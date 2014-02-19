@@ -1,0 +1,65 @@
+$message-size: 70px;
+$message-padding: 10px;
+$message-bar-width: 960px;
+$message-aside-width: 175px;
+$message-aside-padding-left: 20px;
+
+.subnav {
+	background: $lightGray-c2;
+	font-size: 12px;
+	height: $message-size - 2 * $message-padding;
+	line-height: 16px;
+	padding: $message-padding 0;
+}
+
+.message {
+	margin: auto;
+	width: $message-bar-width;
+
+	section {
+		float: left;
+		height: $message-size - 4 * $message-padding;
+		padding: $message-padding 0;
+		width: $message-bar-width - $message-aside-width - $message-aside-padding-left - 10px;
+
+		.icons {
+			display: block;
+			float: right;
+			padding-left: 40px;
+		}
+	}
+
+	aside {
+		border-left: 1px solid $gray-c4;
+		float: right;
+		height: $message-size - 4 * $message-padding;
+		padding-left: $message-aside-padding-left;
+		padding-top: $message-padding;
+		padding-bottom: $message-padding;
+		width: $message-aside-width - $message-aside-padding-left;
+	}
+}
+// Staticly positioned element so that laout will leave place for actual footer which has position absolute.
+.footer-spacer {
+	height: $message-size;
+}
+
+footer.subnav {
+	bottom: 0;
+	margin-bottom: 0;
+	position: absolute;
+	width: 100%;
+}
+
+// header
+#header > nav {
+	text-align: center;
+}
+
+header.subnav {
+	height: 40px;
+	margin-bottom: 20px;
+	position: relative;
+	z-index: 2;
+}
+

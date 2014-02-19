@@ -22,7 +22,7 @@ define( 'wikia.ui.modal', [
 		$win = $( w ),
 		wScrollTop,
 
-		$body = $( 'body' ),
+		$body = $( w.document.body ),
 
 		// default modal rendering params
 		modalDefaults = {

@@ -1,4 +1,4 @@
-function getBody(){
+function getBody( html ){
 	var rand = (Math.random() * Math.random() + '').slice(2),
 		element = document.createElement('div');
 
@@ -9,6 +9,10 @@ function getBody(){
 
 	element.id = rand;
 	getBody.id = rand;
+
+	if ( html ) {
+		element.innerHTML = html;
+	}
 
 	document.body.appendChild(element);
 

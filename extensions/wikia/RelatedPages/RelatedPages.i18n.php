@@ -5,6 +5,8 @@ $messages = array();
 $messages['en'] = array(
 	'wikiarelatedpages-desc' => 'Adds a list with related pages to pages',
 	'wikiarelatedpages-heading' => 'Read more',
+	'wikiamobile-related-article' => 'Related Article',
+	'wikiamobile-people-also-read' => 'People also read',
 );
 
 /** Message documentation (Message documentation)
@@ -14,6 +16,8 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'wikiarelatedpages-desc' => '{{desc}}',
 	'wikiarelatedpages-heading' => '{{Identical|Read more}}',
+	'wikiamobile-related-article' => 'Text displayed in a box with one related article',
+	'wikiamobile-people-also-read' => 'Text displayed in a box with one related article',
 );
 
 /** Afrikaans (Afrikaans)

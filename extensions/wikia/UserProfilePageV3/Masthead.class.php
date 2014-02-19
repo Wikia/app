@@ -756,24 +756,6 @@ class Masthead {
 		return $errorNo;
 	} // end postProcessImageInternal()
 
-
-	function purgeUrl() {
-		// Purge the avatar URL and the proportions commonly used in Oasis.
-		global $wgUseSquid;
-		if ( $wgUseSquid ) {
-			// FIXME: is there a way to know what sizes will be used w/o hardcoding them here?
-			$urls = array(
-				$this->getPurgeUrl(),
-				$this->getThumbnailPurgeUrl(20), # user-links & history dropdown
-				$this->getThumbnailPurgeUrl(50), # article-comments
-				$this->getThumbnailPurgeUrl(100), # user-profile
-				$this->getThumbnailPurgeUrl(200) # user-profile
-			);
-
-			SquidUpdate::purge($urls);
-		}
-	}
-
 	/**
 	 * @param $article
 	 * @param User $user
@@ -836,7 +818,7 @@ class Masthead {
 				@unlink( "$dir/$file" );
 				$url = $this->getPurgeUrl( '/thumb/' ) . "/$file" ;
 				$urls[] = $url;
-				wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file and purging $url\n", true );
+				wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file\n", true );
 			}
 		}
 		else {
