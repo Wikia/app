@@ -1,8 +1,8 @@
 <div class="WikiaPhotoGalleryPreview">
 <?php
 	// render images
-	foreach ($slideshow['images'] as $i => $image) {
-		if (empty($image['recentlyUploaded'])) {
+	foreach ( $slideshow['images'] as $i => $image ) {
+		if ( empty( $image['recentlyUploaded'] ) ) {
 ?>
 	<span class="WikiaPhotoGalleryPreviewItem WikiaPhotoGalleryPreviewDraggable" imageid="<?= $i ?>" style="<? if ( !empty( $image[ 'thumbnailBg' ] ) ): ?>background-image: url(<?= $image['thumbnailBg'] ?>);<? endif; ?> width: <?= $width?>px; height: <?= $height ?>px">
 		<span class="WikiaPhotoGalleryPreviewItemMenu color1">
@@ -17,29 +17,29 @@
 			?></div>
 		</span>
 <?php
-	if (!empty($image['image'])) {
+	if ( !empty( $image['image'] ) ) {
 ?>
 		<img data-src="<?= htmlspecialchars($image['image']) ?>" alt="" width="<?= $width ?>" height="<?= $height ?>" />
 <?php
 	}
-	else if (empty($image['thumbnailBg'])) {
+	elseif ( empty( $image['thumbnailBg'] ) ) {
 ?>
 			<a class="image broken-image new" style="line-height: <?= $height ?>px;"><?= $image['pageTitle']; ?></a>
 <?php
 	}
 	// link icon
-		if ($image['link'] != '') {
-			$msg = htmlspecialchars(wfMsg('wikiaPhotoGallery-preview-link-tooltip', $image['link']));
+		if ( $image['link'] != '' ) {
+			$msg = htmlspecialchars( wfMsg( 'wikiaPhotoGallery-preview-link-tooltip', $image['link'] ) );
 ?>
 		<a href="#" class="WikiaPhotoGalleryPreviewItemLink" title="<?= $msg ?>"></a>
 <?php
 		}
 
 		// image caption
-		if ($image['caption'] != '') {
+		if ( $image['caption'] != '' ) {
 			$caption = $image['caption'];
 		} else {
-			$caption = '<em>' . wfMsg('wikiaPhotoGallery-preview-add-caption') . '</em>';
+			$caption = '<em>' . wfMsg( 'wikiaPhotoGallery-preview-add-caption' ) . '</em>';
 		}
 ?>
 		<span class="WikiaPhotoGalleryPreviewSlideshowCaptionWrapper">
