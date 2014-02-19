@@ -60,7 +60,7 @@ LightboxLoader = {
 	},
 	videoThumbWidthThreshold: 400,
 	init: function() {
-		var that = this,
+		var self = this,
 			article = $('#WikiaArticle'),
 			videos = $('#RelatedVideosRL'),
 			photos = $('#LatestPhotosModule'),
@@ -76,7 +76,7 @@ LightboxLoader = {
 					fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 					parent,
 					isVideo,
-					trackingInfo,
+					mediaData,
 					$slideshowImg,
 					clickSource;
 
@@ -84,7 +84,7 @@ LightboxLoader = {
 					$this.hasClass('link-internal') ||
 					$this.hasClass('link-external') ||
 					$thumb.attr('data-shared-help') ||
-					$this.hasClass( 'no-lightbox' )
+					$this.hasClass('no-lightbox')
 				) {
 					return;
 				}
@@ -103,7 +103,7 @@ LightboxLoader = {
 					parent = $('#videosModule');
 				}
 
-				trackingInfo = {
+				mediaData = {
 					target: $this,
 					parent: parent
 				};
@@ -124,6 +124,9 @@ LightboxLoader = {
 					fileKey = $slideshowImg.attr('data-image-name') || $slideshowImg.attr('data-video-name');
 				}
 
+				// VID-1333 load remote repo data in the lightbox
+				mediaData.remote = $this.hasClass('remote') ? 1 : 0;
+
 				if(!fileKey) {
 					// might be old/cached DOM.  TODO: delete this when cache is flushed
 					fileKey = $this.attr('data-image-name') || $this.attr('data-video-name');
@@ -138,7 +141,7 @@ LightboxLoader = {
 
 				// Display video inline, don't open lightbox
 				isVideo = $this.children('.Wikia-video-play-button').length;
-				if(isVideo && $thumb.width() >= that.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
+				if(isVideo && $thumb.width() >= self.videoThumbWidthThreshold && !$this.hasClass('force-lightbox')) {
 					clickSource = window.wgWikiaHubType ?
 						LightboxTracker.clickSource.HUBS :
 						LightboxTracker.clickSource.EMBED;
@@ -146,7 +149,7 @@ LightboxLoader = {
 					return;
 				}
 
-				that.loadLightbox(fileKey, trackingInfo);
+				self.loadLightbox(fileKey, mediaData);
 
 			});
 
@@ -164,11 +167,12 @@ LightboxLoader = {
 
 	/**
 	 * @param {String} mediaTitle The name of the file to be loaded in the Lightbox
-	 * @param {Object} trackingInfo Any info we've already gathered for tracking purposes.
+	 * @param {Object} mediaData Any info we've already gathered for tracking purposes.
 	 * Will be fed to Lightbox.getClickSource for processing
 	 */
-	loadLightbox: function(mediaTitle, trackingInfo) {
-		var openModal, lightboxParams, deferredList, resources, deferredTemplate;
+	loadLightbox: function(mediaTitle, mediaData) {
+		var openModal, lightboxParams, deferredList, resources, deferredTemplate, mediaParams;
+
 		// restore inline videos to default state, because flash players overlaps with modal
 		LightboxLoader.removeInlineVideos();
 		LightboxLoader.lightboxLoading = true;
@@ -185,7 +189,7 @@ LightboxLoader = {
 			modal: openModal
 		};
 
-		$.extend(lightboxParams, trackingInfo);
+		$.extend(lightboxParams, mediaData);
 
 		deferredList = [];
 		if(!LightboxLoader.assetsLoaded) {
@@ -217,8 +221,12 @@ LightboxLoader = {
 			deferredList.push( deferredTemplate );
 		}
 
+		mediaParams = {
+			fileTitle: mediaTitle,
+			remote: mediaData.remote
+		};
 		// NOTE: be careful with this, look below where it says LASTINDEX
-		deferredList.push(LightboxLoader.getMediaDetailDeferred({fileTitle: mediaTitle}));
+		deferredList.push(LightboxLoader.getMediaDetailDeferred(mediaParams));
 
 		$.when.apply(this, deferredList).done(function() {
 			LightboxLoader.assetsLoaded = true;
@@ -308,7 +316,7 @@ LightboxLoader = {
 	loadFromURL: function() {
 		var fileTitle = window.Wikia.Querystring().getVal('file'),
 			openModal = $('#LightboxModal'),
-			trackingInfo;
+			mediaData;
 
 		// Check if there's a file param in URL
 		if(fileTitle) {
@@ -325,11 +333,11 @@ LightboxLoader = {
 			// Open new Lightbox
 			} else {
 				// set a fake parent for carouselType
-				trackingInfo = {
+				mediaData = {
 					parent: $('#WikiaArticle'),
 					clickSource: LightboxTracker.clickSource.SHARE
 				};
-				LightboxLoader.loadLightbox(fileTitle, trackingInfo);
+				LightboxLoader.loadLightbox(fileTitle, mediaData);
 			}
 		// No file param, if there's an open modal, close it
 		} else {

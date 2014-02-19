@@ -30,7 +30,7 @@ var Lightbox = {
 		$(window).trigger('lightboxOpened');
 
 		// if we don't have latest photos in the DOM, request them from back end
-		Lightbox.includeLatestPhotos = !$('#LatestPhotosModule .carousel-container').length;
+		Lightbox.includeLatestPhotos = !($('#LatestPhotosModule').find('.carousel-container').length);
 		Lightbox.openModal = params.modal;
 
 		// If file doesn't exist, show the error modal
@@ -56,7 +56,8 @@ var Lightbox = {
 		Lightbox.openModal.vbClickSource = clickSource;
 
 		// Check screen height for future interactions
-		Lightbox.shortScreen = $(window).height() < LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset ? true : false;
+		Lightbox.shortScreen = ($(window).height() <
+			(LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset));
 
 		// Add template to modal
 		Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
