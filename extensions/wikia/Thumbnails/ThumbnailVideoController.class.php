@@ -23,6 +23,7 @@ class ThumbnailVideoController extends WikiaController {
 	 *		disableRDF - disable RDF metadata
 	 *		fluid - image will take the width of it's container
 	 *		forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+	 *		remote - for remote video
 	 * @responseParam string width
 	 * @responseParam string height
 	 * @responseParam string linkHref
@@ -84,6 +85,10 @@ class ThumbnailVideoController extends WikiaController {
 		if ( empty( $options['noLightbox'] ) ) {
 			$linkClasses[] = 'image';
 			$linkClasses[] = 'lightbox';
+		}
+
+		if ( !empty( $options['remote'] ) ) {
+			$linkClasses[] = 'remote';
 		}
 
 		if ( !empty( $linkAttribs['class'] ) ) {
