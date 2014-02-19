@@ -8,7 +8,6 @@
 	"keep_array_indentation": false,
 	"keep_function_indentation": false,
 	"space_before_conditional": true,
-	"break_chained_methods": true,
 	"eval_code": false,
 	"unescape_strings": false,
 	"wrap_line_length": 0
