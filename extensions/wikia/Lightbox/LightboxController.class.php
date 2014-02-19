@@ -56,12 +56,13 @@ class LightboxController extends WikiaController {
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
-			$imageList = $this->getImageList( $count, $to );
+			$helper = new LightboxHelper();
+			$imageList = $helper->getImageList( $count, $to );
 			extract( $imageList );
 
 			// add Latest Photos if not exist
 			if ( $includeLatestPhotos == 'true' ) {
-				$latestPhotos = $this->getLatestPhotos();
+				$latestPhotos = $helper->getLatestPhotos();
 				$images = array_merge( $latestPhotos, $images );
 			}
 
@@ -388,9 +389,11 @@ class LightboxController extends WikiaController {
 		$extra = $this->request->getVal( 'count', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
+		$helper = new LightboxHelper();
+
 		// add Latest Photos if not exist
 		if ( $includeLatestPhotos == 'true' ) {
-			$latestPhotos = $this->getLatestPhotos();
+			$latestPhotos = $helper->getLatestPhotos();
 			$extra += count( $latestPhotos );
 		}
 
@@ -399,7 +402,7 @@ class LightboxController extends WikiaController {
 		if ( !is_array( $imageInfo ) ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$timestamp = $this->getTimestamp();
+			$timestamp = $helper->getTimestamp();
 			$totalWikiImages = $db->selectField(
 				array( 'image' ),
 				array( 'count(*) cnt' ),
@@ -424,120 +427,6 @@ class LightboxController extends WikiaController {
 		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->text();
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Get list of images
-	 * @param integer $limit
-	 * @param string $to - timestamp
-	 * @return array $imageList - array( 'images' => list of image, 'minTimestamp' => minimum timestamp of the list )
-	 */
-	protected function getImageList( $limit, $to ) {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( 'lightbox', 'images', $limit, $to );
-		$imageList = $this->wg->Memc->get( $memKey );
-		if ( !is_array( $imageList ) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$result = $db->select(
-				array( 'image' ),
-				array( 'img_name, img_timestamp' ),
-				array(
-					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $to",
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'img_timestamp DESC',
-					'LIMIT' => $limit,
-				)
-			);
-
-			$images = array();
-			$imageList = array( 'images' => $images, 'minTimestamp' => 0 );
-			while( $row = $db->fetchObject( $result ) ) {
-				$minTimestamp = $row->img_timestamp;
-				$images[] = array(
-					'title' => $row->img_name,
-					'type' => 'image',
-				);
-			}
-
-			if ( !empty( $images ) ) {
-				$imageList = array(
-					'images' => $images,
-					'minTimestamp' => wfTimestamp( TS_MW, $minTimestamp ),
-				);
-			}
-
-			$this->wg->Memc->set( $memKey, $imageList, 60*60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $imageList;
-	}
-
-	/**
-	 * Get list of images from LatestPhotosController ( image only )
-	 * @return array $latestPhotos - array( 'title' => imageName, 'type' => 'image' )
-	 */
-	protected function getLatestPhotos() {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( 'lightbox', 'latest_photos' );
-		$latestPhotos = $this->wg->Memc->get( $memKey );
-		if ( !is_array( $latestPhotos ) ) {
-			$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
-			$thumbUrls = $response->getVal( 'thumbUrls', '' );
-
-			$latestPhotos = array();
-			if ( !empty( $thumbUrls ) && is_array( $thumbUrls ) ) {
-				foreach ( $thumbUrls as $thumb ) {
-					if ( !$thumb['isVideoThumb'] ) {
-						$title = Title::newFromText( $thumb['image_filename'] );
-						$latestPhotos[] = array(
-							'title' => $title->getDBKey(),
-							'type' => 'image',
-						);
-					}
-				}
-			}
-
-			$this->wg->Memc->set( $memKey, $latestPhotos, 60*60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $latestPhotos;
-	}
-
-	/**
-	 * Get minimum timestamp from LatestPhotosController or current timestamp ( image only )
-	 * @return string $timestamp
-	 */
-	protected function getTimestamp() {
-		wfProfileIn( __METHOD__ );
-
-		$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
-		$latestPhotos = $response->getVal( 'thumbUrls', '' );
-
-		$timestamp = wfTimestamp( TS_MW );
-		if ( !empty( $latestPhotos ) && is_array( $latestPhotos ) ) {
-			foreach ( $latestPhotos as $photo ) {
-				if ( !$photo['isVideoThumb'] ) {
-					$photoTimestamp = wfTimestamp( TS_MW, $photo['date'] );
-					if ( $photoTimestamp < $timestamp ) {
-						$timestamp = $photoTimestamp;
-					}
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $timestamp;
 	}
 
 }
