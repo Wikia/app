@@ -393,7 +393,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'((ns:0) OR (ns:14)) AND (wid:123) AND (articleQuality_i:[13 TO *])',
+				'((ns:0) OR (ns:14)) AND (wid:123) AND (article_quality_i:[13 TO *])',
 				$reflspell->invoke( $mockSelect )
 		);
 	}

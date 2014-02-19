@@ -29,6 +29,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_EXPAND = 'expand';
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_LIMIT = 'limit';
+	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
 
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
@@ -308,7 +309,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		$ns = $this->request->getArray( self::PARAMETER_NAMESPACES );
 		$limit = $this->request->getInt(self::PARAMETER_LIMIT, self::DEFAULT_NEW_ARTICLES_LIMIT);
-
+		$minArticleQuality = $this->request->getInt( self::PARAM_ARTICLE_QUALITY );
 		if ( $limit < 1 ) {
 			throw new InvalidParameterApiException( self::PARAMETER_LIMIT );
 		}
@@ -326,10 +327,10 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = array_unique( $ns );
 		}
 
-		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) ] );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT, $minArticleQuality );
 			if ( empty( $solrResults ) ) {
 				$results = [];
 			} else {
@@ -376,7 +377,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 
-	protected function getNewArticlesFromSolr( $ns, $limit ) {
+	protected function getNewArticlesFromSolr( $ns, $limit, $minArticleQuality) {
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( '*' )
 			->setLimit( $limit )
@@ -384,6 +385,7 @@ class ArticlesApiController extends WikiaApiController {
 			->setOnWiki( true )
 			->setWikiId( $this->wg->wgCityId )
 			->setNamespaces( $ns )
+			->setMinArticleQuality( $minArticleQuality )
 			->setRank( \Wikia\Search\Config::RANK_NEWEST_PAGE_ID )
 			->setRequestedFields( [ 'html_en' ] );
 
