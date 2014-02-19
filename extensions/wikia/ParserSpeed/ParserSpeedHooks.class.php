@@ -1,5 +1,5 @@
 <?php
-use /Wikia/WikiaLogger as WLog;
+use \Wikia\WikiaLogger as WLog;
 
 class ParserSpeedHooks {
 
