@@ -9,9 +9,7 @@ define( 'videohomepage.views.featured', [
 	'wikia.tracker',
 	// module specific deps
 	'videohomepage.collections.featuredslides',
-	'jquery.ellipses'
 ], function( $, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection ) {
-
 	'use strict';
 	var track, FeaturedVideosView;
 
