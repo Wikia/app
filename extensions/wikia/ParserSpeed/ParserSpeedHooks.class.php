@@ -1,4 +1,5 @@
 <?php
+use /Wikia/WikiaLogger as WLog;
 
 class ParserSpeedHooks {
 
@@ -48,16 +49,13 @@ class ParserSpeedHooks {
 			}
 		}
 
-		try {
-			$data = array(
-				'title' => $article->getTitle()->getPrefixedDBkey(),
-				'dbname' => $wgDBname,
-				'parserTime' => $parserOutput->getPerformanceStats('time'),
-				'skin' => RequestContext::getMain()->getSkin()->getSkinName(),
-			);
-			\Wikia\Logger\WikiaLogger::instance()->debug("Parser execution",$data);
-		} catch (Exception $e) {
-		}
+		//Logging parser activity for monitoring
+		//wiki and article info are sent to logstash anyways so no need to repeat them here
+		WLog::instance()->info( "Parser execution", [
+			'parser_time'   => $parserOutput->getPerformanceStats( 'time' ),
+			'wikitext_size' => $parserOutput->getPerformanceStats( 'wikitextSize' ),
+			'skin_name'     => RequestContext::getMain()->getSkin()->getSkinName(),
+		]);
 
 		return true;
 	}
