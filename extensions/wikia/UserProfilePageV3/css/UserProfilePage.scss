@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/core/layout";
@@ -92,8 +91,8 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
 		@include border-radius-nw($radius-user-profile-masthead * 2);
 		@include border-radius-ne($radius-user-profile-masthead * 2);
-		@include border-radius-sw($radius-user-profile-masthead);
-		@include border-radius-se($radius-user-profile-masthead);
+		border-bottom-left-radius: $radius-user-profile-masthead;
+		border-bottom-right-radius: $radius-user-profile-masthead;
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
 
 		@include clearfix;
@@ -114,8 +113,8 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			width: 320px;
 		}
 		hgroup {
-			@include border-radius-nw($radius-user-profile-masthead);
-			@include border-radius-ne($radius-user-profile-masthead);
+			border-top-left-radius: $radius-user-profile-masthead;
+			border-top-right-radius: $radius-user-profile-masthead;
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
 			color: $color-button-text;
 			overflow: auto;
@@ -128,7 +127,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			line-height: 38px;
 		}
 		.tag {
-			@include border-radius(3px);
+			border-radius: 3px;
 			background: mix($color-button-highlight, $color-page, 80%);
 			display: inline-block;
 			margin-left: 10px;
@@ -182,7 +181,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			margin-right: 1em;
 		}
 		.icon {
-			@include border-radius(50px);
+			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
 			height: 17px;
 			position: relative;

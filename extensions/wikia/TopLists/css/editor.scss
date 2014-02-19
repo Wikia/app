@@ -5,7 +5,6 @@
  */
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/forms";
@@ -171,7 +170,7 @@ $item-number-margin-right: 10px;
 
 			.ItemName {
 				@include centered($item-height);
-				@include border-radius(5px);
+				border-radius: 5px;
 				border: 1px solid $color-page-border;
 				background-color: $color-module-shadow;
 				display: inline;

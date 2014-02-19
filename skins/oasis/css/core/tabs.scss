@@ -1,5 +1,4 @@
 @import "color";
-@import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 
@@ -20,8 +19,8 @@ ol.tabs {
 		padding: 0;
 		position: relative;
 		a {
-			@include border-radius-nw(4px);
-			@include border-radius-ne(4px);
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
 			border: 1px solid transparent;
 			cursor: pointer;
 			display: inline-block;
@@ -86,8 +85,8 @@ ol.tabs {
 		white-space: nowrap;
 	}
 	.ui-tabs-nav li a {
-		@include border-radius-nw(5px);
-		@include border-radius-ne(5px);
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 		color: $color-text;
 		display: inline-block;

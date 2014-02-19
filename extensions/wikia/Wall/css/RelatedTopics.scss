@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 
 @import "WallColors";
@@ -11,7 +10,7 @@
 	padding: 0;
 	.related-topic,
 	.edit-topic {
-		@include border-radius(3px);
+		border-radius: 3px;
 		$color-topic: lighten($color-text, 70%);
 		background-color: $color-topic;
 		float: left;

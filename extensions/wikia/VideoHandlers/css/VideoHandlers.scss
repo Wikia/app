@@ -1,7 +1,6 @@
 /* VideoHandlers.scss */
 
 @import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/background-opacity";
 
@@ -53,7 +52,7 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
     line-height: 14px;
     background-color: black;
     padding: 1px 4px 1px 6px;
-    @include border-radius(4px);
+    border-radius: 4px;
 }
 
 .video {

@@ -1,4 +1,3 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
@@ -32,7 +31,7 @@ $separators: mix($color-page-border, $color-page, 50%);
 			margin-right: 3px;
 			text-align: center;
 			.SortingSelected {
-				@include border-radius(3px);
+				border-radius: 3px;
 				display: inline-block;
 				font-weight: bold;
 				color: $color-page-border;
@@ -55,7 +54,7 @@ $separators: mix($color-page-border, $color-page, 50%);
 
 			}
 			.SortingList {
-				@include border-radius(3px);
+				border-radius: 3px;
 				@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
 				list-style: none;
 				display: none;

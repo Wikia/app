@@ -1,4 +1,3 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/forms";
 
 $error-color: mix(#ff0000, #d4d4d4, 75%);
@@ -42,7 +41,7 @@ $success-color: #3d8d42;
 			font-weight: bold;
 		}
 		&.error, &.success {
-			@include border-radius(3px);
+			border-radius: 3px;
 			@if $is-dark-wiki {
 				background-color: mix($color-page, #ffffff, 85%);
 			} @else {
@@ -86,8 +85,8 @@ $success-color: #3d8d42;
 				line-height: 15px;
 				margin: 0 1px 0 0;// off by one bug
 				padding: 8px;
-				@include border-radius-se(3px);
-				@include border-radius-sw(3px);
+				border-bottom-right-radius: 3px;
+				border-bottom-left-radius: 3px;
 			}
 			*/
 		}
@@ -106,7 +105,7 @@ $success-color: #3d8d42;
 		clear: both;
 	}
 	input[type=submit].link {
-		@include border-radius(0);
+		border-radius: 0;
 		background: none;
 		border: none;
 		color: $color-links;

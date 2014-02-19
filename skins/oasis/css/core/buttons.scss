@@ -1,5 +1,4 @@
 @import "color";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/gradient";
 @import "../mixins/opacity";
@@ -16,7 +15,7 @@ input[type="reset"],
 input[type="button"],
 .button,
 button {
-	@include border-radius(4px);
+	border-radius: 4px;
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
 	color: $color-button-text;
@@ -138,15 +137,15 @@ This list-based button is used in the page header for edit/history/delete action
 		}
 	}
 	>a, >li >a {
-		@include border-radius-nw(4px);
-		@include border-radius-sw(4px);
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
 		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
 		color: $color-button-text;
 		padding: 0 8px 0 5px;
 	}
 	.drop {
-		@include border-radius-ne(4px);
-		@include border-radius-se(4px);
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
 		margin-left: -3px;
 		padding-left: 5px;
 	}
@@ -192,8 +191,8 @@ This list-based button is used in the page header for edit/history/delete action
 		margin: 0 7px 0 1px;
 	}
 	&.active {
-		@include border-radius-se(0);
-		@include border-radius-sw(0);
+		border-bottom-right-radius: 0;
+		border-bottom-left-radius: 0;
 		ul {
 			display: block;
 		}
@@ -272,8 +271,8 @@ This list-based button used for all additional actions
 			}
 		}
 		&.active {
-			@include border-radius-se(0);
-			@include border-radius-sw(0);
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 0;
 			ul {
 				display: block;
 			}
@@ -293,7 +292,7 @@ $button-chiclet-opacity: 30;
 
 .wikia-chiclet-button {
 	@include opacity($button-chiclet-opacity);
-	@include border-radius(0);
+	border-radius: 0;
 	background-image: none;
 	border: 0;
 	cursor: pointer;
@@ -334,7 +333,7 @@ Facebook style button
 ******************************/
 a.wikia-button-facebook,
 a.wikia-button.wikia-button-facebook {
-	@include border-radius(2px);
+	border-radius: 2px;
 	border-color: #afbdd6;
 	color: #fff;
 	font-weight: bold;

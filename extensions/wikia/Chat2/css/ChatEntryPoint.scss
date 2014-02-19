@@ -1,7 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/opacity";
@@ -59,7 +58,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		}
 
 		.chat-total {
-			@include border-radius(15px);
+			border-radius: 15px;
 			background-color: $color-chat-live;
 			color: $color-button-text;
 			display: inline-block;

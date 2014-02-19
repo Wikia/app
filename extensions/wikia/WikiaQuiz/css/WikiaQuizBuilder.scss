@@ -1,6 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-
 .correct-answer {
 	font-weight: bold;
 }
@@ -60,7 +58,7 @@ $color-quiz-label: lighten($color-text, 30%);
 			vertical-align: top;
 		}
 		.details {
-			@include border-radius(5px);
+			border-radius: 5px;
 			background: $color-article-thumb-background;
 			border: 1px solid $color-article-thumb-border;
 			display: inline-block;

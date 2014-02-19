@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/sprite";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/opacity";
@@ -13,7 +12,7 @@ input[type="reset"],
 input[type="button"],
 .button,
 button {
-	@include border-radius(4px);
+	border-radius: 4px;
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
 	color: $color-button-text;

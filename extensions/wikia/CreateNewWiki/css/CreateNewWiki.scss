@@ -1,6 +1,5 @@
 $color-borders: #CECECE;
 
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
@@ -138,7 +137,7 @@ $color-borders: #CECECE;
 		padding: 0;
 	}
 	.step {
-		@include border-radius(5px);
+		border-radius: 5px;
 		background-color: #f4f4f4;
 		float: left;
 		height: 10px;
@@ -334,7 +333,7 @@ div#userloginErrorBox3 {
 
 		li {
 			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
-			@include border-radius(10px);
+			border-radius: 10px;
 			@include box-shadow(1px, 1px, 1px, #000);
 			color: #f6f2f3;
 			font-size: 15px;

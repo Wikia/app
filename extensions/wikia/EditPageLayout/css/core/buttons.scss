@@ -1,7 +1,7 @@
 .EditPage {
 	.cke_button {
 		> a {
-			@include border-radius(4px);
+			border-radius: 4px;
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
 			cursor: default;
@@ -160,8 +160,8 @@
 			position: relative;
 		}
 		.cke_icon:after {
-			@include border-radius-nw(3px);
-			@include border-radius-ne(3px);
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
 			position: absolute;
 			content: 'BETA';
 			background-color: #ff8080; /* for IE8 */

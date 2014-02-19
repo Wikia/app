@@ -1,6 +1,5 @@
 // This file is used for styling the edit page
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
@@ -626,7 +625,7 @@
 		padding-left: 10px;
 	}
 	.cke_dialog_close_button {
-		@include border-radius(3px);
+		border-radius: 3px;
 		@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
 		height: 19px;
 		text-align: center;
@@ -643,8 +642,8 @@
 		background: transparent;
 		overflow: hidden;
 		.cke_dialog_tab {
-			@include border-radius-nw(5px);
-			@include border-radius-ne(5px);
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
 			@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 			border: none;
 			color: $color-text;

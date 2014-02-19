@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
@@ -13,7 +12,7 @@
 
 /* local mixin */
 @mixin forum-message-error() {
-	@include border-radius($wall-border-radius);
+	border-radius: $wall-border-radius;
 	background-color: $color-wall-error;
 	display: none;
 	font-size: 12px;
@@ -136,7 +135,7 @@
 		}
 
 		.message {
-			@include border-radius(0);
+			border-radius: 0;
 			border: 0;
 			background-color: $color-wall-bubble;
 			margin: 0 0 0 60px;

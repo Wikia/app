@@ -4,7 +4,6 @@
  */
 @import "color";
 @import "../mixins/bodytext";
-@import "../mixins/border-radius";
 @import "../mixins/box-sizing";
 @import "../mixins/clearfix";
 
@@ -17,7 +16,7 @@
 	}
 
 	.speech-bubble-message {
-		@include border-radius(5px);
+		border-radius: 5px;
 		background: $color-speech-bubble;
 		border: 1px solid $color-page-border;
 		margin: 0 0 0 75px;

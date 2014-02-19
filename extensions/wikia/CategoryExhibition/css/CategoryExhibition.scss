@@ -1,4 +1,3 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/core/color";
@@ -259,8 +258,8 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	.title {
-		@include border-radius-ne(9px);
-		@include border-radius-se(9px);
+		border-top-right-radius: 9px;
+		border-bottom-right-radius: 9px;
 		position: relative;
 		display: inline-block;
 		background-color: $details-bg-color;

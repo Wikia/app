@@ -1,4 +1,3 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/core/reset";
@@ -13,7 +12,7 @@ $roundness: 2px;
 	@include clearfix;
 	border-style: none;
 	padding: 5px 12px;
-	@include border-radius($roundness);
+	border-radius: $roundness;
 	background: mix($color-buttons, $color-page, 15%);
 	border-width: 1px;
 	h2 {
