@@ -1270,13 +1270,12 @@
 				});
 
 				// clicks on "Add caption" and "Link" - prevent default
-				preview.
-					find('.WikiaPhotoGalleryPreviewItemCaption').
-					add( preview.find('.WikiaPhotoGalleryPreviewItemLink') ).
-					click(function(ev) {
+				preview
+					.find('.WikiaPhotoGalleryPreviewItemCaption')
+					.add( preview.find('.WikiaPhotoGalleryPreviewItemLink') )
+					.click( function(ev) {
 						ev.preventDefault();
-					}
-				);
+					} );
 
 				// scale external images in gallery preview
 				self.log('lazy loading preview images');
@@ -1289,7 +1288,7 @@
 				var thumbHeight = thumb.height();
 
 				var params = self.editor.gallery.params;
-				var crop = (params.orientation && params.orientation != 'none') || (params.crop && params.crop == 'true');
+				var crop = (params.orientation && params.orientation !== 'none') || (params.crop && params.crop === 'true');
 
 				images.each(function() {
 					WikiaPhotoGalleryView.loadAndResizeImage($(this), thumbWidth, thumbHeight, function(image) {
@@ -1530,7 +1529,7 @@
 			var button = $('#WikiaPhotoGallerySlideshowAddImage');
 			var params = this.editor.gallery.params;
 
-			if (params.showrecentuploads == 'true') {
+			if (params.showrecentuploads === 'true') {
 				button.attr('disabled', true).addClass('secondary');
 			} else {
 				button.attr('disabled', false).removeClass('secondary');
@@ -1661,7 +1660,7 @@
 					delete params[paramName];
 				}
 
-				if (paramName == 'showrecentuploads') {
+				if (paramName === 'showrecentuploads') {
 					self.track({
 						label: 'create-automatic'
 					});
@@ -2353,7 +2352,7 @@
 
 		JSONtoWikiTextInner: function(data) {
 			HTML = '';
-			if (typeof data.params.showrecentuploads == 'undefined' || data.params.showrecentuploads != 'true') {
+			if (typeof data.params.showrecentuploads === 'undefined' || data.params.showrecentuploads !== 'true') {
 				// add images
 				for (img in data.images) {
 					var imageData = data.images[img];
