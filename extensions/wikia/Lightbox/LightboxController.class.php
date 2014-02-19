@@ -280,10 +280,8 @@ class LightboxController extends WikiaController {
 			$thumbUrl = $thumb->getUrl();
 
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				$embedMarkup = $file->getEmbedCode( 300, true, false );
 				$msgSuffix = '-video';
 			} else {
-				$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 				$msgSuffix = '';
 			}
 
@@ -303,16 +301,9 @@ class LightboxController extends WikiaController {
 					'url' => $network->getUrl( $shareUrl, $linkDescription )
 				);
 			}
-
-			// Don't show embed code for screenplay b/c it's using JW Player
-			if ( WikiaFileHelper::isFileTypeVideo( $file ) && $file->getProviderName() == 'screenplay' ) {
-				$embedMarkup = false;
-			}
-
 		}
 
 		$this->shareUrl = $shareUrl;
-		$this->embedMarkup = $embedMarkup;
 		$this->articleUrl = $articleUrl;
 		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
@@ -428,5 +419,6 @@ class LightboxController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
+
 
 }
