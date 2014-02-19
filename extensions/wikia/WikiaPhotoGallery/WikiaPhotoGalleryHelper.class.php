@@ -43,7 +43,7 @@ class WikiaPhotoGalleryHelper {
 	 */
 	static public function setup(&$ig, &$text, &$params) {
 		wfProfileIn(__METHOD__);
-		
+
 		$ig = new WikiaPhotoGallery();
 
 		// store content of <gallery> tag
@@ -664,7 +664,7 @@ class WikiaPhotoGalleryHelper {
 				// Get play button overlay for video thumb
 				$image['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( self::STRICT_IMG_WIDTH_PREV, self::STRICT_IMG_HEIGHT_PREV );
 			}
-			
+
 			//need to use parse() - see RT#44270
 			$image['caption'] = $wgParser->parse($image['caption'], $wgTitle, $parserOptions)->getText();
 
@@ -684,126 +684,6 @@ class WikiaPhotoGalleryHelper {
 			'width' => self::STRICT_IMG_WIDTH_PREV,
 		));
 		$html = $template->render('sliderPreview');
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	}
-
-
-
-	/**
-	 * Render gallery preview for feed
-	 *
-	 * @author Marooned
-	 */
-	static public function renderFeedGalleryPreview($gallery) {
-		global $wgTitle, $wgParser, $wgExtensionsPath;
-		wfProfileIn(__METHOD__);
-
-		$data = WikiaPhotoGalleryRSS::parseFeed($gallery['params']['rssfeed']);
-
-		//use images from feed
-		$gallery['images'] = $data['images'];
-
-		// render thumbnail and parse caption for each image (default "box" is 200x200)
-		$thumbSize = !empty($gallery['params']['widths']) && is_numeric($gallery['params']['widths']) ? $gallery['params']['widths'] : 200;
-		$borderSize = (!empty($gallery['params']['bordersize'])) ? $gallery['params']['bordersize'] : 'small';
-		$orientation = !empty($gallery['params']['orientation']) ? $gallery['params']['orientation'] : 'none';
-		$ratio = self::getRatioFromOption($orientation);
-		$crop = true;
-
-		// calculate height based on gallery width
-		$height = round($thumbSize / $ratio);
-
-		foreach ($gallery['images'] as $index => &$image) {
-			$image['placeholder'] = false;
-
-			$image['height'] = $height;
-			$image['width'] = $thumbSize;
-
-			$image['thumbnail'] = false;
-			$image['image'] = $image['src'];
-
-			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
-			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
-		}
-
-		//compensate image wrapper width depending on the border size
-		switch ($borderSize) {
-			case 'large':
-				$thumbSize += 10; //5px * 2
-				$height += 10;
-				break;
-			case 'medium':
-				$thumbSize += 4; //2px * 2
-				$height += 4;
-				break;
-			case 'small':
-				$thumbSize += 2; //1px * 2
-				$height += 2;
-				break;
-		}
-
-		// render gallery HTML preview
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-			'borderColor' => (!empty($gallery['params']['bordercolor'])) ? $gallery['params']['bordercolor'] : 'accent',
-			'borderSize' => $borderSize,
-			'captionsAlign' => (!empty($gallery['params']['captionalign'])) ? $gallery['params']['captionalign'] : 'left',
-			'captionsColor' => (!empty($gallery['params']['captiontextcolor'])) ? $gallery['params']['captiontextcolor'] : null,
-			'captionsPosition' => (!empty($gallery['params']['captionposition'])) ? $gallery['params']['captionposition'] : 'below',
-			'captionsSize' => (!empty($gallery['params']['captionsize'])) ? $gallery['params']['captionsize'] : 'medium',
-			'fromFeed' => true,
-			'gallery' => $gallery,
-			'maxHeight' => $height,
-			'perRow' => (!empty($gallery['params']['columns'])) ? intval($gallery['params']['columns']): 'dynamic',
-			'position' => (!empty($gallery['params']['position'])) ? $gallery['params']['position'] : 'left',
-			'spacing' => (!empty($gallery['params']['spacing'])) ? $gallery['params']['spacing'] : 'medium',
-			'width' => $thumbSize
-		));
-
-		$html = $template->render('galleryPreview');
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	}
-
-	/**
-	 * Render slideshow preview
-	 *
-	 * @author Marooned
-	 */
-	static public function renderFeedSlideshowPreview($slideshow) {
-		wfProfileIn(__METHOD__);
-
-		$data = WikiaPhotoGalleryRSS::parseFeed($slideshow['params']['rssfeed']);
-
-		//use images from feed
-		$slideshow['images'] = $data['images'];
-
-		// handle "crop" attribute
-		$crop = isset($slideshow['params']['crop']) ? ($slideshow['params']['crop'] == 'true') : false;
-
-		// render thumbnail
-		$maxWidth = isset($slideshow['params']['widths']) && is_numeric($slideshow['params']['widths']) ? $slideshow['params']['widths'] : 300;
-		$maxHeight = round($maxWidth * 3/4);
-
-		// render slideshow images
-		foreach ($slideshow['images'] as &$image) {
-			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $image['link'], $match);
-			$image['caption'] = wfMsg('wikiaPhotoGallery-feed-caption', $image['caption'], $image['link'], $match[1]);
-			$image['image'] = $image['src'];
-		}
-
-		// render gallery HTML preview
-		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
-		$template->set_vars(array(
-			'fromFeed' => true,
-			'height' => $maxHeight,
-			'slideshow' => $slideshow,
-			'width' => $maxWidth
-		));
-		$html = $template->render('slideshowPreview');
 
 		wfProfileOut(__METHOD__);
 		return $html;
