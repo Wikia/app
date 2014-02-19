@@ -18,7 +18,7 @@ $messages['qqq'] = array(
 /**
  * Japanese
  */
-$messages['jp'] = array(
+$messages['ja'] = array(
 	'videosmodule-title-default' => 'ビデオでチェック',
 );
 
