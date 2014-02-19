@@ -26,7 +26,7 @@ $messages['ja'] = array(
  * Chinese
  */
 $messages['zh'] = array(
-	'videosmodule-title-default' => ' 必看视频',
+	'videosmodule-title-default' => '必看视频',
 );
 
 /**
