@@ -1,6 +1,6 @@
 <div class="WikiaPhotoGalleryPreview">
 <?php
-	if (!empty($slideshow['params']['usefeed']) && !count($slideshow['images'])) {
+	if (!count($slideshow['images'])) {
 		echo wfMsg('wikiaPhotoGallery-preview-no-images');
 	} else {
 		$extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaPhotoGalleryPreviewFeed';

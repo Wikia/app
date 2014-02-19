@@ -108,9 +108,7 @@ img.WikiaPhotoGalleryProgress {
 	margin: 0 20px 0 5px;
 }
 
-/* Feed checkbox */
-#WikiaPhotoGalleryFeedInUse,
-#WikiaPhotoGallerySlideshowFeedInUse,
+/* Editor Checkboxes */
 #WikiaPhotoGallerySlideshowRecentUploads {
 	margin: 0 5px 0 0;
 }
@@ -556,9 +554,7 @@ img.WikiaPhotoGalleryProgress {
 	padding: 0;
 }
 
-#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
-#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
-#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+#WikiaPhotoGallerySlideshowEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
 	opacity: 0.5;
 }
 
@@ -718,9 +714,7 @@ img.WikiaPhotoGalleryProgress {
 }
 
 
-#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded,
-#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed,
-#WikiaPhotoGalleryEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewFeed {
+#WikiaPhotoGallerySliderEditorPreview .WikiaPhotoGalleryPreview .WikiaPhotoGalleryPreviewRecentlyUploaded {
 	opacity: 0.5;
 }
 
@@ -792,7 +786,7 @@ p.SliderLink {
 	background-repeat: no-repeat;
 }
 
-#WikiaPhotoGalleryImageUploadSize { 
+#WikiaPhotoGalleryImageUploadSize {
 	display: none;
 	font-weight: bold;
 	float: right;
