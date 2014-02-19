@@ -42,7 +42,7 @@ class WikiaHubsParserHelper {
 	}
 
 	/**
-	 * @desc Parse data from <hubspopularvideos /> tag
+	 * Parse data from <hubspopularvideos /> tag
 	 *
 	 * @param String $input data within <hubspopularvideos /> tag
 	 */

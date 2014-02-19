@@ -168,8 +168,9 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	protected function initVertical() {
+		global $wgCityId;
 		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
-		$this->cityId = $this->wg->CityId;
+		$this->cityId = $wgCityId;
 		$this->verticalName = $this->model->getVerticalNameById($this->cityId);
 		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->cityId);
 	}
@@ -180,7 +181,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	/**
-	 * @desc Sets hubs specific settings: page title, hub type, vertical body class
+	 * Sets hubs specific settings: page title, hub type, vertical body class
 	 */
 	protected function initVerticalSettings() {
 		$this->wg->out->setPageTitle($this->verticalName);

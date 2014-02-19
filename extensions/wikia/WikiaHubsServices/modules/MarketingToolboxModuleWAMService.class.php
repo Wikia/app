@@ -277,7 +277,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	/**
-	 * @desc Since search works better only for EN hub pages we implemented this simple method
+	 * Since search works better only for EN hub pages we implemented this simple method
 	 * 
 	 * @param int|string $vertical vertical name or id
 	 * @return string

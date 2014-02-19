@@ -16,7 +16,7 @@ class WikiaHubsV3Article extends Article {
 	}
 
 	/**
-	 * @desc Render hubs page
+	 * Render hubs page
 	 */
 	public function view() {
 		wfProfileIn(__METHOD__);

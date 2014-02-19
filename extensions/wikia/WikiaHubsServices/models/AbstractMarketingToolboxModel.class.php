@@ -117,7 +117,7 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * @desc Returns HTML tags which are allowed in the module's text field
+	 * Returns HTML tags which are allowed in the module's text field
 	 *
 	 * @return String
 	 */

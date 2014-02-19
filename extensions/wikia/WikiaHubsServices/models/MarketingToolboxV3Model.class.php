@@ -15,7 +15,8 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * @return array
 	 */
 	public function getCalendarData($cityId, $beginTimestamp, $endTimestamp) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$conds = array(
 			'city_id' => $cityId,
 		);
@@ -161,7 +162,8 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * @param int $timestamp
 	 */
 	public function checkModulesSaved($cityId, $timestamp) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$hubDate = date('Y-m-d', $timestamp);
 
@@ -179,7 +181,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * @desc Main method to publish hub page of specific city id on specific day
+	 * Main method to publish hub page of specific city id on specific day
 	 *
 	 * @param $cityId
 	 * @param $timestamp
@@ -216,6 +218,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
 	protected function publishHub($cityId, $timestamp, &$results) {
+		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($cityId, $timestamp) ) {
 			$results->success = false;
@@ -225,7 +228,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 			return;
 		}
 
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$hubDate = date('Y-m-d', $timestamp);
 
 		$changes = array(
@@ -265,7 +268,8 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 * @return array
 	 */
 	protected function getModulesDataFromDb($cityId, $timestamp, $moduleId = null) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$conds = array(
 			'city_id' => $cityId,
 			'hub_date' => $sdb->timestamp($timestamp),
@@ -306,8 +310,9 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 *
 	 */
 	public function saveModule($params, $timestamp, $moduleId, $data, $editorId) {
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$updateData = array(
 			'module_data' => json_encode($data),
@@ -365,10 +370,11 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	}
 
 	public function getLastPublishedTimestampFromDB($cityId, $timestamp, $useMaster = false) {
+		global $wgExternalSharedDB;
 		$sdb = wfGetDB(
 			($useMaster) ? DB_MASTER : DB_SLAVE,
 			array(),
-			$this->wg->ExternalSharedDB
+			$wgExternalSharedDB
 		);
 
 		$conds = array(

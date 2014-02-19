@@ -17,7 +17,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * @return array
 	 */
 	public function getCalendarData($params, $beginTimestamp, $endTimestamp) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$conds = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
@@ -174,7 +175,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * @param int $timestamp
 	 */
 	public function checkModulesSaved($params, $timestamp) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$hubDate = date('Y-m-d', $timestamp);
 
@@ -193,7 +195,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	}
 
 	/**
-	 * @desc Main method to publish hub page of specific vertical in specific language and on specific day
+	 * Main method to publish hub page of specific vertical in specific language and on specific day
 	 * 
 	 * @param Array $params contains
 	 * 		- string langCode
@@ -238,6 +240,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * @return stdClass (properties: boolean $success, string $errorMsg)
 	 */
 	protected function publishHub($params, $timestamp, &$results) {
+		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($params, $timestamp) ) {
 			$results->success = false;
@@ -247,7 +250,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			return;
 		}
 
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$hubDate = date('Y-m-d', $timestamp);
 
 		$changes = array(
@@ -291,7 +294,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 * @return array
 	 */
 	protected function getModulesDataFromDb($params, $timestamp, $moduleId = null) {
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$conds = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
@@ -336,8 +340,9 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	 *
 	 */
 	public function saveModule($params, $timestamp, $moduleId, $data, $editorId) {
-		$mdb = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
-		$sdb = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		global $wgExternalSharedDB;
+		$mdb = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$sdb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$updateData = array(
 			'module_data' => json_encode($data),
@@ -399,10 +404,11 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 	}
 
 	public function getLastPublishedTimestampFromDB($params, $timestamp, $useMaster = false) {
+		global $wgExternalSharedDB;
 		$sdb = wfGetDB(
 			($useMaster) ? DB_MASTER : DB_SLAVE,
 			array(),
-			$this->wg->ExternalSharedDB
+			$wgExternalSharedDB
 		);
 
 		$table = $this->getTablesBySectionId($params['sectionId']);

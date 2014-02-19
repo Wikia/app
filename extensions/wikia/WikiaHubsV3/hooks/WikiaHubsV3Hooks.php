@@ -44,7 +44,7 @@ class WikiaHubsV3Hooks {
 	}
 
 	/**
-	 * @desc Off-shot pages are real subpages of a hub (real articles [Video_Games/Video_Game_Olympics/] instead of specific day's versions of a hub page [Video_Games/19-03-2013/])
+	 * Off-shot pages are real subpages of a hub (real articles [Video_Games/Video_Game_Olympics/] instead of specific day's versions of a hub page [Video_Games/19-03-2013/])
 	 * 
 	 * @param Title $title
 	 * @return bool

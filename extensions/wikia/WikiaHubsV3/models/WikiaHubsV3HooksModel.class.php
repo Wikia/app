@@ -9,7 +9,7 @@
 
 class WikiaHubsV3HooksModel extends WikiaModel {
 	/**
-	 * @desc Uses flipped $wgWikiaHubsPages array to return comscore id of a hub page
+	 * Uses flipped $wgWikiaHubsPages array to return comscore id of a hub page
 	 *
 	 * @param String $dbKeyName
 	 * @return bool
