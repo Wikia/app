@@ -167,8 +167,7 @@ LightboxLoader = {
 
 	/**
 	 * @param {String} mediaTitle The name of the file to be loaded in the Lightbox
-	 * @param {Object} mediaData Any info we've already gathered for tracking purposes.
-	 * Will be fed to Lightbox.getClickSource for processing
+	 * @param {Object} mediaData Any info we've already gathered from the DOM.
 	 */
 	loadLightbox: function(mediaTitle, mediaData) {
 		var openModal, lightboxParams, deferredList, resources, deferredTemplate, mediaParams;
