@@ -4,7 +4,7 @@ namespace Wikia\Swift\S3;
 
 use Wikia\Swift\Entity\Container;
 use Wikia\Swift\Entity\Remote;
-use Wikia\Swift\Http\SimpleHttpGetReqeuest;
+use Wikia\Swift\Http\SimpleHttpGetRequest;
 use Wikia\Swift\Net\Cluster;
 use Wikia\Swift\Net\RandomDirector;
 
@@ -23,7 +23,7 @@ class Bucket {
 		$container = $this->container->getName();
 		$director = new RandomDirector($this->cluster);
 		$url = "/{$container}?max-keys=".self::HARD_ITEMS_LIMIT;
-		$http = new SimpleHttpGetReqeuest($director,$url);
+		$http = new SimpleHttpGetRequest($director,$url);
 		$contents = $http->execute();
 		$this->parse($contents);
 	}

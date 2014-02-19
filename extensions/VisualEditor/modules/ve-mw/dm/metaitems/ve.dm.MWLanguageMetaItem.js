@@ -20,7 +20,7 @@ ve.dm.MWLanguageMetaItem = function VeDmMWLanguageMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWLanguageMetaItem, ve.dm.MetaItem );
+OO.inheritClass( ve.dm.MWLanguageMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 
@@ -39,14 +39,15 @@ ve.dm.MWLanguageMetaItem.static.toDataElement = function ( domElements ) {
 	return {
 		'type': 'mwLanguage',
 		'attributes': {
-			'href': href
+			'href': href,
+			'origRel': firstDomElement.getAttribute( 'rel' )
 		}
 	};
 };
 
 ve.dm.MWLanguageMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	var domElement = doc.createElement( 'link' );
-	domElement.setAttribute( 'rel', 'mw:WikiLink/Language' );
+	domElement.setAttribute( 'rel', dataElement.attributes.origRel || 'mw:WikiLink/Language' );
 	domElement.setAttribute( 'href', dataElement.attributes.href );
 	return [ domElement ];
 };

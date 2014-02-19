@@ -9,14 +9,14 @@
  * Generic document.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {ve.Node} model Model to observe
  */
 ve.Document = function VeDocument( documentNode ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.documentNode = documentNode;
@@ -24,7 +24,7 @@ ve.Document = function VeDocument( documentNode ) {
 
 /* Inheritance */
 
-ve.mixinClass( ve.Document, ve.EventEmitter );
+OO.mixinClass( ve.Document, OO.EventEmitter );
 
 /* Methods */
 

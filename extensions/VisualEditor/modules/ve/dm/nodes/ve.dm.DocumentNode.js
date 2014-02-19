@@ -23,7 +23,7 @@ ve.dm.DocumentNode = function VeDmDocumentNode( children ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.DocumentNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.DocumentNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

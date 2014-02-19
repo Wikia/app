@@ -21,7 +21,45 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [];
+		plugins = [],
+		// Used by tracking calls that go out before ve.track is available.
+		trackerConfig = {
+			'category': 'editor-ve',
+			'trackingMethod': 'both'
+		};
+
+	function indicator( type, hook ) {
+		var timer,
+			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+			$content = $( '<div>' ).addClass( 'content' ),
+			$icon = $( '<div>' ).addClass( type ),
+			$message = $( '<p>' )
+				.addClass( 'message' )
+				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+
+		$content
+			.append( $icon )
+			.append( $message );
+
+		$indicator
+			.append( $content )
+			.appendTo( $( 'body' ) )
+			.animate( { 'opacity': 1 }, 400 );
+
+		// Display the message if loading is taking awhile
+		timer = setTimeout( function () {
+			$message.slideDown( 400 );
+		}, 3000 );
+
+		// Cleanup indicator when hook is fired
+		mw.hook( hook ).add( function cleanup() {
+			clearTimeout( timer );
+			$indicator.animate( { 'opacity': 0 }, 400, function () {
+				mw.hook( hook ).remove( cleanup );
+				$indicator.remove();
+			} );
+		} );
+	}
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -29,29 +67,34 @@
 	 */
 	function getTarget() {
 		var loadTargetDeferred;
+
+		indicator( 'loading', 've.activationComplete' );
+
 		if ( !getTargetDeferred ) {
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+				'label': 'edit-page'
+			} );
 			getTargetDeferred = $.Deferred();
-			loadTargetDeferred = $.Deferred()
-				.done( function () {
-					//var target = new ve.init.mw.ViewPageTarget();
-					var target = new ve.init.mw.WikiaViewPageTarget();
-					ve.init.mw.targets.push( target );
+			loadTargetDeferred = $.Deferred();
 
-					// Transfer methods
-					//ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+			$.when(
+				loadTargetDeferred,
+				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
+			).done( function () {
+				var target = new ve.init.mw.WikiaViewPageTarget();
+				ve.init.mw.targets.push( target );
 
-					// Add plugins
-					target.addPlugins( plugins );
+				// Transfer methods
+				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 
-					getTargetDeferred.resolve( target );
-				} )
-				.fail( getTargetDeferred.reject );
+				// Add plugins
+				target.addPlugins( plugins );
+
+				getTargetDeferred.resolve( target );
+			} ).fail( getTargetDeferred.reject );
 
 			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
-			$.getResources( [
-				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
-			] );
 		}
 		return getTargetDeferred.promise();
 	}
@@ -62,7 +105,7 @@
 	// For special pages, no information about page existence is exposed to
 	// mw.config, so we assume it exists TODO: fix this in core.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
-	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
+	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
@@ -92,25 +135,11 @@
 	};
 
 	init = {
+		activateOnPageLoad: uri.query.veaction === 'edit',
 
 		support: support,
 
-		blacklist: {
-			// IE <= 8 has various incompatibilities in layout and feature support
-			// IE9 and IE10 generally work but fail in ajax handling when making POST
-			// requests to the VisualEditor/Parsoid API which is causing silent failures
-			// when trying to save a page (bug 49187)
-			'msie': [['<=', 10]],
-			// Android 2.x and below "support" CE but don't trigger keyboard input
-			'android': [['<', 3]],
-			// Firefox issues in versions 12 and below (bug 50780)
-			// Wikilink [[./]] bug in Firefox 14 and below (bug 50720)
-			'firefox': [['<=', 14]],
-			// Opera < 12 was not tested and it's userbase is almost nonexistent anyway
-			'opera': [['<', 12]],
-			// Blacklist all versions:
-			'blackberry': null
-		},
+		blacklist: conf.blacklist,
 
 		/**
 		 * Add a plugin module or function.
@@ -177,8 +206,13 @@
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-edit'
+			} );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
 				target.activate();
 			} );
 		},
@@ -190,8 +224,13 @@
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-section-edit'
+			} );
+
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
 			} );
@@ -285,7 +324,7 @@
 	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
-				if ( uri.query.veaction === 'edit' ) {
+				if ( init.activateOnPageLoad ) {
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );

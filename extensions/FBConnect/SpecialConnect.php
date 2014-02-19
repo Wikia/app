@@ -558,6 +558,17 @@ class SpecialConnect extends SpecialPage {
 		//}
 
 		$u->setEmail( $this->mEmail );
+
+		if ( empty( $this->mEmail ) ) {
+			// Write to log in case Facebook does not provide email for the user
+			Wikia::log( __METHOD__, false,
+				sprintf( 'Facebook user "%s" [%d] without email', $this->mName, $this->mId )
+			);
+		} else {
+			// CONN-421: Auto authenticate user's email on FBConnect
+			$u->confirmEmail();
+		}
+
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
 

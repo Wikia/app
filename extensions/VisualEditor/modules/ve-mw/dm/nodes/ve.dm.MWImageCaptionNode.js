@@ -19,7 +19,7 @@ ve.dm.MWImageCaptionNode = function VeDmMWImageCaptionNode( children, element ) 
 	ve.dm.BranchNode.call( this, children, element );
 };
 
-ve.inheritClass( ve.dm.MWImageCaptionNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.MWImageCaptionNode, ve.dm.BranchNode );
 
 ve.dm.MWImageCaptionNode.static.name = 'mwImageCaption';
 

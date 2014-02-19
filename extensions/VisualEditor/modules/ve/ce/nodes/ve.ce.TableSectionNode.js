@@ -24,7 +24,7 @@ ve.ce.TableSectionNode = function VeCeTableSectionNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.TableSectionNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.TableSectionNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

@@ -21,7 +21,7 @@ ve.ce.TableRowNode = function VeCeTableRowNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.TableRowNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.TableRowNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

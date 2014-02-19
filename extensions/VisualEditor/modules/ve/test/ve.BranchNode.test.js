@@ -13,8 +13,8 @@ ve.BranchNodeStub = function VeBranchNodeStub( children ) {
 	ve.BranchNode.call( this, children );
 };
 
-ve.inheritClass( ve.BranchNodeStub, ve.Node );
-ve.mixinClass( ve.BranchNodeStub, ve.BranchNode );
+OO.inheritClass( ve.BranchNodeStub, ve.Node );
+OO.mixinClass( ve.BranchNodeStub, ve.BranchNode );
 
 /* Tests */
 

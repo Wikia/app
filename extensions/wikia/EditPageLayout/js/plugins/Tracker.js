@@ -29,7 +29,7 @@
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
 				this.track({
-					action: Wikia.Tracker.ACTIONS.VIEW,
+					action: Wikia.Tracker.ACTIONS.IMPRESSION,
 					label: 'edit-page'
 				});
 			}

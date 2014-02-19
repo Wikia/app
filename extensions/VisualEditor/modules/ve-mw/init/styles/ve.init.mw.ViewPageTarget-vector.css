@@ -14,7 +14,7 @@
 	padding: 0 1.875em; /* 1.5/0.8 */
 }
 
-.ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
+.ve-init-mw-viewPageTarget-surface .oo-ui-menuWidget {
 	font-size: 0.8em;
 }
 
@@ -25,10 +25,6 @@
 	-o-transition: margin 200ms ease-out;
 	transition: margin 200ms ease-out;
 	position: relative;
-}
-
-.ve-init-mw-viewPageTarget-toolbar .ve-ui-toolbar-bar {
-	display: none;
 }
 
 .ve-ui-surface-overlay-global {

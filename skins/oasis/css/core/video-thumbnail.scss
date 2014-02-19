@@ -10,8 +10,12 @@
 	display: inline-block;
 	position: relative;
 
-	&.fluid > img {
+	&.fluid {
 		width: 100%;
+
+		> img {
+			width: 100%;
+		}
 	}
 
 	// Background circle

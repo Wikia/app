@@ -9,18 +9,18 @@
  * Generic Initialization platform.
  *
  * @abstract
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  */
 ve.init.Platform = function VeInitPlatform() {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 };
 
 /* Inheritance */
 
-ve.mixinClass( ve.init.Platform, ve.EventEmitter );
+OO.mixinClass( ve.init.Platform, OO.EventEmitter );
 
 /* Methods */
 
@@ -114,7 +114,7 @@ ve.init.Platform.prototype.getSystemPlatform = function () {
  * @returns {string[]} User language strings
  */
 ve.init.Platform.prototype.getUserLanguages = function () {
-	throw new Error( 've.init.Platform.getUserLanugages must be overridden in subclass' );
+	throw new Error( 've.init.Platform.getUserLanguages must be overridden in subclass' );
 };
 
 /**

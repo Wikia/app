@@ -15,18 +15,23 @@ ve.ce.MWSyntaxHighlightHighlighter = function VeCeMWSyntaxHighlightHighlighter( 
 	// Highlighter rule cache
 	this.ruleset = {};
 	this.delimiter = /\n/;
-	// Properties
-	// 'languageName' : boolean	;set to false to disable support
-	this.langSupport = {
-		'text' : true,
-		'javascript' : true
-	};
 	// Go to the following page for explanations on language rule files
 	// https://www.mediawiki.org/wiki/Extension:SyntaxHighlight_GeSHi/VisualEditor
 	this.rulePath = ve.init.platform.getModulesUrl() + '/syntaxhighlight/rules/';
 	this.lang = lang;
 	this.validators = new ve.ce.MWSyntaxHighlightValidator();
 	this.roster = this.validators.getRoster();
+	// Properties
+	// 'languageName' : [boolean, string];set to false to disable support, string for language name
+	this.langSupport = {
+		'text' : [true, 'Plain text'],
+		'javascript' : [true, 'JavaScript'],
+		'bf' : [true, 'Brainfuck'],
+		'ruby' : [true, 'Ruby'],
+		'python' : [true, 'Python'],
+		'mysql' : [true, 'MySQL'],
+		'jquery' : [true, 'jQuery']
+	};
 };
 
 /* Methods */
@@ -339,6 +344,21 @@ ve.ce.MWSyntaxHighlightHighlighter.prototype.getSupportedLanguages = function ()
 };
 
 /**
+ * Get the name of this language
+ *
+ * @method
+ * @param {String} (Optional) Language to be referenced
+ * @returns {String} Language name
+ */
+ve.ce.MWSyntaxHighlightHighlighter.prototype.getLanguageName = function ( lang ) {
+	if (lang === undefined){
+		return this.langSupport[ this.lang ][1];
+	} else {
+		return this.langSupport[ lang ][1];
+	}
+};
+
+/**
  * Check whether the language is supported
  *
  * @method
@@ -355,7 +375,7 @@ ve.ce.MWSyntaxHighlightHighlighter.prototype.isSupportedLanguage = function () {
  * @returns {boolean}
  */
 ve.ce.MWSyntaxHighlightHighlighter.prototype.isEnabledLanguage = function () {
-	return this.langSupport[ this.lang ];
+	return this.langSupport[ this.lang ][0];
 };
 
 /**

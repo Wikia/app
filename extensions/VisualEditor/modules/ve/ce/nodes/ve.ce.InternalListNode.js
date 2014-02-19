@@ -19,12 +19,12 @@ ve.ce.InternalListNode = function VeCeInternalListNode( model, config ) {
 	ve.ce.BranchNode.call( this, model, config );
 
 	// An internal list has no rendering
-	this.$ = $( [] );
+	this.$element = this.$( [] );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.InternalListNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.InternalListNode, ve.ce.BranchNode );
 
 /* Static Properties */
 
