@@ -1,7 +1,13 @@
+
 <? if ( strlen( $gaSlots ) ): ?>
-<div>
-	<?= wfMessage('abtesting-currently-used-ga-slots', $gaSlots)->plain(); ?>
-</div>
+	<div class="running">
+		<?= wfMessage('abtesting-currently-used-ga-slots', $gaSlots)->plain(); ?>
+	</div>
+<? endif ?>
+<? if ( strlen( $futureGaSlots ) ): ?>
+	<div class="scheduled">
+		<?= wfMessage('abtesting-future-used-ga-slots', $futureGaSlots)->plain(); ?>
+	</div>
 <? endif ?>
 <table class="WikiaTable AbTestEditor" id="AbTestEditor">
 	<thead>
