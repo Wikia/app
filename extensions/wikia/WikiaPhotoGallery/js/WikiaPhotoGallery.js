@@ -261,7 +261,7 @@
 				case this.SLIDESHOW_PREVIEW_PAGE:
 					// update gallery data, generate wikitext and store it in wikitext
 					var gallery = this.editor.gallery;
-debugger;
+
 					// get widths / alignment from sliders
 					if (this.isSlideshow()) {
 						gallery.params.widths = this.sliderInput.val();
