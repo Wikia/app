@@ -18,6 +18,6 @@ class WikiaNewFiles extends SpecialNewFiles {
 	 * @see SpecialPage::getDescription
 	 */
 	public function getDescription() {
-		return wfMessage( 'wikianewfiles-title' )->text();
+		return $this->msg( 'wikianewfiles-title' )->text();
 	}
 }
