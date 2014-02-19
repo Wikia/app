@@ -439,7 +439,7 @@ class WikiaFileHelper extends Service {
 				$articleList = $mediaQuery->getArticleList();
 
 				$data['imageUrl'] = $thumb->getUrl();
-				$data['fileUrl'] = $fileTitle->getLocalUrl();
+				$data['fileUrl'] = $fileTitle->getFullUrl();
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
 				$data['userName'] = $user->getName();
