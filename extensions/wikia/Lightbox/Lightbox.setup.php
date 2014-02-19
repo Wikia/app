@@ -10,6 +10,7 @@ $dir = dirname(__FILE__) . '/';
 
 //classes
 $wgAutoloadClasses['LightboxController'] =  $dir . 'LightboxController.class.php';
+$wgAutoloadClasses['LightboxHelper'] =  $dir . 'LightboxHelper.class.php';
 $wgAutoloadClasses['LightboxHooks'] =  $dir . 'LightboxHooks.class.php';
 
 // hooks
