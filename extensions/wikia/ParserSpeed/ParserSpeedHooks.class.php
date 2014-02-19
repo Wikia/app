@@ -1,5 +1,5 @@
 <?php
-use \Wikia\WikiaLogger as WLog;
+use \Wikia\WikiaLogger;
 
 class ParserSpeedHooks {
 
@@ -51,7 +51,7 @@ class ParserSpeedHooks {
 
 		//Logging parser activity for monitoring
 		//wiki and article info are sent to logstash anyways so no need to repeat them here
-		WLog::instance()->info( "Parser execution", [
+		WikiaLogger::instance()->info( "Parser execution", [
 			'parser_time'   => $parserOutput->getPerformanceStats( 'time' ),
 			'wikitext_size' => $parserOutput->getPerformanceStats( 'wikitextSize' ),
 			'skin_name'     => RequestContext::getMain()->getSkin()->getSkinName(),
