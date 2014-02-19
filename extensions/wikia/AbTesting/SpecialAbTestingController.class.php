@@ -76,8 +76,8 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		sort( $futureGaSlots );
 
 		$this->setVal( 'experiments', $experiments );
-		$this->setVal( 'gaSlots', '<b>'.implode( '</b>, <b>', $gaSlots ).'</b>' );
-		$this->setVal( 'futureGaSlots', '<b>'.implode( '</b>, <b>', $futureGaSlots ).'</b>' );
+		$this->setVal( 'gaSlots', implode( ', ', $gaSlots ) );
+		$this->setVal( 'futureGaSlots', implode( ', ', $futureGaSlots ) );
 
 		$actions = array();
 		$actions[] = array(
