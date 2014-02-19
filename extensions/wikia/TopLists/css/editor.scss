@@ -170,9 +170,9 @@ $item-number-margin-right: 10px;
 
 			.ItemName {
 				@include centered($item-height);
-				border-radius: 5px;
-				border: 1px solid $color-page-border;
 				background-color: $color-module-shadow;
+				border: 1px solid $color-page-border;
+				border-radius: 5px;
 				display: inline;
 				padding: 2px 10px 0 10px;
 				

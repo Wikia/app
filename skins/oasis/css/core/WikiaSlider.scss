@@ -21,16 +21,16 @@
 		width: 4px;
 	}
 	&:before {
-		border-top-left-radius: 5px;
 		border-bottom-left-radius: 5px;
 		border-right: 0;
+	    border-top-left-radius: 5px;
 		left: -4px;
 	}
 	&:after {
-		border-top-right-radius: 5px;
 		border-bottom-right-radius: 5px;
 		border-left: 0;
-		right: -12px;
+      	border-top-right-radius: 5px;
+      	right: -12px;
 		width: 12px;
 	}
 	.ui-slider-handle {

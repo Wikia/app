@@ -149,9 +149,9 @@
 
 		.cke_button {
 			> a {
-				border-radius: 4px;
 				background-color: $color-MiniEditor-button;
 				border: solid 1px $color-MiniEditor-button-border;
+				border-radius: 4px;
 				cursor: pointer;
 				display: inline-block;
 				float: left;

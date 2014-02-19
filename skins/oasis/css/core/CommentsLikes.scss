@@ -20,8 +20,8 @@
 	}
 	.commentsbubble {
 		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
-		border-radius: 2px;
 		border: solid 1px $color-page-border;
+		border-radius: 2px;
 		display: inline-block;
 		height: 14px;
 		line-height: 15px;

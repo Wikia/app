@@ -137,8 +137,8 @@ $color-borders: #CECECE;
 		padding: 0;
 	}
 	.step {
-		border-radius: 5px;
 		background-color: #f4f4f4;
+		border-radius: 5px;
 		float: left;
 		height: 10px;
 		margin-left: 10px;
@@ -333,8 +333,8 @@ div#userloginErrorBox3 {
 
 		li {
 			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
-			border-radius: 10px;
 			@include box-shadow(1px, 1px, 1px, #000);
+			border-radius: 10px;
 			color: #f6f2f3;
 			font-size: 15px;
 			font-weight: bold;

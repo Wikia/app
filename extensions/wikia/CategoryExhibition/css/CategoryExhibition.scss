@@ -258,20 +258,20 @@ $color-inctive-button: mix($color-page, #000, 60%);
 	}
 
 	.title {
-		border-top-right-radius: 9px;
-		border-bottom-right-radius: 9px;
-		position: relative;
-		display: inline-block;
 		background-color: $details-bg-color;
+		border-bottom-right-radius: 9px;
+		border-top-right-radius: 9px;
 		color: $details-fg-color;
-		padding: 3px 5px 3px;
-		margin-top: $thumb-size-height + $thumb-border-top - 9px;
+		display: inline-block;
+		font-size: 11px;
+		font-weight: normal;
 		line-height: 16px;
+		margin-top: $thumb-size-height + $thumb-border-top - 9px;
 		max-height: 32px;
 		max-width: $thumb-size-width + 5px;
 		overflow: hidden;
-		font-weight: normal;
-		font-size: 11px;
+		padding: 3px 5px 3px;
+		position: relative;
 	}
 }
 

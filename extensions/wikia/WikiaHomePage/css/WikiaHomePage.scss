@@ -293,9 +293,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 				.collections-button {
 					border: 0;
+					border-bottom-right-radius: 3px;
 					border-radius: 0;
 					border-top-right-radius: 3px;
-					border-bottom-right-radius: 3px;
 					height: 43px;
 					padding: 0;
 					right: 15px;
@@ -869,11 +869,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 	.hotNew {
 		strong {
+			border-radius: 2px;
 			color: #fff;
 			font-size: 9px;
 			margin-right: 5px;
 			padding: 3px;
-			border-radius: 2px;
 		}
 		.hot {
 			background-color: #993399;

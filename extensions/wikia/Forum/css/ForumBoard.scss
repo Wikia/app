@@ -32,9 +32,9 @@
 		}
 
 		.menu {
-			border-bottom-right-radius: 3px;
-			border-bottom-left-radius: 3px;
 			@include box-shadow(0px, 2px, 5px, $color-wall-shadow);
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
 			border-top: 1px solid $color-page-border-subtle;
 			background: $color-page;
 			display: none;

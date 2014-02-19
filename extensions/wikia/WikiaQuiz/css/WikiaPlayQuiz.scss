@@ -41,9 +41,9 @@ $dark-wiki: 1;
 }
 
 .quiz-bubble {
-	border-radius: 10px;
 	@include box-shadow(0, 2px, 5px, #000);
 	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+	border-radius: 10px;
 	color: $color-header-text;
 	font-size: 28px;
 	line-height: 36px;
@@ -144,9 +144,9 @@ $dark-wiki: 1;
 		top: 0;
 		width: $panel-width;
 		.number {
-			border-radius: 100px;
 			@include box-shadow(0, 5px, 20px, #000, false, -5px);
 			@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+			border-radius: 100px;
 			color: $color-header-text;
 			font-size: 144px;
 			height: 110px;
@@ -196,8 +196,8 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				border-radius: $border-radius;
 				background-color: $color-body;
+				border-radius: $border-radius;
 				color: white;
 				font-size: 12px;
 				height: $height;
@@ -230,9 +230,9 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				border-radius: $border-radius;
 				@include opacity(10);
 				background-color: #999;
+				border-radius: $border-radius;
 				color: white;
 				font-size: 450px;
 				height: $height;
@@ -437,8 +437,8 @@ $dark-wiki: 1;
 				$padding-top: 15px;
 				$height: $logical-height - $padding-top;
 				$width: 180px;
-				border-radius: $border-radius;
 				background-color: $color-links;
+              	border-radius: $border-radius;
 				color: white;
 				font-size: 125px;
 				height: $height;
@@ -547,13 +547,13 @@ $dark-wiki: 1;
 
 .QuizStatus {
 	@include linear-gradient($color-header, top, mix($color-header, #fff, 80%), 18%, mix($color-header, #fff, 90%), 35%, $color-header, 53%);
-	border-radius: 7px;
 	@include box-shadow(0, 2px, 5px, #111);
-	top: -85px;
+	border-radius: 7px;
 	height: 55px;
 	margin: 0 auto;
 	position: relative;
 	text-align: center;
+	top: -85px;
 	width: $panel-width + 14px;
 	img {
 		position: absolute;

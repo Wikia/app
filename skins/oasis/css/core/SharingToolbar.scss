@@ -13,8 +13,8 @@ $toolbox-margin: 7px;
 $toolbar-placing-breakpoint: 1185px;
 
 .SharingToolbar {
-	border-radius: 5px;
 	background-color: $share-background-color;
+	border-radius: 5px;
 	left: 100%;
 	margin-left: $toolbox-margin;
 	min-width: $toolbar-width;

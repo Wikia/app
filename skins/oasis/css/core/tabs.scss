@@ -19,9 +19,9 @@ ol.tabs {
 		padding: 0;
 		position: relative;
 		a {
+			border: 1px solid transparent;
 			border-top-left-radius: 4px;
 			border-top-right-radius: 4px;
-			border: 1px solid transparent;
 			cursor: pointer;
 			display: inline-block;
 			font-size: 14px;
@@ -85,9 +85,9 @@ ol.tabs {
 		white-space: nowrap;
 	}
 	.ui-tabs-nav li a {
+		@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
-		@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 		color: $color-text;
 		display: inline-block;
 		font-size: 12px;

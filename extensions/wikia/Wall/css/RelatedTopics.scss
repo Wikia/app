@@ -10,9 +10,9 @@
 	padding: 0;
 	.related-topic,
 	.edit-topic {
-		border-radius: 3px;
 		$color-topic: lighten($color-text, 70%);
 		background-color: $color-topic;
+		border-radius: 3px;
 		float: left;
 		font-size: 12px;
 		list-style: none;

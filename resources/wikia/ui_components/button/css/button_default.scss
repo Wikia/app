@@ -12,9 +12,9 @@ input[type="reset"],
 input[type="button"],
 .button,
 button {
-	border-radius: 4px;
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
+	border-radius: 4px;
 	color: $color-button-text;
 	cursor: pointer;
 	display: inline-block;

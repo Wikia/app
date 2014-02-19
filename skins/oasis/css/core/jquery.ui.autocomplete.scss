@@ -11,9 +11,9 @@
 
 .skin-oasis .ui-autocomplete {
 	@include menu-regular;
-	border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
 	@include box-shadow( 3px, 3px, 6px, darken( $color-page, 9% ) );
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 	border-width: 1px;
 	cursor: pointer;
 	list-style: none;

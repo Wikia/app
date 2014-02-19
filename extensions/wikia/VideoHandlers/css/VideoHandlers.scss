@@ -44,15 +44,15 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 }
 
 .video .timer {
-    position: absolute;
-    right: 3px;
+    background-color: black;
+    border-radius: 4px;
     bottom: 3px;
     color: white;
     font-size: 11px;
     line-height: 14px;
-    background-color: black;
     padding: 1px 4px 1px 6px;
-    border-radius: 4px;
+    position: absolute;
+    right: 3px;
 }
 
 .video {

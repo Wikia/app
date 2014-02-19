@@ -12,8 +12,8 @@
 
 /* local mixin */
 @mixin forum-message-error() {
-	border-radius: $wall-border-radius;
 	background-color: $color-wall-error;
+	border-radius: $wall-border-radius;
 	display: none;
 	font-size: 12px;
 	line-height: 20px;
@@ -135,9 +135,9 @@
 		}
 
 		.message {
-			border-radius: 0;
-			border: 0;
 			background-color: $color-wall-bubble;
+			border: 0;
+			border-radius: 0;
 			margin: 0 0 0 60px;
 			padding: 10px;
 			position: relative;

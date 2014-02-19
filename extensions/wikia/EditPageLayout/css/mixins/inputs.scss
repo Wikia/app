@@ -1,8 +1,7 @@
 @mixin epl-textfield {
-	border-radius: 4px;
-
 	background-color: $color-epl-input;
 	border: 1px solid $color-epl-input-border;
+	border-radius: 4px;
 	color: $color-text;
 	display: block;
 	font-family: inherit;

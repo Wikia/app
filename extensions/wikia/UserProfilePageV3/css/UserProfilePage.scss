@@ -88,15 +88,14 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
         }
 	}
 	.masthead-info {
-		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
-		@include border-radius-nw($radius-user-profile-masthead * 2);
-		@include border-radius-ne($radius-user-profile-masthead * 2);
-		border-bottom-left-radius: $radius-user-profile-masthead;
-		border-bottom-right-radius: $radius-user-profile-masthead;
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
-
 		@include clearfix;
 		background: $color-masthead;
+        // Top radius included to ensure that the top corners are hidden behind the hgroup radius
+        border-bottom-left-radius: $radius-user-profile-masthead;
+        border-bottom-right-radius: $radius-user-profile-masthead;
+        border-top-left-radius: $radius-user-profile-masthead * 2;
+        border-top-right-radius: $radius-user-profile-masthead * 2;
 		margin-left: 165px;
 		margin-bottom: 20px;
 		position: relative;
