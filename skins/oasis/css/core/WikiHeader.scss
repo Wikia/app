@@ -95,8 +95,8 @@ $WikiNavWidth: $width-outside - 271px;
 
 			&.marked {
 				background-color: $color-buttons;
-              	border-top-right-radius: 3px;
-              	border-top-left-radius: 3px;
+				border-top-right-radius: 3px;
+				border-top-left-radius: 3px;
 
 				> a {
 					margin: 1px 3px;
@@ -376,7 +376,7 @@ $WikiNavWidth: $width-outside - 271px;
 
 			.share-dot {
 				@include box-shadow(0px, 0px, 4px, $color-buttons);
-              	border-radius: 7px;
+				border-radius: 7px;
 				display: block;
 				height: 7px;
 				position: absolute;
