@@ -231,7 +231,6 @@ class LightboxController extends WikiaController {
 	 * @responseParam string url - raw url that is automically determined.  This is determined to be either article url or file page url.
 	 * @responseParam string articleUrl - url to article page
 	 * @responseParam string fileUrl - url to file page
-	 * @responseParam string embedMarkup - embedable markup
 	 * @responseParam string networks - contains id(facebook, twitter, etc) and urls of external social networks
 	 */
 	public function getShareCodes() {
@@ -244,7 +243,6 @@ class LightboxController extends WikiaController {
 		$articleUrl = '';
 		$articleNS = '';
 		$articleTitleText = '';
-		$embedMarkup = '';
 		$fileUrl = '';
 		$thumbUrl = '';
 		$networks = array();
