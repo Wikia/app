@@ -6,7 +6,7 @@
  * created by Jakub Olek <jakubolek@wikia-inc.com>
  */
 
-var base = require('./karma.base.config.js');
+var base = require('./karma.base.conf.js');
 
 module.exports = function(config) {
 	'use strict';

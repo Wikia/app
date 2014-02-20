@@ -47,7 +47,7 @@ ant -f build-wikia.xml phpunit -Ddbname=muppet
 
 ```
 cd /usr/wikia/source/wiki/tests
-karma start karma/js-unit.config.js
+karma start karma/js-unit.conf.js
 ```
 
 For more info see
