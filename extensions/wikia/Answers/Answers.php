@@ -284,9 +284,6 @@ function fnAddAnswerJSGlobalVariables(Array &$vars){
 	global $wgMinimalPasswordLength;
 	$vars['wgMinimalPasswordLength'] = $wgMinimalPasswordLength;
 
-	global $wgAfterContentAndJS;
-	$vars['wgAfterContentAndJS'] = ($wgAfterContentAndJS?$wgAfterContentAndJS:array());
-
 	global $wgIsMainpage;
 	$vars['wgIsMainpage'] = ($wgIsMainpage?$wgIsMainpage:false);
 

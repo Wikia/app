@@ -881,17 +881,18 @@ class CreateWiki {
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
-		$this->mWFSettingVars['wgSitename'] 		        = $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLogo']                   	= self::DEFAULT_WIKI_LOGO;
-		$this->mWFSettingVars['wgUploadPath']             	= $this->mNewWiki->images_url;
-		$this->mWFSettingVars['wgUploadDirectory']        	= $this->mNewWiki->images_dir;
-		$this->mWFSettingVars['wgDBname']                 	= $this->mNewWiki->dbname;
-		$this->mWFSettingVars['wgLocalInterwiki']         	= $this->mNewWiki->sitename;
-		$this->mWFSettingVars['wgLanguageCode']	            = $this->mNewWiki->language;
-		$this->mWFSettingVars['wgServer']                	= rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgFavicon']               	= self::DEFAULT_WIKI_FAVICON;
-		$this->mWFSettingVars['wgEnableEditEnhancements'] 	= true;
-		$this->mWFSettingVars['wgEnableSectionEdit']	    = true;
+		$this->mWFSettingVars['wgSitename']               = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLogo']                   = self::DEFAULT_WIKI_LOGO;
+		$this->mWFSettingVars['wgUploadPath']             = $this->mNewWiki->images_url;
+		$this->mWFSettingVars['wgUploadDirectory']        = $this->mNewWiki->images_dir;
+		$this->mWFSettingVars['wgDBname']                 = $this->mNewWiki->dbname;
+		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
+		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
+		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
+		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
+		$this->mWFSettingVars['wgEnableEditEnhancements'] = true;
+		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
+		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {

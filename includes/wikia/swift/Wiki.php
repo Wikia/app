@@ -278,9 +278,13 @@ class DiffOperationListBuilder {
 
 		$this->logDebug(sprintf("Final operation list contains %d operations",count($requests)));
 
-		/** @var Operation $request */
-		foreach ($requests as $request) {
-			$this->logDebug($request->getDescription());
+		if ( count($requests) <= 400000 ) {
+			/** @var Operation $request */
+			foreach ($requests as $request) {
+				$this->logDebug($request->getDescription());
+			}
+		} else {
+			$this->logDebug("Skipped listing all requests due to number of them");
 		}
 
 		return $requests;
@@ -298,6 +302,34 @@ class WikiFilesFilter {
 		$this->prefix = ltrim($prefix,'/');
 		$prefixRegex = preg_quote($this->prefix);
 		$this->regex = "#^$prefixRegex/([0-9a-fA-F]/[0-9a-fA-F]{2}/|archive/[0-9a-fA-F]/[0-9a-fA-F]{2}/|deleted/([0-9a-zA-Z]/){3})#";
+	}
+
+	protected function getLoggerPrefix() { return 'files-filter'; }
+
+	public function filter( $files ) {
+		$this->logDebug(sprintf("Got %d files to process...",count($files)));
+		/** @var Remote $remote */
+		foreach ($files as $k => $remote) {
+			$path = $remote->getRemotePath();
+			if ( !preg_match($this->regex,$path) ) {
+				unset($files[$k]);
+			}
+		}
+		$this->logDebug(sprintf("Returning %d files that matched the wiki files regex...",count($files)));
+		return $files;
+	}
+}
+
+class AvatarFilesFilter {
+	use LoggerFeature;
+
+	protected $prefix;
+	protected $regex;
+
+	public function __construct( $prefix ) {
+		$this->prefix = ltrim($prefix,'/');
+		$prefixRegex = preg_quote($this->prefix);
+		$this->regex = "#^$prefixRegex/[0-9a-fA-F]/[0-9a-fA-F]{2}/#";
 	}
 
 	protected function getLoggerPrefix() { return 'files-filter'; }

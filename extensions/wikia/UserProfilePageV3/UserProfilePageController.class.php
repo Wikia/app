@@ -739,7 +739,6 @@ class UserProfilePageController extends WikiaController {
 			 * @var $oAvatarObj Masthead
 			 */
 			$oAvatarObj = Masthead::newFromUser($user);
-			$oAvatarObj->purgeUrl();
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
 			/**
