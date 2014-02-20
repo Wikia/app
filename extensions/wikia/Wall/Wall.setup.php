@@ -159,6 +159,7 @@ $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
 // Fix URLs when purging after adding a thread/post
 $wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
+$wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
 JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
