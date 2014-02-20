@@ -44,6 +44,9 @@
 		queueForLateAds,
 		adConfigForLateAds;
 
+	// Don't show ads when Sony requests the page
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
+
 	// Don't have SevenOne Media ads on IE8 (or below)
 	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
@@ -56,7 +59,7 @@
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
-	adTracker = AdTracker(log, tracker);
+	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
@@ -94,7 +97,8 @@
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater
+		adProviderLater,
+		adProviderNull
 	);
 
 	window.wgAfterContentAndJS.push(function () {

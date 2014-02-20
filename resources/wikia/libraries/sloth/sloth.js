@@ -23,7 +23,7 @@
 			wBottom,
 			undef,
 			debounce = (function ( element ) {
-				return element ? parseInt( element.getAttribute( 'data-sloth-debounce' ), 10 ) : 100;
+				return element ? parseInt( element.getAttribute( 'data-sloth-debounce' ), 10 ) : 200;
 			})( context.document.querySelector( 'script[data-sloth-debounce]' ) ),
 			delegate = context.setTimeout,
 			branches = [],
@@ -94,24 +94,47 @@
 			return false;
 		};
 
+		Branch.prototype.compare = function( element ){
+			return this.elem === element;
+		};
+
 		//return Sloth function
 		return function ( params ) {
 			if ( params ) {
-				var elements = params.on, threshold = params.threshold !== undef ? params.threshold : 100, callback = params.callback, i;
+				var elements = params.on,
+					prune = params.off,
+					threshold = params.threshold !== undef ? params.threshold : 100,
+					callback = params.callback,
+					i;
 
-				if ( !elements || !callback ) {
-					throw 'elements or callback missing';
+				if ( elements && callback ) {
+					if ( elements.length !== undef ) {
+						elements = slice.call( elements );
+						i = elements.length;
+
+						while ( i-- ) {
+							branches.push( new Branch( elements[i], threshold, callback ) );
+						}
+					} else {
+						branches.push( new Branch( elements, threshold, callback ) );
+					}
 				}
 
-				if ( elements.length !== undef ) {
-					elements = slice.call( elements );
-					i = elements.length;
+				if ( prune ) {
+					if ( prune.length !== undef ) {
+						prune = slice.call( prune );
+						i = prune.length;
 
-					while ( i-- ) {
-						branches.push( new Branch( elements[i], threshold, callback ) );
+						while ( i-- ) {
+							branches = branches.filter(function( branch ) {
+								return !branch.compare( prune[i] );
+							});
+						}
+					} else {
+						branches = branches.filter(function( branch ) {
+							return !branch.compare( prune );
+						});
 					}
-				} else {
-					branches.push( new Branch( elements, threshold, callback ) );
 				}
 			}
 

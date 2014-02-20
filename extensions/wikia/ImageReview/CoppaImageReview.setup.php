@@ -16,7 +16,7 @@ if ( !class_exists( 'ImageReviewSpecialController' ) ) {
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'COPPA Image Review',
 	'descriptionmsg' => 'coppaimagereview-desc',
-	'authors' => [
+	'author' => [
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	],
 ];

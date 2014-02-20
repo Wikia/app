@@ -401,7 +401,7 @@ class UserPreferencesV2 {
 	 */
 	static public function onSpecialPreferencesBeforeResetUserOptions($preferences, &$user, &$storage) {
 		//user identity box/masthead
-		$userIdentityObject = new UserIdentityBox(F::app(), $user, 0);
+		$userIdentityObject = new UserIdentityBox( $user );
 		$mastheadOptions = $userIdentityObject->getFullData();
 		$masthead = new Masthead($user);
 		if(!empty($masthead->mUser->mOptionOverrides['avatar'])) {

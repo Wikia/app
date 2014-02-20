@@ -25,9 +25,9 @@ class DeleteArticlesByPrefix extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( "prefix", "Prefix used to match articles", true /* $required */ );
-		$this->addOption( "namespace", "Namespace to iterate over" );
+		$this->addOption( "namespace", "Namespace ID to iterate over (default: 0)", false, false, 'ns' );
 		$this->addOption( "dry-run", "Do not remove any article, just list them" );
-		$this->mDescription = "Remove articles matching given prefix";
+		$this->mDescription = "Remove articles matching given prefix (up to 5000)";
 	}
 
 	public function execute() {

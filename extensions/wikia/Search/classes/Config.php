@@ -140,7 +140,7 @@ class Config
 	 * Null means we aren't participating in a test.
 	 * @var string
 	 */
-	protected $ABTestGroup;
+	protected $boostGroup;
 
 	/**
 	 * Storage for client-configured requested fields
@@ -578,8 +578,7 @@ class Config
 	 * Returns desired number of results WITHOUT consideration for article match
 	 * @return int
 	 */
-	public function getLimit()
-	{
+	public function getLimit() {
 		return $this->limit;
 	}
 
@@ -698,10 +697,11 @@ class Config
 	 * Allows us to abstract how we handle query service configuration
 	 * @param string $service the query service without \\Wikia\\Search\\QueryService\\
 	 * @param bool $apply if set to false, we unset the queryservice if it's that value
+	 * @throws \Exception
 	 * @return \Wikia\Search\Config
 	 */
 	protected function setQueryService( $service, $apply ) {
-		if (! class_exists( '\\Wikia\\Search\\QueryService\\'.$service ) ) {
+		if ( ! class_exists( '\\Wikia\\Search\\QueryService\\'.$service ) ) {
 			throw new \Exception( "Query service {$service} is not registered." );
 		}
 		if ( $apply ) {
@@ -777,9 +777,9 @@ class Config
 
 	/**
 	 * Sets (or unsets) video embed tool search as query service
-     * @param bool $apply
-	 * @param Wikia\Search\Config
-     */
+	 * @param bool $apply
+	 * @return \Wikia\Search\Config
+	 */
 	public function setVideoEmbedToolSearch( $apply ) {
 		return $this->setQueryService( 'Select\\Dismax\\VideoEmbedTool', $apply );
 	}
@@ -825,14 +825,13 @@ class Config
 	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
 	 */
-	public function getTruncatedResultsNum( $formatted = false )
-	{
+	public function getTruncatedResultsNum( $formatted = false ) {
 		$resultsNum = $this->getResultsFound();
 
 		$result = $resultsNum;
 
 		$digits = strlen( $resultsNum );
-		if( $digits > 1 ) {
+		if ( $digits > 1 ) {
 			$zeros = ( $digits > 3 ) ? ( $digits - 1 ) : $digits;
 			$result = round( $resultsNum, ( 0 - ( $zeros - 1 ) ) );
 		}
@@ -884,7 +883,7 @@ class Config
 
 	    $this->getService()->invokeHook( 'SpecialSearchProfiles', array( &$profiles ) );
 
-	    foreach( $profiles as $key => &$data ) {
+	    foreach ( $profiles as $key => &$data ) {
 	        sort( $data['namespaces'] );
 	    }
 
@@ -897,7 +896,7 @@ class Config
 	 */
 	public function getActiveTab() {
 
-		if( $this->getAdvanced() ) {
+		if ( $this->getAdvanced() ) {
 		    return SEARCH_PROFILE_ADVANCED;
 		}
 		// $nsVals should always have a value at this point
@@ -905,7 +904,7 @@ class Config
 
 		// we will always return at least SEARCH_PROFILE_ADVANCED, because it is identical to the return value of getNamespaces
 		$searchProfile = SEARCH_PROFILE_ADVANCED;
-		foreach( $this->getSearchProfiles() as $name => $profile ) {
+		foreach ( $this->getSearchProfiles() as $name => $profile ) {
 			if (   ( count( array_diff( $nsVals, $profile['namespaces'] ) ) == 0 )
 				&& ( count( array_diff($profile['namespaces'], $nsVals ) ) == 0 ) ) {
 				$searchProfile = $name !== SEARCH_PROFILE_ADVANCED ? $name : $searchProfile;
@@ -1050,7 +1049,6 @@ class Config
 	 * @return \Wikia\Search\Config
 	 */
 	public function setFilterQueries( array $filterQueries ) {
-		$newFilterQueries = array();
 		$this->filterQueries = array();
 		self::$filterQueryIncrement = 0;
 		foreach ( $filterQueries as $filterQuery ) {
@@ -1118,8 +1116,8 @@ class Config
 	 * @param string $group
 	 * @return \Wikia\Search\Config
 	 */
-	public function setABTestGroup( $group ) {
-		$this->ABTestGroup = $group;
+	public function setBoostGroup( $group ) {
+		$this->boostGroup = $group;
 		return $this;
 	}
 
@@ -1128,8 +1126,8 @@ class Config
 	 * Null means that we aren't performing an A/B test right now.
 	 * @return string
 	 */
-	public function getABTestGroup() {
-		return $this->ABTestGroup;
+	public function getBoostGroup() {
+		return $this->boostGroup;
 	}
 
 	/**
@@ -1140,7 +1138,7 @@ class Config
 	protected function initiateTestProfile() {
 		$nsPrefix = '\\Wikia\\Search\\TestProfile\\';
 		$class = "{$nsPrefix}Base";
-		$abTestGroup = $this->getABTestGroup();
+		$abTestGroup = $this->getBoostGroup();
 		if ( $abTestGroup !== null && class_exists( "{$nsPrefix}Group{$abTestGroup}" ) ) {
 			$class = "{$nsPrefix}Group{$abTestGroup}";
 		}
@@ -1177,7 +1175,7 @@ class Config
 
 	/**
 	 * Setter for language code
-	 * @param $code string language code to set
+	 * @param string|Array $code language code to set
 	 * @return $this
 	 */
 	public function setLanguageCode( $code ) {
@@ -1255,8 +1253,9 @@ class Config
 	/**
 	 * Set true if we need to apply some special treatment for commercial clients i.e. filter wikis with non-commercial license
 	 * @param boolean $commercialUse
+	 * @return \Wikia\Search\Config
 	 */
-	public function setCommercialUse($commercialUse) {
+	public function setCommercialUse( $commercialUse ) {
 		$this->commercialUse = $commercialUse;
 		return $this;
 	}

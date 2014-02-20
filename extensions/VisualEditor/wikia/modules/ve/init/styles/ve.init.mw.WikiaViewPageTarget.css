@@ -1,7 +1,7 @@
 /* VE uses ems instead of pxs so set correct defaults */
 .skin-oasis .ve-ui-surface-overlay,
-.ve-ui-frame-body,
-.ve-ui-toolbar {
+.oo-ui-frame-body,
+.oo-ui-toolbar {
 	font-size: 16px;
 }
 

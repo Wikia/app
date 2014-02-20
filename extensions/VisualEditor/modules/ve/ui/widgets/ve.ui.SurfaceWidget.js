@@ -10,7 +10,7 @@
  *
  * @class
  * @abstract
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {ve.dm.ElementLinearData} data Content data
@@ -23,18 +23,18 @@ ve.ui.SurfaceWidget = function VeUiSurfaceWidget( data, config ) {
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
-	this.surface = new ve.ui.Surface( data, { '$$': this.$$ } );
-	this.toolbar = new ve.ui.SurfaceToolbar( this.surface, { '$$': this.$$ } );
+	this.surface = new ve.ui.Surface( data, { '$': this.$ } );
+	this.toolbar = new ve.ui.Toolbar( this.surface, { '$': this.$ } );
 
 	// Initialization
-	this.surface.$.addClass( 've-ui-surfaceWidget-surface' );
-	this.toolbar.$.addClass( 've-ui-surfaceWidget-toolbar' );
-	this.$
+	this.surface.$element.addClass( 've-ui-surfaceWidget-surface' );
+	this.toolbar.$element.addClass( 've-ui-surfaceWidget-toolbar' );
+	this.$element
 		.addClass( 've-ui-surfaceWidget' )
-		.append( this.toolbar.$, this.surface.$ );
+		.append( this.toolbar.$element, this.surface.$element );
 	if ( config.tools ) {
 		this.toolbar.setup( config.tools );
 	}
@@ -45,7 +45,7 @@ ve.ui.SurfaceWidget = function VeUiSurfaceWidget( data, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.SurfaceWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.SurfaceWidget, OO.ui.Widget );
 
 /* Methods */
 
@@ -63,7 +63,7 @@ ve.ui.SurfaceWidget.prototype.getSurface = function () {
  * Get toolbar.
  *
  * @method
- * @returns {ve.ui.Toolbar} Toolbar
+ * @returns {OO.ui.Toolbar} Toolbar
  */
 ve.ui.SurfaceWidget.prototype.getToolbar = function () {
 	return this.toolbar;
@@ -89,7 +89,7 @@ ve.ui.SurfaceWidget.prototype.getContent = function () {
 ve.ui.SurfaceWidget.prototype.initialize = function () {
 	this.toolbar.initialize();
 	this.surface.initialize();
-	this.surface.view.documentView.documentNode.$.focus();
+	this.surface.view.documentView.documentNode.$element.focus();
 };
 
 /**
@@ -104,5 +104,5 @@ ve.ui.SurfaceWidget.prototype.destroy = function () {
 	if ( this.toolbar ) {
 		this.toolbar.destroy();
 	}
-	this.$.remove();
+	this.$element.remove();
 };

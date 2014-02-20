@@ -72,6 +72,13 @@ $messages['bho'] = array(
 	'adengine-exitstitial-button' => 'इ विज्ञापन के छोड़ चलीं',
 );
 
+/** Bengali (বাংলা)
+ * @author Tauhid16
+ */
+$messages['bn'] = array(
+	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -191,6 +198,14 @@ $messages['gl'] = array(
 	'adengine-exitstitial-redirecting' => 'O teu navegador irá á páxina solicitada nuns segundos.',
 	'adengine-exitstitial-go-back' => 'Queres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
+);
+
+/** Hakka (客家語/Hak-kâ-ngî)
+ * @author EagerLin
+ */
+$messages['hak'] = array(
+	'adengine-exitstitial-go-back' => '想要豆轉去麼?',
+	'adengine-exitstitial-button' => '跳過廣告',
 );
 
 /** Hungarian (magyar)
@@ -429,6 +444,26 @@ $messages['ru'] = array(
 	'adengine-exitstitial-button' => 'Пропустить это объявление',
 );
 
+/** Slovenian (slovenščina)
+ * @author Mitja i
+ */
+$messages['sl'] = array(
+	'adengine-exitstitial-title-template' => 'Zapuščate  $1 ...',
+	'adengine-exitstitial-redirecting' => 'Kmalu boste preusmerjeni na zahtevano stran.',
+	'adengine-exitstitial-go-back' => 'Želite nazaj?',
+	'adengine-exitstitial-button' => 'Preskočite ta oglas',
+);
+
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'adengine-exitstitial-title-template' => 'Напуштате $1…',
+	'adengine-exitstitial-redirecting' => 'Прегледач ће вас за који секунд одвести на тражену страницу.',
+	'adengine-exitstitial-go-back' => 'Желите да се вратите назад?',
+	'adengine-exitstitial-button' => 'Прескочи оглас',
+);
+
 /** Swedish (svenska)
  * @author Tobulos1
  */
@@ -489,10 +524,11 @@ $messages['zh'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Byfserag
  * @author Liuxinyu970226
+ * @author 御坂美琴
  */
 $messages['zh-hans'] = array(
 	'adengine-exitstitial-title-template' => '您将要离开$1......',
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
-	'adengine-exitstitial-go-back' => '想要回去吗？',
+	'adengine-exitstitial-go-back' => '想要返回吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',
 );

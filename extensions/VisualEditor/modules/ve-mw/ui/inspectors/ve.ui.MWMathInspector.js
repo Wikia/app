@@ -12,19 +12,19 @@
  * @extends ve.ui.MWExtensionInspector
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this inspector is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWMathInspector = function VeUiMWMathInspector( surface, config ) {
+ve.ui.MWMathInspector = function VeUiMWMathInspector( windowSet, config ) {
 	// Parent constructor
-	ve.ui.MWExtensionInspector.call( this, surface, config );
+	ve.ui.MWExtensionInspector.call( this, windowSet, config );
 
 	this.onChangeHandler = ve.debounce( ve.bind( this.updatePreview, this ), 250 );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWMathInspector, ve.ui.MWExtensionInspector );
+OO.inheritClass( ve.ui.MWMathInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
@@ -51,9 +51,12 @@ ve.ui.MWMathInspector.prototype.updatePreview = function () {
 };
 
 /**
- * Handle the inspector being opened.
+ * @inheritdoc
  */
-ve.ui.MWMathInspector.prototype.onOpen = function () {
+ve.ui.MWMathInspector.prototype.setup = function ( data ) {
+	// Parent method
+	ve.ui.MWExtensionInspector.prototype.setup.call( this, data );
+
 	var mw, surfaceModel = this.surface.getModel();
 
 	this.node = this.surface.getView().getFocusedNode();
@@ -80,33 +83,31 @@ ve.ui.MWMathInspector.prototype.onOpen = function () {
 
 	this.input.on( 'change', this.onChangeHandler );
 
-	// Parent method
-	ve.ui.MWExtensionInspector.prototype.onOpen.call( this );
+	// Override directionality settings, inspector's input
+	// should always be LTR:
+	this.input.setRTL( false );
 };
 
 /**
- * Handle the inspector being closed.
- *
- * @param {string} action Action that caused the window to be closed
+ * @inheritdoc
  */
-ve.ui.MWMathInspector.prototype.onClose = function ( action ) {
+ve.ui.MWMathInspector.prototype.teardown = function ( data ) {
 	var newsrc = this.input.getValue(),
 		surfaceModel = this.surface.getModel();
 
+	this.input.off( 'change', this.onChangeHandler );
+
 	if ( newsrc !== '' ) {
 		// Parent method
-		ve.ui.MWExtensionInspector.prototype.onClose.call( this, action );
+		ve.ui.MWExtensionInspector.prototype.teardown.call( this, data );
 	} else {
-		// Grandparent method; we're overriding the parent behavior in this case
-		ve.ui.Inspector.prototype.onClose.call( this, action );
-
 		// The user tried to empty the node, remove it
 		surfaceModel.change( ve.dm.Transaction.newFromRemoval(
 			surfaceModel.getDocument(), this.node.getOuterRange()
 		) );
+		// Grandparent method; we're overriding the parent behavior in this case
+		ve.ui.Inspector.prototype.teardown.call( this, data );
 	}
-
-	this.input.off( 'change', this.onChangeHandler );
 };
 
 /* Registration */

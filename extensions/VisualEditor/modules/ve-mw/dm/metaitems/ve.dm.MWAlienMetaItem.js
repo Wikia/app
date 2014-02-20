@@ -21,7 +21,7 @@ ve.dm.MWAlienMetaItem = function VeDmMWAlienMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWAlienMetaItem, ve.dm.AlienMetaItem );
+OO.inheritClass( ve.dm.MWAlienMetaItem, ve.dm.AlienMetaItem );
 
 /* Static Properties */
 

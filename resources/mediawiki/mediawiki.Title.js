@@ -214,6 +214,19 @@ var	Title = function( title, namespace ) {
 		}
 	};
 
+	/**
+	 * #back-compat for VE
+	 */ 
+	Title.newFromText = function( text ) {
+		var title;
+		try {
+			title = new mw.Title( text );
+		} catch ( e ) {
+			title = null;
+		}
+		return title;
+	};
+
 	/* Public methods */
 
 	var fn = {

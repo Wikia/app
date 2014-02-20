@@ -69,7 +69,7 @@
 			</form>
 		</li>
 <?php
-	if (!$isUserLoggedIn) {
+	if( !$isUserLoggedIn || !$isUserEmailConfirmed ) {
 		if($wg->ComboAjaxLogin) {
 ?>
 		<li id="Auth" class="step">
@@ -163,7 +163,7 @@
 						'index',
 						array(
 							'text' => wfMessage('cnw-desc-all-ages')->escaped(),
-							'tooltipIconTitle' => wfMessage('cnw-desc-tip-all-ages')->escaped(),
+							'tooltipIconTitle' => wfMessage('cnw-desc-tip-all-ages')->plain(),
 						)
 					);
 					?>

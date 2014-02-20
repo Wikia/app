@@ -356,13 +356,16 @@ class ArticleComment {
 
 			$isStaff = (int)in_array('staff', $this->mUser->getEffectiveGroups() );
 
-			$parts = self::explode($title);
+			$parts = self::explode( $title->getDBkey() );
 
 			$buttons = array();
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
-			$commentingAllowed = ArticleComment::canComment( Title::newFromText( $title->getBaseText() ) );
+			// we cannot check it using $title->getBaseText, as this returns main namespace title
+			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
+			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
+			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
@@ -565,7 +568,7 @@ class ArticleComment {
 
 		$canComment = true;
 		$title = is_null( $title ) ? $wgTitle : $title;
-		
+
 		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
 			$canComment = false;
 		}
@@ -840,7 +843,12 @@ class ArticleComment {
 
 		if ( $retval->value == EditPage::AS_SUCCESS_NEW_ARTICLE ) {
 			$commentsIndex = CommentsIndex::newFromId( $article->getID() );
-			wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+			if ( empty( $commentsIndex ) ) {
+				Wikia::log( __METHOD__, false, "ERROR ArticleComment::doPost (reply to " . $parentId .
+					") - empty commentsIndex for " . $commentTitleText, true );
+			} else {
+				wfRunHooks( 'EditCommentsIndex', [ $article->getTitle(), $commentsIndex ] );
+			}
 		}
 
 		$res = ArticleComment::doAfterPost( $retval, $article, $parentId );
@@ -899,19 +907,6 @@ class ArticleComment {
 				$parentTitle->purgeSquid();
 			}
 		}
-
-		/*
-		// TODO: use this when surrogate key purging works correctly
-		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
-
-		if ($parentTitle) {
-			if ( empty( $wgArticleCommentsLoadOnDemand ) ) {
-				// need to invalidate parsed article if it includes comments in the body
-				$parentTitle->invalidateCache();
-			}
-			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
-		}
-		*/
 
 		wfProfileOut( __METHOD__ );
 	}

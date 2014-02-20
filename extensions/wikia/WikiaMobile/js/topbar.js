@@ -80,26 +80,23 @@ function (
 		reset( true );
 		//show search
 		navBar.className = 'srhOpn';
-		searchForm.scrollIntoView();
 
 		//reset search
 		searchInput.value = '';
 		searchSug.innerHTML = '';
 
+		searchInput.focus();
+
 		/*
-		 This is needed for iOS 4.x
-		 It knows what to do with input element with autofocus attribute
-		 but totaly forgets about the rest
-		 so I need to cause repaint of the navbar
-
-		 comment this out and load a page on iOS 4.x for a reference
+		 Hiding topbar while searchForm open -> first line for Android,
+		 Second line for iOS to wait for the browser to show keyboard (first
+		 version will not work for iOS browsers as they will move the topbar back
+		 to the viewport
 		 */
-		navBar.style.width = 'auto';
-		setTimeout( function () {
-			navBar.style.width = '100%';
-			searchInput.focus();
-		}, 50 );
-
+		searchForm.scrollIntoView();
+		setTimeout( function(){
+			searchForm.scrollIntoView();
+		}, 0 );
 	}
 
 	if (searchForm) {

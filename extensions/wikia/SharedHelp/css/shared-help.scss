@@ -1,0 +1,17 @@
+@import "skins/oasis/css/core/color";
+
+.sharedHelp {
+  border: 1px solid $color-page-border;
+  margin: 5px;
+  padding: 10px;
+  @if lightness($color-page) < 50 {
+    border: 1px solid $color-page-border;
+  }
+}
+
+/* monobook only styles */
+body.skin-monobook {
+  .sharedHelp {
+    border: 1px solid #aaa;
+  }
+}

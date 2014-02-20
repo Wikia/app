@@ -4880,7 +4880,6 @@ Ersetzte diesen Text durch deinen Artikel!',
 	'oasis-global-nav-header' => 'Wikia-Navigation',
 	'oasis-home' => 'Hauptseite',
 	'oasis-interlang-languages' => 'Sprachen:',
-	'oasis-interlang-show-all' => '... alle zeigen >',
 	'oasis-latest-activity-delete-details' => 'gelöscht von $1 $2',
 	'oasis-latest-activity-delete' => '$1 hat $2 gelöscht',
 	'oasis-latest-activity-edit-details' => 'bearbeitet von $1 $2',
@@ -5052,8 +5051,6 @@ Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das al
 	'philcalendar-20120223' => '*  vafsfafad|asdf
 **  DESCRIPTION: sadfadsfsafds
 **  SYSTEMS: ps3',
-	'photopop-game-loading' => 'Lade…',
-	'photopop-game-progress' => 'Bilder',
 	'plb-create-already-exists-error' => 'Ein Layout mit diesem Titel existiert bereits. Versuche es mit einem anderen Titel.',
 	'plb-create-button-draft-title' => 'Layout als Entwurf speichern',
 	'plb-create-button-draft' => 'Layout als Entwurf speichern',
@@ -11709,7 +11706,6 @@ El formato wiki permite a cualquiera crear o editar cualquier artículo, así qu
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|edición hecha|ediciones hechas}}</sup>',
 	'oasis-global-nav-create-wiki-alt' => 'Crear un wiki',
 	'oasis-global-nav-create-wiki' => 'Crear un wiki',
-	'oasis-interlang-show-all' => '... ver todos >',
 	'oasis-latest-activity-delete' => '$2 borrado por $1',
 	'oasis-latest-activity-edit' => '$2 editado por $1',
 	'oasis-latest-activity-new' => '$2 creado por $1',
@@ -14024,7 +14020,6 @@ Por favor, ¡déjame un mensaje si puedo ayudarte con cualquier cosa!',
 	'widget-title-contribs' => 'Contribuciones',
 	'widget-title-editedrecently' => 'Editado por',
 	'widget-title-featureduser' => 'Usuario destacado',
-	'widget-title-founderbadge' => 'Fundador/a',
 	'widget-title-languages' => 'En otros idiomas',
 	'widget-title-lastwikis' => 'Últimos wikis visitados',
 	'widget-title-mostvisited' => 'Más visitados',
@@ -17820,7 +17815,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia en tous lieux===
 *[http://www.wikia.com/Mobile Wikia mobile]
 *[http://www.wikia.com/Mobile/GameGuides App. jeux vidéo]
-*[http://www.wikia.com/Mobile/PhotoPop App. divertissement]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
@@ -19182,7 +19176,6 @@ Ecco cosa sta succedendo:<br /><em>$1</em></p>
 	'oasis-global-page-header' => 'Wikia',
 	'oasis-home' => 'Home',
 	'oasis-interlang-languages' => 'Lingue:',
-	'oasis-interlang-show-all' => '... vedi tutte >',
 	'oasis-latest-activity-delete-details' => 'cancellato da $1 $2',
 	'oasis-latest-activity-edit-details' => 'modificato da $1 $2',
 	'oasis-latest-activity-new-details' => 'creato da $1 $2',
@@ -21133,7 +21126,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Wikia ovunque===
 *[http://www.wikia.com/Mobile Wikia Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
-*[http://www.wikia.com/Mobile/PhotoPop Entertainment Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===Seguici===
@@ -23383,7 +23375,6 @@ $1
 	'oasis-global-nav-create-wiki' => '새 위키 만들기',
 	'oasis-home' => '대문',
 	'oasis-interlang-languages' => '다른 언어:',
-	'oasis-interlang-show-all' => '... 모두 보기 >',
 	'oasis-latest-activity-delete-details' => '$2 $1에 의해 삭제됨',
 	'oasis-latest-activity-delete' => '$1 사용자가 삭제함: $2',
 	'oasis-latest-activity-edit-details' => '$2 $1에 의해 편집됨',
@@ -25313,7 +25304,6 @@ ___________________________________________
 	'wikiahome-footer-everywhere' => '=== 어디서나 위키아 ===
 *[http://www.wikia.com/Mobile 위키아 모바일 (영어)]
 *[http://www.wikia.com/Mobile/GameGuides 비디오 게임 앱 (영어)]
-*[http://www.wikia.com/Mobile/PhotoPop 엔터테인먼트 앱 (영어)]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API (영어)]',
 	'wikiahome-footer-follow-us' => '=== 소식 구독하기 ===
 *[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog 위키아 블로그 (영어)]
@@ -30531,7 +30521,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===Викия повсюда===
 *[http://www.wikia.com/Mobile Мобильная Викия]
 *[http://www.wikia.com/Mobile/GameGuides Приложение для видеоигр]
-*[http://www.wikia.com/Mobile/PhotoPop Приложение для кино и сериалов]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===Следите за нами===
@@ -37298,7 +37287,6 @@ __NOEDITSECTION__',
 	'wikiahome-footer-everywhere' => '===其他===
 *[http://www.wikia.com/Mobile 维基移动]
 *[http://www.wikia.com/Mobile/GameGuides 维基游戏指南]
-*[http://www.wikia.com/Mobile/PhotoPop 维基娱乐汇]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-follow-us' => '===关注我们===
@@ -42162,7 +42150,6 @@ http://ja.wikia.com/wiki/Special:Following',
 	'oasis-global-nav-create-wiki' => '新しいウィキを作成',
 	'oasis-home' => 'ホーム',
 	'oasis-interlang-languages' => '他の言語:',
-	'oasis-interlang-show-all' => '全て表示 >',
 	'oasis-latest-activity-delete-details' => '$1 による削除: $2',
 	'oasis-latest-activity-delete' => '$1 による削除: $2',
 	'oasis-latest-activity-edit-details' => '$1 による編集: $2',
@@ -51893,7 +51880,6 @@ Abans de contribuir al fòrum de {{SITENAME}} tingues en compte les següents pr
 	'oasis-button-wiki-activity' => 'Wiki Activitat',
 	'oasis-global-nav-create-wiki' => 'Crear un wiki',
 	'oasis-interlang-languages' => 'Llengües:',
-	'oasis-interlang-show-all' => '... veure-ho tot >',
 	'oasis-latest-activity-edit-details' => 'editat per $1 $2',
 	'oasis-latest-photos-header' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|imatge en aquest wiki|imatges en aquest wiki}}</span>',
 	'oasis-latest-photos-inner-message' => 'Veure totes les imatges',

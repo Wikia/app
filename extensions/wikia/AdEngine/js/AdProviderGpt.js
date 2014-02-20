@@ -102,7 +102,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 		// Show INVISIBLE_SKIN when leaderboard was to be shown
 		if (slotname === 'INVISIBLE_SKIN') {
-			if (!leaderboardCalled) {
+			if (leaderboardCalled) {
 				return true;
 			}
 		}

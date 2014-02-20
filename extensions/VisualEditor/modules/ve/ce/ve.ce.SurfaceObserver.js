@@ -11,20 +11,19 @@
  * ContentEditable surface observer.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {ve.ce.Document} documentView Document to observe
  */
 ve.ce.SurfaceObserver = function VeCeSurfaceObserver( documentView ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.documentView = documentView;
 	this.domDocument = null;
 	this.polling = false;
-	this.locked = false;
 	this.timeoutId = null;
 	this.frequency = 250; // ms
 
@@ -34,7 +33,7 @@ ve.ce.SurfaceObserver = function VeCeSurfaceObserver( documentView ) {
 
 /* Inheritance */
 
-ve.mixinClass( ve.ce.SurfaceObserver, ve.EventEmitter );
+OO.mixinClass( ve.ce.SurfaceObserver, OO.EventEmitter );
 
 /* Events */
 
@@ -81,6 +80,16 @@ ve.ce.SurfaceObserver.prototype.clear = function ( range ) {
 };
 
 /**
+ * Detach from the document view
+ *
+ * @method
+ */
+ve.ce.SurfaceObserver.prototype.detach = function () {
+	this.documentView = null;
+	this.domDocument = null;
+};
+
+/**
  * Start the setTimeout synchronisation loop
  *
  * @method
@@ -102,7 +111,7 @@ ve.ce.SurfaceObserver.prototype.timerLoop = function ( firstTime ) {
 		clearTimeout( this.timeoutId );
 		this.timeoutId = null;
 	}
-	if ( !firstTime && !this.locked ) {
+	if ( !firstTime ) {
 		this.pollOnce();
 	}
 	// only reach this point if pollOnce does not throw an exception
@@ -131,8 +140,8 @@ ve.ce.SurfaceObserver.prototype.stopTimerLoop = function () {
  * with a mouse.
  *
  * @method
- * @emits contentChange
- * @emits selectionChange
+ * @fires contentChange
+ * @fires selectionChange
  */
 ve.ce.SurfaceObserver.prototype.pollOnce = function () {
 	this.pollOnceInternal( true );
@@ -159,11 +168,15 @@ ve.ce.SurfaceObserver.prototype.pollOnceNoEmit = function () {
  * @method
  * @private
  * @param {boolean} emitChanges Emit change events if selection changed
- * @emits contentChange
- * @emits selectionChange
+ * @fires contentChange
+ * @fires selectionChange
  */
 ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 	var $nodeOrSlug, node, text, hash, range, rangyRange;
+
+	if ( !this.domDocument ) {
+		return;
+	}
 
 	range = this.range;
 	node = this.node;
@@ -187,13 +200,13 @@ ve.ce.SurfaceObserver.prototype.pollOnceInternal = function ( emitChanges ) {
 			this.hash = null;
 			this.node = null;
 		} else {
-			this.text = ve.ce.getDomText( node.$[0] );
-			this.hash = ve.ce.getDomHash( node.$[0] );
+			this.text = ve.ce.getDomText( node.$element[0] );
+			this.hash = ve.ce.getDomHash( node.$element[0] );
 			this.node = node;
 		}
 	} else if ( node !== null ) {
-		text = ve.ce.getDomText( node.$[0] );
-		hash = ve.ce.getDomHash( node.$[0] );
+		text = ve.ce.getDomText( node.$element[0] );
+		hash = ve.ce.getDomHash( node.$element[0] );
 		if ( this.text !== text || this.hash !== hash ) {
 			if ( emitChanges ) {
 				this.emit(

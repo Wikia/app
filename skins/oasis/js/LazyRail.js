@@ -1,5 +1,22 @@
 $( function () {
 	'use strict';
+	function getParamsFromUrl() {
+		var params = {},
+		paramVal,
+		qs = Wikia.Querystring(),
+		i = 0,
+		paramsToPreserve = [ 'noexternals', 'noads', 'uselang', 'mcache', 'rebuildmessages' ],
+		paramsToPreserveLength = paramsToPreserve.length;
+
+		for ( i = 0; i < paramsToPreserveLength; i++ ) {
+			paramVal = qs.getVal( paramsToPreserve[ i ] );
+			if ( paramVal !== undefined ) {
+				params[ paramsToPreserve[ i ] ] = paramVal;
+			}
+		}
+		return params;
+	}
+
 	var rail = $( '#WikiaRail' ),
 		LAZY_LOADING_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		params = {},
@@ -16,6 +33,8 @@ $( function () {
 		if ( typeof wgSassLoadedScss !== 'undefined' ) {
 			params.excludeScss = window.wgSassLoadedScss;
 		}
+
+		$.extend(params, getParamsFromUrl());
 
 		$.nirvana.sendRequest( {
 			controller: 'RailController',
@@ -58,7 +77,6 @@ $( function () {
 
 					if ( window.wgEnableLightboxExt ) {
 						window.LightboxLoader.init();
-						window.LightboxLoader.loadFromURL();
 					}
 				};
 

@@ -207,15 +207,23 @@ $large-modal-margin: 50px;
 }
 
 // styles required to disable scrolling behind modal
-body,
-body.background-dynamic {
-	&.with-blackout {
-		position: fixed;
-		width: 100%;
+body.with-blackout {
 
-		&.fake-scrollbar {
-			overflow-y: scroll;
+	&.background-dynamic {
+		position: static;
+
+		&:after,
+		&:before {
+			height: 100%;
 		}
 	}
-}
 
+	.WikiaSiteWrapper {
+		position: fixed;
+		width: 100%;
+	}
+
+	.fake-scrollbar {
+		overflow-y: scroll;
+	}
+}

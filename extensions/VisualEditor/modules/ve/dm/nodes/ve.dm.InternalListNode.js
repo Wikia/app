@@ -21,7 +21,7 @@ ve.dm.InternalListNode = function VeDmInternalListNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.InternalListNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.InternalListNode, ve.dm.BranchNode );
 
 /* Static members */
 

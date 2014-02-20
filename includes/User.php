@@ -2121,9 +2121,7 @@ class User {
 			// Save an invalid hash...
 			$this->mPassword = '';
 		} else {
-			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-			//$this->mPassword = self::crypt( $str );
-			$this->mPassword = self::oldCrypt( $str, $this->mId );
+			$this->mPassword = self::crypt( $str );
 		}
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
@@ -2176,9 +2174,7 @@ class User {
 	 */
 	public function setNewpassword( $str, $throttle = true ) {
 		$this->load();
-		// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-		//$this->mNewpassword = self::crypt( $str );
-		$this->mNewpassword = self::oldCrypt( $str, $this->mId );
+		$this->mNewpassword = self::crypt( $str );
 		if ( $throttle ) {
 			$this->mNewpassTime = wfTimestampNow();
 		}

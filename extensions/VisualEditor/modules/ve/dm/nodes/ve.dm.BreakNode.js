@@ -21,7 +21,7 @@ ve.dm.BreakNode = function VeDmBreakNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.BreakNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.BreakNode, ve.dm.LeafNode );
 
 /* Static Properties */
 

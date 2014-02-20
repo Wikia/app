@@ -8,6 +8,8 @@
  */
 class ResourceLoaderHooks {
 
+	const TIMESTAMP_PRECISION = 900; // 15 minutes
+
 	static protected $resourceLoaderInstance;
 	static protected $assetsManagerGroups = array(
 //		'skins.oasis.blocking' => 'oasis_blocking',
@@ -222,8 +224,6 @@ class ResourceLoaderHooks {
 
 	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
 		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
-		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
-
 		return true;
 	}
 
@@ -365,5 +365,18 @@ class ResourceLoaderHooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Round timestamps to 15 minutes to make Varnish entries consistent across nodes
+	 *
+	 * @param $timestamp int timestamp to normalize
+	 * @return int normalized timestamp
+	 *
+	 * @author macbre
+	 * @see BAC-1153
+	 */
+	public static function normalizeTimestamp($timestamp) {
+		return intval( floor( $timestamp / self::TIMESTAMP_PRECISION ) * self::TIMESTAMP_PRECISION );
 	}
 }
