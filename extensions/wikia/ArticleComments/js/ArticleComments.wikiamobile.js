@@ -172,13 +172,14 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 								} );
 							}
 							d.getElementById( 'wkArtComHeader' ).setAttribute( 'data-count', json.counter );
+							d.getElementsByClassName( 'comment-counter' )[0].innerText = json.counterMessage;
 						} else {
 							onFail();
 						}
 					}
 				).fail(
 					onFail
-				).then( function () {
+				).always( function () {
 					submit.disabled = false;
 					throbber.hide( form );
 				} );
@@ -283,6 +284,11 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		} );
 
 	$( d.body )
-		.on( clickEvent, '.commFrm textarea', loginRequired )
+		.on( clickEvent, '.commFrm textarea', function(event){
+			if ( !loginRequired( event ) ) {
+				//scroll text area to top of the screen with small padding
+				window.scrollTo( 0, $( event.target ).offset().top - 5 );
+			}
+		} )
 		.on( 'submit', '.commFrm', post );
 } );

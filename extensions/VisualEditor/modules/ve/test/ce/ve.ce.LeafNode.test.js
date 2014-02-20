@@ -14,7 +14,7 @@ ve.ce.LeafNodeStub = function VeCeLeafNodeStub( model ) {
 	ve.ce.LeafNode.call( this, model );
 };
 
-ve.inheritClass( ve.ce.LeafNodeStub, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.LeafNodeStub, ve.ce.LeafNode );
 
 ve.ce.LeafNodeStub.static.name = 'leaf-stub';
 

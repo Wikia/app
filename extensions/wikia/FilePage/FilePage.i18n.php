@@ -85,6 +85,14 @@ $messages['ar'] = array(
 	'file-page-more-links' => 'انظر القائمة الكاملة',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'video-page-file-list-pagination' => '$1 və ya $2',
+	'file-page-tab-about' => 'Haqqında',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */

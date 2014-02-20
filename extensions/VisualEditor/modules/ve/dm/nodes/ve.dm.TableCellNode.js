@@ -21,7 +21,7 @@ ve.dm.TableCellNode = function VeDmTableCellNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.TableCellNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.TableCellNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

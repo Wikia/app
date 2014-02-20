@@ -8,8 +8,15 @@
 
 .wikia-video-thumbnail {
 	display: inline-block;
-	width: 100%;
 	position: relative;
+
+	&.fluid {
+		width: 100%;
+
+		> img {
+			width: 100%;
+		}
+	}
 
 	// Background circle
 	.play-circle {
@@ -37,7 +44,7 @@
 			display: block;
 			height: 22px;
 			margin-top: 28%;
-			margin-left: 36%;
+			margin-left: 34%;
 			width: 18px;
 		}
 	}
@@ -49,7 +56,7 @@
 			height: 27px;
 			width: 27px;
 			bottom: 10px;
-			left: 34px;
+			left: 36px;
 			top: auto;
 
 			&:after {
@@ -140,5 +147,11 @@
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;
+	}
+}
+
+.title-thumbnail {
+	.title {
+		font-size: 16px;
 	}
 }

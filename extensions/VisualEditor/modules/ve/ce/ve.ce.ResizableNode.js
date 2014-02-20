@@ -12,31 +12,59 @@
  * @abstract
  *
  * @constructor
- * @param {jQuery} [$resizable=this.$] Resizable DOM element
+ * @param {jQuery} [$resizable=this.$element] Resizable DOM element
+ * @param {Object} [config] Configuration options
+ * @param {number|null} [config.snapToGrid=10] Snap to a grid of size X when the shift key is held. Null disables.
+ * @param {boolean} [config.outline=false] Resize using an outline of the element only, don't live preview.
+ * @param {boolean} [config.showSizeLabel=true] Show a label with the current dimensions while resizing
  */
-ve.ce.ResizableNode = function VeCeResizableNode( $resizable ) {
+ve.ce.ResizableNode = function VeCeResizableNode( $resizable, config ) {
 	// Properties
-	this.$resizable = $resizable || this.$;
+	this.$resizable = $resizable || this.$element;
 	this.ratio = this.model.getAttribute( 'width' ) / this.model.getAttribute( 'height' );
 	this.resizing = false;
-	this.$resizeHandles = this.$$( '<div>' );
+	this.$resizeHandles = this.$( '<div>' );
+	this.snapToGrid = ( config && config.snapToGrid !== undefined ) ? config.snapToGrid : 10;
+	this.outline = !!( config && config.outline );
+	if ( !config || config.showSizeLabel !== false ) {
+		this.$sizeText = this.$( '<span>' ).addClass( 've-ce-resizableNode-sizeText' );
+		this.$sizeLabel = this.$( '<div>' ).addClass( 've-ce-resizableNode-sizeLabel' ).append( this.$sizeText );
+	}
+	this.resizableOffset = null;
 
 	// Events
 	this.connect( this, {
 		'focus': 'onResizableFocus',
 		'blur': 'onResizableBlur',
 		'live': 'onResizableLive',
-		'resize': 'onResizableFocus'
+		'resizing': 'onResizableResizing',
+		'resizeEnd': 'onResizableFocus'
 	} );
 
 	// Initialization
 	this.$resizeHandles
 		.addClass( 've-ce-resizableNode-handles' )
-		.append( this.$$( '<div>' ).addClass( 've-ce-resizableNode-nwHandle' ) )
-		.append( this.$$( '<div>' ).addClass( 've-ce-resizableNode-neHandle' ) )
-		.append( this.$$( '<div>' ).addClass( 've-ce-resizableNode-seHandle' ) )
-		.append( this.$$( '<div>' ).addClass( 've-ce-resizableNode-swHandle' ) );
+		.append( this.$( '<div>' ).addClass( 've-ce-resizableNode-nwHandle' ) )
+		.append( this.$( '<div>' ).addClass( 've-ce-resizableNode-neHandle' ) )
+		.append( this.$( '<div>' ).addClass( 've-ce-resizableNode-seHandle' ) )
+		.append( this.$( '<div>' ).addClass( 've-ce-resizableNode-swHandle' ) );
 };
+
+/* Events */
+
+/**
+ * @event resizeStart
+ */
+
+/**
+ * @event resizing
+ * @param {Object} dimensions Dimension object containing width & height
+ */
+
+/**
+ * @event resizeEnd
+ */
+
 
 /* Static Properties */
 
@@ -45,11 +73,71 @@ ve.ce.ResizableNode.static = {};
 /* Methods */
 
 /**
+ * Get and cache the relative offset of the $resizable node
+ *
+ * @returns {Object} Position coordinates, containing top & left
+ */
+ve.ce.ResizableNode.prototype.getResizableOffset = function () {
+	if ( !this.resizableOffset ) {
+		this.resizableOffset = OO.ui.Element.getRelativePosition(
+			this.$resizable, this.getRoot().getSurface().getSurface().$element
+		);
+	}
+	return this.resizableOffset;
+};
+
+/**
+ * Update the contents and position of the size label
+ *
+ * Omitting the dimensions object will hide the size label.
+ *
+ * @param {Object} [dimensions] Dimensions object with width, height, top & left, or undefined to hide
+ */
+ve.ce.ResizableNode.prototype.updateSizeLabel = function ( dimensions ) {
+	if ( !this.$sizeLabel ) {
+		return;
+	}
+	var offset, node, top, height;
+	if ( dimensions ) {
+		offset = this.getResizableOffset();
+		// Things get a bit tight below 100px, so put the label on the outside
+		if ( dimensions.width < 100 ) {
+			top = offset.top + dimensions.height;
+			height = 30;
+		} else {
+			top = offset.top;
+			height = dimensions.height;
+		}
+		this.$sizeLabel
+			.addClass( 've-ce-resizableNode-sizeLabel-resizing' )
+			.css( {
+				'top': top,
+				'left': offset.left,
+				'width': dimensions.width,
+				'height': height,
+				'lineHeight': height + 'px'
+			} );
+		this.$sizeText.text( Math.round( dimensions.width ) + ' × ' + Math.round( dimensions.height ) );
+	} else {
+		node = this;
+		// Defer the removal of this class otherwise other DOM changes may cause
+		// the opacity transition to not play out smoothly
+		setTimeout( function () {
+			node.$sizeLabel.removeClass( 've-ce-resizableNode-sizeLabel-resizing' );
+		} );
+	}
+};
+
+/**
  * Handle node focus.
  *
  * @method
  */
 ve.ce.ResizableNode.prototype.onResizableFocus = function () {
+	if ( this.$sizeLabel ) {
+		// Attach the size label first so it doesn't mask the resize handles
+		this.$sizeLabel.appendTo( this.root.getSurface().getSurface().$localOverlayControls );
+	}
 	this.$resizeHandles.appendTo( this.root.getSurface().getSurface().$localOverlayControls );
 
 	this.setResizableHandlesSizeAndPosition();
@@ -68,9 +156,9 @@ ve.ce.ResizableNode.prototype.onResizableFocus = function () {
 			} );
 
 	this.$resizeHandles.children()
-		.off( '.ve-ui-resizableNode' )
+		.off( '.ve-ce-resizableNode' )
 		.on(
-			'mousedown.ve-ui-resizableNode',
+			'mousedown.ve-ce-resizableNode',
 			ve.bind( this.onResizeHandlesCornerMouseDown, this )
 		);
 };
@@ -82,6 +170,9 @@ ve.ce.ResizableNode.prototype.onResizableFocus = function () {
  */
 ve.ce.ResizableNode.prototype.onResizableBlur = function () {
 	this.$resizeHandles.detach();
+	if ( this.$sizeLabel ) {
+		this.$sizeLabel.detach();
+	}
 };
 
 /**
@@ -93,11 +184,30 @@ ve.ce.ResizableNode.prototype.onResizableLive = function () {
 	var surfaceModel = this.getRoot().getSurface().getModel();
 
 	if ( this.live ) {
-		surfaceModel.connect( this, { 'history': 'setResizableHandlesSizeAndPosition' } );
+		surfaceModel.getDocument().connect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
 	} else {
-		surfaceModel.disconnect( this, { 'history': 'setResizableHandlesSizeAndPosition' } );
+		surfaceModel.getDocument().disconnect( this, { 'transact': 'setResizableHandlesSizeAndPosition' } );
 		this.onResizableBlur();
 	}
+};
+
+/**
+ * Handle resizing event.
+ *
+ * @method
+ * @param {Object} dimensions Dimension object containing width & height
+ */
+ve.ce.ResizableNode.prototype.onResizableResizing = function ( dimensions ) {
+	// Clear cached resizable offset position as it may have changed
+	this.resizableOffset = null;
+	if ( !this.outline ) {
+		this.$resizable.css( {
+			'width': dimensions.width,
+			'height': dimensions.height
+		} );
+		this.setResizableHandlesPosition();
+	}
+	this.updateSizeLabel( dimensions );
 };
 
 /**
@@ -105,6 +215,7 @@ ve.ce.ResizableNode.prototype.onResizableLive = function () {
  *
  * @method
  * @param {jQuery.Event} e Click event
+ * @fires resizeStart
  */
 ve.ce.ResizableNode.prototype.onResizeHandlesCornerMouseDown = function ( e ) {
 	// Hide context menu
@@ -114,7 +225,7 @@ ve.ce.ResizableNode.prototype.onResizeHandlesCornerMouseDown = function ( e ) {
 
 	// Set bounding box width and undo the handle margins
 	this.$resizeHandles
-		.addClass( 've-ui-resizableNode-handles-resizing' )
+		.addClass( 've-ce-resizableNode-handles-resizing' )
 		.css( {
 			'width': this.$resizable.width(),
 			'height': this.$resizable.height()
@@ -135,10 +246,12 @@ ve.ce.ResizableNode.prototype.onResizeHandlesCornerMouseDown = function ( e ) {
 
 	// Bind resize events
 	this.resizing = true;
-	$( this.getElementDocument() ).on( {
+	this.updateSizeLabel( this.resizeInfo );
+	this.$( this.getElementDocument() ).on( {
 		'mousemove.ve-ce-resizableNode': ve.bind( this.onDocumentMouseMove, this ),
 		'mouseup.ve-ce-resizableNode': ve.bind( this.onDocumentMouseUp, this )
 	} );
+	this.emit( 'resizeStart' );
 
 	return false;
 };
@@ -149,28 +262,44 @@ ve.ce.ResizableNode.prototype.onResizeHandlesCornerMouseDown = function ( e ) {
  * @method
  */
 ve.ce.ResizableNode.prototype.setResizableHandlesSizeAndPosition = function () {
-	var offset = ve.Element.getRelativePosition(
-		this.$resizable, this.getRoot().getSurface().getSurface().$
-	);
+	var width = this.$resizable.width(),
+		height = this.$resizable.height();
+
+	// Clear cached resizable offset position as it may have changed
+	this.resizableOffset = null;
+
+	this.setResizableHandlesPosition();
 
 	this.$resizeHandles
 		.css( {
 			'width': 0,
-			'height': 0,
-			'top': offset.top,
-			'left': offset.left
+			'height': 0
 		} )
 		.find( '.ve-ce-resizableNode-neHandle' )
-			.css( { 'margin-right': -this.$resizable.width() } )
+			.css( { 'margin-right': -width } )
 			.end()
 		.find( '.ve-ce-resizableNode-swHandle' )
-			.css( { 'margin-bottom': -this.$resizable.height() } )
+			.css( { 'margin-bottom': -height } )
 			.end()
 		.find( '.ve-ce-resizableNode-seHandle' )
 			.css( {
-				'margin-right': -this.$resizable.width(),
-				'margin-bottom': -this.$resizable.height()
+				'margin-right': -width,
+				'margin-bottom': -height
 			} );
+};
+
+/**
+ * Set the proper position for resize handles
+ *
+ * @method
+ */
+ve.ce.ResizableNode.prototype.setResizableHandlesPosition = function () {
+	var offset = this.getResizableOffset();
+
+	this.$resizeHandles.css( {
+		'top': offset.top,
+		'left': offset.left
+	} );
 };
 
 /**
@@ -178,9 +307,10 @@ ve.ce.ResizableNode.prototype.setResizableHandlesSizeAndPosition = function () {
  *
  * @method
  * @param {jQuery.Event} e Click event
+ * @fires resizing
  */
 ve.ce.ResizableNode.prototype.onDocumentMouseMove = function ( e ) {
-	var newWidth, newHeight, newRatio,
+	var newWidth, newHeight, newRatio, snapMin, snapMax, snap,
 		// TODO: Make these configurable
 		min = 1,
 		max = 1000,
@@ -214,19 +344,27 @@ ve.ce.ResizableNode.prototype.onDocumentMouseMove = function ( e ) {
 		}
 
 		// Unconstrained dimensions and ratio
-		newWidth = Math.max( Math.min( this.$resizable.width() + diff.x, max ), min );
-		newHeight = Math.max( Math.min( this.$resizable.height() + diff.y, max ), min );
+		newWidth = Math.max( Math.min( this.resizeInfo.width + diff.x, max ), min );
+		newHeight = Math.max( Math.min( this.resizeInfo.height + diff.y, max ), min );
 		newRatio = newWidth / newHeight;
 
 		// Fix the ratio
 		if ( this.ratio > newRatio ) {
 			dimensions.width = newWidth;
-			dimensions.height = this.$resizable.height() +
-				( newWidth - this.$resizable.width() ) / this.ratio;
+			dimensions.height = this.resizeInfo.height +
+				( newWidth - this.resizeInfo.width ) / this.ratio;
 		} else {
-			dimensions.width = this.$resizable.width() +
-				( newHeight - this.$resizable.height() ) * this.ratio;
+			dimensions.width = this.resizeInfo.width +
+				( newHeight - this.resizeInfo.height ) * this.ratio;
 			dimensions.height = newHeight;
+		}
+
+		if ( this.snapToGrid && e.shiftKey ) {
+			snapMin = Math.ceil( min / this.snapToGrid );
+			snapMax = Math.floor( max / this.snapToGrid );
+			snap = Math.round( dimensions.width / this.snapToGrid );
+			dimensions.width = Math.max( Math.min( snap, snapMax ), snapMin ) * this.snapToGrid;
+			dimensions.height = dimensions.width / this.ratio;
 		}
 
 		// Fix the position
@@ -249,6 +387,7 @@ ve.ce.ResizableNode.prototype.onDocumentMouseMove = function ( e ) {
 
 		// Update bounding box
 		this.$resizeHandles.css( dimensions );
+		this.emit( 'resizing', dimensions );
 	}
 };
 
@@ -256,6 +395,7 @@ ve.ce.ResizableNode.prototype.onDocumentMouseMove = function ( e ) {
  * Handle body mouseup.
  *
  * @method
+ * @fires resizeEnd
  */
 ve.ce.ResizableNode.prototype.onDocumentMouseUp = function () {
 	var attrChanges,
@@ -266,9 +406,10 @@ ve.ce.ResizableNode.prototype.onDocumentMouseUp = function () {
 		documentModel = surfaceModel.getDocument(),
 		selection = surfaceModel.getSelection();
 
-	this.$resizeHandles.removeClass( 've-ui-resizableNode-handles-resizing' );
-	$( this.getElementDocument() ).off( '.ve-ce-resizableNode' );
+	this.$resizeHandles.removeClass( 've-ce-resizableNode-handles-resizing' );
+	this.$( this.getElementDocument() ).off( '.ve-ce-resizableNode' );
 	this.resizing = false;
+	this.updateSizeLabel();
 
 	// Apply changes to the model
 	attrChanges = this.getAttributeChanges( width, height );
@@ -279,11 +420,11 @@ ve.ce.ResizableNode.prototype.onDocumentMouseUp = function () {
 		);
 	}
 
-	// Show the context menu. This usually happens with the redraw, but not if the
+	// Update the context menu. This usually happens with the redraw, but not if the
 	// user doesn't perform a drag
-	this.root.getSurface().getSurface().getContext().show();
+	this.root.getSurface().getSurface().getContext().update();
 
-	this.emit( 'resize' );
+	this.emit( 'resizeEnd' );
 };
 
 /**

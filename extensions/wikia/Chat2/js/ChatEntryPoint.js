@@ -157,13 +157,18 @@ var ChatEntryPoint = {
 		});
 	},
 
-	onClickChatButton: function(linkToSpecialChat) {
-		if (window.wgUserName) {
-			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
+	onClickChatButton: function( linkToSpecialChat ) {
+		'use strict';
+
+		var UserLoginModal = window.UserLoginModal;
+
+		if ( window.wgUserName ) {
+			window.open( linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		} else {
-			UserLoginModal.show({
+			UserLoginModal.show( {
+				origin: 'chat',
 				callback: ChatEntryPoint.onSuccessfulLogin
-			});
+			} );
 		}
 	},
 

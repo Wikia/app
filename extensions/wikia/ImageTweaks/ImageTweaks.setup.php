@@ -50,7 +50,7 @@ $wgHooks['ImageAfterProduceHTML'][] = 'ImageTweaksHooks::onImageAfterProduceHTML
 //hook into Linker::MakeThumbLink2
 $wgHooks['ThumbnailAfterProduceHTML'][] = 'ImageTweaksHooks::onThumbnailAfterProduceHTML';
 
-//hook into ImageThumbnail::toHTML
+//hook into ThumbnailImage::toHTML
 $wgHooks['ThumbnailImageHTML'][] = 'ImageTweaksHooks::onThumbnailImageHTML';
 
 //hook into ThumbnailVideo::toHTML

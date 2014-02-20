@@ -72,6 +72,13 @@ $messages['bho'] = array(
 	'adengine-exitstitial-button' => 'इ विज्ञापन के छोड़ चलीं',
 );
 
+/** Bengali (বাংলা)
+ * @author Tauhid16
+ */
+$messages['bn'] = array(
+	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -445,6 +452,16 @@ $messages['sl'] = array(
 	'adengine-exitstitial-redirecting' => 'Kmalu boste preusmerjeni na zahtevano stran.',
 	'adengine-exitstitial-go-back' => 'Želite nazaj?',
 	'adengine-exitstitial-button' => 'Preskočite ta oglas',
+);
+
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Rancher
+ */
+$messages['sr-ec'] = array(
+	'adengine-exitstitial-title-template' => 'Напуштате $1…',
+	'adengine-exitstitial-redirecting' => 'Прегледач ће вас за који секунд одвести на тражену страницу.',
+	'adengine-exitstitial-go-back' => 'Желите да се вратите назад?',
+	'adengine-exitstitial-button' => 'Прескочи оглас',
 );
 
 /** Swedish (svenska)

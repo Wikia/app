@@ -328,74 +328,87 @@ class MediaQueryService extends WikiaService {
 	}
 
 	/**
-	 * get list of all videos (order by timestamp)
-	 * @param string $sort [recent/popular/trend]
-	 * @param string $filter [all/premium]
-	 * @param integer $limit
-	 * @param integer $page
-	 * @param array $providers
+	 * Get list of videos based on a few filters ($type, $providers, $category)
+	 * and sort options ($sort, $limit, $page).
+	 *
+	 * @param string $sort How to sort the results.  Valid options are:
+	 *                     - recent  : Sort by the date the video was added (DEFAULT)
+	 *                     - popular : Sort by total views
+	 *                     - trend   : Sort by views over the last 7 days
+	 * @param string $type What type of videos to return.  Valid options are:
+	 *                     - all     : Show all videos (DEFAULT)
+	 *                     - premium : Show only premium videos
+	 * @param integer $limit Limit the number of videos to return
+	 * @param integer $page Specify a page of results (DEFAULT $page = 1)
+	 * @param array $providers An array of content providers.  Only videos hosted by these providers
+	 *                        will be returned (DEFAULT all providers)
+	 * @param string $category A category name.  Only videos tagged with this category will be returned
+	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $filter = 'all', $limit = 0, $page = 1, $providers = array() ) {
+	public function getVideoList( $sort = 'recent', $type = 'all', $limit = 0, $page = 1, $providers = array(), $category = '' ) {
 		wfProfileIn( __METHOD__ );
 
-		$db = wfGetDB( DB_SLAVE );
+		// Determine the sort column
+		if ( $sort == 'popular' ) {
+			$sortCol = 'views_total';
+		} elseif ( $sort == 'trend' ) {
+			$sortCol = 'views_7day';
+		} else {
+			$sortCol = 'added_at';
+		}
 
-		$sqlTables = array( 'video_info' );
-		$sqlWhere = array( 'removed' => 0 );
-		$sqlOptions = array();
+		// Setup the base query cache for a minimal amount of time
+		$query = (new WikiaSQL())->cache( 5 )
+			->SELECT( 'video_title' )
+				->FIELD( 'provider' )
+				->FIELD( 'added_at' )
+				->FIELD( 'added_by' )
+				->FIELD( 'duration' )
+				->FIELD( 'views_total' )
+			->FROM( 'video_info' )
+			->WHERE( 'removed' )->EQUAL_TO( 0 )
+			->ORDER_BY( $sortCol )->DESC();
 
-		// Check for providers
+		if ( $category ) {
+				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
+					  ->JOIN( 'categorylinks' )->ON( 'page_id', 'cl_from' )
+					  ->AND_( 'cl_to' )->EQUAL_TO( $category )
+					  ->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE );
+		}
+
 		if ( $providers ) {
-			// This will become an IN clause from the $providers array
-			$sqlWhere['provider'] = $providers;
+			$query->AND_( 'provider' )->IN( $providers );
 		}
 
-		// check for filter
-		if ( $filter == 'premium' ) {
-			$sqlWhere['premium'] = 1;
+		if ( $type == 'premium' ) {
+			$query->AND_( 'premium' )->EQUAL_TO( 1 );
 		}
 
-		// check for limit
-		if ( !empty($limit) ) {
-			$sqlOptions['LIMIT'] = $limit;
-			if ( !empty($page) ) {
-				$sqlOptions['OFFSET'] = ($page * $limit) - $limit;
+		if ( $limit ) {
+			$query->LIMIT( $limit );
+			if ( $page && $page > 1 ) {
+				$query->OFFSET( ($page - 1) * $limit );
 			}
 		}
 
-		// check for sorting
-		if ( $sort == 'popular' ) {
-			$sqlOptions['ORDER BY'] = 'views_total DESC';
-		} else if ( $sort == 'trend' ) {
-			$sqlOptions['ORDER BY'] = 'views_7day DESC';
-		} else {
-			$sqlOptions['ORDER BY'] = 'added_at DESC';
-		}
+		$db = wfGetDB( DB_SLAVE );
 
-		$result = $db->select(
-			array( 'video_info' ),
-			array( 'video_title, provider, added_at, added_by, duration, views_total' ),
-			$sqlWhere,
-			__METHOD__,
-			$sqlOptions
-		);
-
-		$videoList = array();
-		while ( $row = $db->fetchObject($result) ) {
-			$videoList[] = array(
+		$videoList = $query->runLoop( $db, function( &$videoList, $row ) {
+			$videoList[] = [
 				'title'      => $row->video_title,
 				'provider'   => $row->provider,
 				'addedAt'    => $row->added_at,
 				'addedBy'    => $row->added_by,
 				'duration'   => $row->duration,
-				'viewsTotal' => $row->views_total,
-			);
-		}
+				'viewsTotal' => $row->views_total
+			];
+		});
 
 		wfProfileOut( __METHOD__ );
 
-		return $videoList;
+		// Make sure we're returning an array
+		return empty( $videoList ) ? [] : $videoList;
 	}
 
 	/**
@@ -466,6 +479,43 @@ class MediaQueryService extends WikiaService {
 		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
+	}
+
+	/**
+	 * Get number of total videos in a given category
+	 * @return integer
+	 */
+	public function getTotalVideosByCategory ( $category ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+		$memKey = $this->getMemKeyTotalVideosByCategory( $category );
+
+		$totalViews = (new WikiaSQL())->cache( 60*60*6, $memKey )
+			->SELECT( 'count(video_title) cnt' )
+			->FROM( 'video_info' )
+			->WHERE('removed' )->EQUAL_TO( 0 )
+			->JOIN( 'page' )->ON( 'video_title', 'page_title' )
+			->JOIN( 'categorylinks' )->ON( 'page_id', 'cl_from' )
+				->AND_( 'cl_to' )->EQUAL_TO( $category )
+				->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
+			->run( $db, function ( $result ) {
+				$row = $result->fetchObject( $result );
+				return $row->cnt;
+			});
+
+		wfProfileOut( __METHOD__ );
+
+		return $totalViews;
+	}
+
+	protected function getMemKeyTotalVideosByCategory( $category ) {
+		return wfMemcKey( 'videos', 'total_videos', $category );
+	}
+
+	public function clearCacheTotalVideosByCategory( $category ) {
+		$this->wg->Memc->delete( $this->getMemKeyTotalVideosByCategory( $category ) );
 	}
 
 	/**

@@ -26,7 +26,7 @@ ve.init.sa.Platform = function VeInitSaPlatform() {
 
 /* Inheritance */
 
-ve.inheritClass( ve.init.sa.Platform, ve.init.Platform );
+OO.inheritClass( ve.init.sa.Platform, ve.init.Platform );
 
 /* Methods */
 
@@ -115,7 +115,7 @@ ve.init.sa.Platform.prototype.getUserLanguages = function () {
 		langParts = lang.split( '-' ),
 		langs = [ lang ];
 
-	if ( langParts.length > 0 ) {
+	if ( langParts.length > 1 ) {
 		langs.push( langParts[0] );
 	}
 
@@ -125,3 +125,7 @@ ve.init.sa.Platform.prototype.getUserLanguages = function () {
 /* Initialization */
 
 ve.init.platform = new ve.init.sa.Platform();
+
+/* Extension */
+
+OO.ui.msg = ve.bind( ve.init.platform.getMessage, ve.init.platform );

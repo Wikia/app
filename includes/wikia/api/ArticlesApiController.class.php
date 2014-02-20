@@ -177,14 +177,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
 		if ( count( $collection ) > self::MAX_ITEMS ) {
@@ -196,6 +189,38 @@ class ArticlesApiController extends WikiaApiController {
 
 		$batches = null;
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function getMostLinked() {
+
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$nameSpace = NS_MAIN;
+
+		$wikiService = new WikiService();
+		$mostLinked = $wikiService->getMostLinkedPages();
+		$mostLinkedOutput = [];
+
+		if ( $expand ) {
+			$params = $this->getDetailsParams();
+			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+		} else {
+			foreach ( $mostLinked as $item ) {
+					$title = Title::newFromText( $item['page_title'], $nameSpace );
+					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
+						$mostLinkedOutput[] = [
+							'id' => $item['page_id'],
+							'title' => $item['page_title'],
+							'url' => $title->getLocalURL(),
+							'ns' => $nameSpace
+						];
+					}
+			}
+		}
+
+		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->response->setVal( 'items', $mostLinkedOutput );
+
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 	}
 
 	/**
@@ -363,14 +388,7 @@ class ArticlesApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => array_slice( $results, 0, $limit ), 'basepath' => $this->wg->Server ] );
 
-		$response->setCacheValidity(
-			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
-			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$response->setCacheValidity(self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -531,14 +549,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$this->response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			[
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			]
-		);
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}	
@@ -786,23 +797,6 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * @private
-	 */
-	static function onArticleUpdateCategoryCounts( $this, $added, $deleted ) {
-		foreach ( $added + $deleted as $cat) {
-			WikiaDataAccess::cachePurge( self::getCacheKey( $cat, self::CATEGORY_CACHE_ID ) );
-
-			$param = array(
-				'category' => $cat
-			);
-
-			self::purgeMethods( [['getTop', $param], ['getList', $param]] );
-		}
-
-		return true;
-	}
-
-	/**
 	 * @param $category
 	 * @return array|null|string
 	 */
@@ -885,9 +879,7 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
 		$response = $this->getResponse();
-		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION, self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION,
-			[WikiaResponse::CACHE_TARGET_VARNISH,
-				WikiaResponse::CACHE_TARGET_BROWSER ]);
+		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION);
 
 		$response->setFormat("json");
 		$response->setData( $jsonSimple );

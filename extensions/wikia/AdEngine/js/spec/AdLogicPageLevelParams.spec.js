@@ -259,7 +259,9 @@ describe('AdLogicPageLevelParams', function(){
 		var logMock = function() {},
 			windowMock = {
 				location: {hostname: 'an.example.org'},
-				wgCategories: []
+				wgCategories: [],
+				wgContentLanguage: 'en',
+				wgAdPageLevelCategoryLangs: { en: true }
 			},
 			adLogicPageDimensionsMock,
 			kruxMock,
@@ -281,6 +283,11 @@ describe('AdLogicPageLevelParams', function(){
 		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageLevelParams.getPageLevelParams();
 		expect(params.cat).toEqual(['a_category', 'another_category', 'yet_another_category'], '4 categories stripped down to first 3');
+
+		windowMock.wgContentLanguage = 'zh';
+		adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
+		params = adLogicPageLevelParams.getPageLevelParams();
+		expect(params.cat).toEqual(undef, 'wgContentLanguage not in wgAdPageLevelCategoryLangs');
 	});
 
 	it('getPageLevelParams abTest info', function() {

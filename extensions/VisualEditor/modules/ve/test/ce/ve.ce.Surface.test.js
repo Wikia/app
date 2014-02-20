@@ -9,19 +9,42 @@ QUnit.module( 've.ce.Surface' );
 
 /* Tests */
 
-QUnit.test( 'handleDelete', function ( assert ) {
-	var i,
-		surface = ve.test.utils.createSurfaceFromHtml( ve.dm.example.html ),
-		view = surface.getView(),
-		model = surface.getModel(),
-		data = ve.copy( model.getDocument().getFullData() ),
-		originalData = ve.copy( data ),
+ve.test.utils.runSurfaceHandleDeleteTest = function( assert, html, range, operations, expectedData, expectedRange, msg ) {
+	var i, args,
+		selection,
 		deleteArgs = {
 			'backspace': [ {}, true ],
 			'delete': [ {}, false ],
 			'modifiedBackspace': [ { 'ctrlKey': true }, true ],
 			'modifiedDelete': [ { 'ctrlKey': true }, false ]
 		},
+		surface = ve.test.utils.createSurfaceFromHtml( html || ve.dm.example.html ),
+		view = surface.getView(),
+		model = surface.getModel(),
+		data = ve.copy( model.getDocument().getFullData() );
+
+	// TODO: model.getSelection() should be consistent after it has been
+	// changed but appears to behave differently depending on the browser.
+	// The selection from the select event is still consistent.
+	selection = range;
+	model.on( 'select', function( s ) {
+		selection = s;
+	} );
+
+	model.setSelection( range );
+	for ( i = 0; i < operations.length; i++ ) {
+		args = deleteArgs[operations[i]];
+		view.handleDelete( args[0], args[1] );
+	}
+	expectedData( data );
+
+	assert.deepEqualWithDomElements( model.getDocument().getFullData(), data, msg + ': data' );
+	assert.deepEqual( selection, expectedRange, msg + ': range' );
+	surface.destroy();
+};
+
+QUnit.test( 'handleDelete', function ( assert ) {
+	var i,
 		cases = [
 			{
 				'range': new ve.Range( 2 ),
@@ -85,31 +108,39 @@ QUnit.test( 'handleDelete', function ( assert ) {
 				},
 				'expectedRange': new ve.Range( 1 ),
 				'msg': 'Empty node deleted by delete'
+			},
+			{
+				'range': new ve.Range( 41 ),
+				'operations': ['backspace'],
+				'expectedData': function () {},
+				'expectedRange': new ve.Range( 39, 41 ),
+				'msg': 'Focusable node selected but not deleted by backspace'
+			},
+			{
+				'range': new ve.Range( 39 ),
+				'operations': ['delete'],
+				'expectedData': function () {},
+				'expectedRange': new ve.Range( 39, 41 ),
+				'msg': 'Focusable node selected but not deleted by delete'
+			},
+			{
+				'range': new ve.Range( 39, 41 ),
+				'operations': ['delete'],
+				'expectedData': function ( data ) {
+					data.splice( 39, 2 );
+				},
+				'expectedRange': new ve.Range( 39 ),
+				'msg': 'Focusable node deleted if selected first'
 			}
 		];
-
-	function testRunner( range, operations, expectedData, expectedRange, msg ) {
-		var i, args, data = ve.copy( originalData );
-		model.change( null, range );
-		for ( i = 0; i < operations.length; i++ ) {
-			args = deleteArgs[operations[i]];
-			view.handleDelete( args[0], args[1] );
-		}
-		expectedData( data );
-
-		assert.deepEqual( model.getDocument().getFullData(), data, msg + ': data' );
-		assert.deepEqual( model.getSelection(), expectedRange, msg + ': range' );
-
-		// Roll back the test Surface
-		while ( model.undo() ) {
-			/*jshint noempty:false */
-		}
-	}
 
 	QUnit.expect( cases.length * 2 );
 
 	for ( i = 0; i < cases.length; i++ ) {
-		testRunner( cases[i].range, cases[i].operations, cases[i].expectedData, cases[i].expectedRange, cases[i].msg );
+		ve.test.utils.runSurfaceHandleDeleteTest(
+			assert, cases[i].html, cases[i].range, cases[i].operations,
+			cases[i].expectedData, cases[i].expectedRange, cases[i].msg
+		);
 	}
 } );
 
@@ -217,6 +248,8 @@ QUnit.test( 'onContentChange', function ( assert ) {
 		}
 		assert.deepEqual( ops, expectedOps, msg + ': operations' );
 		assert.deepEqual( surface.getModel().getSelection(), expectedRange, msg + ': range' );
+
+		surface.destroy();
 	}
 
 	for ( i = 0; i < cases.length; i++ ) {
@@ -241,7 +274,6 @@ QUnit.test( 'onContentChange', function ( assert ) {
 // TODO: ve.ce.Surface#getDir
 
 /* Methods without return values */
-// TODO: ve.ce.Surface.static.textPattern
 // TODO: ve.ce.Surface#getSelectionRect
 // TODO: ve.ce.Surface#initialize
 // TODO: ve.ce.Surface#enable

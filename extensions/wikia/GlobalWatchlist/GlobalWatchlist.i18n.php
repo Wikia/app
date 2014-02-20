@@ -148,6 +148,13 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => "No s'ha trobat el fitxer del registre.",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'tog-watchlistdigestclear' => 'Билгал йе еша сана сан тергаме могӀам чура агӀонаш',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */
@@ -1012,6 +1019,16 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|puna|mga puna}})',
 	'globalwatchlist-no-page-found' => 'Walang natagpuang pahina.',
 	'globalwatchlist-no-blog-page-found' => 'Walang natagpuang pahina ng blog.',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'globalwatchlist-desc' => 'Tüm wikilerdeki izleme listenizdeki sayfaları haftalık özet e-posta olarak gönderir',
+	'tog-watchlistdigest' => 'Bana Haftalık İzleme Özetini e-posta gönder',
+	'globalwatchlist-no-page-found' => 'Sayfa bulunamadı.',
+	'globalwatchlist-no-blog-page-found' => 'Blog sayfası bulunamadı.',
 );
 
 /** Ukrainian (українська)

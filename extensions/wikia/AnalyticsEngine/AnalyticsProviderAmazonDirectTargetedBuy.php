@@ -8,7 +8,6 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 				if (geo.getCountryCode() in %%COUNTRIES%%) {
 					var aax_src='3006',
 						aax_url = encodeURIComponent(document.location),
-						host = (geo.getCountryCode() === 'US') ? 'aax-us-east' : 'aax',
 						s = document.createElement('script'),
 						insertLoc = document.getElementsByTagName('script')[0];
 
@@ -16,7 +15,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 
 					s.type = 'text/javascript';
 					s.async = true;
-					s.src = '//' + host + '.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+					s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
 
 					insertLoc.parentNode.insertBefore(s, insertLoc);
 				}

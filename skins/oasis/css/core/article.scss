@@ -239,12 +239,12 @@
 	a.external, a[href^="gopher://"] {
 		&:after {
 			background-image: url(/skins/oasis/images/sprite.png);	/* $wgCdnStylePath */
-			background-position: top right;
+			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: "";
 			display: inline-block;
 			height: 16px;
-			padding: 0px 3px 0 0;
+			margin-left: 3px;
 			vertical-align: text-top;
 			width: 10px;
 		}
@@ -550,5 +550,12 @@
 .ArticlePreviewInner h1.pagetitle {
 	word-wrap: break-word;
 	line-height: 1.2em;
+}
+
+// Change overflow on article when VisualEditor is being used
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaArticle {
+	overflow: visible;
+	z-index: auto;
 }
 

@@ -11,14 +11,14 @@
  */
 ve.dm.WikiaCart = function VeDmWikiaCart() {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	this.items = [];
 };
 
 /* Inheritance */
 
-ve.mixinClass( ve.dm.WikiaCart, ve.EventEmitter );
+OO.mixinClass( ve.dm.WikiaCart, OO.EventEmitter );
 
 /* Methods */
 

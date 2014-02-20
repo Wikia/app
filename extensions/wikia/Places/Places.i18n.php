@@ -81,6 +81,13 @@ $messages['ar'] = array(
 	'places-category-switch-off' => 'تمكين تحديد الموقع الجغرافي',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'places-geolocation-modal-error-title' => 'Xəta',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D

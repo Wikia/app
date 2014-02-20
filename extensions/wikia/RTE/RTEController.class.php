@@ -12,10 +12,7 @@ class RTEController extends WikiaController {
 		$requestedCb = $this->request->getVal('cb');
 		$key = $currentCb == $requestedCb ? 'versioned' : 'unversioned';
 
-		$this->response->setCacheValidity(null,$wgResourceLoaderMaxage[$key]['client'],
-			array(WikiaResponse::CACHE_TARGET_VARNISH));
-		$this->response->setCacheValidity(null,$wgResourceLoaderMaxage[$key]['server'],
-			array(WikiaResponse::CACHE_TARGET_BROWSER));
+		$this->response->setCacheValidity($wgResourceLoaderMaxage[$key]['server']. $wgResourceLoaderMaxage[$key]['client']);
 	}
 
 }

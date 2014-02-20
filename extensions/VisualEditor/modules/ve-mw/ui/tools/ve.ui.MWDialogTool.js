@@ -11,13 +11,13 @@
  * @class
  * @extends ve.ui.DialogTool
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWMediaEditDialogTool = function VeUiMWMediaEditDialogTool( toolbar, config ) {
-	ve.ui.DialogTool.call( this, toolbar, config );
+ve.ui.MWMediaEditDialogTool = function VeUiMWMediaEditDialogTool( toolGroup, config ) {
+	ve.ui.DialogTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.MWMediaEditDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.MWMediaEditDialogTool, ve.ui.DialogTool );
 ve.ui.MWMediaEditDialogTool.static.name = 'mediaEdit';
 ve.ui.MWMediaEditDialogTool.static.group = 'object';
 ve.ui.MWMediaEditDialogTool.static.icon = 'picture';
@@ -34,13 +34,13 @@ ve.ui.toolFactory.register( ve.ui.MWMediaEditDialogTool );
  * @extends ve.ui.DialogTool
  *
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWMediaInsertDialogTool = function VeUiMWMediaInsertDialogTool( toolbar, config ) {
-	ve.ui.DialogTool.call( this, toolbar, config );
+ve.ui.MWMediaInsertDialogTool = function VeUiMWMediaInsertDialogTool( toolGroup, config ) {
+	ve.ui.DialogTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.MWMediaInsertDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.MWMediaInsertDialogTool, ve.ui.DialogTool );
 ve.ui.MWMediaInsertDialogTool.static.name = 'mediaInsert';
 ve.ui.MWMediaInsertDialogTool.static.group = 'object';
 ve.ui.MWMediaInsertDialogTool.static.icon = 'picture';
@@ -55,13 +55,13 @@ ve.ui.toolFactory.register( ve.ui.MWMediaInsertDialogTool );
  * @extends ve.ui.DialogTool
  *
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceDialogTool = function VeUiMWReferenceDialogTool( toolbar, config ) {
-	ve.ui.DialogTool.call( this, toolbar, config );
+ve.ui.MWReferenceDialogTool = function VeUiMWReferenceDialogTool( toolGroup, config ) {
+	ve.ui.DialogTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.MWReferenceDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.MWReferenceDialogTool, ve.ui.DialogTool );
 ve.ui.MWReferenceDialogTool.static.name = 'reference';
 ve.ui.MWReferenceDialogTool.static.group = 'object';
 ve.ui.MWReferenceDialogTool.static.icon = 'reference';
@@ -76,13 +76,13 @@ ve.ui.toolFactory.register( ve.ui.MWReferenceDialogTool );
  * @class
  * @extends ve.ui.DialogTool
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceListDialogTool = function VeUiMWReferenceListDialogTool( toolbar, config ) {
-	ve.ui.DialogTool.call( this, toolbar, config );
+ve.ui.MWReferenceListDialogTool = function VeUiMWReferenceListDialogTool( toolGroup, config ) {
+	ve.ui.DialogTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.MWReferenceListDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.MWReferenceListDialogTool, ve.ui.DialogTool );
 ve.ui.MWReferenceListDialogTool.static.name = 'referenceList';
 ve.ui.MWReferenceListDialogTool.static.group = 'object';
 ve.ui.MWReferenceListDialogTool.static.icon = 'references';
@@ -98,13 +98,13 @@ ve.ui.toolFactory.register( ve.ui.MWReferenceListDialogTool );
  * @class
  * @extends ve.ui.DialogTool
  * @constructor
- * @param {ve.ui.Toolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWTransclusionDialogTool = function VeUiMWTransclusionDialogTool( toolbar, config ) {
-	ve.ui.DialogTool.call( this, toolbar, config );
+ve.ui.MWTransclusionDialogTool = function VeUiMWTransclusionDialogTool( toolGroup, config ) {
+	ve.ui.DialogTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.MWTransclusionDialogTool, ve.ui.DialogTool );
+OO.inheritClass( ve.ui.MWTransclusionDialogTool, ve.ui.DialogTool );
 ve.ui.MWTransclusionDialogTool.static.name = 'transclusion';
 ve.ui.MWTransclusionDialogTool.static.group = 'object';
 ve.ui.MWTransclusionDialogTool.static.icon = 'template';
@@ -114,3 +114,67 @@ ve.ui.MWTransclusionDialogTool.static.dialog = 'transclusion';
 ve.ui.MWTransclusionDialogTool.static.modelClasses = [ ve.dm.MWTransclusionNode ];
 ve.ui.toolFactory.register( ve.ui.MWTransclusionDialogTool );
 
+/**
+ * MediaWiki UserInterface categories tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ * @constructor
+ * @param {OO.ui.Toolbar} toolbar
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.MWMetaDialogTool = function VeUiMWMetaDialogTool( toolbar, config ) {
+	ve.ui.DialogTool.call( this, toolbar, config );
+};
+OO.inheritClass( ve.ui.MWMetaDialogTool, ve.ui.DialogTool );
+ve.ui.MWMetaDialogTool.static.name = 'meta';
+ve.ui.MWMetaDialogTool.static.group = 'utility';
+ve.ui.MWMetaDialogTool.static.icon = 'settings';
+ve.ui.MWMetaDialogTool.static.titleMessage = 'visualeditor-meta-tool';
+ve.ui.MWMetaDialogTool.static.dialog = 'meta';
+ve.ui.MWMetaDialogTool.static.autoAdd = false;
+ve.ui.toolFactory.register( ve.ui.MWMetaDialogTool );
+
+/**
+ * MediaWiki UserInterface categories tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ * @constructor
+ * @param {OO.ui.Toolbar} toolbar
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.MWCategoriesDialogTool = function VeUiMWCategoriesDialogTool( toolbar, config ) {
+	ve.ui.DialogTool.call( this, toolbar, config );
+};
+OO.inheritClass( ve.ui.MWCategoriesDialogTool, ve.ui.DialogTool );
+ve.ui.MWCategoriesDialogTool.static.name = 'categories';
+ve.ui.MWCategoriesDialogTool.static.group = 'utility';
+ve.ui.MWCategoriesDialogTool.static.icon = 'tag';
+ve.ui.MWCategoriesDialogTool.static.titleMessage = 'visualeditor-categories-tool';
+ve.ui.MWCategoriesDialogTool.static.dialog = 'meta';
+ve.ui.MWCategoriesDialogTool.static.config = { 'page': 'categories' };
+ve.ui.MWCategoriesDialogTool.static.autoAdd = false;
+ve.ui.toolFactory.register( ve.ui.MWCategoriesDialogTool );
+
+/**
+ * MediaWiki UserInterface languages tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ * @constructor
+ * @param {OO.ui.Toolbar} toolbar
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.MWLanguagesDialogTool = function VeUiMWLanguagesDialogTool( toolbar, config ) {
+	ve.ui.DialogTool.call( this, toolbar, config );
+};
+OO.inheritClass( ve.ui.MWLanguagesDialogTool, ve.ui.DialogTool );
+ve.ui.MWLanguagesDialogTool.static.name = 'languages';
+ve.ui.MWLanguagesDialogTool.static.group = 'utility';
+ve.ui.MWLanguagesDialogTool.static.icon = 'language';
+ve.ui.MWLanguagesDialogTool.static.titleMessage = 'visualeditor-languages-tool';
+ve.ui.MWLanguagesDialogTool.static.dialog = 'meta';
+ve.ui.MWLanguagesDialogTool.static.config = { 'page': 'languages' };
+ve.ui.MWLanguagesDialogTool.static.autoAdd = false;
+ve.ui.toolFactory.register( ve.ui.MWLanguagesDialogTool );

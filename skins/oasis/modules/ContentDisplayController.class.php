@@ -40,11 +40,6 @@ class ContentDisplayController extends WikiaController {
 
 		$class = 'editsection';
 
-		// RT#84733 - prompt to login if the user is an anon and can't edit right now (protected pages and wgDisableAnonymousEditing wikis).
-		if ( !$title->userCan('edit') && $wgUser->isAnon() ) {
-			$class .= " loginToEditProtectedPage";
-		}
-
 		$result .= Xml::openElement( 'span', array( 'class' => $class ) );
 		$result .= Xml::openElement( 'a', array(
 			'href' => $editUrl,

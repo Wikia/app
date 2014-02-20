@@ -10,14 +10,14 @@
  *
  * @abstract
  * @class
- * @extends ve.ui.Tool
+ * @extends OO.ui.Tool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.FormatTool = function VeUiFormatTool( toolbar, config ) {
+ve.ui.FormatTool = function VeUiFormatTool( toolGroup, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar, config );
+	OO.ui.Tool.call( this, toolGroup, config );
 
 	// Properties
 	this.convertible = false;
@@ -25,7 +25,7 @@ ve.ui.FormatTool = function VeUiFormatTool( toolbar, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.FormatTool, ve.ui.Tool );
+OO.inheritClass( ve.ui.FormatTool, OO.ui.Tool );
 
 /**
  * Format the tool applies.
@@ -50,6 +50,7 @@ ve.ui.FormatTool.prototype.onSelect = function () {
 	var format = this.constructor.static.format;
 
 	if ( this.convertible ) {
+		ve.track( 'tool.format.select', { name: this.constructor.static.name } );
 		this.toolbar.getSurface().execute( 'format', 'convert', format.type, format.attributes );
 	}
 };
@@ -83,13 +84,13 @@ ve.ui.FormatTool.prototype.onUpdateState = function ( nodes ) {
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.ParagraphFormatTool = function VeUiParagraphFormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.ParagraphFormatTool = function VeUiParagraphFormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.ParagraphFormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.ParagraphFormatTool, ve.ui.FormatTool );
 ve.ui.ParagraphFormatTool.static.name = 'paragraph';
 ve.ui.ParagraphFormatTool.static.group = 'format';
 ve.ui.ParagraphFormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-paragraph';
@@ -102,13 +103,13 @@ ve.ui.toolFactory.register( ve.ui.ParagraphFormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading1FormatTool = function VeUiHeading1FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading1FormatTool = function VeUiHeading1FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading1FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading1FormatTool, ve.ui.FormatTool );
 ve.ui.Heading1FormatTool.static.name = 'heading1';
 ve.ui.Heading1FormatTool.static.group = 'format';
 ve.ui.Heading1FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading1';
@@ -121,13 +122,13 @@ ve.ui.toolFactory.register( ve.ui.Heading1FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading2FormatTool = function VeUiHeading2FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading2FormatTool = function VeUiHeading2FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading2FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading2FormatTool, ve.ui.FormatTool );
 ve.ui.Heading2FormatTool.static.name = 'heading2';
 ve.ui.Heading2FormatTool.static.group = 'format';
 ve.ui.Heading2FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading2';
@@ -140,13 +141,13 @@ ve.ui.toolFactory.register( ve.ui.Heading2FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading3FormatTool = function VeUiHeading3FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading3FormatTool = function VeUiHeading3FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading3FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading3FormatTool, ve.ui.FormatTool );
 ve.ui.Heading3FormatTool.static.name = 'heading3';
 ve.ui.Heading3FormatTool.static.group = 'format';
 ve.ui.Heading3FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading3';
@@ -159,13 +160,13 @@ ve.ui.toolFactory.register( ve.ui.Heading3FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading4FormatTool = function VeUiHeading4FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading4FormatTool = function VeUiHeading4FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading4FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading4FormatTool, ve.ui.FormatTool );
 ve.ui.Heading4FormatTool.static.name = 'heading4';
 ve.ui.Heading4FormatTool.static.group = 'format';
 ve.ui.Heading4FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading4';
@@ -178,13 +179,13 @@ ve.ui.toolFactory.register( ve.ui.Heading4FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading5FormatTool = function VeUiHeading5FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading5FormatTool = function VeUiHeading5FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading5FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading5FormatTool, ve.ui.FormatTool );
 ve.ui.Heading5FormatTool.static.name = 'heading5';
 ve.ui.Heading5FormatTool.static.group = 'format';
 ve.ui.Heading5FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading5';
@@ -197,13 +198,13 @@ ve.ui.toolFactory.register( ve.ui.Heading5FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.Heading6FormatTool = function VeUiHeading6FormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.Heading6FormatTool = function VeUiHeading6FormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.Heading6FormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.Heading6FormatTool, ve.ui.FormatTool );
 ve.ui.Heading6FormatTool.static.name = 'heading6';
 ve.ui.Heading6FormatTool.static.group = 'format';
 ve.ui.Heading6FormatTool.static.titleMessage = 'visualeditor-formatdropdown-format-heading6';
@@ -216,13 +217,13 @@ ve.ui.toolFactory.register( ve.ui.Heading6FormatTool );
  * @class
  * @extends ve.ui.FormatTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.PreformattedFormatTool = function VeUiPreformattedFormatTool( toolbar, config ) {
-	ve.ui.FormatTool.call( this, toolbar, config );
+ve.ui.PreformattedFormatTool = function VeUiPreformattedFormatTool( toolGroup, config ) {
+	ve.ui.FormatTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.PreformattedFormatTool, ve.ui.FormatTool );
+OO.inheritClass( ve.ui.PreformattedFormatTool, ve.ui.FormatTool );
 ve.ui.PreformattedFormatTool.static.name = 'preformatted';
 ve.ui.PreformattedFormatTool.static.group = 'format';
 ve.ui.PreformattedFormatTool.static.titleMessage =
