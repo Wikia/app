@@ -2209,6 +2209,7 @@ class WallHooksHelper {
 				$urls[] = $wallMessage->getMessagePageUrl( true );
 			} else {
 				$wallMessage = $wallMessage->getTopParentObj();
+				$wallMessage->load( true );
 				$urls[] = $wallMessage->getMessagePageUrl( true );
 			}
 
