@@ -20,7 +20,7 @@ class SearchApiController extends WikiaApiController {
 
 	public function getKeyword() {
 
-		$query = $this->request->getVal( "q", null );
+		$query = $this->request->getArray( "q", null );
 		$mode = $this->request->getVal( "mode", "default" );
 
 		$kwSearch = new Wikia\Search\KeywordSearch();
