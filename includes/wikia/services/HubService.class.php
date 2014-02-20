@@ -147,7 +147,7 @@ class HubService extends Service {
 	 * @return bool
 	 */
 	public static function isHubPage() {
-		return ( self::isCorporatePage() && F::app()->wg->EnableWikiaHubsV3Ext );
+		return ( F::app()->wg->EnableWikiaHubsV3Ext );
 	}
 
 	/**
