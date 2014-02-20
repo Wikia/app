@@ -11,9 +11,7 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		$isHubPage = HubService::isHubPage();
-
-		if( $isHubPage && !self::isOffShotPage($title) ) {
+		if( HubService::isHubMainPage() ) { /* TODO decide what to do with offshots*/
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();
@@ -29,7 +27,7 @@ class WikiaHubsV3Hooks {
 				$article = new WikiaHubsV3Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
 			}
 		}
-
+/*
 		if( $isHubPage && self::isOffShotPage($title) ) {
 			OasisController::addBodyClass('WikiaHubPage');
 
@@ -37,7 +35,7 @@ class WikiaHubsV3Hooks {
 			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV3/css/WikiaHubsV3.scss'));
 
 		}
-
+*/
 		wfProfileOut(__METHOD__);
 		return true;
 
