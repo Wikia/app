@@ -12,7 +12,7 @@ define('videosmodule.views.rail', [
 		track;
 
 	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-bottom',
+		// category: 'videos-module-bottom',
 		trackingMethod: 'ga',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
@@ -21,23 +21,24 @@ define('videosmodule.views.rail', [
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
 
+
 	function VideoModule(options) {
-		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
-		// not the wrapper for the videos module. We can update this after the A/B testing is over.
+		// this.el is the container for the right rail videos module
 		this.el = options.el;
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
 		// Make sure we're on an article page
-		if (this.articleId) {
+		if (this.articleId && testCase.testGroup === 'VIDEOS_MODULE_RAIL') {
 			this.init();
 		}
 	}
 
 	VideoModule.prototype.init = function() {
 		var self = this;
-		this.data = this.model.fetch( true );
+		this.data = this.model.fetch(true);
+		this.$el.show();
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth({
 			on: this.el,
@@ -79,8 +80,10 @@ define('videosmodule.views.rail', [
 				.$el);
 		}
 
-		this.$el.find('.thumbnails').append(thumbHtml);
-		track();
+		this.$el.find('.thumbnails')
+			.append(thumbHtml);
+		// Tracking not implemented this ticket
+		// track();
 	};
 
 	return VideoModule;
