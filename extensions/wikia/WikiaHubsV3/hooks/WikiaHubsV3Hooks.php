@@ -11,7 +11,7 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( HubService::isHubMainPage() ) { /* TODO decide what to do with offshots*/
+		if( WikiaPageType::isWikiaHubMain() ) { /* TODO decide what to do with offshots */
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();
@@ -72,7 +72,7 @@ class WikiaHubsV3Hooks {
 				$dbKeyNameSplit = explode('/', $dbKeyName);
 				$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-				if ( HubService::isHubPage() && isset($dbKeyNameSplit[1])) {
+				if ( WikiaPageType::isWikiaHub() && isset($dbKeyNameSplit[1])) {
 					$url = $model->getCanonicalHrefForHub($hubName, $url);
 				}
 			}
@@ -101,7 +101,7 @@ class WikiaHubsV3Hooks {
 			$model = new WikiaHubsV3HooksModel();
 			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
-			if( HubService::isHubPage() && self::isOffShotPage($title) ) {
+			if( WikiaPageType::isWikiaHub() && self::isOffShotPage($title) ) {
 				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
 			}
 		}

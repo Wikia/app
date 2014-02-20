@@ -318,8 +318,6 @@ class BodyController extends WikiaController {
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = WikiaPageType::isMainPage();
-		$this->isHubMainPage = HubService::isHubMainPage();
 
 		$this->displayHeaderButtons = true;
 
@@ -355,7 +353,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogListing';
 			}
 		// show corporate header on this page?
-		} else if( HubService::isCorporatePage() || HubService::isHubPage()) {
+		} else if( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub()) {
 			$this->headerModuleName = 'PageHeader';
 
 			if( self::isEditPage() ) {
@@ -364,12 +362,12 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
-			if ( $this->isHubMainPage ) {
+			if ( WikiaPageType::isWikiaHubMain() ) {
 				$this->displayHeaderButtons = false;
 				$this->headerModuleAction = 'Hubs';
 			}
 			// FIXME: move to separate module
-			elseif( $this->isMainPage ) {
+			elseif( WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;

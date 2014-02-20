@@ -414,7 +414,7 @@ class AdEngine2Controller extends WikiaController {
 		// generic type of page: forum/search/article/home/...
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
-		$vars['wikiaPageIsWikiaHomePage'] = !empty( $wgEnableWikiaHomePageExt ) && WikiaPageType::isMainPage();
+		$vars['wikiaPageIsWikiaHomePage'] = WikiaPageType::isWikiaHomePage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);
