@@ -13,12 +13,12 @@ define( 'videosmodule.views.bottomModule', [
 		groupParams,
 		track;
 
-	track = Tracker.buildTrackingFunction({
+	track = Tracker.buildTrackingFunction( {
 		category: 'videos-module-bottom',
 		trackingMethod: 'ga',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
-	});
+	} );
 
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
@@ -66,7 +66,7 @@ define( 'videosmodule.views.bottomModule', [
 			$out,
 			videos = this.model.data.videos,
 			len = videos.length,
-			thumbHtml = [];
+			instance;
 
 		// If no videos are returned from the server, don't render anything
 		if ( !len ) {
@@ -76,24 +76,26 @@ define( 'videosmodule.views.bottomModule', [
 		// AB test set rows shown
 		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
 
-		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {
-			thumbHtml.push( new TitleThumbnailView( {
-				el: 'li',
-				model: videos[i],
-				idx: i
-			} ).render().$el );
-		}
-
 		$out = $( Mustache.render( templates.bottomModule, {
 			title: $.msg( 'videosmodule-title-default' )
 		} ) );
-
-		$out.find( '.thumbnails' ).append( thumbHtml );
 
 		if ( groupParams.position === 1 ) {
 			this.$el.after( $out );
 		} else {
 			this.$el.before( $out );
+		}
+
+		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {
+			instance = new TitleThumbnailView( {
+				el: 'li',
+				model: videos[i],
+				idx: i
+			} ).render();
+			$out.find( '.thumbnails' ).append( instance.$el );
+			instance.applyEllipses( {
+				wordsHidden: 2
+			} );
 		}
 
 		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
