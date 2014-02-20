@@ -9,7 +9,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		$firstSection = $( 'h2[id]' ).first(),
 		$footer = $( '#wkMainCntFtr' ),
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
-		shouldShowAds = window.navigator.userAgent.indexOf( 'sony_tvs' ) === -1,
+		shouldShowAds = window.wgArticleId && window.navigator.userAgent.indexOf( 'sony_tvs' ) === -1,
 		shouldShowInContent = sections.isSectionLongerThan( 0, MIN_ZEROTH_SECTION_LENGTH ),
 		shouldShowBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
 		div,
@@ -72,7 +72,9 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		}
 
 	} else {
-		topAdWrapper.className = 'hide';
+		if ( topAdWrapper ) {
+			topAdWrapper.className = 'hide';
+		}
 		log( 'Ads blocked by UA', logLevel, logGroup );
 	}
 
