@@ -13,20 +13,20 @@
  * @extends ve.ui.MWDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( surface, config ) {
+ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( windowSet, config ) {
 	// Configuration initialization
 	config = ve.extendObject( { 'small': true, 'footless': false }, config );
 
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.MWDialog.call( this, windowSet, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -39,6 +39,16 @@ ve.ui.MWBetaWelcomeDialog.static.icon = 'help';
 /* Methods */
 
 /**
+ * Get the title of the window.
+ *
+ * Send the MediaWiki username along with the message for {{GENDER:}} i18n support
+ * @returns {string} Window title
+ */
+ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
+	return ve.msg( this.constructor.static.titleMessage, mw.user );
+};
+
+/**
  * @inheritdoc
  */
 ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
@@ -46,40 +56,26 @@ ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
-	this.contentLayout = new ve.ui.PanelLayout( {
-		'$$': this.frame.$$,
+	this.contentLayout = new OO.ui.PanelLayout( {
+		'$': this.$,
 		'scrollable': true,
 		'padded': true
 	} );
-	this.continueButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
+	this.continueButton = new OO.ui.PushButtonWidget( {
+		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' ),
 		'flags': ['primary']
 	} );
 
 	// Events
-	this.continueButton.connect( this, { 'click': [ 'close', 'close' ] } );
+	this.continueButton.connect( this, { 'click': [ 'close', { 'action': 'close' } ] } );
 
 	// Initialization
-	this.contentLayout.$
+	this.contentLayout.$element
 		.addClass( 've-ui-mwBetaWelcomeDialog-content' )
 		.text( ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() ) );
-	this.$body.append( this.contentLayout.$ );
-	this.$foot.append( this.continueButton.$ );
-};
-
-/**
- * Get the title of the window.
- *
- * Send the MediaWiki username along with the message for {{GENDER:}} i18n support
- * @returns {string} Window title
- */
-ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
-	var userName = mw.config.get( 'wgUserName' );
-	if ( !userName ) {
-		userName = ''; // Make sure 'null' and 'undefined' are sent as empty string
-	}
-	return ve.msg( this.constructor.static.titleMessage, userName );
+	this.$body.append( this.contentLayout.$element );
+	this.$foot.append( this.continueButton.$element );
 };
 
 /* Registration */

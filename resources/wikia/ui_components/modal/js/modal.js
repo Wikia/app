@@ -12,13 +12,17 @@ define( 'wikia.ui.modal', [
 	// constants for modal component
 	var BLACKOUT_ID = 'blackout',
 		BLACKOUT_VISIBLE_CLASS = 'visible',
+		BODY_WITH_BLACKOUT_CLASS = 'with-blackout',
+		FAKE_SCROLLBAR_CLASS = 'fake-scrollbar',
 		CLOSE_CLASS = 'close',
 		INACTIVE_CLASS = 'inactive',
 
 		// vars required for disable scroll behind modal
-		$bodyElm = $( 'body' ),
+		$wrapper = $( '.WikiaSiteWrapper' ),
 		$win = $( w ),
 		wScrollTop,
+
+		$body = $( w.document.body ),
 
 		// default modal rendering params
 		modalDefaults = {
@@ -90,14 +94,15 @@ define( 'wikia.ui.modal', [
 	function blockPageScrolling() {
 
 		// prevent page from jumping to right if vertical scroll bar exist
-		if ( $bodyElm.height() > $win.height() ) {
-			$bodyElm.addClass( 'fake-scrollbar' );
+		if ( $wrapper.height() > $win.height() ) {
+			$wrapper.addClass( FAKE_SCROLLBAR_CLASS );
 		}
 
 		// set current page vertical position
 		wScrollTop = $win.scrollTop();
 
-		$bodyElm.addClass( 'with-blackout' ).css( 'top', -wScrollTop );
+		$body.addClass( BODY_WITH_BLACKOUT_CLASS );
+		$wrapper.css( 'top', -wScrollTop );
 	}
 
 	/**
@@ -105,7 +110,8 @@ define( 'wikia.ui.modal', [
 	 */
 
 	function unblockPageScrolling() {
-		$bodyElm.removeClass( 'with-blackout fake-scrollbar').css( 'top', 'auto' );
+		$body.removeClass( BODY_WITH_BLACKOUT_CLASS );
+		$wrapper.removeClass( FAKE_SCROLLBAR_CLASS ).css( 'top', 'auto' );
 		$win.scrollTop( wScrollTop );
 	}
 
@@ -161,7 +167,7 @@ define( 'wikia.ui.modal', [
 		params = $.extend( true, {}, modalDefaults, params );
 
 		// render modal markup and append to DOM
-		$( 'body' ).append( uiComponent.render( params ) );
+		$body.append( uiComponent.render( params ) );
 
 		// cache jQuery selectors for different parts of modal
 		this.$element = $( jQuerySelector );
@@ -204,7 +210,7 @@ define( 'wikia.ui.modal', [
 				function() {
 					that.trigger( 'beforeClose').then( $.proxy( function() {
 						// number of active modals on page
-						var activeModalsNumb = $bodyElm.children( '.modal-blackout' ).length;
+						var activeModalsNumb = $body.children( '.modal-blackout' ).length;
 
 						that.$blackout.remove();
 
@@ -225,7 +231,7 @@ define( 'wikia.ui.modal', [
 	Modal.prototype.show = function() {
 
 		// block background only if not modal in scenario
-		if ( $bodyElm.hasClass( 'fake-scrollbar' ) === false ) {
+		if ( $wrapper.hasClass( FAKE_SCROLLBAR_CLASS ) === false ) {
 			blockPageScrolling();
 		}
 

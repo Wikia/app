@@ -97,7 +97,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+		$userIdentityBox = new UserIdentityBox( $user );
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
 		if ($isUserPageOwner) {
@@ -414,7 +414,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 
 			if (!empty($userData->website) && 0 !== strpos($userData->website, 'http')) {
 				$userData->website = 'http://' . $userData->website;
@@ -739,13 +739,12 @@ class UserProfilePageController extends WikiaController {
 			 * @var $oAvatarObj Masthead
 			 */
 			$oAvatarObj = Masthead::newFromUser($user);
-			$oAvatarObj->purgeUrl();
 			$localPath = $this->getLocalPath($user);
 			$errorNo = $oAvatarObj->uploadByUrl($url);
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 			$userData = $userIdentityBox->getFullData();
 			$userData['avatar'] = $localPath;
 			$userIdentityBox->saveUserData($userData);
@@ -826,7 +825,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+		$userIdentityBox = new UserIdentityBox( $user );
 
 		$userData = $userIdentityBox->getFullData();
 
@@ -1027,7 +1026,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+			$userIdentityBox = new UserIdentityBox( $user );
 			$success = $userIdentityBox->hideWiki($wikiId);
 
 			$result = array('success' => $success, 'wikis' => $userIdentityBox->getTopWikis());
@@ -1042,14 +1041,12 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
-		$userId = intval($this->getVal('userId'));
+		$userId = intval( $this->getVal( 'userId' ) );
+		$user = User::newFromId( $userId );
+		$userIdentityBox = new UserIdentityBox( $user );
+		$result = array( 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) );
 
-		$user = User::newFromId($userId);
-
-		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
-		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
-
-		$this->setVal('result', $result);
+		$this->setVal( 'result', $result );
 	}
 
 	public function getClosingModal() {

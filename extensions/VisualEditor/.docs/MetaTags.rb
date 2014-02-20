@@ -1,3 +1,4 @@
+# Extra meta tags for JSDuck 5+
 # See also:
 # - https://github.com/senchalabs/jsduck/wiki/Tags
 # - https://github.com/senchalabs/jsduck/wiki/Custom-tags
@@ -86,16 +87,17 @@ class ContextTag < JsDuck::MetaTag
   end
 end
 
-class EmitsTag < JsDuck::MetaTag
+# As of JSDuck 5 this is in core
+class FiresTag < JsDuck::MetaTag
   def initialize
-    @name = 'emits'
+    @name = 'fires'
     @multiline = true
   end
 
   # @param tags All matches of this tag on one class.
   def to_html(tags)
     doc = []
-    doc << '<h3 class="pa">Emits</h3>'
+    doc << '<h3 class="pa">Fires</h3>'
     doc << [
         '<ul>',
         tags.map {|tag| render_long_event(tag) },

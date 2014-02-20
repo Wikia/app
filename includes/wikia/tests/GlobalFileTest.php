@@ -11,6 +11,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	const POZNAN_CITY_ID = 5915; # poznan.wikia.com
 
 	const DEFAULT_CB = 123456789;
+	const TIMESTAMP = '20111213221639';
 
 	public function setUp() {
 		parent::setUp();
@@ -67,7 +68,7 @@ class GlobalFileTest extends WikiaBaseTest {
 					'img_height' => '450',
 					'img_major_mime' => 'image',
 					'img_minor_mime' => 'jpeg',
-					'img_timestamp' => '20111213221639',
+					'img_timestamp' => self::TIMESTAMP,
 				],
 				'cityId' => self::POZNAN_CITY_ID,
 				'path' => 'poznan/pl',
@@ -76,7 +77,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 450,
 				'crop' => '200px-76%2C527%2C0%2C450-Gzik.jpg',
 				'mime' => 'image/jpeg',
-				'url' => 'http://images3.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/0/06/Gzik.jpg',
+				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/poznan/pl/images/0/06/Gzik.jpg',
 			],
 			// existing image from Muppet wiki
 			[
@@ -85,7 +86,7 @@ class GlobalFileTest extends WikiaBaseTest {
 					'img_height' => '300',
 					'img_major_mime' => 'image',
 					'img_minor_mime' => 'png',
-					'img_timestamp' => '20111213221639',
+					'img_timestamp' => self::TIMESTAMP,
 				],
 				'cityId' => self::MUPPET_CITY_ID,
 				'path' => 'muppet',
@@ -94,7 +95,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 300,
 				'crop' => '200px-0%2C301%2C0%2C300-Gzik.jpg',
 				'mime' => 'image/png',
-				'url' => 'http://images4.wikia.nocookie.net/__cb20111213221641/muppet/images/0/06/Gzik.jpg',
+				'url' => 'http://images4.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/muppet/images/0/06/Gzik.jpg',
 			],
 			// not existing image from Poznań wiki
 			[
@@ -106,7 +107,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => null,
 				'crop' => null,
 				'mime' => null,
-				'url' => 'http://images3.wikia.nocookie.net/__cb123456791/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
+				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
 			]
 		];
 	}

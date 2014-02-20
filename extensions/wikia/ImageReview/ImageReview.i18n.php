@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'imagereview-desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
 	'imagereview-reason' => "Violation of Wikia's [[wikia:Terms of Use|Terms of Use]]",
 	'imagereview-header' => 'Images awaiting review',
 	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
@@ -32,6 +33,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'imagereview-desc' => '{{desc}}',
 	'imagereview-label-ok' => 'Label tooltip content for option to mark an image as OK.',
 	'imagereview-label-delete' => 'Label tooltip content for option to mark an image for deletion.',
 	'imagereview-label-questionable' => 'Label tooltip content for option to mark an image as questionable.',

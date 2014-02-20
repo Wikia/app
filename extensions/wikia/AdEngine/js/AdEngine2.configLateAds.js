@@ -33,7 +33,7 @@
 		return window.Liftium.callInjectedIframeAd(sizeOrSlot, iframeElement, placement);
 	};
 
-	adTracker = AdTracker(log, tracker);
+	adTracker = AdTracker(log, tracker, window);
 	dartUrl = DartUrl();
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps

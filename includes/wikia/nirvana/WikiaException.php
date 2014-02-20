@@ -55,6 +55,7 @@ class WikiaException extends WikiaBaseException {
 		parent::__construct( $message, $code, $previous );
 
 		// log more details (macbre)
+		Wikia::log( 'exceptions-WIKIA', get_class($this), $message, true );
 		Wikia::logBacktrace( __METHOD__ );
 	}
 }

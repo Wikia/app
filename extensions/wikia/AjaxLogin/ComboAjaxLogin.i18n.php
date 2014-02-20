@@ -213,8 +213,11 @@ $messages['bho'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'comboajaxlogin-createlog' => 'প্রবেশ করুন অথবা নতুন অ্যকাউন্ট তৈরি করুন',
+	'comboajaxlogin-actionmsg' => 'এই কাজটি সফল করার জন্য আপনাকে প্রথমে প্রবেশ করতে হবে অথবা নতুন অ্যাকাউন্ট তৈরি করতে হবে।',
 	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
 	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
 );
@@ -1107,6 +1110,7 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'comboajaxlogin-desc' => 'Petak dinamik yang membolehkan pengguna log masuk, ingatkan kata laluan dan daftarkan pengguna',
@@ -1125,8 +1129,8 @@ $messages['ms'] = array(
 <li>Simpan nama pengguna semasa, sejarah, suntingan anda dsb... tiada apa yang berubah selain cara anda log masuk</li>
 <li>Kongsikan kegiatan anda di Wikia dengan rakan-rakan anda Facebook, dengan mengawal sepenuhnya apa yang diterbitkan</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
-	'comboajaxlogin-connectmarketing-forward' => 'Mulakan &raquo;',
+	'comboajaxlogin-connectmarketing-back' => '« Kembali',
+	'comboajaxlogin-connectmarketing-forward' => 'Mulakan »',
 	'comboajaxlogin-connectdirections' => 'Taipkan nama pengguna dan kata laluan Wikia anda di sini – kami akan menyambungkan akaun-akaun Wikia dan Facebook secara automatik.
 
 Selepas siap, anda boleh log masuk dengan mudah dengan menekan mana-mana butang Facebook Connect.',

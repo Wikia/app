@@ -2,7 +2,7 @@
 <project name="Wikia QA" default="all" basedir=".">
     <description>Wikia QA Tests</description>
 
-    <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
+    <property name="localsettings" value="/usr/wikia/source/wiki/LocalSettings.php" />
     <property name="phpunitexcludegroups" value="deprecated,Broken" />
     <property name="dbname" value="firefly" />
 

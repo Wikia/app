@@ -8,7 +8,7 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Checks if given File is video
-	 * @param WikiaLocalFile|Title $file object or Title object eventually
+	 * @param File|Title $file object or Title object eventually
 	 * @return boolean
 	 */
 	public static function isFileTypeVideo( $file ) {
@@ -21,7 +21,7 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Check if the file is video
-	 * @param LocalFile $file
+	 * @param File $file
 	 * @return boolean
 	 */
 	public static function isVideoFile( $file ) {
@@ -47,7 +47,7 @@ class WikiaFileHelper extends Service {
 	}
 
 
-	public static function getTitle( $mTitle ){
+	public static function getTitle( $mTitle ) {
 		if ( !( $mTitle instanceof Title ) ) {
 
 			$mTitle = Title::newFromText( $mTitle );
@@ -185,13 +185,20 @@ class WikiaFileHelper extends Service {
 	 * get html for video info overlay
 	 * @param integer $width
 	 * @param Title|string $title
+	 * @param Boolean $showViews
 	 * @return string
 	 */
-	public static function videoInfoOverlay( $width, $title = null ) {
+	public static function videoInfoOverlay( $width, $title = null, $showViews = false ) {
 		$html = '';
 		if ( $width > 230 && !empty( $title ) ) {
 			$file = self::getFileFromTitle( $title );
 			if ( !empty( $file ) ) {
+				// info
+				$attribs = [
+					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
+				];
+
 				// video title
 				$contentWidth = $width - 60;
 				$videoTitle = $title->getText();
@@ -214,15 +221,12 @@ class WikiaFileHelper extends Service {
 
 				// video views
 				$videoTitle = $title->getDBKey();
-				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-				$content .= self::videoOverlayViews( $views );
-				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
-
-				// info
-				$attribs = array(
-					"class" => "info-overlay",
-					"style" => "width: {$width}px;"
-				);
+				if ( $showViews ) {
+					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
+					$content .= self::videoOverlayViews( $views );
+					$attribs['class'] .= " info-overlay-with-views";
+					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
+				}
 
 				$html = Xml::tags( 'span', $attribs, $content );
 			}
@@ -318,7 +322,7 @@ class WikiaFileHelper extends Service {
 	 * @param string $url
 	 * @return boolean
 	 */
-	public static function isUrlMatchThisWiki($url) {
+	public static function isUrlMatchThisWiki( $url ) {
 		return stripos( $url, F::app()->wg->server ) !== false;
 	}
 
@@ -328,7 +332,7 @@ class WikiaFileHelper extends Service {
 	 * @param string $url
 	 * @return boolean
 	 */
-	public static function isUrlMatchWikiaVideoRepo($url) {
+	public static function isUrlMatchWikiaVideoRepo( $url ) {
 		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
 
@@ -513,7 +517,7 @@ class WikiaFileHelper extends Service {
 	 * @param bool $force16x9Ratio
 	 * @return string|false
 	 */
-	public static function  getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
+	public static function getVideoThumbnailHtml( Title $title, $width=150, $height=75, $force16x9Ratio=false ) {
 		$arr = [];
 		self::inflateArrayWithVideoData( $arr, $title, $width, $height, $force16x9Ratio );
 		if ( !empty( $arr['thumbnail'] ) ) {
@@ -590,6 +594,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get file from title (Please be careful when using $force)
+	 *
+	 * Note: this method turns a string $title into an object, affecting the calling code version
+	 * of this variable
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
@@ -616,6 +624,10 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get video file from title (Please be careful when using $force)
+	 *
+	 * Note: this method calls getFileFromTitle which converts a string $title into a Title object.  This
+	 * conversion is propagated up to the calling code.
+	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
@@ -630,35 +642,19 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Parse a url for 'File' (or i18n'ed namespace) and send back the File object if it's found.
-	 * If the url has 'File' but the file name is not found in our system, send back an error message.
-	 * It could also just be a 3rd party URL (like youtube) in which case a generic status object is returned.
+	 * Check if a url is a wikia file by parsing it for 'File' (or i18n'ed namespace).
+	 * Return the title if found, otherwise null.
 	 *
 	 * @param $url String The URL of a video
-	 * @return Status
+	 * @return string|null
 	 */
-	public static function getWikiaFileFromUrl( $url ) {
-		$file = null;
-
-		// get the video name
+	public static function getWikiaFilename( $url ) {
 		$nsFileTranslated = F::app()->wg->ContLang->getNsText( NS_FILE );
-
-		// added $nsFileTransladed to fix bugId:#48874
-		$pattern = '/(File:|'.$nsFileTranslated.':)(.+)$/';
-
-		$hasMatch = preg_match( $pattern, urldecode( $url ), $matches );
-		if ( $hasMatch ) {
-			$file = wfFindFile( $matches[2] );
+		$pattern = '/(File|'.$nsFileTranslated.'):(.+)$/';
+		if ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			return $matches[2];
 		}
-
-		$status = Status::newGood();
-		if ( !empty( $file ) ) {
-			$status->setResult( true, $file );
-		} else if ( $hasMatch ) {
-			$status->warning( 'The supplied video does not exist' );
-		}
-
-		return $status;
+		return null;
 	}
 
 }

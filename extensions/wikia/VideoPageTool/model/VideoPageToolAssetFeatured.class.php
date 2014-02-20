@@ -5,10 +5,20 @@
  */
 class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
+	const SECTION = 'featured';
+
 	protected $title;
 	protected $displayTitle;
 	protected $description;
 	protected $altThumbTitle;
+
+	public static $defaultThumbOptions = [
+		'noLightbox' => true,
+		'useTemplate' => true,
+		'fluid' => true,
+		'hidePlayButton' => true,
+		'imgClass' => 'vpt-featured-thumbnail'
+	];
 
 	// required data field -- array( FormFieldName => varName )
 	protected static $dataFields = array(
@@ -20,7 +30,7 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 
 	/**
 	 * Get asset data (used in template)
-	 * @param array $thumbOptions
+	 * @param array $thumbOptions An optional array of options to pass to the thumbnailer
 	 * @return array An associative array of video metadata for the video named by $this->title
 	 *
 	 * The associative array data returned has the keys:
@@ -38,6 +48,10 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	 *     updatedAt       => Date this asset was last updated, e.g. "17:04, September 13, 2013"
 	 */
 	public function getAssetData( $thumbOptions = array() ) {
+
+		// Allow defaults to be overridden by options passed into us
+		$thumbOptions = array_merge( $this::$defaultThumbOptions, $thumbOptions );
+
 		$helper = new VideoPageToolHelper();
 		$data = $helper->getVideoData( $this->title, $this->altThumbTitle, $this->displayTitle, $this->description, $thumbOptions );
 		if ( empty( $data ) ) {

@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 class ParserSpeedHooks {
 
@@ -47,6 +48,14 @@ class ParserSpeedHooks {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
+
+		//Logging parser activity for monitoring
+		//wiki and article info are sent to logstash anyways so no need to repeat them here
+		WikiaLogger::instance()->info( "Parser execution", [
+			'parser_time'   => $parserOutput->getPerformanceStats( 'time' ),
+			'wikitext_size' => $parserOutput->getPerformanceStats( 'wikitextSize' ),
+			'skin_name'     => RequestContext::getMain()->getSkin()->getSkinName(),
+		]);
 
 		return true;
 	}

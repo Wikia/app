@@ -2,7 +2,7 @@
 /**
  * Integration test for file uploads and removals
  *
- * @group Integration
+ * @group Broken
  * @author macbre
  */
 class ImagesServiceUploadTest extends WikiaBaseTest {
@@ -10,8 +10,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 	const URL = 'http://upload.wikimedia.org/wikipedia/commons/d/d9/Eldfell%2C_Helgafell_and_the_fissure.jpg';
 	const REUPLOAD_URL = 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Atlantic_Puffin.jpg/320px-Atlantic_Puffin.jpg';
 	const PREFIX = 'QAImage';
-	const FILENAME = 'Test-$1.jpg';
-	#const FILENAME = 'Test%?ąę!-$1.jpg';
+	#const FILENAME = 'Test-$1.jpg';
+	const FILENAME = 'Test%?ąę!-$1.jpg';
 
 	private $origUser;
 	private $fileName;
@@ -116,10 +116,12 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->assertTrue($res !== false, 'File from <' . $url . '> should be uploaded');
 
 		file_put_contents( $tmpFile, $res );
+		$this->assertTrue( is_readable( $tmpFile ), 'Temp file for HTTP upload should be created and readable' );
 
+		Wikia::log(__METHOD__, false, sprintf('uploading %s (%.2f kB) as %s', $tmpFile, filesize($tmpFile) / 1024, $file->getName()), true);
 		$res = $file->upload( $tmpFile, $comment, '' );
 
-		unlink( $tmpFile );
+		#unlink( $tmpFile );
 		return $res;
 	}
 
@@ -160,6 +162,8 @@ class ImagesServiceUploadTest extends WikiaBaseTest {
 		$this->checkCrop( $file );
 
 		// (C) re-upload...
+		$file = new WikiaLocalFile( $target, RepoGroup::singleton()->getLocalRepo() );
+
 		$time = microtime( true );
 
 		$res = $this->uploadFromUrl( $file, self::REUPLOAD_URL, 'Reupload' );
