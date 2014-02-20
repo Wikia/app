@@ -51,7 +51,7 @@ define( 'videohomepage.views.carousel', [
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false,
-				afterMove: function() {
+				afterUpdate: function() {
 					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );
