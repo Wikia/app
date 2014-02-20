@@ -6,7 +6,7 @@ define( 'videosmodule.views.titleThumbnail', [
 
 	var track = Tracker.buildTrackingFunction( {
 		category: 'videos-module-bottom',
-		trackingMethod: 'ga',
+		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK,
 		label: 'thumbnail-click',
 	} );
