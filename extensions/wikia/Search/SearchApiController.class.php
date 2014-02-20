@@ -19,26 +19,13 @@ class SearchApiController extends WikiaApiController {
 	const PARAMETER_NAMESPACES = 'namespaces';
 
 	public function getKeyword() {
-		$config = (new Factory())->getSolariumClientConfig();
-		$client = new \Solarium_Client($config);
 
-		$query = $this->request->getVal('q');
+		$query = $this->request->getVal( "q", null );
+		$mode = $this->request->getVal( "mode", "default" );
 
-		$select = $client->createSelect();
-		$dismax = $select->getDisMax();
-		$dismax->setQueryParser('edismax');
-		$select->setRows(10);
-		$select->setQuery( "nolang_txt:($query) AND article_quality_i:[50 TO *] lang:en" );
+		$kwSearch = new Wikia\Search\KeywordSearch();
+		$res = $kwSearch->getResults( $query, $mode );
 
-		//add filters
-		$select->createFilterQuery( 'ns' )->setQuery('ns:0');
-
-
-		$result = $client->select( $select );
-		$res = [];
-		foreach( $result->getDocuments() as $doc ) {
-			$res[] = $doc->url;
-		}
 		$this->response->setVal('urls', $res);
 	}
 
