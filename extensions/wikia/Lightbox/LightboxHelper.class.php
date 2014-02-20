@@ -12,7 +12,7 @@ class LightboxHelper extends WikiaModel {
 	 * @param string $to - timestamp
 	 * @return array $imageList - array( 'images' => list of image, 'minTimestamp' => minimum timestamp of the list )
 	 */
-	protected function getImageList( $limit, $to ) {
+	public function getImageList( $limit, $to ) {
 		wfProfileIn( __METHOD__ );
 
 		$memKey = wfMemcKey( 'lightbox', 'images', $limit, $to );
