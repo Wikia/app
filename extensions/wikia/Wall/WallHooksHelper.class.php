@@ -2020,7 +2020,12 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * create needed tables
+	 * @desc Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 *
+	 * @param String $name
+	 * @param String $val
+	 *
+	 * @return bool
 	 */
 	public static function onAfterToggleFeature($name, $val) {
 		global $IP;
@@ -2187,6 +2192,8 @@ class WallHooksHelper {
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
+		wfProfileIn( __METHOD__ );
+
 		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
 		// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
@@ -2202,6 +2209,7 @@ class WallHooksHelper {
 			$urls[] = $wallMessage->getMessagePageUrl( true );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
