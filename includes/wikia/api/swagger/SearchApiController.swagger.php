@@ -68,6 +68,13 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ *
  *
  * @SWG\Model ( id="CombinedSearchArticlesResultSet" )
  *  @SWG\Property(

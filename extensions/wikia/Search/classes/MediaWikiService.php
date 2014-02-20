@@ -492,7 +492,7 @@ class MediaWikiService
 			} else {
 				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
 			}
-			
+
 			if ( isset( $wikiId ) ) {
 				$wiki = $this->getWikiFromWikiId( $wikiId );
 				//exclude wikis which lang does not match current one, and wikis that are closed
@@ -650,8 +650,8 @@ class MediaWikiService
 			unset( $statsInfo[$key] );
 		}
 		return $statsInfo;
-	}	
-	
+	}
+
 	/**
 	 * Determines if the current globally registered language code is supported by search for dynamic support.
 	 * @return boolean
