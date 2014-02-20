@@ -396,8 +396,8 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					@include box-shadow(0, 0, 15px, #333, false, 0px);
 				}
 				.hotNew {
-					opacity: 0;
 					@include transition-shorthand(0 all ease-out 200ms);
+					opacity: 0;
 				}
 				.preview-pane {
 					@include transition-shorthand(220ms all ease-in 250ms);

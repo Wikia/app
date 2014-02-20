@@ -84,12 +84,12 @@ $fieldset-padding: 12px;
 	text-decoration: none;
 
 	.chevron {
-		opacity: .5;
 		border-top-color: $color-links;
 		border-bottom-color: $color-page;
 		float: left;
 		height: 2px;
 		margin: 5px 4px 0 0;
+		opacity: .5;
 		vertical-align: bottom;
 	}
 
