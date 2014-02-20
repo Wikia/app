@@ -411,6 +411,23 @@ class ForumHooksHelper {
 	}
 
 	/**
+	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 *
+	 * @param Title $title
+	 * @param String[] $urls
+	 *
+	 * @return bool
+	 */
+	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		return true;
+	}
+
+	/**
 	 * just proxy to onWallStoreRelatedTopicsInDB
 	 */
 	static public function onWallStoreRelatedTopicsInDB($parent, $id, $namespace) {

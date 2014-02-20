@@ -81,6 +81,7 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 // Fix URLs of thread pages when purging them.
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
+$wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
 include ($dir . '/Forum.namespace.setup.php');
 
