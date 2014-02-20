@@ -90,7 +90,16 @@ use Swagger\Annotations as SWG;
  * 					dataType="int",
  * 					defaultValue="10",
  * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
- * 				)
+ *				),
+ * 				@SWG\Parameter(
+ *					name="lang",
+ *					description="The two chars wiki language code, (eg.: en, de, fr). If not provided will use en.",
+ *					paramType="query",
+ *					required="false",
+ *					allowMultiple="false",
+ *					dataType="string",
+ *					defaultValue=""
+ *				)
  *			)
  *		)
  * 	)

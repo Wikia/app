@@ -189,7 +189,7 @@ class TvApiController extends WikiaApiController {
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( static::LIMIT_SETTING )
 			->setPage( static::LIMIT_SETTING )
-			->setLanguageCode(  $request->getVal( 'lang', static::LANG_SETTING ) )
+			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
 			->setRank( static::RANK_SETTING )
 			->setWikiId( $wikiId )
 			->setMinArticleQuality( $request->getInt(static::PARAM_ARTICLE_QUALITY) )
