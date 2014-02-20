@@ -276,7 +276,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			background: none;
 			border: none;
 			margin-bottom: 10px;
-			//margin-right: 16px;
 			margin-left: 40px;
 			padding-top: 0px;
 			&:before {
@@ -311,7 +310,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.preview { margin-left: 10px; margin-right: 10px; }
 		.speech-bubble-message {
 			@include border-radius($wall-border-radius);
-			//@include box-shadow(0,0,6px,$color-wall-bubble);
 			background: $color-wall-bubble;
 			border: none;
 			padding: 10px;
@@ -408,9 +406,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 		.speech-bubble-avatar {
 			display: none;
-			img {
-				//opacity: .25;
-			}
 		}
 		.speech-bubble-message {
 			padding: 0;

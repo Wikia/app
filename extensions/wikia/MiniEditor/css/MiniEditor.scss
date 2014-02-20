@@ -227,7 +227,6 @@
 			&.cke_disabled {
 				> a {
 					opacity: .2;
-					zoom: 1; /* IE fix to make opacity work */
 				}
 			}
 
