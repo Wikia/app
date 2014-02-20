@@ -2195,18 +2195,24 @@ class WallHooksHelper {
 		wfProfileIn( __METHOD__ );
 
 		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
-		// CONN-430: Resign from default ArticleComment purges
+			// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
 		}
 
 		if ( $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
-		// CONN-430: purge cache only for main thread page and owner's wall page
-		// while running AfterBuildNewMessageAndPost hook
+			// CONN-430: purge cache only for main thread page and owner's wall page
+			// while running AfterBuildNewMessageAndPost hook
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->load( true );
 
+			if( $wallMessage->isMain() ) {
+				$urls[] = $wallMessage->getMessagePageUrl( true );
+			} else {
+				$wallMessage = $wallMessage->getTopParentObj();
+				$urls[] = $wallMessage->getMessagePageUrl( true );
+			}
+
 			$urls[] = $wallMessage->getUserWallUrl();
-			$urls[] = $wallMessage->getMessagePageUrl( true );
 		}
 
 		wfProfileOut( __METHOD__ );
