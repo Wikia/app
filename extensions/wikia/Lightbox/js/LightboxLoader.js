@@ -362,7 +362,6 @@ LightboxLoader = {
 LightboxTracker = {
 	inlineVideoTrackingTimeout: 0,
 	// @param data - any extra params we want to pass to internal tracking
-	// Don't add willy nilly though... check with Jonathan.
 	track: function(action, label, value, data, method) {
 		Wikia.Tracker.track({
 			action: action,
@@ -393,7 +392,6 @@ $(function() {
 		LightboxLoader.init();
 		LightboxLoader.loadFromURL();
 	}
-
 });
 
 window.LightboxLoader = LightboxLoader;

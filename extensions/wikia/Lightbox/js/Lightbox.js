@@ -63,7 +63,7 @@
 				(LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset));
 
 			// Add template to modal
-			Lightbox.openModal.find(".modalContent").html(LightboxLoader.templateHtml);
+			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
 
 			// cache re-used DOM elements and templates for this modal instance
 			Lightbox.cacheDOM();
@@ -106,11 +106,11 @@
 			Lightbox.openModal.moreInfoTemplate = $('#LightboxMoreInfoTemplate');
 			Lightbox.openModal.shareTemplate = $('#LightboxShareTemplate');
 			Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
-			Lightbox.openModal.headerTemplate = $("#LightboxHeaderTemplate");
-			Lightbox.openModal.headerAdTemplate = $("#LightboxHeaderAdTemplate");
+			Lightbox.openModal.headerTemplate = $('#LightboxHeaderTemplate');
+			Lightbox.openModal.headerAdTemplate = $('#LightboxHeaderAdTemplate');
 
 			// Cache error message
-			Lightbox.openModal.errorMessage = $("#LightboxErrorMessage")
+			Lightbox.openModal.errorMessage = $('#LightboxErrorMessage')
 				.html();
 
 			// pre-cache known doms
@@ -138,123 +138,125 @@
 				}
 				// Hide Lightbox header and footer on mouse leave.
 			})
-				.on('mouseleave.Lightbox', function (evt) {
-					Lightbox.hideOverlay(10);
-					// Show share screen on button click
-				})
-				.on('click.Lightbox', '.LightboxHeader .share-button', function (evt) {
-					if (Lightbox.current.type === 'video') {
-						Lightbox.video.destroyVideo();
-					}
-					Lightbox.openModal.addClass('share-mode');
-					Lightbox.getShareCodes({
+			.on('mouseleave.Lightbox', function (evt) {
+				Lightbox.hideOverlay(10);
+				// Show share screen on button click
+			})
+			.on('click.Lightbox', '.LightboxHeader .share-button', function (evt) {
+				if (Lightbox.current.type === 'video') {
+					Lightbox.video.destroyVideo();
+				}
+				Lightbox.openModal.addClass('share-mode');
+				Lightbox.getShareCodes({
+					fileTitle: Lightbox.current.key,
+					remote: Lightbox.isRemoteAsset(),
+					articleTitle: wgTitle
+				}, function (json) {
+					Lightbox.openModal.share.append(Lightbox.openModal.shareTemplate.mustache(json))
+						.find('input[type=text]')
+						.click(function () {
+							$(this)
+								.select();
+						})
+						.filter('.share-input')
+						.click();
+
+					var trackingTitle = Lightbox.current.key;
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.CLICK,
+						'lightboxShare',
+						null, {
+							title: trackingTitle,
+							type: Lightbox.current.type
+						}
+					);
+
+					Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
+					Lightbox.setupShareEmail();
+
+					Lightbox.openModal.share.find('.social-links')
+						.on('click', 'a', function () {
+							var shareType = $(this).attr('class');
+							LightboxTracker.track(
+								Wikia.Tracker.ACTIONS.SHARE,
+								shareType,
+								null, {
+									title: trackingTitle,
+									type: Lightbox.current.type
+								}
+							);
+						});
+
+				});
+			})
+			// Close more info and share screens on button click
+			.on('click.Lightbox', '.more-info-close', function (evt) {
+				if (Lightbox.current.type === 'video') {
+					LightboxLoader.getMediaDetail({
 						fileTitle: Lightbox.current.key,
-						articleTitle: wgTitle
-					}, function (json) {
-						Lightbox.openModal.share.append(Lightbox.openModal.shareTemplate.mustache(json))
-							.find('input[type=text]')
-							.click(function () {
-								$(this)
-									.select();
-							})
-							.filter('.share-input')
-							.click();
+						remote: Lightbox.isRemoteAsset()
+					}, Lightbox.video.renderVideo);
+				}
+				Lightbox.openModal.removeClass('share-mode')
+					.removeClass('more-info-mode');
+				Lightbox.openModal.share.html('');
+				Lightbox.openModal.moreInfo.html('');
+				// Pin the toolbar on icon click
+			})
+			.on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
+				var target = $(evt.target);
+				var overlayActive = Lightbox.openModal.data('overlayactive');
+				if (overlayActive) {
+					var pinnedTitle = target.data('pinned-title');
+					target.addClass('active')
+						.attr('title', pinnedTitle); // add active state to button when carousel overlay is active
+					Lightbox.openModal.addClass('pinned-mode');
+				} else {
+					var pinTitle = target.data('pin-title');
+					target.removeClass('active')
+						.attr('title', pinTitle);
+					Lightbox.openModal.removeClass('pinned-mode');
+				}
+				Lightbox.openModal.data('overlayactive', !overlayActive); // flip overlayactive state
 
-						var trackingTitle = Lightbox.current.key;
-						LightboxTracker.track(
-							Wikia.Tracker.ACTIONS.CLICK,
-							'lightboxShare',
-							null, {
-								title: trackingTitle,
-								type: Lightbox.current.type
-							}
-						);
+				// update image if image
+				if (Lightbox.current.type == 'image') {
+					Lightbox.updateMedia();
+				}
+			})
+			.on('click.Lightbox', '#LightboxNext, #LightboxPrevious', function (e) {
+				var target = $(e.target);
 
-						Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
-						Lightbox.setupShareEmail();
+				if (target.is('.disabled')) {
+					return false;
+				}
 
-						Lightbox.openModal.share.find('.social-links')
-							.on('click', 'a', function () {
-								var shareType = $(this).attr('class');
-								LightboxTracker.track(
-									Wikia.Tracker.ACTIONS.SHARE,
-									shareType,
-									null, {
-										title: trackingTitle,
-										type: Lightbox.current.type
-									}
-								);
-							});
-
-					});
-					// Close more info and share screens on button click
-				})
-				.on('click.Lightbox', '.more-info-close', function (evt) {
-					if (Lightbox.current.type === 'video') {
-						LightboxLoader.getMediaDetail({
-							fileTitle: Lightbox.current.key
-						}, Lightbox.video.renderVideo);
-					}
-					Lightbox.openModal.removeClass('share-mode')
-						.removeClass('more-info-mode');
-					Lightbox.openModal.share.html('');
-					Lightbox.openModal.moreInfo.html('');
-					// Pin the toolbar on icon click
-				})
-				.on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
-					var target = $(evt.target);
-					var overlayActive = Lightbox.openModal.data('overlayactive');
-					if (overlayActive) {
-						var pinnedTitle = target.data('pinned-title');
-						target.addClass('active')
-							.attr('title', pinnedTitle); // add active state to button when carousel overlay is active
-						Lightbox.openModal.addClass('pinned-mode');
-					} else {
-						var pinTitle = target.data('pin-title');
-						target.removeClass('active')
-							.attr('title', pinTitle);
-						Lightbox.openModal.removeClass('pinned-mode');
-					}
-					Lightbox.openModal.data('overlayactive', !overlayActive); // flip overlayactive state
-
-					// update image if image
-					if (Lightbox.current.type == 'image') {
-						Lightbox.updateMedia();
-					}
-				})
-				.on('click.Lightbox', '#LightboxNext, #LightboxPrevious', function (e) {
-					var target = $(e.target);
-
-					if (target.is('.disabled')) {
-						return false;
-					}
-
-					// If an ad is showing, we want to show the current index, not move on
-					if (Lightbox.ads.adIsShowing) {
-						Lightbox.ads.reset();
-					} else {
-						if (target.is("#LightboxNext")) {
+				// If an ad is showing, we want to show the current index, not move on
+				if (Lightbox.ads.adIsShowing) {
+					Lightbox.ads.reset();
+				} else {
+					if (target.is('#LightboxNext')) {
+						Lightbox.current.index++;
+						// Don't stop on placeholder
+						if (Lightbox.current.index == Lightbox.current.placeholderIdx) {
 							Lightbox.current.index++;
-							// Don't stop on placeholder
-							if (Lightbox.current.index == Lightbox.current.placeholderIdx) {
-								Lightbox.current.index++;
-							}
-						} else {
+						}
+					} else {
+						Lightbox.current.index--;
+						// Don't stop on placeholder
+						if (Lightbox.current.index == Lightbox.current.placeholderIdx) {
 							Lightbox.current.index--;
-							// Don't stop on placeholder
-							if (Lightbox.current.index == Lightbox.current.placeholderIdx) {
-								Lightbox.current.index--;
-							}
 						}
 					}
+				}
 
-					Lightbox.openModal.find('.carousel li')
-						.eq(Lightbox.current.index)
-						.trigger('click');
-				})
-				.on('click.Lightbox', '.article-add-button', function () {
-					Lightbox.doAutocomplete($(this));
-				});
+				Lightbox.openModal.find('.carousel li')
+					.eq(Lightbox.current.index)
+					.trigger('click');
+			})
+			.on('click.Lightbox', '.article-add-button', function () {
+				Lightbox.doAutocomplete($(this));
+			});
 		},
 		doAutocomplete: function (elem) {
 			$.when(
@@ -275,7 +277,7 @@
 									.
 								replace(encodeURIComponent('/'), '/');
 
-							location = location + "?action=edit&addFile=" + Lightbox.current.key;
+							location = location + '?action=edit&addFile=' + Lightbox.current.key;
 
 							/*this.track({
 						eventName: 'search_start_suggest',
@@ -332,7 +334,7 @@
 					Lightbox.openModal.css(css);
 
 					// extract mustache templates
-					var photoTemplate = Lightbox.openModal.find("#LightboxPhotoTemplate");
+					var photoTemplate = Lightbox.openModal.find('#LightboxPhotoTemplate');
 
 					// render media
 					data.imageHeight = dimensions.imageHeight;
@@ -633,7 +635,7 @@
 				// Set flag to indicate we're showing an ad (for arrow click handler)
 				this.adIsShowing = true;
 
-				// remove "?file=" from URL
+				// remove '?file=' from URL
 				Lightbox.updateUrlState(true);
 			},
 			// Remove showing ad flag
@@ -683,7 +685,7 @@
 					.addClass('error-lightbox')
 					.html(Lightbox.openModal.errorMessage);
 
-				// remove "?file=" from URL
+				// remove '?file=' from URL
 				Lightbox.updateUrlState(true);
 			}
 		},
@@ -709,7 +711,8 @@
 		renderHeader: function () {
 			var headerTemplate = Lightbox.openModal.headerTemplate;
 			LightboxLoader.getMediaDetail({
-				fileTitle: Lightbox.current.key
+				fileTitle: Lightbox.current.key,
+				remote: Lightbox.isRemoteAsset()
 			}, function (json) {
 				var renderedResult = headerTemplate.mustache(json);
 				Lightbox.openModal.header
@@ -762,7 +765,7 @@
 			return modalOptions;
 		},
 		updateMedia: function () {
-			Lightbox.openModal.media.html("").startThrobbing();
+			Lightbox.openModal.media.html('').startThrobbing();
 
 			// If a video uses a timeout for tracking, clear it
 			if (LightboxLoader.videoInstance) {
@@ -779,7 +782,8 @@
 
 			LightboxLoader.getMediaDetail({
 				fileTitle: key,
-				type: type
+				type: type,
+				remote: Lightbox.isRemoteAsset()
 			}, function (data) {
 				if (data.exists === false) {
 					Lightbox.error.updateLightbox();
@@ -831,7 +835,7 @@
 		},
 
 		getShareCodes: function (mediaParams, callback) {
-			var title = mediaParams['fileTitle'];
+			var title = mediaParams.fileTitle;
 			if (LightboxLoader.cache.share[title]) {
 				callback(LightboxLoader.cache.share[title]);
 			} else {
@@ -1080,8 +1084,8 @@
 						wikiaForm.clearGenericError(inputGroups);
 						wikiaForm.clearGenericSuccess(inputGroups);
 
-						var errorMsg = "",
-							successMsg = "";
+						var errorMsg = '',
+							successMsg = '';
 
 						if (data.errors.length) {
 							$(data.errors).each(function () {
@@ -1089,7 +1093,7 @@
 							})
 						}
 						if (data.sent.length) {
-							successMsg += "Email sent to " + data.sent.join() + ". ";
+							successMsg += 'Email sent to ' + data.sent.join() + '. ';
 						}
 
 						if (errorMsg.length) {
@@ -1304,7 +1308,7 @@
 				if (cached.length) {
 					thumbArr = cached;
 				} else {
-					var thumbs = $("#LatestPhotosModule .thumbimage"),
+					var thumbs = $('#LatestPhotosModule .thumbimage'),
 						keys = []; // array to check for title dupes
 
 					thumbs.each(function () {
@@ -1423,7 +1427,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								remote: 1
 							});
 						}
 					});
@@ -1468,29 +1473,20 @@
 			}
 		},
 
-		// get caption html for given target node
-		/*getCaption: function(img) {
-		// TODO: this is broken on Special:NewFiles page
-		var caption = false;
-
-		// gallery images
-		var dataCaption = img.data('caption');
-
-		if(dataCaption) {
-			caption = dataCaption;
-		} else if (img.parent().hasClass('image')) {
-			// article images
-			caption = img.parent().nextAll('.thumbcaption').find('.thumb-caption-text').text();
-		}
-
-		return caption;
-	},*/
 		thumbParams: function (url, type) {
-			/*
-			Get URL to a proper thumbnail
-		 */
+			//Get URL to a proper thumbnail
 			return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
 
+		},
+
+		/**
+		 * Helper function to let the back end know if the asset is from the video library
+		 * as opposed to the local wikia.
+		 * @returns {number}
+		 */
+		isRemoteAsset: function () {
+			// convert bool to number for xhr
+			return ~~(Lightbox.current.thumbs[Lightbox.current.index].remote);
 		},
 
 		/**
