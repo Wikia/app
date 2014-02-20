@@ -3,7 +3,7 @@ define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
 	'videosmodule.models.abTestRail',
 	'wikia.tracker'
-], function(sloth, TitleThumbnailView, abTest, Tracker) {
+], function (sloth, TitleThumbnailView, abTest, Tracker) {
 	'use strict';
 
 	// Keep AB test variables private
@@ -35,7 +35,7 @@ define('videosmodule.views.rail', [
 		}
 	}
 
-	VideoModule.prototype.init = function() {
+	VideoModule.prototype.init = function () {
 		var self = this;
 		this.data = this.model.fetch(true);
 		this.$el.show();
@@ -43,20 +43,20 @@ define('videosmodule.views.rail', [
 		sloth({
 			on: this.el,
 			threshold: 200,
-			callback: function() {
+			callback: function () {
 				self.bindFetchComplete();
 			}
 		});
 	};
 
-	VideoModule.prototype.bindFetchComplete = function() {
+	VideoModule.prototype.bindFetchComplete = function () {
 		var self = this;
-		this.data.complete(function() {
+		this.data.complete(function () {
 			self.render();
 		});
 	};
 
-	VideoModule.prototype.render = function() {
+	VideoModule.prototype.render = function () {
 		var i,
 			videos = this.model.data.videos,
 			len = videos.length,

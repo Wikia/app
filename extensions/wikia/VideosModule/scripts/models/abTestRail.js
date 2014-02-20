@@ -1,4 +1,4 @@
-define('videosmodule.models.abTestRail', [], function() {
+define('videosmodule.models.abTestRail', [], function () {
 	'use strict';
 
 	var instance;
@@ -9,7 +9,7 @@ define('videosmodule.models.abTestRail', [], function() {
 		this.testGroup = testParams ? testParams.getGroup('VIDEOS_MODULE_RAIL') : null;
 	}
 
-	ABTestBottom.prototype.getGroupParams = function() {
+	ABTestBottom.prototype.getGroupParams = function () {
 		return this.groups[this.testGroup];
 	};
 
@@ -53,7 +53,7 @@ define('videosmodule.models.abTestRail', [], function() {
 		}
 	};
 
-	return function() {
+	return function () {
 		return (instance = (instance || new ABTestBottom()));
 	};
 });

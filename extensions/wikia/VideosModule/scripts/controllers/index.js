@@ -4,7 +4,7 @@
 require([
 	'videosmodule.views.rail',
 	'videosmodule.models.videos'
-], function(RailModule, VideoData) {
+], function (RailModule, VideoData) {
 	'use strict';
 	// instantiate bottom view
 	function onWikiaRailLoad() {
@@ -13,7 +13,7 @@ require([
 			model: new VideoData()
 		});
 	}
-	$(function() {
-		$( '#WikiaRail' ).on('afterLoad.rail', onWikiaRailLoad);
+	$(function () {
+		$('#WikiaRail').on('afterLoad.rail', onWikiaRailLoad);
 	});
 });

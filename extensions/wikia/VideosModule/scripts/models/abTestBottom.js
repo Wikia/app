@@ -1,5 +1,4 @@
-define( 'videosmodule.models.abTestBottom', [
-], function() {
+define('videosmodule.models.abTestBottom', [], function () {
 	'use strict';
 
 	var instance;
@@ -7,11 +6,11 @@ define( 'videosmodule.models.abTestBottom', [
 	// Singleton to protect integrity of test cases
 	function ABTestBottom() {
 		var testParams = window.Wikia.AbTest;
-		this.testGroup = testParams ? testParams.getGroup( 'VIDEOS_MODULE_BOTTOM' ) : null;
+		this.testGroup = testParams ? testParams.getGroup('VIDEOS_MODULE_BOTTOM') : null;
 	}
 
-	ABTestBottom.prototype.getGroupParams = function() {
-		return this.groups [ this.testGroup ];
+	ABTestBottom.prototype.getGroupParams = function () {
+		return this.groups[this.testGroup];
 	};
 
 	/*
@@ -71,7 +70,7 @@ define( 'videosmodule.models.abTestBottom', [
 		}
 	};
 
-	return function() {
-		return ( instance = ( instance || new ABTestBottom() ) );
+	return function () {
+		return (instance = (instance || new ABTestBottom()));
 	};
-} );
+});
