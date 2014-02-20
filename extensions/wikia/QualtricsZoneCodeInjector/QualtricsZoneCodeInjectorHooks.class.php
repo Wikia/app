@@ -1,7 +1,8 @@
 <?php
+
 class QualtricsZoneCodeInjectorHooks {
 	const ZONE_CODE = 'ZN_eKkIzldP6dOXaXr'; // This is test zone code - it should be changed before merging to dev
-	const SAMPLING  = 5; // in percent
+	const SAMPLING = 5; // in percent
 
 	/**
 	 * Add important Qualtrics-related variables to javascript
@@ -11,10 +12,10 @@ class QualtricsZoneCodeInjectorHooks {
 	 * @return bool
 	 */
 	static public function onResourceLoaderGetConfigVars( &$vars ) {
-		if ( $vars['skin'] == 'oasis') {
-			$vars['wgQualtricsZoneCode'] = self::ZONE_CODE;
+		if ( $vars['skin'] == 'oasis' ) {
+			$vars['wgQualtricsZoneCode']     = self::ZONE_CODE;
 			$vars['wgQualtricsZoneSampling'] = self::SAMPLING;
-			$vars['wgQualtricsZoneUrl'] = self::BuildQualtricsUri();
+			$vars['wgQualtricsZoneUrl']      = self::BuildQualtricsUri();
 		}
 
 		return true;
@@ -28,16 +29,17 @@ class QualtricsZoneCodeInjectorHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onGetHTMLAfterBody($skin, &$html) {
+	static public function onGetHTMLAfterBody( $skin, &$html ) {
 		if ( $skin->skinname == 'oasis' ) {
 			global $wgHooks;
 
 			$html .= '<!-- START OF QUALTRICS INJECTION -->'
-						. '<div id="' . self::ZONE_CODE . '"></div>'
-						. '<!-- END OF QUALTRICS INJECTION -->';
+				. '<div id="' . self::ZONE_CODE . '"></div>'
+				. '<!-- END OF QUALTRICS INJECTION -->';
 
 			$wgHooks['SkinAfterBottomScripts'][] = 'QualtricsZoneCodeInjectorHooks::onSkinAfterBottomScripts';
 		}
+
 		return true;
 	}
 
@@ -65,7 +67,7 @@ class QualtricsZoneCodeInjectorHooks {
 	 */
 	static private function BuildQualtricsUri() {
 		return '//' . strtolower( self::ZONE_CODE ) . '-wikia.siteintercept.qualtrics.com/WRSiteInterceptEngine/'
-			. '?Q_ZID=' . self::ZONE_CODE . '&Q_LOC=' . self::encodeURIComponent( $_SERVER['SCRIPT_URI'] );
+		. '?Q_ZID=' . self::ZONE_CODE . '&Q_LOC=' . self::encodeURIComponent( $_SERVER['SCRIPT_URI'] );
 	}
 
 	/**
@@ -76,6 +78,6 @@ class QualtricsZoneCodeInjectorHooks {
 	 * @return string
 	 */
 	static private function encodeURIComponent( $str ) {
-		return strtr( rawurlencode( $str ), ['%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')'] );
+		return strtr( rawurlencode( $str ), [ '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' ] );
 	}
 }
