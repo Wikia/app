@@ -157,6 +157,9 @@ $wgHooks['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox'
 // Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
 $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
+// Fix URLs when purging after adding a thread/post
+$wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
+
 JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
