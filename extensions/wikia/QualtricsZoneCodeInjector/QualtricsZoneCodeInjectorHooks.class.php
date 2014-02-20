@@ -1,9 +1,11 @@
 <?php
 class QualtricsZoneCodeInjectorHooks {
-	const ZONE_CODE = 'ZN_eKkIzldP6dOXaXr';
+	const ZONE_CODE = 'ZN_eKkIzldP6dOXaXr'; // This is test zone code - it should be changed before merging to dev
 	const SAMPLING  = 5; // in percent
 
 	/**
+	 * Add important Qualtrics-related variables to javascript
+	 *
 	 * @param $vars
 	 *
 	 * @return bool
