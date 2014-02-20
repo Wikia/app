@@ -2180,24 +2180,19 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Makes sure the correct URLs for thread pages get purged.
+	 * Makes sure the correct URLs for thread pages and message wall page get purged.
 	 *
 	 * @param $title Title
 	 * @param $urls String[]
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		if( $title->inNamespace( NS_USER_WALL ) ||
-			$title->inNamespace( NS_USER_WALL_MESSAGE ) ||
-			$title->inNamespace( NS_USER_WALL_MESSAGE_GREETING )
-		) {
+		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
 		// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
 		}
 
-		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ||
-			$title->inNamespace( NS_USER_WALL_MESSAGE_GREETING )
-		) {
+		if ( $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
 		// CONN-430: purge cache only for main thread page and owner's wall page
 		// while running AfterBuildNewMessageAndPost hook
 			$wallMessage = WallMessage::newFromTitle( $title );
