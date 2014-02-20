@@ -608,7 +608,7 @@ class PageHeaderController extends WikiaController {
 		global $wgOut, $wgSupressPageTitle;
 		wfProfileIn(__METHOD__);
 
-		$this->displaytitle = false;
+		$this->displaytitle = true;
 		// Leave this for now. To discuss do we want PageTitle
 		if ( $this->displaytitle) {
 			$this->title = $wgOut->getPageTitle();

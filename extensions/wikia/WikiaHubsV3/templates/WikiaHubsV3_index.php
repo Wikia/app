@@ -6,7 +6,6 @@
 
 	<div class="WikiaGrid WikiaHubs" id="WikiaHubs">
 		<div class="grid-3 alpha">
-			<h1><?= $verticalName ?></h1>
 			<section class="grid-3 alpha wikiahubs-slider wikiahubs-module">
 				<?= $modules[MarketingToolboxModuleSliderService::MODULE_ID] ?>
 			</section>
