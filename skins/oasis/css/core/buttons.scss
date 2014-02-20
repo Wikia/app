@@ -2,7 +2,6 @@
 @import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/gradient";
-@import "../mixins/opacity";
 
 /*****************************
 Primary & Secondary Wikia Buttons
@@ -286,19 +285,19 @@ Wikia Chiclet Button
 This list-based button is used in the page header for edit/history/delete actions
 ******************************/
 
-$button-chiclet-opacity: 30;
+$button-chiclet-opacity: .3;
 @if $is-dark-wiki {
-	$button-chiclet-opacity: 70;
+	$button-chiclet-opacity: .7;
 }
 
 .wikia-chiclet-button {
-	@include opacity($button-chiclet-opacity);
 	@include border-radius(0);
 	background-image: none;
 	border: 0;
 	cursor: pointer;
 	display: inline-block;
 	height: 19px;
+	opacity: $button-chiclet-opacity;
 	padding: 0;
 	position: relative;
 	width: 19px;
@@ -310,7 +309,7 @@ $button-chiclet-opacity: 30;
 		width: 15px;
 	}
 	&:hover {
-		@include opacity(100);
+		opacity: 1;
 		background-image: none;
 	}
 }

@@ -6,7 +6,6 @@
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/forms";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/buttons";
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
@@ -279,7 +278,7 @@ a {
 	position: absolute;
 	right: 150px;
 	&.blocked {
-	   opacity: 0.3;
+	   opacity: .3;
 	}
 	img {
 		border: 1px solid $color-page-border;
@@ -385,7 +384,7 @@ a {
 		}
 	}
 	.blocked {
-	    opacity: 0.3;
+	    opacity: .3;
 	}
 	.splotch {
 		@include border-radius(10px);

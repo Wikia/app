@@ -3,7 +3,6 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "BreadCrumbs";
 @import "WallColors";
@@ -410,7 +409,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.speech-bubble-avatar {
 			display: none;
 			img {
-				//@include opacity(25);
+				//opacity: 25;
 			}
 		}
 		.speech-bubble-message {
@@ -442,7 +441,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.new-message input[disabled=disabled],
 	.new-message textarea[disabled=disabled],
 	.new-reply textarea[disabled=disabled] {
-		opacity: 0.8;
+		opacity: .8;
 	}
 
 	#WallMessageSubmit, .replyButton {
@@ -504,32 +503,32 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		position: relative;
 		top: -5px;
 		img {
-			@include opacity(20);
 			@if $is-dark-wiki {
 				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgCdnStylePath */
 			} @else {
 				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
 			}
 			cursor: pointer;
+			opacity: .2;
 		}
 		&.inprogress,
 		&.voted {
 			img {
-				@include opacity(50);
+				opacity: .5;
 			}
 		}
 	}
 
 	.follow {
-		@include opacity(70);
 		background-image: none;
 		display: block;
 		float: right;
 		margin-left: 5px;
 		min-width: 60px;
+		opacity: .7;
 		text-align: center;
 		&:hover {
-			@include opacity(100);
+			opacity: 1;
 			background-image: none;
 		}
 
@@ -540,7 +539,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		&:hover { background-image: none; }
 	}
 	.follow:not(.secondary) {
-		opacity: 0.7;
+		opacity: .7;
 	}
 	.follow:not(.secondary):hover {
 		opacity: 1;

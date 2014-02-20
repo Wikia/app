@@ -4,7 +4,6 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 
 @import "ChatColor";
 @import "ChatSprite";
@@ -33,7 +32,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 
 		&.chat-room-empty {
 			.avatar {
-				@include opacity(50);
+				opacity: .5;
 			}
 
 			.chat-total {
@@ -98,8 +97,8 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			position: absolute;
 
 			&.disabled {
-				@include opacity(50);
 				cursor: auto;
+				opacity: .5;
 			}
 		}
 

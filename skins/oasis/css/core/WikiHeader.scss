@@ -5,7 +5,6 @@
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 @import "../mixins/menus";
-@import "../mixins/opacity";
 @import "../mixins/wordmark";
 
 $color-level-3rd: mix($color-buttons, $color-page, 20%);
@@ -194,7 +193,7 @@ $WikiNavWidth: $width-outside - 271px;
 					height: 25px;
 
 					> .chevron {
-						@include opacity(50);
+						opacity: .5;
 						border-top-color: $color-button-text;
 						height: 4px;
 						margin: 0 0 3px 5px;
@@ -215,8 +214,8 @@ $WikiNavWidth: $width-outside - 271px;
 						color: $color-text;
 
 						> .chevron {
-							@include opacity(100);
 							border-top-color: $color-text;
+							opacity: 1;
 						}
 
 						&:hover {

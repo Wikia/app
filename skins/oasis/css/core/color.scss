@@ -8,6 +8,13 @@ $color-header: get_command_line_param("color-header", #3A5766); // default: blue
 $background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
 $page-opacity: get_command_line_param("page-opacity", 100);	// default: 100
 
+@if $page-opacity < 100 {
+  $page-opacity: #{"." + $page-opacity};
+}
+@if $page-opacity == 100 {
+  $page-opacity: 1;
+}
+
 // Verticals colors
 $color-wikiahome-videogames: #8ca038;
 $color-wikiahome-entertainment: #07b2e0;
