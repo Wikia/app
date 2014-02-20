@@ -115,16 +115,15 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="quality",
  * 		type="int",
- * 		required="true",
+ * 		required="false",
  * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  * 	@SWG\Property(
  * 		name="type",
  * 		type="string",
- * 		required="true",
- * 		description="Type of article (movie, character, person, series, season, episode, book, comic_book, video_game, location)"
- * 	)
- *
+ * 		required="false",
+ * 		description="Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | video_game )"
+ *  )
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
  * 		name="id",
