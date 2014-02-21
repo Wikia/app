@@ -2203,7 +2203,6 @@ class WallHooksHelper {
 			// CONN-430: purge cache only for main thread page and owner's wall page
 			// while running AfterBuildNewMessageAndPost hook
 			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->load( true );
 			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_USER_WALL ) );
 		}
 

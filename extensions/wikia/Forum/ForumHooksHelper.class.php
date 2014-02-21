@@ -378,7 +378,6 @@ class ForumHooksHelper {
 
 		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->load( true );
 			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
 		}
 
