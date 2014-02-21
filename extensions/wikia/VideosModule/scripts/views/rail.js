@@ -12,8 +12,8 @@ define('videosmodule.views.rail', [
 		track;
 
 	track = Tracker.buildTrackingFunction({
-		// category: 'videos-module-bottom',
-		trackingMethod: 'ga',
+		category: 'videos-module-rail',
+		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
 	});
@@ -83,7 +83,7 @@ define('videosmodule.views.rail', [
 		this.$el.find('.thumbnails')
 			.append(thumbHtml);
 		// Tracking not implemented this ticket
-		// track();
+		track();
 	};
 
 	return VideoModule;
