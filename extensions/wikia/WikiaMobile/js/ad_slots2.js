@@ -38,7 +38,7 @@ require(
 						$iframe.find( 'body img' ).width() <= 1
 					) {
 						log( 'Slot seems to be empty: ' + adSlotName, logLevel, logGroup );
-						hop({method: 'hop'}, 'Next');
+						hop({method: 'hop'}, 'RemnantDartMobile');
 					} else {
 						slot.className += ' show';
 					}
