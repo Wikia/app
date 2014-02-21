@@ -1443,4 +1443,11 @@ class WallMessage {
 	public function canMove(User $user) {
 		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}
+
+	public function purgeSquid() {
+		$title = Title::newFromID( $this->getId() );
+		if ( $title instanceof Title ) {
+			$title->purgeSquid();
+		}
+	}
 }

@@ -293,6 +293,7 @@ class WallExternalController extends WikiaController {
 		if($isDeleteOrRemove) {
 			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
 			$mw->getLastActionReason();
+			$mw->purgeSquid();
 			$this->response->setVal('deleteInfoBox', 'INFO BOX');
 		}
 
@@ -320,11 +321,13 @@ class WallExternalController extends WikiaController {
 			case 'close':
 				if($mw->canArchive($this->wg->User)) {
 					$result = $mw->archive($this->wg->User, $reason);
+					$mw->purgeSquid();
 				}
 				break;
 			case 'open':
 				if($mw->canReopen($this->wg->User)) {
 					$result = $mw->reopen($this->wg->User);
+					$mw->purgeSquid();
 				}
 				break;
 			default:
@@ -375,6 +378,7 @@ class WallExternalController extends WikiaController {
 
 		){
 			$mw->restore($this->wg->User);
+			$mw->purgeSquid();
 			$this->response->setVal('status', true);
 			return true;
 		}
@@ -401,6 +405,7 @@ class WallExternalController extends WikiaController {
 			}
 
 			$mw->restore($this->wg->User, $reason);
+			$mw->purgeSquid();
 
 			$this->response->setVal('buttons', $this->app->renderView( 'WallController', 'messageButtons', array('comment' => $mw)));
 			$this->response->setVal('status', true);
