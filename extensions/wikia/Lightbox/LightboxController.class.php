@@ -31,7 +31,7 @@ class LightboxController extends WikiaController {
 		if ( $this->wg->User->isAllowed( 'read' ) ) {
 			$this->error = wfMessage( 'lightbox-no-media-error', $this->wg->Sitename )->parse();
 		} else {
-			$this->error = wfMessage( 'lightbox-no-permission-error' )->text();
+			$this->error = htmlspecialchars( wfMessage( 'lightbox-no-permission-error' )->plain() );
 		}
 
 		// set cache control to 1 day
@@ -192,7 +192,7 @@ class LightboxController extends WikiaController {
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
-		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->text();
+		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
