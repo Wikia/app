@@ -62,4 +62,9 @@ class WikiaHubsModel extends WikiaModel {
 			return $wikiaHub;
 		}
 	}
+
+	public function getVerticalId($cityId) {
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		return $wikiFactoryHub->getCategoryId($cityId);
+	}
 }

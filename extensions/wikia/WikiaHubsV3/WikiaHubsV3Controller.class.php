@@ -169,7 +169,7 @@ class WikiaHubsV3Controller extends WikiaController {
 
 	protected function initVertical() {
 		global $wgCityId;
-		$this->verticalId = $this->getRequest()->getVal('verticalid', WikiFactoryHub::CATEGORY_ID_GAMING);
+		$this->verticalId = $this->model->getVerticalId($wgCityId);
 		$this->cityId = $wgCityId;
 		$this->verticalName = $this->model->getVerticalNameById($this->cityId);
 		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->cityId);
