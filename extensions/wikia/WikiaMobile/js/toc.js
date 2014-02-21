@@ -50,7 +50,7 @@ function ( sections, window, $, mustache, toc, track ) {
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			//grab only headers that have text to display
 			tocSections = sections.list().filter( function( section ){
-				return !!section.innerText.trim()
+				return !!section.innerText.trim();
 			} ),
 			tocData = toc.getData(
 				tocSections,
