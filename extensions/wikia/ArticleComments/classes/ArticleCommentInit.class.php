@@ -2,6 +2,7 @@
 class ArticleCommentInit {
 	const ERROR_READONLY = 1;
 	const ERROR_USER_CANNOT_EDIT = 2;
+	const ERROR_CANNOT_COMMENT = 3;
 
 	public static $enable = null;
 	public static $commentByAnonMsg = null;
@@ -326,28 +327,51 @@ class ArticleCommentInit {
 	 *
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 *
-	 * @param array $info [Optional] If passed this will be filled in with an error code and related message in case of negative result
 	 * @param Title $title [Optional] Title to use to create login counter redirect
 	 * @param User $user [Optional] The user to check, if not passed it will use the global user
+	 * @param array $info [Optional] If passed this will be filled in with an error code and related message in case of negative result
 	 *
 	 * @return bool
 	 */
-	static public function userCanComment( Array &$info = array(), Title $title = null, User $user = null ) {
-		$ret = true;
+	static public function userCanComment( Title $title = null, User $user = null, Array &$info = array() ) {
 
-		if ( !( $user instanceof User ) ) {
-			global $wgUser;
-			$user = $wgUser;
+		$user = ( $user instanceof User ) ? $user : RequestContext::getMain()->getUser();
+		$title = ( $title instanceof Title ) ? $title : RequestContext::getMain()->getTitle();
+
+		if ( wfReadOnly() ) {
+			$info['error'] = self::ERROR_READONLY;
+			$info['msg'] = wfMessage( 'readonlytext' )->text();
+			return false;
+		} 
+		
+		if ( !$user->isAllowed( 'edit' ) ) {
+			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
+			$info['msg'] = wfMessage( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( 'returnto=' . $title->getPrefixedUrl() ) );
+			return false;
 		}
 
-		if (wfReadOnly()) {
-			$info['error'] = self::ERROR_READONLY;
-			$info['msg'] = wfMsg('readonlytext');
+		$ret = true;
+		if ( !$user->isAllowed( 'articlecomment' )
+	   	|| !in_array( $title->getNamespace(), F::app()->wg->ArticleCommentsNamespaces )
+		) {
+			// VOLDEV-2: Bind commenting to user right
+			$info['error'] = self::ERROR_CANNOT_COMMENT;
+			$info['msg'] = wfMessage( 'article-comments-comment-cannot-add' )->text();
 			$ret = false;
-		} elseif ( !$user->isAllowed( 'edit' ) ) {
-			$info['error'] = self::ERROR_USER_CANNOT_EDIT;
-			$info['msg'] = wfMsg( 'article-comments-login', SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl( ( $title instanceof Title ) ? 'returnto=' . $title->getPrefixedUrl() : null ) );
-			$ret = false;
+		}
+
+		if ( ArticleComment::isBlog( $title ) ) {
+			$props = BlogArticle::getProps( $title->getArticleID() );
+			if ( isset( $props['commenting'] ) ) {
+				$info['error'] = self::ERROR_CANNOT_COMMENT;
+				$info['msg'] = wfMessage( 'article-comments-comment-cannot-add' )->text();
+				$ret = ( bool ) $props['commenting'];
+			}
+		}
+
+		if ( $ret ) {
+			unset( $info['error'] );
+			unset( $info['msg'] );
 		}
 
 		return $ret;

@@ -365,7 +365,7 @@ class ArticleComment {
 			// we cannot check it using $title->getBaseText, as this returns main namespace title
 			// the subjectpage for $parts title is something like 'User blog comment:SomeUser/BlogTitle' which is fine
 			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
-			$commentingAllowed = ArticleComment::canComment( $articleTitle );
+			$commentingAllowed = ArticleCommentInit::userCanComment( $articleTitle );
 
 			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
@@ -556,29 +556,6 @@ class ArticleComment {
 		$res = $isAuthor || ( $isAllowed && $canEdit );
 
 		return $res;
-	}
-
-	/**
-	 * Check if current user can comment
-	 *
-	 * @returns boolean
-	 */
-	public static function canComment( Title $title = null ) {
-		global $wgTitle, $wgArticleCommentsNamespaces;
-
-		$canComment = true;
-		$title = is_null( $title ) ? $wgTitle : $title;
-
-		if ( !in_array( $title->getNamespace(), $wgArticleCommentsNamespaces ) ) {
-			$canComment = false;
-		}
-		if ( self::isBlog( $title ) ) {
-			$props = BlogArticle::getProps( $title->getArticleID() );
-
-			$canComment = isset( $props[ 'commenting' ] ) ? ( bool ) $props[ 'commenting' ] : true;
-		}
-
-		return $canComment;
 	}
 
 	/**

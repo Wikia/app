@@ -15,7 +15,15 @@ class ArticleCommentsController extends WikiaController {
 				$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
 				$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
 
-				if ( $sSubmit && $sComment && $iArticleId ) {
+				// VOLDEV-2: Check if user is allowed to comment
+				$result = array();
+				$canComment = ArticleCommentInit::userCanComment(
+					$this->getContext()->getTitle(),
+					$this->getContext()->getUser(),
+					$result
+				);
+
+				if ( $canComment && $sSubmit && $sComment && $iArticleId ) {
 					$oTitle = Title::newFromID( $iArticleId );
 
 					if ( $oTitle instanceof Title ) {
@@ -24,24 +32,19 @@ class ArticleCommentsController extends WikiaController {
 						if ( !$isMobile ) {
 							$this->wg->Out->redirect( $oTitle->getLocalURL() );
 						} else {
-							$result = array();
-							$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
-
-							//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
-							//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
-							if ( $canComment == true ) {
-								if ( empty( $response[2]['error'] ) ) {
+							if ( empty( $response[2]['error'] ) ) {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
 									$this->response->redirect( $oTitle->getLocalURL( array( 'page' => 1 ) ) . '#article-comments' );
-								} else {
-									$this->response->setVal( 'error', $response[2]['msg'] );
-								}
 							} else {
-								$this->response->setVal( 'error', $result['msg'] );
+									$this->response->setVal( 'error', $response[2]['msg'] );
 							}
 						}
 					}
+				}
+
+				if ( !$canComment ) {
+					$this->response->setVal( 'error', $result['msg'] );
 				}
 			}
 
