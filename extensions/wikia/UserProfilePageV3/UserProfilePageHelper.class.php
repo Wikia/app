@@ -6,6 +6,8 @@ class UserProfilePageHelper {
 	const GLOBAL_RESTRICTED_WIKIS_TYPE = 1;
 	const GLOBAL_RESTRICTED_WIKIS_CACHE_TIME = 0;
 
+	const GLOBAL_REGISTRY_TABLE = 'global_registry';
+
 	/**
 	 * @brief Get user object from given title
 	 *
@@ -108,9 +110,14 @@ class UserProfilePageHelper {
 	 * @return array - Array with restricted wiki ids
 	 */
 	private static function getRestrictedWikisFromDB() {
-		wfProfileIn(__METHOD__);
-		$value = self::getDb( false )->selectField(
-			'global_registry',
+		wfProfileIn( __METHOD__ );
+		$db = self::getDb( false );
+		if ( !$db->tableExists( self::GLOBAL_REGISTRY_TABLE, __METHOD__ ) ) {
+			Wikia::log( __METHOD__, sprintf('Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ));
+			return array();
+		}
+		$value = $db->selectField(
+			self::GLOBAL_REGISTRY_TABLE,
 			'item_value',
 			array(
 				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
@@ -128,8 +135,16 @@ class UserProfilePageHelper {
 	 * @param $restrictedWikis array - array with restricted wiki ids
 	 */
 	public static function saveRestrictedWikisDB( $restrictedWikis ) {
-		self::getDb( true )->replace(
-			'global_registry',
+		if ( wfReadOnly() ) {
+			return;
+		}
+		$db = self::getDb( true );
+		if ( !$db->tableExists( self::GLOBAL_REGISTRY_TABLE, __METHOD__ ) ) {
+			Wikia::log( __METHOD__, sprintf('Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ));
+			return;
+		}
+		$db->replace(
+			self::GLOBAL_REGISTRY_TABLE,
 			array( 'item_id', 'item_type' ),
 			array(
 				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
@@ -138,6 +153,7 @@ class UserProfilePageHelper {
 			),
 			__METHOD__
 		);
+		$db->commit();
 	}
 
 	/**
