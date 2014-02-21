@@ -52,8 +52,10 @@ class ParserSpeedHooks {
 		//Logging parser activity for monitoring
 		//wiki and article info are sent to logstash anyways so no need to repeat them here
 		WikiaLogger::instance()->info( "Parser execution", [
-			'parser_time'   => $parserOutput->getPerformanceStats( 'time' ),
-			'wikitext_size' => $parserOutput->getPerformanceStats( 'wikitextSize' ),
+			//Send parsing time in millisenconds as an integer
+			'parser_time'   => round( $parserOutput->getPerformanceStats( 'time' ) * 1000 ),
+			'node-ount'     => (int) $parserOutput->getPerformanceStats( 'nodeCount' ),
+			'wikitext_size' => (int) $parserOutput->getPerformanceStats( 'wikitextSize' ),
 			'skin_name'     => RequestContext::getMain()->getSkin()->getSkinName(),
 		]);
 
