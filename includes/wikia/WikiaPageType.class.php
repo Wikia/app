@@ -154,7 +154,9 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isWikiaHubMain() {
-		return ( self::isWikiaHub() && self::isMainPage() );
+		global $wgTitle;
+		$isMainPage = ( wfMessage( 'mainpage' )->inContentLanguage()->text() == $wgTitle->getText() );
+		return ( self::isWikiaHub() && $isMainPage );
 	}
 
 	/**
