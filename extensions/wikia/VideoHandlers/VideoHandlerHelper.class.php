@@ -279,7 +279,6 @@ class VideoHandlerHelper extends WikiaModel {
 					'useTemplate' => true,
 					'fluid' => true,
 					'forceSize' => 'small',
-					'remote' => true,
 				] );
 			}
 
