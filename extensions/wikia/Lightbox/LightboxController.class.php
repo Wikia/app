@@ -403,7 +403,7 @@ class LightboxController extends WikiaController {
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
 
 		$this->to = $imageInfo['timestamp'];
-		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->text();
+		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->escaped();
 
 		wfProfileOut( __METHOD__ );
 	}
