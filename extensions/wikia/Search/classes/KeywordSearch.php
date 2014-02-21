@@ -27,6 +27,65 @@ class KeywordSearch {
 		return $this->$method( $query );
 	}
 
+
+	public function getResultsMode2( $query ) {
+
+		$maxPhrases = 10;
+		$phrases = array_slice( explode(",", $query), 0, $maxPhrases );
+
+		$phraseQuery = [];
+		foreach ( $phrases as $phrase ) {
+			$phraseQuery[] = ' nolang_txt:("' . $phrase . '") ';
+		}
+
+		$select = $this->client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+		$select->setRows(10);
+		$select->setQuery( "( " . implode(" OR ", $phraseQuery) . ") AND article_quality_i:[50 TO *] lang:en" );
+
+		//add filters
+		$select->createFilterQuery( 'ns' )->setQuery('ns:0');
+
+
+		$result = $this->client->select( $select );
+		$res = [];
+		foreach( $result->getDocuments() as $doc ) {
+			$res[] = $doc->url;
+		}
+
+		return $res;
+	}
+
+	public function getResultsMode3( $query ) {
+		$maxPhrases = 5;
+		$phrases = array_slice( explode(",", $query), 0, $maxPhrases );
+		$phraseQuery = [];
+		foreach ( $phrases as $phrase ) {
+			$phraseQuery[] = ' title_en:("' . $phrase . '") ';
+		}
+
+		$select = $this->client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+		$select->setRows(10);
+		$select->setQuery( "( " . implode(" OR ", $phraseQuery) . ") AND article_quality_i:[50 TO *] lang:en" );
+
+		//add filters
+		$select->createFilterQuery( 'ns' )->setQuery('ns:0');
+
+
+		$result = $this->client->select( $select );
+		$res = [];
+		foreach( $result->getDocuments() as $doc ) {
+			$res[] = $doc->url;
+		}
+
+		return $res;
+	}
+
+
+
 	public function getResultsDefault( $query ) {
 
 		$select = $this->client->createSelect();
