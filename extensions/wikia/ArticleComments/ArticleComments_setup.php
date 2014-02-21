@@ -47,6 +47,7 @@ $wgAvailableRights[] = 'commentmove';
 $wgAvailableRights[] = 'commentedit';
 $wgAvailableRights[] = 'commentdelete';
 
+$wgGroupPermissions['*']['articlecomment'] = true;
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
