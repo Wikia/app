@@ -1467,9 +1467,7 @@ class WallMessage {
 		// While creating a new forum board the message id === 0
 		// Therefore we're getting at this place invalid URLs to be purge
 		// To quick fix it we use $idDB variable...
-		$inDb = ( $this->getMessagePageId() > 0 );
-
-		if( $inDb ) {
+		if( $this->getMessagePageId() > 0 ) {
 			if( $this->isMain() ) {
 				$urls[] = $this->getMessagePageUrl( true );
 			} else {
