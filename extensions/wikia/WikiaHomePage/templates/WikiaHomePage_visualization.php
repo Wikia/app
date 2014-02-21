@@ -26,9 +26,9 @@
 					<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
 				</a>
 				<ul class="WikiaMenuElement collections-dropdown">
-					<?php foreach($collectionsList as $collectionId =>$collection): ?>
+					<?php foreach($collectionsList as $collection): ?>
 
-						<li class="collection-link" data-collection-id="<?= $collectionId; ?>"><?= $collection['name']; ?></li>
+						<li class="collection-link" data-collection-id="<?= $collection['id']; ?>"><?= $collection['name']; ?></li>
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
