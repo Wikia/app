@@ -101,9 +101,9 @@ var SuggestModalWikiaHubsV3 = {
 		}
 	}
 };
-})();
 
-$(function () {
-	'use strict';
-	window.SuggestModalWikiaHubsV3.init();
-});
+	$(function () {
+		SuggestModalWikiaHubsV3.init();
+	});
+
+})(this, jQuery);

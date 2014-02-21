@@ -273,10 +273,10 @@ var WikiaHubs = {
 	}
 
 };
-})();
 
 $( function() {
-	'use strict';
 	$( '#carouselContainer' ).carousel();
-	window.WikiaHubs.init();
+	WikiaHubs.init();
 } );
+
+})(this);
