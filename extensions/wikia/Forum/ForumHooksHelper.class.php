@@ -378,12 +378,14 @@ class ForumHooksHelper {
 
 		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
+			$wallMessage->load( true );
 
 			// CONN-426: Purge cache only for main thread page
 			if ( $wallMessage->isMain() ) {
 				$urls[] = $wallMessage->getMessagePageUrl( true );
 			} else {
 				$wallMessage = $wallMessage->getTopParentObj();
+				$wallMessage->load( true );
 				$urls[] = $wallMessage->getMessagePageUrl( true );
 			}
 
