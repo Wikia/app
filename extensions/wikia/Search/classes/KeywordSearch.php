@@ -137,29 +137,6 @@ class KeywordSearch {
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser('edismax');
 		$select->setRows(10);
-		$select->setQuery( "nolang_txt:(\"".implode('" "',$query)."\") AND +(article_quality_i:[50 TO *] AND lang:en)" );
-
-		//add filters
-		$select->createFilterQuery( 'ns' )->setQuery('ns:0');
-
-		$result = $this->client->select( $select );
-		$res = [];
-		foreach( $result->getDocuments() as $doc ) {
-			$res[] = $doc->url;
-		}
-		wfProfileOut(__METHOD__);
-		return $res;
-	}
-
-	public function getResults5onlyhtml( $query ) {
-		wfProfileIn(__METHOD__);
-
-		$query = array_slice($query, 0, 5);
-
-		$select = $this->client->createSelect();
-		$dismax = $select->getDisMax();
-		$dismax->setQueryParser('edismax');
-		$select->setRows(10);
 		$select->setQuery( "html_en:(\"".implode('" "',$query)."\") AND +(article_quality_i:[50 TO *] AND lang:en)" );
 
 		//add filters
@@ -174,22 +151,18 @@ class KeywordSearch {
 		return $res;
 	}
 
-	public function getResultsTitle( $query ) {
+	public function getResults70phrase( $query ) {
 		wfProfileIn(__METHOD__);
-
-		$qs = [];
-		foreach( $query as $q ) {
-			$qs = array_merge( $qs, explode(" ", $q) );
-		}
 
 		$select = $this->client->createSelect();
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser('edismax');
+		$dismax->setMinimumMatch('70%');
 		$select->setRows(10);
-		$select->setQuery( "html_en:(".implode(' ',$qs).") AND +(article_quality_i:[50 TO *] AND lang:en)" );
+		$select->setQuery( "+(article_quality_i:[50 TO *] AND lang:en) AND html_en:(\"".implode('" "',$query)."\")" );
 
 		//add filters
-		$select->createFilterQuery( 'ns' )->setQuery('ns:0');
+		$select->createFilterQuery( 'filter' )->setQuery('(ns:0)');
 		$select->createFilterQuery( 'lyrcis' )->setQuery('-(wid:43339)');
 
 		$result = $this->client->select( $select );
