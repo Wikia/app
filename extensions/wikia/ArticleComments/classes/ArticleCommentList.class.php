@@ -460,7 +460,7 @@ class ArticleCommentList {
 
 			//previous
 			if ($activePage > 1) {
-				$pagination .= '<a href="' . $title->getLinkUrl('page='. (max($activePage - 1, 1)) ) . '#article-comments" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 1)) . '">' . wfMsg('article-comments-prev-page') . '</a>';
+				$pagination .= '<a href="' . $title->getLinkUrl('page='. (max($activePage - 1, 1)) ) . '#article-comments" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 1)) . '">' . wfMessage( 'article-comments-prev-page' )->escaped() . '</a>';
 			}
 
 			//first page - always visible
@@ -472,7 +472,7 @@ class ArticleCommentList {
 
 			//add spacer when there is a gap between 1st and 2nd visible page
 			if ($firstVisiblePage > 2) {
-				$pagination .= wfMsg('article-comments-page-spacer');
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
 			}
 
 			//generate links
@@ -482,7 +482,7 @@ class ArticleCommentList {
 
 			//add spacer when there is a gap between 2 last links
 			if ($numberOfPages - $lastVisiblePage > 1) {
-				$pagination .= wfMsg('article-comments-page-spacer');
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
 			}
 
 			//add last page - always visible
@@ -490,7 +490,7 @@ class ArticleCommentList {
 
 			//next
 			if ($activePage < $numberOfPages) {
-				$pagination .= '<a href="' . $title->getFullUrl('page=' . (min($activePage + 1, $numberOfPages)) ) . '#article-comments" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages)) . '">' . wfMsg('article-comments-next-page') . '</a>';
+				$pagination .= '<a href="' . $title->getFullUrl('page=' . (min($activePage + 1, $numberOfPages)) ) . '#article-comments" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages)) . '">' . wfMessage( 'article-comments-next-page' )->escaped() . '</a>';
 			}
 		}
 		return $pagination;
@@ -513,7 +513,7 @@ class ArticleCommentList {
 
 		list ($blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended) = array(
 			User::whoIs( $wgUser->blockedBy() ),
-			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMsg( 'blockednoreason' ),
+			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
@@ -524,7 +524,7 @@ class ArticleCommentList {
 		$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
 
 		if ( $blockExpiry == 'infinity' ) {
-			$scBlockExpiryOptions = wfMsg( 'ipboptions' );
+			$scBlockExpiryOptions = wfMessage( 'ipboptions' )->text();
 			foreach ( explode( ',', $scBlockExpiryOptions ) as $option ) {
 				if ( strpos( $option, ":" ) === false ) continue;
 				list( $show, $value ) = explode( ":", $option );
@@ -543,7 +543,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMsgExt( $msg, array('parse'), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+		return wfMessage( $msg, $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp )->parseAsBlock();
 	}
 
 	/**
@@ -699,7 +699,7 @@ class ArticleCommentList {
 
 		//do not use $reason as it contains content of parent article/comment - not current ones that we delete in a loop
 
-		$deleteReason = wfMsgForContent('article-comments-delete-reason');
+		$deleteReason = wfMessage( 'article-comments-delete-reason' )->inContentLanguage()->text();
 
 		//we have comment 1st level - checked in articleDelete() (or 2nd - so do nothing)
 		if (is_array(self::$mArticlesToDelete)) {
@@ -784,7 +784,7 @@ class ArticleCommentList {
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
 					if ($oCommentTitle instanceof Title) {
 						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( '', wfMsg('article-comments-undeleted-comment', $new_page_id) );
+						$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->text() );
 
 						if ( !is_array($ok) ) {
 							Wikia::log( __METHOD__, 'error', "cannot restore comment {$page_value['title']} (id: {$page_id})" );
@@ -883,7 +883,7 @@ class ArticleCommentList {
 							$messageKey = 'article-comments-rc-comments';
 						}
 
-						$headerTitle = wfMsgExt($messageKey, array('parseinline'), $title->getPrefixedText());
+						$headerTitle = wfMessage( $messageKey, $title->getPrefixedText() )->parse();
 					} else {
 						Wikia::log( __METHOD__, '2', 'Title does not exist: ' . $text, true );
 					}
@@ -1036,7 +1036,7 @@ class ArticleCommentList {
 				}
 
 				$articleId = $title->getArticleId();
-				$articlelink = wfMsgExt($messageKey, array('parseinline'), $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText());
+				$articlelink = wfMessage( $messageKey, $title->getFullURL("permalink=$articleId#comm-$articleId"),  $titleMainArticle->getText() )->parse();
 			} else {
 			//it should never happened because $rcTitle is never empty,
 			//ArticleComment::explode() always returns an array with not-empty 'title' element,

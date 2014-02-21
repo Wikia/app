@@ -188,7 +188,7 @@ class ArticleCommentInit {
 		if ( self::ArticleCommentCheck() && !( F::app()->checkSkin( 'wikiamobile' ) ) ) {
 			$tocnumber = ++$sublevelCount[1];
 
-			$toc .= Linker::tocLine('WikiaArticleComments', wfMsg( 'article-comments-toc-item' ), $tocnumber, 1);
+			$toc .= Linker::tocLine('WikiaArticleComments', wfMessage( 'article-comments-toc-item' )->text(), $tocnumber, 1);
 		}
 		return true;
 	}
@@ -406,14 +406,13 @@ class ArticleCommentInit {
 		if ( $ns == NS_TALK && ArticleComment::isTitleComment( $title ) ) {
 			$parentTitle = reset( explode( '/', $element->page_title) ); // getBaseText returns me parent comment for subcomment
 
-			$link = wfMsgExt(
+			$link = wfMessage(
 				'article-comments-file-page',
-				array ('parsemag'),
 				$title->getLocalURL(),
 				self::getUserNameFromRevision($title),
 				Title::newFromText( $parentTitle )->getLocalURL(),
 				$parentTitle
-			);
+			)->text();
 
 		// format links to blog posts
 		} else if ( defined('NS_BLOG_ARTICLE_TALK') && $ns == NS_BLOG_ARTICLE_TALK ) {
@@ -421,16 +420,15 @@ class ArticleCommentInit {
 			$titleNames = explode( '/', $baseText );
 			$userBlog = Title::newFromText( $titleNames[0], NS_BLOG_ARTICLE );
 
-			$link = wfMsgExt(
+			$link = wfMessage(
 				'article-blog-comments-file-page',
-				array ('parsemag'),
 				$title->getLocalURL(),
 				self::getUserNameFromRevision($title),
 				Title::newFromText( $baseText, NS_BLOG_ARTICLE )->getLocalURL(),
 				$titleNames[1],
 				$userBlog->getLocalURL(),
 				$userBlog->getBaseText()
-			);
+			)->text();
 		}
 
 		return true;

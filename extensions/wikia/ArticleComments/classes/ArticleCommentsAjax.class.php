@@ -111,7 +111,7 @@ class ArticleCommentsAjax {
 					$result['edgeCases'] = MiniEditorHelper::getEdgeCases();
 				}
 
-				$result['emptyMsg'] = wfMsg('article-comments-empty-comment', $comment->getTitle()->getLocalUrl('redirect=no&action=delete'));
+				$result['emptyMsg'] = wfMessage( 'article-comments-empty-comment', $comment->getTitle()->getLocalUrl( 'redirect=no&action=delete' ) )->escaped();
 			}
 		}
 

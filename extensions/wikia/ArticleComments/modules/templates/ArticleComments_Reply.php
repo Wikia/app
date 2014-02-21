@@ -20,7 +20,7 @@
 					<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 				<? endif ?>
 				<div class="buttons" data-space-type="buttons">
-					<input type="submit" class="actionButton" name="wpArticleSubmit" id="article-comm-reply-submit-<?= $commentId ?>" value="<?= wfMsg('article-comments-post') ?>" />
+					<input type="submit" class="actionButton" name="wpArticleSubmit" id="article-comm-reply-submit-<?= $commentId ?>" value="<?= wfMessage( 'article-comments-post' )->escaped() ?>" />
 					<img src="<?= $stylePath ?>/common/images/ajax.gif" class="throbber" />
 				</div>
 			</div>
