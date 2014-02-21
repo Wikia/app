@@ -21,6 +21,8 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 				wfMemcKey( __METHOD__, self::MAX_TRENDING_ARTICLES ),
 				86400, //24 hours
 				function() {
+					$trendingArticles = [];
+
 					//fetch Trending Articles
 					try {
 						$trendingArticlesData = $this->app->sendRequest( 'ArticlesApi', 'getTop' )->getVal( 'items' );
@@ -30,7 +32,6 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 					}
 
 					if ( !empty( $trendingArticlesData ) ) {
-
 						$items = array_slice( $trendingArticlesData, 0, self::MAX_TRENDING_ARTICLES );
 						//load data from response to template
 						$trendingArticles = [];
@@ -59,11 +60,11 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 						}
 					}
 
-					return $trendingArticlesData;
+					return $trendingArticles;
 				}
 			);
 
-			if ( $trendingArticles != false ) {
+			if ( !empty( $trendingArticles ) ) {
 				$this->response->setVal( 'trendingArticles', $trendingArticles );
 				$this->response->setVal( 'blankImg', $this->wg->BlankImgUrl );
 				$this->response->setVal( 'trendingArticlesHeading', wfMessage( 'wikiamobile-trending-articles-heading' )->plain() );
