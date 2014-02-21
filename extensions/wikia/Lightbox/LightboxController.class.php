@@ -136,12 +136,9 @@ class LightboxController extends WikiaController {
 		return self::$imageserving;
 	}
 
-
-
 	/**
 	 * Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string fileTitle
-	 * @requestParam string remote [0/1]
 	 * @requestParam string sourceArticleId (optional) - article id that the file belongs to
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
@@ -153,10 +150,11 @@ class LightboxController extends WikiaController {
 	 * @responseParam string userPageUrl - url to user profile page
 	 * @responseParam array articles - array of articles that has title and url
 	 * @responseParam string providerName - provider name for videos or '' for others
+	 * @responseParam boolean exists - check if the file exists
+	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
-		$remote = $this->request->getVal( 'remote', 0 );
 
 		// BugId:32939
 		// There is no sane way to check whether $fileTitle is OK other
@@ -189,12 +187,6 @@ class LightboxController extends WikiaController {
 
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
-		// check for remote file
-		if ( !empty( $remote ) ) {
-			$helper = new LightboxHelper();
-			$data['fileUrl'] = $helper->getRemoteUrl( $fileTitle );
-		}
-
 		$articles = $data['articles'];
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
@@ -218,6 +210,7 @@ class LightboxController extends WikiaController {
 		$this->articleListIsSmaller = $articleListIsSmaller;
 		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
+		$this->isAdded = $data['isAdded'];
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat( 'json' );
@@ -226,7 +219,6 @@ class LightboxController extends WikiaController {
 	/**
 	 * Returns pre-formatted social sharing urls and codes
 	 * @requestParam string fileTitle
-	 * @requestParam string remote [0/1]
 	 * @requestParam string articleTitle	(optional)
 	 * @responseParam string url - raw url that is automically determined.  This is determined to be either article url or file page url.
 	 * @responseParam string articleUrl - url to article page
@@ -235,7 +227,6 @@ class LightboxController extends WikiaController {
 	 */
 	public function getShareCodes() {
 		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
-		$remote = $this->request->getVal( 'remote', 0 );
 
 		$file = wfFindFile( $fileTitle );
 
@@ -260,12 +251,11 @@ class LightboxController extends WikiaController {
 				$articleTitleText = $articleTitleObj->getText();
 			}
 
-			// check for remote file
-			if ( empty( $remote ) ) {
+			// check if the file is added to the wiki
+			if ( WikiaFileHelper::isAdded( $file ) ) {
 				$fileUrl = $fileTitleObj->getFullURL();
 			} else {
-				$helper = new LightboxHelper();
-				$fileUrl = $helper->getRemoteUrl( $fileTitle );
+				$fileUrl = WikiaFileHelper::getFullUrlPremiumVideo( $fileTitleObj->getDBkey() );
 			}
 
 			// determine share url
