@@ -69,7 +69,6 @@ var WikiaHomePageRemix = function () {
 	
 	this.heroImageSrc = retriveHeroImageSrc(this.collections);
 	if( this.heroImageSrc !== null ) {
-		$().log('Preloading hero image...');
 		this.heroImage = new Image();
 		this.heroImage.src = this.heroImageSrc;
 	}
@@ -78,7 +77,6 @@ var WikiaHomePageRemix = function () {
 function WikiPreview(el) {
 	this.el = $(el);
 	this.init();
-	$().log('made preview');
 }
 
 var WikiPreviewInterstitial = {
@@ -91,7 +89,7 @@ var WikiPreviewInterstitial = {
 		$('#visualization').delegate('.wikia-slot', 'click', function (e) {
 			var target = $(e.target ),
 				wikiId;
-			$().log(target);
+
 			if (!target.hasClass('goVisit') && target.closest('.goVisit').length === 0) {
 				e.preventDefault();
 				wikiId = $(this).data('wiki-id');
@@ -199,7 +197,6 @@ WikiPreview.prototype = {
 			var $this = $(this);
 			setPopoverTimeout($this);
 			$('.popover').mouseenter(function() {
-				$().log('mouse re-entering');
 				clearTimeout(popoverTimeout);
 			}).mouseleave(function() {
 					setPopoverTimeout($this);
@@ -259,7 +256,6 @@ WikiaHomePageRemix.prototype = {
 		$('.wikia-slot a').removeAttr('title');
 
 		this.remixHandler();
-		$().log('WikiaHomePageRemix initialised');
 	},
 	isTargetOutsideRemixChevron: function ($target) {
 		return !($target.is('.collections-button') || $target.is('.collections-button .chevron'));
@@ -373,7 +369,6 @@ WikiaHomePageRemix.prototype = {
 	},
 	updateVisualisation: function () {
 		if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
-			$().log('WikiaHomePageRemix remixing (batch ' + this.wikiSetStackIndex + ')');
 			this.remix($('.slot-medium'), this.wikiSetStack[this.wikiSetStackIndex].mediumslots);
 			this.remix($('.slot-small'), this.wikiSetStack[this.wikiSetStackIndex].smallslots);
 			this.remix($('.slot-big'), this.wikiSetStack[this.wikiSetStackIndex].bigslots);
@@ -384,10 +379,7 @@ WikiaHomePageRemix.prototype = {
 			this.preload();
 
 			this.showStats();
-
-			$().log('WikiaHomePageRemix data remixed');
 		} else {
-			$().log('wikiSetStack is empty');
 			$('.remix').startThrobbing();
 		}
 	},
@@ -459,7 +451,6 @@ WikiaHomePageRemix.prototype = {
 		}
 
 		this.markCollectionAsShown(collectionIndex);
-		$().log('displaying collection #' + collectionIndex);
 		
 		selectedCollection = this.collections[collectionIndex];
 
@@ -607,7 +598,6 @@ WikiaHomePageRemix.prototype = {
 			callback: $.proxy(function(response) {
 				this.wikiSetStack = this.wikiSetStack.concat(response.wikis);
 				$('.remix').stopThrobbing();
-				$().log('WikiSet preloaded');
 			}, this)
 		});
 	}
