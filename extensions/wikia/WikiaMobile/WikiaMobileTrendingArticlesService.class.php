@@ -19,7 +19,7 @@ class WikiaMobileTrendingArticlesService extends WikiaService {
 		if ( $this->wg->Request->getVal( 'action', 'view' ) == 'view' && $this->wg->Title->getArticleId() != 0 ) {
 			$trendingArticles = WikiaDataAccess::cache(
 				wfMemcKey( __METHOD__, self::MAX_TRENDING_ARTICLES ),
-				10800, //3 hours
+				86400, //24 hours
 				function() {
 					//fetch Trending Articles
 					try {
