@@ -11,7 +11,9 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( WikiaPageType::isWikiaHubMain() ) { /* TODO decide what to do with offshots */
+		$isMainPage = ( wfMessage( 'mainpage' )->inContentLanguage()->text() == $title->getText() );
+
+		if( WikiaPageType::isWikiaHub() && $isMainPage ) { /* TODO decide what to do with offshots */
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();
