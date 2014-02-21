@@ -900,7 +900,7 @@ class ArticleComment {
 	/**
 	 * @param Title $title
 	 */
-	public static function getSquidURLs( $title ) {
+	public static function getSquidURLs( Title $title ) {
 		$urls = [];
 		$articleId = $title->getArticleId();
 
