@@ -48,8 +48,12 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{/sections.length}}{{/firstLevel}}</a>' +
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
+			//grab only headers that have text to display
+			tocSections = sections.list().filter( function( section ){
+				return !!section.innerText.trim()
+			} ),
 			tocData = toc.getData(
-				sections.list(),
+				tocSections,
 				createSection
 			);
 
