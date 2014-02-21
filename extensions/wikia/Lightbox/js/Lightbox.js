@@ -91,7 +91,7 @@
 
 			LightboxLoader.lightboxLoading = false;
 
-			/* tracking after lightbox has fully loaded */
+			// tracking after lightbox has fully loaded
 			trackingTitle = Lightbox.current.key;
 			LightboxTracker.track(
 				Wikia.Tracker.ACTIONS.IMPRESSION,
@@ -141,11 +141,11 @@
 						Lightbox.hideOverlay();
 					}
 				}
-				// Hide Lightbox header and footer on mouse leave.
 			}).on('mouseleave.Lightbox', function () {
+				// Hide Lightbox header and footer on mouse leave.
 				Lightbox.hideOverlay(10);
-				// Show share screen on button click
 			}).on('click.Lightbox', '.LightboxHeader .share-button', function () {
+				// Show share screen on button click
 				if (Lightbox.current.type === 'video') {
 					Lightbox.video.destroyVideo();
 				}
@@ -187,8 +187,8 @@
 					});
 
 				});
-				// Close more info and share screens on button click
 			}).on('click.Lightbox', '.more-info-close', function () {
+				// Close more info and share screens on button click
 				if (Lightbox.current.type === 'video') {
 					LightboxLoader.getMediaDetail({
 						fileTitle: Lightbox.current.key
@@ -197,8 +197,8 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-				// Pin the toolbar on icon click
 			}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
+				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
 					pinTitle;

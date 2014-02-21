@@ -40,7 +40,7 @@
 				// Update history api (remove '?file=' from URL)
 				Lightbox.updateUrlState(true);
 				// Reset carousel
-				Lightbox.current.thumbs = []; /* global Lightbox */
+				Lightbox.current.thumbs = [];
 				Lightbox.current.thumbTypesAdded = [];
 				Lightbox.to = LightboxLoader.cache.to;
 				// Reset Ad Flags
