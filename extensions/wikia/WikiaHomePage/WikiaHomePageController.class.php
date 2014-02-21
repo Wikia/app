@@ -219,6 +219,7 @@ class WikiaHomePageController extends WikiaController {
 					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
 						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
 						$processedCollection['name'] = $collection['name'];
+						$processedCollection['id'] = $collection['id'];
 
 						if (!empty($collection['sponsor_hero_image'])) {
 							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
@@ -231,7 +232,7 @@ class WikiaHomePageController extends WikiaController {
 						if (!empty($collection['sponsor_url'])) {
 							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
 						}
-						$collectionsBatches[$collection['id']] = $processedCollection;
+						$collectionsBatches[] = $processedCollection;
 					}
 				}
 			}
