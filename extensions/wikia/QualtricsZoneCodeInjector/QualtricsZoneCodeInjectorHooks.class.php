@@ -1,9 +1,6 @@
 <?php
 
 class QualtricsZoneCodeInjectorHooks {
-	const ZONE_CODE = 'ZN_eKkIzldP6dOXaXr'; // This is test zone code - it should be changed before merging to dev
-	const SAMPLING = 5; // in percent
-
 	/**
 	 * Add important Qualtrics-related variables to javascript
 	 *
@@ -13,8 +10,9 @@ class QualtricsZoneCodeInjectorHooks {
 	 */
 	static public function onResourceLoaderGetConfigVars( &$vars ) {
 		if ( $vars['skin'] == 'oasis' ) {
-			$vars['wgQualtricsZoneCode']     = self::ZONE_CODE;
-			$vars['wgQualtricsZoneSampling'] = self::SAMPLING;
+			global $wgQualtricsZoneSampling;
+
+			$vars['wgQualtricsZoneSampling'] = $wgQualtricsZoneSampling;
 			$vars['wgQualtricsZoneUrl']      = self::BuildQualtricsUri();
 		}
 
@@ -32,9 +30,10 @@ class QualtricsZoneCodeInjectorHooks {
 	static public function onGetHTMLAfterBody( $skin, &$html ) {
 		if ( $skin->skinname == 'oasis' ) {
 			global $wgHooks;
+			global $wgQualtricsZoneCode;
 
 			$html .= '<!-- START OF QUALTRICS INJECTION -->'
-				. '<div id="' . self::ZONE_CODE . '"></div>'
+				. '<div id="' . $wgQualtricsZoneCode . '"></div>'
 				. '<!-- END OF QUALTRICS INJECTION -->';
 
 			$wgHooks['SkinAfterBottomScripts'][] = 'QualtricsZoneCodeInjectorHooks::onSkinAfterBottomScripts';
@@ -66,8 +65,10 @@ class QualtricsZoneCodeInjectorHooks {
 	 * @return string
 	 */
 	static private function BuildQualtricsUri() {
-		return '//' . strtolower( self::ZONE_CODE ) . '-wikia.siteintercept.qualtrics.com/WRSiteInterceptEngine/'
-		. '?Q_ZID=' . self::ZONE_CODE . '&Q_LOC=' . self::encodeURIComponent( $_SERVER['SCRIPT_URI'] );
+		global $wgQualtricsZoneCode;
+
+		return '//' . strtolower( $wgQualtricsZoneCode ) . '-wikia.siteintercept.qualtrics.com/WRSiteInterceptEngine/'
+		. '?Q_ZID=' . $wgQualtricsZoneCode . '&Q_LOC=' . self::encodeURIComponent( $_SERVER['SCRIPT_URI'] );
 	}
 
 	/**
