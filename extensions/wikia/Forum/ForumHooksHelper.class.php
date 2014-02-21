@@ -379,21 +379,7 @@ class ForumHooksHelper {
 		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->load( true );
-
-			// CONN-426: Purge cache only for main thread page
-			if ( $wallMessage->isMain() ) {
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			} else {
-				$wallMessage = $wallMessage->getTopParentObj();
-				$wallMessage->load( true );
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			}
-
-			// CONN-430: Purge board page
-			$boardTitle = Title::newFromText( $wallMessage->getMainPageText(), NS_WIKIA_FORUM_BOARD );
-			if( !empty( $boardTitle ) ) {
-				$urls[] = $boardTitle->getFullURL();
-			}
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
 		}
 
 		wfProfileOut( __METHOD__ );

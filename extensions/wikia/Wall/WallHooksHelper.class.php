@@ -2204,16 +2204,7 @@ class WallHooksHelper {
 			// while running AfterBuildNewMessageAndPost hook
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->load( true );
-
-			if( $wallMessage->isMain() ) {
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			} else {
-				$wallMessage = $wallMessage->getTopParentObj();
-				$wallMessage->load( true );
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			}
-
-			$urls[] = $wallMessage->getUserWallUrl();
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_USER_WALL ) );
 		}
 
 		wfProfileOut( __METHOD__ );
