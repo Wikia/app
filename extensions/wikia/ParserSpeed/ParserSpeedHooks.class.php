@@ -54,7 +54,7 @@ class ParserSpeedHooks {
 		WikiaLogger::instance()->info( "Parser execution", [
 			//Send parsing time in millisenconds as an integer
 			'parser-time'   => round( $parserOutput->getPerformanceStats( 'time' ) * 1000 ),
-			'node-count'     => (int) $parserOutput->getPerformanceStats( 'nodeCount' ),
+			'node-count'    => (int) $parserOutput->getPerformanceStats( 'nodeCount' ),
 			'wikitext-size' => (int) $parserOutput->getPerformanceStats( 'wikitextSize' ),
 			'skin-name'     => RequestContext::getMain()->getSkin()->getSkinName(),
 		]);
