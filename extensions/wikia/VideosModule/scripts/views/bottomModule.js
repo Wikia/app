@@ -91,9 +91,9 @@ define( 'videosmodule.views.bottomModule', [
 		$out.find( '.thumbnails' ).append( thumbHtml );
 
 		if ( groupParams.position === 1 ) {
-			this.$el.after( $out );
-		} else {
 			this.$el.before( $out );
+		} else {
+			this.$el.after( $out );
 		}
 
 		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
