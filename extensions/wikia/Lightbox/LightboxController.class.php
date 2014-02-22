@@ -332,7 +332,7 @@ class LightboxController extends WikiaController {
 					$result = UserMailer::send(
 						$to,
 						$sender,
-						wfMessage( 'lightbox-share-email-subject'.$msgSuffix, array( "$1" => $user->getName() ) )->plain(),
+						wfMessage( 'lightbox-share-email-subject'.$msgSuffix, $user->getName() )->text(),
 						wfMessage( 'lightbox-share-email-body'.$msgSuffix, $shareUrl )->text(),
 						null,
 						null,
@@ -345,14 +345,14 @@ class LightboxController extends WikiaController {
 					}
 				}
 			} else {
-				$errors[] = wfMessage( 'lightbox-share-email-error-noaddress' )->plain();
+				$errors[] = htmlspecialchars( wfMessage( 'lightbox-share-email-error-noaddress' )->plain() );
 			}
 		}
 
 		$this->errors = $errors;
 		$this->sent = $sent;
 		$this->notsent = $notsent;
-		$this->successMsg = wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->text();
+		$this->successMsg = wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->escaped();
 	}
 
 	/**
