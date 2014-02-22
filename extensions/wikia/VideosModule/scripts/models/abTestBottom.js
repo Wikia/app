@@ -23,37 +23,37 @@ define('videosmodule.models.abTestBottom', [], function () {
 		// Article, Above Read More, 2 Rows
 		'GROUP_A': {
 			verticalOnly: false,
-			position: 2,
+			position: 1,
 			rows: 2
 		},
 		// Vertical, Above Read More, 2 Rows
 		'GROUP_B': {
 			verticalOnly: true,
-			position: 2,
+			position: 1,
 			rows: 2
 		},
 		// Article, Below Read More, 2 Rows
 		'GROUP_C': {
 			verticalOnly: false,
-			position: 1,
+			position: 2,
 			rows: 2
 		},
 		// Article, Above Read More, 1 Row
 		'GROUP_D': {
 			verticalOnly: false,
-			position: 2,
+			position: 1,
 			rows: 1
 		},
 		// Article, Above Read More, 1 Row
 		'GROUP_E': {
 			verticalOnly: true,
-			position: 2,
+			position: 1,
 			rows: 1
 		},
 		// Article, Below Read More, 1 Row
 		'GROUP_F': {
 			verticalOnly: false,
-			position: 1,
+			position: 2,
 			rows: 1
 		}
 	};
