@@ -15,10 +15,9 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$code = $this->getTag();
 
-				return '<script type="text/javascript" src="https://script.ioam.de/iam.js"></script>
-
+				$ivwScript = '<scr\' + \'ipt type="text/javascript" src="https://script.ioam.de/iam.js"></\'+\'scr\'+\'ipt>
 <!-- SZM VERSION="2.0" -->
-<script type="text/javascript">
+<scr\' + \'ipt type="text/javascript">
 var iam_data = {
 "mg":"yes", // Migrationsmodus AKTIVIERT
 "st":"gastar", // site/domain
@@ -28,8 +27,20 @@ var iam_data = {
 }
 
 iom.c(iam_data, 2);
-</script>
+</\' + \'scr\' + \'ipt>
 <!-- /SZM -->';
+
+				$ivwScript = str_replace("\n", '', $ivwScript);
+
+				$IVW2_DR = <<<SCRIPT
+<script type="text/javascript">(function(window){
+debugger;
+if (window.Wikia && window.Wikia.AbTest && Wikia.AbTest.inGroup( "IVW2_DR", "IVW2_ENABLED" ) ){
+document.write('{$ivwScript}');
+}})(window);</script>
+SCRIPT;
+
+				return $IVW2_DR;
 				break;
 			default:
 				return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
