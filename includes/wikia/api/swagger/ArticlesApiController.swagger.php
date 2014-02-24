@@ -315,6 +315,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
+ *  @SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  * 	@SWG\Property(
  * 		name="ns",
  * 		type="int",
@@ -348,12 +354,7 @@ use Swagger\Annotations as SWG;
  * 		type="Creator",
  * 		description="Data about the author of the article (creator of the first revision)"
  * 	)
- * 	@SWG\Property(
- * 		name="quality",
- * 		type="int",
- * 		required="true",
- * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
- * 	)
+ *
  *
  *
  * @SWG\Model( id="UnexpandedListArticleResultSet" )
@@ -497,7 +498,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Minimal value of article quality",
+ * 					description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

@@ -35,6 +35,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  * 
  * @SWG\Model( id="localWikiSearchResultSet" )
  * 	@SWG\Property(
@@ -67,12 +73,6 @@ use Swagger\Annotations as SWG;
  * 		type="Array",
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
- * 	)
- * 	@SWG\Property(
- * 		name="quality",
- * 		type="int",
- * 		required="true",
- * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  *
  *
@@ -107,6 +107,12 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="Language of the article"
  *  )
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  * @SWG\Property(
  * 		name="snippet",
  * 		required="true",
@@ -119,12 +125,6 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="The URL of the image"
  *  )
- * 	@SWG\Property(
- * 		name="quality",
- * 		type="int",
- * 		required="true",
- * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
- * 	)
  * 	@SWG\Property(
  * 		name="type",
  * 		type="string",
@@ -262,7 +262,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Minimal value of article quality",
+ * 					description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

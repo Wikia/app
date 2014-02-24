@@ -25,6 +25,12 @@ use Swagger\Annotations as SWG;
  * 		description="The relative URL of the article"
  * 	)
  * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ * 	@SWG\Property(
  * 		name="wikiId",
  * 		type="int",
  * 		required="true",
@@ -41,12 +47,6 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		required="true",
  * 		description="The URL of plain content of the article"
- * 	)
- * 	@SWG\Property(
- * 		name="quality",
- * 		type="int",
- * 		required="true",
- * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  *
  * @SWG\Api(
