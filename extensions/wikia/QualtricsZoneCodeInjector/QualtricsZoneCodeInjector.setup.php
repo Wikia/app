@@ -16,7 +16,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAutoloadClasses['QualtricsZoneCodeInjectorHooks'] = $dir . 'QualtricsZoneCodeInjectorHooks.class.php';
 
-// hooks
-$wgHooks['ResourceLoaderGetConfigVars'][] = 'QualtricsZoneCodeInjectorHooks::onResourceLoaderGetConfigVars';
+	// hooks
+$wgHooks['MakeGlobalVariablesScript'][] = 'QualtricsZoneCodeInjectorHooks::onMakeGlobalVariablesScript';
 $wgHooks['GetHTMLAfterBody'][]            = 'QualtricsZoneCodeInjectorHooks::onGetHTMLAfterBody';
 $wgHooks['OasisSkinAssetGroups'][]        = 'QualtricsZoneCodeInjectorHooks::onOasisSkinAssetGroups';

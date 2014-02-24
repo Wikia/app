@@ -8,8 +8,10 @@ class QualtricsZoneCodeInjectorHooks {
 	 *
 	 * @return bool
 	 */
-	static public function onResourceLoaderGetConfigVars( &$vars ) {
-		if ( $vars['skin'] == 'oasis' ) {
+	static public function onMakeGlobalVariablesScript( &$vars, $outputPage ) {
+		global $wgNoExternals;
+
+		if ( empty( $wgNoExternals ) && $outputPage->getSkin()->skinname == 'oasis' ) {
 			global $wgQualtricsZoneSampling;
 
 			$vars['wgQualtricsZoneSampling'] = $wgQualtricsZoneSampling;
@@ -28,7 +30,9 @@ class QualtricsZoneCodeInjectorHooks {
 	 * @return bool
 	 */
 	static public function onGetHTMLAfterBody( $skin, &$html ) {
-		if ( $skin->skinname == 'oasis' ) {
+		global $wgNoExternals;
+
+		if ( empty( $wgNoExternals ) && $skin->skinname == 'oasis' ) {
 			global $wgQualtricsZoneCode;
 
 			$html .= '<!-- START OF QUALTRICS INJECTION -->'
@@ -47,7 +51,11 @@ class QualtricsZoneCodeInjectorHooks {
 	 * @return bool
 	 */
 	static public function onOasisSkinAssetGroups( &$assetsArray ) {
-		$assetsArray[] = 'qualtrics_zone_code_injector_js';
+		global $wgNoExternals;
+
+		if ( empty( $wgNoExternals ) ) {
+			$assetsArray[] = 'qualtrics_zone_code_injector_js';
+		}
 
 		return true;
 	}
