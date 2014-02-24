@@ -29,7 +29,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	function createSection( header, level ) {
 		return {
 			id: header.id,
-			name: header.textContent.trim(),
+			name: header.innerText.trim(),
 			level: level,
 			firstLevel: level === 1,
 			sections: []
@@ -56,7 +56,6 @@ function ( sections, window, $, mustache, toc, track ) {
 				tocSections,
 				createSection
 			);
-
 		if ( tocData.sections.length ) {
 			return mustache.render( wrap, tocData, {
 				ol: ol,
