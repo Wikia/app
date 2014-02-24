@@ -29,7 +29,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	function createSection( header, level ) {
 		return {
 			id: header.id,
-			name: header.textContent.trim(),
+			name: header.innerText.trim(),
 			level: level,
 			firstLevel: level === 1,
 			sections: []
@@ -48,15 +48,8 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{/sections.length}}{{/firstLevel}}</a>' +
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
-			noScript,
 			//grab only headers that have text to display
 			tocSections = sections.list().filter( function( section ){
-				//remove unwanted noscript tag
-				noScript = section.getElementsByTagName('noscript')[0];
-				if( noScript ){
-					noScript.parentElement.removeChild( noScript );
-					noScript = null;
-				}
 				return !!section.innerText.trim();
 			} ),
 			tocData = toc.getData(
