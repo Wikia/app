@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 
@@ -56,8 +55,8 @@ $color-poll-odd: mix($color-text, $color-page, 10%);
 		line-height: 50px;
 	}
 	.bar {
-		@include border-radius(8px);
 		@include linear-gradient($color-poll-result-bar, left, $color-poll-result-bar, 0%, $color-poll-result-bar-highlight, 80%);
+		border-radius: 8px;
 		color: $color-poll-result-text;
 		display: none;
 		font-weight: bold;

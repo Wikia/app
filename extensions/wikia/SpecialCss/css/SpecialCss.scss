@@ -2,11 +2,9 @@
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 
 $edit-box-color: mix($color-page, #000, 95%);
 @if $is-dark-wiki {
@@ -78,9 +76,9 @@ $edit-box-color: mix($color-page, #000, 95%);
 		}
 
 		.edit-summary {
-			border: 1px solid $color-page-border;
-			@include border-radius(4px);
 			@include box-sizing();
+			border: 1px solid $color-page-border;
+			border-radius: 4px;
 			clear: both;
 			margin: 5px 0;
 			padding: 5px;

@@ -1,6 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-
 $color-poll-label: lighten($color-text, 30%);
 @if lightness($color-page) < 50 {
 	$color-poll-label: darken($color-text, 30%);
@@ -33,9 +31,9 @@ $color-poll-label: lighten($color-text, 30%);
 			font-weight: bold;
 		}
 		span {
-			@include border-radius(5px);
 			background: $color-article-thumb-background;
 			border: 1px solid $color-article-thumb-border;
+			border-radius: 5px;
 			display: inline-block;
 			margin: 0 5px;
 			padding: 7px 15px;

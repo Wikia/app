@@ -29,8 +29,8 @@ $messages['en'] = array(
 	'lightbox-pin-carousel-tooltip' => 'Pin top and bottom bars in place',
 	'lightbox-unpin-carousel-tooltip' => 'Unpin top and bottom bars',
 	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|more item|more items}} on this wiki',
-	'lightbox-video-views' => '<b>$1</b> {{PLURAL:$1|view|views}}',
-	
+	'lightbox-video-views' => "'''$1''' {{PLURAL:$1|view|views}}",
+
 	/* /new stuff */
 
 	'lightbox_details_tooltip' => 'View photo details',
@@ -130,6 +130,7 @@ $messages['qqq'] = array(
 	'lightbox-share-email-error-content' => 'Parameters:
 * $1 is the numer of sent e-mails
 * $2 is are the error details.',
+	'lightbox-video-views' => 'video views. $1 is number of video views.',
 );
 
 /** Azerbaijani (Azərbaycanca)
@@ -151,7 +152,7 @@ $messages['de'] = array(
 	'lightbox-send' => 'Senden',
 	'lightbox-share-description' => 'Foto auf $1 im $2',
 	'lightbox-share-email-subject' => '$1 hat dir ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo, 
+	'lightbox-share-email-body' => 'Hallo,
 
 jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:
 
@@ -178,7 +179,7 @@ Details: $2',
  */
 $messages['de-formal'] = array(
 	'lightbox-share-email-subject' => '$1 hat Ihnen ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo, 
+	'lightbox-share-email-body' => 'Hallo,
 
 jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:
 

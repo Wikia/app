@@ -12,6 +12,8 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\Utilities;
 class CrossWikiCoreTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09122 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::execute
 	 */
 	public function testExecute() {
@@ -80,6 +82,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12268 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWikiBasics
 	 */
 	public function testGetWikiBasics() {
@@ -155,6 +159,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08143 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWikiViews
 	 */
 	public function testGetWikiViews() {
@@ -184,6 +190,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08105 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWam
 	 */
 	public function testGetWam() {
@@ -213,6 +221,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08427 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getWikiStats
 	 */
 	public function testGetWikiStats() {
@@ -257,6 +267,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08302 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getVisualizationInfo
 	 */
 	public function testGetVisualizationInfo() {
@@ -294,6 +306,8 @@ class CrossWikiCoreTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08589 ms
 	 * @covers Wikia\Search\IndexService\CrossWikiCore::getVisualizationInfo
 	 */
 	public function testGetVisualizationInfoNoDesc() {
@@ -344,6 +358,8 @@ class CrossWikiCoreTest extends BaseTest
 
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08167 ms
 	 * @covers  Wikia\Search\IndexService\CrossWikiCore::getLicenseInformation
 	 */
 	public function testGetLicensedWikisService(){
@@ -359,6 +375,8 @@ class CrossWikiCoreTest extends BaseTest
 
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08324 ms
      * @covers  Wikia\Search\IndexService\CrossWikiCore::getLicenseInformation
 	 */
 	public function testGetLicenseInformation(){

@@ -17,7 +17,9 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse 
+	 * @group Slow
+	 * @slowExecutionTime 0.07925 ms
+	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse
 	 */
 	public function testGetStubbedWikiResponseHatesPageIds() {
 		$service = $this->service->getMockForAbstractClass();
@@ -34,7 +36,9 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
     /**
-	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse 
+	 * @group Slow
+	 * @slowExecutionTime 0.07986 ms
+	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getStubbedWikiResponse
 	 */
 	public function testGetStubbedWikiResponseSuccess() {
 		$service = $this->service
@@ -61,7 +65,9 @@ class AbstractWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId 
+	 * @group Slow
+	 * @slowExecutionTime 0.07898 ms
+	 * @covers \Wikia\Search\IndexService\AbstractWikiService::getCurrentDocumentId
 	 */
 	public function testGetCurrentDocumentId() {
 		$service = new MediaWikiService;

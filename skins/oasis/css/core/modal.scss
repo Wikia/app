@@ -2,12 +2,9 @@
 @import "layout";
 @import "../mixins/bodytext";
 @import "../mixins/border-opacity";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
-@import "../mixins/opacity";
-
 
 $modal-border-opacity: 80;
 @if $is-dark-wiki {
@@ -101,7 +98,7 @@ yui-overlay, .yui-panel-container {
 .mask {
 	background: $color-page;
 	margin-top: -30px;
-	@include opacity(80);
+	opacity: .8;
 	position: fixed;
 	z-index: $zTop + 1 !important;
 }
