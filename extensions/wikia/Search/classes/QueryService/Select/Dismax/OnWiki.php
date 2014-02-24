@@ -29,7 +29,7 @@ class OnWiki extends AbstractDismax
 	
 	/**
 	 * Passes data from the config to the MW service to instantiate a match and store it in the config.
-	 * @return Wikia\Search\Match\Article|null
+	 * @return \Wikia\Search\Match\Article|null
 	 */
 	public function extractMatch() {
 		$config = $this->getConfig();

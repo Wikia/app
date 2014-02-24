@@ -68,6 +68,13 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ *
  *
  * @SWG\Model ( id="CombinedSearchArticlesResultSet" )
  *  @SWG\Property(
@@ -405,6 +412,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue="25"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				),
  * 				@SWG\Parameter(
  * 					name="batch",

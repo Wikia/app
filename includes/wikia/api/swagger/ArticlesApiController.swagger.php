@@ -368,6 +368,13 @@ use Swagger\Annotations as SWG;
  * 		type="Creator",
  * 		description="Data about the author of the article (creator of the first revision)"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ *
  *
  * @SWG\Model( id="PopularListArticleResultSet" )
  * 	@SWG\Property(
@@ -404,6 +411,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
+ *
  * @SWG\Model( id="ExpandedListArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -642,6 +650,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue="20"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)

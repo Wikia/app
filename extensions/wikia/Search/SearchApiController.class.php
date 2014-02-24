@@ -156,7 +156,8 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		//Standard Wikia API response with pagination values
-		$responseValues = (new Factory)->getFromConfig( $searchConfig )->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns' ], true );
+		$responseValues = (new Factory)->getFromConfig( $searchConfig )
+			->searchAsApi( ['pageid' => 'id', 'title', 'url', 'ns', 'article_quality_i' => 'quality' ], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
@@ -196,11 +197,11 @@ class SearchApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-		             ->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
-		             ->setPage( $request->getVal( 'batch', 1 ) )
-		             ->setRank( $request->getVal( 'rank', 'default' ) )
-		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
-		;
+			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setMinArticleQuality( $request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME ) )
+			->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' );
 		return $this->validateNamespacesForConfig( $searchConfig );
 	}
 

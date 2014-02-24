@@ -21,6 +21,7 @@ class Article extends AbstractMatch
 		/**@var $this->service Wikia\Search\MediaWikiService*/
 		$wikiId = $this->service->getWikiId();
 		$pageId = $this->service->getCanonicalPageIdFromPageId( $this->id );
+		$solrData = $this->getDataFromSolr( $wikiId, $pageId );
 		$fieldsArray = array(
 				'id'            => sprintf( '%s_%s', $wikiId, $pageId ),
 				'pageid'        => $pageId,
@@ -32,6 +33,7 @@ class Article extends AbstractMatch
 				'ns'            => $this->service->getNamespaceFromPageId( $this->id ),
 				'created'       => $this->service->getFirstRevisionTimestampForPageId( $this->id ),
 				'touched'       => $this->service->getLastRevisionTimestampForPageId( $this->id ),
+				'article_quality_i' => $solrData['article_quality_i']
 			);
 		$result = new Result( $fieldsArray );
 
@@ -42,6 +44,16 @@ class Article extends AbstractMatch
 			$result->setVar( 'redirectTitle', $this->service->getNonCanonicalTitleStringFromPageId( $this->id ) );
 			$result->setVar( 'redirectUrl', $this->service->getNonCanonicalUrlFromPageId( $this->id ) );
 		}
+		return $result;
+	}
+
+
+	protected function getDataFromSolr( $wikiId, $articleId){
+		$service = new \SolrDocumentService();
+		$service->setCrossWiki( false );
+		$service->setWikiId( $wikiId );
+		$service->setArticleId($articleId);
+		$result = $service->getResult();
 		return $result;
 	}
 
