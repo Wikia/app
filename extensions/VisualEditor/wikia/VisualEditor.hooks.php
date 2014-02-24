@@ -19,7 +19,7 @@ class VisualEditorWikiaHooks {
 
 		// VOLDEV-35
 		// disabling RTE causes this preference to disappear		
-		if ( !empty( $wgEnableRTEExt ) ) {
+		if ( empty( $wgEnableRTEExt ) ) {
 			$preferences['enablerichtext'] = array(
 				'type' => 'toggle',
 				'section' => 'editing/editing-experience',
