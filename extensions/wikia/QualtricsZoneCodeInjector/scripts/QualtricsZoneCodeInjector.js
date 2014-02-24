@@ -1,13 +1,14 @@
-(function ( window, document ) {
+(function ( window ) {
 	'use strict';
 
 	if ( window.wgQualtricsZoneSampling >= ( Math.random() * 100 ) ) {
-		var tag = document.createElement( 'script' );
-
-		tag.src = window.wgQualtricsZoneUrl;
-		tag.type = 'text/javascript';
-
-		document.body.appendChild( tag );
+		require( ['jquery'], function( $ ) {
+			$( function() {
+				$('<script type="text/javascript" />')
+					.attr('src', window.wgQualtricsZoneUrl)
+					.appendTo('body');
+			} );
+		} );
 	}
+})( window );
 
-})( window, document );
