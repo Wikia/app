@@ -23,7 +23,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	function getHeaders () {
 		//querySelectorAll returns NodeList but this one is not live
 		return Array.prototype.slice.apply( d.querySelectorAll(
-			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) )
+			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) );
 	}
 
 	sections = getHeaders();
