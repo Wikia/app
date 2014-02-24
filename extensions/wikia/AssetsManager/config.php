@@ -142,9 +142,12 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
 		// Image and video thumbnail mustache templates
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
 	)
 );
+
+if ( !empty( $wgEnableQualtricsZoneCodeInjector ) ) {
+	$config['oasis_noads_extensions_js']['assets'][] = '//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js';
+}
 
 /** Site specific CSS **/
 $config['site_anon_css'] = array(
