@@ -108,7 +108,7 @@ class WikiaHomePageController extends WikiaController {
 
 	public function footer() {
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
-		$this->interlang = HubService::isCorporatePage();
+		$this->interlang = WikiaPageType::isCorporatePage();
 
 		$corporateWikis = $this->helper->getVisualizationWikisData();
 		$this->selectedLang = $this->wg->ContLang->getCode();
