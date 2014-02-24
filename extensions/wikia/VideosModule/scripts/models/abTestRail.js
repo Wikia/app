@@ -14,42 +14,31 @@ define('videosmodule.models.abTestRail', [], function () {
 	};
 
 	/*
-	 * @description Object containing test cases for bottom module variant test
+	 * @description Object containing test cases for rail module variant test.
+	 * Note that GROUP_L shows no videos
 	 * @property {boolean} verticalOnly - Shows only videos for the wikis vertical, falls back to article if set false
-	 * @property {number} name - name 1 is before "Read More", 2 is after
-	 * @property {number} thumbs - Show one row of videos or two (max)
+	 * @property {number} thumbs - Show either 3 or 5 thumbs
 	 */
 	ABTestBottom.prototype.groups = {
-		// Article, Above Read More, 2 thumbs
-		'GROUP_A': {
+		// Article, 3 thumbs
+		'GROUP_H': {
 			verticalOnly: false,
 			thumbs: 3
 		},
-		// Vertical, Above Read More, 2 thumbs
-		'GROUP_B': {
+		// Vertical, 3 thumbs
+		'GROUP_I': {
 			verticalOnly: true,
 			thumbs: 3
 		},
-		// Article, Below Read More, 2 thumbs
-		'GROUP_C': {
-			verticalOnly: false,
-			thumbs: 3
-		},
-		// Article, Above Read More, 2 thumbs
-		'GROUP_D': {
+		// Article, 5 thumbs
+		'GROUP_J': {
 			verticalOnly: false,
 			thumbs: 5
 		},
-		// Article, Above Read More, 1 Row
-		'GROUP_E': {
+		// Vertical, 5 thumbs
+		'GROUP_K': {
 			verticalOnly: true,
-			thumbs: 3
-		},
-		// Article, Above Read More, 1 Row
-		'GROUP_F': {
-			name: 'trending',
-			verticalOnly: true,
-			thumbs: 3
+			thumbs: 5
 		}
 	};
 
