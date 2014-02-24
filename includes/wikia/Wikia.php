@@ -62,6 +62,9 @@ $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 
+# don't purge all variants of articles in Chinese - BAC-1278
+$wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2274,6 +2277,27 @@ class Wikia {
 	 */
 	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
 		self::addExtraHeaders( $context->getRequest()->response() );;
+		return true;
+	}
+
+	/**
+	 * Purge a limited set of language variants on Chinese wikis
+	 *
+	 * See BAC-1278 / BAC-698 for details
+	 *
+	 * @param Language $contLang
+	 * @param array $variants
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
+		switch($contLang->getCode()) {
+			case 'zh':
+				// skin displays links to these variants only
+				$variants = ['zh-hans', 'zh-hant'];
+				break;
+		}
+
 		return true;
 	}
 }
