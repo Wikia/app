@@ -1,11 +1,11 @@
-@import "../../../../skins/oasis/css/mixins/opacity";
+
 @import "../../../../skins/oasis/css/mixins/transition";
 
 img.lzyPlcHld {
-	@include opacity(0);
+	opacity: 0;
 }
 img.lzyLoaded {
-	@include opacity(100);
+	opacity: 1;
 }
 img.lzyTrns {
 	@include transition-shorthand(opacity 300ms ease-out);

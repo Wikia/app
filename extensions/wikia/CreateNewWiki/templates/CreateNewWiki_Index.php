@@ -69,7 +69,7 @@
 			</form>
 		</li>
 <?php
-	if (!$isUserLoggedIn) {
+	if( !$isUserLoggedIn || !$isUserEmailConfirmed ) {
 		if($wg->ComboAjaxLogin) {
 ?>
 		<li id="Auth" class="step">

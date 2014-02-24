@@ -1,7 +1,6 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "ChatSprite";
 
@@ -64,9 +63,9 @@
 
 				.icon {
 					@include sprite-Chat-base;
-					@include opacity(40);
 					display: inline-block;
 					height: 18px;
+					opacity: .4;
 					width: 19px;
 				}
 
@@ -107,7 +106,7 @@
 					background-color: $color-menu-highlight;
 
 					.icon {
-						@include opacity(70);
+						opacity: .7;
 					}
 
 					&.message-wall .icon,

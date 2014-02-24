@@ -2,17 +2,15 @@
 @import "color";
 
 .ve-ui-wikiaSourceModeDialog-content {
-	.ve-ui-window-body .ve-ui-textInputWidget {
+	.oo-ui-window-body .oo-ui-textInputWidget {
 		height: 100%;
 		padding: 0.75em 0;
 		width: 100%;
 		textarea {
-			background-color: $color-page;
-			border-color: $color-page-border;
-			box-shadow: 0 0 0 $color-page, inset 0 0.1em 0.2em $color-page-border;
-			color: $color-text;
 			font-family: monospace;
+			font-size: 13px;
 			height: 100%;
+			line-height: 140%;
 			width: 100%;
 		}
 	}

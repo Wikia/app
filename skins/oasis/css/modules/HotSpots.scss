@@ -1,7 +1,5 @@
 @import "../core/color";
 @import "../mixins/clearfix";
-@import "../mixins/border-radius";
-
 $color-hot_1: #CC0033;
 $color-hot_2: #FF9900;
 $color-hot_3: #FFCC00;
@@ -22,7 +20,7 @@ $color-hot_5: #006699;
 			border-top: none;
 		}
 		div div { /* the rounded-highlighted area */
-			@include border-radius(5px);
+			border-radius: 5px;
 			color: white;
 			float: left;
 			text-align: center;

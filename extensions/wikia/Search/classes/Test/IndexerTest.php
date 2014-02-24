@@ -50,7 +50,7 @@ class IndexerTest extends BaseTest
 		$reflServiceNames = new ReflectionProperty( 'Wikia\Search\Indexer', 'serviceNames' );
 		$reflServiceNames->setAccessible( true );
 		$reflServiceNames->setValue( $indexer, array( 'DefaultContent' ) );
-		$mockIndexService = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'setPageId', 'execute' ) );
+		$mockIndexService = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'setPageId', 'getResponse' ) );
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getWikiId', 'getCanonicalPageIdFromPageId' ) );
 		$indexer
 		    ->expects( $this->any() )
@@ -83,7 +83,7 @@ class IndexerTest extends BaseTest
 		;
 		$mockIndexService
 		    ->expects( $this->once() )
-		    ->method ( 'execute' )
+		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $resultArray ) )
 		;
 		$this->assertEquals(

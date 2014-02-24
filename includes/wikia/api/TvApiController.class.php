@@ -52,14 +52,7 @@ class TvApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(
-			self::RESPONSE_CACHE_VALIDITY /* 24h */,
-			self::RESPONSE_CACHE_VALIDITY /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
 
 	/**
@@ -148,7 +141,7 @@ class TvApiController extends WikiaApiController {
 		$searchConfig->setQuery( $request->getVal( 'episodeName', null ) )
 			->setLimit( static::LIMIT_SETTING )
 			->setPage( static::LIMIT_SETTING )
-			->setLanguageCode( static::LANG_SETTING )
+			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
 			->setRank( static::RANK_SETTING )
 			->setWikiId($this->wikiId)
 			->setVideoSearch( false )

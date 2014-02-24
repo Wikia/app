@@ -38,7 +38,7 @@
 		 * @slowExecutionTime 0.44648 ms
 		 * @dataProvider loginDataProvider
 		 */
-		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='' ) {
+		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='', $expUsername = null ) {
 			// setup
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
@@ -60,6 +60,9 @@
 
 			$responseData = $response->getVal( 'errParam' );
 			$this->assertEquals( $expErrParam, $responseData, 'errParam' );
+
+			$responseData = $response->getVal( 'username' );
+			$this->assertEquals( $expUsername, $responseData, 'expUsername' );
 		}
 
 		/**
@@ -108,6 +111,8 @@
 		}
 
 		public function loginDataProvider() {
+			$testUserName = 'testUser';
+
 			// submit request
 			// no username
 			$reqParams1 = array(
@@ -122,14 +127,14 @@
 
 			// not pass token
 			$reqParams2 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'action' => 'submitlogin'
 			);
 			$expMsg2 = wfMessage('userlogin-error-sessionfailure')->escaped();
 
 			// empty token
 			$reqParams3 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'action' => 'submitlogin',
 				'loginToken' => '',
 			);
@@ -139,7 +144,7 @@
 			// mock authenticateUserData()
 			// error - NO_NAME
 			$reqParams101 = array(
-				'username' => 'testUser',
+				'username' => $testUserName,
 				'password' => 'testPassword',
 				'action' => 'submitlogin'
 			);
@@ -276,7 +281,7 @@
 				array($reqParams101, $mockLoginFormParams118, $mockUserParams118, $mockHelperParams118, 'unconfirm', $expMsg118),
 
 				// SUCCESS success
-				array($reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockHelperParams120, 'ok', null),
+				array( $reqParams101, $mockLoginFormParams120, $mockUserParams120, $mockHelperParams120, 'ok', null, '', $testUserName ),
 			);
 		}
 

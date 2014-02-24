@@ -958,6 +958,17 @@ Por favor, contáctalo para más información.',
 	'chat-status-away' => 'Ausente',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
+	'chat-you-were-kicked' => '$1(e)k kanporatu zaitu.',
+	'chat-log-reason-undo' => 'desegin',
+	'chat-ban-undolink' => 'desegin',
+	'chat-user-menu-kick' => 'Kanporatu',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
@@ -2273,6 +2284,7 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
@@ -2341,7 +2353,7 @@ Neem contact op met deze gebruiker voor meer informatie.',
 	'chat-user-menu-contribs' => 'Bijdragen',
 	'chat-user-menu-private' => 'Privébericht',
 	'chat-user-menu-give-chat-mod' => 'Status van chatmoderator weergeven',
-	'chat-user-menu-kick' => 'Verbannen',
+	'chat-user-menu-kick' => 'Kick',
 	'chat-user-menu-ban' => 'Verbannen',
 	'chat-user-menu-private-block' => 'Privéberichten blokkeren',
 	'chat-user-menu-private-allow' => 'Privéberichten toestaan',
@@ -2609,7 +2621,7 @@ $messages['ps'] = array(
 	'chat-log-reason-banremove' => 'هېڅ سبب نه دی ورکړ شوی',
 	'chat-live2' => 'ژوندی! بانډار',
 	'chat-start-a-chat' => 'بانډار پيلول',
-	'chat-join-the-chat' => 'بانډار کې ورګډېدل',
+	'chat-join-the-chat' => 'بانډار کې ورگډ شئ',
 	'chat-edit-count' => '{{PLURAL:$1|$1 سمون|$1 سمونونه}}',
 	'chat-member-since' => 'له $1 راهيسې غړی دی',
 	'chat-user-menu-message-wall' => 'پيغام دېوال',
@@ -3208,6 +3220,9 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
  * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'chat' => 'Sohbet',
+	'chat-log-reason-undo' => 'geri al',
+	'chat-ban-undolink' => 'geri al',
 	'chat-start-a-chat' => 'Sohbeti Başlat',
 	'chat-join-the-chat' => 'Sohbete Katıl',
 	'chat-user-menu-message-wall' => 'Mesaj Duvarı',

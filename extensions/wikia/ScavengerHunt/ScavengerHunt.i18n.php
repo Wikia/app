@@ -228,6 +228,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
@@ -282,7 +283,26 @@ $messages['ar'] = array(
 	'scavengerhunt-button-add-section' => 'إضافة خطوة أخرى في الصيد',
 	'scavengerhunt-button-remove-section' => 'إزالة هذه الخطوة',
 	'scavengerhunt-form-error' => 'الرجاء تصحيح الأخطاء التالية:',
+	'scavengerhunt-form-error-no-landing-title' => 'الرجاء إدخال اسم الصفحة المقصودة (URL صالح).',
+	'scavengerhunt-form-error-invalid-title' => 'لم يتم العثور على عنوان الصفحة التالي: "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'الرجاء إدخال نص زر الصفحة المقصودة.',
+	'scavengerhunt-form-error-landing-button-position' => 'الرجاء أدخل موضع زر الصفحة المقصودة.',
+	'scavengerhunt-form-error-starting-clue' => 'الرجاء ملء كل الحقول في بداية قسم الدليل.',
+	'scavengerhunt-form-error-entry-form' => 'الرجاء ملء كل الحقول في مدخل قسم النموذج.',
+	'scavengerhunt-form-error-goodbye' => 'الرجاء ملء كل الحقول في قسم انبثاق التوديع.',
+	'scavengerhunt-form-error-no-article-title' => 'الرجاء إدخال جميع عناوين المقالات (كعناوين URL صالحة).',
+	'scavengerhunt-form-error-duplicated-article-title' => 'خطوات الصيد لا يجب أن تحتوي على عناوين مكررة',
+	'scavengerhunt-form-error-article-hidden-image' => 'الرجاء إدخال كل عناوين الصور المخفية.',
+	'scavengerhunt-form-error-article-clue' => 'الرجاء إدخال كل المعلومات عن دليل المقالات.',
+	'scavengerhunt-form-error-clue' => 'الرجاء إدخال كل المعلومات عن رسالة مقالات الترحيب.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'الرجاء تحديد أبعاد صحيحة لفكرة وسم العفريت.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'أبعاد عفريت انبثاق البدأ غير صالحة',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'أبعاد عفريت انبثاق الوداع غير صالحة',
+	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'أبعاد شريط تقدم العفريت غير صالح',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'مفتاح خروج شريط تقدم أبعاد العفريت غير صالح',
+	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'الرجاء تحديد الأبعاد الصحيحة لأداة عفريت صيد السخام',
 	'scavengerhunt-form-error-no-sprite-image' => 'يرجى إعطاء المسار الكامل لملف الصورة',
+	'scavengerhunt-form-error-invalid-url' => 'الرجاء توفير عنوان URL صالح.',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
 	'scavengerhunt-label-sprite-X' => 'موضع العنصر',
@@ -301,6 +321,7 @@ $messages['ar'] = array(
 	'scavengerhunt-label-clue-font' => 'زخارف الخط',
 	'scavengerhunt-label-article-congrats' => 'رسالة التهنئة',
 	'scavengerhunt-label-facebook' => 'مشاركة في الفيسبوك',
+	'scavengerhunt-editor-tip-facebook-description' => 'النص الذي سيُعرض في تبادل الرسائل',
 	'scavengerhunt-facebook-image' => 'صورة المشاركة في الفيسبوك',
 	'scavengerhunt-facebook-description' => 'نص المشاركة في الفيسبوك',
 );
@@ -359,6 +380,7 @@ $messages['br'] = array(
 	'scavengerhunt-button-enable' => 'Gweredekaat',
 	'scavengerhunt-button-delete' => 'Dilemel',
 	'scavengerhunt-button-export' => 'Ezporzhiañ da CVS',
+	'scavengerhunt-button-remove-section' => 'Lemel ar prantad-mañ',
 	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
 	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
 	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
@@ -378,6 +400,7 @@ $messages['br'] = array(
 	'scavengerhunt-label-clue-font' => 'Kinkladurioù ar font',
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
+	'scavengerhunt-editor-tip-starting-clue-button-target' => "Setu amañ chomlec'h ar bajenn gant an elfenn gentañ.",
 	'scavengerhunt-editor-tip-clue-color' => "Ret eo al livioù bezañ skrivet gant niveroù c'hwezekredel evel #F00.",
 	'scavengerhunt-editor-tip-facebook-description' => 'Testenn a vo diskwelet er gemennadenn rannañ',
 );
@@ -645,7 +668,7 @@ $messages['diq'] = array(
 	'scavengerhunt-list-edit' => 'bıvurne',
 	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
-	'scavengerhunt-button-save' => 'Star ke',
+	'scavengerhunt-button-save' => 'Qeyd ke',
 	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Besterne',

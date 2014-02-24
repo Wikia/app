@@ -11,7 +11,13 @@ jQuery( document ).ready( function( $ ) {
 	/* Lazy load jquery.tablesorter */
 	if ( $( 'table.sortable' ).length ) {
 		mw.loader.using( 'jquery.tablesorter', function() {
-			$( 'table.sortable' ).tablesorter();
+			$( 'table.sortable' ).tablesorter({
+				// wikia change start - react to sorting completion BAC-718
+				complete: function() {
+					$(document).trigger('tablesorter_sortComplete');
+				}
+				// wikia change end
+			});
 		});
 	}
 

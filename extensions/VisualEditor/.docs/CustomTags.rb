@@ -1,3 +1,4 @@
+# Custom tags for JSDuck 4.x
 # See also:
 # - https://github.com/senchalabs/jsduck/wiki/Tags
 # - https://github.com/senchalabs/jsduck/wiki/Custom-tags
@@ -127,41 +128,6 @@ class ContextTag < CommonTag
       return formatter.format("`this` : {@link #{name}}")
     else
       JsDuck::Logger.warn(nil, 'Unexpected @this argument: "'+tag+'"', position)
-      return tag
-    end
-  end
-end
-
-class EmitsTag < CommonTag
-  def initialize
-    @tagname = :emits
-    @pattern = 'emits'
-    super
-  end
-
-  def format(context, formatter)
-    position = context[:files][0]
-    context[@tagname].each do |tag|
-      tag[:doc] = '<li>' + render_long_event(tag[:doc], formatter, position) + '</li>'
-    end
-  end
-
-  def to_html(context)
-    <<-EOHTML
-      <h3 class="pa">Emits</h3>
-      <ul>
-      #{ context[@tagname].map {|tag| tag[:doc] }.join("\n") }
-      </ul>
-    EOHTML
-  end
-
-  def render_long_event(tag, formatter, position)
-    if tag =~ /\A(\w+)( .*)?\Z/m
-      name = $1
-      doc = $2 ? ': ' + $2 : ''
-      return formatter.format("{@link #event-#{name}} #{doc}")
-    else
-      JsDuck::Logger.warn(nil, 'Unexpected @emits argument: "'+tag+'"', position)
       return tag
     end
   end

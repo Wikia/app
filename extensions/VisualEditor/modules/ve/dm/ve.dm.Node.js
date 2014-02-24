@@ -21,7 +21,7 @@ ve.dm.Node = function VeDmNode( length, element ) {
 	ve.dm.Model.call( this, element );
 	// Mixin constructor
 	ve.Node.call( this );
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.length = length || 0;
@@ -40,11 +40,11 @@ ve.dm.Node = function VeDmNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.Node, ve.dm.Model );
+OO.inheritClass( ve.dm.Node, ve.dm.Model );
 
-ve.mixinClass( ve.dm.Node, ve.Node );
+OO.mixinClass( ve.dm.Node, ve.Node );
 
-ve.mixinClass( ve.dm.Node, ve.EventEmitter );
+OO.mixinClass( ve.dm.Node, OO.EventEmitter );
 
 /* Static Properties */
 
@@ -63,7 +63,7 @@ ve.mixinClass( ve.dm.Node, ve.EventEmitter );
  * If .static.childNodeTypes is set to [], this property is ignored and will be assumed to be true.
  *
  * @static
- * @property {boolean} static.handlesOwnChildren
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.handlesOwnChildren = false;
@@ -72,7 +72,7 @@ ve.dm.Node.static.handlesOwnChildren = false;
  * Whether this node type is internal. Internal node types are ignored by the converter.
  *
  * @static
- * @property {boolean} static.isInternal
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.isInternal = false;
@@ -82,7 +82,7 @@ ve.dm.Node.static.isInternal = false;
  * only special node types are not wrapped.
  *
  * @static
- * @property {boolean} static.isWrapped
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.isWrapped = true;
@@ -93,7 +93,7 @@ ve.dm.Node.static.isWrapped = true;
  * also known as inline nodes.
  *
  * @static
- * @property {boolean} static.isContent
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.isContent = false;
@@ -103,7 +103,7 @@ ve.dm.Node.static.isContent = false;
  * content nodes.
  *
  * @static
- * @property {boolean} static.canContainContent
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.canContainContent = false;
@@ -116,7 +116,7 @@ ve.dm.Node.static.canContainContent = false;
  * stripping and preservation.
  *
  * @static
- * @property {boolean} static.hasSignificantWhitespace
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Node.static.hasSignificantWhitespace = false;
@@ -127,7 +127,7 @@ ve.dm.Node.static.hasSignificantWhitespace = false;
  * An empty array means no children are allowed. null means any node type is allowed as a child.
  *
  * @static
- * @property {string[]|null} static.childNodeTypes
+ * @property {string[]|null}
  * @inheritable
  */
 ve.dm.Node.static.childNodeTypes = null;
@@ -139,7 +139,7 @@ ve.dm.Node.static.childNodeTypes = null;
  * can be the child of any node type.
  *
  * @static
- * @property {string[]|null} static.parentNodeTypes
+ * @property {string[]|null}
  * @inheritable
  */
 ve.dm.Node.static.parentNodeTypes = null;
@@ -153,7 +153,7 @@ ve.dm.Node.static.parentNodeTypes = null;
  * can be the child of any node type.
  *
  * @static
- * @property {string[]|null} static.suggestedParentNodeTypes
+ * @property {string[]|null}
  * @inheritable
  */
 ve.dm.Node.static.suggestedParentNodeTypes = null;
@@ -162,7 +162,7 @@ ve.dm.Node.static.suggestedParentNodeTypes = null;
  * Array of annotation types which can't be applied to this node
  *
  * @static
- * @property {string[]} static.blacklistedAnnotationTypes
+ * @property {string[]}
  * @inheritable
  */
 ve.dm.Node.static.blacklistedAnnotationTypes = [];
@@ -176,7 +176,7 @@ ve.dm.Node.static.blacklistedAnnotationTypes = [];
  * Attributes may be omitted, in which case they'll simply be undefined.
  *
  * @static
- * @property {Object} static.defaultAttributes
+ * @property {Object}
  * @inheritable
  */
 ve.dm.Node.static.defaultAttributes = {};
@@ -207,8 +207,10 @@ ve.dm.Node.static.remapStoreIndexes = function ( /*dataElement, mapping*/ ) {
  * @inheritable
  * @param {Object} dataElement Data element (opening) to remap. Will be modified.
  * @param {Object} mapping Object mapping old internal list indexes to new internal list indexes
+ * @param {ve.dm.InternalList} internalList Internal list the indexes are being mapped into.
+ *  Used for refreshing attribute values that were computed with getNextUniqueNumber().
  */
-ve.dm.Node.static.remapInternalListIndexes = function ( /*dataElement, mapping*/ ) {
+ve.dm.Node.static.remapInternalListIndexes = function ( /*dataElement, mapping, internalList*/ ) {
 };
 
 /**
@@ -447,8 +449,8 @@ ve.dm.Node.prototype.getOuterRange = function () {
  *
  * @method
  * @param {number} length Length of content
- * @emits lengthChange
- * @emits update
+ * @fires lengthChange
+ * @fires update
  * @throws {Error} Invalid content length error if length is less than 0
  */
 ve.dm.Node.prototype.setLength = function ( length ) {
@@ -476,8 +478,8 @@ ve.dm.Node.prototype.setLength = function ( length ) {
  *
  * @method
  * @param {number} adjustment Amount to adjust length by
- * @emits lengthChange
- * @emits update
+ * @fires lengthChange
+ * @fires update
  * @throws {Error} Invalid adjustment error if resulting length is less than 0
  */
 ve.dm.Node.prototype.adjustLength = function ( adjustment ) {

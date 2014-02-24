@@ -8,7 +8,6 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 				if (geo.getCountryCode() in %%COUNTRIES%%) {
 					var aax_src='3006',
 						aax_url = encodeURIComponent(document.location),
-						host = (geo.getCountryCode() === 'US') ? 'aax-us-east' : 'aax',
 						s = document.createElement('script'),
 						insertLoc = document.getElementsByTagName('script')[0];
 
@@ -16,7 +15,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 
 					s.type = 'text/javascript';
 					s.async = true;
-					s.src = '//' + host + '.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+					s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
 
 					insertLoc.parentNode.insertBefore(s, insertLoc);
 				}
@@ -34,7 +33,7 @@ SCRIPT;
 	}
 
 	public function getSetupHtml($params = array()) {
-		global $wgAmazonDirectTargetedBuyCountries;
+		global $wgAmazonDirectTargetedBuyCountries, $wgAmazonDirectTargetedBuyCountriesDefault;
 
 		static $called = false;
 		$code = '';
@@ -42,13 +41,17 @@ SCRIPT;
 		if (!$called && self::isEnabled()) {
 			$called = true;
 			$countriesJS = [];
-			$amazonCountries = $wgAmazonDirectTargetedBuyCountries;
 
-			if (!$amazonCountries) {
+			$amazonCountries = $wgAmazonDirectTargetedBuyCountries;
+			if (empty($amazonCountries)) {
 				// If the variable is not set for given wiki, use the value from the community wiki
 				$amazonCountries = WikiFactory::getVarValueByName(
 					'wgAmazonDirectTargetedBuyCountries', Wikia::COMMUNITY_WIKI_ID
 				);
+			}
+			if (empty($amazonCountries)) {
+				// If the variable is set nor for given wiki neither for community, use the default value
+				$amazonCountries = $wgAmazonDirectTargetedBuyCountriesDefault;
 			}
 
 			if (is_array($amazonCountries)) {

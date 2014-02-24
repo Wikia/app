@@ -7,7 +7,7 @@ HEADERS=prototypes.h client_data.h stats.h stats.list
 DESTDIR ?=
 
 poolcounterd: $(OBJS)
-	$(CC) $(LINK) $^ -o $@
+	$(CC) $^ $(LINK) -o $@
 
 %.o: %.c $(HEADERS)
 	$(CC) -c $(CFLAGS) $< -o $@

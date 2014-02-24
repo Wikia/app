@@ -162,7 +162,8 @@ $messages['qqq'] = array(
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
 	'userlogin-error-confirmation-reminder-already-sent' => 'Error message stating that confirmation email was already sent. This message is only used by maintenance scripts.',
 	'userlogin-password-page-title' => 'Heading for change password page.',
-	'userlogin-oldpassword' => 'Label for old password field',
+	'userlogin-oldpassword' => 'Label for old password field.
+{{Identical|Old password}}',
 	'userlogin-newpassword' => 'Label for new password field.
 {{Identical|New password}}',
 	'userlogin-retypenew' => 'Label for retype password field',
@@ -189,8 +190,17 @@ $messages['qqq'] = array(
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 );
 
+/** Aragonese (aragonés)
+ * @author Willtron
+ */
+$messages['an'] = array(
+	'userlogin-get-account' => 'No tiene garra cuenta? <a href="$1" tabindex="$2">Rechistra-te</a>',
+	'userlogin-retypenew' => 'Torne a escribir a nueva clau',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Mutarjem horr
  * @author ترجمان05
  */
@@ -227,13 +237,33 @@ $messages['ar'] = array(
 	'userlogin-error-mail-error' => 'عفوا، كانت هناك مشكلة في إرسال البريد الإلكتروني الخاص بك. الرجاء [[Special:Contact/general|الاتصال بنا]].',
 	'userlogin-password-email-sent' => 'لقد أرسلنا كلمة مرور جديدة إلى عنوان البريد الإلكتروني ل  $1 .',
 	'userlogin-error-unconfirmed-user' => 'عذراً، لم تأكد البريد الإلكتروني الخاص بك. الرجاء تأكيد البريد الإلكتروني الخاص بك أولاً.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'تأكيد تذكير البريد الإلكتروني أرسل بالفعل.',
 	'userlogin-password-page-title' => 'غير كلمة سرّك',
 	'userlogin-oldpassword' => 'كلمة السر القديمة',
 	'userlogin-newpassword' => 'كلمة السر الجديدة',
 	'userlogin-retypenew' => 'أعد كتابة كلمة المرور الجديدة',
 	'userlogin-password-email-subject' => 'طلب كلمة مرور منسية',
 	'userlogin-password-email-greeting' => 'مرحباً $USERNAME,',
+	'userlogin-password-email-content' => 'الرجاء استخدام كلمة السر المؤقتة هذه لتسجيل الدخول إلى ويكيا: "$NEWPASSWORD"
+<br /><br />
+إن لم تطلب كلمة سر جديدة، فلا تقلق! حسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة السر القديمة.
+<br /><br />
+أسئلة أو مخاوف؟ لا تتردد في <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">الاتصال بنا</a>.',
 	'userlogin-password-email-signature' => 'دعم مجتمع ويكيا',
+	'userlogin-password-email-body' => 'مرحبًا $2،
+
+الرجاء استخدام كلمة المرور المؤقتة هذه لتسجيل الدخول إلى ويكيا: " $3 "
+
+إن لم تطلب كلمة مرور جديدة، فلا تقلق! فحسابك آمن ومأمون. يمكنك تجاهل هذه الرسالة ومتابعة تسجيل دخولك إلى ويكيا باستخدام كلمة المرور القديمة.
+
+أسئلة أو مخاوف؟ لا تتردد في الاتصال بنا: http://community.wikia.com/wiki/Special:Contact/account-issue
+
+مجتمع ويكيا للدعم
+
+___________________________________________
+
+للتحقق من آخر الأحداث في ويكيا، قم بزيارة http://community.wikia.com
+تريد التحكم في رسائل البريد الإلكتروني التي تتلقها؟ اذهب إلى: {{fullurl:{{ns:special}}:تفضيلات}}',
 	'userlogin-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'تريد التحكم في رسائل البريد الإلكتروني التي تتلقاها منا؟ انتقل إلى <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">التفضيلات</a> الخاصة بك.',
 	'userlogin-provider-or' => 'أو',
@@ -248,6 +278,7 @@ $messages['ar'] = array(
 );
 
 /** Azerbaijani (azərbaycanca)
+ * @author Cekli829
  * @author Khan27
  */
 $messages['az'] = array(
@@ -265,6 +296,7 @@ $messages['az'] = array(
 	'userlogin-retypenew' => 'Yeni şifrəni təkrar yazın',
 	'userlogin-password-email-subject' => 'Şifrəni unutmaq sorğusu',
 	'userlogin-password-email-greeting' => 'Salam $USERNAME,',
+	'userlogin-provider-or' => 'Və ya',
 	'userlogin-provider-tooltip-facebook' => 'Facebook ilə daxil ol butonuna basın',
 	'userlogin-provider-tooltip-facebook-signup' => 'Facebook ilə qeyd ol butonuna bas',
 	'wikiamobile-sendpassword-label' => 'Yeni şifrəni göndər',
@@ -337,16 +369,25 @@ $messages['br'] = array(
 	'userlogin-forgot-password' => 'Ankouaet ho peus ho ker-tremen ?',
 	'userlogin-forgot-password-button' => "Kenderc'hel",
 	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
-	'userlogin-remembermypassword' => 'Chom kevreet', # Fuzzy
+	'userlogin-remembermypassword' => 'Chom kevreet',
+	'userlogin-error-edit-account-closed-flag' => 'Diweredekaet eo bet ho kont gant Wikia.',
+	'userlogin-error-cantcreateaccount-text' => "N'eo ket aotreet ho chomlec'h IP da grouiñ kontoù nevez.",
+	'userlogin-error-userexists' => 'Implijet eo an anv implijer-mañ gant unan bennak dija. Esaeit gant unan all !',
 	'userlogin-error-invalidemailaddress' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'userlogin-get-account' => 'N\'ho peus kont ebet c\'hoazh ? <a href="$1" tabindex="$2">En em enskrivit</a>',
 	'userlogin-error-invalid-username' => 'Anv implijer direizh',
+	'userlogin-error-userlogin-unable-info' => "Digarezit, n'omp ket evit enrollañ ho kont evit bremañ.",
 	'userlogin-error-user-not-allowed' => "An anv implijer-mañ n'eo ket aotreet.",
+	'userlogin-error-captcha-createaccount-fail' => 'Ar ger ho peus ebarzhet ne glot ket gant ar ger er voest, esaeit en-dro !',
+	'userlogin-error-noemailtitle' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
 	'userlogin-error-resetpass_forbidden' => "
 N'haller ket cheñch ar gerioù-termen",
+	'userlogin-error-blocked-mailpassword' => "Ne c'hallit ket goulenn ur ger-tremen nevez abalamour m'eo stanket ar chomlec'h IP-mañ gant Wikia.",
 	'userlogin-password-page-title' => 'Cheñch ar ger-tremen',
 	'userlogin-oldpassword' => 'Ger-tremen kozh',
 	'userlogin-newpassword' => 'Ger-tremen nevez',
 	'userlogin-retypenew' => 'Adskrivañ ar ger-tremen nevez',
+	'userlogin-password-email-subject' => 'Goulenn ger-tremen ankouaet',
 	'userlogin-password-email-greeting' => 'Ac\'hanta $USERNAME,',
 	'userlogin-provider-or' => 'Pe',
 	'userlogin-provider-tooltip-facebook' => 'Klikañ war ar bouton evit kevreañ gant Facebook',
@@ -1137,7 +1178,7 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 $messages['ja'] = array(
 	'userlogin-login-heading' => 'ログイン',
 	'userlogin-forgot-password' => 'パスワードを忘れた',
-	'userlogin-remembermypassword' => 'ログイン状態を維持する', # Fuzzy
+	'userlogin-remembermypassword' => 'ログイン状態を維持する',
 	'userlogin-error-noname' => '利用者名を入力してください。',
 	'userlogin-error-sessionfailure' => 'ログインセッションがタイムアウトしました。もう一度ログインしてください。',
 	'userlogin-error-nosuchuser' => 'この名前の利用者は存在しません。利用者名は大文字小文字を区別することにご注意ください。',
@@ -1173,7 +1214,7 @@ $messages['ja'] = array(
 	'userlogin-password-email-greeting' => '$USERNAME さん、',
 	'userlogin-password-email-content' => 'ウィキアにログインするには、以下の仮パスワードを使用してください: $NEWPASSWORD<br /><br />
 新しいパスワードをリクエストした覚えがない場合でも、心配しないでください。アカウントの安全性は保たれています。このメールを無視し、これまで使用していたパスワードでウィキアにログインし続けることができます。<br /><br />
-質問や気になることがあれば、遠慮なくお問い合わせください。', # Fuzzy
+質問や気になることがあれば、<a href="http://ja.community.wikia.com/wiki/Special:Contact/account-issue">遠慮なくお問い合わせください</a>。',
 	'userlogin-password-email-signature' => 'ウィキアコミュニティサポート',
 	'userlogin-password-email-body' => '$2 さん、
 
@@ -2454,12 +2495,13 @@ ___________________________________________
 
 /** Uzbek (oʻzbekcha)
  * @author Akmalzhon
+ * @author Sociologist
  */
 $messages['uz'] = array(
 	'userlogin-login-heading' => 'Kirish',
 	'userlogin-forgot-password' => 'Maxfiy so‘zni qayta kiriting:',
 	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos elektron pochta manzilingizni tasdiqlang.',
-	'userlogin-password-page-title' => "Hisob mahfiy so'zini o'zgartirish",
+	'userlogin-password-page-title' => 'Maxfiy soʻzni oʻzgartirish',
 	'userlogin-oldpassword' => "Eski mahfiy so'z:",
 	'userlogin-newpassword' => "Yangi mahfiy so'z:",
 	'userlogin-retypenew' => "Yangi mahfiy so'zni qayta tering:",

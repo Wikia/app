@@ -21,7 +21,7 @@ ve.ce.DivNode = function VeCeDivNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.DivNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.DivNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

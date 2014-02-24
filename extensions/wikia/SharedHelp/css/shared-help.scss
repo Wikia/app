@@ -1,9 +1,9 @@
 @import "skins/oasis/css/core/color";
 
 .sharedHelp {
-  padding: 10px;
-  margin: 5px;
   border: 1px solid $color-page-border;
+  margin: 5px;
+  padding: 10px;
   @if lightness($color-page) < 50 {
     border: 1px solid $color-page-border;
   }

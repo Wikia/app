@@ -1,0 +1,39 @@
+// Keep this file small. This is only for things that need styles before
+// VisualEditor takes care of loading everything it needs.
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/blackout";
+@import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/flexbox";
+
+.ve-indicator {
+	@include align-items( center );
+	@include blackout();
+	@include flexbox();
+	@include justify-content( center );
+	opacity: 0;
+
+	.content {
+		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
+		@include box-sizing( border-box );
+		@include flexbox();
+		@include flex-direction( column );
+		background-color: $color-page;
+		border: 1px solid $color-page-border;
+		color: $color-text;
+		padding: 20px;
+		position: relative;
+	}
+
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat scroll center $color-page; /* $wgCdnStylePath */
+		height: 16px;
+		margin: 0 auto;
+		opacity: .75;
+		width: 16px;
+	}
+
+	.message {
+		display: none;
+		margin-top: 10px;
+	}
+}

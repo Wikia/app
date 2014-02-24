@@ -6,10 +6,8 @@
 @import "skins/oasis/css/core/WikiaSlider";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/box-sizing-border-box";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
@@ -234,9 +232,9 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 		}
 		&.disabled {
-			@include opacity(50);
 			@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 			cursor: auto;
+			opacity: .5;
 		}
 	}
 	p {
@@ -275,7 +273,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		&.in-preview .Wikia-video-play-button {
 			@include box-sizing-border-box;
 			border: 4px solid $color-buttons;
-			@include opacity(100);
+			opacity: 1;
 		}
 		&:last {
 			padding-right: 0;

@@ -388,7 +388,7 @@ class SearchApiControllerTest extends BaseTest
 		$mockResponse
 		    ->expects( $this->once() )
 		    ->method ( 'setCacheValidity' )
-		    ->with   ( 86400, 86400, [ \WikiaResponse::CACHE_TARGET_BROWSER, \WikiaResponse::CACHE_TARGET_VARNISH ] )
+		    ->with   ( 86400 )
 		;
 		
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );

@@ -1,7 +1,6 @@
 @import "color";
 @import "layout";
 @import "../mixins/bodytext";
-@import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 
@@ -239,12 +238,12 @@
 	a.external, a[href^="gopher://"] {
 		&:after {
 			background-image: url(/skins/oasis/images/sprite.png);	/* $wgCdnStylePath */
-			background-position: top right;
+			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: "";
 			display: inline-block;
 			height: 16px;
-			padding: 0px 3px 0 0;
+			margin-left: 3px;
 			vertical-align: text-top;
 			width: 10px;
 		}
@@ -507,13 +506,14 @@
 	h3 {
 		float: left;
 		margin-right: 5px;
+		font-size: inherit;
 	}
 
 	ul {
 		list-style: none;
 		li {
 			border-left: 1px solid $color-page-border;
-			float: left;
+			display: inline-block;
 			line-height: 15px;
 			margin-bottom: 6px;
 			padding-left: 5px;
@@ -522,12 +522,6 @@
 			&:first-child {
 				border: none;
 				padding-left: 0px;
-			}
-			&.more-link {
-				border: none;
-			}
-			&.more {
-				display: none;
 			}
 		}
 	}
@@ -555,5 +549,12 @@
 .ArticlePreviewInner h1.pagetitle {
 	word-wrap: break-word;
 	line-height: 1.2em;
+}
+
+// Change overflow on article when VisualEditor is being used
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaArticle {
+	overflow: visible;
+	z-index: auto;
 }
 

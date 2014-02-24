@@ -21,7 +21,7 @@ ve.dm.DivNode = function VeDmDivNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.DivNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.DivNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

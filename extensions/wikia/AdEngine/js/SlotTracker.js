@@ -6,8 +6,8 @@ var SlotTracker = function (log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
-		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0],
-		timeCheckpoints = [2.0, 5.0, 8.0],
+		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
 		stats = {
 			allEvents: 0,
 			interestingEvents: 0
@@ -101,7 +101,7 @@ var SlotTracker = function (log, tracker) {
 					ga_category: gaCategory,
 					ga_action: gaAction,
 					ga_label: gaLabel,
-					ga_value: gaValue,
+					ga_value: Math.round(gaValue),
 					trackingMethod: 'ad'
 				});
 			} else {
@@ -154,7 +154,7 @@ var SlotTracker = function (log, tracker) {
 						slotname: slotname,
 						state: eventsTracked.join(',')
 					},
-					lastEventTime
+					lastEventTime * 1000
 				);
 			}, timeCheckPoint * 1000);
 		}
@@ -174,7 +174,7 @@ var SlotTracker = function (log, tracker) {
 					timeBucket: timeBucket,
 					extraParams: extraParams
 				},
-				timeElapsed
+				timeElapsed * 1000
 			);
 		}
 

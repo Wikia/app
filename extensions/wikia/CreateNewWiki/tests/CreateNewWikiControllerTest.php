@@ -17,7 +17,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
-	public function testCreateWikiSuccess($userLoggedIn, $status) {
+	public function testCreateWikiSuccess( $testCase, $userLoggedIn, $userEmailConfirmed, $status) {
 		$wikiName = 'Muppet is great';
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
@@ -45,6 +45,9 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wgUser->expects($this->once())
 			->method('isLoggedIn')
 			->will($this->returnValue($userLoggedIn));
+		$wgUser->expects($this->any())
+			->method('isEmailConfirmed')
+			->will($this->returnValue($userEmailConfirmed));
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 		$app->expects($this->exactly(3))
 			->method('getGlobal')
@@ -67,9 +70,9 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
 
-		$this->assertEquals($status, $response->getVal('status'));
+		$this->assertEquals($status, $response->getVal('status'), $testCase);
 
-		if ($userLoggedIn) {
+		if( $userLoggedIn && $userEmailConfirmed ) {
 			$this->assertEquals($siteName, $response->getVal('siteName'));
 			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 		}
@@ -78,11 +81,21 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	public function getCreateWikiDataProvider() {
 		return [
 			[
+				'testCase' => 'Everything is OK',
 				'userLogged' => true,
+				'userEmailConfirmed' => true,
 				'status' => 'ok'
 			],
 			[
+				'testCase' => 'User logged-in but without confirmed e-mail',
+				'userLogged' => true,
+				'userEmailConfirmed' => false,
+				'status' => 'error'
+			],
+			[
+				'testCase' => 'User not logged-in and therefore without confirmed e-mail',
 				'userLogged' => false,
+				'userEmailConfirmed' => false,
 				'status' => 'error'
 			]
 		];

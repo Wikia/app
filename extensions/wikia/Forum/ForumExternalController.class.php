@@ -67,7 +67,6 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		$newTitle = Title::newFromText( $boardTitle, NS_WIKIA_FORUM_BOARD );
-
 		if ( $newTitle->exists() ) {
 			$this->status = 'error';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-exists' )->escaped();
@@ -75,11 +74,16 @@ class ForumExternalController extends WallExternalController {
 		}
 
 		$forum = new Forum();
-		$forum->createBoard( $boardTitle, $boardDescription );
+		$creation = $forum->createBoard( $boardTitle, $boardDescription );
 
-		$this->status = 'ok';
-		$this->errorfield = '';
-		$this->errormsg = '';
+		if ( false === $creation ) {
+			$this->status = 'error';
+			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
+		} else {
+			$this->status = 'ok';
+			$this->errorfield = '';
+			$this->errormsg = '';
+		}
 	}
 
 	/**
@@ -168,6 +172,10 @@ class ForumExternalController extends WallExternalController {
 			return true;
 		}
 
+		/**
+		 * @var ForumBoard $board
+		 * @var ForumBoard $destinationBoard
+		 */
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
 
@@ -202,24 +210,26 @@ class ForumExternalController extends WallExternalController {
 		$this->errorfield = '';
 		$this->errormsg = '';
 
+		// Trim spaces (CONN-167)
+		$boardTitle = WikiaSanitizer::unicodeTrim( $boardTitle );
+		$boardDescription = WikiaSanitizer::unicodeTrim( $boardDescription );
+
 		// Reject illegal characters.
 		$rxTc = Title::getTitleInvalidRegex();
-		if ( preg_match( $rxTc, $boardTitle ) ) {
+		if ( preg_match( $rxTc, $boardTitle ) || is_null( Title::newFromText( $boardTitle ) ) ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-invalid' )->escaped();
 			return false;
 		}
 
-		$titleLength = strlen( $boardTitle );
-		if ( $titleLength > 40 || $titleLength < 4 ) {
+		$forum = new Forum();
+		if ( $forum->validateLength( $boardTitle, 'title' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardTitle';
 			$this->errormsg = wfMessage( 'forum-board-title-validation-length' )->escaped();
 			return false;
 		}
 
-		$descriptionLength = strlen( $boardDescription );
-
-		if ( $descriptionLength > 255 || $descriptionLength < 4 ) {
+		if ( $forum->validateLength( $boardDescription, 'desc' ) !== Forum::LEN_OK ) {
 			$this->errorfield = 'boardDescription';
 			$this->errormsg = wfMessage( 'forum-board-description-validation-length' )->escaped();
 			return false;

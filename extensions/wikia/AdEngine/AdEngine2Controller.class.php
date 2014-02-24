@@ -308,11 +308,12 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgAdDriverCookieLifetime, $wgHighValueCountries,
+			   $wgAdDriverCookieLifetime, $wgHighValueCountries, $wgHighValueCountriesDefault,
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgAdDriverUseNewTracking,
+			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault,
 			   $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -334,11 +335,31 @@ class AdEngine2Controller extends WikiaController {
 
 		// AdDriver
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
-		$highValueCountries = $wgHighValueCountries;
+
+		// TODO: move the (wiki->community->variable) logic to WikiFactory
+		$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
 		if (empty($highValueCountries)) {
-			$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
+			// If the variable is not set for given wiki, use the value from the community wiki
+			$highValueCountries = $wgHighValueCountries;
 		}
+		if (empty($highValueCountries)) {
+			// If the variable is set nor for given wiki neither for community, use the default value
+			$highValueCountries = $wgHighValueCountriesDefault;
+		}
+
 		$vars['wgHighValueCountries'] = $highValueCountries;
+
+		$pageLevelCategoryLanguages = $wgAdPageLevelCategoryLangs;
+		if (empty($pageLevelCategoryLanguages)) {
+			// If the variable is not set for given wiki, use the value from the community wiki
+			$pageLevelCategoryLanguages = WikiFactory::getVarValueByName('wgAdPageLevelCategoryLangs', Wikia::COMMUNITY_WIKI_ID);
+		}
+		if (empty($pageLevelCategoryLanguages)) {
+			// If the variable is set nor for given wiki neither for community, use the default value
+			$pageLevelCategoryLanguages = $wgAdPageLevelCategoryLangsDefault;
+		}
+
+		$vars['wgAdPageLevelCategoryLangs'] = $pageLevelCategoryLanguages;
 
 		if (!empty($wgAdDriverUseExpiryStorage)) {
 			$vars["wgAdDriverUseExpiryStorage"] = $wgAdDriverUseExpiryStorage;

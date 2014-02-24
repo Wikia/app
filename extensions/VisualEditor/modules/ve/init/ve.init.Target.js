@@ -10,22 +10,22 @@
  *
  * @class
  * @abstract
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {jQuery} $container Conainter to render target into
  */
 ve.init.Target = function VeInitTarget( $container ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
-	this.$ = $container;
+	this.$element = $container;
 };
 
 /* Inheritance */
 
-ve.mixinClass( ve.init.Target, ve.EventEmitter );
+OO.mixinClass( ve.init.Target, OO.EventEmitter );
 
 /* Static Properties */
 
@@ -50,6 +50,9 @@ ve.init.Target.static.surfaceCommands = [
 	'italic',
 	'link',
 	'clear',
+	'underline',
+	'subscript',
+	'superscript',
 	'indent',
 	'outdent',
 	'paragraph',

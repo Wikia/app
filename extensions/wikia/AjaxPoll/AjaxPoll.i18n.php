@@ -116,8 +116,10 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'ajaxpoll-thankyou' => 'আপনার ভোটের জন্য ধন্যবাদ!',
 	'ajaxpoll-submit' => 'ভোট!',
 );
 
@@ -848,7 +850,7 @@ $messages['sv'] = array(
 	'ajaxpoll-summary' => 'Röstningen skapades den $2 kl. $1, och hittills har $3 personer röstat.',
 	'ajaxpoll-submit' => 'Rösta!',
 	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
-	'ajaxpoll-submitting' => 'Du skickar in din röst, var god vänta...',
+	'ajaxpoll-submitting' => 'Vänta medan din röst skickas in...',
 );
 
 /** Tamil (தமிழ்)

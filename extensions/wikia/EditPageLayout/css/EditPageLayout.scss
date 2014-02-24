@@ -1,12 +1,10 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/multiple-box-shadow";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
 @import "skins/oasis/css/mixins/ellipses";
 @import "extensions/wikia/UserLogin/mixins/tooltip-icon";
@@ -161,13 +159,13 @@ body {
 
 	// expand link
 	> .expand {
-		@include opacity(80);
 		background-color: $color-page;
 		bottom: 5px;
 		color: $color-links;
 		cursor: pointer;
 		display: none;
 		font-size: 11px;
+		opacity: .8;
 		position: absolute;
 		padding: 5px;
 		right: 15px;

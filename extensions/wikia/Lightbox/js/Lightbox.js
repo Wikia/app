@@ -26,7 +26,7 @@ var Lightbox = {
 	to: 0, // timestamp for getting wiki images
 
 	makeLightbox: function(params) {
-		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and Touchstorm widget
+		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
 		$(window).trigger('lightboxOpened');
 
 		// if we don't have latest photos in the DOM, request them from back end
@@ -46,8 +46,9 @@ var Lightbox = {
 		Lightbox.current.carouselType = trackingObj.carouselType;
 
 		// Set up tracking
-		var clickSource = trackingObj.clickSource,
-			trackingCarouselType = trackingObj.trackingCarouselType;
+		var clickSource = trackingObj.clickSource;
+
+		Lightbox.current.trackingCarouselType = trackingObj.trackingCarouselType;
 
 		Lightbox.openModal.aggregateViewCount = 0;
 		Lightbox.openModal.clickSource = clickSource;
@@ -82,7 +83,15 @@ var Lightbox = {
 
 		/* tracking after lightbox has fully loaded */
 		var trackingTitle = Lightbox.current.key;
-		LightboxTracker.track(Wikia.Tracker.ACTIONS.IMPRESSION, '', Lightbox.current.placeholderIdx, {title: trackingTitle, 'carousel-type': trackingCarouselType});
+		LightboxTracker.track(
+			Wikia.Tracker.ACTIONS.IMPRESSION,
+			'',
+			Lightbox.current.placeholderIdx,
+			{
+				title: trackingTitle,
+				'carousel-type': Lightbox.current.trackingCarouselType
+			}
+		);
 
 		// attach event handlers
 		Lightbox.bindEvents();
@@ -140,14 +149,30 @@ var Lightbox = {
 					.click();
 
 				var trackingTitle = Lightbox.current.key;
-				LightboxTracker.track(Wikia.Tracker.ACTIONS.CLICK, 'lightboxShare', null, {title: trackingTitle, type: Lightbox.current.type});
+				LightboxTracker.track(
+					Wikia.Tracker.ACTIONS.CLICK,
+					'lightboxShare',
+					null,
+					{
+						title: trackingTitle,
+						type: Lightbox.current.type
+					}
+				);
 
 				Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 				Lightbox.setupShareEmail();
 
 				Lightbox.openModal.share.find('.social-links').on('click', 'a', function() {
 					var shareType = $(this).attr('class');
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.SHARE, shareType, null, {title: trackingTitle, type: Lightbox.current.type});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.SHARE,
+						shareType,
+						null,
+						{
+							title: trackingTitle,
+							type: Lightbox.current.type
+						}
+					);
 				});
 
 			});
@@ -310,7 +335,16 @@ var Lightbox = {
 				var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
 				Lightbox.image.trackingTimeout = setTimeout(function() {
 					Lightbox.openModal.aggregateViewCount++;
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'image', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, clickSource: Lightbox.openModal.clickSource});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.VIEW,
+						'image',
+						Lightbox.openModal.aggregateViewCount,
+						{
+							title: trackingTitle,
+							clickSource: Lightbox.openModal.clickSource,
+							'carousel-type': Lightbox.current.trackingCarouselType
+						}
+					);
 
 					// Set all future click sources to Lightbox rather than DOM element
 					Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
@@ -447,7 +481,17 @@ var Lightbox = {
 			 */
 			Lightbox.video.trackingTimeout = setTimeout(function() {
 				Lightbox.openModal.aggregateViewCount++;
-				LightboxTracker.track(Wikia.Tracker.ACTIONS.VIEW, 'video', Lightbox.openModal.aggregateViewCount, {title: trackingTitle, provider: data.providerName, clickSource: Lightbox.openModal.clickSource});
+				LightboxTracker.track(
+					Wikia.Tracker.ACTIONS.VIEW,
+					'video',
+					Lightbox.openModal.aggregateViewCount,
+					{
+						title: trackingTitle,
+						provider: data.providerName,
+						clickSource: Lightbox.openModal.clickSource,
+						'carousel-type': Lightbox.current.trackingCarouselType
+					}
+				);
 
 				// Set all future click sources to Lightbox rather than DOM element
 				Lightbox.openModal.clickSource = LightboxTracker.clickSource.LB;
@@ -764,7 +808,8 @@ var Lightbox = {
 	carouselTypes: [
 		'relatedVideos',
 		'articleMedia',
-		'latestPhotos'
+		'latestPhotos',
+		'videosModule'
 	],
 	setUpCarousel: function() {
 
@@ -1002,22 +1047,32 @@ var Lightbox = {
 					shareEmailForm.find('input[type=text]').val('');
 
 					var trackingTitle = Lightbox.current.key; // prevent race conditions from timeout
-					LightboxTracker.track(Wikia.Tracker.ACTIONS.SHARE, 'email', null, {title: trackingTitle, type: Lightbox.current.type});
+					LightboxTracker.track(
+						Wikia.Tracker.ACTIONS.SHARE,
+						'email',
+						null,
+						{
+							title: trackingTitle,
+							type: Lightbox.current.type
+						}
+					);
 				}
 			});
 		}
 
 		shareEmailForm.submit(function(e) {
 			e.preventDefault();
-			var addresses = $(this).find('input').first().val();
+			var addresses = $( this ).find( 'input' ).first().val(),
+				UserLoginModal = window.UserLoginModal;
 
 			// make sure user is logged in
 			if (window.wgUserName) {
 				doShareEmail(addresses);
 			} else {
-				UserLoginModal.show({
+				UserLoginModal.show( {
+					origin: 'image-lightbox',
 					callback: function() {
-						doShareEmail(addresses);
+						doShareEmail( addresses );
 					}
 				});
 			}
@@ -1056,9 +1111,7 @@ var Lightbox = {
 				thumbArr = cached;
 			} else {
 				var article = $('#WikiaArticle, #WikiaArticleComments'),
-					playButton = Lightbox.thumbPlayButton,
 					keys = [], // array to check for title dupes
-					thumbArr = [],
 					infobox = article.find('.infobox');
 				// Collect images from DOM
 				var thumbs = article.find('img[data-image-name], img[data-video-name]');
@@ -1070,27 +1123,27 @@ var Lightbox = {
 
 				thumbs.each(function() {
 					var $thisThumb = $(this),
-						$thisParent = $thisThumb.parent(),
 						type,
 						title,
 						key,
-						playButton;
+						playButtonSpan,
+						videoName;
 
 					if($thisThumb.closest('.ogg_player').length) {
 						return;
 					}
 
-					var videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
+					videoName = $thisThumb.attr('data-video-name') || $thisThumb.parent().attr('data-video-name');
 
 					if(videoName) {
 						type = 'video';
 						title = videoName;
-						key = $thisThumb.attr('data-video-key')
+						key = $thisThumb.attr('data-video-key');
 						playButtonSpan = Lightbox.thumbPlayButton;
 					} else {
 						type = 'image';
 						title = $thisThumb.attr('data-image-name') || $thisThumb.parent().attr('data-image-name');
-						key = $thisThumb.attr('data-image-key')
+						key = $thisThumb.attr('data-image-key');
 						playButtonSpan = '';
 					}
 
@@ -1274,6 +1327,60 @@ var Lightbox = {
 					Lightbox.getMediaThumbs.backfilling = false;
 				}
 			});
+		},
+		videosModule: function(backfill) {
+			var cached = LightboxLoader.cache.videosModule,
+				thumbArr = [],
+				videosModule,
+				// array to check for title dupes
+				keys = [],
+				thumbs;
+
+			if(cached.length) {
+				thumbArr = cached;
+			} else {
+				videosModule = $('#videosModule');
+				// Collect images from DOM
+				thumbs = videosModule.find('img[data-video-name]');
+
+				thumbs.each(function() {
+					var $thisThumb = $(this),
+						type = 'video',
+						title = $thisThumb.attr('data-video-name'),
+						key = $thisThumb.attr('data-video-key' ),
+						playButtonSpan =Lightbox.thumbPlayButton;
+
+					if(key) {
+						// Check for dupes
+						if($.inArray(key, keys) > -1) {
+							return;
+						}
+						keys.push(key);
+
+						thumbArr.push({
+							thumbUrl: Lightbox.thumbParams($thisThumb.data('src') || $thisThumb.attr('src'), type),
+							title: title,
+							key: key,
+							type: type,
+							playButtonSpan: playButtonSpan
+						});
+					}
+				});
+
+				// Fill articleMedia cache
+				LightboxLoader.cache.videosModule = thumbArr;
+
+				// Count backfill items for progress bar
+				if(backfill) {
+					Lightbox.backfillCount += thumbArr.length;
+				}
+
+			}
+
+			// Add thumbs to current lightbox cache
+			Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
+
+			Lightbox.addThumbsToCarousel(thumbArr, backfill);
 		}
 	},
 	addThumbsToCarousel: function(thumbs, backfill) {
@@ -1293,7 +1400,7 @@ var Lightbox = {
 
 		// if carousel is already instantiated, update settings with added thumbnails
 		var container = Lightbox.openModal.carouselContainer;
-		if(typeof container.updateCarouselItems == "function") {
+		if(typeof container.updateCarouselItems == 'function') {
 			container.updateCarouselItems();
 			container.updateCarouselWidth();
 			container.updateCarouselArrows();
@@ -1326,7 +1433,7 @@ var Lightbox = {
 	},
 
 	/**
-	 * @param {Object} params Object containing any combination of "parent" (required) "target" (optional) or "clickSource" (optional)
+	 * @param {Object} params Object containing any combination of 'parent' (required) 'target' (optional) or 'clickSource' (optional)
 	 */
 	getClickSource: function(params) {
 		var parent = params.parent,
@@ -1336,8 +1443,8 @@ var Lightbox = {
 			VPS = LightboxTracker.clickSource,
 
 			// Two vars that basically mean the same thing but are here for legacy purposes
-			carouselType = "",
-			trackingCarouselType = "";
+			carouselType = '',
+			trackingCarouselType = '';
 
 		switch (id) {
 
@@ -1345,36 +1452,36 @@ var Lightbox = {
 			case 'RelatedVideosRL':
 				clickSource = clickSource || VPS.RV;
 
-				carouselType = "relatedVideos";
-				trackingCarouselType = "related-videos";
+				carouselType = 'relatedVideos';
+				trackingCarouselType = 'related-videos';
 				break;
 
 			// Embeded in Article Comments
 			case 'WikiaArticleComments':
 				clickSource = clickSource || VPS.EMBED;
 
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 				break;
 
 			case 'LatestPhotosModule':
 				clickSource = clickSource || VPS.LP;
 
-				carouselType = "latestPhotos";
-				trackingCarouselType = "latest-photos";
+				carouselType = 'latestPhotos';
+				trackingCarouselType = 'latest-photos';
 				break;
 
-			case 'TouchStormModule':
-				clickSource = clickSource || VPS.TOUCHSTORM;
+			case 'videosModule':
+				clickSource = clickSource || VPS.VIDEOSMODULE;
 
-				carouselType = "touchStorm";
-				trackingCarouselType = "touch-storm";
+				carouselType = 'videosModule';
+				trackingCarouselType = 'videos-module';
 				break;
 
 			case 'WikiaArticle':
 				// Lightbox doesn't care what kind of article page, but clickSource tracking does
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 
 				if(typeof clickSource != 'undefined') {
 					// Click source is already set so we don't have to look for it.
@@ -1415,8 +1522,8 @@ var Lightbox = {
 			default:
 				clickSource = VPS.OTHER;
 
-				carouselType = "articleMedia";
-				trackingCarouselType = "article";
+				carouselType = 'articleMedia';
+				trackingCarouselType = 'article';
 		}
 
 		return {

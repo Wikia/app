@@ -6,30 +6,30 @@
  */
 
 /**
- * UserInterface inspector.
+ * Non-modal interface in a child frame.
  *
  * @class
  * @abstract
- * @extends ve.ui.Window
+ * @extends OO.ui.Window
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {OO.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.Inspector = function VeUiInspector( surface, config ) {
+ve.ui.Inspector = function VeUiInspector( windowSet, config ) {
 	// Parent constructor
-	ve.ui.Window.call( this, surface, config );
+	OO.ui.Window.call( this, windowSet, config );
 
 	// Properties
-	this.initialSelection = null;
+	this.surface = windowSet.getSurface();
 
 	// Initialization
-	this.$.addClass( 've-ui-inspector' );
+	this.$element.addClass( 've-ui-inspector' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.Inspector, ve.ui.Window );
+OO.inheritClass( ve.ui.Inspector, OO.ui.Window );
 
 /* Static Properties */
 
@@ -57,58 +57,17 @@ ve.ui.Inspector.static.removeable = true;
 /* Methods */
 
 /**
- * Handle frame ready events.
- *
- * @method
- */
-ve.ui.Inspector.prototype.initialize = function () {
-	// Parent method
-	ve.ui.Window.prototype.initialize.call( this );
-
-	// Initialization
-	this.frame.$content.addClass( 've-ui-inspector-content' );
-	this.$form = this.$$( '<form>' );
-	this.closeButton = new ve.ui.IconButtonWidget( {
-		'$$': this.$$, 'icon': 'previous', 'title': ve.msg( 'visualeditor-inspector-close-tooltip' )
-	} );
-	if ( this.constructor.static.removeable ) {
-		this.removeButton = new ve.ui.IconButtonWidget( {
-			'$$': this.$$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
-		} );
-	}
-
-	// Events
-	this.$form.on( {
-		'submit': ve.bind( this.onFormSubmit, this ),
-		'keydown': ve.bind( this.onFormKeyDown, this )
-	} );
-	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
-	if ( this.constructor.static.removeable ) {
-		this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
-	}
-
-	// Initialization
-	this.closeButton.$.addClass( 've-ui-inspector-closeButton' );
-	this.$head.prepend( this.closeButton.$ );
-	if ( this.constructor.static.removeable ) {
-		this.removeButton.$.addClass( 've-ui-inspector-removeButton' );
-		this.$head.append( this.removeButton.$ );
-	}
-	this.$body.append( this.$form );
-};
-
-/**
  * Handle close button click events.
  *
  * @method
  */
 ve.ui.Inspector.prototype.onCloseButtonClick = function () {
 	var label = ve.track.nameToLabel( this.constructor.static.name );
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'inspector-' + label + '-button-close'
 	} );
-	this.close( 'back' );
+	this.close( { 'action': 'back' } );
 };
 
 /**
@@ -118,11 +77,11 @@ ve.ui.Inspector.prototype.onCloseButtonClick = function () {
  */
 ve.ui.Inspector.prototype.onRemoveButtonClick = function () {
 	var label = ve.track.nameToLabel( this.constructor.static.name );
-	ve.track( {
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'inspector-' + label + '-button-remove'
 	} );
-	this.close( 'remove' );
+	this.close( { 'action': 'remove' } );
 };
 
 /**
@@ -132,7 +91,7 @@ ve.ui.Inspector.prototype.onRemoveButtonClick = function () {
  * @param {jQuery.Event} e Form submit event
  */
 ve.ui.Inspector.prototype.onFormSubmit = function () {
-	this.close( 'apply' );
+	this.close( { 'action': 'apply' } );
 	return false;
 };
 
@@ -144,32 +103,74 @@ ve.ui.Inspector.prototype.onFormSubmit = function () {
  */
 ve.ui.Inspector.prototype.onFormKeyDown = function ( e ) {
 	// Escape
-	if ( e.which === ve.Keys.ESCAPE ) {
-		this.close( 'back' );
+	if ( e.which === OO.ui.Keys.ESCAPE ) {
+		this.close( { 'action': 'back' } );
 		return false;
 	}
 };
 
 /**
- * Handle inspector setup events.
- *
- * @method
+ * @inheritdoc
  */
-ve.ui.Inspector.prototype.onSetup = function () {
-	this.previousSelection = this.surface.getModel().getSelection();
+ve.ui.Inspector.prototype.initialize = function () {
+	// Parent method
+	OO.ui.Window.prototype.initialize.call( this );
+
+	// Initialization
+	this.frame.$content.addClass( 've-ui-inspector-content' );
+	this.$form = this.$( '<form>' );
+	this.closeButton = new OO.ui.IconButtonWidget( {
+		'$': this.$, 'icon': 'previous', 'title': OO.ui.msg( 'ooui-inspector-close-tooltip' )
+	} );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton = new OO.ui.IconButtonWidget( {
+			'$': this.$, 'icon': 'remove', 'title': OO.ui.msg( 'ooui-inspector-remove-tooltip' )
+		} );
+	}
+
+	// Events
+	this.$form.on( {
+		'submit': OO.ui.bind( this.onFormSubmit, this ),
+		'keydown': OO.ui.bind( this.onFormKeyDown, this )
+	} );
+	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+	}
+
+	// Initialization
+	this.closeButton.$element.addClass( 've-ui-inspector-closeButton' );
+	this.$head.prepend( this.closeButton.$element );
+	if ( this.constructor.static.removeable ) {
+		this.removeButton.$element.addClass( 've-ui-inspector-removeButton' );
+		this.$head.append( this.removeButton.$element );
+	}
+	this.$body.append( this.$form );
 };
 
 /**
- * Handle inspector open events.
- *
- * @method
+ * @inheritdoc
  */
-ve.ui.Inspector.prototype.onOpen = function () {
-	ve.track( {
+ve.ui.Inspector.prototype.setup = function ( data ) {
+	// Parent method
+	OO.ui.Window.prototype.setup.call( this, data );
+
+	ve.track( 'wikia', {
 		'action': ve.track.actions.OPEN,
 		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
 	} );
-	this.initialSelection = this.surface.getModel().getSelection();
+
+	// Wait for animation to complete
+	setTimeout( ve.bind( function () {
+		this.ready();
+	}, this ), 200 );
+};
+
+/**
+ * Inspector is done animating and ready to be interacted with.
+ */
+ve.ui.Inspector.prototype.ready = function () {
+	//
 };
 
 /**
@@ -177,8 +178,11 @@ ve.ui.Inspector.prototype.onOpen = function () {
  *
  * @method
  */
-ve.ui.Inspector.prototype.onClose = function () {
-	ve.track( {
+ve.ui.Inspector.prototype.teardown = function ( data ) {
+	// Parent method
+	OO.ui.Window.prototype.teardown.call( this, data );
+
+	ve.track( 'wikia', {
 		'action': ve.track.actions.CLOSE,
 		'label': 'inspector-' + ve.track.nameToLabel( this.constructor.static.name )
 	} );

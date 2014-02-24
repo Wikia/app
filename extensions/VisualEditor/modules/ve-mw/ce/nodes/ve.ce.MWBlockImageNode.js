@@ -10,10 +10,7 @@
  *
  * @class
  * @extends ve.ce.BranchNode
- * @mixins ve.ce.ProtectedNode
- * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.RelocatableNode
- * @mixins ve.ce.MWResizableNode
+ * @mixins ve.ce.MWImageNode
  *
  * @constructor
  * @param {ve.dm.MWBlockImageNode} model Model to observe
@@ -28,27 +25,27 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	type = this.model.getAttribute( 'type' );
 
 	if ( this.model.getAttribute( 'align' ) === 'center' ) {
-		this.$.addClass( 'center' );
-		this.$thumb = this.$$( '<div>' ).appendTo( this.$ );
+		this.$element.addClass( 'center' );
+		this.$thumb = this.$( '<div>' ).appendTo( this.$element );
 	} else {
-		this.$thumb = this.$;
+		this.$thumb = this.$element;
 	}
 
-	this.$thumbInner = this.$$( '<div>' )
+	this.$thumbInner = this.$( '<div>' )
 		.addClass( 'thumbinner' )
 		.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ) + 2 );
 
-	this.$a = this.$$( '<a>' )
+	this.$a = this.$( '<a>' )
 		.addClass( 'image' )
-		.attr( 'src', this.model.getAttribute( 'href' ) );
+		.attr( 'href', this.getResolvedAttribute( 'href' ) );
 
-	this.$image = this.$$( '<img>' )
-		.attr( 'src', this.model.getAttribute( 'src' ) )
+	this.$image = this.$( '<img>' )
+		.attr( 'src', this.getResolvedAttribute( 'src' ) )
 		.attr( 'width', this.model.getAttribute( 'width' ) )
 		.attr( 'height', this.model.getAttribute( 'height' ) )
 		.appendTo( this.$a );
 
-	this.$inner = this.$$( '<div>' ).addClass( 've-ce-mwBlockImageNode-inner' );
+	this.$inner = this.$( '<div>' ).addClass( 've-ce-mwBlockImageNode-inner' );
 
 	if ( type === 'none' || type === 'frameless' ) {
 		this.$thumb.addClass(
@@ -77,10 +74,7 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	}
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this, this.$inner );
-	ve.ce.FocusableNode.call( this, this.$inner );
-	ve.ce.RelocatableNode.call( this, this.$inner );
-	ve.ce.MWResizableNode.call( this, this.$image );
+	ve.ce.MWImageNode.call( this, this.$inner, this.$image );
 
 	// I smell a caption!
 	if ( type !== 'none' && type !== 'frameless' && this.model.children.length === 1 ) {
@@ -89,27 +83,24 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 		captionModel.connect( this, { 'update': 'onModelUpdate' } );
 		this.children.push( captionView );
 		captionView.attach( this );
-		captionView.$.appendTo( this.$thumbInner );
+		captionView.$element.appendTo( this.$thumbInner );
 		if ( this.live !== captionView.isLive() ) {
 			captionView.setLive( this.live );
 		}
 	}
+
+	// Events
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWBlockImageNode, ve.ce.BranchNode );
-
-ve.mixinClass( ve.ce.MWBlockImageNode, ve.ce.ProtectedNode );
-
-ve.mixinClass( ve.ce.MWBlockImageNode, ve.ce.FocusableNode );
-
-ve.mixinClass( ve.ce.MWBlockImageNode, ve.ce.RelocatableNode );
+OO.inheritClass( ve.ce.MWBlockImageNode, ve.ce.BranchNode );
 
 // Need to mixin base class as well
-ve.mixinClass( ve.ce.MWBlockImageNode, ve.ce.ResizableNode );
+OO.mixinClass( ve.ce.MWBlockImageNode, ve.ce.GeneratedContentNode );
 
-ve.mixinClass( ve.ce.MWBlockImageNode, ve.ce.MWResizableNode );
+OO.mixinClass( ve.ce.MWBlockImageNode, ve.ce.MWImageNode );
 
 /* Static Properties */
 
@@ -147,7 +138,7 @@ ve.ce.MWBlockImageNode.prototype.getCssClass = function ( type, alignment ) {
 	// TODO use this.model.getAttribute( 'type' ) etc., see bug 52065
 	// Default is different between RTL and LTR wikis:
 	if ( type === 'default' && alignment === 'default' ) {
-		if ( this.$.css( 'direction' ) === 'rtl' ) {
+		if ( this.$element.css( 'direction' ) === 'rtl' ) {
 			return 'tleft';
 		} else {
 			return 'tright';
@@ -163,7 +154,7 @@ ve.ce.MWBlockImageNode.prototype.getCssClass = function ( type, alignment ) {
  *
  * @method
  */
-ve.ce.MWBlockImageNode.prototype.onSetup = function ( ) {
+ve.ce.MWBlockImageNode.prototype.onSetup = function () {
 	var type = this.model.getAttribute( 'type' );
 
 	ve.ce.BranchNode.prototype.onSetup.call( this );
@@ -174,9 +165,18 @@ ve.ce.MWBlockImageNode.prototype.onSetup = function ( ) {
 
 };
 
-/** */
+/**
+ * Update the rendering of the 'align', src', 'width' and 'height' attributes when they change
+ * in the model.
+ *
+ * @method
+ * @param {string} key Attribute key
+ * @param {string} from Old value
+ * @param {string} to New value
+ * @fires setup
+ */
 ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) {
-	var $element, type;
+	var $wrapper, type;
 
 	if ( key === 'height' || key === 'width' ) {
 		to = parseInt( to, 10 );
@@ -188,14 +188,14 @@ ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) 
 				if ( to === 'center' || from === 'center' ) {
 					this.emit( 'teardown' );
 					if ( to === 'center' ) {
-						$element = this.$$( '<div>' ).addClass( 'center' );
-						this.$thumb = this.$;
-						this.$.replaceWith( $element );
-						this.$ = $element;
-						this.$.append( this.$thumb );
+						$wrapper = this.$( '<div>' ).addClass( 'center' );
+						this.$thumb = this.$element;
+						this.$element.replaceWith( $wrapper );
+						this.$element = $wrapper;
+						this.$element.append( this.$thumb );
 					} else {
-						this.$.replaceWith( this.$thumb );
-						this.$ = this.$thumb;
+						this.$element.replaceWith( this.$thumb );
+						this.$element = this.$thumb;
 					}
 					this.emit( 'setup' );
 				}
@@ -209,7 +209,7 @@ ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) 
 				}
 				break;
 			case 'src':
-				this.$image.attr( 'src', to );
+				this.$image.attr( 'src', this.getResolvedAttribute( 'src' ) );
 				break;
 			case 'width':
 				this.$thumbInner.css( 'width', to + 2 );
@@ -219,6 +219,14 @@ ve.ce.MWBlockImageNode.prototype.onAttributeChange = function ( key, from, to ) 
 				this.$image.css( 'height', to );
 				break;
 		}
+	}
+};
+
+/** */
+ve.ce.MWBlockImageNode.prototype.onResizableResizing = function ( dimensions ) {
+	if ( !this.outline ) {
+		ve.ce.ResizableNode.prototype.onResizableResizing.call( this, dimensions );
+		this.$thumbInner.css( 'width', dimensions.width + 2 );
 	}
 };
 
