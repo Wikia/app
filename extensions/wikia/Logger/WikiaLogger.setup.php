@@ -18,6 +18,8 @@ $wgAutoloadClasses['Wikia\\Logger\\SyslogHandler'] = "{$dir}/SyslogHandler.class
 $wgAutoloadClasses['Wikia\\Logger\\WebProcessor'] = "{$dir}/WebProcessor.class.php";
 $wgAutoloadClasses['Wikia\\Logger\\LogstashFormatter'] = "{$dir}/LogstashFormatter.class.php";
 
+$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\WikiaLogger::onWikiaSkinTopScripts';
+
 $loggerClasses = [
 	'Psr' => [
 		'Log' => [
