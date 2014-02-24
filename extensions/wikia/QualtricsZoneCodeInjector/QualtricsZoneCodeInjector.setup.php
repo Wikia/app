@@ -19,4 +19,4 @@ $wgAutoloadClasses['QualtricsZoneCodeInjectorHooks'] = $dir . 'QualtricsZoneCode
 // hooks
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'QualtricsZoneCodeInjectorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['GetHTMLAfterBody'][]            = 'QualtricsZoneCodeInjectorHooks::onGetHTMLAfterBody';
-
+$wgHooks['OasisSkinAssetGroups'][]        = 'QualtricsZoneCodeInjectorHooks::onOasisSkinAssetGroups';

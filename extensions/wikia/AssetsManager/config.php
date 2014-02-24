@@ -145,10 +145,6 @@ $config['oasis_noads_extensions_js'] = array(
 	)
 );
 
-if ( !empty( $wgEnableQualtricsZoneCodeInjector ) ) {
-	$config['oasis_noads_extensions_js']['assets'][] = '//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js';
-}
-
 /** Site specific CSS **/
 $config['site_anon_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
@@ -1644,5 +1640,13 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/bottomModule.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+	]
+];
+
+$config['qualtrics_zone_code_injector_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
 	]
 ];

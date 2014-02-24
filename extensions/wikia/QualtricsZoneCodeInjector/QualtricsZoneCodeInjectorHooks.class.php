@@ -40,6 +40,19 @@ class QualtricsZoneCodeInjectorHooks {
 	}
 
 	/**
+	 * Add Qualtrics assets on Oasis
+	 *
+	 * @param $assetsArray
+	 *
+	 * @return bool
+	 */
+	static public function onOasisSkinAssetGroups( &$assetsArray ) {
+		$assetsArray[] = 'qualtrics_zone_code_injector_js';
+		
+		return true;
+	}
+
+/**
 	 * Construct URI for Qualtrics
 	 *
 	 * @return string
