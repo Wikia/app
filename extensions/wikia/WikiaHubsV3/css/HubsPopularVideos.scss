@@ -49,16 +49,6 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 
 .WikiaArticle .wikiahubs-popular-videos {
 	padding-top: 10px;
-	h2 {
-		display: inline;
-		border: none;
-	}
-	.title-wraper {
-		display: block;
-		width: 100%;
-		border-bottom: 4px solid $color-wikiahome-hubcolor;
-		line-height: 30px;
-	}
 	.WikiaMediaCarousel {
 		height: 160px;
 		.button {
