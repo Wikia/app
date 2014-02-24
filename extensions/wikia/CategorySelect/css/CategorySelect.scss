@@ -1,6 +1,5 @@
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
@@ -108,7 +107,7 @@
 	}
 
 	.placeholder {
-		@include opacity( 35 );
+		opacity: .35;
 	}
 
 	.special-categories {

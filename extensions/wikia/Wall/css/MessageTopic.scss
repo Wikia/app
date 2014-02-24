@@ -3,7 +3,6 @@
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/menus";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transform";
 
 @import "../../Wall/css/WallColors";
@@ -69,14 +68,14 @@
 		padding: 0;
 		margin: 5px 0 0;
 		.topic {
-			@include opacity(80);
 			float: left;
 			margin-right: 10px;
+			opacity: .8;
 			padding-right: 15px;
 			position: relative;
 			
 			&:hover {
-				@include opacity(100);
+				opacity: 1;
 				.remove-swatch {
 					background-color: $color-text;
 				}

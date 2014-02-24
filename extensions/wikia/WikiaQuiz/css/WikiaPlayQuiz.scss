@@ -2,7 +2,6 @@
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/transform";
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/core/color";
@@ -166,7 +165,7 @@ $dark-wiki: 1;
 			text-align: center;
 		}
 		.title-image {
-			@include opacity(20);
+			opacity: .2;
 		}
 	}
 	.questions {
@@ -232,13 +231,13 @@ $dark-wiki: 1;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
 				@include border-radius($border-radius);
-				@include opacity(10);
 				background-color: #999;
 				color: white;
 				font-size: 450px;
 				height: $height;
 				left: calc(50% - (#{$question-number-width}/2));
 				line-height: 450px;
+				opacity: .1;
 				padding-top: $padding-top;
 				position: absolute;
 				text-align: center;
@@ -502,7 +501,7 @@ $dark-wiki: 1;
 			}
 		}
 		.title-image {
-			@include opacity(20);
+			opacity: .2;
 		}
 	}
 	.more-info {
@@ -520,17 +519,17 @@ $dark-wiki: 1;
 		}
 	}
 	.correct-icon, .wrong-icon {
-		@include opacity(99);
 		@include transition-shorthand(all 200ms ease-in);
 		height: 136px;
 		left: 25px;
+		opacity: .99;
 		position: absolute;
 		top: 25px;
 		width: 132px;
 		z-index: frame-z + 1;
 		&.effect {
-			@include opacity(0);
 			@include transform(translate(0,-136px) scale(2));
+			opacity: 0;
 		}
 	}
 	.correct-icon {

@@ -42,7 +42,7 @@
 		}
 		&.cke_disabled {
 			> a {
-				@include opacity(20);
+				opacity: .2;
 				zoom: 1; /* IE fix to make opacity work */
 			}
 		}
