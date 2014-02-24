@@ -55,7 +55,10 @@ $.fn.makeCollapsible = function() {
 						// Hide all table rows of this table
 						// Slide doens't work with tables, but fade does as of jQuery 1.1.3
 						// http://stackoverflow.com/questions/467336#920480
-						$containers = $collapsible.find( '>tbody>tr' );
+						// Begin Wikia change - @author Cqm
+						// VOLDEV-32
+						$containers = $collapsible.find( '>thead>tr, >tbody>tr' );
+						// End Wikia change
 						if ( $defaultToggle ) {
 							// Exclude tablerow containing togglelink
 							$containers.not( $defaultToggle.closest( 'tr' ) ).stop(true, true).fadeOut();
@@ -106,7 +109,10 @@ $.fn.makeCollapsible = function() {
 
 					// Expand the element
 					if ( $collapsible.is( 'table' ) ) {
-						$containers = $collapsible.find( '>tbody>tr' );
+						// Begin Wikia change - @author Cqm
+						// VOLDEV-32
+						$containers = $collapsible.find( '>thead>tr, >tbody>tr' );
+						// End Wikia change
 						if ( $defaultToggle ) {
 							// Exclude tablerow containing togglelink
 							$containers.not( $defaultToggle.parent().parent() ).stop(true, true).fadeIn();
