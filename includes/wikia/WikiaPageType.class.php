@@ -149,6 +149,17 @@ class WikiaPageType {
 	}
 
 	/**
+	 * Check if current page is Wikia hub main page ( for hubs v3 )
+	 *
+	 * @return bool
+	 */
+	public static function isWikiaHubMain() {
+		global $wgTitle;
+		$isMainPage = ( wfMessage( 'mainpage' )->inContentLanguage()->text() == $wgTitle->getText() );
+		return ( self::isWikiaHub() && $isMainPage );
+	}
+
+	/**
 	 * Check if current page is home page
 	 *
 	 * @return bool

@@ -318,7 +318,8 @@ class BodyController extends WikiaController {
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = WikiaPageType::isMainPage();
+
+		$this->displayHeaderButtons = true;
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -352,7 +353,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogListing';
 			}
 		// show corporate header on this page?
-		} else if( WikiaPageType::isCorporatePage() ) {
+		} else if( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub()) {
 			$this->headerModuleName = 'PageHeader';
 
 			if( self::isEditPage() ) {
@@ -361,8 +362,12 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
+			if ( WikiaPageType::isWikiaHubMain() ) {
+				$this->displayHeaderButtons = false;
+				$this->headerModuleAction = 'Hubs';
+			}
 			// FIXME: move to separate module
-			if( WikiaPageType::isMainPage() ) {
+			elseif( WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;

@@ -18,6 +18,7 @@ class HubRssModelTest extends WikiaBaseTest {
 		$dir = dirname( __FILE__ ) . '/../';
 		global $wgAutoloadClasses;
 		$wgAutoloadClasses['MarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
+		$wgAutoloadClasses['AbstractMarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/AbstractMarketingToolboxModel.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleSliderService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleSliderService.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFromthecommunityService.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleEditableService.class.php';
@@ -265,7 +266,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 
-	public static function mock_getLastPublishedTimestamp( $a, $b, $c, $timestamp ) {
+	public static function mock_getLastPublishedTimestamp( $params, $timestamp ) {
 		if ( $timestamp === null ) {
 			$timestamp = 1001;
 		}
