@@ -34,7 +34,6 @@ iom.c(iam_data, 2);
 
 				$IVW2_DR = <<<SCRIPT
 <script type="text/javascript">(function(window){
-debugger;
 if (window.Wikia && window.Wikia.AbTest && Wikia.AbTest.inGroup( "IVW2_DR", "IVW2_ENABLED" ) ){
 document.write('{$ivwScript}');
 }})(window);</script>
