@@ -1,4 +1,3 @@
-@import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 @import "../core/color";
@@ -139,9 +138,9 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 			}
 		}
 		a {
-			@include border-radius(3px);
 			background-color: transparentize($color-links, 0.4%);
 			border: 1px solid #FFF;
+			border-radius: 3px;
 			color: #FFF;
 			display: block;
 			font: {

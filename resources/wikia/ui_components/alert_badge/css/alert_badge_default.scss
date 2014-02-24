@@ -1,8 +1,7 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/core/color";
 
 .alert-badge {
-	@include border-radius( 10px );
+	border-radius: 10px;
 	background: $color-buttons;
 	color: $color-button-text;
 	display: inline-block;

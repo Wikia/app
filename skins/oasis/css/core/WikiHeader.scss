@@ -1,6 +1,5 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
@@ -94,9 +93,9 @@ $WikiNavWidth: $width-outside - 271px;
 			}
 
 			&.marked {
-				@include border-radius-ne( 3px );
-				@include border-radius-nw( 3px );
 				background-color: $color-buttons;
+				border-top-right-radius: 3px;
+				border-top-left-radius: 3px;
 
 				> a {
 					margin: 1px 3px;
@@ -204,9 +203,9 @@ $WikiNavWidth: $width-outside - 271px;
 				// level two item with submenu
 				&.marked2 {
 					.subnav-2a {
-						@include border-radius( 0px );
-						@include border-radius-ne( 3px );
-						@include border-radius-nw( 3px );
+						border-radius: 0px;
+						border-top-right-radius: 3px;
+						border-top-left-radius: 3px;
 						margin: 2px 0px 0px 3px;
 						background: $color-page;
 						border: 1px solid $color-button-highlight;
@@ -245,8 +244,8 @@ $WikiNavWidth: $width-outside - 271px;
 				margin: 0px;
 
 				a {
-					@include border-radius( 0px );
 					border: 0px solid $color-button-highlight;
+					border-radius: 0px;
 					font-size: 12px;
 					line-height: 25px;
 					display: block;
@@ -375,8 +374,8 @@ $WikiNavWidth: $width-outside - 271px;
 			position: relative;
 
 			.share-dot {
-				@include border-radius(7px);
 				@include box-shadow(0px, 0px, 4px, $color-buttons);
+				border-radius: 7px;
 				display: block;
 				height: 7px;
 				position: absolute;

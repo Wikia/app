@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 
@@ -65,8 +64,8 @@
 		}
 
 		li {
-			@include border-radius(5px);
 			background: mix($color-page, $color-text, 92%);
+			border-radius: 5px;
 			float: left;
 			font-size: 12px;
 			line-height: normal;

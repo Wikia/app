@@ -1,5 +1,4 @@
 @import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/border-opacity";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
@@ -88,10 +87,10 @@ a {
 }
 
 .ChatHeader {
-	@include border-radius-ne(5px);
-	@include border-radius-nw(5px);
 	background-color: $color-page;
 	border: 1px solid $color-page-border;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	height: 40px;
 	margin: 10px;
 	position: relative;
@@ -179,10 +178,10 @@ a {
 }
 
 #WikiaPage {
-	@include border-radius-se(5px);
-	@include border-radius-sw(5px);
 	background-color: $color-page;
 	border: 1px solid $color-page-border;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	bottom: 10px;
 	color: $color-text;
 	left: 10px;
@@ -387,10 +386,10 @@ a {
 	    opacity: .3;
 	}
 	.splotch {
-		@include border-radius(10px);
 		@include linear-gradient(#dc0d0e, top, #e63031, 0, #dc0d0e, 50%, #e63031, 100%);
 		background-clip: padding-box;
 		border: 1px solid white;
+		border-radius: 10px;
 		color: white;
 		display: none;
 		font-size: 9px;
