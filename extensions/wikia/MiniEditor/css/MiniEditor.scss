@@ -1,7 +1,6 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 // Required outside assets
 @import "../../RTE/css/RTE"; // RTE.scss
@@ -64,11 +63,11 @@
 		}
 
 		.loading-background {
-			@include opacity(75);
 			background-color: $color-MiniEditor-loading;
 			bottom: 0;
 			display: block;
 			left: 0;
+			opacity: .75;
 			right: 0;
 			top: 0;
 			z-index: 100;
@@ -226,8 +225,7 @@
 
 			&.cke_disabled {
 				> a {
-					@include opacity(20);
-					zoom: 1; /* IE fix to make opacity work */
+					opacity: .2;
 				}
 			}
 

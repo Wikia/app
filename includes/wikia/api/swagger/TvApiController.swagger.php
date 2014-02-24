@@ -74,6 +74,15 @@ use Swagger\Annotations as SWG;
  *					allowMultiple="false",
  *					dataType="string",
  *					defaultValue=""
+ *				),
+ * 				@SWG\Parameter(
+ *					name="lang",
+ *					description="The two chars wiki language code, (eg.: en, de, fr). If not provided will use en.",
+ *					paramType="query",
+ *					required="false",
+ *					allowMultiple="false",
+ *					dataType="string",
+ *					defaultValue=""
  *				)
  *			)
  *		)

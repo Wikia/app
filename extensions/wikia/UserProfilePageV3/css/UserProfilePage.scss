@@ -25,7 +25,7 @@ $color-masthead: $color-page;
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
 .WikiaUserPagesHeader {
-	@if $page-opacity == 100 {
+	@if $page-opacity == 1 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {

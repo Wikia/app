@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @mixin centered($height, $hor: center, $ver: middle) {
 	height: $height;
@@ -25,11 +24,11 @@
 }
 
 @mixin blockInput {
-	@include opacity(75);
 	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	z-index: 2;
 	cursor: wait;
+	height: 100%;
+	opacity: .75;
+	position: absolute;
+	width: 100%;
+	z-index: 2;
 }

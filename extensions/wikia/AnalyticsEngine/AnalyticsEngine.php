@@ -43,8 +43,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderExelate();
 			case 'GAS':
 				return new AnalyticsProviderGAS();
-			case 'IVW':
-				return new AnalyticsProviderIVW();
 			case 'AmazonDirectTargetedBuy':
 				return new AnalyticsProviderAmazonDirectTargetedBuy();
 			case 'DynamicYield':

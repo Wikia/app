@@ -559,6 +559,7 @@ class ResourceLoader {
 			}
 		}
 
+		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] ); // Wikia change - @author: macbre
 		wfProfileOut( __METHOD__ );
 	}
 

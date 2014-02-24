@@ -5,7 +5,6 @@
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 
 $edit-box-color: mix($color-page, #000, 95%);
 @if $is-dark-wiki {

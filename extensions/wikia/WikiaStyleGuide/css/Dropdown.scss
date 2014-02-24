@@ -2,7 +2,6 @@
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/arrow";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "DropdownColors";
 
@@ -30,7 +29,7 @@ $ddHeight: 20px;
 	}
 
 	&.disable {
-		@include opacity(50);
+		opacity: .5;
 	}
 
 	.dropdown-list {
@@ -76,7 +75,7 @@ $ddHeight: 20px;
 
 		.arrow {
 			@include arrow(4px, $Dropdown-color-arrow);
-			@include opacity(70);
+			opacity: .7;
 			position: absolute;
 			right: 10px;
 			top: 45%;
@@ -85,7 +84,7 @@ $ddHeight: 20px;
 		&:hover {
 			background-color: $Dropdown-color-hover-background;
 			.arrow {
-				@include opacity(100);
+				opacity: 1;
 			}
 		}
 

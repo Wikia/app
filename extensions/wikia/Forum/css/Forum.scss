@@ -2,7 +2,6 @@
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/menus";
 
 // TODO: all of these should be consolidated and put into oasis
@@ -156,7 +155,7 @@
 
 			&.loading {
 				.message-container {
-					@include opacity(50);
+					opacity: .5;
 				}
 
 				.throbber {

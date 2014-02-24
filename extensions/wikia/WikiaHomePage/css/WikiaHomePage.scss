@@ -3,7 +3,6 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
@@ -395,15 +394,15 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					@include box-shadow(0, 0, 15px, #333, false, 0px);
 				}
 				.hotNew {
-					@include opacity(0);
 					@include transition-shorthand(0 all ease-out 200ms);
+					opacity: 0;
 				}
 				.preview-pane {
 					@include transition-shorthand(220ms all ease-in 250ms);
-					@include opacity(100);
 					bottom: 0;
+					opacity: 1;
 					.hotNew {
-						@include opacity(100);
+						opacity: 1;
 					}
 				}
 				span {
@@ -437,8 +436,8 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				word-break: break-all;
 			}
 			.preview-pane {
-				@include opacity(0);
 				bottom: -85px;
+				opacity: 0;
 				position: absolute;
 				width: 100%;
 				span {
@@ -568,7 +567,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 		&.loaded {
 			.content-area {
-				@include opacity(100);
+				opacity: 1;
 			}
 		}
 		h2 {
@@ -586,7 +585,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 		.content-area {
 			@include transition-shorthand(250ms opacity);
-			@include opacity(0);
+			opacity: 0;
 		}
 		.preview-header {
 			border-bottom: 1px solid $color-page-border;

@@ -2,41 +2,65 @@
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
 
-$(function() {
+$( function() {
 	'use strict';
 
 	// it's a global, it should be a global
 	var ImgLzy = {
 		cache: [],
 		timestats: 0,
-		lastScrollTop: 0,
 
 		init: function() {
 			var self = this,
-				throttled;
+				proxy = $.proxy( self.checkAndLoad, self ),
+				throttled = $.throttle( 250, proxy );
+
 			self.createCache();
 			self.checkAndLoad();
-			throttled = $.throttle( 250, $.proxy( self.checkAndLoad, self ) );
+
 			$( window ).on( 'scroll', throttled );
+			$( '.scroller' ).on( 'scroll', throttled );
+			$( document ).on( 'tablesorter_sortComplete', proxy );
+		},
+
+		relativeTop: function( e ) {
+			return e.offset().top - e.parents( '.scroller' ).offset().top;
+		},
+
+		absTop: function( e ) {
+			return e.offset().top;
 		},
 
 		createCache: function() {
 			var self = this;
 			self.cache = [];
-			$( 'img.lzy' ).each(function( idx ) {
-				var cacheItem = [],
-					$el = $( this ),
-					top = $el.offset().top;
-				cacheItem.push( this );
-				cacheItem.push ( $el );
-				cacheItem.push( top );
-				cacheItem.push( $el.height() + top );
-				self.cache[ idx ] = cacheItem;
-			});
+			$( 'img.lzy' ).each( function( idx ) {
+				var $el = $( this ),
+					relativeTo = $( '.scroller' ).find( this ),
+					topCalc, top;
+
+				if ( relativeTo.length != 0 ) {
+					relativeTo = relativeTo.parents( '.scroller' );
+					topCalc = self.relativeTop;
+				} else {
+					relativeTo = $( window );
+					topCalc = self.absTop;
+				}
+
+				top = topCalc( $el );
+				self.cache[idx] = {
+					el: this,
+					jq: $el,
+					topCalc: topCalc,
+					top: top,
+					bottom: $el.height() + top,
+					parent: relativeTo
+				};
+			} );
 		},
 
 		verifyCache: function() {
-			if( this.cache.length === 0 ) {
+			if ( this.cache.length === 0 ) {
 				return;
 			}
 			// make sure that position of elements in the cache didn't change
@@ -48,11 +72,12 @@ $(function() {
 				idx,
 				pos,
 				diff;
-			for( i in checkidx ) {
+			for ( i in checkidx ) {
 				idx = checkidx[ i ];
-				if( idx in this.cache ) {
-					pos = this.cache[ idx ][ 1 ].offset().top;
-					diff = Math.abs( pos - this.cache[ idx ][ 2 ] );
+				if ( idx in this.cache ) {
+					pos = this.cache[idx].topCalc( this.cache[idx].jq );
+					diff = Math.abs( pos - this.cache[idx].top );
+
 					if ( diff > 5 ) {
 						changed = true;
 						break;
@@ -77,41 +102,50 @@ $(function() {
 
 		},
 
+		parentVisible: function( item ) {
+			if ( item.parent[0] == window ) {
+				return true;
+			}
+
+			var fold = $( window ).scrollTop() + $( window ).height(),
+				parentTop = item.parent.offset().top;
+
+			return fold > parentTop;
+		},
+
 		checkAndLoad: function() {
 			//var timestart = ( new Date() ).getTime();
 
 			this.verifyCache();
 
-			var scrollTop = $( window ).scrollTop(),
-				scrollSpeed = Math.abs( scrollTop - this.lastScrollTop ),
+			var onload = function() {
+					this.setAttribute( 'class', this.getAttribute( 'class' ) + ' lzyLoaded' );
+				},
+				scrollTop,
+				scrollSpeed,
+				lastScrollTop,
 				scrollBottom,
-				onload,
 				idx,
-				cacheEl,
-				el,
-				$el,
-				elTop,
-				elBottom;
+				visible,
+				cacheItem;
 
-			scrollSpeed = Math.min( scrollSpeed, 1000 ) * 3 + 200;
-			this.lastScrollTop = scrollTop;
-			scrollBottom = scrollTop + $( window ).height() + scrollSpeed;
-			scrollTop = scrollTop - scrollSpeed;
-			onload = function() {
-				this.setAttribute( 'class', this.getAttribute( 'class' ) + ' lzyLoaded' );
-			};
 			for ( idx in this.cache ) {
-				cacheEl = this.cache[ idx ];
-				el = cacheEl[ 0 ];
-				$el = cacheEl[ 1 ];
-				elTop = cacheEl[ 2 ];
-				elBottom = cacheEl[ 3 ];
-				if( ( scrollTop < elTop && scrollBottom > elTop ) ||
-					( scrollTop < elBottom && scrollBottom > elBottom ) ) {
-					$el.addClass( 'lzyTrns' );
-					el.onload = onload;
-					el.src = $el.data( 'src' );
-					$el.removeClass( 'lzy' );
+				cacheItem = this.cache[idx];
+				scrollTop = cacheItem.parent.scrollTop();
+				lastScrollTop = cacheItem.parent.data( 'lastScrollTop' ) || 0;
+				scrollSpeed = Math.min( Math.abs( scrollTop - lastScrollTop ), 1000 ) * 3 + 200;
+				scrollBottom = scrollTop + cacheItem.parent.height() + scrollSpeed;
+				scrollTop = scrollTop - scrollSpeed;
+
+				cacheItem.parent.data( 'lastScrollTop', lastScrollTop );
+				visible = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
+					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom)
+
+				if ( visible && this.parentVisible( cacheItem ) ) {
+					cacheItem.jq.addClass( 'lzyTrns' );
+					cacheItem.el.onload = onload;
+					cacheItem.el.src = cacheItem.jq.data( 'src' );
+					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[ idx ];
 				}
 			}
@@ -136,4 +170,4 @@ $(function() {
 	} );
 
 	window.ImgLzy = ImgLzy;
-});
+} );
