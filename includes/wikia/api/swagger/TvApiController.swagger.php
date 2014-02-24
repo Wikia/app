@@ -83,7 +83,7 @@ use Swagger\Annotations as SWG;
  *				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Minimal value of article quality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

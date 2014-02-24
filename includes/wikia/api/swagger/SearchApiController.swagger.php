@@ -262,7 +262,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -418,7 +418,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Minimal value of article quality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
