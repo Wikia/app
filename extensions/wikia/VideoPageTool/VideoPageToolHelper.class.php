@@ -76,6 +76,7 @@ class VideoPageToolHelper extends WikiaModel {
 		foreach( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
+				'title' => $value,
 				'anchor' => $value,
 				'href' => $this->wg->title->getLocalURL( $query ),
 				'selected' => ($selected == $key),

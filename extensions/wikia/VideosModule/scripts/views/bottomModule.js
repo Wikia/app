@@ -15,7 +15,7 @@ define( 'videosmodule.views.bottomModule', [
 
 	track = Tracker.buildTrackingFunction( {
 		category: 'videos-module-bottom',
-		trackingMethod: 'ga',
+		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
 	} );
@@ -81,9 +81,9 @@ define( 'videosmodule.views.bottomModule', [
 		} ) );
 
 		if ( groupParams.position === 1 ) {
-			this.$el.after( $out );
-		} else {
 			this.$el.before( $out );
+		} else {
+			this.$el.after( $out );
 		}
 
 		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {

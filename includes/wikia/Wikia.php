@@ -59,7 +59,11 @@ $wgHooks['LocalFileExecuteUrls']        [] = 'Wikia::onLocalFilePurge';
 $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 
 # Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
-$wgHooks['BeforeSendCacheControl']   [] = 'Wikia::onBeforeSendCacheControl';
+$wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
+$wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
+
+# don't purge all variants of articles in Chinese - BAC-1278
+$wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -2230,7 +2234,24 @@ class Wikia {
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers
+	 * Add response headers with debug data and statistics
+	 *
+	 * @param WebResponse $response
+	 * @author macbre
+	 */
+	private static function addExtraHeaders(WebResponse $response) {
+		global $wgRequestTime;
+		$elapsed = microtime( true ) - $wgRequestTime;
+
+		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
 	 *
 	 * See BAC-550 for details
 	 *
@@ -2240,16 +2261,42 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onBeforeSendCacheControl(OutputPage $out) {
-		global $wgRequestTime;
+		self::addExtraHeaders( $out->getRequest()->response() );;
+		return true;
+	}
 
-		$response = $out->getRequest()->response();
-		$elapsed = microtime( true ) - $wgRequestTime;
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
+	 *
+	 * See BAC-1319 for details
+	 *
+	 * @param ResourceLoader $rl
+	 * @param ResourceLoaderContext $context
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
+		self::addExtraHeaders( $context->getRequest()->response() );;
+		return true;
+	}
 
-		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
-		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
-
-		$response->header( 'X-Cache: ORIGIN' );
-		$response->header( 'X-Cache-Hits: ORIGIN' );
+	/**
+	 * Purge a limited set of language variants on Chinese wikis
+	 *
+	 * See BAC-1278 / BAC-698 for details
+	 *
+	 * @param Language $contLang
+	 * @param array $variants
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
+		switch($contLang->getCode()) {
+			case 'zh':
+				// skin displays links to these variants only
+				$variants = ['zh-hans', 'zh-hant'];
+				break;
+		}
 
 		return true;
 	}

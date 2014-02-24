@@ -1,6 +1,5 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/gradient";
 
@@ -45,9 +44,9 @@
 		padding: 4px 4px 0;
 		vertical-align: bottom;
 		div {
-			@include border-radius(4px);
 			@include box-shadow(0, 0, 5px, mix($color-page, #000));
 			@include linear-gradient($color-notification-background, top, $color-notification-highlight, 35%, $color-notification-background, 65%);
+			border-radius: 4px;
 			color: $color-notification-text;
 			margin: 0;
 			max-width: 175px;
@@ -99,9 +98,9 @@
 			}
 		}
 		.notification-details {
-			@include border-radius-sw(4px);
-			@include border-radius-se(4px);
 			background-color: $color-notification-details-background;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
 			padding: 5px 10px;
 			a {
 				color: $color-notification-links;

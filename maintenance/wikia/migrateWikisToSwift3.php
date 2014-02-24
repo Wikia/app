@@ -58,6 +58,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->addOption( 'dry-run', 'Perform file uploads but don\'t switch wiki to Swift' );
 		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
 		$this->addOption( 'md5', 'Calculate md5 of files only' );
+		$this->addOption( 'stats-only', 'Print statistics only' );
 		$this->addOption( 'dc', 'Target datacenter(s), comma-separated list (default: local datacenter)' );
 		$this->mDescription = 'Migrate images for all Wikis';
 	}
@@ -150,17 +151,26 @@ class MigrateWikisToSwift3 extends Maintenance {
 				)
 			)
 		);
+		$this->output(sprintf("Found %d wikis in database...\n",$res->numRows()));
 
 		$this->output("Building list of wiki IDs...\n");
+		$removedCount = 0;
 		$queue = array();
 		while ( $row = $res->fetchObject() ) {
 			$id = intval($row->city_id);
 			$dbname = $row->city_dbname;
 			if ( !in_array( $id, $this->disabled_wikis ) ) {
 				$queue[$id] = $dbname;
+			} else {
+				$removedCount++;
 			}
 		}
+		$this->output(sprintf("Skipped %d wikis that are on blacklist...\n",$removedCount));
 		$this->output(sprintf("Scheduling %d wikis for migration...\n",count($queue)));
+
+		if ( $this->hasOption('stats-only') ) {
+			return;
+		}
 
 		$this->output( "\nRun migrateImagesToSwift script \n" );
 
@@ -198,7 +208,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 
 	const CMD_MIGRATION = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
 	protected function getMigrationProcess( $cityId, $dbname ) {
-		$opts = "--local --diff --debug --threads=30" ;
+		$opts = "--local --diff --debug --threads=10" ;
 		$opts .= " --dc={$this->dc}";
 		if ( $this->dryRun ) {
 			$opts .= " --dry-run";

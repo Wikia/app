@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/core/layout";
@@ -26,7 +25,7 @@ $color-masthead: $color-page;
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
 .WikiaUserPagesHeader {
-	@if $page-opacity == 100 {
+	@if $page-opacity == 1 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
@@ -89,15 +88,14 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
         }
 	}
 	.masthead-info {
-		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
-		@include border-radius-nw($radius-user-profile-masthead * 2);
-		@include border-radius-ne($radius-user-profile-masthead * 2);
-		@include border-radius-sw($radius-user-profile-masthead);
-		@include border-radius-se($radius-user-profile-masthead);
 		@include box-shadow(0px, 2px, 10px, rgba(0,0,0,.25));
-
 		@include clearfix;
 		background: $color-masthead;
+		// Top radius included to ensure that the top corners are hidden behind the hgroup radius
+		border-bottom-left-radius: $radius-user-profile-masthead;
+		border-bottom-right-radius: $radius-user-profile-masthead;
+		border-top-left-radius: $radius-user-profile-masthead * 2;
+		border-top-right-radius: $radius-user-profile-masthead * 2;
 		margin-left: 165px;
 		margin-bottom: 20px;
 		position: relative;
@@ -114,9 +112,9 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			width: 320px;
 		}
 		hgroup {
-			@include border-radius-nw($radius-user-profile-masthead);
-			@include border-radius-ne($radius-user-profile-masthead);
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 0%, $color-buttons, 100%);
+			border-top-left-radius: $radius-user-profile-masthead;
+			border-top-right-radius: $radius-user-profile-masthead;
 			color: $color-button-text;
 			overflow: auto;
 			padding: 8px 25px;
@@ -128,7 +126,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			line-height: 38px;
 		}
 		.tag {
-			@include border-radius(3px);
+			border-radius: 3px;
 			background: mix($color-button-highlight, $color-page, 80%);
 			display: inline-block;
 			margin-left: 10px;
@@ -182,7 +180,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			margin-right: 1em;
 		}
 		.icon {
-			@include border-radius(50px);
+			border-radius: 50px;
 			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
 			height: 17px;
 			position: relative;

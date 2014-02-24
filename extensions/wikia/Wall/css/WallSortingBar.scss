@@ -1,9 +1,7 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 $separators: mix($color-page-border, $color-page, 50%);
 
@@ -32,16 +30,16 @@ $separators: mix($color-page-border, $color-page, 50%);
 			margin-right: 3px;
 			text-align: center;
 			.SortingSelected {
-				@include border-radius(3px);
+				border-radius: 3px;
+				color: $color-page-border;
+				cursor: pointer;
 				display: inline-block;
 				font-weight: bold;
-				color: $color-page-border;
 				line-height: 19px;
-				vertical-align: center;
 				margin: 1px;
 				padding-left: 10px; padding-right: 10px;
+				vertical-align: center;
 				width: auto;
-				cursor: pointer;
 				&:hover {
 					margin: 0px;
 					color: #3a3a3a;
@@ -55,16 +53,16 @@ $separators: mix($color-page-border, $color-page, 50%);
 
 			}
 			.SortingList {
-				@include border-radius(3px);
 				@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
-				list-style: none;
+				background: $color-page;
+				border-radius: 3px;
 				display: none;
+				left: 1px;
+				list-style: none;
+				margin: 0;
 				position: absolute;
 				top: -4px;
-				left: 1px;
 				width: auto;
-				background: $color-page;
-				margin: 0;
 				z-index: 1;
 				@if $is-dark-wiki {
 					@include box-shadow(0px, 2px, 5px, darken($color-page,7%));

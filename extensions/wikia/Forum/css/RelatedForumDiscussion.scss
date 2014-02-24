@@ -1,7 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
-
 
 .RelatedForumDiscussion {
 	clear: both;
@@ -36,7 +34,7 @@
 	
 	.forum-content {
 		&.forum-invisible {
-			@include opacity(0);
+			opacity: 0;
 		}
 	}
 	

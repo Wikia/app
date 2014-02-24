@@ -17,6 +17,11 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		return new EditPageLayout($article);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01107 ms
+	 * @group UsingDB
+	 */
 	public function testMainPageEdit() {
 		// setup edit page object
 		$title = Title::newMainPage();
@@ -32,6 +37,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertEquals($formAction, $editPage->getFormAction());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testCustomFormHandler() {
 		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
@@ -44,6 +52,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertEquals($title, $editPage->getEditedTitle());
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testAddingFields() {
 		$title = Title::newFromText('Foo');
 		$editPage = $this->editPageFactory($title);
@@ -103,6 +114,11 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$this->assertStringStartsWith('<textarea id="wpSummary" name="wpSummary" placeholder=', $editPage->renderSummaryBox());
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07107 ms
+	 * @group UsingDB
+	 */
 	public function testPreloadText() {
 		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);
@@ -122,6 +138,9 @@ class EditPageLayoutTest extends WikiaBaseTest {
 		$wgTitle = $tempTitle;
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testEditNotices() {
 		$title = Title::newFromText('NewArticle');
 		$editPage = $this->editPageFactory($title);

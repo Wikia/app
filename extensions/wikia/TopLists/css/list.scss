@@ -4,10 +4,8 @@
  * Styles for the creation/editing UI of TopLists extension, Oasis skin
  */
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/forms";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "mixins";
 
 $item-height: 60px;
@@ -30,13 +28,13 @@ $item-width: 415px;
 		margin: 30px 0 0 0;
 		
 		li {
-			@include border-radius(5px);
-			width: $item-width;
-			border: 1px solid $color-page-border;
 			background-color: $color-module-shadow;
+			border: 1px solid $color-page-border;
+			border-radius: 5px;
+			position: relative;
 			padding: 8px;
 			margin-bottom: 25px;
-			position: relative;
+			width: $item-width;
 
 			span.author {
 				margin: 0px;
@@ -97,8 +95,8 @@ $item-width: 415px;
 				}
 
 				.Voted {
-					@include border-radius(5px);
 					background-color: #527A3E;
+					border-radius: 5px;
 					color: $color-button-text;
 					display: block;
 					height: 21px;

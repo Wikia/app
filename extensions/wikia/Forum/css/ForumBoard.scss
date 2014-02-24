@@ -1,10 +1,8 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "../../Wall/css/WallColors";
 
@@ -33,9 +31,9 @@
 		}
 
 		.menu {
-			@include border-radius-se(3px);
-			@include border-radius-sw(3px);
 			@include box-shadow(0px, 2px, 5px, $color-wall-shadow);
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
 			border-top: 1px solid $color-page-border-subtle;
 			background: $color-page;
 			display: none;
@@ -67,7 +65,7 @@
 		}
 
 		.selected {
-			@include border-radius(3px);
+			border-radius: 3px;
 			display: inline-block;
 			vertical-align: center;
 
