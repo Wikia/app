@@ -26,7 +26,7 @@
 				isEnabled = $el.hasClass('on');
 
 				if (isEnabled) {
-					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3').text().trim());
+					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3').contents(':first').text().trim());
 
 					require(['wikia.ui.factory'], function (uiFactory) {
 						uiFactory.init(['modal']).then(function (uiModal) {
