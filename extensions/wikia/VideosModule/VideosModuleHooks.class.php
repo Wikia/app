@@ -19,19 +19,27 @@ class VideosModuleHooks {
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		// On file pages, this hook can be called mulitple times, so we're going to check if the
 		// assets are loaded already before we load them again.
-		global $wgVideosModuleAssetsLoaded;
+		$app = F::app();
 
-		if ( empty( $wgVideosModuleAssetsLoaded ) ) {
-			JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
-
-			$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
-
-			foreach( $scripts as $script ){
-				$out->addScript( "<script src='{$script}'></script>" );
-			}
-
-			$wgVideosModuleAssetsLoaded = true;
+		// Don't do anything if we've already loaded the assets
+		if ( $app->wg->VideosModuleAssetsLoaded ) {
+			return true;
 		}
+
+		// Don't do anything if this is the main page of a site with the VPT enabled
+		if ( $app->wg->Title->isMainPage() && $app->wg->EnableVideoPageToolExt ) {
+			return true;
+		}
+
+		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
+
+		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
+
+		foreach( $scripts as $script ){
+			$out->addScript( "<script src='{$script}'></script>" );
+		}
+
+		$app->wg->VideosModuleAssetsLoaded = true;
 
 		return true;
 
