@@ -69,7 +69,7 @@ class ScreenplayVideoHandler extends VideoHandler {
 	protected function getFileUrl( $type, $bitrateid ) {
 		$fileParams = [
 			'eclipid' => $this->videoId,
-			'vendorid' => ScreenplayApiWrapper::VENDOR_ID
+			'vendorid' => F::app()->wg->ScreenplayApiConfig['customerId'],
 		];
 
 		$urlCommonPart = self::$urlTemplate . http_build_query( $fileParams );

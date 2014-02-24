@@ -1,7 +1,6 @@
 <?php
 
 class ScreenplayApiWrapper extends IngestionApiWrapper {
-	const VENDOR_ID = 1893;
 	const VIDEO_TYPE = '.mp4';
 	const THUMBNAIL_TYPE = '.jpg';
 	const MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
@@ -31,7 +30,7 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 		}
 		$thumb = str_replace( '$1', $this->videoId, self::$THUMBNAIL_URL_TEMPLATE );
 		$thumb = str_replace( '$2', $bitrateId, $thumb );
-		$thumb = str_replace( '$3', self::VENDOR_ID, $thumb );
+		$thumb = str_replace( '$3', F::app()->wg->ScreenplayApiConfig['customerId'], $thumb );
 		$thumb = str_replace( '$4', self::THUMBNAIL_TYPE, $thumb );
 		return $thumb;
 	}
