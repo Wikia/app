@@ -59,7 +59,7 @@ class WikiaHubsModel extends WikiaModel {
 			/** @var WikiFactoryHub $wikiFactoryHub */
 			$wikiFactoryHub = WikiFactoryHub::getInstance();
 			$wikiaHub = $wikiFactoryHub->getCategoryName($cityId);
-			return $wikiaHub;
+			return wfMessage('hub-' . $wikiaHub)->inContentLanguage()->text();
 		}
 	}
 
