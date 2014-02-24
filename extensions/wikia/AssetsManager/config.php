@@ -1642,3 +1642,11 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
 	]
 ];
+
+$config['qualtrics_zone_code_injector_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
+	]
+];
