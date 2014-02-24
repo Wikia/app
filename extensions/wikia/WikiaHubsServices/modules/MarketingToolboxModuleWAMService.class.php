@@ -164,8 +164,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 					$this->skinName
 				),
 				6 * 60 * 60,
-				function () use( $params ) {
-					return $this->loadStructuredData($params);
+				function () use( $model, $params ) {
+					return $this->loadStructuredData($model, $params);
 				}
 			);
 		}
@@ -177,7 +177,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return $structuredData;
 	}
 
-	protected function loadStructuredData($params) {
+	protected function loadStructuredData($model, $params) {
 
 		try {
 

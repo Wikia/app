@@ -12,6 +12,7 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {

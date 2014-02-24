@@ -54,6 +54,7 @@ class SpecialCssModelTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider testGetCssFileContentDataProvider
+	 * @group UsingDB
 	 */
 	public function testGetCssFileContent($expected, $articleContent) {
 		if (isset($articleContent)) {

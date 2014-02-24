@@ -6,6 +6,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.18718 ms
+	 */
 	public function testWikiaPollAjaxCreate() {
 		$poll = new WikiaPollAjax;
 
@@ -48,6 +52,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertContains("Question text is invalid", $result["error"], 'Create Poll with null title failed to return the expected error string');
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.20375 ms
+	 */
 	public function testWikiaPollAjaxGet() {
 
 		// Second part of test is to see if we can "get" the same poll we created
@@ -80,6 +88,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result["exists"], "Get a poll that exists");
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14045 ms
+	 */
 	public function testWikiaPollAjaxUpdate() {
 		// Third part of test is to update the poll we've got and see if that works too
 
@@ -122,6 +134,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result["success"], "Update result is success");
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14959 ms
+	 */
 	public function testWikiaPollAjaxVote() {
 		// Fourth part of test is to register a vote for an item
 
@@ -173,6 +189,10 @@ class WikiaPollTest extends WikiaBaseTest {
 		$this->assertEquals(true, $result['hasVoted'], "HasVoted result is true");
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12346 ms
+	 */
 	function testDuplicateCreate() {
 		$poll = new WikiaPollAjax();
 

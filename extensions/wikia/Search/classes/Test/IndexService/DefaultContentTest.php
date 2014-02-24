@@ -11,6 +11,8 @@ use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, Reflec
 class DefaultContentTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0834 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::Field
 	 */
 	public function testField() {
@@ -51,6 +53,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13276 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::execute
 	 */
 	public function testExecute() {
@@ -230,6 +234,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08447 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getPageContentFromParseResponse
 	 */
 	public function testGetPagContentFromParseResponse() {
@@ -307,6 +313,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12441 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getOutboundLinks
 	 */
 	public function testGetOutboundLinks() {
@@ -350,6 +358,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08268 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getCategoriesFromParseResponse
 	 */
 	public function testGetCategoriesFromParseResponse() {
@@ -370,6 +380,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08246 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getHeadingsFromParseResponse
 	 */
 	public function testGetHeadingsFromParseResponse() {
@@ -390,6 +402,8 @@ class DefaultContentTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08559 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::prepValuesFromHtml
 	 */
 	public function testPrepValuesFromHtml() {
@@ -448,6 +462,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08387 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::removeGarbageFromDom
 	 */
 	public function testRemoveGarbageFromDom() {
@@ -484,6 +500,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08582 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractAsidesFromDom
 	 */
 	public function testExtractAsidesFromDom() {
@@ -539,6 +557,8 @@ ENDIT;
 	
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08336 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getParagraphsFromDom
 	 */
 	public function testGetParagraphsFromDom() {
@@ -575,6 +595,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08371 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::getPlaintextFromDom
 	 */
 	public function testGetPlaintextFromDom() {
@@ -607,6 +629,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0881 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
 	 */
 	public function testExtractInfoBoxes() {
@@ -687,6 +711,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08083 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::pushNolangTxt
 	 * @covers Wikia\Search\IndexService\DefaultContent::getNolangTxt
 	 */
@@ -720,6 +746,8 @@ ENDIT;
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08084 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::reinitialize
 	 */
 	public function testReinitialize() {
