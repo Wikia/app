@@ -189,12 +189,11 @@ class SearchApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config;
 		$searchConfig->setQuery( $request->getVal( 'query', null ) )
-		             ->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
-		             ->setPage( $request->getVal( 'batch', 1 ) )
-		             ->setRank( $request->getVal( 'rank', 'default' ) )
-					 ->setMinArticleQuality( $request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME ) )
-		             ->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' )
-		;
+			->setLimit( $request->getInt( 'limit', self::ITEMS_PER_BATCH ) )
+			->setPage( $request->getVal( 'batch', 1 ) )
+			->setRank( $request->getVal( 'rank', 'default' ) )
+			->setMinArticleQuality( $request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME ) )
+			->setVideoSearch( $request->getVal( 'type', 'articles' ) == 'videos' );
 		return $this->validateNamespacesForConfig( $searchConfig );
 	}
 
