@@ -16,50 +16,49 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 	protected static $CACHE_KEY = 'screenplayapi';
 	protected static $aspectRatio = 1.7777778;
 	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
-		
+
 	public function getDescription() {
 		return '';	//  no description from provider
 	}
-	
+
 	public function getThumbnailUrl() {
 
 		$bitrateId = self::MEDIUM_JPEG_BITRATE_ID;
-		if (!empty($this->metadata['jpegBitrateCode'])) {
+		if ( !empty( $this->metadata['jpegBitrateCode'] ) ) {
 			$bitrateId = $this->metadata['jpegBitrateCode'];
-		} elseif (!empty($this->interfaceObj[3])) {
+		} elseif ( !empty( $this->interfaceObj[3] ) ) {
 			$bitrateId = $this->interfaceObj[3];
 		}
-		$thumb = str_replace('$1', $this->videoId, self::$THUMBNAIL_URL_TEMPLATE);
-		$thumb = str_replace('$2', $bitrateId, $thumb);
-		$thumb = str_replace('$3', self::VENDOR_ID, $thumb);
-		$thumb = str_replace('$4', self::THUMBNAIL_TYPE, $thumb);
+		$thumb = str_replace( '$1', $this->videoId, self::$THUMBNAIL_URL_TEMPLATE );
+		$thumb = str_replace( '$2', $bitrateId, $thumb );
+		$thumb = str_replace( '$3', self::VENDOR_ID, $thumb );
+		$thumb = str_replace( '$4', self::THUMBNAIL_TYPE, $thumb );
 		return $thumb;
 	}
 
 	protected function getVideoDuration(){
-		if (!empty($this->interfaceObj[2])) {
+		if ( !empty( $this->interfaceObj[2] ) ) {
 			return $this->interfaceObj[2];
 		}
 		return '';
 	}
-	
+
 	public function getAspectRatio() {
 		// force 16:9
 		return self::$aspectRatio;
 	}
-	
+
 	protected function isHdAvailable() {
-		if (!empty($this->interfaceObj[1])) {
+		if ( !empty( $this->interfaceObj[1] ) ) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	protected function getVideoPublished(){
-		if (!empty($this->interfaceObj[4])) {
+		if ( !empty( $this->interfaceObj[4] ) ) {
 			return strtotime($this->interfaceObj[4]);
 		}
-		return '';	// Screenplay API includes this field, but videos
-				// ingested prior to refactoring didn't save it
+		return '';	// Screenplay API includes this field, but videos ingested prior to refactoring didn't save it
 	}
 }
