@@ -11,7 +11,9 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
 		shouldShowAds = window.wgArticleId && window.navigator.userAgent.indexOf( 'sony_tvs' ) === -1,
 		shouldShowInContent = sections.isSectionLongerThan( 0, MIN_ZEROTH_SECTION_LENGTH ),
-		shouldShowBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		shouldShowBeforeFooter =
+			( doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH ) &&
+				sections.isDefined( 1 ),
 		div,
 		lazyLoadAd = function ( elem, slotName ) {
 			log( 'Lazy load: ' + slotName, logLevel, logGroup );
@@ -65,7 +67,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		}
 
 		if ( shouldShowBeforeFooter ) {
-			$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
+			$footer.before( '<div id=wkAdBeforeFooter class=ad-in-content />' );
 			lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
 		}
 

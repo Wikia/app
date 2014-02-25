@@ -115,7 +115,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		return currentElement;
 	}
 
-		/**
+	/**
 	 * @desc Function that fires at most every 200ms while scrolling\
 	 * @triggers section:changed with a current section refernece and its id
 	 */
@@ -138,14 +138,19 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		}, 200 );
 	}
 
-	function getId( section ){
+	function getId ( section ) {
 		return h2s.indexOf( section );
 	}
 
-	function getNext( section ) {
+	function getNext ( section ) {
 		section = typeof section === 'number' ? section : getId( section );
 
 		return h2s[section + 1];
+	}
+
+	function isDefined ( section ) {
+		//first h2 has index 0 in the nodeList
+		return !!h2s[section-1] && h2s[section-1].parentElement === d.getElementById( 'mw-content-text' );
 	}
 
 	window.addEventListener( 'scroll', onScroll );
@@ -161,6 +166,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		getElementAt: getElementAt,
 		getId: getId,
 		getNext: getNext,
+		isDefined: isDefined,
 		scrollTo: scrollTo,
 		current: current
 	};
