@@ -520,8 +520,15 @@ class Config
 		$result = $match->getResult();
 		$filterKeys = $this->getPublicFilterKeys();
 		$isVideoFile = $this->getService()->pageIdIsVideoFile( $result['pageid'] );
+		$minArticleQuality = $this->getMinArticleQuality();
+		if($minArticleQuality && $result['article_quality_i'] <= $minArticleQuality) return false;
+
 		return ! (
-				( // We have a file that is video, but we only want images.
+				(
+					$minArticleQuality
+					&&
+					( $result['article_quality_i'] < $minArticleQuality )
+				) || ( // We have a file that is video, but we only want images.
 						$result['ns'] == NS_FILE
 						&&
 						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
