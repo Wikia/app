@@ -10,17 +10,17 @@ CREATE TABLE artist (
   myspace        VARCHAR(50),
   twitter        VARCHAR(50),
   facebook       VARCHAR(50),
-  wikia          VARCHAR(50),
-  wikipedia      VARCHAR(50),
-  wikipedia2     VARCHAR(50),
-  country        VARCHAR(100),
+  wikia          VARCHAR(255),
+  wikipedia      VARCHAR(255),
+  wikipedia2     VARCHAR(255),
+  country        VARCHAR(40),
   state          VARCHAR(50),
   hometown       VARCHAR(50),
-  iTunes         VARCHAR(50),
+  itunes         VARCHAR(50),
   asin           VARCHAR(10),
-  allmusic       VARCHAR(15),
+  allmusic       VARCHAR(12),
   discogs        VARCHAR(10),
-  musicbrainz    VARCHAR(30),
+  musicbrainz    VARCHAR(36),
   youtube        VARCHAR(30),
   PRIMARY KEY (id),
   UNIQUE KEY (name)
@@ -30,18 +30,18 @@ CREATE TABLE artist (
 CREATE TABLE album (
   id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
   artist_id      INT          NOT NULL,
-  genre          VARCHAR(50),
+  genre          VARCHAR(30),
   name           VARCHAR(255),
   romanized_name VARCHAR(255),
   year           SMALLINT DEFAULT NULL,
   length         SMALLINT DEFAULT NULL,
-  image          VARCHAR(255),
-  wikipedia      VARCHAR(50),
+  pic            VARCHAR(255),
+  wikipedia      VARCHAR(255),
   asin           VARCHAR(10),
   itunes         VARCHAR(30),
-  allmusic       VARCHAR(15),
+  allmusic       VARCHAR(12),
   discogs        VARCHAR(10),
-  musicbrainz    VARCHAR(30),
+  musicbrainz    VARCHAR(36),
   download       VARCHAR(255),
   PRIMARY KEY (id),
   UNIQUE KEY (artist_id, name)
@@ -59,8 +59,8 @@ CREATE TABLE song (
   goear          VARCHAR(10),
   itunes         VARCHAR(30),
   asin           VARCHAR(10),
-  musicbrainz    VARCHAR(30),
-  allmusic       VARCHAR(15),
+  musicbrainz    VARCHAR(36),
+  allmusic       VARCHAR(12),
   download       VARCHAR(255),
   PRIMARY KEY (id),
   UNIQUE KEY (artist_id, name)
@@ -68,9 +68,9 @@ CREATE TABLE song (
   ENGINE =InnoDB;
 
 CREATE TABLE track (
-  album_id     INT UNSIGNED      NOT NULL,
-  song_id      INT UNSIGNED      NOT NULL,
-  track_number SMALLINT UNSIGNED NOT NULL,
+  album_id     INT UNSIGNED     NOT NULL,
+  song_id      INT UNSIGNED     NOT NULL,
+  track_number TINYINT UNSIGNED NOT NULL,
   UNIQUE KEY (album_id, song_id)
 )
   ENGINE =InnoDB;
