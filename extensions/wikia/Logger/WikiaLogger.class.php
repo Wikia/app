@@ -164,6 +164,7 @@ class WikiaLogger {
 				";
 			}
 
+			$loggingJs = \AssetsManagerBaseBuilder::minifyJS($loggingJs);
 			$scripts = "<script>$loggingJs</script>$scripts";
 		}
 
