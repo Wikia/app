@@ -20,8 +20,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @desc grab all headers (with non-empty id's) on the page
 	 * @return Array
 	 */
-	function getHeaders () {
-		//querySelectorAll returns NodeList but this one is not live
+	function getHeaders(){
+		//we switch nodeList to Array to use filter / forEach type methods
 		return Array.prototype.slice.apply( d.querySelectorAll(
 			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) );
 	}
