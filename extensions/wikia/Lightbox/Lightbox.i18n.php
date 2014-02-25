@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'lightbox-more-info-caption-heading' => 'Caption:',
 	'lightbox-more-info-description-heading' => 'Description:',
 	'lightbox-more-info-filelinks-heading' => 'File Links:',
-	'lightbox-carousel-progress' => '<b>$1-$2</b> of <b>$3</b>',
+	'lightbox-carousel-progress' => "'''$1-$2''' of '''$3'''",
 	'lightbox-embed-url' => 'Embed URL',
 	'lightbox-file-page-url' => 'File Page URL',
 	'lightbox-email-label' => 'Email this to a friend',
@@ -28,7 +28,7 @@ $messages['en'] = array(
 	'lightbox-email-form-header' => 'Email',
 	'lightbox-pin-carousel-tooltip' => 'Pin top and bottom bars in place',
 	'lightbox-unpin-carousel-tooltip' => 'Unpin top and bottom bars',
-	'lightbox-carousel-more-items' => '<span>$1</span> {{PLURAL:$1|more item|more items}} on this wiki',
+	'lightbox-carousel-more-items' => "'''$1''' {{PLURAL:$1|more item|more items}} on this wiki",
 	'lightbox-video-views' => "'''$1''' {{PLURAL:$1|view|views}}",
 
 	/* /new stuff */
@@ -88,6 +88,7 @@ $messages['qqq'] = array(
 	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'Click this button to view more information about an image or video, like where it\'s posted.',
 	'lightbox-header-share-button' => 'Click this button to go to a screen where you can email a video or image to a friend and get permalinks to the media.',
+	'lightbox-header-add-video-button' => 'Click this button to add the current video to an article page. It will take the user to the editor with the video in place.',
 	'lightbox-header-see-full-size-image' => 'Link text to go to the image page to see the image larger.',
 	'lightbox-header-added-by' => '$1 is the username of the person who added the image or video.',
 	'lightbox-header-posted-in' => '$1 is the article name where the image or video is posted.',
