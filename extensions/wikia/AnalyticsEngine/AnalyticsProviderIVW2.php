@@ -33,8 +33,8 @@ iom.c(iam_data, 2);
 				$ivwScript = str_replace("\n", '', $ivwScript);
 
 				$IVW2_DR = <<<SCRIPT
-<script type="text/javascript">(function(window){
-if (window.Wikia && window.Wikia.AbTest && Wikia.AbTest.inGroup( "IVW2_DR", "IVW2_ENABLED" ) ){
+<script type="text/javascript">(function(w){
+if (w.Wikia && w.Wikia.AbTest && !w.Wikia.AbTest.inGroup( "IVW2_DR", "IVW2_DISABLED" ) ){
 document.write('{$ivwScript}');
 }})(window);</script>
 SCRIPT;
