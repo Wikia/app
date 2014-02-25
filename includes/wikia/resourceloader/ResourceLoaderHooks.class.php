@@ -224,8 +224,6 @@ class ResourceLoaderHooks {
 
 	public static function onResourceLoaderCacheControlHeaders( $context, $maxage, $smaxage, $exp ) {
 		header( "X-Pass-Cache-Control: public, max-age=$maxage, s-maxage=$smaxage" );
-		header( 'X-Pass-Expires: ' . wfTimestamp( TS_RFC2822, $exp + time() ) );
-
 		return true;
 	}
 

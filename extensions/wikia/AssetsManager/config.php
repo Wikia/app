@@ -515,7 +515,9 @@ $config['wikiamobile_js_body_full'] = array(
 		//polyfills
 		'//extensions/wikia/WikiaMobile/js/viewport.js',
 
+		//libraries
 		'//resources/wikia/libraries/iScroll/iscroll.js',
+		'//extensions/wikia/WikiaMobile/js/webview.js',
 
 		//platform components
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
@@ -800,6 +802,14 @@ $config['relatedpages_js'] = array(
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//extensions/wikia/RelatedPages/js/RelatedPages.js'
+	)
+);
+
+$config['relatedpages_wikiamobile_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/RelatedPages/js/relatedPages.wikiamobile.js'
 	)
 );
 
@@ -1243,6 +1253,7 @@ $config['wikiahomepage_scss_wikiamobile'] = array(
 );
 
 /** WikiaHubsV2 **/
+//TODO: remove after HubsV3 release @WikiaHubsV2Remove
 $config['wikiahubs_v2'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array('oasis'),
@@ -1272,6 +1283,39 @@ $config['wikiahubs_v2_scss_mobile'] = array(
 	'skin' => array('wikiamobile'),
 	'assets' => array(
 		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
+	)
+);
+
+/** WikiaHubsV3 **/
+$config['wikiahubs_v3'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WikiaHubsV3/js/WikiaHubsV3.js'
+	)
+);
+
+$config['wikiahubs_v3_modal'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WikiaHubsV3/js/WikiaHubsV3Modals.js'
+	)
+);
+
+$config['wikiahubs_v3_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array('oasis'),
+	'assets' => array(
+		'//extensions/wikia/WikiaHubsV3/css/WikiaHubsV3.scss'
+	)
+);
+
+$config['wikiahubs_v3_scss_mobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array('wikiamobile'),
+	'assets' => array(
+		'//extensions/wikia/WikiaHubsV3/css/WikiaHubsV3Mobile.scss'
 	)
 );
 
@@ -1632,5 +1676,13 @@ $config['videos_module_js'] = [
 		// '//extensions/wikia/VideosModule/scripts/views/bottomModule.js',
 		'//extensions/wikia/VideosModule/scripts/views/rail.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+	]
+];
+
+$config['qualtrics_zone_code_injector_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
 	]
 ];

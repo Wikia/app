@@ -14,6 +14,10 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 		$this->cdn = $this->app->wg->CdnStylePath;
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.85936 ms
+	 */
 	public function testSassBuilder() {
 		// disable memcache layer in this test
 		$mock_memc = $this->getMock('stdClass',array('get','set'));

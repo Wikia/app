@@ -1,5 +1,4 @@
 @import "../mixins/gradient";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 
 
@@ -22,15 +21,15 @@
 		width: 4px;
 	}
 	&:before {
-		@include border-radius-nw(5px);
-		@include border-radius-sw(5px);
+		border-bottom-left-radius: 5px;
 		border-right: 0;
+		border-top-left-radius: 5px;
 		left: -4px;
 	}
 	&:after {
-		@include border-radius-ne(5px);
-		@include border-radius-se(5px);
+		border-bottom-right-radius: 5px;
 		border-left: 0;
+		border-top-right-radius: 5px;
 		right: -12px;
 		width: 12px;
 	}

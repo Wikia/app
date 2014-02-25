@@ -1,5 +1,4 @@
 @import "color";
-@import "../mixins/border-radius";
 @import "../mixins/gradient";
 
 // old comments
@@ -21,8 +20,8 @@
 	}
 	.commentsbubble {
 		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
-		@include border-radius(2px);
 		border: solid 1px $color-page-border;
+		border-radius: 2px;
 		display: inline-block;
 		height: 14px;
 		line-height: 15px;

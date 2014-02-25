@@ -40,6 +40,10 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0126 ms
+	 */
 	public function testPrepareBatchesForVisualization() {
 		$WHPHelper = $this->getMock('WikiaHomePageHelper', ['getImageUrl']);
 		$WHPHelper
@@ -70,6 +74,7 @@ class WikiaHomePageHelperTest extends WikiaBaseTest {
 		}
 
 	}
+
 	public function testPrepareOnePromotedBatchesForVisualization() {
 		$WHPHelper = $this->getMock('WikiaHomePageHelper', ['getImageUrl']);
 		$WHPHelper

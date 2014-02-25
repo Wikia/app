@@ -536,7 +536,8 @@
 				sortList: [],
 				headerList: [],
 				selectorHeaders: 'thead tr:eq(0) th',
-				debug: false
+				debug: false,
+				complete: function() {} // wikia change - react to sorting completion BAC-718
 			},
 
 			dateRegex: [],
@@ -671,6 +672,8 @@
 							appendToTable(
 								$table[0], multisort( $table[0], config.sortList, cache )
 							);
+
+							config.complete(); // wikia change - react to sorting completion BAC-718
 
 							// Stop normal event by returning false
 							return false;

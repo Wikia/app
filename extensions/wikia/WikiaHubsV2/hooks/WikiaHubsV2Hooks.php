@@ -32,7 +32,7 @@ class WikiaHubsV2Hooks {
 		}
 
 		if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
-			$hubsModel = new WikiaHubsV2Model();
+			$hubsModel = new WikiaHubsModel();
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 
