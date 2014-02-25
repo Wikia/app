@@ -598,6 +598,35 @@ class PageHeaderController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Render page header for Hubs
+	 *
+	 * @param: array $params
+	 *    key: showSearchBox (default: false)
+	 */
+	public function executeHubs($params) {
+		global $wgOut, $wgSupressPageTitle;
+		wfProfileIn(__METHOD__);
+
+		$this->displaytitle = true;
+		// Leave this for now. To discuss do we want PageTitle
+		if ( $this->displaytitle) {
+			$this->title = $wgOut->getPageTitle();
+		}
+
+		// number of pages on this wiki
+		$this->tallyMsg = wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse();
+
+		// if page is rendered using one column layout, show search box as a part of page header
+		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
+
+		if (!empty($wgSupressPageTitle)) {
+			$this->title = '';
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		global $wgMemc;

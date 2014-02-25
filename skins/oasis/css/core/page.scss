@@ -3,7 +3,6 @@
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
-@import "../mixins/opacity";
 
 .WikiaPage {
 	border: 1px solid $color-page-border;
@@ -29,10 +28,10 @@
 		display: none;
 	}
 	.WikiaPageBackground {
-		@include opacity($page-opacity);
 		background: $color-page;
 		height: 100%;
 		left: 0;
+		opacity: $page-opacity;
 		position: absolute;
 		top: 0;
 		width: 100%;
@@ -42,6 +41,11 @@
 		@include clearfix;
 		position: relative;
 	}
+}
+
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaPage {
+	z-index: auto;
 }
 
 .WikiaMainContent {
@@ -304,13 +308,13 @@
 }
 
 .wikiaThrobber {
-	@include opacity(75);
 	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
 	height: 100%;
 	left: 0;
-	width: 100%;
+	opacity: .75;
 	position: absolute;
 	top: 0;
+	width: 100%;
 	z-index: 2;
 }
 

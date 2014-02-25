@@ -1,12 +1,40 @@
 describe( 'Modal module', function() {
 	'use strict';
 
-	var browserDetect = {},
-		modal = modules[ 'wikia.ui.modal' ]( jQuery, window, browserDetect),
+	var win = {
+			document: {
+				body: getBody()
+			}
+		},
+		jQuery = function( selector ){
+			return {
+				selector: selector,
+				append: function(html){
+					win.document.body.innerHTML = html;
+				},
+				children: function(){},
+				find: function(){
+					return {
+						click: function(){}
+					}
+				},
+				on: function(){},
+				click: function(){}
+			};
+		},
+		browserDetect = {},
+		modal,
 		uiComponentMock = {
 			render: function() {
 			}
 		};
+
+	jQuery.msg = function(){};
+	jQuery.isArray = function(){};
+	jQuery.extend = function(){};
+	jQuery.proxy = function(){};
+
+	modal = modules[ 'wikia.ui.modal' ]( jQuery, win, browserDetect);
 
 	it( 'registers AMD module', function() {
 		expect( modal ).toBeDefined();
@@ -20,7 +48,7 @@ describe( 'Modal module', function() {
 	it( 'create instance of Modal class and link it with DOM element ID', function() {
 		var id = 'testModal',
 			selector = '#' + id,
-			params= {
+			params = {
 				vars: {
 					id: id
 				}
@@ -31,10 +59,10 @@ describe( 'Modal module', function() {
 		expect( modalObject.$element.selector ).toBe( selector );
 	} );
 
-	it( 'render modal, append to DOM nad create instance of Modal class', function() {
+	it( 'render modal, append to DOM and create instance of Modal class', function() {
 		var params = {
 				vars: {
-					id: 'testModal',
+					id: 'testModal'
 				}
 			},
 			id = params.vars.id,
@@ -47,11 +75,10 @@ describe( 'Modal module', function() {
 			},
 			modalObject = modal.createComponent( params, uiComponent);
 
-		expect( document.body.innerHTML.indexOf( htmlMock ) ).toNotBe( -1 );
+		expect( win.document.body.innerHTML.indexOf( htmlMock ) ).not.toBe( -1 );
 		expect( typeof modalObject ).toBe( 'object' );
 		expect( modalObject.$element.selector ).toBe( modalSelector );
 	} );
-
 });
 
 describe( 'Modal events', function() {
@@ -345,6 +372,7 @@ describe( 'Modal buttons', function() {
 					]
 				}
 			};
+
 		spyOn( jQuery.fn, 'append' );
 		modal.createComponent( params, uiComponent );
 		expect( jQuery.fn.append ).toHaveBeenCalledWith( renderResult );

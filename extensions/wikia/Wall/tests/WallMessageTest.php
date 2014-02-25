@@ -1,7 +1,7 @@
 <?php
 class WallMessageTest extends WikiaBaseTest {
 
-	/*
+	/**
 	 * Forum main board title can have a slightly different name that the ac title itself, the article comment parent
 	 * title takes precedence over the ac itself
 	 */
@@ -15,7 +15,7 @@ class WallMessageTest extends WikiaBaseTest {
 		$this->assertEquals( $wmMock->getWallOwner()->getName(), 'MessageWallTitle' );
 	}
 
-	/*
+	/**
 	 * if article comment/title is not in database yet, we should use the article comment title's text as a fallback
 	 * to return wall owner name
 	 */

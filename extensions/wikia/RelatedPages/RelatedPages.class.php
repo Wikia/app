@@ -418,7 +418,7 @@ class RelatedPages {
 	 */
 	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
 		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
-			$jsStaticPackages[] = 'relatedpages_js';
+			$jsStaticPackages[] = 'relatedpages_wikiamobile_js';
 			//css is in WikiaMobile.scss as AM can't concatanate scss files currently
 		}
 
@@ -426,9 +426,11 @@ class RelatedPages {
 	}
 
 	public static function onSkinAfterContent( &$text ){
+		global $wgTitle;
+
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
-		if ( $skin === 'oasis' || $skin === 'monobook' ){
+		if ( ( $skin === 'oasis' || $skin === 'monobook') && $wgTitle->getNamespace() !== NS_FILE ){
 			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 

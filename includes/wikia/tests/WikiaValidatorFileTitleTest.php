@@ -3,6 +3,8 @@
 class WikiaValidatorFileTitleTest extends WikiaBaseTest {
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03433 ms
 	 * @dataProvider filesDataProvider
 	 */
 	public function testFiles($fileString, $isValid, $exists) {

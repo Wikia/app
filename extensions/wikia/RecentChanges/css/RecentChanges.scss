@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 @import "../../WikiaStyleGuide/css/DropdownColors";
 
@@ -30,7 +29,7 @@
 				margin-right: 10px;
 
 				&.modified {
-					@include opacity(50);
+					opacity: .5;
 				}
 			}
 

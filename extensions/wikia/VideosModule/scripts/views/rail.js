@@ -63,7 +63,8 @@ define('videosmodule.views.rail', [
 			thumbHtml = [];
 
 		// If no videos are returned from the server, don't render anything
-		if (!len) {
+		// Or if there is not a specified value for thumbs
+		if (!len || !groupParams.thumbs) {
 			return;
 		}
 

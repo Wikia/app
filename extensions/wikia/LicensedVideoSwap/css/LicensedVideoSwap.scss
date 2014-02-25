@@ -1,9 +1,7 @@
 @import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/transform";
 @import "skins/oasis/css/mixins/ribbon";
 @import "skins/oasis/css/core/layout";
@@ -82,7 +80,7 @@ $button-icon-color: white;
 		position: relative;
 		width: 100%;
 		&:before, &:after {
-			@include opacity(50);
+			opacity: .5;
 			background: $color-button-text;
 			bottom: 0px;
 			content: "";
@@ -150,8 +148,8 @@ $button-icon-color: white;
 		position: relative;
 		overflow-x: hidden;
 		.swap-arrow {
-			@include border-radius(5px);
 			background-color: $color-page;
+			border-radius: 5px;
 			display: none;
 			height: 31px;
 			left: 50%;

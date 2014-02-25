@@ -1,4 +1,3 @@
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/core/color";
 
@@ -36,8 +35,8 @@
 	}
 	> .wikia-slideshow-prev {
 		> span {
-			@include border-radius-ne(6px);
-			@include border-radius-se(6px);
+			border-top-right-radius: 6px;
+			border-bottom-right-radius: 6px;
 			> .chevron {
 				border-color: transparent $color-buttons transparent transparent;
 				margin-left: -12px;
@@ -46,8 +45,8 @@
 	}
 	> .wikia-slideshow-next {
 		> span {
-			@include border-radius-nw(6px);
-			@include border-radius-sw(6px);
+			border-top-left-radius: 6px;
+			border-bottom-left-radius: 6px;
 			> .chevron {
 				border-color: transparent transparent transparent $color-buttons;
 				margin-right: -12px;

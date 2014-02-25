@@ -2020,7 +2020,12 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * create needed tables
+	 * @desc Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 *
+	 * @param String $name
+	 * @param String $val
+	 *
+	 * @return bool
 	 */
 	public static function onAfterToggleFeature($name, $val) {
 		global $IP;
@@ -2178,4 +2183,48 @@ class WallHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Makes sure the correct URLs for thread pages and message wall page get purged.
+	 *
+	 * @param $title Title
+	 * @param $urls String[]
+	 * @return bool
+	 */
+	public static function onTitleGetSquidURLs( $title, &$urls ) {
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		if ( $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+			// CONN-430: purge cache only for main thread page and owner's wall page
+			// while running AfterBuildNewMessageAndPost hook
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_USER_WALL ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 *
+	 * @param Title $title
+	 * @param String[] $urls
+	 *
+	 * @return bool
+	 */
+	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
+		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		return true;
+	}
+
 }

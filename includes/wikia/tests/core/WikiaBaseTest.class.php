@@ -44,22 +44,35 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * Print out currently run test
 	 */
 	public static function setUpBeforeClass() {
+		global $wgAnnotateTestSpeed;
+
 		error_reporting(E_ALL);
 		$testClass = get_called_class();
 		echo "\nRunning '{$testClass}'...";
 
-		self::$testRunTime = microtime(true);
+		self::$testRunTime = microtime( true );
+
+		if ($wgAnnotateTestSpeed) {
+			WikiaTestSpeedAnnotator::initialize();
+		}
 	}
 
 	/**
 	 * Print out time it took to run all tests from current test class
 	 */
 	public static function tearDownAfterClass() {
-		$time = round( (microtime(true) - self::$testRunTime) * 1000 );
+		global $wgAnnotateTestSpeed;
+
+		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
 		echo "done in {$time} ms";
+
+		if ($wgAnnotateTestSpeed) {
+			WikiaTestSpeedAnnotator::execute();
+		}
 	}
 
 	protected function setUp() {
+		$this->startTime = microtime(true);
 		$this->app = F::app();
 
 		if ($this->setupFile != null) {
@@ -78,6 +91,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
+		global $wgAnnotateTestSpeed;
+
 		$this->unsetGlobals();
 		$this->unsetMessages();
 		if ( $this->mockProxy === null ) {
@@ -85,6 +100,12 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		}
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
+
+
+		if ($wgAnnotateTestSpeed) {
+			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
+				$this->getAnnotations());
+		}
 	}
 
 	/**

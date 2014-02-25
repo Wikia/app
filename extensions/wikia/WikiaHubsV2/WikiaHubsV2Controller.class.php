@@ -13,7 +13,7 @@ class WikiaHubsV2Controller extends WikiaController {
 	const CACHE_VALIDITY_VARNISH = 86400;
 
 	/**
-	 * @var WikiaHubsV2Model
+	 * @var WikiaHubsModel
 	 */
 	protected $model;
 	
@@ -138,7 +138,7 @@ class WikiaHubsV2Controller extends WikiaController {
 	}
 
 	/**
-	 * @return WikiaHubsV2Model
+	 * @return WikiaHubsModel
 	 */
 	protected function getModel() {
 		if (!$this->model) {
@@ -169,7 +169,7 @@ class WikiaHubsV2Controller extends WikiaController {
 	}
 
 	protected function initModel() {
-		$this->model = new WikiaHubsV2Model();
+		$this->model = new WikiaHubsModel();
 		$this->model->setVertical($this->verticalId);
 	}
 

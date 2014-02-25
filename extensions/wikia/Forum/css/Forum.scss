@@ -1,9 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/menus";
 
 // TODO: all of these should be consolidated and put into oasis
@@ -13,8 +11,8 @@
 
 /* local mixin */
 @mixin forum-message-error() {
-	@include border-radius($wall-border-radius);
 	background-color: $color-wall-error;
+	border-radius: $wall-border-radius;
 	display: none;
 	font-size: 12px;
 	line-height: 20px;
@@ -136,9 +134,9 @@
 		}
 
 		.message {
-			@include border-radius(0);
-			border: 0;
 			background-color: $color-wall-bubble;
+			border: 0;
+			border-radius: 0;
 			margin: 0 0 0 60px;
 			padding: 10px;
 			position: relative;
@@ -157,7 +155,7 @@
 
 			&.loading {
 				.message-container {
-					@include opacity(50);
+					opacity: .5;
 				}
 
 				.throbber {

@@ -166,11 +166,7 @@ class WikiaPhotoGalleryAjax {
 		// decode JSON-encoded gallery data
 		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
-		if (empty($gallery['params']['rssfeed'])) {
-			$html = WikiaPhotoGalleryHelper::renderGalleryPreview($gallery);
-		} else {
-			$html = WikiaPhotoGalleryHelper::renderFeedGalleryPreview($gallery);
-		}
+		$html = WikiaPhotoGalleryHelper::renderGalleryPreview( $gallery );
 
 		wfProfileOut(__METHOD__);
 		return array(
@@ -188,11 +184,7 @@ class WikiaPhotoGalleryAjax {
 		// decode JSON-encoded slideshow data
 		$gallery = json_decode($wgRequest->getVal('gallery'), true);
 
-		if (empty($gallery['params']['rssfeed'])) {
-			$html = WikiaPhotoGalleryHelper::renderSlideshowPreview($gallery);
-		} else {
-			$html = WikiaPhotoGalleryHelper::renderFeedSlideshowPreview($gallery);
-		}
+		$html = WikiaPhotoGalleryHelper::renderSlideshowPreview( $gallery );
 
 		wfProfileOut(__METHOD__);
 		return array(

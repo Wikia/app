@@ -11,7 +11,9 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
+$wgAutoloadClasses['AbstractMarketingToolboxModel'] =  $dir . 'models/AbstractMarketingToolboxModel.class.php';
 $wgAutoloadClasses['MarketingToolboxModel'] =  $dir . 'models/MarketingToolboxModel.class.php';
+$wgAutoloadClasses['MarketingToolboxV3Model'] =  $dir . 'models/MarketingToolboxV3Model.class.php';
 $wgAutoloadClasses['MarketingToolboxExploreModel'] =  $dir . 'models/MarketingToolboxExploreModel.class.php';
 $wgAutoloadClasses['MarketingToolboxFeaturedvideoModel'] =  $dir . 'models/MarketingToolboxFeaturedvideoModel.class.php';
 $wgAutoloadClasses['MarketingToolboxPollsModel'] =  $dir . 'models/MarketingToolboxPollsModel.class.php';
@@ -20,6 +22,7 @@ $wgAutoloadClasses['MarketingToolboxSliderModel'] =  $dir . 'models/MarketingToo
 $wgAutoloadClasses['MarketingToolboxFromthecommunityModel'] =  $dir . 'models/MarketingToolboxFromthecommunityModel.class.php';
 $wgAutoloadClasses['MarketingToolboxImageModel'] =  $dir . 'models/MarketingToolboxImageModel.class.php';
 $wgAutoloadClasses['MarketingToolboxWAMModel'] =  $dir . 'models/MarketingToolboxWAMModel.class.php';
+$wgAutoloadClasses['WikiaHubsModel'] =  $dir . 'models/WikiaHubsModel.class.php';
 
 $wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . 'modules/MarketingToolboxModuleService.class.php';
 $wgAutoloadClasses['MarketingToolboxModuleEditableService'] =  $dir . 'modules/MarketingToolboxModuleEditableService.class.php';
@@ -34,3 +37,6 @@ $wgAutoloadClasses['MarketingToolboxModulePollsService'] =  $dir . 'modules/Mark
 $wgAutoloadClasses['MarketingToolboxModuleWAMService'] =  $dir . 'modules/MarketingToolboxModuleWAMService.class.php';
 
 $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper.class.php';
+$wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
+
+$wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";

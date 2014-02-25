@@ -9,14 +9,12 @@
 
 // Mixins
 @import "mixins/bodytext";
-@import "mixins/border-radius";
 @import "mixins/border-opacity";
 @import "mixins/box-shadow";
 @import "mixins/clearfix";
 @import "mixins/forms";
 @import "mixins/gradient";
 @import "mixins/menus";
-@import "mixins/opacity";
 @import "mixins/wordmark";
 
 // Core
@@ -74,7 +72,7 @@
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
 @import "extensions/wikia/TOC/css/toc.scss";
-@import "modules/VideoSuggestions";
+@import "modules/VideosModule";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";

@@ -1,7 +1,6 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/sprite";
 @import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
 
@@ -24,9 +23,9 @@
 			top: -2px;
 			.moveup,
 			.movedown {
-				@include border-radius(4px);
 				@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 15%, $color-secondary-button, 85%);
 				border: 1px solid $color-page-border;
+				border-radius: 4px;
 				cursor: pointer;
 				display: inline-block;
 				height: 14px;

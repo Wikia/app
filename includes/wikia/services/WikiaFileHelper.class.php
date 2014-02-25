@@ -336,6 +336,11 @@ class WikiaFileHelper extends Service {
 		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
 
+	/**
+	 * Get media config (for MediaDetail() function)
+	 * @param array $config
+	 * @return array $config
+	 */
 	public static function getMediaDetailConfig( $config = array() ) {
 		$configDefaults = array(
 			'contextWidth'          => false,
@@ -345,7 +350,6 @@ class WikiaFileHelper extends Service {
 		);
 
 		foreach ( $configDefaults as $key => $val ) {
-
 			if ( empty( $config[$key] ) ) {
 				$config[$key] = $val;
 			}
@@ -396,10 +400,11 @@ class WikiaFileHelper extends Service {
 			'articles' => array(),
 			'providerName' => '',
 			'videoViews' => 0,
-			'exists' => false
+			'exists' => false,
+			'isAdded' => true,
 		);
 
-		if ( !empty($fileTitle) ) {
+		if ( !empty( $fileTitle ) ) {
 			if ( $fileTitle->getNamespace() != NS_FILE ) {
 				$fileTitle = Title::newFromText( $fileTitle->getDBKey(), NS_FILE );
 			}
@@ -421,10 +426,11 @@ class WikiaFileHelper extends Service {
 					if ( isset( $config['maxHeight'] ) ) {
 						$file->setEmbedCodeMaxHeight( $config['maxHeight'] );
 					}
-					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true);
+					$data['videoEmbedCode'] = $file->getEmbedCode( $width, true, true );
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
+					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 				} else {
 					$width = $width > $config['imageMaxWidth'] ? $config['imageMaxWidth'] : $width;
@@ -438,8 +444,13 @@ class WikiaFileHelper extends Service {
 				$mediaQuery =  new ArticlesUsingMediaQuery( $fileTitle );
 				$articleList = $mediaQuery->getArticleList();
 
+				if ( $data['isAdded'] ) {
+					$data['fileUrl'] = $fileTitle->getFullUrl();
+				} else {
+					$data['fileUrl'] = self::getFullUrlPremiumVideo( $fileTitle->getDBkey() );
+				}
+
 				$data['imageUrl'] = $thumb->getUrl();
-				$data['fileUrl'] = $fileTitle->getLocalUrl();
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
 				$data['userName'] = $user->getName();
@@ -655,6 +666,46 @@ class WikiaFileHelper extends Service {
 			return $matches[2];
 		}
 		return null;
+	}
+
+	/**
+	 * Check if the premium video is added to the wiki
+	 * @param File $file
+	 * @return boolean $isAdded
+	 */
+	public static function isAdded( $file ) {
+		$isAdded = true;
+		if ( $file instanceof File && !$file->isLocal()
+			&& F::app()->wg->WikiaVideoRepoDBName == $file->getRepo()->getWiki() ) {
+			$info = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
+			if ( empty( $info ) ) {
+				$isAdded = false;
+			}
+		}
+		return $isAdded;
+	}
+
+	/**
+	 * Get full url for premium video
+	 * @param string $fileTitle
+	 * @return string $fullUrl
+	 */
+	public static function getFullUrlPremiumVideo( $fileTitle ) {
+		return self::getFullUrlFromDBName( $fileTitle, F::app()->wg->WikiaVideoRepoDBName );
+	}
+
+	/**
+	 * Get full url from dbname
+	 * @param string $fileTitle
+	 * @param string $dbName
+	 * @return string $fullUrl
+	 */
+	public static function getFullUrlFromDBName( $fileTitle, $dbName ) {
+		$wikiId = WikiFactory::DBtoID( $dbName );
+		$globalTitle = GlobalTitle::newFromText( $fileTitle, NS_FILE, $wikiId );
+		$fullUrl = $globalTitle->getFullURL();
+
+		return $fullUrl;
 	}
 
 }
