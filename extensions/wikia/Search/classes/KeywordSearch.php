@@ -31,7 +31,7 @@ class KeywordSearch {
 	public function getResultsMode2( $query ) {
 
 		$maxPhrases = 10;
-		$phrases = array_slice( explode(",", $query), 0, $maxPhrases );
+		$phrases = array_slice( $query, 0, $maxPhrases );
 
 		$phraseQuery = [];
 		foreach ( $phrases as $phrase ) {
@@ -59,7 +59,7 @@ class KeywordSearch {
 
 	public function getResultsMode3( $query ) {
 		$maxPhrases = 5;
-		$phrases = array_slice( explode(",", $query), 0, $maxPhrases );
+		$phrases = array_slice( $query, 0, $maxPhrases );
 		$phraseQuery = [];
 		foreach ( $phrases as $phrase ) {
 			$phraseQuery[] = ' title_en:("' . $phrase . '") ';
