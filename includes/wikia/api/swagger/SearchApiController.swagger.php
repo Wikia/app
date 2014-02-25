@@ -110,7 +110,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="quality",
  * 		type="int",
- * 		required="false",
+ * 		required="true",
  * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  * 	@SWG\Property(
