@@ -30,7 +30,7 @@ define('videosmodule.views.rail', [
 		this.articleId = window.wgArticleId;
 
 		// Make sure we're on an article page
-		if (this.articleId && testCase.testGroup === 'VIDEOS_MODULE_RAIL') {
+		if (this.articleId) {
 			this.init();
 		}
 	}
