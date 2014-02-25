@@ -81,9 +81,9 @@ $color-inactive-button: darken($color-secondary-button, 50%);
 				}
 			}
 			&.disabled {
-				@include opacity(50);
 				@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 				cursor: auto;
+				opacity: .5;
 				img {
 					border-color: transparent transparent transparent $color-inactive-button;
 				}
