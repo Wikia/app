@@ -47,7 +47,7 @@ function getCityIdByImagePath( $image_path ) {
 
 function moveRecordToActiveQueue( $row, $dry ) {
 	global $wgSpecialsDB;
-	$dbw = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+	$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
 	# move record to image_sync table
 
 	if ( !$dry ) {
