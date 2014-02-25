@@ -11,23 +11,25 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	var d = window.document,
 		$wkPage = $( '#wkPage' ),
 		h2s = $( 'h2[id]', $wkPage ).toArray(),
-		sections = getHeaders(),
+		sections = [],
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
 		offset = 5;
 
 	/**
 	 * @desc grab all headers on the page
-	 * @return Array
+	 * @returns {Array}
 	 */
-	function getHeaders(){
+	function getHeaders () {
 		//querySelectorAll returns NodeList but this one is not live
-		return Array.prototype.slice.apply( d.querySelectorAll( 'h2[id],h3[id],h4[id]' ) )
+		return Array.prototype.slice.apply( d.querySelectorAll( 'h2[id],h3[id],h4[id]' ) );
 	}
+
+	sections = getHeaders();
 
 	/**
 	 * @desc Function that lets you scroll viewport to a given section
-	 * @param header - a string representation of a header
+	 * @param {String} header
 	 * @returns {undefined|true} - status code if scroll actually happened
 	 */
 	function scrollTo ( header ) {
@@ -45,7 +47,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Finds and returns a current section
-	 * @returns jQuery object - a current section
+	 * @returns {Object} - a current section
 	 */
 	function current () {
 		var top = window.scrollY,
@@ -65,9 +67,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Check if intro is longer than 700px
-	 * @param section - number of section or header element to measure
-	 * @param minHeight - height of intro to compare against
-	 * @returns boolean
+	 * @param {Number} section - number of section or header element to measure
+	 * @param {Number} minHeight - height of intro to compare against
+	 * @returns {Boolean}
 	 */
 	function isSectionLongerThan ( section, minHeight ) {
 		var currentSection,
@@ -99,9 +101,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	}
 
 	/**
-	 * @desc If possible, get section under which the ad can be placed (700px down)
-	 * @param distFromTop - an int value representing given height in document
-	 * @returns jQuery object or null
+	 * @desc If possible, get section at given distance from top
+	 * @param {Number} distFromTop - an int value representing given height in document
+	 * @returns {Object|null}
 	 */
 	function getElementAt ( distFromTop ) {
 		var currentElement = $( '#mw-content-text' ).children().first(),
@@ -116,7 +118,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	}
 
 	/**
-	 * @desc Function that fires at most every 200ms while scrolling\
+	 * @desc Function that fires at most every 200ms while scrolling
 	 * @triggers section:changed with a current section refernece and its id
 	 */
 	function onScroll () {
@@ -140,8 +142,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Gets an index of the given H2 headline
-	 * @param {Object} section - headline
-	 * @returns {integer}
+	 * @param {Object} section
+	 * @returns {Number}
 	 */
 	function getId ( section ) {
 		return h2s.indexOf( section );
@@ -149,7 +151,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Gets next H2 in an article
-	 * @param section - {Object} headline or {Integer} representing it's index
+	 * @param {Object|Number} section - headline or number representing it's index
 	 * @returns {Object}
 	 */
 	function getNext ( section ) {
@@ -160,7 +162,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Checks if the given article Section (only H2-leveled sections) exists
-	 * @param {integer} section number of the article's section getting checked
+	 * @param {Number} section number of the article's section getting checked
 	 * @returns {Boolean}
 	 */
 	function isDefined ( section ) {
