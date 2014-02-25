@@ -584,7 +584,7 @@ class ResourceLoader {
 		}
 
 		// Wikia - change begin - @author: macbre
-		wfRunHooks('ResourceLoaderModifyMaxAge',array($context,$mtime,&$maxage,&$smaxage));
+		wfRunHooks( 'ResourceLoaderModifyMaxAge',[ $this, $context, $mtime, &$maxage, &$smaxage ] );
 		// Wikia - change end
 
 		if ( $context->getOnly() === 'styles' ) {
