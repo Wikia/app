@@ -37,7 +37,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	}
 
 	/**
-	 * @desc Fires on closing of a Side menu toc
+	 * @desc Filters headers with nothing to show
 	 *
 	 * @param {Object} header - DOM element of header
 	 *
@@ -59,7 +59,6 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{/sections.length}}{{/firstLevel}}</a>' +
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
-			//grab only headers that have text to display
 			tocData = toc.getData(
 				sections.list(),
 				createSection,
