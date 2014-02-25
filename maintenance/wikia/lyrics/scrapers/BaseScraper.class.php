@@ -33,5 +33,14 @@ abstract class BaseScraper {
 		return [];
 	}
 
+	protected function sanitiseData( $data, $dataMap) {
+		$result = array();
+		foreach ( $data as $key => $value ) {
+			if ( isset( $dataMap[$key] ) ) {
+				$result[$dataMap[$key]] = $value;
+			}
+		}
+		return $result;
+	}
 
 }
