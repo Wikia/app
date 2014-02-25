@@ -12,8 +12,8 @@ define('videosmodule.views.rail', [
 		track;
 
 	track = Tracker.buildTrackingFunction({
-		// category: 'videos-module-bottom',
-		trackingMethod: 'ga',
+		category: 'videos-module-bottom',
+		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
 	});
@@ -63,7 +63,8 @@ define('videosmodule.views.rail', [
 			thumbHtml = [];
 
 		// If no videos are returned from the server, don't render anything
-		if (!len) {
+		// Or if there is not a specified value for thumbs
+		if (!len || !groupParams.thumbs) {
 			return;
 		}
 
