@@ -10,7 +10,7 @@ namespace scrappers;
 
 abstract class BaseScraper {
 
-	private $db;
+	protected $db;
 
 	abstract public function processPage( Article $article );
 	abstract protected function save( $data );

@@ -36,15 +36,22 @@ class ArtistScrapper extends BaseScraper {
 	];
 
 	public function processPage( Article $article ) {
-		$data = [];
+		$data = [
+			'name' => $article->getTitle()->getText()
+		];
 		$data = array_merge( $data, $this->getHeader( $article ) );
 		$data = array_merge( $data, $this->getFooter( $article ) );
 		$this->save( $data );
 	}
 
 	protected function save( $data ) {
-		$insertData = $this->sanitiseData( $data, $this->dataMap);
-		//$this->db->replace()
+		$replaceData = $this->sanitiseData( $data, $this->dataMap);
+		$this->db->replace(
+			self::TABLE_NAME,
+			null,
+			$replaceData,
+			__METHOD__
+		);
 	}
 
 	protected function getHeader( Article $article ) {
