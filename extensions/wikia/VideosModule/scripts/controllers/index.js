@@ -24,14 +24,14 @@ require([
 		});
 	}
 	$(function () {
-		// if (window.wgVideosModuleABTest === 'rail') {
+		if (window.wgVideosModuleABTest === 'rail') {
 			$('#WikiaRail').on('afterLoad.rail', onWikiaRailLoad);
-		// } else {
-		// 	view = new BottomModule({
-		// 		el: document.getElementById('RelatedPagesModuleWrapper'),
-		// 		model: new VideoData()
-		// 	});
-		// }
+		} else {
+			view = new BottomModule({
+				el: document.getElementById('RelatedPagesModuleWrapper'),
+				model: new VideoData()
+			});
+		}
 		track({
 			category: 'videos-module-' + window.wgVideosModuleABTest
 		})

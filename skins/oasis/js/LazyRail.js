@@ -1,6 +1,3 @@
-// TODO: I added a few lifecycle events to this module, that way we can encapsulate logic for
-// appropriate modules in the right rail in their respective code. Using events, we don't have to
-// pollute the logic of loading with how individual modules should respond to loading.
 $(function () {
 	'use strict';
 
