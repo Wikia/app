@@ -30,7 +30,7 @@ CREATE TABLE artist (
 CREATE TABLE album (
   id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
   artist_id      INT          NOT NULL,
-  genre          VARCHAR(30),
+  genres         VARCHAR(255),
   name           VARCHAR(255),
   romanized_name VARCHAR(255),
   year           SMALLINT DEFAULT NULL,
