@@ -1,9 +1,8 @@
 define('videosmodule.views.rail', [
-	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'videosmodule.models.abTestRail',
 	'wikia.tracker'
-], function (sloth, TitleThumbnailView, abTest, Tracker) {
+], function (TitleThumbnailView, abTest, Tracker) {
 	'use strict';
 
 	// Keep AB test variables private
@@ -37,23 +36,12 @@ define('videosmodule.views.rail', [
 
 	VideoModule.prototype.init = function () {
 		var self = this;
-		this.data = this.model.fetch(true);
-		this.$el.show();
-		// Sloth is a lazy loading service that waits till an element is visisble to load more content
-		sloth({
-			on: this.el,
-			threshold: 200,
-			callback: function () {
-				self.bindFetchComplete();
-			}
-		});
-	};
-
-	VideoModule.prototype.bindFetchComplete = function () {
-		var self = this;
-		this.data.complete(function () {
-			self.render();
-		});
+		this.model
+			.fetch(true)
+			.complete(function () {
+				self.render();
+				self.$el.show();
+			});
 	};
 
 	VideoModule.prototype.render = function () {
@@ -68,10 +56,7 @@ define('videosmodule.views.rail', [
 			return;
 		}
 
-		// AB test set rows shown
-		videos = videos.slice(0, groupParams.thumbs);
-
-		for (i = 0; i < videos.length; i++) {
+		for (i = 0; i < groupParams.thumbs; i++) {
 			thumbHtml.push(new TitleThumbnailView({
 					el: 'li',
 					model: videos[i],
