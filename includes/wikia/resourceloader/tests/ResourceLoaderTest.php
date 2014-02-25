@@ -70,7 +70,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 		return array(
 			'timestamp - 1' => array(
 				'version' => [$wgStyleVersion, $pastTimestamp],
-				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
+				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
 			),
 			'timestamp' => array(
 				'version' => [$wgStyleVersion, $currTimestamp],
@@ -78,7 +78,7 @@ class ResourceLoaderTest extends WikiaBaseTest {
 			),
 			'timestamp + 1' => array(
 				'version' => [$wgStyleVersion, $futureTimestamp],
-				'ttl' => $wgResourceLoaderMaxage['versioned']['client']
+				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
 			)
 		);
 	}

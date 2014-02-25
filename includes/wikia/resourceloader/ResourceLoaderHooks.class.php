@@ -361,11 +361,11 @@ class ResourceLoaderHooks {
 
 		if ($hasDynamicModule) {
 			// use long TTL when version value matches $mtime passed to the hook
-			$useLongTTL = ($ts >= $mtime);
+			$useLongTTL = !empty($ts) && ($ts <= $mtime);
 		}
 		else {
 			// use long TTL when cache buster value from URL matches $wgStyleVersion
-			$useLongTTL = ($cb == $wgStyleVersion);
+			$useLongTTL = !empty($cb) && ($cb <= $wgStyleVersion);
 		}
 
 		// cache "startup" module for longer
