@@ -95,7 +95,7 @@
 	</script>
 
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
+		<?= wfMessage( 'lightbox-carousel-progress' )->rawParams( '{{idx1}}', '{{idx2}}', '{{{total}}}' )->parse(); ?>
 	</script>
 
 	<script id="LightboxShareTemplate" type="text/template">
