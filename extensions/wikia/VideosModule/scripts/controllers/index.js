@@ -16,7 +16,7 @@ require([
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'valid-code'
 	});
-	// instantiate bottom view
+	// instantiate rail view
 	function onWikiaRailLoad() {
 		return new RailModule({
 			el: document.getElementById('videosModule'),
@@ -34,6 +34,6 @@ require([
 		}
 		track({
 			category: 'videos-module-' + window.wgVideosModuleABTest
-		})
+		});
 	});
 });

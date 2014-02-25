@@ -21,7 +21,6 @@ define('videosmodule.views.rail', [
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
 
-
 	function VideoModule(options) {
 		// this.el is the container for the right rail videos module
 		this.el = options.el;
