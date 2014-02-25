@@ -24,7 +24,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 
 					ads.setupSlot( {
 						name: slotName,
-						size: '300x250',
+						size: ['300x250','1x1'],
 						wrapper: adWrapper,
 						init: function onInit ( found ) {
 							log( 'Slot: ' + slotName + ' loaded, found: ' + found, logLevel, logGroup );
@@ -42,7 +42,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		log( 'Loading slot: MOBILE_TOP_LEADERBOARD', logLevel, logGroup );
 		ads.setupSlot( {
 			name: 'MOBILE_TOP_LEADERBOARD',
-			size: '320x50',
+			size: ['320x50','1x1'],
 			wrapper: topAdWrapper,
 			init: function ( found ) {
 				log( 'Slot: MOBILE_TOP_LEADERBOARD loaded, found: ' + found, logLevel, logGroup );
