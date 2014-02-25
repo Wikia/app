@@ -13,6 +13,18 @@ use Swagger\Annotations as SWG;
 
  * @SWG\Model( id="TvResultSet" )
  * 	@SWG\Property(
+ * 		name="wikiId",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for wiki"
+ * 	)
+ * 		@SWG\Property(
+ * 		name="articleId",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for article"
+ * 	)
+ * 	@SWG\Property(
  * 		name="title",
  * 		type="string",
  *		required="true",
@@ -29,18 +41,6 @@ use Swagger\Annotations as SWG;
  * 		type="int",
  * 		required="true",
  * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
- * 	)
- * 	@SWG\Property(
- * 		name="wikiId",
- * 		type="int",
- * 		required="true",
- * 		description="An internal identification number for wiki"
- * 	)
- * 		@SWG\Property(
- * 		name="articleId",
- * 		type="int",
- * 		required="true",
- * 		description="An internal identification number for article"
  * 	)
  * 	@SWG\Property(
  * 		name="contentUrl",

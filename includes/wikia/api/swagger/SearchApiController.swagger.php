@@ -113,6 +113,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Type of article (movie, character, person, series, season, episode, book, comic_book, video_game, location)"
+ * 	)
  * @SWG\Property(
  * 		name="snippet",
  * 		required="true",
@@ -125,12 +131,7 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		description="The URL of the image"
  *  )
- * 	@SWG\Property(
- * 		name="type",
- * 		type="string",
- * 		required="true",
- * 		description="Type of article (movie, character, person, series, season, episode, book, comic_book, video_game, location)"
- * 	)
+ *
  *
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
