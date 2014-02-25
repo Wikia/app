@@ -122,7 +122,7 @@ function fixAllSwiftSyncData( $dry, $limit ) {
 		$row->city_id = getCityIdByImagePath( $serialized_image_path );
 		
 		if ( $row->city_id > 0 ) {
-			moveRecordToActiveQueue( $row );
+			moveRecordToActiveQueue( $row, $dry );
 		} else {
 			print " cannot find city_id \n";
 		}
