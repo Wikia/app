@@ -138,19 +138,35 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		}, 200 );
 	}
 
+	/**
+	 * @desc Gets an id of the given section
+	 * @param section - jQuery Object representing headline
+	 * @returns integer
+	 */
 	function getId ( section ) {
 		return h2s.indexOf( section );
 	}
 
+	/**
+	 * @desc Gets next H2 in an article
+	 * @param section - jQuery Object representing headline or integer representing it's index
+	 * @returns jQuery Object
+	 */
 	function getNext ( section ) {
 		section = typeof section === 'number' ? section : getId( section );
 
 		return h2s[section + 1];
 	}
 
+	/**
+	 * @desc Checks if the given article Section (only H2-leveled sections) exists
+	 * @param section - integer representing number of the article's section
+	 * @returns jQuery Object
+	 */
 	function isDefined ( section ) {
 		//first h2 has index 0 in the nodeList
-		return !!h2s[section-1] && h2s[section-1].parentElement === d.getElementById( 'mw-content-text' );
+		var headline = h2s[section-1];
+		return !!headline && headline.parentElement === d.getElementById( 'mw-content-text' );
 	}
 
 	window.addEventListener( 'scroll', onScroll );
