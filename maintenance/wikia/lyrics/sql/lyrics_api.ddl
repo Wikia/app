@@ -62,7 +62,7 @@ CREATE TABLE song (
   musicbrainz    VARCHAR(30),
   allmusic       VARCHAR(15),
   download       VARCHAR(255),
-  PRIMARY KEY (ID),
+  PRIMARY KEY (id),
   UNIQUE KEY (artist_id, name)
 )
   ENGINE =InnoDB;
