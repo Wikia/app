@@ -21,7 +21,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	 * @return Array
 	 */
 	function getHeaders(){
-		//querySelectorAll returns NodeList but this one is not live
+		//we switch nodeList to Array to use filter / forEach type methods
 		return Array.prototype.slice.apply( d.querySelectorAll(
 			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) );
 	}
