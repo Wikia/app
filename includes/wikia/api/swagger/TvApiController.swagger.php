@@ -13,18 +13,6 @@ use Swagger\Annotations as SWG;
 
  * @SWG\Model( id="TvResultSet" )
  * 	@SWG\Property(
- * 		name="title",
- * 		type="string",
- *		required="true",
- * 		description="The title of the article"
- * 	)
- * 	@SWG\Property(
- * 		name="url",
- * 		type="string",
- * 		required="true",
- * 		description="The relative URL of the article"
- * 	)
- * 	@SWG\Property(
  * 		name="wikiId",
  * 		type="int",
  * 		required="true",
@@ -37,16 +25,28 @@ use Swagger\Annotations as SWG;
  * 		description="An internal identification number for article"
  * 	)
  * 	@SWG\Property(
- * 		name="contentUrl",
+ * 		name="title",
+ * 		type="string",
+ *		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
  * 		type="string",
  * 		required="true",
- * 		description="The URL of plain content of the article"
+ * 		description="The relative URL of the article"
  * 	)
  * 	@SWG\Property(
  * 		name="quality",
  * 		type="int",
  * 		required="true",
  * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="contentUrl",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The URL of plain content of the article"
  * 	)
  *
  * @SWG\Api(
@@ -83,7 +83,7 @@ use Swagger\Annotations as SWG;
  *				),
  * 				@SWG\Parameter(
  * 					name="minArticleQuality",
- * 					description="Minimal value of article quality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

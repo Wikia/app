@@ -47,7 +47,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$refl->setAccessible( true );
 
-		$this->assertEquals( 10, $refl->invoke( $mock, 88 ) );
+		$this->assertEquals( 10, $refl->invoke( $mock, 88, 0 ) );
 	}
 
 	public function testGetArticleQualityNotFound() {
@@ -64,7 +64,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$refl->setAccessible( true );
 
-		$this->assertEquals( null, $refl->invoke( $mock, 88 ) );
+		$this->assertEquals( null, $refl->invoke( $mock, 88, 0 ) );
 
 	}
 
