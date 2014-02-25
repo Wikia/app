@@ -139,9 +139,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	}
 
 	/**
-	 * @desc Gets an id of the given section
-	 * @param section - jQuery Object representing headline
-	 * @returns integer
+	 * @desc Gets an index of the given H2 headline
+	 * @param {Object} section - headline
+	 * @returns {integer}
 	 */
 	function getId ( section ) {
 		return h2s.indexOf( section );
@@ -149,8 +149,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Gets next H2 in an article
-	 * @param section - jQuery Object representing headline or integer representing it's index
-	 * @returns jQuery Object
+	 * @param section - {Object} headline or {Integer} representing it's index
+	 * @returns {Object}
 	 */
 	function getNext ( section ) {
 		section = typeof section === 'number' ? section : getId( section );
@@ -160,8 +160,8 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Checks if the given article Section (only H2-leveled sections) exists
-	 * @param section - integer representing number of the article's section
-	 * @returns jQuery Object
+	 * @param {integer} section number of the article's section getting checked
+	 * @returns {Boolean}
 	 */
 	function isDefined ( section ) {
 		//first h2 has index 0 in the nodeList
