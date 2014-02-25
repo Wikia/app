@@ -14,12 +14,21 @@ class DocsApiController extends WikiaController {
 	private $docsService;
 
 	/**
+	 * @var PrivilegedApiService
+	 */
+	protected $privilegedService;
+
+	/**
 	 *
 	 */
 	public function __construct() {
 		parent::__construct(  );
-
 		$this->docsService = (new ApiDocsServiceFactory)->getApiDocsService();
+	}
+
+	public function init(){
+		parent::init();
+		$this->privilegedService = new PrivilegedApiService( $this->getRequest() );
 	}
 
 	/**
@@ -80,15 +89,12 @@ class DocsApiController extends WikiaController {
 		$api = $this->getVal("name");
 
 		$apiDoc = $this->docsService->getDoc( $api );
-		if ( !$this->isTest() ) {
-			$newElemSet = [];
-			foreach ( $apiDoc['apis'] as $i => $apiElem ) {
-				//FIXME find better solution for disabling test methods in non-test API-DOCS
-				if ( !in_array( $apiElem['path'], [ '/api/v1/Search/Combined' ] ) ) {
-					$newElemSet[] = $apiElem;
-				}
+		$controller = $apiDoc['resourcePath'].'ApiController';
+
+		foreach ( $apiDoc[ 'apis' ] as $i => &$apiElem ) {
+			if ( !$this->privilegedService->canUse( $controller, $apiElem[ 'operations' ][ 0 ][ 'nickname' ] ) ) {
+				unset ( $apiDoc[ 'apis' ][ $i ] );
 			}
-			$apiDoc['apis'] = $newElemSet;
 		}
 
 		$this->getResponse()->setFormat("json");
@@ -105,7 +111,9 @@ class DocsApiController extends WikiaController {
 		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
 			// here you can disable single controller
-			if ( $controller === 'TvApiController' && !$this->isTest() ) { continue; }
+			if ( !$this->privilegedService->canUse( $controller, null ) ) {
+				continue;
+			}
 			foreach ( $docs['apis'] as $doc ) {
 				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
@@ -126,7 +134,4 @@ class DocsApiController extends WikiaController {
 		$this->getResponse()->setData( $docs );
 	}
 
-	protected function isTest() {
-		return (stripos( $this->request->getScriptUrl(), '/api/test' )!==false);
-	}
 }

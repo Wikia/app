@@ -113,6 +113,8 @@ class SearchApiController extends WikiaApiController {
 	 * @example &query=kermit&langs=en&limit=2
 	 */
 	public function getCombined() {
+		$this->privilegedService->checkUse( __CLASS__, __FUNCTION__);
+
 		if ( !$this->request->getVal( 'query' ) ) {
 			throw new MissingParameterApiException( 'query' );
 		}

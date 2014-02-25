@@ -160,6 +160,7 @@ $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiC
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 
 //Wikia Api exceptions classes
+$wgAutoloadClasses[ 'PrivilegedApiService' ] = "{$IP}/includes/wikia/api/services/PrivilegedApiService.php";
 $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'OutOfRangeApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'MissingParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;

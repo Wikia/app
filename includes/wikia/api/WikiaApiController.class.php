@@ -12,6 +12,15 @@ class WikiaApiController extends WikiaController {
 		'json',
 		'raw'
 	);
+	/**
+	 * @var PrivilegedApiService
+	 */
+	protected $privilegedService;
+
+	public function __construct(){
+		parent::__construct();
+		$this->privilegedService = new PrivilegedApiService( $this->request );
+	}
 
 	/**
 	 * block throiwng WikiaException for WikiaApi
