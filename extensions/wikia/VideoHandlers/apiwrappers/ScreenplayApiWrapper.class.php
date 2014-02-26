@@ -3,12 +3,16 @@
 class ScreenplayApiWrapper extends IngestionApiWrapper {
 	const VIDEO_TYPE = '.mp4';
 	const THUMBNAIL_TYPE = '.jpg';
-	const MEDIUM_JPEG_BITRATE_ID = 267;	// 250x200
-	const LARGE_JPEG_BITRATE_ID = 382;	// 480x360
-	const HIGHDEF_BITRATE_ID = 449;	// 720p
-	const STANDARD_43_BITRATE_ID = 455;	// 360, 4:3
-	const STANDARD_BITRATE_ID = 461;	// 360, 16:9
-	const STANDARD2_BITRATE_ID = 472;	// 360, 16:9
+
+	const MEDIUM_JPEG_BITRATE_ID = 267;   // 250x200
+	const LARGE_JPEG_BITRATE_ID = 382;    // 480x360
+
+	const HIGHDEF_BITRATE_ID = 449;       // 720p, 16:9
+	const STANDARD_43_BITRATE_ID = 455;   // 360, 4:3
+	const STANDARD_BITRATE_ID = 461;      // 360, 16:9
+	const STANDARD2_43_BITRATE_ID = 471;  // 360, 4:3
+	const STANDARD2_BITRATE_ID = 472;     // 360, 16:9
+
 	const ENCODEFORMATCODE_JPEG = 9;
 	const ENCODEFORMATCODE_MP4 = 20;
 
