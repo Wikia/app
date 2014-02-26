@@ -158,7 +158,6 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 							log( ['loadGpt', 'defining slot', slotname], 9, logGroup );
 
 							slotnameGpt = slotname + '_' + slotMapSrc;
-
 							slotItem = slotMap[slotname];
 							sizes = convertSizesToGpt( slotItem.size );
 
