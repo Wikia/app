@@ -111,6 +111,7 @@ class VideoEmbedToolSearchService
 	public function getSuggestedVideosByArticleId( $articleId ) {
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
+		$query =  (new \Wikia\Search\Query\Select($query))->getSanitizedQuery();
 		$expectedFields = $this->getExpectedFields();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
