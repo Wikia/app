@@ -61,7 +61,12 @@ class VideosModule extends WikiaModel {
 				}
 			}
 
-			$this->wg->Memc->set( $memcKey, $this->getVideosDetail( $videos ), self::CACHE_TTL );
+			// get video detail
+			if ( !empty( $videos ) ) {
+				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -100,7 +105,12 @@ class VideosModule extends WikiaModel {
 				$this->addToList( $videos, $videoTitle );
 			}
 
-			$this->wg->Memc->set( $memcKey, $this->getVideosDetail( $videos ), self::CACHE_TTL );
+			// get video detail
+			if ( !empty( $videos ) ) {
+				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -139,9 +149,12 @@ class VideosModule extends WikiaModel {
 
 					$this->addToList( $videos, $video['title'] );
 				}
+
+				// get video detail
+				$videos = $this->getVideosDetail( $videos );
 			}
 
-			$this->wg->Memc->set( $memcKey, $this->getVideosDetail( $videos ), self::CACHE_TTL );
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -199,6 +212,7 @@ class VideosModule extends WikiaModel {
 					'title'     => $video['fileTitle'],
 					'url'       => $video['fileUrl'],
 					'thumbnail' => $video['thumbnail'],
+					'videoKey'  => $video['title'],
 				];
 			}
 		}
@@ -249,8 +263,8 @@ class VideosModule extends WikiaModel {
 	protected function trimVideoList( $videos, $numRequired ) {
 		shuffle( $videos );
 		array_splice( $videos, $numRequired );
-		foreach ( $videos as $videoTitle ) {
-			$this->existingVideos[$videoTitle] = true;
+		foreach ( $videos as $video ) {
+			$this->existingVideos[$video['videoKey']] = true;
 		}
 
 		return $videos;
