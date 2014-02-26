@@ -85,6 +85,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	if ( syslogReport ) {
+		var uri = new mw.Uri( location.href );
+		syslogReport( 3, 'ContributionV2', {
+			action: 've-cancel-button-click',
+			referrer: document.referrer,
+			isAnonymous: mw.user.anonymous() ? 'yes' : 'no',
+			isRedlink: !!uri.query.redlink ? 'yes' : 'no',
+			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
+		} );
+	}
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	mw.hook( 've.cancelButton' ).fire();
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
@@ -96,6 +106,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarMetaButtonClick = function () 
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
+	if ( syslogReport ) {
+		var uri = new mw.Uri( location.href );
+		syslogReport( 3, 'ContributionV2', {
+			action: 've-save-button-click',
+			referrer: document.referrer,
+			isAnonymous: mw.user.anonymous() ? 'yes' : 'no',
+			isRedlink: !!uri.query.redlink ? 'yes' : 'no',
+			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
+		} );
+	}
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };

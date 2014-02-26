@@ -125,6 +125,13 @@ var CreatePage = {
 
 							$( '#wpCreatePageDialogTitle' ).focus();
 
+							if ( syslogReport ) {
+								syslogReport( 3, 'ContributionV2', {
+									action: 'createpage-show',
+									isAnonymous: mw.user.anonymous() ? 'yes' : 'no'
+								} );
+							}
+
 							createPageModal.show();
 
 							CreatePage.loading = false;
@@ -137,6 +144,12 @@ var CreatePage = {
 
 	submitDialog: function( enterWasHit ) {
 		'use strict';
+		if ( syslogReport ) {
+			syslogReport( 3, 'ContributionV2', {
+				action: 'createpage-submit',
+				isAnonymous: mw.user.anonymous() ? 'yes' : 'no'
+			} );
+		}	
 		CreatePage.checkTitle( $( '#wpCreatePageDialogTitle' ).val(), enterWasHit );
 	},
 
