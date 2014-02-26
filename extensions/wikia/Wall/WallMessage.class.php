@@ -1487,4 +1487,14 @@ class WallMessage {
 		return $urls;
 	}
 
+	/**
+	 * @desc Concatenates page_touched value with cache buster value
+	 *
+	 * @return string
+	 */
+	public function getETag() {
+		global $wgStyleVersion;
+		return $this->getTitle()->getTouched() . '-' . $wgStyleVersion;
+	}
+
 }

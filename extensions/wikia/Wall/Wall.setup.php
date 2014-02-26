@@ -161,6 +161,9 @@ $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 $wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
+// Fix ETag
+$wgHooks['ParserCacheGetETag'][] = 'WallHooksHelper::onParserCacheGetETag';
+
 JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
