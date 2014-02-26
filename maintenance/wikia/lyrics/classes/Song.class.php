@@ -3,28 +3,26 @@
  * Created by PhpStorm.
  * User: aquilax
  * Date: 2/26/14
- * Time: 2:00 PM
+ * Time: 3:00 PM
  */
 
-class Album extends BaseLyricsEntity {
+class Song extends BaseLyricsEntity {
 
-	const TABLE_NAME = 'lyrics_api.album';
+	const TABLE_NAME = 'lyrics_api.song';
 
 	var $dataMap = [
 		'article_id' => 'article_id',
 		'artist_id' => 'artist_id',
-		'Album' => 'name',
-		'Cover' => 'pic',
-		'year' => 'year',
-		'Length' => 'length',
-		'Genre' => 'genres',
-		'Wikipedia' => 'wikipedia',
-		'romanizedAlbum' => 'romanized_name',
+		'song' => 'name',
+		'lyrics' => 'lyrics',
+		'romanizedSong' => 'romanized_name',
+		'language' => 'language',
+		'youtube' => 'youtube',
+		'goear' => 'goear',
+		'itunes' => 'itunes',
 		'asin' => 'asin',
-		'iTunes' => 'itunes',
-		'allmusic' => 'allmusic',
-		'discogs' => 'discogs',
 		'musicbrainz' => 'musicbrainz',
+		'allmusic' => 'allmusic',
 		'download' => 'download',
 	];
 
@@ -37,5 +35,4 @@ class Album extends BaseLyricsEntity {
 			__METHOD__
 		);
 	}
-
-}
+} 

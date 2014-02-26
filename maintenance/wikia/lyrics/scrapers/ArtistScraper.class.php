@@ -19,7 +19,6 @@ class ArtistScraper extends BaseScraper {
 
 		$artist = new Artist( $this->db );
 		$artistData['id'] = $artist->save( $artistData );
-		unset( $artist );
 		//$albums = $this->getAlbums( $article, $artistData );
 	}
 
@@ -43,15 +42,6 @@ class ArtistScraper extends BaseScraper {
 				$albumData['id'] = $album->save( $albumData );
 			}
 		}
-	}
-
-	protected function getAlbumNameYear( $headerMatch ) {
-		$name = $this->getLabel( $headerMatch );
-		if ( preg_match('#(.+)\s\(([\d]+)\)#', $name, $matches) ) {
-			return array($matches[1], $matches[2]);
-		}
-		// TODO: Handle album without year
-		return array($name, null);
 	}
 
 	protected function getAlbumPic( $section, $artistName ) {

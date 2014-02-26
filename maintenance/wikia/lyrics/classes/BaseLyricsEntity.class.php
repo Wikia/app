@@ -24,4 +24,14 @@ class BaseLyricsEntity {
 		return $result;
 	}
 
+	public function getIdByName( $name ) {
+		return 1; // TODO: REMOVEME
+		return $this->db->selectField(
+			self::TABLE_NAME,
+			id,
+			[ 'name' =>	$albumName],
+			__METHOD__);
+	}
+
+
 } 

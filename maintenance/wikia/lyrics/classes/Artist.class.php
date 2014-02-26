@@ -8,9 +8,10 @@
 
 class Artist extends BaseLyricsEntity {
 
-	const ARTIST_TABLE_NAME = 'lyrics_api.artist';
+	const TABLE_NAME = 'lyrics_api.artist';
 
 	var $dataMap = [
+		'article_id' => 'article_id',
 		'name' => 'name',
 		'romanizedArtist' => 'romanized_name',
 		'pic' => 'image',
@@ -35,10 +36,19 @@ class Artist extends BaseLyricsEntity {
 	public function save( $artistData ) {
 		$artistData = $this->sanitiseData( $artistData, $this->dataMap );
 		$this->db->replace(
-			self::ARTIST_TABLE_NAME,
+			self::TABLE_NAME,
 			null,
 			$artistData,
 			__METHOD__
 		);
+	}
+
+	public function getIdByName( $artistName ) {
+		return 1; // TODO: REMOVEME
+		return $this->db->selectField(
+			self::TABLE_NAME,
+			id,
+			[ 'name' =>	$artistName],
+			__METHOD__);
 	}
 } 

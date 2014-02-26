@@ -58,4 +58,19 @@ abstract class BaseScraper {
 		return $text;
 	}
 
+	protected function getAlbumNameYear( $headerMatch ) {
+		$name = $this->getLabel( $headerMatch );
+		if ( preg_match('#(.+)\s\(([\d]+)\)#', $name, $matches) ) {
+			return array($matches[1], $matches[2]);
+		}
+		// TODO: Handle album without year
+		return array($name, null);
+	}
+
+	protected function getArtistId( $artistName ) {
+		$artist = new Artist( $this->db );
+		$id = $artist->getIdByName( $artistName );
+		return $id ? $id : null;
+	}
+
 }
