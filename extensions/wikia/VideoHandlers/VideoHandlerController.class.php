@@ -16,7 +16,7 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getEmbedCode( ) {
-		$title = $this->getVal('fileTitle', '');
+		$title = urldecode( $this->getVal('fileTitle', '') );
 		$width = $this->getVal('width', '');
 		$autoplay = $this->getVal( 'autoplay', false );
 
