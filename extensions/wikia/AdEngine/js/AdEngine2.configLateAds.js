@@ -62,7 +62,7 @@
 		log,
 		window,
 		adProviderGamePro,
-		window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
+		window.wgEnableRHonDesktop ? adProviderRemanantDart : adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);
