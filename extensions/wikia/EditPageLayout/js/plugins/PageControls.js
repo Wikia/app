@@ -166,6 +166,13 @@
 
 			this.editor.setState( this.editor.states.SAVING );
 
+			if ( syslogReport ) {
+				syslogReport( 3, "Contribution", {
+					action: 'ck-publish',
+					isDirty: ( typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty() )
+				} );
+			}
+
 			this.editor.track({
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
 				label: 'publish'
