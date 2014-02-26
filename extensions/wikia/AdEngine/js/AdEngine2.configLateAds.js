@@ -24,6 +24,7 @@
 		wikiaFullGpt,
 		fakeLiftium = {},
 		adProviderGamePro,
+		adProviderRemanantDart,
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
@@ -50,7 +51,7 @@
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderLiftium = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
+        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
@@ -59,7 +60,7 @@
 		log,
 		window,
 		adProviderGamePro,
-		adProviderLiftium,
+        window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);
