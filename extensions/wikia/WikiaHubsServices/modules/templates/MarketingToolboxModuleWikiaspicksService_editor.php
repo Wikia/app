@@ -1,25 +1,22 @@
 <div class="module-mediabox">
-	<?= $app->renderView(
-			'MarketingToolbox',
-			'sponsoredImage',
-			array(
-				'form' => $form,
-				'fieldName' => 'sponsoredImage',
-				'fileUrl' => (isset($sponsoredImage->url) ? $sponsoredImage->url : ''),
-				'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
-				'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),
-			)
-		);
+	<?=(new Wikia\Template\PHPEngine)->setData([
+		'form' => $form,
+		'fieldName' => 'sponsoredImage',
+		'fileUrl' => (isset($sponsoredImage->url) ? $sponsoredImage->url : ''),
+		'imageWidth' => (isset($sponsoredImage->width) ? $sponsoredImage->width : ''),
+		'imageHeight' => (isset($sponsoredImage->height) ? $sponsoredImage->height : ''),
+		'wg' => $wg
+	])->render( dirname(__FILE__) . '/MarketingToolbox_sponsoredImage.php');
 	?>
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<? $fileNameField = $form->getField('fileName');?>
 				<?php if( !empty($fileNameField['value']) ): ?>
 					<?= $fileNameField['value']; ?>
 				<?php else: ?>
-					<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
+					<?= wfMessage('wikia-hubs-file-name')->text() ?>
 				<?php endif ?>
 			</span>
 
@@ -28,7 +25,7 @@
 			<?=$form->renderField('imageLink'); ?>
 			<?=$form->renderField('text'); ?>
 
-			<p class="alternative"><?= wfMessage('marketing-toolbox-hub-module-html-text-tip')->parse(); ?></p>
+			<p class="alternative"><?= wfMessage('wikia-hubs-module-html-text-tip')->parse(); ?></p>
 		</div>
 		<div class="grid-1 alpha">
 			<div class="image-placeholder">

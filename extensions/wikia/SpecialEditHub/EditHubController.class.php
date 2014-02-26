@@ -396,14 +396,6 @@ class EditHubController extends WikiaSpecialPageController {
 		$this->videoUrl = $url;
 	}
 
-	public function sponsoredImage() {
-		$this->form = $this->request->getVal('form');
-		$this->fieldName = $this->request->getVal('fieldName');
-		$this->fileUrl = $this->request->getVal('fileUrl', '');
-		$this->imageWidth = $this->request->getVal('imageWidth', '');
-		$this->imageHeight = $this->request->getVal('imageHeight', '');
-	}
-
 	private function purgeCache($module) {
 		global $wgCityId;
 

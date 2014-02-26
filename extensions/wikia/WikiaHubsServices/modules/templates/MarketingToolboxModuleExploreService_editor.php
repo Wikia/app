@@ -1,17 +1,17 @@
 <div class="module-explore">
 	<div class="module-box grid-4 alpha">
 		<div class="grid-3 alpha">
-			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-hub-module-explore-add-photo')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-module-explore-add-photo')->text() ?>" />
 			<span class="filename-placeholder alternative">
 				<? $fileNameField = $form->getField('fileName'); ?>
 				<? if (!empty($fileNameField['value'])): ?>
 					<?= $fileNameField['value']; ?>
 				<? else: ?>
-					<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
+					<?= wfMessage('wikia-hubs-file-name')->text() ?>
 				<? endif ?>
 			</span>
 			<p class="alternative">
-				<?= wfMessage('marketing-toolbox-hub-module-explore-image-tip')->parse() ?>
+				<?= wfMessage('wikia-hubs-module-explore-image-tip')->parse() ?>
 			</p>
 
 			<?=$form->renderField('fileName')?>

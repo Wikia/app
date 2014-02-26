@@ -40,3 +40,6 @@ $wgAutoloadClasses['WikiaHubsServicesHelper'] =  $dir . 'WikiaHubsServicesHelper
 $wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
 
 $wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
+
+//message files
+$wgExtensionMessagesFiles['WikiaHubsServices'] = $dir . 'WikiaHubsServices.i18n.php';

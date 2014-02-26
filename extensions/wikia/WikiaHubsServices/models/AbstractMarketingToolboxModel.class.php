@@ -142,7 +142,7 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	}
 	
 	public function getModuleName($moduleId) {
-		return wfMessage('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+		return wfMessage('wikia-hubs-module-' . $this->modules[$moduleId]);
 	}
 
 	public function getNotTranslatedModuleName($moduleId) {

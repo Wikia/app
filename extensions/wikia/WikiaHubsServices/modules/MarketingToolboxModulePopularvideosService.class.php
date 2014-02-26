@@ -5,13 +5,13 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 	public function getFormFields() {
 		return array(
 			'header' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-popular-videos-header'),
+				'label' => wfMessage('wikia-hubs-module-popular-videos-header')->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required'
@@ -29,7 +29,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 							array(
 								'required' => true
 							),
-							array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+							array('wrong-file' => 'wikia-hubs-validator-wrong-file')
 						)
 					)
 				),
@@ -43,7 +43,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 								'required' => true
 							),
 							array(
-								'wrong' => 'marketing-toolbox-validator-wrong-url'
+								'wrong' => 'wikia-hubs-validator-wrong-url'
 							)
 						),
 					)

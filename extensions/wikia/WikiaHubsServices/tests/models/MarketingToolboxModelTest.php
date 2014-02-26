@@ -22,7 +22,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 
 		$mockMsg->expects($this->once())
 			->method('wfMessage')
-			->with('marketing-toolbox-hub-module-slider')
+			->with('wikia-hubs-module-slider')
 			->will($this->returnValue('testNameFor slider'));
 
 		$this->assertEquals(

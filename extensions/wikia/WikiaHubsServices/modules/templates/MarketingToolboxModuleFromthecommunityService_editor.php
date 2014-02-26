@@ -3,13 +3,13 @@
 	<h3 class="alternative"><?= $i?>.</h3>
 	<div class="module-right-box">
 		<div class="module-input-box">
-			<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-edithub-add-file-button')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />
 				<span class="alternative filename-placeholder">
 					<? $photoField = $form->getField('photo' . $i); ?>
 					<? if (!empty($photoField['value'])): ?>
 						<?= $photoField['value']; ?>
 					<? else: ?>
-						<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
+						<?= wfMessage('wikia-hubs-file-name')->text() ?>
 					<? endif ?>
 				</span>
 
@@ -19,7 +19,7 @@
 			<?=$form->renderField('quote' . $i)?>
 			<?=$form->renderField('url' . $i)?>
 
-			<input class="secondary clear" type="button" value="<?= wfMessage('marketing-toolbox-edithub-clear-button')->text() ?>" />
+			<input class="secondary clear" type="button" value="<?= wfMessage('wikia-hubs-clear-button')->text() ?>" />
 		</div>
 		<div class="module-image-box">
 			<div class="image-placeholder">
