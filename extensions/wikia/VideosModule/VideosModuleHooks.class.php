@@ -71,7 +71,7 @@ class VideosModuleHooks {
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$wg = F::app()->wg;
 
-		$vars[ 'wgVideosModuleABTest' ] = $wg->VideosModuleABTest;
+		$vars['wgVideosModuleABTest'] = $wg->VideosModuleABTest;
 
 		return true;
 	}
