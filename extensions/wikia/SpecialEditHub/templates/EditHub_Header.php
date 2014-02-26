@@ -8,8 +8,8 @@
 		<? if (isset($date)): ?>
 			<p><strong><?=$wg->lang->date($date);?></strong></p>
 		<? endif?>
-		<? if (isset($regionName) && isset($sectionName) && isset($verticalName)): ?>
-			<p class="alternative"><?=$regionName?> / <?=$sectionName ?> / <?=$verticalName?></p>
+		<? if (isset($hubLang) && isset($hubName)): ?>
+			<p class="alternative"><?=$hubLang?> / <?=$hubName ?></p>
 		<? endif ?>
 	</div>
 

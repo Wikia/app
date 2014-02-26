@@ -4,13 +4,9 @@
 ) ?>
 
 <div class="EditHub WikiaGrid">
-	<div class="grid-2 data">
-		<img class="chevron border" src="<?= $wg->BlankImgUrl; ?>">
-		<img class="chevron" src="<?= $wg->BlankImgUrl; ?>">
-		<div class="ml15">
-			<h2><?= wfMessage('edit-hub-date-title')->escaped(); ?></h2>
-			<div id="date-picker"><?=wfMessage('edit-hub-tooltip-calendar-placeholder')->escaped()?></div>
-		</div>
+	<div class="grid-6 data">
+		<h2><?= wfMessage('edit-hub-date-title')->escaped(); ?></h2>
+		<div id="date-picker"><?=wfMessage('edit-hub-tooltip-calendar-placeholder')->escaped()?></div>
 	</div>
 </div>
 

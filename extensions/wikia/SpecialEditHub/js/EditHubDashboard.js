@@ -53,8 +53,7 @@ EditHub.prototype = {
 			tmpDate.setTime(date);
 			Wikia.Querystring(window.wgEditHubUrl)
 				.setVal({
-					date: tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60,
-					sectionId: $('.section input:not(.secondary)').data('section-id')
+					date: tmpDate.getTime() / 1000 - tmpDate.getTimezoneOffset() * 60
 				})
 				.goTo();
 		}

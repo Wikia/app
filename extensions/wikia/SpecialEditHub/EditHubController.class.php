@@ -13,7 +13,7 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->toolboxModel = new MarketingToolboxModel();
+		$this->toolboxModel = new MarketingToolboxV3Model();
 	}
 
 	/**
@@ -69,7 +69,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 	/**
 	 * dashboard action
-	 * Here curator can select language, section, vertical and date
+	 * Here curator can select date
 	 */
 	public function dashboardAction() {
 		if (!$this->checkAccess()) {
@@ -84,11 +84,13 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	protected function checkDate($date) {
+		global $wgCityId;
+
 		$datetime = new DateTime('@' . $date);
 		if ($datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
 			$datetime->setTime(0, 0, 0);
 			$url = $this->toolboxModel->getModuleUrl(
-				$this->getParams(),
+				$wgCityId,
 				$datetime->getTimestamp(),
 				$this->selectedModuleId
 			);
@@ -100,6 +102,8 @@ class EditHubController extends WikiaSpecialPageController {
 	 * Main action for editing hub modules
 	 */
 	public function editHubAction() {
+		global $wgCityId;
+
 		if (!$this->checkAccess()) {
 			return false;
 		}
@@ -114,10 +118,11 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$this->checkDate($this->date);
 
+
 		$this->flashMessage = FlashMessages::pop();
 
 		$modulesData = $this->toolboxModel->getModulesData(
-			$this->getParams(),
+			$wgCityId,
 			$this->date,
 			$this->selectedModuleId
 		);
@@ -133,12 +138,14 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
-			$this->langCode,
-			$this->sectionId,
-			$this->verticalId
+			null,
+			null,
+			null,
+			$wgCityId,
+			3
 		);
 
-		$form = new FormBuilderService(MarketingToolboxModel::FORM_FIELD_PREFIX);
+		$form = new FormBuilderService(MarketingToolboxV3Model::FORM_FIELD_PREFIX);
 		$form->setFields($module->getFormFields());
 
 		if ($this->request->wasPosted()) {
@@ -148,7 +155,7 @@ class EditHubController extends WikiaSpecialPageController {
 			$isValid = $form->validate($selectedModuleValues);
 			if ($isValid) {
 				$this->toolboxModel->saveModule(
-					$this->getParams(),
+					['cityId' => $wgCityId],
 					$this->date,
 					$this->selectedModuleId,
 					$selectedModuleValues,
@@ -178,6 +185,8 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function publishHub() {
+		global $wgCityId;
+
 		if (!$this->checkAccess()) {
 			return false;
 		}
@@ -186,7 +195,7 @@ class EditHubController extends WikiaSpecialPageController {
 			$this->retriveDataFromUrl();
 
 			$result = $this->toolboxModel->publish(
-				$this->getParams(),
+				$wgCityId,
 				$this->date
 			);
 
@@ -197,7 +206,7 @@ class EditHubController extends WikiaSpecialPageController {
 				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
 					. '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
-				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->getParams(), null, true)) {
+				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -207,6 +216,8 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	private function getNextModuleUrl() {
+		global $wgCityId;
+
 		$moduleIds = $this->toolboxModel->getEditableModulesIds();
 
 		$actualModuleIndex = array_search($this->selectedModuleId, $moduleIds);
@@ -218,7 +229,7 @@ class EditHubController extends WikiaSpecialPageController {
 		}
 
 		$nextUrl = $this->toolboxModel->getModuleUrl(
-			$this->getParams(),
+			$wgCityId,
 			$this->date,
 			$nextModuleId
 		);
@@ -226,9 +237,6 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	protected function retriveDataFromUrl() {
-		$this->langCode = $this->getVal('region');
-		$this->verticalId = $this->getVal('verticalId');
-		$this->sectionId = $this->getVal('sectionId');
 		$this->date = $this->getVal('date');
 		$this->selectedModuleId = $this->getVal('moduleId', 1);
 	}
@@ -241,21 +249,22 @@ class EditHubController extends WikiaSpecialPageController {
 	protected function prepareLayoutData($selectedModuleId, $modulesData) {
 		$this->prepareHeaderData($modulesData, $this->date);
 		$this->prepareLeftMenuData($modulesData, $selectedModuleId);
-		$this->prepareFooterData($this->langCode, $this->verticalId, $this->date);
+		$this->prepareFooterData($this->date);
 	}
 
 	/**
 	 * Prepare data for header
 	 */
 	protected function prepareHeaderData($modulesData, $date) {
+		global $wgCityId;
+
 		$this->headerData = array(
 			'date' => $date,
 			'moduleName' => $modulesData['activeModuleName'],
 			'lastEditor' => $modulesData['lastEditor'],
 			'lastEditTime' => $modulesData['lastEditTime'],
-			'sectionName' => $this->toolboxModel->getSectionName($this->sectionId),
-			'verticalName' => $this->toolboxModel->getVerticalName($this->sectionId, $this->verticalId),
-			'regionName' => Language::getLanguageName($this->langCode),
+			'hubName' => WikiFactory::getWikiByID($wgCityId)->city_title,
+			'hubLang' => $this->wg->Lang->getLanguageName($this->wg->ContLang->getCode())
 		);
 	}
 
@@ -275,13 +284,11 @@ class EditHubController extends WikiaSpecialPageController {
 		}
 	}
 
-	protected  function prepareFooterData($langCode, $verticalId, $timestamp) {
-		$params = [
-			'langCode' => $langCode,
-			'verticalId' => $verticalId
-		];
+	protected  function prepareFooterData($timestamp) {
+		global $wgCityId;
+
 		$this->footerData = array(
-			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($params, $timestamp)
+			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($wgCityId, $timestamp)
 		);
 	}
 
@@ -308,24 +315,13 @@ class EditHubController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getCalendarData() {
-		$params = [
-			'langCode' => $this->getVal('langCode'),
-			'verticalId' => $this->getVal('verticalId')
-		];
+		global $wgCityId;
+
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getCalendarData($params, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->toolboxModel->getCalendarData($wgCityId, $beginTimestamp, $endTimestamp);
 	}
 
-	/**
-	 * Get available verticals for selected Section
-	 *
-	 * @param int $sectionId
-	 * @return array
-	 */
-	public function getVerticals($sectionId) {
-		return $this->toolboxModel->getAvailableVerticals(MarketingToolboxModel::SECTION_HUBS);
-	}
 
 	/**
 	 * Render header module
@@ -333,8 +329,7 @@ class EditHubController extends WikiaSpecialPageController {
 	public function executeHeader($data) {
 		$this->response->addAsset('/extensions/wikia/SpecialEditHub/css/EditHub_Header.scss');
 
-		$optionalDataKeys = array('date', 'moduleName', 'sectionName', 'verticalName',
-			'regionName', 'lastEditor', 'lastEditTime');
+		$optionalDataKeys = array('date', 'moduleName', 'hubName', 'hubLang', 'lastEditor', 'lastEditTime');
 
 		foreach ($optionalDataKeys as $key) {
 			if (isset($data[$key])) {
@@ -410,11 +405,13 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	private function purgeCache($module) {
+		global $wgCityId;
+
 		$module->purgeMemcache($this->date);
 		$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
-			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $this->getParams(), null )) {
+			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
 				$this->purgeWikiaHomepageHubs();
 		}
 	}
@@ -429,13 +426,5 @@ class EditHubController extends WikiaSpecialPageController {
 			$this->hubsServicesHelper = new WikiaHubsServicesHelper();
 		}
 		return $this->hubsServicesHelper;
-	}
-
-	private function getParams() {
-		return [
-			'langCode' => $this->langCode,
-			'sectionId' => $this->sectionId,
-			'verticalId' => $this->verticalId
-		];
 	}
 }

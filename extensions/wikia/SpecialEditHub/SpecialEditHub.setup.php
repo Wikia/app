@@ -4,9 +4,9 @@
  * EditHub
  *
  * @author Damian Jóźwiak
- * @author Andrzej 'nAndy' Łukaszewski
- * @author Marcin Maciejewski
  * @author Sebastian Marzjan
+ * @author Łukasz Konieczny
+ * @author Bartosz Bentkowski
  *
  */
 

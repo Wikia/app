@@ -22,35 +22,9 @@ $color-toolbox-datepicker-inprog-background: #d4ecf7;
 		height: 380px;
 	}
 
-	input[type="button"] {
-		margin-bottom: 20px;
-		width: 100%;
-	}
-
-	.ml15 {
-		margin-left: 15px;
-	}
-
-	.chevron {
-		border-color: transparent transparent transparent $color-article-thumb-background;
-		border-width: 8px;
-		margin-left: -1px;
-		margin-top: -15px;
-		position: absolute;
-		top: 38%;
-	}
-
-	.chevron.border {
-		margin-left: 0;
-		border-color: transparent transparent transparent $color-tab-background-top;
-	}
-
-	&.WikiaGrid .grid-2 {
-		width: 320px;
-	}
-
 	#date-picker {
 		clear: left;
+		margin-bottom: 20px;
 	}
 }
 

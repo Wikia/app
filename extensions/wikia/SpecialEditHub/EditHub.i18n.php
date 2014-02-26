@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'edit-hub-tooltip-current-date' => 'Current date',
 	'edit-hub-tooltip-published' => 'Published',
 	'edit-hub-tooltip-in-progress' => 'Not published',
-	'edit-hub-tooltip-calendar-placeholder' => 'To activate the calendar select Vertical first.',
+	'edit-hub-tooltip-calendar-placeholder' => 'Please, wait for calendar.',
 
 	'edit-hub-header-dashboard' => 'Dashboard',
 	'edit-hub-header-right-last-saved' => 'Last saved:',
