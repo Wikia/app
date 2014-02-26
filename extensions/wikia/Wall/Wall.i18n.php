@@ -259,7 +259,7 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-history-action-thread-history' => 'thread history',
 
 	/* Thread Level History */
-	'wall-thread-history-title' => 'thread history',
+	'wall-thread-history-title' => 'Thread history',
 	'wall-thread-history-thread-created' => '$1 $2 created this thread',
 	'wall-thread-history-reply-created' => '$1 $2 left a reply',
 
