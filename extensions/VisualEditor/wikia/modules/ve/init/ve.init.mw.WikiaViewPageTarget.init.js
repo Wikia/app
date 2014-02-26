@@ -218,7 +218,14 @@
 		},
 
 		onEditSectionLinkClick: function ( e ) {
-			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+			if ( 
+				!mw.config.get( 'wgEnableVisualEditorUI' ) ||
+				( e.which && e.which !== 1 ) || 
+				e.shiftKey || 
+				e.altKey || 
+				e.ctrlKey || 
+				e.metaKey 
+			) {
 				return;
 			}
 
