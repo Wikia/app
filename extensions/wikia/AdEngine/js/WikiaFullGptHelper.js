@@ -161,7 +161,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 							slotItem = slotMap[slotname];
 							sizes = convertSizesToGpt( slotItem.size );
 
-							slotPath = path + '/' + slotMapSrc + '/' + slotname;
+							slotPath = path + '/' + slotname + '/' + slotMapSrc;
 
 							log( ['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup );
 							slot = googletag.defineSlot( slotPath, sizes, slotnameGpt );
@@ -184,9 +184,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 								}
 							}
 
-							gptSlots[slotname] = slot;
+							gptSlots[slotnameGpt] = slot;
 
-							dataAttribs[slotname] = {
+							dataAttribs[slotnameGpt] = {
 								'data-gpt-page-params': JSON.stringify( pageLevelParams ),
 								'data-gpt-slot-params': JSON.stringify( slotParams ),
 								'data-gpt-slot-sizes': JSON.stringify( sizes )
@@ -228,7 +228,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			log(['googletag.display', slotnameGpt], 9, logGroup);
 			googletag.display(slotnameGpt);
 
-			slotQueue.push(gptSlots[slotname]);
+			slotQueue.push(gptSlots[slotnameGpt]);
 
 			doneCallbacks[slotnameGpt] = function () {
 				var status, height;
@@ -258,9 +258,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			};
 
 			// Save page level and slot level params for easier ad delivery debugging
-			for (attrName in dataAttribs[slotname]) {
-				if (dataAttribs[slotname].hasOwnProperty(attrName)) {
-					slotDiv.setAttribute(attrName, dataAttribs[slotname][attrName]);
+			for (attrName in dataAttribs[slotnameGpt]) {
+				if (dataAttribs[slotnameGpt].hasOwnProperty(attrName)) {
+					slotDiv.setAttribute(attrName, dataAttribs[slotnameGpt][attrName]);
 				}
 			}
 		});
