@@ -1473,7 +1473,9 @@ class WallMessage {
 		// To quick fix it we use $idDB variable...
 		if( $this->getMessagePageId() > 0 ) {
 			if( $this->isMain() ) {
-				$urls[] = $this->getMessagePageUrl( true );
+				$threadPageUrl = $this->getMessagePageUrl( true );
+				$urls[] = $threadPageUrl;
+				$urls[] = $threadPageUrl . '?action=history';
 			} else {
 				/** @var WallMessage $parent */
 				$parent = $this->getTopParentObj();
@@ -1508,9 +1510,26 @@ class WallMessage {
 	 * @desc Changes page_touched value in page table for main message
 	 */
 	public function invalidateCache() {
-		$parent = $this->getTopParentObj();
-		if( !is_null( $parent ) ) {
-			$parent->getTitle()->invalidateCache();
+		if( $this->isMain() ) {
+			$title = $this->getTitle();
+		} else {
+			$parent = $this->getTopParentObj();
+
+			if( !is_null( $parent ) ) {
+				$title = $parent->getTitle();
+			} else {
+				$title = null;
+			}
+		}
+
+		if( !is_null( $title ) ) {
+			$title->invalidateCache();
+		} else {
+			wfDebug(
+				__METHOD__ .
+				': WARNING! $title not found for WallMessage. The cache will not be invalidated. ' .
+				'ETags will stay the same. Message ID: ' . $this->getMessagePageId()
+			);
 		}
 	}
 
