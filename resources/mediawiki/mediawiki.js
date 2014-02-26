@@ -1541,10 +1541,15 @@ var mw = ( function ( $, undefined ) {
 			 * @method hook
 			 * @member mw
 			 * @param {string} name Name of hook.
+			 * @param {string} callbacksFlag Flag(s) for $.Callbacks method. Defaults to 'memory'.
 			 * @return {mw.hook}
 			 */
-			return function ( name ) {
-				var list = lists[name] || ( lists[name] = $.Callbacks( 'memory' ) );
+			return function ( name, callbacksFlag ) {
+				if (typeof callbacksFlag !== 'string') {
+					callbacksFlag = 'memory';
+				}
+				var list = lists[name] || ( lists[name] = $.Callbacks( callbacksFlag ) );
+				console.log('NAME: ' + name + ' FLAG: ' + callbacksFlag);
 
 				return {
 					/**
