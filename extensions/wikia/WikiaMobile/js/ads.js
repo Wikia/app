@@ -62,8 +62,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 	 * 		wrapper - html element
 	 * 		init - function to be called
 	 */
-	function setupSlot(options) {
-		if (shouldRequestAd()) {
+	function setupSlot( options ) {
+		if ( shouldRequestAd() ) {
 			scriptWriter.injectScriptByUrl(
 				options.wrapper,
 				dartHelper.getMobileUrl({
@@ -71,7 +71,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 					size: options.size,
 					uniqueId: getUniqueId()
 				}),
-				findAd(options.wrapper, options.init)
+				findAd( options.wrapper, options.init )
 			);
 		}
 	}
@@ -84,9 +84,9 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 	 *
 	 * @return function - callback for postscribe
 	 */
-	function findAd(wrapper, init) {
+	function findAd( wrapper, init ) {
 		return function(){
-			if (wrapper) {
+			if ( wrapper ) {
 				var i,
 					imgs,
 					width,
@@ -97,31 +97,31 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 				//search for any real ad content
 				//unfortunately some iframes can be empty
 				//but we have no access to them
-				var found = (wrapper.getElementsByTagName('iframe').length > 0 ||
-					wrapper.getElementsByTagName('video').length > 0 ||
-					wrapper.getElementsByTagName('object').length > 0 ||
-					wrapper.getElementsByTagName('embed').length > 0 ||
-					wrapper.getElementsByClassName('celtra-ad-v3').length > 0);
+				var found = (wrapper.getElementsByTagName( 'iframe' ).length > 0 ||
+					wrapper.getElementsByTagName( 'video' ).length > 0 ||
+					wrapper.getElementsByTagName( 'object' ).length > 0 ||
+					wrapper.getElementsByTagName( 'embed' ).length > 0 ||
+					wrapper.getElementsByClassName( 'celtra-ad-v3' ).length > 0);
 
 				//despite the above check's result, run this anyways
 				//as it also takes care of hiding tracking pixels
-				if ((imgs = wrapper.getElementsByTagName('img')).length > 0) {
+				if ( ( imgs = wrapper.getElementsByTagName( 'img' ) ).length > 0 ) {
 					for (x = 0, y = imgs.length; x < y; x += 1) {
 						i = imgs[x];
-						width = i.getAttribute('width');
-						height = i.getAttribute('height');
+						width = i.getAttribute( 'width' );
+						height = i.getAttribute( 'height' );
 
 						//try calculating the size if there were no attributes
 						//this is expensive, so attributes were checked first
-						if (!width) {
+						if ( !width ) {
 							width = i.clientWidth;
 						}
 
-						if (!height) {
+						if ( !height ) {
 							height = i.clientHeight;
 						}
 
-						if (width > 1 && height > 1) {
+						if ( width > 1 && height > 1 ) {
 							//if image is not a tracking pixel
 							found = true;
 							break;
@@ -134,8 +134,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 					}
 				}
 
-				if(typeof init == 'function') {
-					init(found)
+				if( typeof init == 'function' ) {
+					init( found )
 				}
 			}
 		}
@@ -148,8 +148,8 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 		setupSlot: setupSlot,
 		shouldRequestAd: shouldRequestAd,
 		init: function(name, options){
-			if(options && options.hasOwnProperty('stop')){
-				stop(options.stop);
+			if( options && options.hasOwnProperty( 'stop' ) ){
+				stop( options.stop );
 			}
 		},
 		stop: stop

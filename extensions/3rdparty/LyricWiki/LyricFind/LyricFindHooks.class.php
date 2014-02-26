@@ -99,7 +99,9 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace
+	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace.
+	 *
+	 * Also: 
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin
@@ -109,7 +111,31 @@ class LyricFindHooks {
 		if (!self::pageIsIndexable($out->getTitle())) {
 			$out->setRobotPolicy('noindex,follow');
 		}
+		
+		return true;
+	}
+
+	/**
+	 * If this song is on takedown list... replace the lyrics content with a message about why
+	 * it is gone. This will replace the content of all <lyrics> tags on the page (also <lyricfind>
+	 * and <gracenotelyrics> tags for support of legacy pages).
+	 *
+	 * @param Parser $parser
+	 * @param $text a string containing the wikitext (this is _not_ a Text object).
+	 * @param strip_state (undocumented)
+	 */
+	static public function onParserBeforeStrip(Parser $parser, &$text, &$strip_state){
+		$wg = F::app()->wg;
+		$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $wg->Title->getArticleID());
+		$isMarkedAsRemoved = (!empty($removedProp));
+		if($isMarkedAsRemoved){
+			// Replace just the lyrics boxes if any are found. If none are found, hide the whole page.
+			$NO_LIMIT = -1;
+			$numReplacements = 0;
+			$text = preg_replace("/<(lyrics|lyricfind|gracenotelyrics)>(.*?)<\/(lyrics|lyricfind|gracenotelyrics)>/is", "<lyrics>{{gracenote_takedown}}</lyrics>", $text, $NO_LIMIT, $numReplacements);
+		}
 
 		return true;
 	}
+
 }
