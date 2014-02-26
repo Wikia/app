@@ -12,14 +12,9 @@ class WikiaApiController extends WikiaController {
 		'json',
 		'raw'
 	);
-	/**
-	 * @var PrivilegedApiService
-	 */
-	protected $privilegedService;
 
 	public function __construct(){
 		parent::__construct();
-		$this->privilegedService = new PrivilegedApiService( $this->request );
 	}
 
 	/**
@@ -41,11 +36,17 @@ class WikiaApiController extends WikiaController {
 	 * @throws WikiaException
 	 */
 	final public function init() {
+		$webRequest = F::app()->wg->Request;
+		$privilegedService = new PrivilegedApiService( $this->getRequest() );
+		$controller = $webRequest->getVal( 'controller' );
+		$method = $webRequest->getVal( 'method' );
+		$privilegedService->checkUse( $controller.'Controller', $method );
+		var_dump($controller, $method);die();
 		if ( !$this->request->isInternal() ) {
 			if ($this->hideNonCommercialContent()) {
 				$this->blockIfNonCommercialOnly();				
 			}
-			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+			$paramKeys = array_keys( $webRequest->getQueryValues() );
 			$count = count( $paramKeys );
 
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {

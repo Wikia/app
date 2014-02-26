@@ -114,6 +114,9 @@ class DocsApiController extends WikiaController {
 			if ( !$this->privilegedService->canUse( $controller, null ) ) {
 				continue;
 			}
+
+
+
 			foreach ( $docs['apis'] as $doc ) {
 				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
