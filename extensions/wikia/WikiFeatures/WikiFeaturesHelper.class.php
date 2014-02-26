@@ -34,7 +34,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableVisualEditorExt' => 259
+		'wgEnableVisualEditorUI' => 259
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -43,7 +43,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableVisualEditorExt' => '2013-12-04'
+		'wgEnableVisualEditorUI' => '2013-12-04'
 	);
 
 	/**
@@ -93,7 +93,7 @@ class WikiFeaturesHelper extends WikiaModel {
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
-					'imageExtension' => $feature == 'wgEnableVisualEditorExt' ? '.gif' : '.png'
+					'imageExtension' => $feature == 'wgEnableVisualEditorUI' ? '.gif' : '.png'
 				);
 			}
 		}

@@ -335,20 +335,22 @@
 	}
 
 	// Redlinks
-	$( function () {
-		$( document ).on(
-			'mouseover click',
-			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
-				var $element = $( this ),
-					href = $element.attr( 'href' ),
-					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
-					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
+	if ( mw.config.get( 'wgEnableVisualEditorUI' ) ) {
+		$( function () {
+			$( document ).on(
+				'mouseover click',
+				'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+				function () {
+					var $element = $( this ),
+						href = $element.attr( 'href' ),
+						articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+						redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailable( redlinkArticle ) ) {
-					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+					if ( init.isAvailable( redlinkArticle ) ) {
+						$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+					}
 				}
-			}
-		);
-	} );
+			);
+		} );
+	}
 }() );

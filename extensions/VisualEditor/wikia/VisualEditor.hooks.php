@@ -49,8 +49,9 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize;
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
+		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
 		return true;
 	}
 
