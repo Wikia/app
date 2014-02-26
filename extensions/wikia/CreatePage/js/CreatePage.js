@@ -5,7 +5,7 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	visualEditorUIEnabled: mw.config.get( 'wgEnableVisualEditorUI' ),
+	veUIEnabled: mw.config.get( 'wgEnableVisualEditorUI' ),
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -18,7 +18,7 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.visualEditorUIEnabled ) {
+				if ( CreatePage.veUIEnabled ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href =  articlePath + '?veaction=edit';
 				} else {
@@ -35,7 +35,7 @@ var CreatePage = {
 	openDialog: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorUIEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
+		if ( CreatePage.veUIEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
 			return;
 		}
 
@@ -167,7 +167,7 @@ var CreatePage = {
 	redLinkClick: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorUIEnabled ) {
+		if ( CreatePage.veUIEnabled ) {
 			return;
 		}
 

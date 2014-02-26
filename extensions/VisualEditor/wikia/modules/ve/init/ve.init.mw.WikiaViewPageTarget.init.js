@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [],
+		plugins = [], veUIEnabled,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -111,6 +111,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -219,7 +220,7 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( 
-				!mw.config.get( 'wgEnableVisualEditorUI' ) ||
+				!veUIEnabled ||
 				( e.which && e.which !== 1 ) || 
 				e.shiftKey || 
 				e.altKey || 
@@ -342,7 +343,7 @@
 	}
 
 	// Redlinks
-	if ( mw.config.get( 'wgEnableVisualEditorUI' ) ) {
+	if ( veUIEnabled ) {
 		$( function () {
 			$( document ).on(
 				'mouseover click',
