@@ -1474,13 +1474,16 @@ class WallMessage {
 				/** @var WallMessage $parent */
 				$parent = $this->getTopParentObj();
 				$parent->load( true );
-				$urls[] = $parent->getMessagePageUrl( true );
+				$threadPageUrl = $parent->getMessagePageUrl( true );
+				$urls[] = $threadPageUrl;
+				$urls[] = $threadPageUrl . '?action=history';
 			}
 
 			// CONN-430: Purge wall page / forum board
 			$title = Title::newFromText( $this->getMainPageText(), $namespace );
 			if( !empty( $title ) ) {
 				$urls[] = $title->getFullURL();
+				$urls[] = $title->getFullUrl( 'action=history' );
 			}
 		}
 
