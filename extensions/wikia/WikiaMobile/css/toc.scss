@@ -30,6 +30,7 @@ $width: 260px;
 
 		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}
+	&.
 
 	header {
 		background: $toc-background;
@@ -52,10 +53,6 @@ $width: 260px;
 	height: $handle-size;
 
 	border-radius: 3px 0 0 3px;
-
-	&.hide {
-		display: none;
-	}
 }
 
 .toc-list {
