@@ -483,4 +483,38 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * @desc Changes ETag value for WallMessage
+	 *
+	 * @param Article $article
+	 * @param ParserOptions $popts
+	 * @param String $eTag
+	 *
+	 * @return Boolean
+	 */
+	public static function onParserCacheGetETag( $article, $popts, &$eTag ) {
+		wfProfileIn( __METHOD__ );
+
+		$title = $article->getTitle();
+		if( !is_null($title) && $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$threadId = $title->getText();
+			$wt = WallThread::newFromId( $threadId );
+
+			$mainMsg = $wt->getThreadMainMsg();
+			if( !is_null( $mainMsg ) ) {
+				$eTag = $mainMsg->getETag();
+			} else {
+				wfDebug(
+					__METHOD__ . ': WARNING! No main message for a thread on Message Wall. ETag left as default.' .
+					' ETag: ' . $eTag .
+					' Thread ID: ' . $threadId
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 }

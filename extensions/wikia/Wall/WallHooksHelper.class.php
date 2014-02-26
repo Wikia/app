@@ -2248,7 +2248,11 @@ class WallHooksHelper {
 			if( !is_null( $mainMsg ) ) {
 				$eTag = $mainMsg->getETag();
 			} else {
-				wfDebug( __METHOD__ . ': WARNING! No main message for a thread on Message Wall. ETag left as default. Thread ID: ' . $threadId );
+				wfDebug(
+					__METHOD__ . ': WARNING! No main message for a thread on Message Wall.' .
+					' ETag left as default. ETag: ' . $eTag .
+					' Thread ID: ' . $threadId
+				);
 			}
 		}
 

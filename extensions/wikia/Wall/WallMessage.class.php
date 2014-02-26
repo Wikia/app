@@ -1527,8 +1527,9 @@ class WallMessage {
 		} else {
 			wfDebug(
 				__METHOD__ .
-				': WARNING! $title not found for WallMessage. The cache will not be invalidated. ' .
-				'ETags will stay the same. Message ID: ' . $this->getMessagePageId()
+				': WARNING! $title not found for WallMessage. The cache will not be invalidated.' .
+				' ETags will stay the same. ' .
+				' Message ID: ' . $this->getMessagePageId()
 			);
 		}
 	}

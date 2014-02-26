@@ -82,6 +82,9 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
+// Fix ETag
+$wgHooks['ParserCacheGetETag'][] = 'ForumHooksHelper::onParserCacheGetETag';
+
 include ($dir . '/Forum.namespace.setup.php');
 
 //add this namespace to list of wall namespaces
