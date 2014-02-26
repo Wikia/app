@@ -126,7 +126,8 @@ class VideosModule extends WikiaModel {
 	public function getVerticalVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfMemcKey( 'videomodule', 'vertical_videos' );
+		$category = $this->getWikiVertical();
+		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', $category );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$params = [
@@ -134,7 +135,7 @@ class VideosModule extends WikiaModel {
 				'method'     => 'getVideoList',
 				'sort'       => 'trend',
 				'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
-				'category'   => $this->getWikiVertical(),
+				'category'   => $category,
 			];
 
 			$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
