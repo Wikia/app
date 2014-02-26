@@ -12,6 +12,7 @@ require_once( dirname(__FILE__) . '/classes/BaseLyricsEntity.class.php' );
 require_once( dirname(__FILE__) . '/classes/Artist.class.php' );
 require_once( dirname(__FILE__) . '/classes/Album.class.php' );
 require_once( dirname(__FILE__) . '/classes/Song.class.php' );
+require_once(dirname(__FILE__) . '/classes/SongTrack.class.php');
 
 class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_ID = 'articleId';

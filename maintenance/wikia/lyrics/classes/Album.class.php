@@ -10,32 +10,28 @@ class Album extends BaseLyricsEntity {
 
 	const TABLE_NAME = 'lyrics_api.album';
 
-	var $dataMap = [
-		'article_id' => 'article_id',
-		'artist_id' => 'artist_id',
-		'Album' => 'name',
-		'Cover' => 'pic',
-		'year' => 'year',
-		'Length' => 'length',
-		'Genre' => 'genres',
-		'Wikipedia' => 'wikipedia',
-		'romanizedAlbum' => 'romanized_name',
-		'asin' => 'asin',
-		'iTunes' => 'itunes',
-		'allmusic' => 'allmusic',
-		'discogs' => 'discogs',
-		'musicbrainz' => 'musicbrainz',
-		'download' => 'download',
-	];
+	public function getTableName() {
+		return self::TABLE_NAME;
+	}
 
-	function save( $albumData ) {
-		$albumData = $this->sanitiseData( $albumData, $this->dataMap );
-		$this->db->replace(
-			self::TABLE_NAME,
-			null,
-			$albumData,
-			__METHOD__
-		);
+	public function getDataMap() {
+		return [
+			'article_id' => 'article_id',
+			'artist_id' => 'artist_id',
+			'Album' => 'name',
+			'Cover' => 'pic',
+			'year' => 'year',
+			'Length' => 'length',
+			'Genre' => 'genres',
+			'Wikipedia' => 'wikipedia',
+			'romanizedAlbum' => 'romanized_name',
+			'asin' => 'asin',
+			'iTunes' => 'itunes',
+			'allmusic' => 'allmusic',
+			'discogs' => 'discogs',
+			'musicbrainz' => 'musicbrainz',
+			'download' => 'download',
+		];
 	}
 
 }

@@ -6,9 +6,12 @@
  * Time: 12:55 PM
  */
 
-class BaseLyricsEntity {
+abstract class BaseLyricsEntity {
 
 	protected $db;
+
+	abstract public function getTableName();
+	abstract public function getDataMap();
 
 	public function __construct( $db ) {
 		return $this->db = $db;
@@ -24,14 +27,25 @@ class BaseLyricsEntity {
 		return $result;
 	}
 
+	public function save( $data ) {
+		$data = $this->sanitiseData( $data, $this->getDataMap() );
+		// TODO: Remove me
+		echo 'Saving ... '.PHP_EOL; print_r($data); return 1;
+
+		$this->db->replace(
+			$this->getTableName(),
+			null,
+			$data,
+			__METHOD__
+		);
+	}
+
 	public function getIdByName( $name ) {
-		return 1; // TODO: REMOVEME
+		return 1; // TODO: REMOVE_ME
 		return $this->db->selectField(
 			self::TABLE_NAME,
-			id,
+			'article_id',
 			[ 'name' =>	$albumName],
 			__METHOD__);
 	}
-
-
 } 

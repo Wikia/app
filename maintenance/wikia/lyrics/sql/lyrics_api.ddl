@@ -2,7 +2,6 @@ CREATE DATABASE IF NOT EXISTS lyrics_api;
 USE lyrics_api;
 
 CREATE TABLE artist (
-  id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
   article_id     INT UNSIGNED NOT NULL,
   name           VARCHAR(255),
   romanized_name VARCHAR(255),
@@ -23,13 +22,12 @@ CREATE TABLE artist (
   discogs        VARCHAR(10),
   musicbrainz    VARCHAR(36),
   youtube        VARCHAR(30),
-  PRIMARY KEY (id),
+  PRIMARY KEY (article_id),
   UNIQUE KEY (name)
 )
   ENGINE =InnoDB;
 
 CREATE TABLE album (
-  id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
   article_id     INT UNSIGNED NOT NULL,
   artist_id      INT          NOT NULL,
   genres         VARCHAR(255),
@@ -45,13 +43,12 @@ CREATE TABLE album (
   discogs        VARCHAR(10),
   musicbrainz    VARCHAR(50),
   download       VARCHAR(255),
-  PRIMARY KEY (id),
+  PRIMARY KEY (article_id),
   UNIQUE KEY (artist_id, name)
 )
   ENGINE =InnoDB;
 
 CREATE TABLE song (
-  id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
   article_id     INT UNSIGNED NOT NULL,
   artist_id      INT          NOT NULL,
   name           VARCHAR(255),
