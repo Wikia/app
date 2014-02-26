@@ -166,6 +166,17 @@
 
 			this.editor.setState( this.editor.states.SAVING );
 
+			if ( syslogReport ) {
+				var uri = new mw.Uri( location.href );
+				syslogReport( 3, 'ContributionV2', {
+					action: 'ck-save-button-click',
+					referrer: document.referrer,
+					isAnonymous: mw.user.anonymous() ? 'yes' : 'no',
+					isRedlink: !!uri.query.redlink ? 'yes' : 'no',
+					isDirty: ( typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty() ) ? 'yes' : 'no'
+				} );
+			}
+
 			this.editor.track({
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
 				label: 'publish'
