@@ -47,7 +47,7 @@ class VideosModuleController extends WikiaController {
 
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $module->getVideosDetail( $videos );
+		$this->videos = $videos;
 
 		wfProfileOut( __METHOD__ );
 	}
