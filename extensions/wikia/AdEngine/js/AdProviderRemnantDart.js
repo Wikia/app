@@ -1,30 +1,10 @@
 /*exported AdProviderRemnantDart*/
-var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt ) {
+var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt, adSlotMapConfig) {
     'use strict';
 
     var logGroup = 'AdProviderRemnantDart',
-
-        slotMap = {
-            'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
-            'HOME_TOP_LEADERBOARD': {'size': '728x90', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
-            'HOME_TOP_RIGHT_BOXAD': {'size': '300x250', 'tile': 1, 'loc': 'top'},
-            'INCONTENT_BOXAD_1': {'size': '300x250'},
-            'INVISIBLE_1': {'size': '0x0', 'useGw': true},
-            'INVISIBLE_2': {'size': '0x0', 'useGw': true},
-            'LEFT_SKYSCRAPER_2': {'size': '160x600', 'tile': 3, 'loc': 'middle'},
-            'LEFT_SKYSCRAPER_3': {'size': '160x600', 'tile': 6, 'loc': 'footer'},
-            'TEST_TOP_RIGHT_BOXAD': {'size': '300x250', 'tile': 1, 'loc': 'top'},
-            'TEST_HOME_TOP_RIGHT_BOXAD': {'size': '300x250', 'tile': 1, 'loc': 'top'},
-            'TOP_BUTTON_WIDE': {'size': '292x90', 'tile': 3, 'loc': 'top'},
-
-            'TOP_LEADERBOARD': {'size': '728x90', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
-            'TOP_RIGHT_BOXAD': {'size': '300x250', 'tile': 1, 'loc': 'top'},
-            'PREFOOTER_LEFT_BOXAD': {'size': '300x250', 'tile': 7, 'loc': 'footer'},
-            'PREFOOTER_RIGHT_BOXAD': {'size': '300x250', 'tile': 8, 'loc': 'footer'},
-            'WIKIA_BAR_BOXAD_1': {'size': '300x250', 'tile': 4, 'loc': 'bottom'}
-        };
-
-    wikiaGpt.init( slotMap, 'rh' );
+        srcName = 'rh',
+	    slotMap = adSlotMapConfig.getConfig(srcName);
 
     function canHandleSlot( slotname ) {
 
@@ -60,7 +40,7 @@ var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt ) {
 
                 success();
             },
-            true
+            srcName
         );
 
         wikiaGpt.flushAds();
