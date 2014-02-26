@@ -6,41 +6,56 @@
  * Time: 4:34 PM
  */
 
-namespace scrappers;
-
 abstract class BaseScraper {
 
 	protected $db;
 
-	abstract public function processPage( Article $article );
-	abstract protected function save( $data );
+	abstract public function processArticle( Article $article );
 
-	function __construct(DataBase $db) {
+	function __construct( $db) {
 		$this->db = $db;
 	}
 
-	protected function getTemplateValues( $name, $text, $separator = '|' ) {
+	protected function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
 		$result = [];
 		$regexp = sprintf('#\{\{%s(.*?)\}\}#s', $name);
 		if ( preg_match( $regexp, $text, $matches ) ){
 			$keyValues = explode( $separator, trim( $matches[1] ) );
-
 			foreach ( $keyValues as $row ) {
-				$keyValue = explode( '=', $row );
-                $result[trim( $keyValue[0] )] = $keyValue[1];
+				if ( $hash ) {
+					$keyValue = explode( '=', $row );
+					if ( count( $keyValue ) == 2 ) {
+						$result[trim( $keyValue[0] )] = trim($keyValue[1]);
+					}
+				} else {
+					$result[] = trim( $row );
+				}
             }
 		};
-		return [];
+		return $result;
 	}
 
-	protected function sanitiseData( $data, $dataMap) {
-		$result = array();
-		foreach ( $data as $key => $value ) {
-			if ( isset( $dataMap[$key] ) ) {
-				$result[$dataMap[$key]] = $value;
-			}
+	// [[Audioslave:Audioslave (2002)|Audioslave (2002)]]
+	protected function getLabel( $headerMatch ) {
+		$name = trim( $headerMatch );
+		if ( $this->isLink( $name ) ) {
+			$name = $this->getLinkLabel( $name );
 		}
-		return $result;
+		return $name;
+	}
+
+	protected function isLink( $text ) {
+		$len = mb_strlen( $text );
+		return mb_substr( $text, 0, 2 ) == '[[' && mb_substr( $text, $len-2, 2 ) == ']]';
+	}
+
+	protected function getLinkLabel ( $text ) {
+		// Remove brackets
+		$text = trim($text, '[]');
+		if ( strpos( $text, '|' ) !== false) {
+			$text =  end( explode( '|', $text ) );
+		}
+		return $text;
 	}
 
 }

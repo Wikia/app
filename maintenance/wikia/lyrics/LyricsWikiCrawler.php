@@ -1,12 +1,19 @@
 <?php
 
 require_once( dirname(__FILE__) . '/../../Maintenance.php' );
+require_once( dirname(__FILE__) . '/ScraperFactory.class.php' );
+require_once( dirname(__FILE__) . '/scrapers/BaseScraper.class.php' );
+require_once( dirname(__FILE__) . '/scrapers/ArtistScraper.class.php' );
+require_once( dirname(__FILE__) . '/classes/BaseLyricsEntity.class.php' );
+require_once( dirname(__FILE__) . '/classes/Artist.class.php' );
+require_once( dirname(__FILE__) . '/classes/Album.class.php' );
 
 class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_ID = 'articleId';
 	const OPTION_ARTICLE_ALL = 'all';
 
 	private $articleId = 0;
+	private $scrapperFactory;
 
 	public function __construct() {
 		parent::__construct();
@@ -16,6 +23,10 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgDWStatsDB;
+		$db = $this->getDB( DB_SLAVE, array(), $wgDWStatsDB );
+		$this->scrapperFactory = new ScraperFactory( $db );
+
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTICLE_ID, 0 ) ) ) && $articleId > 0 ) {
@@ -31,7 +42,18 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function doScrapeArticle() {
-		$this->output( 'Scraping article #' . $this->getArticleId() );
+		$this->output( 'Scraping article #' . $this->getArticleId() . PHP_EOL );
+		$article = Article::newFromID( $this->getArticleId() );
+		if ( !is_null($article) ) {
+			$scraper = $this->scrapperFactory->newFromArticle( $article );
+			if ( $scraper ) {
+				$scraper->processArticle( $article );
+			} else {
+				$this->output( 'Unknown article type #' . $this->getArticleId() . PHP_EOL );
+			}
+		} else {
+			$this->output( 'Article not found #' . $this->getArticleId() . PHP_EOL );
+		}
 	}
 
 	public function doScrapeArticlesFromYesterday() {

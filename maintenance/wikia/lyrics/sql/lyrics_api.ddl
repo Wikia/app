@@ -3,6 +3,7 @@ USE lyrics_api;
 
 CREATE TABLE artist (
   id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  article_id     INT UNSIGNED NOT NULL,
   name           VARCHAR(255),
   romanized_name VARCHAR(255),
   pic            VARCHAR(255),
@@ -29,6 +30,7 @@ CREATE TABLE artist (
 
 CREATE TABLE album (
   id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  article_id     INT UNSIGNED NOT NULL,
   artist_id      INT          NOT NULL,
   genres         VARCHAR(255),
   name           VARCHAR(255),
@@ -50,6 +52,7 @@ CREATE TABLE album (
 
 CREATE TABLE song (
   id             INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  article_id     INT UNSIGNED NOT NULL,
   artist_id      INT          NOT NULL,
   name           VARCHAR(255),
   lyrics         TEXT,
