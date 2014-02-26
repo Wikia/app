@@ -716,8 +716,6 @@ use Swagger\Annotations as SWG;
  * 			@SWG\ErrorResponses(
  * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
  * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
- * 			),
- * 			@SWG\Parameters(
  * 			)
  * 		)
  * 	)
@@ -735,8 +733,6 @@ use Swagger\Annotations as SWG;
  * 			@SWG\ErrorResponses(
  * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
  * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
- * 			),
- * 			@SWG\Parameters(
  * 			)
  * 		)
  * 	)
