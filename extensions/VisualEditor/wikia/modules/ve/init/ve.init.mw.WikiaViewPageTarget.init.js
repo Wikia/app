@@ -52,7 +52,7 @@
 		}, 3000 );
 
 		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function cleanup() {
+		mw.hook( hook, '' ).add( function cleanup() {
 			clearTimeout( timer );
 			$indicator.animate( { 'opacity': 0 }, 400, function () {
 				mw.hook( hook ).remove( cleanup );
