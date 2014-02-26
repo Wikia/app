@@ -71,6 +71,15 @@
 		indicator( 'loading', 've.activationComplete' );
 
 		if ( !getTargetDeferred ) {
+			if ( syslogReport ) {
+				syslogReport( 3, 'ContributionV2', {
+					action: 've-edit-page-impression',
+					referrer: document.referrer,
+					isAnonymous: mw.user.anonymous() ? 'yes' : 'no',
+					isActivateOnPageLoad: !!init.activateOnPageLoad ? 'yes' : 'no',
+					isRedlink: !!uri.query.redlink ? 'yes' : 'no'
+				} );
+			}
 			Wikia.Tracker.track( trackerConfig, {
 				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 				'label': 'edit-page'
