@@ -23,9 +23,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		dataAttribs = {},
 		googletag;
 
-	function init(paramSlotMap, src) {
+    function init(paramSlotMap, src) {
         providerSlotMap[src] = paramSlotMap;
-	}
+    }
 
 	function triggerDone(slotnameGpt) {
 		var callback = doneCallbacks[slotnameGpt];
@@ -212,10 +212,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	}
 
 	function pushAd(slotname, success, error, slotMapSrc) {
-		var slotnameGpt,
+		var slotnameGpt = slotname + '_' + slotMapSrc,
 			slotDiv = document.createElement('div');
-
-        slotnameGpt = slotname + '_' + slotMapSrc;
 
 		loadGpt();
 
