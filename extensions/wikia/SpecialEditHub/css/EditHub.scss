@@ -1,0 +1,297 @@
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/curation-elements";
+@import "../../../../skins/oasis/css/core/color";
+
+$module-background-color: #fafafa;
+$vertical-border-color: #cdcdcd;
+$horizontal-border-color: #eee;
+
+.WikiaGrid .WikiaArticle {
+	border: none;
+}
+
+.EditHubMain {
+	@include clearfix;
+
+	margin-top: 15px;
+
+	h3 {
+		width: 30px;
+		font-size: 24px;
+		text-align: right;
+		float: left;
+		margin-right: 10px;
+		margin-left: -40px;
+	}
+
+	form {
+		margin-top: 5px;
+	}
+
+	p.alternative {
+		margin: 0 7px;
+		padding-top: 7px;
+		clear: left;
+	}
+
+	.input-group {
+		margin: 0px 7px;
+		padding: 5px 0;
+		float: none;
+
+		label {
+			clear: both;
+			float: left;
+			margin-top: 10px;
+			width: 145px;
+		}
+		.headline-wrapper {
+			float: right;
+		}
+		input[type="text"] {
+			width: 149px;
+		}
+	}
+
+	.grid-2 .input-group input.wikiaUrl {
+		width: 239px;
+	}
+
+	.error {
+		font-size: 12px;
+		margin-left: 7px;
+		clear: left;
+	}
+
+	.input-group .error {
+		margin-left: 0;
+	}
+
+	.input-group:not(.borderNone) {
+		border-bottom: 1px solid #e5e5e5;
+	}
+	
+	.grid-4.wide {
+		margin-bottom: 28px;
+		input[type="text"], textarea {
+			width: 480px;
+		}
+	}
+
+	.grid-3.wide {
+		input[type="text"], textarea {
+			width: 250px;
+		}
+	}
+
+	.WikiaForm {
+		fieldset {
+			border: 0;
+		}
+
+		.submits {
+			float: right;
+			margin: 40px 0;
+			padding: 0;
+
+			input {
+				margin-right: 10px;
+				float: right;
+			}
+		}
+	}
+
+	ol {
+		font-weight: bold;
+
+		li {
+			line-height: 25px;;
+		}
+		span {
+			font-weight: normal;
+		}
+	}
+
+	.alternative {
+		color: $color-alternate-text;
+	}
+
+	.hidden {
+		display: none;
+	}
+
+	.module-explore {
+		.grid-4 {
+			@include module-box;
+		}
+		.header-group {
+			.url-group {
+				.input-group:nth-child(1) {
+					margin-top: 45px;
+				}
+				.input-group:nth-child(4) {
+					border: none;
+				}
+			}
+			.input-group:nth-child(5) {
+				border: none;
+			}
+		}
+		.placeholder {
+			border: 1px solid #d2d2d2;
+			float: right;
+			height: 138px;
+			margin: 10px 0;
+			width: 138px;
+		}
+		.input-group .explore-mainbox-input {
+			width: 320px;
+		}
+		.wikiaUrlLabel {
+			width: 55px;
+		}
+		.input-icon {
+			background-image: url("/extensions/wikia/SpecialEditHub/images/url.png"); /* base64 */
+			height: 7px;
+			width: 15px;
+		}
+	}
+
+	.module-box, .module-popular-videos .one-input-box {
+		@include clearfix;
+
+		.module-right-box {
+			background-color: $module-background-color;
+			border: 1px solid $horizontal-border-color;
+			border-top-color: $vertical-border-color;
+			border-bottom-color: $vertical-border-color;
+			margin-bottom: 35px;
+			float: left;
+			padding: 10px 0px;
+			position: relative;
+
+			.module-input-box {
+				float: left;
+
+				input[type="text"], textarea {
+					width: 291px;
+				}
+				input[type="text"].video-url-input {
+					width: 456px;
+				}
+			}
+
+			.navigation {
+				@include navigation;
+			}
+		}
+		.wmu-show, .vet-show {
+			float: left;
+		}
+
+		input[type="button"] {
+			margin-left: 7px;
+		}
+
+		input.secondary {
+			margin-top: 5px;
+		}
+
+		.filename-placeholder {
+			margin-left: 5px;
+			display: block;
+			width: 360px;
+			float: left;
+			overflow: hidden;
+		}
+
+		.module-image-box {
+			float: right;
+			margin: 0 33px 0 3px;
+		}
+		.image-placeholder {
+			background-color: $module-background-color;
+//			border: 1px solid $vertical-border-color;
+			width: 149px;
+//			height: 149px;
+			position: relative;
+		}
+
+	}
+
+	.module-polls {
+		overflow: hidden;
+		clear: both;
+	}
+
+	.module-popular-videos {
+		.one-input-box {
+			h3 {
+				color: #006CB0;
+			}
+			.module-right-box {
+				height: 57px;
+			}
+		}
+		.module-input-box {
+			width: 460px;
+			&.buttons {
+				clear: both;
+			}
+		}
+		.module-image-box {
+			margin-top: 5px;
+		}
+		h4 {
+			color: #006CB0;
+			font-weight: bold;
+		}
+		h4,
+		.timeago {
+			clear: both;
+			display: inline-block;
+			float: none;
+			margin: 0px 7px;
+			padding: 2px 0;
+			width: 460px;
+		}
+	}
+
+	.module-mediabox {
+		.input-group input,
+		.input-group textarea {
+			width: 321px;
+		}
+
+		.image-placeholder {
+			margin-left: 3px;
+		}
+	}
+
+	.grid-4.alpha.sponsored-image {
+		border-bottom: 1px solid $vertical-border-color;
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		.filename-placeholder {
+			width: 330px;
+		}
+		.image-placeholder {
+			float: right;
+			height: 15px;
+			overflow: hidden;
+			width: 85px;
+		}
+		.remove-sponsored-image {
+			clear: both;
+			float: left;
+			margin-top: 10px;
+		}
+		p {
+			float: left;
+		}
+	}
+
+	.input-group textarea {
+		resize: vertical;
+	}
+}

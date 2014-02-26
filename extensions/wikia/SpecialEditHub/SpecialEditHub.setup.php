@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * EditHub
+ *
+ * @author Damian Jóźwiak
+ * @author Andrzej 'nAndy' Łukaszewski
+ * @author Marcin Maciejewski
+ * @author Sebastian Marzjan
+ *
+ */
+
+$dir = dirname(__FILE__) . '/';
+
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Edit Hub',
+	'description' => 'Internal tool to configure Hub page',
+	'authors' => array(
+		'Damian Jóźwiak',
+		'Sebastian Marzjan',
+		'Łukasz Konieczny',
+		'Bartosz Bentkowski'
+	),
+	'version' => 1.0
+);
+
+//classes
+$wgAutoloadClasses['EditHubController'] = $dir . 'EditHubController.class.php';
+$wgAutoloadClasses['EditHubVideosController'] =  $dir . 'EditHubVideosController.class.php';
+
+$wgAutoloadClasses['WikiaValidatorToolboxUrl'] =  $dir . 'validators/WikiaValidatorToolboxUrl.class.php';
+$wgAutoloadClasses['WikiaValidatorUsersUrl'] =  $dir . 'validators/WikiaValidatorUsersUrl.class.php';
+
+// hooks
+$wgAutoloadClasses['EditHubHooks'] =  $dir . 'hooks/EditHubHooks.class.php';
+$wgHooks['MakeGlobalVariablesScript'][] = 'EditHubHooks::onMakeGlobalVariablesScript';
+
+//special page
+$wgSpecialPages['EditHub'] = 'EditHubController';
+$wgSpecialPageGroups['EditHub'] = 'wikia';
+
+//message files
+$wgExtensionMessagesFiles['EditHub'] = $dir . 'EditHub.i18n.php';
+JSMessages::registerPackage('EditHub', array('edit-hub-*'));
+
+
+$wgAvailableRights[] = 'edithub';
+
+$wgGroupPermissions['*']['edithub'] = false;
+$wgGroupPermissions['staff']['edithub'] = true;
+$wgGroupPermissions['sysop']['edithub'] = true;
+$wgGroupPermissions['bureaucrat']['edithub'] = true;
+$wgGroupPermissions['helper']['edithub'] = true;
+
