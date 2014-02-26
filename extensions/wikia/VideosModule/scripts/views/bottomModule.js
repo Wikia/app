@@ -24,7 +24,6 @@ define('videosmodule.views.bottomModule', [
 	groupParams = testCase.getGroupParams();
 
 	function VideoModule(options) {
-		var $relatedArticles = $('#wkRelPag');
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
@@ -35,8 +34,8 @@ define('videosmodule.views.bottomModule', [
 		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
 		if (
 			this.articleId &&
-			!$relatedArticles.is(':hidden') &&
-			$relatedArticles.css('visibility') !== 'hidden'
+			!this.$el.is(':hidden') &&
+			this.$el.css('visibility') !== 'hidden'
 		) {
 			this.init();
 		}
