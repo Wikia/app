@@ -3,6 +3,7 @@ var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt ) {
     'use strict';
 
     var logGroup = 'AdProviderRemnantDart',
+        srcName = 'rh',
 
         slotMap = {
             'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
@@ -24,7 +25,7 @@ var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt ) {
             'WIKIA_BAR_BOXAD_1': {'size': '300x250', 'tile': 4, 'loc': 'bottom'}
         };
 
-    wikiaGpt.init( slotMap, 'rh' );
+    wikiaGpt.init( slotMap, srcName );
 
     function canHandleSlot( slotname ) {
 
@@ -60,7 +61,7 @@ var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt ) {
 
                 success();
             },
-            true
+            srcName
         );
 
         wikiaGpt.flushAds();

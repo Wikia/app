@@ -18,22 +18,13 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		slotMap = {},
+		providerSlotMap = {},
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
 
 	function init(paramSlotMap, src) {
-
-		var name,
-			isRemnant = src === 'rh' || src === 'rh_mobile';
-
-		for (name in paramSlotMap) {
-			if (paramSlotMap.hasOwnProperty(name)) {
-				paramSlotMap[name].src = src;
-				slotMap[name + (isRemnant ? '.remnant' : '')] = paramSlotMap[name];
-			}
-		}
+        providerSlotMap[src] = paramSlotMap;
 	}
 
 	function triggerDone(slotnameGpt) {
@@ -130,18 +121,15 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 				var name,
 					value,
 					pubads = googletag.pubads(),
-					// slot name with remnant suffix, i.e. TOP_LEADERBOARD.remnant
 					slotname,
-					// clear slotname, i.e. TOP_LEADERBOARD
-					slotnameReal,
-					// id for slotDiv, i.e. TOP_LEADERBOARD_gpt or TOP_LEADERBOARD_remnant_dart
 					slotnameGpt,
+                    slotMap,
+                    slotMapSrc,
 					sizes,
 					slot,
 					slotItem,
 					slotPath,
-					slotParams,
-					isRemnant;
+					slotParams;
 
 				pubads.collapseEmptyDivs();
 
@@ -158,60 +146,58 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 				}
 
 				// Define all possible slots
-				for (slotname in slotMap) {
-					if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
-						log(['loadGpt', 'defining slot', slotname], 9, logGroup);
+                for ( slotMapSrc in providerSlotMap ) {
+                    if ( !providerSlotMap.hasOwnProperty( slotMapSrc ) ) {
+                        continue;
+                    }
 
-						slotnameReal = slotname;
+                    slotMap = providerSlotMap[slotMapSrc];
 
-						if (slotname.indexOf('.remnant') !== -1) {
-							isRemnant = true;
-							slotnameReal = slotname.substr(0, slotname.indexOf('.remnant'));
-						}
+                    for ( slotname in slotMap ) {
+                        if ( slotMap.hasOwnProperty( slotname ) && slotMap[slotname].size ) {
+                            log( ['loadGpt', 'defining slot', slotname], 9, logGroup );
 
-						if (isRemnant) {
-							slotnameGpt = slotnameReal + '_remnant_dart';
-						} else {
-							slotnameGpt = slotnameReal + '_gpt';
-						}
+                            slotnameGpt = slotname + '_' + slotMapSrc;
 
-						slotItem = slotMap[slotname];
-						sizes = convertSizesToGpt(slotItem.size);
+                            slotItem = slotMap[slotname];
+                            sizes = convertSizesToGpt( slotItem.size );
 
-						slotPath = path + '/' + slotname;
+                            slotPath = path + '/' + slotMapSrc + '/' + slotname;
 
-						log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
-						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
-						slot.addService(googletag.pubads());
+                            log( ['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup );
+                            slot = googletag.defineSlot( slotPath, sizes, slotnameGpt );
+                            slot.addService( googletag.pubads() );
 
-						// Per-slot targeting keys
-						slotParams = {
-							pos: slotnameReal,
-							loc: slotItem.loc,
-							src: slotItem.src
-						};
-						for (name in slotParams) {
-							if (slotParams.hasOwnProperty(name)) {
-								value = slotParams[name];
-								if (value) {
-									log(['slot.setTargeting', name, value], 9, logGroup);
-									slot.setTargeting(name, value);
-								}
-							}
-						}
+                            // Per-slot targeting keys
+                            slotParams = {
+                                pos: slotname,
+                                loc: slotItem.loc,
+                                src: slotMapSrc
+                            };
 
-						gptSlots[slotname] = slot;
+                            for ( name in slotParams ) {
+                                if ( slotParams.hasOwnProperty( name ) ) {
+                                    value = slotParams[name];
+                                    if ( value ) {
+                                        log( ['slot.setTargeting', name, value], 9, logGroup );
+                                        slot.setTargeting( name, value );
+                                    }
+                                }
+                            }
 
-						dataAttribs[slotname] = {
-							'data-gpt-page-params': JSON.stringify(pageLevelParams),
-							'data-gpt-slot-params': JSON.stringify(slotParams),
-							'data-gpt-slot-sizes': JSON.stringify(sizes)
-						};
+                            gptSlots[slotname] = slot;
 
-						log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
+                            dataAttribs[slotname] = {
+                                'data-gpt-page-params': JSON.stringify( pageLevelParams ),
+                                'data-gpt-slot-params': JSON.stringify( slotParams ),
+                                'data-gpt-slot-sizes': JSON.stringify( sizes )
+                            };
 
-					}
-				}
+                            log( ['loadGpt', 'defined slot', slotname, slot], 9, logGroup );
+
+                        }
+                    }
+                }
 
 				log(['loadGpt', 'all slots defined'], 9, logGroup);
 
@@ -225,24 +211,18 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		}
 	}
 
-	function pushAd(slotname, success, error, remnant) {
+	function pushAd(slotname, success, error, slotMapSrc) {
 		var slotnameGpt,
-			slotnameReal = slotname,
 			slotDiv = document.createElement('div');
 
-		if (remnant) {
-			slotnameGpt = slotnameReal + '_remnant_dart';
-			slotname = slotname + '.remnant';
-		} else {
-			slotnameGpt = slotnameReal + '_gpt';
-		}
+        slotnameGpt = slotname + '_' + slotMapSrc;
 
 		loadGpt();
 
 		// Create a div for the GPT ad
 		slotDiv.id = slotnameGpt;
 
-		document.getElementById(slotnameReal).appendChild(slotDiv);
+		document.getElementById(slotname).appendChild(slotDiv);
 
 		log(['pushAd', slotname], 9, logGroup);
 		googletag.cmd.push(function () {
