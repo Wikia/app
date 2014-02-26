@@ -81,17 +81,17 @@ class WallHistoryController extends WallController {
 		}
 			
 		$path = array_merge(array(array(
-			'title' => wfMessage('wall-message-elseswall', array($wallOwnerName))->text(),
+			'title' => wfMessage( 'wall-message-elseswall', array( $wallOwnerName ) )->escaped(),
 			'url' => $wallUrl 
 		)), $path); 
 		
 		$this->response->setVal('wallOwnerName', $wallOwnerName);
 
 		if( $this->isThreadLevel ) {
-			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-thread-history-title' )->text() );
+			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-thread-history-title' )->escaped() );
 			wfRunHooks('WallHistoryThreadHeader', array($title, $wallMessage, &$path, &$this->response, &$this->request));
 		} else {
-			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-history-title' )->text() );
+			$this->response->setVal( 'pageTitle' , wfMessage( 'wall-history-title' )->escaped() );
 			wfRunHooks('WallHistoryHeader', array($title, &$path, &$this->response, &$this->request));
 		}
 		
