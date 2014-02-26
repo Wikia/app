@@ -4,6 +4,7 @@ class SpotlightsModel extends WikiaModel {
 	const IMG_WIDTH = 255;
 	const IMG_HEIGHT = 123;
 	const WIKI_VISUALIZATION_IMG = 'Wikia-Visualization-Main.png';
+	const SPOTLIGHT_PLACEHOLDER = '/skins/oasis/images/spotlightsABTest/spotlight-imgplaceholder.gif';
 
 	/**
 	 * Gets set of wikis from given vertical and community wikis
@@ -12,11 +13,16 @@ class SpotlightsModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getOpenXSpotlights( $vertical ) {
-		$spotlights = [];
+		$spotlights = [
+			'data' => [],
+			'status' => 0
+		];
+
 		$verticalsData = $this->getOpenXVerticalData();
 
 		if ( isset( $verticalsData[ $vertical ] ) ) {
-			$spotlights = $verticalsData[ $vertical ];
+			$spotlights[ 'data' ] = $verticalsData[ $vertical ];
+			$spotlights[ 'status' ] = 1;
 		}
 
 		return $spotlights;
@@ -29,14 +35,20 @@ class SpotlightsModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getTipsySpotlights( $cityId ) {
-		$spotlights = [];
+		$spotlights = [
+			'data' => [],
+			'status' => 0
+		];
+
 		$tipsy = $this->getTipsyData();
 
 		if ( isset( $tipsy[ $cityId ] ) ) {
-			$spotlights = $tipsy[ $cityId ];
-			foreach ( $spotlights as &$spotlight ) {
-				if ( empty ( $spotlight[ 'image' ] ) ) {
-					$spotlight[ 'image' ] = $this->getSpotlightImage( $spotlight[ 'url' ] );
+			$spotlights[ 'data' ] = $tipsy[ $cityId ];
+			$spotlights[ 'status' ] = 1;
+			foreach ( $spotlights[ 'data' ] as &$spotlight ) {
+				$spotlight[ 'image' ] = $this->getSpotlightImage( $spotlight[ 'url' ] );
+				if ( $spotlight[ 'image' ] === null ) {
+					$spotlight[ 'image' ] = self::SPOTLIGHT_PLACEHOLDER;
 				}
 			}
 		}
@@ -60,13 +72,18 @@ class SpotlightsModel extends WikiaModel {
 			if ( $file !== null ) {
 				$originalWidth = $file->getWidth();
 				$originalHeight = $file->getHeight();
-				$imageServing = $helper->getImageServingForResize(
-					self::IMG_WIDTH,
-					self::IMG_HEIGHT,
-					$originalWidth,
-					$originalHeight
-				);
-				$imageUrl = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
+				if ( !empty( $originalWidth ) && !empty( $originalHeight ) ) {
+					$imageServing = $helper->getImageServingForResize(
+						self::IMG_WIDTH,
+						self::IMG_HEIGHT,
+						$originalWidth,
+						$originalHeight
+					);
+					$imageUrl = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
+					if ( @getimagesize( $imageUrl ) === false ) {
+						$imageUrl = null;
+					}
+				}
 			}
 		}
 		return $imageUrl;
