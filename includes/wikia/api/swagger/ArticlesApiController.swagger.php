@@ -783,7 +783,34 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- * 
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/Popular?expand=1",
+ * 	description="Get popular articles for the current wiki (from the beginning of time)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get popular articles for the current wiki (from the beginning of time)",
+ * 			nickname="getPopular",
+ * 			responseClass="ExpandedArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Limit parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="The maximum number of results to get, from 1 to 10 inclusive",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/Popular",
  * 	description="Get popular articles for the current wiki (from the beginning of time)",
