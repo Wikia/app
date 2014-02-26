@@ -80,9 +80,6 @@ class SpotlightsModel extends WikiaModel {
 						$originalHeight
 					);
 					$imageUrl = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
-					if ( @getimagesize( $imageUrl ) === false ) {
-						$imageUrl = null;
-					}
 				}
 			}
 		}
