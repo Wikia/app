@@ -169,6 +169,7 @@ class WallMessage {
 			$class->notifyEveryone();
 		}
 
+		$class->invalidateCache();
 		$class->addWatch($user);
 
 		wfRunHooks( 'AfterBuildNewMessageAndPost', array(&$class) );
@@ -259,6 +260,9 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
+
+		$this->invalidateCache();
+
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -605,7 +609,7 @@ class WallMessage {
 	}
 
 	/**
-	 * @return null|ArticleComment
+	 * @return null|WallMessage
 	 */
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
@@ -1498,6 +1502,16 @@ class WallMessage {
 	public function getETag() {
 		global $wgStyleVersion;
 		return $this->getTitle()->getTouched() . '-' . $wgStyleVersion;
+	}
+
+	/**
+	 * @desc Changes page_touched value in page table for main message
+	 */
+	public function invalidateCache() {
+		$parent = $this->getTopParentObj();
+		if( !is_null( $parent ) ) {
+			$parent->getTitle()->invalidateCache();
+		}
 	}
 
 }
