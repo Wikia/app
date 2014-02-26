@@ -286,8 +286,6 @@ class WikiaResponse {
 	 */
 	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
-		$targetBrowser = ( in_array( self::CACHE_TARGET_BROWSER, $targets ) );
-		$targetVarnish = ( in_array( self::CACHE_TARGET_VARNISH, $targets ) );
 
 		$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
 
