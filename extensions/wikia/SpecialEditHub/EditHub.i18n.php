@@ -25,6 +25,7 @@ $messages['en'] = array(
 	'edit-hub-footer-button-preview' => 'Preview',
 	'edit-hub-footer-button-publish' => 'Publish',
 	'edit-hub-edithub-save-button' => 'Save',
+	'edit-hub-edithub-clearall-button' => 'Clear all',
 	'edit-hub-edithub-removeall-button' => 'Remove all',
 	'edit-hub-edithub-remove' => 'Remove',
 

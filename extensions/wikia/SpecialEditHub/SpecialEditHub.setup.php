@@ -41,7 +41,7 @@ $wgSpecialPageGroups['EditHub'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['EditHub'] = $dir . 'EditHub.i18n.php';
-JSMessages::registerPackage('EditHub', array('edit-hub-*'));
+JSMessages::registerPackage('EditHub', array('edit-hub-*', 'wikia-hubs-*'));
 
 
 $wgAvailableRights[] = 'edithub';

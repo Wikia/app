@@ -208,7 +208,7 @@ EditHub.prototype = {
 	formReset: function(elem) {
 		elem.find('input:text, input:password, input:file, input:hidden, select, textarea').val('');
 		elem.find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
-		elem.find('.filename-placeholder').html($.msg('edit-hub-edithub-file-name'));
+		elem.find('.filename-placeholder').html($.msg('wikia-hubs-file-name'));
 		elem.find('.image-placeholder').find('img').attr('src', wgBlankImgUrl)
 			.end().filter('.video').empty();
 		this.removeSponsoredImage();
@@ -232,7 +232,7 @@ EditHub.prototype = {
 	},
 
 	popularVideosRemove: function(event) {
-		if (confirm($.msg('edit-hub-hub-module-popular-videos-clear-one-confirm')) == true) {
+		if (confirm($.msg('wikia-hubs-module-popular-videos-clear-one-confirm')) == true) {
 			var moduleContainer = '.module-box';
 			$(event.target).parents(moduleContainer).remove();
 			$('.popular-videos-list').find(moduleContainer).each(this.popularVideosResetIndex);
@@ -241,7 +241,7 @@ EditHub.prototype = {
 	},
 
 	popularVideosRemoveAll: function(event) {
-		if (confirm($.msg('edit-hub-hub-module-popular-videos-clear-confirm')) == true) {
+		if (confirm($.msg('wikia-hubs-module-popular-videos-clear-confirm')) == true) {
 			$('.popular-videos-list .module-box').remove();
 		}
 	},

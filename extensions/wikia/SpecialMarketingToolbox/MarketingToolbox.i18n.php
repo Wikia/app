@@ -52,7 +52,8 @@ $messages['en'] = array(
 
 	'marketing-toolbox-edithub-save-button' => 'Save',
 	'marketing-toolbox-edithub-removeall-button' => 'Remove all',
-	'marketing-toolbox-edithub-remove' => 'Remove'
+	'marketing-toolbox-edithub-remove' => 'Remove',
+	'marketing-toolbox-edithub-clearall-button' => 'Clear all',
 );
 
 $messages['qqq'] = array(

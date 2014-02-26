@@ -46,4 +46,4 @@ $wgSpecialPageGroups['MarketingToolbox'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['MarketingToolbox'] = $dir . 'MarketingToolbox.i18n.php';
-JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*'));
+JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*', 'wikia-hubs-*'));
