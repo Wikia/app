@@ -71,6 +71,14 @@
 		indicator( 'loading', 've.activationComplete' );
 
 		if ( !getTargetDeferred ) {
+			if ( syslogReport ) {
+				syslogReport( 3, "Contribution", {
+					action: 've-edit-page',
+					referrer: document.referrer,
+					anonymous: mw.user.anonymous(),
+					activateOnPageLoad: init.activateOnPageLoad
+				} );
+			}
 			Wikia.Tracker.track( trackerConfig, {
 				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
 				'label': 'edit-page'

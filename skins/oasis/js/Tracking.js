@@ -18,6 +18,16 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
+		if ( e.data.label === 'section-edit' ) {
+			if ( syslogReport ) {
+				syslogReport( 3, "Contribution", {
+					action: $('#ca-ve-edit').exists() ? 've-section-edit' : 'section-edit',
+					which: e.which,
+					referrer: document.referrer,
+					anonymous: mw.user.anonymous()
+				} );
+			}
+		}
 
 		// Primary mouse button only
 		if (e.type === 'mousedown' && e.which !== 1) {
@@ -63,6 +73,15 @@ jQuery(function($){
 			var label,
 				el = $(e.currentTarget),
 				id = el.data('id');
+
+			if ( syslogReport && ( id === 'edit' || id === 've-edit' ) ) {
+				syslogReport( 3, "Contribution", {
+					action: id,
+					which: e.which,
+					referrer: document.referrer,
+					anonymous: mw.user.anonymous()
+				} );
+			}
 
 			// Primary mouse button only
 			if (e.which !== 1) {
