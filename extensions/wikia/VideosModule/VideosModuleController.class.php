@@ -49,6 +49,9 @@ class VideosModuleController extends WikiaController {
 		$this->msg = '';
 		$this->videos = $videos;
 
+		// set cache
+		$this->response->setCacheValidity( 600 );
+
 		wfProfileOut( __METHOD__ );
 	}
 
