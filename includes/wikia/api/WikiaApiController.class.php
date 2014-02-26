@@ -37,11 +37,11 @@ class WikiaApiController extends WikiaController {
 	 */
 	final public function init() {
 		$webRequest = F::app()->wg->Request;
-		$privilegedService = new PrivilegedApiService( $this->getRequest() );
+		$accessService = new ApiAccessService( $this->getRequest() );
 		$controller = $webRequest->getVal( 'controller' );
 		$method = $webRequest->getVal( 'method' );
-		$privilegedService->checkUse( $controller.'Controller', $method );
-		var_dump($controller, $method);die();
+		$accessService->checkUse( $controller.'Controller', $method );
+
 		if ( !$this->request->isInternal() ) {
 			if ($this->hideNonCommercialContent()) {
 				$this->blockIfNonCommercialOnly();				
