@@ -622,6 +622,11 @@ $wgLangCreationVariables = array();
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 
+/**
+ * Logger
+ */
+require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
+
 /*
  * @name wgWikiaStaffLanguages
  * array of language codes supported by ComTeam
@@ -1254,9 +1259,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
-
-/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
-$wgEnableCentralizedLogging = true;
 
 /**
  * @name $wgDisableReportTime
