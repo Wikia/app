@@ -62,4 +62,17 @@ class VideosModuleHooks {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Set global variables for javascript
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
+		$wg = F::app()->wg;
+
+		$vars[ 'wgVideosModuleABTest' ] = $wg->VideosModuleABTest;
+
+		return true;
+	}
 }
