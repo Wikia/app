@@ -290,11 +290,11 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 			if ( !loginRequired( event ) ) {
 				//scroll text area to top of the screen with small padding
 				window.scrollTo( 0, $( event.target ).offset().top - 5 );
-				elmToHide.addClass( 'hide' );
+				elmToHide.addClass( 'hidden' );
 			}
 		} )
 		.on( 'blur', textAreaSel, function ( event ) {
-			elmToHide.removeClass( 'hide' );
+			elmToHide.removeClass( 'hidden' );
 		} )
 		.on( 'submit', '.commFrm', post );
 } );
