@@ -544,6 +544,8 @@ class ResourceLoader {
 			$response = $this->makeComment( $outputBuffer ) . $response;
 		}
 		ob_clean();
+
+		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] );
 		// Wikia change - end
 		echo $response;
 
@@ -559,7 +561,6 @@ class ResourceLoader {
 			}
 		}
 
-		wfRunHooks( 'ResourceLoaderAfterRespond',[ $this,&$context ] ); // Wikia change - @author: macbre
 		wfProfileOut( __METHOD__ );
 	}
 
