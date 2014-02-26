@@ -2240,19 +2240,15 @@ class WallHooksHelper {
 		wfProfileIn( __METHOD__ );
 
 		$title = $article->getTitle();
-		if( !is_null($title) && $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
-			$namespace = $title->getNamespace();
+		if( !is_null($title) && $title->inNamespaces( NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+			$threadId = $title->getText();
+			$wt = WallThread::newFromId( $threadId );
 
-			if( $namespace === NS_USER_WALL_MESSAGE ) {
-				$threadId = $title->getText();
-				$wt = WallThread::newFromId( $threadId );
-
-				$mainMsg = $wt->getThreadMainMsg();
-				if( !is_null( $mainMsg ) ) {
-					$eTag = $mainMsg->getETag();
-				} else {
-					wfDebug( __METHOD__ . ': WARNING! No main message for a thread on Message Wall. ETag left as default. Thread ID: ' . $threadId );
-				}
+			$mainMsg = $wt->getThreadMainMsg();
+			if( !is_null( $mainMsg ) ) {
+				$eTag = $mainMsg->getETag();
+			} else {
+				wfDebug( __METHOD__ . ': WARNING! No main message for a thread on Message Wall. ETag left as default. Thread ID: ' . $threadId );
 			}
 		}
 
