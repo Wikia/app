@@ -24,6 +24,7 @@ define('videosmodule.views.bottomModule', [
 	groupParams = testCase.getGroupParams();
 
 	function VideoModule(options) {
+		var $relatedArticles = $('#wkRelPag');
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
@@ -31,8 +32,12 @@ define('videosmodule.views.bottomModule', [
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
-		// Make sure we're on an article page
-		if (this.articleId) {
+		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
+		if (
+			this.articleId &&
+			!$relatedArticles.is(':hidden') &&
+			$relatedArticles.css('visibility') !== 'hidden'
+		) {
 			this.init();
 		}
 	}
@@ -64,7 +69,6 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.render = function () {
 		var i,
 			$out,
-			$videosModule = $('#videosModule'),
 			videos = this.model.data.videos,
 			len = videos.length,
 			instance;
@@ -99,16 +103,8 @@ define('videosmodule.views.bottomModule', [
 			});
 		}
 
-		$videosModule.addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
-
-		// Do not track an impression if the videosModule is hidden by CSS. Note, jQuery considers elements with
-		// 'visibility': 'hidden' to be visible, since they still take up explicit in the page. We want to consider
-		// that hidden as well, hence the second check.
-		if (!$videosModule.is(':hidden') && $videosModule.css('visibility') !== true) {
-			// impression tracking call
-			track();
-		}
-
+		$('#videosModule').addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
+		track();
 	};
 
 	return VideoModule;
