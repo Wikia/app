@@ -11,7 +11,7 @@ define('videosmodule.views.rail', [
 		track;
 
 	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-bottom',
+		category: 'videos-module-rail',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
@@ -19,7 +19,6 @@ define('videosmodule.views.rail', [
 
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
-
 
 	function VideoModule(options) {
 		// this.el is the container for the right rail videos module
@@ -69,7 +68,7 @@ define('videosmodule.views.rail', [
 		this.$el.find('.thumbnails')
 			.append(thumbHtml);
 		// Tracking not implemented this ticket
-		// track();
+		track();
 	};
 
 	return VideoModule;

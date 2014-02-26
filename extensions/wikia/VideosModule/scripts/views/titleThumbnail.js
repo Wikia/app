@@ -8,7 +8,7 @@ define('videosmodule.views.titleThumbnail', [
 		category: 'videos-module-' + window.wgVideosModuleABTest,
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK,
-		label: 'thumbnail-click',
+		label: 'thumbnail-click'
 	});
 
 	function VideosModuleThumbnail(config) {
