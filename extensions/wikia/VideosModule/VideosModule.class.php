@@ -39,6 +39,10 @@ class VideosModule extends WikiaModel {
 	 * @return array $videos - Premium videos related to article.
 	 */
 	public function getArticleRelatedVideos( $articleId, $numRequired ) {
+		// szpachla-style temp fix for fatals flood
+		if ( !class_exists( 'VideoEmbedToolSearchService' ) ) {
+			return [];
+		}
 		wfProfileIn( __METHOD__ );
 
 		$service = new VideoEmbedToolSearchService();
