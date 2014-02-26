@@ -29,11 +29,22 @@ function ( sections, window, $, mustache, toc, track ) {
 	function createSection( header, level ) {
 		return {
 			id: header.id,
-			name: header.textContent.trim(),
+			name: header.innerText.trim(),
 			level: level,
 			firstLevel: level === 1,
 			sections: []
 		};
+	}
+
+	/**
+	 * @desc Filters headers with nothing to show
+	 *
+	 * @param {Object} header - DOM element of header
+	 *
+	 * @returns {Object} or {Boolean} false if filtered
+	 */
+	function filter ( header ) {
+		return !header.innerText.trim() ? false : header;
 	}
 
 	/**
@@ -50,9 +61,9 @@ function ( sections, window, $, mustache, toc, track ) {
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
 				sections.list(),
-				createSection
+				createSection,
+				filter
 			);
-
 		if ( tocData.sections.length ) {
 			return mustache.render( wrap, tocData, {
 				ol: ol,
