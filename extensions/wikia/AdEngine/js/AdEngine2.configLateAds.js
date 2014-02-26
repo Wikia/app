@@ -7,7 +7,7 @@
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, AdLogicPageLevelParamsLegacy, SlotTweaker, AdTracker*/
 /*global AdProviderNull, AdProviderRemnantDart, AdProviderLiftium, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
-/*global AdConfig2Late, Wikia, window, document, Geo, Krux, jQuery*/
+/*global AdConfig2Late, AdSlotMapConfig, WikiaFullGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
@@ -53,7 +53,7 @@
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 
 	if (window.wgEnableRHonDesktop) {
-        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
+		adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
@@ -62,7 +62,7 @@
 		log,
 		window,
 		adProviderGamePro,
-        window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
+		window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);
