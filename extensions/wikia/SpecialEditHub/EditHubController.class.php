@@ -155,7 +155,11 @@ class EditHubController extends WikiaSpecialPageController {
 			$isValid = $form->validate($selectedModuleValues);
 			if ($isValid) {
 				$this->toolboxModel->saveModule(
-					['cityId' => $wgCityId],
+					[
+						'cityId' => $wgCityId,
+						'langCode' => $this->wg->ContLang->getCode(),
+						'verticalId' => WikiFactoryHub::getInstance()->getCategoryId($wgCityId)
+					],
 					$this->date,
 					$this->selectedModuleId,
 					$selectedModuleValues,
@@ -203,11 +207,12 @@ class EditHubController extends WikiaSpecialPageController {
 			if ($this->success) {
 				$date = new DateTime('@' . $this->date);
 
-				$this->hubUrl = $this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
-					. '/' . $date->format('Y-m-d');
+				// TODO
+				$this->hubUrl = 'asd';//$this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
+					//. '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
 				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
-					$this->purgeWikiaHomepageHubs();
+				//	$this->purgeWikiaHomepageHubs();
 				}
 			} else {
 				$this->errorMsg = $result->errorMsg;
@@ -400,11 +405,13 @@ class EditHubController extends WikiaSpecialPageController {
 		global $wgCityId;
 
 		$module->purgeMemcache($this->date);
-		$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
+		// TODO
+		//$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
-				$this->purgeWikiaHomepageHubs();
+			// TODO
+				//$this->purgeWikiaHomepageHubs();
 		}
 	}
 
