@@ -50,6 +50,9 @@ class WikiaResponse {
 	 * View object
 	 * @var WikiaView
 	 */
+	
+  const CACHE_DISABLED = 0;
+	
 
 	private $view = null;
 	private $body = null;
