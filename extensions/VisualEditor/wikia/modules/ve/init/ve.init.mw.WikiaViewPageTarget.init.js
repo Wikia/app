@@ -76,7 +76,8 @@
 					action: 've-edit-page',
 					referrer: document.referrer,
 					anonymous: mw.user.anonymous(),
-					activateOnPageLoad: init.activateOnPageLoad
+					activateOnPageLoad: init.activateOnPageLoad,
+					redlink: uri.query.redlink
 				} );
 			}
 			Wikia.Tracker.track( trackerConfig, {
