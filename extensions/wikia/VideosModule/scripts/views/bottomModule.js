@@ -64,6 +64,7 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.render = function () {
 		var i,
 			$out,
+			$videosModule = $('#videosModule'),
 			videos = this.model.data.videos,
 			len = videos.length,
 			instance;
@@ -98,8 +99,16 @@ define('videosmodule.views.bottomModule', [
 			});
 		}
 
-		$('#videosModule').addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
-		track();
+		$videosModule.addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
+
+		// Do not track an impression if the videosModule is hidden by CSS. Note, jQuery considers elements with
+		// 'visibility': 'hidden' to be visible, since they still take up explicit in the page. We want to consider
+		// that hidden as well, hence the second check.
+		if (!$videosModule.is(':hidden') && $videosModule.css('visibility') !== true) {
+			// impression tracking call
+			track();
+		}
+
 	};
 
 	return VideoModule;
