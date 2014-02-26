@@ -230,11 +230,12 @@ class WikisModel extends WikiaModel {
 	 * Get details about one or more wikis
 	 *
 	 * @param Array $wikiIds An array of one or more wiki ID's
+	 * @param bool $getBlocked If set to true, will return also blocked (not displayed on global page) wikias
 	 *
 	 * @return Array A collection of results, the index is the wiki ID and each item has a name,
 	 * url, lang, hubId, headline, desc, image and flags index.
 	 */
-	public function getDetails( Array $wikiIds = null ) {
+	public function getDetails( Array $wikiIds = null, $getBlocked = false ) {
 		wfProfileIn(__METHOD__);
 
 		$results = array();
@@ -263,6 +264,14 @@ class WikisModel extends WikiaModel {
 		if ( !empty( $wikiIds ) ) {
 			$db = $this->getSharedDB();
 
+			$where = array(
+				'city_list.city_public' => 1,
+				'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')'
+			);
+			if ( !$getBlocked ) {
+				$where[] = '((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' .
+					self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)';
+			}
 			$rows = $db->select(
 				array(
 					'city_visualization',
@@ -279,11 +288,7 @@ class WikisModel extends WikiaModel {
 					'city_visualization.city_main_image',
 					'city_visualization.city_flags',
 				),
-				array(
-					'city_list.city_public' => 1,
-					'city_list.city_id IN (' . implode( ',', $wikiIds ) . ')',
-					'((city_visualization.city_flags & ' . self::FLAG_BLOCKED . ') != ' . self::FLAG_BLOCKED . ' OR city_visualization.city_flags IS NULL)'
-				),
+				$where,
 				__METHOD__,
 				array(),
 				array(
