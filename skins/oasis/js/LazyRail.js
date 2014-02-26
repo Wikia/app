@@ -86,6 +86,9 @@ $(function () {
 					if (window.wgEnableLightboxExt) {
 						window.LightboxLoader.init();
 					}
+
+					// Lifecycle event for once all content has been loaded
+					rail.trigger('afterLoad.rail');
 				};
 
 				if (data.css.length === 0) {
@@ -101,8 +104,6 @@ $(function () {
 						})
 							.done(function () {
 								loadRailContents(data);
-								// Lifecycle event for once all content has been loaded
-								rail.trigger('afterLoad.rail');
 							});
 					});
 				}
