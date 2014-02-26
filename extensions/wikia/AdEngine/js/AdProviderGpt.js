@@ -175,7 +175,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				slotTweaker.adjustLeaderboardSize(slotname);
 
 				// experimental hack: track LB success time
-				if (slotname.search('LEADERBOARD') > -1) {
+				if ( slotname.search( 'LEADERBOARD' ) > -1 ) {
 					// Track hop time
 					slotTracker.success();
 				}
@@ -192,7 +192,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				// hop to Liftium
 				hop({method: 'hop'}, 'Liftium');
 			},
-            srcName
+			srcName
 		);
 
 		if (gptConfig[slotname] === 'flush' || gptFlushed) {

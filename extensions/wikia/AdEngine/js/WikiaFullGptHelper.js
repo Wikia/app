@@ -23,9 +23,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		dataAttribs = {},
 		googletag;
 
-    function init(paramSlotMap, src) {
-        providerSlotMap[src] = paramSlotMap;
-    }
+	function init( paramSlotMap, src ) {
+		providerSlotMap[src] = paramSlotMap;
+	}
 
 	function triggerDone(slotnameGpt) {
 		var callback = doneCallbacks[slotnameGpt];
@@ -146,58 +146,58 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 				}
 
 				// Define all possible slots
-                for ( slotMapSrc in providerSlotMap ) {
-                    if ( !providerSlotMap.hasOwnProperty( slotMapSrc ) ) {
-                        continue;
-                    }
+				for ( slotMapSrc in providerSlotMap ) {
+					if ( !providerSlotMap.hasOwnProperty( slotMapSrc ) ) {
+						continue;
+					}
 
-                    slotMap = providerSlotMap[slotMapSrc];
+					slotMap = providerSlotMap[slotMapSrc];
 
-                    for ( slotname in slotMap ) {
-                        if ( slotMap.hasOwnProperty( slotname ) && slotMap[slotname].size ) {
-                            log( ['loadGpt', 'defining slot', slotname], 9, logGroup );
+					for ( slotname in slotMap ) {
+						if ( slotMap.hasOwnProperty( slotname ) && slotMap[slotname].size ) {
+							log( ['loadGpt', 'defining slot', slotname], 9, logGroup );
 
-                            slotnameGpt = slotname + '_' + slotMapSrc;
+							slotnameGpt = slotname + '_' + slotMapSrc;
 
-                            slotItem = slotMap[slotname];
-                            sizes = convertSizesToGpt( slotItem.size );
+							slotItem = slotMap[slotname];
+							sizes = convertSizesToGpt( slotItem.size );
 
-                            slotPath = path + '/' + slotMapSrc + '/' + slotname;
+							slotPath = path + '/' + slotMapSrc + '/' + slotname;
 
-                            log( ['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup );
-                            slot = googletag.defineSlot( slotPath, sizes, slotnameGpt );
-                            slot.addService( googletag.pubads() );
+							log( ['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup );
+							slot = googletag.defineSlot( slotPath, sizes, slotnameGpt );
+							slot.addService( googletag.pubads() );
 
-                            // Per-slot targeting keys
-                            slotParams = {
-                                pos: slotname,
-                                loc: slotItem.loc,
-                                src: slotMapSrc
-                            };
+							// Per-slot targeting keys
+							slotParams = {
+								pos: slotname,
+								loc: slotItem.loc,
+								src: slotMapSrc
+							};
 
-                            for ( name in slotParams ) {
-                                if ( slotParams.hasOwnProperty( name ) ) {
-                                    value = slotParams[name];
-                                    if ( value ) {
-                                        log( ['slot.setTargeting', name, value], 9, logGroup );
-                                        slot.setTargeting( name, value );
-                                    }
-                                }
-                            }
+							for ( name in slotParams ) {
+								if ( slotParams.hasOwnProperty( name ) ) {
+									value = slotParams[name];
+									if ( value ) {
+										log( ['slot.setTargeting', name, value], 9, logGroup );
+										slot.setTargeting( name, value );
+									}
+								}
+							}
 
-                            gptSlots[slotname] = slot;
+							gptSlots[slotname] = slot;
 
-                            dataAttribs[slotname] = {
-                                'data-gpt-page-params': JSON.stringify( pageLevelParams ),
-                                'data-gpt-slot-params': JSON.stringify( slotParams ),
-                                'data-gpt-slot-sizes': JSON.stringify( sizes )
-                            };
+							dataAttribs[slotname] = {
+								'data-gpt-page-params': JSON.stringify( pageLevelParams ),
+								'data-gpt-slot-params': JSON.stringify( slotParams ),
+								'data-gpt-slot-sizes': JSON.stringify( sizes )
+							};
 
-                            log( ['loadGpt', 'defined slot', slotname, slot], 9, logGroup );
+							log( ['loadGpt', 'defined slot', slotname, slot], 9, logGroup );
 
-                        }
-                    }
-                }
+						}
+					}
+				}
 
 				log(['loadGpt', 'all slots defined'], 9, logGroup);
 
