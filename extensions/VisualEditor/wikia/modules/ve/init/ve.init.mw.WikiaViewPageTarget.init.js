@@ -19,7 +19,7 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, indicatorTimer,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
@@ -28,10 +28,10 @@
 			'trackingMethod': 'both'
 		};
 
-	function initIndicator( type, hook ) {
+	function initIndicator() {
 		var $indicator = $( '<div>' )
 				.addClass( 've-indicator visible' )
-				.attr( 'data-type', type ),
+				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
 			$icon = $( '<div>' ).addClass( type ),
 			$message = $( '<p>' )
@@ -49,23 +49,25 @@
 			.hide();
 
 		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function hide() {
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( indicatorTimer !== 'undefined' ) {
+				clearTimeout( indicatorTimer );
+			}
 			if ( $indicator.is( ':visible' ) ) {
 				$indicator.fadeOut( 400 );
 			}
 		} );
 	}
 
-	function showIndicator( type ) {
-		var timer,
-			$indicator = $( '.ve-indicator[data-type="' + type + '"]' ),
+	function showIndicator() {
+		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
 			$message = $indicator.find( 'p.message' );
 
 		$message.hide();
 		$indicator.fadeIn( 400 );
 
 		// Display the message if loading is taking awhile
-		timer = setTimeout( function () {
+		indicatorTimer = setTimeout( function () {
 			if ( $indicator.is( ':visible' ) ) {
 				$message.slideDown( 400 );
 			}
@@ -79,7 +81,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		showIndicator( 'loading' );
+		showIndicator();
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
@@ -345,7 +347,7 @@
 		} );
 	}
 
-	initIndicator( 'loading', 've.activationComplete' );
+	initIndicator();
 
 	// Redlinks
 	$( function () {
