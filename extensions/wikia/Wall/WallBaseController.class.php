@@ -43,8 +43,6 @@ class WallBaseController extends WikiaController{
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
-
-		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$id = $this->request->getVal('id', null);
 
 		$this->getThread($id);
@@ -56,7 +54,7 @@ class WallBaseController extends WikiaController{
 		if( count($this->threads) > 0 ) {
 			$wn = new WallNotifications();
 			foreach($this->threads as $key => $val ){
-				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 				break;
 			}
 		}
