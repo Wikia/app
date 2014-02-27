@@ -28,9 +28,10 @@
 			'trackingMethod': 'both'
 		};
 
-	function indicator( type, hook ) {
-		var timer,
-			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+	function initIndicator( type, hook ) {
+		var $indicator = $( '<div>' )
+				.addClass( 've-indicator visible' )
+				.attr( 'data-type', type ),
 			$content = $( '<div>' ).addClass( 'content' ),
 			$icon = $( '<div>' ).addClass( type ),
 			$message = $( '<p>' )
@@ -46,19 +47,28 @@
 			.appendTo( $( 'body' ) )
 			.animate( { 'opacity': 1 }, 400 );
 
+		// Cleanup indicator when hook is fired
+		mw.hook( hook ).add( function hide() {
+			if ( $indicator.is( ':visible' ) ) {
+				$indicator.fadeOut( 400 );
+			}
+		} );
+	}
+
+	function showIndicator( type ) {
+		var timer,
+			$indicator = $( '.ve-indicator[data-type="' + type + '"]' ),
+			$message = $indicator.find( 'p.message' );
+
+		$message.hide();
+		$indicator.fadeIn( 400 );
+
 		// Display the message if loading is taking awhile
 		timer = setTimeout( function () {
-			$message.slideDown( 400 );
+			if ( $indicator.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
 		}, 3000 );
-
-		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function cleanup() {
-			clearTimeout( timer );
-			$indicator.animate( { 'opacity': 0 }, 400, function () {
-				mw.hook( hook ).remove( cleanup );
-				$indicator.remove();
-			} );
-		} );
 	}
 
 	/**
@@ -68,7 +78,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		indicator( 'loading', 've.activationComplete' );
+		showIndicator( 'loading' );
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
@@ -333,6 +343,8 @@
 			init.setupSkin();
 		} );
 	}
+
+	initIndicator( 'loading', 've.activationComplete' );
 
 	// Redlinks
 	$( function () {
