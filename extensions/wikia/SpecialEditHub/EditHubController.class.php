@@ -207,9 +207,7 @@ class EditHubController extends WikiaSpecialPageController {
 				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
 				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
-
-				// TODO
-				//	$this->purgeWikiaHomepageHubs();
+					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
 				$this->errorMsg = $result->errorMsg;
@@ -406,15 +404,14 @@ class EditHubController extends WikiaSpecialPageController {
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
-
-				// TODO temporary until we decide what would happed with hub images on WHP
-				//$this->purgeWikiaHomepageHubs();
+				$this->purgeWikiaHomepageHubs();
 		}
 	}
 
 	private function purgeWikiaHomepageHubs() {
-		WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
-		$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
+		// TODO temporary disabled until we decide what would happed with hub images on WHP
+		//WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
+		//$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
 	}
 
 	private function getHubsServicesHelper() {
