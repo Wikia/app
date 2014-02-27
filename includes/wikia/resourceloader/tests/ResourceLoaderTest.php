@@ -18,8 +18,6 @@ class ResourceLoaderTest extends WikiaBaseTest {
 		global $wgHooks;
 		$this->oldWgHooks = $wgHooks;
 
-		$this->mockGlobalVariable('wgCacheEpoch',TestResourceLoaderModule::TIMESTAMP - 1000);
-
 		parent::setUp();
 	}
 
@@ -78,10 +76,6 @@ class ResourceLoaderTest extends WikiaBaseTest {
 			),
 			'timestamp + 1' => array(
 				'version' => [$wgStyleVersion, $futureTimestamp],
-				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
-			),
-			'no style version' => array(
-				'version' => [$currTimestamp],
 				'ttl' => $wgResourceLoaderMaxage['unversioned']['client']
 			)
 		);
