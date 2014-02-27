@@ -19,6 +19,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$this->sectionId = $sectionId;
 		$this->verticalId = $verticalId;
 		$this->cityId = $cityId;
+		$this->hubsVersion = $hubsVersion;
 		// Disabling global search on hubsv3
 		$this->hubsLayoutVersion = $hubsVersion;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
@@ -50,7 +51,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return $this->hubsLayoutVersion;
 	}
 
-	private function getHubsParams() {
+	protected function getHubsParams() {
 		$params = null;
 		$version = $this->getHubsVersion();
 

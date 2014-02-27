@@ -46,7 +46,7 @@ class WikiaHubsV3Controller extends WikiaController {
 			return;
 		}
 
-		$toolboxModel = new MarketingToolboxModel();
+		$toolboxModel = new MarketingToolboxV3Model();
 
 		$this->modules = array();
 
@@ -87,7 +87,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	/**
 	 * Render one module with given data
 	 *
-	 * @param MarketingToolboxModel $toolboxModel
+	 * @param MarketingToolboxV3Model $toolboxModel
 	 * @param string $moduleName
 	 * @param array  $moduleData
 	 *
@@ -99,7 +99,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
 			$this->wg->ContLang->getCode(),
-			MarketingToolboxModel::SECTION_HUBS,
+			MarketingToolboxV3Model::SECTION_HUBS,
 			$this->verticalId,
 			$this->cityId,
 			self::HUBS_VERSION
@@ -156,7 +156,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	 */
 	protected function getMarketingToolboxModel() {
 		if( !$this->marketingToolboxModel ) {
-			$this->marketingToolboxModel = new MarketingToolboxModel($this->app);
+			$this->marketingToolboxModel = new MarketingToolboxV3Model($this->app);
 		}
 		
 		return $this->marketingToolboxModel;

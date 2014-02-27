@@ -48,11 +48,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function loadData($model, $params) {
-		$hubParams = [
-			'langCode' => $this->langCode,
-			'sectionId' => $this->sectionId,
-			'verticalId' => $this->verticalId,
-		];
+		$hubParams = $this->getHubsParams();
 		$lastTimestamp = $model->getLastPublishedTimestamp(
 									$hubParams,
 									$params['ts']

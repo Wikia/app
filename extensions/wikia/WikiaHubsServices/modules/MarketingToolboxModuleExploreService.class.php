@@ -15,8 +15,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 	protected $sectionsLimit;
 	protected $linksLimit;
 
-	public function __construct($langCode, $sectionId, $verticalId) {
-		parent::__construct($langCode, $sectionId, $verticalId);
+	public function __construct($langCode, $sectionId, $verticalId, $cityId = 0, $hubsVersion = 2) {
+		parent::__construct($langCode, $sectionId, $verticalId, $cityId, $hubsVersion);
 
 		$this->model = new MarketingToolboxExploreModel();
 		$this->sectionsLimit = $this->model->getFormSectionsLimit();
