@@ -40,7 +40,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		replies = msg( 'wikiamobile-article-comments-replies' ),
 		postComm = d.getElementsByClassName( 'commFrm' )[0].cloneNode( true ),
 		textAreaSel = '.commFrm textarea',
-		elmToHide = $( '#wkTOC.side-menu' ) || $( '#wkTOCHandle' );
+		elmToHide = $( '#wkTOC, #wkTOCHandle' ).eq(0);
 
 	postComm.getElementsByClassName( 'commText' )[0].setAttribute( 'placeholder', postReply );
 
