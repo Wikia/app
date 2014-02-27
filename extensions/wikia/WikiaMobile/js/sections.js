@@ -163,7 +163,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Checks if the given article Section (only H2-leveled sections) exists
-	 * @param {Number} section number of the article's section getting checked
+	 * @param {Number} number of the article's section getting checked
 	 * @returns {Boolean}
 	 */
 	function isDefined ( section ) {
