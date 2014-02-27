@@ -402,13 +402,11 @@ class EditHubController extends WikiaSpecialPageController {
 		global $wgCityId;
 
 		$module->purgeMemcache($this->date);
-		// TODO
-		//$this->getHubsServicesHelper()->purgeHubVarnish($this->langCode, $this->verticalId);
+		$this->getHubsServicesHelper()->purgeHubV3Varnish($wgCityId);
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
-			// TODO
-				//$this->purgeWikiaHomepageHubs();
+				$this->purgeWikiaHomepageHubs();
 		}
 	}
 
