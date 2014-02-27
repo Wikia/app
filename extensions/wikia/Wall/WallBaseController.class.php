@@ -40,6 +40,7 @@ class WallBaseController extends WikiaController{
 	}
 
 	public function thread() {
+		global $wgUser, $wgCityId, $wgOut, $wgWallNS;
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
@@ -54,7 +55,7 @@ class WallBaseController extends WikiaController{
 		if( count($this->threads) > 0 ) {
 			$wn = new WallNotifications();
 			foreach($this->threads as $key => $val ){
-				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				$wn->markRead( $wgUser->getId(), $wgCityId, $key );
 				break;
 			}
 		}
@@ -63,11 +64,11 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('greeting', '');
 
 		$title = Title::newFromId($id);
-		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
+		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $wgWallNS) ) {
 			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->load();
-			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
-			$this->app->wg->Out->setETag( $wallMessage->getETag() );
+			$wgOut->setPageTitle( $wallMessage->getMetaTitle() );
+			$wgOut->setETag( $wallMessage->getETag() );
 		}
 
 		//TODO: keep the varnish cache and do purging on post
