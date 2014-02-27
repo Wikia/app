@@ -5,6 +5,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	'use strict';
 
 	var logGroup = 'AdProviderGpt',
+		srcName = 'gpt',
 		forgetAdsShownAfterTime = 3600, // an hour
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
@@ -39,7 +40,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
 
-	wikiaGpt.init(slotMap, 'gpt');
+	wikiaGpt.init(slotMap, srcName);
 
 	// Private methods
 
@@ -173,7 +174,8 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 
 				// hop to Liftium
 				hop({method: 'hop'}, 'Liftium');
-			}
+			},
+			srcName
 		);
 
 		if (slotMap[slotname].gpt === 'flush' || gptFlushed) {
