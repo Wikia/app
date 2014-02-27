@@ -182,3 +182,7 @@ dd {
 strong, b {
 	font-weight: bold;
 }
+
+.hidden, .mw-hidden-cats-hidden {
+	display: none !important;
+}
