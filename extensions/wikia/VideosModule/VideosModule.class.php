@@ -83,16 +83,17 @@ class VideosModule extends WikiaModel {
 	public function getWikiRelatedVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		// Strip Wiki off the end of the wiki name if it exists
-		$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
-
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos', md5( $wikiTitle ) );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos' );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
+			// Strip Wiki off the end of the wiki name if it exists
+			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
+
 			$params = [
 				'title' => $wikiTitle,
 				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
 			];
+
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
 
 			$videos = [];
