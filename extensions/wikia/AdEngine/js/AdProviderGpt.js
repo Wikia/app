@@ -35,6 +35,8 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		GPT_FLUSH: 'flushonly'
 	};
 
+	wikiaGpt.init(slotMap, srcName);
+
 	// Private methods
 
 	function incrementItemInStorage(storageKey) {

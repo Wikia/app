@@ -8,10 +8,14 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		providerSlotMap = adSlotMapConfig.getConfig(),
+		providerSlotMap = {},
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
+
+	function init(paramSlotMap, slotMapSrc) {
+		providerSlotMap[slotMapSrc] = paramSlotMap;
+	}
 
 	function triggerDone(slotnameGpt) {
 		var callback = doneCallbacks[slotnameGpt];
@@ -147,7 +151,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 							slotItem = slotMap[slotname];
 							sizes = convertSizesToGpt(slotItem.size);
 
-							slotPath = path + '/' + slotname + '_' + slotMapSrc;
+							slotPath = path + '/' + slotname + '/' + slotMapSrc;
 
 							log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
 							slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
