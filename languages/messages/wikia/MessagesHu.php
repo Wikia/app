@@ -45,5 +45,9 @@ $messages = array_merge( $messages, array(
 'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Új szakasz nyitása',
+
+// Shared Help
+'shared_help_info' => 'Kérdéseid vannak? Tedd fel őket a [[w:Special:Forum|Közösségi Központ fórumain]].'
+
 ) );
 
