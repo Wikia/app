@@ -3,14 +3,14 @@ define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia
 	'use strict';
 
 	var logGroup = 'AdProviderDartRemnantMobile',
-
+		srcName = 'rh_mobile',
 		slotMap = {
 			MOBILE_TOP_LEADERBOARD: {size: '320x50'},
 			MOBILE_IN_CONTENT: {size: '300x250'},
 			MOBILE_PREFOOTER: {size: '300x250'}
 		};
 
-	wikiaGpt.init(slotMap, 'rh_mobile');
+	wikiaGpt.init(slotMap, srcName);
 
 	function canHandleSlot(slotname) {
 		return !!slotMap[slotname];
@@ -41,7 +41,9 @@ define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia
 				slotTweaker.hideSelfServeUrl(slotname);
 
 				success();
-			}, true);
+			},
+			srcName
+		);
 		wikiaGpt.flushAds();
 	}
 

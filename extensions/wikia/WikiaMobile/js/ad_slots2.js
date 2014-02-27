@@ -31,7 +31,7 @@ require(
 			isAdVisible = function ( adSlotName ) {
 				return function ( hop ) {
 					var slot = document.getElementById( adSlotName ),
-						$iframe = $( slot ).find( 'iframe' ).contents();
+						$iframe = $( slot ).children(':last-child').find( 'iframe' ).contents();
 
 					if (
 						$iframe.find( 'body *:not(script)' ).length === 0 ||
@@ -46,7 +46,7 @@ require(
 					} else {
 						slot.className += ' show';
 					}
-				}
+				};
 			};
 
 		// Slots
