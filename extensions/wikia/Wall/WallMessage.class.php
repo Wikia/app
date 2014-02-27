@@ -1503,7 +1503,7 @@ class WallMessage {
 	 */
 	public function getETag() {
 		global $wgStyleVersion;
-		return $this->getTitle()->getTouched() . '-' . $wgStyleVersion;
+		return sprintf( '%s-%s', $this->getTitle()->getTouched(), $wgStyleVersion );
 	}
 
 	/**
