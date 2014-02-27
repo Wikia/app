@@ -40,7 +40,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		replies = msg( 'wikiamobile-article-comments-replies' ),
 		postComm = d.getElementsByClassName( 'commFrm' )[0].cloneNode( true ),
 		textAreaSel = '.commFrm textarea',
-		elmToHide = $( '#wkTOC, #wkTOCHandle' ).eq(0);
+		$toc = $( '#wkTOC' );
 
 	postComm.getElementsByClassName( 'commText' )[0].setAttribute( 'placeholder', postReply );
 
@@ -290,11 +290,11 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 			if ( !loginRequired( event ) ) {
 				//scroll text area to top of the screen with small padding
 				window.scrollTo( 0, $( event.target ).offset().top - 5 );
-				elmToHide.addClass( 'hidden' );
+				$toc.addClass( 'hidden' );
 			}
 		} )
 		.on( 'blur', textAreaSel, function ( event ) {
-			elmToHide.removeClass( 'hidden' );
+			$toc.removeClass( 'hidden' );
 		} )
 		.on( 'submit', '.commFrm', post );
 } );
