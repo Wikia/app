@@ -69,6 +69,7 @@ class WallBaseController extends WikiaController{
 			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->load();
 			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+			$this->app->wg->Out->setETag( $wallMessage->getETag() );
 		}
 
 		//TODO: keep the varnish cache and do purging on post
