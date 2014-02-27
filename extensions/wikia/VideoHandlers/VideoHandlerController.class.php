@@ -15,36 +15,36 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string|asset A URL for the video
 	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
-	public function getEmbedCode( ) {
-		$title = urldecode( $this->getVal('fileTitle', '') );
-		$width = $this->getVal('width', '');
+	public function getEmbedCode() {
+		$title = urldecode( $this->getVal( 'fileTitle', '' ) );
+		$width = $this->getVal( 'width', '' );
 		$autoplay = $this->getVal( 'autoplay', false );
 
 		$error = '';
-		if ( empty($title) ) {
-			$error = wfMessage('videohandler-error-missing-parameter', 'title')->inContentLanguage()->text();
+		if ( empty( $title ) ) {
+			$error = wfMessage( 'videohandler-error-missing-parameter' , 'title' )->inContentLanguage()->text();
 		} else {
-			if ( empty($width) ) {
-				$error = wfMessage('videohandler-error-missing-parameter', 'width')->inContentLanguage()->text();
+			if ( empty( $width ) ) {
+				$error = wfMessage( 'videohandler-error-missing-parameter', 'width' )->inContentLanguage()->text();
 			}
 			else {
-				$title = Title::newFromText($title, NS_FILE);
-				$file = ($title instanceof Title) ? wfFindFile($title) : false;
+				$title = Title::newFromText( $title, NS_FILE ) ;
+				$file = ( $title instanceof Title ) ? wfFindFile( $title ) : false;
 				if ( $file === false ) {
-					$error = wfMessage('videohandler-error-video-no-exist')->inContentLanguage()->text();
+					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode($width, $autoplay, true);
-					$this->setVal('videoId', $videoId);
-					$this->setVal('asset', $assetUrl);
-					$this->setVal('embedCode', $embedCode);
+					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$this->setVal( 'videoId', $videoId );
+					$this->setVal( 'asset', $assetUrl) ;
+					$this->setVal( 'embedCode', $embedCode );
 				}
 			}
 		}
 
-		if ( !empty($error) ) {
-			$this->setVal('error', $error);
+		if ( !empty( $error ) ) {
+			$this->setVal( 'error', $error );
 		}
 	}
 
