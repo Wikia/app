@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * @method setLimit
