@@ -157,7 +157,7 @@ class WallHistoryController extends WallController {
 	
 	private function getFormatedHistoryData($history, $threadId = 0) {
 		// VOLDEV-39: Store whether Wall is enabled
-		$ns = $this->wg->EnableWallExt ? NS_WALL : NS_USER_TALK;
+		$ns = $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK;
 
 		foreach($history as $key => $value) {
 			$type = intval($value['action']);
@@ -172,13 +172,18 @@ class WallHistoryController extends WallController {
 			$user = $value['user'];
 			$username = $user->getName();
 
-			$url = Title::newFromText( $username, $ns )->getFullUrl();
-			
+			$userTalk = Title::newFromText( $username, $ns );
+			$url = $userTalk->getFullUrl();
+
 			if( $user->isAnon() ) {
-				$name = wfMessage( 'oasis-anon-user' )->text();
-				$history[$key]['displayname'] = wfMessage( 'wall-history-username-full', array('$1' => $name, '$2' => $username, '$3' => $url ) )->text();
+				$history[$key]['displayname'] = Linker::linkKnown( $userTalk, wfMessage( 'oasis-anon-user' )->escaped() );
+				$history[$key]['displayname'] .= ' ' . Linker::linkKnown(
+					$userTalk,
+					Html::element( 'small', array(), $username ),
+					array( 'class' => 'username' )
+				);
 			} else {
-				$history[$key]['displayname'] = wfMessage( 'wall-history-username-short', array('$1' => $username, '$2' => $url ) )->text();
+				$history[$key]['displayname'] = Linker::linkKnown( $userTalk, $username );
 			}
 			
 			$history[$key]['authorurl'] = $url;
