@@ -218,7 +218,6 @@ class ForumHooksHelper {
 	/**
 	 * clear the caches
 	 */
-
 	static public function onAfterBuildNewMessageAndPost(&$mw) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
@@ -232,7 +231,6 @@ class ForumHooksHelper {
 	/**
 	 * overriding message
 	 */
-
 	static public function onWallMessageDeleted(&$mw, &$response) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
@@ -248,7 +246,6 @@ class ForumHooksHelper {
 	 *
 	 * @author Tomasz Odrobny
 	 **/
-
 	static function onGetUserPermissionsErrors(Title &$title, User &$user, $action, &$result) {
 		if ( $action == 'read' ) {
 			return true;
@@ -270,7 +267,6 @@ class ForumHooksHelper {
 	/**
 	 * override button on forum
 	 */
-
 	static public function onPageHeaderIndexAfterActionButtonPrepared($response, $ns, $skin) {
 		$app = F::App();
 		$title = $app->wg->Title;
@@ -291,7 +287,6 @@ class ForumHooksHelper {
 	/**
 	 * helper function for onGetUserPermissionsErrors/onPageHeaderIndexAfterActionButtonPrepared
 	 */
-
 	static public function canEditOldForum($user) {
 		return $user->isAllowed( 'forumoldedit' );
 	}
@@ -299,7 +294,6 @@ class ForumHooksHelper {
 	/**
 	 * show the info box for old forums
 	 */
-
 	static public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
 		$title = $article->getTitle();
 		$ns = $title->getNamespace();
@@ -334,7 +328,6 @@ class ForumHooksHelper {
 	 * in case of edit this hook is run two time before (WallBeforeEdit) edit and after edit (WallAction)
 	 *
 	 */
-
 	static public function onWallAction($action, $parent, $comment_id) {
 		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
@@ -379,6 +372,10 @@ class ForumHooksHelper {
 		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
+		} elseif ( $title->inNamespace( NS_WIKIA_FORUM_BOARD ) ) {
+			$boardTitle = Title::newFromText( $title->getText(), NS_WIKIA_FORUM_BOARD );
+			$urls[] = $boardTitle->getFullURL();
+			$urls[] = $boardTitle->getFullURL( 'action=history' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -483,4 +480,5 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
 }

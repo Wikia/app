@@ -293,8 +293,8 @@ class WallExternalController extends WikiaController {
 		if($isDeleteOrRemove) {
 			$this->response->setVal('html', $this->app->renderView( 'WallController', 'messageRemoved', array('showundo' => true , 'comment' => $mw)));
 			$mw->getLastActionReason();
-			$mw->purgeSquid();
 			$this->response->setVal('deleteInfoBox', 'INFO BOX');
+			$mw->purgeSquid();
 		}
 
 		$this->response->setVal('status', $result);
@@ -379,6 +379,7 @@ class WallExternalController extends WikiaController {
 		){
 			$mw->restore($this->wg->User);
 			$mw->purgeSquid();
+
 			$this->response->setVal('status', true);
 			return true;
 		}

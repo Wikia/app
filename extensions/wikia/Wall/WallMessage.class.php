@@ -169,6 +169,7 @@ class WallMessage {
 			$class->notifyEveryone();
 		}
 
+		$class->purgeSquid();
 		$class->addWatch($user);
 
 		wfRunHooks( 'AfterBuildNewMessageAndPost', array(&$class) );
@@ -259,6 +260,9 @@ class WallMessage {
 			// after changing reply invalidate thread cache
 			$this->getThread()->invalidateCache();
 		}
+
+		$this->purgeSquid();
+
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -605,7 +609,7 @@ class WallMessage {
 	}
 
 	/**
-	 * @return null|ArticleComment
+	 * @return null|WallMessage
 	 */
 	public function getTopParentObj(){
 		wfProfileIn(__METHOD__);
@@ -1445,10 +1449,14 @@ class WallMessage {
 	}
 
 	/**
-	 * @desc Creates wall message title (a board, a thread, a message) instance and calls purgeSquid() on it
+	 * @desc Creates wall message title (a board, a thread, a message) instance and purgeSquid() on it.
+	 * Before that calls MessageWall::invalidateCache() which changes page_touched value for a page "main" page.
+	 *
 	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
 	 */
 	public function purgeSquid() {
+		$this->invalidateCache();
+
 		$title = Title::newFromID( $this->getId() );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
@@ -1469,22 +1477,82 @@ class WallMessage {
 		// To quick fix it we use $idDB variable...
 		if( $this->getMessagePageId() > 0 ) {
 			if( $this->isMain() ) {
-				$urls[] = $this->getMessagePageUrl( true );
+				$threadPageUrl = $this->getMessagePageUrl( true );
+				$urls[] = $threadPageUrl;
+				$urls[] = $threadPageUrl . '?action=history';
 			} else {
 				/** @var WallMessage $parent */
 				$parent = $this->getTopParentObj();
 				$parent->load( true );
-				$urls[] = $parent->getMessagePageUrl( true );
+				$threadPageUrl = $parent->getMessagePageUrl( true );
+				$urls[] = $threadPageUrl;
+				$urls[] = $threadPageUrl . '?action=history';
 			}
 
 			// CONN-430: Purge wall page / forum board
 			$title = Title::newFromText( $this->getMainPageText(), $namespace );
 			if( !empty( $title ) ) {
 				$urls[] = $title->getFullURL();
+				$urls[] = $title->getFullUrl( 'action=history' );
 			}
 		}
 
 		return $urls;
+	}
+
+	/**
+	 * @desc Concatenates page_touched value with cache buster value
+	 *
+	 * @return string
+	 */
+	public function getETag() {
+		global $wgStyleVersion;
+		return sprintf( '%s-%s', $this->getTitle()->getTouched(), $wgStyleVersion );
+	}
+
+	/**
+	 * @desc Changes page_touched value in page table for main message
+	 */
+	public function invalidateCache() {
+		$this->invalidateMessagePageCache();
+
+		if( $this->isMain() ) {
+			$title = $this->getTitle();
+		} else {
+			$parent = $this->getTopParentObj();
+
+			if( !is_null( $parent ) ) {
+				$title = $parent->getTitle();
+			} else {
+				$title = null;
+			}
+		}
+
+		if( !is_null( $title ) ) {
+			$title->invalidateCache();
+		} else {
+			wfDebug(
+				__METHOD__ .
+				': WARNING! $title not found for WallMessage. The cache will not be invalidated.' .
+				' ETags will stay the same. ' .
+				' Message ID: ' . $this->getMessagePageId()
+			);
+		}
+	}
+
+	public function invalidateMessagePageCache() {
+		$wall = $this->getWall();
+
+		if( !is_null($wall) ) {
+			$wall->getTitle()->invalidateCache();
+		} else {
+			wfDebug(
+				__METHOD__ .
+				': WARNING! $wall not found. The cache will not be invalidated.' .
+				' ETags will stay the same. ' .
+				' Message ID: ' . $this->getMessagePageId()
+			);
+		}
 	}
 
 }

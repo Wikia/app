@@ -40,11 +40,10 @@ class WallBaseController extends WikiaController{
 	}
 
 	public function thread() {
+		global $wgUser, $wgCityId, $wgOut, $wgWallNS;
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
-
-		$title = $this->request->getVal('title', $this->app->wg->Title);
 		$id = $this->request->getVal('id', null);
 
 		$this->getThread($id);
@@ -56,7 +55,7 @@ class WallBaseController extends WikiaController{
 		if( count($this->threads) > 0 ) {
 			$wn = new WallNotifications();
 			foreach($this->threads as $key => $val ){
-				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				$wn->markRead( $wgUser->getId(), $wgCityId, $key );
 				break;
 			}
 		}
@@ -65,10 +64,11 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('greeting', '');
 
 		$title = Title::newFromId($id);
-		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
+		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $wgWallNS) ) {
 			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->load();
-			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+			$wgOut->setPageTitle( $wallMessage->getMetaTitle() );
+			$wgOut->setETag( $wallMessage->getETag() );
 		}
 
 		//TODO: keep the varnish cache and do purging on post
@@ -78,11 +78,14 @@ class WallBaseController extends WikiaController{
 	}
 
 	public function index($wallMessagesPerPage = 10) {
+		global $wgTitle, $wgOut, $wgStyleVersion;
+
 		wfProfileIn( __METHOD__ );
 
 		$this->addAsset();
 
-		$title = $this->request->getVal('title', $this->app->wg->Title);
+		/** @var Title $title */
+		$title = $this->request->getVal('title', $wgTitle);
 		$page = $this->request->getVal('page', 1);
 
 		/* for some reason nirvana passes null to this function we need to force default value */
@@ -118,6 +121,8 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('itemsPerPage', $wallMessagesPerPage);
 		$this->response->setVal('showPager', ($this->countComments > $wallMessagesPerPage) );
 		$this->response->setVal('currentPage', $page );
+
+		$wgOut->setETag( sprintf( '%s-%s', $title->getTouched(), $wgStyleVersion ) );
 
 		//TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
