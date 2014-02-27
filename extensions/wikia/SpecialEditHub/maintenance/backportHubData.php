@@ -31,12 +31,6 @@ class backportHubData extends Maintenance {
 		'ja' => '記事を投稿する'
 	];
 
-
-
-	public function __construct() {
-		parent::__construct();
-	}
-
 	public function execute() {
 		echo 'Hub backport starting: ' . ( new DateTime() )->format( "Y-m-d H:i:s" ) . "\n";
 		global $wgExternalSharedDB;
