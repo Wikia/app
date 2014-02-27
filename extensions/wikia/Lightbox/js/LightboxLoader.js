@@ -65,10 +65,11 @@
 				videos = $('#RelatedVideosRL'),
 				photos = $('#LatestPhotosModule'),
 				comments = $('#WikiaArticleComments'),
-				footer = $('#WikiaArticleFooter');
+				footer = $('#WikiaArticleFooter'),
+				videosModule = $('#videosModule');
 
 			// Bind click event to initiate lightbox
-			article.add(photos).add(videos).add(comments).add(footer)
+			article.add(photos).add(videos).add(comments).add(footer).add(videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -370,7 +371,8 @@
 			SHARE: 'share',
 			HUBS: 'hubs',
 			OTHER: 'other',
-			VIDEOSMODULE: 'bottomVideosModule'
+			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
+			VIDEOS_MODULE_RAIL: 'railVideosModule'
 		}
 	};
 
