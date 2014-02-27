@@ -24,7 +24,7 @@ class WikiaHubsV3Hooks {
 
 			if (!$app->wg->request->wasPosted()) {
 				// don't change article object while saving data
-				$article = new WikiaHubsV3Article($title, $model->getHubPageId($dbKeyNameSplit[0]), $hubTimestamp);
+				$article = new WikiaHubsV3Article($title, $hubTimestamp);
 			}
 		}
 /*
@@ -61,21 +61,13 @@ class WikiaHubsV3Hooks {
 	 */
 	static public function onWikiaCanonicalHref(&$url) {
 		wfProfileIn(__METHOD__);
-		$app = F::app();
+		global $wgRequest;
 
-		if( !empty($app->wg->EnableWikiaHomePageExt) ) {
-			$model = new WikiaHubsV3HooksModel();
-			
-			$title = Title::newFromURL($url);
-			if( $title instanceof Title ) {
-				$dbKeyName = $title->getDBKey();
-				$dbKeyNameSplit = explode('/', $dbKeyName);
-				$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
+		$title = Title::newFromText($wgRequest->getVal( 'title' ));
+		$mainPageTitle = Title::newMainPage();
 
-				if ( WikiaPageType::isWikiaHub() && isset($dbKeyNameSplit[1])) {
-					$url = $model->getCanonicalHrefForHub($hubName, $url);
-				}
-			}
+		if ( $title->isSubpageOf($mainPageTitle) ) {
+			$url = $mainPageTitle->getFullURL();
 		}
 
 		wfProfileOut(__METHOD__);

@@ -134,7 +134,6 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->initFormat();
 		$this->initModel();
 		$this->initVertical();
-		$this->initVerticalSettings();
 		$this->initHubTimestamp();
 	}
 
@@ -173,6 +172,7 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->cityId = $wgCityId;
 		$this->verticalName = $this->model->getVerticalNameById($this->cityId);
 		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->cityId);
+		$this->wg->out->setPageTitle($this->verticalName);
 	}
 
 	protected function initModel() {
@@ -180,16 +180,6 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->model->setVertical($this->verticalId);
 	}
 
-	/**
-	 * Sets hubs specific settings: page title, hub type, vertical body class
-	 */
-	protected function initVerticalSettings() {
-		$this->wg->out->setPageTitle($this->verticalName);
-		if ($this->format != 'json') {
-			$this->wgWikiaHubType = $this->verticalName;
-		}
-		OasisController::addBodyClass('WikiaHubsPage');
-	}
 
 	protected function initHubTimestamp() {
 		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
