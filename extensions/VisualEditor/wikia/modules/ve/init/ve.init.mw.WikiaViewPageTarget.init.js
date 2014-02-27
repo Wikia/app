@@ -45,7 +45,8 @@
 		$indicator
 			.append( $content )
 			.appendTo( $( 'body' ) )
-			.animate( { 'opacity': 1 }, 400 );
+			.css( 'opacity', 1 )
+			.hide();
 
 		// Cleanup indicator when hook is fired
 		mw.hook( hook ).add( function hide() {
