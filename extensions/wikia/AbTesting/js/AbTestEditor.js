@@ -131,7 +131,8 @@
 		showEditModal: function( response ) {
 			var title = this.msg('abtesting-' + response.type + '-experiment-title'),
 				modal = $.showModal( title, response.html, {
-					closeOnBlackoutClick: false
+					closeOnBlackoutClick: false,
+					width: 930
 				} );
 
 			modal.find('input[type=submit]').click($.proxy(this.submitEditForm, this));
@@ -264,7 +265,8 @@
 				value = input.val(),
 				title = inputGroup.hasClass('group-styles') ? 'Edit styles' : 'Edit script',
 				modal = $.showModal( title, templates.textareaEditor, {
-					closeOnBlackoutClick: false
+					closeOnBlackoutClick: false,
+					width: 930
 				}),
 				textarea = modal.find('textarea');
 
