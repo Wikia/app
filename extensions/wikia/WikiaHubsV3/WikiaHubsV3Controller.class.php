@@ -177,7 +177,6 @@ class WikiaHubsV3Controller extends WikiaController {
 
 	protected function initModel() {
 		$this->model = new WikiaHubsModel();
-		$this->model->setVertical($this->verticalId);
 	}
 
 
