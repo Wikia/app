@@ -406,7 +406,9 @@ class EditHubController extends WikiaSpecialPageController {
 
 		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
-				$this->purgeWikiaHomepageHubs();
+
+				// TODO temporary until we decide what would happed with hub images on WHP
+				//$this->purgeWikiaHomepageHubs();
 		}
 	}
 
