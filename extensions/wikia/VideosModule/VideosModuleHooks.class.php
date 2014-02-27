@@ -15,7 +15,7 @@ class VideosModuleHooks {
 
 		// Check if we're on a page where we want to show the Videos Module.
 		// If we're not, stop right here.
-		if ( !VideosModuleHooks::canShowVideosModule() ) {
+		if ( self::canShowVideosModule() ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -42,7 +42,7 @@ class VideosModuleHooks {
 
 		// Check if we're on a page where we want to show the Videos Module.
 		// If we're not, stop right here.
-		if ( !VideosModuleHooks::canShowVideosModule() ) {
+		if ( self::canShowVideosModule() ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
