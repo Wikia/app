@@ -31,18 +31,22 @@ require(
 			isAdVisible = function ( adSlotName ) {
 				return function ( hop ) {
 					var slot = document.getElementById( adSlotName ),
-						$iframe = $( slot ).find( 'iframe' ).contents();
+						$iframe = $( slot ).children(':last-child').find( 'iframe' ).contents();
 
 					if (
 						$iframe.find( 'body *:not(script)' ).length === 0 ||
 						$iframe.find( 'body img' ).width() <= 1
 					) {
 						log( 'Slot seems to be empty: ' + adSlotName, logLevel, logGroup );
-						hop({method: 'hop'}, 'Next');
+						if (window.wgEnableRHonMobile) {
+							hop({method: 'hop'}, 'RemnantDartMobile');
+						} else {
+							hop({method: 'hop'}, 'Null');
+						}
 					} else {
 						slot.className += ' show';
 					}
-				}
+				};
 			};
 
 		// Slots
