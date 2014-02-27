@@ -136,6 +136,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
 
+		// TODO remove not used params after HubsV2 removal
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
 			null,
@@ -156,6 +157,7 @@ class EditHubController extends WikiaSpecialPageController {
 			if ($isValid) {
 				$this->toolboxModel->saveModule(
 					[
+						// TODO remove lang and vertical after HubsV2 removal
 						'cityId' => $wgCityId,
 						'langCode' => $this->wg->ContLang->getCode(),
 						'verticalId' => WikiFactoryHub::getInstance()->getCategoryId($wgCityId)
@@ -169,11 +171,6 @@ class EditHubController extends WikiaSpecialPageController {
 				$this->purgeCache( $module );
 
 				FlashMessages::put(wfMessage('edit-hub-module-save-ok', $modulesData['activeModuleName'])->escaped());
-
-				// send request to add popular/featured videos
-				if ( $module->isVideoModule() ) {
-					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleValues  );
-				}
 
 				$nextUrl = $this->getNextModuleUrl();
 				$this->response->redirect($nextUrl);
