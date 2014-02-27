@@ -1549,6 +1549,7 @@ var mw = ( function ( $, undefined ) {
 					callbacksFlag = 'memory';
 				}
 				var list = lists[name] || ( lists[name] = $.Callbacks( callbacksFlag ) );
+				console.log('NAME: ' + name + ' FLAG: ' + callbacksFlag);
 
 				return {
 					/**
