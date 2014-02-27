@@ -18,6 +18,13 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
+		if ( syslogReport && e.data.label === 'section-edit' ) {
+			syslogReport( 3, 'ContributionV2', {
+				action: ( $('#ca-ve-edit').exists() ? 've-section-edit' : 'section-edit' ) + '-click',
+				referrer: document.referrer,
+				isAnonymous: mw.user.anonymous() ? 'yes' : 'no'
+			} );
+		}
 
 		// Primary mouse button only
 		if (e.type === 'mousedown' && e.which !== 1) {
@@ -67,6 +74,14 @@ jQuery(function($){
 			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
+			}
+
+			if ( syslogReport && ( id === 'edit' || id === 've-edit' ) ) {
+				syslogReport( 3, 'ContributionV2', {
+					action: id + '-click',
+					referrer: document.referrer,
+					isAnonymous: mw.user.anonymous() ? 'yes' : 'no'
+				} );
 			}
 
 			switch(id) {

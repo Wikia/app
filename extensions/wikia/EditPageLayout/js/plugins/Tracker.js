@@ -28,6 +28,15 @@
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
+				if ( syslogReport ) {
+					var uri = new mw.Uri( location.href );
+					syslogReport( 3, 'ContributionV2', {
+						action: 'ck-edit-page-impression',
+						referrer: document.referrer,
+						isAnonymous: !wgUserName ? 'yes' : 'no',
+						isRedlink: !!uri.query.redlink ? 'yes' : 'no'
+					} );
+				}
 				this.track({
 					action: Wikia.Tracker.ACTIONS.IMPRESSION,
 					label: 'edit-page'
