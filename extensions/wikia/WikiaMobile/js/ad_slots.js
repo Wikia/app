@@ -46,7 +46,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		init: function ( found ) {
 			log( 'Slot: MOBILE_TOP_LEADERBOARD loaded, found: ' + found, logLevel, logGroup );
 			if ( !found ) {
-				topAdWrapper.className = 'hide';
+				topAdWrapper.className = 'hidden';
 			}
 		}
 	} );
