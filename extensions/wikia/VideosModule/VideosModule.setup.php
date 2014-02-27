@@ -30,16 +30,7 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
-
-// Only show the videos module on File pages, Article pages, and Main pages
-$showNameSpaces = array_merge( $wgContentNamespaces, [ NS_FILE ] );
-if ( in_array( $wgtitle->getNamespace(), $showNameSpaces ) ) {
-	// Only load this hook handler if we're showing the VideosModule in the right rail
-	if ( $wgVideosModuleABTest == 'rail' ) {
-		$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
-	}
-	$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
-}
+//$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
 
 /**
  * messages
