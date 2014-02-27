@@ -11,7 +11,7 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( WikiaPageType::isWikiaHub() && WikiaPageType::isWikiaHubMain() ) { /* TODO decide what to do with offshots */
+		if( WikiaPageType::isWikiaHubMain() || $title->isSubpageOf(Title::newMainPage()) ) { /* TODO decide what to do with offshots */
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();

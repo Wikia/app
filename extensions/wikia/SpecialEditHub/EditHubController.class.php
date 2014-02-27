@@ -204,11 +204,11 @@ class EditHubController extends WikiaSpecialPageController {
 			if ($this->success) {
 				$date = new DateTime('@' . $this->date);
 
-				// TODO
-				$this->hubUrl = 'asd';//$this->toolboxModel->getHubUrl($this->langCode, $this->verticalId)
-					//. '/' . $date->format('Y-m-d');
+				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
 				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
+
+				// TODO
 				//	$this->purgeWikiaHomepageHubs();
 				}
 			} else {
