@@ -169,7 +169,7 @@ class WallMessage {
 			$class->notifyEveryone();
 		}
 
-		$class->invalidateCache();
+		$class->purgeSquid();
 		$class->addWatch($user);
 
 		wfRunHooks( 'AfterBuildNewMessageAndPost', array(&$class) );
@@ -261,7 +261,7 @@ class WallMessage {
 			$this->getThread()->invalidateCache();
 		}
 
-		$this->invalidateCache();
+		$this->purgeSquid();
 
 		$out = $this->getArticleComment()->parseText($body);
 		wfProfileOut( __METHOD__ );
@@ -1449,10 +1449,14 @@ class WallMessage {
 	}
 
 	/**
-	 * @desc Creates wall message title (a board, a thread, a message) instance and calls purgeSquid() on it
+	 * @desc Creates wall message title (a board, a thread, a message) instance and purgeSquid() on it.
+	 * Before that calls MessageWall::invalidateCache() which changes page_touched value for a page "main" page.
+	 *
 	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
 	 */
 	public function purgeSquid() {
+		$this->invalidateCache();
+
 		$title = Title::newFromID( $this->getId() );
 		if ( $title instanceof Title ) {
 			$title->purgeSquid();
