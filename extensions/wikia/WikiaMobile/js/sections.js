@@ -48,7 +48,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 
 	/**
 	 * @desc Finds and returns a current section
-	 * @returns {Object} - jQuery object with a current section
+	 * @returns {Object} - a current section
 	 */
 	function current () {
 		var top = window.scrollY,
