@@ -63,7 +63,7 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 			),
 			'imageLink' => array(
 				'label' => wfMessage('wikia-hubs-module-wikiaspicks-link-url')->text(),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(),
 					array(
 						'wrong' => 'wikia-hubs-validator-wrong-url'

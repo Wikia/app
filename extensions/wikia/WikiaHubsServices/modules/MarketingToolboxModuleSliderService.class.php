@@ -67,7 +67,7 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 
 			$fields['url' . $i] = array(
 				'label' => wfMessage('wikia-hubs-module-slider-url')->text(),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(
 						'required' => true
 					),

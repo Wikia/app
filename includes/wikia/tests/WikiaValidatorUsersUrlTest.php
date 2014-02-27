@@ -2,12 +2,12 @@
 
 class WikiaValidatorUsersUrlTest extends PHPUnit_Framework_TestCase {
 
-	/* @var $validator WikiaValidatorToolboxUrl */
+	/* @var $validator WikiaValidatorUsersUrlTest */
 	private $validator;
 
 	protected function setUp () {
-		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
-		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorUsersUrl.class.php');
+		//require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
+		//require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorUsersUrl.class.php');
 		$this->validator = $this->getMock('WikiaValidatorUsersUrl', array('getUserNameFromUrl'));
 	}
 

@@ -28,9 +28,6 @@ $wgExtensionCredits['specialpage'][] = array(
 $wgAutoloadClasses['EditHubController'] = $dir . 'EditHubController.class.php';
 $wgAutoloadClasses['EditHubVideosController'] =  $dir . 'EditHubVideosController.class.php';
 
-$wgAutoloadClasses['WikiaValidatorToolboxUrl'] =  $dir . 'validators/WikiaValidatorToolboxUrl.class.php';
-$wgAutoloadClasses['WikiaValidatorUsersUrl'] =  $dir . 'validators/WikiaValidatorUsersUrl.class.php';
-
 // hooks
 $wgAutoloadClasses['EditHubHooks'] =  $dir . 'hooks/EditHubHooks.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditHubHooks::onMakeGlobalVariablesScript';

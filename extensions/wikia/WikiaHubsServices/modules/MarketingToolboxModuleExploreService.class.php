@@ -50,7 +50,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 			),
 			'imageLink' => array(
 				'label' => wfMsg('wikia-hubs-module-explore-link-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(),
 					array(
 						'wrong' => 'wikia-hubs-validator-wrong-url'
@@ -107,7 +107,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$linkUrlField = array(
 			'label' => wfMessage('wikia-hubs-module-explore-link-url')->text(),
 			'labelclass' => "wikiaUrlLabel",
-			'validator' => new WikiaValidatorToolboxUrl(
+			'validator' => new WikiaValidatorRestrictiveUrl(
 				array(),
 				array(
 					'wrong' => 'wikia-hubs-validator-wrong-url'

@@ -38,7 +38,7 @@ class MarketingToolboxModulePopularvideosService extends MarketingToolboxModuleE
 			'videoUrl' => array(
 				'validator' => new WikiaValidatorListValue(
 					array(
-						'validator' => new WikiaValidatorToolboxUrl(
+						'validator' => new WikiaValidatorRestrictiveUrl(
 							array(
 								'required' => true
 							),

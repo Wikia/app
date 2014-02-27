@@ -50,7 +50,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 			),
 			'articleUrl' => array(
 				'label' => wfMessage('wikia-hubs-module-featured-video-article-url')->text(),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(
 						'required' => true
 					),

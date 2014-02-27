@@ -7,7 +7,7 @@ class EditHubHooks {
 			$toolboxModel = new MarketingToolboxV3Model();
 			$vars['wgEditHubConstants'] = $toolboxModel->getAvailableStatuses();
 			$vars['wgEditHubThumbnailSize'] = $toolboxModel->getThumbnailSize();
-			$vars['wgEditHubUrlRegex'] = trim(WikiaValidatorToolboxUrl::URL_RESTRICTIVE_REGEX, 'i/');
+			$vars['wgEditHubUrlRegex'] = trim(WikiaValidatorRestrictiveUrl::URL_RESTRICTIVE_REGEX, 'i/');
 			$vars['wgEditHubUrl'] = SpecialPage::getTitleFor('EditHub','editHub')->getFullURL();
 		}
 

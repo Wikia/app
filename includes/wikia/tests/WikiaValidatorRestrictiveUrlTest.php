@@ -1,13 +1,13 @@
 <?php
 
-class WikiaValidatorToolboxUrlTest extends PHPUnit_Framework_TestCase {
+class WikiaValidatorRestrictiveUrlTest extends PHPUnit_Framework_TestCase {
 
-	/* @var $validator WikiaValidatorToolboxUrl */
+	/* @var $validator WikiaValidatorRestrictiveUrl */
 	private $validator;
 
 	protected function setUp () {
-		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
-		$this->validator = new WikiaValidatorToolboxUrl();
+//		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
+		$this->validator = new WikiaValidatorRestrictiveUrl();
 	}
 
 	/**

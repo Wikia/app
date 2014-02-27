@@ -1,6 +1,4 @@
 <?php
-include( dirname(__FILE__) . '/../../../SpecialMarketingToolbox/validators/WikiaValidatorToolboxUrl.class.php' );
-include( dirname(__FILE__) . '/../../../SpecialMarketingToolbox/validators/WikiaValidatorUsersUrl.class.php' );
 
 class MarketingToolboxModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	/**

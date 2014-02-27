@@ -33,7 +33,7 @@ class WikiaHubsServicesHelper
 	public function purgeHomePageVarnish($lang) {
 		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
-		$mainPageTitle = GlobalTitle::newMainPage($wikiId);
+		$mainPageTitle = $this->getGlobalMainPage($wikiId);
 		$mainPageTitle->purgeSquid();
 	}
 
@@ -50,8 +50,24 @@ class WikiaHubsServicesHelper
 		$hubTitle->purgeSquid();
 	}
 
+	/**
+	 * Get global title
+	 *
+	 * @param $mainPageName
+	 * @param $wikiId
+	 *
+	 * @return GlobalTitle|null|Title
+	 */
+	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
+			return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
+	}
+
+	protected function getGlobalMainPage($wikiId) {
+		return GlobalTitle::newMainPage($wikiId);
+	}
+
 	public function purgeHubV3Varnish($wikiId) {
-		GlobalTitle::newMainPage($wikiId)->purgeSquid();
+		$this->getGlobalMainPage($wikiId)->purgeSquid();
 	}
 
 	protected function getCorporateModel() {
