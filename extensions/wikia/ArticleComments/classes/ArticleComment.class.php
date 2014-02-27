@@ -813,9 +813,6 @@ class ArticleComment {
 			$parentTitle = $parentArticle->getTitle();
 			//nested comment
 			$commentTitle = sprintf('%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow());
-
-			// CONN-430 change page_touched value for parent -- it'll get to ETag later
-			$parentTitle->invalidateCache();
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText($commentTitle, MWNamespace::getTalk($title->getNamespace()));
