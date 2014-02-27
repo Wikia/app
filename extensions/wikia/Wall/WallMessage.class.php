@@ -1510,6 +1510,8 @@ class WallMessage {
 	 * @desc Changes page_touched value in page table for main message
 	 */
 	public function invalidateCache() {
+		$this->invalidateMessagePageCache();
+
 		if( $this->isMain() ) {
 			$title = $this->getTitle();
 		} else {
@@ -1528,6 +1530,21 @@ class WallMessage {
 			wfDebug(
 				__METHOD__ .
 				': WARNING! $title not found for WallMessage. The cache will not be invalidated.' .
+				' ETags will stay the same. ' .
+				' Message ID: ' . $this->getMessagePageId()
+			);
+		}
+	}
+
+	public function invalidateMessagePageCache() {
+		$wall = $this->getWall();
+
+		if( !is_null($wall) ) {
+			$wall->getTitle()->invalidateCache();
+		} else {
+			wfDebug(
+				__METHOD__ .
+				': WARNING! $wall not found. The cache will not be invalidated.' .
 				' ETags will stay the same. ' .
 				' Message ID: ' . $this->getMessagePageId()
 			);
