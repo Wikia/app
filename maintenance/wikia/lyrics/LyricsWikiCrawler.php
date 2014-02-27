@@ -1,5 +1,8 @@
 <?php
 
+// Composer
+require_once( dirname(__FILE__) . '/vendor/autoload.php' );
+
 require_once( dirname(__FILE__) . '/../../Maintenance.php' );
 require_once( dirname(__FILE__) . '/ScraperFactory.class.php' );
 
@@ -12,7 +15,6 @@ require_once( dirname(__FILE__) . '/classes/BaseLyricsEntity.class.php' );
 require_once( dirname(__FILE__) . '/classes/Artist.class.php' );
 require_once( dirname(__FILE__) . '/classes/Album.class.php' );
 require_once( dirname(__FILE__) . '/classes/Song.class.php' );
-require_once(dirname(__FILE__) . '/classes/SongTrack.class.php');
 
 class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_ID = 'articleId';
@@ -29,9 +31,15 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgDWStatsDB;
-		$db = $this->getDB( DB_SLAVE, array(), $wgDWStatsDB );
-		$this->scrapperFactory = new ScraperFactory( $db );
+		$params = [
+			'hosts' => [
+				'10.10.10.242:9200',
+			]
+		];
+
+		$esClient = new Elasticsearch\Client( $params );
+
+		$this->scrapperFactory = new ScraperFactory( $esClient );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
@@ -44,22 +52,46 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function doScrapeAllArticles() {
-		$this->output( 'Scraping all articles...' );
+		$this->output( 'Scraping all articles...' . PHP_EOL );
+		$db = $this->getDB( DB_SLAVE );
+		$pagesResult = $db->select(
+			'page',
+			[
+				'page_id',
+				'page_title'
+			],
+			[
+				'page_namespace' => 0,
+				'page_is_redirect' => 0,
+			],
+			__METHOD__,
+			[
+				'ORDER BY' => 'page_id'
+			]
+		);
+
+		while ( $page = $db->fetchObject( $pagesResult ) ) {
+			$this->setArticleId( $page->page_id );
+			$this->doScrapeArticle();
+		};
 	}
 
 	public function doScrapeArticle() {
-		$this->output( 'Scraping article #' . $this->getArticleId() . PHP_EOL );
+		$start = microtime(true);
+		$status = ' ';
+		$this->output( 'Scraping article #' . $this->getArticleId() );
 		$article = Article::newFromID( $this->getArticleId() );
 		if ( !is_null($article) ) {
 			$scraper = $this->scrapperFactory->newFromArticle( $article );
 			if ( $scraper ) {
 				$scraper->processArticle( $article );
 			} else {
-				$this->output( 'Unknown article type #' . $this->getArticleId() . PHP_EOL );
+				$status .= 'Unknown article type ';
 			}
 		} else {
-			$this->output( 'Article not found #' . $this->getArticleId() . PHP_EOL );
+			$status .= 'Article not found ';
 		}
+		$this->output( $status . round( microtime( true ) - $start, 2) . 's' . PHP_EOL );
 	}
 
 	public function doScrapeArticlesFromYesterday() {

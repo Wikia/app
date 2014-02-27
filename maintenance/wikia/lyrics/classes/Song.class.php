@@ -9,15 +9,23 @@
 class Song extends BaseLyricsEntity {
 
 	const TABLE_NAME = 'lyrics_api.song';
+	const ES_TYPE = 'artist';
 
 	public function getTableName() {
 		return self::TABLE_NAME;
 	}
 
+	public function getESType() {
+		return self::ES_TYPE;
+	}
+
 	public function getDataMap() {
 		return [
 			'article_id' => 'article_id',
+			'index' => 'index',
+			'type' => 'type',
 			'artist_id' => 'artist_id',
+			'Artist' => 'artist',
 			'song' => 'name',
 			'lyrics' => 'lyrics',
 			'romanizedSong' => 'romanized_name',
@@ -30,17 +38,5 @@ class Song extends BaseLyricsEntity {
 			'allmusic' => 'allmusic',
 			'download' => 'download',
 		];
-	}
-
-	public function getIdByNameAndArtistId( $songName, $artistId ) {
-		return 1; // TODO: REMOVE_ME
-		return $this->db->selectField(
-			$this->getTableName(),
-			'article_id',
-			[
-				'name' => $albumName,
-				'artist_id' => $artist_id
-			],
-			__METHOD__);
 	}
 } 

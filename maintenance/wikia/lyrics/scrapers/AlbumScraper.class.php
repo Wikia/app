@@ -11,14 +11,15 @@ class AlbumScraper extends BaseScraper {
 	public function processArticle( Article $article ) {
 		$albumData = [
 			'article_id' => $article->getId(),
+			'index' => 'lyrics',
+			'type' => 'album',
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		$albumData = array_merge( $albumData, $this->getFooter( $article ) );
 
-		$albumData['artist_id'] = $this->getArtistId( $albumData['Artist'] );
-		$album = new Album( $this->db );
+		$album = new Album( $this->esClient );
 		$albumData['id'] = $album->save( $albumData );
-		$this->saveTracks( $article, $albumData );
+		//$this->saveTracks( $article, $albumData );
 	}
 
 	protected function getHeader( Article $article ) {
@@ -34,8 +35,8 @@ class AlbumScraper extends BaseScraper {
 		$re = '/# \'\'\'\[\[(.+)\]\]/';
 		if ( preg_match_all( $re, $article->getContent(), $matches ) ) {
 			$trackNumber = 1;
-			$song = new Song( $this->db );
-			$track = new SongTrack( $this->db );
+			$song = new Song( $this->esClient );
+			$track = new SongTrack( $this->esClient );
 			foreach ( $matches[1] as $songName ) {
 				$trackData = [];
 				$trackData['album_id'] = $albumData['id'];

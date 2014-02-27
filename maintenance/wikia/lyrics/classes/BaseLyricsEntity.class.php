@@ -8,19 +8,25 @@
 
 abstract class BaseLyricsEntity {
 
-	protected $db;
+	const ES_INDEX = 'lyrics';
+
+	protected $esClient;
 
 	abstract public function getTableName();
 	abstract public function getDataMap();
+	abstract public function getESType();
 
-	public function __construct( $db ) {
-		return $this->db = $db;
+	public function __construct( $esClient ) {
+		return $this->esClient = $esClient;
 	}
 
-	protected function sanitiseData( $data, $dataMap) {
+	protected function sanitiseData( $data, $dataMap, $keepEmpty = true) {
 		$result = array();
 		foreach ( $data as $key => $value ) {
 			if ( isset( $dataMap[$key] ) ) {
+				if ( !$keepEmpty && empty( $value ) ) {
+					continue;
+				}
 				$result[$dataMap[$key]] = $value;
 			}
 		}
@@ -28,24 +34,21 @@ abstract class BaseLyricsEntity {
 	}
 
 	public function save( $data ) {
-		$data = $this->sanitiseData( $data, $this->getDataMap() );
-		// TODO: Remove me
-		echo 'Saving ... '.PHP_EOL; print_r($data); return 1;
-
-		$this->db->replace(
-			$this->getTableName(),
-			null,
-			$data,
-			__METHOD__
-		);
-	}
-
-	public function getIdByName( $name ) {
-		return 1; // TODO: REMOVE_ME
-		return $this->db->selectField(
-			self::TABLE_NAME,
-			'article_id',
-			[ 'name' =>	$albumName],
-			__METHOD__);
+		$data = $this->sanitiseData( $data, $this->getDataMap(), false );
+		$params = [
+			'index' => self::ES_INDEX,
+			'type' => $this->getESType(),
+			'id' => (int)$data['article_id'],
+			'body' => [],
+		];
+		unset($data['index']);
+		unset($data['type']);
+		unset($data['article_id']);
+		$params['body'] = $data;
+		$ret = $this->esClient->index( $params );
+		if ( isset( $ret['_id'] ) ) {
+			return $ret['_id'];
+		}
+		return false;
 	}
 } 
