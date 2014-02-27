@@ -7,6 +7,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const FIELD_NAME_USERSURL = 'usersUrl';
 	const FIELD_NAME_QUOTE = 'quote';
 	const FIELD_NAME_URL = 'url';
+	const FIELD_NAME_MODULE_TITLE = 'headline';
+	const FIELD_NAME_SUGGEST_ARTICLE = 'suggest';
 
 	const MODULE_ID = 6;
 
@@ -20,6 +22,40 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	public function getFormFields() {
 		$fields = array();
 		$boxesCount = $this->getModel()->getBoxesCount();
+
+		$fields[self::FIELD_NAME_MODULE_TITLE] = array(
+			'type' => 'text',
+			'label' => wfMsg('wikia-hubs-module-from-the-community-title'),
+			'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array(
+						'too_short' => 'wikia-hubs-string-short'
+					)
+				),
+			'attributes' => array(
+				'class' => 'required'
+			)
+		);
+
+		$fields[self::FIELD_NAME_SUGGEST_ARTICLE] = array(
+			'type' => 'text',
+			'label' => wfMsg('wikia-hubs-module-from-the-community-suggest'),
+			'validator' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 1
+				),
+				array(
+					'too_short' => 'wikia-hubs-string-short'
+				)
+			),
+			'attributes' => array(
+				'class' => 'required'
+			)
+		);
 
 		for ($i = self::FIRST_SECTION_INDEX; $i <= $boxesCount; $i++) {
 			$fields[self::FIELD_NAME_PHOTO . $i] = array(
@@ -242,6 +278,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		}
 		
 		return array(
+			'headline' => $data[self::FIELD_NAME_MODULE_TITLE],
+			'button' => $data[self::FIELD_NAME_SUGGEST_ARTICLE],
 			'entries' => $entries
 		);
 	}
