@@ -895,8 +895,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # Button labels
 'button-createpage' => 'Add a Page',
 
-'wikianewfiles-title' => 'New photos on this wiki',
-
 # Hub names
 'hub-Entertainment' => 'Entertainment',
 'hub-Gaming' => 'Video Games',

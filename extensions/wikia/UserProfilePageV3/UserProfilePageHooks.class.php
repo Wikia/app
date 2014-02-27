@@ -190,6 +190,11 @@ class UserProfilePageHooks {
 	 * @author Evgeniy (aquilax)
 	 */
 	static public function onWikiFactoryChanged( $cv_name , $city_id, $value ) {
+		global $wgExternalDatawareDB;
+		if ( empty( $wgExternalDatawareDB ) ) {
+			// Exit if there is no Dataware DB
+			return true;
+		}
 		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
 			$is_restricted = false;
 			$permissions =  WikiFactory::getVarValueByName( 'wgGroupPermissionsLocal', $city_id );
@@ -221,6 +226,11 @@ class UserProfilePageHooks {
 	 * @author Evgeniy (aquilax)
 	 */
 	static public function onWikiFactoryVariableRemoved( $cv_name , $city_id ) {
+		global $wgExternalDatawareDB;
+		if ( empty( $wgExternalDatawareDB ) ) {
+			// Exit if there is no Dataware DB
+			return true;
+		}
 		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
 			UserProfilePageHelper::updateRestrictedWikis( (int)$city_id, false );
 		}

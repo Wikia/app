@@ -193,6 +193,38 @@ class UserBlock {
 		return null;
 	}
 
+	/**
+	 * Format the message with user block reason. If additional description was provided when creating that block,
+	 * it's included in the message.
+	 *
+	 * @param String $reason Optional reason that came with the block
+	 * @param bool $isExact Set to true for exact block
+	 * @param bool $isBlockIP Set to true for IP blocks
+	 * @return String Translated message with optional reason details
+	 */
+	public static function getBlockReasonMessage( $reason, $isExact, $isBlockIP ) {
+		if ( $reason ) {
+			// a reason was given
+			if ( $isExact ) {
+				$result = wfMsg( 'phalanx-user-block-withreason-exact', $reason );
+			} elseif ( $isBlockIP ) {
+				$result = wfMsg( 'phalanx-user-block-withreason-ip', $reason );
+			} else {
+				$result = wfMsg( 'phalanx-user-block-withreason-similar', $reason );
+			}
+		} else {
+			// no reason in block data, so use preexisting no-param worded versions
+			if ( $isExact ) {
+				$result = wfMsg( 'phalanx-user-block-reason-exact' );
+			} elseif ( $isBlockIP ) {
+				$result = wfMsg( 'phalanx-user-block-reason-ip' );
+			} else {
+				$result = wfMsg( 'phalanx-user-block-reason-similar' );
+			}
+		}
+		return $result;
+	}
+
 	//moved from RegexBlockCore.php
 	private static function setUserData(User $user, $blockData, $address /* not used at all */, $isBlockIP = false) {
 		wfProfileIn( __METHOD__ );
@@ -203,26 +235,7 @@ class UserBlock {
 		//-- Andrzej 'nAndy' Łukaszewski
 		$user->mBlockedGlobally = true;
 
-		if ($blockData['reason']) {
-			// a reason was given
-			$reason = $blockData['reason'];
-			if ($blockData['exact']) {
-				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-exact', $reason);
-			} elseif ($isBlockIP) {
-				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-ip', $reason);
-			} else {
-				$user->mBlockreason = wfMsg('phalanx-user-block-withreason-similar', $reason);
-			}
-		} else {
-			// no reason in block data, so use preexisting no-param worded versions
-			if ($blockData['exact']) {
-				$user->mBlockreason = wfMsg('phalanx-user-block-reason-exact');
-			} elseif ($isBlockIP) {
-				$user->mBlockreason = wfMsg('phalanx-user-block-reason-ip');
-			} else {
-				$user->mBlockreason = wfMsg('phalanx-user-block-reason-similar');
-			}
-		}
+		$user->mBlockreason = self::getBlockReasonMessage( $blockData[ 'reason' ], $blockData[ 'exact' ], $isBlockIP );
 
 		// set expiry information
 		$user->mBlock = new Block();
