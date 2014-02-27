@@ -31,11 +31,15 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
-// Only load this hook handler if we're showing the VideosModule in the right rail
-if ( F::app()->wg->VideosModuleABTest == 'rail' ) {
-	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
+$wg = F::app()->wg;
+$showNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
+if ( in_array( $wg->title->getNamespace(), $showNameSpaces ) ) {
+	// Only load this hook handler if we're showing the VideosModule in the right rail
+	if ( $wg->VideosModuleABTest == 'rail' ) {
+		$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
+	}
+	$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
 }
-$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
 
 /**
  * messages
