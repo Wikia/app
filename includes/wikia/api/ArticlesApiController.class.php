@@ -893,19 +893,28 @@ class ArticlesApiController extends WikiaApiController {
 
 	public function getPopular() {
 		$limit = $this->getRequest()->getInt( self::PARAMETER_LIMIT, self::POPULAR_ARTICLES_PER_WIKI );
+		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 		if ( $limit < 1 || $limit > self::POPULAR_ARTICLES_PER_WIKI ) {
 			throw new OutOfRangeApiException( self::PARAMETER_LIMIT, 1, self::POPULAR_ARTICLES_PER_WIKI );
 		}
-		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' );
+		$key = self::getCacheKey( self::POPULAR_CACHE_ID, '' , [ $expand ]);
 
 		$result = $this->wg->Memc->get( $key );
 		if ( $result === false ) {
 			$result = $this->getResultFromConfig( $this->getConfigFromRequest() );
+			if ( $expand ) {
+				$articleIds = [];
+				$params = $this->getDetailsParams();
+				foreach($result as $item){
+					$articleIds[] = $item['id'];
+				}
+				$result = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+			}
+
 			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
 		}
 
 		$result = array_slice( $result, 0, $limit );
-
 		$response = $this->getResponse();
 		$response->setValues( [ 'items' => $result ] );
 		$this->response->setVal( 'basepath', $this->wg->Server );
