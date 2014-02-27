@@ -10,7 +10,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected $skinName;
 	private $shouldFilterCommercialData = false;
 	private $hubsVersion = 2;
-	private $hubsLayoutVersion = 2;
 
 	public function __construct($langCode, $sectionId, $verticalId, $cityId = 0, $hubsVersion = 2) {
 		parent::__construct();
@@ -19,8 +18,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		$this->sectionId = $sectionId;
 		$this->verticalId = $verticalId;
 		$this->cityId = $cityId;
-		// Disabling global search on hubsv3
-		$this->hubsLayoutVersion = $hubsVersion;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 	}
 
@@ -44,10 +41,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	public function getHubsVersion() {
 		return $this->hubsVersion;
-	}
-
-	public function getHubsLayoutVersion() {
-		return $this->hubsLayoutVersion;
 	}
 
 	private function getHubsParams() {
