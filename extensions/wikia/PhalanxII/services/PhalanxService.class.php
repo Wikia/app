@@ -192,9 +192,13 @@ class PhalanxService extends Service {
 			/* service doesn't work */
 			$res = false;
 
+			WikiaLogger::instance()->debug( "Phalanx service error", [ "url" => $url ] );
+
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
+
+			WikiaLogger::instance()->debug( "Phalanx service success", ["url" => $url ] );
 
 			switch ( $action ) {
 				case "stats":
