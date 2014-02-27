@@ -191,7 +191,7 @@ class PhalanxService extends Service {
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
-
+			Wikia::log( __METHOD__, false, "Phalanx response failed when calling " . $url, true );
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
