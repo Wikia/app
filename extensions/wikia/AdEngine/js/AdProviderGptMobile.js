@@ -7,13 +7,14 @@ define(
 		'use strict';
 
 		var logGroup = 'AdProviderGptMobile',
+			srcName = 'mobile',
 			slotMap = {
 				MOBILE_TOP_LEADERBOARD: {size: '320x50'},
 				MOBILE_IN_CONTENT: {size: '300x250'},
 				MOBILE_PREFOOTER: {size: '300x250'}
 			};
 
-		wikiaGpt.init(slotMap, 'mobile');
+		wikiaGpt.init(slotMap, srcName);
 
 		function canHandleSlot(slotname) {
 			return !!slotMap[slotname];
@@ -26,7 +27,7 @@ define(
 				hop({method: 'hop'}, 'Null');
 			}
 
-			wikiaGpt.pushAd(slotname, success, hopToNull);
+			wikiaGpt.pushAd(slotname, success, hopToNull, srcName);
 			wikiaGpt.flushAds();
 		}
 
