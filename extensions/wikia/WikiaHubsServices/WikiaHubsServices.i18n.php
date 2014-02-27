@@ -51,6 +51,7 @@ $messages['en'] = array(
 	'wikia-hubs-module-popular-videos-clear-one-confirm' => 'Are you sure you want to remove this section?',
 
 	'wikia-hubs-module-from-the-community-title' => 'Title',
+	'wikia-hubs-module-from-the-community-suggest' => 'Label for content suggestion button',
 	'wikia-hubs-module-from-the-community-users-url' => 'User\'s URL',
 	'wikia-hubs-module-from-the-community-long-quote' => 'Quote',
 	'wikia-hubs-module-from-the-community-url' => 'Article URL',

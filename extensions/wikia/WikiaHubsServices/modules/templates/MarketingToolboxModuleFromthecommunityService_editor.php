@@ -1,3 +1,8 @@
+<div class="module-box">
+	<?=$form->renderField('headline')?>
+	<?=$form->renderField('suggest')?>
+</div>
+
 <? for ($i = 1; $i <= $boxesCount; $i++): ?>
 <div class="module-box">
 	<h3 class="alternative"><?= $i?>.</h3>

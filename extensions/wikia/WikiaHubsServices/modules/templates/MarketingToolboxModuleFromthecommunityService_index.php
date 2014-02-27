@@ -1,8 +1,8 @@
 <h2>
-	<?= wfMessage('wikiahubs-from-community-headline')->text(); ?>
+	<?= $headline ?>
 	<? if (!F::app()->checkSkin('wikiamobile')): ?>
 		<button id="suggestArticle" class="wikia-button secondary">
-			<?= wfMessage('wikiahubs-from-community-promoted')->text(); ?>
+			<?= $button ?>
 		</button>
 	<? endif; ?>
 </h2>
