@@ -31,8 +31,12 @@ define('videosmodule.views.bottomModule', [
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
-		// Make sure we're on an article page
-		if (this.articleId) {
+		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
+		if (
+			this.articleId &&
+			!this.$el.is(':hidden') &&
+			this.$el.css('visibility') !== 'hidden'
+		) {
 			this.init();
 		}
 	}
@@ -81,9 +85,9 @@ define('videosmodule.views.bottomModule', [
 		}));
 
 		if (groupParams.position === 1) {
-			this.$el.after($out);
-		} else {
 			this.$el.before($out);
+		} else {
+			this.$el.after($out);
 		}
 
 		for (i = 0; i < (groupParams.rows * 4); i++) {
