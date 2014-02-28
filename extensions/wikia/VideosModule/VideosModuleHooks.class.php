@@ -13,6 +13,13 @@ class VideosModuleHooks {
 	static public function onGetRailModuleList( &$modules ) {
 		wfProfileIn(__METHOD__);
 
+		// Check if we're on a page where we want to show the Videos Module.
+		// If we're not, stop right here.
+		if ( !self::canShowVideosModule() ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
+
 		// Use a different position depending on whether the user is logged in
 		$app = F::App();
 		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
@@ -32,6 +39,13 @@ class VideosModuleHooks {
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		wfProfileIn(__METHOD__);
+
+		// Check if we're on a page where we want to show the Videos Module.
+		// If we're not, stop right here.
+		if ( !self::canShowVideosModule() ) {
+			wfProfileOut(__METHOD__);
+			return true;
+		}
 
 		// On file pages, this hook can be called multiple times, so we're going to check if the
 		// assets are loaded already before we load them again.
@@ -74,5 +88,24 @@ class VideosModuleHooks {
 		$vars['wgVideosModuleABTest'] = $wg->VideosModuleABTest;
 
 		return true;
+	}
+
+	/**
+	 * Return whether we're on one of the pages where we want to show the Videos Module,
+	 * specifically File pages, Article pages, and Main pages
+	 * @return bool
+	 */
+	static public function canShowVideosModule() {
+		$wg = F::app()->wg;
+		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
+
+		if ( $wg->Title->exists()
+			 && in_array( $wg->Title->getNamespace(), $showableNameSpaces )
+			 && in_array( $wg->request->getVal( 'action' ), [ 'view', null ] )
+			 && $wg->request->getVal( 'diff' ) === null
+		) {
+			return true;
+		}
+		return false;
 	}
 }

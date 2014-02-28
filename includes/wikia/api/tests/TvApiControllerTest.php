@@ -33,6 +33,41 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		parent::tearDown();
 	}
 
+	public function testGetArticleQuality() {
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getQualityFromSolr' )
+			->will( $this->returnValue( [ [ 'quality' => 10 ] ] ) );
+
+		$refl = new \ReflectionMethod( $mock, 'getArticleQuality' );
+
+		$refl->setAccessible( true );
+
+		$this->assertEquals( 10, $refl->invoke( $mock, 88, 0 ) );
+	}
+
+	public function testGetArticleQualityNotFound() {
+		$mock = $this->getMockBuilder( "\TvApiController" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getQualityFromSolr' ] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getQualityFromSolr' )
+			->will( $this->returnValue( null ) );
+
+		$refl = new \ReflectionMethod( $mock, 'getArticleQuality' );
+
+		$refl->setAccessible( true );
+
+		$this->assertEquals( null, $refl->invoke( $mock, 88, 0 ) );
+
+	}
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.03134 ms
@@ -41,7 +76,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion'] )
+			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion','checkArticleByQuality','getConfigFromRequest','getResponseFromConfig'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -56,26 +91,40 @@ class TvApiControllerTest extends \WikiaBaseTest {
 			->method( 'getApiVersion' )
 			->will( $this->returnValue('test'));
 
-		$this->getStaticMethodMock('\WikiFactory','getCurrentStagingHost')
-					->expects($this->any())
-					->method('getCurrentStagingHost')
-					->will( $this->returnCallback( [$this, 'mock_getCurrentStagingHost']));
+		$mock->expects( $this->any() )
+			->method( 'checkArticleByQuality' )
+			->will( $this->returnCallback( [ $this, 'mock_checkArticleByQuality' ] ) );
+
+		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+			->expects( $this->any() )
+			->method( 'getCurrentStagingHost' )
+			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+
+		$mockRequest = $this->getMockBuilder( "\WikiaRequest" )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getInt' ] )
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getInt' )
+			->will( $this->returnValue( 0 ) );
 
 		$mockResponse = $this->getMockBuilder( "\WikiaResponse" )
 			->disableOriginalConstructor()
-			->setMethods(['__construct','setValues','setCacheValidity'])
+			->setMethods( [ '__construct', 'setValues', 'setCacheValidity' ] )
 			->getMock();
 
-		$mockResponse->expects($this->any())
-				->method('setValues')
-				->will($this->returnCallback([$this, 'mock_setValues']));
+		$mockResponse->expects( $this->any() )
+			->method( 'setValues' )
+			->will( $this->returnCallback( [ $this, 'mock_setValues' ] ) );
 
 		$mock->expects( $this->any() )
 			->method( 'getResponse' )
 			->will( $this->returnValue($mockResponse));
 
 		$this->responseValues = null;
-
+		$mock->request = $mockRequest;
+		$mock->wikis = [[1]];
 		$mock->getEpisode();
 
 		$this->assertArrayHasKey('url',$this->responseValues);
@@ -100,16 +149,25 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	 * @group Slow
 	 * @slowExecutionTime 0.02327 ms
 	 */
+	public function mock_checkArticleByQuality($arg1, $arg2)
+	{
+		return $arg1;
+	}
+
 	public function testGetTitle() {
 
-		$mock = $this->getMockBuilder( "\TvApiController" )
+		$mock = $this->getMockBuilder( '\TvApiController' )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'createTitle'] )
+			->setMethods( ['__construct', 'createTitle', 'getArticleQuality'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
 			->method( 'createTitle' )
 			->will( $this->returnCallback( [$this, 'mock_createTitle'] ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getArticleQuality' )
+			->will( $this->returnValue( 13 ) );
 
 		$refl = new \ReflectionMethod($mock, 'getTitle');
 
@@ -117,11 +175,9 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 		$this->setMockVariables( false, 0, 'a0', 'b0', 'c0', false );
 
-		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1' ], $refl->invoke( $mock, 'test number one' ) );
-
-		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2'], $refl->invoke( $mock, 'test number two' ) );
-
-		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3'], $refl->invoke( $mock, 'test_redirect' ) );
+		$this->assertEquals( ['articleId' => 1, 'title' => 'a1', 'url' => 'b1', 'quality' => 13 ], $refl->invoke( $mock, 'test number one', 1 ) );
+		$this->assertEquals( ['articleId' => 2, 'title' => 'a2', 'url' => 'b2', 'quality' => 13 ], $refl->invoke( $mock, 'test number two', 1) );
+		$this->assertEquals( ['articleId' => 30, 'title' => 'a3', 'url' => 'b3', 'quality' => 13 ], $refl->invoke( $mock, 'test_redirect', 1 ) );
 
 	}
 
@@ -162,7 +218,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 				->will( $this->returnValue( true ) );
 
 			$id = $id * 10;
-
 		}
 
 		$this->mockGlobalTitle->expects( $this->any() )
@@ -188,3 +243,4 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	}
 
 }
+

@@ -2218,7 +2218,7 @@ class Wikia {
 	}
 
 	/**
-	 * Send ETag header with article's last modidication timestamp and cache buster
+	 * Send ETag header with article's last modification timestamp and cache buster
 	 *
 	 * See BAC-1227 for details
 	 *
@@ -2229,7 +2229,15 @@ class Wikia {
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
 		global $wgStyleVersion;
-		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
+		$touched = $article->getTouched();
+
+		// don't emit the default touched value set in WikiPage class (see CONN-430)
+		if ($touched === '19700101000000') {
+			$eTag = '';
+			return true;
+		}
+
+		$eTag = sprintf( '%s-%s', $touched, $wgStyleVersion );
 		return true;
 	}
 

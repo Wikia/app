@@ -124,6 +124,9 @@
 	// DART API for Liftium
 	window.LiftiumDART = {
 		getUrl: function (slotname, slotsize) {
+			if (slotsize) {
+				slotsize += ',1x1';
+			}
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,
