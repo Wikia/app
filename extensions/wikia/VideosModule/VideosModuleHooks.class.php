@@ -86,11 +86,11 @@ class VideosModuleHooks {
 		$wg = F::app()->wg;
 		$showableNameSpaces = array_merge( $wg->ContentNamespaces, [ NS_FILE ] );
 
-		if ( in_array( $wg->Title->getNamespace(), $showableNameSpaces ) &&
-			 in_array( $wg->request->getVal( 'action' ), [ 'view', null ] ) &&
-			 $wg->request->getVal( 'diff' ) === null &&
-			 !WikiaPageType::isCorporatePage() &&
-			 $wg->Title->exists()
+		if ( $wg->Title->exists()
+			 && in_array( $wg->Title->getNamespace(), $showableNameSpaces )
+			 && in_array( $wg->request->getVal( 'action' ), [ 'view', null ] )
+			 && $wg->request->getVal( 'diff' ) === null
+			 && !WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		}
