@@ -15,21 +15,20 @@
  * 			- http://wikia.com/WAM/Next_Old_title
  *
  * 		$this->redirects = array(
- * 								'old title' => 'new title'
- * 								'next old title' => 'next new title'
- * 							);
+ * 					'old title' => 'new title'
+ * 					'next old title' => 'next new title'
+ * 				);
  *
  * If page type is set, it expects multidimensional array with page type on first level.
  *
  *		$this->redirects = array(
- * 								'wam' => array(
- * 									'old title' => 'new title'
- * 								),
- * 								'hubs' => array(
- * 									'other old title' => 'new title'
- * 								)
- * 							);
- *
+ * 					'wam' => array(
+ * 						'old title' => 'new title'
+ * 					),
+ * 					'hubs' => array(
+ * 						'other old title' => 'new title'
+ * 					)
+ * 				);
  */
 
 class RedirectService extends WikiaService {
