@@ -13,7 +13,8 @@
 				format: 'html',
 				type: 'GET',
 				data: {
-					hasnotifications: hasNotifications
+					hasnotifications: hasNotifications,
+					lastdismissed: $.storage.get( 'swm-lastdismissed' )
 				}
 			} ).done( function( data ) {
 				var	$body,
@@ -77,6 +78,8 @@
 					messageid: messageId
 				}
 			} );
+
+			$.storage.set( 'swm-lastdismissed', messageId );
 
 			this.track( {
 				action: window.Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
