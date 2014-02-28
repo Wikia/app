@@ -33,10 +33,10 @@
 				.addClass( 've-indicator visible' )
 				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
-			$icon = $( '<div>' ).addClass( type ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
 
 		$content
 			.append( $icon )
