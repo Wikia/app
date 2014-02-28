@@ -59,3 +59,23 @@
 	}
 
 }
+
+/* Monobook colorization issues (VOLDEV-36 ) */
+.skin-monobook {
+	.Forum {
+		.activity,
+		.board-description,
+		.description,
+		.last-post {
+			color: black;
+		}
+
+		.board {
+			border-bottom: 1px dotted #AAA;
+
+			&:first-child {
+				border-top: 1px dotted #AAA;
+			}
+		}
+	}
+}

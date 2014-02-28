@@ -107,5 +107,9 @@ $ddHeight: 20px;
 		.dropdown-item.selected {
 			background-color: white;
 		}
+
+		.arrow {
+			@include arrow(4px, black);
+		}
 	}
 }

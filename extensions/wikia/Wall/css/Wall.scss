@@ -683,17 +683,15 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.buttons {
 			display: none;
 		}
-		textarea{
+		textarea {
 			background: white;
 			color: black;
-			border: black;
-			border: solid;
-			border-width: 1px;
+			border: 1px solid #AAA;
 		}
 		.SortingBar {
 			background: white;
 			color: black;
-			border: black;
+			border: #AAA;
 			border: solid;
 			border-width: 1px;
 		}
@@ -712,11 +710,11 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	/* Colorization issues (VOLDEV-36) */
 	.deleteorremove-infobox {
 		background: white;
-		border-top: 1px dashed black;
+		border-top: 1px dashed #AAA;
 
 		.deleteorremove-bubble {
 			background: white;
-			border: 1px solid black;
+			border: 1px solid #AAA;
 			box-shadow: 2px 2px 4px 0 #000;
 
 			.message {
@@ -733,7 +731,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.WallPreview {
 		.quote {
 			background-color: white;
-			border: 1px solid black;
+			border: 1px solid #AAA;
 		}
 	}
 }
