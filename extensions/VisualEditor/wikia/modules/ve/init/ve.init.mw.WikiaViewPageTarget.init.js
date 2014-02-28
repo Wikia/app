@@ -19,7 +19,7 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, indicatorTimer,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
@@ -28,14 +28,15 @@
 			'trackingMethod': 'both'
 		};
 
-	function indicator( type, hook ) {
-		var timer,
-			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+	function initIndicator() {
+		var $indicator = $( '<div>' )
+				.addClass( 've-indicator visible' )
+				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
-			$icon = $( '<div>' ).addClass( type ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
 
 		$content
 			.append( $icon )
@@ -44,21 +45,33 @@
 		$indicator
 			.append( $content )
 			.appendTo( $( 'body' ) )
-			.animate( { 'opacity': 1 }, 400 );
-
-		// Display the message if loading is taking awhile
-		timer = setTimeout( function () {
-			$message.slideDown( 400 );
-		}, 3000 );
+			.css( 'opacity', 1 )
+			.hide();
 
 		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function cleanup() {
-			clearTimeout( timer );
-			$indicator.animate( { 'opacity': 0 }, 400, function () {
-				mw.hook( hook ).remove( cleanup );
-				$indicator.remove();
-			} );
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( indicatorTimer !== 'undefined' ) {
+				clearTimeout( indicatorTimer );
+			}
+			if ( $indicator.is( ':visible' ) ) {
+				$indicator.fadeOut( 400 );
+			}
 		} );
+	}
+
+	function showIndicator() {
+		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
+			$message = $indicator.find( 'p.message' );
+
+		$message.hide();
+		$indicator.fadeIn( 400 );
+
+		// Display the message if loading is taking awhile
+		indicatorTimer = setTimeout( function () {
+			if ( $indicator.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
+		}, 3000 );
 	}
 
 	/**
@@ -68,7 +81,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		indicator( 'loading', 've.activationComplete' );
+		showIndicator();
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
@@ -333,6 +346,8 @@
 			init.setupSkin();
 		} );
 	}
+
+	initIndicator();
 
 	// Redlinks
 	$( function () {
