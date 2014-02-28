@@ -704,9 +704,6 @@ checkbox on Special:Block',
 	'wall-deleted-reply' => 'Confirmation message after deleting a reply',
 	'wall-history' => 'toolbar link to wall history.
 {{Identical|History}}',
-* $1 is preferred name
-* $2 is username',
-* $2 is username',
 	'wall-history-title' => 'heading on wall history page',
 	'wall-history-who-involved-wall-title' => "heading on who's involved box on wall history page",
 	'wall-history-who-involved-thread-title' => "heading on who's involved box on thread history page",
