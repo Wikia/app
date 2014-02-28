@@ -45,7 +45,6 @@ class WikiaHubsV3Controller extends WikiaController {
 			$this->overrideTemplate('404');
 			return;
 		}
-
 		$toolboxModel = new MarketingToolboxModel();
 
 		$this->modules = array();
@@ -171,8 +170,8 @@ class WikiaHubsV3Controller extends WikiaController {
 		global $wgCityId;
 		$this->verticalId = $this->model->getVerticalId($wgCityId);
 		$this->cityId = $wgCityId;
-		$this->verticalName = $this->model->getVerticalNameById($this->cityId);
-		$this->canonicalVerticalName = $this->model->getCanonicalVerticalNameById($this->cityId);
+		$this->verticalName = $this->getContext()->getTitle()->getText();
+		$this->canonicalVerticalName = str_replace(' ', '', $this->model->getCanonicalVerticalNameById($this->cityId));
 	}
 
 	protected function initModel() {
