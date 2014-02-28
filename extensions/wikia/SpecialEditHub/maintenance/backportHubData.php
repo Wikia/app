@@ -34,7 +34,7 @@ class backportHubData extends Maintenance {
 	];
 
 	public function execute() {
-		echo 'Hub backport starting: ' . ( new DateTime() )->format( "Y-m-d H:i:s" ) . "\n";
+		echo 'Hub backport starting: ' . ( new DateTime() )->format( "Y-m-d H:i:s" ) . PHP_EOL;
 		global $wgExternalSharedDB;
 		$sdb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$mdb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
