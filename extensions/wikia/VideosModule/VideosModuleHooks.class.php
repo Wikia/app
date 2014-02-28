@@ -90,7 +90,6 @@ class VideosModuleHooks {
 			 && in_array( $wg->Title->getNamespace(), $showableNameSpaces )
 			 && in_array( $wg->request->getVal( 'action' ), [ 'view', null ] )
 			 && $wg->request->getVal( 'diff' ) === null
-			 && !WikiaPageType::isCorporatePage()
 		) {
 			return true;
 		}
