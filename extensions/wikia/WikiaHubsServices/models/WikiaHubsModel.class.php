@@ -11,7 +11,6 @@
 
 class WikiaHubsModel extends WikiaModel {
 	const HUB_CANONICAL_LANG = 'en';
-	const HUB_PAGE_NAME_VAR = 'wgWikiaHubPageName';
 
 	protected $vertical;
 	protected $cityId;
@@ -36,16 +35,6 @@ class WikiaHubsModel extends WikiaModel {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
 		return wfMessage('hub-' . $wikiaHub['name'])->inLanguage(self::HUB_CANONICAL_LANG)->text();
-	}
-
-	public function getVerticalNameById($cityId) {
-		$hubName = WikiFactory::getVarValueByName(self::HUB_PAGE_NAME_VAR, $cityId);
-
-		if ( empty( $hubName ) ) {
-			$hubName = $this->getCanonicalVerticalNameById( $cityId );
-		}
-
-		return $hubName;
 	}
 
 	public function getCanonicalVerticalNameById($cityId) {
