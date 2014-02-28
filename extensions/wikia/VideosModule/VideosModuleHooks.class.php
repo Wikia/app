@@ -78,6 +78,19 @@ class VideosModuleHooks {
 	}
 
 	/**
+	 * Set global variables for javascript
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
+		$wg = F::app()->wg;
+
+		$vars['wgVideosModuleABTest'] = $wg->VideosModuleABTest;
+
+		return true;
+	}
+
+	/**
 	 * Return whether we're on one of the pages where we want to show the Videos Module,
 	 * specifically File pages, Article pages, and Main pages
 	 * @return bool

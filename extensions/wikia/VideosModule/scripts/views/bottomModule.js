@@ -45,7 +45,7 @@ define('videosmodule.views.bottomModule', [
 		var self = this;
 		if (!groupParams) {
 			// Add tracking for GROUP_I, Control Group
-			return false;
+			return;
 		}
 		this.data = this.model.fetch(groupParams.verticalOnly);
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content

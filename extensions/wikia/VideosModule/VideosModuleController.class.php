@@ -20,6 +20,10 @@ class VideosModuleController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn( __METHOD__ );
 
+		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
+
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$showVerticalOnly = ( $this->request->getVal( 'verticalOnly' ) == 'true' );
 		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
