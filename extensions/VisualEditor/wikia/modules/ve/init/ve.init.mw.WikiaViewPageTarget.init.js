@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -193,7 +193,9 @@
 		},
 
 		setupSectionLinks: function () {
-			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			if ( veUIEnabled ) {
+				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			}
 		},
 
 		onEditTabClick: function ( e ) {
@@ -219,14 +221,7 @@
 		},
 
 		onEditSectionLinkClick: function ( e ) {
-			if ( 
-				!veUIEnabled ||
-				( e.which && e.which !== 1 ) || 
-				e.shiftKey || 
-				e.altKey || 
-				e.ctrlKey || 
-				e.metaKey 
-			) {
+			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
 				return;
 			}
 

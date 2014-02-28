@@ -5,7 +5,7 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	veUIEnabled: mw.config.get( 'wgEnableVisualEditorUI' ),
+	veUIEnabled: !!mw.config.get( 'wgEnableVisualEditorUI' ),
 
 	checkTitle: function( title ) {
 		'use strict';
