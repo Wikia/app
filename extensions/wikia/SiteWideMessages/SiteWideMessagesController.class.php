@@ -2,8 +2,8 @@
 
 class SiteWideMessagesController extends WikiaController  {
 
-	const CACHE_VALIDITY_VARNISH = 0;
-	const CACHE_VALIDITY_BROWSER = 900; // 15 minutes
+	const CACHE_VALIDITY_VARNISH = 10800; // 3 hours
+	const CACHE_VALIDITY_BROWSER = 3600; // 1 hour
 
 	public function getAnonMessages() {
 		if ( $this->wg->User->isLoggedIn() ) {
