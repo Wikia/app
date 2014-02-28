@@ -124,6 +124,24 @@ class RedirectService extends WikiaService {
 	}
 
 	/**
+	 * Redirect to given url, if it's found in redirects mapping array
+	 * Redirection is made with given HTTP status code
+	 *
+	 * @param Title $title
+	 */
+	public function redirectToUrl( Title $title ) {
+		global $wgOut;
+
+		$this->getUrlPathSegments( $title );
+
+		$url = $this->getRedirectURL();
+
+		if ( !is_null( $url ) ) {
+			$wgOut->redirect( $url, $this->status );
+		}
+	}
+
+	/**
 	 * Get new title.
 	 * If mapping from old title to new title exists in redirects array, the new title is returned
 	 *
@@ -148,6 +166,26 @@ class RedirectService extends WikiaService {
 	}
 
 	/**
+	 * Get url to redirect.
+	 * If mapping from old title to url exists in redirects array, url is returned
+	 *
+	 * @return null|Title
+	 */
+	private function getRedirectURL() {
+		$url = null;
+
+		$titleText = mb_strtolower( $this->pathSegments[ $this->level - 1 ] );
+
+		$redirects = $this->prepareRedirects();
+
+		if ( isset( $redirects[$titleText] ) ) {
+			$url = $redirects[$titleText];
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Gets title from text
 	 *
 	 * @param $text
@@ -166,8 +204,8 @@ class RedirectService extends WikiaService {
 		$out = [];
 		$redirects = $this->getRedirects();
 
-		foreach ( $redirects as $oldTitle => $newTitle ) {
-			$out[ mb_strtolower( $oldTitle ) ] = $newTitle;
+		foreach ( $redirects as $redirectFrom => $redirectTo ) {
+			$out[ mb_strtolower( $redirectFrom ) ] = $redirectTo;
 		}
 
 		return $out;
