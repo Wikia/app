@@ -143,7 +143,7 @@ class EditHubController extends WikiaSpecialPageController {
 			null,
 			null,
 			$wgCityId,
-			3
+			3 // Hub vesion - TODO remove while removal of HubsV2
 		);
 
 		$form = new FormBuilderService(MarketingToolboxV3Model::FORM_FIELD_PREFIX);
@@ -206,7 +206,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
-				if( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
+				if ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {

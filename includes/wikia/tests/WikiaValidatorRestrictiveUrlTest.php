@@ -6,7 +6,6 @@ class WikiaValidatorRestrictiveUrlTest extends PHPUnit_Framework_TestCase {
 	private $validator;
 
 	protected function setUp () {
-//		require_once(dirname(__FILE__) . '/../../validators/WikiaValidatorToolboxUrl.class.php');
 		$this->validator = new WikiaValidatorRestrictiveUrl();
 	}
 

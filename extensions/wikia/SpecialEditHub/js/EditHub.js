@@ -16,15 +16,16 @@ EditHub.prototype = {
 	},
 
 	init: function () {
-		var validator;
-		var initThis = this;
+		var validator,
+			initThis = this,
+			editHubMain = $('.EditHubMain');
 
 		$('#EditHubPublish').click($.proxy(this.publishHub, this));
 
-		$('.EditHubMain .wmu-show').click($.proxy(this.wmuInit, this));
+		editHubMain.find('.wmu-show').click($.proxy(this.wmuInit, this));
 		$('.module-popular-videos').on('click', '.remove', $.proxy(this.popularVideosRemove, this));
-		$('.EditHubMain #edit-hub-removeall').click($.proxy(this.popularVideosRemoveAll, this));
-		$('.EditHubMain .vet-show').each(function() {
+		$('#edit-hub-removeall').click($.proxy(this.popularVideosRemoveAll, this));
+		editHubMain.find('.vet-show').each(function() {
 			var $this = $(this);
 
 			$this.addVideoButton({

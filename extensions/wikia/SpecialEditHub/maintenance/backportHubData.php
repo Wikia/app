@@ -13,6 +13,8 @@ ini_set( 'display_errors', 'On' );
 require_once( "../../../../maintenance/Maintenance.php" );
 
 class backportHubData extends Maintenance {
+	CONST LOG_FORMAT = "%12s\n%12s%12s%12s%15s%12s\n";
+
 	static $moduleToMigrate = 6; //MarketingToolboxModuleFromthecommunityService::MODULE_ID
 	static $ftcHeadline = [
 		'en' =>	'From the Community',
@@ -50,7 +52,7 @@ class backportHubData extends Maintenance {
 		);
 
 		$changeLog = [
-			sprintf("%12s\n%12s%12s%12s%15s%12s\n",
+			sprintf(self::LOG_FORMAT,
 				'Changelog',
 				'city_id',
 				'lang_code',
@@ -87,7 +89,7 @@ class backportHubData extends Maintenance {
 						'module_id' => $row->module_id
 					)
 				);
-				$changeLog []= sprintf("%12s%12s%12s%15s%12s\n",
+				$changeLog []= sprintf(self::LOG_FORMAT,
 					$row->city_id,
 					$row->lang_code,
 					$row->vertical_id,
@@ -104,7 +106,7 @@ class backportHubData extends Maintenance {
 			}
 		}
 
-		echo 'Hub backport ended: ' . ( new DateTime() )->format( "Y-m-d H:i:s" ) . "\n";
+		echo 'Hub backport ended: ' . ( new DateTime() )->format( "Y-m-d H:i:s" ) . PHP_EOL;
 	}
 }
 

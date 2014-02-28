@@ -1,30 +1,30 @@
 <div class="module-box">
-	<?=$form->renderField('headline')?>
-	<?=$form->renderField('suggest')?>
+	<?=$form->renderField( 'headline' )?>
+	<?=$form->renderField( 'suggest' )?>
 </div>
 
-<? for ($i = 1; $i <= $boxesCount; $i++): ?>
+<? for ( $i = 1; $i <= $boxesCount; $i++ ): ?>
 <div class="module-box">
 	<h3 class="alternative"><?= $i?>.</h3>
 	<div class="module-right-box">
 		<div class="module-input-box">
-			<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />
+			<input type="button" class="wmu-show" value="<?= wfMessage( 'wikia-hubs-add-file-button' )->text() ?>" />
 				<span class="alternative filename-placeholder">
-					<? $photoField = $form->getField('photo' . $i); ?>
+					<? $photoField = $form->getField( 'photo' . $i ); ?>
 					<? if (!empty($photoField['value'])): ?>
 						<?= $photoField['value']; ?>
 					<? else: ?>
-						<?= wfMessage('wikia-hubs-file-name')->text() ?>
+						<?= wfMessage( 'wikia-hubs-file-name' )->text() ?>
 					<? endif ?>
 				</span>
 
-			<?=$form->renderField('photo' . $i)?>
-			<?=$form->renderField('title' . $i)?>
-			<?=$form->renderField('usersUrl' . $i)?>
-			<?=$form->renderField('quote' . $i)?>
-			<?=$form->renderField('url' . $i)?>
+			<?=$form->renderField( 'photo' . $i )?>
+			<?=$form->renderField( 'title' . $i )?>
+			<?=$form->renderField( 'usersUrl' . $i )?>
+			<?=$form->renderField( 'quote' . $i )?>
+			<?=$form->renderField( 'url' . $i )?>
 
-			<input class="secondary clear" type="button" value="<?= wfMessage('wikia-hubs-clear-button')->text() ?>" />
+			<input class="secondary clear" type="button" value="<?= wfMessage( 'wikia-hubs-clear-button' )->text() ?>" />
 		</div>
 		<div class="module-image-box">
 			<div class="image-placeholder">
