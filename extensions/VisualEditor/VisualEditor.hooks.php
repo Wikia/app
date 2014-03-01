@@ -14,7 +14,8 @@ class VisualEditorHooks {
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
-				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins )
+				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
+				$skin->getUser()->getOption( 'enablerichtext' )
 			);
 		}
 		return $isAvailable;
