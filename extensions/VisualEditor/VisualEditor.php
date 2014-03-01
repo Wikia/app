@@ -9,6 +9,7 @@
  */
 
 /* Setup */
+global $wgEnableVisualEditorUI;
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
@@ -48,7 +49,9 @@ $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
-$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+if ( $wgEnableVisualEditorUI ) {
+	$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+}
 if ( array_key_exists( 'GetBetaFeaturePreferences', $wgHooks ) ) {
 	$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
 }
@@ -57,7 +60,9 @@ $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
-$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
+if ( $wgEnableVisualEditorUI ) {
+	$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
+}
 $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
@@ -880,14 +885,16 @@ $wgVisualEditorTabMessages = array(
 	'edit' => null,
 	// i18n message key to use for the old edit tab
 	// If null, the tab's caption will not be changed
-	'editsource' => 'visualeditor-ca-editsource',
+	//'editsource' => 'visualeditor-ca-editsource',
+	'editsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the VisualEditor create tab
 	// If null, the default create tab caption will be used
 	// The 'visualeditor-ca-ve-create' message is available for this
 	'create' => null,
 	// i18n message key to use for the old create tab
 	// If null, the tab's caption will not be changed
-	'createsource' => 'visualeditor-ca-createsource',
+	//'createsource' => 'visualeditor-ca-createsource',
+	'createsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the VisualEditor section edit link
 	// If null, the default edit section link caption will be used
 	'editsection' => null,
@@ -905,12 +912,3 @@ $wgVisualEditorTabMessages = array(
 	'editsectionappendix' => null,
 	'editsectionsourceappendix' => null,
 );
-
-global $wgEnableVisualEditorUI;
-if ( !empty( $wgEnableVisualEditorUI ) ) {
-	$wgVisualEditorTabMessages['editsource'] = 'visualeditor-ca-classiceditor';
-	$wgVisualEditorTabMessages['createsource'] = 'visualeditor-ca-classiceditor';
-} else {
-	$wgVisualEditorTabMessages['editsource'] = null; 
-	$wgVisualEditorTabMessages['createsource'] = null;
-}
