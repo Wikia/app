@@ -13,16 +13,16 @@
 */
 
 if (!defined('MEDIAWIKI')){
-    echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
+	echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
 }
 
 $wgExtensionFunctions [] = 'efInitializeOversightCompanion';
 
 function efInitializeOversightCompanion(){
-        global $wgHooks;
+	global $wgHooks;
 
-        $wgHooks['Oversight::getRevisions'][] = 'efAddHiddenTable';
-        $wgHooks['Oversight::insertRevision'][] = 'efAddHiddenTable';
+	$wgHooks['Oversight::getRevisions'][] = 'efAddHiddenTable';
+	$wgHooks['Oversight::insertRevision'][] = 'efAddHiddenTable';
 }
 
 function efAddHiddenTable() {
