@@ -1804,6 +1804,18 @@ $messages['ja'] = array(
 	'chat-status-away' => '退席中',
 );
 
+/** Georgian (ქართული)
+ * @author ToaMeiko
+ */
+ $messages['ka'] = array(
+ 	'chat' => 'სტატისტიკა',
+ 	'chat-desc' => '[[Special:Chat|სტატისტიკა]]',
+ 	'chat-ban-modal-button-cancel' => 'გაუქმება',
+ 	'chat-ban-undolink' => 'გაუქმება',
+ 	'chat-log-reason-undo' => 'გაუქმება',
+ 	'chat-you-are-banned' => 'ნებართვის შეცდომა.',
+ );
+
 /** Khowar (کھوار)
  * @author Rachitrali
  */
