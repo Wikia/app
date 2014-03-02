@@ -3,83 +3,85 @@
 
 	var AnonSiteWideMessages = {
 		init: function () {
-			var $notificationArea = $('#WikiaNotifications'),
-				hasNotifications = $notificationArea.length ? 1 : 0,
-				self = this;
-
 			$.nirvana.sendRequest({
 				controller: 'SiteWideMessagesController',
 				method: 'getAnonMessages',
-				format: 'html',
-				type: 'GET',
-				data: {
-					hasnotifications: hasNotifications,
-					lastdismissed: $.storage.get('swm-lastdismissed')
-				}
-			}).done(function (data) {
-				var $body,
-					$siteWideMessages,
-					$firstSWM;
+				format: 'json',
+				type: 'GET'
+			}).done($.proxy(this.handleMessages, this));
+		},
 
-				if (hasNotifications) {
-					$notificationArea.append(data);
-				} else {
-					$body = $('body');
-					$body.addClass('notifications');
-					$body.append(data);
-					$notificationArea = $('#WikiaNotifications');
-				}
+		handleMessages: function (data) {
+			var i, msgId,
+				$siteWideMessage,
+				$siteWideMessages,
+				$notificationArea = $('#WikiaNotifications'),
+				hasNotifications = $notificationArea.length ? 1 : 0,
+				cookiePrefix = mw.config.get('wgCookiePrefix') + 'swm-',
+				siteMessagesHtml = [],
+				firstMessage = true;
 
-				$siteWideMessages = $notificationArea.find('div[data-type="5"]');
+			if (data && data.siteWideMessagesCount > 0) {
+				for (i in data.siteWideMessages) {
+					msgId = data.siteWideMessages[i].msgId;
 
-				if ($siteWideMessages.length) {
-					$firstSWM = $siteWideMessages.first();
-
-					// Track first notification impression
-					if ($firstSWM.length) {
-						self.track({
-							action: window.Wikia.Tracker.ACTIONS.IMPRESSION,
-							label: 'swm-impression',
-							value: parseInt($firstSWM.attr('id').substr(4), 10)
-						});
+					// Skip dismissed messages
+					if ($.cookie(cookiePrefix + msgId)) {
+						continue;
 					}
 
-					// Handle dismissing notifications
-					$siteWideMessages.find('.close-notification')
-						.click($.proxy(self.handleClose, self));
+					$siteWideMessage = $('<div>').attr('data-type', data.notificationType)
+						.attr('id', 'msg_' + msgId).attr('data-msgid', msgId)
+						.on('click', 'p a', $.proxy(this.handleLinkClick, this))
+						.append(
+							$('<a class="sprite close-notification"></a>')
+								.click($.proxy(this.handleClose, this)),
+							data.siteWideMessages[i].text
+						);
 
-					// Track clicks of links within messages
-					$siteWideMessages.each(function () {
-						var msgId = parseInt($(this).attr('id').substr(4), 10);
-						$(this).find('p a').click(function (ev) {
-							self.track({
-								action: window.Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
-								browserEvent: ev,
-								href: $(this).attr('href'),
-								label: 'swm-link',
-								value: msgId
-							});
-						});
-					});
+					if (firstMessage === true) {
+						firstMessage = msgId;
+					} else {
+						$siteWideMessage.hide();
+					}
+
+					siteMessagesHtml[siteMessagesHtml.length] = $siteWideMessage;
 				}
-			});
+
+				if (siteMessagesHtml.length > 0) {
+					$siteWideMessages = $('<li>').append(siteMessagesHtml);
+
+					if (hasNotifications) {
+						$notificationArea.append($siteWideMessages);
+					} else {
+						$('body').addClass('notifications')
+							.append($('<ul id="WikiaNotifications" class="WikiaNotifications"></ul>')
+								.append($siteWideMessages));
+						$notificationArea = $('#WikiaNotifications');
+					}
+
+					// Track first notification impression
+					this.track({
+						action: window.Wikia.Tracker.ACTIONS.IMPRESSION,
+						label: 'swm-impression',
+						value: firstMessage
+					});
+
+				}
+
+			}
 		},
 
 		handleClose: function (ev) {
 			var notification = $(ev.currentTarget).parent(),
-				messageId = parseInt(notification.attr('id').substr(4), 10),
+				messageId = notification.attr('data-msgid'),
 				$nextNotification = notification.next(),
 				nextMessageId;
 
-			$.nirvana.sendRequest({
-				controller: 'SiteWideMessagesController',
-				method: 'dismissAnonMessage',
-				data: {
-					messageid: messageId
-				}
+			$.cookie(mw.config.get('wgCookiePrefix') + 'swm-' + messageId, 1, {
+				'domain': mw.config.get('wgCookieDomain'),
+				'expires': 1
 			});
-
-			$.storage.set('swm-lastdismissed', messageId);
 
 			this.track({
 				action: window.Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
@@ -92,7 +94,7 @@
 			$nextNotification.show();
 
 			if ($nextNotification.length) {
-				nextMessageId = parseInt($nextNotification.attr('id').substr(4), 10);
+				nextMessageId = $nextNotification.attr('data-msgid');
 
 				// Track next message impression
 				this.track({
@@ -101,6 +103,16 @@
 					value: nextMessageId
 				});
 			}
+		},
+
+		handleLinkClick: function (ev) {
+			this.track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
+				browserEvent: ev,
+				href: $(ev.currentTarget).attr('href'),
+				label: 'swm-link',
+				value: $(ev.delegateTarget).attr('data-msgid')
+			});
 		},
 
 		track: window.Wikia.Tracker.buildTrackingFunction({
