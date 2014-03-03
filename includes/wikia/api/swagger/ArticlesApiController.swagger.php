@@ -173,6 +173,26 @@ use Swagger\Annotations as SWG;
  * 		description="The namespace value of the given article"
  * 	)
  *
+ * @SWG\Model( id="PopularArticle" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ *
  * @SWG\Model( id="ExpandedArticle" )
  * 	@SWG\Property(
  * 		name="id",
@@ -232,7 +252,7 @@ use Swagger\Annotations as SWG;
  * 		type="OriginalDimension",
  * 		description="The original dimensions of the thumbnail for the article, if available"
  * 	)
- *
+ * 
  * @SWG\Model( id="Revision" )
  * 	@SWG\Property(
  * 		name="id",
@@ -258,7 +278,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The Unix timestamp (in seconds) that the revision was made"
  * 	)
- *
+ * 
  * @SWG\Model( id="OriginalDimension" )
  * 	@SWG\Property(
  * 		name="width",
@@ -304,10 +324,28 @@ use Swagger\Annotations as SWG;
  * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
  * 		name="title",
  * 		type="string",
  * 		required="true",
  * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  * 	@SWG\Property(
  * 		name="url",
@@ -316,16 +354,9 @@ use Swagger\Annotations as SWG;
  * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
  * 	@SWG\Property(
- * 		name="ns",
- * 		type="int",
- * 		required="true",
- * 		description="The namespace value of the given article"
- * 	)
- * 	@SWG\Property(
- * 		name="abstract",
- * 		type="string",
- * 		required="true",
- * 		description="A snippet of text from the beginning of the article"
+ * 		name="creator",
+ * 		type="Creator",
+ * 		description="Data about the author of the article (creator of the first revision)"
  * 	)
  * 	@SWG\Property(
  * 		name="creation_date",
@@ -343,10 +374,22 @@ use Swagger\Annotations as SWG;
  * 		type="OriginalDimension",
  * 		description="The original dimensions of the thumbnail for the article, if available"
  * 	)
+ *
+ *
+ *
+ * @SWG\Model( id="PopularListArticleResultSet" )
  * 	@SWG\Property(
- * 		name="creator",
- * 		type="Creator",
- * 		description="Data about the author of the article (creator of the first revision)"
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:PopularArticle",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  *
  * @SWG\Model( id="UnexpandedListArticleResultSet" )
@@ -369,6 +412,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
+ *
  * @SWG\Model( id="ExpandedListArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -476,6 +520,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The namespace value of the given article"
  * 	)
+ * 	@SWG\Property(
+ * 		name="backlink_cnt",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of backlinks for the article"
+ * 	)
  *
  * @SWG\Model( id="ExpandedMostLinked" )
  * 	@SWG\Property(
@@ -525,6 +575,12 @@ use Swagger\Annotations as SWG;
  * 		type="string",
  * 		required="true",
  * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="backlink_cnt",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of backlinks for the article"
  * 	)
  *
  *
@@ -595,6 +651,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue="20"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)
@@ -602,11 +668,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/Top?expand=1",
- * 	description="Get the most viewed articles for this wiki (extended response)",
+ * 	description="Get the most viewed articles for this wiki (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get the most viewed articles for this wiki (extended response)",
+ * 			summary="Get the most viewed articles for this wiki (expanded results)",
  * 			nickname="getTop",
  * 			responseClass="ExpandedArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -636,7 +702,7 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- *
+ * 
  *
  * @SWG\Api(
  * 	path="/api/v1/Articles/MostLinked",
@@ -717,7 +783,61 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/Popular?expand=1",
+ * 	description="Get popular articles for the current wiki (from the beginning of time)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get popular articles for the current wiki (from the beginning of time)",
+ * 			nickname="getPopular",
+ * 			responseClass="ExpandedArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Limit parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="The maximum number of results to get, from 1 to 10 inclusive",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
  *
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/Popular",
+ * 	description="Get popular articles for the current wiki (from the beginning of time)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get popular articles for the current wiki (from the beginning of time)",
+ * 			nickname="getPopular",
+ * 			responseClass="PopularListArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Limit parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="The maximum number of results to get, from 1 to 10 inclusive",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
  *
  * @SWG\Api(
  * 	path="/api/v1/Articles/List",
@@ -775,11 +895,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/List?expand=1",
- * 	description="Get articles list in alphabetical order (extended response)",
+ * 	description="Get a list of pages on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get articles list in alphabetical order (extended response)",
+ * 			summary="Get a list of pages on the current wiki",
  * 			nickname="getList",
  * 			responseClass="ExpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -827,7 +947,7 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- *
+ * 
  * @SWG\Api(
  * 		path="/api/v1/Articles/Details",
  * 		description="Get top articles for the current wiki",

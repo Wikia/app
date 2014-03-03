@@ -135,6 +135,7 @@ class MatchTest extends BaseTest {
 		$snippet = "This be my long snippet";
 		$highlighted = 'This be my <span class="searchmatch">long</span> snippet&hellip;';
 
+
 		$fieldsArray = array(
 				'id' => sprintf( '%s_%s', $wid, $canonicalPageId ),
 				'pageid' => $pageId,

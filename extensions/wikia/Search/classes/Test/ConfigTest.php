@@ -537,6 +537,34 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\Search\Config::getMainPage
+	 * @covers \Wikia\Search\Config::setMainPage
+	 */
+	public function testSetMainPage() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'setMainPage', 'getMainPage' ] );
+
+		$config
+			->expects( $this->once() )
+			->method ( 'getMainPage' )
+			->will   ( $this->returnValue( true ) )
+		;
+		$this->assertEquals(
+			true,
+			$config->getMainPage()
+		);
+		$config
+			->expects( $this->once() )
+			->method ( 'setMainPage' )
+			->with   ( true )
+			->will   ( $this->returnValue( $config ) )
+		;
+		$this->assertEquals(
+			$config,
+			$config->setMainPage( true )
+		);
+	}
+
+	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.18868 ms
 	 * @covers \Wikia\Search\Config::getSearchProfiles
@@ -1258,7 +1286,52 @@ class ConfigTest extends BaseTest {
 				$config->getStart()
 		);
 	}
-	
+
+	/**
+	 * @covers Wikia\Search\Config::setMinArticleQuality
+	 * @covers Wikia\Search\Config::getMinArticleQuality
+	 */
+	public function testGetMinArticleQuality() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setMinArticleQuality( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'minArticleQuality',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getMinArticleQuality()
+		);
+	}
+
+
+	/**
+	 * @covers Wikia\Search\Config::setPageId
+	 * @covers Wikia\Search\Config::getPageId
+	 */
+	public function testSetPageId() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setPageId( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'pageId',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getPageId()
+		);
+	}
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07426 ms
@@ -1313,8 +1386,6 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.07524 ms
 	 * @covers Wikia\Search\Config::setNamespaces
 	 */
 	public function testSetNamespaces() {

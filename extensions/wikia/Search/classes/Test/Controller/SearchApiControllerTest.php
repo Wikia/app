@@ -51,7 +51,7 @@ class SearchApiControllerTest extends BaseTest
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'setQuery', 'setLimit', 'setPage', 'setRank', 'setVideoSearch' ] )
+		                   ->setMethods( [ 'setQuery', 'setLimit', 'setPage', 'setRank', 'setVideoSearch', 'setMinArticleQuality' ] )
 		                   ->getMock();
 		
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
@@ -116,6 +116,18 @@ class SearchApiControllerTest extends BaseTest
 		    ->method ( 'setRank' )
 		    ->with   ( 'default' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockRequest
+			->expects( $this->at( $requestIncr++ ) )
+			->method ( 'getInt' )
+			->with   ( 'minArticleQuality' )
+			->will   ( $this->returnValue( 11 ) )
+		;
+		$mockConfig
+			->expects( $this->at( $configIncr++ ) )
+			->method ( 'setMinArticleQuality' )
+			->with   ( 11 )
+			->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockRequest
 		    ->expects( $this->at( $requestIncr++ ) )

@@ -11,7 +11,9 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		firstSectionTop = ( $firstSection.length && $firstSection.offset().top ) || 0,
 		shouldShowAds = window.wgArticleId && window.navigator.userAgent.indexOf( 'sony_tvs' ) === -1,
 		shouldShowInContent = sections.isSectionLongerThan( 0, MIN_ZEROTH_SECTION_LENGTH ),
-		shouldShowBeforeFooter = doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH,
+		shouldShowBeforeFooter =
+			( doc.body.offsetHeight > MIN_PAGE_LENGTH || firstSectionTop < MIN_ZEROTH_SECTION_LENGTH ) &&
+				sections.isDefined( 1 ),
 		div,
 		lazyLoadAd = function ( elem, slotName ) {
 			log( 'Lazy load: ' + slotName, logLevel, logGroup );
@@ -24,7 +26,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 
 					ads.setupSlot( {
 						name: slotName,
-						size: '300x250',
+						size: ['300x250','1x1'],
 						wrapper: adWrapper,
 						init: function onInit ( found ) {
 							log( 'Slot: ' + slotName + ' loaded, found: ' + found, logLevel, logGroup );
@@ -42,7 +44,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		log( 'Loading slot: MOBILE_TOP_LEADERBOARD', logLevel, logGroup );
 		ads.setupSlot( {
 			name: 'MOBILE_TOP_LEADERBOARD',
-			size: '320x50',
+			size: ['320x50','1x1'],
 			wrapper: topAdWrapper,
 			init: function ( found ) {
 				log( 'Slot: MOBILE_TOP_LEADERBOARD loaded, found: ' + found, logLevel, logGroup );
@@ -65,7 +67,7 @@ require( ['ads', 'sloth', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', '
 		}
 
 		if ( shouldShowBeforeFooter ) {
-			$footer.after( '<div id=wkAdBeforeFooter class=ad-in-content />' );
+			$footer.before( '<div id=wkAdBeforeFooter class=ad-in-content />' );
 			lazyLoadAd( doc.getElementById( 'wkAdBeforeFooter' ), 'MOBILE_PREFOOTER' );
 		}
 

@@ -53,6 +53,18 @@ class Http {
 		if ( $status->isOK() ) {
 			$ret = $req->getContent();
 		} else {
+			// Wikia change - @author: mech - begin
+			// log http errors
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				$params = [
+					'statusMessage' => $status->getMessage(),
+					'statusCode' => $req->getStatus(),
+					'reqMethod' => $method,
+					'reqUrl' => $url
+				];
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'Http::request error' , $params );
+			}
+			// Wikia change - end
 			$ret = false;
 		}
 

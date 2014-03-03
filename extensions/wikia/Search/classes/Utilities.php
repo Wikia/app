@@ -29,7 +29,23 @@ class Utilities
 		$expression = new Field\FieldExpression( new Field\Field( $field ), array_merge( array( 'value' => $value ), $params ) );
 		return $expression->__toString();
 	}
-	
+
+	/**
+	 * Generates range query on given field. Params are integers
+	 * @param string $field
+	 * @param int $from
+	 * @param int $to
+	 * @return string
+	 */
+	public static function rangeIntValueField( $field, $from = null , $to = null )
+	{
+		$res = '(' . $field . ':[';
+		$res .= $from !== null ? (int)$from : '*';
+		$res .= ' TO ';
+		$res .= $to !== null ? (int)$to : '*';
+		return $res.'])';
+	}
+
 	/**
 	 * Accepts a string and, checks it against a known set of dynamic language fields, and composes
 	 * a field namebased on the language context and field set membership.

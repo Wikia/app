@@ -125,7 +125,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 			sectionsLength = sectionsList.length;
 
 			$( '.trending-articles' )
-				.removeClass( 'hide' )
+				.removeClass( 'hidden' )
 				.find( 'h2' )
 				.attr( 'id', 'trendingArticles' );
 

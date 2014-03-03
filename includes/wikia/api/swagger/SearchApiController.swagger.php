@@ -35,6 +35,12 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces"
  * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
  * 
  * @SWG\Model( id="localWikiSearchResultSet" )
  * 	@SWG\Property(
@@ -68,7 +74,65 @@ use Swagger\Annotations as SWG;
  * 		items="$ref:localWikiSearchResult",
  * 		description="Standard container name for element collection (list)"
  * 	)
- * 
+ *
+ *
+ * @SWG\Model ( id="CombinedSearchArticlesResultSet" )
+ *  @SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="articleId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of the article on the Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="title",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The title of the article"
+ *  )
+ *  @SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the article"
+ *  )
+ * @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the article"
+ *  )
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | video_game )"
+ * 	)
+ * @SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Text snippet for the article"
+ *  )
+ *  @SWG\Property(
+ * 		name="image",
+ * 		required="true",
+ * 		type="string",
+ * 		description="The URL of the image"
+ *  )
+ *
+ *
  * @SWG\Model( id="CrossWikiSearchResult" )
  * 	@SWG\Property(
  * 		name="id",
@@ -245,6 +309,61 @@ use Swagger\Annotations as SWG;
  * 		description="Original image height"
  * 	)
  *
+ *
+ * @SWG\Model( id="CombinedSearchResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikias",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:WikiasResultSet",
+ * 		description="Container for wikias collection (list)"
+ * 	)
+ *  @SWG\Property(
+ * 		name="articles",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:CombinedSearchArticlesResultSet",
+ * 		description="Container for articles collection (list)"
+ * 	)
+ *
+ * @SWG\Model( id="WikiasResultSet" )
+ * 	@SWG\Property(
+ * 		name="wikiId",
+ * 		required="true",
+ * 		type="int",
+ * 		description="ID of Wikia site"
+ *  )
+ *  @SWG\Property(
+ * 		name="name",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Name of Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL to the main page"
+ *  )
+ *  @SWG\Property(
+ * 		name="lang",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Language of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="snippet",
+ * 		required="true",
+ * 		type="string",
+ * 		description="Description of the Wikia site"
+ *  )
+ * 	@SWG\Property(
+ * 		name="wordmark",
+ * 		required="true",
+ * 		type="string",
+ * 		description="URL for Wikia site logo"
+ *  )
+ *
  * @SWG\Api(
  * 	path="/api/v1/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
@@ -295,6 +414,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue="25"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				),
  * 				@SWG\Parameter(
  * 					name="batch",
@@ -483,6 +612,80 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *  @SWG\Api(
+ * 	path="/api/v1/Search/Combined",
+ * 	description="Get results for combined wiki and cross-wiki search ",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="get",
+ * 			summary="Get results for combined (wiki and cross-wiki) search",
+ * 			nickname="getCombined",
+ * 			responseClass="CombinedSearchResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Query parameter is missing" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="query",
+ * 					description="The query to use for the search",
+ * 					paramType="query",
+ * 					required="true",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="langs",
+ * 					description="The two chars wiki language code set, coma-separated, (eg.: en,de,fr or en,pl)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="true",
+ * 					dataType="string",
+ * 					defaultValue="en"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="hubs",
+ * 					description="Filter by the verticals, coma-separated, (eg.: Gaming,Entertainment,Lifestyle)",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue="0,14"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Will limit number of articles returned to given number",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="6",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="15")
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)
