@@ -10,9 +10,17 @@ class VideosModule extends WikiaModel {
 
 	const LIMIT_TRENDING_VIDEOS = 20;
 	const CACHE_TTL = 3600;
+	const CACHE_VERSION = 1;
 
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+
+	// list of page categories [ array( categoryId => name ) ]
+	protected static $pageCategories = [
+		2 => 'Games',
+		3 => 'Entertainment',
+		9 => 'Lifestyle',
+	];
 
 	/**
 	 * Get related videos (article related videos and wiki related videos)
@@ -42,7 +50,7 @@ class VideosModule extends WikiaModel {
 	public function getArticleRelatedVideos( $articleId, $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfMemcKey( 'videomodule', 'article_related_videos', $articleId );
+		$memcKey = wfMemcKey( 'videomodule', 'article_related_videos', self::CACHE_VERSION, $articleId );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$service = new VideoEmbedToolSearchService();
@@ -83,7 +91,7 @@ class VideosModule extends WikiaModel {
 	public function getWikiRelatedVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos' );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			// Strip Wiki off the end of the wiki name if it exists
@@ -128,7 +136,7 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$category = $this->getWikiVertical();
-		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', $category );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$params = [
@@ -170,18 +178,17 @@ class VideosModule extends WikiaModel {
 	public function getWikiVertical() {
 		wfProfileIn( __METHOD__ );
 
-		$category = [];
+		$name = '';
 
 		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
 		if ( !empty( $categoryId ) ) {
 			// get vertical id
 			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
 
-			// get category name
-			$category = WikiFactoryHub::getInstance()->getCategory( $verticalId );
+			if ( array_key_exists( $verticalId, self::$pageCategories ) ) {
+				$name = self::$pageCategories[$verticalId];
+			}
 		}
-
-		$name = empty( $category['name'] ) ? '' : $category['name'];
 
 		wfProfileOut( __METHOD__ );
 
