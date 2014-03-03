@@ -63,7 +63,7 @@ EditHub.prototype = {
 									$.when(
 										$.loadMustache(),
 										Wikia.getMultiTypePackage({
-											mustache: 'extensions/wikia/SpecialEditHub/templates/EditHubVideosController_popularVideoRow.mustache'
+											mustache: 'extensions/wikia/WikiaHubsServices/modules/templates/MarketingToolbox_popularVideoRow.mustache'
 										})
 									).done(function(libData, packagesData) {
 										initThis.popularVideosAdd(packagesData[0].mustache[0], response);

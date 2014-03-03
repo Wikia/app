@@ -16,15 +16,19 @@
 		<? if( !empty($videos) ): ?>
 				<? foreach($videos as $idx => $video): ?>
 					<? $videoUrlField = $form->getField('videoUrl')?>
-					<?= $app->renderView(
-							'MarketingToolboxVideosController',
-							'popularVideoRow',
-							array(
-								'video' => $video,
-								'errorMsg' => (isset($videoUrlField['errorMessage'][$idx]) ? $videoUrlField['errorMessage'][$idx] : ''),
-							)
-						);
+					<?=(new Wikia\Template\MustacheEngine())->setData([
+						'blankImgUrl' => $wg->BlankImgUrl,
+						'removeMsg' => wfMessage('marketing-toolbox-edithub-remove')->text(),
+						'errorMsg' => (isset($videoUrlField['errorMessage'][$idx])) ? $videoUrlField['errorMessage'][$idx] : '',
+						'sectionNo' => (isset($video['section-no'])) ? $video['section-no'] : null,
+						'videoTitle' => (isset($video['title'])) ? $video['title'] : null,
+						'videoFullUrl' => (isset($video['fullUrl'])) ? $video['fullUrl'] : null,
+						'videoTime' => (isset($video['videoTime'])) ? $video['videoTime'] : null,
+						'videoThumbnail' => (isset($video['videoThumb'])) ? $video['videoThumb'] : null,
+					])->render( dirname(__FILE__) . '/MarketingToolbox_popularVideoRow.mustache' );
 					?>
+
+
 				<? endforeach; ?>
 		<? endif; ?>
 	</div>
