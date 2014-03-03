@@ -12,7 +12,7 @@ class LyricsApiController extends WikiaController {
 	private $lyricsApiHandler = null;
 
 	public function __construct() {
-		$this->lyricsApiHandler = new LyricsApiHandlerFactory();
+		$this->lyricsApiHandler = new MockLyricsApiHandler();
 	}
 
 	public function getArtist() {
