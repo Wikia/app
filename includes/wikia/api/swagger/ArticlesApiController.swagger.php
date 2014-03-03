@@ -206,7 +206,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The title of the article"
  * 	)
- * @SWG\Property(
+ *  @SWG\Property(
  * 		name="ns",
  * 		type="int",
  * 		required="true",
@@ -448,7 +448,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 	@SWG\Model( id="ExpandedArticleResultSet" )
+ * @SWG\Model( id="ExpandedArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
  * 		required="true",
@@ -464,7 +464,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  *
- *  @SWG\Model( id="UnexpandedMostLinkedResultSet" )
+ * @SWG\Model( id="UnexpandedMostLinkedResultSet" )
  * 	@SWG\Property(
  * 		name="items",
  * 		required="true",
