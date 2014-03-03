@@ -31,19 +31,29 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$result = new stdClass();
 		$result->name = $artist;
-		$result->image = $this->getMockedImgUrl();
+		$result->image = $this->getImage( $artist );
 
 		$album1 = new stdClass();
 		$album1->name = 'Album #1';
-		$album1->image = $this->getMockedImgUrl();
+		$album1->image = $this->getImage( $album1->name );
 		$album1->year = 2001;
-		$album1->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album1->name ) );
+		$album1->url = $this->buildUrl([
+			'controller' => self::API_CONTROLLER_NAME,
+			'method' => 'getAlbum',
+			LyricsApiController::PARAM_ARTIST => $artist,
+			LyricsApiController::PARAM_ALBUM => $album1->name,
+		]);
 
 		$album2 = new stdClass();
 		$album2->name = 'Album #2';
-		$album2->image = $this->getMockedImgUrl();
+		$album2->image = $this->getImage( $album2->name );
 		$album2->year = 2011;
-		$album2->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album2->name ) );
+		$album2->url = $this->buildUrl([
+			'controller' => self::API_CONTROLLER_NAME,
+			'method' => 'getAlbum',
+			LyricsApiController::PARAM_ARTIST => $artist,
+			LyricsApiController::PARAM_ALBUM => $album2->name,
+		]);
 
 		$result->albums = [
 			$album2,
@@ -119,14 +129,5 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	public function searchArtist( $query ) {}
 	public function searchSong( $query ) {}
 	public function searchLyrics( $query ) {}
-
-	/**
-	 * @desc Just a simple helper method to return random placekitten images' urls
-	 *
-	 * @return string
-	 */
-	private function getMockedImgUrl() {
-		return sprintf( '%s/%d/%d', 'http://placekitten.com', rand(128, 1024), rand(128, 1024) );
-	}
 
 } 
