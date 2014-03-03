@@ -8,15 +8,13 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		slotMap,
+		providerSlotMap = {},
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
 
-	pageLevelParams.src = 'gpt';
-
-	function init(paramSlotMap) {
-		slotMap = paramSlotMap;
+	function init(paramSlotMap, slotMapSrc) {
+		providerSlotMap[slotMapSrc] = paramSlotMap;
 	}
 
 	function triggerDone(slotnameGpt) {
@@ -117,6 +115,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 					slotnameGpt,
 					sizes,
 					slot,
+					slotMap,
+					slotMapSrc,
 					slotItem,
 					slotPath,
 					slotParams;
@@ -135,49 +135,57 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 					}
 				}
 
-				// Define all possible slots
-				for (slotname in slotMap) {
-					if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
-						log(['loadGpt', 'defining slot', slotname], 9, logGroup);
+				for ( slotMapSrc in providerSlotMap ) {
+					if ( !providerSlotMap.hasOwnProperty( slotMapSrc ) ) {
+						continue;
+					}
 
-						slotnameGpt = slotname + '_gpt';
-						slotItem = slotMap[slotname];
-						sizes = convertSizesToGpt(slotItem.size);
+					slotMap = providerSlotMap[slotMapSrc];
 
-						slotPath = path + '/' + slotname;
+					// Define all possible slots
+					for (slotname in slotMap) {
+						if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
+							log(['loadGpt', 'defining slot', slotname], 9, logGroup);
 
-						log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
-						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
-						slot.addService(googletag.pubads());
+							slotnameGpt = slotname + '_' + slotMapSrc;
+							slotItem = slotMap[slotname];
+							sizes = convertSizesToGpt(slotItem.size);
 
-						// Per-slot targeting keys
-						slotParams = {
-							pos: slotname,
-							loc: slotItem.loc
-						};
-						for (name in slotParams) {
-							if (slotParams.hasOwnProperty(name)) {
-								value = slotParams[name];
-								if (value) {
-									log(['slot.setTargeting', name, value], 9, logGroup);
-									slot.setTargeting(name, value);
+							slotPath = path + '/' + slotname + '/' + slotMapSrc;
+
+							log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
+							slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
+							slot.addService(googletag.pubads());
+
+							// Per-slot targeting keys
+							slotParams = {
+								pos: slotname,
+								loc: slotItem.loc,
+								src: slotMapSrc
+							};
+							for (name in slotParams) {
+								if (slotParams.hasOwnProperty(name)) {
+									value = slotParams[name];
+									if (value) {
+										log(['slot.setTargeting', name, value], 9, logGroup);
+										slot.setTargeting(name, value);
+									}
 								}
 							}
+
+							gptSlots[slotnameGpt] = slot;
+
+							dataAttribs[slotnameGpt] = {
+								'data-gpt-page-params': JSON.stringify(pageLevelParams),
+								'data-gpt-slot-params': JSON.stringify(slotParams),
+								'data-gpt-slot-sizes': JSON.stringify(sizes)
+							};
+
+							log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
+
 						}
-
-						gptSlots[slotname] = slot;
-
-						dataAttribs[slotname] = {
-							'data-gpt-page-params': JSON.stringify(pageLevelParams),
-							'data-gpt-slot-params': JSON.stringify(slotParams),
-							'data-gpt-slot-sizes': JSON.stringify(sizes)
-						};
-
-						log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
-
 					}
 				}
-
 				log(['loadGpt', 'all slots defined'], 9, logGroup);
 
 				// Enable services
@@ -190,8 +198,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		}
 	}
 
-	function pushAd(slotname, success, error) {
-		var slotnameGpt = slotname + '_gpt',
+	function pushAd(slotname, success, error, slotMapSrc) {
+		var slotnameGpt = slotname + '_' + slotMapSrc,
 			slotDiv = document.createElement('div');
 
 		loadGpt();
@@ -208,7 +216,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			log(['googletag.display', slotnameGpt], 9, logGroup);
 			googletag.display(slotnameGpt);
 
-			slotQueue.push(gptSlots[slotname]);
+			slotQueue.push(gptSlots[slotnameGpt]);
 
 			doneCallbacks[slotnameGpt] = function () {
 				var status, height;
@@ -238,9 +246,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			};
 
 			// Save page level and slot level params for easier ad delivery debugging
-			for (attrName in dataAttribs[slotname]) {
-				if (dataAttribs[slotname].hasOwnProperty(attrName)) {
-					slotDiv.setAttribute(attrName, dataAttribs[slotname][attrName]);
+			for (attrName in dataAttribs[slotnameGpt]) {
+				if (dataAttribs[slotnameGpt].hasOwnProperty(attrName)) {
+					slotDiv.setAttribute(attrName, dataAttribs[slotnameGpt][attrName]);
 				}
 			}
 		});
