@@ -9,13 +9,13 @@
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
-/*global AdLogicPageLevelParamsLegacy */
+/*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
 
-(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
+(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest, adSlotMapConfig) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -70,11 +70,11 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
+	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -206,4 +206,4 @@
 		});
 	};
 
-}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
+}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest, AdSlotMapConfig));

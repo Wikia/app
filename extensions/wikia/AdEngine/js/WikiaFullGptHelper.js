@@ -1,5 +1,5 @@
 /*global setTimeout*/
-var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams) {
+var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
 	'use strict';
 
 	var logGroup = 'WikiaFullGptHelper',
@@ -8,14 +8,10 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		providerSlotMap = {},
+		providerSlotMap = adSlotMapConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
-
-	function init(paramSlotMap, slotMapSrc) {
-		providerSlotMap[slotMapSrc] = paramSlotMap;
-	}
 
 	function triggerDone(slotnameGpt) {
 		var callback = doneCallbacks[slotnameGpt];
@@ -275,7 +271,6 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	}
 
 	return {
-		init: init,
 		pushAd: pushAd,
 		flushAds: flushAds
 	};
