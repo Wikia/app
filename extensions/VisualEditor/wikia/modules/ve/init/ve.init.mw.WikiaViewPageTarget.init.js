@@ -184,7 +184,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -193,9 +195,7 @@
 		},
 
 		setupSectionLinks: function () {
-			if ( veUIEnabled ) {
-				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
-			}
+			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 		},
 
 		onEditTabClick: function ( e ) {
@@ -343,17 +343,20 @@
 			$( document ).on(
 				'mouseover click',
 				'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-				function () {
-					var $element = $( this ),
-						href = $element.attr( 'href' ),
-						articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
-						redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
-
-					if ( init.isAvailable( redlinkArticle ) ) {
-						$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
-					}
-				}
+				setupRedlinks
 			);
 		} );
 	}
+
+	function setupRedlinks() {
+		var $element = $( this ),
+			href = $element.attr( 'href' ),
+			articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+			redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
+
+		if ( init.isAvailable( redlinkArticle ) ) {
+			$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+		}
+	}
+
 }() );
