@@ -8,7 +8,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	}
 
 	if (!(this instanceof WikiaFullGptHelper)){
-		return new WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+		return new WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
 	}
 
 	WikiaFullGptHelper.prototype._singletonInstance = this;
