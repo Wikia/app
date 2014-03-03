@@ -9,6 +9,18 @@
 class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	const API_ENTRY_POINT = 'wikia.php';
 
+	function buildUrl( $params ) {
+		global $wgServer;
+		return implode('',
+			[
+				$wgServer,
+				'/',
+				self::API_ENTRY_POINT,
+				'?',
+				http_build_query( $params )
+			]);
+	}
+
 	public function getArtist( $artist ) {
 		global $wgServer;
 
@@ -36,26 +48,49 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $result;
 	}
 
-	public function getAlbum( $artist, $album ) {
-		return [
-			'artist' => [
-				'name' => $artist,
-				'image' => $artist . '.jpg',
-				'url' => $artist
-			],
-			'name' => $album,
-			'image' => $album . '.jpg',
-			'songs' => [
-				[
-					'name' => $album . ' song 1',
-					'url' => $album . ' song 1',
-				],
-				[
-					'name' => $album . ' song 2',
-					'url' => $album . ' song 2',
-				],
-			]
-		];
+	public function getAlbum( $artistName, $albumName ) {
+		$album = new StdClass();
+
+		$album->name = $albumName;
+		$album->image = $albumName . '.jpg';
+		$album->year = '2000';
+		$album->length = '6:66';
+		$album->genres = ['Hard', 'Heavy'];
+
+		$artist = new StdClass();
+		$artist->name = $artistName;
+		$artist->image = $artistName . '.jpg';
+		$artist->url = $this->buildUrl([
+			'controller' => 'LyricsApiController',
+			'method' => 'getArtist',
+			LyricsApiController::PARAM_ARTIST => $artistName
+		]);
+		$artist->itunes = 'ARTIST';
+		$album->artist = $artist;
+
+		$album->songs = [];
+		$song = new StdClass();
+		$song->name =  $albumName . ' song 1';
+		$song->url = $this->buildUrl([
+			'controller' => 'LyricsApiController',
+			'method' => 'getSong',
+			LyricsApiController::PARAM_ARTIST => $artistName,
+			LyricsApiController::PARAM_ALBUM => $albumName,
+			LyricsApiController::PARAM_SONG => $song->name
+		]);
+		$album->songs[] = $song;
+
+		$song = new StdClass();
+		$song->name =  $albumName . ' song 2';
+		$song->url = $this->buildUrl([
+			'controller' => 'LyricsApiController',
+			'method' => 'getSong',
+			'artist' => $artistName,
+			'album' => $albumName,
+			'song' => $song->name
+		]);
+		$album->songs[] = $song;
+		return $album;
 	}
 
 	public function getSong( $artist, $album, $song ) {}
