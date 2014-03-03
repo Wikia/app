@@ -3,25 +3,23 @@ var AdConfig2Late = function (
 	// regular dependencies
 	log,
 	window,
+	abTest,
 
 	// AdProviders
-	adProviderGamePro,
 	adProviderLiftium,
 	adProviderNull,
-	adProviderSevenOneMedia
+	adProviderSevenOneMedia // TODO: move this to the early queue (remove jQuery dependency first)
 ) {
 	'use strict';
 
 	var logGroup = 'AdConfig2',
-		cityLang = window.wgContentLanguage,
-		deProvider = window.wgAdDriverUseSevenOneMedia ? adProviderSevenOneMedia : adProviderGamePro,
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
 			'TOP_BUTTON_WIDE.force': true
 		},
-		tryLiftium,
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
+		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
+		sevenOneMediaDisabled = abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -37,26 +35,28 @@ var AdConfig2Late = function (
 			return adProviderNull;
 		}
 
-		// First ask GamePro (german lang wiki)
-		if (cityLang === 'de') {
-			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3') {
-				return adProviderNull;
-			}
-			if (deProvider.canHandleSlot(slotname)) {
-				if (ie8 && window.wgAdDriverUseSevenOneMedia) {
+		// First ask SevenOne Media
+		if (window.wgAdDriverUseSevenOneMedia) {
+			if (adProviderSevenOneMedia.canHandleSlot(slotname)) {
+				if (ie8) {
+					log('SevenOneMedia not supported on IE8. Using Null provider instead', 'warn', logGroup);
 					return adProviderNull;
 				}
-				return deProvider;
+
+				if (sevenOneMediaDisabled) {
+					log('SevenOneMedia disabled by A/B test. Using Null provider instead', 'warn', logGroup);
+					return adProviderNull;
+				}
+
+				return adProviderSevenOneMedia;
+			}
+
+			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
+				return adProviderNull;
 			}
 		}
 
-		if (window.wgAdDriverUseSevenOneMedia) {
-			tryLiftium = liftiumSlotsToShowWithSevenOneMedia[slot[0]];
-		} else {
-			tryLiftium = true;
-		}
-
-		if (tryLiftium && adProviderLiftium.canHandleSlot(slotname)) {
+		if (adProviderLiftium.canHandleSlot(slotname)) {
 			return adProviderLiftium;
 		}
 
