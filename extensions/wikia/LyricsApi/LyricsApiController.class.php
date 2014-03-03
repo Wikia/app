@@ -11,6 +11,7 @@ class LyricsApiController extends WikiaController {
 	const PARAM_ARTIST = 'artist';
 	const PARAM_ALBUM = 'album';
 	const PARAM_SONG = 'song';
+	const PARAM_QUERY = 'query';
 
 	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
 
@@ -79,25 +80,77 @@ class LyricsApiController extends WikiaController {
 	}
 
 	public function searchArtist() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+		$artists = $this->lyricsApiHandler->searchArtist( $query );
+		$this->response->setVal( 'result', $artists );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function searchSong() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+		$songs = $this->lyricsApiHandler->searchSong( $query );
+		$this->response->setVal( 'result', $songs );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
+
 	public function searchLyrics() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+		$lyrics = $this->lyricsApiHandler->searchLyrics( $query );
+		$this->response->setVal( 'result', $lyrics );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function suggestArtist() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+
+		$artists = $this->lyricsApiHandler->suggestArtist( $query );
+		$this->response->setVal( 'result', $artists );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function suggestAlbum() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+
+		$albums = $this->lyricsApiHandler->suggestAlbum( $query );
+		$this->response->setVal( 'result', $albums );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function suggestSong() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$query = $this->wg->Request->getVal( 'query' );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+
+		$songs = $this->lyricsApiHandler->suggestSong( $query );
+		$this->response->setVal( 'result', $songs );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
-} 
+}
