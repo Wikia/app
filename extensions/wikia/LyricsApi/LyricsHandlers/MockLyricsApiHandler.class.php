@@ -7,27 +7,30 @@
  */
 
 class MockLyricsApiHandler extends AbstractLyricsApiHandler {
-	const LYRICS_WIKI_URL = 'http://lyrics.wikia.com/';
+	const API_ENTRY_POINT = 'wikia.php';
 
 	public function getArtist( $artist ) {
+		global $wgServer;
+
 		$result = new stdClass();
 		$result->name = $artist;
 		$result->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
-		$result->url = self::LYRICS_WIKI_URL . $artist;
 
 		$album1 = new stdClass();
 		$album1->name = 'Album #1';
 		$album1->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
-		$album1->url = self::LYRICS_WIKI_URL . $artist . ':' . $album1->name;
+		$album1->year = 2001;
+		$album1->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album1->name ) );
 
 		$album2 = new stdClass();
 		$album2->name = 'Album #2';
 		$album2->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
-		$album2->url = self::LYRICS_WIKI_URL . $artist . ':' . $album2->name;
+		$album2->year = 2011;
+		$album2->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album2->name ) );
 
 		$result->albums = [
-			$album1,
-			$album2
+			$album2,
+			$album1
 		];
 
 		return $result;
