@@ -33,7 +33,7 @@ var AdSlotMapConfig = function() {
 			return slotMapConfig;
 		}
 
-		return slotMapConfig;
+		return slotMapConfig[src];
 	}
 
 	return {
