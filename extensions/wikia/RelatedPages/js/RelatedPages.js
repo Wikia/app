@@ -102,7 +102,8 @@ require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
 										category: 'article',
 										label: 'related-pages'
 									});
-								});
+								})
+								.trigger('afterLoad.relatedPages');
 						}
 					});
 				}

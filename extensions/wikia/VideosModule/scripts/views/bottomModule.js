@@ -32,11 +32,7 @@ define('videosmodule.views.bottomModule', [
 		this.articleId = window.wgArticleId;
 
 		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
-		if (
-			this.articleId &&
-			!this.$el.is(':hidden') &&
-			this.$el.css('visibility') !== 'hidden'
-		) {
+		if (this.articleId) {
 			this.init();
 		}
 	}
@@ -61,8 +57,31 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.bindFetchComplete = function () {
 		var self = this;
 		return this.data.complete(function () {
-			self.render();
+			if (self.elIsPresent()) {
+				self.render();
+			} else {
+				self.$el.on('afterLoad.relatedPages', function () {
+					if (self.elIsPresent()) {
+						self.render();
+					}
+				});
+			}
 		});
+	};
+
+	/**
+	 * Check if the element has content that is not hidden by css
+	 * @returns {boolean}
+	 */
+	VideoModule.prototype.elIsPresent = function () {
+		var $content = this.$el.children();
+		return !!(
+			$content.length &&
+			!$content.is(':hidden') &&
+			$content.css('visibility') !== 'hidden' &&
+			$content.css('opacity') !== '0' &&
+			$content.height() !== 0
+		);
 	};
 
 	VideoModule.prototype.render = function () {
@@ -84,25 +103,27 @@ define('videosmodule.views.bottomModule', [
 			title: $.msg('videosmodule-title-default')
 		}));
 
-		if (groupParams.position === 1) {
-			this.$el.before($out);
-		} else {
-			this.$el.after($out);
-		}
-
 		for (i = 0; i < (groupParams.rows * 4); i++) {
 			instance = new TitleThumbnailView({
 				el: 'li',
 				model: videos[i],
 				idx: i
 			}).render();
+
 			$out.find('.thumbnails').append(instance.$el);
 			instance.applyEllipses({
 				wordsHidden: 2
 			});
 		}
 
-		$('#videosModule').addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
+		$out.addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
+
+		if (groupParams.position === 1) {
+			this.$el.before($out);
+		} else {
+			this.$el.after($out);
+		}
+
 		track();
 	};
 
