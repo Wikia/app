@@ -126,13 +126,68 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		$song->album = $album;
 		return $song;
 	}
-	public function searchArtist( $query ) {}
-	public function searchSong( $query ) {}
-	public function searchLyrics( $query ) {}
-	public function suggest( $query, $target ) {}
-	public function suggestArtist( $query ) {}
-	public function suggestAlbum( $query ) {}
-	public function suggestSong( $query ) {}
+
+	public function searchArtist( $query ) {
+		$artists = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$artist = new StdClass();
+			$artist->name = $query . $i;
+			$artist->image = $this->getImage( $artist->name . '.jpg' );
+			$artist->url = $this->buildUrl([
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getArtist',
+				LyricsApiController::PARAM_ARTIST => $artist->name
+			]);
+			$artists[] = $artist;
+		}
+		return $artists;
+	}
+
+	public function searchSong( $query ) {
+		$songs = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$song = new StdClass();
+			$song->name =  sprintf('%s  %d', $query, $i);
+			$song->image =  $this->getImage( $song->name . '.jpg' );;
+			$song->url = $this->buildUrl([
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getSong',
+				LyricsApiController::PARAM_ARTIST => 'Mocked Artist',
+				LyricsApiController::PARAM_ALBUM => 'Mocked Album',
+				LyricsApiController::PARAM_SONG => $song->name
+			]);
+			$songs[] = $song;
+		}
+		return $songs;
+	}
+
+	public function searchLyrics( $query ) {
+		// TODO: Do me
+	}
+	
+	public function suggestArtist( $query ) {
+		$artists = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$artists[] = $query. $i;
+		}
+		return $artists;
+	}
+
+	public function suggestAlbum( $query ) {
+		$albums = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$albums[] = $query. $i;
+		}
+		return $albums;
+	}
+
+	public function suggestSong( $query ) {
+		$songs = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$songs[] = $query. $i;
+		}
+		return $songs;
+	}
 
 
 } 
