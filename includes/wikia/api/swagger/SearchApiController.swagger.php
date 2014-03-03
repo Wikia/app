@@ -115,8 +115,8 @@ use Swagger\Annotations as SWG;
  * 	)
  * 	@SWG\Property(
  * 		name="type",
- * 		type="string",
- * 		required="false",
+ * 		type="string|null",
+ * 		required="true",
  * 		description="Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | other | video_game )"
  * 	)
  * @SWG\Property(
