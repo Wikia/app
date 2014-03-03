@@ -10,6 +10,8 @@
 class LyricsApiController extends WikiaController {
 	const PARAM_ARTIST = 'artist';
 
+	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
+
 	private $lyricsApiHandler = null;
 
 	public function __construct() {
@@ -25,6 +27,7 @@ class LyricsApiController extends WikiaController {
 
 		$results = $this->lyricsApiHandler->getArtist( $artist );
 		$this->response->setVal( 'result', $results );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function getAlbum() {
