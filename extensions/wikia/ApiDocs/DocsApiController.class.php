@@ -92,7 +92,7 @@ class DocsApiController extends WikiaController {
 				unset ( $apiDoc[ 'apis' ][ $i ] );
 			}
 		}
-
+		$apiDoc[ 'apis' ]  = array_values( $apiDoc[ 'apis' ] );
 		return $apiDoc;
 	}
 
