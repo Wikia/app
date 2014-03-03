@@ -148,7 +148,7 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		for ( $i = 0; $i < 5; $i++ ) {
 			$song = new StdClass();
 			$song->name =  sprintf('%s  %d', $query, $i);
-			$song->image =  $this->getImage( $song->name . '.jpg' );;
+			$song->image =  $this->getImage( $song->name . '.jpg' );
 			$song->url = $this->buildUrl([
 				'controller' => self::API_CONTROLLER_NAME,
 				'method' => 'getSong',
@@ -162,7 +162,22 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	public function searchLyrics( $query ) {
-		// TODO: Do me
+		$songs = [];
+		for ( $i = 0; $i < 5; $i++ ) {
+			$song = new StdClass();
+			$song->name =  sprintf('%s  %d', $query, $i);
+			$song->image =  $this->getImage( $song->name . '.jpg' );
+			$song->url = $this->buildUrl([
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getSong',
+				LyricsApiController::PARAM_ARTIST => 'Mocked Artist',
+				LyricsApiController::PARAM_ALBUM => 'Mocked Album',
+				LyricsApiController::PARAM_SONG => $song->name
+			]);
+			$song->highlight = 'i love '.$song->name.' desperately';
+			$songs[] = $song;
+		}
+		return $songs;
 	}
 	
 	public function suggestArtist( $query ) {
