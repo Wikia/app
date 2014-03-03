@@ -15,11 +15,11 @@ class VideosModule extends WikiaModel {
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
 
-	// list of page categories [ array( categoryId => name ) ]
+	// list of page categories for premium videos [ array( categoryId => name ) ]
 	protected static $pageCategories = [
-		2 => 'Games',
-		3 => 'Entertainment',
-		9 => 'Lifestyle',
+		WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
 	];
 
 	/**
