@@ -159,14 +159,14 @@ class WikiaLogger {
 
 				if ($onError) {
 					$loggingJs .= "
-					window.onerror = function(m, u, l) {
-						if (Math.random() < 0.01) {
-							syslogReport(3, m, {'url': u, 'line': l}); // 3 is 'error'
-						}
+						window.onerror = function(m, u, l) {
+							if (Math.random() < 0.01) {
+								syslogReport(3, m, {'url': u, 'line': l}); // 3 is 'error'
+							}
 
-						return false;
-					}
-				";
+							return false;
+						}
+					";
 				}
 
 				$loggingJs = \AssetsManagerBaseBuilder::minifyJS($loggingJs);
