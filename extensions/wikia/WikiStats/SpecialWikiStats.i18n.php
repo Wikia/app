@@ -2502,6 +2502,7 @@ Por favor [[Special:UserLogin|inicia sesión o crea una cuenta]] si todavía no 
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'wikistats' => 'Wikia Estatistikak',
@@ -2539,7 +2540,7 @@ $messages['eu'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'irudi',
 	'wikistats_redirects' => 'birzuzenketa',
-	'wikistats_main_namespace' => 'nagusia', # Fuzzy
+	'wikistats_main_namespace' => 'nagusia',
 	'wikistats_image_namespace' => 'irudi',
 	'wikistats_visits' => 'bisita',
 	'wikistats_new_per_day' => 'berri<br />eguneko',

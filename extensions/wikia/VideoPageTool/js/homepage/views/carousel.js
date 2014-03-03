@@ -5,7 +5,7 @@ define( 'videohomepage.views.carousel', [
 	'videopageadmin.collections.categorydata',
 	'shared.views.carouselthumb',
 	'shared.views.owlcarousel',
-	'templates.mustache'
+	'videopagetool.templates.mustache'
 ], function(
 	CategoryDataCollection,
 	CarouselThumbView,
@@ -16,10 +16,12 @@ define( 'videohomepage.views.carousel', [
 
 	var CarouselView = OwlCarouselBase.extend( {
 		initialize: function() {
+			var total = parseInt( this.model.get( 'total' ), 10 );
 			this.collection = new CategoryDataCollection( this.model.get( 'thumbnails' ).slice( 0, 24 ) );
-			if ( this.collection.length ) {
+			// if the category doesn't contain more than 24 videos, don't show seemore label
+			if ( total > 24 ) {
 				this.collection.add( {
-					count: this.model.get( 'total' ),
+					count: total,
 					label: this.model.get( 'seeMoreLabel' ),
 					url: this.model.get( 'url' ),
 					type: 'redirect'
@@ -49,7 +51,7 @@ define( 'videohomepage.views.carousel', [
 				lazyLoad: true,
 				navigation: true,
 				rewindNav: false,
-				afterMove: function() {
+				afterUpdate: function() {
 					self.$carousel.find( '.title a' ).ellipses( {
 						wordsHidden: 2
 					} );

@@ -1,0 +1,96 @@
+//dependencies
+@import "../../WikiaMobile/css/variables";
+
+$itemHeight: 50px;
+$itemPadding: 6px;
+
+#wkRelPag {
+	ul {
+		margin: 10px 0;
+	}
+
+	li {
+		position: relative;
+		padding-left: 0;
+
+		a {
+			color: inherit;
+			padding: $itemPadding $itemPadding/2 $itemPadding 112px;
+			min-height: 62px;
+
+			img {
+				position: absolute;
+				top: 50%;
+				left: $itemPadding;
+
+				margin-top: -25px;
+
+				pointer-events: none;
+			}
+		}
+	}
+}
+
+.trending-articles.hide {
+	display: none;
+}
+
+.related-article {
+	display: block;
+	border-top: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
+	padding: 15px 0;
+	margin-top: 25px;
+	color: $page-text-color;
+
+	.trending-articles & {
+		border: none;
+		padding: 20px 0 0 0;
+		margin: 0;
+	}
+
+	.header {
+		font: {
+			size: 1.2rem;
+			weight: 800;
+		}
+
+		padding-bottom: 15px;
+	}
+
+	.lazy {
+		display: block;
+		margin: 0 auto;
+	}
+
+	.loaded {
+		width: auto;
+	}
+
+	.title {
+		line-height: 1.25rem;
+	}
+
+	&.large {
+		.title {
+			padding-top: 15px;
+		}
+	}
+
+	&.small {
+		&:after {
+			content: '';
+			clear: both;
+			display: table;
+		}
+
+		.lazy {
+			float: left;
+			margin-right: 8px;
+		}
+
+		.title {
+			display: table;
+		}
+	}
+}

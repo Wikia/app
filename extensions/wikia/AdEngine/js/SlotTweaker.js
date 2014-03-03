@@ -112,13 +112,11 @@ var SlotTweaker = function (log, document, window) {
 	// TODO: fix it, it's a hack!
 	function removeTopButtonIfNeeded(slotname) {
 		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
-			log('removing TOP_BUTTON(_WIDE)', 3, logGroup);
-			hide('TOP_BUTTON');
+			log('removing TOP_BUTTON_WIDE', 3, logGroup);
 			hide('TOP_BUTTON_WIDE');
 		}
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			log('pushing TOP_BUTTON(_WIDE).force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push(['TOP_BUTTON.force', null, 'Liftium2']);
+			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
 			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
 		}
 	}

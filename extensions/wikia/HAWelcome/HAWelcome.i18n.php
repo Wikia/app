@@ -143,7 +143,7 @@ $messages['ar'] = array(
 '''[[Special:Userlogin|رجاءً سجل دخولك أو أنشئ حسابًا]]'''
 إنها طريقة سهلة لتقوم بتتبع مساهماتك وسوف تساعدك على التواصل بباقي المجتمع.
 
-الرجاء ترك رسالة لي على [[$2|صفحة نقاشي]] إن أردت مساعدتي بأي شيء!", # Fuzzy
+الرجاء إرسال رسالة إليَّ إن أردت مساعدتي بأي شيء!",
 	'welcome-message-wall-anon-staff' => 'مرحبًا بك في {{SITENAME}} وشكرًا لتحريرك صفحة [[:$1]]. إننا نشجع كل المساهمين على [[Special:UserLogin|إنشاء الحسابات]]، حتى تستطيع تتبع مساهماتك، والوصول إلى خصائص ويكيا أكثر ومعرفة باقي مجتمع {{SITENAME}}.
 
 إن احتجت المساعدة، تصفح [[Help:Contents|صفحات المساعدة]] أولاً ثم قم بزيارة [[w:c:community|المجتمع المركزي]] لمعرفة المزيد. تحرير سعيد!',
@@ -1196,6 +1196,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 );
 
 /** Dutch (Nederlands)
+ * @author Flightmare
  * @author Konovalov
  * @author McDutchie
  * @author Siebrand
@@ -1223,7 +1224,7 @@ Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik u ergens mee 
 Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
 Laat een bericht achter op [[$2|mijn overleg pagina]] als ik u ergens mee kan helpen! $3",
-	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
+	'welcome-message-log' => 'Welkom',
 	'welcome-message-user-staff' => "==Welkom==
 
 Hallo,
@@ -1901,6 +1902,25 @@ Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
 Paki iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!", # Fuzzy
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'welcome-user-page' => "== Hakkımda ==
+
+''Bu kullanıcı sayfanızdır. Kendinizi topluluğa tanıtmak için bu sayfayı düzenleyin!''
+
+== Katkılarım ==
+
+* [[Special:Contributions/$1|Kullanıcı katkıları]]
+
+== Favori sayfalarım ==
+
+* Buraya sevdiğiniz wiki sayfalarını ekleyin!
+* Favori sayfası #2
+* Favori sayfası #3",
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -2108,13 +2128,67 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'welcome-user-page' => "==關於我==
+
+''這是您的用戶頁面。請編輯本頁向整個社區介紹您！''
+
+==我的貢獻==
+
+* [[Special:Contributions/$1|用戶貢獻]]
+
+==我喜愛的頁面==
+
+* 在此為您喜愛的頁面增加連結！
+* 喜愛的頁面 #2
+* 喜愛的頁面 #3",
+	'welcome-message-user' => 'Hi，歡迎來到{{SITENAME}}！ 感謝您對[[:$1]]頁面的編輯。
+
+如果我能幫助您的話，請在[[$2|我的討論頁]]留言。$3',
 	'welcome-message-anon' => "嗨，歡迎來到{{SITENAME}}！感謝您編輯[[:$1]]頁面。
 
 '''[[Special:Userlogin|請登錄并創建一個用戶名]]'''。
 這是用來保持跟蹤您貢獻和幫助您與其他社群成員溝通的很好方式。
 
 如果我能幫忙請在[[$2|我的討論頁]]留言！$3",
+	'welcome-message-log' => '歡迎新參與者',
+	'welcome-message-user-staff' => '==歡迎==
+
+您好：
+
+歡迎來到{{SITENAME}}並感謝您編輯[[:$1]]。如果您需要幫助，可以參見[[Help:Contents|幫助頁面]]、訪問 [[w:c:zh.community|社區中心]]、看我們的[[w:c:zh.community:Blog:Wikia_Staff_Blog|職員部落格]]，在 [[w:c:zh.community:Special:Forum|社區中心論壇]]上發問，或與Wikia參與者線上聊天。祝編輯愉快。 $3', # Fuzzy
+	'welcome-message-anon-staff' => '==歡迎==
+
+您好：
+
+歡迎來到{{SITENAME}}並感謝您編輯[[:$1]]。我們鼓勵所有的參與者[[Special:UserLogin|註冊一個帳號]]，這樣您能更方便記錄您的貢獻、使用更多Wikia的功能，並認識更多{{SITENAME}}社群。
+
+
+如果您需要幫助，可以參見[[Help:Contents|幫助頁面]]、訪問 [[w:c:zh.community|社區中心]]。祝編輯愉快。 $3', # Fuzzy
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|論壇求助]] | [[w:sblog|部落格]])</small>',
+	'hawelcomeedit' => '歡迎工具編輯',
+	'welcome-message-wall-user' => 'Hi，歡迎來到{{SITENAME}}！ 感謝您協助編輯[[:$1]]。
+
+如果我能提供幫助，請留言給我！',
+	'welcome-message-wall-user-staff' => '
+您好：
+
+歡迎來到{{SITENAME}}並感謝您編輯[[:$1]]。如果您需要幫助，可以參見[[Help:Contents|幫助頁面]]、訪問 [[w:c:zh.community|社區中心]]、看我們的[[w:c:zh.community:Blog:Wikia_Staff_Blog|職員部落格]]，在 [[w:c:zh.community:Special:Forum|社區中心論壇]]上發問，或與Wikia參與者線上聊天。祝編輯愉快。',
+	'welcome-message-wall-anon' => "您好，歡迎來到{{SITENAME}}！感謝您編輯了T[[:$1]]
+
+建議您'''[[Special:Userlogin|登入創建一個帳號]]'''。這樣您可以更容易記錄您的貢獻，並有助於和社區中的其他人交流。
+
+如果我的協助您，請留言。",
+	'welcome-message-wall-anon-staff' => '==歡迎==
+
+您好：
+
+歡迎來到{{SITENAME}}並感謝您編輯[[:$1]]。我們鼓勵所有的參與者[[Special:UserLogin|註冊一個帳號]]，這樣您能更方便記錄您的貢獻、使用更多Wikia的功能，並認識更多{{SITENAME}}社群的人。
+
+
+如果您需要幫助，可以參見[[Help:Contents|幫助頁面]]、訪問 [[w:c:zh.community|社區中心]]。祝編輯愉快。', # Fuzzy
+	'welcome-description' => '在用戶初次貢獻後發給他們歡迎訊息',
 );

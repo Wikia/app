@@ -325,5 +325,13 @@ class SwiftStorage {
 	 */
 	public function getSwiftServer() {
 		return $this->swiftServer;
-	} 
+	}
+
+	public function getContainerName() {
+		return $this->containerName;
+	}
+
+	public function getPathPrefix() {
+		return $this->pathPrefix;
+	}
 }

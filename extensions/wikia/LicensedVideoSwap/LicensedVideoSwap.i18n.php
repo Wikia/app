@@ -480,6 +480,16 @@ $messages['es'] = array(
 	'lvs-new-flag' => 'Nuevo',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'lvs-button-yes' => 'Bai',
+	'lvs-button-no' => 'Ez',
+	'lvs-posted-in-more' => 'gehiago',
+	'lvs-new-flag' => 'Berria',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -1076,10 +1086,19 @@ $messages['sv'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Rapsar
  */
 $messages['tr'] = array(
 	'lvs-history-button-text' => 'Geçmiş',
+	'lvs-button-yes' => 'Evet',
+	'lvs-button-no' => 'Hayır',
+	'lvs-more-suggestions' => 'daha fazla öneri',
+	'lvs-undo-swap' => 'Geri al',
+	'lvs-undo-keep' => 'Geri al',
+	'lvs-posted-in-more' => 'daha fazla',
+	'lvs-click-here' => 'buraya tıkla',
+	'lvs-new-flag' => 'Yeni',
 );
 
 /** Ukrainian (українська)
@@ -1145,6 +1164,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Thanhtai2009
  */
 $messages['vi'] = array(
 	'licensedvideoswap' => 'Cấp phép trao đổi Video',
@@ -1155,6 +1175,19 @@ $messages['vi'] = array(
 	'lvs-history-button-text' => 'Lịch sử',
 	'lvs-page-header-back-link' => 'Quay lại cấp phép trao đổi Video',
 	'lvs-callout-title-licensed' => '100% có giấy phép',
+	'lvs-callout-title-quality' => 'Chất lượng cao',
+	'lvs-callout-reason-quality' => 'Video Wikia có chất lượng cao',
+	'lvs-callout-title-collaborative' => 'Cộng tác',
+	'lvs-callout-reason-collaborative' => 'Video Wikia được cộng tác và có thể được sử dụng trên nhiều wiki',
+	'lvs-callout-reason-more' => 'và nhiều hơn nữa... chúng tôi sẽ thêm nhiều tính năng và cách để sử dụng và quản lý video Wikia dễ dàng. Hãy chờ!',
+	'lvs-instructions-header' => 'Cách dùng trang này',
+	'lvs-button-keep' => 'Giữ',
+	'lvs-button-swap' => 'Trao đổi',
+	'lvs-button-yes' => 'Có',
+	'lvs-button-no' => 'Không',
+	'lvs-more-suggestions' => 'gợi ý thêm',
+	'lvs-undo-swap' => 'Hoàn tác',
+	'lvs-undo-keep' => 'Hoàn tác',
 );
 
 /** Wu (吴语)

@@ -2495,12 +2495,13 @@ ___________________________________________
 
 /** Uzbek (oʻzbekcha)
  * @author Akmalzhon
+ * @author Sociologist
  */
 $messages['uz'] = array(
 	'userlogin-login-heading' => 'Kirish',
 	'userlogin-forgot-password' => 'Maxfiy so‘zni qayta kiriting:',
 	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos elektron pochta manzilingizni tasdiqlang.',
-	'userlogin-password-page-title' => "Hisob mahfiy so'zini o'zgartirish",
+	'userlogin-password-page-title' => 'Maxfiy soʻzni oʻzgartirish',
 	'userlogin-oldpassword' => "Eski mahfiy so'z:",
 	'userlogin-newpassword' => "Yangi mahfiy so'z:",
 	'userlogin-retypenew' => "Yangi mahfiy so'zni qayta tering:",

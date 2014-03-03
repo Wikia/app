@@ -205,10 +205,18 @@ $messages['bho'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
 	'quickstats-header-date' => 'তারিখ',
+	'quickstats-header-edits' => 'সম্পাদনাসমূহ',
+	'quickstats-header-photos' => 'চিত্রসমূহ',
+	'quickstats-header-likes' => 'পছন্দসমূহ',
 	'quickstats-totals-label' => 'মোট',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|আরও পরিসংখ্যান দেখুন]]',
+	'quickstats-number-shortening' => '$১ হাজার', # Fuzzy
+	'quickstats-number-shortening-millions' => '$১০ লাখ', # Fuzzy
+	'quickstats-number-shortening-billions' => '$১০০ কোটি', # Fuzzy
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -435,6 +443,14 @@ $messages['et'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'quickstats-header-date' => 'Data',
+	'quickstats-header-photos' => 'Argazkiak',
 );
 
 /** Persian (فارسی)

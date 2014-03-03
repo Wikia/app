@@ -1152,6 +1152,16 @@ $messages['es'] = array(
 	'rte-ck-format-tag_h5' => 'Encabezado 5',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'rte-ck-photoGallery-gallery' => 'Galeria',
+	'rte-ck-video-add' => 'Bideo bat gehitu',
+	'rte-ck-video-video' => 'Bideoa',
+	'rte-ck-video-confirmDeleteTitle' => 'Bideo hau ezabatu?',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */

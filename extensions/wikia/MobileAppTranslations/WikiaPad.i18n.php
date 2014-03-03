@@ -179,6 +179,15 @@ $messages['es'] = array(
 	'browser-loading-message' => 'Cargando...',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'tab-discover-loading-message' => 'Kargatzen...',
+	'tab-discover-no-network-dialog-close-button' => 'Ados',
+	'browser-loading-message' => 'Kargatzen...',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -616,6 +625,21 @@ $messages['tly'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Нәвејдә...',
 	'browser-loading-message' => 'Бо кардә...',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'main-tab-discover' => 'Keşfet',
+	'main-tab-personal' => "Benim Wikia'm",
+	'main-tab-search' => 'Arama',
+	'main-tab-offline' => 'Çevrimdışı',
+	'tab-discover-loading-message' => 'Yükleniyor...',
+	'tab-discover-no-network-dialog-title' => 'Ağ kullanılamıyor',
+	'tab-discover-no-network-dialog-close-button' => 'TAMAM',
+	'tab-search-loading-message' => 'Aranıyor...',
+	'browser-loading-message' => 'Yükleniyor...',
 );
 
 /** Uyghur (Arabic script) (ئۇيغۇرچە)

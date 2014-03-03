@@ -169,6 +169,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -220,6 +221,33 @@ $messages['ar'] = array(
 	'phalanx-legend-listing' => 'المرشحات المطبقة حاليا',
 	'phalanx-unblock-message' => 'تمت إزالة عملية المنع رقم #$1 بنجاح',
 	'phalanx-help-type-content' => 'هذا المرشح يمنع عملية تحرير من أن يتم حفظها، إذا كان محتواها يتطابق مع أي من العبارات المدرجة في القائمة السوداء.',
+	'phalanx-help-type-summary' => 'هذا المرشح يمنع حفظ تعديل، إن كان المحتوى المكتوب يطابق أي جملة محظورة.',
+	'phalanx-help-type-title' => 'هذا المرشح يمنع إنشاء صفحة، إن كان عنوانها يطابق أي جملة محظورة.
+
+	ولا يمنع صفحة موجودة مسبقًا من التحرير.',
+	'phalanx-help-type-user' => 'هذا المرشح يمنع مستخدم (مثل برنامج ميدياويكي المحلي تمامًا)، إن كان الاسم أو عنوان الآيبي يطابق أيًا من الأسماء أو عنوانين الآيبي المحظورة.',
+	'phalanx-help-type-wiki-creation' => 'هذا المرشح يمنع إنشاء ويكي، إن كان اسم أو عنوان URL الخاص بها يطابق أي جملة محظورة.',
+	'phalanx-help-type-answers-question-title' => 'هذا المرشح يمنع إنشاء (صفحة) سؤال، إن كان عنوانه يطابق أي جملة محظورة.
+
+ملحوظة: يعمل فقط على ويكيات الإجابات.',
+	'phalanx-help-type-answers-recent-questions' => 'هذا المرشح يمنع عرض (صفحات) أسئلة في عدد من النتائج (التطبيقات، القوائم، قوائم الوسوم).
+ولا يمنع إنشاء هذه الصفحات.
+
+ملحوظة: يعمل فقط على ويكيات الإجابات.',
+	'phalanx-help-type-user-email' => 'المرشح يمنع إنشاء حساب باستخدام عنوان بريد إلكتروني محظور.',
+	'phalanx-user-block-reason-ip' => 'عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر لك أو بواسطة شخص يشارك بعنوان الآيبي الخاص بك.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].',
+	'phalanx-user-block-reason-exact' => 'اسم المستخدم أو عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].',
+	'phalanx-user-block-reason-similar' => 'اسم المستخدم هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر بواسطة بواسطة مستخدم باسم مماثل.
+رجاءً [[Special:Contact|أخبر ويكيا]] بالمشكلة.',
+	'phalanx-user-block-new-account' => 'اسم المستخدم غير متوفر للتسجيل. الرجاء اختيار اسم آخر.',
+	'phalanx-user-block-withreason-ip' => 'عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا كلها بسبب التخريب أو تشويش آخر بواسطتك أو بواسطة شخص يشارك عنوان الآيبي الخاص بك.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].<br />الذي قام بالحظر أعطى أيضًا هذا السبب الإضافي: $1.',
+	'phalanx-user-block-withreason-exact' => 'اسم المستخدم أو عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].<br />الذي قام بالمنع أعطى أيضًا هذا السبب الإضافي: $1.',
+	'phalanx-user-block-withreason-similar' => 'اسم المستخدم هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر بواسطة بواسطة مستخدم باسم مماثل.
+رجاءً [[Special:Contact|أخبر ويكيا]] بالمشكلة.<br />الذي قام بالمنع أعطى أيضًا هذا السبب الإضافي: $1.',
 	'phalanx-title-move-summary' => 'سبب المنع الذي أدخلته يحتوي على عبارة محظورة.',
 	'phalanx-content-spam-summary' => 'تم العثور على النص في موجز للصفحة.',
 	'phalanx-stats-title' => 'إحصائيات الفالانكس',
@@ -776,6 +804,19 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanx' => 'Puede administrar bloqueos globales y filtros de spam',
 	'right-phalanxexempt' => 'Exento de las reglas de Phalanx',
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'phalanx-label-filter' => 'Iragazkia:',
+	'phalanx-label-reason' => 'Arrazoia:',
+	'phalanx-label-type' => 'Mota:',
+	'phalanx-label-lang' => 'Hizkuntza:',
+	'phalanx-view-type' => 'Blokeo mota...',
+	'phalanx-stats-table-language' => 'Hizkuntza',
+	'phalanx-stats-table-reason' => 'Arrazoia',
 );
 
 /** Persian (فارسی)

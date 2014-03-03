@@ -14,7 +14,7 @@ $wgExtensionCredits['other'][] = array(
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 );
 
-if( ! function_exists( "wfUnserializeHandler" ) ) {
+if ( ! function_exists( "wfUnserializeHandler" ) ) {
 	/**
 	 * wfUnserializeErrorHandler
 	 *
@@ -34,7 +34,7 @@ $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 class WikiFactoryDuplicateWgServer extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
 	
-	function __construct($city_id, $city_url, $duplicate_city_id) {
+	function __construct( $city_id, $city_url, $duplicate_city_id ) {
 		$message = "Cannot set wgServer for wiki $city_id to '$city_url' because it conflicts with wiki $duplicate_city_id";
 		parent::__construct($message);
 		$this->city_id = $city_id;
@@ -118,7 +118,7 @@ class WikiFactory {
 	 * @return boolean	current value of self::$mIsUsed
 	 */
 	static public function isUsed( $flag = false ) {
-		if( $flag ) {
+		if ( $flag ) {
 			self::$mIsUsed = (bool )$flag;
 		}
 		return self::$mIsUsed;
@@ -139,7 +139,7 @@ class WikiFactory {
 		global $wgExternalSharedDB;
 
 		$database = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : self::db;
-		if( $column ) {
+		if ( $column ) {
 			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
 		}
 		else {
@@ -186,7 +186,7 @@ class WikiFactory {
 	 */
 	static public function getDomains( $city_id, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -196,15 +196,15 @@ class WikiFactory {
  		wfProfileIn( __METHOD__ );
 
 		$domains = array();
-		if( !empty( $city_id ) ) {
+		if ( !empty( $city_id ) ) {
 			/**
 			 * skip cache if we want master
 			 */
 			$key = "wikifactory:domains_by_city_id:".$city_id;
-			if( ! $master ) {
+			if ( ! $master ) {
 				$domains = $wgMemc->get( $key );
 
-				if( is_array( $domains ) ) {
+				if ( is_array( $domains ) ) {
 					wfProfileOut( __METHOD__ );
 					return $domains;
 				}
@@ -218,7 +218,7 @@ class WikiFactory {
 				__METHOD__
 			);
 
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$domains[] = strtolower( $oRow->city_domain );
 			}
 			$dbr->freeResult( $oRes );
@@ -249,12 +249,12 @@ class WikiFactory {
 	static public function addDomain( $city_id, $domain ) {
 		global $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -262,7 +262,7 @@ class WikiFactory {
 		/**
 		 * domain should contain at least one dot
 		 */
-		if( !strpos($domain, ".") ) {
+		if ( !strpos($domain, ".") ) {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
@@ -278,7 +278,7 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		if( $oRow->city_id != $city_id ) {
+		if ( $oRow->city_id != $city_id ) {
 			/**
 			 * ... yes it exists
 			 */
@@ -296,7 +296,7 @@ class WikiFactory {
 			array( "city_domain" => strtolower( $domain ) ),
 			__METHOD__
 		);
-		if( !empty($oRow) && ( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) ) {
+		if ( !empty($oRow) && ( strtolower( $oRow->city_domain ) == strtolower( $domain ) ) ) {
 			/**
 			 * ... yes it exists
 			 */
@@ -341,7 +341,7 @@ class WikiFactory {
 	 * @return boolean: true - removed, false otherwise
 	 */
 	static public function removeDomain ( $city_id, $domain = null ) {
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -382,12 +382,12 @@ class WikiFactory {
 	 * @return boolean: true - set, false otherwise
 	 */
 	static public function setmainDomain ( $city_id, $domain = null ) {
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if ('http://' != strpos($domain, 0, 7)) {
+		if ( 'http://' != strpos($domain, 0, 7) ) {
 			$domain = 'http://' . $domain;
 		}
 
@@ -412,11 +412,11 @@ class WikiFactory {
 
 		$city_id = false;
 		$parts = parse_url( $url );
-		if( isset( $parts[ "host" ] ) ) {
+		if ( isset( $parts[ "host" ] ) ) {
 			$host = self::getDomainHash( $parts[ "host" ] );
 
 			// TODO: Eloy: Can this hack be removed?
-			if( $host === "memory-alpha.org" ) {
+			if ( $host === "memory-alpha.org" ) {
 				/**
 				 * for memory-alpha check first element of path
 				 */
@@ -445,7 +445,7 @@ class WikiFactory {
 	 */
 	static public function DomainToID( $domain ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -457,7 +457,7 @@ class WikiFactory {
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 		$domains = $oMemc->get( self::getDomainKey( $domain ) );
 
-		if( isset($domains["id"]) ){
+		if ( isset($domains["id"]) ) {
 			// Success... have the city_id in memcached.
 			$city_id = $domains["id"];
 		} else {
@@ -503,19 +503,19 @@ class WikiFactory {
 
 		global $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
 
 		global $wgUser;
 
-		if( empty( $cv_variable_id ) || empty( $city_id ) ) {
+		if ( empty( $cv_variable_id ) || empty( $city_id ) ) {
 			return;
 		}
 
@@ -616,7 +616,7 @@ class WikiFactory {
 			 */
 			wfProfileIn( __METHOD__."-citylist" );
 			wfRunHooks( 'WikiFactoryChanged', array( $variable->cv_name , $city_id, $value ) );
-			switch( $variable->cv_name ) {
+			switch ( $variable->cv_name ) {
 				case "wgServer":
 				case "wgScriptPath":
 					/**
@@ -626,7 +626,7 @@ class WikiFactory {
 					/**
 					 * ...so get the other variable
 					 */
-					if( $variable->cv_name === "wgServer" ) {
+					if ( $variable->cv_name === "wgServer" ) {
 						$tmp = self::getVarValueByName( "wgScriptPath", $city_id );
 						$server = is_null( $value ) ? "" : $value;
 						$script_path = is_null( $tmp ) ? "/" : $tmp . "/";
@@ -645,14 +645,14 @@ class WikiFactory {
 							__METHOD__
 						);						
 					} catch ( DBQueryError $e ) {
-						if (preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error)) {
+						if ( preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error) ) {
 							$res = $dbw->selectRow(
 								self::table("city_list"),
 								"city_id",
 								array("city_url" => $city_url),
 								__METHOD__
 							);							
-							if (isset($res->city_id)) {
+							if ( isset($res->city_id) ) {
 								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);								
 								Wikia::log( __METHOD__, "", $exc->getMessage());
 								$dbw->rollback();
@@ -713,7 +713,7 @@ class WikiFactory {
 				case 'wgMetaNamespace':
 				case 'wgMetaNamespaceTalk':
 					#--- these cannot contain spaces!
-					if (strpos($value, ' ') !== false) {
+					if ( strpos($value, ' ') !== false ) {
 						$value = str_replace(' ', '_', $value);
 						$dbw->update(
 							self::table('city_variables'),
@@ -896,7 +896,7 @@ class WikiFactory {
 		$varId = 0;
 		$varData = self::loadVariableFromDB( false, $cv_name, false, $master );
 
-		if( $varData ) {
+		if ( $varData ) {
 			$varId = (int) $varData->cv_id;
 		}
 
@@ -923,7 +923,7 @@ class WikiFactory {
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
 		// don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
 		global $wgCityId;
-		if ($city_id == $wgCityId) {
+		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
 
@@ -936,14 +936,14 @@ class WikiFactory {
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
-		if( !$master ) {
+		if ( !$master ) {
 			$variables = $oMemc->get( self::getVarsKey( $city_id ) );
 			$value = isset( $variables[ "data" ][ $cv_name ] )
 				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
 				: null;
 		}
 
-		if( is_null( $value ) ) {
+		if ( is_null( $value ) ) {
 			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
 			$value = isset( $variable->cv_value )
 				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
@@ -974,15 +974,15 @@ class WikiFactory {
 		 * if there's no $ there is nothing to work
 		 */
 		$value = $cv_value;
-		if( is_string( $cv_value ) && preg_match_all('/(\$\w+)/', $cv_value, $matches ) ) {
-			if( is_array( $matches ) ) {
-				foreach( $matches[ 1 ] as $idx => $key ) {
-					if( !is_numeric( ltrim( $key, '$' ) ) ) {
+		if ( is_string( $cv_value ) && preg_match_all('/(\$\w+)/', $cv_value, $matches ) ) {
+			if ( is_array( $matches ) ) {
+				foreach ( $matches[ 1 ] as $idx => $key ) {
+					if ( !is_numeric( ltrim( $key, '$' ) ) ) {
 						/**
 						 * get value for key
 						 */
 						$val = self::getVarValueByName( ltrim( $key, '$' ), $city_id );
-						if( $val ) {
+						if ( $val ) {
 							$value = str_replace( $key, $val, $value );
 						}
 					}
@@ -1009,7 +1009,7 @@ class WikiFactory {
 	 */
 	static public function DBtoID( $city_dbname, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1035,7 +1035,7 @@ class WikiFactory {
 	 */
 	static public function IDtoDB( $city_id, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1053,8 +1053,7 @@ class WikiFactory {
 	 * @param string $host for testing
 	 * @return string changed host or $default
 	 */
-	public static function getCurrentStagingHost($dbName='', $default='', $host = null)
-	{
+	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
 		global $wgStagingList;
 
 		if ( $host === null ) {
@@ -1089,7 +1088,7 @@ class WikiFactory {
 	static public function getLocalEnvURL( $url ) {
 		// first - normalize URL
 		$regexp = '/^http:\/\/([^\/]+)\/?(.*)?$/';
-		if(preg_match( $regexp, $url, $groups ) === 0) {
+		if ( preg_match( $regexp, $url, $groups ) === 0 ) {
 			// on fail at least return original url
 			return $url;
 		}
@@ -1110,14 +1109,14 @@ class WikiFactory {
 		//  wikiname.developer.wikia-dev.com
 
 		$servers = array( 'preview.', 'sandbox-s1.', 'verify.' );
-		foreach( $servers as $serv ) {
-			if( strpos( $server, $serv ) === 0 ) {
+		foreach ( $servers as $serv ) {
+			if ( strpos( $server, $serv ) === 0 ) {
 				$server = substr( $server, strlen( $serv ) );
 			}
 		}
 
 		$regexp = '/\.([^\.]+)\.wikia-dev\.com$/';
-		if(preg_match( $regexp, $server, $groups ) === 1) {
+		if ( preg_match( $regexp, $server, $groups ) === 1 ) {
 			// devbox
 			$devbox = $groups[1];
 			$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
@@ -1138,16 +1137,16 @@ class WikiFactory {
 		}
 
 		$servername = $_SERVER['SERVER_NAME'];
-		if( strpos( $servername, 'preview.' ) !== false ) {
+		if ( strpos( $servername, 'preview.' ) !== false ) {
 			return 'http://preview.' . $server . '.wikia.com'.$address;
 		}
-		if( strpos( $servername, 'verify.' ) !== false ) {
+		if ( strpos( $servername, 'verify.' ) !== false ) {
 			return 'http://verify.' . $server . '.wikia.com'.$address;
 		}
-		if( strpos( $servername, 'sandbox-s1.' ) !== false ) {
+		if ( strpos( $servername, 'sandbox-s1.' ) !== false ) {
 			return 'http://sandbox-s1.' . $server . '.wikia.com'.$address;
 		}
-		if( preg_match( $regexp, $servername, $groups ) === 1 ) {
+		if ( preg_match( $regexp, $servername, $groups ) === 1 ) {
 			return 'http://' . $server . '.' . $groups[1] . '.wikia-dev.com'.$address;
 		}
 
@@ -1170,7 +1169,7 @@ class WikiFactory {
 	 */
 	static public function getWikiByID( $id, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1212,7 +1211,7 @@ class WikiFactory {
 	 * @return array an array of objects, keys are wikis ids.
 	 */
 	static public function getWikisByID( $ids, $master = false ) {
-		if( !self::isUsed() ) {
+		if ( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1253,7 +1252,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 			// Cache single entries so other methods could use the cache
 			$sMemKey = self::getWikiaCacheKey( $oRow->city_id );
 			$oMemc->set( $sMemKey, $oRow, 60*60*24 );
@@ -1280,7 +1279,7 @@ class WikiFactory {
 	 */
 	static public function getWikiByDB( $city_dbname, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1323,7 +1322,7 @@ class WikiFactory {
 	public static function getDomainHash( $domain ) {
 
 		$domain = strtolower( $domain );
-		if( substr($domain, 0, 4) === "www." ) {
+		if ( substr($domain, 0, 4) === "www." ) {
 			/**
 			 * cut off www. part
 			 */
@@ -1348,7 +1347,7 @@ class WikiFactory {
 	 * @return unserialized structure
 	 */
 	public static function fetch( $file, $timestamp = null ) {
-		if( !file_exists($file) ) {
+		if ( !file_exists($file) ) {
 			return false;
 		}
 
@@ -1358,7 +1357,7 @@ class WikiFactory {
 		$data = unserialize( file_get_contents( $file ) );
 		restore_error_handler();
 
-		if( !$data ) {
+		if ( !$data ) {
 			#--- If unserializing somehow didn't work, we delete the file
 			Wikia::log( __METHOD__, "", "Could not unserialize data from {$file}!" );;
 			@unlink($file);
@@ -1370,7 +1369,7 @@ class WikiFactory {
 		 */
 		$now = time();
 		$host = isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : "unknown";
-		if( ( $now > $data[0] ) || ( !is_null($timestamp) && $timestamp != $data[1] ) ) {
+		if ( ( $now > $data[0] ) || ( !is_null($timestamp) && $timestamp != $data[1] ) ) {
 			/**
 			 * Unlinking when the file was expired
 			 */
@@ -1402,11 +1401,11 @@ class WikiFactory {
 	public static function store( $file, $data, $ttl, $timestamp = null ) {
 		global $wgCommandLineMode;
 
-		if( $wgCommandLineMode ) {
+		if ( $wgCommandLineMode ) {
 			return false;
 		}
 
-		if( !file_exists( dirname( $file ) ) ) {
+		if ( !file_exists( dirname( $file ) ) ) {
 			wfMkdirParents( dirname( $file ) );
 		}
 
@@ -1435,7 +1434,7 @@ class WikiFactory {
 	 * @return string - variables key for memcached
 	 */
 	static public function getVarsKey( $city_id ) {
-		if( empty( $city_id ) ) {
+		if ( empty( $city_id ) ) {
 			return "wikifactory:variables:v5:0";
 		}
 		else {
@@ -1477,18 +1476,18 @@ class WikiFactory {
 	static public function clearCache( $city_id ) {
 		global $wgMemc,$wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if( ! is_numeric( $city_id ) ) {
+		if ( ! is_numeric( $city_id ) ) {
 			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
 
-		if( $wgWikicitiesReadOnly ) {
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 		}
 		else {
@@ -1536,13 +1535,13 @@ class WikiFactory {
 	 * Given a city_id, removes the domain-data array from memcached.
 	 * @param $city_id
 	 */
-	static public function clearDomainCache( $city_id ){
+	static public function clearDomainCache( $city_id ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$domains = self::getDomains( $city_id, true );
-		if( is_array( $domains ) ) {
-			foreach( $domains as $domain ) {
+		if ( is_array( $domains ) ) {
+			foreach ( $domains as $domain ) {
 				$wgMemc->delete( self::getDomainKey( $domain ) );
 				wfDebugLog( "wikifactory", __METHOD__ . ": Remove {$domain} from wikifactory cache.\n", true );
 			}
@@ -1564,7 +1563,7 @@ class WikiFactory {
 	 */
 	static public function getGroups() {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			wfDebugLog( "wikifactory", __METHOD__ . ": WikiFactory is not used.\n", true );
 			return array();
 		}
@@ -1580,7 +1579,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 			$groups[$oRow->cv_group_id] = $oRow->cv_group_name;
 		}
 		$dbr->freeResult( $oRes );
@@ -1607,9 +1606,8 @@ class WikiFactory {
 	 * @return mixed: array with variables
 	 */
 	static public function getVariables( $sort = "cv_name", $wiki = 0, $group = 0,
-		$defined = false, $editable = false, $string = false )
-	{
-		if( ! self::isUsed() ) {
+		$defined = false, $editable = false, $string = false ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1622,7 +1620,7 @@ class WikiFactory {
 			"cv_id", "cv_name", "cv_variable_type",
 			"cv_variable_group", "cv_access_level"
 		);
-		if (!empty( $group )) {
+		if ( !empty( $group ) ) {
 			$where["cv_variable_group"] = $group;
 		}
 
@@ -1630,7 +1628,7 @@ class WikiFactory {
 			$where[] = "cv_access_level > 1";
 		}
 
-		if( $string ) {
+		if ( $string ) {
 			$where[] = "cv_name like '%$string%'";
 		}
 
@@ -1654,7 +1652,7 @@ class WikiFactory {
 			array( "ORDER BY" => $sort )
 		);
 
-		while ($oRow = $dbr->fetchObject($oRes)) {
+		while ( $oRow = $dbr->fetchObject($oRes) ) {
 			$aVariables[] = $oRow;
 		}
 		$dbr->freeResult( $oRes );
@@ -1692,11 +1690,11 @@ class WikiFactory {
 	*/
 	static public function DBtoDomain( $db ) {
 		$wikiID = self::DBtoID($db);
-		if(is_null($wikiID)){
+		if ( is_null($wikiID) ) {
 			$retVal = null;
 		} else {
 			$domains = self::getDomains($wikiID);
-			if(count($domains) == 0){
+			if ( count($domains) == 0 ) {
 				$retVal = null;
 			} else {
 				$retVal = array_shift($domains);
@@ -1720,7 +1718,7 @@ class WikiFactory {
 	 * @return string: path to file or null if id is not a number
 	 */
 	static public function getFileCachePath( $city_id ) {
-		if( is_null( $city_id ) || empty( $city_id ) ) {
+		if ( is_null( $city_id ) || empty( $city_id ) ) {
 			return null;
 		}
 		wfProfileIn( __METHOD__ );
@@ -1728,10 +1726,10 @@ class WikiFactory {
 		$intid = $city_id;
 		$strid = (string)$intid;
 		$path = "";
-		if( $intid < 10 ) {
+		if ( $intid < 10 ) {
 			$path = sprintf( "%s/%d.ser", self::CACHEDIR, $intid );
 		}
-		elseif( $intid < 100 ) {
+		elseif ( $intid < 100 ) {
 			$path = sprintf(
 				"%s/%s/%d.ser",
 				self::CACHEDIR,
@@ -1769,17 +1767,17 @@ class WikiFactory {
 	 */
 	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
 		global $wgWikicitiesReadOnly;
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
 
-		if( (self::getFlags($city_id) & self::FLAG_PROTECTED) && $city_public != 1 ) {
+		if ( (self::getFlags($city_id) & self::FLAG_PROTECTED) && $city_public != 1 ) {
 			Wikia::log( __METHOD__, "", "Wiki is protected. Skipping update.");
 			return false;
 		}
@@ -1824,7 +1822,7 @@ class WikiFactory {
 	 * @return integer | boolean false if WikiFactory is not used; integer otherwise
 	 */
 	static private function getPublic( $city_id ) {
-		if( !self::isUsed() ) {
+		if ( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1856,8 +1854,8 @@ class WikiFactory {
 	 *
 	 * @return boolean
 	 */
-	static public function isPublic($city_id) {
-		if( WikiFactory::getPublic($city_id) === 1 ) {
+	static public function isPublic( $city_id ) {
+		if ( WikiFactory::getPublic($city_id) === 1 ) {
 			return true;
 		}
 
@@ -1904,7 +1902,7 @@ class WikiFactory {
 	 */
 	static private function loadVariableFromDB( $cv_id, $cv_name, $city_id, $master = false ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -1912,7 +1910,7 @@ class WikiFactory {
 		/**
 		 * $wiki could be empty, but we have to know which variable read
 		 */
-		if( ! $cv_id && ! $cv_name ) {
+		if ( ! $cv_id && ! $cv_name ) {
 			return false;
 		}
 
@@ -1921,7 +1919,7 @@ class WikiFactory {
 		/**
 		 * if both are defined cv_id has precedence
 		 */
-		if( $cv_id ) {
+		if ( $cv_id ) {
 			$condition = array( "cv_id" => $cv_id );
 			$cacheKey = "id:$cv_id";
 		}
@@ -1955,7 +1953,7 @@ class WikiFactory {
 			$oRow = clone $oRow;
 		}
 
-		if( !isset( $oRow->cv_id ) ) {
+		if ( !isset( $oRow->cv_id ) ) {
 			/**
 			 * variable doesn't exist
 			 */
@@ -1963,7 +1961,7 @@ class WikiFactory {
 			return null;
 		}
 
-		if( !empty( $city_id ) ) {
+		if ( !empty( $city_id ) ) {
 			$oRow2 = $dbr->selectRow(
 				array("city_variables"),
 				array(
@@ -1977,7 +1975,7 @@ class WikiFactory {
 				),
 				__METHOD__
 			);
-			if( isset( $oRow2->cv_variable_id ) ) {
+			if ( isset( $oRow2->cv_variable_id ) ) {
 
 				$oRow->cv_city_id = $oRow2->cv_city_id;
 				$oRow->cv_variable_id = $oRow2->cv_variable_id;
@@ -2015,7 +2013,7 @@ class WikiFactory {
 		global $wgMemc;
 
 		wfProfileIn( __METHOD__ );
-		if (empty($wgLocalDatabases)) {
+		if ( empty($wgLocalDatabases) ) {
 			$wgLocalDatabases = array();
 		}
 		$wgLocalDatabases[] = $wgDBname;
@@ -2057,9 +2055,9 @@ class WikiFactory {
 		$tied = array(
 			#"wgExtraNamespacesLocal|wgContentNamespaces|wgNamespacesWithSubpagesLocal|wgNamespacesToBeSearchedDefault"
 		);
-		foreach( $tied as $group ) {
+		foreach ( $tied as $group ) {
 			$pattern = "/\b{$cv_name}\b/";
-			if( preg_match( $pattern, $group ) ) {
+			if ( preg_match( $pattern, $group ) ) {
 				return explode( "|", $group );
 			}
 		}
@@ -2088,12 +2086,12 @@ class WikiFactory {
 	static public function log( $type, $msg, $city_id = false, $variable_id = null ) {
 		global $wgUser, $wgCityId, $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -2130,7 +2128,7 @@ class WikiFactory {
 	 */
 	static public function VarValueToID( $cv_value ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return null;
 		}
@@ -2174,10 +2172,10 @@ class WikiFactory {
 	 *
 	 * @return integer: city ID or null if not found
 	 */
-	static public function redirectDomains($city_id, $new_city_id, $skip_domains = array()) {
+	static public function redirectDomains( $city_id, $new_city_id, $skip_domains = array() ) {
 		global $wgExternalArchiveDB,$wgWikicitiesReadOnly;
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -2193,7 +2191,7 @@ class WikiFactory {
 				"city_id" => $city_id
 		);
 
-		if(count($skip_domains) > 0) {
+		if ( count($skip_domains) > 0 ) {
 			$where_cond[] = "city_domain NOT IN (" .$dbw->makeList( $skip_domains ) . ")";
 		}
 
@@ -2203,7 +2201,7 @@ class WikiFactory {
 			array( "city_id" => $new_city_id ),
 			$where_cond,
 			__METHOD__ );
-		if ($db) {
+		if ( $db ) {
 			$dbw->commit();
 		} else {
 			$dbw->rollback();
@@ -2217,7 +2215,7 @@ class WikiFactory {
 				 */
 				$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 				foreach ( $domains as $domain ) {
-					if( !in_array($domain, $skip_domains) ) {
+					if ( !in_array($domain, $skip_domains) ) {
 						$dba->insert(
 							"city_domains",
 							array(
@@ -2255,7 +2253,7 @@ class WikiFactory {
 	static public function copyToArchive( $city_id ) {
 		global $wgExternalArchiveDB, $wgWikicitiesReadOnly;
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -2265,7 +2263,7 @@ class WikiFactory {
 		 * do only on inactive wikis
 		 */
 		$wiki = WikiFactory::getWikiByID( $city_id );
-		if( isset( $wiki->city_id ) ) {
+		if ( isset( $wiki->city_id ) ) {
 
 			$timestamp = wfTimestampNow();
 			$dbw = self::db( DB_MASTER );
@@ -2320,7 +2318,7 @@ class WikiFactory {
 				array( "cv_city_id" => $city_id ),
 				__METHOD__
 			);
-			while( $row = $dbw->fetchObject( $sth ) ) {
+			while ( $row = $dbw->fetchObject( $sth ) ) {
 				$dba->insert(
 					"city_variables",
 					array(
@@ -2343,7 +2341,7 @@ class WikiFactory {
 				array( "city_id" => $city_id ),
 				__METHOD__
 			);
-			while( $row = $dbw->fetchObject( $sth ) ) {
+			while ( $row = $dbw->fetchObject( $sth ) ) {
 				$dba->insert(
 					"city_domains",
 					array(
@@ -2379,7 +2377,7 @@ class WikiFactory {
 	 *
 	 * @return string: fixed name of DB
 	 */
-	static public function prepareDBName($dbname) {
+	static public function prepareDBName( $dbname ) {
 		wfProfileIn( __METHOD__ );
 
 		$dbwf = self::db( DB_SLAVE );
@@ -2397,7 +2395,7 @@ class WikiFactory {
 				__METHOD__
 			);
 			$exists = 0;
-			if( $Row->count > 0 ) {
+			if ( $Row->count > 0 ) {
 				Wikia::log( __METHOD__, "", "Database {$dbname} exists in city_list!" );
 				$exists = 1;
 			} else {
@@ -2409,7 +2407,7 @@ class WikiFactory {
 				}
 			}
 			# add suffix
-			if ($exists == 1) {
+			if ( $exists == 1 ) {
 				$suffix = rand(1,999);
 			}
 		}
@@ -2435,12 +2433,12 @@ class WikiFactory {
 	static public function resetFlags( $city_id, $city_flags, $skip=false ) {
 		global $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "info", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -2454,7 +2452,7 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		if ($skip)
+		if ( $skip)
 			Wikia::log( __METHOD__, "", "skip logging.");
 		else
 			self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags", decbin( $city_flags ) ), $city_id );
@@ -2482,12 +2480,12 @@ class WikiFactory {
 	static public function setFlags( $city_id, $city_flags, $skip=false ) {
 		global $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "info", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
+		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
@@ -2502,7 +2500,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		if ($skip)
+		if ( $skip)
 			Wikia::log( __METHOD__, "", "skip logging.");
 		else
 			self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", decbin( $city_flags ) ), $city_id );
@@ -2554,12 +2552,16 @@ class WikiFactory {
 	 *
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return StdObject ($row->cat_id $row->cat_name) or false
+	 * @return stdClass ($row->cat_id $row->cat_name) or false
 	 */
 	static public function getCategory( $city_id ) {
-
-		if( ! self::isUsed() ) {
+		global $wgRunningUnitTests, $wgNoDBUnits;
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if ($wgRunningUnitTests && $wgNoDBUnits) {
 			return false;
 		}
 
@@ -2604,21 +2606,21 @@ class WikiFactory {
 	 *
 	 * @return integer: city ID or null if not found
 	 */
-	static public function MultipleVarsToID($data) {
+	static public function MultipleVarsToID( $data ) {
 
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return null;
 		}
 
-		if (!is_array($data)) {
+		if ( !is_array($data) ) {
 			return null;
 		}
 
 		$i = 0;
 		$tables = array();
 		$where = array();
-		foreach ($data as $key => $val) {
+		foreach ( $data as $key => $val ) {
 			$i++;
 			$tables[] = "city_variables AS cv{$i}";
 
@@ -2627,7 +2629,7 @@ class WikiFactory {
 			$where["cv{$i}.cv_value"] = @serialize($val);
 		}
 
-		if (!$i) {
+		if ( !$i ) {
 			return null;
 		}
 
@@ -2663,13 +2665,13 @@ class WikiFactory {
 	 * @throws DBQueryError|Exception
 	 * @return boolean true on success, false on failure
 	 */
-	static public function createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description, $cv_is_unique = false){
+	static public function createVariable( $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description, $cv_is_unique = false ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 		$dbw = self::db( DB_MASTER );
 
 		// Follow the convention already started in the database of putting "(unknown)" for non-descriptions.
-		if($cv_description == ""){
+		if ( $cv_description == "" ) {
 			$cv_description = "(unknown)";
 		}
 
@@ -2723,13 +2725,13 @@ class WikiFactory {
 	 * @throws DBQueryError|Exception
 	 * @return boolean true on success, false on failure
 	 */
-	static public function changeVariable($cv_variable_id, $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description){
+	static public function changeVariable( $cv_variable_id, $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
 		$dbw = self::db( DB_MASTER );
 
 		// Follow the convention already started in the database of putting "(unknown)" for non-descriptions.
-		if($cv_description == ""){
+		if ( $cv_description == "" ) {
 			$cv_description = "(unknown)";
 		}
 
@@ -2776,10 +2778,10 @@ class WikiFactory {
 	 * @param $user
 	 * @return bool
 	 */
-	static public function updateCityDescription (&$article, &$user ) {
+	static public function updateCityDescription( &$article, &$user ) {
 		global $wgCityId;
 
-		if( strtolower($article->getTitle()) == "mediawiki:description" ) {
+		if ( strtolower($article->getTitle()) == "mediawiki:description" ) {
 			$out = trim( strip_tags( wfMsg('description') ) );
 			$db = WikiFactory::db( DB_MASTER );
 			$db->update(
@@ -2807,7 +2809,7 @@ class WikiFactory {
 	 * @return id from coty_lang
 	 */
 	static public function LangCodeToId( $lang_code ) {
-		if( ! self::isUsed() ) {
+		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -2828,7 +2830,7 @@ class WikiFactory {
 					__METHOD__
 				);
 
-				while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 					$languages[$oRow->lang_code] = intval($oRow->lang_id);
 				}
 				$dbr->freeResult( $oRes );
@@ -2943,7 +2945,7 @@ class WikiFactory {
 
 		$key = "wikifactory:clusters";
 		$clusters = $wgMemc->get( $key );
-		if( !is_array( $clusters ) ) {
+		if ( !is_array( $clusters ) ) {
 
 			$dbr = self::db( DB_SLAVE );
 			$oRes = $dbr->select(
@@ -2954,7 +2956,7 @@ class WikiFactory {
 				array( "GROUP BY" => "city_cluster" )
 			);
 
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$clusters[] = strtolower( $oRow->cluster );
 			}
 			$dbr->freeResult( $oRes );
@@ -2978,7 +2980,7 @@ class WikiFactory {
 	 * @return array
 	 */
 
-	static public function getListOfWikisWithVar($varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null) {
+	static public function getListOfWikisWithVar( $varId, $type, $selectedCond ,$val, $likeVal = '', $offset = null, $limit = null ) {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -3002,7 +3004,7 @@ class WikiFactory {
                     $aOptions['OFFSET'] = $offset;
                 }
 
-		if( $type == "full" ) {
+		if ( $type == "full" ) {
 			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
 		} else {
 			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
@@ -3019,7 +3021,7 @@ class WikiFactory {
 			$aOptions
 		);
 
-		while ($oRow = $dbr->fetchObject($oRes)) {
+		while ( $oRow = $dbr->fetchObject($oRes) ) {
 			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
 		}
 		$dbr->freeResult( $oRes );
@@ -3049,7 +3051,7 @@ class WikiFactory {
 			"cv_variable_id = '$varId'"
 		);
 
-		if( 'full' == $type ) {
+		if ( 'full' == $type ) {
 			$aWhere[] = "cv_value " . $dbr->buildLike( $dbr->anyString(), $likeVal, $dbr->anyString() );
 		} else {
 			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
@@ -3102,7 +3104,7 @@ class WikiFactory {
 	 * @return url in city_list
 	 */
 	static public function DBtoUrl( $dbname, $master = false ) {
-		if( !self::isUsed() ) {
+		if ( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
@@ -3125,7 +3127,7 @@ class WikiFactory {
 		if ( !is_array( $ids ) ) $ids = [ $ids ];
 		$keys = array();
 		$added = array();
-		foreach ($ids as $id) {
+		foreach ( $ids as $id ) {
 			$id = intval($id);
 
 			// don't add the same wiki twice

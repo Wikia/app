@@ -1,11 +1,11 @@
 ve.ui.WikiaCartWidget = function VeUiWikiaCartWidget( model, config ) {
-	ve.ui.SelectWidget.call( this, config );
+	OO.ui.SelectWidget.call( this, config );
 	this.model = model;
 	this.model.connect( this, { 'add': 'onAdd', 'remove': 'onRemove' } );
-	this.$.addClass( 've-ui-wikiaCartWidget' );
+	this.$element.addClass( 've-ui-wikiaCartWidget' );
 };
 
-ve.inheritClass( ve.ui.WikiaCartWidget, ve.ui.SelectWidget );
+OO.inheritClass( ve.ui.WikiaCartWidget, OO.ui.SelectWidget );
 
 ve.ui.WikiaCartWidget.prototype.onAdd = function ( items, index ) {
 	var i, widgetItems = [];

@@ -72,6 +72,13 @@ $messages['bho'] = array(
 	'adengine-exitstitial-button' => 'इ विज्ञापन के छोड़ चलीं',
 );
 
+/** Bengali (বাংলা)
+ * @author Tauhid16
+ */
+$messages['bn'] = array(
+	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D

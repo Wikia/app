@@ -9,8 +9,9 @@ QUnit.module( 've.dm.Document' );
 
 /* Tests */
 
-QUnit.test( 'constructor', 8, function ( assert ) {
-	var doc = ve.dm.example.createExampleDocument();
+QUnit.test( 'constructor', 12, function ( assert ) {
+	var data, htmlDoc,
+		doc = ve.dm.example.createExampleDocument();
 	assert.equalNodeTree( doc.getDocumentNode(), ve.dm.example.tree, 'node tree matches example data' );
 	assert.throws(
 		function () {
@@ -23,7 +24,6 @@ QUnit.test( 'constructor', 8, function ( assert ) {
 		'unbalanced input causes exception'
 	);
 
-	// TODO data provider?
 	doc = new ve.dm.Document( [ 'a', 'b', 'c', 'd' ] );
 	assert.equalNodeTree(
 		doc.getDocumentNode(),
@@ -33,13 +33,25 @@ QUnit.test( 'constructor', 8, function ( assert ) {
 	assert.deepEqualWithDomElements( doc.getMetadata(), new Array( 5 ),
 		'sparse metadata array is created'
 	);
+	assert.equal( doc.getHtmlDocument().body.innerHTML, '', 'Empty HTML document is created' );
 
-	doc = new ve.dm.Document( [ { 'type': 'paragraph' }, { 'type': '/paragraph' } ] );
+	htmlDoc = ve.createDocumentFromHtml( 'abcd' );
+	doc = new ve.dm.Document( [ 'a', 'b', 'c', 'd' ], htmlDoc );
+	assert.equal( doc.getHtmlDocument(), htmlDoc, 'Provided HTML document is used' );
+	doc = new ve.dm.Document( htmlDoc, ve.createDocumentFromHtml( 'efgh' ) );
+	assert.equal( doc.getHtmlDocument(), htmlDoc, 'Second parameter ignored if first parameter is a document' );
+
+	data = new ve.dm.ElementLinearData(
+		new ve.dm.IndexValueStore(),
+		[ { 'type': 'paragraph' }, { 'type': '/paragraph' } ]
+	);
+	doc = new ve.dm.Document( data );
 	assert.equalNodeTree(
 		doc.getDocumentNode(),
 		new ve.dm.DocumentNode( [ new ve.dm.ParagraphNode( [], { 'type': 'paragraph' } ) ] ),
 		'empty paragraph no longer has a text node'
 	);
+	assert.equal( doc.data, data, 'ElementLinearData is stored by reference' );
 
 	doc = ve.dm.example.createExampleDocument( 'withMeta' );
 	assert.deepEqualWithDomElements( doc.getData(), ve.dm.example.withMetaPlainData,

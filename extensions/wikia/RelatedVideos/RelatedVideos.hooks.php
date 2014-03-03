@@ -136,7 +136,7 @@ class RelatedVideosHookHandler {
 	static private function isRailModuleWanted($title, $namespace) {
 		$app = F::App();
 		
-		return !HubService::isCorporatePage()
+		return !WikiaPageType::isCorporatePage()
 			&& $title->exists()
 			&& $app->wg->request->getVal( 'diff' ) === null
 			&& ( $namespace == NS_MAIN 

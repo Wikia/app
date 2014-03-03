@@ -557,10 +557,12 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Izenburua',
+	'lookupcontribswikioptions' => 'Aukerak',
 );
 
 /** Persian (فارسی)
@@ -1835,6 +1837,27 @@ $messages['tly'] = array(
 	'lookupcontribsnext' => 'думотоно шә',
 	'lookupcontribsprevious' => 'навынәни',
 	'lookupcontribsall' => 'һәммәј',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'lookupcontribsselectuser' => 'Kullanıcı seç:',
+	'lookupcontribsselectfor' => 'Seçmek için:',
+	'lookupcontribsdisplaymode' => 'Görüntü modu:',
+	'lookupcontribsgo' => 'Git',
+	'lookupcontribsselectwikis' => 'Wikileri seç:',
+	'lookupcontribsnoresultfound' => 'Hiçbir sonuç bulunamadı!',
+	'lookupcontribsinvalidresults' => 'Geçersiz sonuçlar!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Veritabanı adı',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Başlık',
+	'lookupcontribswikioptions' => 'Seçenekler',
+	'lookupcontribscontribslink' => 'Katkılara bağlantı',
+	'lookupcontribsdetails' => 'Detayları gösterilen:',
+	'lookupcontribslastedited' => 'Son düzenleme',
 );
 
 /** Tatar (Cyrillic script) (татарча)

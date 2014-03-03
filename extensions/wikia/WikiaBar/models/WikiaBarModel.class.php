@@ -10,7 +10,7 @@
 class WikiaBarModel extends WikiaBarModelBase {
 	const WIKIA_BAR_TYPE_DATA_MODEL = 1;
 	const WIKIA_BAR_TYPE_DATA_FAILSAFE_MODEL = 2;
-	const WIKIA_BAR_MCACHE_VERSION = '0.20.1333';
+	const WIKIA_BAR_MCACHE_VERSION = '1';
 	const WIKIA_BAR_DEFAULT_LANG_CODE = 'en';
 
 	const BUTTON_1_CLASS = 'button-1-class';
@@ -54,6 +54,37 @@ class WikiaBarModel extends WikiaBarModelBase {
 		self::LINE_5_TEXT,
 		self::LINE_5_HREF
 	);
+
+	protected static $availableButtonImages = [
+		'ent_actionheroshowdown',
+		'ent_bookclub',
+		'ent_breakingentertainment',
+		'ent_comiccon',
+		'ent_falltv',
+		'ent_halloweengiveaway',
+		'ent_judgedredd',
+		'ent_movietrailers',
+		'ent_summermusic',
+		'ent_thedarkknightrises',
+		'ent_twitter',
+		'lifestyle_beauty',
+		'lifestyle_fooddrink',
+		'lifestyle_olympics',
+		'lifestyle_science',
+		'lifestyle_summerfun',
+		'lifestyle_summerolympics',
+		'lifestyle_travel',
+		'lifestyle_twitter',
+		'vg_gameguides',
+		'vg_halloweengiveaway',
+		'vg_halo4',
+		'vg_newreleases',
+		'vg_skyrimv',
+		'vg_sleepingdogs',
+		'vg_streetfighter',
+		'vg_twitter',
+		'vg_videogameolympics',
+	];
 
 
 	public function getBarContents() {
@@ -254,6 +285,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_1_CLASS],
+					'image_url' => self::getValidImageUrl( $data[self::BUTTON_1_CLASS] ),
 					'text' => $data[self::BUTTON_1_TEXT],
 					'href' => $data[self::BUTTON_1_HREF]
 				);
@@ -267,6 +299,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_2_CLASS],
+					'image_url' => self::getValidImageUrl( $data[self::BUTTON_2_CLASS] ),
 					'text' => $data[self::BUTTON_2_TEXT],
 					'href' => $data[self::BUTTON_2_HREF]
 				);
@@ -280,6 +313,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 			$structuredData['buttons'] [] =
 				array(
 					'class' => $data[self::BUTTON_3_CLASS],
+					'image_url' => self::getValidImageUrl( $data[self::BUTTON_3_CLASS] ),
 					'text' => $data[self::BUTTON_3_TEXT],
 					'href' => $data[self::BUTTON_3_HREF]
 				);
@@ -352,4 +386,10 @@ class WikiaBarModel extends WikiaBarModelBase {
 	function getMemcKey() {
 		return wfSharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
 	}
+
+	public static function getValidImageUrl( $class ) {
+		return in_array( $class, self::$availableButtonImages )
+			? '/extensions/wikia/WikiaBar/images/icons/' . $class . '.png'
+			: '/extensions/wikia/WikiaBar/images/wikiabarIcon.png';
+}
 }

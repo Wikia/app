@@ -18,6 +18,10 @@ class UIFactoryApiControllerTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03707 ms
+	 */
 	public function testFactoryInit() {
 		$componentNames = [ 'button', 'modal' ];
 		$factoryMock = $this->getMock( 'Wikia\UI\Factory', [ 'init', '__wakeup' ], [], '', false );

@@ -10,19 +10,19 @@
  *
  * @abstract
  * @class
- * @extends ve.ui.Tool
+ * @extends OO.ui.Tool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.InspectorTool = function VeUiInspectorTool( toolbar, config ) {
+ve.ui.InspectorTool = function VeUiInspectorTool( toolGroup, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar, config );
+	OO.ui.Tool.call( this, toolGroup, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.InspectorTool, ve.ui.Tool );
+OO.inheritClass( ve.ui.InspectorTool, OO.ui.Tool );
 
 /* Static Properties */
 
@@ -37,9 +37,19 @@ ve.inheritClass( ve.ui.InspectorTool, ve.ui.Tool );
 ve.ui.InspectorTool.static.inspector = '';
 
 /**
+ * Configuration options for setting up inspector.
+ *
+ * @abstract
+ * @static
+ * @property {Object}
+ * @inheritable
+ */
+ve.ui.InspectorTool.static.config = {};
+
+/**
  * Annotation or node models this tool is related to.
  *
- * Used by #canEditModel.
+ * Used by #isCompatibleWith.
  *
  * @static
  * @property {Function[]}
@@ -50,7 +60,7 @@ ve.ui.InspectorTool.static.modelClasses = [];
 /**
  * @inheritdoc
  */
-ve.ui.InspectorTool.static.canEditModel = function ( model ) {
+ve.ui.InspectorTool.static.isCompatibleWith = function ( model ) {
 	return ve.isInstanceOfAny( model, this.modelClasses );
 };
 
@@ -62,8 +72,19 @@ ve.ui.InspectorTool.static.canEditModel = function ( model ) {
  * @method
  */
 ve.ui.InspectorTool.prototype.onSelect = function () {
-	this.toolbar.getSurface().execute( 'inspector', 'open', this.constructor.static.inspector );
-	this.setActive( false );
+	ve.track( 'tool.inspector.select', {
+		name: this.constructor.static.name,
+		// HACK: which toolbar is this coming from?
+		// TODO: this should probably be passed into the config or something
+		toolbar: ( this.toolbar.constructor === ve.ui.Toolbar ? 'surface' : 'target' )
+	} );
+	this.toolbar.getSurface().execute(
+		'inspector',
+		'open',
+		this.constructor.static.inspector,
+		this.constructor.static.config
+	);
+	this.setActive( true );
 };
 
 /**
@@ -75,8 +96,13 @@ ve.ui.InspectorTool.prototype.onSelect = function () {
  * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
  */
 ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
-	var toolFactory = this.toolbar.getToolFactory();
-	this.setActive( toolFactory.getToolsForAnnotations( full ).indexOf( this.constructor ) !== -1 );
+	var toolFactory = this.toolbar.getToolFactory(),
+		tools = toolFactory.getToolsForAnnotations( full );
+
+	this.setActive(
+		// This tool is compatible with one of the annotations
+		tools.indexOf( this.constructor.static.name ) !== -1
+	);
 };
 
 /**
@@ -85,13 +111,13 @@ ve.ui.InspectorTool.prototype.onUpdateState = function ( nodes, full ) {
  * @class
  * @extends ve.ui.InspectorTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.LinkInspectorTool = function VeUiLinkInspectorTool( toolbar, config ) {
-	ve.ui.InspectorTool.call( this, toolbar, config );
+ve.ui.LinkInspectorTool = function VeUiLinkInspectorTool( toolGroup, config ) {
+	ve.ui.InspectorTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.LinkInspectorTool, ve.ui.InspectorTool );
+OO.inheritClass( ve.ui.LinkInspectorTool, ve.ui.InspectorTool );
 ve.ui.LinkInspectorTool.static.name = 'link';
 ve.ui.LinkInspectorTool.static.group = 'meta';
 ve.ui.LinkInspectorTool.static.icon = 'link';

@@ -9,10 +9,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'LeGourmet TV',
 			'categories' => array( 'Lifestyle', 'Le Gourmet' )
 		),
-		141 => array(
-			'name' => 'HowCast',
-			'categories' => array( 'HowTo', 'Lifestyle' )
-		),
 		647 => array(
 			'name' => 'Howcast - Cars and Transportation',
 			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Cars', 'Transportation' )

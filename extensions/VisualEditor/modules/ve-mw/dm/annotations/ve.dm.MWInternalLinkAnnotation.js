@@ -26,7 +26,7 @@ ve.dm.MWInternalLinkAnnotation = function VeDmMWInternalLinkAnnotation( element 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWInternalLinkAnnotation, ve.dm.LinkAnnotation );
+OO.inheritClass( ve.dm.MWInternalLinkAnnotation, ve.dm.LinkAnnotation );
 
 /* Static Properties */
 
@@ -54,8 +54,13 @@ ve.dm.MWInternalLinkAnnotation.static.toDataElement = function ( domElements ) {
 };
 
 ve.dm.MWInternalLinkAnnotation.static.toDomElements = function ( dataElement, doc ) {
+	var parentResult = ve.dm.LinkAnnotation.static.toDomElements.call( this, dataElement, doc );
+	parentResult[0].setAttribute( 'rel', 'mw:WikiLink' );
+	return parentResult;
+};
+
+ve.dm.MWInternalLinkAnnotation.static.getHref = function ( dataElement ) {
 	var href,
-		domElement = doc.createElement( 'a' ),
 		title = dataElement.attributes.title,
 		origTitle = dataElement.attributes.origTitle;
 	if ( origTitle && decodeURIComponent( origTitle ).replace( /_/g, ' ' ) === title ) {
@@ -68,22 +73,17 @@ ve.dm.MWInternalLinkAnnotation.static.toDomElements = function ( dataElement, do
 	} else {
 		href = encodeURIComponent( title );
 	}
-	domElement.setAttribute( 'href', href );
-	domElement.setAttribute( 'rel', 'mw:WikiLink' );
-	return [ domElement ];
+	return href;
 };
 
 /**
  * Normalize title for comparison purposes
  * @param {string} title Original title
- * @returns {string} Normalized title
+ * @returns {string} Normalized title, or the original if it is invalid
  */
-ve.dm.MWInternalLinkAnnotation.static.normalizeTitle = function ( title ) {
-	var normalizedTitle = title;
-	try {
-		normalizedTitle = new mw.Title( title ).getPrefixedText();
-	} catch ( e ) {}
-	return normalizedTitle;
+ve.dm.MWInternalLinkAnnotation.static.normalizeTitle = function ( original ) {
+	var title = mw.Title.newFromText( original );
+	return title ? title.getPrefixedText() : original;
 };
 
 /* Methods */

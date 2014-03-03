@@ -36,6 +36,7 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaMobile/js/throbber.js',
 			'extensions/wikia/WikiaMobile/js/topbar.js',
 			'extensions/wikia/WikiaMobile/js/track.js',
+			'extensions/wikia/WikiaMobile/js/toc.js',
 			'extensions/wikia/WikiaMobile/js/spec/*.spec.js',
 
 			//core modules
@@ -126,6 +127,12 @@ module.exports = function(config) {
 			'extensions/wikia/VideoPageTool/js/spec/**/*.spec.js',
 			'extensions/wikia/VideoPageTool/js/spec/**/**/*.spec.js',
 
+			/*
+			 * Extension: VideosModule
+			 */
+			'extensions/wikia/VideosModule/scripts/models/videos.js',
+			'extensions/wikia/VideosModule/scripts/spec/**/*.spec.js',
+
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
 			'extensions/wikia/Search/js/SearchAbTest.*.js',
@@ -141,64 +148,3 @@ module.exports = function(config) {
 		]
 	});
 };
-
-notCovered = [
-	//Those are for coverage purposes
-	'tests/lib/coverage.mocks.js',
-	//'extensions/wikia/AbTesting/js/*.js',
-	'extensions/wikia/Lightbox/js/*.js',
-	'extensions/wikia/WikiStats/js/wikistats.js',
-	'extensions/wikia/WikiMap/js/WikiMapIndexContent.js',
-	//'extensions/wikia/WikiFactory/js/*.js',
-	//'extensions/wikia/WikiaQuiz/js/*.js',
-	//'extensions/wikia/WikiaPoll/js/*.js',
-	'extensions/wikia/WikiaPhotoGallery/js/*.js',
-	'extensions/wikia/WikiaMiniUpload/js/WMU.js',
-	//'extensions/wikia/WikiaHubsV2/js/*.js',
-	//'extensions/wikia/WikiaHomePage/js/*.js',
-	'extensions/wikia/WikiaBar/js/WikiaBar.js',
-	//'extensions/wikia/Wall/js/*.js',
-	'extensions/wikia/VisualStats/js/Visual*.js',
-	'extensions/wikia/VideoHandlers/js/*.js',
-	'extensions/wikia/VideoEmbedTool/js/*.js',
-	//'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js',
-	//'extensions/wikia/UserLogin/js/*.js',
-	//'extensions/wikia/TopLists/js/*.js',
-	//'extensions/wikia/ThemeDesigner/js/*.js',
-	//'extensions/wikia/TabView/js/*.js',
-	//'extensions/wikia/StructuredData/js/*.js',
-	'extensions/wikia/SponsorshipDashboard/js/*.js',
-	//'extensions/wikia/SpecialVideos/js/*.js',
-	//'extensions/wikia/SpecialMarketingToolbox/js/*.js',
-	//'extensions/wikia/SpecialManageWikiaHome/js/*.js',
-	//'extensions/wikia/ShareButtons/js/*.js',
-	//'extensions/wikia/Search/js/*.js',
-	//'extensions/wikia/RelatedVideos/js/*.js',
-	//'extensions/wikia/RelatedPages/js/*.js',
-	//'extensions/wikia/RecentChanges/js/*.js',
-	'extensions/wikia/Places/js/*.js',
-	'extensions/wikia/Phalanx/js/*.js',
-	//'extensions/wikia/MiniEditor/js/*.js',
-	//'extensions/wikia/MiniEditor/js/Forum/*.js',
-	//'extensions/wikia/MiniEditor/js/Wall/*.js',
-	'extensions/wikia/LoaderQueue/js/*.js',
-	//'extensions/wikia/LinkSuggest/js/*.js',
-	'extensions/wikia/JSSnippets/js/*.js',
-	//'extensions/wikia/ImageReview/js/*.js',
-	'extensions/wikia/ImagePlaceholder/js/*.js',
-	//'extensions/wikia/ImageLazyLoad/js/*.js',
-	//'extensions/wikia/Forum/js/*.js',
-	//'extensions/wikia/EditPageLayout/js/**/*.js',
-	'extensions/wikia/CreatePage/js/**/*.js',
-	//'extensions/wikia/CreateNewWiki/js/*.js',
-	'extensions/wikia/CorporatePage/js/*.js',
-	'extensions/wikia/ContentWarning/js/*.js',
-	//'extensions/wikia/CategorySelect/js/*.js',
-	'extensions/wikia/CategoryExhibition/js/*.js',
-	'extensions/wikia/Blogs/js/*.js',
-	'extensions/wikia/ArticleComments/js/*.js',
-	'extensions/wikia/AjaxPoll/js/*.js'
-	//'extensions/wikia/AchievementsII/js/*.js',
-	//'extensions/wikia/WikiFeatures/js/WikiFeatures.js',
-];
-

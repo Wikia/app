@@ -24,18 +24,18 @@ class LightboxController extends WikiaController {
 		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity( 86400 );
 	}
 
 	public function lightboxModalContentError() {
 		if ( $this->wg->User->isAllowed( 'read' ) ) {
-			$this->error = wfMessage('lightbox-no-media-error', $this->wg->Sitename)->parse();
+			$this->error = wfMessage( 'lightbox-no-media-error', $this->wg->Sitename )->parse();
 		} else {
-			$this->error = wfMessage('lightbox-no-permission-error')->text();
+			$this->error = htmlspecialchars( wfMessage( 'lightbox-no-permission-error' )->plain() );
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity( 86400 );
 	}
 
 	/**
@@ -47,21 +47,22 @@ class LightboxController extends WikiaController {
 	 * thumbs = array( 'title' => image title, 'type' => [image/video], 'thumbUrl' => thumbnail link )
 	 */
 	public function getThumbImages() {
-		$count = $this->request->getVal('count', 20);
+		$count = $this->request->getVal( 'count', 20 );
 		$to = $this->request->getInt( 'to', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		$thumbs = array();
 		$minTimestamp = 0;
-		if ( !empty($to) ) {
+		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
-			$imageList = $this->getImageList( $count, $to );
+			$helper = new LightboxHelper();
+			$imageList = $helper->getImageList( $count, $to );
 			extract( $imageList );
 
 			// add Latest Photos if not exist
 			if ( $includeLatestPhotos == 'true' ) {
-				$latestPhotos = $this->getLatestPhotos();
+				$latestPhotos = $helper->getLatestPhotos();
 				$images = array_merge( $latestPhotos, $images );
 			}
 
@@ -72,7 +73,7 @@ class LightboxController extends WikiaController {
 		$this->to = $minTimestamp;
 
 		// set cache control to 1 hour
-		$this->response->setCacheValidity(3600);
+		$this->response->setCacheValidity( 3600 );
 	}
 
 	/**
@@ -88,9 +89,9 @@ class LightboxController extends WikiaController {
 	 */
 	protected function mediaTableToThumbs( $mediaTable ) {
 		$thumbs = array();
-		foreach ($mediaTable as $entry) {
-			$thumb = $this->createCarouselThumb($entry);
-			if ( !empty($thumb) ) {
+		foreach ( $mediaTable as $entry ) {
+			$thumb = $this->createCarouselThumb( $entry );
+			if ( !empty( $thumb ) ) {
 				$thumbs[] = $thumb;
 			}
 		}
@@ -102,15 +103,15 @@ class LightboxController extends WikiaController {
 	 * @param $entry - must have 'title'(image title) and 'type'(image|video) defined
 	 * @return array|string
 	 */
-	private function createCarouselThumb($entry) {
+	private function createCarouselThumb( $entry ) {
 		$thumb = '';
 		$is = $this->carouselImageServingInstance();
-		if ( is_string($entry['title']) ) {
-			$media = Title::newFromText($entry['title'], NS_FILE);
+		if ( is_string( $entry['title'] ) ) {
+			$media = Title::newFromText( $entry['title'], NS_FILE );
 		} else {
 			$media = $entry['title'];
 		}
-		$file = wfFindFile($media);
+		$file = wfFindFile( $media );
 		if ( !empty( $file ) ) {
 			$url = $is->getUrl( $file, $file->getWidth(), $file->getHeight() );
 			$thumb = array(
@@ -118,7 +119,7 @@ class LightboxController extends WikiaController {
 				'type' => $entry['type'],
 				'key' => $media->getDBKey(),
 				'title' => $media->getText(),
-				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay(self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT) : ''
+				'playButtonSpan' => $entry['type'] == 'video' ? WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT ) : ''
 			);
 		}
 		return $thumb;
@@ -129,13 +130,11 @@ class LightboxController extends WikiaController {
 	 * @return \ImageServing
 	 */
 	private function carouselImageServingInstance() {
-		if ( empty(self::$imageserving) ) {
-			self::$imageserving = new ImageServing(null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT);
+		if ( empty( self::$imageserving ) ) {
+			self::$imageserving = new ImageServing( null, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 		}
 		return self::$imageserving;
 	}
-
-
 
 	/**
 	 * Returns complete details about a single media (file).  JSON only, no associated template to this method.
@@ -151,16 +150,17 @@ class LightboxController extends WikiaController {
 	 * @responseParam string userPageUrl - url to user profile page
 	 * @responseParam array articles - array of articles that has title and url
 	 * @responseParam string providerName - provider name for videos or '' for others
+	 * @responseParam boolean exists - check if the file exists
+	 * @responseParam boolean isAdded - check if the file is added to the wiki
 	 */
 	public function getMediaDetail() {
-		$fileTitle = $this->request->getVal('fileTitle', '');
-		$fileTitle = urldecode($fileTitle);
+		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
 
 		// BugId:32939
 		// There is no sane way to check whether $fileTitle is OK other
 		// than an attempt to create a Title object and then a check
 		// whether the object has been created.
-		$title = Title::newFromText($fileTitle, NS_FILE);
+		$title = Title::newFromText( $fileTitle, NS_FILE );
 
 		// BugId:32939
 		// Can't create a valid Title object based on $fileTitle. This method
@@ -175,13 +175,13 @@ class LightboxController extends WikiaController {
 
 		$config = array(
 			'imageMaxWidth'  => 1000,
-			'contextWidth'   => $this->request->getVal('width', 750),
-			'contextHeight'  => $this->request->getVal('height', 415),
+			'contextWidth'   => $this->request->getVal( 'width', 750 ),
+			'contextHeight'  => $this->request->getVal( 'height', 415 ),
 			'userAvatarWidth'=> 16,
 		);
 
 		// set max height if play in lightbox
-		if ( $this->request->getVal('width', 0) == 0 ) {
+		if ( $this->request->getVal( 'width', 0 ) == 0 ) {
 			$config['maxHeight'] = 415;
 		}
 
@@ -192,7 +192,7 @@ class LightboxController extends WikiaController {
 		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
-		$this->views = wfMsg( 'lightbox-video-views', $this->wg->Lang->formatNum($data['videoViews']) );
+		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
 		$this->title = $title->getDBKey();
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
@@ -202,7 +202,7 @@ class LightboxController extends WikiaController {
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
 		$this->userThumbUrl = $data['userThumbUrl'];
-		$this->userName = ( User::isIP($data['userName']) ) ? wfMsg( 'oasis-anon-user' ) : $data['userName'] ;
+		$this->userName = ( User::isIP($data['userName']) ) ? wfMessage( 'oasis-anon-user' )->plain() : $data['userName'] ;
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $articles;
 		$this->isPostedIn = $isPostedIn;
@@ -210,9 +210,10 @@ class LightboxController extends WikiaController {
 		$this->articleListIsSmaller = $articleListIsSmaller;
 		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
+		$this->isAdded = $data['isAdded'];
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
-		$this->response->setFormat('json');
+		$this->response->setFormat( 'json' );
 	}
 
 	/**
@@ -222,57 +223,58 @@ class LightboxController extends WikiaController {
 	 * @responseParam string url - raw url that is automically determined.  This is determined to be either article url or file page url.
 	 * @responseParam string articleUrl - url to article page
 	 * @responseParam string fileUrl - url to file page
-	 * @responseParam string embedMarkup - embedable markup
 	 * @responseParam string networks - contains id(facebook, twitter, etc) and urls of external social networks
 	 */
 	public function getShareCodes() {
-		$fileTitle = $this->request->getVal('fileTitle', '');
-		$fileTitle = urldecode($fileTitle);
+		$fileTitle = urldecode( $this->request->getVal( 'fileTitle', '' ) );
 
-		$file = wfFindFile($fileTitle);
+		$file = wfFindFile( $fileTitle );
 
 		$shareUrl = '';
 		$articleUrl = '';
 		$articleNS = '';
 		$articleTitleText = '';
-		$embedMarkup = '';
 		$fileUrl = '';
 		$thumbUrl = '';
 		$networks = array();
 
-		if ( !empty($file) ) {
-			$fileTitleObj =  Title::newFromText($fileTitle, NS_FILE);
+		if ( !empty( $file ) ) {
+			$fileTitleObj =  Title::newFromText( $fileTitle, NS_FILE );
 			$fileTitle = $fileTitleObj->getText();
-			$articleTitle = $this->request->getVal('articleTitle');
-			$articleTitleObj = Title::newFromText($articleTitle);
+			$articleTitle = $this->request->getVal( 'articleTitle' );
+			$articleTitleObj = Title::newFromText( $articleTitle );
 
-			if ( !empty($articleTitleObj) && $articleTitleObj->exists() ) {
+			if ( !empty( $articleTitleObj ) && $articleTitleObj->exists() ) {
 				$fileParam = wfUrlencode( $fileTitleObj->getDBKey() );
-				$articleUrl = $articleTitleObj->getFullURL("file=$fileParam");
+				$articleUrl = $articleTitleObj->getFullURL( "file=$fileParam" );
 				$articleNS = $articleTitleObj->getNamespace();
 				$articleTitleText = $articleTitleObj->getText();
 			}
 
-			$fileUrl = $fileTitleObj->getFullURL();
+			// check if the file is added to the wiki
+			if ( WikiaFileHelper::isAdded( $file ) ) {
+				$fileUrl = $fileTitleObj->getFullURL();
+			} else {
+				$fileUrl = WikiaFileHelper::getFullUrlPremiumVideo( $fileTitleObj->getDBkey() );
+			}
 
 			// determine share url
 			$sharingNamespaces = array(
 				NS_MAIN,
 				NS_CATEGORY,
 			);
-			$shareUrl = !empty($articleUrl) && in_array($articleNS, $sharingNamespaces) ? $articleUrl : $fileUrl;
-			$thumb = $file->transform(array('width'=>300, 'height'=>250));
+			$shareUrl = ( !empty( $articleUrl ) && in_array( $articleNS, $sharingNamespaces ) ) ? $articleUrl : $fileUrl;
+			$thumb = $file->transform( array( 'width' => 300, 'height' => 250 ) );
 			$thumbUrl = $thumb->getUrl();
 
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
-				$embedMarkup = $file->getEmbedCode(300, true, false);
 				$msgSuffix = '-video';
 			} else {
-				$embedMarkup = "<a href=\"$shareUrl\"><img width=\"" . $thumb->getWidth() . "\" height=\"" . $thumb->getHeight() . "\" src=\"$thumbUrl\"/></a>";
 				$msgSuffix = '';
 			}
 
-			$linkDescription = wfMsg( 'lightbox-share-description'.$msgSuffix, empty($articleUrl) ? $fileTitle : $articleTitleText, $this->wg->Sitename );
+			$msgArticleTitle = empty( $articleUrl ) ? $fileTitle : $articleTitleText;
+			$linkDescription = wfMessage( 'lightbox-share-description'.$msgSuffix, $msgArticleTitle, $this->wg->Sitename )->text();
 
 			$shareNetworks = SocialSharingService::getInstance()->getNetworks( array(
 				'facebook',
@@ -281,22 +283,15 @@ class LightboxController extends WikiaController {
 				'reddit',
 				'plusone',
 			) );
-			foreach ($shareNetworks as $network) {
+			foreach ( $shareNetworks as $network ) {
 				$networks[] = array(
 					'id' => $network->getId(),
-					'url' => $network->getUrl($shareUrl, $linkDescription)
+					'url' => $network->getUrl( $shareUrl, $linkDescription )
 				);
 			}
-
-			// Don't show embed code for screenplay b/c it's using JW Player
-			if ( WikiaFileHelper::isFileTypeVideo($file) && $file->getProviderName() == 'screenplay' ) {
-				$embedMarkup = false;
-			}
-
 		}
 
 		$this->shareUrl = $shareUrl;
-		$this->embedMarkup = $embedMarkup;
 		$this->articleUrl = $articleUrl;
 		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
@@ -304,7 +299,7 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity( 86400 );
 	}
 
 	/**
@@ -327,18 +322,18 @@ class LightboxController extends WikiaController {
 
 			$msgSuffix = ( $type == 'video' ) ? '-video' : '';
 
-			if ( !empty($addresses) && !empty($shareUrl) && !$user->isBlockedFromEmailuser() ) {
-				$addresses = explode(',', $addresses);
+			if ( !empty( $addresses ) && !empty( $shareUrl ) && !$user->isBlockedFromEmailuser() ) {
+				$addresses = explode( ',', $addresses );
 
 				//send mails
-				$sender = new MailAddress($this->wg->NoReplyAddress, 'Wikia');	//TODO: use some standard variable for 'Wikia'?
-				foreach ($addresses as $address) {
-					$to = new MailAddress($address);
+				$sender = new MailAddress( $this->wg->NoReplyAddress, 'Wikia' );	//TODO: use some standard variable for 'Wikia'?
+				foreach ( $addresses as $address ) {
+					$to = new MailAddress( $address );
 					$result = UserMailer::send(
 						$to,
 						$sender,
-						wfMsg( 'lightbox-share-email-subject'.$msgSuffix, array("$1" => $user->getName()) ),
-						wfMsg( 'lightbox-share-email-body'.$msgSuffix, $shareUrl ),
+						wfMessage( 'lightbox-share-email-subject'.$msgSuffix, $user->getName() )->text(),
+						wfMessage( 'lightbox-share-email-body'.$msgSuffix, $shareUrl )->text(),
 						null,
 						null,
 						'ImageLightboxShare'
@@ -350,14 +345,14 @@ class LightboxController extends WikiaController {
 					}
 				}
 			} else {
-				$errors[] = wfMsg('lightbox-share-email-error-noaddress');
+				$errors[] = htmlspecialchars( wfMessage( 'lightbox-share-email-error-noaddress' )->plain() );
 			}
 		}
 
 		$this->errors = $errors;
 		$this->sent = $sent;
 		$this->notsent = $notsent;
-		$this->successMsg = wfMsgExt('lightbox-share-email-ok-content', array('parsemag'), count($sent));
+		$this->successMsg = wfMessage( 'lightbox-share-email-ok-content', count( $sent ) )->escaped();
 	}
 
 	/**
@@ -373,18 +368,20 @@ class LightboxController extends WikiaController {
 		$extra = $this->request->getVal( 'count', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
+		$helper = new LightboxHelper();
+
 		// add Latest Photos if not exist
 		if ( $includeLatestPhotos == 'true' ) {
-			$latestPhotos = $this->getLatestPhotos();
+			$latestPhotos = $helper->getLatestPhotos();
 			$extra += count( $latestPhotos );
 		}
 
 		$memKey = wfMemcKey( 'lightbox', 'total_images' );
 		$imageInfo = $this->wg->Memc->get( $memKey );
-		if ( !is_array($imageInfo) ) {
+		if ( !is_array( $imageInfo ) ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$timestamp = $this->getTimestamp();
+			$timestamp = $helper->getTimestamp();
 			$totalWikiImages = $db->selectField(
 				array( 'image' ),
 				array( 'count(*) cnt' ),
@@ -406,139 +403,10 @@ class LightboxController extends WikiaController {
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
 
 		$this->to = $imageInfo['timestamp'];
-		$this->msg = wfMsg( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum($totalWikiImages) );
+		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->parse();
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Get list of images
-	 * @param integer $limit
-	 * @param string $to - timestamp
-	 * @return array $imageList - array( 'images' => list of image, 'minTimestamp' => minimum timestamp of the list )
-	 */
-	protected function getImageList( $limit, $to ) {
-		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey( 'lightbox', 'images', $limit, $to );
-		$imageList = $this->wg->Memc->get( $memKey );
-		if ( !is_array($imageList) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$result = $db->select(
-				array( 'image' ),
-				array( 'img_name, img_timestamp' ),
-				array(
-					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $to",
-				),
-				__METHOD__,
-				array(
-					'ORDER BY' => 'img_timestamp DESC',
-					'LIMIT' => $limit,
-				)
-			);
-
-			$images = array();
-			$imageList = array( 'images' => $images, 'minTimestamp' => 0 );
-			while( $row = $db->fetchObject($result) ) {
-				$minTimestamp = $row->img_timestamp;
-				$images[] = array(
-					'title' => $row->img_name,
-					'type' => 'image',
-				);
-			}
-
-			if ( !empty($images) ) {
-				$imageList = array(
-					'images' => $images,
-					'minTimestamp' => wfTimestamp( TS_MW, $minTimestamp ),
-				);
-			}
-
-			$this->wg->Memc->set( $memKey, $imageList, 60*60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $imageList;
-	}
-
-	/**
-	 * Get list of images from LatestPhotosController ( image only )
-	 * @return array $latestPhotos - array( 'title' => imageName, 'type' => 'image' )
-	 */
-	protected function getLatestPhotos() {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = wfMemcKey( 'lightbox', 'latest_photos' );
-		$latestPhotos = $this->wg->Memc->get( $memKey );
-		if ( !is_array($latestPhotos) ) {
-			$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
-			$thumbUrls = $response->getVal( 'thumbUrls', '' );
-
-			$latestPhotos = array();
-			if ( !empty($thumbUrls) && is_array($thumbUrls) ) {
-				foreach ( $thumbUrls as $thumb ) {
-					if ( !$thumb['isVideoThumb'] ) {
-						$title = Title::newFromText( $thumb['image_filename'] );
-						$latestPhotos[] = array(
-							'title' => $title->getDBKey(),
-							'type' => 'image',
-						);
-					}
-				}
-			}
-
-			$this->wg->Memc->set( $memKey, $latestPhotos, 60*60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $latestPhotos;
-	}
-
-	/**
-	 * Get minimum timestamp from LatestPhotosController or current timestamp ( image only )
-	 * @return string $timestamp
-	 */
-	protected function getTimestamp() {
-		wfProfileIn( __METHOD__ );
-
-		$response = $this->sendRequest( 'LatestPhotosController', 'executeIndex' );
-		$latestPhotos = $response->getVal( 'thumbUrls', '' );
-
-		$timestamp = wfTimestamp( TS_MW );
-		if ( !empty($latestPhotos) && is_array($latestPhotos) ) {
-			foreach ( $latestPhotos as $photo ) {
-				if ( !$photo['isVideoThumb'] ) {
-					$photoTimestamp = wfTimestamp( TS_MW, $photo['date'] );
-					if ( $photoTimestamp < $timestamp ) {
-						$timestamp = $photoTimestamp;
-					}
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $timestamp;
-	}
-
-	/**
-	 * @param array $vars
-	 * @return bool
-	 */
-	static public function onMakeGlobalVariablesScript(&$vars) {
-		global $wgShowAdModalInterstitialTimes;
-		// How many ads to show while browsing Lightbox
-		if ( !$wgShowAdModalInterstitialTimes ) {
-			$wgShowAdModalInterstitialTimes = 1; // default: 1
-		}
-
-		$vars['wgEnableLightboxExt'] = true;
-		$vars['wgShowAdModalInterstitialTimes'] = $wgShowAdModalInterstitialTimes;
-
-		return true;
-	}
 }

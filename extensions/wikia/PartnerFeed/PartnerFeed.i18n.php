@@ -220,6 +220,13 @@ $messages['es'] = array(
 	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'all-blog-posts' => 'kategoria guztiak',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Reza1615

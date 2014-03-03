@@ -1,5 +1,4 @@
 @import "../../../../skins/oasis/css/mixins/bodytext";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
@@ -88,10 +87,10 @@
 				float: left;
 				margin-top: 10px;
 				.slider {
-					@include border-radius(14px);
 					@include box-shadow(0, 2px, 5px, #999, true);
 					background-color: #eeeded;
 					border: 1px solid #a6a6a6;
+					border-radius: 14px;
 					cursor: pointer;
 					display: block;
 					float: left;
@@ -111,10 +110,10 @@
 						margin: 2px 10px 0 35px;
 					}
 					.button {
-						@include border-radius(14px);
 						@include linear-gradient(#f2f2f2, top, #F2F2F2, 35%, #D8D8D8, 65%);
 						@include transition-shorthand(left 350ms);
 						border: 1px solid #a6a6a6;
+						border-radius: 14px;
 						display: block;
 						height: 26px;
 						left: -1px;

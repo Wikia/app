@@ -1,39 +1,46 @@
+/*!
+ * VisualEditor Tool styles.
+ *
+ * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
 /* ve.ui.FormatTool */
 
-.ve-ui-menuToolGroup .ve-ui-tool-paragraph .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-paragraph .oo-ui-labeledElement-label {
 	font-weight: normal;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading1 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading1 .oo-ui-labeledElement-label {
 	font-size: 150%;
 	font-weight: normal;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading2 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading2 .oo-ui-labeledElement-label {
 	font-size: 120%;
 	font-weight: normal;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading3 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading3 .oo-ui-labeledElement-label {
 	font-size: 105%;
 	font-weight: bold;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading4 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading4 .oo-ui-labeledElement-label {
 	font-size: 92%;
 	font-weight: bold;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading5 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading5 .oo-ui-labeledElement-label {
 	font-size: 80%;
 	font-weight: bold;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-heading6 .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading6 .oo-ui-labeledElement-label {
 	font-size: 64%;
 	font-weight: bold;
 }
 
-.ve-ui-menuToolGroup .ve-ui-tool-preformatted .ve-ui-labeledElement-label {
+.oo-ui-menuToolGroup .oo-ui-tool-name-preformatted .oo-ui-labeledElement-label {
 	font-family: monospace, "Courier New";
 }

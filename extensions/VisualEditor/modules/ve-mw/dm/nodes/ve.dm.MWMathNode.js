@@ -12,6 +12,8 @@
  * @extends ve.dm.MWExtensionNode
  *
  * @constructor
+ * @param {number} [length] Length of content data (ignored, forced to 0)
+ * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.MWMathNode = function VeDmMWMathNode( length, element ) {
 	// Parent constructor
@@ -20,7 +22,7 @@ ve.dm.MWMathNode = function VeDmMWMathNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWMathNode, ve.dm.MWExtensionNode );
+OO.inheritClass( ve.dm.MWMathNode, ve.dm.MWExtensionNode );
 
 /* Static members */
 

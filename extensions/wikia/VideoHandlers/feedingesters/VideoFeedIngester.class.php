@@ -1,45 +1,53 @@
 <?php
 
+/**
+ * Class VideoFeedIngester
+ */
 abstract class VideoFeedIngester {
+
+	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
-	public static $PROVIDERS = array(
+
+	// Caching constants; all integers are seconds
+	const CACHE_KEY = 'videofeedingester-2';
+	const CACHE_EXPIRY = 3600;
+	const THROTTLE_INTERVAL = 1;
+
+	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
+	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+
+	// Determines if a duplicate video found should be re-uploaded or ignored
+	public $reupload = false;
+
+	// Providers from which we ingest daily video data
+	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
+		self::PROVIDER_REALGRAVITY,
+		self::PROVIDER_OOYALA,
+		self::PROVIDER_IVA,
+	];
+
+	// These providers are not ingested daily, but can be ingested from if specifically named
+	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
-	public static $PROVIDERS_DEFAULT = array(
-		self::PROVIDER_SCREENPLAY,
-		self::PROVIDER_IGN,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
+	];
+
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array();
-	private static $instances = array();
+	protected static $CLDR_NAMES = array();
 	protected $filterByProviderVideoId = array();
 
-	protected static $CLDR_NAMES = array();
-
-	const CACHE_KEY = 'videofeedingester-2';
-	const CACHE_EXPIRY = 3600;
-	const THROTTLE_INTERVAL = 1;	// seconds
-
-	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
-
-	public $reupload = false;
+	private static $instances = array();
 
 	abstract public function import($content='', $params=array());
 
@@ -50,6 +58,31 @@ abstract class VideoFeedIngester {
 	 * @return array - A list of category names
 	 */
 	abstract public function generateCategories( $data, $addlCategories );
+
+	/**
+	 * Return a list of all the providers we actively ingest from
+	 * @return array
+	 */
+	public static function activeProviders() {
+		return self::$ACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all the providers that are legal to ingest from but from whom
+	 * we do not ingest automatically.
+	 * @return array
+	 */
+	public static function inactiveProviders() {
+		return self::$INACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all available providers
+	 * @return array
+	 */
+	public static function allProviders() {
+		return array_merge( self::$ACTIVE_PROVIDERS, self::$INACTIVE_PROVIDERS );
+	}
 
 	/**
 	 * Generate name for video.
@@ -234,7 +267,7 @@ abstract class VideoFeedIngester {
 		}
 		$metadata['destinationTitle'] = $name;
 
-		if ( !$this->validateTitle($id, $name, $msg, $debug) ) {
+		if ( !$this->validateTitle( $id, $name, $msg ) ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -272,7 +305,8 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		// parepare article body
+		// prepare article body
+		/** @var ApiWrapper $apiWrapper */
 		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
 
 		// add category
@@ -313,6 +347,7 @@ abstract class VideoFeedIngester {
 					return 0;
 				}
 			}
+			/** @var Title $uploadedTitle */
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
@@ -465,13 +500,13 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Returns whether the given video title has a value title object
 	 * @param $videoId
 	 * @param $name
 	 * @param $msg
-	 * @param $isDebug
-	 * @return int
+	 * @return bool
 	 */
-	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
+	protected function validateTitle( $videoId, $name, &$msg ) {
 
 		wfProfileIn( __METHOD__ );
 		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
@@ -479,10 +514,10 @@ abstract class VideoFeedIngester {
 		if ( is_null($title) ) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			wfProfileOut( __METHOD__ );
-			return 0;
+			return false;
 		}
 		wfProfileOut( __METHOD__ );
-		return 1;
+		return true;
 	}
 
 	/**
@@ -506,7 +541,7 @@ abstract class VideoFeedIngester {
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
-		foreach ( $rawData as $cityId=>$cityData ) {
+		foreach ( $rawData as $cityId => $cityData ) {
 			if ( is_array($cityData) ) {
 				foreach ( self::$WIKI_INGESTION_DATA_FIELDS as $field ) {
 					if ( !empty($cityData[$field]) && is_array($cityData[$field]) ) {
@@ -1129,6 +1164,10 @@ abstract class VideoFeedIngester {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 			if ( empty( self::$CLDR_NAMES ) ) {
+
+				// Initialize some variables that will be overwritten by the following include
+				$languageNames = $countryNames = [];
+
 				// include cldr extension for language code
 				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
 				self::$CLDR_NAMES = array(

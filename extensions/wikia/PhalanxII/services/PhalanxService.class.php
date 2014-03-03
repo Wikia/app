@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * @method setLimit
@@ -13,6 +14,7 @@ class PhalanxService extends Service {
 	const RES_OK = 'ok';
 	const RES_FAILURE = 'failure';
 	const RES_STATUS = 'PHALANX ALIVE';
+	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
 
 	/**
 	 * @param $name
@@ -137,12 +139,16 @@ class PhalanxService extends Service {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$requestTime = 0;
+		$loggerPostParams = [];
 		/**
 		 * for status we're sending GET
 		 */
 		if( $action == "status" ) {
 			wfDebug( __METHOD__ . ": calling $url\n" );
+			$requestTime = microtime( true );
 			$response = Http::get( $url, 'default', $options );
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 		/**
 		 * for any other we're sending POST
@@ -179,22 +185,30 @@ class PhalanxService extends Service {
 					} else {
 						$postData[] = urlencode( $key ) . '=' . urlencode( $values );
 					}
+					$loggerPostParams[ $key ] = substr( json_encode( $values ), 0, self::PHALANX_LOG_PARAM_LENGTH_LIMIT );
 				}
 			}
 
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
+			$requestTime = microtime( true );
 			$response = Http::post( $url, $options);
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 
 		if ( $response === false ) {
 			/* service doesn't work */
 			$res = false;
 
+			WikiaLogger::instance()->debug( "Phalanx service error", [ "phalanxUrl" => $url, 'requestTime' => $requestTime,
+				'postParams' => json_encode( $loggerPostParams ) ] );
+
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
+
+			WikiaLogger::instance()->debug( "Phalanx service success", ["phalanxUrl" => $url, 'requestTime' => $requestTime ] );
 
 			switch ( $action ) {
 				case "stats":

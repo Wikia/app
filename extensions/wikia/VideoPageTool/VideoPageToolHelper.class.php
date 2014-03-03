@@ -76,6 +76,7 @@ class VideoPageToolHelper extends WikiaModel {
 		foreach( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
+				'title' => $value,
 				'anchor' => $value,
 				'href' => $this->wg->title->getLocalURL( $query ),
 				'selected' => ($selected == $key),
@@ -213,9 +214,9 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param Title $categoryTitle
 	 * @param array $thumbOptions
 	 * @return array An array of video data where each array element has the structure:
-	 *   [ title => 'Video Title',
-	 *     url   => 'http://url.to.video',
-	 *     thumb => '<thumbnail_html_snippet>'
+	 *   [ title     => 'Video Title',
+	 *     url       => 'http://url.to.video',
+	 *     thumbnail => '<thumbnail_html_snippet>'
 	 */
 	public function getVideosByCategory( Title $categoryTitle, $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
@@ -230,13 +231,13 @@ class VideoPageToolHelper extends WikiaModel {
 
 		$videos = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
 
-			->SELECT('page_id')->FIELD('page_title')
+			->SELECT( 'page_id' )->FIELD( 'page_title' )
 			->FROM( 'page' )
 				->JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
 				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
 			->WHERE( 'cl_to' )->EQUAL_TO( $dbKey )
 			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
-			->ORDER_BY( 'added_at ')->DESC()
+			->ORDER_BY( 'added_at ' )->DESC()
 			->ORDER_BY( 'page_title' )
 			->LIMIT( self::MAX_VIDEOS_PER_CATEGORY )
 
@@ -254,16 +255,16 @@ class VideoPageToolHelper extends WikiaModel {
 					] );
 					$videoThumb = $thumb->toHtml( $thumbOptions );
 					$videos[] = [
-						'title' => $title->getText(),
-						'url'   => $title->getFullURL(),
-						'thumb' => $videoThumb,
+						'title'     => $title->getText(),
+						'url'       => $title->getFullURL(),
+						'thumbnail' => $videoThumb,
 					];
 				}
 			});
 
 		wfProfileOut( __METHOD__ );
 
-		return empty($videos) ? [] : $videos;
+		return empty( $videos ) ? [] : $videos;
 	}
 
 	/**

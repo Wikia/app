@@ -1,12 +1,11 @@
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../mixins/divider";
 
 .UserLoginModal {
 	@include transition-shorthand(200ms opacity ease-in-out);
-	@include opacity(100);
 	height: auto;
 	margin: 0 auto;
+	opacity: 1;
 	padding: 0;
 	width: 264px;
 	input[type=text],

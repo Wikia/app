@@ -649,7 +649,7 @@ $messages['sv'] = array(
 	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
 	'category-exhibition-media-header' => 'Media i kategorin "$1"',
-	'category-exhibition-blogs-header' => 'Blogg-inlägg',
+	'category-exhibition-blogs-header' => 'Blogginlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',
 );

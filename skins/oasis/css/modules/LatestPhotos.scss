@@ -1,7 +1,5 @@
-@import "../mixins/border-radius";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
-@import "../mixins/opacity";
 @import "../core/color";
 
 /* FILE: LatestPhotos.scss */
@@ -140,9 +138,9 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 			}
 		}
 		a {
-			@include border-radius(3px);
 			background-color: transparentize($color-links, 0.4%);
 			border: 1px solid #FFF;
+			border-radius: 3px;
 			color: #FFF;
 			display: block;
 			font: {
@@ -183,7 +181,7 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 			margin-right: -8px;
 		}
 		&.disabled {
-			@include opacity(50);
+			opacity: .5;
 			cursor: default;
 		}
 		
@@ -242,11 +240,11 @@ $color-see-more-images-placeholder: darken($color-page, 5%);
 				}
 			}
 			img {
-				@include opacity(90);
 				height: 82px;
+				opacity: .9;
 				width: 82px;
 				&:hover {
-					@include opacity(100);
+					opacity: 1;
 				}
 			}
 			.thumbcaption {

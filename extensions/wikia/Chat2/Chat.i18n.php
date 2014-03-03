@@ -958,6 +958,17 @@ Por favor, contáctalo para más información.',
 	'chat-status-away' => 'Ausente',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
+	'chat-you-were-kicked' => '$1(e)k kanporatu zaitu.',
+	'chat-log-reason-undo' => 'desegin',
+	'chat-ban-undolink' => 'desegin',
+	'chat-user-menu-kick' => 'Kanporatu',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
@@ -3209,6 +3220,9 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
  * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'chat' => 'Sohbet',
+	'chat-log-reason-undo' => 'geri al',
+	'chat-ban-undolink' => 'geri al',
 	'chat-start-a-chat' => 'Sohbeti Başlat',
 	'chat-join-the-chat' => 'Sohbete Katıl',
 	'chat-user-menu-message-wall' => 'Mesaj Duvarı',

@@ -273,7 +273,7 @@ ve.ce.getOffsetOfSlug = function ( $node ) {
  * @returns {boolean} Key code represents a left or right arrow key
  */
 ve.ce.isLeftOrRightArrowKey = function ( keyCode ) {
-	return keyCode === ve.Keys.LEFT || keyCode === ve.Keys.RIGHT;
+	return keyCode === OO.ui.Keys.LEFT || keyCode === OO.ui.Keys.RIGHT;
 };
 
 /**
@@ -282,7 +282,7 @@ ve.ce.isLeftOrRightArrowKey = function ( keyCode ) {
  * @returns {boolean} Key code represents an up or down arrow key
  */
 ve.ce.isUpOrDownArrowKey = function ( keyCode ) {
-	return keyCode === ve.Keys.UP || keyCode === ve.Keys.DOWN;
+	return keyCode === OO.ui.Keys.UP || keyCode === OO.ui.Keys.DOWN;
 };
 
 /**

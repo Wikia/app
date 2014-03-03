@@ -1,8 +1,6 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/border-radius";
-
 @mixin tooltip-icon {
-	@include border-radius(6px);
+	border-radius: 6px;
 	background-color: $color-buttons;
 	color: white;
 	cursor: default;

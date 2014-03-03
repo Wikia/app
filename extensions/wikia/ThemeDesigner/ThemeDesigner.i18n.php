@@ -696,6 +696,13 @@ $messages['es'] = array(
 	'themedesigner-upload-disabled' => 'Lo sentimos, hemos desactivado temporalmente la subida de archivos. Para hacer cambios, regresa en unos momentos',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'themedesigner-button-ok' => 'Ados',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio

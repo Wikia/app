@@ -769,6 +769,14 @@ Kasulikud tööriistad:
 [[Eri:UserRights|Kasutajate õigused]]', # Fuzzy
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiadoption-adopt-inquiry' => 'Jakin ezazu gehiago!',
+	'wikiadoption-know-more-header' => 'Gehiago jakin nahi duzu?',
+);
+
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Wayiran
@@ -2729,7 +2737,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'wikiadoption' => 'Automatisk wiki-adoption',
+	'wikiadoption' => 'Automatisk wikiadoption',
 	'wikiadoption-desc' => 'En AutomatiskWikiAdoptions-förlängning för MediaWiki',
 	'wikiadoption-header' => 'Adoptera den här wikin',
 	'wikiadoption-button-adopt' => 'Ja, jag vill adoptera {{SITENAME}}!',
@@ -2748,7 +2756,7 @@ Genom att adoptera wikin, befordras du till administratör och byråkrat som ger
 	'wikiadoption-not-allowed' => 'Vi ber om ursäkt. Du kan inte adoptera denna wiki just nu.',
 	'wikiadoption-not-enough-edits' => 'Hoppsan! Du måste ha mer än 10 redigeringar för att adoptera denna wiki.',
 	'wikiadoption-adopted-recently' => 'Hoppsan! Du har redan adopterat en wiki nyligen. Du måste vänta ett tag innan du kan adoptera en ny wiki.',
-	'wikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
+	'wikiadoption-log-reason' => 'Automatisk Wikiadoption',
 	'wikiadoption-notification' => '{{SITENAME}} är tillgänglig för adoption! Intressant att bli en ledare här? Adoptera denna wiki för att komma igång! $2',
 	'wikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
 	'wikiadoption-mail-first-content' => 'Hej $1,
@@ -2940,10 +2948,32 @@ Mga Kasangkapang Nakakatulong:
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Trncmvsr
  */
 $messages['tr'] = array(
+	'wikiadoption' => 'Otomatik wiki kabulü',
+	'wikiadoption-desc' => 'MediaWiki için AutomaticWikiAdoption eklentisi',
+	'wikiadoption-header' => 'Bu wikiyi kabul et',
+	'wikiadoption-button-adopt' => 'Evet, Ben {{SITENAME}} sitesini kabul etmek istiyorum!',
+	'wikiadoption-adopt-inquiry' => 'Daha fazla bilgi!',
+	'wikiadoption-description' => '$1, {{SITENAME}} sitesini kabul etmeye hazır mısınız?
+<br /><br />
+{{SITENAME}} wikisinde bir süredir aktif bir yönetici yoktu ve biz bu eklentiyi sitenin içeriği ile topluluğun büyümesine yardımcı olacak yeni bir lider araması için bulduk! Biz {{SITENAME}} sitesine katkıda bulunan birisi olarak çalışmayı isteyip, istemediğinizi merak ediyoruz.
+<br /><br />
+Eğer wiki topluluğuna gelerek içeriği yönetmek için gerekli araçların verilmesini talep ederseniz, bu durumda kabul etme eklentisi sizi yönetici ve bürokrat olarak atayacaktır. Böylece, diğer yöneticilere yardımcı olmak için silme, geriye alma, taşıma ve sayfaları koruma yetkiniz olacaktır.
+<br /><br />
+{{SITENAME}} sitesine yardım etmek için bir sonraki adıma hazır mısınız?',
 	'wikiadoption-know-more-header' => 'Daha fazlasını öğrenmek ister misin?',
+	'wikiadoption-know-more-description' => 'Daha fazla bilgi için bu bağlantıları göz atın. Ve tabii ki, herhangi bir sorunuz varsa lütfen bizimle temas kurmaktan çekinmeyin!',
+	'wikiadoption-adoption-successed' => 'Tebrikler! Bu wiki üzerinde artık bir yöneticisiniz!',
+	'wikiadoption-adoption-failed' => 'Özür dileriz. Sizi bir yönetici yapmayı denedik ama bu işe yaramadı. Lütfen [http://community.wikia.com/Special:Contact bize ulaşın] ve size yardımcı olmaya çalışalım.',
+	'wikiadoption-not-allowed' => 'Özür dileriz. Bu wiki şu anda bunu kabul etmiyor.',
+	'wikiadoption-not-enough-edits' => "Oops! Bu wikiyi kabul edebilmeniz için 10'dan fazla düzenlemenizin olması gerekir.",
+	'wikiadoption-adopted-recently' => 'Oops! Son zamanlarda başka bir wikiyi  zaten kabul ettiniz. Yeni bir wikiyi kabul etmek için daha önce bir süre beklemeniz gerekecektir.',
+	'wikiadoption-log-reason' => 'Otomatik wiki kabulü',
+	'wikiadoption-notification' => '{{SITENAME}} sitesi için kabul etme bulunmakta. Burada bir lider olmakla ilgileniyor musunuz? Dilerseniz bu wikiyi kabul etmeye başlayın! $2',
+	'wikiadoption-mail-first-subject' => 'Biz sizi bir süredir çevrelerde göremedik',
 );
 
 /** Ukrainian (українська)

@@ -624,16 +624,17 @@ $messages['pap'] = array(
 );
 
 /** Polish (polski)
+ * @author Chrumps
  * @author Marcin Łukasz Kiejzik
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'wva-success' => 'Strona filmu „$1” została pomyślnie dodana.', # Fuzzy
-	'wva-success-replaced' => 'Strona filmu „$1” została pomyślnie zastąpiona.', # Fuzzy
+	'wva-success' => 'Strona filmu [[$1]] została pomyślnie dodana.', # Fuzzy
+	'wva-success-replaced' => 'Strona filmu [[$1]] została pomyślnie zastąpiona.', # Fuzzy
 	'wva-failure' => 'Podaj prawidłowe parametry.',
-	'wva-name' => 'Wpisz nazwę:', # Fuzzy
-	'wva-url' => 'Podaj URL:', # Fuzzy
+	'wva-name' => 'Nazwa filmu:',
+	'wva-url' => 'URL filmu:',
 	'wva-add' => 'Dodaj',
 	'wva-title' => 'Dodaj film z adresu URL',
 	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',

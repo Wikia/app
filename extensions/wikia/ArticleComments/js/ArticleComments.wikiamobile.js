@@ -172,6 +172,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 								} );
 							}
 							d.getElementById( 'wkArtComHeader' ).setAttribute( 'data-count', json.counter );
+							d.getElementsByClassName( 'comment-counter' )[0].innerText = json.counterMessage;
 						} else {
 							onFail();
 						}

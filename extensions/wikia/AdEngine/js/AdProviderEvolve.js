@@ -21,8 +21,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		'HUB_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
 		'LEFT_SKYSCRAPER_2': {'tile': 3, 'size': '160x600'},
 		'TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
-		'INVISIBLE_1': {'size': '0x0'}
+		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'}
 	};
 
 	function hasEmbed(slot) {

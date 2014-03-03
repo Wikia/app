@@ -482,6 +482,43 @@ class MediaQueryService extends WikiaService {
 	}
 
 	/**
+	 * Get number of total videos in a given category
+	 * @return integer
+	 */
+	public function getTotalVideosByCategory ( $category ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$db = wfGetDB( DB_SLAVE );
+		$memKey = $this->getMemKeyTotalVideosByCategory( $category );
+
+		$totalViews = (new WikiaSQL())->cache( 60*60*6, $memKey )
+			->SELECT( 'count(video_title) cnt' )
+			->FROM( 'video_info' )
+			->WHERE('removed' )->EQUAL_TO( 0 )
+			->JOIN( 'page' )->ON( 'video_title', 'page_title' )
+			->JOIN( 'categorylinks' )->ON( 'page_id', 'cl_from' )
+				->AND_( 'cl_to' )->EQUAL_TO( $category )
+				->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
+			->run( $db, function ( $result ) {
+				$row = $result->fetchObject( $result );
+				return $row->cnt;
+			});
+
+		wfProfileOut( __METHOD__ );
+
+		return $totalViews;
+	}
+
+	protected function getMemKeyTotalVideosByCategory( $category ) {
+		return wfMemcKey( 'videos', 'total_videos', $category );
+	}
+
+	public function clearCacheTotalVideosByCategory( $category ) {
+		$this->wg->Memc->delete( $this->getMemKeyTotalVideosByCategory( $category ) );
+	}
+
+	/**
 	 * Get memcache key for total premium videos
 	 */
 	protected function getMemKeyTotalPremiumVideos() {

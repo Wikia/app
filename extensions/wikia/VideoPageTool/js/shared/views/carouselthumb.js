@@ -3,21 +3,22 @@
  */
 define( 'shared.views.carouselthumb', [
 	'jquery',
-	'templates.mustache'
-], function( $, templates ) {
+	'videopagetool.templates.mustache',
+	'thumbnails.templates.mustache'
+], function( $, vptTemplates, thumbnailsTemplates ) {
 	'use strict';
 
 	var CarouselThumbView = Backbone.View.extend( {
 		initialize: function() {
 			if ( this.model.get( 'type' ) === 'redirect' ) {
-				this.template = Mustache.compile( templates.carouselLastThumb );
+				this.template = Mustache.compile( vptTemplates.carouselLastThumb );
 			} else {
-				this.template = Mustache.compile( templates.carouselThumb );
+				this.template = Mustache.compile( thumbnailsTemplates.titleThumbnail );
 			}
 			this.render();
 		},
 		tagName: 'div',
-		className: 'carousel-item',
+		className: 'carousel-item title-thumbnail',
 		render: function() {
 			var html = this.template( this.model.toJSON() );
 			this.$el.html( html );

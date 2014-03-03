@@ -39,6 +39,7 @@ $messages['en'] = array(
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
 
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comment|Comments}}',
 	'wikiamobile-article-comments-header' => 'Comments',
 	'wikiamobile-article-comments-more' => 'Load more',
 	'wikiamobile-article-comments-prev' => 'Load previous',
@@ -112,6 +113,7 @@ Parameters:
 	'article-comments-toc-item' => '{{Identical|Comment}}',
 	'article-comments-reply' => '{{Identical|Reply}}',
 	'article-comments-next-page' => '{{Identical|Next}}',
+	'wikiamobile-article-comments-counter' => 'Number of comments + word Comments to display in WM page header',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin.
 {{Identical|Comment}}",
 	'wikiamobile-article-comments-more' => 'Label on a button to load next page of comments.
@@ -1130,6 +1132,7 @@ $messages['et'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'article-comments-anonymous' => 'Lankide anonimoa',
@@ -1143,6 +1146,8 @@ $messages['eu'] = array(
 	'article-comments-prev-page' => 'Aurrekoa',
 	'article-comments-next-page' => 'Hurrengoa',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-view' => 'Erantzunak ikusi',
+	'wikiamobile-article-comments-replies' => 'erantzunak',
 );
 
 /** Persian (فارسی)
@@ -3512,6 +3517,7 @@ $messages['tr'] = array(
 	'article-comments-next-page' => 'Sonraki',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Ana makale / ana yorum silinmiş.',
+	'article-comments-empty-comment' => "Boş yorum gönderemezsiniz. <a href='$1'>Bunun yerine silin?</a>",
 	'wikiamobile-article-comments-header' => 'Yorumlar',
 	'wikiamobile-article-comments-more' => 'Daha fazla yükle',
 	'wikiamobile-article-comments-prev' => 'Öncekileri yükle',
@@ -3523,6 +3529,28 @@ $messages['tr'] = array(
 	'wikiamobile-article-comments-placeholder' => 'Yorum gönder',
 	'wikiamobile-article-comments-login-post' => 'Yorum yazmak için lütfen giriş yapınız.',
 	'wikiamobile-article-comments-post-fail' => 'Yorum kaydetme başarısız oldu, lütfen daha sonra yeniden deneyin',
+	'enotif_subject_article_comment' => '$PAGEEDITOR {{SITENAME}} sitesindeki  "$PAGETITLE" başlığına yorum bıraktı',
+	'enotif_body_article_comment' => 'Merhaba $WATCHINGUSERNAME,
+
+{{SITENAME}} sitesi $PAGETITLE  başlığında yeni bir yorum var. Tüm yorumları görmek için şu linki kullanabilirsiniz: $PAGETITLE_URL#WikiaArticleComments
+
+- Wikia Topluluğu Desteği
+
+___________________________________________
+* Topluluk Merkezinden yardım alabilirsiniz: http://community.wikia.com
+* Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: http://community.wikia.com/Special:Preferences',
+	'enotif_body_article_comment-HTML' => '<p>Merhaba $WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}} sitesi $PAGETITLE başlığında yeni bir yorum var. Tüm yorumları görmek için şu bağlantıyı kullanın: $PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia Topluluğu Desteği
+<br /><br />
+___________________________________________
+<ul>
+<li>Topluluk Merkezinden yardım alabilirsiniz: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Bizden daha az mesaj almak ister misiniz? Şu adresteki tercihlerinizden e-posta aboneliğinizi iptal edin veya değiştirin: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -3769,7 +3797,7 @@ $messages['zh-hans'] = array(
 	'article-comments-edit' => '编辑',
 	'article-comments-history' => '历史',
 	'article-comments-error' => '无法保存评论',
-	'article-comments-undeleted-comment' => '博客页$1被撤消删除的评论',
+	'article-comments-undeleted-comment' => '撤消删除博客页$1的评论',
 	'article-comments-rc-comment' => '条目评论(<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '文章评论([[$1]])',
 	'article-comments-fblogin' => '请<a href="$1" rel="nofollow">登陆并连接到Facebook</a>以在本维基上发表评论！',

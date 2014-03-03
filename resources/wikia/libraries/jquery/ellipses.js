@@ -1,78 +1,112 @@
-/**
- * @description Simple AMD friendly jquery plugin to make 2 line ellipses
- * @author Liz
- * @author Ken (refactor for modularity)
- * TODO: Allow user to pass config to plugin that allows ellipsifying of arbitary # of lines
- */
-(function( exports ) {
-		'use strict';
-		var factory = function( $ ) {
-			function Ellipses( $el ) {
-				this.$el = $el;
-				this.render();
+( function( exports ) {
+	'use strict';
+	var factory = function( $ ) {
+		function Ellipses( $el, opts ) {
+			this.$el = $el;
+			if ( opts ) {
+				$.extend( this.settings, opts );
 			}
+			this.render();
+		}
 
-			Ellipses.prototype = {
-				render: function() {
-					var oText = this.$el.text(),
-						words = oText.split( ' ' ),
-						len = words.length,
-						i,
-						$spans,
-						lineCount = 0,
-						maxLines = 2,
-						spanTop = null,
-						currSpanTop;
+		Ellipses.prototype = {
+			settings: {
+				marginLeft: -3,
+				maxLines: 2,
+				// words hidden on last visible line
+				wordsHidden: 1
+			},
+			render: function() {
+				var oText = this.$el.text(),
+					words = oText.split( ' ' ),
+					len = words.length,
+					i,
+					$spans,
+					lineCount = 0,
+					maxLines = this.settings.maxLines,
+					$tar,
+					spanTop = null,
+					currSpanTop,
+					self;
 
-					for( i = 0; i < len; i++ ) {
-						words[ i ] = '<span>' + words[ i ] + '</span>';
-					}
+				self = this;
 
-					this.$el.html( words.join( ' ' ) );
-
-					$spans = this.$el.find( 'span' );
-
-					$spans.each( function() {
-						var $this = $( this );
-
-						currSpanTop = $this.offset().top;
-
-						// if it's the first span, set the value and move on
-						if( spanTop === null ) {
-							spanTop = currSpanTop;
-						} else if( lineCount === maxLines ) {
-							// hide everthing if we've already reached our max lines
-							$this.hide();
-						} else {
-							if( spanTop !== currSpanTop ) {
-								// we're at a new line, increment lineCount
-								lineCount += 1;
-								// update span top with the new y coordinate
-								spanTop = currSpanTop;
-							}
-
-							if( lineCount === maxLines ) {
-								// hide the first word on the new line and the last word in
-								// the line before the max lines
-								// reached
-								$this.hide().prev().hide().before( '...' );
-							}
-						}
-					});
+				for( i = 0; i < len; i++ ) {
+					words[ i ] = '<span>' + words[ i ] + '</span>';
 				}
-			};
 
-			$.fn.ellipses = function() {
-				return this.each(function() {
-						var $this = $( this );
-						$this.data( 'ellipses', new Ellipses( $this ));
+				this.$el.html( words.join( ' ' ) );
+
+				$spans = this.$el.find( 'span' );
+
+				for ( i = 0; i < $spans.length; i++ ) {
+					$tar = $( $spans[i] );
+
+					currSpanTop = $tar.offset().top;
+
+					// if it's the first span, set the value and move on
+					if ( spanTop === null ) {
+						spanTop = currSpanTop;
+					} else if ( lineCount === maxLines ) {
+						// hide everthing if we've already reached our max lines
+						$tar.hide();
+					} else {
+						if ( spanTop !== currSpanTop ) {
+							// we're at a new line, increment lineCount
+							lineCount += 1;
+							// update span top with the new y coordinate
+							spanTop = currSpanTop;
+						}
+
+						if ( lineCount === maxLines ) {
+							// hide the first word on the new line and the nth word in
+							// the line before the max lines
+							// reached
+							$tar
+								.hide()
+							.prevUntil( ':nth-child( ' + ( i - self.settings.wordsHidden )  + ' )' )
+								.hide()
+							.eq( 0 )
+								.before( '<span class="ellipses" style="">...</span>' );
+
+							self.trim();
+						}
+					}
+				}
+			},
+			/**
+			 * @description method that aims to achieve balance between clean ellipses implementation
+			 * and performance. Uses CSS to position ellipses appropriate to hide last whitespace and also trims
+			 * dashes.
+			 */
+			trim: function() {
+				var $ellipses,
+						$prev;
+
+				$ellipses = this.$el.find( '.ellipses' );
+				$prev = $ellipses.prev( 'span' );
+
+				$ellipses.css({
+					marginLeft: this.settings.marginLeft
 				});
-			};
+
+				if ( $prev.text() === '-' ) {
+					$prev.hide();
+				}
+			}
 		};
 
-		if ( typeof define === 'function' && define.amd ) {
-			define( 'jquery.ellipses', [ 'jquery' ], factory );
-		} else {
-			factory( exports.jQuery );
-		}
-})( this );
+		$.fn.ellipses = function( opts ) {
+			return this.each( function() {
+				var $this = $( this );
+				$this.data( 'ellipses', new Ellipses( $this, opts ) );
+			} );
+		};
+	};
+
+	if ( typeof define === 'function' && define.amd ) {
+		define( 'jquery.ellipses', [ 'jquery' ], factory );
+	} else {
+		factory( exports.jQuery );
+	}
+} )( this );

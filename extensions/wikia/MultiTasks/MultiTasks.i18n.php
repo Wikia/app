@@ -113,6 +113,7 @@ $messages['en'] = array(
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
+	'multiwikifinder-redirect' => 'redirect',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
 );
 
@@ -635,7 +636,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'multiwikiedit_from_form' => 'формера',
 	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
-	'multidelete_title' => 'Дуккха дӀяккхар',
+	'multidelete_title' => 'Дуккха дӀаяккхар',
 	'multidelete_processing' => 'агӀонаш дӀаяхар',
 	'multiwikienterpagename' => 'ДӀаязъе агӀона цӀе:',
 );
@@ -1092,6 +1093,16 @@ $messages['es'] = array(
 	'multiwikienterpagename' => 'Ingresar un nombre de página:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki encontrado|wikis encontrados}}',
 	'action-multiwikifinder' => 'Buscador de Títulos Multiwiki',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'multitasks-link-back-label' => 'hemen',
+	'multiwikiedit_or' => '<b>EDO</b>',
+	'multiwikiedit_select_yourself' => 'zu',
+	'multidelete_or' => '<b>EDO</b>',
 );
 
 /** Persian (فارسی)
@@ -3429,10 +3440,22 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'multiwikiedit_button' => 'DÜZENLE',
+	'multiwikiedit_confirm' => 'ONAYLA',
+	'multiwikiedit_caption' => 'Sayfa listesi',
+	'multiwikiedit_title' => 'Çoklu Wiki Düzenle',
+	'multiwikiedit_this_wiki' => 'bu wiki',
+	'multiwikiedit_inbox_caption' => 'virgülle ayrılmış',
+	'multiwikiedit_all_wikis' => 'tüm vikiler',
+	'multiwikiedit_selected_wikis' => 'seçilen vikiler',
+	'multiwikiedit_success_subtitle' => '$1 için',
 	'multidelete_button' => 'SİL',
+	'multidelete_caption' => 'Sayfa listesi',
+	'multidelete_title' => 'Çoklu Sil',
 );
 
 /** Tatar (Cyrillic script) (татарча)

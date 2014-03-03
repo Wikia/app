@@ -93,6 +93,15 @@ $messages['es'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'performancestat-total' => 'Guztira: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Finnish (suomi)
  * @author Nike
  */

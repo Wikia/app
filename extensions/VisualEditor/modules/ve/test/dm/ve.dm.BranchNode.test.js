@@ -14,7 +14,7 @@ ve.dm.BranchNodeStub = function VeDmBranchNodeStub( children, element ) {
 	ve.dm.BranchNode.call( this, children, element );
 };
 
-ve.inheritClass( ve.dm.BranchNodeStub, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.BranchNodeStub, ve.dm.BranchNode );
 
 ve.dm.BranchNodeStub.static.name = 'branch-stub';
 

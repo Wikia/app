@@ -242,64 +242,6 @@ class WAMPageModelTest extends WikiaBaseTest {
 		];
 	}
 
-	 /**
-	  * @dataProvider calculateFilterIndexProvider
-	  */
-	public function testCalculateFilterIndex( $wamWikis, $params, $expected ) {
-		$class = new ReflectionClass( 'WAMPageModel' );
-		$method = $class->getMethod( 'calculateFilterIndex' );
-		$method->setAccessible( true );
-
-		$wamModel = new WAMPageModel();
-		$computedWikis = $method->invokeArgs( $wamModel, array( $wamWikis, $params ) );
-		$this->assertEquals( $expected, $computedWikis );
-	}
-
-	public function calculateFilterIndexProvider() {
-		return [
-			[
-				[
-					['wiki_id' => 1],
-					['wiki_id' => 2],
-				],
-				['offset' => 50, 'limit' => 20],
-				[
-					['wiki_id' => 1, 'index' => 51],
-					['wiki_id' => 2, 'index' => 52],
-				]
-			],
-			[
-				[
-					['wiki_id' => 1],
-				],
-				['offset' => 511, 'limit' => 21],
-				[
-					['wiki_id' => 1, 'index' => 512],
-				]
-			],
-			[
-				[
-					['wiki_id' => 1],
-					['wiki_id' => 2],
-					['wiki_id' => 3],
-					['wiki_id' => 4],
-					['wiki_id' => 5],
-					['wiki_id' => 6],
-					['wiki_id' => 7],
-				],
-				['offset' => 0, 'limit' => 5],
-				[
-					['wiki_id' => 1, 'index' => 1],
-					['wiki_id' => 2, 'index' => 2],
-					['wiki_id' => 3, 'index' => 3],
-					['wiki_id' => 4, 'index' => 4],
-					['wiki_id' => 5, 'index' => 5],
-					['wiki_id' => 6, 'index' => 6],
-					['wiki_id' => 7, 'index' => 7],
-				]
-			],
-		];
-	}
 	/**
 	 * @dataProvider getWAMRedirectsDataProvider
 	 */

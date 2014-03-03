@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/* global mw */
 
 /**
  * Initialization MediaWiki target.
@@ -20,7 +20,8 @@
  *  revision id here. Defaults to loading the latest version (see #load).
  */
 ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) {
-	var conf = mw.config.get( 'wgVisualEditorConfig' );
+	var i, len, prefName, prefValue, conf = mw.config.get( 'wgVisualEditorConfig' ),
+		extraModules = [ 'experimental'/* , 'language'*//*, 'mwalienextension'*/, 'mwmath'/*, 'mwhiero'*/ ];
 
 	// Parent constructor
 	ve.init.Target.call( this, $container );
@@ -33,13 +34,11 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
 	this.apiUrl = mw.util.wikiScript( 'api' );
-	this.submitUrl = ( new mw.Uri( mw.util.wikiGetlink( this.pageName ) ) )
+	this.submitUrl = ( new mw.Uri( mw.util.getUrl( this.pageName ) ) )
 		.extend( { 'action': 'submit' } );
+
 	this.modules = [
-			( mw.config.get( 'wgUserName' ) === null ?
-				conf.defaultUserOptions.experimental :
-				mw.user.options.get( 'visualeditor-enable-experimental', conf.defaultUserOptions.experimental ) ) ?
-				'ext.visualEditor.experimental' : 'ext.visualEditor.core',
+			'ext.visualEditor.core',
 			'ext.visualEditor.data'
 		]
 		.concat(
@@ -47,7 +46,17 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 				['ext.visualEditor.viewPageTarget.icons-vector', 'ext.visualEditor.icons-vector'] :
 				['ext.visualEditor.viewPageTarget.icons-raster', 'ext.visualEditor.icons-raster']
 		)
-		.concat( mw.config.get( 'wgVisualEditorConfig' ).pluginModules || [] );
+		.concat( conf.pluginModules || [] );
+	for ( i = 0, len = extraModules.length; i < len; i++ ) {
+		prefName = 'visualeditor-enable-' + extraModules[i];
+		prefValue = mw.config.get( 'wgUserName' ) === null ?
+			conf.defaultUserOptions[prefName] :
+			mw.user.options.get( prefName, conf.defaultUserOptions[prefName] );
+		if ( prefValue && prefValue !== '0' ) {
+			this.modules.push( 'ext.visualEditor.' + extraModules[i] );
+		}
+	}
+
 	this.pluginCallbacks = [];
 	this.modulesReady = $.Deferred();
 	this.loading = false;
@@ -120,7 +129,7 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.init.mw.Target, ve.init.Target );
+OO.inheritClass( ve.init.mw.Target, ve.init.Target );
 
 /* Static Methods */
 
@@ -157,7 +166,7 @@ ve.init.mw.Target.onModulesReady = function () {
  * @method
  * @param {Object} response XHR Response object
  * @param {string} status Text status message
- * @emits loadError
+ * @fires loadError
  */
 ve.init.mw.Target.onLoad = function ( response ) {
 	var data = response ? response.visualeditor : null;
@@ -225,7 +234,6 @@ ve.init.mw.Target.onNoticesReady = function () {
 
 	for ( i = 0, len = noticeHtmls.length; i < len; i++ ) {
 		el = $( '<div>' )
-			.addClass( 've-init-mw-viewPageTarget-toolbar-editNotices-notice' )
 			.html( noticeHtmls[i] )
 			.get( 0 );
 
@@ -245,7 +253,7 @@ ve.init.mw.Target.onNoticesReady = function () {
  *
  * @static
  * @method
- * @emits load
+ * @fires load
  */
 ve.init.mw.Target.onReady = function () {
 	// We need to wait until onReady as local notices may require special messages
@@ -265,7 +273,7 @@ ve.init.mw.Target.onReady = function () {
  * @param {Object} jqXHR
  * @param {string} status Text status message
  * @param {Mixed} error HTTP status text
- * @emits loadError
+ * @fires loadError
  */
 ve.init.mw.Target.onLoadError = function ( jqXHR, status, error ) {
 	this.loading = false;
@@ -281,8 +289,8 @@ ve.init.mw.Target.onLoadError = function ( jqXHR, status, error ) {
  * @method
  * @param {Object} response Response data
  * @param {string} status Text status message
- * @emits editConflict
- * @emits save
+ * @fires editConflict
+ * @fires save
  */
 ve.init.mw.Target.onSave = function ( response ) {
 	this.saving = false;
@@ -319,7 +327,7 @@ ve.init.mw.Target.onSave = function ( response ) {
  * @param {Object} jqXHR
  * @param {string} status Text status message
  * @param {Object|null} data API response data
- * @emits saveError
+ * @fires saveError
  */
 ve.init.mw.Target.onSaveError = function ( jqXHR, status, data ) {
 	this.saving = false;
@@ -334,8 +342,8 @@ ve.init.mw.Target.onSaveError = function ( jqXHR, status, data ) {
  * @method
  * @param {Object} response API response data
  * @param {string} status Text status message
- * @emits showChanges
- * @emits noChanges
+ * @fires showChanges
+ * @fires noChanges
  */
 ve.init.mw.Target.onShowChanges = function ( response ) {
 	var data = response.visualeditor;
@@ -367,7 +375,7 @@ ve.init.mw.Target.onShowChanges = function ( response ) {
  * @param {Object} jqXHR
  * @param {string} status Text status message
  * @param {Mixed} error HTTP status text
- * @emits showChangesError
+ * @fires showChangesError
  */
 ve.init.mw.Target.onShowChangesError = function ( jqXHR, status, error ) {
 	this.saving = false;
@@ -417,7 +425,7 @@ ve.init.mw.Target.onSerialize = function ( response ) {
  * @param {jqXHR|null} jqXHR
  * @param {string} status Text status message
  * @param {Mixed|null} error HTTP status text
- * @emits serializeError
+ * @fires serializeError
  */
 ve.init.mw.Target.onSerializeError = function ( jqXHR, status, error ) {
 	this.serializing = false;
@@ -492,7 +500,7 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * @returns {boolean} Loading has been started
 */
 ve.init.mw.Target.prototype.load = function () {
-	var data;
+	var data, start;
 	// Prevent duplicate requests
 	if ( this.loading ) {
 		return false;
@@ -520,6 +528,8 @@ ve.init.mw.Target.prototype.load = function () {
 	}
 
 	// Load DOM
+	start = ve.now();
+
 	this.loading = $.ajax( {
 		'url': this.apiUrl,
 		'data': data,
@@ -527,10 +537,20 @@ ve.init.mw.Target.prototype.load = function () {
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up
 		'timeout': 100000,
-		'cache': 'false',
-		'success': ve.bind( ve.init.mw.Target.onLoad, this ),
-		'error': ve.bind( ve.init.mw.Target.onLoadError, this )
-	} );
+		'cache': 'false'
+	} )
+		.then( function ( data, status, jqxhr ) {
+			ve.track( 'performance.system.domLoad', {
+				'bytes': $.byteLength( jqxhr.responseText ),
+				'duration': ve.now() - start,
+				'cacheHit': /hit/i.test( jqxhr.getResponseHeader( 'X-Cache' ) ),
+				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+			} );
+			return jqxhr;
+		} )
+		.done( ve.bind( ve.init.mw.Target.onLoad, this ) )
+		.fail( ve.bind( ve.init.mw.Target.onLoadError, this ) );
+
 	return true;
 };
 
@@ -550,12 +570,13 @@ ve.init.mw.Target.prototype.load = function () {
  * @returns {boolean} Saving has been started
 */
 ve.init.mw.Target.prototype.save = function ( doc, options ) {
+	var data, start;
 	// Prevent duplicate requests
 	if ( this.saving ) {
 		return false;
 	}
 
-	var data = $.extend( {}, options, {
+	data = $.extend( {}, options, {
 		'format': 'json',
 		'action': 'visualeditoredit',
 		'page': this.pageName,
@@ -568,19 +589,29 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 		data.oldwt = this.wikitext;
 	} else {
 		data.oldid = this.revid;
-	}	
+	}
 	// Save DOM
-	this.saving = true;
-	$.ajax( {
+	start = ve.now();
+
+	this.saving = $.ajax( {
 		'url': this.apiUrl,
 		'data': data,
 		'dataType': 'json',
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'success': ve.bind( ve.init.mw.Target.onSave, this ),
-		'error': ve.bind( ve.init.mw.Target.onSaveError, this )
-	} );
+		'timeout': 100000
+	} )
+		.then( function ( data, status, jqxhr ) {
+			ve.track( 'performance.system.domSave', {
+				'bytes': $.byteLength( jqxhr.responseText ),
+				'duration': ve.now() - start,
+				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+			} );
+			return jqxhr;
+		} )
+		.done( ve.bind( ve.init.mw.Target.onSave, this ) )
+		.fail( ve.bind( ve.init.mw.Target.onSaveError, this ) );
+
 	return true;
 };
 
@@ -591,28 +622,37 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
  * @param {HTMLDocument} doc Document to compare against (via wikitext)
 */
 ve.init.mw.Target.prototype.showChanges = function ( doc ) {
-	var data = {
-		'format': 'json',
-		'action': 'visualeditor',
-		'paction': 'diff',
-		'page': this.pageName,
-		'html': this.getHtml( doc )
-	};
+	var start = ve.now(),
+		data = {
+			'format': 'json',
+			'action': 'visualeditor',
+			'paction': 'diff',
+			'page': this.pageName,
+			'html': this.getHtml( doc )
+		};
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
 	} else {
 		data.oldid = this.revid;
-	}	
+	}
 	$.ajax( {
 		'url': this.apiUrl,
 		'data': data,
 		'dataType': 'json',
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'success': ve.bind( ve.init.mw.Target.onShowChanges, this ),
-		'error': ve.bind( ve.init.mw.Target.onShowChangesError, this )
-	} );
+		'timeout': 100000
+	} )
+		.then( function ( data, status, jqxhr ) {
+			ve.track( 'performance.system.domDiff', {
+				'bytes': $.byteLength( jqxhr.responseText ),
+				'duration': ve.now() - start,
+				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+			} );
+			return jqxhr;
+		} )
+		.done( ve.bind( ve.init.mw.Target.onShowChanges, this ) )
+		.fail( ve.bind( ve.init.mw.Target.onShowChangesError, this ) );
 };
 
 /**
@@ -678,7 +718,7 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, options ) {
  * @returns {boolean} Serializing has beeen started
 */
 ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
-	var data;
+	var data, start = ve.now();
 	// Prevent duplicate requests
 	if ( this.serializing ) {
 		return false;
@@ -705,10 +745,18 @@ ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
 		'type': 'POST',
 		// Wait up to 100 seconds before giving up
 		'timeout': 100000,
-		'cache': 'false',
-		'success': ve.bind( ve.init.mw.Target.onSerialize, this ),
-		'error': ve.bind( ve.init.mw.Target.onSerializeError, this )
-	} );
+		'cache': 'false'
+	} )
+		.then( function ( data, status, jqxhr ) {
+			ve.track( 'performance.system.domSerialize', {
+				'bytes': $.byteLength( jqxhr.responseText ),
+				'duration': ve.now() - start,
+				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+			} );
+			return jqxhr;
+		} )
+		.done( ve.bind( ve.init.mw.Target.onSerialize, this ) )
+		.fail( ve.bind( ve.init.mw.Target.onSerializeError, this ) );
 	return true;
 };
 
@@ -718,4 +766,13 @@ ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
  */
 ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
 	this.wikitext = wikitext;
+};
+
+/**
+ * Get list of edit notices.
+ *
+ * @returns {Object|null} List of edit notices or null if none are loaded
+ */
+ve.init.mw.Target.prototype.getEditNotices = function () {
+	return this.editNotices;
 };

@@ -22,12 +22,12 @@ ve.ce.MWMathNode = function VeCeMWMathNode( model, config ) {
 	ve.ce.MWExtensionNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwMathNode' );
+	this.$element.addClass( 've-ce-mwMathNode' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWMathNode, ve.ce.MWExtensionNode );
+OO.inheritClass( ve.ce.MWMathNode, ve.ce.MWExtensionNode );
 
 /* Static Properties */
 
@@ -37,7 +37,7 @@ ve.ce.MWMathNode.static.name = 'mwMath';
 
 /** */
 ve.ce.MWMathNode.prototype.onParseSuccess = function ( deferred, response ) {
-	var data = response.visualeditor, contentNodes = $( data.content ).get();
+	var data = response.visualeditor, contentNodes = this.$( data.content ).get();
 	if ( contentNodes[0] && contentNodes[0].childNodes ) {
 		contentNodes = Array.prototype.slice.apply( contentNodes[0].childNodes );
 	}
@@ -46,15 +46,15 @@ ve.ce.MWMathNode.prototype.onParseSuccess = function ( deferred, response ) {
 
 /** */
 ve.ce.MWExtensionNode.prototype.afterRender = function ( domElements ) {
-	if ( $( domElements ).is( 'span.tex' ) ) {
+	if ( this.$( domElements ).is( 'span.tex' ) ) {
 		// MathJax
 		MathJax.Hub.Queue(
-			[ 'Typeset', MathJax.Hub, this.$[0] ],
+			[ 'Typeset', MathJax.Hub, this.$element[0] ],
 			[ this, this.emit, 'rerender' ]
 		);
 	} else {
 		// Rerender after image load
-		this.$.find( 'img.tex' ).on( 'load', ve.bind( function () {
+		this.$element.find( 'img.tex' ).on( 'load', ve.bind( function () {
 			this.emit( 'rerender' );
 		}, this ) );
 	}

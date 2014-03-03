@@ -73,7 +73,7 @@ define( 'videopageadmin.views.featured', [
 
 					$.nirvana.sendRequest( {
 						controller: 'VideoPageAdminSpecial',
-						method: 'getVideoData',
+						method: 'getFeaturedVideoData',
 						type: 'GET',
 						format: 'json',
 						data: req,

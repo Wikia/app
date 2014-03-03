@@ -13,6 +13,10 @@ class WikiaApiController extends WikiaController {
 		'raw'
 	);
 
+	public function __construct(){
+		parent::__construct();
+	}
+
 	/**
 	 * block throiwng WikiaException for WikiaApi
 	 * if no method is passed
@@ -32,11 +36,17 @@ class WikiaApiController extends WikiaController {
 	 * @throws WikiaException
 	 */
 	final public function init() {
+		$webRequest = F::app()->wg->Request;
+		$accessService = new ApiAccessService( $this->getRequest() );
+		$controller = $webRequest->getVal( 'controller' );
+		$method = $webRequest->getVal( 'method' );
+		$accessService->checkUse( $controller.'Controller', $method );
+
 		if ( !$this->request->isInternal() ) {
 			if ($this->hideNonCommercialContent()) {
 				$this->blockIfNonCommercialOnly();				
 			}
-			$paramKeys = array_keys( F::app()->wg->Request->getQueryValues() );
+			$paramKeys = array_keys( $webRequest->getQueryValues() );
 			$count = count( $paramKeys );
 
 			if ( $count >= 2 && $paramKeys[0] === 'controller' && $paramKeys[1] === 'method') {

@@ -110,7 +110,6 @@ if (!$wg->DevelEnvironment):?>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
-<?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>

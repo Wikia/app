@@ -488,6 +488,8 @@ class MediaWiki {
 	 * Ends this task peacefully
 	 */
 	public function restInPeace() {
+		wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
+
 		MessageCache::logMessages();
 		wfLogProfilingData();
 		// Commit and close up!

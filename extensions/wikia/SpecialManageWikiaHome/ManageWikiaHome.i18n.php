@@ -675,6 +675,22 @@ $messages['es'] = array(
 	'manage-wikia-home-stats-failure' => 'No se guardaron los datos. Corrige los errores del formulario e inténtalo de nuevo.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ez',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Bai',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ez',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Bai',
+	'manage-wikia-home-wiki-list-official-no' => 'Ez',
+	'manage-wikia-home-wiki-list-official-yes' => 'Bai',
+	'manage-wikia-home-modal-button-no' => 'Ez',
+	'manage-wikia-home-modal-button-yes' => 'Bai',
+	'manage-wikia-home-modal-button-okay' => 'Ados',
+	'manage-wikia-home-collections-setup-save-button' => 'Gorde',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -1522,6 +1538,34 @@ $messages['sv'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Reservresurs för totala sidor',
 	'manage-wikia-home-stats-success' => 'Statistiken uppdaterades!',
 	'manage-wikia-home-stats-failure' => 'Data sparades inte. Var god korrigera felen i formuläret och försök igen.',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-official-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-official-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-all-collections' => 'Tüm koleksiyonlar',
+	'manage-wikia-home-modal-title' => "Wiki'nın durumunu değiştir",
+	'manage-wikia-home-modal-title-collection' => 'Wiki koleksiyonu düzenle',
+	'manage-wikia-home-modal-button-no' => 'Hayır',
+	'manage-wikia-home-modal-button-yes' => 'Evet',
+	'manage-wikia-home-modal-button-okay' => 'Tamam',
+	'manage-wikia-home-collections-setup-save-button' => 'Kaydet',
+	'manage-wikia-home-collections-enabled-field-label' => 'Etkin',
+	'manage-wikia-home-collections-name-field-label' => 'Koleksiyon adı',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'Sponsor URL',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor görüntü',
+	'manage-wikia-home-collection-add-file-button' => 'Fotoğraf ekle',
+	'manage-wikia-home-stats-visitors-label' => 'Aylık ziyaretçiler',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Ziyaretçiler',
+	'manage-wikia-home-stats-success' => 'İstatistikler başarıyla güncelleştirildi!',
+	'manage-wikia-home-stats-failure' => 'Veri kaydedilmedi. Formdaki hataları düzenleyin ve tekrar deneyin.',
 );
 
 /** Ukrainian (українська)

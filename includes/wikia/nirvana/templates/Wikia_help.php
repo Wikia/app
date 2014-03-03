@@ -4,7 +4,9 @@
 	 <?php foreach( $methods as $method ): ?>
 	 <dt><h3><?= $method['method']; ?></h3></d3t>
 	 <dd>
-	 	<?= $method['description']; ?>
+		<? if (isset($method['description'])): ?>
+	 		<?= $method['description']; ?>
+		<? endif ?>
 		 <? if ( !empty( $method['examples'] ) ) :?>
 		 <dl>
 			 <dt><h4>Examples</h4></dt>

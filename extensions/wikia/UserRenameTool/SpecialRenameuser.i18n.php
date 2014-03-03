@@ -217,6 +217,9 @@ $messages['ar'] = array(
 	'userrenametool-error-request' => 'حدثت مشكلة أثناء استقبال الطلب.
 من فضلك عد وحاول مرة ثانية.',
 	'userrenametool-error-same-user' => 'لا يمكنك إعادة تسمية مستخدم بنفس الاسم.',
+	'userrenametool-error-invalid-ip' => 'تم توفير عنوان آيبي غير صالح.',
+	'userrenametool-warnings-characters' => 'اسم المستخدم الجديد يحتوي على أحرف غير صالحة!',
+	'userrenametool-warnings-maxlength' => 'لا يمكن أن يتجاوز طول اسم المستخدم الجديد 255 حرف!',
 	'userrenametool-warn-table-missing' => 'الجدول "<nowiki>$2</nowiki>" غير موجود في قاعدة المعطيات "<nowiki>$1</nowiki>."',
 	'userrenametool-info-started' => '$1بدأت إعادة تسمية:  $2  إلى  $3  (سجلات:  $4 ).
 السبب: " $5 ".',
@@ -235,6 +238,7 @@ $messages['ar'] = array(
 السبب: $2',
 	'userrenametool-move-log' => 'نقل الصفحة تلقائيا خلال إعادة تسمية المستخدم من "[[User:$1|$1]]" إلى "[[User:$2|$2]]"',
 	'right-renameuser' => 'إعادة تسمية المستخدمين',
+	'action-renameuser' => 'أعد تسمية المستخدمين',
 );
 
 /** Aramaic (ܐܪܡܝܐ)

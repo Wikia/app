@@ -290,6 +290,17 @@ Si prefieres enviar un correo con datos adjuntos, puedes contactarnos a [mailto:
 	'specialcontact-submitcomplete' => 'Gracias por contactar a Wikia.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'specialcontact-username' => 'Zure Erabiltzaile-izena:',
+	'specialcontact-realname' => 'Zure izena',
+	'specialcontact-yourmail' => 'Helbide elektronikoa',
+	'specialcontact-problem' => 'Gaia',
+	'specialcontact-problemdesc' => 'Mezua',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Mjbmr
