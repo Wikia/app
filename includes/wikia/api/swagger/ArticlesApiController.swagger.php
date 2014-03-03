@@ -206,17 +206,17 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The title of the article"
  * 	)
+ * @SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
  * 	@SWG\Property(
  * 		name="url",
  * 		type="string",
  * 		required="true",
  * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
- * 	)
- * 	@SWG\Property(
- * 		name="ns",
- * 		type="int",
- * 		required="true",
- * 		description="The namespace value of the given article"
  * 	)
  * 	@SWG\Property(
  * 		name="revision",
