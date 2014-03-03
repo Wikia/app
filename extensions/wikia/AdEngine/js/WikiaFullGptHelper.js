@@ -8,14 +8,10 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		providerSlotMap = {},
+		providerSlotMap = adSlotMapConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
-
-	function init(paramSlotMap, slotMapSrc) {
-		providerSlotMap[slotMapSrc] = paramSlotMap;
-	}
 
 	function triggerDone(slotnameGpt) {
 		var callback = doneCallbacks[slotnameGpt];
