@@ -57,11 +57,11 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.bindFetchComplete = function () {
 		var self = this;
 		return this.data.complete(function () {
-			if (self.elIsPresent()) {
+			if (self.elContentPresent()) {
 				self.render();
 			} else {
 				self.$el.on('afterLoad.relatedPages', function () {
-					if (self.elIsPresent()) {
+					if (self.elContentPresent()) {
 						self.render();
 					}
 				});
@@ -73,7 +73,7 @@ define('videosmodule.views.bottomModule', [
 	 * Check if the element has content that is not hidden by css
 	 * @returns {boolean}
 	 */
-	VideoModule.prototype.elIsPresent = function () {
+	VideoModule.prototype.elContentPresent = function () {
 		var $content = this.$el.children();
 		return !!(
 			$content.length &&
