@@ -15,7 +15,7 @@
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
 
-(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest, adSlotMapConfig) {
+(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -40,6 +40,7 @@
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
+		adSlotMapConfig,
 
 		queueForLateAds,
 		adConfigForLateAds;
@@ -62,6 +63,7 @@
 	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
+	adSlotMapConfig = AdSlotMapConfig();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
@@ -206,4 +208,4 @@
 		});
 	};
 
-}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest, AdSlotMapConfig));
+}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
