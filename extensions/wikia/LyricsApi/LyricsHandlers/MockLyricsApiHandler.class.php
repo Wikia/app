@@ -129,5 +129,10 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	public function searchArtist( $query ) {}
 	public function searchSong( $query ) {}
 	public function searchLyrics( $query ) {}
+	public function suggest( $query, $target ) {}
+	public function suggestArtist( $query ) {}
+	public function suggestAlbum( $query ) {}
+	public function suggestSong( $query ) {}
+
 
 } 

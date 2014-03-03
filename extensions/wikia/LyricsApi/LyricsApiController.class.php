@@ -89,4 +89,15 @@ class LyricsApiController extends WikiaController {
 		$query = $this->wg->Request->getVal( 'query' );
 	}
 
+	public function suggestArtist() {
+		$query = $this->wg->Request->getVal( 'query' );
+	}
+
+	public function suggestAlbum() {
+		$query = $this->wg->Request->getVal( 'query' );
+	}
+
+	public function suggestSong() {
+		$query = $this->wg->Request->getVal( 'query' );
+	}
 } 
