@@ -36,7 +36,7 @@ define('videosmodule.views.rail', [
 	VideoModule.prototype.init = function () {
 		var self = this;
 		this.model
-			.fetch(true)
+			.fetch(groupParams.verticalOnly)
 			.complete(function () {
 				self.render();
 				self.$el.show();
