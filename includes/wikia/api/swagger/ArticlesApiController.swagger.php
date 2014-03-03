@@ -206,7 +206,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The title of the article"
  * 	)
- *  @SWG\Property(
+ * 	@SWG\Property(
  * 		name="ns",
  * 		type="int",
  * 		required="true",
