@@ -43,6 +43,7 @@ $wgLyricFindTrackingNamespaces = [
 
 // LyricFind indexing
 $wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';
+$wgHooks['ParserBeforeStrip'][] = 'LyricFindHooks::onParserBeforeStrip';
 
 // edit permissions & view-source protection
 // @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection

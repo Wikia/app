@@ -11,13 +11,17 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05506 ms
+	 */
 	public function testGetModuleName() {
-		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMessage' );
 
 		$model = new MarketingToolboxModel();
 
 		$mockMsg->expects($this->once())
-			->method('wfMsg')
+			->method('wfMessage')
 			->with('marketing-toolbox-hub-module-slider')
 			->will($this->returnValue('testNameFor slider'));
 
@@ -48,11 +52,15 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05283 ms
+	 */
 	public function testGetAvailableSections() {
-		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMessage' );
 
 		$mockMsg->expects($this->at(0))
-			->method('wfMsg')
+			->method('wfMessage')
 			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
 			->will($this->returnValue('test name for hubs section'));
 
@@ -63,11 +71,15 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test name for hubs section', $sections[MarketingToolboxModel::SECTION_HUBS]);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05268 ms
+	 */
 	public function testGetSectionName() {
-		$mockMsg = $this->getGlobalFunctionMock( 'wfMsg' );
+		$mockMsg = $this->getGlobalFunctionMock( 'wfMessage' );
 
 		$mockMsg->expects($this->at(0))
-			->method('wfMsg')
+			->method('wfMessage')
 			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
 			->will($this->returnValue('test name for hubs section'));
 
@@ -117,9 +129,11 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model->setSpecialPageClass($specialPageMock);
 
 		$url = $model->getModuleUrl(
-			$params['region'],
-			$params['sectionId'],
-			$params['verticalId'],
+			array(
+				'langCode' => $params['region'],
+				'sectionId' => $params['sectionId'],
+				'verticalId' => $params['verticalId']
+			),
 			$params['date'],
 			$params['moduleId']
 		);
@@ -127,11 +141,17 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals('test returned url', $url);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01248 ms
+	 */
 	public function testGetModulesDataFromDefault() {
-		$params = array(
-			'langCode' => 'pl',
-			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
-			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		$moduleParams = array(
+			'params' => array(
+				'langCode' => 'pl',
+				'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+			),
 			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
@@ -156,10 +176,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->once())
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
-			$this->equalTo($params['timestamp'])
+			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(array()));
 
@@ -172,11 +190,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 			->will($this->returnValue(0));
 
 		$modulesData = $modelMock->getModulesData(
-			$params['langCode'],
-			$params['sectionId'],
-			$params['verticalId'],
-			$params['timestamp'],
-			$params['activeModule']
+			$moduleParams['params'],
+			$moduleParams['timestamp'],
+			$moduleParams['activeModule']
 		);
 
 		// make assert
@@ -207,11 +223,17 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01649 ms
+	 */
 	public function testGetModulesDataWithoutDefaults() {
-		$params = array(
-			'langCode' => 'pl',
-			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
-			'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		$moduleParams = array(
+			'params' => array(
+				'langCode' => 'pl',
+				'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+			),
 			'timestamp' => 789654,
 			'activeModule' => MarketingToolboxModuleWikiaspicksService::MODULE_ID
 		);
@@ -276,19 +298,15 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->at(1))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
+			$this->equalTo($moduleParams['params']),
 			$this->equalTo($lastPublishTimestamp)
 		)
 			->will($this->returnValue($mockedModulesData));
 		$modelMock->expects($this->at(2))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($params['langCode']),
-			$this->equalTo($params['sectionId']),
-			$this->equalTo($params['verticalId']),
-			$this->equalTo($params['timestamp'])
+			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(
 			array()
@@ -308,11 +326,9 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$modelMock->setUserClass($userMock);
 
 		$modulesData = $modelMock->getModulesData(
-			$params['langCode'],
-			$params['sectionId'],
-			$params['verticalId'],
-			$params['timestamp'],
-			$params['activeModule']
+			$moduleParams['params'],
+			$moduleParams['timestamp'],
+			$moduleParams['activeModule']
 		);
 
 		// make assert
@@ -365,14 +381,21 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05746 ms
 	 * Test saving module when there is no data
 	 */
 	public function testSaveModuleInsert() {
-
-		$dataToInsert = array(
-			'lang' => 'pl',
+		$params = array(
+			'langCode' => 'pl',
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
+		);
+
+		$dataToInsert = array(
+			'lang' => $params['langCode'],
+			'sectionId' => $params['sectionId'],
+			'verticalId' => $params['verticalId'],
 			'timestamp' => 1234567,
 			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
@@ -409,9 +432,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model = new MarketingToolboxModel();
 
 		$model->saveModule(
-			$dataToInsert['lang'],
-			$dataToInsert['sectionId'],
-			$dataToInsert['verticalId'],
+			$params,
 			$dataToInsert['timestamp'],
 			$dataToInsert['moduleId'],
 			$dataToInsert['data'],
@@ -421,14 +442,21 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05797 ms
 	 * Test saving module when there is data already saved
 	 */
 	public function testSaveModuleUpdate() {
-
-		$dataToInsert = array(
-			'lang' => 'pl',
+		$params = array(
+			'langCode' => 'pl',
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
+		);
+
+		$dataToInsert = array(
+			'lang' => $params['langCode'],
+			'sectionId' => $params['sectionId'],
+			'verticalId' => $params['verticalId'],
 			'timestamp' => 1234567,
 			'moduleId' => MarketingToolboxModulePollsService::MODULE_ID,
 			'data' => array('test1' => 'test2', 'hola hola' => 'espaniola'),
@@ -469,9 +497,7 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$model = new MarketingToolboxModel();
 
 		$model->saveModule(
-			$dataToInsert['lang'],
-			$dataToInsert['sectionId'],
-			$dataToInsert['verticalId'],
+			$params,
 			$dataToInsert['timestamp'],
 			$dataToInsert['moduleId'],
 			$dataToInsert['data'],
@@ -514,6 +540,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05666 ms
+	 */
 	public function testGetDataPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -555,6 +585,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['PUBLISHED'], $data['2012-12-25']);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05577 ms
+	 */
 	public function testGetCalendarDataNotPublished() {
 		$model = new MarketingToolboxModel();
 
@@ -596,6 +630,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEquals($statuses['NOT_PUBLISHED'], $data['2012-12-25']);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0547 ms
+	 */
 	public function testGetCalendarDataEmptyData() {
 
 		$dbMock = $this->getMock('DatabaseMysql', array('makeList', 'select', 'fetchRow'));
@@ -621,6 +659,10 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 		$this->assertEmpty($data);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05753 ms
+	 */
 	public function testGetCalendarDataComplex() {
 		$model = new MarketingToolboxModel();
 
@@ -683,6 +725,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05588 ms
 	 * @dataProvider getDataModulesSavedDataProvider
 	 */
 	public function testCheckModulesSaved($savedModules, $expectedVal) {

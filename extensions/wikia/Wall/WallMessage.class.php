@@ -551,8 +551,8 @@ class WallMessage {
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {
-
 		wfProfileIn(__METHOD__);
+
 		//local cache consider cache this in memc
 		if(!empty($this->messagePageUrl)) {
 			wfProfileOut(__METHOD__);
@@ -560,7 +560,7 @@ class WallMessage {
 		}
 
 		$id = $this->getMessagePageId();
-
+		
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
@@ -1443,4 +1443,48 @@ class WallMessage {
 	public function canMove(User $user) {
 		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}
+
+	/**
+	 * @desc Creates wall message title (a board, a thread, a message) instance and calls purgeSquid() on it
+	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
+	 */
+	public function purgeSquid() {
+		$title = Title::newFromID( $this->getId() );
+		if ( $title instanceof Title ) {
+			$title->purgeSquid();
+		}
+	}
+
+	/**
+	 * @param Integer $namespace Message_Wall or Board namespace
+	 *
+	 * @return array
+	 */
+	public function getSquidURLs( $namespace ) {
+		$urls = [];
+		$this->load( true );
+
+		// While creating a new forum board the message id === 0
+		// Therefore we're getting at this place invalid URLs to be purge
+		// To quick fix it we use $idDB variable...
+		if( $this->getMessagePageId() > 0 ) {
+			if( $this->isMain() ) {
+				$urls[] = $this->getMessagePageUrl( true );
+			} else {
+				/** @var WallMessage $parent */
+				$parent = $this->getTopParentObj();
+				$parent->load( true );
+				$urls[] = $parent->getMessagePageUrl( true );
+			}
+
+			// CONN-430: Purge wall page / forum board
+			$title = Title::newFromText( $this->getMainPageText(), $namespace );
+			if( !empty( $title ) ) {
+				$urls[] = $title->getFullURL();
+			}
+		}
+
+		return $urls;
+	}
+
 }

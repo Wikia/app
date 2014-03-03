@@ -275,7 +275,11 @@ class VideoHandlerHelper extends WikiaModel {
 			// we're using this for other parts of the site, we should probably change getThumb to some sort
 			// of associative array rather than a boolean so that these thumbs could be customizabl
 			if ( $getThumb ) {
-				$thumbNail = $thumb->toHtml( [ 'useTemplate' => true, 'fluid' => true, 'forceSize' => 'small' ] );
+				$thumbNail = $thumb->toHtml( [
+					'useTemplate' => true,
+					'fluid' => true,
+					'forceSize' => 'small',
+				] );
 			}
 
 			// get article list

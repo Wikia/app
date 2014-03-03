@@ -1,7 +1,5 @@
 /* VideoHandlers.scss */
 
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/background-opacity";
 
@@ -11,8 +9,8 @@
 }
 
 .Wikia-video-play-button {
-	@include opacity(65);
 	cursor: pointer;
+	opacity: .65;
 	position: absolute;
 	text-align: center;
 	z-index: 100;
@@ -41,19 +39,19 @@
 }
 
 a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
-    @include opacity(95);
+    opacity: .95;
 }
 
 .video .timer {
-    position: absolute;
-    right: 3px;
+    background-color: black;
+    border-radius: 4px;
     bottom: 3px;
     color: white;
     font-size: 11px;
     line-height: 14px;
-    background-color: black;
     padding: 1px 4px 1px 6px;
-    @include border-radius(4px);
+    position: absolute;
+    right: 3px;
 }
 
 .video {
@@ -107,10 +105,10 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 
 .Wikia-video-title-bar {
    background-color:black;
+   opacity: .5;
    position:absolute;
-   z-index:99;
    text-align:left;
-   @include opacity(50);
+   z-index:99;
 }
 
 .Wikia-video-title-bar .title {

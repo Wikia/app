@@ -62,6 +62,9 @@ $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 
+# don't purge all variants of articles in Chinese - BAC-1278
+$wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -419,11 +422,11 @@ class Wikia {
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
-	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode, $wgEnableCentralizedLogging;
+	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (!$wgDevelEnvironment && $wgEnableCentralizedLogging && class_exists('Wikia\\Logger\\WikiaLogger')) {
+			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
 				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
 				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 			} else {
@@ -2215,7 +2218,7 @@ class Wikia {
 	}
 
 	/**
-	 * Send ETag header with article's last modidication timestamp and cache buster
+	 * Send ETag header with article's last modification timestamp and cache buster
 	 *
 	 * See BAC-1227 for details
 	 *
@@ -2226,7 +2229,15 @@ class Wikia {
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
 		global $wgStyleVersion;
-		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
+		$touched = $article->getTouched();
+
+		// don't emit the default touched value set in WikiPage class (see CONN-430)
+		if ($touched === '19700101000000') {
+			$eTag = '';
+			return true;
+		}
+
+		$eTag = sprintf( '%s-%s', $touched, $wgStyleVersion );
 		return true;
 	}
 
@@ -2274,6 +2285,27 @@ class Wikia {
 	 */
 	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
 		self::addExtraHeaders( $context->getRequest()->response() );;
+		return true;
+	}
+
+	/**
+	 * Purge a limited set of language variants on Chinese wikis
+	 *
+	 * See BAC-1278 / BAC-698 for details
+	 *
+	 * @param Language $contLang
+	 * @param array $variants
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
+		switch($contLang->getCode()) {
+			case 'zh':
+				// skin displays links to these variants only
+				$variants = ['zh-hans', 'zh-hant'];
+				break;
+		}
+
 		return true;
 	}
 }

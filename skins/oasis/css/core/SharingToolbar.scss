@@ -1,8 +1,6 @@
 @import "color";
 @import "layout";
 @import "responsive-variables";
-@import "../mixins/border-radius";
-
 $share-background-color: transparentize($color-page, 0.65);
 @if lightness($color-page) < 50 {
 	$share-background-color: transparentize($color-page, 0.7);
@@ -15,8 +13,8 @@ $toolbox-margin: 7px;
 $toolbar-placing-breakpoint: 1185px;
 
 .SharingToolbar {
-	@include border-radius(5px);
 	background-color: $share-background-color;
+	border-radius: 5px;
 	left: 100%;
 	margin-left: $toolbox-margin;
 	min-width: $toolbar-width;

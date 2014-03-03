@@ -1,11 +1,11 @@
-define( 'videosmodule.views.bottomModule', [
+define('videosmodule.views.bottomModule', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
 	'videosmodule.models.abTestBottom',
 	'wikia.tracker'
-], function( sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker ) {
+], function (sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker) {
 	'use strict';
 
 	// Keep AB test variables private
@@ -13,55 +13,59 @@ define( 'videosmodule.views.bottomModule', [
 		groupParams,
 		track;
 
-	track = Tracker.buildTrackingFunction( {
+	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-bottom',
-		trackingMethod: 'ga',
+		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION,
 		label: 'module-impression'
-	} );
+	});
 
 	testCase = abTest();
 	groupParams = testCase.getGroupParams();
 
-	function VideoModule( options ) {
+	function VideoModule(options) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
-		this.$el = $( options.el );
+		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
-		// Make sure we're on an article page
-		if ( this.articleId ) {
+		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
+		if (
+			this.articleId &&
+			!this.$el.is(':hidden') &&
+			this.$el.css('visibility') !== 'hidden'
+		) {
 			this.init();
 		}
 	}
 
-	VideoModule.prototype.init = function() {
+	VideoModule.prototype.init = function () {
 		var self = this;
-		if ( !groupParams ) {
+		if (!groupParams) {
 			// Add tracking for GROUP_I, Control Group
-			return false;
+			return;
 		}
-		this.data = this.model.fetch( groupParams.verticalOnly );
+		this.data = this.model.fetch(groupParams.verticalOnly);
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
-		sloth( {
+		sloth({
 			on: this.el,
 			threshold: 200,
-			callback: function() {
+			callback: function () {
 				self.bindFetchComplete();
 			}
-		} );
+		});
 	};
 
-	VideoModule.prototype.bindFetchComplete = function() {
+	VideoModule.prototype.bindFetchComplete = function () {
 		var self = this;
-		return this.data.complete( function() {
+		return this.data.complete(function () {
 			self.render();
-		} );
+		});
 	};
 
-	VideoModule.prototype.render = function() {
+	VideoModule.prototype.render = function () {
 		var i,
 			$out,
 			videos = this.model.data.videos,
@@ -69,38 +73,38 @@ define( 'videosmodule.views.bottomModule', [
 			instance;
 
 		// If no videos are returned from the server, don't render anything
-		if ( !len ) {
+		if (!len) {
 			return;
 		}
 
 		// AB test set rows shown
-		videos = videos.slice( 0, groupParams.rows > 1 ? 8 : 4 );
+		videos = videos.slice(0, groupParams.rows > 1 ? 8 : 4);
 
-		$out = $( Mustache.render( templates.bottomModule, {
-			title: $.msg( 'videosmodule-title-default' )
-		} ) );
+		$out = $(Mustache.render(templates.bottomModule, {
+			title: $.msg('videosmodule-title-default')
+		}));
 
-		if ( groupParams.position === 1 ) {
-			this.$el.after( $out );
+		if (groupParams.position === 1) {
+			this.$el.before($out);
 		} else {
-			this.$el.before( $out );
+			this.$el.after($out);
 		}
 
-		for ( i = 0; i < ( groupParams.rows * 4 ); i++ ) {
-			instance = new TitleThumbnailView( {
+		for (i = 0; i < (groupParams.rows * 4); i++) {
+			instance = new TitleThumbnailView({
 				el: 'li',
 				model: videos[i],
 				idx: i
-			} ).render();
-			$out.find( '.thumbnails' ).append( instance.$el );
-			instance.applyEllipses( {
+			}).render();
+			$out.find('.thumbnails').append(instance.$el);
+			instance.applyEllipses({
 				wordsHidden: 2
-			} );
+			});
 		}
 
-		$( '#videosModule' ).addClass( groupParams.rows > 1 ? 'rows-2' : 'rows-1' );
+		$('#videosModule').addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
 		track();
 	};
 
 	return VideoModule;
-} );
+});

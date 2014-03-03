@@ -1,6 +1,5 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
@@ -164,8 +163,8 @@
 			width: auto !important;
 		}
 		.cke_dialog_close_button {
-			@include border-radius(3px);
 			@include linear-gradient($color-buttons, top, $color-button-highlight, 8%, $color-buttons, 13%);
+			border-radius: 3px;
 			height: 19px;
 			text-align: center;
 			width: 19px;
@@ -181,10 +180,10 @@
 			border-bottom: none;
 			overflow: hidden;
 			.cke_dialog_tab {
-				@include border-radius-nw(5px);
-				@include border-radius-ne(5px);
 				@include linear-gradient($color-tab-background, top, $color-tab-background-top, 50%, $color-tab-background-bottom, 100%);
 				border: none;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
 				color: $color-text;
 				display: inline-block;
 				font-size: 11px;

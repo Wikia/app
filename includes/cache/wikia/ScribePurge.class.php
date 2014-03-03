@@ -118,7 +118,7 @@ class ScribePurge {
 
 		while ( $entry = array_shift( $backtrace ) ) {
 			// ignore "internal" classes
-			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title'] ) ) {
+			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title', 'WikiaDispatchableObject'] ) ) {
 				continue;
 			}
 

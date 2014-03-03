@@ -50,6 +50,8 @@ class WikiaResponse {
 	 * @var WikiaView
 	 */
 
+	
+
 	private $view = null;
 	private $body = null;
 	private $code = null;

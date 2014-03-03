@@ -10,6 +10,8 @@ use Wikia\Search\Test\BaseTest;
 class SearchApiControllerTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07828 ms
 	 * @covers SearchApiController::getList
 	 */
 	public function testGetListWithTerms() {
@@ -37,6 +39,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08631 ms
 	 * @covers SearchApiController::getConfigFromRequest
 	 */
 	public function testGetConfigFromRequest() {
@@ -47,7 +51,7 @@ class SearchApiControllerTest extends BaseTest
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'setQuery', 'setLimit', 'setPage', 'setRank', 'setVideoSearch' ] )
+		                   ->setMethods( [ 'setQuery', 'setLimit', 'setPage', 'setRank', 'setVideoSearch', 'setMinArticleQuality' ] )
 		                   ->getMock();
 		
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
@@ -114,6 +118,18 @@ class SearchApiControllerTest extends BaseTest
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
 		$mockRequest
+			->expects( $this->at( $requestIncr++ ) )
+			->method ( 'getInt' )
+			->with   ( 'minArticleQuality' )
+			->will   ( $this->returnValue( 11 ) )
+		;
+		$mockConfig
+			->expects( $this->at( $configIncr++ ) )
+			->method ( 'setMinArticleQuality' )
+			->with   ( 11 )
+			->will   ( $this->returnValue( $mockConfig ) )
+		;
+		$mockRequest
 		    ->expects( $this->at( $requestIncr++ ) )
 		    ->method ( 'getVal' )
 		    ->with   ( 'type', 'articles' )
@@ -140,6 +156,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07758 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigNoNamespaces() {
@@ -182,6 +200,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07744 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigWithNamespaces() {
@@ -225,6 +245,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07736 ms
 	 * @covers SearchApiController::validateNamespacesForConfig
 	 */
 	public function testValidateNamespacesForConfigBadNamespaces() {
@@ -267,6 +289,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07725 ms
 	 * @covers SearchApiController::setResponseFromConfig
 	 */
 	public function testSetResponseFromConfigNoTerms() {
@@ -306,6 +330,8 @@ class SearchApiControllerTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08567 ms
 	 * @covers SearchApiController::setResponseFromConfig
 	 */
 	public function testSetResponseFromConfigWithTerms() {

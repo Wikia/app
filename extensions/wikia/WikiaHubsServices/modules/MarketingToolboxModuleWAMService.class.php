@@ -48,10 +48,13 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function loadData($model, $params) {
+		$hubParams = [
+			'langCode' => $this->langCode,
+			'sectionId' => $this->sectionId,
+			'verticalId' => $this->verticalId,
+		];
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-									$this->langCode,
-									$this->sectionId,
-									$this->verticalId,
+									$hubParams,
 									$params['ts']
 						);
 
@@ -164,8 +167,8 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 					$this->skinName
 				),
 				6 * 60 * 60,
-				function () use( $params ) {
-					return $this->loadStructuredData($params);
+				function () use( $model, $params ) {
+					return $this->loadStructuredData($model, $params);
 				}
 			);
 		}
@@ -177,7 +180,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		return $structuredData;
 	}
 
-	protected function loadStructuredData($params) {
+	protected function loadStructuredData($model, $params) {
 
 		try {
 
@@ -251,7 +254,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function getWikiaHubsModel() {
-		return new WikiaHubsV2Model();
+		return new WikiaHubsModel();
 	}
 
 	public function render($data) {
@@ -259,6 +262,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		$data['imagesWidth'] = $this->getModel()->getImageWidth();
 		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
 		$data['specialSearchUrl'] = SpecialPage::getTitleFor( 'WikiaSearch' )->getFullUrl();
+		$data['hubsVersion'] = $this->getHubsLayoutVersion();
 		$data['scoreChangeMap'] = [self::WAM_SCORE_CHANGE_DOWN => 'down', self::WAM_SCORE_NO_CHANGE => 'nochange', self::WAM_SCORE_CHANGE_UP => 'up'];
 
 		return parent::render($data);
@@ -273,7 +277,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	/**
-	 * @desc Since search works better only for EN hub pages we implemented this simple method
+	 * Since search works better only for EN hub pages we implemented this simple method
 	 * 
 	 * @param int|string $vertical vertical name or id
 	 * @return string

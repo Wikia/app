@@ -17,12 +17,13 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		offset = 5;
 
 	/**
-	 * @desc grab all headers on the page
+	 * @desc grab all headers (with non-empty id's) on the page
 	 * @return Array
 	 */
 	function getHeaders(){
-		//querySelectorAll returns NodeList but this one is not live
-		return Array.prototype.slice.apply( d.querySelectorAll( 'h2[id],h3[id],h4[id]' ) )
+		//we switch nodeList to Array to use filter / forEach type methods
+		return Array.prototype.slice.apply( d.querySelectorAll(
+			'h2[id]:not( [id=""] ), h3[id]:not( [id=""] ), h4[id]:not( [id=""] )' ) );
 	}
 
 	/**

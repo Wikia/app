@@ -15,7 +15,6 @@ class WikiaHubsApiControllerTest extends WikiaBaseTest {
 	 */
 	public function setUp() {
 		require_once(dirname(__FILE__) . '/../../../WikiaHubsServices/WikiaHubsServices.setup.php');
-		$this->setupFile = dirname(__FILE__) . '/../../WikiaHubsV2.setup.php';
 		parent::setUp();
 	}
 

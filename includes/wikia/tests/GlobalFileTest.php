@@ -25,6 +25,8 @@ class GlobalFileTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04145 ms
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime, $url) {
@@ -108,6 +110,65 @@ class GlobalFileTest extends WikiaBaseTest {
 				'crop' => null,
 				'mime' => null,
 				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 */
+	public function testNewFromTextDbNameMatch($row, $cityId) {
+		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
+		$mockSelectRow
+			->expects( $this->any() )
+			->method( 'selectRow' )
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+				if ( $fname == 'GlobalFile::loadData' ) {
+					if ( $conds['img_name'] == $row->img_name ) {
+						return $row;
+					} else {
+						return false;
+					}
+				} else { // don't mess with WikiFactory accessing database
+					return $this->getCurrentInvocation()->callOriginal();
+				}
+			}));
+
+		$dbName = $row->img_name;
+		$name = str_replace("_", " ", $dbName);
+
+		$file = GlobalFile::newFromText($dbName, $cityId);
+		$file2 = GlobalFile::newFromText($name, $cityId);
+		$file3 = GlobalFile::newFromText("Not-existing-Image.jpg", $cityId);
+
+		$this->assertTrue( $file->exists() );
+		$this->assertTrue( $file2->exists() );
+		$this->assertFalse( $file3->exists() );
+	}
+
+	public function testNewFromTextDbNameMatchProvider() {
+		return [
+			[
+				'row' => (object) [
+						'img_name' => "Gzik.jpg",
+						'img_width' => '600',
+						'img_height' => '450',
+						'img_major_mime' => 'image',
+						'img_minor_mime' => 'jpeg',
+						'img_timestamp' => '20111213221639',
+					],
+				'cityId' => self::POZNAN_CITY_ID,
+			],
+			[
+				'row' => (object) [
+						'img_name' => "Gzik_v2.jpg",
+						'img_width' => '600',
+						'img_height' => '450',
+						'img_major_mime' => 'image',
+						'img_minor_mime' => 'jpeg',
+						'img_timestamp' => '20111213221639',
+					],
+				'cityId' => self::POZNAN_CITY_ID,
 			]
 		];
 	}

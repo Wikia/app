@@ -4,6 +4,11 @@
 @import 'skins/oasis/css/core/color';
 @import 'skins/oasis/css/core/layout';
 
+.videos-module, .videos-module-rail {
+	img {
+		display: block;
+	}
+}
 .videos-module {
 	margin-bottom: 30px;
 
@@ -73,6 +78,47 @@
 		padding-top: 11px;
 	}
 
+}
+
+.videos-module-rail {
+	display: none;
+	// For the duration of the AB Test, we'll create a new
+	// definition for span.title here because WikiaRail responsive
+	// overrides are all over the place.
+	> .title {
+		display: block;
+		font-size: 20px;
+		padding-top: 10px;
+		margin-bottom: 18px;
+	}
+
+	.thumbnails {
+
+		a:first-of-type {
+			margin-bottom: 10px;
+		}
+
+		.title {
+			display: block;
+			font-size: 16px;
+			height: 50px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.title:last-of-type {
+			height: 40px;
+		}
+
+		.title a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
 }
 
 .oasis-one-column .videos-module {

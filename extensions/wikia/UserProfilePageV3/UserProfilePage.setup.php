@@ -55,10 +55,8 @@ $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPa
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
 
-/* These hooks caused breakage, can probably re-enable when database table exists: MAIN-1781
 $wgHooks['WikiFactoryChanged'][] = 'UserProfilePageHooks::onWikiFactoryChanged';
 $wgHooks['WikiFactoryVariableRemoved'][] = 'UserProfilePageHooks::onWikiFactoryVariableRemoved';
-*/
 
 $wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleList';
 

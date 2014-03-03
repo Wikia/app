@@ -7,7 +7,7 @@ class IgnVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.ign.com/watch?v=$1';
 	protected static $providerPlayerUrl = 'http://widgets.ign.com/video/embed/content.html';
 	protected static $providerHomeUrl = 'http://www.ign.com/';
-	protected static $autoplayParam = "qs_autoplay";
+	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "true";
 
 	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {

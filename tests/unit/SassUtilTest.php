@@ -2,6 +2,9 @@
 
 class SassUtilTest extends WikiaBaseTest {
 
+	/**
+	 * @group UsingDB
+	 */
 	function testSassUtil() {
 		$sassParams = SassUtil::getSassParams();
 

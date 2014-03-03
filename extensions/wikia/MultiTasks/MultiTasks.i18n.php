@@ -113,6 +113,7 @@ $messages['en'] = array(
 	'multiwikifindpagenames' => 'Find pagenames',
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
+	'multiwikifinder-redirect' => 'redirect',
 	'action-multiwikifinder' => 'search for a specific title across Wikia',
 );
 

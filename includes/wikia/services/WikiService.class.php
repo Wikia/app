@@ -384,6 +384,24 @@ class WikiService extends WikiaModel {
 		return $images;
 	}
 
+	public function getWikiWordmark( $wikiId ) {
+		$url = '';
+		$history = WikiFactory::getVarByName( 'wgOasisThemeSettingsHistory', $wikiId );
+		$settings = unserialize( $history->cv_value );
+		if ( $settings !== false ) {
+			$currentSettings =  end( $settings );
+
+			if ( isset($currentSettings['settings']['wordmark-type']) && $currentSettings['settings']['wordmark-type'] == 'text' ) {
+				return '';
+			}
+
+			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
+					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			}
+		}
+		return $url;
+	}
+
 	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
 		return WikiaDataAccess::cacheWithLock(
 			wfsharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),
@@ -782,7 +800,7 @@ class WikiService extends WikiaModel {
 					'city_list.city_id',
 					'city_list.city_title',
 					'city_list.city_url',
-					'city_visualization.city_lang_code',
+					'city_list.city_lang',
 					'city_visualization.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
@@ -808,7 +826,7 @@ class WikiService extends WikiaModel {
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'lang' => $row->city_lang_code,
+					'lang' => $row->city_lang,
 					'hubId' => $row->city_vertical,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
