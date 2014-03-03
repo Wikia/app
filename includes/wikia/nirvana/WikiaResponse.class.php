@@ -291,7 +291,7 @@ class WikiaResponse {
 		$this->isCaching = true;
 
 		if ($varnishTTL === self::CACHE_PRIVATE_DISABLED) {
-			$this->setHeader('Cache-Control', sprintf('private, max-age=0, must-revalidate'));
+			$this->setHeader('Cache-Control', 'private, max-age=0, must-revalidate');
 		}
 		else {
 			$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
