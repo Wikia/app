@@ -19,9 +19,8 @@ class ArticleType extends AbstractService {
 		if ( $this->currentPageId === null ) {
 			throw new \WikiaException( 'A pageId-dependent indexer service was executed without a page ID queued' );
 		}
-		$wikiId = (int) $this->getService()->getWikiId();
 		$pageId = (int) $this->currentPageId;
 
-		return [ "article_type_s" => $articleTypeService->getArticleType( $wikiId, $pageId ) ];
+		return [ "article_type_s" => $articleTypeService->getArticleType( $pageId ) ];
 	}
 }

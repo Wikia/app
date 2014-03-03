@@ -1,32 +1,46 @@
 <?php
 
+class ArticleTypeService {
+	/**
+	 * endpoint for holmes
+	 */
+	const HOLEMS_ENDOPINT = 'http://dev-arturd:8080/holmes/classifications/';
 
-class ArticleTypeService  /*extends AbstractService*/ {
+	public function execute(){}
 
 	/**
-	 * Returns article type for given (wikiId, pageId) pair
-	 * @param int $wikiId
+	 * Returns article type for given pageId
 	 * @param int $pageId
 	 * @return string|null
 	 */
-	public function getArticleType( $wikiId, $pageId ) {
-		//curl -X POST -H "Content-Type: application/json" "http://dev-arturd:8080/holmes/classifications/" --data "{\"title\": \"John Price\", \"wikiText\": \"asdfasfd\"}"
+	public function getArticleType( $pageId ) {
 
+		$art = Article::newFromID( $pageId );
+		if ( !$art ) {
+			return null;
+		}
+		$params = [
+			'title' => $art->getTitle()->getText(),
+			'wikiText' => $art->getPage()->getRawText()
+		];
 
-		$art = Article::newFromID(50);
-		var_dump($art->getTitle()->getText());
-		var_dump($art->getPage()->getRawText());
-		$ch= curl_init();
-		curl_setopt($ch,CURLOPT_URL, 'http://dev-arturd:8080/holmes/classifications/');
-		cur_setopt($ch,CURLOPT_CONNECTTIMEOUT, 1);
-		curl_setopt($ch,CURLOPT_POST, 1);
-		curl_setopt($ch,CURLOPT_POSTFIELDS, "{\"title\": \"John Price\", \"wikiText\": \"asdfasfd\"}");
-		curl_setopt($ch,CURLOPT_HTTPHEADER,[ 'Content-Type: application/json' ] );
+		$json = json_encode( $params, JSON_FORCE_OBJECT );
 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$result = curl_exec($ch);
-		var_dump($result);
-//close connection
-		curl_close($ch);
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, self::HOLEMS_ENDOPINT );
+		curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 1 );
+		curl_setopt( $ch, CURLOPT_POST, 1 );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $json );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, [ 'Content-Type: application/json' ] );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+		$result = curl_exec( $ch );
+		curl_close( $ch );
+
+		$response = json_decode( $result, true );
+		if ( !empty( $response ) && isset( $response[ 'class' ] ) ) {
+			return $response[ 'class' ];
+		}
+		return null;
 	}
 }
