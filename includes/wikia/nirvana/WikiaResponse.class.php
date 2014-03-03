@@ -43,6 +43,7 @@ class WikiaResponse {
 	/**
 	 * Cache targets
 	 */
+	const CACHE_PRIVATE_DISABLED = -1;
 	const CACHE_DISABLED = 0;
 
 	/**
@@ -287,7 +288,12 @@ class WikiaResponse {
 	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
 
-		$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
+		if ($varnishTTL === self::CACHE_PRIVATE_DISABLED) {
+			$this->setHeader('Cache-Control', sprintf('private, max-age=0, must-revalidate'));
+		}
+		else {
+			$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
+		}
 
 		// default to the TTL for Varnish
 		if ($browserTTL === false) {
