@@ -101,6 +101,7 @@ define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia
 					wrapper.getElementsByTagName( 'video' ).length > 0 ||
 					wrapper.getElementsByTagName( 'object' ).length > 0 ||
 					wrapper.getElementsByTagName( 'embed' ).length > 0 ||
+					wrapper.querySelector( '#lyra-spacer' ) ||
 					wrapper.getElementsByClassName( 'celtra-ad-v3' ).length > 0);
 
 				//despite the above check's result, run this anyways

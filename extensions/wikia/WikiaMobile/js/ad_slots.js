@@ -51,7 +51,7 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', 'sections'
             //this can wait to on load as is under the fold
             $( window ).on( 'load', function () {
                 if ( shouldShowInContent ) {
-                    div = '<div id=wkAdInContent class=ad-in-content />';
+                    div = '<div id=MOBILE_IN_CONTENT class=ad-in-content />';
     
                     if ( Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' ) ) {
                         sections.getElementAt( MIN_ZEROTH_SECTION_LENGTH ).after( div );
@@ -59,7 +59,7 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', 'sections'
                         $firstSection.before( div );
                     }
     
-                    loadAd( doc.getElementById( 'wkAdInContent' ), 'MOBILE_IN_CONTENT' );
+                    loadAd( doc.getElementById( 'MOBILE_IN_CONTENT' ), 'MOBILE_IN_CONTENT' );
                 }
     
                 if ( shouldShowBeforeFooter ) {
