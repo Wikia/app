@@ -8,6 +8,7 @@
 
 
 class LyricsApiController extends WikiaController {
+	const PARAM_ARTIST = 'artist';
 
 	private $lyricsApiHandler = null;
 
@@ -16,7 +17,14 @@ class LyricsApiController extends WikiaController {
 	}
 
 	public function getArtist() {
-		$artist = $this->wg->Request->getVal( 'artist' );
+		$artist = $this->wg->Request->getVal( self::PARAM_ARTIST );
+
+		if( empty( $artist ) ) {
+			throw new InvalidParameterApiException( self::PARAM_ARTIST );
+		}
+
+		$results = $this->lyricsApiHandler->getArtist( $artist );
+		$this->response->setVal( 'result', $results );
 	}
 
 	public function getAlbum() {
