@@ -15,7 +15,7 @@
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
 
-(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest, adSlotMapConfig) {
+(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -205,4 +205,4 @@
 		});
 	};
 
-}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest, AdSlotMapConfig));
+}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
