@@ -9,16 +9,20 @@
 
 class LyricsApiController extends WikiaController {
 	const PARAM_ARTIST = 'artist';
+	const PARAM_ALBUM = 'album';
+	const PARAM_SONG = 'song';
 
 	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
 
 	private $lyricsApiHandler = null;
 
 	public function __construct() {
+		parent::__construct();
 		$this->lyricsApiHandler = new MockLyricsApiHandler();
 	}
 
 	public function getArtist() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$artist = $this->wg->Request->getVal( self::PARAM_ARTIST );
 
 		if( empty( $artist ) ) {
@@ -31,8 +35,21 @@ class LyricsApiController extends WikiaController {
 	}
 
 	public function getAlbum() {
-		$artist = $this->wg->Request->getVal( 'artist' );
-		$album = $this->wg->Request->getVal( 'album' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
+		$albumName = $this->wg->Request->getVal( self::PARAM_ALBUM );
+
+		if( empty( $artistName ) ) {
+			throw new InvalidParameterApiException( self::PARAM_ARTIST );
+		}
+
+		if( empty( $albumName ) ) {
+			throw new InvalidParameterApiException( self::PARAM_ALBUM );
+		}
+
+		$album = $this->lyricsApiHandler->getAlbum( $artistName, $albumName );
+		$this->response->setVal( 'result', $album );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	public function getSong() {
