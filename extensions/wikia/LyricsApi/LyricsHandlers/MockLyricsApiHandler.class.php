@@ -31,17 +31,17 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$result = new stdClass();
 		$result->name = $artist;
-		$result->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
+		$result->image = $this->getMockedImgUrl();
 
 		$album1 = new stdClass();
 		$album1->name = 'Album #1';
-		$album1->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
+		$album1->image = $this->getMockedImgUrl();
 		$album1->year = 2001;
 		$album1->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album1->name ) );
 
 		$album2 = new stdClass();
 		$album2->name = 'Album #2';
-		$album2->image = 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
+		$album2->image = $this->getMockedImgUrl();
 		$album2->year = 2011;
 		$album2->url = sprintf( '%s/%s?controller=LyricsApi&method=getAlbum&artist=%s&album=%s', $wgServer, self::API_ENTRY_POINT, urlencode( $artist ), urlencode( $album2->name ) );
 
@@ -119,5 +119,14 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	public function searchArtist( $query ) {}
 	public function searchSong( $query ) {}
 	public function searchLyrics( $query ) {}
+
+	/**
+	 * @desc Just a simple helper method to return random placekitten images' urls
+	 *
+	 * @return string
+	 */
+	private function getMockedImgUrl() {
+		return sprintf( '%s/%d/%d', 'http://placekitten.com', rand(128, 1024), rand(128, 1024) );
+	}
 
 } 
