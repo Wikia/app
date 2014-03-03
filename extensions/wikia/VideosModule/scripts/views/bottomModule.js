@@ -31,7 +31,7 @@ define('videosmodule.views.bottomModule', [
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
 
-		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
+		// Make sure we're on an article page
 		if (this.articleId) {
 			this.init();
 		}
