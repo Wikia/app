@@ -9,23 +9,11 @@
 class VisualEditorWikiaHooks {
 
 	public static function onGetPreferences( $user, &$preferences ) {
-		global $wgEnableRTEExt;
-
 		// Remove core VisualEditor preferences
 		unset(
 			$preferences['visualeditor-enable'],
 			$preferences['visualeditor-betatempdisable']
 		);
-
-		// VOLDEV-35
-		// disabling RTE causes this preference to disappear		
-		if ( empty( $wgEnableRTEExt ) ) {
-			$preferences['enablerichtext'] = array(
-				'type' => 'toggle',
-				'section' => 'editing/editing-experience',
-				'label-message' => 'enablerichtexteditor',
-			);
-		}
 
 		return true;
 	}
@@ -63,6 +51,26 @@ class VisualEditorWikiaHooks {
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		global $wgMaxUploadSize;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
+		return true;
+	}
+
+	/**
+	 * VOLDEV-35
+	 * Always show "Enable visual editor (where available)" preference when VE is enabled
+	 * From extensions/wikia/RTE/RTE.class.php
+	 */
+	static function onEditingPreferencesBefore( $user, &$preferences ) {
+		global $wgEnableRTEExt;
+
+		if ( empty( $wgEnableRTEExt ) ) {
+			$preferences['enablerichtext'] = array(
+				'type' => 'toggle',
+				'section' => 'editing/editing-experience',
+				// 'section' => 'editing/rte',
+				'label-message' => 'enablerichtexteditor',
+			);
+		}
+
 		return true;
 	}
 
