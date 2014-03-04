@@ -61,6 +61,7 @@ $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 # Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
 $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
+$wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
 
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
@@ -2269,7 +2270,7 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onBeforeSendCacheControl(OutputPage $out) {
-		self::addExtraHeaders( $out->getRequest()->response() );;
+		self::addExtraHeaders( $out->getRequest()->response() );
 		return true;
 	}
 
@@ -2284,7 +2285,20 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
-		self::addExtraHeaders( $context->getRequest()->response() );;
+		self::addExtraHeaders( $context->getRequest()->response() );
+		return true;
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
+	 *
+	 * @param WikiaApp $app
+	 * @param WikiaResponse $response
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onNirvanaAfterRespond(WikiaApp $app, WikiaResponse $response) {
+		self::addExtraHeaders( $app->wg->Request->response() );
 		return true;
 	}
 
