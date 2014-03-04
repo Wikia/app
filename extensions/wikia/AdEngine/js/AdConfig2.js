@@ -10,7 +10,7 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
-	adProviderGpt,
+	adProviderDirectGpt,
 	adProviderEvolve,
 	adProviderGamePro,
 	adProviderLater,
@@ -72,18 +72,18 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderGpt;
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderGpt;
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'Liftium') {
 			return adProviderLater;
 		}
 
 		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
-		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slotname)) {
-			return adProviderGpt;
+		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderDirectGpt.canHandleSlot(slotname)) {
+			return adProviderDirectGpt;
 		}
 
 		if (useSevenOneMedia) {
@@ -109,8 +109,8 @@ var AdConfig2 = function (
 		}
 
 		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
-			return adProviderGpt;
+		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+			return adProviderDirectGpt;
 		}
 
 		return adProviderLater;

@@ -6,8 +6,8 @@
  */
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, AdLogicPageLevelParamsLegacy, SlotTweaker, AdTracker*/
-/*global AdProviderNull, AdProviderRemnantDart, AdProviderLiftium, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
-/*global AdConfig2Late, AdSlotMapConfig, WikiaFullGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
+/*global AdProviderNull, AdProviderRemnantGpt, AdProviderLiftium, AdProviderGamePro, AdProviderSevenOneMedia, SevenOneMediaHelper*/
+/*global AdConfig2Late, GptSlotConfig, WikiaGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
@@ -24,11 +24,11 @@
 		wikiaFullGpt,
 		fakeLiftium = {},
 		adProviderGamePro,
-		adProviderRemanantDart,
+		adProviderRemantGpt,
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
-		adSlotMapConfig,
+		gptSlotConfig,
 		sevenOneMediaHelper;
 
 	// TODO: make Liftium and AdEngine2 rely less on order of execution
@@ -42,8 +42,8 @@
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	slotTweaker = SlotTweaker(log, document, window);
-	adSlotMapConfig = AdSlotMapConfig();
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
+	gptSlotConfig = GptSlotConfig();
+	wikiaFullGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -53,7 +53,7 @@
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
+		adProviderRemantGpt = AdProviderRemnantGpt(adTracker, log, slotTweaker, wikiaFullGpt, gptSlotConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
@@ -62,7 +62,7 @@
 		log,
 		window,
 		adProviderGamePro,
-		window.wgEnableRHonDesktop ? adProviderRemanantDart : adProviderLiftium,
+		window.wgEnableRHonDesktop ? adProviderRemantGpt : adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);

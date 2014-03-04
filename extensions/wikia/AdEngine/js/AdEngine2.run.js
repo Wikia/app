@@ -6,10 +6,10 @@
 /*global document, window */
 /*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaFullGptHelper, AdLogicPageDimensions */
-/*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
+/*global WikiaDartHelper, WikiaGptHelper, AdLogicPageDimensions */
+/*global AdProviderEvolve, AdProviderDirectGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
-/*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
+/*global AdLogicPageLevelParamsLegacy, GptSlotConfig */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
@@ -34,13 +34,13 @@
 		wikiaDart,
 		wikiaFullGpt,
 		evolveHelper,
-		adProviderGpt,
+		adProviderDirectGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
-		adSlotMapConfig,
+		gptSlotConfig,
 
 		queueForLateAds,
 		adConfigForLateAds;
@@ -63,7 +63,7 @@
 	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
-	adSlotMapConfig = AdSlotMapConfig();
+	gptSlotConfig = GptSlotConfig();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
@@ -72,11 +72,11 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
+	wikiaFullGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
+	adProviderDirectGpt = AdProviderDirectGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, gptSlotConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -96,7 +96,7 @@
 		adDecoratorPageDimensions,
 
 		// AdProviders:
-		adProviderGpt,
+		adProviderDirectGpt,
 		adProviderEvolve,
 		adProviderGamePro,
 		adProviderLater,

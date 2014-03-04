@@ -4,7 +4,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock', canHandleSlot: function() {return false;}}
+			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return false;}}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
@@ -18,7 +18,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -32,7 +32,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
+			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
 			, adProviderLaterMock = {name: 'LaterMock', canHandleSlot: function() {return true;}}
 			, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
 			, logMock = function() {}
@@ -48,7 +48,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -56,7 +56,7 @@ describe('AdConfig2', function(){
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderLaterMock');
-		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderGptMock, 'adProviderGptMock');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderDirectGptMock, 'adProviderDirectGptMock');
 	});
 
 	it('getProvider use Evolve for NZ (only if provider accepts)', function() {
@@ -64,7 +64,7 @@ describe('AdConfig2', function(){
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMockHandling = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderGptMock = {name:'GptMock'}
+			, adProviderDirectGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMockAU = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
@@ -78,7 +78,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMockAU, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMockHandling
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -92,7 +92,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderGptMock = {name:'GptMock'}
+			, adProviderDirectGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'PL';}}
 			, logMock = function() {}
@@ -106,7 +106,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -120,7 +120,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock'}
+			, adProviderDirectGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
@@ -134,7 +134,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -148,7 +148,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderGptMock = {name:'GptMock'}
+			, adProviderDirectGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {}}
 			, logMock = function() {}
@@ -162,7 +162,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -178,7 +178,7 @@ describe('AdConfig2', function(){
 			, adProviderGameProMockRejecting = {name: 'GameProMock', canHandleSlot: function() {return false;}}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderGptMock = {name:'GptMock'}
+			, adProviderDirectGptMock = {name:'GptMock'}
 			, adProviderLaterMock = {name: 'LaterMock'}
 			, geoMock = {getCountryCode:function() {return 'NZ';}}
 			, logMock = function() {}
@@ -193,7 +193,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMockRejecting
 			, adProviderLaterMock
@@ -205,7 +205,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
@@ -218,7 +218,7 @@ describe('AdConfig2', function(){
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderGameProMock = {name: 'GameProMock', canHandleSlot: function() {return true;}}
 			, adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}}
-			, adProviderGptMock = {name:'GptMock', canHandleSlot: function() {return true}}
+			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true}}
 			, adProviderLaterMock = {name: 'LaterMock', canHandleSlot: function() {return true}}
 			, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
 			, logMock = function() {}
@@ -232,7 +232,7 @@ describe('AdConfig2', function(){
 			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
 
 			// AdProviders
-			, adProviderGptMock
+			, adProviderDirectGptMock
 			, adProviderEvolveMock
 			, adProviderGameProMock
 			, adProviderLaterMock
