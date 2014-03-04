@@ -46,7 +46,7 @@ class WAMPageHooks {
 			$article = new WAMPageArticle( $title );
 		} else {
 			$redirectService = new RedirectService( 'wam' );
-			$redirectService->redirect( $title );
+			$redirectService->redirect();
 		}
 
 		wfProfileOut( __METHOD__ );
