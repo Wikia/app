@@ -1,6 +1,6 @@
 /* globals Features:true */
 //init toc
-require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
+define( 'toc', [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
 function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
 
