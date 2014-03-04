@@ -245,7 +245,6 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 		 *		scripts - comma-separated list of AssetsManager groups
 		 *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
 		 * 		mustache - comma-separated list of paths to Mustache-powered templates
-		 *		ttl - cache period for both Varnish and Browser (in seconds)
 		 *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
 		 *		callback - function to be called with fetched JSON object
 		 *

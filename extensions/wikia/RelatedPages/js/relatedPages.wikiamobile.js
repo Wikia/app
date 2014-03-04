@@ -35,7 +35,6 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 				loader( {
 					type: loader.MULTI,
 					resources: {
-						ttl: 604800, // 7 days
 						mustache: 'extensions/wikia/RelatedPages/templates/RelatedPages_section.mustache'
 					}
 				} ).done( function ( data ) {
