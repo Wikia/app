@@ -297,7 +297,7 @@ class Config
 	public function __construct( array $params = [] ) {
 
 		$dynamicFilterCodes = [
-				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', [ 'quote'=>'"' ] ),
+				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Games', [ 'quote'=>'"' ] ),
 				self::FILTER_CAT_ENTERTAINMENT => Utilities::valueForField( 'categories', 'Entertainment' ),
 				self::FILTER_CAT_LIFESTYLE     => Utilities::valueForField( 'categories', 'Lifestyle'),
 				];
