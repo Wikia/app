@@ -495,6 +495,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			'isApproved' => false,
 			'isAutoApproved' => false
 		];
+		wfDebug("Szumodebug ".__METHOD__ . "($wikiId, $langCode)\n");
 
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
@@ -513,8 +514,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			foreach($additionalImages as $image) {
 				$imageStatuses []= $image['review_status'];
 			}
-		}
-
+		}		
 		foreach($imageStatuses as $status) {
 			switch($status) {
 				case ImageReviewStatuses::STATE_REJECTED:
@@ -531,7 +531,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
-
+		wfDebug("Szumodebug ".__METHOD__ . " imageStatus = ".var_export($imageStatuses, true)."\n");
 		return $wikiStatus;
 	}
 

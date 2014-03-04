@@ -654,6 +654,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
+		wfDebug("Szumodebug ".__METHOD__ . "('$imageName'): $imageTitle,  $imageId\n");
+		
 
 		wfProfileOut(__METHOD__);
 		return $imageId;

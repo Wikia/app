@@ -20,13 +20,8 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'Promote' );
 
-		if ( $this->wg->User->isLoggedIn() ) {
-			//fix for fb#49401 -- the page for anons looks better without this stylesheet
-			//apparently it's also fix for fb#49394 -- the page for anons looks better without this stylesheet
-			//FIXME: this is an asset of AdminDashboard extension; why is it added here? Maybe we should use some logic of AdminDashboard to load this asset and remove it from here
-			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/AdminDashboard/css/AdminDashboard.scss' ) );
-		}
-
+		//FIXME: this is an asset of AdminDashboard extension; why is it added here? Maybe we should use some logic of AdminDashboard to load this asset and remove it from here
+		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/AdminDashboard/css/AdminDashboard.scss' ) );
 		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialPromote/css/SpecialPromote.scss' ) );
 
 		$this->helper = new SpecialPromoteHelper();
