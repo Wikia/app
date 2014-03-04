@@ -8,6 +8,7 @@ define( 'thumbnails.views.titleThumbnail', [
 	function TitleView( options ) {
 		this.model = options.model;
 		this.el = document.createElement( options.el || 'div' );
+		this.initialize();
 	}
 
 	TitleView.prototype.render = function() {
@@ -15,6 +16,13 @@ define( 'thumbnails.views.titleThumbnail', [
 		this.el.innerHTML = Mustache.render( templates.titleThumbnail, this.model );
 		this.$el = $( this.el );
 		return this;
+	};
+
+	TitleView.prototype.initialize = function() {
+		var self = this;
+		$(window).resize(function() {
+			self.applyEllipses();
+		});
 	};
 
 	TitleView.prototype.applyEllipses = function( config ) {
