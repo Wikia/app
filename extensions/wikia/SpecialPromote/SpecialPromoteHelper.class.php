@@ -322,7 +322,6 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
-		WikiaLogger::instance()->debug("Szumodebug", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data]);
 
 		$updateData = array(
 			'city_lang_code' => $langCode,
@@ -354,6 +353,9 @@ class SpecialPromoteHelper extends WikiaObject {
 
 			$updateData['city_images'] = json_encode($additionalImageNames);
 		}
+
+		WikiaLogger::instance()->debug("Szumodebug", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data,
+																									'updateData' => $updateData, 'cityId' => $cityId]);
 		
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
 
