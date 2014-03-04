@@ -59,6 +59,8 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 	}
 
 	$response->sendHeaders();
+	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
+
 	$response->render();
 
 	wfLogProfilingData();
