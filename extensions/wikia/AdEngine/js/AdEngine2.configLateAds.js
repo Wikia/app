@@ -53,7 +53,7 @@
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderRemantGpt = AdProviderRemnantGpt(adTracker, log, slotTweaker, wikiaGptHelper, gptSlotConfig);
+		adProviderRemantGpt = AdProviderRemnantGpt(log, slotTweaker, wikiaGptHelper, gptSlotConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
