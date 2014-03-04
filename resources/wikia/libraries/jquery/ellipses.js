@@ -1,5 +1,7 @@
 /**
+ * $.fn.ellipses
  * @author Liz Lee <lizlee at wikia dash inc dot com>
+ * @author Kenneth Kouot <kenkouot at wikia dash inc dot com>
  * @description A jQuery plugin for applying ellipses to text that wraps over one line (which could otherwise be
  * handled by CSS)
  */
