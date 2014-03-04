@@ -57,9 +57,6 @@ define('videohomepage.views.carousel', [
 						wordsHidden: 2
 					});
 					self.resizeLastSlide();
-				},
-				beforeUpdate: function () {
-					self.$('.ellipses').remove();
 				}
 			});
 
