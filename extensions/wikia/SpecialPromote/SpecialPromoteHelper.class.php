@@ -330,8 +330,6 @@ class SpecialPromoteHelper extends WikiaObject {
 			'city_description' => $description
 		);
 
-		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
-
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
 			$imageReviewState = $isCorpLang
@@ -356,6 +354,8 @@ class SpecialPromoteHelper extends WikiaObject {
 
 			$updateData['city_images'] = json_encode($additionalImageNames);
 		}
+		
+		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
 
 		if( !empty($deletedFiles) ) {
 			if ($isCorpLang) {
