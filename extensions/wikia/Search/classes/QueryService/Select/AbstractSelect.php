@@ -435,7 +435,7 @@ abstract class AbstractSelect
 		);
 		$service = $this->getService();
 		$langs = $config->getLanguageCode();
-		$langs = is_array( $langs ) ?: [ $langs ];
+		$langs = is_array( $langs ) ? $langs : [ $langs ];
 		foreach( $langs as $lang ) {
 			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
 			//if found exit, we look only for first match

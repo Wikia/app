@@ -149,7 +149,7 @@ class WikiDetailsService extends WikiService {
 	protected function getFromWAMService( $id ) {
 		$service = new WAMService();
 		return [
-			'wam_score' => $service->getCurrentWamScoreForWiki( $id )
+			'wam_score' => floatval( $service->getCurrentWamScoreForWiki( $id ) )
 		];
 	}
 
