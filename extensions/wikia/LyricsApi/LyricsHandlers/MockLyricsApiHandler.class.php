@@ -1,11 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 3/3/14
- * Time: 2:11 PM
+ * Class MockLyricsApiHandler
+ *
+ * @desc Provides mocked data for LyricsApi
  */
-
 class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	const API_ENTRY_POINT = 'wikia.php';
 	const API_CONTROLLER_NAME = 'LyricsApi';
@@ -27,8 +25,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	public function getArtist( $artist ) {
-		global $wgServer;
-
 		$result = new stdClass();
 		$result->name = $artist;
 		$result->image = $this->getImage( $artist );
@@ -204,5 +200,4 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $songs;
 	}
 
-
-} 
+}
