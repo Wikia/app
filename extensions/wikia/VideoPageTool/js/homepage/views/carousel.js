@@ -5,7 +5,7 @@ define('videohomepage.views.carousel', [
 	'videopageadmin.collections.categorydata',
 	'shared.views.carouselthumb',
 	'shared.views.owlcarousel',
-	'videopagetool.templates.mustache',
+	'videopagetool.templates.mustache'
 ], function (
 	CategoryDataCollection,
 	CarouselThumbView,
