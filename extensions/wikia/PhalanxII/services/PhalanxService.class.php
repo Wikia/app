@@ -193,7 +193,18 @@ class PhalanxService extends Service {
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$requestTime = microtime( true );
-			$response = Http::post( $url, $options);
+			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
+			// it's better to do the retry than maintain the PHP fallback for that
+			for( $tries = 2 ; $tries >= 0 ; $tries-- ) {
+				$response = Http::post( $url, $options );
+				if ( false !== $response) {
+					break;
+				}
+				if ( $tries ) { // don't wait after the last try
+					// wait for 0.02 second
+					usleep( 20000 );
+				}
+			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
 
