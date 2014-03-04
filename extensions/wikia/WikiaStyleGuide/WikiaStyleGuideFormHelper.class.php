@@ -18,7 +18,7 @@ class WikiaStyleGuideFormHelper {
 		$attributesString = '';
 
 		foreach( $attributes as $name => $value ) {
-			$attributesString .= ' '. $name . '="' . $value . '"';
+			$attributesString .= ' '. $name . '="' . Sanitizer::encodeAttribute( $value ) . '"';
 		}
 
 		return ltrim( $attributesString );
