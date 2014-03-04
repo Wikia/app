@@ -19,9 +19,9 @@
  *	}
  */
 
-(function(window, $) {
+(function (window, $) {
 
-	if( window.VET_loader ) {
+	if (window.VET_loader) {
 		return;
 	}
 
@@ -35,16 +35,16 @@
 	 * @param {Object} options Control options sent to VET from extensions
 	 * @param {jQuery} elem Element that was clicked on to open the VET modal
 	 */
-	VET_loader.load = function(options, elem) {
+	VET_loader.load = function (options, elem) {
 		if (wgUserName == null && wgAction == 'edit') {
 			// handle login on edit page
 			UserLogin.rteForceLogin();
 			elem && elem.stopThrobbing();
 			return;
 		} else if (wgUserName == null) {
-			UserLoginModal.show( {
+			UserLoginModal.show({
 				origin: 'vet',
-				callback: function() {
+				callback: function () {
 					UserLogin.forceLoggedIn = true;
 					window.VET_loader.load(options);
 				}
@@ -55,16 +55,16 @@
 		}
 
 		// if modal is already on screen or is about to be, don't do anything
-		if(modalOnScreen) {
+		if (modalOnScreen) {
 			elem && elem.stopThrobbing();
 			return;
 		}
 
-		modalOnScreen = true;	// modal is now loading
+		modalOnScreen = true; // modal is now loading
 
 		var deferredList = [];
 
-		if(!resourcesLoaded) {
+		if (!resourcesLoaded) {
 			var templateDeferred = $.Deferred(),
 				deferredMessages = $.Deferred();
 
@@ -74,7 +74,7 @@
 				method: 'modal',
 				type: 'get',
 				format: 'html',
-				callback: function(html) {
+				callback: function (html) {
 					templateHtml = html;
 					templateDeferred.resolve();
 				}
@@ -90,18 +90,18 @@
 			deferredList.push(resourcePromise);
 		}
 
-		$.when.apply(this, deferredList).done(function() {
+		$.when.apply(this, deferredList).done(function () {
 			elem && elem.stopThrobbing();
 
-			require(['wikia.vet'], function(vet) {
+			require(['wikia.vet'], function (vet) {
 
 				VET_loader.modal = $(templateHtml).makeModal({
 					width: 939,
-					onClose: function() {
+					onClose: function () {
 						vet.close();
 					},
-					onAfterClose: function() {
-						modalOnScreen = false;	// release modal lock
+					onAfterClose: function () {
+						modalOnScreen = false; // release modal lock
 					}
 				});
 
@@ -117,13 +117,13 @@
 	 *
 	 * @param object options - options to be passed to VET_loader.load(). See above for example.
 	 */
-	$.fn.addVideoButton = function(options) {
+	$.fn.addVideoButton = function (options) {
 		$.preloadThrobber();
 
-		return this.each(function() {
+		return this.each(function () {
 			var $this = $(this);
 
-			$this.off('click.VETLoader').on('click.VETLoader', function(e) {
+			$this.off('click.VETLoader').on('click.VETLoader', function (e) {
 				e.preventDefault();
 
 				// Provide immediate feedback once button is clicked
