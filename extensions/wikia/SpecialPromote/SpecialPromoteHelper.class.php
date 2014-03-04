@@ -9,6 +9,9 @@
  *
  */
 
+use \Wikia\Logger\WikiaLogger;
+
+
 class SpecialPromoteHelper extends WikiaObject {
 	const MIN_HEADER_LENGTH = 20;
 	const MAX_HEADER_LENGTH = 75;
@@ -319,6 +322,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
+		WikiaLogger::instance()->debug("Szumodebug", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data]);
 
 		$updateData = array(
 			'city_lang_code' => $langCode,
@@ -495,7 +499,8 @@ class SpecialPromoteHelper extends WikiaObject {
 			'isApproved' => false,
 			'isAutoApproved' => false
 		];
-		wfDebug("Szumodebug ".__METHOD__ . "($wikiId, $langCode)\n");
+		
+		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, 'wikiId' => $wikiId, 'lang' => $langCode]);
 
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
@@ -531,7 +536,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
-		wfDebug("Szumodebug ".__METHOD__ . " imageStatus = ".var_export($imageStatuses, true)."\n");
+		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, "imageStatuses" => $imageStatuses]);
 		return $wikiStatus;
 	}
 

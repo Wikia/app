@@ -9,6 +9,9 @@
  * @author Sebastian Marzjan
  *
  */
+use \Wikia\Logger\WikiaLogger;
+
+ 
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -654,7 +657,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
-		wfDebug("Szumodebug ".__METHOD__ . "('$imageName'): $imageTitle,  $imageId\n");
+		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, 'imageName' => $imageName,
+																									'imageTitle' => $imageTitle, 'imageId' => $imageId]);
 		
 
 		wfProfileOut(__METHOD__);
