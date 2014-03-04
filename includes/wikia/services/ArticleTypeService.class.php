@@ -41,15 +41,13 @@ class ArticleTypeService {
 
 		$result = curl_exec( $ch );
 		curl_close( $ch );
+		$response = json_decode( $result, true );
 
-		if ( $result === false ) {
+		if ( !empty( $response ) && isset( $response[ 'class' ] ) ) {
+			return $response[ 'class' ];
+		} else {
 			$wikiId = F::app()->wg->cityId;
 			throw new Exception( 'ArticleType error for: ' . $wikiId . '_' . $pageId );
 		}
-		$response = json_decode( $result, true );
-		if ( !empty( $response ) && isset( $response[ 'class' ] ) ) {
-			return $response[ 'class' ];
-		}
-		return null;
 	}
 }
