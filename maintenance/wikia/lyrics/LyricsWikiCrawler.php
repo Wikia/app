@@ -140,6 +140,7 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @return ResultWrapper
 	 */
 	private function getArtistPageIds( $limit = 0, $offset = 0 ) {
+		$limitParams = [];
 		if ( $limit ) {
 			$limitParams = [
 				'LIMIT' => $limit,

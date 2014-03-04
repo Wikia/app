@@ -17,11 +17,13 @@ class LyricsScrapper {
 	}
 
 	function processArtistArticle( Article $article ) {
+		$albumsData = [];
 		$artistScraper = new ArtistScraper();
 		$artistData = $artistScraper->processArticle( $article );
 		$albumsData = $artistScraper->getAlbums( $article, $artistData['name'] );
 		self::log( 'ARTIST: ' . $artistData['name'] . PHP_EOL );
 		foreach ( $albumsData as $albumData ) {
+			$songsData = [];
 			$albumArticle = $this->articleFromTitle( $albumData['title'] );
 			self::log( "\tALBUM: " . $albumData['title'] . PHP_EOL );
 			if ( $albumArticle !== null ) {
