@@ -16,8 +16,8 @@ class PhalanxService extends Service {
 	const RES_STATUS = 'PHALANX ALIVE';
 	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
 
-	const PHALANX_SERVICE_TRIES_LIMIT = 3;
-	const PHALANX_SERVICE_TRY_USLEEP = 20000; // 0.2s
+	const PHALANX_SERVICE_TRIES_LIMIT = 3; // number of retries for phalanx POST requests
+	const PHALANX_SERVICE_TRY_USLEEP = 20000; // delay between retries - 0.2s
 
 	/**
 	 * @param $name
