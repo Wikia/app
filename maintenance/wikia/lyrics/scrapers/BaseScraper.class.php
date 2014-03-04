@@ -28,37 +28,4 @@ abstract class BaseScraper {
 		};
 		return $result;
 	}
-
-	// [[Audioslave:Audioslave (2002)|Audioslave (2002)]]
-	protected function getLabel( $headerMatch ) {
-		$name = trim( $headerMatch );
-		if ( $this->isLink( $name ) ) {
-			$name = $this->getLinkLabel( $name );
-		}
-		return $name;
-	}
-
-	protected function isLink( $text ) {
-		$len = mb_strlen( $text );
-		return mb_substr( $text, 0, 2 ) == '[[' && mb_substr( $text, $len-2, 2 ) == ']]';
-	}
-
-	protected function getLinkLabel ( $text ) {
-		// Remove brackets
-		$text = trim($text, '[]');
-		if ( strpos( $text, '|' ) !== false) {
-			$text =  end( explode( '|', $text ) );
-		}
-		return $text;
-	}
-
-	protected function getAlbumNameYear( $headerMatch ) {
-		$name = $this->getLabel( $headerMatch );
-		if ( preg_match('#(.+)\s\(([\d]+)\)#', $name, $matches) ) {
-			return array($matches[1], $matches[2]);
-		}
-		// TODO: Handle album without year
-		return array($name, null);
-	}
-
 }

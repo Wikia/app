@@ -16,7 +16,6 @@ class AlbumScraper extends BaseScraper {
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		$albumData = array_merge( $albumData, $this->getFooter( $article ) );
-
 		return $albumData;
 	}
 
@@ -28,7 +27,7 @@ class AlbumScraper extends BaseScraper {
 		return $this->getTemplateValues( 'AlbumFooter', $article->getContent() );
 	}
 
-	function getSongs( Article $article ) {
+	public function getSongs( Article $article ) {
 		// # '''[[La Polla Records:Salve|Salve]]'''
 		$songs = [];
 		$re = '/# \'\'\'\[\[(.+)\]\]/';
@@ -44,11 +43,11 @@ class AlbumScraper extends BaseScraper {
 		return $songs;
 	}
 
- 	function getSongData( $songName ) {
-		$songa = explode( '|', $songName );
+ 	protected function getSongData( $songName ) {
+		$songFields = explode( '|', $songName );
 		return [
-			'title' => $songa[0],
-			'name' => $songa[1],
+			'title' => $songFields[0],
+			'name' => $songFields[1],
 		];
 	}
 

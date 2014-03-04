@@ -18,9 +18,6 @@ class SongScraper extends BaseScraper {
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
-//
-//		$song = new Song( $this->esClient );
-//		$songData['id'] = $song->save( $songData );
 	}
 
 	protected function getHeader( Article $article ) {
@@ -34,7 +31,6 @@ class SongScraper extends BaseScraper {
 			$result['Album'] = $albumName;
 		}
 		return $result;
-
 	}
 
 	protected function getFooter( Article $article ) {

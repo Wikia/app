@@ -1,19 +1,15 @@
 <?php
 
 require_once( dirname(__FILE__) . '/../../Maintenance.php' );
-require_once( dirname(__FILE__) . '/ScraperFactory.class.php' );
+require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
 require_once( dirname(__FILE__) . '/LyricsScrapper.class.php' );
 
 require_once( dirname(__FILE__) . '/scrapers/BaseScraper.class.php' );
 require_once( dirname(__FILE__) . '/scrapers/ArtistScraper.class.php' );
 require_once( dirname(__FILE__) . '/scrapers/AlbumScraper.class.php' );
 require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
-require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
 
-require_once( dirname(__FILE__) . '/classes/BaseLyricsEntity.class.php' );
-require_once( dirname(__FILE__) . '/classes/Artist.class.php' );
-require_once( dirname(__FILE__) . '/classes/Album.class.php' );
-require_once( dirname(__FILE__) . '/classes/Song.class.php' );
+
 
 class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_ID = 'articleId';
@@ -22,7 +18,6 @@ class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_LANE = 'lane';
 
 	private $articleId = 0;
-	private $scrapperFactory;
 	/**
 	 * @var DataBase
 	 */
@@ -39,16 +34,8 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function execute() {
-		$params = [
-			'hosts' => [
-				'10.10.10.242:9200',
-			]
-		];
 		$this->db = $this->getDB( DB_SLAVE );
-
-		$this->dba = new DataBaseAdapter();
-
-		$this->scrapperFactory = new ScraperFactory( $this->dba );
+		$this->dba = newDatabaseAdapter( 'dummy', [] );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
@@ -64,35 +51,26 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function doScrapeAllArticles() {
-		$this->output( 'Scraping all articles...' . PHP_EOL );
-
-		$pagesResult = $this->db->select(
-			'page',
-			[
-				'page_id',
-				'page_title'
-			],
-			[
-				'page_namespace' => 0,
-				'page_is_redirect' => 0,
-			],
-			__METHOD__,
-			[
-				'ORDER BY' => 'page_id'
-			]
-		);
-
-		while ( $page = $this->db->fetchObject( $pagesResult ) ) {
-			$this->setArticleId( $page->page_id );
-			$this->doScrapeArticle();
-		};
+		$artists = $this->getArtistPageIds();
+		while ( $page = $this->db->fetchObject( $artists ) ) {
+			$this->setArticleId( $page->cl_from );
+			$this->doScrapeArtist();
+		}
 	}
 
 	function doScrapeLane( $poolSize, $laneNumber ) {
 		$artistCount = $this->getArtistCount();
 		$laneSize = ceil( $artistCount / $poolSize );
 		$laneOffset = $laneSize * ( $laneNumber - 1 );
-		$this->output( sprintf('Scraping lane %d of %d'.PHP_EOL, $laneNumber, $poolSize ) );
+		$this->output(
+			sprintf(
+				'Scraping lane %d of %d size %d/%d artists' . PHP_EOL,
+				$laneNumber,
+				$poolSize,
+				$laneSize,
+				$artistCount
+			)
+		);
 		$artists = $this->getArtistPageIds( $laneSize, $laneOffset );
 		while ( $page = $this->db->fetchObject( $artists ) ) {
 			$this->setArticleId( $page->cl_from );
@@ -119,6 +97,7 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function doScrapeArtist() {
+		$this->output( 'Scraping artist #' . $this->getArticleId() . PHP_EOL );
 		$article = Article::newFromID( $this->getArticleId() );
 		$ls = new LyricsScrapper( $this->dba );
 		$ls->processArtistArticle( $article );
@@ -137,6 +116,11 @@ class LyricsWikiCrawler extends Maintenance {
 		return $this->articleId;
 	}
 
+	/**
+	 * Get total number of artists
+	 *
+	 * @return false|mixed
+	 */
 	private function getArtistCount() {
 		return $this->db->selectField(
 			'categorylinks',
@@ -148,7 +132,14 @@ class LyricsWikiCrawler extends Maintenance {
 		);
 	}
 
-	private function getArtistPageIds( $limit, $offset ) {
+	/**
+	 * Get page ids for artists
+	 *
+	 * @param $limit Number of results
+	 * @param $offset Result offset
+	 * @return ResultWrapper
+	 */
+	private function getArtistPageIds( $limit = 0, $offset = 0 ) {
 		if ( $limit ) {
 			$limitParams = [
 				'LIMIT' => $limit,
