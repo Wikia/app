@@ -1,3 +1,8 @@
+/**
+ * @author Liz Lee <lizlee at wikia dash inc dot com>
+ * @description A jQuery plugin for applying ellipses to text that wraps over one line (which could otherwise be
+ * handled by CSS)
+ */
 (function (exports) {
 	'use strict';
 	var factory = function ($) {
@@ -6,6 +11,7 @@
 			if (opts) {
 				$.extend(this.settings, opts);
 			}
+			this.cleanUp();
 			this.render();
 		}
 
@@ -15,6 +21,13 @@
 				maxLines: 2,
 				// words hidden on last visible line
 				wordsHidden: 1
+			},
+            /**
+             * cleanUp
+             * @description Cleans up previous ellipses elements before applying new ones
+             */
+			cleanUp: function() {
+				this.$el.find('.ellipses').remove();
 			},
 			render: function () {
 				var oText = this.$el.text(),
@@ -75,6 +88,7 @@
 				}
 			},
 			/**
+			 * trim
 			 * @description method that aims to achieve balance between clean ellipses implementation
 			 * and performance. Uses CSS to position ellipses appropriate to hide last whitespace and also trims
 			 * dashes.
