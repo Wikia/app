@@ -40,12 +40,14 @@ class LyricsWikiCrawler extends Maintenance {
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTICLE_ID, 0 ) ) ) && $articleId > 0 ) {
+			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->setArticleId( $articleId );
 			$this->doScrapeArticle();
 		} elseif ( ( $poolSize = intval( $this->getOption( self::OPTION_ARTICLE_POOL, 0 ) ) ) && $poolSize > 0  &&
 			( $laneNumber = intval( $this->getOption( self::OPTION_ARTICLE_LANE, 0 ) ) ) && $laneNumber > 0 ) {
 			$this->doScrapeLane( $poolSize, $laneNumber );
 		} else {
+			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->doScrapeArticlesFromYesterday();
 		}
 	}
