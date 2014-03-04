@@ -1,4 +1,4 @@
-require( [
+require([
 	'jquery',
 	'lvs.callout',
 	'lvs.commonajax',
@@ -8,12 +8,12 @@ require( [
 	'lvs.videocontrols',
 	'lvs.suggestions',
 	'lvs.tracker'
-], function( $, callout, commonAjax, ellipses, swapKeep, undo, videoControls, suggestions, tracker ) {
+], function ($, callout, commonAjax, ellipses, swapKeep, undo, videoControls, suggestions, tracker) {
 
 	"use strict";
 
-	$(function() {
-		var $container = $( '#LVSGrid' );
+	$(function () {
+		var $container = $('#LVSGrid');
 
 		// track impression
 		tracker.track({
@@ -21,11 +21,11 @@ require( [
 		});
 
 		callout.init();
-		commonAjax.init( $container );
-		ellipses.init( $container );
-		swapKeep.init( $container );
-		undo.init( $container );
-		videoControls.init( $container );
-		suggestions.init( $container );
+		commonAjax.init($container);
+		ellipses.init($container);
+		swapKeep.init($container);
+		undo.init($container);
+		videoControls.init($container);
+		suggestions.init($container);
 	});
 });
