@@ -8,10 +8,10 @@
 
 class ScraperFactory {
 
-	private $esClient;
+	private $dba;
 
-	function __construct( $esClient ) {
-		$this->esClient = $esClient;
+	function __construct( $dba ) {
+		$this->dba = $dba;
 	}
 
 	/**
@@ -21,10 +21,10 @@ class ScraperFactory {
 	public function newFromArticle( Article $article ) {
 		$content = $article->getContent();
 		if ( strpos( $content, '{{ArtistHeader' ) !== FALSE ) {
-			return new ArtistScraper( $this->esClient );
+			return new ArtistScraper( $this->dl );
 		}
 		if ( strpos( $content, '{{Album' ) !== FALSE ) {
-			return new AlbumScraper( $this->esClient );
+			return new AlbumScraper( $this->dl );
 		}
 		if ( strpos( $content, '{{Song' ) !== FALSE ) {
 			return new SongScraper( $this->esClient );

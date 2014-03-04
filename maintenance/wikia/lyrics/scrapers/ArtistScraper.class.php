@@ -6,7 +6,6 @@
  * Time: 4:37 PM
  */
 
-
 class ArtistScraper extends BaseScraper {
 
 	const INDEX_NAME = 'lyrics';
@@ -22,9 +21,7 @@ class ArtistScraper extends BaseScraper {
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
 		$artistData = array_merge( $artistData, $this->getFooter( $article ) );
 
-		$artist = new Artist( $this->esClient );
-		$artistData['id'] = $artist->save( $artistData );
-		$albums = $this->getAlbums( $article, $artistData );
+		return $artistData;
 	}
 
 	protected function getHeader( Article $article ) {
@@ -35,18 +32,33 @@ class ArtistScraper extends BaseScraper {
 		return $this->getTemplateValues( 'ArtistFooter', $article->getContent() );
 	}
 
-	function getAlbums( Article $article,  $artistData) {
+	function getAlbums( Article $article, $artistName) {
 		$albums = [];
 		$text = $article->getContent();
-		$re_albums = '#==(.*?)==\s+(.*?)\{\{clear\}\}#s';
+		$re_albums = '#==(.*?)==\s+(.*?)\{\{[c|C]lear\}\}#s';
 		if ( preg_match_all( $re_albums, $text, $matches) ) {
 			for ( $i = 0; $i < count($matches[0]); $i++ ) {
-				$albumData = $this->getAlbumNameYear( $matches[1][$i] );
-				$albumData['pic'] = $this->getAlbumPic( $matches[2][$i], $artistData['name'] );
-				$album = new Album( $this->esClient );
-				$albumData['id'] = $album->save( $albumData );
+				$albumData = $this->getAlbumData( $matches[1][$i] );
+				$albumData['pic'] = $this->getAlbumPic( $matches[2][$i], $artistName );
+				$albums[] = $albumData;
 			}
 		}
+		return $albums;
+	}
+
+	function getAlbumData( $heading ) {
+		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
+		$result = [];
+		$headinga = explode( '|', trim( $heading, '][=' ) );
+		$result['title'] = $headinga[0];
+		if ( preg_match('#(.+)\s\(([\d]+)\)#', $headinga[1], $matches) ) {
+			$result['name'] = $matches[1];
+			$result['year'] = $matches[2];
+		} else {
+			// TODO Better parser
+			echo 'NEED BETTER Album title parser '.$heading.PHP_EOL;
+		}
+		return $result;
 	}
 
 	protected function getAlbumPic( $section, $artistName ) {

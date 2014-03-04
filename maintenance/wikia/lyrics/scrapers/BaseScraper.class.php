@@ -8,13 +8,7 @@
 
 abstract class BaseScraper {
 
-	protected $esClient;
-
 	abstract public function processArticle( Article $article );
-
-	function __construct( $esClient) {
-		$this->esClient = $esClient;
-	}
 
 	protected function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
 		$result = [];

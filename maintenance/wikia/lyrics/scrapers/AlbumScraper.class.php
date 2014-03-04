@@ -17,8 +17,9 @@ class AlbumScraper extends BaseScraper {
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		$albumData = array_merge( $albumData, $this->getFooter( $article ) );
 
-		$album = new Album( $this->esClient );
-		$albumData['id'] = $album->save( $albumData );
+		return $albumData;
+//		$album = new Album( $this->esClient );
+//		$albumData['id'] = $album->save( $albumData );
 		//$this->saveTracks( $article, $albumData );
 	}
 
