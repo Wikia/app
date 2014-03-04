@@ -87,10 +87,6 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		// Only do this if the user has VE enabled
-		if ( !self::isAvailable( $skin ) ) {
-			return true;
-		}
 		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
 		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
 		return true;
