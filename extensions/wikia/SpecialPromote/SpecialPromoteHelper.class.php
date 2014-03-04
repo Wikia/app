@@ -354,7 +354,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			$updateData['city_images'] = json_encode($additionalImageNames);
 		}
 
-		WikiaLogger::instance()->debug("Szumodebug", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data,
+		WikiaLogger::instance()->debug("Special:Promote", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data,
 																									'updateData' => $updateData, 'cityId' => $cityId]);
 		
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
@@ -502,7 +502,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			'isAutoApproved' => false
 		];
 		
-		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, 'wikiId' => $wikiId, 'lang' => $langCode]);
+		WikiaLogger::instance()->debug("Special:Promote", ['method' => __METHOD__, 'wikiId' => $wikiId, 'lang' => $langCode]);
 
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
@@ -538,7 +538,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
-		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, "imageStatuses" => $imageStatuses]);
+		WikiaLogger::instance()->debug("Special:Promote", ['method' => __METHOD__, "imageStatuses" => $imageStatuses]);
 		return $wikiStatus;
 	}
 

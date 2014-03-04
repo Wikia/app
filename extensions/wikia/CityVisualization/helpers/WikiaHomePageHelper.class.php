@@ -657,7 +657,7 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
-		WikiaLogger::instance()->debug("Szumodebug", ['method' => __METHOD__, 'imageName' => $imageName,
+		WikiaLogger::instance()->debug("Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
 																									'imageTitle' => $imageTitle, 'imageId' => $imageId]);
 		
 
