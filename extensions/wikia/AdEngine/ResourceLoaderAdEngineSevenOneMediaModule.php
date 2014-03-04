@@ -112,7 +112,6 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 		$data = $this->getData();
 		$script = [
 			'var SEVENONEMEDIA_MODTIME = ' . json_encode(date('r', $data['modTime'])) . ';',
-			'var SEVENONEMEDIA_GENTIME = ' . json_encode(date('r', $this->getCurrentTimestamp())) . ';',
 			$data['script'],
 		];
 		return join(PHP_EOL, $script);
