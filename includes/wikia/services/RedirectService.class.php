@@ -177,7 +177,7 @@ class RedirectService extends WikiaService {
 	 * @param $text
 	 * @return null|Title
 	 */
-	private function getTitleFromText( $text ) {
+	protected function getTitleFromText( $text ) {
 		return Title::newFromText( $text );
 	}
 }
