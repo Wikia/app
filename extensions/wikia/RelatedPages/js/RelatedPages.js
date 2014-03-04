@@ -79,27 +79,29 @@ require( [ 'sloth', 'wikia.window', 'jquery' ], function ( sloth, w, $ ) {
 								} );
 							}
 
-							$placeholder.prepend(
-								mustache.render( template, {
-									relatedPagesHeading: msg( 'wikiarelatedpages-heading' ),
-									imgWidth: 200,
-									imgHeight:  100,
-									pages: relatedPages
-								} )
-							)
-							.on( 'mousedown', '.RelatedPagesModule a', function ( event ) {
-								// Primary mouse button only
-								if ( event.type === 'mousedown' && event.which !== 1 ) {
-									return;
-								}
+							$placeholder
+								.prepend(
+									mustache.render(template, {
+										relatedPagesHeading: msg('wikiarelatedpages-heading'),
+										imgWidth: 200,
+										imgHeight: 100,
+										pages: relatedPages
+									})
+								)
+								.on('mousedown', '.RelatedPagesModule a', function (event) {
+									// Primary mouse button only
+									if (event.type === 'mousedown' && event.which !== 1) {
+										return;
+									}
 
-								tracker.track( {
-									action: tracker.ACTIONS.CLICK,
-									trackingMethod: 'ga',
-									category: 'article',
-									label: 'related-pages'
-								} );
-							} );
+									tracker.track({
+										action: tracker.ACTIONS.CLICK,
+										trackingMethod: 'ga',
+										category: 'article',
+										label: 'related-pages'
+									});
+								})
+								.trigger('afterLoad.relatedPages');
 						}
 					} );
 				}
