@@ -42,6 +42,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permission denied',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Sorry, this video is not available for preview.',
 	'wikia-visualeditor-loading' => 'Loading the VisualEditor...',
+	'wikia-visualeditor-indicator-saving' => 'Saving',
+	'wikia-visualeditor-indicator-saved' => 'Saved!',
 );
 
 /** Message documentation (Message documentation)

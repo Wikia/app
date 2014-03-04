@@ -94,6 +94,12 @@
 .ve-init-mw-viewPageTarget-saveDialog-closeButton {
 	@include ve-icon(collapse, ve);
 }
+.ve-init-mw-viewPageTarget-checkmark {
+	@include ve-icon(checkmark, wikia);
+	width: 1.9em;
+	height: 1.9em;
+	margin: auto;
+}
 .oo-ui-icon-add-item {
 	@include ve-icon(add-item, oo);
 }

@@ -58,6 +58,10 @@ $wgResourceModules += array(
 		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
+		),
+		'messages' => array(
+			'wikia-visualeditor-indicator-saving',
+			'wikia-visualeditor-indicator-saved',
 		)
 	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
