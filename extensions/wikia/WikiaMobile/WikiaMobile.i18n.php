@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensing]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Privacy Policy]]',
 	'mobile-full-site' => 'Full site',
 
 	//categories
