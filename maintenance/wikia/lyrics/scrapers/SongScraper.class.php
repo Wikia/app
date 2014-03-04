@@ -10,15 +10,16 @@ class SongScraper extends BaseScraper {
 
 	public function processArticle( Article $article ) {
 		$songData = [
-			'article_id' => $article->getId()
+			'article_id' => $article->getId(),
+			'index' => 'lyrics',
+			'type' => 'song',
 		];
 		$songData = array_merge( $songData, $this->getHeader( $article ) );
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
-		$songData['artist_id'] = $this->getArtistId( $songData['Artist'] );
 		$songData['lyrics'] = $this->getLyrics( $article );
 
-		$song = new Song( $this->db );
+		$song = new Song( $this->esClient );
 		$songData['id'] = $song->save( $songData );
 	}
 

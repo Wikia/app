@@ -8,12 +8,12 @@
 
 abstract class BaseScraper {
 
-	protected $db;
+	protected $esClient;
 
 	abstract public function processArticle( Article $article );
 
-	function __construct( $db) {
-		$this->db = $db;
+	function __construct( $esClient) {
+		$this->esClient = $esClient;
 	}
 
 	protected function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
@@ -65,12 +65,6 @@ abstract class BaseScraper {
 		}
 		// TODO: Handle album without year
 		return array($name, null);
-	}
-
-	protected function getArtistId( $artistName ) {
-		$artist = new Artist( $this->db );
-		$id = $artist->getIdByName( $artistName );
-		return $id ? $id : null;
 	}
 
 }
