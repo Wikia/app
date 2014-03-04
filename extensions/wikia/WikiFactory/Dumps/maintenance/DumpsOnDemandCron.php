@@ -12,8 +12,11 @@ class DumpsOnDemandCron extends Maintenance {
     public function execute() {
 
         if ( file_exists( self::PIDFILE ) ) {
-            // Another process already running.
-            exit( 0 );
+		$sPid = file_get_contents( self::PIDFILE );
+		// Another process already running.
+		if ( file_exists( "/proc/{$sPid}" ) ) {
+			exit( 0 );
+		}
         }
 
         file_put_contents( self::PIDFILE, getmypid() );
