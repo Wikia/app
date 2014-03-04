@@ -16,6 +16,9 @@ class PhalanxService extends Service {
 	const RES_STATUS = 'PHALANX ALIVE';
 	const PHALANX_LOG_PARAM_LENGTH_LIMIT = 64;
 
+	const PHALANX_SERVICE_TRIES_LIMIT = 3;
+	const PHALANX_SERVICE_TRY_USLEEP = 20000; // 0.2s
+
 	/**
 	 * @param $name
 	 * @param $args
@@ -141,6 +144,7 @@ class PhalanxService extends Service {
 		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
 		$requestTime = 0;
 		$loggerPostParams = [];
+		$tries = 1;
 		/**
 		 * for status we're sending GET
 		 */
@@ -193,17 +197,19 @@ class PhalanxService extends Service {
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
 			$requestTime = microtime( true );
+
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
-			for( $tries = 2 ; $tries >= 0 ; $tries-- ) {
+			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
 				}
-				if ( $tries ) { // don't wait after the last try
+				if ( $tries <  self::PHALANX_SERVICE_TRIES_LIMIT ) { // don't wait after the last try
 					// wait for 0.02 second
-					usleep( 20000 );
+					usleep( self::PHALANX_SERVICE_TRY_USLEEP );
 				}
+				$tries++;
 			}
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 10000.0 );
 		}
@@ -213,13 +219,14 @@ class PhalanxService extends Service {
 			$res = false;
 
 			WikiaLogger::instance()->debug( "Phalanx service error", [ "phalanxUrl" => $url, 'requestTime' => $requestTime,
-				'postParams' => json_encode( $loggerPostParams ) ] );
+				'postParams' => json_encode( $loggerPostParams ), 'tries' => $tries ] );
 
 			wfDebug( __METHOD__ . " - response failed!\n" );
 		} else {
 			wfDebug( __METHOD__ . " - received '{$response}'\n" );
 
-			WikiaLogger::instance()->debug( "Phalanx service success", ["phalanxUrl" => $url, 'requestTime' => $requestTime ] );
+			WikiaLogger::instance()->debug( "Phalanx service success", ["phalanxUrl" => $url, 'requestTime' => $requestTime,
+				'tries' => $tries ] );
 
 			switch ( $action ) {
 				case "stats":
