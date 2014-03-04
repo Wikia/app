@@ -147,7 +147,7 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 							slotItem = slotMap[slotname];
 							sizes = convertSizesToGpt(slotItem.size);
 
-							slotPath = path + '/' + slotname + '/' + slotMapSrc;
+							slotPath = path + '/' + slotname + '_' + slotMapSrc;
 
 							log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
 							slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
