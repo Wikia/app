@@ -304,11 +304,13 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 	function trackEnd() {
 		log('trackEnd', 'info', logGroup);
-		insertAd({slotname: 'trackEnd', params: {
-			afterFinish: function () {
-				track('stage/ads');
-			}
-		}});
+		if (initialized) {
+			insertAd({slotname: 'trackEnd', params: {
+				afterFinish: function () {
+					track('stage/ads');
+				}
+			}});
+		}
 	}
 
 	return {
