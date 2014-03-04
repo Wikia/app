@@ -196,7 +196,7 @@ function wfCreatePageAjaxGetDialog() {
 	}
 
 	$template->set_vars( array(
-			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) || !empty( $wgEnableVisualEditorUI ),
+			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
 			'type' => $listtype
 		)
