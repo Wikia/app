@@ -18,9 +18,9 @@ class SongScraper extends BaseScraper {
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
-
-		$song = new Song( $this->esClient );
-		$songData['id'] = $song->save( $songData );
+//
+//		$song = new Song( $this->esClient );
+//		$songData['id'] = $song->save( $songData );
 	}
 
 	protected function getHeader( Article $article ) {

@@ -7,5 +7,7 @@
  */
 
 class DataBaseAdapter {
-
-} 
+	function saveArtist($artist, $albums) { echo 'R'; }
+	function saveAlbum($artist, $album, $songs) { echo 'L'; }
+	function saveSong($artist, $album, $song) { echo 'S'; }
+}

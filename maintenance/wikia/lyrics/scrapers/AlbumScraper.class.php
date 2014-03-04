@@ -18,9 +18,6 @@ class AlbumScraper extends BaseScraper {
 		$albumData = array_merge( $albumData, $this->getFooter( $article ) );
 
 		return $albumData;
-//		$album = new Album( $this->esClient );
-//		$albumData['id'] = $album->save( $albumData );
-		//$this->saveTracks( $article, $albumData );
 	}
 
 	protected function getHeader( Article $article ) {
@@ -31,22 +28,28 @@ class AlbumScraper extends BaseScraper {
 		return $this->getTemplateValues( 'AlbumFooter', $article->getContent() );
 	}
 
-	function saveTracks( Article $article, $albumData ) {
+	function getSongs( Article $article ) {
 		// # '''[[La Polla Records:Salve|Salve]]'''
+		$songs = [];
 		$re = '/# \'\'\'\[\[(.+)\]\]/';
 		if ( preg_match_all( $re, $article->getContent(), $matches ) ) {
 			$trackNumber = 1;
-			$song = new Song( $this->esClient );
-			$track = new SongTrack( $this->esClient );
 			foreach ( $matches[1] as $songName ) {
-				$trackData = [];
-				$trackData['album_id'] = $albumData['id'];
-				$trackData['song_id'] = $song->getIdByNameAndArtistId( $songName, $albumData['artist_id'] );
-				$trackData['track_number'] = $trackNumber;
-				$track->save( $trackData );
+				$song = $this->getSongData( $songName );
+				$song['number'] = $trackNumber;
+				$songs[] = $song;
 				$trackNumber++;
 			}
 		}
+		return $songs;
+	}
+
+ 	function getSongData( $songName ) {
+		$songa = explode( '|', $songName );
+		return [
+			'title' => $songa[0],
+			'name' => $songa[1],
+		];
 	}
 
 } 

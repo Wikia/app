@@ -15,20 +15,34 @@ class LyricsScrapper {
 	}
 
 	function processArtistArticle( Article $article ) {
+		$context = new RequestContext();
 		$artistScraper = new ArtistScraper();
-		$artist = $artistScraper->processArticle( $article );
-		$albumsData = $artistScraper->getAlbums( $article, $artist['name'] );
+		$artistData = $artistScraper->processArticle( $article );
+		$albumsData = $artistScraper->getAlbums( $article, $artistData['name'] );
 		foreach ( $albumsData as $albumData ) {
-			$context = new RequestContext();
 			$title = Title::newFromText( $albumData['title'] );
-			$albumArticle = Article::newFromTitle( $title, $context);
-			$albumScraper = new AlbumScraper();
-			$albumData = array_merge( $albumData,  $albumScraper->processArticle( $albumArticle ) );
-			$artist['_albums'][] = $albumData;
+			if ( $title->exists() ) {
+				$albumArticle = Article::newFromTitle( $title, $context);
+				$albumScraper = new AlbumScraper();
+				$albumData = array_merge( $albumData,  $albumScraper->processArticle( $albumArticle ) );
+				$songsData = $albumScraper->getSongs( $albumArticle );
+				foreach( $songsData as $songData ) {
+					$title = Title::newFromText( $songData['title'] );
+					if ( $title->exists() ) {
+						$songArticle = Article::newFromTitle( $title, $context);
+						$songScraper = new SongScraper();
+						$songData = array_merge( $songData,  $songScraper->processArticle( $songArticle ) );
+					} else {
+						echo 'SONG NOT FOUND '. $songData['title'] . PHP_EOL;
+					}
+					$this->dba->saveSong( $artistData, $albumData, $songData );
+				}
+			} else {
+				echo 'ALBUM NOT FOUND '. $albumData['title'] . PHP_EOL;
+			}
+			$this->dba->saveAlbum( $artistData, $albumData, $songsData );
 		}
-		print_r( $artist );
-		print_r( $albumData );
-		die();
+		$this->dba->saveArtist($artistData, $albumsData);
 	}
 
 } 
