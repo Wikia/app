@@ -20,7 +20,7 @@ class WikiaHubsV2Hooks {
 
 		if ( $model->isHubsPage( $hubName ) ) {
 			$redirectService = new RedirectService('hubsv2');
-			$redirectService->redirect();
+			$redirectService->redirectIfURLExists();
 		}
 
 		if( $model->isHubsPage($hubName) && !self::isOffShotPage($title) ) {

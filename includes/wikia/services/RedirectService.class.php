@@ -108,7 +108,7 @@ class RedirectService extends WikiaService {
 	 *
 	 * @param Title $title
 	 */
-	public function redirect() {
+	public function redirectIfURLExists() {
 		global $wgOut;
 
 		$url = $this->getRedirectUrl();
