@@ -24,11 +24,11 @@
 				// words hidden on last visible line
 				wordsHidden: 1
 			},
-            /**
-             * cleanUp
-             * @description Cleans up previous ellipses elements before applying new ones
-             */
-			cleanUp: function() {
+			/**
+			 * cleanUp
+			 * @description Cleans up previous ellipses elements before applying new ones
+			 */
+			cleanUp: function () {
 				this.$el.find('.ellipses').remove();
 			},
 			render: function () {
