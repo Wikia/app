@@ -14,8 +14,7 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		sections = [],
 		lastSection,
 		escapeRegExp = /[()\.\+]/g,
-		offset = 5,
-		showToc = true;;
+		offset = 5;
 
 	/**
 	 * @desc grab all headers (with non-empty id's) on the page
@@ -176,12 +175,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	window.addEventListener( 'scroll', onScroll );
 
 	return {
-		list: function(){
+		list: function () {
 			//make sure we're grabbing the latest version
 			sections = getHeaders();
-			if( !sections.length ){
-				showToc = false;
-			}
 			return sections;
 		},
 		isSectionLongerThan: isSectionLongerThan,
@@ -190,7 +186,6 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 		getNext: getNext,
 		isDefined: isDefined,
 		scrollTo: scrollTo,
-		current: current,
-		showToc : showToc
+		current: current
 	};
 } );

@@ -16,7 +16,9 @@ function ( sections, window, $, mustache, toc, track ) {
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
 		inPageToc,
-		tocMarkup;
+		tocMarkup,
+		headers = sections.list(),
+		show = headers.length > 0;
 
 	/**
 	 * @desc Creates object representing a section
@@ -26,7 +28,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	 *
 	 * @returns {Object} - returns TOC section object
 	 */
-	function createSection( header, level ) {
+	function createSection ( header, level ) {
 		return {
 			id: header.id,
 			name: header.innerText.trim(),
@@ -60,7 +62,7 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
-				sections.list(),
+				headers,
 				createSection,
 				filter
 			);
@@ -125,7 +127,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		}
 	}
 
-	function renderToc(){
+	function renderToc () {
 		$toc.find( '#tocWrapper' ).remove();
 
 		$anchors = $toc
@@ -203,7 +205,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Fires on closing of a Side menu toc
 	 */
-	function onClose( event ) {
+	function onClose ( event ) {
 		if ( $toc.hasClass( active ) ) {
 			$toc.removeClass( active );
 			$document.off( 'section:changed', onSectionChange );
@@ -244,6 +246,10 @@ function ( sections, window, $, mustache, toc, track ) {
 			}
 		} else {
 			onTap();
+		}
+
+		return {
+			show: show
 		}
 	} );
 } );
