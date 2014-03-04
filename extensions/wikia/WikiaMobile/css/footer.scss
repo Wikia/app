@@ -6,11 +6,11 @@
 	@include box-shadow(inset 0 20px 20px -20px rgba(0,0,0,.4));
 	text-align: left;
 	color: $footerTextColor;
-	padding: 20px;
+	padding: 30px;
 
 	ul {
-		margin: 10px 0 0 0;
-		padding: 0;
+		margin: 0;
+		padding: 10px 0;
 
 		&:first-of-type {
 			font-weight: bold;
@@ -18,8 +18,7 @@
 	}
 
 	li {
-		display: inline;
-		padding: 5px;
+		display: block;
 	}
 
 	a {
