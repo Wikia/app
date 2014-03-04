@@ -1,10 +1,10 @@
-( function( exports ) {
+(function (exports) {
 	'use strict';
-	var factory = function( $ ) {
-		function Ellipses( $el, opts ) {
+	var factory = function ($) {
+		function Ellipses($el, opts) {
 			this.$el = $el;
-			if ( opts ) {
-				$.extend( this.settings, opts );
+			if (opts) {
+				$.extend(this.settings, opts);
 			}
 			this.render();
 		}
@@ -16,9 +16,9 @@
 				// words hidden on last visible line
 				wordsHidden: 1
 			},
-			render: function() {
+			render: function () {
 				var oText = this.$el.text(),
-					words = oText.split( ' ' ),
+					words = oText.split(' '),
 					len = words.length,
 					i,
 					$spans,
@@ -31,43 +31,43 @@
 
 				self = this;
 
-				for( i = 0; i < len; i++ ) {
-					words[ i ] = '<span>' + words[ i ] + '</span>';
+				for (i = 0; i < len; i++) {
+					words[i] = '<span>' + words[i] + '</span>';
 				}
 
-				this.$el.html( words.join( ' ' ) );
+				this.$el.html(words.join(' '));
 
-				$spans = this.$el.find( 'span' );
+				$spans = this.$el.find('span');
 
-				for ( i = 0; i < $spans.length; i++ ) {
-					$tar = $( $spans[i] );
+				for (i = 0; i < $spans.length; i++) {
+					$tar = $($spans[i]);
 
 					currSpanTop = $tar.offset().top;
 
 					// if it's the first span, set the value and move on
-					if ( spanTop === null ) {
+					if (spanTop === null) {
 						spanTop = currSpanTop;
-					} else if ( lineCount === maxLines ) {
+					} else if (lineCount === maxLines) {
 						// hide everthing if we've already reached our max lines
 						$tar.hide();
 					} else {
-						if ( spanTop !== currSpanTop ) {
+						if (spanTop !== currSpanTop) {
 							// we're at a new line, increment lineCount
 							lineCount += 1;
 							// update span top with the new y coordinate
 							spanTop = currSpanTop;
 						}
 
-						if ( lineCount === maxLines ) {
+						if (lineCount === maxLines) {
 							// hide the first word on the new line and the nth word in
 							// the line before the max lines
 							// reached
 							$tar
 								.hide()
-							.prevUntil( ':nth-child( ' + ( i - self.settings.wordsHidden )  + ' )' )
+								.prevUntil(':nth-child( ' + (i - self.settings.wordsHidden) + ' )')
 								.hide()
-							.eq( 0 )
-								.before( '<span class="ellipses" style="">...</span>' );
+								.eq(0)
+								.before('<span class="ellipses" style="">...</span>');
 
 							self.trim();
 						}
@@ -79,34 +79,34 @@
 			 * and performance. Uses CSS to position ellipses appropriate to hide last whitespace and also trims
 			 * dashes.
 			 */
-			trim: function() {
+			trim: function () {
 				var $ellipses,
-						$prev;
+					$prev;
 
-				$ellipses = this.$el.find( '.ellipses' );
-				$prev = $ellipses.prev( 'span' );
+				$ellipses = this.$el.find('.ellipses');
+				$prev = $ellipses.prev('span');
 
 				$ellipses.css({
 					marginLeft: this.settings.marginLeft
 				});
 
-				if ( $prev.text() === '-' ) {
+				if ($prev.text() === '-') {
 					$prev.hide();
 				}
 			}
 		};
 
-		$.fn.ellipses = function( opts ) {
-			return this.each( function() {
-				var $this = $( this );
-				$this.data( 'ellipses', new Ellipses( $this, opts ) );
-			} );
+		$.fn.ellipses = function (opts) {
+			return this.each(function () {
+				var $this = $(this);
+				$this.data('ellipses', new Ellipses($this, opts));
+			});
 		};
 	};
 
-	if ( typeof define === 'function' && define.amd ) {
-		define( 'jquery.ellipses', [ 'jquery' ], factory );
+	if (typeof define === 'function' && define.amd) {
+		define('jquery.ellipses', ['jquery'], factory);
 	} else {
-		factory( exports.jQuery );
+		factory(exports.jQuery);
 	}
-} )( this );
+})(this);
