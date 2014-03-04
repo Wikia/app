@@ -128,7 +128,7 @@ class RedirectService extends WikiaService {
 		global $wgTitle;
 
 		$url = null;
-		$titleText = mb_strtolower( $wgTitle );
+		$titleText = mb_strtolower( $wgTitle->getText() );
 		$redirects = $this->getRedirects();
 
 		if ( isset( $redirects[$titleText] ) ) {
