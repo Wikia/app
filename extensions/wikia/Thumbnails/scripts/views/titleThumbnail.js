@@ -1,7 +1,6 @@
 define( 'thumbnails.views.titleThumbnail', [
 	'thumbnails.templates.mustache',
-	'wikia.mustache',
-	'jquery.ellipses'
+	'wikia.mustache'
 ], function( templates, Mustache ) {
 	'use strict';
 

@@ -1,5 +1,3 @@
-/* global _ */
-/* global Backbone */
 define('videohomepage.views.featured', [
 	// lib deps
 	'jquery',

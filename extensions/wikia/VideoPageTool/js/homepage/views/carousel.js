@@ -6,7 +6,6 @@ define('videohomepage.views.carousel', [
 	'shared.views.carouselthumb',
 	'shared.views.owlcarousel',
 	'videopagetool.templates.mustache',
-	'jquery.ellipses'
 ], function (
 	CategoryDataCollection,
 	CarouselThumbView,

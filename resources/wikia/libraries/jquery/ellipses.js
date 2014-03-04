@@ -120,9 +120,5 @@
 		};
 	};
 
-	if (typeof define === 'function' && define.amd) {
-		define('jquery.ellipses', ['jquery'], factory);
-	} else {
-		factory(exports.jQuery);
-	}
+	factory(exports.jQuery);
 })(this);
