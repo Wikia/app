@@ -57,8 +57,8 @@ class LyricsScrapper {
 	 * @return Article|null
 	 */
 	function articleFromTitle ( $titleText ) {
-		$title = Title::newFromText( $titleText );
-		if ( $title->exists() ) {
+		$title = Title::newFromText( $titleText, NS_MAIN );
+		if ( !is_null( $title ) && $title->exists() ) {
 			 return Article::newFromTitle( $title, $this->context);
 		}
 		return null;
