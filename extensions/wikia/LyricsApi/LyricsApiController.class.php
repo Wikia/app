@@ -1,6 +1,8 @@
 <?php
 /**
  * Class LyricsApiController
+ *
+ * @desc Entry point for LyricsAPI
  */
 class LyricsApiController extends WikiaController {
 	const PARAM_ARTIST = 'artist';
