@@ -1,4 +1,4 @@
-define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
+define('lvs.tracker', ['wikia.tracker'], function (tracker) {
 
 	"use strict";
 
@@ -26,4 +26,4 @@ define( 'lvs.tracker', [ 'wikia.tracker' ], function( tracker ) {
 		}
 	};
 
-} );
+});

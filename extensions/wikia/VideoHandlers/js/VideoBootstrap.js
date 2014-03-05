@@ -4,12 +4,12 @@
  * This file doesn't require jQuery
  */
 
-define( 'wikia.videoBootstrap', [
+define('wikia.videoBootstrap', [
 	'wikia.loader',
 	'wikia.nirvana',
 	'wikia.log',
 	'wikia.tracker'
-], function videoBootstrap( loader, nirvana, log, tracker ) {
+], function videoBootstrap(loader, nirvana, log, tracker) {
 	'use strict';
 
 	var trackingTimeout = 0;
@@ -19,7 +19,7 @@ define( 'wikia.videoBootstrap', [
 	 *  @param {object} json Key/value pair of data sent from a VideoHandler that provides info for video bootstrap
 	 *  @param {string} clickSource For analytics; the place on the site where the video was initiated. ex: lightbox
 	 */
-	function VideoBootstrap ( element, json, clickSource ) {
+	function VideoBootstrap(element, json, clickSource) {
 
 		var self = this,
 			init = json.init,
@@ -36,7 +36,7 @@ define( 'wikia.videoBootstrap', [
 
 		// Insert html if it hasn't been inserted already
 		function insertHtml() {
-			if ( html && !json.htmlPreloaded ) {
+			if (html && !json.htmlPreloaded) {
 				element.innerHTML = html;
 			}
 		}
@@ -46,10 +46,10 @@ define( 'wikia.videoBootstrap', [
 			// wait till all assets are loaded before overriding any loading images
 			insertHtml();
 			// execute the video handler's init function
-			if( init ) {
-				require( [init], function( init ) {
+			if (init) {
+				require([init], function (init) {
 					self.clearTimeoutTrack();
-					init( jsParams, self );
+					init(jsParams, self);
 				});
 			}
 		}
@@ -59,25 +59,25 @@ define( 'wikia.videoBootstrap', [
 			var i,
 				args = [];
 
-			for ( i = 0; i < scripts.length; i++ ) {
+			for (i = 0; i < scripts.length; i++) {
 				args.push({
 					type: loader.JS,
-					resources: scripts[ i ]
+					resources: scripts[i]
 				});
 			}
 
-			loader.apply( loader, args ).done( loadFromScriptsCallback );
+			loader.apply(loader, args).done(loadFromScriptsCallback);
 		}
 
 		// Load any scripts needed for the video player
-		if ( scripts ) {
+		if (scripts) {
 			loadFromScripts();
 		} else {
 			insertHtml();
 		}
 
 		// If there's no init function, just send one tracking call so it counts as a view
-		if( !init ) {
+		if (!init) {
 			self.timeoutTrack();
 		}
 	}
@@ -89,7 +89,7 @@ define( 'wikia.videoBootstrap', [
 		 * Note: Reloading videos without JS api's can result in extra views
 		 * tracked. Not sure it's worth fixing at this time b/c it's edge-casey.
 		 */
-		reload: function( title, width, autoplay, clickSource ) {
+		reload: function (title, width, autoplay, clickSource) {
 			var element = this.element,
 				fileTitle = title || this.title,
 				fileClickSource = clickSource || this.clickSource,
@@ -99,17 +99,16 @@ define( 'wikia.videoBootstrap', [
 
 			nirvana.getJson(
 				'VideoHandler',
-				'getEmbedCode',
-				{
+				'getEmbedCode', {
 					fileTitle: fileTitle,
 					width: fileWidth,
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
-			).done( function( data ) {
-				return new VideoBootstrap( element, data.embedCode, fileClickSource );
+			).done(function (data) {
+				return new VideoBootstrap(element, data.embedCode, fileClickSource);
 			});
 		},
-		track: function( action ) {
+		track: function (action) {
 			log('tracking ' + action, 3, 'VideoBootstrap');
 			tracker.track({
 				action: action,
@@ -125,33 +124,33 @@ define( 'wikia.videoBootstrap', [
 		/**
 		 * Use this when the video provider doesn't offer a player api for tracking
 		 */
-		timeoutTrack: function() {
+		timeoutTrack: function () {
 			var self = this;
 			this.clearTimeoutTrack();
-			trackingTimeout = setTimeout( function() {
-				self.track( 'content-begin' );
-			}, 3000 );
+			trackingTimeout = setTimeout(function () {
+				self.track('content-begin');
+			}, 3000);
 		},
-		clearTimeoutTrack: function() {
-			log( 'clearing tracking timeout', 3, 'VideoBootstrap' );
-			clearTimeout( trackingTimeout );
+		clearTimeoutTrack: function () {
+			log('clearing tracking timeout', 3, 'VideoBootstrap');
+			clearTimeout(trackingTimeout);
 		},
 		/**
 		 * Some video providers require unique DOM id's in order to initialize
 		 * videos. Timestamping DOM id's makes it so you can create more than
 		 * one instance of the same video on a page.
 		 */
-		timeStampId: function( id ) {
-			var container = document.getElementById( id ),
+		timeStampId: function (id) {
+			var container = document.getElementById(id),
 				newId = id + '-' + new Date().getTime();
 
-			if(container) {
+			if (container) {
 				container.id = newId;
 			}
 
 			return newId;
 		},
-		destroy: function() {
+		destroy: function () {
 			this.element.innerHTML = '';
 		}
 	};

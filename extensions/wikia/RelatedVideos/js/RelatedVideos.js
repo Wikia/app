@@ -20,12 +20,12 @@ var RelatedVideos = {
 	loadedCount: 0,
 	seeMorePlaceholderAdded: false,
 
-	init: function(relatedVideosModule) {
+	init: function (relatedVideosModule) {
 		// DOM caching
 		this.rvModule = $(relatedVideosModule);
 
 		// Stop execution if there's no RV on this page
-		if(!this.rvModule.length) {
+		if (!this.rvModule.length) {
 			return;
 		}
 
@@ -41,7 +41,7 @@ var RelatedVideos = {
 		// Cache the number loaded on init
 		this.loadedCount = $('.item', this.rvModule).length;
 
-		if ( this.rvModule.closest('.WikiaRail').size() > 0 ) {
+		if (this.rvModule.closest('.WikiaRail').size() > 0) {
 			// Right rail
 			this.onRightRail = true;
 			this.rvItemCount = window.RelatedVideosIds.length;
@@ -54,13 +54,13 @@ var RelatedVideos = {
 			this.rvItemCount = this.loadedCount;
 		}
 
-		if( this.rvModule.hasClass('RelatedHubsVideos') ) {
+		if (this.rvModule.hasClass('RelatedHubsVideos')) {
 			this.isHubVideos = true;
 		}
 
-		if(typeof WikiaHubs != 'undefined' ) {
+		if (typeof WikiaHubs != 'undefined') {
 			this.isHubExtEnabled = true;
-			if($('.WikiaHubs').length > 0 ) {
+			if ($('.WikiaHubs').length > 0) {
 				this.isHubExtPage = true;
 			}
 		}
@@ -70,20 +70,19 @@ var RelatedVideos = {
 
 		// TODO: Clean this up so it's clear when we're talking about right rail vs. hubs etc. (Liz)
 		var $RelatedVideosPlaceholder = $('span[data-placeholder="RelatedVideosModule"]');
-		if ( !this.onRightRail && $RelatedVideosPlaceholder.length != 0 ){
-			$RelatedVideosPlaceholder.replaceWith( relatedVideosModule );
+		if (!this.onRightRail && $RelatedVideosPlaceholder.length != 0) {
+			$RelatedVideosPlaceholder.replaceWith(relatedVideosModule);
 		}
 		if (
-				(!this.isHubExtEnabled && (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold))
-				||
-				(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
+			(!this.isHubExtEnabled && (this.onRightRail || importantContentHeight >= RelatedVideos.heightThreshold)) ||
+			(this.isHubExtEnabled && this.isHubExtPage && this.isHubVideos)
 		) {
 			relatedVideosModule.removeClass('RelatedVideosHidden');
-			relatedVideosModule.on( 'click', '.scrollright', this.scrollright );
-			relatedVideosModule.on( 'click', '.scrollleft', this.scrollleft );
+			relatedVideosModule.on('click', '.scrollright', this.scrollright);
+			relatedVideosModule.on('click', '.scrollleft', this.scrollleft);
 
 			relatedVideosModule.find('.addVideo').addVideoButton({
-				callbackAfterSelect: function(url, VET) {
+				callbackAfterSelect: function (url, VET) {
 					RelatedVideos.track({
 						action: Wikia.Tracker.ACTIONS.ADD,
 						label: 'add-video-success',
@@ -101,34 +100,37 @@ var RelatedVideos = {
 							url: url
 						},
 						// success callback
-						function( formRes ) {
+						function (formRes) {
 							GlobalNotification.hide();
-							if ( formRes.error ) {
-								RelatedVideos.showError( formRes.error );
+							if (formRes.error) {
+								RelatedVideos.showError(formRes.error);
 							} else {
 								VET.close();
-								RelatedVideos.injectCarouselElement( formRes.html );
+								RelatedVideos.injectCarouselElement(formRes.html);
 							}
 						},
 						// error callback
-						function() {
-							RelatedVideos.showError( $.msg('vet-error-while-loading') );
+						function () {
+							RelatedVideos.showError($.msg('vet-error-while-loading'));
 						}
 					);
 					// Don't move on to second VET screen.  We're done.
 					return false;
 				}
 			}).tooltip({
-				delay: { show: 500, hide: 100 }
+				delay: {
+					show: 500,
+					hide: 100
+				}
 			});
 
-			$('body').on( 'click', '#relatedvideos-video-player-embed-show', function() {
+			$('body').on('click', '#relatedvideos-video-player-embed-show', function () {
 				$('#relatedvideos-video-player-embed-code').show();
 				$(this).hide();
 			});
 
 			RelatedVideos.maxRooms = relatedVideosModule.attr('data-count');
-			if ( RelatedVideos.maxRooms < 1 ) {
+			if (RelatedVideos.maxRooms < 1) {
 				RelatedVideos.maxRooms = 1;
 			}
 			RelatedVideos.trackItemImpressions(RelatedVideos.currentRoom);
@@ -143,7 +145,7 @@ var RelatedVideos = {
 
 	// Scrolling items
 
-	scrollright: function(){
+	scrollright: function () {
 		RelatedVideos.lazyLoad();
 
 		RelatedVideos.track({
@@ -153,10 +155,10 @@ var RelatedVideos = {
 			value: RelatedVideos.currentRoom + 1
 		});
 
-		RelatedVideos.scroll( 1, false );
+		RelatedVideos.scroll(1, false);
 	},
 
-	scrollleft: function(){
+	scrollleft: function () {
 		RelatedVideos.track({
 			action: Wikia.Tracker.ACTIONS.PAGINATE,
 			label: 'paginate-prev',
@@ -164,26 +166,26 @@ var RelatedVideos = {
 			value: RelatedVideos.currentRoom - 1
 		});
 
-		RelatedVideos.scroll( -1, false );
+		RelatedVideos.scroll(-1, false);
 	},
 
-	scroll: function( param, callback ) {
+	scroll: function (param, callback) {
 		//setup variables
 
 		var scroll_by, anim_time;
-		if( this.onRightRail ) {
-			scroll_by = parseInt( $('.group', this.rvModule).outerWidth(true) );
+		if (this.onRightRail) {
+			scroll_by = parseInt($('.group', this.rvModule).outerWidth(true));
 			anim_time = 300;
 		} else {
-			scroll_by = parseInt( $('.item', this.rvModule).outerWidth(true) * 3 );
+			scroll_by = parseInt($('.item', this.rvModule).outerWidth(true) * 3);
 			anim_time = 500;
 		}
 
 		// button vertical secondary left
 		var futureState = RelatedVideos.currentRoom + param;
 		RelatedVideos.trackItemImpressions(futureState);
-		if( futureState >= 1 && futureState <= this.maxRooms ) {
-			var scroll_to = (futureState-1) * scroll_by;
+		if (futureState >= 1 && futureState <= this.maxRooms) {
+			var scroll_to = (futureState - 1) * scroll_by;
 
 			this.rvPage.text(futureState);
 			this.currentRoom = futureState;
@@ -194,7 +196,7 @@ var RelatedVideos = {
 			this.rvContainer.stop().animate({
 				left: -scroll_to
 				//left: '-=' + scroll_by
-			}, anim_time, function(){
+			}, anim_time, function () {
 				//hide description
 				if (typeof callback == 'function') {
 					callback();
@@ -205,14 +207,14 @@ var RelatedVideos = {
 		}
 	},
 
-	trackItemImpressions: function(room) {
+	trackItemImpressions: function (room) {
 		var titles = [];
 		var orders = [];
-		var group = this.rvContainer.find('.group').eq(room-1);
+		var group = this.rvContainer.find('.group').eq(room - 1);
 		var itemLinks = group.find('a.video');
-		itemLinks.each( function(i) {
-			titles.push( $(this).data('ref') );
-			orders.push( (room-1)*RelatedVideos.videosPerPage + i+1 );
+		itemLinks.each(function (i) {
+			titles.push($(this).data('ref'));
+			orders.push((room - 1) * RelatedVideos.videosPerPage + i + 1);
 		});
 
 		if (titles.length) {
@@ -226,68 +228,68 @@ var RelatedVideos = {
 		}
 	},
 
-	regroup: function() {
-		if ( !this.onRightRail ) {
+	regroup: function () {
+		if (!this.onRightRail) {
 			return;
 		}
 
 		var self = this,
 			container = this.rvContainer;
 
-		$('.group .item', container).each( function() {
-			$(this).appendTo( container );
+		$('.group .item', container).each(function () {
+			$(this).appendTo(container);
 		});
 		$('.group', container).remove();
 
 		var group = null;
-		container.children('.item').each( function(i) {
-			if( i % self.videosPerPage == 0 ) {
-				if(group) {
-					group.appendTo( container );
+		container.children('.item').each(function (i) {
+			if (i % self.videosPerPage == 0) {
+				if (group) {
+					group.appendTo(container);
 				}
 				group = $('<div class="group"></div>');
 			}
-			$(this).appendTo( group );
+			$(this).appendTo(group);
 		});
 
-		if(group) {
-			group.appendTo( container );
+		if (group) {
+			group.appendTo(container);
 		}
 
 	},
 
 	// State calculations & refresh
 
-	checkButtonState: function() {
-		this.rvScrollLeft.removeClass( 'inactive' );
-		this.rvScrollRight.removeClass( 'inactive' );
-		if ( this.currentRoom == 1 ){
-			this.rvScrollLeft.addClass( 'inactive' );
+	checkButtonState: function () {
+		this.rvScrollLeft.removeClass('inactive');
+		this.rvScrollRight.removeClass('inactive');
+		if (this.currentRoom == 1) {
+			this.rvScrollLeft.addClass('inactive');
 		}
-		if ( this.currentRoom == RelatedVideos.maxRooms ) {
-			this.rvScrollRight.addClass( 'inactive' );
+		if (this.currentRoom == RelatedVideos.maxRooms) {
+			this.rvScrollRight.addClass('inactive');
 		}
 	},
 
 	// Lazy load image src
 	// Only for hubs
-	showImages: function(){
+	showImages: function () {
 		var rl = this;
-		$('div.item a.video img', this.rvModule).each( function (i) {
-			if ( i < ( ( RelatedVideos.currentRoom + (rl.videosPerPage-1) ) * rl.videosPerPage ) ){
+		$('div.item a.video img', this.rvModule).each(function (i) {
+			if (i < ((RelatedVideos.currentRoom + (rl.videosPerPage - 1)) * rl.videosPerPage)) {
 				var $thisJquery = $(this);
-				if ( $thisJquery.attr( 'data-src' ) != "" ){
-					$thisJquery.attr( 'src', $thisJquery.attr( 'data-src' ) );
+				if ($thisJquery.attr('data-src') != "") {
+					$thisJquery.attr('src', $thisJquery.attr('data-src'));
 				}
 			}
 		});
 	},
 
 	// Lazy load html
-	lazyLoad: function() {
+	lazyLoad: function () {
 		// Only for onRightRail
 		// Hubs will divert to showImages();
-		if(!RelatedVideos.onRightRail) {
+		if (!RelatedVideos.onRightRail) {
 			RelatedVideos.showImages();
 			return;
 		}
@@ -296,11 +298,11 @@ var RelatedVideos = {
 			idx = this.loadedCount, // cache index to avoid race conditions
 			totalCount = window.RelatedVideosIds.length;
 
-		var getItems = function() {
-			for(var i = 0; i < self.videosPerPage; i++) {
+		var getItems = function () {
+			for (var i = 0; i < self.videosPerPage; i++) {
 
 				// Stop lazy loading if we've got all the videos
-				if(self.loadedCount >= totalCount) {
+				if (self.loadedCount >= totalCount) {
 					self.lazyLoaded = true;
 					break;
 				}
@@ -318,7 +320,7 @@ var RelatedVideos = {
 						videoTitle: window.RelatedVideosIds[idx + i].title,
 						preloaded: true
 					},
-					callback: function(data) {
+					callback: function (data) {
 						var html = self.mustacheTemplate.mustache(data);
 
 						self.doLazyInsert(html);
@@ -328,7 +330,7 @@ var RelatedVideos = {
 			}
 		}
 
-		if(this.mustacheTemplate) {
+		if (this.mustacheTemplate) {
 			getItems();
 		} else {
 			// Load all the resources for Lazy Loading
@@ -337,7 +339,7 @@ var RelatedVideos = {
 				Wikia.getMultiTypePackage({
 					mustache: 'extensions/wikia/RelatedVideos/templates/RelatedVideosController_getCarouselElementRL.mustache'
 				})
-			).done(function(libData, packagesData) {
+			).done(function (libData, packagesData) {
 				// cache mustache template for carousel item
 				self.mustacheTemplate = $(packagesData[0].mustache[0]).wrap('<div></div>').parent();
 				getItems();
@@ -346,18 +348,18 @@ var RelatedVideos = {
 
 	},
 
-	handleSeeMorePlaceholder: function() {
-		if(!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.rvItemCount) {
+	handleSeeMorePlaceholder: function () {
+		if (!this.seeMorePlaceholderAdded && $('.item', this.rvModule).length == this.rvItemCount) {
 			var seeMorePlaceholder = $('.seeMorePlaceholder', this.rvModule).addClass('item');
 			this.doLazyInsert(seeMorePlaceholder);
 			this.seeMorePlaceholderAdded = true;
 		}
 	},
 
-	doLazyInsert: function(item) {
-		var last = $('.group',this.rvModule).last();
+	doLazyInsert: function (item) {
+		var last = $('.group', this.rvModule).last();
 
-		if(last.children().length < this.videosPerPage) {
+		if (last.children().length < this.videosPerPage) {
 			// There's space for this item in the last group, append it
 			$(item).appendTo(last).show();
 		} else {
@@ -367,9 +369,9 @@ var RelatedVideos = {
 		}
 	},
 
-	recalculateLength: function(totalCount, increment){
+	recalculateLength: function (totalCount, increment) {
 		// Update video tally text
-		this.rvTallyCount.text( totalCount );
+		this.rvTallyCount.text(totalCount);
 
 		this.rvItemCount = this.rvItemCount + increment;
 
@@ -377,50 +379,52 @@ var RelatedVideos = {
 		var numberItems = this.rvItemCount;
 
 		// Account for placeholder item
-		if(this.onRightRail) {
+		if (this.onRightRail) {
 			numberItems += 1;
 		}
 
-        if ( numberItems == 0 ) {
-            this.rvNoVideos.show();
-        } else {
-            this.rvNoVideos.hide();
-        }
-
-		if ( this.onRightRail ) {
-			numberItems = Math.ceil( ( numberItems ) / this.videosPerPage );
+		if (numberItems == 0) {
+			this.rvNoVideos.show();
 		} else {
-			numberItems = Math.ceil( ( numberItems + 1 ) / this.videosPerPage );
+			this.rvNoVideos.hide();
 		}
 
-        if( numberItems == 0) { numberItems = 1; }
+		if (this.onRightRail) {
+			numberItems = Math.ceil((numberItems) / this.videosPerPage);
+		} else {
+			numberItems = Math.ceil((numberItems + 1) / this.videosPerPage);
+		}
+
+		if (numberItems == 0) {
+			numberItems = 1;
+		}
 
 		// Update carousel progress text
 		this.maxRooms = numberItems;
-		this.rvMaxCount.text( numberItems );
+		this.rvMaxCount.text(numberItems);
 
-        if(numberItems < this.currentRoom) {
-            this.scroll(-1);
-        }
+		if (numberItems < this.currentRoom) {
+			this.scroll(-1);
+		}
 
 		this.checkButtonState();
 	},
 
 	// general helper functions
 
-	showError: function(error){
-		GlobalNotification.show( error || $('.errorWhileLoading').html(), 'error' );
+	showError: function (error) {
+		GlobalNotification.show(error || $('.errorWhileLoading').html(), 'error');
 	},
 
 	// Inject newly added video into carousel - different from lazy loading
-	injectCarouselElement: function( html ){
-		var scrollLength = -1 * ( RelatedVideos.currentRoom - 1 );
+	injectCarouselElement: function (html) {
+		var scrollLength = -1 * (RelatedVideos.currentRoom - 1);
 		RelatedVideos.scroll(
 			scrollLength,
-			function(){
-				$( html ).hide()
-					.prependTo( RelatedVideos.rvContainer )
-					.fadeIn( 'slow', function(){
+			function () {
+				$(html).hide()
+					.prependTo(RelatedVideos.rvContainer)
+					.fadeIn('slow', function () {
 						// Get the updated total number of videos on the wiki from the response html
 						var totalVideos = $(this).data('total-count');
 						RelatedVideos.recalculateLength(totalVideos, 1);
@@ -433,31 +437,31 @@ var RelatedVideos = {
 
 	// Remove Video
 
-	removeVideoLoginWrapper: function( e ){
+	removeVideoLoginWrapper: function (e) {
 		e.preventDefault();
 
 		var self = this,
 			callback = RelatedVideos.removeVideoClick;
 
 		var message = 'protected';
-		if(( wgUserName == null ) && ( !alreadyLoggedIn )){
+		if ((wgUserName == null) && (!alreadyLoggedIn)) {
 			if (window.wgComboAjaxLogin) {
-				showComboAjaxForPlaceHolder( false, "", function() {
-					AjaxLogin.doSuccess = function() {
+				showComboAjaxForPlaceHolder(false, "", function () {
+					AjaxLogin.doSuccess = function () {
 						$('#AjaxLoginBoxWrapper').closest('.modalWrapper').closeModal();
 						alreadyLoggedIn = true;
 						callback(self);
 					};
-					AjaxLogin.close = function() {
+					AjaxLogin.close = function () {
 						$('#AjaxLoginBoxWrapper').closeModal();
-						$( window ).scrollTop( element.offset().top + 100 );
+						$(window).scrollTop(element.offset().top + 100);
 					}
-				}, false, message );
+				}, false, message);
 			} else {
-				UserLoginModal.show( {
+				UserLoginModal.show({
 					origin: 'related-videos',
-					callback: function() {
-						$( window ).scrollTop( element.offset().top + 100 );
+					callback: function () {
+						$(window).scrollTop(element.offset().top + 100);
 						alreadyLoggedIn = true;
 						callback(self);
 					}
@@ -468,38 +472,38 @@ var RelatedVideos = {
 		}
 	},
 
-	removeVideoClick: function(target) {
+	removeVideoClick: function (target) {
 		var parentItem = $(target).parents('.item');
 
 		$.confirm({
-			title: $( '.deleteConfirmTitle', RelatedVideos.rvModule ).html(),
-			content: $( '.deleteConfirm', RelatedVideos.rvModule ).html(),
-			onOk: function(){
-				RelatedVideos.removeVideoItem( parentItem );
+			title: $('.deleteConfirmTitle', RelatedVideos.rvModule).html(),
+			content: $('.deleteConfirm', RelatedVideos.rvModule).html(),
+			onOk: function () {
+				RelatedVideos.removeVideoItem(parentItem);
 			},
 			className: 'rv-delete-confirm'
 		});
 	},
 
-	removeVideoItem: function(parentItem) {
-		$( parentItem ).fadeTo( 'slow', 0 );
+	removeVideoItem: function (parentItem) {
+		$(parentItem).fadeTo('slow', 0);
 		var item = $(parentItem).find('a.video');
 		var deleteFromWiki = $('input[name=delete-from-wiki]:checked').val();
 		$.nirvana.sendRequest({
-			controller: ( deleteFromWiki ? 'VideoHandlerController' : 'RelatedVideos' ),
+			controller: (deleteFromWiki ? 'VideoHandlerController' : 'RelatedVideos'),
 			method: 'removeVideo',
 			format: 'json',
 			data: {
-				external:	item.attr('data-external'),
-				title:		item.attr('data-ref'),
-				articleId:	wgArticleId
+				external: item.attr('data-external'),
+				title: item.attr('data-ref'),
+				articleId: wgArticleId
 			},
-			callback: function(formRes) {
-				if ( formRes.error ) {
-					$.showModal( '', formRes.error, {
+			callback: function (formRes) {
+				if (formRes.error) {
+					$.showModal('', formRes.error, {
 						'width': RelatedVideos.modalWidth,
-						callback: function(){
-							$( parentItem ).fadeTo( 'slow', 1 );
+						callback: function () {
+							$(parentItem).fadeTo('slow', 1);
 						}
 					});
 				} else {
@@ -509,7 +513,7 @@ var RelatedVideos = {
 				}
 
 			},
-			onErrorCallback: function(){
+			onErrorCallback: function () {
 				RelatedVideos.showError();
 			}
 		});
@@ -517,7 +521,7 @@ var RelatedVideos = {
 };
 
 //on content ready
-$().ready(function() {
+$().ready(function () {
 	var railElem = $('#RelatedVideosRL');
 	RelatedVideos.init(railElem.length > 0 ? railElem : $('#RelatedVideos'));
 });

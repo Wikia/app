@@ -4,29 +4,29 @@
 // the player to create an instance of the module. This function must
 // return a constructor for the module class (see the end of this example)
 OO.plugin("AgeGateModule", function (OO, _, $, W) {
-    var AgeGate = {};
+	var AgeGate = {};
 
-    AgeGate.AgeGateModule = function (mb, id) {
-        this.identifier = Math.floor(Math.random()*10000000000);
-        this.mb = mb; // save message bus reference for later use
-        this.id = id;
-        this.playing = false;
-        this.ageVerified = false;
-        this.duration = NaN;
-        this.metaData = NaN;
-        this.ageGateRoot = NaN;
-        this.playerRoot = NaN;
-        this.playerElementRoot = NaN;
-        this.playerWidth = NaN;
-        this.playerHeight = NaN;
-        this.isOldIE = false;
-        this.isMobile = false;
-        this.rootElement = NaN;
-        this.embedIdentifier = NaN;
-        this.currentPlaybackType = 'content';
-        this.content = NaN;
-        this.ageRequired = NaN;
-        this.ageGateHTML =  '<style> \
+	AgeGate.AgeGateModule = function (mb, id) {
+		this.identifier = Math.floor(Math.random() * 10000000000);
+		this.mb = mb; // save message bus reference for later use
+		this.id = id;
+		this.playing = false;
+		this.ageVerified = false;
+		this.duration = NaN;
+		this.metaData = NaN;
+		this.ageGateRoot = NaN;
+		this.playerRoot = NaN;
+		this.playerElementRoot = NaN;
+		this.playerWidth = NaN;
+		this.playerHeight = NaN;
+		this.isOldIE = false;
+		this.isMobile = false;
+		this.rootElement = NaN;
+		this.embedIdentifier = NaN;
+		this.currentPlaybackType = 'content';
+		this.content = NaN;
+		this.ageRequired = NaN;
+		this.ageGateHTML = '<style> \
                             .ageGate { \
                                 display: none; \
                                 position: absolute; \
@@ -131,107 +131,107 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                                 </div> \
                             </div>';
 
-        if(!window.ooyalaAgeGateModule) {
-            window.ooyalaAgeGateModule = [];
-        }
+		if (!window.ooyalaAgeGateModule) {
+			window.ooyalaAgeGateModule = [];
+		}
 
-        window.ooyalaAgeGateModule.push(this);
+		window.ooyalaAgeGateModule.push(this);
 
-        this.init(); // subscribe to relevant events
-    };
+		this.init(); // subscribe to relevant events
+	};
 
-    // public functions of the module object
-    AgeGate.AgeGateModule.prototype = {
-        init: function () {
-            // subscribe to relevant player events
-            this.mb.subscribe(OO.EVENTS.PLAYER_CREATED, 'customerUi',
-            _.bind(this.onPlayerCreate, this));
-            /*this.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED,
+	// public functions of the module object
+	AgeGate.AgeGateModule.prototype = {
+		init: function () {
+			// subscribe to relevant player events
+			this.mb.subscribe(OO.EVENTS.PLAYER_CREATED, 'customerUi',
+				_.bind(this.onPlayerCreate, this));
+			/*this.mb.subscribe(OO.EVENTS.PLAYHEAD_TIME_CHANGED,
                 'customerUi', _.bind(this.onTimeUpdate, this));*/
-            this.mb.subscribe(OO.EVENTS.CONTENT_TREE_FETCHED,
-                'customerUi', _.bind(this.onContentReady, this));
-            this.mb.subscribe(OO.EVENTS.PLAYING,
-                'customerUi', _.bind(this.onPlay, this));
-            this.mb.subscribe(OO.EVENTS.METADATA_FETCHED,
-                'customerUi', _.bind(this.onMetadataFetched, this));
-            this.mb.subscribe(OO.EVENTS.WILL_PLAY_ADS,
-                'customerUi', _.bind(this.onWillPlayAds, this));
-            this.mb.subscribe(OO.EVENTS.ADS_PLAYED,
-                'customerUi', _.bind(this.onAdsPlayed, this));
+			this.mb.subscribe(OO.EVENTS.CONTENT_TREE_FETCHED,
+				'customerUi', _.bind(this.onContentReady, this));
+			this.mb.subscribe(OO.EVENTS.PLAYING,
+				'customerUi', _.bind(this.onPlay, this));
+			this.mb.subscribe(OO.EVENTS.METADATA_FETCHED,
+				'customerUi', _.bind(this.onMetadataFetched, this));
+			this.mb.subscribe(OO.EVENTS.WILL_PLAY_ADS,
+				'customerUi', _.bind(this.onWillPlayAds, this));
+			this.mb.subscribe(OO.EVENTS.ADS_PLAYED,
+				'customerUi', _.bind(this.onAdsPlayed, this));
 
-        },
+		},
 
-        consoleLog: function (what) {
-            if(typeof console != 'undefined') {
-                console.log(what);
-            }
-        },
+		consoleLog: function (what) {
+			if (typeof console != 'undefined') {
+				console.log(what);
+			}
+		},
 
-        // Handles the PLAYER_CREATED event
-        // First parameter is the event name
-        // Second parameter is the elementId of player container
-        // Third parameter is the list of parameters which were passed into
-        // player upon creation.
-        // In this section, we use this opportunity to create the custom UI
-        onPlayerCreate: function (event, elementId, params) {
-            this.playerRoot = $("#" + elementId);
-            this.rootElement = this.playerRoot.parent();
-            this.playerWidth = this.playerRoot.children('.innerWrapper').width();
-            this.playerHeight = this.playerRoot.children('.innerWrapper').height();
+		// Handles the PLAYER_CREATED event
+		// First parameter is the event name
+		// Second parameter is the elementId of player container
+		// Third parameter is the list of parameters which were passed into
+		// player upon creation.
+		// In this section, we use this opportunity to create the custom UI
+		onPlayerCreate: function (event, elementId, params) {
+			this.playerRoot = $("#" + elementId);
+			this.rootElement = this.playerRoot.parent();
+			this.playerWidth = this.playerRoot.children('.innerWrapper').width();
+			this.playerHeight = this.playerRoot.children('.innerWrapper').height();
 
-            this.buildAgeGateUI();
+			this.buildAgeGateUI();
 
-            this.adjustForBrowser();
+			this.adjustForBrowser();
 
-            this.isMobile = this.playerRoot.find('video').size() > 0;
+			this.isMobile = this.playerRoot.find('video').size() > 0;
 
-            this.consoleLog("EVENT: onPlayerCreate");
-        },
+			this.consoleLog("EVENT: onPlayerCreate");
+		},
 
-        buildAgeGateUI: function () {
-            var ag = NaN;
-            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		buildAgeGateUI: function () {
+			var ag = NaN;
+			var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-            this.playerRoot.prepend(this.ageGateHTML);
-            this.playerElementRoot = this.playerRoot.children('.innerWrapper');
-            ag = this.ageGateRoot = this.playerRoot.children('.ageGate');
+			this.playerRoot.prepend(this.ageGateHTML);
+			this.playerElementRoot = this.playerRoot.children('.innerWrapper');
+			ag = this.ageGateRoot = this.playerRoot.children('.ageGate');
 
-            ag.css('width', this.playerWidth);
-            ag.css('height', this.playerHeight);
-            ag.css('position', 'absolute');
-            ag.css('z-index', '100000');
-            // wikia change begin
-            ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
-            // wikia change end
+			ag.css('width', this.playerWidth);
+			ag.css('height', this.playerHeight);
+			ag.css('position', 'absolute');
+			ag.css('z-index', '100000');
+			// wikia change begin
+			ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
+			// wikia change end
 
-            $.each(months, function (index, value){
-                ag.find('#month').append('<option value="' + (index + 1) + '">' + value + '</option>');
-            });
+			$.each(months, function (index, value) {
+				ag.find('#month').append('<option value="' + (index + 1) + '">' + value + '</option>');
+			});
 
-            for (var i=1940; i<2010; i++) {
-                ag.find('#year').prepend('<option>' + i + '</option>');
-            }
+			for (var i = 1940; i < 2010; i++) {
+				ag.find('#year').prepend('<option>' + i + '</option>');
+			}
 
-            ag.find('button').click(_.bind(this.validateAgeEntry, this));
-        },
+			ag.find('button').click(_.bind(this.validateAgeEntry, this));
+		},
 
-        // Handles CONTENT_TREE_FETCHED event
-        // Second parameter is a content object with details about the
-        // content that was loaded into the player
-        // In this example, we use the parameter to update duration
-        onContentReady: function (event, content) {
-            this.content = content;
-            this.embedIdentifier = this.content.embed_code || this.content.embedCode;
-            this.duration = content.duration / 1000;
+		// Handles CONTENT_TREE_FETCHED event
+		// Second parameter is a content object with details about the
+		// content that was loaded into the player
+		// In this example, we use the parameter to update duration
+		onContentReady: function (event, content) {
+			this.content = content;
+			this.embedIdentifier = this.content.embed_code || this.content.embedCode;
+			this.duration = content.duration / 1000;
 
-            this.ageGateRoot.find('.title').html(this.content.title);
+			this.ageGateRoot.find('.title').html(this.content.title);
 
-            this.consoleLog("EVENT: onContentReady (" + this.duration + ")");
-        },
+			this.consoleLog("EVENT: onContentReady (" + this.duration + ")");
+		},
 
-        // Handles PLAYHEAD_TIME_CHANGED event
-        // In this example, we use it to move the slider as content is played
-        /*onTimeUpdate: function (event, time, duration, buffer) {
+		// Handles PLAYHEAD_TIME_CHANGED event
+		// In this example, we use it to move the slider as content is played
+		/*onTimeUpdate: function (event, time, duration, buffer) {
             // update scrubber bar.
             if (duration > 0) {
                 this.duration = duration;
@@ -240,170 +240,170 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.consoleLog("EVENT: onTimeUpdate (" + this.duration + ")");
         },*/
 
-        onWillPlayAds: function(funcLabel, data) {
-            this.currentPlaybackType = 'ad';
+		onWillPlayAds: function (funcLabel, data) {
+			this.currentPlaybackType = 'ad';
 
-            this.onPlay();
+			this.onPlay();
 
-            this.consoleLog("EVENT: onWillPlayAds");
-        },
+			this.consoleLog("EVENT: onWillPlayAds");
+		},
 
-        onAdsPlayed: function(funcLabel, data) {
-            this.currentPlaybackType = 'content';
+		onAdsPlayed: function (funcLabel, data) {
+			this.currentPlaybackType = 'content';
 
-            this.consoleLog("EVENT: onAdsPlayed");
-        },
+			this.consoleLog("EVENT: onAdsPlayed");
+		},
 
-        onPlay: function () {
-            this.consoleLog("EVENT: onPlay");
+		onPlay: function () {
+			this.consoleLog("EVENT: onPlay");
 
-            if(this.ageRequired && !this.ageVerified) {
-                var action = this.readCookies();
+			if (this.ageRequired && !this.ageVerified) {
+				var action = this.readCookies();
 
-                if(action != 'pass') {
-                    this.seek(0);
-                    this.pause();
-                    this.ageGateRoot.show();
+				if (action != 'pass') {
+					this.seek(0);
+					this.pause();
+					this.ageGateRoot.show();
 
-                    // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
-                    // and we have to exit
-                    if(this.isMobile) {
-                        this.playerRoot.find('video')[0].webkitExitFullScreen();
-                    }
+					// If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
+					// and we have to exit
+					if (this.isMobile) {
+						this.playerRoot.find('video')[0].webkitExitFullScreen();
+					}
 
-                    if(this.isOldIE) {
-                        this.playerElementRoot.hide();
-                    }
+					if (this.isOldIE) {
+						this.playerElementRoot.hide();
+					}
 
-                    if(action == 'fail') {
-                        this.failAgeValidation();
+					if (action == 'fail') {
+						this.failAgeValidation();
 
-                        return false;
-                    } else if(action == 'check') {
+						return false;
+					} else if (action == 'check') {
 
-                        return false;
-                    }
-                }
-            }
+						return false;
+					}
+				}
+			}
 
-            this.playing = true;
-        },
+			this.playing = true;
+		},
 
-        onPause: function () {
-            this.pause();
-            this.playing = false;
+		onPause: function () {
+			this.pause();
+			this.playing = false;
 
-            this.consoleLog("EVENT: onPause");
-        },
+			this.consoleLog("EVENT: onPause");
+		},
 
-        onMetadataFetched: function (funcLabel, data) {
-            this.consoleLog('EVENT: onMetadataFetched');
-            this.metaData = data;
-            this.ageRequired = data.base.age_required;
+		onMetadataFetched: function (funcLabel, data) {
+			this.consoleLog('EVENT: onMetadataFetched');
+			this.metaData = data;
+			this.ageRequired = data.base.age_required;
 
-            // Look at the content's modules, to see if an ad manager is loaded
-            for(var m in data.modules) {
-                if(m.indexOf('ads') > -1) {
-                    this.currentPlaybackType = 'ad';
-                }
-            }
+			// Look at the content's modules, to see if an ad manager is loaded
+			for (var m in data.modules) {
+				if (m.indexOf('ads') > -1) {
+					this.currentPlaybackType = 'ad';
+				}
+			}
 
-            this.ageGateRoot.find('.ageRequirement').html(this.ageRequired);
-        },
+			this.ageGateRoot.find('.ageRequirement').html(this.ageRequired);
+		},
 
-        // Sends PLAY event to start playing the video
-        play: function () {
-            this.mb.publish(OO.EVENTS.PLAY);
-        },
+		// Sends PLAY event to start playing the video
+		play: function () {
+			this.mb.publish(OO.EVENTS.PLAY);
+		},
 
-        // Sends PAUSE event to pause the video
-        pause: function () {
-            this.mb.publish(OO.EVENTS.PAUSE);
-        },
+		// Sends PAUSE event to pause the video
+		pause: function () {
+			this.mb.publish(OO.EVENTS.PAUSE);
+		},
 
-        // Sends SEEK event to seek to specified position
-        seek: function (seconds) {
-            this.mb.publish(OO.EVENTS.SEEK, seconds);
-        },
+		// Sends SEEK event to seek to specified position
+		seek: function (seconds) {
+			this.mb.publish(OO.EVENTS.SEEK, seconds);
+		},
 
-        adjustForBrowser: function() {
-            if(navigator.userAgent.indexOf("MSIE") != -1 && $.browser.version < 11) {
-                this.isOldIE = true;
-                this.ageGateRoot.addClass('noFlashTransparency');
-            }
+		adjustForBrowser: function () {
+			if (navigator.userAgent.indexOf("MSIE") != -1 && $.browser.version < 11) {
+				this.isOldIE = true;
+				this.ageGateRoot.addClass('noFlashTransparency');
+			}
 
-            if(navigator.userAgent.indexOf("MSIE") != -1 && $.browser.version < 10) {
-                this.ageGateRoot.addClass('noCustomSizing');
-            }
+			if (navigator.userAgent.indexOf("MSIE") != -1 && $.browser.version < 10) {
+				this.ageGateRoot.addClass('noCustomSizing');
+			}
 
-            if($.browser.webkit) {
-                this.ageGateRoot.addClass('fancySelects');
-            }
-        },
+			if ($.browser.webkit) {
+				this.ageGateRoot.addClass('fancySelects');
+			}
+		},
 
-        validateAgeEntry: function () {
-            var ag = this.ageGateRoot;
-            var date = new Date();
-            var month = date.getMonth();
-            var year = date.getFullYear();
-            var requiredDate = (year + (month / 100)) - this.ageRequired; // 1996.05 format
-            var actualDate = parseFloat(ag.find('#year').val()) + (ag.find('#month').val() / 100);
+		validateAgeEntry: function () {
+			var ag = this.ageGateRoot;
+			var date = new Date();
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			var requiredDate = (year + (month / 100)) - this.ageRequired; // 1996.05 format
+			var actualDate = parseFloat(ag.find('#year').val()) + (ag.find('#month').val() / 100);
 
-            if(actualDate <= requiredDate) {
-                this.passAgeValidation();
+			if (actualDate <= requiredDate) {
+				this.passAgeValidation();
 
-                // Set a cookie that lasts one day, allowing continued access to this content
-                date.setDate(date.getDate() + 1);
-                document.cookie = 'ooyalaAgeGate-' + this.embedIdentifier + '=passed; expires=' + date.toUTCString();
-            } else {
-                this.failAgeValidation();
+				// Set a cookie that lasts one day, allowing continued access to this content
+				date.setDate(date.getDate() + 1);
+				document.cookie = 'ooyalaAgeGate-' + this.embedIdentifier + '=passed; expires=' + date.toUTCString();
+			} else {
+				this.failAgeValidation();
 
-                // Set a cookie that lasts one day, forbidding access to this content
-                date.setDate(date.getDate() + 1);
-                document.cookie = 'ooyalaAgeGate-' + this.embedIdentifier + '=failed; expires=' + date.toUTCString();
-            }
+				// Set a cookie that lasts one day, forbidding access to this content
+				date.setDate(date.getDate() + 1);
+				document.cookie = 'ooyalaAgeGate-' + this.embedIdentifier + '=failed; expires=' + date.toUTCString();
+			}
 
-            return false;
-        },
+			return false;
+		},
 
-        failAgeValidation: function () {
-            this.ageVerified = false;
+		failAgeValidation: function () {
+			this.ageVerified = false;
 
-            if(this.isOldIE) {
-                this.playerElementRoot.hide();
-            }
-            this.ageGateRoot.find('.innerElement.validate').hide();
-            this.ageGateRoot.find('.innerElement.failed').show();
-        },
+			if (this.isOldIE) {
+				this.playerElementRoot.hide();
+			}
+			this.ageGateRoot.find('.innerElement.validate').hide();
+			this.ageGateRoot.find('.innerElement.failed').show();
+		},
 
-        passAgeValidation: function () {
-            this.ageVerified = true;
+		passAgeValidation: function () {
+			this.ageVerified = true;
 
-            this.playerElementRoot.show();
-            this.ageGateRoot.hide();
+			this.playerElementRoot.show();
+			this.ageGateRoot.hide();
 
-            this.play();
-        },
+			this.play();
+		},
 
-        readCookies: function () {
-            if(document.cookie.indexOf('ooyalaAgeGate-' + this.embedIdentifier + '=failed') > -1) {
-                this.ageVerified = false;
+		readCookies: function () {
+			if (document.cookie.indexOf('ooyalaAgeGate-' + this.embedIdentifier + '=failed') > -1) {
+				this.ageVerified = false;
 
-                return 'fail';
-            } else if(document.cookie.indexOf('ooyalaAgeGate-' + this.embedIdentifier + '=passed') > -1) {
-                this.ageVerified = true;
+				return 'fail';
+			} else if (document.cookie.indexOf('ooyalaAgeGate-' + this.embedIdentifier + '=passed') > -1) {
+				this.ageVerified = true;
 
-                return 'pass';
-            }
+				return 'pass';
+			}
 
-            return 'check';
-        },
+			return 'check';
+		},
 
-        __end_marker: true
-    };
+		__end_marker: true
+	};
 
-    // Return the constructor of the module class.
-    // This is required so that Ooyala’s player can instantiate the custom
-    // module correctly.
-    return AgeGate.AgeGateModule;
+	// Return the constructor of the module class.
+	// This is required so that Ooyala’s player can instantiate the custom
+	// module correctly.
+	return AgeGate.AgeGateModule;
 });

@@ -4,7 +4,7 @@ describe("VideoBootstrap", function () {
 
 	//var vb = modules['wikia.videoBootstrap'](loader);
 
-	it('just a test', function() {
+	it('just a test', function () {
 		//console.log('test');
 	});
 
