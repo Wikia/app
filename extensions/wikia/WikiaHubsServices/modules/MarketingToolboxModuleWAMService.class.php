@@ -205,7 +205,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
-		$realVerticalId = HubService::getCanonicalCategoryId($data['vertical_id'];
+		$realVerticalId = HubService::getCanonicalCategoryId($data['vertical_id']);
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
 			'verticalName' => $hubModel->getVerticalName($realVerticalId),
