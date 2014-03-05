@@ -12,6 +12,7 @@ class LightboxController extends WikiaController {
 	const THUMBNAIL_WIDTH = 90;
 	const THUMBNAIL_HEIGHT = 55;
 	const POSTED_IN_ARTICLES = 7;
+
 	static $imageserving;
 
 	/**
@@ -73,7 +74,7 @@ class LightboxController extends WikiaController {
 		$this->to = $minTimestamp;
 
 		// set cache control to 1 hour
-		$this->response->setCacheValidity( 3600 );
+		$this->response->setCacheValidity( LightboxHelper::CACHE_TTL );
 	}
 
 	/**
@@ -397,7 +398,7 @@ class LightboxController extends WikiaController {
 				'timestamp' => $timestamp,
 			);
 
-			$this->wg->Memc->set( $memKey, $imageInfo, 60*60 );
+			$this->wg->Memc->set( $memKey, $imageInfo, LightboxHelper::CACHE_TTL );
 		}
 
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
@@ -405,8 +406,10 @@ class LightboxController extends WikiaController {
 		$this->to = $imageInfo['timestamp'];
 		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->parse();
 
+		// set cache control to 1 hour
+		$this->response->setCacheValidity( LightboxHelper::CACHE_TTL );
+
 		wfProfileOut( __METHOD__ );
 	}
-
 
 }

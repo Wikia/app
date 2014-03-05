@@ -6,6 +6,8 @@
  */
 class LightboxHelper extends WikiaModel {
 
+	const CACHE_TTL = 3600;
+
 	/**
 	 * Get list of images
 	 * @param integer $limit
@@ -51,7 +53,7 @@ class LightboxHelper extends WikiaModel {
 				);
 			}
 
-			$this->wg->Memc->set( $memKey, $imageList, 60*60 );
+			$this->wg->Memc->set( $memKey, $imageList, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -85,7 +87,7 @@ class LightboxHelper extends WikiaModel {
 				}
 			}
 
-			$this->wg->Memc->set( $memKey, $latestPhotos, 60*60 );
+			$this->wg->Memc->set( $memKey, $latestPhotos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
