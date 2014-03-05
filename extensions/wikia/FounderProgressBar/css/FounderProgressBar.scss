@@ -183,9 +183,10 @@ $color-founder-progress-list-border-shadow: #e2e2e2;
 
 .FounderProgressList {
 	@include box-shadow(2px, 2px, 2px, $color-founder-progress-list-border-shadow, false, 0);
-	border: 1px solid $color-founder-progress-preview-border;
-	position: relative; 
-	width: 698px;
+	border: solid $color-founder-progress-preview-border;
+	border-width: 0 1px 1px 0;
+	position: relative;
+	width: 100%;
 	z-index: 7;
 	>nav {
 		@include box-shadow(0, 3px, 6px, $color-founder-progress-list-border-shadow);
