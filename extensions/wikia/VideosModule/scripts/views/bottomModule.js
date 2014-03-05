@@ -33,8 +33,7 @@ define('videosmodule.views.bottomModule', [
 
 		// Make sure we're on an article page and that Related Articles (Read More) is not hidden
 		if (
-			this.articleId &&
-			!this.$el.is(':hidden') &&
+			this.articleId && !this.$el.is(':hidden') &&
 			this.$el.css('visibility') !== 'hidden'
 		) {
 			this.init();
