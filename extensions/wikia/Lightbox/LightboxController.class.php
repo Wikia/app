@@ -24,7 +24,7 @@ class LightboxController extends WikiaController {
 		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	public function lightboxModalContentError() {
@@ -35,7 +35,7 @@ class LightboxController extends WikiaController {
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
@@ -299,7 +299,7 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**

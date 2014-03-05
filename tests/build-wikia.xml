@@ -92,7 +92,7 @@
 		<mkdir dir="${basedir}/build" />
         <exec executable="karma" dir="${basedir}" failonerror="true">
             <arg line="start
-            		karma/js-unit.config.js
+            		karma/js-unit.conf.js
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage
@@ -104,7 +104,7 @@
 		<mkdir dir="${basedir}/build" />
 		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					karma/js-integration.config.js
+					karma/js-integration.conf.js
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage
