@@ -29,7 +29,6 @@ $wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.cl
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
-$wgHooks['UserLoadFromSession'][] = 'AssetsManagerClearCookie';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
 /**
@@ -40,20 +39,6 @@ function onUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
 	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
 		$aRights[] = 'read';
-	}
-	return true;
-}
-
-/**
- * @param User $user
- * @param $result
- * @return bool
- */
-function AssetsManagerClearCookie( $user, &$result ) {
-	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint'
-			&& !AssetsConfig::isUserDependent( $wgRequest->getVal('oid') ) ) {
-		$result = new User();
 	}
 	return true;
 }
