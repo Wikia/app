@@ -10,7 +10,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		inited,
+		isAppended,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
@@ -148,10 +148,10 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @desc Handles appending the toc to a side menu
 	 */
 	function append () {
-		if( show ) {
+		if ( show ) {
 			$toc.removeClass( 'hidden' );
 		}
-		if ( !inited ) {
+		if ( !isAppended ) {
 			$toc.on( 'click', 'header', function () {
 				onClose( 'header' );
 				window.scrollTo( 0, 0 );
@@ -172,7 +172,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			renderToc();
 
-			inited = true;
+			isAppended = true;
 		}
 	}
 
