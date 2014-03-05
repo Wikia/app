@@ -1,7 +1,8 @@
-require( ['wikia.querystring', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, cookies, track, window, $ ) {
+require( ['wikia.querystring', 'toc', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, toc, cookies, track, window, $ ) {
 	'use strict';
-
 	var d = window.document;
+
+	toc.init();
 
 	//used to handle close tracking on Read More section
 	$( d.getElementById( 'wkRelPag' ) ).on( 'click', '.open',function () {
