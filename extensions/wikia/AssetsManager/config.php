@@ -146,22 +146,6 @@ $config['oasis_noads_extensions_js'] = array(
 	)
 );
 
-/** Site specific CSS **/
-$config['site_anon_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => array(
-		'#function_AssetsConfig::getSiteCSS'
-	)
-);
-
-/** User specific CSS **/
-$config['site_user_css'] = array(
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => array(
-		'#group_site_anon_css',
-	)
-);
-
 /**
  * Scripts that are needed very early in execution and thus are worth blocking for.
  *

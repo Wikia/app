@@ -63,15 +63,5 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $this->mContent);
 			$this->mContent = str_replace("\xEF\xBB\xBF" /* BOM */, '', $this->mContent);
 		}
-
-		if($this->mOid == 'site_user_css') {
-			$this->mCacheMode = 'private';
-		}
-	}
-
-	// vary by Cookie as well when serving site_user_css group
-	public function getVary() {
-		$isCookieDependent = AssetsConfig::isUserDependent($this->mOid);
-		return $isCookieDependent ? 'Cookie,Accept-Encoding' : 'Accept-Encoding';
 	}
 }
