@@ -81,9 +81,7 @@
 
 .WikiaRail .videos-module-rail {
 	display: none;
-	// For the duration of the AB Test, we'll create a new
-	// definition for span.title here because WikiaRail responsive
-	// overrides are all over the place.
+
 	h1 {
 		margin-bottom: 18px;
 	}
@@ -94,11 +92,18 @@
 			margin-bottom: 7px;
 		}
 
+		.title {
+			font-size: 15px;
+			height: 50px;
+		}
+
+		.title:last-of-type {
+			height: 40px;
+		}
+
 		.title a {
 			color: $color-text;
 			display: block;
-			font-size: 15px;
-			height: 50px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -107,11 +112,6 @@
 				color: $color-links;
 			}
 		}
-
-		.title:last-of-type a {
-			height: 40px;
-		}
-
 	}
 }
 
