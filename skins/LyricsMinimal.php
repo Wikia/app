@@ -699,7 +699,7 @@ class LyricsMinimalTemplate extends QuickTemplate {
 
 	// Site-CSS.
 	global $wgUser, $wgStylePath, $wgJsMimeType;
-	$srcs[] = $wgStylePath."/lyricsminimal/article.css"; // Probably ghetto.  This whole skin needs to just be rewritten as Oasis modifications anyway though.
+	$srcs = [ $wgStylePath."/lyricsminimal/article.css" ]; // Probably ghetto.  This whole skin needs to just be rewritten as Oasis modifications anyway though.
 	foreach($srcs as $src) {
 		echo '<link rel="stylesheet" href="'. htmlspecialchars( $src ) .'">';
 	}
