@@ -3,7 +3,7 @@
 class AnalyticsProviderBlueKai implements iAnalyticsProvider
 {
 
-	const SITE_ID = '15415';
+	const SITE_ID = '5040';
 
 	function getSetupHtml( $params = array() )
 	{
