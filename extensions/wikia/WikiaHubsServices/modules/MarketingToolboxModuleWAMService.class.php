@@ -205,12 +205,11 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
-
+		$realVerticalId = HubService::getCanonicalCategoryId($data['vertical_id'];
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
-			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
-			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($data['vertical_id'])),
-			'ranking' => []
+			'verticalName' => $hubModel->getVerticalName($realVerticalId),
+			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($realVerticalId)),
 		];
 
 		$rank = 1;
