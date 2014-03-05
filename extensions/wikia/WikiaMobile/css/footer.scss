@@ -2,8 +2,8 @@
 @import "mixins/box-shadow.scss";
 
 #wkFtr {
-	background-color: $footerBackground;
 	@include box-shadow(inset 0 20px 20px -20px rgba(0,0,0,.4));
+	background-color: $footerBackground;
 	color: $footerTextColor;
 	font-size: 0.812rem;
 	padding: 35px;
