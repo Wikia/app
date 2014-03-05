@@ -54,4 +54,23 @@ class VisualEditorWikiaHooks {
 		return true;
 	}
 
+	/**
+	 * VOLDEV-35
+	 * Always show "Enable visual editor (where available)" preference when VE is enabled
+	 * From extensions/wikia/RTE/RTE.class.php
+	 */
+	public static function onEditingPreferencesBefore( $user, &$preferences ) {
+		global $wgEnableRTEExt;
+
+		if ( empty( $wgEnableRTEExt ) ) {
+			$preferences['enablerichtext'] = array(
+				'type' => 'toggle',
+				'section' => 'editing/editing-experience',
+				'label-message' => 'enablerichtexteditor',
+			);
+		}
+
+		return true;
+	}
+
 }
