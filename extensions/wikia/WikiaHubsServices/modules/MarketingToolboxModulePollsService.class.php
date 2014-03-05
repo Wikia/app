@@ -81,11 +81,10 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 			$model = new MarketingToolboxPollsModel();
 			$optionsLimit = $model->getTotalOptionsLimit();
 
-			$toolBoxModel = $this->getToolboxModel();
 
 			$structuredData['headline'] = $data['pollsTitle'];
 			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
-			$structuredData['hubUrl'] = $toolBoxModel->getHubUrl($this->langCode, $this->verticalId);
+			$structuredData['hubUrl'] = $this->getHubUrl();
 
 			for ($i = 1; $i <= $optionsLimit; $i++) {
 				if(isset($data['pollsOption' . $i])) {
@@ -93,7 +92,6 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 				}
 			}
 		}
-
 		return $structuredData;
 	}
 
@@ -104,7 +102,17 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 		return parent::render($data);
 	}
 
-	protected function getToolboxModel() {
-		return new MarketingToolboxModel();
+	protected function getHubUrl() {
+		switch($this->getHubsVersion()) {
+			case 3:
+				global $wgCityId;
+				$url = (new MarketingToolboxV3Model())->getHubUrl( $wgCityId );
+				break;
+			case 2:
+			default:
+				$url = (new MarketingToolboxModel())->getHubUrl( $this->langCode, $this->verticalId );
+		}
+
+		return $url;
 	}
 }

@@ -435,6 +435,24 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		return $result;
 	}
 
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
+	public function getHubUrl($langCode, $verticalId) {
+		$corporateModel = new WikiaCorporateModel();
+		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
+		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
+
+		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
+
+		return $title->getFullURL();
+	}
+
 	protected function getMKeyForLastPublishedTimestamp($params, $timestamp) {
 		return wfSharedMemcKey(
 			self::CACHE_KEY,

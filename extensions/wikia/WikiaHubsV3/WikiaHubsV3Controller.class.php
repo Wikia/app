@@ -45,7 +45,6 @@ class WikiaHubsV3Controller extends WikiaController {
 			$this->overrideTemplate('404');
 			return;
 		}
-
 		$toolboxModel = new MarketingToolboxV3Model();
 
 		$this->modules = array();

@@ -392,6 +392,20 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		return $result;
 	}
 
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
+	public function getHubUrl($wikiId) {
+		$title = GlobalTitle::newMainPage($wikiId);
+
+		return $title->getFullURL();
+	}
+
 	protected function getMKeyForLastPublishedTimestamp($cityId, $timestamp) {
 		return wfSharedMemcKey(
 			self::CACHE_KEY,

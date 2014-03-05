@@ -288,24 +288,6 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	}
 
 	/**
-	 * Get hub url
-	 *
-	 * @param $langCode
-	 * @param $verticalId
-	 *
-	 * @return String
-	 */
-	public function getHubUrl($langCode, $verticalId) {
-		$corporateModel = new WikiaCorporateModel();
-		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
-		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
-
-		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
-
-		return $title->getFullURL();
-	}
-
-	/**
 	 * Method to extract textual filename from VET-generated
 	 * wikitext (i.e. [[File:Batman - Following|thumb|right|335 px]]
 	 * returns false if not found
