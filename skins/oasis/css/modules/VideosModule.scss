@@ -80,9 +80,14 @@
 }
 
 .WikiaRail .videos-module-rail {
-	display: none;
+	&.hidden, .hidden {
+		display: none;
+	}
 
 	h1 {
+		display: block;
+		font-size: 20px;
+		padding-top: 10px;
 		margin-bottom: 18px;
 	}
 
