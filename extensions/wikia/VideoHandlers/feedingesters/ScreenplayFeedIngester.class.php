@@ -330,7 +330,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
-		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
+		if ( !empty( $data['language'] ) && !preg_match( "/\benglish\b/i", $data['language'] ) ) {
 			$categories[] = 'International';
 			$categories[] = $data['language'];
 		}
