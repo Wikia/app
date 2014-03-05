@@ -43,10 +43,10 @@ define('videosmodule.views.rail', [
 			return;
 		}
 
-		self.$thumbs.hide();
+		self.$thumbs.addClass('hidden');
 		self.$el
 			.startThrobbing()
-			.show();
+			.removeClass('hidden');
 
 		this.model
 			.fetch(groupParams.verticalOnly)
@@ -61,11 +61,12 @@ define('videosmodule.views.rail', [
 			len = videos.length,
 			thumbHtml = [],
 			self = this,
-			$imagesLoaded = $.Deferred();
+			$imagesLoaded = $.Deferred(),
+			imgCount = 0;
 
 		// If no videos are returned from the server, don't render anything
 		if (!len) {
-			this.$el.hide();
+			this.$el.addClass('hidden');
 			log(
 				'No videos were returned for VideosModule rail, ' + testCase.testGroup,
 				log.levels.error,
@@ -87,13 +88,16 @@ define('videosmodule.views.rail', [
 		this.$thumbs
 			.append(thumbHtml);
 
-		self.$thumbs.find('img').on('load', function () {
-			$imagesLoaded.resolve();
+		self.$thumbs.find('img[data-video-key]').on('load error', function () {
+			imgCount += 1;
+			if (imgCount === groupParams.thumbs) {
+				$imagesLoaded.resolve();
+			}
 		});
 
 		$.when($imagesLoaded)
 			.done(function () {
-				self.$thumbs.fadeIn();
+				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing();
 			});
 
