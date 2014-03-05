@@ -5,7 +5,7 @@
  * @package MediaWiki
  * @addtopackage maintenance
  */
-
+echo 'hi';
 require_once( "../../../../maintenance/commandLine.inc" );
 
 global $wgContentNamespaces, $wgExtraNamespaces;
@@ -23,7 +23,7 @@ if ( ( $handle = fopen( $argv[1], 'r' ) ) !== false ) {
 			$variableId = $row[1];
 			$variableValue = $row[2];
 			WikiFactory::setVarById( $variableId, $wikiId, $variableValue );
-			if ( $rowCounter++ %% 1000 == 0 ) {
+			if ( $rowCounter++ % 1000 == 0 ) {
 				echo "{$rowCounter}\n";
 			}
 		} catch ( Exception $e ) {
