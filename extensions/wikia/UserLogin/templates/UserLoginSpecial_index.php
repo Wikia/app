@@ -86,7 +86,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returnto',
-			'value' => $returnto
+			'value' => Sanitizer::encodeAttribute( $returnto )
 		);
 	}
 
@@ -94,7 +94,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returntoquery',
-			'value' => $returntoquery
+			'value' => Sanitizer::encodeAttribute( $returntoquery )
 		);
 	}
 

@@ -12,30 +12,13 @@ class SiteWideMessagesController extends WikiaController  {
 			return;
 		}
 
-		$this->hasNotifications = $this->request->getBool( 'hasnotifications' );
-
 		$msgs = SiteWideMessages::getAllAnonMessages( $this->wg->User, false, false );
 
-		// Filter dismissed messages
-		foreach ( $msgs as $msgId => $msgData ) {
-			if ( isset( $_COOKIE[$this->wg->CookiePrefix . 'swm-' . $msgId] ) ) {
-				unset( $msgs[$msgId] );
-			}
-		}
-
+		$this->siteWideMessagesCount = count( $msgs );
 		$this->siteWideMessages = $msgs;
 		$this->notificationType = NotificationsController::NOTIFICATION_SITEWIDE;
 
 		$this->response->setCacheValidity( self::CACHE_VALIDITY_VARNISH, self::CACHE_VALIDITY_BROWSER );
-	}
-
-	public function dismissAnonMessage() {
-		if ( !$this->wg->User->isLoggedIn() ) {
-			$messageId = $this->request->getInt( 'messageid' );
-			if ( $messageId > 0 ) {
-				$this->wg->Request->response()->setcookie( 'swm-' . $messageId, 1, time() + 86400 /*24h*/ );
-			}
-		}
 	}
 
 }

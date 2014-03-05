@@ -46,7 +46,7 @@
 			array(
 				'type' => 'text',
 				'name' => 'email',
-				'value' => $email,
+				'value' => Sanitizer::encodeAttribute( $email ),
 				'label' => wfMessage('email')->text(),
 				'isRequired' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
@@ -102,7 +102,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returnto',
-			'value' => $returnto
+			'value' => Sanitizer::encodeAttribute( $returnto )
 		);
 	}
 
@@ -110,7 +110,7 @@
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'byemail',
-			'value' => $byemail
+			'value' => Sanitizer::encodeAttribute( $byemail )
 		);
 	}
 

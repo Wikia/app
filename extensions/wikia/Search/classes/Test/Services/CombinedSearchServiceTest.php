@@ -82,7 +82,7 @@ class CombinedSearchServiceTest extends BaseTest {
 		$foundResultsMock1 = [ [
 			'lang' => 'pl', 'title' => 'a', 'url' => 'b', 'id' => '123_14', 'score' => 3,
 			'pageid' => 14, 'wid' => 123, 'html_pl' => 'lorem ipsum pl', 'quality' => 0,
-			'article_type_s' => 'movie'
+			'article_type_s' => 'something weird'
 		] ];
 
 		$foundResultsMock2 = [ [
@@ -123,7 +123,7 @@ class CombinedSearchServiceTest extends BaseTest {
 				'lang' => 'pl',
 				'snippet' => 'lorem ipsum pl',
 				'quality' => 0,
-				'type' => 'movie' ],
+				'type' => 'other' ],
 			[
 				'wikiId' => 124,
 				'articleId' => 15,

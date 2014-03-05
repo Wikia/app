@@ -198,6 +198,11 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 				86400, 60,
 				's-maxage=86400', 'public, max-age=60'
 			],
+			// private caching
+			[
+				WikiaResponse::CACHE_PRIVATE_DISABLED, false,
+				'private, max-age=0, must-revalidate', null
+			],
 		];
 	}
 }

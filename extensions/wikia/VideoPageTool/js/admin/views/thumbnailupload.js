@@ -1,9 +1,9 @@
-define( 'videopageadmin.views.thumbnailupload', [
-		'jquery',
-		'wikia.window',
-		'videopageadmin.models.thumbnail',
-		'wikia.aim'
-	], function( $, window, ThumbnailModel ) {
+define('videopageadmin.views.thumbnailupload', [
+	'jquery',
+	'wikia.window',
+	'videopageadmin.models.thumbnail',
+	'wikia.aim'
+], function ($, window, ThumbnailModel) {
 	'use strict';
 
 
@@ -13,75 +13,75 @@ define( 'videopageadmin.views.thumbnailupload', [
 	 * @description Built to interop with legacy WikiaMediaUpload extension
 	 * @returns Constructor
 	 */
-	function ThumbnailUploader( opts ) {
+	function ThumbnailUploader(opts) {
 		this.$el = opts.el;
-		this.$window = $( window );
+		this.$window = $(window);
 		this.init();
 	}
 
 	ThumbnailUploader.prototype = {
-		init: function() {
+		init: function () {
 			this.showUploader();
 			// Unbind this later
-			this.$window.on( 'WMU_addFromSpecialPage', $.proxy( this.onUserUpload, this ) );
+			this.$window.on('WMU_addFromSpecialPage', $.proxy(this.onUserUpload, this));
 		},
-		showUploader: function() {
+		showUploader: function () {
 			/* jshint ignore:start */
 			// bypass page layout details screen
 			// @deprecated WMU global namespace pollution
 			window.WMU_exactHeight = 461;
 			window.WMU_exactWidth = 1024;
-			window.WMU_aspectRatio = 1024/461;
+			window.WMU_aspectRatio = 1024 / 461;
 			window.WMU_skipDetails = true;
 			window.WMU_show();
 			window.WMU_openedInEditor = false;
 			/* jshint ignore:end */
 		},
-		onUserUpload: function( evt, data ) {
+		onUserUpload: function (evt, data) {
 			evt.preventDefault();
 			// Unbind events to avoid zombie/duplicate events
-			this.$window.off( 'WMU_addFromSpecialPage' );
+			this.$window.off('WMU_addFromSpecialPage');
 
 			var img,
 				that = this,
 				$videoThumb;
 
-			img = new ThumbnailModel( {
+			img = new ThumbnailModel({
 				imgTitle: data.imageTitle,
 				wikiText: data.imageWikiText
-			} );
+			});
 
-			$videoThumb = this.$el.find( '.video-thumb' );
+			$videoThumb = this.$el.find('.video-thumb');
 
-			img.create().done( function( response ) {
+			img.create().done(function (response) {
 
 				// Swap out the small thumbnail
-				if ( $videoThumb.find( 'img' ).length ) {
+				if ($videoThumb.find('img').length) {
 					that.$el
-						.find( '.vpt-featured-thumbnail' )
-						.attr( 'src', response.data.thumbUrl );
+						.find('.vpt-featured-thumbnail')
+						.attr('src', response.data.thumbUrl);
 
 				} else {
-					$videoThumb.html( $( '<img>' )
-						.addClass( 'vpt-featured-thumbnail' )
-						.attr( 'src', response.data.thumbUrl ) );
+					$videoThumb.html($('<img>')
+						.addClass('vpt-featured-thumbnail')
+						.attr('src', response.data.thumbUrl));
 				}
 
 				// Swap out the preview link href
 				// And fade in the preview link
-				that.$el.find( '.preview-large-link' )
-					.attr( 'href', response.data.largeThumbUrl )
-					.fadeIn( 200 );
+				that.$el.find('.preview-large-link')
+					.attr('href', response.data.largeThumbUrl)
+					.fadeIn(200);
 
-				that.$el.find( '.alt-thumb' )
-					.val( response.data.imageKey )
-					.removeClass( 'error' )
-				.next( '.error' )
+				that.$el.find('.alt-thumb')
+					.val(response.data.imageKey)
+					.removeClass('error')
+					.next('.error')
 					.remove();
-				that.$el.find( '.alt-thumb-name' ).text( response.data.imageTitle );
+				that.$el.find('.alt-thumb-name').text(response.data.imageTitle);
 
-			} );
+			});
 		}
 	};
 	return ThumbnailUploader;
-} );
+});

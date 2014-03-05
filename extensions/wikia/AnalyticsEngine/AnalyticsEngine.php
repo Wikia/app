@@ -49,6 +49,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
 				return new AnalyticsProviderIVW2();
+			case 'BlueKai':
+				return new AnalyticsProviderBlueKai();
 		}
 
 		return null;
