@@ -116,6 +116,7 @@ class GlobalFileTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
 		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
