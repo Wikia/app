@@ -36,8 +36,9 @@ class VideosModule extends WikiaModel {
 	 * @return array $videos - list of related videos
 	 */
 	public function getRelatedVideos( $articleId, $numRequired ) {
-		// get article related videos
-		$videos = $this->getArticleRelatedVideos( $articleId, $numRequired );
+		// Get article related videos
+		// @TODO Disabled until we can find a better way to find these vidoes
+		$videos = [];  //$this->getArticleRelatedVideos( $articleId, $numRequired );
 
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		$numRequired = $numRequired - count( $videos );
@@ -111,11 +112,11 @@ class VideosModule extends WikiaModel {
 			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
 			$params = [
-				'title' => $wikiTitle,
+				'defaultTopic' => $wikiTitle,
 				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
 			];
 
-			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
+			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
