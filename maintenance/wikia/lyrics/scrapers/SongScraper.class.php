@@ -18,6 +18,7 @@ class SongScraper extends BaseScraper {
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
+		return $this->sanitizeData( $songData, $this->getDataMap() );
 	}
 
 	protected function getHeader( Article $article ) {
@@ -41,6 +42,27 @@ class SongScraper extends BaseScraper {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
 			return trim( $matches[1] );
 		}
+	}
+
+	public function getDataMap() {
+		return [
+			'article_id' => 'article_id',
+			'index' => 'index',
+			'type' => 'type',
+			'artist_id' => 'artist_id',
+			'Artist' => 'artist',
+			'song' => 'name',
+			'lyrics' => 'lyrics',
+			'romanizedSong' => 'romanized_name',
+			'language' => 'language',
+			'youtube' => 'youtube',
+			'goear' => 'goear',
+			'itunes' => 'itunes',
+			'asin' => 'asin',
+			'musicbrainz' => 'musicbrainz',
+			'allmusic' => 'allmusic',
+			'download' => 'download',
+		];
 	}
 
 } 

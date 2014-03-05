@@ -35,17 +35,26 @@ class LyricsWikiCrawler extends Maintenance {
 
 	public function execute() {
 		$this->db = $this->getDB( DB_SLAVE );
-		$this->dba = newDatabaseAdapter( 'dummy', [] );
+		//$this->dba = newDatabaseAdapter( 'dummy', [] );
+
+		$this->dba = newDatabaseAdapter( 'solr', [
+			'adapteroptions' => [
+				'host' => '10.10.10.242',
+				'port' => 8983,
+				'path' => '/solr/',
+				'core' => 'lyrics',
+			]
+		] );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
+		} elseif ( ( $poolSize = intval( $this->getOption( self::OPTION_ARTICLE_POOL, 0 ) ) ) && $poolSize > 0  &&
+			( $laneNumber = intval( $this->getOption( self::OPTION_ARTICLE_LANE, 0 ) ) ) && $laneNumber > 0 ) {
+			$this->doScrapeLane( $poolSize, $laneNumber );
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTICLE_ID, 0 ) ) ) && $articleId > 0 ) {
 			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->setArticleId( $articleId );
 			$this->doScrapeArticle();
-		} elseif ( ( $poolSize = intval( $this->getOption( self::OPTION_ARTICLE_POOL, 0 ) ) ) && $poolSize > 0  &&
-			( $laneNumber = intval( $this->getOption( self::OPTION_ARTICLE_LANE, 0 ) ) ) && $laneNumber > 0 ) {
-			$this->doScrapeLane( $poolSize, $laneNumber );
 		} else {
 			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->doScrapeArticlesFromYesterday();

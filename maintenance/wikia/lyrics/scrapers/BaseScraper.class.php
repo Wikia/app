@@ -9,6 +9,7 @@
 abstract class BaseScraper {
 
 	abstract public function processArticle( Article $article );
+	abstract public function getDataMap();
 
 	protected function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
 		$result = [];
@@ -28,4 +29,15 @@ abstract class BaseScraper {
 		};
 		return $result;
 	}
+
+	function sanitizeData ( $data, $dataMap ) {
+		$result = array();
+		foreach ( $data as $key => $value ) {
+			if ( isset( $dataMap[$key] ) ) {
+				$result[$dataMap[$key]] = $value;
+			}
+		}
+		return $result;
+	}
+
 }

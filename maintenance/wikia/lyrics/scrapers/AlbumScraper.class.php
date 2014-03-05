@@ -16,7 +16,7 @@ class AlbumScraper extends BaseScraper {
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		$albumData = array_merge( $albumData, $this->getFooter( $article ) );
-		return $albumData;
+		return $this->sanitizeData( $albumData, $this->getDataMap() );
 	}
 
 	protected function getHeader( Article $article ) {
@@ -48,6 +48,29 @@ class AlbumScraper extends BaseScraper {
 		return [
 			'title' => $songFields[0],
 			'name' => $songFields[1],
+		];
+	}
+
+	public function getDataMap() {
+		return [
+			'index'	=> 'index',
+			'type'	=> 'type',
+			'article_id' => 'article_id',
+			'artist_id' => 'artist_id',
+			'Artist' => 'artist',
+			'Album' => 'name',
+			'Cover' => 'pic',
+			'year' => 'year',
+			'Length' => 'length',
+			'Genre' => 'genres',
+			'Wikipedia' => 'wikipedia',
+			'romanizedAlbum' => 'romanized_name',
+			'asin' => 'asin',
+			'iTunes' => 'itunes',
+			'allmusic' => 'allmusic',
+			'discogs' => 'discogs',
+			'musicbrainz' => 'musicbrainz',
+			'download' => 'download',
 		];
 	}
 

@@ -42,10 +42,10 @@ class LyricsScrapper {
 						self::log( 'SONG NOT FOUND '. $songData['title'] . PHP_EOL );
 					}
 				}
+				$this->dba->saveAlbum( $artistData, $albumData, $songsData );
 			} else {
 				self::log( 'ALBUM NOT FOUND '. $albumData['title'] . PHP_EOL );
 			}
-			$this->dba->saveAlbum( $artistData, $albumData, $songsData );
 		}
 		$this->dba->saveArtist( $artistData, $albumsData );
 	}
