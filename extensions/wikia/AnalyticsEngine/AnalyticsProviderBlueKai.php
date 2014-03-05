@@ -15,6 +15,20 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 
 		$siteId = self::SITE_ID;
 
+		$allowedParams = json_encode([
+				's0' => true,
+				's1' => true,
+				's2' => true,
+				'esrb' => true,
+				'gnre' => true,
+				'pub' => true,
+				'dev' => true,
+				'pform' => true,
+				'wpage' => true,
+				'lang' => true,
+				'onSiteSearch' => true,
+		]);
+
 		switch ( $event ) {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$script = <<<SCRIPT
@@ -22,6 +36,22 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 <iframe name="__bkframe" height="0" width="0" frameborder="0" "src="javascript:void(0)"></iframe>
 <script type="text/javascript">
 window.bk_async = function() {
+var i,
+	paramName,
+	allowedParams = {$allowedParams},
+	pageParams = (new AdLogicPageLevelParams(Wikia.log, window)).getPageLevelParams();
+
+for (param in pageParams){
+	if (pageParams.hasOwnProperty(param) && allowedParams[param]) {
+		if (typeof pageParams[param] === "string") {
+			pageParams[param] = [pageParams[param]];
+		}
+		for(i=0;i<pageParams[param].length;i++) {
+			bk_addPageCtx(param, pageParams[param][i]);
+		}
+
+	}
+}
 BKTAG.doTag({$siteId}, 1); };
 (function() {
 var scripts = document.getElementsByTagName('script')[0];
