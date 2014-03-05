@@ -3,7 +3,6 @@
 define( 'toc', [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
 function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
-
 	//private
 	var open = 'open',
 		active = 'active',
@@ -148,7 +147,10 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending the toc to a side menu
 	 */
-	function init () {
+	function append () {
+		if( show ) {
+			$toc.removeClass( 'hidden' );
+		}
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
 				onClose( 'header' );
@@ -193,7 +195,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
 
-		init();
+		append();
 
 		onSectionChange( null, sections.current()[0], true );
 
@@ -218,38 +220,48 @@ function ( sections, window, $, mustache, toc, track ) {
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	$document.on( 'curtain:hidden', onClose );
+	/**
+	 * @desc Initializes TOC if it is supposed to be shown on a page
+	 */
+	function init () {
+		if ( show ) {
+			$document.on( 'curtain:hidden', onClose );
 
-	if ( !sideMenuCapable ) {
-		tocMarkup = createTocMarkup();
+			if ( !sideMenuCapable ) {
+				tocMarkup = createTocMarkup();
 
-		if ( tocMarkup ) {
-			$document.find( '#mw-content-text' )
-				.append(
-					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
-				).find('.level');
+				if ( tocMarkup ) {
+					$document.find( '#mw-content-text' )
+						.append(
+							'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
+						).find('.level');
 
-			inPageToc = doc.getElementsByClassName('in-page-toc')[0];
-		} else {
-			$tocHandle.hide();
+					inPageToc = doc.getElementsByClassName('in-page-toc')[0];
+				} else {
+					$tocHandle.hide();
+				}
+			}
+
+			$tocHandle.on( 'click', function ( event ) {
+				event.stopPropagation();
+
+				if ( sideMenuCapable ) {
+					if ( $toc.hasClass( active ) ) {
+						onClose();
+					} else {
+						onOpen();
+					}
+				} else {
+					onTap();
+				}
+			} );
+			$toc.removeClass( 'hidden' );
 		}
 	}
 
-	$tocHandle.on( 'click', function ( event ) {
-		event.stopPropagation();
+	return {
+		show : show,
+		init : init
+	}
 
-		if ( sideMenuCapable ) {
-			if ( $toc.hasClass( active ) ) {
-				onClose();
-			} else {
-				onOpen();
-			}
-		} else {
-			onTap();
-		}
-
-		return {
-			show: show
-		}
-	} );
 } );
