@@ -142,10 +142,6 @@ class RedirectServiceTest extends WikiaBaseTest {
 			->method('getTitleFromText')
 			->will($this->returnValue($titleMock));
 
-		$redirectMock->expects($this->any())
-			->method('getRedirects')
-			->will($this->returnValue($redirects));
-
 		$this->mockGlobalVariable('wgTitle', $wgTitleMock);
 
 		$redirectURL = $this->getReflectionMethod('getRedirectURL');
