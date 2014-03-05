@@ -82,6 +82,12 @@ class SpecialPageFactory {
 		'Listusers'                 => 'SpecialListUsers' ,
 		'Listadmins'                => 'SpecialListAdmins',
 		'Listbots'                  => 'SpecialListBots',
+		// Begin Wikia change - @author Cqm
+		// VOLDEV-49
+		'Liststaff'                 => 'SpecialListStaff',
+		'Listvstf'                  => 'SpecialListVstf',
+		'Listhelpers'               => 'SpecialListHelpers',
+		// End Wikia change
 		'Activeusers'               => 'SpecialActiveUsers',
 		'Userrights'                => 'UserrightsPage',
 		'EditWatchlist'             => 'SpecialEditWatchlist',

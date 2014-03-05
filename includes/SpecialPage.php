@@ -1061,6 +1061,42 @@ class SpecialListBots extends SpecialRedirectToSpecial {
 }
 
 /**
+ * Begin Wikia change
+ * @author Cqm
+ * VOLDEV-49
+ * Addition of Special:ListVSTF, Special:ListStaff and Special:ListHelpers
+ */
+
+/**
+ * ListStaff --> ListUsers/staff
+ */
+class SpecialListStaff extends SpecialRedirectToSpecial {
+	function __construct() {
+		parent::__construct( 'Liststaff', 'Listusers', 'staff' );
+	}
+}
+
+/**
+ * ListVstf --> ListUsers/vstf
+ */
+class SpecialListVstf extends SpecialRedirectToSpecial {
+	function __construct() {
+		parent::__construct( 'Listvstf', 'Listusers', 'vstf' );
+	}
+}
+
+/**
+ * ListHelpers --> ListUser/helper
+ */
+class SpecialListHelpers extends SpecialRedirectToSpecial {
+	function __construct() {
+		parent::__construct( 'Listhelpers', 'Listusers', 'helper' );
+	}
+}
+
+/* End Wikia change */
+
+/**
  * CreateAccount --> UserLogin/signup
  * @todo FIXME: This (and the rest of the login frontend) needs to die a horrible painful death
  */
