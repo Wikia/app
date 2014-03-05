@@ -140,7 +140,7 @@ class AssetsManagerController extends WikiaController {
 			wfProfileOut( $profileId );
 		}
 
-		$this->response->setCacheValidity( 7 * 86400 ); // a week
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		$this->response->setFormat( 'json' );
 		wfProfileOut( __METHOD__ );
