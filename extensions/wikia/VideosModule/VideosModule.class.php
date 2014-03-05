@@ -209,7 +209,7 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get search vertical
+	 * Get vertical name recognized by search from wiki's category ID
 	 * @return string $name - search vertical
 	 */
 	public function getSearchVertical() {
