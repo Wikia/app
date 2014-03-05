@@ -1,5 +1,3 @@
-/* global _ */
-/* global Backbone */
 define('videohomepage.views.featured', [
 	// lib deps
 	'jquery',
@@ -62,7 +60,6 @@ define('videohomepage.views.featured', [
 		},
 
 		render: function () {
-			this.$('.ellipses').remove();
 			this.$thumbs.find('.title').ellipses({
 				maxLines: 2
 			});
