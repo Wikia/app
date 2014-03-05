@@ -6,7 +6,7 @@
 		<? endif ?>
 
 		<? if (isset($date)): ?>
-			<p><strong><?=$wg->lang->date($date);?></strong></p>
+			<p class="date"><?= $wg->lang->date($date); ?></p>
 		<? endif?>
 		<? if (isset($hubLang) && isset($hubName)): ?>
 			<p class="alternative"><?=$hubLang?> / <?=$hubName ?></p>

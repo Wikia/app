@@ -21,6 +21,11 @@
 		}
 		p {
 			margin: 0;
+
+			&.date {
+				clear: left;
+				font-weight: bold;
+			}
 		}
 	}
 	.right {
