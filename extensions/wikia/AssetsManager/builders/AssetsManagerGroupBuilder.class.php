@@ -28,11 +28,6 @@ class AssetsManagerGroupBuilder extends AssetsManagerBaseBuilder {
 				// Start checking the url to see if it is something we care about (BugId:30188)
 				if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'js') {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserJs(); // FIXME
-				} else if(strpos($asset, 'Wikia.css') !== false) {
-					$message = wfMsgForContent('Wikia.css');
-					if(!wfEmptyMsg('Wikia.css', $message)) {
-						$this->mContent .= $message;
-					}
 				} else if(isset($params['action']) && $params['action'] == 'raw' && isset($params['gen']) && $params['gen'] == 'css') {
 					//$this->mContent .= RequestContext::getMain()->getSkin()->generateUserStylesheet(); // FIXME
 				} else {
