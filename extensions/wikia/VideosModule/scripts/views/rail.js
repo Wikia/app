@@ -70,7 +70,8 @@ define('videosmodule.views.rail', [
 			log(
 				'No videos were returned for VideosModule rail, ' + testCase.testGroup,
 				log.levels.error,
-				'VideosModule'
+				'VideosModule',
+				true
 			);
 			return;
 		}
@@ -86,14 +87,13 @@ define('videosmodule.views.rail', [
 		}
 
 		this.$thumbs
-			.append(thumbHtml);
-
-		self.$thumbs.find('img[data-video-key]').on('load error', function () {
-			imgCount += 1;
-			if (imgCount === groupParams.thumbs) {
-				$imagesLoaded.resolve();
-			}
-		});
+			.append(thumbHtml)
+			.find('img[data-video-key]').on('load error', function () {
+				imgCount += 1;
+				if (imgCount === groupParams.thumbs) {
+					$imagesLoaded.resolve();
+				}
+			});
 
 		$.when($imagesLoaded)
 			.done(function () {
