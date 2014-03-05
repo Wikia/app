@@ -10,11 +10,12 @@
 
 class VisualEditorHooks {
 	public static function isAvailable( $skin ) {
-		global $wgVisualEditorSupportedSkins;
+		global $wgVisualEditorSupportedSkins, $wgEnableVisualEditorUI;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
 				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
+				$wgEnableVisualEditorUI &&
 				$skin->getUser()->getOption( 'enablerichtext' )
 			);
 		}

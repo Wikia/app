@@ -125,7 +125,7 @@ var CreatePage = {
 							$( '#wpCreatePageDialogTitle' ).focus();
 
 							// Hide formats if ve is available
-							if ( CreatePage.Available ) {
+							if ( CreatePage.veAvailable ) {
 								$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
 							}
 

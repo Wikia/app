@@ -9,8 +9,6 @@
  */
 
 /* Setup */
-global $wgEnableVisualEditorUI;
-
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'VisualEditor',
@@ -49,9 +47,7 @@ $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
-if ( $wgEnableVisualEditorUI ) {
-	$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
-}
+$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
 if ( array_key_exists( 'GetBetaFeaturePreferences', $wgHooks ) ) {
 	$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
 }
@@ -60,9 +56,7 @@ $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
-if ( $wgEnableVisualEditorUI ) {
-	$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
-}
+$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
 $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
