@@ -166,6 +166,11 @@ var SlotTracker = function (log, tracker) {
 
 			eventsTracked.push(eventName);
 			lastEventTime = timeElapsed;
+
+			if (/\+$/.test(timeBucket)) {
+				eventName = 'error';
+			}
+
 			trackEvent(
 				eventName,
 				{
