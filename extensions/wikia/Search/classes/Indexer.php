@@ -242,7 +242,7 @@ class Indexer
 	protected function getClient() {
 		if ( $this->client === null ) {
 			$mwService = $this->getMwService();
-			$master = $mwService->isOnDbCluster() ? $mwService->getGlobal( 'SolrHost' ) : 'staff-search-s1';
+			$master = $mwService->isOnDbCluster() ? $mwService->getGlobal( 'SolrMaster' ) : 'staff-search-s1';
 			$params = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
