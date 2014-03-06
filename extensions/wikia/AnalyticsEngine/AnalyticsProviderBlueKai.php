@@ -33,7 +33,7 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$script = <<<SCRIPT
 <!-- Begin BlueKai Tag -->
-<iframe name="__bkframe" height="0" width="0" frameborder="0" "src="javascript:void(0)"></iframe>
+<iframe name="__bkframe" height="0" width="0" frameborder="0" "src="javascript:void(0)" style="display:none"></iframe>
 <script type="text/javascript">
 window.bk_async = function() {
 var i,
