@@ -377,29 +377,7 @@ class LightboxController extends WikiaController {
 			$extra += count( $latestPhotos );
 		}
 
-		$memKey = wfMemcKey( 'lightbox', 'total_images' );
-		$imageInfo = $this->wg->Memc->get( $memKey );
-		if ( !is_array( $imageInfo ) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$timestamp = $helper->getTimestamp();
-			$totalWikiImages = $db->selectField(
-				array( 'image' ),
-				array( 'count(*) cnt' ),
-				array(
-					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $timestamp",
-				),
-				__METHOD__
-			);
-
-			$imageInfo = array(
-				'totalWikiImages' => intval( $totalWikiImages ),
-				'timestamp' => $timestamp,
-			);
-
-			$this->wg->Memc->set( $memKey, $imageInfo, LightboxHelper::CACHE_TTL );
-		}
+		$imageInfo = $helper->getTotalImages();
 
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
 

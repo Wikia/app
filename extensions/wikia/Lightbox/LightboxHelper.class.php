@@ -96,6 +96,42 @@ class LightboxHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get Total number of images until specific timestamp
+	 * @return array $imageInfo [ array( 'totalWikiImages' => value, 'timestamp' => value ) ]
+	 */
+	public function getTotalImages() {
+		wfProfileIn( __METHOD__ );
+
+		$memKey = wfMemcKey( 'lightbox', 'total_images' );
+		$imageInfo = $this->wg->Memc->get( $memKey );
+		if ( !is_array( $imageInfo ) ) {
+			$db = wfGetDB( DB_SLAVE );
+
+			$timestamp = $this->getTimestamp();
+			$totalWikiImages = $db->selectField(
+				array( 'image' ),
+				array( 'count(*) cnt' ),
+				array(
+					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
+					"img_timestamp < $timestamp",
+				),
+				__METHOD__
+			);
+
+			$imageInfo = array(
+				'totalWikiImages' => intval( $totalWikiImages ),
+				'timestamp' => $timestamp,
+			);
+
+			$this->wg->Memc->set( $memKey, $imageInfo, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $imageInfo;
+	}
+
+	/**
 	 * Get minimum timestamp from LatestPhotosController or current timestamp ( image only )
 	 * @return string $timestamp
 	 */
