@@ -305,7 +305,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$topics = array_unique( $topics );
-		return empty( $topics ) ? $default : implode( ' OR ', $topics );
+		return empty( $topics ) ? '"'.$default.'"' : implode( ' OR ', $topics );
 	}
 
 	/**
