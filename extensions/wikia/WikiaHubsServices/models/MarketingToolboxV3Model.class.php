@@ -224,7 +224,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($cityId, $timestamp) ) {
 			$results->success = false;
-			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-modules-not-saved');
+			$results->errorMsg = wfMessage('edit-hub-module-publish-error-modules-not-saved')->text();
 
 			wfProfileOut(__METHOD__);
 			return;

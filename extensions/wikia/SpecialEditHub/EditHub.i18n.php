@@ -8,7 +8,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'edithub' => 'Edit Hub',
 	'action-edithub' => 'Edit Hub',
 	'edit-hub-title' => 'Edit Hub',
 	'edit-hub-date-title' => 'Date',
@@ -22,7 +21,6 @@ $messages['en'] = array(
 	'edit-hub-header-right-last-saved' => 'Last saved:',
 	'edit-hub-header-right-by' => 'by:',
 
-	'edit-hub-footer-button-preview' => 'Preview',
 	'edit-hub-footer-button-publish' => 'Publish',
 	'edit-hub-edithub-save-button' => 'Save',
 	'edit-hub-edithub-clearall-button' => 'Clear all',
@@ -45,5 +43,32 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'action-edithub' => 'Edit Hub Special Page Name',
 	'edit-hub-title' => 'Edit Hub Special Page title',
-	'edit-hub-hub-module-explore-link-url' => 'The parameter here is alphanumeric: for sections it reads "Header 1." for links in section "Header a." in example',
+	'edit-hub-date-title' => 'Special Edit Hub - Date section header',
+
+	'edit-hub-tooltip-current-date' => 'Special Edit Hub - Label for Current date in calendar example',
+	'edit-hub-tooltip-published' => 'Special Edit Hub - Label for Published date in calendar example',
+	'edit-hub-tooltip-in-progress' => 'Special Edit Hub - Label for date that is save but not published in calendar example',
+	'edit-hub-tooltip-calendar-placeholder' => 'Special Edit Hub - Calendar placeholder - displayed while browser is waiting for server response',
+
+	'edit-hub-header-dashboard' => 'Special Edit Hub - Dashboard header',
+	'edit-hub-header-right-last-saved' => 'Special Edit Hub - label for last saved date field',
+	'edit-hub-header-right-by' => 'Special Edit Hub - label for last saved by field',
+
+	'edit-hub-footer-button-publish' => 'Special Edit Hub - text on publish button. Hit on this button will publish new data for selected date.',
+	'edit-hub-edithub-save-button' => 'Special Edit Hub - text on save button. Hit on this button will save data in current module.',
+	'edit-hub-edithub-clearall-button' => 'Special Edit Hub - text on clear all button. Hit on this button will clear all fields in current module.',
+	'edit-hub-edithub-removeall-button' => 'Special Edit Hub - text on remove all button. Hit on this button will remove all sections in current module.',
+	'edit-hub-edithub-remove' => 'Special Edit Hub - text on remove button. Hit on this button will remove selected section in current module.',
+
+	'edit-hub-edithub-clearall-confirmation' => 'Confirmation message after click on clear all button. User is about to clear data in entire module. 1st parameter is module name.',
+	'edit-hub-edithub-clear-confirmation' => 'Confirmation message after click on clear button. User is about to clear data in selected section of module.',
+	'edit-hub-edithub-clear-sponsored-image' => 'Confirmation message after click on clear button for sponsored image section.',
+
+	'edit-hub-module-save-error' => 'General error message while saving data. This message should point user to more specific messages near fields that returned validation errors.',
+	'edit-hub-module-save-ok' => 'Message after successful save data in module. 1st param is module name.',
+
+	'edit-hub-module-publish-error-read-only' => 'Error message while in read only mode. Should inform user that hub cannot be published right now and to try again later.',
+	'edit-hub-module-publish-error-modules-not-saved' => 'Error message after publish attempt with not all modules saved for selected day.',
+	'edit-hub-module-publish-error-db-error' => 'Error message after try to publish hub. Problems with Database.',
+	'edit-hub-module-publish-success' => 'Message after publishing hub. 1st param is date on which hub was published.',
 );
