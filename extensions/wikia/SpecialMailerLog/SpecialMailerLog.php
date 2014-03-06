@@ -23,8 +23,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgRequest, $wgStylePath;
-		global $wgExternalDatawareDB;
+		global $wgOut, $wgUser, $wgRequest, $wgStylePath, $wgWikiaMailerDB;
 		wfProfileIn( __METHOD__ );
 
 		// Allow any logged in users to use this page (below, we make it so that non-staff can only see emails sent to themselves).
@@ -63,7 +62,7 @@ class SpecialMailerLog extends UnlistedSpecialPage {
 		$num_rows = 0;
 		$mail_records = array();
 		if($this->do_query()) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgWikiaMailerDB );
 
 			$num_rows = $dbr->selectField( 'wikia_mailer.mail', 'COUNT(*)', $filter, __METHOD__ );
 
