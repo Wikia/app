@@ -10,16 +10,20 @@
 
 class VisualEditorHooks {
 	public static function isAvailable( $skin ) {
-		global $wgVisualEditorSupportedSkins, $wgEnableVisualEditorUI;
+		global $wgVisualEditorSupportedSkins;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
 			$isAvailable = (
 				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
-				$wgEnableVisualEditorUI &&
 				$skin->getUser()->getOption( 'enablerichtext' )
 			);
 		}
 		return $isAvailable;
+	}
+
+	public static function isVisible() {
+		global $wgEnableVisualEditorUI;
+		return $wgEnableVisualEditorUI;
 	}
 
 	public static function onSetup() {
@@ -104,7 +108,7 @@ class VisualEditorHooks {
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// Only do this if the user has VE enabled
-		if ( !self::isAvailable( $skin ) ) {
+		if ( !self::isAvailable( $skin ) || !self::isVisible() ) {
 			return true;
 		}
 
@@ -179,7 +183,7 @@ class VisualEditorHooks {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
 		if (
-			!self::isAvailable( $skin ) ||
+			( !self::isAvailable( $skin ) || !self::isVisible() ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
 		) {
 			return true;
