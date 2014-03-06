@@ -14,6 +14,7 @@ define('videohomepage.views.carouselThumb', [
 
 	VideoHomeCarouselThumb = CarouselThumb.extend({
 		initialize: function (opts) {
+			this.modulePosition = opts.modulePosition;
 			_.bindAll(this, 'onClick');
 			CarouselThumb.prototype.initialize.call(this, opts);
 		},
@@ -27,8 +28,7 @@ define('videohomepage.views.carouselThumb', [
 		 */
 		onClick: function (evt) {
 			var tar,
-				categoryModules,
-				modulePosition;
+				categoryModules;
 
 			tar = evt.target;
 
@@ -36,9 +36,8 @@ define('videohomepage.views.carouselThumb', [
 				.closest('.latest-videos-wrapper')[0]
 				.children;
 
-			modulePosition = Array.prototype.indexOf.call(categoryModules, this.$el.closest('.carousel-wrapper')[0]);
 			track({
-				label: 'category-carousel-position-' + modulePosition,
+				label: 'category-carousel-position-' + this.modulePosition,
 				value: this.model.collection.indexOf(this.model)
 			});
 		}

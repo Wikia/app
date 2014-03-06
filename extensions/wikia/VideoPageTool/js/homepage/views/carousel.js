@@ -22,12 +22,12 @@ define('videohomepage.views.carousel', [
 	track = Tracker.buildTrackingFunction({
 		category: 'video-home-page',
 		trackingMethod: 'both',
-		action: Tracker.ACTIONS.CLICK
 	});
 
 	CarouselView = OwlCarouselBase.extend({
 		initialize: function () {
 			var total = parseInt(this.model.get('total'), 10);
+			this.modulePosition = this.model.collection.indexOf(this.model);
 			this.collection = new CategoryDataCollection(this.model.get('thumbnails')
 				.slice(0, 24));
 			// if the category doesn't contain more than 24 videos, don't show seemore label
@@ -52,10 +52,10 @@ define('videohomepage.views.carousel', [
 			this.$el.html(this.template(this.model.toJSON()));
 			this.$carousel = this.$el.find('.category-carousel');
 
-			this.collection.each(function (categoryData, idx) {
+			this.collection.each(function (categoryData) {
 				var view = new CarouselThumbView({
 					model: categoryData,
-					index: idx
+					modulePosition: self.modulePosition
 				});
 				self.$carousel.append(view.$el);
 			});
@@ -77,6 +77,12 @@ define('videohomepage.views.carousel', [
 				}
 			});
 
+			track({
+				label: 'category-carousel',
+				value: this.modulePosition,
+				action: Tracker.ACTIONS.IMPRESSION
+			});
+
 			return this;
 		},
 		/**
@@ -89,7 +95,8 @@ define('videohomepage.views.carousel', [
 				label: 'category-carousel-arrow',
 				// 0 is a left arrow click
 				// 1 is a right arrow click
-				value: $(evt.target).hasClass('owl-next') ? 1 : 0
+				value: $(evt.target).hasClass('owl-next') ? 1 : 0,
+				action: Tracker.ACTIONS.CLICK
 			});
 		},
 		/**
@@ -102,7 +109,8 @@ define('videohomepage.views.carousel', [
 			track({
 				label: 'category-carousel-pagination',
 				// The target page clicked
-				value: Array.prototype.indexOf.call(this.$('.owl-pagination')[0].children, evt.target)
+				value: Array.prototype.indexOf.call(this.$('.owl-pagination')[0].children, evt.target),
+				action: Tracker.ACTIONS.CLICK
 			});
 		},
 		/**
