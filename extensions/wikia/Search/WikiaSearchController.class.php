@@ -271,11 +271,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	public function searchVideosByWikiTopic() {
 		$defaultTopic = $this->getVal( 'defaultTopic' );
-		$topics = $this->getTopicsAsQuery();
-
-		if ( empty($topics) ) {
-			$topics = $defaultTopic;
-		}
+		$topics = $this->getTopicsAsQuery( $defaultTopic );
 
 		if ( $topics ) {
 			$this->request->setVal( 'title', $topics );
@@ -289,9 +285,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 *   wgWikiVideoSearchTopics
 	 *   wgWikiVideoSearchTopicsAutomated
 	 *
+	 * @param string $default
 	 * @return string
 	 */
-	protected function getTopicsAsQuery() {
+	protected function getTopicsAsQuery( $default = '' ) {
 		$wg = \F::app()->wg;
 		$topics = [];
 
@@ -308,7 +305,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$topics = array_unique( $topics );
-		return empty( $topics ) ? '' : implode( ' OR ', $topics );
+		return empty( $topics ) ? $default : implode( ' OR ', $topics );
 	}
 
 	/**
