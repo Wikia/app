@@ -20,14 +20,35 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 			]);
 	}
 
+	private function generateSongs( $count, $artistName, $albumName ) {
+		$songs = [];
+		for($i = 0; $i < $count; $i++) {
+			$song = new StdClass();
+			$song->name =  sprintf('%s song %d', $albumName, $i);
+
+			// Songs without song pages and lyrics
+			if ( $i % 3 != 0 ) {
+				$song->url = $this->buildUrl([
+					'controller' => self::API_CONTROLLER_NAME,
+					'method' => 'getSong',
+					LyricsApiController::PARAM_ARTIST => $artistName,
+					LyricsApiController::PARAM_ALBUM => $albumName,
+					LyricsApiController::PARAM_SONG => $song->name
+				]);
+			}
+			$songs[] = $song;
+		}
+		return $songs;
+	}
+
 	function getImage( $image ) {
 		return 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
 	}
 
-	public function getArtist( $artist ) {
+	public function getArtist( $artistName ) {
 		$result = new stdClass();
-		$result->name = $artist;
-		$result->image = $this->getImage( $artist );
+		$result->name = $artistName;
+		$result->image = $this->getImage( $artistName );
 
 		$album1 = new stdClass();
 		$album1->name = 'Album #1';
@@ -36,7 +57,7 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		$album1->url = $this->buildUrl([
 			'controller' => self::API_CONTROLLER_NAME,
 			'method' => 'getAlbum',
-			LyricsApiController::PARAM_ARTIST => $artist,
+			LyricsApiController::PARAM_ARTIST => $artistName,
 			LyricsApiController::PARAM_ALBUM => $album1->name,
 		]);
 
@@ -47,7 +68,7 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		$album2->url = $this->buildUrl([
 			'controller' => self::API_CONTROLLER_NAME,
 			'method' => 'getAlbum',
-			LyricsApiController::PARAM_ARTIST => $artist,
+			LyricsApiController::PARAM_ARTIST => $artistName,
 			LyricsApiController::PARAM_ALBUM => $album2->name,
 		]);
 
@@ -55,6 +76,9 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 			$album2,
 			$album1
 		];
+
+		// Songs without albums
+		$result->songs = $this->generateSongs( 5, $artistName, '' );
 
 		return $result;
 	}
@@ -78,19 +102,7 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		]);
 		$album->artist = $artist;
 
-		$album->songs = [];
-		for($i = 0; $i < 13; $i++) {
-			$song = new StdClass();
-			$song->name =  sprintf('%s song %d', $albumName, $i);
-			$song->url = $this->buildUrl([
-				'controller' => self::API_CONTROLLER_NAME,
-				'method' => 'getSong',
-				LyricsApiController::PARAM_ARTIST => $artistName,
-				LyricsApiController::PARAM_ALBUM => $albumName,
-				LyricsApiController::PARAM_SONG => $song->name
-			]);
-			$album->songs[] = $song;
-		}
+		$album->songs = $this->generateSongs( 13, $artistName, $albumName );
 		return $album;
 	}
 
@@ -110,16 +122,19 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		]);
 		$song->artist = $artist;
 
-		$album = new StdClass();
-		$album->name = $albumName;
-		$album->image = $this->getImage( $albumName . '.jpg' );
-		$album->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getAlbum',
-			LyricsApiController::PARAM_ARTIST => $artistName,
-			LyricsApiController::PARAM_ALBUM => $albumName
-		]);
-		$song->album = $album;
+		// Songs without album
+		if ( $albumName ) {
+			$album = new StdClass();
+			$album->name = $albumName;
+			$album->image = $this->getImage( $albumName . '.jpg' );
+			$album->url = $this->buildUrl([
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getAlbum',
+				LyricsApiController::PARAM_ARTIST => $artistName,
+				LyricsApiController::PARAM_ALBUM => $albumName
+			]);
+			$song->album = $album;
+		}
 		return $song;
 	}
 
