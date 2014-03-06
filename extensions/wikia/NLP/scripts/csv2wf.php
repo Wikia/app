@@ -8,11 +8,6 @@
 require_once( "../../../../maintenance/commandLine.inc" );
 
 global $wgContentNamespaces, $wgExtraNamespaces;
-$wgUser = User::newFromName('Owen Davis');
-$wgTitle = Title::newMainPage();
-$c = RequestContext::getMain();
-$c->setUser($wgUser);
-$c->setTitle($wgTitle);
 
 $rowCounter = 0;
 if ( ( $handle = fopen( $argv[0], 'r' ) ) !== false ) {
@@ -21,7 +16,9 @@ if ( ( $handle = fopen( $argv[0], 'r' ) ) !== false ) {
 			$wikiId = $row[0];
 			$variableId = $row[1];
 			$variableValue = $row[2];
-			WikiFactory::setVarById( $variableId, $wikiId, $variableValue );
+			if ( ( $valArray = unserialize( $variableValue ) ) !== false ) {
+				WikiFactory::setVarById( $variableId, $wikiId, $valArray );
+			}
 			if ( $rowCounter++ % 1000 == 0 ) {
 				echo "{$rowCounter}\n";
 			}
