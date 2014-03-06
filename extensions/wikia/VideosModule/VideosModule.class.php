@@ -37,7 +37,7 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getRelatedVideos( $articleId, $numRequired ) {
 		// Get article related videos
-		// @TODO Disabled until we can find a better way to find these vidoes
+		// @TODO find a better way to find article related videos, until then, skip this.
 		$videos = [];  //$this->getArticleRelatedVideos( $articleId, $numRequired );
 
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
