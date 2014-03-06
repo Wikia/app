@@ -1,6 +1,6 @@
 # Wikia .editorconfig
 # Please keep these in alphabetical order.
-# Download the plugin for your editor/IDE of choice from http =//editorconfig.org/#download
+# Download the plugin for your editor/IDE of choice from http://editorconfig.org/#download
 root = true
 
 [**.js]
