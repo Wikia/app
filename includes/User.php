@@ -1163,8 +1163,7 @@ class User {
 
 		// Wikia. The following if/else statement has been added to reflect our user table layout.
 		if ( isset( $row->user_birthdate ) ) {
-			// " 00:00:00" has to concatenated onto the timestamp from the DB to make it valid
-			$this->mBirthDate = wfTimestampOrNull( TS_DB, $row->user_birthdate . " 00:00:00");
+			$this->mBirthDate = wfTimestamp( TS_DB, strtotime( $row->user_birthdate ) );
 		} else {
 			$all = false;
 		}
