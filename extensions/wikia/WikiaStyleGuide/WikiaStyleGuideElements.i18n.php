@@ -29,6 +29,23 @@ This is for a custom multiple choice dropdown (essentially a more powerful and m
 	'wikiastyleguide-tooltip-icon-question-mark' => 'An icon indicating a tooltip. When you hover over it a tooltip is shown. Translate this message only if the symbol commonly used to convey "help" in your language is different than a question mark (?).',
 );
 
+/** Arabic (العربية)
+ * @author Claw eg
+ */
+$messages['ar'] = array(
+	'wikiastyleguide-dropdown-all' => 'الكل',
+	'wikiastyleguide-dropdown-select-all' => 'تحديد الكل',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 و $2 إضافي',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiastyleguide-dropdown-all' => 'Bütün',
+	'wikiastyleguide-dropdown-select-all' => 'Hamısını seç',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -134,6 +151,15 @@ $messages['oc'] = array(
 	'wikiastyleguide-dropdown-all' => 'Totes',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 que demòran',
+);
+
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'wikiastyleguide-dropdown-all' => 'Æппæт',
+	'wikiastyleguide-dropdown-select-all' => 'Равзарын иууылдæр',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 æмæ та $2 ма',
 );
 
 /** Polish (polski)

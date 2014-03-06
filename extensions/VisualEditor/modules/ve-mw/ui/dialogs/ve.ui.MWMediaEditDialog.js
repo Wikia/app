@@ -12,12 +12,12 @@
  * @extends ve.ui.MWDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWMediaEditDialog = function VeUiMWMediaEditDialog( surface, config ) {
+ve.ui.MWMediaEditDialog = function VeUiMWMediaEditDialog( windowSet, config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.MWDialog.call( this, windowSet, config );
 
 	// Properties
 	this.mediaNode = null;
@@ -26,7 +26,7 @@ ve.ui.MWMediaEditDialog = function VeUiMWMediaEditDialog( surface, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWMediaEditDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWMediaEditDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -54,48 +54,53 @@ ve.ui.MWMediaEditDialog.static.toolbarGroups = [
 ];
 
 ve.ui.MWMediaEditDialog.static.surfaceCommands = [
-	'undo', 'redo', 'bold', 'italic', 'link', 'clear'
+	'undo', 'redo', 'bold', 'italic', 'link', 'clear',
+	'underline', 'subscript', 'superscript'
 ];
 
 /* Methods */
 
-/** */
+/**
+ * @inheritdoc
+ */
 ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWDialog.prototype.initialize.call( this );
 
 	// Properties
-	this.editPanel = new ve.ui.PanelLayout( {
-		'$$': this.frame.$$,
+	this.editPanel = new OO.ui.PanelLayout( {
+		'$': this.$,
 		'padded': true,
 		'scrollable': true
 	} );
-	this.captionFieldset = new ve.ui.FieldsetLayout( {
-		'$$': this.frame.$$,
+	this.captionFieldset = new OO.ui.FieldsetLayout( {
+		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-media-content-section' ),
 		'icon': 'parameter'
 	} );
-	this.applyButton = new ve.ui.ButtonWidget( {
-		'$$': this.$$,
+	this.applyButton = new OO.ui.PushButtonWidget( {
+		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-action-apply' ),
 		'flags': ['primary']
 	} );
 
 	// Events
-	this.applyButton.connect( this, { 'click': [ 'close', 'apply' ] } );
+	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
 
 	// Initialization
-	this.editPanel.$.append( this.captionFieldset.$ );
-	this.$body.append( this.editPanel.$ );
-	this.$foot.append( this.applyButton.$ );
+	this.editPanel.$element.append( this.captionFieldset.$element );
+	this.$body.append( this.editPanel.$element );
+	this.$foot.append( this.applyButton.$element );
 };
 
-/** */
-ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
-	var newDoc, doc = this.surface.getModel().getDocument();
-
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
 	// Parent method
-	ve.ui.MWDialog.prototype.onOpen.call( this );
+	ve.ui.MWDialog.prototype.setup.call( this, data );
+
+	var newDoc, doc = this.surface.getModel().getDocument();
 
 	// Properties
 	this.mediaNode = this.surface.getView().getFocusedNode().getModel();
@@ -114,26 +119,29 @@ ve.ui.MWMediaEditDialog.prototype.onOpen = function () {
 	this.captionSurface = new ve.ui.SurfaceWidget(
 		newDoc,
 		{
-			'$$': this.frame.$$,
+			'$': this.$,
 			'tools': this.constructor.static.toolbarGroups,
 			'commands': this.constructor.static.surfaceCommands
 		}
 	);
 
 	// Initialization
-	this.captionSurface.$.addClass( 'WikiaArticle' );
-	this.captionFieldset.$.append( this.captionSurface.$ );
+	this.captionSurface.$element.addClass( 'WikiaArticle' );
+	this.captionFieldset.$element.append( this.captionSurface.$element );
 	this.captionSurface.initialize();
 };
 
-/** */
-ve.ui.MWMediaEditDialog.prototype.onClose = function ( action ) {
-	var newDoc, doc, surfaceModel = this.surface.getModel();
+/**
+ * @inheritdoc
+ */
+ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
+	var newDoc, doc,
+		surfaceModel = this.surface.getModel();
 
-	// Parent method
-	ve.ui.MWDialog.prototype.onClose.call( this );
+	// Data initialization
+	data = data || {};
 
-	if ( action === 'apply' ) {
+	if ( data.action === 'apply' ) {
 		newDoc = this.captionSurface.getSurface().getModel().getDocument();
 		doc = surfaceModel.getDocument();
 		if ( !this.captionNode ) {
@@ -154,6 +162,9 @@ ve.ui.MWMediaEditDialog.prototype.onClose = function ( action ) {
 	this.captionSurface.destroy();
 	this.captionSurface = null;
 	this.captionNode = null;
+
+	// Parent method
+	ve.ui.MWDialog.prototype.teardown.call( this, data );
 };
 
 /* Registration */

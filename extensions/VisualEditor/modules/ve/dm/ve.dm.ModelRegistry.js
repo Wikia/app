@@ -9,14 +9,14 @@
 /**
  * Registry for models.
  *
- * To register a new model type, call ve.dm.modelRegistry.register()
+ * To register a new model type, call #register.
  *
- * @extends ve.Registry
+ * @extends OO.Registry
  * @constructor
  */
 ve.dm.ModelRegistry = function VeDmModelRegistry() {
 	// Parent constructor
-	ve.Registry.call( this );
+	OO.Registry.call( this );
 	// Map of func presence and tag names to model names
 	// [ { tagName: [modelNamesWithoutFunc] }, { tagName: [modelNamesWithFunc] } ]
 	this.modelsByTag = [ {}, {} ];
@@ -36,7 +36,7 @@ ve.dm.ModelRegistry = function VeDmModelRegistry() {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.ModelRegistry, ve.Registry );
+OO.inheritClass( ve.dm.ModelRegistry, OO.Registry );
 
 /* Private helper functions */
 
@@ -45,13 +45,17 @@ ve.inheritClass( ve.dm.ModelRegistry, ve.Registry );
  * Objects and arrays are created if needed. You can specify one or more keys and a value.
  *
  * Specifically:
- * addType( obj, keyA, value ) does obj[keyA].unshift( value );
- * addType( obj, keyA, keyB, value ) does obj[keyA][keyB].unshift( value );
- * etc.
  *
- * @param {Object} obj Object to add to
+ * - `addType( obj, keyA, value )` does `obj[keyA].unshift( value );`
+ * - `addType( obj, keyA, keyB, value )` does `obj[keyA][keyB].unshift( value )`;
+ * - etc.
+ *
+ * @private
+ * @param {Object} obj Object the array resides in
+ * @param {string...} keys
+ * @param {Mixed} value
  */
-function addType( obj /*, ...*/ ) {
+function addType( obj ) {
 	var i, len, o = obj;
 	for ( i = 1, len = arguments.length - 2; i < len; i++ ) {
 		if ( o[arguments[i]] === undefined ) {
@@ -94,7 +98,7 @@ ve.dm.ModelRegistry.prototype.register = function ( constructor ) {
 		throw new Error( 'No factory associated with this ve.dm.Model subclass' );
 	}
 	// Parent method
-	ve.Registry.prototype.register.call( this, name, constructor );
+	OO.Registry.prototype.register.call( this, name, constructor );
 
 	tags = constructor.static.matchTagNames === null ?
 		[ '' ] :
@@ -160,16 +164,20 @@ ve.dm.ModelRegistry.prototype.isExtensionSpecificType = function ( type ) {
  * Determine which model best matches the given element
  *
  * Model matching works as follows:
+ *
  * Get all models whose tag and rdfaType rules match
+ *
  * Rank them in order of specificity:
- * * tag, rdfaType and func specified
- * * rdfaType and func specified
- * * tag and func specified
- * * func specified
- * * tag and rdfaType specified
- * * rdfaType specified
- * * tag specified
- * * nothing specified
+ *
+ * - tag, rdfaType and func specified
+ * - rdfaType and func specified
+ * - tag and func specified
+ * - func specified
+ * - tag and rdfaType specified
+ * - rdfaType specified
+ * - tag specified
+ * - nothing specified
+ *
  * If there are multiple candidates with the same specificity, they are ranked in reverse order of
  * registration (i.e. if A was registered before B, B will rank above A).
  * The highest-ranking model whose test function does not return false, wins.
@@ -242,7 +250,7 @@ ve.dm.ModelRegistry.prototype.matchElement = function ( element, forceAboutGroup
 			// Queue string matches and regexp matches separately
 			queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 1, types[i], tag ) || [] );
 			if ( excludeTypes ) {
-				queue = ve.simpleArrayDifference( queue, excludeTypes );
+				queue = OO.simpleArrayDifference( queue, excludeTypes );
 			}
 			queue2 = queue2.concat( matchTypeRegExps( types[i], tag, true ) );
 		}
@@ -282,7 +290,7 @@ ve.dm.ModelRegistry.prototype.matchElement = function ( element, forceAboutGroup
 			// Queue string and regexp matches separately
 			queue = queue.concat( ve.getProp( reg.modelsByTypeAndTag, 0, types[i], tag ) || [] );
 			if ( excludeTypes ) {
-				queue = ve.simpleArrayDifference( queue, excludeTypes );
+				queue = OO.simpleArrayDifference( queue, excludeTypes );
 			}
 			queue2 = queue2.concat( matchTypeRegExps( types[i], tag, false ) );
 		}

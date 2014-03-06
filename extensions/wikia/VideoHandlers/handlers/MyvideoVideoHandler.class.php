@@ -9,7 +9,7 @@ class MyvideoVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "";
 	protected static $autoplayValue = "";
 
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 
 		$url = $this->getEmbedUrl();
@@ -26,7 +26,11 @@ class MyvideoVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }

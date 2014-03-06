@@ -22,7 +22,7 @@ ve.dm.LanguageAnnotation = function VeDmLanguageAnnotation( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.LanguageAnnotation, ve.dm.Annotation );
+OO.inheritClass( ve.dm.LanguageAnnotation, ve.dm.Annotation );
 
 /* Static Properties */
 

@@ -14,7 +14,7 @@ class WallMessage {
 	/**
 	 * @var $commentsIndex CommentsIndex
 	 */
-	public $commentsIndex;
+	public $commentsIndex = false;
 	/**
 	 * @var $helper WallHelper
 	 */
@@ -48,7 +48,7 @@ class WallMessage {
 
 		if( $title instanceof Title && $title->exists() ) {
 			wfProfileOut(__METHOD__);
-			return  WallMessage::newFromTitle($title);
+			return WallMessage::newFromTitle($title);
 		}
 
 		if( $master == false ) {
@@ -199,8 +199,8 @@ class WallMessage {
 	}
 
 	public function getCommentsIndex() {
-		if(empty($this->commentsIndex)) {
-			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() );
+		if( false === $this->commentsIndex ) { // false means we didn't call newFromId yet
+			$this->commentsIndex = CommentsIndex::newFromId( $this->getId() ); // note: can return null
 		}
 
 		return $this->commentsIndex;
@@ -369,25 +369,30 @@ class WallMessage {
 		}
 		return false;
 	}
-	public function setNotifyeveryone($notifyeveryone, $save = false ) {
-		if($this->isMain()) {
-			if(!$this->isAllowedNotifyEveryone()) {
+
+	public function setNotifyEveryone( $notifyEveryone ) {
+		if( $this->isMain() ) {
+			if( !$this->isAllowedNotifyEveryone() ) {
 				return false;
 			}
 			$app = F::App();
 			$wne = new WallNotificationsEveryone();
-			$this->load(true);
-			if($notifyeveryone) {
-				$this->getArticleComment()->setMetaData('notify_everyone', time());
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-highlight-summary' ), false, true );
+			$this->load( true );
+			if ( $notifyEveryone ) {
+				$this->getArticleComment()->setMetaData( 'notify_everyone', time() );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
-				$notif = WallNotificationEntity::createFromRev($rev, $this->cityId);
-				$wne->addNotificationToQueue($notif);
+				$entity = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+				$wne->addNotificationToQueue( $entity );
 			} else {
-				$this->getArticleComment()->removeMetadata('notify_everyone');
+				$this->getArticleComment()->removeMetadata( 'notify_everyone' );
 				$pageId = $this->getId();
-				$wne->removeNotificationFromQueue($pageId);
-				$this->doSaveMetadata( $app->wg->User, wfMsgForContent( 'wall-message-update-removed-highlight-summary' ), false, true );
+				$wne->removeNotificationForPageId( $pageId );
+				$this->doSaveMetadata( $app->wg->User,
+					wfMessage( 'wall-message-update-removed-highlight-summary' )->inContentLanguage()->text(),
+					false, true );
 			}
 		}
 	}
@@ -432,14 +437,14 @@ class WallMessage {
 	public function getWallOwner( $master = false ) {
 		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
 		$userName = $parts[0];
+		$titleText = $this->title->getText();
+		$parts = explode( '/', $titleText );
 		if ( mt_rand( 1, 100 ) < 2 ) {  // doing this experiment for all requests pollutes the logs
 
 			// mech: I'm not sure we have to create wall title doing db queries on both, page and comments_index tables.
 			// as the user name is the first part on comment's title. But I'm not able to go through all wall/forum
 			// usecases. I'm going to check production logs for the next 2-3 sprints and make sure the result is
 			// always correct
-			$titleText = $this->title->getText();
-			$parts = explode( '/', $titleText );
 			if ( $parts[0] != $userName ) {
 				Wikia::log( __METHOD__, false, 'WALL_PERF article title owner does not match ci username (' . $userName .
 					' vs ' . $parts[0] . ') for ' . $this->getId() . ' (title is ' . $titleText. ')', true );
@@ -546,8 +551,8 @@ class WallMessage {
 	}
 
 	public function getMessagePageUrl($withoutAnchor = false) {
-
 		wfProfileIn(__METHOD__);
+
 		//local cache consider cache this in memc
 		if(!empty($this->messagePageUrl)) {
 			wfProfileOut(__METHOD__);
@@ -555,7 +560,7 @@ class WallMessage {
 		}
 
 		$id = $this->getMessagePageId();
-
+		
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
@@ -1024,7 +1029,7 @@ class WallMessage {
 
 	protected function customActionNotifyRC($user, $action, $reason) {
 		$articleId = $this->getId();
-		$target =  $this->getTitle();
+		$target = $this->getTitle();
 
 		RecentChange::notifyLog(
 			wfTimestampNow(),
@@ -1438,4 +1443,48 @@ class WallMessage {
 	public function canMove(User $user) {
 		return ( $this->isMain() && !$this->isRemove() && $this->can($user, 'wallmessagemove') && in_array(MWNamespace::getSubject($this->title->getNamespace()), F::App()->wg->WallTopicsNS) );
 	}
+
+	/**
+	 * @desc Creates wall message title (a board, a thread, a message) instance and calls purgeSquid() on it
+	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
+	 */
+	public function purgeSquid() {
+		$title = Title::newFromID( $this->getId() );
+		if ( $title instanceof Title ) {
+			$title->purgeSquid();
+		}
+	}
+
+	/**
+	 * @param Integer $namespace Message_Wall or Board namespace
+	 *
+	 * @return array
+	 */
+	public function getSquidURLs( $namespace ) {
+		$urls = [];
+		$this->load( true );
+
+		// While creating a new forum board the message id === 0
+		// Therefore we're getting at this place invalid URLs to be purge
+		// To quick fix it we use $idDB variable...
+		if( $this->getMessagePageId() > 0 ) {
+			if( $this->isMain() ) {
+				$urls[] = $this->getMessagePageUrl( true );
+			} else {
+				/** @var WallMessage $parent */
+				$parent = $this->getTopParentObj();
+				$parent->load( true );
+				$urls[] = $parent->getMessagePageUrl( true );
+			}
+
+			// CONN-430: Purge wall page / forum board
+			$title = Title::newFromText( $this->getMainPageText(), $namespace );
+			if( !empty( $title ) ) {
+				$urls[] = $title->getFullURL();
+			}
+		}
+
+		return $urls;
+	}
+
 }

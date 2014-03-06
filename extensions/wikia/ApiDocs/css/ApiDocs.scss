@@ -4,7 +4,6 @@
 @import "skins/oasis/css/core/sprite";
 @import "skins/oasis/css/core/GlobalHeader";
 
-
 //colors variables
 $main-bgcolor: #ffffff;
 $blue-c1: #0a5fa3;
@@ -109,9 +108,32 @@ h1 {
 }
 
 
+html {
+	height:100%;
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+}
+
+a {
+	color: $blue-c1;
+}
+
+a:hover,
+a:active {
+	text-decoration: underline;
+}
+a:visited {
+	color: #462f91;
+ }
+
 @import "ApiDocsBox";
+@import "ApiDocsWarning";
 @import "ApiDocsEndpoint";
-@import "ApiDocsHeader";
+@import "ApiDocsMessage";
+@import "ApiDocsIcons";
 @import "ApiDocsParameter";
 @import "ApiDocsResponseClass";
 @import "ApiDocsResponseType";
@@ -119,5 +141,4 @@ h1 {
 @import "ApiDocsTry";
 @import "ApiDocsHighlight";
 @import "ApiDocsButtons";
-@import "ApiDocsFooter";
 

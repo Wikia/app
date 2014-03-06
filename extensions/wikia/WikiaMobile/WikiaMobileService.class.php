@@ -150,6 +150,10 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'Comscore',
 					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'BlueKai',
+					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
@@ -263,7 +267,7 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'languageDirection', $this->templateObject->get( 'dir' ) );
 		$this->response->setVal( 'headLinks', $this->wg->Out->getHeadLinks() );
 		$this->response->setVal( 'pageTitle', htmlspecialchars( $this->wg->Out->getHTMLTitle() ) );
-		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ), 'cont-dir-' . $this->wg->ContLang->getDir() ] );
+		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ) ] );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
 
 		wfProfileOut( __METHOD__ );

@@ -164,4 +164,58 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 		$this->assertStringStartsWith( '<pre>', $output );
 	}
 
+	/**
+	 * @dataProvider cachingHeadersProvider
+	 */
+	public function testCachingHeaders($varnishTTL, $clientTTL, $cachingPolicy, $expectedValue, $passExpectedValue) {
+		$this->object->setCachePolicy($cachingPolicy);
+		$this->object->setCacheValidity( $varnishTTL, $clientTTL );
+
+		$cacheControlValue = $this->object->getHeader( 'Cache-Control' )[0]['value'];
+		$passCacheControlValue = $this->object->getHeader( 'X-Pass-Cache-Control' )[0]['value'];
+
+		$this->assertEquals( $expectedValue, $cacheControlValue, 'Cache-Control header should match the expected value' );
+		$this->assertEquals( $passExpectedValue, $passCacheControlValue, 'X-Pass-Cache-Control header should match the expected value' );
+	}
+
+	public function cachingHeadersProvider() {
+		return [
+			// no caching, but Varnish would still cache it for 5 seconds
+			[
+				WikiaResponse::CACHE_DISABLED, false,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=5', null
+			],
+			// cache on Varnish only
+			[
+				60, WikiaResponse::CACHE_DISABLED,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=60', null
+			],
+			// cache on both
+			[
+				60, false,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=60', 'public, max-age=60'
+			],
+			// cache on both (different TTLs)
+			[
+				WikiaResponse::CACHE_STANDARD, 60,
+				WikiaResponse::CACHE_PUBLIC,
+				's-maxage=86400', 'public, max-age=60'
+			],
+			// Varnish caching disabled, private caching
+			[
+				WikiaResponse::CACHE_DISABLED, false,
+				WikiaResponse::CACHE_PRIVATE,
+				'private, s-maxage=0', null
+			],
+			// only private caching
+			[
+				WikiaResponse::CACHE_DISABLED, WikiaResponse::CACHE_STANDARD,
+				WikiaResponse::CACHE_PRIVATE,
+				'private, s-maxage=0', 'private, max-age=86400'
+			],
+		];
+	}
 }

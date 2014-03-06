@@ -486,59 +486,252 @@ ___________________________________________
 لمعرفة آخر الأحداث على ويكيا، قم بزيارة community.wikia.com
 تود التحكم بالرسائل الإلكترونية التي تصلك؟ اذهب إلى
 http://community.wikia.com/wiki/Special:Preferences',
+	'founderemails-email-3-days-passed-body-HTML' => 'مرحبا يا $USERNAME،<br /><br />
+بما أنك متواجد منذ عدة أيام على الويكي الخاصة بك، فقد فكرنا أنك تريد تفحص أشياء أخرى قليلة تستطيع القيام بها.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-10-days-passed-subject' => 'ذكرى يوم 10 سعيد!',
+	'founderemails-email-10-days-passed-body' => 'كيف حالك يا $USERNAME؟
+
+واه، إن الوقت يجري!  مرت 10 أيام منذ أن أنشأت $WIKINAME، $WIKIURL.
+
+أحضر آخرين مهتمين بمشروعك وتفاخر بالعمل الرائع الذي كنت تؤديه! إليك بعض الطرق للتعبير عن ذلك:
+
+ألم تقل لك أمك أن تشارك؟ استخدم زر المشاركة على الصفحة الرئيسية والمقالات والصور لتتباهى بها لأصدقائك ومتابعيك على فيسبوك أو تويتر أو مواقع مشهورة أخرى.
+
+استخدم قدرة البريد الإلكتروني. راسل الآخرين الذين تعرفهم المهتمين بموضوعك أو مهتمين بمساعدتك، كصديق من المدرسة أو زميل عمل.  يمكنك أيضًا إرسال صور محددة من الويكي الخاصة بك باستخدام زر الإرسال.
+
+اتحد مع مواقع شبيهة. اسأل الناس الذين على منتديات أخرى أو مواقع أخرى تتعلق بموضوعك أن تساعدك ناشرين في منتدياتهم أو تعليقاتهم. إن كان الأمر ممكنًا، اتصل بالإدارة واسألهم إن كانوا مهتمين بمشاركة الروابط — أي أنهم سيضعون رابط الويكي الخاصة بك على مواقعم إن وضعت روابط مواقعهم على الويكي.
+
+يمكنك أيضًا أن تسأل ويكيين آخرين لمساعدتك في الويكي الخاصة بك بالمشاركة في المنتديات على http://community.wikia.com.  
+
+استمر بالعمل الجيد!
+
+فريق ويكيا
+
+___________________________________________
+
+لمعرفة آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+أتريد التحكم بالرسائل التي تصلك؟ اذهب إلى: http://messaging.wikia.com/wiki/Special:Preferences.
+اضغط على الرابط التالي لإلغاء الاشتراك من جميع رسائل ويكيا: $UNSUBSCRIBEURL',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'هناك تعديل جديد في $WIKINAME !',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => 'مرحبًا يا $USERNAME،
+
+حسنًا! $EDITORNAME قد قاموا للتو بتعديلهم الأول على WIKINAME.
+
+انطلق إلى $PAGETITLE لتتفحص ما أضافوا.
+
+$PAGEURL
+
+فريق ويكيا',
 	'founderemails-email-first-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'حسنًا! $EDITORNAME قد قاموا للتو بتعديلهم الأول على WIKINAME.',
+	'founderemails-email-first-edit-content' => 'انطلق إلى $PAGETITLE لتتفحص ما أضافوا.',
 	'founderemails-email-first-edit-signature' => 'طاقم ويكيا',
 	'founderemails-email-first-edit-button' => 'التحقق من ذلك!',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|عدل|عدلت|عدل}} الويكي الخاصة بك للمرة الأولى! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-page-edited-reg-user-subject' => 'تعديل جديد في $WIKINAME!',
+	'founderemails-email-page-edited-reg-user-body' => 'مرحبًا $USERNAME،
+
+$EDITORNAME قد {{GENDER:$EDITORNAME|قام|قامت|قام}} بتعديل آخر على $WIKINAME على $PAGETITLE.
+
+انطلق إلى $PAGETITLE لترَ ما {{GENDER:$EDITORNAME|قام|قامت|قام}} بتغييره.
+
+$PAGEURL
+
+فريق ويكيا',
 	'founderemails-email-general-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME قد {{GENDER:$EDITORNAME|قام|قامت|قام}} بتعديل آخر على $WIKINAME على $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'انطلق إلى $PAGETITLE لتتفحص ما أضافوا.',
 	'founderemails-email-general-edit-signature' => 'فريق ويكيا',
 	'founderemails-email-general-edit-button' => 'التحقق من ذلك!',
+	'founderemails-email-page-edited-reg-user-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن {{GENDER:$EDITORNAME|المستخدم|المستخدمة|المستخدم}} $EDITORNAME قد {{GENDER:$EDITORNAME|قام|قامت|قام}} بالتحرير في الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL">{{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
+	'founderemails-email-page-edited-anon-subject' => 'صديق غامض عدل $WIKINAME',
+	'founderemails-email-page-edited-anon-body' => 'مرحبًا $USERNAME،
+
+مساهم بويكيا قد قام بتعديل $PAGETITLE على $WIKINAME.
+
+مساهمو ويكيا هم أشخاص قاموا بالتحرير بدون تسجيل دخولهم بمستخدم ويكيا. اذهب لترى ماذا أضاف هذا الصديق الغامض!
+
+$PAGEURL
+
+فريق ويكيا',
 	'founderemails-email-anon-edit-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-anon-edit-headline' => 'مساهم ويكيا قد قام بتعديل على $PAGETITLE على $WIKINAME.',
+	'founderemails-email-anon-edit-content' => 'مساهمو ويكيا هم أشخاص قاموا بالتحرير بدون تسجيل دخولهم بمستخدم ويكيا. اذهب لترى ماذا أضاف هذا الصديق الغامض!',
 	'founderemails-email-anon-edit-signature' => 'طاقم ويكيا',
 	'founderemails-email-anon-edit-button' => 'التحقق من ذلك!',
+	'founderemails-email-page-edited-anon-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن شخصًا ما قد قام بتحرير الويكي الخاصة بك! لمَ لا <a href="$MYHOMEURL">تفحص الأمر</a> لترى ما الذي تغير؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
+	'founderemails-answers-email-user-registered-subject' => 'أحد ما أنشئ حسابًا على ويكي الأسئلة الخاصة بك!',
+	'founderemails-answers-email-user-registered-body' => 'مرحبًا $USERNAME،
+
+يبدو أن $EDITORNAME {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}} $EDITORTALKPAGEURL للترحيب؟
+
+-- فريق ويكيا',
+	'founderemails-answers-email-user-registered-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'مرحبا بك في أسئلة و إجابات ويكيا!',
 	'founderemails-answers-email-0-days-passed-body' => 'تهانينا على إنشاء $WIKINAME - أنت الآن جزء من مجتمع ويكيا!
 
 --  فريق ويكيا',
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'تهانينا لإنشاء <strong>$WIKINAME</strong> - أنت الآن جزء من مجتمع ويكيا!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-3-days-passed-subject' => 'التثبت',
+	'founderemails-answers-email-3-days-passed-body' => 'مرحبًا $USERNAME،
+
+الآن وقد مرت عدة أيام منذ أن أنشئت الويكي الخاصة بك، ظننا أنك قد {{GENDER:$USERNAME|تريد|تريدين|تريد}} أن ترى أشياء أخرى {{GENDER:$USERNAME|تستطيع|تستطيعين|تستطيع}} القيام بها.
+
+-- فريق ويكيا',
+	'founderemails-answers-email-3-days-passed-body-HTML' => 'مرحبا يا $USERNAME،<br /><br />
+بما أنك {{GENDER:$USERNAME|متواجد|متواجدة|متواجد}} منذ عدة أيام على الويكي الخاصة بك، فقد فكرنا أنك {{GENDER:$USERNAME|تريد|تريدين|تريد}} تفحص أشياء أخرى قليلة {{GENDER:$USERNAME|تستطيع|تستطيعين|تستطيع}} القيام بها.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-10-days-passed-subject' => 'كيف تسير الأمور في الويكي الخاصة بك؟',
+	'founderemails-answers-email-10-days-passed-body' => 'مرحبًا $USERNAME،
+
+مرت فترة منذ أن أنشئت ويكي على ويكيا - نأمل أن الأمور تسير بشكل جيد! أردنا أن نشارك أخبارًا جيدة قليلة لنساعدك لجعل الويكي كالمنزل.
+
+-- فريق ويكيا',
+	'founderemails-answers-email-10-days-passed-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+مرت فترة منذ أن أنشئت ويكي على ويكيا - نأمل أن الأمور تسير بشكل جيد! أردنا أن نشارك أخبارًا جيدة قليلة لنساعدك لجعل الويكي كالمنزل.
+<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'قام مستخدم مسجل بتعديل في الويكي الخاصة بك للمرة الأولى!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'مرحبًا $USERNAME،
+
+يبدو أن {{GENDER:$EDITORNAME|المستخدم|المستخدمة|المستخدم}} $EDITORNAME قد {{GENDER:$EDITORNAME|عدل|عدلت|عدل}} الويكي الخاصة بك للمرة الأولى! لمَ لا تزور صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}} ($EDITORTALKPAGEURL) للترحيب؟
+
+-- فريق ويكيا',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|عدل|عدلت|عدل}} الويكي الخاصة بك للمرة الأولى! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-page-edited-reg-user-subject' => 'قام مستخدم مسجل بتعديل في الويكي الخاصة بك!',
+	'founderemails-answers-email-page-edited-reg-user-body' => 'مرحبًا $USERNAME،
+
+يبدو أن {{GENDER:$EDITORNAME|المستخدم|المستخدمة|المستخدم}} $EDITORNAME قد {{GENDER:$EDITORNAME|عدل|عدلت|عدل}} الويكي الخاصة بك للمرة الأولى! لمَ لا تزور صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}} ($EDITORTALKPAGEURL) للترحيب؟
+
+-- فريق ويكيا',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن {{GENDER:$EDITORNAME|المستخدم|المستخدمة|المستخدم}} $EDITORNAME قد {{GENDER:$EDITORNAME|قام|قامت|قام}} بالتحرير في الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL">{{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-page-edited-anon-subject' => 'قام أحد ما بتعديل في الويكي الخاصة بك!',
+	'founderemails-answers-email-page-edited-anon-body' => 'مرحبًا $USERNAME،
+
+يبدو أن شخصًا ما قد عدل الويكي الخاصة بك! لمَ لا تزور $MYHOMEURL لترى ما الذي تغير؟
+
+-- فريق ويكيا',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يبدو أن شخصًا ما قد قام بتحرير الويكي الخاصة بك! لمَ لا <a href="$MYHOMEURL">تفحص الأمر</a> لترى ما الذي تغير؟<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-lot-happening-subject' => 'هناك نشاط كثيف في $WIKINAME',
+	'founderemails-lot-happening-body' => 'مرحبًا $USERNAME،
+
+تهانينا، يوجد الكثير من الأمور تحدث على $WIKINAME، $WIKIURL.
+
+إن لم تكن تعلم، يمكنك الذهاب إلى نشاط الويكي لترى العمل العظيم الذي يحدث.
+
+لأن هناك الكثير يحدث، قد تحتاج إلى تغيير تفضيلات بريدك الإلكتروني إلى وضع الخلاصة. بتفعيل وضع الخلاصة، ستتلقى رسالة واحدة تسرد كل الأنشطة على الويكي كل يوم.
+
+فريق ويكيا',
+	'founderemails-lot-happening-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
+يوجد الكثير من الأمور تحدث على الويكي الخاصة بك اليوم! قم بزيارة $MYHOMEURL لترى ما يحدث.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-lot-happening-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-lot-happening-headline' => 'تهانينا، يوجد الكثير من الأمور تحدث على $WIKINAME اليوم!',
+	'founderemails-email-lot-happening-content' => 'إن لم تكن تعلم، يمكنك الذهاب إلى نشاط الويكي لترى العمل العظيم الذي يحدث.  لأن هناك الكثير يحدث، قد تحتاج إلى تغيير تفضيلات بريدك الإلكتروني إلى وضع الخلاصة. بتفعيل وضع الخلاصة، ستتلقى رسالة واحدة تسرد كل الأنشطة على الويكي كل يوم.',
 	'founderemails-email-lot-happening-signature' => 'فريق ويكيا',
 	'founderemails-email-lot-happening-button' => 'انظر الأنشطة',
+	'founderemails-email-footer-line1' => 'للتحقق من آخر الأحداث في ويكيا، قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
+	'founderemails-email-footer-line2' => 'تريد التحكم في رسائل البريد التي تتلقاها منا؟ انتقل إلى <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">تفضيلاتك</a>',
 	'founderemails-email-0-day-heading' => 'نتشرف بمعرفتك يا $USERNAME',
 	'founderemails-email-0-day-congratulations' => 'تهانينا على إنشاء $HDWIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'هذه بعض النصائح المفيد التي تساعدك على البداية:',
 	'founderemails-email-0-day-addpages-heading' => 'إضافة صفحات.',
+	'founderemails-email-0-day-addpages-content' => 'الويكي هي مشروع يشارك المعلومات عن موضوعك الفريد.  أنشئ صفحات بالضغط على <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"أضف صفحة"</a> واكتب معلومات محددة أكثر عن موضوعك.',
 	'founderemails-email-0-day-addpages-button' => 'أضف صفحة',
 	'founderemails-email-0-day-addphotos-heading' => 'إضافة صور.',
+	'founderemails-email-0-day-addphotos-content' => 'الصفحات دائمًا أفضل عندما يكون لديها وسائط مرئية! أضف صورًا لصفحاتك وصفحتك الرئيسية. يمكنك الضغط على <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"أضف صورة"</a> لإضافة صورة أو معرض صور أو عارض شرائح.',
 	'founderemails-email-0-day-addphotos-button' => 'أضف صورة',
 	'founderemails-email-0-day-customizetheme-heading' => 'تخصيص مظهرك',
+	'founderemails-email-0-day-customizetheme-content' => 'قم بتخصيص تصميم الويكي الخاصة بك وشعارها لتجعل الويكي تنهض!  قم باستخدام <a style="color:#2a87d5;text-decoration:none;" href="$CUSTOMIZETHEMEURL">مصمم الويكي</a> لإضافة ألوان مخصصة للويكي ولجعلها فريدة لموضوعك.',
 	'founderemails-email-0-day-customizetheme-button' => 'تخصيص',
+	'founderemails-email-0-day-wikiahelps-text' => '<span style="color:#2a87d5;font-weight:bold">لن نتركك خارجًا في البرد.</span> إننا هنا لمساعدتك لتجعل $WIKINAME ناجحة في كل خطوة في الطريق. قم بزيارة <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> للمنتديات والنصيحة والمساعدة أو لكي <a style="color:#2a87d5;text-decoration:none;" href="http://www.wikia.com/Special:Contact">ترسل إلينا</a> استفسارتك!',
+	'founderemails-email-0-day-wikiahelps-signature' => 'إنشاء ويكي سعيد!<br />فريق ويكيا',
+	'founderemails-email-3-day-heading' => 'مرحبًا $USERNAME،',
 	'founderemails-email-3-day-congratulations' => 'لقد أردنا أن نتحقق ونرى كيف تسير الأمور في $HDWIKINAME.',
+	'founderemails-email-3-day-tips-heading' => 'مرت 3 أيام منذ أن أنشأتها وقد فكرنا بالمرور عليك لتقديم مزيد من التلميحات لإنشاء الويكي الخاصة بك:',
+	'founderemails-email-3-day-editmainpage-heading' => 'نظم صفحتك الرئيسية.',
+	'founderemails-email-3-day-editmainpage-content' => 'الصفحة الرئيسية هي من أوائل الأشياء التي يراها الناس عندما يزورون <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a>. قم بوضع انطباع أوليّ جيد بكتابة ملخص تفصيلي عن موضوع الويكي الخاصة بك وقم بإضافة عارض شرائح أو معرض صور أو شريط تمرير صور.',
+	'founderemails-email-3-day-editmainpage-button' => 'نظم',
 	'founderemails-email-3-day-addphotos-heading' => 'أضف صور أكثر.',
+	'founderemails-email-3-day-addphotos-content' => 'من أفضل الطرق لجعل صفحاتك مفاجئة هي <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"بإضافة بعض الصور"</a>.',
 	'founderemails-email-3-day-addphotos-button' => 'أضف صور',
 	'founderemails-email-3-day-explore-heading' => 'العثور على الإلهام.',
+	'founderemails-email-3-day-explore-content' => 'لا تكن خائفًا من تصفح الويكيات الأخرى لترى كيف صمموا صفحتها الرئيسية وصفحات مقالاتها والمزيد. إليك بعض الويكيات المفضلة لدينا: <a style="color:#2a87d5;text-decoration:none;" href="http://muppets.wikia.com">ويكي الدمى</a>، <a style="color:#2a87d5;text-decoration:none;" href="http://poptarts.wikia.com">ويكي فطائر البوب</a>، <a style="color:#2a87d5;text-decoration:none;" href="http://monsterhigh.wikia.com">ويكي الوحوش العالية</a>.',
 	'founderemails-email-3-day-explore-button' => 'استكشاف',
+	'founderemails-email-3-day-wikiahelps-text' => 'أتحتاج المساعدة لمعرفة كيف يعمل شيء ما؟ إننا هنا دائمًا لأجلك! تعالَ واطلب منا المساعدة والنصيحة في<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
+	'founderemails-email-3-day-wikiahelps-signature' => 'استمر في العمل الجيد!<br />فريق ويكيا',
 	'founderemails-email-10-day-heading' => 'كيف حالك يا $USERNAME؟',
 	'founderemails-email-10-day-congratulations' => 'الوقت يطير! مرت 10 أيام منذ إنشائك ل$HDWIKINAME.',
+	'founderemails-email-10-day-tips-heading' => 'أحضر أشخاصًا آخرين مهتمين بمشروعك وأظهر كل العمل الرائع الذي قمت به! إليك بعض الطرق للنشر:',
 	'founderemails-email-10-day-share-heading' => 'ألم يعلمك أهلك المشاركة؟',
+	'founderemails-email-10-day-share-content' => 'استخدم زر المشاركة على صفحة الويكي الرئيسية وصفحات المقالات والصور لتعرضها على أصدقائك ومتابعيك على الفيس بوك.',
 	'founderemails-email-10-day-email-heading' => 'تسخير قوة البريد الإلكتروني.',
+	'founderemails-email-10-day-email-content' => 'راسل أشخاصًا آخرين تعرفهم مهتمين بموضوعك أو مهتمين بمساعدتك، كصديق من المدرسة أو زميل عمل. يمكنك أيضًا إرسال صور محددة من الويكي الخاصة بك باستخدام زر المراسلة',
 	'founderemails-email-10-day-join-heading' => 'الالتحاق بالمواقع المشابهة',
+	'founderemails-email-10-day-join-content' => 'اطلب المساعدك من أشخاص على منتديات أو مواقع أخرى تتحدث عن موضوعك بالنشر في منتدياتهم أو التعليقات. إن كان الأمر ممكنًا، اتصل بالإدارة ولترَ إن كانوا مهتمين في مشاركة الروابط &mdash; أي أنهم سيضعون رابط الويكي الخاصة بك على مواقعم إن وضعت روابط مواقعهم على الويكي الخاصة بك.',
+	'founderemails-email-10-day-wikiahelps-text' => 'يمكنك أيضًا أن تطلب المساعدة من ويكيين آخرين ليساعدوك بالويكي الخاصة بك بالنشر في منتديات <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-10-day-wikiahelps-signature' => 'استمر في العمل الجيد!<br />فريق ويكيا',
 	'founderemails-email-views-digest-subject' => 'مشاهدات $WIKINAME لهذا اليوم',
+	'founderemails-email-views-digest-body' => 'مرحبًا $USERNAME،
+
+اليوم، زار $WIKINAME {{PLURAL:$1|شخص|$1 أشخاص|$1 شخص}}.
+
+واصل إضافة محتوى جديد وتطوير الويكي الخاصة بك لتشجع المزيد من الناس للقراءة والتعديل والنشر.
+
+$WIKIURL
+
+فريق ويكيا',
 	'founderemails-email-views-digest-greeting' => 'مرحباً $USERNAME،',
 	'founderemails-email-views-digest-headline' => 'تمت مشاهدة $WIKINAME اليوم من قبل $1 {{PLURAL:$1|شخص|أشخاص}}.',
+	'founderemails-email-views-digest-content' => 'واصل إضافة محتوى جديد وتطوير الويكي الخاصة بك لتشجع المزيد من الناس للقراءة والتعديل والنشر.',
 	'founderemails-email-views-digest-signature' => 'فريق ويكيا',
 	'founderemails-email-views-digest-button' => 'أضف المزيد من الصفحات',
 	'founderemails-email-complete-digest-subject' => 'النشاط الأخير في $WIKINAME',
+	'founderemails-email-complete-digest-body' => 'مرحبًا $USERNAME،
+
+حان وقت الجرعة اليومية من نشاط $WIKINAME، $WIKIURL.
+
+زار $1 {{PLURAL:$1|شخص|أشخاص}} الويكي الخاصة بك.
+
+واصل العمل الجيد بإضافة محتوى ليقرأه الناس!
+
+حدثت $2 {{PLURAL:$2|تعديل|تعديلات}}.
+
+المحررون السعداء يصنعون ويكيات سعيدة. تأكد من أن تشكر المحررين وتدخل معهم من حين لآخر.
+
+$3 {{PLURAL:$3|شخص انضم|أشخاص انضموا}} إلى الويكي.
+
+رحب بالقادمين الجدد للويكي برسالة على صفحة نقاشهم.
+
+يمكنك دائمًا التوجه إلى نشاط الويكي لرؤية جميع التغييرات المثيرة التي قاموا بها على $WIKINAME. قم بالدخول غالبًا، بصفتك المؤسس فإن المجتمع يبحث عنك للمساعدة بالإرشاد وتشغيل الويكي.
+
+فريق ويكيا',
 	'founderemails-email-complete-digest-greeting' => 'مرحباً $USERNAME,',
+	'founderemails-email-complete-digest-headline' => 'حان وقت جرعتك اليومية من نشاط $WIKINAME.',
 	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|شخص|أشخاص}} شاهدوا الويكي الخاصة بك.',
+	'founderemails-email-complete-digest-content1' => 'واصل العمل الجيد بإضافة محتوى مثير للاهتمام للناس حتى تقرأه!',
+	'founderemails-email-complete-digest-content-heading2' => 'حدث {{PLURAL:$1|تعديل واحد|2=تعديلان|$1 تعديلات|$1 تعديل}}',
+	'founderemails-email-complete-digest-content2' => 'المحررون السعداء ينشؤون ويكيات سعيدة. تأكد من أن تشكر محرري الويكي وتدخل معهم من وقت لآخر.',
+	'founderemails-email-complete-digest-content-heading3' => 'انضم {{PLURAL:$1|شخص واحد|2=شخصان|$1 أشخاص|$1 شخص}}',
+	'founderemails-email-complete-digest-content3' => 'رحب بالقادمين الجدد للويكي برسالة على صفحة نقاشهم.
+<br /><br />
+يمكنك دائمًا التوجه إلى نشاط الويكي لرؤية جميع التغييرات المثيرة التي قاموا بها على $WIKINAME. قم بالدخول غالبًا، بصفتك المؤسس فإن المجتمع يبحث عنك للمساعدة بالإرشاد وتشغيل الويكي.',
 	'founderemails-email-complete-digest-signature' => 'فريق ويكيا',
 	'founderemails-email-complete-digest-button' => 'مشاهدة نشاط الويكي',
 	'founderemails-pref-joins' => 'أرسل لي بريدا الكترونيا عندما ينضم شخص ما إلى $1',
@@ -549,6 +742,20 @@ http://community.wikia.com/wiki/Special:Preferences',
 	'founderemails-pref-edits-v2' => '... يقوم شخص ما بتعديل',
 	'founderemails-pref-views-digest-v2' => '... ملخص يومي للمشاهدات جاهز',
 	'founderemails-pref-complete-digest-v2' => '... موجز يومي خاص بالتسجيلات، التعديلات، والمشاهدات جاهز',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'founderemails-email-user-registered-greeting' => 'Salam $USERNAME,',
+	'founderemails-email-10-days-passed-subject' => 'Xoşbəxt 10 gün ildönümü!',
+	'founderemails-email-first-edit-greeting' => 'Salam $USERNAME,',
+	'founderemails-email-general-edit-greeting' => 'Salam $USERNAME,',
+	'founderemails-email-lot-happening-greeting' => 'Salam $USERNAME,',
+	'founderemails-email-0-day-addphotos-heading' => 'Əlavə şəkillər.',
+	'founderemails-email-0-day-addphotos-button' => 'Şəkil əlavə et',
+	'founderemails-email-complete-digest-greeting' => 'Salam $USERNAME,',
 );
 
 /** Bulgarian (български)
@@ -1125,6 +1332,13 @@ Sempre pots fer-li un cop d'ull a la Wiki Activitat per a tots els canvis existe
 	'founderemails-pref-edits-v2' => '...algú edita',
 	'founderemails-pref-views-digest-v2' => '...un resum diari del total de visites',
 	'founderemails-pref-complete-digest-v2' => '... un resum diari de les incorporacions, edicions i visites està preparat',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'founderemails-email-0-day-addpages-button' => 'ТӀетоха агӀо',
 );
 
 /** Czech (čeština)
@@ -2100,6 +2314,13 @@ Siempre puedes echarle un vistazo a la Wiki Actividad para ver todos los cambios
 	'founderemails-pref-complete-digest-v2' => '...un resumen diario de las incorporaciones, ediciones y visitas está preparado',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'founderemails-email-0-days-passed-subject' => 'Ongi etorri Wikiara!',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Reza1615
@@ -2128,6 +2349,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Kalakuh
  * @author Nedergard
  * @author Nike
@@ -2135,6 +2357,8 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
+	'founderemails-desc' => 'Auttaa tiedottamaan perustajille muutoksista heidän wikeihinsä',
+	'tog-founderemailsenabled' => 'Lähetä minulle sähköpostipäivityksiä muiden tekemisistä (vain perustajille)',
 	'founderemails-email-user-registered-subject' => 'Joku on liittynyt $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Hei $USERNAME,
 
@@ -2146,6 +2370,39 @@ $EDITORTALKPAGEURL
 
 Wikia-tiimi',
 	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-user-registered-headline' => 'Onnittelut! $EDITORNAME on juuri liittynyt $WIKINAMEin.',
+	'founderemails-email-user-registered-content' => 'Tartu tilaisuuteen toivottaa häntä tervetulleeksi ja rohkaisemaan häntä muokkaaman. Enempi parempi, ja wikisi myös kasvaa nopeammin.',
+	'founderemails-email-user-registered-signature' => 'Wikia-tiimi',
+	'founderemails-email-user-registered-button' => 'Toivota hänet tervetulleeksi',
+	'founderemails-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
+$EDITORNAME näyttäisi rekisteröityneen wikiisi! Miksipä et kävisi hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> tervehtimässä häntä?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
+	'founderemails-email-0-days-passed-subject' => 'Tervetuloa Wikiaan!',
+	'founderemails-email-0-days-passed-body' => 'Hauska tavata, $USERNAME,
+
+Onneksi olkoon! Olet luonut sivustuon $WIKINAME, $WIKIURL.
+
+Tässä muutama hyödyllinen vinkki alkuun pääsemiseksi:
+
+Lisää sivuja. Wikissä tiedon jakaminen ainutlaatuisesta aiheestasi on kaikki kaikessa.
+
+Lisää kuvia. Kuvalliset sivut ovat aina parempia! Lisää niitä artikkeleihin ja etusivulle.
+
+Mukauta teemaasi. Anna wikisi erottua joukosta mukauttamalla teemaa ja logoa! Käytä Teemansuunnittelijaa muuttaaksesi värejä ja tekemään wikistäsi ainutlaatuisen.
+
+Emme jätä sinua hunningolle. Autamme sinua ja $WIKINAMEä tiellä menestykseen sen joka askeleella. Käy osoitteessa http://yhteiso.wikia.com saadaksesi lisää tietoa ja neuvoja, tai ottaaksesi meihin yhteyttä sähköpostitse.
+
+Hauskaa wikirakentamista! Wikia-tiimi
+
+___________________________________________
+
+Nähdäksesi, mitä Wikialla tapahtuu, käy osoitteessa http://yhteisö.wikia.com
+Haluatko hallinnoida, mitä sähköposteja sinulle tulee? Mene tänne: http://messaging.wikia.com/wiki/Toiminnot:Asetukset.
+Klikkaa seuraavaa linkkiä peruuttaaksesi kaikki Wikian tilauksesi: $UNSUBSCRIBEURL',
+	'founderemails-email-0-days-passed-body-HTML' => 'Onnittelut sivuston <strong>$WIKINAME</strong> luomisen johdosta - olet nyt osa Wikian yhteisöä!<br /><br />
+<div style="font-style: italic; font-size: 120%;">--Wikia-tiimi</div>',
+	'founderemails-email-3-days-passed-subject' => 'Miten wikisi kanssa menee?',
+	'founderemails-email-10-days-passed-subject' => 'Hyvää 10 päivän juhlapäivää!',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Hei $USERNAME,
 
@@ -2160,6 +2417,7 @@ Wikia-ryhmä',
 	'founderemails-email-first-edit-headline' => 'Hienoa! $EDITORNAME teki juuri ensimmäinen muokkauksensa wikissä $WIKINAME.',
 	'founderemails-email-first-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
 	'founderemails-email-first-edit-signature' => 'Wikia-tiimi',
+	'founderemails-email-first-edit-button' => 'Katso tätä!',
 	'founderemails-email-page-edited-reg-user-subject' => 'Uusi $WIKINAME -muokkaus!',
 	'founderemails-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
@@ -2174,24 +2432,83 @@ Wikia-ryhmä',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME muokkasi juuri wikin $WIKINAME sivua $PAGETITLE.',
 	'founderemails-email-general-edit-content' => 'Siirry sivulle $PAGETITLE ja katso, mitä muokkauksia on tehty.',
 	'founderemails-email-general-edit-signature' => 'Wikia-tiimi',
+	'founderemails-email-general-edit-button' => 'Katso tätä!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hei $USERNAME,<br /><br />
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et sano hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> hei?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
+	'founderemails-email-page-edited-anon-subject' => 'Salaperäinen ystävä muokkasi $WIKINAMEä',
+	'founderemails-email-page-edited-anon-body' => 'Hei $USERNAME,
+
+Wikia-avustaja muokkasi juuri $WIKINAMEn sivua $PAGETITLE.
+
+Wikia-avustajat ovat henkilöitä, jotka tekevät muokkauksia kirjautumatta Wikiaan. Käy katsomassa, mitä tämä salaperäinen ystävä lisäsi!
+
+$PAGEURL
+
+Wikia-tiimi',
+	'founderemails-email-anon-edit-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-anon-edit-headline' => 'Wikia-avustaja muokkasi juuri $WIKINAMEn sivua $PAGETITLE.',
+	'founderemails-email-anon-edit-content' => 'Wikia-avustajat ovat henkilöitä, jotka tekevät muokkauksia kirjautumatta Wikiaan. Käy katsomassa, mitä tämä salaperäinen ystävä lisäsi!',
 	'founderemails-email-anon-edit-signature' => 'Wikia-tiimi',
+	'founderemails-email-anon-edit-button' => 'Katso tätä!',
+	'founderemails-answers-email-user-registered-subject' => 'Joku rekisteröityi QA-wikillesi!',
+	'founderemails-answers-email-user-registered-body' => 'Hei $USERNAME,
+
+Näyttäisi siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksipä et kävisi hänen keskustelusivullaan $EDITORTALKPAGEURL tervehtimässä häntä?
+
+-- Wikia-tiimi',
+	'founderemails-answers-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
+$EDITORNAME näyttäisi rekisteröityneen wikiisi! Miksipä et kävisi hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> tervehtimässä häntä?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
+	'founderemails-answers-email-0-days-passed-subject' => 'Tervetuloa QA Wikiaan!',
+	'founderemails-answers-email-0-days-passed-body' => 'Onnittelut sivustion $WIKINAME luomisen johdosta - olet nyt osa Wikian yhteisöä!
+
+-- Wikia-tiimi',
+	'founderemails-answers-email-0-days-passed-body-HTML' => 'Onnittelut sivuston <strong>$WIKINAME</strong> luomisen johdosta - olet nyt osa Wikian yhteisöä!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
+	'founderemails-answers-email-3-days-passed-subject' => 'Kunhan kyselemme',
+	'founderemails-answers-email-10-days-passed-subject' => 'Miten wikissäsi menee?',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Rekisteröitynyt käyttäjä muokkasi sivustoasi ensimmäistä kertaa!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Rekisteröitynyt käyttäjä muokkasi sivustoasi!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Hei $USERNAME,
 
 Näyttää siltä, että rekisteröitynyt käyttäjä $EDITORNAME on muokannut wikiäsi! Miksi et kävisi hänen keskustelusivullaan ($EDITORTALKPAGEURL) ja sanoisi hei?
 
 -- Wikia Team',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Joku muokkasi sivustoasi!',
+	'founderemails-answers-email-page-edited-anon-body' => 'Hei $USERNAME,
+
+Näyttäisi siltä, että joku muokkasi wikiäsi! Miksipä ei tarkistaisi sivulta $MYHOMEURL, mikä muuttui?
+-- Wikia-tiimi',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hei $USERNAME,<br /><br />
+Joku näyttäisi muokanneen wikiäsi! Miksipä et <a href="$MYHOMEURL">tarkistaisi</a>, mikä on muuttunut?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
+	'founderemails-lot-happening-subject' => '$WIKINAME kuumenee!',
+	'founderemails-email-lot-happening-greeting' => 'Hei $USERNAME,',
+	'founderemails-email-lot-happening-headline' => 'Onnittelut: sivustolla $WIKINAME on tänään kova meno!',
+	'founderemails-email-lot-happening-signature' => 'Wikia-tiimi',
+	'founderemails-email-lot-happening-button' => 'Katso toimintaa',
+	'founderemails-email-0-day-heading' => 'Hauska tavata $USERNAME,',
+	'founderemails-email-0-day-congratulations' => 'Onnittelut sivuston $HDWIKINAME luomisen johdosta!',
+	'founderemails-email-0-day-tips-heading' => 'Tässä muutama hyödyllinen vinkki alkuun pääsemiseksi:',
 	'founderemails-email-0-day-addpages-heading' => 'Lisää sivuja.',
 	'founderemails-email-0-day-addpages-button' => 'Lisää sivu',
 	'founderemails-email-0-day-addphotos-heading' => 'Lisää valokuvia.',
 	'founderemails-email-0-day-addphotos-button' => 'Lisää valokuva',
 	'founderemails-email-0-day-customizetheme-heading' => 'Mukauta teema.',
 	'founderemails-email-0-day-customizetheme-button' => 'Mukauta',
+	'founderemails-email-0-day-wikiahelps-signature' => 'Hauskaa wikirakentamista!<br />Wikia-tiimi',
+	'founderemails-email-3-day-heading' => 'Hei $USERNAME,',
+	'founderemails-email-3-day-congratulations' => 'Halusimme vain tarkistaa, miten sivustolla $HDWIKINAME menee.',
+	'founderemails-email-3-day-tips-heading' => 'Aloituksestasi on kulunut kolme päivää, ja ajattelimme pistäytyä hetkeksi jakamaan muutamia wikisi rakennukseen liittyviä vinkkejä:',
+	'founderemails-email-3-day-editmainpage-heading' => 'Koristele etusivuasi.',
+	'founderemails-email-3-day-editmainpage-button' => 'Siisti sitä',
+	'founderemails-email-3-day-addphotos-heading' => 'Lisää vielä enemmän kuvia.',
 	'founderemails-email-3-day-addphotos-button' => 'Lisää valokuvia',
+	'founderemails-email-3-day-explore-heading' => 'Löydä inspiraatiota.',
 	'founderemails-email-3-day-explore-button' => 'Tutustu',
 	'founderemails-email-3-day-wikiahelps-signature' => 'Jatka vain hienoa työtäsi!<br />Wikia-ryhmä',
+	'founderemails-email-10-day-heading' => 'Miten menee, $USERNAME?',
 	'founderemails-email-views-digest-greeting' => 'Hei $USERNAME,',
 	'founderemails-email-views-digest-signature' => 'Wikia-tiimi',
 	'founderemails-email-views-digest-button' => 'Lisää sivuja',
@@ -7924,6 +8241,19 @@ Palagi kang makakapunta sa gawain ng wiki upang makita ang lahat ng nakakapukaw 
 	'founderemails-pref-complete-digest-v2' => '...nakahanda na ang isang Pang-araw-araw na Buod ng mga pagsali, mga pamamatnugot, at mga pagtanaw',
 );
 
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'founderemails-email-lot-happening-signature' => 'Wikia Takımı',
+	'founderemails-email-lot-happening-button' => 'Etkinlikleri Gör',
+	'founderemails-email-0-day-addpages-heading' => 'Sayfaları ekle.',
+	'founderemails-email-0-day-addpages-button' => 'Bir Sayfa Ekle',
+	'founderemails-email-0-day-addphotos-heading' => 'Fotoğraf ekle',
+	'founderemails-email-0-day-addphotos-button' => 'Bir Fotoğraf Ekle',
+	'founderemails-email-0-day-customizetheme-heading' => 'Temanızı özelleştirin.',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -7941,95 +8271,93 @@ $messages['tt-cyrl'] = array(
  * @author Тест
  */
 $messages['uk'] = array(
-	'founderemails-desc' => 'Допомагає інформуванню засновників про зміни на їх вікі',
-	'tog-founderemailsenabled' => 'Відправляти мені листи про зміни, зроблені іншими людьми (тільки для засновників)',
-	'founderemails-email-user-registered-subject' => 'Хтось новий приєднався до $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Привіт $USERNAME,
+	'founderemails-desc' => 'Допомагає інформувати засновників про зміни на їхніх вікі',
+	'tog-founderemailsenabled' => 'Надсилати мені листи про зміни, зроблені іншими користувачами (тільки для адміністраторів вікі)',
+	'founderemails-email-user-registered-subject' => 'Новий користувач приєднався до $WIKINAME',
+	'founderemails-email-user-registered-body' => 'Привіт, $USERNAME!
 
-Вітаємо! $EDITORNAME щойно приєднався до  $WIKINAME.
+Користувач $EDITORNAME щойно приєднався до $WIKINAME.
 
-Скористайся цією можливістю, щоб привітати його на вашій вікі і закликати допомогти вам з правками. Чим більше нових учасників, тим краще, і тим швидше зростатиме ваша вікі.
+Скористайтеся цією можливістю, щоб привітати його на вашій вікі і закликати допомогти вам із написанням нових статей. Чим більше нових учасників, тим краще, і тим швидше зростатиме ваша вікі.
 
 $EDITORPAGEURL
 
-команда Вікія',
-	'founderemails-email-user-registered-greeting' => 'Привіт $USERNAME,',
-	'founderemails-email-user-registered-headline' => 'Вітаємо! $EDITORNAME приєднався до $WIKINAME.',
-	'founderemails-email-user-registered-content' => 'Скористатися цією можливістю, щоб привітати їх у вашій wiki та заохочувати їх допомагати змінювати. Чим більше, тим краще, і тим швидше ваш wiki буде зростати.',
-	'founderemails-email-user-registered-signature' => 'Команда Вікія',
-	'founderemails-email-user-registered-button' => 'Привітати їх',
-	'founderemails-email-user-registered-body-HTML' => 'Привіт, $USERNAME,<br /><br />
-Здається, що $EDITORNAME {{GENDER:$EDITORNAME|зареєструвався|зареєструвалася}} у вашій вікі! Чому б вам не зайти на {{GENDER:$EDITORNAME|його|її}} <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і не сказати "Привіт"?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-email-0-days-passed-subject' => 'Ласкаво просимо до Wikia!',
-	'founderemails-email-0-days-passed-body' => 'Дуже приємно познайомитися з вами $USERNAME,
+Команда Вікії',
+	'founderemails-email-user-registered-greeting' => 'Привіт, $USERNAME!',
+	'founderemails-email-user-registered-headline' => 'Користувач $EDITORNAME щойно приєднався до $WIKINAME.',
+	'founderemails-email-user-registered-content' => 'Скористайтеся цією можливістю, щоб привітати його на вашій вікі і закликати допомогти вам із написанням нових статей. Чим більше нових учасників, тим краще, і тим швидше зростатиме ваша вікі.',
+	'founderemails-email-user-registered-signature' => 'Команда Вікії',
+	'founderemails-email-user-registered-button' => 'Привітати його',
+	'founderemails-email-user-registered-body-HTML' => 'Привіт, $USERNAME!<br /><br />
+Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і привітати його.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Команда Вікії</div>',
+	'founderemails-email-0-days-passed-subject' => 'Ласкаво просимо на ZeWiki!',
+	'founderemails-email-0-days-passed-body' => 'Привіт, $USERNAME!
 
-Вітаємо Вас із створенням $WIKINAME, $WIKIURL!
+Вітаємо вас із створенням $WIKINAME, $WIKIURL!
 
 Ось кілька корисних порад для початку:
 
 Додайте сторінки. Вікі призначена для обміну інформацією про вашу унікальну тему.
 
-Додайте фотографії. Сторінки завжди краще виглядають, коли на них є візуальні ефекти! Додайте зображення на ваші сторінки і на головну сторінку.
+Додайте фото. Статті завжди виглядають краще, коли в них присутні зображення.
 
-Налаштуйте тему вікі. Налаштування теми та логотипу дозволить вашій вікі виділитися! Використовуйте Конструктор тем і налаштуйте колір вашої вікі, який буде унікальним лише для вашої вікі.
+Змініть оформлення вікі. Кольори та логотип дозволять вашій вікі виокремитись! За допомогою Конструктора тем зробіть свою вікі унікальною.
 
-Ми не залишимо вас одного. Ми тут, щоб допомогти вам зробити кожен крок шляху $WIKINAME успішним. Відвідайте http://community.wikia.com, де можна знайти форум, поради та допомогу, або напишіть нам ваші запитання!
+Ми раді допомогти вам в усьому, щоб покращити $WIKINAME. Відвідайте http://community.wikia.com, де можна знайти форум, поради та допомогу, або напишіть нам ваші запитання!
 
-Щасливого створення вікі! команда Вікія
+Творчих успіхів! Команда Вікії
 
 ___________________________________________
 
-Щоб перевірити останні події на Вікія, відвідайте http://community.wikia.com
-Хочете контролювати, які електронні листи ви хочете отримувати? Перейдіть до: http://messaging.wikia.com/wiki/Special:Preferences.
-Клацніть це посилання, щоб відписатися від всіх листів Вікія: $UNSUBSCRIBEURL',
+Щоб переглянути останні події на Вікії, відвідайте http://community.wikia.com
+Хочете налаштувати, які електронні листи ви хочете отримувати? Перейдіть до: http://messaging.wikia.com/wiki/Special:Preferences.
+Якщо ви взагалі не хочете отримувати листів від Вікії, натисніть тут: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Вітаємо із створенням <strong>$WIKINAME</strong> - ви тепер частина спільноти Вікія!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-Команда Вікія</div>',
-	'founderemails-email-3-days-passed-subject' => 'Як справи на вашій вікі',
-	'founderemails-email-3-days-passed-body' => 'Привіт $USERNAME,
+	'founderemails-email-3-days-passed-subject' => 'Як справи на вашій вікі?',
+	'founderemails-email-3-days-passed-body' => 'Привіт, $USERNAME!
 
-Ми хотіли перевірити і подивитися, як йдуть справи на $WIKINAME, $WIKIURL.
+Як ідуть справи на $WIKINAME, $WIKIURL?
 
-Минуло 3 дні, як ви почали, і ми подумали, що могли б
-запропонувати ще кілька порад щодо створення вікі:
+Минуло 3 дні від моменту створення, і ми хочемо
+запропонувати ще кілька порад стосовно розвитку вікі:
 
-Прикрасьте головну сторінку. Головна сторінка є однією з перших сторінок, яку люди бачать, коли вони відвідують $WIKINAME. Створіть хороше перше враження,
-написавши докладно про вашу тему, додайте
-показ слайдів, галерею або повзунок.
-  
-Додайте ще більше фотографій. Один з кращих способів зробити ваші сторінки цікавішими -
-це натиснути на посилання „додати фото“.
-  
-Знайдіть натхнення. Не бійтеся подивитися на інші вікіі, щоб дізнатися, як їх учасники працювали над своєю головною сторінкою, сторінками статей та іншими сторінками. Ось
-деякі з хороших вікій: Muppet Wiki, Pop Tarts Wiki, Monster High Wiki.
+Прикрасьте головну сторінку. Головна сторінка є однією з перших сторінок,
+яку люди бачать, відвідуючи вашу вікі. Створіть хороше перше враження,
+описавши детально вашу тему, додайте галерею або слайд-шоу.
+  
+Додайте більше фото. Один із найкращих способів зробити ваші сторінки цікавішими -
+натиснути кнопку "Додати фото".
+  
+Знайдіть натхнення. Не бійтеся заходити на інші вікі, щоб побачити, як їхні учасники оформили свою головну та інші сторінки.
 
-Потрібна допомога, роз\'яснити, як щось працює? Ми завжди тут!
-Зверніться до нас за допомогою і порадою на http://community.wikia.com.
+Потрібна допомога? Зверніться до нас на http://community.wikia.com.
 
-Продовжуйте в тому ж дусі!
+Творчих успіхів!
 Команда Вікія
 
 
-Щоб перевірити останні події на Вікія, відвідайте http://community.wikia.com
-Хочете контролювати, які електронні листи ви хочете отримувати? Перейдіть до: http://messaging.wikia.com/wiki/Special:Preferences.',
-	'founderemails-email-3-days-passed-body-HTML' => 'Привіт, $USERNAME.<br /><br />
-Тепер, коли ваша вікі працює уже декілька днів, ймовірно, вас зацікавить ще декілька речей, які ви можете зробити.<br /><br />
+Щоб переглянути останні події на Вікії, відвідайте http://community.wikia.com
+Хочете налаштувати, які електронні листи ви хочете отримувати? Перейдіть до: http://messaging.wikia.com/wiki/Special:Preferences',
+	'founderemails-email-3-days-passed-body-HTML' => 'Привіт, $USERNAME!<br /><br />
+Тепер, коли ваша вікі існує вже декілька днів, можливо, вас зацікавлять ще декілька речей, які ви можете зробити.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
 	'founderemails-email-10-days-passed-subject' => 'Вітаємо з 10-м днем існування вікі!',
-	'founderemails-email-10-days-passed-body' => 'Як справи, $USERNAME?
+	'founderemails-email-10-days-passed-body' => 'Привіт, $USERNAME!
 
 Час швидко біжить! Уже минуло 10 днів відтоді, як ви створили $WIKINAME, $WIKIURL.  
 
-Залучіть до свого проекту інших учасників і покажіть їм ту роботу, яку ви вже зробили! Ось декілька способів розповісти про свою вікі:
+Залучіть до свого проекту інших учасників і покажіть їм роботу, яку ви вже зробили! Ось декілька способів розповісти про свою вікі:
 
-Не забули, що потрібно ділитися? Використовуйте кнопку Поділитися на Головній сторінці вікі, сторінках статтей та зображень, щоб показати їх друзям на Facebook, Twitter чи інших популярних сайтах.
+Не забувайте ділитися! Використовуйте кнопку "Поділитися" на Головній сторінці вікі, сторінках статей та зображень, щоб показати їх друзям на Facebook, Twitter чи інших популярних сайтах.
 
-Використовуйте можливості електронної пошти. Надішліть електронні листи тим, хто точно зацікавлений у тематиці вашої вікі або хоче допомогти вам, наприклад, хтось зі школи або колега. Ви можете також відіслати певні фотографії з вашої вікі за допомогою кнопки Електронна пошта.
+Використовуйте можливості електронної пошти. Надсилайте електронні листи тим, хто точно зацікавлений у тематиці вашої вікі або хоче допомогти вам, наприклад, хтось зі школи або колега. Ви можете також відіслати певні фото з вашої вікі за допомогою кнопки "Електронна пошта".
 
 Разом зі схожими веб-сайтами. Попросіть людей на форумах або веб-сайтах, близьких за тематикою вашої вікі, про допомогу, розмістивши повідомлення на форумах або в коментарях. Якщо можливо, зв\'яжіться з адміністратором і перевірте, чи не зацікавлений він в обміні посиланнями - вони помістять посилання на вашу вікі на своєму веб-сайті, а ви на своїй вікі - на їхній веб-сайт.
 
 Ви також можете попросити допомогти учасників інших вікі, розмістивши повідомлення на форумі http://community.wikia.com.
-Продовжуйте в такому ж дусі!
+Головне не зупинятися!
 
 Команда Wikia
 
@@ -8038,43 +8366,43 @@ ___________________________________________
 Переглянути останні події на Wikia можна тут: http://community.wikia.com
 Хочете вибрати, які електронні листи вам надсилати? Перейдіть сюди: http://messaging.wikia.com/wiki/Special:Preferences.
 Якщо ви взагалі не хочете отримувати електронних листів від Wikia, натисніть тут: $UNSUBSCRIBEURL',
-	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME має нове редагування!',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => 'На $WIKINAME з\'явився новий редактор!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => 'Привіт, $USERNAME!
 
-Користувач $EDITORNAME щойно зробив свою першу редакцію на $WIKINAME.
+Користувач $EDITORNAME щойно зробив своє перше редагування на $WIKINAME.
 
-Зайдіть на $PAGETITLE, щоб переглянути те, що він відредагував.
+Зайдіть на сторінку $PAGETITLE, щоб переглянути, що було змінено:
 
 $PAGEURL
 
 Команда Wikia',
 	'founderemails-email-first-edit-greeting' => 'Привіт, $USERNAME,',
-	'founderemails-email-first-edit-headline' => '$EDITORNAME щойно зробив свою першу редакцію на $WIKINAME.',
-	'founderemails-email-first-edit-content' => 'Зайдіть на сторінку $PAGETITLE, щоб побачити, що було змінено.',
+	'founderemails-email-first-edit-headline' => '$EDITORNAME щойно зробив своє перше редагування на $WIKINAME.',
+	'founderemails-email-first-edit-content' => 'Зайдіть на сторінку $PAGETITLE, щоб переглянути, що було змінено.',
 	'founderemails-email-first-edit-signature' => 'Команда Вікія',
-	'founderemails-email-first-edit-button' => 'Перейти',
+	'founderemails-email-first-edit-button' => 'Переглянути',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Привіт, $USERNAME.<br /><br />
 Здається, що учасник $EDITORNAME здійснив перше редагування на вашій вікі! Чому б вам не привітати його на <a href="$EDITORTALKPAGEURL">сторінці обговорення</a>і не сказати привіт?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-email-page-edited-reg-user-subject' => 'Нове редагування на $WIKINAME!',
-	'founderemails-email-page-edited-reg-user-body' => 'Привіт $USERNAME,
+	'founderemails-email-page-edited-reg-user-subject' => 'Нове редагування на $WIKINAME',
+	'founderemails-email-page-edited-reg-user-body' => 'Привіт, $USERNAME!
 
-$EDITORNAME щойно {{GENDER:$EDITORNAME|зробив|зробила}} ще одне редагування для $WIKINAME на $PAGETITLE.
+Користувач $EDITORNAME щойно зробив ще одне редагування на сторінці $PAGETITLE на $WIKINAME.
 
-Перейдіть до PAGETITLE $, щоб дізнатися про зміни, внесені {{GENDER:$EDITORNAME|ним|нею}}.
+Перейдіть до сторінки $PAGETITLE, щоб переглянути, що було змінено:
 
 $PAGEURL
 
 Команда Вікія',
-	'founderemails-email-general-edit-greeting' => 'Здоровеньки були, $USERNAME',
-	'founderemails-email-general-edit-headline' => '$EDITORNAME щойно зробив ще одне редагування у $WIKINAME на сторінці $PAGETITLE.',
-	'founderemails-email-general-edit-content' => 'Зайдіть на сторінку $PAGETITLE, щоб побачити, що було змінено.',
+	'founderemails-email-general-edit-greeting' => 'Привіт, $USERNAME!',
+	'founderemails-email-general-edit-headline' => 'Користувач $EDITORNAME щойно зробив нове редагування у $WIKINAME на сторінці $PAGETITLE.',
+	'founderemails-email-general-edit-content' => 'Зайдіть на сторінку $PAGETITLE, щоб переглянути, що було змінено.',
 	'founderemails-email-general-edit-signature' => 'Команда Вікія',
 	'founderemails-email-general-edit-button' => 'Перейти',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Привіт, $USERNAME.<br /><br />
 Здається, що зареєстрований користувач $EDITORNAME вніс зміни у вашу вікі! Чому б вам не привітати його на <a href="$EDITORTALKPAGEURL">сторінці обговорення</a> і не сказати привіт?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-email-page-edited-anon-subject' => 'Таємничий друг відредагував $WIKINAME',
+	'founderemails-email-page-edited-anon-subject' => 'Анонімний користувач відредагував $WIKINAME',
 	'founderemails-email-page-edited-anon-body' => 'Привіт $USERNAME,
 
 Незареєстрований користувач щойно здійсни редагування  для $WIKINAME на $PAGETITLE.
@@ -8094,14 +8422,14 @@ $PAGEURL
 Здається, що хтось вніс правки у вашу вікі! Чому б вам <a href="$MYHOMEURL">не перевірити,</a> що змінено?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
 	'founderemails-answers-email-user-registered-subject' => 'Хтось зареєстрував обліковий запис на вашому QA-вікі!',
-	'founderemails-answers-email-user-registered-body' => 'Привіт, $USERNAME.
+	'founderemails-answers-email-user-registered-body' => 'Привіт, $USERNAME!
 
-Здається, $EDITORNAME зареєструвався у вашій вікі! Чому б вам не зайти на його сторінку обговорення $EDITORTALKPAGEURL і не привітати його?
+Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його сторінку обговорення $EDITORTALKPAGEURL і привітати його.
 
 -- Команда Вікія',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Привіт, $USERNAME,<br /><br />
-Здається, що $EDITORNAME {{GENDER:$EDITORNAME|зареєструвався|зареєструвалася}} у вашій вікі! Чому б вам не зайти на {{GENDER:$EDITORNAME|його|її}} <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і не сказати "Привіт"?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
+	'founderemails-answers-email-user-registered-body-HTML' => 'Привіт, $USERNAME!<br /><br />
+Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і привітати його.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Команда Вікії</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Ласкаво просимо до QA-Вікія!',
 	'founderemails-answers-email-0-days-passed-body' => 'Вітаємо зі створенням $WIKINAME - ви тепер частина спільноти Вікія!
 
@@ -8135,7 +8463,7 @@ $PAGEURL
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => 'Привіт, $USERNAME.<br /><br />
 Здається, що учасник $EDITORNAME здійснив перше редагування на вашій вікі! Чому б вам не привітати його на <a href="$EDITORTALKPAGEURL">сторінці обговорення</a>і не сказати привіт?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-answers-email-page-edited-reg-user-subject' => 'Зареєстрований користувач змінив ваш сайт!',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Зареєстрований користувач відредагував ваш сайт!',
 	'founderemails-answers-email-page-edited-reg-user-body' => 'Привіт, $USERNAME.
 
 Здається, що зареєстрований користувач $EDITORNAME зробив перше редагування на вашій вікі! Чому б вам не привітати його на сторінці обговорення ($EDITORTALKPAGEURL) і не сказати привіт?
@@ -8144,7 +8472,7 @@ $PAGEURL
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => 'Привіт, $USERNAME.<br /><br />
 Здається, що зареєстрований користувач $EDITORNAME вніс зміни у вашу вікі! Чому б вам не привітати його на <a href="$EDITORTALKPAGEURL">сторінці обговорення</a> і не сказати привіт?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-answers-email-page-edited-anon-subject' => 'Хтось змінив ваш сайт!',
+	'founderemails-answers-email-page-edited-anon-subject' => 'Анонімний користувач відредагував ваш сайт!',
 	'founderemails-answers-email-page-edited-anon-body' => 'Привіт, $USERNAME.
 
 Здається, що хтось зробив правку на вашій вікі! Чому б вам не поглянути, що змінено ним ($MYHOMEURL)?
@@ -8204,7 +8532,7 @@ $PAGEURL
 	'founderemails-email-3-day-wikiahelps-signature' => 'Продовжуйте велику роботу!<br /> Команда Вікія',
 	'founderemails-email-10-day-heading' => 'Як справи $USERNAME?',
 	'founderemails-email-10-day-congratulations' => 'Час швидко біжить! Уже минуло 10 днів відтоді, як ви створили $WIKINAME.',
-	'founderemails-email-10-day-tips-heading' => 'Залучіть до свого проекту інших учасників і покажіть їм ту роботу, яку ви вже зробили! Ось декілька способів розповісти про свою вікі:',
+	'founderemails-email-10-day-tips-heading' => 'Залучіть до свого проекту інших учасників і покажіть їм роботу, яку ви вже зробили! Ось декілька способів розповісти про свою вікі:',
 	'founderemails-email-10-day-share-heading' => 'Не забули, що потрібно ділитися?',
 	'founderemails-email-10-day-share-content' => 'Використовуйте кнопку Поділитися на головній сторінці вашої вікі, сторінках статті і фотографіях, щоб показати їх друзям на Facebook.',
 	'founderemails-email-10-day-email-heading' => 'Використовуйте можливості електронної пошти.',
@@ -8258,16 +8586,16 @@ $3 {{PLURAL:$3|особа приєдналася|особи приєдналис
 	'founderemails-email-complete-digest-content3' => 'Вітайте нових людей на вашій вікі, залишаючи повідомлення на їхніх сторінках обговорення.
 <br /> <br />
 Ви завжди можете зайти на сторінку Вікі-діяльності, щоб переглянути всі важливі зміни на $WIKINAME. Робіть це якомога частіше, бо ви - засновник, і ваша співльнота очікує, що ви будете направляти розвиток вікі і просувати її.',
-	'founderemails-email-complete-digest-signature' => 'Команда Вікія',
-	'founderemails-email-complete-digest-button' => 'Перейти до діяльності на вікі',
-	'founderemails-pref-joins' => 'Напишіть мені, коли хтось приєднується до $1',
-	'founderemails-pref-edits' => 'Напишіть мені, коли хтось редагує $1',
-	'founderemails-pref-views-digest' => 'Надсилати мені щоденну електронну пошту, повідомляючи у ній скільки разів переглянули $1',
+	'founderemails-email-complete-digest-signature' => 'Команда Вікії',
+	'founderemails-email-complete-digest-button' => 'Переглянути вікі-активність',
+	'founderemails-pref-joins' => 'Сповіщати мене, коли хтось реєструється на  $1',
+	'founderemails-pref-edits' => 'Сповіщати мене, коли хтось редагує  $1',
+	'founderemails-pref-views-digest' => 'Надсилати мені щоденний звіт про кількість переглядів $1',
 	'founderemails-pref-complete-digest' => 'Надсилати мені щоденний звіт діяльності на $1',
-	'founderemails-pref-joins-v2' => '...хтось приєднується',
-	'founderemails-pref-edits-v2' => '...хтось редагує',
-	'founderemails-pref-views-digest-v2' => '...щоденне зведення всіх переглядів готове',
-	'founderemails-pref-complete-digest-v2' => '...щоденний звіт про нових редакторів, виправлення, перегляди вже готовий',
+	'founderemails-pref-joins-v2' => '...хтось зареєструвався на вікі',
+	'founderemails-pref-edits-v2' => '...хтось зробив редагування на вікі',
+	'founderemails-pref-views-digest-v2' => '...щоденний звіт про усіх відвідувачів вікі буде готовий',
+	'founderemails-pref-complete-digest-v2' => '...щоденний звіт про нових учасників вікі, редагування та перегляди буде готовий',
 );
 
 /** Vietnamese (Tiếng Việt)

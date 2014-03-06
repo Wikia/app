@@ -2,15 +2,40 @@
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
 
-var SlotTracker = function (log/*, tracker*/) {
+var SlotTracker = function (log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
-		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0],
-		timeCheckpoints = [2.0, 5.0, 8.0],
+		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
 		stats = {
 			allEvents: 0,
 			interestingEvents: 0
+		},
+		slotTypes = {
+			CORP_TOP_LEADERBOARD:  'leaderboard',
+			HOME_TOP_LEADERBOARD:  'leaderboard',
+			HUB_TOP_LEADERBOARD:   'leaderboard',
+			TOP_LEADERBOARD:       'leaderboard',
+			CORP_TOP_RIGHT_BOXAD:  'medrec',
+			EXIT_STITIAL_BOXAD_1:  'medrec',
+			HOME_TOP_RIGHT_BOXAD:  'medrec',
+			INCONTENT_BOXAD_1:     'medrec',
+			TOP_RIGHT_BOXAD:       'medrec',
+			MODAL_INTERSTITIAL:    'interstitial',
+			MODAL_INTERSTITIAL_1:  'interstitial',
+			MODAL_INTERSTITIAL_2:  'interstitial',
+			MODAL_INTERSTITIAL_3:  'interstitial',
+			MODAL_INTERSTITIAL_4:  'interstitial',
+			INVISIBLE_1:           'pixel',
+			INVISIBLE_2:           'pixel',
+			INVISIBLE_SKIN:        'pixel',
+			LEFT_SKYSCRAPER_2:     'skyscraper',
+			LEFT_SKYSCRAPER_3:     'skyscraper',
+			PREFOOTER_LEFT_BOXAD:  'prefooter',
+			PREFOOTER_RIGHT_BOXAD: 'prefooter',
+			TOP_BUTTON_WIDE:       'button',
+			WIKIA_BAR_BOXAD_1:     'wikiabar'
 		};
 
 	// The filtering function
@@ -40,31 +65,54 @@ var SlotTracker = function (log/*, tracker*/) {
 		return true;
 	}
 
-	function trackEvent(eventName, data, value) {
-		var toLog = [
-				'event: ' + eventName,
-				'provider: ' + data.provider,
-				'slotname: ' + data.slotname
-			],
-			interesting = isInteresting(eventName, data);
-
-		if (eventName.match(/^state/)) {
-			toLog.push('state: ' + data.state);
-		} else {
-			toLog.push('timeBucket: ' + data.timeBucket);
-			toLog.push('extraParams');
-			toLog.push(data.extraParams);
+	function buildExtraParamsString(extraParams) {
+		var out = [], key;
+		for (key in extraParams) {
+			out.push(key + '=' + extraParams[key]);
 		}
+		return out.join(';');
+	}
 
-		toLog.push('value: ' + value);
-		toLog.push('interesting: ' + interesting || 'false');
+	function trackEvent(eventName, data, value) {
+		var interesting = isInteresting(eventName, data),
+			slotname = data.slotname,
+			slotType = slotTypes[slotname] || 'other',
+			extraParams = data.extraParams || {},
+			gaCategory,
+			gaAction,
+			gaLabel,
+			gaValue;
 
-		// TODO: track instead of log :-)
-		log(toLog, 'debug', logGroup);
+		extraParams['pos'] = data.slotname;
+
+		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
+		gaAction = buildExtraParamsString(extraParams);
+		gaLabel = data.state || data.timeBucket || 0;
+		gaValue = value;
 
 		stats.allEvents += 1;
 		if (interesting) {
 			stats.interestingEvents += 1;
+
+			if (window.wgAdDriverUseNewTracking) {
+				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+
+				tracker.track({
+					ga_category: gaCategory,
+					ga_action: gaAction,
+					ga_label: gaLabel,
+					ga_value: Math.round(gaValue),
+					trackingMethod: 'ad'
+				});
+			} else {
+				log(['Not pushing to GA (wgAdDriverUseNewTracking is false)',
+					gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
+				);
+			}
+		} else {
+			log(['Not pushing to GA (not interesting)',
+				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
+			);
 		}
 	}
 
@@ -106,7 +154,7 @@ var SlotTracker = function (log/*, tracker*/) {
 						slotname: slotname,
 						state: eventsTracked.join(',')
 					},
-					lastEventTime
+					lastEventTime * 1000
 				);
 			}, timeCheckPoint * 1000);
 		}
@@ -126,7 +174,7 @@ var SlotTracker = function (log/*, tracker*/) {
 					timeBucket: timeBucket,
 					extraParams: extraParams
 				},
-				timeElapsed
+				timeElapsed * 1000
 			);
 		}
 

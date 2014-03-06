@@ -252,6 +252,7 @@ define( 'wikia.preview', [
 					message: msg( 'back' ),
 					handler: function () {
 						$( '#EditPageDialog' ).closeModal();
+						$( window ).trigger( 'EditPagePreviewClosed' );
 					}
 				},
 				{

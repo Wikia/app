@@ -90,8 +90,10 @@ $messages['bar'] = array(
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'interwikiedit' => 'Рэдактар інтэрвікі',
 	'iwedit-title' => 'Рэдактар інтэрвікі',
 	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
 	'iwedit-all-interwikis' => 'усе інтэрвікі',
@@ -349,6 +351,13 @@ $messages['kn'] = array(
 	'iwedit-title' => 'ಇಂಟರ್ವಿಕಿ ಸಂಪಾದಕ',
 	'iwedit-language-interwikis' => 'ಭಾಷಾ ಇಂಟರ್ವಿಕಿಗಳು ಮಾತ್ರ',
 	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'iwedit-update' => 'Джангырт',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

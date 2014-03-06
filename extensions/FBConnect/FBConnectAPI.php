@@ -70,7 +70,6 @@ class FBConnectAPI {
 	 */
 	public static function isConfigSetup() {
 		$fbAppId = F::app()->getGlobal('fbAppId');
-
 		$fbAppSecret = F::app()->getGlobal('fbAppSecret');
 
 		$isSetup = isset($fbAppId) && $fbAppId != 'YOUR_APP_KEY' &&

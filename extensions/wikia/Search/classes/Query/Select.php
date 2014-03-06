@@ -43,13 +43,13 @@ class Select
 	
 	/**
 	 * This is our original query with any XSS vulns and tags removed.
-	 * @var unknown_type
+	 * @var string
 	 */
 	protected $sanitizedQuery;
 	
 	/**
 	 * MediaWikiService, encapsulates MediaWiki logic
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -59,8 +59,7 @@ class Select
 	 * This is raw user input, so you should use a public accessor to get the right kind of query.
 	 * @param string $queryString
 	 */
-	public function __construct( $queryString )
-	{
+	public function __construct( $queryString ) {
 		$this->rawQuery = $queryString;
 	}
 	

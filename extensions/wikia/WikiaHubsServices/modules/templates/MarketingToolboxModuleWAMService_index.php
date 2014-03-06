@@ -1,31 +1,33 @@
 <div class="wam-header">
 	<div class="social-links">
-		<? $fbMsg = wfMessage('wikiahubs-social-facebook-link-' . $canonicalVerticalName)->text(); ?>
+		<? $fbMsg = wfMessage('wikiahubs-social-facebook-link-' . $canonicalVerticalName)->inContentLanguage()->text(); ?>
 		<? if (!empty($fbMsg)): ?>
 			<a href="<?= $fbMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
 		<? endif ?>
-		<? $twMsg =  wfMessage('wikiahubs-social-twitter-link-' . $canonicalVerticalName)->text()?>
+		<? $twMsg =  wfMessage('wikiahubs-social-twitter-link-' . $canonicalVerticalName)->inContentLanguage()->text()?>
 		<? if (!empty($twMsg)): ?>
 			<a href="<?= $twMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
 		<? endif ?>
-		<? $gplusMsg =  wfMessage('wikiahubs-social-googleplus-link-' . $canonicalVerticalName)->text()?>
+		<? $gplusMsg =  wfMessage('wikiahubs-social-googleplus-link-' . $canonicalVerticalName)->inContentLanguage()->text()?>
 		<? if (!empty($gplusMsg)): ?>
 			<a href="<?= $gplusMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 		<? endif ?>
 	</div>
-	<div class="search">
-		<form method="get" action="<?= $specialSearchUrl; ?>" class="WikiaSearch" id="WikiaSearch">
-			<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
-			<input type="hidden" value="0" name="fulltext" />
-			<? if (!empty($searchHubName)): ?>
-				<input type="hidden" name="hub" value="<?= $searchHubName; ?>" />
-			<? endif; ?>
-			<input type="submit" />
-			<button class="wikia-button">
-				<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
-			</button>
-		</form>
-	</div>
+	<? if ($hubsVersion == 2) : ?>
+		<div class="search">
+			<form method="get" action="<?= $specialSearchUrl; ?>" class="WikiaSearch" id="WikiaSearch">
+				<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
+				<input type="hidden" value="0" name="fulltext" />
+				<? if (!empty($searchHubName)): ?>
+					<input type="hidden" name="hub" value="<?= $searchHubName; ?>" />
+				<? endif; ?>
+				<input type="submit" />
+				<button class="wikia-button">
+					<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
+				</button>
+			</form>
+		</div>
+	<? endif ?>
 </div>
 <div class="wam-content">
 	<div class="title">

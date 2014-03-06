@@ -48,6 +48,7 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'tagsreport' => 'تقرير العلامات',
@@ -60,6 +61,7 @@ $messages['ar'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}})',
 	'tagsreportpagesfound' => 'تم العثور على (<strong>$1</strong> {{PLURAL:$1|صفحة|صفحات}}) تحتوي على العلامة الخاصة (دي بي إل، يوتيوب، إلخ.)',
 	'tagsreportgenerated' => 'تم توليدها في  $1 على الساعة  $2',
+	'tagsreportpageremoved' => 'الصفحة #$1 قد أزيلت',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -111,6 +113,7 @@ $messages['br'] = array(
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|pajenn|pajennoù}})',
 	'tagsreportpagesfound' => 'Kavet <strong>$1</strong> pajennoù, zo enno ur valizenn arbennik (dpl, youtube, ...)', # Fuzzy
 	'tagsreportgenerated' => "Krouet d'an $1 da $2",
+	'tagsreportpageremoved' => 'Lamet eo bet ar bajenn #$1',
 );
 
 /** Catalan (català)

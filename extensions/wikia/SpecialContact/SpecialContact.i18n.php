@@ -135,6 +135,8 @@ $messages['br'] = array(
 	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
 	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
 	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
+	'specialcontact-ccheader' => 'Setu amañ un eiladenn eus ar gemennadenn a zo bet kaset da Skoazell Wikia',
+	'specialcontact-submitcomplete' => "Trugarez deoc'h evit mont e darempred gant Wikia.",
 );
 
 /** Catalan (català)
@@ -286,6 +288,17 @@ Si prefieres enviar un correo con datos adjuntos, puedes contactarnos a [mailto:
 	'specialcontact-mailsubcc' => 'Copia del correo de contacto de Wikia',
 	'specialcontact-ccheader' => 'Esta es una copia de tu mensaje que fue enviado al Staff de Wikia',
 	'specialcontact-submitcomplete' => 'Gracias por contactar a Wikia.',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'specialcontact-username' => 'Zure Erabiltzaile-izena:',
+	'specialcontact-realname' => 'Zure izena',
+	'specialcontact-yourmail' => 'Helbide elektronikoa',
+	'specialcontact-problem' => 'Gaia',
+	'specialcontact-problemdesc' => 'Mezua',
 );
 
 /** Persian (فارسی)
@@ -654,6 +667,7 @@ $messages['my'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Event
  */
 $messages['nb'] = array(
 	'contact' => 'Kontakt Wikia',
@@ -664,7 +678,7 @@ $messages['nb'] = array(
 Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
 
 Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Brukernavn', # Fuzzy
+	'specialcontact-username' => 'Ditt brukernavn',
 	'specialcontact-wikiname' => 'Hvilke wiki',
 	'specialcontact-realname' => 'Ditt navn',
 	'specialcontact-yourmail' => 'E-postadresse',

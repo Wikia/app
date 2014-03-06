@@ -27,9 +27,9 @@ ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTransclusionNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWTransclusionNode, ve.dm.LeafNode );
 
-ve.mixinClass( ve.dm.MWTransclusionNode, ve.dm.GeneratedContentNode );
+OO.mixinClass( ve.dm.MWTransclusionNode, ve.dm.GeneratedContentNode );
 
 /* Static members */
 
@@ -80,7 +80,7 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 		}
 	};
 
-	index = this.storeDomElements( dataElement, domElements, converter.getStore() );
+	index = this.storeGeneratedContents( dataElement, domElements, converter.getStore() );
 	dataElement.attributes.originalIndex = index;
 
 	return dataElement;
@@ -88,7 +88,7 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 
 ve.dm.MWTransclusionNode.static.toDomElements = function ( dataElement, doc, converter ) {
 	var el,
-		index = converter.getStore().indexOfHash( ve.getHash( this.getHashObject( dataElement ) ) ),
+		index = converter.getStore().indexOfHash( OO.getHash( this.getHashObject( dataElement ) ) ),
 		originalMw = dataElement.attributes.originalMw;
 
 	// If the transclusion is unchanged just send back the
@@ -228,7 +228,7 @@ ve.dm.MWTransclusionBlockNode = function VeDmMWTransclusionBlockNode( length, el
 	ve.dm.MWTransclusionNode.call( this, length, element );
 };
 
-ve.inheritClass( ve.dm.MWTransclusionBlockNode, ve.dm.MWTransclusionNode );
+OO.inheritClass( ve.dm.MWTransclusionBlockNode, ve.dm.MWTransclusionNode );
 
 ve.dm.MWTransclusionBlockNode.static.matchTagNames = [];
 
@@ -248,7 +248,7 @@ ve.dm.MWTransclusionInlineNode = function VeDmMWTransclusionInlineNode( length, 
 	ve.dm.MWTransclusionNode.call( this, length, element );
 };
 
-ve.inheritClass( ve.dm.MWTransclusionInlineNode, ve.dm.MWTransclusionNode );
+OO.inheritClass( ve.dm.MWTransclusionInlineNode, ve.dm.MWTransclusionNode );
 
 ve.dm.MWTransclusionInlineNode.static.matchTagNames = [];
 

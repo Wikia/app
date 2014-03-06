@@ -233,12 +233,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'Screenplay, Inc.';
 		$categories[] = $data['name'];
 
 		if ( !empty( $data['type'] ) ) {
 			$categories[] = $this->getStdPageCategory( $data['type'] );
 		}
+
+		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
 		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
@@ -252,9 +253,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$categories[] = 'Entertainment';
 		}
 
+		$categories[] = 'Screenplay, Inc.';
+
 		wfProfileOut( __METHOD__ );
 
-		return $categories;
+		return $this->getUniqueArray( $categories );
 	}
 
 	/**

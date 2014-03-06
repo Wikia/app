@@ -21,7 +21,7 @@ ve.ce.InternalItemNode = function VeCeInternalItemNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.InternalItemNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.InternalItemNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

@@ -7,7 +7,7 @@
 		'class' => ["img{$i}"],
 		'linked' => !empty( $image['imageLink'] ),
 		'anchorAttributes' => ( !empty( $image['imageLink'] ) ) ? array( 'href' => $image['imageLink'] ) : null,
-		'caption' => ( !empty( $image['imageTitle'] ) ) ? $image['imageTitle'] : null,
+		'caption' => ( !empty( $mediaInfo['caption'] ) ) ? $mediaInfo['caption'] : null,
 		'attributes' => $mediaInfo['attributes'],
 		'parameters' => $mediaInfo['parameters'],
 		'noscript' => $mediaInfo['noscript']

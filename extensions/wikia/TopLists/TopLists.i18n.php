@@ -146,6 +146,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Imksa
  * @author Meno25
  * @author OsamaK
@@ -190,6 +191,8 @@ $messages['ar'] = array(
 	'toplists-update-button' => 'احفظ القائمة',
 	'toplists-cancel-button' => 'إلغاء',
 	'toplists-items-removed' => 'تمت إزالة {{PLURAL:$1|عنصر واحد|$1 عناصر}}',
+	'toplists-items-created' => 'أنشئت $1 {{PLURAL:$1|عنصر واحد|2=عنصران|عناصر|$1 عنصر}}',
+	'toplists-items-updated' => 'تحديث $1 {{PLURAL:$1|عنصر واحد|2=عنصرين|عناصر|$1 عنصر}}',
 	'toplists-items-nochange' => 'لا يوجد تغيير في العناصر',
 	'toplits-image-browser-no-picture-selected' => 'ليست هناك صورة مختارة',
 	'toplits-image-browser-clear-picture' => 'صورة واضحة',
@@ -223,6 +226,11 @@ $3
 -ويكيا
 
 يمكنك  <a href="$4">إلغاء الإشتراك</a> من خلال التغييرات  للقائمة.',
+	'toplists-seconds' => '{{PLURAL:$1|ثانية واحدة|ثانيتان|$1 ثوان|$1 ثانية}}',
+	'toplists-minutes' => '{{PLURAL:$1|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
+	'toplists-hours' => '({{PLURAL:$1||ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}})',
+	'toplists-days' => '{{PLURAL:$1||يوم واحد|يومان|$1 أيام|$1 يومًا|$1 يوم}}',
+	'toplists-weeks' => '{{PLURAL:$1||أسبوع واحد|أسبوعان|$1 أسابيع|$1 أسبوعًا|$1 أسبوع}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'صوت على قائمة أفضل 10 في $WIKINAME!',
 	'toplists-create-heading' => '<em>خاصية جديدة!</em> إنشاء قائمة أفضل عشرة خاصة بك',
 	'toplists-create-button-msg' => 'إنشاء قائمة',
@@ -378,6 +386,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
+	'toplists-days' => '$1 {{PLURAL:$1|де}}',
 );
 
 /** Czech (čeština)

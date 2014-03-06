@@ -99,6 +99,7 @@ $messages['qqq'] = array(
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-label-reason' => 'Label for reason field.
 {{Identical|Reason}}',
+	'editaccount-submit-pass' => '{{Identical|Save password}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',
 	'editaccount-success-disable' => 'Parameters:
@@ -714,6 +715,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Jack Phoenix <jack@countervandalism.net>
  * @author Nedergard
  * @author Nike
@@ -734,6 +736,9 @@ $messages['fi'] = array(
 	'editaccount-label-pass' => 'Aseta uusi salasana',
 	'editaccount-label-realname' => 'Aseta uusi oikea nimi',
 	'editaccount-label-clearunsub' => 'Tilaus lopetettu',
+	'editaccount-label-toggleadopt' => 'Muokkaa adoptoijatilaa (AutomaticWikiAdoptia varten):',
+	'editaccount-label-toggleadopt-prevent' => 'Estä automaattinen adoptointi',
+	'editaccount-label-toggleadopt-allow' => 'Salli automaattinen adoptointi',
 	'editaccount-label-reason' => 'Syy',
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
@@ -748,6 +753,7 @@ $messages['fi'] = array(
 	'editaccount-success-email-blank' => 'Tunnuksen $1 sähköpostiosoitteen poistaminen onnistui.',
 	'editaccount-success-pass' => 'Tunnuksen $1 salasana vaihdettiin onnistuneesti.',
 	'editaccount-success-realname' => 'Tilin $1 oikea nimi vaihdettiin onnistuneesti.',
+	'editaccount-success-toggleadopt' => 'Käyttäjän $1 adoptointikelpoisuustila vaihdettiin onnistuneesti',
 	'editaccount-success-close' => 'Tunnus $1 poistettiin käytöstä onnistuneesti.',
 	'editaccount-error-email' => 'Sähköpostiosoitetta ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
 	'editaccount-error-pass' => 'Salasanaa ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
@@ -755,12 +761,18 @@ $messages['fi'] = array(
 	'editaccount-error-close' => 'Tunnusta suljettaessa tapahtui virhe. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
 	'editaccount-invalid-email' => '"$1" ei ole kelvollinen sähköpostiosoite!',
 	'editaccount-nouser' => 'Tunnusta nimeltä "$1" ei ole olemassa!',
+	'editaccount-not-loaded' => 'Virhe: Käyttäjän tietojen lataaminen epäonnistui, ole hyvä ja kokeile sivun uudelleenlataamista.',
+	'editaccount-remove-avatar-fail' => 'Ongelma avatarin automaattisessa poistossa.',
+	'editaccount-requested' => 'Huomautus: Käyttäjä on pyytänyt tilin sulkemista',
+	'editaccount-not-requested' => 'VAROITUS: Käyttäjä ei ole pyytänyt tilin sulkemista',
 	'editaccount-labal-account-status' => 'Tilin tila',
 	'editaccount-labal-email-status' => 'Sähköpostin tila',
 	'editaccount-status-confirmed' => 'Vahvistettu',
 	'editaccount-status-unconfirmed' => 'Vahvistamaton',
 	'editaccount-status-realuser' => 'Todellinen käyttäjä',
 	'editaccount-status-tempuser' => 'Tilapäinen käyttäjä',
+	'editaccount-error-tempuser-email' => 'Väliaikaisilla käyttäjillä ei voi olla tyhjää sähköpostiosoitekenttää. Ole hyvä ja syötä sähköpostiosoite.',
+	'editaccount-email-change-requested' => 'Käyttäjä pyysi Asetuksien kautta sähköpostiosoitteensa muuttamista osoitteeksi $1. Vahvistaaksesi käyttäjän pyytämä sähköpostiosoitteen muutos, syötä pyydetty sähköpostiosoite allaolevaan kenttään ja klikkaa "Tallenna ja vahvista."',
 	'editaccount-log' => 'Käyttäjätunnusloki',
 	'editaccount-log-header' => 'Tämä sivu listaa Wikian henkilökunnan käyttäjäkohtaisiin asetuksiin tekemät muutokset.',
 	'editaccount-log-entry-email' => 'muutti käyttäjän $2 sähköpostiosoitetta',
@@ -1343,7 +1355,7 @@ $messages['mk'] = array(
 	'editaccount-title' => 'Специјални:УредиСметка',
 	'editaccount-frame-manage' => 'Уреди сметка',
 	'editaccount-frame-usage' => 'Напомена',
-	'editaccount-usage' => 'Корисничките податоци се кешираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, кешот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со кеширање.',
+	'editaccount-usage' => 'Корисничките податоци се меѓускладираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, меѓускладот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со меѓускладирање.',
 	'editaccount-label-select' => 'Одберете корисничка сметка',
 	'editaccount-submit-account' => 'Раководење со сметка',
 	'editaccount-frame-account' => 'Уредување на корисничка сметка: $1',
@@ -2257,7 +2269,7 @@ $messages['sv'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Förhindra automatisk adoptering',
 	'editaccount-label-toggleadopt-allow' => 'Tillåt automatisk adoption',
 	'editaccount-label-reason' => 'Anledning:',
-	'editaccount-submit-email' => 'Spara e-postadress',
+	'editaccount-submit-email' => 'Spara och bekräfta e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',
 	'editaccount-submit-clearunsub' => 'Rensa avprenumerering',
@@ -2426,7 +2438,11 @@ $messages['tl'] = array(
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'editaccount-frame-usage' => 'Not',
+	'editaccount-label-reason' => 'Gerekçe:',
+	'editaccount-submit-pass' => 'Parolayı kaydet',
 	'editaccount-submit-close' => 'Hesabı kapat',
+	'editaccount-submit-button' => 'Kaydet',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Bu hesap Wikia tarafından küresel olarak devre dışı bırakıldı.</div>',
 );
 
@@ -2585,6 +2601,7 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author User670839245
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
@@ -2623,6 +2640,7 @@ $messages['zh-hans'] = array(
 	'editaccount-success-realname' => '帐户 $1 的真实姓名更改成功。',
 	'editaccount-success-unsub' => '成功为账户$1移除退订位。',
 	'editaccount-success-disable' => '成功为账户$1取消禁用。',
+	'editaccount-success-toggleadopt' => '账户 $1 的认领能力状态已被成功更改。',
 	'editaccount-success-close' => '成功禁用了帐户 $1 。',
 	'editaccount-error-email' => '电子邮件地址未改变。请重试或联系技术团队。',
 	'editaccount-error-pass' => '密码未改变。请重试或联系技术团队。',
@@ -2641,6 +2659,7 @@ $messages['zh-hans'] = array(
 	'editaccount-status-realuser' => '活跃用户',
 	'editaccount-status-tempuser' => '临时用户',
 	'editaccount-error-tempuser-email' => '临时用户不能有空白的电子邮件地址字段，请输入一个电子邮件地址。',
+	'editaccount-email-change-requested' => '用户在用户设置里请求了将电子邮件更改为$1。为确认该用户的电子邮件更改请求，请您在下面输入请求的电子邮件地址，并点击“保存并确认”。',
 	'editaccount-log' => '用户帐户日志',
 	'editaccount-log-header' => '本页列出了由Wikia工作人员对用户信息所做出的更改。',
 	'editaccount-log-entry-email' => '用户$2电子邮箱地址已变更',

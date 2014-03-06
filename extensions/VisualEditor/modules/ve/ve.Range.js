@@ -6,14 +6,7 @@
  */
 
 /**
- * Range.
- *
  * @class
- *
- * @property {number} from Starting offset
- * @property {number} to Ending offset
- * @property {number} start Starting offset (the lesser of #to and #from)
- * @property {number} end Ending offset (the greater of #to and #from)
  *
  * @constructor
  * @param {number} from Starting offset
@@ -26,11 +19,28 @@ ve.Range = function VeRange( from, to ) {
 	this.end = this.from < this.to ? this.to : this.from;
 };
 
+/**
+ * @property {number} from Starting offset
+ */
+
+/**
+ * @property {number} to Ending offset
+ */
+
+/**
+ * @property {number} start Starting offset (the lesser of #to and #from)
+ */
+
+/**
+ * @property {number} end Ending offset (the greater of #to and #from)
+ */
+
 /* Static Methods */
 
 /**
  * Create a new range that's a translated version of another.
  *
+ * @static
  * @param {ve.Range} range Range to base new range on
  * @param {number} distance Distance to move range by
  * @returns {ve.Range} New translated range
@@ -42,6 +52,7 @@ ve.Range.newFromTranslatedRange = function ( range, distance ) {
 /**
  * Create a range object that covers all of the given ranges.
  *
+ * @static
  * @param {Array} ranges Array of ve.Range objects (at least one)
  * @param {boolean} backwards Return a backwards range
  * @returns {ve.Range} Range that spans all of the given ranges

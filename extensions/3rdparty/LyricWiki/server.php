@@ -559,7 +559,7 @@ function searchArtists($searchString){
 				print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
 			}
 
-			// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
+			// If there were no results at all, look for some with a more liberal query.
 			if(count($retVal) == 0){
 				// Under the hood this uses the SimpleSearch service which is powered by Lucene.
 				$searchResults = lw_getSearchResults($artist, $MAX_RESULTS * 3); // select more than max so that we can filter after-the-fact for artists.
@@ -933,6 +933,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$finalName = $page_id = "";
 				$content = lw_getPage($title, $finalName, $debug, $ns, $page_id);
 
+				// LYR-7 - if pages are on LyricFind takedown list, remove their content here.
+				$pageRemovedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $page_id);
+				if(!empty($pageRemovedProp)){
+					// Overwrite with the same content that normal takedowns used before LF API (this lets the
+					// Community easily update the text since it's a template).
+					$content = "{{gracenote_takedown}}";
+				}
+
 				// Parse the lyrics from the content.
 				$matches = array();
 				if(0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)<.(gracenotelyrics|lyrics?)>/si", $content, $matches) || (0<preg_match("/<(gracenotelyrics|lyrics?)>(.*)/si", $content, $matches))){
@@ -1101,6 +1109,8 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 		$retVal['isOnTakedownList'] = ($retVal['isOnTakedownList'] ? "1" : "0"); // turn it into a string
 		requestFinished($id);
 	}
+	
+	$retVal['lyrics'] = removeWikitextFromLyrics($retVal['lyrics']);
 
 	wfProfileOut( __METHOD__ );
 	return $retVal;
@@ -2532,3 +2542,23 @@ function requestFinished($id){
 		}
 	}
 } // end requestFinished()
+
+////
+// Given the lyrics (possibly containing wikitext) this will filter
+// most wikitext out of them that is likely to appear in them.
+////
+function removeWikitextFromLyrics($lyrics){
+	// Clean up wikipedia template to be plaintext
+	$lyrics = preg_replace("/\{\{wp.*\|(.*?)\}\}/", "$1", $lyrics);
+	
+	// Clean up links & category-links to be plaintext
+	$lyrics = preg_replace("/\[\[([^\|\]]*)\]\]/", "$1", $lyrics); // links with no alias (no pipe)
+	$lyrics = preg_replace("/\[\[.*\|(.*?)\]\]/", "$1", $lyrics);
+
+	// Filter out extra formatting markup
+	$lyrics = preg_replace("/'''/", "", $lyrics); // rm bold
+	$lyrics = preg_replace("/''/", "", $lyrics); // rm italics
+
+	return $lyrics;
+} // end removeWikitextFromLyrics()
+

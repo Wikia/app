@@ -29,34 +29,6 @@ ve.dm.MWTemplateSpecModel = function VeDmMWTemplateSpecModel( template ) {
 	this.fill();
 };
 
-/* Static Methods */
-
-/**
- * Get the correct value from a message property.
- *
- * @method
- * @static
- * @param {string|Object|null} val Messsage or object with messages keyed by language
- * @param {Mixed} [fallback=null] Value to use if message is not available
- * @param {string} [lang] Language to prefer, user interface language will be used by default
- * @returns {string} Message text or fallback if not available
- */
-ve.dm.MWTemplateSpecModel.getMessage = function ( val, fallback, lang ) {
-	var i, len, langs = lang !== undefined ? [lang] : ve.init.platform.getUserLanguages();
-	if ( fallback === undefined ) {
-		fallback = null;
-	}
-	if ( ve.isPlainObject( val ) ) {
-		for ( i = 0, len = langs.length; i < len; i++ ) {
-			if ( val[langs[i]] ) {
-				return val[langs[i]];
-			}
-		}
-		return fallback;
-	}
-	return typeof val === 'string' ? val : fallback;
-};
-
 /* Methods */
 
 /**
@@ -126,7 +98,7 @@ ve.dm.MWTemplateSpecModel.prototype.fill = function () {
  */
 ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec = function ( name ) {
 	return {
-		'label': { 'en': name },
+		'label': name,
 		'description': null,
 		'default': '',
 		'type': 'string',
@@ -169,10 +141,12 @@ ve.dm.MWTemplateSpecModel.prototype.getLabel = function () {
  * Get template description.
  *
  * @method
+ * @param {string} [lang] Language to get description in
  * @returns {string|null} Template description or null if not available
  */
-ve.dm.MWTemplateSpecModel.prototype.getDescription = function () {
-	return this.constructor.getMessage( this.description, null );
+ve.dm.MWTemplateSpecModel.prototype.getDescription = function ( lang ) {
+	var value = this.description;
+	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
 };
 
 /**
@@ -204,10 +178,12 @@ ve.dm.MWTemplateSpecModel.prototype.isParameterAlias = function ( name ) {
  *
  * @method
  * @param {string} name Parameter name
+ * @param {string} [lang] Language to get label in
  * @returns {string} Parameter label
  */
-ve.dm.MWTemplateSpecModel.prototype.getParameterLabel = function ( name ) {
-	return this.constructor.getMessage( this.params[name].label, name );
+ve.dm.MWTemplateSpecModel.prototype.getParameterLabel = function ( name, lang ) {
+	var value = this.params[name].label;
+	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
 };
 
 /**
@@ -215,10 +191,12 @@ ve.dm.MWTemplateSpecModel.prototype.getParameterLabel = function ( name ) {
  *
  * @method
  * @param {string} name Parameter name
+ * @param {string} [lang] Language to get description
  * @returns {string|null} Parameter description
  */
-ve.dm.MWTemplateSpecModel.prototype.getParameterDescription = function ( name ) {
-	return this.constructor.getMessage( this.params[name].description );
+ve.dm.MWTemplateSpecModel.prototype.getParameterDescription = function ( name, lang ) {
+	var value = this.params[name].description;
+	return ve.isPlainObject( value ) ? OO.ui.getLocalValue( value, lang ) : value;
 };
 
 /**

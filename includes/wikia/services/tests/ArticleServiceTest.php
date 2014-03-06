@@ -4,6 +4,8 @@ class ArticleServiceTest extends WikiaBaseTest {
 	const TEST_CITY_ID = 79860;
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03939 ms
 	 * @covers ArticleService::getUncachedSnippetFromArticle
 	 * @covers ArticleService::getTextSnippet
 	 * @dataProvider getTextSnippetDataProvider

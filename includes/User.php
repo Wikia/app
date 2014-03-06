@@ -1038,7 +1038,11 @@ class User {
 			$passwordCorrect = $proposedUser->getToken( false ) === $request->getSessionData( 'wsToken' );
 			$from = 'session';
 		} elseif ( $request->getCookie( 'Token' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getCookie( 'Token' );
+			# Get the token from DB/cache and clean it up to remove garbage padding.
+			# This deals with historical problems with bugs and the default column value.
+			$token = rtrim( $proposedUser->getToken( false ) ); // correct token
+			// Make comparison in constant time (bug 61346)
+			$passwordCorrect = strlen( $token ) && $this->compareSecrets( $token, $request->getCookie( 'Token' ) );
 			$from = 'cookie';
 		} else {
 			# No session or persistent login cookie
@@ -1058,6 +1062,25 @@ class User {
 			$this->loadDefaults();
 			return false;
 		}
+	}
+
+	/**
+	 * A comparison of two strings, not vulnerable to timing attacks
+	 * @param string $answer the secret string that you are comparing against.
+	 * @param string $test compare this string to the $answer.
+	 * @return bool True if the strings are the same, false otherwise
+	 */
+	protected function compareSecrets( $answer, $test ) {
+		if ( strlen( $answer ) !== strlen( $test ) ) {
+			$passwordCorrect = false;
+		} else {
+			$result = 0;
+			for ( $i = 0; $i < strlen( $answer ); $i++ ) {
+				$result |= ord( $answer{$i} ) ^ ord( $test{$i} );
+			}
+			$passwordCorrect = ( $result == 0 );
+		}
+		return $passwordCorrect;
 	}
 
 	/**
@@ -2024,19 +2047,19 @@ class User {
                     $dbw = wfGetDB( DB_MASTER );
             }
 			#</Wikia>
-			
+
 			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField( 
-				'`user`', '1', 
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ), 
+			$needsPurge =  $dbw->selectField(
+				'`user`', '1',
+				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
 				__METHOD__ );
-			
+
 			if ( $needsPurge ) {
-				$dbw->update( '`user`', 
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ), 
+				$dbw->update( '`user`',
+					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
 					__METHOD__ );
 			}
-			
+
 			$this->clearSharedCache();
 		}
 	}
@@ -2121,9 +2144,7 @@ class User {
 			// Save an invalid hash...
 			$this->mPassword = '';
 		} else {
-			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-			//$this->mPassword = self::crypt( $str );
-			$this->mPassword = self::oldCrypt( $str, $this->mId );
+			$this->mPassword = self::crypt( $str );
 		}
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
@@ -2176,9 +2197,7 @@ class User {
 	 */
 	public function setNewpassword( $str, $throttle = true ) {
 		$this->load();
-		// Wikia uses the old hashing until we migrate all wikis to MW 1.13
-		//$this->mNewpassword = self::crypt( $str );
-		$this->mNewpassword = self::oldCrypt( $str, $this->mId );
+		$this->mNewpassword = self::crypt( $str );
 		if ( $throttle ) {
 			$this->mNewpassTime = wfTimestampNow();
 		}
@@ -3532,7 +3551,7 @@ class User {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg ) );
+		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
@@ -4141,21 +4160,8 @@ class User {
 			 * @author Kamil Koterba
 			 */
 			if ( !empty($wgEnableEditCountLocal) ) {
-				$dbw = wfGetDB( DB_MASTER );
-				$dbw->update( 'wikia_user_properties',
-					array( 'wup_value=wup_value+1' ),
-					array( 'wup_user' => $this->getId(),
-						'wup_property' => 'editcount' ),
-					__METHOD__ );
-
-				if ($dbw->affectedRows() == 1) {
-					//increment memcache also
-					$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
-					$wgMemc->incr( $key );
-				} else {
-					//initialize editcount skipping memcache
-					$this->getEditCountLocal( 0, true );
-				}
+				$userStatsService = new UserStatsService( $this->getId() );
+				$userStatsService->increaseEditsCount();
 			}
 			/* end of change */
 

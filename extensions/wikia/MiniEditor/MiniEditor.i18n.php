@@ -96,6 +96,13 @@ $messages['es'] = array(
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'minieditor-reply' => 'Erantzun',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -391,6 +398,13 @@ $messages['tl'] = array(
 	'minieditor-message-edit' => 'Isa itong umiiral nang mensahe',
 	'minieditor-reply' => 'Tumugon',
 	'minieditor-placeholder-reply' => 'Tumugon sa mensahe rito',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor Demo Sayfası',
 );
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)

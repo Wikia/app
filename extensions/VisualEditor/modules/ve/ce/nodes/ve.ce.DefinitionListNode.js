@@ -21,7 +21,7 @@ ve.ce.DefinitionListNode = function VeCeDefinitionListNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.DefinitionListNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.DefinitionListNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

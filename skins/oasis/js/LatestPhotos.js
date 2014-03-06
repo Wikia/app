@@ -14,8 +14,10 @@ var UploadPhotos = {
 		});
 	},
 	loginBeforeShowDialog: function(evt) {
+		var UserLoginModal = window.UserLoginModal;
 		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
-			UserLoginModal.show({
+			UserLoginModal.show( {
+				origin: 'latest-photos',
 				callback: $.proxy(function() {
 					UserLogin.forceLoggedIn = true;
 					this.showDialog(evt);

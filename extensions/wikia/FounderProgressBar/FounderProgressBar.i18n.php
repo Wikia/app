@@ -137,9 +137,11 @@ $messages['ar'] = array(
 	'founderprogressbar-profile-edit-label' => 'ملء صفحتك الشخصية',
 	'founderprogressbar-photo-add20-label' => 'ابلغ {{PLURAL:$1|صورة|صور}}',
 	'founderprogressbar-total-edit75-label' => 'الوصول إلى 75 تعديلا',
+	'founderprogressbar-page-add20-label' => 'الوصول إلى $1 {{PLURAL:$1|صفحة|صفحات}}',
 	'founderprogressbar-category-edit-label' => 'تعديل صفحة تصنيف',
 	'founderprogressbar-wikialabs-visit-label' => 'زيارة مختبرات ويكيا',
 	'founderprogressbar-fb-connect-label' => 'اتصال عبر الفيسبوك',
+	'founderprogressbar-category-add5-label' => 'الوصول إلى$1 {{PLURAL:$1|تصنيف|تصنيفات}}',
 	'founderprogressbar-gallery-add-label' => 'إضافة معرض للصور',
 	'founderprogressbar-topnav-edit-label' => 'قم بتخصيص الإبحار',
 	'founderprogressbar-mainpage-addslider-label' => 'إضافة شريط تمرير صور للصفحة الرئيسية',
@@ -155,7 +157,17 @@ $messages['ar'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'انظر الصفحات الغير مصنفة',
 	'founderprogressbar-total-edit300-label' => 'ابلغ {{PLURAL:$1|$1 تعديل|$1 تعديلات}}',
 	'founderprogressbar-bonus-photo-add10-label' => 'أضف $1 من الصور',
+	'founderprogressbar-bonus-page-add5-label' => 'أضف {{PLURAL:$1|1=صفحة أخرى|2=صفحتين أخريتين|$1 صفحات أخرى|$1 صفحة أخرى}}',
+	'founderprogressbar-bonus-edit50-label' => 'عدل {{PLURAL:$1|1=صفحة أخرى|2=صفحتين أخريتين|$1 صحفات أخرى|$1 صفحة أخرى}}',
 	'founderprogressbar-browse-page-name' => 'تصفّح',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'founderprogressbar-progress-hide-full-list' => 'Tam siyahını gizlət',
+	'founderprogressbar-video-add-label' => 'Video əlavə et',
 );
 
 /** Breton (brezhoneg)
@@ -1035,17 +1047,34 @@ $messages['ja'] = array(
 	'founderprogressbar-progress-see-full-list' => '完全な一覧を見る',
 	'founderprogressbar-progress-hide-full-list' => '完全な一覧を隠す',
 	'founderprogressbar-skip-for-now' => 'とりあえずスキップ',
+	'founderprogressbar-task-completed' => '完了',
 	'founderprogressbar-list-label' => '{{SITENAME}} のタスク',
+	'founderprogressbar-list-description1' => 'ウィキを成功へと導く準備はお済みでしょうか？下の一覧に掲載されているタスク全てを完了し、達成率を100%にしましょう！この一覧に掲載されているタスクの進行は誰でも手伝うことができるもので、このウィキアで行われるすべての投稿を対象にタスク達成の判定が行われます。',
+	'founderprogressbar-list-description2' => 'タスク一覧には、あなたが完了する必要があるすべてのタスクを掲載しています。タスクをスキップすると、そのタスクは「スキップしたタスク」という項目に移動しますが、いつでも完了することができます。このウィキアに適していると思えないものが一覧にある場合でも心配する必要はありません ── スキップしたタスク以外を完了させ、完了待ちのタスクがあとはスキップしたものだけという状態にすれば、ボーナスタスクが開放されます。スキップしたタスクの代わりに、ボーナスタスクを完了させることでパーセンテージを上積みでき、100%に到達させることができます。',
 	'founderprogressbar-list-task-label' => 'タスク',
 	'founderprogressbar-list-skipped-task-label' => 'スキップしたタスク',
-	'founderprogressbar-task-call-to-action' => '課題に移動',
+	'founderprogressbar-list-bonus-task-desc' => 'ボーナスタスクを開放するにはタスク一覧のタスクをすべて完了してください',
+	'founderprogressbar-task-call-to-action' => 'タスクに移動',
 	'founderprogressbar-page-add10-label' => '記事数を$1件にする',
 	'founderprogressbar-page-add10-description' => '新しいウィキがよいスタートを切れるようにするのに最も効果的な方法は、そのウィキが扱おうとしている話題に関するページを作成していくことです。1つもしくは2つ以上の段落があり、他のページへのリンクがあるページが、良いページと言えるでしょう。',
-	'founderprogressbar-themedesigner-visit-label' => '自分のテーマをカスタマイズ',
+	'founderprogressbar-themedesigner-visit-label' => 'ウィキのテーマをカスタマイズ',
+	'founderprogressbar-themedesigner-visit-description' => 'テーマデザイナでは、ウィキアのテーマを選んだり、簡易ツールを利用して独自のテーマを作成できます。独自のテーマにより、ウィキアをよりユニークなものにできます。',
+	'founderprogressbar-category-add3-label' => 'カテゴリ数を$1件にする',
 	'founderprogressbar-page-add20-label' => '記事数を$1件にする',
-	'founderprogressbar-category-edit-label' => 'カテゴリ ページを編集',
-	'founderprogressbar-gallery-add-label' => '写真ギャラリーを追加',
-	'founderprogressbar-video-add-label' => '動画を追加',
+	'founderprogressbar-page-add20-description' => '記事をさらに作成していき、このウィキアで扱っている話題についての総合的な情報源となるように成長させましょう。ただし、ただ単にページを作成するのではなく、その内容を良質なものすることも忘れないでください。',
+	'founderprogressbar-category-edit-label' => 'カテゴリページを編集する',
+	'founderprogressbar-category-edit-description' => 'カテゴリは、カテゴリ内のすべてのページへのリンクを表示するだけでなく、カテゴリページを編集して、そのカテゴリがどのようなものであるか、あるいはどのような種類のページをそのカテゴリに入れるべきかを知らせることもできます。また、カテゴリページを編集すると、そのカテゴリへのリンクが赤リンクから青リンクに変わります。',
+	'founderprogressbar-fb-connect-label' => 'Facebookコネクト',
+	'founderprogressbar-fb-connect-description' => 'あなたの活動をシェアしましょう！Facebookコネクトを利用し、あなたがウィキアで行っている活動をFacebookの友達とシェアできます。ウィキアでのどの行動をFacebookに投稿するかは設定で変更できます。このウィキアの管理者のいずれか1人がこの機能を有効にすれば、タスクは完了になります。',
+	'founderprogressbar-category-add5-label' => 'カテゴリ数を$1件にする',
+	'founderprogressbar-gallery-add-label' => '画像ギャラリーを追加する',
+	'founderprogressbar-gallery-add-description' => '画像ギャラリーは、多数の画像をページ内で展示形式で表示させるのに適しています。また、訪問者の興味を引き続ける方法として、ウィキ内で（例えばページごとに）異なる画像表示方式を組み合わせるのが効果的です。',
+	'founderprogressbar-video-add-label' => '動画を追加する',
+	'founderprogressbar-user-add5-label' => 'ユーザープロフィール数を5件にする',
+	'founderprogressbar-user-add5-description' => '良いウィキを支えるのは、良いコミュニティです。たくさんの編集者が活躍する最高のウィキにするための第一歩として、編集者数5人を目指しましょう！',
+	'founderprogressbar-recentchanges-visit-label' => '「最近の更新」を見てみる',
+	'founderprogressbar-blogpost-add-label' => 'ブログの記事を投稿する',
+	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

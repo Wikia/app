@@ -14,7 +14,7 @@ ve.ce.NodeStub = function VeCeNodeStub( model ) {
 	ve.ce.Node.call( this, model );
 };
 
-ve.inheritClass( ve.ce.NodeStub, ve.ce.Node );
+OO.inheritClass( ve.ce.NodeStub, ve.ce.Node );
 
 ve.ce.NodeStub.static.name = 'stub';
 

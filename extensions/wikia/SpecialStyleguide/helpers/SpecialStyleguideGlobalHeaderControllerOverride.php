@@ -138,4 +138,13 @@ class GlobalHeaderController extends WikiaController {
 		}
 		return $centralUrl;
 	}
+
+	/**
+	 * We're overriding the original GlobalHeaderController class from oasis modules. This listener is required.
+	 * I wish I could commit those lines anonymously :(
+	 */
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		return true;
+	}
+
 }

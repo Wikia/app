@@ -139,29 +139,13 @@ class RelatedPages {
 	protected function afterGet( $pages, $limit ){
 		wfProfileIn( __METHOD__ );
 
-		// ImageServing extension enabled, get images
 		$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
 		$images = $imageServing->getImages(1); // get just one image per article
 
-		// TMP: always remove last article to get a text snippeting working example
-		// macbre: removed as requested by Angie
-		//$images = array_slice($images, 0, $limit-1, true);
-
 		foreach( $pages as $pageId => $data ) {
-			if( isset( $images[$pageId] ) ) {
-				$image = $images[$pageId][0];
-				$data['imgUrl'] = $image['url'];
-
-				$this->pushData( $data );
-			}
-			else {
-				// no images, get a text snippet
-				$data['text'] = $this->getArticleSnippet( $pageId );
-
-				if ($data['text'] != '') {
-					$this->pushData( $data );
-				}
-			}
+			$data['imgUrl'] = isset( $images[$pageId] ) ? $images[$pageId][0]['url'] : null;
+			$data['text'] = $this->getArticleSnippet( $pageId );
+			$this->pushData( $data );
 			if (count($this->getData()) >= $limit) {
 				break;
 			}
@@ -328,45 +312,38 @@ class RelatedPages {
 	 * @return array
 	 */
 	protected function getCategoryRank() {
-		global $wgMemc;
+		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__);
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__);
-		}
-		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
-			wfProfileOut( __METHOD__ );
-			return $cache;
-		}
+		$results = WikiaDataAccess::cacheWithLock(
+			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__),
+			$this->categoryRankCacheTTL * 3600,
+			function () use ( $wgContentNamespaces ) {
+				$db = wfGetDB(DB_SLAVE);
+				$sql = ( new WikiaSQL() )
+					->SELECT( "COUNT(cl_to)" )->AS_("count")->FIELD('cl_to')
+					->FROM( 'categorylinks' )
+					->GROUP_BY( 'cl_to' )
+					->HAVING( 'count > 1' )
+					->ORDER_BY( ['count', 'desc'] );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$tables = array( "categorylinks" );
-		$joinSql = $this->getPageJoinSql( $dbr, $tables );
+				if( count($wgContentNamespaces) > 0 ) {
+					$join_cond = ( count($wgContentNamespaces) == 1)
+								? "page_namespace = " . intval(reset($wgContentNamespaces))
+								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
 
-		$res = $dbr->select(
-			$tables,
-			array( "cl_to", "COUNT(cl_to) AS count" ),
-			array(),
-			__METHOD__,
-			array(
-				"GROUP BY" => "cl_to",
-				"HAVING" => "count > 1",
-				"ORDER BY" => "count DESC"
-			),
-			$joinSql
+					$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
+				}
+
+				$rank = 1;
+				$results = $sql->runLoop($db, function(&$results, $row) use ( &$rank ) {
+					$results[$row->cl_to] = $rank;
+					$rank++;
+				});
+
+				return $results;
+			}
 		);
-		$results = array();
-
-		$rank = 1;
-		while($row = $dbr->fetchObject($res)) {
-			$results[$row->cl_to] = $rank;
-			$rank++;
-		}
-
-		$wgMemc->set( $cacheKey, $results, ( $this->categoryRankCacheTTL * 3600 ) );
 
 		wfProfileOut( __METHOD__ );
 		return $results;
@@ -425,7 +402,7 @@ class RelatedPages {
 	 */
 	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
 		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
-			$jsStaticPackages[] = 'relatedpages_js';
+			$jsStaticPackages[] = 'relatedpages_wikiamobile_js';
 			//css is in WikiaMobile.scss as AM can't concatanate scss files currently
 		}
 
@@ -433,8 +410,12 @@ class RelatedPages {
 	}
 
 	public static function onSkinAfterContent( &$text ){
-		if ( !F::app()->checkSkin( 'wikiamobile' ) ){
-			$text = '<!-- RelatedPages -->';
+		global $wgTitle;
+
+		$skin = RequestContext::getMain()->getSkin()->getSkinName();
+
+		if ( ( $skin === 'oasis' || $skin === 'monobook') && $wgTitle->getNamespace() !== NS_FILE ){
+			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 
 		return true;

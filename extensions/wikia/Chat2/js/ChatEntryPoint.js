@@ -157,19 +157,22 @@ var ChatEntryPoint = {
 		});
 	},
 
-	onClickChatButton: function(linkToSpecialChat) {
-		if (window.wgUserName) {
-			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
+	onClickChatButton: function( linkToSpecialChat ) {
+		'use strict';
+
+		var UserLoginModal = window.UserLoginModal;
+
+		if ( window.wgUserName ) {
+			window.open( linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures );
 		} else {
-			UserLoginModal.show({
-				persistModal: true,
+			UserLoginModal.show( {
+				origin: 'chat',
 				callback: ChatEntryPoint.onSuccessfulLogin
-			});
+			} );
 		}
 	},
 
 	onSuccessfulLogin: function(json) {
-		UserLoginModal.dialog.startThrobbing();
 		$.nirvana.sendRequest({
 			controller: 'ChatRail',
 			method: 'AnonLoginSuccess',
@@ -180,8 +183,6 @@ var ChatEntryPoint = {
 	},
 
 	onJoinChatFormLoaded: function( html ) {
-		UserLoginModal.dialog.stopThrobbing();
-		UserLoginModal.dialog.closeModal();
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
 			uiFactory.init( 'modal' ).then( function( uiModal ) {

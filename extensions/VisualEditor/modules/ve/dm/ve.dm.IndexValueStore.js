@@ -27,14 +27,14 @@ ve.dm.IndexValueStore = function VeDmIndexValueStore() {
  *
  * @method
  * @param {Object|string|Array} value Value to lookup or store
- * @param {string} [hash] Value hash. Uses ve.getHash( value ) if not provided.
+ * @param {string} [hash] Value hash. Uses OO.getHash( value ) if not provided.
  * @param {boolean} [overwrite=false] Overwrite the value in the store if the hash is already in use
  * @returns {number} The index of the value in the store
  */
 ve.dm.IndexValueStore.prototype.index = function ( value, hash, overwrite ) {
 	var index;
 	if ( typeof hash !== 'string' ) {
-		hash = ve.getHash( value );
+		hash = OO.getHash( value );
 	}
 	index = this.indexOfHash( hash );
 	if ( index === null || overwrite ) {

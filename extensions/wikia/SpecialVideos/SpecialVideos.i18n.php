@@ -27,6 +27,9 @@ $messages['en'] = array(
 	'specialvideos-remove-modal-title' => 'Delete video',
 	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
 
+	'specialvideos-filter-games' => 'Trending in Games',
+	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
+	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
 );
 
 $messages['qqq'] = array(
@@ -48,6 +51,10 @@ $messages['qqq'] = array(
 	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
+
+	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
+	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
+	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
 );
 
 $messages['de'] = array(

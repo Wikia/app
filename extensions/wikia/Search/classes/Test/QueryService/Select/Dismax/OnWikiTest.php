@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class OnWikiTest extends Wikia\Search\Test\BaseTest { 
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1058 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -97,6 +99,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09931 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -137,6 +141,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10161 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
@@ -190,6 +196,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1173 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerSpellcheck
 	 */
 	public function testRegisterSpellcheck() {
@@ -307,7 +315,9 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryFieldsString 
+	 * @group Slow
+	 * @slowExecutionTime 0.10199 ms
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryFieldsString
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
@@ -331,10 +341,18 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09878 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$this->_testGetQueryClausesStringArgs( null );
+		$this->_testGetQueryClausesStringArgs( true );
+		$this->_testGetQueryClausesStringArgs( false );
+	}
+
+	protected function _testGetQueryClausesStringArgs( $mainPage ) {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces', 'getPageId', 'getMainPage' ) );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -347,23 +365,40 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 123 ) )
 		;
 		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getPageId' )
+			->will   ( $this->returnValue( 88 ) )
+		;
+		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getNamespaces' )
 		    ->will   ( $this->returnValue( array( 0, 14 ) ) )
 		;
+		$mockConfig
+			->expects( $this->once() )
+			->method( 'getMainPage' )
+			->will( $this->returnValue( $mainPage ) );
+
 		$method = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getQueryClausesString' );
 		$method->setAccessible( true );
-		$this->assertEquals(
-				'((wid:123) AND ((ns:0) OR (ns:14)))',
-				$method->invoke( $mockSelect )
-		);
+		if ( $mainPage === null ) {
+			$expected = '((wid:123) AND (pageid:88) AND ((ns:0) OR (ns:14)))';
+		} elseif ( $mainPage == true ) {
+			$expected = '((wid:123) AND (pageid:88) AND ((ns:0) OR (ns:14)) AND (+is_main_page:true))';
+		} else {
+			$expected = '((wid:123) AND (pageid:88) AND ((ns:0) OR (ns:14)) AND (+is_main_page:false))';
+		}
+
+		$this->assertEquals( $expected, $method->invoke( $mockSelect ) );
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09852 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces', 'getMinArticleQuality' ) );
 		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
@@ -379,10 +414,16 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'getNamespaces' )
 		    ->will   ( $this->returnValue( [ 0, 14 ] ) )
 		;
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getMinArticleQuality' )
+			->will   ( $this->returnValue( 13 ) )
+		;
+
 		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\Dismax\OnWiki', 'getFilterQueryString' );
 		$reflspell->setAccessible( true );
 		$this->assertEquals(
-				'((ns:0) OR (ns:14)) AND (wid:123)',
+				'((ns:0) OR (ns:14)) AND (wid:123) AND (article_quality_i:[13 TO *])',
 				$reflspell->invoke( $mockSelect )
 		);
 	}

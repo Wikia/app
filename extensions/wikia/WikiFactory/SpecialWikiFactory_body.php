@@ -1056,6 +1056,9 @@ class ChangeLogPager extends TablePager {
 				return $sRetval;
 				break;
 
+			case "cl_text":
+				return '<div class="ChangeLogPager_cl_value">' . $value . '</div>';
+				break;
 			case "cl_timestamp":
 				return wfTimestamp( TS_EXIF, $value );
 				break;

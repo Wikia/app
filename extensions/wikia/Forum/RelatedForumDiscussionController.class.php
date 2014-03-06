@@ -76,8 +76,7 @@ class RelatedForumDiscussionController extends WikiaController {
 			$this->html = '';
 		}
 
-		$this->response->setCacheValidity( 0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER) );
-		$this->response->setCacheValidity( 6*60*60, 6*60*60, array(WikiaResponse::CACHE_TARGET_VARNISH) );
+		$this->response->setCacheValidity( 6*60*60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
 
 	public function purgeCache() {

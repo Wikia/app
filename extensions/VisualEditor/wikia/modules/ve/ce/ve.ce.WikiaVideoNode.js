@@ -20,7 +20,7 @@
 ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 
 	// Properties
-	this.$image = $image || this.$image || this.$;
+	this.$image = $image || this.$image || this.$element;
 	this.$wikiaVideoElements = $( [] );
 
 	// The minimum allowable width for the information overlay to be displayed
@@ -53,18 +53,18 @@ ve.ce.WikiaVideoNode.prototype.createOverlay = function () {
 	var $br, $overlay, $title, $views,
 		width = this.model.getAttribute( 'width' );
 
-	$overlay = this.$$( '<span>' )
+	$overlay = this.$( '<span>' )
 		.addClass( 'info-overlay' )
 		.css( 'max-width', width );
 
-	$title = this.$$( '<span>' )
+	$title = this.$( '<span>' )
 		.addClass( 'info-overlay-title ve-no-shield' )
 		.css( 'width', width - 60 )
 		.text( this.model.getAttribute( 'title' ) );
 
-	$br = this.$$( '<br>' );
+	$br = this.$( '<br>' );
 
-	$views = this.$$( '<span>' )
+	$views = this.$( '<span>' )
 		.addClass( 'info-overlay-views' )
 		.text( mw.message( 'videohandler-video-views', this.model.getAttribute( 'views' ) ).plain() );
 
@@ -89,14 +89,14 @@ ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
 			( width > this.playButtonLargeWidth ) ? 'large' : ''
 		);
 
-	$wrapper = this.$$( '<div>' )
+	$wrapper = this.$( '<div>' )
 		.addClass( 'Wikia-video-play-button ve-no-shield' )
 		.css( {
 			'line-height': this.model.getAttribute( 'height' ) + 'px',
 			'width': width
 		} );
 
-	$image = this.$$( '<img>' )
+	$image = this.$( '<img>' )
 		.addClass( 'sprite play' )
 		.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
 

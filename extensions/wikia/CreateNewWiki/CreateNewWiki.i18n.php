@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	// general messages
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
+	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
@@ -83,6 +83,8 @@ $messages['en'] = array(
 	'cnw-error-torblock' => 'Creating wikis via the Tor Network is not allowed.',
 	'cnw-error-bot' => 'We have detected that you may be a bot.  If we made a mistake, please contact us describing that you have been falsely detected as a bot, and we will aid you in creating your wiki: [http://www.wikia.com/Special:Contact/general Contact Us]',
 	'cnw-error-bot-header' => 'You have been detected as a bot',
+	'cnw-error-unconfirmed-email-header' => 'Your e-mail has not been confirmed',
+	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
 );
 
 /** Message documentation (Message documentation)
@@ -167,6 +169,8 @@ Be carefull to keep it short as there are 3 successive balloon tips to display i
 	'cnw-error-anon-user' => 'Error message when anon user tries to create new wiki.',
 	'cnw-error-bot' => 'Message describing you may be a bot and link to contact page',
 	'cnw-error-bot-header' => 'Message header for modal box',
+	'cnw-error-unconfirmed-email-header' => 'Message header for modal box',
+	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
 );
 
 /** Afrikaans (Afrikaans)
@@ -195,6 +199,14 @@ $messages['af'] = array(
 	'cnw-badword-header' => 'Pas op!',
 );
 
+/** Aragonese (aragonés)
+ * @author Willtron
+ */
+$messages['an'] = array(
+	'cnw-call-to-signup' => 'Rechistra-te aquí',
+	'cnw-userauth-marketing-heading' => 'No tiene garra cuenta?',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
@@ -205,7 +217,7 @@ $messages['af'] = array(
  * @author زكريا
  */
 $messages['ar'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|صانع الويكيات]]',
+	'createnewwiki-desc' => 'صانع الويكيات',
 	'cnw-next' => 'التالي',
 	'cnw-back' => 'رجوع',
 	'cnw-or' => 'أو',
@@ -276,7 +288,7 @@ $messages['ar'] = array(
  * @author Wikimistusik
  */
 $messages['avk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Tcicesiki va redura va wiki]]',
+	'createnewwiki-desc' => 'Tcicesiki va redura va wiki',
 	'cnw-next' => 'Radim-',
 	'cnw-back' => 'Dim-',
 	'cnw-or' => 'ok',
@@ -338,6 +350,7 @@ $messages['avk'] = array(
 $messages['az'] = array(
 	'cnw-next' => 'Növbəti',
 	'cnw-back' => 'Əvvəlki',
+	'cnw-or' => 'və ya',
 	'cnw-name-wiki-wiki' => 'Viki',
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
@@ -348,7 +361,7 @@ $messages['az'] = array(
  * @author Mucalexx
  */
 $messages['bar'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zan Dastejn vahram Wiki]]',
+	'createnewwiki-desc' => 'Assistent zan Dastejn vahram Wiki',
 	'cnw-next' => 'Naxde',
 	'cnw-back' => 'Zruck',
 	'cnw-or' => 'óder',
@@ -364,7 +377,7 @@ $messages['bar'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Съветник за създаване на уики]]',
+	'createnewwiki-desc' => 'Съветник за създаване на уики',
 	'cnw-next' => 'Продължаване',
 	'cnw-back' => 'Връщане',
 	'cnw-or' => 'или',
@@ -424,7 +437,7 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Skoazeller evit krouiñ wikioù]]',
+	'createnewwiki-desc' => 'Skoazeller evit krouiñ wikioù',
 	'cnw-next' => "War-lerc'h",
 	'cnw-back' => 'Distreiñ',
 	'cnw-or' => 'pe',
@@ -492,7 +505,7 @@ $messages['br'] = array(
  * @author Roxas Nobody 15
  */
 $messages['ca'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent de creació de wikis]]',
+	'createnewwiki-desc' => 'Assistent de creació de wikis',
 	'cnw-next' => 'Següent',
 	'cnw-back' => 'Enrere',
 	'cnw-or' => 'o',
@@ -631,7 +644,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistent zum Erstellen eines Wikis]]',
+	'createnewwiki-desc' => 'Assistent zum Erstellen eines Wikis',
 	'cnw-next' => 'Nächste',
 	'cnw-back' => 'Zurück',
 	'cnw-or' => 'oder',
@@ -713,7 +726,7 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikiyo newe vırazdar]]',
+	'createnewwiki-desc' => 'Wikiyo newe vırazdar',
 	'cnw-next' => 'Ver şo',
 	'cnw-back' => 'Peyser',
 	'cnw-or' => 'ya na',
@@ -754,7 +767,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Asistente de creación de wikis]]',
+	'createnewwiki-desc' => 'Asistente de creación de wikis',
 	'cnw-next' => 'Siguiente',
 	'cnw-back' => 'Atrás',
 	'cnw-or' => 'o',
@@ -855,6 +868,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
@@ -863,7 +877,7 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Ohjattu wikin luonti]]',
+	'createnewwiki-desc' => 'Ohjattu wikin luonti',
 	'cnw-next' => 'Seuraava',
 	'cnw-back' => 'Takaisin',
 	'cnw-or' => 'tai',
@@ -903,6 +917,7 @@ $messages['fi'] = array(
 	'cnw-desc-choose' => 'Valitse kategoria',
 	'cnw-desc-select-one' => 'Valitse yksi',
 	'cnw-desc-all-ages' => 'Kaikenikäisille',
+	'cnw-desc-tip-all-ages' => 'Käsitteleekö tämä wiki aihetta, jota kiinnostaa lapsia? Noudattaaksemme Yhdysvaltojen lakia pidämme seurantaa wikeistä, joiden aiheet viehättävät 12-vuotiaita tai nuorempia lapsia.',
 	'cnw-desc-default-lang' => 'Wikisi kieli tulee olemaan $1',
 	'cnw-desc-change-lang' => 'vaihda',
 	'cnw-desc-lang' => 'Kieli',
@@ -914,14 +929,16 @@ $messages['fi'] = array(
 	'cnw-welcome-instruction1' => 'Klikkaa painiketta alta aloittaaksesi sivujen lisäämisen wikiisi.',
 	'cnw-welcome-instruction2' => 'Näet tämän painikkeen joka puolella wikissäsi, käytä sitä kun haluat lisätä uuden sivun.',
 	'cnw-welcome-help' => 'Löydä vastauksia, neuvoa, ja muuta <a href="http://community.wikia.com">Community Central:sta</a>',
-	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme!  Ole hyvä ja yritä uudelleen tai <a href="/Special:Contact">ota yhteyttä</a> saadaksesi apua.', # Fuzzy
-	'cnw-error-general-heading' => 'Pahoittelumme', # Fuzzy
+	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme! Ole hyvä ja yritä uudelleen tai [[Special:Contact|ota meihin yhteyttä]] saadaksesi apua.',
+	'cnw-error-general-heading' => 'Pahoittelumme',
 	'cnw-badword-header' => 'Hei siellä',
 	'cnw-badword-msg' => 'Hei, vältä käyttämästä näitä rumia sanoja tai kiellettyjä sanoja Wikisi kuvauksesta: $1',
 	'cnw-error-wiki-limit-header' => 'Wikien enimmäis määrä saavutettu',
 	'cnw-error-wiki-limit' => 'Hei, olet rajoitettu luomaan {{PLURAL:$1|$1 wikin|$1 wikiä}} päivässä. Odota 24 tuntia ennen wikin luontia.',
 	'cnw-error-blocked-header' => 'Käyttäjätunnus estetty',
 	'cnw-error-blocked' => '$1 esti sinut. Syy oli: $2. (Eston ID valitusta varten: $3)',
+	'cnw-error-anon-user-header' => 'Ole hyvä ja kirjaudu sisään',
+	'cnw-error-anon-user' => 'Anonyymi käyttäjä ei voi luoda wikiä. [[Special:UserLogin|Kirjaudu sisään]] ja yritä uudelleen.',
 	'cnw-error-torblock' => 'Wikin luonti Tor-verkkoa käyttäen ei ole sallittu.',
 	'cnw-error-bot' => 'Havaitsimme että voit olla botti. Jos olemme tehneet virheen, ota yhteyttä kertoen että sinut on virheellisesti havaittu botiksi, ja me avustamme wikisi luonnissa: [http://www.wikia.com/Special:Contact/general Ota yhteyttä]',
 	'cnw-error-bot-header' => 'Sinut on havaittu botiksi',
@@ -931,7 +948,7 @@ $messages['fi'] = array(
  * @author EileenSanda
  */
 $messages['fo'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Vegleiðing í at upprætta eina Wiki]]',
+	'createnewwiki-desc' => 'Vegleiðing í at upprætta eina Wiki',
 	'cnw-next' => 'Næsta',
 	'cnw-back' => 'Aftur',
 	'cnw-or' => 'ella',
@@ -976,7 +993,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistant de création de wiki]]',
+	'createnewwiki-desc' => 'Assistant de création de wiki',
 	'cnw-next' => 'Suite',
 	'cnw-back' => 'Retour',
 	'cnw-or' => 'ou',
@@ -1048,7 +1065,7 @@ $messages['fr'] = array(
  * @author Vivaelcelta
  */
 $messages['gl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Asistente para a creación de wikis]]',
+	'createnewwiki-desc' => 'Asistente para a creación de wikis',
 	'cnw-next' => 'Seguinte',
 	'cnw-back' => 'Volver',
 	'cnw-or' => 'ou',
@@ -1120,7 +1137,7 @@ $messages['gl'] = array(
  * @author שומבלע
  */
 $messages['he'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|אשף יצירת ויקי]]',
+	'createnewwiki-desc' => 'אשף יצירת ויקי',
 	'cnw-next' => 'הבא',
 	'cnw-back' => 'הקודם',
 	'cnw-or' => 'או',
@@ -1173,7 +1190,7 @@ $messages['he'] = array(
  * @author TK-999
  */
 $messages['hu'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wikikészítő varázsló]]',
+	'createnewwiki-desc' => 'Wikikészítő varázsló',
 	'cnw-next' => 'Következő',
 	'cnw-back' => 'Vissza',
 	'cnw-or' => 'vagy',
@@ -1247,7 +1264,7 @@ $messages['hy'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente pro crear wikis]]',
+	'createnewwiki-desc' => 'Assistente pro crear wikis',
 	'cnw-next' => 'Sequente',
 	'cnw-back' => 'Retornar',
 	'cnw-or' => 'o',
@@ -1353,7 +1370,7 @@ $messages['inh'] = array(
  * @author Minerva Titani
  */
 $messages['it'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Procedura guidata per la creazione di una wiki]]',
+	'createnewwiki-desc' => 'Procedura guidata per la creazione di una wiki',
 	'cnw-next' => 'Avanti',
 	'cnw-back' => 'Indietro',
 	'cnw-or' => 'o',
@@ -1423,7 +1440,7 @@ $messages['it'] = array(
  * @author Wrightbus
  */
 $messages['ja'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|ウィキ作成ウィザード]]',
+	'createnewwiki-desc' => 'ウィキ作成ウィザード',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
 	'cnw-or' => 'または',
@@ -1536,7 +1553,7 @@ $messages['km'] = array(
  * @author 한글화담당
  */
 $messages['ko'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 만들기 마법사]]',
+	'createnewwiki-desc' => '위키 만들기 마법사',
 	'cnw-next' => '다음',
 	'cnw-back' => '뒤로',
 	'cnw-or' => '또는',
@@ -1718,7 +1735,7 @@ $messages['lt'] = array(
  * @author Rancher
  */
 $messages['mk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Помошник за создавање на вики]]',
+	'createnewwiki-desc' => 'Помошник за создавање на вики',
 	'cnw-next' => 'Следно',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -1818,7 +1835,7 @@ $messages['ml'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Pendeta penciptaan Wiki]]',
+	'createnewwiki-desc' => 'Pendeta penciptaan Wiki',
 	'cnw-next' => 'Berikutnya',
 	'cnw-back' => 'Sebelumnya',
 	'cnw-or' => 'atau',
@@ -1891,7 +1908,7 @@ $messages['ms'] = array(
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Veiviser for opprettelse av wiki]]',
+	'createnewwiki-desc' => 'Veiviser for opprettelse av wiki',
 	'cnw-next' => 'Neste',
 	'cnw-back' => 'Tilbake',
 	'cnw-or' => 'eller',
@@ -1972,9 +1989,10 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki Wizard wiki aanmaken]]',
+	'createnewwiki-desc' => 'Wiki Wizard wiki aanmaken',
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
 	'cnw-or' => 'of',
@@ -2034,6 +2052,8 @@ $messages['nl'] = array(
 	'cnw-error-wiki-limit' => "Hallo. U mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
 	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
+	'cnw-error-anon-user-header' => 'Meld u aan',
+	'cnw-error-anon-user' => "Het aanmaken voor wiki's is uitgeschakeld voor anonieme gebruikers. [[Special:UserLogin|Meld je aan]] en probeer opnieuw.",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
 	'cnw-error-bot' => 'We denken dat u wellicht een geautomatiseerd programma bent. Als deze aanname onjuist is, neem dan [http://www.wikia.com/Special:Contact/general contact met ons op], en geef aan waarop u denk dat u onterecht bent aangemerkt als een robot. Dit stelt ons in staat u verder te helpen met het aanmaken van uw wiki.',
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
@@ -2089,7 +2109,7 @@ $messages['pfl'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Kreator tworzenia wiki]]',
+	'createnewwiki-desc' => 'Kreator tworzenia wiki',
 	'cnw-next' => 'Dalej',
 	'cnw-back' => 'Wstecz',
 	'cnw-or' => 'lub',
@@ -2161,7 +2181,7 @@ $messages['pl'] = array(
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Creassion guidà ëd Wiki]]',
+	'createnewwiki-desc' => 'Creassion guidà ëd Wiki',
 	'cnw-next' => 'Apress',
 	'cnw-back' => 'André',
 	'cnw-or' => 'o',
@@ -2273,7 +2293,7 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
+	'createnewwiki-desc' => 'Assistente de criação de wikis',
 	'cnw-next' => 'Seguinte',
 	'cnw-back' => 'Anterior',
 	'cnw-or' => 'ou',
@@ -2347,7 +2367,7 @@ $messages['pt'] = array(
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Assistente de criação de wikis]]',
+	'createnewwiki-desc' => 'Assistente de criação de wikis',
 	'cnw-next' => 'Próximo',
 	'cnw-back' => 'Voltar',
 	'cnw-or' => 'ou',
@@ -2450,7 +2470,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'createnewwiki-desc' => "[[Special:CreateNewWiki|Procedure de ccrejazione d'a Uicchi]]",
+	'createnewwiki-desc' => "Procedure de ccrejazione d'a Uicchi",
 	'cnw-next' => 'Prossime',
 	'cnw-back' => 'Rrete',
 	'cnw-or' => 'o',
@@ -2497,7 +2517,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Мастер создания вики]]',
+	'createnewwiki-desc' => 'Мастер создания вики',
 	'cnw-next' => 'Далее',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -2575,7 +2595,7 @@ $messages['sl'] = array(
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Помоћник за стварање викија]]',
+	'createnewwiki-desc' => 'Помоћник за стварање викија',
 	'cnw-next' => 'Следеће',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'или',
@@ -2641,7 +2661,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Guide för att skapa en wiki]]',
+	'createnewwiki-desc' => 'Guide för att skapa en wiki',
 	'cnw-next' => 'Nästa',
 	'cnw-back' => 'Tillbaka',
 	'cnw-or' => 'eller',
@@ -2740,7 +2760,7 @@ $messages['te'] = array(
  * @author AnakngAraw
  */
 $messages['tl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Madyikerong panlikha ng Wiki]]',
+	'createnewwiki-desc' => 'Madyikerong panlikha ng Wiki',
 	'cnw-next' => 'Susunod',
 	'cnw-back' => 'Bumalik',
 	'cnw-or' => 'o',
@@ -2828,16 +2848,16 @@ $messages['tly'] = array(
  * @author Suelnur
  */
 $messages['tr'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki oluşturma sihirbazı]]',
+	'createnewwiki-desc' => 'Wiki oluşturma sihirbazı',
 	'cnw-next' => 'Sonraki',
 	'cnw-back' => 'Geri',
 	'cnw-or' => 'ya da',
 	'cnw-title' => 'Yeni bir wiki oluştur',
-	'cnw-name-wiki-headline' => "Wiki'yi Başlat",
+	'cnw-name-wiki-headline' => 'Bir Wiki Başlat',
 	'cnw-name-wiki-creative' => 'Wikia bir web sitesi oluşturmak için en iyi yerdir ve sevgi çerçevesinde topluluk büyür.',
 	'cnw-name-wiki-label' => 'Wikinizin adı',
 	'cnw-name-wiki-wiki' => 'Wiki',
-	'cnw-name-wiki-domain-label' => "Lütfen wiki'deki adresini ver",
+	'cnw-name-wiki-domain-label' => 'Lütfen Wiki adresini ekleyin',
 	'cnw-name-wiki-submit-error' => 'Oops! Devam et için yukarıdaki kutuların her ikisini de doldurmanız gerekir.',
 	'cnw-login' => 'Oturum aç',
 	'cnw-signup' => 'Hesap Oluştur',
@@ -2856,15 +2876,15 @@ $messages['tr'] = array(
 	'cnw-userauth-marketing-heading' => 'Hesabın yok mu?',
 	'cnw-userauth-marketing-body' => "Wikia'da bir wiki oluşturmak için üye olmanız gerekmektedir. Kayıt sadece bir dakika sürer!",
 	'cnw-userauth-signup-button' => 'Kaydol',
-	'cnw-desc-headline' => 'Wikiniz hakkında nedir?',
-	'cnw-desc-creative' => 'Konunuzun tarifi',
-	'cnw-desc-placeholder' => 'Bu wiki ana sayfanızda görünecektir.',
+	'cnw-desc-headline' => 'Wikiniz ne hakkında?',
+	'cnw-desc-creative' => 'Konuyu açıklayın',
+	'cnw-desc-placeholder' => 'Bu wikinizin ana sayfanızda görünecektir.',
 	'cnw-desc-tip1' => 'İpucu',
 	'cnw-desc-tip1-creative' => 'Wikinizin konusunu insanlara bir iki cümle ile anlatmak için bu alanı kullanın',
 	'cnw-desc-tip2' => 'Hişt',
 	'cnw-desc-tip2-creative' => 'Ziyaretçilerinize konu hakkında bazı özel bilgiler verin',
-	'cnw-desc-tip3' => 'Pro İpucu',
-	'cnw-desc-tip3-creative' => 'İnsanların sayfalarınızı düzenlemesi wikinizin büyümesini yardımcı olur, şimdi onlara haber verin',
+	'cnw-desc-tip3' => 'Ön İpucu',
+	'cnw-desc-tip3-creative' => 'İnsanların sayfalarınızı düzenlemesi wikinizin büyümesine yardımcı olur, şimdi onlara haber verin',
 	'cnw-desc-choose' => 'Bir kategori seç',
 	'cnw-desc-select-one' => 'Birini seç',
 	'cnw-desc-all-ages' => 'Tüm süreler',
@@ -2882,13 +2902,14 @@ $messages['tr'] = array(
 	'cnw-welcome-help' => 'Daha fazla cevap ve öneri bulabilmek için <a href="http://community.wikia.com">Topluluk Merkezini</a> ziyaret edin.',
 	'cnw-error-general' => 'Üzgünüz, ters giden bir şeyler var!  Lütfen tekrar deneyin veya yardım için  bizimle [[Special:Contact|iletişim]] kurun.',
 	'cnw-error-general-heading' => 'Özür dileriz',
-	'cnw-badword-header' => 'Oops!',
+	'cnw-badword-header' => 'Dur bakalım',
 	'cnw-badword-msg' => 'Merhaba, lütfen Wiki tanımınızda $1 gibi kötü kelimeler veya yasaklı kelimeler kullanmaktan kaçının.',
 	'cnw-error-wiki-limit-header' => 'Wiki sınırına ulaşıldı',
 	'cnw-error-wiki-limit' => 'Merhaba, günlük {{PLURAL:$1|$1 wiki oluşturma|$1 wiki oluşturma}} limiti bulunmaktadır. Başka bir wiki oluşturmadan önce 24 saat bekleyin.',
 	'cnw-error-blocked-header' => 'Hesabınız engellendi',
 	'cnw-error-blocked' => '$1 tarafından $2 gerekçesiyle engellendiniz. (Başvuru için referans numarası: $3)',
 	'cnw-error-anon-user-header' => 'Lütfen oturum açın',
+	'cnw-error-anon-user' => 'Wikilerde duyuru oluşturma devre dışı bırakılı. Lütfen [[Special:UserLogin|giriş yapın]] ve tekrar deneyin.',
 	'cnw-error-torblock' => 'Tor ağı üzerinden wikiler oluşturmaya izin verilmemektedir.',
 	'cnw-error-bot' => 'Sizin bir bot olabileceğinizi tespit ettik. Bir hata yaptıysanız, sizin yanlışlıkla bir bot olduğunuzu tespit etmiş olabiliriz. Wiki oluştururken size yardımcı olabilmemiz için bizimle [http://www.wikia.com/Special:Contact/general İletişime] geçin',
 	'cnw-error-bot-header' => 'Sizin bir bot olduğunuz tespit edilmiştir',
@@ -2898,7 +2919,7 @@ $messages['tr'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Вики ясау остаханәсе]]',
+	'createnewwiki-desc' => 'Вики ясау остаханәсе',
 	'cnw-next' => 'Киләсе',
 	'cnw-back' => 'Артка',
 	'cnw-or' => 'яки',
@@ -2967,7 +2988,7 @@ $messages['tt-cyrl'] = array(
  * @author Ua2004
  */
 $messages['uk'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Майстер створення вікі]]',
+	'createnewwiki-desc' => 'Майстер створення вікі',
 	'cnw-next' => 'Далі',
 	'cnw-back' => 'Назад',
 	'cnw-or' => 'або',
@@ -3051,7 +3072,7 @@ $messages['vep'] = array(
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Thuật sĩ tạo Wiki]]',
+	'createnewwiki-desc' => 'Thuật sĩ tạo Wiki',
 	'cnw-next' => 'Tiếp theo',
 	'cnw-back' => 'Trở lại',
 	'cnw-or' => 'hoặc',
@@ -3121,7 +3142,7 @@ $messages['vi'] = array(
 /** Chinese (中文)
  */
 $messages['zh'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki creation wizard]]',
+	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
 	'cnw-or' => 'or',
@@ -3176,11 +3197,12 @@ $messages['zh'] = array(
  * @author Liuxinyu970226
  * @author Sam Wang
  * @author TianyinLee
+ * @author User670839245
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|维基创建向导]]',
+	'createnewwiki-desc' => '维基创建向导',
 	'cnw-next' => '下一步',
 	'cnw-back' => '上一步',
 	'cnw-or' => '或',
@@ -3241,6 +3263,7 @@ $messages['zh-hans'] = array(
 	'cnw-error-blocked-header' => '帐户被封禁',
 	'cnw-error-blocked' => '您已被$1封禁。原因是：$2。（参考封禁ID：$3）',
 	'cnw-error-anon-user-header' => '请登录',
+	'cnw-error-anon-user' => '匿名用户不能创建维基。请先[[Special:UserLogin|登陆]]，然后再试。',
 	'cnw-error-torblock' => '不能使用Tor网络创建Wiki。',
 	'cnw-error-bot' => '我们发现您可能是一个及其软件。如果这是个错误，请联系并告诉我们您被误认为是一个机器人，然后让我们协助您创建Wiki：[http://www.wikia.com/Special:Contact/general 联系我们]',
 	'cnw-error-bot-header' => '您已被识别为机器人',
@@ -3254,7 +3277,7 @@ $messages['zh-hans'] = array(
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'createnewwiki-desc' => '[[Special:CreateNewWiki|Wiki 創建嚮導]]',
+	'createnewwiki-desc' => 'Wiki 創建嚮導',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
 	'cnw-or' => '或者',
@@ -3280,7 +3303,7 @@ $messages['zh-hant'] = array(
 	'cnw-userauth-headline' => '擁有帳戶嗎？',
 	'cnw-userauth-creative' => '登入',
 	'cnw-userauth-marketing-heading' => '沒有帳戶嗎？',
-	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可 註冊!', # Fuzzy
+	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可註冊!',
 	'cnw-userauth-signup-button' => '註冊',
 	'cnw-desc-headline' => '你的wiki是關於什麼？',
 	'cnw-desc-creative' => '描述您的主題',
@@ -3292,6 +3315,8 @@ $messages['zh-hant'] = array(
 	'cnw-desc-tip3-creative' => '讓人們知道他們可以編輯和增加頁面來幫助你的wiki 增長',
 	'cnw-desc-choose' => '選擇一個分類',
 	'cnw-desc-select-one' => '請選擇一項',
+	'cnw-desc-all-ages' => '所有年齡',
+	'cnw-desc-tip-all-ages' => '這個Wiki有關於孩子們感興趣的話題嗎？为了遵守美國法律，我們持續追縱直接與12歲及以下兒童相關主題的wiki。',
 	'cnw-desc-default-lang' => '你的 wiki 將使用$1',
 	'cnw-desc-change-lang' => '變更',
 	'cnw-desc-lang' => '語言',
@@ -3303,13 +3328,17 @@ $messages['zh-hant'] = array(
 	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',
 	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',
-	'cnw-error-general' => '創建你的 wiki 時發生錯誤，請稍後再試。', # Fuzzy
+	'cnw-error-general' => '哎呀，我們這邊出了一些問題 ！請重試，或 [[Special： Contact|聯絡我們]]以得到幫助。', # Fuzzy
 	'cnw-error-general-heading' => '抱歉',
+	'cnw-badword-header' => '哇',
 	'cnw-badword-msg' => '嗨，請不要使用這些不好的、被禁止的字詞在您的 Wiki 描述：$1',
 	'cnw-error-wiki-limit-header' => '到達 Wiki 限制',
 	'cnw-error-wiki-limit' => '您好，您受限於每天的 {{PLURAL:$1|$1 wiki creation|$1 wiki創建}} 數量。 請等待24小時之後再創建另一個wiki。.',
 	'cnw-error-blocked-header' => '帳戶被封禁',
 	'cnw-error-blocked' => '您的帳戶被 $1封禁。 封禁原因是 $2. (被封禁ID: $3)',
+	'cnw-error-anon-user-header' => '請登錄',
+	'cnw-error-anon-user' => '匿名用戶不能創建維基。請先[[Special:UserLogin|登入]]，然後再試。',
 	'cnw-error-torblock' => '不允許通過 Tor 網路創建 wiki 。',
+	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們弄錯了，請聯繫我們描述你被錯誤地檢測為機器人，我們將協助您創建您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯繫我們]',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
 );

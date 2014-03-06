@@ -231,7 +231,7 @@ var WikiaHubs = {
 				);
 			}
 		} else if ( node.closest( '.wikiahubs-slider' ).length > 0 ) {    // Slider
-			if ( node.is( '.wikia-mosaic-hero-image' ) ) {
+			if ( node.closest( '.wikia-mosaic-slider-region' ).length > 0 ) {
 				WikiaHubs.trackClick(
 					'hub-slider',
 					Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE,
@@ -240,7 +240,7 @@ var WikiaHubs = {
 					{},
 					e
 				);
-			} else if ( node.is( '.wikia-mosaic-thumb-image' ) ) {
+			} else if ( node.closest( '.wikia-mosaic-slide' ).length > 0 ) {
 
 				parentNode = node.closest( 'li' );
 				allNodes = node.closest( '.wikia-mosaic-thumb-region' ).find( 'li' );

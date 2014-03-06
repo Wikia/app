@@ -99,14 +99,12 @@
 					"ve.ui",
 					"ve.ui.Surface",
 					"ve.ui.Context",
-					"ve.ui.Frame",
 					"ve.ui.Toolbar",
-					"ve.ui.SurfaceToolbar",
 					"ve.ui.TargetToolbar",
-					"ve.ui.Window",
 					"ve.ui.WindowSet",
 					"ve.ui.Action",
-					"ve.ui.Trigger"
+					"ve.ui.Trigger",
+					"ve.ui.Command"
 				]
 			},
 			{
@@ -126,24 +124,12 @@
 				"classes": ["ve.ui.*Tool"]
 			},
 			{
-				"name": "Tool groups",
-				"classes": ["ve.ui.*ToolGroup"]
-			},
-			{
 				"name": "Inspectors",
 				"classes": ["ve.ui.*Inspector"]
 			},
 			{
-				"name": "Elements",
-				"classes": ["ve.ui.*Element"]
-			},
-			{
 				"name": "Widgets",
 				"classes": ["ve.ui.*Widget"]
-			},
-			{
-				"name": "Layouts",
-				"classes": ["ve.ui.*Layout"]
 			},
 			{
 				"name": "Dialogs",
@@ -157,8 +143,7 @@
 			{
 				"name": "Utilities",
 				"classes": [
-					"ve", "ve.EventEmitter", "ve.Registry", "ve.Factory",
-					"ve.Range", "ve.Element", "ve.EventSequencer"
+					"ve", "ve.Range", "ve.EventSequencer"
 				]
 			},
 			{
@@ -183,15 +168,61 @@
 		]
 	},
 	{
+		"name": "OOJS UI",
+		"groups": [
+			{
+				"name": "General",
+				"classes": [
+					"OO.ui",
+					"OO.ui.Element",
+					"OO.ui.Frame",
+					"OO.ui.Toolbar",
+					"OO.ui.Window",
+					"OO.ui.WindowSet",
+					"OO.ui.Dialog"
+				]
+			},
+			{
+				"name": "Factories",
+				"classes": ["OO.ui.*Factory"]
+			},
+			{
+				"name": "Tools",
+				"classes": ["OO.ui.*Tool"]
+			},
+			{
+				"name": "Elements",
+				"classes": ["OO.ui.*Element"]
+			},
+			{
+				"name": "Layouts",
+				"classes": ["OO.ui.*Layout"]
+			},
+			{
+				"name": "Tool groups",
+				"classes": ["OO.ui.*ToolGroup"]
+			},
+			{
+				"name": "Widgets",
+				"classes": ["OO.ui.*Widget"]
+			}
+		]
+	},
+	{
+		"name": "OOJS",
+		"groups": [
+			{
+				"name": "General",
+				"classes": [ "OO", "OO.EventEmitter", "OO.Factory", "OO.Registry" ]
+			}
+		]
+	},
+	{
 		"name": "Upstream",
 		"groups": [
 			{
 				"name": "jQuery",
 				"classes": ["jQuery", "jQuery.Event", "jQuery.Promise", "jQuery.Deferred", "jQuery.jqXHR", "QUnit"]
-			},
-			{
-				"name": "OOJS",
-				"classes": ["OO", "OO.*"]
 			},
 			{
 				"name": "JavaScript",

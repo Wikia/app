@@ -76,13 +76,15 @@ var AdTracker = function (log, tracker) {
 			'value: 0'
 		], 'debug', logGroup);
 
-		tracker.track({
-			eventName: 'liftium.slot3',
-			ga_category: 'slot3/' + slotsize.split(',')[0],
-			ga_action: slotname,
-			ga_label: provider,
-			trackingMethod: 'ad'
-		});
+		if (!window.wgAdDriverUseNewTracking) {
+			tracker.track({
+				eventName: 'liftium.slot3',
+				ga_category: 'slot3/' + slotsize.split(',')[0],
+				ga_action: slotname,
+				ga_label: provider,
+				trackingMethod: 'ad'
+			});
+		}
 
 		stats.allEvents += 1;
 		stats.interestingEvents += 1;
@@ -108,13 +110,15 @@ var AdTracker = function (log, tracker) {
 		toLog.push('[NOT TRACKED hopTime: ' + (hopTime / 1000) + ']');
 		log(toLog, 'debug', logGroup);
 
-		tracker.track({
-			eventName: 'liftium.hop3',
-			ga_category: category + '3/' + provider,
-			ga_action: 'slot ' + slotname,
-			ga_label: labelPrefix + formatTrackTime(hopTime),
-			trackingMethod: 'ad'
-		});
+		if (!window.wgAdDriverUseNewTracking) {
+			tracker.track({
+				eventName: 'liftium.hop3',
+				ga_category: category + '3/' + provider,
+				ga_action: 'slot ' + slotname,
+				ga_label: labelPrefix + formatTrackTime(hopTime),
+				trackingMethod: 'ad'
+			});
+		}
 
 		stats.allEvents += 1;
 		stats.interestingEvents += 1;

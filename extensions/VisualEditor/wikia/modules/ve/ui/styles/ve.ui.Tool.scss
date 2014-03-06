@@ -1,29 +1,33 @@
 @import "skins/oasis/css/core/color";
 
-.ve-ui-barToolGroup {
-	.ve-ui-tool-wikiaMediaInsert {
+.oo-ui-barToolGroup {
+	.oo-ui-tool-name-wikiaMediaInsert {
 		padding-left: .5em;
 		padding-right: .5em;
 		width: auto;
 
-		&:hover {
-			text-decoration: none;
-		}
-
-		.ve-ui-iconedElement-icon {
+		.oo-ui-iconedElement-icon {
 			display: inline-block;
 			margin-right: .3em;
 			vertical-align: middle;
 		}
 
-		.ve-ui-labeledElement-label {
+		.oo-ui-labeledElement-label {
 			display: inline;
 			font-size: .8em;
 			vertical-align: middle;
 		}
+
+		.oo-ui-tool-link:hover {
+			text-decoration: none;
+		}
+
+		.oo-ui-tool-title {
+			display: inline;
+		}
 	}
 }
 
-.ve-ui-toolGroup .ve-ui-tool .ve-ui-labeledElement-label {
+.oo-ui-toolGroup .oo-ui-tool .oo-ui-labeledElement-label {
 	color: $color-text;
 }

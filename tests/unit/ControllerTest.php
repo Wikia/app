@@ -23,6 +23,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	function testRenderView() {
+		$this->markTestSkipped('Refactor this unit test');
+
 		$result = F::app()->renderView('UnitTest', 'Index');
 		$this->assertEquals('Foo', $result);
 
@@ -41,6 +43,11 @@ class ControllerTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02133 ms
+	 * @group UsingDB
+	 */
 	function testWikiaLink() {
 		$this->assertTag (
 			array("tag" => "a"),

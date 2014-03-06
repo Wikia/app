@@ -6,7 +6,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -18,12 +18,12 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	// Properties
 	this.batch = 1;
-	this.input = new ve.ui.TextInputWidget( {
-		'$$': this.$$,
+	this.input = new OO.ui.TextInputWidget( {
+		'$': this.$,
 		'icon': 'search',
 		'placeholder': config.placeholder,
 		'value': config.value
@@ -31,10 +31,10 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	this.request = null;
 	this.requestMediaCallback = ve.bind( this.requestMedia, this );
 	this.timeout = null;
-	this.upload = new ve.ui.WikiaUploadWidget( { '$$': this.$$ } );
-	this.$outerWrapper = this.$$( '<div>' );
-	this.$inputWrapper = this.$$( '<div>' );
-	this.$uploadWrapper = this.$$( '<div>' );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$ } );
+	this.$outerWrapper = this.$( '<div>' );
+	this.$inputWrapper = this.$( '<div>' );
+	this.$uploadWrapper = this.$( '<div>' );
 
 	// Events
 	this.input.connect( this, { 'change': 'onInputChange' } );
@@ -42,21 +42,21 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	// Initialization
 	this.$inputWrapper
 		.addClass( 've-ui-wikiaMediaQueryWidget-queryWrapper' )
-		.append( this.input.$ );
+		.append( this.input.$element );
 	this.$uploadWrapper
 		.addClass( 've-ui-wikiaMediaQueryWidget-uploadWrapper' )
-		.append( this.upload.$ );
+		.append( this.upload.$element );
 	this.$outerWrapper
 		.addClass( 've-ui-wikiaMediaQueryWidget-wrapper' )
 		.append( this.$inputWrapper, this.$uploadWrapper );
-	this.$
+	this.$element
 		.addClass( 've-ui-wikiaMediaQueryWidget' )
 		.append( this.$outerWrapper );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaQueryWidget, OO.ui.Widget );
 
 /* Events */
 
@@ -76,7 +76,7 @@ ve.inheritClass( ve.ui.WikiaMediaQueryWidget, ve.ui.Widget );
  * Get the query input.
  *
  * @method
- * @returns {ve.ui.TextInputWidget} Query input
+ * @returns {OO.ui.TextInputWidget} Query input
  */
 ve.ui.WikiaMediaQueryWidget.prototype.getInput = function () {
 	return this.input;

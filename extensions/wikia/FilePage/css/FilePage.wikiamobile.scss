@@ -12,6 +12,20 @@
 }
 .fullImageLink {
 	margin-top: 10px;
+
+	//For videos with hardcoded inline width
+	>div {
+		width: 100% !important;
+
+		.innerWrapper {
+			max-width: 100%;
+		}
+	}
+
+	iframe, embed {
+		max-width: 100%;
+		height: auto;
+	}
 }
 .filehistory {
 	.videoInfo {

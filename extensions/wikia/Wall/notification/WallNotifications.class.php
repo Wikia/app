@@ -12,6 +12,11 @@
  */
 
 class WallNotifications {
+	/**
+	 * @var WikiaApp
+	 */
+	protected $app;
+
 	private $cachedUsers = array();
 
 	private $removedEntities;
@@ -44,7 +49,7 @@ class WallNotifications {
 			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
 			// we're using the same callback when we cannot aquire the lock, as we want to have the list of notifications
 			// even if we won't be able to store it in the cache
-			$this->lockAndSetData( $memcSync, $callback, $callback);
+			$memcSync->lockAndSetData( $callback, $callback );
 		}
 
 		if(empty($list)) {
@@ -523,7 +528,7 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		$this->lockAndSetData( $memcSync,
+		$memcSync->lockAndSetData(
 			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
@@ -599,7 +604,7 @@ class WallNotifications {
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
 
-				$this->lockAndSetData( $memcSync,
+				$memcSync->lockAndSetData(
 					function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
@@ -696,7 +701,7 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		$this->lockAndSetData( $memcSync,
+		$memcSync->lockAndSetData(
 			function() use( $memcSync, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
@@ -1005,46 +1010,6 @@ class WallNotifications {
 			$this->cachedUsers[$userId] = User::newFromId($userId);
 		}
 		return $this->cachedUsers[$userId];
-	}
-
-	/**
-	 * Modify the shared memcache entry after locking it. After this function gets the lock, it calls the $getDataCallback,
-	 * which should return the value to be put into the memcache. In case the lock cannot be acquired, $lockFailCallback
-	 * is called
-	 * If the $getDataCallback returns null or false, no memcache data is set
-	 * @param $memcSync - MemcacheSync instance
-	 * @param $getDataCallback - callback returning the data to be put in the memcache entry.
-	 * @param $lockFailCallback -
-	 */
-	protected function lockAndSetData( $memcSync, $getDataCallback, $lockFailCallback ) {
-		// Try to update the data $count times before giving up
-		$count = 5;
-		while ($count--) {
-			if( $memcSync->lock() ) {
-				$data = $getDataCallback();
-				$success = false;
-				// Make sure we have data
-				if (isset($data)) {
-					// See if we can set it successfully
-					if ($this->setData($memcSync, $data)) {
-						$success = true;
-					}
-				} else {
-					// If there's no data don't bother doing anything
-					$success = true;
-				}
-				$memcSync->unlock();
-				if ( $success ) {
-					break;
-				}
-			} else {
-				$this->random_msleep( $count );
-			}
-		}
-		// If count is -1 it means we left the above loop failing to update
-		if ($count == -1) {
-			$lockFailCallback();
-		}
 	}
 
 }

@@ -1,7 +1,5 @@
 /* VideoHandlers.scss */
 
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/background-opacity";
 
@@ -11,8 +9,8 @@
 }
 
 .Wikia-video-play-button {
-	@include opacity(65);
 	cursor: pointer;
+	opacity: .65;
 	position: absolute;
 	text-align: center;
 	z-index: 100;
@@ -22,7 +20,7 @@
 	}
 }
 
-/* Monobook doesn't have oasis sprite so we're using the old way of 
+/* Monobook doesn't have oasis sprite so we're using the old way of
  * giving the div a one-size-fits-all background image.  (bugid:95941);
  */
 .skin-monobook .Wikia-video-play-button {
@@ -41,19 +39,19 @@
 }
 
 a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
-    @include opacity(95);
+    opacity: .95;
 }
 
 .video .timer {
-    position: absolute;
-    right: 3px;
+    background-color: black;
+    border-radius: 4px;
     bottom: 3px;
     color: white;
     font-size: 11px;
     line-height: 14px;
-    background-color: black;
     padding: 1px 4px 1px 6px;
-    @include border-radius(4px);
+    position: absolute;
+    right: 3px;
 }
 
 .video {
@@ -64,12 +62,17 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 		display: block;
 		font-family: "Helvetica", "Arial", sans-serif;
 		font-size: 12px;
-		height: 40px;
+		height: 25px;
 		line-height: 17px;
-		margin-top: -40px;
+		margin-top: -25px;
 		padding: 4px 5px;
 		position: relative;
 		text-align: left;
+		// Add space for another line (view count)
+		&.info-overlay-with-views {
+			height: 40px;
+			margin-top: -40px;
+		}
 		.info-overlay-title {
 			display: block;
 			font-size: 14px;
@@ -79,6 +82,7 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 			padding-right: 3px;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		.info-overlay-duration {
 			display: inline-block;
@@ -86,6 +90,10 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 			font-size: 12px;
 			font-weight: bold;
 		}
+	}
+	// can be removed after article cache clears on 2/6/2014
+	.info-overlay-views {
+		display: none;
 	}
 	&:hover {
 		text-decoration: none;
@@ -97,10 +105,10 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 
 .Wikia-video-title-bar {
    background-color:black;
+   opacity: .5;
    position:absolute;
-   z-index:99;
    text-align:left;
-   @include opacity(50);
+   z-index:99;
 }
 
 .Wikia-video-title-bar .title {

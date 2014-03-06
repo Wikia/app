@@ -6,8 +6,11 @@ class WikiService extends WikiaModel {
 	const TOPUSER_CACHE_VALID = 10800;
 	const TOPUSER_LIMIT = 150;
 
-	const CACHE_VERSION = '4';
-	const MAX_WIKI_RESULTS = 250;
+	const CACHE_VERSION = '5';
+	const MAX_WIKI_RESULTS = 300;
+
+	const MOST_LINKED_CACHE_TTL = 86400; //24h
+	const MOST_LINKED_LIMIT = 50;
 
 	const FLAG_NEW = 1;
 	const FLAG_HOT = 2;
@@ -18,7 +21,17 @@ class WikiService extends WikiaModel {
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
-		1458396, //Abuse filter
+		/* Abuse filter users start */
+		519362,
+		3245469,
+		5309332,
+		4067247,
+		4865761,
+		4119511,
+		1458396,
+		15510531,
+		24039613
+		/* Abuse filter users start */
 	);
 
 	protected $cityVisualizationObject = null;
@@ -371,6 +384,24 @@ class WikiService extends WikiaModel {
 		return $images;
 	}
 
+	public function getWikiWordmark( $wikiId ) {
+		$url = '';
+		$history = WikiFactory::getVarByName( 'wgOasisThemeSettingsHistory', $wikiId );
+		$settings = unserialize( $history->cv_value );
+		if ( $settings !== false ) {
+			$currentSettings =  end( $settings );
+
+			if ( isset($currentSettings['settings']['wordmark-type']) && $currentSettings['settings']['wordmark-type'] == 'text' ) {
+				return '';
+			}
+
+			if ( isset( $currentSettings['settings'] ) && !empty( $currentSettings['settings']['wordmark-image-url'] ) ) {
+					$url = wfReplaceImageServer( $currentSettings['settings']['wordmark-image-url'], $currentSettings['timestamp'] );
+			}
+		}
+		return $url;
+	}
+
 	public function getWikiAdmins ($wikiId, $avatarSize, $limit = null) {
 		return WikiaDataAccess::cacheWithLock(
 			wfsharedMemcKey('get_wiki_admins', $wikiId, $avatarSize, $limit),
@@ -390,6 +421,55 @@ class WikiService extends WikiaModel {
 				return $admins;
 			}
 		);
+	}
+
+	/**
+	 * @param int $wikiId
+	 * @return array most linked articles
+	 */
+	public function getMostLinkedPages( $wikiId = 0 ) {
+		wfProfileIn( __METHOD__ );
+
+		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$memKey = $this->getMemcKeyMostLinked( $wikiId );
+		$mostLinked = $this->wg->Memc->get( $memKey );
+
+		if ( $mostLinked === false ) {
+			$mostLinked = [];
+			$dbname = WikiFactory::IDtoDB( $wikiId );
+			if ( !empty( $dbname ) ) {
+				$db = wfGetDB( DB_SLAVE, array(), $dbname );
+			} else {
+				$db = false;
+			}
+
+			if ( $db !== false ) {
+				$res = $db->select(
+					array( 'querycache', 'page' ),
+					array( 'page_id', 'qc_value', 'page_title' ),
+					array(
+						'qc_title = page_title',
+						'qc_namespace = page_namespace',
+						'page_is_redirect = 0',
+						'qc_type' => 'Mostlinked',
+						'qc_namespace' => '0'
+					),
+					__METHOD__,
+					array( 'ORDER BY' => 'qc_value DESC', 'LIMIT' => self::MOST_LINKED_LIMIT  )
+				);
+
+				while ( $row = $db->fetchObject( $res ) ) {
+					$mostLinked[ $row->page_id ] = [ 	"page_id" => $row->page_id,
+														"page_title" => $row->page_title,
+														"backlink_cnt" => $row->qc_value ];
+				}
+			}
+			$this->wg->Memc->set( $memKey, $mostLinked, self::MOST_LINKED_CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $mostLinked;
 	}
 
 	/**
@@ -527,19 +607,21 @@ class WikiService extends WikiaModel {
 				//this respects WF's data abstraction layer
 				//also: WF data is heavily cached
 				$name = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
-				$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
-				$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
-				$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-				$domain = $this->getDomainByWikiId( $wikiId );
+				if ( !empty( $name ) ) {
+					$hubName = ( !empty( $hub ) ) ? $hub : $this->getVerticalByWikiId( $wikiId );
+					$langCode = WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
+					$topic = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+					$domain = $this->getDomainByWikiId( $wikiId );
 
-				$results[] = array(
-					'id' => $wikiId,
-					'name' => ( !empty( $name ) ) ? $name : null,
-					'hub' => $hubName,
-					'language' => ( !empty( $langCode ) ) ? $langCode : null,
-					'topic' => ( !empty( $topic ) ) ? $topic : null,
-					'domain' => $domain
-				);
+					$results[ ] = array(
+						'id' => $wikiId,
+						'name' => $name,
+						'hub' => $hubName,
+						'language' => ( !empty( $langCode ) ) ? $langCode : null,
+						'topic' => ( !empty( $topic ) ) ? $topic : null,
+						'domain' => $domain
+					);
+				}
 			}
 
 			$this->wg->Memc->set( $cacheKey, $results, 86400 /* 24h */ );
@@ -718,7 +800,7 @@ class WikiService extends WikiaModel {
 					'city_list.city_id',
 					'city_list.city_title',
 					'city_list.city_url',
-					'city_visualization.city_lang_code',
+					'city_list.city_lang',
 					'city_visualization.city_vertical',
 					'city_visualization.city_headline',
 					'city_visualization.city_description',
@@ -744,7 +826,7 @@ class WikiService extends WikiaModel {
 				$item = array(
 					'name' => $row->city_title,
 					'url' => $row->city_url,
-					'lang' => $row->city_lang_code,
+					'lang' => $row->city_lang,
 					'hubId' => $row->city_vertical,
 					'headline' => $row->city_headline,
 					'desc' => $row->city_description,
@@ -775,6 +857,10 @@ class WikiService extends WikiaModel {
 
 	protected function getMemcKeyTotalImages( $wikiId ) {
 		return wfSharedMemcKey( 'wiki_total_images', $wikiId );
+	}
+
+	protected function getMemcKeyMostLinked( $wikiId ) {
+		return wfSharedMemcKey( 'wiki_most_linked', $wikiId );
 	}
 
 	public function invalidateCacheTotalImages( $wikiId = 0 ) {

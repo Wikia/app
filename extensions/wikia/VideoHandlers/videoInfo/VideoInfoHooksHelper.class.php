@@ -34,6 +34,9 @@ class VideoInfoHooksHelper {
 				if ( !$file->isLocal() ) {
 					$mediaService->clearCacheTotalPremiumVideos();
 				}
+				if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
+					VideoInfoHooksHelper::clearCategories( $file->getTitle() );
+				}
 			}
 		}
 
@@ -310,4 +313,81 @@ class VideoInfoHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Hook: Clear total videos by category cache when video is deleted, after checking if it was associated with
+	 * one of the categories filtered in Special Videos.
+	 * @param $wikiPage
+	 * @param User $user
+	 * @param $reason
+	 * @param $error
+	 * @return true
+	 */
+	public static function onArticleDelete( &$wikiPage, User &$user, &$reason, &$error ) {
+
+		$title = $wikiPage->getTitle();
+
+		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
+			VideoInfoHooksHelper::clearCategories( $title );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook: Clear total videos by category cache when video is updated, after checking if it was associated with
+	 * one of the categories filtered in Special Videos.
+	 * @param $article
+	 * @param $sectionanchor
+	 * @param $extraq
+	 * @return true
+	 */
+	public static function onArticleUpdateBeforeRedirect( $article, &$sectionanchor, &$extraq ) {
+
+		$title = $article->getTitle();
+
+		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
+			VideoInfoHooksHelper::clearCategories( $title );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Clear total videos by category cache when video categories are added via the Category Select extension,
+	 * after checking if it was associated with one of the categories filtered in Special Videos.
+	 * @param $title
+	 * @param $categories
+	 * @return true
+	 */
+	public static function onCategorySelectSave( $title, $categories ) {
+
+		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
+			VideoInfoHooksHelper::clearCategories( $title );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get all categories associated with a given video, compare them with the categories we're using as filters
+	 * on the Special:Videos page, and clear the cache for total videos in categories which match.
+	 * @param $title
+	 * @param null||array $categories
+	 */
+	private static function clearCategories( $title, $categories = null ) {
+		if ( is_null( $categories ) ) {
+			$categories = array_map(
+				function( $category ) { return explode( ":", $category )[1]; },
+				array_keys( $title->getParentCategories() ) );
+		}
+
+		$helper = new MediaQueryService();
+		foreach ( $categories as $category ) {
+			if ( in_array( $category, SpecialVideosHelper::$verticalCategoryFilters ) ) {
+				$helper->clearCacheTotalVideosByCategory( $category );
+			}
+		}
+	}
+
 }

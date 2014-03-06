@@ -504,6 +504,7 @@ $messages['an'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  * @author ترجمان05
@@ -538,6 +539,10 @@ $messages['ar'] = array(
 	'wikistats_latest_pageviews_subtitle' => 'في آخر {{PLURAL:$1|دقيقة واحدة|$1 دقائق}}',
 	'wikistats_pageviews' => 'عدد مشاهدات الصفحة حسب اسم النطاق في الشهر الواحد',
 	'wikistats_article_one_link' => 'المقالات التي تحتوي على وصلة داخلية واحدة على الأقل',
+	'wikistats_recently_active_wikians' => '$1 مؤخرًا {{PLURAL:$1|محرر مسجل نشيط|محررين مسجلين نشيطين|محررين مسجلين نشطاء|$1 محرر مسجل نشيط}}',
+	'wikistats_recently_absent_wikians' => '$1 مؤخرًا {{PLURAL:$1|محرر مسجل غائب|محررين مسجلان غائبين|محررون مسجلون غائبين|$1 محرر مسجل غائب}}',
+	'wikistats_active_wikians_subtitle' => 'تحريرات المحتوى هي فقط ما تحسب، بصرف النظر عن العمود "{{int:wikiastats_other}}"',
+	'wikistats_anon_wikians_subtitle' => 'تحريرات المحتوى هي فقط ما تحسب',
 	'wikistats_active_wikians_subtitle_info' => 'Δ = تغيير في الرتبة',
 	'wikistats_pageviews_subtext' => 'عدد مشاهدات الصفحة لهذا الشهر (كيلو = x 1000، ميغا = كيلو x 1000، غيغا = ميغا x 1000، تيرا = غيغا x 1000)',
 	'wikistats_pageviews_counting' => 'x% = التغيير مقارنة باليوم/الشهر السابق',
@@ -545,6 +550,9 @@ $messages['ar'] = array(
 	'wikistats_distrib_article_subtext' => 'يتم احتساب تعديلات المقالات فقط، دون التعديلات في صفحات النقاش، إلخ',
 	'wikistats_namespace_records' => 'سجلات قاعدة البيانات لكل مساحة الاسم',
 	'wikistats_page_edits' => 'أكثر المقالات تعديلا (مساحات أسماء المحتوى) (> 25 عملية تعديل)',
+	'wikistats_other_nspaces_edits' => 'أكثر الصفحات تعديلاً (مساحات أسماء أخرى) (&gt; 25 تعديل)',
+	'wikistats_page_edits_count' => '$1 {{PLURAL:$1|مقالة معدلة موجودة|مقالتين معدلتين موجودتين|مقالات معدلة موجودة|$1 مقالة أكثر تعديلاً موجودين}}',
+	'wikistats_other_nspaces_edits_count' => '$1 {{PLURAL:$1|مقالة معدلة موجودة|مقالتين معدلتين موجودتين|مقالات معدلة موجودة|$1 مقالة أكثر تعديلاً موجودين}}',
 	'wikistats_active_wikians_date' => 'إظهار التغييرات لآخر',
 	'wikistats_active_day' => 'يوم',
 	'wikistats_active_month' => 'شهر',
@@ -619,14 +627,21 @@ $messages['ar'] = array(
 	'wikistats_wikiurl' => 'عنوان URL:',
 	'wikistats_wikicreated' => 'تاريخ الإنشاء:',
 	'wikistats_wikilang' => 'اللغة:',
+	'wikistats_note_mainstats' => 'ملحوظة: أرقام الأشهر الأولى متدنية جدًا. لم يتم الاحتفاظ بتاريخ المراجعة دائمًا في الأيام الأولى.',
 	'wikistats_history_mainstats_value1' => 'x &lt; 0%',
 	'wikistats_history_mainstats_value2' => '0% &lt; x &lt; 25%',
 	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
 	'wikistats_history_mainstats_value4' => '&gt; 75%',
 	'wikistats_column_A' => 'مجموع المحررين المسجلين في الشهر الحالي (جميع النطاقات)',
 	'wikistats_column_B' => 'مجموع المحررين المسجلين في الشهر الحالي (نطاقات المحتوى)',
+	'wikistats_column_C' => 'عدد المحررين المسجلين الذين عدلوا أكثر من 5 مرات في الشهر الحالي (صفحات المحتوى)',
+	'wikistats_column_D' => 'عدد المحررين المسجلين الذين عدلوا أكثر من 100 مرات في الشهر الحالي (صفحات المحتوى)',
+	'wikistats_column_E' => 'عدد جميع صفحات المحتوى',
 	'wikistats_column_F' => 'المقالات الجديدة لكل يوم في الشهر الحالي',
+	'wikistats_column_G' => 'عدد تعديلات مقالات المحتوى',
+	'wikistats_column_H' => 'العدد الكلي لروابط الصور في مقالات المحتوى',
 	'wikistats_column_I' => 'مجموع عدد الصور التي تم رفعها',
+	'wikistats_column_J' => 'العدد الكلي من المقاطع المصورة المضمنة في صفحات المحتوى',
 	'wikistats_column_K' => 'مجموع عدد الفيديوهات التي تم تحميلها',
 	'wikistats_website' => 'موقع وب',
 	'wikistats_tables' => 'جداول',
@@ -634,8 +649,10 @@ $messages['ar'] = array(
 	'wikistats_back_to_mainpage' => 'انتقل إلى إحصاءات الصفحة الرئيسية',
 	'wikistats_back_to_prevpage' => 'رجوع',
 	'wikistats_trend_mean_info' => 'المتوسط = معدل حسابات مدى الأشهر الظاهرة',
+	'wikistats_trend_growth_info' => 'النمو = متوسط النمو الشهري على مدى الشهور المرئية',
 	'wikistats_trend_value' => 'القيمة',
 	'wikistats_trend_formula' => 'صيغة',
+	'wikistats_trend_ordered' => 'كل ويكي مرتبة حسب أرقام المقالات. <br /> اختر جزء من تلك الإحصائيات:',
 	'wikistats_trend_where_text' => 'أين:',
 	'wikistats_trend_all_wikia_text' => 'كل الويكيات',
 	'wikistats_always_selected' => '(دائماً محددة)',
@@ -1621,11 +1638,14 @@ $messages['ce'] = array(
 	'wikistats_panel_close_btn' => 'ДӀачӀагӀа',
 	'wikistats_active_year' => 'шо',
 	'wikistats_uploaded_images' => 'чуйаьккхина',
+	'wikistats_distrib_edits' => 'Нисдарш >=',
 	'wikistats_hide' => 'Къайлаяккха',
 	'wikistats_username' => 'Декъашхо',
+	'wikistats_edits' => 'нисдарш',
 	'wikistats_image' => 'сурт',
 	'wikistats_more_txt' => 'кхин дӀа',
 	'wikistats_days_ago' => 'де хьалха',
+	'wikistats_month_ago' => '$1 $2 хьалха',
 	'wikistats_wikicreated' => 'Кхоьллина:',
 	'wikistats_wikilang' => 'Мотт:',
 	'wikistats_trend_all_wikia_text' => 'Массо Википедеш',
@@ -2140,7 +2160,7 @@ $messages['diq'] = array(
 	'wikistats_image' => 'resım',
 	'wikistats_external' => 'teber',
 	'wikistats_namespaces' => 'cayê namey',
-	'wikistats_redirects' => 'Hetenayış',
+	'wikistats_redirects' => 'serçarnayışi',
 	'wikistats_main_namespace' => 'ser',
 	'wikistats_image_namespace' => 'resım',
 	'wikistats_page_requests' => 'Pela wastış',
@@ -2482,6 +2502,7 @@ Por favor [[Special:UserLogin|inicia sesión o crea una cuenta]] si todavía no 
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'wikistats' => 'Wikia Estatistikak',
@@ -2519,7 +2540,7 @@ $messages['eu'] = array(
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'irudi',
 	'wikistats_redirects' => 'birzuzenketa',
-	'wikistats_main_namespace' => 'nagusia', # Fuzzy
+	'wikistats_main_namespace' => 'nagusia',
 	'wikistats_image_namespace' => 'irudi',
 	'wikistats_visits' => 'bisita',
 	'wikistats_new_per_day' => 'berri<br />eguneko',
@@ -9648,11 +9669,40 @@ $messages['vi'] = array(
 	'wikistats_user_page_edits' => 'Người dùng:trang chỉnh sửa',
 	'wikistats_user_talk_edits' => 'Người dùng:chỉnh sửa Talk',
 	'wikistats_article_daily' => 'Chỉnh sửa/ngày',
+	'wikistats_image_uploads' => 'Hình ảnh tải lên',
+	'wikistats_video_uploads' => 'Video được tải lên',
+	'wikistats_per_namespace' => 'Một dữ liệu không gian tên',
+	'wikistats_months_edits' => 'Biên tập viên tháng này',
 	'wikistats_content' => 'nội dung',
+	'wikistats_content_editors' => 'Nội dung biên tập',
 	'wikistats_userns' => 'thành viên',
+	'wikistats_other_namespace' => 'khác<br />không gian tên',
+	'wikistats_restricted_page' => 'Trang đang hạn chế.<br />
+Bạn phải đăng nhập để xem số liệu thống kê Wikia.
+Hãy [[Special:UserLogin|đăng nhập hoặc tạo một tài khoản]] nếu bạn không có.',
+	'wikistats_code_version' => 'Phiên bản mã:',
+	'wikistats_mediawiki_stats' => 'Thống kê MediaWiki:',
+	'wikistats_statistics_information' => 'Thông tin thống kê',
+	'wikistats_nbr_kilo' => 'K = x 1000',
+	'wikistats_nbr_mega' => 'M = K x 1000',
+	'wikistats_nbr_giga' => 'G = M x 1000',
+	'wikistats_nbr_format' => 'Định dạng số:',
+	'wikistats_daily' => 'Số liệu thống kê hàng ngày (tháng hiện tại)',
+	'wikistats_month' => 'Số liệu thống kê hàng tháng',
 	'wikistats_current_month' => 'Tháng hiện tại',
+	'wikistats_see_also' => 'Xem thêm:',
+	'wikistats_language_top' => 'Hạng $1 ngôn ngữ',
+	'wikistats_language_all' => 'Tất cả các ngôn ngữ',
+	'wikistats_recordspager' => "Hiển thị '''$1''' để '''$2''' của '''$3''' hồ sơ.",
+	'wikistats_title' => 'Tiêu đề',
+	'wikistats_summary_data' => 'Tóm tắt dữ liệu',
+	'wikistats_namespaces_talk' => 'Thảo luận (bao gồm ý kiến)',
+	'wikistats_namespaces_top10list' => 'Danh sách Top 10',
+	'wikistats_namespaces_blog' => 'Blog (bao gồm các blog và blog ý kiến)',
+	'wikistats_namespaces_user' => 'Người dùng (bao gồm trang thảo luận người dùng)',
 	'wikistats_namespaces_maintenance' => 'Bảo trì (MediaWiki, bản mẫu, dự án)',
 	'wikistats_namespace_top' => 'Không gian tên được xác định trước',
+	'wikistats_error_malformed_date' => 'Lỗi: Ngày cho là bị thay đổi',
 );
 
 /** Wu (吴语)

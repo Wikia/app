@@ -29,13 +29,7 @@ class RailController extends WikiaController {
 
 		$this->getLazyRail();
 
-		$this->response->setCacheValidity(
-			86400 /* 24h */,
-			86400 /* 24h */,
-			array(
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -48,7 +42,7 @@ class RailController extends WikiaController {
 
 		$this->getLazyRail();
 
-		$this->response->setCacheValidity(null, null, []);
+		//$this->response->setCacheValidity(null, null, []); // NOP
 
 		wfProfileOut(__METHOD__);
 	}

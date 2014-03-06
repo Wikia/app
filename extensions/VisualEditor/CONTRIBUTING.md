@@ -129,6 +129,7 @@ here, for consistency. See [JSDuck/Tags](https://github.com/senchalabs/jsduck/wi
 * @until Text: Optional text.
 * @source Text
 * @context {Type} Optional text.
+* @inheritable
 * @param {Type} name Optional text.
 * @emits name
 * @returns {Type} Optional text.

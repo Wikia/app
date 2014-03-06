@@ -1,10 +1,8 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/box-sizing";
 
 $color-search-form-background: mix($color-page, #000, 97%);
@@ -175,9 +173,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 				display: none;
 			}
 			.search-filter-sort-overlay {
-				@include opacity(50);
 				background: $color-page;
 				height: 100%;
+				opacity: .5;
 				position: absolute;
 				margin-left: -10px;
 				padding-left: 10px;

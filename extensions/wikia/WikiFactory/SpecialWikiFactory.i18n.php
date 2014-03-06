@@ -336,6 +336,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
@@ -446,7 +447,8 @@ $messages['ar'] = array(
 	'closed-wiki' => 'ويكي مغلقة',
 	'closed-wiki-info' => 'تم إغلاق هذه الويكي',
 	'disabled-wiki-info' => 'هذه الويكي تم غلقها',
-	'closed-wiki-dump-exists' => 'بإمكانك إسترداد المحتويات إذا أردت.<br />(إذا تم مؤخرا إغلاق الويكي الخاصة بك، قد يستغرق إسترداد الملفات فترة من الزمن لكي يتم توليدها)', # Fuzzy
+	'closed-wiki-dump-exists' => 'بإمكانك استرداد المحتويات إذا أردت.<br />(إن أغلقت الويكي الخاصة بك مؤخرًا، قد يستغرق استرداد الملفات فترة من الزمن لكي يتم إنشاؤها)',
+	'closed-wiki-dump-links' => '[$1 صفحات حالية] (هذه النسخة أفضل لاستخدام البوت عادةً)<br />[$2 صفحات حالية وتاريخ] (تحذير: هذا الملف قد يكون كبيرًا جدًا)<br />[$3 صور] (تحذير: هذا الملف قد يكون كبيرًا جدًا)',
 	'closed-wiki-dump-noexists' => 'تم إغلاق هذه الويكي. ما بقي من المحتوى سيكون متاحا في غضون 24 ساعة. يرجى العودة.',
 	'closed-wiki-create-wiki' => 'إنشاء ويكي جديدة',
 	'closed-wiki-policy' => 'أنظر سياسة ويكيا حول الإغلاق',
@@ -499,6 +501,8 @@ $messages['az'] = array(
 	'awc-metrics-active' => 'aktiv',
 	'awc-metrics-closed' => 'bağlı',
 	'closed-reason' => 'Səbəb:',
+	'newwikisgraph-param-all' => 'Bütün',
+	'newwikisgraph-param-other' => 'Digər',
 );
 
 /** Bashkir (башҡортса)
@@ -2172,6 +2176,7 @@ $messages['gl'] = array(
 	'closed-wiki-info' => 'Este wiki foi pechado',
 	'disabled-wiki-info' => 'Este wiki foi desactivado',
 	'closed-wiki-dump-exists' => 'Podes recuperar o teu contido se queres.<br />(Se pecharon o teu wiki hai pouco, poida que a xeración dos ficheiros tarde uns intres)',
+	'closed-wiki-dump-links' => '[$1 Páxinas actuais] (esta versión normalmente é a mellor para usar o bot)<br />[$2 Páxinas actuais e historial] (atención: este ficheiro pode ser moi grande)<br />[$3 Imaxes] (atención: este ficheiro pode ser moi grande)',
 	'closed-wiki-dump-noexists' => 'Este wiki foi pechado. Haberá dispoñible unha copia do contido nun prazo de 24 horas. Por favor, volva máis adiante.',
 	'closed-wiki-create-wiki' => 'Crear un novo wiki',
 	'closed-wiki-policy' => 'Ollar a política de peche de Wikia',
@@ -3032,8 +3037,8 @@ $messages['mk'] = array(
 	'wf_city_public' => 'Статус',
 	'wf_city_lang' => 'Јазик',
 	'wf_cc_name' => 'Категорија',
-	'wikifactory_removevariable' => 'Отстрани ги податоците за викито од кешот',
-	'wikifactory_removeconfirm' => 'Податоците за викито се отстранети од кешот!',
+	'wikifactory_removevariable' => 'Отстрани ги податоците за викито од меѓускладот',
+	'wikifactory_removeconfirm' => 'Податоците за викито се отстранети од меѓускладот!',
 	'wikifactory-label-info' => 'Инфо',
 	'wikifactory-label-variables' => 'Променливи',
 	'wikifactory-label-variables2' => 'Општо',

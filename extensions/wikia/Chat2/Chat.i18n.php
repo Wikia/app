@@ -958,6 +958,17 @@ Por favor, contáctalo para más información.',
 	'chat-status-away' => 'Ausente',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
+	'chat-you-were-kicked' => '$1(e)k kanporatu zaitu.',
+	'chat-log-reason-undo' => 'desegin',
+	'chat-ban-undolink' => 'desegin',
+	'chat-user-menu-kick' => 'Kanporatu',
+);
+
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Dalba
@@ -1054,6 +1065,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
@@ -1072,6 +1084,14 @@ $messages['fi'] = array(
 	'chat-user-parted' => '$1 on poistunut chatista.',
 	'chat-user-blocked' => '$1 on estänyt käyttäjän $2.',
 	'chat-user-allow' => '$1 on sallinut käyttäjän $2.',
+	'chat-kick-you-need-permission' => 'Sinulla ei ole oikeutta häätää toista käyttäjää.',
+	'chat-kick-cant-kick-moderator' => 'Et voi häätää toista chat-valvojaa.',
+	'chat-user-was-kicked' => '$2 hääti käyttäjän $1 chatista.',
+	'chat-you-were-kicked' => '$1 hääti sinut chatista.',
+	'chat-user-was-banned' => '$1 määräsi käyttäjän $2 chattikieltoon $3',
+	'chat-you-were-banned' => '$1 määräsi sinut chattikieltoon.',
+	'chat-user-was-unbanned' => '$2 on päättänyt käyttäjän $1 chattikiellon.',
+	'chat-ban-cannt-undo' => 'Kielto on jo kumottu',
 	'chat-user-permanently-disconnected' => 'Yhteys on katkaistu. Tarkista Internet-yhteytesi ja päivitä selainikkunasi.',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 on tehnyt käyttäjästä <strong> $2 </strong> chat-valvojan.',
 	'chat-err-connected-from-another-browser' => 'Olet muodostanut yhteyden toisesta selaimesta. Tämä yhteys suljetaan.',
@@ -1086,6 +1106,8 @@ $messages['fi'] = array(
 	'chat-ban-modal-button-ok' => 'Lukitse tämä käyttäjä',
 	'chat-ban-modal-button-change-ban' => 'Muuta lukitusta',
 	'chat-ban-modal-button-cancel' => 'Peruuta',
+	'chat-ban-modal-change-ban-heading' => 'Muuta tämän käyttäjän chattikieltoa',
+	'chat-ban-modal-change-ban-label' => 'Muuta',
 	'chat-ban-modal-end-ban' => 'Poista lukitus',
 	'chat-log-reason-banchange' => 'Syytä ei annettu',
 	'chat-log-reason-banremove' => 'Syytä ei annettu',
@@ -1124,7 +1146,16 @@ $messages['fi'] = array(
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 	'group-bannedfromchat' => 'Estetty chatista',
 	'group-bannedfromchat-member' => 'chatista estetty',
+	'chat-ban-option-list' => '2 tuntia:2 hours,1 päivä:1 day,3 päivää:3 days,1 viikko:1 week,2 viikkoa:2 weeks,1 kuukausi:1 month,3 kuukautta:3 months,6 kuukautta:6 months,1 vuosi:1 year,ikuinen:infinite',
+	'chat-ban-log-change-ban-link' => 'Muuta kieltoa',
 	'chat-chatconnect-log' => 'Juttelukanavan yhteysloki',
+	'chat-chatconnect-log-entry' => 'yhdistetty sivuun $1 osoitteesta $2',
+	'chat-chatban-log' => 'Chattikieltoloki',
+	'chat-chatbanadd-log-entry' => '$1 määrättiin chattikieltoon määräajaksi ($2), joka päättyy $3',
+	'chat-chatbanremove-log-entry' => 'kumosi käyttäjän $1 chattikiellon',
+	'chat-chatbanchange-log-entry' => 'muutti käyttäjän $1 chattikiellon asetuksia. Eston kesto $2, päättyy $3',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|Tämä käyttäjä}} on tällä hetkellä chattikiellossa. Viimeisin chattikieltolokin merkintä viitteenä alla:',
+	'chat-browser-is-notsupported' => 'Selaimesi ei tue Chat-toimintoa. Käytä <a href="http://community.wikia.com/wiki/Help:Supported_browsers">uudempaa selainta</a> parhaimman kokemuksen saamiseksi.',
 	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
 );
@@ -1783,6 +1814,7 @@ $messages['khw'] = array(
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Infinity
+ * @author Leehoy
  * @author 아라
  * @author 한글화담당
  */
@@ -1791,6 +1823,9 @@ $messages['ko'] = array(
 	'chat-no-login' => '채팅을 하려면 로그인해야 합니다.',
 	'chat-no-login-text' => '채팅을 하기 위해서는 로그인이 필요합니다.',
 	'chat-default-topic' => '$1 채팅에 오신 것을 환영합니다',
+	'chat-private-messages' => '개인 메시지',
+	'chat-user-parted' => '$1님이 대화를 떠났습니다.',
+	'chat-user-blocked' => '$1님이 $2님을 차단했습니다.',
 	'chat-ban-cant-ban-moderator' => '다른 채팅 운영자를 추방할 수 없습니다.',
 	'chat-ban-already-banned' => '$1 사용자는 이미 이 위키의 채팅에서 추방되었습니다.',
 	'chat-ban-you-need-permission' => '다른 사용자를 추방하기 위해서는 $1 권한이 필요합니다.',
@@ -2249,6 +2284,7 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  * @author Tjcool007
@@ -2317,7 +2353,7 @@ Neem contact op met deze gebruiker voor meer informatie.',
 	'chat-user-menu-contribs' => 'Bijdragen',
 	'chat-user-menu-private' => 'Privébericht',
 	'chat-user-menu-give-chat-mod' => 'Status van chatmoderator weergeven',
-	'chat-user-menu-kick' => 'Verbannen',
+	'chat-user-menu-kick' => 'Kick',
 	'chat-user-menu-ban' => 'Verbannen',
 	'chat-user-menu-private-block' => 'Privéberichten blokkeren',
 	'chat-user-menu-private-allow' => 'Privéberichten toestaan',
@@ -2585,7 +2621,7 @@ $messages['ps'] = array(
 	'chat-log-reason-banremove' => 'هېڅ سبب نه دی ورکړ شوی',
 	'chat-live2' => 'ژوندی! بانډار',
 	'chat-start-a-chat' => 'بانډار پيلول',
-	'chat-join-the-chat' => 'بانډار کې ورګډېدل',
+	'chat-join-the-chat' => 'بانډار کې ورگډ شئ',
 	'chat-edit-count' => '{{PLURAL:$1|$1 سمون|$1 سمونونه}}',
 	'chat-member-since' => 'له $1 راهيسې غړی دی',
 	'chat-user-menu-message-wall' => 'پيغام دېوال',
@@ -3184,6 +3220,9 @@ Mangyaring makipag-ugnayan sa kanila para sa mas maraming kabatiran.',
  * @author Incelemeelemani
  */
 $messages['tr'] = array(
+	'chat' => 'Sohbet',
+	'chat-log-reason-undo' => 'geri al',
+	'chat-ban-undolink' => 'geri al',
 	'chat-start-a-chat' => 'Sohbeti Başlat',
 	'chat-join-the-chat' => 'Sohbete Katıl',
 	'chat-user-menu-message-wall' => 'Mesaj Duvarı',

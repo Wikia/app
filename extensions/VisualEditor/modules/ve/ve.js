@@ -5,8 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-( function ( oo ) {
-	var ve, hasOwn;
+( function () {
+	var ve, hasOwn, rSpecialChars, rWhiteSpace;
 
 	/**
 	 * Namespace for all VisualEditor classes, static methods and static properties.
@@ -22,22 +22,12 @@
 
 	hasOwn = Object.prototype.hasOwnProperty;
 
+	/* Static Properties */
+
+	rSpecialChars = /[^\w\d\s]/g;
+	rWhiteSpace = /\s/g;
+
 	/* Static Methods */
-
-	/**
-	 * Create an object that inherits from another object.
-	 *
-	 * @method
-	 * @until ES5: Object#create
-	 * @inheritdoc Object#create
-	 */
-	ve.createObject = Object.create;
-
-	/**
-	 * @method
-	 * @inheritdoc OO#inheritClass
-	 */
-	ve.inheritClass = oo.inheritClass;
 
 	/**
 	 * Checks if an object is an instance of one or more classes.
@@ -60,42 +50,15 @@
 
 	/**
 	 * @method
-	 * @inheritdoc OO#mixinClass
+	 * @inheritdoc OO#cloneObject
 	 */
-	ve.mixinClass = function ( targetFn, originFn ) {
-		oo.mixinClass( targetFn, originFn );
-
-		// Track mixins
-		targetFn.mixins = targetFn.mixins || [];
-		targetFn.mixins.push( originFn );
-	};
-
-	/**
-	 * Check if a constructor or object contains a certain mixin.
-	 *
-	 * @param {Function|Object} a Class or object to check
-	 * @param {Function} mixin Mixin to check for
-	 * @returns {boolean} Class or object uses mixin
-	 */
-	ve.isMixedIn = function ( subject, mixin ) {
-		// Traverse from instances to the constructor
-		if ( $.type( subject ) !== 'function' ) {
-			subject = subject.constructor;
-		}
-		return !!subject.mixins && subject.mixins.indexOf( mixin ) !== -1;
-	};
+	ve.cloneObject = OO.cloneObject;
 
 	/**
 	 * @method
 	 * @inheritdoc OO#cloneObject
 	 */
-	ve.cloneObject = oo.cloneObject;
-
-	/**
-	 * @method
-	 * @inheritdoc OO#cloneObject
-	 */
-	ve.getObjectValues = oo.getObjectValues;
+	ve.getObjectValues = OO.getObjectValues;
 
 	/**
 	 * @method
@@ -108,13 +71,13 @@
 	 * @method
 	 * @inheritdoc OO#compare
 	 */
-	ve.compare = oo.compare;
+	ve.compare = OO.compare;
 
 	/**
 	 * @method
 	 * @inheritdoc OO#copy
 	 */
-	ve.copy = oo.copy;
+	ve.copy = OO.copy;
 
 	/**
 	 * Copy an array of DOM elements, optionally into a different document.
@@ -193,86 +156,6 @@
 	ve.indexOf = $.inArray;
 
 	/**
-	 * Compute the union (duplicate-free merge) of a set of arrays.
-	 *
-	 * Arrays values must be convertable to object keys (strings)
-	 *
-	 * By building an object (with the values for keys) in parallel with
-	 * the array, a new item's existence in the union can be computed faster
-	 *
-	 * @param {Array...} arrays Arrays to union
-	 * @returns {Array} Union of the arrays
-	 */
-	ve.simpleArrayUnion = function () {
-		var i, ilen, j, jlen, arr, obj = {}, result = [];
-		for ( i = 0, ilen = arguments.length; i < ilen; i++ ) {
-			arr = arguments[i];
-			for ( j = 0, jlen = arr.length; j < jlen; j++ ) {
-				if ( !obj[arr[j]] ) {
-					obj[arr[j]] = true;
-					result.push( arr[j] );
-				}
-			}
-		}
-		return result;
-	};
-
-	/**
-	 * Compute the intersection of two arrays (items in both arrays).
-	 *
-	 * Arrays values must be convertable to object keys (strings)
-	 *
-	 * @param {Array} a First array
-	 * @param {Array} b Second array
-	 * @returns {Array} Intersection of arrays
-	 */
-	ve.simpleArrayIntersection = function ( a, b ) {
-		return ve.simpleArrayCombine( a, b, true );
-	};
-
-	/**
-	 * Compute the difference of two arrays (items in 'a' but not 'b').
-	 *
-	 * Arrays values must be convertable to object keys (strings)
-	 *
-	 * @param {Array} a First array
-	 * @param {Array} b Second array
-	 * @returns {Array} Intersection of arrays
-	 */
-	ve.simpleArrayDifference = function ( a, b ) {
-		return ve.simpleArrayCombine( a, b, false );
-	};
-
-	/**
-	 * Combine arrays (intersection or difference).
-	 *
-	 * An intersection checks the item exists in 'b' while difference checks it doesn't.
-	 *
-	 * Arrays values must be convertable to object keys (strings)
-	 *
-	 * By building an object (with the values for keys) of 'b' we can
-	 * compute the result faster
-	 *
-	 * @param {Array} a First array
-	 * @param {Array} b Second array
-	 * @param {boolean} includeB Include items in 'b'
-	 * @returns {Array} Combination (intersection or difference) of arrays
-	 */
-	ve.simpleArrayCombine = function ( a, b, includeB ) {
-		var i, ilen, isInB, bObj = {}, result = [];
-		for ( i = 0, ilen = b.length; i < ilen; i++ ) {
-			bObj[b[i]] = true;
-		}
-		for ( i = 0, ilen = a.length; i < ilen; i++ ) {
-			isInB = !!bObj[a[i]];
-			if ( isInB === includeB ) {
-				result.push( a[i] );
-			}
-		}
-		return result;
-	};
-
-	/**
 	 * Merge properties of one or more objects into another.
 	 * Preserves original object's inheritance (e.g. Array, Object, whatever).
 	 * In case of array or array-like objects only the indexed properties
@@ -290,59 +173,6 @@
 	 * @returns {Mixed} Modified version of first or second argument
 	 */
 	ve.extendObject = $.extend;
-
-	/**
-	 * Generates a hash of an object based on its name and data.
-	 * Performance optimization: http://jsperf.com/ve-gethash-201208#/toJson_fnReplacerIfAoForElse
-	 *
-	 * To avoid two objects with the same values generating different hashes, we utilize the replacer
-	 * argument of JSON.stringify and sort the object by key as it's being serialized. This may or may
-	 * not be the fastest way to do this; we should investigate this further.
-	 *
-	 * Objects and arrays are hashed recursively. When hashing an object that has a .getHash()
-	 * function, we call that function and use its return value rather than hashing the object
-	 * ourselves. This allows classes to define custom hashing.
-	 *
-	 * @param {Object} val Object to generate hash for
-	 * @returns {string} Hash of object
-	 */
-	ve.getHash = function ( val ) {
-		return JSON.stringify( val, ve.getHash.keySortReplacer );
-	};
-
-	/**
-	 * Helper function for ve.getHash which sorts objects by key.
-	 *
-	 * This is a callback passed into JSON.stringify.
-	 *
-	 * @param {string} key Property name of value being replaced
-	 * @param {Mixed} val Property value to replace
-	 * @returns {Mixed} Replacement value
-	 */
-	ve.getHash.keySortReplacer = function ( key, val ) {
-		var normalized, keys, i, len;
-		if ( val && typeof val.getHashObject === 'function' ) {
-			// This object has its own custom hash function, use it
-			val = val.getHashObject();
-		}
-		if ( !ve.isArray( val ) && Object( val ) === val ) {
-			// Only normalize objects when the key-order is ambiguous
-			// (e.g. any object not an array).
-			normalized = {};
-			keys = ve.getObjectKeys( val ).sort();
-			i = 0;
-			len = keys.length;
-			for ( ; i < len; i += 1 ) {
-				normalized[keys[i]] = val[keys[i]];
-			}
-			return normalized;
-
-		// Primitive values and arrays get stable hashes
-		// by default. Lets those be stringified as-is.
-		} else {
-			return val;
-		}
-	};
 
 	/**
 	 * Splice one array into another.
@@ -897,13 +727,28 @@
 		// object...), so we're detecting that and using the innerHTML hack described above.
 
 		// Create an invisible iframe
-		var newDocument, $iframe = $( '<iframe frameborder="0" width="0" height="0" />'),
+		var newDocument, newWindow,
+			$iframe = $( '<iframe frameborder="0" width="0" height="0" />'),
 			iframe = $iframe.get( 0 );
 		// Attach it to the document. We have to do this to get a new document out of it
 		document.documentElement.appendChild( iframe );
-		// Write the HTML to it
-		newDocument = ( iframe.contentWindow && iframe.contentWindow.document ) || iframe.contentDocument;
+		newWindow = ( iframe.contentWindow || iframe.contentDocument.defaultView );
+		newDocument = newWindow.document;
 		newDocument.open();
+		// Handle JavaScript errors inside the iframe. Note that the placement of this function
+		// here is intentional, it MUST be defined after the call to .open()!
+		newWindow.onerror = function( message ) {
+			ve.track( 'error.createdocumentfromhtml', {
+				message: message
+					.toLowerCase()
+					.replace( rSpecialChars, '' )
+					.replace( rWhiteSpace, '-' )
+			} );
+
+			// Suppress in-browser errors
+			return true;
+		};
+		// Write the HTML to it
 		newDocument.write( html ); // Party like it's 1995!
 		newDocument.close();
 		// Detach the iframe
@@ -923,6 +768,32 @@
 		}
 
 		return newDocument;
+	};
+
+	/**
+	 * Resolve a URL according to a given base.
+	 *
+	 * Passing a string for the base parameter causes a throwaway document to be created, which is
+	 * slow.
+	 *
+	 * @param {string} url URL to resolve
+	 * @param {HTMLDocument|string} base Document whose base URL to use, or base URL as a string
+	 * @returns {string} Resolved URL
+	 */
+	ve.resolveUrl = function ( url, base ) {
+		var doc, node;
+		if ( typeof base === 'string' ) {
+			doc = ve.createDocumentFromHtml( '' );
+			node = doc.createElement( 'base' );
+			node.setAttribute( 'href', base );
+			doc.head.appendChild( node );
+		} else {
+			doc = base;
+		}
+
+		node = doc.createElement( 'a' );
+		node.setAttribute( 'href', url );
+		return node.href;
 	};
 
 	/**
@@ -1009,26 +880,6 @@
 			function () { return navStart + perf.now(); } : Date.now;
 	}() );
 
-	// Add more as you need
-	ve.Keys = {
-		'UNDEFINED': 0,
-		'BACKSPACE': 8,
-		'DELETE': 46,
-		'LEFT': 37,
-		'RIGHT': 39,
-		'UP': 38,
-		'DOWN': 40,
-		'ENTER': 13,
-		'END': 35,
-		'HOME': 36,
-		'TAB': 9,
-		'PAGEUP': 33,
-		'PAGEDOWN': 34,
-		'ESCAPE': 27,
-		'SHIFT': 16,
-		'SPACE': 32
-	};
-
 	// Expose
 	window.ve = ve;
-}( OO ) );
+}() );

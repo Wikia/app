@@ -9,10 +9,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'LeGourmet TV',
 			'categories' => array( 'Lifestyle', 'Le Gourmet' )
 		),
-		141 => array(
-			'name' => 'HowCast',
-			'categories' => array( 'HowTo', 'Lifestyle' )
-		),
 		647 => array(
 			'name' => 'Howcast - Cars and Transportation',
 			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Cars', 'Transportation' )
@@ -200,12 +196,15 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'RealGravity';
 		$categories[] = $data['marketplaceName'];
+
+		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
+
+		$categories[] = 'RealGravity';
 
 		wfProfileOut( __METHOD__ );
 
-		return $categories;
+		return $this->getUniqueArray( $categories );
 	}
 
 	/**

@@ -1,5 +1,7 @@
 var SuggestModalWikiaHubsV2 = {
 	init: function () {
+		var UserLoginModal = window.UserLoginModal;
+
 		// show modal for suggest article
 		$('#suggestArticle').click(function () {
 			$().log(window.wgUserName);
@@ -17,7 +19,8 @@ var SuggestModalWikiaHubsV2 = {
 						};
 					}, false, true);
 				} else {
-					UserLoginModal.show({
+					UserLoginModal.show( {
+						origin: 'wikia-hubs',
 						callback: function () {
 							UserLogin.forceLoggedIn = true;
 							SuggestModalWikiaHubsV2.suggestArticle();

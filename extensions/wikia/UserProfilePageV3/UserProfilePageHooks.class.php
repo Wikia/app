@@ -6,9 +6,11 @@ class UserProfilePageHooks {
 	 *
 	 * @author Tomek Odrobny
 	 *
-	 * @param $title Title
+	 * @param Title $title
+	 * @param String $ptext
+	 *
+	 * @return Boolean
 	 */
-
 	static public function onSkinSubPageSubtitleAfterTitle($title, &$ptext) {
 		if (!empty($title) && $title->getNamespace() == NS_USER) {
 			$ptext = $title->getText();
@@ -16,8 +18,6 @@ class UserProfilePageHooks {
 
 		return true;
 	}
-
-
 
 	/**
 	 * @brief adds wiki id to cache and fav wikis instantly
@@ -30,14 +30,22 @@ class UserProfilePageHooks {
 			$wikiId = intval($wgCityId);
 
 			if ($user instanceof User && $wikiId > 0) {
-				$userIdentityBox = new UserIdentityBox(F::app(), $user, UserProfilePageController::MAX_TOP_WIKIS);
+				$userIdentityBox = new UserIdentityBox( $user );
 				$userIdentityBox->addTopWiki($wikiId);
 			}
 		}
 		return true;
 	}
 
-	//WikiaMobile hook to add assets so they are minified and concatenated
+	/**
+	 * @brief WikiaMobile hook to add assets so they are minified and concatenated
+	 *
+	 * @param Array $jsStaticPackages
+	 * @param Array $jsExtensionPackages
+	 * @param Array $scssPackages
+	 *
+	 * @return Boolean
+	 */
 	static public function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages){
 		$wg = F::app()->wg;
 		if ( $wg->Title->getNamespace() === NS_USER ) {
@@ -52,12 +60,15 @@ class UserProfilePageHooks {
 	static public function onSkinTemplateOutputPageBeforeExec( $skin, $template ) {
 		return self::addToUserProfile($skin, $template);
 	}
-	/**
-	 *
-	 * Monobook fallback for UUP
-	 *
-	 */
 
+	/**
+	 * @brief Monobook fallback for UUP
+	 *
+	 * @param Skin $skin
+	 * @param Object $tpl
+	 *
+	 * @return Boolean
+	 */
 	static function addToUserProfile(&$skin, &$tpl) {
 		wfProfileIn(__METHOD__);
 
@@ -142,7 +153,9 @@ class UserProfilePageHooks {
 	 * Don't send 404 status for user pages with filled in masthead (bugid:44602)
 	 * @brief hook handler
 	 *
-	 * @param $article Article
+	 * @param Article $article
+	 *
+	 * @return Boolean
 	 */
 	static public function onBeforeDisplayNoArticleText($article) {
 		global $UPPNamespaces;
@@ -152,7 +165,7 @@ class UserProfilePageHooks {
 		if ($title instanceof Title && in_array($title->getNamespace(), $UPPNamespaces)) {
 			$user = UserProfilePageHelper::getUserFromTitle($title);
 			if ( $user instanceof User && $user->getId() > 0) {
-				$userIdentityBox = new UserIdentityBox( F::app(), $user, UserProfilePageController::MAX_TOP_WIKIS );
+				$userIdentityBox = new UserIdentityBox( $user );
 				$userData = $userIdentityBox->getFullData();
 				if ( is_array( $userData ) && array_key_exists( 'showZeroStates', $userData ) ) {
 					if ( !$userData['showZeroStates'] ) {
@@ -160,6 +173,66 @@ class UserProfilePageHooks {
 					}
 				}
 			}
+		}
+		return true;
+	}
+
+
+	/**
+	 * @brief Hook on WikiFactory change and update wikis's visibility if the wgGroupPermissionsLocal is changed
+	 *
+	 * @param String $cv_name
+	 * @param Integer $city_id
+	 * @param String $value
+	 *
+	 * @return Boolean
+	 *
+	 * @author Evgeniy (aquilax)
+	 */
+	static public function onWikiFactoryChanged( $cv_name , $city_id, $value ) {
+		global $wgExternalDatawareDB;
+		if ( empty( $wgExternalDatawareDB ) ) {
+			// Exit if there is no Dataware DB
+			return true;
+		}
+		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
+			$is_restricted = false;
+			$permissions =  WikiFactory::getVarValueByName( 'wgGroupPermissionsLocal', $city_id );
+			if ( !empty( $value ) ) {
+				$permissions = WikiFactoryLoader::parsePermissionsSettings( $value );
+			}
+			if (
+				isset( $permissions['*'] ) &&
+				is_array( $permissions['*'] ) &&
+				isset( $permissions['*']['read'] ) &&
+				$permissions['*']['read'] === false
+			) {
+				$is_restricted = true;
+			}
+			UserProfilePageHelper::updateRestrictedWikis( (int)$city_id, $is_restricted );
+		}
+		return true;
+	}
+
+
+	/**
+	 * @brief Hook on WikiFactory value remove and update wikis's visibility if the wgGroupPermissionsLocal is removed
+	 *
+	 * @param String $cv_name
+	 * @param Integer $city_id
+	 *
+	 * @return Boolean
+	 *
+	 * @author Evgeniy (aquilax)
+	 */
+	static public function onWikiFactoryVariableRemoved( $cv_name , $city_id ) {
+		global $wgExternalDatawareDB;
+		if ( empty( $wgExternalDatawareDB ) ) {
+			// Exit if there is no Dataware DB
+			return true;
+		}
+		if ( $cv_name === 'wgGroupPermissionsLocal' ) {
+			UserProfilePageHelper::updateRestrictedWikis( (int)$city_id, false );
 		}
 		return true;
 	}

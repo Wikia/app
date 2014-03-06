@@ -138,15 +138,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!");
 					$timestamp = rand(0, 1000);
 				}
-			} else if(strtotime($timestamp) > strtotime("now -10 minute")){
-				// To prevent a race-condition, if the image is less than 10 minutes old, don't use cb-value.
-				// This will cause Akamai to only cache for 30 seconds.
-				$timestamp = "";
-			}
-
-			// Add Akamai versions, but only if there is some sort of caching number.
-			if($timestamp != ""){
-				$timestamp += $wg->AkamaiGlobalVersion + $wg->AkamaiLocalVersion;
 			}
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.

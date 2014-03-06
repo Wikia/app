@@ -14,8 +14,8 @@
 ve.ui = {
 	//'actionFactory' instantiated in ve.ui.ActionFactory.js
 	//'commandRegistry' instantiated in ve.ui.CommandRegistry.js
-	//'dialogFactory': Initialized in ve.ui.InspectorFactory.js
-	//'inspectorFactory': Initialized in ve.ui.InspectorFactory.js
-	//'toolFactory': Initialized in ve.ui.ToolFactory.js
 	//'triggerRegistry' instantiated in ve.ui.TriggerRegistry.js
+	//'toolFactory' instantiated in ve.ui.ToolFactory.js
+	'dialogFactory': new OO.Factory(),
+	'inspectorFactory': new OO.Factory()
 };

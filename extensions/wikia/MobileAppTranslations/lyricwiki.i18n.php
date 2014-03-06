@@ -315,18 +315,19 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'app-loading' => 'Bar beno...',
 	'app-tab-search' => 'Cı geyre',
-	'app-tab-about' => 'Heqdé cı',
+	'app-tab-about' => 'Heqa cı de',
 	'app-tab-browse' => 'A ra Z',
 	'app-async-error-title' => 'Hoooop',
 	'app-nonetwork-dialog-close-button' => 'TEMAM',
 	'search-go' => 'Şo!',
 	'login-username-hint' => 'Namey karberi',
 	'login-password-hint' => 'Parola',
-	'login-submit-button' => 'Dekewtış',
+	'login-submit-button' => 'Cıkewtış',
 	'about-heading' => 'LirikWiki',
 	'about-heading-tips' => 'Geyreno cı',
 );
@@ -377,6 +378,17 @@ $messages['es'] = array(
 	'gracenote-takedown' => '¡Qué mala suerte! En este momento no tenemos permiso para mostrar la letra completa de esta canción (esto sucede en menos del 1% de nuestras canciones). Por favor, inténtelo de nuevo la próxima semana.',
 	'lyrics-artist-byline' => 'por %s',
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'app-loading' => 'Kargatzen...',
+	'app-nonetwork-dialog-close-button' => 'Ados',
+	'search-hint-text' => "adib. 'John Lennon:Imagine'",
+	'login-username-hint' => 'Erabiltzaile izena',
+	'login-password-hint' => 'Pasahitza',
 );
 
 /** Persian (فارسی)
@@ -501,7 +513,7 @@ $messages['gl'] = array(
 	'about-heading-tips' => 'Procurando',
 	'about-tips-0' => 'Empece escribindo o nome dun artista para que a función de autocompletar faga as suxestións.',
 	'about-tips-1' => 'As imaxes da páxina principal son as 9 cancións do momento no iTunes.',
-	'about-heading-licensing' => 'Dereitos de autor',
+	'about-heading-licensing' => 'Dereitos de autoría',
 	'about-licensing-0' => 'Esta aplicación é legal ao 100%. As compensación páganse aos propietarios dos dereitos de autor das cancións a través de Gracenote, igual que na páxina web LyricWiki.',
 	'about-heading-feedback' => 'Comentarios',
 	'about-feedback-0' => 'Quere dicirnos algo sobre a aplicación? Envíe un correo electrónico a: %s',
@@ -1307,11 +1319,29 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'app-loading' => 'Yükleniyor...',
+	'app-tab-search' => 'Arama',
+	'app-tab-about' => 'Hakkında',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Geçici bağlantı sorunu. Lütfen daha sonra yeniden deneyin.',
+	'app-nonetwork-dialog-title' => 'Ağ kullanılamıyor',
+	'app-nonetwork-dialog-close-button' => 'TAMAM',
+	'search-go' => 'Git!',
+	'search-hint-text' => "örn. 'John Lennon:Hayal'",
+	'search-no-match-found' => 'Eşleşme bulunamadı.',
+	'search-no-match-found-query' => 'Aranan: %s',
+	'search-results-title' => 'Arama sonuçları: %s',
+	'login-label' => 'LyricWiki girişi',
 	'login-username-hint' => 'Kullanıcı adı',
 	'login-password-hint' => 'Parola',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Aranıyor',
 	'about-heading-licensing' => 'Telif hakları',
 );
 
@@ -1426,7 +1456,9 @@ $messages['zh-hans'] = array(
 	'about-credits' => '由%s',
 	'about-heading-tips' => '搜索',
 	'about-heading-licensing' => '版权',
+	'about-licensing-0' => '此app100%合法。',
 	'about-heading-feedback' => '反馈',
+	'about-feedback-0' => '希望告诉我们关于此app的一些东西？与我电邮联系：%s',
 	'about-heading-rate' => '请给此应用程序评一评！',
 	'about-rate-0-android' => '喜欢这个应用程序的话，请在Android市场给它五颗星！',
 	'about-rate-0-ios' => '喜欢这个应用程序的话，请在App Store给它五颗星！',

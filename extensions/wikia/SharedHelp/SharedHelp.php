@@ -111,7 +111,7 @@ class SharedHttp {
  * @return bool
  */
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgTitle, $wgOut, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
 	static $wasCalled = false;
@@ -322,12 +322,13 @@ function SharedHelpHook(&$out, &$text) {
 			$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
 			// "this text is stored..."
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
-				$text = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
+				$text = '<div class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
 			} else {
-				$text = $text . '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
+				$text = $text . '<div class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
 			}
 		}
 	}
@@ -346,6 +347,10 @@ function SharedHelpEditPageHook(&$editpage) {
 
 	// show message only when editing pages from Help namespace
 	if ( !($wgTitle instanceof Title) || ($wgTitle->getNamespace() != NS_HELP) ) {
+		return true;
+	}
+
+	if ( !SharedHelpArticleExists($wgTitle) ) {
 		return true;
 	}
 

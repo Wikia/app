@@ -6,7 +6,7 @@
 
 /**
  * @class
- * @extends ve.ui.Widget
+ * @extends OO.ui.Widget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -15,10 +15,10 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	var uploadButtonConfig;
 
 	// Parent constructor
-	ve.ui.Widget.call( this, config );
+	OO.ui.Widget.call( this, config );
 
 	uploadButtonConfig = {
-		'$$': this.$$,
+		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
 		'flags': ['constructive']
 	};
@@ -27,38 +27,38 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	}
 
 	// Properties
-	this.$uploadIcon = this.$$( '<span>' )
-		.addClass( 've-ui-icon-upload' );
+	this.$uploadIcon = this.$( '<span>' )
+		.addClass( 'oo-ui-icon-upload' );
 
-	this.$uploadLabel = this.$$( '<span>' )
+	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
-	this.uploadButton = new ve.ui.ButtonWidget( uploadButtonConfig );
+	this.uploadButton = new OO.ui.PushButtonWidget( uploadButtonConfig );
 
-	this.$form = this.$$( '<form>' );
-	this.$file = this.$$( '<input>' ).attr( {
+	this.$form = this.$( '<form>' );
+	this.$file = this.$( '<input>' ).attr( {
 		'type': 'file',
 		'name': 'file'
 	} );
 
 	// Events
-	this.$.on( 'click', ve.bind( this.onClick, this ) );
+	this.$element.on( 'click', ve.bind( this.onClick, this ) );
 	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
 	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
 
 	// Initialization
 	this.$form.append( this.$file );
-	this.$
+	this.$element
 		.addClass( 've-ui-wikiaUploadButtonWidget' )
 		.append( this.$uploadIcon )
 		.append( this.$uploadLabel )
-		.append( this.uploadButton.$ )
+		.append( this.uploadButton.$element )
 		.append( this.$form );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaUploadWidget, ve.ui.Widget );
+OO.inheritClass( ve.ui.WikiaUploadWidget, OO.ui.Widget );
 
 /* Events */
 
@@ -116,14 +116,16 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  * @method
  * @fires success
  */
-ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
-	var fileErrors;
+ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
+	var fileErrors,
+			form;
 
-	if ( !this.$file[0].files[0] ) {
+	file = file || this.$file[0].files[0];
+	if ( !file ) {
 		return;
 	}
 
-	fileErrors = this.constructor.static.validateFile( this.$file[0].files[0] );
+	fileErrors = this.constructor.static.validateFile( file );
 
 	if ( fileErrors.length ) {
 		mw.config.get( 'GlobalNotification' ).show(
@@ -136,13 +138,16 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
 		);
 	} else {
+		form = new FormData( document.createElement( 'form' ) );
+		form.append( 'file', file );
+
 		$.ajax( {
 			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
 			'type': 'post',
 			'cache': false,
 			'contentType': false,
 			'processData': false,
-			'data': new FormData( this.$form[0] ),
+			'data': form,
 			'success': ve.bind( this.onUploadSuccess, this ),
 			'error': ve.bind( this.onUploadError, this )
 		} );
@@ -190,7 +195,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadError = function () {
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
-	this.$.addClass( 've-ui-texture-pending' );
+	this.$element.addClass( 've-ui-texture-pending' );
 };
 
 /*
@@ -199,5 +204,5 @@ ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
  * @method
  */
 ve.ui.WikiaUploadWidget.prototype.hideUploadAnimation = function () {
-	this.$.removeClass( 've-ui-texture-pending' );
+	this.$element.removeClass( 've-ui-texture-pending' );
 };

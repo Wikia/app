@@ -56,12 +56,18 @@ Parameters:
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'partner-feed-achievements-leaderboard' => 'قائمة متصدري الإنجازات الخاصة بالويكيات',
 	'partner-feed-earned-badges' => 'الإنجازات المتحصل عليها حديثا في ويكي محددة',
+	'partner-feed-recent-blog-posts' => 'مشاركات المدونات المؤخرة مرتبطة بترويج',
+	'partner-feed-latest-images' => 'معرض لأحدث الصور التي تم رفعها',
+	'partner-feed-hotcontent' => 'محور / قطاعات "المحتوى الساخن" كما هي مرتبة حسب عدد المحررين',
+	'partner-feed-recent-blog-comments' => 'تعليقات حديثة متعلقة بمشاركة مدونة محددة',
 	'partner-feed-recent-changes' => 'أحدث التغييرات',
 	'partnerfeed' => 'قائمة الشركاء',
+	'error-no-article' => 'خطأ: لا "مقالة" معلمة نجحت',
 	'feed-title-blogposts' => 'أحدث معلقات المدونة',
 	'feed-title-recent-badges' => 'أحدث الشارات',
 	'feed-title-recent-images' => 'أحدث الصور',
@@ -72,6 +78,7 @@ $messages['ar'] = array(
 	'feed-title-hot-content' => 'محتوى المحور - $1',
 	'feed-title-blogcomments' => 'التعليقات على $1',
 	'feed-title-recentchanges' => 'أحدث التغييرات',
+	'partner-feed-error-no-blogpost-found' => '<b>خطأ:</b> مشاركة المدونة $1 غير موجودة.',
 );
 
 /** Bulgarian (български)
@@ -211,6 +218,13 @@ $messages['es'] = array(
 	'feed-title-blogcomments' => 'Comentarios de $1',
 	'feed-title-recentchanges' => 'Cambios recientes',
 	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> La entrada de blog $1 no existe.',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'all-blog-posts' => 'kategoria guztiak',
 );
 
 /** Persian (فارسی)

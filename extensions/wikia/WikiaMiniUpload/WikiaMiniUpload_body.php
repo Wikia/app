@@ -435,9 +435,11 @@ class WikiaMiniUpload {
 
 		$gallery = $wgRequest->getVal( 'gallery', '' );
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
-		$fck = $wgRequest->getCheck( 'ns', false );
 		$ns = $wgRequest->getVal( 'ns', '' );
 		$link = urldecode( $wgRequest->getVal( 'link', '' ) );
+
+		// Are we in the ck editor?
+		$ck = $wgRequest->getVal( 'ck' );
 
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
@@ -552,7 +554,7 @@ class WikiaMiniUpload {
 						return wfMsg( 'wmu-file-protected' );
 					}
 
-					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
+					$temp_file = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
 					if ( !empty($extraId) ) {
@@ -606,7 +608,7 @@ class WikiaMiniUpload {
 
 		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
 
-		if ( ( -2 == $gallery ) && !$fck ) {
+		if ( ( -2 == $gallery ) && !$ck ) {
 			// this went in from the single placeholder...
 			$name = $title->getText();
 			$size = $wgRequest->getVal('size');

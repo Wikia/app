@@ -21,7 +21,7 @@ ve.dm.TableSectionNode = function VeDmTableSectionNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.TableSectionNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.TableSectionNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

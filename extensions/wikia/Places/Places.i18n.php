@@ -53,6 +53,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -60,6 +61,9 @@ $messages['ar'] = array(
 	'places-desc' => 'يوفر دعم مرشد  <nowiki><place> و <places></nowiki> ليحدد جغرافيا الصفحات، كما يضع [[Special:Places|خريطة بالأماكن المحددة]]',
 	'places-in-category' => 'الأماكن في تصنيف $1',
 	'places-on-map' => '{{PLURAL:$1|مكان واحد|$1 أماكن}} على هذه الخريطة',
+	'places-modal-go-to-special' => 'عرض {{PLURAL:$1|مكان واحد|2=مكانين|$1 أماكن|$1 مكان}} ([[Special:Places|شاهد الكل]])',
+	'places-toolbar-button-tooltip' => 'اضغط لإضافة علامات جغرافية لهذه الصفحة',
+	'places-toolbar-button-address' => 'يرجى تقديم عنوان ليستخدم كإحدى العلامات جغرافية لهذه الصفحة',
 	'places-editor-search' => 'بحث',
 	'places-editor-title-create-new' => 'إضافة علامة جغرافية',
 	'places-editor-title-edit' => 'تعديل علامة جغرافية',
@@ -68,11 +72,20 @@ $messages['ar'] = array(
 	'places-geolocation-button-label' => 'إضافة مكان',
 	'places-geolocation-modal-add-title' => 'إضافة مكان',
 	'places-geolocation-modal-error-title' => 'خطأ',
+	'places-geolocation-modal-error' => 'وقع خطأ أثناء محاولة تحديد موقعك:<br />$1',
+	'places-geolocation-modal-not-available' => 'عفوًا! هذه الميزة متوفرة حاليًا للأجهزة المحمولة فقط.<br /><br />أتود تجربتها؟ قم بزيارة هذه الصفحة باستخدام جهازك المحمول المفضل.',
 	'places-error-no-article' => 'يجب أن تحدد صفحة',
 	'places-error-place-already-exists' => 'تم تحديد الموقع الجغرافي لهذه الصفحة بالفعل',
 	'places-updated-geolocation' => 'إضافة علامة جغرافية لهذه الصفحة',
 	'places-category-switch' => 'تعطيل تحديد الموقع الجغرافي',
 	'places-category-switch-off' => 'تمكين تحديد الموقع الجغرافي',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'places-geolocation-modal-error-title' => 'Xəta',
 );
 
 /** Breton (brezhoneg)
@@ -126,6 +139,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'places-editor-search' => 'Лаха',
+	'places-editor-geoposition' => 'ХӀинца йолу меттиг',
 );
 
 /** Czech (čeština)

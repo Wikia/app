@@ -56,6 +56,13 @@ $messages['ar'] = array(
 	'category-exhibition-display-new' => 'عرض معرض التصنيف',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'category-exhibition-subcategories-header' => 'Alt kateqoriyalar',
+);
+
 /** Bikol Central (Bikol Central)
  * @author Geopoet
  */
@@ -370,6 +377,16 @@ $messages['kn'] = array(
 	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Leehoy
+ */
+$messages['ko'] = array(
+	'category-exhibition-sorttype' => '정렬 기준:',
+	'category-exhibition-alphabetical' => '알파벳순',
+	'category-exhibition-recentedits' => '최근 수정',
+	'category-exhibition-subcategories-header' => '하위 분류',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(
@@ -632,7 +649,7 @@ $messages['sv'] = array(
 	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
 	'category-exhibition-media-header' => 'Media i kategorin "$1"',
-	'category-exhibition-blogs-header' => 'Blogg-inlägg',
+	'category-exhibition-blogs-header' => 'Blogginlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',
 );

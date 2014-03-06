@@ -14,9 +14,6 @@ window.Wikia = window.Wikia || {};
  *		scripts - comma-separated list of AssetsManager groups
  *		messages - comma-separated list of JSMessages packages (messages are registered automagically)
  * 		mustache - comma-separated list of paths to Mustache-powered templates
- *		ttl - cache period for both Varnish and Browser (in seconds), is overridden by varnishTTL and BrowserTTL
- *		varnishTTL - cache period for varnish and browser (in seconds)
- *		browserTTL - cache period for browser (in seconds)
  *		params - an object with all the additional parameters for the request (e.g. useskin, forceprofile, etc.)
  *		callback - function to be called with fetched JSON object
  *
@@ -48,9 +45,6 @@ window.Wikia.getMultiTypePackage = function(options) {
 		mustache = options.mustache,
 		callback = options.callback,
 		params = options.params,
-		ttl = options.ttl,
-		varnishTTL = options.varnishTTL,
-		browserTTL = options.browserTTL,
 		send = false;
 
 	if(typeof styles === 'string'){
@@ -82,15 +76,6 @@ window.Wikia.getMultiTypePackage = function(options) {
 	if(typeof params === 'object'){
 		request = $.extend(request, params);
 	}
-
-	if(ttl)
-		request.ttl = ~~ttl;
-
-	if(varnishTTL)
-		request.varnishTTL = ~~varnishTTL;
-
-	if(browserTTL)
-		request.browserTTL = ~~browserTTL;
 
 	if(send){
 		// add a cache buster

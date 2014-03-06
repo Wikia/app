@@ -36,6 +36,8 @@ class StyleguideComponents {
 	 */
 	const MESSAGES_FILE_SUFFIX = 'i18n.php';
 
+	const MEMCACHE_VERSION_KEY = '0.1';
+
 	/**
 	 * @var Array|null
 	 */
@@ -60,7 +62,7 @@ class StyleguideComponents {
 		$this->userLangCode = F::app()->wg->Lang->getCode();
 
 		static::$componentsNames = WikiaDataAccess::cache(
-			wfSharedMemcKey( __CLASS__, 'components_names_list', $this->userLangCode ),
+			wfSharedMemcKey( __CLASS__, 'components_names_list', self::MEMCACHE_VERSION_KEY, $this->userLangCode ),
 			\Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			['StyleguideComponents', 'loadComponentsFromFileSystem']
 		);
@@ -73,10 +75,13 @@ class StyleguideComponents {
 	 */
 	public function getAllComponents() {
 		$components = WikiaDataAccess::cache(
-			wfSharedMemcKey( __CLASS__, 'all_components_list_with_details', $this->userLangCode ),
+			wfSharedMemcKey( __CLASS__, 'all_components_list_with_details', self::MEMCACHE_VERSION_KEY, $this->userLangCode ),
 			Wikia\UI\Factory::MEMCACHE_EXPIRATION,
 			[ $this, 'getAllComponentsFromDirectories' ]
 		);
+
+		$this->initComponents( $components );
+		$this->includeComponentsAssets( $components );
 
 		return $components;
 	}
@@ -280,9 +285,7 @@ class StyleguideComponents {
 			}
 
 			if( !empty( $sampleArray[ 'assets' ] ) ) {
-				foreach( $sampleArray[ 'assets' ] as $assetUrl ) {
-					\Wikia::addAssetsToOutput( $assetUrl );
-				}
+				$sample->assets = $sampleArray[ 'assets' ];
 			}
 
 			$result[] = $sample;
@@ -409,5 +412,31 @@ class StyleguideComponents {
 	 */
 	public function getComponentsNames() {
 		return static::$componentsNames;
+	}
+
+	/**
+	 * @param $components
+	 */
+	private function includeComponentsAssets( $components ) {
+		foreach ( $components as $component ) {
+			if ( ! empty( $component['examples'] ) ) {
+				foreach ( $component['examples'] as $example ) {
+					if ( ! empty( $example->assets ) ) {
+						foreach ( $example->assets as $assetUrl ) {
+							\Wikia::addAssetsToOutput( $assetUrl );
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param $components
+	 */
+	private function initComponents( $components ) {
+		foreach ( $components as $component ) {
+			\Wikia\UI\Factory::getInstance()->init( $component['id'] );
+		}
 	}
 }

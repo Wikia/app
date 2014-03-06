@@ -14,26 +14,37 @@ $messages = array();
 $messages['en'] = array(
 	'poolcounter-desc' => 'MediaWiki client for the pool counter daemon',
 	'poolcounter-connection-error' => 'Error connecting to pool counter server: $1',
-	'poolcounter-read-error' => 'Error reading from pool counter server',
-	'poolcounter-write-error' => 'Error writing to pool counter server',
+	'poolcounter-read-error' => 'Error reading from pool counter server.',
+	'poolcounter-write-error' => 'Error writing to pool counter server.',
 	'poolcounter-remote-error' => 'Pool counter server error: $1',
 );
 
 /** Message documentation (Message documentation)
+ * @author Mormegil
  * @author Nedergard
  * @author Purodha
+ * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'poolcounter-desc' => '{{desc}}
-
+	'poolcounter-desc' => '{{desc|name=Pool Counter|url=http://www.mediawiki.org/wiki/Extension:PoolCounter}}
 A pool counter keeps track of the running processes on a cluster of processors, and may or may not grant a job access to the processing pool. (Note, the word "counter" relates to the counter in a shop, bank, or hotel, not to the verb "to count")',
-	'poolcounter-connection-error' => 'Used at least in the MediaWiki message view-pool-error:
-"Sorry, the servers are overloaded at the moment.
-Too many users are trying to view this page.
-Please wait a while before you try to access this page again.
+	'poolcounter-connection-error' => 'Used at least in the MediaWiki message {{msg-mw|view-pool-error}}.
 
-$1"',
+Used as fatal error message.
+
+Parameters:
+* $1 - error message which is returned by the server',
+	'poolcounter-read-error' => 'Used as error message.
+
+See also:
+* {{msg-mw|Poolcounter-write-error}}',
+	'poolcounter-write-error' => 'Used as error message.
+
+See also:
+* {{msg-mw|Poolcounter-read-error}}',
+	'poolcounter-remote-error' => 'Used as error message. Parameters:
+* $1 - error message which the server returned, or not-localized string "(no message given)".',
 );
 
 /** Afrikaans (Afrikaans)
@@ -45,7 +56,7 @@ $messages['af'] = array(
 	'poolcounter-write-error' => 'Fout met skryf aan die swembad toonbank bediener',
 );
 
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  * @author Juanpabl
  */
 $messages['an'] = array(
@@ -67,7 +78,18 @@ $messages['ar'] = array(
 	'poolcounter-remote-error' => 'خطأ خادم مشرف المجموعة: $1',
 );
 
-/** Asturian (Asturianu)
+/** Assamese (অসমীয়া)
+ * @author Gitartha.bordoloi
+ */
+$messages['as'] = array(
+	'poolcounter-desc' => 'পুল্‌ কাউণ্টাৰ ডিমনৰ বাবে মিডিয়াৱিকি ক্লায়েণ্ট',
+	'poolcounter-connection-error' => 'পুল কাউণ্টাৰ চাৰ্ভাৰলৈ সংযোগ স্থাপনত ত্ৰুটী হৈছে: $1',
+	'poolcounter-read-error' => 'পুল কাউণ্টাৰ চাৰ্ভাৰৰ পৰা পঢ়াত ত্ৰুটী হৈছে',
+	'poolcounter-write-error' => 'পুল কাউণ্টাৰ চাৰ্ভাৰত লিখাত ত্ৰুটী হৈছে',
+	'poolcounter-remote-error' => 'পুল কাউণ্টাৰ চাৰ্ভাৰ ত্ৰুটী: $1',
+);
+
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -78,7 +100,18 @@ $messages['ast'] = array(
 	'poolcounter-remote-error' => "Error del sirvidor del contador d'encuestes: $1",
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Bikol Central (Bikol Central)
+ * @author Geopoet
+ */
+$messages['bcl'] = array(
+	'poolcounter-desc' => 'An kliyente kan MediaWiki para sa pangrupong parabilang na daemon',
+	'poolcounter-connection-error' => 'Kasalaan na nagkokonekta sa pangrupong parabilang na serbidor: $1',
+	'poolcounter-read-error' => 'Kasalaan sa pagbabasa gikan sa pangrupong parabilang na serbidor.',
+	'poolcounter-write-error' => 'Kasalaan sa pagsusurat pasiring sa pangrupong parabilang na serbidor.',
+	'poolcounter-remote-error' => 'Kasalaan kan pangrupong parabilang na serbidor: $1',
+);
+
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
@@ -89,7 +122,18 @@ $messages['be-tarask'] = array(
 	'poolcounter-remote-error' => 'Памылка сэрвэра лічыльніка: $1',
 );
 
-/** Breton (Brezhoneg)
+/** Bengali (বাংলা)
+ * @author Nasir8891
+ */
+$messages['bn'] = array(
+	'poolcounter-desc' => 'পুল কাউন্টার ডেমনের জন্য মিডিয়াউইকি ক্লায়েন্ট',
+	'poolcounter-connection-error' => 'পুল কাউন্টার সার্ভার কানেকশন ত্রুটি: $1',
+	'poolcounter-read-error' => 'পুল কাউন্টার সার্ভার থেকে তথ্য পেতে সমস্যা হচ্ছে',
+	'poolcounter-write-error' => 'পুল কাউন্টার সার্ভার তথ্য সংযোজন ত্রুটি',
+	'poolcounter-remote-error' => 'পুল কাউন্টার সার্ভার ত্রুটি: $1',
+);
+
+/** Breton (brezhoneg)
  * @author Fulup
  */
 $messages['br'] = array(
@@ -100,7 +144,7 @@ $messages['br'] = array(
 	'poolcounter-remote-error' => 'Fazi servijer kanastell ar strollad : $1',
 );
 
-/** Bosnian (Bosanski)
+/** Bosnian (bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
@@ -111,7 +155,7 @@ $messages['bs'] = array(
 	'poolcounter-remote-error' => 'Greška na serveru pool brojača: $1',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Aleator
  * @author Gemmaa
  */
@@ -123,19 +167,66 @@ $messages['ca'] = array(
 	'poolcounter-remote-error' => 'Error de servidor de taulell de piscina:$1',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'poolcounter-desc' => 'Клиент MediaWiki poolcounter.py пулан доменан лорург',
+);
+
+/** Czech (česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'poolcounter-desc' => 'Klient do MediaWiki k démonovi řídícímu přístup ke clusteru',
+	'poolcounter-connection-error' => 'Chyba připojování k serveru řídícímu přístup ke clusteru: $1',
+	'poolcounter-read-error' => 'Chyba čtení ze serveru řídícího přístup ke clusteru',
+	'poolcounter-write-error' => 'Chyba zápisu na server řídící přístup ke clusteru',
+	'poolcounter-remote-error' => 'Chyba serveru řídícího přístup ke clusteru: $1',
+);
+
+/** Danish (dansk)
+ * @author HenrikKbh
+ */
+$messages['da'] = array(
+	'poolcounter-desc' => 'MediaWiki-klient til pool counter daemon',
+	'poolcounter-connection-error' => 'Fejl ved tilslutning til pool counter server:$1',
+	'poolcounter-read-error' => 'Fejl ved læsning fra pool counter server',
+	'poolcounter-write-error' => 'Fejl under skrivning til pool counter server',
+	'poolcounter-remote-error' => 'Pool counter server fejl: $1',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  * @author Purodha
  */
 $messages['de'] = array(
-	'poolcounter-desc' => 'Stellt einen Klienten für MediaWiki für den Hintergrundprozeß „poolcounter.py“ eines Computerclusters bereit',
+	'poolcounter-desc' => "Ermöglicht einen ''Client'' für den ''„PoolCounter“'' eines Computerclusters",
 	'poolcounter-connection-error' => 'Fehler beim Verbinden zum Server $1, auf dem sich das Zählwerk des Computerclusters befindet',
 	'poolcounter-read-error' => 'Fehler beim Lesen vom Server, auf dem sich das Zählwerk des Computerclusters befindet',
 	'poolcounter-write-error' => 'Fehler beim Schreiben auf dem Server, auf dem sich das Zählwerk des Computerclusters befindet',
 	'poolcounter-remote-error' => 'Fehler beim Server $1, auf dem sich das Zählwerk des Computerclusters befindet',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Swiss High German (Schweizer Hochdeutsch)
+ * @author Geitost
+ */
+$messages['de-ch'] = array(
+	'poolcounter-desc' => 'stellt einen Klienten für MediaWiki für den Hintergrundprozess „poolcounter.py“ eines Computerclusters bereit',
+);
+
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'poolcounter-desc' => 'Muşteriyan dê MediaWiki re amardeya arey',
+	'poolcounter-connection-error' => 'İrtibat de amargeya areya bırya: $1',
+	'poolcounter-read-error' => 'Arden dê hewız da amari de nusno xırab',
+	'poolcounter-write-error' => 'Wasterê hewız da amari de nusno xırab',
+	'poolcounter-remote-error' => 'Hewız da amariya waster bırya: $1',
+);
+
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -168,7 +259,7 @@ $messages['eo'] = array(
 	'poolcounter-remote-error' => 'Eraro de la grupokontila servilo: $1',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Crazymadlover
  * @author Translationista
  */
@@ -191,7 +282,7 @@ $messages['fa'] = array(
 	'poolcounter-remote-error' => 'خطای کارساز باجهٔ مخزن: $1',
 );
 
-/** Finnish (Suomi)
+/** Finnish (suomi)
  * @author Nedergard
  * @author Nike
  */
@@ -203,7 +294,7 @@ $messages['fi'] = array(
 	'poolcounter-remote-error' => 'Varantolaskuripalvelimen virhe: $1',
 );
 
-/** French (Français)
+/** French (français)
  * @author IAlex
  * @author Urhixidur
  */
@@ -215,7 +306,7 @@ $messages['fr'] = array(
 	'poolcounter-remote-error' => 'Erreur du serveur du compteur de groupement : $1',
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -226,7 +317,7 @@ $messages['frp'] = array(
 	'poolcounter-remote-error' => 'Èrror du sèrvor du comptor de ressôrses comenes : $1',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -252,6 +343,7 @@ $messages['gsw'] = array(
  * @author Sushant savla
  */
 $messages['gu'] = array(
+	'poolcounter-desc' => 'પૂલ કૌન્ટર ડાઍમન નો મિડિયા વિકિ ગ્રાહક',
 	'poolcounter-connection-error' => 'પૂલ ગણક સર્વર સાથે જોડાણમાં ત્રુટી : $1',
 	'poolcounter-read-error' => 'પૂલ ગણક સર્વર પર વાંચવામાં ત્રુટી',
 	'poolcounter-write-error' => 'પૂલ ગણક સર્વર પર લખવામાં ત્રુટી',
@@ -260,9 +352,10 @@ $messages['gu'] = array(
 
 /** Hebrew (עברית)
  * @author Amire80
+ * @author Guycn2
  */
 $messages['he'] = array(
-	'poolcounter-desc' => 'לקוח מדיה ויקי לשרת דלפק מאגר',
+	'poolcounter-desc' => 'לקוח מדיה־ויקי לשרת דלפק מאגר',
 	'poolcounter-connection-error' => 'שגיאת התחברות לשרת דלפק מאגר: $1',
 	'poolcounter-read-error' => 'שגיאת קריאה משרת דלפק מאגר',
 	'poolcounter-write-error' => 'שגיאת כתיבה לשרת דלפק מאגר',
@@ -276,7 +369,7 @@ $messages['hi'] = array(
 	'poolcounter-remote-error' => 'पूल काउंटर सर्वर त्रुटि: $1',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
@@ -287,7 +380,7 @@ $messages['hsb'] = array(
 	'poolcounter-remote-error' => 'Zmylk serwera skupinskeho ličaka: $1',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Glanthor Reviol
  */
 $messages['hu'] = array(
@@ -298,7 +391,7 @@ $messages['hu'] = array(
 	'poolcounter-remote-error' => 'Pool counter szerver hiba: $1',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -336,14 +429,14 @@ $messages['ie'] = array(
  * @author Lam-ang
  */
 $messages['ilo'] = array(
-	'poolcounter-desc' => 'Kliente ti mediaWiki para iti panag-bliang ti nairaman a daemon',
-	'poolcounter-connection-error' => 'Biddut ti panakaikabit ti nairaman a panagbilang ti server: $1',
-	'poolcounter-read-error' => 'Biddut ti pinagbasa manipud idiay nairaman a panagbilang ti server',
-	'poolcounter-write-error' => 'Biddut ti pinagsurat idiay nairaman a panagbilang ti server',
+	'poolcounter-desc' => 'Kliente ti MediaWiki para iti panag-bliang ti nairaman a daemon',
+	'poolcounter-connection-error' => 'Biddut ti pannakaikabit ti nairaman a panagbilang ti server: $1',
+	'poolcounter-read-error' => 'Biddut ti panagbasa manipud idiay nairaman a panagbilang ti server.',
+	'poolcounter-write-error' => 'Biddut ti panagsurat idiay nairaman a panagbilang ti server.',
 	'poolcounter-remote-error' => 'Biddut ti nairaman a panagbilang ti server: $1',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author F. Cosoleto
  */
 $messages['it'] = array(
@@ -356,20 +449,44 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Shirayuki
  */
 $messages['ja'] = array(
-	'poolcounter-desc' => 'プールカウンター・デーモン poolcounter.py の MediaWiki クライアント',
-	'poolcounter-connection-error' => 'プールカウンター・サーバーへの接続中にエラー: $1',
-	'poolcounter-read-error' => 'プールカウンター・サーバーからの読み込み中にエラー',
-	'poolcounter-write-error' => 'プールカウンター・サーバーへの書き込み中にエラー',
-	'poolcounter-remote-error' => 'プールカウンター・サーバーのエラー: $1',
+	'poolcounter-desc' => 'プール カウンター デーモン poolcounter.py の MediaWiki クライアント',
+	'poolcounter-connection-error' => 'プール カウンター サーバーに接続する際にエラーが発生しました: $1',
+	'poolcounter-read-error' => 'プール カウンター サーバーから読み込む際にエラーが発生しました。',
+	'poolcounter-write-error' => 'プール カウンター サーバーに書き込む際にエラーが発生しました。',
+	'poolcounter-remote-error' => 'プール カウンター サーバーのエラー: $1',
+);
+
+/** Javanese (Basa Jawa)
+ * @author NoiX180
+ */
+$messages['jv'] = array(
+	'poolcounter-desc' => "Klièn MediaWiki kanggo daèmon ''pool counter''",
+	'poolcounter-connection-error' => "Kasalahan ngubungaké nèng sasana ''pool counter'': $1",
+	'poolcounter-read-error' => "Kasalahan maca saka sasana ''pool counter''",
+	'poolcounter-write-error' => "Ora bisa nulis nèng sasana ''counter pool''",
+	'poolcounter-remote-error' => "Kasalahan sasana ''counter pool'': $1",
+);
+
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'poolcounter-desc' => 'MediaWiki-ს კლიენტი პულის მრიცხველის დაემონისთვის',
+	'poolcounter-connection-error' => 'შეცდომა პულის მრიცხველის სერვერთან დაკავშირებისას: $1',
+	'poolcounter-read-error' => 'პულის მრიცხველის სერვერის წაკითხვის შეცდომა',
+	'poolcounter-write-error' => 'ჩანაწერის შეცდომა პულის მრიცხველის სერვერის მიმართვისას',
+	'poolcounter-remote-error' => 'პულის მთვლელის სერვერის შეცდომა: $1',
 );
 
 /** Korean (한국어)
  * @author Kwj2772
+ * @author 아라
  */
 $messages['ko'] = array(
-	'poolcounter-desc' => 'pool counter daemon 미디어위키 클라이언트',
+	'poolcounter-desc' => 'pool 카운터 데몬을 위한 미디어위키 클라이언트',
 	'poolcounter-connection-error' => '풀 카운터 서버에 접속하는 중 오류: $1',
 	'poolcounter-read-error' => '풀 카운터 서버 읽기 오류',
 	'poolcounter-write-error' => '풀 카운터 서버 쓰기 오류',
@@ -393,6 +510,9 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'poolcounter-desc' => 'Mediawiki-Client fir de Pool-Counter-Daemon',
 	'poolcounter-connection-error' => 'Feeler beim Verbanne mam Pool-Counter-Server: $1',
+	'poolcounter-read-error' => 'Feeler beim Liese vum Pool-Counter-Server',
+	'poolcounter-write-error' => 'Feeler beim Schreiwen op de Pool-Counter-Server',
+	'poolcounter-remote-error' => 'Pool-counter-Server Feeler: $1',
 );
 
 /** Limburgish (Limburgs)
@@ -406,7 +526,7 @@ $messages['li'] = array(
 	'poolcounter-remote-error' => 'Poolcounterserverfout: $1',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -451,7 +571,7 @@ $messages['ms'] = array(
 	'poolcounter-remote-error' => 'Ralat pelayan kaunter tabung: $1',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Nghtwlkr
  * @author Stigmj
  */
@@ -474,7 +594,7 @@ $messages['nl'] = array(
 	'poolcounter-remote-error' => 'Poolcounter serverfout: $1',
 );
 
-/** Occitan (Occitan)
+/** Occitan (occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
@@ -485,7 +605,7 @@ $messages['oc'] = array(
 	'poolcounter-remote-error' => 'Error del servidor de comptador de gropament : $1',
 );
 
-/** Oriya (ଓଡ଼ିଆ)
+/** Oriya (ଓଡ଼ିଆ)
  * @author Psubhashish
  */
 $messages['or'] = array(
@@ -496,7 +616,7 @@ $messages['or'] = array(
 	'poolcounter-remote-error' => 'ପୁଲ କାଉଣ୍ଟର ସର୍ଭର ଅସୁବିଧା: $1',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
@@ -530,7 +650,7 @@ $messages['pnb'] = array(
 	'poolcounter-remote-error' => 'پول کاؤنٹر سرور غلطی: $1',
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -541,7 +661,7 @@ $messages['pt'] = array(
 	'poolcounter-remote-error' => "Erro do servidor ''pool counter'': $1",
 );
 
-/** Brazilian Portuguese (Português do Brasil)
+/** Brazilian Portuguese (português do Brasil)
  * @author Eduardo.mps
  */
 $messages['pt-br'] = array(
@@ -552,7 +672,18 @@ $messages['pt-br'] = array(
 	'poolcounter-remote-error' => 'Erro no servidor do pool counter: $1',
 );
 
-/** Russian (Русский)
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'poolcounter-desc' => 'Cliende MediaUicchi pu demone ca conde le pool',
+	'poolcounter-connection-error' => "Errore de connessione a 'u server ca conde le pool: $1",
+	'poolcounter-read-error' => "Errore leggenne da 'u server ca conde le pool.",
+	'poolcounter-write-error' => "Errore scrivenne sus a 'u server ca conde le pool.",
+	'poolcounter-remote-error' => "Errore sus a 'u server ca conde le pool: $1",
+);
+
+/** Russian (русский)
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
@@ -563,7 +694,7 @@ $messages['ru'] = array(
 	'poolcounter-remote-error' => 'Ошибка сервера-счётчика пула: $1',
 );
 
-/** Rusyn (Русиньскый)
+/** Rusyn (русиньскый)
  * @author Gazeb
  */
 $messages['rue'] = array(
@@ -572,6 +703,17 @@ $messages['rue'] = array(
 	'poolcounter-read-error' => 'Хыба чітаня з засобного рахуючого сервера',
 	'poolcounter-write-error' => 'Хыба записованя до засобного рахуючого сервера',
 	'poolcounter-remote-error' => 'Хыба засобного сервера рахованя: $1',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author Shubha
+ */
+$messages['sa'] = array(
+	'poolcounter-desc' => 'पूल् कौण्टर् डीमन् कृते मेटावीकी क्लैण्ट्',
+	'poolcounter-connection-error' => 'पूल् कौण्टर् वितरकेण सह सम्बन्धकल्पने दोषः : $1',
+	'poolcounter-read-error' => 'पूल् कौण्टर् वितरकात् पठनावसरे दोषः',
+	'poolcounter-write-error' => 'पूल् कौण्टर् वितरके लेखनावसरे दोषः',
+	'poolcounter-remote-error' => 'पूल् कौण्टर् वितरकदोषः : $1',
 );
 
 /** Sinhala (සිංහල)
@@ -585,7 +727,7 @@ $messages['si'] = array(
 	'poolcounter-remote-error' => 'සංසද ගණක සර්වරයේ දෝෂය: $1',
 );
 
-/** Slovak (Slovenčina)
+/** Slovak (slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
@@ -596,7 +738,7 @@ $messages['sk'] = array(
 	'poolcounter-remote-error' => 'Chyba servera počítadla skupiny: $1',
 );
 
-/** Slovenian (Slovenščina)
+/** Slovenian (slovenščina)
  * @author Dbc334
  */
 $messages['sl'] = array(
@@ -607,7 +749,7 @@ $messages['sl'] = array(
 	'poolcounter-remote-error' => 'Napaka strežnika založnega pulta: $1',
 );
 
-/** Albanian (Shqip)
+/** Albanian (shqip)
  * @author Vinie007
  */
 $messages['sq'] = array(
@@ -618,7 +760,7 @@ $messages['sq'] = array(
 	'poolcounter-remote-error' => 'server error counter Pool: $1',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -629,7 +771,8 @@ $messages['sr-ec'] = array(
 	'poolcounter-remote-error' => 'Грешка у серверу фондовског шалтера: $1',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+/** Serbian (Latin script) (srpski (latinica)‎)
+ */
 $messages['sr-el'] = array(
 	'poolcounter-desc' => 'Medijaviki klijent za demona fondovskog šaltera poolcounter.py',
 	'poolcounter-connection-error' => 'Greška pri povezivanju sa serverom fondovskog šaltera: $1',
@@ -638,7 +781,7 @@ $messages['sr-el'] = array(
 	'poolcounter-remote-error' => 'Greška u serveru fondovskog šaltera: $1',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author Ainali
  */
 $messages['sv'] = array(
@@ -670,7 +813,7 @@ $messages['tl'] = array(
 	'poolcounter-remote-error' => 'Kamalian sa tagapaghain ng pambilang ng lawa: $1',
 );
 
-/** Ukrainian (Українська)
+/** Ukrainian (українська)
  * @author Dim Grits
  */
 $messages['uk'] = array(
@@ -679,6 +822,25 @@ $messages['uk'] = array(
 	'poolcounter-read-error' => 'Помилка зчитування з сервера лічильника пулу',
 	'poolcounter-write-error' => 'Помилка запису до сервера лічильника пулу',
 	'poolcounter-remote-error' => 'Помилка сервера лічильника пулу: $1',
+);
+
+/** Urdu (اردو)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ur'] = array(
+	'poolcounter-read-error' => 'پول کے انسداد کے سرور سے پڑھنے کی خرابی',
+	'poolcounter-write-error' => 'لکھنے کے پول انسداد سرور کی غلطی',
+);
+
+/** vèneto (vèneto)
+ * @author GatoSelvadego
+ */
+$messages['vec'] = array(
+	'poolcounter-desc' => "Client de MediaWiki pa'l demone contador de i pool",
+	'poolcounter-connection-error' => 'Eror de conesion al server contador de i pool: $1',
+	'poolcounter-read-error' => 'Eror de letura dal server contador de i pool',
+	'poolcounter-write-error' => 'Eror de scritura al server contador de i pool',
+	'poolcounter-remote-error' => 'Eror del server contador de i pool: $1',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -692,7 +854,7 @@ $messages['vi'] = array(
 	'poolcounter-remote-error' => 'Lỗi máy chủ chia việc xử lý (pool counter server): $1',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  */
 $messages['zh-hans'] = array(
@@ -703,7 +865,7 @@ $messages['zh-hans'] = array(
 	'poolcounter-remote-error' => '池计数器服务器错误：$1',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Waihorace
  */
 $messages['zh-hant'] = array(
@@ -713,4 +875,3 @@ $messages['zh-hant'] = array(
 	'poolcounter-write-error' => '錯誤寫入至服務器池計數器',
 	'poolcounter-remote-error' => '服務器池計數器錯誤：$1',
 );
-

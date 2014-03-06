@@ -14,7 +14,7 @@
  *
  */
 
-require_once('../commandLine.inc');
+require_once( dirname(__FILE__) . '/../commandLine.inc' );
 
 if (isset($options['help'])) {
 	die( "Usage: php AutomaticWikiAdoptionGatherData.php [--quiet] [--maxwiki=12345]

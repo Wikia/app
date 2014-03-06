@@ -4,6 +4,7 @@
  * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+/*csslint regex-selectors:false, overqualified-elements:false */
 
 /* ve.ce.MWTransclusionNode */
 
@@ -67,4 +68,15 @@
 
 .ve-ce-mwHieroNode {
 	display: table;
+}
+
+/* ve.ce.MWNumberedExternalLinkNode */
+
+.ve-ce-surface {
+    counter-reset: ve-ce-mwNumberedExternalLinkNode;
+}
+
+.ve-ce-mwNumberedExternalLinkNode a:empty:after {
+    content: "[" counter(ve-ce-mwNumberedExternalLinkNode) "]";
+    counter-increment: ve-ce-mwNumberedExternalLinkNode;
 }

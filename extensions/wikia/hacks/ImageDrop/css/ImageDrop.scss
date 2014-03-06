@@ -1,8 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 #ImageDropMask {
-	@include opacity(50);
+	opacity: .5;
 	background-color: $color-buttons;
 	position: absolute;
 	width: 100%;

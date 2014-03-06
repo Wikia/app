@@ -52,8 +52,9 @@
 				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
 				<? endforeach ?>
 			</select>
+			<input type="hidden" name="date" id="WamFilterDate" value="<?=$selectedDate?>"/>
 			<label for="WamFilterDate"><?= wfMessage('wam-index-filter-date-label')->text() ?></label>
-			<input type="text" name="date" id="WamFilterDate" value="<?=$selectedDate?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
+			<input type="text" id="WamFilterHumanDate" value="<?= $wg->Lang->date($selectedDate); ?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
 			<label for="langCode"><?= wfMessage('wam-index-filter-lang-label')->text() ?></label>
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
@@ -71,9 +72,8 @@
 	</form>
 	<table>
 		<tr>
-			<th></th>
-			<th><?= wfMessage('wam-index-header-score')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
+			<th><?= wfMessage('wam-index-header-score')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-wiki-name')->text() ?></th>
 			<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
@@ -84,11 +84,10 @@
 		<? if($indexWikis['wam_index']): ?>
 			<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 				<tr>
-					<td><?=$wiki['index']?>.</td>
+					<td><?=$wiki['wam_rank']?></td>
 					<td class="score <?=$wiki['change']?>">
 						<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
 					</td>
-					<td><?=$wiki['wam_rank']?></td>
 					<td><?=$wiki['peak_wam_rank']?></td>
 					<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
 					<td><?=$wiki['hub_name']?></td>

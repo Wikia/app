@@ -1,0 +1,37 @@
+$drop-target-border-radius: 6px;
+$drop-target-border-color: #e5e5e5;
+
+.ve-ui-widget-droptarget {
+	background-color: rgba( 70, 70, 70, .95 );
+	bottom: 0;
+	border-radius: $drop-target-border-radius;
+	box-sizing: border-box;
+	color: white;
+	display: none;
+	left: 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	text-shadow: 1px 1px 1px black;
+	top: 0;
+
+	> div {
+		font-size: 1.7em;
+		height: 2em;
+		margin-top: -1em;
+		position: absolute;
+		top: 50%;
+		width: 100%;
+	}
+
+	&:before {
+		border: 4px dashed $drop-target-border-color;
+		border-radius: $drop-target-border-radius;
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+}

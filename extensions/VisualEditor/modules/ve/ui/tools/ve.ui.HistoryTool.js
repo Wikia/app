@@ -9,14 +9,14 @@
  * UserInterface history tool.
  *
  * @class
- * @extends ve.ui.Tool
+ * @extends OO.ui.Tool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.HistoryTool = function VeUiHistoryTool( toolbar, config ) {
+ve.ui.HistoryTool = function VeUiHistoryTool( toolGroup, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar, config );
+	OO.ui.Tool.call( this, toolGroup, config );
 
 	// Events
 	this.toolbar.getSurface().getModel().connect( this, { 'history': 'onUpdateState' } );
@@ -27,7 +27,7 @@ ve.ui.HistoryTool = function VeUiHistoryTool( toolbar, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.HistoryTool, ve.ui.Tool );
+OO.inheritClass( ve.ui.HistoryTool, OO.ui.Tool );
 
 /* Static Properties */
 
@@ -59,6 +59,7 @@ ve.ui.HistoryTool.static.check = '';
  * @method
  */
 ve.ui.HistoryTool.prototype.onSelect = function () {
+	ve.track( 'tool.history.select', { name: this.constructor.static.name } );
 	this.toolbar.getSurface().execute( 'history', this.constructor.static.method );
 	this.setActive( false );
 };
@@ -80,7 +81,7 @@ ve.ui.HistoryTool.prototype.onUpdateState = function () {
  */
 ve.ui.HistoryTool.prototype.destroy = function () {
 	this.toolbar.getSurface().getModel().disconnect( this );
-	ve.ui.Tool.prototype.destroy.call( this );
+	OO.ui.Tool.prototype.destroy.call( this );
 };
 
 /**
@@ -89,13 +90,13 @@ ve.ui.HistoryTool.prototype.destroy = function () {
  * @class
  * @extends ve.ui.HistoryTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.UndoHistoryTool = function VeUiUndoHistoryTool( toolbar, config ) {
-	ve.ui.HistoryTool.call( this, toolbar, config );
+ve.ui.UndoHistoryTool = function VeUiUndoHistoryTool( toolGroup, config ) {
+	ve.ui.HistoryTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.UndoHistoryTool, ve.ui.HistoryTool );
+OO.inheritClass( ve.ui.UndoHistoryTool, ve.ui.HistoryTool );
 ve.ui.UndoHistoryTool.static.name = 'undo';
 ve.ui.UndoHistoryTool.static.group = 'history';
 ve.ui.UndoHistoryTool.static.icon = 'undo';
@@ -110,13 +111,13 @@ ve.ui.toolFactory.register( ve.ui.UndoHistoryTool );
  * @class
  * @extends ve.ui.HistoryTool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.RedoHistoryTool = function VeUiRedoHistoryTool( toolbar, config ) {
-	ve.ui.HistoryTool.call( this, toolbar, config );
+ve.ui.RedoHistoryTool = function VeUiRedoHistoryTool( toolGroup, config ) {
+	ve.ui.HistoryTool.call( this, toolGroup, config );
 };
-ve.inheritClass( ve.ui.RedoHistoryTool, ve.ui.HistoryTool );
+OO.inheritClass( ve.ui.RedoHistoryTool, ve.ui.HistoryTool );
 ve.ui.RedoHistoryTool.static.name = 'redo';
 ve.ui.RedoHistoryTool.static.group = 'history';
 ve.ui.RedoHistoryTool.static.icon = 'redo';

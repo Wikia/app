@@ -67,6 +67,13 @@ $messages['ar'] = array(
 	'prefs-rte' => 'محرر النص المتطور',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'rte-edgecase-redirect' => 'yönləndirmə',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -221,11 +228,12 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'rte-edgecase-comment' => 'Vatışdiq HTML',
 	'rte-edgecase-triplecurls' => 'parametrey şablonan',
-	'rte-edgecase-redirect' => 'hetenayış',
+	'rte-edgecase-redirect' => 'serçarnayış',
 	'prefs-rte' => 'Editorê metnê Zengini',
 );
 
@@ -411,7 +419,7 @@ $messages['ja'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'rte-edgecase-redirect' => 'en Ömleidung',
+	'rte-edgecase-redirect' => 'en Ömleidong',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

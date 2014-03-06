@@ -29,6 +29,22 @@ class LyricFindTrackingService extends WikiaService {
 	}
 
 	/**
+	 * Sometimes pages that were marked for removal, may no longer be banned (for instance,
+	 * a licensing deal was reached with rights-owners that didn't have an agreement previously).
+	 * In these cases, this function will change the page-property so that the page is no-longer
+	 * hidden.
+	 *
+	 * @param $pageId int article ID
+	 * @return bool result
+	 */
+	private function markLyricAsNotRemoved($pageId) {
+		$this->wf->SetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $pageId, 0);
+
+		self::log(__METHOD__, "marked page #{$pageId} as no longer removed");
+		return true;
+	}
+
+	/**
 	 * Artist and track name needs to be lowercase and without commas or colons
 	 *
 	 * @param $item string parameter value to be encoded
@@ -48,7 +64,7 @@ class LyricFindTrackingService extends WikiaService {
 	 *
 	 * @param $data array containing amgid, gnlyricid and title of the lyric
 	 */
-	private function formatTrackId($data) {
+	public function formatTrackId($data) {
 		$parts = [];
 
 		if (!empty($data['amg'])) {
@@ -118,6 +134,12 @@ class LyricFindTrackingService extends WikiaService {
 				case self::CODE_LRC_IS_AVAILABLE:
 				case self::CODE_LYRIC_IS_INSTRUMENTAL:
 				case self::CODE_LYRIC_IS_AVAILABLE:
+					// LyricFind has reported that the page is okay. If it was banned before, unban it.
+					$removedProp = $this->wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $this->wg->Title->getArticleID());
+					$isMarkedAsRemoved = (!empty($removedProp));
+					if($isMarkedAsRemoved){
+						$this->markLyricAsNotRemoved($this->wg->Title->getArticleID());
+					}
 					break;
 
 				default:
@@ -133,6 +155,74 @@ class LyricFindTrackingService extends WikiaService {
 		wfProfileOut(__METHOD__);
 		return $status;
 	}
+	
+	/**
+	 * WARNING: This function makes an API request and is therefore slow.
+	 *
+	 * This function is intended only for use to test if not-yet-created pages are blocked
+	 * (so that we can prevent their creation). If calling-code just needs to check if an
+	 * already-existing page is blocked, check the page properties using
+	 * GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL) instead.
+	 */
+	public static function isPageBlockedViaApi($amgId="", $gracenoteId="", $pageTitleText=""){
+		wfProfileIn(__METHOD__);
+		
+		$isBlocked = false;
+		
+		$app = F::app();
+		$service = new LyricFindTrackingService();
+
+		// format trackid parameter
+		$trackId = $service->formatTrackId([
+			'amg' => $amgId,
+			'gracenote' => $gracenoteId,
+			'title' => $pageTitleText
+		]);
+
+		$url = $app->wg->LyricFindApiUrl . '/lyric.do';
+		$data = [
+			'apikey' => $app->wg->LyricFindApiKeys['display'],
+			'reqtype' => 'offlineviews',
+			'count' => 1, // This is overcounting since we know it's not a view (page doesn't exist yet), but their API won't accept "0"
+			'trackid' => $trackId,
+			'output' => 'json',
+			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
+		];
+
+		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
+
+		$resp = Http::post($url, ['postData' => $data]);
+
+		if ($resp !== false) {
+			wfDebug(__METHOD__ . ": API response - {$resp}\n");
+		}
+
+		// get the code from API response
+		if ($resp !== false) {
+			$json = json_decode($resp, true);
+
+			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
+
+			switch ($code) {
+				case self::CODE_LYRIC_IS_BLOCKED:
+					$isBlocked = true;
+					break;
+
+				case self::CODE_LRC_IS_AVAILABLE:
+				case self::CODE_LYRIC_IS_INSTRUMENTAL:
+				case self::CODE_LYRIC_IS_AVAILABLE:
+					break;
+
+				default:
+					self::log(__METHOD__, "got #{$code} response code from API (track amg#{$amgId} / gn#{$gracenoteId} / '{$pageTitleText}')");
+			}
+		} else {
+			self::log(__METHOD__, "LyricFind API request failed in isPageBlockedViaApi()!");
+		}
+
+		wfProfileOut(__METHOD__);
+		return $isBlocked;
+	}
 
 	/**
 	 * Log to /var/log/private file
@@ -144,3 +234,4 @@ class LyricFindTrackingService extends WikiaService {
 		Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 }
+

@@ -90,7 +90,9 @@
 	bottom: 0;
 }
 
+/* @noflip */
 .ve-ui-simplesurface-container-editbox {
+	direction: ltr;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -107,6 +109,7 @@
 	cursor: text;
 }
 
+/* @noflip */
 .ve-ui-simplesurface-textarea {
 	display:inline-block;
 	overflow: hidden;
@@ -116,6 +119,8 @@
 	left: -10px;
 	top: 0;
 }
+
+/* @noflip */
 .ve-ui-simplesurface-container-editbox pre {
 	border: none;
 	background-color: transparent;
@@ -132,12 +137,14 @@
 	font-size: 1.25em;
 }
 
+/* @noflip */
 .ve-ui-simplesurface-container-editbox-lineNumber {
 	display: inline-block;
 	float: left;
 	height: 100%;
 }
 
+/* @noflip */
 .ve-ui-simplesurface-container-editbox-text {
 	display: inline-block;
 	position: absolute;
@@ -153,7 +160,7 @@
 	z-index: 7;
 }
 
-.ve-ui-simplesurface .ve-ui-toolbar {
+.ve-ui-simplesurface .oo-ui-toolbar {
 	position: relative;
 	line-height: 1em;
 	height: 100%;
@@ -246,17 +253,17 @@
 
 /* Icons */
 
-.ve-ui-icon-reformat {
+.oo-ui-icon-reformat {
 	/* @embed */
 	background-image: url(images/reformat.svg);
 }
 
-.ve-ui-icon-replace {
+.oo-ui-icon-replace {
 	/* @embed */
 	background-image: url(images/replace.svg);
 }
 
-.ve-ui-icon-syntaxHighlight {
+.oo-ui-icon-syntaxHighlight {
 	/* @embed */
 	background-image: url(images/syntaxHighlight.svg);
 }

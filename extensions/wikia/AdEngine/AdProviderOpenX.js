@@ -56,10 +56,12 @@ AdProviderOpenX.getUrl2 = function() {
 	return AdProviderOpenX.url2;
 };
 
-if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage) {
+if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {
 	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl2(), function() {
 			var lazy = new window.Wikia.LazyLoadAds();
 		});
 	});
+} else {
+	$('#SPOTLIGHT_FOOTER').parent('section').hide();
 }

@@ -441,6 +441,7 @@ $messages['az'] = array(
 	'swm-button-save' => '[ Yaddaşa ver ]',
 	'swm-button-new' => '[ Yeni ]',
 	'swm-list-no-messages' => 'Mesaj yoxdur.',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-wiki' => 'Viki',
 	'swm-list-table-group' => 'Qrup',
 	'swm-list-table-removed' => 'Çıxarılıb',
@@ -448,6 +449,14 @@ $messages['az'] = array(
 	'swm-list-table-lang' => 'Dillər',
 	'swm-yes' => 'Bəli',
 	'swm-no' => 'Xeyr',
+	'swm-mode-users-registration-after' => 'Sonra',
+	'swm-mode-users-registration-before' => 'Əvvəl',
+	'swm-mode-users-registration-between' => 'Arasında',
+	'swm-mode-users-editcount-more' => 'Daha',
+	'swm-mode-users-editcount-between' => 'Arasında',
+	'swm-mode-wikis-created-after' => 'Sonra',
+	'swm-mode-wikis-created-before' => 'Əvvəl',
+	'swm-mode-wikis-created-between' => 'Arasında',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -574,6 +583,7 @@ $messages['br'] = array(
 	'swm-label-mode-wikis-hub' => 'Hub diuzet',
 	'swm-label-mode-wikis-wiki' => 'Wiki diuzet',
 	'swm-label-mode-wikis-wiki-multi' => 'Roll ar wikioù',
+	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Ebarzhiñ ur wiki dre linenn.</i>',
 	'swm-label-mode-users-all' => 'An holl implijerien',
 	'swm-label-mode-users-active' => 'Implijerien oberiant',
 	'swm-label-mode-users-group' => "Implijerien a aparchant d'ar strollad-se",
@@ -611,6 +621,7 @@ $messages['br'] = array(
 	'swm-list-table-content' => 'Danvez',
 	'swm-list-table-tools' => 'Ostilhoù',
 	'swm-list-table-lang' => 'Yezhoù',
+	'swm-list-table-hub' => 'Tem',
 	'swm-yes' => 'Ya',
 	'swm-no' => 'Ket',
 	'swm-error-no-such-wiki' => "N'eus ket a wiki evel-se",
@@ -1162,6 +1173,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'swm-label-language' => 'Hizkuntza',
@@ -1170,6 +1182,7 @@ $messages['eu'] = array(
 	'swm-button-save' => '[ Gorde ]',
 	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-tools' => 'Tresnak',
+	'swm-list-table-lang' => 'Hizkuntzak',
 	'swm-yes' => 'Bai',
 	'swm-no' => 'Ez',
 );

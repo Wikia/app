@@ -284,9 +284,6 @@ function fnAddAnswerJSGlobalVariables(Array &$vars){
 	global $wgMinimalPasswordLength;
 	$vars['wgMinimalPasswordLength'] = $wgMinimalPasswordLength;
 
-	global $wgAfterContentAndJS;
-	$vars['wgAfterContentAndJS'] = ($wgAfterContentAndJS?$wgAfterContentAndJS:array());
-
 	global $wgIsMainpage;
 	$vars['wgIsMainpage'] = ($wgIsMainpage?$wgIsMainpage:false);
 
@@ -408,7 +405,7 @@ $wgHooks['CategoryViewer::addPage'][] = 'answerAddCategoryPage';
 // Since this function returns false, it prevents the default behavior from adding this item to the "pages" section
 // of the category page.
 ////
-function answerAddCategoryPage(&$catView, &$title, &$row){
+function answerAddCategoryPage( &$catView, &$title, &$row, $humanSortkey ) {
 	global $wgContLang;
 
 	if (empty($catView->answers)){
@@ -555,7 +552,7 @@ function wfCategoryPageWithAds(&$cat){
 		global $wgOut, $wgRequest;
 		$from = $wgRequest->getVal( 'from' );
 		$until = $wgRequest->getVal( 'until' );
-		$viewer = new CategoryWithAds( $cat->mTitle, $from, $until);
+		$viewer = new CategoryWithAds( $cat->mTitle, $from, $until );
 		$wgOut->addHTML( $viewer->getHTML() );
 	}
 
@@ -564,19 +561,19 @@ function wfCategoryPageWithAds(&$cat){
 
 class CategoryWithAds extends CategoryViewer{
 
-	function __construct( $title, $from = '', $until = '', $query = array() ) {
-		parent::__construct( $title, RequestContext::getMain(), array( $from ), array( $until ), $query );
-		$this->from = $from;
-		$this->until = $until;
+	function __construct( $title, $from = '', $until = '' ) {
+		parent::__construct( $title, RequestContext::getMain() );
+		$this->fromSortKey = $from;
+		$this->untilSortKey = $until;
 	}
 
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-		if( $this->from != '' ) {
-			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
+		if( $this->fromSortKey != '' ) {
+			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->fromSortKey );
 			$this->flip = false;
-		} elseif( $this->until != '' ) {
-			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->until );
+		} elseif( $this->untilSortKey != '' ) {
+			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->untilSortKey );
 			$this->flip = true;
 		} else {
 			$pageCondition = '1 = 1';
@@ -613,7 +610,7 @@ class CategoryWithAds extends CategoryViewer{
 			} elseif( $this->showGallery && $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
-				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$x ) ) ) {
+				if( wfRunHooks( "CategoryViewer::addPage", array( &$this, &$title, &$x, $x->cl_sortkey ) ) ) {
 					$this->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 				}
 			}

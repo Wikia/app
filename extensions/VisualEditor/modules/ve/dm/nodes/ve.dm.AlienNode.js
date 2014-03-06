@@ -27,9 +27,9 @@ ve.dm.AlienNode = function VeDmAlienNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.AlienNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.AlienNode, ve.dm.LeafNode );
 
-ve.mixinClass( ve.dm.AlienNode, ve.dm.GeneratedContentNode );
+OO.mixinClass( ve.dm.AlienNode, ve.dm.GeneratedContentNode );
 
 /* Static members */
 
@@ -83,7 +83,7 @@ ve.dm.AlienBlockNode = function VeDmAlienBlockNode( length, element ) {
 	ve.dm.AlienNode.call( this, length, element );
 };
 
-ve.inheritClass( ve.dm.AlienBlockNode, ve.dm.AlienNode );
+OO.inheritClass( ve.dm.AlienBlockNode, ve.dm.AlienNode );
 
 ve.dm.AlienBlockNode.static.name = 'alienBlock';
 
@@ -101,7 +101,7 @@ ve.dm.AlienInlineNode = function VeDmAlienInlineNode( length, element ) {
 	ve.dm.AlienNode.call( this, length, element );
 };
 
-ve.inheritClass( ve.dm.AlienInlineNode, ve.dm.AlienNode );
+OO.inheritClass( ve.dm.AlienInlineNode, ve.dm.AlienNode );
 
 ve.dm.AlienInlineNode.static.name = 'alienInline';
 

@@ -21,7 +21,7 @@ ve.dm.DefinitionListNode = function VeDmDefinitionListNode( children, element ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.DefinitionListNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.DefinitionListNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

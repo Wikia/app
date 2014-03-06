@@ -2,16 +2,10 @@
  * SCSS for UserLogin that is to be in the oasis skin globally
  */
  
-@import "../../../../skins/oasis/css/mixins/opacity";
 
 .UserLoginModal {
-	@include opacity(0);
 	height: 400px;
-}
-
-.UserLoginFacebook {
-	@include opacity(0);
-	height: 400px;	/* this is a fixed value that is more of a guess so it'll be less jarring when height becomes auto*/
+	opacity: 0;
 }
 
 .UserLogin.ChangePassword {

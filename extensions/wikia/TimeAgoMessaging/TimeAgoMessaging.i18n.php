@@ -628,6 +628,13 @@ $messages['tl'] = array(
 	'timeago-second-from-now' => 'isang minuto magmula ngayon',
 );
 
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ilnur efende
+ */
+$messages['tt-cyrl'] = array(
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут|$1 минут}} элек', # Fuzzy
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Тест

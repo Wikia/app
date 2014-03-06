@@ -1,0 +1,12 @@
+{{{introText}}}
+
+{{#warning}}
+<p class="error">{{{warning}}}</p>
+{{/warning}}
+
+{{#showForm}}
+<form method="POST" name="CloseMyAccountForm" id="CloseMyAccountForm" class="CloseMyAccountForm">
+	{{{submitButton}}}
+	<input type="hidden" name="token" value="{{editToken}}" />
+</form>
+{{/showForm}}

@@ -84,12 +84,17 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'unsubscribe' => 'Digoumanantiñ',
+	'unsubscribe-nousers' => "N'eus bet kavet implijer ebet gant ar chomlec'h postel-se.",
+	'unsubscribe-noconfusers' => "N'eus bet kavet implijer kadarnaet ebet gant ar chomlec'h postel-se.",
 	'unsubscribe-confirm-legend' => 'Kadarnaat',
+	'unsubscribe-confirm-text' => "Digoumannantiñ an holl gontoù gant ar c'hod <code>$1</code> ?",
 	'unsubscribe-confirm-button' => 'Ya, sur on',
+	'unsubscribe-working-problem' => 'Diaesterioù o kargañ titouroù evit : $1',
 	'unsubscribe-working-done' => 'Graet.',
 );
 
@@ -699,24 +704,25 @@ $messages['tl'] = array(
  * @author Andriykopanytsia
  * @author Steve.rusyn
  * @author SteveR
+ * @author Ua2004
  * @author Тест
  */
 $messages['uk'] = array(
 	'unsubscribe' => 'Відписатись',
-	'unsubscribe-badaccess' => 'На жаль, ця сторінка не може бути використана безпосередньо. Будь ласка, перейдіть за посиланням з вашої електронної пошти.',
-	'unsubscribe-badtoken' => 'На жаль, у нас проблема з маркером безпеки.',
-	'unsubscribe-bademail' => 'Вибачте, виникла проблема з електронною поштою.',
-	'unsubscribe-badtime' => 'На жаль, термін дії посилання минув. Будь ласка, використовуйте посилання, створене менше, ніж 7 днів тому.',
-	'unsubscribe-nousers' => 'Не знайдено користувачів з цією адресою електронної пошти.',
-	'unsubscribe-noconfusers' => 'Не знайдено підтверджених користувачів з цією адресою електронної пошти.',
+	'unsubscribe-badaccess' => 'На жаль, цю сторінку не можна відкрити безпосередньо. Будь ласка, перейдіть за посиланням з вашої електронної пошти.',
+	'unsubscribe-badtoken' => 'Помилка: невірний ключ.',
+	'unsubscribe-bademail' => 'Помилка: невірний e-mail.',
+	'unsubscribe-badtime' => 'Помилка: посилання вже недійсне. Будь ласка, скористайтеся посиланням, якому не більше 7 днів.',
+	'unsubscribe-nousers' => 'Користувача з таким e-mail не знайдено.',
+	'unsubscribe-noconfusers' => 'Підтверджених користувачів з таким e-mail не знайдено.',
 	'unsubscribe-confirm-legend' => 'Підтвердити',
 	'unsubscribe-confirm-text' => 'Скасувати підписку усіх облікових записів з <code>$1</code> ?',
-	'unsubscribe-confirm-button' => 'Так, я впевнений',
+	'unsubscribe-confirm-button' => 'Так, підтверджую',
 	'unsubscribe-working' => 'Скасовується підписка $1 {{PLURAL:$1|облікового запису|облікових записів}} для $2',
 	'unsubscribe-working-problem' => 'проблема при завантаженні інформації про користувача: $1',
 	'unsubscribe-working-done' => 'Готово.',
-	'unsubscribe-preferences-toggle' => 'Зняти підписку на всі листи з Вікія (відмініть це для доступу нижче до параметрів)',
-	'unsubscribe-preferences-notice' => 'Електронні листи вимкнені для вашого облікового запису. Перейдіть на вкладку профіль користувача, щоб знову увімкнути їх.',
+	'unsubscribe-preferences-toggle' => 'Відмовитися від усіх листів Вікії (зніміть цю галочку, щоб розблокувати нижчевказані опції)',
+	'unsubscribe-preferences-notice' => 'Усі електронні листи вимкнено для вашого облікового запису. Ви можете увімкнути їх будь-коли в налаштуваннях свого профілю.',
 );
 
 /** Vietnamese (Tiếng Việt)

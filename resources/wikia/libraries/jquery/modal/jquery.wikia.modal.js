@@ -79,13 +79,13 @@ $.fn.extend({
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
 
-			if(options.width != 'auto') {
+			if(settings.width != 'auto') {
 				//set up dimensions and position
 				var modalWidth = $("#WikiaMainContent").width();
 
 				// or use width provided
-				if (typeof options.width != 'undefined') {
-					modalWidth = options.width + 40 /* padding */;
+				if (typeof settings.width != 'undefined') {
+					modalWidth = settings.width + 40 /* padding */;
 				}
 			} else {
 				modalWidth = 'auto';
@@ -95,7 +95,7 @@ $.fn.extend({
 				left: "50%",
 				top: $(window).scrollTop() + settings.topOffset,
 				width: modalWidth,
-				height: options.height,
+				height: settings.height,
 				zIndex: zIndex + 1
 			}).css("margin-left", -wrapper.outerWidth(false)/2);
 

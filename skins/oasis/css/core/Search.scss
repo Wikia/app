@@ -1,6 +1,5 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
@@ -33,7 +32,7 @@
 	}
 
 	.wikia-button {
-		@include border-radius(3px);
+		border-radius: 3px;
 		float: left;
 		height: 28px;
 		margin-top: 0;

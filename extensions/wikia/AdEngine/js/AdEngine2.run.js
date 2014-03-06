@@ -9,7 +9,7 @@
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
-/*global AdLogicPageLevelParamsLegacy */
+/*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
@@ -40,9 +40,13 @@
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
+		adSlotMapConfig,
 
 		queueForLateAds,
 		adConfigForLateAds;
+
+	// Don't show ads when Sony requests the page
+	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
 
 	// Don't have SevenOne Media ads on IE8 (or below)
 	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
@@ -56,9 +60,10 @@
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
-	adTracker = AdTracker(log, tracker);
+	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
+	adSlotMapConfig = AdSlotMapConfig();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
@@ -67,11 +72,11 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt);
+	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -94,7 +99,8 @@
 		adProviderGpt,
 		adProviderEvolve,
 		adProviderGamePro,
-		adProviderLater
+		adProviderLater,
+		adProviderNull
 	);
 
 	window.wgAfterContentAndJS.push(function () {
@@ -120,6 +126,9 @@
 	// DART API for Liftium
 	window.LiftiumDART = {
 		getUrl: function (slotname, slotsize) {
+			if (slotsize) {
+				slotsize += ',1x1';
+			}
 			return wikiaDart.getUrl({
 				slotname: slotname,
 				slotsize: slotsize,

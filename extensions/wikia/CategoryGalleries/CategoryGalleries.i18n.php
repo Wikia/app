@@ -51,6 +51,13 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'categorygalleries-desc' => 'Паказвае галерэю старонак на старонках катэгорыяў',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */

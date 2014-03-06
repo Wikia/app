@@ -2,49 +2,33 @@
 
 $line-height: 40px;
 $toc-background: #F8F8F8;
-$handle-size: 48px;
+$handle-size: 44px;
 $dark-border: #D8D8D8;
+$width: 260px;
 
-//TODO: Remove after 2 weeks :)
-#toc.toc {
-	display: none;
-}
-
-//Some simple fixed for RTL languages
-.cont-dir-rtl {
-	.side-menu-capable {
-		direction: ltr; //JanusCSS will change it to rtl
-
-		-webkit-transform: translate(100%);
-		-moz-transform: translate(100%);
-		transform: translate(100%);
-	}
-
-	#wkTOCHandle {
-		border-radius: 3px 3px 0 0;
-	}
-}
-
+/* @noflip */
 .side-menu {
 	position: fixed;
-	left: -260px;
+	right: -$width;
 	top: 0;
-	bottom:0;
-	width: 260px;
+	bottom: 0;
+	width: $width;
 	background: $toc-background;
+	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
 
 	counter-reset: level1, level2, level3;
 
+	-webkit-transition: -webkit-transform .1s ease-out;
+	-moz-transition: -moz-transform .1s ease-out;
+	transition: transform .1s ease-out;
+
 	&.active {
-		-webkit-transition: -webkit-transform .1s ease-out;
-		-moz-transition: -moz-transform .1s ease-out;
-		transition: transform .1s ease-out;
+		-webkit-transform: translate(-$width);
+		-moz-transform: translate(-$width);
+		-ms-transform: translate(-$width);
+		transform: translate(-$width);
 
-		-webkit-transform: translate(0);
-		-moz-transform: translate(0);
-		transform: translate(0);
-
-		z-index: 11;
+		z-index: $video-overlay-z-index + 2; //For overlaying Curtain
 	}
 
 	header {
@@ -59,27 +43,15 @@ $dark-border: #D8D8D8;
 	}
 }
 
-.side-menu-capable {
-	left: 0;
-
-	-webkit-transform: translate(-100%);
-	-moz-transform: translate(-100%);
-	transform: translate(-100%);
-}
-
+/* @noflip */
 #wkTOCHandle {
 	position: absolute;
-	right: -$handle-size;
-	bottom: 25px;
+	left: -$handle-size;
+	bottom: 48px;
 	width: $handle-size;
 	height: $handle-size;
 
-	background-color: rgb(0, 77, 141);
-	background-size: 55%;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-image: url(/extensions/wikia/WikiaMobile/images/toc-icon.png); /* base64 */
-	border-radius: 0 3px 3px 0;
+	border-radius: 3px 0 0 3px;
 }
 
 .toc-list {
@@ -165,7 +137,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	border-top: 1px solid $dark-border;
 
 	> li {
@@ -183,7 +155,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level3 {
+.level2 {
 	border-top: 1px solid #F0F0F0;
 
 	> li {
@@ -203,7 +175,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2 {
+.level1 {
 	display:none;
 
 	.open & {
@@ -219,7 +191,7 @@ $level0-border-left-width: 5px;
 	}
 }
 
-.level2, .level3 {
+.level1, .level2 {
 
 	li {
 		border-top: 1px solid #F0F0F0;

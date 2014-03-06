@@ -43,6 +43,13 @@ $messages['ast'] = array(
 	'wikiaconfirmemail-username' => "Nome d'usuariu",
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'wikiaconfirmemail-username' => 'İstifadəçi adı',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  */
@@ -423,4 +430,17 @@ $messages['zh-hans'] = array(
 	'wikiaconfirmemail-heading' => '马上好了。',
 	'wikiaconfirmemail-subheading' => '用您的用户名和密码登录，让我们知道您收到了那封电子邮件。',
 	'wikiaconfirmemail-username' => '用户名',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiaconfirmemail-error-empty-code' => '驗證碼為空',
+	'wikiaconfirmemail-error-invalid-code' => '無效的驗證碼',
+	'wikiaconfirmemail-error-user-not-match' => '哎呀，這個確認連結與您輸入的使用者名稱不同。請確保您輸入了正確的使用者名稱。如果您想要使用一個不同的帳戶登錄，請按一下<a href="{{fullurl:{{ns:special}}:UserLogin}}">這裡</a>',
+	'wikiaconfirmemail-login-button' => '確認並登錄',
+	'wikiaconfirmemail-heading' => '快完成了。',
+	'wikiaconfirmemail-subheading' => '用您的用戶名和密碼登錄，讓我們知道您收到了那封電子郵件。',
+	'wikiaconfirmemail-username' => '用戶名',
 );

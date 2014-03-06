@@ -1,15 +1,15 @@
 <?php
 class PhalanxStatsPager extends PhalanxPager {
-	public $qCond = '';
-	public $pInx = '';
+	public $qCond = 'ps_blocker_id';
+	public $pInx = 'blockId';
 
 	public function __construct( $id ) {
 		parent::__construct();
 		$this->id = (int) $id;
 		$this->mDb = wfGetDB( DB_SLAVE, array(), $this->app->wg->StatsDB );
-		$this->mDefaultQuery['blockId'] = $this->id;
-		$this->qCond = 'ps_blocker_id';
-		$this->pInx = 'blockId';
+		if ( !empty( $this->pInx ) ) {
+			$this->mDefaultQuery[$this->pInx] = $this->id;
+		}
 	}
 
 	function getQueryInfo() {
@@ -33,7 +33,9 @@ class PhalanxStatsPager extends PhalanxPager {
 			if ( $query === false ) {
 				continue;
 			}
-			$query[ $this->pInx ] = $this->id;
+			if ( !empty( $this->pInx ) ) {
+				$query[ $this->pInx ] = $this->id;
+			}
 			$queries[$type] = $query;
 		}
 

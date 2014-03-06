@@ -58,6 +58,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal('slotsInTotal', WikiaHomePageHelper::SLOTS_IN_TOTAL);
+		$this->infoMsg = FlashMessages::pop();
 
 		//wikis with visualization selectbox
 		$visualizationLang = $this->wg->request->getVal(self::WHST_VISUALIZATION_LANG_VAR_NAME, $this->wg->contLang->getCode());
@@ -79,10 +80,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = new CollectionsForm();
+		$this->statsForm = new StatsForm();
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
 		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
+
+		$statsValues = $this->helper->getStatsFromWF();
 
 		if( $this->request->wasPosted() ) {
 			if ( $this->request->getVal('wikis-in-slots',false) ) {
@@ -113,17 +117,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
-					$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
-					$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList, true);
-					
-					$this->infoMsg = wfMessage('manage-wikia-home-collections-success')->text();
+					FlashMessages::put(wfMessage('manage-wikia-home-collections-success')->text());
+					$this->response->redirect($_SERVER['REQUEST_URI']);
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-collections-failure')->text();
+				}
+			} elseif ( $this->request->getVal('stats',false) ) {
+				$statsValues = $this->request->getParams();
+				$statsValues = $this->statsForm->filterData($statsValues);
+				$isValid = $this->statsForm->validate($statsValues);
+
+				if ($isValid) {
+					$this->helper->saveStatsToWF($statsValues);
+					FlashMessages::put(wfMessage('manage-wikia-home-stats-success')->text());
+					$this->response->redirect($_SERVER['REQUEST_URI']);
+				} else {
+					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
 			}
 		}
 
 		$this->form->setFieldsValues($collectionValues);
+		$this->statsForm->setFieldsValues($statsValues);
 		$this->verticals = $this->getWikiVerticals();
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);

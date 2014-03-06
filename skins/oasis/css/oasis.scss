@@ -9,14 +9,12 @@
 
 // Mixins
 @import "mixins/bodytext";
-@import "mixins/border-radius";
 @import "mixins/border-opacity";
 @import "mixins/box-shadow";
 @import "mixins/clearfix";
 @import "mixins/forms";
 @import "mixins/gradient";
 @import "mixins/menus";
-@import "mixins/opacity";
 @import "mixins/wordmark";
 
 // Core
@@ -53,6 +51,7 @@
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand
 @import "core/video-thumbnail";
 @import "core/MenuElement";
+@import "core/visualeditor";
 
 // Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
@@ -70,10 +69,10 @@
 @import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
 @import "extensions/wikia/WikiaBar/css/WikiaBar";
 @import "extensions/wikia/Chat2/css/ChatEntryPoint";
-@import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
 @import "extensions/wikia/TOC/css/toc.scss";
+@import "modules/VideosModule";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";

@@ -55,6 +55,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Başlıq',
 	'contentfeeds-firstfewarticles-tag-next' => 'Növbəti',
 );
 
@@ -187,9 +188,11 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
 	'contentfeeds-firstfewarticles-tag-next' => 'Seuraava',
@@ -549,6 +552,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'contentfeeds-desc' => 'Ger riklig och aktuell information genom olika taggar eller "feeds"',
@@ -558,7 +562,7 @@ $messages['sv'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Rubrik',
 	'contentfeeds-firstfewarticles-tag-next' => 'Nästa',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fel: Sidrubrik krävs',
-	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidans kropp krävs',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidinnehåll krävs',
 );
 
 /** Swahili (Kiswahili)
@@ -595,6 +599,16 @@ $messages['tl'] = array(
 $messages['tly'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Сәрловһә',
 	'contentfeeds-firstfewarticles-tag-next' => 'Бәнав',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Başlık',
+	'contentfeeds-firstfewarticles-tag-next' => 'Sonraki',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Hata: Sayfa başlığı gereklidir',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Hata: Sayfa metni gereklidir',
 );
 
 /** Tatar (Cyrillic script) (татарча)

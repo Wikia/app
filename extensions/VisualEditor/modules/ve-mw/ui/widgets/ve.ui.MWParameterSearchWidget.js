@@ -9,7 +9,7 @@
  * Creates an ve.ui.MWParameterSearchWidget object.
  *
  * @class
- * @extends ve.ui.SearchWidget
+ * @extends OO.ui.SearchWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -21,7 +21,7 @@ ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, 
 	}, config );
 
 	// Parent constructor
-	ve.ui.SearchWidget.call( this, config );
+	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
 	this.template = template;
@@ -31,13 +31,13 @@ ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, 
 	this.template.connect( this, { 'add': 'buildIndex', 'remove': 'buildIndex' } );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwParameterSearchWidget' );
+	this.$element.addClass( 've-ui-mwParameterSearchWidget' );
 	this.buildIndex();
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWParameterSearchWidget, ve.ui.SearchWidget );
+OO.inheritClass( ve.ui.MWParameterSearchWidget, OO.ui.SearchWidget );
 
 /* Events */
 
@@ -56,7 +56,7 @@ ve.inheritClass( ve.ui.MWParameterSearchWidget, ve.ui.SearchWidget );
  */
 ve.ui.MWParameterSearchWidget.prototype.onQueryChange = function () {
 	// Parent method
-	ve.ui.SearchWidget.prototype.onQueryChange.call( this );
+	OO.ui.SearchWidget.prototype.onQueryChange.call( this );
 
 	// Populate
 	this.addResults();
@@ -66,8 +66,8 @@ ve.ui.MWParameterSearchWidget.prototype.onQueryChange = function () {
  * Handle select widget select events.
  *
  * @method
- * @param {ve.ui.OptionWidget} item Selected item
- * @emits select
+ * @param {OO.ui.OptionWidget} item Selected item
+ * @fires select
  */
 ve.ui.MWParameterSearchWidget.prototype.onResultsSelect = function ( item ) {
 	this.emit( 'select', item && item.getData() ? item.getData().name : null );
@@ -123,7 +123,7 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 	for ( i = 0, len = this.index.length; i < len; i++ ) {
 		item = this.index[i];
 		if ( item.text.indexOf( query ) >= 0 ) {
-			items.push( new ve.ui.MWParameterResultWidget( item, { '$$': this.$$ } ) );
+			items.push( new ve.ui.MWParameterResultWidget( item, { '$': this.$ } ) );
 			if ( item.name === value || ve.indexOf( value, item.aliases ) !== -1 ) {
 				exactMatch = true;
 			}
@@ -136,7 +136,7 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 			'label': value,
 			'aliases': [],
 			'description': ve.msg( 'visualeditor-parameter-search-unknown' )
-		}, { '$$': this.$$ } ) );
+		}, { '$': this.$ } ) );
 	}
 
 	if ( !items.length ) {
@@ -147,7 +147,7 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 				'aliases': [],
 				'description': ve.msg( 'visualeditor-parameter-search-no-unused' )
 			},
-			{ '$$': this.$$, 'disabled': true }
+			{ '$': this.$, 'disabled': true }
 		) );
 	}
 

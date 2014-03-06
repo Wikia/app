@@ -696,12 +696,13 @@ class LocalFile extends File {
 		$this->purgeThumbnails( $options );
 
 		// Purge squid cache for this file
-/**
-		SquidUpdate::purge( array( $this->getURL() ) );
-**/
-		// Wikia purge the base thumbnail url
-		SquidUpdate::purge( array( $this->getURL(), $this->getThumbUrl() ) );
+		// Wikia change - begin
+		// @author macbre / BAC-1206
+		$urls = array( $this->getURL() );
+		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
+		SquidUpdate::purge( $urls );
+		// Wikia change - end
 	}
 
 	/**
@@ -757,6 +758,8 @@ class LocalFile extends File {
 			foreach( $files as $file ) {
 				$urls[] = $this->getThumbUrl( $file );
 			}
+
+			wfRunHooks( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 	}
@@ -1796,6 +1799,7 @@ class LocalFileDeleteBatch {
 				$urlRel = str_replace( '%2F', '/', rawurlencode( $srcRel ) );
 				$urls[] = $this->file->repo->getZoneUrl( 'public' ) . '/' . $urlRel;
 			}
+			wfRunHooks( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 

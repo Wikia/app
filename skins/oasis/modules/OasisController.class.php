@@ -39,7 +39,6 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		$this->ivw = null;
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
@@ -264,7 +263,6 @@ class OasisController extends WikiaController {
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -456,9 +454,10 @@ EOT;
 
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
-		$headScripts = str_replace($this->wg->out->getHeadItems(), '', $tpl->data['headscripts']);
-		// ...and top scripts too (BugId: 32747)
-		$headScripts = str_replace($this->topScripts, '', $headScripts);
+		$remove = $this->wg->out->getHeadItemsArray();
+		$remove[ ] = $this->topScripts;
+		array_walk( $remove, 'trim' );
+		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 

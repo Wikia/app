@@ -21,7 +21,7 @@ ve.dm.TableCaptionNode = function VeDmTableCaptionNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.TableCaptionNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.TableCaptionNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

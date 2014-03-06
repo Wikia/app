@@ -47,14 +47,7 @@ class RelatedPagesApiController extends WikiaApiController {
 			$this->response->setVal( 'items', $related );
 			$this->response->setVal( 'basepath', $this->wg->Server );
 
-			$this->response->setCacheValidity(
-				10800 /* 3 hours */,
-				10800 /* 3 hours */,
-				array(
-					WikiaResponse::CACHE_TARGET_BROWSER,
-					WikiaResponse::CACHE_TARGET_VARNISH
-				)
-			);
+			$this->response->setCacheValidity(10800);
 
 			wfProfileOut( __METHOD__ );
 		} else {

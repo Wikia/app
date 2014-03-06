@@ -15,6 +15,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 		tablesKey = 'wideTables',
 		ttl = 604800, //7days
 		assets,
+		lazyImages,
 		process = function ( res ) {
 			!assets && cache && cache.setVersioned( tablesKey, res, ttl );
 
@@ -41,8 +42,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 				type: loader.MULTI,
 				resources: {
 					scripts: 'wikiamobile_tables_js',
-					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
-					ttl: ttl
+					styles: '/extensions/wikia/WikiaMobile/css/tables.scss'
 				}
 			} ).done( process );
 		}
@@ -51,13 +51,12 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 	//init media
 	media.init( d.getElementsByClassName( 'media' ) );
 
+	lazyImages = d.getElementsByClassName( 'lazy' );
+	lazyload.fixSizes( lazyImages );
+
 	sloth( {
-		on: document.getElementsByClassName( 'lazy' ),
-		threshold: 300,
+		on: lazyImages,
+		threshold: 400,
 		callback: lazyload
 	} );
-
-	$(function(){
-		sloth();
-	});
 } );

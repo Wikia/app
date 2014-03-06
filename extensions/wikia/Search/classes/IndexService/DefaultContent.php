@@ -13,6 +13,8 @@ use Wikia\Search\Utilities, simple_html_dom;
  */
 class DefaultContent extends AbstractService
 {
+	const SPACE_SEQUENCE_REGEXP = "/\s+/";  
+	
 	/**
 	 * Text from selectors in this list should be removed during HTML stripping.
 	 * @var array
@@ -198,11 +200,13 @@ class DefaultContent extends AbstractService
 	 * @param string $html
 	 * @return array
 	 */
+
+	
 	protected function prepValuesFromHtml( $html ) {
 		$result = array();
 		$paragraphs = array();
-		// default value; we'll overwrite if dom can parse
-		$plaintext = preg_replace( '/\s+/', ' ', html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' ) );
+		
+		$html = str_replace(["&lt;", "&gt;"], "", $html); // workaround for bug in html_entity_decode that truncates the text
 
 		$dom = new \simple_html_dom( html_entity_decode($html, ENT_COMPAT, 'UTF-8') );
 		if ( $dom->root ) {
@@ -212,9 +216,12 @@ class DefaultContent extends AbstractService
 			$this->removeGarbageFromDom( $dom );
 			$plaintext = $this->getPlaintextFromDom( $dom );
 			$paragraphs = $this->getParagraphsFromDom( $dom );
+		} else {
+			$plaintext = html_entity_decode( strip_tags( $html ), ENT_COMPAT, 'UTF-8' );			
 		}
-		$paragraphString = preg_replace( '/\s+/', ' ', implode( ' ', $paragraphs ) ); // can be empty
-		$words = preg_split( '/[[:space:]]+/', $paragraphString?: $plaintext);
+		$plaintext = trim(preg_replace(static::SPACE_SEQUENCE_REGEXP, ' ', $plaintext));
+		$paragraphString = trim(preg_replace( static::SPACE_SEQUENCE_REGEXP, ' ', implode( ' ', $paragraphs ) )); // can be empty
+		$words = preg_split( '/ /', $paragraphString?: $plaintext);
 		$wordCount = count( $words );
 		$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
 		$this->pushNolangTxt( $upTo100Words );

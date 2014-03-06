@@ -1,4 +1,4 @@
-/*jshint camelcase:false*/
+/*jshint camelcase:false, maxdepth:4*/
 /*exported AdLogicPageDimensions*/
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
@@ -18,6 +18,14 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
+
+		/**
+		 * Slots based on whether there's a right rail on page or not
+		 */
+		slotsOnlyWithRail = {
+			LEFT_SKYSCRAPER_3: true
+		},
+		rightRailPresent = !!document.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -71,6 +79,11 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			wideEnough = false,
 			conflictingMediaQuery;
 
+		if (slotsOnlyWithRail[slotname]) {
+			if (!rightRailPresent) {
+				return false;
+			}
+		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -124,28 +137,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
-	 * Add an ad to the wrappedAds
-	 *
-	 * @param slotname
-	 * @param loadCallback -- the function to call when an ad shows up the first time
-	 */
-	function add(slotname, loadCallback) {
-		log(['add', slotname, loadCallback], 'debug', logGroup);
-
-		if (!initCalled) {
-			init();
-		}
-
-		wrappedAds[slotname] = {
-			slotname: slotname,
-			state: 'none',
-			loadCallback: loadCallback
-		};
-
-		refresh(wrappedAds[slotname]);
-	}
-
-	/**
 	 * Update the pageHeight and trigger refresh of all ads.
 	 * No logging here, it needs to be super fast
 	 */
@@ -194,6 +185,28 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
+	 * Add an ad to the wrappedAds
+	 *
+	 * @param slotname
+	 * @param loadCallback -- the function to call when an ad shows up the first time
+	 */
+	function add(slotname, loadCallback) {
+		log(['add', slotname, loadCallback], 'debug', logGroup);
+
+		if (!initCalled) {
+			init();
+		}
+
+		wrappedAds[slotname] = {
+			slotname: slotname,
+			state: 'none',
+			loadCallback: loadCallback
+		};
+
+		refresh(wrappedAds[slotname]);
+	}
+
+	/**
 	 * Check if page should have prefooters (note it can change later)
 	 *
 	 * @returns {boolean}
@@ -214,7 +227,11 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	function isApplicable(slotname) {
 		log(['isApplicable', slotname], 'debug', logGroup);
 
-		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
+		return !!(
+			slotsOnlyOnLongPages[slotname] ||
+				slotsToHideOnMediaQuery[slotname] ||
+				slotsOnlyWithRail[slotname]
+		);
 	}
 
 	return {

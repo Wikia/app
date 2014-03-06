@@ -1,3 +1,11 @@
+<?
+/* @var $sortingOptions array */
+/* @var $sortMsg string */
+/* @var $wg object */
+/* @var $isRemovalAllowed bool */
+/* @var $showAddVideoBtn bool */
+/* @var $pagination string */
+?>
 
 <div class="ContentHeader sort-form">
 	<label><?= wfMsg('specialvideos-sort-by') ?></label>
@@ -10,10 +18,15 @@
 		</div>
 		<div class="dropdown">
 			<ul class="dropdown-list">
-				<? foreach($sortingOptions as $sortBy => $option): ?>
-					<? if($sortMsg != $option): ?>
+				<? foreach ( $sortingOptions as $sortBy => $option ): ?>
+					<? if ( $sortMsg != $option ): ?>
+						<?
+							$parts = explode( ':', $sortBy );
+							$sortType = empty( $parts[0] ) ? '' : $parts[0];
+							$category = empty( $parts[1] ) ? '' : $parts[1];
+						?>
 						<li class="dropdown-item">
-							<label data-sort="<?= $sortBy ?>"><?= $option ?></label>
+							<label data-sort="<?= $sortType ?>" data-category="<?= $category ?>"><?= $option ?></label>
 						</li>
 					<? endif; ?>
 				<? endforeach; ?>

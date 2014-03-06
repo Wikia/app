@@ -42,6 +42,12 @@
 				// Clicking okay in a confirmation modal
 				CONFIRM: 'confirm',
 
+				// Generic disable
+				DISABLE: 'disable',
+
+				// Generic enable
+				ENABLE: 'enable',
+
 				// Generic error (generally AJAX)
 				ERROR: 'error',
 

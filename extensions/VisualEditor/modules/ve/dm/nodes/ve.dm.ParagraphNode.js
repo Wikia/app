@@ -21,7 +21,7 @@ ve.dm.ParagraphNode = function VeDmParagraphNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.ParagraphNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.ParagraphNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

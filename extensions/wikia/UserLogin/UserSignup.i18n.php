@@ -362,6 +362,7 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'usersignup-page-title' => 'سجل في ويكيا',
@@ -411,10 +412,48 @@ $messages['ar'] = array(
 انقر فوق رابط التأكيد في بريدك الإلكتروني للانتهاء من إنشاء حسابك.",
 	'usersignup-confirmation-email_subject' => 'هناك تقريبا! قم بالتأكيد على حسابك في ويكيا',
 	'usersignup-confirmation-email-greeting' => 'مرحباً $USERNAME،',
+	'usersignup-confirmation-email-content' => 'أنت على بعد خطوة من إنشاء حساب على ويكيا! اضغط على الرابط أدناه لتأكد عنوان بريد الإلكتروني وتبدأ.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-confirmation-email_body' => 'مرحبًا $2،
+
+أنت على بعد خطوة من إنشاء حساب على ويكيا! اضغط على الرابط أدناه لتأكد عنوان بريدك الإلكتروني وتبدأ.
+
+$3
+
+فريق ويكيا
+
+
+___________________________________________
+
+للتحقق من آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+أتريد التحكم بالرسائل التي تتلقاها؟ اذهب إلى {{fullurl:{{ns:special}}:تفضيلات}}',
+	'usersignup-reconfirmation-email-sent' => 'تم تغيير عنوان بريدك الإلكتروني إلى  $1 . لقد أرسلنا لك رسالة تأكيد جديدة بالبريد إلكتروني. يرجى تأكيد عنوان البريد الإلكتروني الجديد.',
 	'usersignup-reconfirmation-email_subject' => 'تأكيد تغيير عنوان البريد الإلكتروني الخاص بك على ويكيا',
 	'usersignup-reconfirmation-email-greeting' => 'مرحبا يا $USERNAME',
+	'usersignup-reconfirmation-email-content' => 'الرجاء الضغط على الرابط أدناه لتأكيد تغيير عنوان بريدك الإلكتروني على ويكيا.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+ستستمر في تلقي الرسائل الإلكترونية على عنوان بريدك الإلكتروني القديم حتى تقوم بتأكيد هذا العنوان.',
 	'usersignup-reconfirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-reconfirmation-email_body' => 'مرحبًا $2،
+
+من فضلك اضغط على الرابط أدناه لتأكيد تغيير عنوان البريد الإلكتروني على ويكيا.
+
+$3
+
+ستستمر باستقبال رسائل على عنوان بريدك الإلكتروني القديم حتى تأكد هذا العنوان.
+
+فريق ويكيا
+
+
+___________________________________________
+
+للتحقق من آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+
+تريد التحكم بالرسائل الإلكترونية التي تستقبلها؟ اذهب إلى: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-welcome-email-subject' => 'مرحبا بك في ويكيا يا $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'مرحبا يا $USERNAME',
 	'usersignup-welcome-email-heading' => 'نحن سعداء بالترحيب بك في ويكيا و {{SITENAME}}! إليك بعض الأشياء التي يمكنك القيام بها للبدأ.',
@@ -453,6 +492,16 @@ $messages['ar'] = array(
 	'usersignup-facebook-problem' => 'هناك مشكلة في الاتصال مع فيسبوك. الرجاء المحاولة مرة أخرى لاحقاً.',
 );
 
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'usersignup-welcome-email-greeting' => 'Salam $USERNAME',
+	'usersignup-marketing-global-heading' => 'Yarat',
+	'usersignup-account-creation-email-greeting' => 'Salam,',
+	'usersignup-confirmation-reminder-email-greeting' => 'Salam $USERNAME',
+);
+
 /** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
@@ -476,10 +525,16 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'usersignup-error-username-length' => "Oc'ho, ne c'hall ket bezañ ouzhpenn {{PLURAL:$1|un arouezenn|$1 arouezenn}} en hoc'h anv implijer.",
+	'usersignup-error-invalid-user' => 'Implijer direizh. Kevreit da gentañ, mar plij.',
+	'usersignup-error-invalid-email' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'usersignup-error-already-confirmed' => "Kadarnaet ho peus ar chomlec'h postel-mañ dija.",
+	'usersignup-facebook-heading' => 'Echu eo an enskrivadur',
 	'usersignup-facebook-create-account' => 'Krouiñ ur gont',
 	'usersignup-facebook-have-an-account-heading' => "Ur gont hoc'h eus dija ?",
+	'usersignup-facebook-proxy-email' => 'Postel dianv Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Goulenn ur postel kadarnaat nevez',
 	'usersignup-user-pref-confirmemail_send' => 'Adkas ma fostel kadarnaat',
+	'usersignup-user-pref-emailauthenticated' => "Trugarez deoc'h ! Kadarnaet eo bet ho postel d'an $2 da $3.",
 	'usersignup-confirm-page-title' => "Kadarnait ho chomlec'h postel",
 	'usersignup-confirm-email-resend-email' => 'Kas din ur postel kadarnaat all',
 	'usersignup-confirm-email-change-email-content' => "Fellout a ra din implijout ur chomlec'h postel disheñvel.",
@@ -493,8 +548,10 @@ $messages['br'] = array(
 	'usersignup-confirmation-heading' => 'Tost echu',
 	'usersignup-confirmation-heading-email-resent' => 'Kaset ez eus bet ur postel nevez',
 	'usersignup-confirmation-subheading' => 'Gwiriekait ho posteloù',
+	'usersignup-confirmation-email_subject' => 'Tost echu eo ! Kadarnait ho kont Wikia',
 	'usersignup-confirmation-email-greeting' => 'Ac\'hanta $USERNAME,',
 	'usersignup-confirmation-email-signature' => 'Skipailh Wikia',
+	'usersignup-reconfirmation-email_subject' => "Kadarnaat ho cheñchamant chomlec'h postel war Wikia",
 	'usersignup-reconfirmation-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'Skipailh Wikia',
 	'usersignup-welcome-email-subject' => 'Deuet-mat oc\'h e Wikia, $USERNAME !',
@@ -509,6 +566,7 @@ $messages['br'] = array(
 	'usersignup-heading-byemail' => 'Krouiñ ur gont evit unan bennak all',
 	'usersignup-marketing-community-heading' => 'Kenlabourit',
 	'usersignup-marketing-global-heading' => 'Krouiñ',
+	'usersignup-createaccount-byemail' => 'Krouiñ ur gont evit unan bennak all',
 	'usersignup-account-creation-heading' => 'Berzh !',
 	'usersignup-account-creation-subheading' => 'Kaset hon eus ur postel da $1',
 	'usersignup-account-creation-email-subject' => "Krouet ez eus bet ur gont evidoc'h war Wikia !",
@@ -733,7 +791,7 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
 	'usersignup-resend-email-heading-success' => 'Керла хаам дӀабахийтина',
-	'usersignup-reconfirmation-email_subject' => 'Бакъде электрони почтан адрес хуьйцуш хилар Вики чохь',
+	'usersignup-reconfirmation-email_subject' => 'Бакъде электронан почтан адрес хуьйцуш хилар Вики чохь',
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
 
@@ -1036,6 +1094,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'usersignup-page-title' => 'Dekew Wikia',
@@ -1054,7 +1113,7 @@ $messages['diq'] = array(
 	'usersignup-welcome-email-signature' => 'Taxıma Wikia',
 	'usersignup-heading' => 'Noroc dekewe Wikia',
 	'usersignup-marketing-community-heading' => 'Piyakarkerdış',
-	'usersignup-marketing-global-heading' => 'İycad ke',
+	'usersignup-marketing-global-heading' => 'Vıraze',
 	'usersignup-marketing-creativity-heading' => 'Oricinal be',
 	'usersignup-account-creation-email-greeting' => 'Merheba,',
 	'usersignup-account-creation-email-signature' => 'Taxıma Wikia',
@@ -1374,6 +1433,7 @@ Haluatko määrittää mitä sähköpostia saat? Mene osoitteeseen: {{fullurl:{{
  * @author Gomoko
  * @author McDutchie
  * @author Wyz
+ * @author Zetud
  */
 $messages['fr'] = array(
 	'usersignup-page-title' => 'Rejoindre Wikia',
@@ -1400,7 +1460,7 @@ $messages['fr'] = array(
 	'usersignup-user-pref-emailauthenticated' => 'Merci ! Votre adresse de courriel a été confirmée le $2 à $3.',
 	'usersignup-user-pref-emailnotauthenticated' => 'Vérifiez votre courriel et cliquez sur le lien de confirmation pour terminer le changement votre adresse de courriel à: $1',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Oh, non ! Votre adresse de courriel n’est pas confirmée. Les fonctionnalités de courriel ne fonctionneront pas tant que vous n’aurez pas confirmé votre adresse de courriel.',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'Ça y est presque ! Un nouveau courriel de confirmation à été envoyé à $1. Vérifiez votre courriel et cliquez sur le lien pour terminer la confirmation de votre adresse de courriel.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Ça y est presque ! Un nouveau courriel de confirmation a été envoyé à $1. Vérifiez votre courriel et cliquez sur le lien pour terminer la confirmation de votre adresse de courriel.',
 	'usersignup-user-pref-noemailprefs' => "Il semblerait que nous n’ayons pas d'adresse de courriel pour vous. Veuillez saisir une adresse de courriel ci-dessus.",
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, non ! Votre adresse de courriel n’est pas confirmée. Nous vous avons envoyé un courriel, cliquez sur le lien de confirmation qui s'y trouve pour la confirmer.",
 	'usersignup-user-pref-confirmemail_noemail' => "Il semblerait que nous n'ayons pas d’adresse de courriel pour vous. Allez dans les [[Special:Preferences|préférences utilisateur]] pour en saisir une.",

@@ -4,6 +4,10 @@ namespace {
 
 	class MockNamespacedFunctionsTest extends WikiaBaseTest {
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05464 ms
+		 */
 		public function testFunctionNameSpec() {
 			$expValue = 2;
 
@@ -21,6 +25,10 @@ namespace {
 			$this->assertEquals($expValue,\NamespacedFunctions\named2(),'without \\ at the beginning');
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05561 ms
+		 */
 		public function testNamespacedFunctionsMocks() {
 			$expValue = 2;
 

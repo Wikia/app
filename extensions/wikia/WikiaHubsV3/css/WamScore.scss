@@ -1,0 +1,108 @@
+.WikiaGrid .wikiahubs-wam {
+	height: 380px;
+	margin-top: 10px;
+	.social-links {
+		float: right;
+		a {
+			display: block;
+			float: left;
+			padding: 10px;
+		}
+		a:first-child {
+			padding-left: 0;
+		}
+		img {
+			height: 20px;
+			width: 20px;
+		}
+		.facebook {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/fb.png"); /* base64 */
+		}
+		.twitter {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/twitter.png"); /* base64 */
+		}
+		.gplus {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* base64 */
+		}
+	}
+	.wam-header {
+		height: 52px;
+	}
+	.wam-content {
+		border-top: 1px solid #ccc;
+		clear: both;
+		padding-top: 10px;
+		.title {
+			border-bottom: 4px solid $color-wikiahome-hubcolor;
+			height: 30px;
+			a {
+				float: right;
+				margin-top: 8px;
+			}
+			img {
+				background-color: $color-wikiahome-hubcolor;
+				background-image: url("/extensions/wikia/WikiaHubsV3/images/headicon.png"); /* base64 */
+				display: block;
+				float: left;
+				height: 25px;
+				margin-right: 10px;
+				width: 25px;
+			}
+		}
+		h2 {
+			border: none;
+			float: left;
+		}
+		h3 {
+			clear: both;
+			font-weight: bold;
+			margin: 12px 0;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		tr {
+			border-bottom: 1px solid #eaeaea;
+			th {
+				color: #666;
+				font-weight: normal;
+				text-align: left;
+			}
+			td {
+				padding: 7px 0;
+			}
+			.rank, .score {
+				font-weight: bold;
+				padding-left: 3px;
+			}
+			.score {
+				img {
+					height: 13px;
+					margin-right: 5px;
+					width: 11px;
+				}
+				.down {
+					background-image: url("/skins/oasis/images/wam/down.png"); /* base64 */
+				}
+				.up {
+					background-image: url("/skins/oasis/images/wam/up.png"); /* base64 */
+				}
+				.nochange {
+					background-image: url("/skins/oasis/images/wam/nochange.png"); /* base64 */
+				}
+			}
+			.url {
+				text-decoration: none;
+			}
+			.wiki-thumb, .wiki-thumb img {
+				display: block;
+				height: 30px;
+				width: 48px;
+			}
+			.wiki-thumb img {
+				background: url("/extensions/wikia/WikiaHubsV3/images/image-placeholder.png"); /* base64 */;
+			}
+		}
+	}
+}

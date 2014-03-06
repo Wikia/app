@@ -595,11 +595,11 @@ $1
 	'lightbox-share-email-page-label' => '友達にメールでこのページを送信',
 	'lightbox-share-email-page-label-address' => 'メールアドレス',
 	'lightbox-share-email-ok-caption' => '確認',
-	'lightbox-share-email-ok-content' => 'メールを送信しました。', # Fuzzy
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|メール}}を送信しました。',
 	'lightbox-share-email-error-caption' => 'エラー',
-	'lightbox-share-email-error-content' => 'メールの送信でエラーが発生しました。
+	'lightbox-share-email-error-content' => '{{PLURAL:$1メール}}の送信でエラーが発生しました。
 
-詳細: $2', # Fuzzy
+詳細: $2',
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
