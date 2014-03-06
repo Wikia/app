@@ -475,8 +475,13 @@ class CategoryViewer extends ContextSource {
 		 * @desc: Debugging for VE-840
 		 * @author: Christian
 		 */
-		if ( $type === 'subcat' ) {
-			WikiaLogger::instance()->debug( "VE-840" );
+		if ( $type === 'subcat' && ( is_string( $this->nextPage ) || is_string( $this->from ) ) ) {
+			$debugging = [
+				"nextPage" => var_dump( $this->nextPage ),
+				"until" => var_dump( $this->until ),
+				"backtrace" => debug_backtrace()
+			];
+			WikiaLogger::instance()->debug( "VE-840", $debugging );
 		}
 		/* Wikia change end */
 		if ( $this->until[$type] !== null ) {
