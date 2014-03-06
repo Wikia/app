@@ -75,7 +75,12 @@ class LyricFindTrackingService extends WikiaService {
 			$parts[] = sprintf('gnlyricid:%d', $data['gracenote']);
 		}
 
-		list($artistName, $trackName) = explode(':', $data['title'], 2);
+		if(strpos($data['title'], ':') === false){
+			$artistName = $data['title'];
+			$trackName = "";
+		} else {
+			list($artistName, $trackName) = explode(':', $data['title'], 2);
+		}
 
 		$parts[] = sprintf('trackname:%s', self::encodeParam($trackName));
 		$parts[] = sprintf('artistname:%s', self::encodeParam($artistName));

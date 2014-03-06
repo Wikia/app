@@ -938,7 +938,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				if(!empty($pageRemovedProp)){
 					// Overwrite with the same content that normal takedowns used before LF API (this lets the
 					// Community easily update the text since it's a template).
-					$content = "{{gracenote_takedown}}";
+					$content = "{{lyricfind_takedown}}";
 				}
 
 				// Parse the lyrics from the content.
@@ -1065,7 +1065,7 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				}
 
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
-				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{gracenote[ _]takedown\}\}/", $retVal['lyrics']));
+				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{(gracenote|lyricfind)[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
@@ -1080,7 +1080,12 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 						$lyrics = $retVal['lyrics'];
 
 						if(mb_strlen($lyrics) < 50){
-							$lyrics = "";
+							if($lyrics == "{{lyricfind_takedown}}"){
+								// TODO: INJECT THE ACTUAL RESULT OF THE TEMPLATE IN HERE INSTEAD!!
+								$lyrics = "We don't currently have a license for these lyrics. Please try again in a few days!";
+							} else {
+								$lyrics = "[...]";
+							}
 						} else {
 							$lyrics = mb_substr($lyrics, 0, max(0, round(mb_strlen($lyrics) / 7)), 'UTF-8') . "[...]";
 						}
