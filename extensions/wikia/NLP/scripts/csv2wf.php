@@ -2,12 +2,11 @@
 /**
  * Import WF variables into CSV. The CSV must take the following format:
  * wiki_id,variable_id,variable_value
+ * NOTE: variable value _must_ be serialized.
  * @package MediaWiki
  * @addtopackage maintenance
  */
 require_once( "../../../../maintenance/commandLine.inc" );
-
-global $wgContentNamespaces, $wgExtraNamespaces;
 
 $rowCounter = 0;
 if ( ( $handle = fopen( $argv[0], 'r' ) ) !== false ) {
