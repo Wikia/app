@@ -92,10 +92,6 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_ARTIST );
 		}
 
-		if( empty( $albumName ) ) {
-			throw new InvalidParameterApiException( self::PARAM_ALBUM );
-		}
-
 		if( empty( $songName ) ) {
 			throw new InvalidParameterApiException( self::PARAM_SONG );
 		}
