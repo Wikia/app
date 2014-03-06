@@ -28,6 +28,6 @@ if ( ( $handle = fopen( $argv[0], 'r' ) ) !== false ) {
 	}
 	fclose( $handle );
 } else {
-	echo "{$argv[1]} could not be opened";
+	echo "{$argv[0]} could not be opened";
 }
 
