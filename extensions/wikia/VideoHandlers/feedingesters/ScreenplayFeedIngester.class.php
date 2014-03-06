@@ -226,8 +226,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$clipData['videoId'] = $clip['EClipId'];
 		$clipData['published'] = strtotime( $clip['DateAdded'] );
-		$clipData['description'] = $clip['Description'];
 		$clipData['duration'] = $clip['Runtime'];
+
+		// set description
+		$clipData['description'] = str_replace( [ '[', ']' ], '', str_replace( '][', ', ', $clip['Description'] ) );
 
 		// set category
 		$trailerType = empty( self::$TRAILER_TYPE[$clip['TrailerTypeId']] ) ? '' : self::$TRAILER_TYPE[$clip['TrailerTypeId']];
