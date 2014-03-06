@@ -65,7 +65,8 @@ class SpecialUserManagementController extends WikiaSpecialPageController {
 
 
 	private function getLastEmailDelivery() {
-		$dbr = wfGetDB( DB_SLAVE, array(), 'dataware' );
+		global $wgWikiaMailerDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgWikiaMailerDB );
 
 		$res = $dbr->select(
 			'wikia_mailer.mail_send',
