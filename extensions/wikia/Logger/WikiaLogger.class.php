@@ -126,7 +126,7 @@ class WikiaLogger {
 
 		if (!$wgDevelEnvironment) {
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
-			$key = "wikialogger-top-script-$wgCacheBuster-$onError";
+			$key = "wikialogger-top-script-$onError";
 			$loggingJs = $wgMemc->get($key);
 
 			if (!$loggingJs) {
