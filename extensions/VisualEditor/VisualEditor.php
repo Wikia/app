@@ -9,6 +9,7 @@
  */
 
 /* Setup */
+
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'VisualEditor',
