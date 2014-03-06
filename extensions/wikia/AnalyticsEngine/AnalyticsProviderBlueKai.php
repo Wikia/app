@@ -31,7 +31,7 @@ s.src = "http://tags.bkrtx.com/js/bk-coretag.js";
 scripts.parentNode.insertBefore(s, scripts);
 }());
 </script>
-<!-- End BlueKai Tag -->';
+<!-- End BlueKai Tag -->
 SCRIPT;
 
 				return $script;
