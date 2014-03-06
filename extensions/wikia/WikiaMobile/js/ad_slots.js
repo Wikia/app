@@ -71,9 +71,9 @@ require( ['ads', 'jquery', 'JSMessages', 'wikia.window', 'wikia.log', 'sections'
 
 	} else {
 		if ( topAdWrapper ) {
-			topAdWrapper.className = 'hide';
+			topAdWrapper.className = 'hidden';
 		}
 
-		log( 'Ads blocked by UA', logLevel, logGroup );
+		log( 'Ads blocked by UA or this is not an article', logLevel, logGroup );
 	}
 } );
