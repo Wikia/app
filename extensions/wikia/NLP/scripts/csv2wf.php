@@ -5,7 +5,6 @@
  * @package MediaWiki
  * @addtopackage maintenance
  */
-echo 'hi';
 require_once( "../../../../maintenance/commandLine.inc" );
 
 global $wgContentNamespaces, $wgExtraNamespaces;
