@@ -155,7 +155,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				log('Sites/wikia.js loaded', 'info', logGroup);
 				myAd.loaded.site = true;
 
-				if (!window.SoiAP) {
+				if (!window.globalV6) {
 					error('globalV6');
 					return;
 				}
