@@ -122,9 +122,6 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		wfProfileIn( __METHOD__ );
 
-		// TODO: remove this
-		$options[ 'useTemplate' ] = true;
-
 		// Migrate to new system which uses a template instead of this toHtml method
 		if( !empty( $options[ 'useTemplate' ] ) ) {
 			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
