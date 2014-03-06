@@ -7,7 +7,7 @@
 /*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
-/*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
+/*global AdProviderEvolve, AdProviderGpt, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
 /*global require*/
@@ -36,7 +36,6 @@
 		evolveHelper,
 		adProviderGpt,
 		adProviderEvolve,
-		adProviderGamePro,
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
@@ -47,9 +46,6 @@
 
 	// Don't show ads when Sony requests the page
 	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
-
-	// Don't have SevenOne Media ads on IE8 (or below)
-	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
@@ -78,7 +74,6 @@
 	// Construct Ad Providers
 	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderGamePro = AdProviderGamePro(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
@@ -98,7 +93,6 @@
 		// AdProviders:
 		adProviderGpt,
 		adProviderEvolve,
-		adProviderGamePro,
 		adProviderLater,
 		adProviderNull
 	);
