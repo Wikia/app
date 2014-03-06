@@ -33,6 +33,7 @@ require(
 					var slot = document.getElementById( adSlotName ),
 						$iframe = $( slot ).find( 'iframe' ).contents();
 
+					// TODO: move this logic to AdProviderGptMobile (and AdEngine2.js:31)
 					if (
 						$iframe.find( 'body *:not(script)' ).length === 0 ||
 						$iframe.find( 'body img' ).width() <= 1

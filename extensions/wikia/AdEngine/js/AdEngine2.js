@@ -34,6 +34,7 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 				log(['success', slotname, extra], 'debug', logGroup);
 				aSlotTracker.track('success')
 
+				// TODO: move this logic to AdProviderGptMobile (and ad_slots2.js:36)
 				slot[1] && slot[1](hop);
 			}
 
