@@ -15,7 +15,7 @@ $c->setUser($wgUser);
 $c->setTitle($wgTitle);
 
 $rowCounter = 0;
-if ( ( $handle = fopen( $argv[1], 'r' ) ) !== false ) {
+if ( ( $handle = fopen( $argv[0], 'r' ) ) !== false ) {
 	while ( ( $row = fgetcsv( $handle ) ) !== false ) {
 		try {
 			$wikiId = $row[0];
