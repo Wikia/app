@@ -1,6 +1,7 @@
 <?php
 
 class ScreenplayFeedIngester extends VideoFeedIngester {
+
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
 	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&bitrateID=$5';
@@ -103,6 +104,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$debug = !empty( $params['debug'] );
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
+		$remoteAsset = !empty( $params['remoteAsset'] );
 
 		$articlesCreated = 0;
 
@@ -171,8 +173,12 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 						print "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n";
 					}
 				} else {
-					$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
-					$articlesCreated = $this->createVideo( $video, $msg, $createParams );
+					$createParams = [
+						'addlCategories' => $addlCategories,
+						'debug'          => $debug,
+						'remoteAsset'    => $remoteAsset,
+					];
+					$articlesCreated += $this->createVideo( $video, $msg, $createParams );
 				}
 				if ( $msg ) {
 					print "ERROR: $msg\n";
@@ -261,7 +267,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$clipData['ageRequired'] = 0;
 		}
 
-		$clipData['language'] = $clip['LanguageName'];
+		// set language
+		if ( empty( $clip['LanguageName'] ) || $clip['LanguageName'] == 'Not Set'  ) {
+			$clipData['language'] = 'English';
+		} else {
+			$clipData['language'] = $clip['LanguageName'];
+		}
+
 		$clipData['provider'] = 'screenplay';
 
 		wfProfileOut( __METHOD__ );
@@ -341,7 +353,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$categories[] = 'Entertainment';
 		}
 
-		$categories[] = 'Screenplay, Inc.';
+		$categories[] = 'Screenplay';
 
 		wfProfileOut( __METHOD__ );
 
@@ -372,6 +384,29 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$metadata['streamHdUrl'] = empty( $data['streamHdUrl'] ) ? '' : $data['streamHdUrl'];
 
 		return $metadata;
+	}
+
+	/**
+	 * Massage some video metadata and generate URLs to this video's assets
+	 * @param string $name
+	 * @param array $data
+	 * @param boolean $generateUrl
+	 * @return array $data
+	 */
+	protected function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
+		$data['assetTitle'] = $name;
+		$data['duration'] = $data['duration'] * 1000;
+		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
+
+		if ( $generateUrl ) {
+			$url = empty( $data['streamHdUrl'] ) ? $data['streamUrl'] : $data['streamHdUrl'];
+			$data['url'] = [
+				'flash' => $url,
+				'iphone' => $url,
+			];
+		}
+
+		return $data;
 	}
 
 }
