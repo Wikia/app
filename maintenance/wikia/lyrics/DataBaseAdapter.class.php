@@ -38,12 +38,25 @@ class SolrAdapter extends DataBaseAdapter {
 
 	function saveArtist( $artist, $albums ) {
 		$meta = [
-
+			'albums' => []
 		];
+		if (
+			isset( $artist['image'] ) &&
+			!empty( $artist['image'] )
+		) {
+			$meta['image'] = $artist['image'];
+		}
+		foreach ( $albums as $album ) {
+			$meta['albums'][] = [
+				'name' => $album['name'],
+				'image' => $album['image'],
+				'year' => $album['year'],
+			];
+		}
 		$update = $this->client->createUpdate();
 		$doc = $update->createDocument();
 		$doc->id = $this->generateKey( [$artist['name']] );
-		$doc->name = [$artist['name']];
+		$doc->name = $artist['name'];
 		$doc->meta = json_encode( $meta );
 		$doc->type = 1;
 		$doc->article_id = $artist['article_id'];
@@ -54,8 +67,24 @@ class SolrAdapter extends DataBaseAdapter {
 
 	function saveAlbum($artist, $album, $songs) {
 		$meta = [
-
+			'image' => $album['image'],
+			'year' => $album['year'],
+			'length' => $album['length'],
+			'genres' => $album['genres'],
+			'itunes' => $album['itunes'],
+			'artist' => [
+				'name' => $artist['name'],
+				'image' => $artist['image'],
+			],
+			'songs' => []
 		];
+
+		foreach ( $songs as $song ) {
+			$meta['songs'][] = [
+				'name' => $song['name'],
+				'number' => $song['number'],
+			];
+		}
 
 		$update = $this->client->createUpdate();
 		$doc = $update->createDocument();
@@ -71,7 +100,15 @@ class SolrAdapter extends DataBaseAdapter {
 
 	function saveSong($artist, $album, $song) {
 		$meta = [
-
+			'itunes' => $song['itunes'],
+			'artist' => [
+				'name' => $artist['name'],
+				'image' => $artist['image'],
+			],
+			'album' => [
+				'name' => $album['name'],
+				'image' => $album['image'],
+			]
 		];
 
 		$update = $this->client->createUpdate();
@@ -84,7 +121,6 @@ class SolrAdapter extends DataBaseAdapter {
 		$doc->name = $album['name'];
 		$doc->meta = json_encode( $meta );
 		$doc->content = $song['lyrics'];
-
 		$doc->type = 3;
 		$doc->article_id = $song['article_id'];
 		$update->addDocuments( array( $doc ) );

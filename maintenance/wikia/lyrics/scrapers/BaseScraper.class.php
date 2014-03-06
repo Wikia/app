@@ -32,9 +32,11 @@ abstract class BaseScraper {
 
 	function sanitizeData ( $data, $dataMap ) {
 		$result = array();
-		foreach ( $data as $key => $value ) {
-			if ( isset( $dataMap[$key] ) ) {
-				$result[$dataMap[$key]] = $value;
+		foreach ( $dataMap as $key => $value ) {
+			if ( isset( $data[$key] ) ) {
+				$result[$value] = $data[$key];
+			} else {
+				$result[$value] = '';
 			}
 		}
 		return $result;

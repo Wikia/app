@@ -20,22 +20,24 @@ class LyricsScrapper {
 		$albumsData = [];
 		$artistScraper = new ArtistScraper();
 		$artistData = $artistScraper->processArticle( $article );
-		$albumsData = $artistScraper->getAlbums( $article, $artistData['name'] );
-		self::log( 'ARTIST: ' . $artistData['name'] . PHP_EOL );
-		foreach ( $albumsData as $albumData ) {
+		$smallAlbumsData = $artistScraper->getAlbums( $article, $artistData['name'] );
+		self::log( "\tARTIST: " . $artistData['name'] . PHP_EOL );
+		foreach ( $smallAlbumsData as $albumData ) {
 			$songsData = [];
 			$albumArticle = $this->articleFromTitle( $albumData['title'] );
-			self::log( "\tALBUM: " . $albumData['title'] . PHP_EOL );
+			self::log( "\t\tALBUM: " . $albumData['title'] . PHP_EOL );
 			if ( $albumArticle !== null ) {
 				$albumScraper = new AlbumScraper();
 				$albumData = array_merge( $albumData,  $albumScraper->processArticle( $albumArticle ) );
-				$songsData = $albumScraper->getSongs( $albumArticle );
-				foreach( $songsData as $songData ) {
+				$albumsData[] = $albumData;
+				$smallSongsData = $albumScraper->getSongs( $albumArticle );
+				foreach( $smallSongsData as $songData ) {
 					$songArticle = $this->articleFromTitle( $songData['title'] );
-					self::log( "\t\tSONG: " . $songData['title'] . PHP_EOL );
+					self::log( "\t\t\tSONG: " . $songData['title'] . PHP_EOL );
 					if ( $songArticle !== null ) {
 						$songScraper = new SongScraper();
 						$songData = array_merge( $songData,  $songScraper->processArticle( $songArticle ) );
+						$songsData[] = $songData;
 						// Save only songs we have
 						$this->dba->saveSong( $artistData, $albumData, $songData );
 					} else {

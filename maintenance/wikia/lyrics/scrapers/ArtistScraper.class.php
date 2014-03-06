@@ -39,7 +39,7 @@ class ArtistScraper extends BaseScraper {
 		if ( preg_match_all( $re_albums, $text, $matches) ) {
 			for ( $i = 0; $i < count($matches[0]); $i++ ) {
 				$albumData = $this->getAlbumData( $matches[1][$i] );
-				$albumData['pic'] = $this->getAlbumPic( $matches[2][$i], $artistName );
+				$albumData['image'] = $this->getAlbumPic( $matches[2][$i], $artistName );
 				$albums[] = $albumData;
 			}
 		}
@@ -51,7 +51,7 @@ class ArtistScraper extends BaseScraper {
 		$result = [];
 		$headinga = explode( '|', trim( $heading, '][=' ) );
 		$result['title'] = $headinga[0];
-		if ( preg_match('#(.+)\s\(([\d]+)\)#', $headinga[1], $matches) ) {
+		if ( preg_match('#(.+)\(([\d]+)\)#', $headinga[1], $matches) ) {
 			$result['name'] = $matches[1];
 			$result['year'] = $matches[2];
 		} else {

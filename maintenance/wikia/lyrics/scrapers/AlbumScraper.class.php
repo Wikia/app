@@ -59,7 +59,7 @@ class AlbumScraper extends BaseScraper {
 			'artist_id' => 'artist_id',
 			'Artist' => 'artist',
 			'Album' => 'name',
-			'Cover' => 'pic',
+			'Cover' => 'image',
 			'year' => 'year',
 			'Length' => 'length',
 			'Genre' => 'genres',
