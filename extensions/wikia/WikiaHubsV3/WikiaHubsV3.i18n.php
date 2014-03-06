@@ -35,9 +35,7 @@ $messages['en'] = array(
 	'wikiahubs-v3-wam-wiki-url' => "Name",
 	
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Get Promoted',
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'From the Community',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsored by $1',
@@ -90,9 +88,7 @@ $messages['de'] = array(
 	'wikiahubs-v3-vertical-lifestyle' => 'Lifestyle',
 
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Artikel vorschlagen',
 	'wikiahubs-v3-from-community-caption' => 'Von [$1 $2] aus [$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'Aus der Community',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => 'Gesponsert von $1',
@@ -146,9 +142,7 @@ $messages['fr'] = array(
 	'wikiahubs-v3-vertical-Lifestyle' => 'Mode de vie',
 
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Promouvoir',
 	'wikiahubs-v3-from-community-caption' => 'De [$1 $2] sur [$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'En provenance de la communauté',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsorisée par $1',
@@ -202,9 +196,7 @@ $messages['es'] = array(
 	'wikiahubs-v3-vertical-Lifestyle' => 'Otros',
 
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Promociónate',
 	'wikiahubs-v3-from-community-caption' => 'De [$1 $2] en [$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'De la comunidad',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => 'Patrocinado por $1',
@@ -255,9 +247,7 @@ $messages['pl'] = [
 	'wikiahubs-v3-wam-wiki-url' => 'Nazwa',
 
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Wypromuj wiki',
 	'wikiahubs-v3-from-community-caption' => 'Od [$1 $2] na [$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'Od społeczności',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsorowany przez $1',
@@ -311,9 +301,7 @@ $messages['ja'] = array(
 	'wikiahubs-v3-wam-wiki-url' => "名前",
 
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => '宣伝する',
 	'wikiahubs-v3-from-community-caption' => '[$1 $2] から[$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'コミュニティーから',
 
 	//featured video
 	'wikiahubs-v3-sponsored-by' => '$1によって提供されました。',
@@ -343,27 +331,32 @@ $messages['ja'] = array(
 
 $messages['qqq'] = array(
 	// general
-	'wikiahubs-v3-button-cancel' => 'Cancel',
+	'wikiahubs-v3-button-cancel' => 'Wikia Hubs V3 - Text on Cancel button',
+	'wikiahubs-v3-search-placeholder' => 'Wikia Hubs V3 - Placeholder text on Search input',
 
 	// suggest article
-	'wikiahubs-v3-suggest-article-header' => 'Get promoted - modal title',
-	'wikiahubs-v3-suggest-article-submit-button' => 'Get promoted - text on submit button on modal',
-	'wikiahubs-v3-suggest-article-what-article' => 'Get promoted - Label for article Url field - should include info about 255 chars max',
-	'wikiahubs-v3-suggest-article-reason' => 'Get promoted - Label for reason field - should include info about 140 chars max',
-	'wikiahubs-v3-suggest-article-success' => 'Get promoted - message after successful add',
-	'wikiahubs-v3-error-invalid-article-url-length' => 'Get promoted - Article url validation error message',
-	'wikiahubs-v3-error-invalid-reason-length' => 'Get promoted - Reason validation error message',
+	'wikiahubs-v3-suggest-article-header' => 'Wikia Hubs V3 - Get promoted - modal title',
+	'wikiahubs-v3-suggest-article-submit-button' => 'Wikia Hubs V3 - Get promoted - text on submit button on modal',
+	'wikiahubs-v3-suggest-article-what-article' => 'Wikia Hubs V3 - Get promoted - Label for article Url field - should include info about 255 chars max',
+	'wikiahubs-v3-suggest-article-reason' => 'Wikia Hubs V3 - Get promoted - Label for reason field - should include info about 140 chars max',
+	'wikiahubs-v3-suggest-article-success' => 'Wikia Hubs V3 - Get promoted - message after successful add',
+	'wikiahubs-v3-error-invalid-article-url-length' => 'Wikia Hubs V3 - Get promoted - Article url validation error message',
+	'wikiahubs-v3-error-invalid-reason-length' => 'Wikia Hubs V3 - Get promoted - Reason validation error message',
 
 	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Video Games hub name',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment hub name',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle hub name',
+	'wikiahubs-v3-vertical-VideoGames' => 'Wikia Hubs V3 - video games vertical name',
+	'wikiahubs-v3-vertical-Entertainment' => 'Wikia Hubs V3 - entertainment vertical name',
+	'wikiahubs-v3-vertical-Lifestyle' => 'Wikia Hubs V3 - lifestyle vertical name',
 
 	//WAM
-	'wikiahubs-v3-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
+	'wikiahubs-v3-wam-header' => 'Wikia Hubs V3 - Header for WAM module',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Wikia Hubs V3 - text on link to WAM page',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia Hubs V3 - WAM module - header for WAM index in given vertical. 1st param vertical name',
+	'wikiahubs-v3-wam-rank' => 'Wikia Hubs V3 - WAM module - table header for WAM rank',
+	'wikiahubs-v3-wam-score' => 'Wikia Hubs V3 - WAM module - table header for WAM Score',
+	'wikiahubs-v3-wam-wiki-url' => "Wikia Hubs V3 - WAM module - table header for wiki name",
 	
 	// from the community
-	'wikiahubs-v3-from-community-promoted' => 'Text on button next to FTC title - suggest new article',
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4] - 1st parameter: Users URL, 2nd - User Name, 3rd - Article Url, 4th - wiki name',
 
 	//featured video
@@ -373,6 +366,16 @@ $messages['qqq'] = array(
 	'wikiahubs-v3-404-title' => '404 page title',
 	'wikiahubs-v3-404-message' => '404 page message, first parameter is link to actual hub page',
 
-	// off-shot pages
-	'wikiahubs-v3-popular-videos' => 'Nuestros vídeos favoritos'
+	// social icons
+	'wikiahubs-v3-social-twitter-link-VideoGames' => 'URL to video games twitter link',
+	'wikiahubs-v3-social-facebook-link-VideoGames' => 'URL to video games facebook link',
+	'wikiahubs-v3-social-googleplus-link-VideoGames' => 'URL to video games g+ link',
+
+	'wikiahubs-v3-social-twitter-link-Entertainment' => 'URL to entertainment twitter link',
+	'wikiahubs-v3-social-facebook-link-Entertainment' => 'URL to entertainment facebook link',
+	'wikiahubs-v3-social-googleplus-link-Entertainment' => 'URL to entertainment g+ link',
+
+	'wikiahubs-v3-social-twitter-link-Lifestyle' => 'URL to lifestyle twitter link',
+	'wikiahubs-v3-social-facebook-link-Lifestyle' => 'URL to lifestyle facebook link',
+	'wikiahubs-v3-social-googleplus-link-Lifestyle' => 'URL to lifestyle g+ link',
 );

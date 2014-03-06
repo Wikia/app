@@ -1,6 +1,8 @@
 <?php
 
 class MarketingToolboxModel extends AbstractMarketingToolboxModel {
+	const CACHE_KEY = 'HubsV2v1.02';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
 
 	public function __construct($app = null) {
 		parent::__construct($app);
@@ -22,6 +24,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		$conds = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
+			'city_id' => 0
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
@@ -184,7 +187,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		$conds = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
-			'hub_date' => $hubDate
+			'hub_date' => $hubDate,
+			'city_id' => 0
 		);
 
 		$result = $sdb->select(self::HUBS_TABLE_NAME, $fields, $conds);
@@ -260,7 +264,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		$conditions = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
-			'hub_date' => $hubDate
+			'hub_date' => $hubDate,
+			'city_id' => 0
 		);
 
 		$dbSuccess = $mdb->update(self::HUBS_TABLE_NAME, $changes, $conditions, __METHOD__);
@@ -300,6 +305,7 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
 			'hub_date' => $sdb->timestamp($timestamp),
+			'city_id' => 0
 		);
 		
 		if( is_int($moduleId) ) {
@@ -355,7 +361,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
 			'module_id' => $moduleId,
-			'hub_date' => $mdb->timestamp($timestamp)
+			'hub_date' => $mdb->timestamp($timestamp),
+			'city_id' => 0
 		);
 
 		$result = $sdb->selectField($table, 'count(1)', $conds, __METHOD__);
@@ -416,7 +423,8 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		$conds = array(
 			'lang_code' => $params['langCode'],
 			'vertical_id' => $params['verticalId'],
-			'module_status' => $this->statuses['PUBLISHED']
+			'module_status' => $this->statuses['PUBLISHED'],
+			'city_id' => 0
 		);
 
 		$conds = $sdb->makeList($conds, LIST_AND);
@@ -425,6 +433,24 @@ class MarketingToolboxModel extends AbstractMarketingToolboxModel {
 		$result = $sdb->selectField($table, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 
 		return $result;
+	}
+
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
+	public function getHubUrl($langCode, $verticalId) {
+		$corporateModel = new WikiaCorporateModel();
+		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
+		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
+
+		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
+
+		return $title->getFullURL();
 	}
 
 	protected function getMKeyForLastPublishedTimestamp($params, $timestamp) {

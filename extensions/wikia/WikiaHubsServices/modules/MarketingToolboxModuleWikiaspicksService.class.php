@@ -15,11 +15,11 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 						'maxHeight' => 15,
 					),
 					array(
-						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
-						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
-						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
-						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
-						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
+						'wrong-file' => 'wikia-hubs-validator-wrong-file',
+						'wrong-size' => 'wikia-hubs-validator-wrong-file-size',
+						'max-width' => 'wikia-hubs-validator-wrong-file-size-width',
+						'max-height' => 'wikia-hubs-validator-wrong-file-size-height',
+						'not-an-image' => 'wikia-hubs-validator-wrong-file-not-an-image',
 					)
 				)
 			),
@@ -30,30 +30,30 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 				),
 				'validator' => new WikiaValidatorFileTitle(
 					array(),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+					array('wrong-file' => 'wikia-hubs-validator-wrong-file')
 				)
 			),
 			'moduleTitle' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-title'),
+				'label' => wfMessage('wikia-hubs-module-wikiaspicks-title')->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required'
 				)
 			),
 			'text' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-text'),
+				'label' => wfMessage('wikia-hubs-module-wikiaspicks-text')->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'type' => 'textarea',
 				'attributes' => array(
@@ -62,11 +62,11 @@ class MarketingToolboxModuleWikiaspicksService extends MarketingToolboxModuleEdi
 				)
 			),
 			'imageLink' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-wikiaspicks-link-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'label' => wfMessage('wikia-hubs-module-wikiaspicks-link-url')->text(),
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(),
 					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
+						'wrong' => 'wikia-hubs-validator-wrong-url'
 					)
 				),
 				'attributes' => array(

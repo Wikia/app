@@ -23,26 +23,17 @@ class MarketingToolboxModulePollsServiceTest extends WikiaBaseTest
 	 * @dataProvider getDataStructureDataProvider
 	 */
 	public function testGetStructureData($flatArray, $expectedData) {
-		$toolboxModelMock = $this->getMock(
-			'MarketingToolboxModel',
-			array('getHubUrl')
-		);
-
-		$toolboxModelMock
-			->expects($this->any())
-			->method('getHubUrl')
-			->will($this->returnValue('http://www.wikia.com/Video_Games'));
 
 		$pollsModuleMock = $this->getMock(
 			'MarketingToolboxModulePollsService',
-			array('getToolboxModel'),
+			array('getHubUrl'),
 			array('en', 1, 2)
 		);
 
 		$pollsModuleMock
 			->expects($this->any())
-			->method('getToolboxModel')
-			->will($this->returnValue($toolboxModelMock));
+			->method('getHubUrl')
+			->will($this->returnValue('http://www.wikia.com/Video_Games'));
 
 		$structuredData = $pollsModuleMock->getStructuredData($flatArray);
 
