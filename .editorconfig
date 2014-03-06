@@ -1,6 +1,6 @@
 # Wikia .editorconfig
 # Please keep these in alphabetical order.
-# Download the plugin for your editor/IDE of choice from http://editorconfig.org/#download
+# Download the plugin for your editor/IDE of choice from http =//editorconfig.org/#download
 root = true
 
 [**.js]
@@ -11,3 +11,17 @@ indent_style = tab
 insert_final_newline = true
 max_line_length = 120 # Vim
 trim_trailing_whitespace = true
+# Vim JsBeautify Settings
+break_chained_methods = false
+indent_level = 0
+indent_with_tabs = true
+preserve_newlines = true
+max_preserve_newlines = 10
+jslint_happy = true
+brace_style = collapse
+keep_array_indentation = false
+keep_function_indentation = false
+space_before_conditional = true
+eval_code = false
+unescape_strings = false
+wrap_line_length = 0
