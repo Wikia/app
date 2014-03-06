@@ -32,7 +32,54 @@ class ArtistScraper extends BaseScraper {
 		return $this->getTemplateValues( 'ArtistFooter', $article->getContent() );
 	}
 
-	function getAlbums( Article $article, $artistName) {
+	function getSections( $text ) {
+		// Remove templates
+		$text = preg_replace ( '#\{\{(.+?)\}\}#s', '', $text );
+		$sections = [];
+		$offset = 0;
+		if (preg_match_all('#==(.+?)==#u', $text, $matches, PREG_OFFSET_CAPTURE)) {
+			$positions = $matches[0];
+			array_shift( $positions );
+			foreach ( $positions as $section ) {
+				if ( $section[0][2] !== '=' ) {
+					$sections[] = substr( $text, $offset, ( $section[1] - $offset ) );
+					$offset = $section[1];
+				}
+			}
+			if ($offset) {
+				$sections[] = substr( $text, $offset, ( strlen( $text ) - $offset ) );
+			}
+		}
+		return $sections;
+	}
+
+	function getAlbums( Article $article, $artistName ) {
+		$albums = [];
+		$text = $article->getContent();
+		$sections = $this->getSections( $text );
+		foreach( $sections as $section ) {
+			if ( preg_match( '#==(.*?)==#mu', $section, $matches ) ) {
+				$albumData = $this->getAlbumData( $matches[1] );
+				$albumData['image'] = $this->getAlbumPic( $section, $artistName );
+				$albumData['songs'] = $this->getAlbumSongs( $section );
+				$albums[] = $albumData;
+			}
+		}
+		return $albums;
+	}
+
+	function getAlbumSongs( $section ) {
+		$songs = [];
+		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
+			foreach ( $matches[1] as $song ) {
+				$songs[] = $this->getSongData( $song );
+			}
+		}
+		return $songs;
+	}
+
+
+	function _getAlbums( Article $article, $artistName) {
 		$albums = [];
 		$text = $article->getContent();
 		$re_albums = '#==(.*?)==\s+(.*?)\{\{[c|C]lear\}\}#s';
@@ -50,13 +97,19 @@ class ArtistScraper extends BaseScraper {
 		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
 		$result = [];
 		$headinga = explode( '|', trim( $heading, '][=' ) );
-		$result['title'] = $headinga[0];
-		if ( preg_match('#(.+)\(([\d]+)\)#', $headinga[1], $matches) ) {
+		$result['title'] = false;
+		if ( count( $headinga ) > 1) {
+			$result['title'] = $headinga[0];
+			$result['year'] = '';
+			$heading = $headinga[1];
+		}
+		if ( preg_match('#(.+)\(([\d]+)\)#', $heading, $matches) ) {
 			$result['name'] = $matches[1];
 			$result['year'] = $matches[2];
 		} else {
 			// TODO Better parser
 			echo 'NEED BETTER Album title parser '.$heading.PHP_EOL;
+			$result['name'] = $heading;
 		}
 		return $result;
 	}

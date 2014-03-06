@@ -24,6 +24,8 @@ class MockAdapter extends DataBaseAdapter {
 	function saveSong($artist, $album, $song) { echo 'S'; }
 }
 
+
+// TODO: BATCH FEED THE DATA
 class SolrAdapter extends DataBaseAdapter {
 
 	private $client;

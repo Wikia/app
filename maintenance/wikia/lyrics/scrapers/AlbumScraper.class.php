@@ -30,7 +30,7 @@ class AlbumScraper extends BaseScraper {
 	public function getSongs( Article $article ) {
 		// # '''[[La Polla Records:Salve|Salve]]'''
 		$songs = [];
-		$re = '/# \'\'\'\[\[(.+)\]\]/';
+		$re = '/^# (.+?)$/mu';
 		if ( preg_match_all( $re, $article->getContent(), $matches ) ) {
 			$trackNumber = 1;
 			foreach ( $matches[1] as $songName ) {
@@ -41,14 +41,6 @@ class AlbumScraper extends BaseScraper {
 			}
 		}
 		return $songs;
-	}
-
- 	protected function getSongData( $songName ) {
-		$songFields = explode( '|', $songName );
-		return [
-			'title' => $songFields[0],
-			'name' => $songFields[1],
-		];
 	}
 
 	public function getDataMap() {

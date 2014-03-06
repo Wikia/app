@@ -13,6 +13,7 @@ require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
 
 class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_ID = 'articleId';
+	const OPTION_ARTIST_ID = 'artistId';
 	const OPTION_ARTICLE_ALL = 'all';
 	const OPTION_ARTICLE_POOL = 'pool';
 	const OPTION_ARTICLE_LANE = 'lane';
@@ -26,6 +27,7 @@ class LyricsWikiCrawler extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( self::OPTION_ARTICLE_ID, 'Article ID which we will get data from' );
+		$this->addOption( self::OPTION_ARTIST_ID, 'Artist article ID which we will get data from' );
 		$this->addOption( self::OPTION_ARTICLE_ALL, 'If passed it pulls all articles on lyrics.wikia.com; otherwise it pulls edits from yesterday' );
 		$this->addOption( self::OPTION_ARTICLE_POOL, 'If passed it pulls all articles on lyrics.wikia.com; Requires --lane option' );
 		$this->addOption( self::OPTION_ARTICLE_LANE, 'Sets the lane, current process should work on' );
@@ -51,6 +53,9 @@ class LyricsWikiCrawler extends Maintenance {
 		} elseif ( ( $poolSize = intval( $this->getOption( self::OPTION_ARTICLE_POOL, 0 ) ) ) && $poolSize > 0  &&
 			( $laneNumber = intval( $this->getOption( self::OPTION_ARTICLE_LANE, 0 ) ) ) && $laneNumber > 0 ) {
 			$this->doScrapeLane( $poolSize, $laneNumber );
+		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTIST_ID, 0 ) ) ) && $articleId > 0 ) {
+			$this->setArticleId( $articleId );
+			$this->doScrapeArtist();
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTICLE_ID, 0 ) ) ) && $articleId > 0 ) {
 			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->setArticleId( $articleId );
