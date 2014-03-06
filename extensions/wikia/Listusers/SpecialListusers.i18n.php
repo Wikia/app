@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'listusers-desc' =>'Special list users',
+	'listusers-desc' => 'Special list users',
 	'listusers' => 'Local list users',
 	'listuserstitle'  => 'Local list users',
 	'listusersfound' => 'Found <strong>$1</strong> users',
@@ -38,8 +38,10 @@ $messages['en'] = array(
 	'listusers-username' => 'User name',
 	'listusers-blocked' => 'Blocked',
 	'listusers-nonegroup' => 'none',
-	'listusers-selectall' => 'Select all',
-	'listusers-deselectall' => 'Deselect all',
+);
+
+$messages['qqq'] = array(
+	'listusers-desc' => '{{desc}}
 );
 
 $messages['de'] = array(

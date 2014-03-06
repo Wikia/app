@@ -53,15 +53,15 @@ class Listusers extends SpecialRedirectToSpecial {
 		$this->mCityId = $wgCityId;
 		$this->mDefGroups = array( self::DEF_GROUP_NAME, 'bot', 'sysop', 'rollback', 'bureaucrat', 'fb-user' );
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );
-		$this->mAction = htmlspecialchars( $this->mTitle->getLocalURL( "" ) );
+		$this->mAction = htmlspecialchars( $this->mTitle->getLocalURL() );
 		$this->mContribs = array(
-			0	=> wfMessage( 'listusersallusers' )->text(),
-			1	=> wfMessage( 'listusers-1contribution' )->text(),
-			5	=> wfMessage( 'listusers-5contributions' )->text(),
-			10	=> wfMessage( 'listusers-10contributions' )->text(),
-			20	=> wfMessage( 'listusers-20contributions' )->text(),
-			50	=> wfMessage( 'listusers-50contributions' )->text(),
-			100	=> wfMessage( 'listusers-100contributions' )->text()
+			0	=> wfMessage( 'listusersallusers' )->escaped(),
+			1	=> wfMessage( 'listusers-1contribution' )->escaped(),
+			5	=> wfMessage( 'listusers-5contributions' )->escaped(),
+			10	=> wfMessage( 'listusers-10contributions' )->escaped(),
+			20	=> wfMessage( 'listusers-20contributions' )->escaped(),
+			50	=> wfMessage( 'listusers-50contributions' )->escaped(),
+			100	=> wfMessage( 'listusers-100contributions' )->escaped()
 		);
 
 		/**
