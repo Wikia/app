@@ -16,20 +16,23 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'AjaxPoll',
-	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
-	'version' => '1.1',
+	'author' => [
+		'[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]',
+		'Maciej Brencz',
+		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'
+	],
+	'version' => '1.2',
 	'description' => 'Poll extension for MediaWiki driven by Ajax requests',
 	'url' => 'http://help.wikia.com/wiki/Help:Polls'
 );
 
-$dir = dirname(__FILE__) . '/';
 $wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";
-$wgExtensionMessagesFiles["AjaxPoll"] = $dir . 'AjaxPoll.i18n.php';
+$wgExtensionMessagesFiles["AjaxPoll"] = __DIR__ . '/AjaxPoll.i18n.php';
 
 /**
  * helper file
  */
-require_once( $dir . 'AjaxPoll_body.php' );
+require_once( __DIR__ . '/AjaxPoll_body.php' );
 
 /**
  * additional table

@@ -818,12 +818,13 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  */
 $messages['te'] = array(
-	'dump-database-curr-pages' => 'ప్రస్తుర పుటలు',
-	'dump-database-full-pages' => 'ప్రస్తుత పుటలు మరియు చరిత్ర',
-	'dump-database-info-more' => 'మరింత సమాచారం కోసం దయచేసి <a href="http://community.wikia.com/wiki/Help:Database_download">దీన్ని చూడండి</a>',
+	'dump-database-curr-pages' => 'ప్రస్తుత పేజీలు',
+	'dump-database-full-pages' => 'ప్రస్తుత పేజీలు, చరిత్ర',
+	'dump-database-info-more' => 'మరింత సమాచారం కోసం <a href="http://community.wikia.com/wiki/Help:Database_download">ఇది చూడండి</a>',
 );
 
 /** Tagalog (Tagalog)

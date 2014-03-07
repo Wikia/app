@@ -229,6 +229,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Delivers a JSON response for videos matching a provided title
 	 * Expects query param "title" for the title value.
+	 *
+	 * @requestParam string title Text used for searching against video titles
+	 * @requestParam int limit Limit the number of results returned
 	 */
 	public function searchVideosByTitle() {
 		$searchConfig = new Wikia\Search\Config;
@@ -252,6 +255,57 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
+	}
+
+	/**
+	 * A wrapper around searchVideosByTitle that passes in topics for the current Wiki.  Topics are pulled from
+	 * the WikiFactory variables:
+	 *
+	 *   wgWikiVideoSearchTopics
+	 *   wgWikiVideoSearchTopicsAutomated
+	 *
+	 * If there are no topics, the 'defaultTopic' parameter is used instead.  If that isn't given, nothing is returned.
+	 *
+	 * @requestParam string defaultTopic Text to use for the topic if no topics are found on this wiki.
+	 * @requestParam int limit Limit the number of results returned
+	 */
+	public function searchVideosByWikiTopic() {
+		$defaultTopic = $this->getVal( 'defaultTopic' );
+		$topics = $this->getTopicsAsQuery( $defaultTopic );
+
+		if ( $topics ) {
+			$this->request->setVal( 'title', $topics );
+			$this->searchVideosByTitle();
+		}
+	}
+
+	/**
+	 * Returns a query string made up of topics found in the WikiFactory variables:
+	 *
+	 *   wgWikiVideoSearchTopics
+	 *   wgWikiVideoSearchTopicsAutomated
+	 *
+	 * @param string $default
+	 * @return string
+	 */
+	protected function getTopicsAsQuery( $default = '' ) {
+		$wg = \F::app()->wg;
+		$topics = [];
+
+		if ( is_array($wg->WikiVideoSearchTopics) ) {
+			foreach ( $wg->WikiVideoSearchTopics as $topic ) {
+				$topics[] = sprintf( '"%s"', $topic );
+			}
+		}
+
+		if ( is_array($wg->WikiVideoSearchTopicsAutomated) ) {
+			foreach ( $wg->WikiVideoSearchTopicsAutomated as $topic ) {
+				$topics[] = sprintf( '"%s"', $topic );
+			}
+		}
+
+		$topics = array_unique( $topics );
+		return empty( $topics ) ? '"'.$default.'"' : implode( ' OR ', $topics );
 	}
 
 	/**

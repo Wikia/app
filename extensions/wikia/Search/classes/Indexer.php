@@ -16,19 +16,19 @@ class Indexer
 	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $mwService;
-	
+
 	/**
-	 * Connects to Solr 
+	 * Connects to Solr
 	 * @var Solarium_Client
 	 */
 	protected $client;
-	
+
 	/**
 	 * Encapsulates Wikia::log functionality
 	 * @var Wikia
 	 */
 	protected $logger;
-	
+
 	/**
 	 * Stores any IndexServices we have instantiated
 	 * @var array
@@ -53,7 +53,7 @@ class Indexer
 	 * Used to generate indexing data for a number of page IDs on a given  wiki
 	 * @see WikiaSearchController::getPages()
 	 * @param array $pageIds those ids we want to populate indexing data for
-	 * @return array result, for JSON encoding 
+	 * @return array result, for JSON encoding
 	 */
 	public function getPages( array $pageIds ) {
 		$result = array(
@@ -90,24 +90,24 @@ class Indexer
 			$serviceResult = $this->getIndexService( $serviceName )
 			                      ->setPageId( $pageId )
 			                      ->getResponse();
-			
+
 			if ( is_array( $serviceResult ) ) {
     			$result = array_merge( $result, $serviceResult );
 			}
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Generates a Solr document from a page ID
 	 * @param  int $pageId
-	 * @return Wikia\Search\Result 
+	 * @return Wikia\Search\Result
 	 */
 	public function getSolrDocument( $pageId ) {
 		$this->getMwService()->setGlobal( 'AppStripsHtml', true );
 		return new Result( $this->getPage( $pageId ) );
 	}
-	
+
 	/**
 	 * Iterates over a set of page IDs reindexes their articles
 	 * @param  array $documentIds
@@ -120,7 +120,7 @@ class Indexer
 		}
 		return $this->updateDocuments( $documents );
 	}
-	
+
 	/**
 	 * Sends an update query to the client, provided a document set
 	 * @param array $documents
@@ -137,7 +137,7 @@ class Indexer
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Emits scribe events for each page to be reindexed by the search backend
 	 * @param int $wid
@@ -156,7 +156,7 @@ class Indexer
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Deletes all documents containing the provided wiki ID
 	 * Careful, this will alter our index!
@@ -196,7 +196,7 @@ class Indexer
 			$this->getLogger()->log( __METHOD__, 'Delete: '.$query, $e);
 		}
 	}
-	
+
 	/**
 	 * Given a set of page IDs, deletes by query
 	 * @param  array $documentIds
@@ -216,7 +216,7 @@ class Indexer
 
 		return true;
 	}
-	
+
 	/**
 	 * Written to work as a hook
 	 * @param int $pageId
@@ -224,7 +224,7 @@ class Indexer
 	public function reindexPage( $pageId ) {
 		return $this->reindexBatch( array( $this->getSolrDocument( $pageId ) ) );
 	}
-	
+
 	/**
 	 * Written to work as a hook
 	 * @param int $pageId
@@ -234,14 +234,15 @@ class Indexer
 		$this->deleteBatch( array( $id ) );
 		return true;
 	}
-	
+
 	/**
 	 * Lazy-loading for the client dependency.
 	 * @return \Solarium_Client
 	 */
 	protected function getClient() {
 		if ( $this->client === null ) {
-			$master = $this->getMwService()->isOnDbCluster() ? $this->getMwService()->getGlobal( 'SolrHost' ) : 'staff-search-s1';
+			$mwService = $this->getMwService();
+			$master = $mwService->isOnDbCluster() ? $mwService->getGlobal( 'SolrMaster' ) : 'staff-search-s1';
 			$params = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
@@ -250,11 +251,17 @@ class Indexer
 							'path' => '/solr/'
 							)
 					);
+
+			if ( $mwService->isOnDbCluster() && $mwService->getGlobal( 'WikiaSearchUseProxy' ) && $mwService->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
+				$params['adapteroptions']['proxy'] = $mwService->getGlobal( 'SolrProxy' );
+				$params['adapteroptions']['port'] = null;
+			}
+
 			$this->client = new Solarium_Client( $params );
 		}
 		return $this->client;
 	}
-	
+
 	/**
 	 * Lazy loads MW service
 	 * @return \Wikia\Search\MediaWikiService
@@ -263,7 +270,7 @@ class Indexer
 		$this->mwService = $this->mwService ?: new MediaWikiService;
 		return $this->mwService;
 	}
-	
+
 	/**
 	 * Lazy loads logger
 	 * @return \Wikia
@@ -272,7 +279,7 @@ class Indexer
 		$this->logger = $this->logger ?: new Wikia;
 		return $this->logger;
 	}
-	
+
 	/**
 	 * Helper for instantiating or retrieving stored services
 	 * @param string $serviceName
@@ -281,8 +288,8 @@ class Indexer
 	protected function getIndexService( $serviceName ) {
 		if (! isset( $this->indexServices[$serviceName] ) ) {
 			$fullServiceName = 'Wikia\Search\IndexService\\' . $serviceName;
-			$this->indexServices[$serviceName] = new $fullServiceName; 
+			$this->indexServices[$serviceName] = new $fullServiceName;
 		}
-		return $this->indexServices[$serviceName]; 
+		return $this->indexServices[$serviceName];
 	}
 }

@@ -10,7 +10,7 @@ class VideosModule extends WikiaModel {
 
 	const LIMIT_TRENDING_VIDEOS = 20;
 	const CACHE_TTL = 3600;
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
@@ -22,6 +22,13 @@ class VideosModule extends WikiaModel {
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
 	];
 
+	// map category id to search vertical
+	protected static $searchCategories = [
+		WikiFactoryHub::CATEGORY_ID_GAMING        => Wikia\Search\Config::FILTER_CAT_VIDEOGAMES,
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => Wikia\Search\Config::FILTER_CAT_ENTERTAINMENT,
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => Wikia\Search\Config::FILTER_CAT_LIFESTYLE,
+	];
+
 	/**
 	 * Get related videos (article related videos and wiki related videos)
 	 * @param integer $articleId
@@ -29,8 +36,9 @@ class VideosModule extends WikiaModel {
 	 * @return array $videos - list of related videos
 	 */
 	public function getRelatedVideos( $articleId, $numRequired ) {
-		// get article related videos
-		$videos = $this->getArticleRelatedVideos( $articleId, $numRequired );
+		// Get article related videos
+		// @TODO find a better way to find article related videos, until then, skip this.
+		$videos = [];  //$this->getArticleRelatedVideos( $articleId, $numRequired );
 
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		$numRequired = $numRequired - count( $videos );
@@ -55,6 +63,12 @@ class VideosModule extends WikiaModel {
 		if ( !is_array( $videos ) ) {
 			$service = new VideoEmbedToolSearchService();
 			$service->setLimit( $this->getVideoLimit( $numRequired ) );
+
+			$category = $this->getSearchVertical();
+			if ( !empty( $category ) ) {
+				$service->getConfig()->setFilterQueryByCode( $category );
+			}
+
 			$response = $service->getSuggestedVideosByArticleId( $articleId );
 
 			$videos = [];
@@ -98,11 +112,11 @@ class VideosModule extends WikiaModel {
 			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
 			$params = [
-				'title' => $wikiTitle,
+				'defaultTopic' => $wikiTitle,
 				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
 			];
 
-			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
+			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
@@ -187,6 +201,30 @@ class VideosModule extends WikiaModel {
 
 			if ( array_key_exists( $verticalId, self::$pageCategories ) ) {
 				$name = self::$pageCategories[$verticalId];
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $name;
+	}
+
+	/**
+	 * Get vertical name recognized by search from wiki's category ID
+	 * @return string $name - search vertical
+	 */
+	public function getSearchVertical() {
+		wfProfileIn( __METHOD__ );
+
+		$name = '';
+
+		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		if ( !empty( $categoryId ) ) {
+			// get vertical id
+			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
+
+			if ( array_key_exists( $verticalId, self::$searchCategories ) ) {
+				$name = self::$searchCategories[$verticalId];
 			}
 		}
 

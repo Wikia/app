@@ -1531,6 +1531,7 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'wikiadoption' => 'Automatesch Wiki-Adoptioun',
 	'wikiadoption-header' => 'Dës Wiki adoptéieren',
 	'wikiadoption-button-adopt' => 'Jo, Ech wëll {{SITENAME}} adoptéieren!',
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
@@ -1963,6 +1964,7 @@ Nyttige verktøy:
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'wikiadoption' => 'Automatische wikiadoptie',
@@ -1977,7 +1979,7 @@ Er is al een tijdje geen actieve beheerder geweest voor {{SITENAME}} en we zoeke
 Door de wiki te adopteren wordt u beheerder en bureaucraat zodat u de hulpmiddelen hebt om de inhoud en de gemeenschap van de wiki te beheren. U kunt andere gebruikers beheerder maken en helpen met het verwijderen, hernoemen en beveiligen van pagina's en bewerkingen terugdraaien.
 <br /><br />
 Bent u klaar om de volgende stap te zetten in uw carrière bij {{SITENAME}}?",
-	'wikiadoption-know-more-header' => 'Meer te weten komen?',
+	'wikiadoption-know-more-header' => 'Wil je meer weten?',
 	'wikiadoption-know-more-description' => 'Volg deze koppelingen voor meer infomatie. Het staat u natuurlijk ook vrij om contact met ons op te nemen als u vragen hebt.',
 	'wikiadoption-adoption-successed' => 'Gefeliciteerd! U bent nu beheerder van deze wiki.',
 	'wikiadoption-adoption-failed' => 'We hebben geprobeerd u beheerder te maken, maar dit lukte helaas niet. [http://community.wikia.com/Special:Contact Neem contact met ons op] zodat we u verder kunnen helpen.',
@@ -2836,11 +2838,29 @@ Användbara verktyg:
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'wikiadoption' => 'ఆటోమాటిక్ వికీ దత్తత',
+	'wikiadoption-header' => 'ఈ వికీని దత్తత చేసుకోండి',
+	'wikiadoption-button-adopt' => 'ఔను, నేను {{SITENAME}} ను దత్తత చేసుకోవాలనుకుంటున్నాను!',
 	'wikiadoption-adopt-inquiry' => 'ఇంకా తెలుసుకోండి!',
 	'wikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
+	'wikiadoption-know-more-description' => 'మరింత సమాచారం కోసం ఈ లింకులు చూడండి. అన్నట్టు, సందేహాలేమైనా ఉంటే వెనకాడకుండా మమ్మల్ని సంప్రదించండి!',
+	'wikiadoption-adoption-successed' => 'అభినందనలు! ఇప్పుడు మీరీ వికీలో నిర్వాహకుడయ్యారు!',
+	'wikiadoption-adoption-failed' => 'సారీ, మిమ్మల్ని నిర్వాహకునిగా చేద్దామని అనుకున్నాం. కాని కాలేదు. మమ్మల్ని [http://community.wikia.com/Special:Contact సంప్రదించండి], సాయం చేస్తాం.',
+	'wikiadoption-not-allowed' => 'సారీ, ప్రస్తుతం మీరీ వికీని దత్తత చేసుకోలేరు.',
+	'wikiadoption-not-enough-edits' => 'అయ్యో! ఈ వికీని దత్త చేసుకునేందుకు మీరు కనీసం 10 మార్పుచేర్పులు చేసి ఉండాలి.',
+	'wikiadoption-adopted-recently' => 'అయ్యో! ఈ మధ్యనే మీరు మరో వికీని దత్తత చేసుకుని ఉన్నారు. కొత్త వికీని దత్తత చేసుకోవాలంటే కొంత ఆగాలి.',
+	'wikiadoption-log-reason' => 'ఆటోమాటిక్ వికీ దత్తత',
+	'wikiadoption-notification' => '{{SITENAME}} దత్తత కోసం సిదధంగా ఉంది. దీనికి సారథ్యం వహించేందుకు మీకు ఆసక్తి ఉందా? ఈ వికీని దత్తత తీసుకుని మొదలుపెట్టండి! $2',
+	'wikiadoption-mail-first-subject' => 'ఈ మధ్య మీరు ఇటువైపు రానేలేదు',
+	'wikiadoption-mail-second-subject' => 'త్వరలో #WIKINAME ను దత్తత కోసం పెడతాం',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME దత్తత తీసుకోబడింది',
+	'tog-adoptionmails' => '$1 ఇతర వాడుకరులు దత్తత తీసుకునేందుకు అందుబాటులోకి వస్తే నాకు ఈమెయిలు చెయ్యి',
+	'tog-adoptionmails-v2' => '...ఇతర వాడుకరులు దత్తత తీసుకునేందుకు ఈ వికీ అందుబాటులోకి వస్తే',
+	'wikiadoption-welcome-header' => 'అభినందనలు! మీరు {{SITENAME}} ను దత్తత చేసుకున్నారు!',
 );
 
 /** Tagalog (Tagalog)

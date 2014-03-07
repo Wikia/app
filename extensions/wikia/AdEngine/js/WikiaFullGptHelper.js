@@ -1,4 +1,5 @@
-/*global setTimeout*/
+/*global setTimeout, define*/
+/*jshint maxlen:150, camelcase:false, maxdepth:5*/
 var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
 	'use strict';
 
@@ -275,3 +276,5 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		flushAds: flushAds
 	};
 };
+
+define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams'], WikiaFullGptHelper);

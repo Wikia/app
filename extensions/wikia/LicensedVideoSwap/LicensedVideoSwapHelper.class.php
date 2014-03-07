@@ -63,6 +63,10 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	/**
+	 * Get the raw data about LVS from the DB
+	 * @return array
+	 */
 	public function getVideoDebugInfo() {
 		$db = wfGetDB( DB_SLAVE );
 
@@ -79,7 +83,8 @@ class LicensedVideoSwapHelper extends WikiaModel {
 						FROM page_wikia_props e
 						WHERE e.propname = 21
 						  AND e.props = 1
-				  )";
+				  )
+				ORDER BY added_at desc";
 
 		$result = $db->query( $sql, __METHOD__ );
 

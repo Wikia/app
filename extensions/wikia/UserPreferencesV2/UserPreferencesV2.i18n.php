@@ -337,7 +337,7 @@ $messages['diq'] = array(
 	'preferences-v2-gender' => 'Cınsiyeta mı:',
 	'preferences-v2-password' => 'Parolaya mı:',
 	'preferences-v2-oldsig' => 'İmzaya mewcude:',
-	'preferences-v2-nickname' => 'İmzaya bağsi:',
+	'preferences-v2-nickname' => 'İmzaya xısusiye:',
 	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
 	'prefs-appearance' => 'Asayış',
 	'preferences-v2-time' => 'Warey sehat:',
@@ -352,7 +352,7 @@ $messages['diq'] = array(
 	'prefs-addressv2' => 'Adres:',
 	'preferences-v2-watchdefault' => 'Timar ke',
 	'preferences-v2-watchmoves' => 'Bere',
-	'preferences-v2-watchdeletion' => 'Besterne',
+	'preferences-v2-watchdeletion' => 'Bestere',
 	'preferences-v2-watchcreations' => 'Vıraze',
 	'preferences-v2-showads-enable' => 'Reklama hemın bıvin',
 	'preferences-v2-showads-disable' => 'Reklama hemın mevin',
@@ -435,6 +435,8 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
+ * @author Nike
  * @author Ville96
  */
 $messages['fi'] = array(
@@ -468,6 +470,10 @@ $messages['fi'] = array(
 	'preferences-v2-redirect-main-page' => 'Etusivu',
 	'preferences-v2-redirect-recent-changes' => 'Tuoreet muutokset',
 	'preferences-v2-redirect-explanation' => 'Aloitussivu-vaihtoehto antaa sinun valita mille sivulle päädyt, kun kirjoitat $1 selaimeesi.',
+	'prefs-under-the-hood' => 'Lisäasetukset',
+	'prefs-recent-changesv2' => 'Tuoreet muutokset, historia, lokit',
+	'prefs-followed-pagesv2' => 'Tarkkailtujen sivujen syöte',
+	'prefs-advanced-displayv2' => 'Lisäasetukset',
 	'tog-showAdsv2' => 'Mainokset:',
 	'prefs-addressv2' => 'Osoite',
 	'prefs-followed-pages-iv2' => 'Seuraa sivuja, joita minä...',
@@ -478,6 +484,8 @@ $messages['fi'] = array(
 	'preferences-v2-showads-enable' => 'Näytä kaikki mainokset',
 	'preferences-v2-showads-disable' => 'Älä näytä kaikkia mainoksia',
 	'preferences-v2-my-email-address' => 'Sähköpostiosoite:',
+	'prefs-patrolled-editsv2' => 'Tarkastetut muokkaukset',
+	'tog-hidefollowedpages-v2' => 'Piilota tarkkailulistani kaikilta',
 );
 
 /** French (français)
@@ -926,6 +934,63 @@ $messages['ru'] = array(
 	'tog-hidefollowedpages-v2' => 'Скрыть список страниц, за которыми я слежу, от всех',
 );
 
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'prefs-personal' => 'Ma Info',
+	'preferences-v2-username' => 'Ma uisername:',
+	'preferences-v2-usergroups' => 'Ma uiser groups:',
+	'preferences-v2-gender' => 'Ma gender:',
+	'preferences-v2-password' => 'Ma passwaird:',
+	'preferences-v2-oldsig' => 'Exeestin signature:',
+	'preferences-v2-nickname' => 'Custom signature:',
+	'preferences-v2-fancysig' => 'I want tae uise wikitex in ma signature<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Whit ar signatures?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Heelp:Signature', # Fuzzy
+	'prefs-appearance' => 'Appearance',
+	'preferences-v2-date' => 'Date format:',
+	'preferences-v2-time' => 'Time zone:',
+	'preferences-v2-skin' => 'Layoot:',
+	'prefs-emailv2' => 'Wab-mail',
+	'prefs-email-me-v2' => 'Wab-mail me whan...',
+	'tog-enotifwatchlistpages-v2' => "...ae page Ah'm follaein haes chynged",
+	'tog-enotifusertalkpages-v2' => '...ma uiser tauk page haes chynged',
+	'tog-enotifminoredits-v2' => "...a page that Ah'm follaein haes chynged ae wee bit",
+	'tog-marketingallowed-v2' => '...Wikia haes news n events',
+	'prefs-email-advanced-v2' => 'Advanced Opties',
+	'tog-htmlemails-v2' => 'Send me HTML wab-mails',
+	'prefs-wikiemail' => '{{SITENAME}} opties. Wab-mail me whan...',
+	'prefs-email-unsubscribe' => 'Disable aw wab-mails',
+	'unsubscribe-preferences-toggle-v2' => 'Disable aw wab-mails fae Wikia (owergangs aw ither opties)',
+	'tog-watchlistdigest-v2' => '...ae Weeklie Rindoon o chynges til ma follaed Wikia pages is readie',
+	'tog-justify-v2' => 'Shaw justified paragraphs',
+	'preferences-v2-user-landing-page' => 'Landin page:',
+	'preferences-v2-redirect-wiki-activity' => 'Wiki Acteevitie',
+	'preferences-v2-redirect-main-page' => 'Main Page',
+	'preferences-v2-redirect-recent-changes' => 'Recent Chynges',
+	'preferences-v2-redirect-explanation' => 'The Landin page optie permits ye tae chuise whaur ye gang whan ye type $1 intil yer brouser.',
+	'prefs-monobookv2' => 'MonoBuik',
+	'prefs-under-the-hood' => 'Unner the Huid',
+	'prefs-recent-changesv2' => 'Recent chynges, histeries, logs',
+	'prefs-followed-pagesv2' => 'Follaed pages feed',
+	'prefs-advanced-displayv2' => 'Advanced displey opties',
+	'tog-highlightbrokenv2' => 'Shaw broken links aes reid, no wi ae speirin maurk.',
+	'tog-showAdsv2' => 'Ads:',
+	'prefs-addressv2' => 'Address',
+	'prefs-followed-pages-iv2' => 'Follae pages Ah...',
+	'preferences-v2-watchdefault' => 'Eidit',
+	'preferences-v2-watchmoves' => 'Muiv',
+	'preferences-v2-watchdeletion' => 'Delyte',
+	'preferences-v2-watchcreations' => 'Cræft',
+	'preferences-v2-showads-enable' => 'Shaw aw ads',
+	'preferences-v2-showads-disable' => 'Dinna shaw aw ads',
+	'preferences-v2-my-email-address' => 'Ma wab-mail address:',
+	'prefs-patrolled-editsv2' => 'Patrolled eidits',
+	'tog-editsectiononrightclick-v2' => 'Eidit sections bi richt clapin oan section titles',
+	'tog-editondblclick-v2' => 'Eidit pages oan dooble clap',
+	'tog-hidefollowedpages-v2' => 'Skauk ma follaed pages leet fae awbodie',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Milicevic01
  */
@@ -1241,4 +1306,60 @@ $messages['zh-hans'] = array(
 	'tog-editsectiononrightclick-v2' => '右击章节标题来编辑章节',
 	'tog-editondblclick-v2' => '双击来编辑页面',
 	'tog-hidefollowedpages-v2' => '对大家隐藏我关注的页面名单',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'prefs-personal' => '我的資訊',
+	'preferences-v2-username' => '我的用户名：',
+	'preferences-v2-usergroups' => '我的用户组：',
+	'preferences-v2-gender' => '我的性别：',
+	'preferences-v2-password' => '我的密碼：',
+	'preferences-v2-oldsig' => '現有的簽名：',
+	'preferences-v2-nickname' => '自訂簽名：',
+	'preferences-v2-fancysig' => '我想在我的簽名中使用wiki文本<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|什麼是簽名？]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:簽名',
+	'prefs-appearance' => '外觀',
+	'preferences-v2-date' => '日期格式',
+	'preferences-v2-time' => '時區：',
+	'preferences-v2-skin' => '布局',
+	'prefs-emailv2' => '電子郵件',
+	'prefs-email-me-v2' => '發電子郵件通知我，當...',
+	'tog-enotifwatchlistpages-v2' => '...我關注的頁面被更改',
+	'tog-enotifusertalkpages-v2' => '...我的用戶討論頁被更改',
+	'tog-enotifminoredits-v2' => '...我關注的頁面有小修改',
+	'tog-marketingallowed-v2' => '...Wikia 有新聞和事件',
+	'prefs-email-advanced-v2' => '進階選項',
+	'tog-htmlemails-v2' => '發HTML的電子郵件給我',
+	'prefs-wikiemail' => '{{SITENAME}}的選項。發電子郵件件给我，當...',
+	'prefs-email-unsubscribe' => '禁用所有的電子郵件',
+	'unsubscribe-preferences-toggle-v2' => '禁用所有來自 Wikia的電子郵件 (覆蓋所有其他選項)',
+	'tog-watchlistdigest-v2' => '我關注頁面改變的每週摘要產生時',
+	'tog-justify-v2' => '顯示左右對齊的段落',
+	'preferences-v2-user-landing-page' => '登錄頁面',
+	'preferences-v2-redirect-wiki-activity' => 'wiki動作',
+	'preferences-v2-redirect-main-page' => '首頁',
+	'preferences-v2-redirect-recent-changes' => '最近更改',
+	'preferences-v2-redirect-explanation' => '登錄頁面選項，讓你選擇你在輸入$1的時候會抵達的頁面。',
+	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => '進階設定',
+	'prefs-recent-changesv2' => '近期變動、歷史和日誌',
+	'prefs-followed-pagesv2' => '關注頁面的feed',
+	'prefs-advanced-displayv2' => '進階顯示選項',
+	'tog-highlightbrokenv2' => '顯示損壞的連結為紅色，而不帶問號標記。',
+	'tog-showAdsv2' => '廣告：',
+	'prefs-addressv2' => '地址',
+	'preferences-v2-watchdefault' => '編輯',
+	'preferences-v2-watchmoves' => '移動',
+	'preferences-v2-watchdeletion' => '刪除',
+	'preferences-v2-watchcreations' => '創建',
+	'preferences-v2-showads-enable' => '顯示所有廣告',
+	'preferences-v2-showads-disable' => '不顯示所有的廣告',
+	'preferences-v2-my-email-address' => '我的電子郵件地址：',
+	'prefs-patrolled-editsv2' => '巡查過的編輯',
+	'tog-editsectiononrightclick-v2' => '允許在標題上按右鍵編輯段落',
+	'tog-editondblclick-v2' => '雙擊來編輯頁面',
+	'tog-hidefollowedpages-v2' => '對大家隱藏我的關注頁面列表',
 );

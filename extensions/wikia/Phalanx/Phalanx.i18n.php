@@ -2423,7 +2423,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 [[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
 	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
 	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP atual.
-Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação.
 Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
@@ -2828,12 +2828,13 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'phalanx-type-content' => 'పుట విషయం',
-	'phalanx-type-summary' => 'పుట సారాంశం',
-	'phalanx-type-title' => 'పుట శీర్షిక',
+	'phalanx-type-content' => 'పేజీ విషయం',
+	'phalanx-type-summary' => 'పేజీ సారాంశం',
+	'phalanx-type-title' => 'పేజీ శీర్షిక',
 	'phalanx-type-user' => 'వాడుకరి',
 	'phalanx-type-answers-recent-questions' => 'ఇటీవలి ప్రశ్నలు',
 	'phalanx-label-reason' => 'కారణం:',
@@ -2841,6 +2842,7 @@ $messages['te'] = array(
 	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
 	'phalanx-link-stats' => 'గణాంకాలు',
+	'phalanx-stats-table-user' => 'చేర్చినవారు',
 	'phalanx-stats-table-type' => 'రకం',
 	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',

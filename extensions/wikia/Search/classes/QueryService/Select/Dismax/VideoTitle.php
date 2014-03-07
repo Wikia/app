@@ -60,7 +60,7 @@ class VideoTitle extends AbstractDismax
 
 	/**
 	 * @param int $minDuration
-	 * @return Wikia\Search\QueryService\Select\VideoTitle
+	 * @return \Wikia\Search\QueryService\Select\Dismax\VideoTitle
 	 */
 	public function setMinDuration($minDuration) {
 		$this->minDuration = $minDuration;
@@ -77,7 +77,7 @@ class VideoTitle extends AbstractDismax
 
 	/**
 	 * @param int $maxDuration
-	 * @return Wikia\Search\QueryService\Select\VideoTitle
+	 * @return \Wikia\Search\QueryService\Select\Dismax\VideoTitle
 	 */
 	public function setMaxDuration($maxDuration) {
 		$this->maxDuration = $maxDuration;

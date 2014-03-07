@@ -568,6 +568,7 @@ Du kannst die Änderungsbenachrichtigungen zu dieser Liste <a href="$4">abbestel
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'toplists-desc' => 'listey Tewr 10a',
@@ -578,7 +579,7 @@ $messages['diq'] = array(
 	'toplists-editor-image-browser-tooltip' => 'Resim deke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',
-	'toplists-cancel-button' => 'Bıterkne',
+	'toplists-cancel-button' => 'Bıtexelne',
 	'toplists-items-removed' => '$1 {{PLURAL:$1|çi|çiy}} wedariyaya',
 	'toplists-items-created' => '$1 {{PLURAL:$1|çi|çiy}} vıraziyay',
 	'toplists-items-updated' => '$1 {{PLURAL:$1|çi|çiy}} rocneya',
@@ -712,6 +713,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Ilkea
  * @author Nike
  */
@@ -739,10 +741,13 @@ $messages['fi'] = array(
 	'toplists-error-add-item-permission' => 'Käyttöoikeusvirhe: Tilille ei ole myönnetty oikeutta luoda uusia kohteita.',
 	'toplists-error-add-item-list-not-exists' => 'Top10-listaa $1 ei ole olemassa.',
 	'toplists-upload-error-unknown' => 'Tapahtui virhe lataus prosessissa. Yritä uudestaan.',
+	'action-toplists-create-edit-list' => 'luoda tai muokata top-10-listoja',
 	'toplists-editor-title-label' => 'Luettelonimi',
 	'toplists-editor-title-placeholder' => 'Kirjoita luettelon nimi',
 	'toplists-editor-related-article-label' => 'Liittyvä sivu <small>(valinnainen, mutta valitsee kuvan)</small>',
 	'toplists-editor-related-article-placeholder' => 'Anna olemassa olevan sivun nimi',
+	'toplists-editor-description-label' => 'Lyhyt kuvaus omasta top-10-listastasi',
+	'toplists-editor-description-placeholder' => 'Lisää kuvaus',
 	'toplists-editor-image-browser-tooltip' => 'Lisää kuva',
 	'toplists-editor-remove-item-tooltip' => 'Poista kohde',
 	'toplists-editor-drag-item-tooltip' => 'Voit muuttaa järjestystä vetämällä',
@@ -795,6 +800,7 @@ Voit <a href="$4">perua päivitykset</a> luettelon muutoksista.',
 	'toplists-msg-fb-OnRateArticle-short' => 'on äänestänyt Top10-listaa wikissä $WIKINAME!',
 	'toplists-create-heading' => '<em>Uutta!</em> Luo oma top-10',
 	'toplists-create-button-msg' => 'Luo lista',
+	'toplists-oasis-only' => 'Top-10-listojen luonti ja muokkaus ei ole mahdollista Monobook-ulkoasua käytettäessä. Mikäli haluat käyttää tätä toimintoa, muuta asetuksissasi ulkoasuksi "Wikia".',
 );
 
 /** French (français)

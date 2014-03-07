@@ -1149,6 +1149,7 @@ $messages['fi'] = array(
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|keskustelu<br />tässä Foorumissa|keskustelua<br />tässä Foorumissa}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|aktiivinen<br />keskustelu|aktiivista<br />keskustelua}}</span>',
 	'forum-specialpage-heading' => 'Foorumi',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Sinä voit muokata tätä<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|keskustelu|keskustelua}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|viesti|viestiä}}',
 	'forum-specialpage-board-lastpostby' => 'Viimeisimmän viestin kirjoitti',
@@ -1181,7 +1182,7 @@ Ennen kuin alat käyttää {{SITENAME}}n Foorumeja, pidäthän mielessä muutama
 
 '''Mitä Aiheet ovat?'''
 :Aiheiden avulla voit linkittää foorumikeskustelun tiettyyn wikiartikkeliin. Se on tapa pitää Foorumeja järjestyksessä ja auttaa käyttäjiä löytämään kiinnostavia keskusteluja. Esimerkiksi Lord Voldemortilla tagattu keskustelu ilmestyy Lord Voldemortin artikkelin alareunaan.",
-	'forum-board-title' => '$1 -keskustelupalsta',
+	'forum-board-title' => '$1',
 	'forum-board-topic-title' => 'Keskusteluja aiheesta $1',
 	'forum-board-topics' => 'Aiheet',
 	'forum-board-thread-follow' => 'Seuraa',
@@ -1192,7 +1193,7 @@ Ennen kuin alat käyttää {{SITENAME}}n Foorumeja, pidäthän mielessä muutama
 	'forum-no-board-selection-error' => '← Valitse keskustelupalsta',
 	'forum-thread-reply-placeholder' => 'Lähetä vastaus',
 	'forum-thread-reply-post' => 'Vastaa',
-	'forum-thread-deleted-return-to' => 'Palaa $1 -keskustelupalstalle',
+	'forum-thread-deleted-return-to' => 'Palaa palstalle $1',
 	'forum-sorting-option-newest-replies' => 'Viimeisimmät vastaukset',
 	'forum-sorting-option-popular-threads' => 'Suosituimmat',
 	'forum-sorting-option-most-replies' => 'Viimeisen 7 päivän aktiivisimmat',
@@ -1200,8 +1201,8 @@ Ennen kuin alat käyttää {{SITENAME}}n Foorumeja, pidäthän mielessä muutama
 	'forum-sorting-option-oldest-threads' => 'Vanhimmat keskustelut',
 	'forum-discussion-post' => 'Luo keskustelu',
 	'forum-discussion-highlight' => 'Korosta tämä keskustelu',
-	'forum-discussion-placeholder-title' => 'Mistä haluat puhua?',
-	'forum-discussion-placeholder-message' => 'Kirjoita uusi viesti $1 -keskustelupalstalle',
+	'forum-discussion-placeholder-title' => 'Mistä haluat keskustella?',
+	'forum-discussion-placeholder-message' => 'Kirjoita uusi viesti $1 -palstalle',
 	'forum-discussion-placeholder-message-short' => 'Lähetä uusi viesti',
 	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|vastasi}} keskusteluusi $3 -palstalla',
 	'forum-notification-user2-reply-to-your' => '$1 ja $2 vastasivat keskusteluusi $3 -palstalla',
@@ -1246,8 +1247,8 @@ ___________________________________________<br />
 * Löydä apua ja neuvoja Yhteisöwikiltä: http://yhteiso.wikia.com
 * Haluatko saada vähemmäm viestejä meiltä? Voit peruuttaa tilauksen tai muuttaa sähköpostiasetuksia täällä: http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'palstalla $1',
-	'forum-wiki-activity-msg-name' => '$1 -palsta',
-	'forum-activity-module-heading' => 'Foorumin toiminta',
+	'forum-wiki-activity-msg-name' => '$1',
+	'forum-activity-module-heading' => 'Foorumitoiminta',
 	'forum-related-module-heading' => 'Tähän liittyvät keskustelut',
 	'forum-activity-module-posted' => '$1 vastasi $2',
 	'forum-activity-module-started' => '$1 aloitti keskustelun $2',
@@ -1262,11 +1263,11 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'poisti vastauksen [[$3|$4 -palstan]] keskustelusta "[[$1|$2]]"',
 	'forum-recentchanges-deleted-reply-title' => 'Viesti',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Keskustelupalsta',
-	'forum-recentchanges-thread-group' => '$1 <a href="$2">$3 -palstalla</a>',
+	'forum-recentchanges-thread-group' => '$1 palstalla <a href="$2">$3</a>',
 	'forum-recentchanges-history-link' => 'palstan historia',
 	'forum-recentchanges-thread-history-link' => 'keskusteluhistoria',
-	'forum-recentchanges-closed-thread' => 'sulki keskustelun "[[$1|$2]]" palstalla [[$3|$4]]',
-	'forum-recentchanges-reopened-thread' => 'uudelleenavasi keskustelun "[[$1|$2]]" palstalla [[$3|$4]]',
+	'forum-recentchanges-closed-thread' => 'sulki ketjun "[[$1|$2]]" palstalla [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'uudelleenavasi ketjun "[[$1|$2]]" palstalla [[$3|$4]]',
 	'forum-board-history-title' => 'palstan historia',
 	'forum-specialpage-oldforum-link' => 'Foorumiarkisto',
 	'forum-admin-page-breadcrumb' => 'Palstojen hallinta ylläpitäjiä varten',
@@ -1279,7 +1280,7 @@ ___________________________________________<br />
 	'forum-admin-edit-board-description' => 'Palstan kuvaus',
 	'forum-admin-delete-and-merge-board-modal-heading' => 'Poista palsta: $1',
 	'forum-admin-delete-board-title' => 'Vahvista kirjoittamalla poistettavan palstan nimi:',
-	'forum-admin-merge-board-warning' => 'Tämän palstan keskustelut yhdistetään olemassaolevaan palstaan.',
+	'forum-admin-merge-board-warning' => 'Tämän palstan ketjut yhdistetään olemassaolevaan palstaan.',
 	'forum-admin-merge-board-destination' => 'Valitse keskustelpalsta, johon yhdistetään:',
 	'forum-admin-delete-and-merge-button-label' => 'Poista ja yhdistä',
 	'forum-admin-link-label' => 'Hallinnoi palstoja',
@@ -3436,6 +3437,7 @@ ___________________________________________<br />
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Byfserag
  * @author Dimension
  * @author Ffaarr
  * @author Hzy980512
@@ -3466,7 +3468,7 @@ $messages['zh-hans'] = array(
 :请大致浏览{{SITENAME}}论坛，看看是不是已经有其他人发表过类似的话题。如果没有，那就赶快发起一个新的讨论吧！
 
 '''寻求帮助'''
-:发现有些地方不对劲？或是有问题要问？赶快登陆论坛吧！如果你需要寻求维基员工的帮助，请登陆[[w:c:zh.community|社区中心]]或者[http://zh.community.wikia.com/wiki/Special:Contact 发送邮件]给我们。
+:发现有些地方不对劲？或是有问题要问？赶快登陆论坛吧！如果你需要寻求维基员工的帮助，请登陆[[w:c:community|社区中心]]或者[[Special:Contact|发送邮件]]给我们。
 
 '''畅所欲言'''
 :{{SITENAME}}社区非常高兴有你的参与！赶快发起你感兴趣的话题，让大家一起参与讨论吧！
@@ -3482,7 +3484,7 @@ $messages['zh-hans'] = array(
 : 如果你发现某个话题非常有趣，可以通过点“赞”来告诉其他人。
 
 '''话题是什么？'''
-: 话题允许你引导其他用户讨论维基上相同的主题类别或者编辑功能。比如说，以\"哈利波特\"为标签的所有讨论都将在出现在\"哈利波特\"文章\"中。", # Fuzzy
+: 话题允许你引导其他用户讨论维基上相同的主题类别或者编辑功能。比如说，以\"哈利波特\"为标签的所有讨论都将在出现在\"哈利波特\"文章\"中。",
 	'forum-board-title' => '$1板面',
 	'forum-board-topic-title' => '有关$1的讨论',
 	'forum-board-topics' => '主题',
@@ -3507,6 +3509,7 @@ $messages['zh-hans'] = array(
 	'forum-discussion-placeholder-message-short' => '创建新消息',
 	'forum-notification-user2-reply-to-your' => '$1和$2在$3的讨论版上回复了你',
 	'forum-notification-user2-reply-to-someone' => '$1和$2在$3的讨论板上做出了回复',
+	'forum-notification-user3-reply-to-someone' => '$1等人$3讨论版上做出了回复',
 	'forum-mail-notification-html-greeting' => 'Hi $1，',
 	'forum-mail-notification-html-button' => '查看会话',
 	'forum-mail-notification-subject' => '$1——$2',

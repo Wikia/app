@@ -10,9 +10,7 @@ class WikiaPageType {
 	 * @return string one of corporate, home, search, forum, article or extra
 	 */
 	public static function getPageType() {
-		if (self::isCorporatePage()) {
-			$type = 'corporate';
-		} elseif (self::isMainPage()) {
+		if (self::isMainPage()) {
 			$type = 'home';
 		} elseif (self::isFilePage()) {
 			$type = 'file';

@@ -150,7 +150,7 @@ class LyricFindHooks {
 			// Replace just the lyrics boxes if any are found. If none are found, hide the whole page.
 			$NO_LIMIT = -1;
 			$numReplacements = 0;
-			$text = preg_replace("/<(lyrics|lyricfind|gracenotelyrics)>(.*?)<\/(lyrics|lyricfind|gracenotelyrics)>/is", "<lyrics>{{gracenote_takedown}}</lyrics>", $text, $NO_LIMIT, $numReplacements);
+			$text = preg_replace("/<(lyrics|lyricfind|gracenotelyrics)>(.*?)<\/(lyrics|lyricfind|gracenotelyrics)>/is", "<lyrics>{{lyricfind_takedown}}</lyrics>", $text, $NO_LIMIT, $numReplacements);
 		}
 
 		return true;
