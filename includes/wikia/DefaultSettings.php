@@ -1233,6 +1233,12 @@ $wgHighValueCountries = null;
 $wgAdVideoTargeting = false;
 
 /**
+ * @name $wgAdDriverUseGptMobile
+ * Enables experimental AdEngine on mobile skin (for GPT)
+ */
+$wgAdDriverUseGptMobile = false;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;

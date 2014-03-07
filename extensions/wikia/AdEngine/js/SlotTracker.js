@@ -1,6 +1,7 @@
 /*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
+/*global define*/
 
 var SlotTracker = function (log, tracker) {
 	'use strict';
@@ -83,7 +84,7 @@ var SlotTracker = function (log, tracker) {
 			gaLabel,
 			gaValue;
 
-		extraParams['pos'] = data.slotname;
+		extraParams.pos = data.slotname;
 
 		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
 		gaAction = buildExtraParamsString(extraParams);
@@ -197,3 +198,5 @@ var SlotTracker = function (log, tracker) {
 
 	return slotTracker;
 };
+
+define('ext.wikia.adengine.slottracker', ['wikia.log', 'wikia.tracker'], SlotTracker);
