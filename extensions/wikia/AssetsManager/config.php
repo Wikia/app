@@ -1068,7 +1068,7 @@ $config['videopageadmin_edit_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/carousel.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
@@ -1130,8 +1130,9 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
-		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
 

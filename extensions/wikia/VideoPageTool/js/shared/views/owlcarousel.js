@@ -4,10 +4,6 @@ define('shared.views.owlcarousel', [], function () {
 		tagName: 'div',
 		className: 'carousel-wrapper',
 		$carousel: null,
-		events: {
-			'click .control[data-direction="left"]': 'slideLeft',
-			'click .control[data-direction="right"]': 'slideRight'
-		},
 		renderCarousel: function (config) {
 			var params = _.extend({
 				items: 5,
@@ -21,12 +17,6 @@ define('shared.views.owlcarousel', [], function () {
 			}, config);
 			this.$carousel.owlCarousel(params);
 			return this;
-		},
-		slideRight: function () {
-			this.$carousel.trigger('owl.next');
-		},
-		slideLeft: function () {
-			this.$carousel.trigger('owl.prev');
 		},
 		getCarouselInstance: function () {
 			return this.$carousel.data('owlCarousel');
