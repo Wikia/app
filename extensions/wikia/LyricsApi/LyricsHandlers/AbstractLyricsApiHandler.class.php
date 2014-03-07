@@ -1,12 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 3/3/14
- * Time: 2:08 PM
+ * Class AbstractLyricsApiHandler
+ *
+ * @desc An interface for all *LyricsApiHandlers
  */
-
-
 abstract class AbstractLyricsApiHandler {
 
 	abstract public function getArtist( $artist );
