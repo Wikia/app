@@ -41,6 +41,12 @@ abstract class BaseScraper {
 		return $result;
 	}
 
+	protected function getGenres( Article $article) {
+		return array_filter(
+			$this->getTemplateValues( 'Genres', $article->getContent(), '|', false )
+		);
+	}
+
 	protected function getSongData( $songName, $number ) {
 		$songName = urldecode( $songName );
 		if ( preg_match( '#\[\[(.+?)\]\]#', $songName, $matches ) ) {

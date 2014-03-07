@@ -14,7 +14,7 @@ class ArtistScraper extends BaseScraper {
 		];
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
 		$artistData = array_merge( $artistData, $this->getFooter( $article ) );
-
+		$artistData['genres'] = $this->getGenres( $article );
 		return $this->sanitizeData( $artistData, $this->getDataMap() );
 	}
 
@@ -127,6 +127,7 @@ class ArtistScraper extends BaseScraper {
 			'name' => 'name',
 			'pic' => 'image',
 			'iTunes' => 'itunes',
+			'genres' => 'genres',
 /* These fields are also captured but not needed now
 			'romanizedArtist' => 'romanized_name',
 			'officialSite' => 'official_site',

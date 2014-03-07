@@ -12,6 +12,7 @@ class AlbumScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
+		$albumData['genres'] = $this->getGenres( $article );
 		return array_merge( $albumData, $this->getFooter( $article ) );
 	}
 
@@ -31,10 +32,10 @@ class AlbumScraper extends BaseScraper {
 			'year' => 'year',
 			'Album' => 'name',
 			'iTunes' => 'itunes',
+			'Genre' => 'genres',
+			'Length' => 'length',
 /* These fields are also captured but not needed now
 			'Artist' => 'artist',
-			'Length' => 'length',
-			'Genre' => 'genres',
 			'Wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_name',
 			'asin' => 'asin',
