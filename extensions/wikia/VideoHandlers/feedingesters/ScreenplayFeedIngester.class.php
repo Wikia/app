@@ -10,16 +10,28 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	protected static $FORMAT_ID_THUMBNAIL = 9;
 	protected static $FORMAT_ID_VIDEO = 20;
 
+	// list of bit rate ids in priority for videos
 	protected static $BITRATE_IDS_THUMBNAIL = [
 		ScreenplayApiWrapper::MEDIUM_JPEG_BITRATE_ID => 1,
 		ScreenplayApiWrapper::LARGE_JPEG_BITRATE_ID  => 2,
 	];
+
+	// list of bit rate ids in priority for videos
 	protected static $BITRATE_IDS_VIDEO = [
 		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 1,
 		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 2,
 		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 3,
 		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 4,
 		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 5,
+	];
+
+	// map bit rate id to resolution
+	protected static $VIDEO_RESOLUTION = [
+		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => '480x360',
+		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => '480x270',
+		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => '640x480',
+		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => '640x360',
+		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => '1280x720',
 	];
 
 	protected static $TRAILER_TYPE = [
@@ -131,6 +143,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				'streamUrl'       => '',
 				'streamHdUrl'     => '',
 				'hd'              => 0,
+				'resolution'      => '',
 			];
 
 			if ( !empty( $params['keyphrasesCategories'] ) ) {
@@ -212,10 +225,15 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			if ( $clip['BitrateId'] == ScreenplayApiWrapper::HIGHDEF_BITRATE_ID ) {
 				$clipData['streamHdUrl'] = $clip['Url'];
 				$clipData['hd'] = 1;
+				$clipData['resolution'] = self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID];
 			} else if ( empty( $clipData['stdBitrateCode'] )
 				|| self::$BITRATE_IDS_VIDEO[$clip['BitrateId']] > self::$BITRATE_IDS_VIDEO[$clipData['stdBitrateCode']] ) {
 				$clipData['stdBitrateCode'] = $clip['BitrateId'];
 				$clipData['streamUrl'] = $clip['Url'];
+
+				if ( $clipData['resolution'] != self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID] ) {
+					$clipData['resolution'] = self::$VIDEO_RESOLUTION[$clipData['stdBitrateCode']];
+				}
 			}
 		}
 
@@ -234,6 +252,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		// set category
 		$trailerType = empty( self::$TRAILER_TYPE[$clip['TrailerTypeId']] ) ? '' : self::$TRAILER_TYPE[$clip['TrailerTypeId']];
 		$clipData['category'] = $this->getCategory( $trailerType );
+
+		// set series
+		$clipData['series'] = ( $trailerType == 'TV Trailer' ) ? $clipData['name'] : '';
 
 		// set type
 		$trailerVersion = empty( self::$TRAILER_VERSION[$clip['TrailerVersion']] ) ? '' : self::$TRAILER_VERSION[$clip['TrailerVersion']];
@@ -254,20 +275,21 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$clipData['industryRating'] = $trailerRating;
 		} else if ( !empty( self::$RATING_MPAA[$clip['RatingId']] ) ) {
 			$clipData['industryRating'] = $this->getIndustryRating( self::$RATING_MPAA[$clip['RatingId']] );
+		} else {
+			$clipData['industryRating'] = '';
 		}
 
 		// set age required if ageGate is set
-		if  ( !empty( $clip['AgeGate'] ) && strtolower( $clip['AgeGate'] ) == "true" ) {
-			$clipData['ageGate'] = 1;
+		if ( !empty( $clipData['industryRating'] ) ) {
 			$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
-			// set age required to 18 if ageRequired is empty
-			if ( empty( $clipData['ageRequired'] ) ) {
-				$clipData['ageRequired'] = 18;
-			}
+		} else if ( !empty( $clip['AgeGate'] ) && strtolower( $clip['AgeGate'] ) == "true" ) {
+			// set default age required
+			$clipData['ageRequired'] = 17;
 		} else {
-			$clipData['ageGate'] = 0;
 			$clipData['ageRequired'] = 0;
 		}
+
+		$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
 		// set language
 		if ( empty( $clip['LanguageName'] ) || $clip['LanguageName'] == 'Not Set'  ) {
@@ -275,6 +297,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		} else {
 			$clipData['language'] = $clip['LanguageName'];
 		}
+
+		// set distributor
+		$clipData['distributor'] = empty( $clip['Studio'] ) ? '' : $clip['Studio'];
 
 		$clipData['provider'] = 'screenplay';
 
@@ -384,6 +409,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$metadata['jpegBitrateCode'] = empty( $data['jpegBitrateCode'] ) ? '' : $data['jpegBitrateCode'];
 		$metadata['streamUrl'] = empty( $data['streamUrl'] ) ? '' : $data['streamUrl'];
 		$metadata['streamHdUrl'] = empty( $data['streamHdUrl'] ) ? '' : $data['streamHdUrl'];
+		$metadata['distributor'] = empty( $data['distributor'] ) ? '' : $data['distributor'];
 
 		return $metadata;
 	}

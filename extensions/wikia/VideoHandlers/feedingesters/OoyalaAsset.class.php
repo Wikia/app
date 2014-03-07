@@ -431,6 +431,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
+		if ( !empty( $data['distributor']) ) {
+			$metadata['distributor'] = $data['distributor'];
+		}
 		// set blank thumbnail
 		if ( empty( $data['thumbnail'] ) ) {
 			$metadata['thumbnail'] = 1;
