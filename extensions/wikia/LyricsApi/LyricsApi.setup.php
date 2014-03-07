@@ -9,7 +9,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['api'][] = array(
 	'name' => 'Lyrics API',
-	'description' => 'Lyrics API',
+	'description' => 'Extension enabled on lyrics.wikia.com which provides an entry point for different parties, so they can get data about: an artist, an album, a song.',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Evgeniy "aquilax" Vasilev',
@@ -22,3 +22,4 @@ $wgAutoloadClasses['MockLyricsApiHandler'] = $dir . '/LyricsHandlers/MockLyricsA
 $wgAutoloadClasses['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 
 $wgWikiaApiControllers['LyricsApiController'] = "{$dir}/LyricsApiController.class.php";
+
