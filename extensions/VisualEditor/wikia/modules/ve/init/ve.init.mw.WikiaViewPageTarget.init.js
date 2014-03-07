@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the

@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw, confirm, alert */
+/* global mw, confirm, alert, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
