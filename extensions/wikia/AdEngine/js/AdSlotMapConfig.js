@@ -1,7 +1,6 @@
 var AdSlotMapConfig = function() {
 	"use strict";
 
-
 	var slotMapConfig = {
 		'gpt': {
 			'CORP_TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x180', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
@@ -25,6 +24,11 @@ var AdSlotMapConfig = function() {
 			'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 			'WIKIA_BAR_BOXAD_1': {'size': '320x50,320x70,320x100', 'tile': 4, 'loc': 'bottom'},
 			'GPT_FLUSH': 'flushonly'
+		},
+		'mobile': {
+			'MOBILE_TOP_LEADERBOARD': {size: '320x50,1x1'},
+			'MOBILE_IN_CONTENT': {size: '300x250,1x1'},
+			'MOBILE_PREFOOTER': {size: '300x250,1x1'}
 		}
 	};
 

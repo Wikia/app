@@ -384,12 +384,13 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Jprmvnvijay5
  */
 $messages['te'] = array(
-	'userdata' => 'వాడుకరి మందలను తెమ్ము',
-	'userdata-userid-label' => 'అందించు వాడుకరి గుర్తింపు:',
-	'userdata-submit' => 'మందలను తెమ్ము',
+	'userdata' => 'వాడుకరి డేటా తీసుకురా',
+	'userdata-userid-label' => 'వాడుకరి ఐడీని ఇవ్వండి:',
+	'userdata-submit' => 'డేటాను తీసుకురా',
 );
 
 /** Tagalog (Tagalog)

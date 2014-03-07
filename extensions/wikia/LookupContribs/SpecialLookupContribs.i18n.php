@@ -1760,14 +1760,49 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'lookupcontribsrecentcontributions' => '$1 యొక్క ఇటీవలి మార్పుచేర్పులు',
+	'lookupcontribsfinalcontributions' => '$1 యొక్క చిట్టచివరి మార్పుచేర్పులు',
+	'lookupcontribusernotspecify' => 'మీరింకా వాడుకరి ఎవరినీ సూచించలేదు',
+	'lookupcontribsselectuser' => 'వాడుకరిని ఎంచుకోండి:',
+	'lookupcontribsselectmodenormal' => 'ఆ వాడుకరి యొక్క ఇటీవలి మార్పుచేర్పులు',
+	'lookupcontribsselectmodefinal' => 'ఆ వాడుకరి యొక్క చివరి మార్పుచేర్పులు',
+	'lookupcontribsselectmodeall' => 'ఆ వాడుకరి యొక్క మార్పుచేర్పులన్నీ',
+	'lookupcontribsfullurls' => 'పూర్తి URLలు',
 	'lookupcontribsgo' => 'వెళ్ళు',
+	'lookupcontribsinvaliduser' => '<p class="error">వాడుకరి "<b>$1</b>" లేనేలేరు.
+ఇచ్చిన వాడుకరి పేరులో టైపాట్లున్నాయేమో చూడండి.</p>',
+	'lookupcontribsselectwikis' => 'వికీలను ఎంచుకోండి:',
+	'lookupcontribslistwikiainfo' => '<b>$1</b> మార్పుచేర్పులు చేసిన వ్యాసాలు గల వికీల జాబితా',
+	'lookupcontribsnoresultfound' => 'ఫలితాలేమీ దొరకలేదు!',
+	'lookupcontribsinvalidresults' => 'చెల్లని ఫలితాలు!',
 	'lookupcontribswiki' => 'వికీ',
+	'lookupcontribswikidbname' => 'DB పేరు',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'శీర్షిక',
 	'lookupcontribswikioptions' => 'ఎంపికలు',
-	'lookupcontribsshowpages' => 'అన్ని పేజీలు ($1 పేరుబరి)',
+	'lookupcontribsdetails' => 'దీని వివరాలు చూడండి:',
+	'lookupcontribslastedited' => 'చివరి మార్పు',
+	'lookupcontribsrecordspager' => "మొత్తం '''$3''' రికార్డులలో '''$1''' నుండి '''$2''' వరకు చూపిస్తున్నాం.",
+	'lookupcontribsnext' => 'తరువాతి',
+	'lookupcontribsprevious' => 'గత',
+	'lookupcontribspageremoved' => 'తొలిగించబడినది:',
+	'lookupcontribsrestore' => 'పునఃస్థాపించు',
+	'lookupcontribslog' => 'లాగ్',
+	'lookupcontribscontribs' => 'రచనలు',
+	'lookupcontribshist' => 'చరిత్ర',
+	'lookupcontribsdiff' => 'తేడా',
+	'right-lookupcontribs' => 'వాడుకరి యొక్క సార్వత్రిక రచనలను చూపించు',
+	'lookupcontribsshowpages' => 'అన్ని పేజీలు ($1 పేరుబరులు)',
+	'lookupcontribscontent' => 'విషయం',
+	'lookupcontribscontribtitleforuser' => 'వాడుకరి మార్పుచేర్పులు:',
+	'lookupcontribsnormal' => 'ఇటీవలి',
+	'lookupcontribsfinal' => 'తుది',
+	'lookupcontribsall' => 'అన్నీ',
+	'action-lookupcontribs' => 'వివిధ వికీల్లో వాడుకరి రచనల కోసం చూసే',
 );
 
 /** Tagalog (Tagalog)

@@ -2223,6 +2223,9 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'wikiaquiz-editquiz-headline' => '編輯測驗',
+	'wikiaquiz-createquizarticle-headline' => '創建測驗的問題和答案',
+	'wikiaquiz-editquizarticle-headline' => '編輯測驗的問題和答案',
 	'wikiaquiz-title-label' => '標題',
 );
 

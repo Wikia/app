@@ -81,8 +81,8 @@ class AssetsManagerServer {
 		}
 
 		if($cacheDuration > 0) {
-			$headers['Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration['server'];
-			$headers['X-Pass-Cache-Control'] = $builder->getCacheMode() . ', max-age=' . $cacheDuration['client'];
+			$headers['Cache-Control'] = 'public, max-age=' . $cacheDuration['server'];
+			$headers['X-Pass-Cache-Control'] = 'public, max-age=' . $cacheDuration['client'];
 		}
 
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');

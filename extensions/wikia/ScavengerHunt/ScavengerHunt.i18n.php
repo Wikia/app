@@ -305,6 +305,7 @@ $messages['ar'] = array(
 	'scavengerhunt-form-error-invalid-url' => 'الرجاء توفير عنوان URL صالح.',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
+	'scavengerhunt-entry-form-submit' => 'أرسل المدخلة',
 	'scavengerhunt-label-sprite-X' => 'موضع العنصر',
 	'scavengerhunt-game-has-been-deleted' => 'تم حذف لعبة الصيد',
 	'scavengerhunt-game-more-to-go' => 'مازال فقط #',
@@ -671,10 +672,10 @@ $messages['diq'] = array(
 	'scavengerhunt-button-save' => 'Qeyd ke',
 	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
-	'scavengerhunt-button-delete' => 'Besterne',
+	'scavengerhunt-button-delete' => 'Bestere',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
 	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
-	'scavengerhunt-quit-game-button-cancel' => 'Bıterkne',
+	'scavengerhunt-quit-game-button-cancel' => 'Bıtexelne',
 	'scavengerhunt-label-entry-form-email' => 'E postay karberi',
 	'scavengerhunt-label-entry-form-username' => 'Nameyê Karberi',
 	'scavengerhunt-facebook-image' => 'Resimi Facebook de vıla ke',
@@ -2744,13 +2745,14 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'scavengerhunt-list-header-name' => 'ఆట పేరు',
 	'scavengerhunt-list-header-actions' => 'చర్యలు',
 	'scavengerhunt-label-name' => 'పేరు:',
-	'scavengerhunt-label-article-title' => 'పుట శీర్షిక (ఏ వికీ నుండైనా వ్యాసపు శీర్షిక):',
+	'scavengerhunt-label-article-title' => 'పేజీ శీర్షిక (ఏ వికీలోదైనా వ్యాసపు URL):',
 	'scavengerhunt-button-save' => 'భద్రపరచు',
 	'scavengerhunt-button-delete' => 'తొలగించు',
 	'scavengerhunt-entry-form-name' => 'మీ పేరు:',

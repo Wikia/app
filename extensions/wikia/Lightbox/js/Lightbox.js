@@ -1085,7 +1085,8 @@
 						LightboxTracker.track(
 							Wikia.Tracker.ACTIONS.SHARE,
 							'email',
-							null, {
+							null,
+							{
 								title: trackingTitle,
 								type: Lightbox.current.type
 							}

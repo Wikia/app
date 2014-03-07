@@ -685,11 +685,12 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  */
 $messages['te'] = array(
 	'places-editor-search' => 'వెతుకు',
-	'places-editor-show-my-location' => 'నన్ను నా ప్రాంతానికి తీసుకువెళ్ళు',
+	'places-editor-show-my-location' => 'నన్ను నా స్థలానికి తీసుకువెళ్ళు',
 	'places-geolocation-button-label' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-add-title' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-error-title' => 'లోపం',

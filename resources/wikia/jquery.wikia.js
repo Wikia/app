@@ -306,7 +306,8 @@ $.fn.startThrobbing = function() {
 };
 
 $.fn.stopThrobbing = function() {
-	return this.find('.wikiaThrobber').remove();
+	this.find('.wikiaThrobber').remove();
+	return this;
 };
 $.preloadThrobber = function() {
 	var img = new Image();

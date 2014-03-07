@@ -1,10 +1,11 @@
-/* exported AdTracker */
-/* jshint camelcase:false, maxparams:5 */
+/*exported AdTracker*/
+/*jshint camelcase:false, maxparams:5*/
+/*global define*/
 
 var AdTracker = function (log, tracker) {
 	'use strict';
 
-	var logGroup = 'AdTracker',
+	var logGroup = 'ext.wikia.adengine.adtracker',
 		maxTrackedTime = 5,
 		trackedSize = {
 			CORP_TOP_LEADERBOARD:  '728x90',
@@ -160,3 +161,5 @@ var AdTracker = function (log, tracker) {
 		getStats: getStats
 	};
 };
+
+define('ext.wikia.adengine.adtracker', ['wikia.log', 'wikia.tracker'], AdTracker);
