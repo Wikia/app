@@ -396,7 +396,7 @@ $config['gameguides_js'] = array(
 		//modules
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
-		'//extensions/wikia/WikiaMobile/js/toc.js',
+		'//extensions/wikia/WikiaMobile/js/mobile.toc.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/events.js',

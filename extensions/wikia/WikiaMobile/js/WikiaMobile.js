@@ -1,4 +1,4 @@
-require( ['wikia.querystring', 'toc', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, toc, cookies, track, window, $ ) {
+require( ['wikia.querystring', 'mobile.toc', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, toc, cookies, track, window, $ ) {
 	'use strict';
 	var d = window.document;
 
