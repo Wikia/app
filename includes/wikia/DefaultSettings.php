@@ -1302,6 +1302,7 @@ $wgUseETag = true;
 /**
  * Restrictions for some api methods
  */
-$wgApiAccess = [
-	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
-];
+//TODO: fix this
+//$wgApiAccess = [
+//	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
+//];
