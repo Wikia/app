@@ -224,7 +224,7 @@ $1',
 	'wikiamobile-video-views-counter' => '{{PLURAL:$1|مشاهدة واحدة|مشاهدتان|$1 مشاهدات|$1 مشاهدة}}',
 	'wikiamobile-video-not-friendly-header' => 'يا للأسف!',
 	'wikiamobile-video-not-friendly' => 'عذرًا، هذا الڤيديو غير متوفر للجوال.',
-	'wikiamobile-toc-header' => 'جدول المحتوى',
+	'wikiamobile-toc-header' => 'جدول المحتوى', # Fuzzy
 	'wikiamobile-ad-label' => 'إعلان',
 	'wikiamobile-image-not-loaded' => 'الصورة غير متوفرة',
 	'wikiamobile-shared-file-not-available' => 'عفوًا، هذا العنصر لم يعد متوفرًا، ولكن بما أنك هنا، تصفح الويكي!',
@@ -453,7 +453,7 @@ $messages['diq'] = array(
 	'wikiamobile-menu' => 'Menu',
 	'wikiamobile-article-categories' => 'Kategoriy',
 	'wikiamobile-feedback' => 'Peydrıstış',
-	'wikiamobile-back' => 'Peyd bê',
+	'wikiamobile-back' => 'Peyser',
 	'wikiamobile-hide-section' => 'bınımne',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Stilê cıwıyayışi]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Keyfiye]]',
@@ -1182,6 +1182,7 @@ $1',
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Faren
+ * @author Pio387
  * @author Sovq
  * @author Woytecr
  */
@@ -1213,6 +1214,7 @@ $messages['pl'] = array(
 	'wikiamobile-category-items-prev' => 'Załaduj poprzednie',
 	'wikiamobile-categories-expand' => 'Pokaż wszystko',
 	'wikiamobile-categories-collapse' => 'Ukryj wszystko',
+	'wikiamobile-categories-blogs' => 'Wpisy na blogach',
 	'wikiamobile-sharing-media-image' => 'Obraz',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 w $2 - $3',
@@ -1224,7 +1226,7 @@ $messages['pl'] = array(
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|odwiedziny|odwiedzin}}',
 	'wikiamobile-video-not-friendly-header' => 'Ups!',
 	'wikiamobile-video-not-friendly' => 'Ten film nie jest dostępny w wersji mobilnej.',
-	'wikiamobile-toc-header' => 'Spis treści',
+	'wikiamobile-toc-header' => 'Spis treści', # Fuzzy
 	'wikiamobile-ad-label' => 'reklama',
 	'wikiamobile-image-not-loaded' => 'Obraz nie jest dostępny',
 	'wikiamobile-shared-file-not-available' => 'Oj, ten element nie jest już dostępny, ale skoro już tutaj jesteś, eksploruj wiki!',
@@ -1537,6 +1539,7 @@ $messages['tcy'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  * @author Veeven
  */
@@ -1544,15 +1547,16 @@ $messages['te'] = array(
 	'wikiamobile-search' => 'వెతుకు',
 	'wikiamobile-search-wiki' => 'వికీ',
 	'wikiamobile-search-wikia' => 'వికియా',
-	'wikiamobile-login' => 'ప్రవేశించండి',
+	'wikiamobile-login' => 'లాగినవండి',
 	'wikiamobile-password' => 'సంకేతపదం',
-	'wikiamobile-login-submit' => 'ప్రవేశించు',
+	'wikiamobile-login-submit' => 'లాగినవండి',
 	'wikiamobile-menu' => 'మెనూ',
 	'wikiamobile-article-categories' => 'వర్గాలు',
 	'wikiamobile-feedback' => 'ప్రతిస్పందన',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|జీవనవిధానం]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|వినోదం]]',
-	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ఆటలు]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|వీడియో గేమ్స్]]',
+	'wikiamobile-categories-blogs' => 'బ్లాగు టపాలు',
 );
 
 /** Thai (ไทย)
@@ -1804,7 +1808,9 @@ $messages['zh-hant'] = array(
 	'wikiamobile-menu' => '選單',
 	'wikiamobile-article-categories' => '頁面分類',
 	'wikiamobile-feedback' => '意見反饋',
+	'wikiamobile-back' => '返回',
 	'wikiamobile-hide-section' => '隱藏',
+	'wikiamobile-profile' => '個人資料',
 	'wikiamobile-last-edited-on' => '最近編輯在$1',
 	'wikiamobile-last-edited-by' => '由$1',
 	'wikiamobile-anonymous-edited-by' => '匿名用户',
@@ -1814,4 +1820,29 @@ $messages['zh-hant'] = array(
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|授權]]',
 	'mobile-full-site' => '完整網站',
 	'wikiamobile-categories-tagline' => '分類頁面',
+	'wikiamobile-categories-items-total' => '$1個{{PLURAL:$1|條目|條目}}',
+	'wikiamobile-category-items-more' => '載入更多',
+	'wikiamobile-category-items-prev' => '載入前一個',
+	'wikiamobile-categories-expand' => '顯示全部',
+	'wikiamobile-categories-collapse' => '隱藏全部',
+	'wikiamobile-categories-blogs' => '部落格文章',
+	'wikiamobile-sharing-media-image' => '圖片',
+	'wikiamobile-sharing-page-text' => '$1-$2',
+	'wikiamobile-sharing-modal-text' => '$1在$2-$3',
+	'wikiamobile-sharing-email-text' => '嗨，
+您應該檢查一下這些：
+
+$1',
+	'wikiamobile-media-group-footer' => '$1的1',
+	'wikiamobile-unsupported-video-download' => '您的瀏覽器不支援這種影片格式，請嘗試按一下 <a href="$1">這裡</a>',
+	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
+	'wikiamobile-video-not-friendly' => '抱歉，這段影片不能在行動裝置使用。',
+	'wikiamobile-toc-header' => '目錄', # Fuzzy
+	'wikiamobile-ad-label' => '廣告',
+	'wikiamobile-image-not-loaded' => '圖像無法使用',
+	'wikiamobile-page-not-found' => '哎呀！<b>$1</b>不存在。',
+	'wikiasmartbanner-appstore' => '在 App Store 上',
+	'wikiasmartbanner-googleplay' => '在Google Play',
+	'wikiasmartbanner-price' => '免費',
+	'wikiasmartbanner-view' => '查看',
 );

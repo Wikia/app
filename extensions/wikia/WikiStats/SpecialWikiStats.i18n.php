@@ -2146,7 +2146,7 @@ $messages['diq'] = array(
 	'wikistats_hide' => 'Bınımne',
 	'wikistats_wikiname' => 'Name:',
 	'wikistats_wikidbname' => 'DBName:',
-	'wikistats_wikicategory' => 'Kategori:',
+	'wikistats_wikicategory' => 'Kategoriye:',
 	'wikistats_wikiid' => 'ID:',
 	'wikistats_mean' => 'vatış',
 	'wikistats_username' => 'Karber',
@@ -2189,8 +2189,8 @@ $messages['diq'] = array(
 	'wikistats_history_mainstats_value4' => '&gt; 75%',
 	'wikistats_website' => 'Websita',
 	'wikistats_tables' => 'Tabloy',
-	'wikistats_charts' => 'Xizılgey',
-	'wikistats_back_to_prevpage' => 'Peyd bê',
+	'wikistats_charts' => 'Diyagrami',
+	'wikistats_back_to_prevpage' => 'Peyser',
 	'wikistats_trend_value' => 'erc',
 	'wikistats_trend_formula' => 'Formûl',
 	'wikistats_trend_where_text' => 'Kon ca:',
@@ -8778,6 +8778,7 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
@@ -8787,7 +8788,7 @@ $messages['te'] = array(
 	'wikistats_showstats_btn' => 'గణాంకాలను చూపించు',
 	'wikistats_wikia_information' => 'వికియా సమాచారం',
 	'wikistats_panel_close_btn' => 'మూసివేయి',
-	'wikistats_active_useredits' => 'భాషా కలాపం',
+	'wikistats_active_useredits' => 'భాషా వ్యాపకం',
 	'wikistats_active_day' => 'రోజు',
 	'wikistats_active_month' => 'నెల',
 	'wikistats_active_year' => 'సంవత్సరం',

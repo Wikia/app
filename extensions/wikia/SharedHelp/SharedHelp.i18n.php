@@ -389,3 +389,13 @@ $messages['zh-hans'] = array(
 	'sharedhelp-searchprofile' => '帮助页面',
 	'sharedhelp-searchprofile-tooltip' => '搜索帮助页面',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間',
+	'sharedhelp-autotalkcreate-summary' => '討論頁已自動創建',
+	'sharedhelp-searchprofile' => '幫助頁面',
+	'sharedhelp-searchprofile-tooltip' => '搜尋幫助頁面',
+);

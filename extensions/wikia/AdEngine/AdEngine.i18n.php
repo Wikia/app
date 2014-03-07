@@ -208,6 +208,16 @@ $messages['hak'] = array(
 	'adengine-exitstitial-button' => '跳過廣告',
 );
 
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'adengine-exitstitial-title-template' => 'Ke haʻalele nei mai $1...',
+	'adengine-exitstitial-redirecting' => 'E hāʻawi ana kāu polokalamu pūnaewele i ka ʻaoʻao āu  i noi ai ma kahi o kekahi mau kekona.',
+	'adengine-exitstitial-go-back' => 'Makemake e hoʻihoʻi?',
+	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
+);
+
 /** Hungarian (magyar)
  * @author Liteon
  */
@@ -256,6 +266,16 @@ $messages['lb'] = array(
 	'adengine-exitstitial-redirecting' => 'Äre Browser leet Iecht an e puer Sekonnen op déi Säit virun déi Dir gefrot hutt.',
 	'adengine-exitstitial-go-back' => 'Wëllt Dir zréckgoen?',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** Lezghian (лезги)
+ * @author Lezgia
+ */
+$messages['lez'] = array(
+	'adengine-exitstitial-title-template' => 'Куь акъечlза', # Fuzzy
+	'adengine-exitstitial-redirecting' => 'Куь браузерди рукъурда тlaлабнай чъинал са кьве секудла',
+	'adengine-exitstitial-go-back' => 'Кlанзани хквез?',
+	'adengine-exitstitial-button' => 'Лугьунар ахъагъа',
 );
 
 /** لوری (لوری)

@@ -1178,6 +1178,8 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author Jacenty359
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1249,6 +1251,10 @@ $messages['pl'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Dodaj obraz',
+	'manage-wikia-home-stats-visitors-label' => 'Użytkowników miesięcznie',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% odwiedzających z urządzeń mobilnych',
+	'manage-wikia-home-stats-success' => 'Statystyki zostały pomyślnie zaktualizowane',
+	'manage-wikia-home-stats-failure' => 'Dane nie zostały zapisane. Proszę popraw błędy w formularzu i spróbuj ponownie.',
 );
 
 /** Pashto (پښتو)

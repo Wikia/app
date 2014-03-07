@@ -2948,6 +2948,7 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
@@ -2959,7 +2960,7 @@ $messages['te'] = array(
 	'wmu-width' => 'వెడల్పు',
 	'wmu-link' => 'లంకె',
 	'wmu-optional' => '(ఐచ్చికం)',
-	'wmu-prev' => 'క్రితం 8',
+	'wmu-prev' => 'గత 8',
 	'wmu-next' => 'తర్వాతి 8',
 	'wmu-back' => 'వెనక్కి', # Fuzzy
 );
