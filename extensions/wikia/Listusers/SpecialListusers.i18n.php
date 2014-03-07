@@ -41,7 +41,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'listusers-desc' => '{{desc}}
+	'listusers-desc' => '{{desc}}',
 );
 
 $messages['de'] = array(
