@@ -42,7 +42,10 @@
 		adSlotMapConfig,
 
 		queueForLateAds,
-		adConfigForLateAds;
+		adConfigForLateAds,
+		params,
+		param,
+		value;
 
 	// Don't show ads when Sony requests the page
 	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
@@ -189,7 +192,15 @@
 	window.wikiaDartHelper = wikiaDart;
 
 	// Export page level params, so Krux can read them
-	window.kruxDartParams = adLogicPageLevelParams.getPageLevelParams();
+	params = adLogicPageLevelParams.getPageLevelParams();
+	for (param in params) {
+		if (params.hasOwnProperty(param)) {
+			value = params[param];
+			if (value) {
+				window['kruxDartParam_' + param] = value.toString();
+			}
+		}
+	}
 
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
