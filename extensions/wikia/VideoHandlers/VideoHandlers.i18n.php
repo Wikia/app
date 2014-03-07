@@ -306,6 +306,7 @@ $messages['hu'] = array(
 	'videos-add-video-label-name' => 'Írd be a teljes URL-címet valamely támogatott webhelyről.',
 	'videos-add-video-ok' => 'Hozzáadás',
 	'videos-add-video-label-all' => 'Összes megtekintése',
+	'videos-update-edit-summary' => 'Videó frissítve',
 );
 
 /** Armenian (Հայերեն)
