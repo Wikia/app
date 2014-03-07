@@ -50,9 +50,8 @@ class SongScraper extends BaseScraper {
 			'song' => 'name',
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
-/* These fields are also captured but not needed now
 			'Artist' => 'artist',
-			'romanizedSong' => 'romanized_name',
+			'romanizedSong' => 'romanized_song_name',
 			'language' => 'language',
 			'youtube' => 'youtube',
 			'goear' => 'goear',
@@ -60,7 +59,6 @@ class SongScraper extends BaseScraper {
 			'musicbrainz' => 'musicbrainz',
 			'allmusic' => 'allmusic',
 			'download' => 'download',
-*/
 		];
 	}
 

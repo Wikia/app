@@ -1,5 +1,5 @@
 <?php
-
+// FIXME: Move the autoloader
 require_once( dirname(__FILE__) . '/../../../lib/vendor/Solarium/Autoloader.php' );
 
 
@@ -39,12 +39,20 @@ class MockAdapter implements DataBaseAdapter {
  */
 class SolrAdapter implements DataBaseAdapter {
 
-	const MAX_QUEUE_LENGTH = 10;
-	const TYPE_ARTIST = 1;
-	const TYPE_ALBUM = 2;
-	const TYPE_SONG = 3;
+	const MAX_QUEUE_LENGTH = 10; // FIXME: Increase the queue size
+	const TYPE_ARTIST = 'artist';
+	const TYPE_ALBUM = 'album';
+	const TYPE_SONG = 'song';
 
+
+	/**
+	 * @var Solarium_Client
+	 */
 	private $client;
+
+	/**
+	 * @var array Queue array
+	 */
 	private $queue = [];
 
 	/**
