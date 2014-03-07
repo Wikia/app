@@ -1,6 +1,6 @@
 <?php
 
-class WikiaValidatorUsersUrl extends WikiaValidatorToolboxUrl {
+class WikiaValidatorUsersUrl extends WikiaValidatorRestrictiveUrl {
 
 	protected function configMsgs( array $msgs = array() ) {
 		parent::configMsgs($msgs);
