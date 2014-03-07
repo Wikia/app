@@ -21,9 +21,9 @@ class VisualEditorHooks {
 		return $isAvailable;
 	}
 
-	public static function isVisible() {
+	public static function isVisible( $skin ) {
 		global $wgEnableVisualEditorUI;
-		return $wgEnableVisualEditorUI;
+		return $wgEnableVisualEditorUI && self::isAvailable( $skin );
 	}
 
 	public static function onSetup() {
@@ -108,7 +108,7 @@ class VisualEditorHooks {
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// Only do this if the user has VE enabled
-		if ( !self::isAvailable( $skin ) || !self::isVisible() ) {
+		if ( !self::isVisible( $skin ) ) {
 			return true;
 		}
 
@@ -183,7 +183,7 @@ class VisualEditorHooks {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
 		if (
-			( !self::isAvailable( $skin ) || !self::isVisible() ) ||
+			( !self::isVisible( $skin ) ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
 		) {
 			return true;
