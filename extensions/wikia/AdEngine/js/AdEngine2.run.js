@@ -188,6 +188,9 @@
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
 
+	// Export page level params, so Krux can read them
+	window.kruxDartParams = adLogicPageLevelParams.getPageLevelParams();
+
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
 	window.loadCustomAd = function (params) {
