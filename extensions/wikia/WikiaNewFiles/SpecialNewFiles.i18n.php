@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikianewfiles-title' => 'New photos on this wiki',
+	'wikianewfiles-title' => 'New files on this wiki',
 	'wikianewfiles-desc' => 'Extends a [[Special:NewFiles|special page]] to override some of the header formatting',
 	'wikianewfiles-uploadby' => 'by {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Posted in',

@@ -107,7 +107,8 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	/**
 	 * Convenience method for getting a value from the request object
 	 * @param string $key
-	 * @param string $value
+	 * @param string $default
+	 * @return mixed
 	 */
 
 	protected function getVal($key, $default = null) {

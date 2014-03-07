@@ -454,9 +454,10 @@ EOT;
 
 		// $tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
 		// FIXME: we need to remove head items - i.e. <meta> tags
-		$headScripts = str_replace($this->wg->out->getHeadItems(), '', $tpl->data['headscripts']);
-		// ...and top scripts too (BugId: 32747)
-		$headScripts = str_replace($this->topScripts, '', $headScripts);
+		$remove = $this->wg->out->getHeadItemsArray();
+		$remove[ ] = $this->topScripts;
+		array_walk( $remove, 'trim' );
+		$headScripts = str_replace( $remove, '', $tpl->data[ 'headscripts' ] );
 
 		$this->jsFiles = $headScripts . $jsLoader . $this->jsFiles;
 
