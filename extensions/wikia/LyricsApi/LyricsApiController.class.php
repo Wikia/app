@@ -19,6 +19,15 @@ class LyricsApiController extends WikiaController {
 		$this->lyricsApiHandler = new MockLyricsApiHandler();
 	}
 
+	private function getData( $params, $method ) {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
+
+		$this->response->setVal( 'result', $results );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+	}
+
 	/**
 	 * @desc Gets information about given artist
 	 *
@@ -28,17 +37,13 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArtist() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
 		$artist = $this->wg->Request->getVal( self::PARAM_ARTIST );
 
 		if( empty( $artist ) ) {
 			throw new InvalidParameterApiException( self::PARAM_ARTIST );
 		}
 
-		$results = $this->lyricsApiHandler->getArtist( $artist );
-		$this->response->setVal( 'result', $results );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->getData( [ $artist ], 'getArtist' );
 	}
 
 	/**
@@ -52,8 +57,6 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getAlbum() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
 		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
 		$albumName = $this->wg->Request->getVal( self::PARAM_ALBUM );
 
@@ -65,9 +68,7 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_ALBUM );
 		}
 
-		$album = $this->lyricsApiHandler->getAlbum( $artistName, $albumName );
-		$this->response->setVal( 'result', $album );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->getData( [ $artistName, $albumName ], 'getAlbum' );
 	}
 
 	/**
@@ -82,8 +83,6 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getSong() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-
 		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
 		$albumName = $this->wg->Request->getVal( self::PARAM_ALBUM );
 		$songName = $this->wg->Request->getVal( self::PARAM_SONG );
@@ -100,9 +99,7 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_SONG );
 		}
 
-		$song = $this->lyricsApiHandler->getSong( $artistName, $albumName, $songName );
-		$this->response->setVal( 'result', $song );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->getData( [ $artistName, $albumName, $songName ], 'getSong' );
 	}
 
 	/**
