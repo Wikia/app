@@ -103,6 +103,25 @@ class LyricsApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Re-used in other public methods functionality to get a query param from the request
+	 *
+	 * @requestParam String $query searching phrase
+	 *
+	 * @return String
+	 *
+	 * @throws InvalidParameterApiException
+	 */
+	private function getQueryFromRequest() {
+		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
+
+		if( empty( $query ) ) {
+			throw new InvalidParameterApiException( self::PARAM_QUERY );
+		}
+
+		return $query;
+	}
+
+	/**
 	 * @desc Searches for an artist
 	 *
 	 * @requestParam String $query searching phrase
@@ -112,16 +131,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchArtist() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$artists = $this->lyricsApiHandler->searchArtist( $query );
-		$this->response->setVal( 'result', $artists );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'searchArtist' );
 	}
 
 	/**
@@ -134,16 +145,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchSong() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$songs = $this->lyricsApiHandler->searchSong( $query );
-		$this->response->setVal( 'result', $songs );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'searchSong' );
 	}
 
 	/**
@@ -156,16 +159,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchLyrics() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$lyrics = $this->lyricsApiHandler->searchLyrics( $query );
-		$this->response->setVal( 'result', $lyrics );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'searchLyrics' );
 	}
 
 	/**
@@ -178,16 +173,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function suggestArtist() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$artists = $this->lyricsApiHandler->suggestArtist( $query );
-		$this->response->setVal( 'result', $artists );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'suggestArtist' );
 	}
 
 	/**
@@ -200,16 +187,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function suggestAlbum() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$albums = $this->lyricsApiHandler->suggestAlbum( $query );
-		$this->response->setVal( 'result', $albums );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'suggestAlbum' );
 	}
 
 	/**
@@ -222,16 +201,8 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function suggestSong() {
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		$songs = $this->lyricsApiHandler->suggestSong( $query );
-		$this->response->setVal( 'result', $songs );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$query = $this->getQueryFromRequest();
+		$this->getData( [ $query ], 'suggestSong' );
 	}
 
 }
