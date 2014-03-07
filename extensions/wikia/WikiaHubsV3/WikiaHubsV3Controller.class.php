@@ -167,7 +167,7 @@ class WikiaHubsV3Controller extends WikiaController {
 
 	protected function initVertical() {
 		global $wgCityId;
-		$this->verticalId = $this->model->getVerticalId($wgCityId);
+		$this->verticalId = HubService::getCanonicalCategoryId($wgCityId);
 		$this->cityId = $wgCityId;
 		$this->verticalName = $this->getContext()->getTitle()->getText();
 		$this->canonicalVerticalName = str_replace(' ', '', $this->model->getCanonicalVerticalNameById($this->cityId));
