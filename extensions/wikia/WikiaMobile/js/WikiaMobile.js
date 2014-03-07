@@ -1,5 +1,6 @@
 require( ['wikia.querystring', require.optional( 'wikia.cookies' ), 'track', 'wikia.window', 'jquery' ], function ( qs, cookies, track, window, $ ) {
 	'use strict';
+
 	var d = window.document;
 
 	//used to handle close tracking on Read More section

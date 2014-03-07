@@ -3,6 +3,7 @@
 require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
 function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
+
 	//private
 	var open = 'open',
 		active = 'active',
@@ -148,9 +149,6 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @desc Handles appending the toc to a side menu
 	 */
 	function init () {
-		if ( show ) {
-			$toc.removeClass( 'hidden' );
-		}
 		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
 				onClose( 'header' );
