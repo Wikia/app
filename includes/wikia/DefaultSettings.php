@@ -446,6 +446,8 @@ $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorFileTitle"       ] = "$IP/includes/wikia/validators/WikiaValidatorFileTitle.class.php";
 $wgAutoloadClasses[ "WikiaValidatorImageSize"       ] = "$IP/includes/wikia/validators/WikiaValidatorImageSize.class.php";
 $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/validators/WikiaValidatorDependent.class.php";
+$wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
+$wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 
@@ -1231,6 +1233,12 @@ $wgHighValueCountries = null;
 $wgAdVideoTargeting = false;
 
 /**
+ * @name $wgAdDriverUseGptMobile
+ * Enables experimental AdEngine on mobile skin (for GPT)
+ */
+$wgAdDriverUseGptMobile = false;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1260,8 +1268,28 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 /**
  * @name $wgOasisResponsive
  * Enables the Oasis responsive layout styles
+ * Null means enabled on all and disabled for languages defined in $wgOasisResponsiveDisabledInLangs
  */
 $wgOasisResponsive = null;
+
+/**
+ * @name $wgOasisResponsiveDisabledInLangs
+ * Disables the Oasis responsive layout in those languages
+ */
+$wgOasisResponsiveDisabledInLangs = ['de'];
+
+/**
+ * @name $wgOasisResponsiveLimited
+ * Enables the limited version of Oasis responsive layout
+ * Null means disabled on all and enabled for languages defined in $wgOasisResponsiveLimitedInLangs
+ */
+$wgOasisResponsiveLimited = null;
+
+/**
+ * @name $wgOasisResponsiveLimitedInLangs
+ * Enables the limited version of Oasis responsive layout on given languages
+ */
+$wgOasisResponsiveLimitedInLangs = [];
 
 /**
  * @name $wgDisableReportTime

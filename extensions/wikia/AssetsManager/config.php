@@ -592,7 +592,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_js_ads'] = array(
+$config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -612,6 +612,31 @@ $config['wikiamobile_js_ads'] = array(
 		'//resources/wikia/modules/geo.js',
 		'//extensions/wikia/WikiaMobile/js/ads.js',
 		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
+	)
+);
+
+$config['wikiamobile_ads_gpt_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		// Modules
+		'//resources/wikia/modules/lazyqueue.js',
+
+		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
+		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdProviderGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/SlotTracker.js',
+		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+
+		// Video ads
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+
+		// Run!
+		'//extensions/wikia/WikiaMobile/js/ad_slots2.js',
 	)
 );
 

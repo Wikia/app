@@ -1035,10 +1035,38 @@ Detaljer: $2',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'lightbox_details_tooltip' => 'ఫొటో వివరాలను చూపించు',
+	'lightbox-forum' => 'వేదిక',
+	'lightbox-standard-link' => 'సాధారణ లింకు',
+	'lightbox-blog-link' => 'బ్లాగు లింకు',
+	'lightbox-send' => 'పంపించు',
+	'lightbox-share-description' => '$2 లో $1 లోని ఫొటో',
+	'lightbox-share-email-subject' => '$1 వికియాలో మీకో ఫొటో పంపించారు',
+	'lightbox-share-email-body' => 'హలో,
+
+ఎవరో వికియాలో మీకో ఫొటో చూపించ దలచారు, చూడండి:
+
+$1
+
+- వికియా బృందం',
+	'lightbox-share-button-email' => 'ఈమెయిలు',
+	'lightbox-share-button-www' => 'పంచుకోండి',
+	'lightbox-share-button-embed' => 'ఇముడ్చు',
+	'lightbox-share-email-label' => 'ఈ బొమ్మను మిత్రునికి పంపించండి',
+	'lightbox-share-email-page-label' => 'ఈ పేజీని మిత్రునికి పంపించండి',
 	'lightbox-share-email-page-label-address' => 'ఈమెయిలు చిరునామా',
+	'lightbox-share-email-ok-caption' => 'ధృవీకరణ',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|ఈమెయిలును|ఈమెయిళ్ళను}} పంపించాం.',
+	'lightbox-share-email-error-caption' => 'లోపం',
+	'lightbox-share-email-error-content' => '{{PLURAL:$1|ఈమెయిలు|ఈమెయిళ్ళను}} పంపించడంలో లోపం.
+వివరాలు: $2',
+	'lightbox-share-email-error-login' => 'ఈమెయిళ్ళు పంపాలంటే మీరు లాగిన్ అవాలి',
+	'lightbox-share-email-error-noaddress' => 'చిరునామాలేమీ ఇవ్వలేదు.',
+	'lightbox-visit-the-wiki' => 'వికీకి వెళ్ళండి:',
 );
 
 /** Tagalog (Tagalog)

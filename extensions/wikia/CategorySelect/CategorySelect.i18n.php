@@ -1212,14 +1212,28 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
+	'categoryselect-desc' => 'పేజీ యావత్తునూ మార్చకుండా, పేజీలోని వర్గాలను మార్చేందుకు ఇంటరుఫేసును చూపిస్తుంది',
+	'categoryselect-button-add' => 'వర్గాన్ని చేర్చు',
 	'categoryselect-button-cancel' => 'రద్దుచేయి',
 	'categoryselect-button-save' => 'భద్రపరచు',
-	'categoryselect-category-edit' => 'వర్గాల ఎంపికలు', # Fuzzy
+	'categoryselect-category-add' => 'వర్గాన్ని చేర్చండి...',
+	'categoryselect-category-edit' => 'వర్గాన్ని సరిదిద్దండి',
+	'categoryselect-category-remove' => 'వర్గాన్ని తొలగించు',
+	'categoryselect-edit-summary' => 'వర్గాలను చేరుస్తున్నాం',
+	'categoryselect-error-article-doesnt-exist' => 'పేజీ [id=$1] లేనే లేదు.',
+	'categoryselect-error-category-name-length' => 'వర్గం పేరు యొక్క గరిష్ఠ నిడివిని చేరుకుంది.',
 	'categoryselect-error-db-locked' => 'డేటాబేసు లాక్‌చెయ్యబడింది.',
+	'categoryselect-error-duplicate-category-name' => 'వర్గం "$1" ఈసరికే ఉంది.',
+	'categoryselect-error-edit-abort' => 'మీరు చేయ ప్రయత్నించిన మార్పులను ఓ పొడిగింత కొక్కెం అడ్డుకుంది.',
+	'categoryselect-error-empty-category-name' => 'ఓ వర్గం పేరును ఇవ్వండి.',
+	'categoryselect-error-user-rights' => 'ఈ పని చేసేందుకు వాడుకరికి అనుమతి లేదు.',
+	'categoryselect-modal-category-name' => 'వర్గం పేరును ఇవ్వండి:',
+	'categoryselect-tooltip-add' => 'అయ్యాక, ఎంటరు/రిటర్న్ కీని నొక్కండి',
 );
 
 /** Tagalog (Tagalog)

@@ -7888,13 +7888,187 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'founderemails-desc' => 'వ్యవస్థాపకులకు తమ వికీలో జరిగిన మార్పుల గురించి తెలియజెయ్యడంలో తోడ్పడుతుంది',
+	'tog-founderemailsenabled' => 'ఇతరులు ఏం చేస్తున్నారో నాకు ఈమెయిలు చెయ్యి (వ్యవస్థాపకులకు మాత్రమే)',
 	'founderemails-email-user-registered-subject' => '$WIKINAME లో ఎవరో చేరారు',
-	'founderemails-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?', # Fuzzy
-	'founderemails-answers-email-10-days-passed-subject' => 'మీ వికీలో ఏమి జరుగుతూంది?',
-	'founderemails-email-views-digest-signature' => 'వికియా జట్టు',
+	'founderemails-email-user-registered-body' => 'హలో $USERNAME,
+
+అభినందనలు! $EDITORNAME ఇప్పుడే $WIKINAME లో చేరారు.
+
+ఈ సందర్భంగా వారిని మీ వికీలోకి ఆహ్వానించి అక్కడ మార్పుచేర్పులు చేసేలా వారిని ప్రోత్సహించండి. ఎంత ఎక్కువమంది ఉంటే, అంత ఊపు. ఎంత ఊపు ఉంటే అంత వేగంగా వికీ విస్తరిస్తుంది.
+
+$EDITORPAGEURL
+
+వికియా బృందం',
+	'founderemails-email-user-registered-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-user-registered-headline' => 'అభినందనలు! $EDITORNAME ఇప్పుడే $WIKINAME లో చేరారు.',
+	'founderemails-email-user-registered-content' => 'ఈ సందర్భంగా వాళ్ళను మీ వికీకి ఆహ్వానించి మార్పుచేర్పులు చేసేందుకు ప్రోత్సహించండి. ఎంత మంది ఉంటే అంత ఊపు వస్తుంది, అంత త్వరగా మీ వికీ విస్తరిస్తుంది.',
+	'founderemails-email-user-registered-signature' => 'వికియా బృందం',
+	'founderemails-email-user-registered-button' => 'వారిని ఆహ్వానించండి',
+	'founderemails-email-user-registered-body-HTML' => '$USERNAME గారూ,<br /><br />
+$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-email-0-days-passed-subject' => 'వికియాకు స్వాగతం!',
+	'founderemails-email-0-days-passed-body-HTML' => '<strong>$WIKINAME</strong> ను సృష్టించిన సందర్భంగా మిమ్మల్ని అభినందిస్తున్నాం - మీరిప్పుడు వికియా సముదాయంలో ఒక భాగం!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-email-3-days-passed-subject' => 'మీ వికీ పురోగతి ఎలా ఉంది',
+	'founderemails-email-3-days-passed-body-HTML' => '$USERNAME గారూ,<br /><br />
+మీ వికీనిమొదలుపెట్టి కొన్ని రోజులైంది కాబట్టి, ఇక్కడ చెయ్యదగిన మరికొన్ని పనుల గురించి మీకు చెప్పాలనుకుంటున్నాం.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-email-10-days-passed-subject' => 'దశ దినోత్సవ శుభాకాంక్షలు!',
+	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME లో కొత్త మార్పుచేర్పు జరిగింది!',
+	'founderemails-email-page-edited-reg-user-first-edit-body' => '$USERNAME గారూ,
+
+సరే! $EDITORNAME, $WIKINAME లో తమ మొట్టమొదటి మార్పుచేర్పు చేసారు.
+
+$PAGETITLE కి వెళ్ళి వారు చేసిన మార్పు ఏమిటో చూడండి.
+
+$PAGEURL
+
+వికియా బృందం',
+	'founderemails-email-first-edit-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-first-edit-headline' => 'సరే! $EDITORNAME ఇప్పుడే $WIKINAME లో తమ మొట్తమొదటి మార్పుచేర్పు చేసారు.',
+	'founderemails-email-first-edit-content' => '$PAGETITLE కి వెళ్ళి వాళ్ళేం రాసారో చూడండి.',
+	'founderemails-email-first-edit-signature' => 'వికియా బృందం',
+	'founderemails-email-first-edit-button' => 'దాన్ని చూడండి!',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '$USERNAME గారూ,<br /><br />
+నమోదైన వాడుకరి $EDITORNAME మీ వికీలో మొదటిసారిగా మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME లో కొత్త మార్పుచేర్పు!',
+	'founderemails-email-page-edited-reg-user-body' => '$USERNAME గారూ,
+
+$EDITORNAME, $WIKINAME లోని $PAGETITLE లో మరో మార్పుచేర్పు చేసారు.
+
+$PAGETITLE కు వెళ్ళి వారు చేసిన మార్పు ఏమిటో చూడండి.
+
+$PAGEURL
+
+వికియా బృందం',
+	'founderemails-email-general-edit-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-general-edit-headline' => '$EDITORNAME, $WIKINAME లోని $PAGETITLE లో మరో మార్పుచేర్పు చేసారు.',
+	'founderemails-email-general-edit-content' => '$PAGETITLE కి వెళ్ళి వాళ్ళేం చేసారో చూడండి.',
+	'founderemails-email-general-edit-signature' => 'వికియా బృందం',
+	'founderemails-email-general-edit-button' => 'దాన్ని చూడండి!',
+	'founderemails-email-anon-edit-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-anon-edit-signature' => 'వికియా బృందం',
+	'founderemails-email-anon-edit-button' => 'దాన్ని చూడండి!',
+	'founderemails-email-page-edited-anon-body-HTML' => '$USERNAME గారూ,<br /><br />
+ఎవరో మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి <a href="$MYHOMEURL">వెళ్ళి</a> ఏం మార్చారో చూడకూడదూ?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-user-registered-subject' => 'మీ ప్రజ వికీలో ఎవరో ఓ ఖాతాను నమోదు చేసుకున్నారు!',
+	'founderemails-answers-email-user-registered-body' => '$USERNAME గారూ,
+$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి చర్చాపేజీకి ($EDITORTALKPAGEURL) వెళ్ళి పలకరించకూడదూ?
+
+-- వికియా బృందం',
+	'founderemails-answers-email-user-registered-body-HTML' => '$USERNAME గారూ,<br /><br />
+$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-0-days-passed-subject' => 'ప్రజ వికియాకు స్వాగతం!',
+	'founderemails-answers-email-0-days-passed-body' => '$WIKINAME ను సృష్టించినందుకు అభినందనలు - మీరిప్పుడు వికియా సముదాయంలో భాగమయ్యారు!
+
+-- వికియా బృందం',
+	'founderemails-answers-email-0-days-passed-body-HTML' => '<strong>$WIKINAME</strong> ను సృష్టించిన సందర్భంగా మిమ్మల్ని అభినందిస్తున్నాం - మీరిప్పుడు వికియా సముదాయంలో ఒక భాగం!<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-3-days-passed-body' => '$USERNAME గారూ,
+
+మీ వికీనిమొదలుపెట్టి కొన్ని రోజులైంది కాబట్టి, ఇక్కడ చెయ్యదగిన మరికొన్ని పనుల గురించి మీకు చెప్పలనుకుంటున్నాం.
+
+-- వికియా బృందం',
+	'founderemails-answers-email-3-days-passed-body-HTML' => '$USERNAME గారూ,<br /><br />
+మీ వికీనిమొదలుపెట్టి కొన్ని రోజులైంది కాబట్టి, ఇక్కడ చెయ్యదగిన మరికొన్ని పనుల గురించి మీకు చెప్పాలనుకుంటున్నాం.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-10-days-passed-subject' => 'మీ వికీలో ఏం జరుగుతోంది?',
+	'founderemails-answers-email-10-days-passed-body' => '$USERNAME గారూ,
+
+మీరు వికియాలో వికీని మొదలుపెట్టి కొద్ది రోజులైపోయింది - అది బాగా నడుస్తున్నదని భావిస్తున్నాం! మీ వికీని మీ ఇంటిలాగా మార్చుకునేందుకు అంతిమంగా మీకు మరికొన్ని చిట్కాలు చెప్పాలనుకుంటున్నాం.
+
+-- వికియా బృందం',
+	'founderemails-answers-email-10-days-passed-body-HTML' => '$USERNAME గారూ,<br /><br />
+మీరు వికియాలో వికీని మొదలుపెట్టి కొద్ది రోజులైపోయింది - అది బాగా నడుస్తున్నదని భావిస్తున్నాం! మీ వికీని మీ ఇంటిలాగా మార్చుకునేందుకు అంతిమంగా మీకు మరికొన్ని చిట్కాలు చెప్పాలనుకుంటున్నాం.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'నమోదైన వాడుకరి మొదటిసారిగా మీ సైటును మార్చారు!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '$USERNAME గారూ,
+నమోదైన వాడుకరి $EDITORNAME మీ వికీలో మొదటిసారిగా మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి వారి చర్చాపేజీకి ($EDITORTALKPAGEURL) వెళ్ళి పలకరించకూడదూ?
+
+-- వికియా బృందం',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => '$USERNAME గారూ,<br /><br />
+నమోదైన వాడుకరి $EDITORNAME మీ వికీలో మొదటిసారిగా మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'నమోదైన వాడుకరి మీ సైటును మార్చారు!',
+	'founderemails-answers-email-page-edited-reg-user-body' => '$USERNAME గారూ,
+
+నమోదైన వాడుకరి $EDITORNAME మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి వారి చర్చాపేజీకి ($EDITORTALKPAGEURL) వెళ్ళి పలకరించకూడదూ?
+
+-- వికియా బృందం',
+	'founderemails-answers-email-page-edited-reg-user-body-HTML' => '$USERNAME గారూ,<br /><br />
+నమోదైన వాడుకరి $EDITORNAME మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-answers-email-page-edited-anon-subject' => 'మీ సైటులో ఎవరో మార్పుచేర్పు చేసారు!',
+	'founderemails-answers-email-page-edited-anon-body' => '$USERNAME గారూ,
+ఎవరో మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి $MYHOMEURL కి వెళ్ళి ఏం మార్చారో చూడకూడదూ?
+
+-- వికియా బృందం',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => '$USERNAME గారూ,<br /><br />
+ఎవరో మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి <a href="$MYHOMEURL">వెళ్ళి</a> ఏం మార్చారో చూడకూడదూ?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-lot-happening-subject' => '$WIKINAME వేడెక్కుతోంది!',
+	'founderemails-lot-happening-body-HTML' => '$USERNAME గారూ,<br /><br />
+మీ వికీలో ఇవ్వాళ చాలా హడావుడగా ఉంది! $MYHOMEURL కి వెళ్ళి ఏం జరుగుతోందో చూడండి.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
+	'founderemails-email-lot-happening-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-lot-happening-headline' => 'ఇవ్వాళ $WIKINAME లో బాగా హడావుడిగా ఉంది, అభినందనలు!',
+	'founderemails-email-lot-happening-signature' => 'వికియా బృందం',
+	'founderemails-email-lot-happening-button' => 'కార్యకలాపాలను చూడండి',
+	'founderemails-email-footer-line1' => 'వికియాలో తాజాగా ఏం జరుగుతోందో తెలుసుకోడానికి, <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> కు వెళ్ళండి',
+	'founderemails-email-0-day-heading' => 'మిమ్మల్ని కలిసినందుకు ఆనందంగా ఉంది $USERNAME గారూ,',
+	'founderemails-email-0-day-congratulations' => '$HDWIKINAME సృష్టించినందుకు అభినందనలు!',
+	'founderemails-email-0-day-tips-heading' => 'ముందుకు దూకేందుకు కొన్ని చిట్కాలు మీకోసం:',
+	'founderemails-email-0-day-addpages-heading' => 'పేజీలను చేర్చండి.',
+	'founderemails-email-0-day-addpages-button' => 'ఓ పేజీని చేర్చండి',
+	'founderemails-email-0-day-addphotos-heading' => 'ఫొటోలను చేర్చండి.',
+	'founderemails-email-0-day-addphotos-button' => 'ఓ ఫొటోను చేర్చు',
+	'founderemails-email-0-day-customizetheme-heading' => 'మీ థీమును అనుకూలీకరించండి.',
+	'founderemails-email-0-day-customizetheme-button' => 'అనుకూలీకరించు',
+	'founderemails-email-0-day-wikiahelps-signature' => 'మీ వికీనిర్మాణం శుభమగుగాక!<br />వికియా బృందం',
+	'founderemails-email-3-day-editmainpage-heading' => 'మీ మొదటిపేజీని తీర్చిదిద్దండి.',
+	'founderemails-email-3-day-editmainpage-button' => 'తీర్చిదిద్దండి',
+	'founderemails-email-3-day-addphotos-heading' => 'ఇంకా కాసిని ఫొటోలను చేర్చండి.',
+	'founderemails-email-3-day-addphotos-button' => 'ఫొటోలను చేర్చండి',
+	'founderemails-email-3-day-explore-heading' => 'ఉత్తేజం పొందండి.',
+	'founderemails-email-3-day-explore-button' => 'శోధించండి',
+	'founderemails-email-3-day-wikiahelps-signature' => 'మీరు చేస్తున్న గొప్ప పనిని కొనసాగించండి!<br />వికియా బృందం',
+	'founderemails-email-10-day-heading' => 'ఎలా సాగుతోంది $USERNAME గారూ?',
+	'founderemails-email-10-day-congratulations' => 'ఒహ్హో, కాలం పరిగెడుతుంది! మీరు $HDWIKINAME మొదలుపెట్టి అప్పుడే పది రోజులైపోయింది.',
+	'founderemails-email-10-day-share-heading' => 'పంచుకోమని అమ్మ మీకు చెప్పలేదూ?',
+	'founderemails-email-10-day-email-heading' => 'ఈమెయిలు శక్తిని వాడుకోండి',
+	'founderemails-email-10-day-join-heading' => 'ఇలాంటి వెబ్‍సైట్లతో జతకట్టండి',
+	'founderemails-email-10-day-wikiahelps-signature' => 'మీరు చేస్తున్న గొప్ప పనిని కొనసాగించండి!<br />వికియా బృందం',
+	'founderemails-email-views-digest-subject' => '$WIKINAME లో నేటి సందర్శనలు',
+	'founderemails-email-views-digest-greeting' => 'ఏమండీ $USERNAMEగారూ,',
+	'founderemails-email-views-digest-headline' => 'ఈరోజు $WIKINAME ను $1 {{PLURAL:$1|ఒక్కరు|మంది}} చూసారు.',
+	'founderemails-email-views-digest-content' => 'కొత్త విశేషాలను జోడిస్తూ పొండి. మీ వికీకి ప్రాచుర్యం కల్పించండి. మరింత మంది చదివేలా, మార్పుచేర్పులు చేసేలా, ప్రచారం చేసేలా ప్రోత్సహించండి.',
+	'founderemails-email-views-digest-signature' => 'వికియా బృందం',
+	'founderemails-email-views-digest-button' => 'మరిన్ని పేజీలను చేర్చండి',
+	'founderemails-email-complete-digest-subject' => '$WIKINAME లో ఇటీవలి కార్యకలాపాలు',
+	'founderemails-email-complete-digest-greeting' => 'హలో $USERNAME,',
+	'founderemails-email-complete-digest-headline' => 'ఇది $WIKINAME లో మీ కార్యకలాపాలు చేసుకునే సమయం.',
+	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|వ్యక్తి|మంది}} మీ వికీని చూసారు.',
+	'founderemails-email-complete-digest-content-heading2' => '$1 {{PLURAL:$1|మార్పుచేర్పు|మార్పుచేర్పులు}} చేసారు.',
+	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|వ్యక్తి|వ్యక్తులు}} మీ వికీలో చేరారు.',
+	'founderemails-email-complete-digest-signature' => 'వికియా బృందం',
+	'founderemails-email-complete-digest-button' => 'వికీ కార్యకలాపాలకు వెళ్ళండి',
+	'founderemails-pref-joins' => '$1 లో ఎవరైనా చేరినపుడు నాకు ఈమెయిలు పంపు',
+	'founderemails-pref-edits' => '$1 లో ఎవరైనా మార్పుచేర్పులు చేసినపుడు నాకు ఈమెయిలు పంపు',
+	'founderemails-pref-views-digest' => '$1 ను ఎన్నిసార్లు చూసారో ప్రతిరోజూ నాకు ఈమెయిలు పంపు',
+	'founderemails-pref-complete-digest' => '$1 లో కార్యకలాపాల గురించి నాకు ప్రతిరోజూ సంగ్రహం పంపించు',
+	'founderemails-pref-joins-v2' => '...ఎవరైనా చేరితే',
+	'founderemails-pref-edits-v2' => '...ఎవరైనా మార్పుచేర్పులు చేస్తే',
+	'founderemails-pref-views-digest-v2' => '...రోజువారీ సందర్శనల సారాంశం సిద్ధమైంది',
+	'founderemails-pref-complete-digest-v2' => '...రోజువారీ చేరికలు, మార్పుచేర్పులు, సందర్శనల సంగ్రహం సిద్ధమైంది',
 );
 
 /** Tagalog (Tagalog)

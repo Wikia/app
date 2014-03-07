@@ -233,3 +233,12 @@ $messages['zh-hans'] = array(
 	'wikiastyleguide-dropdown-select-all' => '全选',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1与$2以及更多',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiastyleguide-dropdown-all' => '全部',
+	'wikiastyleguide-dropdown-select-all' => '全選',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1和$2以及更多',
+);

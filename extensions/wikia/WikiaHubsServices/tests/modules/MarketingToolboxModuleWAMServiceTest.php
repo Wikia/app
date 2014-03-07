@@ -126,7 +126,6 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 			'expectedData' => [
 				'wamPageUrl' => 'http://www.wikia.com/WAM',
 				'verticalName' => 'Video Games',
-				'canonicalVerticalName' => 'VideoGames',
 				'ranking' => [
 					[
 						'rank' => 1,

@@ -112,8 +112,10 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
+	'minieditor-specialpage-title' => 'MiniEditorin Demosivu',
 	'minieditor-new-heading' => 'Luo uusi viesti',
 	'minieditor-placeholder-new' => 'Kirjoita viestin teksti tähän',
 	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
