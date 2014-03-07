@@ -23,6 +23,17 @@ class SearchApiController extends WikiaApiController {
 
 	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
+	public function getKeyword() {
+
+		$query = $this->request->getArray( "q", null );
+		$mode = $this->request->getVal( "mode", "default" );
+
+		$kwSearch = new Wikia\Search\KeywordSearch();
+		$res = $kwSearch->getResults( $query, $mode );
+
+		$this->response->setVal('urls', $res);
+	}
+
 	/**
 	 * @var \WikiDetailsService|null
 	 */
