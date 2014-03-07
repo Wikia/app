@@ -9,9 +9,25 @@ class VideosModule extends WikiaModel {
 	const GET_THUMB = true;
 
 	const LIMIT_TRENDING_VIDEOS = 20;
+	const CACHE_TTL = 3600;
+	const CACHE_VERSION = 2;
 
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+
+	// list of page categories for premium videos [ array( categoryId => name ) ]
+	protected static $pageCategories = [
+		WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
+	];
+
+	// map category id to search vertical
+	protected static $searchCategories = [
+		WikiFactoryHub::CATEGORY_ID_GAMING        => Wikia\Search\Config::FILTER_CAT_VIDEOGAMES,
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => Wikia\Search\Config::FILTER_CAT_ENTERTAINMENT,
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => Wikia\Search\Config::FILTER_CAT_LIFESTYLE,
+	];
 
 	/**
 	 * Get related videos (article related videos and wiki related videos)
@@ -20,8 +36,9 @@ class VideosModule extends WikiaModel {
 	 * @return array $videos - list of related videos
 	 */
 	public function getRelatedVideos( $articleId, $numRequired ) {
-		// get article related videos
-		$videos = $this->getArticleRelatedVideos( $articleId, $numRequired );
+		// Get article related videos
+		// @TODO find a better way to find article related videos, until then, skip this.
+		$videos = [];  //$this->getArticleRelatedVideos( $articleId, $numRequired );
 
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		$numRequired = $numRequired - count( $videos );
@@ -41,20 +58,37 @@ class VideosModule extends WikiaModel {
 	public function getArticleRelatedVideos( $articleId, $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$service = new VideoEmbedToolSearchService();
-		$service->setLimit( $this->getVideoLimit( $numRequired ) );
-		$response = $service->getSuggestedVideosByArticleId( $articleId );
+		$memcKey = wfMemcKey( 'videomodule', 'article_related_videos', self::CACHE_VERSION, $articleId );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$service = new VideoEmbedToolSearchService();
+			$service->setLimit( $this->getVideoLimit( $numRequired ) );
 
-		$videos = [];
-		foreach ( $response['items'] as $video ) {
-			if ( count( $videos ) >= $numRequired ) {
-				break;
+			$category = $this->getSearchVertical();
+			if ( !empty( $category ) ) {
+				$service->getConfig()->setFilterQueryByCode( $category );
 			}
 
-			$title = Title::newFromText( $video['title'], NS_FILE );
-			if ( $title instanceof Title && $this->addToList( $videos, $title->getDBkey() ) ) {
-				$this->existingVideos[$title->getDBkey()] = true;
+			$response = $service->getSuggestedVideosByArticleId( $articleId );
+
+			$videos = [];
+			foreach ( $response['items'] as $video ) {
+				if ( count( $videos ) >= $numRequired ) {
+					break;
+				}
+
+				$title = Title::newFromText( $video['title'], NS_FILE );
+				if ( $title instanceof Title && $this->addToList( $videos, $title->getDBkey() ) ) {
+					$this->existingVideos[$title->getDBkey()] = true;
+				}
 			}
+
+			// get video detail
+			if ( !empty( $videos ) ) {
+				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -71,23 +105,35 @@ class VideosModule extends WikiaModel {
 	public function getWikiRelatedVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		// Strip Wiki off the end of the wiki name if it exists
-		$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			// Strip Wiki off the end of the wiki name if it exists
+			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
-		$params = [
-			'title' => $wikiTitle,
-			'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
-		];
-		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTitle', $params )->getData();
+			$params = [
+				'defaultTopic' => $wikiTitle,
+				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+			];
 
-		$videos = [];
-		foreach ( $videoResults as $video ) {
-			if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
-				break;
+			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
+
+			$videos = [];
+			foreach ( $videoResults as $video ) {
+				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+					break;
+				}
+
+				$videoTitle = preg_replace( '/.+\/File:/', '', urldecode( $video['url'] ) );
+				$this->addToList( $videos, $videoTitle );
 			}
 
-			$videoTitle = preg_replace( '/.+\/File:/', '', urldecode( $video['url'] ) );
-			$this->addToList( $videos, $videoTitle );
+			// get video detail
+			if ( !empty( $videos ) ) {
+				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -103,25 +149,35 @@ class VideosModule extends WikiaModel {
 	public function getVerticalVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$videos = [];
+		$category = $this->getWikiVertical();
+		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$params = [
+				'controller' => 'VideoHandler',
+				'method'     => 'getVideoList',
+				'sort'       => 'trend',
+				'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'category'   => $category,
+			];
 
-		$params = [
-			'controller' => 'VideoHandler',
-			'method'     => 'getVideoList',
-			'sort'       => 'trend',
-			'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
-			'category'   => $this->getWikiVertical(),
-		];
+			$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 
-		$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
-		if ( !empty( $response['videos'] ) ) {
-			foreach ( $response['videos'] as $video ) {
-				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
-					break;
+			$videos = [];
+			if ( !empty( $response['videos'] ) ) {
+				foreach ( $response['videos'] as $video ) {
+					if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+						break;
+					}
+
+					$this->addToList( $videos, $video['title'] );
 				}
 
-				$this->addToList( $videos, $video['title'] );
+				// get video detail
+				$videos = $this->getVideosDetail( $videos );
 			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -136,18 +192,41 @@ class VideosModule extends WikiaModel {
 	public function getWikiVertical() {
 		wfProfileIn( __METHOD__ );
 
-		$category = [];
+		$name = '';
 
 		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
 		if ( !empty( $categoryId ) ) {
 			// get vertical id
 			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
 
-			// get category name
-			$category = WikiFactoryHub::getInstance()->getCategory( $verticalId );
+			if ( array_key_exists( $verticalId, self::$pageCategories ) ) {
+				$name = self::$pageCategories[$verticalId];
+			}
 		}
 
-		$name = empty( $category['name'] ) ? '' : $category['name'];
+		wfProfileOut( __METHOD__ );
+
+		return $name;
+	}
+
+	/**
+	 * Get vertical name recognized by search from wiki's category ID
+	 * @return string $name - search vertical
+	 */
+	public function getSearchVertical() {
+		wfProfileIn( __METHOD__ );
+
+		$name = '';
+
+		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		if ( !empty( $categoryId ) ) {
+			// get vertical id
+			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
+
+			if ( array_key_exists( $verticalId, self::$searchCategories ) ) {
+				$name = self::$searchCategories[$verticalId];
+			}
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -179,6 +258,7 @@ class VideosModule extends WikiaModel {
 					'title'     => $video['fileTitle'],
 					'url'       => $video['fileUrl'],
 					'thumbnail' => $video['thumbnail'],
+					'videoKey'  => $video['title'],
 				];
 			}
 		}
@@ -229,8 +309,8 @@ class VideosModule extends WikiaModel {
 	protected function trimVideoList( $videos, $numRequired ) {
 		shuffle( $videos );
 		array_splice( $videos, $numRequired );
-		foreach ( $videos as $videoTitle ) {
-			$this->existingVideos[$videoTitle] = true;
+		foreach ( $videos as $video ) {
+			$this->existingVideos[$video['videoKey']] = true;
 		}
 
 		return $videos;

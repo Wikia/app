@@ -919,14 +919,7 @@ class ArticlesApiController extends WikiaApiController {
 		$response->setValues( [ 'items' => $result ] );
 		$this->response->setVal( 'basepath', $this->wg->Server );
 
-		$response->setCacheValidity(
-			self::CLIENT_CACHE_VALIDITY,
-			self::CLIENT_CACHE_VALIDITY,
-			array(
-				WikiaResponse::CACHE_TARGET_BROWSER,
-				WikiaResponse::CACHE_TARGET_VARNISH
-			)
-		);
+		$response->setCacheValidity( self::CLIENT_CACHE_VALIDITY );
 
 	}
 

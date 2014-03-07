@@ -1,11 +1,9 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/clearfix";
 @import "../mixins/gradient";
 @import "../mixins/menus";
-@import "../mixins/opacity";
 @import "../mixins/wordmark";
 
 $color-level-3rd: mix($color-buttons, $color-page, 20%);
@@ -95,9 +93,9 @@ $WikiNavWidth: $width-outside - 271px;
 			}
 
 			&.marked {
-				@include border-radius-ne( 3px );
-				@include border-radius-nw( 3px );
 				background-color: $color-buttons;
+				border-top-right-radius: 3px;
+				border-top-left-radius: 3px;
 
 				> a {
 					margin: 1px 3px;
@@ -194,10 +192,10 @@ $WikiNavWidth: $width-outside - 271px;
 					height: 25px;
 
 					> .chevron {
-						@include opacity(50);
 						border-top-color: $color-button-text;
 						height: 4px;
 						margin: 0 0 3px 5px;
+						opacity: .5;
 						vertical-align: bottom;
 					}
 				}
@@ -205,9 +203,9 @@ $WikiNavWidth: $width-outside - 271px;
 				// level two item with submenu
 				&.marked2 {
 					.subnav-2a {
-						@include border-radius( 0px );
-						@include border-radius-ne( 3px );
-						@include border-radius-nw( 3px );
+						border-radius: 0px;
+						border-top-right-radius: 3px;
+						border-top-left-radius: 3px;
 						margin: 2px 0px 0px 3px;
 						background: $color-page;
 						border: 1px solid $color-button-highlight;
@@ -215,8 +213,8 @@ $WikiNavWidth: $width-outside - 271px;
 						color: $color-text;
 
 						> .chevron {
-							@include opacity(100);
 							border-top-color: $color-text;
+							opacity: 1;
 						}
 
 						&:hover {
@@ -246,8 +244,8 @@ $WikiNavWidth: $width-outside - 271px;
 				margin: 0px;
 
 				a {
-					@include border-radius( 0px );
 					border: 0px solid $color-button-highlight;
+					border-radius: 0px;
 					font-size: 12px;
 					line-height: 25px;
 					display: block;
@@ -376,8 +374,8 @@ $WikiNavWidth: $width-outside - 271px;
 			position: relative;
 
 			.share-dot {
-				@include border-radius(7px);
 				@include box-shadow(0px, 0px, 4px, $color-buttons);
+				border-radius: 7px;
 				display: block;
 				height: 7px;
 				position: absolute;

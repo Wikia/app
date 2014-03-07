@@ -257,8 +257,10 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'cloakcheck' => 'IRC-cloakin kelpoisuuden tarkistus',
 	'cloakcheck-form-username' => 'Käyttäjätunnus:',
 	'cloakcheck-form-check' => 'Tarkista käyttäjätunnus',
+	'cloakcheck-form-check-self' => 'Tarkista IRC-cloakin kelpoisuus',
 	'cloakcheck-process-empty' => 'Käyttäjätunnus ei saa olla tyhjä.',
 	'cloakcheck-process-notexist' => 'Käyttäjätunnusta ei ole olemassa.',
 	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
@@ -783,12 +785,21 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
 	'cloakcheck-form-username' => 'వాడుకరి పేరు:',
+	'cloakcheck-process-empty' => 'వాడుకరిపేరు ఖాళీగా ఉండే వీల్లేదు.',
+	'cloakcheck-process-notexist' => 'వాడుకరిపేరు లేనే లేదు.',
 	'cloakcheck-process-username' => 'వాడుకరిపేరు: $1',
+	'cloakcheck-process-accountage-yes' => 'ఖాతా పాతదే.',
+	'cloakcheck-process-accountage-no' => 'ఖాతా మరీ కొత్తది.',
+	'cloakcheck-process-emailconf-yes' => 'ఈమెయిలు చిరునామా ధృవీకరించబడింది.',
+	'cloakcheck-process-emailconf-no' => 'ఈమెయిలు చిరునామా ధృవీకరించబడలేదు.',
+	'cloakcheck-process-edits-yes' => 'వాడుకరికి చాలినన్ని మార్పుచేర్పులున్నాయి.',
+	'cloakcheck-process-edits-no' => 'వాడుకరికి చాలినన్ని మార్పుచేర్పుల్లేవు.',
 );
 
 /** Tagalog (Tagalog)

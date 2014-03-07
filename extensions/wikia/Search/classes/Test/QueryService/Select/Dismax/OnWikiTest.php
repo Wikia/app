@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod;
 class OnWikiTest extends Wikia\Search\Test\BaseTest { 
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1058 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -97,6 +99,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09931 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -137,6 +141,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10161 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
@@ -190,6 +196,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1173 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::registerSpellcheck
 	 */
 	public function testRegisterSpellcheck() {
@@ -307,7 +315,9 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryFieldsString 
+	 * @group Slow
+	 * @slowExecutionTime 0.10199 ms
+	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryFieldsString
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
@@ -331,6 +341,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09878 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
@@ -381,6 +393,8 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09852 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::getFilterQueryString
 	 */
 	public function testGetFilterQueryString() {

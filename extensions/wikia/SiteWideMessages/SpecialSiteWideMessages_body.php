@@ -1280,7 +1280,7 @@ class SiteWideMessages extends SpecialPage {
 			while ( $oMsg = $dbr->fetchObject( $dbResult ) ) {
 				if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
 					$messageText = ParserPool::parse( $oMsg->text, $wgTitle, new ParserOptions() )->getText();
-					$result[$oMsg->id] = array( 'wiki_id' => $oMsg->msg_wiki_id, 'text' => $messageText, 'expire' => $oMsg->expire, 'status' => $oMsg->status );
+					$result['msg_' . $oMsg->id] = array( 'msgId' => $oMsg->id, 'wiki_id' => $oMsg->msg_wiki_id, 'text' => $messageText, 'expire' => $oMsg->expire, 'status' => $oMsg->status );
 				}
 			}
 			if ( $dbResult !== false ) {
@@ -1290,7 +1290,7 @@ class SiteWideMessages extends SpecialPage {
 			//sort from newer to older
 			krsort( $result );
 
-			// Cache resuult for 15 minutes
+			// Cache result for 15 minutes
 			$wgMemc->set( $memcKey, $result, 900 /* 15 minutes */ );
 		}
 

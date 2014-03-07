@@ -410,9 +410,11 @@ class RelatedPages {
 	}
 
 	public static function onSkinAfterContent( &$text ){
+		global $wgTitle;
+
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
-		if ( $skin === 'oasis' || $skin === 'monobook' ){
+		if ( ( $skin === 'oasis' || $skin === 'monobook') && $wgTitle->getNamespace() !== NS_FILE ){
 			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 

@@ -1,6 +1,5 @@
 @import "skins/oasis/css/mixins/arrow";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/core/color";
 
 .page-listings {
@@ -19,7 +18,7 @@
 			position: relative;
 			top: -1px;
 			&.disabled {
-				@include opacity(50);
+				opacity: .5;
 			}
 			&.left {
 				@include arrow(6px, $color-buttons, 'left');
@@ -96,6 +95,9 @@
 		font-size: 11px;
 		line-height: 11px;
 		padding-top: 10px;
+	}
+	.inner {
+		width: 670px;
 	}
 }
 

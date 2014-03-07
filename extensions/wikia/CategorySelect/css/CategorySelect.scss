@@ -1,6 +1,4 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 
 // These styles are for view pages only
 .CategorySelect.articlePage {
@@ -100,15 +98,15 @@
 
 	.category.new,
 	.placeholder {
-		@include border-radius( 4px );
 		background-color: $color-speech-bubble;
 		border: 1px solid $color-page-border;
+		border-radius: 4px;
 		padding: 2px 6px;
 		margin-top: 0;
 	}
 
 	.placeholder {
-		@include opacity( 35 );
+		opacity: .35;
 	}
 
 	.special-categories {

@@ -909,8 +909,8 @@ $messages['diq'] = array(
 	'article-comments-anonymous' => 'Karbero bêname',
 	'article-comments-comments' => 'Vatışi ($1)',
 	'article-comments-post' => 'Mışewri bıvurne',
-	'article-comments-cancel' => 'Bıterkne',
-	'article-comments-delete' => 'besterne',
+	'article-comments-cancel' => 'Bıtexelne',
+	'article-comments-delete' => 'bestere',
 	'article-comments-edit' => 'bıvurne',
 	'article-comments-history' => 'Ravêrden',
 	'article-comments-error' => 'Mışewre qeyd nêbı',
@@ -1441,6 +1441,30 @@ ___________________________________________
 <li>Quere recibir menos mensaxes nosas? Pode cancelar a subscrición ou cambiar as preferencias de correo electrónico aquí: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'article-comments-post' => 'Kākau',
+	'article-comments-cancel' => 'Hoʻōki',
+	'article-comments-delete' => 'holoi',
+	'article-comments-edit' => 'hoʻololi',
+	'article-comments-history' => 'mōʻaukala',
+	'article-comments-error' => 'Hiki ʻole ke mālama ʻia ka manaʻo',
+	'article-comments-rc-comment' => 'Manaʻo ʻatikala (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'Manaʻo ʻatikala ([[$1]])',
+	'article-comments-rc-blog-comment' => 'Manaʻo bologa (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'Manaʻo bologa ([[$1]])',
+	'article-comments-toc-item' => 'Manaʻo',
+	'article-comments-show-all' => 'Hōʻike piha i nā manaʻo',
+	'article-comments-prev-page' => 'ʻAoʻao ma mua',
+	'article-comments-next-page' => 'ʻAoʻao aʻe',
+	'wikiamobile-article-comments-header' => 'Manaʻo',
+	'wikiamobile-article-comments-post' => 'Kākau',
+	'wikiamobile-article-comments-placeholder' => 'Kākau i ka manaʻo',
+	'wikiamobile-article-comments-login-post' => 'ʻEʻe no ke kākau manaʻo ʻana, ke ʻoluʻolu.',
 );
 
 /** Hebrew (עברית)
@@ -2049,6 +2073,7 @@ $messages['lb'] = array(
 );
 
 /** Lezghian (лезги)
+ * @author Lezgia
  * @author Migraghvi
  */
 $messages['lez'] = array(
@@ -2070,9 +2095,18 @@ $messages['lez'] = array(
 	'article-comments-next-page' => 'Къведай',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Асул макъала/асул къейд алуднава.',
+	'wikiamobile-article-comments-header' => 'Жузунар',
 	'wikiamobile-article-comments-more' => 'Мадни ппарун',
 	'wikiamobile-article-comments-prev' => 'Вилик алатай ппарун',
 	'wikiamobile-article-comments-none' => 'КЪейдер авайд ттуш',
+	'wikiamobile-article-comments-view' => 'Жавабриз килигин',
+	'wikiamobile-article-comments-replies' => 'Хвекьун',
+	'wikiamobile-article-comments-post-reply' => 'Хвекьун тун',
+	'wikiamobile-article-comments-post' => 'Тун',
+	'wikiamobile-article-comments-placeholder' => 'Жузунар тун',
+	'wikiamobile-article-comments-login-post' => 'Гьахьа жузунар тун паталди',
+	'wikiamobile-article-comments-post-fail' => 'Жузунар хуьз ханач гьахь ахпа',
+	'enotif_subject_article_comment' => '$PAGEEDITOR жузунарна "$PAGETITLE"  ина {{SITENAME}}',
 	'enotif_body_article_comment-HTML' => '<p>Играми $WATCHINGUSERNAME,
 <br /><br />
 $PAGEEDITOR къейд ттуна "$PAGETITLE".
@@ -3385,10 +3419,13 @@ $messages['szl'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
+	'article-comments-file-page' => "<a href='$3'>$4</a> పై <a href='$1'>$2 వ్యాఖ్య</a>",
+	'article-blog-comments-file-page' => "<a href='$5'>$6</a> బ్లాగులోని <a href='$3'>$4</a> టపా పై <a href='$1'>$2 వ్యాఖ్య</a>",
 	'article-comments-anonymous' => 'అజ్ఞాత వాడుకరి',
 	'article-comments-comments' => 'వ్యాఖ్యలు ($1)',
 	'article-comments-post' => 'వ్యాఖ్యానించండి',
@@ -3396,11 +3433,37 @@ $messages['te'] = array(
 	'article-comments-delete' => 'తొలగించు',
 	'article-comments-edit' => 'సవరించు',
 	'article-comments-history' => 'చరిత్ర',
+	'article-comments-error' => 'వ్యాఖ్యను భద్రపరచలేకపోయాం',
+	'article-comments-undeleted-comment' => 'బ్లాగు పేజీ $1 లో తొలగించబడని వ్యాఖ్య',
+	'article-comments-rc-comment' => 'వ్యాసపు వ్యాఖ్య (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => 'వ్యాసపు వ్యాఖ్యలు ([[$1]])',
+	'article-comments-fblogin' => 'ఈ వికీలో వ్యాఖ్యానించేందుకు <a href="$1" rel="nofollow">లాగినయ్యాక, ఫేస్‍బుక్ తో కనెక్టవండి</a>!',
+	'article-comments-fbconnect' => 'వ్యాఖ్యానించేందుకు <a href="$1">ఈ ఖాతాను ఫేస్‍బుక్ తో కనెక్టు చెయ్యండి</a>!',
+	'article-comments-rc-blog-comment' => 'బ్లాగు వ్యాఖ్య (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => 'బ్లాగు వ్యాఖ్యలు ([[$1]])',
+	'article-comments-login' => 'ఈ వికీలో వ్యాఖ్యానించేందుకు <a href="$1">లాగినవండి</a>.',
 	'article-comments-toc-item' => 'వ్యాఖ్యలు',
 	'article-comments-comment-cannot-add' => 'ఈ వ్యాసానికి మీరు వ్యాఖ్యని చేర్చలేరు.',
+	'article-comments-vote' => 'వోటెయ్యండి',
+	'article-comments-reply' => 'జవాబివ్వు',
+	'article-comments-show-all' => 'వ్యాఖ్యలన్నిటినీ చూపించు',
+	'article-comments-prev-page' => 'గత',
+	'article-comments-next-page' => 'తరువాతి',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => 'మాతృ వ్యాసం/మాతృ వ్యాఖ్య తొలగించబడింది.',
+	'article-comments-empty-comment' => "ఖాళీవ్యాఖ్యను పంపించలేరు. <a href='$1'>దాన్ని తొలగిస్తారా?</a>",
+	'wikiamobile-article-comments-header' => 'వ్యాఖ్యలు',
+	'wikiamobile-article-comments-more' => 'మరిన్ని చూపించు',
+	'wikiamobile-article-comments-prev' => 'గత వ్యాఖ్యలను చూపించు',
 	'wikiamobile-article-comments-none' => 'వ్యాఖ్యలు లేవు',
+	'wikiamobile-article-comments-view' => 'జవాబులు చూపించు',
+	'wikiamobile-article-comments-replies' => 'జవాబులు',
+	'wikiamobile-article-comments-post-reply' => 'జవాబివ్వండి',
+	'wikiamobile-article-comments-post' => 'పంపించు',
+	'wikiamobile-article-comments-placeholder' => 'వ్యాఖ్యానించండి',
+	'wikiamobile-article-comments-login-post' => 'వ్యాఖ్యానించేందుకు లాగినవండి.',
+	'wikiamobile-article-comments-post-fail' => 'వ్యాఖ్యను భద్రపరచలేకపోయాం, మళ్ళీ ప్రయత్నించండి',
+	'enotif_subject_article_comment' => '{{SITENAME}} లో "$PAGETITLE" పై $PAGEEDITOR వ్యాఖ్యానించారు',
 );
 
 /** Tagalog (Tagalog)

@@ -157,7 +157,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					$msg = wfMessage( 'videopagetool-success-publish' )->plain();
 					NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
 					$this->getContext()->getOutput()->redirect( $url );
-					return true;
+					return false;
 				}
 			// save assets
 			} else {
@@ -180,7 +180,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					if ( $status->isGood() ) {
 						$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
 						$this->getContext()->getOutput()->redirect( $nextUrl );
-						return true;
+						return false;
 					} else {
 						$result = 'error';
 						$msg = $status->getMessage();

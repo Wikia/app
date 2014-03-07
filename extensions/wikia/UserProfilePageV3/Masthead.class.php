@@ -718,9 +718,8 @@ class Masthead {
 				if ($res->isOK()) {
 					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s', 
 						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-
 					Wikia\SwiftSync\Queue::newFromParams( [
-						'city_id' => null,
+						'city_id' => 0,
 						'op' => 'store',
 						'src' => $sFilePath,
 						'dst' => $mwStorePath

@@ -591,18 +591,18 @@ $messages['diq'] = array(
 	'themedesigner-color' => 'dawte', # Fuzzy
 	'themedesigner-graphic' => 'grafik',
 	'themedesigner-buttons' => 'makiy',
-	'themedesigner-links' => 'Gırey',
+	'themedesigner-links' => 'gırey',
 	'themedesigner-header' => 'Seror',
 	'themedesigner-small' => 'Werdı',
 	'themedesigner-medium' => 'Medyum',
 	'themedesigner-large' => 'Larc',
 	'themedesigner-tab-theme' => 'Tema',
-	'themedesigner-button-cancel' => 'Bıterkne',
+	'themedesigner-button-cancel' => 'Bıtexelne',
 	'themedesigner-button-ok' => 'Temam',
 	'themedesigner-button-upload' => 'Bar ke',
 	'themedesigner-button-upload-wordmark' => 'Bar ke',
 	'themedesigner-rules-background' => 'jpg, gif yana png. limita cı {{PLURAL:$1|$1 kilobayt bo|$1 kilobayti bê}}',
-	'themedesigner-default' => 'Hesıbyaye',
+	'themedesigner-default' => 'Hesabiyaye',
 	'themedesigner-size' => 'gırdiye',
 	'themedesigner-button-save' => 'Qeyd ke',
 	'themedesigner-dont-use-a-graphic' => 'wedarne',
@@ -1565,6 +1565,7 @@ $messages['pdc'] = array(
  * @author Chrumps
  * @author Clamira
  * @author Cloudissimo
+ * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  * @author Wladekb
@@ -1591,7 +1592,7 @@ $messages['pl'] = array(
 	'themedesigner-tile-background' => 'sąsiadująco',
 	'themedesigner-fix-background' => 'nieruchomy',
 	'themedesigner-not-split-background' => 'nie dziel',
-	'themedesigner-rules-not-split-background' => 'Jeśli obraz tła jest szerszy niż $1px, możesz nie dzielić obrazu.', # Fuzzy
+	'themedesigner-rules-not-split-background' => "Jeśli obraz tła jest szerszy niż $1px, możesz ''nie'' dzielić obrazu.",
 	'themedesigner-transparency' => 'przezroczystość',
 	'themedesigner-tab-theme' => 'Motyw',
 	'themedesigner-tab-customize' => 'Dostosuj',
@@ -2067,10 +2068,11 @@ var god ange wikins namn för att spara.',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'themedesigner-page' => 'పుట',
+	'themedesigner-page' => 'పేజీ',
 	'themedesigner-color' => 'రంగు', # Fuzzy
 	'themedesigner-buttons' => 'బొత్తాలు',
 	'themedesigner-links' => 'లంకెలు',

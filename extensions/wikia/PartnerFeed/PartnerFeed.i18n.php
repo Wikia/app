@@ -242,17 +242,31 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wikien saavutuksien tilastot',
+	'partner-feed-earned-badges' => 'Äskettäin ansaitut merkit tietyssä wikissä',
+	'partner-feed-recent-blog-posts' => 'Uusimmat promootioon liittyvät blogiartikkelit',
+	'partner-feed-latest-images' => 'Viimeisimmäksi ladattujen kuvien galleria',
+	'partner-feed-recent-blog-comments' => 'Tiettyyn blogiartikkeliin liittyvät viimeisimmät kommentit.',
 	'partner-feed-recent-changes' => 'Viimeisimmät muutokset',
+	'partnerfeed' => 'Kumppanisyöte',
+	'error-no-article' => 'Virhe: Ei "artikkeli" -parametria annettu',
 	'feed-title-blogposts' => 'Tuoreet blogimerkinnät',
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
+	'feed-title-leaderboard' => 'Saavutuksien leaderboard',
+	'feed-main-title' => 'Wikia kumppanisyöte',
 	'all-blog-posts' => 'kaikki kategoriat',
+	'blog-posts-from-listing' => 'listauksesta $1',
+	'feed-title-hot-content' => 'Kuuma sisältö - $1',
+	'feed-title-blogcomments' => 'Kommentit artikkelista $1',
 	'feed-title-recentchanges' => 'Tuoreet muutokset',
+	'partner-feed-error-no-blogpost-found' => '<b>Virhe:</b> Blogiartikkelia $1 ei ole olemassa.',
 );
 
 /** French (français)

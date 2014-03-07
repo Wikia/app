@@ -13,19 +13,21 @@
 			<a href="<?= $gplusMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 		<? endif ?>
 	</div>
-	<div class="search">
-		<form method="get" action="<?= $specialSearchUrl; ?>" class="WikiaSearch" id="WikiaSearch">
-			<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
-			<input type="hidden" value="0" name="fulltext" />
-			<? if (!empty($searchHubName)): ?>
-				<input type="hidden" name="hub" value="<?= $searchHubName; ?>" />
-			<? endif; ?>
-			<input type="submit" />
-			<button class="wikia-button">
-				<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
-			</button>
-		</form>
-	</div>
+	<? if ($hubsVersion == 2) : ?>
+		<div class="search">
+			<form method="get" action="<?= $specialSearchUrl; ?>" class="WikiaSearch" id="WikiaSearch">
+				<input type="text" value="" accesskey="f" autocomplete="off" placeholder="<?= wfMessage('wikiahubs-search-placeholder')->text(); ?>" name="search" id="HubSearch" />
+				<input type="hidden" value="0" name="fulltext" />
+				<? if (!empty($searchHubName)): ?>
+					<input type="hidden" name="hub" value="<?= $searchHubName; ?>" />
+				<? endif; ?>
+				<input type="submit" />
+				<button class="wikia-button">
+					<img width="21" height="17" class="sprite search" src="<?= $wg->BlankImgUrl; ?>" />
+				</button>
+			</form>
+		</div>
+	<? endif ?>
 </div>
 <div class="wam-content">
 	<div class="title">

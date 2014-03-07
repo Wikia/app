@@ -400,13 +400,14 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillende labels of "feeds"',
 	'contentfeeds-newimages-rss-title' => 'RSS-feed voor {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed van $1',
 	'contentfeeds-firstfewarticles-tag-header' => "Maak uw eerste pagina's aan!",
-	'contentfeeds-firstfewarticles-tag-title' => 'Pagina',
+	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Volgende',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fout: paginanaam is verplicht',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: paginainhoud is verplicht',
@@ -574,9 +575,15 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  */
 $messages['te'] = array(
+	'contentfeeds-newimages-rss-desc' => '$1 నుండి వడ్డన',
+	'contentfeeds-firstfewarticles-tag-header' => 'మీ మొదటి పేజీలను సృష్టించండి!',
 	'contentfeeds-firstfewarticles-tag-title' => 'శీర్షిక',
+	'contentfeeds-firstfewarticles-tag-next' => 'తరువాతి',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'లోపం: పేజీ శీర్షిక ఆవశ్యకం',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'లోపం: పేజీ దేహం ఆవశ్యకం',
 );
 
 /** Tagalog (Tagalog)

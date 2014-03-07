@@ -68,6 +68,10 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03134 ms
+	 */
 	public function testGetEpisodeUrlDevOrSandbox() {
 
 		$mock = $this->getMockBuilder( "\TvApiController" )
@@ -141,6 +145,10 @@ class TvApiControllerTest extends \WikiaBaseTest {
 		$this->responseValues = $values;
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02327 ms
+	 */
 	public function mock_checkArticleByQuality($arg1, $arg2)
 	{
 		return $arg1;
@@ -235,3 +243,4 @@ class TvApiControllerTest extends \WikiaBaseTest {
 	}
 
 }
+

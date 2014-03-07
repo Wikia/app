@@ -25,6 +25,8 @@ class GlobalFileTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04145 ms
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime, $url) {
@@ -114,6 +116,7 @@ class GlobalFileTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
 		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );

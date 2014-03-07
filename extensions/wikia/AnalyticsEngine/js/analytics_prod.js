@@ -91,8 +91,7 @@
 			!!window.wgUserName ? 'user' : 'anon', 3] );
 
 	/**** Medium-Priority CVs ****/
-	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType',
-			(window.wikiaPageIsHub || window.wikiaPageIsWikiaHomePage) ? 'corporate' : window.wikiaPageType, 3],
+	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
 		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3]

@@ -563,6 +563,23 @@ $messages['hak'] = array(
 	'quickstats-number-shortening-billions' => '$10億',
 );
 
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'quickstats-header-label' => 'ʻIkepilihelu Wiki',
+	'quickstats-header-date' => 'Ka Lā',
+	'quickstats-header-views' => 'Nānana',
+	'quickstats-header-edits' => 'Hoʻololi',
+	'quickstats-header-photos' => 'Kiʻi',
+	'quickstats-header-likes' => 'Puni',
+	'quickstats-totals-label' => 'Huinanui',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Nā ʻikepilihelu ʻē aʻe]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Hebrew (עברית)
  * @author Deror avi
  * @author Yova
@@ -767,6 +784,19 @@ $messages['lb'] = array(
 	'quickstats-number-shortening' => '$1k',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1 Mrd',
+);
+
+/** Lezghian (лезги)
+ * @author Lezgia
+ */
+$messages['lez'] = array(
+	'quickstats-header-edits' => 'Дегишарин',
+	'quickstats-header-photos' => 'Фото',
+	'quickstats-header-likes' => 'Иерзани',
+	'quickstats-totals-label' => 'Мандни',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** لوری (لوری)
@@ -1271,6 +1301,8 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
@@ -1282,6 +1314,9 @@ $messages['te'] = array(
 	'quickstats-header-likes' => 'మెచ్చుకోళ్ళు',
 	'quickstats-totals-label' => 'మొత్తాలు',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|మరిన్ని గణాంకాలను చూడండి]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1మిలియన్',
+	'quickstats-number-shortening-billions' => '$1బిలియన్',
 );
 
 /** Tagalog (Tagalog)

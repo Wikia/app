@@ -7,7 +7,19 @@
     <property name="dbname" value="firefly" />
 
 	<!-- PHP Tests -->
-
+    <!-- fast unit tests only -->
+    <target name="fastphp">
+        <mkdir dir="${basedir}/build/logs" />
+        <exec executable="php" dir="${basedir}" failonerror="true">
+            <env key="SERVER_DBNAME" value="${dbname}" />
+            <arg line="run-test.php
+                       --log-junit=${basedir}/build/logs/phpunit.xml
+                       --conf=${localsettings}
+                       --configuration=${basedir}/phpunit.xml
+					   --exclude-group=Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
+                       " />
+        </exec>
+    </target>
 	<!-- unit tests only -->
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
@@ -80,7 +92,7 @@
 		<mkdir dir="${basedir}/build" />
         <exec executable="karma" dir="${basedir}" failonerror="true">
             <arg line="start
-            		karma/js-unit.config.js
+            		karma/js-unit.conf.js
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage
@@ -92,7 +104,7 @@
 		<mkdir dir="${basedir}/build" />
 		<exec executable="karma" dir="${basedir}" failonerror="true">
 			<arg line="start
-					karma/js-integration.config.js
+					karma/js-integration.conf.js
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage

@@ -95,7 +95,7 @@
 	</script>
 
 	<script id="LightboxCarouselProgressTemplate" type="text/template">
-		<?= wfMsg('lightbox-carousel-progress', array("{{idx1}}", "{{idx2}}", "{{{total}}}")); ?>
+		<?= wfMessage( 'lightbox-carousel-progress' )->rawParams( '{{idx1}}', '{{idx2}}', '{{{total}}}' )->parse(); ?>
 	</script>
 
 	<script id="LightboxShareTemplate" type="text/template">
@@ -145,18 +145,6 @@
 						);
 					?>
 					<?php
-						$formEmbed = array (
-							'inputs' => array (
-						        array(
-						            'label' => wfMsg('lightbox-embed-url'),
-						            'type' => 'text',
-						            'name' => 'lightbox-embed-url',
-					                'value' => "{{embedMarkup}}",
-						        ),
-						    ),
-						);
-					?>
-					<?php
 						$formFilePage = array (
 							'inputs' => array (
 						        array(
@@ -169,9 +157,6 @@
 						);
 					?>
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formHeader)); ?>
-					{{#embedMarkup}}
-						<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formEmbed)); ?>
-					{{/embedMarkup}}
 					<?= F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFilePage)); ?>
 				</div>
 				<div class="email">

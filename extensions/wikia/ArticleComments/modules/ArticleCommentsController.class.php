@@ -105,6 +105,7 @@ class ArticleCommentsController extends WikiaController {
 
 		// When lazy loading this request it shouldn't be cached in the browser
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
+			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		}
 

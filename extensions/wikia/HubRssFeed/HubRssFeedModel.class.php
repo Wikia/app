@@ -55,9 +55,14 @@ class HubRssFeedModel extends WikiaModel {
 
 
 	public function getRealData( $verticalId ) {
+		$params = [
+			'langCode' => $this->lang,
+			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+			'verticalId' => $verticalId,
+		];
 
 		$currentData = $this->getDataFromModules( $verticalId );
-		$timestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId );
+		$timestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $params );
 
 		foreach ( $currentData as &$val ) {
 			$val[ 'timestamp' ] = $timestamp;
@@ -67,7 +72,7 @@ class HubRssFeedModel extends WikiaModel {
 		$prevTimestamp = $timestamp - 1;
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
-			$prevTimestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId, $prevTimestamp );
+			$prevTimestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $params, $prevTimestamp );
 			$prevData = $this->getDataFromModules( $verticalId, $prevTimestamp );
 
 			if ( $prevData === null ) {

@@ -86,6 +86,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 
 ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	mw.hook( 've.cancelButton' ).fire();
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 
@@ -119,10 +120,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 	) {
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
-	mw.hook( 've.cancelButton' ).fire();
-	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 

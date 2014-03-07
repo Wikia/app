@@ -1,11 +1,11 @@
 /**
  * view for video home page
  */
-require( [
-		'videohomepage.views.featured',
-		'videohomepage.views.search',
-        'videohomepage.views.carousels'
-], function( FeaturedVideoView, SearchView, CarouselsView ) {
+require([
+	'videohomepage.views.featured',
+	'videohomepage.views.search',
+	'videohomepage.views.carousels'
+], function (FeaturedVideoView, SearchView, CarouselsView) {
 
 	'use strict';
 
@@ -17,19 +17,17 @@ require( [
 		var module = window.Wikia.modules.videoHomePage;
 		module.search = new SearchView();
 
-		module.featured = new FeaturedVideoView( {
+		module.featured = new FeaturedVideoView({
 			el: '#featured-video-slider',
-			$bxSlider: $( '#featured-video-bxslider' ),
-			$thumbs: $( '#featured-video-thumbs' )
-		} );
+			$bxSlider: $('#featured-video-bxslider'),
+			$thumbs: $('#featured-video-thumbs')
+		});
 
-		module.categories = new CarouselsView( {
+		module.categories = new CarouselsView({
 			el: '.latest-videos-wrapper'
-		} );
+		});
 	}
 
-	$( init );
+	$(init);
 
-} );
-
-
+});

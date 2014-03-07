@@ -8,6 +8,8 @@ use Wikia\Search\Query\Select as Query, Wikia\Search\MediaWikiService, Wikia\Sea
 class SelectTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10199 ms
 	 * @covers Wikia\Search\Query\Select::__construct
 	 */
 	public function testConstruct()
@@ -21,6 +23,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10945 ms
 	 * @covers Wikia\Search\Query\Select::getSanitizedQuery
 	 */
 	public function testGetSanitizedQuery()
@@ -52,6 +56,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10793 ms
 	 * @covers Wikia\Search\Query\Select::getQueryForHtml
 	 */
 	public function testGetQueryForHtml() {
@@ -68,6 +74,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10823 ms
 	 * @covers Wikia\Search\Query\Select::hasTerms
 	 */
 	public function testHasTerms() {
@@ -91,6 +99,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09127 ms
 	 * @covers Wikia\Search\Query\Select::getService
 	 */
 	public function testGetService() {
@@ -109,6 +119,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09147 ms
 	 * @covers Wikia\Search\Query\Select::initializeNamespaceData
 	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
 	 * @covers Wikia\Search\Query\Select::getNamespaceId
@@ -133,6 +145,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09197 ms
 	 * @covers Wikia\Search\Query\Select::getNamespacePrefix
 	 */
 	public function testGetNamespacePrefix() {
@@ -168,6 +182,8 @@ class SelectTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09139 ms
 	 * @covers Wikia\Search\Query\Select::getSolrQuery
 	 */
 	public function testGetSolrQuery() {
@@ -188,6 +204,10 @@ class SelectTest extends BaseTest
 		);
 	}
 	
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09074 ms
+	 */
 	public function testGetSolrQueryWithWordLimit() {
 		$query = <<<YEEZY
 Uh:my mind move like a Tron bike
