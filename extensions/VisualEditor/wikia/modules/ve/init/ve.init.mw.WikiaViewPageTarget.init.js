@@ -214,6 +214,12 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -225,6 +231,12 @@
 				'label': 've-edit'
 			} );
 
+			if ( veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.activate();
 			} );
@@ -232,6 +244,12 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -243,6 +261,12 @@
 				'label': 've-section-edit'
 			} );
 
+			if ( veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
@@ -338,6 +362,12 @@
 		$( function () {
 			if ( isViewPage ) {
 				if ( init.activateOnPageLoad ) {
+					if ( veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );

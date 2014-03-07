@@ -18,6 +18,9 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
+		if ( veTrack && e.data.label === 'section-edit' ) {
+			veTrack( { action: ( $( '#ca-ve-edit' ).exists() ? 've-section-edit' : 'other-section-edit' ) + '-click' } );
+		}
 
 		// Primary mouse button only
 		if (e.type === 'mousedown' && e.which !== 1) {
@@ -67,6 +70,15 @@ jQuery(function($){
 			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
+			}
+
+			if ( veTrack ) {
+				if ( id === 'edit' ) {
+					veTrack( { action: 'other-edit-click' } );
+				}
+				if ( id === 've-edit' ) {
+					veTrack( { action: 've-edit-click' } );
+				}
 			}
 
 			switch(id) {

@@ -60,6 +60,46 @@ if (!$wg->DevelEnvironment):?>
 				i.src = url+'e?'+e;
 			}
 		}
+		function veTrack( data ) {
+			var defaultData = {}, uri, finalData;
+			try {
+				// isAnonymous
+				try {
+					defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
+				} catch ( e ) {
+					defaultData.isAnonymous = 'unknown';
+				}
+
+				// isRedlink
+				try {
+					uri = new mw.Uri( location.href );
+					defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no'
+				} catch ( e ) {
+					defaultData.isRedlink = 'unknown';
+				}
+
+				defaultData.referrer = document.referrer;
+
+				// contentLanguage
+				try {
+					defaultData.contentLanguage = mw.config.get( 'wgContentLanguage' );
+				} catch ( e ) {
+					defaultData.contentLanguage = 'unknown';
+				}
+
+				// userLanguage
+				try {
+					defaultData.userLanguage = mw.config.get( 'wgUserLanguage' );
+				} catch ( e ) {
+					defaultData.userLanguage = 'unknown';
+				}
+				
+				finalData = $.extend( {}, defaultData, data );
+			} catch( e ) {
+				finalData = { failed: true };
+			}
+			syslogReport( 3, 'veTrack-v1', finalData );
+		}
 	</script><?
 	if ($wg->IsGASpecialWiki || $wg->EnableJavaScriptErrorLogging):?>
 		<script>
