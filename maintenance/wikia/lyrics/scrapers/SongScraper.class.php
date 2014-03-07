@@ -1,18 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 2/26/14
- * Time: 3:08 PM
- */
 
+
+/**
+ * Class SongScraper
+ *
+ * Scrape Song page from Lyrics API
+ */
 class SongScraper extends BaseScraper {
 
 	public function processArticle( Article $article ) {
 		$songData = [
 			'article_id' => $article->getId(),
-			'index' => 'lyrics',
-			'type' => 'song',
 		];
 		$songData = array_merge( $songData, $this->getHeader( $article ) );
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
@@ -49,21 +47,20 @@ class SongScraper extends BaseScraper {
 			'article_id' => 'article_id',
 			'available' => 'available',
 			'number' => 'number',
-			'index' => 'index',
-			'type' => 'type',
-			'artist_id' => 'artist_id',
-			'Artist' => 'artist',
 			'song' => 'name',
+			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
+/* These fields are also captured but not needed now
+			'Artist' => 'artist',
 			'romanizedSong' => 'romanized_name',
 			'language' => 'language',
 			'youtube' => 'youtube',
 			'goear' => 'goear',
-			'itunes' => 'itunes',
 			'asin' => 'asin',
 			'musicbrainz' => 'musicbrainz',
 			'allmusic' => 'allmusic',
 			'download' => 'download',
+*/
 		];
 	}
 

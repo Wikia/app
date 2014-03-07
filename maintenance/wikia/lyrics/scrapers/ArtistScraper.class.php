@@ -1,20 +1,14 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 2/25/14
- * Time: 4:37 PM
+ * Class ArtistScraper
+ *
+ * Scrape Artist page from Lyrics API
  */
-
 class ArtistScraper extends BaseScraper {
-
-	const INDEX_NAME = 'lyrics';
-	const TYPE_NAME = 'artist';
 
 	public function processArticle( Article $article ) {
 		$artistData = [
-			'index' => self::INDEX_NAME,
-			'type' => self::TYPE_NAME,
 			'article_id' => $article->getId(),
 			'name' => $article->getTitle()->getText()
 		];
@@ -131,8 +125,10 @@ class ArtistScraper extends BaseScraper {
 		return [
 			'article_id' => 'article_id',
 			'name' => 'name',
-			'romanizedArtist' => 'romanized_name',
 			'pic' => 'image',
+			'iTunes' => 'itunes',
+/* These fields are also captured but not needed now
+			'romanizedArtist' => 'romanized_name',
 			'officialSite' => 'official_site',
 			'myspace' => 'myspace',
 			'twitter' => 'twitter',
@@ -143,12 +139,12 @@ class ArtistScraper extends BaseScraper {
 			'country' => 'country',
 			'state' => 'state',
 			'hometown' => 'hometown',
-			'iTunes' => 'itunes',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',
 			'discogs' => 'discogs',
 			'musicbrainz' => 'musicbrainz',
 			'youtube' => 'youtube',
+*/
 		];
 	}
 

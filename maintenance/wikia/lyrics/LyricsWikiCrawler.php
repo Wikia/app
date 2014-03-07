@@ -12,6 +12,7 @@ require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
 
 
 class LyricsWikiCrawler extends Maintenance {
+
 	const OPTION_ARTICLE_ID = 'articleId';
 	const OPTION_ARTIST_ID = 'artistId';
 	const OPTION_ARTICLE_ALL = 'all';

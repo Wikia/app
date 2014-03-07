@@ -1,18 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 2/26/14
- * Time: 2:23 PM
- */
 
+/**
+ * Class AlbumScraper
+ *
+ * Scrape Album page from Lyrics API
+ */
 class AlbumScraper extends BaseScraper {
 
 	public function processArticle( Article $article ) {
 		$albumData = [
 			'article_id' => $article->getId(),
-			'index' => 'lyrics',
-			'type' => 'album',
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		return array_merge( $albumData, $this->getFooter( $article ) );
@@ -26,43 +23,27 @@ class AlbumScraper extends BaseScraper {
 		return $this->getTemplateValues( 'AlbumFooter', $article->getContent() );
 	}
 
-	public function getSongs( Article $article ) {
-		// # '''[[La Polla Records:Salve|Salve]]'''
-		$songs = [];
-		$re = '/^# (.+?)$/mu';
-		if ( preg_match_all( $re, $article->getContent(), $matches ) ) {
-			$trackNumber = 1;
-			foreach ( $matches[1] as $songName ) {
-				$song = $this->getSongData( $songName, $trackNumber );
-				$songs[] = $song;
-				$trackNumber++;
-			}
-		}
-		return $songs;
-	}
-
 	public function getDataMap() {
 		return [
-			'index'	=> 'index',
 			'available' => 'available',
-			'type'	=> 'type',
 			'article_id' => 'article_id',
-			'artist_id' => 'artist_id',
-			'Artist' => 'artist',
-			'Album' => 'name',
 			'Cover' => 'image',
 			'year' => 'year',
+			'Album' => 'name',
+			'iTunes' => 'itunes',
+/* These fields are also captured but not needed now
+			'Artist' => 'artist',
 			'Length' => 'length',
 			'Genre' => 'genres',
 			'Wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_name',
 			'asin' => 'asin',
-			'iTunes' => 'itunes',
 			'allmusic' => 'allmusic',
 			'discogs' => 'discogs',
 			'musicbrainz' => 'musicbrainz',
 			'download' => 'download',
 			'songs' => 'songs',
+*/
 		];
 	}
 

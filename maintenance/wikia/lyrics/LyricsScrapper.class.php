@@ -1,20 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 3/4/14
- * Time: 11:20 AM
- */
 
+/**
+ * Class LyricsScrapper
+ *
+ * Scrapes lyrics wiki articles for structured lyrics data
+ *
+ */
 class LyricsScrapper {
 
+	/**
+	 * @var DataBaseAdapter
+	 */
 	private $dba;
+
+	/**
+	 * @var RequestContext
+	 */
 	private $context;
+
+	/**
+	 * @var ArtistScraper
+	 */
 	private $artistScraper;
+
+	/**
+	 * @var AlbumScraper
+	 */
 	private $albumScraper;
+
+	/**
+	 * @var SongScraper
+	 */
 	private $songScraper;
 
-	function __construct( $dba ) {
+	function __construct( DataBaseAdapter $dba ) {
 		$this->dba = $dba;
 		$this->context = new RequestContext();
 		$this->artistScraper = new ArtistScraper();

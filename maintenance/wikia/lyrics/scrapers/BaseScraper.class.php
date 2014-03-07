@@ -1,11 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aquilax
- * Date: 2/25/14
- * Time: 4:34 PM
- */
 
+/**
+ * Class BaseScraper
+ *
+ * Base Lyrics API scraper
+ */
 abstract class BaseScraper {
 
 	abstract public function processArticle( Article $article );
