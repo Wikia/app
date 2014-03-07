@@ -1,6 +1,6 @@
 /* globals Features:true */
 //init toc
-define( 'mobile.toc', [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
+require( [ 'sections', 'wikia.window', 'jquery', 'wikia.mustache', 'wikia.toc', 'track' ],
 function ( sections, window, $, mustache, toc, track ) {
 	'use strict';
 	//private
@@ -10,7 +10,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		isAppended,
+		inited,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
@@ -147,11 +147,11 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending the toc to a side menu
 	 */
-	function append () {
+	function init () {
 		if ( show ) {
 			$toc.removeClass( 'hidden' );
 		}
-		if ( !isAppended ) {
+		if ( !inited ) {
 			$toc.on( 'click', 'header', function () {
 				onClose( 'header' );
 				window.scrollTo( 0, 0 );
@@ -172,7 +172,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			renderToc();
 
-			isAppended = true;
+			inited = true;
 		}
 	}
 
@@ -195,7 +195,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
 
-		append();
+		init();
 
 		onSectionChange( null, sections.current()[0], true );
 
@@ -213,55 +213,40 @@ function ( sections, window, $, mustache, toc, track ) {
 			$document.off( 'section:changed', onSectionChange );
 
 			track.event( 'newtoc', track.CLICK, {
-				label: (typeof event === 'string' ? event : 'close')
+				label: ( typeof event === 'string' ? event : 'close' )
 			} );
 		}
 
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	/**
-	 * @desc Initializes TOC if it is supposed to be shown on a page
-	 */
-	function init () {
-		if ( show ) {
-			$document.on( 'curtain:hidden', onClose );
+	if ( show ) {
+		$document.on( 'curtain:hidden', onClose );
 
-			if ( !sideMenuCapable ) {
-				tocMarkup = createTocMarkup();
+		if ( !sideMenuCapable ) {
+			$document.find( '#mw-content-text' )
+				.append(
+					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
+				).find('.level');
 
-				if ( tocMarkup ) {
-					$document.find( '#mw-content-text' )
-						.append(
-							'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
-						).find('.level');
-
-					inPageToc = doc.getElementsByClassName('in-page-toc')[0];
-				} else {
-					$tocHandle.hide();
-				}
-			}
-
-			$tocHandle.on( 'click', function ( event ) {
-				event.stopPropagation();
-
-				if ( sideMenuCapable ) {
-					if ( $toc.hasClass( active ) ) {
-						onClose();
-					} else {
-						onOpen();
-					}
-				} else {
-					onTap();
-				}
-			} );
-			$toc.removeClass( 'hidden' );
+			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
 		}
-	}
 
-	return {
-		show : show,
-		init : init
+		$tocHandle.on( 'click', function ( event ) {
+			event.stopPropagation();
+
+			if ( sideMenuCapable ) {
+				if ( $toc.hasClass( active ) ) {
+					onClose();
+				} else {
+					onOpen();
+				}
+			} else {
+				onTap();
+			}
+		} );
+
+		$toc.removeClass( 'hidden' );
 	}
 
 } );
