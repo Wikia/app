@@ -20,7 +20,7 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, indicatorTimer,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable, loadIndicator,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
@@ -29,48 +29,25 @@
 		};
 
 	function initIndicator() {
-		var $indicator = $( '<div>' )
-				.addClass( 've-indicator visible' )
-				.attr( 'data-type', 'loading' ),
-			$content = $( '<div>' ).addClass( 'content' ),
-			$icon = $( '<div>' ).addClass( 'loading' ),
-			$message = $( '<p>' )
-				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
-
-		$content
-			.append( $icon )
-			.append( $message );
-
-		$indicator
-			.append( $content )
-			.appendTo( $( 'body' ) )
-			.css( 'opacity', 1 )
-			.hide();
+		loadIndicator = new veIndicator( 'loading', 'wikia-visualeditor-loading' );
 
 		// Cleanup indicator when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
 			if ( indicatorTimer !== 'undefined' ) {
 				clearTimeout( indicatorTimer );
 			}
-			if ( $indicator.is( ':visible' ) ) {
-				$indicator.fadeOut( 400 );
-			}
+			loadIndicator.hide();
 		} );
 	}
 
 	function showIndicator() {
-		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
-			$message = $indicator.find( 'p.message' );
-
+		var $message = loadIndicator.getIndicator().find( 'p.message' );
+		// Message is hidden temporarily and shown after a delay
 		$message.hide();
-		$indicator.fadeIn( 400 );
+		loadIndicator.show();
 
-		// Display the message if loading is taking awhile
 		indicatorTimer = setTimeout( function () {
-			if ( $indicator.is( ':visible' ) ) {
-				$message.slideDown( 400 );
-			}
+			$message.slideDown( 400 );
 		}, 3000 );
 	}
 

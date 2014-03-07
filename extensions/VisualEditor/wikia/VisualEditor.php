@@ -36,7 +36,10 @@ $wgVisualEditorWikiaResourceTemplate = array(
 
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => $wgVisualEditorWikiaResourceTemplate + array(
-		'scripts' => 've/init/ve.init.mw.WikiaViewPageTarget.init.js',
+		'scripts' => array(
+			've/ve.indicator.js',
+			've/init/ve.init.mw.WikiaViewPageTarget.init.js',
+		),
 		'dependencies' => array(
 			'jquery.client',
 			'mediawiki.Title',
@@ -45,7 +48,9 @@ $wgResourceModules += array(
 			'user.options'
 		),
 		'messages' => array(
-			'wikia-visualeditor-loading'
+			'wikia-visualeditor-loading',
+			'wikia-visualeditor-indicator-saving',
+			'wikia-visualeditor-indicator-saved',
 		),
 		'position' => 'top'
 	),
@@ -58,10 +63,6 @@ $wgResourceModules += array(
 		),
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
-		),
-		'messages' => array(
-			'wikia-visualeditor-indicator-saving',
-			'wikia-visualeditor-indicator-saved',
 		)
 	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(

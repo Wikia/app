@@ -79,27 +79,14 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
 
 	// Show saving indicator
-	var $indicator = $( '<div>' )
-			.addClass( 've-indicator visible saving' ),
-		$content = $( '<div>' ).addClass( 'content' ),
-		$icon = $( '<div>' ).addClass( 'icon loading' ),
-		$message = $( '<p>' )
-			.addClass( 'message' )
-			.text( mw.message( 'wikia-visualeditor-indicator-saving' ).plain() )
-			.show();
-
-	$content
-		.append( $icon )
-		.append( $message );
-
-	$indicator
-		.append( $content )
-		.appendTo( 'body' )
-		/* Fix layer stack. The indicator already has a high z-index, but displays below
-		   the Save Dialog iframe. Reapply z-index to move it to the front.
-		*/
-		.css( { opacity: 1, zIndex: 99999999 } )
-		.fadeIn();
+	if ( typeof this.saveIndicator === 'undefined' ) {
+		this.saveIndicator = new veIndicator( 'loading', 'wikia-visualeditor-indicator-saving' );
+	}
+	else {
+		this.saveIndicator.setIcon( 'loading' );
+		this.saveIndicator.setMessage( 'wikia-visualeditor-indicator-saving' );
+	}
+	this.saveIndicator.show();
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
@@ -111,26 +98,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 ve.init.mw.WikiaViewPageTarget.prototype.onSave = function ( args ) {
 	ve.init.mw.ViewPageTarget.prototype.onSave.call( this, args );
 	// Change "Saving" message to "Saved"
-	var $indicator = $( '.ve-indicator.saving' );
-	$indicator
-		.find( 'p.message' )
-			.text( mw.message( 'wikia-visualeditor-indicator-saved' ).plain() );
-	$indicator
-		.find( 'div.icon' )
-			.removeClass( 'loading' )
-			.addClass( 've-init-mw-viewPageTarget-checkmark' );
-	setTimeout(function() {
-		$indicator.fadeOut( 400, function() {
-			$indicator.remove();
-		} );
+	this.saveIndicator.setIcon( 've-init-mw-viewPageTarget-checkmark' );
+	this.saveIndicator.setMessage( 'wikia-visualeditor-indicator-saved' );
+	var indicator = this.saveIndicator;
+	setTimeout( function() {
+		indicator.hide();
 	}, 1000 );
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( args ) {
-	var $indicator = $( '.ve-indicator.saving' );
-	$indicator.fadeOut( 200, function() {
-		$indicator.remove();
-	} );
+	this.saveIndicator.hide();
 	ve.init.mw.ViewPageTarget.prototype.onSaveError.call( this, args );
 };
 
