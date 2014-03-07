@@ -30,7 +30,7 @@
 				Changing value of <strong>$wgServer</strong> will change domain in city_list as well!
 			</div>
 		</li>
-		<!-- s:enabling/disabling/redirecting -->
+		<!-- s:enabling/disabling/redirecting/protecting -->
 		<li>
 			<form action="<?php echo $title->getFullUrl() ?>" method="post">
 				<input type="hidden" name="wpAction" value="status" />
@@ -46,6 +46,14 @@
 				</select>
 				<input type="submit" name="wk-status-submit" value="Confirm change" />
 			</form>
+		</li>
+		<li>
+			<form action="<?php echo $title->getFullUrl() ?>" method="post">
+				<input type="hidden" name="wpAction" value="protect" />
+                <input type="checkbox" name="wpProtected" id="wp-protected" <?php echo $protected ? "checked" : "" ?> />
+                <label for="wp-protected">Protect Site (never delete)</label>
+                <input type="submit" name="wk-protect-submit" value="Confirm change" />
+            </form>
 		</li>
 		<!-- e:enabling/disabling/redirecting -->
 			<!-- s:configuring domains -->
