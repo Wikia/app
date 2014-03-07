@@ -50,10 +50,10 @@
 		<li>
 			<form action="<?php echo $title->getFullUrl() ?>" method="post">
 				<input type="hidden" name="wpAction" value="protect" />
-                <input type="checkbox" name="wpProtected" id="wp-protected" <?php echo $protected ? "checked" : "" ?> />
-                <label for="wp-protected">Protect Site (never delete)</label>
-                <input type="submit" name="wk-protect-submit" value="Confirm change" />
-            </form>
+				<input type="checkbox" name="wpProtected" id="wp-protected" <?php echo $protected ? "checked" : "" ?> />
+				<label for="wp-protected">Protect Site (never delete)</label>
+				<input type="submit" name="wk-protect-submit" value="Confirm change" />
+			</form>
 		</li>
 		<!-- e:enabling/disabling/redirecting -->
 			<!-- s:configuring domains -->

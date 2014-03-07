@@ -337,7 +337,7 @@ class WikiFactoryPage extends SpecialPage {
 			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
-			"statuses" 	  => $this->mStatuses,
+			"statuses"    => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
