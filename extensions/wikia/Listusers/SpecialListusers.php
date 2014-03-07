@@ -45,12 +45,12 @@ if( empty( $wgDevelEnvironment ) ){
 /**
  * Special pages
  */
-$wgAutoloadClasses['ListUsers'] = __DIR__ . '/SpecialListusers_body.php';
+$wgAutoloadClasses['Listusers'] = __DIR__ . '/SpecialListusers_body.php';
 $wgAutoloadClasses['SpecialListStaff'] = __DIR__ . '/SpecialListusers_body.php';
 $wgAutoloadClasses['SpecialListVstf'] = __DIR__ . '/SpecialListusers_body.php';
 $wgAutoloadClasses['SpecialListHelpers'] = __DIR__ . '/SpecialListusers_body.php';
 
-$wgSpecialPages['Listusers'] = 'ListUsers';
+$wgSpecialPages['Listusers'] = 'Listusers';
 $wgSpecialPages['Liststaff'] = 'SpecialListStaff';
 $wgSpecialPages['Listvstf'] = 'SpecialListVstf';
 $wgSpecialPages['Listhelpers'] = 'SpecialListHelpers';
