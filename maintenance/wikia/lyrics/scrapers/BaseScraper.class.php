@@ -42,20 +42,22 @@ abstract class BaseScraper {
 		return $result;
 	}
 
-	protected function getSongData( $songName ) {
+	protected function getSongData( $songName, $number ) {
 		$songName = urldecode( $songName );
 		if ( preg_match( '#\[\[(.+?)\]\]#', $songName, $matches ) ) {
 			$songFields = explode( '|', $matches[1] );
 			if ( count( $songFields)  > 1 ) {
 				return [
 					'title' => $songFields[0],
-					'name' => $songFields[1],
+					'song' => $songFields[1],
+					'number' => $number,
 				];
 			}
 		}
 		return [
 			'title' => false,
-			'name' => $songName,
+			'song' => $songName,
+			'number' => $number,
 		];
 	}
 

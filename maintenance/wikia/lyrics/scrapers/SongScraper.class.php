@@ -18,7 +18,7 @@ class SongScraper extends BaseScraper {
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
-		return $this->sanitizeData( $songData, $this->getDataMap() );
+		return $songData;
 	}
 
 	protected function getHeader( Article $article ) {
@@ -47,6 +47,8 @@ class SongScraper extends BaseScraper {
 	public function getDataMap() {
 		return [
 			'article_id' => 'article_id',
+			'available' => 'available',
+			'number' => 'number',
 			'index' => 'index',
 			'type' => 'type',
 			'artist_id' => 'artist_id',

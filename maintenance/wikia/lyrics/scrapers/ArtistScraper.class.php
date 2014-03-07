@@ -46,9 +46,7 @@ class ArtistScraper extends BaseScraper {
 					$offset = $section[1];
 				}
 			}
-			if ($offset) {
-				$sections[] = substr( $text, $offset, ( strlen( $text ) - $offset ) );
-			}
+			$sections[] = substr( $text, $offset, ( strlen( $text ) - $offset ) );
 		}
 		return $sections;
 	}
@@ -71,8 +69,10 @@ class ArtistScraper extends BaseScraper {
 	function getAlbumSongs( $section ) {
 		$songs = [];
 		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
+			$number = 1;
 			foreach ( $matches[1] as $song ) {
-				$songs[] = $this->getSongData( $song );
+				$songs[] = $this->getSongData( $song, $number );
+				$number++;
 			}
 		}
 		return $songs;
@@ -86,7 +86,7 @@ class ArtistScraper extends BaseScraper {
 		if ( preg_match_all( $re_albums, $text, $matches) ) {
 			for ( $i = 0; $i < count($matches[0]); $i++ ) {
 				$albumData = $this->getAlbumData( $matches[1][$i] );
-				$albumData['image'] = $this->getAlbumPic( $matches[2][$i], $artistName );
+				$albumData['Cover'] = $this->getAlbumPic( $matches[2][$i], $artistName );
 				$albums[] = $albumData;
 			}
 		}
@@ -104,12 +104,10 @@ class ArtistScraper extends BaseScraper {
 			$heading = $headinga[1];
 		}
 		if ( preg_match('#(.+)\(([\d]+)\)#', $heading, $matches) ) {
-			$result['name'] = $matches[1];
+			$result['Album'] = $matches[1];
 			$result['year'] = $matches[2];
 		} else {
-			// TODO Better parser
-			echo 'NEED BETTER Album title parser '.$heading.PHP_EOL;
-			$result['name'] = $heading;
+			$result['Album'] = $heading;
 		}
 		return $result;
 	}

@@ -37,7 +37,6 @@ class LyricsWikiCrawler extends Maintenance {
 
 	public function execute() {
 		$this->db = $this->getDB( DB_SLAVE );
-		//$this->dba = newDatabaseAdapter( 'dummy', [] );
 
 		$this->dba = newDatabaseAdapter( 'solr', [
 			'adapteroptions' => [
@@ -47,6 +46,8 @@ class LyricsWikiCrawler extends Maintenance {
 				'core' => 'lyrics',
 			]
 		] );
+
+		// $this->dba = newDatabaseAdapter( 'dummy', [] );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
