@@ -26,7 +26,9 @@ define( 'modal', ['throbber', 'jquery'], function modal ( throbber, $ ){
 		positionfixed = Features.positionfixed,
 		scrollable;
 
-	/* private */
+	/**
+	 * @desc Finds all needed DOM elements and initializes vars
+	 */
 	function setup () {
 		wrapper = d.getElementById('wkMdlWrp');
 		$wrapper = $(wrapper);
@@ -39,10 +41,16 @@ define( 'modal', ['throbber', 'jquery'], function modal ( throbber, $ ){
 		created = true;
 	}
 
+	/**
+	 * @desc Handles click action on the modal content
+	 */
 	function onContentClick () {
 		if(!stopHiding) $wrapper.toggleClass('hdn');
 	}
 
+	/**
+	 * @desc Handles click action on the modal 'close' button
+	 */
 	function onCloseClick ( ev ) {
 		ev.stopPropagation();
 		ev.preventDefault();
