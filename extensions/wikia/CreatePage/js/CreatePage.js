@@ -5,11 +5,10 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	visualEditorEnabled: !!mw.config.get( 'wgVisualEditor' ),
+	veAvailable: !!mw.config.get( 'wgEnableVisualEditorUI' ) && $( 'html' ).hasClass( 've-available' ),
 
 	checkTitle: function( title ) {
 		'use strict';
-
 		$.getJSON( CreatePage.context.wgScript, {
 			action: 'ajax',
 			rs: 'wfCreatePageAjaxCheckTitle',
@@ -18,7 +17,7 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.visualEditorEnabled ) {
+				if ( CreatePage.veAvailable ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href =  articlePath + '?veaction=edit';
 				} else {
@@ -35,7 +34,7 @@ var CreatePage = {
 	openDialog: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
+		if ( CreatePage.veAvailable && !$( e.target ).hasClass( 'createpage' ) ) {
 			return;
 		}
 
@@ -125,6 +124,11 @@ var CreatePage = {
 
 							$( '#wpCreatePageDialogTitle' ).focus();
 
+							// Hide formats if ve is available
+							if ( CreatePage.veAvailable ) {
+								$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
+							}
+
 							createPageModal.show();
 
 							CreatePage.loading = false;
@@ -167,7 +171,7 @@ var CreatePage = {
 	redLinkClick: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorEnabled ) {
+		if ( CreatePage.veAvailable ) {
 			return;
 		}
 

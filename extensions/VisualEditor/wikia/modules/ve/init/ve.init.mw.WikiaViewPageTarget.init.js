@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [],
+		plugins = [], veUIEnabled,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -111,6 +111,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -183,7 +184,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -335,11 +338,15 @@
 	}
 
 	// Redlinks
-	$( function () {
+	if ( veUIEnabled ) {
+		$( setupRedlinks );
+	}
+
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
+			function() {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
@@ -350,5 +357,5 @@
 				}
 			}
 		);
-	} );
+	}
 }() );
