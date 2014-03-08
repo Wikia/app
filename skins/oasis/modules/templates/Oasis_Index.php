@@ -34,7 +34,7 @@
 <? endif ?>
 
 <? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis
-if (!$wg->DevelEnvironment):?>
+if (true||!$wg->DevelEnvironment):?>
 	<script>
 		function syslogReport(priority, message, context) {
 			context = context || null;
