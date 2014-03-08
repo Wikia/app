@@ -183,7 +183,7 @@ class VisualEditorHooks {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
 		if (
-			( !self::isVisible( $skin ) ) ||
+			!self::isVisible( $skin ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
 		) {
 			return true;
