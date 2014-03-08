@@ -28,7 +28,7 @@
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
-				if ( veTrack ) {
+				if ( window.veTrack ) {
 					veTrack( { action: 'ck-edit-page-start' } );
 				}
 				this.track({
