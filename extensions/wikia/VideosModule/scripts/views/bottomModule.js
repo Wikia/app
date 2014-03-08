@@ -89,7 +89,8 @@ define('videosmodule.views.bottomModule', [
 			$out,
 			videos = this.model.data.videos,
 			len = videos.length,
-			instance;
+			instance,
+			thumbnailViews = [];
 
 		// If no videos are returned from the server, don't render anything
 		if (!len) {
@@ -111,9 +112,7 @@ define('videosmodule.views.bottomModule', [
 			}).render();
 
 			$out.find('.thumbnails').append(instance.$el);
-			instance.applyEllipses({
-				wordsHidden: 2
-			});
+			thumbnailViews.push(instance);
 		}
 
 		$out.addClass(groupParams.rows > 1 ? 'rows-2' : 'rows-1');
@@ -123,6 +122,12 @@ define('videosmodule.views.bottomModule', [
 		} else {
 			this.$el.after($out);
 		}
+
+		$.each(thumbnailViews, function () {
+			this.applyEllipses({
+				wordsHidden: 2
+			});
+		});
 
 		track();
 	};
