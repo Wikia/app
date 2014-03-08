@@ -248,7 +248,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoad = function ( doc ) {
 			if ( mw.config.get( 'wgVisualEditorConfig' ).showBetaWelcome ) {
 				this.showBetaWelcome();
 			}
-			if ( veTrack ) {
+			if ( window.veTrack ) {
 				veTrack( { action: 've-edit-page-stop' } );
 			}
 			ve.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );

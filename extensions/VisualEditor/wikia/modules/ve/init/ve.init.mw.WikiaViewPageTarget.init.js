@@ -214,7 +214,7 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
-				if ( veTrack ) {
+				if ( window.veTrack ) {
 					veTrack( {
 						action: 've-edit-page-ignored',
 						trigger: 'onEditTabClick'
@@ -231,7 +231,7 @@
 				'label': 've-edit'
 			} );
 
-			if ( veTrack ) {
+			if ( window.veTrack ) {
 				veTrack( {
 					action: 've-edit-page-start',
 					trigger: 'onEditTabClick'
@@ -244,7 +244,7 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
-				if ( veTrack ) {
+				if ( window.veTrack ) {
 					veTrack( {
 						action: 've-edit-page-ignored',
 						trigger: 'onEditTabClick'
@@ -261,7 +261,7 @@
 				'label': 've-section-edit'
 			} );
 
-			if ( veTrack ) {
+			if ( window.veTrack ) {
 				veTrack( {
 					action: 've-edit-page-start',
 					trigger: 'onEditSectionLinkClick'
@@ -362,7 +362,7 @@
 		$( function () {
 			if ( isViewPage ) {
 				if ( init.activateOnPageLoad ) {
-					if ( veTrack ) {
+					if ( window.veTrack ) {
 						veTrack( {
 							action: 've-edit-page-start',
 							trigger: 'activateOnPageLoad'

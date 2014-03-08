@@ -18,7 +18,7 @@ jQuery(function($){
 	});
 
 	var trackWithEventData = function(e) {
-		if ( veTrack && e.data.label === 'section-edit' ) {
+		if ( window.veTrack && e.data.label === 'section-edit' ) {
 			veTrack( { action: ( $( '#ca-ve-edit' ).exists() ? 've-section-edit' : 'other-section-edit' ) + '-click' } );
 		}
 
@@ -72,7 +72,7 @@ jQuery(function($){
 				return;
 			}
 
-			if ( veTrack ) {
+			if ( window.veTrack ) {
 				if ( id === 'edit' ) {
 					veTrack( { action: 'other-edit-click' } );
 				}

@@ -165,7 +165,7 @@
 			}
 
 			this.editor.setState( this.editor.states.SAVING );
-			if ( veTrack ) {
+			if ( window.veTrack ) {
 				veTrack( {
 					action: 'ck-save-button-click',
 					isDirty: ( typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty() ) ? 'yes' : 'no'
