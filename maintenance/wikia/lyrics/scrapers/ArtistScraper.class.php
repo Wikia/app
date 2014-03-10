@@ -126,17 +126,20 @@ class ArtistScraper extends BaseScraper {
 		$result = [];
 		$headinga = explode( '|', trim( $heading, '][=' ) );
 		$result['title'] = false;
+
 		if ( count( $headinga ) > 1) {
 			$result['title'] = $headinga[0];
 			$result['year'] = '';
 			$heading = $headinga[1];
 		}
-		if ( preg_match('#(.+)\(([\d]+)\)#', $heading, $matches) ) {
-			$result['Album'] = $matches[1];
-			$result['year'] = $matches[2];
+
+		if ( preg_match( '#(.+)\(([\d]+)\)#', $heading, $matches ) ) {
+			$result['album'] = trim( $matches[1] );
+			$result['year'] = trim( $matches[2] );
 		} else {
-			$result['Album'] = $heading;
+			$result['album'] = trim( $heading );
 		}
+
 		return $result;
 	}
 

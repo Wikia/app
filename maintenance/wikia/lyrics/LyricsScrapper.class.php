@@ -67,7 +67,7 @@ class LyricsScrapper {
 		$albumsData = [];
 		foreach ( $leanAlbumsData as $albumData ) {
 			$albumData['available'] = 0;
-			self::log( "\t\tALBUM: " . $albumData['Album'] . PHP_EOL );
+			self::log( "\t\tALBUM: " . $albumData['album'] . PHP_EOL );
 			// Check if Album has MediaWiki Title
 			if ( $albumData['title'] ) {
 				$albumArticle = $this->articleFromTitle( $albumData['title'] );
