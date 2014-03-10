@@ -1,54 +1,54 @@
 /*exported AdProviderRemnantDart*/
-var AdProviderRemnantDart = function ( adTracker, log, slotTweaker, wikiaGpt, adSlotMapConfig) {
-    'use strict';
+var AdProviderRemnantDart = function (adTracker, log, slotTweaker, wikiaGpt, adSlotMapConfig) {
+	'use strict';
 
-    var logGroup = 'AdProviderRemnantDart',
-        srcName = 'rh',
-	    slotMap = adSlotMapConfig.getConfig(srcName);
+	var logGroup = 'AdProviderRemnantDart',
+		srcName = 'rh',
+		slotMap = adSlotMapConfig.getConfig(srcName);
 
-    function canHandleSlot( slotname ) {
+	function canHandleSlot(slotname) {
 
-        if ( !slotMap[slotname] ) {
-            return false;
-        }
+		if (!slotMap[slotname]) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    function fillInSlot( slotname, success ) {
+	function fillInSlot(slotname, success) {
 
-        log( ['fillInSlot', slotname], 5, logGroup );
+		log(['fillInSlot', slotname], 5, logGroup);
 
-        var slotTracker = adTracker.trackSlot( 'addriver2', slotname );
+		var slotTracker = adTracker.trackSlot('addriver2', slotname);
 
-        slotTracker.init();
+		slotTracker.init();
 
-        wikiaGpt.pushAd(
-            slotname,
-            function () { // Success
-                slotTweaker.removeDefaultHeight( slotname );
-                slotTweaker.removeTopButtonIfNeeded( slotname );
-                slotTweaker.adjustLeaderboardSize( slotname );
+		wikiaGpt.pushAd(
+			slotname,
+			function () { // Success
+				slotTweaker.removeDefaultHeight(slotname);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+				slotTweaker.adjustLeaderboardSize(slotname);
 
-                success();
-            },
-            function () { // Hop
-                log( slotname + ' was not filled by DART', 'info', logGroup );
+				success();
+			},
+			function () { // Hop
+				log(slotname + ' was not filled by DART', 'info', logGroup);
 
-                slotTweaker.hide( slotname );
-                slotTweaker.hideSelfServeUrl( slotname );
+				slotTweaker.hide(slotname);
+				slotTweaker.hideSelfServeUrl(slotname);
 
-                success();
-            },
-            srcName
-        );
+				success();
+			},
+			srcName
+		);
 
-        wikiaGpt.flushAds();
-    }
+		wikiaGpt.flushAds();
+	}
 
-    return {
-        name: 'RemnantDart',
-        canHandleSlot: canHandleSlot,
-        fillInSlot: fillInSlot
-    };
+	return {
+		name: 'RemnantDart',
+		canHandleSlot: canHandleSlot,
+		fillInSlot: fillInSlot
+	};
 };
