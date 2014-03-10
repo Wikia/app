@@ -32,20 +32,17 @@ $config['tracker_js'] = array(
 	)
 );
 
-global $wgEnableRHonDesktop;
-if (!$wgEnableRHonDesktop) {
-	$config['liftium_ads_js'] = array(
-		'type' => AssetsManager::TYPE_JS,
-		'assets' => array(
-			'//extensions/wikia/AdEngine/liftium/Liftium.js',
-	//		 TODO: get rid of those:
-			'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
-			'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
-			'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
-			'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
-		),
-	);
-}
+$config['liftium_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+		// TODO: get rid of those:
+		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
+		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+	),
+);
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -72,7 +69,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
-		'//extensions/wikia/AdEngine/js/AdProviderRemnantDart.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
