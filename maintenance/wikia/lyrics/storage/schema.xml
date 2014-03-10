@@ -18,13 +18,13 @@
 		<field name="album_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
 		<field name="song_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
 		<!--original + romanized artist name-->
-		<field name="search_artist_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
+		<field name="search_artist_name" type="string" indexed="true" stored="flase" required="false" multiValued="true" />
 		<!--original + romanized album name-->
-		<field name="search_album_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
+		<field name="search_album_name" type="string" indexed="true" stored="flase" required="false" multiValued="true" />
 		<!--original + romanized song name-->
-		<field name="search_song_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
+		<field name="search_song_name" type="string" indexed="true" stored="flase" required="false" multiValued="true" />
 		<!--original + romanized names for artist album song -->
-		<field name="search_full_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
+		<field name="search_full_name" type="string" indexed="true" stored="flase" required="false" multiValued="true" />
 
 		<!--COMMON API FIELDS-->
 
