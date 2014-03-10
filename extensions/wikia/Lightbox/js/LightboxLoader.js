@@ -65,8 +65,9 @@
 				videos = $('#RelatedVideosRL'),
 				photos = $('#LatestPhotosModule'),
 				comments = $('#WikiaArticleComments'),
-				footer = $('#WikiaArticleFooter'),
-				videosModule = $('#videosModule');
+				footer = $('#WikiaArticleFooter'), // bottom videos module
+				videosModule = $('#videosModule'), // right rail videos module
+				videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
 			article.add(photos).add(videos).add(comments).add(footer).add(videosModule)
@@ -75,7 +76,7 @@
 					var $this = $(this),
 						$thumb = $this.children('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
-						parent,
+						$parent,
 						isVideo,
 						trackingInfo,
 						$slideshowImg,
@@ -92,21 +93,24 @@
 
 					e.preventDefault();
 
-					if ($this.closest(article).length) {
-						parent = article;
+					if ($this.closest(videoHomePage).length) {
+						$parent = videoHomePage;
+					} else if ($this.closest(article).length) {
+						$parent = article;
 					} else if ($this.closest(videos).length) {
-						parent = videos;
+						$parent = videos;
 					} else if ($this.closest(photos).length) {
-						parent = photos;
+						$parent = photos;
 					} else if ($this.closest(comments).length) {
-						parent = comments;
+						$parent = comments;
 					} else if ($this.closest('#videosModule').length) {
-						parent = $('#videosModule');
+						// Don't use cached object because it may not have been in the DOM on init
+						$parent = $('#videosModule');
 					}
 
 					trackingInfo = {
 						target: $this,
-						parent: parent
+						parent: $parent
 					};
 
 					// Handle edge cases

@@ -1461,85 +1461,92 @@
 				trackingCarouselType = '';
 
 			switch (id) {
-
 				// Related Videos
-			case 'RelatedVideosRL':
-				clickSource = clickSource || VPS.RV;
+				case 'RelatedVideosRL':
+					clickSource = clickSource || VPS.RV;
 
-				carouselType = 'relatedVideos';
-				trackingCarouselType = 'related-videos';
-				break;
+					carouselType = 'relatedVideos';
+					trackingCarouselType = 'related-videos';
+					break;
 
 				// Embeded in Article Comments
-			case 'WikiaArticleComments':
-				clickSource = clickSource || VPS.EMBED;
+				case 'WikiaArticleComments':
+					clickSource = clickSource || VPS.EMBED;
 
-				carouselType = 'articleMedia';
-				trackingCarouselType = 'article';
-				break;
-
-			case 'LatestPhotosModule':
-				clickSource = clickSource || VPS.LP;
-
-				carouselType = 'latestPhotos';
-				trackingCarouselType = 'latest-photos';
-				break;
-
-			case 'videosModule':
-				if ( !clickSource ) {
-					clickSource = parent.hasClass('videos-module-rail') ?
-						VPS.VIDEOS_MODULE_RAIL :
-						VPS.VIDEOS_MODULE_BOTTOM;
-				}
-
-				carouselType = 'videosModule';
-				trackingCarouselType = 'videos-module';
-				break;
-
-			case 'WikiaArticle':
-				// Lightbox doesn't care what kind of article page, but clickSource tracking does
-				carouselType = 'articleMedia';
-				trackingCarouselType = 'article';
-
-				if (typeof clickSource !== 'undefined') {
-					// Click source is already set so we don't have to look for it.
+					carouselType = 'articleMedia';
+					trackingCarouselType = 'article';
 					break;
-				}
 
-				// Hubs
-				if (window.wgWikiaHubType) {
-					clickSource = VPS.HUBS;
+				case 'LatestPhotosModule':
+					clickSource = clickSource || VPS.LP;
+
+					carouselType = 'latestPhotos';
+					trackingCarouselType = 'latest-photos';
 					break;
-				}
 
-				// Search
-				if (target.closest('.Search').length) {
-					clickSource = VPS.SEARCH;
+				case 'videosModule':
+					if ( !clickSource ) {
+						clickSource = parent.hasClass('videos-module-rail') ?
+							VPS.VIDEOS_MODULE_RAIL :
+							VPS.VIDEOS_MODULE_BOTTOM;
+					}
+
+					carouselType = 'videosModule';
+					trackingCarouselType = 'videos-module';
 					break;
-				}
 
-				// Special:Videos
-				if (target.closest('.VideoGrid').length) {
-					clickSource = VPS.SV;
+				// Video Home Page
+				case 'latest-videos-wrapper':
+					clickSource = 'videoHomePage';
+					carouselType = 'articleMedia';
+					trackingCarouselType = 'article';
 					break;
-				}
 
-				// WikiActivity
-				if (target.closest('#wikiactivity-main').length) {
+				case 'WikiaArticle':
+					// Lightbox doesn't care what kind of article page, but clickSource tracking does
+					carouselType = 'articleMedia';
+					trackingCarouselType = 'article';
+
+					if (typeof clickSource !== 'undefined') {
+						// Click source is already set so we don't have to look for it.
+						break;
+					}
+
+					// Hubs
+					if (window.wgWikiaHubType) {
+						clickSource = VPS.HUBS;
+						break;
+					}
+
+					// Search
+					if (target.closest('.Search').length) {
+						clickSource = VPS.SEARCH;
+						break;
+					}
+
+					// Special:Videos
+					if (target.closest('.VideoGrid').length) {
+						clickSource = VPS.SV;
+						break;
+					}
+
+					// WikiActivity
+					if (target.closest('#wikiactivity-main').length) {
+						clickSource = VPS.OTHER;
+						break;
+					}
+
+					// Embeded in an article
+					clickSource = VPS.EMBED;
+					break;
+
+				default:
 					clickSource = VPS.OTHER;
-					break;
-				}
 
-				// Embeded in an article
-				clickSource = VPS.EMBED;
-				break;
-
-			default:
-				clickSource = VPS.OTHER;
-
-				carouselType = 'articleMedia';
-				trackingCarouselType = 'article';
+					carouselType = 'articleMedia';
+					trackingCarouselType = 'article';
 			}
+
 
 			return {
 				clickSource: clickSource,
