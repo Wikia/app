@@ -47,9 +47,9 @@ $messages['en'] = array(
 	'wikia-hubs-module-wikiaspicks-text' => 'Text',
 	'wikia-hubs-module-wikiaspicks-link-url' => 'URL',
 	'wikia-hubs-module-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
-	'wikia-hubs-module-sponsored-image-tip' => "'''Tip:''' The maximum file size is $1x$2 pixels",
+	'wikia-hubs-module-sponsored-image-tip' => "'''Tip:''' The maximum file size is $1px X $2px",
 	'wikia-hubs-module-slider-image-tip' => "'''Tip:''' Image size should be $1px X $2px",
-	'wikia-hubs-module-explore-image-tip' => "'''Tip:''' Image size should be $1px wide and no taller than $2px",
+	'wikia-hubs-module-explore-image-tip' => "'''Tip:''' Image size should be $1px X $2px",
 
 	'wikia-hubs-module-featured-video-header' => 'Header',
 	'wikia-hubs-module-featured-video-desc' => 'Description',
