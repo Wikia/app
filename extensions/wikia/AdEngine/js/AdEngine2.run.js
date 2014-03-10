@@ -32,7 +32,7 @@
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
-		wikiaGptHelper,
+		wikiaFullGpt,
 		evolveHelper,
 		adProviderDirectGpt,
 		adProviderEvolve,
@@ -71,11 +71,11 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaGptHelper = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
+	wikiaFullGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderDirectGpt = AdProviderDirectGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaGptHelper, gptSlotConfig);
+	adProviderDirectGpt = AdProviderDirectGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, gptSlotConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
