@@ -7,7 +7,7 @@
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, SlotTweaker*/
 /*global AdProviderNull, AdProviderRemnantDart, AdProviderLiftium, AdProviderSevenOneMedia, SevenOneMediaHelper*/
-/*global AdConfig2Late, Wikia, window, document, Geo, Krux, jQuery*/
+/*global AdConfig2Late, AdSlotMapConfig, WikiaFullGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
@@ -45,7 +45,7 @@
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, $, sevenOneMediaHelper);
 
 	if (window.wgEnableRHonDesktop) {
-        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
+		adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
