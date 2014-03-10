@@ -127,6 +127,9 @@ function ( sections, window, $, mustache, toc, track ) {
 		}
 	}
 
+	/**
+	 * @desc Handles rendering TO
+	 */
 	function renderToc () {
 		$toc.find( '#tocWrapper' ).remove();
 
@@ -219,7 +222,12 @@ function ( sections, window, $, mustache, toc, track ) {
 		$.event.trigger( 'curtain:hide' );
 	}
 
+	/**
+	 * @desc Initializes the proper version of TOC and event handlers for it
+	 */
 	function init () {
+		$document.on( 'curtain:hidden', onClose );
+
 		if ( !sideMenuCapable ) {
 			tocMarkup = createTocMarkup();
 			$document.find( '#mw-content-text' )
@@ -240,14 +248,13 @@ function ( sections, window, $, mustache, toc, track ) {
 				}
 			} );
 		}
-	}
-
-	if ( show ) {
-		$document.on( 'curtain:hidden', onClose );
-
-		init();
 
 		$toc.removeClass( 'hidden' );
+	}
+
+	//initialize TOC only if there are sections to show in it
+	if ( show ) {
+		init();
 	}
 
 } );
