@@ -11,7 +11,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		inited,
+		appended,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
@@ -148,8 +148,8 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending the toc to a side menu
 	 */
-	function init () {
-		if ( !inited ) {
+	function append () {
+		if ( !appended ) {
 			$toc.on( 'click', 'header', function () {
 				onClose( 'header' );
 				window.scrollTo( 0, 0 );
@@ -170,14 +170,15 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			renderToc();
 
-			inited = true;
+			appended = true;
 		}
 	}
 
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function onTap (){
+	function onTap ( event ) {
+		event.stopPropagation();
 		inPageToc.scrollIntoView();
 
 		track.event( 'newtoc', track.CLICK, {
@@ -193,7 +194,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
 
-		init();
+		append();
 
 		onSectionChange( null, sections.current()[0], true );
 
@@ -218,31 +219,33 @@ function ( sections, window, $, mustache, toc, track ) {
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	if ( show ) {
-		$document.on( 'curtain:hidden', onClose );
-
+	function init () {
 		if ( !sideMenuCapable ) {
+			tocMarkup = createTocMarkup();
 			$document.find( '#mw-content-text' )
 				.append(
 					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
 				).find('.level');
 
 			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
-		}
+			$tocHandle.on( 'click', onTap );
 
-		$tocHandle.on( 'click', function ( event ) {
-			event.stopPropagation();
-
-			if ( sideMenuCapable ) {
+		} else {
+			$tocHandle.on( 'click', function( event ){
+				event.stopPropagation();
 				if ( $toc.hasClass( active ) ) {
 					onClose();
 				} else {
 					onOpen();
 				}
-			} else {
-				onTap();
-			}
-		} );
+			} );
+		}
+	}
+
+	if ( show ) {
+		$document.on( 'curtain:hidden', onClose );
+
+		init();
 
 		$toc.removeClass( 'hidden' );
 	}
