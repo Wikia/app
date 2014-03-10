@@ -336,7 +336,8 @@ class WikiFactoryPage extends SpecialPage {
 			"groups"      => WikiFactory::getGroups(),
 			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
-			"statuses" 	  => $this->mStatuses,
+			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
+			"statuses"    => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),
 			"variableName"=> $this->mVariableName,
 			"isDevel"     => $wgDevelEnvironment,
@@ -506,6 +507,15 @@ class WikiFactoryPage extends SpecialPage {
 				$this->mWiki->city_public = $status;
 				WikiFactory::clearCache( $this->mWiki->city_id );
 				$message = "Status of this wiki was changed to " . $this->mStatuses[ $status ];
+			case "protect":
+				$protect = $request->getCheck( "wpProtected", false);
+				if ($protect) {
+					$message = "Wiki protected";
+					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+				} else {
+					$message = "Wiki un-protected";
+					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+				}
 			break;
 		}
 		return Wikia::successmsg( $message );
