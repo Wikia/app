@@ -1,10 +1,10 @@
-/* exported adProviderDirectGpt */
+/* exported AdProviderGpt */
 /* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderDirectGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderDirectGpt',
+	var logGroup = 'AdProviderGpt',
 		srcName = 'gpt',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
@@ -178,7 +178,7 @@ var AdProviderDirectGpt = function (adTracker, log, window, Geo, slotTweaker, ca
 	}
 
 	return {
-		name: 'DirectGpt',
+		name: 'Gpt',
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};

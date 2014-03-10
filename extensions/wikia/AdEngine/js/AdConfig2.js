@@ -10,7 +10,7 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
-	adProviderDirectGpt,
+	adProviderGpt,
 	adProviderEvolve,
 	adProviderLater,
 	adProviderNull
@@ -67,11 +67,11 @@ var AdConfig2 = function (
 		}
 		if (slot[2] === 'AdDriver2') {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'AdDriver') {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+			return adProviderGpt;
 		}
 		if (slot[2] === 'Liftium') {
 			log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
@@ -95,9 +95,9 @@ var AdConfig2 = function (
 			}
 		}
 
-		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+			return adProviderGpt;
 		}
 
 		// Non-high-value slots go to ad provider Later

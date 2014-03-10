@@ -1,10 +1,10 @@
 /*exported AdProviderRemnantDart*/
-var AdProviderRemnantGpt = function (adTracker, log, slotTweaker, wikiaGpt, gptSlotConfig) {
+var AdProviderRemnantDart = function (adTracker, log, slotTweaker, wikiaGpt, adSlotMapConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderRemnantGpt',
+	var logGroup = 'AdProviderRemnantDart',
 		srcName = 'rh',
-		slotMap = gptSlotConfig.getConfig(srcName);
+		slotMap = adSlotMapConfig.getConfig(srcName);
 
 	function canHandleSlot(slotname) {
 
@@ -47,7 +47,7 @@ var AdProviderRemnantGpt = function (adTracker, log, slotTweaker, wikiaGpt, gptS
 	}
 
 	return {
-		name: 'RemnantGpt',
+		name: 'RemnantDart',
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};

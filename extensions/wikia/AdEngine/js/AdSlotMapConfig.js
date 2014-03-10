@@ -1,4 +1,4 @@
-var GptSlotConfig = function() {
+var AdSlotMapConfig = function() {
 	"use strict";
 
 	var slotMapConfig = {
