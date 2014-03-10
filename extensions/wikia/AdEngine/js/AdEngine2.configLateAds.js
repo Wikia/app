@@ -54,7 +54,7 @@
 		log,
 		window,
 		abTest,
-		window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
+		window.wgEnableRHonDesktop ? adProviderRemanantDart : adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);
