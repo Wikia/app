@@ -43,15 +43,15 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'action-edithub' => 'Edit Hub Special Page Name',
 	'edit-hub-title' => 'Edit Hub Special Page title',
-	'edit-hub-date-title' => 'Special Edit Hub - Date section header',
+	'edit-hub-date-title' => 'Special Edit Hub - Header displayed in section where date is chosen',
 
-	'edit-hub-tooltip-current-date' => 'Special Edit Hub - Label for Current date in calendar example',
-	'edit-hub-tooltip-published' => 'Special Edit Hub - Label for Published date in calendar example',
-	'edit-hub-tooltip-in-progress' => 'Special Edit Hub - Label for date that is save but not published in calendar example',
+	'edit-hub-tooltip-current-date' => 'Special Edit Hub - Label for Current date in calendar. Current date is visible as marked current day in monthly calendar.',
+	'edit-hub-tooltip-published' => 'Special Edit Hub - Label for Published date in calendar. Published date is date on which new content (all modules are edited and saved) is displayed on hub page.',
+	'edit-hub-tooltip-in-progress' => 'Special Edit Hub - Label for date on which new content will be publish, but work on editing its modules is still in progress.',
 	'edit-hub-tooltip-calendar-placeholder' => 'Special Edit Hub - Calendar placeholder - displayed while browser is waiting for server response',
 
-	'edit-hub-header-dashboard' => 'Special Edit Hub - Dashboard header',
-	'edit-hub-header-right-last-saved' => 'Special Edit Hub - label for last saved date field',
+	'edit-hub-header-dashboard' => 'Special Edit Hub - Header displayed on dashboard with calendar.',
+	'edit-hub-header-right-last-saved' => 'Special Edit Hub - label for date on which hubs modules were last saved',
 	'edit-hub-header-right-by' => 'Special Edit Hub - label for last saved by field',
 
 	'edit-hub-footer-button-publish' => 'Special Edit Hub - text on publish button. Hit on this button will publish new data for selected date.',
@@ -70,5 +70,5 @@ $messages['qqq'] = array(
 	'edit-hub-module-publish-error-read-only' => 'Error message while in read only mode. Should inform user that hub cannot be published right now and to try again later.',
 	'edit-hub-module-publish-error-modules-not-saved' => 'Error message after publish attempt with not all modules saved for selected day.',
 	'edit-hub-module-publish-error-db-error' => 'Error message after try to publish hub. Problems with Database.',
-	'edit-hub-module-publish-success' => 'Message after publishing hub. 1st param is date on which hub was published.',
+	'edit-hub-module-publish-success' => 'Message after successful publishing hub. 1st param is date on which hub was published.',
 );
