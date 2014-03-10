@@ -314,7 +314,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
-			   $wgOut;
+			   $wgEnableRHonDesktop, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -393,6 +393,10 @@ class AdEngine2Controller extends WikiaController {
 
 		if (!empty($wgAdDriverTrackState)) {
 			$vars['wgAdDriverTrackState'] = $wgAdDriverTrackState;
+        }
+
+		if (!empty($wgEnableRHonDesktop)) {
+			$vars['wgEnableRHonDesktop'] = $wgEnableRHonDesktop;
 		}
 
 		wfProfileOut(__METHOD__);
