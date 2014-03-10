@@ -1,25 +1,25 @@
 /*global setTimeout, define*/
 /*jshint maxlen:150, camelcase:false, maxdepth:5*/
-var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
+var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
 	'use strict';
 
-	if ( WikiaFullGptHelper.prototype.singletonInstance ) {
-		return WikiaFullGptHelper.prototype.singletonInstance;
+	if ( WikiaGptHelper.prototype.singletonInstance ) {
+		return WikiaGptHelper.prototype.singletonInstance;
 	}
 
-	if (!(this instanceof WikiaFullGptHelper)){
-		return new WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
+	if (!(this instanceof WikiaGptHelper)){
+		return new WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 	}
 
-	WikiaFullGptHelper.prototype.singletonInstance = this;
+	WikiaGptHelper.prototype.singletonInstance = this;
 
-	var logGroup = 'WikiaFullGptHelper',
+	var logGroup = 'WikiaGptHelper',
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		slotQueue = [],
 		doneCallbacks = {},// key: slot name, value: callback
-		providerSlotMap = adSlotMapConfig.getConfig(),
+		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
 		googletag;
@@ -285,4 +285,4 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	this.flushAds = flushAds;
 };
 
-define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams'], WikiaFullGptHelper);
+define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams'], WikiaGptHelper);
