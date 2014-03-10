@@ -1,12 +1,14 @@
-/* VET_loader
+/* VET Loader
  *
  * @author Hyun Lim, Liz Lee
  *
  * Final callback should include vet.close() in success case.
  * Sample input json for options:
  *	{
- *		callbackAfterSelect: function() {}, // callback after video is selected (first screen).  If it returns false, second screen will not show.
- *		callbackAfterEmbed: function() {}, // callback after video formating (second screen).
+ *		// callback after video is selected (first screen).  If it returns false, second screen will not show.
+ *		callbackAfterSelect: function() {},
+ *		// callback after video formating (second screen).
+ *		callbackAfterEmbed: function() {},
  *		embedPresets: {
  *			align: "right"
  *			caption: ""
@@ -19,89 +21,100 @@
  *	}
  */
 
-(function(window, $) {
+(function (window, $) {
+	'use strict';
 
-	if( window.VET_loader ) {
+	if (window.vetLoader) {
 		return;
 	}
 
 	var resourcesLoaded = false,
 		modalOnScreen = false,
 		templateHtml = '',
-		VET_loader = {},
+		vetLoader = {},
 		UserLoginModal = window.UserLoginModal;
+
+	function loadResources(options, $elem) {
+		var resourcePromise,
+			deferredList = [],
+			templateDeferred = $.Deferred(),
+			deferredMessages = $.Deferred();
+
+		// Get modal template HTML
+		$.nirvana.sendRequest({
+			controller: 'VideoEmbedToolController',
+			method: 'modal',
+			type: 'get',
+			format: 'html',
+			callback: function (html) {
+				templateHtml = html;
+				templateDeferred.resolve();
+			}
+		});
+		deferredList.push(templateDeferred);
+
+		// Get JS and CSS
+		resourcePromise = $.getResources([
+			$.getAssetManagerGroupUrl('VET_js'),
+			$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+			$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+		]);
+		deferredList.push(resourcePromise);
+
+		return deferredList;
+	}
 
 	/*
 	 * @param {Object} options Control options sent to VET from extensions
-	 * @param {jQuery} elem Element that was clicked on to open the VET modal
+	 * @param {jQuery} $elem Element that was clicked on to open the VET modal
 	 */
-	VET_loader.load = function(options, elem) {
-		if (wgUserName == null && wgAction == 'edit') {
+	vetLoader.load = function (options, $elem) {
+		var resourceList = [];
+
+		$elem = $elem || $();
+
+		if (window.wgUserName === null && window.wgAction === 'edit') {
 			// handle login on edit page
-			UserLogin.rteForceLogin();
-			elem && elem.stopThrobbing();
+			window.UserLogin.rteForceLogin();
+			$elem.stopThrobbing();
 			return;
-		} else if (wgUserName == null) {
-			UserLoginModal.show( {
+		} else if (window.wgUserName === null) {
+			UserLoginModal.show({
 				origin: 'vet',
-				callback: function() {
-					UserLogin.forceLoggedIn = true;
-					window.VET_loader.load(options);
+				callback: function () {
+					window.UserLogin.forceLoggedIn = true;
+					vetLoader.load(options);
 				}
 			});
-			elem && elem.stopThrobbing();
+			$elem.stopThrobbing();
 			// handle login on article page
 			return;
 		}
 
 		// if modal is already on screen or is about to be, don't do anything
-		if(modalOnScreen) {
-			elem && elem.stopThrobbing();
+		if (modalOnScreen) {
+			$elem.stopThrobbing();
 			return;
 		}
 
-		modalOnScreen = true;	// modal is now loading
+		modalOnScreen = true; // modal is now loading
 
-		var deferredList = [];
-
-		if(!resourcesLoaded) {
-			var templateDeferred = $.Deferred(),
-				deferredMessages = $.Deferred();
-
-			// Get modal template HTML
-			$.nirvana.sendRequest({
-				controller: 'VideoEmbedToolController',
-				method: 'modal',
-				type: 'get',
-				format: 'html',
-				callback: function(html) {
-					templateHtml = html;
-					templateDeferred.resolve();
-				}
-			});
-			deferredList.push(templateDeferred);
-
-			// Get JS and CSS
-			var resourcePromise = $.getResources([
-				$.getAssetManagerGroupUrl('VET_js'),
-				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
-				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
-			]);
-			deferredList.push(resourcePromise);
+		if (!resourcesLoaded) {
+			resourceList = loadResources(options, $elem);
 		}
 
-		$.when.apply(this, deferredList).done(function() {
-			elem && elem.stopThrobbing();
+		$.when.apply($, resourceList).done(function () {
+			$elem.stopThrobbing();
 
-			require(['wikia.vet'], function(vet) {
+			require(['wikia.vet'], function (vet) {
 
-				VET_loader.modal = $(templateHtml).makeModal({
+				vetLoader.modal = $(templateHtml).makeModal({
 					width: 939,
-					onClose: function() {
+					onClose: function () {
 						vet.close();
 					},
-					onAfterClose: function() {
-						modalOnScreen = false;	// release modal lock
+					onAfterClose: function () {
+						modalOnScreen = false; // release modal lock
 					}
 				});
 
@@ -109,31 +122,31 @@
 
 				resourcesLoaded = true;
 			});
-
 		});
+
 	};
 
 	/* Extends jQuery to make any element an add video button
 	 *
-	 * @param object options - options to be passed to VET_loader.load(). See above for example.
+	 * @param object options - options to be passed to vetLoader.load(). See above for example.
 	 */
-	$.fn.addVideoButton = function(options) {
+	$.fn.addVideoButton = function (options) {
 		$.preloadThrobber();
 
-		return this.each(function() {
+		return this.each(function () {
 			var $this = $(this);
 
-			$this.off('click.VETLoader').on('click.VETLoader', function(e) {
+			$this.off('click.VETLoader').on('click.VETLoader', function (e) {
 				e.preventDefault();
 
 				// Provide immediate feedback once button is clicked
 				$this.startThrobbing();
 
-				VET_loader.load(options, $this);
+				vetLoader.load(options, $this);
 			});
 		});
 	};
 
-	window.VET_loader = VET_loader;
+	window.vetLoader = vetLoader;
 
 })(window, jQuery);

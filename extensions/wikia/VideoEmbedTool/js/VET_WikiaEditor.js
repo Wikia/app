@@ -10,7 +10,8 @@
 			onClose = null,
 			triggeredFromRTE = event && event.type === 'rte',
 			callback = null,
-			wikiaEditor;
+			wikiaEditor,
+			options;
 
 		if ( event && event.data && event.data.element ) {
 			// Video or Placeholder element was clicked in RTE
@@ -99,7 +100,8 @@
 						if ( element ) {
 							// update existing video
 							RTE.mediaEditor.update( element, wikitext, embedData );
-							//
+
+							console.log('get vet from editor');
 							require( ['wikia.vet'], function( vet ) {
 								vet.close();
 							} );
@@ -112,15 +114,15 @@
 			};
 		}
 
-		var options = {
+		options = {
 			callbackAfterEmbed: callback,
 			embedPresets: embedPresets,
 			onClose: onClose,
 			startPoint: startPoint
 		};
 
-		VET_loader.load( options );
-	}
+		window.vetLoader.load( options );
+	};
 
 	window.VET_WikiaEditor = editorVET;
 

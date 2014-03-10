@@ -2,7 +2,6 @@
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
-
 define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
 
 	var VET_panel = null;
@@ -531,7 +530,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	function VET_close() {
 		window.VETbackButton = false;
 
-		VET_loader.modal.closeModal();
+		vetLoader.modal.closeModal();
 
 		VET_tracking({
 			action: Wikia.Tracker.ACTIONS.CLOSE
