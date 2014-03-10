@@ -252,11 +252,6 @@ class Indexer
 							)
 					);
 
-			if ( $mwService->isOnDbCluster() && $mwService->getGlobal( 'WikiaSearchUseProxy' ) && $mwService->getGlobalWithDefault( 'SolrProxy' ) !== null ) {
-				$params['adapteroptions']['proxy'] = $mwService->getGlobal( 'SolrProxy' );
-				$params['adapteroptions']['port'] = null;
-			}
-
 			$this->client = new Solarium_Client( $params );
 		}
 		return $this->client;
