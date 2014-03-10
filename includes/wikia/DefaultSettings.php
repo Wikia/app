@@ -1213,6 +1213,12 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 $wgAdDriverUseNewTracking = true;
 
 /**
+ * @name $wgAdDriverTrackState
+ * Enables GA tracking of state for ad slots on pages
+ */
+$wgAdDriverTrackState = false;
+
+/**
  * @name $wgHighValueCountriesDefault
  * Default list of countries defined as high-value for revenue purposes
  * $wgHighValueCountries overrides this
