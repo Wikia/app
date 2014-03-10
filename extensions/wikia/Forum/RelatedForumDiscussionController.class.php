@@ -76,6 +76,7 @@ class RelatedForumDiscussionController extends WikiaController {
 			$this->html = '';
 		}
 
+		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
 		$this->response->setCacheValidity( 6*60*60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
 	}
 
