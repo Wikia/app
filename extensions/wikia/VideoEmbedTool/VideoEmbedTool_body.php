@@ -165,7 +165,7 @@ class VideoEmbedTool {
 			$props['code'] = json_encode( $embedCode );
 			$props['metadata'] = '';
 			$props['description'] = $vHelper->getVideoDescription( $file );
-			$props['premiumVideo'] = ( $wgRequest->getVal( 'searchType' ) == 'premium' );
+			$props['premiumVideo'] = F::app()->wg->WikiaVideoRepoDBName == $file->getRepo()->getWiki();
 		}
 
 		wfProfileOut( __METHOD__ );
