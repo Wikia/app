@@ -4,7 +4,7 @@
  *
  * @package Wikia\extensions\HAWelcome
  *
- * @version 1009
+ * @version 1010
  *
  * @author Krzysztof 'Eloy' Krzyżaniak <eloy@wikia-inc.com>
  * @author Maciej 'Marooned' Błaszkowski <marooned@wikia-inc.com>
@@ -653,6 +653,9 @@ class HAWelcomeJob extends Job {
 	 * Function called on UserRights hook
 	 *
 	 * Invalidates cached welcomer user ID if equal to changed user ID
+	 *
+	 * @author Kamil Koterba kamil@wikia-inc.com
+	 * @since MediaWiki 1.19.12
 	 *
 	 * @param User $oUser
 	 * @param Array $sAddedGroups
