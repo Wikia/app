@@ -48,9 +48,7 @@ $wgResourceModules += array(
 			'user.options'
 		),
 		'messages' => array(
-			'wikia-visualeditor-loading',
-			'wikia-visualeditor-indicator-saving',
-			'wikia-visualeditor-indicator-saved',
+			'wikia-visualeditor-loading'
 		),
 		'position' => 'top'
 	),
@@ -143,6 +141,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-query-failed',
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
+			'wikia-visualeditor-indicator-saving',
+			'wikia-visualeditor-indicator-saved'
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core'

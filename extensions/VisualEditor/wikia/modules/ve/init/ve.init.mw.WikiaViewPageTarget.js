@@ -20,6 +20,7 @@ ve.init.mw.WikiaViewPageTarget = function VeInitMwWikiaViewPageTarget() {
 	ve.init.mw.ViewPageTarget.call( this );
 
 	this.toolbarSaveButtonEnableTracked = false;
+	this.saveIndicator = null;
 };
 
 /* Inheritance */
@@ -79,8 +80,8 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
 
 	// Show saving indicator
-	if ( typeof this.saveIndicator === 'undefined' ) {
-		this.saveIndicator = new veIndicator( 'loading', 'wikia-visualeditor-indicator-saving' );
+	if ( this.saveIndicator === null ) {
+		this.saveIndicator = new mw.libs.ve.progressIndicator( 'loading', 'wikia-visualeditor-indicator-saving' );
 	}
 	else {
 		this.saveIndicator.setIcon( 'loading' );
@@ -100,10 +101,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSave = function ( args ) {
 	// Change "Saving" message to "Saved"
 	this.saveIndicator.setIcon( 've-init-mw-viewPageTarget-checkmark' );
 	this.saveIndicator.setMessage( 'wikia-visualeditor-indicator-saved' );
-	var indicator = this.saveIndicator;
-	setTimeout( function() {
-		indicator.hide();
-	}, 1000 );
+	this.saveIndicator.hide( 1000 );
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( args ) {

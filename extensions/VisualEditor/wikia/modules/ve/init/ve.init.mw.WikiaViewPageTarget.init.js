@@ -29,26 +29,12 @@
 		};
 
 	function initIndicator() {
-		loadIndicator = new veIndicator( 'loading', 'wikia-visualeditor-loading' );
+		loadIndicator = new mw.libs.ve.progressIndicator( 'loading', 'wikia-visualeditor-loading' );
 
 		// Cleanup indicator when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
-			if ( indicatorTimer !== 'undefined' ) {
-				clearTimeout( indicatorTimer );
-			}
 			loadIndicator.hide();
 		} );
-	}
-
-	function showIndicator() {
-		var $message = loadIndicator.getIndicator().find( 'p.message' );
-		// Message is hidden temporarily and shown after a delay
-		$message.hide();
-		loadIndicator.show();
-
-		indicatorTimer = setTimeout( function () {
-			$message.slideDown( 400 );
-		}, 3000 );
 	}
 
 	/**
@@ -58,7 +44,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		showIndicator();
+		loadIndicator.show( 3000 );
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
@@ -294,7 +280,7 @@
 	// Most of mw.libs.ve is considered subject to change and private.  The exception is that
 	// mw.libs.ve.isAvailable is public, and indicates whether the VE editor itself can be loaded
 	// on this page. See above for why it may be false.
-	mw.libs.ve = init;
+	mw.libs.ve = $.extend( mw.libs.ve, init );
 
 	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
 
