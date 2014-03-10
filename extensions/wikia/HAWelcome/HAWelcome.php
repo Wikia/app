@@ -658,7 +658,7 @@ class HAWelcomeJob extends Job {
 	 * @param Array $sAddedGroups
 	 * @param Array $sRemovedGroups
 	 */
-	public static function onUserRightsChange( &$oUser,$aAddedGroups, $aRemovedGroups ) {
+	public static function onUserRightsChange( &$oUser, $aAddedGroups, $aRemovedGroups ) {
 		global $wgMemc;
 		if ( $oUser->getId() == $wgMemc->get( wfMemcKey( 'last-sysop-id' ) ) ) {
 			$wgMemc->delete( wfMemcKey( 'last-sysop-id' ) );
