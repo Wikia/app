@@ -3,15 +3,15 @@
 /**
  * Class ArtistScraper
  *
- * Scrape Artist page from Lyrics API
+ * @desc Scrape Artist page from Lyrics API
  */
 class ArtistScraper extends BaseScraper {
 
-
 	/**
-	 * Process Artist article page
+	 * @desc Process Artist article page
 	 *
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
@@ -19,16 +19,19 @@ class ArtistScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 			'name' => $article->getTitle()->getText()
 		];
+
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
 		$artistData = array_merge( $artistData, $this->getFooter( $article ) );
 		$artistData['genres'] = $this->getGenres( $article );
+
 		return $this->sanitizeData( $artistData, $this->getDataMap() );
 	}
 
 	/**
-	 * Get artist data from header template
+	 * @desc Get artist data from header template
 	 *
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	protected function getHeader( Article $article ) {
@@ -36,7 +39,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get artist data from footer template
+	 * @desc Get artist data from footer template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -46,7 +49,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Split article page into h2 sections (albums or song groups)
+	 * @desc Split article page into h2 sections (albums or song groups)
 	 *
 	 * @param $text - article content
 	 * @return array - article sections
@@ -71,7 +74,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get list of albums (or song sections from Artist article)
+	 * @desc Get list of albums (or song sections from Artist article)
 	 *
 	 * @param Article $article
 	 * @param string $artistName
@@ -93,7 +96,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Extract songs from album section
+	 * @desc Extract songs from album section
 	 *
 	 * @param string $section
 	 * @return array
@@ -111,7 +114,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Extract album data from section heading
+	 * @desc Extract album data from section heading
 	 *
 	 * @param string $heading - section heading
 	 * @return array
@@ -136,7 +139,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Extract album pic
+	 * @desc Extract album pic
 	 *
 	 * @param string $section - Section text
 	 * @param string $artistName - Artist name
@@ -158,7 +161,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Data field mapping
+	 * @desc Data field mapping
 	 *
 	 * @return array
 	 */

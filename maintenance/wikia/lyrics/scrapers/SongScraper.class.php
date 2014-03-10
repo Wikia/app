@@ -1,10 +1,8 @@
 <?php
-
-
 /**
  * Class SongScraper
  *
- * Scrape Song page from Lyrics API
+ * @desc Scrape Song page from Lyrics API
  */
 class SongScraper extends BaseScraper {
 
@@ -93,4 +91,4 @@ class SongScraper extends BaseScraper {
 		];
 	}
 
-} 
+}
