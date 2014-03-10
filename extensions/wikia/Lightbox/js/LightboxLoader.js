@@ -61,47 +61,47 @@
 		videoThumbWidthThreshold: 400,
 		init: function () {
 			var self = this,
-				article = $('#WikiaArticle'),
-				videos = $('#RelatedVideosRL'),
-				photos = $('#LatestPhotosModule'),
-				comments = $('#WikiaArticleComments'),
-				footer = $('#WikiaArticleFooter'),
-				videosModule = $('#videosModule');
+				$article = $('#WikiaArticle'),
+				$videos = $('#RelatedVideosRL'),
+				$photos = $('#LatestPhotosModule'),
+				$comments = $('#WikiaArticleComments'),
+				$footer = $('#WikiaArticleFooter'),
+				$videosModule = $('#videosModule');
 
 			// Bind click event to initiate lightbox
-			article.add(photos).add(videos).add(comments).add(footer).add(videosModule)
+			$article.add($photos).add($videos).add($comments).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
 						$thumb = $this.children('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
-						parent,
+						$parent,
 						isVideo,
 						trackingInfo,
 						$slideshowImg,
 						clickSource;
 
-					if ( LightboxLoader.noLightbox($this, $thumb)) {
+					if (!LightboxLoader.hasLightbox($this, $thumb)) {
 						return;
 					}
 
 					e.preventDefault();
 
-					if ($this.closest(article).length) {
-						parent = article;
-					} else if ($this.closest(videos).length) {
-						parent = videos;
-					} else if ($this.closest(photos).length) {
-						parent = photos;
-					} else if ($this.closest(comments).length) {
-						parent = comments;
+					if ($this.closest($article).length) {
+						$parent = $article;
+					} else if ($this.closest($videos).length) {
+						$parent = $videos;
+					} else if ($this.closest($photos).length) {
+						$parent = $photos;
+					} else if ($this.closest($comments).length) {
+						$parent = $comments;
 					} else if ($this.closest('#videosModule').length) {
-						parent = $('#videosModule');
+						$parent = $('#videosModule');
 					}
 
 					trackingInfo = {
 						target: $this,
-						parent: parent
+						parent: $parent
 					};
 
 					// Handle edge cases
@@ -148,14 +148,14 @@
 				});
 
 			// TODO: refactor wikia slideshow (BugId:43483)
-			article
+			$article
 				.off('.slideshowLightbox')
 				.on(
 					'click.slideshowLightbox',
 					'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
 					function (e) {
 						var $this = $(this);
-						if (!LightboxLoader.noLightbox($this) ) {
+						if (LightboxLoader.hasLightbox($this)) {
 							e.preventDefault();
 							$this.closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
 						}
@@ -351,8 +351,8 @@
 		 * @param [$thumb] Optional thumbnail image inside clicked anchor
 		 * @returns {boolean}
 		 */
-		noLightbox: function ($link, $thumb) {
-			return !!(
+		hasLightbox: function ($link, $thumb) {
+			return !(
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||
