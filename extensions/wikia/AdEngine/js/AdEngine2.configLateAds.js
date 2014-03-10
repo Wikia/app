@@ -6,8 +6,8 @@
  */
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, SlotTweaker*/
-/*global AdProviderNull, AdProviderRemnantDart, AdProviderLiftium, AdProviderSevenOneMedia, SevenOneMediaHelper*/
-/*global AdConfig2Late, AdSlotMapConfig, WikiaFullGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
+/*global AdProviderNull, AdProviderRemnantGpt, AdProviderLiftium, AdProviderSevenOneMedia, SevenOneMediaHelper*/
+/*global AdConfig2Late, GptSlotConfig, WikiaGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
@@ -20,11 +20,11 @@
 		slotTweaker,
 		wikiaFullGpt,
 		fakeLiftium = {},
-		adProviderRemanantDart,
+		adProviderRemnantGpt,
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
-		adSlotMapConfig,
+		gptSlotConfig,
 		sevenOneMediaHelper;
 
 	// TODO: make Liftium and AdEngine2 rely less on order of execution
@@ -35,8 +35,8 @@
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
 	slotTweaker = SlotTweaker(log, document, window);
-	adSlotMapConfig = AdSlotMapConfig();
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
+	gptSlotConfig = GptSlotConfig();
+	wikiaFullGpt = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -45,7 +45,7 @@
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, $, sevenOneMediaHelper);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
+		adProviderRemnantGpt = AdProviderRemnantGpt(adTracker, log, slotTweaker, wikiaFullGpt, gptSlotConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
@@ -54,7 +54,7 @@
 		log,
 		window,
 		abTest,
-		window.wgEnableRHonDesktop ? adProviderRemanantDart : adProviderLiftium,
+		window.wgEnableRHonDesktop ? adProviderRemnantGpt : adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);
