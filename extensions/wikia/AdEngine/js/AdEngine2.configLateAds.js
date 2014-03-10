@@ -23,7 +23,6 @@
 		slotTweaker,
 		wikiaFullGpt,
 		fakeLiftium = {},
-		adProviderRemanantDart,
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
@@ -48,7 +47,7 @@
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, adTracker, $, sevenOneMediaHelper);
 
 	if (window.wgEnableRHonDesktop) {
-        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
+		adProviderLiftium = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
@@ -57,7 +56,7 @@
 		log,
 		window,
 		abTest,
-		window.wgEnableRHonDesktop ? adProviderLiftium : adProviderRemanantDart,
+		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);

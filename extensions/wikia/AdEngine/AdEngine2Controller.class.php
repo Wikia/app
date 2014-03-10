@@ -299,9 +299,9 @@ class AdEngine2Controller extends WikiaController {
 	/**
 	 * Handle URL parameters and set proper global variables early enough :)
 	 *
-	 * - Enable Remnant Dart hop instead of Liftium on Desktop ($wgEnableRHonDesktop)
+	 * - Detect debug mode for assets (allinone=0) - sets $wgAllInOne and $wgResourceLoaderDebug
 	 *
-	 * @author Sergey Naumov
+	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
