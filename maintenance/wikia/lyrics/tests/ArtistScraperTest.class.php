@@ -117,4 +117,62 @@ WIKITEXT
 		];
 	}
 
+	/**
+	 * @desc Tests ArtistScrapper::getAlbumData()
+	 * @dataProvider getAlbumDataProvider
+	 */
+	public function testGetAlbumData( $message, $text, $expected ) {
+		$artistScraper = new ArtistScraper();
+		$this->assertEquals( $expected, $artistScraper->getAlbumData( $text ), $message );
+	}
+
+	public function getAlbumDataProvider() {
+		return [
+			[
+				'message' => 'Empty $text value',
+				'text' => '',
+				'expected' => [
+					'title' => false,
+					'album' => ''
+				],
+			],
+			[
+				'message' => 'Valid data',
+				'text' => '==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==',
+				'expected' => [
+					'title' => 'Entombed:Serpent Saints The Ten Amendments (2007)',
+					'album' => 'Serpent Saints - The Ten Amendments',
+					'year' => '2007',
+				],
+			],
+			[
+				'message' => 'Valid data but without year',
+				'text' => '==[[Entombed:Serpent Saints The Ten Amendments|Serpent Saints - The Ten Amendments]]==',
+				'expected' => [
+					'title' => 'Entombed:Serpent Saints The Ten Amendments',
+					'album' => 'Serpent Saints - The Ten Amendments',
+					'year' => '',
+				],
+			],
+			[
+				'message' => 'Valid data with UTF-8 characters',
+				'text' => '==[[Entombed:Macbreður Hákarlsson (2014)|Macbreður Hákarlsson - The Ten Hákarlsson (2014)]]==',
+				'expected' => [
+					'title' => 'Entombed:Macbreður Hákarlsson (2014)',
+					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'year' => '2014',
+				],
+			],
+			[
+				'message' => 'Valid data with UTF-8 characters but the format changed a little bit with whitespaces',
+				'text' => '==[[ Entombed : Macbreður Hákarlsson (2014) | Macbreður Hákarlsson - The Ten Hákarlsson (2014) ]]==',
+				'expected' => [
+					'title' => ' Entombed : Macbreður Hákarlsson (2014) ',
+					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'year' => '2014',
+				],
+			],
+		];
+	}
+
 }
