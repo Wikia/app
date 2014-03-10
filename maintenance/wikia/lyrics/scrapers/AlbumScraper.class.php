@@ -34,15 +34,17 @@ class AlbumScraper extends BaseScraper {
 			'iTunes' => 'itunes',
 			'Genre' => 'genres',
 			'Length' => 'length',
+/* These fields are also captured but not needed now
 			'Artist' => 'artist',
 			'Wikipedia' => 'wikipedia',
-			'romanizedAlbum' => 'romanized_album_name',
+			'romanizedAlbum' => 'romanized_name',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',
 			'discogs' => 'discogs',
 			'musicbrainz' => 'musicbrainz',
 			'download' => 'download',
 			'songs' => 'songs',
+*/
 		];
 	}
 

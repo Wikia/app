@@ -2,71 +2,13 @@
 <schema name="lyrics" version="1.5">
     <fields>
         <field name="_version_" type="long" indexed="true" stored="true" required="true"/>
-        <field name="id" type="int" indexed="true" stored="true" required="true" multiValued="false" />
-        <field name="type" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+        <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+        <field name="name" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+        <field name="meta" type="string" indexed="false" stored="true" required="true" multiValued="false" />
+        <field name="content" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
+        <field name="type" type="int" indexed="true" stored="true" required="true" multiValued="false" />
+        <field name="article_id" type="int" indexed="true" stored="true" required="true" multiValued="false" />
         <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
-
-        <!--names-->
-        <field name="artist_name" type="string" indexed="true" stored="true" required="true" multiValued="false" />
-        <field name="album_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-        <field name="song_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-        <field name="search_artist_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
-        <field name="search_album_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
-        <field name="search_song_name" type="string" indexed="true" stored="flase" required="true" multiValued="true" />
-
-        <!--basic-->
-        <field name="itunes" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="image" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="genres" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--extra-->
-        <field name="asin" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="allmusic" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="musicbrainz" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="youtube" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="download" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--artist extra-->
-        <field name="romanized_artist_name" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="official_site" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="myspace" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="twitter" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="facebook" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="wikia" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="wikipedia" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="wikipedia2" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="country" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="state" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="hometown" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--album extra-->
-        <field name="length" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="release_date" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="romanized_album_name" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--song extra -->
-        <field name="lyrics" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
-        <field name="number" type="int" indexed="true" stored="true" required="false" multiValued="false" />
-        <field name="romanized_song_name" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="goear" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--reference fields-->
-        <field name="albums" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-        <field name="songs" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
-        <!--copy fields-->
-        <copyField source="artist_name" dest="search_artist_name" />
-        <copyField source="romanized_artist_name" dest="search_artist_name" />
-
-        <copyField source="album_name" dest="search_album_name" />
-        <copyField source="romanized_album_name" dest="search_album_name" />
-
-        <copyField source="song_name" dest="search_song_name" />
-        <copyField source="romanized_song_name" dest="search_song_name" />
-
-        <!--catchall string values-->
-        <dynamicField name="*_s" type="string" indexed="false" stored="true" required="false" multiValued="false" />
-
     </fields>
     <uniqueKey>id</uniqueKey>
     <types>
@@ -83,6 +25,7 @@
             <analyzer type="query">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
         </fieldType>
