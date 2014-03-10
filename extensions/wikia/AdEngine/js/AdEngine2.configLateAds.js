@@ -45,7 +45,7 @@
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, $, sevenOneMediaHelper);
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderRemnantGpt = AdProviderRemnantGpt(adTracker, log, slotTweaker, wikiaGptHelper, gptSlotConfig);
+		adProviderRemnantGpt = AdProviderRemnantGpt(log, slotTweaker, wikiaGptHelper, gptSlotConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}

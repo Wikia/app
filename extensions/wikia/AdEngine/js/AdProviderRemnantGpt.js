@@ -1,5 +1,5 @@
 /*exported AdProviderRemnantDart*/
-var AdProviderRemnantGpt = function (adTracker, log, slotTweaker, wikiaGpt, gptSlotConfig) {
+var AdProviderRemnantGpt = function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'AdProviderRemnantGpt',
@@ -18,10 +18,6 @@ var AdProviderRemnantGpt = function (adTracker, log, slotTweaker, wikiaGpt, gptS
 	function fillInSlot(slotname, success) {
 
 		log(['fillInSlot', slotname], 5, logGroup);
-
-		var slotTracker = adTracker.trackSlot('addriver2', slotname);
-
-		slotTracker.init();
 
 		wikiaGpt.pushAd(
 			slotname,
