@@ -47,7 +47,7 @@ var GptSlotConfig = function() {
 			'TOP_RIGHT_BOXAD': {'size': '300x250', 'tile': 1, 'loc': 'top'},
 			'PREFOOTER_LEFT_BOXAD': {'size': '300x250', 'tile': 7, 'loc': 'footer'},
 			'PREFOOTER_RIGHT_BOXAD': {'size': '300x250', 'tile': 8, 'loc': 'footer'},
-			'WIKIA_BAR_BOXAD_1': {'size': '300x250', 'tile': 4, 'loc': 'bottom'}
+			'WIKIA_BAR_BOXAD_1': {'size': '300x70', 'tile': 4, 'loc': 'bottom'}
 		}
 	};
 
