@@ -16,7 +16,7 @@ class GroupTvCrossWikiApi {
 		'top_categories_txt' => 150,
 		'top_articles_txt' => 200,
 		'sitename_txt' => 500,
-		'series_txt' => 1000
+//		'series_txt' => 1000
 	];
 
 	protected $tieParams = [
