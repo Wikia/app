@@ -18,6 +18,11 @@ class WikiaHubsV2Hooks {
 
 		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
+		if ( $model->isHubsPage( $hubName ) ) {
+			$redirectService = new RedirectService('hubsv2');
+			$redirectService->redirectIfURLExists();
+		}
+
 		if( $model->isHubsPage($hubName) && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 

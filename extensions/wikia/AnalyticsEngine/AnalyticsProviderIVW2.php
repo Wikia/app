@@ -15,22 +15,30 @@ class AnalyticsProviderIVW2 implements iAnalyticsProvider {
 			case AnalyticsEngine::EVENT_PAGEVIEW:
 				$code = $this->getTag();
 
-				return '<script type="text/javascript" src="https://script.ioam.de/iam.js"></script>
+				$iamData = [
+					"mg" => "yes",    // Migrationsmodus AKTIVIERT
+					"st" => "gastar", // site/domain
+					"cp" => $code,    // code
+					"oc" => $code,    // code SZM-System 1.5
+					"sv" => "ke"      // FRABO-Tag deaktiviert
+				];
 
+				$ivwScriptTag = '<script src="https://script.ioam.de/iam.js"></script>';
+				$ivwScriptTag .= '<script>iom.c(' . json_encode($iamData) . ', 2);</script>';
+				$ivwScriptTagEscaped = json_encode($ivwScriptTag);
+
+				$script = <<<SCRIPT
 <!-- SZM VERSION="2.0" -->
-<script type="text/javascript">
-var iam_data = {
-"mg":"yes", // Migrationsmodus AKTIVIERT
-"st":"gastar", // site/domain
-"cp":"' . $code . '", // code
-"oc":"' . $code . '", // code SZM-System 1.5
-"sv":"ke" // FRABO-Tag deaktiviert
+<script>
+
+if (window.Wikia && window.Wikia.AbTest && !window.Wikia.AbTest.inGroup('IVW2_DR', 'DISABLED')) {
+	document.write($ivwScriptTagEscaped);
 }
 
-iom.c(iam_data, 2);
 </script>
-<!-- /SZM -->';
-				break;
+SCRIPT;
+				return $script;
+
 			default:
 				return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
