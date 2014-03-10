@@ -477,9 +477,8 @@ class CategoryViewer extends ContextSource {
 		 */
 		if ( $type === 'subcat' && ( is_string( $this->nextPage ) || is_string( $this->from ) ) ) {
 			$debugging = [
-				"nextPage" => var_export( $this->nextPage, true ),
-				"until" => var_export( $this->until, true ),
-				"backtrace" => debug_backtrace()
+				"nextPage" => $this->nextPage,
+				"until" => $this->until
 			];
 			WikiaLogger::instance()->debug( "VE-840", $debugging );
 		}
