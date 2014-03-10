@@ -54,12 +54,13 @@ class ArtistScraper extends BaseScraper {
 	 * @param $text - article content
 	 * @return array - article sections
 	 */
-	function getSections( $text ) {
+	public function getSections( $text ) {
 		// Remove templates
 		$text = preg_replace ( '#\{\{(.+?)\}\}#s', '', $text );
 		$sections = [];
 		$offset = 0;
-		if (preg_match_all('#==(.+?)==#u', $text, $matches, PREG_OFFSET_CAPTURE)) {
+
+		if( preg_match_all( '#==(.+?)==#u', $text, $matches, PREG_OFFSET_CAPTURE ) ) {
 			$positions = $matches[0];
 			array_shift( $positions );
 			foreach ( $positions as $section ) {
@@ -70,6 +71,7 @@ class ArtistScraper extends BaseScraper {
 			}
 			$sections[] = substr( $text, $offset, ( strlen( $text ) - $offset ) );
 		}
+
 		return $sections;
 	}
 
@@ -80,7 +82,7 @@ class ArtistScraper extends BaseScraper {
 	 * @param string $artistName
 	 * @return array - Albums and song sections
 	 */
-	function getAlbums( Article $article, $artistName ) {
+	public function getAlbums( Article $article, $artistName ) {
 		$albums = [];
 		$text = $article->getContent();
 		$sections = $this->getSections( $text );
@@ -101,7 +103,7 @@ class ArtistScraper extends BaseScraper {
 	 * @param string $section
 	 * @return array
 	 */
-	function getAlbumSongs( $section ) {
+	public function getAlbumSongs( $section ) {
 		$songs = [];
 		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
 			$number = 1;
@@ -119,7 +121,7 @@ class ArtistScraper extends BaseScraper {
 	 * @param string $heading - section heading
 	 * @return array
 	 */
-	function getAlbumData( $heading ) {
+	public function getAlbumData( $heading ) {
 		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
 		$result = [];
 		$headinga = explode( '|', trim( $heading, '][=' ) );

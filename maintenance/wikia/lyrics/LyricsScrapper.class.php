@@ -4,7 +4,6 @@
  * Class LyricsScrapper
  *
  * Scrapes lyrics wiki articles for structured lyrics data
- *
  */
 class LyricsScrapper {
 

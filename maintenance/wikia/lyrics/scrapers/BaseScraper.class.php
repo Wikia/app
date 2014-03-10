@@ -48,7 +48,7 @@ abstract class BaseScraper {
 	 *
 	 * @return Array
 	 */
-	public function sanitizeData ( $data, $dataMap ) {
+	public function sanitizeData( $data, $dataMap ) {
 		$result = array();
 
 		foreach ( $dataMap as $key => $value ) {
