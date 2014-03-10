@@ -39,6 +39,7 @@ class LyricsWikiCrawler extends Maintenance {
 	public function execute() {
 		$this->db = $this->getDB( DB_SLAVE );
 
+		// FIXME: Use actual sold settings
 		$this->dba = newDatabaseAdapter( 'solr', [
 			'adapteroptions' => [
 				'host' => '10.10.10.242',
@@ -153,8 +154,8 @@ class LyricsWikiCrawler extends Maintenance {
 	/**
 	 * Get page ids for artists
 	 *
-	 * @param $limit Number of results
-	 * @param $offset Result offset
+	 * @param int $limit Number of results
+	 * @param int  $offset Result offset
 	 * @return ResultWrapper
 	 */
 	private function getArtistPageIds( $limit = 0, $offset = 0 ) {

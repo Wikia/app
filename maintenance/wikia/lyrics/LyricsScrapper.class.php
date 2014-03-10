@@ -41,6 +41,11 @@ class LyricsScrapper {
 		$this->songScraper = new SongScraper();
 	}
 
+	/**
+	 * Process Lyrics wiki Artist Article
+	 *
+	 * @param Article $article
+	 */
 	function processArtistArticle( Article $article ) {
 		// Get Artist data
 		$artistData = $this->artistScraper->processArticle( $article );
@@ -52,6 +57,13 @@ class LyricsScrapper {
 		$this->dba->saveArtist( $artistData, $albumsData );
 	}
 
+	/**
+	 * Process Lyrics wiki Albums
+	 *
+	 * @param array $artistData - Artist data
+	 * @param array $leanAlbumsData - Albums data collected from Artist page
+	 * @return array - Fill albums data
+	 */
 	function processAlbums( $artistData, $leanAlbumsData ) {
 		$albumsData = [];
 		foreach ( $leanAlbumsData as $albumData ) {
@@ -84,6 +96,15 @@ class LyricsScrapper {
 		return $albumsData;
 	}
 
+
+	/**
+	 * Process Lyrics wiki Songs
+	 *
+	 * @param $artistData - Artist data
+	 * @param $albumData - Fill Album data
+	 * @param $leanSongsData - songs data collected from Artist's page
+	 * @return array - Full songs data
+	 */
 	function processSongs( $artistData, $albumData, $leanSongsData ) {
 		$songsData = [];
 		foreach( $leanSongsData as $songData ) {
@@ -141,6 +162,12 @@ class LyricsScrapper {
 		return null;
 	}
 
+
+	/**
+	 * Helper log function
+	 *
+	 * @param $text - text to log
+	 */
 	static function log ( $text ) {
 		echo $text;
 	}

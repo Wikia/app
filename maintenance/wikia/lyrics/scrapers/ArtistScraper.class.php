@@ -7,6 +7,13 @@
  */
 class ArtistScraper extends BaseScraper {
 
+
+	/**
+	 * Process Artist article page
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	public function processArticle( Article $article ) {
 		$artistData = [
 			'article_id' => $article->getId(),
@@ -18,14 +25,32 @@ class ArtistScraper extends BaseScraper {
 		return $this->sanitizeData( $artistData, $this->getDataMap() );
 	}
 
+	/**
+	 * Get artist data from header template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getHeader( Article $article ) {
 		return $this->getTemplateValues( 'ArtistHeader', $article->getContent() );
 	}
 
+	/**
+	 * Get artist data from footer template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getFooter( Article $article ) {
 		return $this->getTemplateValues( 'ArtistFooter', $article->getContent() );
 	}
 
+	/**
+	 * Split article page into h2 sections (albums or song groups)
+	 *
+	 * @param $text - article content
+	 * @return array - article sections
+	 */
 	function getSections( $text ) {
 		// Remove templates
 		$text = preg_replace ( '#\{\{(.+?)\}\}#s', '', $text );
@@ -45,6 +70,13 @@ class ArtistScraper extends BaseScraper {
 		return $sections;
 	}
 
+	/**
+	 * Get list of albums (or song sections from Artist article)
+	 *
+	 * @param Article $article
+	 * @param string $artistName
+	 * @return array - Albums and song sections
+	 */
 	function getAlbums( Article $article, $artistName ) {
 		$albums = [];
 		$text = $article->getContent();
@@ -60,6 +92,12 @@ class ArtistScraper extends BaseScraper {
 		return $albums;
 	}
 
+	/**
+	 * Extract songs from album section
+	 *
+	 * @param string $section
+	 * @return array
+	 */
 	function getAlbumSongs( $section ) {
 		$songs = [];
 		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
@@ -72,21 +110,12 @@ class ArtistScraper extends BaseScraper {
 		return $songs;
 	}
 
-
-	function _getAlbums( Article $article, $artistName) {
-		$albums = [];
-		$text = $article->getContent();
-		$re_albums = '#==(.*?)==\s+(.*?)\{\{[c|C]lear\}\}#s';
-		if ( preg_match_all( $re_albums, $text, $matches) ) {
-			for ( $i = 0; $i < count($matches[0]); $i++ ) {
-				$albumData = $this->getAlbumData( $matches[1][$i] );
-				$albumData['Cover'] = $this->getAlbumPic( $matches[2][$i], $artistName );
-				$albums[] = $albumData;
-			}
-		}
-		return $albums;
-	}
-
+	/**
+	 * Extract album data from section heading
+	 *
+	 * @param string $heading - section heading
+	 * @return array
+	 */
 	function getAlbumData( $heading ) {
 		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
 		$result = [];
@@ -106,6 +135,13 @@ class ArtistScraper extends BaseScraper {
 		return $result;
 	}
 
+	/**
+	 * Extract album pic
+	 *
+	 * @param string $section - Section text
+	 * @param string $artistName - Artist name
+	 * @return string - image title
+	 */
 	protected function getAlbumPic( $section, $artistName ) {
 		$values = $this->getTemplateValues( 'Album Art', $section, '|', false );
 		if ( !$values) {
@@ -121,6 +157,11 @@ class ArtistScraper extends BaseScraper {
 		return $values[1];
 	}
 
+	/**
+	 * Data field mapping
+	 *
+	 * @return array
+	 */
 	public function getDataMap() {
 		return [
 			'article_id' => 'article_id',

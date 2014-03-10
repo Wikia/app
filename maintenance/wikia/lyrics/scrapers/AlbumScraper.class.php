@@ -7,6 +7,13 @@
  */
 class AlbumScraper extends BaseScraper {
 
+
+	/**
+	 * Process Album article page
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	public function processArticle( Article $article ) {
 		$albumData = [
 			'article_id' => $article->getId(),
@@ -16,14 +23,31 @@ class AlbumScraper extends BaseScraper {
 		return array_merge( $albumData, $this->getFooter( $article ) );
 	}
 
+	/**
+	 * Get album data from header template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getHeader( Article $article ) {
 		return $this->getTemplateValues( 'Album', $article->getContent() );
 	}
 
+	/**
+	 * Get album data from footer template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getFooter( Article $article ) {
 		return $this->getTemplateValues( 'AlbumFooter', $article->getContent() );
 	}
 
+	/**
+	 * Data field mapping
+	 *
+	 * @return array
+	 */
 	public function getDataMap() {
 		return [
 			'available' => 'available',

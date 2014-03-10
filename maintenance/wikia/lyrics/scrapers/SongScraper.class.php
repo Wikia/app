@@ -8,6 +8,12 @@
  */
 class SongScraper extends BaseScraper {
 
+	/**
+	 * Process Song article page
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	public function processArticle( Article $article ) {
 		$songData = [
 			'article_id' => $article->getId(),
@@ -19,6 +25,12 @@ class SongScraper extends BaseScraper {
 		return $songData;
 	}
 
+	/**
+	 * Get song data from header template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getHeader( Article $article ) {
 		$result = [];
 		$values = $this->getTemplateValues( 'song', $article->getContent(), '|', false );
@@ -32,16 +44,33 @@ class SongScraper extends BaseScraper {
 		return $result;
 	}
 
+	/**
+	 * Get song data from header template
+	 *
+	 * @param Article $article
+	 * @return array
+	 */
 	protected function getFooter( Article $article ) {
 		return $this->getTemplateValues( 'SongFooter', $article->getContent() );
 	}
 
+	/**
+	 * Get song lyrics from article
+	 *
+	 * @param $article
+	 * @return string
+	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
 			return trim( $matches[1] );
 		}
 	}
 
+	/**
+	 * Data field mapping
+	 *
+	 * @return array
+	 */
 	public function getDataMap() {
 		return [
 			'article_id' => 'article_id',
