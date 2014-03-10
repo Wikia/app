@@ -6,6 +6,7 @@
 class AdEngine2Controller extends WikiaController {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const AD_LEVEL_NONE = 'none';           // show no ads
 	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
@@ -508,6 +509,8 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
+		global $wgEnableRHonDesktop;
+
 		$coreGroupIndex = array_search(self::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
 			// Do nothing. oasis_shared_core_js must be present for ads to work
@@ -517,6 +520,10 @@ class AdEngine2Controller extends WikiaController {
 		if (!self::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE);
+		}
+
+		if ($wgEnableRHonDesktop === false) {
+			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
 		}
 		return true;
 	}
