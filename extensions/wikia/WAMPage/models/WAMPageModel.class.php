@@ -396,6 +396,45 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	/**
+	 * Get title where user should be redirected for given title
+	 * Redirection list is kept in $wgWAMRedirects
+	 *
+	 * @param $title
+	 * @return null|Title
+	 */
+	public function getWAMRedirect( $title ) {
+		wfProfileIn( __METHOD__ );
+		$newTabTitle = null;
+
+		if( $title instanceof Title && $title->isSubpage() ) {
+			$titleText = mb_strtolower( $title->getSubpageText() );
+
+			$wamRedirects = $this->getWAMRedirectsList();
+			if ( isset( $wamRedirects[$titleText] ) ) {
+				$newTabTitle = $this->getTitleFromText( $this->getWAMMainPageName() . '/' . $wamRedirects[$titleText] );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $newTabTitle;
+	}
+
+	protected function getWAMRedirectsList() {
+		wfProfileIn( __METHOD__ );
+		global $wgWAMRedirects;
+
+		$out = [];
+		if ( is_array( $wgWAMRedirects ) ) {
+			foreach ( $wgWAMRedirects as $oldTitle => $newTitle ) {
+				$out[mb_strtolower( $oldTitle )] = $newTitle;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $out;
+	}
+
+	/**
 	 * MOCKED data for devboxes for testing
 	 * because we don't have wam data on devboxes
 	 *

@@ -45,8 +45,10 @@ class WAMPageHooks {
 			self::$app->wg->SuppressFooter = true;
 			$article = new WAMPageArticle( $title );
 		} else {
-			$redirectService = new RedirectService( 'wam' );
-			$redirectService->redirectIfURLExists();
+			$newTabTitle = self::$model->getWAMRedirect( $title );
+			if ( $newTabTitle instanceof Title ) {
+				$wgOut->redirect( $newTabTitle->getLocalURL(), 301 );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );

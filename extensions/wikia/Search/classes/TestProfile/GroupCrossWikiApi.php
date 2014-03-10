@@ -11,10 +11,10 @@ class GroupCrossWikiApi {
 	protected $interWikiQueryFields = [
 		'headline_txt' => 300,
 		'description_txt' => 250,
-		'categories_txt' => 50,
+		'categories_mv_txt' => 50,
 		'articles_i' => 75,
-		'top_categories_txt' => 150,
-		'top_articles_txt' => 200,
+		'top_categories_mv_txt' => 150,
+		'top_articles_mv_txt' => 200,
 		'sitename_txt' => 500
 	];
 

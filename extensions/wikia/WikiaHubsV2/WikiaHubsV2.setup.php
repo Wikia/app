@@ -35,9 +35,6 @@ $wgAutoloadClasses['WikiaHubsV2SuggestModel'] =  $dir . 'models/WikiaHubsV2Sugge
 
 $wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.class.php';
 
-// services
-$wgAutoloadClasses['RedirectService'] = 'includes/wikia/services/RedirectService.class.php';
-
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubsV2'] = $dir.'WikiaHubsV2.i18n.php';
 

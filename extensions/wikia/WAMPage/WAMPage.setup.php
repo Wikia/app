@@ -32,8 +32,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'WAMPageHooks::onMakeGlobalVariablesSc
 $wgHooks['LinkBegin'][] = 'WAMPageHooks::onLinkBegin';
 $wgHooks['WikiaCanonicalHref'][] = 'WAMPageHooks::onWikiaCanonicalHref';
 
-// services
-$wgAutoloadClasses[ 'RedirectService' ] = 'includes/wikia/services/RedirectService.class.php';
 
 // i18n
 $wgExtensionMessagesFiles['WAMPage'] = $dir . 'WAMPage.i18n.php' ;

@@ -22,7 +22,7 @@
 				$.nirvana.sendRequest({
 					controller: 'RelatedForumDiscussionController',
 					method: 'checkData',
-					type: 'GET',
+					format: 'json',
 					data: {
 						articleId: window.wgArticleId ? window.wgArticleId:0 
 					},

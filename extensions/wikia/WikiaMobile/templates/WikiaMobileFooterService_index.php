@@ -4,7 +4,6 @@
  * @var $defaultSkin String
  * @var $wf WikiaFunctionWrapper
  * @var $copyrightLink String
- * @var $privacyLink String
  * @var $feedbackLink String
  */
 ?>
@@ -20,7 +19,6 @@
 	<ul>
 		<li><a href="?useskin=<?= $defaultSkin ?>" id=wkFllSite data-skin="<?= $defaultSkin ?>"><?= wfMsg('mobile-full-site') ;?></a></li>
 		<li><?= $copyrightLink ;?></li>
-		<li><?= $privacyLink ;?></li>
 		<li><a href="<?= $feedbackLink ;?>" target=_blank><?= wfMsg('wikiamobile-feedback') ;?></a></li>
 	</ul>
 </footer>

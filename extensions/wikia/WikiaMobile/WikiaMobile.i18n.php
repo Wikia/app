@@ -32,7 +32,6 @@ $messages['en'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensing]]',
-	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Privacy Policy]]',
 	'mobile-full-site' => 'Full site',
 
 	//categories
@@ -115,7 +114,6 @@ $messages['qqq'] = array(
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-licencing' => 'Label for the link pointing to content licensing information',
-	'wikiamobile-footer-link-privacy' => 'Link leading to the Privacy Policy page',
 	'mobile-full-site' => 'Link to reload a page and load desktop skin',
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
 	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',

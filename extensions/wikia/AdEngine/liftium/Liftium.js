@@ -2467,13 +2467,9 @@ var BrowserDetect = {
 		{ string: navigator.userAgent, subString: "Mozilla", identity: "Netscape", versionSearch: "Mozilla" }
 	],
 	dataOS : [
-		{ string: navigator.userAgent, subString: "Android", identity: "Android" },
-		{ string: navigator.userAgent, subString: "iPad", identity: "iPad" },
-		{ string: navigator.userAgent, subString: "iPhone", identity: "iPhone/iPod" },
-		{ string: navigator.userAgent, subString: "SymbianOs", identity: "Symbian" },
-		{ string: navigator.userAgent, subString: "Windows Phone", identity: "Windows Phone" },
 		{ string: navigator.platform, subString: "Win", identity: "Windows" },
 		{ string: navigator.platform, subString: "Mac", identity: "Mac" },
+		{ string: navigator.userAgent, subString: "iPhone", identity: "iPhone/iPod" },
 		{ string: navigator.platform, subString: "Linux", identity: "Linux" }
 	]
 

@@ -47,31 +47,31 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		),
 		419 => array(
 			'name' => 'Outside Lines Travel',
-			'categories' => array( 'Lifestyle' )
+			'categories' => array()
 		),
 		196 => array(
 			'name' => 'VIDCAT Fashion TV',
-			'categories' => array( 'Lifestyle' )
+			'categories' => array()
 		),
 		586 => array(
 			'name' => 'Billboard',
-			'categories' => array( 'Entertainment' )
+			'categories' => array()
 		),
 		628 => array(
 			'name' => 'Sugar Inc. - FitSugar',
-			'categories' => array( 'Health & fitness', 'Lifestyle' )
+			'categories' => array( 'Health & fitness' )
 		),
 		629 => array(
 			'name' => 'Sugar Inc. - FabSugar',
-			'categories' => array( 'Fashion', 'Lifestyle' )
+			'categories' => array( 'Fashion' )
 		),
 		630 => array(
 			'name' => 'Sugar Inc. - BellaSugar',
-			'categories' => array( 'Beauty', 'Lifestyle' )
+			'categories' => array( 'Beauty' )
 		),
 		631 => array(
 			'name' => 'Sugar Inc. - YumSugar',
-			'categories' => array( 'Food', 'Lifestyle' )
+			'categories' => array( 'Food' )
 		),
 	);
 

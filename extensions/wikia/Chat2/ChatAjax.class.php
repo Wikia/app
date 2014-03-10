@@ -123,6 +123,8 @@ class ChatAjax {
 
 		NodeApiClient::setChatters($wgRequest->getArray('users'));
 
+		ChatRailController::purgeMethod("content");
+
 		wfProfileOut( __METHOD__ );
 		return array('status' => $wgRequest->getArray('users') );
 	}
