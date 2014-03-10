@@ -11,7 +11,12 @@
 				<? endif ?>
 			</span>
 			<p class="alternative">
-				<?= wfMessage('wikia-hubs-module-explore-image-tip')->parse() ?>
+				<?= wfMessage('wikia-hubs-module-explore-image-tip')
+					->numParams(
+						MarketingToolboxExploreModel::MAX_IMAGE_WIDTH,
+						MarketingToolboxExploreModel::MAX_IMAGE_HEIGHT
+					)
+					->parse() ?>
 			</p>
 
 			<?=$form->renderField('fileName')?>

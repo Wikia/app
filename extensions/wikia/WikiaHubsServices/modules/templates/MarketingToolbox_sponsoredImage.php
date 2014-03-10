@@ -21,7 +21,13 @@
 		</div>
 	</div>
 	<p class="alternative">
-		<?= wfMessage('wikia-hubs-module-sponsored-image-tip')->parse() ?>
+		<?= wfMessage('wikia-hubs-module-sponsored-image-tip')
+			->numParams(
+				AbstractMarketingToolboxModel::MAX_SPONSOR_IMAGE_WIDTH,
+				AbstractMarketingToolboxModel::MAX_SPONSOR_IMAGE_HEIGHT
+			)
+			->parse()
+		?>
 	</p>
 	<input class="secondary remove-sponsored-image" type="button" value="<?= wfMessage('wikia-hubs-remove')->text() ?>" />
 </div>

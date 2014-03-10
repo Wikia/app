@@ -10,6 +10,9 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 
 	const STRTOTIME_MIDNIGHT = '00:00';
 
+	const MAX_SPONSOR_IMAGE_WIDTH = 85;
+	const MAX_SPONSOR_IMAGE_HEIGHT = 15;
+
 	protected $statuses = array();
 	protected $modules = array();
 	protected $editableModules = array();

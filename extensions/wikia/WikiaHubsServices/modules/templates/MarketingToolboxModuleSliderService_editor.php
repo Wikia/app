@@ -13,7 +13,12 @@
 					<? endif ?>
 				</span>
 				<p class="alternative">
-					<?= wfMessage('wikia-hubs-module-slider-image-tip')->parse() ?>
+					<?= wfMessage('wikia-hubs-module-slider-image-tip')
+						->numParams(
+							MarketingToolboxSliderModel::IMAGE_WIDTH,
+							MarketingToolboxSliderModel::IMAGE_HEIGHT
+						)
+						->parse() ?>
 				</p>
 
 				<?=$form->renderField('photo' . $i); ?>
