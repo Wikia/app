@@ -90,7 +90,11 @@ class RelatedForumDiscussionController extends WikiaController {
 		foreach($ids as $id) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
 			WikiaDataAccess::cachePurge($key);
-			$requestsParams[] = array('articleId' => $id);
+			// purge the following responses: /wikia.php?controller=RelatedForumDiscussion&method=checkData&articleId=...&format=json
+			$requestsParams[] = [
+				'articleId' => $id,
+				'format' => 'json'
+			];
 		}
 
 		RelatedForumDiscussionController::purgeMethodVariants('checkData', $requestsParams);
