@@ -32,18 +32,20 @@ $config['tracker_js'] = array(
 	)
 );
 
-$config['liftium_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/liftium/Liftium.js',
-//		 TODO: get rid of those:
-		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
-		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
-		'//extensions/wikia/AdEngine/liftium/AdsInContent.js'
-	),
-);
+global $wgEnableRHonDesktop;
+if (!$wgEnableRHonDesktop) {
+	$config['liftium_ads_js'] = array(
+		'type' => AssetsManager::TYPE_JS,
+		'assets' => array(
+			'//extensions/wikia/AdEngine/liftium/Liftium.js',
+	//		 TODO: get rid of those:
+			'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
+			'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
+			'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
+			'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+		),
+	);
+}
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -102,6 +104,9 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
+		'#group_liftium_ads_js',
+
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 	),
 );
 
