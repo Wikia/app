@@ -24,6 +24,7 @@
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
+		adSlotMapConfig,
 		sevenOneMediaHelper;
 
 	// TODO: make Liftium and AdEngine2 rely less on order of execution
@@ -34,7 +35,8 @@
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
 	slotTweaker = SlotTweaker(log, document, window);
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams);
+	adSlotMapConfig = AdSlotMapConfig();
+	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
@@ -43,7 +45,7 @@
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, $, sevenOneMediaHelper);
 
 	if (window.wgEnableRHonDesktop) {
-        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt);
+        adProviderRemanantDart = AdProviderRemnantDart(adTracker, log, slotTweaker, wikiaFullGpt, adSlotMapConfig);
 	} else {
 		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
 	}
