@@ -19,8 +19,8 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, indicatorTimer,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable, loadIndicator,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, loadIndicator,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
