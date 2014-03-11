@@ -73,13 +73,11 @@ class SongScraper extends BaseScraper {
 	 */
 	public function getDataMap() {
 		return [
-			'article_id' => 'article_id',
-			'available' => 'available',
+			'article_id' => 'id',
 			'number' => 'number',
-			'song' => 'name',
+			'song' => 'song_name',
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
-/* These fields are also captured but not needed now
 			'Artist' => 'artist',
 			'romanizedSong' => 'romanized_name',
 			'language' => 'language',
@@ -89,8 +87,7 @@ class SongScraper extends BaseScraper {
 			'musicbrainz' => 'musicbrainz',
 			'allmusic' => 'allmusic',
 			'download' => 'download',
-*/
 		];
 	}
 
-} 
+}

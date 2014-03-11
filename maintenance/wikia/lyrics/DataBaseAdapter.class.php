@@ -114,15 +114,21 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	private function add( Solarium_Document_ReadWrite $doc ) {
 		$this->queue[] = $doc;
+		$this->autoCommit();
 	}
 
 	/**
-	 * Create new update document
+	 * Create new solr doc from data array
 	 *
+	 * @param $data
 	 * @return Solarium_Document_ReadWrite
 	 */
-	private function newDoc() {
-		return $this->update->createDocument();
+	private function newDocFromData( $data ) {
+		$doc = $this->update->createDocument();
+		foreach ( $data as $key => $value ) {
+			$doc->{$key} = $value;
+		}
+		return $doc;
 	}
 
 	/**
@@ -135,6 +141,63 @@ class SolrAdapter implements DataBaseAdapter {
 		return json_encode( $metaData );
 	}
 
+	function getAlbumMetaData( Array $album ) {
+		if ( isset( $album['id'] ) ) {
+			return [
+				'id' => $album['id'],
+				'album_name' => $album['album_name'],
+				'image' => $album['image'],
+				'release_date' => $album['release_date'],
+				'available' => $album['available'],
+			];
+		}
+		return null;
+	}
+
+	function getArtistMetaData( Array $artist ) {
+		$result = [
+			'id' => $artist['id'],
+			'name' => $artist['artist_name'],
+		];
+		if ( isset( $artist['image'] ) ) {
+			$result['image'] = $artist['image'];
+		}
+		return $result;
+	}
+
+	function getSongMetaData( Array $song ) {
+		$result = [
+			'name' => $song['song_name'],
+		];
+		if ( isset( $song['id'] ) ) {
+			$result['id'] = $song['id'];
+		}
+		return $result;
+	}
+
+	function getAlbumsMetaData( Array $albums ) {
+		$result = [];
+		foreach ( $albums as $album ) {
+			$album = $this->getAlbumMetaData( $album );
+			if ( $album ) {
+				$result[] = $album;
+			}
+		}
+		return $result;
+	}
+
+	function getSongsMetaData( Array $songs ) {
+		$result = [];
+		foreach ( $songs as $song ) {
+			$song = $this->getSongMetaData( $song );
+			if ( $song ) {
+				$result[] = $song;
+			}
+		}
+		return $result;
+	}
+
+
 	/**
 	 * Save artist document to Solr
 	 *
@@ -142,41 +205,10 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $albums
 	 */
 	function saveArtist( Array $artist, Array $albums ) {
-		$meta = [
-			'albums' => [],
-			'songs' => [],
-		];
-		if (
-			isset( $artist['image'] ) &&
-			!empty( $artist['image'] )
-		) {
-			$meta['image'] = $artist['image'];
-		}
-		foreach ( $albums as $album ) {
-			if ( empty( $album['article_id'] ) ) {
-				foreach ( $album['songs'] as $song ) {
-					$meta['songs'][] = [
-						'name' => $song['name'],
-						'available' => $song['available'],
-					];
-				}
-			} else {
-				$meta['albums'][] = [
-					'name' => $album['name'],
-					'image' => $album['image'],
-					'year' => $album['year'],
-					'available' => $album['available'],
-				];
-			}
-		}
-		$doc = $this->newDoc();
-		$doc->id = $this->generateKey( [$artist['name']] );
-		$doc->name = $artist['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->type = self::TYPE_ARTIST;
-		$doc->article_id = $artist['article_id'];
+		// Add albums data
+		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
+		$doc = $this->newDocFromData( $artist );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 
 	/**
@@ -186,39 +218,21 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $album
 	 * @param array $songs
 	 */
-	function saveAlbum( Array $artist, Array $album, Array $songs) {
-		if ( empty ( $album['article_id'] ) ) {
-			// Don't create meta albums like "Other songs"
+	function saveAlbum( Array $artist, Array $album, Array $songs ) {
+		// Non album
+		if ( !isset($album['id'] ) ) {
 			return;
 		}
-		$meta = [
-			'image' => $album['image'],
-			'year' => $album['year'],
-			'length' => $album['length'],
-			'genres' => $album['genres'],
-			'itunes' => $album['itunes'],
-			'artist' => [
-				'name' => $artist['name'],
-				'image' => $artist['image'],
-			],
-			'songs' => []
-		];
+		// Add artist meta data
+		$album['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
+		// Add songs meta data
+		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
 
-		foreach ( $songs as $song ) {
-			$meta['songs'][] = [
-				'name' => $song['name'],
-				'number' => $song['number'],
-				'available' => $song['available'],
-			];
-		}
-		$doc = $this->newDoc();
-		$doc->id = $this->generateKey( [$artist['name'], $album['name']] );
-		$doc->name = $album['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->type = self::TYPE_ALBUM;
-		$doc->article_id = $album['article_id'];
+		$album['artist_id'] = $artist['id'];
+		$album['artist_name'] = $artist['artist_name'];
+
+		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 
 	/**
@@ -228,41 +242,18 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $album
 	 * @param array $song
 	 */
-	function saveSong( Array $artist, Array $album, Array $song) {
-		$meta = [
-			'itunes' => $song['itunes'],
-			'artist' => [
-				'name' => $artist['name'],
-				'image' => $artist['image'],
-			],
-		];
-
-		if ( $album['available'] ) {
-			$meta['album'] = [
-				'name' => $album['name'],
-				'image' => $album['image'],
-			];
-			$key = $this->generateKey( [
-				$artist['name'],
-				$album['name'],
-				$song['name'],
-			] );
-		} else {
-			$key = $this->generateKey( [
-				$artist['name'],
-				'',
-				$song['name'],
-			] );
+	function saveSong( Array $artist, Array $album, Array $song ) {
+		// Non song
+		if ( !isset( $song['id'] ) ) {
+			return;
 		}
-		$doc = $this->newDoc();
-		$doc->id = $key;
-		$doc->name = $song['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->content = $song['lyrics'];
-		$doc->type = self::TYPE_SONG;
-		$doc->article_id = $song['article_id'];
+		$song['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
+		$albumMeta = $this->getAlbumMetaData( $album );
+		if ( !is_null( $albumMeta ) ) {
+			$song['album'] = $albumMeta;
+		}
+		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 }
 

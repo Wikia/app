@@ -50,15 +50,13 @@ class AlbumScraper extends BaseScraper {
 	 */
 	public function getDataMap() {
 		return [
-			'available' => 'available',
-			'article_id' => 'article_id',
+			'article_id' => 'id',
 			'Cover' => 'image',
-			'year' => 'year',
-			'Album' => 'name',
+			'year' => 'release_date',
+			'Album' => 'album_name',
 			'iTunes' => 'itunes',
 			'Genre' => 'genres',
 			'Length' => 'length',
-/* These fields are also captured but not needed now
 			'Artist' => 'artist',
 			'Wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_name',
@@ -68,7 +66,6 @@ class AlbumScraper extends BaseScraper {
 			'musicbrainz' => 'musicbrainz',
 			'download' => 'download',
 			'songs' => 'songs',
-*/
 		];
 	}
 

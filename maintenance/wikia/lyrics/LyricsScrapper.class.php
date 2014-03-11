@@ -50,8 +50,8 @@ class LyricsScrapper {
 		// Get Artist data
 		$artistData = $this->artistScraper->processArticle( $article );
 		// Get basic albums data from Artist page
-		$leanAlbumsData = $this->artistScraper->getAlbums( $article, $artistData['name'] );
-		self::log( "\tARTIST: " . $artistData['name'] . PHP_EOL );
+		$leanAlbumsData = $this->artistScraper->getAlbums( $article, $artistData['artist_name'] );
+		self::log( "\tARTIST: " . $artistData['artist_name'] . PHP_EOL );
 		$albumsData = $this->processAlbums( $artistData, $leanAlbumsData );
 		// Save Artist
 		$this->dba->saveArtist( $artistData, $albumsData );
