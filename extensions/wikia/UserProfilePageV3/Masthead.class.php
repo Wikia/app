@@ -525,6 +525,10 @@ class Masthead {
 		wfProfileOut(__METHOD__);
 	}
 
+	private function getThumbPath( $dir ) {
+		return str_replace( "/avatars/", "/avatars/thumb/", $dir );		
+	}
+
 	/**
 	 * While this is technically downloading the URL, the function's purpose is to be similar
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
@@ -790,38 +794,68 @@ class Masthead {
 	 * @return boolean status of operation
 	 */
 	private function purgeThumbnails( ) {
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
 		// get path to thumbnail folder
 		wfProfileIn( __METHOD__ );
 
 		// dirty hack, should work in this case
-		$dir = $this->getFullPath( );
-		$dir = str_replace( "/avatars/", "/avatars/thumb/", $dir );
-		if( is_dir( $dir )  ) {
-			$files = array();
-			// copied from LocalFile->getThumbnails
-			$handle = opendir( $dir );
+		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
+			$swift = $this->getSwiftStorage();
 
-			if ( $handle ) {
-				while ( false !== ( $file = readdir( $handle ) ) ) {
-					if ( $file{0} != '.' ) {
-						$files[] = $file;
+			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+			$dir = sprintf( 'mwstore://swift-backend/%s%s%s', $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
+			$dir = $this->getThumbPath( $dir );
+
+			$avatarRemotePath = sprintf( "thumb%s", $this->getLocalPath() );
+
+			$files = array();
+			$iterator = $backend->getFileList( array( 'dir' => $dir ) );
+			foreach ( $iterator as $file ) {
+				$files[] = sprintf( "%s/%s", $avatarRemotePath, $file );
+			}
+
+			if ( !empty( $files ) ) {
+				foreach ( $files as $file ) {
+					$status = $swift->remove( $file );
+					if ( ! $status->isOk() ) {
+						wfDebugLog( "avatar", __METHOD__ . ": $file exists but cannot be removed.\n", true );
+					} else {
+						wfDebugLog( "avatar", __METHOD__ . ": $file removed.\n", true );
 					}
 				}
-				closedir( $handle );
 			}
-
-			// copied from LocalFile->purgeThumbnails()
-			$urls = array();
-			$urls[] = $this->getPurgeUrl( "/thumb/" );
-			foreach( $files as $file ) {
-				@unlink( "$dir/$file" );
-				$url = $this->getPurgeUrl( '/thumb/' ) . "/$file" ;
-				$urls[] = $url;
-				wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file\n", true );
-			}
+			wfDebugLog( "avatar", __METHOD__ . ": all thumbs removed.\n", true );
 		}
 		else {
-			wfDebugLog( "avatar", __METHOD__ . ": $dir exists but is not directory so not removed.\n", true );
+			$dir = $this->getFullPath( );
+			$dir = $this->getThumbPath( $dir );
+			if( is_dir( $dir )  ) {
+				$files = array();
+				// copied from LocalFile->getThumbnails
+				$handle = opendir( $dir );
+
+				if ( $handle ) {
+					while ( false !== ( $file = readdir( $handle ) ) ) {
+						if ( $file{0} != '.' ) {
+							$files[] = $file;
+						}
+					}
+					closedir( $handle );
+				}
+
+				// copied from LocalFile->purgeThumbnails()
+				$urls = array();
+				$urls[] = $this->getPurgeUrl( "/thumb/" );
+				foreach( $files as $file ) {
+					@unlink( "$dir/$file" );
+					$url = $this->getPurgeUrl( '/thumb/' ) . "/$file" ;
+					$urls[] = $url;
+					wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file\n", true );
+				}
+			}
+			else {
+				wfDebugLog( "avatar", __METHOD__ . ": $dir exists but is not directory so not removed.\n", true );
+			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
