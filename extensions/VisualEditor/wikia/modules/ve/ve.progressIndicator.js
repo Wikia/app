@@ -16,10 +16,8 @@ mw.libs.ve = $.extend( mw.libs.ve, {} );
  * @param {string} Message label
  */
 mw.libs.ve.progressIndicator = function( icon, message ) {
-	var $content;
-
+	var $content = $( '<div>' ).addClass( 'content' );
 	this.$indicator = $( '<div>' ).addClass( 've-indicator visible' );
-	$content = $( '<div>' ).addClass( 'content' );
 	this.$icon = $( '<div>' ).addClass( 'icon ' + icon );
 	this.$message = $( '<p>' )
 		.addClass( 'message' )
@@ -36,7 +34,7 @@ mw.libs.ve.progressIndicator = function( icon, message ) {
 		.css( { 'opacity': 1, 'z-index': 99999999 } )
 		.hide();
 
-	this.messageTimer = null;
+	this.messageTimeoutId = null;
 };
 
 /**
@@ -54,25 +52,25 @@ mw.libs.ve.progressIndicator.prototype.setIcon = function ( icon ) {
  * Set the message for the indicator.
  *
  * @method
- * @param {string} Message label
+ * @param {string} Message key
  * @returns {void}
  */
-mw.libs.ve.progressIndicator.prototype.setMessage = function ( message ) {
-	this.$message.text( mw.message( message ).plain() );
+mw.libs.ve.progressIndicator.prototype.setMessage = function ( messageKey ) {
+	this.$message.text( mw.message( messageKey ).plain() );
 };
 
 /**
  * Show the indicator using jQuery's fade-in effect.
  *
  * @method
- * @param {number} Optional delay, in milliseconds, when displaying the indicator message
+ * @param {number} [messageDelay] Optional delay, in milliseconds, when displaying the indicator message
  * @returns {void}
  */
 mw.libs.ve.progressIndicator.prototype.show = function( messageDelay ) {
 	if ( typeof messageDelay === 'number' ) {
 		this.$message.hide();
 		// The ve.bind() method might not be available to use yet, so use native bind() instead.
-		this.messageTimer = setTimeout( this.slideMessage.bind( this ), messageDelay );
+		this.messageTimeoutId = setTimeout( this.slideMessage.bind( this ), messageDelay );
 	}
 	this.$indicator.fadeIn();
 };
@@ -84,14 +82,16 @@ mw.libs.ve.progressIndicator.prototype.show = function( messageDelay ) {
  * @returns {void}
  */
 mw.libs.ve.progressIndicator.prototype.slideMessage = function( ) {
-	this.$message.slideDown( 400 );
+	if ( this.$indicator.is( ':visible' ) ) {
+		this.$message.slideDown( 400 );
+	}
 };
 
 /**
  * Hide the indicator using jQuery's fade-out effect.
  *
  * @method
- * @param {number} Optional delay, in milliseconds, to wait until hiding the indicator.
+ * @param {number} [delay] Optional delay, in milliseconds, to wait until hiding the indicator.
  * @returns {void}
  */
 mw.libs.ve.progressIndicator.prototype.hide = function( delay ) {
@@ -101,14 +101,4 @@ mw.libs.ve.progressIndicator.prototype.hide = function( delay ) {
 	else {
 		this.$indicator.fadeOut();
 	}
-};
-
-/**
- * Access the jQuery object for direct manipulation.
- *
- * @method
- * @returns {jQuery}
- */
-mw.libs.ve.progressIndicator.prototype.getIndicator = function() {
-	return this.$indicator;
 };

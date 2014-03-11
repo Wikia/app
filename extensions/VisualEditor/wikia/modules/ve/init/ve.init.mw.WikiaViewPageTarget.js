@@ -82,8 +82,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 	// Show saving indicator
 	if ( this.saveIndicator === null ) {
 		this.saveIndicator = new mw.libs.ve.progressIndicator( 'loading', 'wikia-visualeditor-indicator-saving' );
-	}
-	else {
+	} else {
 		this.saveIndicator.setIcon( 'loading' );
 		this.saveIndicator.setMessage( 'wikia-visualeditor-indicator-saving' );
 	}
