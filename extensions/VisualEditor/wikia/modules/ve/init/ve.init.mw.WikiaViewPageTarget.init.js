@@ -19,14 +19,15 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage, indicatorTimer,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [],
+		plugins = [], veUIEnabled,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
-		};
+		},
+		indicatorTimeoutId = null;
 
 	function initIndicator() {
 		var $indicator = $( '<div>' )
@@ -50,8 +51,9 @@
 
 		// Cleanup indicator when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
-			if ( indicatorTimer !== 'undefined' ) {
-				clearTimeout( indicatorTimer );
+			if ( indicatorTimeoutId ) {
+				clearTimeout( indicatorTimeoutId );
+				indicatorTimeoutId = null;
 			}
 			if ( $indicator.is( ':visible' ) ) {
 				$indicator.fadeOut( 400 );
@@ -66,8 +68,8 @@
 		$message.hide();
 		$indicator.fadeIn( 400 );
 
-		// Display the message if loading is taking awhile
-		indicatorTimer = setTimeout( function () {
+		// Display a message if loading is taking longer than 3 seconds
+		indicatorTimeoutId = setTimeout( function () {
 			if ( $indicator.is( ':visible' ) ) {
 				$message.slideDown( 400 );
 			}
@@ -124,6 +126,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -196,7 +199,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -380,11 +385,15 @@
 	initIndicator();
 
 	// Redlinks
-	$( function () {
+	if ( veUIEnabled ) {
+		$( setupRedlinks );
+	}
+
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
+			function() {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
@@ -395,5 +404,5 @@
 				}
 			}
 		);
-	} );
+	}
 }() );
