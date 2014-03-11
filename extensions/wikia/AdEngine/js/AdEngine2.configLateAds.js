@@ -6,8 +6,8 @@
  */
 
 /*global DartUrl, ScriptWriter, AdLogicPageLevelParams, SlotTweaker, AdTracker*/
-/*global AdProviderNull, AdProviderLiftium, AdProviderSevenOneMedia, SevenOneMediaHelper*/
-/*global AdConfig2Late, Wikia, window, document, Geo, Krux, jQuery*/
+/*global AdProviderNull, AdProviderRemnantGpt, AdProviderLiftium, AdProviderSevenOneMedia, SevenOneMediaHelper*/
+/*global AdConfig2Late, GptSlotConfig, WikiaGptHelper, Wikia, window, document, Geo, Krux, jQuery*/
 /*jslint newcap:true*/
 /*jshint maxparams:false, camelcase:false, maxlen: 150*/
 
@@ -21,10 +21,13 @@
 		dartUrl,
 		adTracker,
 		slotTweaker,
+		wikiaGptHelper,
 		fakeLiftium = {},
+		adProviderRemnantGpt,
 		adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia,
+		gptSlotConfig,
 		sevenOneMediaHelper;
 
 	// TODO: make Liftium and AdEngine2 rely less on order of execution
@@ -37,19 +40,26 @@
 	scriptWriter = ScriptWriter(document, log, window);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux); // omitted a few optional deps
 	slotTweaker = SlotTweaker(log, document, window);
+	gptSlotConfig = GptSlotConfig();
+	wikiaGptHelper = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 
 	// TODO: ad provider error
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	sevenOneMediaHelper = SevenOneMediaHelper(adLogicPageLevelParams, scriptWriter, log, window, $, tracker);
 	adProviderSevenOneMedia = AdProviderSevenOneMedia(log, window, adTracker, $, sevenOneMediaHelper);
-	adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
+
+	if (window.wgEnableRHonDesktop) {
+		adProviderRemnantGpt = AdProviderRemnantGpt(log, slotTweaker, wikiaGptHelper, gptSlotConfig);
+	} else {
+		adProviderLiftium = AdProviderLiftium(log, document, slotTweaker, fakeLiftium, scriptWriter, window);
+	}
 
 	adConfig = AdConfig2Late(
 		log,
 		window,
 		abTest,
-		adProviderLiftium,
+		window.wgEnableRHonDesktop ? adProviderRemnantGpt : adProviderLiftium,
 		adProviderNull,
 		adProviderSevenOneMedia
 	);

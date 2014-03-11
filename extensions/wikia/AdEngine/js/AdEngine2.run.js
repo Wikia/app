@@ -6,10 +6,10 @@
 /*global document, window */
 /*global Geo, Wikia, Krux, AdTracker, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaFullGptHelper */
-/*global AdProviderEvolve, AdProviderGpt, AdProviderLater, AdProviderNull */
+/*global WikiaDartHelper, WikiaFullGptHelper, AdLogicPageDimensions */
+/*global AdProviderEvolve, AdProviderDirectGpt, AdProviderLater, AdProviderNull */
 /*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
-/*global AdLogicPageLevelParamsLegacy, AdSlotMapConfig */
+/*global AdLogicPageLevelParamsLegacy, GptSlotConfig */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
@@ -32,14 +32,14 @@
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
-		wikiaFullGpt,
+		wikiaGptHelper,
 		evolveHelper,
-		adProviderGpt,
+		adProviderDirectGpt,
 		adProviderEvolve,
 		adProviderLater,
 		adProviderNull,
 		slotTweaker,
-		adSlotMapConfig,
+		gptSlotConfig,
 
 		queueForLateAds,
 		adConfigForLateAds,
@@ -62,7 +62,7 @@
 	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
-	adSlotMapConfig = AdSlotMapConfig();
+	gptSlotConfig = GptSlotConfig();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
@@ -71,11 +71,11 @@
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
 	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaFullGpt = WikiaFullGptHelper(log, window, document, adLogicPageLevelParams, adSlotMapConfig);
+	wikiaGptHelper = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
+	adProviderDirectGpt = AdProviderDirectGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaGptHelper, gptSlotConfig);
 	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
@@ -94,7 +94,7 @@
 		adDecoratorPageDimensions,
 
 		// AdProviders:
-		adProviderGpt,
+		adProviderDirectGpt,
 		adProviderEvolve,
 		adProviderLater,
 		adProviderNull
@@ -176,6 +176,9 @@
 		}
 	};
 
+	if (window.wgEnableRHonDesktop) {
+		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
+	}
 	// Load Krux asynchronously later
 	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
 	// or on DOM ready, it will be loaded after most (if not all) of the ads
