@@ -29,6 +29,7 @@ define('videosmodule.views.bottomModule', [
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		this.shouldRender = true;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -40,7 +41,8 @@ define('videosmodule.views.bottomModule', [
 		var self = this;
 		if (!groupParams) {
 			// Handle control group, no videos module display
-			this.handleRelatedPages(false);
+			this.shouldRender = false;
+			this.handleRelatedPages();
 			return;
 		}
 
@@ -51,7 +53,7 @@ define('videosmodule.views.bottomModule', [
 			threshold: 200,
 			callback: function () {
 				self.data.complete(function () {
-					self.handleRelatedPages(true);
+					self.handleRelatedPages();
 				});
 			}
 		});
@@ -60,33 +62,35 @@ define('videosmodule.views.bottomModule', [
 	/**
 	 * Handle logic to display videos module or not based on related pages module
 	 * Also used for tracking related pages impressions
-	 * @param {boolean} render
 	 */
-	VideoModule.prototype.handleRelatedPages = function (render) {
+	VideoModule.prototype.handleRelatedPages = function () {
 		var self = this;
-
-		// called if related pages module is present
-		function afterPresent() {
-			track({
-				label: 'related-pages-impression'
-			});
-			if (render) {
-				self.render();
-			}
-		}
 
 		// check if related pages is loaded and visible
 		if (this.elContentPresent()) {
-			afterPresent();
+			this.onRelatedPagesLoad();
 		} else {
 			// wait till after related pages has loaded to check if visible
 			this.$el.on('afterLoad.relatedPages', function () {
 				if (self.elContentPresent()) {
-					afterPresent();
+					self.onRelatedPagesLoad();
 				}
 			});
 		}
 	};
+
+	/**
+	 * Called when related pages loads and is visible
+	 */
+	VideoModule.prototype.onRelatedPagesLoad = function () {
+		track({
+			label: 'related-pages-impression'
+		});
+		if (this.shouldRender) {
+			this.render();
+		}
+	};
+
 
 	/**
 	 * Check if the element has content that is not hidden by css
