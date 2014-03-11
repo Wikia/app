@@ -148,7 +148,6 @@ class SolrAdapter implements DataBaseAdapter {
 				'album_name' => $album['album_name'],
 				'image' => $album['image'],
 				'release_date' => $album['release_date'],
-				'available' => $album['available'],
 			];
 		}
 		return null;
