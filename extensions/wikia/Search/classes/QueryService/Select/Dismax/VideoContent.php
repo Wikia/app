@@ -33,7 +33,7 @@ class VideoContent extends AbstractDismax
 		$dismax = $query->getDismax();
 		$dismax->setQueryParser( 'edismax' )
 		       ->setMinimumMatch( $this->getConfig()->getMinimumMatch() )
-		       ->setQueryFields( 'title_en^100 html_en^5 redirect_titles_mv_en^50 categories_mv_en^25 nolang_txt^10 backlinks_txt^25 title_en^100 html_en^5 redirect_titles_mv_en^50 video_actors_txt^100 video_genres_txt^50 html_media_extras_txt^20 video_description_txt^100 video_keywords_txt^60 video_tags_txt^40' )
+		       ->setQueryFields( 'title_en^100 html_en^5 redirect_titles_mv_en^50 categories_mv_en^25 nolang_txt^10 backlinks_txt^25 video_actors_txt^100 video_genres_txt^50 html_media_extras_txt^20 video_description_txt^100 video_keywords_txt^60 video_tags_txt^40' )
 		       ->setPhraseFields( 'title_en' )
 		       ->setPhraseSlop( 4 );
 		$queryString = "+(wid:%1% AND is_video:true AND categories_mv_en:%2%) AND +(%3%)";
