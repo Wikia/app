@@ -155,6 +155,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 	}
 
 	public function saveData() {
+		
 		if ( !$this->checkAccess() ) {
 			$this->success = false;
 			$this->error   = wfMsg( 'promote-wrong-rights' );
@@ -168,6 +169,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		if ( empty( $data['additionalImagesNames'] ) ) {
 			$data['additionalImagesNames'] = array();
 		}
+		WikiaLogger::instance()->warning("SpecialPromote", ['method' => __MEHOD__, 'data'=> $data]);
 
 		try {
 			$this->helper->saveVisualizationData( $data, $this->wg->contLang->getCode() );
