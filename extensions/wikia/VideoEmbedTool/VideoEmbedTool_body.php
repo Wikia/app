@@ -9,7 +9,6 @@ class VideoEmbedTool {
 	function loadMain( $error = false ) {
 		global $wgContLanguageCode, $wgVETNonEnglishPremiumSearch, $wgUser;
 
-
 		$showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ).'/templates/' );
@@ -18,11 +17,13 @@ class VideoEmbedTool {
 			'vet_premium_videos_search_enabled' => ( $wgContLanguageCode == 'en' ) || $wgVETNonEnglishPremiumSearch,
 			'showAddVideoBtn' => $showAddVideoBtn
 		) );
+
 		return $tmpl->render( "main" );
 	}
 
 	function recentlyUploaded() {
 		global $IP, $wmu;
+
 		require_once( $IP . '/includes/SpecialPage.php' );
 		require_once( $IP . '/includes/specials/SpecialNewimages.php' );
 		// this needs to be revritten, since we will not display recently uploaded, but embedded
@@ -31,11 +32,13 @@ class VideoEmbedTool {
 		wfSpecialNewimages( 8, $isp );
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$tmpl->set_vars( array( 'data' => $wmu ) );
+
 		return $tmpl->render( "results_recently" );
 	}
 
 	function editVideo() {
 		global $wgRequest;
+
 		$itemTitle = $wgRequest->getVal( 'itemTitle' );
 		$title = Title::newFromText( $itemTitle, NS_FILE );
 		$file = wfFindFile( $title );
@@ -60,11 +63,13 @@ class VideoEmbedTool {
 		$tmpl = new EasyTemplate( dirname( __FILE__ ).'/templates/' );
 
 		$tmpl->set_vars( array( 'props' => $props, 'screenType' => 'edit' ) );
+
 		return $tmpl->render( 'details' );
 	}
 
 	function insertVideo() {
 		global $wgRequest, $wgUser, $wgContLang;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgUser->isBlocked() ) {
@@ -88,12 +93,11 @@ class VideoEmbedTool {
 		try {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
-		}
-		catch ( Exception $e ) {
+		} catch ( Exception $e ) {
 			$nonPremiumException = $e;
 		}
 
-		if( !empty( $apiwrapper ) ) { // try ApiWrapper first - is it from a supported 3rd party ( non-premium ) provider?
+		if ( !empty( $apiwrapper ) ) { // try ApiWrapper first - is it from a supported 3rd party ( non-premium ) provider?
 			$provider = $apiwrapper->getMimeType();
 
 			$file = new WikiaLocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
@@ -123,14 +127,12 @@ class VideoEmbedTool {
 				if ( !$file ) { // bugID: 26721
 					$file = wfFindFile( urldecode( $matches[2] ) );
 				}
-			}
-			elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			} elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
 				$file = wfFindFile( $matches[2] );
 				if ( !$file ) { // bugID: 26721
 					$file = wfFindFile( $matches[2] );
 				}
-			}
-			else {
+			} else {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
 					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
@@ -169,19 +171,19 @@ class VideoEmbedTool {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $this->detailsPage( $props );
 	}
 
 	function detailsPage( $props ) {
 		global $wgUser;
 
-
 		$tmpl = new EasyTemplate( dirname( __FILE__ ).'/templates/' );
 
 		$showAddVideoBtn = $wgUser->isAllowed( 'videoupload' );
 
-		$tmpl->set_vars(
-			array( 'props' => $props,
+		$tmpl->set_vars( array(
+			'props' => $props,
 			'screenType' => 'details',
 			'showAddVideoBtn' => $showAddVideoBtn
 		) );
@@ -200,7 +202,7 @@ class VideoEmbedTool {
 		$name = urldecode( $wgRequest->getVal( 'name' ) );
 		$embed_code = '';
 
-		if( $provider == 'FILE' ) { // no need to upload, local reference
+		if ( $provider == 'FILE' ) { // no need to upload, local reference
 			$title = $oTitle = Title::newFromText( $name, NS_FILE );
 			if ( empty( $oTitle ) ) {
 				header( 'X-screen-type: error' );
@@ -211,7 +213,7 @@ class VideoEmbedTool {
 			// sanitize name and init title objects
 			$name = VideoFileUploader::sanitizeTitle( $name );
 
-			if( $name == '' ) {
+			if ( $name == '' ) {
 				header( 'X-screen-type: error' );
 				return wfMsg( 'vet-warn3' );
 			}
@@ -260,17 +262,24 @@ class VideoEmbedTool {
 
 		header( 'X-screen-type: summary' );
 		$tag = $ns_file . ":" . $oTitle->getText();
-		if( !empty( $size ) )		$tag .= "|$size";
-		if( !empty( $layout ) )		$tag .= "|$layout";
-		if( $width != '' )		$tag .= "|$width px";
-		if( $caption != '' )		$tag .= "|".$caption;
-
+		if ( !empty( $size ) ) {
+			$tag .= "|$size";
+		}
+		if ( !empty( $layout ) ) {
+			$tag .= "|$layout";
+		}
+		if ( $width != '' ) {
+			$tag .= "|$width px";
+		}
+		if ( $caption != '' ) {
+			$tag .= "|".$caption;
+		}
 		$tag = "[[$tag]]";
 		$button_message = wfMessage( 'vet-return' );
 
 		// Adding a video from article view page
 		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
-		if( $editingFromArticle ) {
+		if ( $editingFromArticle ) {
 			Wikia::setVar( 'EditFromViewMode', true );
 
 			$article_title = $wgRequest->getVal( 'article' );
@@ -286,7 +295,6 @@ class VideoEmbedTool {
 
 			$success = false;
 			if ( $placeholder ) {
-
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
 				$embed_code = $file->transform( array( 'width'=>$width ) )->toHtml();
@@ -305,7 +313,7 @@ class VideoEmbedTool {
 				$embed_code = $image_data['tag'];
 
 				// Make output match what's in a saved article
-				if( $layout == 'center' ) {
+				if ( $layout == 'center' ) {
 					$embed_code = '<div class="center">'.$embed_code.'</div>';
 				}
 
@@ -329,7 +337,8 @@ class VideoEmbedTool {
 			'message' => $message,
 			'code' => $embed_code,
 			'button_message' => $button_message,
-			) );
+		) );
+
 		return $tmpl->render( 'summary' );
 	}
 
@@ -346,7 +355,7 @@ class VideoEmbedTool {
 		$oUploader->setProvider( $provider );
 		$oUploader->setVideoId( $videoId );
 		$oUploader->setTargetTitle( $videoName );
-		return $oUploader->upload( $oTitle );
 
+		return $oUploader->upload( $oTitle );
 	}
 }
