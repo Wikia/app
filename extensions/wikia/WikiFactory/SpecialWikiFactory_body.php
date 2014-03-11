@@ -232,7 +232,7 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return nothing
 	 */
 	public function doWikiForm() {
-		global $wgOut, $wgRequest, $wgStylePath;
+		global $wgOut, $wgRequest, $wgStylePath, $wgUser;
 		global $wgDevelEnvironment;
 
 		$info = null;
@@ -346,21 +346,33 @@ class WikiFactoryPage extends SpecialPage {
 		);
 		if( $this->mTab === 'info' ) {
 			$vars[ 'founder_id' ] = $this->mWiki->city_founding_user;
+			#this is the static stored email
+			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
 
 			if( !empty( $this->mWiki->city_founding_user ) ) {
 				#if we knew who they were, get their current info
 				$fu = User::newFromId( $this->mWiki->city_founding_user );
 				$vars[ 'founder_username' ] = $fu->getName();
 				$vars[ 'founder_usermail' ] = $fu->getEmail();
-			}
-			else
+				$vars[ 'founder_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?founder=" . rawurlencode( $fu->getName() );
+				$vars[ 'founder_usermail_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_usermail' ] );
+				$vars[ 'founder_email_metrics_url' ] = $vars[ 'wikiFactoryUrl' ] . "/Metrics?email=" . urlencode( $vars[ 'founder_email' ] );
+			} else
 			{	#dont know who made the wiki, so dont try to do lookups
 				$vars[ 'founder_username' ] = null;
 				$vars[ 'founder_usermail' ] = null;
 			}
 
-			#this is the static stored email
-			$vars[ 'founder_email' ] = $this->mWiki->city_founding_email;
+			if( $wgUser->isAllowed( 'lookupuser' ) ) {
+				$vars[ 'lookupuser_by_founder_email_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_email']));
+
+				if( !empty( $vars['founder_username'] ) ) {
+					$vars[ 'lookupuser_by_founder_username_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_username']));
+				}
+				if( !empty( $vars['founder_usermail'] ) ) {
+					$vars[ 'lookupuser_by_founder_usermail_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_usermail']));
+				}
+			}
 		}
 		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
