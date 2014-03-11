@@ -151,7 +151,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending TOC to a side menu
 	 */
-	function append () {
+	function init () {
 		$toc.on( 'click', 'header', function () {
 			onClose( 'header' );
 			window.scrollTo( 0, 0 );
@@ -178,13 +178,23 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function onTap ( event ) {
+	function scrollToToc ( event ) {
 		event.stopPropagation();
 		inPageToc.scrollIntoView();
 
 		track.event( 'newtoc', track.CLICK, {
 			label: 'scroll'
 		} );
+	}
+
+	function toggleSideMenu( event ) {
+		event.stopPropagation();
+
+		if ( $toc.hasClass( active ) ) {
+			onClose();
+		} else {
+			onOpen();
+		}
 	}
 
 	/**
@@ -195,7 +205,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
 		if ( !appended ) {
-			append();
+			init();
 		}
 
 		onSectionChange( null, sections.current()[0], true );
@@ -224,7 +234,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Initializes the proper version of TOC and event handlers for it
 	 */
-	function init () {
+	if ( show ) {
 		$document.on( 'curtain:hidden', onClose );
 
 		if ( !sideMenuCapable ) {
@@ -235,25 +245,13 @@ function ( sections, window, $, mustache, toc, track ) {
 				).find('.level');
 
 			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
-			$tocHandle.on( 'click', onTap );
+			$tocHandle.on( 'click', scrollToToc );
 
 		} else {
-			$tocHandle.on( 'click', function( event ){
-				event.stopPropagation();
-				if ( $toc.hasClass( active ) ) {
-					onClose();
-				} else {
-					onOpen();
-				}
-			} );
+			$tocHandle.on( 'click', toggleSideMenu );
 		}
 
 		$toc.removeClass( 'hidden' );
-	}
-
-	//initialize TOC only if it should be shown
-	if ( show ) {
-		init();
 	}
 
 } );
