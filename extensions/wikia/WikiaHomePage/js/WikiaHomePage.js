@@ -373,7 +373,7 @@ WikiaHomePageRemix.prototype = {
 			this.remix($('.slot-small'), this.wikiSetStack[this.wikiSetStackIndex].smallslots);
 			this.remix($('.slot-big'), this.wikiSetStack[this.wikiSetStackIndex].bigslots);
 			if (this.wikiSetStack.length - this.wikiSetStackIndex - this.WIKISETSTACKOFFSET <= 0) {
-				this.addWikiToStack();
+				this.fetchMoreWikis();
 			}
 			this.wikiSetStackIndex++;
 			this.preload();
@@ -588,7 +588,7 @@ WikiaHomePageRemix.prototype = {
 		return (collectionIndex === 0);
 	},
 
-	addWikiToStack: function() {
+	fetchMoreWikis: function() {
 		$.nirvana.sendRequest({
 			type: 'get',
 			format: 'json',
