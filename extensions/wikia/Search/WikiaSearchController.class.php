@@ -251,7 +251,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
-			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
