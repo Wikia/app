@@ -570,7 +570,7 @@ class UserProfilePageController extends WikiaController {
 				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
 			}
 
-			if( false === $thumbnail || is_int($thumbnail) ) {
+			if( false === $thumbnail || is_int( $thumbnail ) ) {
 				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
 				$this->setVal('result', $result);
 				wfProfileOut(__METHOD__);
@@ -621,7 +621,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$file = new FakeLocalFile($title, $localRepo);
-		$status = $file->upload($fileName, '', '');
+		$status = $file->upload( $fileName, '', '' );
 
 		if( $status->ok ) {
 			$width = min( self::AVATAR_DEFAULT_SIZE, $file->width );
