@@ -31,8 +31,8 @@ EditHub.prototype = {
 				callbackAfterSelect: function(url, VET) {
 					$.nirvana.sendRequest({
 						controller: 'MarketingToolboxController',
-						method: 'getVideoDetails',
-						type: 'get',
+						method: 'uploadAndGetVideo',
+						type: 'post',
 						data: {
 							'url': url
 						},
