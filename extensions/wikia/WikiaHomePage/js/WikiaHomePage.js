@@ -113,7 +113,7 @@ var WikiPreviewInterstitial = {
 			WikiPreviewInterstitial.showContent(cache);
 		} else {
 			$.nirvana.sendRequest({
-				type: 'post',
+				type: 'get',
 				format: 'html',
 				controller: 'WikiaHomePage',
 				method: 'getInterstitial',
@@ -590,7 +590,7 @@ WikiaHomePageRemix.prototype = {
 
 	addWikiToStack: function() {
 		$.nirvana.sendRequest({
-			type: 'post',
+			type: 'get',
 			format: 'json',
 			controller: 'WikiaHomePage',
 			method: 'getWikiBatchesForVisualization',
