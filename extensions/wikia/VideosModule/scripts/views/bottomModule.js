@@ -16,8 +16,7 @@ define('videosmodule.views.bottomModule', [
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-bottom',
 		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'module-impression'
+		action: Tracker.ACTIONS.IMPRESSION
 	});
 
 	testCase = abTest();
@@ -40,33 +39,53 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.init = function () {
 		var self = this;
 		if (!groupParams) {
-			// Add tracking for GROUP_I, Control Group
+			// Handle control group, no videos module display
+			this.handleRelatedPages(false);
 			return;
 		}
+
 		this.data = this.model.fetch(groupParams.verticalOnly);
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth({
 			on: this.el,
 			threshold: 200,
 			callback: function () {
-				self.bindFetchComplete();
+				self.data.complete(function () {
+					self.handleRelatedPages(true);
+				});
 			}
 		});
 	};
 
-	VideoModule.prototype.bindFetchComplete = function () {
+	/**
+	 * Handle logic to display videos module or not based on related pages module
+	 * Also used for tracking related pages impressions
+	 * @param {boolean} render
+	 */
+	VideoModule.prototype.handleRelatedPages = function (render) {
 		var self = this;
-		return this.data.complete(function () {
-			if (self.elContentPresent()) {
+
+		// called if related pages module is present
+		function afterPresent() {
+			track({
+				label: 'related-pages-impression'
+			});
+			if (render) {
 				self.render();
-			} else {
-				self.$el.on('afterLoad.relatedPages', function () {
-					if (self.elContentPresent()) {
-						self.render();
-					}
-				});
 			}
-		});
+		}
+
+		// check if related pages is loaded and visible
+		if (this.elContentPresent()) {
+			afterPresent();
+		} else {
+			// wait till after related pages has loaded to check if visible
+			this.$el.on('afterLoad.relatedPages', function () {
+				if (self.elContentPresent()) {
+					afterPresent();
+				}
+			});
+		}
 	};
 
 	/**
@@ -129,7 +148,7 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
-		track();
+		track({label: 'module-impression'});
 	};
 
 	return VideoModule;
