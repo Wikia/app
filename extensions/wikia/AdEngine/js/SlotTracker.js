@@ -96,15 +96,15 @@ var SlotTracker = function (window, log, tracker) {
 		if (interesting) {
 			stats.interestingEvents += 1;
 
-				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
 
-				tracker.track({
-					ga_category: gaCategory,
-					ga_action: gaAction,
-					ga_label: gaLabel,
-					ga_value: Math.round(gaValue),
-					trackingMethod: 'ad'
-				});
+			tracker.track({
+				ga_category: gaCategory,
+				ga_action: gaAction,
+				ga_label: gaLabel,
+				ga_value: Math.round(gaValue),
+				trackingMethod: 'ad'
+			});
 		} else {
 			log(['Not pushing to GA (not interesting)',
 				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
