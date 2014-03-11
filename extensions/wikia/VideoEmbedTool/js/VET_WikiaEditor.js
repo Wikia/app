@@ -101,7 +101,6 @@
 							// update existing video
 							RTE.mediaEditor.update( element, wikitext, embedData );
 
-							console.log('get vet from editor');
 							require( ['wikia.vet'], function( vet ) {
 								vet.close();
 							} );
