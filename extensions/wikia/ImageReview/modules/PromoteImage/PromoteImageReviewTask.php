@@ -203,14 +203,14 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 		
-		WikiaLogger::getInstance()->warning("PromoteImageReviewTask", [
+		WikiaLogger::getInstance()->debug("PromoteImageReviewTask", [
 			'command' => $sCommand,
 			'city_url' => $city_url
 		]);
 		
 		$output = wfShellExec($sCommand, $retval);
 
-		WikiaLogger::getInstance()->warning("PromoteImageReviewTask", [
+		WikiaLogger::getInstance()->debug("PromoteImageReviewTask", [
 			'command' => $sCommand,
 			'output' => $output,
 			'city_url' => $city_url,
