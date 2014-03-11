@@ -3,7 +3,7 @@
 var EditHub = function() {};
 
 EditHub.prototype = {
-	form: undefined,`
+	form: undefined,
 	wmuReady: undefined,
 	wmuDeffered: undefined,
 	lastActiveWmuButton: undefined,

@@ -34,11 +34,9 @@
 		vetLoader = {},
 		UserLoginModal = window.UserLoginModal;
 
-	function loadResources(options, $elem) {
-		var resourcePromise,
-			deferredList = [],
-			templateDeferred = $.Deferred(),
-			deferredMessages = $.Deferred();
+	function loadResources() {
+		var deferredList = [],
+			templateDeferred = $.Deferred();
 
 		// Get modal template HTML
 		$.nirvana.sendRequest({
@@ -54,12 +52,20 @@
 		deferredList.push(templateDeferred);
 
 		// Get JS and CSS
-		resourcePromise = $.getResources([
-			$.getAssetManagerGroupUrl('VET_js'),
-			$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
-			$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
-		]);
-		deferredList.push(resourcePromise);
+		deferredList.push(
+			$.getResources([
+				$.getAssetManagerGroupUrl('VET_js'),
+				$.getSassCommonURL('/extensions/wikia/VideoEmbedTool/css/VET.scss'),
+				$.getSassCommonURL('/extensions/wikia/WikiaStyleGuide/css/Dropdown.scss')
+			])
+		);
+
+		// Get messages
+		deferredList.push(
+			Wikia.getMultiTypePackage({
+				messages: 'VideoEmbedTool'
+			})
+		);
 
 		return deferredList;
 	}
@@ -100,7 +106,7 @@
 		modalOnScreen = true; // modal is now loading
 
 		if (!resourcesLoaded) {
-			resourceList = loadResources(options, $elem);
+			resourceList = loadResources();
 		}
 
 		$.when.apply($, resourceList).done(function () {

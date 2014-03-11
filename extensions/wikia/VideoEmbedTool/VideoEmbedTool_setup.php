@@ -45,8 +45,6 @@ JSMessages::registerPackage('VideoEmbedTool', array(
 	'vet-insert-error',
 	'vet-imagebutton',
 ));
-JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
-
 
 /**
  * @param $article
