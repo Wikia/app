@@ -10,7 +10,7 @@ class TvApiController extends WikiaApiController {
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const MINIMAL_WIKIA_SCORE = 0.5;
+	const MINIMAL_WIKIA_SCORE = 1.5;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
@@ -146,18 +146,59 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 
+	protected function querySolr( $query, $lang ) {
+		$config = (new Factory())->getSolariumClientConfig();
+		$config['adapteroptions']['core'] = 'xwiki';
+		$client = new \Solarium_Client($config);
+
+		$phrase = $this->sanitizeQuery( $query );
+		$query = $this->prepareXWikiQuery( $phrase, $lang );
+
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setQuery( $query );
+		$select->setRows(5);
+
+		$dismax->setQueryFields( 'series_txt^4 description_txt^2 categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
+		$dismax->setPhraseFields( 'series_txt^10' );
+		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
+		$dismax->setBoostFunctions( 'wam_i^2' );
+
+		$result = $client->select( $select );
+		return $result;
+	}
+
+	protected function sanitizeQuery( $query ) {
+		$select = new \Wikia\Search\Query\Select( $query );
+		return $select->getSolrQuery( 10 );
+	}
+
+	protected function prepareXWikiQuery( $query, $lang ) {
+		return '+("'.$query.'") AND +(lang_s:'.$lang.') AND +(hub_s:Entertainment)';
+	}
+
 	protected function setWikiVariables(){
 		$config = $this->getConfigCrossWiki();
 		$resultSet = (new Factory)->getFromConfig( $config )->search();
 		$found = false;
 
-		foreach( $resultSet->getResults() as $result ) {
+		$query = $this->getRequest()->getVal( 'seriesName', null );
+		$results = $this->querySolr($query, 'en');
+		foreach( $results as $result ) {
 			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
 				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
 				$found = true;
 			}
 		}
 
+//		foreach( $resultSet->getResults() as $result ) {
+//			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
+//				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
+//				$found = true;
+//			}
+//		}
 		return $found;
 	}
 
