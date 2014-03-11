@@ -66,6 +66,7 @@
 		<field name="number" type="int" indexed="true" stored="true" required="false" multiValued="false" />
 		<field name="romanized_song_name" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 		<field name="goear" type="string" indexed="false" stored="true" required="false" multiValued="false" />
+        <field name="language" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
 
 		<!--REFERENCE FIELDS-->
 
