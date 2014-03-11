@@ -229,16 +229,14 @@ class Masthead {
 				if ( strpos( $url, 'http://' ) === false ) {
 					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
 				}
-			}
-			else {
+			} else {
 				/**
 				 * default avatar, path from messaging.wikia.com
 				 */
 				$hash = FileRepo::getHashPathForLevel( $url, 2 );
 				$url = $this->mDefaultPath . trim( $thumb,  '/' ) . '/' . $hash . $url;
 			}
-		}
-		else {
+		} else {
 			$defaults = $this->getDefaultAvatars( trim( $thumb,  "/" ) . "/" );
 			$url = array_shift( $defaults );
 		}
@@ -526,7 +524,7 @@ class Masthead {
 	}
 
 	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );		
+		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
 	}
 
 	/**
@@ -643,6 +641,8 @@ class Masthead {
 	 * @param String $sTmpFile -- the full path to the temporary image file (will be deleted after processing).
 	 * @param $errorNo -- optional initial error-code state.
 	 * @param $errorMsg -- optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION.
+	 *
+	 * @return integer
 	 */
 	private function postProcessImageInternal($sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg=''){
 		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
@@ -794,7 +794,7 @@ class Masthead {
 	 * @return boolean status of operation
 	 */
 	private function purgeThumbnails( ) {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
+		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarPath, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
 		// get path to thumbnail folder
 		wfProfileIn( __METHOD__ );
 
@@ -808,29 +808,33 @@ class Masthead {
 
 			$avatarRemotePath = sprintf( "thumb%s", $this->getLocalPath() );
 
-			$files = array();
+			$urls = [];
+			$files = [];
 			$iterator = $backend->getFileList( array( 'dir' => $dir ) );
 			foreach ( $iterator as $file ) {
 				$files[] = sprintf( "%s/%s", $avatarRemotePath, $file );
 			}
 
+			// deleting files on file system and creating an array of URLs to purge
 			if ( !empty( $files ) ) {
 				foreach ( $files as $file ) {
 					$status = $swift->remove( $file );
-					if ( ! $status->isOk() ) {
+					if ( !$status->isOk() ) {
 						wfDebugLog( "avatar", __METHOD__ . ": $file exists but cannot be removed.\n", true );
 					} else {
+						$urls[] = wfReplaceImageServer( $wgBlogAvatarPath ) . "/$file";
 						wfDebugLog( "avatar", __METHOD__ . ": $file removed.\n", true );
 					}
 				}
 			}
+
 			wfDebugLog( "avatar", __METHOD__ . ": all thumbs removed.\n", true );
-		}
-		else {
+		} else {
 			$dir = $this->getFullPath( );
 			$dir = $this->getThumbPath( $dir );
 			if( is_dir( $dir )  ) {
-				$files = array();
+				$urls = [];
+				$files = [];
 				// copied from LocalFile->getThumbnails
 				$handle = opendir( $dir );
 
@@ -843,20 +847,21 @@ class Masthead {
 					closedir( $handle );
 				}
 
-				// copied from LocalFile->purgeThumbnails()
-				$urls = array();
-				$urls[] = $this->getPurgeUrl( "/thumb/" );
+				// partialy copied from LocalFile->purgeThumbnails()
 				foreach( $files as $file ) {
+					// deleting files on file system
 					@unlink( "$dir/$file" );
-					$url = $this->getPurgeUrl( '/thumb/' ) . "/$file" ;
-					$urls[] = $url;
+					$urls[] = $this->getPurgeUrl( '/thumb/' ) . "/$file";
 					wfDebugLog( "avatar", __METHOD__ . ": removing $dir/$file\n", true );
 				}
-			}
-			else {
+			} else {
 				wfDebugLog( "avatar", __METHOD__ . ": $dir exists but is not directory so not removed.\n", true );
 			}
 		}
+
+		// purging avatars urls
+		SquidUpdate::purge( $urls );
+
 		wfProfileOut( __METHOD__ );
 	}
 }
