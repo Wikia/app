@@ -65,8 +65,9 @@
 				$videos = $('#RelatedVideosRL'),
 				$photos = $('#LatestPhotosModule'),
 				$comments = $('#WikiaArticleComments'),
-				$footer = $('#WikiaArticleFooter'),
-				$videosModule = $('#videosModule');
+				$footer = $('#WikiaArticleFooter'), // bottom videos module
+				$videosModule = $('#videosModule'), // right rail videos module
+				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($videos).add($comments).add($footer).add($videosModule)
@@ -87,7 +88,9 @@
 
 					e.preventDefault();
 
-					if ($this.closest($article).length) {
+					if ($this.closest($videoHomePage).length) {
+						$parent = $videoHomePage;
+					} else if ($this.closest($article).length) {
 						$parent = $article;
 					} else if ($this.closest($videos).length) {
 						$parent = $videos;
@@ -96,6 +99,7 @@
 					} else if ($this.closest($comments).length) {
 						$parent = $comments;
 					} else if ($this.closest('#videosModule').length) {
+						// Don't use cached object because it may not have been in the DOM on init
 						$parent = $('#videosModule');
 					}
 
@@ -387,7 +391,8 @@
 			HUBS: 'hubs',
 			OTHER: 'other',
 			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
-			VIDEOS_MODULE_RAIL: 'railVideosModule'
+			VIDEOS_MODULE_RAIL: 'railVideosModule',
+			VIDEO_HOME_PAGE: 'videoHomePage'
 		}
 	};
 
