@@ -128,7 +128,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	}
 
 	/**
-	 * @desc Handles rendering TO
+	 * @desc Handles rendering TOC
 	 */
 	function renderToc () {
 		$toc.find( '#tocWrapper' ).remove();
@@ -149,32 +149,30 @@ function ( sections, window, $, mustache, toc, track ) {
 	}
 
 	/**
-	 * @desc Handles appending the toc to a side menu
+	 * @desc Handles appending TOC to a side menu
 	 */
 	function append () {
-		if ( !appended ) {
-			$toc.on( 'click', 'header', function () {
-				onClose( 'header' );
-				window.scrollTo( 0, 0 );
-			} )
-			.on( 'click', 'li', function ( event ) {
-				var $li = $( this ),
-					$a = $li.find( 'a' ).first();
+		$toc.on( 'click', 'header', function () {
+			onClose( 'header' );
+			window.scrollTo( 0, 0 );
+		} )
+		.on( 'click', 'li', function ( event ) {
+			var $li = $( this ),
+				$a = $li.find( 'a' ).first();
 
-				event.stopPropagation();
-				event.preventDefault();
+			event.stopPropagation();
+			event.preventDefault();
 
-				if ( !toggleLi( $li ) ) {
-					onClose( 'element' );
-				}
+			if ( !toggleLi( $li ) ) {
+				onClose( 'element' );
+			}
 
-				sections.scrollTo( $a.attr( 'href' ) );
-			} );
+			sections.scrollTo( $a.attr( 'href' ) );
+		} );
 
-			renderToc();
+		renderToc();
 
-			appended = true;
-		}
+		appended = true;
 	}
 
 	/**
@@ -196,8 +194,9 @@ function ( sections, window, $, mustache, toc, track ) {
 		$toc.addClass( active );
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
-
-		append();
+		if ( !appended ) {
+			append();
+		}
 
 		onSectionChange( null, sections.current()[0], true );
 
@@ -252,7 +251,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$toc.removeClass( 'hidden' );
 	}
 
-	//initialize TOC only if there are sections to show in it
+	//initialize TOC only if it should be shown
 	if ( show ) {
 		init();
 	}
