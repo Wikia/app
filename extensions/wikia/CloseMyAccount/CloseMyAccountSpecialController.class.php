@@ -248,7 +248,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->setPageTitle( $this->msg( 'closemyaccount-reactivate-page-title' )->plain() );
 
 		if ( $this->request->wasPosted() ) {
-			$result = $helper->requestReactivation( $userObj );
+			$result = $helper->requestReactivation( $userObj, $this->app );
 
 			if ( $result ) {
 				$this->introText = $this->msg( 'closemyaccount-reactivate-requested' )->parseAsBlock();

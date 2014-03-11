@@ -39,11 +39,12 @@ class CloseMyAccountHelper {
 	 * generating a token, and emailing the link with the token, so we
 	 * can confirm that they own this account.
 	 *
-	 * @param  User    $user The user account to reactivate
-	 * @return boolean       True if the reactivation was successfully requested,
-	 *                       False otherwise
+	 * @param  User     $user The user account to reactivate
+	 * @param  WikiaApp $app  An instance of WikiaApp
+	 * @return boolean        True if the reactivation was successfully requested,
+	 *                        False otherwise
 	 */
-	public function requestReactivation( User $user ) {
+	public function requestReactivation( User $user, $app ) {
 		wfProfileIn( __METHOD__ );
 		// Not scheduled for closure or not email confirmed?
 		if ( !$this->isScheduledForClosure( $user ) || !$user->isEmailConfirmed() ) {
@@ -51,7 +52,7 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$emailTextTemplate = F::app()->renderView( 'CloseMyAccountSpecial', 'email', [ 'language' => $user->getOption( 'language' ) ] );
+		$emailTextTemplate = $app->renderView( 'CloseMyAccountSpecial', 'email', [ 'language' => $user->getOption( 'language' ) ] );
 
 		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail', 'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
 
