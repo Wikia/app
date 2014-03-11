@@ -1325,6 +1325,11 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 $wgUseETag = true;
 
 /**
+ * whether or not to send logs from dev to elasticsearch
+ */
+$wgDevESLog = false;
+
+/**
  * Restrictions for some api methods
  */
 $wgApiAccess = [
