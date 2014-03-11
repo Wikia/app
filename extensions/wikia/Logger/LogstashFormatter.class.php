@@ -13,7 +13,7 @@ namespace Wikia\Logger;
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 	private $devMode = false;
 
-	public function devMode() {
+	public function enableDevMode() {
 		$this->devMode = true;
 	}
 

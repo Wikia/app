@@ -13,7 +13,7 @@ class SyslogHandler extends \Monolog\Handler\SyslogHandler {
 			$formatter = new LogstashFormatter(null);
 
 			if ($wgDevelEnvironment && $wgDevESLog) {
-				$formatter->devMode();
+				$formatter->enableDevMode();
 			}
 		}
 
