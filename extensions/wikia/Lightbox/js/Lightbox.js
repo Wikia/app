@@ -1497,7 +1497,7 @@
 
 				// Video Home Page
 				case 'latest-videos-wrapper':
-					clickSource = 'videoHomePage';
+					clickSource = VPS.VIDEO_HOME_PAGE;
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
 					break;
