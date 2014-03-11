@@ -16,7 +16,10 @@ $messages['en'] = array(
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
 	'closemyaccount-intro-text' => "We are sorry you want to disable your account. Wikia has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
 
-If you have decided you definitely want to disable your account please be aware that Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin Wikia. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
+If you have decided you definitely want to disable your account please be aware:
+* Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used.
+* This process is NOT reversible after $1 {{PLURAL:$1|day has|days have}} passed, and you will have to create a new account if you wish to rejoin Wikia.
+* This process will not remove your contributions from a given Wikia community, as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. If you are sure you want to close your account, please click the button below.
 
@@ -66,7 +69,7 @@ To check out the latest happenings on Wikia, visit http://community.wikia.com',
 $messages['qqq'] = array(
 	'closemyaccount' => 'Special page name',
 	'closemyaccount-desc' => '{{desc}}',
-	'closemyaccount-intro-text' => 'Text displayed at the top of the Close My Account form.',
+	'closemyaccount-intro-text' => 'Text displayed at the top of the Close My Account form. $1 is the number of days before the account is permanently closed.',
 	'closemyaccount-unconfirmed-email' => 'Warning message displayed when a user attempts to close their account when they do not have a confirmed email set on their account.',
 	'closemyaccount-button-text' => 'Text of the submit button to close your account',
 	'closemyaccount-reactivate-button-text' => 'Text of the submit button to reactivate your account',
