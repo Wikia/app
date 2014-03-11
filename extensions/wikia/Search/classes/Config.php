@@ -834,6 +834,15 @@ class Config
 	}
 
 	/**
+	 * Sets or unsets VideoContent as our query service
+	 * @param bool $apply
+	 * @return \Wikia\Search\Config
+	 */
+	public function setVideoContentSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\VideoContent', $apply );
+	}
+
+	/**
 	 * Returns results number based on a truncated heuristic
 	 * @param boolean $formatted whether we should also format the number
 	 * @return integer
