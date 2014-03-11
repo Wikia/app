@@ -3,28 +3,31 @@
  */
 
 define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
+	'use strict';
 
-	var curSourceId = 0;
-	var jqXHR = {
-		abort: function() {
-			// empty function so if statements will not have to be embedded everywhere
-		}
-	};
-	var curScreen = 'Main';
-	var prevScreen = null;
-	var wysiwygStart = 1;
-	var notificationTimout = 4000; // Show notifications for this long and then hide them
-	var options = {};
-	var embedPresets = false;
-	var callbackAfterSelect = $.noop;
-	var callbackAfterEmbed = $.noop;
-	var MAX_WIDTH = 670; // 670 max width on oasis
-	var MIN_WIDTH = 100;
-	var DEFAULT_WIDTH = 335;
-	var thumbSize = DEFAULT_WIDTH;	// variable that can change later, defaulted to DEFAULT
-	var videoInstance = null;
+	var curSourceId = 0,
+		jqXHR = {
+			abort: function() {
+				// empty function so if statements will not have to be embedded everywhere
+			}
+		},
+		curScreen = 'Main',
+		prevScreen = null,
+		wysiwygStart = 1,
+		// Show notifications for this long and then hide them
+		notificationTimout = 4000,
+		options = {},
+		embedPresets = false,
+		callbackAfterSelect = $.noop,
+		callbackAfterEmbed = $.noop,
+		MAX_WIDTH = 670,
+		MIN_WIDTH = 100,
+		DEFAULT_WIDTH = 335,
+		thumbSize = DEFAULT_WIDTH,
+		videoInstance = null,
+		tracking;
 
-	var tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+	tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'vet',
 		trackingMethod: 'both'
@@ -86,7 +89,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		jqXHR.abort();
 		var params = [];
 		var escTitle = '';
-		if ( typeof(embedPresets.href) == 'undefined' ) {
+		if ( typeof embedPresets.href === 'undefined' ) {
 			escTitle = embedPresets.title;
 		} else {
 			escTitle = embedPresets.href;
