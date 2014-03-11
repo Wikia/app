@@ -71,6 +71,8 @@
 
 		<field name="albums" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 		<field name="songs" type="string" indexed="false" stored="true" required="false" multiValued="false" />
+		<field name="artist_id" type="int" indexed="false" stored="true" required="false" multiValued="false" />
+		<field name="album_id" type="int" indexed="false" stored="true" required="false" multiValued="false" />
 
 		<!--COPY FIELDS-->
 
