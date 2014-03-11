@@ -462,6 +462,10 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	}
 
 	var iframeUrl = Liftium.getIframeUrl(slotname, t);
+	var tagParams = Liftium.clone(t);
+	delete tagParams.tag;
+	delete tagParams.criteria;
+	iframeElement.setAttribute('data-tag-params', JSON.stringify(tagParams));
 	iframeElement.src = iframeUrl;
 
 	Liftium.slotTimer2[slotname + "-" + t.tag_id] = Liftium.debugTime();
