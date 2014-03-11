@@ -5,8 +5,8 @@
  * @todo refactor, the queries should be part of /includes/wikia/models/WikisModel.class.php
  */
 class CityVisualization extends WikiaModel {
-	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.79a';
-	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.08a';
+	const CITY_VISUALIZATION_MEMC_VERSION = 'v0.80';
+	const CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION = 'v1.09';
 	const WIKI_STANDARD_BATCH_SIZE_MULTIPLIER = 100;
 
 	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
