@@ -203,23 +203,22 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
 		
-		WikiaLogger::getInstance()->debug("PromoteImageReviewTask", [
+		$logdata = [
 			'command' => $sCommand,
 			'city_url' => $city_url
-		]);
+		];
+		WikiaLogger::getInstance()->debug("PromoteImageReviewTask started", $logdata);
 		
 		$output = wfShellExec($sCommand, $retval);
-
-		WikiaLogger::getInstance()->debug("PromoteImageReviewTask", [
-			'command' => $sCommand,
-			'output' => $output,
-			'city_url' => $city_url,
-			'retval' => $retval
-		]);
-
+		
+		$logdata['output'] = $output;
+		$logdata['retval'] = $retval;
+		
 		if( $retval ) {
+			WikiaLogger::getInstance()->error("PromoteImageReviewTask failed", $logdata);		
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
+			WikiaLogger::getInstance()->debug("PromoteImageReviewTask finished", $logdata);		
 			$this->log('Upload successful: '.$output);
 		}
 

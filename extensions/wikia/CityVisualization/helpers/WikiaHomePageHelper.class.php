@@ -658,7 +658,7 @@ class WikiaHomePageHelper extends WikiaModel {
 			$imageId = $imageTitle->getArticleID();
 		}
 		WikiaLogger::instance()->debug("Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
-																									'imageTitle' => $imageTitle, 'imageId' => $imageId]);
+			'imageTitle' => $imageTitle, 'imageId' => $imageId]);
 		
 
 		wfProfileOut(__METHOD__);
