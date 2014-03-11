@@ -1,7 +1,7 @@
 /* exported AdProviderSevenOneMedia */
 /* jshint maxparams:false */
 
-var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia) {
+var AdProviderSevenOneMedia = function (log, window, $, sevenOneMedia) {
 	'use strict';
 
 	var logGroup = 'AdProviderSevenOneMedia',
@@ -65,19 +65,15 @@ var AdProviderSevenOneMedia = function (log, window, adTracker, $, sevenOneMedia
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var slotDeName = slotMap[slotname],
-			$slot,
-			slotTracker = adTracker.trackSlot('sevenonemedia', slotname);
+			$slot;
 
 		function clearDefaultHeight() {
 			$('#' + slotname).removeClass('default-height');
 		}
 
 		function success() {
-			slotTracker.success();
 			pSuccess();
 		}
-
-		slotTracker.init();
 
 		if (slotDeName === 'topAds') {
 			makeTopAds();
