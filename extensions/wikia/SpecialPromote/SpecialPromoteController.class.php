@@ -9,6 +9,9 @@
  *
  */
 
+use \Wikia\Logger\WikiaLogger;
+
+
 class SpecialPromoteController extends WikiaSpecialPageController {
 	/**
 	 * @var SpecialPromoteHelper
@@ -169,7 +172,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		if ( empty( $data['additionalImagesNames'] ) ) {
 			$data['additionalImagesNames'] = array();
 		}
-		WikiaLogger::instance()->warning("SpecialPromote", ['method' => __MEHOD__, 'data'=> $data]);
+		WikiaLogger::instance()->debug("SpecialPromote", ['method' => __MEHOD__, 'data'=> $data]);
 
 		try {
 			$this->helper->saveVisualizationData( $data, $this->wg->contLang->getCode() );
