@@ -564,12 +564,13 @@ class UserProfilePageController extends WikiaController {
 				$thumbnail = $uploadError;
 			} else {
 				$fileName = $this->app->wg->Request->getFileTempName($avatarUploadFiled);
+
 				$fileuploader = new WikiaTempFilesUpload();
 
 				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
 			}
 
-			if (is_int($thumbnail)) {
+			if( false === $thumbnail || is_int($thumbnail) ) {
 				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
 				$this->setVal('result', $result);
 				wfProfileOut(__METHOD__);
@@ -620,15 +621,27 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$file = new FakeLocalFile($title, $localRepo);
-		$file->upload($fileName, '', '');
+		$status = $file->upload($fileName, '', '');
 
-		$width = min(self::AVATAR_DEFAULT_SIZE, $file->width);
-		$height = min(self::AVATAR_DEFAULT_SIZE, $file->height);
+		if( $status->ok ) {
+			$width = min( self::AVATAR_DEFAULT_SIZE, $file->width );
+			$height = min( self::AVATAR_DEFAULT_SIZE, $file->height );
 
-		$thumbnail = $file->transform(array(
-			'height' => $height,
-			'width' => $width,
-		));
+			$thumbnail = $file->transform( [
+				'height' => $height,
+				'width' => $width,
+			] );
+		} else {
+			$errors = $status->getErrorsArray();
+			$errMsg = 'Unable to upload temp file fo avatar. Error(s): ';
+			foreach( $errors as $error ) {
+				$errMsg .= $error[0] . ', ';
+			}
+			$errMsg = rtrim( $errMsg, ', ' );
+
+			wfDebugLog( __METHOD__, $errMsg );
+			$thumbnail = false;
+		}
 
 		wfProfileOut(__METHOD__);
 		return $thumbnail;
@@ -731,6 +744,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function uploadByUrl($url, $userData, &$errorMsg = '') {
 		wfProfileIn(__METHOD__);
+
 		//start by presuming there is no error
 		//$errorNo = UPLOAD_ERR_OK;
 		$user = $userData['user'];
