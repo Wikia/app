@@ -4,6 +4,9 @@
  * TaskManager task to go through a list of images and delete them.
  */
 
+use \Wikia\Logger\WikiaLogger;
+ 
+
 class PromoteImageReviewTask extends BatchTask {
 	var $mType,
 		$mVisible,
@@ -199,8 +202,20 @@ class PromoteImageReviewTask extends BatchTask {
 		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
 		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
 		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
-
+		
+		WikiaLogger::getInstance()->warning("PromoteImageReviewTask", [
+			'command' => $sCommand,
+			'city_url' => $city_url
+		]);
+		
 		$output = wfShellExec($sCommand, $retval);
+
+		WikiaLogger::getInstance()->warning("PromoteImageReviewTask", [
+			'command' => $sCommand,
+			'output' => $output,
+			'city_url' => $city_url,
+			'retval' => $retval
+		]);
 
 		if( $retval ) {
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
