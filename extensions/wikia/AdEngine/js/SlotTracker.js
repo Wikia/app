@@ -3,7 +3,7 @@
 /*jshint camelcase:false, maxparams:5*/
 /*global define*/
 
-var SlotTracker = function (log, tracker) {
+var SlotTracker = function (window, log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
@@ -60,9 +60,10 @@ var SlotTracker = function (log, tracker) {
 			return false;
 		}
 		// Don't track state events yet
-		if (eventName.match(/^state/)) {
+		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -199,4 +200,4 @@ var SlotTracker = function (log, tracker) {
 	return slotTracker;
 };
 
-define('ext.wikia.adengine.slottracker', ['wikia.log', 'wikia.tracker'], SlotTracker);
+define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);
