@@ -45,7 +45,7 @@ class VideoEmbedTool {
 
 		if ( !( $file instanceof LocalFile ) ) {
 			header( 'X-screen-type: error' );
-			return wfMsg( 'vet-non-existing' );
+			return wfMessage( 'vet-non-existing' )->plain();
 		}
 
 		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
@@ -75,7 +75,7 @@ class VideoEmbedTool {
 		if ( $wgUser->isBlocked() ) {
 			header( 'X-screen-type: error' );
 			wfProfileOut( __METHOD__ );
-			return wfMessage( 'videos-error-blocked-user' );
+			return wfMessage( 'videos-error-blocked-user' )->plain();
 		}
 
 		if ( !$wgUser->isAllowed( 'videoupload' ) ) {
@@ -147,13 +147,13 @@ class VideoEmbedTool {
 				}
 
 				wfProfileOut( __METHOD__ );
-				return wfMsg( 'vet-bad-url' );
+				return wfMessage( 'vet-bad-url' )->plain();
 			}
 
 			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				wfProfileOut( __METHOD__ );
-				return wfMsg( 'vet-non-existing' );
+				return wfMessage( 'vet-non-existing' )->plain();
 			}
 
 			// Loading this to deal with video descriptions
@@ -206,7 +206,7 @@ class VideoEmbedTool {
 			$title = $oTitle = Title::newFromText( $name, NS_FILE );
 			if ( empty( $oTitle ) ) {
 				header( 'X-screen-type: error' );
-				return wfMsg( 'vet-name-incorrect' );
+				return wfMessage( 'vet-name-incorrect' )->plain();
 			}
 			wfRunHooks( 'AddPremiumVideo', array( $title ) );
 		} else { // needs to upload
@@ -215,14 +215,14 @@ class VideoEmbedTool {
 
 			if ( $name == '' ) {
 				header( 'X-screen-type: error' );
-				return wfMsg( 'vet-warn3' );
+				return wfMessage( 'vet-warn3' )->plain();
 			}
 
 			$nameFile = VideoFileUploader::sanitizeTitle( $name );
          	$titleFile = VideoFileUploader::getUniqueTitle( $nameFile );
          	if ( empty( $titleFile ) ) {
 				header( 'X-screen-type: error' );
-				return wfMsg( 'vet-name-incorrect' );
+				return wfMessage( 'vet-name-incorrect' )->plain();
 			}
 			// by definition, WikiaFileHelper::useVideoHandlersExtForEmbed() == true
 			$nameSanitized = $titleFile->getBaseText();
@@ -241,7 +241,7 @@ class VideoEmbedTool {
 			$status = $this->uploadVideoAsFile( $provider, $id, $nameSanitized, $oTitle );
 			if ( !$status->ok ) {
 				header( 'X-screen-type: error' );
-				return wfMsg( 'wva-thumbnail-upload-failed' );
+				return wfMessage( 'wva-thumbnail-upload-failed' )->plain();
 			}
 		}
 
@@ -251,7 +251,7 @@ class VideoEmbedTool {
 		$vHelper = new VideoHandlerHelper();
 		$vHelper->setVideoDescription( $oTitle, $description );
 
-		$message = wfMsg( 'vet-single-success' );
+		$message = wfMessage( 'vet-single-success' )->plain();
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal( 'caption' );
 
@@ -275,7 +275,7 @@ class VideoEmbedTool {
 			$tag .= "|".$caption;
 		}
 		$tag = "[[$tag]]";
-		$button_message = wfMessage( 'vet-return' );
+		$button_message = wfMessage( 'vet-return' )->plain();
 
 		// Adding a video from article view page
 		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
@@ -317,17 +317,17 @@ class VideoEmbedTool {
 					$embed_code = '<div class="center">'.$embed_code.'</div>';
 				}
 
-				$summary = wfMsg( 'vet-added-from-placeholder' );
+				$summary = wfMessage( 'vet-added-from-placeholder' )->plain();
 
 				$text = substr_replace( $text, $tag, $placeholder[1], strlen( $placeholder_tag ) );
 
-				$button_message = wfMessage( 'vet-placeholder-return' );
+				$button_message = wfMessage( 'vet-placeholder-return' )->plain();
 				$success = $article_obj->doEdit( $text, $summary );
 			}
 
 			if ( !$success ) {
 				header( 'X-screen-type: error' );
-				return wfMsg( 'vet-insert-error' );
+				return wfMessage( 'vet-insert-error' )->plain();
 			}
 		}
 
