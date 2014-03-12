@@ -353,7 +353,7 @@
 	if ( !thisPageIsAvailable ) {
 		$( 'html' ).addClass( 've-not-available' );
 		$veEdit = $( '#ca-ve-edit' );
-		if ( $veEdit.exists() ) {
+		if ( $veEdit.length > 0 ) {
 			$edit = $( '#ca-edit' );
 			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			$edit.parent().remove();
