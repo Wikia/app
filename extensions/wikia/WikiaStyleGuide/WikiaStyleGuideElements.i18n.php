@@ -90,11 +90,13 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'wikiastyleguide-dropdown-all' => 'همه',
 	'wikiastyleguide-dropdown-select-all' => 'انتخاب همه',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 و $2 بیشتر',
 	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
 );
 

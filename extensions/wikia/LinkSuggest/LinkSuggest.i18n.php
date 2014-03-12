@@ -324,9 +324,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'linksuggest-desc' => 'Sugere links para editor no modo de edição',
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
+	'tog-redirected-from' => '&ndash; redirecionado de $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)

@@ -303,6 +303,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Ebraminio
  * @author Mjbmr
  * @author Reza1615
  */
@@ -314,25 +315,25 @@ $messages['fa'] = array(
 
 می‌توانید اطلاعات بیشتر دربارهٔ اینکه چگونه مشکلات را به ویکیا گزارش کنید را در [[w:project:Report_a_problem|اینجا]] پیدا کنید، و یا می‌توانید مشکل خود را در [[w:Forum:Index|انجمن‌های جامعهٔ ویکیا]] برای حمایت کاربر ارسال کنید.
 
-اگر شما ترجیح می‌دهید که از پست الکترونیکی معمولی استفاده کنید و یا پرونده‌ای را همراه با درخواستتان بفرستید، شما می‌توانید با ما در نشانی [mailto:community@wikia.com community@wikia.com] در تماس باشید.',
-	'specialcontact-username' => 'نام کاربری:', # Fuzzy
+اگر شما ترجیح می‌دهید که از رایانامهٔ معمولی استفاده کنید و یا پرونده‌ای را همراه با درخواستتان بفرستید، شما می‌توانید با ما در نشانی [mailto:community@wikia.com community@wikia.com] در تماس باشید.',
+	'specialcontact-username' => 'نام کاربری شما',
 	'specialcontact-wikiname' => 'کدام ویکی',
 	'specialcontact-realname' => 'نام شما:',
-	'specialcontact-yourmail' => 'نشانی پست الکترونیکی',
+	'specialcontact-yourmail' => 'نشانی رایانامه',
 	'specialcontact-problem' => 'موضوع',
 	'specialcontact-problemdesc' => 'پیغام',
 	'specialcontact-mail' => 'ارسال به ویکیا',
 	'specialcontact-filledin' => 'این اطلاعات از ترجیحات حساب‌کاربری‌تان تکمیل شده است.',
 	'specialcontact-ccme' => 'رونوشت این پیغام را برای من بفرست',
-	'specialcontact-ccdisabled' => 'غیرفعال شده: برای استفاده از این عملکرد لطفاً نشانی پست الکترونیکی خودتان را معتبر سازید.',
+	'specialcontact-ccdisabled' => 'غیرفعال شده: برای استفاده از این عملکرد لطفاً نشانی رایانامه خودتان را معتبر سازید.',
 	'specialcontact-notyou' => 'شما نیستید؟',
 	'specialcontact-captchainfo' => 'لطفاً متن درون تصویر را وارد کنید.',
 	'specialcontact-captchatitle' => 'کلمهٔ تار',
 	'specialcontact-formtitle' => 'تماس با پرسنل پشتیبانی ویکیا',
 	'specialcontact-nomessage' => 'لطفاً متن پیام را وارد کنید.',
 	'specialcontact-captchafail' => 'كد تأييد نادرست یا وجود ندارد.',
-	'specialcontact-mailsub' => 'پست الکترونیکی تماس با ویکیا',
-	'specialcontact-mailsubcc' => 'رونوشت از پست الکترونیکی تماس با ویکیا',
+	'specialcontact-mailsub' => 'رایانامه تماس با ویکیا',
+	'specialcontact-mailsubcc' => 'رونوشت از تماس رایانامه‌ای با ویکیا',
 	'specialcontact-ccheader' => 'این یک رونوشت از پیام شماست که به پشتیبانی ویکیا ارسال شد.',
 	'specialcontact-submitcomplete' => 'متشکر از تماس شما با ویکیا.',
 );

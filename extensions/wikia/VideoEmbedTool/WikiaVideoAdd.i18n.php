@@ -247,16 +247,17 @@ $messages['eu'] = array(
  * @author ZxxZxxZ
  */
 $messages['fa'] = array(
-	'wva-success' => 'فیلم صفحهٔ $1 موفقیت‌آمیز اضافه شد.', # Fuzzy
-	'wva-success-replaced' => 'فیلم صفحهٔ $1 موفقیت‌آمیز جایگزین شد.', # Fuzzy
-	'wva-failure' => 'لطفا ورودی‌های درستی وارد کنید.',
-	'wva-name' => 'نام را وارد کنید:', # Fuzzy
-	'wva-url' => 'نشانی اینترنتی را وارد کنید:', # Fuzzy
+	'wva-success' => 'فیلم صفحهٔ [[:$1]] باموفقیت اضافه شد.',
+	'wva-success-replaced' => 'فیلم صفحهٔ [[:$1]] موفقیت‌آمیز جایگزین شد.',
+	'wva-failure' => 'لطفاً ورودی‌های درستی وارد کنید.',
+	'wva-name' => 'نام ویدئو:',
+	'wva-url' => 'نشانی اینترنتی ویدئو:',
 	'wva-add' => 'افزودن',
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
 	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
 	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
 	'wva-protected' => 'این ویدیو محافظت شده‌است.',
+	'wva-thumbnail-upload-failed' => 'ویدئو توکار شکست خرد، ناتوان به دریافت بنداگشتی مناسب',
 );
 
 /** Finnish (suomi)
@@ -682,14 +683,15 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'wva-success' => 'A página do vídeo $1 foi adicionada com sucesso.', # Fuzzy
-	'wva-success-replaced' => 'A página do vídeo $1 foi substituída com sucesso.', # Fuzzy
+	'wva-success' => 'A página do vídeo [[:$1]] foi adicionada com sucesso.',
+	'wva-success-replaced' => 'A página do vídeo [[:$1]] foi substituída com sucesso.',
 	'wva-failure' => 'Forneça parâmetros válidos, por favor.',
-	'wva-name' => 'Introduza o nome:', # Fuzzy
-	'wva-url' => 'Introduza a URL:', # Fuzzy
+	'wva-name' => 'Nome do vídeo:',
+	'wva-url' => 'URL do vídeo:',
 	'wva-add' => 'Adicionar',
 	'wva-title' => 'Adição Rápida de Vídeo a Partir da URL',
 	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',

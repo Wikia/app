@@ -251,6 +251,7 @@ $messages['br'] = array(
 	'lvs-callout-title-collaborative' => 'Kenlabourat',
 	'lvs-instructions-header' => 'Penaos implijout ar bajenn-mañ',
 	'lvs-button-keep' => "Derc'hel",
+	'lvs-button-swap' => 'Eskemm',
 	'lvs-button-yes' => 'Ya',
 	'lvs-button-no' => 'Ket',
 	'lvs-more-suggestions' => "muioc'h a ginnigoù",
@@ -1064,7 +1065,7 @@ $messages['sco'] = array(
 	'lvs-history-swapped-exact' => 'Swapt "$1" wi ae video o the same name',
 	'lvs-history-kept' => 'Kept "$1"',
 	'lvs-history-instructions' => 'To see the histerie fer aw swaps n ondaes, gang til $1.',
-	'lvs-no-monobook-support' => "This page isna supported in Monobuik. Tae get at it in the Wikia layoot, $1. This'll no chynge yer layoot preference",
+	'lvs-no-monobook-support' => "This page isna supported in Monobuik. Tae get at it in the Wikia layoot, $1. This'll naw chynge yer layoot preference",
 	'lvs-click-here' => 'clap here',
 	'lvs-new-flag' => 'New',
 );

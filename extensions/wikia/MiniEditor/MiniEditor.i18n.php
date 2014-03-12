@@ -325,7 +325,12 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'minieditor-specialpage-title' => 'Página de Demonstração do MiniEditor',
+	'minieditor-new-heading' => 'Criar uma nova mensagem',
+	'minieditor-placeholder-new' => 'Digita a tua mensagem aqui',
+	'minieditor-message-edit' => 'Esta é uma mensagem existente',
 	'minieditor-reply' => 'Responder',
+	'minieditor-placeholder-reply' => 'Responde à mensagem aqui',
 );
 
 /** Brazilian Portuguese (português do Brasil)

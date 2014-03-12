@@ -1721,6 +1721,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  * @author Malafaya
  * @author Rhaijin
@@ -1734,7 +1735,9 @@ $messages['pt'] = array(
 	'themedesigner-title' => 'Compositor de Variantes do Tema, da Wikia',
 	'themedesigner-background' => 'Fundo',
 	'themedesigner-page' => 'Página',
-	'themedesigner-color' => 'cor', # Fuzzy
+	'themedesigner-color' => 'principal',
+	'themedesigner-color-middle' => 'centro',
+	'themedesigner-rules-color-middle' => 'Cor diferente para o centro da página',
 	'themedesigner-graphic' => 'imagem',
 	'themedesigner-buttons' => 'botões',
 	'themedesigner-links' => 'links',
@@ -1746,6 +1749,8 @@ $messages['pt'] = array(
 	'themedesigner-large' => 'Grande',
 	'themedesigner-tile-background' => 'Repetir imagem de fundo',
 	'themedesigner-fix-background' => 'fixar',
+	'themedesigner-not-split-background' => 'sem divisão',
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fundo for mais largo que $1px aparecerá uma opção para '''não''' dividir a imagem.",
 	'themedesigner-transparency' => 'transparência',
 	'themedesigner-tab-theme' => 'Variante',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -1770,7 +1775,7 @@ $messages['pt'] = array(
 	'themedesigner-button-save' => 'Gravar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'até 250x65 pixels (só ficheiros .png)',
-	'themedesigner-rules-favicon' => 'Envie um ficheiro .ico de 16x16 pixels. Um favicon é um pequeno ícone que aparece na aba da wiki do navegador. [http://community.wikia.com/wiki/Help:Favicon Saiba mais.]', # Fuzzy
+	'themedesigner-rules-favicon' => 'Envie um ficheiro .ico de 16x16 pixels. Um favicon é um pequeno ícone que aparece na aba da wiki do navegador. [http://community.wikia.com/wiki/Help:Favicon Saiba mais.]',
 	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
@@ -1782,6 +1787,9 @@ $messages['pt'] = array(
 	'themedesigner-manual-upload-error' => 'Use o Compositor de Variantes do Tema para colocar o símbolo da wiki e definir o fundo',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Antevisão',
+	'themedesigner-wordmark-preview-error' => 'Oops! O nome da wiki não pode ficar vazio,
+escreve o nome da wiki para guardar.',
+	'themedesigner-upload-disabled' => 'Lamentamos, desativamos temporariamente os envies. Verifica mais tarde para fazer alterações',
 );
 
 /** Brazilian Portuguese (português do Brasil)

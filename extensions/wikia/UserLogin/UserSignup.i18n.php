@@ -2354,6 +2354,13 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Facebook との通信中に問題が発生しました。しばらくしてからもう一度お試しください。',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'usersignup-facebook-create-account' => 'Аккаунт къурау',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

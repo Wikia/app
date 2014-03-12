@@ -454,6 +454,7 @@ $messages['br'] = array(
 	'chat-you-were-kicked' => "Skarzhet oc'h bet gant $1.",
 	'chat-user-was-banned' => '$1 zo bet forbannet gant $2 $3.',
 	'chat-you-were-banned' => "Forbannet oc'h bet gant $1.",
+	'chat-user-was-unbanned' => '$2 en deus paouezet da forbannañ $1 eus ar flap.',
 	'chat-user-permanently-disconnected' => "Digevreet oc'h bet, gwiriit ho kevreadur Kenrouedad ha freskait prenestr ho merdeer",
 	'chat-inlinealert-a-made-b-chatmod' => 'Lakaet eo bet <strong>$2</strong> da verour ar flap gant $1.',
 	'chat-err-connected-from-another-browser' => "Kevreet oc'h gant ur merdeer all. Klozet e vo ar c'hevreadur-mañ.",

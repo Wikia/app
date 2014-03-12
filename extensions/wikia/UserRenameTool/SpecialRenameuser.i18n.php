@@ -4112,6 +4112,7 @@ $messages['su'] = array(
  * @author Boivie
  * @author Habj
  * @author Lejonel
+ * @author Lokal Profil
  * @author M.M.S.
  * @author Najami
  * @author Tobulos1
@@ -4150,7 +4151,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-errorbot' => 'Användare <nowiki>$1</nowiki> är en bot.',
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
-	'userrenametool-error-extension-abort' => 'En förlängning förhindrade namnbytningsprocessen.',
+	'userrenametool-error-extension-abort' => 'Ett tillägg förhindrade namnbytningsprocessen.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa ett Phalanx-block.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Oväntat fel uppstod, kolla loggarna eller försök igen.',

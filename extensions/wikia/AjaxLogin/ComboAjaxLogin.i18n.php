@@ -547,7 +547,7 @@ Palun proovige uuesti või [[Eri:Ilmuta|teavita sellest]].', # Fuzzy
 $messages['fa'] = array(
 	'comboajaxlogin-desc' => 'جعبهٔ پویای‌ای که اجازه می‌دهد کاربران وارد شوند، گذرواژه‌یشان را به یاد آورند و ثبت‌نام کاربران را انجام دهند',
 	'comboajaxlogin-createlog' => 'وارد شوید یا حساب کاربری ایجاد کنید',
-	'comboajaxlogin-actionmsg' => 'برای انجام این کار، لازم است اول به سیستم وارد شوید یا حساب کاربری ایجاد کنید',
+	'comboajaxlogin-actionmsg' => 'برای انجام این کار، لازم است اول به سامانه وارد شوید یا حساب کاربری ایجاد کنید',
 	'comboajaxlogin-actionmsg-protected' => 'برای انجام این عمل، لازم است اول به سامانه وارد شوید یا حساب کاربری ایجاد کنید.',
 	'comboajaxlogin-connectmarketing' => '<h1>متصل‌کردن حساب‌هایتان</h1>
 <ul>
@@ -1535,8 +1535,8 @@ $messages['ru'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'comboajaxlogin-desc' => 'Dynâmic kist that permits uisers tae log-in, remynd passwaird an register uisers',
-	'comboajaxlogin-createlog' => 'Log in or mak an accoont',
+	'comboajaxlogin-desc' => 'Dynâmic kist that permits uisers tae log-in, remynd passwaird n register uisers',
+	'comboajaxlogin-createlog' => 'Log in or cræft aen accoont',
 	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or mak aen accoont',
 	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or mak aen accoont.',
 	'comboajaxlogin-connectmarketing' => "<h1>Connect yer accoonts</h1>
@@ -1558,12 +1558,12 @@ $messages['sco'] = array(
 yince ye'r dun, ye can log in easilie uisin oni Facebook Connect button.",
 	'comboajaxlogin-post-not-understood' => 'Thaur wis ae mistake in hou this form wis constructed.
 Please try again or [[Special:Contact|report this]].',
-	'comboajaxlogin-readonlytext' => '<h2>Sorrie!</h2>
-<p>Ye canna mak aen accoont the nou - we shid be up an rinnin again shortly. Here\'s whit\'s happenin:<br /><em>$1</em></p>
-<p>Please check <a href="http://twitter.com/wikia">Twitter</a> or <a href="http://facebook.com/wikia">Facebook</a> fer mmair information.
+	'comboajaxlogin-readonlytext' => '<h2>Sarrie!</h2>
+<p>Ye canna cræft aen accoont the nou - we shid be up n rinnin again shortlie. Here\'s whit\'s happenin:<br /><em>$1</em></p>
+<p>Please check <a href="http://twitter.com/wikia">Twitter</a> or <a href="http://facebook.com/wikia">Facebook</a> fer mair information.
 <br />
-(Gif ye awreadie hae aen accoont, ye can <a href="#">log in</a> as normal, but ye\'ll no be able tae eidit.)</p>',
-	'comboajaxlogin-ajaxerror' => 'Wikia is no respondin. Please check yer netwark connection.',
+(Gif ye awreadie hae aen accoont, ye can <a href="#">log in</a> aes normal, but ye\'ll naw be able tae eedit.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia is naw respondin. Please check yer netwark connection.',
 );
 
 /** Somali (Soomaaliga)

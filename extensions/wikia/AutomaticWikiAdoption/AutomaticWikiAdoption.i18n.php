@@ -2735,12 +2735,13 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiadoption' => 'Automatisk wikiadoption',
-	'wikiadoption-desc' => 'En AutomatiskWikiAdoptions-förlängning för MediaWiki',
+	'wikiadoption-desc' => 'Ett AutomatiskWikiAdoptions-tillägg för MediaWiki',
 	'wikiadoption-header' => 'Adoptera den här wikin',
 	'wikiadoption-button-adopt' => 'Ja, jag vill adoptera {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Lär dig mer!',
