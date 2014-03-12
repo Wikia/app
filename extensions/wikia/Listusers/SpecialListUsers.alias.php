@@ -1,6 +1,6 @@
 <?php
 /**
- * Aliases for Special:ListUsers redirects
+ * Aliases for non-core Special:ListUsers redirects
  */
 
 $specialPageAliases = array();
@@ -31,6 +31,13 @@ $specialPageAliases['it'] = array(
 	'Listvstf' => array( 'Vstf', 'Elencovstf' ),
 	'Liststaff' => array( 'Staff', 'Elencostaff' ),
 	'Listhelpers' => array( 'Helper', 'Elencohelper' ),
+);
+
+/** Dutch (Nederlands) */
+$specialPageAliases['nl'] = array(
+	'Listvstf' => array( 'Vstflijst' ),
+	'Liststaff' => array( 'Medewerkerlijst', 'Medewerkerslijst', 'Stafledenlijst' ),
+	'Listhelpers' => array( 'Helperlijst', 'Helperslijst' ),
 );
 
 /** Polish (Polski) */
