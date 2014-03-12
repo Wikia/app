@@ -242,8 +242,8 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $songs
 	 */
 	function saveAlbum( Array $artist, Array $album, Array $songs ) {
-		// Non album
-		if ( !isset($album['id'] ) ) {
+		// Placeholder "albums" doesn't have id's
+		if ( !isset( $album['id'] ) ) {
 			return;
 		}
 		// Add artist meta data
