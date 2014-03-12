@@ -16,8 +16,7 @@ define('videosmodule.views.bottomModule', [
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-bottom',
 		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'module-impression'
+		action: Tracker.ACTIONS.IMPRESSION
 	});
 
 	testCase = abTest();
@@ -30,6 +29,7 @@ define('videosmodule.views.bottomModule', [
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		this.shouldRender = true;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -40,34 +40,57 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.init = function () {
 		var self = this;
 		if (!groupParams) {
-			// Add tracking for GROUP_I, Control Group
+			// Handle control group, no videos module display
+			this.shouldRender = false;
+			this.handleRelatedPages();
 			return;
 		}
+
 		this.data = this.model.fetch(groupParams.verticalOnly);
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth({
 			on: this.el,
 			threshold: 200,
 			callback: function () {
-				self.bindFetchComplete();
-			}
-		});
-	};
-
-	VideoModule.prototype.bindFetchComplete = function () {
-		var self = this;
-		return this.data.complete(function () {
-			if (self.elContentPresent()) {
-				self.render();
-			} else {
-				self.$el.on('afterLoad.relatedPages', function () {
-					if (self.elContentPresent()) {
-						self.render();
-					}
+				self.data.complete(function () {
+					self.handleRelatedPages();
 				});
 			}
 		});
 	};
+
+	/**
+	 * Handle logic to display videos module or not based on related pages module
+	 * Also used for tracking related pages impressions
+	 */
+	VideoModule.prototype.handleRelatedPages = function () {
+		var self = this;
+
+		// check if related pages is loaded and visible
+		if (this.elContentPresent()) {
+			this.onRelatedPagesLoad();
+		} else {
+			// wait till after related pages has loaded to check if visible
+			this.$el.on('afterLoad.relatedPages', function () {
+				if (self.elContentPresent()) {
+					self.onRelatedPagesLoad();
+				}
+			});
+		}
+	};
+
+	/**
+	 * Called when related pages loads and is visible
+	 */
+	VideoModule.prototype.onRelatedPagesLoad = function () {
+		track({
+			label: 'related-pages-impression'
+		});
+		if (this.shouldRender) {
+			this.render();
+		}
+	};
+
 
 	/**
 	 * Check if the element has content that is not hidden by css
@@ -129,7 +152,7 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
-		track();
+		track({label: 'module-impression'});
 	};
 
 	return VideoModule;
