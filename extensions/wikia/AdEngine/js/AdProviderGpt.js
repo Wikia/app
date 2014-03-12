@@ -1,5 +1,5 @@
 /* exported AdProviderGpt */
-/* jshint maxparams: false, maxlen: 150 */
+/* jshint maxparams: false, maxlen: 150, camelcase:false */
 
 var AdProviderGpt = function (log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
@@ -78,13 +78,6 @@ var AdProviderGpt = function (log, window, Geo, slotTweaker, cacheStorage, adLog
 		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
 			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
 
-		// Show INVISIBLE_SKIN when leaderboard was to be shown
-		if (slotname === 'INVISIBLE_SKIN') {
-			if (leaderboardCalled) {
-				return true;
-			}
-		}
-
 		// Always have an ad for MODAL_INTERSTITIAL
 		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
 			return true;
@@ -97,30 +90,59 @@ var AdProviderGpt = function (log, window, Geo, slotTweaker, cacheStorage, adLog
 			log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup);
 			return false;
 		}
-
-		if (slotname.search('LEADERBOARD') > -1) {
-			leaderboardCalled = true;
-		}
 		return true;
 	}
 
-	// Public methods
+	function isAmznOnPage(slotname, slot) {
+		log(['isAmznOnPage', slotname], 'debug', logGroup);
+
+		var matches, i;
+
+		if (!window.amzn_targs || !slot.size) {
+			return false;
+		}
+
+		matches = window.amzn_targs.match(/\d+x\d+/g);
+
+		for (i = 0; i < matches.length; i += 1) {
+
+			if (slot.size.indexOf(matches[i].toLowerCase()) !== -1) {
+				return true;
+			}
+
+		}
+
+		return false;
+	}
 
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
+		var canHandle = false;
+
+		// Show INVISIBLE_SKIN when leaderboard was to be shown
+		if (slotname === 'INVISIBLE_SKIN') {
+			if (leaderboardCalled) {
+				canHandle = true;
+			}
+		}
+
 		if (!isHighValueCountry || !slotMap[slotname]) {
-			return false;
+			canHandle = false;
 		}
 
 		if (gptConfig[slotname] === 'flushonly') {
-			return true;
+			canHandle = true;
 		}
 
-		var canHandle = shouldCallDart(slotname);
+		canHandle = shouldCallDart(slotname);
 
-		if (!canHandle && gptConfig[slotname] === 'flush') {
-			flushGpt();
+		if (canHandle && slotname.search('LEADERBOARD') > -1) {
+			leaderboardCalled = true;
+		}
+
+		if (!canHandle && isAmznOnPage(slotname, slotMap[slotname])) {
+			canHandle = true;
 		}
 
 		return canHandle;
