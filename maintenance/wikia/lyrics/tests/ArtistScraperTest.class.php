@@ -288,4 +288,37 @@ WIKITEXT
 		];
 	}
 
+	/**
+	 * @desc Tests ArtistScraper::getAlbumPic() method
+	 *
+	 * @dataProvider getAlbumPicDataProvider
+	 */
+	public function testGetAlbumPic( $message, $expected, $text, $artistName ) {
+		$artistScraper = new ArtistScraper();
+		$this->assertEquals( $expected, $artistScraper->getAlbumPic( $text, $artistName ), $message );
+	}
+
+	public function getAlbumPicDataProvider() {
+		return [
+			[
+				'message' => 'Empty template',
+				'expected' => '',
+				'text' => '{{Album Art}}',
+				'artistName' => 'Silent Cry',
+			],
+			[
+				'message' => 'One way of using Album Art template: first parameter is empty so it takes artist name (pagename)',
+				'expected' => 'Silent Cry - Goddess of Tears.jpg',
+				'text' => '{{Album Art||Goddess of Tears}}',
+				'artistName' => 'Silent Cry',
+			],
+			[
+				'message' => 'Second way of using Album Art template: first parameter is NOT empty and it takes it instead of artist name (pagename)',
+				'expected' => 'Test - Goddess of Tears.jpg',
+				'text' => '{{Album Art|Test|Goddess of Tears}}',
+				'artistName' => 'Silent Cry',
+			],
+		];
+	}
+
 }
