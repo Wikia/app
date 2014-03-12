@@ -27,18 +27,21 @@ class SongScraper extends BaseScraper {
 	 * Get song data from header template
 	 *
 	 * @param Article $article
+	 * 
 	 * @return array
 	 */
 	protected function getHeader( Article $article ) {
 		$result = [];
 		$values = $this->getTemplateValues( 'song', $article->getContent(), '|', false );
+
 		if ( $values ) {
 			$result['Artist'] = $values[2];
 			if ( $values[1] ) {
-				list( $albumName, $albumYear ) = $this->getAlbumNameYear( $values[1] );
+				list( $albumName ) = $this->getAlbumNameYear( $values[1] );
 			}
 			$result['Album'] = $albumName;
 		}
+
 		return $result;
 	}
 
