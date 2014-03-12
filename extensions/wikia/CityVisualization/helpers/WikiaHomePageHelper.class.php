@@ -9,6 +9,9 @@
  * @author Sebastian Marzjan
  *
  */
+use \Wikia\Logger\WikiaLogger;
+
+ 
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -654,6 +657,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
+		WikiaLogger::instance()->debug( "Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
+			'imageTitle' => $imageTitle, 'imageId' => $imageId] );
+		
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
