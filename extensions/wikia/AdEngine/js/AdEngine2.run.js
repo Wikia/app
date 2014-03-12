@@ -4,7 +4,7 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, Krux, AdTracker, SlotTracker */
+/*global Geo, Wikia, Krux, SlotTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderLater, AdProviderNull */
@@ -21,7 +21,6 @@
 	var module = 'AdEngine2.run',
 		adConfig,
 		adEngine,
-		adTracker,
 		slotTracker,
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
@@ -53,13 +52,12 @@
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
-	slotTracker = SlotTracker(log, tracker);
+	slotTracker = SlotTracker(window, log, tracker);
 
 	// Construct Ad Engine
 	adEngine = AdEngine2(log, LazyQueue, slotTracker);
 
 	// Construct various helpers
-	adTracker = AdTracker(log, tracker, window);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adSlotMapConfig = AdSlotMapConfig();
@@ -75,8 +73,8 @@
 	evolveHelper = EvolveHelper(log, window);
 
 	// Construct Ad Providers
-	adProviderGpt = AdProviderGpt(adTracker, log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
-	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker);
+	adProviderGpt = AdProviderGpt(log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaFullGpt, adSlotMapConfig);
+	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, log, window, document, Krux, evolveHelper, slotTweaker);
 	adProviderNull = AdProviderNull(log, slotTweaker);
 
 	// Special Ad Provider, to deal with the late ads
@@ -113,12 +111,7 @@
 		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	});
 
-	window.AdEngine_getTrackerStats = function () {
-		return {
-			'old': adTracker.getStats(),
-			'new': slotTracker.getStats()
-		};
-	};
+	window.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	// DART API for Liftium
 	window.LiftiumDART = {

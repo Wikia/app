@@ -32,9 +32,10 @@ abstract class AbstractDismax extends AbstractSelect
 		}
 		return trim( $queryFieldsString );
 	}
-	
+
 	/**
 	 * Registers our query as an extended dismax query.
+	 * @param \Solarium_Query_Select $select
 	 * @return AbstractSelect
 	 */
 	protected function registerDismax( Solarium_Query_Select $select ) {
@@ -59,21 +60,22 @@ abstract class AbstractDismax extends AbstractSelect
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Dismax-specific implementation -- registers the dismax component for child components.
-	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\Dismax\AbstractDismax
+	 * @param \Solarium_Query_Select $select
+	 * @return \Wikia\Search\QueryService\Select\Dismax\AbstractDismax
 	 */
 	protected function registerComponents( Solarium_Query_Select $select ) {
 		return $this->registerDismax( $select )
 		            ->registerNonDismaxComponents( $select );
 	}
-	
+
 	/**
 	 * This is a hook for child components to provide their own specific component registry.
-	 * @param Solarium_Query_Select $query
-	 * @return Wikia\Search\QueryService\Select\Dismax\AbstractDismax
+	 * @param \Solarium_Query_Select $select
+	 * @internal param \Solarium_Query_Select $query
+	 * @return \Wikia\Search\QueryService\Select\Dismax\AbstractDismax
 	 */
 	protected function registerNonDismaxComponents( Solarium_Query_Select $select ) {
 		return $this;

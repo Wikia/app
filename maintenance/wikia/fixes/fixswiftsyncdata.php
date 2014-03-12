@@ -19,7 +19,7 @@ function getCityIdByImagePath( $image_path ) {
 	
 	if ( !empty( $image_upload_paths[ $image_path ] ) ) {
 		$city_id = $image_upload_paths[ $image_path ];
-		print "found city_id: $result, ";
+		print "found city_id: $city_id, ";
 		return $city_id;
 	}
 	

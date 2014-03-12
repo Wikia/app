@@ -54,7 +54,7 @@ $(function () {
 			return $.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'isWikiBlocked',
-				type: 'post',
+				type: 'get',
 				data: {
 					lang: this.visualizationLang,
 					wikiId: wikiId
@@ -68,7 +68,7 @@ $(function () {
 			return $.nirvana.sendRequest({
 				controller: 'ManageWikiaHome',
 				method: 'isWikiInCollection',
-				type: 'post',
+				type: 'get',
 				data: {
 					wikiId: wikiId
 				}

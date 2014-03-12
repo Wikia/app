@@ -251,7 +251,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
-			$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 		}
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
@@ -276,6 +276,35 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $topics ) {
 			$this->request->setVal( 'title', $topics );
 			$this->searchVideosByTitle();
+		}
+	}
+
+	/**
+	 * Search videos by topics
+	 * @requestParam string defaultTopic - Text to use for the topic if no topics are found on this wiki.
+	 * @requestParam int limit - Limit the number of results returned
+	 */
+	public function searchVideosByTopics() {
+		$limit = $this->getVal( 'limit' );
+		$defaultTopic = $this->getVal( 'defaultTopic' );
+		$topics = $this->getTopicsAsQuery( $defaultTopic );
+		if ( !empty( $topics ) ) {
+			$searchConfig = new Wikia\Search\Config;
+			$mm = $this->getVal( 'mm', '80%' );
+			$searchConfig
+				->setVideoContentSearch( true )
+				->setQuery( $topics )
+				->setMinimumMatch( $mm );
+			if ( !empty( $limit ) ) {
+				$searchConfig->setLimit( $limit );
+			}
+
+			$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
+			if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
+				$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+			}
+			$this->getResponse()->setFormat( 'json' );
+			$this->getResponse()->setData( $queryService->searchAsApi() );
 		}
 	}
 

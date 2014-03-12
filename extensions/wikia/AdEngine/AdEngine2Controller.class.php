@@ -312,8 +312,8 @@ class AdEngine2Controller extends WikiaController {
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgAdDriverUseNewTracking,
-			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault,
+			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
+			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
 			   $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -374,9 +374,6 @@ class AdEngine2Controller extends WikiaController {
 			$vars['wgAdDriverUseSevenOneMedia'] = $wgAdDriverUseSevenOneMedia;
 			$vars['wgAdDriverSevenOneMediaCombinedUrl'] = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
 		}
-		if (!empty($wgAdDriverUseNewTracking)) {
-			$vars['wgAdDriverUseNewTracking'] = $wgAdDriverUseNewTracking;
-		}
 
 		if ($wgUser->getOption('showAds')) {
 			$vars['wgUserShowAds'] = true;
@@ -392,6 +389,10 @@ class AdEngine2Controller extends WikiaController {
 		}
 		if (!empty($wgEnableOutboundScreenExt)) {
 			$vars['wgEnableOutboundScreenExt'] = $wgEnableOutboundScreenExt;
+		}
+
+		if (!empty($wgAdDriverTrackState)) {
+			$vars['wgAdDriverTrackState'] = $wgAdDriverTrackState;
 		}
 
 		wfProfileOut(__METHOD__);

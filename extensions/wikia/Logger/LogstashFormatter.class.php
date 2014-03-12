@@ -11,6 +11,12 @@ namespace Wikia\Logger;
 
 
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
+	private $devMode = false;
+
+	public function enableDevMode() {
+		$this->devMode = true;
+	}
+
 	protected function formatV0(array $record) {
 		$message = array(
 			'@timestamp' => $record['datetime'],
@@ -29,6 +35,10 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 			foreach ($record['context'] as $key => $val) {
 				$message['@context'][$key] = $val;
 			}
+		}
+
+		if ($this->devMode) {
+			$message['@message'] = "DEV_ES_MESSAGE {$message['@message']}";
 		}
 
 		return $message;

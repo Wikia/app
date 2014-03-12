@@ -516,6 +516,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array wikiInfo
 	 */
 	public function getInterstitial() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 		$wikiId = $this->request->getVal('wikiId', 0);
 		$domain = $this->request->getVal('domain', null);
 

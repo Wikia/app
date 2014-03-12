@@ -1204,13 +1204,10 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverUseNewTracking
- * Whether to use the new ad tracking code.
- * If true: the new tracking code (SlotTracker.js) will be used on half of
- * the traffic and the old one (AdTracker.js) on the other half.
- * If false: only the old ad tracking code (AdTracker.js) will be used.
+ * @name $wgAdDriverTrackState
+ * Enables GA tracking of state for ad slots on pages
  */
-$wgAdDriverUseNewTracking = true;
+$wgAdDriverTrackState = false;
 
 /**
  * @name $wgHighValueCountriesDefault
@@ -1326,6 +1323,11 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
  * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
  */
 $wgUseETag = true;
+
+/**
+ * whether or not to send logs from dev to elasticsearch
+ */
+$wgDevESLog = false;
 
 /**
  * Restrictions for some api methods

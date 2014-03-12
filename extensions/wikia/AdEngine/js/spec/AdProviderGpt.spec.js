@@ -1,5 +1,4 @@
 describe('AdProviderGpt', function(){
-	var adTrackerMock = {trackSlot: function() { return {init: function () {}, success: function () {}, hop: function () {}}}};
 
 	it('Leaderboard works as expected in low value countries', function() {
 		var logMock = function() {},
@@ -24,7 +23,6 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderGpt = AdProviderGpt(
-			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
@@ -69,7 +67,6 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderGpt = AdProviderGpt(
-			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
@@ -118,7 +115,6 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderGpt = AdProviderGpt(
-			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
@@ -168,7 +164,6 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderGpt = AdProviderGpt(
-			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
@@ -226,7 +221,6 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
 		adProviderGpt = AdProviderGpt(
-			adTrackerMock,
 			logMock,
 			windowMock,
 			geoMock,
