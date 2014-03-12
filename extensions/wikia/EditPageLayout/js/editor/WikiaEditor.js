@@ -269,6 +269,9 @@
 					label: 'edit-page-ready',
 					value: Math.round( new Date() - window.wgNow )
 				} );
+				if ( window.veTrack ) {
+					veTrack( { action: 'ck-edit-page-stop' } );
+				}
 			}
 		},
 

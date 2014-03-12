@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [],
+		plugins = [], veUIEnabled,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -126,6 +126,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -198,7 +199,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -216,6 +219,12 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -227,6 +236,12 @@
 				'label': 've-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.activate();
 			} );
@@ -234,6 +249,12 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -245,6 +266,12 @@
 				'label': 've-section-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
@@ -340,6 +367,12 @@
 		$( function () {
 			if ( isViewPage ) {
 				if ( init.activateOnPageLoad ) {
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );
@@ -352,11 +385,15 @@
 	initIndicator();
 
 	// Redlinks
-	$( function () {
+	if ( veUIEnabled ) {
+		$( setupRedlinks );
+	}
+
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
+			function() {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
@@ -367,5 +404,5 @@
 				}
 			}
 		);
-	} );
+	}
 }() );
