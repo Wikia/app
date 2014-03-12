@@ -169,7 +169,7 @@ class ArtistScraper extends BaseScraper {
 			'pic' => 'image',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
-			'romanizedArtist' => 'romanized_name',
+			'romanizedArtist' => 'romanized_artist_name',
 			'officialSite' => 'official_site',
 			'myspace' => 'myspace',
 			'twitter' => 'twitter',

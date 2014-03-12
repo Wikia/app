@@ -39,7 +39,7 @@ class MockAdapter implements DataBaseAdapter {
  */
 class SolrAdapter implements DataBaseAdapter {
 
-	const MAX_QUEUE_LENGTH = 1;
+	const MAX_QUEUE_LENGTH = 50;
 	const TYPE_ARTIST = 'artist';
 	const TYPE_ALBUM = 'album';
 	const TYPE_SONG = 'song';
@@ -60,6 +60,7 @@ class SolrAdapter implements DataBaseAdapter {
 	function __construct( $config ) {
 		$this->client = new Solarium_Client( $config );
 		$this->update = $this->client->createUpdate();
+		$this->timer = microtime( true );
 	}
 
 	/**
@@ -71,16 +72,6 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
-	 * Generate key based on the provided keys
-	 *
-	 * @param array $fields
-	 * @return string
-	 */
-	private function generateKey( Array $fields ) {
-		return implode( '~', $fields );
-	}
-
-	/**
 	 * Commit the documents in the current update queue
 	 *
 	 * @return null|Solarium_Result_Update
@@ -88,6 +79,8 @@ class SolrAdapter implements DataBaseAdapter {
 	public function commit() {
 		$result = null;
 		if ( $this->queue ) {
+			printf('COMMIT %f s for %d commits' . PHP_EOL, ( microtime( true ) - $this->timer ), count( $this->queue ) );
+			$this->timer = microtime( true );
 			$update = $this->client->createUpdate();
 			$update->addDocuments( $this->queue );
 			$update->addCommit();
@@ -102,7 +95,7 @@ class SolrAdapter implements DataBaseAdapter {
 	 * Commit the queue if number of documents = MAX_QUEUE_LENGTH
 	 */
 	private function autoCommit() {
-		if ( count( $this->queue ) == self::MAX_QUEUE_LENGTH ) {
+		if ( count( $this->queue ) >= self::MAX_QUEUE_LENGTH ) {
 			$this->commit();
 		}
 	}
@@ -141,29 +134,35 @@ class SolrAdapter implements DataBaseAdapter {
 		return json_encode( $metaData );
 	}
 
+	/**
+	 * Generate meta data for album
+	 *
+	 * @param array $album - Album data array
+	 * @return array|null
+	 */
 	function getAlbumMetaData( Array $album ) {
 		if ( isset( $album['id'] ) ) {
-			return [
-				'id' => $album['id'],
+			$albumData =  [
+				'album_id' => $album['id'],
 				'album_name' => $album['album_name'],
-				'image' => $album['image'],
-				'release_date' => $album['release_date'],
 			];
+			if ( isset($album['image']) ) {
+				$albumData['image'] = $album['image'];
+			}
+			if ( isset($album['release_date']) ) {
+				$albumData['release_date'] = $album['release_date'];
+			}
+			return $albumData;
 		}
 		return null;
 	}
 
-	function getArtistMetaData( Array $artist ) {
-		$result = [
-			'id' => $artist['id'],
-			'name' => $artist['artist_name'],
-		];
-		if ( isset( $artist['image'] ) ) {
-			$result['image'] = $artist['image'];
-		}
-		return $result;
-	}
-
+	/**
+	 * Generate meta data for song
+	 *
+	 * @param array $song - Song data array
+	 * @return array
+	 */
 	function getSongMetaData( Array $song ) {
 		$result = [
 			'name' => $song['song_name'],
@@ -174,6 +173,12 @@ class SolrAdapter implements DataBaseAdapter {
 		return $result;
 	}
 
+	/**
+	 * Generate meta data for albums
+	 *
+	 * @param array $albums - array with albums data
+	 * @return array
+	 */
 	function getAlbumsMetaData( Array $albums ) {
 		$result = [];
 		foreach ( $albums as $album ) {
@@ -185,17 +190,25 @@ class SolrAdapter implements DataBaseAdapter {
 		return $result;
 	}
 
+	/**
+	 * Generate meta data for songs
+	 *
+	 * @param array $songs
+	 * @return array
+	 */
 	function getSongsMetaData( Array $songs ) {
 		$result = [];
 		foreach ( $songs as $song ) {
-			$song = $this->getSongMetaData( $song );
-			if ( $song ) {
-				$result[] = $song;
-			}
+			$result[] = $this->getSongMetaData( $song );
 		}
 		return $result;
 	}
 
+	/**
+	 * Set genres data to data element
+	 *
+	 * @param $element
+	 */
 	function setGenres( &$element ) {
 		if ( isset( $element['genres'] ) ) {
 			if ( !is_array( $element['genres'] ) ) {
@@ -234,12 +247,11 @@ class SolrAdapter implements DataBaseAdapter {
 			return;
 		}
 		// Add artist meta data
-		$album['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
+		$album['artist_name'] = $artist['artist_name'];
+		$album['artist_id'] = $artist['id'];
 		// Add songs meta data
 		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
 		$this->setGenres( $album );
-		$album['artist_id'] = $artist['id'];
-		$album['artist_name'] = $artist['artist_name'];
 		$album['type'] = self::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
@@ -257,12 +269,14 @@ class SolrAdapter implements DataBaseAdapter {
 		if ( !isset( $song['id'] ) ) {
 			return;
 		}
+		$song['artist_id'] = $artist['id'];
 		$song['artist_name'] = $artist['artist_name'];
-		$song['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
-		$albumMeta = $this->getAlbumMetaData( $album );
-		if ( !is_null( $albumMeta ) ) {
+		if ( isset( $album['id'] ) ) {
 			$song['album_name'] = $album['album_name'];
-			$song['album'] = $this->encodeMeta( $albumMeta );
+			$song['album_id'] = $album['id'];
+			if ( isset( $album['image'] ) ) {
+				$song['image'] = $album['image'];
+			}
 		}
 		$this->setGenres( $song );
 		$song['type'] = self::TYPE_SONG;

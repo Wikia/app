@@ -59,7 +59,7 @@ class AlbumScraper extends BaseScraper {
 			'Length' => 'length',
 			'Artist' => 'artist',
 			'Wikipedia' => 'wikipedia',
-			'romanizedAlbum' => 'romanized_name',
+			'romanizedAlbum' => 'romanized_album_name',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',
 			'discogs' => 'discogs',
