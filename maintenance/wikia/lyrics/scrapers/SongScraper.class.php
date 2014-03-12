@@ -16,6 +16,7 @@ class SongScraper extends BaseScraper {
 		$songData = [
 			'article_id' => $article->getId(),
 		];
+
 		$songData = array_merge( $songData, $this->getHeader( $article ) );
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
@@ -27,7 +28,7 @@ class SongScraper extends BaseScraper {
 	 * Get song data from header template
 	 *
 	 * @param Article $article
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getHeader( Article $article ) {
@@ -35,11 +36,11 @@ class SongScraper extends BaseScraper {
 		$values = $this->getTemplateValues( 'song', $article->getContent(), '|', false );
 
 		if ( $values ) {
-			$result['Artist'] = $values[2];
+			$result['artist'] = $values[2];
 			if ( $values[1] ) {
 				list( $albumName ) = $this->getAlbumNameYear( $values[1] );
 			}
-			$result['Album'] = $albumName;
+			$result['album'] = $albumName;
 		}
 
 		return $result;
@@ -81,7 +82,7 @@ class SongScraper extends BaseScraper {
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
 /* These fields are also captured but not needed now
-			'Artist' => 'artist',
+			'artist' => 'artist',
 			'romanizedSong' => 'romanized_name',
 			'language' => 'language',
 			'youtube' => 'youtube',
