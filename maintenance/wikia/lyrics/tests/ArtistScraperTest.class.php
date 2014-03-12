@@ -7,6 +7,100 @@ class ArtistScraperTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @desc Tests the main functionality of scrapers (it's being re-used in all types of scrapers)
+	 * @dataProvider getTemplateValuesDataProvider
+	 */
+	public function testGetTemplateValues( $message, $expected, $name, $text, $separator = '|', $hash = true ) {
+		/** @var ArtistScraper $artistScraper */
+		$artistScraper = new ArtistScraper();
+		$this->assertEquals( $expected, $artistScraper->getTemplateValues( $name, $text, $separator, $hash ), $message );
+	}
+
+	public function getTemplateValuesDataProvider() {
+		return [
+			[
+				'message' => 'Default values for optional parameters and rest empty string',
+				'expected' => [],
+				'name' => '',
+				'text' => '',
+				'separator' => '',
+				'hash' => true,
+			],
+			[
+				'message' => 'Song footer example',
+				'expected' => [
+					'fLetter' => 'O',
+					'album' => 'Dance Of Shadows',
+					'song' => 'Only To Love You',
+					'language' => 'English',
+					'youtube' => '',
+					'goear' => '',
+					'asin' => '',
+					'iTunes' => '',
+					'allmusic' => '',
+				],
+				'name' => 'SongFooter',
+				'text' => <<<WIKITEXT
+{{SongFooter
+|fLetter  = O
+|album    = Dance Of Shadows
+|song     = Only To Love You
+|language = English
+|youtube  =
+|goear    =
+|asin     =
+|iTunes   =
+|allmusic =
+}}
+WIKITEXT
+,
+				'separator' => '|',
+				'hash' => true,
+			],
+			[
+				'message' => 'Song footer example with different separator than default',
+				'expected' => [],
+				'name' => 'SongFooter',
+				'text' => <<<WIKITEXT
+{{SongFooter
+|fLetter  = O
+|album    = Dance Of Shadows
+|song     = Only To Love You
+|language = English
+|youtube  =
+|goear    =
+|asin     =
+|iTunes   =
+|allmusic =
+}}
+WIKITEXT
+				,
+				'separator' => '|#|',
+				'hash' => true,
+			],
+			[
+				'message' => 'Different separator than default',
+				'expected' => [
+					'album' => 'Dance Of Shadows',
+					'song' => 'Only To Love You',
+					'language' => 'English',
+				],
+				'name' => 'data',
+				'text' => <<<WIKITEXT
+{{data
+|#|album    = Dance Of Shadows
+|#|song     = Only To Love You
+|#|language = English
+}}
+WIKITEXT
+				,
+				'separator' => '|#|',
+				'hash' => true,
+			],
+		];
+	}
+
+	/**
 	 * @desc Tests ArtistScraper::testGetHeader()
 	 *
 	 * @dataProvider processArticleDataProvider
