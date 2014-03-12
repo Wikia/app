@@ -7,7 +7,7 @@
 class SongScraper extends BaseScraper {
 
 	/**
-	 * Process Song article page
+	 * @desc Process Song article page
 	 *
 	 * @param Article $article
 	 * @return array
@@ -25,7 +25,7 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get song data from header template
+	 * @desc Get song data from header template
 	 *
 	 * @param Article $article
 	 *
@@ -47,7 +47,7 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get song data from header template
+	 * @desc Get song data from header template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -69,7 +69,7 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Data field mapping
+	 * @desc Data field mapping
 	 *
 	 * @return array
 	 */
