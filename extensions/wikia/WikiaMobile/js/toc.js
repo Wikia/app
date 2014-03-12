@@ -11,7 +11,7 @@ function ( sections, window, $, mustache, toc, track ) {
 		$document = $( doc ),
 		$anchors,
 		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
-		appended,
+		sideMenuInited,
 		$toc = $( doc.getElementById( 'wkTOC' ) ),
 		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
@@ -22,10 +22,8 @@ function ( sections, window, $, mustache, toc, track ) {
 
 	/**
 	 * @desc Creates object representing a section
-	 *
 	 * @param {Object} header - Processed element object for single article header
 	 * @param {Integer} level - The actual level on which the element will be rendered
-	 *
 	 * @returns {Object} - returns TOC section object
 	 */
 	function createSection ( header, level ) {
@@ -40,9 +38,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 	/**
 	 * @desc Filters headers with nothing to show
-	 *
 	 * @param {Object} header - DOM element of header
-	 *
 	 * @returns {Object} or {Boolean} false if filtered
 	 */
 	function filter ( header ) {
@@ -151,7 +147,7 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Handles appending TOC to a side menu
 	 */
-	function init () {
+	function initSideMenu () {
 		$toc.on( 'click', 'header', function () {
 			onClose( 'header' );
 			window.scrollTo( 0, 0 );
@@ -172,7 +168,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 		renderToc();
 
-		appended = true;
+		sideMenuInited = true;
 	}
 
 	/**
@@ -187,7 +183,11 @@ function ( sections, window, $, mustache, toc, track ) {
 		} );
 	}
 
-	function toggleSideMenu( event ) {
+	/**
+	 * @desc Opens / Closes side menu with TOC
+	 * @param event
+	 */
+	function toggleSideMenu ( event ) {
 		event.stopPropagation();
 
 		if ( $toc.hasClass( active ) ) {
@@ -199,13 +199,14 @@ function ( sections, window, $, mustache, toc, track ) {
 
 	/**
 	 * @desc Fires on opening of a Side menu toc
+	 * At first trigger it renders internal markup
 	 */
 	function onOpen () {
 		$toc.addClass( active );
 		$document.on( 'section:changed', onSectionChange );
 		$.event.trigger( 'curtain:show' );
-		if ( !appended ) {
-			init();
+		if ( !sideMenuInited ) {
+			initSideMenu();
 		}
 
 		onSectionChange( null, sections.current()[0], true );
@@ -231,12 +232,9 @@ function ( sections, window, $, mustache, toc, track ) {
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	/**
-	 * @desc Initializes the proper version of TOC and event handlers for it
-	 */
 	if ( show ) {
 		$document.on( 'curtain:hidden', onClose );
-
+		//If TOC as a section, create markup right away
 		if ( !sideMenuCapable ) {
 			tocMarkup = createTocMarkup();
 			$document.find( '#mw-content-text' )
@@ -246,7 +244,7 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
 			$tocHandle.on( 'click', scrollToToc );
-
+		//If TOC as side-menu, render at first opening
 		} else {
 			$tocHandle.on( 'click', toggleSideMenu );
 		}
