@@ -161,8 +161,8 @@ class TvApiController extends WikiaApiController {
 		$select->setQuery( $query );
 		$select->setRows(5);
 
-		$dismax->setQueryFields( 'series_txt^4 description_txt^2 categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
-		$dismax->setPhraseFields( 'series_txt^10' );
+		$dismax->setQueryFields( 'series_txt^4 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
+		$dismax->setPhraseFields( 'series_txt^10 sitename_txt^5' );
 		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
@@ -176,7 +176,7 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function prepareXWikiQuery( $query, $lang ) {
-		return '+("'.$query.'") AND +(lang_s:'.$lang.') AND +(hub_s:Entertainment)';
+		return '+("'.$query.'") AND +(lang_s:'.$lang.')';
 	}
 
 	protected function setWikiVariables(){
