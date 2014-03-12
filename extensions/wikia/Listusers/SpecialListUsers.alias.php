@@ -6,7 +6,7 @@
 $specialPageAliases = array();
 
 /** English (English) */
-$specialPageAlisases['en'] = array(
+$specialPageAliases['en'] = array(
 	'Listvstf' => array( 'Listvstf' ),
 	'Liststaff' => array( 'Liststaff' ),
 	'Listhelpers' => array( 'Listhelpers' ),
@@ -15,26 +15,26 @@ $specialPageAlisases['en'] = array(
 /** German (Deutsch) */
 $specialPageAliases[ 'de' ] = array(
 	'Listvstf' => array( 'Vstf' ),
-	'Liststaff' => array( 'Wikia-Mitarbeiter' ),
-	'Listhelpers' => array( 'Wikia-Helfer' ),
+	'Liststaff' => array( 'Wikia-mitarbeiter' ),
+	'Listhelpers' => array( 'Wikia-helfer' ),
 );
 
 /** French (Français) */
-$specialPageAlisases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'Listvstf' => array( 'Listevstf', 'Liste_vstf' ),
 	'Liststaff' => array( 'Listestaff', 'Liste_staff' ),
 	'Listhelpers' => array( 'Listedesassistants', 'Liste_des_assistants' ),
 );
 
 /** Italian (Italiano) */
-$specialPageAlisases['it'] = array(
+$specialPageAliases['it'] = array(
 	'Listvstf' => array( 'Vstf', 'Elencovstf' ),
 	'Liststaff' => array( 'Staff', 'Elencostaff' ),
 	'Listhelpers' => array( 'Helper', 'Elencohelper' ),
 );
 
 /** Polish (Polski) */
-$specialPageAlisases['pl'] = array(
+$specialPageAliases['pl'] = array(
 	'Listvstf' => array( 'Vstf' ),
 	'Liststaff' => array( 'Staffowie' ),
 	'Listhelpers' => array( 'Helperzy' ),
