@@ -19,7 +19,7 @@ abstract class BaseScraper {
 	 *
 	 * @return Array
 	 */
-	protected function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
+	public function getTemplateValues( $name, $text, $separator = '|', $hash = true) {
 		$result = [];
 		$regexp = sprintf( '#\{\{%s(.*?)\}\}#s', $name );
 
