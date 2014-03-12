@@ -39,10 +39,10 @@ class MockAdapter implements DataBaseAdapter {
  */
 class SolrAdapter implements DataBaseAdapter {
 
-	const MAX_QUEUE_LENGTH = 10;
-	const TYPE_ARTIST = 1;
-	const TYPE_ALBUM = 2;
-	const TYPE_SONG = 3;
+	const MAX_QUEUE_LENGTH = 1;
+	const TYPE_ARTIST = 'artist';
+	const TYPE_ALBUM = 'album';
+	const TYPE_SONG = 'song';
 
 	private $client;
 	private $queue = [];
@@ -196,6 +196,15 @@ class SolrAdapter implements DataBaseAdapter {
 		return $result;
 	}
 
+	function setGenres( &$element ) {
+		if ( isset( $element['genres'] ) ) {
+			if ( !is_array( $element['genres'] ) ) {
+				$element['genres'] = [$element['genres']];
+			}
+			$element['genres'] = json_encode( array_values( $element['genres'] ) );
+		}
+	}
+
 
 	/**
 	 * Save artist document to Solr
@@ -206,6 +215,8 @@ class SolrAdapter implements DataBaseAdapter {
 	function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
+		$artist['type'] = self::TYPE_ARTIST;
+		$this->setGenres( $artist );
 		$doc = $this->newDocFromData( $artist );
 		$this->add( $doc );
 	}
@@ -226,10 +237,10 @@ class SolrAdapter implements DataBaseAdapter {
 		$album['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
 		// Add songs meta data
 		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
-
+		$this->setGenres( $album );
 		$album['artist_id'] = $artist['id'];
 		$album['artist_name'] = $artist['artist_name'];
-
+		$album['type'] = self::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
 	}
@@ -242,15 +253,19 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $song
 	 */
 	function saveSong( Array $artist, Array $album, Array $song ) {
-		// Non song
+		// Non lyrics song
 		if ( !isset( $song['id'] ) ) {
 			return;
 		}
+		$song['artist_name'] = $artist['artist_name'];
 		$song['artist'] = $this->encodeMeta( $this->getArtistMetaData( $artist ) );
 		$albumMeta = $this->getAlbumMetaData( $album );
 		if ( !is_null( $albumMeta ) ) {
-			$song['album'] = $albumMeta;
+			$song['album_name'] = $album['album_name'];
+			$song['album'] = $this->encodeMeta( $albumMeta );
 		}
+		$this->setGenres( $song );
+		$song['type'] = self::TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}
