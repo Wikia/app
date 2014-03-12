@@ -1,10 +1,10 @@
 /*
-	$Revision: 1.7 $Date: 2014/01/31 14:06:31 $
+	$Revision: 1.11 $Date: 2014/03/12 13:32:31 $
 	SevenOne Media Ad Integration for de.wikia.com
 */
 
 window.myAd = {
-	revision: '$Revision: 1.7 $Date: 2014/01/31 14:06:31 $',
+	revision: '$Revision: 1.11 $Date: 2014/03/12 13:32:31 $',
 	soi_site_script:  'wikia.js',
 
 	container_prefix: 'ad-',
@@ -51,9 +51,8 @@ window.myAd = {
 				// high default in case of non-retrievable widths
 				var content_width = this.getContentWidth() || 10000;
 				var client_width  = this.getClientWidth() || 10000;
-				if (client_width < 1300) window.SOI_SB = 0;
-				if (client_width < 1200) window.SOI_SC1 = window.SOI_WP = window.SOI_FP = 0;
-				if (client_width < 1170) window.SOI_SC1 = window.SOI_SB = window.SOI_WP = 0; // (1170 - 960) / 2 - 5 = 100px visibible width
+				if (client_width < 1300) window.SOI_SB = 0; // (1300 - 1030) / 2 = 135
+				if (client_width < 1200) window.SOI_SC1 = window.SOI_WP = window.SOI_FP = 0; // (1200 - 1030) / 2 = 85
 				if (content_width < 800) window.SOI_PU = window.SOI_PL = window.SOI_FA
 					= window.SOI_BB = window.SOI_PD = window.SOI_HP = 0;
 			}
@@ -217,7 +216,6 @@ window.myAd = {
 						case 'fullbanner2':
 							retval = SoiAd.isPowerbanner(ad_id) || SoiAd.isPushdown(ad_id)|| SoiAd.isBillboard(ad_id)
 								|| SoiAd.isWallpaper(ad_id) || SoiAd.isFireplace(ad_id);
-							if (!retval && this.getClientWidth() < 1020) retval = true;
 							break;
 						case 'rectangle1':
 							retval = SoiAd.isHalfpage(ad_id);
