@@ -1,7 +1,7 @@
 <?php
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-require_once( dirname( __FILE__ ) . 'lyrics.setup.php' );
+require_once( dirname( __FILE__ ) . '/lyrics.setup.php' );
 
 /**
  * Class LyricsWikiCrawler
