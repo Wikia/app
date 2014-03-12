@@ -351,10 +351,13 @@
 	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
 
 	if ( !thisPageIsAvailable ) {
-		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
-		$edit.parent().remove();
+		$veEdit = $( '#ca-ve-edit' );
+		if ( $veEdit.exists() ) {
+			$edit = $( '#ca-edit' );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			$edit.parent().remove();
+		}
 	} else {
 		$( 'html' ).addClass( 've-available' );
 	}
