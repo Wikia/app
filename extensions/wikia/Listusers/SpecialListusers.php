@@ -21,7 +21,8 @@ $wgExtensionCredits['specialpage'][] = array(
 /**
  * Messages
  */
-$wgExtensionMessagesFiles["Listusers"] = __DIR__ . '/SpecialListusers.i18n.php';
+$wgExtensionMessagesFiles['Listusers'] = __DIR__ . '/SpecialListusers.i18n.php';
+$wgExtensionMessagesFiles['ListusersAlias'] = __DIR__ . '/SpecialListusers.alias.php';
 
 /**
  * Helpers
