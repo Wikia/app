@@ -100,6 +100,13 @@ $messages['fa'] = array(
 	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
 );
 
+/** Finnish (suomi)
+ * @author Elseweyr
+ */
+$messages['fi'] = array(
+	'wikiastyleguide-dropdown-select-all' => 'Valitse kaikki',
+);
+
 /** French (français)
  * @author Gomoko
  * @author Wyz

@@ -1152,8 +1152,10 @@ $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
+	'wikiaPhotoGallery-upload-select-images' => 'Харжа',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Харжа',
 );
 
 /** Sorani Kurdish (کوردی)

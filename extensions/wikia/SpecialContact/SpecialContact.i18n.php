@@ -838,6 +838,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -849,7 +850,7 @@ $messages['pt'] = array(
 Para mais informações sobre como relatar problemas à Wikia visite [[w:project:Report_a_problem|esta página]], ou pode colocar um pedido de apoio no [[w:Forum:Index|Wikia Community Forums]]
 
 Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pode contactar-nos em [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Nome de utilizador', # Fuzzy
+	'specialcontact-username' => 'O seu nome de utilizador',
 	'specialcontact-wikiname' => 'Qual é a wiki?',
 	'specialcontact-realname' => 'O seu nome',
 	'specialcontact-yourmail' => 'Correio eletrónico',
@@ -873,19 +874,20 @@ Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pod
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'contact' => 'Contato Wikia',
 	'specialcontact-wikia' => 'Contato Wikia',
 	'specialcontact-pagetitle' => 'Contato Wikia',
-	'specialcontact-intro' => 'Você pode entrar em contato com a [[w:project:Staff|Wikia Staff]] usando este formulário. Administradores desta wiki podem ser encontrados [[Special:ListAdmins|aqui]]. 
+	'specialcontact-intro' => 'Você pode contatar a [[w:project:Staff|Wikia Staff]] usando este formulário. Administradores desta wiki podem ser encontrados [[Special:ListAdmins|aqui]].
 
-Informações adicionais sobre como reportar problemas a Wikia podem ser encontrados  [[w:project:Report_a_problem|aqui]], ou você pode postar em algum [[w:Forum:Index|Wikia Community Forums]] para suporte ao usuário. 
+	Informações adicionais sobre como reportar problemas para a Wikia podem ser encontradas [[w:project:Report_a_problem|aqui]], ou você pode postar nos [[w:Forum:Index|Wikia Community Forums]] para suporte ao usuário.
 
-Se você preferir utilizar o correio electrónico regular ou anexos, você pode nos contatar em [mailto:community@wikia.com community@wikia.com].',
+Se você preferir usar o e-mail regular ou ter anexos, você pode contatar-nos em [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-username' => 'Seu nome de usuário',
-	'specialcontact-wikiname' => 'Wiki',
+	'specialcontact-wikiname' => 'Qual wiki',
 	'specialcontact-realname' => 'Seu nome',
 	'specialcontact-yourmail' => 'Endereço de e-mail',
 	'specialcontact-problem' => 'Assunto',
@@ -897,13 +899,13 @@ Se você preferir utilizar o correio electrónico regular ou anexos, você pode 
 	'specialcontact-notyou' => 'Não é você?',
 	'specialcontact-captchainfo' => 'Por favor, digite o texto da imagem.',
 	'specialcontact-captchatitle' => 'Palavra errada',
-	'specialcontact-formtitle' => 'Contato Equipe de Apoio Wikia',
+	'specialcontact-formtitle' => 'Contato Equipe de Suporte da Wikia',
 	'specialcontact-nomessage' => 'Por favor, preencha a mensagem',
 	'specialcontact-captchafail' => 'Código de confirmação incorreto ou não preenchido.',
 	'specialcontact-mailsub' => 'Email de contato Wikia',
 	'specialcontact-mailsubcc' => 'Cópia do Email de contato Wikia',
-	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada para o Apoio Wikia',
-	'specialcontact-submitcomplete' => 'Obrigado por contactar a Wikia.',
+	'specialcontact-ccheader' => 'Esta é uma cópia da mensagem que foi enviada para o Suporte da Wikia',
+	'specialcontact-submitcomplete' => 'Obrigado por contatar a Wikia.',
 );
 
 /** Romanian (română)

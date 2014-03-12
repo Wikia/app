@@ -3665,10 +3665,16 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'usersignup-page-title' => 'Junte-se à Wikia',
+	'usersignup-page-captcha-label' => 'Palavra Obscura',
+	'usersignup-error-invalid-user' => 'Usuário inválido. Por favor, autentique-se primeiro.',
+	'usersignup-error-invalid-email' => 'Por favor, insira um endereço de e-mail válido.',
+	'usersignup-error-symbols-in-username' => 'Ops, seu nome de usuário pode conter apenas letras e números.',
 	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-confirm-email-update' => 'Atualizar',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Você já está confirmado',
@@ -3679,8 +3685,13 @@ $messages['pt-br'] = array(
 	'usersignup-welcome-email-edit-profile-button' => 'Ir para o perfil',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
+	'usersignup-heading' => 'Junte-se à Wikia Hoje',
 	'usersignup-heading-byemail' => 'Criar uma conta para outra pessoa',
-	'usersignup-marketing-global-heading' => 'Criar',
+	'usersignup-marketing-wikia' => 'Comece a colaborar com milhões de pessoas de todo o mundo que se reúnem para compartilhar o que sabem e amam.',
+	'usersignup-marketing-login' => 'Já é um usuário? [[Especial:UserLogin|Autentique-se]]', # Fuzzy
+	'usersignup-marketing-community-heading' => 'Colabore',
+	'usersignup-marketing-community' => 'Descubra e explore assuntos que vão desde jogos eletrônicos para filmes e tv. Conheça pessoas com interesses e paixões semelhantes.',
+	'usersignup-marketing-global-heading' => 'Crie',
 	'usersignup-marketing-creativity-heading' => 'Seja original',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
 );

@@ -244,6 +244,13 @@ $messages['sv'] = array(
 	'confirmemailprompt-error' => 'Är detta din e-postadress: <strong>$1</strong>? [[$2|Bekräfta den]] eller [[$3|ändra den]].',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'confirmemailprompt-error' => 'ఈ ఈమెయిలు చిరునామా మీదేనా: <strong>$1</strong>? [[$2|దాన్ని ధృవీకరించండి]] లేదా [[$3|మార్చండి]].',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

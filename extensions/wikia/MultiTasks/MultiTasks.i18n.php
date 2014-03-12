@@ -1126,12 +1126,14 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
 	'multitasks-link-back-label' => 'tässä',
+	'multiwikiedit' => 'Muokkaa useita sivuja',
 	'multiwikiedit_button' => 'Muokkaa',
 	'multiwikiedit_confirm' => 'Vahvista',
 	'multiwikiedit_caption' => 'Sivuluettelo',
@@ -2447,6 +2449,13 @@ Kies je pagina's en sla de taak op.
 Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
+/** Occitan (occitan)
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'multiwikiedit_norecentchanges_caption' => 'Mostrar pas lo cambiament dins los Cambiaments Recents',
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -3703,6 +3712,7 @@ $messages['zh-hans'] = array(
 	'multiwikiedit_button' => '编辑',
 	'multiwikiedit_confirm' => '确定',
 	'multiwikiedit_caption' => '页面列表',
+	'multiwikiedit_title' => '跨维基编辑',
 	'multiwikiedit_or' => '<b>或</b>',
 	'multiwikiedit_on' => '运行该脚本于',
 	'multiwikiedit_page' => '待撰页面',

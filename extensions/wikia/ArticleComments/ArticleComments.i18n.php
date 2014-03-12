@@ -1827,6 +1827,8 @@ Wikia
  * @author Tommy6
  */
 $messages['ja'] = array(
+	'article-comments-file-page' => "<a href='$3'>$4</a>での<a href='$1'>$2からのコメント</a>",
+	'article-blog-comments-file-page' => "<a href='$5'>$6のブログ</a>の記事「<a href='$3'>$4</a>」での<a href='$1'>$2からのコメント</a>",
 	'article-comments-anonymous' => '匿名利用者',
 	'article-comments-comments' => 'コメント ($1)',
 	'article-comments-post' => 'コメントを投稿',
@@ -1853,9 +1855,17 @@ $messages['ja'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '親記事/親コメントが削除されました',
 	'article-comments-empty-comment' => "空コメントを投稿することはできません。<a href='$1'>コメントを削除しますか？</a>",
+	'wikiamobile-article-comments-header' => 'コメント',
+	'wikiamobile-article-comments-more' => '続きを読み込む',
+	'wikiamobile-article-comments-prev' => 'これより前を読み込む',
+	'wikiamobile-article-comments-none' => 'コメントなし',
+	'wikiamobile-article-comments-view' => '返信を見る',
+	'wikiamobile-article-comments-replies' => '返信',
 	'wikiamobile-article-comments-post-reply' => '返信を投稿',
 	'wikiamobile-article-comments-post' => '投稿',
 	'wikiamobile-article-comments-placeholder' => 'コメントを投稿',
+	'wikiamobile-article-comments-login-post' => 'コメントを投稿するにはログインする必要があります。',
+	'wikiamobile-article-comments-post-fail' => 'コメントの保存に失敗しました。のちほどもう一度お試しください。',
 	'enotif_subject_article_comment' => '{{SITENAME}} のページ「$PAGETITLE」に $PAGEEDITOR がコメントを投稿しました',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAMEさん、
 
@@ -1878,9 +1888,19 @@ Wikia
 
 /** Georgian (ქართული)
  * @author DevaMK
+ * @author GeorgeBarnick
  */
 $messages['ka'] = array(
 	'article-comments-anonymous' => 'ანონიმი მომხმარებელი',
+	'article-comments-comments' => 'კომენტარები ($1)',
+	'article-comments-cancel' => 'გაუქმება',
+	'article-comments-delete' => 'წაშლა',
+	'article-comments-edit' => 'რედაქტირება',
+	'article-comments-history' => 'ისტორია',
+	'article-comments-toc-item' => 'კომენტარები',
+	'article-comments-reply' => 'პასუხი',
+	'article-comments-show-all' => 'ნახოთ ყველა კომენტარი',
+	'wikiamobile-article-comments-header' => 'კომენტარები',
 );
 
 /** Khmer (ភាសាខ្មែរ)

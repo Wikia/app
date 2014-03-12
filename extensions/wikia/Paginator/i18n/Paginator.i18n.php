@@ -348,6 +348,14 @@ $messages['ta'] = array(
 	'paginator-back' => 'பின் செல்',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'paginator-next' => 'తరువాతి',
+	'paginator-back' => 'వెనక్కి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

@@ -895,6 +895,7 @@ $messages['ja'] = array(
 	'wikiamobile-page-not-found' => '申し訳ございません。<b>$1</b> というページは見つかりませんでした。',
 	'wikiamobile-page-not-found-tap' => '亀裂のむこうにある画像をクリックすると、画像の正体を確認できます。',
 	'wikiasmartbanner-price' => '無料',
+	'wikiasmartbanner-view' => '見てみる',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -918,6 +919,7 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Hym411
  * @author Jytim
+ * @author Priviet
  * @author 아라
  */
 $messages['ko'] = array(
@@ -938,6 +940,7 @@ $messages['ko'] = array(
 	'wikiamobile-category-items-prev' => '이전 불러오기',
 	'wikiamobile-categories-expand' => '모두 보기',
 	'wikiamobile-categories-collapse' => '모두 숨기기',
+	'wikiamobile-categories-blogs' => '블로그 게시물',
 	'wikiamobile-sharing-media-image' => '사진',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 );
@@ -1112,7 +1115,7 @@ apa kata anda tengok yang ini pula:
 	'wikiamobile-video-views-counter' => 'Dilihat $1 kali',
 	'wikiamobile-video-not-friendly-header' => 'Maaf!',
 	'wikiamobile-video-not-friendly' => 'Video ini tidak boleh ditonton secara mudah alih.',
-	'wikiamobile-toc-header' => 'jadual isi kandungan',
+	'wikiamobile-toc-header' => 'jadual isi kandungan', # Fuzzy
 	'wikiamobile-ad-label' => 'iklan',
 	'wikiamobile-image-not-loaded' => 'Gambar tidak tersedia',
 	'wikiamobile-shared-file-not-available' => 'Maaf, perkara ini tidak lagi wujud, tetapi memandangkan anda berada di sini, terokailah wiki ini!',
@@ -1847,6 +1850,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-category-items-prev' => '加载上次',
 	'wikiamobile-categories-expand' => '显示全部',
 	'wikiamobile-categories-collapse' => '隐藏全部',
+	'wikiamobile-categories-blogs' => '博客文章',
 	'wikiamobile-sharing-media-image' => '图片',
 	'wikiamobile-sharing-page-text' => '$1-$2',
 	'wikiamobile-sharing-modal-text' => '$1在$2-$3',
@@ -1858,7 +1862,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|浏览|浏览}}',
 	'wikiamobile-video-not-friendly-header' => '哦买糕的！',
 	'wikiamobile-video-not-friendly' => '抱歉，此视频在移动端不可用。',
-	'wikiamobile-toc-header' => '目录',
+	'wikiamobile-toc-header' => '目录', # Fuzzy
 	'wikiamobile-ad-label' => '广告',
 	'wikiamobile-image-not-loaded' => '图像不可用',
 	'wikiamobile-page-not-found' => '啊呀！<b>$1</b>不存在。',

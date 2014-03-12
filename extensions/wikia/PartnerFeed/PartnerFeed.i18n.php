@@ -530,6 +530,14 @@ $messages['nl'] = array(
 	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
 );
 
+/** Occitan (occitan)
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'partner-feed-recent-changes' => 'Cambiaments recents',
+	'feed-title-recentchanges' => 'Cambiaments recents',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

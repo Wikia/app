@@ -54,6 +54,7 @@ $messages['br'] = array(
 	'sharedhelp-desc' => "Kemer a ra pajennoù [[w:c:Help|skoazell Wikia]] hag ensoc'hañ a ra anezho en esaouenn anv {{ns:help}} eus ar wiki-mañ",
 	'sharedhelp-autotalkcreate-summary' => 'Pajenn gaozeal krouet ent emgefreek',
 	'sharedhelp-searchprofile' => 'Pajennoù skoazell',
+	'sharedhelp-searchprofile-tooltip' => 'Furchal ar pajennoù skoazell',
 );
 
 /** Catalan (català)
@@ -110,11 +111,14 @@ $messages['es'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Ilkea
  */
 $messages['fi'] = array(
 	'sharedhelp-desc' => 'Ottaa sivut[[w:c:Help|Help Wikiasta]] ja liittää ne {{ns:help}} nimiavaruuteen tässä wikissä',
 	'sharedhelp-autotalkcreate-summary' => 'Keskustelusivu luotiin automaattisesti',
+	'sharedhelp-searchprofile' => 'Ohjesivut',
+	'sharedhelp-searchprofile-tooltip' => 'Etsi ohjesivuja',
 );
 
 /** French (français)

@@ -553,6 +553,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Elseweyr
  * @author Nike
  * @author Varusmies
  * @author Ville96
@@ -585,6 +586,16 @@ Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3"
 Hei,
 
 Tervetuloa sivustolle {{SITENAME}}. Kiitos, että muokkasit sivua [[:$1]]. Jos tarvitset apua, aloita katsomalla meidän [[Help:Contents|ohjesivujamme]]. Käy [[w:c:community|Community Centralissa]] pysyäksesi ajan tasalla [[w:c:community:Blog:Wikia_Staff_Blog|henkilökunnan blogista]], kysyäksesi kysymyksiä meidän [[w:c:community:Special:Forum|yhteisöfoorumeillamme]], osallistuaksesi [[w:c:community:Help:Webinars|webinaarisarjoihimme]], tai keskustellaksesi muiden wikialaisten kanssa. Iloisia muokkaamisia! $3',
+	'welcome-message-anon-staff' => '== Tervetuloa ==
+
+Hei,
+
+Tervetuloa sivustolle {{SITENAME}} ja kiitos, että muokkasit sivua [[:$1]]. Suosittelemme kaikille osallistujille [[Special:UserLogin|käyttäjätunnuksen luomista]] jotta voisit helpommin pitää lukua muokkauksistasi, päästä käsiksi useampiin Wikia-ominaisuuksiin sekä tutustua tämän wikin yhteisöön.
+
+Mikäli tarvitset apua, tutustu ensin [[Help:Contents|ohjesivuihin]] ja vieraile sitten [[w:c:yhteiso|Yhteisöwikissä]] saadaksesi lisätietoja. Mukavaa muokkaamista! $3', # Fuzzy
+	'welcome-message-wall-user' => 'Hei, tervetuloa sivustolle {{SITENAME}}! Kiitos muokkauksestasi sivulle [[:$1]].
+
+Voit jättää minulle vapaasti viestiä, jos sinulle tulee vastaan ongelmia!',
 	'welcome-description' => 'Lähettää tervetuloviestin ensimmäisen muokkasensa tehneille käyttäjille',
 );
 
@@ -1197,6 +1208,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 );
 
 /** Dutch (Nederlands)
+ * @author Arent
  * @author Flightmare
  * @author Konovalov
  * @author McDutchie
@@ -1225,7 +1237,7 @@ Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik u ergens mee 
 Het is een eenvoudige manier om uw bijdragen te volgen en helpt u bij het onderhouden van contacten met de rest van de gemeenschap.
 
 Laat een bericht achter op [[$2|mijn overleg pagina]] als ik u ergens mee kan helpen! $3",
-	'welcome-message-log' => 'Welkom',
+	'welcome-message-log' => 'Verwelkomen van nieuwe bijdrager',
 	'welcome-message-user-staff' => "==Welkom==
 
 Hallo,
@@ -1799,6 +1811,40 @@ Välkommen till {{SITENAME}} och tack för din redigering på sidan [[:$1]]. Vi 
 
 Om du behöver hjälp kan du börja med att kolla på våra [[Help:Contents|hjälpsidor]] och sedan besöka [[w:c:community|Gemenskapscentralen]] för att läsa mer. Lycka till med redigeringen!',
 	'welcome-description' => 'Skickar ett välkomstmeddelande till användare efter deras första redigering',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'welcome-user-page' => "==నా గురించి==
+
+''ఇది మీ వాడుకరి పేజీ. ఈ పేజీలో మార్పుచేర్పులు చేసి, మీగురించి సముదాయానికి చెప్పండి!''
+
+==నా మార్పుచేర్పులు==
+
+* [[Special:Contributions/$1|వాడుకరి మార్పుచేర్పులు]]
+
+==నా అభిమాన పేజీలు==
+
+* వికీలోని మీ అభిమాన పేజీల లింకులను ఇక్కడ చేర్చండి!
+* అభిమాన పేజీ #2
+* అభిమాన పేజీ #3",
+	'welcome-message-user' => 'హలో, {{SITENAME}} కు స్వాగతం! [[:$1]] పేజీలో మీరు చేసిన మార్పుకు నెనరులు.
+
+నేనేమైనా సాయపడగలననుకుంటే [[$2|నా చర్చాపేజీలో]] సందేశం పెట్టండి! $3',
+	'welcome-message-anon' => "{{SITENAME}} కు స్వాగతం! [[:$1]] పేజీలో మీరు చేసిన మార్పులకు నెనరులు.
+
+'''[[Special:Userlogin|లాగినై ఓ వాడుకరి పేరును సృష్టించుకోండి]]'''.
+మీ రచనలను గమనిస్తూ ఉండేందుకు అది సులువైన మార్గం. సముదాయంతో మాట్లాడేందుకు కూడా అది పనికొస్తుంది.
+
+నా సాయమేదైనా కావలిస్తే [[$2|నా చర్చా పేజీలో]] సందేశం పెట్టండి! $3",
+	'welcome-message-log' => 'కొత్త సమర్పకుని స్వాగతించడం',
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|సహాయ వేదిక]] | [[w:sblog|బ్లాగు]])</small>',
+	'welcome-message-wall-user' => 'హలో, {{SITENAME}} కు స్వాగతం! [[:$1]] పేజీలో మీరు చేసిన మార్పుకు నెనరులు.
+
+నేనేమైనా సాయపడగలననుకుంటే నాకో సందేశం పెట్టండి!',
+	'welcome-description' => 'వాడుకరులు తమ మొదటి మార్పు చెయ్యగానే వారికి స్వాగత సందేశం పంపిస్తుంది',
 );
 
 /** Thai (ไทย)

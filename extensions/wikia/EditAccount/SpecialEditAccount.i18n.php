@@ -502,6 +502,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Das Schäfchen
  * @author Jan Luca
  * @author LWChris
  * @author Metalhead64
@@ -536,7 +537,7 @@ $messages['de'] = array(
 	'editaccount-submit-cleardisable' => 'Deaktiviert-Markierung aufheben',
 	'editaccount-submit-close' => 'Konto schließen',
 	'editaccount-submit-button' => 'Speichern',
-	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
+	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren, indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren gehen und nicht wiederherstellbar sind.',
 	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
 	'editaccount-status' => 'Statusmeldung',
 	'editaccount-success-email' => 'E-Mail-Adresse für das Konto $1 erfolgreich in $2 geändert.',
@@ -563,8 +564,8 @@ $messages['de'] = array(
 	'editaccount-status-unconfirmed' => 'Unbestätigt',
 	'editaccount-status-realuser' => 'Echter User',
 	'editaccount-status-tempuser' => 'Vorläufiger User',
-	'editaccount-error-tempuser-email' => 'Vorläufige Benutzer können keine leere Mail-Adressen-Angabe haben, bitte Adresse angeben.',
-	'editaccount-email-change-requested' => 'Der Benutzer änderte seine E-Mail-Einstellungen hin zu $1. Um die Adressen-Änderung zu bewilligen, muss die angefragte Mailadresse in das untere Feld eingegeben und "Speichern und bestätigen" geklickt werden.',
+	'editaccount-error-tempuser-email' => 'Vorläufige Benutzer können keine leere E-Mail-Adressen-Angabe haben, bitte Adresse angeben.',
+	'editaccount-email-change-requested' => 'Der Benutzer änderte seine E-Mail-Einstellungen hin zu $1. Um die Adressen-Änderung zu bewilligen, muss die angefragte Mailadresse in das untere Feld eingegeben und „Speichern und bestätigen“ geklickt werden.',
 	'editaccount-log' => 'Benutzerkonten-Logbuch',
 	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
 	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
@@ -743,6 +744,7 @@ $messages['fi'] = array(
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
+	'editaccount-submit-clearunsub' => 'Poista peruutus',
 	'editaccount-submit-cleardisable' => 'Nollaa poista käytöstä -lippu',
 	'editaccount-submit-close' => 'Sulje tunnus',
 	'editaccount-submit-button' => 'Tallenna',
@@ -753,6 +755,8 @@ $messages['fi'] = array(
 	'editaccount-success-email-blank' => 'Tunnuksen $1 sähköpostiosoitteen poistaminen onnistui.',
 	'editaccount-success-pass' => 'Tunnuksen $1 salasana vaihdettiin onnistuneesti.',
 	'editaccount-success-realname' => 'Tilin $1 oikea nimi vaihdettiin onnistuneesti.',
+	'editaccount-success-unsub' => 'Tilin $1 peruutuskohta poistettiin onnistuneesti.',
+	'editaccount-success-disable' => 'Käytöstä poistettu kohta poistettiin onnistuneesti tilille $1.',
 	'editaccount-success-toggleadopt' => 'Käyttäjän $1 adoptointikelpoisuustila vaihdettiin onnistuneesti',
 	'editaccount-success-close' => 'Tunnus $1 poistettiin käytöstä onnistuneesti.',
 	'editaccount-error-email' => 'Sähköpostiosoitetta ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
@@ -1210,6 +1214,13 @@ $messages['ja'] = array(
 	'editaccount-submit-button' => '保存',
 	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
 	'editaccount-labal-account-status' => 'アカウントの状態',
+);
+
+/** Georgian (ქართული)
+ * @author GeorgeBarnick
+ */
+$messages['ka'] = array(
+	'editaccount-submit-button' => 'შენახვა',
 );
 
 /** Khmer (ភាសាខ្មែរ)

@@ -296,6 +296,7 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Arkondi
  * @author Avatar
+ * @author Das Schäfchen
  * @author Inkowik
  * @author Jan Luca
  * @author LWChris
@@ -317,7 +318,7 @@ $messages['de'] = array(
 	'categoryselect-error-duplicate-category-name' => 'Die Kategorie „$1“ ist bereits vorhanden.',
 	'categoryselect-error-edit-abort' => 'Deine versuchte Änderung wurde durch eine Einschubmethode verhindert.',
 	'categoryselect-error-empty-category-name' => 'Bitte gib einen Kategorienamen an.',
-	'categoryselect-error-user-rights' => 'Der Benutzer hat zum Ausführen dieser Aktion keine Berechtigung.',
+	'categoryselect-error-user-rights' => 'Der Benutzer hat keine Berechtigung zum Ausführen dieser Aktion.',
 	'categoryselect-modal-category-name' => 'Gib den Namen der Kategorie an:',
 	'categoryselect-modal-category-sortkey' => 'Optional kannst du diesen Artikel auf der Kategorieseite „$1“ unter folgendem Namen einordnen:',
 	'categoryselect-tooltip-add' => 'Drück die Eingabetaste, wenn du fertig bist.',
@@ -684,9 +685,12 @@ $messages['ja'] = array(
 
 /** Georgian (ქართული)
  * @author DevaMK
+ * @author GeorgeBarnick
  */
 $messages['ka'] = array(
 	'categoryselect-button-add' => 'დაამატე კატეგორია',
+	'categoryselect-button-cancel' => 'გაუქმება',
+	'categoryselect-button-save' => 'შენახვა',
 );
 
 /** Kannada (ಕನ್ನಡ)

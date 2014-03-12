@@ -1392,7 +1392,7 @@ $messages['br'] = array(
 	'wall-history-action-view' => 'gwelet',
 	'wall-history-action-restore' => 'assevel',
 	'wall-history-action-thread-history' => 'istor an neudennad',
-	'wall-thread-history-title' => 'istor an neudennad',
+	'wall-thread-history-title' => 'istor an neudennad', # Fuzzy
 	'wall-thread-history-thread-created' => '$1 $2 en deus krouet an neudennad-mañ',
 	'wall-thread-history-reply-created' => '$1 $2 en deus laosket ur respont',
 	'wall-thread-history-thread-removed' => '$1 $2 en deus dilammet an neudennad-mañ',
@@ -2822,6 +2822,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  * @author ZxxZxxZ
  */
@@ -2836,7 +2837,7 @@ $messages['fa'] = array(
 	'wall-placeholder-reply' => 'ارسال پاسخ',
 	'wall-button-to-preview-comment' => 'پیش‌نمایش',
 	'wall-button-to-cancel-preview' => 'ویرایش',
-	'wall-button-to-submit-comment' => 'پست',
+	'wall-button-to-submit-comment' => 'ارسال',
 	'wall-button-to-submit-reply' => 'پاسخ دادن',
 	'wall-button-save-changes' => 'ذخیره‌کردن تغییرات',
 	'wall-button-cancel-changes' => 'لغو',
@@ -3813,6 +3814,13 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-topic-edit-cancel' => 'Cancelar',
 );
 
+/** Hindi (हिन्दी)
+ * @author Vivek Rai
+ */
+$messages['hi'] = array(
+	'wall-history-who-involved-wall-title' => 'कौन शामिल है?',
+);
+
 /** Hungarian (magyar)
  * @author TK-999
  */
@@ -4590,7 +4598,7 @@ $messages['ja'] = array(
 	'wall-history-action-view' => '閲覧',
 	'wall-history-action-restore' => '復帰',
 	'wall-history-action-thread-history' => 'スレッドの履歴',
-	'wall-thread-history-title' => 'スレッドの履歴',
+	'wall-thread-history-title' => 'スレッドの履歴', # Fuzzy
 	'wall-thread-history-thread-created' => '$1 $2 がこのスレッドを作成しました',
 	'wall-thread-history-reply-created' => '$1 $2 が返信を投稿しました',
 	'wall-thread-history-thread-removed' => '$1 $2 がこのスレッドを除去しました',
@@ -4706,6 +4714,7 @@ $messages['kbd'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Priviet
  * @author 아라
  */
 $messages['ko'] = array(
@@ -4730,6 +4739,7 @@ $messages['ko'] = array(
 	'wall-thread-closed' => '폐쇄됨',
 	'wall-message-more' => '더 보기',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
+	'wall-history-who-involved-wall-title' => '이 담벼락에 메시지를 남긴 사용자',
 	'prefs-email-wall-v2' => '메시지 담벼락과 포럼',
 	'wall-quote-author' => '$1의 말:',
 	'wall-quote-reply-to' => '#$1에 대한 덧글',
@@ -5966,7 +5976,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-history-action-view' => 'bekijken',
 	'wall-history-action-restore' => 'terugplaatsen',
 	'wall-history-action-thread-history' => 'draadgeschiedenis',
-	'wall-thread-history-title' => 'draadgeschiedenis',
+	'wall-thread-history-title' => 'draadgeschiedenis', # Fuzzy
 	'wall-thread-history-thread-created' => '$2 heeft deze draad $1 gemaakt',
 	'wall-thread-history-reply-created' => '$1 $2 heeft een antwoord achtergelaten.',
 	'wall-thread-history-thread-removed' => '$1 $2 heeft deze draad verwijderd',
@@ -6841,7 +6851,7 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-notifications' => 'Notificações',
 	'wall-notifications-all' => 'Todas as Notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} {{PLURAL:$1|não lida|não lidas}}',
-	'wall-notifications-wall-disabled' => 'O Mural de mensagens foi desativado nesta wiki. Impossível carregar notificações.',
+	'wall-notifications-wall-disabled' => 'O Mural de Mensagens foi desativado nesta wiki. Impossível carregar notificações.',
 	'wall-sorting-archived' => 'Arquivado',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-edit' => '(mensagem editada)',
@@ -6872,7 +6882,7 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-history-action-view' => 'ver',
 	'wall-history-action-restore' => 'restaurar',
 	'wall-history-action-thread-history' => 'histórico do tópico',
-	'wall-thread-history-title' => 'histórico do tópico',
+	'wall-thread-history-title' => 'histórico do tópico', # Fuzzy
 	'mail-notification-body' => 'Oi $WATCHER,
 
 $SUBJECT
@@ -6891,18 +6901,18 @@ ___________________________________________
 * Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
 * Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências',
-	'mail-notification-body-HTML' => 'Olá $WATCHER,
-<p>$SUBJECT.</p>
-<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
-<p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p>
-<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
-<p>A Equipe Wikia</p>
+	'mail-notification-body-HTML' => 'Oi $WATCHER,
+			<p>$SUBJECT.</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE<p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veja a conversa</a></p>
+			<p>A Equipe Wikia</p>
 ___________________________________________<br />
-* Procure ajuda e conselho na Wikia Português do Brasil: http://pt-br.wikia.com
-* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
-suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferências', # Fuzzy
-	'prefs-email-wall-v2' => 'Mural de Mensagens', # Fuzzy
+* Procure ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
+* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar 
+suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
+	'prefs-email-wall-v2' => 'Mural de Mensagens e Fórum',
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
 	'wall-quote-author' => '$1 escreveu:',
 	'wall-quote-reply-to' => 'responder a #$1',
@@ -9110,6 +9120,7 @@ $messages['zh-hans'] = array(
 	'wall-wiki-activity-wall-owner' => '$1的留言墙',
 	'wall-removed-reply' => '这条回复已被删除',
 	'wall-history' => '历史',
+	'wall-history-who-involved-wall-title' => '涉及谁？',
 	'wall-history-sorting-newest-first' => '最近优先',
 	'wall-history-sorting-oldest-first' => '最久优先',
 	'wall-history-rail-contribs' => '贡献',
@@ -9331,7 +9342,7 @@ $messages['zh-hant'] = array(
 	'wall-history-action-view' => '查看',
 	'wall-history-action-restore' => '恢復',
 	'wall-history-action-thread-history' => '討論串歷史',
-	'wall-thread-history-title' => '討論串歷史',
+	'wall-thread-history-title' => '討論串歷史', # Fuzzy
 	'wall-thread-history-thread-created' => '$1 $2 開始此討論串',
 	'wall-thread-history-reply-created' => '$1 $2 留下一個答覆',
 	'wall-thread-history-thread-removed' => '$1 $2 移除除此討論串',

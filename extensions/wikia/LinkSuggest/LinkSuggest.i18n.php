@@ -387,6 +387,13 @@ $messages['sv'] = array(
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'tog-redirected-from' => '&ndash; $1 నుండి దారిమార్పు చెందింది',
+);
+
 /** Thai (ไทย)
  * @author Akkhaporn
  */

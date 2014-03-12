@@ -1700,7 +1700,7 @@ $messages['ps'] = array(
 	'themedesigner-or' => 'يا',
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
-	'themedesigner-color' => 'رنگ', # Fuzzy
+	'themedesigner-color' => 'آرنی',
 	'themedesigner-graphic' => 'ګرافيک',
 	'themedesigner-buttons' => 'تڼۍ',
 	'themedesigner-links' => 'تړنې',
@@ -1794,17 +1794,21 @@ escreve o nome da wiki para guardar.',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Giro720
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'action-themedesigner' => 'acessar o Designer de Temas',
 	'themedesigner-or' => 'ou',
 	'themedesigner-desc' => 'Permite aos administradores compor um tema visual para a wiki',
-	'themedesigner-title' => 'Compositor de Temas Visuais da Wikia',
+	'themedesigner-title' => 'Designer de Temas da Wikia',
 	'themedesigner-background' => 'Fundo',
 	'themedesigner-page' => 'Página',
-	'themedesigner-color' => 'cor', # Fuzzy
+	'themedesigner-color' => 'principal',
+	'themedesigner-color-middle' => 'meio',
+	'themedesigner-rules-color-middle' => 'Cor diferente para o meio da página',
 	'themedesigner-graphic' => 'imagem',
 	'themedesigner-buttons' => 'botões',
 	'themedesigner-links' => 'links',
@@ -1814,7 +1818,10 @@ $messages['pt-br'] = array(
 	'themedesigner-small' => 'Pequeno',
 	'themedesigner-medium' => 'Médio',
 	'themedesigner-large' => 'Grande',
-	'themedesigner-tile-background' => 'repetir imagem de fundo', # Fuzzy
+	'themedesigner-tile-background' => 'repetir',
+	'themedesigner-fix-background' => 'fixar',
+	'themedesigner-not-split-background' => 'sem divisão',
+	'themedesigner-rules-not-split-background' => "Se seu gráfico de fundo é maior que $1px você tem uma opção de ''não'' dividir uma imagem.",
 	'themedesigner-transparency' => 'transparência',
 	'themedesigner-tab-theme' => 'Variante',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -1839,14 +1846,21 @@ $messages['pt-br'] = array(
 	'themedesigner-button-save' => 'Salvar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'Carregar um arquivo .png que de 250 x 65 pixels ou menos.',
+	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wiki. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
 	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
-	'themedesigner-reason' => 'Compositor de Temas Visuais - gravado por $1',
+	'themedesigner-reason' => 'Designer de Temas - salvo por $1',
 	'themedesigner-size-error' => 'Tamanho de arquivo incorreto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de arquivo incorreto',
 	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
+	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wiki',
+	'themedesigner-favicon-heading' => 'Favicon',
+	'themedesigner-wodmark-preview' => 'Pré-visualizar',
+	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wiki não pode ficar em branco, 
+digite o nome da wiki para salvar.',
+	'themedesigner-upload-disabled' => 'Desculpe, nós desativamos os uploads temporariamente. Volte em breve para fazer mudanças',
 );
 
 /** Romanian (română)

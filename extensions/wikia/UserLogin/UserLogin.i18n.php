@@ -1871,7 +1871,7 @@ $messages['pt'] = array(
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'userlogin-login-heading' => 'Login',
+	'userlogin-login-heading' => 'Entrar',
 	'userlogin-forgot-password' => 'Esqueceu sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
 	'userlogin-forgot-password-go-to-login' => 'Já tem sua senha? [[Special:UserLogin|Faça login]]',

@@ -1031,7 +1031,7 @@ $messages['de'] = array(
 	'create-blog-post-title-edit' => 'Blogbeitrag bearbeiten',
 	'create-blog-form-title' => 'Was ist ein Blogbeitrag?',
 	'create-blog-form-post-text' => 'Blog-Text',
-	'create-blog-form-info' => 'Blogbeiträge sind eine prima Möglichkeit um Neuigkeiten, Meinungen und kreative Dinge mit der Gemeinschaft zu teilen.',
+	'create-blog-form-info' => 'Blogbeiträge sind eine gute Möglichkeit, um Neuigkeiten, Meinungen und kreative Dinge mit der Community zu teilen.',
 	'create-blog-form-post-title' => 'Titel des Beitrags',
 	'create-blog-empty-title-error' => 'Titel erforderlich',
 	'create-blog-empty-post-error' => 'Dein Beitrag enthält keinen Text',
@@ -1362,7 +1362,7 @@ $messages['es'] = array(
 	'create-listing-confirm-info' => 'Copiar y pegar el siguiente código:',
 	'create-blog-no-login' => 'No identificado',
 	'create-blog-login-required' => 'Debes estar <span class="plainlinks">[{{fullurl:Special:Signup|$1}} identificado/a]</span> para crear una entrada o una lista de blogs.',
-	'create-blog-categories-title' => 'Añadir esta entrada de blog a estas categorías (haz clic para seleccinarlas)',
+	'create-blog-categories-title' => 'Añadir esta entrada de blog a estas categorías (haz clic para seleccionarlas)',
 	'create-blog-categories-textinput' => 'Añadir una nueva categoría',
 	'create-blog-categories-submit' => 'Aceptar',
 	'create-blog-save' => 'Grabar la página',
@@ -2741,6 +2741,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
  * @author 青子守歌
  */
 $messages['ja'] = array(
+	'blog-file-page' => "<a href='$3'>$4のブログ</a>の記事「<a href='$1'>$2</a>」",
 	'createblogpage' => 'ブログの記事を作成',
 	'createbloglistingpage' => 'ブログのリストを作成',
 	'create-blog-spam' => 'スパムの可能性があると判定されました',
@@ -2755,7 +2756,7 @@ $messages['ja'] = array(
 	'create-blog-post-title-edit' => 'ブログの記事の編集',
 	'create-blog-form-title' => 'ブログ機能とは?',
 	'create-blog-form-post-text' => '記事の本文',
-	'create-blog-form-info' => 'ブログ形式での投稿は、あなたがコミュニティによって編集されたくないと考えるコンテンツを書くのに適しています。投稿された記事は、「ブログの記事」というタグに基づいてブログのリストページに集約されます。それぞれの記事に対して評価機能とコメント機能を有効にするかどうかを選択できます。', # Fuzzy
+	'create-blog-form-info' => 'ブログ形式での投稿は、ニュースや意見、あなたが素晴らしいと感じたものをコミュニティと共有するのにうってつけの手段です。',
 	'create-blog-form-post-title' => '記事のタイトル',
 	'create-blog-empty-title-error' => '記事のタイトルを入力してください',
 	'create-blog-empty-post-error' => '記事の本文が空です',
@@ -2852,13 +2853,25 @@ $messages['ja'] = array(
 	'blog-comment-sending' => '送信中...',
 	'blog-by' => '$1 by $2',
 	'blogs-searchprofile' => 'ブログ',
+	'blogs-searchprofile-tooltip' => 'ブログ記事とブログリストを検索',
+	'user-blog-url-link' => 'User blog:$1',
 );
 
 /** Georgian (ქართული)
  * @author DevaMK
+ * @author GeorgeBarnick
  */
 $messages['ka'] = array(
+	'create-blog-categories-submit' => 'მიღება',
+	'create-blog-listing-preview' => 'წინასწარ',
+	'create-blog-listing-sortby' => 'სორტირება',
+	'create-blog-listing-sortby-author' => 'ავტორი',
 	'blog-page' => 'ბლოგი',
+	'blog-comment-delete' => 'წაშლა',
+	'blog-comment-hide' => 'დამალვა',
+	'blog-comment-history' => 'ისტორია',
+	'blog-comment-edit' => 'რედაქტირება',
+	'blog-refresh-label' => 'განახლება',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -3047,8 +3060,10 @@ $messages['lb'] = array(
 	'create-blog-listing-sortby' => 'Zortéiert no',
 	'create-blog-listing-sortby-date' => 'Neist',
 	'create-blog-listing-sortby-author' => 'Auteur',
+	'create-blog-listing-sortby-comments' => 'Zuel vun de Bemierkungen',
 	'blog-emptyparam' => 'Den Numm vum Parameter kann net eidel sinn.',
 	'blog-readfullpost' => 'Liest méi',
+	'blog-nbrcomments' => '{{PLURAL:$1|Eng Bemierkung|$1 Bemierkungen}}',
 	'blog-writeone' => 'Schreift een!',
 	'blog-added' => 'derbäigesat',
 	'blog-edited' => 'geännert',
@@ -3056,10 +3071,12 @@ $messages['lb'] = array(
 	'blog-zero-comments' => 'Nach keng Bemierkungen!',
 	'blog-comments' => 'Bemierkungen',
 	'blog-comments-dsc' => "Neist fir d'éischt",
+	'blog-comments-asc' => "Neist fir d'lescht",
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
 	'blog-comment-delete' => 'läschen',
 	'blog-comment-hide' => 'verstoppen',
 	'blog-comment-unhide' => 'nees weisen',
+	'blog-comment-history' => 'Versiounen',
 	'blog-comment-edit' => 'änneren',
 	'blog-comment-error' => "D'Bemierkung konnt net gespäichert ginn",
 	'blog-avatar-preferences-title' => 'Avatar',
@@ -4261,6 +4278,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  * @author Luckas Blade
  * @author McDutchie
@@ -4281,7 +4299,7 @@ $messages['pt'] = array(
 	'create-blog-post-recent-listing' => 'Entradas recentes',
 	'create-blog-post-recent-listing-title' => 'Entradas recentes',
 	'create-blog-post-recent-listing-log' => 'Criou artigo para as entradas de blogue recentes',
-	'create-blog-post-title' => 'Criar uma entrada nova num blogue',
+	'create-blog-post-title' => 'Criar uma entrada nova no blogue',
 	'create-blog-post-title-edit' => 'Editar uma entrada de blogue',
 	'create-blog-form-title' => 'O que é uma entrada de um blogue?',
 	'create-blog-form-post-text' => 'Texto do blogue',
@@ -4389,6 +4407,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Caio1478
  * @author Giro720
  * @author JM Pessanha
  * @author Jesielt
@@ -4405,8 +4424,8 @@ $messages['pt-br'] = array(
 	'createbloglistingpage' => 'Criar lista de blogs',
 	'create-blog-spam' => 'Isso parece spam',
 	'create-blog-cant-edit' => 'Não foi possível realizar a edição',
-	'create-blog-post-category' => 'Postagens de Blog',
-	'create-blog-post-category-body' => 'Esta é uma lista de posts em blogs gerada automaticamente',
+	'create-blog-post-category' => 'Posts de blog',
+	'create-blog-post-category-body' => 'Esta é uma lista de posts de blogs gerada automaticamente',
 	'create-blog-post-category-log' => 'Criada categoria de artigos para posts de blog',
 	'create-blog-post-recent-listing' => 'Postagens recentes',
 	'create-blog-post-recent-listing-title' => 'Posts recentes',

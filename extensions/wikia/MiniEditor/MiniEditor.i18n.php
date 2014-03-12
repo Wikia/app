@@ -395,6 +395,18 @@ $messages['sv'] = array(
 	'minieditor-placeholder-reply' => 'Svara på meddelandet här',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor డెమో పేజీ',
+	'minieditor-new-heading' => 'కొత్త సందేశాన్ని సృష్టించండి',
+	'minieditor-placeholder-new' => 'మీ సందేశాన్ని ఇక్కడ ఇవ్వండి',
+	'minieditor-message-edit' => 'ఇది ఈసరికే ఉన్న సందేశం',
+	'minieditor-reply' => 'జవాబివ్వు',
+	'minieditor-placeholder-reply' => 'సందేశానికి జవాబు ఇక్కడ ఇవ్వండి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

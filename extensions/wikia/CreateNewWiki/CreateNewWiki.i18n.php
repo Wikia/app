@@ -2129,11 +2129,13 @@ $messages['nl-informal'] = array(
 
 /** Occitan (occitan)
  * @author Cedric31
+ * @author Hulothe
  */
 $messages['oc'] = array(
 	'cnw-next' => 'Seguent',
 	'cnw-back' => 'Precedent',
 	'cnw-or' => 'o',
+	'cnw-name-wiki-headline' => 'Començar un Wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
 );
 

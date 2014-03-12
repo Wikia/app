@@ -413,7 +413,7 @@ $messages['de'] = array(
 	'comboajaxlogin-desc' => 'Dynamische Box, die es Benutzern ermöglicht, sich anzumelden, Passwörter zu merken und Benutzer zu registrieren',
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen, musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
-	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Konto anlegen.',
+	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Benutzerkonto anlegen.',
 	'comboajaxlogin-connectmarketing' => '<h1>Verbinden Sie Ihre Konten</h1>
 <ul>
 <li>Behalte Sie Ihre aktuellen Benutzernamen, Versionsgeschichte, Bearbeitungen... ändert sich nichts, außer, wie Sie in </li> einloggen <li>Teile deine Aktivitäten auf Wikia mit deinen Freunden auf Facebook</li>
@@ -623,11 +623,12 @@ Tá tú ert liðug/ur, so kanst tú lættliga rita inn við at brúka einhvønn 
 /** French (français)
  * @author Crochet.david
  * @author IAlex
+ * @author Maxime Corbin
  * @author Peter17
  * @author Wyz
  */
 $messages['fr'] = array(
-	'comboajaxlogin-desc' => "Boîte de dynamique qui permettent aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
+	'comboajaxlogin-desc' => "Boîte dynamique qui permet aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
 	'comboajaxlogin-createlog' => 'Se connecter ou créer un compte',
 	'comboajaxlogin-actionmsg' => "Vous devez d'abord vous connecter ou créer un compte avant d'effectuer cette action",
 	'comboajaxlogin-actionmsg-protected' => 'Pour modifier cette page protégée, vous devez d’abord vous connecter ou créer un compte.',
@@ -922,6 +923,13 @@ $messages['ja'] = array(
 <p>さらに詳しい情報については <a href="http://twitter.com/wikia">Twitter</a> や <a href="http://facebook.com/wikia">Facebook</a> をご覧ください。<br />
 （既にアカウントをお持ちであれば、通常通り<a href="#">ログイン</a>はできますが、編集はできません。）</p>',
 	'comboajaxlogin-ajaxerror' => 'ウィキアからの応答がありません。ネットワーク接続を確認してください。',
+);
+
+/** Georgian (ქართული)
+ * @author GeorgeBarnick
+ */
+$messages['ka'] = array(
+	'comboajaxlogin-createlog' => 'შესვლა ან ახალი ანგარიშის შექმნა',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1411,6 +1419,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Giro720
  * @author TheGabrielZaum
  */
@@ -1425,7 +1434,7 @@ $messages['pt-br'] = array(
 <li>Partilhe a sua atividade na Wikia com os seus amigos no Facebook</li>
 <li>Controle total do que é publicado</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autenticar-se com o Facebook Connect</h1>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Entrar com Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ligue a sua conta Wikia ao Facebook</h1>
 <ul>
 <li>Mantenha o seu nome de usuário, histórico, edições... nada muda, exceto a forma como você entra</li>
@@ -1435,7 +1444,7 @@ $messages['pt-br'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
 	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de usuário e senha - nós magicamente conectaremos as suas contas Wikia e Facebook nos bastidores.
 
-Quando acabar, poderá autenticar-se usando qualquer botão Conexão Facebook.',
+Quando acabar, poderá autenticar-se usando qualquer botão Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>
@@ -1849,6 +1858,13 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 <br />
 (Nếu bạn có tài khoản, bạn có thể <a href="#">đăng nhập</a> như bình thường, nhưng có thể bạn không thể chỉnh sửa trong một thời gian ngắn.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia chưa trả lời. Xin vui lòng kiểm tra lại kết nối mạng của bạn.',
+);
+
+/** Waray (Winaray)
+ * @author Harvzsf
+ */
+$messages['war'] = array(
+	'comboajaxlogin-createlog' => 'Magpasabot nga masakob o paghímò hin akawnt',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -263,16 +263,17 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Konstaduck
  * @author Nedergard
  * @author Silvonen
  * @author Tofu II
  */
 $messages['fi'] = array(
-	'wva-success' => 'Videosivun $1 lisääminen onnistui.', # Fuzzy
-	'wva-success-replaced' => 'Videosivun $1 korvaaminen onnistui.', # Fuzzy
+	'wva-success' => 'Videosivun [[:$1]] lisääminen onnistui.',
+	'wva-success-replaced' => 'Videosivun [[:$1]] korvaaminen onnistui.',
 	'wva-failure' => 'Toimita kelvolliset parametrit.',
-	'wva-name' => 'Kirjoita nimi:', # Fuzzy
-	'wva-url' => 'Anna verkko-osoite:', # Fuzzy
+	'wva-name' => 'Videon nimi:',
+	'wva-url' => 'Videon verkko-osoite:',
 	'wva-add' => 'Lisää',
 	'wva-title' => 'Lisää nopeasti video verkko-osoitteesta',
 	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
@@ -667,11 +668,11 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wva-success' => 'د $1 ويډيو مخ په برياليتوب سره ورگډ شو.', # Fuzzy
-	'wva-success-replaced' => 'د $1 ويډيو مخ په برياليتوب سره ځايناستی شو.', # Fuzzy
+	'wva-success' => 'د [[:$1]] ويډيو مخ په برياليتوب سره ورگډ شو.',
+	'wva-success-replaced' => 'د [[:$1]] ويډيو مخ په برياليتوب سره ځايناستی شو.',
 	'wva-failure' => 'لطفاً سم پاراميټرونه ورکړۍ.',
-	'wva-name' => 'نوم يې وليکۍ:', # Fuzzy
-	'wva-url' => 'URL يې وليکۍ:', # Fuzzy
+	'wva-name' => 'د ويډيو نوم:',
+	'wva-url' => 'د ويډيو URL:',
 	'wva-add' => 'ورگډول',
 	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورگډول',
 	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
