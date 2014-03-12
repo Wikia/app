@@ -159,7 +159,8 @@ class TvApiController extends WikiaApiController {
 		$dismax->setQueryParser('edismax');
 
 		$select->setQuery( $query );
-		$select->setRows(5);
+		$select->setRows(1);
+		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
 
 		$dismax->setQueryFields( 'series_txt^4 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
 		$dismax->setPhraseFields( 'series_txt^10 sitename_txt^5' );
@@ -187,7 +188,7 @@ class TvApiController extends WikiaApiController {
 		$query = $this->getRequest()->getVal( 'seriesName', null );
 		$results = $this->querySolr($query, 'en');
 		foreach( $results as $result ) {
-			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
+			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE && $result['articles_i'] > 50 ) {
 				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
 				$found = true;
 			}
