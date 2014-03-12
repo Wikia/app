@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -21,21 +21,23 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [],
+		plugins = [], veUIEnabled,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
-		};
+		},
+		indicatorTimeoutId = null;
 
-	function indicator( type, hook ) {
-		var timer,
-			$indicator = $( '<div>' ).addClass( 've-indicator visible' ),
+	function initIndicator() {
+		var $indicator = $( '<div>' )
+				.addClass( 've-indicator visible' )
+				.attr( 'data-type', 'loading' ),
 			$content = $( '<div>' ).addClass( 'content' ),
-			$icon = $( '<div>' ).addClass( type ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-' + type ).plain() );
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
 
 		$content
 			.append( $icon )
@@ -44,21 +46,34 @@
 		$indicator
 			.append( $content )
 			.appendTo( $( 'body' ) )
-			.animate( { 'opacity': 1 }, 400 );
-
-		// Display the message if loading is taking awhile
-		timer = setTimeout( function () {
-			$message.slideDown( 400 );
-		}, 3000 );
+			.css( 'opacity', 1 )
+			.hide();
 
 		// Cleanup indicator when hook is fired
-		mw.hook( hook ).add( function cleanup() {
-			clearTimeout( timer );
-			$indicator.animate( { 'opacity': 0 }, 400, function () {
-				mw.hook( hook ).remove( cleanup );
-				$indicator.remove();
-			} );
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( indicatorTimeoutId ) {
+				clearTimeout( indicatorTimeoutId );
+				indicatorTimeoutId = null;
+			}
+			if ( $indicator.is( ':visible' ) ) {
+				$indicator.fadeOut( 400 );
+			}
 		} );
+	}
+
+	function showIndicator() {
+		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
+			$message = $indicator.find( 'p.message' );
+
+		$message.hide();
+		$indicator.fadeIn( 400 );
+
+		// Display a message if loading is taking longer than 3 seconds
+		indicatorTimeoutId = setTimeout( function () {
+			if ( $indicator.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
+		}, 3000 );
 	}
 
 	/**
@@ -68,7 +83,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		indicator( 'loading', 've.activationComplete' );
+		showIndicator();
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
@@ -111,6 +126,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -183,7 +199,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -201,6 +219,12 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -212,6 +236,12 @@
 				'label': 've-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.activate();
 			} );
@@ -219,6 +249,12 @@
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
@@ -230,6 +266,12 @@
 				'label': 've-section-edit'
 			} );
 
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
@@ -325,6 +367,12 @@
 		$( function () {
 			if ( isViewPage ) {
 				if ( init.activateOnPageLoad ) {
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );
@@ -334,12 +382,18 @@
 		} );
 	}
 
+	initIndicator();
+
 	// Redlinks
-	$( function () {
+	if ( veUIEnabled ) {
+		$( setupRedlinks );
+	}
+
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
+			function() {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
@@ -350,5 +404,5 @@
 				}
 			}
 		);
-	} );
+	}
 }() );
