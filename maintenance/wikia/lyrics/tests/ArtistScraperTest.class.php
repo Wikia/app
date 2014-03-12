@@ -97,6 +97,25 @@ WIKITEXT
 				'separator' => '|#|',
 				'hash' => true,
 			],
+			[
+				'message' => 'Hash different than default',
+				'expected' => [
+					'album    = Dance Of Shadows',
+					'song     = Only To Love You',
+					'language = English',
+				],
+				'name' => 'Data',
+				'text' => <<<WIKITEXT
+{{Data
+|album    = Dance Of Shadows
+|song     = Only To Love You
+|language = English
+}}
+WIKITEXT
+				,
+				'separator' => '|',
+				'hash' => false,
+			],
 		];
 	}
 
