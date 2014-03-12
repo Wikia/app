@@ -207,7 +207,7 @@ class PromoteImageReviewTask extends BatchTask {
 			'command' => $sCommand,
 			'city_url' => $city_url
 		];
-		WikiaLogger::getInstance()->debug("PromoteImageReviewTask started", $logdata);
+		WikiaLogger::getInstance()->debug( "PromoteImageReviewTask started", $logdata );
 		
 		$output = wfShellExec($sCommand, $retval);
 		
