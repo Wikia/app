@@ -59,6 +59,7 @@
 		<field name="length" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 		<field name="release_date" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 		<field name="romanized_album_name" type="string" indexed="false" stored="true" required="false" multiValued="false" />
+		<field name="discogs" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 
 		<!--SONG EXTRA-->
 
