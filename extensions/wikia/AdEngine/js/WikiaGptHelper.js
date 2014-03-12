@@ -1,6 +1,6 @@
 /*global setTimeout, define*/
 /*jshint maxlen:150, camelcase:false, maxdepth:5*/
-var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, adSlotMapConfig) {
+var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gptSlotConfig) {
 	'use strict';
 
 	if ( WikiaGptHelper.prototype.singletonInstance ) {
