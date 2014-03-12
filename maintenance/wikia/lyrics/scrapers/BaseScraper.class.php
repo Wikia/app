@@ -27,17 +27,40 @@ abstract class BaseScraper {
 			$keyValues = explode( $separator, trim( $matches[1] ) );
 			foreach ( $keyValues as $row ) {
 				if ( $hash ) {
-					$keyValue = explode( '=', $row );
-					if ( count( $keyValue ) == 2 ) {
-						$result[trim( $keyValue[0] )] = trim( $keyValue[1] );
-					}
+					$this->addPairToResult( $row, $result );
 				} else {
-					$result[] = trim( $row );
+					$this->addNotEmptyStringToResult( $row, $result );
 				}
 			}
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @desc Adds key => value element to passed in reference $result array
+	 *
+	 * @param String $row
+	 * @param Array $result
+	 */
+	protected function addPairToResult( $row, &$result ) {
+		$keyValue = explode( '=', $row );
+		if ( count( $keyValue ) == 2 ) {
+			$result[trim( $keyValue[0] )] = trim( $keyValue[1] );
+		} // else not a key => value pair
+	}
+
+	/**
+	 * @desc Adds not empty string to passed in reference $result array
+	 *
+	 * @param String $row
+	 * @param Array $result
+	 */
+	protected function addNotEmptyStringToResult( $row, &$result ) {
+		$row = trim( $row );
+		if( !empty( $row ) ) {
+			$result[] = $row;
+		} // else an empty string - we do not want it
 	}
 
 	/**
