@@ -10,7 +10,7 @@ class TvApiController extends WikiaApiController {
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const MINIMAL_WIKIA_SCORE = 1.5;
+	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
@@ -181,8 +181,8 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function setWikiVariables(){
-		$config = $this->getConfigCrossWiki();
-		$resultSet = (new Factory)->getFromConfig( $config )->search();
+//		$config = $this->getConfigCrossWiki();
+//		$resultSet = (new Factory)->getFromConfig( $config )->search();
 		$found = false;
 
 		$query = $this->getRequest()->getVal( 'seriesName', null );
