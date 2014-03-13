@@ -358,10 +358,10 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 
 		// TODO: move the (wiki->community->variable) logic to WikiFactory
-		$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
+		$highValueCountries = $wgHighValueCountries;
 		if (empty($highValueCountries)) {
 			// If the variable is not set for given wiki, use the value from the community wiki
-			$highValueCountries = $wgHighValueCountries;
+			$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
 		}
 		if (empty($highValueCountries)) {
 			// If the variable is set nor for given wiki neither for community, use the default value
