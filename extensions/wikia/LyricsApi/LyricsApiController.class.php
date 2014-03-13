@@ -16,7 +16,17 @@ class LyricsApiController extends WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->lyricsApiHandler = new MockLyricsApiHandler();
+		//$this->lyricsApiHandler = new MockLyricsApiHandler();
+		// TODO: Do Proper config
+		$config = [
+			'adapteroptions' => [
+				'host' => '10.10.10.242',
+				'port' => 8983,
+				'path' => '/solr/',
+				'core' => 'lyrics',
+			]
+		];
+		$this->lyricsApiHandler = new SolrLyricsApiHandler( $config );
 	}
 
 	private function getData( $params, $method ) {
@@ -25,7 +35,8 @@ class LyricsApiController extends WikiaController {
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
 
 		$this->response->setVal( 'result', $results );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		// TODO: Enable cache
+		// $this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	/**

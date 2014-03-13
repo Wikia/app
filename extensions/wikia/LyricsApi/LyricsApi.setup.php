@@ -19,7 +19,10 @@ $wgExtensionCredits['api'][] = array(
 
 $wgAutoloadClasses['AbstractLyricsApiHandler'] = $dir . '/LyricsHandlers/AbstractLyricsApiHandler.class.php';
 $wgAutoloadClasses['MockLyricsApiHandler'] = $dir . '/LyricsHandlers/MockLyricsApiHandler.class.php';
+$wgAutoloadClasses['SolrLyricsApiHandler'] = $dir . '/LyricsHandlers/SolrLyricsApiHandler.class.php';
 $wgAutoloadClasses['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 
 $wgWikiaApiControllers['LyricsApiController'] = "{$dir}/LyricsApiController.class.php";
 
+// TODO: Check if this is the right way to include the autoloader
+require_once( $dir . '../../../lib/vendor/Solarium/Autoloader.php' );
