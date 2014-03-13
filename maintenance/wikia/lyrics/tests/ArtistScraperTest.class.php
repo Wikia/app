@@ -150,11 +150,8 @@ WIKITEXT
 			[
 				'message' => 'No matches found',
 				'expected' => [
-					'article_id' => 123,
-					'name' => 'Test',
-					'image' => '',
-					'itunes' => '',
-					'genres' => [],
+					'id' => 123,
+					'artist_name' => 'Test',
 				],
 				'mockedTitleText' => 'Test',
 				'mockedArticleId' => 123,
