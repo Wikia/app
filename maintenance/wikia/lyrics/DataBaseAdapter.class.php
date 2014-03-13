@@ -205,21 +205,6 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
-	 * Set genres data to data element
-	 *
-	 * @param $element
-	 */
-	function setGenres( &$element ) {
-		if ( isset( $element['genres'] ) ) {
-			if ( !is_array( $element['genres'] ) ) {
-				$element['genres'] = [$element['genres']];
-			}
-			$element['genres'] = json_encode( array_values( $element['genres'] ) );
-		}
-	}
-
-
-	/**
 	 * Save artist document to Solr
 	 *
 	 * @param array $artist
@@ -229,7 +214,9 @@ class SolrAdapter implements DataBaseAdapter {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
 		$artist['type'] = self::TYPE_ARTIST;
-		$this->setGenres( $artist );
+		if ( $artist['genres'] ) {
+			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
+		}
 		$doc = $this->newDocFromData( $artist );
 		$this->add( $doc );
 	}
@@ -242,16 +229,14 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $songs
 	 */
 	function saveAlbum( Array $artist, Array $album, Array $songs ) {
-		// Placeholder "albums" doesn't have id's
-		if ( !isset( $album['id'] ) ) {
-			return;
-		}
 		// Add artist meta data
 		$album['artist_name'] = $artist['artist_name'];
 		$album['artist_id'] = $artist['id'];
 		// Add songs meta data
 		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
-		$this->setGenres( $album );
+		if ( $album['genres'] ) {
+			$album['genres'] = json_encode( array_values( $album['genres'] ) );
+		}
 		$album['type'] = self::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
@@ -265,10 +250,6 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $song
 	 */
 	function saveSong( Array $artist, Array $album, Array $song ) {
-		// Non lyrics song
-		if ( !isset( $song['id'] ) ) {
-			return;
-		}
 		$song['artist_id'] = $artist['id'];
 		$song['artist_name'] = $artist['artist_name'];
 		if ( isset( $album['id'] ) ) {
@@ -278,7 +259,6 @@ class SolrAdapter implements DataBaseAdapter {
 				$song['image'] = $album['image'];
 			}
 		}
-		$this->setGenres( $song );
 		$song['type'] = self::TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );

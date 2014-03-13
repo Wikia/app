@@ -86,7 +86,10 @@ class LyricsScrapper {
 			);
 			$songsData = $this->processSongs( $artistData, $albumData, $leanSongsData );
 			$albumData['songs'] = $songsData;
-			$this->dba->saveAlbum( $artistData, $albumData, $songsData );
+			if ( isset( $albumData['id'] ) ) {
+				// Save only albums which are actual wiki pages
+				$this->dba->saveAlbum( $artistData, $albumData, $songsData );
+			}
 			$albumsData[] = $albumData;
 		}
 		return $albumsData;
@@ -114,13 +117,15 @@ class LyricsScrapper {
 						$this->songScraper->getDataMap()
 					);
 					$songsData[] = $songData;
-					// Save only songs we have
-					$this->dba->saveSong(
-						$artistData,
-						$albumData,
-						$songData
-					);
 
+					if ( isset( $songData['id'] ) && !empty( $songData['lyrics'] ) ) {
+						// Save only songs we have as Wiki pages and have lyrics
+						$this->dba->saveSong(
+							$artistData,
+							$albumData,
+							$songData
+						);
+					}
 					continue;
 				}
 			}
