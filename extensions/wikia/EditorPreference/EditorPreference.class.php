@@ -109,7 +109,6 @@ class EditorPreference {
 	 */
 	public static function getPrimaryEditor() {
 		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt;
-
 		$selectedOption = (int)$wgUser->getOption( 'defaulteditor' );
 
 		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
