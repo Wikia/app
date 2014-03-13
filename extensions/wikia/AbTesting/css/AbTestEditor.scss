@@ -7,15 +7,15 @@ $abTesting-color-hover: mix($color-page, $color-text, 80);
 $abTesting-color-text-warning: #c27500;
 
 .running {
-	color: #080;
+  color: #e00;
 	font-weight: bold;
 }
 .scheduled {
-	color: #aa0;
+  color: #080;
 	font-weight: bold;
 }
 .not-running {
-	color: #e00;
+// no change
 }
 
 .AbTestingEditForm {

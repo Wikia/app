@@ -18,7 +18,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		date_default_timezone_set('UTC');
 		$now = time();
 
-		$experiment[ 'css_class' ] = 'not-running';
+		$experiment[ 'css_class' ] = '';
 
 		foreach ( $experiment[ 'versions' ] as $id => $version ) {
 			$startTime = strtotime( $version[ 'start_time' ] );
@@ -40,6 +40,10 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			} else {
 				$experiment[ 'versions' ][ $id ][ 'css_class' ] = 'not-running';
 			}
+		}
+
+		if ( empty( $experiment[ 'css_class' ] ) ) {
+			$experiment[ 'css_class' ] = 'not-running';
 		}
 
 		date_default_timezone_set( $timezone );
