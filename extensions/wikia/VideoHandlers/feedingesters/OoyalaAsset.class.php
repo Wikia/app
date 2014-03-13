@@ -15,10 +15,10 @@ class OoyalaAsset extends WikiaModel {
 		// only live video
 		$cond[] = "status = 'live'";
 
-		$params = array(
+		$params = [
 			'limit' => $apiPageSize,
 			'where' => implode( ' AND ', $cond ),
-		);
+		];
 
 		if ( !empty( $nextPage ) ) {
 			$parsed = explode( "?", $nextPage );
@@ -42,7 +42,7 @@ class OoyalaAsset extends WikiaModel {
 	public static function getApiContent( $url ) {
 		wfProfileIn( __METHOD__ );
 
-		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$result = json_decode( $req->getContent(), true );
@@ -79,25 +79,26 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
-	 * Get assets by sourceid in metadata (max = 10)
+	 * Get assets by sourceid in metadata
 	 * @param string $sourceId
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
+	 * @param integer $limit
 	 * @return array $assets
 	 */
-	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset' ) {
+	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
-		$cond = array(
+		$cond = [
 			"asset_type='$assetType'",
 			"metadata.sourceid='$sourceId'",
-			//"metadata.source='$source'",
-		);
+			"metadata.source='$source'",
+		];
 
-		$params = array(
-			'limit' => 10,
+		$params = [
+			'limit' => $max,
 			'where' => implode( ' AND ', $cond ),
-		);
+		];
 
 		$method = 'GET';
 		$reqPath = '/v2/assets';
@@ -191,11 +192,11 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
 
-		$options = array(
-			'method' => $method,
+		$options = [
+			'method'   => $method,
 			'postData' => $reqBody,
-			'noProxy' => true,
-		);
+			'noProxy'  => true,
+		];
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
@@ -255,16 +256,16 @@ class OoyalaAsset extends WikiaModel {
 	 * @return array $params
 	 */
 	protected function generateRemoteAssetParams( $data ) {
-		$params = array(
-			'name' => $data['assetTitle'],
-			'asset_type' => 'remote_asset',
+		$params = [
+			'name'        => $data['assetTitle'],
+			'asset_type'  => 'remote_asset',
 			'description' => $data['description'],
-			'duration' => $data['duration'],
-			'stream_urls' => array(
-				'flash' => $data['url']['flash'],
+			'duration'    => $data['duration'],
+			'stream_urls' => [
+				'flash'  => $data['url']['flash'],
 				'iphone' => $data['url']['iphone'],
-			),
-		);
+			],
+		];
 
 		return $params;
 	}
@@ -288,11 +289,11 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
 
-		$options = array(
-			'method' => $method,
+		$options = [
+			'method'   => $method,
 			'postData' => $reqBody,
-			'noProxy' => true,
-		);
+			'noProxy'  => true,
+		];
 
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
@@ -329,11 +330,11 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		echo "\tRequest to update metadata: $url\n";
 
-		$options = array(
-			'method' => $method,
+		$options = [
+			'method'   => $method,
 			'postData' => $reqBody,
-			'noProxy' => true,
-		);
+			'noProxy'  => true,
+		];
 
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
@@ -430,6 +431,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
+		if ( !empty( $data['distributor']) ) {
+			$metadata['distributor'] = $data['distributor'];
+		}
 		// set blank thumbnail
 		if ( empty( $data['thumbnail'] ) ) {
 			$metadata['thumbnail'] = 1;
@@ -453,11 +457,11 @@ class OoyalaAsset extends WikiaModel {
 	 * @return boolean
 	 */
 	public function isTitleExist( $name, $source, $assetType = 'remote_asset' ) {
-		$cond = array(
+		$cond = [
 			"asset_type='$assetType'",
-			"name='".addslashes($name)."'",
-			//"metadata.source='$source'",
-		);
+			"name='".addslashes( $name )."'",
+			"metadata.source='$source'",
+		];
 
 		return $this->isExist( $cond );
 	}
@@ -470,11 +474,11 @@ class OoyalaAsset extends WikiaModel {
 	 * @return boolean
 	 */
 	public function isSourceIdExist( $sourceId, $source, $assetType = 'remote_asset' ) {
-		$cond = array(
+		$cond = [
 			"asset_type='$assetType'",
 			"metadata.sourceid='$sourceId'",
-			//"metadata.source='$source'",
-		);
+			"metadata.source='$source'",
+		];
 
 		return $this->isExist( $cond );
 	}
@@ -487,10 +491,10 @@ class OoyalaAsset extends WikiaModel {
 	public function isExist( $cond ) {
 		wfProfileIn( __METHOD__ );
 
-		$params = array(
+		$params = [
 			'limit' => 1,
 			'where' => implode( ' AND ', $cond ),
-		);
+		];
 
 		$method = 'GET';
 		$reqPath = '/v2/assets';
@@ -498,7 +502,7 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
@@ -525,11 +529,11 @@ class OoyalaAsset extends WikiaModel {
 		$method = 'PUT';
 		$reqPath = '/v2/assets/'.$videoId.'/preview_image_urls';
 
-		$params[] = array(
-			'url' => $assetData['thumbnail'],
-			'width' => 240,
+		$params[] = [
+			'url'    => $assetData['thumbnail'],
+			'width'  => 240,
 			'height' => 320,
-		);
+		];
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
 
@@ -548,7 +552,7 @@ class OoyalaAsset extends WikiaModel {
 
 		$method = 'PUT';
 		$reqPath = '/v2/assets/'.$videoId.'/primary_preview_image';
-		$params = array( 'type' => 'remote_url' );
+		$params = [ 'type' => 'remote_url' ];
 
 		$resp = $this->sendRequest( $method, $reqPath, $params );
 
@@ -571,7 +575,7 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath );
 		//print( "Connecting to $url...\n" );
 
-		$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
 		$status = $req->execute();
 		if ( $status->isGood() ) {
 			$response = json_decode( $req->getContent(), true );
@@ -673,11 +677,11 @@ class OoyalaAsset extends WikiaModel {
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
 		//print( "Connecting to $url...\n" );
 
-		$options = array(
-			'method' => $method,
+		$options = [
+			'method'   => $method,
 			'postData' => $reqBody,
-			'noProxy' => true,
-		);
+			'noProxy'  => true,
+		];
 
 		$req = MWHttpRequest::factory( $url, $options );
 		$status = $req->execute();
