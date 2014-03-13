@@ -1,6 +1,6 @@
 <?php
 /**
- * Class definition for Wikia\Search\QueryService\Select\Dismax\InterWiki
+ * Class definition for \Wikia\Search\QueryService\Select\Dismax\InterWiki
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
 use \Solarium_Query_Select, \Wikia\Search\Utilities;
@@ -66,7 +66,7 @@ class InterWiki extends AbstractDismax
 	/**
 	 * Reuses AbstractSelect's extractWikiMatch as the primary match method
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
-	 * @return Wikia\Search\Match\Wiki
+	 * @return \Wikia\Search\Match\Wiki
 	 */
 	public function extractMatch() {
 		return $this->extractWikiMatch();
@@ -85,7 +85,7 @@ class InterWiki extends AbstractDismax
 	/**
 	 * Registers a filter query for documents matching the wiki ID of a match, if available.
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch()
-	 * @return Wikia\Search\QueryService\Select\InterWiki
+	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function registerFilterQueryForMatch() {
 		$config = $this->getConfig();
@@ -99,7 +99,7 @@ class InterWiki extends AbstractDismax
 	
 	/**
 	 * Handles initial configuration when invoking search.
-	 * @return Wikia\Search\QueryService\Select\InterWiki
+	 * @return \Wikia\Search\QueryService\Select\InterWiki
 	 */
 	protected function prepareRequest() {
 		$config = $this->getConfig();
@@ -119,10 +119,7 @@ class InterWiki extends AbstractDismax
 		if( $this->getConfig()->getCommercialUse() ) {
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
-		$hub = $this->getConfig()->getHub();
-		if (! empty( $hub ) ) {
-			$filterQueries[] = Utilities::valueForField( 'hub_s', $hub );
-		}
+		//removed hub query from filter (PLA-1166)
 		return implode( ' AND ', $filterQueries );
 	}
 	
@@ -138,14 +135,31 @@ class InterWiki extends AbstractDismax
 		foreach ( $excludedWikiIds as $excludedWikiId ) {
 			$widQueries[] = Utilities::valueForField( 'wid',  $excludedWikiId, array( 'negate' => true ) );
 		}
-		$queryClauses= array(
-				'lang_s:'.$this->config->getLanguageCode()
-		);
+		$queryClauses = [];
+		$config = $this->getConfig();
+		$queryClauses = $this->generateArrayQuery( $queryClauses, 'lang_s',  $config->getLanguageCode() );
+		$queryClauses = $this->generateArrayQuery( $queryClauses, 'hub_s',  $config->getHub() );
+		return implode( ' AND ', $queryClauses );
+	}
 
-		$hub = $this->config->getHub();
-		if (! empty( $hub ) ) {
-		    $queryClauses[] = Utilities::valueForField( 'hub', $hub );
+	protected function generateArrayQuery( $queryArray, $name, $values  ) {
+		$q = '';
+		if ( !empty( $values ) ) {
+			if ( !is_array( $values ) ) {
+				$values = [ $values ];
+			}
+
+			foreach ( $values as $item ) {
+				if ( !$item ) {
+					continue;
+				}
+				$q .= ( $q ? ' OR ' : '' ) . Utilities::valueForField( $name, $item );
+			}
+
+			if ( $q ) {
+				$queryArray[] =   ' ( ' . $q . ' ) ';
+			}
 		}
-		return sprintf( '%s', implode( ' AND ', $queryClauses ) );
+		return $queryArray;
 	}
 }

@@ -37,7 +37,6 @@ $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
 //$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
-$wgHooks['OutputPageCheckLastModified'][] = 'Wikia::onOutputPageCheckLastModified';
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
 # User hooks
@@ -60,7 +59,12 @@ $wgHooks['LocalFileExecuteUrls']        [] = 'Wikia::onLocalFilePurge';
 $wgHooks['ParserCacheGetETag']       [] = 'Wikia::onParserCacheGetETag';
 
 # Add X-Served-By and X-Backend-Response-Time response headers - BAC-550
-$wgHooks['BeforeSendCacheControl']   [] = 'Wikia::onBeforeSendCacheControl';
+$wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
+$wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
+$wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
+
+# don't purge all variants of articles in Chinese - BAC-1278
+$wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -419,11 +423,11 @@ class Wikia {
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
-	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode, $wgEnableCentralizedLogging;
+	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode, $wgCommandLineSilentMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (!$wgDevelEnvironment && $wgEnableCentralizedLogging && class_exists('Wikia\\Logger\\WikiaLogger')) {
+			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
 				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
 				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 			} else {
@@ -1618,13 +1622,18 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
 			$wgResourceLoaderDebug = true;
 			wfDebug("Wikia: using resource loader debug mode\n");
 		}
+
+		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
+		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
+		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
 
 		return true;
 	}
@@ -1947,21 +1956,6 @@ class Wikia {
 	}
 
 	/**
-	 * Force article Last-Modified header to include modification time of app and config repos
-	 *
-	 * @param $modifiedTimes array List of components modification time
-	 * @return true
-	 */
-	public static function onOutputPageCheckLastModified( &$modifiedTimes ) {
-		global $IP, $wgWikiaConfigDirectory;
-
-		$modifiedTimes['wikia_app'] = filemtime("$IP/includes/specials/SpecialVersion.php");
-		$modifiedTimes['wikia_config'] = filemtime("$wgWikiaConfigDirectory/CommonSettings.php");
-
-		return true;
-	}
-
-	/**
 	 * Add shared AMD modules
 	 *
 	 * @param $out OutputPage
@@ -2225,7 +2219,7 @@ class Wikia {
 	}
 
 	/**
-	 * Send ETag header with article's last modidication timestamp and cache buster
+	 * Send ETag header with article's last modification timestamp and cache buster
 	 *
 	 * See BAC-1227 for details
 	 *
@@ -2236,12 +2230,37 @@ class Wikia {
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
 		global $wgStyleVersion;
-		$eTag = sprintf( '%s-%s', $article->getTouched(), $wgStyleVersion );
+		$touched = $article->getTouched();
+
+		// don't emit the default touched value set in WikiPage class (see CONN-430)
+		if ($touched === '19700101000000') {
+			$eTag = '';
+			return true;
+		}
+
+		$eTag = sprintf( '%s-%s', $touched, $wgStyleVersion );
 		return true;
 	}
 
 	/**
-	 * Add X-Served-By and X-Backend-Response-Time response headers
+	 * Add response headers with debug data and statistics
+	 *
+	 * @param WebResponse $response
+	 * @author macbre
+	 */
+	private static function addExtraHeaders(WebResponse $response) {
+		global $wgRequestTime;
+		$elapsed = microtime( true ) - $wgRequestTime;
+
+		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
+		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+
+		$response->header( 'X-Cache: ORIGIN' );
+		$response->header( 'X-Cache-Hits: ORIGIN' );
+	}
+
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
 	 *
 	 * See BAC-550 for details
 	 *
@@ -2251,16 +2270,55 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onBeforeSendCacheControl(OutputPage $out) {
-		global $wgRequestTime;
+		self::addExtraHeaders( $out->getRequest()->response() );
+		return true;
+	}
 
-		$response = $out->getRequest()->response();
-		$elapsed = microtime( true ) - $wgRequestTime;
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to ResourceLoader
+	 *
+	 * See BAC-1319 for details
+	 *
+	 * @param ResourceLoader $rl
+	 * @param ResourceLoaderContext $context
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onResourceLoaderAfterRespond(ResourceLoader $rl, ResourceLoaderContext $context) {
+		self::addExtraHeaders( $context->getRequest()->response() );
+		return true;
+	}
 
-		$response->header( sprintf( 'X-Served-By:%s', wfHostname() ) );
-		$response->header( sprintf( 'X-Backend-Response-Time:%01.3f', $elapsed ) );
+	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to wikia.php
+	 *
+	 * @param WikiaApp $app
+	 * @param WikiaResponse $response
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onNirvanaAfterRespond(WikiaApp $app, WikiaResponse $response) {
+		self::addExtraHeaders( $app->wg->Request->response() );
+		return true;
+	}
 
-		$response->header( 'X-Cache: ORIGIN' );
-		$response->header( 'X-Cache-Hits: ORIGIN' );
+	/**
+	 * Purge a limited set of language variants on Chinese wikis
+	 *
+	 * See BAC-1278 / BAC-698 for details
+	 *
+	 * @param Language $contLang
+	 * @param array $variants
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onTitleGetLangVariants(Language $contLang, Array &$variants) {
+		switch($contLang->getCode()) {
+			case 'zh':
+				// skin displays links to these variants only
+				$variants = ['zh-hans', 'zh-hant'];
+				break;
+		}
 
 		return true;
 	}

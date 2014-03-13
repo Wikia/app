@@ -56,20 +56,38 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Blocks view page source page
+	 * Blocks view source page & make it so that users cannot create/edit
+	 * pages that are on the takedown list.
 	 *
 	 * @param EditPage $editPage edit page instance
 	 * @return bool show edit page form?
 	 */
 	static public function onAlternateEdit(EditPage $editPage) {
 		$wg = F::app()->wg;
+		$wf = F::app()->wf;
 		$title = $editPage->getTitle();
+
+		// Block view-source on the LyricFind namespace.
 		$isLyricFind = $title->getNamespace() === NS_LYRICFIND;
 		$isNotAllowedToEdit = $title->isNamespaceProtected($wg->User);
-
 		$blockEdit = ($isLyricFind && $isNotAllowedToEdit);
 		if ($blockEdit) {
 			$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-edit-blocked')));
+		} else if($title->exists()){
+			// Look at the page-props to see if this page is blocked.
+			if(!$wg->user->isAllowed( 'editlyricfind' )){ // some users (staff/admin) will be allowed to edit these to prevent vandalism/spam issues.
+				$removedProp = $wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $title->getArticleID());
+				if(!empty($removedProp)){
+					$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-editpage-blocked')));
+					$blockEdit = true;
+				}
+			}
+		} else {
+			// Page is being created. Prevent this if page is prohibited by LyricFind.
+			$blockEdit = LyricFindTrackingService::isPageBlockedViaApi($amgId="", $gracenoteId="", $title->getText());
+			if($blockEdit){
+				$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-creation-blocked')));
+			}
 		}
 
 		return !$blockEdit;
@@ -99,7 +117,9 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace
+	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace.
+	 *
+	 * Also: 
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin
@@ -109,7 +129,31 @@ class LyricFindHooks {
 		if (!self::pageIsIndexable($out->getTitle())) {
 			$out->setRobotPolicy('noindex,follow');
 		}
+		
+		return true;
+	}
+
+	/**
+	 * If this song is on takedown list... replace the lyrics content with a message about why
+	 * it is gone. This will replace the content of all <lyrics> tags on the page (also <lyricfind>
+	 * and <gracenotelyrics> tags for support of legacy pages).
+	 *
+	 * @param Parser $parser
+	 * @param $text a string containing the wikitext (this is _not_ a Text object).
+	 * @param strip_state (undocumented)
+	 */
+	static public function onParserBeforeStrip(Parser $parser, &$text, &$strip_state){
+		$wg = F::app()->wg;
+		$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $wg->Title->getArticleID());
+		$isMarkedAsRemoved = (!empty($removedProp));
+		if($isMarkedAsRemoved){
+			// Replace just the lyrics boxes if any are found. If none are found, hide the whole page.
+			$NO_LIMIT = -1;
+			$numReplacements = 0;
+			$text = preg_replace("/<(lyrics|lyricfind|gracenotelyrics)>(.*?)<\/(lyrics|lyricfind|gracenotelyrics)>/is", "<lyrics>{{lyricfind_takedown}}</lyrics>", $text, $NO_LIMIT, $numReplacements);
+		}
 
 		return true;
 	}
+
 }

@@ -5,31 +5,31 @@
 class VideoEmbedToolSearchService
 {
 	use Wikia\Search\Traits\ArrayConfigurableTrait;
-	
+
 	/**
 	 * Default width of video
 	 * @var int
 	 */
 	const VIDEO_THUMB_DEFAULT_WIDTH = 160;
-	
+
 	/**
 	 * Default height of video
 	 * @var int
 	 */
 	const VIDEO_THUMB_DEFAULT_HEIGHT = 90;
-	
+
 	/**
-	 * Fields required for preprocessing to work when searching as API 
+	 * Fields required for preprocessing to work when searching as API
 	 * @var array
 	 */
 	protected $expectedFields = [ 'pageid', 'wid', 'title', 'title_en' ];
-	
+
 	/**
 	 * Height of video
 	 * @var int
 	 */
 	protected $height = self::VIDEO_THUMB_DEFAULT_HEIGHT;
-	
+
 	/**
 	 * Width of video
 	 * @var int
@@ -41,7 +41,12 @@ class VideoEmbedToolSearchService
 	 * @var string
 	 */
 	protected $suggestionQuery;
-	
+
+	/**
+	 * @var string $title
+	 */
+	protected $title;
+
 	/**
 	 * Whether to do preprocessing on title, and then character limit if so
 	 * @var int
@@ -53,43 +58,43 @@ class VideoEmbedToolSearchService
 	 * @var int
 	 */
 	protected $start = 0;
-	
+
 	/**
 	 * Limit to be set in config
 	 * @var int
 	 */
 	protected $limit = 20;
-	
+
 	/**
 	 * The ranking style to be set in the config
 	 * @var string
 	 */
 	protected $rank = Wikia\Search\Config::RANK_DEFAULT;
-	
+
 	/**
 	 * Determines what wiki ID we use.
 	 * @var string
 	 */
 	protected $searchType = 'local';
-	
+
 	/**
 	 * Wikia Search Config
 	 * @var Wikia\Search\Config
 	 */
 	protected $config;
-	
+
 	/**
 	 * Factory responsible for instantiating correct query service
 	 * @var Wikia\Search\QueryService\Factory
 	 */
 	protected $factory;
-	
+
 	/**
 	 * Encapsulates MediaWiki behavior
 	 * @var Wikia\Search\MediaWikiService
 	 */
 	protected $mwService;
-	
+
 	/**
 	 * Allows us to use the arrayconfigurable trait
 	 * @param array $dependencies
@@ -97,28 +102,35 @@ class VideoEmbedToolSearchService
 	public function __construct( $dependencies = [] ) {
 		$this->configureByArray( $dependencies );
 	}
-	
+
 	/**
-	 * Provided an article ID, return an array of suggested videos.
+	 * Get suggested videos by article id (raw data)
 	 * @param int $articleId
 	 * @return array
 	 */
-	public function getSuggestionsForArticleId( $articleId )
-	{
+	public function getSuggestedVideosByArticleId( $articleId ) {
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
-		$service = $this->getMwService();
+		$query =  (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
 		$expectedFields = $this->getExpectedFields();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
 									->setRequestedFields( $expectedFields )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
-		                            ->setVideoEmbedToolSearch( true )
-		  
-		  ;
-		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
+		                            ->setVideoEmbedToolSearch( true );
+
+		return $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true );
 	}
-	
+
+	/**
+	 * Provided an article ID, return an array of suggested videos.
+	 * @param int $articleId
+	 * @return array
+	 */
+	public function getSuggestionsForArticleId( $articleId ) {
+		return $this->postProcessSearchResponse( $this->getSuggestedVideosByArticleId( $articleId ));
+	}
+
 	/**
 	 * Returns an array of results for a given query, based on settings in config
 	 * @param string $query
@@ -129,7 +141,7 @@ class VideoEmbedToolSearchService
 		$config = $this->getConfig()->setVideoSearch( true )->setQuery( $query )->setRequestedFields( $expectedFields );
 		return $this->postProcessSearchResponse( $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true ) );
 	}
-	
+
 	/**
 	 * Given an article ID, stores the suggestion query.
 	 * @param int
@@ -140,10 +152,10 @@ class VideoEmbedToolSearchService
 		try {
 			$service = $this->getMwService();
 			$title = $service->getTitleStringFromPageId( $service->getCanonicalPageIdFromPageId( $articleId ) );
-		} catch ( \Exception $e ) {} 
+		} catch ( \Exception $e ) {}
 		return $this->setSuggestionQuery( $title );
 	}
-	
+
 	/**
 	 * Gets the query used for VET suggestions
 	 * @return string
@@ -151,7 +163,7 @@ class VideoEmbedToolSearchService
 	public function getSuggestionQuery() {
 		return $this->suggestionQuery;
 	}
-	
+
 	/**
 	 * Sets the query used for video suggestion
 	 * @param string $query
@@ -161,7 +173,7 @@ class VideoEmbedToolSearchService
 		$this->suggestionQuery = $query;
 		return $this;
 	}
-	
+
 	/**
 	 * Correctly formats response as expected by VET, and inflates video data on each result.
 	 * @param array
@@ -183,7 +195,7 @@ class VideoEmbedToolSearchService
 						true
 				);
 				$trimTitle = $this->getTrimTitle();
-				if (! empty( $trimTitle ) ) {
+				if ( ! empty( $trimTitle ) ) {
 					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
 				}
 				$singleVideoData['pos'] = $pos++;
@@ -196,7 +208,7 @@ class VideoEmbedToolSearchService
 				'items' => $data
 		];
 	}
-	
+
 	/**
 	 * Lazy-loaded DI
 	 * @return Wikia\Search\QueryService\Factory
@@ -207,12 +219,12 @@ class VideoEmbedToolSearchService
 		}
 		return $this->factory;
 	}
-	
+
 	/**
 	 * Lazy-loads config with values set from controller. Allows us to test config API.
 	 * @return Wikia\Search\Config
 	 */
-	protected function getConfig() {
+	public function getConfig() {
 		if ( $this->config === null ) {
 			$this->config = new Wikia\Search\Config;
 			$this->config->setLimit( $this->getLimit() )
@@ -223,27 +235,27 @@ class VideoEmbedToolSearchService
 			if ( $this->getSearchType() == 'premium' ) {
 				$this->config->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
 			}
-			
+
 		}
 		return $this->config;
 	}
-	
+
 	protected function getMwService() {
 		if ( $this->mwService === null ) {
 			$this->mwService = new Wikia\Search\MediaWikiService;
 		}
 		return $this->mwService;
 	}
-	
+
 	/**
-	 * @return the $height
+	 * @return int Height of video
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 
 	/**
-	 * @return the $width
+	 * @return int Width of video
 	 */
 	public function getWidth() {
 		return $this->width;
@@ -264,14 +276,14 @@ class VideoEmbedToolSearchService
 	}
 
 	/**
-	 * @return the $title
+	 * @return string Title of video
 	 */
 	public function getTitle() {
 		return $this->title;
 	}
 
 	/**
-	 * @return the $trimTitle
+	 * @return string Trimmed Title
 	 */
 	public function getTrimTitle() {
 		return $this->trimTitle;
@@ -285,7 +297,7 @@ class VideoEmbedToolSearchService
 		$this->trimTitle = $trimTitle;
 		return $this;
 	}
-	
+
 	/**
 	 * Allows controller to set limit on service, which injects into its config
 	 * @param int $limit
@@ -295,7 +307,7 @@ class VideoEmbedToolSearchService
 		$this->limit = $limit;
 		return $this;
 	}
-	
+
 	/**
 	 * Returns limit set by controller
 	 * @return int
@@ -303,7 +315,7 @@ class VideoEmbedToolSearchService
 	public function getLimit() {
 		return $this->limit;
 	}
-	
+
 	/**
 	 * Allows controller to set start on service, which injects into its config
 	 * @param int $start
@@ -313,7 +325,7 @@ class VideoEmbedToolSearchService
 		$this->start = $start;
 		return $this;
 	}
-	
+
 	/**
 	 * Return start set by controller
 	 * @return int $start
@@ -321,7 +333,7 @@ class VideoEmbedToolSearchService
 	public function getStart() {
 		return $this->start;
 	}
-	
+
 	/**
 	 * Allows controller to set rank on service, which injects into its config
 	 * @param string $rank
@@ -331,7 +343,7 @@ class VideoEmbedToolSearchService
 		$this->rank = $rank;
 		return $this;
 	}
-	
+
 	/**
 	 * Return start set by controller
 	 * @return string $rank
@@ -349,7 +361,7 @@ class VideoEmbedToolSearchService
 		$this->searchType = $type;
 		return $this;
 	}
-	
+
 	/**
 	 * Return search type set by controller
 	 * @return string $searchType
@@ -357,7 +369,7 @@ class VideoEmbedToolSearchService
 	public function getSearchType() {
 		return $this->searchType;
 	}
-	
+
 	/**
 	 * Read-only expected field value because arrays can't be class constants.
 	 * @return array

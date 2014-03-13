@@ -21,7 +21,7 @@ ve.ce.TableCaptionNode = function VeCeTableCaptionNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.TableCaptionNode, ve.ce.BranchNode );
+OO.inheritClass( ve.ce.TableCaptionNode, ve.ce.BranchNode );
 
 /* Static Properties */
 

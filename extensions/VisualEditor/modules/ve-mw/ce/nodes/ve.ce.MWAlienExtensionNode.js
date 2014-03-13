@@ -20,12 +20,12 @@ ve.ce.MWAlienExtensionNode = function VeCeMWAlienExtensionNode( model, config ) 
 	ve.ce.MWExtensionNode.call( this, model, config );
 
 	// DOM changes
-	this.$.addClass( 've-ce-mwAlienExtensionNode' );
+	this.$element.addClass( 've-ce-mwAlienExtensionNode' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWAlienExtensionNode, ve.ce.MWExtensionNode );
+OO.inheritClass( ve.ce.MWAlienExtensionNode, ve.ce.MWExtensionNode );
 
 /* Static Properties */
 

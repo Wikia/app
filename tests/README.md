@@ -35,6 +35,30 @@ excluding the following groups: Infrastructure, Integration, Broken, Stub, Monit
 
 Test file needs to match ``*Test.php`` and the class in the file should extend ``WikiaBaseTest``
 
+### Running only fast test suite
+
+In ```tests``` directory type in ```./php-fast```
+
+**Updating threshold for testsAnnotator**
+
+This number can be found in app/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php
+
+**Running testsAnnotator**
+
+To enable testsAnnotator you need to set environment variable to ```1``` and then run full tests suite.
+````
+ANNOTATE_TEST_SPEED=1 ./php-all
+````
+
+**Running unit tests on local machine**
+
+We've run phpunit tests locally only on linux machines, requirements:
+* php 5.4+
+* phpunit http://phpunit.de/
+* modified test_helpers - https://github.com/Wikia/php-test-helpers
+* runkit http://php.net/manual/en/book.runkit.php
+* config ( https://github.com/Wikia/config ) repo cloned into /usr/wikia/source/config
+
 ### Running all tests (including infrastructure tests)
 
 Run all tests on a specific wiki (by providing database name):
@@ -47,7 +71,7 @@ ant -f build-wikia.xml phpunit -Ddbname=muppet
 
 ```
 cd /usr/wikia/source/wiki/tests
-karma start karma/js-unit.config.js
+karma start karma/js-unit.conf.js
 ```
 
 For more info see

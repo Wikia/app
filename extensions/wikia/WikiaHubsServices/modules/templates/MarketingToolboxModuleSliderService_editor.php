@@ -3,17 +3,17 @@
 		<h3 class="alternative"><?= $i?>.</h3>
 		<div class="module-right-box">
 			<div class="module-input-box">
-				<input type="button" class="wmu-show" value="<?= wfMessage('marketing-toolbox-edithub-add-file-button')->text() ?>" />
+				<input type="button" class="wmu-show" value="<?= wfMessage('wikia-hubs-add-file-button')->text() ?>" />
 				<span class="alternative filename-placeholder">
 					<?$photo = $form->getField('photo' . $i); ?>
 					<? if (!empty($photo['value'])): ?>
 						<?= $photo['value']; ?>
 					<? else: ?>
-						<?= wfMessage('marketing-toolbox-edithub-file-name')->text() ?>
+						<?= wfMessage('wikia-hubs-file-name')->text() ?>
 					<? endif ?>
 				</span>
 				<p class="alternative">
-					<?= wfMessage('marketing-toolbox-hub-module-slider-image-tip')->parse() ?>
+					<?= wfMessage('wikia-hubs-module-slider-image-tip')->parse() ?>
 				</p>
 
 				<?=$form->renderField('photo' . $i); ?>
@@ -22,7 +22,7 @@
 				<?=$form->renderField('longDesc' . $i); ?>
 				<?=$form->renderField('url' . $i); ?>
 
-				<input class="secondary clear" type="button" value="<?= wfMessage('marketing-toolbox-edithub-clear-button')->text() ?>" />
+				<input class="secondary clear" type="button" value="<?= wfMessage('wikia-hubs-clear-button')->text() ?>" />
 			</div>
 			<div class="module-image-box">
 				<div class="image-placeholder">

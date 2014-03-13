@@ -100,7 +100,7 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * remove video
+	 * Remove video
 	 * @requestParam string title
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
@@ -218,11 +218,13 @@ class VideoHandlerController extends WikiaController {
 	}
 
 	/**
-	 * check if the file exists
+	 * Check if the file exists
 	 * @requestParam string fileTitle
 	 * @responseParam boolean $fileExists
 	 */
 	public function fileExists() {
+		wfProfileIn( __METHOD__ );
+
 		$fileExists = false;
 
 		$fileTitle = $this->getVal( 'fileTitle', '' );
@@ -235,11 +237,13 @@ class VideoHandlerController extends WikiaController {
 		}
 
 		$this->fileExists = $fileExists;
+
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
-	 * @requestParam string fileTitle - The title of the file to get details for
+	 * @requestParam array|string fileTitle - The title of the file to get details for
 	 * @requestParam int thumbWidth - The width of the video thumbnail to return
 	 * @requestParam int thumbHeight - The height of the video thumbnail to return
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
@@ -247,19 +251,73 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam array detail - The video details
 	 */
 	public function getVideoDetail() {
-		$fileTitle = $this->getVal( 'fileTitle', '' );
+		wfProfileIn( __METHOD__ );
+
+		$fileTitle = $this->getVal( 'fileTitle', array() );
 		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
 		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
 		$articleLimit = $this->getVal( 'articleLimit', '10' );
 		$getThumb = $this->getVal( 'getThumb', false );
 
+		if ( is_string( $fileTitle ) ) {
+			$singleFile = true;
+			$fileTitles = [ $fileTitle ];
+		} else {
+			$singleFile = false;
+			$fileTitles = $fileTitle;
+		}
+
+		$videos = [];
 		$helper = new VideoHandlerHelper();
-		$videoDetail = $helper->getVideoDetail( array('title' => $fileTitle),
-												$thumbWidth,
-												$thumbHeight,
-												$articleLimit,
-												$getThumb
-		);
-		$this->detail = $videoDetail;
+		foreach ( $fileTitles as $fileTitle ) {
+			$detail = $helper->getVideoDetail(
+				[ 'title' => $fileTitle ],
+				$thumbWidth,
+				$thumbHeight,
+				$articleLimit,
+				$getThumb
+			);
+
+			if ( !empty( $detail ) ) {
+				$videos[] = $detail;
+			}
+		}
+
+		$this->detail = ( !empty( $videos ) && $singleFile ) ? array_pop( $videos ) : $videos;
+
+		wfProfileOut( __METHOD__ );
 	}
+
+	/**
+	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
+	 * @requestParam string sort [recent/popular/trend]
+	 * @requestParam integer limit
+	 * @requestParam integer page
+	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
+	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @responseParam array $videos
+	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
+	 */
+	public function getVideoList() {
+		wfProfileIn( __METHOD__ );
+
+		$sort = $this->getVal( 'sort', 'recent' );
+		$limit = $this->getVal( 'limit', 1 );
+		$page = $this->getVal( 'page', 1 );
+		$providers = $this->getVal( 'providers', array() );
+		$category = $this->getVal( 'category', '' );
+
+		$filter = 'all';
+		if ( is_string( $providers ) ) {
+			$providers = [ $providers ];
+		}
+
+		$mediaService = new MediaQueryService();
+		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+		$this->videos = $videoList;
+
+		wfProfileOut( __METHOD__ );
+	}
+
 }

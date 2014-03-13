@@ -42,6 +42,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08676 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleStringFromPageId
 	 */
 	public function testGetTitleStringFromPageId() {
@@ -73,6 +75,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08731 ms
 	 * @covers \Wikia\Search\MediaWikiService::getLocalUrlForPageId
 	 */
 	public function testGetLocalUrlForPageId() {
@@ -103,6 +107,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08611 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleFromPageId
 	 */
 	public function testGetTitleFromPageIdFreshPage() {
@@ -148,6 +154,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08477 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleFromPageId
 	 */
 	public function testGetTitleFromPageIdCachedPage() {
@@ -186,6 +194,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08548 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId
 	 */
 	public function testGetCanonicalPageIdFromPageIdIsCanonical() {
@@ -208,6 +218,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08534 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId
 	 */
 	public function testGetCanonicalPageIdFromPageIdIsException() {
@@ -233,6 +245,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08506 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId
 	 */
 	public function testGetCanonicalPageIdFromPageIdIsRedirect() {
@@ -261,6 +275,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08618 ms
 	 * @covers \Wikia\Search\MediaWikiService::isPageIdContent
 	 */
 	public function testIsPageIdContentYes() {
@@ -284,6 +300,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08544 ms
 	 * @covers \Wikia\Search\MediaWikiService::isPageIdContent
 	 */
 	public function testIsPageIdContentNo() {
@@ -307,6 +325,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08566 ms
 	 * @covers \Wikia\Search\MediaWikiService::getLanguageCode
 	 */
 	public function testGetLanguageCode() {
@@ -319,6 +339,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08422 ms
 	 * @covers \Wikia\Search\MediaWikiService::getUrlFromPageId
 	 */
 	public function testGetUrlFromPageId() {
@@ -350,6 +372,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08527 ms
 	 * @covers \Wikia\Search\MediaWikiService::getNamespaceFromPageId
 	 */
 	public function testGetNamespaceFromPageId() {
@@ -379,6 +403,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08489 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMainPageArticleId
 	 */
 	public function testGetMainPageArticleId() {
@@ -389,6 +415,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08549 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageIdForWikiId
 	 */
 	public function testGetMainPageIdForWikiId() {
@@ -416,6 +444,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08591 ms
 	 * @covers \Wikia\Search\MediaWikiService::getSimpleLanguageCode
 	 */
 	public function testGetsimpleLanguageCode() {
@@ -434,7 +464,9 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * Note: we actually expect an array here but since static method calls are tricky here 
+	 * @group Slow
+	 * @slowExecutionTime 0.12579 ms
+	 * Note: we actually expect an array here but since static method calls are tricky here
 	 * we're using proxyClass with translated version of a response array
 	 * @covers \Wikia\Search\MediaWikiService::getParseResponseFromPageId
 	 */
@@ -455,6 +487,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12603 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCacheKey
 	 */
 	public function testGetCacheKey() {
@@ -483,6 +517,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08632 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCacheResult
 	 */
 	public function testGetCacheResult() {
@@ -516,6 +552,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08651 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCacheResultFromString
 	 */
 	public function testGetCacheResultFromString() {
@@ -544,6 +582,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08869 ms
 	 * @covers \Wikia\Search\MediaWikiService::setCacheFromStringKey
 	 */
 	public function testSetCacheFromStringKey() {
@@ -582,6 +622,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11852 ms
 	 * One day this test will actually work as advertised.
 	 * @covers \Wikia\Search\MediaWikiService::getBacklinksCountFromPageId
 	 */
@@ -617,6 +659,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08564 ms
 	 * @covers \Wikia\Search\MediaWikiService::getGlobal
 	 */
 	public function testGetGlobal() {
@@ -632,6 +676,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09211 ms
 	 * @covers \Wikia\Search\MediaWikiService::getGlobalWithDefault
 	 */
 	public function testGetGlobalWithDefault() {
@@ -647,6 +693,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
     /**
+	 * @group Slow
+	 * @slowExecutionTime 0.08814 ms
 	 * @covers \Wikia\Search\MediaWikiService::setGlobal
 	 */
 	public function testSetGlobal() {
@@ -665,6 +713,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08829 ms
 	 * @covers \Wikia\Search\MediaWikiService::getWikiId
 	 */
 	public function testGetWikiId() {
@@ -705,6 +755,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09124 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMediaDataFromPageId
 	 */
 	public function testGetMediaDataFromPageId() {
@@ -754,7 +806,9 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
     /**
-     * @covers\Wikia\Search\MediaWikiService::pageIdHasFile 
+	 * @group Slow
+	 * @slowExecutionTime 0.09431 ms
+     * @covers\Wikia\Search\MediaWikiService::pageIdHasFile
      */	
 	public function testPageIdHasFile() {
 		$service = $this->service->setMethods( array( 'getFileForPageId' ) )->getMock();
@@ -784,7 +838,9 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForPageId 
+	 * @group Slow
+	 * @slowExecutionTime 0.20025 ms
+	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForPageId
 	 */
 	public function testGetApiStatsForPageId() {
 		$this->assertEquals(
@@ -801,7 +857,9 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForWiki 
+	 * @group Slow
+	 * @slowExecutionTime 0.14909 ms
+	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForWiki
 	 */
 	public function testGetApiStatsForWiki() {
 		global $wgCityId;
@@ -818,7 +876,9 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
-	 * @covers \Wikia\Search\MediaWikiService::pageIdExists 
+	 * @group Slow
+	 * @slowExecutionTime 0.08778 ms
+	 * @covers \Wikia\Search\MediaWikiService::pageIdExists
 	 */
 	public function testPageIdExists() {
 		$service = $this->service->setMethods( array( 'getPageFromPageId' ) )->getMock();
@@ -872,6 +932,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1391 ms
 	 * @covers \Wikia\Search\MediaWikiService::getRedirectTitlesForPageId
 	 */
 	public function testGetRedirectTitlesForPageID() {
@@ -950,6 +1012,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09684 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMediaDetailFromPageId
 	 */
 	public function testGetMediaDetailFromPageId() {
@@ -980,6 +1044,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10581 ms
 	 * @covers \Wikia\Search\MediaWikiService::pageIdIsVideoFile
 	 */
 	public function testPageIdIsVideoFile() {
@@ -1009,6 +1075,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09202 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleKeyFromPageId
 	 */
 	public function testGetTitleKeyFromPageId() {
@@ -1039,6 +1107,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.16046 ms
 	 * @covers \Wikia\Search\MediaWikiService::getFileForPageId
 	 */
 	public function testGetFileForPageId() {
@@ -1091,6 +1161,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14926 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
 	public function testGetPageFromPageIdThrowsException() {
@@ -1109,6 +1181,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.16001 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
 	public function testGetPageFromPageCanonicalArticle() {
@@ -1148,6 +1222,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.16608 ms
 	 * @covers \Wikia\Search\MediaWikiService::getPageFromPageId
 	 */
 	public function testGetPageFromPageRedirectArticle() {
@@ -1211,6 +1287,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08691 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 	 */
 	public function testGetTitleStringDefault() {
@@ -1240,6 +1318,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1397 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 	 */
 	public function testGetTitleStringChildWallMessage() {
@@ -1301,6 +1381,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13248 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 	 */
 	public function testGetTitleStringEmptyChildWallMessage() {
@@ -1392,6 +1474,8 @@ class MediaWikiServiceTest extends BaseTest
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13071 ms
 	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 	 **/
 	public function testGetTitleStringMainWallMessage() {
@@ -1441,6 +1525,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08616 ms
 	 * @covers Wikia\Search\MediaWikiService::getNamespaceIdForString
 	 */
 	public function testGetNamespaceIdForString() {
@@ -1448,6 +1534,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08865 ms
 	 * @covers Wikia\Search\MediaWikiService::getGlobalForWiki
 	 */
 	public function testGetGlobalForWiki() {
@@ -1476,6 +1564,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10373 ms
 	 * @covers Wikia\Search\MediaWikiService::isSkinMobile
 	 */
 	public function testIsSkinMobile() {
@@ -1502,6 +1592,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08888 ms
 	 * @covers Wikia\Search\MediaWikiService::isOnDbCluster
 	 */
 	public function testIsOnDbCluster() {
@@ -1527,6 +1619,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08666 ms
 	 * @covers Wikia\Search\MediaWikiService::getDefaultNamespacesFromSearchEngine
 	 */
 	public function testGetDefaultNamespacesFromSearchEngine() {
@@ -1537,6 +1631,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09002 ms
 	 * @covers Wikia\Search\MediaWikiService::getSearchableNamespacesFromSearchEngine
 	 */
 	public function testGetSearchableNamespacesFromSearchEngine() {
@@ -1547,6 +1643,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08619 ms
 	 * @covers Wikia\Search\MediaWikiService::getTextForNamespaces
 	 */
 	public function testGetTextForNamespaces() {
@@ -1557,6 +1655,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0894 ms
 	 * @covers Wikia\Search\MediaWikiService::getFirstRevisionTimestampForPageId()
 	 */
 	public function testGetFirstRevisionTimestampForPageId() {
@@ -1599,6 +1699,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09075 ms
 	 * @covers Wikia\Search\MediaWikiService::getSnippetForPageId
 	 */
 	public function testGetSnippetForPageId() {
@@ -1624,6 +1726,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09298 ms
 	 * @covers Wikia\Search\MediaWikiService::getNonCanonicalTitleStringFromPageId
 	 */
 	public function testGetNonCanonicalTitleStringFromPageId() { 
@@ -1668,6 +1772,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09138 ms
 	 * @covers Wikia\Search\MediaWikiService::getNonCanonicalUrlFromPageId
 	 */
 	public function testGetNonCanonicalUrlFromPageId() { 
@@ -1712,6 +1818,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09557 ms
 	 * @covers Wikia\Search\MediaWikiService::getArticleMatchForTermAndNamespaces
 	 */
 	public function testGetArticleMatchForTermAndNamespaces() {
@@ -1773,6 +1881,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09007 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostWithNoDomain() {
@@ -1788,6 +1898,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09183 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostNoWikiIdFound() {
@@ -1815,6 +1927,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0899 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostWorksDefaultLanguage() {
@@ -1846,6 +1960,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08665 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostWorksForeignLanguage() {
@@ -1877,6 +1993,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08709 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostForeignLanguageTld() {
@@ -1914,6 +2032,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08804 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostClosedWiki() {
@@ -1944,6 +2064,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08925 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiMatchByHost
 	 */
 	public function testGetWikiMatchByHostLanguageMismatch() {
@@ -1975,6 +2097,8 @@ class MediaWikiServiceTest extends BaseTest
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08756 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiFromWikiId
 	 */
 	public function testGetWikiFromWikiId() {
@@ -1997,6 +2121,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08833 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageUrlForWikiId
 	 */
 	public function testGetMainPageUrlForWikiId() {
@@ -2024,6 +2150,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08847 ms
 	 * @covers Wikia\Search\MediaWikiService::getDbNameForWikiId
 	 */
 	public function testGetDbNameForWikiId() {
@@ -2053,6 +2181,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13295 ms
 	 * @covers Wikia\Search\MediaWikiService::getLastRevisionTimestampForPageId()
 	 */
 	public function testGetLastRevisionTimestampForPageId() {
@@ -2096,6 +2226,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.12891 ms
 	 * @covers Wikia\Search\MediaWikiService::getMediaWikiFormattedTimestamp
 	 */
 	public function testGetMediaWikiFormattedTimestamp() {
@@ -2131,6 +2263,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08929 ms
 	 * @covers Wikia\Search\MediaWikiService::searchSupportsCurrentLanguage
 	 */
 	public function testSearchSupportsCurrentLanguage() {
@@ -2152,6 +2286,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09356 ms
 	 * @covers Wikia\Search\MediaWikiService::getThumbnailUrl
 	 */
 	public function testGetThumbnailUrl() {
@@ -2218,6 +2354,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08881 ms
 	 * @covers Wikia\Search\MediaWikiService::getThumbnailUrl
 	 */
 	public function testGetThumbnailUrlNoResults() {
@@ -2247,6 +2385,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10257 ms
 	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtml
 	 */
 	public function testGetThumbnailHtml() {
@@ -2364,6 +2504,8 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.22076 ms
 	 * @covers Wikia\Search\MediaWikiService::getThumbnailHtmlFromFileTitle
 	 */
 	public function testGetThumbnailHtmlFromFileTitle() {
@@ -2389,6 +2531,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09379 ms
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
 	 */
 	public function testGetVideoViewsForPageId() {
@@ -2439,6 +2583,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13485 ms
 	 * @covers Wikia\Search\MediaWikiService::getFormattedVideoViewsForPageId
 	 */
 	public function testGetFormattedVideoViewsForPageId() {
@@ -2471,6 +2617,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09123 ms
 	 * @covers Wikia\Search\MediaWikiService::formatNumber
 	 */
 	public function testFormatNumber() {
@@ -2498,6 +2646,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09122 ms
 	 * @covers Wikia\Search\MediaWikiService::getVisualizationInfoForWikiId
 	 */
 	public function testGetVisualizationInfoForWikiId() {
@@ -2508,8 +2658,10 @@ class MediaWikiServiceTest extends BaseTest
 		$model
 		    ->expects( $this->exactly( 2 ) )
 		    ->method ( 'getDetails' )
-		    ->will   ( $this->returnValueMap( [ [ [ 123 ], $info ],
-				[ [ 321 ], [] ] ] ) )
+		    ->will   ( $this->returnValueMap( [
+				[ [ 123 ], true, $info ],
+				[ [ 321 ], true, [] ]
+			] ) )
 		;
 		$this->mockClass( 'WikisModel', $model );
 		$this->assertEquals(
@@ -2523,6 +2675,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09316 ms
 	 * @covers Wikia\Search\MediaWikiService::getStatsInfoForWikiId
 	 */
 	public function testGetStatsInfoForWikiId() {
@@ -2552,6 +2706,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13199 ms
 	 * @covers Wikia\Search\MediaWikiService::getFormattedTimestamp
 	 */
 	public function testGetFormattedTimestamp() {
@@ -2574,6 +2730,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09136 ms
 	 * @covers Wikia\Search\MediaWikiService::getDataSourceForWikiId
 	 */
 	public function testGetDataSourceForWikiId() {
@@ -2598,6 +2756,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.14423 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTitleForWikiId
 	 */
 	public function testGetMainPageTitleForWikiId() {
@@ -2650,6 +2810,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09433 ms
 	 * @covers Wikia\Search\MediaWikiService::getDescriptionTextForWikiId
 	 */
 	public function testGetDescriptionTextForWikiId() {
@@ -2691,6 +2853,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09148 ms
 	 * @covers Wikia\Search\MediaWikiService::getHubForWikiId
 	 */
 	public function testGetHubForWikiId() {
@@ -2711,6 +2875,8 @@ class MediaWikiServiceTest extends BaseTest
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09163 ms
 	 * @covers Wikia\Search\MediaWikiService::getSubHubForWikiId
 	 */
 	public function testGetSubHubForWikiId() {
@@ -2730,6 +2896,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09473 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTextForWikiId
 	 */
 	public function testGetMainPageTextForWikiId() {
@@ -2773,6 +2941,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13325 ms
 	 * @covers Wikia\Search\MediaWikiService::invokeHook
 	 */
 	public function testInvokeHook() {
@@ -2790,6 +2960,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09113 ms
 	 * @covers Wikia\Search\MediaWikiService::__construct
 	 */
 	public function test__construct() {
@@ -2802,6 +2974,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09036 ms
 	 * @covers Wikia\Search\MediaWikiService::getHostName
 	 */
 	public function testGetHostName() {
@@ -2813,6 +2987,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0917 ms
 	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
 	 */
 	public function testPageIdIsMainPage() {
@@ -2839,6 +3015,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13433 ms
 	 * @covers Wikia\Search\MediaWikiService::shortNumForMsg
 	 * @dataProvider dataShortNumForMsg
 	 */
@@ -2866,6 +3044,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13412 ms
 	 * @covers Wikia\Search\MediaWikiService::getSimpleMessage
 	 */
 	public function testGetSimpleMessage() {
@@ -2897,6 +3077,8 @@ class MediaWikiServiceTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.13765 ms
 	 * @covers Wikia\Search\MediaWikiService::getDomainsForWikiId
 	 */
 	public function testGetDomainsForWikiId() {

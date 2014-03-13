@@ -18,7 +18,7 @@ $dir = dirname( __FILE__ );
 /**
  * classes
  */
-$wgAutoloadClasses[ 'VideosModuleHelper'] =  $dir. '/VideosModuleHelper.class.php' ;
+$wgAutoloadClasses[ 'VideosModule'] =  $dir. '/VideosModule.class.php' ;
 
 /**
  * controllers
@@ -29,14 +29,20 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  * hooks
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
+$wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
-if ( $wgVideosModuleOnRail ) {
+// Only load this hook handler if we're showing the VideosModule in the right rail
+if ( F::app()->wg->VideosModuleABTest == 'rail' ) {
 	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
-} else {
-	array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'VideosModuleHooks::onOutputPageBeforeHTML' );
 }
+$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
 
 /**
  * messages
  */
 $wgExtensionMessagesFiles['VideosModule'] = $dir . '/VideosModule.i18n.php';
+
+// register messages package for JS
+JSMessages::registerPackage('VideosModule', array(
+	'videosmodule-title-default',
+));

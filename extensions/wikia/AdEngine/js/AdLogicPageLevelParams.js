@@ -50,9 +50,12 @@ var AdLogicPageLevelParams = function (
 	}
 
 	function getCategories() {
-		if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
-			var categories = window.wgCategories.slice(0, maxNumberOfCategories);
-			return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
+
+		if (window.wgAdPageLevelCategoryLangs && (window.wgContentLanguage in window.wgAdPageLevelCategoryLangs)) {
+			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
+				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
+				return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
+			}
 		}
 	}
 

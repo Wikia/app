@@ -502,6 +502,7 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Das Schäfchen
  * @author Jan Luca
  * @author LWChris
  * @author Metalhead64
@@ -536,7 +537,7 @@ $messages['de'] = array(
 	'editaccount-submit-cleardisable' => 'Deaktiviert-Markierung aufheben',
 	'editaccount-submit-close' => 'Konto schließen',
 	'editaccount-submit-button' => 'Speichern',
-	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren und nicht wiederherstellbar sind.',
+	'editaccount-usage-close' => 'Du kannst ein Konto auch deaktivieren, indem du das Passwort zerwürfelst und die E-Mail-Adresse löschst. Beachte, dass diese Daten verloren gehen und nicht wiederherstellbar sind.',
 	'editaccount-warning-close' => '<b>Achtung!</b> Du bist dabei, das Konto von Benutzer <b>$1</b> dauerhaft zu deaktivieren. Dies kann nicht rückgängig gemacht werden. Bist du sicher, dass du das tun möchtest?',
 	'editaccount-status' => 'Statusmeldung',
 	'editaccount-success-email' => 'E-Mail-Adresse für das Konto $1 erfolgreich in $2 geändert.',
@@ -563,8 +564,8 @@ $messages['de'] = array(
 	'editaccount-status-unconfirmed' => 'Unbestätigt',
 	'editaccount-status-realuser' => 'Echter User',
 	'editaccount-status-tempuser' => 'Vorläufiger User',
-	'editaccount-error-tempuser-email' => 'Vorläufige Benutzer können keine leere Mail-Adressen-Angabe haben, bitte Adresse angeben.',
-	'editaccount-email-change-requested' => 'Der Benutzer änderte seine E-Mail-Einstellungen hin zu $1. Um die Adressen-Änderung zu bewilligen, muss die angefragte Mailadresse in das untere Feld eingegeben und "Speichern und bestätigen" geklickt werden.',
+	'editaccount-error-tempuser-email' => 'Vorläufige Benutzer können keine leere E-Mail-Adressen-Angabe haben, bitte Adresse angeben.',
+	'editaccount-email-change-requested' => 'Der Benutzer änderte seine E-Mail-Einstellungen hin zu $1. Um die Adressen-Änderung zu bewilligen, muss die angefragte Mailadresse in das untere Feld eingegeben und „Speichern und bestätigen“ geklickt werden.',
 	'editaccount-log' => 'Benutzerkonten-Logbuch',
 	'editaccount-log-header' => 'Diese Seite listet Änderungen von Benutzereinstellungen durch das Wikia Personal.',
 	'editaccount-log-entry-email' => 'änderte die E-Mail-Adresse von Benutzer $2',
@@ -743,6 +744,7 @@ $messages['fi'] = array(
 	'editaccount-submit-email' => 'Tallenna sähköpostiosoite',
 	'editaccount-submit-pass' => 'Tallenna salasana',
 	'editaccount-submit-realname' => 'Tallenna oikea nimi',
+	'editaccount-submit-clearunsub' => 'Poista peruutus',
 	'editaccount-submit-cleardisable' => 'Nollaa poista käytöstä -lippu',
 	'editaccount-submit-close' => 'Sulje tunnus',
 	'editaccount-submit-button' => 'Tallenna',
@@ -753,6 +755,8 @@ $messages['fi'] = array(
 	'editaccount-success-email-blank' => 'Tunnuksen $1 sähköpostiosoitteen poistaminen onnistui.',
 	'editaccount-success-pass' => 'Tunnuksen $1 salasana vaihdettiin onnistuneesti.',
 	'editaccount-success-realname' => 'Tilin $1 oikea nimi vaihdettiin onnistuneesti.',
+	'editaccount-success-unsub' => 'Tilin $1 peruutuskohta poistettiin onnistuneesti.',
+	'editaccount-success-disable' => 'Käytöstä poistettu kohta poistettiin onnistuneesti tilille $1.',
 	'editaccount-success-toggleadopt' => 'Käyttäjän $1 adoptointikelpoisuustila vaihdettiin onnistuneesti',
 	'editaccount-success-close' => 'Tunnus $1 poistettiin käytöstä onnistuneesti.',
 	'editaccount-error-email' => 'Sähköpostiosoitetta ei vaihdettu. Yritä uudelleen tai ota yhteyttä tekniseen tiimiin.',
@@ -1212,6 +1216,13 @@ $messages['ja'] = array(
 	'editaccount-labal-account-status' => 'アカウントの状態',
 );
 
+/** Georgian (ქართული)
+ * @author GeorgeBarnick
+ */
+$messages['ka'] = array(
+	'editaccount-submit-button' => 'შენახვა',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
@@ -1355,7 +1366,7 @@ $messages['mk'] = array(
 	'editaccount-title' => 'Специјални:УредиСметка',
 	'editaccount-frame-manage' => 'Уреди сметка',
 	'editaccount-frame-usage' => 'Напомена',
-	'editaccount-usage' => 'Корисничките податоци се кешираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, кешот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со кеширање.',
+	'editaccount-usage' => 'Корисничките податоци се меѓускладираат посебно за секое вики. Кога ќе смените лозинка или е-пошта, меѓускладот ќе се поднови само за ова вики. Упатете го корисникот кон ова вики да се најави со новосоздадена лозинка, за да избегне проблеми со меѓускладирање.',
 	'editaccount-label-select' => 'Одберете корисничка сметка',
 	'editaccount-submit-account' => 'Раководење со сметка',
 	'editaccount-frame-account' => 'Уредување на корисничка сметка: $1',
@@ -2269,7 +2280,7 @@ $messages['sv'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Förhindra automatisk adoptering',
 	'editaccount-label-toggleadopt-allow' => 'Tillåt automatisk adoption',
 	'editaccount-label-reason' => 'Anledning:',
-	'editaccount-submit-email' => 'Spara e-postadress',
+	'editaccount-submit-email' => 'Spara och bekräfta e-postadress',
 	'editaccount-submit-pass' => 'Spara lösenord',
 	'editaccount-submit-realname' => 'Spara riktigt namn',
 	'editaccount-submit-clearunsub' => 'Rensa avprenumerering',
@@ -2359,16 +2370,60 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'editaccount' => 'ఖాతా మార్పు',
+	'editaccount-desc' => 'వాడుకరి ఖాతా సమాచారాన్ని నిర్వహించడంలో సిబ్బందికి వీలు కలిగిస్తుంది',
+	'editaccount-frame-manage' => 'ఖాతాను సవరించు',
 	'editaccount-frame-usage' => 'గమనిక',
+	'editaccount-label-select' => 'ఓ వాడుకరి ఖాతాను ఎంచుకోండి',
+	'editaccount-submit-account' => 'ఖాతా నిర్వహణ',
+	'editaccount-frame-account' => 'వాడుకరి ఖాతాను సవరిస్తున్నారు: $1',
+	'editaccount-frame-close' => 'వాడుకరి ఖాతాను అచేతనం చెయ్యి: $1',
+	'editaccount-label-email' => 'కొత్త ఈమెయిలు చిరునామాను ఇవ్వండి',
+	'editaccount-label-pass' => 'కొత్త సంకేతపదాన్ని ఇవ్వండి',
+	'editaccount-label-realname' => 'కొత్త అసలు పేరును ఇవ్వండి',
+	'editaccount-label-clearunsub' => 'చందా విరమించబడింది',
+	'editaccount-label-toggleadopt-prevent' => 'ఆటో దత్తతను నివారించు',
+	'editaccount-label-toggleadopt-allow' => 'ఆటో దత్తతను అనుమతించు',
+	'editaccount-label-reason' => 'కారణం:',
+	'editaccount-submit-email' => 'ఈమెయిలు చిరునామాను భద్రపరచి, నిర్ధారించు',
+	'editaccount-submit-pass' => 'సంకేతపదాన్ని భద్రపరచు',
+	'editaccount-submit-realname' => 'అసలు పేరును భద్రపరచు',
+	'editaccount-submit-close' => 'ఖాతాను మూసివెయ్యి',
+	'editaccount-submit-button' => 'భద్రపరచు',
+	'editaccount-warning-close' => '<b>జాగ్రత్త!</b> మీరు వాడుకరి <b>$1</b> యొక్క ఖాతాను శాశ్వతంగా అచేతనం చెయ్యబోతున్నారు. దీన్ని వెనక్కి తీసుకోలేరు. మీరు చెయ్యదలచుకున్నది అదేనా?',
 	'editaccount-status' => 'స్థితి సందేశం',
+	'editaccount-success-email' => '$1 ఖాతా యొక్క ఈమెయిలు చిరునామా $2 కు జయప్రదంగా మార్చబడింది.',
+	'editaccount-success-email-blank' => '$1 ఖాతా యొక్క ఈమెయిలు చిరునామా జయప్రదంగా తొలగించబడింది.',
+	'editaccount-success-pass' => '$1 ఖాతా యొక్క సంకేతపదం జయప్రదంగా మార్చబడింది.',
+	'editaccount-success-realname' => '$1 ఖాతా యొక్క అసలు పేరు జయప్రదంగా మార్చబడింది.',
+	'editaccount-success-close' => '$1 ఖాతా జయప్రదంగా అచేతనం చెయ్యబడింది.',
+	'editaccount-error-email' => 'ఈమెయిలు మారలేదు.  మళ్ళీ ప్రయత్నించండి, లేదా సాంకేతిక బృందాన్ని సంప్రదించండి.',
+	'editaccount-error-pass' => 'సంకేతపదం మారలేదు.  మళ్ళీ ప్రయత్నించండి, లేదా సాంకేతిక బృందాన్ని సంప్రదించండి.',
+	'editaccount-error-realname' => 'అసలు పేరు మారలేదు.  మళ్ళీ ప్రయత్నించండి, లేదా సాంకేతిక బృందాన్ని సంప్రదించండి.',
+	'editaccount-error-close' => 'ఖాతాను మూసెయ్యడంలో ఏదో ఇబ్బంది ఏర్పడింది. మళ్ళీ ప్రయత్నించండి, లేదా సాంకేతిక బృందాన్ని సంప్రదించండి.',
 	'editaccount-invalid-email' => '"$1" అనేది సరైన ఈ-మెయిలు చిరునామా కాదు!',
 	'editaccount-nouser' => '"$1" అనే ఖాతా లేనే లేదు!',
+	'editaccount-not-loaded' => 'లోపం: వాడుకరి డేటా సరిగ్గా లోడు చెయ్యలేకపోయాం. పేజీని మళ్ళీ లోడు చెయ్యండి.',
+	'editaccount-requested' => 'గమనిక: వాడుకరి ఓ ఖాతా మూసివేతను కోరారు',
+	'editaccount-not-requested' => 'జాగ్రత్త: వాడుకరి, ఖాతా మూసివేతను కోరలేదు',
 	'editaccount-labal-account-status' => 'ఖాతా స్థితి',
+	'editaccount-labal-email-status' => 'ఈమెయిలు స్థితి:',
+	'editaccount-status-confirmed' => 'ధృవీకరించబడింది',
+	'editaccount-status-unconfirmed' => 'ధృవీకరణ కాలేదు',
+	'editaccount-status-realuser' => 'అసలైన వాడుకరి',
+	'editaccount-status-tempuser' => 'తాత్కాలిక వాడుకరి',
 	'editaccount-log' => 'వాడుకరి ఖాతాల చిట్టా',
-	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">ఈ ఖాతాని అచేతనం చేసారు.</div>', # Fuzzy
+	'editaccount-log-entry-email' => 'వాడుకరి $2 యొక్క ఈమెయిలును మార్చాం',
+	'editaccount-log-entry-pass' => 'వాడుకరి $2 యొక్క సంకేతపదాన్ని మార్చాం',
+	'editaccount-log-entry-realname' => 'వాడుకరి $2 యొక్క అసలుపేరును మార్చాం',
+	'editaccount-log-entry-close' => 'ఖాతా $2 ను అచేతనం చేసాం',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">వికియా ఈ ఖాతాను సార్వత్రికంగా అచేతనం చేసింది.</div>',
+	'right-editaccount' => 'ఇతర వాడుకరుల సమాచారాన్ని మార్చడం',
+	'action-editaccount' => 'ఇతర వాడుకరుల సమాచారాన్ని మార్చే',
 );
 
 /** Tagalog (Tagalog)
@@ -2438,7 +2493,11 @@ $messages['tl'] = array(
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'editaccount-frame-usage' => 'Not',
+	'editaccount-label-reason' => 'Gerekçe:',
+	'editaccount-submit-pass' => 'Parolayı kaydet',
 	'editaccount-submit-close' => 'Hesabı kapat',
+	'editaccount-submit-button' => 'Kaydet',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Bu hesap Wikia tarafından küresel olarak devre dışı bırakıldı.</div>',
 );
 

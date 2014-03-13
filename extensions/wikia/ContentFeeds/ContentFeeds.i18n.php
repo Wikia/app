@@ -192,6 +192,8 @@ $messages['fa'] = array(
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-desc' => 'Tarjoaa runsasta ja ajankohtaista tietoa eri tunnisteiden tai "syötteiden" kautta',
+	'contentfeeds-newimages-rss-title' => 'RSS-syöte: {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',
@@ -400,13 +402,14 @@ $messages['ne'] = array(
 
 /** Dutch (Nederlands)
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'contentfeeds-desc' => 'Biedt rijke en bijgewerkte informatie via verschillende labels of "feeds"',
 	'contentfeeds-newimages-rss-title' => 'RSS-feed voor {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Feed van $1',
 	'contentfeeds-firstfewarticles-tag-header' => "Maak uw eerste pagina's aan!",
-	'contentfeeds-firstfewarticles-tag-title' => 'Pagina',
+	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
 	'contentfeeds-firstfewarticles-tag-next' => 'Volgende',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fout: paginanaam is verplicht',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fout: paginainhoud is verplicht',
@@ -552,6 +555,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'contentfeeds-desc' => 'Ger riklig och aktuell information genom olika taggar eller "feeds"',
@@ -561,7 +565,7 @@ $messages['sv'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Rubrik',
 	'contentfeeds-firstfewarticles-tag-next' => 'Nästa',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Fel: Sidrubrik krävs',
-	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidans kropp krävs',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Fel: Sidinnehåll krävs',
 );
 
 /** Swahili (Kiswahili)
@@ -573,9 +577,15 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  */
 $messages['te'] = array(
+	'contentfeeds-newimages-rss-desc' => '$1 నుండి వడ్డన',
+	'contentfeeds-firstfewarticles-tag-header' => 'మీ మొదటి పేజీలను సృష్టించండి!',
 	'contentfeeds-firstfewarticles-tag-title' => 'శీర్షిక',
+	'contentfeeds-firstfewarticles-tag-next' => 'తరువాతి',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'లోపం: పేజీ శీర్షిక ఆవశ్యకం',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'లోపం: పేజీ దేహం ఆవశ్యకం',
 );
 
 /** Tagalog (Tagalog)
@@ -598,6 +608,16 @@ $messages['tl'] = array(
 $messages['tly'] = array(
 	'contentfeeds-firstfewarticles-tag-title' => 'Сәрловһә',
 	'contentfeeds-firstfewarticles-tag-next' => 'Бәнав',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Başlık',
+	'contentfeeds-firstfewarticles-tag-next' => 'Sonraki',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Hata: Sayfa başlığı gereklidir',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Hata: Sayfa metni gereklidir',
 );
 
 /** Tatar (Cyrillic script) (татарча)

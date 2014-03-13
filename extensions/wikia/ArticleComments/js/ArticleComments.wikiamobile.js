@@ -38,7 +38,9 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		postReply = msg( 'wikiamobile-article-comments-post-reply' ),
 		view = msg( 'wikiamobile-article-comments-view' ),
 		replies = msg( 'wikiamobile-article-comments-replies' ),
-		postComm = d.getElementsByClassName( 'commFrm' )[0].cloneNode( true );
+		postComm = d.getElementsByClassName( 'commFrm' )[0].cloneNode( true ),
+		textAreaSel = '.commFrm textarea',
+		$toc = $( '#wkTOC' );
 
 	postComm.getElementsByClassName( 'commText' )[0].setAttribute( 'placeholder', postReply );
 
@@ -172,6 +174,7 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 								} );
 							}
 							d.getElementById( 'wkArtComHeader' ).setAttribute( 'data-count', json.counter );
+							d.getElementsByClassName( 'comment-counter' )[0].innerText = json.counterMessage;
 						} else {
 							onFail();
 						}
@@ -283,11 +286,15 @@ require( ['throbber', 'toast', 'modal', 'track', 'JSMessages', 'lazyload', 'jque
 		} );
 
 	$( d.body )
-		.on( clickEvent, '.commFrm textarea', function(event){
+		.on( clickEvent, textAreaSel, function ( event ) {
 			if ( !loginRequired( event ) ) {
 				//scroll text area to top of the screen with small padding
 				window.scrollTo( 0, $( event.target ).offset().top - 5 );
+				$toc.addClass( 'hidden' );
 			}
+		} )
+		.on( 'blur', textAreaSel, function ( event ) {
+			$toc.removeClass( 'hidden' );
 		} )
 		.on( 'submit', '.commFrm', post );
 } );

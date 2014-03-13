@@ -324,9 +324,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'linksuggest-desc' => 'Sugere links para editor no modo de edição',
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
+	'tog-redirected-from' => '&ndash; redirecionado de $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -382,6 +385,13 @@ $messages['sv'] = array(
 	'linksuggest-desc' => 'Föreslår länkar till redigerarna i redigeringsvyn',
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'tog-redirected-from' => '&ndash; $1 నుండి దారిమార్పు చెందింది',
 );
 
 /** Thai (ไทย)
@@ -444,9 +454,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
  * @author Frankou
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(
+	'linksuggest-desc' => '在編輯畫面中提供編輯者一些鏈接建議',
 	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
+	'tog-redirected-from' => '&ndash;重定向自$1',
 );

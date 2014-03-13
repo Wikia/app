@@ -72,6 +72,13 @@ $messages['bho'] = array(
 	'adengine-exitstitial-button' => 'इ विज्ञापन के छोड़ चलीं',
 );
 
+/** Bengali (বাংলা)
+ * @author Tauhid16
+ */
+$messages['bn'] = array(
+	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -201,6 +208,16 @@ $messages['hak'] = array(
 	'adengine-exitstitial-button' => '跳過廣告',
 );
 
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'adengine-exitstitial-title-template' => 'Ke haʻalele nei mai $1...',
+	'adengine-exitstitial-redirecting' => 'E hāʻawi ana kāu polokalamu pūnaewele i ka ʻaoʻao āu  i noi ai ma kahi o kekahi mau kekona.',
+	'adengine-exitstitial-go-back' => 'Makemake e hoʻihoʻi?',
+	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
+);
+
 /** Hungarian (magyar)
  * @author Liteon
  */
@@ -218,6 +235,15 @@ $messages['id'] = array(
 	'adengine-exitstitial-redirecting' => 'Peramban Anda akan mengarahkan Anda ke halaman yang Anda minta dalam beberapa detik.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
+);
+
+/** Georgian (ქართული)
+ * @author GeorgeBarnick
+ */
+$messages['ka'] = array(
+	'adengine-exitstitial-title-template' => 'თქვენ ტოვებენ $1...',
+	'adengine-exitstitial-redirecting' => 'თქვენი ბრაუზერის გადამისამართება გაძლევთ თქვენს მიერ მოთხოვნილი გვერდი რამდენიმე წამში.',
+	'adengine-exitstitial-button' => 'გამოტოვოთ ეს რეკლამა',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -249,6 +275,16 @@ $messages['lb'] = array(
 	'adengine-exitstitial-redirecting' => 'Äre Browser leet Iecht an e puer Sekonnen op déi Säit virun déi Dir gefrot hutt.',
 	'adengine-exitstitial-go-back' => 'Wëllt Dir zréckgoen?',
 	'adengine-exitstitial-button' => 'Dës Reklamm iwwersprangen',
+);
+
+/** Lezghian (лезги)
+ * @author Lezgia
+ */
+$messages['lez'] = array(
+	'adengine-exitstitial-title-template' => 'Куь акъечlза', # Fuzzy
+	'adengine-exitstitial-redirecting' => 'Куь браузерди рукъурда тlaлабнай чъинал са кьве секудла',
+	'adengine-exitstitial-go-back' => 'Кlанзани хквез?',
+	'adengine-exitstitial-button' => 'Лугьунар ахъагъа',
 );
 
 /** لوری (لوری)
@@ -368,11 +404,12 @@ $messages['nl'] = array(
 
 /** Occitan (occitan)
  * @author Cedric31
+ * @author Hulothe
  */
 $messages['oc'] = array(
 	'adengine-exitstitial-title-template' => 'Sètz a mand de quitar $1…',
 	'adengine-exitstitial-redirecting' => 'Vòstre navigador vos redirigirà cap a la pagina demandada dins qualques segondas.',
-	'adengine-exitstitial-go-back' => 'Volètz tornar en arrièr ?',
+	'adengine-exitstitial-go-back' => 'Volètz tornar ?',
 	'adengine-exitstitial-button' => 'Passar aquesta publicitat',
 );
 
@@ -437,6 +474,16 @@ $messages['ru'] = array(
 	'adengine-exitstitial-button' => 'Пропустить это объявление',
 );
 
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'adengine-exitstitial-title-template' => "Ye'r leain $1…",
+	'adengine-exitstitial-redirecting' => 'Yer brouser will redirect ye til the page ye requested in ae few seiconts.',
+	'adengine-exitstitial-go-back' => 'Wish tae gae back?',
+	'adengine-exitstitial-button' => 'Pass ower this Ad',
+);
+
 /** Slovenian (slovenščina)
  * @author Mitja i
  */
@@ -477,6 +524,16 @@ $messages['szl'] = array(
 	'adengine-exitstitial-button' => 'Uodćepej reklama',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'adengine-exitstitial-title-template' => 'మీరు $1 ను వీడుతున్నారు…',
+	'adengine-exitstitial-redirecting' => 'కొద్ది సెకండ్లలో మీ విహారిణి మీరడిగిన పేజీకి తీసుకుపోతుంది.',
+	'adengine-exitstitial-go-back' => 'తిరిగి వెనక్కి వెళ్తారా?',
+	'adengine-exitstitial-button' => 'ఈ యాడ్‍ను దాటవెయ్యి',
+);
+
 /** Turkish (Türkçe)
  * @author Sabri Vatansever
  */
@@ -505,6 +562,14 @@ $messages['vi'] = array(
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
 	'adengine-exitstitial-button' => 'Bỏ qua các quảng cáo này',
+);
+
+/** Waray (Winaray)
+ * @author Harvzsf
+ */
+$messages['war'] = array(
+	'adengine-exitstitial-title-template' => 'Naíwas ka na han $1...',
+	'adengine-exitstitial-go-back' => '¿Karúyag mo bumálik?',
 );
 
 /** Chinese (中文)

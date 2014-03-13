@@ -567,6 +567,14 @@ $messages['de'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Dieses Bild soll $1 × $2 Pixel groß sein',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Dieses Bild soll $1 × $2 Pixel groß sein',
 	'manage-wikia-home-collection-add-file-button' => 'Ein Foto hinzufügen',
+	'manage-wikia-home-stats-header' => 'Unternehmens-Hauptseiten-Statistiken',
+	'manage-wikia-home-stats-text' => 'Diese Statistiken werden auf allen Unternehmenswebsites angezeigt ohne Trennung pro Sprache.',
+	'manage-wikia-home-stats-visitors-label' => 'Monatliche Besucher',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobile Besucher',
+	'manage-wikia-home-stats-edits-default-label' => 'Heutige-Änderungen-Fallback',
+	'manage-wikia-home-stats-total-pages-label' => 'Gesamtseiten-Fallback',
+	'manage-wikia-home-stats-success' => 'Statistiken erfolgreich aktualisiert!',
+	'manage-wikia-home-stats-failure' => 'Die Daten wurden nicht gespeichert. Bitte korrigiere Fehler im Formular und versuche es erneut.',
 );
 
 /** Greek (Ελληνικά)
@@ -675,6 +683,22 @@ $messages['es'] = array(
 	'manage-wikia-home-stats-failure' => 'No se guardaron los datos. Corrige los errores del formulario e inténtalo de nuevo.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Ez',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Bai',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Ez',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Bai',
+	'manage-wikia-home-wiki-list-official-no' => 'Ez',
+	'manage-wikia-home-wiki-list-official-yes' => 'Bai',
+	'manage-wikia-home-modal-button-no' => 'Ez',
+	'manage-wikia-home-modal-button-yes' => 'Bai',
+	'manage-wikia-home-modal-button-okay' => 'Ados',
+	'manage-wikia-home-collections-setup-save-button' => 'Gorde',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -696,6 +720,13 @@ $messages['fa'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'ذخیره',
 	'manage-wikia-home-collections-enabled-field-label' => 'فعال',
 	'manage-wikia-home-collections-name-field-label' => 'نام مجموعه',
+);
+
+/** Finnish (suomi)
+ * @author Konstaduck
+ */
+$messages['fi'] = array(
+	'manage-wikia-home-wikis-in-slots-total' => 'Paikkoja yhteensä: $1',
 );
 
 /** Faroese (føroyskt)
@@ -805,6 +836,14 @@ $messages['fr'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Cette image devrait faire $1px x $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Cette image devrait faire $1px x $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Ajouter une image',
+	'manage-wikia-home-stats-header' => 'Statistiques de la page d’accueil de l’entreprise',
+	'manage-wikia-home-stats-text' => 'Ces statistiques sont affichées sur tous les sites d’entreprise sans séparation par langue.',
+	'manage-wikia-home-stats-visitors-label' => 'Visiteurs mensuels',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% de visiteurs sur mobile',
+	'manage-wikia-home-stats-edits-default-label' => 'Secours des modifications du jour',
+	'manage-wikia-home-stats-total-pages-label' => 'Secours du total des pages',
+	'manage-wikia-home-stats-success' => 'Statistiques bien mises à jour !',
+	'manage-wikia-home-stats-failure' => 'Les données n’ont pas été enregistrées. Veuillez corriger les erreurs dans le formulaire et réessayer.',
 );
 
 /** Galician (galego)
@@ -935,6 +974,8 @@ $messages['lb'] = array(
 	'manage-wikia-home-modal-button-no' => 'Neen',
 	'manage-wikia-home-modal-button-yes' => 'Jo',
 	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
+	'manage-wikia-home-stats-visitors-label' => 'Visiteure pro Mount',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Visiteuren',
 );
 
 /** لوری (لوری)
@@ -1162,6 +1203,8 @@ $messages['nl'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author Jacenty359
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1233,6 +1276,10 @@ $messages['pl'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Obraz powinien mieć wymiary $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Dodaj obraz',
+	'manage-wikia-home-stats-visitors-label' => 'Użytkowników miesięcznie',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% odwiedzających z urządzeń mobilnych',
+	'manage-wikia-home-stats-success' => 'Statystyki zostały pomyślnie zaktualizowane',
+	'manage-wikia-home-stats-failure' => 'Dane nie zostały zapisane. Proszę popraw błędy w formularzu i spróbuj ponownie.',
 );
 
 /** Pashto (پښتو)
@@ -1438,6 +1485,14 @@ $messages['ru'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Это изображение должно быть $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Это изображение должно быть $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Добавить фотографию',
+	'manage-wikia-home-stats-header' => 'Статистика корпоративной главной страницы',
+	'manage-wikia-home-stats-text' => 'Эти статистические данные отображаются на всех корпоративных сайтах без разделения по языкам.',
+	'manage-wikia-home-stats-visitors-label' => 'Посетителей за месяц',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% мобильных посетителей',
+	'manage-wikia-home-stats-edits-default-label' => 'Возврат для сегодняшних изменений',
+	'manage-wikia-home-stats-total-pages-label' => 'Возврат для общего числа страниц',
+	'manage-wikia-home-stats-success' => 'Статистика успешно обновлена!',
+	'manage-wikia-home-stats-failure' => 'Данные не были сохранены. Пожалуйста, исправьте ошибки в форме и повторите попытку.',
 );
 
 /** Swedish (svenska)
@@ -1522,6 +1577,86 @@ $messages['sv'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Reservresurs för totala sidor',
 	'manage-wikia-home-stats-success' => 'Statistiken uppdaterades!',
 	'manage-wikia-home-stats-failure' => 'Data sparades inte. Var god korrigera felen i formuläret och försök igen.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'manage-wikia-home-wrong-rights' => 'మీరు లాగౌటై ఉండవచ్చు లేదా ఈ ప్రత్యేకపేజీని వాడేందుకు మీకు అనుమతులు లేకపోయి ఉండవచ్చు.',
+	'manage-wikia-home-collections-validation-error' => 'భద్రపరచడంలో ఏదో లోపం దొర్లింది. మీరు ఇచ్చినది ఏమిటో ఓసారి సరిచూడండి.',
+	'manage-wikia-home-change-button' => 'మార్చు',
+	'manage-wikia-home-wiki-name-filter' => 'వికీ పేరును టైపించడం మొదలు పెట్టండి, జాబితా చిన్నదైపోతూ ఉంటుంది:',
+	'manage-wikia-home-wiki-filter' => 'వడపోయి',
+	'manage-wikia-home-wiki-filter-reset' => 'తుడిచివేయి',
+	'manage-wikia-home-wiki-list-id' => 'ఐడీ',
+	'manage-wikia-home-wiki-list-headline' => 'వికీ పేరు',
+	'manage-wikia-home-wiki-list-blocked' => 'నిరోధించబడింది',
+	'manage-wikia-home-wiki-list-promoted' => 'పదోన్నతీకరించబడింది',
+	'manage-wikia-home-wiki-list-official' => 'అధికారికం',
+	'manage-wikia-home-wiki-list-collection' => 'సంకలనాలు',
+	'manage-wikia-home-wiki-list-blocked-no' => 'లేదు',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'ఔను',
+	'manage-wikia-home-wiki-list-promoted-no' => 'లేదు',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'ఔను',
+	'manage-wikia-home-wiki-list-official-no' => 'కాదు',
+	'manage-wikia-home-wiki-list-official-yes' => 'ఔను',
+	'manage-wikia-home-wiki-list-disabled-collection' => 'అచేతన సంకలనం',
+	'manage-wikia-home-wiki-list-all-collections' => 'సంకలనాలన్నీ',
+	'manage-wikia-home-modal-title' => 'వికీ స్థితిని మార్చండి',
+	'manage-wikia-home-modal-title-collection' => 'సంకలనంలో వికీని మార్చండి',
+	'manage-wikia-home-modal-content-add-collection' => 'ఈ వికీని సంకలనానికి చేర్చాలనుకుంటున్నారా?',
+	'manage-wikia-home-modal-content-remove-collection' => 'ఈ వికీని సంకలనం నుండి తీసెయ్యాలనుకుంటున్నారా?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'నిరోధించిన వికీలను సంకలనానికి చేర్చలేరు.',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'ఈ వికీ నిరోధించబడింది కాబట్టి ఇది సంకలనంలో ఉండకూడదు. అది సంకలనం నుండి తీసివెయ్యబడుతుంది.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'ఈ వికీ నిరోధించబడింది',
+	'manage-wikia-home-modal-content-removed-blocked-in-collection' => 'ఈ వికీ ప్రస్తుతం ఒక సంకలనంలో ఉంది కాబట్టి దీన్ని నిరోధించలేరు.',
+	'manage-wikia-home-modal-too-many-wikis-in-collection' => 'ఈ సంకలనంలో ఇక వికీలను చేర్చలేరు.',
+	'manage-wikia-home-modal-button-no' => 'వద్దు',
+	'manage-wikia-home-modal-button-yes' => 'ఔను',
+	'manage-wikia-home-modal-button-okay' => 'సరే',
+	'manage-wikia-home-collections-setup-header' => 'సంకలనాల ఏర్పాటు',
+	'manage-wikia-home-collections-setup-save-button' => 'భద్రపరచు',
+	'manage-wikia-home-collections-enabled-field-label' => 'సచేతనం',
+	'manage-wikia-home-collections-name-field-label' => 'సంకలనం పేరు',
+	'manage-wikia-home-collections-wikis-in-collection' => 'వికీలు: $2 లో$1',
+	'manage-wikia-home-collections-invalid-wikis-number' => 'ఈ సంకలనానికి {{PLURAL:$1|ఒక వికీ|$1 వికీలు}} చేర్చనంతవరకూ ఇది కార్పొరేటు మొదటిపేజీలో కనబడదు.',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'ఈ బొమ్మ పరిమాణం $1px × $2px ఉండాలి',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'ఈ బొమ్మ పరిమాణం $1px × $2px ఉండాలి',
+	'manage-wikia-home-collection-add-file-button' => 'ఓ ఫొటోను చేర్చు',
+	'manage-wikia-home-stats-header' => 'కార్పొరేటు మొదటి పేజీ గణాంకాలు',
+	'manage-wikia-home-stats-visitors-label' => 'నెలవారీ సందర్శకులు',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% మొబైలు సందర్శకులు',
+	'manage-wikia-home-stats-success' => 'గణాంకాలను జయప్రదంగా తాజాకరించాం!',
+	'manage-wikia-home-stats-failure' => 'డేటాను భద్రపరచలేదు. ఫారంలోని దోషాలను సవరించి మళ్ళీ ప్రయత్నించండి.',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'manage-wikia-home-wiki-list-blocked-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-official-no' => 'Hayır',
+	'manage-wikia-home-wiki-list-official-yes' => 'Evet',
+	'manage-wikia-home-wiki-list-all-collections' => 'Tüm koleksiyonlar',
+	'manage-wikia-home-modal-title' => "Wiki'nın durumunu değiştir",
+	'manage-wikia-home-modal-title-collection' => 'Wiki koleksiyonu düzenle',
+	'manage-wikia-home-modal-button-no' => 'Hayır',
+	'manage-wikia-home-modal-button-yes' => 'Evet',
+	'manage-wikia-home-modal-button-okay' => 'Tamam',
+	'manage-wikia-home-collections-setup-save-button' => 'Kaydet',
+	'manage-wikia-home-collections-enabled-field-label' => 'Etkin',
+	'manage-wikia-home-collections-name-field-label' => 'Koleksiyon adı',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'Sponsor URL',
+	'manage-wikia-home-collections-sponsor-image-field-label' => 'Sponsor görüntü',
+	'manage-wikia-home-collection-add-file-button' => 'Fotoğraf ekle',
+	'manage-wikia-home-stats-visitors-label' => 'Aylık ziyaretçiler',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Ziyaretçiler',
+	'manage-wikia-home-stats-success' => 'İstatistikler başarıyla güncelleştirildi!',
+	'manage-wikia-home-stats-failure' => 'Veri kaydedilmedi. Formdaki hataları düzenleyin ve tekrar deneyin.',
 );
 
 /** Ukrainian (українська)
@@ -1620,6 +1755,7 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Liuxinyu970226
  * @author Yfdyh000
  */
@@ -1631,6 +1767,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
 	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
 	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
+	'manage-wikia-home-collections-validation-error' => '保存中出错，请检查您输入的内容。',
 	'manage-wikia-home-change-button' => '更改',
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
 	'manage-wikia-home-wiki-filter' => '过滤器',

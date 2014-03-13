@@ -1,6 +1,5 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/opacity";
 
 $previewheight: 65px;
 $previewwidth: 250px;
@@ -121,10 +120,10 @@ $previewwidth: 250px;
 		margin-top: 15px;
 	}
 	#wordmark-shield {
-		@include opacity(75);
 		background: #FFF;
 		display: none;
 		left: 0;
+		opacity: .75;
 		position: absolute;
 		top: 0;
 	}

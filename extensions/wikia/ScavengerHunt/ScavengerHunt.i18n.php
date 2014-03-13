@@ -295,9 +295,17 @@ $messages['ar'] = array(
 	'scavengerhunt-form-error-article-hidden-image' => 'الرجاء إدخال كل عناوين الصور المخفية.',
 	'scavengerhunt-form-error-article-clue' => 'الرجاء إدخال كل المعلومات عن دليل المقالات.',
 	'scavengerhunt-form-error-clue' => 'الرجاء إدخال كل المعلومات عن رسالة مقالات الترحيب.',
+	'scavengerhunt-form-error-progressBarHintLabel-sprite-empty' => 'الرجاء تحديد أبعاد صحيحة لفكرة وسم العفريت.',
+	'scavengerhunt-form-error-startPopupSprite-sprite-empty' => 'أبعاد عفريت انبثاق البدأ غير صالحة',
+	'scavengerhunt-form-error-finishPopupSprite-sprite-empty' => 'أبعاد عفريت انبثاق الوداع غير صالحة',
+	'scavengerhunt-form-error-progressBarBackgroundSprite-sprite-empty' => 'أبعاد شريط تقدم العفريت غير صالح',
+	'scavengerhunt-form-error-progressBarExitSprite-sprite-empty' => 'مفتاح خروج شريط تقدم أبعاد العفريت غير صالح',
+	'scavengerhunt-form-error-article-spriteNotFound-sprite-empty' => 'الرجاء تحديد الأبعاد الصحيحة لأداة عفريت صيد السخام',
 	'scavengerhunt-form-error-no-sprite-image' => 'يرجى إعطاء المسار الكامل لملف الصورة',
+	'scavengerhunt-form-error-invalid-url' => 'الرجاء توفير عنوان URL صالح.',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
+	'scavengerhunt-entry-form-submit' => 'أرسل المدخلة',
 	'scavengerhunt-label-sprite-X' => 'موضع العنصر',
 	'scavengerhunt-game-has-been-deleted' => 'تم حذف لعبة الصيد',
 	'scavengerhunt-game-more-to-go' => 'مازال فقط #',
@@ -314,6 +322,7 @@ $messages['ar'] = array(
 	'scavengerhunt-label-clue-font' => 'زخارف الخط',
 	'scavengerhunt-label-article-congrats' => 'رسالة التهنئة',
 	'scavengerhunt-label-facebook' => 'مشاركة في الفيسبوك',
+	'scavengerhunt-editor-tip-facebook-description' => 'النص الذي سيُعرض في تبادل الرسائل',
 	'scavengerhunt-facebook-image' => 'صورة المشاركة في الفيسبوك',
 	'scavengerhunt-facebook-description' => 'نص المشاركة في الفيسبوك',
 );
@@ -663,10 +672,10 @@ $messages['diq'] = array(
 	'scavengerhunt-button-save' => 'Qeyd ke',
 	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
-	'scavengerhunt-button-delete' => 'Besterne',
+	'scavengerhunt-button-delete' => 'Bestere',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
 	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
-	'scavengerhunt-quit-game-button-cancel' => 'Bıterkne',
+	'scavengerhunt-quit-game-button-cancel' => 'Bıtexelne',
 	'scavengerhunt-label-entry-form-email' => 'E postay karberi',
 	'scavengerhunt-label-entry-form-username' => 'Nameyê Karberi',
 	'scavengerhunt-facebook-image' => 'Resimi Facebook de vıla ke',
@@ -2407,6 +2416,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  * @author Lvova
  * @author Volkov
@@ -2537,12 +2547,12 @@ $messages['ru'] = array(
 	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Этот текст является меткой на кнопке, которая направляет пользователя на страницу с первым элементом.',
 	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Это адрес страницы с первым элементом.',
 	'scavengerhunt-editor-tip-startPopupSprite' => 'Если нужно изображение в диалоговом окне начальной подсказки, то введите здесь координаты.',
-	'scavengerhunt-editor-tip-articleTitle' => 'Это расположение страницы с следующим элементом.',
+	'scavengerhunt-editor-tip-articleTitle' => 'Это расположение страницы со следующим элементом.',
 	'scavengerhunt-editor-tip-spriteNotFound' => 'Этот раздел определяет изображение для подсказки.',
 	'scavengerhunt-editor-tip-spriteInProgressBar' => 'В этом разделе определяется значок строки прогресса, появляющийся после того, как элемент был найден.',
 	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'В этом разделе определяется значок строки прогресса при наведении мышки.',
 	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'В этом разделе определяется значок строки прогресса появляющийся когда элемент еще не найден.',
-	'scavengerhunt-editor-tip-article-title' => 'Это расположение страницы с следующим элементом.',
+	'scavengerhunt-editor-tip-article-title' => 'Это расположение страницы со следующим элементом.',
 	'scavengerhunt-editor-tip-entry-form-title' => 'Это заголовок всплывающее диалоговое окно, которое появляется в конце охоты.',
 	'scavengerhunt-editor-tip-entry-form-text' => 'Это текст всплывающего диалогового окна, которое появляется в конце охоты.',
 	'scavengerhunt-editor-tip-entry-form-question' => 'Если вы хотите отобразить свободное текстовое поле для игроков для ответа на вопрос или комментарий, то пожалуйста, введите здесь текст. Если этого не требуется, оставьте это поле пустым.',
@@ -2736,13 +2746,14 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'scavengerhunt-list-header-name' => 'ఆట పేరు',
 	'scavengerhunt-list-header-actions' => 'చర్యలు',
 	'scavengerhunt-label-name' => 'పేరు:',
-	'scavengerhunt-label-article-title' => 'పుట శీర్షిక (ఏ వికీ నుండైనా వ్యాసపు శీర్షిక):',
+	'scavengerhunt-label-article-title' => 'పేజీ శీర్షిక (ఏ వికీలోదైనా వ్యాసపు URL):',
 	'scavengerhunt-button-save' => 'భద్రపరచు',
 	'scavengerhunt-button-delete' => 'తొలగించు',
 	'scavengerhunt-entry-form-name' => 'మీ పేరు:',

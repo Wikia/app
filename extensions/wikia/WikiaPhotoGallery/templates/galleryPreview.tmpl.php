@@ -5,7 +5,6 @@ if (in_array($borderColor, array('accent', 'color1'))) {
 	$borderColorCSS = " border-color: {$borderColor};";
 	if ($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
 }
-$extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaPhotoGalleryPreviewFeed';
 ?>
 <div class="wikia-gallery clearfix wikia-gallery-position-<?= $position ;?> wikia-gallery-spacing-<?= $spacing ;?> wikia-gallery-border-<?= $borderSize ;?> wikia-gallery-captions-<?= $captionsAlign ;?> wikia-gallery-caption-size-<?= $captionsSize ;?> WikiaPhotoGalleryPreview">
 	<?php
@@ -18,7 +17,7 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 				<div class="wikia-gallery-row">
 			<?php endif; ?>
 
-			<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= $image['placeholder'] ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : $extraClass ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
+			<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= $image['placeholder'] ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : 'WikiaPhotoGalleryPreviewDraggable' ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
 				<div class="thumb" style="height: <?= $maxHeight ;?>px;">
 					<div class="gallery-image-wrapper<?= !empty($borderColorClass) ? $borderColorClass : null;?>"
 						 style="position: relative; height: <?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;<?= (!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null ;?><?= !empty($borderColorCSS) ? $borderColorCSS : null;?>">
@@ -52,7 +51,7 @@ $extraClass = empty($fromFeed) ? ' WikiaPhotoGalleryPreviewDraggable' : ' WikiaP
 				</div>
 			<?php } ?>
 
-				<?php if (empty($fromFeed) && !$image['placeholder']) { ?>
+				<?php if (!$image['placeholder']) { ?>
 					<span class="WikiaPhotoGalleryPreviewItemMenu color1">
 						<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-modify') ?></a>
 						<a href="#"><?= wfMsg('WikiaPhotoGallery-preview-hover-delete')?></a>

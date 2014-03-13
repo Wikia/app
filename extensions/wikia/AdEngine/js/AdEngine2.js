@@ -1,4 +1,5 @@
 /*exported AdEngine2*/
+/*global define*/
 var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	'use strict';
 
@@ -32,6 +33,9 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 			function success(extra) {
 				log(['success', slotname, extra], 'debug', logGroup);
 				aSlotTracker.track('success');
+
+				// TODO: move this logic to AdProviderGptMobile (and ad_slots2.js:36)
+				slot[1] && slot[1](hop);
 			}
 
 			function hop(extra, hopTo) {
@@ -63,3 +67,5 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 	return {run: run};
 };
+
+define('ext.wikia.adengine.adengine', ['wikia.log', 'wikia.lazyqueue', 'ext.wikia.adengine.slottracker'], AdEngine2);

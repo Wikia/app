@@ -97,6 +97,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03649 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexCached() {
@@ -104,6 +106,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03315 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexNotCached( $cached = false ) {

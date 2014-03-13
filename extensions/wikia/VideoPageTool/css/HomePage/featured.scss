@@ -1,7 +1,6 @@
 @import 'skins/oasis/css/core/color';
 @import 'skins/oasis/css/mixins/box-sizing-border-box';
 @import 'skins/oasis/css/mixins/clearfix';
-@import 'skins/oasis/css/mixins/opacity';
 @import 'skins/oasis/css/mixins/transition';
 @import '../mixins/_sprite-VideoPageTool.scss';
 
@@ -13,11 +12,11 @@ $play-button-overlay-fade-duration: 400ms;
 @mixin transition-show-hide( $selector ) {
 	#{$selector} {
 		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
-		@include opacity(0);
+		opacity: 0;
 	}
 	&:hover #{$selector} {
-		@include opacity(100);
 		@include transition-shorthand(opacity $play-button-overlay-fade-duration ease-out);
+		opacity: 1;
 		visibility: visible;
 	}
 }
@@ -64,12 +63,12 @@ $play-button-overlay-fade-duration: 400ms;
 
 					// darken the image with 10% opacity per design request
 					&:after {
-						@include opacity(10);
 						background: black;
 						content: '';
 						display: block;
 						height: 100%;
 						left: 0;
+						opacity: .1;
 						position: absolute;
 						top: 0;
 						width: 100%;
@@ -139,18 +138,18 @@ $play-button-overlay-fade-duration: 400ms;
 				padding: 0 10px;
 				text-align: center;
 				.title {
-					@include opacity( 70 );
 					color: #FFF;
 					font-size: 14px;
 					line-height: 1.5em;
 					max-height: 3em;
+					opacity: .7;
 					text-align: left;
 					p {
 						margin: 0;
 					}
 				}
 				&:hover .title {
-					@include opacity( 100 );
+					opacity: 1;
 				}
 			}
 			a { // .video
@@ -167,12 +166,12 @@ $play-button-overlay-fade-duration: 400ms;
 
 				&.playing {
 					&:after {
-						@include opacity( 80 );
 						background: black;
 						content: '';
 						display: block;
 						height: 100%;
 						left: 0;
+						opacity: .8;
 						position: absolute;
 						top: 0;
 						width: 100%;

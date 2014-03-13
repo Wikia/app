@@ -105,6 +105,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 					$user->saveSettings();
 
+					$userLoginHelper->addNewUserLogEntry( $user );
+
 					// send welcome email
 					$emailParams = array(
 						'$USERNAME' => $user->getName(),

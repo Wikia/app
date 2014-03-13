@@ -197,6 +197,7 @@ $messages['ar'] = array(
 	'userrenametool-desc' => "يضيف [[Special:Renameuser|صفحة خاصة]] لإعادة تسمية مستخدم (يحتاج إلى صلاحية ''renameuser'')",
 	'userrenametool-old' => 'اسم المستخدم الحالي:',
 	'userrenametool-new' => 'اسم المستخدم الجديد:',
+	'userrenametool-encoded' => 'ترميز URL:',
 	'userrenametool-reason' => 'السبب لإعادة التسمية:',
 	'userrenametool-move' => 'انقل صفحات المستخدم ونقاشه (و الصفحات المتفرعة) إلى الاسم الجديد',
 	'userrenametool-reserve' => 'إمنع إستعمال الاسم القديم في المستقبل',
@@ -208,6 +209,7 @@ $messages['ar'] = array(
 	'userrenametool-phalanx-matches' => 'مطابقة مرشحات الفالانكس $1:',
 	'userrenametool-confirm' => 'نعم، أعد تسمية المستخدم',
 	'userrenametool-submit' => 'غيّر اسم المستخدم',
+	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof غير منصب.',
 	'userrenametool-errordoesnotexist' => 'لا يوجد مستخدم بالاسم "<nowiki>$1</nowiki>".',
 	'userrenametool-errorexists' => 'المستخدم "<nowiki>$1</nowiki>" موجود سابقاً.',
 	'userrenametool-errorinvalid' => 'اسم المستخدم "<nowiki>$1</nowiki>" غير صالح.',
@@ -217,6 +219,9 @@ $messages['ar'] = array(
 	'userrenametool-error-request' => 'حدثت مشكلة أثناء استقبال الطلب.
 من فضلك عد وحاول مرة ثانية.',
 	'userrenametool-error-same-user' => 'لا يمكنك إعادة تسمية مستخدم بنفس الاسم.',
+	'userrenametool-error-invalid-ip' => 'تم توفير عنوان آيبي غير صالح.',
+	'userrenametool-warnings-characters' => 'اسم المستخدم الجديد يحتوي على أحرف غير صالحة!',
+	'userrenametool-warnings-maxlength' => 'لا يمكن أن يتجاوز طول اسم المستخدم الجديد 255 حرف!',
 	'userrenametool-warn-table-missing' => 'الجدول "<nowiki>$2</nowiki>" غير موجود في قاعدة المعطيات "<nowiki>$1</nowiki>."',
 	'userrenametool-info-started' => '$1بدأت إعادة تسمية:  $2  إلى  $3  (سجلات:  $4 ).
 السبب: " $5 ".',
@@ -235,6 +240,7 @@ $messages['ar'] = array(
 السبب: $2',
 	'userrenametool-move-log' => 'نقل الصفحة تلقائيا خلال إعادة تسمية المستخدم من "[[User:$1|$1]]" إلى "[[User:$2|$2]]"',
 	'right-renameuser' => 'إعادة تسمية المستخدمين',
+	'action-renameuser' => 'أعد تسمية المستخدمين',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
@@ -1340,7 +1346,7 @@ $messages['fa'] = array(
 	'userrenametool-reason' => 'علت تغییر نام کاربری:',
 	'userrenametool-move' => 'صفحه کاربر و صفحه بحث کاربر (و زیر صفحه‌های آن‌ها) را به نام جدید انتقال بده',
 	'userrenametool-reserve' => 'نام کاربری قبلی را در مقابل استفادهٔ مجدد حفظ کن',
-	'userrenametool-notify-renamed' => 'ارسال پست الکترونیکی به کاربر تغییر نام داده شده، در هنگام اتمام کار.',
+	'userrenametool-notify-renamed' => 'ارسال رایانامه به کاربر تغییر نام داده شده، در هنگام اتمام کار.',
 	'userrenametool-warnings' => 'هشدار:',
 	'userrenametool-confirm' => 'بله، نام کاربر را تغییر بده',
 	'userrenametool-submit' => 'ثبت',
@@ -3066,7 +3072,7 @@ Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-phalanx-matches' => 'Phalanxfilters die overeenkomen met $1:',
 	'userrenametool-confirm' => 'Ja, hernoem de gebruiker',
 	'userrenametool-submit' => 'Hernoemen',
-	'userrenametool-error-antispoof-conflict' => 'Waarschuwing van AntiSpoof: er is al een gebruikersnaam die lijkt op <nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-conflict' => 'Waarschuwing van AntiSpoof: er is al een gebruikersnaam die lijkt op "<nowiki>$1</nowiki>".',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is niet geïnstalleerd.',
 	'userrenametool-errordoesnotexist' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat niet.',
 	'userrenametool-errorexists' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat al.',
@@ -4106,6 +4112,7 @@ $messages['su'] = array(
  * @author Boivie
  * @author Habj
  * @author Lejonel
+ * @author Lokal Profil
  * @author M.M.S.
  * @author Najami
  * @author Tobulos1
@@ -4144,7 +4151,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-errorbot' => 'Användare <nowiki>$1</nowiki> är en bot.',
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
-	'userrenametool-error-extension-abort' => 'En förlängning förhindrade namnbytningsprocessen.',
+	'userrenametool-error-extension-abort' => 'Ett tillägg förhindrade namnbytningsprocessen.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa ett Phalanx-block.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Oväntat fel uppstod, kolla loggarna eller försök igen.',
@@ -4194,7 +4201,7 @@ Anledning: $2',
  */
 $messages['te'] = array(
 	'renameuser' => 'వాడుకరి పేరుమార్చు',
-	'userrenametool-desc' => "వాడుకరి పేరు మార్చండి (''renameuser'' అన్న అధికారం కావాలి)",
+	'userrenametool-desc' => "వాడుకరి పేరు మార్చేందుకు ('వాడుకరిపేరుమార్చు'' హక్కు అవసరం), సంబంధిత డేటా అంతటినీ ప్రాసెస్ చేసేందుకు ఒక [[Special:UserRenameTool|ప్రత్యేక పేజీ]] ను చేరుస్తుంది",
 	'userrenametool-old' => 'ప్రస్తుత వాడుకరి పేరు:',
 	'userrenametool-new' => 'కొత్త వాడుకరి పేరు:',
 	'userrenametool-reason' => 'పేరు మార్చడానికి కారణం:',
@@ -4208,11 +4215,11 @@ $messages['te'] = array(
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" అనే వాడుకరిపేరు సరైనది కాదు.',
 	'userrenametool-errortoomany' => 'వాడుకరి "<nowiki>$1</nowiki>" $2 {{PLURAL:$2|రచన|రచనలు}} చేసారు. $3 కంటే ఎక్కువ {{PLURAL:$3|రచన|రచనలు}} చేసిన వాడుకరి పేరు మార్చడం వలన సైటు పనితీరుపై ప్రతికూల ప్రభావం పడగలదు.',
 	'userrenametool-error-request' => 'మీ అభ్యర్థనను స్వీకరించేటప్పుడు ఒక సమస్య తలెత్తింది. దయచేసి వెనక్కు వెళ్లి ఇంకోసారి ప్రయత్నించండి.',
-	'userrenametool-error-same-user' => 'సభ్యనామాన్ని ఇంతకు ముందు ఉన్న సభ్యనామంతోనే మార్చడం కుదరదు.',
-	'userrenametool-success' => '"<nowiki>$1</nowiki>" అనే సభ్యనామాన్ని "<nowiki>$2</nowiki>"గా మార్చేసాం.',
+	'userrenametool-error-same-user' => 'వాడుకరి పేరును అదే పేరుతో మార్చడం కుదరదు.',
+	'userrenametool-success' => '"<nowiki>$1</nowiki>" అనే వాడుకరి పేరును "<nowiki>$2</nowiki>"గా మార్చేసాం.',
 	'userrenametool-confirm-yes' => 'అవును',
 	'userrenametool-confirm-no' => 'కాదు',
-	'userrenametool-page-exists' => '$1 పేజీ ఇప్పటికే ఉంది, కాబట్టి ఆటోమాటిగ్గా దానిపై కొత్తపేజీని రుద్దడం కుదరదు.',
+	'userrenametool-page-exists' => '$1 పేజీ ఇప్పటికే ఉంది. దానిపై ఆటోమాటిగ్గా కొత్తపేజీని రుద్దడం కుదరదు.',
 	'userrenametool-page-moved' => '$1 పేజీని $2 పేజీకి తరలించాం.',
 	'userrenametool-page-unmoved' => '$1 పేజీని $2 పేజీకి తరలించలేక పోయాం.',
 	'userrenametool-logpage' => 'వాడుకరి పేరుమార్పుల చిట్టా',

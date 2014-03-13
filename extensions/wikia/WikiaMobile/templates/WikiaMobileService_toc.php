@@ -1,4 +1,4 @@
 <div id=wkTOC class=side-menu>
 	<header><?= wfMessage( 'wikiamobile-toc-header' )->plain() ?></header>
-	<div id=wkTOCHandle></div>
+	<img id=wkTOCHandle src="<?= $wg->ExtensionsPath ?>/wikia/WikiaMobile/images/toc-icon.png">
 </div>

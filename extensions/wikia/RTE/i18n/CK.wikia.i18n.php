@@ -1152,6 +1152,16 @@ $messages['es'] = array(
 	'rte-ck-format-tag_h5' => 'Encabezado 5',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'rte-ck-photoGallery-gallery' => 'Galeria',
+	'rte-ck-video-add' => 'Bideo bat gehitu',
+	'rte-ck-video-video' => 'Bideoa',
+	'rte-ck-video-confirmDeleteTitle' => 'Bideo hau ezabatu?',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -3568,14 +3578,16 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'వ్యాఖ్య',
 	'rte-ck-hoverPreview-delete' => 'తొలగించు',
+	'rte-ck-link-error-title' => 'లోపం',
 	'rte-ck-link-external-linkText' => 'లంకె పాఠ్యం',
 	'rte-ck-link-external-tab' => 'బయటి లంకె',
-	'rte-ck-link-internal-pageName' => 'పుట పేరు',
+	'rte-ck-link-internal-pageName' => 'పేజీ పేరు',
 	'rte-ck-link-internal-tab' => 'అంతర్గత లంకె',
 	'rte-ck-link-status-external' => 'బయటి లంకె',
 	'rte-ck-media-delete' => 'తొలగించు',

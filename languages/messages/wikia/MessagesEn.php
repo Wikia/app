@@ -570,8 +570,6 @@ hu',
 'widget-title-editedrecently' => 'Recently edited by',
 'widget-desc-editedrecently' => 'Displays a list of recent editors for any page you visit',
 'widget-title-featureduser' => 'Featured user',
-'widget-title-founderbadge' => 'Founder',
-'widget-desc-founderbadge' => "Display wiki founder's badge",
 'widget-title-languages' => 'Languages',
 'widget-desc-languages' => 'Lanaguages',
 'widget-title-lastwikis' => 'Last Wikis',
@@ -617,7 +615,6 @@ hu',
 'widget-categorycloud-blacklist-global' => 'Answered_questions, Un-answered_questions',
 'widget-categorycloud-blacklist' => '',
 'widget-categorycloud-empty' => '(No categories yet)',
-'widget-founderbadge-notavailable' => "(Wiki founder's badge is not available)",
 'widget-shoutbox-disabled' => 'The Shoutbox widget is disabled on this wiki.',
 
 #Wikia Widgets tooltips
@@ -897,8 +894,6 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # Button labels
 'button-createpage' => 'Add a Page',
-
-'wikianewfiles-title' => 'New photos on this wiki',
 
 # Hub names
 'hub-Entertainment' => 'Entertainment',

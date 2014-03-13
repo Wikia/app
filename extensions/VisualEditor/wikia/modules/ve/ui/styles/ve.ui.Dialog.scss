@@ -1,33 +1,39 @@
 @import "skins/oasis/css/core/color";
 
 
-.ve-ui-dialog .ve-ui-window-frame {
+.oo-ui-dialog .oo-ui-window-frame {
 	background: $color-page;
 	border-color: $color-page-border;
 }
 
-.ve-ui-window-title {
+.oo-ui-window-title {
 	color: $color-text;
 }
 
 @if $is-dark-wiki {
-	.ve-ui-window-head {
+	.oo-ui-window-head {
 		border-bottom: 1px solid $color-page-border;
 	}
 
-	.ve-ui-window-foot {
+	.oo-ui-window-foot {
 		border-top: 1px solid $color-page-border;
 	}
 }
 
-.ve-ui-pagedOutlineLayout-outlinePanel {
+.oo-ui-pagedOutlineLayout-outlinePanel {
 	border-color: $color-page-border;
 
-	.ve-ui-outlineControlsWidget {
+	.oo-ui-outlineControlsWidget {
 		border-top: 1px solid $color-page-border;
 	}
 }
 
-.ve-ui-dialog-content .ve-ui-window-body .ve-ui-surface {
-	border-color: $color-page-border;
+.oo-ui-dialog-content .oo-ui-window-body {
+	.ve-ui-surface {
+		border-color: $color-page-border;
+	}
+
+	.WikiaArticle {
+		overflow: visible;
+	}
 }

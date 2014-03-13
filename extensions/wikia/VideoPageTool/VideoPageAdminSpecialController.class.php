@@ -157,7 +157,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					$msg = wfMessage( 'videopagetool-success-publish' )->plain();
 					NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
 					$this->getContext()->getOutput()->redirect( $url );
-					return true;
+					return false;
 				}
 			// save assets
 			} else {
@@ -180,7 +180,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					if ( $status->isGood() ) {
 						$nextUrl = $helper->getNextMenuItemUrl( $leftMenuItems ).'&success=1';
 						$this->getContext()->getOutput()->redirect( $nextUrl );
-						return true;
+						return false;
 					} else {
 						$result = 'error';
 						$msg = $status->getMessage();
@@ -420,14 +420,14 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get video data
+	 * Get video data for a featured video
 	 * @requestParam string url
 	 * @requestParam string altThumbKey
 	 * @responseParam string result [ok/error]
 	 * @responseParam string msg - result message
 	 * @responseParam array video
 	 */
-	public function getVideoData() {
+	public function getFeaturedVideoData() {
 		$errMsg = '';
 		if ( !$this->validateUser( $errMsg ) ) {
 			$this->result = 'error';
@@ -448,8 +448,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
-			// Override defaults so we always show a lightbox in the admin pages
-			$thumbOptions = [ 'noLightbox' => false ];
+			// Use the default thumb options from Featured Assets since that's the only type of
+			// asset this controller returns.
+			$thumbOptions = VideoPageToolAssetFeatured::$defaultThumbOptions;
 			$helper = new VideoPageToolHelper();
 			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}
@@ -506,7 +507,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string categoryName
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
-	 * @responseParam array $videos - list of videos in the category
+	 * @responseParam array thumbnails - the list of videos in the category
+	 * @responseParam integer total - the number of videos in the category
+	 * @responseParam string url - the url of the category page
+	 * @responseParam string seeMoreLabel
 	 */
 	public function getVideosByCategory() {
 		$categoryName = $this->getVal( 'categoryName', '' );

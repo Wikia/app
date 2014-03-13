@@ -10,19 +10,19 @@
  *
  * @abstract
  * @class
- * @extends ve.ui.Tool
+ * @extends OO.ui.Tool
  * @constructor
- * @param {ve.ui.SurfaceToolbar} toolbar
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
-ve.ui.DialogTool = function VeUiDialogTool( toolbar, config ) {
+ve.ui.DialogTool = function VeUiDialogTool( toolGroup, config ) {
 	// Parent constructor
-	ve.ui.Tool.call( this, toolbar, config );
+	OO.ui.Tool.call( this, toolGroup, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.DialogTool, ve.ui.Tool );
+OO.inheritClass( ve.ui.DialogTool, OO.ui.Tool );
 
 /* Static Properties */
 
@@ -37,9 +37,19 @@ ve.inheritClass( ve.ui.DialogTool, ve.ui.Tool );
 ve.ui.DialogTool.static.dialog = '';
 
 /**
+ * Configuration options for setting up dialog.
+ *
+ * @abstract
+ * @static
+ * @property {Object}
+ * @inheritable
+ */
+ve.ui.DialogTool.static.config = {};
+
+/**
  * Annotation or node models this tool is related to.
  *
- * Used by #canEditModel.
+ * Used by #isCompatibleWith.
  *
  * @static
  * @property {Function[]}
@@ -50,7 +60,7 @@ ve.ui.DialogTool.static.modelClasses = [];
 /**
  * @inheritdoc
  */
-ve.ui.DialogTool.static.canEditModel = function ( model ) {
+ve.ui.DialogTool.static.isCompatibleWith = function ( model ) {
 	return ve.isInstanceOfAny( model, this.modelClasses );
 };
 
@@ -62,7 +72,18 @@ ve.ui.DialogTool.static.canEditModel = function ( model ) {
  * @method
  */
 ve.ui.DialogTool.prototype.onSelect = function () {
-	this.toolbar.getSurface().getDialogs().open( this.constructor.static.dialog );
+	ve.track( 'tool.dialog.select', {
+		name: this.constructor.static.name,
+		// HACK: which toolbar is this coming from?
+		// TODO: this should probably be passed into the config or something
+		toolbar: ( this.toolbar.constructor === ve.ui.Toolbar ? 'surface' : 'target' )
+	} );
+	this.toolbar.getSurface().execute(
+		'dialog',
+		'open',
+		this.constructor.static.dialog,
+		this.constructor.static.config
+	);
 	this.setActive( false );
 };
 

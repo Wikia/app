@@ -233,9 +233,12 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'places' => 'Paikkoja tässä wikissä',
+	'places-in-category' => 'Paikat luokassa $1',
 	'places-editor-search' => 'Etsi',
 	'places-editor-title-create-new' => 'Lisää paikkatunniste',
 	'places-editor-title-edit' => 'Muokkaa paikkatunnistetta',
@@ -395,7 +398,7 @@ $messages['lrc'] = array(
  */
 $messages['mk'] = array(
 	'places' => 'Места на ова вики',
-	'places-desc' => 'Дава парсерски куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
+	'places-desc' => 'Дава расчленувачки куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
 	'places-in-category' => 'Места во $1 категорија',
 	'places-on-map' => '{{PLURAL:$1|$1 место|$1 места}} на картава',
 	'places-modal-go-to-special' => 'Приказ на {{PLURAL:$1|$1 место|$1 места}} ([[Special:Places|погл. сите]])',
@@ -685,11 +688,12 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  */
 $messages['te'] = array(
 	'places-editor-search' => 'వెతుకు',
-	'places-editor-show-my-location' => 'నన్ను నా ప్రాంతానికి తీసుకువెళ్ళు',
+	'places-editor-show-my-location' => 'నన్ను నా స్థలానికి తీసుకువెళ్ళు',
 	'places-geolocation-button-label' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-add-title' => 'ప్రాంతాన్ని చేర్చు',
 	'places-geolocation-modal-error-title' => 'లోపం',

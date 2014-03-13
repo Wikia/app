@@ -13,6 +13,8 @@ class VideoEmbedToolTest extends BaseTest
 	const CLASSNAME = 'Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool';
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09861 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQuery
 	 */
 	public function testGetQuery() {
@@ -56,6 +58,8 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09794 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTransformedQuery
 	 * @dataProvider queryProvider
 	 */
@@ -91,6 +95,8 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09934 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryWithTopics() {
@@ -122,6 +128,8 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09852 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getTopicsAsQuery
 	 */
 	public function testGetTopicsAsQueryNoTopics() {
@@ -164,6 +172,8 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09852 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getQueryClausesString
 	 */
 	public function testGetQueryClausesString() {
@@ -194,6 +204,8 @@ class VideoEmbedToolTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10235 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoEmbedTool::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {

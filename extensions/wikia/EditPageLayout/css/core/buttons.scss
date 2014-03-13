@@ -1,9 +1,9 @@
 .EditPage {
 	.cke_button {
 		> a {
-			@include border-radius(4px);
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
+			border-radius: 4px;
 			cursor: default;
 			display: inline-block;
 			float: left;
@@ -42,7 +42,7 @@
 		}
 		&.cke_disabled {
 			> a {
-				@include opacity(20);
+				opacity: .2;
 				zoom: 1; /* IE fix to make opacity work */
 			}
 		}
@@ -160,17 +160,17 @@
 			position: relative;
 		}
 		.cke_icon:after {
-			@include border-radius-nw(3px);
-			@include border-radius-ne(3px);
-			position: absolute;
-			content: 'BETA';
 			background-color: #ff8080; /* for IE8 */
 			background-color: rgba(255,0,0,0.4);
-			left: -2px;
-			top: -4px;
-			text-align: center;
-			width: 53px;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
 			color: $color-page;
+			content: 'BETA';
+			left: -2px;
+			position: absolute;
+			text-align: center;
+			top: -4px;
+			width: 53px;
 		}
 	}
 	.RTEPollButton.cke_button_big .cke_icon {

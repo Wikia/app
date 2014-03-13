@@ -140,7 +140,7 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 
 function wfCreatePageAjaxGetDialog() {
 	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript,
-	$wgEnableVideoToolExt, $wgEnableVisualEditorExt;
+	$wgEnableVideoToolExt, $wgEnableVisualEditorUI;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -196,7 +196,7 @@ function wfCreatePageAjaxGetDialog() {
 	}
 
 	$template->set_vars( array(
-			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ) || !empty( $wgEnableVisualEditorExt ),
+			'useFormatOnly' => !empty( $wgWikiaCreatePageUseFormatOnly ),
 			'options' => $options,
 			'type' => $listtype
 		)

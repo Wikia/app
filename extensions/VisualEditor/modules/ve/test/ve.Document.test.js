@@ -14,7 +14,7 @@ ve.DocumentStub = function VeDocumentStub( documentNode ) {
 	ve.Document.call( this, documentNode );
 };
 
-ve.inheritClass( ve.DocumentStub, ve.Document );
+OO.inheritClass( ve.DocumentStub, ve.Document );
 
 /* Tests */
 

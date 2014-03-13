@@ -107,6 +107,14 @@ $messages['es'] = array(
 	'paginator-back' => 'Atrás',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'paginator-next' => 'Hurrengoa',
+	'paginator-back' => 'Atzera',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -338,6 +346,14 @@ $messages['sw'] = array(
 $messages['ta'] = array(
 	'paginator-next' => 'அடுத்து',
 	'paginator-back' => 'பின் செல்',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'paginator-next' => 'తరువాతి',
+	'paginator-back' => 'వెనక్కి',
 );
 
 /** Tagalog (Tagalog)

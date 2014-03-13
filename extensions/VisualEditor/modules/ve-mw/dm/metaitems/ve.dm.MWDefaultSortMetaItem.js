@@ -20,7 +20,7 @@ ve.dm.MWDefaultSortMetaItem = function VeDmMWDefaultSortMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWDefaultSortMetaItem, ve.dm.MetaItem );
+OO.inheritClass( ve.dm.MWDefaultSortMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 

@@ -93,11 +93,24 @@ $messages['es'] = array(
 	'performancestat-cpu' => 'CPU: $1s',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'performancestat-total' => 'Guztira: $1s',
+	'performancestat-apache' => 'Apache: $1s',
+	'performancestat-cpu' => 'CPU: $1s',
+);
+
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'showperformancestats-desc' => 'Palauttaa luettavia tehokkuustilastoja',
 	'performancestat-total' => 'Yhteensä: $1 s',
+	'performancestat-apache' => 'Apache: $1 sek',
+	'performancestat-cpu' => 'CPU: $1 sek',
 );
 
 /** Faroese (føroyskt)

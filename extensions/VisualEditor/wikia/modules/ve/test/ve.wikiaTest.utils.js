@@ -116,6 +116,18 @@ ve.wikiaTest = ( function () {
 		return testCases;
 	};
 
+	/**
+	 * Uppercase the first letter in a string.
+	 *
+	 * @method
+	 * @static
+	 * @param {String} str The string.
+	 * @returns {String} The string with the first letter uppercased.
+	 */
+	utils.ucFirst = function ( str ) {
+		return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
+	};
+
 	/* Media Utils */
 
 	utils.media = {};
@@ -162,7 +174,7 @@ ve.wikiaTest = ( function () {
 			nodeView.setFocused( false );
 
 			assert.equalDomStructure(
-				nodeView.$,
+				nodeView.$element,
 				getHtml( current ),
 				'Built with attributes: ' + utils.getObjectDescription( current )
 			);
@@ -219,7 +231,7 @@ ve.wikiaTest = ( function () {
 		nodeView.setFocused( false );
 
 		assert.equalDomStructure(
-			nodeView.$,
+			nodeView.$element,
 			getHtml( previous ),
 			'Starting with attributes: ' + utils.getObjectDescription( previous )
 		);
@@ -237,8 +249,10 @@ ve.wikiaTest = ( function () {
 				)
 			);
 
+			nodeView.$element.removeClass( 've-ce-generatedContentNode-generating' );
+
 			assert.equalDomStructure(
-				nodeView.$,
+				nodeView.$element,
 				getHtml( merged ),
 				'Attributes changed: ' + utils.getObjectDescription( diff )
 			);

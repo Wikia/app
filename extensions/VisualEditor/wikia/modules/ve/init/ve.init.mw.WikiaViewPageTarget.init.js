@@ -9,7 +9,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack, Wikia */
 
 /**
  * Platform preparation for the MediaWiki view page. This loads (when user needs it) the
@@ -21,7 +21,60 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [];
+		plugins = [], veUIEnabled,
+		// Used by tracking calls that go out before ve.track is available.
+		trackerConfig = {
+			'category': 'editor-ve',
+			'trackingMethod': 'both'
+		},
+		indicatorTimeoutId = null;
+
+	function initIndicator() {
+		var $indicator = $( '<div>' )
+				.addClass( 've-indicator visible' )
+				.attr( 'data-type', 'loading' ),
+			$content = $( '<div>' ).addClass( 'content' ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
+			$message = $( '<p>' )
+				.addClass( 'message' )
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
+
+		$content
+			.append( $icon )
+			.append( $message );
+
+		$indicator
+			.append( $content )
+			.appendTo( $( 'body' ) )
+			.css( 'opacity', 1 )
+			.hide();
+
+		// Cleanup indicator when hook is fired
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( indicatorTimeoutId ) {
+				clearTimeout( indicatorTimeoutId );
+				indicatorTimeoutId = null;
+			}
+			if ( $indicator.is( ':visible' ) ) {
+				$indicator.fadeOut( 400 );
+			}
+		} );
+	}
+
+	function showIndicator() {
+		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
+			$message = $indicator.find( 'p.message' );
+
+		$message.hide();
+		$indicator.fadeIn( 400 );
+
+		// Display a message if loading is taking longer than 3 seconds
+		indicatorTimeoutId = setTimeout( function () {
+			if ( $indicator.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
+		}, 3000 );
+	}
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -29,29 +82,34 @@
 	 */
 	function getTarget() {
 		var loadTargetDeferred;
+
+		showIndicator();
+
 		if ( !getTargetDeferred ) {
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+				'label': 'edit-page'
+			} );
 			getTargetDeferred = $.Deferred();
-			loadTargetDeferred = $.Deferred()
-				.done( function () {
-					//var target = new ve.init.mw.ViewPageTarget();
-					var target = new ve.init.mw.WikiaViewPageTarget();
-					ve.init.mw.targets.push( target );
+			loadTargetDeferred = $.Deferred();
 
-					// Transfer methods
-					//ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+			$.when(
+				loadTargetDeferred,
+				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
+			).done( function () {
+				var target = new ve.init.mw.WikiaViewPageTarget();
+				ve.init.mw.targets.push( target );
 
-					// Add plugins
-					target.addPlugins( plugins );
+				// Transfer methods
+				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 
-					getTargetDeferred.resolve( target );
-				} )
-				.fail( getTargetDeferred.reject );
+				// Add plugins
+				target.addPlugins( plugins );
+
+				getTargetDeferred.resolve( target );
+			} ).fail( getTargetDeferred.reject );
 
 			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
-			$.getResources( [
-				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' )
-			] );
 		}
 		return getTargetDeferred.promise();
 	}
@@ -62,12 +120,13 @@
 	// For special pages, no information about page existence is exposed to
 	// mw.config, so we assume it exists TODO: fix this in core.
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
-	viewUri = new mw.Uri( mw.util.wikiGetlink( mw.config.get( 'wgRelevantPageName' ) ) );
+	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 
 	support = {
 		es5: !!(
@@ -92,25 +151,11 @@
 	};
 
 	init = {
+		activateOnPageLoad: uri.query.veaction === 'edit',
 
 		support: support,
 
-		blacklist: {
-			// IE <= 8 has various incompatibilities in layout and feature support
-			// IE9 and IE10 generally work but fail in ajax handling when making POST
-			// requests to the VisualEditor/Parsoid API which is causing silent failures
-			// when trying to save a page (bug 49187)
-			'msie': [['<=', 10]],
-			// Android 2.x and below "support" CE but don't trigger keyboard input
-			'android': [['<', 3]],
-			// Firefox issues in versions 12 and below (bug 50780)
-			// Wikilink [[./]] bug in Firefox 14 and below (bug 50720)
-			'firefox': [['<=', 14]],
-			// Opera < 12 was not tested and it's userbase is almost nonexistent anyway
-			'opera': [['<', 12]],
-			// Blacklist all versions:
-			'blackberry': null
-		},
+		blacklist: conf.blacklist,
 
 		/**
 		 * Add a plugin module or function.
@@ -154,7 +199,9 @@
 		setupSkin: function () {
 			if ( isViewPage ) {
 				init.setupTabs();
-				init.setupSectionLinks();
+				if ( veUIEnabled ) {
+					init.setupSectionLinks();
+				}
 			}
 		},
 
@@ -172,26 +219,60 @@
 			// (e.g. not middle click or right click) and no modifier keys
 			// (e.g. cmd-click to open in new tab).
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-edit'
+			} );
+
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditTabClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'edit-link-click' } );
 				target.activate();
 			} );
 		},
 
 		onEditSectionLinkClick: function ( e ) {
 			if ( ( e.which && e.which !== 1 ) || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey ) {
+				if ( window.veTrack ) {
+					veTrack( {
+						action: 've-edit-page-ignored',
+						trigger: 'onEditTabClick'
+					} );
+				}
 				return;
 			}
 
 			e.preventDefault();
 
+			Wikia.Tracker.track( trackerConfig, {
+				'action': Wikia.Tracker.ACTIONS.CLICK,
+				'category': 'article',
+				'label': 've-section-edit'
+			} );
+
+			if ( window.veTrack ) {
+				veTrack( {
+					action: 've-edit-page-start',
+					trigger: 'onEditSectionLinkClick'
+				} );
+			}
 			getTarget().done( function ( target ) {
-				ve.track( 'Edit', { action: 'section-edit-link-click' } );
 				target.saveEditSection( $( e.target ).closest( 'h1, h2, h3, h4, h5, h6' ).get( 0 ) );
 				target.activate();
 			} );
@@ -270,10 +351,13 @@
 	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
 
 	if ( !thisPageIsAvailable ) {
-		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
-		$edit.parent().remove();
+		$veEdit = $( '#ca-ve-edit' );
+		if ( $veEdit.length > 0 ) {
+			$edit = $( '#ca-edit' );
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			$edit.parent().remove();
+		}
 	} else {
 		$( 'html' ).addClass( 've-available' );
 	}
@@ -285,7 +369,13 @@
 	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
-				if ( uri.query.veaction === 'edit' ) {
+				if ( init.activateOnPageLoad ) {
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
 					getTarget().done( function ( target ) {
 						target.activate();
 					} );
@@ -295,12 +385,18 @@
 		} );
 	}
 
+	initIndicator();
+
 	// Redlinks
-	$( function () {
+	if ( veUIEnabled ) {
+		$( setupRedlinks );
+	}
+
+	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
 			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function () {
+			function() {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
@@ -311,5 +407,5 @@
 				}
 			}
 		);
-	} );
+	}
 }() );

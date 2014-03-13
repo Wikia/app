@@ -108,7 +108,7 @@ class WikiaHomePageController extends WikiaController {
 
 	public function footer() {
 		$this->response->addAsset('extensions/wikia/WikiaHomePage/js/CorporateFooterTracker.js');
-		$this->interlang = HubService::isCorporatePage();
+		$this->interlang = WikiaPageType::isCorporatePage();
 
 		$corporateWikis = $this->helper->getVisualizationWikisData();
 		$this->selectedLang = $this->wg->ContLang->getCode();
@@ -219,6 +219,7 @@ class WikiaHomePageController extends WikiaController {
 					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
 						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
 						$processedCollection['name'] = $collection['name'];
+						$processedCollection['id'] = $collection['id'];
 
 						if (!empty($collection['sponsor_hero_image'])) {
 							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
@@ -231,7 +232,7 @@ class WikiaHomePageController extends WikiaController {
 						if (!empty($collection['sponsor_url'])) {
 							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
 						}
-						$collectionsBatches[$collection['id']] = $processedCollection;
+						$collectionsBatches[] = $processedCollection;
 					}
 				}
 			}
@@ -515,6 +516,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @responseParam array wikiInfo
 	 */
 	public function getInterstitial() {
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 		$wikiId = $this->request->getVal('wikiId', 0);
 		$domain = $this->request->getVal('domain', null);
 

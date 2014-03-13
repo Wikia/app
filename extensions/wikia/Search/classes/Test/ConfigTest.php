@@ -23,6 +23,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07082 ms
 	 * @covers \Wikia\Search\Config::__construct
 	 */
 	public function testConstructor() {
@@ -37,6 +39,8 @@ class ConfigTest extends BaseTest {
 
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07158 ms
 	 * @covers \Wikia\Search\Config::getSort
 	 * @covers \Wikia\Search\Config::setSort
 	 */
@@ -79,6 +83,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0741 ms
 	 * @covers \Wikia\Search\Config::hasArticleMatch
 	 * @covers \Wikia\Search\Config::setArticleMatch
 	 * @covers \Wikia\Search\Config::getArticleMatch
@@ -126,6 +132,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0722 ms
 	 * @covers \Wikia\Search\Config::hasArticleMatch
 	 * @covers \Wikia\Search\Config::setArticleMatch
 	 * @covers \Wikia\Search\Config::getArticleMatch
@@ -170,6 +178,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07421 ms
 	 * @covers Wikia\Search\Config::articleMatchPassesFilters
 	 */
 	public function testArticleMatchPassesFiltersImageInVideoFilter() {
@@ -211,6 +221,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0731 ms
 	 * @covers Wikia\Search\Config::articleMatchPassesFilters
 	 */
 	public function testArticleMatchPassesFiltersVideoInImageFilter() {
@@ -253,6 +265,8 @@ class ConfigTest extends BaseTest {
 	
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07283 ms
 	 * @covers \Wikia\Search\Config::hasWikiMatch
 	 * @covers \Wikia\Search\Config::setWikiMatch
 	 * @covers \Wikia\Search\Config::getWikiMatch
@@ -298,6 +312,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07752 ms
 	 * @covers \Wikia\Search\Config::getInterWiki
 	 * @covers \Wikia\Search\Config::setInterWiki
 	 * @covers \Wikia\Search\Config::setVideoSearch
@@ -358,6 +374,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07596 ms
 	 * @covers \Wikia\Search\Config::getTruncatedResultsNum
 	 */
 	public function testGetTruncatedResultsNum() {
@@ -445,6 +463,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07473 ms
 	 * @covers \Wikia\Search\Config::getNumPages
 	 */
 	public function testGetNumPagesNoResults() {
@@ -462,6 +482,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07363 ms
 	 * @covers \Wikia\Search\Config::getNumPages
 	 */
 	public function testGetNumPagesWithResults() {
@@ -485,6 +507,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07442 ms
 	 * @covers \Wikia\Search\Config::getCityId
 	 * @covers \Wikia\Search\Config::setCityID
 	 */
@@ -513,6 +537,36 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @covers \Wikia\Search\Config::getMainPage
+	 * @covers \Wikia\Search\Config::setMainPage
+	 */
+	public function testSetMainPage() {
+		$config = $this->getMock( '\\Wikia\\Search\\Config', [ 'setMainPage', 'getMainPage' ] );
+
+		$config
+			->expects( $this->once() )
+			->method ( 'getMainPage' )
+			->will   ( $this->returnValue( true ) )
+		;
+		$this->assertEquals(
+			true,
+			$config->getMainPage()
+		);
+		$config
+			->expects( $this->once() )
+			->method ( 'setMainPage' )
+			->with   ( true )
+			->will   ( $this->returnValue( $config ) )
+		;
+		$this->assertEquals(
+			$config,
+			$config->setMainPage( true )
+		);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.18868 ms
 	 * @covers \Wikia\Search\Config::getSearchProfiles
 	 */
 	public function testGetSearchProfiles() {
@@ -552,6 +606,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07765 ms
 	 * @covers \Wikia\Search\Config::getActiveTab
 	 */
 	public function testGetActiveTab() {
@@ -606,6 +662,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07724 ms
 	 * @covers \Wikia\Search\Config::setFilterQuery
 	 * @covers \Wikia\Search\Config::setFilterQueries
 	 * @covers \Wikia\Search\Config::getFilterQueries
@@ -744,6 +802,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07581 ms
 	 * @covers \Wikia\Search\Config::getRequestedFields
 	 */
 	public function testGetRequestedFields() {
@@ -760,6 +820,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07465 ms
 	 * @covers \Wikia\Search\Config::getPublicFilterKeys
 	 */
 	public function testGetPublicFilterKeys() {
@@ -776,6 +838,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07419 ms
 	 * @covers \Wikia\Search\Config::hasFilterQueries
 	 */
 	public function testHasFilterQueries() {
@@ -790,6 +854,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07694 ms
 	 * @covers \Wikia\Search\Config::setQuery
 	 * @covers \Wikia\Search\Config::getQuery
 	 */
@@ -838,6 +904,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07311 ms
 	 * @covers \Wikia\Search\Config::getNamespaces
 	 * @todo mock better
 	 */
@@ -858,6 +926,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07538 ms
 	 * @covers \Wikia\Search\Config::getQuery
 	 */
 	public function testGetQuery() {
@@ -884,6 +954,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07579 ms
 	 * @covers Wikia\Search\Config::getWikiId
 	 */
 	public function testGetWikiIdDefault() {
@@ -922,6 +994,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07413 ms
 	 * @covers Wikia\Search\Config::setWikiId
 	 * @covers Wikia\Search\Config::getWikiId
 	 */
@@ -944,6 +1018,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07462 ms
 	 * @covers Wikia\Search\Config::getLanguageCode
 	 * @covers Wikia\Search\Config::setLanguageCode
 	 */
@@ -996,6 +1072,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0725 ms
 	 * @covers Wikia\Search\Config::setLimit
 	 * @covers Wikia\Search\Config::getLimit
 	 */
@@ -1032,6 +1110,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07239 ms
 	 * @covers Wikia\Search\Config::setPage
 	 * @covers Wikia\Search\Config::getPage
 	 */
@@ -1058,6 +1138,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07962 ms
 	 * @covers Wikia\Search\Config::getRank
 	 * @covers Wikia\Search\Config::setRank
 	 */
@@ -1088,37 +1170,41 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07653 ms
 	 * @covers Wikia\Search\Config
 	 */
 	public function testSetGetABTestGroup() {
 		$config = new Config;
 		$this->assertAttributeEmpty(
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertEquals(
 				$config,
-				$config->setABTestGroup( 'A' )
+				$config->setBoostGroup( 'A' )
 		);
 		$this->assertAttributeEquals(
 				'A',
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertEquals(
 				'A',
-				$config->getABTestGroup()
+				$config->getBoostGroup()
 		);
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07502 ms
 	 * @covers Wikia\Search\Config::getTestProfile
 	 * @covers Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileNotSet() {
 		$config = new Config;
 		$this->assertAttributeEmpty(
-				'ABTestGroup',
+				'boostGroup',
 				$config
 		);
 		$this->assertInstanceOf(
@@ -1129,12 +1215,14 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07379 ms
 	 * @covers Wikia\Search\Config::getTestProfile
 	 * @covers Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileExplicitBase() {
 		$config = new Config;
-		$config->setABTestGroup( 'Base' );
+		$config->setBoostGroup( 'Base' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\Base',
 				$config->getTestProfile(),
@@ -1144,12 +1232,14 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07386 ms
 	 * @covers Wikia\Search\Config::getTestProfile
 	 * @covers Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileWithTestGroup() {
 		$config = new Config;
-		$config->setABTestGroup( 'A' );
+		$config->setBoostGroup( 'A' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\GroupA',
 				$config->getTestProfile(),
@@ -1158,12 +1248,14 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07465 ms
 	 * @covers Wikia\Search\Config::getTestProfile
 	 * @covers Wikia\Search\Config::initiateTestProfile
 	 */
 	public function testGetTestProfileNonexistentTestGroup() {
 		$config = new Config;
-		$config->setABTestGroup( 'THIS_AINT_NO_TEST_GROUP' );
+		$config->setBoostGroup( 'THIS_AINT_NO_TEST_GROUP' );
 		$this->assertInstanceOf(
 				'Wikia\Search\TestProfile\Base',
 				$config->getTestProfile(),
@@ -1172,6 +1264,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07421 ms
 	 * @covers Wikia\Search\Config::setStart
 	 * @covers Wikia\Search\Config::getStart
 	 */
@@ -1192,8 +1286,55 @@ class ConfigTest extends BaseTest {
 				$config->getStart()
 		);
 	}
-	
+
 	/**
+	 * @covers Wikia\Search\Config::setMinArticleQuality
+	 * @covers Wikia\Search\Config::getMinArticleQuality
+	 */
+	public function testGetMinArticleQuality() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setMinArticleQuality( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'minArticleQuality',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getMinArticleQuality()
+		);
+	}
+
+
+	/**
+	 * @covers Wikia\Search\Config::setPageId
+	 * @covers Wikia\Search\Config::getPageId
+	 */
+	public function testSetPageId() {
+		$val = 13; // could never be our default start
+		$config = new Config();
+		$this->assertEquals(
+			$config,
+			$config->setPageId( $val )
+		);
+		$this->assertAttributeEquals(
+			$val,
+			'pageId',
+			$config
+		);
+		$this->assertEquals(
+			$val,
+			$config->getPageId()
+		);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07426 ms
 	 * @covers Wikia\Search\Config::setMinimumMatch
 	 * @covers Wikia\Search\Config::getMinimumMatch
 	 */
@@ -1216,6 +1357,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07702 ms
 	 * @covers Wikia\Search\Config::getLength
 	 */
 	public function testGetLengthWithMatch() {
@@ -1261,6 +1404,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07548 ms
 	 * @covers Wikia\Search\Config::getNamespaces
 	 */
 	public function testGetNamespacesLazyLoad() {
@@ -1301,6 +1446,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07538 ms
 	 * @covers Wikia\Search\Config::getNamespaces
 	 */
 	public function testGetNamespacesWithQueryNamespace() {
@@ -1333,6 +1480,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07537 ms
 	 * @covers Wikia\Search\Config::setRank
 	 * @covers Wikia\Search\Config::getRank
 	 * @covers Wikia\Search\Config::getSort
@@ -1369,6 +1518,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07327 ms
 	 * @covers Wikia\Search\Config::setRequestedFields
 	 */
 	public function testSetRequestedFields() {
@@ -1386,6 +1537,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07447 ms
 	 * @covers Wikia\Search\Config::setRank
 	 */
 	public function testSetRankBadRankName() {
@@ -1403,6 +1556,8 @@ class ConfigTest extends BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07418 ms
 	 * @covers Wikia\Search\Config::setHub
 	 * @covers Wikia\Search\Config::getHub
 	 */
@@ -1425,6 +1580,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07394 ms
 	 * @covers Wikia\Search\Config::setAdvanced
 	 * @covers Wikia\Search\Config::getAdvanced
 	 */
@@ -1446,6 +1603,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07453 ms
 	 * @covers Wikia\Search\Config::setError
 	 * @covers Wikia\Search\Config::getError
 	 */
@@ -1470,6 +1629,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07416 ms
 	 * @covers Wikia\Search\Config::setSkipBoostFunctions
 	 * @covers Wikia\Search\Config::getSkipBoostFunctions
 	 */
@@ -1491,6 +1652,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07473 ms
 	 * @covers Wikia\Search\Config::setQueryService
 	 */
 	public function testSetQueryServiceNonExistentClass() {
@@ -1539,6 +1702,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0772 ms
 	 * @covers Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceDefault() {
@@ -1573,6 +1738,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0758 ms
 	 * @covers Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceVideo() {
@@ -1607,6 +1774,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07578 ms
 	 * @covers Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceInterWiki() {
@@ -1641,6 +1810,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07476 ms
 	 * @covers Wikia\Search\Config::getQueryService
 	 */
 	public function testGetQueryService() {
@@ -1666,6 +1837,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07508 ms
 	 * @covers Wikia\Search\Config::getService
 	 */
 	public function testGetService() {
@@ -1688,6 +1861,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07596 ms
 	 * @covers Wikia\Search\Config::getQueryFieldsToBoosts
 	 */
 	public function testGetQueryFieldsToBoosts() {
@@ -1728,7 +1903,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\Config::setResults
+	 * @group Slow
+	 * @slowExecutionTime 0.0751 ms
 	 * @covers Wikia\Search\Config::getResults
 	 */
 	public function testSetGetResults() {
@@ -1756,6 +1932,8 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07594 ms
 	 * @covers Wikia\Search\Config::getResultsFound
 	 */
 	public function testGetResultsFound() {

@@ -1,5 +1,5 @@
 <?php
-include( dirname(__FILE__) . '/../../../WikiaHubsV2/models/WikiaHubsV2Model.class.php' );
+include( dirname(__FILE__) . '/../../models/WikiaHubsModel.class.php' );
 
 class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	/**
@@ -12,6 +12,7 @@ class MarketingToolboxModuleWAMServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {

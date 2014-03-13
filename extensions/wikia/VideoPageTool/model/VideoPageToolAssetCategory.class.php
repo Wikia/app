@@ -18,6 +18,14 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	);
 
 	/**
+	 * Get the Category Name of the asset
+	 * @return string
+	 */
+	public function getCategoryName() {
+		return $this->categoryName;
+	}
+
+	/**
 	 * Get asset data (used in template)
 	 * @param array $thumbOptions
 	 * @return array

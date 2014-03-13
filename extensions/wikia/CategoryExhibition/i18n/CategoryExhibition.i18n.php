@@ -472,6 +472,7 @@ $messages['nb'] = array(
 /** Dutch (Nederlands)
  * @author McDutchie
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'category-exhibition-sorttype' => 'Sorteertype:',
@@ -479,7 +480,7 @@ $messages['nl'] = array(
 	'category-exhibition-mostvisited' => 'Meest bekeken',
 	'category-exhibition-recentedits' => 'Recent bewerkt',
 	'category-exhibition-page-header' => 'Pagina\'s in de categorie "$1"',
-	'category-exhibition-subcategories-header' => 'Ondercategorieën',
+	'category-exhibition-subcategories-header' => 'Subcategorieën',
 	'category-exhibition-media-header' => 'Mediabestanden in de categorie "$1"',
 	'category-exhibition-blogs-header' => 'Blogberichten',
 	'category-exhibition-display-old' => 'Categorielijstweergave',
@@ -649,17 +650,25 @@ $messages['sv'] = array(
 	'category-exhibition-page-header' => 'Sidor i kategorin "$1"',
 	'category-exhibition-subcategories-header' => 'Underkategorier',
 	'category-exhibition-media-header' => 'Media i kategorin "$1"',
-	'category-exhibition-blogs-header' => 'Blogg-inlägg',
+	'category-exhibition-blogs-header' => 'Blogginlägg',
 	'category-exhibition-display-old' => 'Kategori-listvyn',
 	'category-exhibition-display-new' => 'Visning av kategoriutställning',
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'category-exhibition-alphabetical' => 'అక్షరక్రమంలో',
+	'category-exhibition-mostvisited' => 'ఎక్కువగా చూసినవి',
+	'category-exhibition-recentedits' => 'ఇటీవలే మార్చినది',
+	'category-exhibition-page-header' => '"$1" వర్గం లోని పేజీలు',
 	'category-exhibition-subcategories-header' => 'ఉపవర్గాలు',
+	'category-exhibition-media-header' => '"$1" వర్గంలోని మీడియా',
 	'category-exhibition-blogs-header' => 'బ్లాగు టపాలు',
+	'category-exhibition-display-old' => 'వర్గ జాబితా దృశ్యం',
+	'category-exhibition-display-new' => 'వర్గ ప్రదర్శన దృశ్యం',
 );
 
 /** Tagalog (Tagalog)

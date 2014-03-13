@@ -18,7 +18,7 @@ ve.dm.DataString = function VeDmDataString( data ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.DataString, unicodeJS.TextString );
+OO.inheritClass( ve.dm.DataString, unicodeJS.TextString );
 
 /**
  * Reads the character from the specified position in the data.

@@ -4,25 +4,19 @@
 
 /**
  * @class
- * @extends ve.ui.SelectWidget
+ * @extends OO.ui.SelectWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMediaSelectWidget = function VeUiWikiaMediaSelectWidget( config ) {
 	// Parent constructor
-	ve.ui.SelectWidget.call( this, config );
-
-	// Properties
-
-	// Events
-
-	// Initialization
+	OO.ui.SelectWidget.call( this, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaSelectWidget, ve.ui.SelectWidget );
+OO.inheritClass( ve.ui.WikiaMediaSelectWidget, OO.ui.SelectWidget );
 
 /* Events */
 
@@ -45,12 +39,10 @@ ve.ui.WikiaMediaSelectWidget.prototype.onMouseUp = function ( e ) {
 	}
 	if ( !this.disabled && e.which === 1 && this.selecting ) {
 		// What was clicked on?
-		if ( $( e.target ).hasClass( 've-ui-wikiaMediaResultWidget-check' ) ) {
+		if ( $( e.target ).closest( '.ve-ui-wikiaMediaOptionWidget-check' ).length ) {
 			this.emit( 'check', this.selecting );
 		} else {
-			// TODO: When preview is ready, this should call this.selectItem.
-			//this.selectItem( this.selecting );
-			this.emit( 'check', this.selecting );
+			this.selectItem( this.selecting );
 		}
 		this.selecting = null;
 	}

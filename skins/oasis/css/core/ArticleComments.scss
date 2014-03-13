@@ -1,7 +1,5 @@
 @import "color";
 @import "../mixins/clearfix";
-@import "../mixins/border-radius";
-@import "../mixins/opacity";
 
 // While these styles are used primarily for the Oasis skin,
 // they are also used by Monobook, so please test there also.
@@ -71,7 +69,7 @@
 		list-style: none;
 
 		&.loading {
-			@include opacity(70);
+			opacity: .7;
 		}
 
 		.article-comm-text {

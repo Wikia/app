@@ -208,22 +208,17 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$userPageId = $user->getUserPage()->getArticleID();
 
 		if($userPageId) {
-			$conditions[] = "page_id != $userPageId";
+			$conditions[] = "rev_page != $userPageId";
 		}
 
 		$dbResult = $dbr->select(
-			[ 'revision', 'page' ],
+			[ 'revision' ],
 			[ 'rev_id' ],
 			$conditions,
 			__METHOD__,
 			[
 				'LIMIT' => self::FIRST_EDIT_REVISION_THRESHOLD,
 				'ORDER BY' => 'rev_timestamp DESC'
-			],
-			[ 'page' => [
-					'left join',
-					[ 'revision.rev_page = page.page_id' ]
-				]
 			]
 		);
 

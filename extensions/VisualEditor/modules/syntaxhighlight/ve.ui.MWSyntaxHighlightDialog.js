@@ -9,20 +9,20 @@
  * Document dialog.
  *
  * @class
- * @extends ve.ui.Dialog
+ * @extends ve.ui.MWDialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {OO.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Config options
  */
-ve.ui.MWSyntaxHighlightDialog = function VeUiMWSyntaxHighlightDialog( surface, config ) {
+ve.ui.MWSyntaxHighlightDialog = function VeUiMWSyntaxHighlightDialog( windowSet, config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.MWDialog.call( this, windowSet, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWSyntaxHighlightDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWSyntaxHighlightDialog, ve.ui.MWDialog );
 
 /* Static Properties */
 
@@ -35,55 +35,52 @@ ve.ui.MWSyntaxHighlightDialog.static.name = 'mwSyntaxHighlight';
 /* Methods */
 
 /**
- * Handle frame ready events.
- *
- * @method
+ * @inheritdoc
  */
 ve.ui.MWSyntaxHighlightDialog.prototype.initialize = function () {
 	// Call parent method
-	ve.ui.Dialog.prototype.initialize.call( this );
-	this.editPanel = new ve.ui.PanelLayout( {
-		'$$': this.frame.$$, 'scrollable': false, 'padded': false
+	ve.ui.MWDialog.prototype.initialize.call( this );
+	this.editPanel = new OO.ui.PanelLayout( {
+		'$': this.$, 'scrollable': false, 'padded': false
 	} );
-	this.applyButton = new ve.ui.ButtonWidget( {
-		'$$': this.frame.$$, 'label': ve.msg( 'visualeditor-dialog-action-apply' ), 'flags': ['primary']
+	this.applyButton = new OO.ui.PushButtonWidget( {
+		'$': this.$, 'label': ve.msg( 'visualeditor-dialog-action-apply' ), 'flags': ['primary']
 	} );
-	this.applyButton.connect( this, { 'click': [ 'close', 'apply' ] } );
-	this.$body.append( this.editPanel.$ );
-	this.$foot.append( this.applyButton.$ );
+	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
+	this.$body.append( this.editPanel.$element );
+	this.$foot.append( this.applyButton.$element );
 };
 
 /**
- * Handle frame ready events.
- *
- * @method
+ * @inheritdoc
  */
-ve.ui.MWSyntaxHighlightDialog.prototype.onOpen = function () {
+ve.ui.MWSyntaxHighlightDialog.prototype.setup = function ( data ) {
 	// Parent method
-	ve.ui.Dialog.prototype.onOpen.call( this );
+	ve.ui.MWDialog.prototype.setup.call( this, data );
+
 	// Properties
 	this.sourceNode = this.surface.getView().getFocusedNode();
 	this.sourceText = this.sourceNode.getModel().getAttribute( 'body' );
 	this.sourceLang = this.sourceNode.getModel().getAttribute( 'lang' );
 	this.editSurface = new ve.ui.MWSyntaxHighlightSimpleSurface( this.sourceText, this.sourceLang );
+
 	// Initialization
-	this.editPanel.$.append( this.editSurface.$ );
+	this.editPanel.$element.append( this.editSurface.$element );
 	this.editSurface.initialize();
 };
 
 /**
- * Handle frame ready events.
- *
- * @method
- * @param {string} action Action that caused the window to be closed
+ * @inheritdoc
  */
-ve.ui.MWSyntaxHighlightDialog.prototype.onClose = function ( action ) {
+ve.ui.MWSyntaxHighlightDialog.prototype.teardown = function ( data ) {
+	// Data initialization
+	data = data || {};
+
 	var tx,
 		doc = this.surface.getModel().getDocument();
-	// Parent method
-	ve.ui.Dialog.prototype.onClose.call( this );
+
 	// Save changes via Transaction
-	if ( action === 'apply' ) {
+	if ( data.action === 'apply' ) {
 		tx = ve.dm.Transaction.newFromAttributeChanges(
 			doc,
 			this.sourceNode.getModel().getOffset(),
@@ -97,6 +94,9 @@ ve.ui.MWSyntaxHighlightDialog.prototype.onClose = function ( action ) {
 
 	// Cleanup
 	this.editSurface.destroy();
+
+	// Parent method
+	ve.ui.MWDialog.prototype.teardown.call( this, data );
 };
 
 /* Registration */

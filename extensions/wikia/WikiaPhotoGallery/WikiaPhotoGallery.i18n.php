@@ -1152,8 +1152,10 @@ $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
+	'wikiaPhotoGallery-upload-select-images' => 'Харжа',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Харжа',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -4868,6 +4870,7 @@ $messages['ps'] = array(
  * @author Crazymadlover
  * @author Giro720
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  * @author SandroHc
  * @author Waldir
@@ -4915,7 +4918,7 @@ O que pretende fazer?',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Inserir',
 	'wikiaPhotoGallery-upload-select-images' => 'Selecionar',
 	'wikiaPhotoGallery-photooptions-title' => 'Opções da imagem',
-	'wikiaPhotoGallery-photooptions-done' => 'Feito',
+	'wikiaPhotoGallery-photooptions-done' => 'Concluído',
 	'wikiaPhotoGallery-preview-no-images' => 'Neste momento não se encontra fotografias no feed RSS selecionado',
 	'wikiaPhotoGallery-preview-title' => 'Criador de galerias',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
@@ -5043,7 +5046,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma atualizada.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Link para (inserir nome da página ou URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalhes da imagem.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos nesta wiki',
-	'wikiaPhotoGallery-upload-image-size' => 'As imagens têm de ter 670px por 360px ou maior.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'As fotos devem ter 670px por 360px ou maior',
 	'wikiaPhotoGallery-not-displayed' => 'Não exibida',
 	'galery-slider-read-more' => ' Leia mais >',
 );
@@ -6131,6 +6134,7 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Ата
  * @author Тест
  */
 $messages['uk'] = array(
@@ -6233,7 +6237,7 @@ $messages['uk'] = array(
 	'wikiaPhotoGallery-preview-captions' => 'Підписи',
 	'wikiaPhotoGallery-preview-captions-left' => 'Зліва',
 	'wikiaPhotoGallery-preview-captions-center' => 'По центру',
-	'wikiaPhotoGallery-preview-captions-right' => 'Зправа',
+	'wikiaPhotoGallery-preview-captions-right' => 'Справа',
 	'wikiaPhotoGallery-conflict-title' => 'Виник конфлікт редагування',
 	'wikiaPhotoGallery-conflict-help' => 'Ми покажемо ниже вікітекст, створений вашим редагуванням.
 Для відновлення ваших змін ви можете скопіювати цей текст, натиснувши „$1“ та вставити його у потрібному місці.

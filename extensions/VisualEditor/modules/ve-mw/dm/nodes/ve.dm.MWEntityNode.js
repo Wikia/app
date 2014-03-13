@@ -21,7 +21,7 @@ ve.dm.MWEntityNode = function VeDmMWEntityNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWEntityNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWEntityNode, ve.dm.LeafNode );
 
 /* Static Properties */
 

@@ -15,11 +15,11 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 						'maxHeight' => 15,
 					),
 					array(
-						'wrong-file' => 'marketing-toolbox-validator-wrong-file',
-						'wrong-size' => 'marketing-toolbox-validator-wrong-file-size',
-						'max-width' => 'marketing-toolbox-validator-wrong-file-size-width',
-						'max-height' => 'marketing-toolbox-validator-wrong-file-size-height',
-						'not-an-image' => 'marketing-toolbox-validator-wrong-file-not-an-image',
+						'wrong-file' => 'wikia-hubs-validator-wrong-file',
+						'wrong-size' => 'wikia-hubs-validator-wrong-file-size',
+						'max-width' => 'wikia-hubs-validator-wrong-file-size-width',
+						'max-height' => 'wikia-hubs-validator-wrong-file-size-height',
+						'not-an-image' => 'wikia-hubs-validator-wrong-file-not-an-image',
 					)
 				)
 			),
@@ -32,30 +32,30 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 					array(
 						'required' => true
 					),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+					array('wrong-file' => 'wikia-hubs-validator-wrong-file')
 				)
 			),
 			'header' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-header'),
+				'label' => wfMessage('wikia-hubs-module-featured-video-header')->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required'
 				)
 			),
 			'articleUrl' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-article-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'label' => wfMessage('wikia-hubs-module-featured-video-article-url')->text(),
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(
 						'required' => true
 					),
 					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
+						'wrong' => 'wikia-hubs-validator-wrong-url'
 					)
 				),
 				'attributes' => array(
@@ -63,7 +63,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 				),
 			),
 			'description' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-featured-video-desc'),
+				'label' => wfMessage('wikia-hubs-module-featured-video-desc')->text(),
 				'validator' => new WikiaValidatorString(),
 				'type' => 'textarea',
 				'attributes' => array(
@@ -171,7 +171,7 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 	 * @param $data
 	 * @return mixed
 	 */
-	protected function filterCommercialData( array $data ) {
+	protected function filterCommercialData( $data ) {
 		$data['video'] = null;
 		$service = $this->getLicensedWikisService();
 		if ( isset($data['articleUrl']) && !$service->isCommercialUseAllowedByUrl($data['articleUrl']) ) {

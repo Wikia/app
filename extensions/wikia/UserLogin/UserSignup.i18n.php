@@ -438,6 +438,22 @@ ___________________________________________
 
 ستستمر في تلقي الرسائل الإلكترونية على عنوان بريدك الإلكتروني القديم حتى تقوم بتأكيد هذا العنوان.',
 	'usersignup-reconfirmation-email-signature' => 'فريق ويكيا',
+	'usersignup-reconfirmation-email_body' => 'مرحبًا $2،
+
+من فضلك اضغط على الرابط أدناه لتأكيد تغيير عنوان البريد الإلكتروني على ويكيا.
+
+$3
+
+ستستمر باستقبال رسائل على عنوان بريدك الإلكتروني القديم حتى تأكد هذا العنوان.
+
+فريق ويكيا
+
+
+___________________________________________
+
+للتحقق من آخر الأحداث على ويكيا، قم بزيارة http://community.wikia.com
+
+تريد التحكم بالرسائل الإلكترونية التي تستقبلها؟ اذهب إلى: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-welcome-email-subject' => 'مرحبا بك في ويكيا يا $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'مرحبا يا $USERNAME',
 	'usersignup-welcome-email-heading' => 'نحن سعداء بالترحيب بك في ويكيا و {{SITENAME}}! إليك بعض الأشياء التي يمكنك القيام بها للبدأ.',
@@ -2338,6 +2354,13 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Facebook との通信中に問題が発生しました。しばらくしてからもう一度お試しください。',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'usersignup-facebook-create-account' => 'Аккаунт къурау',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -3642,10 +3665,16 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'usersignup-page-title' => 'Junte-se à Wikia',
+	'usersignup-page-captcha-label' => 'Palavra Obscura',
+	'usersignup-error-invalid-user' => 'Usuário inválido. Por favor, autentique-se primeiro.',
+	'usersignup-error-invalid-email' => 'Por favor, insira um endereço de e-mail válido.',
+	'usersignup-error-symbols-in-username' => 'Ops, seu nome de usuário pode conter apenas letras e números.',
 	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-confirm-email-update' => 'Atualizar',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Você já está confirmado',
@@ -3656,8 +3685,13 @@ $messages['pt-br'] = array(
 	'usersignup-welcome-email-edit-profile-button' => 'Ir para o perfil',
 	'usersignup-welcome-email-explore-wiki-heading' => 'Explorar mais wikis.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir para wikia.com',
+	'usersignup-heading' => 'Junte-se à Wikia Hoje',
 	'usersignup-heading-byemail' => 'Criar uma conta para outra pessoa',
-	'usersignup-marketing-global-heading' => 'Criar',
+	'usersignup-marketing-wikia' => 'Comece a colaborar com milhões de pessoas de todo o mundo que se reúnem para compartilhar o que sabem e amam.',
+	'usersignup-marketing-login' => 'Já é um usuário? [[Especial:UserLogin|Autentique-se]]', # Fuzzy
+	'usersignup-marketing-community-heading' => 'Colabore',
+	'usersignup-marketing-community' => 'Descubra e explore assuntos que vão desde jogos eletrônicos para filmes e tv. Conheça pessoas com interesses e paixões semelhantes.',
+	'usersignup-marketing-global-heading' => 'Crie',
 	'usersignup-marketing-creativity-heading' => 'Seja original',
 	'usersignup-account-creation-email-greeting' => 'Olá,',
 );

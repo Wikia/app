@@ -11,11 +11,6 @@
 	<?= $csslinks ?>
 	<?php
 		global $wgUser;
-//		$srcs = AssetsManager::getInstance()->getGroupLocalURL($wgUser->isLoggedIn() ? 'site_user_css' : 'site_anon_css');
-//		foreach($srcs as $src) {
-//			echo '<link rel="stylesheet" href="'.$src.'">';
-//		}
-
 		// RT #68514: load global user CSS
 		if ($pagecss != '') {
 	?>

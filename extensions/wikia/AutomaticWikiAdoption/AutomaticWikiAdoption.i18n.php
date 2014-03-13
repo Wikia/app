@@ -520,7 +520,7 @@ $messages['de'] = array(
 	'wikiadoption-adopt-inquiry' => 'Mehr erfahren!',
 	'wikiadoption-description' => '$1, willst du {{SITENAME}} adoptieren?
 <br /><br />
-Auf {{SITENAME}} ist seit einiger Zeit kein aktiver Admin mehr unterwegs, und wir suchen einen neuen Leiter, der dem Wiki beim Wachsen helfen soll. Du hast dich in diesem Wiki eingebracht, möchtest du diesen Job übernehmen?
+Auf {{SITENAME}} ist seit einiger Zeit kein aktiver Admin mehr unterwegs und wir suchen einen neuen Leiter, der dem Wiki beim Wachsen helfen soll. Du hast dich in diesem Wiki eingebracht, möchtest du diesen Job übernehmen?
 <br /><br />
 Durch die Adoption wirst du zum Administrator und Bürokraten befördert, sodass du die Werkzeuge erhältst, um den Inhalt und die Community des Wikis zu verwalten. Du wirst auch die Möglichkeit haben, andere Benutzer zu Administratoren zu ernennen, die beim Löschen, Zurücksetzen und Seitenschützen helfen können.
 <br /><br />
@@ -528,7 +528,7 @@ Bist du bereit, einen weiteren Schritt zu tun, um {{SITENAME}} zu helfen?',
 	'wikiadoption-know-more-header' => 'Möchtest du mehr erfahren?',
 	'wikiadoption-know-more-description' => 'Sieh dir diese Links für weitere Informationen an. Und natürlich, zögere nicht, uns zu kontaktieren, wenn du Fragen hast!',
 	'wikiadoption-adoption-successed' => 'Herzlichen Glückwunsch! Du bist jetzt ein Administrator in diesem Wiki!',
-	'wikiadoption-adoption-failed' => 'Tut uns leid. Wir haben versucht, dich zu einem Administrator zu machen, aber es hat nicht funktioniert. Bitte [http://de.community.wikia.com/wiki/Spezial:Kontakt kontaktiere uns], und wir werden versuchen, dir weiterzuhelfen.',
+	'wikiadoption-adoption-failed' => 'Tut uns leid. Wir haben versucht, dich zu einem Administrator zu machen, aber es hat nicht funktioniert. Bitte [http://de.community.wikia.com/wiki/Spezial:Kontakt kontaktiere uns] und wir werden versuchen, dir weiterzuhelfen.',
 	'wikiadoption-not-allowed' => 'Tut uns leid. Du kannst dieses Wiki im Moment nicht übernehmen.',
 	'wikiadoption-not-enough-edits' => 'Auweia! Du musst mehr als 10 Bearbeitungen getätigt haben, um dieses Wiki adoptieren zu können.',
 	'wikiadoption-adopted-recently' => 'Auweia! Du hast in letzter Zeit bereits ein anderes Wiki adoptiert. Du musst eine Weile warten, bevor du ein weiteres Wiki adoptieren kannst.',
@@ -767,6 +767,14 @@ Kasulikud tööriistad:
 [[Eri:ListUsers|Kasutajate nimekiri]]
 <br>
 [[Eri:UserRights|Kasutajate õigused]]', # Fuzzy
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiadoption-adopt-inquiry' => 'Jakin ezazu gehiago!',
+	'wikiadoption-know-more-header' => 'Gehiago jakin nahi duzu?',
 );
 
 /** Persian (فارسی)
@@ -1523,6 +1531,7 @@ $messages['ko'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'wikiadoption' => 'Automatesch Wiki-Adoptioun',
 	'wikiadoption-header' => 'Dës Wiki adoptéieren',
 	'wikiadoption-button-adopt' => 'Jo, Ech wëll {{SITENAME}} adoptéieren!',
 	'wikiadoption-adopt-inquiry' => 'Fir méi ze wëssen!',
@@ -1955,6 +1964,7 @@ Nyttige verktøy:
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
+ * @author Yatalu
  */
 $messages['nl'] = array(
 	'wikiadoption' => 'Automatische wikiadoptie',
@@ -1969,7 +1979,7 @@ Er is al een tijdje geen actieve beheerder geweest voor {{SITENAME}} en we zoeke
 Door de wiki te adopteren wordt u beheerder en bureaucraat zodat u de hulpmiddelen hebt om de inhoud en de gemeenschap van de wiki te beheren. U kunt andere gebruikers beheerder maken en helpen met het verwijderen, hernoemen en beveiligen van pagina's en bewerkingen terugdraaien.
 <br /><br />
 Bent u klaar om de volgende stap te zetten in uw carrière bij {{SITENAME}}?",
-	'wikiadoption-know-more-header' => 'Meer te weten komen?',
+	'wikiadoption-know-more-header' => 'Wil je meer weten?',
 	'wikiadoption-know-more-description' => 'Volg deze koppelingen voor meer infomatie. Het staat u natuurlijk ook vrij om contact met ons op te nemen als u vragen hebt.',
 	'wikiadoption-adoption-successed' => 'Gefeliciteerd! U bent nu beheerder van deze wiki.',
 	'wikiadoption-adoption-failed' => 'We hebben geprobeerd u beheerder te maken, maar dit lukte helaas niet. [http://community.wikia.com/Special:Contact Neem contact met ons op] zodat we u verder kunnen helpen.',
@@ -2489,8 +2499,8 @@ Ferramentas Úteis:
 $messages['pt-br'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
 	'wikiadoption-desc' => 'Uma extensão do MediaWiki para Adoção Automática de Wikis',
-	'wikiadoption-header' => 'Adotar este wiki',
-	'wikiadoption-button-adopt' => 'Sim, quero adotar {{SITENAME}}!',
+	'wikiadoption-header' => 'Adotar esta wiki',
+	'wikiadoption-button-adopt' => 'Sim, eu quero adotar {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Saiba mais!',
 	'wikiadoption-description' => '$1, pronto(a) para adotar a {{SITENAME}}?
 <br /><br />
@@ -2502,8 +2512,8 @@ Está preparado(a) para dar os próximos passos e ajudar o wiki {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quer saber mais?',
 	'wikiadoption-know-more-description' => 'Para mais informações visite estes links. E claro, contate-nos se tiver alguma pergunta!',
 	'wikiadoption-adoption-successed' => 'Parabéns! Você se tornou administrador neste wiki!',
-	'wikiadoption-adoption-failed' => 'Desculpe-nos. Nós tentamos te tornar um administrador, mas ocorreu um problema. [http://community.wikia.com/Special:Contact Entre me contato conosco]  para que tentemos ajudá-lo.',
-	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar este wiki no momento.',
+	'wikiadoption-adoption-failed' => 'Desculpe-nos. Nós tentamos torná-lo um administrador, mas não deu certo. Por favor [http://comunidade.wikia.com/Especial:Contact contate-nos], e nós vamos tentar ajudá-lo.',
+	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar esta wiki agora.',
 	'wikiadoption-not-enough-edits' => 'Oops! Você precisa ter mais de 10 edições para adotar este wiki.',
 	'wikiadoption-adopted-recently' => 'Oops! Você já adotou outro wiki recentemente. Será necessário esperar algum tempo até poder adotar mais um wiki.',
 	'wikiadoption-log-reason' => 'Adoção Automática de Wikis',
@@ -2725,12 +2735,13 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'wikiadoption' => 'Automatisk wiki-adoption',
-	'wikiadoption-desc' => 'En AutomatiskWikiAdoptions-förlängning för MediaWiki',
+	'wikiadoption' => 'Automatisk wikiadoption',
+	'wikiadoption-desc' => 'Ett AutomatiskWikiAdoptions-tillägg för MediaWiki',
 	'wikiadoption-header' => 'Adoptera den här wikin',
 	'wikiadoption-button-adopt' => 'Ja, jag vill adoptera {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Lär dig mer!',
@@ -2748,7 +2759,7 @@ Genom att adoptera wikin, befordras du till administratör och byråkrat som ger
 	'wikiadoption-not-allowed' => 'Vi ber om ursäkt. Du kan inte adoptera denna wiki just nu.',
 	'wikiadoption-not-enough-edits' => 'Hoppsan! Du måste ha mer än 10 redigeringar för att adoptera denna wiki.',
 	'wikiadoption-adopted-recently' => 'Hoppsan! Du har redan adopterat en wiki nyligen. Du måste vänta ett tag innan du kan adoptera en ny wiki.',
-	'wikiadoption-log-reason' => 'Automatisk Wiki-Adoption',
+	'wikiadoption-log-reason' => 'Automatisk Wikiadoption',
 	'wikiadoption-notification' => '{{SITENAME}} är tillgänglig för adoption! Intressant att bli en ledare här? Adoptera denna wiki för att komma igång! $2',
 	'wikiadoption-mail-first-subject' => 'Vi har inte sett dig på ett tag',
 	'wikiadoption-mail-first-content' => 'Hej $1,
@@ -2828,11 +2839,29 @@ Användbara verktyg:
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'wikiadoption' => 'ఆటోమాటిక్ వికీ దత్తత',
+	'wikiadoption-header' => 'ఈ వికీని దత్తత చేసుకోండి',
+	'wikiadoption-button-adopt' => 'ఔను, నేను {{SITENAME}} ను దత్తత చేసుకోవాలనుకుంటున్నాను!',
 	'wikiadoption-adopt-inquiry' => 'ఇంకా తెలుసుకోండి!',
 	'wikiadoption-know-more-header' => 'మరింత తెలుసుకోవాలనుకుంటున్నారా?',
+	'wikiadoption-know-more-description' => 'మరింత సమాచారం కోసం ఈ లింకులు చూడండి. అన్నట్టు, సందేహాలేమైనా ఉంటే వెనకాడకుండా మమ్మల్ని సంప్రదించండి!',
+	'wikiadoption-adoption-successed' => 'అభినందనలు! ఇప్పుడు మీరీ వికీలో నిర్వాహకుడయ్యారు!',
+	'wikiadoption-adoption-failed' => 'సారీ, మిమ్మల్ని నిర్వాహకునిగా చేద్దామని అనుకున్నాం. కాని కాలేదు. మమ్మల్ని [http://community.wikia.com/Special:Contact సంప్రదించండి], సాయం చేస్తాం.',
+	'wikiadoption-not-allowed' => 'సారీ, ప్రస్తుతం మీరీ వికీని దత్తత చేసుకోలేరు.',
+	'wikiadoption-not-enough-edits' => 'అయ్యో! ఈ వికీని దత్త చేసుకునేందుకు మీరు కనీసం 10 మార్పుచేర్పులు చేసి ఉండాలి.',
+	'wikiadoption-adopted-recently' => 'అయ్యో! ఈ మధ్యనే మీరు మరో వికీని దత్తత చేసుకుని ఉన్నారు. కొత్త వికీని దత్తత చేసుకోవాలంటే కొంత ఆగాలి.',
+	'wikiadoption-log-reason' => 'ఆటోమాటిక్ వికీ దత్తత',
+	'wikiadoption-notification' => '{{SITENAME}} దత్తత కోసం సిదధంగా ఉంది. దీనికి సారథ్యం వహించేందుకు మీకు ఆసక్తి ఉందా? ఈ వికీని దత్తత తీసుకుని మొదలుపెట్టండి! $2',
+	'wikiadoption-mail-first-subject' => 'ఈ మధ్య మీరు ఇటువైపు రానేలేదు',
+	'wikiadoption-mail-second-subject' => 'త్వరలో #WIKINAME ను దత్తత కోసం పెడతాం',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME దత్తత తీసుకోబడింది',
+	'tog-adoptionmails' => '$1 ఇతర వాడుకరులు దత్తత తీసుకునేందుకు అందుబాటులోకి వస్తే నాకు ఈమెయిలు చెయ్యి',
+	'tog-adoptionmails-v2' => '...ఇతర వాడుకరులు దత్తత తీసుకునేందుకు ఈ వికీ అందుబాటులోకి వస్తే',
+	'wikiadoption-welcome-header' => 'అభినందనలు! మీరు {{SITENAME}} ను దత్తత చేసుకున్నారు!',
 );
 
 /** Tagalog (Tagalog)
@@ -2940,10 +2969,32 @@ Mga Kasangkapang Nakakatulong:
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Trncmvsr
  */
 $messages['tr'] = array(
+	'wikiadoption' => 'Otomatik wiki kabulü',
+	'wikiadoption-desc' => 'MediaWiki için AutomaticWikiAdoption eklentisi',
+	'wikiadoption-header' => 'Bu wikiyi kabul et',
+	'wikiadoption-button-adopt' => 'Evet, Ben {{SITENAME}} sitesini kabul etmek istiyorum!',
+	'wikiadoption-adopt-inquiry' => 'Daha fazla bilgi!',
+	'wikiadoption-description' => '$1, {{SITENAME}} sitesini kabul etmeye hazır mısınız?
+<br /><br />
+{{SITENAME}} wikisinde bir süredir aktif bir yönetici yoktu ve biz bu eklentiyi sitenin içeriği ile topluluğun büyümesine yardımcı olacak yeni bir lider araması için bulduk! Biz {{SITENAME}} sitesine katkıda bulunan birisi olarak çalışmayı isteyip, istemediğinizi merak ediyoruz.
+<br /><br />
+Eğer wiki topluluğuna gelerek içeriği yönetmek için gerekli araçların verilmesini talep ederseniz, bu durumda kabul etme eklentisi sizi yönetici ve bürokrat olarak atayacaktır. Böylece, diğer yöneticilere yardımcı olmak için silme, geriye alma, taşıma ve sayfaları koruma yetkiniz olacaktır.
+<br /><br />
+{{SITENAME}} sitesine yardım etmek için bir sonraki adıma hazır mısınız?',
 	'wikiadoption-know-more-header' => 'Daha fazlasını öğrenmek ister misin?',
+	'wikiadoption-know-more-description' => 'Daha fazla bilgi için bu bağlantıları göz atın. Ve tabii ki, herhangi bir sorunuz varsa lütfen bizimle temas kurmaktan çekinmeyin!',
+	'wikiadoption-adoption-successed' => 'Tebrikler! Bu wiki üzerinde artık bir yöneticisiniz!',
+	'wikiadoption-adoption-failed' => 'Özür dileriz. Sizi bir yönetici yapmayı denedik ama bu işe yaramadı. Lütfen [http://community.wikia.com/Special:Contact bize ulaşın] ve size yardımcı olmaya çalışalım.',
+	'wikiadoption-not-allowed' => 'Özür dileriz. Bu wiki şu anda bunu kabul etmiyor.',
+	'wikiadoption-not-enough-edits' => "Oops! Bu wikiyi kabul edebilmeniz için 10'dan fazla düzenlemenizin olması gerekir.",
+	'wikiadoption-adopted-recently' => 'Oops! Son zamanlarda başka bir wikiyi  zaten kabul ettiniz. Yeni bir wikiyi kabul etmek için daha önce bir süre beklemeniz gerekecektir.',
+	'wikiadoption-log-reason' => 'Otomatik wiki kabulü',
+	'wikiadoption-notification' => '{{SITENAME}} sitesi için kabul etme bulunmakta. Burada bir lider olmakla ilgileniyor musunuz? Dilerseniz bu wikiyi kabul etmeye başlayın! $2',
+	'wikiadoption-mail-first-subject' => 'Biz sizi bir süredir çevrelerde göremedik',
 );
 
 /** Ukrainian (українська)

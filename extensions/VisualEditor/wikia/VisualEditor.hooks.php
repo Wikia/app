@@ -35,15 +35,11 @@ class VisualEditorWikiaHooks {
 				've/test/ce/ve.ce.wikiaExample.js',
 				've/test/ce/ve.ce.WikiaBlockImageNode.test.js',
 				've/test/ce/ve.ce.WikiaBlockVideoNode.test.js',
-				've/test/ce/ve.ce.WikiaInlineVideoNode.test.js',
-
-				// ui
-				've/test/ui/ve.ui.PagedLayout.test.js',
+				've/test/ce/ve.ce.WikiaInlineVideoNode.test.js'
 			),
 			'dependencies' => array(
 				'ext.visualEditor.test',
 				'ext.visualEditor.wikiaCore',
-				'wikia.stringhelper',
 			)
 		);
 		return true;
@@ -53,8 +49,9 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize;
-		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize; 
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI;
+		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
+		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
 		return true;
 	}
 

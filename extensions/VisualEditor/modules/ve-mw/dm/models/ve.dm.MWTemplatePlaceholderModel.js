@@ -21,4 +21,4 @@ ve.dm.MWTemplatePlaceholderModel = function VeDmMWTemplatePlaceholderModel( tran
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTemplatePlaceholderModel, ve.dm.MWTransclusionPartModel );
+OO.inheritClass( ve.dm.MWTemplatePlaceholderModel, ve.dm.MWTransclusionPartModel );

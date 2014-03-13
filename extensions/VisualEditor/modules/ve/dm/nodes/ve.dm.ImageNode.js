@@ -21,7 +21,7 @@ ve.dm.ImageNode = function VeDmImageNode( length, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.ImageNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.ImageNode, ve.dm.LeafNode );
 
 /* Static Properties */
 

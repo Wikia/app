@@ -1,4 +1,5 @@
 /*exported AdProviderNull*/
+/*global define*/
 var AdProviderNull = function (log, slotTweaker) {
 	'use strict';
 
@@ -10,7 +11,7 @@ var AdProviderNull = function (log, slotTweaker) {
 
 	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
-		slotTweaker.hide(slotname);
+		slotTweaker.hide(slotname, true);
 		slotTweaker.hideSelfServeUrl(slotname);
 		success();
 	}
@@ -21,3 +22,5 @@ var AdProviderNull = function (log, slotTweaker) {
 		fillInSlot: fillInSlot
 	};
 };
+
+define('ext.wikia.adengine.provider.null', ['wikia.log', 'ext.wikia.adengine.slottweaker'], AdProviderNull);

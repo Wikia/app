@@ -71,11 +71,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	private $mShowAddButton;
 
 	/**
-	 * Displaying local files or from feed?
-	 */
-	private $mFeedURL = false;
-
-	/**
 	 * List of files in a gallery
 	 */
 	public $mFiles = array();
@@ -92,7 +87,6 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		$this->mData = array(
 			'externalImages' => array(),
-			'feedTitle' => '',
 			'hash' => false,
 			'id' => false,
 			'images' => array(),
@@ -117,7 +111,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			'captionposition' => array('below', 'within'),
 			'captionsize' => array('medium', 'small', 'large'),
 			'captiontextcolor' => false,
-			'rssfeed' => false,
 			'orientation' => array('none', 'square', 'portrait', 'landscape'),
 			'position' => array('left', 'center', 'right'),
 			'spacing' => array('medium', 'large', 'small'),
@@ -210,11 +203,8 @@ class WikiaPhotoGallery extends ImageGallery {
 		$this->mData['params'] = $params;
 
 		// lowercase parameters
-		$skipParams = array('rssfeed');
-		foreach($params as $key => &$param) {
-			if (!in_array($key, $skipParams)) {
-				$param = strtolower($param);
-			}
+		foreach( $params as $key => &$param ) {
+			$param = strtolower( $param );
 		}
 
 		if( isset($params['id']) ) {
@@ -227,11 +217,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		if (isset($params['hideaddbutton']) && $params['hideaddbutton'] == 'true') {
 			$this->mShowAddButton = false;
  		}
-
-		// rss feed parameter
-		if (!empty($params['rssfeed'])) {
-			$this->mFeedURL = $params['rssfeed'];
-		}
 
 		// set gallery type
 		//
@@ -450,24 +435,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			$this->addRecentlyUploaded(self::RECENT_UPLOADS_IMAGES);
 		}
 
-		if (!empty($this->mFeedURL)) {
-			$data = WikiaPhotoGalleryRSS::parseFeed($this->mFeedURL);
-
-			//title of the feed - used by Lightbox
-			$this->mData['feedTitle'] = $data['feedTitle'];
-
-			//use images from feed
-			$this->mExternalImages = $data['images'];
-
-			// store list of images from inner content of tag (to be used by front-end)
-			$this->mData['externalImages'] = $this->mExternalImages;
-
-			// store list of images actually shown (to be used by front-end)
-			$this->mData['imagesShown'] = $this->mExternalImages;
-		}
-
 		// store ID of gallery
-
 		if(empty($this->mData['id'] )) {
 			$this->mData['id'] = self::$galleriesCounter++;
 		}
@@ -487,7 +455,6 @@ class WikiaPhotoGallery extends ImageGallery {
 	public function getData() {
 		return array(
 			'externalImages' => $this->mData['externalImages'],
-			'feedTitle' => $this->mData['feedTitle'],
 			'hash' => $this->mData['hash'],
 			'id' => $this->mData['id'],
 			'images' => $this->mData['images'],
@@ -573,19 +540,11 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		switch ($this->mType) {
 			case self::WIKIA_PHOTO_GALLERY:
-				if ($this->mFeedURL) {
-					$out = $this->renderFeedGallery();
-				} else {
-					$out = $this->renderGallery();
-				}
+				$out = $this->renderGallery();
 				break;
 
 			case self::WIKIA_PHOTO_SLIDESHOW:
-				if ($this->mFeedURL) {
-					$out = $this->renderFeedSlideshow();
-				} else {
-					$out = $this->renderSlideshow();
-				}
+				$out = $this->renderSlideshow();
 				break;
 
 			case self::WIKIA_PHOTO_SLIDER:
@@ -1522,411 +1481,6 @@ class WikiaPhotoGallery extends ImageGallery {
 		return $html;
 
 	}
-
-
-	/**
- 	 * Return a HTML representation of the image gallery for external images taken from feed
-	 *
-	 * The new gallery disables the old perrow control, and automatically fit the gallery to the available space in the browser.
-	 * @author Marooned
-	 */
-	private function renderFeedGallery() {
-		wfProfileIn(__METHOD__);
-
-		// do not render empty gallery
-		if (empty($this->mExternalImages)) {
-			wfProfileOut(__METHOD__);
-			return '';
-		}
-
-		$thumbSize = $this->mWidths;
-		$orientation = $this->getParam('orientation');
-
-		if ($orientation == 'none') {
-			$this->enableCropping(false);
-		}
-		$crop = $this->mCrop;
-
-		$useBuckets = $this->getParam('buckets');
-		$useRowDivider = $this->getParam('rowdivider');
-		$captionColor = $this->getParam('captiontextcolor');
-		$borderColor = $this->getParam('bordercolor');
-
-		$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
-		$position = $this->getParam('position');
-		$captionsPosition = $this->getParam('captionposition');
-		$captionsAlign = $this->getParam('captionalign');
-		$captionsSize = $this->getParam('captionsize');
-		$captionsColor = (!empty($captionColor)) ? $captionColor : null;
-		$spacing = $this->getParam('spacing');
-		$borderSize = $this->getParam('bordersize');
-		$borderColor = (!empty($borderColor)) ? $borderColor : 'accent';
-		$isTemplate = (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f");
-		$hash = $this->mData['hash'];
-		$id = 'gallery-' . $this->mData['id'];
-
-		if (in_array($borderColor, array('accent', 'color1'))) {
-			$borderColorClass = " {$borderColor}";
-		} else {
-			$borderColorCSS = " border-color: {$borderColor};";
-
-			if ($captionsPosition == 'within') $captionsBackgroundColor = $borderColor;
-		}
-
-		$attribs = array(
-			'data-feed-title' => wfMessage('wikiaPhotoGallery-lightbox-caption', $this->mData['feedTitle'])->text(),
-			'id' => $id,
-			'hash' => $hash,
-			'class' =>  'wikia-gallery'.
-				(($isTemplate) ? ' template' : null).
-				" wikia-gallery-position-{$position}".
-				" wikia-gallery-spacing-{$spacing}".
-				" wikia-gallery-border-{$borderSize}".
-				" wikia-gallery-captions-{$captionsAlign}".
-				" wikia-gallery-caption-size-{$captionsSize}"
-
-		);
-		if ($crop) {
-			$attribs['data-crop'] = 'true';
-		}
-
-		$html = Xml::openElement('div', $attribs);
-
-		// render gallery caption (RT #59241)
-		if ($this->mCaption !== false) {
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-caption')) .
-				$this->mCaption .
-				Xml::closeElement('div');
-		}
-
-		$itemWrapperWidth = $thumbSize;
-		$thumbWrapperHeight = $thumbSize;	//TODO: fix?
-
-		//compensate image wrapper width depending on the border size
-		switch ($borderSize) {
-			case 'large':
-				$itemWrapperWidth += 10; //5px * 2
-				$thumbWrapperHeight += 10;
-				break;
-			case 'medium':
-				$itemWrapperWidth += 4; //2px * 2
-				$thumbWrapperHeight += 4;
-				break;
-			case 'small':
-				$itemWrapperWidth += 2; //1px * 2
-				$thumbWrapperHeight += 2;
-				break;
-		}
-
-		//adding more width for the padding
-		$outeritemWrapperWidth = $itemWrapperWidth + 20;
-
-		$rowDividerCSS = '';
-		if ($useRowDivider) {
-			$rowDividerCSS = "height: ".($thumbWrapperHeight+100)."px; padding: 30px 15px 20px 15px; margin: 0px; border-bottom: solid 1px #CCCCCC;";
-		}
-
-		if ($useBuckets) {
-			$itemSpanStyle = "width:{$outeritemWrapperWidth}px; ".($useRowDivider ? $rowDividerCSS : 'margin: 4px;');
-			$itemDivStyle = "background-color: #f9f9f9; height:{$thumbWrapperHeight}px; text-align: center; border: solid 1px #CCCCCC; padding: ".(($outeritemWrapperWidth-$thumbWrapperHeight)/2)."px 5px;";
-		} else {
-			$itemSpanStyle = "width:{$itemWrapperWidth}px; $rowDividerCSS";
-			$itemDivStyle = "height:{$thumbWrapperHeight}px;";
-		}
-
-		foreach ($this->mExternalImages as $index => $imageData) {
-
-			if ($perRow != 'dynamic' && ($index % $perRow) == 0){
-				$html .= Xml::openElement('div', array('class' => 'wikia-gallery-row'));
-			}
-
-			$html .= Xml::openElement('div', array('class' => 'wikia-gallery-item', 'style' => $itemSpanStyle));
-
-			$html .= Xml::openElement('div', array('class' => 'thumb', 'style' => $itemDivStyle));
-
-			$image = array();
-
-			$image['height'] = $thumbSize;	//TODO: fix? remove!
-			$image['width'] = $thumbSize;
-			//TODO: move this before foreach? `link` should be always the same
-			preg_match('%(?:' . wfUrlProtocols() . ')([^/]+)%i', $imageData['link'], $match);
-			$image['caption'] = wfMessage('wikiaPhotoGallery-feed-caption', $imageData['caption'], $imageData['link'], $match[1])->text();
-
-			$linkAttribs = $this->parseLink($imageData['src'], $image['caption'], $imageData['link']);
-
-			$image['link'] = $linkAttribs['href'];
-			$image['linkTitle'] = $linkAttribs['title'];
-			$image['classes'] = $linkAttribs['class'] . ' lightbox';	//parseLink mark it as external - add lightbox class
-
-			//see Image SEO project
-			$wrapperId = preg_replace('/[^a-z0-9_]/i', '-', Sanitizer::escapeId($image['linkTitle']));
-
-			$html .= Xml::openElement('div', array(
-				'class' => 'gallery-image-wrapper'.
-					((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
-				'id' => $wrapperId,
-				'style' => 'position: relative;'.
-					'visibility: hidden;'. // RT #69622
-					($useBuckets ? " width: {$itemWrapperWidth}px; border-style: none;"
-								 : " height:{$image['height']}px; width:{$image['width']}px;").
-					((!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null).
-					((!empty($borderColorCSS)) ? $borderColorCSS : null)
-			));
-
-			# Fix 59913 - thumbnail goes as <img /> not as <a> background.
-			$html .= Xml::openElement(
-				'a',
-				array(
-					'class' => $image['classes'],
-					'data-image-name' => $image['linkTitle'],
-					'href' => $image['link'],
-					'title' => $image['linkTitle'],
-					//'style' => "line-height: {$image['height']}px", # commented out by macbre (this one is done via JS code)
-				)
-			);
-			$html .= Xml::openElement(
-				'img',
-				array(
-					'class' => $image['classes'],
-					'style' => ((!empty($image['titleText'])) ? " line-height:{$image['height']}px;" : null).
-						#" height:{$image['height']}px;". // macbre
-						($useBuckets ? '' : " width:{$image['width']}px;"),
-					'data-src' => $imageData['src'],
-					'title' => $image['linkTitle']
-				)
-			);
-
-			$html .= Xml::closeElement('a');
-			if ($captionsPosition == 'below') {
-				$html .= Xml::closeElement('div');
-				$html .= Xml::closeElement('div');
-			}
-
-			if (!empty($image['caption'])) {
-				$html .= Xml::openElement(
-					'div',
-					array(
-						'class' => 'lightbox-caption'.
-							((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
-						'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
-							((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
-							((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
-							($useBuckets ? " margin-top: 0px;" : '')
-					)
-				);
-
-				$html .= $image['caption'];
-
-				$html .= Xml::closeElement('div');
-			}
-
-			if ($captionsPosition == 'within') {
-				$html .= Xml::closeElement('div');
-				$html .= Xml::closeElement('div');
-			}
-
-			$html .= Xml::closeElement('div'); // /div.wikia-gallery-item
-
-			if ($perRow != 'dynamic' && (($index % $perRow) == ($perRow - 1) || $index == (count($this->mExternalImages) - 1))) {
-				$html .= Xml::closeElement('div');
-			}
-		}
-
-		$html .= Xml::closeElement('div');
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	}
-
-	/**
- 	 * Return a HTML representation of the image slideshow for external images taken from feed
-	 * @author Marooned
-	 */
-	private function renderFeedSlideshow() {
-		global $wgStylePath, $wgBlankImgUrl;
-		wfProfileIn(__METHOD__);
-
-		// don't render empty slideshows
-		if (empty($this->mExternalImages)) {
-			wfProfileOut(__METHOD__);
-			return '';
-		}
-
-		// slideshow wrapper CSS class
-		$class = 'wikia-slideshow clearfix';
-
-		$id = "slideshow-{$this->mData['id']}";
-
-		// do not add button for galleries from templates
-		if (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f") {
-			$class .= ' template';
-		}
-
-		// support "position" attribute (slideshow alignment)
-		switch ($this->getParam('position')) {
-			case 'left':
-				$class .= ' floatleft';
-				break;
-			case 'center':
-				$class .= ' slideshow-center';
-				break;
-			case 'right':
-				$class .= ' floatright';
-				break;
-		}
-
-		// wrap image slideshow inside div.slideshow
-		$attribs = Sanitizer::mergeAttributes(
-			array(
-				'class' => $class,
-				'hash' => $this->mData['hash'],
-				'id' => $id,
-			),
-			$this->mAttribs );
-		$html = Xml::openElement('div', $attribs);
-
-		// render slideshow caption
-		if ($this->mCaption) {
-			$html .= '<div class="wikia-slideshow-caption">' . $this->mCaption . '</div>';
-		}
-
-		// fit images inside width:height = 4:3 box
-		$this->mHeights = round($this->mWidths * 3 / 4);
-		$params = array('width' => $this->mWidths, 'height' => $this->mHeights);
-
-		wfDebug(__METHOD__ . ": slideshow {$params['width']}x{$params['height']}\n");
-
-		$html .= Xml::openElement('div', array(
-			'class' => 'wikia-slideshow-wrapper',
-			'style' => 'width: ' . ($this->mWidths + 10) . 'px'
-		));
-
-		// wrap images inside <div> and <ul>
-		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-images-wrapper accent'));
-		$html .= Xml::openElement('ul', array(
-			'class' => 'wikia-slideshow-images neutral',
-			'style' => "height: {$params['height']}px; width: {$params['width']}px;",
-		));
-
-		foreach ($this->mExternalImages as $index => $imageData) {
-			// Give extensions a chance to select the file revision for us
-			$caption = $linkOverlay = '';
-
-			// render caption overlay
-			if ($imageData['caption'] != '') {
-				$caption = Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption'))
-					. Xml::openElement('span', array('class' => 'wikia-slideshow-image-caption-inner'))
-					. $imageData['caption']
-					. Xml::closeElement('span')
-					. Xml::closeElement('span');
-			}
-
-			// parse link
-			$linkAttribs = $this->parseLink($imageData['src'], $imageData['caption'], $imageData['link']);
-
-			// extra link tag attributes
-			$linkAttribs['id'] = "{$id}-{$index}";
-			$linkAttribs['style'] = 'width: ' . ($params['width'] - 80) . 'px';
-			$linkAttribs['class'] = 'wikia-slideshow-image';
-			$linkAttribs['target'] = "_blank";
-
-			if ($imageData['link'] == '') {
-				// tooltip to be used for not-linked images
-				$linkAttribs['title'] = wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text();
-				unset($linkAttribs['href']);
-			} else {
-				$linkText = $imageData['link'];
-
-				// add link overlay
-				$linkOverlay = Xml::openElement('span', array('class' => 'wikia-slideshow-link-overlay'))
-					. wfMessage('wikiaPhotoGallery-slideshow-view-link-overlay', $linkText)->text()
-					. Xml::closeElement('span');
-			}
-
-			// add CSS class so we can show first slideshow image before JS is loaded
-			$liAttribs = array('class' => 'wikia-slideshow-from-feed');
-			if ($index == 0) {
-				$liAttribs['class'] .= ' wikia-slideshow-first-image';
-			}
-
-			$html .= Xml::openElement('li', $liAttribs)
-				. Xml::openElement('img', array('data-src' => $imageData['src']))
-				. Xml::element('a', $linkAttribs, ' ')
-				. $caption
-				. $linkOverlay
-				. '</li>';
-		}
-
-		$html .= Xml::closeElement('ul');
-		$html .= Xml::closeElement('div');
-
-		// render prev/next buttons
-		$top = ($params['height'] >> 1) - 30 /* button height / 2 */ + 5 /* top border of slideshow area */;
-		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-prev-next'));
-
-		// prev
-		$html .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-prev', 'style' => "top: {$top}px",
-				'title' => wfMessage('wikiaPhotoGallery-slideshow-view-prev-tooltip')->text()));
-		$html .= Xml::openElement('span');
-		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
-		$html .= Xml::closeElement('span');
-		$html .= Xml::closeElement('a');
-
-		// next
-		$html .= Xml::openElement('a',
-			array('class' => 'wikia-slideshow-sprite wikia-slideshow-next', 'style' => "top: {$top}px",
-				'title' =>  wfMessage('wikiaPhotoGallery-slideshow-view-next-tooltip')->text()));
-		$html .= Xml::openElement('span');
-		$html .= Xml::element('img', array('class' => 'chevron', 'src' => $wgBlankImgUrl));
-		$html .= Xml::closeElement('span');
-		$html .= Xml::closeElement('a');
-
-		$html .= Xml::closeElement('div');
-
-		// render slideshow toolbar
-		$html .= Xml::openElement('div', array('class' => 'wikia-slideshow-toolbar clearfix', 'style' => 'display: none'));
-
-		// Pop-out icon, "X of X" counter
-		$counterValue = wfMessage('wikiaPhotoGallery-slideshow-view-number', '$1', $index)->text();
-
-		$html .= Xml::openElement('div', array('style' => 'float: left'));
-			$html .= Xml::element('img',
-				array(
-					'class' => 'wikia-slideshow-popout',
-					'height' => 11,
-					'src' => "{$wgStylePath}/common/images/magnify-clip.png",
-					'title' => wfMessage('wikiaPhotoGallery-slideshow-view-popout-tooltip')->text(),
-					'width' => 15,
-				));
-			$html .= Xml::element('span',
-				array('class' => 'wikia-slideshow-toolbar-counter', 'data-counter' => $counterValue),
-				str_replace('$1', '1', $counterValue));
-		$html .= Xml::closeElement('div');
-
-		$html .= Xml::closeElement('div');
-
-		// close slideshow wrapper
-		$html .= Xml::closeElement('div');
-		$html .= Xml::closeElement('div');
-
-		// output JS to init slideshow
-		$height = $params['height'];
-		$width = $params['width'];
-
-		$html .= JSSnippets::addToStack(
-			array(
-				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
-				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
-			),
-			array(),
-			'WikiaPhotoGallerySlideshow.init',
-			array('id' => $id, 'width' => $width, 'height'=> $height)
-		);
-
-		wfProfileOut(__METHOD__);
-		return $html;
-	} // end renderFeedSlideshow()
 
 	/**
 	 * Get object for given image (and call hook)

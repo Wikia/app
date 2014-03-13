@@ -3,7 +3,6 @@ Document   : infobox
 Created on : Nov 3, 2011, 12:41:29 PM
 Author     : wlee
 */
-@import "../../../../../skins/oasis/css/mixins/opacity";
 
 .jwplayer-infobox {
 	
@@ -13,9 +12,9 @@ Author     : wlee
 	width: 95%;
 	
 	.jwplayer-infobox-background {
-		@include opacity(60);
 		background: black;
 		height: 100%;
+		opacity: .6;
 		position: absolute;
 		width: 100%;
 	}

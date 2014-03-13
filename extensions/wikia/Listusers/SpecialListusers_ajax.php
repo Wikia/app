@@ -7,11 +7,6 @@
  * @version: $Id$
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension and cannot be used standalone.\n";
-	exit( 1 ) ;
-}
-
 class ListusersAjax {
 
 	/**
@@ -22,7 +17,7 @@ class ListusersAjax {
 	 * @param       Array   $list
 	 */
 	public static function axShowUsers ( ) {
-		global $wgRequest, $wgUser,	$wgCityId;
+		global $wgRequest, $wgUser, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 

@@ -256,8 +256,11 @@ $messages['fa'] = array(
  * @author Ville96
  */
 $messages['fi'] = array(
+	'filepage-desc' => 'Normaalin MediaWiki-tiedostosivun muunnos videotukea varten',
 	'video-page-file-list-header' => 'Esiintyy näillä sivuilla',
 	'video-page-global-file-list-header' => 'Esiintyy näissä wikeissä',
+	'video-page-from-provider' => 'Tuotu sivulta $1',
+	'video-page-expires' => 'Sisältö vanhenee $1',
 	'video-page-views' => '$1 {{PLURAL:$1|Katselukerta|Katselukertaa}}',
 	'video-page-see-more-info' => 'Näytä lisätiedot',
 	'video-page-see-less-info' => 'Näytä vähemmän tietoa',
@@ -266,6 +269,7 @@ $messages['fi'] = array(
 	'video-page-add-description-link-text' => 'Lisää kuvaus.',
 	'video-page-default-description-header-and-text' => '== Kuvaus ==
 Lisää kuvaus tähän.',
+	'video-page-file-list-pagination' => '$1 ($2)',
 	'file-page-replace-button' => 'Korvaa',
 	'file-page-tab-about' => 'Tietoja',
 	'file-page-tab-history' => 'Tiedoston historia',
@@ -795,6 +799,29 @@ Ange en beskrivning här.',
 	'file-page-more-links' => 'Se hela listan',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'video-page-file-list-header' => 'ఇది, ఈ పేజీల్లో కనిపిస్తుంది',
+	'video-page-global-file-list-header' => 'ఈ వికీల్లో కనిపిస్తుంది',
+	'video-page-from-provider' => '$1 నుండి',
+	'video-page-expires' => 'కంటెంటుకు $1 న కాలం చెల్లుతుంది',
+	'video-page-views' => '$1 {{PLURAL:$1|సందర్శన|సందర్శనలు}}',
+	'video-page-see-more-info' => 'మరింత సమాచారాన్ని చూపించు',
+	'video-page-see-less-info' => 'తక్కువ సమాచారాన్ని చూపించు',
+	'video-page-description-heading' => 'వివరణ',
+	'video-page-description-zero-state' => 'ఇంకా వివరణేమీ లేదు.',
+	'video-page-add-description-link-text' => 'వివరణను చేర్చు.',
+	'video-page-default-description-header-and-text' => '==వివరణ==
+ఇక్కడ వివరణ ఇవ్వండి.',
+	'video-page-file-list-pagination' => '$2 లో $1',
+	'file-page-tab-about' => 'గురించి',
+	'file-page-tab-history' => 'ఫైలు చరిత్ర',
+	'file-page-tab-metadata' => 'మెటాడేటా',
+	'file-page-more-links' => 'పూర్తి జాబితా చూడండి',
+);
+
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  */
@@ -925,14 +952,24 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
+	'video-page-file-list-header' => '出現在這些頁面上',
+	'video-page-global-file-list-header' => '出現在這些 wiki 上',
 	'video-page-from-provider' => '出自$1',
+	'video-page-see-more-info' => '顯示更多資訊',
+	'video-page-see-less-info' => '顯示較少資訊',
 	'video-page-description-heading' => '描述',
+	'video-page-description-zero-state' => '現在還沒有描述',
 	'video-page-add-description-link-text' => '添加說明。',
+	'video-page-default-description-header-and-text' => '在這裡輸入描述。',
+	'video-page-file-list-pagination' => '$2的$1',
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
+	'file-page-tab-history' => '檔案歷史',
+	'file-page-tab-metadata' => '元數據',
 	'file-page-more-links' => '查看完整清單',
 );
 

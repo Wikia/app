@@ -24,7 +24,7 @@ ve.ce.HeadingNode = function VeCeHeadingNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.HeadingNode, ve.ce.ContentBranchNode );
+OO.inheritClass( ve.ce.HeadingNode, ve.ce.ContentBranchNode );
 
 /* Static Properties */
 

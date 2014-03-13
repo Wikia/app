@@ -1,0 +1,6 @@
+// Add bottom padding to window bodies. This is needed after fixing the gaps
+// caused by iframes being display: inline.
+// TODO: this is also a bug in core, might want to upstream it.
+.oo-ui-window-body {
+	padding-bottom: 0.5em;
+}

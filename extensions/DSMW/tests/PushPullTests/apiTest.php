@@ -113,7 +113,7 @@ class apiTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals( $contentOp, str_replace( " ", "", $op[0] ) );
     }
 
-    /*
+    /**
      * test apiQueryPatch with a long content operation
      */
     public function testGetPatchWithLongOp() {

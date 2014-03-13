@@ -14,13 +14,13 @@
 }
 
 .ve-ui-context,
-.ve-ui-toolbar {
+.oo-ui-toolbar {
 	font-size: 1.25em;
 	line-height: 1.5em;
 }
 
 /* Monobook sets font-size: x-small; on the body. Undo this in frames and overlays */
-.ve-ui-frame-body, body .ve-ui-surface-overlay {
+.oo-ui-frame-body, body .ve-ui-surface-overlay {
 	font-size: medium;
 }
 

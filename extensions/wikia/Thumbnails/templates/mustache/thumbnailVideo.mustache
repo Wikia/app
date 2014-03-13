@@ -1,0 +1,21 @@
+<a
+	href="{{linkHref}}"
+	class="video wikia-video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
+	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
+
+	<span class="play-circle"></span>
+
+	<img
+		src="{{imgSrc}}"
+		{{#imgClass}}class="{{imgClass}}"{{/imgClass}}
+		data-video-key="{{videoKey}}"
+		data-video-name="{{videoName}}"
+		{{#dataSrc}}data-src="{{dataSrc}}" {{/dataSrc}}
+		{{#imgWidth}}width="{{imgWidth}}" {{/imgWidth}}
+		{{#imgHeight}}height="{{imgHeight}}" {{/imgHeight}}
+		{{#imgAttrs}}{{{.}}} {{/imgAttrs}}>
+
+	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>
+
+	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}
+</a>

@@ -11,7 +11,8 @@ QUnit.module( 've.ce.Document' );
 
 QUnit.test( 'getRelativeOffset', function ( assert ) {
 	var documentModel = ve.dm.example.createExampleDocument( 'alienData' ),
-		documentView = new ve.ce.Document( documentModel ),
+		surface = ve.test.utils.createSurfaceFromDocument( documentModel ),
+		documentView = surface.getView().getDocument(),
 		tests = [
 			{
 				direction: 1,
@@ -72,10 +73,11 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 		expectCount += tests[i].cases.length;
 	}
 	QUnit.expect( expectCount );
+	surface.destroy();
 } );
 
 QUnit.test( 'getRelativeRange', function ( assert ) {
-	var documentModel, documentView, i, j, expectCount = 0,
+	var documentModel, surface, documentView, i, j, expectCount = 0,
 		tests = [
 		{
 			data: [
@@ -153,7 +155,8 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 	];
 	for ( i = 0; i < tests.length; i++ ) {
 		documentModel = new ve.dm.Document( tests[i].data );
-		documentView = new ve.ce.Document( documentModel );
+		surface = ve.test.utils.createSurfaceFromDocument( documentModel );
+		documentView = surface.getView().getDocument();
 		for ( j = 0; j < tests[i].cases.length; j++ ) {
 			expectCount++;
 			assert.equalRange(
@@ -167,6 +170,7 @@ QUnit.test( 'getRelativeRange', function ( assert ) {
 				'i: ' + i + ', j: ' + j
 			);
 		}
+		surface.destroy();
 	}
 	QUnit.expect( expectCount );
 } );

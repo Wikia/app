@@ -24,6 +24,7 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor/modules';
 	this.parsedMessages = {};
 	this.mediaSources = [
+		//TODO: Bug 50673
 		{ 'url': mw.util.wikiScript( 'api' ) },
 		{ 'url': '//commons.wikimedia.org/w/api.php' }
 	];
@@ -31,7 +32,7 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 
 /* Inheritance */
 
-ve.inheritClass( ve.init.mw.Platform, ve.init.Platform );
+OO.inheritClass( ve.init.mw.Platform, ve.init.Platform );
 
 /* Methods */
 
@@ -84,7 +85,7 @@ ve.init.mw.Platform.prototype.getUserLanguages = function () {
 		langParts = lang.split( '-' ),
 		langs = [ lang ];
 
-	if ( langParts.length > 0 ) {
+	if ( langParts.length > 1 ) {
 		langs.push( langParts[0] );
 	}
 
@@ -104,3 +105,9 @@ ve.init.mw.Platform.prototype.getMediaSources = function () {
 /* Initialization */
 
 ve.init.platform = new ve.init.mw.Platform();
+
+/* Extension */
+
+OO.ui.getUserLanguages = ve.bind( ve.init.platform.getUserLanguages, ve.init.platform );
+
+OO.ui.msg = ve.bind( ve.init.platform.getMessage, ve.init.platform );

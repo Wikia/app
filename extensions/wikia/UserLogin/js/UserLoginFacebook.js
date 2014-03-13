@@ -36,19 +36,12 @@ var UserLoginFacebook = {
 
 			this.initialized = true;
 			this.loginSetup();
-			this.setupTooltips();
 
 			// load when the login dropdown is shown - see BugId:68955
 			$.loadFacebookAPI();
 
 			this.log( 'init' );
 		}
-	},
-
-	setupTooltips: function() {
-		'use strict';
-
-		$( '.sso-login > a' ).tooltip();
 	},
 
 	loginSetup: function() {

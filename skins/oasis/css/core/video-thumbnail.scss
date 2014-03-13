@@ -1,6 +1,5 @@
 @import "skins/oasis/css/mixins/background-opacity";
 @import "skins/oasis/css/mixins/border-opacity";
-@import "skins/oasis/css/mixins/opacity";
 
 /**
  * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
@@ -10,8 +9,12 @@
 	display: inline-block;
 	position: relative;
 
-	&.fluid > img {
+	&.fluid {
 		width: 100%;
+
+		> img {
+			width: 100%;
+		}
 	}
 
 	// Background circle
@@ -133,15 +136,21 @@
 	}
 
 	.duration {
-		@include opacity(70);
 		background: black;
 		border-radius: 1px 0 0 0;
 		bottom: 0;
 		color: white;
 		font-size: 11px;
 		line-height: 17px;
+		opacity: .7;
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;
+	}
+}
+
+.title-thumbnail {
+	.title {
+		font-size: 16px;
 	}
 }

@@ -15,13 +15,13 @@ var hasOwn = Object.hasOwnProperty,
  * MediaWiki transclusion model.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  */
 ve.dm.MWTransclusionModel = function VeDmMWTransclusionModel() {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.parts = [];
@@ -32,7 +32,7 @@ ve.dm.MWTransclusionModel = function VeDmMWTransclusionModel() {
 
 /* Inheritance */
 
-ve.mixinClass( ve.dm.MWTransclusionModel, ve.EventEmitter );
+OO.mixinClass( ve.dm.MWTransclusionModel, OO.EventEmitter );
 
 /* Events */
 
@@ -87,7 +87,7 @@ ve.dm.MWTransclusionModel.prototype.load = function ( data ) {
  * @method
  * @param {Object[]} queue List of objects containing parts to add and optionally indexes to add
  *  them at, if no index is given parts will be added at the end
- * @emits add For each item added
+ * @fires add For each item added
  */
 ve.dm.MWTransclusionModel.prototype.process = function ( queue ) {
 	var i, len, item, title, index;
@@ -164,7 +164,8 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 		'data': {
 			'format': 'json',
 			'action': 'templatedata',
-			'titles': titles.join( '|' )
+			'titles': titles.join( '|' ),
+			'lang': mw.config.get( 'wgUserLanguage' )
 		}
 	} )
 		.done( function ( data ) {
@@ -290,7 +291,7 @@ ve.dm.MWTransclusionModel.prototype.addPart = function ( part, index ) {
  *
  * @method
  * @param {ve.dm.MWTransclusionPartModel} part Part to remove
- * @emits remove
+ * @fires remove
  */
 ve.dm.MWTransclusionModel.prototype.removePart = function ( part ) {
 	var index = ve.indexOf( part, this.parts );

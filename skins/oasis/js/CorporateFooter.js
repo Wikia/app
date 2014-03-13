@@ -13,9 +13,6 @@ require(['JSMessages', 'wikia.cookies', 'wikia.tracker', 'jquery', 'wikia.querys
 				ev.preventDefault();
 				ev.stopPropagation();
 
-				//This is being depracted remove when Varnish will be updated to use useskin
-				cookies.set('mobilefullsite', null);//invalidate cookie
-
 				cookies.set('useskin', 'wikiamobile', {
 					domain: window.wgCookieDomain,
 					path: window.wgCookiePath
