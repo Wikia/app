@@ -1,16 +1,13 @@
 <?php
 
-require_once( dirname(__FILE__) . '/../../Maintenance.php' );
-require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
-require_once( dirname(__FILE__) . '/LyricsScrapper.class.php' );
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/lyrics.setup.php' );
 
-require_once( dirname(__FILE__) . '/scrapers/BaseScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/ArtistScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/AlbumScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
-
-
-
+/**
+ * Class LyricsWikiCrawler
+ *
+ * @desc Maintenance script responsible for scribing Lyrics wikia articles
+ */
 class LyricsWikiCrawler extends Maintenance {
 
 	const OPTION_ARTICLE_ID = 'articleId';
@@ -20,6 +17,7 @@ class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_LANE = 'lane';
 
 	private $articleId = 0;
+
 	/**
 	 * @var DataBase
 	 */
@@ -69,6 +67,9 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 	}
 
+	/**
+	 * @desc Scrapes all Lyrics Wikia articles
+	 */
 	public function doScrapeAllArticles() {
 		$artists = $this->getArtistPageIds();
 		while ( $page = $this->db->fetchObject( $artists ) ) {
@@ -77,6 +78,12 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 	}
 
+	/**
+	 * @desc Scraping only a partition of articles
+	 *
+	 * @param $poolSize
+	 * @param $laneNumber
+	 */
 	function doScrapeLane( $poolSize, $laneNumber ) {
 		$artistCount = $this->getArtistCount();
 		$laneSize = ceil( $artistCount / $poolSize );
@@ -97,6 +104,9 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 	}
 
+	/**
+	 * @desc Scrapes given single article
+	 */
 	public function doScrapeArticle() {
 		$start = microtime(true);
 		$status = ' ';
@@ -115,6 +125,9 @@ class LyricsWikiCrawler extends Maintenance {
 		$this->output( $status . round( microtime( true ) - $start, 2) . 's' . PHP_EOL );
 	}
 
+	/**
+	 * @desc Scrapes artists data from given article
+	 */
 	public function doScrapeArtist() {
 		$this->output( 'Scraping artist #' . $this->getArticleId() . PHP_EOL );
 		$article = Article::newFromID( $this->getArticleId() );
@@ -122,15 +135,28 @@ class LyricsWikiCrawler extends Maintenance {
 		$ls->processArtistArticle( $article );
 	}
 
+	/**
+	 * @desc Scrapes data from articles from yesterday
+	 */
 	public function doScrapeArticlesFromYesterday() {
 		$yesterday = date( "Y-m-d", strtotime( '-1 day' ) );
 		$this->output( 'Scraping articles from ' . $yesterday );
 	}
 
+	/**
+	 * @desc Sets article id
+	 *
+	 * @param Integer $articleId article id
+	 */
 	public function setArticleId( $articleId ) {
 		$this->articleId = $articleId;
 	}
 
+	/**
+	 * @desc Getter - returns article id
+	 *
+	 * @return Integer
+	 */
 	public function getArticleId() {
 		return $this->articleId;
 	}
@@ -152,20 +178,23 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	/**
-	 * Get page ids for artists
+	 * @desc Gets page ids for artists
 	 *
 	 * @param int $limit Number of results
 	 * @param int  $offset Result offset
+	 *
 	 * @return ResultWrapper
 	 */
 	private function getArtistPageIds( $limit = 0, $offset = 0 ) {
 		$limitParams = [
 			'ORDER BY' => 'cl_from'
 		];
+		
 		if ( $limit ) {
 			$limitParams['LIMIT'] = $limit;
 			$limitParams['OFFSET'] = $offset;
 		}
+
 		return $this->db->select(
 			'categorylinks',
 			'cl_from',
@@ -180,3 +209,4 @@ class LyricsWikiCrawler extends Maintenance {
 
 $maintClass = "LyricsWikiCrawler";
 require_once( DO_MAINTENANCE );
+

@@ -2,13 +2,13 @@
 /**
  * Class AlbumScraper
  *
- * Scrape Album page from Lyrics API
+ * @desc Scrape Album page from Lyrics API
  */
 class AlbumScraper extends BaseScraper {
 
 
 	/**
-	 * Process Album article page
+	 * @desc Process Album article page
 	 *
 	 * @param Article $article
 	 * @return array
@@ -26,7 +26,7 @@ class AlbumScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get album data from header template
+	 * @desc Get album data from header template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -36,7 +36,7 @@ class AlbumScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get album data from footer template
+	 * @desc Get album data from footer template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -46,7 +46,7 @@ class AlbumScraper extends BaseScraper {
 	}
 
 	/**
-	 * Data field mapping
+	 * @desc Data field mapping
 	 *
 	 * @return array
 	 */
