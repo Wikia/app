@@ -57,7 +57,7 @@ class SpotlightsModel extends WikiaModel {
 	}
 
 	/**
-	 * Gets three recommended wikis from NLP Results for given wiki
+	 * Gets recommended wikis from NLP Results for given wiki
 	 *
 	 * @param int $cityId Wiki ID
 	 * @return array
