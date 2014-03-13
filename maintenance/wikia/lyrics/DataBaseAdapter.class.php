@@ -214,7 +214,7 @@ class SolrAdapter implements DataBaseAdapter {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
 		$artist['type'] = self::TYPE_ARTIST;
-		if ( $artist['genres'] ) {
+		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
 		$doc = $this->newDocFromData( $artist );
@@ -234,7 +234,7 @@ class SolrAdapter implements DataBaseAdapter {
 		$album['artist_id'] = $artist['id'];
 		// Add songs meta data
 		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
-		if ( $album['genres'] ) {
+		if ( isset( $album['genres'] ) && $album['genres'] ) {
 			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
 		$album['type'] = self::TYPE_ALBUM;
