@@ -210,7 +210,10 @@
 		},
 
 		setupSectionLinks: function () {
-			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			// If VE is the default editor for the page...
+			if ( $( 'nav.wikia-menu-button a', '#WikiaPageHeader' ).filter( ':first' ).attr( 'data-id' ) === 've-edit' ) {
+				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			}
 		},
 
 		onEditTabClick: function ( e ) {

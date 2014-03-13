@@ -21,3 +21,4 @@ $wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.ph
 // Hooks
 $wgHooks['GetPreferences'][] = 'EditorPreference::onGetPreferences';
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
+$wgHooks['DoEditSectionLink'][] = 'EditorPreference::onDoEditSectionLink';

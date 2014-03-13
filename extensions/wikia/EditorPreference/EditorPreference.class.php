@@ -103,63 +103,6 @@ class EditorPreference {
 	}
 
 	/**
-	 * Changes the section edit links to add a VE edit link.
-	 *
-	 * This is attached to the MediaWiki 'DoEditSectionLink' hook.
-	 *
-	 * @param $skin Skin
-	 * @param $title Title
-	 * @param $section string
-	 * @param $tooltip string
-	 * @param $result string HTML
-	 * @param $lang Language
-	 * @return bool true
-	 */
-	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, &$result, $lang ) {
-		return true;
-		global $wgUser;
-
-		$primaryEditor = self::getPrimaryEditor();
-
-		$veEditSection = $wgVisualEditorTabMessages['editsection'] !== null ?
-			$wgVisualEditorTabMessages['editsection'] : 'editsection';
-		$sourceEditSection = $wgVisualEditorTabMessages['editsectionsource'] !== null ?
-			$wgVisualEditorTabMessages['editsectionsource'] : 'editsection';
-
-		// Mostly copied from VisualEditor.hooks.php
-		$attributes = array();
-		if ( !is_null( $tooltip ) ) {
-			# Bug 25462: undo double-escaping.
-			$tooltip = Sanitizer::decodeCharReferences( $tooltip );
-			$attributes['title'] = wfMessage( 'editsectionhint' )->rawParams( $tooltip )
-				->inLanguage( $lang )->text();
-		}
-		$veLink = Linker::link( $title, wfMessage( $veEditSection )->inLanguage( $lang )->text(),
-			$attributes + array( 'class' => 'mw-editsection-visualeditor' ),
-			array( 'veaction' => 'edit', 'section' => $section ),
-			array( 'noclasses', 'known' )
-		);
-		$sourceLink = Linker::link( $title, wfMessage( $sourceEditSection )->inLanguage( $lang )->text(),
-			$attributes,
-			array( 'action' => 'edit', 'section' => $section ),
-			array( 'noclasses', 'known' )
-		);
-
-		$veFirst = $primaryEditor === self::OPTION_EDITOR_VISUAL;
-		$result = '<span class="mw-editsection">'
-			. '<span class="mw-editsection-bracket">[</span>'
-			. ( $veFirst ? $veLink : $sourceLink )
-			. '<span class="mw-editsection-divider">'
-			. wfMessage( 'pipe-separator' )->inLanguage( $lang )->text()
-			. '</span>'
-			. ( $veFirst ? $sourceLink : $veLink )
-			. '<span class="mw-editsection-bracket">]</span>'
-			. '</span>';
-
-		return true;
-	}
-
-	/**
 	 * Gets the primary editor by checking user preferences.
 	 *
 	 * @return integer The editor option value
