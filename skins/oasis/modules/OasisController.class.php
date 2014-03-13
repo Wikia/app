@@ -365,7 +365,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgOasisDisableWikiaScriptLoader;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -412,36 +412,39 @@ class OasisController extends WikiaController {
 			}
 		}
 
-		// Load the combined JS
-		$jsAssetGroups = array(
-			'oasis_shared_core_js', 'oasis_shared_js',
-		);
-		if ($wgUser->isLoggedIn()) {
-			$jsAssetGroups[] = 'oasis_user_js';
-		} else {
-			$jsAssetGroups[] = 'oasis_anon_js';
-		}
-		wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
-		$assets = array();
+		$jsLoader = '';
 
-		$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
+		if ( empty($wgOasisDisableWikiaScriptLoader)) {
+			// Load the combined JS
+			$jsAssetGroups = array(
+				'oasis_shared_core_js', 'oasis_shared_js',
+			);
+			if ($wgUser->isLoggedIn()) {
+				$jsAssetGroups[] = 'oasis_user_js';
+			} else {
+				$jsAssetGroups[] = 'oasis_anon_js';
+			}
+			wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
+			$assets = array();
 
-		// jQueryless version - appears only to be used by the ad-experiment at the moment.
-		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
+			$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
 
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			foreach ( $assets as $group => $urls ) {
-				foreach ( $urls as $index => $u ) {
-					$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
+			// jQueryless version - appears only to be used by the ad-experiment at the moment.
+			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL(($wgUser->isLoggedIn()) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
+
+			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+				foreach ($assets as $group => $urls) {
+					foreach ($urls as $index => $u) {
+						$assets[$group][$index] = $this->rewriteJSlinks($assets[$group][$index]);
+					}
 				}
 			}
-		}
 
-		$assets['references'] = $jsReferences;
+			$assets['references'] = $jsReferences;
 
-		// generate code to load JS files
-		$assets = json_encode($assets);
-		$jsLoader = <<<EOT
+			// generate code to load JS files
+			$assets = json_encode($assets);
+			$jsLoader = <<<EOT
 <script type="text/javascript">
 	var wsl_assets = {$assets};
 	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
@@ -449,6 +452,42 @@ class OasisController extends WikiaController {
 	(function(){ wsl.loadScript(toload); })();
 </script>
 EOT;
+		} else {
+			// skip WikiaScriptLoader
+			$isLoggedIn = $wgUser->isLoggedIn();
+
+			$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
+			$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
+
+			wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
+
+			$assets[] = $this->assetsManager->getURL( $assetGroups ) ;
+
+			// jQueryless version - appears only to be used by the ad-experiment at the moment.
+			// disabled - not needed atm (and skipped in wsl-version anyway)
+			// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
+
+			// get urls
+			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+				foreach ($assets as $group => $urls) {
+					foreach ($urls as $index => $u) {
+						$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
+					}
+				}
+			}
+
+			// as $jsReferences
+			$assets[] = $jsReferences;
+
+			//dd( $assets );
+
+			// generate direct script tags
+			foreach ($assets as $group => $urls) {
+				foreach ($urls as $index => $u) {
+					$jsLoader .= "<script type=\"text/javascript\" src=\"{$u}\"></script>\n";
+				}
+			}
+		}
 
 		$tpl = $this->app->getSkinTemplateObj();
 
