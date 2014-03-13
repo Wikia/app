@@ -35,6 +35,7 @@ class RenderAction extends FormlessAction {
 
 	public function show(){
 
+		$this->getOutput()->setSquidMaxage(600); # Wikia change - cache action=render for 600 s
 		$this->page->render();
 
 	}
