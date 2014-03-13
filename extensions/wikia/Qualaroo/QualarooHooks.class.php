@@ -21,7 +21,17 @@ class QualarooHooks {
 		global $wgNoExternals;
 
 		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
-			$scssPackages[] = 'extensions/wikia/Qualaroo/css/Qualaroo.scss';
+			$scssPackages[] = 'wikia/Qualaroo/css/Qualaroo.scss';
+		}
+
+		return true;
+	}
+
+	static public function onMakeGlobalVariablesScript ( &$vars, $outputPage ) {
+		global $wgNoExternals, $wgQualarooDevUrl, $wgDevelEnvironment, $wgQualarooUrl;
+
+		if ( empty( $wgNoExternals ) && $outputPage->getSkin()->skinname == 'oasis' ) {
+			$vars['wgQualarooUrl'] = ($wgDevelEnvironment) ? $wgQualarooDevUrl : $wgQualarooUrl;
 		}
 
 		return true;
