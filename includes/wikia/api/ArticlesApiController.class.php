@@ -221,11 +221,11 @@ class ArticlesApiController extends WikiaApiController {
 					}
 			}
 		}
-
-		$this->response->setVal( 'basepath', $this->wg->Server );
-		$this->response->setVal( 'items', $mostLinkedOutput );
-
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+		$this->setResponseData(
+			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
+			'thumbnail',
+			self::CLIENT_CACHE_VALIDITY
+		);
 	}
 
 	/**
@@ -390,11 +390,12 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( [ 'items' => array_slice( $results, 0, $limit ), 'basepath' => $this->wg->Server ] );
-
-		$response->setCacheValidity(self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION);
-
+		$results = array_slice( $results, 0, $limit );
+		$this->setResponseData(
+			[ 'items' => $results, 'basepath' => $this->wg->Server ],
+			'thumbnail',
+			self::NEW_ARTICLES_VARNISH_CACHE_EXPIRATION
+		);
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -542,20 +543,17 @@ class ArticlesApiController extends WikiaApiController {
 					}
 				}
 			}
-
-			$this->response->setVal( 'items', $ret );
+			$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
 
 			if ( !empty( $articles[1] ) ) {
-				$this->response->setVal( 'offset', $articles[1] );
+				$responseValues[ 'offset' ] = $articles[ 1 ];
 			}
 
-			$this->response->setVal( 'basepath', $this->wg->Server );
+			$this->setResponseData( $responseValues, 'thumbnail', self::CLIENT_CACHE_VALIDITY );
 		} else {
 			wfProfileOut( __METHOD__ );
 			throw new NotFoundApiException( 'No members' );
 		}
-
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
 
 		wfProfileOut( __METHOD__ );
 	}	
@@ -599,9 +597,11 @@ class ArticlesApiController extends WikiaApiController {
 		 * Varnish/Browser caching not appliable for
 		 * for this method's data to be kept up-to-date
 		 */
-
-		$this->response->setVal( 'items', $collection );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->setResponseData(
+			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
+			'thumbnail',
+			self::CLIENT_CACHE_VALIDITY
+		);
 
 		$collection = null;
 		wfProfileOut( __METHOD__ );
@@ -884,11 +884,7 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
-		$response = $this->getResponse();
-		$response->setCacheValidity(self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION);
-
-		$response->setFormat("json");
-		$response->setData( $jsonSimple );
+		$this->setResponseData( $jsonSimple, 'images', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {
@@ -915,11 +911,11 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$result = array_slice( $result, 0, $limit );
-		$response = $this->getResponse();
-		$response->setValues( [ 'items' => $result ] );
-		$this->response->setVal( 'basepath', $this->wg->Server );
-
-		$response->setCacheValidity( self::CLIENT_CACHE_VALIDITY );
+		$this->setResponseData(
+			[ 'items' => $result, 'basepath' => $this->wg->Server ],
+			'thumbnail',
+			self::CLIENT_CACHE_VALIDITY
+		);
 
 	}
 

@@ -167,7 +167,49 @@ class WikiaApiController extends WikiaController {
 		return array_merge(parent::getSkipMethods(),
 			['getApiVersion', 'blockIfNonCommercialOnly', 'hideNonCommercialContent']);
 	}
-	
+
+	protected function serveImages()
+	{
+		global  $wgApiDisableImages;
+		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
+	}
+
+	/**
+	 * @param $data data to set as output
+	 * @param string|array $imageFields - fields to remove if we don't serve images
+	 * @param int $cacheValidity set only if greater than 0
+	 */
+	protected function setResponseData( $data, $imageFields = null, $cacheValidity = 0 ) {
+		if ( !$this->serveImages() && is_array( $data ) && !empty( $imageFields ) ) {
+			if ( !is_array( $imageFields ) ) {
+				$imageFields = [ $imageFields ];
+			}
+			//convert array to [ field_name => N ]
+			$imageFields = array_flip( $imageFields );
+			self::clear_array( $data, $imageFields );
+		}
+		$this->response->setData( $data );
+		if ( $cacheValidity > 0 ) {
+			$this->response->setCacheValidity( $cacheValidity );
+		}
+	}
+
+	/**
+	 * recursive search in array and clean values where key is in "$fields"
+	 * @param $input
+	 * @param $fields
+	 */
+	protected static function clear_array( &$input, &$fields ) {
+		foreach ( $input as $key => &$val ) {
+			$isArray = is_array( $val );
+			if ( array_key_exists( $key, $fields ) ) {
+				$val = $isArray ? [ ] : null;
+			} elseif ( $isArray ) {
+				self::clear_array( $val, $fields );
+			}
+		}
+	}
+
 }
 
 
