@@ -411,26 +411,23 @@ class OasisController extends WikiaController {
 				$this->jsFiles .= $s['tag'];
 			}
 		}
+		$isLoggedIn = $wgUser->isLoggedIn();
+
+		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
+		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
 
 		$jsLoader = '';
 
+		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
+
 		if ( empty($wgOasisDisableWikiaScriptLoader)) {
 			// Load the combined JS
-			$jsAssetGroups = array(
-				'oasis_shared_core_js', 'oasis_shared_js',
-			);
-			if ($wgUser->isLoggedIn()) {
-				$jsAssetGroups[] = 'oasis_user_js';
-			} else {
-				$jsAssetGroups[] = 'oasis_anon_js';
-			}
-			wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
 			$assets = array();
 
-			$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
+			$assets['oasis_shared_js'] = $this->assetsManager->getURL($assetGroups);
 
 			// jQueryless version - appears only to be used by the ad-experiment at the moment.
-			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL(($wgUser->isLoggedIn()) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
+			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL($isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
 
 			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
 				foreach ($assets as $group => $urls) {
@@ -454,12 +451,6 @@ class OasisController extends WikiaController {
 EOT;
 		} else {
 			// skip WikiaScriptLoader
-			$isLoggedIn = $wgUser->isLoggedIn();
-
-			$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
-			$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
-
-			wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
 			$assets = $this->assetsManager->getURL( $assetGroups ) ;
 
@@ -478,7 +469,7 @@ EOT;
 			$assets = array_merge($assets, $jsReferences);
 
 			// generate direct script tags
-			foreach ($assets as $index => $url) {
+			foreach ($assets as $url) {
 				$url = htmlspecialchars( $url );
 				$jsLoader .= "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
 			}
