@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class AlbumScraper
  *
@@ -20,6 +19,9 @@ class AlbumScraper extends BaseScraper {
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
 		$albumData['genres'] = $this->getGenres( $article );
+		if ( isset( $albumData['Genre']) && !in_array($albumData['Genre'], $albumData['genres'] ) ) {
+			$albumData['genres'][] = $albumData['Genre'];
+		}
 		return array_merge( $albumData, $this->getFooter( $article ) );
 	}
 
@@ -50,26 +52,22 @@ class AlbumScraper extends BaseScraper {
 	 */
 	public function getDataMap() {
 		return [
-			'available' => 'available',
-			'article_id' => 'article_id',
+			'article_id' => 'id',
 			'Cover' => 'image',
-			'year' => 'year',
-			'Album' => 'name',
+			'year' => 'release_date',
+			'Album' => 'album_name',
 			'iTunes' => 'itunes',
-			'Genre' => 'genres',
+			'genres' => 'genres',
 			'Length' => 'length',
-/* These fields are also captured but not needed now
-			'Artist' => 'artist',
 			'Wikipedia' => 'wikipedia',
-			'romanizedAlbum' => 'romanized_name',
+			'romanizedAlbum' => 'romanized_album_name',
 			'asin' => 'asin',
 			'allmusic' => 'allmusic',
 			'discogs' => 'discogs',
 			'musicbrainz' => 'musicbrainz',
 			'download' => 'download',
 			'songs' => 'songs',
-*/
 		];
 	}
 
-} 
+}

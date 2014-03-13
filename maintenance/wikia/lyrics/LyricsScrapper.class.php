@@ -50,8 +50,8 @@ class LyricsScrapper {
 		// Get Artist data
 		$artistData = $this->artistScraper->processArticle( $article );
 		// Get basic albums data from Artist page
-		$leanAlbumsData = $this->artistScraper->getAlbums( $article, $artistData['name'] );
-		self::log( "\tARTIST: " . $artistData['name'] . PHP_EOL );
+		$leanAlbumsData = $this->artistScraper->getAlbums( $article, $artistData['artist_name'] );
+		self::log( "\tARTIST: " . $artistData['artist_name'] . PHP_EOL );
 		$albumsData = $this->processAlbums( $artistData, $leanAlbumsData );
 		// Save Artist
 		$this->dba->saveArtist( $artistData, $albumsData );
@@ -67,7 +67,6 @@ class LyricsScrapper {
 	function processAlbums( $artistData, $leanAlbumsData ) {
 		$albumsData = [];
 		foreach ( $leanAlbumsData as $albumData ) {
-			$albumData['available'] = 0;
 			self::log( "\t\tALBUM: " . $albumData['Album'] . PHP_EOL );
 			// Check if Album has MediaWiki Title
 			if ( $albumData['title'] ) {
@@ -76,8 +75,6 @@ class LyricsScrapper {
 				if ( $albumArticle !== null ) {
 					// Get full album data from Album page
 					$albumData = array_merge( $albumData,  $this->albumScraper->processArticle( $albumArticle ) );
-					// Mark the album as available
-					$albumData['available'] = 1;
 					// Get songs from Album page NOT
 					// $leanSongsData = $this->albumScraper->getSongs( $albumArticle );
 				}
@@ -89,8 +86,10 @@ class LyricsScrapper {
 			);
 			$songsData = $this->processSongs( $artistData, $albumData, $leanSongsData );
 			$albumData['songs'] = $songsData;
-			// Mark the album as available
-			$this->dba->saveAlbum( $artistData, $albumData, $songsData );
+			if ( isset( $albumData['id'] ) ) {
+				// Save only albums which are actual wiki pages
+				$this->dba->saveAlbum( $artistData, $albumData, $songsData );
+			}
 			$albumsData[] = $albumData;
 		}
 		return $albumsData;
@@ -113,20 +112,20 @@ class LyricsScrapper {
 				if ( $songArticle !== null ) {
 					self::log( "\t\t\tSONG: " . $songData['title'] . PHP_EOL );
 					$songData = array_merge( $songData, $this->songScraper->processArticle( $songArticle ) );
-					// Mark the song as available
-					$songData['available'] = 1;
 					$songData = $this->songScraper->sanitizeData(
 						$songData,
 						$this->songScraper->getDataMap()
 					);
 					$songsData[] = $songData;
-					// Save only songs we have
-					$this->dba->saveSong(
-						$artistData,
-						$albumData,
-						$songData
-					);
 
+					if ( isset( $songData['id'] ) && !empty( $songData['lyrics'] ) ) {
+						// Save only songs we have as Wiki pages and have lyrics
+						$this->dba->saveSong(
+							$artistData,
+							$albumData,
+							$songData
+						);
+					}
 					continue;
 				}
 			}
@@ -135,8 +134,6 @@ class LyricsScrapper {
 				$songData,
 				$this->songScraper->getDataMap()
 			);
-			// Mark the song as available
-			$songData['available'] = 0;
 			$songsData[] = $songData;
 			// but also add to list the one which we don't have
 			$albumsData[] = $this->songScraper->sanitizeData(
@@ -171,4 +168,4 @@ class LyricsScrapper {
 	static function log ( $text ) {
 		echo $text;
 	}
-} 
+}

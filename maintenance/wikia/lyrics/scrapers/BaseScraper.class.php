@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class BaseScraper
  *
@@ -33,9 +32,9 @@ abstract class BaseScraper {
 		$result = array();
 		foreach ( $dataMap as $key => $value ) {
 			if ( isset( $data[$key] ) ) {
-				$result[$value] = $data[$key];
-			} else {
-				$result[$value] = '';
+				if ( !empty( $data[$key] ) ) {
+					$result[$value] = $data[$key];
+				}
 			}
 		}
 		return $result;

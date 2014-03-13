@@ -39,10 +39,10 @@ class MockAdapter implements DataBaseAdapter {
  */
 class SolrAdapter implements DataBaseAdapter {
 
-	const MAX_QUEUE_LENGTH = 10;
-	const TYPE_ARTIST = 1;
-	const TYPE_ALBUM = 2;
-	const TYPE_SONG = 3;
+	const MAX_QUEUE_LENGTH = 50;
+	const TYPE_ARTIST = 'artist';
+	const TYPE_ALBUM = 'album';
+	const TYPE_SONG = 'song';
 
 	private $client;
 	private $queue = [];
@@ -60,6 +60,7 @@ class SolrAdapter implements DataBaseAdapter {
 	function __construct( $config ) {
 		$this->client = new Solarium_Client( $config );
 		$this->update = $this->client->createUpdate();
+		$this->timer = microtime( true );
 	}
 
 	/**
@@ -71,16 +72,6 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
-	 * Generate key based on the provided keys
-	 *
-	 * @param array $fields
-	 * @return string
-	 */
-	private function generateKey( Array $fields ) {
-		return implode( '~', $fields );
-	}
-
-	/**
 	 * Commit the documents in the current update queue
 	 *
 	 * @return null|Solarium_Result_Update
@@ -88,6 +79,8 @@ class SolrAdapter implements DataBaseAdapter {
 	public function commit() {
 		$result = null;
 		if ( $this->queue ) {
+			printf('COMMIT %f s for %d commits' . PHP_EOL, ( microtime( true ) - $this->timer ), count( $this->queue ) );
+			$this->timer = microtime( true );
 			$update = $this->client->createUpdate();
 			$update->addDocuments( $this->queue );
 			$update->addCommit();
@@ -102,7 +95,7 @@ class SolrAdapter implements DataBaseAdapter {
 	 * Commit the queue if number of documents = MAX_QUEUE_LENGTH
 	 */
 	private function autoCommit() {
-		if ( count( $this->queue ) == self::MAX_QUEUE_LENGTH ) {
+		if ( count( $this->queue ) >= self::MAX_QUEUE_LENGTH ) {
 			$this->commit();
 		}
 	}
@@ -114,15 +107,21 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	private function add( Solarium_Document_ReadWrite $doc ) {
 		$this->queue[] = $doc;
+		$this->autoCommit();
 	}
 
 	/**
-	 * Create new update document
+	 * Create new solr doc from data array
 	 *
+	 * @param $data
 	 * @return Solarium_Document_ReadWrite
 	 */
-	private function newDoc() {
-		return $this->update->createDocument();
+	private function newDocFromData( $data ) {
+		$doc = $this->update->createDocument();
+		foreach ( $data as $key => $value ) {
+			$doc->{$key} = $value;
+		}
+		return $doc;
 	}
 
 	/**
@@ -136,47 +135,90 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
+	 * Generate meta data for album
+	 *
+	 * @param array $album - Album data array
+	 * @return array|null
+	 */
+	function getAlbumMetaData( Array $album ) {
+		if ( isset( $album['id'] ) ) {
+			$albumData =  [
+				'album_id' => $album['id'],
+				'album_name' => $album['album_name'],
+			];
+			if ( isset($album['image']) ) {
+				$albumData['image'] = $album['image'];
+			}
+			if ( isset($album['release_date']) ) {
+				$albumData['release_date'] = $album['release_date'];
+			}
+			return $albumData;
+		}
+		return null;
+	}
+
+	/**
+	 * Generate meta data for song
+	 *
+	 * @param array $song - Song data array
+	 * @return array
+	 */
+	function getSongMetaData( Array $song ) {
+		$result = [
+			'name' => $song['song_name'],
+		];
+		if ( isset( $song['id'] ) ) {
+			$result['id'] = $song['id'];
+		}
+		return $result;
+	}
+
+	/**
+	 * Generate meta data for albums
+	 *
+	 * @param array $albums - array with albums data
+	 * @return array
+	 */
+	function getAlbumsMetaData( Array $albums ) {
+		$result = [];
+		foreach ( $albums as $album ) {
+			$album = $this->getAlbumMetaData( $album );
+			if ( $album ) {
+				$result[] = $album;
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Generate meta data for songs
+	 *
+	 * @param array $songs
+	 * @return array
+	 */
+	function getSongsMetaData( Array $songs ) {
+		$result = [];
+		foreach ( $songs as $song ) {
+			$result[] = $this->getSongMetaData( $song );
+		}
+		return $result;
+	}
+
+	/**
 	 * Save artist document to Solr
 	 *
 	 * @param array $artist
 	 * @param array $albums
 	 */
 	function saveArtist( Array $artist, Array $albums ) {
-		$meta = [
-			'albums' => [],
-			'songs' => [],
-		];
-		if (
-			isset( $artist['image'] ) &&
-			!empty( $artist['image'] )
-		) {
-			$meta['image'] = $artist['image'];
+		// Add albums data
+		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
+		$artist['type'] = self::TYPE_ARTIST;
+		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
+			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
-		foreach ( $albums as $album ) {
-			if ( empty( $album['article_id'] ) ) {
-				foreach ( $album['songs'] as $song ) {
-					$meta['songs'][] = [
-						'name' => $song['name'],
-						'available' => $song['available'],
-					];
-				}
-			} else {
-				$meta['albums'][] = [
-					'name' => $album['name'],
-					'image' => $album['image'],
-					'year' => $album['year'],
-					'available' => $album['available'],
-				];
-			}
-		}
-		$doc = $this->newDoc();
-		$doc->id = $this->generateKey( [$artist['name']] );
-		$doc->name = $artist['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->type = self::TYPE_ARTIST;
-		$doc->article_id = $artist['article_id'];
+		$doc = $this->newDocFromData( $artist );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 
 	/**
@@ -186,39 +228,18 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $album
 	 * @param array $songs
 	 */
-	function saveAlbum( Array $artist, Array $album, Array $songs) {
-		if ( empty ( $album['article_id'] ) ) {
-			// Don't create meta albums like "Other songs"
-			return;
+	function saveAlbum( Array $artist, Array $album, Array $songs ) {
+		// Add artist meta data
+		$album['artist_name'] = $artist['artist_name'];
+		$album['artist_id'] = $artist['id'];
+		// Add songs meta data
+		$album['songs'] = $this->encodeMeta( $this->getSongsMetaData( $songs ) );
+		if ( isset( $album['genres'] ) && $album['genres'] ) {
+			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
-		$meta = [
-			'image' => $album['image'],
-			'year' => $album['year'],
-			'length' => $album['length'],
-			'genres' => $album['genres'],
-			'itunes' => $album['itunes'],
-			'artist' => [
-				'name' => $artist['name'],
-				'image' => $artist['image'],
-			],
-			'songs' => []
-		];
-
-		foreach ( $songs as $song ) {
-			$meta['songs'][] = [
-				'name' => $song['name'],
-				'number' => $song['number'],
-				'available' => $song['available'],
-			];
-		}
-		$doc = $this->newDoc();
-		$doc->id = $this->generateKey( [$artist['name'], $album['name']] );
-		$doc->name = $album['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->type = self::TYPE_ALBUM;
-		$doc->article_id = $album['article_id'];
+		$album['type'] = self::TYPE_ALBUM;
+		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 
 	/**
@@ -228,41 +249,19 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @param array $album
 	 * @param array $song
 	 */
-	function saveSong( Array $artist, Array $album, Array $song) {
-		$meta = [
-			'itunes' => $song['itunes'],
-			'artist' => [
-				'name' => $artist['name'],
-				'image' => $artist['image'],
-			],
-		];
-
-		if ( $album['available'] ) {
-			$meta['album'] = [
-				'name' => $album['name'],
-				'image' => $album['image'],
-			];
-			$key = $this->generateKey( [
-				$artist['name'],
-				$album['name'],
-				$song['name'],
-			] );
-		} else {
-			$key = $this->generateKey( [
-				$artist['name'],
-				'',
-				$song['name'],
-			] );
+	function saveSong( Array $artist, Array $album, Array $song ) {
+		$song['artist_id'] = $artist['id'];
+		$song['artist_name'] = $artist['artist_name'];
+		if ( isset( $album['id'] ) ) {
+			$song['album_name'] = $album['album_name'];
+			$song['album_id'] = $album['id'];
+			if ( isset( $album['image'] ) ) {
+				$song['image'] = $album['image'];
+			}
 		}
-		$doc = $this->newDoc();
-		$doc->id = $key;
-		$doc->name = $song['name'];
-		$doc->meta = $this->encodeMeta( $meta );
-		$doc->content = $song['lyrics'];
-		$doc->type = self::TYPE_SONG;
-		$doc->article_id = $song['article_id'];
+		$song['type'] = self::TYPE_SONG;
+		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
-		$this->autoCommit();
 	}
 }
 

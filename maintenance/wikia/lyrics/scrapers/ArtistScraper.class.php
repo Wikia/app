@@ -164,13 +164,12 @@ class ArtistScraper extends BaseScraper {
 	 */
 	public function getDataMap() {
 		return [
-			'article_id' => 'article_id',
-			'name' => 'name',
+			'article_id' => 'id',
+			'name' => 'artist_name',
 			'pic' => 'image',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
-/* These fields are also captured but not needed now
-			'romanizedArtist' => 'romanized_name',
+			'romanizedArtist' => 'romanized_artist_name',
 			'officialSite' => 'official_site',
 			'myspace' => 'myspace',
 			'twitter' => 'twitter',
@@ -186,7 +185,6 @@ class ArtistScraper extends BaseScraper {
 			'discogs' => 'discogs',
 			'musicbrainz' => 'musicbrainz',
 			'youtube' => 'youtube',
-*/
 		];
 	}
 
