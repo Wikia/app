@@ -149,6 +149,9 @@ class TvApiController extends WikiaApiController {
 	protected function querySolr( $query, $lang ) {
 		$config = (new Factory())->getSolariumClientConfig();
 		$config['adapteroptions']['core'] = 'xwiki';
+		$config['adapteroptions']['host'] = 'dev-search-s4';
+		$config['adapteroptions']['port'] = 8983;
+		unset($config['adapteroptions']['proxy']);
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -162,8 +165,8 @@ class TvApiController extends WikiaApiController {
 		$select->setRows(1);
 		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
 
-		$dismax->setQueryFields( 'series_txt^4 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
-		$dismax->setPhraseFields( 'series_txt^10 sitename_txt^5' );
+		$dismax->setQueryFields( 'series_mv_em^20 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
+		$dismax->setPhraseFields( 'series_mv_em^20 sitename_txt^5' );
 		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
@@ -193,7 +196,6 @@ class TvApiController extends WikiaApiController {
 				$found = true;
 			}
 		}
-
 //		foreach( $resultSet->getResults() as $result ) {
 //			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
 //				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
