@@ -13,7 +13,6 @@ class QualarooHooks {
 		if ( empty( $wgNoExternals ) ) {
 			$assetsArray[] = 'qualaroo_js';
 		}
-		var_dump($assetsArray);
 
 		return true;
 	}
