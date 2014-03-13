@@ -108,14 +108,18 @@ class LyricsScrapper {
 		$songsData = [];
 		foreach( $leanSongsData as $songData ) {
 			if ( $songData['title'] ) {
+				// Song has wiki title
 				$songArticle = $this->articleFromTitle( $songData['title'] );
 				if ( $songArticle !== null ) {
+					// Song article exists
 					self::log( "\t\t\tSONG: " . $songData['title'] . PHP_EOL );
 					$songData = array_merge( $songData, $this->songScraper->processArticle( $songArticle ) );
 					$songData = $this->songScraper->sanitizeData(
 						$songData,
 						$this->songScraper->getDataMap()
 					);
+
+					// Add song to songs list
 					$songsData[] = $songData;
 
 					if ( isset( $songData['id'] ) && !empty( $songData['lyrics'] ) ) {
@@ -130,12 +134,7 @@ class LyricsScrapper {
 				}
 			}
 			self::log( "\t\t\tSONG NOT FOUND: " . $songData['song'] . PHP_EOL );
-			$songData = $this->songScraper->sanitizeData(
-				$songData,
-				$this->songScraper->getDataMap()
-			);
-			$songsData[] = $songData;
-			// but also add to list the one which we don't have
+			// Add song to songs list
 			$songsData[] = $this->songScraper->sanitizeData(
 				$songData,
 				$this->songScraper->getDataMap()
