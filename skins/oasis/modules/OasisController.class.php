@@ -461,7 +461,7 @@ EOT;
 
 			wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
-			$assets[] = $this->assetsManager->getURL( $assetGroups ) ;
+			$assets = $this->assetsManager->getURL( $assetGroups ) ;
 
 			// jQueryless version - appears only to be used by the ad-experiment at the moment.
 			// disabled - not needed atm (and skipped in wsl-version anyway)
@@ -469,23 +469,18 @@ EOT;
 
 			// get urls
 			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-				foreach ($assets as $group => $urls) {
-					foreach ($urls as $index => $u) {
-						$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
-					}
+				foreach ($assets as $index => $url) {
+					$assets[$index] = $this->rewriteJSlinks( $url );
 				}
 			}
 
 			// as $jsReferences
-			$assets[] = $jsReferences;
-
-			//dd( $assets );
+			$assets = array_merge($assets, $jsReferences);
 
 			// generate direct script tags
-			foreach ($assets as $group => $urls) {
-				foreach ($urls as $index => $u) {
-					$jsLoader .= "<script type=\"text/javascript\" src=\"{$u}\"></script>\n";
-				}
+			foreach ($assets as $index => $url) {
+				$url = htmlspecialchars( $url );
+				$jsLoader .= "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
 			}
 		}
 
