@@ -3,19 +3,13 @@ var UserSignup = {
 	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 	invalidInputs: {},
-	init: function() {
-		$('.extiw').click(function(e) {
-			e.preventDefault();
-			$.getJSON('http://www.wikia.com/api.php?callback=?', {
-				'action': 'parse',           
-				'format': 'json',           
-				'page': 'Terms_of_Use'       
-			}, function(data) { 
-				var modal = $(data.parse.text['*']).makeModal({
-					persistent: false, 
-					width: 800 });
-				modal.addClass('WikiaArticle').find('.editsection').hide();
-			});
+	init: function () {
+		'use strict';
+
+		$('.extiw').click(function (event) {
+			var url = $(this).attr('href');
+			event.preventDefault();
+			window.open(url, '_blank');
 		});
 
 		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
