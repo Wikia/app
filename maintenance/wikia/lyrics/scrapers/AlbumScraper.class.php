@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class AlbumScraper
  *
@@ -69,4 +68,4 @@ class AlbumScraper extends BaseScraper {
 		];
 	}
 
-} 
+}

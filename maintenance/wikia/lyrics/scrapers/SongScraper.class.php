@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Class SongScraper
  *
@@ -62,31 +60,24 @@ class SongScraper extends BaseScraper {
 	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
-			return trim( removeWikitextFromLyrics( $matches[1] ) );
+			return $this->removeWikiTextFromLyrics( $matches[1] );
 		}
+		return '';
 	}
 
 	/**
-	 * Clear wikitext from the lyrics tag
+	 * Remove wikitext from the lyrics tag
 	 *
 	 * Borrowed from extensions/3rdparty/LyricWiki/server.php
 	 *
 	 * @param $lyrics
 	 * @return mixed
 	 */
-	function removeWikitextFromLyrics( $lyrics ) {
-		// Clean up wikipedia template to be plaintext
-		$lyrics = preg_replace( '/\{\{wp.*\|(.*?)\}\}/', '$1', $lyrics );
+	function removeWikiTextFromLyrics( $lyrics ) {
+		global $wgParser;
 
-		// Clean up links & category-links to be plaintext
-		$lyrics = preg_replace( '/\[\[([^\|\]]*)\]\]/', '$1', $lyrics ); // links with no alias (no pipe)
-		$lyrics = preg_replace( '/\[\[.*\|(.*?)\]\]/', '$1', $lyrics );
-
-		// Filter out extra formatting markup
-		$lyrics = preg_replace("/'''/", "", $lyrics); // rm bold
-		$lyrics = preg_replace("/''/", "", $lyrics); // rm italics
-
-		return $lyrics;
+		$lyrics = preg_replace( '/\{\{(.*?)\}\}/', '$1', $lyrics );
+		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 	/**

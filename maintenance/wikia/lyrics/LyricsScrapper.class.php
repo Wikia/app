@@ -163,4 +163,4 @@ class LyricsScrapper {
 	static function log ( $text ) {
 		echo $text;
 	}
-} 
+}
