@@ -3,6 +3,8 @@ class SpotlightsABTestController extends WikiaController {
 	const TYPE_TIPSY_MOCK = 1;
 	const TYPE_OPENX_MOCK = 2;
 	const TYPE_NLP_MOCK = 4;
+	const TYPE_NLP_LDA_MOCK = 8;
+
 	const MEMCACHE_VER = '1.0';
 
 	/**
@@ -40,7 +42,10 @@ class SpotlightsABTestController extends WikiaController {
 							$spotlights = $spotlightsModel->getTipsySpotlights( $cityId );
 							break;
 						case self::TYPE_NLP_MOCK:
-							$spotlights = $spotlightsModel->getNLPSpotlights();
+							$spotlights = $spotlightsModel->getNLPTopicSpotlights();
+							break;
+						case self::TYPE_NLP_LDA_MOCK:
+							$spotlights = $spotlightsModel->getNLPLDaSpotlights();
 							break;
 					}
 
