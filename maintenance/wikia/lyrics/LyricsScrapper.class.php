@@ -136,7 +136,7 @@ class LyricsScrapper {
 			);
 			$songsData[] = $songData;
 			// but also add to list the one which we don't have
-			$albumsData[] = $this->songScraper->sanitizeData(
+			$songsData[] = $this->songScraper->sanitizeData(
 				$songData,
 				$this->songScraper->getDataMap()
 			);
