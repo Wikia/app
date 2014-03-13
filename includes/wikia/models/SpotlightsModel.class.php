@@ -57,6 +57,41 @@ class SpotlightsModel extends WikiaModel {
 	}
 
 	/**
+	 * Gets three recommended wikis from NLP Results for given wiki
+	 *
+	 * @param int $cityId Wiki ID
+	 * @return array
+	 */
+	public function getNLPSpotlights() {
+		global $wgNLPSpotlightIds;
+
+		$spotlights = [
+			'data' => [],
+			'status' => 0
+		];
+
+		foreach ( $wgNLPSpotlightIds as &$spotlightId ) {
+			$wikiData = WikiFactory::getWikiByID($spotlightId);
+
+			if ( $wikiData ) {
+				$wikiUrl = $wikiData->city_url;
+				$wikiName = $wikiData->city_title;
+				$wikiImage = $this->getSpotlightImage( $wikiUrl );
+
+				$spotlight = [
+					'image' => $wikiImage ? $wikiImage : self::SPOTLIGHT_PLACEHOLDER,
+					'url' => $wikiUrl,
+					'text' => $wikiName
+				];
+
+				$spotlights['data'] = $spotlight;
+			}
+		}
+
+		return $spotlights;
+	}
+
+	/**
 	 * Gets wiki main image
 	 *
 	 * @param $url Wiki url
