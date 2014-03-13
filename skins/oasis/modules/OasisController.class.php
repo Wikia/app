@@ -417,12 +417,12 @@ class OasisController extends WikiaController {
 		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
 
 		$jsLoader = '';
+		$assets = array();
 
 		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
 		if ( empty($wgOasisDisableWikiaScriptLoader)) {
 			// Load the combined JS
-			$assets = array();
 
 			$assets['oasis_shared_js'] = $this->assetsManager->getURL($assetGroups);
 
