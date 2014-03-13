@@ -599,6 +599,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
+		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
+
+		if( $this->currentPage == $this->pagesCount ) {
+			$this->setVal( 'shownResultsEnd', $this->resultsFound );
+		} else {
+			$this->setVal( 'shownResultsEnd', $this->resultsPerPage * $this->currentPage ) ;
+		}
+
 		$sanitizedQuery = $searchConfig->getQuery()->getSanitizedQuery();
 		if ( strlen($sanitizedQuery)>0 && in_array( 0, $searchConfig->getNamespaces() ) && !in_array( 6, $searchConfig->getNamespaces() ) ) {
 			$combinedMediaResult = $this->sendSelfRequest( 'combinedMediaSearch',
