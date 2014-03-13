@@ -84,7 +84,7 @@ class SpotlightsModel extends WikiaModel {
 					'text' => $wikiName
 				];
 
-				$spotlights['data'] = $spotlight;
+				$spotlights['data'] []= $spotlight;
 			}
 		}
 
