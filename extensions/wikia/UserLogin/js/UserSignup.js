@@ -6,7 +6,7 @@ var UserSignup = {
 	init: function () {
 		'use strict';
 
-		$('.extiw').click(function (event) {
+		$('.submit-pane p a').click(function (event) {
 			var url = $(this).attr('href');
 			event.preventDefault();
 			window.open(url, '_blank');
