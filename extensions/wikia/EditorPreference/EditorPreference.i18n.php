@@ -9,5 +9,4 @@ $messages['en'] = array(
 	'option-visual-editor' => 'Wikia\'s new VisualEditor',
 	'option-ck-editor' => 'Wikia\'s classic rich-text editor (where available)',
 	'option-source-editor' => 'Source editor',
-	'edit-visual-editor' => 'VisualEditor',
 );
