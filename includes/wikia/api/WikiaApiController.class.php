@@ -168,8 +168,11 @@ class WikiaApiController extends WikiaController {
 			['getApiVersion', 'blockIfNonCommercialOnly', 'hideNonCommercialContent']);
 	}
 
-	protected function serveImages()
-	{
+	/**
+	 * Check whether to serve images (using $wgApiDisableImages)
+	 * @return bool
+	 */
+	protected function serveImages() {
 		global  $wgApiDisableImages;
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
 	}
