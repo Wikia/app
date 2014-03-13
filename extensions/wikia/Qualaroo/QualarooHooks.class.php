@@ -16,4 +16,14 @@ class QualarooHooks {
 
 		return true;
 	}
+
+	static public function onWikiaAssetsPackages ( &$wgOut, &$jsPackages, &$scssPackages ) {
+		global $wgNoExternals;
+
+		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
+			$scssPackages[] = 'extensions/wikia/Qualaroo/css/Qualaroo.scss';
+		}
+
+		return true;
+	}
 }
