@@ -12,9 +12,6 @@ abstract class AbstractLyricsApiHandler {
 	abstract public function searchArtist( $query );
 	abstract public function searchSong( $query );
 	abstract public function searchLyrics( $query );
-	abstract public function suggestArtist( $query );
-	abstract public function suggestAlbum( $query );
-	abstract public function suggestSong( $query );
 
 }
  

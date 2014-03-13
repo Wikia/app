@@ -159,47 +159,5 @@ class LyricsApiController extends WikiaController {
 		$this->getData( [ $query ], 'searchLyrics' );
 	}
 
-	/**
-	 * @desc Gets suggestion of an artist
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result artists names
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	public function suggestArtist() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestArtist' );
-	}
-
-	/**
-	 * @desc Gets albums suggestions
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result albums names
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	public function suggestAlbum() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestAlbum' );
-	}
-
-	/**
-	 * @desc Gets songs suggestions
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result songs names
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	public function suggestSong() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestSong' );
-	}
-
 }
 

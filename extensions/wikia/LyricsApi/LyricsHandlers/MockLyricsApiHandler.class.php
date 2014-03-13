@@ -251,50 +251,5 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $songs;
 	}
 
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestArtist( $query ) {
-		$artists = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$artists[] = $query. $i;
-		}
-		return $artists;
-	}
-
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestAlbum( $query ) {
-		$albums = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$albums[] = $query. $i;
-		}
-		return $albums;
-	}
-
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestSong( $query ) {
-		$songs = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$songs[] = $query. $i;
-		}
-		return $songs;
-	}
-
 }
 
