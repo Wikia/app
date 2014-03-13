@@ -59,7 +59,6 @@ class AlbumScraper extends BaseScraper {
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
 			'Length' => 'length',
-			'Artist' => 'artist',
 			'Wikipedia' => 'wikipedia',
 			'romanizedAlbum' => 'romanized_album_name',
 			'asin' => 'asin',

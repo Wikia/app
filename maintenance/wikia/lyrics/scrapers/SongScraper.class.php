@@ -92,7 +92,6 @@ class SongScraper extends BaseScraper {
 			'song' => 'song_name',
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
-			'Artist' => 'artist',
 			'romanizedSong' => 'romanized_song_name',
 			'language' => 'language',
 			'youtube' => 'youtube',
