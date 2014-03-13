@@ -64,8 +64,24 @@ class SongScraper extends BaseScraper {
 	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
-			return trim( $matches[1] );
+			return $this->removeWikiTextFromLyrics( $matches[1] );
 		}
+		return '';
+	}
+
+	/**
+	 * Remove wikitext from the lyrics tag
+	 *
+	 * Borrowed from extensions/3rdparty/LyricWiki/server.php
+	 *
+	 * @param $lyrics
+	 * @return mixed
+	 */
+	function removeWikiTextFromLyrics( $lyrics ) {
+		global $wgParser;
+
+		$lyrics = preg_replace( '/\{\{(.*?)\}\}/', '$1', $lyrics );
+		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 	/**
@@ -75,15 +91,12 @@ class SongScraper extends BaseScraper {
 	 */
 	public function getDataMap() {
 		return [
-			'article_id' => 'article_id',
-			'available' => 'available',
+			'article_id' => 'id',
 			'number' => 'number',
-			'song' => 'name',
+			'song' => 'song_name',
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
-/* These fields are also captured but not needed now
-			'artist' => 'artist',
-			'romanizedSong' => 'romanized_name',
+			'romanizedSong' => 'romanized_song_name',
 			'language' => 'language',
 			'youtube' => 'youtube',
 			'goear' => 'goear',
@@ -91,7 +104,6 @@ class SongScraper extends BaseScraper {
 			'musicbrainz' => 'musicbrainz',
 			'allmusic' => 'allmusic',
 			'download' => 'download',
-*/
 		];
 	}
 

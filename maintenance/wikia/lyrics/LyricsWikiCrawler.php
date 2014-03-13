@@ -186,14 +186,13 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @return ResultWrapper
 	 */
 	private function getArtistPageIds( $limit = 0, $offset = 0 ) {
-		$limitParams = [];
-
+		$limitParams = [
+			'ORDER BY' => 'cl_from'
+		];
+		
 		if ( $limit ) {
-			$limitParams = [
-				'LIMIT' => $limit,
-				'OFFSET' => $offset,
-				'ORDER BY' => 'cl_from'
-			];
+			$limitParams['LIMIT'] = $limit;
+			$limitParams['OFFSET'] = $offset;
 		}
 
 		return $this->db->select(
@@ -210,3 +209,4 @@ class LyricsWikiCrawler extends Maintenance {
 
 $maintClass = "LyricsWikiCrawler";
 require_once( DO_MAINTENANCE );
+

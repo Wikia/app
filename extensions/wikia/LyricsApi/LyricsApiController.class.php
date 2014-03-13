@@ -95,9 +95,7 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_SONG );
 		}
 
-		$song = $this->lyricsApiHandler->getSong( $artistName, $albumName, $songName );
-		$this->response->setVal( 'result', $song );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->getData( [ $artistName, $albumName, $songName ], 'getSong' );
 	}
 
 	/**
