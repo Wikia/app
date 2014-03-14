@@ -66,10 +66,17 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		5  => 'NC-17',
 	];
 
-	public function downloadFeed( $startDate, $endDate ) {
+	/**
+	 * Download feed from API
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer|null $ageGate
+	 * @return string $content
+	 */
+	public function downloadFeed( $startDate, $endDate, $ageGate = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$url = $this->initFeedUrl( $startDate, $endDate );
+		$url = $this->initFeedUrl( $startDate, $endDate, $ageGate );
 
 		print( "Connecting to $url...\n" );
 
@@ -89,9 +96,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * Get feed url
 	 * @param string $startDate
 	 * @param string $endDate
+	 * @param integer|null $ageGate
 	 * @return string $url
 	 */
-	private function initFeedUrl( $startDate, $endDate ) {
+	private function initFeedUrl( $startDate, $endDate, $ageGate ) {
 		global $wgScreenplayApiConfig;
 
 		$url = str_replace( '$1', $wgScreenplayApiConfig['customerId'], static::$FEED_URL );
@@ -101,6 +109,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$bitrates = array_keys( self::$BITRATE_IDS_THUMBNAIL + self::$BITRATE_IDS_VIDEO );
 		$url = str_replace( '$5', implode( ',', $bitrates ), $url );
+
+		if ( isset( $ageGate ) ) {
+			$url .= '&ageGate='.$ageGate;
+		}
 
 		return $url;
 	}
@@ -112,6 +124,36 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @return integer $articlesCreated
 	 */
 	public function import( $content = '', $params = array() ) {
+		wfProfileIn( __METHOD__ );
+
+		$articlesCreated = 0;
+		$ageGateValues = [0, 1];
+		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
+		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
+
+		foreach ( $ageGateValues as $value ) {
+			$content = $this->downloadFeed( $startDate, $endDate, $value );
+			if ( empty( $content ) ) {
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+
+			$params['ageGate'] = $value;
+			$articlesCreated += $this->ingestVideos( $content, $params );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $articlesCreated;
+	}
+
+	/**
+	 * Ingest videos
+	 * @param string $content
+	 * @param array $params
+	 * @return integer $articlesCreated
+	 */
+	public function ingestVideos( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty( $params['debug'] );
@@ -167,6 +209,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					continue;
 				}
 
+				$clip['AgeGate'] = $params['ageGate'];
 				if ( array_key_exists( $clip['EClipId'], $videos) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
@@ -280,16 +323,17 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		}
 
 		// set age required if ageGate is set
-		if ( !empty( $clipData['industryRating'] ) ) {
-			$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
-		} else if ( !empty( $clip['AgeGate'] ) && strtolower( $clip['AgeGate'] ) == "true" ) {
-			// set default age required
-			$clipData['ageRequired'] = 17;
-		} else {
+		if  ( empty( $clip['AgeGate'] ) ) {
+			$clipData['ageGate'] = 0;
 			$clipData['ageRequired'] = 0;
+		} else {
+			$clipData['ageGate'] = 1;
+			$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
+			// set age required to 17 if ageRequired is empty
+			if ( empty( $clipData['ageRequired'] ) ) {
+				$clipData['ageRequired'] = 17;
+			}
 		}
-
-		$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
 		// set language
 		if ( empty( $clip['LanguageName'] ) || $clip['LanguageName'] == 'Not Set'  ) {
