@@ -133,13 +133,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		foreach ( $ageGateValues as $value ) {
 			$content = $this->downloadFeed( $startDate, $endDate, $value );
-			if ( empty( $content ) ) {
-				wfProfileOut( __METHOD__ );
-				return 0;
+			if ( !empty( $content ) ) {
+				$params['ageGate'] = $value;
+				$articlesCreated += $this->ingestVideos( $content, $params );
 			}
-
-			$params['ageGate'] = $value;
-			$articlesCreated += $this->ingestVideos( $content, $params );
 		}
 
 		wfProfileOut( __METHOD__ );
