@@ -101,10 +101,10 @@ foreach ( $providersVideoFeed as $provider ) {
 	$startDate = $endDate = '';
 	switch ( $provider ) {
 		case VideoFeedIngester::PROVIDER_SCREENPLAY:
+			// no file needed
 			$startDate = date( 'm/d/y', $startDateTS );
 			$endDate = date( 'm/d/y', $endDateTS );
 			$remoteAsset = true;
-			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
 		case VideoFeedIngester::PROVIDER_IGN:
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
