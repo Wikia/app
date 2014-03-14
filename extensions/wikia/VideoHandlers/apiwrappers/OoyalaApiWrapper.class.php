@@ -164,6 +164,9 @@ class OoyalaApiWrapper extends ApiWrapper {
 		if ( !isset( $this->metadata['startDate'] ) ) {
 			$this->metadata['startDate'] = $this->getVideoStartDate();
 		}
+		if ( !isset( $this->metadata['distributor'] ) ) {
+			$this->metadata['distributor'] = $this->getDistributor();
+		}
 		if ( !isset( $this->metadata['pageCategories'] ) ) {
 			$this->metadata['pageCategories'] = $this->getPageCategories();
 		}
@@ -532,6 +535,22 @@ class OoyalaApiWrapper extends ApiWrapper {
 
 		if ( !empty( $this->interfaceObj['metadata']['name'] ) ) {
 			return $this->interfaceObj['metadata']['name'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get distributor
+	 * @return string
+	 */
+	protected function getDistributor() {
+		if ( !empty( $this->metadata['distributor'] ) ) {
+			return $this->metadata['distributor'];
+		}
+
+		if ( !empty( $this->interfaceObj['metadata']['distributor'] ) ) {
+			return $this->interfaceObj['metadata']['distributor'];
 		}
 
 		return '';

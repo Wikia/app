@@ -6,10 +6,6 @@
 	right: 60px;
 }
 
-/* IE7 targeted hacks */
-html>body #WallNotifications .avatars { *float: left; }
-
-
 #WallNotifications {
   &.prehide {
     visibility:hidden;
