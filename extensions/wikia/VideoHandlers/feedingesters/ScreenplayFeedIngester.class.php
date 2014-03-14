@@ -4,7 +4,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
-	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&bitrateID=$5';
+	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	protected static $FORMAT_ID_THUMBNAIL = 9;
@@ -106,9 +106,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$url = str_replace( '$2', $wgScreenplayApiConfig['username'], $url );
 		$url = str_replace( '$3', $wgScreenplayApiConfig['password'], $url );
 		$url = str_replace( '$4', $startDate, $url );
+		$url = str_replace( '$5', $endDate, $url );
 
 		$bitrates = array_keys( self::$BITRATE_IDS_THUMBNAIL + self::$BITRATE_IDS_VIDEO );
-		$url = str_replace( '$5', implode( ',', $bitrates ), $url );
+		$url = str_replace( '$6', implode( ',', $bitrates ), $url );
 
 		if ( isset( $ageGate ) ) {
 			$url .= '&ageGate='.$ageGate;
