@@ -298,10 +298,7 @@
 				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
 				(
 					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
-						!mw.user.options.get(
-							'visualeditor-betatempdisable',
-							conf.defaultUserOptions.betatempdisable
-						)
+					!!mw.user.options.get( 'enablerichtext' )
 				)
 		)
 	);
