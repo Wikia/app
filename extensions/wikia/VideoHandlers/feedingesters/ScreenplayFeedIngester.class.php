@@ -18,11 +18,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	// list of bit rate ids in priority for videos
 	protected static $BITRATE_IDS_VIDEO = [
-		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 1,
-		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 2,
-		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 3,
-		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 4,
-		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 5,
+		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 4,
+		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 5,
+		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 2,
+		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 3,
+		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 1,
 	];
 
 	// map bit rate id to resolution
@@ -469,7 +469,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		if ( $generateUrl ) {
-			$url = empty( $data['streamHdUrl'] ) ? $data['streamUrl'] : $data['streamHdUrl'];
+			$url = empty( $data['streamUrl'] ) ? $data['streamHdUrl'] : $data['streamUrl'];
 			$data['url'] = [
 				'flash' => $url,
 				'iphone' => $url,
