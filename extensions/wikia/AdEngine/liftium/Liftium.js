@@ -380,6 +380,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 
 	if (typeof adIframe == "object"){
 		// Iframe passed in, use it
+        adIframe.setAttribute('data-tag-id', tag.tag_id); // For IE
 		adIframe.src = iframeUrl;
 	} else {
 		// Otherwise, create one and append it to load dive
@@ -394,6 +395,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 		adIframe.marginWidth = 0;
 		adIframe.allowTransparency = true; // For IE
 		adIframe.id = slotname + '_' + tag.tag_id;
+        adIframe.setAttribute('data-tag-id', tag.tag_id); // For IE
 		adIframe.style.display = 'block';
 
 		// expandable slots via in-tag-name magic phrase
@@ -462,10 +464,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	}
 
 	var iframeUrl = Liftium.getIframeUrl(slotname, t);
-	var tagParams = Liftium.clone(t);
-	delete tagParams.tag;
-	delete tagParams.criteria;
-	iframeElement.setAttribute('data-tag-params', JSON.stringify(tagParams));
+	iframeElement.setAttribute('data-tag-id', t.tag_id);
 	iframeElement.src = iframeUrl;
 
 	Liftium.slotTimer2[slotname + "-" + t.tag_id] = Liftium.debugTime();
