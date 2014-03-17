@@ -17,33 +17,10 @@ class SongScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 		];
 
-		$songData = array_merge( $songData, $this->getHeader( $article ) );
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
 		return $songData;
-	}
-
-	/**
-	 * @desc Get song data from header template
-	 *
-	 * @param Article $article
-	 *
-	 * @return array
-	 */
-	protected function getHeader( Article $article ) {
-		$result = [];
-		$values = $this->getTemplateValues( 'song', $article->getContent(), '|', false );
-
-		if ( $values ) {
-			$result['artist'] = $values[2];
-			if ( $values[1] ) {
-				list( $albumName ) = $this->getAlbumNameYear( $values[1] );
-			}
-			$result['album'] = $albumName;
-		}
-
-		return $result;
 	}
 
 	/**

@@ -137,20 +137,17 @@ class SolrAdapter implements DataBaseAdapter {
 	 * @return array|null
 	 */
 	public function getAlbumMetaData( Array $album ) {
-		if ( isset( $album['id'] ) ) {
-			$albumData =  [
-				'album_id' => $album['id'],
-				'album_name' => $album['album_name'],
-			];
-			if ( isset($album['image']) ) {
-				$albumData['image'] = $album['image'];
-			}
-			if ( isset($album['release_date']) ) {
-				$albumData['release_date'] = $album['release_date'];
-			}
-			return $albumData;
+		$albumData =  [
+			'album_id' => $album['id'],
+			'album_name' => $album['album_name'],
+		];
+		if ( isset($album['image']) ) {
+			$albumData['image'] = $album['image'];
 		}
-		return null;
+		if ( isset($album['release_date']) ) {
+			$albumData['release_date'] = $album['release_date'];
+		}
+		return $albumData;
 	}
 
 	/**
@@ -161,7 +158,7 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	public function getSongMetaData( Array $song ) {
 		$result = [
-			'name' => $song['song_name'],
+			'song_name' => $song['song_name'],
 		];
 
 		if ( isset( $song['id'] ) ) {
@@ -172,18 +169,24 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
-	 * @desc Generate meta data for albums
+	 * @desc Generate meta data for albums and songs not in albums
 	 *
 	 * @param array $albums - array with albums data
 	 * @return array
 	 */
 	public function getAlbumsMetaData( Array $albums ) {
-		$result = [];
+		$result = [
+			'albums' => [],
+			'songs' => []
+		];
 
 		foreach ( $albums as $album ) {
-			$album = $this->getAlbumMetaData( $album );
-			if ( $album ) {
-				$result[] = $album;
+			if ( isset( $album['id'] ) ) {
+				$result['albums'][] = $this->getAlbumMetaData( $album );
+			} else {
+				foreach ( $album['songs'] as $song ) {
+					$result['songs'][] = $this->getSongMetaData( $song );
+				}
 			}
 		}
 
@@ -212,14 +215,22 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	public function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
-		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
+		$albumsMetaData = $this->getAlbumsMetaData( $albums );
+
+		if ( !empty( $albumsMetaData['albums'] ) ) {
+			$artist['albums'] = $this->encodeMeta( $albumsMetaData['albums'] );
+		}
+		if ( !empty( $albumsMetaData['songs'] ) ) {
+			$artist['songs'] = $this->encodeMeta( $albumsMetaData['songs'] );
+		}
 		$artist['type'] = self::TYPE_ARTIST;
 		
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
-		
+
 		$doc = $this->newDocFromData( $artist );
+
 		$this->add( $doc );
 	}
 
