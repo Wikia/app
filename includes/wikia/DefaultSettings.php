@@ -52,6 +52,8 @@ if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
 }
 
+require_once("$IP/lib/composer/autoload.php");
+
 /**
  * autoload classes
  */
@@ -630,6 +632,11 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
  * Logger
  */
 require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
+
+/**
+ * Tasks
+ */
+require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
 /*
  * @name wgWikiaStaffLanguages
