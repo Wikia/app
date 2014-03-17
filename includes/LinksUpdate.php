@@ -275,10 +275,10 @@ class LinksUpdate {
 	 * @param $dbkeys Array
 	 */
 	function invalidatePages( $namespace, $dbkeys ) {
+
 		if ( !count( $dbkeys ) ) {
 			return;
 		}
-
 		/**
 		 * Determine which pages need to be updated
 		 * This is necessary to prevent the job queue from smashing the DB with
@@ -311,6 +311,39 @@ class LinksUpdate {
 				'page_touched < ' . $this->mDb->addQuotes( $now )
 			), __METHOD__
 		);
+		$this->logPagesInvalidation(
+			[
+				'table' => 'page',
+				'set' => "page_touched = {$now}",
+				'conditions' => [
+					'page_id IN (' . $this->mDb->makeList( $ids ) . ')',
+					'page_touched < ' . $this->mDb->addQuotes( $now )
+					]
+			]
+		);
+	}
+
+	/**
+	 * Log function called by LinksUpdate::invalidatePages
+	 * to gather some data on heavy load on DB reported in CE-677
+	 * @param Array $queryParams Array with sql query params to be logged
+	 */
+	function logPagesInvalidation( $queryParams ) {
+		global $wgRequest;
+		$logFileName = "KamilkLogPagesInvalidation";
+		$logFileName .= "-WIKIA: ";
+
+		error_log( $logFileName . __METHOD__ ." called from:" );
+
+		if( get_class( $wgRequest ) != 'FauxRequest' ) {
+			$requestUrl = $wgRequest->getFullRequestURL();
+		} else {
+			$requestUrl = "not available";
+		}
+
+		error_log( $logFileName . "==Request URL== " . $requestUrl );
+		error_log( $logFileName . "==with SQL update query params== " . json_encode( $queryParams ) );
+		error_log( $logFileName . "==Backtrace== " . json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
 	}
 
 	/**
