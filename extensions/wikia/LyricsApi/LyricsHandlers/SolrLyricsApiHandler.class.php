@@ -2,11 +2,21 @@
 
 class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
+
+	const IMG_WIDTH_SMALL = 174;
+	const IMG_HEIGHT_SMALL = 174;
+	const IMG_WIDTH_MIDDLE = 300;
+	const IMG_HEIGHT_MIDDLE = 300;
+	const IMG_WIDTH_LARGE = 600;
+	const IMG_HEIGHT_LARGE = 600;
+
 	/**
 	 * @var Solarium_Client
 	 */
 	var $client;
 
+
+	var $cityId;
 
 	// TODO: these must be shared with the maintenance script
 
@@ -17,7 +27,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	const TYPE_SONG = 'song';
 
 	public function __construct( $config ) {
-		// TODO: Check if connection is ok
+		global $wgCityId;
+		$this->cityId = $wgCityId;
 		$this->client = new Solarium_Client( $config );
 	}
 
@@ -37,9 +48,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return null;
 	}
 
-	private function getImage( $imageTitle, $thumbnailConfig = [] ) {
-		// TODO: Do me
-		return $imageTitle;
+	private function getImage( $imageTitle, $width = self::IMG_WIDTH_SMALL, $height = self::IMG_HEIGHT_SMALL ) {
+		return ImagesService::getImageSrcByTitle( $this->cityId, $imageTitle, $width, $height );
 	}
 
 	private function deSerialize ( $text ) {
@@ -130,7 +140,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 	public function getAlbum( $artist, $album ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_ARTIST,
+			'type: %1%' => self::TYPE_ALBUM,
 			'artist_name: %P2%' => $artist,
 			'album_name: %P3%' => $album,
 		] );
