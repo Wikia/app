@@ -152,6 +152,7 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
+		track({label: 'module-impression'});
 		track({label: testCase.testGroup});
 	};
 
