@@ -93,8 +93,7 @@ class SearchApiController extends WikiaApiController {
 				];
 			}
 		}
-
-		$this->response->setVal( 'items', $items );
+		$this->setResponseData( [ 'items' => $items ], 'image' );
 	}
 
 	/**
@@ -140,7 +139,7 @@ class SearchApiController extends WikiaApiController {
 		$searchService = new CombinedSearchService();
 		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
 
-		$this->getResponse()->setData($response);
+		$this->setResponseData( $response, 'image' );
 	}
 
 	/**
