@@ -4,7 +4,7 @@
  * TaskManager task to go through a list of images and delete them.
  */
 
-use \Wikia\Logger\WikiaLogger;
+//use \Wikia\Logger\WikiaLogger; // does not autoload inside maintenance script
  
 
 class PromoteImageReviewTask extends BatchTask {
@@ -207,7 +207,7 @@ class PromoteImageReviewTask extends BatchTask {
 			'command' => $sCommand,
 			'city_url' => $city_url
 		];
-		WikiaLogger::getInstance()->debug( "PromoteImageReviewTask started", $logdata );
+		//WikiaLogger::getInstance()->debug( "PromoteImageReviewTask started", $logdata );
 		
 		$output = wfShellExec($sCommand, $retval);
 		
@@ -215,10 +215,10 @@ class PromoteImageReviewTask extends BatchTask {
 		$logdata['retval'] = $retval;
 		
 		if( $retval ) {
-			WikiaLogger::getInstance()->error("PromoteImageReviewTask failed", $logdata);		
+			//WikiaLogger::getInstance()->error("PromoteImageReviewTask failed", $logdata);		
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
-			WikiaLogger::getInstance()->debug("PromoteImageReviewTask finished", $logdata);		
+			//WikiaLogger::getInstance()->debug("PromoteImageReviewTask finished", $logdata);		
 			$this->log('Upload successful: '.$output);
 		}
 
