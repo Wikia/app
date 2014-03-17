@@ -1190,6 +1190,12 @@ $wgAdPageLevelCategoryLangs = null;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableRHonDesktop
+ * Enables RH- hack on Desktop
+ */
+$wgEnableRHonDesktop = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1273,7 +1279,7 @@ $wgOasisResponsive = null;
  * @name $wgOasisResponsiveDisabledInLangs
  * Disables the Oasis responsive layout in those languages
  */
-$wgOasisResponsiveDisabledInLangs = ['de'];
+$wgOasisResponsiveDisabledInLangs = [];
 
 /**
  * @name $wgOasisResponsiveLimited
@@ -1286,7 +1292,7 @@ $wgOasisResponsiveLimited = null;
  * @name $wgOasisResponsiveLimitedInLangs
  * Enables the limited version of Oasis responsive layout on given languages
  */
-$wgOasisResponsiveLimitedInLangs = [];
+$wgOasisResponsiveLimitedInLangs = ['de'];
 
 /**
  * @name $wgDisableReportTime
