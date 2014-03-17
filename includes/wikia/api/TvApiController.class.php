@@ -165,8 +165,8 @@ class TvApiController extends WikiaApiController {
 		$select->setRows(1);
 		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
 
-		$dismax->setQueryFields( 'series_mv_em^10 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
-		$dismax->setPhraseFields( 'series_mv_em^10 sitename_txt^5' );
+		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt sitename_txt^4 domains_txt' );
+		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
 		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10 domains_txt:"' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
