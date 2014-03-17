@@ -641,7 +641,7 @@ $messages['ja'] = array(
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://ja.wikia.com/ライフスタイル',
-	'wikiahome-hubs-lifestyle-creative' => '熱狂的で面白いコミュニティーを発見しよう',
+	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう',
 	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
 
