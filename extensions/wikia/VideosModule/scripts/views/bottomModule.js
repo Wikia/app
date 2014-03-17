@@ -29,7 +29,7 @@ define('videosmodule.views.bottomModule', [
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
-		this.shouldRender = true;
+		this.shouldRender = false;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -41,11 +41,11 @@ define('videosmodule.views.bottomModule', [
 		var self = this;
 		if (!groupParams) {
 			// Handle control group, no videos module display
-			this.shouldRender = false;
 			this.handleRelatedPages();
 			return;
 		}
 
+		this.shouldRender = true;
 		this.data = this.model.fetch(groupParams.verticalOnly);
 		// Sloth is a lazy loading service that waits till an element is visisble to load more content
 		sloth({
@@ -153,6 +153,7 @@ define('videosmodule.views.bottomModule', [
 		});
 
 		track({label: 'module-impression'});
+		track({label: testCase.testGroup});
 	};
 
 	return VideoModule;
