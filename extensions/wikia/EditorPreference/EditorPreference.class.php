@@ -63,13 +63,30 @@ class EditorPreference {
 				);
 				$veParams = $editParams = $skin->editUrlOptions();
 
+				// Message keys for VE tab and regular Edit tab
+				if ( $primaryEditor === self::OPTION_EDITOR_VISUAL ) {
+					if ( $pageExists ) {
+						$veMessageKey = 'edit';
+					} else {
+						$veMessageKey = 'create';
+					}
+
+					if ( !$wgEnableRTEExt ) {
+						$editMessageKey = 'visualeditor-ca-editsource';
+					} else {
+						$editMessageKey = 'visualeditor-ca-classiceditor';
+					}
+				} else {
+					$veMessageKey = 'visualeditor-ca-ve-edit';
+					$editMessageKey = $pageExists ? 'edit' : 'create';
+				}
+
 				// Create the Visual Editor tab
 				unset( $veParams['action'] );
 				$veParams['veaction'] = 'edit';
 				$veTab = array(
 					'href' => $title->getLocalURL( $veParams ),
-					'text' => wfMessage( $primaryEditor === self::OPTION_EDITOR_VISUAL ? 'edit' :
-						'visualeditor-ca-ve-edit' )->setContext( $skin->getContext() )->text(),
+					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 				);
 
@@ -78,16 +95,6 @@ class EditorPreference {
 				if ( $primaryEditor === self::OPTION_EDITOR_SOURCE ) {
 					$editParams['useeditor'] = 'source';
 					$editTab['href'] = $title->getLocalURL( $editParams );
-				}
-
-				if ( $primaryEditor === self::OPTION_EDITOR_VISUAL ) {
-					if ( !$wgEnableRTEExt ) {
-						$editMessageKey = 'visualeditor-ca-editsource';
-					} else {
-						$editMessageKey = 'visualeditor-ca-classiceditor';
-					}
-				} else {
-					$editMessageKey = 'edit';
 				}
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
 
