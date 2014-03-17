@@ -158,7 +158,7 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	public function getSongMetaData( Array $song ) {
 		$result = [
-			'name' => $song['song_name'],
+			'song_name' => $song['song_name'],
 		];
 
 		if ( isset( $song['id'] ) ) {
