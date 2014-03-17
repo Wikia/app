@@ -456,16 +456,17 @@ SQL;
 			}
 
 			foreach ( $suggest as $video ) {
-				$suggestTitles[$video['title']] = 1;
-				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
-					if ( $verbose ) {
-						echo "\t\t[FILTER] Match was already suggested in the past: '".$video['title']."'\n";
-					}
+				// Do some data integrity checking; clean up for VID-1446
+				if (!array_key_exists('title', $video)) {
 					continue;
 				}
 
+				$suggestTitles[$video['title']] = 1;
 				$suggestions[] = $video;
 			}
+
+			// Write out cleaned up suggestions
+			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $suggestions );
 		}
 
 		$readableTitle = $titleObj->getText();
