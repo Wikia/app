@@ -105,14 +105,11 @@ class ArtistScraper extends BaseScraper {
 	 */
 	public function getAlbumSongs( $section ) {
 		$songs = [];
-		if ( preg_match_all('/^[#|\*] (.+?)$/mu', $section, $matches ) ) {
+		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
 			$number = 1;
 			foreach ( $matches[1] as $song ) {
-				$song = $this->getSongData( $song, $number );
-				if ( $song ) {
-					$songs[] = $song;
-					$number++;
-				}
+				$songs[] = $this->getSongData( $song, $number );
+				$number++;
 			}
 		}
 		return $songs;
