@@ -103,7 +103,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			$artist->albums = $this->getAlbums( $artist->name, $solrAlbum->albums );
 		}
 		if ( $solrAlbum->songs ) {
-			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->albums );
+			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->songs );
 		}
 		return $artist;
 	}
