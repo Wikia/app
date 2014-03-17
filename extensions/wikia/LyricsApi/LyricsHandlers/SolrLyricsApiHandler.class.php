@@ -193,13 +193,15 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			LyricsApiController::PARAM_ARTIST => $song->artist->name
 		] );
 
-		$song->album = new stdClass();
-		$song->album->name = $solrSong->album_name;
-		$song->album->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getArtist',
-			LyricsApiController::PARAM_ARTIST => $song->album->name
-		] );
+		if ( isset( $solrSong->album_id ) ) {
+			$song->album = new stdClass();
+			$song->album->name = $solrSong->album_name;
+			$song->album->url = $this->buildUrl([
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getArtist',
+				LyricsApiController::PARAM_ARTIST => $song->album->name
+			] );
+		}
 		if ( $solrSong->image ) {
 			$song->album->image = $this->getImage( $solrSong->image );
 		}
@@ -208,12 +210,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	public function getSong( $artist, $album, $song ) {
-		$query = $this->newQueryFromSearch( [
+		$solrQuery = [
 			'type: %1%' => self::TYPE_SONG,
 			'artist_name: %P2%' => $artist,
-			'album_name: %P3%' => $album,
-			'song_name: %P4%' => $song,
-		] );
+			'song_name: %P3%' => $song,
+		];
+		// don't add album for unassociated songs
+		if ( trim( $album ) ) {
+			$solrQuery['album_name: %P4%'] = $album;
+		}
+
+		$query = $this->newQueryFromSearch( $solrQuery );
 		$query->setFields( [
 			'artist_name',
 			'album_name',
