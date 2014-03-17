@@ -9,6 +9,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 
 	// TODO: these must be shared with the maintenance script
+
+	// TODO: Figure out search limits, pagination a.s.o.
+
 	const TYPE_ARTIST = 'artist';
 	const TYPE_ALBUM = 'album';
 	const TYPE_SONG = 'song';
@@ -90,6 +93,21 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 	}
 
+	private function getOutputArtist( $solrAlbum ) {
+		$artist = new stdClass();
+		$artist->name = $solrAlbum->artist_name;
+		if ( $solrAlbum->image ) {
+			$artist->image = $this->getImage( $solrAlbum->image );
+		}
+		if ( $solrAlbum->albums ) {
+			$artist->albums = $this->getAlbums( $artist->name, $solrAlbum->albums );
+		}
+		if ( $solrAlbum->songs ) {
+			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->albums );
+		}
+		return $artist;
+	}
+
 	public function getArtist( $artist ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_ARTIST,
@@ -103,22 +121,11 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		] );
 		$query->setStart( 0 )->setRows( 1 );
 
-		$queryResult = $this->getFirstResult( $this->client->select( $query ) );
-		if ( is_null( $queryResult ) ) {
+		$solrAlbum = $this->getFirstResult( $this->client->select( $query ) );
+		if ( is_null( $solrAlbum ) ) {
 			return null;
 		}
-		$artist = new stdClass();
-		$artist->name = $queryResult->artist_name;
-		if ( $queryResult->image ) {
-			$artist->image = $this->getImage( $queryResult->image );
-		}
-		if ( $queryResult->albums ) {
-			$artist->albums = $this->getAlbums( $artist->name, $queryResult->albums );
-		}
-		if ( $queryResult->songs ) {
-			$artist->songs = $this->getSongs( $artist->name, '', $queryResult->albums );
-		}
-		return $artist;
+		return $this->getOutputArtist( $solrAlbum );
 	}
 
 	public function getAlbum( $artist, $album ) {
@@ -170,6 +177,36 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $album;
 	}
 
+	private function getOutputSong( $solrSong ) {
+		$song = new stdClass();
+		$song->name = $solrSong->song_name;
+		if ( $solrSong->itunes ) {
+			$song->itunes = $solrSong->itunes;
+		}
+		$song->lyrics = $solrSong->lyrics;
+
+		$song->artist = new stdClass();
+		$song->artist->name = $solrSong->artist_name;
+		$song->artist->url = $this->buildUrl([
+			'controller' => self::API_CONTROLLER_NAME,
+			'method' => 'getArtist',
+			LyricsApiController::PARAM_ARTIST => $song->artist->name
+		] );
+
+		$song->album = new stdClass();
+		$song->album->name = $solrSong->album_name;
+		$song->album->url = $this->buildUrl([
+			'controller' => self::API_CONTROLLER_NAME,
+			'method' => 'getArtist',
+			LyricsApiController::PARAM_ARTIST => $song->album->name
+		] );
+		if ( $solrSong->image ) {
+			$song->album->image = $this->getImage( $solrSong->image );
+		}
+		return $song;
+
+	}
+
 	public function getSong( $artist, $album, $song ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_SONG,
@@ -186,47 +223,59 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		] );
 		$query->setStart( 0 )->setRows( 1 );
 
-		$queryResult = $this->getFirstResult( $this->client->select( $query ) );
-		if ( is_null( $queryResult ) ) {
+		$solrSong = $this->getFirstResult( $this->client->select( $query ) );
+		if ( is_null( $solrSong ) ) {
 			return null;
 		}
-		$song = new stdClass();
-		$song->name = $queryResult->song_name;
-		if ( $queryResult->itunes ) {
-			$song->itunes = $queryResult->itunes;
-		}
-		$song->lyrics = $queryResult->lyrics;
-
-		$song->artist = new stdClass();
-		$song->artist->name = $queryResult->artist_name;
-		$song->artist->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getArtist',
-			LyricsApiController::PARAM_ARTIST => $song->artist->name
-		] );
-
-		$song->album = new stdClass();
-		$song->album->name = $queryResult->album_name;
-		$song->album->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getArtist',
-			LyricsApiController::PARAM_ARTIST => $song->album->name
-		] );
-		if ( $queryResult->image ) {
-			$song->album->image = $this->getImage( $queryResult->image );
-		}
-		return $album;
+		return $this->getOutputSong( $solrSong );
 	}
 
 	public function searchArtist( $query ) {
-		// TODO: Implement searchArtist() method.
+		$query = $this->newQueryFromSearch( [
+			'type: %1%' => self::TYPE_ARTIST,
+			'search_artist_name: %P2%' => $query,
+		] );
+		$solrArtists = $this->client->select( $query );
+		if ( !is_array( $solrArtists ) ) {
+			return null;
+		}
+		$albums = [];
+		foreach ( $solrArtists as $solrArtist ) {
+			$albums = $this->getOutputArtist( $solrArtist );
+		}
+		return $albums;
 	}
 
 	public function searchSong( $query ) {
-		// TODO: Implement searchSong() method.
+		$query = $this->newQueryFromSearch( [
+			'type: %1%' => self::TYPE_SONG,
+			'search_song_name: %P2%' => $query,
+		] );
+		$solrSongs = $this->client->select( $query );
+		if ( !is_array( $solrSongs ) ) {
+			return null;
+		}
+		$songs = [];
+		foreach ( $solrSongs as $solrSong ) {
+			$songs = $this->getOutputSong( $solrSong );
+		}
+		return $songs;
 	}
 
 	public function searchLyrics( $query ) {
-		// TODO: Implement searchLyrics() method.
+		// TODO: Add highlighting
+		$query = $this->newQueryFromSearch( [
+			'type: %1%' => self::TYPE_SONG,
+			'lyrics: %P2%' => $query,
+		] );
+		$solrSongs = $this->client->select( $query );
+		if ( !is_array( $solrSongs ) ) {
+			return null;
+		}
+		$songs = [];
+		foreach ( $solrSongs as $solrSong ) {
+			$songs = $this->getOutputSong( $solrSong );
+		}
+		return $songs;
 	}
 }
