@@ -84,7 +84,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 						WHERE e.propname = 21
 						  AND e.props = 1
 				  )
-				ORDER BY added_at desc";
+				ORDER BY added_at DESC";
 
 		$result = $db->query( $sql, __METHOD__ );
 

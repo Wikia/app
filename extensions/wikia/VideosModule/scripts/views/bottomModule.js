@@ -47,7 +47,7 @@ define('videosmodule.views.bottomModule', [
 		}
 
 		this.data = this.model.fetch(groupParams.verticalOnly);
-		// Sloth is a lazy loading service that waits till an element is visisble to load more content
+		// Sloth is a lazy loading service that waits till an element is visible to load more content
 		sloth({
 			on: this.el,
 			threshold: 200,
