@@ -329,7 +329,7 @@ class LinksUpdate {
 	 * @param Array $queryParams Array with sql query params to be logged
 	 */
 	function logPagesInvalidation( $queryParams ) {
-		global $wgRequest;
+		global $wgRequest, $wgDBname;
 		$logFileName = "KamilkLogPagesInvalidation";
 		$logFileName .= "-WIKIA: ";
 
@@ -342,6 +342,7 @@ class LinksUpdate {
 		}
 
 		error_log( $logFileName . "==Request URL== " . $requestUrl );
+		error_log( $logFileName . "==Database== " . $wgDBname );
 		error_log( $logFileName . "==with SQL update query params== " . json_encode( $queryParams ) );
 		error_log( $logFileName . "==Backtrace== " . json_encode(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) ) );
 	}
