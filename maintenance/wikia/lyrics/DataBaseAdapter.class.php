@@ -182,15 +182,10 @@ class SolrAdapter implements DataBaseAdapter {
 
 		foreach ( $albums as $album ) {
 			if ( isset( $album['id'] ) ) {
-				$album = $this->getAlbumMetaData( $album );
-				if ( $album ) {
-					$result['albums'][] = $album;
-				}
+				$result['albums'][] = $this->getAlbumMetaData( $album );
 			} else {
-				if ( isset( $album['songs'] ) ) {
-					foreach ( $album['songs'] as $song ) {
-						$result['songs'][] = $this->getSongMetaData( $song );
-					}
+				foreach ( $album['songs'] as $song ) {
+					$result['songs'][] = $this->getSongMetaData( $song );
 				}
 			}
 		}
