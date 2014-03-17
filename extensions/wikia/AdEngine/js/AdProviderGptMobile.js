@@ -13,8 +13,6 @@ define(
 				MOBILE_PREFOOTER: {size: '300x250'}
 			};
 
-		wikiaGpt.init(slotMap, 'mobile');
-
 		function canHandleSlot(slotname) {
 			return !!slotMap[slotname];
 		}
@@ -26,7 +24,7 @@ define(
 				hop({method: 'hop'}, 'Null');
 			}
 
-			wikiaGpt.pushAd(slotname, success, hopToNull);
+			wikiaGpt.pushAd(slotname, success, hopToNull, 'mobile');
 			wikiaGpt.flushAds();
 		}
 
