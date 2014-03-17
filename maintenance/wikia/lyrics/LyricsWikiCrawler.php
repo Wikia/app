@@ -23,6 +23,11 @@ class LyricsWikiCrawler extends Maintenance {
 	 */
 	private $db;
 
+	/**
+	 * @var DataBaseAdapter
+	 */
+	private $dba;
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( self::OPTION_ARTICLE_ID, 'Article ID which we will get data from' );

@@ -124,20 +124,20 @@ class ArtistScraper extends BaseScraper {
 	public function getAlbumData( $heading ) {
 		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
 		$result = [];
-		$headinga = explode( '|', trim( $heading, '][=' ) );
+		$headingArr = explode( '|', trim( $heading, '][= ' ) );
 		$result['title'] = false;
 
-		if ( count( $headinga ) > 1) {
-			$result['title'] = $headinga[0];
+		if ( count( $headingArr ) > 1) {
+			$result['title'] = $headingArr[0];
 			$result['year'] = '';
-			$heading = $headinga[1];
+			$heading = $headingArr[1];
 		}
 
 		if ( preg_match( '#(.+)\(([\d]+)\)#', $heading, $matches ) ) {
-			$result['album'] = trim( $matches[1] );
+			$result['Album'] = trim( $matches[1] );
 			$result['year'] = trim( $matches[2] );
 		} else {
-			$result['album'] = trim( $heading );
+			$result['Album'] = trim( $heading );
 		}
 
 		return $result;
