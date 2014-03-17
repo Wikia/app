@@ -6,23 +6,47 @@
  */
 class WikiaHubsApiController extends WikiaApiController {
 	const DEFAULT_LANG = 'en';
-	const CLIENT_CACHE_VALIDITY = 86400; //24*60*60 = 24h
 
 	const PARAMETER_MODULE = 'module';
 	const PARAMETER_VERTICAL = 'vertical';
 	const PARAMETER_TIMESTAMP = 'ts';
 	const PARAMETER_LANG = 'lang';
-	
+	const HUBS_V3_VARIABLE_NAME = 'wgEnableWikiaHubsV3Ext';
+
 	/**
-	 * Get explore module data from given date and vertical
+	 * Get Hubs list
+	 *
+	 * @requestParam string $lang [OPTIONAL] default set to EN
+	 *
+	 * @responseParam array $list list of wikis that are hubsV3, structure of list items: $wikiId, $wikiName, $wikiUrl, $wikiLanguage
+	 *
+	 * @example
+	 * @example &lang=en
+	 */
+	public function getHubsV3List() {
+		$lang = $this->request->getVal(self::PARAMETER_LANG);
+
+		$out = WikiaDataAccess::cache(
+			'hubs_list_' . $lang,
+			6 * 60 * 60,
+			function () use( $lang ) {
+				return $this->getHubsWikis( $lang );
+			}
+		);
+
+		$this->response->setVal('list', $out);
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	/**
+	 * Get hub module data from given date and vertical
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
 	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 * @requestParam string $lang [OPTIONAL] default set to EN
 	 *
-	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
-	 * @responseParam string $basepath domain of a wiki to create a url for an article
+	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
 	 *
 	 * @example
 	 * @example &module=1&vertical=2&ts=1359504000
@@ -66,7 +90,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 		
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		
 		wfProfileOut( __METHOD__ );
 	}
@@ -102,5 +126,37 @@ class WikiaHubsApiController extends WikiaApiController {
 	protected function isValidModuleService($moduleService) {
 		return ($moduleService instanceof MarketingToolboxModuleService);
 	}
-	
+
+	/**
+	 * Get list of hubs from Database
+	 *
+	 * @param $lang
+	 * @return array
+	 */
+	private function getHubsWikis( $lang ) {
+		$varId = WikiFactory::getVarIdByName( self::HUBS_V3_VARIABLE_NAME );
+
+		$wikis = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
+
+		if ( !empty( $lang ) ) {
+			foreach ( $wikis as $wikiId => $wiki ) {
+				if ( $wiki['l'] != $lang ) {
+					unset( $wikis[$wikiId] );
+				}
+			}
+		}
+
+		$out = [];
+		foreach ( $wikis as $wikiId => $wiki ) {
+			$out[] = [
+				'wikiId' => $wikiId,
+				'wikiName' => $wiki['t'],
+				'wikiUrl' => $wiki['u'],
+				'wikiLanguage' => $wiki['l']
+			];
+		}
+
+		return $out;
+	}
+
 }
