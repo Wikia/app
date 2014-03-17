@@ -22,9 +22,11 @@ $wikiahubs-line-height: 16px;
 }
 
 .wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer .WikiaPageHeader {
-	padding-right: 0px;
+	padding: 15px 0;
 	h1 {
 		display: block;
+		font-size: 28px;
+		font-weight: bold;
 		line-height: 32px;
 	}
 
