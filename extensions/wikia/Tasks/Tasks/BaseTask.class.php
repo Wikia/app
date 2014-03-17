@@ -39,10 +39,11 @@ abstract class BaseTask {
 		$result = [
 			'@method' => $this->getMethod(),
 			'@args' => $this->args,
+			'@context' => []
 		];
 
 		foreach ($mirror->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-			$result[$property->getName()] = $property->getValue($this);
+			$result['@context'][$property->getName()] = $property->getValue($this);
 		}
 
 		return $result;

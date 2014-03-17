@@ -30,6 +30,8 @@ class AsyncTask {
 
 	protected $delay = 0;
 
+	protected $wikiId = 177;
+
 	public function __construct(BaseTask $task=null) {
 		$this->task = $task;
 	}
@@ -46,6 +48,12 @@ class AsyncTask {
 		return $this;
 	}
 
+	public function wikiId($wikiId) {
+		$this->wikiId = $wikiId;
+
+		return $this;
+	}
+
 	public function delay($time) {
 		$this->delay = $time;
 
@@ -54,19 +62,20 @@ class AsyncTask {
 
 	public function run() {
 		$serialized = $this->task->serialize();
-		$task = get_class($this->task).".{$this->task->getMethod()}";
 		$idArgs = array_merge($serialized, [
-			'@task' => $task,
+			'@task' => get_class($this->task).".{$this->task->getMethod()}",
+			'@wikiId' => $this->wikiId,
 		]);
 
 		ksort($idArgs);
-		$id = 'mw-'.md5(json_encode($idArgs));
 
+		$id = 'mw-'.uniqid().'-'.md5(json_encode($idArgs));
 		$payload = [
-			'id' => 'mw-'.md5($id),
+			'id' => $id,
 			'task' => $this->taskType,
 			'args' => [
-				$task,
+				$this->wikiId,
+				get_class($this->task),
 				(object) $serialized
 			],
 		];

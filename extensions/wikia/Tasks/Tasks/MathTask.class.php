@@ -2,7 +2,7 @@
 /**
  * MathTask
  *
- * <insert description here>
+ * dummy math class for testing puposes
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
