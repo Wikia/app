@@ -16,7 +16,7 @@ class LyricsApiController extends WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		//$this->lyricsApiHandler = new MockLyricsApiHandler();
+
 		// TODO: Do Proper config
 		$config = [
 			'adapteroptions' => [
@@ -26,6 +26,7 @@ class LyricsApiController extends WikiaController {
 				'core' => 'lyrics',
 			]
 		];
+
 		$this->lyricsApiHandler = new SolrLyricsApiHandler( $config );
 	}
 
