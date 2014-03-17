@@ -66,10 +66,10 @@
 				photos = $('#LatestPhotosModule'),
 				comments = $('#WikiaArticleComments'),
 				footer = $('#WikiaArticleFooter'),
-				videosModule = $('.videos-module-rail'); // bottom videos module is handled in $footer
+				videosModule = $('#videosModule');
 
 			// Bind click event to initiate lightbox
-			article.add(photos).add(videos).add(footer).add(videosModule)
+			article.add(photos).add(videos).add(comments).add(footer).add(videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
