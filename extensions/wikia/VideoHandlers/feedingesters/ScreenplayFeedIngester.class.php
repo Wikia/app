@@ -4,7 +4,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
-	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&bitrateID=$5';
+	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	protected static $FORMAT_ID_THUMBNAIL = 9;
@@ -18,11 +18,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	// list of bit rate ids in priority for videos
 	protected static $BITRATE_IDS_VIDEO = [
-		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 1,
-		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 2,
-		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 3,
-		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 4,
-		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 5,
+		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 4,
+		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 5,
+		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 2,
+		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 3,
+		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 1,
 	];
 
 	// map bit rate id to resolution
@@ -66,10 +66,17 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		5  => 'NC-17',
 	];
 
-	public function downloadFeed( $startDate, $endDate ) {
+	/**
+	 * Download feed from API
+	 * @param string $startDate
+	 * @param string $endDate
+	 * @param integer|null $ageGate
+	 * @return string $content
+	 */
+	public function downloadFeed( $startDate, $endDate, $ageGate = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$url = $this->initFeedUrl( $startDate, $endDate );
+		$url = $this->initFeedUrl( $startDate, $endDate, $ageGate );
 
 		print( "Connecting to $url...\n" );
 
@@ -89,18 +96,24 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * Get feed url
 	 * @param string $startDate
 	 * @param string $endDate
+	 * @param integer|null $ageGate
 	 * @return string $url
 	 */
-	private function initFeedUrl( $startDate, $endDate ) {
+	private function initFeedUrl( $startDate, $endDate, $ageGate ) {
 		global $wgScreenplayApiConfig;
 
 		$url = str_replace( '$1', $wgScreenplayApiConfig['customerId'], static::$FEED_URL );
 		$url = str_replace( '$2', $wgScreenplayApiConfig['username'], $url );
 		$url = str_replace( '$3', $wgScreenplayApiConfig['password'], $url );
 		$url = str_replace( '$4', $startDate, $url );
+		$url = str_replace( '$5', $endDate, $url );
 
 		$bitrates = array_keys( self::$BITRATE_IDS_THUMBNAIL + self::$BITRATE_IDS_VIDEO );
-		$url = str_replace( '$5', implode( ',', $bitrates ), $url );
+		$url = str_replace( '$6', implode( ',', $bitrates ), $url );
+
+		if ( isset( $ageGate ) ) {
+			$url .= '&ageGate='.$ageGate;
+		}
 
 		return $url;
 	}
@@ -112,6 +125,33 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @return integer $articlesCreated
 	 */
 	public function import( $content = '', $params = array() ) {
+		wfProfileIn( __METHOD__ );
+
+		$articlesCreated = 0;
+		$ageGateValues = [0, 1];
+		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
+		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
+
+		foreach ( $ageGateValues as $value ) {
+			$content = $this->downloadFeed( $startDate, $endDate, $value );
+			if ( !empty( $content ) ) {
+				$params['ageGate'] = $value;
+				$articlesCreated += $this->ingestVideos( $content, $params );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $articlesCreated;
+	}
+
+	/**
+	 * Ingest videos
+	 * @param string $content
+	 * @param array $params
+	 * @return integer $articlesCreated
+	 */
+	public function ingestVideos( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$debug = !empty( $params['debug'] );
@@ -167,6 +207,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					continue;
 				}
 
+				$clip['AgeGate'] = $params['ageGate'];
 				if ( array_key_exists( $clip['EClipId'], $videos) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
@@ -280,16 +321,17 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		}
 
 		// set age required if ageGate is set
-		if ( !empty( $clipData['industryRating'] ) ) {
-			$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
-		} else if ( !empty( $clip['AgeGate'] ) && strtolower( $clip['AgeGate'] ) == "true" ) {
-			// set default age required
-			$clipData['ageRequired'] = 17;
-		} else {
+		if  ( empty( $clip['AgeGate'] ) ) {
+			$clipData['ageGate'] = 0;
 			$clipData['ageRequired'] = 0;
+		} else {
+			$clipData['ageGate'] = 1;
+			$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
+			// set age required to 17 if ageRequired is empty
+			if ( empty( $clipData['ageRequired'] ) ) {
+				$clipData['ageRequired'] = 17;
+			}
 		}
-
-		$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
 		// set language
 		if ( empty( $clip['LanguageName'] ) || $clip['LanguageName'] == 'Not Set'  ) {
@@ -427,7 +469,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		if ( $generateUrl ) {
-			$url = empty( $data['streamHdUrl'] ) ? $data['streamUrl'] : $data['streamHdUrl'];
+			$url = empty( $data['streamUrl'] ) ? $data['streamHdUrl'] : $data['streamUrl'];
 			$data['url'] = [
 				'flash' => $url,
 				'iphone' => $url,

@@ -418,7 +418,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 					'lang_code' => $dataToInsert['lang'],
 					'vertical_id' => $dataToInsert['verticalId'],
 					'module_id' => $dataToInsert['moduleId'],
-					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp'])
+					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp']),
+					'city_id' => 0
 				)
 			)
 		);
@@ -483,7 +484,8 @@ class MarketingToolboxModelTest extends WikiaBaseTest {
 					'lang_code' => $dataToInsert['lang'],
 					'vertical_id' => $dataToInsert['verticalId'],
 					'module_id' => $dataToInsert['moduleId'],
-					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp'])
+					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp']),
+					'city_id' => 0
 				)
 			)
 		);

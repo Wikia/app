@@ -1346,7 +1346,7 @@ $messages['fa'] = array(
 	'userrenametool-reason' => 'علت تغییر نام کاربری:',
 	'userrenametool-move' => 'صفحه کاربر و صفحه بحث کاربر (و زیر صفحه‌های آن‌ها) را به نام جدید انتقال بده',
 	'userrenametool-reserve' => 'نام کاربری قبلی را در مقابل استفادهٔ مجدد حفظ کن',
-	'userrenametool-notify-renamed' => 'ارسال پست الکترونیکی به کاربر تغییر نام داده شده، در هنگام اتمام کار.',
+	'userrenametool-notify-renamed' => 'ارسال رایانامه به کاربر تغییر نام داده شده، در هنگام اتمام کار.',
 	'userrenametool-warnings' => 'هشدار:',
 	'userrenametool-confirm' => 'بله، نام کاربر را تغییر بده',
 	'userrenametool-submit' => 'ثبت',
@@ -3072,7 +3072,7 @@ Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-phalanx-matches' => 'Phalanxfilters die overeenkomen met $1:',
 	'userrenametool-confirm' => 'Ja, hernoem de gebruiker',
 	'userrenametool-submit' => 'Hernoemen',
-	'userrenametool-error-antispoof-conflict' => 'Waarschuwing van AntiSpoof: er is al een gebruikersnaam die lijkt op <nowiki>$1</nowiki>".',
+	'userrenametool-error-antispoof-conflict' => 'Waarschuwing van AntiSpoof: er is al een gebruikersnaam die lijkt op "<nowiki>$1</nowiki>".',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof is niet geïnstalleerd.',
 	'userrenametool-errordoesnotexist' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat niet.',
 	'userrenametool-errorexists' => 'De gebruiker "<nowiki>$1</nowiki>" bestaat al.',
@@ -4112,6 +4112,7 @@ $messages['su'] = array(
  * @author Boivie
  * @author Habj
  * @author Lejonel
+ * @author Lokal Profil
  * @author M.M.S.
  * @author Najami
  * @author Tobulos1
@@ -4150,7 +4151,7 @@ Se [[Special:Stafflog|personalloggen]] för loggar.',
 	'userrenametool-errorbot' => 'Användare <nowiki>$1</nowiki> är en bot.',
 	'userrenametool-error-request' => 'Ett problem inträffade i hanteringen av begäran. Gå tillbaks och försök igen.',
 	'userrenametool-error-same-user' => 'Du kan inte byta namn på en användare till samma som tidigare.',
-	'userrenametool-error-extension-abort' => 'En förlängning förhindrade namnbytningsprocessen.',
+	'userrenametool-error-extension-abort' => 'Ett tillägg förhindrade namnbytningsprocessen.',
 	'userrenametool-error-cannot-rename-account' => 'Att byta namn på användarkontot på den delade globala databasen misslyckades.',
 	'userrenametool-error-cannot-create-block' => 'Misslyckades att skapa ett Phalanx-block.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Oväntat fel uppstod, kolla loggarna eller försök igen.',

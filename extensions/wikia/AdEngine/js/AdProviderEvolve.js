@@ -3,7 +3,7 @@
 /*jshint maxlen:false*/
 /*jshint quotmark:false*/
 
-var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adTracker, log, window, document, Krux, evolveHelper, slotTweaker) {
+var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log, window, document, Krux, evolveHelper, slotTweaker) {
 	'use strict';
 
 	var slotMap,
@@ -169,9 +169,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		log('fillInSlot', 5, 'AdProviderEvolve');
 		log(slotname, 5, 'AdProviderEvolve');
 
-		var slotTracker = adTracker.trackSlot('evolve', slotname);
-		slotTracker.init();
-
 		if (slotname === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
 				slotname,
@@ -194,7 +191,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 					height;
 
 				if (hoppedSlots[slotname]) {
-					slotTracker.hop('hop');
 					pHop({method: 'hop'}, hopTo);
 					return;
 				}
@@ -215,7 +211,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 
 				slotTweaker.addDefaultHeight(slotname);
 				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
-				slotTracker.hop('1x1');
 				pHop({method: '1x1'}, hopTo);
 			});
 		}

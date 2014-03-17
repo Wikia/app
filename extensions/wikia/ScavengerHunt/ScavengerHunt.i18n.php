@@ -2416,6 +2416,7 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kaganer
  * @author Kuzura
  * @author Lvova
  * @author Volkov
@@ -2546,12 +2547,12 @@ $messages['ru'] = array(
 	'scavengerhunt-editor-tip-starting-clue-button-text' => 'Этот текст является меткой на кнопке, которая направляет пользователя на страницу с первым элементом.',
 	'scavengerhunt-editor-tip-starting-clue-button-target' => 'Это адрес страницы с первым элементом.',
 	'scavengerhunt-editor-tip-startPopupSprite' => 'Если нужно изображение в диалоговом окне начальной подсказки, то введите здесь координаты.',
-	'scavengerhunt-editor-tip-articleTitle' => 'Это расположение страницы с следующим элементом.',
+	'scavengerhunt-editor-tip-articleTitle' => 'Это расположение страницы со следующим элементом.',
 	'scavengerhunt-editor-tip-spriteNotFound' => 'Этот раздел определяет изображение для подсказки.',
 	'scavengerhunt-editor-tip-spriteInProgressBar' => 'В этом разделе определяется значок строки прогресса, появляющийся после того, как элемент был найден.',
 	'scavengerhunt-editor-tip-spriteInProgressBarHover' => 'В этом разделе определяется значок строки прогресса при наведении мышки.',
 	'scavengerhunt-editor-tip-spriteInProgressBarNotFound' => 'В этом разделе определяется значок строки прогресса появляющийся когда элемент еще не найден.',
-	'scavengerhunt-editor-tip-article-title' => 'Это расположение страницы с следующим элементом.',
+	'scavengerhunt-editor-tip-article-title' => 'Это расположение страницы со следующим элементом.',
 	'scavengerhunt-editor-tip-entry-form-title' => 'Это заголовок всплывающее диалоговое окно, которое появляется в конце охоты.',
 	'scavengerhunt-editor-tip-entry-form-text' => 'Это текст всплывающего диалогового окна, которое появляется в конце охоты.',
 	'scavengerhunt-editor-tip-entry-form-question' => 'Если вы хотите отобразить свободное текстовое поле для игроков для ответа на вопрос или комментарий, то пожалуйста, введите здесь текст. Если этого не требуется, оставьте это поле пустым.',

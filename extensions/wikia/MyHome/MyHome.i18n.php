@@ -1220,6 +1220,7 @@ $messages['fa'] = array(
 	'myhome-hot-spots-feed-empty' => "این ویکی در انتظار مشارکت شماست.
 بر '''[[Special:CreatePage|صفحهٔ جدید]]''' برای شروع نوشتن کلیک کنید!",
 	'myhome-hot-spots-newest' => 'صفحات جدید بر ویکی',
+	'tog-userlandingpage' => 'صفحهٔ فرود:',
 	'prefs-myhome' => 'خانه من',
 	'myhome-feed-newpage' => 'صفحهٔ جدید',
 	'myhome-feed-edit' => 'ویرایش',
@@ -1285,6 +1286,7 @@ $messages['fa'] = array(
 	'myhome-default-view-success' => 'باشد، این پیشفرض شما است الآن',
 	'tooltip-pt-myhome' => 'برگشت به خانهٔ خودم',
 	'activityfeed' => 'اشتراک فعالیت',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|یک پیام|$1 پیام}}',
 );
 
 /** Finnish (suomi)

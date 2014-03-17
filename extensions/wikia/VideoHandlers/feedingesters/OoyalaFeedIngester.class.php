@@ -200,6 +200,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
 		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
 		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
+		$metadata['distributor'] = empty( $data['distributor'] ) ? '' :  $data['distributor'];
 		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;

@@ -3,7 +3,7 @@
 /*jshint camelcase:false, maxparams:5*/
 /*global define*/
 
-var SlotTracker = function (log, tracker) {
+var SlotTracker = function (window, log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
@@ -60,9 +60,10 @@ var SlotTracker = function (log, tracker) {
 			return false;
 		}
 		// Don't track state events yet
-		if (eventName.match(/^state/)) {
+		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -95,21 +96,15 @@ var SlotTracker = function (log, tracker) {
 		if (interesting) {
 			stats.interestingEvents += 1;
 
-			if (window.wgAdDriverUseNewTracking) {
-				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
 
-				tracker.track({
-					ga_category: gaCategory,
-					ga_action: gaAction,
-					ga_label: gaLabel,
-					ga_value: Math.round(gaValue),
-					trackingMethod: 'ad'
-				});
-			} else {
-				log(['Not pushing to GA (wgAdDriverUseNewTracking is false)',
-					gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
-				);
-			}
+			tracker.track({
+				ga_category: gaCategory,
+				ga_action: gaAction,
+				ga_label: gaLabel,
+				ga_value: Math.round(gaValue),
+				trackingMethod: 'ad'
+			});
 		} else {
 			log(['Not pushing to GA (not interesting)',
 				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
@@ -199,4 +194,4 @@ var SlotTracker = function (log, tracker) {
 	return slotTracker;
 };
 
-define('ext.wikia.adengine.slottracker', ['wikia.log', 'wikia.tracker'], SlotTracker);
+define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);

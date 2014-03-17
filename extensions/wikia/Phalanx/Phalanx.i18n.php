@@ -319,6 +319,8 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'phalanx' => 'Phalanx',
+	'phalanx-type-content' => "endalc'had ar bajenn",
+	'phalanx-type-summary' => 'diverradur eus ar bajenn',
 	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
 	'phalanx-type-user-email' => 'postel',

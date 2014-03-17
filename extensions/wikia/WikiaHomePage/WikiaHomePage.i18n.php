@@ -606,14 +606,14 @@ $messages['ja'] = array(
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
 
 	'wikiahome-visualisation-remix-mixitup' => 'シャッフル!',
-	'wikiahome-visualisation-remix-mixituptext' => 'いくつものコミュニティーに簡単にアクセスできます。ウィキア内を探求しよう!',
+	'wikiahome-visualisation-remix-mixituptext' => 'ウィキア内の様々な<br/>コミュニティーを<br/>探求しよう!',
 	'wikiahome-visualisation-remix-button' => 'ミックス',
 
 	'wikiahome-stats-heading' => 'コラボ中',
 	'wikiahome-stats-visitors' => '月の訪問者',
 	'wikiahome-stats-visitors-tooltip' => '月の訪問者の数はクオントキャストのグローバル「PEOPLE」スコアで測定しており、その構成はオンラインとモバイルウェブから成り立っています。',
 	'wikiahome-stats-mobile-visitors' => 'ひと月のモバイルからの訪問者',
-	'wikiahome-stats-mobile-percentage' => '% モバイルからの訪問者',
+	'wikiahome-stats-mobile-percentage' => 'モバイルからの訪問者',
 	'wikiahome-stats-mobile-percentage-value' => '$1%',
 	'wikiahome-stats-edits' => '本日の変更',
 	'wikiahome-stats-communities' => 'コミュニティーの合計数',
@@ -629,34 +629,34 @@ $messages['ja'] = array(
 
 	'wikiahome-hubs-videogames-heading' => 'ゲーム',
 	'wikiahome-hubs-videogames-url' => 'http://ja.wikia.com/ゲーム',
-	'wikiahome-hubs-videogames-creative' => 'ウィキアはゲームカルチャーを作り上げ基盤となる場所です。',
+	'wikiahome-hubs-videogames-creative' => 'ウィキアはゲームカルチャーを作り上げ基盤となる場所',
 	'wikiahome-hubs-videogames-more-heading' => '',
 	'wikiahome-hubs-videogames-more-list' => '',
 
 	'wikiahome-hubs-entertainment-heading' => 'エンターテイメント',
 	'wikiahome-hubs-entertainment-url' => 'http://ja.wikia.com/エンタテインメント',
-	'wikiahome-hubs-entertainment-creative' => 'エンターテイメントに詳しいコミュニティーから直にフレッシュな情報を得られる場所です。',
+	'wikiahome-hubs-entertainment-creative' => 'エンターテイメントに詳しいコミュニティーから<br/>直にフレッシュな情報を得られる場所',
 	'wikiahome-hubs-entertainment-more-heading' => '',
 	'wikiahome-hubs-entertainment-more-list' => '',
 
 	'wikiahome-hubs-lifestyle-heading' => 'ライフスタイル & カルチャー',
 	'wikiahome-hubs-lifestyle-url' => 'http://ja.wikia.com/ライフスタイル',
-	'wikiahome-hubs-lifestyle-creative' => '熱狂的で面白いコミュニティーを発見しよう。',
+	'wikiahome-hubs-lifestyle-creative' => '熱狂的で情報を持っているコミュニティーを発見しよう',
 	'wikiahome-hubs-lifestyle-more-heading' => '',
 	'wikiahome-hubs-lifestyle-more-list' => '',
 
 	'wikiahome-community-column1-heading' => 'コミュニティーリソース',
 	'wikiahome-community-column1-link' => 'http://ja.community.wikia.com',
-	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させるための必要な情報はそろっています。ヒントやツール、そしてニュースをチェックしてみて下さい。それでも疑問がある場合は人々に連絡することができます。',
+	'wikiahome-community-column1-creative' => 'ウィキアにはあなたがコミュニティーを始め成長させる<br/>ための必要な情報が揃っています。ヒントやツール<br/>そしてニュースをチェックしてみて下さい。<br/>それでも疑問がある時は人々に訪ねることもできます。',
 	'wikiahome-community-column2-heading' => 'ウィキアの改革',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
-	'wikiahome-community-column2-creative' => 'ウィキアからマイウィキアとゲームガイドという公式モバイルアプリをご紹介させていただきます。各それぞれのアプリにはウィキアコミュニティーユーザーによって創られた上質で生き生きとしたコンテンツを数多く見る事が出来ます。ダウンロードは[[w:c:Wikia:Mobile|こちら]]から。',
+	'wikiahome-community-column2-creative' => 'ウィキアからマイウィキアとゲームガイドという<br/>公式モバイルアプリをご紹介させていただきます。<br/>それぞれのアプリにはウィキアコミュニティーユーザー<br/>によって創られた上質で生き生きとしたコンテンツを<br/>数多く見ることが出来ます。<br/>ダウンロードはこちらから。',
 	'wikiahome-community-column3-heading' => 'フォローしてね',
 	'wikiahome-community-social-wikia-blog' => 'ウィキアブログ',
 	'wikiahome-community-social-wikia-blog-link' => 'http://ja.community.wikia.com/wiki/カテゴリ:スタッフブログ',
 	'wikiahome-community-social-twitter' => 'ツイッター',
 	'wikiahome-community-social-facebook' => 'フェイスブック',
-	'wikiahome-community-social-googleplus' => 'グーグル+',
+	'wikiahome-community-social-googleplus' => 'Google+',
 
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://ja.wikia.com/ウィキアについて ウィキアについて]
@@ -673,7 +673,7 @@ __NOEDITSECTION__',
 *[https://twitter.com/wikia ツイッター]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===コミュニティー===
-*[http://ja.community.wikia.com コミュニティーセントラルl]
+*[http://ja.community.wikia.com コミュニティーセントラル]
 *[http://ja.community.wikia.com/wiki/ヘルプ:ユーザー権限 設立者&管理者]
 *[http://ja.wikia.com/Special:Contact サポートコンタクト]$1
 *[http://www.wikia.com/Stars ウィキア スター]

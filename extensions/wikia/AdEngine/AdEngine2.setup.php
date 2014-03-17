@@ -4,6 +4,7 @@ $wgAutoloadClasses['AdServer'] =  __DIR__ . '/AdServer.php';
 $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaderAdEngineSevenOneMediaModule.php';
 
+$wgHooks['AfterInitialize'][] = 'AdEngine2Controller::onAfterInitialize';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Controller::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Controller::onWikiaSkinTopScriptsLegacy';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AdEngine2Controller::onMakeGlobalVariablesScript';

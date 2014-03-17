@@ -40,7 +40,7 @@ DatepickerModel.prototype = {
 		return $.nirvana.sendRequest({
 			controller: 'EditHub',
 			method: 'getCalendarData',
-			type: 'post',
+			type: 'get',
 			data: {
 				'cityId': this.cityId,
 				'beginTimestamp': beginTimestamp,

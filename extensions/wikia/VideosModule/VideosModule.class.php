@@ -43,7 +43,8 @@ class VideosModule extends WikiaModel {
 		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
 		$numRequired = $numRequired - count( $videos );
 		if ( $numRequired > 0 ) {
-			$videos = array_merge( $videos, $this->getWikiRelatedVideos( $numRequired ) );
+//			$videos = array_merge( $videos, $this->getWikiRelatedVideos( $numRequired ) );
+			$videos = array_merge( $videos, $this->getWikiRelatedVideosTopics( $numRequired ) );
 		}
 
 		return $videos;
@@ -117,6 +118,50 @@ class VideosModule extends WikiaModel {
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
+
+			$videos = [];
+			foreach ( $videoResults as $video ) {
+				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+					break;
+				}
+
+				$videoTitle = preg_replace( '/.+\/File:/', '', urldecode( $video['url'] ) );
+				$this->addToList( $videos, $videoTitle );
+			}
+
+			// get video detail
+			if ( !empty( $videos ) ) {
+				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->trimVideoList( $videos, $numRequired );
+	}
+
+	/**
+	 * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
+	 * @param integer $numRequired - number of videos required
+	 * @return array $videos - Premium videos related to the local wiki.
+	 */
+	public function getWikiRelatedVideosTopics( $numRequired ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			// Strip Wiki off the end of the wiki name if it exists
+			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
+
+			$params = [
+				'defaultTopic' => $wikiTitle,
+				'limit'        => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+			];
+
+			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {

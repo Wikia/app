@@ -72,7 +72,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
+			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',

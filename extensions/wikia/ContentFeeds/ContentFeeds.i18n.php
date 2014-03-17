@@ -192,6 +192,8 @@ $messages['fa'] = array(
  * @author Nedergard
  */
 $messages['fi'] = array(
+	'contentfeeds-desc' => 'Tarjoaa runsasta ja ajankohtaista tietoa eri tunnisteiden tai "syötteiden" kautta',
+	'contentfeeds-newimages-rss-title' => 'RSS-syöte: {{#Special:NewFiles}}',
 	'contentfeeds-newimages-rss-desc' => 'Syöte sivulta $1',
 	'contentfeeds-firstfewarticles-tag-header' => 'Luo ensimmäiset sivusi!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Otsikko',

@@ -330,14 +330,15 @@ Detalles: $2',
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'lightbox-forum' => 'فروم',
 	'lightbox-send' => 'ارسال',
-	'lightbox-share-button-email' => 'پست الکترونیکی',
+	'lightbox-share-button-email' => 'رایانامه',
 	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
-	'lightbox-share-email-page-label-address' => 'نشانی پست الکترونیکی',
+	'lightbox-share-email-page-label-address' => 'نشانی رایانامه',
 	'lightbox-share-email-ok-caption' => 'تأیید عمل',
 	'lightbox-share-email-error-caption' => 'خطا',
 );

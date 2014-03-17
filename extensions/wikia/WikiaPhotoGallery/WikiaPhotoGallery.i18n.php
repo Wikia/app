@@ -1152,8 +1152,10 @@ $messages['ce'] = array(
 	'wikiaPhotoGallery-error-user-rights' => 'Декъашхочун тӀекхачаре бакъона гӀалат.',
 	'wikiaPhotoGallery-upload-findbutton' => 'Каро',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Чуйилла',
+	'wikiaPhotoGallery-upload-select-images' => 'Харжа',
 	'wikiaPhotoGallery-preview-saving-title' => 'ДӀадоьду Ӏалашяр',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Дехьа гӀо $1',
+	'wikiaPhotoGallery-upload-selectbutton' => 'Харжа',
 );
 
 /** Sorani Kurdish (کوردی)
@@ -5044,7 +5046,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma atualizada.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Link para (inserir nome da página ou URL).',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalhes da imagem.',
 	'wikiaPhotoGallery-search-tooltip' => 'Procurar fotos nesta wiki',
-	'wikiaPhotoGallery-upload-image-size' => 'As imagens têm de ter 670px por 360px ou maior.', # Fuzzy
+	'wikiaPhotoGallery-upload-image-size' => 'As fotos devem ter 670px por 360px ou maior',
 	'wikiaPhotoGallery-not-displayed' => 'Não exibida',
 	'galery-slider-read-more' => ' Leia mais >',
 );
