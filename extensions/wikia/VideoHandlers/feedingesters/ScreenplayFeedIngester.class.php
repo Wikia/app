@@ -272,9 +272,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$clipData['stdBitrateCode'] = $clip['BitrateId'];
 				$clipData['streamUrl'] = $clip['Url'];
 
-				if ( $clipData['resolution'] != self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID] ) {
-					$clipData['resolution'] = self::$VIDEO_RESOLUTION[$clipData['stdBitrateCode']];
-				}
+				$clipData['hd'] = 0;
+				$clipData['resolution'] = self::$VIDEO_RESOLUTION[$clipData['stdBitrateCode']];
 			}
 		}
 
