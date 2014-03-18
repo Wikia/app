@@ -9,6 +9,7 @@ class WikiaHubsApiController extends WikiaApiController {
 
 	const PARAMETER_MODULE = 'module';
 	const PARAMETER_VERTICAL = 'vertical';
+	const PARAMETER_CITY = 'city';
 	const PARAMETER_TIMESTAMP = 'ts';
 	const PARAMETER_LANG = 'lang';
 	const HUBS_V3_VARIABLE_NAME = 'wgEnableWikiaHubsV3Ext';
@@ -38,6 +39,87 @@ class WikiaHubsApiController extends WikiaApiController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
+
+	/**
+	 * Get explore module data from given date and city id
+	 *
+	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
+	 * @requestParam integer $city [REQUIRED] (1) city id of givenhub
+	 * @requestParam integer $vertical [REQUIRED] (2) vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
+	 * @requestParam string $lang [OPTIONAL] (2) default set to EN
+	 *
+	 * We need either (1) or (2)
+	 *
+	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
+	 * @responseParam string $basepath domain of a wiki to create a url for an article
+	 *
+	 * @example
+	 * @example &module=1&city=2&ts=1359504000
+	 */
+
+	public function getModuleData() {
+		if ( $this->request->getInt( self::PARAMETER_CITY ) === 0 ) {
+			$this->getModuleDataV3();
+		} else {
+			$this->getModuleDataV2();
+		}
+	}
+
+	/**
+	 * Get explore module data from given date and city id
+	 *
+	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
+	 * @requestParam integer $city [REQUIRED] city id of givenhub
+	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
+	 *
+	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
+	 * @responseParam string $basepath domain of a wiki to create a url for an article
+	 *
+	 * @example
+	 * @example &module=1&city=2&ts=1359504000
+	 */
+
+	public function getModuleDataV3() {
+		wfProfileIn( __METHOD__ );
+
+		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
+		$cityId = $this->request->getInt(self::PARAMETER_CITY);
+		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
+
+		$model = $this->getModel();
+
+		if( !$this->isValidModule($model, $moduleId) ) {
+			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
+		}
+
+		if( !$this->isValidCity($model, $cityId) ) {
+			throw new InvalidParameterApiException( self::PARAMETER_CITY );
+		}
+
+		if( !$this->isValidTimestamp($timestamp) ) {
+			throw new InvalidParameterApiException( self::PARAMETER_TIMESTAMP );
+		}
+
+		$moduleName = $model->getNotTranslatedModuleName($moduleId);
+		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, null, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3);
+
+		if( $this->isValidModuleService($moduleService) ) {
+			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
+			$data = $moduleService->loadData($model, [
+				'city_id' => $cityId,
+				'ts' => $timestamp,
+			]);
+			$this->response->setVal('data', $data);
+		} else {
+			throw new BadRequestApiException();
+		}
+
+		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+
+		wfProfileOut( __METHOD__ );
+	}
+
 	/**
 	 * Get hub module data from given date and vertical
 	 *
@@ -53,7 +135,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * @example &module=1&vertical=2&ts=1359504000&lang=de
 	 */
 
-	public function getModuleData() {
+	public function getModuleDataV2() {
 		wfProfileIn( __METHOD__ );
 		
 		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
@@ -135,7 +217,6 @@ class WikiaHubsApiController extends WikiaApiController {
 	 */
 	private function getHubsWikis( $lang ) {
 		$varId = WikiFactory::getVarIdByName( self::HUBS_V3_VARIABLE_NAME );
-
 		$wikis = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
 
 		if ( !empty( $lang ) ) {
@@ -157,6 +238,13 @@ class WikiaHubsApiController extends WikiaApiController {
 		}
 
 		return $out;
+	}
+
+	protected function isValidCity($cityId) {
+		$varId = WikiFactory::getVarIdByName( self::HUBS_V3_VARIABLE_NAME );
+		$wikiIds = array_keys( WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true ) );
+
+		return in_array($cityId, $wikiIds);
 	}
 
 }
