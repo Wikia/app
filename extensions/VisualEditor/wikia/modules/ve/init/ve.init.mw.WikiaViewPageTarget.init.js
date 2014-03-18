@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit,
-		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported,
+		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported, $html,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -197,11 +197,9 @@
 		},
 
 		setupSkin: function () {
-			if ( isViewPage ) {
+			if ( userPrefEnabled && veUIEnabled ) {
 				init.setupTabs();
-				if ( init.isAvailable() ) {
-					init.setupSectionLinks();
-				}
+				init.setupSectionLinks();
 			}
 		},
 
@@ -289,27 +287,26 @@
 	userPrefEnabled = (
 		// Allow disabling for anonymous users separately from changing the
 		// default preference (bug 50000)
-		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null )
+		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
+
+		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
+		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
+		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
+		// anons as it is likely outdated.
+		(
+			mw.config.get( 'wgUserName' ) === null ?
+				conf.defaultUserOptions.enable :
+				(
+					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
+					!!mw.user.options.get( 'enablerichtext' )
+				)
+		)
 	);
 
 	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
-	// Whether VisualEditor should be available for the current user, wiki, mediawiki skin,
-	// browser etc.
-	init.isAvailable = function () {
-		return (
-			isBrowserSupported &&
-
-			userPrefEnabled &&
-
-			isSkinSupported &&
-
-			veUIEnabled
-		);
-	};
-
 	// Whether VisualEditor is available for a specific page based on namespace, etc.
-	init.isAvailableForPage = function ( article ) {
+	init.isPageEligible = function ( article ) {
 		return (
 			// Disable on redirect pages until redirects are editable (bug 47328)
 			// Property wgIsRedirect is relatively new in core, many cached pages
@@ -337,17 +334,19 @@
 	// The VE global was once available always, but now that platform integration initialisation
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
 	//
-	// Most of mw.libs.ve is considered subject to change and private.  The exception is that
-	// mw.libs.ve.isAvailable is public, and indicates whether the VE editor itself can be loaded
-	// on this page. See above for why it may be false.
+	// Most of mw.libs.ve is considered subject to change and private.
 	mw.libs.ve = init;
 
-	if ( init.isAvailable() ) {
-		if ( init.isAvailableForPage( mw.config.get( 'wgRelevantPageName' ) ) ) {
-			$( 'html' ).addClass( 've-available' );
-			$( function () {
-				if ( isViewPage ) {
+	$html = $( 'html' );
+	if ( isBrowserSupported && isSkinSupported ) {
+		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
+			if ( userPrefEnabled && veUIEnabled ) {
+				$html.addClass( 've-available' );
+			}
+			if ( isViewPage ) {
+				$( function () {
 					if ( init.activateOnPageLoad ) {
+						initIndicator();
 						if ( window.veTrack ) {
 							veTrack( {
 								action: 've-edit-page-start',
@@ -358,18 +357,19 @@
 							target.activate();
 						} );
 					}
-				}
-				init.setupSkin();
-			} );
+					init.setupSkin();
+				} );
+			}
 		}
 
-		initIndicator();
-
-		// Redlinks
-		$( setupRedlinks );
-	} else {
-		$edit = $( '#ca-edit' );
+		if ( userPrefEnabled && veUIEnabled ) {
+			// Redlinks
+			$( setupRedlinks );
+		}
+	}
+	if ( !$html.hasClass( 've-available' ) ) {
 		$( 'html' ).addClass( 've-not-available' );
+		$edit = $( '#ca-edit' );
 		$veEdit = $( '#ca-ve-edit' );
 		if ( isElementInDropdown( $veEdit ) ) {
 			// Remove the VE edit link from the tab dropdown
@@ -394,7 +394,7 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailableForPage( redlinkArticle ) ) {
+				if ( init.isPageEligible( redlinkArticle ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
