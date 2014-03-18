@@ -24,7 +24,11 @@ define(
 				hop({method: 'hop'}, 'Null');
 			}
 
-			wikiaGpt.pushAd(slotname, success, (window.wgEnableRHonMobile ? hop : hopToNull), 'mobile');
+            function hopToRemnant() {
+                hop({method: 'hop'}, 'RemnantDart');
+            }
+
+			wikiaGpt.pushAd(slotname, success, (window.wgEnableRHonMobile ? hopToRemnant : hopToNull), 'mobile');
 			wikiaGpt.flushAds();
 		}
 
