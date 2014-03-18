@@ -149,10 +149,10 @@ class WikiaHubsApiController extends WikiaApiController {
 		$out = [];
 		foreach ( $wikis as $wikiId => $wiki ) {
 			$out[] = [
-				'wikiId' => $wikiId,
-				'wikiName' => $wiki['t'],
-				'wikiUrl' => $wiki['u'],
-				'wikiLanguage' => $wiki['l']
+				'id' => $wikiId,
+				'name' => $wiki['t'],
+				'url' => $wiki['u'],
+				'language' => $wiki['l']
 			];
 		}
 
