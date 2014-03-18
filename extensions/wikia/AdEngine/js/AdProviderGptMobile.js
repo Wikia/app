@@ -2,16 +2,12 @@
 
 define(
 	'ext.wikia.adengine.provider.gptmobile',
-	['wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'],
-	function (log, window, document, slotTweaker, wikiaGpt) {
+	['wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper', 'ext.wikia.adengine.gptslotconfig'],
+	function (log, window, document, slotTweaker, wikiaGpt, gptSlotConfig) {
 		'use strict';
 
 		var logGroup = 'AdProviderGptMobile',
-			slotMap = {
-				MOBILE_TOP_LEADERBOARD: {size: '320x50'},
-				MOBILE_IN_CONTENT: {size: '300x250'},
-				MOBILE_PREFOOTER: {size: '300x250'}
-			};
+			slotMap = gptSlotConfig.getConfig('mobile');
 
 		function canHandleSlot(slotname) {
 			return !!slotMap[slotname];

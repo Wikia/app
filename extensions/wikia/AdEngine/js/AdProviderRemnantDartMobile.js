@@ -1,16 +1,9 @@
 /*global define*/
-define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'], function (log, slotTweaker, wikiaGpt) {
+define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper', 'ext.wikia.adengine.gptslotconfig'], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'AdProviderDartRemnantMobile',
-		srcName = 'rh_mobile',
-		slotMap = {
-			MOBILE_TOP_LEADERBOARD: {size: '320x50'},
-			MOBILE_IN_CONTENT: {size: '300x250'},
-			MOBILE_PREFOOTER: {size: '300x250'}
-		};
-
-	wikiaGpt.init(slotMap, srcName);
+		slotMap = gptSlotConfig.getConfig('rh_mobile');
 
 	function canHandleSlot(slotname) {
 		return !!slotMap[slotname];
@@ -42,7 +35,7 @@ define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia
 
 				success();
 			},
-			srcName
+			'rh_mobile'
 		);
 		wikiaGpt.flushAds();
 	}
