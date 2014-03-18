@@ -16,7 +16,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		wysiwygStart = 1,
 		// Show notifications for this long and then hide them
 		notificationTimout = 4000,
-		options = {},
+		vetOptions = {},
 		embedPresets = false,
 		callbackAfterSelect = $.noop,
 		callbackAfterEmbed = $.noop,
@@ -147,7 +147,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 				var caption = $('#VideoEmbedCaption').val();
 				if (caption) {
-					 extraData.caption = caption;
+					extraData.caption = caption;
 				}
 
 				if(callbackAfterEmbed) {
@@ -226,7 +226,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 	function show( options ) {
 		/* set vars for this instance of VET */
-		options = options;
+		vetOptions = options;
 		embedPresets = options.embedPresets;
 		wysiwygStart = options.startPoint || 1;
 		callbackAfterSelect = options.callbackAfterSelect || $.noop;
@@ -236,7 +236,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			action: Wikia.Tracker.ACTIONS.OPEN
 		});
 
-		if(wysiwygStart == 2) {
+		if(wysiwygStart === 2) {
 			if(options.size) {
 				thumbSize = options.size;
 			}
@@ -378,7 +378,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		var params = [];
 
 		if( !$('#VideoEmbedName').length || $('#VideoEmbedName').val() == '' ) {
-	 		GlobalNotification.show( $.msg('vet-warn3'), 'error', null, notificationTimout );
+			GlobalNotification.show( $.msg('vet-warn3'), 'error', null, notificationTimout );
 			return false;
 		}
 
@@ -412,7 +412,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		}
 
 		// Allow extensions to add extra params to ajax call
-		params = params.concat(options.insertFinalVideoParams || []);
+		params = params.concat(vetOptions.insertFinalVideoParams || []);
 
 		var callback = function(data, status) {
 			if(status === 'error') {
@@ -528,8 +528,8 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			action: Wikia.Tracker.ACTIONS.CLOSE
 		});
 
-		if ($.isFunction(options.onClose)) {
-			options.onClose();
+		if ($.isFunction(vetOptions.onClose)) {
+			vetOptions.onClose();
 		}
 
 		switchScreen('Main');
@@ -1014,7 +1014,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			var that = this,
 				svStart = this.searchCachedStuff.fetchedResoultsCount,
-				svSize = 20; // number of requested items
+				svSize = 20, // number of requested items
 				phrase = this.searchCachedStuff.currentKeywords;
 
 			if (this.canFatch === true) {
