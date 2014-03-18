@@ -790,7 +790,7 @@ $config['filepage_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePage.wikiamobile.js'
+		'//extensions/wikia/FilePage/scripts/FilePage.wikiamobile.js'
 	)
 );
 
@@ -1533,13 +1533,13 @@ $config['categoryselect_edit_js'] = array(
 $config['wikia_file_page_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/WikiaFilePage.js',
+		'//extensions/wikia/FilePage/scripts/WikiaFilePage.js',
 	)
 );
 $config['file_page_tabbed_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePageTabbed.js',
+		'//extensions/wikia/FilePage/scripts/FilePageTabbed.js',
 	)
 );
 $config['file_page_tabbed_css'] = array(
