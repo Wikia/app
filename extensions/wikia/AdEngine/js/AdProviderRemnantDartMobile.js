@@ -12,31 +12,11 @@ define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 5, logGroup);
 
-		wikiaGpt.pushAd(slotname,
-			function () { // Success
-				var slot = document.getElementById( slotname ),
-					$iframe = $( slot ).find( 'iframe' ).contents();
+		function hopToNull() {
+			hop({method: 'hop'}, 'Null')
+		}
 
-				if (
-					$iframe.find( 'body *:not(script)' ).length === 0 ||
-						$iframe.find( 'body img' ).width() <= 1
-					) {
-					log( 'Slot seems to be empty: ' + slotname, 5, logGroup );
-					slotTweaker.hide(slotname);
-					slotTweaker.hideSelfServeUrl(slotname);
-				}
-			},
-			function () { // Hop
-
-				log(slotname + ' was not filled by DART', 'info', logGroup);
-
-				slotTweaker.hide(slotname);
-				slotTweaker.hideSelfServeUrl(slotname);
-
-				success();
-			},
-			'rh_mobile'
-		);
+		wikiaGpt.pushAd(slotname, success, hopToNull, 'rh_mobile');
 		wikiaGpt.flushAds();
 	}
 
