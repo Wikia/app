@@ -25,7 +25,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * @example &lang=en
 	 */
 	public function getHubsV3List() {
-		$lang = $this->request->getVal(self::PARAMETER_LANG);
+		$lang = $this->request->getVal( self::PARAMETER_LANG );
 
 		$out = WikiaDataAccess::cache(
 			'hubs_list_' . $lang,
@@ -35,7 +35,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			}
 		);
 
-		$this->response->setVal('list', $out);
+		$this->response->setVal( 'list', $out );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
@@ -53,8 +53,11 @@ class WikiaHubsApiController extends WikiaApiController {
 	 *
 	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
 	 *
-	 * @example
+	 * @example &module=1&city=2
 	 * @example &module=1&city=2&ts=1359504000
+	 * @example &module=1&vertical=2&ts=1359504000
+	 * @example &module=1&vertical=2&ts=1359504000&lang=de
+	 *
 	 */
 
 	public function getModuleData() {
@@ -69,7 +72,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * Get explore module data from given date and city id
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
-	 * @requestParam integer $city [REQUIRED] city id of givenhub
+	 * @requestParam integer $city [REQUIRED] city id of given hub
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 *
 	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
@@ -122,6 +125,8 @@ class WikiaHubsApiController extends WikiaApiController {
 
 	/**
 	 * Get hub module data from given date and vertical
+	 *
+	 * @deprecated use getModuleDataV3
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
 	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
@@ -185,7 +190,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		return new MarketingToolboxV3Model($this->app);
 	}
 	
-	protected function isValidModule(MarketingToolboxV3Model $model, $moduleId) {
+	protected function isValidModule(AbstractMarketingToolboxModel $model, $moduleId) {
 		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
 		}
