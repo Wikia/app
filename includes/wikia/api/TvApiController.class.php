@@ -154,6 +154,7 @@ class TvApiController extends WikiaApiController {
 	 */
 	protected function queryXWikiSolr( $query, $lang ) {
 		$config = (new Factory())->getSolariumClientConfig();
+		$config['adapteroptions']['core'] = 'xwiki';
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
