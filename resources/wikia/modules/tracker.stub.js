@@ -175,7 +175,7 @@ function veTrack( data ) {
 		// isAnonymous
 		try {
 			//defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
-			defaultData.isAnonymous = !wgUserName;
+			defaultData.isAnonymous = !wgUserName ? 'yes' : 'no';
 		} catch ( e ) {
 			defaultData.isAnonymous = 'unknown';
 		}
