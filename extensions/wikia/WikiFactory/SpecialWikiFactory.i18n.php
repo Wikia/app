@@ -811,6 +811,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -847,6 +848,7 @@ $messages['br'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Keñveriañ',
 	'right-wikifactory' => 'Kemmañ arventennoù diabarzh ar wikioù',
+	'action-wikifactory' => 'kemmañ arventennoù diabarzh ar wikioù',
 	'wikifactory-domain-edit' => "Kemmañ ar chomlec'h URL-mañ",
 	'wikifactory-domain-remove' => 'Tennañ an URL-mañ eus ar wiki',
 	'wikifactory-domain-setmain' => 'Lakaat an URL-mañ e wgServer',
@@ -1134,7 +1136,7 @@ $messages['ce'] = array(
 	'awc-metrics-close' => 'ДӀачӀагӀа',
 	'awc-metrics-close-action' => 'дӀачӀагӀа',
 	'awc-metrics-close-checked' => 'ДӀачӀагӀа билгал йинарш',
-	'closed-reason' => 'Бахьан:',
+	'closed-reason' => 'Бахьна:',
 	'newwikisgraph-param-other' => 'Кхин',
 );
 
@@ -3738,8 +3740,8 @@ $messages['oc'] = array(
 	'wf_city_public' => 'Estatut',
 	'wf_city_lang' => 'Lenga',
 	'wf_cc_name' => 'Categoria',
-	'wikifactory_removevariable' => "Suprimir las donadas del wiki de l'amagatal",
-	'wikifactory_removeconfirm' => "Las donadas del wiki son estadas suprimidas de l'amagatal !",
+	'wikifactory_removevariable' => "Suprimir las donadas del wiki de l'escondedor",
+	'wikifactory_removeconfirm' => "Las donadas del wiki son estadas suprimidas de l'escondedor !",
 	'wikifactory-label-variables' => 'Variablas',
 	'wikifactory-label-variables2' => 'General',
 	'wikifactory-label-hubs' => 'Hubs',

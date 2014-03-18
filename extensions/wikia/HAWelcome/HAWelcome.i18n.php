@@ -1536,12 +1536,11 @@ $messages['pt'] = array(
 	'welcome-message-user' => 'Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela tua edição na página [[:$1]].
 
 Por favor, deixa uma mensagem na [[$2|minha página de discussão]] se eu posso-te ajudar nalguma coisa! $3',
-	'welcome-message-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela sua edição em [[:$1]]. 
+	'welcome-message-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela tua edição em [[:$1]]. 
 
-'''[[Special:Userlogin|Porque não cria uma conta e se autentica?]]'''
-Desta forma será muito mais fácil saber quais foram as suas contribuições e além do mais será de grande ajuda na hora de comunicar com o resto da comunidade.
+Porque não '''[[Special:Userlogin|crias uma conta e te identificas]]'''? Desta forma será muito mais fácil saber as páginas que tu editaste e o teu trabalho será atribuido a ti na wiki, além do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
 
-Por favor, se tiver alguma dúvida, sinta-se à vontade para deixar uma mensagem na [[$2|minha página de discussão]] para ver se eu posso ajudar. $3",
+Por favor, se tiveres alguma dúvida, sente-te à vontade para deixar uma mensagem na [[$2|minha página de discussão]] para ver se eu posso-te ajudar com alguma coisa. $3",
 	'welcome-message-log' => 'boas-vindas a novo colaborador',
 	'welcome-message-user-staff' => '==Bem-vindo(a)==
 

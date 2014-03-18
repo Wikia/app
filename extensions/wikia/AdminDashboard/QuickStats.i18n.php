@@ -1197,6 +1197,9 @@ $messages['sco'] = array(
 	'quickstats-header-likes' => 'Likes,',
 	'quickstats-totals-label' => 'Tôtals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See mair stats]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Serbo-Croatian (srpskohrvatski / српскохрватски)

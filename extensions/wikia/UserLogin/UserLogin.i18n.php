@@ -370,6 +370,8 @@ $messages['br'] = array(
 	'userlogin-forgot-password-button' => "Kenderc'hel",
 	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
 	'userlogin-remembermypassword' => 'Chom kevreet',
+	'userlogin-error-noname' => 'Pop, leugnit ar vaezienn anv implijer, mar plij.',
+	'userlogin-error-wrongpasswordempty' => 'Pop, leugnit ar vaezienn ger-tremen, mar plij.',
 	'userlogin-error-edit-account-closed-flag' => 'Diweredekaet eo bet ho kont gant Wikia.',
 	'userlogin-error-cantcreateaccount-text' => "N'eo ket aotreet ho chomlec'h IP da grouiñ kontoù nevez.",
 	'userlogin-error-userexists' => 'Implijet eo an anv implijer-mañ gant unan bennak dija. Esaeit gant unan all !',
@@ -383,6 +385,8 @@ $messages['br'] = array(
 	'userlogin-error-resetpass_forbidden' => "
 N'haller ket cheñch ar gerioù-termen",
 	'userlogin-error-blocked-mailpassword' => "Ne c'hallit ket goulenn ur ger-tremen nevez abalamour m'eo stanket ar chomlec'h IP-mañ gant Wikia.",
+	'userlogin-password-email-sent' => "Kaset hon eus ur ger-tremen nevez d'ar chomlec'h postel evit $1.",
+	'userlogin-error-unconfirmed-user' => "Digarezit, n'ho peus ket kadanaet ho chomlec'h postel. Kadarnait ho chomlec'h postel da gentañ, mar plij.",
 	'userlogin-password-page-title' => 'Cheñch ar ger-tremen',
 	'userlogin-oldpassword' => 'Ger-tremen kozh',
 	'userlogin-newpassword' => 'Ger-tremen nevez',

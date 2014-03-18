@@ -134,7 +134,10 @@ $messages['br'] = array(
 	'specialcontact-mail' => 'Kas da Wikia',
 	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
 	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
+	'specialcontact-captchatitle' => 'Ger dispisaet',
+	'specialcontact-formtitle' => 'Mont e darempred gant skipailh skoazell Wikia',
 	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
+	'specialcontact-captchafail' => "Diank pe direizh eo ar c'hod kadarnaat.",
 	'specialcontact-ccheader' => 'Setu amañ un eiladenn eus ar gemennadenn a zo bet kaset da Skoazell Wikia',
 	'specialcontact-submitcomplete' => "Trugarez deoc'h evit mont e darempred gant Wikia.",
 );
@@ -244,6 +247,7 @@ Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter 
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'contact' => 'Wikia İrtibat',
@@ -252,7 +256,7 @@ $messages['diq'] = array(
 	'specialcontact-username' => 'Namey Karberi', # Fuzzy
 	'specialcontact-realname' => 'Namey şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
-	'specialcontact-problem' => 'Mersel',
+	'specialcontact-problem' => 'Mewzu',
 	'specialcontact-problemdesc' => 'Mesac',
 );
 
