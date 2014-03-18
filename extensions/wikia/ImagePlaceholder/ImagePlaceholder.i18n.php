@@ -553,6 +553,17 @@ $messages['sv'] = array(
 	'imgplc-notinhistory-video' => 'Du kan inte lägga till ett videoklipp i historikläget.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'imgplc-add-image' => 'బొమ్మను చేర్చు',
+	'imgplc-add-video' => 'వీడియోను చేర్చు',
+	'imgplc-image' => 'బొమ్మ',
+	'imgplc-notinhistory' => 'చరిత్ర మోడ్‍లో ఉండగా మీరు బొమ్మను చేర్చలేరు.',
+	'imgplc-notinhistory-video' => 'చరిత్ర మోడ్‍లో ఉండగా మీరు వీడియోను చేర్చలేరు.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

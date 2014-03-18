@@ -4,18 +4,11 @@
 require([
 	'videosmodule.views.bottomModule',
 	'videosmodule.views.rail',
-	'videosmodule.models.videos',
-	'wikia.tracker'
-], function (BottomModule, RailModule, VideoData, Tracker) {
+	'videosmodule.models.videos'
+], function (BottomModule, RailModule, VideoData) {
 	'use strict';
-	var view,
-		track;
+	var view;
 
-	track = Tracker.buildTrackingFunction({
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'valid-code'
-	});
 	// instantiate rail view
 	function onWikiaRailLoad() {
 		return new RailModule({
@@ -32,8 +25,5 @@ require([
 				model: new VideoData()
 			});
 		}
-		track({
-			category: 'videos-module-' + window.wgVideosModuleABTest
-		});
 	});
 });

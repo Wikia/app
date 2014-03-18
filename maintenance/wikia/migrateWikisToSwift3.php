@@ -41,6 +41,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 	private $dryRun = null;
 	private $noDeletes = null;
 	private $calculateMd5 = null;
+	private $syncSecondary = null;
 
 	/**
 	 * Set script options
@@ -58,6 +59,7 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->addOption( 'dry-run', 'Perform file uploads but don\'t switch wiki to Swift' );
 		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
 		$this->addOption( 'md5', 'Calculate md5 of files only' );
+		$this->addOption( 'sync', 'Synchronize the secondary DC only' );
 		$this->addOption( 'stats-only', 'Print statistics only' );
 		$this->addOption( 'dc', 'Target datacenter(s), comma-separated list (default: local datacenter)' );
 		$this->mDescription = 'Migrate images for all Wikis';
@@ -80,15 +82,22 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$debug = $this->hasOption( 'debug' );
 		$force = $this->hasOption( 'force' );
 		$wikis = $this->getOption( 'wiki', null );
+		$forceAll = $this->hasOption( 'all' );
 		$this->dryRun = $this->hasOption('dry-run');
 		$this->noDeletes = $this->hasOption('no-deletes');
 		$this->calculateMd5 = $this->hasOption('md5');
+		$this->syncSecondary = $this->hasOption('sync');
+
+		if ( $this->syncSecondary ) {
+			$force = true;
+			$forceAll = true;
+		}
 
 		$this->dc = $this->getOption('dc','sjc,res');
 
 		# don't migrate top 200 Wikis
 		$top200Wikis = array();
-		if ( !$this->hasOption('all') ) {
+		if ( !$forceAll ) {
 			$top200Wikis = DataMartService::getWAM200Wikis();
 
 			if ( count($top200Wikis) != 200 ) {
@@ -105,6 +114,10 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->disabled_wikis = array_merge( $top200Wikis, $this->disabled_wikis );
 		foreach ($this->disabled_wikis as $k => $v) {
 			$this->disabled_wikis[$k] = intval($v);
+		}
+
+		if ( $this->syncSecondary ) {
+			$this->disabled_wikis = array();
 		}
 
 		$wikiIds = null;
@@ -179,6 +192,8 @@ class MigrateWikisToSwift3 extends Maintenance {
 		foreach ( $queue as $id => $dbname ) {
 			if ( $this->calculateMd5 ) {
 				$process = $this->getMd5Process($id,$dbname);
+			} elseif ( $this->syncSecondary ) {
+				$process = $this->getSyncProcess($id,$dbname);
 			} else {
 				$process = $this->getMigrationProcess($id,$dbname);
 			}
@@ -203,6 +218,14 @@ class MigrateWikisToSwift3 extends Maintenance {
 //		$logFile = $this->getLogPath($dbname);
 		$logFile = '/dev/null';
 		$cmd = sprintf( self::CMD_MD5, $cityId, $opts, $this->getOption('conf'), $logFile );
+		return new \Wikia\Swift\Process\Process($cmd);
+	}
+
+	const CMD_SYNC = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 syncSwiftImagesBetweenDC.php %s --conf %s" >> %s 2>&1';
+	protected function getSyncProcess( $cityId, $dbname ) {
+		$opts = "--debug" ;
+		$logFile = $this->getLogPath($dbname);
+		$cmd = sprintf( self::CMD_SYNC, $cityId, $opts, $this->getOption('conf'), $logFile );
 		return new \Wikia\Swift\Process\Process($cmd);
 	}
 

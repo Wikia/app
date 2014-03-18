@@ -112,8 +112,10 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
+	'minieditor-specialpage-title' => 'MiniEditorin Demosivu',
 	'minieditor-new-heading' => 'Luo uusi viesti',
 	'minieditor-placeholder-new' => 'Kirjoita viestin teksti tähän',
 	'minieditor-message-edit' => 'Tämä on olemassa oleva viesti',
@@ -323,7 +325,12 @@ $messages['ps'] = array(
  * @author SandroHc
  */
 $messages['pt'] = array(
+	'minieditor-specialpage-title' => 'Página de Demonstração do MiniEditor',
+	'minieditor-new-heading' => 'Criar uma nova mensagem',
+	'minieditor-placeholder-new' => 'Digita a tua mensagem aqui',
+	'minieditor-message-edit' => 'Esta é uma mensagem existente',
 	'minieditor-reply' => 'Responder',
+	'minieditor-placeholder-reply' => 'Responde à mensagem aqui',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -386,6 +393,18 @@ $messages['sv'] = array(
 	'minieditor-message-edit' => 'Detta är ett befintligt meddelande',
 	'minieditor-reply' => 'Svara',
 	'minieditor-placeholder-reply' => 'Svara på meddelandet här',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'minieditor-specialpage-title' => 'MiniEditor డెమో పేజీ',
+	'minieditor-new-heading' => 'కొత్త సందేశాన్ని సృష్టించండి',
+	'minieditor-placeholder-new' => 'మీ సందేశాన్ని ఇక్కడ ఇవ్వండి',
+	'minieditor-message-edit' => 'ఇది ఈసరికే ఉన్న సందేశం',
+	'minieditor-reply' => 'జవాబివ్వు',
+	'minieditor-placeholder-reply' => 'సందేశానికి జవాబు ఇక్కడ ఇవ్వండి',
 );
 
 /** Tagalog (Tagalog)

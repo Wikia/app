@@ -97,9 +97,12 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'partner-feed-earned-badges' => 'Badjoù gounezet nevez zo gant ur Wiki difer',
 	'partner-feed-recent-changes' => 'Kemmoù diwezhañ',
+	'partnerfeed' => 'Keveler gwazh',
+	'error-no-article' => 'Fazi : N\'eo ket bet kaset an arventenn "pennad"',
 	'feed-title-blogposts' => 'Blogadennoù nevez',
 	'feed-title-recent-badges' => 'Badjoù diwezhañ',
 	'feed-title-recent-images' => 'Skeudennoù diwezhañ',
+	'feed-main-title' => 'Gwazh keveler Wikia',
 	'all-blog-posts' => 'an holl rummadoù',
 	'blog-posts-from-listing' => 'eus ar roll : $1',
 	'feed-title-blogcomments' => 'Evezhiadenn da $1',
@@ -242,17 +245,31 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  * @author Nike
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'partner-feed-achievements-leaderboard' => 'Wikien saavutuksien tilastot',
+	'partner-feed-earned-badges' => 'Äskettäin ansaitut merkit tietyssä wikissä',
+	'partner-feed-recent-blog-posts' => 'Uusimmat promootioon liittyvät blogiartikkelit',
+	'partner-feed-latest-images' => 'Viimeisimmäksi ladattujen kuvien galleria',
+	'partner-feed-recent-blog-comments' => 'Tiettyyn blogiartikkeliin liittyvät viimeisimmät kommentit.',
 	'partner-feed-recent-changes' => 'Viimeisimmät muutokset',
+	'partnerfeed' => 'Kumppanisyöte',
+	'error-no-article' => 'Virhe: Ei "artikkeli" -parametria annettu',
 	'feed-title-blogposts' => 'Tuoreet blogimerkinnät',
 	'feed-title-recent-badges' => 'Viimeaikaiset rintanapit',
 	'feed-title-recent-images' => 'Viimeaikaiset kuvat',
+	'feed-title-leaderboard' => 'Saavutuksien leaderboard',
+	'feed-main-title' => 'Wikia kumppanisyöte',
 	'all-blog-posts' => 'kaikki kategoriat',
+	'blog-posts-from-listing' => 'listauksesta $1',
+	'feed-title-hot-content' => 'Kuuma sisältö - $1',
+	'feed-title-blogcomments' => 'Kommentit artikkelista $1',
 	'feed-title-recentchanges' => 'Tuoreet muutokset',
+	'partner-feed-error-no-blogpost-found' => '<b>Virhe:</b> Blogiartikkelia $1 ei ole olemassa.',
 );
 
 /** French (français)
@@ -511,6 +528,15 @@ $messages['nl'] = array(
 	'feed-title-blogcomments' => 'Opmerkingen bij $1',
 	'feed-title-recentchanges' => 'Recente wijzigingen',
 	'partner-feed-error-no-blogpost-found' => '<b>Fout:</b> Blogbericht $1 bestaat niet.',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'partner-feed-recent-changes' => 'Darrièrs cambiaments',
+	'feed-title-recentchanges' => 'Darrièrs cambiaments',
 );
 
 /** Polish (polski)

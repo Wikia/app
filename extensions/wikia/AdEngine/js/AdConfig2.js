@@ -10,9 +10,8 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
-	adProviderGpt,
+	adProviderDirectGpt,
 	adProviderEvolve,
-	adProviderGamePro,
 	adProviderLater,
 	adProviderNull
 ) {
@@ -23,7 +22,6 @@ var AdConfig2 = function (
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		useSevenOneMedia = window.wgAdDriverUseSevenOneMedia,
 		decorators = [adDecoratorPageDimensions];
 
 	defaultHighValueSlots = {
@@ -55,64 +53,55 @@ var AdConfig2 = function (
 	function getProvider(slot) {
 		var slotname = slot[0];
 
-		log('getProvider', 5, logGroup);
-		log(slot, 5, logGroup);
+		log(['getProvider', slot], 'info', logGroup);
 
-
-		// If wgShowAds set to false hide slots
+		// If wgShowAds set to false, hide slots
 		if (!window.wgShowAds) {
 			return adProviderNull;
 		}
 
 		// Force providers:
-		if (slot[2] === 'GamePro') {
-			return adProviderGamePro;
-		}
 		if (slot[2] === 'Evolve') {
+			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			return adProviderGpt;
+			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			return adProviderGpt;
+			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'Liftium') {
+			log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
 			return adProviderLater;
 		}
 
-		// Prevent passing WIKIA_BAR_BOXAD_1 to Later queue if useSevenOneMedia
-		if (slotname === 'WIKIA_BAR_BOXAD_1' && adProviderGpt.canHandleSlot(slotname)) {
-			return adProviderGpt;
-		}
-
-		if (useSevenOneMedia) {
-			// All SevenOne Media ads are handled in the Later queue
+		// All SevenOne Media ads are handled in the Later queue
+		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
+		// TOP_BUTTON is always handled in Later queue, so we need to exclude
+		// only WIKIA_BAR_BOXAD_1
+		if (window.wgAdDriverUseSevenOneMedia && slotname !== 'WIKIA_BAR_BOXAD_1') {
+			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return adProviderLater;
-		}
-
-		// TODO refactor highValueSlots check to the top of the whole config
-		if (highValueSlots[slotname]) {
-			// First ask GamePro (german lang wiki)
-			if (cityLang === 'de') {
-				if (adProviderGamePro.canHandleSlot(slotname)) {
-					return adProviderGamePro;
-				}
-			}
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
 				return adProviderEvolve;
 			}
 		}
 
-		// Non-high-value slots goes to ad provider Later, so GamePro can grab them later
-		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
-			return adProviderGpt;
+		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			return adProviderDirectGpt;
 		}
 
+		// Non-high-value slots go to ad provider Later
+		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
 		return adProviderLater;
 	}
 

@@ -30,7 +30,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	public function getContent( $processingTimeStart = null ) {
-		global $IP;
+		global $IP, $wgEnableSASSSourceMaps;
 		wfProfileIn(__METHOD__);
 
 		$processingTimeStart = null;
@@ -50,6 +50,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		try {
 			$sassService = SassService::newFromFile("{$IP}/{$this->mOid}");
 			$sassService->setSassVariables($this->mParams);
+			$sassService->enableSourceMaps(!empty($wgEnableSASSSourceMaps));
 			$sassService->setFilters(
 				SassService::FILTER_IMPORT_CSS | SassService::FILTER_CDN_REWRITE
 				| SassService::FILTER_BASE64 | SassService::FILTER_JANUS

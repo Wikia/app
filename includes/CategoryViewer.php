@@ -3,6 +3,8 @@
 if ( !defined( 'MEDIAWIKI' ) )
 	die( 1 );
 
+use Wikia\Logger\WikiaLogger;
+
 class CategoryViewer extends ContextSource {
 	var $limit, $from, $until,
 		$articles, $articles_start_char,
@@ -468,6 +470,19 @@ class CategoryViewer extends ContextSource {
 	 * @return String: HTML output, possibly empty if there are no other pages
 	 */
 	private function getSectionPagingLinks( $type ) {
+		/*
+		 * Wikia change begin
+		 * @desc: Debugging for VE-840
+		 * @author: Christian
+		 */
+		if ( $type === 'subcat' && ( is_string( $this->nextPage ) || is_string( $this->from ) ) ) {
+			$debugging = [
+				"nextPage" => $this->nextPage,
+				"until" => $this->until
+			];
+			WikiaLogger::instance()->debug( "VE-840", $debugging );
+		}
+		/* Wikia change end */
 		if ( $this->until[$type] !== null ) {
 			return $this->pagingLinks( $this->nextPage[$type], $this->until[$type], $type );
 		} elseif ( $this->nextPage[$type] !== null || $this->from[$type] !== null ) {

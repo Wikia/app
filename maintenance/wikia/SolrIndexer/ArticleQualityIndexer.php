@@ -14,7 +14,7 @@ class ArticleQualityIndexer extends Maintenance {
 	private $CONFIG = [
 		'adapter' => 'Solarium_Client_Adapter_Curl',
 		'adapteroptions' => [
-			'host' => 'search-s11',
+			'host' => 'search-master',
 			'port' => 8983,
 			'path' => '/solr/',
 			'core' => 'main'

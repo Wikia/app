@@ -22,7 +22,7 @@ class HelloWorldController extends WikiaController {
 		$this->html5logo = $this->wg->ExtensionsPath . '/wikia/templates/HelloWorld/images/html5logo.png';
 
 		// use caching
-		$this->response->setCacheValidity(3600);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 	}
 
 }
