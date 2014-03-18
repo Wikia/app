@@ -307,9 +307,10 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Sg ghost
+ * @author Srolanh
  */
 $messages['lv'] = array(
-	'adengine-exitstitial-title-template' => 'Jūs atstājot $1...',
+	'adengine-exitstitial-title-template' => 'Jūs atstājat $1...',
 	'adengine-exitstitial-redirecting' => 'Jūsu pārlūkprogramma būs novirzīt jūs uz jūsu pieprasīto lapu pēc dažām sekundēm.',
 	'adengine-exitstitial-go-back' => 'Vēlaties doties atpakaļ?',
 	'adengine-exitstitial-button' => 'Izlaist šo reklāmu',
@@ -409,7 +410,7 @@ $messages['nl'] = array(
 $messages['oc'] = array(
 	'adengine-exitstitial-title-template' => 'Sètz a mand de quitar $1…',
 	'adengine-exitstitial-redirecting' => 'Vòstre navigador vos redirigirà cap a la pagina demandada dins qualques segondas.',
-	'adengine-exitstitial-go-back' => 'Volètz tornar ?',
+	'adengine-exitstitial-go-back' => 'Volètz tornar en arrièr ?',
 	'adengine-exitstitial-button' => 'Passar aquesta publicitat',
 );
 
@@ -479,8 +480,8 @@ $messages['ru'] = array(
  */
 $messages['sco'] = array(
 	'adengine-exitstitial-title-template' => "Ye'r leain $1…",
-	'adengine-exitstitial-redirecting' => 'Yer brouser will redirect ye til the page ye requested in ae few seiconts.',
-	'adengine-exitstitial-go-back' => 'Wish tae gae back?',
+	'adengine-exitstitial-redirecting' => 'Yer brouser will reguide ye til the page ye requested in ae few seiconts.',
+	'adengine-exitstitial-go-back' => 'Wan tae gang back?',
 	'adengine-exitstitial-button' => 'Pass ower this Ad',
 );
 

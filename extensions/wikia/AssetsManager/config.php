@@ -1116,8 +1116,8 @@ $config['videopageadmin_scss'] = array(
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
 		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
-		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss',
+		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool.scss',
+		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool_Header.scss',
 		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 	)
 );
@@ -1182,9 +1182,9 @@ $config['videohomepage_scss'] = array(
 		// Dependencies
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
 		// VideoHomePage
-		'//extensions/wikia/VideoPageTool/css/HomePage/main.scss',
+		'//extensions/wikia/VideoPageTool/css/homepage/main.scss',
 		'//extensions/wikia/VideoPageTool/css/carousel.scss',
-		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
+		'//extensions/wikia/VideoPageTool/css/homepage/featured.scss',
 	)
 );
 
@@ -1420,6 +1420,14 @@ $config['analytics_gas_js'] = array(
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
+	)
+);
+
+$config['analytics_bluekai_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	)
 );
 

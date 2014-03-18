@@ -1557,8 +1557,8 @@ $messages['sco'] = array(
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Log in wi Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => "<h1>Connect yer Wikia accoont til Facebook</h1>
 <ul>
-<li>Keep yer current uisername, histerie, edits... nawthin chynges cept hou ye log in</li>
-<li>Shair yer acteevity oan Wikia wi yer freends oan Facebook, wi compleate control o whit's published</li>
+<li>Keep yer Nou uisername, histerie, eedits... nathing chynges except hou ye log in</li>
+<li>Shair yer acteevitie oan Wikia wi yer freends oan Facebook, wi compleate control o whit's publeeshed</li>
 </ul>",
 	'comboajaxlogin-connectmarketing-back' => '« laist',
 	'comboajaxlogin-connectmarketing-forward' => 'Get sterted »',

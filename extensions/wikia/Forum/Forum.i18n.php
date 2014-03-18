@@ -684,6 +684,7 @@ $messages['br'] = array(
 	'forum-specialpage-board-lastpostby' => 'Kemennadenn diwezhañ gant',
 	'forum-specialpage-policies-edit' => 'Aozañ',
 	'forum-specialpage-policies' => 'Reolennoù ar forom / FAG',
+	'forum-board-title' => 'Isforom $1',
 	'forum-board-topic-title' => 'Kaozioù diwar-benn $1',
 	'forum-board-topics' => 'Danvezioù',
 	'forum-board-thread-follow' => 'Heuliañ',
@@ -1562,36 +1563,33 @@ $messages['gl'] = array(
 	'forum-specialpage-board-lastpostby' => 'Última publicación de',
 	'forum-specialpage-policies-edit' => 'Editar',
 	'forum-specialpage-policies' => 'Políticas do foro/Preguntas máis frecuentes',
-	'forum-policies-and-faq' => "==Políticas do foro== 
-Antes de contribuír no foro de {{SITENAME}} ten en conta as seguintes prácticas: 
+	'forum-policies-and-faq' => "==Políticas do foro==
+Antes de colaborar nos foros de {{SITENAME}} teña en conta as seguintes prácticas:
 
-'''Trata á xente con respecto e non teñas malas intencións.''' 
-:Persoas de todos os lugares do mundo len e editan neste wiki e este foro. Como calquera proxecto colaborativo, non todo o mundo vai estar de acordo permanentemente co que se discuta así que abre a túa mente a diferentes opinións. Estamos aquí porque nos gusta o mesmo. 
+'''Trate á xente con respecto e non teña malas intencións.'''
+:Persoas de todos os lugares do mundo len e editan este wiki e os seus foros. Como calquera outro proxecto colaborativo, non todo o mundo estará de acordo permanentemente co que se discuta, así que abra a súa mente a diferentes opinións. Estamos aquí porque nos gusta o mesmo tema.
 
-'''Tenta atopar discusións existentes primeiro, pero non teñas medo de iniciar un novo tema.''' 
-:Por favor, toma un momento para visitar os subforos deste wiki e ver se xa existe unha discusión sobre o que queres falar. Se non podes atopar o que buscas, comeza un novo tema! 
+'''Intente buscar entre as conversas existentes primeiro, pero non teña medo de iniciar un novo tema.'''
+:Por favor, tome un momento para visitar os subforos deste wiki e ver se xa existe un debate sobre o que quere falar. Se non atopa o que busca, comeza unha nova conversa!
 
-'''Pide axuda.''' 
-:Algo non se ve como debería? Tes algunha pregunta? Pide axuda aquí, no foro! Se necesitas axuda do Staff de Wikia, podes ir a nosa [[w:c:community|Comunidade Central]] ou preguntar a través de [[Special:Contact|Especial:Contactar]]. 
+'''Pida axuda.'''
+:Algo non se ve como debería? Ten algunha pregunta? Pida axuda aquí, no foro! Se necesita a axuda do persoal de Wikia, pode ir á nosa [[w:c:community|central da comunidade]] ou preguntar a través de [[Special:Contact|Contacto]]. 
 
-'''Divírtete!''' 
-:A comunidade de {{SITENAME}} alégrase de que esteas aquí. Queremos verte falar sobre o tema que máis nos gusta, adiviña cal... 
+'''Divírtase!'''
+:A comunidade de {{SITENAME}} alégrase de que estea aquí. Queremos ver como fala sobre o tema que máis nos gusta.
 
-==Preguntas frecuentes sobre o foro== 
-'''Como podo seguir as discusións nas que estou interesado?''' 
-:Cunha conta de usuario de Wikia podes seguir conversacións específicas e recibir notificacións (a través do wiki ou por correo) cando un tema teña máis actividade. [[Special:UserSignup|Crea unha conta en Wikia]] se aínda non o fixeches. 
+==Preguntas frecuentes sobre o foro==
+'''Como podo seguir as conversas nas que teño interese?'''
+:Cunha conta de usuario de Wikia pode seguir conversas específicas e recibir notificacións (a través do wiki ou por correo electrónico) cando un tema teña máis actividade. [[Special:UserSignup|Cree unha conta en Wikia]] se aínda non o fixo.
 
-'''Como borro os vandalismos?''' 
-:Se descobres mensaxes inadecuadas, ou vandalismo nun fío, pasa o cursor sobre o texto, verás que aparece un botón chamado \"Máis accións\". Dentro do menú que se desprega en \"Máis accións\", atoparás \"Retirar\". Esa acción permitirache retirar o vandalismo e avisar a un administrador se o consideras necesario. 
+'''Como borro os vandalismos?'''
+:Se descobre mensaxes inadecuadas ou vandalismo nun fío, pasa o cursor sobre o texto. Verá que aparece un botón co texto \"Máis\". Dentro do menú que se desprega, atopará a opción \"Eliminar\". Isto permite retirar o vandalismo e avisar a un administrador se o considera necesario.
 
-'''Que significa que estou a favor dunha mensaxe?''' 
-:Se atopas interesante unha mensaxe, estás de acordo co seu contido ou simplemente apoias o contido do mesmo, móstrallo aos demais facendo clic na icona co pulgar arriba. Pode ser algo moi útil para votacións. 
+'''Que son os eloxios?'''
+:Se atopa unha mensaxe ou resposta interesante, ben razoada ou simplemente apoia o seu contido, pódello mostrar aos demais dando un eloxio. Poden ser moi útiles tamén durante as votacións.
 
-'''Temas, fíos, conversacións, de que falas?''' 
-:Vexamos, un fío é un conxunto de mensaxes sobre un mesmo tema. Cando inicias unha discusión sobre algo específico, estás a iniciar un fío. Cada fío componse de mensaxes que van deixando os usuarios, e todos estes teñen en común que tratan sobre o mesmo tema. Ás veces, cando nos referimos a un fío dicimos que é un tema ou unha discusión, pódese chamar de ambas as formas, ten claro polo contexto a que nos estamos referindo. 
-
-'''Dentro dun fío hai temas?''' 
-:Soa confuso verdade? É fácil, ao final dun fío atoparás un apartado que define as cousas sobre as que se está falando nese fío, eses son os temas. É unha forma de manter organizados os fíos do foro. Aí poderás engadir os artigos sobre os que se está falando. Por exemplo, se etiquetas ese fío coa etiqueta \"Lord Voldermort\", aparecerá apuntado ese artigo ao final da discusión, pero non sabemos como podedes ter tanto valor como para falar sobre ''O-Que-Non-Debe-Ser-Nomeado''!",
+'''Que son os temas?'''
+:Os temas permiten ligar as conversas do foro cun artigo do wiki. É outra forma de manter organizado o foro e axudar a outras persoas a atopar conversas interesantes. Por exemplo, un fío do foro coa etiqueta \"Lord Voldemort\" aparecerá ao final do artigo \"Lord Voldemort\".",
 	'forum-board-title' => 'Taboleiro "$1"',
 	'forum-board-topic-title' => 'Conversas sobre "$1"',
 	'forum-board-topics' => 'Temas',
@@ -2240,12 +2238,13 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
 	'forum-specialpage-board-lastpostby' => 'Darrièr messatge de',
-	'forum-board-new-message-heading' => 'Començar una novèla discussion',
-	'forum-activity-module-started' => '$1 a momençat una discussion $2',
+	'forum-board-new-message-heading' => 'Començar una discussion',
+	'forum-activity-module-started' => '$1 a començat una discussion $2',
 );
 
 /** Polish (polski)
@@ -2427,6 +2426,7 @@ ___________________________________________<br />
 );
 
 /** Portuguese (português)
+ * @author Imperadeiro98
  * @author Josep Maria 15.
  */
 $messages['pt'] = array(
@@ -2452,7 +2452,7 @@ Antes de contribuir nos Fóruns do {{SITENAME}}, por favor, fique ciente dessas 
 :Por favor, dê uma olhada pelos Fóruns do {{SITENAME}} para ver se uma discussão já existe sobre o que você quer falar. Se você não achar nenhuma, vá em frente e comece uma nova discussão!
 
 '''Peça ajuda.'''
-:Viu alguma coisa que não está certa? Ou tem uma pergunta? Peça ajuda aqui nos fóruns! Se você precisar de ajuda da equipe da Wikia, por favor entre em contato com [[w:c:pt-br.comunidade|Comunidade Central]] ou via [[Special:Contact]].
+:Viu alguma coisa que não está certa? Ou tem uma pergunta? Peça ajuda aqui nos fóruns! Se você precisar de ajuda da equipe da Wikia, por favor entre em contato com [[w:c:community|Comunidade Central]] ou via [[Special:Contact]].
 
 '''Divirta-se!'''
 :A comunidade do {{SITENAME}} fica feliz em tê-lo aqui. Esperamos vê-lo por aqui enquanto discutimos esse tópico que amamos.
@@ -2468,7 +2468,7 @@ Antes de contribuir nos Fóruns do {{SITENAME}}, por favor, fique ciente dessas 
 : Se você achar uma certa discussão ou uma resposta interessante, bem pensada ou engraçada, você pode mostrar que gostou distribuindo Kudos. Eles podem ser interessantes para votações, também.
 
 '''O que são tópicos?'''
-: Tópicos permitem que você associe uma discussão do fórum com um artigo da wiki. É uma outra maneira de manter os Fóruns organizados e ajudar as pessoas a encontrar discussões interessantes. Por exemplo, uma conversa no Fórum com a etiqueta \"Lord Voldemort\" vai aparecer embaixo do artigo \"Lord Voldemort\".", # Fuzzy
+: Tópicos permitem que você associe uma discussão do fórum com um artigo da wiki. É uma outra maneira de manter os Fóruns organizados e ajudar as pessoas a encontrar discussões interessantes. Por exemplo, uma conversa no Fórum com a etiqueta \"Lord Voldemort\" vai aparecer embaixo do artigo \"Lord Voldemort\".",
 	'forum-board-title' => '$1 quadro',
 	'forum-board-topic-title' => 'Discussões sobre $1',
 	'forum-board-topics' => 'Tópicos',
