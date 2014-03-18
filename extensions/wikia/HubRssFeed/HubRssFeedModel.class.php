@@ -18,7 +18,8 @@ class HubRssFeedModel extends WikiaModel {
 	/**
 	 * @var MarketingToolboxModel
 	 */
-	protected $marketingToolboxModel;
+	protected $marketingToolboxV2Model;
+	protected $marketingToolboxV3Model;
 
 	protected $lang;
 
@@ -30,13 +31,27 @@ class HubRssFeedModel extends WikiaModel {
 
 
 	private function setUpModel() {
-		$this->marketingToolboxModel = new MarketingToolboxModel($this->app);
+		$this->marketingToolboxV2Model = new MarketingToolboxModel($this->app);
+		$this->marketingToolboxV3Model = new MarketingToolboxV3Model($this->app);
 	}
 
 
 	public function isValidVerticalId( $verticalId ) {
-		$ids = $this->marketingToolboxModel->getVerticalsIds();
+		$ids = $this->marketingToolboxV2Model->getVerticalsIds();
 		return in_array( $verticalId, $ids );
+
+	}
+
+	/**
+	 * @param $cityId
+	 * @return array
+	 */
+	protected function getServicesV3( $cityId ) {
+
+		return [
+			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3),
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3)
+		];
 
 	}
 
@@ -44,7 +59,7 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $verticalId
 	 * @return array
 	 */
-	protected function getServices( $verticalId ) {
+	protected function getServicesV2( $verticalId ) {
 
 		return [
 			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
@@ -53,16 +68,18 @@ class HubRssFeedModel extends WikiaModel {
 
 	}
 
+	public function getRealDataV3( $cityId ) {
+		if ( $cityId === 0 ) {
+			return [];
+		}
 
-	public function getRealData( $verticalId ) {
 		$params = [
-			'langCode' => $this->lang,
 			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
-			'verticalId' => $verticalId,
+			'cityId' => $cityId,
 		];
 
-		$currentData = $this->getDataFromModules( $verticalId );
-		$timestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $params );
+		$currentData = $this->getDataFromModulesV3( $cityId );
+		$timestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params );
 
 		foreach ( $currentData as &$val ) {
 			$val[ 'timestamp' ] = $timestamp;
@@ -72,8 +89,75 @@ class HubRssFeedModel extends WikiaModel {
 		$prevTimestamp = $timestamp - 1;
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
-			$prevTimestamp = $this->marketingToolboxModel->getLastPublishedTimestamp( $params, $prevTimestamp );
-			$prevData = $this->getDataFromModules( $verticalId, $prevTimestamp );
+			$prevTimestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
+			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp );
+
+			if ( $prevData === null ) {
+				$prevTimestamp--;
+				continue;
+			}
+
+			/*$keysFound = 0;*/
+
+			foreach ( $currentData as $url => &$val ) {
+				if ( array_key_exists( $url, $prevData ) ) {
+					/*		$keysFound++; */
+					$val[ 'timestamp' ] = $prevTimestamp;
+				}
+			}
+
+			/*if ( $keysFound === 0 ) {
+				break;
+			}*/
+			$prevTimestamp--;
+
+		}
+
+		$prevTimestamp++;
+
+		foreach ( $currentData as $url => &$val ) {
+			if ( $val[ 'timestamp' ] === $prevTimestamp ) {
+				$val[ 'timestamp' ] = self::MIN_DATE_FOUND;
+			}
+		}
+
+		$timestamps = [];
+		// Obtain a list of columns
+		foreach ($currentData as $key => $row) {
+			$timestamps[$key]  = $row['timestamp'];
+		}
+
+		array_multisort($timestamps, SORT_DESC, $currentData);
+
+
+		return $currentData;
+	}
+
+
+	public function getRealDataV2( $verticalId ) {
+		if ( $verticalId == 0 ) {
+			return [];
+		}
+
+		$params = [
+			'langCode' => $this->lang,
+			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+			'verticalId' => $verticalId,
+		];
+
+		$currentData = $this->getDataFromModulesV2( $verticalId );
+		$timestamp = $this->marketingToolboxV2Model->getLastPublishedTimestamp( $params );
+
+		foreach ( $currentData as &$val ) {
+			$val[ 'timestamp' ] = $timestamp;
+
+		}
+
+		$prevTimestamp = $timestamp - 1;
+
+		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
+			$prevTimestamp = $this->marketingToolboxV2Model->getLastPublishedTimestamp( $params, $prevTimestamp );
+			$prevData = $this->getDataFromModulesV2( $verticalId, $prevTimestamp );
 
 			if ( $prevData === null ) {
 				$prevTimestamp--;
@@ -122,20 +206,46 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $verticalId
 	 *
 	 */
-	protected function getDataFromModules( $verticalId, $timestamp = null ) {
+	protected function getDataFromModulesV2( $verticalId, $timestamp = null ) {
 
-		$services = $this->getServices( $verticalId );
+		$services = $this->getServicesV2( $verticalId );
+		$data = [];
 
 		foreach ( $services as $k => &$v ) {
-			$data[ $k ] = $v->loadData( $this->marketingToolboxModel, [
+			$data[ $k ] = $v->loadData( $this->marketingToolboxV2Model, [
 				'lang' => $this->lang,
 				'vertical_id' => $verticalId,
 				'ts' => $timestamp
 			] );
 		}
 
+		return $this->normalizeDataFromModules( $data );
+	}
 
-		$out = array();
+
+	/**
+	 * @param $cityId
+	 *
+	 */
+	protected function getDataFromModulesV3( $cityId, $timestamp = null ) {
+
+		$services = $this->getServicesV2( $cityId );
+		$data = [];
+
+		foreach ( $services as $k => &$v ) {
+			$data[ $k ] = $v->loadData( $this->marketingToolboxV3Model, [
+				'city_id' => $cityId,
+				'ts' => $timestamp
+			] );
+		}
+
+		return $this->normalizeDataFromModules( $data );
+	}
+
+
+
+	protected function normalizeDataFromModules( $data ) {
+		$out = [];
 
 		foreach ( $data as &$result ) {
 
