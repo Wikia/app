@@ -2,8 +2,8 @@
 
 define(
 	'ext.wikia.adengine.provider.gptmobile',
-	['wikia.log', 'wikia.window', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'],
-	function (log, window, slotTweaker, wikiaGpt) {
+	['wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'],
+	function (log, window, document, slotTweaker, wikiaGpt) {
 		'use strict';
 
 		var logGroup = 'AdProviderGptMobile',
@@ -28,7 +28,13 @@ define(
                 hop({method: 'hop'}, 'RemnantDart');
             }
 
-			wikiaGpt.pushAd(slotname, success, (window.wgEnableRHonMobile ? hopToRemnant : hopToNull), 'mobile');
+			function showAdAndCallSuccess() {
+				document.getElementById(slotname).className += ' show';
+				success();
+			}
+
+			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgEnableRHonMobile ? hopToRemnant : hopToNull), 'mobile');
+
 			wikiaGpt.flushAds();
 		}
 
