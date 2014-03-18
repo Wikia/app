@@ -64,13 +64,13 @@
 				$article = $('#WikiaArticle'),
 				$videos = $('#RelatedVideosRL'),
 				$photos = $('#LatestPhotosModule'),
-				$comments = $('#WikiaArticleComments'),
+				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
-				$videosModule = $('#videosModule'), // right rail videos module
+				$videosModule = $('.videos-module-rail'), // right rail videos module
 				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($videos).add($comments).add($footer).add($videosModule)
+			$article.add($photos).add($videos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
