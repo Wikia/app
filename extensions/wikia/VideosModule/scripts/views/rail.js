@@ -96,7 +96,7 @@ define('videosmodule.views.rail', [
 			});
 
 		$.when($imagesLoaded)
-		.done(function () {
+			.done(function () {
 				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing();
 			});
@@ -105,4 +105,4 @@ define('videosmodule.views.rail', [
 	};
 
 	return VideoModule;
-);
+});
