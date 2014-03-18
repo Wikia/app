@@ -1,4 +1,4 @@
-/*exported AdSlotMapConfig*/
+/*exported GptSlotConfig*/
 /*global define*/
 var GptSlotConfig = function() {
 	'use strict';
@@ -64,4 +64,4 @@ var GptSlotConfig = function() {
 
 };
 
-define('ext.wikia.adengine.adslotmapconfig', [], AdSlotMapConfig);
+define('ext.wikia.adengine.gptslotconfig', [], GptSlotConfig);
