@@ -334,8 +334,13 @@ class ThemeDesignerController extends WikiaController {
 			$this->displayRestrictionError( __METHOD__ );
 		}
 
-
 		$data = $wgRequest->getArray( 'settings' );
+
+		// This should not be possible using ThemeDesigner UI, but if this controller ever receives 'false' or a
+		// non-string, the value should be set to an empty string. BugId:VE-894
+		if ( getType( $data['background-image'] ) !== 'string' || $data['background-image'] === 'false' ) {
+			$data['background-image'] = '';
+		}
 
 		$themeSettings = new ThemeSettings();
 		$themeSettings->saveSettings($data);
