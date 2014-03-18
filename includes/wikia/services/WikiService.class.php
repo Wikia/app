@@ -17,7 +17,7 @@ class WikiService extends WikiaModel {
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-
+	const DBNAME_REGEXP = '/(,[a-z0-9]+\.)([a-z0-9]{3,4}$)/';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -367,7 +367,8 @@ class WikiService extends WikiaModel {
 			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
 
 			while($row = $results->fetchObject()) {
-				$title = Title::newFromText($row->city_main_image, NS_FILE);
+				$filename = preg_replace(DBNAME_REGEXP,'.\\2',$row->city_main_image);
+				$title = Title::newFromText($filename, NS_FILE);
 				$file = wffindFile($title);
 				
 				if ($file instanceof File && $file->exists()) {
