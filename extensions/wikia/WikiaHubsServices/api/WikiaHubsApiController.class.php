@@ -51,15 +51,14 @@ class WikiaHubsApiController extends WikiaApiController {
 	 *
 	 * We need either (1) or (2)
 	 *
-	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
-	 * @responseParam string $basepath domain of a wiki to create a url for an article
+	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
 	 *
 	 * @example
 	 * @example &module=1&city=2&ts=1359504000
 	 */
 
 	public function getModuleData() {
-		if ( $this->request->getInt( self::PARAMETER_CITY ) === 0 ) {
+		if ( $this->request->getInt( self::PARAMETER_CITY ) !== 0 ) {
 			$this->getModuleDataV3();
 		} else {
 			$this->getModuleDataV2();
@@ -73,8 +72,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * @requestParam integer $city [REQUIRED] city id of givenhub
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 *
-	 * @responseParam array $items The list of top articles by pageviews matching the optional filtering
-	 * @responseParam string $basepath domain of a wiki to create a url for an article
+	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
 	 *
 	 * @example
 	 * @example &module=1&city=2&ts=1359504000
@@ -87,13 +85,13 @@ class WikiaHubsApiController extends WikiaApiController {
 		$cityId = $this->request->getInt(self::PARAMETER_CITY);
 		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
 
-		$model = $this->getModel();
+		$model = $this->getModelV3();
 
 		if( !$this->isValidModule($model, $moduleId) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
 		}
 
-		if( !$this->isValidCity($model, $cityId) ) {
+		if( !$this->isValidCity($cityId) ) {
 			throw new InvalidParameterApiException( self::PARAMETER_CITY );
 		}
 
@@ -104,8 +102,10 @@ class WikiaHubsApiController extends WikiaApiController {
 		$moduleName = $model->getNotTranslatedModuleName($moduleId);
 		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, null, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3);
 
+
 		if( $this->isValidModuleService($moduleService) ) {
 			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
+
 			$data = $moduleService->loadData($model, [
 				'city_id' => $cityId,
 				'ts' => $timestamp,
@@ -115,7 +115,7 @@ class WikiaHubsApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -180,8 +180,12 @@ class WikiaHubsApiController extends WikiaApiController {
 	protected function getModel() {
 		return new MarketingToolboxModel($this->app);
 	}
+
+	protected function getModelV3() {
+		return new MarketingToolboxV3Model($this->app);
+	}
 	
-	protected function isValidModule(MarketingToolboxModel $model, $moduleId) {
+	protected function isValidModule(MarketingToolboxV3Model $model, $moduleId) {
 		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
 		}
@@ -240,11 +244,17 @@ class WikiaHubsApiController extends WikiaApiController {
 		return $out;
 	}
 
-	protected function isValidCity($cityId) {
-		$varId = WikiFactory::getVarIdByName( self::HUBS_V3_VARIABLE_NAME );
-		$wikiIds = array_keys( WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true ) );
+	private function isValidCity( $cityId ) {
+		return WikiaDataAccess::cache(
+			'hubsapi_is_valid_cityid_' . $cityId,
+			6 * 60 * 60,
+			function () use( $cityId ) {
+				$varId = WikiFactory::getVarIdByName( self::HUBS_V3_VARIABLE_NAME );
+				$varData = WikiFactory::getVarById( $varId, $cityId );
 
-		return in_array($cityId, $wikiIds);
+				return !empty( $varData ) && !empty( $varData->cv_value ) && unserialize( $varData->cv_value );
+			}
+		);
 	}
 
 }
