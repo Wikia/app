@@ -72,7 +72,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	}
 
 	/**
-	 * @covers ApiAccessService::getProductionValue
+	 * @covers ApiAccessService::canUse
 	 * @dataProvider dp_canUse
 	 */
 	public function testCanUse( $access, $test, $env, $result ) {

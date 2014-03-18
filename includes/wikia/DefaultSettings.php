@@ -1190,6 +1190,12 @@ $wgAdPageLevelCategoryLangs = null;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableRHonDesktop
+ * Enables RH- hack on Desktop
+ */
+$wgEnableRHonDesktop = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1204,13 +1210,10 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverUseNewTracking
- * Whether to use the new ad tracking code.
- * If true: the new tracking code (SlotTracker.js) will be used on half of
- * the traffic and the old one (AdTracker.js) on the other half.
- * If false: only the old ad tracking code (AdTracker.js) will be used.
+ * @name $wgAdDriverTrackState
+ * Enables GA tracking of state for ad slots on pages
  */
-$wgAdDriverUseNewTracking = true;
+$wgAdDriverTrackState = false;
 
 /**
  * @name $wgHighValueCountriesDefault
@@ -1276,7 +1279,7 @@ $wgOasisResponsive = null;
  * @name $wgOasisResponsiveDisabledInLangs
  * Disables the Oasis responsive layout in those languages
  */
-$wgOasisResponsiveDisabledInLangs = ['de'];
+$wgOasisResponsiveDisabledInLangs = [];
 
 /**
  * @name $wgOasisResponsiveLimited
@@ -1289,7 +1292,7 @@ $wgOasisResponsiveLimited = null;
  * @name $wgOasisResponsiveLimitedInLangs
  * Enables the limited version of Oasis responsive layout on given languages
  */
-$wgOasisResponsiveLimitedInLangs = [];
+$wgOasisResponsiveLimitedInLangs = ['de'];
 
 /**
  * @name $wgDisableReportTime
@@ -1326,6 +1329,11 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
  * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
  */
 $wgUseETag = true;
+
+/**
+ * whether or not to send logs from dev to elasticsearch
+ */
+$wgDevESLog = false;
 
 /**
  * Restrictions for some api methods

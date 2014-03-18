@@ -305,6 +305,7 @@ $messages['qqq'] = array(
 	'wikistats_wikicreated' => '{{Identical|Created}}',
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_tables' => '{{Identical|Table}}',
+	'wikistats_charts' => '{{Identical|Chart}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
 	'wikistats_trend_formula' => '{{Identical|Formula}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
@@ -1272,7 +1273,7 @@ $messages['br'] = array(
 	'wikistats_namespaces' => 'esaouennoù anv',
 	'wikistats_redirects' => 'adkasoù',
 	'wikistats_edited_in_namespace' => 'Kemmet en egorenn anvioù',
-	'wikistats_main_namespace' => 'Endalch <br /> egorenn anvioù', # Fuzzy
+	'wikistats_main_namespace' => 'pennañ',
 	'wikistats_image_namespace' => 'skeudenn',
 	'wikistats_page_requests' => 'goulennoù pajennoù',
 	'wikistats_visits' => 'gweladennoù',
@@ -1650,6 +1651,7 @@ $messages['ce'] = array(
 	'wikistats_wikilang' => 'Мотт:',
 	'wikistats_trend_all_wikia_text' => 'Массо Википедеш',
 	'wikistats_xls_cancel' => 'Цаоьшу',
+	'wikistats_select_btn' => 'Харжа',
 	'wikistats_language_stats' => 'Меттан статистика',
 	'wikistats_article_talk' => 'Яззам:Дийцаре',
 	'wikistats_language_all' => 'Берриге меттанаш',
@@ -2240,7 +2242,7 @@ $messages['diq'] = array(
 	'wikistats_language_top' => 'Top $1 zıwani',
 	'wikistats_language_all' => 'Zıwani pêro',
 	'wikistats_title' => 'Sername',
-	'wikistats_summary_data' => 'Melumatê mersel',
+	'wikistats_summary_data' => 'Melumatê xulasa',
 	'wikistats_namespaces_top10list' => 'listey Tewr 10a',
 	'wikistats_namespace_top' => 'Verşınasiya Cayênaman',
 );
@@ -2629,6 +2631,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Nike
  * @author Silvonen
  * @author Tofu II
@@ -2720,6 +2723,9 @@ $messages['fi'] = array(
 	'wikistats_wikicreated' => 'Luotu:',
 	'wikistats_wikilang' => 'Kieli:',
 	'wikistats_xls_cancel' => 'Peruuta',
+	'wikistats_select_text' => 'Valitse wiki:',
+	'wikistats_select_btn' => 'Valitse',
+	'wikistats_xls_press_uncheck' => 'Paina poistaaksesi kaikki valinnat',
 	'wikistats_other_statistics_legend' => 'Muut tilastot',
 	'wikistats_article_edits' => 'Artikkelin muutokset',
 	'wikistats_article_talk' => 'Artikkeli:Keskustelu',
@@ -6646,6 +6652,7 @@ Je moet aangemeld zijn om de Wikia-statistieken in te zien.
 /** Occitan (occitan)
  * @author Boulaur
  * @author Cedric31
+ * @author Hulothe
  */
 $messages['oc'] = array(
 	'wikistats' => 'Estatisticas de Wikia',

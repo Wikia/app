@@ -324,9 +324,12 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
+	'linksuggest-desc' => 'Sugere links para editor no modo de edição',
 	'tog-disablelinksuggest' => 'Não apresentar sugestões de links no modo Fonte',
+	'tog-redirected-from' => '&ndash; redirecionado de $1',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -382,6 +385,13 @@ $messages['sv'] = array(
 	'linksuggest-desc' => 'Föreslår länkar till redigerarna i redigeringsvyn',
 	'tog-disablelinksuggest' => 'Visa inte länkförslag i källäge',
 	'tog-redirected-from' => '&ndash; omdirigerad från $1',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'tog-redirected-from' => '&ndash; $1 నుండి దారిమార్పు చెందింది',
 );
 
 /** Thai (ไทย)

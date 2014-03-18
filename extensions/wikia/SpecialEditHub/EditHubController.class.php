@@ -370,7 +370,7 @@ class EditHubController extends WikiaSpecialPageController {
 		wfProfileOut(__METHOD__);
 	}
 
-	public function getVideoDetails() {
+	public function uploadAndGetVideo() {
 		if (!$this->checkAccess()) {
 			return false;
 		}

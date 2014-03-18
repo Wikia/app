@@ -83,6 +83,17 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * Decide on which pages the LIMITED responsive / liquid layout should be turned on.
+	 * ADEN-975 Limited fluid is meant for German wikis
+	 * @return Boolean
+	 */
+	public static function isLimitedResponsiveLayoutEnabled() {
+		global $wgOasisResponsive, $wgOasisResponsiveLimited;
+
+		return !empty( $wgOasisResponsive ) && !empty( $wgOasisResponsiveLimited );
+	}
+
+	/**
 	 * Decide whether to show user pages header on current page
 	 */
 	public static function showUserPagesHeader() {

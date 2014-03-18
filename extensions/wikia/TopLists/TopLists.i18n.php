@@ -386,6 +386,8 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
+	'toplists-image-browser-upload-btn' => 'Харжа',
+	'toplists-seconds' => '$1 {{PLURAL:$1|секунд}}',
 	'toplists-days' => '$1 {{PLURAL:$1|де}}',
 );
 
@@ -1352,10 +1354,10 @@ $messages['mk'] = array(
 - Викија
 
 Можете да се <a href="$4">отпишете</a> од ваквите известувања за промени на списокот.',
-	'toplists-seconds' => '$1 {{PLURAL:$1|секунда|секунди}}',
-	'toplists-minutes' => '$1 {{PLURAL:$1|минута|минути}}',
-	'toplists-hours' => '$1 {{PLURAL:$1|час|часа}}',
-	'toplists-days' => '$1 {{PLURAL:$1|ден|дена}}',
+	'toplists-seconds' => '{{PLURAL:$1|една секунда|$1 секунди}}',
+	'toplists-minutes' => '{{PLURAL:$1|една минута|$1 минути}}',
+	'toplists-hours' => '{{PLURAL:$1|еден час|$1 часа}}',
+	'toplists-days' => '{{PLURAL:$1|еден ден|$1 дена}}',
 	'toplists-weeks' => '$1 {{PLURAL:$1|недела|недели}}',
 	'toplists-msg-fb-OnRateArticle-short' => 'гласаше на списокот на 10 најкотирани на $WIKINAME!',
 	'toplists-create-heading' => '<em>Ново!</em> Создајте свои „10 најкотирани“',
@@ -1663,6 +1665,13 @@ Ga naar Wikia om de wijzigingen te bekijken! $1
 
 Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak je eigen Top 10 aan',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'toplists-editor-description-placeholder' => 'Entratz una descripcion',
 );
 
 /** Polish (polski)

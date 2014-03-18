@@ -30,11 +30,13 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Gagnabil
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'wikiarelatedpages-desc' => 'يضيف قائمة بصفحات ذات صلة لصفحات',
 	'wikiarelatedpages-heading' => 'اقرأ المزيد',
+	'wikiamobile-related-article' => 'مقالة ذات صلة',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -63,11 +65,14 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiarelatedpages-desc' => 'Ouzhpennañ ur roll pajennoù liammet gant pajennoù all',
 	'wikiarelatedpages-heading' => "Lenn muioc'h",
+	'wikiamobile-related-article' => 'Pennad damheñvel',
+	'wikiamobile-people-also-read' => 'An dud o deus lennet ivez',
 );
 
 /** Bosnian (bosanski)
@@ -86,6 +91,14 @@ $messages['ca'] = array(
 	'wikiarelatedpages-heading' => 'Llegir més',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiamobile-related-article' => 'Йихкина яззамаш',
+	'wikiamobile-people-also-read' => 'Наха кхин йоьшуш ю',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */
@@ -96,11 +109,14 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Kjell
+ * @author Mauricekoller
  * @author The Evil IP address
  */
 $messages['de'] = array(
 	'wikiarelatedpages-desc' => 'Liste mit ähnlichen Seiten',
 	'wikiarelatedpages-heading' => 'Lies mehr',
+	'wikiamobile-related-article' => 'Verwandter Artikel',
+	'wikiamobile-people-also-read' => 'Was Leute sonst noch lesen',
 );
 
 /** Greek (Ελληνικά)
@@ -113,10 +129,14 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Absay
  * @author Danke7
+ * @author Fitoschido
+ * @author Ihojose
  */
 $messages['es'] = array(
 	'wikiarelatedpages-desc' => 'Añadir una lista a páginas de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Leer más',
+	'wikiamobile-related-article' => 'Artículo relacionado',
+	'wikiamobile-people-also-read' => 'También te podría interesar',
 );
 
 /** Persian (فارسی)
@@ -135,11 +155,15 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
+ * @author Jgaignerot
  * @author Peter17
  */
 $messages['fr'] = array(
 	'wikiarelatedpages-desc' => 'Ajoute une liste de pages liées à d’autres pages',
 	'wikiarelatedpages-heading' => 'Pour aller plus loin',
+	'wikiamobile-related-article' => 'Article analogue',
+	'wikiamobile-people-also-read' => 'Les gens ont aussi lu',
 );
 
 /** Galician (galego)
@@ -148,6 +172,22 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'wikiarelatedpages-desc' => 'Engade unha lista de páxinas relacionadas con outras',
 	'wikiarelatedpages-heading' => 'Ler máis',
+	'wikiamobile-related-article' => 'Artigo relacionado',
+	'wikiamobile-people-also-read' => 'A xente tamén leu',
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author KartikMistry
+ */
+$messages['gu'] = array(
+	'wikiamobile-related-article' => 'સંબંધિત લેખ',
+);
+
+/** Hindi (हिन्दी)
+ * @author Adithyavr
+ */
+$messages['hi'] = array(
+	'wikiamobile-related-article' => 'संबंधित लेख',
 );
 
 /** Hungarian (magyar)
@@ -219,6 +259,8 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'wikiarelatedpages-desc' => 'Setzt eng Lëscht mat Säiten derbäi, déi eng Relatioun mat där Säit hunn',
 	'wikiarelatedpages-heading' => 'Liest méi',
+	'wikiamobile-related-article' => 'Ähnlechen Artikel',
+	'wikiamobile-people-also-read' => 'Anerer hunn dëst och nach geliest',
 );
 
 /** Macedonian (македонски)
@@ -227,6 +269,8 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'wikiarelatedpages-desc' => 'Во страниците додава список на поврзани страници',
 	'wikiarelatedpages-heading' => 'Прочитајте повеќе',
+	'wikiamobile-related-article' => 'Поврзана статија',
+	'wikiamobile-people-also-read' => 'Луѓето исто така читаат',
 );
 
 /** Malayalam (മലയാളം)
@@ -234,6 +278,14 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'wikiarelatedpages-heading' => 'കൂടുതൽ വായിക്കുക',
+);
+
+/** Mongolian (монгол)
+ * @author Mongol
+ */
+$messages['mn'] = array(
+	'wikiamobile-related-article' => 'Холбогдох нийтлэл',
+	'wikiamobile-people-also-read' => 'Хүмүүс бас уншдаг',
 );
 
 /** Malay (Bahasa Melayu)
@@ -244,12 +296,23 @@ $messages['ms'] = array(
 	'wikiarelatedpages-heading' => 'Bacaan lanjut',
 );
 
+/** Neapolitan (Napulitano)
+ * @author C.R.
+ */
+$messages['nap'] = array(
+	'wikiamobile-related-article' => 'Articulo azzeccato',
+	'wikiamobile-people-also-read' => "'A ggente liegge pure",
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
+ * @author Danmichaelo
  */
 $messages['nb'] = array(
 	'wikiarelatedpages-desc' => 'Legger til en liste med relaterte sider til sider',
 	'wikiarelatedpages-heading' => 'Les mer',
+	'wikiamobile-related-article' => 'Relatert artikkel',
+	'wikiamobile-people-also-read' => 'Folk leste også',
 );
 
 /** Dutch (Nederlands)
@@ -297,10 +360,13 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author SandroHc
  */
 $messages['pt'] = array(
 	'wikiarelatedpages-desc' => 'Adiciona a páginas uma lista de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Ler mais',
+	'wikiamobile-related-article' => 'Artigo Relacionado',
+	'wikiamobile-people-also-read' => 'As pessoas também leram',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -317,16 +383,28 @@ $messages['pt-br'] = array(
 $messages['roa-tara'] = array(
 	'wikiarelatedpages-desc' => "Aggiunge 'n'elenghe cu le pàggene collegate a le pàggene",
 	'wikiarelatedpages-heading' => 'Ligge de cchiù',
+	'wikiamobile-related-article' => 'Vôsce collegate',
 );
 
 /** Russian (русский)
  * @author Eleferen
  * @author Exlex
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'wikiarelatedpages-desc' => 'Добавляет на страницы список связанных страниц',
 	'wikiarelatedpages-heading' => 'Читать больше',
+	'wikiamobile-related-article' => 'Связанные статьи',
+	'wikiamobile-people-also-read' => 'Люди также читают',
+);
+
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'wikiamobile-related-article' => 'Relatit Airticle',
+	'wikiamobile-people-also-read' => 'Fawk read ava',
 );
 
 /** Slovenian (slovenščina)
@@ -347,10 +425,22 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'wikiarelatedpages-desc' => 'Adds a list with related pages to pages',
 	'wikiarelatedpages-heading' => 'Läs mer',
+	'wikiamobile-related-article' => 'Relaterad artikel',
+	'wikiamobile-people-also-read' => 'Folk läser också',
+);
+
+/** Tamil (தமிழ்)
+ * @author Hareesh Sivasubramanian
+ * @author Jayarathina
+ */
+$messages['ta'] = array(
+	'wikiamobile-related-article' => 'தொடர்புடைய கட்டுரை',
+	'wikiamobile-people-also-read' => 'மக்கள் இவற்றையும் படித்தனர்',
 );
 
 /** Tagalog (Tagalog)
@@ -370,11 +460,14 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Andriykopanytsia
  * @author Ua2004
  */
 $messages['uk'] = array(
 	'wikiarelatedpages-desc' => "Додає на сторінки список пов'язаних сторінок",
 	'wikiarelatedpages-heading' => 'Читати далі',
+	'wikiamobile-related-article' => "Пов'язана стаття",
+	'wikiamobile-people-also-read' => 'Люди також читають',
 );
 
 /** Vietnamese (Tiếng Việt)

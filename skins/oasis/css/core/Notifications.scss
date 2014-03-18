@@ -65,18 +65,6 @@
 				top: 3px;
 			}
 		}
-		// IE7 fixes - start
-		*float: left;
-		*height: 150px;
-		*position: relative;
-		*width: 210px;
-		div {
-			*bottom: 0;
-			*left: 0;
-			*position: absolute;
-			*width: 175px !important;
-		}
-		// IE7 fixes - end
 	}
 	.WikiaBadgeNotification {
 		max-width: 250px;

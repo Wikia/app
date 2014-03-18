@@ -96,7 +96,11 @@ $messages['br'] = array(
 	'places' => 'Lakaat war ar wiki-mañ',
 	'places-in-category' => "Lec'hioù er rummad $1",
 	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
+	'places-toolbar-button-tooltip' => "Klikit evit ouzhpennañ ur valizenn douaroniel d'ar bajenn-mañ",
+	'places-toolbar-button-address' => "Pourchasit ar chomlec'h da implijout da valizenn douaroniel evit ar bajenn-mañ, mar plij",
 	'places-editor-search' => 'Klask',
+	'places-editor-title-create-new' => 'Ouzhpennañ ur valizenn douaroniel',
+	'places-editor-title-edit' => 'Aozañ ur valizenn douaroniel',
 	'places-editor-show-my-location' => "Ma c'has da'm lec'h",
 	'places-editor-geoposition' => "Geolec'hiadur a-vremañ :",
 	'places-geolocation-button-label' => "Ouzhpennañ ul lec'hiadur",
@@ -104,6 +108,9 @@ $messages['br'] = array(
 	'places-geolocation-modal-error-title' => 'Fazi',
 	'places-geolocation-modal-error' => "Ur fazi zo bet pa oad o klask gouzout pelec'h emaoc'h : <br />$1",
 	'places-error-no-article' => "Ret eo deoc'h diferiñ ur bajenn",
+	'places-error-place-already-exists' => "Bez' ez eus ur valizenn douaroniel war ar bajenn-mañ dija",
+	'places-category-switch' => 'Diweredekaat ar balizennañ douaroniel',
+	'places-category-switch-off' => 'Gweredekaat ar balizennañ douaroniel',
 );
 
 /** Catalan (català)
@@ -233,9 +240,12 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nike
  */
 $messages['fi'] = array(
+	'places' => 'Paikkoja tässä wikissä',
+	'places-in-category' => 'Paikat luokassa $1',
 	'places-editor-search' => 'Etsi',
 	'places-editor-title-create-new' => 'Lisää paikkatunniste',
 	'places-editor-title-edit' => 'Muokkaa paikkatunnistetta',
@@ -395,7 +405,7 @@ $messages['lrc'] = array(
  */
 $messages['mk'] = array(
 	'places' => 'Места на ова вики',
-	'places-desc' => 'Дава парсерски куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
+	'places-desc' => 'Дава расчленувачки куки <nowiki><place> и <places></nowiki> за страници за геоозначување и [[Special:Places|карта на сите означени страници]]',
 	'places-in-category' => 'Места во $1 категорија',
 	'places-on-map' => '{{PLURAL:$1|$1 место|$1 места}} на картава',
 	'places-modal-go-to-special' => 'Приказ на {{PLURAL:$1|$1 место|$1 места}} ([[Special:Places|погл. сите]])',

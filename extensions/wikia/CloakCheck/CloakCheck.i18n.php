@@ -232,6 +232,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Ebraminio
  * @author Mjbmr
  */
 $messages['fa'] = array(
@@ -244,8 +245,8 @@ $messages['fa'] = array(
 	'cloakcheck-process-username' => 'نام کاربری: $1',
 	'cloakcheck-process-accountage-yes' => 'حساب کاربری به اندازهٔ کافی قدیمی است.',
 	'cloakcheck-process-accountage-no' => 'حساب کاربری بیش از حد جدید است.',
-	'cloakcheck-process-emailconf-yes' => 'نشانی پست الکترونیکی تایید شد.',
-	'cloakcheck-process-emailconf-no' => 'نشانی پست الکترونیکی تایید نشده است.',
+	'cloakcheck-process-emailconf-yes' => 'نشانی رایانامه تأیید شد.',
+	'cloakcheck-process-emailconf-no' => 'نشان رایانامه تأیید نشده‌است.',
 	'cloakcheck-process-edits-yes' => 'کاربر به اندازهٔ کافی ویرایش دارد.',
 	'cloakcheck-process-edits-no' => 'کاربر به اندازهٔ کافی ویرایش ندارد.',
 );

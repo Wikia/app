@@ -586,9 +586,17 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
+ * @author Konstaduck
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'lookupcontribs' => 'Etsi muokkaukset',
+	'lookupcontribstitle' => 'Etsi muokkaukset',
+	'lookupcontribsrecentcontributions' => 'Käyttäjän $1 viimeaikaiset muokkaukset',
+	'lookupcontribsfinalcontributions' => 'Käyttäjän $1 viimeiset muokkaukset',
+	'lookupcontribshelp' => 'Tämän toimintosivun avulla voidaan tarkastella käyttäjän muokkauksia useissa Wikian wikeissä.
+Syötä käyttäjänimi luettelon näkemiseksi.',
 	'lookupcontribsselectuser' => 'Valitse käyttäjä:',
 	'lookupcontribsdisplaymode' => 'Näyttötila:',
 	'lookupcontribsfullurls' => 'täydelliset verkko-osoitteet',
@@ -608,6 +616,9 @@ $messages['fi'] = array(
 	'lookupcontribsprevious' => 'edellinen',
 	'lookupcontribspageremoved' => 'Poistettu:',
 	'lookupcontribsrestore' => 'palauta',
+	'lookupcontribslog' => 'loki',
+	'lookupcontribshist' => 'historia',
+	'lookupcontribsdiff' => 'ero',
 	'lookupcontribscontent' => 'sisältö',
 	'lookupcontribsnormal' => 'äskettäinen',
 	'lookupcontribsfinal' => 'lopullinen',
