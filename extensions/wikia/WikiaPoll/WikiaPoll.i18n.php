@@ -271,6 +271,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 merduma|$1 merduman}} rey da',
@@ -282,7 +283,7 @@ $messages['diq'] = array(
 	'wikiapoll-editpoll-headline' => 'Anketi bıvurnê',
 	'wikiapoll-question-label' => 'Pers',
 	'wikiapoll-addnewitem-label' => 'Çiyo newe de ke',
-	'wikiapoll-cancel-label' => 'Bıterkne',
+	'wikiapoll-cancel-label' => 'Bıtexelne',
 	'wikiapoll-publish-label' => 'Vıla ke',
 	'wikiamobile-wikiapoll-poll' => 'Anket',
 );

@@ -4,7 +4,7 @@
  *
  * @package Wikia\extensions\HAWelcome
  *
- * @version 1009
+ * @version 1010
  *
  * @author Krzysztof 'Eloy' Krzyżaniak <eloy@wikia-inc.com>
  * @author Maciej 'Marooned' Błaszkowski <marooned@wikia-inc.com>
@@ -51,6 +51,7 @@ $wgExtensionMessagesFiles[ 'HAWelcome' ] = __DIR__ . '/HAWelcome.i18n.php';
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
  */
 $wgHooks['ArticleSaveComplete'][] = 'HAWelcomeJob::onArticleSaveComplete';
+$wgHooks['UserRights'][] = 'HAWelcomeJob::onUserRightsChange';
 /**
  * @type String Command name for the job aka type of the job.
  * @see http://www.mediawiki.org/wiki/Manual:RunJobs.php
@@ -646,5 +647,25 @@ class HAWelcomeJob extends Job {
 		), E_USER_WARNING );
 		wfProfileOut( __METHOD__ );
 		return;
+	}
+
+	/**
+	 * Function called on UserRights hook
+	 *
+	 * Invalidates cached welcomer user ID if equal to changed user ID
+	 *
+	 * @author Kamil Koterba kamil@wikia-inc.com
+	 * @since MediaWiki 1.19.12
+	 *
+	 * @param User $oUser
+	 * @param Array $sAddedGroups
+	 * @param Array $sRemovedGroups
+	 */
+	public static function onUserRightsChange( &$oUser, $aAddedGroups, $aRemovedGroups ) {
+		global $wgMemc;
+		if ( $oUser->getId() == $wgMemc->get( wfMemcKey( 'last-sysop-id' ) ) ) {
+			$wgMemc->delete( wfMemcKey( 'last-sysop-id' ) );
+		}
+		return true;
 	}
 }

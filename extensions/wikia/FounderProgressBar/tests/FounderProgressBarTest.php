@@ -70,6 +70,8 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.01265 ms
 		 * @dataProvider taskCompleteDataProvider
 		 */
 		
@@ -101,6 +103,8 @@ class FounderProgressBarTest extends WikiaBaseTest {
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.02318 ms
 		 * @dataProvider longTaskListDataProvider
 		 */
 		public function testLongTaskList($fetch_obj, $exp_list, $exp_data) {

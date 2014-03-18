@@ -82,7 +82,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setData($menuItems);
 
 		// Cache for 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 	}
 
 	protected function isGameStarLogoEnabled() {

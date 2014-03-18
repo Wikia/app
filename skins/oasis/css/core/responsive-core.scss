@@ -144,8 +144,8 @@
 
 			.module,
 			.admin-dashboard-module {
-				position: static;
-				@include calc(width, "100% - 35px");
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
 
 				-moz-column-break-inside: avoid;
 				-ms-column-break-inside: avoid;
@@ -155,6 +155,8 @@
 
 				// fallback, because column-break-inside is currently NYI
 				display: inline-block;
+				position: static;
+				width: 100%;
 			}
 		}
 

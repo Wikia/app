@@ -565,6 +565,21 @@ Detta kommer inte att uppnå någonting.
 Resten av sidan kommer att tillåtas att köras bara så att du lätt kan se om några av användarnamnen inte kunde läsas in.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'batchuserrights' => 'వాడుకరి హక్కుల సముదాయం',
+	'batchuserrights-desc' => 'ఒకే చర్యతో ఒకటి లేదా అంతకంటే ఎక్కువ వాడుకరులను ఓ గుంపులో చేర్చడాన్ని అనుమతించు',
+	'batchuserrights-names' => 'ఈ గుంపు చేర్చాల్సిన వాడుకరులు (వరుసకొకటి):',
+	'batchuserrights-single-progress-update' => '<strong>$2</strong> కు {{PLURAL:$1|గుంపును|గుంపులను}} చేర్చాం.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|ఒక వాడురిని|$1 వాడుకరులను}} కింది {{PLURAL:$2|గుంపులోకి|గుంపుల్లోకి}} చేరుస్తున్నాం: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "వాడుకరి \"'''\$1'''\" ని లోడు చెయ్యలేకపోయాం.",
+	'batchuserrights-no-groups' => 'మీరు గుంపులు వేటిన ఎంచుకోలేదు.
+ఇప్పుడు పనేమీ జరగదు.
+పేజీలోని మిగిలిన భాగాన్ని నడవనిస్తాం - కానీ కేవలం వాడకరిపేర్లు ఏమైనా లోడు కావడం లేదేమో తెలుసుకునేందుకు మాత్రమే.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

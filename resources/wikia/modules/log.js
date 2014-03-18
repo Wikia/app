@@ -137,6 +137,7 @@
 			group = group || 'Unknown source';
 
 			if (report && levelID < SYSLOG_CUTOFF) {
+				printMessage(msg, 'syslog');
 				syslog(levelID, msg);
 			}
 

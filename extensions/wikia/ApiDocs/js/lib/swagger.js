@@ -73,7 +73,6 @@
           } else {
             _this.basePath = _this.discoveryUrl;
           }
-          log('derived basepath from discoveryUrl as ' + _this.basePath);
         }
         _this.apis = {};
         _this.apisArray = [];
@@ -211,7 +210,6 @@
       this.name = resourceObj.readableName; //parts[parts.length - 1].replace('.{format}', '');
       this.readableName = resourceObj.readableName;
       this.basePath = this.api.basePath;
-      console.log('bp: ' + this.basePath);
       this.operations = {};
       this.operationsArray = [];
       this.modelsArray = [];
@@ -226,8 +224,6 @@
           this.api.fail("SwaggerResources must have a path.");
         }
         this.url = this.api.suffixApiKey(this.api.basePath + this.path.replace('{format}', 'json'));
-        console.log('basePath: ' + this.api.basePath);
-        console.log('url: ' + this.url);
         this.api.progress('fetching resource ' + this.name + ': ' + this.url);
         jQuery.getJSON(this.url, function(response) {
           var endpoint, _i, _len, _ref;

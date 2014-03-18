@@ -17,6 +17,7 @@ use Wikia\Swift\Status\AggregateStatus;
 use Wikia\Swift\Status\CountStatus;
 use Wikia\Swift\Status\NamedAggregateStatus;
 use Wikia\Swift\Status\SizeStatus;
+use Wikia\Swift\Status\StatusPrinter;
 use Wikia\Swift\Wiki\Target;
 
 class OperationList implements IHttpRequestSource {
@@ -47,14 +48,26 @@ class OperationList implements IHttpRequestSource {
 	}
 	public function getName() { return $this->target->getCluster()->getName(); }
 	protected function buildResults() {
+		$this->logDebug("Building result objects...\n");
+		$countStatus = new CountStatus();
+		$countStatus->setTotal(count($this->operations));
+		$statusPrinter = new StatusPrinter($countStatus);
+
+		$i = 0;
 		/** @var Operation $operation */
 		foreach ($this->operations as $k => $operation) {
 			$result = new OperationResult($operation);
 			$result->copyLogger($this);
 			$this->queue[$operation->getId()] = $result;
+			$countStatus->completed(1);
+			if ( ++$i % 10000 == 0 ) {
+				$statusPrinter->printStatus();
+			}
 		}
+		$statusPrinter->finish();
 		$this->result->setQueue($this->queue);
 		$this->queueBuilt = true;
+		$this->logDebug("Finished building result objects...\n");
 	}
 	protected function getLoggerPrefix() { return $this->target->getCluster()->getName(); }
 	public function getResult() { return $this->result; }

@@ -12,6 +12,8 @@ class AbstractDismaxTest extends BaseTest
 {
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09772 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQuery
 	 */
 	public function testGetQuery() {
@@ -51,6 +53,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09612 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQuery
 	 */
 	public function testGetQueryMultipleQueryClauses() {
@@ -90,7 +94,9 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQueryFieldsString 
+	 * @group Slow
+	 * @slowExecutionTime 0.0966 ms
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getQueryFieldsString
 	 */
 	public function testGetQueryFieldsString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQueryFieldsToBoosts' ) );
@@ -118,7 +124,9 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerComponents 
+	 * @group Slow
+	 * @slowExecutionTime 0.09729 ms
+	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerComponents
 	 */
 	public function testRegisterComponents() {
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
@@ -149,6 +157,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11456 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerDismax
 	 */
 	public function testRegisterDismax() {
@@ -270,6 +280,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09646 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::registerNonDismaxComponents
 	 */
 	public function testRegisterNonDismaxComponents() {
@@ -289,6 +301,8 @@ class AbstractDismaxTest extends BaseTest
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09409 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\AbstractDismax::getBoostQueryString
 	 */
 	public function testGetBoostQueryString() {

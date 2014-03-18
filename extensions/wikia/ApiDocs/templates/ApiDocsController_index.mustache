@@ -18,21 +18,11 @@
                 protocol: "http",
                 dom_id:"swagger-ui-container",
                 supportHeaderParams: false,
+                disabled: $('body').data('disabled'),
                 supportedSubmitMethods: ['get', 'post', 'put'],
                 onComplete: function(swaggerApi, swaggerUi){
-                    if(console) {
-                        console.log("Loaded SwaggerUI");
-                        console.log(swaggerApi);
-                        console.log(swaggerUi);
-                    }
                     $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
-                },
-                onFailure: function(data) {
-                    if(console) {
-                        console.log("Unable to Load SwaggerUI");
-                        console.log(data);
-                    }
-                },
+                },                
                 docExpansion: "none"
             });
 
@@ -42,28 +32,32 @@
     </script>
 </head>
 
-<body class="skin-oasis">
-<div id='header' class="WikiaHeader">
-    <nav class="swagger-ui-wrap">
-        <a id="logo" href="http://wikia.com">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite logo" height="23" width="91" alt="Wikia">
-        </a>
-    </nav>
-</div>
-<div class="subnav"></div>
-<h1>Wikia API V1 documentation</h1>
-<div id="message-bar" class="swagger-ui-wrap">
-    &nbsp;
-</div>
+<body class="skin-oasis" {{{bodyData}}}>
 
-<div id="swagger-ui-container" class="swagger-ui-wrap">	
+    <div id='header' class="WikiaHeader">
+        <nav class="swagger-ui-wrap">
+            <a id="logo" href="http://wikia.com">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="sprite logo" height="23" width="91" alt="Wikia">
+            </a>
+        </nav>
+    </div>
 
-</div>
+    <header class="subnav">
+    </header>
+    {{{licenseWarning}}}
 
-<footer class="subnav">
-		<a href="http://api.wikia.com/wiki/Terms_of_Use">Terms of Use</a>
-</footer>
+    <h1>Wikia API V1 documentation</h1>
+    <div id="message-bar" class="swagger-ui-wrap">
+        &nbsp;
+    </div>
 
+    <div id="swagger-ui-container" class="swagger-ui-wrap">
+
+    </div>
+    <footer class="footer-spacer"></footer>
+    <footer class="subnav">
+        {{{licenseMessage}}}
+    </footer>
 </body>
 
 </html>

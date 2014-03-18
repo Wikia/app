@@ -812,10 +812,11 @@ Artikeln '''$1''' kunde inte hittas.
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'our404handler' => '404 పొరపాటు: పేజీ కనబడలేదు!',
+	'our404handler' => '404 లోపం: పేజీ కనబడలేదు!',
 );
 
 /** Tagalog (Tagalog)

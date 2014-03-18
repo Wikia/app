@@ -1,6 +1,5 @@
 @import "skins/oasis/css/mixins/background-opacity";
 @import "skins/oasis/css/mixins/border-opacity";
-@import "skins/oasis/css/mixins/opacity";
 
 /**
  * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
@@ -43,8 +42,7 @@
 			content: "";
 			display: block;
 			height: 22px;
-			margin-top: 28%;
-			margin-left: 34%;
+			margin: 14px 0 0 18px;
 			width: 18px;
 		}
 	}
@@ -62,6 +60,7 @@
 			&:after {
 				background-position: -1244px -26px;
 				height: 15px;
+				margin: 7px 0 0 10px;
 				width: 9px;
 			}
 		}
@@ -80,6 +79,7 @@
 			&:after {
 				background-position: -1210px -81px;
 				height: 15px;
+				margin: 10px 0 0 13px;
 				width: 12px;
 			}
 		}
@@ -94,6 +94,7 @@
 			&:after {
 				background-position: -1210px 0px;
 				height: 31px;
+				margin: 20px 0 0 26px;
 				width: 24px;
 			}
 		}
@@ -108,6 +109,7 @@
 			&:after {
 				background-position: -1210px -34px;
 				height: 42px;
+				margin: 23px 0 0 34px;
 				width: 31px;
 			}
 		}
@@ -137,13 +139,13 @@
 	}
 
 	.duration {
-		@include opacity(70);
 		background: black;
 		border-radius: 1px 0 0 0;
 		bottom: 0;
 		color: white;
 		font-size: 11px;
 		line-height: 17px;
+		opacity: .7;
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;

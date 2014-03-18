@@ -83,6 +83,17 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * Decide on which pages the LIMITED responsive / liquid layout should be turned on.
+	 * ADEN-975 Limited fluid is meant for German wikis
+	 * @return Boolean
+	 */
+	public static function isLimitedResponsiveLayoutEnabled() {
+		global $wgOasisResponsive, $wgOasisResponsiveLimited;
+
+		return !empty( $wgOasisResponsive ) && !empty( $wgOasisResponsiveLimited );
+	}
+
+	/**
 	 * Decide whether to show user pages header on current page
 	 */
 	public static function showUserPagesHeader() {
@@ -318,7 +329,6 @@ class BodyController extends WikiaController {
 
 		// InfoBox - Testing
 		$this->wg->EnableInfoBoxTest = $wgEnableInfoBoxTest;
-		$this->isMainPage = WikiaPageType::isMainPage();
 
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
@@ -352,7 +362,7 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'BlogListing';
 			}
 		// show corporate header on this page?
-		} else if( HubService::isCorporatePage() ) {
+		} else if( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub()) {
 			$this->headerModuleName = 'PageHeader';
 
 			if( self::isEditPage() ) {
@@ -361,8 +371,11 @@ class BodyController extends WikiaController {
 				$this->headerModuleAction = 'Corporate';
 			}
 
+			if ( WikiaPageType::isWikiaHubMain() ) {
+				$this->headerModuleAction = 'Hubs';
+			}
 			// FIXME: move to separate module
-			if( WikiaPageType::isMainPage() ) {
+			elseif( WikiaPageType::isMainPage() ) {
 				$this->wg->SuppressFooter = true;
 				$this->wg->SuppressArticleCategories = true;
 				$this->wg->SuppressPageHeader = true;

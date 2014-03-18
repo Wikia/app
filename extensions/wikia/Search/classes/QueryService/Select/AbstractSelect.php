@@ -150,6 +150,8 @@ abstract class AbstractSelect
 				'categories',
 				'hub',
 				'lang',
+				'article_quality_i',
+				'article_type_s'
 			];
 	
 	/**
@@ -432,19 +434,51 @@ abstract class AbstractSelect
 			strtolower( $query ) 
 		);
 		$service = $this->getService();
-		$wikiMatch = $service->getWikiMatchByHost( $domain, $config->getLanguageCode() );
-		if ( ! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
+		$langs = $config->getLanguageCode();
+		$langs = is_array( $langs ) ? $langs : [ $langs ];
+		foreach( $langs as $lang ) {
+			$wikiMatch = $service->getWikiMatchByHost( $domain, $lang );
+			//if found exit, we look only for first match
+			if ( !empty( $wikiMatch ) ) {
+				break;
+			}
+		}
+		if (! empty( $wikiMatch ) && ( $wikiMatch->getId() !== $service->getWikiId() ) &&
 			( !( $config->getCommercialUse() ) ||  (new \LicensedWikisService)->isCommercialUseAllowedById($wikiMatch->getId()) ) ) {
 			$result = $wikiMatch->getResult();
-			$hub = $config->getHub();
-			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
-				( empty($hub) || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+			if ($this->isValidExactMatch($result)) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}
 		return $config->getWikiMatch();
 	}
-	
+
+	/**
+	 * @param $result
+	 * @return bool
+	 */
+	protected function isValidExactMatch($result) {
+		$config = $this->getConfig();
+		$hub = $config->getHub();
+		if ( !empty( $hub ) ) {
+			if ( strtolower( $result['hub_s'] ) !== strtolower( $hub ) ) {
+				return false;
+			}
+		}
+		$hubs = $config->getHubs();
+		if ( !empty( $hubs ) ) {
+			$found = false;
+			foreach ( $hubs as $hub )
+			if ( strtolower( $result['hub_s'] ) === strtolower( trim($hub) ) ) {
+				$found = true;
+			}
+			if ( !$found ) {
+				return false;
+			}
+		}
+		return $result['articles_i'] >= 50;
+	}
+
 	/**
 	 * This allows internal manipulation of the specific core being queried by this service.
 	 * There is probably a better way to do this, but this is the least disruptive way to handle this somewhat circular dependency.

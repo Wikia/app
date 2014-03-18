@@ -1,4 +1,5 @@
 @import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/layout";
 @import "color";
 
 /* Button */
@@ -157,4 +158,25 @@
 
 .ve-ui-surfaceWidget-toolbar .oo-ui-toolbar-bar {
 	border-color: $color-page-border;
+}
+
+/* Focus Widget */
+.ve-ui-wikiaFocusWidget {
+	left: 0;
+	opacity: .5;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: $zTop;
+
+	div {
+		background-color: #000;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.ve-ui-wikiaFocusWidget-right {
+		left: auto;
+		right: 0;
+	}
 }

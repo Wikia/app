@@ -33,47 +33,6 @@
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
-<? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis
-if (!$wg->DevelEnvironment):?>
-	<script>
-		function syslogReport(priority, message, context) {
-			context = context || null;
-			var url = "//jserrorslog.wikia.com/",
-				i = new Image(),
-				data = {
-					'@message': message,
-					'syslog_pri': priority
-				};
-
-//			url = '//jserrorslog.nelson.wikia-dev.com/';
-			if (context) {
-				data['@context'] = context;
-			}
-
-			try {
-				data['@fields'] = { server: document.cookie.match(/server.([A-Z]*).cache/)[1] };
-			} catch (e) {}
-
-			try {
-				i.src = url+'l?'+JSON.stringify(data);
-			} catch (e) {
-				i.src = url+'e?'+e;
-			}
-		}
-	</script><?
-	if ($wg->IsGASpecialWiki || $wg->EnableJavaScriptErrorLogging):?>
-		<script>
-			window.onerror = function(m,u,l) {
-				if (Math.random() < 0.01) {
-					syslogReport(3, m, {'url': u, 'line': l}); // 3 is "error"
-				}
-
-				return false;
-			}
-		</script>
-	<? endif ?>
-<? endif ?>
-
 <?= $topScripts ?>
 <?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
@@ -110,7 +69,6 @@ if (!$wg->DevelEnvironment):?>
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
-<?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>

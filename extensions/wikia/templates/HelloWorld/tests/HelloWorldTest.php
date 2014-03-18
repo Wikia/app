@@ -11,6 +11,10 @@ class HelloWorldTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.05355 ms
+	 */
 	public function testGettingWikiData() {
 
 		$testRow = new stdClass();

@@ -44,35 +44,31 @@ var WikiaHomePageRemix = function () {
 	this.WIKISETSTACKOFFSET = 2;
 	this.NUMBEROFBATCHESTODOWNLOAD = 5;
 
-	this.COLLECTIONS_LS_KEY = 'WHP_collections';
-	this.COLLECTIONS_LS_VALIDITY = 12; // in hours
 	this.SPONSOR_HERO_IMG_TIMEOUT = 3000;
 	this.SPONSOR_HERO_IMG_CONTAINER_ID = 'WikiaHomePageHeroImage';
 	this.SPONSOR_HERO_IMG_FADE_OUT_TIME = 800;
+	this.SPONSOR_HERO_IMG_VALIDITY = 12; // in hours
+	this.SPONSOR_HERO_IMAGE_STORAGE_KEY = 'WikiaHomePageHeroImageDisplayed';
 
 	this.wikiSetStack = [];
 	this.wikiSetStackIndex = 0;
 
-	var collections = window.wgCollectionsBatches || [];
-	this.collectionsWikisStack = collections;
+	this.collections = window.wgCollectionsBatches || [];
 	this.remixesWhenShowCollection = [0, 3, 5];
-	this.heroImageDisplayed = false;
 	this.heroImage = null;
 	
-	function retriveHeroImageSrc() {
-		var collectionsKeys = Object.keys(collections) || [];
-		var firstCollection = collections[collectionsKeys[0]] || [];
+	function retriveHeroImageSrc(collections) {
+		var firstCollection = collections[0] || [];
 		
-		if( typeof(firstCollection['sponsor_hero_image']) !== 'undefined' && typeof(firstCollection['sponsor_hero_image']['url']) !== 'undefined' ) {
-			return firstCollection['sponsor_hero_image']['url'];
+		if( typeof(firstCollection.sponsor_hero_image) !== 'undefined' && typeof(firstCollection.sponsor_hero_image.url) !== 'undefined' ) {
+			return firstCollection.sponsor_hero_image.url;
 		}
 		
 		return null;
 	}
 	
-	this.heroImageSrc = retriveHeroImageSrc();
+	this.heroImageSrc = retriveHeroImageSrc(this.collections);
 	if( this.heroImageSrc !== null ) {
-		$().log('Preloading hero image...');
 		this.heroImage = new Image();
 		this.heroImage.src = this.heroImageSrc;
 	}
@@ -81,7 +77,6 @@ var WikiaHomePageRemix = function () {
 function WikiPreview(el) {
 	this.el = $(el);
 	this.init();
-	$().log('made preview');
 }
 
 var WikiPreviewInterstitial = {
@@ -92,11 +87,12 @@ var WikiPreviewInterstitial = {
 		WikiPreviewInterstitial.contentArea = WikiPreviewInterstitial.el.find('.content-area');
 
 		$('#visualization').delegate('.wikia-slot', 'click', function (e) {
-			var target = $(e.target);
-			$().log(target);
+			var target = $(e.target ),
+				wikiId;
+
 			if (!target.hasClass('goVisit') && target.closest('.goVisit').length === 0) {
 				e.preventDefault();
-				var wikiId = $(this).data("wiki-id");
+				wikiId = $(this).data('wiki-id');
 				WikiPreviewInterstitial.show();
 				WikiPreviewInterstitial.loadContent(wikiId);
 			}
@@ -117,7 +113,7 @@ var WikiPreviewInterstitial = {
 			WikiPreviewInterstitial.showContent(cache);
 		} else {
 			$.nirvana.sendRequest({
-				type: 'post',
+				type: 'get',
 				format: 'html',
 				controller: 'WikiaHomePage',
 				method: 'getInterstitial',
@@ -178,9 +174,8 @@ WikiPreview.prototype = {
 	AVATAR_HOVER_TIMEOUT: 750,
 
 	init: function () {
-		var avatars = this.el.find('.users .user');
-
-		var popoverTimeout = 0;
+		var avatars = this.el.find('.users .user' ),
+			popoverTimeout = 0;
 
 		function setPopoverTimeout(elem) {
 			popoverTimeout = setTimeout(function() {
@@ -189,8 +184,8 @@ WikiPreview.prototype = {
 		}
 
 		avatars.popover({
-			trigger: "manual",
-			placement: "top",
+			trigger: 'manual',
+			placement: 'top',
 			content: function() {
 				return $(this).find('.details').clone().wrap('<div>').parent().html();
 			}
@@ -202,7 +197,6 @@ WikiPreview.prototype = {
 			var $this = $(this);
 			setPopoverTimeout($this);
 			$('.popover').mouseenter(function() {
-				$().log("mouse re-entering");
 				clearTimeout(popoverTimeout);
 			}).mouseleave(function() {
 					setPopoverTimeout($this);
@@ -224,32 +218,32 @@ WikiaHomePageRemix.prototype = {
 			$.proxy(this.trackClick, this)
 		);
 
-		$(".remix-button").click($.proxy(
+		$('.remix-button').click($.proxy(
 			function (event) {
 				event.preventDefault();
 				this.remixHandler();
 			}, this)
 		);
 		
-		$(".collection-link").click($.proxy(
+		$('.collection-link').click($.proxy(
 			function( event ) {
-				var collectionId = $(event.target).data('collection-id') || 0;
-				this.displayCollection(collectionId);
+				var collectionIndex = $( '.collections-dropdown li' ).index( event.target ) || 0;
+				this.displayCollection(collectionIndex);
 			}, this)
 		);
 		
 		$('#WikiaHomePageSponsorImage').on(
-			'click', 
-			'.sponsor-image-link', 
+			'click',
+			'.sponsor-image-link',
 			$.proxy(this.trackClick, this)
 		);
 
 		// show / hide collections dropdown
-		var $collectionsDropdown = $(".collections-dropdown");
+		var $collectionsDropdown = $('.collections-dropdown');
 		$('body').on('click', '.collections-button',
 			function (event) {
 				event.preventDefault();
-				$collectionsDropdown.toggleClass("show");
+				$collectionsDropdown.toggleClass('show');
 			}
 		).on('click', $.proxy(function(event) {
 				var $target = $(event.target);
@@ -262,7 +256,6 @@ WikiaHomePageRemix.prototype = {
 		$('.wikia-slot a').removeAttr('title');
 
 		this.remixHandler();
-		$().log('WikiaHomePageRemix initialised');
 	},
 	isTargetOutsideRemixChevron: function ($target) {
 		return !($target.is('.collections-button') || $target.is('.collections-button .chevron'));
@@ -278,10 +271,13 @@ WikiaHomePageRemix.prototype = {
 		}, params);
 	},
 	trackClick: function(ev) {
-		var node = $(ev.target);
+		var node = $(ev.target ),
+			remixCounter = 0,
+			collectionId,
+			isLink;
 		
 		if( node.hasParent('.remix-button') || node.hasClass('remix-button') ) {
-			var remixCounter = $.storage.get('remixCounter') || 0;
+			remixCounter = $.storage.get('remixCounter') || 0;
 			remixCounter++;
 			this.track(
 				Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
@@ -345,59 +341,65 @@ WikiaHomePageRemix.prototype = {
 				this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'interstitial-wam-score', {'wam-link-state': wamLinkState}, ev);
 			}
 		} else if( node.hasClass('collections-button') || node.hasParent('.collections-button') ) {
-			var collectionListState = ( $('.collections-dropdown').hasClass('show') ) ? 'shown' : 'hidden';
+			collectionListState = ( $('.collections-dropdown').hasClass('show') ) ? 'shown' : 'hidden';
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-button', {'collection-list-state': collectionListState}, ev);
 		} else if( node.hasClass('collection-link') || node.hasParent('.collection-link') ) {
-			var collectionId = node.data('collection-id');
+			collectionId = node.data('collection-id');
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON, 'collections-link', {'collection-id': collectionId}, ev);
 		} else if( node.hasClass('sponsor-image-link') ) {
-			var collectionId = node.data('collection-id');
-			var isLink = node.hasParent('a');
+			collectionId = node.data('collection-id' );
+			isLink = node.hasParent('a');
 			this.track(Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE, 'collection-sponsor', {'collection-id': collectionId, 'is-link': isLink}, ev);
 		}
 	},
 	preload: function () {
+		var i,
+			image,
+			allWikisInBatch;
+
 		if (typeof this.wikiSetStack[this.wikiSetStackIndex] != 'undefined') {
-			var allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
+			allWikisInBatch = this.wikiSetStack[this.wikiSetStackIndex].mediumslots;
 			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].smallslots);
 			allWikisInBatch = allWikisInBatch.concat(this.wikiSetStack[this.wikiSetStackIndex].bigslots);
-			for (var i in allWikisInBatch) {
-				var image = new Image();
+			for (i in allWikisInBatch) {
+				image = new Image();
 				image.src = allWikisInBatch[i].image;
 			}
 		}
 	},
 	updateVisualisation: function () {
 		if (this.wikiSetStack.length !== this.wikiSetStackIndex) {
-			$().log('WikiaHomePageRemix remixing (batch ' + this.wikiSetStackIndex + ')');
 			this.remix($('.slot-medium'), this.wikiSetStack[this.wikiSetStackIndex].mediumslots);
 			this.remix($('.slot-small'), this.wikiSetStack[this.wikiSetStackIndex].smallslots);
 			this.remix($('.slot-big'), this.wikiSetStack[this.wikiSetStackIndex].bigslots);
 			if (this.wikiSetStack.length - this.wikiSetStackIndex - this.WIKISETSTACKOFFSET <= 0) {
-				this.addWikiToStack();
+				this.fetchMoreWikis();
 			}
 			this.wikiSetStackIndex++;
 			this.preload();
 
 			this.showStats();
-
-			$().log('WikiaHomePageRemix data remixed');
 		} else {
-			$().log('wikiSetStack is empty');
 			$('.remix').startThrobbing();
 		}
 	},
 	remix: function (getSlotCurrent, getSlotList) {
 		getSlotCurrent.each(function(slotIndex, slot) {
-			var listslot = getSlotList[slotIndex];
-			var currentslot = $(slot);
-			var currentlink = currentslot.find('a');
+			var listslot = getSlotList[slotIndex],
+				currentslot = $(slot ),
+				currentlink = currentslot.find('a' ),
+				wikinamehtml = $('<span class="hotNew"></span>' ),
+				previewDiv = $('<div class="preview-pane"></div>' ),
+				previewDivWrapperClass = 'preview-pane-wrapper',
+				previewDivWrapper = $('<div class="'+previewDivWrapperClass+'"></div>'),
+				previewVisitHtml;
+
 			if (currentlink.is('a')) {
 				currentlink.attr('href', listslot.wikiurl);
 				currentlink.attr('data-wikiurl', listslot.wikiurl);
 			}
 			currentslot.find('span').remove().end().find('img').attr('src', listslot.image);
-			var wikinamehtml = $('<span class="hotNew"></span>');
+
 			if (listslot.wikinew) {
 				wikinamehtml.append('<strong class="new">' + $.msg('wikia-home-page-new') + '</strong>');
 			}
@@ -406,10 +408,7 @@ WikiaHomePageRemix.prototype = {
 			}
 			currentslot.data('wiki-id', listslot.wikiid);
 			wikinamehtml.append(listslot.wikiname);
-			var previewDiv = $('<div class="preview-pane"></div>');
-			var previewDivWrapperClass = 'preview-pane-wrapper';
-			var previewDivWrapper = $('<div class="'+previewDivWrapperClass+'"></div>');
-			var previewVisitHtml;
+
 			if (currentslot.hasClass('slot-small')) {
 				previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" /></a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" /></span></a>');
 			} else {
@@ -427,41 +426,40 @@ WikiaHomePageRemix.prototype = {
 	},
 
 	remixHandler: function() {
-		var collectionId = this.getNextCollectionId();
-		if (collectionId) {
-			this.displayCollection(collectionId);
-			this.displaySponsorHeroImage(collectionId);
+		var collectionIndex = this.getNextCollectionIndex();
+		if (collectionIndex !== undefined) {
+			this.displayCollection(collectionIndex);
+			this.displaySponsorHeroImage(collectionIndex);
 
-			this.track(Wikia.Tracker.ACTIONS.IMPRESSION, 'collection-remix', {'collection-id': collectionId, 'remix-count': this.remixCount});
+			this.track(Wikia.Tracker.ACTIONS.IMPRESSION, 'collection-remix', {'collection-id': collectionIndex, 'remix-count': this.remixCount});
 		} else {
 			this.updateVisualisation();
 		}
 	},
 
-	displayCollection: function(collectionId) {
-		var selectedCollection;
-		if (typeof collectionId === 'undefined' || !(collectionId in this.collectionsWikisStack)) {
-			var avaliableCollectionIds = Object.keys(this.collectionsWikisStack);
-			if (avaliableCollectionIds.length) {
-				collectionId = avaliableCollectionIds[0];
+	displayCollection: function(collectionIndex) {
+		var selectedCollection,
+			container;
+
+		if (typeof collectionIndex === 'undefined' || collectionIndex > this.collections.length ) {
+			if (this.collections.length) {
+				collectionIndex = 0;
 			} else {
 				this.updateVisualisation();
 				return false;
 			}
 		}
 
-		this.markCollectionAsShown(collectionId);
-		$().log('displaying collection #' + collectionId);
+		this.markCollectionAsShown(collectionIndex);
 		
-		selectedCollection = this.collectionsWikisStack[collectionId];
-		selectedCollection['collection_id'] = collectionId;
+		selectedCollection = this.collections[collectionIndex];
 
 		this.remix($('.slot-medium'), selectedCollection.mediumslots);
 		this.remix($('.slot-small'), selectedCollection.smallslots);
 		this.remix($('.slot-big'), selectedCollection.bigslots);
 
 		if( 'sponsor_image' in selectedCollection ) {
-			var container = this.createSponsorImageContainer(selectedCollection);
+			container = this.createSponsorImageContainer(selectedCollection);
 			$('#WikiaHomePageSponsorImage').remove();
 			this.statsContainer
 				.hide()
@@ -473,85 +471,37 @@ WikiaHomePageRemix.prototype = {
 
 	initCollectionRemixVariables: function() {
 		this.remixCount = 0;
-		this.shownCollections = {};
-		for (collectionId in this.collectionsWikisStack) {
-			if (this.collectionsWikisStack.hasOwnProperty(collectionId)) {
-				this.shownCollections[collectionId] = false;
-			}
-		}
 
-		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
-		var lsShownCollections;
-		if (lsData) {
-			if ('date' in lsData && 'collections' in lsData) {
-				var tmpDate = new Date();
-				tmpDate.setHours(tmpDate.getHours() - this.COLLECTIONS_LS_VALIDITY);
-				if (new Date(lsData.date) > tmpDate) {
-					lsShownCollections = lsData.collections;
-					if ('remixCount' in lsData) {
-						this.remixCount = lsData.remixCount;
-					}
-				}
-			}
-
-			if (lsShownCollections) {
-				$.extend(this.shownCollections, lsShownCollections);
-			} else {
-				$.storage.set(this.COLLECTIONS_LS_KEY, null);
-			}
+		for (var i = 0; i < this.collections.length; i++) {
+			this.collections[i].shown = false;
 		}
 	},
 
 	icreaseRemixCount: function() {
 		this.remixCount++;
-		this.saveLSData({remixCount: this.remixCount});
 	},
 
-	markCollectionAsShown: function(collectionId) {
-		this.shownCollections[collectionId] = true;
-		this.saveLSData({collectionId: collectionId});
+	markCollectionAsShown: function(collectionIndex) {
+		this.collections[collectionIndex].shown = true;
 	},
 
-	saveLSData: function(data) {
-		var lsData = $.storage.get(this.COLLECTIONS_LS_KEY);
-		if (!lsData) {
-			lsData = {};
-		}
+	getNextCollectionIndex: function() {
+		var nextCollectionIndex,
+			out,
+			i;
 
-		if (!('collections' in lsData)) {
-			lsData.collections = {};
-		}
-		if ('collectionId' in data) {
-			lsData.collections[data.collectionId] = true;
-		}
-		if ('remixCount' in data) {
-			lsData.remixCount = data.remixCount;
-		}
-
-		if (!('date' in lsData)) {
-			lsData.date = new Date();
-		}
-
-		$.storage.set(this.COLLECTIONS_LS_KEY, lsData);
-	},
-
-	getNextCollectionId: function() {
-		var nextCollectionId;
-		var out;
-
-		for (collectionId in this.shownCollections) {
-			if (this.shownCollections.hasOwnProperty(collectionId) && !this.shownCollections[collectionId]) {
-				nextCollectionId = collectionId;
+		for (i = 0; i < this.collections.length; i++) {
+			if ( !this.collections[i].shown) {
+				nextCollectionIndex = i;
 				break;
 			}
 		}
 
-		if (nextCollectionId && $.inArray(this.remixCount, this.remixesWhenShowCollection) > -1) {
-			out = nextCollectionId;
+		if ( nextCollectionIndex !== undefined && $.inArray(this.remixCount, this.remixesWhenShowCollection) > -1 ) {
+			out = nextCollectionIndex;
 		}
 
 		this.icreaseRemixCount();
-
 		return out;
 	},
 
@@ -561,21 +511,21 @@ WikiaHomePageRemix.prototype = {
 	},
 
 	createSponsorImageContainer: function(collection) {
-		var imgData = collection['sponsor_image'];
-		var img = $('<img />')
-			.attr('alt', imgData['title'])
-			.attr('witdh', imgData['width'])
-			.attr('witdh', imgData['height'])
-			.attr('src', imgData['url'])
-			.addClass('sponsor-image-link')
-			.data('collection-id', collection['collection_id']);
-
-		var container = $('<div />')
-			.attr('id', 'WikiaHomePageSponsorImage')
-			.addClass('grid-2');
+		var imgData = collection.sponsor_image,
+			img = $('<img />')
+				.attr('alt', imgData.title)
+				.attr('width', imgData.width)
+				.attr('height', imgData.height)
+				.attr('src', imgData.url)
+				.addClass('sponsor-image-link')
+				.data('collection-id', collection.id ),
+			container = $('<div />')
+				.attr('id', 'WikiaHomePageSponsorImage')
+				.addClass('grid-2' ),
+			link;
 
 		if ('sponsor_url' in collection) {
-			var link = $('<a />').attr('href', collection['sponsor_url']);
+			link = $('<a />').attr('href', collection['sponsor_url']);
 			link.append(img);
 			container.append(link);
 		} else {
@@ -585,44 +535,62 @@ WikiaHomePageRemix.prototype = {
 	},
 
 	createHeroImageContainer: function() {
-		var imgData = this.getFirstCollection()['sponsor_hero_image'];
+		var imgData = this.collections[0].sponsor_hero_image,
+			img,
+			container;
 		
 		if( this.heroImage !== null ) {
-			var img = $(this.heroImage)
-				.attr('alt', imgData['title'])
-				.attr('witdh', imgData['width'])
-				.attr('witdh', imgData['height']);
+			img = $(this.heroImage)
+				.attr('alt', imgData.title)
+				.attr('witdh', imgData.width)
+				.attr('witdh', imgData.height);
 
-			var container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
+			container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
 			container.append(img);
 		}
 		
 		return container;
 	},
 	
-	displaySponsorHeroImage: function(collectionId) {
-		if( this.isFirstCollection(collectionId) && !this.heroImageDisplayed ) {
+	displaySponsorHeroImage: function(collectionIndex) {
+		'use strict';
+
+		if( this.isFirstCollection(collectionIndex) && !this.wasHeroImageDisplayed() ) {
 			var heroContainer = this.createHeroImageContainer();
 			$('#visualization').append(heroContainer);
-			this.heroImageDisplayed = true;
+			this.markHeroImageAsDisplayed();
 		}
 	},
 
-	isFirstCollection: function(collectionId) {
-		return (collectionId === this.getFirstCollectionId());
-	},
-	
-	getFirstCollectionId: function() {
-		return Object.keys(this.collectionsWikisStack)[0];
-	},
-	
-	getFirstCollection: function() {
-		return this.collectionsWikisStack[ this.getFirstCollectionId() ];
+	wasHeroImageDisplayed: function() {
+		'use strict';
+
+		var date = $.storage.get( this.SPONSOR_HERO_IMAGE_STORAGE_KEY ),
+			tmpDate;
+		if ( date ) {
+			tmpDate = new Date();
+			tmpDate.setHours( tmpDate.getHours() - this.SPONSOR_HERO_IMG_VALIDITY );
+			if (new Date( date ) > tmpDate) {
+				return true;
+			}
+		}
+
+		return false;
 	},
 
-	addWikiToStack: function() {
+	markHeroImageAsDisplayed: function() {
+		'use strict';
+
+		$.storage.set( this.SPONSOR_HERO_IMAGE_STORAGE_KEY, new Date() );
+	},
+
+	isFirstCollection: function(collectionIndex) {
+		return (collectionIndex === 0);
+	},
+
+	fetchMoreWikis: function() {
 		$.nirvana.sendRequest({
-			type: 'post',
+			type: 'get',
 			format: 'json',
 			controller: 'WikiaHomePage',
 			method: 'getWikiBatchesForVisualization',
@@ -630,7 +598,6 @@ WikiaHomePageRemix.prototype = {
 			callback: $.proxy(function(response) {
 				this.wikiSetStack = this.wikiSetStack.concat(response.wikis);
 				$('.remix').stopThrobbing();
-				$().log('WikiSet preloaded');
 			}, this)
 		});
 	}

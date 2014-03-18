@@ -2,15 +2,9 @@
 @import "../../../../skins/oasis/css/mixins/gradient";
 @import "../../../../skins/oasis/css/mixins/menus";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/border-radius";
-
 #AccountNavigation.AccountNavigation {
 	right: 60px;
 }
-
-/* IE7 targeted hacks */
-html>body #WallNotifications .avatars { *float: left; }
-
 
 #WallNotifications {
   &.prehide {
@@ -22,9 +16,8 @@ html>body #WallNotifications .avatars { *float: left; }
 		width: 34px;
 		height: 20px;
 		&.reddot #bubbles_count {
-			@include border-radius(15px);
 			background: red;
-			//border: 1px solid white;
+			border-radius: 15px;
 		}
 		#bubbles_count {
 			position: relative;
@@ -41,8 +34,8 @@ html>body #WallNotifications .avatars { *float: left; }
 		position: absolute;
 		right: 20px;
 		.notifications-wiki-count {
-			@include border-radius(15px);
 			background: red;
+			border-radius: 15px;
 			font-size: 12px;
 			text-align: center;
 			display: inline-block;
@@ -238,7 +231,7 @@ html>body #WallNotifications .avatars { *float: left; }
 		right: 10px;
 	}
 	#wall-notifications-markasread, #wall-notifications-markasread * {
-		@include border-radius(3px);
+		border-radius: 3px;
 		color: $color-links;
 		cursor: pointer;
 		text-align: right;
@@ -271,19 +264,17 @@ html>body #WallNotifications .avatars { *float: left; }
 }
 
 #WallNotificationsReminder {
-	@include border-radius(3px);
 	@include box-shadow(0px, 2px, 5px, darken($color-page,12%), 0, 0);
 	background: $color-page;
 	border: 1px solid $color-page-border;
+	border-radius: 3px;
 	@if $is-dark-wiki {
 		@include box-shadow(0px, 2px, 5px, darken($color-page,7%), 0, 0);
 		background: $color-module-background;
-		border: 1px solid $color-page-border;
 	}
 	position: fixed;
 	top: 20px;
 	right: 20px;
-	border: 1px solid $color-page-border;
 	color: $color-links;
 	padding: 10px;
 	display: none;

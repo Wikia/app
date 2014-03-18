@@ -1,0 +1,190 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/gradient";
+@import "Colors";
+@import 'Explore';
+@import 'HubsPopularVideos';
+@import 'FeaturedVideo';
+@import 'WikitextModule';
+@import 'CorporateFooter';
+@import 'SponsoredBox';
+@import 'WamScore';
+
+$wikiahubs-line-height: 16px;
+
+.WikiaArticleCategories {
+	display: none;
+}
+
+.WikiaPageHeader p {
+	display: none;
+}
+
+.WikiaMainContent {
+	margin-top: 20px;
+	padding-bottom: 70px;
+}
+
+.start-a-wiki {
+	border-left: 1px solid mix($color-header-text, $color-header, 20%);
+}
+
+.WikiaHubs {
+	font-size: 13px;	/* reset font size */
+	line-height: $wikiahubs-line-height;	/* reset line height */
+
+	h1 {
+		margin: 23px 0 22px 0;
+	}
+	/* reset article styling */
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	h2 {
+		border-bottom: 4px solid $color-wikiahome-hubcolor;
+		font-weight: bold;
+		line-height: 23px;
+		margin: 0;
+		padding: 0;
+	}
+	.wikiahubs-module {
+		overflow: hidden;
+		h1 {
+			border-bottom: 4px solid $color-wikiahome-hubcolor;
+			font-weight: bold;
+			font-size: 18px;
+			line-height: 23px;
+			margin: 0;
+			padding: 0;
+		}
+	}
+	.social-links {
+		float: right;
+		a {
+			display: block;
+			float: left;
+			padding: 10px;
+		}
+		a:first-child {
+			padding-left: 0;
+		}
+		img {
+			height: 20px;
+			width: 20px;
+		}
+		.facebook {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/fb.png"); /* base64 */
+		}
+		.twitter {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/twitter.png"); /* base64 */
+		}
+		.gplus {
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* base64 */
+		}
+	}
+	/* resets */
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			line-height: $wikiahubs-line-height;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	#suggestArticle, #suggest-popularvideos {
+		position:relative;
+		top:-2px;
+	}
+
+	/* From the Community Module */
+	.wikiahubs-from-the-community {
+		padding-top: 10px;
+		h1 {
+			margin-bottom: 10px;
+		}
+		.wikiahubs-ftc-item {
+			@include clearfix;
+			border-bottom: 1px solid $color-page-border;
+			padding: 10px 0;
+			img {
+				height: 100px;
+				width: 155px;
+			}
+			.floatleft {
+				display: inline-block;
+				margin: 0 10px 0 0;
+			}
+			.wikiahubs-ftc-title,
+			.wikiahubs-ftc-subtitle,
+			.wikiahubs-ftc-creative {
+				//margin-left: 165px;
+			}
+			.wikiahubs-ftc-title {
+				font-size: 14px;
+				font-weight: bold;
+			}
+			.wikiahubs-ftc-creative {
+				margin-top: 10px;
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+	}
+
+	.RelatedHubsVideos {
+		height: 170px;
+	}
+
+	.sponsored-image {
+		margin: 4px 0 0 0;
+	}
+
+	.wikiahubs-newstabs {
+		p {
+			margin-top: 10px;
+		}
+	}
+}
+
+.WikiaHubsModal {
+	.WikiaForm {
+		input[type="text"],
+		textarea {
+			width: 450px;
+			padding: 7px;
+			margin-bottom: 10px;
+		}
+		.default-value {
+			input[type="text"] {
+				color: #666666;
+			}
+		}
+		.submit-button {
+			float: right;
+			.secondary {
+				margin-right: 10px;
+			}
+		}
+	}
+	.success-view {
+		display: none;
+	}
+}
+
+.WikiaGrid {
+	.wikiahubs-rail {
+		float: right;
+		margin-right: 10px;
+		clear: right;
+	}
+	.grid-3 {
+		.wikiahubs-slider {
+			margin: 10px 0 20px 0;
+		}
+	}
+}

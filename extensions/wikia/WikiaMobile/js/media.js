@@ -644,8 +644,7 @@ function(
 						type: loader.MULTI,
 						resources: {
 							styles: '/extensions/wikia/WikiaMobile/css/mediagallery.scss',
-							scripts: 'wikiamobile_mediagallery_js',
-							ttl: ttl
+							scripts: 'wikiamobile_mediagallery_js'
 						}
 					} ).done( function ( res ) {
 						var script = res.scripts,

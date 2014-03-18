@@ -38,7 +38,7 @@ class HttpResponse {
 class HttpRunner {
 	use LoggerFeature;
 
-	const FETCH_BATCH_LIMIT = 10;
+	const FETCH_BATCH_LIMIT = 500;
 	const CURL_EXEC_LIMIT = 10000;
 
 	protected $sources;

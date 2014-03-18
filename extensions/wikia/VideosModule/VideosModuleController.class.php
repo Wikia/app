@@ -17,8 +17,12 @@ class VideosModuleController extends WikiaController {
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
 	 */
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
+
+		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$showVerticalOnly = ( $this->request->getVal( 'verticalOnly' ) == 'true' );
@@ -47,7 +51,10 @@ class VideosModuleController extends WikiaController {
 
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $module->getVideosDetail( $videos );
+		$this->videos = $videos;
+
+		// set cache
+		$this->response->setCacheValidity( 600 );
 
 		wfProfileOut( __METHOD__ );
 	}

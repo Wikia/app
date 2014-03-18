@@ -13,11 +13,11 @@
  * @author Liz Lee <liz@wikia-inc.com>
  */
 
-( function( $ ) {
+(function ($) {
 
 	'use strict';
 
-	var Switcher = function( $element, options ) {
+	var Switcher = function ($element, options) {
 		var defaults = {
 			up: '.nav-up',
 			down: '.nav-down',
@@ -26,84 +26,90 @@
 		};
 
 		this.$elem = $element;
-		this.options = $.extend( defaults, options );
+		this.options = $.extend(defaults, options);
 		this.init();
 	};
 
 	Switcher.prototype = {
-		init: function() {
+		init: function () {
 			this.setBoxes();
 
 			this.count = this.$boxes.length;
-			this.upArrows = this.$boxes.find( this.options.up );
-			this.downArrows = this.$boxes.find( this.options.down );
+			this.upArrows = this.$boxes.find(this.options.up);
+			this.downArrows = this.$boxes.find(this.options.down);
 
 			this.updateDisabled();
 			this.bindEvents();
 
 		},
-		bindEvents: function() {
+		bindEvents: function () {
 			var self = this;
 
-			this.upArrows.on( 'click', $.proxy( this.handleUpClick, this ) );
-			this.downArrows.on( 'click', $.proxy( this.handleDownClick, this ) );
+			this.upArrows.on('click', $.proxy(this.handleUpClick, this));
+			this.downArrows.on('click', $.proxy(this.handleDownClick, this));
 
-			this.$elem.on( 'switched.switcher', function( e, data ) {
+			this.$elem.on('switched.switcher', function (e, data) {
 				self.updateDisabled();
 				// Call extension's onChange callback
-				if ( self.options.onChange ) {
-					self.options.onChange( data.box, data.elem );
+				if (self.options.onChange) {
+					self.options.onChange(data.box, data.elem);
 				}
-			} );
+			});
 		},
-		handleUpClick: function( e ) {
+		handleUpClick: function (e) {
 			var $box,
-					$prev;
+				$prev;
 
 			e.preventDefault();
 
-			$box = $( e.target ).closest( this.options.boxes );
+			$box = $(e.target).closest(this.options.boxes);
 			$prev = $box.prev();
 
-			$box.insertBefore( $prev );
+			$box.insertBefore($prev);
 
-			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $prev } );
+			$box.parent().trigger('switched.switcher', {
+				box: $box,
+				elem: $prev
+			});
 		},
-		handleDownClick: function( e ) {
+		handleDownClick: function (e) {
 			var $box,
-					$next;
+				$next;
 
 			e.preventDefault();
 
-			$box = $( e.target ).closest( this.options.boxes ),
+			$box = $(e.target).closest(this.options.boxes),
 			$next = $box.next();
 
-			$box.insertAfter( $next );
+			$box.insertAfter($next);
 
-			$box.parent().trigger( 'switched.switcher', { box: $box, elem: $next } );
+			$box.parent().trigger('switched.switcher', {
+				box: $box,
+				elem: $next
+			});
 		},
 		// Disable up button for first box and down button for last box
-		updateDisabled: function() {
+		updateDisabled: function () {
 			this.setBoxes();
 
-			this.upArrows.attr( 'disabled', false );
-			this.downArrows.attr( 'disabled', false );
+			this.upArrows.attr('disabled', false);
+			this.downArrows.attr('disabled', false);
 
-			this.$boxes.eq( 0 ).find( this.options.up ).attr( 'disabled', true );
-			this.$boxes.eq( this.count - 1 ).find( this.options.down ).attr( 'disabled', true );
+			this.$boxes.eq(0).find(this.options.up).attr('disabled', true);
+			this.$boxes.eq(this.count - 1).find(this.options.down).attr('disabled', true);
 		},
 		// Get jQuery array of boxes
 		setBoxes: function () {
-			this.$boxes = this.$elem.find( this.options.boxes );
+			this.$boxes = this.$elem.find(this.options.boxes);
 		}
 
 	};
 
-	$.fn.switcher = function( options ) {
-		return this.each( function() {
-			var $this = $( this );
-			$this.data( 'switcher', new Switcher( $this, options ) );
-		} );
+	$.fn.switcher = function (options) {
+		return this.each(function () {
+			var $this = $(this);
+			$this.data('switcher', new Switcher($this, options));
+		});
 	};
 
-} )( jQuery );
+})(jQuery);

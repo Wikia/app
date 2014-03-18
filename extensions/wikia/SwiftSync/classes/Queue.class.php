@@ -75,8 +75,8 @@ class Queue {
 			$params[ 'src' ] = '';
 		}
 		
-		if ( !is_null( $params[ 'city_id' ] ) ) {
-			$city_id = ( !empty( $params[ 'city_id' ] ) ) ? $params[  'city_id' ] : $wgCityId;
+		if ( is_null( $params[ 'city_id' ] ) ) {
+			$city_id = $wgCityId;
 		} else {
 			/* for Avatars */
 			$city_id = 0;

@@ -155,7 +155,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				log('Sites/wikia.js loaded', 'info', logGroup);
 				myAd.loaded.site = true;
 
-				if (!window.SoiAP) {
+				if (!window.globalV6) {
 					error('globalV6');
 					return;
 				}
@@ -304,11 +304,13 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 
 	function trackEnd() {
 		log('trackEnd', 'info', logGroup);
-		insertAd({slotname: 'trackEnd', params: {
-			afterFinish: function () {
-				track('stage/ads');
-			}
-		}});
+		if (initialized) {
+			insertAd({slotname: 'trackEnd', params: {
+				afterFinish: function () {
+					track('stage/ads');
+				}
+			}});
+		}
 	}
 
 	return {

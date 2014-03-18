@@ -1,17 +1,29 @@
 /**
  * Controller/entry point for Videos Module
  */
-require( [
+require([
 	'videosmodule.views.bottomModule',
+	'videosmodule.views.rail',
 	'videosmodule.models.videos'
-], function( BottomModule, VideoData ) {
+], function (BottomModule, RailModule, VideoData) {
 	'use strict';
 	var view;
-	// instantiate bottom view
-	$( function() {
-		view = new BottomModule( {
-			el: document.getElementById( 'RelatedPagesModuleWrapper' ),
+
+	// instantiate rail view
+	function onWikiaRailLoad() {
+		return new RailModule({
+			el: document.getElementById('videosModule'),
 			model: new VideoData()
-		} );
-	} );
-} );
+		});
+	}
+	$(function () {
+		if (window.wgVideosModuleABTest === 'rail') {
+			$('#WikiaRail').on('afterLoad.rail', onWikiaRailLoad);
+		} else {
+			view = new BottomModule({
+				el: document.getElementById('RelatedPagesModuleWrapper'),
+				model: new VideoData()
+			});
+		}
+	});
+});

@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/*global mw, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
@@ -85,7 +85,14 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-cancel-button-click',
+			isDirty: !this.toolbarSaveButton.isDisabled() ? 'yes' : 'no'
+		} );
+	}
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
+	mw.hook( 've.cancelButton' ).fire();
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 
@@ -95,6 +102,9 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarMetaButtonClick = function () 
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
+	if ( window.veTrack ) {
+		veTrack( { action: 've-save-button-click' } );
+	}
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
@@ -119,10 +129,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 	) {
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function () {
-	mw.hook( 've.cancelButton' ).fire();
-	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 

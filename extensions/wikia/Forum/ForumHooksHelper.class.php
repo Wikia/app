@@ -202,27 +202,6 @@ class ForumHooksHelper {
 		return true;
 	}
 
-	// Hook: clear cache when editing comment
-	static public function onEditCommentsIndex($title, $commentsIndex) {
-		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$parentPageId = $commentsIndex->getParentPageId();
-
-			$board = ForumBoard::newFromId( $parentPageId );
-			if ( $board instanceof ForumBoard ) {
-				$board->clearCacheBoardInfo();
-			} else {
-				Wikia::log(
-					__METHOD__,
-					'',
-					'Board doesn\'t exist: PageId: ' . $parentPageId .
-					' Title: ' . $title->getText()
-				);
-			}
-		}
-
-		return true;
-	}
-
 	/**
 	 * Hook: add comments_index table when adding board
 	 */
@@ -384,17 +363,9 @@ class ForumHooksHelper {
 				return true;
 			}
 
-			$board->clearCacheBoardInfo();
-
 			$thread = WallThread::newFromId( $threadId );
-			if(!empty($thread)) {
+			if( !empty($thread) ) {
 				$thread->purgeLastMessage();
-				$threadTitle = Title::newFromId( $threadId );
-				// the title can be empty if this is a create action
-				if ( !empty( $threadTitle ) ) {
-					$threadTitle->purgeSquid();
-					$threadTitle->invalidateCache();
-				}
 			}
 		}
 		return true;
@@ -408,15 +379,39 @@ class ForumHooksHelper {
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array();
-			// CONN-426: Purge cache only for main thread page. When a reply is added, the main page is also updated so
-			// we should prevent replies from being added for purging
-			if ( $wallMessage->isMain() ) {
-				$urls[] = $wallMessage->getMessagePageUrl( true );
-			}
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
 		}
+
+		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 *
+	 * @param Title $title
+	 * @param String[] $urls
+	 *
+	 * @return bool
+	 */
+	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
+		wfProfileIn( __METHOD__ );
+
+		if( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
+			// CONN-430: Resign from default ArticleComment purges
+			$urls = [];
+		}
+
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

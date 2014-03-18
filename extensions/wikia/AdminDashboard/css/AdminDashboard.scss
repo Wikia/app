@@ -1,11 +1,9 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/calc";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/forms";
 @import "skins/oasis/css/mixins/gradient";
 @import "skins/oasis/css/mixins/menus";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/mixins/wordmark";
 @import "skins/oasis/css/core/layout";
@@ -106,9 +104,9 @@ $color-highlight-column: rgba($color-page, 0);
 		right: 10px;
 	}
 	.tab {
-		@include border-radius-ne(5px);
-		@include border-radius-nw(5px);
 		background: $color-admin-tab-inactive;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 		color: $color-admin-text;
 		display: block;
 		float: left;
@@ -195,7 +193,7 @@ $color-highlight-column: rgba($color-page, 0);
 					padding: 20px 3px 0;
 					width: 74px;
 					.representation {
-						@include border-radius(7px);
+						border-radius: 7px;
 						@include linear-gradient(darken($color-admin-icon-highlight, 2%), top, $color-admin-icon-highlight, 40%, $color-admin-icon-shadow, 100%);
 						border: 1px solid $color-admin-icon-border;
 						display: block;
@@ -532,7 +530,7 @@ $color-highlight-column: rgba($color-page, 0);
 		}
 	}
 
-	.page-Special_AdminDashboard .WikiaMainContentContainer {
+	.mw-special-AdminDashboard .WikiaMainContentContainer {
 		margin-right: $admin-dashboard-rail-width;
 		padding: 0;
 

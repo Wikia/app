@@ -3531,7 +3531,6 @@ function wfSplitWikiID( $wiki ) {
  * @return DatabaseBase
  */
 function &wfGetDB( $db, $groups = array(), $wiki = false ) {
-
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {

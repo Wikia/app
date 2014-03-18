@@ -9,14 +9,12 @@
 
 // Mixins
 @import "mixins/bodytext";
-@import "mixins/border-radius";
 @import "mixins/border-opacity";
 @import "mixins/box-shadow";
 @import "mixins/clearfix";
 @import "mixins/forms";
 @import "mixins/gradient";
 @import "mixins/menus";
-@import "mixins/opacity";
 @import "mixins/wordmark";
 
 // Core
@@ -72,9 +70,8 @@
 @import "extensions/wikia/WikiaBar/css/WikiaBar";
 @import "extensions/wikia/Chat2/css/ChatEntryPoint";
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
-@import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
+@import "extensions/wikia/Forum/css/RelatedForumDiscussion"; // on every article page
 @import "extensions/wikia/TOC/css/toc.scss";
-@import "modules/VideosModule";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
@@ -86,10 +83,12 @@
 	@import "print";
 }
 
-// load all responsive layout files
-// These files should always be loaded after everything else in oasis.scss because
-// they override some of the styles.
+// Responsive layout files
+// These files override some of the styles for older extentions.
 @import "core/responsive-variables";
 @import "core/responsive-font-sizing";
 @import "core/responsive-core";
 @import "core/responsive-mainpage-tag";
+
+// VideosModule test
+@import "modules/VideosModule";

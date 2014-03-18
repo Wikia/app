@@ -9,6 +9,7 @@
  */
 
 use Wikia\SFlow;
+use Wikia\Logger\WikiaLogger;
 
 class ScribePurge {
 
@@ -80,14 +81,21 @@ class ScribePurge {
 			foreach ( self::$urls as $url => $data ) {
 				wfDebug( sprintf( "%s: %s\n", __METHOD__, $url ) );
 
+				// send to Scribe queue
 				$scribe->send( json_encode( $data ) );
 
-				// log purges using SFlow (BAC-1258)
-				SFlow::operation( 'varnish.purge', [
+				// debugging data to be sent to both sFlow (for monitoring) and Kibana (for debugging)
+				$context = [
 					'city' => $wgCityId,
 					'url' => $data['url'],
 					'method' => $data['method'],
-				] );
+				];
+
+				// log purges using SFlow (BAC-1258)
+				SFlow::operation( 'varnish.purge', $context );
+
+				// log purges using Kibana (BAC-1317)
+				WikiaLogger::instance()->info( 'varnish.purge', $context );
 			}
 		}
 		catch ( TException $e ) {
@@ -110,7 +118,7 @@ class ScribePurge {
 
 		while ( $entry = array_shift( $backtrace ) ) {
 			// ignore "internal" classes
-			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title'] ) ) {
+			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title', 'WikiaDispatchableObject'] ) ) {
 				continue;
 			}
 

@@ -1,13 +1,14 @@
 /*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
+/*global define*/
 
-var SlotTracker = function (log, tracker) {
+var SlotTracker = function (window, log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
-		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0],
-		timeCheckpoints = [2.0, 5.0, 8.0],
+		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
 		stats = {
 			allEvents: 0,
 			interestingEvents: 0
@@ -59,9 +60,10 @@ var SlotTracker = function (log, tracker) {
 			return false;
 		}
 		// Don't track state events yet
-		if (eventName.match(/^state/)) {
+		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -83,7 +85,7 @@ var SlotTracker = function (log, tracker) {
 			gaLabel,
 			gaValue;
 
-		extraParams['pos'] = data.slotname;
+		extraParams.pos = data.slotname;
 
 		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
 		gaAction = buildExtraParamsString(extraParams);
@@ -94,21 +96,15 @@ var SlotTracker = function (log, tracker) {
 		if (interesting) {
 			stats.interestingEvents += 1;
 
-			if (window.wgAdDriverUseNewTracking) {
-				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
 
-				tracker.track({
-					ga_category: gaCategory,
-					ga_action: gaAction,
-					ga_label: gaLabel,
-					ga_value: Math.round(gaValue),
-					trackingMethod: 'ad'
-				});
-			} else {
-				log(['Not pushing to GA (wgAdDriverUseNewTracking is false)',
-					gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
-				);
-			}
+			tracker.track({
+				ga_category: gaCategory,
+				ga_action: gaAction,
+				ga_label: gaLabel,
+				ga_value: Math.round(gaValue),
+				trackingMethod: 'ad'
+			});
 		} else {
 			log(['Not pushing to GA (not interesting)',
 				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
@@ -197,3 +193,5 @@ var SlotTracker = function (log, tracker) {
 
 	return slotTracker;
 };
+
+define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);

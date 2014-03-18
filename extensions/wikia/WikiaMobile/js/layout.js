@@ -42,8 +42,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 				type: loader.MULTI,
 				resources: {
 					scripts: 'wikiamobile_tables_js',
-					styles: '/extensions/wikia/WikiaMobile/css/tables.scss',
-					ttl: ttl
+					styles: '/extensions/wikia/WikiaMobile/css/tables.scss'
 				}
 			} ).done( process );
 		}

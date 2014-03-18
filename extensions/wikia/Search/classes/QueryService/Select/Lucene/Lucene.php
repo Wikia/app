@@ -40,6 +40,7 @@ class Lucene extends AbstractSelect
 				'hub',
 				'lang',
 				'html',
+				'article_quality_i'
 			];
 	
 	/**

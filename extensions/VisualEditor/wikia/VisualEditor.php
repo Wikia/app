@@ -95,7 +95,8 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
 			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
-			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js'
+			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
+			've/ui/widgets/ve.ui.WikiaFocusWidget.js'
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',

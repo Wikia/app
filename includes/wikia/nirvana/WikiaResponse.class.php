@@ -36,20 +36,30 @@ class WikiaResponse {
 	/**
 	 * template engine
 	 */
-
 	const TEMPLATE_ENGINE_PHP = 'php';
 	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
 
 	/**
-	 * Cache targets
+	 * Caching times
 	 */
 	const CACHE_DISABLED = 0;
+
+	const CACHE_LONG = 2592000; // 30 days
+	const CACHE_STANDARD = 86400; // 24 hours
+	const CACHE_SHORT = 10800; // 3 hours
+
+	/**
+	 * Caching policy
+	 */
+	private $cachingPolicy = 'public';
+
+	const CACHE_PRIVATE = 'private';
+	const CACHE_PUBLIC = 'public';
 
 	/**
 	 * View object
 	 * @var WikiaView
 	 */
-
 	private $view = null;
 	private $body = null;
 	private $code = null;
@@ -275,6 +285,17 @@ class WikiaResponse {
 	}
 
 	/**
+	 * Sets caching policy
+	 *
+	 * This method needs to be called before WikiaResponse::setCacheValidity
+	 *
+	 * @param string $policy caching policy (either private or public)
+	 */
+	public function setCachePolicy($policy) {
+		$this->cachingPolicy = $policy === self::CACHE_PRIVATE ? self::CACHE_PRIVATE : self::CACHE_PUBLIC;
+	}
+
+	/**
 	 * Sets correct cache headers for the client, Varnish or both
 	 *
 	 * Cache-Control / X-Pass-Cache-Control headers will be set
@@ -287,16 +308,30 @@ class WikiaResponse {
 	public function setCacheValidity( $varnishTTL, $browserTTL = false ) {
 		$this->isCaching = true;
 
-		$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
-
 		// default to the TTL for Varnish
 		if ($browserTTL === false) {
 			$browserTTL = $varnishTTL;
 		}
 
+		switch($this->cachingPolicy) {
+			case self::CACHE_PUBLIC:
+				// Varnish caches for 5 seconds when Apache sends Cache-Control: public, s-maxage=0
+				// perform this logic here
+				if ( $varnishTTL === self::CACHE_DISABLED ) {
+					$varnishTTL = 5;
+				}
+
+				$this->setHeader('Cache-Control', sprintf('s-maxage=%d', $varnishTTL));
+				break;
+
+			case self::CACHE_PRIVATE:
+				$this->setHeader('Cache-Control', sprintf('private, s-maxage=%d', $varnishTTL));
+				break;
+		}
+
 		// cache on client side
 		if ($browserTTL > 0) {
-			$this->setHeader('X-Pass-Cache-Control', sprintf('public, max-age=%d', $browserTTL));
+			$this->setHeader('X-Pass-Cache-Control', sprintf('%s, max-age=%d', $this->cachingPolicy, $browserTTL));
 		}
 	}
 

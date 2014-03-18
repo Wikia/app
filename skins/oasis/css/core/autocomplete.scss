@@ -1,15 +1,14 @@
 @import "color";
 @import "layout";
-@import "../mixins/border-radius";
 @import "../mixins/box-shadow";
 @import "../mixins/menus";
 
 // Styles for the jQuery Autocomplete plugin
 .autocomplete {
 	@include menu-regular;
-	@include border-radius-se(3px);
-	@include border-radius-sw(3px);
 	@include box-shadow(3px, 3px, 6px, darken($color-page, 9%));
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
 	border-width: 1px;
 	cursor: pointer;
 	margin-top: 2px;

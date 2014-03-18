@@ -400,6 +400,13 @@ $messages['ta'] = array(
 	'mostpopularcategories' => 'மிகப் பிரபலமான பகுப்புகள்',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'mostpopularcategories' => 'అత్యంత ప్రజాదరణ పొందిన వర్గాలు',
+);
+
 /** Turkmen (Türkmençe)
  * @author Hanberke
  */

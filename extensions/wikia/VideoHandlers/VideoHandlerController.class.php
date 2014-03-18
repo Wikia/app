@@ -243,7 +243,7 @@ class VideoHandlerController extends WikiaController {
 
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
-	 * @requestParam array fileTitle - The title of the file to get details for
+	 * @requestParam array|string fileTitle - The title of the file to get details for
 	 * @requestParam int thumbWidth - The width of the video thumbnail to return
 	 * @requestParam int thumbHeight - The height of the video thumbnail to return
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return

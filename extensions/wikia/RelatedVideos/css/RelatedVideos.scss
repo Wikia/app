@@ -1,10 +1,8 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/ribbon";
 
 $color-inactive-button: darken($color-secondary-button, 50%);
@@ -113,7 +111,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 
 			&.inactive {
-				@include opacity(50);
+				opacity: .5;
 				@include linear-gradient($color-secondary-button, left, $color-secondary-button, 5%, $color-secondary-button, 50%);
 				cursor: auto;
 				img {
@@ -189,7 +187,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			position: relative;
 
 			.playButton {
-				@include opacity(30);
+				opacity: .3;
 				width: 160px;
 				height: 90px;
 				position: absolute;
@@ -199,7 +197,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				background-position:center;
 
 				&:hover {
-					@include opacity(75);
+					opacity: .75;
 				}
 			}
 
@@ -254,7 +252,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			background: $color-related-videos-background;
 
 			.addVideo {
-				@include opacity(30);
+				opacity: .3;
 				width: 168px;
 				height: 83px;
 				position: absolute;
@@ -264,14 +262,14 @@ $color-related-videos-background: darken($color-page, 20%);
 				background-position:center;
 
 				&:hover {
-					@include opacity(100);
+					opacity: 1;
 				}
 			}
 		}
 
 		&:hover {
 			.addVideo {
-				@include opacity(50);
+				opacity: .5;
 			}
 		}
 	}
@@ -483,16 +481,16 @@ $color-related-videos-background: darken($color-page, 20%);
 				background: $color-related-videos-background;
 
 				.addVideo {
-					@include opacity(30);
-					width: 150px;
-					height: 85px;
-					position: absolute;
-					z-index: 100;
 					background-image: url(/extensions/wikia/RelatedVideos/images/AddVideo_Large.png); /* base64 */
-					background-repeat:no-repeat;
 					background-position:center;
+					background-repeat:no-repeat;
+					height: 85px;
+					opacity: .3;
+					position: absolute;
+					width: 150px;
+					z-index: 100;
 					&:hover {
-						@include opacity(100);
+						opacity: 1;
 					}
 				}
 			}
@@ -504,7 +502,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				background: none;
 
 				.addVideo {
-					@include opacity(50);
+					opacity: .5;
 				}
 			}
 		}
@@ -527,7 +525,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			padding: 0;
 
 			&.inactive img {
-				@include opacity(50);
+				opacity: .5;
 			}
 
 			img {
@@ -567,7 +565,7 @@ $color-related-videos-background: darken($color-page, 20%);
             clear: both;
 
 			&:before {
-				@include opacity(50);
+				opacity: .5;
 				border-top: 1px solid $color-secondary-button-border;
 				content: "";
 				display: block;
