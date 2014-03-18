@@ -36,8 +36,7 @@ class LyricsApiController extends WikiaController {
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
 
 		$this->response->setVal( 'result', $results );
-		// TODO: Enable cache
-		// $this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	/**
