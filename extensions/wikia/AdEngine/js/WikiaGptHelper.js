@@ -309,4 +309,4 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 	this.flushAds = flushAds;
 };
 
-define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.adslotmapconfig'], WikiaFullGptHelper);
+define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.gptslotconfig'], WikiaGptHelper);
