@@ -446,6 +446,8 @@ $wgAutoloadClasses[ "WikiaValidatorCompareEmptyIF"  ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ "WikiaValidatorFileTitle"       ] = "$IP/includes/wikia/validators/WikiaValidatorFileTitle.class.php";
 $wgAutoloadClasses[ "WikiaValidatorImageSize"       ] = "$IP/includes/wikia/validators/WikiaValidatorImageSize.class.php";
 $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/validators/WikiaValidatorDependent.class.php";
+$wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
+$wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 
@@ -676,6 +678,7 @@ $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
+$wgWikiaMailerDB = 'wikia_mailer';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 
@@ -1187,6 +1190,12 @@ $wgAdPageLevelCategoryLangs = null;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableRHonDesktop
+ * Enables RH- hack on Desktop
+ */
+$wgEnableRHonDesktop = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1201,13 +1210,10 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverUseNewTracking
- * Whether to use the new ad tracking code.
- * If true: the new tracking code (SlotTracker.js) will be used on half of
- * the traffic and the old one (AdTracker.js) on the other half.
- * If false: only the old ad tracking code (AdTracker.js) will be used.
+ * @name $wgAdDriverTrackState
+ * Enables GA tracking of state for ad slots on pages
  */
-$wgAdDriverUseNewTracking = true;
+$wgAdDriverTrackState = false;
 
 /**
  * @name $wgHighValueCountriesDefault
@@ -1228,6 +1234,12 @@ $wgHighValueCountries = null;
  * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = false;
+
+/**
+ * @name $wgAdDriverUseGptMobile
+ * Enables experimental AdEngine on mobile skin (for GPT)
+ */
+$wgAdDriverUseGptMobile = false;
 
 /**
  * trusted proxy service registry
@@ -1259,8 +1271,28 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 /**
  * @name $wgOasisResponsive
  * Enables the Oasis responsive layout styles
+ * Null means enabled on all and disabled for languages defined in $wgOasisResponsiveDisabledInLangs
  */
 $wgOasisResponsive = null;
+
+/**
+ * @name $wgOasisResponsiveDisabledInLangs
+ * Disables the Oasis responsive layout in those languages
+ */
+$wgOasisResponsiveDisabledInLangs = [];
+
+/**
+ * @name $wgOasisResponsiveLimited
+ * Enables the limited version of Oasis responsive layout
+ * Null means disabled on all and enabled for languages defined in $wgOasisResponsiveLimitedInLangs
+ */
+$wgOasisResponsiveLimited = null;
+
+/**
+ * @name $wgOasisResponsiveLimitedInLangs
+ * Enables the limited version of Oasis responsive layout on given languages
+ */
+$wgOasisResponsiveLimitedInLangs = ['de'];
 
 /**
  * @name $wgDisableReportTime
@@ -1299,9 +1331,13 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 $wgUseETag = true;
 
 /**
+ * whether or not to send logs from dev to elasticsearch
+ */
+$wgDevESLog = false;
+
+/**
  * Restrictions for some api methods
  */
 $wgApiAccess = [
-	'TvApiController' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX,
 	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
 ];

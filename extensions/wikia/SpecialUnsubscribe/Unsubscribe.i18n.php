@@ -109,6 +109,13 @@ $messages['ca'] = array(
 	'unsubscribe-working-done' => 'Complet.',
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'unsubscribe-working-done' => 'Кийчча ю.',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */

@@ -56,9 +56,16 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 
 	if ( empty( $cacheControl ) ) {
 		$response->setHeader( 'Cache-Control', 'private', true );
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.caching-disabled', [
+			'controller' => $response->getControllerName(),
+			'method' => $response->getMethodName()
+		] );
 	}
 
 	$response->sendHeaders();
+	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
+
 	$response->render();
 
 	wfLogProfilingData();

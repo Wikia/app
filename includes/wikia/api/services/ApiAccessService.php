@@ -73,10 +73,13 @@ class ApiAccessService {
 			return true;
 		}
 		//if access needs TEST in url, and we are not on test
-		if ( ( $access & self::URL_TEST ) && !$isTest ) {
-			return false;
+		if ( $access & self::URL_TEST ) {
+			if ( !$isTest ) {
+				return false;
+			} elseif ( $access === self::URL_TEST ) {
+				return true;
+			}
 		}
-
 		return (bool)( $access & $prodVal );
 	}
 

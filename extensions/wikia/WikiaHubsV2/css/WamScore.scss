@@ -1,37 +1,5 @@
 .WikiaGrid .wikiahubs-wam {
-	height: 380px;
-	margin-top: 10px;
-	.social-links {
-		float: left;
-		a {
-			display: block;
-			float: left;
-			padding: 10px;
-		}
-		a:first-child {
-			padding-left: 0;
-		}
-		img {
-			height: 20px;
-			width: 20px;
-		}
-		.facebook {
-			background-image: url("/extensions/wikia/WikiaHubsV2/images/fb.png"); /* base64 */
-		}
-		.twitter {
-			background-image: url("/extensions/wikia/WikiaHubsV2/images/twitter.png"); /* base64 */
-		}
-		.gplus {
-			background-image: url("/extensions/wikia/WikiaHubsV2/images/gplus.png"); /* base64 */
-		}
-	}
-	div.search {
-		float: right;
-		margin-top: 8px;
-	}
-	.wam-header {
-		height: 52px;
-	}
+	height: 330px;
 	.wam-content {
 		border-top: 1px solid #ccc;
 		clear: both;

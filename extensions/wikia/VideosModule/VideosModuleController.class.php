@@ -17,7 +17,7 @@ class VideosModuleController extends WikiaController {
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
 	 */
-	public function executeIndex() {
+	public function index() {
 		wfProfileIn( __METHOD__ );
 
 		$this->title = wfMessage( 'videosmodule-title-default' )->plain();

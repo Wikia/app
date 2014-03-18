@@ -18,7 +18,14 @@ class CombinedSearchService {
 	const IMAGE_SIZE = 80;
 	const TOP_ARTICLES_CACHE_TIME = 604800; // 60 * 60 * 24 * 7 - one week
 	const ARTICLE_QUALITY_EPSILON = 1;
-
+	const ARTICLE_TYPE_OTHER = "other";
+		
+	
+	/**
+	 * @var array
+	 */
+	protected $article_types_passed_on;
+	
 	/**
 	 * @var bool
 	 */
@@ -31,6 +38,10 @@ class CombinedSearchService {
 
 	function __construct( $wikiService = null ) {
 		$this->wikiService = $wikiService === null ? new WikiService() : $wikiService;
+		$this->article_types_passed_on = array_fill_keys([
+			"book", "character", "comic_book", "location", "movie", "person",
+			"tv_episode", "tv_season", "tv_series", "video_game"
+		], true);
 	}
 
 	/**
@@ -360,7 +371,13 @@ class CombinedSearchService {
 		$outputModel['url'] = $articleInfo['url'];
 		$outputModel['lang'] = $articleInfo['lang'];
 		$outputModel['quality'] = isset( $articleInfo['article_quality_i'] ) ? $articleInfo['article_quality_i'] : null;
-		$outputModel['type'] = isset( $articleInfo['article_type_s'] ) ? $articleInfo['article_type_s'] : null;
+		
+		if (isset( $articleInfo['article_type_s'] )) {
+			$type = $articleInfo['article_type_s'];
+			$outputModel['type'] = array_key_exists($type, $this->article_types_passed_on) ? $type : static::ARTICLE_TYPE_OTHER;
+		} else {		
+			$outputModel['type'] = null;
+		}
 
 		if ( isset($articleInfo[Utilities::field('html', $articleInfo['lang'])]) ) {
 			$fullText = $articleInfo[Utilities::field('html', $articleInfo['lang'])];

@@ -166,7 +166,7 @@ SQL;
 	protected function get_founderemails() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->WikiaMailerDB);
 
 		$sql =<<<SQL
 			select date_format(created, '%Y-%m-%d') day, if(category is null,'unknown',category) type, 
@@ -195,7 +195,7 @@ SQL;
 	protected function get_allemails() {
 		wfProfileIn( __METHOD__ );
 		
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalDatawareDB);
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->WikiaMailerDB);
 
 		$sql =<<<SQL
 			select date_format(created, '%Y-%m-%d') day, if(category is null,'unknown',category) type, 

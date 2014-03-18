@@ -24,25 +24,15 @@ class WikiaHubsServicesHelperTest extends WikiaBaseTest {
 			->method('getCorporateWikiIdByLang')
 			->will($this->returnValue($wikiId));
 
-		$hubsHelperMockClass = $this->getMockClass(
-			'WikiaHubsServicesHelper',
-			array('getMainPageNameByWikiId', 'getGlobalTitleFromText')
-		);
-
-		$hubsHelperMock = $this->getMock($hubsHelperMockClass, array('getCorporateModel'));
+		$hubsHelperMock = $this->getMock('WikiaHubsServicesHelper', array('getGlobalMainPage', 'getCorporateModel'));
 
 		$hubsHelperMock->expects($this->any())
 			->method('getCorporateModel')
 			->will($this->returnValue($corporateModelMock));
 
-		$hubsHelperMockClass::staticExpects($this->any())
-			->method('getMainPageNameByWikiId')
-			->will($this->returnValue($mainPageName));
-
-		$hubsHelperMockClass::staticExpects($this->any())
-			->method('getGlobalTitleFromText')
+		$hubsHelperMock->expects($this->any())
+			->method('getGlobalMainPage')
 			->with(
-				$this->equalTo($mainPageName),
 				$this->equalTo($wikiId)
 			)
 			->will($this->returnValue($globalTitleMock));

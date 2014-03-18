@@ -12,6 +12,7 @@ class LightboxController extends WikiaController {
 	const THUMBNAIL_WIDTH = 90;
 	const THUMBNAIL_HEIGHT = 55;
 	const POSTED_IN_ARTICLES = 7;
+
 	static $imageserving;
 
 	/**
@@ -24,7 +25,7 @@ class LightboxController extends WikiaController {
 		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	public function lightboxModalContentError() {
@@ -35,7 +36,7 @@ class LightboxController extends WikiaController {
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
@@ -73,7 +74,7 @@ class LightboxController extends WikiaController {
 		$this->to = $minTimestamp;
 
 		// set cache control to 1 hour
-		$this->response->setCacheValidity( 3600 );
+		$this->response->setCacheValidity( LightboxHelper::CACHE_TTL );
 	}
 
 	/**
@@ -299,7 +300,7 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity( 86400 );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
@@ -376,37 +377,17 @@ class LightboxController extends WikiaController {
 			$extra += count( $latestPhotos );
 		}
 
-		$memKey = wfMemcKey( 'lightbox', 'total_images' );
-		$imageInfo = $this->wg->Memc->get( $memKey );
-		if ( !is_array( $imageInfo ) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$timestamp = $helper->getTimestamp();
-			$totalWikiImages = $db->selectField(
-				array( 'image' ),
-				array( 'count(*) cnt' ),
-				array(
-					"img_media_type in ('".MEDIATYPE_BITMAP."', '".MEDIATYPE_DRAWING."')",
-					"img_timestamp < $timestamp",
-				),
-				__METHOD__
-			);
-
-			$imageInfo = array(
-				'totalWikiImages' => intval( $totalWikiImages ),
-				'timestamp' => $timestamp,
-			);
-
-			$this->wg->Memc->set( $memKey, $imageInfo, 60*60 );
-		}
+		$imageInfo = $helper->getTotalImages();
 
 		$totalWikiImages = $imageInfo['totalWikiImages'] + $extra;
 
 		$this->to = $imageInfo['timestamp'];
 		$this->msg = wfMessage( 'lightbox-carousel-more-items', $this->wg->Lang->formatNum( $totalWikiImages ) )->parse();
 
+		// set cache control to 1 hour
+		$this->response->setCacheValidity( LightboxHelper::CACHE_TTL );
+
 		wfProfileOut( __METHOD__ );
 	}
-
 
 }
