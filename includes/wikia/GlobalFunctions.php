@@ -1805,8 +1805,8 @@ function wfFixMalformedHTML( $html ) {
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
 
-	// Make sure loadHTML knows that text is utf-8 (it assumes  ISO-88591)
-	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment;
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
 	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
 	$domDocument->loadHTML( $htmlHeader . $html );
 
