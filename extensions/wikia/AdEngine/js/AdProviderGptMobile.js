@@ -29,7 +29,11 @@ define(
 				success();
 			}
 
-			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgEnableRHonMobile ? hop : hopToNull), 'mobile');
+			function hopToRemnant() {
+				hop({method: 'hop'}, 'RemnantDart');
+			}
+
+			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgEnableRHonMobile ? hopToRemnant : hopToNull), 'mobile');
 			wikiaGpt.flushAds();
 		}
 
