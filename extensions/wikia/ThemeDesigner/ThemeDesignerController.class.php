@@ -345,6 +345,6 @@ class ThemeDesignerController extends WikiaController {
 
 
 	private function displayRestrictionError( $method ) {
-		throw new MethodNotFoundException( $method );
+		throw new PermissionsError( $method );
 	}
 }
