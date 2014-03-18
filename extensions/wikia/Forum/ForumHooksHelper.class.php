@@ -335,9 +335,9 @@ class ForumHooksHelper {
 
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
-     * @param OutputPage $out
-     * @param string $text article HTML
-     * @return bool: true because it is a hook
+	 * @param OutputPage $out
+	 * @param string $text article HTML
+	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::app();
@@ -368,7 +368,6 @@ class ForumHooksHelper {
 	 */
 
 	static public function onWallAction($action, $parent, $comment_id) {
-		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {

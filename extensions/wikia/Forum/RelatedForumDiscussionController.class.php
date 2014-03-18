@@ -1,6 +1,9 @@
 <?php
 class RelatedForumDiscussionController extends WikiaController {
 
+	/** Expiry time to use in cache requests */
+	const CACHE_EXPIRY = 86400; // 24*60*60
+
 	public function init() {
 
 	}
@@ -29,30 +32,63 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
 	}
 
-    /**
-     * Purge the cache for articles related to a given thread
-     * @param int $threadId
-     */
-    public static function purgeCache( $threadId ) {
+	/**
+	 * @deprecated legacy entry point for cached JS requests
+	 */
+	public function checkData() {
+		$articleId = $this->getVal('articleId');
+		$title = Title::newFromId($articleId);
+		if(empty($articleId) || empty($title)) {
+			$this->replace = false;
+			$this->articleId = $articleId;
+			return;
+		}
+
+		$messages = RelatedForumDiscussionController::getData( $articleId );
+
+		$timediff = time() - $messages['lastupdate'];
+
+		$this->lastupdate = $messages['lastupdate'];
+		$this->timediff = $timediff;
+
+		unset($messages['lastupdate']);
+
+		if($timediff < 24*60*60) {
+			$this->replace = true;
+			$this->html = $this->app->renderView( "RelatedForumDiscussion", "relatedForumDiscussion", array('messages' => $messages) );
+		} else {
+			$this->replace = false;
+			$this->html = '';
+		}
+
+		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
+		$this->response->setCacheValidity( 6*60*60, WikiaResponse::CACHE_DISABLED /* no caching in browser */ );
+	}
+
+	/**
+	 * Purge the cache for articles related to a given thread
+	 * @param int $threadId
+	 */
+	public static function purgeCache( $threadId ) {
 		$rm = new WallRelatedPages();
 		$ids = $rm->getMessagesRelatedArticleIds($threadId, 'order_index', DB_MASTER);
 
 		foreach($ids as $id) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
 			WikiaDataAccess::cachePurge($key);
-            // VOLDEV-46: Update module by purging page, not via AJAX
-            WikiPage::newFromID( $id )->doPurge();
+			// VOLDEV-46: Update module by purging page, not via AJAX
+			WikiPage::newFromID( $id )->doPurge();
 		}
 	}
 
-    /**
-     * Fetch Forum discussions related to an article from the cache
-     * @param int $articleId MediaWiki article id
-     * @return array: Cache data
-     */
+	/**
+	 * Fetch Forum discussions related to an article from the cache
+	 * @param int $articleId MediaWiki article id
+	 * @return array: Cache data
+	 */
 	public static function getData( $articleId ) {
 		$key = wfMemcKey( __CLASS__, 'getData', $articleId );
-		return WikiaDataAccess::cache( $key, 24*60*60, function() use ( $articleId ) {
+		return WikiaDataAccess::cache( $key, self::CACHE_EXPIRY, function() use ( $articleId ) {
 			$wlp = new WallRelatedPages();
 			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
