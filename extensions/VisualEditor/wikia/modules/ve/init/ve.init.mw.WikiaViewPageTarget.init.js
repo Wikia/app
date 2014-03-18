@@ -356,17 +356,20 @@
 	if ( !thisPageIsAvailable ) {
 		$edit = $( '#ca-edit' );
 		$( 'html' ).addClass( 've-not-available' );
-		$( '#ca-ve-edit' ).attr( 'href', $edit.attr( 'href' ) );
-		$edit.parent().remove();
+		$veEdit = $( '#ca-ve-edit' );
+		if ( isElementInDropdown( $veEdit ) ) {
+			// Remove the VE edit link from the dropdown menu
+			$veEdit.remove();
+		} else {
+			// Else the VE edit link is the main edit button -- replace URI with default edit
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			// Remove the alternate edit link in the dropdown because it's redundant
+			if ( isElementInDropdown( $edit ) ) {
+				$edit.remove();
+			}
+		}
 	} else {
 		$( 'html' ).addClass( 've-available' );
-	}
-
-	if ( !userPrefEnabled ) {
-		return;
-	}
-
-	if ( thisPageIsAvailable ) {
 		$( function () {
 			if ( isViewPage ) {
 				if ( init.activateOnPageLoad ) {
@@ -407,5 +410,9 @@
 				}
 			}
 		);
+	}
+
+	function isElementInDropdown( jqElement ) {
+		return jqElement.parent().is( 'li' );
 	}
 }() );
