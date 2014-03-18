@@ -434,6 +434,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['distributor']) ) {
 			$metadata['distributor'] = $data['distributor'];
 		}
+		if ( !empty( $data['streamHdUrl']) ) {
+			$metadata['streamHdUrl'] = $data['streamHdUrl'];
+		}
 		// set blank thumbnail
 		if ( empty( $data['thumbnail'] ) ) {
 			$metadata['thumbnail'] = 1;
