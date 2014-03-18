@@ -449,7 +449,7 @@ SQL;
 		// get current suggestions
 		$suggestTitles = array();
 		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		$suggestions = array();
+
 		if ( !empty( $suggest ) ) {
 			if ( $verbose ) {
 				echo "\tExamining the ".count($suggest)." current match(es)\n";
@@ -462,11 +462,7 @@ SQL;
 				}
 
 				$suggestTitles[$video['title']] = 1;
-				$suggestions[] = $video;
 			}
-
-			// Write out cleaned up suggestions
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $suggestions );
 		}
 
 		$readableTitle = $titleObj->getText();
