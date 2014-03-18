@@ -15,15 +15,16 @@ class LyricsApiController extends WikiaController {
 	private $lyricsApiHandler = null;
 
 	public function __construct() {
+		global $wgLyricsSolrConfig;
+
 		parent::__construct();
 
-		// TODO: Do Proper config
 		$config = [
 			'adapteroptions' => [
-				'host' => '10.10.10.242',
-				'port' => 8983,
-				'path' => '/solr/',
-				'core' => 'lyrics',
+				'host' => $wgLyricsSolrConfig['host'],
+				'port' => $wgLyricsSolrConfig['port'],
+				'path' => $wgLyricsSolrConfig['path'],
+				'core' => $wgLyricsSolrConfig['core'],
 			]
 		];
 
