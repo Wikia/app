@@ -1,5 +1,5 @@
 /*global define*/
-/*jshint maxlen:150, camelcase:false, maxdepth:5*/
+/*jshint maxlen:125, camelcase:false, maxdepth:7*/
 var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gptSlotConfig) {
 	'use strict';
 
@@ -206,6 +206,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 					if (window.skin === 'wikiamobile' && !empty) {
 						try {
 							iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+
 							// Because Chrome reports iframe.contentWindow.innerHeight as the outer
 							// iframe height, we're setting the outer height to 0, so the innerHeight
 							// reports real height of the content. Then we reset the height back
