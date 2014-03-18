@@ -3,11 +3,11 @@
 var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gptSlotConfig) {
 	'use strict';
 
-	if ( WikiaGptHelper.prototype.singletonInstance ) {
+	if (WikiaGptHelper.prototype.singletonInstance) {
 		return WikiaGptHelper.prototype.singletonInstance;
 	}
 
-	if (!(this instanceof WikiaGptHelper)){
+	if (!(this instanceof WikiaGptHelper)) {
 		return new WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
 	}
 
@@ -266,4 +266,8 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 	this.flushAds = flushAds;
 };
 
-define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.gptslotconfig'], WikiaGptHelper);
+define(
+	'ext.wikia.adengine.gpthelper',
+	['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.gptslotconfig'],
+	WikiaGptHelper
+);
