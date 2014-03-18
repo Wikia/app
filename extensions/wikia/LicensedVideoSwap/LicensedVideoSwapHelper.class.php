@@ -455,6 +455,7 @@ SQL;
 				echo "\tExamining the ".count($suggest)." current match(es)\n";
 			}
 
+			$validSuggest = [];
 			foreach ( $suggest as $video ) {
 				// Do some data integrity checking; clean up for VID-1446
 				if (!array_key_exists('title', $video)) {
@@ -462,7 +463,10 @@ SQL;
 				}
 
 				$suggestTitles[$video['title']] = 1;
+				$validSuggest[] = $video;
 			}
+
+			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
 		}
 
 		$readableTitle = $titleObj->getText();
