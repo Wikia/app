@@ -300,7 +300,7 @@ class ForumHooksHelper {
 		#check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMsg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -335,6 +335,9 @@ class ForumHooksHelper {
 
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
+     * @param OutputPage $out
+     * @param string $text article HTML
+     * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::app();
@@ -342,13 +345,13 @@ class ForumHooksHelper {
 		if ( $out->isArticle()
 			&& $title->exists()
 			&& $title->getNamespace() == NS_MAIN
-			&& !$title->isMainPage()
+			&& !Wikia::isMainPage()
 			&& $out->getRequest()->getVal( 'diff' ) === null
 			&& $out->getRequest()->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile' ) )
+			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
 		) {
 			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
-			$messages = $app->sendRequest( 'RelatedForumDiscussion', 'getData', array( 'articleId' => $title->getArticleId() ) )->getData()['data'];
+			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
 			unset( $messages['lastupdate'] );
 			if ( !empty( $messages ) ) {
 				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
@@ -370,7 +373,7 @@ class ForumHooksHelper {
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$threadId = empty($parent) ? $comment_id:$parent;
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
+			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			//cleare board info
 			$commentsIndex = CommentsIndex::newFromId( $comment_id );

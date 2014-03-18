@@ -3,7 +3,7 @@
 		<a class="button forum-new-post" href="<?= $newPostUrl ?>" title="<?= $newPostTooltip ?>"><?= $newPostButton ?></a>
 		<?= $sectionHeading ?>
 	</h2>
-	<div class="forum-content<?= $wg->User->isLoggedIn() ? '' : ' forum-invisible' ?>">
+	<div class="forum-content">
 		<ul class="forum-discussions">
 			<? foreach($messages as $message): ?>
 				<li class="forum-thread">
