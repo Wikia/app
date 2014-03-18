@@ -328,14 +328,14 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgAdDriverCookieLifetime, $wgHighValueCountries, $wgHighValueCountriesDefault,
+			   $wgAdDriverCookieLifetime, $wgHighValueCountriesDefault,
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
 			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			   $wgEnableRHonDesktop, $wgOut;
+			   $wgEnableRHonDesktop, $wgOut, $wgCityId;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -357,18 +357,12 @@ class AdEngine2Controller extends WikiaController {
 		// AdDriver
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 
-		// TODO: move the (wiki->community->variable) logic to WikiFactory
-		$highValueCountries = $wgHighValueCountries;
-		if (empty($highValueCountries)) {
-			// If the variable is not set for given wiki, use the value from the community wiki
-			$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
-		}
-		if (empty($highValueCountries)) {
-			// If the variable is set nor for given wiki neither for community, use the default value
-			$highValueCountries = $wgHighValueCountriesDefault;
-		}
-
-		$vars['wgHighValueCountries'] = $highValueCountries;
+		$vars['wgHighValueCountries'] = WikiFactory::getVarValueByName(
+			'wgHighValueCountries',
+			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
+			false,
+			$wgHighValueCountriesDefault
+		);
 
 		$pageLevelCategoryLanguages = $wgAdPageLevelCategoryLangs;
 		if (empty($pageLevelCategoryLanguages)) {
