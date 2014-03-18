@@ -1423,6 +1423,14 @@ $config['analytics_gas_js'] = array(
 	)
 );
 
+$config['analytics_bluekai_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+	)
+);
+
 /** WikiMap Extension **/
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,

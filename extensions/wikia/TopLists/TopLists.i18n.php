@@ -1667,6 +1667,13 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak je eigen Top 10 aan',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'toplists-editor-description-placeholder' => 'Entratz una descripcion',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq

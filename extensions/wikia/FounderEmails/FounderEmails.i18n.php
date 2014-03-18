@@ -6109,10 +6109,40 @@ $messages['oc'] = array(
 	'founderemails-email-user-registered-signature' => 'L’equipa Wikia',
 	'founderemails-email-user-registered-button' => 'Lor desirar la benvenguda',
 	'founderemails-email-0-days-passed-subject' => 'Benvenguda sus Wikia !',
-	'founderemails-email-10-day-join-heading' => 'Juntar amb de sites similars.',
-	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|persona rejuntèt|personas rejuntèran}} vòstre wiki.',
-	'founderemails-pref-joins' => "Me mandar un e-mail quand qualqu'un rejunt $1",
+	'founderemails-email-first-edit-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-first-edit-signature' => '— L’equipa Wikia',
+	'founderemails-email-first-edit-button' => 'Verificar !',
+	'founderemails-email-general-edit-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-general-edit-signature' => '— L’equipa Wikia',
+	'founderemails-email-general-edit-button' => 'Verificar !',
+	'founderemails-email-anon-edit-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-anon-edit-signature' => '— L’equipa Wikia',
+	'founderemails-email-anon-edit-button' => 'Verificar !',
+	'founderemails-email-lot-happening-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-lot-happening-signature' => '— L’equipa Wikia',
+	'founderemails-email-lot-happening-button' => 'Veire l’activitat',
+	'founderemails-email-0-day-addpages-heading' => 'Apondre de paginas',
+	'founderemails-email-0-day-addpages-button' => 'Apondre una pagina',
+	'founderemails-email-0-day-addphotos-heading' => "Apondre d'imatges.",
+	'founderemails-email-0-day-addphotos-button' => 'Apondre una fòto',
+	'founderemails-email-0-day-customizetheme-button' => 'Personalizar',
+	'founderemails-email-3-day-heading' => 'Bonjour $USERNAME,',
+	'founderemails-email-3-day-editmainpage-button' => 'Agrementatz-la',
+	'founderemails-email-3-day-addphotos-button' => "Apondre d'imatges.",
+	'founderemails-email-3-day-explore-heading' => 'Trobatz l’inspiracion.',
+	'founderemails-email-3-day-explore-button' => 'Exploratz',
+	'founderemails-email-10-day-join-heading' => 'Contactar de sites Web similars.',
+	'founderemails-email-views-digest-subject' => 'Vistas uèi sus $WIKINAME',
+	'founderemails-email-views-digest-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-views-digest-signature' => '— L’equipa Wikia',
+	'founderemails-email-complete-digest-greeting' => 'Bonjorn $USERNAME,',
+	'founderemails-email-complete-digest-content-heading2' => '$1 {{PLURAL:$1|modificacion es estada efectuada|modificacions son estadas efectuadas}}.',
+	'founderemails-email-complete-digest-content-heading3' => '$1 {{PLURAL:$1|persona a|personas an}} rejunt vòstre wiki.',
+	'founderemails-email-complete-digest-signature' => '— L’equipa Wikia',
+	'founderemails-email-complete-digest-button' => 'Anar a l’activitat del wiki',
+	'founderemails-pref-joins' => "Me mandar un e-mail quand qualqu'un rejonh $1",
 	'founderemails-pref-joins-v2' => '...una persona participa pel primièr còp',
+	'founderemails-pref-edits-v2' => '...qualqu’un efectua una modificacion',
 );
 
 /** Pälzisch (Pälzisch)
@@ -6643,6 +6673,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Caio1478
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
@@ -6927,6 +6958,7 @@ Há muitas coisas a acontecer hoje na sua wiki! Passe por $MYHOMEURL para ver o 
 	'founderemails-email-10-day-wikiahelps-signature' => 'Continue o bom trabalho!<br />A Equipa da Wikia',
 	'founderemails-email-views-digest-subject' => 'Visitas diárias de hoje em $WIKINAME',
 	'founderemails-email-views-digest-greeting' => 'Olá, $USERNAME,',
+	'founderemails-email-views-digest-headline' => 'Hoje, $WIKINAME foi vista por $1 {{PLURAL:$1|pessoa|pessoas}}.',
 	'founderemails-email-views-digest-signature' => 'A Equipa da Wikia',
 	'founderemails-email-views-digest-button' => 'Adicionar mais artigos',
 	'founderemails-email-complete-digest-subject' => 'A última atividade em $WIKINAME',

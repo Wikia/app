@@ -99,6 +99,7 @@ $messages['az'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'stafflog' => 'StaffLog',
 	'stafflog-filter-label' => 'Sil',
 	'stafflog-filter-user' => 'Implijer :',
 	'stafflog-filter-type' => 'Seurt :',

@@ -384,6 +384,7 @@ $messages['br'] = array(
 	'scavengerhunt-button-remove-section' => 'Lemel ar prantad-mañ',
 	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
 	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
+	'scavengerhunt-form-error-no-sprite-image' => 'Roit an hent klok betek ar restr skeudenn, mar plij',
 	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
 	'scavengerhunt-entry-form-name' => "Hoc'h anv :",
 	'scavengerhunt-entry-form-email' => "Ho chomlec'h postel :",
@@ -402,8 +403,11 @@ $messages['br'] = array(
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
 	'scavengerhunt-editor-tip-starting-clue-button-target' => "Setu amañ chomlec'h ar bajenn gant an elfenn gentañ.",
+	'scavengerhunt-editor-tip-articleTitle' => 'Setu amañ plas ar bajenn gant an elfenn da-heul.',
 	'scavengerhunt-editor-tip-clue-color' => "Ret eo al livioù bezañ skrivet gant niveroù c'hwezekredel evel #F00.",
 	'scavengerhunt-editor-tip-facebook-description' => 'Testenn a vo diskwelet er gemennadenn rannañ',
+	'scavengerhunt-facebook-image' => 'Skeudenn rannet Facebook',
+	'scavengerhunt-facebook-description' => 'Testenn rannet Facebook',
 );
 
 /** Catalan (català)

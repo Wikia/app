@@ -55,11 +55,13 @@ $messages['bn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiastyleguide-dropdown-all' => 'An holl',
 	'wikiastyleguide-dropdown-select-all' => 'Diuzañ pep tra',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 ha $2 ouzhpenn',
 );
 
 /** Catalan (català)

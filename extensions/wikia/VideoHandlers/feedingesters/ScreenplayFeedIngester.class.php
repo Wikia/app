@@ -218,6 +218,16 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 			// create videos
 			foreach ( $videos as $video ) {
+				// set hd and resolution
+				if ( !empty( $video['stdBitrateCode'] ) ) {
+					$video['hd'] = 0;
+					$video['resolution'] = self::$VIDEO_RESOLUTION[$video['stdBitrateCode']];
+				} else if ( !empty( $video['streamHdUrl'] ) ) {
+					$video['hd'] = 1;
+					$video['resolution'] = self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID];
+				}
+
+				// get addlCategories
 				$addlCategories = $video['addlCategories'];
 				unset( $video['addlCategories'] );
 
@@ -265,16 +275,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		if ( $clip['FormatId'] == self::$FORMAT_ID_VIDEO ) {
 			if ( $clip['BitrateId'] == ScreenplayApiWrapper::HIGHDEF_BITRATE_ID ) {
 				$clipData['streamHdUrl'] = $clip['Url'];
-				$clipData['hd'] = 1;
-				$clipData['resolution'] = self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID];
 			} else if ( empty( $clipData['stdBitrateCode'] )
 				|| self::$BITRATE_IDS_VIDEO[$clip['BitrateId']] > self::$BITRATE_IDS_VIDEO[$clipData['stdBitrateCode']] ) {
 				$clipData['stdBitrateCode'] = $clip['BitrateId'];
 				$clipData['streamUrl'] = $clip['Url'];
-
-				if ( $clipData['resolution'] != self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID] ) {
-					$clipData['resolution'] = self::$VIDEO_RESOLUTION[$clipData['stdBitrateCode']];
-				}
 			}
 		}
 
