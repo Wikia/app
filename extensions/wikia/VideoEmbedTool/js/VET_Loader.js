@@ -56,7 +56,6 @@
 			])
 		);
 
-
 		// Get messages
 		deferredList.push(
 			$.getMessages('VideoEmbedTool')
