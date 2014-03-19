@@ -30,26 +30,22 @@
 
 	var resourcesLoaded = false,
 		modalOnScreen = false,
-		templateHtml = '',
 		vetLoader = {},
 		UserLoginModal = window.UserLoginModal;
 
 	function loadResources() {
-		var deferredList = [],
-			templateDeferred = $.Deferred();
+		var deferredList = [];
 
 		// Get modal template HTML
-		$.nirvana.sendRequest({
-			controller: 'VideoEmbedToolController',
-			method: 'modal',
-			type: 'get',
-			format: 'html',
-			callback: function (html) {
-				templateHtml = html;
-				templateDeferred.resolve();
-			}
-		});
-		deferredList.push(templateDeferred);
+		// Keep this deferred first because the output is used in the promise
+		deferredList.push(
+			$.nirvana.sendRequest({
+				controller: 'VideoEmbedToolController',
+				method: 'modal',
+				type: 'get',
+				format: 'html'
+			})
+		);
 
 		// Get JS and CSS
 		deferredList.push(
@@ -60,11 +56,10 @@
 			])
 		);
 
+
 		// Get messages
 		deferredList.push(
-			Wikia.getMultiTypePackage({
-				messages: 'VideoEmbedTool'
-			})
+			$.getMessages('VideoEmbedTool')
 		);
 
 		return deferredList;
@@ -103,24 +98,28 @@
 			return;
 		}
 
-		modalOnScreen = true; // modal is now loading
+		// modal is now loading
+		modalOnScreen = true;
 
 		if (!resourcesLoaded) {
 			resourceList = loadResources();
 		}
 
-		$.when.apply($, resourceList).done(function () {
+		$.when.apply($, resourceList).done(function (templateResp) {
+			console.log(arguments);
 			$elem.stopThrobbing();
 
+			// now that VET is loaded, require it.
 			require(['wikia.vet'], function (vet) {
 
-				vetLoader.modal = $(templateHtml).makeModal({
+				vetLoader.modal = $(templateResp[0]).makeModal({
 					width: 939,
 					onClose: function () {
 						vet.close();
 					},
 					onAfterClose: function () {
-						modalOnScreen = false; // release modal lock
+						// release modal lock
+						modalOnScreen = false;
 					}
 				});
 
