@@ -340,9 +340,6 @@
 	$html = $( 'html' );
 	if ( isBrowserSupported && isSkinSupported ) {
 		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
-			if ( userPrefEnabled && veUIEnabled ) {
-				$html.addClass( 've-available' );
-			}
 			if ( isViewPage ) {
 				$( function () {
 					if ( init.activateOnPageLoad ) {
@@ -367,7 +364,8 @@
 			$( setupRedlinks );
 		}
 	}
-	if ( !$html.hasClass( 've-available' ) ) {
+	else if ( !userPrefEnabled ) {
+		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
 		$edit = $( '#ca-edit' );
 		$veEdit = $( '#ca-ve-edit' );

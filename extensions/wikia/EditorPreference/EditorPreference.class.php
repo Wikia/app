@@ -141,4 +141,9 @@ class EditorPreference {
 			}
 		}
 	}
+
+	public static function shouldShowVisualEditorTab() {
+		global $wgTitle, $wgVisualEditorNamespaces;
+		return in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces );
+	}
 }

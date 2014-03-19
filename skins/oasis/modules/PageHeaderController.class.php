@@ -89,9 +89,9 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		// User preference for VE should always override the per-wiki setting
 		else if ( isset($this->content_actions['ve-edit']) && ( ( $wgEnableVisualEditorUI &&
 			!$wgEnableEditorPreferenceExt ) || ( $wgEnableEditorPreferenceExt &&
+			EditorPreference::shouldShowVisualEditorTab() &&
 			EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ) ) ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
