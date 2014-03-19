@@ -38,10 +38,12 @@ class TvApiController extends WikiaApiController {
 			$responseValues = null;
 			$wikiId = $wiki['id'];
 			$url = $wiki['url'];
-			$responseValues = $this->getExactMatch( $wiki['id'] );
+//			$responseValues = $this->getExactMatch( $wiki['id'] );
 			if ( $responseValues === null ) {
-				$config = $this->getConfigFromRequest( $wiki['id'] );
-				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
+//				$config = $this->getConfigFromRequest( $wiki['id'] );
+//				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
+//				var_dump( $responseValues );
+				$responseValues = $this->getEpisodeFromWiki( $wiki['id'] );
 			}
 
 			if ( $responseValues !== null ) {
@@ -289,5 +291,72 @@ class TvApiController extends WikiaApiController {
 			return $responseValues;
 		}
 		return null;
+	}
+
+	protected function getEpisodeFromWiki( $wikiId ) {
+		$request = $this->getRequest();
+		$query = $request->getVal( 'episodeName', null );
+		if ( $query === null ) {
+			throw new InvalidParameterApiException( 'episodeName' );
+		}
+		$quality = $request->getInt( static::PARAM_ARTICLE_QUALITY, null );
+		$lang = $request->getVal( 'lang', static::LANG_SETTING );
+		$response = $this->querySolr( $query, $wikiId, $lang, $quality );
+		foreach( $response as $item ) {
+			return $this->getDataFromItem( $item, $lang );
+		}
+		return null;
+	}
+
+	protected function getDataFromItem( $item, $lang ) {
+		return [
+			'articleId' => $item['pageid'],
+			'title' => $item['title_'.$lang],
+			'url' => $item['url'],
+			'quality' => $item['article_quality_i'],
+		];
+
+	}
+	
+	protected function querySolr( $query, $wikiId, $lang, $minQuality = null ) {
+		$config = (new Factory())->getSolariumClientConfig();
+		$client = new \Solarium_Client($config);
+
+		$phrase = $this->sanitizeQuery( $query );
+		$preparedQuery = $this->prepareQuery( $phrase, $wikiId, $minQuality );
+
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setQuery( $preparedQuery );
+		$select->setRows( 1 );
+		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
+
+		$dismax->setQueryFields( implode( ' ', [
+			$this->withLang( 'title', $lang )
+//			$this->withLang( 'html', $lang )
+		] ) );
+		$dismax->setPhraseFields( implode( ' ', [
+			$this->withLang( 'title', $lang ).'^4',
+			$this->withLang( 'html', $lang ).'^2',
+			'backlinks_txt'
+		] ) );
+
+		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^20' );
+
+		return $client->select( $select );
+	}
+
+	protected function withLang( $field, $lang ) {
+		return $field.'_'.$lang;
+	}
+
+	protected function prepareQuery( $query, $wikiId, $minQuality ) {
+		$quality = '';
+		if ( !empty( $minQuality ) ) {
+			$quality = ' AND +(article_quality_i:[' . $minQuality . ' TO *])';
+		}
+		return '+('. $query . ') AND +(wid:' . $wikiId . ')' . $quality;
 	}
 }
