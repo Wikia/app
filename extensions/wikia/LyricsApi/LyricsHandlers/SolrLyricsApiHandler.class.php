@@ -5,8 +5,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 	const IMG_WIDTH_SMALL = 174;
 	const IMG_HEIGHT_SMALL = 174;
-	const IMG_WIDTH_MIDDLE = 300;
-	const IMG_HEIGHT_MIDDLE = 300;
+	const IMG_WIDTH_MEDIUM = 300;
+	const IMG_HEIGHT_MEDIUM = 300;
 	const IMG_WIDTH_LARGE = 600;
 	const IMG_HEIGHT_LARGE = 600;
 
@@ -46,6 +46,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			}
 		}
 		return null;
+	}
+
+	private function appendImages( $obj, $image ) {
+		$obj->small_image = $this->getImage( $image );
+		$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
+		$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
 	}
 
 	private function getImage( $imageTitle, $width = self::IMG_WIDTH_SMALL, $height = self::IMG_HEIGHT_SMALL ) {
@@ -138,12 +144,21 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $this->getOutputArtist( $solrAlbum );
 	}
 
+	/**
+	 * @desc Gets an album from Solr index if exists
+	 *
+	 * @param String $artist
+	 * @param String $album
+	 *
+	 * @return null|stdClass
+	 */
 	public function getAlbum( $artist, $album ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_ALBUM,
 			'artist_name: %P2%' => $artist,
 			'album_name: %P3%' => $album,
 		] );
+
 		$query->setFields( [
 			'artist_name',
 			'album_name',
@@ -154,26 +169,33 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'release_date',
 			'songs'
 		] );
-		$query->setStart( 0 )->setRows( 1 );
 
+		$query->setStart( 0 )->setRows( 1 );
 		$queryResult = $this->getFirstResult( $this->client->select( $query ) );
+
 		if ( is_null( $queryResult ) ) {
 			return null;
 		}
+
 		$album = new stdClass();
 		$album->name = $queryResult->album_name;
+
 		if ( $queryResult->image ) {
-			$album->image = $this->getImage( $queryResult->image );
+			$this->appendImages( $album, $queryResult->image );
 		}
+
 		if ( $queryResult->genres ) {
 			$album->genres = $this->deSerialize( $queryResult->genres );
 		}
+
 		if ( $queryResult->length ) {
 			$album->length = $queryResult->length;
 		}
+
 		if ( $queryResult->itunes ) {
 			$album->itunes = $queryResult->itunes;
 		}
+
 		$album->artist = new stdClass();
 		$album->artist->name = $queryResult->artist_name;
 		$album->artist->url = $this->buildUrl([
@@ -181,9 +203,11 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'method' => 'getArtist',
 			LyricsApiController::PARAM_ARTIST => $album->artist->name,
 		]);
+
 		if ( $queryResult->songs ) {
 			$album->songs = $this->getSongs( $album->artist->name, $album->name, $queryResult->songs );
 		}
+
 		return $album;
 	}
 
@@ -224,14 +248,21 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		if ( $solrSong->image ) {
-			$song->small_image = $this->getImage( $solrSong->image );
-			$song->mid_image = $this->getImage( $solrSong->image, self::IMG_WIDTH_MIDDLE, self::IMG_HEIGHT_MIDDLE );
-			$song->large_image = $this->getImage( $solrSong->image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+			$this->appendImages( $song, $solrSong->image );
 		}
 
 		return $song;
 	}
 
+	/**
+	 * @desc Gets a song from Solr index if exists
+	 *
+	 * @param String $artist
+	 * @param String $album
+	 * @param String $song
+	 *
+	 * @return null|stdClass
+	 */
 	public function getSong( $artist, $album, $song ) {
 		$solrQuery = [
 			'type: %1%' => self::TYPE_SONG,
