@@ -224,7 +224,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		if ( $solrSong->image ) {
-			$song->image = $this->getImage( $solrSong->image );
+			$song->small_image = $this->getImage( $solrSong->image );
+			$song->mid_image = $this->getImage( $solrSong->image, self::IMG_WIDTH_MIDDLE, self::IMG_HEIGHT_MIDDLE );
+			$song->large_image = $this->getImage( $solrSong->image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
 		}
 
 		return $song;
