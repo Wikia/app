@@ -4,6 +4,7 @@ class SpotlightsABTestController extends WikiaController {
 	const TYPE_OPENX_MOCK = 2;
 	const TYPE_NLP_MOCK = 4;
 	const TYPE_NLP_LDA_MOCK = 8;
+	const TYPE_NLP_ALL_MOCK = 16;
 
 	const MEMCACHE_VER = '1.0';
 
@@ -47,6 +48,10 @@ class SpotlightsABTestController extends WikiaController {
 						case self::TYPE_NLP_LDA_MOCK:
 							$spotlights = $spotlightsModel->getNLPLDaSpotlights();
 							break;
+						case self::TYPE_NLP_ALL_MOCK:
+							$spotlights['NLPTopic'] = $spotlightsModel->getNLPTopicSpotlights();
+							$spotlights['NLPLDa'] = $spotlightsModel->getNLPLDaSpotlights();
+							$spotlights['status'] = 1;
 					}
 
 					return $spotlights;

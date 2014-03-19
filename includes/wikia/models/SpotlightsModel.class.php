@@ -85,6 +85,7 @@ class SpotlightsModel extends WikiaModel {
 				];
 
 				$spotlights['data'] []= $spotlight;
+				$spotlights['status'] = 1;
 			}
 		}
 
@@ -122,6 +123,7 @@ class SpotlightsModel extends WikiaModel {
 				];
 
 				$spotlights['data'] []= $spotlight;
+				$spotlights['status'] = 1;
 			}
 		}
 
