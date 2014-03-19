@@ -16,6 +16,7 @@ class TvApiController extends WikiaApiController {
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
+	const QUERY_WORDS_LIMIT = 10;
 	/**
 	 * @var Array wikis
 	 */
@@ -184,7 +185,7 @@ class TvApiController extends WikiaApiController {
 	 */
 	protected function sanitizeQuery( $query ) {
 		$select = new \Wikia\Search\Query\Select( $query );
-		return $select->getSolrQuery( 10 );
+		return $select->getSolrQuery( static::QUERY_WORDS_LIMIT );
 	}
 
 	/**
