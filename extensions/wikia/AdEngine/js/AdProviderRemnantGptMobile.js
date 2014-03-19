@@ -16,7 +16,12 @@ define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.
 			hop({method: 'hop'}, 'Null')
 		}
 
-		wikiaGpt.pushAd(slotname, success, hopToNull, 'rh_mobile');
+		function showAdAndCallSuccess() {
+			document.getElementById(slotname).className += ' show';
+			success();
+		}
+
+		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hopToNull, 'rh_mobile');
 		wikiaGpt.flushAds();
 	}
 
