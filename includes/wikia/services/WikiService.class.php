@@ -357,29 +357,28 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
+	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO ) {
 		$images = array();
 		try {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$tables = array('city_visualization');
-			$fields = array('city_id', 'city_main_image');
-			$conds = array('city_id' => $wikiIds);
-			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+			$tables = array( 'city_visualization' );
+			$fields = array( 'city_id', 'city_main_image' );
+			$conds = array( 'city_id' => $wikiIds );
+			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
-			while($row = $results->fetchObject()) {
-				$filename = preg_replace(DBNAME_REGEXP,'.\\2',$row->city_main_image);
-				$title = GlobalTitle::newFromText($filename, NS_FILE, WikiFactory::IDtoDB($row->city_id));
-				$file = wffindFile($title);
-				
-				if ($file instanceof File && $file->exists()) {
-					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
-						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
+			while ( $row = $results->fetchObject() ) {
+				$filename = preg_replace( self::DBNAME_REGEXP, '.\\2', $row->city_main_image );
+				$file = GlobalFile::newFromText( $filename, $row->city_id );
+
+				if ( $file->exists() ) {
+					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
+					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $file, $file->getWidth(), $file->getHeight() ),
 						ImagesService::EXT_JPG
 					);
 				}
 			}
-		} catch(Exception $e) {
+		} catch ( Exception $e ) {
 			// for devbox machines
 		}
 		return $images;
