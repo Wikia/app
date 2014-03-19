@@ -49,10 +49,11 @@ class HubRssFeedModel extends WikiaModel {
 	protected function getServicesV3( $cityId ) {
 
 		return [
-			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3),
-			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3)
+			'slider' => new MarketingToolboxModuleSliderService($this->lang,
+					MarketingToolboxV3Model::SECTION_HUBS, null, $cityId, MarketingToolboxV3Model::VERSION),
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang,
+					MarketingToolboxV3Model::SECTION_HUBS, null, $cityId, MarketingToolboxV3Model::VERSION)
 		];
-
 	}
 
 	/**
