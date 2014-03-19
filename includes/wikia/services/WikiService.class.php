@@ -368,7 +368,7 @@ class WikiService extends WikiaModel {
 
 			while($row = $results->fetchObject()) {
 				$filename = preg_replace(DBNAME_REGEXP,'.\\2',$row->city_main_image);
-				$title = Title::newFromText($filename, NS_FILE);
+				$title = GlobalTitle::newFromText($filename, NS_FILE, WikiFactory::IDtoDB($row->city_id));
 				$file = wffindFile($title);
 				
 				if ($file instanceof File && $file->exists()) {
