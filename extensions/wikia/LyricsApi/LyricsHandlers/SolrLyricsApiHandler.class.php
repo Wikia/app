@@ -187,12 +187,21 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $album;
 	}
 
+	/**
+	 * @desc Builds API requests URLs, images URLs and whole song object returned in response results
+	 *
+	 * @param Solarium_Document_ReadOnly $solrSong song object retrieved from solr
+	 *
+	 * @return stdClass
+	 */
 	private function getOutputSong( $solrSong ) {
 		$song = new stdClass();
 		$song->name = $solrSong->song_name;
+
 		if ( $solrSong->itunes ) {
 			$song->itunes = $solrSong->itunes;
 		}
+
 		$song->lyrics = $solrSong->lyrics;
 
 		$song->artist = new stdClass();
@@ -202,6 +211,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'method' => 'getArtist',
 			LyricsApiController::PARAM_ARTIST => $song->artist->name
 		] );
+
 		if ( $solrSong->album_id ) {
 			$song->album = new stdClass();
 			$song->album->name = $solrSong->album_name;
@@ -212,11 +222,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 				LyricsApiController::PARAM_ALBUM => $song->album->name
 			] );
 		}
+
 		if ( $solrSong->image ) {
 			$song->image = $this->getImage( $solrSong->image );
 		}
-		return $song;
 
+		return $song;
 	}
 
 	public function getSong( $artist, $album, $song ) {
@@ -235,12 +246,14 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'image',
 			'lyrics'
 		] );
-		$query->setStart( 0 )->setRows( 1 );
 
+		$query->setStart( 0 )->setRows( 1 );
 		$solrSong = $this->getFirstResult( $this->client->select( $query ) );
+
 		if ( is_null( $solrSong ) ) {
 			return null;
 		}
+
 		return $this->getOutputSong( $solrSong );
 	}
 

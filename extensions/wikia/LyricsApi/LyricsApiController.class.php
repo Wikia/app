@@ -39,11 +39,17 @@ class LyricsApiController extends WikiaController {
 	 *
 	 * @param Array $params
 	 * @param String $method
+	 *
+	 * @throws NotFoundApiException
 	 */
 	private function getData( $params, $method ) {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
+
+		if( is_null( $results ) ) {
+			throw new NotFoundApiException();
+		}
 
 		$this->response->setVal( 'result', $results );
 		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
