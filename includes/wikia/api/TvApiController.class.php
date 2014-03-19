@@ -16,7 +16,6 @@ class TvApiController extends WikiaApiController {
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
-	const CROSS_WIKI_BOOST_GROUP = 'TvCrossWikiApi';
 	/**
 	 * @var Array wikis
 	 */
