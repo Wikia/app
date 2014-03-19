@@ -48,11 +48,45 @@ class LyricsApiController extends WikiaController {
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
 
 		if( is_null( $results ) ) {
-			throw new NotFoundApiException( sprintf( 'LyricsApiController::%s() returned no results', $method ) );
+			throw new NotFoundApiException( $this->getNotFoundDetails( $method ) );
 		}
 
 		$this->response->setVal( 'result', $results );
 		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+	}
+
+	/**
+	 * @desc Returns proper details message for NotFoundApiException
+	 *
+	 * @param String $method
+	 *
+	 * @return string
+	 */
+	private function getNotFoundDetails( $method ) {
+		switch( $method ) {
+			case 'getArtist':
+				$details = 'Artist not found';
+				break;
+			case 'getAlbum':
+				$details = 'Album not found';
+				break;
+			case 'getSong':
+				$details = 'Song not found';
+				break;
+			case 'searchArtist':
+				$details = 'Could not found artist which match the criteria';
+				break;
+			case 'searchSong':
+				$details = 'Could not found album which match the criteria';
+				break;
+			case 'searchLyrics':
+				$details = 'Could not found song which match the criteria';
+				break;
+			default:
+				$details = 'No results found';
+		}
+
+		return $details;
 	}
 
 	/**
