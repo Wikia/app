@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit,
-		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported, $html,
+		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -327,6 +327,10 @@
 		);
 	};
 
+	init.canCreatePageUseVE = function () {
+		return isBrowserSupported && userPrefEnabled && isSkinSupported && veUIEnabled;
+	};
+
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
 	// (namely to access init.blacklist from the unit tests...) this has become one of the nicest
 	// ways to easily detect whether the VisualEditor initialisation code is present.
@@ -335,9 +339,9 @@
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
 	//
 	// Most of mw.libs.ve is considered subject to change and private.
-	mw.libs.ve = init;
+	mw.libs.ve = $.extend( mw.libs.ve, init );
+	window.mw.libs.ve = mw.libs.ve;
 
-	$html = $( 'html' );
 	if ( isBrowserSupported && isSkinSupported ) {
 		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
 			if ( isViewPage ) {
