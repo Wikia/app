@@ -96,18 +96,12 @@ class HubRssFeedModel extends WikiaModel {
 				continue;
 			}
 
-			/*$keysFound = 0;*/
-
 			foreach ( $currentData as $url => &$val ) {
 				if ( array_key_exists( $url, $prevData ) ) {
-					/*		$keysFound++; */
 					$val[ 'timestamp' ] = $prevTimestamp;
 				}
 			}
 
-			/*if ( $keysFound === 0 ) {
-				break;
-			}*/
 			$prevTimestamp--;
 
 		}
@@ -163,18 +157,12 @@ class HubRssFeedModel extends WikiaModel {
 				continue;
 			}
 
-			/*$keysFound = 0;*/
-
 			foreach ( $currentData as $url => &$val ) {
 				if ( array_key_exists( $url, $prevData ) ) {
-					/*		$keysFound++; */
 					$val[ 'timestamp' ] = $prevTimestamp;
 				}
 			}
 
-			/*if ( $keysFound === 0 ) {
-				break;
-			}*/
 			$prevTimestamp--;
 
 		}
