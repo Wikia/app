@@ -1,5 +1,7 @@
+/*exported AdSlotMapConfig*/
+/*global define*/
 var AdSlotMapConfig = function() {
-	"use strict";
+	'use strict';
 
 	var slotMapConfig = {
 		'gpt': {
@@ -46,3 +48,4 @@ var AdSlotMapConfig = function() {
 
 };
 
+define('ext.wikia.adengine.adslotmapconfig', [], AdSlotMapConfig);

@@ -216,8 +216,9 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			slotQueue.push(gptSlots[slotnameGpt]);
 
 			doneCallbacks[slotnameGpt] = function () {
-				var status, height;
+				var status, height, iframeContent;
 
+				// First, see if there's a "forced" status from the creative itself
 				status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
 
 				if (status === 'success') {
@@ -225,19 +226,42 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 					if (typeof success === 'function') {
 						success();
 					}
-				} else {
-					height = slotDiv.offsetHeight;
-					log(['doneCallback', slotname, 'height', height], 4, logGroup);
+					return;
+				}
+
+				// Now, let's base our decision on slot height
+				height = slotDiv.offsetHeight;
+				log(['doneCallback', slotname, 'height (slot)', height], 4, logGroup);
+
+				// For mobile: examine the iframe
+				if (window.skin === 'wikiamobile' && height > 1) {
+					try {
+						iframeContent = slotDiv.querySelector('div[id*="_container_"] iframe').contentWindow;
+						height = iframeContent.innerHeight;
+						log(['doneCallback', slotname, 'height (iframe content)', height], 4, logGroup);
+					} catch (e) {
+						log(['doneCallback', slotname, 'height (iframe content)', 'exception'], 4, logGroup);
+					}
+
+					// Check specifically for ads which can appear empty, even when successful
 					if (height <= 1) {
-						log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
-						if (typeof error === 'function') {
-							error();
+						if (iframeContent.document.querySelector('script[src*="/ads.saymedia.com/"], .celtra-ad-v3')) {
+							height = 13;
+							log(['doneCallback', slotname, 'height (iframe content, special ad)', height], 4, logGroup);
 						}
-					} else {
-						log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
-						if (typeof success === 'function') {
-							success();
-						}
+					}
+				}
+
+				// If calculated height <= 1px, call error, else success
+				if (height <= 1) {
+					log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
+					if (typeof error === 'function') {
+						error();
+					}
+				} else {
+					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
+					if (typeof success === 'function') {
+						success();
 					}
 				}
 			};
@@ -277,4 +301,4 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 	};
 };
 
-define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams'], WikiaFullGptHelper);
+define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.adslotmapconfig'], WikiaFullGptHelper);

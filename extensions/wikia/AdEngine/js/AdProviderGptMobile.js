@@ -2,8 +2,8 @@
 
 define(
 	'ext.wikia.adengine.provider.gptmobile',
-	['wikia.log', 'wikia.window', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'],
-	function (log, window, slotTweaker, wikiaGpt) {
+	['wikia.log', 'wikia.window', 'wikia.document', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper'],
+	function (log, window, document, slotTweaker, wikiaGpt) {
 		'use strict';
 
 		var logGroup = 'AdProviderGptMobile',
@@ -12,8 +12,6 @@ define(
 				MOBILE_IN_CONTENT: {size: '300x250'},
 				MOBILE_PREFOOTER: {size: '300x250'}
 			};
-
-		wikiaGpt.init(slotMap, 'mobile');
 
 		function canHandleSlot(slotname) {
 			return !!slotMap[slotname];
@@ -26,7 +24,12 @@ define(
 				hop({method: 'hop'}, 'Null');
 			}
 
-			wikiaGpt.pushAd(slotname, success, hopToNull);
+			function showAdAndCallSuccess() {
+				document.getElementById(slotname).className += ' show';
+				success();
+			}
+
+			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hopToNull, 'mobile');
 			wikiaGpt.flushAds();
 		}
 
