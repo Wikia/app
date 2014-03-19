@@ -36,7 +36,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	protected function prepareActionButton() {
 
-		global $wgTitle, $wgUser, $wgRequest, $wgEnableVisualEditorUI;
+		global $wgTitle, $wgUser, $wgRequest, $wgEnableVisualEditorUI, $wgEnableEditorPreferenceExt;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
@@ -89,7 +89,10 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if (isset($this->content_actions['ve-edit']) && $wgEnableVisualEditorUI) {
+		else if ( isset($this->content_actions['ve-edit']) && ( ( $wgEnableVisualEditorUI &&
+			!$wgEnableEditorPreferenceExt ) || ( $wgEnableEditorPreferenceExt &&
+			EditorPreference::shouldShowVisualEditorTab() &&
+			EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ) ) ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
@@ -114,6 +117,7 @@ class PageHeaderController extends WikiaController {
 	 * Get content actions for dropdown
 	 */
 	protected function getDropdownActions() {
+		global $wgEnableEditorPreferenceExt;
 		$ret = array();
 
 		// items to be added to "edit" dropdown
@@ -122,6 +126,9 @@ class PageHeaderController extends WikiaController {
 		// add "edit" to dropdown (if action button is not an edit)
 		if (!in_array($this->actionName, array('edit', 'source'))) {
 			array_unshift($actions, 'edit');
+		}
+		elseif ($wgEnableEditorPreferenceExt && $this->actionName !== 've-edit') {
+			array_unshift($actions, 've-edit');
 		}
 
 		foreach($actions as $action) {

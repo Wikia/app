@@ -25,7 +25,7 @@ class ContentDisplayController extends WikiaController {
 	 * Modify edit section link markup (for Oasis only)
 	 */
 	public static function onDoEditSectionLink( $skin, Title $title, $section, $tooltip, &$result, $lang = false ) {
-		global $wgBlankImgUrl, $wgUser;
+		global $wgBlankImgUrl, $wgUser, $wgEnableEditorPreferenceExt;
 		wfProfileIn(__METHOD__);
 
 		// modify Oasis only (BugId:8444)
@@ -36,7 +36,11 @@ class ContentDisplayController extends WikiaController {
 
 		$result = ''; // reset result first
 
-		$editUrl = $title->getLocalUrl( array( 'action' => 'edit', 'section' => $section ) );
+		$params = array( 'action' => 'edit', 'section' => $section );
+		if ( $wgEnableEditorPreferenceExt && EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_SOURCE ) {
+			$params['useeditor'] = 'source';
+		}
+		$editUrl = $title->getLocalUrl( $params );
 
 		$class = 'editsection';
 
