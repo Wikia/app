@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper', 'ext.wikia.adengine.gptslotconfig'], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
+define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper', 'ext.wikia.adengine.gptslotconfig'], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'AdProviderDartRemnantMobile',
@@ -21,7 +21,7 @@ define('ext.wikia.adengine.provider.remnantdartmobile', ['wikia.log', 'ext.wikia
 	}
 
 	return {
-		name: 'RemnantDartMobile',
+		name: 'RemnantGptMobile',
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};

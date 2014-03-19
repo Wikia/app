@@ -2,8 +2,8 @@
 
 define(
 	'ext.wikia.adengine.config.mobile',
-	['wikia.log', 'wikia.window', 'ext.wikia.adengine.provider.gptmobile','ext.wikia.adengine.provider.remnantdartmobile', 'ext.wikia.adengine.provider.null'],
-	function (log, window, adProviderGpt, adProviderRemnantDart, adProviderNull) {
+	['wikia.log', 'wikia.window', 'ext.wikia.adengine.provider.directgptmobile','ext.wikia.adengine.provider.remnantgptmobile', 'ext.wikia.adengine.provider.null'],
+	function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
 		'use strict';
 
 		var slotTried = {},
@@ -24,16 +24,16 @@ define(
 			switch(slot[2]) {
 				case 'Null':
 					return registerProvider(slotName, adProviderNull);
-				case 'RemnantDartMobile':
-					return registerProvider(slotName, adProviderRemnantDart);
+				case 'RemnantGptMobile':
+					return registerProvider(slotName, adProviderRemnantGpt);
 				default:
 					// ordinary way
-					if (!slotTried[slotName + 'GptMobile'] && adProviderGpt.canHandleSlot(slotName)) {
-						return registerProvider(slotName, adProviderGpt);
+					if (!slotTried[slotName + adProviderDirectGpt.name] && adProviderDirectGpt.canHandleSlot(slotName)) {
+						return registerProvider(slotName, adProviderDirectGpt);
 					}
 
-					if (window.wgEnableRHonMobile && !slotTried[slotName + 'RemnantDartMobile'] && adProviderRemnantDart.canHandleSlot(slotName)) {
-						return registerProvider(slotName, adProviderRemnantDart);
+					if (window.wgEnableRHonMobile && !slotTried[slotName + adProviderRemnantGpt.name] && adProviderRemnantGpt.canHandleSlot(slotName)) {
+						return registerProvider(slotName, adProviderRemnantGpt);
 					}
 
 					return registerProvider(slotName, adProviderNull);
