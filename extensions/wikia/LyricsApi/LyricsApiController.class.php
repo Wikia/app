@@ -48,7 +48,7 @@ class LyricsApiController extends WikiaController {
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
 
 		if( is_null( $results ) ) {
-			throw new NotFoundApiException();
+			throw new NotFoundApiException( sprintf( 'LyricsApiController::%s() returned no results', $method ) );
 		}
 
 		$this->response->setVal( 'result', $results );
