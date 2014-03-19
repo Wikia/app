@@ -62,26 +62,39 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return json_decode( $text );
 	}
 
+	/**
+	 * @desc Gets albums of an artist for SolrLyricsApiHandler::getArtist() response
+	 *
+	 * @param String $artistName
+	 * @param Array $albums
+	 *
+	 * @return array
+	 */
 	private function getAlbums( $artistName, $albums ) {
 		$albumsList = [];
 		$albums = $this->deSerialize( $albums );
+
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
 				$responseAlbum = new stdClass();
 				$responseAlbum->name = $solrAlbum->album_name;
-				$responseAlbum->image = $this->getImage( $solrAlbum->image );
+				$this->appendImages( $responseAlbum, $solrAlbum->image );
+
 				if ( $solrAlbum->release_date ) {
 					$responseAlbum->year = $solrAlbum->release_date;
 				}
+
 				$responseAlbum->url = $this->buildUrl( [
 					'controller' => self::API_CONTROLLER_NAME,
 					'method' => 'getAlbum',
 					LyricsApiController::PARAM_ARTIST => $artistName,
 					LyricsApiController::PARAM_ALBUM => $responseAlbum->name,
 				] );
+
 				$albumsList[] = $responseAlbum;
 			}
 		}
+
 		return $albumsList;
 	}
 
@@ -112,35 +125,49 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	private function getOutputArtist( $solrAlbum ) {
 		$artist = new stdClass();
 		$artist->name = $solrAlbum->artist_name;
+
 		if ( $solrAlbum->image ) {
 			$artist->image = $this->getImage( $solrAlbum->image );
 		}
+
 		if ( $solrAlbum->albums ) {
 			$artist->albums = $this->getAlbums( $artist->name, $solrAlbum->albums );
 		}
+
 		if ( $solrAlbum->songs ) {
 			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->songs );
 		}
+
 		return $artist;
 	}
 
+	/**
+	 * @desc Gets an artist from Solr index if exists
+	 *
+	 * @param String $artist
+	 *
+	 * @return null|stdClass
+	 */
 	public function getArtist( $artist ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_ARTIST,
 			'artist_name: %P2%' => $artist,
 		] );
+
 		$query->setFields( [
 			'artist_name',
 			'image',
 			'albums',
 			'songs'
 		] );
-		$query->setStart( 0 )->setRows( 1 );
 
+		$query->setStart( 0 )->setRows( 1 );
 		$solrAlbum = $this->getFirstResult( $this->client->select( $query ) );
+
 		if ( is_null( $solrAlbum ) ) {
 			return null;
 		}
+
 		return $this->getOutputArtist( $solrAlbum );
 	}
 
