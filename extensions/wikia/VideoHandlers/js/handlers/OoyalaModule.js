@@ -33,25 +33,27 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                                 z-index: 100000; \
                                 background: rgba(0, 0, 0, 0.9); \
                                 color: #fff; \
-                                font-size: 18px; \
                                 font-family: Arial, Helvetica; \
+                                line-height: 16px; \
                             } \
                             .ageGate.noFlashTransparency { \
                                 background: #000; \
                             } \
                             .ageGate .innerElement { \
-                                width: 330px; \
+                                width: 100%; \
                                 height: 160px; \
+                                margin: 0 auto; \
                             } \
                             .ageGate .innerElement.failed { \
                                 display: none; \
                             } \
                             .ageGate .innerElement .title { \
                                 color: #A9DE44; \
-                                margin-bottom: 15px; \
+                                margin-bottom: 1px; \
+                                font-size: 10px; \
                             } \
-                            .ageGate .innerElement form { \
-                                margin-top: 15px; \
+                            .ageGate .innerElement .verbiage { \
+                                font-size: 12px; \
                             } \
                             .ageGate .innerElement .ageRequirement { \
                                 font-weight: bold; \
@@ -89,6 +91,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                             } \
                             .ageGate.fancySelects button { \
                                 padding: 6px 24px; \
+                                margin-top: 3px; \
                             }\
                             .ageGate button:hover { \
                                 background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #a5cc52), color-stop(1, #b8e356)); \
@@ -200,9 +203,6 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('height', this.playerHeight);
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
-            // wikia change begin
-            ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
-            // wikia change end
 
             $.each(months, function (index, value){
                 ag.find('#month').append('<option value="' + (index + 1) + '">' + value + '</option>');
