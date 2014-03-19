@@ -11,7 +11,7 @@ class HubRssFeedModel extends WikiaModel {
 
 	const THUMB_MIN_SIZE = 200;
 
-	const MAX_DATE_LOOP = 8;
+	const MAX_DATE_LOOP = 8; // Number of historical elements
 
 	const MIN_DATE_FOUND = 1262300400; //2010-01-01
 
@@ -29,20 +29,17 @@ class HubRssFeedModel extends WikiaModel {
 		$this->lang = $lang;
 	}
 
-
+	/*
+	 * Set up marketing toolbox model (for HubsV2 and HubsV3)
+	 */
 	private function setUpModel() {
 		$this->marketingToolboxV2Model = new MarketingToolboxModel($this->app);
 		$this->marketingToolboxV3Model = new MarketingToolboxV3Model($this->app);
 	}
 
-
-	public function isValidVerticalId( $verticalId ) {
-		$ids = $this->marketingToolboxV2Model->getVerticalsIds();
-		return in_array( $verticalId, $ids );
-
-	}
-
 	/**
+	 * Get services to get data from (for HubsV2)
+	 *
 	 * @param $cityId
 	 * @return array
 	 */
@@ -55,6 +52,8 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 	/**
+	 * Get services to get data from (for HubsV2)
+	 *
 	 * @param $verticalId
 	 * @return array
 	 */
@@ -67,13 +66,19 @@ class HubRssFeedModel extends WikiaModel {
 
 	}
 
+	/*
+	 * Get data from MarketingToolboxModelV3, sorted by timestamp DESC
+	 *
+	 * @param $cityId
+	 * @return array
+	 */
 	public function getRealDataV3( $cityId ) {
 		if ( $cityId === 0 ) {
 			return [];
 		}
 
 		$params = [
-			'sectionId' => MarketingToolboxModel::SECTION_HUBS,
+			'sectionId' => MarketingToolboxV3Model::SECTION_HUBS,
 			'cityId' => $cityId,
 		];
 
@@ -126,7 +131,12 @@ class HubRssFeedModel extends WikiaModel {
 		return $currentData;
 	}
 
-
+	/*
+	 * Get data from MarketingToolboxModelV2, sorted by timestamp DESC
+	 *
+	 * @param $verticalId
+	 * @return array
+	 */
 	public function getRealDataV2( $verticalId ) {
 		if ( $verticalId == 0 ) {
 			return [];
@@ -188,10 +198,11 @@ class HubRssFeedModel extends WikiaModel {
 
 	}
 
-
 	/**
-	 * @param $verticalId
+	 * Get normalized partial data from MarketingToolboxModelV2 from given timestamp
 	 *
+	 * @param $verticalId
+	 * @return array
 	 */
 	protected function getDataFromModulesV2( $verticalId, $timestamp = null ) {
 
@@ -211,8 +222,10 @@ class HubRssFeedModel extends WikiaModel {
 
 
 	/**
-	 * @param $cityId
+	 * Get normalized partial data from MarketingToolboxModelV3 from given timestamp
 	 *
+	 * @param $cityId
+	 * @return array
 	 */
 	protected function getDataFromModulesV3( $cityId, $timestamp = null ) {
 
@@ -229,8 +242,12 @@ class HubRssFeedModel extends WikiaModel {
 		return $this->normalizeDataFromModules( $data );
 	}
 
-
-
+	/**
+	 * Normalize data (remove duplicates, pupulate title, description and image fields.
+	 *
+	 * @param $data
+	 * @return array
+	 */
 	protected function normalizeDataFromModules( $data ) {
 		$out = [];
 
@@ -279,9 +296,14 @@ class HubRssFeedModel extends WikiaModel {
 		return $out;
 	}
 
-
-	public function getThumbData( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
+	/**
+	 * Get thumbnail for given image.
+	 *
+	 * @param $fileName
+	 * @return stdClass
+	 */
+	public function getThumbData( $fileName ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, 0, ImagesService::EXT_JPG);
 
 	}
 

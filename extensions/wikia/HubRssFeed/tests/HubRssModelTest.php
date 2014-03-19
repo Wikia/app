@@ -60,33 +60,6 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers  HubRssFeedModel::isValidVerticalId
-	 */
-	public function testIsValidVerticalId() {
-		$mockToolbox = $this->mockToolbox->setMethods( ['getVerticalsIds'] )->getMock();
-
-		$mockToolbox->expects( $this->any() )
-			->method( 'getVerticalsIds' )
-			->will( $this->returnValue( [1, 2, 3] ) );
-
-		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct'] )
-			->getMock();
-
-		$refl = new \ReflectionObject($mock);
-
-		$propToolbox = $refl->getProperty( 'marketingToolboxModel' );
-		$propToolbox->setAccessible( true );
-		$propToolbox->setValue( $mock, $mockToolbox );
-
-
-		$this->assertTrue( $mock->isValidVerticalId( 1 ) );
-		$this->assertFalse( $mock->isValidVerticalId( 5 ) );
-
-	}
-
-	/**
 	 * @covers  HubRssFeedModel::getServices
 	 */
 	public function testGetServices() {
