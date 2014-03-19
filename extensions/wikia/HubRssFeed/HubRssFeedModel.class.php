@@ -49,10 +49,8 @@ class HubRssFeedModel extends WikiaModel {
 	protected function getServicesV3( $cityId ) {
 
 		return [
-			'slider' => new MarketingToolboxModuleSliderService($this->lang,
-					MarketingToolboxV3Model::SECTION_HUBS, null, $cityId, MarketingToolboxV3Model::VERSION),
-			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang,
-					MarketingToolboxV3Model::SECTION_HUBS, null, $cityId, MarketingToolboxV3Model::VERSION)
+			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION)
 		];
 	}
 
@@ -230,7 +228,7 @@ class HubRssFeedModel extends WikiaModel {
 	 */
 	protected function getDataFromModulesV3( $cityId, $timestamp = null ) {
 
-		$services = $this->getServicesV2( $cityId );
+		$services = $this->getServicesV3( $cityId );
 		$data = [];
 
 		foreach ( $services as $k => &$v ) {
