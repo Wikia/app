@@ -33,7 +33,7 @@ class ExternalRubyCompiler extends Compiler {
 
 		$tempDir = $this->tempDir ?: sys_get_temp_dir();
 		//replace \ to / is needed because escapeshellcmd() replace \ into spaces (?!!)
-		$outputFile = str_replace('\\', '/', tempnam($tempDir, 'Sass'));
+		$outputFile = str_replace('\\', '/', tempnam($tempDir, uniqid('Sass')));
 		$tempDir = str_replace('\\', '/', $tempDir);
 
 		$sassVariables = urldecode(http_build_query($this->sassVariables, '', ' '));
@@ -52,19 +52,27 @@ class ExternalRubyCompiler extends Compiler {
 			$cmd = escapeshellcmd("cat {$localFile}") . " | " . $cmd;
 		}
 
-		$sassOutput = shell_exec($cmd);
-		if ($sassOutput != '') {
-			Wikia::log('sass-errors-WIKIA', false, "out: " . preg_replace('#\n\s+#', ' ', trim($sassOutput)). " / cmd: $cmd", true /* $always */);
+		exec($cmd, $sassOutput, $status);
+		if ($status !== 0) { // 0 => success
+			$sassOutput = implode("\n", $sassOutput);
+			Wikia::log('sass-errors-WIKIA', false, "status: $status, out: " . preg_replace('#\n\s+#', ' ', trim($sassOutput)). " / cmd: $cmd", true /* $always */);
 			if ( file_exists( $outputFile ) ) {
 				unlink($outputFile);
 			}
 
-			throw new \Wikia\Sass\Exception("SASS compilation failed: {$sassOutput}\nFull commandline: $cmd");
+			throw new Wikia\Sass\Exception("SASS compilation failed: {$sassOutput}\nFull commandline: $cmd");
 		}
 
 		$styles = file_get_contents($outputFile);
-
 		unlink($outputFile);
+
+		if ($styles === false) {
+			Wikia\Logger\WikiaLogger::instance()->debug("Reading SASS file failed", [
+				'input' => $inputFile,
+				'output' => $outputFile,
+			]);
+			throw new Wikia\Sass\Exception("Reading SASS file failed");
+		}
 
 		wfProfileOut(__METHOD__);
 
