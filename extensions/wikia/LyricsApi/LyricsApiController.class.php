@@ -14,6 +14,9 @@ class LyricsApiController extends WikiaController {
 
 	private $lyricsApiHandler = null;
 
+	/**
+	 * @desc Constructor, gets the configuration from global $wgLyricsSolrConfig variable and sets data handler
+	 */
 	public function __construct() {
 		global $wgLyricsSolrConfig;
 
@@ -31,6 +34,12 @@ class LyricsApiController extends WikiaController {
 		$this->lyricsApiHandler = new SolrLyricsApiHandler( $config );
 	}
 
+	/**
+	 * @desc Calls methods of data handlers with given params. Sets caching and response format to JSON.
+	 *
+	 * @param Array $params
+	 * @param String $method
+	 */
 	private function getData( $params, $method ) {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
