@@ -1,8 +1,6 @@
 <?php
 
 class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
-
-
 	const IMG_WIDTH_SMALL = 174;
 	const IMG_HEIGHT_SMALL = 174;
 	const IMG_WIDTH_MEDIUM = 300;
@@ -14,7 +12,6 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @var Solarium_Client
 	 */
 	var $client;
-
 
 	var $cityId;
 
@@ -32,10 +29,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		$this->client = new Solarium_Client( $config );
 	}
 
+	/**
+	 * @desc Creates select query on Solr
+	 *
+	 * @param array $fields
+	 * @return Solarium_Query_Select
+	 */
 	private function newQueryFromSearch( Array $fields ) {
 		$query = $this->client->createSelect();
-		$queryText = implode(' AND ', array_keys( $fields ) );
-		$query->setQuery( $queryText, array_values($fields) );
+		$queryText = implode( ' AND ', array_keys( $fields ) );
+		$query->setQuery( $queryText, array_values( $fields ) );
+
 		return $query;
 	}
 
@@ -54,11 +58,27 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
 	}
 
+	/**
+	 * @desc Uses ImagesService to create an image URL
+	 *
+	 * @param String $imageTitle
+	 * @param int $width optional
+	 * @param int $height optional
+	 *
+	 * @return bool|null|Object|string
+	 */
 	private function getImage( $imageTitle, $width = self::IMG_WIDTH_SMALL, $height = self::IMG_HEIGHT_SMALL ) {
 		return ImagesService::getImageSrcByTitle( $this->cityId, $imageTitle, $width, $height );
 	}
 
-	private function deSerialize ( $text ) {
+	/**
+	 * @desc Decods JSON into array/object
+	 *
+	 * @param String $text
+	 *
+	 * @return mixed
+	 */
+	private function deSerialize( $text ) {
 		return json_decode( $text );
 	}
 
@@ -98,9 +118,18 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $albumsList;
 	}
 
+	/**
+	 * @desc Gets songs
+	 *
+	 * @param $artistName
+	 * @param $albumName
+	 * @param $songs
+	 * @return array
+	 */
 	private function getSongs( $artistName, $albumName, $songs ) {
 		$songsList = [];
 		$songs = $this->deSerialize( $songs );
+
 		if ( is_array( $songs ) ) {
 			foreach ( $songs as $solrSong ) {
 				$responseSong = new stdClass();
@@ -118,10 +147,16 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 				$songsList[] = $responseSong;
 			}
 		}
-		return $songsList;
 
+		return $songsList;
 	}
 
+	/**
+	 * @desc Decorates Solr results with images URLs, albums and songs for an artist
+	 *
+	 * @param Solarium_Document_ReadOnly $solrAlbum
+	 * @return stdClass
+	 */
 	private function getOutputArtist( $solrAlbum ) {
 		$artist = new stdClass();
 		$artist->name = $solrAlbum->artist_name;
@@ -317,6 +352,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $this->getOutputSong( $solrSong );
 	}
 
+	/**
+	 * @desc Searches for an artist in Solr index
+	 *
+	 * @param String $query
+	 * @return array|null|stdClass
+	 */
 	public function searchArtist( $query ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_ARTIST,
@@ -333,6 +374,13 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $albums;
 	}
 
+	/**
+	 * @desc Searches for a song in Solr index
+	 *
+	 * @param String $query
+	 *
+	 * @return array|null|stdClass
+	 */
 	public function searchSong( $query ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_SONG,
@@ -349,20 +397,30 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $songs;
 	}
 
+	/**
+	 * @desc Searches for a song lyrics in Solr index
+	 *
+	 * @param String $query
+	 * @return array|null|stdClass
+	 */
 	public function searchLyrics( $query ) {
 		// TODO: Add highlighting
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_SONG,
 			'lyrics: %P2%' => $query,
 		] );
+
 		$solrSongs = $this->client->select( $query );
 		if ( !is_array( $solrSongs ) ) {
 			return null;
 		}
+
 		$songs = [];
 		foreach ( $solrSongs as $solrSong ) {
 			$songs = $this->getOutputSong( $solrSong );
 		}
+
 		return $songs;
 	}
+
 }
