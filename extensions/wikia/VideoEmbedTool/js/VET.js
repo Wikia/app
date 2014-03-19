@@ -9,7 +9,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 	var curSourceId = 0,
 		jqXHR = {
-			abort: function() {
+			abort: function () {
 				// empty function so if statements will not have to be embedded everywhere
 			}
 		},
@@ -31,7 +31,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		VETExtended,
 		VET;
 
-	tracking = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+	tracking = Wikia.Tracker.buildTrackingFunction(Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'vet',
 		trackingMethod: 'both'
@@ -45,19 +45,19 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 		$('#VideoEmbedMain').hide();
 
-		callback = function(data) {
+		callback = function (data) {
 			var presets = embedPresets;
 
 			displayDetails(data.responseText, presets);
 
 			$('#VideoEmbedBack').hide();
 
-			setTimeout(function() {
-				if ( presets.thumb || presets.thumbnail ) {
+			setTimeout(function () {
+				if (presets.thumb || presets.thumbnail) {
 					$('#VideoEmbedThumbOption').prop('checked', true);
 					$('#VET_StyleThumb').addClass('selected');
-				}  else {
-					var sizeDiv = $('#VideoEmbedSizeRow > div');
+				} else {
+					var sizeDiv = $('#VideoEmbedSizeRow').find('div');
 					sizeDiv.children('input').removeClass('show');
 					sizeDiv.children('p').addClass('show');
 					$('#VideoEmbedThumbOption').prop('checked', false);
@@ -66,7 +66,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					$('#VET_StyleNoThumb').addClass('selected');
 				}
 
-				if(presets.align && presets.align === 'left') {
+				if (presets.align && presets.align === 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
 				} else if (presets.align && presets.align === 'center') {
 					$('#VideoEmbedLayoutCenter').attr('checked', 'checked').parent().addClass('selected');
@@ -74,13 +74,13 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					$('#VideoEmbedLayoutRight').attr('checked', 'checked').parent().addClass('selected');
 				}
 
-				if(presets.width) {
-					readjustSlider( presets.width );
-					$('#VideoEmbedManualWidth').val( presets.width );
+				if (presets.width) {
+					readjustSlider(presets.width);
+					$('#VideoEmbedManualWidth').val(presets.width);
 				}
 
 			}, 200);
-			if(presets.caption) {
+			if (presets.caption) {
 				$('#VideoEmbedCaption').val(presets.caption);
 			}
 
@@ -88,24 +88,23 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			toggleSizing(true);
 
 			// show alignment row
-			$( '#VideoEmbedLayoutRow' ).show();
+			$('#VideoEmbedLayoutRow').show();
 
 			// make replace video link to open in new window / tab
 			$('#VideoReplaceLink').find('a').first().attr('target', '_blank');
 		};
 
 		jqXHR.abort();
-		if ( typeof embedPresets.href === 'undefined' ) {
+		if (typeof embedPresets.href === 'undefined') {
 			escTitle = embedPresets.title;
 		} else {
 			escTitle = embedPresets.href;
 		}
 		escTitle = encodeURIComponent(escTitle);
-		params.push( 'itemTitle='+escTitle );
+		params.push('itemTitle=' + escTitle);
 
 		jqXHR = $.ajax(
-			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'),
-			{
+			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=editVideo&' + params.join('&'), {
 				method: 'get',
 				complete: callback,
 				headers: {
@@ -117,7 +116,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 	// Collect embed settings from form and send to callbackAfterEmbed
 	function doEditVideo() {
-
 		var description = encodeURIComponent($('#VideoEmbedDescription').val());
 
 		$.nirvana.sendRequest({
@@ -129,25 +127,25 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				title: $('#VideoEmbedName').val(),
 				description: description
 			}
-		}).done(function(json) {
+		}).done(function (json) {
 			var extraData, caption;
 
-			if(json.status === 'fail') {
-				GlobalNotification.show( json.errMsg, 'error', null, notificationTimout );
+			if (json.status === 'fail') {
+				GlobalNotification.show(json.errMsg, 'error', null, notificationTimout);
 			} else {
 				// setup metadata
 				extraData = {};
 
 				extraData.href = $('#VideoEmbedHref').val();
-				extraData.width= $('#VideoEmbedManualWidth').val();
+				extraData.width = $('#VideoEmbedManualWidth').val();
 
 				if ($('#VideoEmbedThumbOption').is(':checked')) {
 					extraData.thumb = 1;
 				}
 
-				if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
+				if ($('#VideoEmbedLayoutLeft').is(':checked')) {
 					extraData.align = 'left';
-				} else if ($('#VideoEmbedLayoutCenter').is(':checked') ) {
+				} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
 					extraData.align = 'center';
 				} else {
 					extraData.align = 'right';
@@ -158,7 +156,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					extraData.caption = caption;
 				}
 
-				if(callbackAfterEmbed) {
+				if (callbackAfterEmbed) {
 					// Callback from extensions
 					callbackAfterEmbed(extraData);
 				}
@@ -192,43 +190,43 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 		// move button
 		window.VETbackButton.clone().
-			click(back).
-			insertAfter(selector);
+		click(back).
+		insertAfter(selector);
 	}
 
 	/*
 	 * Functions/methods
 	 */
 
-	function toggleSizing( enable ) {
-		if( enable ) {
-			$( '#VideoEmbedThumbOption' ).attr('disabled', false);
-			$( '#VideoEmbedNoThumbOption' ).attr('disabled', false);
-			$( '#VideoEmbedWidthRow' ).show();
-			$( '#VideoEmbedSizeRow' ).show();
+	function toggleSizing(enable) {
+		if (enable) {
+			$('#VideoEmbedThumbOption').attr('disabled', false);
+			$('#VideoEmbedNoThumbOption').attr('disabled', false);
+			$('#VideoEmbedWidthRow').show();
+			$('#VideoEmbedSizeRow').show();
 		} else {
-			$( '#VideoEmbedThumbOption' ).attr('disabled', true);
-			$( '#VideoEmbedNoThumbOption' ).attr('disabled', true);
-			$( '#VideoEmbedWidthRow' ).hide();
-			$( '#VideoEmbedSizeRow' ).hide();
+			$('#VideoEmbedThumbOption').attr('disabled', true);
+			$('#VideoEmbedNoThumbOption').attr('disabled', true);
+			$('#VideoEmbedWidthRow').hide();
+			$('#VideoEmbedSizeRow').hide();
 		}
 	}
 
 	function manualWidthInput() {
-		var val = parseInt( this.value ); // jshint ignore:line
-		if ( isNaN( val ) ) {
-			readjustSlider( 0 );
+		var val = parseInt(this.value); // jshint ignore:line
+		if (isNaN(val)) {
+			readjustSlider(0);
 			return false;
 		}
-		if(val > MAX_WIDTH) {
+		if (val > MAX_WIDTH) {
 			val = MAX_WIDTH;
-			$( '#VideoEmbedManualWidth' ).val(val);
+			$('#VideoEmbedManualWidth').val(val);
 		}
-		readjustSlider( val );
+		readjustSlider(val);
 		return true;
 	}
 
-	function readjustSlider( value ) {
+	function readjustSlider(value) {
 		var elem = $('#VideoEmbedSlider');
 
 		if (elem.slider) {
@@ -238,7 +236,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		}
 	}
 
-	function show( options ) {
+	function show(options) {
 		// set vars for this instance of VET
 		vetOptions = options;
 		embedPresets = options.embedPresets;
@@ -250,8 +248,8 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			action: Wikia.Tracker.ACTIONS.OPEN
 		});
 
-		if(wysiwygStart === 2) {
-			if(options.size) {
+		if (wysiwygStart === 2) {
+			if (options.size) {
 				thumbSize = options.size;
 			}
 			editVideo();
@@ -264,7 +262,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 	/* ajax call for first screen (aka video search) */
 	function loadMain(searchOrder) {
-		var callback = function(data) {
+		var callback = function (data) {
 			$('#VideoEmbedMain').html(data.responseText);
 			$('#VideoEmbedUrl').focusNoScroll();
 			updateHeader();
@@ -275,8 +273,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			});
 		};
 		$.ajax(
-			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMain',
-			{
+			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMain', {
 				method: 'get',
 				complete: callback
 			}
@@ -288,7 +285,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	 * note: onVideoEmbedUrlKeypress is called from template
 	 */
 	function onVideoEmbedUrlKeypress(e) {
-		if (e.which === 13){
+		if (e.which === 13) {
 			e.preventDefault();
 			preQuery();
 			return false;
@@ -303,12 +300,12 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		var $urlInput = $('#VideoEmbedUrl'),
 			query;
 
-		if(!$urlInput.val()) {
-			GlobalNotification.show( $.msg('vet-warn2'), 'error', null, notificationTimout );
+		if (!$urlInput.val()) {
+			GlobalNotification.show($.msg('vet-warn2'), 'error', null, notificationTimout);
 			return false;
 		} else {
 			query = $urlInput.val();
-			sendQueryEmbed( query );
+			sendQueryEmbed(query);
 			return false;
 		}
 	}
@@ -337,7 +334,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		value = thumbSize;
 
 		if (dataFromEditMode) {
-			if(dataFromEditMode.width) {
+			if (dataFromEditMode.width) {
 				value = dataFromEditMode.width;
 			} else {
 				value = '';
@@ -349,29 +346,29 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			min: MIN_WIDTH,
 			max: MAX_WIDTH,
 			value: value,
-			slide: function(event, ui) {
+			slide: function (event, ui) {
 				$('#VideoEmbedManualWidth').val(ui.value);
 			},
-			create: function() {
+			create: function () {
 				$('#VideoEmbedManualWidth').val(value);
 			}
 		});
 
 		if ($errorBox.length) {
-			GlobalNotification.show( $errorBox.html(), 'error', null, notificationTimout );
+			GlobalNotification.show($errorBox.html(), 'error', null, notificationTimout);
 		}
 
-		if ( $('#VideoEmbedMain').html() === '' ) {
+		if ($('#VideoEmbedMain').html() === '') {
 			loadMain();
 		}
 
-		$('#VideoEmbedThumbOption').on('change', function() {
+		$('#VideoEmbedThumbOption').on('change', function () {
 			tracking({
 				label: 'display-thumbnail-with-caption'
 			});
 		});
 
-		$('#VideoEmbedNoThumbOption').on('change', function() {
+		$('#VideoEmbedNoThumbOption').on('change', function () {
 			tracking({
 				label: 'display-thumbnail-only'
 			});
@@ -383,7 +380,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	function insertFinalVideo(e) {
 		var params = [],
 			$nameInput = $('#VideoEmbedName'),
-			$metadataInput = $( '#VideoEmbedMetadata'),
+			$metadataInput = $('#VideoEmbedMetadata'),
 			metadata,
 			i,
 			callback;
@@ -394,105 +391,104 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 		e.preventDefault();
 
-		if( !$nameInput.length || $nameInput.val() === '' ) {
-			GlobalNotification.show( $.msg('vet-warn3'), 'error', null, notificationTimout );
+		if (!$nameInput.length || $nameInput.val() === '') {
+			GlobalNotification.show($.msg('vet-warn3'), 'error', null, notificationTimout);
 			return;
 		}
 
 		params.push('id=' + $('#VideoEmbedId').val());
 		params.push('provider=' + $('#VideoEmbedProvider').val());
 
-		if( $metadataInput.length ) {
-			metadata = $metadataInput.val().split( ',' );
-			for( i = 0; i < metadata.length; i++ ) {
-				params.push( 'metadata' + i  + '=' + metadata[i] );
+		if ($metadataInput.length) {
+			metadata = $metadataInput.val().split(',');
+			for (i = 0; i < metadata.length; i++) {
+				params.push('metadata' + i + '=' + metadata[i]);
 			}
 		}
 
-		params.push('description='+encodeURIComponent($('#VideoEmbedDescription').val()));
-		params.push('oname='+encodeURIComponent( $('#VideoEmbedOname').val() ) );
-		params.push('name='+encodeURIComponent( $nameInput.val() ) );
+		params.push('description=' + encodeURIComponent($('#VideoEmbedDescription').val()));
+		params.push('oname=' + encodeURIComponent($('#VideoEmbedOname').val()));
+		params.push('name=' + encodeURIComponent($nameInput.val()));
 
-		if($('#VideoEmbedThumb').length) {
+		if ($('#VideoEmbedThumb').length) {
 			params.push('size=' + ($('#VideoEmbedThumbOption').is(':checked') ? 'thumb' : 'full'));
-			params.push( 'width=' + $( '#VideoEmbedManualWidth' ).val() );
-			if( $('#VideoEmbedLayoutLeft').is(':checked') ) {
-				params.push( 'layout=left' );
-			} else if( $('#VideoEmbedLayoutGallery').is(':checked') ) {
-				params.push( 'layout=gallery' );
-			} else if ( $('#VideoEmbedLayoutCenter').is(':checked') ) {
-				params.push( 'layout=center' );
+			params.push('width=' + $('#VideoEmbedManualWidth').val());
+			if ($('#VideoEmbedLayoutLeft').is(':checked')) {
+				params.push('layout=left');
+			} else if ($('#VideoEmbedLayoutGallery').is(':checked')) {
+				params.push('layout=gallery');
+			} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
+				params.push('layout=center');
 			} else {
-				params.push( 'layout=right' );
+				params.push('layout=right');
 			}
-			params.push('caption=' + encodeURIComponent( $('#VideoEmbedCaption').val() ) );
+			params.push('caption=' + encodeURIComponent($('#VideoEmbedCaption').val()));
 		}
 
 		// Allow extensions to add extra params to ajax call
 		params = params.concat(vetOptions.insertFinalVideoParams || []);
 
-		callback = function(data, status) {
+		callback = function (data, status) {
 			var wikitext, options, screenType;
 
-			if(status === 'error') {
-				GlobalNotification.show( $.msg('vet-insert-error'), 'error', null, notificationTimout );
+			if (status === 'error') {
+				GlobalNotification.show($.msg('vet-insert-error'), 'error', null, notificationTimout);
 			} else if (status === 'success') {
 				screenType = jqXHR.getResponseHeader('X-screen-type');
-				if(typeof screenType === 'undefined') {
+				if (typeof screenType === 'undefined') {
 					screenType = jqXHR.getResponseHeader('X-Screen-Type');
 				}
-				switch($.trim(screenType)) {
-					case 'error':
-						data.responseText = data.responseText.replace(/<script.*script>/, '' );
-						GlobalNotification.show( data.responseText, 'error', null, notificationTimout );
-						break;
-					case 'summary':
-						switchScreen('Summary');
-						$('#VideoEmbedBack').hide();
-						$('#VideoEmbed' + curScreen).html(data.responseText);
-						updateHeader();
+				switch ($.trim(screenType)) {
+				case 'error':
+					data.responseText = data.responseText.replace(/<script.*script>/, '');
+					GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+					break;
+				case 'summary':
+					switchScreen('Summary');
+					$('#VideoEmbedBack').hide();
+					$('#VideoEmbed' + curScreen).html(data.responseText);
+					updateHeader();
 
-						if ( !$( '#VideoEmbedCreate'  ).length && !$( '#VideoEmbedReplace' ).length ) {
-							wikitext = $('#VideoEmbedTag').val();
-							options = {};
+					if (!$('#VideoEmbedCreate').length && !$('#VideoEmbedReplace').length) {
+						wikitext = $('#VideoEmbedTag').val();
+						options = {};
 
-							if(wikitext) {
-								options.wikitext = wikitext;
-							}
-							if($('#VideoEmbedThumbOption').is(':checked')) {
-								options.thumb = 1;
-							} else {
-								options.thumb = null;
-							}
-							if($('#VideoEmbedLayoutLeft').is(':checked')) {
-								options.align = 'left';
-							} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
-								options.align = 'center';
-							} else {
-								options.align = null;
-							}
-
-							options.caption = $('#VideoEmbedCaption').val();
-
-							options.placeholderIndex = embedPresets.placeholderIndex;
-
-							callbackAfterEmbed(options);
-						} else {
-							$( '#VideoEmbedSuccess' ).hide();
-							$( '#VideoEmbedTag' ).hide();
-							$( '#VideoEmbedPageSuccess' ).show();
+						if (wikitext) {
+							options.wikitext = wikitext;
 						}
-						break;
-					default:
-						break;
+						if ($('#VideoEmbedThumbOption').is(':checked')) {
+							options.thumb = 1;
+						} else {
+							options.thumb = null;
+						}
+						if ($('#VideoEmbedLayoutLeft').is(':checked')) {
+							options.align = 'left';
+						} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
+							options.align = 'center';
+						} else {
+							options.align = null;
+						}
+
+						options.caption = $('#VideoEmbedCaption').val();
+
+						options.placeholderIndex = embedPresets.placeholderIndex;
+
+						callbackAfterEmbed(options);
+					} else {
+						$('#VideoEmbedSuccess').hide();
+						$('#VideoEmbedTag').hide();
+						$('#VideoEmbedPageSuccess').show();
+					}
+					break;
+				default:
+					break;
 				}
 			}
 		};
 
 		jqXHR.abort();
 		jqXHR = $.ajax(
-			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo&' + params.join('&'),
-			{
+			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo&' + params.join('&'), {
 				method: 'get',
 				complete: callback
 			}
@@ -500,7 +496,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	}
 
 	function switchScreen(to) {
-		if ( videoInstance ) {
+		if (videoInstance) {
 			videoInstance.clearTimeoutTrack();
 		}
 		prevScreen = curScreen;
@@ -512,13 +508,13 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		// this is called in both cases - when hitting 'back' and when closing the dialog.
 		// in any case we want to stop the video
 		$('#VideoEmbedThumb').children().remove();
-		if(curScreen === 'Main') {
+		if (curScreen === 'Main') {
 			$('#VideoEmbedBack').hide();
 		}
 
 		// macbre: move back button on Oasis
-		if( to === 'Details' ) {
-			setTimeout(function() {
+		if (to === 'Details') {
+			setTimeout(function () {
 				moveBackButton($('.addVideoDetailsFormControls').find('input'));
 			}, 50);
 		}
@@ -531,9 +527,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			label: 'button-' + curScreen.toLowerCase() + '-back'
 		});
 
-		if(curScreen === 'Details') {
+		if (curScreen === 'Details') {
 			switchScreen('Main');
-		} else if(curScreen === 'Conflict' && prevScreen === 'Details') {
+		} else if (curScreen === 'Conflict' && prevScreen === 'Details') {
 			switchScreen('Details');
 		}
 	}
@@ -564,15 +560,15 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		var searchType, callback;
 
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
-		if(callbackAfterSelect(query, VET) !== false) {
-			callback = function(data) {
+		if (callbackAfterSelect(query, VET) !== false) {
+			callback = function (data) {
 				var screenType = jqXHR.getResponseHeader('X-screen-type');
-				if(typeof screenType === 'undefined') {
+				if (typeof screenType === 'undefined') {
 					screenType = jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
-				if($.trim(screenType) === 'error') {
-					GlobalNotification.show( data.responseText, 'error', null, notificationTimout );
+				if ($.trim(screenType) === 'error') {
+					GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();
@@ -584,8 +580,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			jqXHR.abort();
 			jqXHR = $.ajax(
-				window.wgScriptPath + '/index.php',
-				{
+				window.wgScriptPath + '/index.php', {
 					method: 'post',
 					data: 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query) + '&searchType=' + searchType,
 					complete: callback
@@ -609,19 +604,16 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	//***********************************************
 
 	VETExtended = {
-
 		canFatch: true, // flag for blocking fetching if it's in progress or no more items to fetch
 
 		// object for caching stuff for suggestions
 		suggestionsCachedStuff: {
-
 			cashedSuggestions: [],
 			fetchedResoultsCount: 0
 		},
 
 		// object for caching stuff for search
 		searchCachedStuff: {
-
 			inSearchMode: false,
 			currentKeywords: '',
 			fetchedResoultsCount: 0,
@@ -629,7 +621,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			searchOrder: 'default'
 		},
 
-		init: function(searchSettings) {
+		init: function (searchSettings) {
 			var self = this,
 				$videoEmbedDetails;
 
@@ -669,7 +661,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			}
 
 			// attach handlers - add video button
-			this.cachedSelectors.carousel.on('click', 'li > a', function(event) {
+			this.cachedSelectors.carousel.on('click', 'li > a', function (event) {
 				var node, trackData;
 
 				event.preventDefault();
@@ -678,13 +670,12 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				trackData = node.phrase + '[' + node.pos + ']';
 				tracking({
 					label: (self.carouselMode === 'search') ?
-						'add-video-' + trackData  :
-						'add-video-suggested-' + trackData
+						'add-video-' + trackData : 'add-video-suggested-' + trackData
 				});
 			});
 
 			// attach handlers - play button (open video preview)
-			this.cachedSelectors.carousel.on('click', 'li a.video', function(event){
+			this.cachedSelectors.carousel.on('click', 'li a.video', function (event) {
 				event.preventDefault();
 				var videoTitle = $('.Wikia-video-thumb', this).attr('data-video-key');
 				self.fetchVideoPlayer(videoTitle);
@@ -701,32 +692,32 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			});
 
 			// attach handlers - close preview
-			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function(event) {
+			this.cachedSelectors.previewWrapper.on('click', '#VET-preview-close', function (event) {
 				event.preventDefault();
 
 				// Closing a video instance, clear the tracking timeout
-				if ( videoInstance ) {
+				if (videoInstance) {
 					videoInstance.clearTimeoutTrack();
 				}
 
-				self.cachedSelectors.previewWrapper.stop().slideUp('slow', function() {
+				self.cachedSelectors.previewWrapper.stop().slideUp('slow', function () {
 					self.cachedSelectors.videoWrapper.children().remove();
 					self.removeInPreview();
 				});
 			});
 
 			// attach handlers - add video button from preview
-			this.cachedSelectors.previewWrapper.on('click', '#VET-add-from-preview', function(event) {
+			this.cachedSelectors.previewWrapper.on('click', '#VET-add-from-preview', function (event) {
 				event.preventDefault();
 				self.cachedSelectors.inPreview.children('a').click();
 			});
 
 			// attach handlers - back to suggestions
-			this.cachedSelectors.backToSuggestions.on('click', function() {
+			this.cachedSelectors.backToSuggestions.on('click', function () {
 
 				self.searchCachedStuff.inSearchMode = false;
 
-				if(self.requestInProgress) {
+				if (self.requestInProgress) {
 					self.requestInProgress.abort();
 				}
 				self.searchCachedStuff.currentKeywords = '';
@@ -748,17 +739,17 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			});
 
 			// attach handlers - search
-			this.cachedSelectors.searchForm.submit(function(event) {
+			this.cachedSelectors.searchForm.submit(function (event) {
 				event.preventDefault();
 				var keywords = $(this).find('#VET-search-field').val();
-				if(keywords !== '' && self.searchCachedStuff.currentKeywords !== keywords) {
+				if (keywords !== '' && self.searchCachedStuff.currentKeywords !== keywords) {
 
 					// switch fetch more handler to fetch search mode;
 					self.searchCachedStuff.inSearchMode = true;
 
 					// stop proccesing previous fetching request
 					// (exp. using search when still loading suggestions on init)
-					if(self.requestInProgress) {
+					if (self.requestInProgress) {
 						self.requestInProgress.abort();
 					}
 
@@ -778,15 +769,14 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 					tracking({
 						label: (self.searchCachedStuff.searchType === 'local') ?
-							'find-local-' + keywords :
-							'find-wikia-library-' + keywords
+							'find-local-' + keywords : 'find-wikia-library-' + keywords
 					});
 				}
 			});
 
 			$videoEmbedDetails = $('#VideoEmbedDetails');
 			// attach handlers - selection border around position options in video display options tab
-			$videoEmbedDetails.on('click', '#VideoEmbedLayoutRow span, #VideoEmbedSizeRow span', function() {
+			$videoEmbedDetails.on('click', '#VideoEmbedLayoutRow span, #VideoEmbedSizeRow span', function () {
 
 				var parent = $(this).parent();
 				parent.find('span').removeClass('selected');
@@ -803,11 +793,11 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			});
 
 			// attach handler - submit display options tab
-			$videoEmbedDetails.on('submit', '#VET-display-options', function(event) {
+			$videoEmbedDetails.on('submit', '#VET-display-options', function (event) {
 				event.preventDefault();
 				insertFinalVideo(event, 'details');
 			});
-			$videoEmbedDetails.on('submit', '#VET-display-options-update', function(event) {
+			$videoEmbedDetails.on('submit', '#VET-display-options-update', function (event) {
 				event.preventDefault();
 
 				tracking({
@@ -819,12 +809,12 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			// create dropdown for search filters
 			this.cachedSelectors.searchDropDown.wikiaDropdown({
-				onChange: function(e, $target) {
+				onChange: function (e, $target) {
 					var currSort = this.$selectedItemsList.text(),
 						newSort = $target.text(),
 						sort;
 
-					if(currSort !== newSort) {
+					if (currSort !== newSort) {
 						sort = $target.data('sort');
 						tracking({
 							label: 'dropdown-search-filter-' + sort
@@ -837,7 +827,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				}
 			});
 
-			$('#vet-see-all').on('click', function() {
+			$('#vet-see-all').on('click', function () {
 				tracking({
 					label: 'link-see-all-help'
 				});
@@ -845,24 +835,22 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		},
 
 		// METHOD: Remove selected state from in-preview thumbnail
-		removeInPreview: function() {
-
+		removeInPreview: function () {
 			if (this.cachedSelectors.inPreview) {
 				this.cachedSelectors.inPreview.removeClass('in-preview');
 			}
-
 		},
 
 		// METHOD: Trim titles
-		trimTitles: function(data) {
+		trimTitles: function (data) {
 			var item, i;
 
 			// trim video titles to two lines
-			for ( i in data.items ) {
+			for (i in data.items) {
 				item = data.items[i];
 				if (item.title) {
 					item.trimTitle = item.title.substr(0, 35);
-					if ( item.trimTitle.length < item.title.length ) {
+					if (item.trimTitle.length < item.title.length) {
 						item.trimTitle += '...';
 					}
 				}
@@ -871,7 +859,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		},
 
 		// METHOD: add items to carousel
-		addSuggestions: function(data) {
+		addSuggestions: function (data) {
 			var html, template;
 
 			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption>' +
@@ -883,7 +871,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		},
 
 		// METHOD: create carousel instance
-		createCarousel: function() {
+		createCarousel: function () {
 			var self = this,
 				// items displayed per carousel slide
 				itemsShown = 5,
@@ -898,7 +886,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				itemsShown: itemsShown,
 				nextClass: 'scrollright',
 				prevClass: 'scrollleft',
-				trackProgress: function(indexStart, indexEnd, totalItems) {
+				trackProgress: function (indexStart, indexEnd, totalItems) {
 					// trackProgress gets called on init, we don't want to count that.
 					if (previousIndexStart !== undefined) {
 						tracking({
@@ -918,33 +906,30 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					previousIndexStart = indexStart;
 				}
 			});
-
 		},
 
 		// METHOD: Update carousel after adding new items
-		updateCarousel: function() {
+		updateCarousel: function () {
 			this.carouselInstance.updateCarouselItems();
 			this.carouselInstance.updateCarouselWidth();
 			this.carouselInstance.updateCarouselArrows();
 		},
 
 		// METHOD: update carousel after adding new items or create one if not already created
-		isCarouselCheck: function() {
-
+		isCarouselCheck: function () {
 			if (this.cachedSelectors.carouselWrapper.hasClass('show')) {
 				this.updateCarousel();
 			} else {
 				this.createCarousel();
 			}
-
 		},
 
 
 		// METHOD: show preview of the selected video
-		showVideoPreview: function(data) {
+		showVideoPreview: function (data) {
 			var previewWrapper = this.cachedSelectors.previewWrapper,
 				videoWrapper = this.cachedSelectors.videoWrapper,
-				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">'+data.videoEmbedCode+'</div>')
+				embedWrapper = $('<div class="Wikia-video-enabledEmbedCode">' + data.videoEmbedCode + '</div>')
 					.appendTo(videoWrapper.html(''));
 
 			videoInstance = new VideoBootstrap(embedWrapper[0], data.videoEmbedCode, 'vetPreview');
@@ -956,8 +941,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		},
 
 		// METHOD: fech player embed code
-		fetchVideoPlayer: function(title) {
-
+		fetchVideoPlayer: function (title) {
 			var self = this;
 
 			$.nirvana.sendRequest({
@@ -967,13 +951,13 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				data: {
 					fileTitle: title
 				},
-				callback: function(data) {
+				callback: function (data) {
 					self.showVideoPreview(data);
 
 					// video play tracking
 					Wikia.Tracker.track({
 						action: Wikia.Tracker.ACTIONS.VIEW,
-						category: 'Lightbox',	// yeah, Lightbox so we can roll up all the data
+						category: 'Lightbox', // yeah, Lightbox so we can roll up all the data
 						label: 'video-inline',
 						title: title,
 						provider: data.providerName,
@@ -982,23 +966,22 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					});
 				}
 			});
-
 		},
 
 		// METHOD: update caption
-		updateResultCaption: function( txt ) {
+		updateResultCaption: function (txt) {
 			if (!this.cachedResultCaption) {
 				this.cachedResultCaption = this.cachedSelectors.resultCaption.text();
 			}
-			if ( txt ) {
-				this.cachedSelectors.resultCaption.text( txt );
+			if (txt) {
+				this.cachedSelectors.resultCaption.text(txt);
 			} else {
-				this.cachedSelectors.resultCaption.text( this.cachedResultCaption );
+				this.cachedSelectors.resultCaption.text(this.cachedResultCaption);
 			}
 		},
 
 		// METHOD: fetch part of suggestions
-		fetchSuggestions: function() {
+		fetchSuggestions: function () {
 
 			var self = this,
 				// index - start fetching from item number...
@@ -1020,7 +1003,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 						svSize: svSize,
 						articleId: window.wgArticleId
 					},
-					callback: function(data) {
+					callback: function (data) {
 						var i,
 							items = data.items,
 							length = items.length;
@@ -1052,7 +1035,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		},
 
 		// METHOD: fetch part of search results
-		fetchSearch: function() {
+		fetchSearch: function () {
 
 			var self = this,
 				svStart = this.searchCachedStuff.fetchedResoultsCount,
@@ -1075,12 +1058,12 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 						type: self.searchCachedStuff.searchType,
 						order: self.searchCachedStuff.searchOrder
 					},
-					callback: function(data) {
+					callback: function (data) {
 						var items = data.items,
 							length = items.length;
 
 						// show results count
-						self.updateResultCaption( data.caption );
+						self.updateResultCaption(data.caption);
 
 						if (length > 0) {
 
@@ -1120,23 +1103,20 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			$target = $(e.target),
 			toggleTo = true;
 
-		if($target.is('#VideoEmbedLayoutGallery')) {
+		if ($target.is('#VideoEmbedLayoutGallery')) {
 			toggleTo = false;
 		}
 
-		switch($target.attr('id')) {
-			case 'VideoEmbedLayoutCenter': {
+		switch ($target.attr('id')) {
+			case 'VideoEmbedLayoutCenter':
 				label = 'center';
 				break;
-			}
-			case 'VideoEmbedLayoutLeft': {
+			case 'VideoEmbedLayoutLeft':
 				label = 'left';
 				break;
-			}
-			case 'VideoEmbedLayoutRight': {
+			case 'VideoEmbedLayoutRight':
 				label = 'right';
 				break;
-			}
 		}
 
 		if (label !== undefined) {
@@ -1153,11 +1133,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			label = $target.attr('id') === 'VideoEmbedCloseButton' ? 'success-button-return' : 'button-close';
 
 		e.preventDefault();
-
 		tracking({
 			label: label
 		});
-
 		close();
 	}
 
@@ -1177,7 +1155,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			insertFinalVideo
 		)
 		.on('click.VET', '.vet-close', handleClose);
-
 
 	// globally available functions
 	VET = {
