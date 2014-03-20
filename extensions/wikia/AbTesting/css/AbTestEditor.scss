@@ -7,19 +7,19 @@ $abTesting-color-hover: mix($color-page, $color-text, 80);
 $abTesting-color-text-warning: #c27500;
 
 .running {
-  color: #e00;
-  font-weight: bold;
-
-  .tooltip-icon {
-    background: #e00;
-  }
-}
-.scheduled {
   color: #080;
   font-weight: bold;
 
   .tooltip-icon {
     background: #080;
+  }
+}
+.scheduled {
+  color: #FFA500;
+  font-weight: bold;
+
+  .tooltip-icon {
+    background: #FFA500;
   }
 }
 .not-running {
