@@ -8,6 +8,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	const IMG_WIDTH_LARGE = 600;
 	const IMG_HEIGHT_LARGE = 600;
 
+	const HIGHLIGHT_PREFIX = '<em>';
+	const HIGHLIGHT_POSTFIX = '</em>';
+
 	/**
 	 * @var Solarium_Client
 	 */
@@ -418,8 +421,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$hl = $query->getHighlighting();
 		$hl->setFields( 'lyrics' );
-		$hl->setSimplePrefix( '<pre>' );
-		$hl->setSimplePostfix( '</pre>' );
+		$hl->setSimplePrefix( self::HIGHLIGHT_PREFIX );
+		$hl->setSimplePostfix( self::HIGHLIGHT_POSTFIX );
 
 		$solrSongs = $this->client->select( $query );
 
