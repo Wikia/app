@@ -149,7 +149,7 @@ foreach ( $providersVideoFeed as $provider ) {
 	$summary[$provider] = $feedIngester->getResultSummary();
 
 	// show ingested videos by vertical
-	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester ), 'vertical' );
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester, $provider ), 'vertical' );
 
 	print "\nCreated $numCreated articles!\n\n";
 }
@@ -210,12 +210,13 @@ function getContentSummary( $summary ) {
 	return $content;
 }
 
-function getContentIngestedVideosByCategory( $ingester ) {
-	$content = '';
+function getContentIngestedVideosByCategory( $ingester, $provider ) {
+	$content = "\n\nProvider: ".strtoupper( $provider )."\n";
 	foreach ( $ingester->getResultIngestedVideos() as $category => $msgs ) {
+		$content .= "\nCategory: $category\n";
 		if ( !empty( $msgs ) ) {
-			$content .= "\nCategory: $category\n";
 			$content .= implode( '', $msgs );
+			$content .= "\n";
 		}
 	}
 
@@ -226,7 +227,20 @@ function displaySummary( $showSummary, $content, $type = 'summary' ) {
 	if ( empty( $showSummary ) ) {
 		echo $content;
 	} else {
-		$summaryFile = ( $type == 'summary' ) ? '/tmp/ingestion_summary' : '/tmp/ingestion_vertical';
-		file_put_contents( $summaryFile, $content );
+		$fileVertical = '/tmp/ingestion_vertical';
+		if ( $type == 'summary' ) {
+			// write summary to file
+			$filename = '/tmp/ingestion_summary';
+			file_put_contents( $filename, $content );
+
+			// write ingested videos by vertical to file
+			$content = file_get_contents( $fileVertical );
+			file_put_contents( $filename, $content, FILE_APPEND );
+
+			// delete vertical file
+			unlink( $fileVertical );
+		} else {
+			file_put_contents( $fileVertical, $content, FILE_APPEND );
+		}
 	}
 }

@@ -61,7 +61,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 			foreach ( $videos as $video ) {
 				if ( !empty( $video['time_restrictions']['start_date'] ) && strtotime( $video['time_restrictions']['start_date'] ) > $params['now'] ) {
-					$this->videoSkipped( "Skipping {$video['name']} (Id:{$video['embed_code']}). Time restriction." );
+					$this->videoSkipped( "Skipping {$video['name']} (Id:{$video['embed_code']}). Time restriction.\n" );
 					continue;
 				}
 
