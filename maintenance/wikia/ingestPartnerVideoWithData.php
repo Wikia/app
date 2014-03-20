@@ -148,16 +148,15 @@ foreach ( $providersVideoFeed as $provider ) {
 	$numCreated = $feedIngester->import( $file, $params );
 	$summary[$provider] = $feedIngester->getResultSummary();
 
-	print "Created $numCreated articles!\n\n";
+	// show ingested videos by vertical
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester ), 'vertical' );
+
+	print "\nCreated $numCreated articles!\n\n";
 }
 
-$content = getSummaryContent( $summary );
-if ( empty( $showSummary ) ) {
-	echo $content;
-} else {
-	$summaryFile = '/tmp/ingestion_summary';
-	file_put_contents( $summaryFile, $content );
-}
+// show summary
+displaySummary( $showSummary, getContentSummary( $summary ) );
+
 
 function loadUser( $userName ) {
 	global $wgUser;
@@ -188,7 +187,7 @@ function loadProviders ( $provider ) {
 	return $providersVideoFeed;
 }
 
-function getSummaryContent( $summary ) {
+function getContentSummary( $summary ) {
 	$now = date( 'Y-m-d H:i:s' );
 	$content = "Run Date: $now\n";
 
@@ -209,4 +208,25 @@ function getSummaryContent( $summary ) {
 	}
 
 	return $content;
+}
+
+function getContentIngestedVideosByCategory( $ingester ) {
+	$content = '';
+	foreach ( $ingester->getResultIngestedVideos() as $category => $msgs ) {
+		if ( !empty( $msgs ) ) {
+			$content .= "\nCategory: $category\n";
+			$content .= implode( '', $msgs );
+		}
+	}
+
+	return $content;
+}
+
+function displaySummary( $showSummary, $content, $type = 'summary' ) {
+	if ( empty( $showSummary ) ) {
+		echo $content;
+	} else {
+		$summaryFile = ( $type == 'summary' ) ? '/tmp/ingestion_summary' : '/tmp/ingestion_vertical';
+		file_put_contents( $summaryFile, $content );
+	}
 }

@@ -54,6 +54,13 @@ abstract class VideoFeedIngester {
 		'errors'   => 0,
 	];
 
+	protected $resultIngestedVideos = [
+		'Games'         => [],
+		'Entertainment' => [],
+		'Lifestyle'     => [],
+		'International' => [],
+	];
+
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
 	private static $instances = array();
 
@@ -363,7 +370,7 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
-				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}" );
+				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n", $categories );
 
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
 				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
@@ -1246,7 +1253,16 @@ abstract class VideoFeedIngester {
 	 * Set summary result for ingested video
 	 * @param string $msg
 	 */
-	public function videoIngested( $msg = '' ) {
+	public function videoIngested( $msg = '', $categories = [] ) {
+		if ( !empty( $msg ) ) {
+			foreach ( $categories as $category ) {
+				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
+					$this->resultIngestedVideos[$category][] = $msg;
+				}
+			}
+		}
+
+		$msg .= "\n";
 		$this->setResultSummary( 'ingested', $msg );
 	}
 
@@ -1285,6 +1301,14 @@ abstract class VideoFeedIngester {
 	 */
 	public function getResultSummary() {
 		return $this->resultSummary;
+	}
+
+	/**
+	 * Get messages for ingested videos by category
+	 * @return array
+	 */
+	public function getResultIngestedVideos() {
+		return $this->resultIngestedVideos;
 	}
 
 }
