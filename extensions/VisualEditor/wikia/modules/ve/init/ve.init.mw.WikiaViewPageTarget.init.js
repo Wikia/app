@@ -20,8 +20,8 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit,
-		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, vePreferred,
+		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -127,6 +127,8 @@
 		!( 'diff' in uri.query )
 	);
 	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
+	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
+	vePreferred = defaultEditor === 2 || ( defaultEditor === 0 && veUIEnabled );
 
 	support = {
 		es5: !!(
@@ -197,7 +199,7 @@
 		},
 
 		setupSkin: function () {
-			if ( userPrefEnabled && veUIEnabled ) {
+			if ( userPrefEnabled && vePreferred ) {
 				init.setupTabs();
 				init.setupSectionLinks();
 			}
@@ -328,7 +330,7 @@
 	};
 
 	init.canCreatePageUseVE = function () {
-		return isBrowserSupported && userPrefEnabled && isSkinSupported && veUIEnabled;
+		return isBrowserSupported && userPrefEnabled && isSkinSupported && vePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -363,7 +365,7 @@
 			}
 		}
 
-		if ( userPrefEnabled && veUIEnabled ) {
+		if ( userPrefEnabled && vePreferred ) {
 			// Redlinks
 			$( setupRedlinks );
 		}

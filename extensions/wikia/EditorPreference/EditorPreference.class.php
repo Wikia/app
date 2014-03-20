@@ -43,10 +43,10 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		global $wgUser, $wgEnableRTEExt;
+		global $wgUser, $wgEnableRTEExt, $wgEnableVisualEditorExt;
 
-		if ( !isset( $links['views']['edit'] ) ) {
-			// There's no edit link, nothing to do
+		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorTab() ) {
+			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
 
@@ -140,5 +140,16 @@ class EditorPreference {
 				return self::OPTION_EDITOR_SOURCE;
 			}
 		}
+	}
+
+	/**
+	 * Checks whether the VisualEditor tab should be shown.
+	 *
+	 * @return boolean
+	 */
+	public static function shouldShowVisualEditorTab() {
+		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
+		return $wgEnableVisualEditorExt && ( is_array( $wgVisualEditorNamespaces ) ?
+			in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
 	}
 }

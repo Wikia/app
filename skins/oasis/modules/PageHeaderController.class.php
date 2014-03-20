@@ -91,6 +91,7 @@ class PageHeaderController extends WikiaController {
 		// ve-edit
 		else if ( isset($this->content_actions['ve-edit']) && ( ( $wgEnableVisualEditorUI &&
 			!$wgEnableEditorPreferenceExt ) || ( $wgEnableEditorPreferenceExt &&
+			EditorPreference::shouldShowVisualEditorTab() &&
 			EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ) ) ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
@@ -126,7 +127,8 @@ class PageHeaderController extends WikiaController {
 		if (!in_array($this->actionName, array('edit', 'source'))) {
 			array_unshift($actions, 'edit');
 		}
-		elseif ($wgEnableEditorPreferenceExt && $this->actionName !== 've-edit') {
+		elseif ($wgEnableEditorPreferenceExt && EditorPreference::shouldShowVisualEditorTab() &&
+			$this->actionName !== 've-edit') {
 			array_unshift($actions, 've-edit');
 		}
 

@@ -5,7 +5,7 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	veAvailable: mw.libs.ve.canCreatePageUseVE(),
+	veAvailable: ( mw.hasOwnProperty( 'libs' ) && mw.libs.hasOwnProperty( 've' ) ? mw.libs.ve.canCreatePageUseVE() : false ),
 
 	checkTitle: function( title ) {
 		'use strict';
