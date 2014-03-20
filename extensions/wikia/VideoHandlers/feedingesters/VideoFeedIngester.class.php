@@ -330,7 +330,6 @@ abstract class VideoFeedIngester {
 		$videoHandlerHelper = new VideoHandlerHelper();
 		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
 
-
 		if ( $debug ) {
 			print "Ready to create video\n";
 			print "id:          $id\n";
@@ -346,7 +345,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 
-			$this->videoIngested();
+			$this->videoIngested( "Ingested $name (id: $id).\n", $categories );
 
 			wfProfileOut( __METHOD__ );
 			return 1;
@@ -433,7 +432,9 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		$this->videoIngested();
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
+
 		wfProfileOut( __METHOD__ );
 		return 1;
 	}
@@ -489,7 +490,9 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		$this->videoIngested();
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
+
 		wfProfileOut( __METHOD__ );
 		return 1;
 	}
