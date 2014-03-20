@@ -262,9 +262,7 @@ abstract class VideoFeedIngester {
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
-				if ( $debug ) {
-					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists and reupload is disabled.\n" );
-				}
+				$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists and reupload is disabled.\n" );
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
