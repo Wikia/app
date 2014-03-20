@@ -396,14 +396,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'type: %1%' => self::TYPE_SONG,
 			'search_song_name: %P2%' => $query,
 		] );
+
 		$solrSongs = $this->client->select( $query );
-		if ( !is_array( $solrSongs ) ) {
+		if ( $solrSongs->getNumFound() <= 0 ) {
 			return null;
 		}
+
 		$songs = [];
 		foreach ( $solrSongs as $solrSong ) {
-			$songs = $this->getOutputSong( $solrSong );
+			$songs[] = $this->getOutputSong( $solrSong );
 		}
+
 		return $songs;
 	}
 
