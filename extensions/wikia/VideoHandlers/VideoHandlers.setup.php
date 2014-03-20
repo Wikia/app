@@ -229,6 +229,7 @@ $wgAutoloadClasses['UstreamVideoHandler'] =  $dir . '/handlers/UstreamVideoHandl
 $wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrapper.class.php';
 $wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
 
+$wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
 
 /**
  * Feed ingesters
@@ -268,4 +269,5 @@ $wgVideoMigrationProviderMap = array(
 	29 => 'Iva',
 	30 => 'Snappytv',
 	31 => 'Ustream',
+	32 => 'Youku'
 );

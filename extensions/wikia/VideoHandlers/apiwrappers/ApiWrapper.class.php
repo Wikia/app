@@ -144,6 +144,7 @@ abstract class ApiWrapper {
 
 	protected function initializeInterfaceObject(){
 		$this->interfaceObj = $this->getInterfaceObjectFromType( static::$RESPONSE_FORMAT );
+		print_tmp("interob: ", $this->interfaceObj);
 	}
 
 	protected function getInterfaceObjectFromType( $type ) {
