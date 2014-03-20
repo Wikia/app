@@ -12,4 +12,5 @@ $data = json_decode($options['data'], true);
 /** @var \Wikia\Tasks\Tasks\BaseTask $task */
 $task = new $options['class']();
 $task->unserialize($data['@context']);
-call_user_func_array([$task, $data['@method']], $data['@args']);
+$retval = $task->execute($data['@method'], $data['@args']);
+echo json_encode($retval);

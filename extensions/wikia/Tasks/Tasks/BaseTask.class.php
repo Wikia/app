@@ -15,7 +15,7 @@ abstract class BaseTask {
 
 	protected $args = [];
 
-	public function call(/** args. index0=method, indexN=arg */) {
+	public function queue(/** args. index0=method, indexN=arg */) {
 		$this->args = func_get_args();
 		$this->method = array_shift($this->args);
 
@@ -26,8 +26,19 @@ abstract class BaseTask {
 		return $this;
 	}
 
-	public function execute() {
-		// has a body so that not every subclass need override, since this is just a default
+	public function execute($method, $args) {
+		if (!method_exists($this, $method)) {
+			throw new \InvalidArgumentException;
+		}
+
+
+		try {
+			$result = call_user_func_array([$this, $method], $args);
+		} catch (\Exception $e) {
+			$result = $e;
+		}
+
+		return $this->format($result);
 	}
 
 	public function getMethod() {
@@ -53,5 +64,20 @@ abstract class BaseTask {
 		foreach ($properties as $name => $value) {
 			$this->$name = $value;
 		}
+	}
+
+	protected function format($result) {
+		$json = (object) [
+			'status' => 'success',
+		];
+
+		if ($result instanceof \Exception) {
+			$json->status = 'failure';
+			$json->reason = $result->getMessage();
+		} else {
+			$json->retval = $result;
+		}
+
+		return $json;
 	}
 }
