@@ -20,8 +20,8 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [], veUIEnabled,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit,
+		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -197,11 +197,9 @@
 		},
 
 		setupSkin: function () {
-			if ( isViewPage ) {
+			if ( userPrefEnabled && veUIEnabled ) {
 				init.setupTabs();
-				if ( veUIEnabled ) {
-					init.setupSectionLinks();
-				}
+				init.setupSectionLinks();
 			}
 		},
 
@@ -210,7 +208,10 @@
 		},
 
 		setupSectionLinks: function () {
-			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			// If VE is the default editor for the page...
+			if ( $( 'nav.wikia-menu-button a', '#WikiaPageHeader' ).filter( ':first' ).attr( 'data-id' ) === 've-edit' ) {
+				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
+			}
 		},
 
 		onEditTabClick: function ( e ) {
@@ -279,7 +280,7 @@
 		}
 	};
 
-	support.visualEditor = support.es5 &&
+	isBrowserSupported = support.es5 &&
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
@@ -289,13 +290,12 @@
 		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
 
 		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
-		// User has 'visualeditor-betatempdisable' preference disabled
 		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
 		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
 		// anons as it is likely outdated.
 		(
 			mw.config.get( 'wgUserName' ) === null ?
-				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
+				conf.defaultUserOptions.enable :
 				(
 					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
 					!!mw.user.options.get( 'enablerichtext' )
@@ -303,9 +303,10 @@
 		)
 	);
 
-	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
-	// browser etc.
-	init.isAvailable = function ( article ) {
+	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
+
+	// Whether VisualEditor is available for a specific page based on namespace, etc.
+	init.isPageEligible = function ( article ) {
 		return (
 			// Disable on redirect pages until redirects are editable (bug 47328)
 			// Property wgIsRedirect is relatively new in core, many cached pages
@@ -318,19 +319,16 @@
 				mw.config.get( 'wgIsRedirect', !!uri.query.redirect )
 			) &&
 
-			support.visualEditor &&
-
-			userPrefEnabled &&
-
-			// Only in supported skins
-			$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
-
 			// Only in enabled namespaces
 			$.inArray(
 				new mw.Title( article ).getNamespaceId(),
 				conf.namespaces
 			) !== -1
 		);
+	};
+
+	init.canCreatePageUseVE = function () {
+		return isBrowserSupported && userPrefEnabled && isSkinSupported && veUIEnabled;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -340,53 +338,52 @@
 	// The VE global was once available always, but now that platform integration initialisation
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
 	//
-	// Most of mw.libs.ve is considered subject to change and private.  The exception is that
-	// mw.libs.ve.isAvailable is public, and indicates whether the VE editor itself can be loaded
-	// on this page. See above for why it may be false.
-	mw.libs.ve = init;
+	// Most of mw.libs.ve is considered subject to change and private.
+	mw.libs.ve = $.extend( mw.libs.ve, init );
+	window.mw.libs.ve = mw.libs.ve;
 
-	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
-
-	if ( !thisPageIsAvailable ) {
-		$( 'html' ).addClass( 've-not-available' );
-		$veEdit = $( '#ca-ve-edit' );
-		if ( $veEdit.length > 0 ) {
-			$edit = $( '#ca-edit' );
-			$veEdit.attr( 'href', $edit.attr( 'href' ) );
-			$edit.parent().remove();
-		}
-	} else {
-		$( 'html' ).addClass( 've-available' );
-	}
-
-	if ( !userPrefEnabled ) {
-		return;
-	}
-
-	if ( thisPageIsAvailable ) {
-		$( function () {
+	if ( isBrowserSupported && isSkinSupported ) {
+		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
 			if ( isViewPage ) {
-				if ( init.activateOnPageLoad ) {
-					if ( window.veTrack ) {
-						veTrack( {
-							action: 've-edit-page-start',
-							trigger: 'activateOnPageLoad'
+				$( function () {
+					if ( init.activateOnPageLoad ) {
+						initIndicator();
+						if ( window.veTrack ) {
+							veTrack( {
+								action: 've-edit-page-start',
+								trigger: 'activateOnPageLoad'
+							} );
+						}
+						getTarget().done( function ( target ) {
+							target.activate();
 						} );
 					}
-					getTarget().done( function ( target ) {
-						target.activate();
-					} );
-				}
+					init.setupSkin();
+				} );
 			}
-			init.setupSkin();
-		} );
+		}
+
+		if ( userPrefEnabled && veUIEnabled ) {
+			// Redlinks
+			$( setupRedlinks );
+		}
 	}
-
-	initIndicator();
-
-	// Redlinks
-	if ( veUIEnabled ) {
-		$( setupRedlinks );
+	else if ( !userPrefEnabled ) {
+		// This class may still be used by CSS
+		$( 'html' ).addClass( 've-not-available' );
+		$edit = $( '#ca-edit' );
+		$veEdit = $( '#ca-ve-edit' );
+		if ( isElementInDropdown( $veEdit ) ) {
+			// Remove the VE edit link from the tab dropdown
+			$veEdit.parent().remove();
+		} else {
+			// Else the VE edit link is the main edit button -- replace URI with default edit
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			// Remove the alternate edit link in the tab dropdown because it's redundant
+			if ( isElementInDropdown( $edit ) ) {
+				$edit.parent().remove();
+			}
+		}
 	}
 
 	function setupRedlinks() {
@@ -399,10 +396,14 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailable( redlinkArticle ) ) {
+				if ( init.isPageEligible( redlinkArticle ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
 		);
+	}
+
+	function isElementInDropdown( jqElement ) {
+		return jqElement.parent().is( 'li' );
 	}
 }() );

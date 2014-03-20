@@ -700,6 +700,7 @@ HTML
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
+		return true;
 
 		// add RTE related section under "Editing" tab
 		$preferences['enablerichtext'] = array(

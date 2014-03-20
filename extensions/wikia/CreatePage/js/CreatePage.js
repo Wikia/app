@@ -5,7 +5,7 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	veAvailable: !!mw.config.get( 'wgEnableVisualEditorUI' ) && $( 'html' ).hasClass( 've-available' ),
+	veAvailable: mw.libs.ve.canCreatePageUseVE(),
 
 	checkTitle: function( title ) {
 		'use strict';
