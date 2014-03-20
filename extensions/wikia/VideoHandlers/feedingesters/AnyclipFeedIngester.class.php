@@ -1,4 +1,4 @@
-videoErrors<?php
+<?php
 
 class AnyclipFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'AnyclipApiWrapper';
