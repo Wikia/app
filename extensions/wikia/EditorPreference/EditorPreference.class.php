@@ -141,14 +141,4 @@ class EditorPreference {
 			}
 		}
 	}
-
-	/**
-	 * Checks whether the VisualEditor tab should be shown.
-	 *
-	 * @return boolean
-	 */
-	public static function shouldShowVisualEditorTab() {
-		global $wgTitle, $wgVisualEditorNamespaces;
-		return in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces );
-	}
 }
