@@ -31,14 +31,12 @@ EOT;
 				'videoId' => $this->videoId,
 				'autoPlay' => $autoPlayStr,
 				'title' => $this->title,
-				'jsFile' => array(
-					$jsFile,
-					"extensions/wikia/VideoHandlers/js/handlers/OoyalaModule.js",
-				),
 			),
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
-				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
+				$jsFile,
+				"extensions/wikia/VideoHandlers/js/handlers/OoyalaModule.js",
+				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js",
 			),
 		);
 	}
