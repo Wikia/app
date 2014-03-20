@@ -36,6 +36,7 @@ class ImagePage extends Article {
 	/**
 	 * Constructor from a page id
 	 * @param $id Int article ID to load
+	 * @return \Article|\ImagePage|null
 	 */
 	public static function newFromID( $id ) {
 		$t = Title::newFromID( $id );
@@ -298,11 +299,33 @@ class ImagePage extends Article {
 	 * @return String The metadata table. This is treated as Wikitext (!)
 	 */
 	protected function makeMetadataTable( $metadata ) {
+		/* Wikia change start */
+		$wg = F::app()->wg;
+		$filter = $wg->FilePageFilterMetaFields;
+		/* Wikia change end */
+
 		$r = "<div class=\"mw-imagepage-section-metadata\">";
 		$r .= wfMsgNoTrans( 'metadata-help' );
 		$r .= "<table id=\"mw_metadata\" class=\"mw_metadata\">\n";
 		foreach ( $metadata as $type => $stuff ) {
 			foreach ( $stuff as $v ) {
+
+				/* Wikia change start */
+				// Filter out metadata fields that we don't want to show the user
+				if ( !empty( $filter[strtolower( $v['name'] )] ) ) {
+					continue;
+				}
+
+				// Convert the secs duration to HH::MM::SS
+				if ( $v['name'] == 'duration' ) {
+					$v['value'] = WikiaFileHelper::formatDuration($v['value']);
+				}
+				// Convert epoch seconds to a date format in the content language format
+				if ( $v['name'] == 'published' ) {
+					$v['value'] = $wg->ContLang->date(str_replace(',', '', $v['value']));
+				}
+				/* Wikia change end */
+
 				# @todo FIXME: Why is this using escapeId for a class?!
 				$class = Sanitizer::escapeId( $v['id'] );
 				if ( $type == 'collapsed' ) {
@@ -1247,6 +1270,7 @@ class ImageHistoryPseudoPager extends ReverseChronologicalPager {
 	}
 
 	/**
+	 * @param Object $row
 	 * @return string
 	 */
 	function formatRow( $row ) {
