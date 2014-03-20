@@ -8,14 +8,38 @@ $abTesting-color-text-warning: #c27500;
 
 .running {
   color: #e00;
-	font-weight: bold;
+  font-weight: bold;
+
+  .tooltip-icon {
+    background: #e00;
+  }
 }
 .scheduled {
   color: #080;
-	font-weight: bold;
+  font-weight: bold;
+
+  .tooltip-icon {
+    background: #080;
+  }
 }
 .not-running {
 // no change
+}
+
+.galegend .tooltip-icon {
+  padding: 2px;
+  border-radius: 50%;
+  color: white;
+  cursor: default;
+  display: inline-block;
+  font-size: 10px;
+  height: 12px;
+  line-height: 12px;
+  text-align: center;
+  margin-top: -5px;
+  width: 12px;
+  vertical-align: middle;
+  font-weight: bold;
 }
 
 .AbTestingEditForm {

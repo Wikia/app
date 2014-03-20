@@ -4,13 +4,29 @@
 	<label for="show-past-experiments"><?= wfMessage('abtesting-checkbox-show-past-experiments')->plain(); ?></label>
 </div>
 <? if ( strlen( $gaSlots ) ): ?>
-	<div class="running">
-		<?= wfMessage('abtesting-currently-used-ga-slots', $gaSlots)->plain(); ?>
+	<div class="galegend running">
+	<?= $app->renderView(
+		'WikiaStyleGuideTooltipIcon',
+		'index',
+		array(
+			'text' => wfMessage('abtesting-currently-used-ga-slots', $gaSlots)->escaped(),
+			'tooltipIconTitle' => wfMessage('abtesting-currently-used-ga-slots-tooltip')->plain(),
+		)
+	);
+	?>
 	</div>
 <? endif ?>
 <? if ( strlen( $futureGaSlots ) ): ?>
-	<div class="scheduled">
-		<?= wfMessage('abtesting-future-used-ga-slots', $futureGaSlots)->plain(); ?>
+	<div class="galegend scheduled">
+		<?= $app->renderView(
+			'WikiaStyleGuideTooltipIcon',
+			'index',
+			array(
+				'text' => wfMessage('abtesting-future-used-ga-slots', $futureGaSlots)->escaped(),
+				'tooltipIconTitle' => wfMessage('abtesting-future-used-ga-slots-tooltip')->plain(),
+			)
+		);
+		?>
 	</div>
 <? endif ?>
 <table class="WikiaTable AbTestEditor" id="AbTestEditor">

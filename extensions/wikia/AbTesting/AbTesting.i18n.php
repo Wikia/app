@@ -11,7 +11,9 @@ $messages['en'] = array(
 	'abtesting' => 'A/B Testing',
 	'abtesting-desc' => 'The A/B Testing extension is used by Wikia to test what effects different features or settings have on actual users.',
 	'abtesting-currently-used-ga-slots' => 'List of currently used GA slots: $1',
+	'abtesting-currently-used-ga-slots-tooltip' => 'This list will be updated ONLY when page is refreshed.',
 	'abtesting-future-used-ga-slots' => 'List of used GA slots in the future: $1',
+	'abtesting-future-used-ga-slots-tooltip' => 'This list will be updated ONLY when page is refreshed.',
 	'abtesting-checkbox-show-past-experiments' => 'Show past experiments',
 
 	'abtesting-heading-id' => 'ID',
