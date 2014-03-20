@@ -380,7 +380,11 @@ class RelatedPages {
 				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
 				!$app->checkSkin( 'wikiamobile' )
 			) {
-				OasisController::addSkinAssetGroup('relatedpages_js');
+				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+
+				foreach( $scripts as $script ){
+					$wg->Out->addScript( "<script src='{$script}'></script>" );
+				}
 			}
 		}
 
