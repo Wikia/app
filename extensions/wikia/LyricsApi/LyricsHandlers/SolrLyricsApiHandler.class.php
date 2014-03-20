@@ -277,10 +277,11 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Builds API requests URLs, images URLs and whole song object returned in response results
 	 *
 	 * @param Solarium_Document_ReadOnly $solrSong song object retrieved from solr
+	 * @param Solarium_Result_Select_Highlighting_Result $highlights optional Solarium result object with highlighting
 	 *
 	 * @return stdClass
 	 */
-	private function getOutputSong( $solrSong ) {
+	private function getOutputSong( $solrSong, $highlights = null ) {
 		$song = new stdClass();
 		$song->name = $solrSong->song_name;
 
@@ -311,6 +312,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		if ( $solrSong->image ) {
 			$this->appendImages( $song, $solrSong->image );
+		}
+
+		if( !is_null( $highlights ) ) {
+			foreach( $highlights->getIterator() as $highlight ) {
+				$song->hightlights[] = $highlight;
+			}
 		}
 
 		return $song;
@@ -404,20 +411,28 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @return array|null|stdClass
 	 */
 	public function searchLyrics( $query ) {
-		// TODO: Add highlighting
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => self::TYPE_SONG,
 			'lyrics: %P2%' => $query,
 		] );
 
+		$hl = $query->getHighlighting();
+		$hl->setFields( 'lyrics' );
+		$hl->setSimplePrefix( '<pre>' );
+		$hl->setSimplePostfix( '</pre>' );
+
 		$solrSongs = $this->client->select( $query );
-		if ( !is_array( $solrSongs ) ) {
+
+		if ( $solrSongs->getNumFound() <= 0 ) {
 			return null;
 		}
 
 		$songs = [];
+		$highlighting = $solrSongs->getHighlighting();
+		/** @var Solarium_Document_ReadOnly $solrSong */
 		foreach ( $solrSongs as $solrSong ) {
-			$songs = $this->getOutputSong( $solrSong );
+			$fields = $solrSong->getFields();
+			$songs[] = $this->getOutputSong( $solrSong, $highlighting->getResult( $fields['id'] ) );
 		}
 
 		return $songs;
