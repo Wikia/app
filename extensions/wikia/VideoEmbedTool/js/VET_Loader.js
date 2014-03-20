@@ -105,7 +105,6 @@
 		}
 
 		$.when.apply($, resourceList).done(function (templateResp) {
-			console.log(arguments);
 			$elem.stopThrobbing();
 
 			// now that VET is loaded, require it.
