@@ -8,7 +8,6 @@
  */
 
 class HubRssFeedSpecialController extends WikiaSpecialPageController {
-	const WFV_HUB_CITY_IDS = 'wgHubRssFeedCityIds';
 	const SPECIAL_NAME = 'HubRssFeed';
 	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
@@ -67,6 +66,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
+		global $wgHubRssFeedCityIds;
+
 		$params = $this->request->getParams();
 
 		$hubName = strtolower( (string)$params[ 'par' ] );
@@ -85,7 +86,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		if ( $xml === false ) {
 			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
 			$verticalId = $this->hubs[ $hubName ];
-			$cityId = self::getCityIdForHubName($hubName );
+			$cityId = $wgHubRssFeedCityIds[ $hubName ];
 			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
 			$xml = $service->dataToXml( $data, $verticalId );
 			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
@@ -95,15 +96,5 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setBody( $xml );
 		$this->response->setContentType( 'text/xml' );
 	}
-
-	private static function getCityIdForHubName( $hubName ) {
-		global $wgCityId;
-
-		$cityIds = WikiFactory::getVarValueByName(self::WFV_HUB_CITY_IDS, $wgCityId);
-
-		return !empty( $cityIds ) && !empty( $cityIds[ $hubName ] ) ? $cityIds[ $hubName ] : 0;
-	}
-
-
 
 }
