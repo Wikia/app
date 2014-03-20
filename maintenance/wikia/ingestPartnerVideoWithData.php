@@ -32,11 +32,11 @@ Options:
   -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
   --ra				use ooyala remote asset to ingest video
+  --summary			show summary information
 
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
-                    If none is specified, script will ingest content from all
-		    supported premium providers.
+                    If none is specified, script will ingest content from all supported premium providers.
 
 
 EOT;
@@ -59,6 +59,7 @@ $reupload     = isset( $options['r'] );
 $ignoreRecent = isset( $options['i'] ) ? $options['i'] : 0;
 $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
+$showSummary  = isset( $options['summary'] );
 $provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
 
 // check if allow to upload file
@@ -145,8 +146,17 @@ foreach ( $providersVideoFeed as $provider ) {
 	}
 
 	$numCreated = $feedIngester->import( $file, $params );
+	$summary[$provider] = $feedIngester->getResultSummary();
 
 	print "Created $numCreated articles!\n\n";
+}
+
+$content = getSummaryContent( $summary );
+if ( empty( $showSummary ) ) {
+	echo $content;
+} else {
+	$summaryFile = '/tmp/ingestion_summary';
+	file_put_contents( $summaryFile, $content );
 }
 
 function loadUser( $userName ) {
@@ -176,4 +186,27 @@ function loadProviders ( $provider ) {
 	}
 
 	return $providersVideoFeed;
+}
+
+function getSummaryContent( $summary ) {
+	$now = date( 'Y-m-d H:i:s' );
+	$content = "Run Date: $now\n";
+
+	// get header
+	$keys = array_keys( current( $summary ) );
+	$header = array_merge( ['provider'], $keys );
+	$content .= implode( "\t\t", array_map( 'ucwords', $header ) )."\n";
+
+	// get body
+	$summary['total'] = array_fill_keys( $keys, 0 );
+	foreach ( $summary as $provider => &$result ) {
+		$body = [ strtoupper( $provider ) ];
+		foreach ( $result as $key => $value ) {
+			$summary['total'][$key] += $value;
+			$body[] = $value;
+		}
+		$content .= implode( "\t\t", $body )."\n";
+	}
+
+	return $content;
 }
