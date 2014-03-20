@@ -373,15 +373,19 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'type: %1%' => self::TYPE_ARTIST,
 			'search_artist_name: %P2%' => $query,
 		] );
+
 		$solrArtists = $this->client->select( $query );
-		if ( !is_array( $solrArtists ) ) {
+
+		if ( $solrArtists->getNumFound() <= 0 ) {
 			return null;
 		}
-		$albums = [];
+
+		$artists = [];
 		foreach ( $solrArtists as $solrArtist ) {
-			$albums = $this->getOutputArtist( $solrArtist );
+			$artists[] = $this->getOutputArtist( $solrArtist );
 		}
-		return $albums;
+
+		return $artists;
 	}
 
 	/**
