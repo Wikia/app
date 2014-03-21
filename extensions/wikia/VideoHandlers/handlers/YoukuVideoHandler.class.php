@@ -10,26 +10,14 @@ class YoukuVideoHandler extends VideoHandler {
 	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
 
 		$height =  $this->getHeight( $width );
-		$youKuConfig = F::app()->wg->YoukuConfig;
-		$html = <<< EOF
-<div id="youkuplayer" style="width: {$width}px; height: {$height}px"></div>
-EOF;
+		$sizeString = $this->getSizeString( $width, $height );
+		$url = $this->getEmbedUrl();
+		$html = "<iframe src='$url' $sizeString frameborder=0 allowfullscreen></iframe>";
 
 		return array(
 			'html'	=> $html,
 			'width' => $width,
 			'height' => $height,
-			'scripts' => array(
-				'http://player.youku.com/jsapi',
-				"extensions/wikia/VideoHandlers/js/handlers/Youku.js"
-			),
-			'jsParams' => array(
-				'styleid'	=> $youKuConfig['playerColor'],
-				'client_id'	=> $youKuConfig['AppKey'],
-				'vid'		=> $this->videoId,
-				'autoplay'	=> $autoplay,
-			),
-			'init' => 'wikia.videohandler.youku',
 		);
 	}
 
