@@ -2,16 +2,25 @@
 
 class YoukuApiWrapper extends ApiWrapper {
 
-	protected  static $API_KEY = '481ddfdf1bc0960f';
 	protected static $API_URL = "https://openapi.youku.com/v2/videos/show.json";
 	protected static $CACHE_KEY = 'youkuapi';
 	protected static $aspectRatio = 1.7777778;
 	const VIDEO_NOT_FOUND_ERROR = 120020001;
 
+	/**
+	 * Determine if the given url is from Youku
+	 * @param string $hostname
+	 * @return bool
+	 */
 	public static function isMatchingHostname( $hostname ) {
-		return endsWith( $hostname, "v.youku.com" ) ? true : false;
+		return endsWith( $hostname, "youku.com" ) ? true : false;
 	}
 
+	/**
+	 * Create an api wrapper from a given url
+	 * @param string $url
+	 * @return mixed|null|static
+	 */
 	public static function newFromUrl( $url ) {
 
 		wfProfileIn( __METHOD__ );
@@ -30,6 +39,7 @@ class YoukuApiWrapper extends ApiWrapper {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return null;
 	}
 
@@ -37,11 +47,8 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * Is resolution of 720 or higher available
 	 * @return boolean
 	 */
-	// TODO Implement!!!! Ask Chen to translate the "settings" gear on the video used to change the resolution
-	// Also, check what we do with that information (whether something is HD or not).
 	protected function isHdAvailable() {
-		return null;
-		//return isset($this->interfaceObj['entry']['yt$hd']);
+		return in_array( "hd", $this->interfaceObj['streamtypes'] );
 	}
 
 	/**
@@ -56,9 +63,8 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	// TODO is saying that this is created in UTC accurate?
 	/**
-	 * Time that this feed entry was created, in UTC
+	 * Time that this feed entry was created
 	 * @return string
 	 */
 	protected function getVideoPublished() {
@@ -69,7 +75,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Description of the video
+	 * Description of the video provided by Youku
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
@@ -80,6 +86,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Video Category
 	 * @return string
 	 */
 	protected function getVideoCategory() {
@@ -90,20 +97,20 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Keywords of the video
 	 * @return mixed|string
 	 */
-	// TODO check with chen if there these keywords should actually not have a space following the comma
 	protected function getVideoKeywords() {
-		if ( !empty( $this->interfaceObj['keywords'] ) ) {
-			return str_replace(',', ', ', $this->interfaceObj['keywords'] );
+		if ( !empty( $this->interfaceObj['tags'] ) ) {
+			return $this->interfaceObj['tags'];
 		}
 		return '';
 	}
 
 	/**
+	 * Lanuage of the video
 	 * @return string
 	 */
-	// TODO Try and get the api to actually return an audiolang dictionary...
 	protected function getLanguage() {
 		if ( !empty( $this->interfaceObj['audiolang']['lang'] ) ) {
 			return $this->interfaceObj['audiolang']['lang'];
@@ -112,6 +119,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Name of the series
 	 * @return string
 	 */
 	protected function getSeries() {
@@ -121,7 +129,10 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	// TODO check with Chen if this is returning the character name, or the actor name
+	/**
+	 * Characters in the scene
+	 * @return string
+	 */
 	protected function getCharacters() {
 		if ( !empty( $this->interfaceObj['dvd']['person']['name'] ) ) {
 			return $this->interfaceObj['dvd']['person']['name'];
@@ -129,7 +140,6 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	// TODO check if ['show']['seq'] represents the number of videos, or if it's actually the season
 	/**
 	 * Aspect ratio of the video
 	 * @return float
@@ -163,13 +173,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * @return mixed
 	 */
 	public function getThumbnailUrl() {
-
-		wfProfileIn( __METHOD__ );
-
 		return !empty( $this->interfaceObj['bigThumbnail'] ) ? $this->interfaceObj['bigThumbnail'] :  $this->interfaceObj['thumbnail'];
-
-		wfProfileOut( __METHOD__ );
-
 	}
 
 	/**
