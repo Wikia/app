@@ -21,10 +21,6 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public $cityId;
 
-	const TYPE_ARTIST = 'artist';
-	const TYPE_ALBUM = 'album';
-	const TYPE_SONG = 'song';
-
 	public function __construct( $config ) {
 		global $wgCityId;
 		$this->cityId = $wgCityId;
@@ -48,7 +44,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Returns first document from results set
 	 *
-	 * @param Solarium_Document_ReadOnly $resultSet
+	 * @param Solarium_Result_Select $resultSet
 	 * @return null
 	 */
 	private function getFirstResult( $resultSet ) {
@@ -199,7 +195,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getArtist( $artist ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_ARTIST,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_ARTIST,
 			'artist_name: %P2%' => $artist,
 		] );
 
@@ -230,7 +226,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getAlbum( $artist, $album ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_ALBUM,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_ALBUM,
 			'artist_name: %P2%' => $artist,
 			'album_name: %P3%' => $album,
 		] );
@@ -348,7 +344,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getSong( $artist, $album, $song ) {
 		$solrQuery = [
-			'type: %1%' => self::TYPE_SONG,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
 			'artist_name: %P2%' => $artist,
 			'song_name: %P3%' => $song,
 		];
@@ -381,7 +377,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchArtist( $query ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_ARTIST,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_ARTIST,
 			'search_artist_name: %P2%' => $query,
 		] );
 
@@ -408,7 +404,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchSong( $query ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_SONG,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
 			'search_song_name: %P2%' => $query,
 		] );
 
@@ -433,7 +429,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchLyrics( $query ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => self::TYPE_SONG,
+			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
 			'lyrics: %P2%' => $query,
 		] );
 

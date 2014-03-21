@@ -40,9 +40,6 @@ class MockAdapter implements DataBaseAdapter {
 class SolrAdapter implements DataBaseAdapter {
 
 	const MAX_QUEUE_LENGTH = 50;
-	const TYPE_ARTIST = 'artist';
-	const TYPE_ALBUM = 'album';
-	const TYPE_SONG = 'song';
 
 	private $client;
 	private $queue = [];
@@ -213,7 +210,7 @@ class SolrAdapter implements DataBaseAdapter {
 	function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
-		$artist['type'] = self::TYPE_ARTIST;
+		$artist['type'] = WIKIA_LYRICS_API_TYPE_ARTIST;
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
@@ -237,7 +234,7 @@ class SolrAdapter implements DataBaseAdapter {
 		if ( isset( $album['genres'] ) && $album['genres'] ) {
 			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
-		$album['type'] = self::TYPE_ALBUM;
+		$album['type'] = WIKIA_LYRICS_API_TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
 	}
@@ -259,7 +256,7 @@ class SolrAdapter implements DataBaseAdapter {
 				$song['image'] = $album['image'];
 			}
 		}
-		$song['type'] = self::TYPE_SONG;
+		$song['type'] = WIKIA_LYRICS_API_TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}

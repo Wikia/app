@@ -1,6 +1,8 @@
 <?php
 
 require_once( dirname(__FILE__) . '/../../Maintenance.php' );
+require_once( dirname(__FILE__) . '/../../../extensions/wikia/LyricsApi/LyricsApiConstants.php' );
+
 require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
 require_once( dirname(__FILE__) . '/LyricsScrapper.class.php' );
 
