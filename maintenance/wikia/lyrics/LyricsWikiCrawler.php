@@ -39,19 +39,17 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgLyricsSolrConfig;
 		$this->db = $this->getDB( DB_SLAVE );
 
-		// FIXME: Use actual sold settings
 		$this->dba = newDatabaseAdapter( 'solr', [
 			'adapteroptions' => [
-				'host' => '10.10.10.242',
-				'port' => 8983,
-				'path' => '/solr/',
-				'core' => 'lyrics',
+				'host' => $wgLyricsSolrConfig['host'],
+				'port' => $wgLyricsSolrConfig['port'],
+				'path' => $wgLyricsSolrConfig['path'],
+				'core' => $wgLyricsSolrConfig['core'],
 			]
 		] );
-
-		// $this->dba = newDatabaseAdapter( 'dummy', [] );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
@@ -120,7 +118,7 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArtist() {
 		$this->output( 'Scraping artist #' . $this->getArticleId() . PHP_EOL );
 		$article = Article::newFromID( $this->getArticleId() );
-		$ls = new LyricsScrapper( $this->dba );
+		$ls = new LyricsScraper( $this->dba );
 		$ls->processArtistArticle( $article );
 	}
 

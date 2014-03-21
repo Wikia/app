@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Class LyricsScrapper
+ * Class LyricsScraper
  *
  * Scrapes lyrics wiki articles for structured lyrics data
- *
  */
-class LyricsScrapper {
+class LyricsScraper {
 
 	/**
 	 * @var DataBaseAdapter
