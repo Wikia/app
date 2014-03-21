@@ -230,6 +230,8 @@ $wgAutoloadClasses['UstreamApiWrapper'] =  $dir . '/apiwrappers/UstreamApiWrappe
 $wgMediaHandlers['video/ustream'] = 'UstreamVideoHandler';
 
 $wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
+$wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
+$wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
 
 /**
  * Feed ingesters
