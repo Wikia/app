@@ -21,7 +21,7 @@ define(
 			}
 
 			function hopToRemnant() {
-				hop({method: 'hop'}, 'RemnantDart');
+				hop({method: 'hop'}, 'RemnantGptMobile');
 			}
 
 			function showAdAndCallSuccess() {
