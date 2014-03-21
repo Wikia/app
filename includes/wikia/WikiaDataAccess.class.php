@@ -136,7 +136,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
+				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key, true) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -216,11 +216,15 @@ class WikiaDataAccess {
 		F::app()->wg->Memc->delete( $key );
 	}
 
-	/*
+	/**
 	 * Internal use by cacheWithLock code-path
+	 *
+	 * @param bool $clearCache set it to true to force checking for updated value
 	 */
-	static private function getDataAndVerify( $app, $key ) {
-		$app->wg->Memc->clearLocalCache($key);
+	static private function getDataAndVerify( $app, $key, $clearLocalCache = false ) {
+		if ( $clearLocalCache ) {
+			$app->wg->Memc->clearLocalCache( $key );
+		}
 		$result = $app->wg->Memc->get( $key );
 		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
 			$result = null;
