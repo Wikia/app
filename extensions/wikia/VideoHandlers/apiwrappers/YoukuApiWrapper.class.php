@@ -6,6 +6,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	protected static $API_URL = "https://openapi.youku.com/v2/videos/show.json";
 	protected static $CACHE_KEY = 'youkuapi';
 	protected static $aspectRatio = 1.7777778;
+	const VIDEO_NOT_FOUND_ERROR = 120020001;
 
 	public static function isMatchingHostname( $hostname ) {
 		return endsWith( $hostname, "v.youku.com" ) ? true : false;
@@ -184,6 +185,25 @@ class YoukuApiWrapper extends ApiWrapper {
 
 		return static::$API_URL . "?" . http_build_query( $params );
 
+	}
+
+	/**
+	 * Handle response errors
+	 * @param $status - The response status object
+	 * @param $content - Json content from the provider
+	 * @param $apiUrl - The URL for the providers API
+	 * @throws VideoNotFoundException - Video cannot be found
+	 */
+	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
+
+		// true parameter here has json_decode return an array, rather than an object
+		$error_code = json_decode( $content, true )['error']['code'];
+
+		if ( $error_code == self::VIDEO_NOT_FOUND_ERROR ) {
+			throw new VideoNotFoundException( $status, $content, $apiUrl );
+		}
+
+		parent::checkForResponseErrors( $status, $content, $apiUrl );
 	}
 
 }
