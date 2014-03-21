@@ -12,7 +12,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
-	const MINIMAL_ARTICLE_SCORE = 2;
+	const MINIMAL_ARTICLE_SCORE = 8.75;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
@@ -335,10 +335,9 @@ class TvApiController extends WikiaApiController {
 		$select->setRows( 1 );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
 
-		$dismax->setPhraseSlop(1);
+		$dismax->setPhraseSlop(2);
 		$dismax->setQueryFields( implode( ' ', [
 			$this->withLang( 'title', $lang )
-//			$this->withLang( 'html', $lang )
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			$this->withLang( 'title', $lang ).'^4',
@@ -360,6 +359,6 @@ class TvApiController extends WikiaApiController {
 		if ( !empty( $minQuality ) ) {
 			$quality = ' AND +(article_quality_i:[' . $minQuality . ' TO *])';
 		}
-		return '+('. $query . ') AND +(wid:' . $wikiId . ')' . $quality;
+		return '+("'. $query . '") AND +(wid:' . $wikiId . ')' . $quality;
 	}
 }
