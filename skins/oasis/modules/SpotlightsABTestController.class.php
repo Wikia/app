@@ -78,23 +78,13 @@ class SpotlightsABTestController extends WikiaController {
 		global $wgNLPSpotlightIds, $wgNLPLDASpotlightIds, $wgCityId;
 		$launchSpotlightABTest = false;
 
-		$launchSpotlightABTest = WikiaDataAccess::cache(
-			wfSharedMemcKey(
-				'spotlights-launch',
-				$wgCityId,
-				self::MEMCACHE_VER
-			),
-			604800 /* 7 days */,
-			function() use( $wgNLPSpotlightIds, $wgNLPLDASpotlightIds ) {
-				if ( count( $wgNLPSpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER
-					 && count( $wgNLPLDASpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER )
-				{
-					return true;
-				} else {
-					return false;
-				}
-			}
-		);
+		if ( count( $wgNLPSpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER
+			&& count( $wgNLPLDASpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER )
+		{
+			$launchSpotlightABTest = true;
+		} else {
+			$launchSpotlightABTest = false;
+		}
 
 		$vars['launchSpotlightABTest'] = $launchSpotlightABTest;
 
