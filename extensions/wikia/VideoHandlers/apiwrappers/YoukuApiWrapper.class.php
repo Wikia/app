@@ -2,7 +2,8 @@
 
 class YoukuApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'https://openapi.youku.com/v2/videos/show.json?client_id=481ddfdf1bc0960f&video_id=$1&ext=file_meta';
+	protected  static $API_KEY = '481ddfdf1bc0960f';
+	protected static $API_URL = "https://openapi.youku.com/v2/videos/show.json";
 	protected static $CACHE_KEY = 'youkuapi';
 	protected static $aspectRatio = 1.7777778;
 
@@ -98,16 +99,66 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	// TODO Try and get the api to actually return an audiolang dictionary...
+	protected function getLanguage() {
+		if ( !empty( $this->interfaceObj['audiolang']['lang'] ) ) {
+			return $this->interfaceObj['audiolang']['lang'];
+		}
+		return '';
+	}
+
+	protected function getSeries() {
+		if ( !empty( $this->interfaceObj['show']['name'] ) ) {
+			return $this->interfaceObj['show']['name'];
+		}
+		return '';
+	}
+
+	// TODO check with Chen if this is returning the character name, or the actor name
+	protected function getCharacters() {
+		if ( !empty( $this->interfaceObj['dvd']['person']['name'] ) ) {
+			return $this->interfaceObj['dvd']['person']['name'];
+		}
+		return '';
+	}
+
+	// TODO check if ['show']['seq'] represents the number of videos, or if it's actually the season
+
+	/**
+	 * Title
+	 * @return string
+	 */
 	protected function getVideoTitle() {
-		return true;
+		if ( !empty( $this->interfaceObj['title'] ) ) {
+			return $this->interfaceObj['title'];
+		}
+		return '';
 	}
 
 	public function getDescription() {
-		return true;
+		return "This is a very generic description";
 	}
 
 	public function getThumbnailUrl() {
-		return true;
+
+		wfProfileIn( __METHOD__ );
+
+		return !empty( $this->interfaceObj['bigThumbnail'] ) ? $this->interfaceObj['bigThumbnail'] :  $this->interfaceObj['thumbnail'];
+
+		wfProfileOut( __METHOD__ );
+
+	}
+
+	protected function getApiUrl() {
+
+		$params = [
+			"video_id" 	=> $this->videoId,
+			"client_id" => F::app()->wg->YoukuConfig['AppKey'],
+			"ext" 		=> "file_meta,audiolang,show"
+		];
+
+		return static::$API_URL . "?" . http_build_query( $params );
+
 	}
 
 }
