@@ -157,10 +157,12 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for an artist
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchArtist( $query ) {
+	public function searchArtist( $query, $limit, $offset ) {
 		$artists = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$artist = new StdClass();
@@ -180,10 +182,12 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for a song
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchSong( $query ) {
+	public function searchSong( $query, $limit, $offset ) {
 		$songs = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$song = new StdClass();
@@ -205,10 +209,12 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for lyrics
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchLyrics( $query ) {
+	public function searchLyrics( $query, $limit, $offset ) {
 		$songs = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$song = new StdClass();

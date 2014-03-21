@@ -373,13 +373,18 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Searches for an artist in Solr index
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
+	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchArtist( $query ) {
+	public function searchArtist( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => WIKIA_LYRICS_API_TYPE_ARTIST,
 			'search_artist_name: %P2%' => $query,
 		] );
+		$query->setStart( $offset );
+		$query->setRows( $limit );
 
 		$solrArtists = $this->client->select( $query );
 
@@ -399,14 +404,18 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Searches for a song in Solr index
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchSong( $query ) {
+	public function searchSong( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
 			'search_song_name: %P2%' => $query,
 		] );
+		$query->setStart( $offset );
+		$query->setRows( $limit );
 
 		$solrSongs = $this->client->select( $query );
 		if ( $solrSongs->getNumFound() <= 0 ) {
@@ -425,13 +434,18 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Searches for a song lyrics in Solr index
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
+	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchLyrics( $query ) {
+	public function searchLyrics( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
 			'lyrics: %P2%' => $query,
 		] );
+		$query->setStart( $offset );
+		$query->setRows( $limit );
 
 		$hl = $query->getHighlighting();
 		$hl->setFields( 'lyrics' );

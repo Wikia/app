@@ -9,8 +9,13 @@ class LyricsApiController extends WikiaController {
 	const PARAM_ALBUM = 'album';
 	const PARAM_SONG = 'song';
 	const PARAM_QUERY = 'query';
+	const PARAM_LIMIT = 'limit';
+	const PARAM_OFFSET = 'offset';
 
 	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
+
+	const SEARCH_RESULTS_DEFAULT_LIMIT = 25;
+	const SEARCH_RESULTS_DEFAULT_OFFSET = 0;
 
 	private $lyricsApiHandler = null;
 
@@ -189,6 +194,7 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchArtist() {
 		$query = $this->getQueryFromRequest();
+
 		$this->getData( [ $query ], 'searchArtist' );
 	}
 
@@ -217,7 +223,33 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchLyrics() {
 		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'searchLyrics' );
+
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->lyricsApiHandler->setLimit( $limit );
+		$this->lyricsApiHandler->setOffset( $offset );
+
+		$this->getData( [ $query, $limit, $offset ], 'searchLyrics' );
+	}
+
+	/**
+	 * @desc Gets limit and offset from request if they're not passed it returns defaults
+	 *
+	 * @return array
+	 * @throws InvalidParameterApiException
+	 */
+	private function getPaginationParamsFromRequest() {
+		$limit = $this->wg->Request->getVal( self::PARAM_LIMIT, self::SEARCH_RESULTS_DEFAULT_LIMIT );
+		$offset = $this->wg->Request->getVal( self::PARAM_OFFSET, self::SEARCH_RESULTS_DEFAULT_OFFSET );
+
+		if( $limit <= 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_LIMIT );
+		}
+
+		if( $offset < 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_LIMIT );
+		}
+
+		return [ $limit, $offset ];
 	}
 
 }
