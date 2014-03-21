@@ -23,10 +23,17 @@ if ( (int)$dbr->fetchRow( $result )[0] > 0 ) {
 }
 
 $result = $dbr->select( 'user_properties', 'up_user, up_property', "up_property = 'enablerichtext'" );
+
+$allRows = array();
+while ( $row = $dbr->fetchObject( $result ) ) {
+	$allRows[] = $row;
+}
+
+$dbr->freeResult( $result );
 $userCount = 0;
 $start = time();
 
-while ( $row = $dbr->fetchObject( $result ) ) {
+foreach ( $allRows as $row ) {
 	$user = User::newFromId( $row->up_user );
 	$output = 'User ID: '.$row->up_user;
 
@@ -39,8 +46,5 @@ while ( $row = $dbr->fetchObject( $result ) ) {
 	$userCount++;
 }
 
-$end = time();
-$delta = $end - $start;
+$delta = time() - $start;
 echo "\nDone -- $userCount users updated, $delta seconds elapsed.\n";
-
-$dbr->freeResult( $result );

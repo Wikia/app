@@ -393,11 +393,15 @@ HTML
 		}
 
 		// check user preferences option
-		$userOption = $wgUser->getOption('enablerichtext');
+		/* With the new 'defaulteditor' option available from the EditorPreference extension,
+		   the 'enablerichtext' option should no longer influence availability of the RTE.
+		   See Wikia issue VE-742 for more information.
+		 */
+		/*$userOption = $wgUser->getOption('enablerichtext');
 		if( ($userOption != true) && empty($forcedWysiwyg) ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
-		}
+		}*/
 
 		// check current skin - enable RTE only on Oasis
 		$skinName = get_class(RequestContext::getMain()->getSkin());
@@ -700,6 +704,7 @@ HTML
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
+		// The 'defaulteditor' preference takes the place of this option, so return early here.
 		return true;
 
 		// add RTE related section under "Editing" tab
