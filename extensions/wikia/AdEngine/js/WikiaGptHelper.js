@@ -174,7 +174,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 			slotQueue.push(gptSlots[slotnameGpt]);
 
 			googletag.pubads().addEventListener('slotRenderEnded', function (event) {
-				var status, height, gptEmpty, empty, iframeContent;
+				var status, height, gptEmpty, empty, iframe, iframeHeight, iframeContentHeight;
 
 				if (event.slot === gptSlots[slotnameGpt]) {
 					log(['slotRenderEnded', slotname, event], 'info', logGroup);
@@ -202,20 +202,27 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 
 					empty = gptEmpty || height <= 1;
 
-					// On mobile skin check GPT iframe contents
+					// On mobile skin check GPT iframe contents height
 					if (window.skin === 'wikiamobile' && !empty) {
 						try {
-							iframeContent = slotDiv.querySelector('div[id*="_container_"] iframe').contentWindow;
-							height = iframeContent.innerHeight;
-							log(['slotRenderEnded', slotname, 'height (iframe content)', height], 4, logGroup);
+							iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+							// Because Chrome reports iframe.contentWindow.innerHeight as the outer
+							// iframe height, we're setting the outer height to 0, so the innerHeight
+							// reports real height of the content. Then we reset the height back
+							iframeHeight = iframe.height;
+							iframe.height = 0;
+							iframeContentHeight = iframe.contentWindow.document.body.offsetHeight;
+							iframe.height = iframeHeight;
+
+							log(['slotRenderEnded', slotname, 'height (iframe content)', iframeContentHeight], 4, logGroup);
+
+							if (iframeContentHeight <= 1) {
+								// Check specifically for ads which can appear empty, even when successful
+								empty = !iframe.contentWindow.document.querySelector(specialAdSelector);
+								log(['slotRenderEnded', slotname, 'empty (iframe content)', empty], 4, logGroup);
+							}
 						} catch (e) {
 							log(['slotRenderEnded', slotname, 'height (iframe content)', 'exception'], 4, logGroup);
-						}
-
-						// Check specifically for ads which can appear empty, even when successful
-						if (height <= 1) {
-							empty = !iframeContent.document.querySelector(specialAdSelector);
-							log(['slotRenderEnded', slotname, 'empty (iframe content)', empty], 4, logGroup);
 						}
 					}
 
