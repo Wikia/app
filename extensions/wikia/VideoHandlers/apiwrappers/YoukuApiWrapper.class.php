@@ -130,6 +130,16 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	// TODO check if ['show']['seq'] represents the number of videos, or if it's actually the season
+	/**
+	 * Aspect ratio of the video
+	 * @return float
+	 */
+	protected function getAspectRatio() {
+		if ( isset( $this->interfaceObj['file_meta'] ) ) {
+			return $this->interfaceObj['file_meta']['width'] / $this->interfaceObj['file_meta']['height'];
+		}
+		return parent::getAspectRatio();
+	}
 
 	/**
 	 * Title
