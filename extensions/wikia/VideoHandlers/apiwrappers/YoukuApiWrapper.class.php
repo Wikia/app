@@ -18,7 +18,7 @@ class YoukuApiWrapper extends ApiWrapper {
 		$id = '';
 		$parsedUrl = parse_url( $url );
 		if ( !empty( $parsedUrl['path'] ) ){
-			// Translates something like this: http://v.youku.com/v_show/id_XNjg3Mzc4MDMy.html?f=22039479&ev=2
+			// Translates a url like this: http://v.youku.com/v_show/id_XNjg3Mzc4MDMy.html?f=22039479&ev=2
 			// into this: XNjg3Mzc4MDMy
 			$id = explode( ".html", explode( "id_", $parsedUrl["path"] )[1] )[0];
 		};
@@ -36,7 +36,8 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * Is resolution of 720 or higher available
 	 * @return boolean
 	 */
-	// TODO Implement!!!!
+	// TODO Implement!!!! Ask Chen to translate the "settings" gear on the video used to change the resolution
+	// Also, check what we do with that information (whether something is HD or not).
 	protected function isHdAvailable() {
 		return null;
 		//return isset($this->interfaceObj['entry']['yt$hd']);
@@ -77,6 +78,9 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getVideoName() {
 		if ( !empty( $this->interfaceObj['title'] ) ) {
 			return $this->interfaceObj['title'];
@@ -84,6 +88,9 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getVideoCategory() {
 		if ( !empty( $this->interfaceObj['category'] ) ) {
 			return $this->interfaceObj['category'];
@@ -91,6 +98,9 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return mixed|string
+	 */
 	// TODO check with chen if there these keywords should actually not have a space following the comma
 	protected function getVideoKeywords() {
 		if ( !empty( $this->interfaceObj['keywords'] ) ) {
@@ -99,6 +109,9 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	// TODO Try and get the api to actually return an audiolang dictionary...
 	protected function getLanguage() {
 		if ( !empty( $this->interfaceObj['audiolang']['lang'] ) ) {
@@ -107,6 +120,9 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getSeries() {
 		if ( !empty( $this->interfaceObj['show']['name'] ) ) {
 			return $this->interfaceObj['show']['name'];
@@ -135,10 +151,16 @@ class YoukuApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDescription() {
 		return "This is a very generic description";
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getThumbnailUrl() {
 
 		wfProfileIn( __METHOD__ );
@@ -149,6 +171,9 @@ class YoukuApiWrapper extends ApiWrapper {
 
 	}
 
+	/**
+	 * @return mixed|string
+	 */
 	protected function getApiUrl() {
 
 		$params = [
