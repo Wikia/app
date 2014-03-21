@@ -48,7 +48,7 @@ class WikiaMobileService extends WikiaService {
 
 			$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = false;
 
-			if ($useGpt && $this->wg->EnableRHonMobile) {
+			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
 				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 
