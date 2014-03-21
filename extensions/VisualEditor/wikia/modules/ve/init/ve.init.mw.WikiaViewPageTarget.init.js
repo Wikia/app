@@ -298,10 +298,7 @@
 		(
 			mw.config.get( 'wgUserName' ) === null ?
 				conf.defaultUserOptions.enable :
-				(
-					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
-					!!mw.user.options.get( 'enablerichtext' )
-				)
+				mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable )
 		)
 	);
 
