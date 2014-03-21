@@ -22,6 +22,8 @@ class EnableVideosModule extends Maintenance {
 	protected $test    = false;
 	protected $file    = '';
 	protected $dbname  = '';
+	protected $set     = false;
+	protected $get     = true;
 
 	public function __construct() {
 		parent::__construct();
@@ -30,6 +32,8 @@ class EnableVideosModule extends Maintenance {
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'file', 'File of dbnames', false, true, 'f' );
 		$this->addOption( 'dbname', 'A specific dbname', false, true, 'd' );
+		$this->addOption( 'set', 'Set variables', false, false, 's' );
+		$this->addOption( 'get', 'Show current values', false, false, 'g' );
 	}
 
 	public function execute() {
@@ -37,9 +41,16 @@ class EnableVideosModule extends Maintenance {
 		$this->verbose = $this->hasOption('verbose');
 		$this->file    = $this->getOption('file', '');
 		$this->dbname  = $this->getOption('dbname', '');
+		$this->set     = $this->hasOption('verbose');
+		$this->get     = $this->hasOption('verbose');
 
 		if ( $this->test ) {
 			echo "\n=== TEST MODE ===\n";
+		}
+
+		// Shouldn't happen ... paranoid programming
+		if ( !$this->set && !$this->get ) {
+			$this->get = true;
 		}
 
 		if ( $this->file ) {
@@ -56,7 +67,7 @@ class EnableVideosModule extends Maintenance {
 
 		foreach ( $dbnames as $db ) {
 
-			$this->debug( "Running on $db ...\n" );
+			echo "Running on $db ...\n";
 
 			// get wiki ID
 			$id = $this->dbname2id( $db );
@@ -74,13 +85,23 @@ class EnableVideosModule extends Maintenance {
 				continue;
 			}
 
-			if ( !$this->test ) {
-				$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt\n" );
-				WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, 'bottom' );
-				WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, true );
+			if ( $this->set ) {
+				if ( !$this->test ) {
+					$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt\n" );
+					WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, 'bottom' );
+					WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, true );
 
-				WikiFactory::clearCache( $id );
-				$this->debug( "\tdone\n" );
+					WikiFactory::clearCache( $id );
+					$this->debug( "\tdone\n" );
+				}
+			} else if ( $this->get ) {
+				$pos = WikiFactory::getVarByName( 'wgVideosModuleABTest', $id );
+				$enabled = WikiFactory::getVarByName( 'wgEnableVideosModuleExt', $id );
+				if ( $enabled ) {
+					echo "\tEnabled on the $pos\n";
+				} else {
+					echo "\tDisabled";
+				}
 			}
 		}
 	}
