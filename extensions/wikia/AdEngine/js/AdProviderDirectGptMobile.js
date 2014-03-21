@@ -29,7 +29,7 @@ define(
 				success();
 			}
 
-			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgEnableRHonMobile ? hopToRemnant : hopToNull), 'mobile');
+			wikiaGpt.pushAd(slotname, showAdAndCallSuccess, (window.wgAdDriverEnableRemnantGptMobile ? hopToRemnant : hopToNull), 'mobile');
 			wikiaGpt.flushAds();
 		}
 

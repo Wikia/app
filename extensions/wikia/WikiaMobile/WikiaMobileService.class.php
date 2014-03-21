@@ -46,10 +46,10 @@ class WikiaMobileService extends WikiaService {
 			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
 			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
 
-			$this->globalVariables['wgEnableRHonMobile'] = false;
+			$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = false;
 
 			if ($useGpt && $this->wg->EnableRHonMobile) {
-				$this->globalVariables['wgEnableRHonMobile'] = $this->wg->EnableRHonMobile;
+				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->EnableRHonMobile;
 			}
 
 			if ( $mobileAdService->shouldShowAds() ) {

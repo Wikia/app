@@ -1196,10 +1196,10 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableRHonDesktop = false;
 
 /**
- * @name $wgEnableRHonMobile
- * Enables RH- hack on Mobile
+ * @name $wgAdDriverEnableRemnantGptMobile
+ * Enables Remnant Gpti on Mobile experiment
  */
-$wgEnableRHonMobile = false;
+$wgAdDriverEnableRemnantGptMobile = false;
 
 /**
  * @name $wgEnableAdEngineExt

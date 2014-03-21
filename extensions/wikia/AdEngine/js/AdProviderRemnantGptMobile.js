@@ -3,7 +3,7 @@ define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.
 	'use strict';
 
 	var logGroup = 'AdProviderDartRemnantMobile',
-		slotMap = gptSlotConfig.getConfig('rh_mobile');
+		slotMap = gptSlotConfig.getConfig('mobile_remnant');
 
 	function canHandleSlot(slotname) {
 		return !!slotMap[slotname];
@@ -21,7 +21,7 @@ define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.
 			success();
 		}
 
-		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hopToNull, 'rh_mobile');
+		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hopToNull, 'mobile_remnant');
 		wikiaGpt.flushAds();
 	}
 
