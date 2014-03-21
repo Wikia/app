@@ -12,7 +12,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
-	const MINIMAL_ARTICLE_SCORE = 1.7;
+	const MINIMAL_ARTICLE_SCORE = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
@@ -38,7 +38,7 @@ class TvApiController extends WikiaApiController {
 			$responseValues = null;
 			$wikiId = $wiki['id'];
 			$url = $wiki['url'];
-			$responseValues = $this->getExactMatch( $wiki['id'] );
+//			$responseValues = $this->getExactMatch( $wiki['id'] );
 			if ( $responseValues === null ) {
 //				$config = $this->getConfigFromRequest( $wiki['id'] );
 //				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
@@ -303,7 +303,9 @@ class TvApiController extends WikiaApiController {
 		$lang = $request->getVal( 'lang', static::LANG_SETTING );
 		$response = $this->querySolr( $query, $wikiId, $lang, $quality );
 		foreach( $response as $item ) {
-			return $this->getDataFromItem( $item, $lang );
+			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
+				return $this->getDataFromItem( $item, $lang );
+			}
 		}
 		return null;
 	}
@@ -333,6 +335,7 @@ class TvApiController extends WikiaApiController {
 		$select->setRows( 1 );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
 
+		$dismax->setPhraseSlop(1);
 		$dismax->setQueryFields( implode( ' ', [
 			$this->withLang( 'title', $lang )
 //			$this->withLang( 'html', $lang )
