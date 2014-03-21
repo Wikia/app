@@ -9,14 +9,15 @@ $( function() {
 	var ImgLzy = {
 		cache: [],
 		timestats: 0,
+		browserSupportsWebP: undefined,
 
 		init: function() {
-			var self = this,
-				proxy = $.proxy( self.checkAndLoad, self ),
+			var proxy = $.proxy( this.checkAndLoad, this ),
 				throttled = $.throttle( 250, proxy );
 
-			self.createCache();
-			self.checkAndLoad();
+			this.checkWebPSupport();
+			this.createCache();
+			this.checkAndLoad();
 
 			$( window ).on( 'scroll', throttled );
 			$( '.scroller' ).on( 'scroll', throttled );
@@ -29,6 +30,25 @@ $( function() {
 
 		absTop: function( e ) {
 			return e.offset().top;
+		},
+
+		checkWebPSupport: function() {
+			// @see http://stackoverflow.com/a/5573422
+			var webP = new Image();
+			webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+			webP.onload = webP.onerror = $.proxy(function () {
+				this.browserSupportsWebP = webP.height === 2;
+
+				// TODO: add stats reporting
+			}, this);
+		},
+
+		// rewrite the URL to request WebP thumbnails (if supported)
+		rewriteURLForWebP: function(src) {
+			if ( this.browserSupportsWebP && src.indexOf( '/images/thumb/' ) > 0 ) {
+				src = src.replace( /\.[^\./]+$/, '.webp' );
+			}
+			return src;
 		},
 
 		createCache: function() {
@@ -96,7 +116,7 @@ $( function() {
 				dataSrc = $img.data( 'src' );
 			image.onload = '';
 			if ( dataSrc ) {
-				image.src = dataSrc;
+				image.src = this.rewriteURLForWebP( dataSrc );
 			}
 			$img.removeClass( 'lzy' ).removeClass( 'lzyPlcHld' );
 
@@ -144,7 +164,7 @@ $( function() {
 				if ( visible && this.parentVisible( cacheItem ) ) {
 					cacheItem.jq.addClass( 'lzyTrns' );
 					cacheItem.el.onload = onload;
-					cacheItem.el.src = cacheItem.jq.data( 'src' );
+					cacheItem.el.src = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
 					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[ idx ];
 				}
