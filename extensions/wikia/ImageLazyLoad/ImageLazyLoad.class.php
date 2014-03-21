@@ -124,4 +124,18 @@ class ImageLazyLoad  {
 		}
 		return true;
 	}
+
+	/**
+	 * Add wgEnableWebPThumbnails global JS variable
+	 *
+	 * @param array $vars JS variables
+	 * @return bool true
+	 */
+	static function onMakeGlobalVariablesScript( Array &$vars ) {
+		global $wgEnableWebPThumbnails;
+		if ( !empty( $wgEnableWebPThumbnails ) && self::isEnabled() ) {
+			$vars['wgEnableWebPThumbnails'] = true;
+		}
+		return true;
+	}
 }
