@@ -82,16 +82,6 @@ class YoukuApiWrapper extends ApiWrapper {
 	/**
 	 * @return string
 	 */
-	protected function getVideoName() {
-		if ( !empty( $this->interfaceObj['title'] ) ) {
-			return $this->interfaceObj['title'];
-		}
-		return '';
-	}
-
-	/**
-	 * @return string
-	 */
 	protected function getVideoCategory() {
 		if ( !empty( $this->interfaceObj['category'] ) ) {
 			return $this->interfaceObj['category'];
