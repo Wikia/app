@@ -66,7 +66,7 @@ class EnableVideosModule extends Maintenance {
 		}
 
 		foreach ( $dbnames as $db ) {
-
+			$db = trim($db);
 			echo "Running on $db ...\n";
 
 			// get wiki ID
@@ -77,7 +77,7 @@ class EnableVideosModule extends Maintenance {
 				echo "\t$db: ERROR (not found in WikiFactory)\n";
 				continue;
 			} else {
-				$this->debug( "\tWiki ID ($db): $id\n" );
+				$this->debug( "\tWiki ID ($db): $id" );
 			}
 
 			if ( $id == 177 ) {
@@ -87,17 +87,25 @@ class EnableVideosModule extends Maintenance {
 
 			if ( $this->set ) {
 				if ( !$this->test ) {
-					$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt\n" );
+					$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt" );
 					WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, 'bottom' );
 					WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, true );
 
 					WikiFactory::clearCache( $id );
-					$this->debug( "\tdone\n" );
+					$this->debug( "\tdone" );
 				}
 			} else if ( $this->get ) {
 				$pos = WikiFactory::getVarByName( 'wgVideosModuleABTest', $id );
+				$pos = $pos->cv_value;
+
 				$enabled = WikiFactory::getVarByName( 'wgEnableVideosModuleExt', $id );
+				$enabled = $enabled->cv_value;
+
+				$enabled = $enabled ? unserialize($enabled) : false;
+				$pos = $pos ? unserialize($pos) : false;
+
 				if ( $enabled ) {
+					$pos = unserialize($pos);
 					echo "\tEnabled on the $pos\n";
 				} else {
 					echo "\tDisabled";
