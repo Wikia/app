@@ -5,7 +5,8 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	veAvailable: ( mw.hasOwnProperty( 'libs' ) && mw.libs.hasOwnProperty( 've' ) ? mw.libs.ve.canCreatePageUseVE() : false ),
+	veAvailable: ( mw.hasOwnProperty( 'libs' ) && mw.libs.hasOwnProperty( 've' ) ? mw.libs.ve.canCreatePageUsingVE() : false ),
+	defaultEditor: parseInt( mw.user.options.get( 'defaulteditor' ) ),
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -15,15 +16,20 @@ var CreatePage = {
 			title: title
 		},
 		function( response ) {
-			var articlePath;
+			var articlePath, newLocation;
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.veAvailable ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href =  articlePath + '?veaction=edit';
+					newLocation = articlePath + '?veaction=edit';
 				} else {
-					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
+					newLocation = CreatePage.options[ CreatePage.pageLayout ].submitUrl
 						.replace( '$1', encodeURIComponent( title ) );
 				}
+
+				if ( CreatePage.defaultEditor === 1 ) {
+					newLocation += '&useeditor=source';
+				}
+				location.href = newLocation;
 			}
 			else {
 				CreatePage.displayError( response.msg );

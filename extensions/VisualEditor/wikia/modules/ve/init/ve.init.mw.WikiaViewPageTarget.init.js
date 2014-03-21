@@ -326,7 +326,7 @@
 		);
 	};
 
-	init.canCreatePageUseVE = function () {
+	init.canCreatePageUsingVE = function () {
 		return isBrowserSupported && userPrefEnabled && isSkinSupported && vePreferred;
 	};
 
