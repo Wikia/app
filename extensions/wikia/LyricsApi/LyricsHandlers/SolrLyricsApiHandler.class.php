@@ -14,13 +14,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @var Solarium_Client
 	 */
-	var $client;
+	public $client;
 
-	var $cityId;
-
-	// TODO: these must be shared with the maintenance script
-
-	// TODO: Figure out search limits, pagination a.s.o.
+	/**
+	 * @var Integer
+	 */
+	public $cityId;
 
 	const TYPE_ARTIST = 'artist';
 	const TYPE_ALBUM = 'album';
@@ -46,6 +45,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return $query;
 	}
 
+	/**
+	 * @desc Returns first document from results set
+	 *
+	 * @param Solarium_Document_ReadOnly $resultSet
+	 * @return null
+	 */
 	private function getFirstResult( $resultSet ) {
 		if ( $resultSet->getNumFound() ) {
 			foreach ($resultSet as $document) {
@@ -55,6 +60,12 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		return null;
 	}
 
+	/**
+	 * @desc Adds images to an response results
+	 *
+	 * @param stdClass $obj response results object i.e. $song, $artist, $album
+	 * @param String $image image title
+	 */
 	private function appendImages( $obj, $image ) {
 		$obj->small_image = $this->getImage( $image );
 		$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
