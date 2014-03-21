@@ -6,6 +6,8 @@ class SpotlightsABTestController extends WikiaController {
 	const TYPE_NLP_LDA_MOCK = 8;
 	const TYPE_NLP_ALL_MOCK = 16;
 
+	const MIN_SPOTLIGHTS_NUMBER = 3;
+
 	const MEMCACHE_VER = '1.0';
 
 	/**
@@ -70,5 +72,32 @@ class SpotlightsABTestController extends WikiaController {
 			$cityId,
 			self::MEMCACHE_VER
 		);
+	}
+
+	static public function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		global $wgNLPSpotlightIds, $wgNLPLDASpotlightIds, $wgCityId;
+		$launchSpotlightABTest = false;
+
+		$launchSpotlightABTest = WikiaDataAccess::cache(
+			wfSharedMemcKey(
+				'spotlights-launch',
+				$wgCityId,
+				self::MEMCACHE_VER
+			),
+			604800 /* 7 days */,
+			function() use( $wgNLPSpotlightIds, $wgNLPLDASpotlightIds ) {
+				if ( count( $wgNLPSpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER
+					 && count( $wgNLPLDASpotlightIds) >= self::MIN_SPOTLIGHTS_NUMBER )
+				{
+					return true;
+				} else {
+					return false;
+				}
+			}
+		);
+
+		$vars['launchSpotlightABTest'] = $launchSpotlightABTest;
+
+		return true;
 	}
 }
