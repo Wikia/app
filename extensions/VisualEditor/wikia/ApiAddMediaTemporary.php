@@ -141,6 +141,9 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 				$this->dieUsageMsg( 'badaccess-groups' );
 			}
 		}
+		if ( $this->mUser->getBlock() ) {
+			$this->dieUsageMsg( 'badaccess-groups' );
+		}
 	}
 
 	protected function verifyUpload( ) {

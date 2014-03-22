@@ -215,7 +215,7 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 		mw.config.get( 'GlobalNotification' ).show(
 			errorMsg,
 			'error',
-			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
+			$( '.oo-ui-frame' ).contents().find( '.oo-ui-window-body' )
 		);
 
 		this.requestSearch();

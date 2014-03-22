@@ -28,12 +28,17 @@
 	}
 }
 
-.oo-ui-dialog-content .oo-ui-window-body {
-	.ve-ui-surface {
-		border-color: $color-page-border;
-	}
+.oo-ui-dialog-content {
+	.oo-ui-window-body {
+		.ve-ui-surface {
+			border-color: $color-page-border;
+		}
 
-	.WikiaArticle {
-		overflow: visible;
+		.WikiaArticle {
+			overflow: visible;
+		}
+	}
+	.global-notification {
+		position: absolute;
 	}
 }
