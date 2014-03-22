@@ -163,10 +163,19 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Description with video category and and keywords if available
 	 * @return string
 	 */
 	public function getDescription() {
 		return "This is a very generic description";
+		$desc = $this->getOriginalDescription();
+
+		if ( $this->getVideoCategory() ) {
+			$desc . "\n\nCategory: " . $this->getVideoCategory();
+		}
+		if ( $this->getVideoKeywords() ) {
+			$desc . "\n\nKeyWords: " . $this->getVideoKeywords();
+		}
 	}
 
 	/**
