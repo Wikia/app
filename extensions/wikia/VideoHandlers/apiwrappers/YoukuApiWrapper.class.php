@@ -108,7 +108,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Lanuage of the video
+	 * Language of the video
 	 * @return string
 	 */
 	protected function getLanguage() {
@@ -144,7 +144,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * Aspect ratio of the video
 	 * @return float
 	 */
-	protected function getAspectRatio() {
+	public function getAspectRatio() {
 		if ( isset( $this->interfaceObj['file_meta'] ) ) {
 			return $this->interfaceObj['file_meta']['width'] / $this->interfaceObj['file_meta']['height'];
 		}
@@ -167,7 +167,6 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	public function getDescription() {
-		return "This is a very generic description";
 		$desc = $this->getOriginalDescription();
 
 		if ( $this->getVideoCategory() ) {
@@ -179,6 +178,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Url of video thumbnail
 	 * @return mixed
 	 */
 	public function getThumbnailUrl() {
@@ -186,6 +186,9 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
+	 * Get url for API. Note: file_meta, audiolang, and show have the API return info for
+	 * aspect ratio, language of video, and characters in video respectively. More information:
+	 * http://open.youku.com/docs/tech_doc.html (warning, it's in Chinese...)
 	 * @return mixed|string
 	 */
 	protected function getApiUrl() {
@@ -197,7 +200,6 @@ class YoukuApiWrapper extends ApiWrapper {
 		];
 
 		return static::$API_URL . "?" . http_build_query( $params );
-
 	}
 
 	/**
