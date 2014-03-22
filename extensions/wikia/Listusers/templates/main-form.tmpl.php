@@ -157,6 +157,20 @@ $( function () {
 	$( '#lu-showusers' ).click( function () {
 		oTable.fnDraw();
 	} );
+	$( '#lu-select-all' ).click( function () {
+		var $this = $( this ),
+			$checkbox = $( '.lu_target' );
+		
+		if ( $this.hasClass( 'lu-selected' ) ) {
+			$checkbox.removeAttr( 'checked' );
+			$this.removeClass( 'lu-selected' );
+			$this.val( '<?= wfMessage( 'listusers-select-all' )->escaped() ?>' );
+		} else {
+			$checkbox.attr( 'checked', 'checked' );
+			$this.addClass( 'lu-selected' );
+			$this.val( '<?= wfMessage( 'listusers-deselect-all' )->escaped() ?>' );
+		}
+	} );
 } );
 
 </script>
@@ -194,6 +208,7 @@ $( function () {
 	}
 ?>
 		</tr>
+		<tr><td colspan="4" style="text-align:right;"><input type="button" class="wikia-button lu-selected" id="lu-select-all" value="<?= wfMessage( 'listusers-deselect-all' )->escaped() ?>" /></td>
 	</table>
 </fieldset>
 <? } ?>
