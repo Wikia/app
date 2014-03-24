@@ -341,7 +341,6 @@ class TvApiController extends WikiaApiController {
 			'titleStrict^8',
 			$this->withLang( 'title', $lang ).'^2',
 			$this->withLang( 'redirect_titles_mv', $lang ).'^2',
-			'nolang_txt^75'
 		] ) );
 
 		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^25' );
