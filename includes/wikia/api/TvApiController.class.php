@@ -331,6 +331,7 @@ class TvApiController extends WikiaApiController {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( 5 );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
+		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:tv_episode)');
 
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
@@ -343,7 +344,7 @@ class TvApiController extends WikiaApiController {
 			$this->withLang( 'redirect_titles_mv', $lang ).'^2',
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^25' );
+//		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^25' );
 
 		return $client->select( $select );
 	}
