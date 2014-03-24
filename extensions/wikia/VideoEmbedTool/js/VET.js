@@ -582,7 +582,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			jqXHR = $.ajax(
 				window.wgScriptPath + '/index.php', {
 					method: 'post',
-					data: 'action=ajax&rs=VET&method=insertVideo&url=' + escape(query) + '&searchType=' + searchType,
+					data: 'action=ajax&rs=VET&method=insertVideo&url=' + encodeURIComponent(query) + '&searchType=' + searchType,
 					complete: callback
 				}
 			);
