@@ -422,7 +422,7 @@ class OasisController extends WikiaController {
 		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
 		// add groups queued via OasisController::addSkinAssetGroup
-		$jsAssetGroups = array_merge($jsAssetGroups, self::$skinAssetGroups);
+		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
 
 		if ( empty($wgOasisDisableWikiaScriptLoader)) {
 			// Load the combined JS
