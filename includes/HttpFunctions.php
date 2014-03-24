@@ -45,6 +45,11 @@ class Http {
 		}
 
 		$req = MWHttpRequest::factory( $url, $options );
+		if ( isset( $options[ 'headers' ] ) && is_array( $options[ 'headers' ] ) ) {
+			foreach ( $options[ 'headers' ] as $name => $value ) {
+				$req->setHeader( $name, $value );
+			}
+		}
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
 		}
