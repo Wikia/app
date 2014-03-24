@@ -1,3 +1,5 @@
+/*global GlobalNotification*/
+
 /**
  * AJAX interrupter for Licensed Video Swap undo workflow
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
@@ -6,6 +8,7 @@ require([
 	'jquery',
 	'lvs.commonajax'
 ], function ($, commonAjax) {
+	'use strict';
 
 	function LVSHistoryPage(opts) {
 		var that = this;
@@ -38,7 +41,7 @@ require([
 
 			this.undoSwap(url)
 				.success(function (data) {
-					if (data.result === "error") {
+					if (data.result === 'error') {
 						that.handleUndoFail(data.msg);
 					} else {
 						that.handleUndoSuccess(data.msg, target);

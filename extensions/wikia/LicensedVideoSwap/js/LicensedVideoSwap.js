@@ -10,7 +10,7 @@ require([
 	'lvs.tracker'
 ], function ($, callout, commonAjax, ellipses, swapKeep, undo, videoControls, suggestions, tracker) {
 
-	"use strict";
+	'use strict';
 
 	$(function () {
 		var $container = $('#LVSGrid');

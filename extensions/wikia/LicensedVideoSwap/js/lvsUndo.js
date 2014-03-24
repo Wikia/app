@@ -1,4 +1,12 @@
-define('lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.videocontrols', 'wikia.nirvana', 'jquery', 'lvs.tracker'], function (QueryString, commonAjax, window, videoControls, nirvana, $, tracker) {
+define('lvs.undo', [
+	'wikia.querystring',
+	'lvs.commonajax',
+	'lvs.videocontrols',
+	'wikia.nirvana',
+	'jquery',
+	'lvs.tracker'
+], function (QueryString, commonAjax, videoControls, nirvana, $, tracker) {
+	'use strict';
 
 	var $container,
 		videoTitle,
@@ -9,7 +17,6 @@ define('lvs.undo', ['wikia.querystring', 'lvs.commonajax', 'wikia.window', 'lvs.
 		sort,
 		page,
 		wasSwap;
-
 
 	function doRequest() {
 		commonAjax.startLoadingGraphic();

@@ -19,7 +19,7 @@ define('lvs.videocontrols', [
 	 */
 	var videoInstances = [];
 
-	function setVerticalAlign($element, video) {
+	function setVerticalAlign(/*$element, video*/) {
 		// TODO: once height is set dynamically, let this function run.
 
 		/*
@@ -32,7 +32,7 @@ define('lvs.videocontrols', [
 	}
 
 	// remove vertical alignment css
-	function removeVerticalAlign($element) {
+	function removeVerticalAlign(/*$element*/) {
 		// TODO: once height is set dynamically, let this function run.
 
 		/*

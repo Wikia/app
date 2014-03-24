@@ -1,12 +1,12 @@
 /*
- * The design calls for all of the "posted in" titles to be on one line.
+ * The design calls for all of the 'posted in' titles to be on one line.
  * This function calculates whether or not we need to truncate that list
- * and show a "more" link based on the width of that line.
+ * and show a 'more' link based on the width of that line.
  */
 
 define('lvs.ellipses', [], function () {
 
-	"use strict";
+	'use strict';
 
 	/**
 	 * @param jQuery $container The wrapper element for the main body of this page
