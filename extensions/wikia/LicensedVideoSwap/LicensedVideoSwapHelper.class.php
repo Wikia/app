@@ -449,13 +449,13 @@ SQL;
 		// get current suggestions
 		$suggestTitles = array();
 		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
+		$validSuggest = [];
 
 		if ( !empty( $suggest ) ) {
 			if ( $verbose ) {
 				echo "\tExamining the ".count($suggest)." current match(es)\n";
 			}
 
-			$validSuggest = [];
 			foreach ( $suggest as $video ) {
 				// Do some data integrity checking; clean up for VID-1446
 				if (!array_key_exists('title', $video)) {
@@ -573,7 +573,7 @@ SQL;
 		}
 
 		// combine current suggestions and new suggestions
-		$videos = array_slice( array_merge( $videos, $suggestions ), 0 , self::NUM_SUGGESTIONS );
+		$videos = array_slice( array_merge( $videos, $validSuggest ), 0 , self::NUM_SUGGESTIONS );
 
 		// If we're just testing don't set any page props
 		if ( !$test ) {
