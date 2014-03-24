@@ -12,7 +12,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
-	const MINIMAL_ARTICLE_SCORE = 1;
+	const MINIMAL_ARTICLE_SCORE = 1.5;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
@@ -329,10 +329,9 @@ class TvApiController extends WikiaApiController {
 		$dismax->setQueryParser('edismax');
 
 		$select->setQuery( $preparedQuery );
-		$select->setRows( 1 );
+		$select->setRows( 5 );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
 
-		$dismax->setPhraseSlop(2);
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
 			$this->withLang( 'title', $lang ),
@@ -342,7 +341,7 @@ class TvApiController extends WikiaApiController {
 			'titleStrict^8',
 			$this->withLang( 'title', $lang ).'^2',
 			$this->withLang( 'redirect_titles_mv', $lang ).'^2',
-			'backlinks_txt'
+			'nolang_txt^75'
 		] ) );
 
 		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^25' );
