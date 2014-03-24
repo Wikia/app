@@ -12,7 +12,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
-	const MINIMAL_ARTICLE_SCORE = 8.75;
+	const MINIMAL_ARTICLE_SCORE = 2;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
