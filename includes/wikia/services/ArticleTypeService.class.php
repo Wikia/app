@@ -25,7 +25,7 @@ class ArticleTypeService {
 		}
 		$params = [
 			'title' => $art->getTitle()->getText(),
-			'wikiText' => /*$art->getPage()->getRawText()*/ 'asdf'
+			'wikiText' => $art->getPage()->getRawText()
 		];
 
 		$json = json_encode( $params, JSON_FORCE_OBJECT );
