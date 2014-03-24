@@ -473,7 +473,12 @@ SQL;
 				$validSuggest[] = $video;
 			}
 
-			wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
+			// See if we cleaned up any data
+			if (count($validSuggest) != count($suggest)) {
+				// We call wfSetWikiaPageProp below, but only if we get new suggestions.  Write out here
+				// to make sure we get the cleaned version written when necessary.
+				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
+			}
 		}
 
 		$readableTitle = $titleObj->getText();
