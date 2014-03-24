@@ -1218,6 +1218,18 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 $wgAdDriverTrackState = false;
 
 /**
+ * @name $wgAdDriverForceDirectGptAd
+ * Forces to use AdProviderDirectGpt for all slots managed by this provider
+ */
+$wgAdDriverForceDirectGptAd = false;
+
+/**
+ * @name $wgAdDriverForceLiftiumAd
+ * Forces to use AdProviderLiftium for all slots managed by this provider
+ */
+$wgAdDriverForceLiftiumAd = false;
+
+/**
  * @name $wgHighValueCountriesDefault
  * Default list of countries defined as high-value for revenue purposes
  * $wgHighValueCountries overrides this

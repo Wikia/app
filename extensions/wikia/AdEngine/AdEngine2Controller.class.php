@@ -306,9 +306,12 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
-		global $wgEnableRHonDesktop;
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop;
 
 		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
+
+		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
+		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 
 		return true;
 	}
@@ -318,7 +321,6 @@ class AdEngine2Controller extends WikiaController {
 	 * Register global JS variables bottom (migrated from wfAdEngineSetupJSVars)
 	 *
 	 * @param array $vars
-	 * @param array $scripts
 	 *
 	 * @return bool
 	 */
@@ -332,6 +334,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
+			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			   $wgEnableRHonDesktop, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -415,6 +418,14 @@ class AdEngine2Controller extends WikiaController {
 
 		if (!empty($wgEnableRHonDesktop)) {
 			$vars['wgEnableRHonDesktop'] = $wgEnableRHonDesktop;
+		}
+
+		if (!empty($wgAdDriverForceDirectGptAd)) {
+			$vars['wgAdDriverForceDirectGptAd'] = $wgAdDriverForceDirectGptAd;
+		}
+
+		if (!empty($wgAdDriverForceLiftiumAd)) {
+			$vars['wgAdDriverForceLiftiumAd'] = $wgAdDriverForceLiftiumAd;
 		}
 
 		wfProfileOut(__METHOD__);
