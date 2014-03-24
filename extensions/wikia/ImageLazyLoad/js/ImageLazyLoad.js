@@ -1,27 +1,51 @@
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-
-$( function() {
+require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], function( $, log, browserDetect, w ) {
 	'use strict';
+
+	var browserSupportsWebP;
+
+	function checkWebPSupport() {
+		// WebP is turned off on this wiki
+		if ( w.wgEnableWebPThumbnails !== true ) {
+			return;
+		}
+
+		log('checking WebP support...',  log.levels.info, 'ImgLzy');
+
+		// @see http://stackoverflow.com/a/5573422
+		var webP = new Image();
+		webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+		webP.onload = webP.onerror = $.proxy(function () {
+			browserSupportsWebP = webP.height === 2;
+
+			log('has support for WebP: ' + (browserSupportsWebP ? 'yes' : 'no'),  log.levels.info, 'ImgLzy');
+
+			// report browsers support stats to Kibana
+			if (typeof syslogReport === 'function') {
+				syslogReport(log.levels.info, 'webp', {'webp-support': browserSupportsWebP ? 'yes' : 'no'});
+			}
+		}, this);
+	}
 
 	// it's a global, it should be a global
 	var ImgLzy = {
 		cache: [],
 		timestats: 0,
-		browserSupportsWebP: undefined,
 
 		init: function() {
 			var proxy = $.proxy( this.checkAndLoad, this ),
 				throttled = $.throttle( 250, proxy );
 
-			this.checkWebPSupport();
 			this.createCache();
 			this.checkAndLoad();
 
 			$( window ).on( 'scroll', throttled );
 			$( '.scroller' ).on( 'scroll', throttled );
 			$( document ).on( 'tablesorter_sortComplete', proxy );
+
+			log('initialized', log.levels.info, 'ImgLzy');
 		},
 
 		relativeTop: function( e ) {
@@ -32,24 +56,9 @@ $( function() {
 			return e.offset().top;
 		},
 
-		checkWebPSupport: function() {
-			if ( window.wgEnableWebPThumbnails !== true ) {
-				return;
-			}
-
-			// @see http://stackoverflow.com/a/5573422
-			var webP = new Image();
-			webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
-			webP.onload = webP.onerror = $.proxy(function () {
-				this.browserSupportsWebP = webP.height === 2;
-
-				// TODO: add stats reporting
-			}, this);
-		},
-
 		// rewrite the URL to request WebP thumbnails (if supported)
 		rewriteURLForWebP: function(src) {
-			if ( this.browserSupportsWebP && src.indexOf( '/images/thumb/' ) > 0 ) {
+			if ( browserSupportsWebP && src.indexOf( '/images/thumb/' ) > 0 ) {
 				src = src.replace( /\.[^\./]+$/, '.webp' );
 			}
 			return src;
@@ -178,10 +187,16 @@ $( function() {
 		}
 	};
 
-	ImgLzy.init();
+	// detect WebP support as early as possible
+	checkWebPSupport();
 
-	// fix iOS bug - not firing scroll event when after refresh page is opened in the middle of its content
-	require( [ 'wikia.browserDetect', 'wikia.window' ], function( browserDetect, w ) {
+	// expose as a global
+	window.ImgLzy = ImgLzy;
+
+	$( function() {
+		ImgLzy.init();
+
+		// fix iOS bug - not firing scroll event when after refresh page is opened in the middle of its content
 		if ( browserDetect.isIPad() ) {
 			w.addEventListener( 'pageshow', function() {
 				// Safari iOS doesn't trigger scroll event after page refresh.
@@ -190,8 +205,5 @@ $( function() {
 				w.setTimeout( $.proxy( ImgLzy.checkAndLoad, ImgLzy ), 0 );
 			} );
 		}
-
-	} );
-
-	window.ImgLzy = ImgLzy;
-} );
+	});
+});
