@@ -462,6 +462,13 @@ SQL;
 					continue;
 				}
 
+				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
+					if ( $verbose ) {
+						echo "\t\t[FILTER] Match was already suggested in the past: '".$video['title']."'\n";
+					}
+					continue;
+				}
+
 				$suggestTitles[$video['title']] = 1;
 				$validSuggest[] = $video;
 			}
