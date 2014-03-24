@@ -1,63 +1,63 @@
 /*
- * The design calls for all of the "posted in" titles to be on one line.
+ * The design calls for all of the 'posted in' titles to be on one line.
  * This function calculates whether or not we need to truncate that list
- * and show a "more" link based on the width of that line.
+ * and show a 'more' link based on the width of that line.
  */
 
-define( 'lvs.ellipses', [], function() {
+define('lvs.ellipses', [], function () {
 
-	"use strict";
+	'use strict';
 
 	/**
 	 * @param jQuery $container The wrapper element for the main body of this page
 	 */
-	function init( $container ) {
+	function init($container) {
 		var wrapperWidth,
 			ellipsesWidth,
 			truncatedWidth,
 			undef;
 
-		function initPopover( elem ) {
+		function initPopover(elem) {
 			var popoverTimeout = 0;
 
 			function setPopoverTimeout() {
-				popoverTimeout = setTimeout( function() {
-					elem.popover( 'hide' );
-				}, 300 );
+				popoverTimeout = setTimeout(function () {
+					elem.popover('hide');
+				}, 300);
 			}
 
 			elem.popover({
 				trigger: 'manual',
 				placement: 'top',
-				content: function() {
+				content: function () {
 					var list = elem.next().find('ul').clone(),
-						details = list.wrap( '<div class="details"></div>' );
+						details = list.wrap('<div class="details"></div>');
 
 					return details.parent();
 				}
-			}).on( 'mouseenter', function() {
-					clearTimeout( popoverTimeout );
-					$( '.popover' ).remove();
-					elem.popover( 'show' );
+			}).on('mouseenter', function () {
+				clearTimeout(popoverTimeout);
+				$('.popover').remove();
+				elem.popover('show');
 
-				}).on('mouseleave', function() {
+			}).on('mouseleave', function () {
+				setPopoverTimeout();
+				$('.popover').mouseenter(function () {
+					clearTimeout(popoverTimeout);
+				}).mouseleave(function () {
 					setPopoverTimeout();
-					$( '.popover' ).mouseenter( function() {
-						clearTimeout( popoverTimeout );
-					}).mouseleave( function() {
-							setPopoverTimeout();
-						});
 				});
+			});
 		}
 
-		$container.find('.posted-in').each(function() {
-			var $this = $( this ),
-				$msg = $this.children( 'div' ),
+		$container.find('.posted-in').each(function () {
+			var $this = $(this),
+				$msg = $this.children('div'),
 				msgWidth = $msg.width(),
-				$ellipses = $this.find( '.ellipses' );
+				$ellipses = $this.find('.ellipses');
 
 			// get constant DOM widths only once
-			if ( ellipsesWidth === undef ) {
+			if (ellipsesWidth === undef) {
 				ellipsesWidth = $ellipses.width();
 				// get wrapper width
 				wrapperWidth = $this.width();
@@ -65,10 +65,10 @@ define( 'lvs.ellipses', [], function() {
 				truncatedWidth = wrapperWidth - ellipsesWidth;
 			}
 
-			if ( msgWidth > wrapperWidth ) {
-				$msg.addClass( 'processed' ).width( truncatedWidth );
+			if (msgWidth > wrapperWidth) {
+				$msg.addClass('processed').width(truncatedWidth);
 				$ellipses.show();
-				initPopover( $ellipses );
+				initPopover($ellipses);
 			}
 		});
 	}
