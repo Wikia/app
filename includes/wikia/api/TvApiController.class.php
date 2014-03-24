@@ -300,10 +300,13 @@ class TvApiController extends WikiaApiController {
 		$lang = $request->getVal( 'lang', static::LANG_SETTING );
 		$response = $this->querySolr( $query, $wikiId, $lang, $quality );
 		foreach( $response as $item ) {
+			var_dump( $item['url']);
+			var_dump( $item['score']);
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
-				return $this->getDataFromItem( $item, $lang );
+//				return $this->getDataFromItem( $item, $lang );
 			}
 		}
+		die;
 		return null;
 	}
 
@@ -334,18 +337,18 @@ class TvApiController extends WikiaApiController {
 
 		$dismax->setPhraseSlop(2);
 		$dismax->setQueryFields( implode( ' ', [
-			'nolang_txt',
-			$this->withLang( 'title', $lang )
+			'titleStrict',
+			$this->withLang( 'title', $lang ),
+			$this->withLang( 'redirect_titles_mv', $lang ),
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
-			'nolang_txt^4',
-			$this->withLang( 'title', $lang ).'^8',
-//			$this->withLang( 'html', $lang ).'^2',
-//			'backlinks_txt'
+			'titleStrict^8',
+			$this->withLang( 'title', $lang ).'^2',
+			$this->withLang( 'redirect_titles_mv', $lang ).'^2',
+			'backlinks_txt'
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^20' );
-//		$dismax->setBoostFunctions( "if(exists(query({!v='article_type_s:\"tv_episode\"'})),1000,0)" );
+		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^25' );
 
 		return $client->select( $select );
 	}
