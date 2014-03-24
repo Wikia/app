@@ -10,28 +10,58 @@
 namespace Wikia\api;
 
 
+use ApiAccessService;
+
 class ApiAccessServiceTest extends \WikiaBaseTest {
 	private $org_wgApiAccess;
 	private $wgApiEnvironment;
+	private $org_wgApiEnvironment;
+	private $org_wgUser;
 
 	public function setUp() {
-		global $wgApiAccess, $wgApiEnvironment;
+		global $wgApiAccess, $wgApiEnvironment, $IP, $wgUser;
 		$this->org_wgApiAccess = $wgApiAccess;
 		$this->org_wgApiEnvironment = $wgApiEnvironment;
+		$this->org_wgUser = $wgUser;
+		$wgUser = $this->mockUser(true);
+
 		$wgApiAccess = [
 			'AAA' => 111,
 			'BBB' => [ 'CCC' => 333 ]
 		];
 
 		$wgApiEnvironment = 'XXX';
+		$this->setupFile = $IP . "/includes/wikia/DefaultSettings.php";
 		parent::setUp();
 	}
 
+	/**
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 */
+	public function mockUser($isAllowed) {
+		$wgUser = $this->getMock("User");
+		$wgUser->expects($this->any())
+			->method("isAllowed")
+			->will($this->returnValue($isAllowed));
+		return $wgUser;
+	}
+
 	public function tearDown() {
-		global $wgApiAccess, $wgApiEnvironment;
+		global $wgApiAccess, $wgApiEnvironment, $wgUser;
 		$wgApiAccess = $this->org_wgApiAccess;
 		$wgApiEnvironment = $this->org_wgApiEnvironment;
+		$wgUser = $this->org_wgUser;
 		parent::tearDown();
+	}
+
+	public function testDisallowIfUserHasNoReadPermissions() {
+		global $wgUser;
+		$wgUser = $this->mockUser(false);
+		$subject = new ApiAccessService($this->getMockBuilder("WikiaRequest")->disableOriginalConstructor()->getMock());
+
+		$result = $subject->canUse("FakeController", "fakeAction");
+
+		$this->assertFalse($result);
 	}
 
 	/**
