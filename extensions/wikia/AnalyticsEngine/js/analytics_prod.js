@@ -95,7 +95,7 @@
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
 		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3],
-		['_setCustomVar', 20, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3] number
+		['_setCustomVar', 20, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
 	);
 
 	/**** Include A/B testing status ****/
