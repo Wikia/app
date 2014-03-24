@@ -223,6 +223,7 @@ class HubRssFeedModel extends WikiaModel {
 
 	/**
 	 * Get normalized partial data from MarketingToolboxModelV3 from given timestamp
+	 * @see normalizeDataFromModules
 	 *
 	 * @param $cityId
 	 * @return array
@@ -243,7 +244,7 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 	/**
-	 * Normalize data (remove duplicates, pupulate title, description and image fields.
+	 * Normalize data (remove duplicates, populate title, description and image fields).
 	 *
 	 * @param $data
 	 * @return array
