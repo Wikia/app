@@ -194,8 +194,8 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchArtist() {
 		$query = $this->getQueryFromRequest();
-
-		$this->getData( [ $query ], 'searchArtist' );
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->getData( [ $query, $limit, $offset ], 'searchArtist' );
 	}
 
 	/**
@@ -209,7 +209,8 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchSong() {
 		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'searchSong' );
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->getData( [ $query, $limit, $offset ], 'searchSong' );
 	}
 
 	/**
@@ -223,11 +224,7 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchLyrics() {
 		$query = $this->getQueryFromRequest();
-
 		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
-		$this->lyricsApiHandler->setLimit( $limit );
-		$this->lyricsApiHandler->setOffset( $offset );
-
 		$this->getData( [ $query, $limit, $offset ], 'searchLyrics' );
 	}
 
