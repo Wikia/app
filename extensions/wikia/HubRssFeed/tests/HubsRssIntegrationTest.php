@@ -10,45 +10,30 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 	 * Hubs rss links
 	 */
 	private $rssUrls  = [
-		'Gaming' 	=> 'http://www.wikia.com/rss/Gaming',
+		'Gaming'		=> 'http://www.wikia.com/rss/Gaming',
 		'Entertainment' => 'http://www.wikia.com/rss/Entertainment',
 		'Lifestyle' 	=> 'http://www.wikia.com/rss/Lifestyle'
 	];
 
 	/**
 	 * Check if hubs rss contain data in proper structure
+	 *
+	 * @dataProvider hubsRssLinksDataProvider
 	 */
-	public function testHubsRssLinks() {
-		foreach( $this->rssUrls as $hub => $rssUrl ) {
-			$rss = $this->getRssContent( $rssUrl, $hub );
+	public function testHubsRssLinks( $hub, $rssStr ) {
+		$this->assertNotEquals($rssStr, FALSE, "Cannot read RSS file from $hub hub");
 
-			$channelCount = $rss->channel->count();
-			$this->assertGreaterThan(0, $channelCount);
+		$rss = new SimpleXMLElement($rssStr, LIBXML_NOCDATA);
 
-			if( $channelCount ) {
-				$this->verifyRssDescription( $rss->channel, $hub );
+		$channelCount = $rss->channel->count();
+		$this->assertGreaterThan(0, $channelCount);
 
-				$itemCount = $rss->channel->item->count();
-				$this->assertGreaterThan(0, $itemCount);
+		$this->verifyRssDescription( $rss->channel, $hub );
 
-				if( $itemCount ) {
-					$this->verifyRssItem( $rss->channel->item[0], $hub );
-				}
-			}
-		}
-	}
+		$itemCount = $rss->channel->item->count();
+		$this->assertGreaterThan(0, $itemCount);
 
-	/**
-	 * Gets rss content
-	 */
-	private function getRssContent( $rssUrl, $hub ) {
-		$rss_str = file_get_contents( $rssUrl );
-
-		$this->assertNotEquals($rss_str, FALSE, "Cannot read RSS file from $hub hub");
-
-		$rss = new SimpleXMLElement($rss_str, LIBXML_NOCDATA);
-
-		return $rss;
+		$this->verifyRssItem( $rss->channel->item[0], $hub );
 	}
 
 	/**
@@ -75,5 +60,20 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 		$this->assertNotEmpty( $item->link->__toString(),  $hub . ' RSS item link is empty' );
 		$this->assertNotEmpty( $item->guid->__toString(),  $hub . ' RSS item guid is empty' );
 		$this->assertNotEmpty( $item->pubDate->__toString(),  $hub . ' RSS item pubDate is empty' );
+	}
+
+	public function hubsRssLinksDataProvider() {
+		$data = [];
+
+		foreach( $this->rssUrls as $hub => $rssUrl ) {
+			$rssStr =  file_get_contents( $rssUrl );
+			$hubData = [
+				$hub,
+				$rssStr
+			];
+			$data[] = $hubData;
+		}
+
+		return $data;
 	}
 }
