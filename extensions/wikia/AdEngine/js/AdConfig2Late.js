@@ -27,7 +27,7 @@ var AdConfig2Late = function (
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
-		if (slot[2] === 'Liftium') {
+		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
 			if (adProviderLiftium.canHandleSlot(slot)) {
 				return adProviderLiftium;
 			}
