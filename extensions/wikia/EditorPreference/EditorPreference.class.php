@@ -12,14 +12,14 @@ class EditorPreference {
 	const OPTION_EDITOR_CK = 3;
 
 	/**
-	 * Adds the editor dropdown to user preferences.
+	 * Adds the editor dropdown to the top of Editing preferences.
 	 *
 	 * @static
 	 * @param User $user
 	 * @param array $preferences
 	 * @return bool
 	 */
-	public static function onGetPreferences( $user, &$preferences ) {
+	public static function onEditingPreferencesBefore( $user, &$preferences ) {
 		$preferences['defaulteditor'] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',

@@ -19,7 +19,7 @@ $wgAutoloadClasses['EditorPreference'] = $dir . 'EditorPreference.class.php';
 $wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.php';
 
 // Hooks
-$wgHooks['GetPreferences'][] = 'EditorPreference::onGetPreferences';
+$wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferencesBefore';
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
 
 // Default preference -- needed for export
