@@ -304,7 +304,6 @@ class TvApiController extends WikiaApiController {
 				return $this->getDataFromItem( $item, $lang );
 			}
 		}
-		die;
 		return null;
 	}
 
