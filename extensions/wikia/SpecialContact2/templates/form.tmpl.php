@@ -14,68 +14,68 @@ if ( !empty($err) ) {
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
 <?php if ( $isLoggedIn ) {
-	echo wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName );
-	echo wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail );
+	echo wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock();
+	echo wfMessage( 'specialcontact-mail-on-file',  $encEmail )->parseAsBlock();
 } else {
 ?>
 <p>
-<label for="wpUserName"><?= wfMsg( 'specialcontact-username' ) ?></label>
+<label for="wpUserName"><?= wfMessage( 'specialcontact-username' )->escaped() ?></label>
 <input name="wpUserName" value="<?= $encName ?>" />
 </p>
 
 <p>
-<label for="wpEmail"><?= wfMsg( 'specialcontact-yourmail' ) ?></label>
+<label for="wpEmail"><?= wfMessage( 'specialcontact-yourmail' )->escaped() ?></label>
 <input name="wpEmail" value="<?= $encEmail ?>" />
 </p>
 <?php } ?>
 
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-problem' ); ?></p>
+<p class="contactformcaption"><?php echo wfMessage( 'specialcontact-problem' )->escaped(); ?></p>
 <?php
 	print "<input ". $eclass['wpContactSubject'] ." tabindex='" . ($tabindex++) . "' type='text' name=\"wpContactSubject\" value=\"{$encProblem}\" size='60' />";
 ?>
 
-<p class="contactformcaption"><?php echo wfMsg( 'specialcontact-problemdesc' ); ?></p>
+<p class="contactformcaption"><?php echo wfMessage( 'specialcontact-problemdesc' )->escaped(); ?></p>
 <?php
 	print "<textarea ". $eclass['wpContactDesc'] ." tabindex='" . ($tabindex++) . "' name=\"wpContactDesc\" rows=\"10\" cols=\"60\">{$encProblemDesc}</textarea>";
 ?>
 
 <p>
-<label for="wpScreenshot1"><?= wfMsg( 'specialcontact-label-screenshot' ) ?></label>
+<label for="wpScreenshot1"><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
 <input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
 </p>
 
 <p class="additionalScreenShot">
-<label for="wpScreenshot2"><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
+<label for="wpScreenshot2"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
 <input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
 </p>
 
 <p class="additionalScreenShot">
-<label for="wpScreenshot3"><?= wfMsg( 'specialcontact-label-additionalscreenshot' ) ?></label>
+<label for="wpScreenshot3"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
 <input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
 </p>
 
 <?php	
 if( !$isLoggedIn && (isset($captchaForm)) ) {
 	echo "<div class='captcha'>" .
-	wfMsg( 'specialcontact-captchatitle' ) .
+	wfMessage( 'specialcontact-captchatitle' )->escaped() .
 	$captchaForm .
-	wfMsg( 'specialcontact-captchainfo' ) .
+	wfMessage( 'specialcontact-captchainfo' )->escaped() .
 	"</div>\n";
 }
 ?>
-<p><?php print "<input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMsg( 'specialcontact-mail' ) ."\" />"; ?></p>
+<p><?php print "<input tabindex='" . ($tabindex++) . "' type='submit' value=\"". wfMessage( 'specialcontact-mail' )->escaped() ."\" />"; ?></p>
 
 <?php
 if( $isLoggedIn && $hasEmail ) {
 	//is user, has email, but is verified?
 	if( $hasEmailConf ) {
 		//yes!
-		print "<input tabindex='" . ($tabindex++) . "' type='checkbox' name=\"wgCC\" value=\"1\" />" . wfMsg('specialcontact-ccme');
+		print "<input tabindex='" . ($tabindex++) . "' type='checkbox' name=\"wgCC\" value=\"1\" />" . wfMessage( 'specialcontact-ccme' )->escaped();
 	}
 	else
 	{
 		//not
-		print "<s><i>" . wfMsg('specialcontact-ccme') . "</i></s><br/> ". wfMsgExt('specialcontact-ccdisabled', array('parse') ) ."";
+		print "<s><i>" . wfMessage( 'specialcontact-ccme' )->escaped() . "</i></s><br/> ". wfMessage( 'specialcontact-ccdisabled' )->parse() ."";
 	}
 }
 ?>

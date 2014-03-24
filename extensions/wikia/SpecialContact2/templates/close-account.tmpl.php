@@ -3,30 +3,30 @@ if ( !empty($err) ) {
         print $err;
 }
 
-echo wfMsgExt( 'specialcontact-intro-close-account', array( 'parse' ) );
+echo wfMessage( 'specialcontact-intro-close-account' )->parse();
 ?>
 
-<h2><?= wfMsg( 'specialcontact-form-header' ) ?></h2>
+<h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
 
 <form id="contactform" method="post" action="">
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
-<?= wfMsgExt( 'specialcontact-logged-in-as', array( 'parse' ), $encName, 'link' ) ?>
+<?= wfMessage( 'specialcontact-logged-in-as', $encName, 'link' )->parse() ?>
 
-<?= wfMsgExt( 'specialcontact-mail-on-file', array( 'parse' ), $encEmail, 'link' ) ?>
+<?= wfMessage( 'specialcontact-mail-on-file', $encEmail, 'link' )->parse() ?>
 
 <p>
 <input type="checkbox" name="wpReadHelp" required />
-<label for="wpReadHelp"><?= wfMsgExt( 'specialcontact-label-close-account-read-help', array( 'parseinline' ) ) ?></label>
+<label for="wpReadHelp"><?= wfMessage( 'specialcontact-label-close-account-read-help' )->parse() ?></label>
 </p>
 
 <p>
 <input type="checkbox" name="wpConfirm" required />
-<label for="wpConfirm"><?= wfMsg( 'specialcontact-label-close-account-confirm' ) ?></label>
+<label for="wpConfirm"><?= wfMessage( 'specialcontact-label-close-account-confirm' )->escaped() ?></label>
 </p>
 
-<input type="submit" value="<?= wfMsg( 'specialcontact-mail' ) ?>" />
+<input type="submit" value="<?= wfMessage( 'specialcontact-mail' )->escaped() ?>" />
 
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
