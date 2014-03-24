@@ -69,7 +69,7 @@ class AsyncTask {
 
 		ksort($idArgs);
 
-		$id = 'mw-'.uniqid().'-'.md5(json_encode($idArgs));
+		$id = uniqid('mw-');
 		$payload = [
 			'id' => $id,
 			'task' => $this->taskType,
@@ -78,6 +78,10 @@ class AsyncTask {
 				get_class($this->task),
 				(object) $serialized
 			],
+			'kwargs' => (object) [
+				'created' => time(),
+				'work_id' => md5(json_encode($idArgs))
+			]
 		];
 
 		if ($this->delay) {
