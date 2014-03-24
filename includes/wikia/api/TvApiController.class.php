@@ -38,12 +38,9 @@ class TvApiController extends WikiaApiController {
 			$responseValues = null;
 			$wikiId = $wiki['id'];
 			$url = $wiki['url'];
-//			$responseValues = $this->getExactMatch( $wiki['id'] );
+			$responseValues = $this->getEpisodeFromWiki( $wiki['id'] );
 			if ( $responseValues === null ) {
-//				$config = $this->getConfigFromRequest( $wiki['id'] );
-//				$responseValues = $this->getResponseFromConfig( $config, $wiki['id'] );
-//				var_dump( $responseValues );
-				$responseValues = $this->getEpisodeFromWiki( $wiki['id'] );
+				$responseValues = $this->getExactMatch( $wiki['id'] );
 			}
 
 			if ( $responseValues !== null ) {
@@ -345,7 +342,8 @@ class TvApiController extends WikiaApiController {
 			'backlinks_txt'
 		] ) );
 
-		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^20' );
+//		$dismax->setBoostQuery( 'article_type_s:"tv_episode"^20' );
+		$dismax->setBoostFunctions( "if(exists(query({!v='article_type_s:\"tv_episode\"'})),1000,0)" );
 
 		return $client->select( $select );
 	}
