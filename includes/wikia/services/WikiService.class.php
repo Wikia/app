@@ -379,7 +379,7 @@ class WikiService extends WikiaModel {
 				}
 			}
 		} catch ( Exception $e ) {
-			// for devbox machines
+			Wikia::log( __METHOD__, false, $e->getMessage() );
 		}
 		return $images;
 	}
