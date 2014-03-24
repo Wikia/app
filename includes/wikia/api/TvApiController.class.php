@@ -300,9 +300,6 @@ class TvApiController extends WikiaApiController {
 		$lang = $request->getVal( 'lang', static::LANG_SETTING );
 		$response = $this->querySolr( $query, $wikiId, $lang, $quality );
 		foreach( $response as $item ) {
-			var_dump( $item['url']);
-			var_dump( $item['score']);
-			die;
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
 				return $this->getDataFromItem( $item, $lang );
 			}
