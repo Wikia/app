@@ -474,7 +474,7 @@ SQL;
 			}
 
 			// See if we cleaned up any data
-			if (count($validSuggest) != count($suggest)) {
+			if (!$test && (count($validSuggest) != count($suggest))) {
 				// We call wfSetWikiaPageProp below, but only if we get new suggestions.  Write out here
 				// to make sure we get the cleaned version written when necessary.
 				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
