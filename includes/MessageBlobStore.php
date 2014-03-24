@@ -55,7 +55,7 @@ class MessageBlobStore {
 				$messages[$key] = wfMessage( $key )->inLanguage( $lang )->text();
 			}
 
-			if (!empty($messages)) {
+			if ( !empty( $messages) ) {
 				$blobs[$moduleName] = json_encode( $messages );
 			}
 		}
