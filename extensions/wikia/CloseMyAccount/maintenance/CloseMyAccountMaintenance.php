@@ -56,7 +56,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 				$this->output( "Closing account {$userObj->getName()}...\n" );
 				$statusMsg1 = '';
 				$statusMsg2 = '';
-				$result = EditAccount::closeAccount( $userObj, $closeReason, $statusMsg1, $statusMsg2 );
+				$result = EditAccount::closeAccount( $userObj, $closeReason, $statusMsg1, $statusMsg2, /*$keepEmail = */true );
 
 				// Set an option that signifies this user was closed automatically
 				$userObj->setOption( 'disabled-by-user-request', true );

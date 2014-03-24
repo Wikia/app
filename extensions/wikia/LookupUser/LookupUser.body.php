@@ -164,6 +164,30 @@ EOT
 				$aUsers[] = $oRow->user_name;
 				$loop++;
 			}
+
+			// Check for disabled accounts where we kept the email
+			$dRows = $dbr->select(
+				[ '`user`', 'user_properties' ],
+				[ 'user_name' ],
+				[
+					'user_id = up_user',
+					'up_property' => 'disabled-user-email',
+					'up_value' => $target,
+				],
+				__METHOD__
+			);
+
+			foreach ( $dRows as $row ) {
+				if ($loop === 0) {
+					$userTarget = $oRow->user_name;
+				}
+				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
+					$userTarget = $emailUser;
+				}
+				$aUsers[] = $row->user_name;
+				$loop++;
+			}
+
 			$count = $loop;
 		}
 
@@ -226,8 +250,8 @@ EOT
 			$optionsString .= "$name = $value <br />";
 		}
 		$name = $user->getName();
-		if( $user->getEmail() ) {
-			$email = $user->getEmail();
+		$email = $user->getEmail() ?: $user->getOption( 'disabled-user-email' );
+		if( !empty( $email ) ) {
 			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
 			$email_output = wfMessage( 'lookupuser-no-email' )->text();

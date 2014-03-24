@@ -56,6 +56,7 @@ The Wikia Team
 ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com',
+	'closemyaccount-reactivation-email_body-HTML' => '',
 	'closemyaccount-reactivation-email-greeting' => 'Hi $USERNAME,',
 	'closemyaccount-reactivation-email-content' => 'You\'re one step away from reactivating your account on Wikia! Click the link below to confirm you were the one who requested this and get started.
 
