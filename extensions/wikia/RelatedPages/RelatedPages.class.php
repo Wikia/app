@@ -380,10 +380,15 @@ class RelatedPages {
 				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
 				!$app->checkSkin( 'wikiamobile' )
 			) {
-				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+				if ( $app->checkSkin( 'oasis' ) ) {
+					OasisController::addSkinAssetGroup( 'relatedpages_js' );
+				}
+				else {
+					$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
 
-				foreach( $scripts as $script ){
-					$wg->Out->addScript( "<script src='{$script}'></script>" );
+					foreach( $scripts as $script ){
+						$wg->Out->addScript( "<script src='{$script}'></script>" );
+					}
 				}
 			}
 		}

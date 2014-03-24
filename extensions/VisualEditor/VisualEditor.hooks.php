@@ -21,6 +21,11 @@ class VisualEditorHooks {
 		return $isAvailable;
 	}
 
+	public static function isVisible( $skin ) {
+		global $wgEnableVisualEditorUI;
+		return $wgEnableVisualEditorUI && self::isAvailable( $skin );
+	}
+
 	public static function onSetup() {
 		global $wgResourceModules, $wgVisualEditorResourceTemplate,
 			$wgVisualEditorTabMessages;
@@ -87,10 +92,6 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		// Only do this if the user has VE enabled
-		if ( !self::isAvailable( $skin ) ) {
-			return true;
-		}
 		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
 		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
 		return true;
@@ -107,7 +108,7 @@ class VisualEditorHooks {
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		// Only do this if the user has VE enabled
-		if ( !self::isAvailable( $skin ) ) {
+		if ( !self::isVisible( $skin ) ) {
 			return true;
 		}
 
@@ -182,7 +183,7 @@ class VisualEditorHooks {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
 		if (
-			!self::isAvailable( $skin ) ||
+			!self::isVisible( $skin ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
 		) {
 			return true;

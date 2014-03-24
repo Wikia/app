@@ -41,6 +41,7 @@ $config['liftium_ads_js'] = array(
 		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
+		'//extensions/wikia/AdEngine/liftium/AdsInContent.js'
 	),
 );
 
@@ -55,19 +56,20 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 
 		// high prio
-		'//extensions/wikia/AdEngine/js/AdSlotMapConfig.js',
+		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGpt.js',
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -99,9 +101,6 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
-		'#group_liftium_ads_js',
-
-		'//extensions/wikia/AdEngine/liftium/AdsInContent.js',
 	),
 );
 
@@ -134,8 +133,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
-		// Related Forum Discussion is on all article pages
-		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		// Survey for first time editors
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
@@ -218,6 +215,9 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
+
+		// Global Header tracking
+		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -627,9 +627,10 @@ $config['wikiamobile_ads_gpt_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -963,6 +964,13 @@ $config['wall_js'] = array(
 	)
 );
 
+$config['wall_notifications_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/WallNotifications.js',
+	)
+);
+
 $config['wall_mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1092,7 +1100,7 @@ $config['videopageadmin_edit_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/carousel.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocompleteitem.js',
 		'//extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
@@ -1154,8 +1162,9 @@ $config['videohomepage_js'] = array(
 		'//extensions/wikia/VideoPageTool/js/admin/collections/category.js',
 		'//extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
 
-		'//extensions/wikia/VideoPageTool/js/shared/views/carouselthumb.js',
+		'//extensions/wikia/VideoPageTool/js/shared/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/shared/views/owlcarousel.js',
+		'//extensions/wikia/VideoPageTool/js/homepage/views/carouselThumb.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/carousels.js',
 		'//extensions/wikia/VideoPageTool/js/homepage/views/carousel.js',
 
@@ -1420,6 +1429,14 @@ $config['analytics_gas_js'] = array(
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
+	)
+);
+
+$config['analytics_bluekai_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 	)
 );
 
@@ -1692,5 +1709,13 @@ $config['qualtrics_zone_code_injector_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
+	]
+];
+
+$config['qualaroo_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/Qualaroo/scripts/Qualaroo.js',
 	]
 ];

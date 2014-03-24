@@ -305,6 +305,7 @@ $messages['qqq'] = array(
 	'wikistats_wikicreated' => '{{Identical|Created}}',
 	'wikistats_wikilang' => '{{Identical|Language}}',
 	'wikistats_tables' => '{{Identical|Table}}',
+	'wikistats_charts' => '{{Identical|Chart}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
 	'wikistats_trend_formula' => '{{Identical|Formula}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
@@ -1272,7 +1273,7 @@ $messages['br'] = array(
 	'wikistats_namespaces' => 'esaouennoù anv',
 	'wikistats_redirects' => 'adkasoù',
 	'wikistats_edited_in_namespace' => 'Kemmet en egorenn anvioù',
-	'wikistats_main_namespace' => 'Endalch <br /> egorenn anvioù', # Fuzzy
+	'wikistats_main_namespace' => 'pennañ',
 	'wikistats_image_namespace' => 'skeudenn',
 	'wikistats_page_requests' => 'goulennoù pajennoù',
 	'wikistats_visits' => 'gweladennoù',
@@ -2241,7 +2242,7 @@ $messages['diq'] = array(
 	'wikistats_language_top' => 'Top $1 zıwani',
 	'wikistats_language_all' => 'Zıwani pêro',
 	'wikistats_title' => 'Sername',
-	'wikistats_summary_data' => 'Melumatê mersel',
+	'wikistats_summary_data' => 'Melumatê xulasa',
 	'wikistats_namespaces_top10list' => 'listey Tewr 10a',
 	'wikistats_namespace_top' => 'Verşınasiya Cayênaman',
 );
@@ -6798,7 +6799,7 @@ $messages['oc'] = array(
 	'wikistats_see_also' => 'Vejatz tanben :',
 	'wikistats_language_all' => 'Totas las lengas',
 	'wikistats_recordspager' => "Mostrar '''$1''' de '''$2''' sus '''$3''' registraments",
-	'wikistats_title' => 'Titol',
+	'wikistats_title' => 'Títol',
 );
 
 /** Deitsch (Deitsch)

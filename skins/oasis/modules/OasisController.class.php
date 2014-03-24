@@ -2,8 +2,9 @@
 
 class OasisController extends WikiaController {
 
-	private static $extraBodyClasses = array();
-	private static  $bodyParametersArray = array();
+	private static $extraBodyClasses = [];
+	private static $bodyParametersArray = [];
+	private static $skinAssetGroups = [];
 
 	/* @var AssetsManager */
 	private $assetsManager;
@@ -420,6 +421,9 @@ class OasisController extends WikiaController {
 
 		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
+		// add groups queued via OasisController::addSkinAssetGroup
+		$jsAssetGroups = array_merge($jsAssetGroups, self::$skinAssetGroups);
+
 		if ( empty($wgOasisDisableWikiaScriptLoader)) {
 			// Load the combined JS
 			$assets = [];
@@ -625,5 +629,14 @@ EOT;
 
 	public static function addBodyParameter($parameter) {
 		static::$bodyParametersArray[] = $parameter;
+	}
+
+	/**
+	 * Adds given AssetsManager group to Oasis main non-blocking JS request
+	 *
+	 * @param string $group group name
+	 */
+	public static function addSkinAssetGroup($group) {
+		self::$skinAssetGroups[] = $group;
 	}
 }

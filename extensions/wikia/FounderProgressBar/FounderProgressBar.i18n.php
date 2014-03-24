@@ -1507,10 +1507,11 @@ $messages['nl'] = array(
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Cambiaments Recents',
+	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Darrièrs Cambiaments',
 );
 
 /** Polish (polski)

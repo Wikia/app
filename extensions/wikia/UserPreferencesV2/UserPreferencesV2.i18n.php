@@ -232,6 +232,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'prefs-personal' => 'Ma zitouroù',
 	'preferences-v2-username' => 'Ma anv implijer :',
+	'preferences-v2-usergroups' => 'Strolladoù implijerien :',
 	'preferences-v2-gender' => 'Jener :',
 	'preferences-v2-password' => 'Ma ger-tremen :',
 	'preferences-v2-oldsig' => 'Ar sinadur zo evit poent :',
@@ -252,11 +253,13 @@ $messages['br'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Oberiantiz ar wiki',
 	'preferences-v2-redirect-main-page' => 'Pajenn bennañ',
 	'preferences-v2-redirect-recent-changes' => 'Kemmoù diwezhañ',
+	'tog-showAdsv2' => 'Bommoù bruderezh :',
 	'prefs-addressv2' => "Chomlec'h",
 	'preferences-v2-watchdefault' => 'Aozañ',
 	'preferences-v2-watchmoves' => "Dilec'hiañ",
 	'preferences-v2-watchdeletion' => 'Diverkañ',
 	'preferences-v2-watchcreations' => 'Krouiñ',
+	'preferences-v2-showads-enable' => 'Diskouez an holl vommoù bruderezh',
 	'preferences-v2-my-email-address' => "Ma chomlec'h postel :",
 	'tog-editondblclick-v2' => 'Daouglikañ evit aozañ pajennoù',
 	'tog-hidefollowedpages-v2' => "Kuzhat ma fajennoù heuliet d'an holl",
@@ -819,11 +822,12 @@ $messages['nl'] = array(
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'preferences-v2-redirect-recent-changes' => 'Cambiaments Recents',
-	'prefs-recent-changesv2' => 'Cambiaments recents, istorics e jornals',
+	'preferences-v2-redirect-recent-changes' => 'Darrièrs cambiaments',
+	'prefs-recent-changesv2' => 'Darrièrs cambiaments, istorics e jornals recents',
 );
 
 /** Polish (polski)
@@ -1069,7 +1073,7 @@ $messages['sco'] = array(
 	'preferences-v2-oldsig' => 'Exeestin signature:',
 	'preferences-v2-nickname' => 'Custom signature:',
 	'preferences-v2-fancysig' => 'I want tae uise wikitex in ma signature<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Whit ar signatures?]]',
-	'preferences-v2-fancysig-help-page-name' => 'Heelp:Signature', # Fuzzy
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
 	'prefs-appearance' => 'Appearance',
 	'preferences-v2-date' => 'Date format:',
 	'preferences-v2-time' => 'Time zone:',

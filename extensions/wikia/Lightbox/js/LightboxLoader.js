@@ -61,52 +61,51 @@
 		videoThumbWidthThreshold: 400,
 		init: function () {
 			var self = this,
-				article = $('#WikiaArticle'),
-				videos = $('#RelatedVideosRL'),
-				photos = $('#LatestPhotosModule'),
-				comments = $('#WikiaArticleComments'),
-				footer = $('#WikiaArticleFooter'),
-				videosModule = $('#videosModule');
+				$article = $('#WikiaArticle'),
+				$videos = $('#RelatedVideosRL'),
+				$photos = $('#LatestPhotosModule'),
+				$comments = $('#WikiaArticleComments'), // event handled with $footer
+				$footer = $('#WikiaArticleFooter'), // bottom videos module
+				$videosModule = $('.videos-module-rail'), // right rail videos module
+				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
-			article.add(photos).add(videos).add(comments).add(footer).add(videosModule)
+			$article.add($photos).add($videos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
 						$thumb = $this.children('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
-						parent,
+						$parent,
 						isVideo,
 						trackingInfo,
 						$slideshowImg,
 						clickSource;
 
-					if (
-						$this.hasClass('link-internal') ||
-						$this.hasClass('link-external') ||
-						$thumb.attr('data-shared-help') ||
-						$this.hasClass('no-lightbox')
-					) {
+					if (!LightboxLoader.hasLightbox($this, $thumb)) {
 						return;
 					}
 
 					e.preventDefault();
 
-					if ($this.closest(article).length) {
-						parent = article;
-					} else if ($this.closest(videos).length) {
-						parent = videos;
-					} else if ($this.closest(photos).length) {
-						parent = photos;
-					} else if ($this.closest(comments).length) {
-						parent = comments;
+					if ($this.closest($videoHomePage).length) {
+						$parent = $videoHomePage;
+					} else if ($this.closest($article).length) {
+						$parent = $article;
+					} else if ($this.closest($videos).length) {
+						$parent = $videos;
+					} else if ($this.closest($photos).length) {
+						$parent = $photos;
+					} else if ($this.closest($comments).length) {
+						$parent = $comments;
 					} else if ($this.closest('#videosModule').length) {
-						parent = $('#videosModule');
+						// Don't use cached object because it may not have been in the DOM on init
+						$parent = $('#videosModule');
 					}
 
 					trackingInfo = {
 						target: $this,
-						parent: parent
+						parent: $parent
 					};
 
 					// Handle edge cases
@@ -115,7 +114,8 @@
 					// Used in RelatedVideos.
 					if ($this.hasClass('lightbox-link-to-open')) {
 						fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
-						// TODO: refactor wikia slideshow
+
+					// TODO: refactor wikia slideshow
 					} else if ($this.hasClass('wikia-slideshow-popout')) {
 						$slideshowImg = $this.parents('.wikia-slideshow-toolbar')
 							.siblings('.wikia-slideshow-images-wrapper')
@@ -152,14 +152,19 @@
 				});
 
 			// TODO: refactor wikia slideshow (BugId:43483)
-			article.on(
-				'click.lightbox',
-				'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
-				function (e) {
-					e.preventDefault();
-					$(this).closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
-				}
-			);
+			$article
+				.off('.slideshowLightbox')
+				.on(
+					'click.slideshowLightbox',
+					'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
+					function (e) {
+						var $this = $(this);
+						if (LightboxLoader.hasLightbox($this)) {
+							e.preventDefault();
+							$this.closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
+						}
+					}
+				);
 
 		},
 
@@ -343,6 +348,20 @@
 					openModal.closeModal();
 				}
 			}
+		},
+		/**
+		 *
+		 * @param $link Anchor that was clicked
+		 * @param [$thumb] Optional thumbnail image inside clicked anchor
+		 * @returns {boolean}
+		 */
+		hasLightbox: function ($link, $thumb) {
+			return !(
+				$link.hasClass('link-internal') ||
+				$link.hasClass('link-external') ||
+				$thumb && $thumb.attr('data-shared-help') ||
+				$link.hasClass('no-lightbox')
+			);
 		}
 	};
 
@@ -372,7 +391,8 @@
 			HUBS: 'hubs',
 			OTHER: 'other',
 			VIDEOS_MODULE_BOTTOM: 'bottomVideosModule',
-			VIDEOS_MODULE_RAIL: 'railVideosModule'
+			VIDEOS_MODULE_RAIL: 'railVideosModule',
+			VIDEO_HOME_PAGE: 'videoHomePage'
 		}
 	};
 

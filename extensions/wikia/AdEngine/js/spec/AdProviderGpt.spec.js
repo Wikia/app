@@ -1,4 +1,4 @@
-describe('AdProviderGpt', function(){
+describe('AdProviderDirectGpt', function(){
 
 	it('Leaderboard works as expected in low value countries', function() {
 		var logMock = function() {},
@@ -7,11 +7,11 @@ describe('AdProviderGpt', function(){
 			slotTweakerMock,
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adProviderGpt,
+			adProviderDirectGpt,
 			wikiaGptMock = {
 				init: function () {}
 			},
-			AdSlotMapConfigMock = {
+			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
 						'TOP_LEADERBOARD': {}
@@ -22,7 +22,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return false;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderGpt = AdProviderGpt(
+		adProviderDirectGpt = AdProviderDirectGpt(
 			logMock,
 			windowMock,
 			geoMock,
@@ -30,10 +30,10 @@ describe('AdProviderGpt', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
-			AdSlotMapConfigMock
+			GptSlotConfigMock
 		);
 
-		expect(adProviderGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART not called when user in low value country');
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART not called when user in low value country');
 	});
 
 
@@ -46,7 +46,7 @@ describe('AdProviderGpt', function(){
 			slotTweakerMock,
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adProviderGpt,
+			adProviderDirectGpt,
 			wikiaGptMock = {
 				init: function () {},
 				pushAd: function () {
@@ -55,7 +55,7 @@ describe('AdProviderGpt', function(){
 			},
 			successMock = function () {},
 			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
-			AdSlotMapConfigMock = {
+			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
 						'TOP_LEADERBOARD': {}
@@ -66,7 +66,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderGpt = AdProviderGpt(
+		adProviderDirectGpt = AdProviderDirectGpt(
 			logMock,
 			windowMock,
 			geoMock,
@@ -74,12 +74,12 @@ describe('AdProviderGpt', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
-			AdSlotMapConfigMock
+			GptSlotConfigMock
 		);
 
-		expect(adProviderGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country (and not exceeded number of DART calls');
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country (and not exceeded number of DART calls');
 
-		adProviderGpt.fillInSlot('TOP_LEADERBOARD', successMock, hopMock);
+		adProviderDirectGpt.fillInSlot('TOP_LEADERBOARD', successMock, hopMock);
 		expect(liftiumCalled).toBeFalsy('Liftium not called when user in high value country (and not exceeded number of DART calls)');
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
@@ -93,7 +93,7 @@ describe('AdProviderGpt', function(){
 			slotTweakerMock,
 			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adProviderGpt,
+			adProviderDirectGpt,
 			wikiaGptMock = {
 				init: function () {},
 				pushAd: function (slotname, success, hop) {
@@ -103,7 +103,7 @@ describe('AdProviderGpt', function(){
 			},
 			successMock = function () {},
 			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
-			AdSlotMapConfigMock = {
+			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
 						'TOP_LEADERBOARD': {}
@@ -114,7 +114,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderGpt = AdProviderGpt(
+		adProviderDirectGpt = AdProviderDirectGpt(
 			logMock,
 			windowMock,
 			geoMock,
@@ -122,12 +122,12 @@ describe('AdProviderGpt', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
-			AdSlotMapConfigMock
+			GptSlotConfigMock
 		);
 
-		expect(adProviderGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country (and not exceeded number of DART calls');
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country (and not exceeded number of DART calls');
 
-		adProviderGpt.fillInSlot('TOP_LEADERBOARD', successMock, hopMock);
+		adProviderDirectGpt.fillInSlot('TOP_LEADERBOARD', successMock, hopMock);
 		expect(liftiumCalled).toBeTruthy('Liftium called when user in high value country (and not exceeded number of DART calls) and GPT hops');
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
@@ -148,11 +148,11 @@ describe('AdProviderGpt', function(){
 			},
 			cacheStorageMock = {set: function() {}, get: cacheGetMock, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adProviderGpt,
+			adProviderDirectGpt,
 			wikiaGptMock = {
 				init: function () {}
 			},
-			AdSlotMapConfigMock = {
+			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
 						'TOP_LEADERBOARD': {}
@@ -163,7 +163,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderGpt = AdProviderGpt(
+		adProviderDirectGpt = AdProviderDirectGpt(
 			logMock,
 			windowMock,
 			geoMock,
@@ -171,14 +171,14 @@ describe('AdProviderGpt', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
-			AdSlotMapConfigMock
+			GptSlotConfigMock
 		);
 
 		callsToTopLeaderboard = 6;
-		expect(adProviderGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country and number of DART calls is not exceeded');
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country and number of DART calls is not exceeded');
 
 		callsToTopLeaderboard = 8;
-		expect(adProviderGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART can\'t handle the slot when user in high value country and exceeded number of DART calls');
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART can\'t handle the slot when user in high value country and exceeded number of DART calls');
 	});
 
 	it('Skin re-uses the leaderboard show/hop decision', function() {
@@ -204,11 +204,11 @@ describe('AdProviderGpt', function(){
 			},
 			cacheStorageMock = {set: function() {}, get: cacheGetMock, del: function() {}},
 			adLogicHighValueCountryMock = {},
-			adProviderGpt,
+			adProviderDirectGpt,
 			wikiaGptMock = {
 				init: function () {}
 			},
-			AdSlotMapConfigMock = {
+			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
 						'TOP_LEADERBOARD': {},
@@ -220,7 +220,7 @@ describe('AdProviderGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderGpt = AdProviderGpt(
+		adProviderDirectGpt = AdProviderDirectGpt(
 			logMock,
 			windowMock,
 			geoMock,
@@ -228,14 +228,14 @@ describe('AdProviderGpt', function(){
 			cacheStorageMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
-			AdSlotMapConfigMock
+			GptSlotConfigMock
 		);
 
 		callsToTopLeaderboard = 6;
 		callsToInvisibleSkin = 8;
 
-		expect(adProviderGpt.canHandleSlot('INVISIBLE_SKIN')).toBeFalsy('DART don\' call for skin after no ad limit is exceeded if leaderboard was not called');
-		adProviderGpt.canHandleSlot('TOP_LEADERBOARD');
-		expect(adProviderGpt.canHandleSlot('INVISIBLE_SKIN')).toBeTruthy('DART calls for skin even with no ad limit is exceeded if leaderboard was called');
+		expect(adProviderDirectGpt.canHandleSlot('INVISIBLE_SKIN')).toBeFalsy('DART don\' call for skin after no ad limit is exceeded if leaderboard was not called');
+		adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD');
+		expect(adProviderDirectGpt.canHandleSlot('INVISIBLE_SKIN')).toBeTruthy('DART calls for skin even with no ad limit is exceeded if leaderboard was called');
 	});
 });
