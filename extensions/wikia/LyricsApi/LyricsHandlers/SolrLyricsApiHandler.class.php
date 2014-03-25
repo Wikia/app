@@ -82,13 +82,13 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	/**
-	 * @desc Decods JSON into array/object
+	 * @desc Decodes JSON into array/object
 	 *
 	 * @param String $text
 	 *
 	 * @return mixed
 	 */
-	private function deSerialize( $text ) {
+	private function deserialize( $text ) {
 		return json_decode( $text );
 	}
 
