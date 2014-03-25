@@ -20,14 +20,12 @@ class LyricsApiController extends WikiaController {
 	private $lyricsApiHandler = null;
 
 	/**
-	 * @desc Constructor, gets the configuration from global $wgLyricsSolrConfig variable and sets data handler
+	 * @desc Constructor, gets the configuration from global $wgLyricsSolariumOptions variable and sets data handler
 	 */
 	public function __construct() {
-		global $wgLyricsSolariumOptions;
-
 		parent::__construct();
 		$this->lyricsApiHandler = new SolrLyricsApiHandler( [
-			'adapteroptions' => $wgLyricsSolariumOptions
+			'adapteroptions' => F::app()->wg->LyricsSolariumOptions
 		] );
 	}
 

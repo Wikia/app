@@ -22,8 +22,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	public $cityId;
 
 	public function __construct( $config ) {
-		global $wgCityId;
-		$this->cityId = $wgCityId;
+		$this->cityId = F::app()->wg->CityId;
 		$this->client = new Solarium_Client( $config );
 	}
 

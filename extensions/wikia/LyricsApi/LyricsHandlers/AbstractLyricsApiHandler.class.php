@@ -24,10 +24,9 @@ abstract class AbstractLyricsApiHandler {
 	 * @return string
 	 */
 	protected function buildUrl( $params ) {
-		global $wgServer;
 		return implode('',
 			[
-				$wgServer,
+				F::app()->wg->Server,
 				'/',
 				self::API_ENTRY_POINT,
 				'?',
