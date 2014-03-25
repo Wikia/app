@@ -2,7 +2,12 @@
  * These are generic functions having to do with loading graphics
  * and ajax responses for LVS
  */
-define('lvs.commonajax', ['wikia.window', 'lvs.tracker'], function (window, tracker) {
+define('lvs.commonajax', [
+	'lvs.suggestions',
+	'lvs.ellipses',
+	'wikia.window',
+	'lvs.tracker'
+], function (suggestions, ellipses, window, tracker) {
 	'use strict';
 
 	var $body,
@@ -34,6 +39,9 @@ define('lvs.commonajax', ['wikia.window', 'lvs.tracker'], function (window, trac
 			window.GlobalNotification.show(data.msg, 'confirm');
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html(data.html).trigger('contentReset');
+			suggestions.init($container);
+			ellipses.init($container);
+
 			$('.lvs-match-stats').find('.count').text(data.totalVideos || 0);
 
 			stopLoadingGraphic();
