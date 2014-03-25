@@ -65,6 +65,7 @@ $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
 	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
+	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
 );
 
 /** Czech (čeština)

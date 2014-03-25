@@ -65,11 +65,14 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiarelatedpages-desc' => 'Ouzhpennañ ur roll pajennoù liammet gant pajennoù all',
 	'wikiarelatedpages-heading' => "Lenn muioc'h",
+	'wikiamobile-related-article' => 'Pennad damheñvel',
+	'wikiamobile-people-also-read' => 'An dud o deus lennet ivez',
 );
 
 /** Bosnian (bosanski)

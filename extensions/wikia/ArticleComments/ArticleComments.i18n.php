@@ -2251,6 +2251,7 @@ $messages['lus'] = array(
 /** Latvian (latviešu)
  * @author Papuass
  * @author Sg ghost
+ * @author Srolanh
  */
 $messages['lv'] = array(
 	'article-comments-file-page' => "<a href='$1'>Komentārs no $2</a> par<a href='$3'>$4</a>",
@@ -2281,6 +2282,7 @@ $messages['lv'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Mātes raksts / mātes komentārs ir izdzēsts.',
 	'article-comments-empty-comment' => "Jūs nevarat ievietot tukšu komentāru. <a href='$1'>Dzēst tā vietā?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Komentārs|Komentāri}}',
 	'wikiamobile-article-comments-header' => 'Komentāri',
 	'wikiamobile-article-comments-more' => 'Ielādēt vairāk',
 	'wikiamobile-article-comments-prev' => 'Ielādētu iepriekšēja',
@@ -2720,7 +2722,7 @@ $messages['nl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'De bovenliggende pagina is verwijderd.',
 	'article-comments-empty-comment' => "U kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Opmerking|Opmerkingen}}',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Reactie|Reacties}}',
 	'wikiamobile-article-comments-header' => 'Reacties',
 	'wikiamobile-article-comments-more' => 'Meer laden',
 	'wikiamobile-article-comments-prev' => 'Vorige laden',
@@ -3484,6 +3486,7 @@ $messages['szl'] = array(
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Praveen Illa
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
@@ -3515,6 +3518,7 @@ $messages['te'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'మాతృ వ్యాసం/మాతృ వ్యాఖ్య తొలగించబడింది.',
 	'article-comments-empty-comment' => "ఖాళీవ్యాఖ్యను పంపించలేరు. <a href='$1'>దాన్ని తొలగిస్తారా?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|వ్యాఖ్య|వ్యాఖ్యలు}}',
 	'wikiamobile-article-comments-header' => 'వ్యాఖ్యలు',
 	'wikiamobile-article-comments-more' => 'మరిన్ని చూపించు',
 	'wikiamobile-article-comments-prev' => 'గత వ్యాఖ్యలను చూపించు',

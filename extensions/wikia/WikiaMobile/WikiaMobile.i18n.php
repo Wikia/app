@@ -287,9 +287,28 @@ $messages['br'] = array(
 	'wikiamobile-login-submit' => 'Kevreañ',
 	'wikiamobile-menu' => 'Lañser',
 	'wikiamobile-article-categories' => 'Rummadoù',
+	'wikiamobile-feedback' => 'Sonjoù',
+	'wikiamobile-back' => 'Distreiñ',
 	'wikiamobile-hide-section' => 'kuzhat',
 	'wikiamobile-profile' => 'Profil',
 	'wikiamobile-last-edited-on' => "Aozet da ziwezhañ d'an $1",
+	'wikiamobile-last-edited-by' => 'gant $1',
+	'wikiamobile-anonymous-edited-by' => 'Dizanv',
+	'mobile-full-site' => "Lec'hienn glok",
+	'wikiamobile-categories-expand' => 'Diskouez pep tra',
+	'wikiamobile-categories-collapse' => 'Kuzhat pep tra',
+	'wikiamobile-categories-blogs' => 'Pennadoù ar blog',
+	'wikiamobile-sharing-media-image' => 'Skeudenn',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-media-group-footer' => '1 diwar $1',
+	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|selladenn}}',
+	'wikiamobile-video-not-friendly' => "Digarezit, ne c'haller ket lenn ar video-mañ war ur pellgomzer hezoug.",
+	'wikiamobile-toc-header' => 'Taolenn',
+	'wikiamobile-ad-label' => 'bomm bruderezh',
+	'wikiamobile-image-not-loaded' => "Ne c'haller ket tapout ar skeudenn",
+	'wikiamobile-page-not-found' => "Pop ! n'eus ket eus <b>$1</b>.",
+	'wikiasmartbanner-price' => 'digoust',
+	'wikiasmartbanner-view' => 'gwelet',
 );
 
 /** буряад (буряад)
@@ -415,6 +434,7 @@ $messages['de'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Unterhaltung]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videospiele]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Lizenzierung]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Datenschutzrichtlinie]]',
 	'mobile-full-site' => 'Vollständige Website',
 	'wikiamobile-categories-tagline' => 'Kategorieseite',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|Artikel|Artikel}}',
@@ -529,6 +549,7 @@ $messages['es'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretenimiento]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videojuegos]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licencias]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Política de privacidad]]',
 	'mobile-full-site' => 'Sitio completo',
 	'wikiamobile-categories-tagline' => 'Página de categoría',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artículo|artículos}}',
@@ -673,6 +694,7 @@ $messages['fr'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Divertissement]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Jeux vidéo]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licence]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Politique de confidentialité]]',
 	'mobile-full-site' => 'Site complet',
 	'wikiamobile-categories-tagline' => 'Page de catégorie',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
@@ -1000,7 +1022,7 @@ $messages['mk'] = array(
 	'wikiamobile-back' => 'Назад',
 	'wikiamobile-hide-section' => 'скриј',
 	'wikiamobile-profile' => 'Профил',
-	'wikiamobile-last-edited-on' => 'Последно уредено на $1',
+	'wikiamobile-last-edited-on' => 'Последно уредување: $1',
 	'wikiamobile-last-edited-by' => 'од $1',
 	'wikiamobile-anonymous-edited-by' => 'Анонимен',
 	'wikiamobile-trending-articles-heading' => 'Актуелни статии',
@@ -1449,6 +1471,7 @@ $messages['ru'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Кино и сериалы]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Игры]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Лицензирование]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Политика конфиденциальности]]',
 	'mobile-full-site' => 'Весь сайт',
 	'wikiamobile-categories-tagline' => 'Страница категорий',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|статья|статьи|статей}}',
@@ -1493,6 +1516,7 @@ $messages['sah'] = array(
  */
 $messages['sco'] = array(
 	'wikiamobile-trending-articles-heading' => 'Trendin Airticles',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Preevacie Policie]]',
 	'wikiamobile-categories-blogs' => 'Blog posts',
 	'wikiamobile-toc-header' => 'Buird o Contents',
 );
@@ -1558,6 +1582,7 @@ $messages['sv'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Underhållning]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Spel]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licensiering]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Sekretesspolicy]]',
 	'mobile-full-site' => 'Fullständig sida',
 	'wikiamobile-categories-tagline' => 'Kategorisida',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|artikel|artiklar}}',
@@ -1703,6 +1728,52 @@ kesinlikle bu kontrol etmelisiniz:
 	'wikiasmartbanner-view' => 'görüntüle',
 );
 
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ilnur efende
+ */
+$messages['tt-cyrl'] = array(
+	'wikiamobile-search' => 'Эзләү',
+	'wikiamobile-search-this-wiki' => 'Бу вики буенча эзләү',
+	'wikiamobile-search-wiki' => 'Вики',
+	'wikiamobile-search-wikia' => 'Викия',
+	'wikiamobile-login' => 'Керү',
+	'wikiamobile-password' => 'Серсүз',
+	'wikiamobile-login-submit' => 'Керү',
+	'wikiamobile-menu' => 'Меню',
+	'wikiamobile-article-categories' => 'Төркемнәр',
+	'wikiamobile-feedback' => 'Аралашу',
+	'wikiamobile-back' => 'Артка',
+	'wikiamobile-hide-section' => 'яшерү',
+	'wikiamobile-profile' => 'Профиль',
+	'wikiamobile-last-edited-on' => 'Соңгы тапкыр $1 үзгәртелгән',
+	'wikiamobile-anonymous-edited-by' => 'Аноним',
+	'wikiamobile-trending-articles-heading' => 'Актуаль битләр',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Мавыгулар]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Кино һәм сериаллар]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Уеннар]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Лицензияләтерү]]',
+	'mobile-full-site' => 'Бөтен сайт',
+	'wikiamobile-categories-tagline' => 'Төркемнәр агачы.',
+	'wikiamobile-categories-items-total' => '$1 мәкалә', # Fuzzy
+	'wikiamobile-category-items-more' => 'Тагын йөкләү',
+	'wikiamobile-category-items-prev' => 'Алдагыларын йөкләү',
+	'wikiamobile-categories-expand' => 'Барысын да күрсәтергә',
+	'wikiamobile-categories-collapse' => 'Барысын да яшерергә',
+	'wikiamobile-categories-blogs' => 'Блогтагы язмалар',
+	'wikiamobile-sharing-media-image' => 'Рәсем',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$1 дән $2 - $3',
+	'wikiamobile-sharing-email-text' => 'Сәлам, син монда кереп чыгарга тиешсең: $1',
+	'wikiamobile-media-group-footer' => '1, барысы - $1',
+	'wikiamobile-video-views-counter' => '$1 карау', # Fuzzy
+	'wikiamobile-video-not-friendly-header' => 'Шайтан алгыры!',
+	'wikiamobile-video-not-friendly' => 'Бу видеоны мобиль җайланмадан карап булмый.',
+	'wikiamobile-toc-header' => 'Эчтәлек',
+	'wikiamobile-ad-label' => 'реклама',
+	'wikiamobile-image-not-loaded' => 'Рәсемне карап булмый',
+	'wikiamobile-page-not-found' => 'Ой! <b>$1</b> юк шул.',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Ua2004
@@ -1729,6 +1800,7 @@ $messages['uk'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Розваги]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Відеоігри]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Ліцензування]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Політика конфіденційності]]',
 	'mobile-full-site' => 'Повний сайт',
 	'wikiamobile-categories-tagline' => 'Сторінка категорії',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|стаття|статті|статей}}',

@@ -164,6 +164,9 @@ $messages['br'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => "Ouzhpennañ skeudennoù nevez d'ar wikia-mañ", # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Enporzhiañ',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'fazi o kargañ ar restr',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Klask un dra bennak, pe ebarzhiñ un URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => "Lenn muioc'h",
+	'wikia-visualeditor-dialog-drop-target-callout' => 'Laoskit ho restr amañ',
 	'wikia-visualeditor-help-label' => 'Kudennoù anavezet',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Patrom',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Patrom',
@@ -901,6 +904,7 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'Błąd podczas przesyłania pliku',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Szukaj lub wprowadź adres URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Podgląd dostępny wkrótce!',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Czytaj więcej',
 	'wikia-visualeditor-help-label' => 'Znane problemy',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
 	'wikia-visualeditor-beta-warning' => 'To wersja beta VisualEditora Wikii. Niektóre jego elementy mogą wymagać jeszcze poprawek, ale mamy nadzieję, że edytor się Wam spodoba!',
@@ -920,6 +924,7 @@ $messages['pl'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Ta wiki pozwala dodawać tylko licencjonowane treści z <a href="http://video.wikia.com" target="_blank">biblioteki filmów Wikia</a>. Przejdź do <a href="http://video.wikia.com" target="_blank">video.wikia.com</a>, aby wyszukać film.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Niestety, nie udało się znaleźć obsługiwanego formatu zdjęć lub filmów dla tego adresu URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Brak dostępu',
+	'wikia-visualeditor-loading' => 'Ładowanie VisualEditora...',
 );
 
 /** Pashto (پښتو)
@@ -1104,7 +1109,7 @@ $messages['ru'] = array(
  */
 $messages['sco'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Drap eimages tae uplaid',
-	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Please stick wi {{SITENAME}}'s eimage policie n Wikia's [http://www.wikia.com/Terms_of_Use terms of use] whan embeddin new videos n uplaidin new photæs.",
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => "Please stick wi {{SITENAME}}'s eemage policie n Wikia's [http://www.wikia.com/Terms_of_Use terms o uiss] whan embeddin new videos n uplaidin new photæs.",
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Read mair',
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Drap yer file here',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Sairrie, this video isna available fer luikower.',

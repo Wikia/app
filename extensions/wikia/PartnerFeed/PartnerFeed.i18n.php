@@ -531,11 +531,12 @@ $messages['nl'] = array(
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'partner-feed-recent-changes' => 'Cambiaments recents',
-	'feed-title-recentchanges' => 'Cambiaments recents',
+	'partner-feed-recent-changes' => 'Darrièrs cambiaments',
+	'feed-title-recentchanges' => 'Darrièrs cambiaments',
 );
 
 /** Polish (polski)
