@@ -1220,6 +1220,7 @@ $messages['fa'] = array(
 	'myhome-hot-spots-feed-empty' => "این ویکی در انتظار مشارکت شماست.
 بر '''[[Special:CreatePage|صفحهٔ جدید]]''' برای شروع نوشتن کلیک کنید!",
 	'myhome-hot-spots-newest' => 'صفحات جدید بر ویکی',
+	'tog-userlandingpage' => 'صفحهٔ فرود:',
 	'prefs-myhome' => 'خانه من',
 	'myhome-feed-newpage' => 'صفحهٔ جدید',
 	'myhome-feed-edit' => 'ویرایش',
@@ -1285,6 +1286,7 @@ $messages['fa'] = array(
 	'myhome-default-view-success' => 'باشد، این پیشفرض شما است الآن',
 	'tooltip-pt-myhome' => 'برگشت به خانهٔ خودم',
 	'activityfeed' => 'اشتراک فعالیت',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|یک پیام|$1 پیام}}',
 );
 
 /** Finnish (suomi)
@@ -2195,7 +2197,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'myhome-desc' => 'Приватна домашна страница за најавени корисници',
+	'myhome-desc' => 'Лична домашна страница за најавени корисници',
 	'myhome' => 'Мојата домашна страница',
 	'wikiactivity' => 'Активности на викито',
 	'myhome-activity-more' => 'понови активности',
@@ -2960,6 +2962,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Josep Maria 15.
  * @author Luckas
  * @author Malafaya
@@ -3508,17 +3511,47 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'myhome-desc' => 'లాగినైన వాడుకరులకు ఓ స్వంత హోమ్ పేజీ',
+	'myhome' => 'నా హోమ్',
+	'wikiactivity' => 'వికీ వ్యాపకం',
+	'myhome-activity-feed' => 'వ్యాపకం వడ్డన',
+	'myhome-activity-feed-empty' => "ఈ వికీ మీ కోసం చూస్తోంది.
+'''[[Special:CreatePage|కొత్త పేజీ]]''' పై నొక్కండి, ఇక రాయడం మొదలుపెట్టండి!",
+	'myhome-watchlist-feed' => 'వీక్షణ జాబితా',
+	'myhome-user-contributions-feed' => 'మార్పుచేర్పులు',
+	'myhome-hot-spots-feed-empty' => "ఈ వికీ మీ కోసం చూస్తోంది.
+'''[[Special:CreatePage|కొత్త పేజీ]]''' పై నొక్కండి, ఇక రాయడం మొదలుపెట్టండి!",
+	'myhome-hot-spots-newest' => 'వికీలో కొత్త పేజీలు',
+	'tog-userlandingpage' => 'ఈ పేజీ లోడవుతోంది:',
+	'prefs-myhome' => 'నా హోమ్',
 	'myhome-feed-newpage' => 'కొత్త పుట',
 	'myhome-feed-edit' => 'మార్చు',
+	'myhome-feed-move' => 'పేజీ తరలించబడింది',
 	'myhome-feed-talkpage' => 'చర్చా పేజీ',
+	'myhome-feed-blogcomment' => 'బ్లాగు వ్యాఖ్య',
+	'myhome-feed-delete' => 'తొలిగించబడింది',
+	'myhome-feed-image' => 'బొమ్మను చేర్చాం',
+	'myhome-feed-video' => 'వీడియోను చేర్చాం',
 	'myhome-feed-categorization' => 'వర్గీకరణ',
+	'myhome-feed-created-by' => '$1 చే సృష్టించబడింది',
+	'myhome-feed-added-by' => '$1 చే చేర్చబడింది',
+	'myhome-feed-edited-by' => '$1 చే మార్చబడింది',
+	'myhome-feed-posted-by' => '$1 చే టపాయించబడింది',
+	'myhome-feed-comment-by' => '$1 యొక్క వ్యాఖ్య',
+	'myhome-feed-deleted-by' => '$1 చే తొలగించబడింది',
+	'myhome-feed-moved-by' => '$1 చే తరలించబడింది',
+	'myhome-feed-article-comment-created-by' => '$1 యొక్క కొత్త వ్యాఖ్య',
+	'myhome-feed-by' => '$1 చే',
 	'myhome-feed-new-page-details' => 'కొత్త పుట',
 	'myhome-feed-summary-details' => 'సారాంశం',
+	'myhome-feed-new-blog-post-details' => 'కొత్త బ్లాగు',
 	'myhome-feed-new-blog-comment-details' => 'వ్యాఖ్య',
 	'myhome-feed-new-article-comment-details' => 'వ్యాఖ్య',
+	'myhome-feed-move-details' => 'పేరు మార్చబడింది',
 	'myhome-feed-redirect-details' => 'దారిమార్పు',
 	'myhome-namespace-blog' => 'బ్లాగు',
 );

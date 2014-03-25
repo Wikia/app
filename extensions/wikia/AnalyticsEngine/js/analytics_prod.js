@@ -222,7 +222,7 @@
 	 *
 	 * @param {string} category Event Category.
 	 * @param {string} action Event Action.
-	 * @param {string=""} opt_value Event Label.
+	 * @param {string=""} opt_label Event Label.
 	 * @param {number=0} opt_value Event Value. Have to be an integer.
 	 * @param {boolean=false} opt_noninteractive Event noInteractive.
 	 */

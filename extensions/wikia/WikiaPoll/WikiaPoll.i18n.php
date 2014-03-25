@@ -172,6 +172,8 @@ $messages['br'] = array(
 	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
 	'wikiapoll-publish-label' => 'Embann',
+	'wikiapoll-error-duplicate' => 'Ur sontadeg en anv-se zo anezhi dija.',
+	'wikiapoll-error-invalid-title' => 'Direizh eo testenn ar goulenn.',
 	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
 	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
 	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
@@ -271,6 +273,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 merduma|$1 merduman}} rey da',
@@ -282,7 +285,7 @@ $messages['diq'] = array(
 	'wikiapoll-editpoll-headline' => 'Anketi bıvurnê',
 	'wikiapoll-question-label' => 'Pers',
 	'wikiapoll-addnewitem-label' => 'Çiyo newe de ke',
-	'wikiapoll-cancel-label' => 'Bıterkne',
+	'wikiapoll-cancel-label' => 'Bıtexelne',
 	'wikiapoll-publish-label' => 'Vıla ke',
 	'wikiamobile-wikiapoll-poll' => 'Anket',
 );

@@ -7,6 +7,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 	const FIELD_NAME_USERSURL = 'usersUrl';
 	const FIELD_NAME_QUOTE = 'quote';
 	const FIELD_NAME_URL = 'url';
+	const FIELD_NAME_MODULE_TITLE = 'headline';
+	const FIELD_NAME_SUGGEST_ARTICLE = 'suggest';
 
 	const MODULE_ID = 6;
 
@@ -21,6 +23,40 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		$fields = array();
 		$boxesCount = $this->getModel()->getBoxesCount();
 
+		$fields[self::FIELD_NAME_MODULE_TITLE] = array(
+			'type' => 'text',
+			'label' => wfMsg('wikia-hubs-module-from-the-community-title'),
+			'validator' => new WikiaValidatorString(
+					array(
+						'required' => true,
+						'min' => 1
+					),
+					array(
+						'too_short' => 'wikia-hubs-string-short'
+					)
+				),
+			'attributes' => array(
+				'class' => 'required'
+			)
+		);
+
+		$fields[self::FIELD_NAME_SUGGEST_ARTICLE] = array(
+			'type' => 'text',
+			'label' => wfMsg('wikia-hubs-module-from-the-community-suggest'),
+			'validator' => new WikiaValidatorString(
+				array(
+					'required' => true,
+					'min' => 1
+				),
+				array(
+					'too_short' => 'wikia-hubs-string-short'
+				)
+			),
+			'attributes' => array(
+				'class' => 'required'
+			)
+		);
+
 		for ($i = self::FIRST_SECTION_INDEX; $i <= $boxesCount; $i++) {
 			$fields[self::FIELD_NAME_PHOTO . $i] = array(
 				'type' => 'hidden',
@@ -32,7 +68,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_TITLE . $i] = array(
-				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-title'),
+				'label' => wfMessage('wikia-hubs-module-from-the-community-title')->text(),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_TITLE),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_TITLE)
@@ -40,7 +76,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_USERSURL . $i] = array(
-				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-users-url'),
+				'label' => wfMessage('wikia-hubs-module-from-the-community-users-url')->text(),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_USERSURL),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_USERSURL)
@@ -49,7 +85,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 
 			$fields[self::FIELD_NAME_QUOTE . $i] = array(
 				'type' => 'textarea',
-				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-long-quote'),
+				'label' => wfMessage('wikia-hubs-module-from-the-community-long-quote')->text(),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_QUOTE),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_QUOTE),
@@ -58,7 +94,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 			);
 
 			$fields[self::FIELD_NAME_URL . $i] = array(
-				'label' => wfMsg('marketing-toolbox-hub-module-from-the-community-url'),
+				'label' => wfMessage('wikia-hubs-module-from-the-community-url')->text(),
 				'validator' => $this->getValidator($i, self::FIELD_NAME_URL),
 				'attributes' => array(
 					'class' => $this->getJsValidator($i, self::FIELD_NAME_URL)
@@ -94,7 +130,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 					array(
 						'required' => true
 					),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+					array('wrong-file' => 'wikia-hubs-validator-wrong-file')
 				);
 				break;
 			case self::FIELD_NAME_TITLE:
@@ -104,7 +140,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				);
 				break;
 			case self::FIELD_NAME_URL:
@@ -113,7 +149,7 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 						'required' => true
 					),
 					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
+						'wrong' => 'wikia-hubs-validator-wrong-url'
 					)
 				);
 				break;
@@ -123,8 +159,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 						'required' => true
 					),
 					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url',
-						'wrong-users-url' => 'marketing-toolbox-validator-wrong-users-url'
+						'wrong' => 'wikia-hubs-validator-wrong-url',
+						'wrong-users-url' => 'wikia-hubs-validator-wrong-users-url'
 					)
 				);
 				break;
@@ -242,6 +278,8 @@ class MarketingToolboxModuleFromthecommunityService extends MarketingToolboxModu
 		}
 		
 		return array(
+			'headline' => $data[self::FIELD_NAME_MODULE_TITLE],
+			'button' => $data[self::FIELD_NAME_SUGGEST_ARTICLE],
 			'entries' => $entries
 		);
 	}

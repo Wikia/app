@@ -298,6 +298,14 @@ $messages['sv'] = array(
 	'campfire-licensed-under' => 'Gjord tillgänglig under licensen $1',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'campfire-page-header' => '$2 నుండి $1',
+	'campfire-licensed-under' => '$1 లైసెన్సుకు లోబడి',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */

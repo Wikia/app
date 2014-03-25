@@ -594,13 +594,16 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
 	'mostvisitedpages' => 'ఎక్కువగా చూసిన పేజీలు',
 	'mostvisitedpagessearchtext' => 'వ్యాసపు పేరు:',
 	'mostvisitedpagessearchbtn' => 'వెతుకు',
-	'mostvisitedpageslatest' => 'గత $1 నిమిషాలలో',
+	'mostvisitedpageslatest' => 'గత $1 {{PLURAL:$1|నిమిషంలో|నిమిషాల్లో}}',
+	'mostvisitedpageslatestlink' => 'ఇట్టీవల చూసిన పేజీలను చూడండి',
+	'mostvisitedpagesalllink' => 'అత్యధికంగా చూసిన పేజీలను చూడండి',
 );
 
 /** Tagalog (Tagalog)

@@ -380,6 +380,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 
 	if (typeof adIframe == "object"){
 		// Iframe passed in, use it
+		adIframe.setAttribute('data-tag-id', tag.tag_id);
 		adIframe.src = iframeUrl;
 	} else {
 		// Otherwise, create one and append it to load dive
@@ -394,6 +395,7 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 		adIframe.marginWidth = 0;
 		adIframe.allowTransparency = true; // For IE
 		adIframe.id = slotname + '_' + tag.tag_id;
+		adIframe.setAttribute('data-tag-id', tag.tag_id);
 		adIframe.style.display = 'block';
 
 		// expandable slots via in-tag-name magic phrase
@@ -462,6 +464,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	}
 
 	var iframeUrl = Liftium.getIframeUrl(slotname, t);
+	iframeElement.setAttribute('data-tag-id', t.tag_id);
 	iframeElement.src = iframeUrl;
 
 	Liftium.slotTimer2[slotname + "-" + t.tag_id] = Liftium.debugTime();
@@ -2467,9 +2470,13 @@ var BrowserDetect = {
 		{ string: navigator.userAgent, subString: "Mozilla", identity: "Netscape", versionSearch: "Mozilla" }
 	],
 	dataOS : [
+		{ string: navigator.userAgent, subString: "Android", identity: "Android" },
+		{ string: navigator.userAgent, subString: "iPad", identity: "iPad" },
+		{ string: navigator.userAgent, subString: "iPhone", identity: "iPhone/iPod" },
+		{ string: navigator.userAgent, subString: "SymbianOs", identity: "Symbian" },
+		{ string: navigator.userAgent, subString: "Windows Phone", identity: "Windows Phone" },
 		{ string: navigator.platform, subString: "Win", identity: "Windows" },
 		{ string: navigator.platform, subString: "Mac", identity: "Mac" },
-		{ string: navigator.userAgent, subString: "iPhone", identity: "iPhone/iPod" },
 		{ string: navigator.platform, subString: "Linux", identity: "Linux" }
 	]
 

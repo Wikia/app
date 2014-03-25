@@ -328,11 +328,13 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',
 	'wikiaconfirmemail-error-invalid-code' => 'Código de confirmação inválido',
+	'wikiaconfirmemail-login-button' => 'Confirmar e entrar',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
 	'wikiaconfirmemail-username' => 'Nome de usuário',
 );

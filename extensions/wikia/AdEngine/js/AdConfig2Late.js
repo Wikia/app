@@ -19,7 +19,7 @@ var AdConfig2Late = function (
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
+		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
 
 	function getProvider(slot) {
 		var slotname = slot[0];

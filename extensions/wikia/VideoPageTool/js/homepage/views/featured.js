@@ -41,6 +41,7 @@ define('videohomepage.views.featured', [
 
 			// Track the video that's playing at any given time
 			this.videoInstance = null;
+			this.videoPlays = 0;
 
 			// values will be assigned after slider inits
 			this.$sliderControls = null;
@@ -254,7 +255,7 @@ define('videohomepage.views.featured', [
 
 			track({
 				label: 'featured-video-plays',
-				value: this.videoPlays++
+				value: (this.videoPlays += 1)
 			});
 		},
 

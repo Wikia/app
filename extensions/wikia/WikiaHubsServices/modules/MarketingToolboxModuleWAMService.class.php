@@ -48,11 +48,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function loadData($model, $params) {
-		$hubParams = [
-			'langCode' => $this->langCode,
-			'sectionId' => $this->sectionId,
-			'verticalId' => $this->verticalId,
-		];
+		$hubParams = $this->getHubsParams();
 		$lastTimestamp = $model->getLastPublishedTimestamp(
 									$hubParams,
 									$params['ts']
@@ -209,11 +205,11 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
-
+		$realVerticalId = HubService::getCanonicalCategoryId($data['vertical_id']);
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
-			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
-			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($data['vertical_id'])),
+			'verticalName' => $hubModel->getVerticalName($realVerticalId),
+			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($realVerticalId)),
 			'ranking' => []
 		];
 
@@ -260,9 +256,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	public function render($data) {
 		$data['imagesHeight'] = $this->getModel()->getImageHeight();
 		$data['imagesWidth'] = $this->getModel()->getImageWidth();
-		$data['searchHubName'] = $this->getSearchHubName($data['verticalName']);
-		$data['specialSearchUrl'] = SpecialPage::getTitleFor( 'WikiaSearch' )->getFullUrl();
-		$data['hubsVersion'] = $this->getHubsLayoutVersion();
 		$data['scoreChangeMap'] = [self::WAM_SCORE_CHANGE_DOWN => 'down', self::WAM_SCORE_NO_CHANGE => 'nochange', self::WAM_SCORE_CHANGE_UP => 'up'];
 
 		return parent::render($data);
@@ -274,21 +267,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 		}
 		
 		return $this->model;
-	}
-
-	/**
-	 * Since search works better only for EN hub pages we implemented this simple method
-	 * 
-	 * @param int|string $vertical vertical name or id
-	 * @return string
-	 */
-	protected function getSearchHubName($vertical) {
-		$searchNames = F::app()->wg->WikiaHubsSearchMapping;
-		if( !empty($searchNames[$vertical]) ) {
-			return $searchNames[$vertical];
-		}
-		
-		return null;
 	}
 
 	/**

@@ -319,12 +319,15 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'phalanx' => 'Phalanx',
+	'phalanx-type-content' => "endalc'had ar bajenn",
+	'phalanx-type-summary' => 'diverradur eus ar bajenn',
 	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
 	'phalanx-type-user-email' => 'postel',
 	'phalanx-type-answers-question-title' => 'titl ar goulenn',
 	'phalanx-type-answers-recent-questions' => 'goulennoù graet nevez zo',
 	'phalanx-type-wiki-creation' => 'Krouiñ ur wiki',
+	'phalanx-add-block' => "Arloañ ar bloc'h",
 	'phalanx-edit-block' => "Enrollañ ar bloc'h",
 	'phalanx-label-filter' => 'Sil :',
 	'phalanx-label-reason' => 'Abeg :',
@@ -340,6 +343,10 @@ $messages['br'] = array(
 	'phalanx-format-exact' => 'rik',
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
+	'phalanx-block-success' => "Ouzhpennet eo bet ar bloc'h",
+	'phalanx-block-failure' => "Ur fazi a oa bet pa oad oc'h ouzhpennañ ar bloc'h",
+	'phalanx-modify-success' => "Kemmet eo bet ar bloc'h",
+	'phalanx-modify-failure' => "Ur fazi a oa bet pa oad o kemmañ ar bloc'h",
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-test-results-legend' => "Disoc'hoù an amprouad",
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
@@ -356,6 +363,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
+	'phalanx-stats-table-expire' => "A ya d'e dermen",
 	'phalanx-stats-table-exact' => 'Rik',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
@@ -2423,7 +2431,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 [[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
 	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
 	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP atual.
-Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação.
 Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
@@ -2828,12 +2836,13 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'phalanx-type-content' => 'పుట విషయం',
-	'phalanx-type-summary' => 'పుట సారాంశం',
-	'phalanx-type-title' => 'పుట శీర్షిక',
+	'phalanx-type-content' => 'పేజీ విషయం',
+	'phalanx-type-summary' => 'పేజీ సారాంశం',
+	'phalanx-type-title' => 'పేజీ శీర్షిక',
 	'phalanx-type-user' => 'వాడుకరి',
 	'phalanx-type-answers-recent-questions' => 'ఇటీవలి ప్రశ్నలు',
 	'phalanx-label-reason' => 'కారణం:',
@@ -2841,6 +2850,7 @@ $messages['te'] = array(
 	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
 	'phalanx-link-stats' => 'గణాంకాలు',
+	'phalanx-stats-table-user' => 'చేర్చినవారు',
 	'phalanx-stats-table-type' => 'రకం',
 	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',

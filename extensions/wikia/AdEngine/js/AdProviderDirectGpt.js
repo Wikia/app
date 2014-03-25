@@ -1,10 +1,10 @@
-/* exported AdProviderGpt */
+/* exported adProviderDirectGpt */
 /* jshint maxparams: false, maxlen: 150 */
 
-var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+var AdProviderDirectGpt = function (log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderGpt',
+	var logGroup = 'AdProviderDirectGpt',
 		srcName = 'gpt',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
@@ -130,16 +130,13 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		log(['fillInSlot', slotname], 'debug', logGroup);
 
 		var noAdStorageKey = getStorageKey('noad', slotname),
-			numCallForSlotStorageKey = getStorageKey('calls', slotname),
-			slotTracker = adTracker.trackSlot('addriver2', slotname);
+			numCallForSlotStorageKey = getStorageKey('calls', slotname);
 
 		if (gptConfig[slotname] === 'flushonly') {
 			flushGpt();
 			success();
 			return;
 		}
-
-		slotTracker.init();
 
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
@@ -151,20 +148,11 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
 
-				// experimental hack: track LB success time
-				if (slotname.search('LEADERBOARD') > -1) {
-					// Track hop time
-					slotTracker.success();
-				}
-
 				success();
 			},
 			function () { // Hop
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-
-				// Track hop time
-				slotTracker.hop();
 
 				// hop to Liftium
 				hop({method: 'hop'}, 'Liftium');
@@ -178,7 +166,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	}
 
 	return {
-		name: 'Gpt',
+		name: 'DirectGpt',
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};

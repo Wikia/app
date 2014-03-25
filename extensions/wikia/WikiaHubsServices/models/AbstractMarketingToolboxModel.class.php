@@ -8,9 +8,6 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'MarketingToolbox';
 
-	const CACHE_KEY = 'HubsV2v1.01';
-	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'lastPublishedTimestamp';
-
 	const STRTOTIME_MIDNIGHT = '00:00';
 
 	protected $statuses = array();
@@ -142,7 +139,7 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 	}
 	
 	public function getModuleName($moduleId) {
-		return wfMessage('marketing-toolbox-hub-module-' . $this->modules[$moduleId]);
+		return wfMessage('wikia-hubs-module-' . $this->modules[$moduleId]);
 	}
 
 	public function getNotTranslatedModuleName($moduleId) {
@@ -288,24 +285,6 @@ abstract class AbstractMarketingToolboxModel extends WikiaModel {
 
 	protected function purgeLastPublishedTimestampCache($params) {
 		$this->wg->Memc->delete($this->getMKeyForLastPublishedTimestamp($params, strtotime(self::STRTOTIME_MIDNIGHT)));
-	}
-
-	/**
-	 * Get hub url
-	 *
-	 * @param $langCode
-	 * @param $verticalId
-	 *
-	 * @return String
-	 */
-	public function getHubUrl($langCode, $verticalId) {
-		$corporateModel = new WikiaCorporateModel();
-		$wikiId = $corporateModel->getCorporateWikiIdByLang($langCode);
-		$hubName = WikiaHubsServicesHelper::getHubName($wikiId, $verticalId);
-
-		$title = GlobalTitle::newFromText($hubName, NS_MAIN, $wikiId);
-
-		return $title->getFullURL();
 	}
 
 	/**

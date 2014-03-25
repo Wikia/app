@@ -42,7 +42,7 @@ DatepickerModel.prototype = {
 		return $.nirvana.sendRequest({
 			controller: 'MarketingToolbox',
 			method: 'getCalendarData',
-			type: 'post',
+			type: 'get',
 			data: {
 				'verticalId': this.verticalId,
 				'langCode': this.langCode,
