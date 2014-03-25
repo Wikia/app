@@ -1,10 +1,10 @@
 /*
-	$Revision: 1.11 $Date: 2014/03/12 10:52:58 $
+	$Revision: 1.12 $Date: 2014/03/25 13:03:04 $
 	SevenOne Media Ad Integration for de.wikia.com
 */
 
 .ad-version:after {
-	content: '$Revision: 1.11 $';
+	content: '$Revision: 1.12 $';
 	display: none;
 }
 .ad-wrapper div,
@@ -103,7 +103,7 @@
 /* foreign ad slot */
 #ads-outer #TOP_BUTTON_WIDE {
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	max-width: 292px; /* 292 = 1030 - 728 - 10 */
 	margin: 10px 0px 0px 0px;
 	padding: 0px;
