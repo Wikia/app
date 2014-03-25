@@ -29,7 +29,7 @@ class YoukuApiWrapper extends ApiWrapper {
 		$parsedUrl = parse_url( $url );
 		if ( !empty( $parsedUrl['path'] ) ){
 			// Youku urls look like this: http://v.youku.com/v_show/id_XNjg3Mzc4MDMy.html?f=22039479&ev=2
-			// or like this: http://v.youku.com/v_show/id_XNjg5MzUwNTcy_ev_5.html. We want to extra the id
+			// or like this: http://v.youku.com/v_show/id_XNjg5MzUwNTcy_ev_5.html. We want to extract the id
 			// which looks like this: XNjg3Mzc4MDMy. Note, those underbars in the second example (_ev_5) are
 			// never part of the id.
 			$path = explode( "id_", $parsedUrl["path"] )[1];
