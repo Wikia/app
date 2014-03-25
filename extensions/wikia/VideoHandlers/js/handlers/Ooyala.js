@@ -1,3 +1,5 @@
+/*global define, require*/
+
 /**
  * Use Ooyala V3 player API to play and track videos
  * Uses player events to track video views.
@@ -5,11 +7,12 @@
  * @see http://support.ooyala.com/developers/documentation
  */
 
-/*global define, require*/
 define('wikia.videohandler.ooyala', [
 	'wikia.window',
-	require.optional('ext.wikia.adengine.dartvideohelper')
-], function (window, dartVideoHelper) {
+	require.optional('ext.wikia.adengine.dartvideohelper'),
+	'wikia.loader',
+	'wikia.log'
+], function (window, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -73,7 +76,32 @@ define('wikia.videohandler.ooyala', [
 			};
 		}
 
-		window.OO.Player.create(containerId, params.videoId, createParams);
+		// log any errors from failed script loading (VID-976)
+		function loadFail( data ) {
+			var message = data.error + ':';
 
+			$.each( data.resources, function() {
+				message += ' ' + this;
+			});
+
+			log( message, log.levels.error, 'VideoBootstrap' );
+		}
+
+		log( 'Begin getting Ooyala assets', log.levels.info, 'VideoBootstrap' );
+
+		/* the second file depends on the first file */
+		loader({
+			type: loader.JS,
+			resources: params.jsFile[ 0 ]
+		}).done(function() {
+			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+			loader({
+				type: loader.JS,
+				resources: params.jsFile[ 1 ]
+			}).done(function() {
+				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				window.OO.Player.create( containerId, params.videoId, createParams );
+			}).fail( loadFail );
+		}).fail( loadFail );
 	};
 });
