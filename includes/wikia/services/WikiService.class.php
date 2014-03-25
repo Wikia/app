@@ -11,13 +11,12 @@ class WikiService extends WikiaModel {
 
 	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
-
+	const WIKIAGLOBAL_CITY_ID = 80433;
 	const FLAG_NEW = 1;
 	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-	const DBNAME_REGEXP = '/(,[a-z0-9]+\.)([a-z0-9]{3,4}$)/';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -367,8 +366,7 @@ class WikiService extends WikiaModel {
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
 			while ( $row = $results->fetchObject() ) {
-				$filename = preg_replace( self::DBNAME_REGEXP, '.\\2', $row->city_main_image );
-				$file = GlobalFile::newFromText( $filename, $row->city_id );
+				$file = GlobalFile::newFromText( $row->city_main_image, self::WIKIAGLOBAL_CITY_ID );
 
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
