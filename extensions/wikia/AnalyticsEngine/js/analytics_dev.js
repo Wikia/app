@@ -95,7 +95,7 @@
                       window.wikiaPageType, 3],
                   ['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
                   ['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-                  ['_setCustomVar', 20, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
+                  ['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
     );
 
     // Unleash
@@ -128,7 +128,7 @@
                   window.wikiaPageType, 3],
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
               ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-              ['ads._setCustomVar', 20, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
+              ['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
     );
 
 
