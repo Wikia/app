@@ -194,6 +194,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		}
 
 		function callError() {
+			slotDiv.className += ' hidden';
 			if (typeof error === 'function') {
 				error();
 			}
