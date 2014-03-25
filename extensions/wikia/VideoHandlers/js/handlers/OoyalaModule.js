@@ -203,9 +203,9 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('z-index', '100000');
             // wikia change begin
             if (this.isMobile) {
-                ag.css({"height": "auto"});
-                $(".innerElement").css({"padding-bottom": "7px", "height": "auto", "width": "auto"});
-                $(window).on("resize", _.bind(this.repositionAgeGate, this));
+                ag.css({'height': 'auto'});
+                $('.innerElement').css({'padding-bottom': '7px', 'height': 'auto', 'width': 'auto'});
+                $(window).on('resize', _.bind(this.repositionAgeGate, this));
             } else {
                 ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
             }
@@ -414,8 +414,8 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
         // wikia change begin
         repositionAgeGate: function() {
             this.ageGateRoot.css({
-                "top": ($(window).height() - this.ageGateRoot.height()) / 2 + "px",
-                "left": ($(window).width() - this.ageGateRoot.width()) / 2 + "px"
+                'top': ($(window).height() - this.ageGateRoot.height()) / 2 + 'px',
+                'left': ($(window).width() - this.ageGateRoot.width()) / 2 + 'px'
             });
         },
         // wikia change end
