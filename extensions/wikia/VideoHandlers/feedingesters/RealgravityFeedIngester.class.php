@@ -9,10 +9,6 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			'name' => 'LeGourmet TV',
 			'categories' => array( 'Lifestyle', 'Le Gourmet' )
 		),
-		141 => array(
-			'name' => 'HowCast',
-			'categories' => array( 'HowTo', 'Lifestyle' )
-		),
 		647 => array(
 			'name' => 'Howcast - Cars and Transportation',
 			'categories' => array( 'HowTo', 'HowCast', 'Lifestyle', 'Cars', 'Transportation' )
@@ -51,31 +47,31 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		),
 		419 => array(
 			'name' => 'Outside Lines Travel',
-			'categories' => array()
+			'categories' => array( 'Lifestyle' )
 		),
 		196 => array(
 			'name' => 'VIDCAT Fashion TV',
-			'categories' => array()
+			'categories' => array( 'Lifestyle' )
 		),
 		586 => array(
 			'name' => 'Billboard',
-			'categories' => array()
+			'categories' => array( 'Entertainment' )
 		),
 		628 => array(
 			'name' => 'Sugar Inc. - FitSugar',
-			'categories' => array( 'Health & fitness' )
+			'categories' => array( 'Health & fitness', 'Lifestyle' )
 		),
 		629 => array(
 			'name' => 'Sugar Inc. - FabSugar',
-			'categories' => array( 'Fashion' )
+			'categories' => array( 'Fashion', 'Lifestyle' )
 		),
 		630 => array(
 			'name' => 'Sugar Inc. - BellaSugar',
-			'categories' => array( 'Beauty' )
+			'categories' => array( 'Beauty', 'Lifestyle' )
 		),
 		631 => array(
 			'name' => 'Sugar Inc. - YumSugar',
-			'categories' => array( 'Food' )
+			'categories' => array( 'Food', 'Lifestyle' )
 		),
 	);
 

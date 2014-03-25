@@ -30,7 +30,12 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . '/VideosModuleController.
  */
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . '/VideosModuleHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
-//$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
+
+// Only load this hook handler if we're showing the VideosModule in the right rail
+if ( F::app()->wg->VideosModuleABTest == 'rail' ) {
+	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
+}
+$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
 
 /**
  * messages

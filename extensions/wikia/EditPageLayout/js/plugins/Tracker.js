@@ -28,6 +28,9 @@
 
 			// Track edit page views and page type
 			if ( !isMiniEditor ) {
+				if ( window.veTrack ) {
+					veTrack( { action: 'ck-edit-page-start' } );
+				}
 				this.track({
 					action: Wikia.Tracker.ACTIONS.IMPRESSION,
 					label: 'edit-page'

@@ -1,5 +1,5 @@
 /**
- * Extension of AdLogicPageLevelParams for Legacy DART AdProviders
+ * Extension of AdLogicPageLevelParams for Evolve
  */
 var AdLogicPageLevelParamsLegacy = function (log, window, adLogicPageLevelParams, Krux, dartUrl) {
 	'use strict';
@@ -34,9 +34,9 @@ var AdLogicPageLevelParamsLegacy = function (log, window, adLogicPageLevelParams
 	};
 
 	return {
-		getCustomKeyValues: getCustomKeyValues, // Evolve, GamePro
-		getDomainKV: getDomainKV,               // Evolve
-		getHostnamePrefix: getHostnamePrefix,   // Evolve
-		getKruxKeyValues: getKruxKeyValues      // Evolve
+		getCustomKeyValues: getCustomKeyValues,
+		getDomainKV: getDomainKV,
+		getHostnamePrefix: getHostnamePrefix,
+		getKruxKeyValues: getKruxKeyValues
 	};
 };

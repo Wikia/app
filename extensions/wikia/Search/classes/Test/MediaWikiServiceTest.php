@@ -2658,8 +2658,10 @@ class MediaWikiServiceTest extends BaseTest
 		$model
 		    ->expects( $this->exactly( 2 ) )
 		    ->method ( 'getDetails' )
-		    ->will   ( $this->returnValueMap( [ [ [ 123 ], $info ],
-				[ [ 321 ], [] ] ] ) )
+		    ->will   ( $this->returnValueMap( [
+				[ [ 123 ], true, $info ],
+				[ [ 321 ], true, [] ]
+			] ) )
 		;
 		$this->mockClass( 'WikisModel', $model );
 		$this->assertEquals(

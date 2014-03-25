@@ -50,17 +50,9 @@ $messages['en'] = array(
 	'wikiahubs-v3-popular-videos' => 'Popular videos',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'http://www.facebook.com/Wikia',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/Wikia',
+	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-v3-social-googleplus-link' => 'http://gplus.to/wikia',
 );
 
 $messages['de'] = array(
@@ -105,17 +97,9 @@ $messages['de'] = array(
 	'wikiahubs-v3-popular-videos' => 'Beliebte Videos',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'http://twitter.com/wikia_de',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikia.de',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => '',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'http://twitter.com/wikia_de',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikia.de',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => '',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => '',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => '',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => '',
+	'wikiahubs-v3-social-twitter-link' => 'http://twitter.com/wikia_de',
+	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikia.de',
+	'wikiahubs-v3-social-googleplus-link' => '',
 );
 
 $messages['fr'] = array(
@@ -161,17 +145,9 @@ $messages['fr'] = array(
 	'wikiahubs-v3-popular-videos' => 'Nos vidéos préférées',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'https://twitter.com/#!/wikia_fr',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'http://www.facebook.com/wikia.fr',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => 'https://plus.google.com/u/0/102929967599324609587/posts',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'https://twitter.com/#!/wikia_fr',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'http://www.facebook.com/wikia.fr',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => 'https://plus.google.com/u/0/102929967599324609587/posts',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => 'https://twitter.com/#!/wikia_fr',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => 'http://www.facebook.com/wikia.fr',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => '',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/#!/wikia_fr',
+	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/wikia.fr',
+	'wikiahubs-v3-social-googleplus-link' => 'https://plus.google.com/u/0/102929967599324609587/posts',
 );
 
 $messages['es'] = array(
@@ -214,17 +190,9 @@ $messages['es'] = array(
 	'wikiahubs-v3-404-message' => 'No pudimos encontrar la página que estás buscando. [[$1|Haz clic aquí]] para ir a la página con noticias de hoy.',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_es',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikia.es',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => '',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'https://twitter.com/wikia_es',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikia.es',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => '',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => '',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => '',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => '',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/wikia_es',
+	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikia.es',
+	'wikiahubs-v3-social-googleplus-link' => '',
 );
 
 $messages['pl'] = [
@@ -270,17 +238,9 @@ $messages['pl'] = [
 	'wikiahubs-v3-popular-videos' => 'Popularne filmy',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'https://twitter.com/wikia_pl',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'https://www.facebook.com/wikiapl',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => '',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'https://twitter.com/wikia_pl',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'https://www.facebook.com/wikiapl',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => '',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => 'https://twitter.com/wikia_pl',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => 'https://www.facebook.com/wikiapl',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => '',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/wikia_pl',
+	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikiapl',
+	'wikiahubs-v3-social-googleplus-link' => '',
 ];
 
 $messages['ja'] = array(
@@ -326,17 +286,9 @@ $messages['ja'] = array(
 	'wikiahubs-v3-popular-videos' => 'ポピュラービデオ',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link-VideoGames' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
-	'wikiahubs-v3-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
-
-	'wikiahubs-v3-social-twitter-link-Entertainment' => 'https://twitter.com/ja_wikiaanime',
-	'wikiahubs-v3-social-facebook-link-Entertainment' => 'http://www.facebook.com/WikiaAnimeJapan',
-	'wikiahubs-v3-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
-
-	'wikiahubs-v3-social-twitter-link-Lifestyle' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
-	'wikiahubs-v3-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/Wikia',
+	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-v3-social-googleplus-link' => 'http://gplus.to/wikia',
 );
 
 

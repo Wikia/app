@@ -111,14 +111,13 @@ class VideoEmbedToolSearchService
 	public function getSuggestedVideosByArticleId( $articleId ) {
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
+		$query =  (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
 		$expectedFields = $this->getExpectedFields();
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
 									->setRequestedFields( $expectedFields )
 		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
-		                            ->setVideoEmbedToolSearch( true )
-
-		  ;
+		                            ->setVideoEmbedToolSearch( true );
 
 		return $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true );
 	}
@@ -225,7 +224,7 @@ class VideoEmbedToolSearchService
 	 * Lazy-loads config with values set from controller. Allows us to test config API.
 	 * @return Wikia\Search\Config
 	 */
-	protected function getConfig() {
+	public function getConfig() {
 		if ( $this->config === null ) {
 			$this->config = new Wikia\Search\Config;
 			$this->config->setLimit( $this->getLimit() )

@@ -246,6 +246,7 @@ $messages['br'] = array(
 	'wikiaquiz-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiaquiz-cancel-label' => 'Nullañ',
 	'wikiaquiz-publish-label' => 'Embann',
+	'wikiaquiz-error-duplicate-question' => 'Ur goulenn en anv-se zo anezhañ dija.',
 	'wikiaquiz-error-invalid-question' => 'Direizh eo testenn ar goulenn.',
 	'wikiaquiz-error-invalid-image' => "N'eo ket reizh ar skeudenn : $1",
 	'wikiaquiz-error-invalid-video' => "N'eo ket reizh ar video : $1",
@@ -271,12 +272,16 @@ $messages['br'] = array(
 	'wikiaquiz-game-email-placeholder' => 'hoanv@hopostel.com',
 	'wikiaquiz-game-email-button' => 'Kas din traoù digoust',
 	'wikiaquiz-game-email-valid-please' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'wikiaquiz-game-email-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
 	'wikiaquiz-game-email-subject' => "Trugarez deoc'h evit ho kasadenn !",
+	'wikiaquiz-game-email-error' => 'Ur fazi a oa bet pa oad o kas ar postel-mañ : $1',
+	'wikiaquiz-game-challenge' => "Broudit ho mignoned da c'hoari !",
 	'wikiaquiz-game-mute' => 'Hep son',
 );
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
+ * @author Fitoschido
  * @author Gemmaa
  */
 $messages['ca'] = array(
@@ -302,7 +307,7 @@ $messages['ca'] = array(
 	'wikiaquiz-questions-label' => 'Preguntes',
 	'wikiaquiz-answers-label' => 'Respostes',
 	'wikiaquiz-answer-label' => 'Resposta',
-	'wikiaquiz-correct-label' => 'Corregir?',
+	'wikiaquiz-correct-label' => '¿Corregir?',
 	'wikiaquiz-addnewitem-label' => 'Afegeix un nou element',
 	'wikiaquiz-cancel-label' => 'Cancel·la',
 	'wikiaquiz-publish-label' => 'Publica',
@@ -2223,6 +2228,9 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'wikiaquiz-editquiz-headline' => '編輯測驗',
+	'wikiaquiz-createquizarticle-headline' => '創建測驗的問題和答案',
+	'wikiaquiz-editquizarticle-headline' => '編輯測驗的問題和答案',
 	'wikiaquiz-title-label' => '標題',
 );
 

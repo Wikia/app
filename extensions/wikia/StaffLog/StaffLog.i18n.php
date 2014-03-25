@@ -95,14 +95,17 @@ $messages['az'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'stafflog' => 'StaffLog',
 	'stafflog-filter-label' => 'Sil',
 	'stafflog-filter-user' => 'Implijer :',
 	'stafflog-filter-type' => 'Seurt :',
 	'stafflog-filter-apply' => 'Arloañ ar sil',
 	'stafflog-filter-type-block' => 'Stankadennoù',
+	'stafflog-filter-type-wikifactory' => 'Statud ar wiki',
 );
 
 /** Bosnian (bosanski)

@@ -94,7 +94,8 @@
 	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3]
+		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3],
+		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
 	);
 
 	/**** Include A/B testing status ****/
@@ -172,7 +173,8 @@
 	window._gaq.push( ['ads._setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3]
+		['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3],
+		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
 	);
 
 	/**** Include A/B testing status ****/
@@ -222,7 +224,7 @@
 	 *
 	 * @param {string} category Event Category.
 	 * @param {string} action Event Action.
-	 * @param {string=""} opt_value Event Label.
+	 * @param {string=""} opt_label Event Label.
 	 * @param {number=0} opt_value Event Value. Have to be an integer.
 	 * @param {boolean=false} opt_noninteractive Event noInteractive.
 	 */

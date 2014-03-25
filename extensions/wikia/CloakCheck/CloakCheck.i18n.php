@@ -232,6 +232,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author BlueDevil
+ * @author Ebraminio
  * @author Mjbmr
  */
 $messages['fa'] = array(
@@ -244,8 +245,8 @@ $messages['fa'] = array(
 	'cloakcheck-process-username' => 'نام کاربری: $1',
 	'cloakcheck-process-accountage-yes' => 'حساب کاربری به اندازهٔ کافی قدیمی است.',
 	'cloakcheck-process-accountage-no' => 'حساب کاربری بیش از حد جدید است.',
-	'cloakcheck-process-emailconf-yes' => 'نشانی پست الکترونیکی تایید شد.',
-	'cloakcheck-process-emailconf-no' => 'نشانی پست الکترونیکی تایید نشده است.',
+	'cloakcheck-process-emailconf-yes' => 'نشانی رایانامه تأیید شد.',
+	'cloakcheck-process-emailconf-no' => 'نشان رایانامه تأیید نشده‌است.',
 	'cloakcheck-process-edits-yes' => 'کاربر به اندازهٔ کافی ویرایش دارد.',
 	'cloakcheck-process-edits-no' => 'کاربر به اندازهٔ کافی ویرایش ندارد.',
 );
@@ -257,8 +258,10 @@ $messages['fa'] = array(
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'cloakcheck' => 'IRC-cloakin kelpoisuuden tarkistus',
 	'cloakcheck-form-username' => 'Käyttäjätunnus:',
 	'cloakcheck-form-check' => 'Tarkista käyttäjätunnus',
+	'cloakcheck-form-check-self' => 'Tarkista IRC-cloakin kelpoisuus',
 	'cloakcheck-process-empty' => 'Käyttäjätunnus ei saa olla tyhjä.',
 	'cloakcheck-process-notexist' => 'Käyttäjätunnusta ei ole olemassa.',
 	'cloakcheck-process-username' => 'Käyttäjätunnus: $1',
@@ -783,12 +786,21 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Praveen Illa
  * @author Veeven
  */
 $messages['te'] = array(
 	'cloakcheck-form-username' => 'వాడుకరి పేరు:',
+	'cloakcheck-process-empty' => 'వాడుకరిపేరు ఖాళీగా ఉండే వీల్లేదు.',
+	'cloakcheck-process-notexist' => 'వాడుకరిపేరు లేనే లేదు.',
 	'cloakcheck-process-username' => 'వాడుకరిపేరు: $1',
+	'cloakcheck-process-accountage-yes' => 'ఖాతా పాతదే.',
+	'cloakcheck-process-accountage-no' => 'ఖాతా మరీ కొత్తది.',
+	'cloakcheck-process-emailconf-yes' => 'ఈమెయిలు చిరునామా ధృవీకరించబడింది.',
+	'cloakcheck-process-emailconf-no' => 'ఈమెయిలు చిరునామా ధృవీకరించబడలేదు.',
+	'cloakcheck-process-edits-yes' => 'వాడుకరికి చాలినన్ని మార్పుచేర్పులున్నాయి.',
+	'cloakcheck-process-edits-no' => 'వాడుకరికి చాలినన్ని మార్పుచేర్పుల్లేవు.',
 );
 
 /** Tagalog (Tagalog)

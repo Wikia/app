@@ -80,6 +80,12 @@ class Config
 	protected $wikiId = 0;
 
 	/**
+	 * Id of page to search for
+	 * @var int
+	 */
+	protected $pageId = 0;
+
+	/**
 	 * Result offset for our query
 	 * @var int
 	 */
@@ -100,9 +106,16 @@ class Config
 
 	/**
 	 * If we're doing a hub search, the hub we're on
+	 * @deprecated use hubs
 	 * @var string
 	 */
 	protected $hub;
+
+	/**
+	 * If we're doing a hub search, the hub we're on
+	 * @var string[]
+	 */
+	protected $hubs;
 
 	/**
 	 * Here is where we store the user's query
@@ -158,6 +171,19 @@ class Config
 	 * @var bool
 	 */
 	protected $commercialUse;
+
+	/**
+	 *  main page policy (true - must be main page, false- must not be mainpage, null - don't check)
+	 * @var bool
+	 */
+	protected $mainPage;
+
+
+	/**
+	 * Minimum article (filter)
+	 * @var int
+	 */
+	protected  $minArticleQuality = 0;
 
 	/**
 	 * This array allows us to associate sort arguments from the request with the appropriate sorting format
@@ -271,13 +297,12 @@ class Config
 	public function __construct( array $params = [] ) {
 
 		$dynamicFilterCodes = [
-				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Video Games', [ 'quote'=>'"' ] ),
+				self::FILTER_CAT_VIDEOGAMES    => Utilities::valueForField( 'categories', 'Games', [ 'quote'=>'"' ] ),
 				self::FILTER_CAT_ENTERTAINMENT => Utilities::valueForField( 'categories', 'Entertainment' ),
 				self::FILTER_CAT_LIFESTYLE     => Utilities::valueForField( 'categories', 'Lifestyle'),
 				];
 
 		$this->filterCodes = array_merge( $this->filterCodes, $dynamicFilterCodes );
-
 		$this->configureByArray( $params );
 	}
 
@@ -353,7 +378,6 @@ class Config
 	public function setQuery( $query ) {
 
 		$this->query = new Query( $query );
-
 		$namespace = $this->query->getNamespaceId();
 		if ( $namespace !== null ) {
 			$namespaces = $this->getNamespaces();
@@ -410,6 +434,24 @@ class Config
 			$this->setSort( $sort[0], $sort[1] );
 		}
 		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @param int $minArticleQuality
+	 * @return $this
+	 */
+	public function setMinArticleQuality( $minArticleQuality ) {
+		$this->minArticleQuality = (int)$minArticleQuality;
+		return $this;
+	}
+
+	/**
+	 * Sets minimum article quality to to filter by
+	 * @returns int
+	 */
+	public function getMinArticleQuality() {
+		return $this->minArticleQuality;
 	}
 
 	/**
@@ -478,8 +520,15 @@ class Config
 		$result = $match->getResult();
 		$filterKeys = $this->getPublicFilterKeys();
 		$isVideoFile = $this->getService()->pageIdIsVideoFile( $result['pageid'] );
+		$minArticleQuality = $this->getMinArticleQuality();
+		if($minArticleQuality && $result['article_quality_i'] <= $minArticleQuality) return false;
+
 		return ! (
-				( // We have a file that is video, but we only want images.
+				(
+					$minArticleQuality
+					&&
+					( $result['article_quality_i'] < $minArticleQuality )
+				) || ( // We have a file that is video, but we only want images.
 						$result['ns'] == NS_FILE
 						&&
 						in_array( \Wikia\Search\Config::FILTER_IMAGE, $filterKeys )
@@ -583,6 +632,25 @@ class Config
 	public function getHub() {
 		return $this->hub;
 	}
+
+	/**
+	 * Sets what hub we're on
+	 * @param string[] $hubs
+	 * @return \Wikia\Search\Config
+	 */
+	public function setHubs( array $hubs ) {
+		$this->hubs = $hubs;
+		return $this;
+	}
+
+	/**
+	 * Returns hub value
+	 * @return string|null
+	 */
+	public function getHubs() {
+		return $this->hubs;
+	}
+
 
 	/**
 	 * Sets whether we're in an 'advanced search' context
@@ -702,7 +770,6 @@ class Config
 		return $this->setQueryService( 'Select\\Dismax\\InterWiki', $apply );
 	}
 
-
 	/**
 	 * Synonym function for backward compatbility
 	 * @param  boolean $apply
@@ -764,6 +831,15 @@ class Config
 	 */
 	public function setVideoTitleSearch( $apply ) {
 		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $apply );
+	}
+
+	/**
+	 * Sets or unsets VideoContent as our query service
+	 * @param bool $apply
+	 * @return \Wikia\Search\Config
+	 */
+	public function setVideoContentSearch( $apply ) {
+		return $this->setQueryService( 'Select\\Dismax\\VideoContent', $apply );
 	}
 
 	/**
@@ -896,6 +972,26 @@ class Config
 	 */
 	public function getCityId() {
 		return $this->getWikiId();
+	}
+
+	/**
+	 * Sets pageId to search for
+	 * @param $pageId
+	 * @return $this
+	 */
+	public function setPageId($pageId)
+	{
+		$this->pageId =(int) $pageId;
+		return $this;
+	}
+
+	/**
+	 * Get currently set pageId
+	 * @return int
+	 */
+	public function getPageId()
+	{
+		return $this->pageId;
 	}
 
 	/**
@@ -1192,5 +1288,22 @@ class Config
 	 */
 	public function getCommercialUse() {
 		return $this->commercialUse;
+	}
+
+	/**
+	 * Set main page policy (true - must be main page, false- must not be mainpage, null - don't check)
+	 * @param boolean $mainPage
+	 */
+	public function setMainPage($mainPage) {
+		$this->mainPage = $mainPage;
+		return $this;
+	}
+
+	/**
+	 * get main page policy
+	 * @return boolean
+	 */
+	public function getMainPage() {
+		return $this->mainPage;
 	}
 }

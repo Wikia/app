@@ -7,7 +7,6 @@ class GlobalHeaderController extends WikiaController {
 		global $wgCityId;
 
 		wfProfileIn(__METHOD__);
-		$this->response->addAsset('skins/oasis/js/GlobalHeader.js');
 
 		$category = WikiFactory::getCategory($wgCityId);
 
@@ -82,7 +81,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setData($menuItems);
 
 		// Cache for 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 	}
 
 	protected function isGameStarLogoEnabled() {

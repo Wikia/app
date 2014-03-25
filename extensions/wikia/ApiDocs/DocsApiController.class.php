@@ -14,12 +14,21 @@ class DocsApiController extends WikiaController {
 	private $docsService;
 
 	/**
+	 * @var ApiAccessService
+	 */
+	protected $accessService;
+
+	/**
 	 *
 	 */
 	public function __construct() {
 		parent::__construct(  );
-
 		$this->docsService = (new ApiDocsServiceFactory)->getApiDocsService();
+	}
+
+	public function init(){
+		parent::init();
+		$this->accessService = new ApiAccessService( $this->getRequest() );
 	}
 
 	/**
@@ -71,34 +80,49 @@ class DocsApiController extends WikiaController {
 		return [
 			'cc-by' => AssetsManager::getInstance()->getURL( self::LICENSE_ICONS_URL )
 		];
-	} 
+	}
 
-	/**
-	 *
-	 */
+	protected function getApiMethods( $api )
+	{
+		$apiDoc = $this->docsService->getDoc( $api );
+		$controller = $apiDoc['resourcePath'].'ApiController';
+
+		foreach ( $apiDoc[ 'apis' ] as $i => &$apiElem ) {
+			if ( !$this->accessService->canUse( $controller, $apiElem[ 'operations' ][ 0 ][ 'nickname' ] ) ) {
+				unset ( $apiDoc[ 'apis' ][ $i ] );
+			}
+		}
+		$apiDoc[ 'apis' ]  = array_values( $apiDoc[ 'apis' ] );
+		return $apiDoc;
+	}
+
 	public function getApi() {
 		$api = $this->getVal("name");
 
-		$apiDoc = $this->docsService->getDoc( $api );
-
+		$apiDoc = $this->getApiMethods( $api );
 		$this->getResponse()->setFormat("json");
 		$this->getResponse()->setData( $apiDoc );
 	}
 
-	/**
-	 *
-	 */
 	public function getList() {
 		$docs = $this->docsService->getDocList();
 
 		$thisWikiDocs = [];
-		// FIXME - find permanent solution
 		foreach ( $this->wg->WikiaApiControllers as $controller => $file ) {
-			// here you can disable single controller
-			if ( $controller === 'TvApiController' && !$this->isTest() ) { continue; }
+			// If you cannot use controller
+			if ( !$this->accessService->canUse( $controller, null ) ) {
+				continue;
+			}
+
 			foreach ( $docs['apis'] as $doc ) {
 				if ( $doc['readableName'] . "ApiController" == $controller ) {
 					if ( class_exists($controller) ) {
+						//you can use controller, but there are no methods avail
+						$apiDoc = $this->getApiMethods( $doc['readableName'] );
+						if ( empty( $apiDoc[ 'apis' ] ) ) {
+							continue 2;
+						}
+
 						$thisWikiDocs[] = $doc;
 						break;
 					}
@@ -116,7 +140,4 @@ class DocsApiController extends WikiaController {
 		$this->getResponse()->setData( $docs );
 	}
 
-	protected function isTest() {
-		return (stripos( $this->request->getScriptUrl(), '/api/test' )!==false);
-	}
 }

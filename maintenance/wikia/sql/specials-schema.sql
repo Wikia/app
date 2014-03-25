@@ -1,10 +1,3 @@
-CREATE TABLE `city_list_count` (
-  `city_created` date NOT NULL,
-  `count_created` int(8) unsigned NOT NULL,
-  PRIMARY KEY `city_created` 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 CREATE TABLE `city_list_cats` (
   `city_id` int(9) NOT NULL DEFAULT '0',
   `city_dbname` varchar(64) NOT NULL DEFAULT 'notreal',

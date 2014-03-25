@@ -3,26 +3,27 @@
  */
 require([
 	'videosmodule.views.bottomModule',
-	'videosmodule.models.videos',
-	'wikia.tracker'
-], function (BottomModule, VideoData, Tracker) {
+	'videosmodule.views.rail',
+	'videosmodule.models.videos'
+], function (BottomModule, RailModule, VideoData) {
 	'use strict';
-	var view,
-		track;
+	var view;
 
-	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-bottom',
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'valid-code'
-	});
-
-	// instantiate bottom view
-	$(function () {
-		view = new BottomModule({
-			el: document.getElementById('RelatedPagesModuleWrapper'),
+	// instantiate rail view
+	function onWikiaRailLoad() {
+		return new RailModule({
+			el: document.getElementById('videosModule'),
 			model: new VideoData()
 		});
-		track();
+	}
+	$(function () {
+		if (window.wgVideosModuleABTest === 'rail') {
+			$('#WikiaRail').on('afterLoad.rail', onWikiaRailLoad);
+		} else {
+			view = new BottomModule({
+				el: document.getElementById('RelatedPagesModuleWrapper'),
+				model: new VideoData()
+			});
+		}
 	});
 });
