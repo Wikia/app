@@ -411,8 +411,6 @@ class BodyController extends WikiaController {
 
 			$this->headerModuleParams = array ('showSearchBox' => true);
 			$this->railModulesExist = false;
-		} else {
-			$this->response->addAsset('skins/oasis/js/LazyRail.js');
 		}
 
 		// determine if WikiaGridLayout needs to be enabled
