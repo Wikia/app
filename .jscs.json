@@ -40,6 +40,6 @@
 	},
 	"excludeFiles": [
 		"node_modules/**",
-	    "**/lib/**"
+		"**/lib/**"
 	]
 }
