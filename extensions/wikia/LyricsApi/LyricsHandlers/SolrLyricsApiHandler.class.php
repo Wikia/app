@@ -130,12 +130,13 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Gets songs
 	 *
-	 * @param $artistName
-	 * @param $albumName
-	 * @param $songs
+	 * @param String $artistName
+	 * @param String $albumName there are songs without albums and that's why we allow here an empty string
+	 * @param String $songs
+	 *
 	 * @return array
 	 */
-	private function getSongs( $artistName, $albumName, $songs ) {
+	private function getSongs( $artistName, $albumName = '', $songs ) {
 		$songsList = [];
 		$songs = $this->deSerialize( $songs );
 
@@ -179,6 +180,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		if ( $solrAlbum->songs ) {
+		// some artists have songs without albums that's why we have an empty string passed here
 			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->songs );
 		}
 
