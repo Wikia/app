@@ -46,8 +46,5 @@ $messages = array_merge( $messages, array(
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => 'Új szakasz nyitása',
 
-// Shared Help
-'shared_help_info' => 'Kérdéseid vannak? Tedd fel őket a [[w:Special:Forum|Közösségi Központ fórumain]].'
-
 ) );
 
