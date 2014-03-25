@@ -39,7 +39,7 @@
 		"requireParamTypes": true
 	},
 	"excludeFiles": [
-		"node_modules/**",
+		"**/node_modules/**",
 		"**/lib/**"
 	]
 }
