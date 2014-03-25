@@ -155,6 +155,7 @@ class TvApiController extends WikiaApiController {
 		$config['adapteroptions']['core'] = 'xwiki';
 		$client = new \Solarium_Client($config);
 
+		$noyearphrase = preg_replace( '|\(\d{4}\)|', '', $query );
 		$phrase = $this->sanitizeQuery( $query );
 		$query = $this->prepareXWikiQuery( $phrase, $lang );
 
@@ -169,8 +170,10 @@ class TvApiController extends WikiaApiController {
 		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt '.
 			'sitename_txt^4 domains_txt' );
 		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
-		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10 '.
-			'domains_txt:"' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
+
+		$domain = strtolower( preg_replace( '|[\W-]+|', '', $this->sanitizeQuery( $noyearphrase ) ) );
+		$dismax->setBoostQuery( 'domains_txt:"www.' . $domain . '.wikia.com"^10 '.
+			'domains_txt:"' . $domain . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
 		$result = $client->select( $select );
