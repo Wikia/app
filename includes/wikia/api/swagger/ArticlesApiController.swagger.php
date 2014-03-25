@@ -600,7 +600,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -636,7 +636,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -682,7 +682,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -754,7 +754,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="hub",
- * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+ * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.)",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -763,7 +763,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="Specifies the desired language of the resulting wikis, by language code",
+ * 					description="Comma separated language codes (eg.: en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -772,7 +772,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -799,7 +799,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get, from 1 to 10 inclusive",
+ * 					description="Limit the number of result - maximum limit is 10",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -827,7 +827,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get, from 1 to 10 inclusive",
+ * 					description="Limit the number of result - maximum limit is 10",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -864,7 +864,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -873,7 +873,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -882,7 +882,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="offset",
- * 					description="If provided, lists results starting with the provided offset position",
+ * 					description="Lexicographically minimal article title.",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -918,7 +918,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -927,7 +927,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -936,7 +936,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="offset",
- * 					description="Offset to start fetching data from",
+ * 					description="Lexicographically minimal article title.",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -963,7 +963,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameters(
  * 					@SWG\Parameter(
  * 						name="ids",
- * 						description="A string with a comma-separated list of article IDs",
+ * 						description="Comma-separated list of article ids",
  * 						paramType="query",
  * 						required="true",
  * 						allowMultiple="true",
