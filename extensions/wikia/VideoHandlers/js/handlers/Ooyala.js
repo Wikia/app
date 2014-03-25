@@ -1,6 +1,6 @@
 /**
  * Use Ooyala V3 player API to play and track videos
- * Uses player events to track video views
+ * Uses player events to track video views.
  *
  * @see http://support.ooyala.com/developers/documentation
  */
@@ -31,7 +31,7 @@ define('wikia.videohandler.ooyala', [
 			var messageBus = player.mb;
 
 			// Player has loaded
-			messageBus.subscribe(window.OO.EVENTS.PLAYER_CREATED, 'tracking', function (/*eventName, payload*/) {
+			messageBus.subscribe(window.OO.EVENTS.PLAYER_CREATED, 'tracking', function () {
 				vb.track('player-load');
 			});
 
@@ -45,12 +45,12 @@ define('wikia.videohandler.ooyala', [
 			});
 
 			// Ad starts
-			messageBus.subscribe(window.OO.EVENTS.WILL_PLAY_ADS, 'tracking', function (/*eventName, payload*/) {
+			messageBus.subscribe(window.OO.EVENTS.WILL_PLAY_ADS, 'tracking', function () {
 				vb.track('ad-start');
 			});
 
 			// Ad has been fully watched
-			messageBus.subscribe(window.OO.EVENTS.ADS_PLAYED, 'tracking', function (/*eventName, payload*/) {
+			messageBus.subscribe(window.OO.EVENTS.ADS_PLAYED, 'tracking', function () {
 				vb.track('ad-finish');
 			});
 
@@ -59,7 +59,6 @@ define('wikia.videohandler.ooyala', [
 				console.log(eventName);
 				console.log(payload);
 			});*/
-
 		}
 
 		createParams.onCreate = onCreate;
