@@ -3357,6 +3357,7 @@ class Title {
 		// purge variant urls as well
 		if ( $wgContLang->hasVariants() ) {
 			$variants = $wgContLang->getVariants();
+			wfRunHooks( 'TitleGetLangVariants', [ $wgContLang, &$variants ] ); // Wikia change - @author macbre / BAC-1278
 			foreach ( $variants as $vCode ) {
 				$urls[] = $this->getInternalURL( '', $vCode );
 			}

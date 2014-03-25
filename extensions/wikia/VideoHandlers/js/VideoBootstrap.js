@@ -31,6 +31,8 @@ define( 'wikia.videoBootstrap', [
 		this.clickSource = clickSource;
 		this.title = json.title;
 		this.provider = json.provider;
+		this.width = json.width;
+		this.height = json.height;
 
 		// Insert html if it hasn't been inserted already
 		function insertHtml() {
@@ -90,7 +92,8 @@ define( 'wikia.videoBootstrap', [
 		reload: function( title, width, autoplay, clickSource ) {
 			var element = this.element,
 				fileTitle = title || this.title,
-				fileClickSource = clickSource || this.clickSource;
+				fileClickSource = clickSource || this.clickSource,
+				fileWidth = width || this.width;
 
 			this.clearTimeoutTrack();
 
@@ -99,7 +102,7 @@ define( 'wikia.videoBootstrap', [
 				'getEmbedCode',
 				{
 					fileTitle: fileTitle,
-					width: width,
+					width: fileWidth,
 					autoplay: autoplay ? 1 : 0 // backend needs an integer
 				}
 			).done( function( data ) {

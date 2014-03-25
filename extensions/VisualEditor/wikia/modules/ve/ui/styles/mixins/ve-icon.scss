@@ -1,23 +1,29 @@
 @import "skins/oasis/css/core/color";
 
+$basePath: "/extensions/VisualEditor";
+
 /*
  * $name - name of the icon (bold, media, etc)
  * $vendor - who is providing the icon? (ve, mw, wikia)
+ * $baseColor - the color that the icon sits on
  */
 @mixin ve-icon($name, $vendor, $baseColor: $color-page) {
+	$vendorPath: "";
 	$white: "";
-	$path: "";
 
 	@if lightness($baseColor) < 50 {
 		$white: "-white";
 	}
-	@if $vendor == ve {
-		$path: "/extensions/VisualEditor/modules/ve/ui/styles/images/icons/";
-	} @elseif $vendor == mw {
-		$path: "/extensions/VisualEditor/modules/ve-mw/ui/styles/images/icons/";
+
+	@if $vendor == mw {
+		$vendorPath: "/modules/ve-mw/ui/styles/images/icons/";
+	} @elseif $vendor == oo {
+		$vendorPath: "/modules/oojs-ui/images/icons/";
+	} @elseif $vendor == ve {
+		$vendorPath: "/modules/ve/ui/styles/images/icons/";
 	} @elseif $vendor == wikia {
-		$path: "/extensions/VisualEditor/wikia/modules/ve/ui/styles/images/icons/";
+		$vendorPath: "/wikia/modules/ve/ui/styles/images/icons/";
 	}
 
-	background-image: url($path + $name + $white + ".svg"); /* $wgCdnStylePath */
+	background-image: url($basePath + $vendorPath + $name + $white + ".svg"); /* $wgCdnStylePath */
 }

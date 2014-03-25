@@ -21,7 +21,7 @@ ve.ce.MWPreformattedNode = function VeCeMWPreformattedNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.MWPreformattedNode, ve.ce.PreformattedNode );
+OO.inheritClass( ve.ce.MWPreformattedNode, ve.ce.PreformattedNode );
 
 /* Static Properties */
 

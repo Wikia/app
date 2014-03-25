@@ -11,8 +11,8 @@
  * Creates an ve.ui.MWTitleInputWidget object.
  *
  * @class
- * @extends ve.ui.TextInputWidget
- * @mixins ve.ui.LookupInputWidget
+ * @extends OO.ui.TextInputWidget
+ * @mixins OO.ui.LookupInputWidget
  *
  * @constructor
  * @param {Object} [config] Configuration options
@@ -23,10 +23,10 @@ ve.ui.MWTitleInputWidget = function VeUiMWTitleInputWidget( config ) {
 	config = config || {};
 
 	// Parent constructor
-	ve.ui.TextInputWidget.call( this, config );
+	OO.ui.TextInputWidget.call( this, config );
 
 	// Mixin constructors
-	ve.ui.LookupInputWidget.call( this, this, config );
+	OO.ui.LookupInputWidget.call( this, this, config );
 
 	// Properties
 	this.namespace = config.namespace || null;
@@ -35,15 +35,15 @@ ve.ui.MWTitleInputWidget = function VeUiMWTitleInputWidget( config ) {
 	this.lookupMenu.connect( this, { 'select': 'onLookupMenuItemSelect' } );
 
 	// Initialization
-	this.$.addClass( 've-ui-mwTitleInputWidget' );
-	this.lookupMenu.$.addClass( 've-ui-mwTitleInputWidget-menu' );
+	this.$element.addClass( 've-ui-mwTitleInputWidget' );
+	this.lookupMenu.$element.addClass( 've-ui-mwTitleInputWidget-menu' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWTitleInputWidget, ve.ui.TextInputWidget );
+OO.inheritClass( ve.ui.MWTitleInputWidget, OO.ui.TextInputWidget );
 
-ve.mixinClass( ve.ui.MWTitleInputWidget, ve.ui.LookupInputWidget );
+OO.mixinClass( ve.ui.MWTitleInputWidget, OO.ui.LookupInputWidget );
 
 /* Methods */
 
@@ -51,7 +51,7 @@ ve.mixinClass( ve.ui.MWTitleInputWidget, ve.ui.LookupInputWidget );
  * Handle menu item select event.
  *
  * @method
- * @param {ve.ui.MenuItemWidget} item Selected item
+ * @param {OO.ui.MenuItemWidget} item Selected item
  */
 ve.ui.MWTitleInputWidget.prototype.onLookupMenuItemSelect = function ( item ) {
 	if ( item ) {
@@ -104,11 +104,11 @@ ve.ui.MWTitleInputWidget.prototype.getLookupCacheItemFromData = function ( data 
  * Get list of menu items from a server response.
  *
  * @param {Object} data Query result
- * @returns {ve.ui.MenuItemWidget[]} Menu items
+ * @returns {OO.ui.MenuItemWidget[]} Menu items
  */
 ve.ui.MWTitleInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
 	var i, len, title, value,
-		menu$$ = this.lookupMenu.$$,
+		menu$ = this.lookupMenu.$,
 		items = [],
 		matchingPages = data;
 
@@ -122,8 +122,8 @@ ve.ui.MWTitleInputWidget.prototype.getLookupMenuItemsFromData = function ( data 
 			} else {
 				value = title.getPrefixedText();
 			}
-			items.push( new ve.ui.MenuItemWidget(
-				value, { '$$': menu$$, 'label': value }
+			items.push( new OO.ui.MenuItemWidget(
+				value, { '$': menu$, 'label': value }
 			) );
 		}
 	}

@@ -1,5 +1,24 @@
 <?php
+
 class NavigationModelTest extends WikiaBaseTest {
+
+	function setUp() {
+		parent::setUp();
+		$memcMock = $this->getMock( 'MemcachedPhpBagOStuff', ['get','set'], [], '', false );
+		$memcMock->expects( $this->any() )
+			->method( 'get' )
+			->will( $this->returnValue( false ) );
+		$memcMock->expects( $this->any() )
+			->method( 'set' )
+			->will( $this->returnValue( true ) );
+
+		$this->mockGlobalVariable('wgMemc', $memcMock);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01634 ms
+	 */
 	function testParseLines() {
 		$model = new NavigationModel();
 
@@ -118,6 +137,10 @@ class NavigationModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.02663 ms
+	 */
 	function testParseMessage() {
 		$messageName = 'test'.rand();
 
@@ -152,6 +175,9 @@ class NavigationModelTest extends WikiaBaseTest {
 		));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testParseOneLine() {
 		$model = new NavigationModel();
 
@@ -255,6 +281,10 @@ class NavigationModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.022 ms
+	 */
 	function testParseOneLineWithoutTranslation() {
 		$this->getGlobalFunctionMock( 'wfMsg' )
 			->expects( $this->never() )
@@ -283,6 +313,9 @@ class NavigationModelTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testParseText() {
 		$model = new NavigationModel();
 
@@ -314,6 +347,11 @@ class NavigationModelTest extends WikiaBaseTest {
 		}
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03666 ms
+	 * @group UsingDB
+	 */
 	function testParseErrors() {
 		$model = new NavigationModel();
 		$this->assertEmpty($model->getErrors());

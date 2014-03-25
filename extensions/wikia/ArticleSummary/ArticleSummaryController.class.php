@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class ArticleSummaryController
+ */
 class ArticleSummaryController extends WikiaController {
 
+	/**
+	 * Returns information to summarize an article with a snippet of text and a picture if applicable.
+	 */
 	public function blurb() {
 		wfProfileIn( __METHOD__ );
 
@@ -45,5 +51,4 @@ class ArticleSummaryController extends WikiaController {
 
 		$this->summary = $summary;
 	}
-
 }

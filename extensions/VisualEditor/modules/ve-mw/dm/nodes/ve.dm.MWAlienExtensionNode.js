@@ -20,7 +20,7 @@ ve.dm.MWAlienExtensionNode = function VeDmMWAlienExtensionNode( length, element 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWExtensionNode );
+OO.inheritClass( ve.dm.MWAlienExtensionNode, ve.dm.MWExtensionNode );
 
 /* Static members */
 

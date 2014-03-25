@@ -193,11 +193,21 @@ El resto de la página será ejecutada solo para que puedas ver fácilmente si a
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
+	'batchuserrights' => 'Käyttäjäoikeudet erissä',
+	'batchuserrights-desc' => 'Mahdollistaa yhden tai useamman käyttäjän lisäämisen ryhmään kerralla',
 	'batchuserrights-names' => 'Tähän ryhmään lisättävät käyttäjätunnukset (yksi per rivi):',
+	'batchuserrights-intro' => 'Tämän sivun avulla voit lisätä ryhmään useita käyttäjiä kerralla.
+Turvallisuussyistä lisättävien ryhmien luettelo sijaitsee laajennuksessa eikä sitä voi muuttaa wikin sisältä.
+Ole yhteydessä ylläpitäjään, mikäli haluat mahdollistaa käyttäjien lisääminen erissä muihinkin ryhmiin.',
 	'batchuserrights-single-progress-update' => 'Lisätty {{PLURAL:$1|ryhmä|ryhmää}} kohteeseen <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Lisätään {{PLURAL:$1|yksi käyttäjä|$1 käyttäjää}} seuraavaan {{PLURAL:$2|ryhmään|ryhmiin}}: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Käyttäjää \"'''\$1'''\" ei voitu ladata.",
+	'batchuserrights-no-groups' => 'Et valinnut yhtään ryhmää.
+Tämä ei muuta mitään.
+Loput sivusta suoritetaan jotta voisit helposti nähdä, epäonnistuiko joidenkin käyttäjänimien lataaminen.',
 );
 
 /** Faroese (føroyskt)
@@ -555,6 +565,21 @@ Detta kommer inte att uppnå någonting.
 Resten av sidan kommer att tillåtas att köras bara så att du lätt kan se om några av användarnamnen inte kunde läsas in.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'batchuserrights' => 'వాడుకరి హక్కుల సముదాయం',
+	'batchuserrights-desc' => 'ఒకే చర్యతో ఒకటి లేదా అంతకంటే ఎక్కువ వాడుకరులను ఓ గుంపులో చేర్చడాన్ని అనుమతించు',
+	'batchuserrights-names' => 'ఈ గుంపు చేర్చాల్సిన వాడుకరులు (వరుసకొకటి):',
+	'batchuserrights-single-progress-update' => '<strong>$2</strong> కు {{PLURAL:$1|గుంపును|గుంపులను}} చేర్చాం.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|ఒక వాడురిని|$1 వాడుకరులను}} కింది {{PLURAL:$2|గుంపులోకి|గుంపుల్లోకి}} చేరుస్తున్నాం: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "వాడుకరి \"'''\$1'''\" ని లోడు చెయ్యలేకపోయాం.",
+	'batchuserrights-no-groups' => 'మీరు గుంపులు వేటిన ఎంచుకోలేదు.
+ఇప్పుడు పనేమీ జరగదు.
+పేజీలోని మిగిలిన భాగాన్ని నడవనిస్తాం - కానీ కేవలం వాడకరిపేర్లు ఏమైనా లోడు కావడం లేదేమో తెలుసుకునేందుకు మాత్రమే.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -629,7 +654,11 @@ $messages['zh-hans'] = array(
 	'batchuserrights' => '批处理的用户权限',
 	'batchuserrights-desc' => '允许在一次操作中将一个或多个用户添加到一个组',
 	'batchuserrights-names' => '添加至该组的用户（每行一个）：',
+	'batchuserrights-intro' => '此页面可以让您一次添加多个用户到一个用户组中去。出于安全考虑，可添加的用户组列表仅在扩展的配置中可设置，不能直接在网站中更改。若要添加其他用户组，请与系统管理员联系。',
 	'batchuserrights-single-progress-update' => '已添加$1个用户组到<strong>$2</strong>。',
 	'batchuserrights-add-groups' => '正在添加$1个用户到下面$2个组：<strong>$3</strong>。',
 	'batchuserrights-userload-error' => "无法加载用户\"'''\$1'''\"。",
+	'batchuserrights-no-groups' => '您没有选择任何用户组。
+这将什么都不做。
+页面的剩余部分将继续运行，以便让您能看到是否有任何用户名不能被加载。',
 );

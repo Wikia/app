@@ -5,12 +5,12 @@
 	right: $width-rail-epl;
 
 	.cke_button {
-		@include border-radius(5px);
-		@include border-radius-se(0);
-		@include border-radius-sw(0);
 		background-color: $color-epl-gradient-light;
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		border-radius: 5px;
 		display: inline-block;
 		margin-left: 3px;
 		padding: 1px 0;

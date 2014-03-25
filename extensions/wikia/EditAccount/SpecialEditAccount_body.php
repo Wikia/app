@@ -419,6 +419,7 @@ class EditAccount extends SpecialPage {
 	function clearDisable() {
 		$this->mUser->setOption( 'disabled', null );
 		$this->mUser->setOption( 'disabled_date', null );
+		$this->mUser->setRealName( '' );
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );

@@ -1,5 +1,3 @@
-mediawiki_username: Selenium_user
-
 chrome:
   name: chrome
   platform: Linux

@@ -42,32 +42,16 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 		$nextPage = '';
 
-		// ingest only live video
-		$cond = array_merge( array( "status = 'live'" ), $params['cond'] );
-
-		$apiParams = array(
-			'limit' => self::API_PAGE_SIZE,
-			'where' => implode( ' AND ', $cond ),
-		);
-
 		do {
 			// connect to provider API
-			$url = $this->initFeedUrl( $apiParams, $nextPage );
+			$url = OoyalaAsset::getApiUrlAssets( self::API_PAGE_SIZE, $nextPage, $params['cond'] );
 			print( "Connecting to $url...\n" );
 
-			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
-			$status = $req->execute();
-			if ( $status->isGood() ) {
-				$response = $req->getContent();
-			} else {
-				print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+			$response = OoyalaAsset::getApiContent( $url );
+			if ( $response === false ) {
 				wfProfileOut( __METHOD__ );
-
 				return 0;
 			}
-
-			// parse response
-			$response = json_decode( $response, true );
 
 			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
@@ -88,7 +72,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['published'] = empty( $video['metadata']['published'] ) ? '' : strtotime( $video['metadata']['published'] );
 				$clipData['name'] = empty( $video['metadata']['name'] ) ? '' : $video['metadata']['name'];
 				$clipData['type'] = empty( $video['metadata']['type'] ) ? '' : $video['metadata']['type'];
-				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $video['metadata']['category'];
+				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $this->getCategory( $video['metadata']['category'] );
 				$clipData['keywords'] = empty( $video['metadata']['keywords'] ) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim( $video['description'] );
 
@@ -125,6 +109,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['characters'] = empty( $video['metadata']['characters'] ) ? '' : $video['metadata']['characters'];
 				$clipData['resolution'] = empty( $video['metadata']['resolution'] ) ? '' : $video['metadata']['resolution'];
 				$clipData['aspectRatio'] = empty( $video['metadata']['aspectratio'] ) ? '' : $video['metadata']['aspectratio'];
+				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
 
 				// For page categories only. Not store in metadata.
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
@@ -173,11 +158,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['name'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
+			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $data['name'] ) ) );
 		}
 
 		if ( !empty( $data['pageCategories'] ) ) {
-			$categories += array_map( 'trim', explode( ',', $data['pageCategories'] ) );
+			$stdCategories = array_map( array( $this ,'getStdPageCategory' ), explode( ',', $data['pageCategories'] ) );
+			$categories = array_merge( $categories, $stdCategories );
 		}
 
 		// remove 'the' category
@@ -189,6 +175,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		if ( !empty( $data['categoryName'] ) ) {
 			$categories[] = $data['categoryName'];
 		}
+
+		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		$categories[] = 'Ooyala';
 
@@ -212,6 +200,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
 		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
 		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
+		$metadata['distributor'] = empty( $data['distributor'] ) ? '' :  $data['distributor'];
 		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;

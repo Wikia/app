@@ -790,10 +790,14 @@ class EnhancedChangesList extends ChangesList {
 	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
-		
+
 		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
 		$out = $wgMemc->get($memcKey);
 		if(!empty($out)) {
+			// wikia change start (BAC-492)
+			$out['usertalklink'] = $this->isDeleted($rc, Revision::DELETED_USER) ?
+				null : Linker::userToolLinks($rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text']);
+			// wikia change end
 			wfProfileOut( __METHOD__ );
 			return $out;
 		}
@@ -869,7 +873,7 @@ class EnhancedChangesList extends ChangesList {
 		if ( $block[0]->mAttribs['rc_log_type'] ) {
 			# Log entry
 			$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-'
-					. $block[0]->mAttribs['rc_log_type'] . '-' . $block[0]->mAttribs['rc_title'] );
+				. $block[0]->mAttribs['rc_log_type'] );
 		} else {
 			$classes = 'mw-collapsible mw-collapsed mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-ns'
 					. $block[0]->mAttribs['rc_namespace'] . '-' . $block[0]->mAttribs['rc_title'] );
@@ -1217,8 +1221,10 @@ class EnhancedChangesList extends ChangesList {
 		$logType = $rcObj->mAttribs['rc_log_type'];
 		if( $logType ) {
 			# Log entry
-			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-'
-					. $logType . '-' . $rcObj->mAttribs['rc_title'] );
+			// begin Wikia change - @author Cqm
+			// VOLDEV-43
+			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-log-' . $logType );
+			// end Wikia change
 		} else {
 			$classes = 'mw-enhanced-rc ' . Sanitizer::escapeClass( 'mw-changeslist-ns' .
 					$rcObj->mAttribs['rc_namespace'] . '-' . $rcObj->mAttribs['rc_title'] );

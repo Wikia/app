@@ -355,13 +355,13 @@ $messages['mk'] = array(
 	'timeagomessaging-desc' => 'Овозможува i18n за приклучокот jquery.timeago.js',
 	'timeago-year' => 'пред {{PLURAL:$1|$1 година|$1 години}}',
 	'timeago-month' => '{{PLURAL:$1|пред еден месец|пред $1 месеци}}',
-	'timeago-day' => 'пред {{PLURAL:$1|1 ден|$1 дена}}',
-	'timeago-hour' => 'пред {{PLURAL:$1|1 час|$1 часа}}',
-	'timeago-minute' => 'пред {{PLURAL:$1|1 минута|$1 минути}}',
+	'timeago-day' => 'пред {{PLURAL:$1|еден ден|$1 дена}}',
+	'timeago-hour' => 'пред {{PLURAL:$1|еден час|$1 часа}}',
+	'timeago-minute' => 'пред {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-second' => 'пред една минута',
-	'timeago-day-from-now' => 'пред {{PLURAL:$1|1 ден|$1 дена}}',
-	'timeago-hour-from-now' => 'пред {{PLURAL:$1|$1 час|$1 часа}}',
-	'timeago-minute-from-now' => 'пред {{PLURAL:$1|$1 минута|$1 минути}}',
+	'timeago-day-from-now' => 'пред {{PLURAL:$1|еден ден|$1 дена}}',
+	'timeago-hour-from-now' => '{{PLURAL:$1|еден час|$1 часа}}',
+	'timeago-minute-from-now' => 'пред {{PLURAL:$1|една минута|$1 минути}}',
 	'timeago-month-from-now' => 'пред {{PLURAL:$1|$1 месец|$1 месеци}}',
 	'timeago-second-from-now' => 'пред една минута',
 );
@@ -626,6 +626,13 @@ $messages['tl'] = array(
 	'timeago-minute-from-now' => '{{PLURAL:$1|isang minuto|$1 mga minuto}} magmula ngayon',
 	'timeago-month-from-now' => '{{PLURAL:$1|isang buwan|$1 mga buwan}} magmula ngayon',
 	'timeago-second-from-now' => 'isang minuto magmula ngayon',
+);
+
+/** Tatar (Cyrillic script) (татарча)
+ * @author Ilnur efende
+ */
+$messages['tt-cyrl'] = array(
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут|$1 минут}} элек', # Fuzzy
 );
 
 /** Ukrainian (українська)

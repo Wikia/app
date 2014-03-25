@@ -10,6 +10,8 @@ use Wikia, ReflectionProperty, ReflectionMethod, Wikia\Search\Utilities;
 class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09372 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::__construct
 	 */
 	public function test__construct() {
@@ -40,6 +42,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09917 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::search
 	 */
 	public function testSearch() {
@@ -96,6 +100,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09584 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getMatch
 	 */
 	public function testGetMatch() {
@@ -151,6 +157,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09542 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractMatch
 	 */
 	public function testExtractMatch() {
@@ -178,6 +186,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09908 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getSelectQuery
 	 */
 	public function testGetSelectQuery() {
@@ -236,7 +246,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerComponents 
+	 * @group Slow
+	 * @slowExecutionTime 0.10254 ms
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerComponents
 	 */
 	public function testRegisterComponents() {
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
@@ -255,7 +267,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerQueryParams 
+	 * @group Slow
+	 * @slowExecutionTime 0.10082 ms
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerQueryParams
 	 */
 	public function testRegisterQueryParams() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
@@ -331,7 +345,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueries 
+	 * @group Slow
+	 * @slowExecutionTime 0.09759 ms
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueries
 	 */
 	public function testRegisterFilterQueries() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_select' )
@@ -384,7 +400,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch 
+	 * @group Slow
+	 * @slowExecutionTime 0.09187 ms
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerFilterQueryForMatch
 	 */
 	public function testRegisterFilterQueryForMatch() {
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
@@ -400,7 +418,9 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerHighlighting 
+	 * @group Slow
+	 * @slowExecutionTime 0.10014 ms
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerHighlighting
 	 */
 	public function testRegisterHighlighting() {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
@@ -484,6 +504,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10923 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::sendSearchRequestToClient
 	 */
 	public function testSearchWorksFirst() {
@@ -597,6 +619,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09672 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareRequest
 	 */
 	public function testPrepareRequest() {
@@ -638,6 +662,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10116 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::spellcheckResult
 	 */
 	public function testSpellcheckResult() {
@@ -725,6 +751,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10668 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::prepareResponse
 	 */
 	public function testPrepareResponse() {
@@ -776,36 +804,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$reflspell->setAccessible( true );
 		$reflspell->invoke( $mockSelect, $mockResult ); // weirdness
 	}
-	
-	/**
-	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
-	 *@todo move to correct query service
-	public function testGetFilterQueryString() {
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
-		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
-		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
-		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( null ) )
-		                   ->getMockForAbstractClass();
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getCityId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getNamespaces' )
-		    ->will   ( $this->returnValue( [ 0, 14 ] ) )
-		;
-		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getFilterQueryString' );
-		$reflspell->setAccessible( true );
-		$this->assertEquals(
-				'((ns:0) OR (ns:14)) AND (wid:123)',
-				$reflspell->invoke( $mockSelect )
-		);
-	}
-	*/
-	
+
 	/**
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::registerDismax
 	 * @todo move ot correct query service
@@ -814,10 +813,10 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getDismax' ) )
 		                  ->getMock();
-		
-		$dismaxMethods = array( 
+
+		$dismaxMethods = array(
 				'setQueryFields', 'setQueryParser', 'setPhraseFields', 'setBoostFunctions',
-				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie' 
+				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie'
 				);
 		$mockDismax = $this->getMockBuilder( 'Solarium_Query_Select_Component_DisMax' )
 		                   ->disableOriginalConstructor()
@@ -827,18 +826,18 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'isOnDbCluster' ) )
 		                      ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'getMinimumMatch', 'getSkipBoostFunctions', 'getQuery' ) )
 		                   ->getMock();
-		
+
 		$deps = array( 'config' => $mockConfig, 'service' => $mockService  );
 		$dc = new Wikia\Search\QueryService\DependencyContainer( $deps );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array( 'getQueryFieldsString', 'getBoostQueryString' ) )
 		                   ->getMockForAbstractClass();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryFieldsString' )
@@ -928,6 +927,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}*/
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09641 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApi() {
@@ -960,6 +961,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10416 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApiWithMetadata() {
@@ -1030,6 +1033,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10116 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::searchAsApi
 	 */
 	public function testSearchAsApiWithMetadataNoResults() {
@@ -1080,6 +1085,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.11422 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatch() {
@@ -1105,7 +1112,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
 		
 		$mockService
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
@@ -1170,6 +1177,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10737 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatchUnder50Articles() {
@@ -1195,7 +1204,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSanitizedQuery' ], [ 'foo' ] );
 		
 		$mockService
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getConfig' )
 		    ->will   ( $this->returnValue( $mockConfig ) )
 		;
@@ -1258,6 +1267,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09903 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::extractWikiMatch
 	 */
 	public function testExtractWikiMatchWithMatchSameWiki() {
@@ -1333,6 +1344,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10144 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getRequestedFields
 	 */
 	public function testGetRequestedFields() {
@@ -1377,8 +1390,39 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 				$fqs->invoke( $mockService )
 		);
 	}
+
+	/**
+	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getFilterQueryString
+	 * @todo move to correct query service
+	public function testGetFilterQueryString() {
+		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces' ) );
+		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
+		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
+			->setConstructorArgs( array( $dc ) )
+			->setMethods( array( null ) )
+			->getMockForAbstractClass();
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getCityId' )
+			->will   ( $this->returnValue( 123 ) )
+			;
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'getNamespaces' )
+			->will   ( $this->returnValue( [ 0, 14 ] ) )
+			;
+		$reflspell = new ReflectionMethod( 'Wikia\Search\QueryService\Select\AbstractSelect', 'getFilterQueryString' );
+		$reflspell->setAccessible( true );
+		$this->assertEquals(
+			'((ns:0) OR (ns:14)) AND (wid:123)',
+			$reflspell->invoke( $mockSelect )
+		);
+	}
+	 */
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09538 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getConfig
 	 */
 	public function testGetConfig() {
@@ -1399,6 +1443,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09431 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getService
 	 */
 	public function testGetService() {
@@ -1419,6 +1465,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09601 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::getClient
 	 */
 	public function testGetClient() {
@@ -1461,6 +1509,8 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09929 ms
 	 * @covers Wikia\Search\QueryService\Select\AbstractSelect::setCoreInClient
 	 */
 	public function testSetCoreInClient() {

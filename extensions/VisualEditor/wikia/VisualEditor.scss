@@ -8,26 +8,33 @@
 // VE Mixins
 @import "modules/ve/ui/styles/mixins/ve-icon";
 
-// Wikia VE Imports
+// VE Imports
 @import "modules/ve/ui/styles/color";
-@import "modules/ve/ui/styles/ve.ui.Icons-vector";
-@import "modules/ve/ui/styles/ve.ui.Surface";
+@import "modules/ve/ui/styles/ve.ui.Ads";
+@import "modules/ve/ui/styles/ve.ui.Context";
 @import "modules/ve/ui/styles/ve.ui.Dialog";
 @import "modules/ve/ui/styles/ve.ui.Frame";
+@import "modules/ve/ui/styles/ve.ui.Icons-vector";
+@import "modules/ve/ui/styles/ve.ui.Inspector";
+@import "modules/ve/ui/styles/ve.ui.Surface";
 @import "modules/ve/ui/styles/ve.ui.Tool";
+@import "modules/ve/ui/styles/ve.ui.Toolbar";
 @import "modules/ve/ui/styles/ve.ui.ToolGroup";
+@import "modules/ve/ui/styles/ve.ui.Widget";
+@import "modules/ve/ui/styles/ve.ui.WikiaMediaPreviewWidget";
+@import "modules/ve/ui/styles/ve.ui.WikiaDropTargetWidget";
 @import "modules/ve/ui/styles/ve.ui.WikiaMediaInsertDialog";
 @import "modules/ve/ui/styles/ve.ui.WikiaSourceModeDialog";
-@import "modules/ve/ui/styles/ve.ui.Toolbar";
-@import "modules/ve/ui/styles/ve.ui.Context";
-@import "modules/ve/ui/styles/ve.ui.Widget";
+
+// OO Imports
+@import "modules/ve/ui/styles/oo.ui.Window";
 
 /*
  * Fixes background colors in inspectors and dialogs
  * Fixes width problems inherited from Oasis responsive breakpoints
  */
-.ve-ui-frame-body,
-.ve-ui-popupWidget-body {
+.oo-ui-frame-body,
+.oo-ui-popupWidget-body {
 	background: $color-page;
 	min-width: 0;
 }
@@ -35,14 +42,14 @@
 /*
  * Fixes link type-ahead positioning due to Oasis margins set on lists
  */
-.WikiaArticle .ve-ui-selectWidget {
+.WikiaArticle .oo-ui-selectWidget {
 	margin: 0;
 }
 
 /*
  * Fixes font size for type-ahead widget. This style is from mw init.
  */
-.ve-init-mw-viewPageTarget-surface .ve-ui-menuWidget {
+.ve-init-mw-viewPageTarget-surface .oo-ui-menuWidget {
 	font-size: .8em;
 }
 
@@ -81,9 +88,11 @@
 	}
 
 }
+
 .ve-init-mw-viewPageTarget-saveDialog-title {
 	color: $color-text;
 }
+
 .ve-init-mw-viewPageTarget-saveDialog-options {
 	background: $color-ve-page-secondary;
 }

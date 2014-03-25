@@ -22,7 +22,7 @@ ve.dm.MetaLinearData = function VeDmMetaLinearData( store, data ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MetaLinearData, ve.dm.LinearData );
+OO.inheritClass( ve.dm.MetaLinearData, ve.dm.LinearData );
 
 /* Static Methods */
 

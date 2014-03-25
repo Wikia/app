@@ -15,6 +15,9 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->instance = AssetsManager::getInstance();
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testGetSassCommonURL() {
 		$url =  $this->instance->getSassCommonURL(self::SASS_FILE, true /* $minify */);
 
@@ -37,12 +40,18 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertEquals($this->instance->isSassUrl($file), $expected);
 	}
 
-	/** @dataProvider testGetSassFilePathProvider */
+	/**
+	 * @dataProvider getSassFilePathProvider
+	 * @group UsingDB
+	 */
 	public function testGetSassFilePath($url, $expected) {
 		$filePath = $this->instance->getSassFilePath($url);
 		$this->assertEquals($filePath, $expected);
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testGetSassesUrl() {
 		$otherSass = 'path/to/another/sass.scss';
 		$sassList = [self::SASS_FILE, $otherSass];
@@ -56,6 +65,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider duplicateAssetsDataProvider
+	 * @group UsingDB
 	 */
 	public function testDuplicateAssets( $setName, $files ) {
 		$counts = array();
@@ -149,7 +159,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testGetSassFilePathProvider() {
+	public function getSassFilePathProvider() {
 		return [
 			[AssetsManager::getInstance()->getSassCommonURL(self::SASS_FILE), self::SASS_FILE],
 			[self::SASS_FILE, self::SASS_FILE],

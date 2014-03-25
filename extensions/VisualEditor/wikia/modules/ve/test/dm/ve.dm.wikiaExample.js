@@ -15,7 +15,7 @@ ve.dm.wikiaExample.createExampleDocument = function ( name, store ) {
 
 ve.dm.wikiaExample.domToDataCases = {
 	'thumb image': {
-		'html': '<body><figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure></body>',
+		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockImage',
@@ -24,8 +24,8 @@ ve.dm.wikiaExample.domToDataCases = {
 					'align': 'right',
 					'href': 'Foo',
 					'src': 'Bar',
-					'width': '1',
-					'height': '2',
+					'width': 1,
+					'height': 2,
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
@@ -51,7 +51,7 @@ ve.dm.wikiaExample.domToDataCases = {
 		]
 	},
 	'thumb video': {
-		'html': '<body><figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure></body>',
+		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockVideo',
@@ -60,8 +60,8 @@ ve.dm.wikiaExample.domToDataCases = {
 					'align': 'right',
 					'href': 'Foo',
 					'src': 'Bar',
-					'width': '1',
-					'height': '2',
+					'width': 1,
+					'height': 2,
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],

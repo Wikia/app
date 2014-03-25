@@ -26,7 +26,7 @@ ve.ce.BranchNode = function VeCeBranchNode( model, config ) {
 	ve.ce.Node.call( this, model, config );
 
 	// Properties
-	this.tagName = this.$.get( 0 ).nodeName.toLowerCase();
+	this.tagName = this.$element.get( 0 ).nodeName.toLowerCase();
 	this.slugs = {};
 
 	// Events
@@ -38,9 +38,9 @@ ve.ce.BranchNode = function VeCeBranchNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.BranchNode, ve.ce.Node );
+OO.inheritClass( ve.ce.BranchNode, ve.ce.Node );
 
-ve.mixinClass( ve.ce.BranchNode, ve.BranchNode );
+OO.mixinClass( ve.ce.BranchNode, ve.BranchNode );
 
 /* Events */
 
@@ -85,7 +85,7 @@ ve.ce.BranchNode.$blockSlugTemplate = $( '<span>' )
  */
 ve.ce.BranchNode.prototype.onSetup = function () {
 	ve.ce.Node.prototype.onSetup.call( this );
-	this.$.addClass( 've-ce-branchNode' );
+	this.$element.addClass( 've-ce-branchNode' );
 };
 
 /**
@@ -95,7 +95,7 @@ ve.ce.BranchNode.prototype.onSetup = function () {
  */
 ve.ce.BranchNode.prototype.onTeardown = function () {
 	ve.ce.Node.prototype.onTeardown.call( this );
-	this.$.removeClass( 've-ce-branchNode' );
+	this.$element.removeClass( 've-ce-branchNode' );
 };
 
 /**
@@ -107,21 +107,21 @@ ve.ce.BranchNode.prototype.onTeardown = function () {
  * 'rewrap' event and copy information from the {$old} wrapper the {$new} wrapper.
  *
  * @method
- * @emits rewrap
+ * @fires rewrap
  */
 ve.ce.BranchNode.prototype.updateTagName = function () {
-	var $element,
+	var $wrapper,
 		tagName = this.getTagName();
 
 	if ( tagName !== this.tagName ) {
 		this.emit( 'teardown' );
-		$element = this.$$( this.$$.context.createElement( tagName ) );
+		$wrapper = this.$( this.$.context.createElement( tagName ) );
 		// Move contents
-		$element.append( this.$.contents() );
+		$wrapper.append( this.$element.contents() );
 		// Swap elements
-		this.$.replaceWith( $element );
+		this.$element.replaceWith( $wrapper );
 		// Use new element from now on
-		this.$ = $element;
+		this.$element = $wrapper;
 		this.emit( 'setup' );
 		// Remember which tag name we are using now
 		this.tagName = tagName;
@@ -161,7 +161,7 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 	// Convert models to views and attach them to this node
 	if ( args.length >= 3 ) {
 		for ( i = 2, length = args.length; i < length; i++ ) {
-			args[i] = ve.ce.nodeFactory.create( args[i].getType(), args[i] );
+			args[i] = ve.ce.nodeFactory.create( args[i].getType(), args[i], { '$': this.$ } );
 			args[i].model.connect( this, { 'update': 'onModelUpdate' } );
 		}
 	}
@@ -170,28 +170,28 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 		removals[i].model.disconnect( this, { 'update': 'onModelUpdate' } );
 		removals[i].setLive( false );
 		removals[i].detach();
-		removals[i].$.detach();
+		removals[i].$element.detach();
 	}
 	if ( args.length >= 3 ) {
 		if ( index ) {
 			// Get the element before the insertion point
-			$anchor = this.children[ index - 1 ].$.last();
+			$anchor = this.children[ index - 1 ].$element.last();
 		}
 		for ( i = args.length - 1; i >= 2; i-- ) {
 			args[i].attach( this );
 			if ( index ) {
-				// DOM equivalent of $anchor.after( args[i].$ );
+				// DOM equivalent of $anchor.after( args[i].$element );
 				afterAnchor = $anchor[0].nextSibling;
 				parentNode = $anchor[0].parentNode;
-				for ( j = 0, length = args[i].$.length; j < length; j++ ) {
-					parentNode.insertBefore( args[i].$[j], afterAnchor );
+				for ( j = 0, length = args[i].$element.length; j < length; j++ ) {
+					parentNode.insertBefore( args[i].$element[j], afterAnchor );
 				}
 			} else {
-				// DOM equivalent of this.$.prepend( args[j].$ );
-				node = this.$[0];
+				// DOM equivalent of this.$element.prepend( args[j].$element );
+				node = this.$element[0];
 				firstChild = node.firstChild;
-				for ( j = args[i].$.length - 1; j >= 0; j-- ) {
-					node.insertBefore( args[i].$[j], firstChild );
+				for ( j = args[i].$element.length - 1; j >= 0; j-- ) {
+					node.insertBefore( args[i].$element[j], firstChild );
 				}
 			}
 			if ( this.live !== args[i].isLive() ) {
@@ -231,9 +231,9 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 	// from becoming invisible/unfocusable. In Firefox, backspace after Ctrl-A leaves the document
 	// completely empty, so this ensures DocumentNode gets a slug.
 	// Can't use this.getLength() because the internal list adds to the length but doesn't render.
-	if ( this.$.contents().length === 0 ) {
+	if ( this.$element.contents().length === 0 ) {
 		this.slugs[0] = doc.importNode( slug, true );
-		this.$[0].appendChild( this.slugs[0] );
+		this.$element[0].appendChild( this.slugs[0] );
 	} else {
 		// Iterate over all children of this branch and add slugs in appropriate places
 		for ( i = 0, len = this.children.length; i < len; i++ ) {
@@ -244,7 +244,7 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 			// First sluggable child (left side)
 			if ( i === 0 && this.children[i].canHaveSlugBefore() ) {
 				this.slugs[i] = doc.importNode( slug, true );
-				first = this.children[i].$[0];
+				first = this.children[i].$element[0];
 				first.parentNode.insertBefore( this.slugs[i], first );
 			}
 			if ( this.children[i].canHaveSlugAfter() ) {
@@ -255,7 +255,7 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 					( this.children[i + 1] && this.children[i + 1].canHaveSlugBefore() )
 				) {
 					this.slugs[i + 1] = doc.importNode( slug, true );
-					last = this.children[i].$[this.children[i].$.length - 1];
+					last = this.children[i].$element[this.children[i].$element.length - 1];
 					last.parentNode.insertBefore( this.slugs[i + 1], last.nextSibling );
 				}
 			}
@@ -290,7 +290,7 @@ ve.ce.BranchNode.prototype.getSlugAtOffset = function ( offset ) {
  *
  * @method
  * @param {boolean} live New live state
- * @emits live
+ * @fires live
  */
 ve.ce.BranchNode.prototype.setLive = function ( live ) {
 	ve.ce.Node.prototype.setLive.call( this, live );

@@ -433,6 +433,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 
 		wfProfileIn( __METHOD__.'-filemtime' );
 		$filesMtime = max( array_map( array( __CLASS__, 'safeFilemtime' ), $files ) );
+		$filesMtime = ResourceLoaderHooks::normalizeTimestamp($filesMtime); // Wikia change - @macbre
 		wfProfileOut( __METHOD__.'-filemtime' );
 		$this->modifiedTime[$context->getHash()] = max(
 			$filesMtime,

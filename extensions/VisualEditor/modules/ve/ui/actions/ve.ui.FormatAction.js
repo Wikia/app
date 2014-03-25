@@ -20,7 +20,7 @@ ve.ui.FormatAction = function VeUiFormatAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.FormatAction, ve.ui.Action );
+OO.inheritClass( ve.ui.FormatAction, ve.ui.Action );
 
 /* Static Properties */
 

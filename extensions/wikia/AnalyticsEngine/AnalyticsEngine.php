@@ -43,14 +43,14 @@ class AnalyticsEngine {
 				return new AnalyticsProviderExelate();
 			case 'GAS':
 				return new AnalyticsProviderGAS();
-			case 'IVW':
-				return new AnalyticsProviderIVW();
 			case 'AmazonDirectTargetedBuy':
 				return new AnalyticsProviderAmazonDirectTargetedBuy();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
 				return new AnalyticsProviderIVW2();
+			case 'BlueKai':
+				return new AnalyticsProviderBlueKai();
 		}
 
 		return null;

@@ -9,6 +9,9 @@
  * @author Sebastian Marzjan
  *
  */
+use \Wikia\Logger\WikiaLogger;
+
+ 
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -37,13 +40,15 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_WIDTH = 115;
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
-	const FAILSAFE_COMMUNITIES_COUNT = 280000;
-	const FAILSAFE_NEW_COMMUNITIES_COUNT = 200;
+	const FAILSAFE_COMMUNITIES_COUNT = 300000;
+	const FAILSAFE_NEW_COMMUNITIES_COUNT = 400;
+	const FAILSAFE_VISITORS = 100000000;
+	const FAILSAFE_MOBILE_PERCENTAGE = 25;
 
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.7';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.8';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -263,23 +268,41 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $newCommunities;
 	}
 
+	public function getStatsIncludingFallbacks() {
+		$stats = $this->getStatsFromWF();
 
-	/**
-	 * get stats from article
-	 * @param string $articleName
-	 * @return integer stats
-	 */
-	public function getStatsFromArticle($articleName) {
-		wfProfileIn(__METHOD__);
+		$stats[ 'edits' ] = $this->getEdits();
+		$stats[ 'communities' ] = $this->getTotalCommunities();
+		$stats[ 'newCommunities' ] = $this->getLastDaysNewCommunities();
 
-		$title = Title::newFromText($articleName);
-		$article = new Article($title);
-		$content = $article->getRawText();
-		$stats = (empty($content)) ? 0 : $content;
+		$totalPages = intval( Wikia::get_content_pages() );
+		if ( $totalPages > $stats[ 'totalPages' ] ) {
+			$stats[ 'totalPages' ] = $totalPages;
+		}
 
-		wfProfileOut(__METHOD__);
+		if ( $stats[ 'mobilePercentage' ] < self::FAILSAFE_MOBILE_PERCENTAGE ) {
+			$stats[ 'mobilePercentage' ] = self::FAILSAFE_MOBILE_PERCENTAGE;
+		}
 
-		return intval($stats);
+		if ( $stats[ 'visitors' ] < self::FAILSAFE_VISITORS ) {
+			$stats[ 'visitors' ] = self::FAILSAFE_VISITORS;
+		}
+		return $stats;
+	}
+
+	public function getStatsFromWF() {
+		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
+	}
+
+	public function saveStatsToWF($statsValues) {
+		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
+		$this->wg->Memc->delete($this->getStatsMemcacheKey());
+
+		$corpWikisLangs = array_keys((new CityVisualization())->getVisualizationWikisData());
+		$wikiaHubsHelper = new WikiaHubsServicesHelper();
+		foreach ($corpWikisLangs as $lang) {
+			$wikiaHubsHelper->purgeHomePageVarnish($lang);
+		}
 	}
 
 	/**
@@ -634,6 +657,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
+		WikiaLogger::instance()->debug( "Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
+			'imageTitle' => $imageTitle, 'imageId' => $imageId] );
+		
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
@@ -929,6 +955,16 @@ class WikiaHomePageHelper extends WikiaModel {
 			$wam = null;
 		}
 		return $wam;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getStatsMemcacheKey() {
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
+
+		return $memKey;
 	}
 
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 
 class AutoCreateWikiTest extends WikiaBaseTest {
 
@@ -77,6 +77,10 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03061 ms
+	 */
 	function testCheckDomainIsCorrectBadWords() {
 		$this->getGlobalFunctionMock( 'wfMsg' )
 			->expects( $this->exactly( 1 ) )
@@ -102,6 +106,10 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 		$this->assertEquals('mocked-string', $result);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03205 ms
+	 */
 	function testCheckDomainIsCorrectDomainExists() {
 		$this->getGlobalFunctionMock( 'wfMsg' )
 			->expects( $this->exactly( 1 ) )

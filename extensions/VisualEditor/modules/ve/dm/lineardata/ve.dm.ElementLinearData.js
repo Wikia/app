@@ -11,7 +11,7 @@
  * Element linear data storage
  *
  * @class
- * @extends ve.dm.LinearData
+ * @extends ve.dm.FlatLinearData
  * @constructor
  * @param {ve.dm.IndexValueStore} store Index-value store
  * @param {Array} [data] Linear data
@@ -22,49 +22,7 @@ ve.dm.ElementLinearData = function VeDmElementLinearData( store, data ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.ElementLinearData, ve.dm.LinearData );
-
-/* Methods */
-
-/**
- * Get the type of the element at a specified offset
- * @method
- * @param {number} offset Document offset
- * @returns {string} Type of the element
- */
-ve.dm.ElementLinearData.prototype.getType = function ( offset ) {
-	return ve.dm.LinearData.static.getType( this.getData( offset ) );
-};
-
-/**
- * Check if data at a given offset is an element.
- * @method
- * @param {number} offset Document offset
- * @returns {boolean} Data at offset is an element
- */
-ve.dm.ElementLinearData.prototype.isElementData = function ( offset ) {
-	return ve.dm.LinearData.static.isElementData( this.getData( offset ) );
-};
-
-/**
- * Checks if data at a given offset is an open element.
- * @method
- * @param {number} offset Document offset
- * @returns {boolean} Data at offset is an open element
- */
-ve.dm.ElementLinearData.prototype.isOpenElementData = function ( offset ) {
-	return ve.dm.LinearData.static.isOpenElementData( this.getData( offset ) );
-};
-
-/**
- * Checks if data at a given offset is a close element.
- * @method
- * @param {number} offset Document offset
- * @returns {boolean} Data at offset is a close element
- */
-ve.dm.ElementLinearData.prototype.isCloseElementData = function ( offset ) {
-	return ve.dm.LinearData.static.isCloseElementData( this.getData( offset ) );
-};
+OO.inheritClass( ve.dm.ElementLinearData, ve.dm.FlatLinearData );
 
 /**
  * Check if content can be inserted at an offset in document data.
@@ -768,13 +726,15 @@ ve.dm.ElementLinearData.prototype.remapStoreIndexes = function ( mapping ) {
  *
  * @method
  * @param {Object} mapping Mapping from internal list indexes to internal list indexes
+ * @param {ve.dm.InternalList} internalList Internal list the indexes are being mapped into.
+ *  Used for refreshing attribute values that were computed with getNextUniqueNumber().
  */
-ve.dm.ElementLinearData.prototype.remapInteralListIndexes = function ( mapping ) {
+ve.dm.ElementLinearData.prototype.remapInternalListIndexes = function ( mapping, internalList ) {
 	var i, ilen, nodeClass;
 	for ( i = 0, ilen = this.data.length; i < ilen; i++ ) {
 		if ( this.isOpenElementData( i ) ) {
 			nodeClass = ve.dm.nodeFactory.lookup( this.getType( i ) );
-			nodeClass.static.remapInternalListIndexes( this.data[i], mapping );
+			nodeClass.static.remapInternalListIndexes( this.data[i], mapping, internalList );
 		}
 	}
 };
@@ -799,6 +759,6 @@ ve.dm.ElementLinearDataSlice = function VeDmElementLinearDataSlice( store, data,
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.ElementLinearDataSlice, ve.dm.ElementLinearData );
+OO.inheritClass( ve.dm.ElementLinearDataSlice, ve.dm.ElementLinearData );
 
-ve.mixinClass( ve.dm.ElementLinearDataSlice, ve.dm.SlicedLinearData );
+OO.mixinClass( ve.dm.ElementLinearDataSlice, ve.dm.SlicedLinearData );

@@ -66,6 +66,10 @@ class WikiaDispatcher {
 	 *
 	 * @param WikiaApp $app
 	 * @param WikiaRequest $request
+	 * @throws WikiaException
+	 * @throws Exception
+	 * @throws WikiaHttpException
+	 * @throws WikiaDispatchedException
 	 * @return WikiaResponse
 	 */
 	public function dispatch( WikiaApp $app, WikiaRequest $request ) {

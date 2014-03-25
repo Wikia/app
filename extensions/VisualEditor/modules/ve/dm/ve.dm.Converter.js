@@ -29,6 +29,14 @@ ve.dm.Converter = function VeDmConverter( modelRegistry, nodeFactory, annotation
 	this.contextStack = null;
 };
 
+/* Static Properties */
+
+/**
+ * List of HTML attribute names that {#buildHtmlAttributeList} should store computed values for.
+ * @type {string[]}
+ */
+ve.dm.Converter.computedAttributes = [ 'href', 'src' ];
+
 /* Static Methods */
 
 /**
@@ -124,8 +132,9 @@ ve.dm.Converter.openAndCloseAnnotations = function ( currentSet, targetSet, open
  * Build an HTML attribute list for attribute preservation.
  *
  * The attribute list is an array of objects, one for each DOM element. Each object contains a
- * map with attribute keys and values in .values, an (ordered) array of attribute keys in .keys,
- * and an array of attribute lists for the child nodes in .children .
+ * map with attribute keys and values in .values, a map with a subset of the attribute keys and
+ * their computed values in .computed (see {#computedAttributes}), and an array of attribute lists
+ * for the child nodes in .children .
  *
  * @static
  * @param {HTMLElement[]} domElements Array of DOM elements to build attribute list for
@@ -135,14 +144,22 @@ ve.dm.Converter.openAndCloseAnnotations = function ( currentSet, targetSet, open
  * @returns {Object[]|undefined} Attribute list, or undefined if empty
  */
 ve.dm.Converter.buildHtmlAttributeList = function ( domElements, spec, deep, attributeList ) {
-	var i, ilen, j, jlen, domAttributes, childList, empty = true;
+	var i, ilen, j, jlen, domAttributes, childList, attrName,
+		empty = true;
 	attributeList = attributeList || [];
 	for ( i = 0, ilen = domElements.length; i < ilen; i++ ) {
 		domAttributes = domElements[i].attributes || [];
 		attributeList[i] = { 'values': {} };
 		for ( j = 0, jlen = domAttributes.length; j < jlen; j++ ) {
-			if ( ve.dm.Model.matchesAttributeSpec( domAttributes[j].name, spec ) ) {
-				attributeList[i].values[domAttributes[j].name] = domAttributes[j].value;
+			attrName = domAttributes[j].name;
+			if ( ve.dm.Model.matchesAttributeSpec( attrName, spec ) ) {
+				attributeList[i].values[attrName] = domAttributes[j].value;
+				if ( ve.indexOf( attrName, this.computedAttributes ) !== -1 ) {
+					if ( !attributeList[i].computed ) {
+						attributeList[i].computed = {};
+					}
+					attributeList[i].computed[attrName] = domElements[i][attrName];
+				}
 				empty = false;
 			}
 		}
@@ -174,10 +191,11 @@ ve.dm.Converter.buildHtmlAttributeList = function ( domElements, spec, deep, att
  * @param {Object[]} attributeList Attribute list, see buildHtmlAttributeList()
  * @param {HTMLElement[]} domElements Array of DOM elements to render onto
  * @param {boolean|string|RegExp|Array|Object} [spec=true] Attribute specification, see ve.dm.Model
+ * @param {boolean} [computed=false] If true, use the computed values of attributes where available
  * @param {boolean} [overwrite=false] If true, overwrite attributes that are already set
  */
-ve.dm.Converter.renderHtmlAttributeList = function ( attributeList, domElements, spec, overwrite ) {
-	var i, ilen, key, values;
+ve.dm.Converter.renderHtmlAttributeList = function ( attributeList, domElements, spec, computed, overwrite ) {
+	var i, ilen, key, values, value;
 	if ( spec === undefined ) {
 		spec = true;
 	}
@@ -191,16 +209,17 @@ ve.dm.Converter.renderHtmlAttributeList = function ( attributeList, domElements,
 		values = attributeList[i].values;
 		for ( key in values ) {
 			if ( ve.dm.Model.matchesAttributeSpec( key, spec ) ) {
-				if ( values[key] === undefined ) {
+				value = computed && attributeList[i].computed && attributeList[i].computed[key] || values[key];
+				if ( value === undefined ) {
 					domElements[i].removeAttribute( key );
 				} else if ( overwrite || !domElements[i].hasAttribute( key ) ) {
-					domElements[i].setAttribute( key, values[key] );
+					domElements[i].setAttribute( key, value );
 				}
 			}
 		}
 		if ( attributeList[i].children ) {
 			ve.dm.Converter.renderHtmlAttributeList(
-				attributeList[i].children, domElements[i].children, spec
+				attributeList[i].children, domElements[i].children, spec, computed, overwrite
 			);
 		}
 	}
@@ -366,9 +385,10 @@ ve.dm.Converter.prototype.getDomElementFromDataAnnotation = function ( dataAnnot
  * @param {HTMLDocument} doc HTML document to convert
  * @param {ve.dm.IndexValueStore} store Index-value store
  * @param {ve.dm.InternalList} internalList Internal list
- * @returns {ve.dm.ElementLinearData} Linear model data
+ * @param {Array} innerWhitespace Inner whitespace
+ * @returns {ve.dm.FlatLinearData} Linear model data
  */
-ve.dm.Converter.prototype.getDataFromDom = function ( doc, store, internalList ) {
+ve.dm.Converter.prototype.getDataFromDom = function ( doc, store, internalList, innerWhitespace ) {
 	var linearData, refData;
 
 	// Set up the converter state
@@ -378,12 +398,14 @@ ve.dm.Converter.prototype.getDataFromDom = function ( doc, store, internalList )
 	this.contextStack = [];
 	// Possibly do things with doc and the head in the future
 
-	linearData = new ve.dm.ElementLinearData(
+	linearData = new ve.dm.FlatLinearData(
 		store,
 		this.getDataFromDomRecursion( doc.body )
 	);
-	refData = this.internalList.convertToData( this );
+	refData = this.internalList.convertToData( this, doc );
 	linearData.batchSplice( linearData.getLength(), 0, refData );
+
+	this.setInnerWhitespace( innerWhitespace, linearData );
 
 	// Clear the state
 	this.doc = null;
@@ -958,6 +980,39 @@ ve.dm.Converter.prototype.getDataFromDomRecursion = function ( domElement, wrapp
 };
 
 /**
+ * Set inner whitespace from linear data
+ *
+ * @param {Array} innerWhitespace Inner whitespace
+ * @param {ve.dm.FlatLinearData} data Linear model data
+ */
+ve.dm.Converter.prototype.setInnerWhitespace = function ( innerWhitespace, data ) {
+	var whitespace,
+		stack = 0,
+		last = data.getLength() - 1;
+
+	if ( data.isOpenElementData( 0 ) ) {
+		whitespace = ve.getProp( data.getData( 0 ), 'internal', 'whitespace' );
+		innerWhitespace[0] = whitespace ? whitespace[0] : undefined;
+	}
+	if ( data.isCloseElementData( last ) ) {
+		// Find matching opening tag of the last close tag
+		stack++;
+		while ( --last ) {
+			if ( data.isCloseElementData( last ) ) {
+				stack++;
+			} else if ( data.isOpenElementData( last ) ) {
+				stack--;
+				if ( stack === 0 && data.getType( last ) !== 'internalList' ) {
+					break;
+				}
+			}
+		}
+		whitespace = ve.getProp( data.getData( last ), 'internal', 'whitespace' );
+		innerWhitespace[1] = whitespace ? whitespace[3] : undefined;
+	}
+};
+
+/**
  * Check if all the domElements provided are metadata or whitespace.
  *
  * A list of model names to exclude when matching can optionally be passed.
@@ -1012,9 +1067,10 @@ ve.dm.Converter.prototype.isDomAllMetaOrWhitespace = function ( domElements, exc
  * @param {Array} documentData Linear model data
  * @param {ve.dm.IndexValueStore} store Index-value store
  * @param {ve.dm.InternalList} internalList Internal list
+ * @param {Array} innerWhitespace Inner whitespace
  * @returns {HTMLDocument} Document containing the resulting HTML
  */
-ve.dm.Converter.prototype.getDomFromData = function ( documentData, store, internalList ) {
+ve.dm.Converter.prototype.getDomFromData = function ( documentData, store, internalList, innerWhitespace ) {
 	var doc = ve.createDocumentFromHtml( '' );
 
 	// Set up the converter state
@@ -1022,7 +1078,7 @@ ve.dm.Converter.prototype.getDomFromData = function ( documentData, store, inter
 	this.store = store;
 	this.internalList = internalList;
 
-	this.getDomSubtreeFromData( documentData, doc.body );
+	this.getDomSubtreeFromData( documentData, doc.body, innerWhitespace );
 
 	// Clear the state
 	this.documentData = null;
@@ -1037,9 +1093,10 @@ ve.dm.Converter.prototype.getDomFromData = function ( documentData, store, inter
  *
  * @param {Array} data Linear model data
  * @param {HTMLElement} container DOM element to add the generated elements to. Should be empty.
+ * @param {Array} [innerWhitespace] Inner whitespace if the container is the body
  * @throws Unbalanced data: looking for closing /type
  */
-ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container ) {
+ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container, innerWhitespace ) {
 	var text, i, j, isStart, annotations, dataElement, dataElementOrSlice,
 		childDomElements, pre, ours, theirs, parentDomElement, lastChild, isContentNode, sibling,
 		previousSiblings, doUnwrap, textNode, type, annotatedDomElementStack, annotatedDomElements,
@@ -1421,9 +1478,8 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container ) {
 							// Get previous sibling's outerPost
 							theirs = parentDomElement.lastOuterPost;
 						} else if ( parentDomElement === container ) {
-							// outerPre of the very first node in the document, this one
-							// has no duplicate
-							theirs = ours;
+							// outerPre of the very first node in the document, check against body innerWhitespace
+							theirs = innerWhitespace ? innerWhitespace[0] : ours;
 						} else {
 							// First child, get parent's innerPre
 							if (
@@ -1454,8 +1510,11 @@ ve.dm.Converter.prototype.getDomSubtreeFromData = function ( data, container ) {
 			}
 		}
 	}
-	// Process the outerPost whitespace of the very last node
-	if ( container.lastOuterPost !== undefined ) {
+	// Check outerPost whitespace of the very last node against body innerWhitespace
+	if (
+		container.lastOuterPost !== undefined &&
+		( !innerWhitespace || container.lastOuterPost === innerWhitespace[1] )
+	) {
 		if ( container.lastChild && container.lastChild.nodeType === Node.TEXT_NODE ) {
 			// Last child is a TextNode, append to it
 			container.lastChild.appendData( container.lastOuterPost );

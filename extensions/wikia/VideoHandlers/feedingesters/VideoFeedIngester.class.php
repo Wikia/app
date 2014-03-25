@@ -1,45 +1,53 @@
 <?php
 
+/**
+ * Class VideoFeedIngester
+ */
 abstract class VideoFeedIngester {
+
+	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
-	public static $PROVIDERS = array(
-		self::PROVIDER_SCREENPLAY,
+
+	// Caching constants; all integers are seconds
+	const CACHE_KEY = 'videofeedingester-2';
+	const CACHE_EXPIRY = 3600;
+	const THROTTLE_INTERVAL = 1;
+
+	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
+	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+
+	// Determines if a duplicate video found should be re-uploaded or ignored
+	public $reupload = false;
+
+	// Providers from which we ingest daily video data
+	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
+		self::PROVIDER_REALGRAVITY,
+		self::PROVIDER_OOYALA,
+		self::PROVIDER_IVA,
+		self::PROVIDER_SCREENPLAY,
+	];
+
+	// These providers are not ingested daily, but can be ingested from if specifically named
+	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
-	public static $PROVIDERS_DEFAULT = array(
-		self::PROVIDER_SCREENPLAY,
-		self::PROVIDER_IGN,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
+	];
+
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array();
-	private static $instances = array();
+	protected static $CLDR_NAMES = array();
 	protected $filterByProviderVideoId = array();
 
-	protected static $CLDR_NAMES = array();
-
-	const CACHE_KEY = 'videofeedingester-2';
-	const CACHE_EXPIRY = 3600;
-	const THROTTLE_INTERVAL = 1;	// seconds
-
-	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
-
-	public $reupload = false;
+	private static $instances = array();
 
 	abstract public function import($content='', $params=array());
 
@@ -50,6 +58,31 @@ abstract class VideoFeedIngester {
 	 * @return array - A list of category names
 	 */
 	abstract public function generateCategories( $data, $addlCategories );
+
+	/**
+	 * Return a list of all the providers we actively ingest from
+	 * @return array
+	 */
+	public static function activeProviders() {
+		return self::$ACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all the providers that are legal to ingest from but from whom
+	 * we do not ingest automatically.
+	 * @return array
+	 */
+	public static function inactiveProviders() {
+		return self::$INACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all available providers
+	 * @return array
+	 */
+	public static function allProviders() {
+		return array_merge( self::$ACTIVE_PROVIDERS, self::$INACTIVE_PROVIDERS );
+	}
 
 	/**
 	 * Generate name for video.
@@ -198,11 +231,13 @@ abstract class VideoFeedIngester {
 		// check if the video id exists in Ooyala.
 		if ( $remoteAsset ) {
 			$ooyalaAsset = new OoyalaAsset();
-			$isExist = $ooyalaAsset->isSourceIdExist( $id, $provider );
-			if ( $isExist ) {
-				print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
-				wfProfileOut( __METHOD__ );
-				return 0;
+			$dupAssets = $ooyalaAsset->getAssetsBySourceId( $id, $provider );
+			if ( !empty( $dupAssets ) ) {
+				if ( $this->reupload === false ) {
+					print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
+					wfProfileOut( __METHOD__ );
+					return 0;
+				}
 			}
 		}
 
@@ -232,7 +267,7 @@ abstract class VideoFeedIngester {
 		}
 		$metadata['destinationTitle'] = $name;
 
-		if ( !$this->validateTitle($id, $name, $msg, $debug) ) {
+		if ( !$this->validateTitle( $id, $name, $msg ) ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -243,7 +278,18 @@ abstract class VideoFeedIngester {
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
 			$metadata['pageCategories'] = implode( ', ', $categories );
-			$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+			if ( !empty( $dupAssets ) ) {
+				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
+					$result = $this->updateRemoteAsset( $id, $name, $metadata, $debug, $dupAssets[0] );
+				} else {
+					echo "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n";
+					wfProfileOut( __METHOD__ );
+					return 0;
+				}
+			} else {
+				$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+			}
+
 			wfProfileOut( __METHOD__ );
 			return $result;
 		}
@@ -259,7 +305,8 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		// parepare article body
+		// prepare article body
+		/** @var ApiWrapper $apiWrapper */
 		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
 
 		// add category
@@ -300,12 +347,14 @@ abstract class VideoFeedIngester {
 					return 0;
 				}
 			}
+			/** @var Title $uploadedTitle */
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
 				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
+				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
 				wfProfileOut( __METHOD__ );
 				return 1;
 			}
@@ -340,7 +389,7 @@ abstract class VideoFeedIngester {
 
 		// check if video title exists
 		$ooyalaAsset = new OoyalaAsset();
-		$isExist = $ooyalaAsset->isTitleExist( $assetData['name'], $assetData['provider'] );
+		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
 		if ( $isExist ) {
 			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
 			wfProfileOut( __METHOD__ );
@@ -368,13 +417,67 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Update remote asset (metadata only)
+	 * @param string $id
+	 * @param string $name
+	 * @param array $metadata
+	 * @param boolean $debug
+	 * @param array $dupAsset
+	 * @return integer
+	 */
+	protected function updateRemoteAsset( $id, $name, $metadata, $debug, $dupAsset ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( empty( $dupAsset['embed_code'] ) ) {
+			echo "Error when updating remote asset data: empty asset embed code.\n";
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		$assetData = $this->generateRemoteAssetData( $dupAsset['name'], $metadata, false );
+
+		$ooyalaAsset = new OoyalaAsset();
+		$assetMeta = $ooyalaAsset->getAssetMetadata( $assetData );
+
+		// set reupload
+		$assetMeta['reupload'] = 1;
+
+		// remove unwanted data
+		$emptyMetaKeys = array_diff( array_keys( $dupAsset['metadata'] ), array_keys( $assetMeta ) );
+		foreach ( $emptyMetaKeys as $key ) {
+			$assetMeta[$key] = null;
+		}
+
+		if ( $debug ) {
+			print "Ready to update remote asset\n";
+			print "id:          $id\n";
+			print "name:        $name\n";
+			print "embed code:  $dupAsset[embed_code]\n";
+			print "asset name:  $dupAsset[name]\n";
+			print "metadata:\n";
+			foreach ( explode("\n", var_export( $assetMeta, TRUE ) ) as $line ) {
+				print ":: $line\n";
+			}
+		} else {
+			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
+			if ( !$result ) {
+				wfProfileOut( __METHOD__ );
+				return 0;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return 1;
+	}
+
+	/**
 	 * Generate remote asset data
 	 * @param string $name
 	 * @param array $data
 	 * @return array $data
 	 */
 	protected function generateRemoteAssetData( $name, $data ) {
-		$data['name'] = $name;
+		$data['assetTitle'] = $name;
 
 		return $data;
 	}
@@ -397,13 +500,13 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Returns whether the given video title has a value title object
 	 * @param $videoId
 	 * @param $name
 	 * @param $msg
-	 * @param $isDebug
-	 * @return int
+	 * @return bool
 	 */
-	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
+	protected function validateTitle( $videoId, $name, &$msg ) {
 
 		wfProfileIn( __METHOD__ );
 		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
@@ -411,10 +514,10 @@ abstract class VideoFeedIngester {
 		if ( is_null($title) ) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			wfProfileOut( __METHOD__ );
-			return 0;
+			return false;
 		}
 		wfProfileOut( __METHOD__ );
-		return 1;
+		return true;
 	}
 
 	/**
@@ -438,7 +541,7 @@ abstract class VideoFeedIngester {
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
-		foreach ( $rawData as $cityId=>$cityData ) {
+		foreach ( $rawData as $cityId => $cityData ) {
 			if ( is_array($cityData) ) {
 				foreach ( self::$WIKI_INGESTION_DATA_FIELDS as $field ) {
 					if ( !empty($cityData[$field]) && is_array($cityData[$field]) ) {
@@ -993,6 +1096,10 @@ abstract class VideoFeedIngester {
 			case 'trailer':
 				$category = 'Trailers';
 				break;
+			case 'game':
+			case 'gaming':
+				$category = 'Games';
+				break;
 			case 'none':
 				$category = '';
 				break;
@@ -1000,6 +1107,50 @@ abstract class VideoFeedIngester {
 		}
 
 		return $category;
+	}
+
+	/**
+	 * Get additional page category
+	 * @param string $category
+	 * @return string $addition
+	 */
+	public function getAdditionalPageCategory( $category ) {
+		switch ( strtolower( $category ) ) {
+			case 'movies':
+			case 'tv':
+			case 'movie trailers':
+				$addition = 'Entertainment';
+				break;
+			case 'travel':
+			case 'beauty':
+			case 'fashion':
+			case 'food':
+			case 'food & drink':
+			case 'crafts':
+			case 'howto':
+				$addition = 'Lifestyle';
+				break;
+			default: $addition = '';
+		}
+
+		return $addition;
+	}
+
+	/**
+	 * Get list of additional page category
+	 * @param array $categories
+	 * @return array $pageCategories
+	 */
+	public function getAdditionalPageCategories( $categories ) {
+		$pageCategories = array();
+		foreach ( $categories as $category ) {
+			$addition = $this->getAdditionalPageCategory( $category );
+			if ( !empty( $addition ) ) {
+				$pageCategories[] = $addition;
+			}
+		}
+
+		return $pageCategories;
 	}
 
 	/**
@@ -1013,6 +1164,10 @@ abstract class VideoFeedIngester {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 			if ( empty( self::$CLDR_NAMES ) ) {
+
+				// Initialize some variables that will be overwritten by the following include
+				$languageNames = $countryNames = [];
+
 				// include cldr extension for language code
 				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
 				self::$CLDR_NAMES = array(
@@ -1048,7 +1203,7 @@ abstract class VideoFeedIngester {
 	public function getUniqueArray( $arr ) {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
-		return $unique;
+		return array_filter( $unique );
 	}
 
 }

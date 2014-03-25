@@ -21,7 +21,7 @@ ve.dm.MWPreformattedNode = function VeDmMWPreformattedNode( children, element ) 
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWPreformattedNode, ve.dm.PreformattedNode );
+OO.inheritClass( ve.dm.MWPreformattedNode, ve.dm.PreformattedNode );
 
 /* Static Properties */
 

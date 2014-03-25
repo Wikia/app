@@ -213,8 +213,11 @@ $messages['bho'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'comboajaxlogin-createlog' => 'প্রবেশ করুন অথবা নতুন অ্যকাউন্ট তৈরি করুন',
+	'comboajaxlogin-actionmsg' => 'এই কাজটি সফল করার জন্য আপনাকে প্রথমে প্রবেশ করতে হবে অথবা নতুন অ্যাকাউন্ট তৈরি করতে হবে।',
 	'comboajaxlogin-connectmarketing-back' => '« পিছনে',
 	'comboajaxlogin-connectmarketing-forward' => 'শুরু করুন »',
 );
@@ -410,7 +413,7 @@ $messages['de'] = array(
 	'comboajaxlogin-desc' => 'Dynamische Box, die es Benutzern ermöglicht, sich anzumelden, Passwörter zu merken und Benutzer zu registrieren',
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen, musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
-	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Konto anlegen.',
+	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Benutzerkonto anlegen.',
 	'comboajaxlogin-connectmarketing' => '<h1>Verbinden Sie Ihre Konten</h1>
 <ul>
 <li>Behalte Sie Ihre aktuellen Benutzernamen, Versionsgeschichte, Bearbeitungen... ändert sich nichts, außer, wie Sie in </li> einloggen <li>Teile deine Aktivitäten auf Wikia mit deinen Freunden auf Facebook</li>
@@ -439,11 +442,12 @@ Bitte versuche es erneut oder [[Special:Contact|melde es]].',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'comboajaxlogin-createlog' => 'Cı kewe ya zi hesab vıraze',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Gıre dê Facebook ra deqew de</h1>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Peyd bê',
+	'comboajaxlogin-connectmarketing-back' => '« Peyser',
 	'comboajaxlogin-connectmarketing-forward' => 'Seroknayen de &raquo;',
 );
 
@@ -543,7 +547,7 @@ Palun proovige uuesti või [[Eri:Ilmuta|teavita sellest]].', # Fuzzy
 $messages['fa'] = array(
 	'comboajaxlogin-desc' => 'جعبهٔ پویای‌ای که اجازه می‌دهد کاربران وارد شوند، گذرواژه‌یشان را به یاد آورند و ثبت‌نام کاربران را انجام دهند',
 	'comboajaxlogin-createlog' => 'وارد شوید یا حساب کاربری ایجاد کنید',
-	'comboajaxlogin-actionmsg' => 'برای انجام این کار، لازم است اول به سیستم وارد شوید یا حساب کاربری ایجاد کنید',
+	'comboajaxlogin-actionmsg' => 'برای انجام این کار، لازم است اول به سامانه وارد شوید یا حساب کاربری ایجاد کنید',
 	'comboajaxlogin-actionmsg-protected' => 'برای انجام این عمل، لازم است اول به سامانه وارد شوید یا حساب کاربری ایجاد کنید.',
 	'comboajaxlogin-connectmarketing' => '<h1>متصل‌کردن حساب‌هایتان</h1>
 <ul>
@@ -563,6 +567,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Nike
  * @author Tofu II
  * @author VezonThunder
@@ -584,18 +589,18 @@ $messages['fi'] = array(
 <li>Säilytä nykyinen käyttäjänimesi, historiasi, muokkaukset... mikään muu kuin kirjautumistapa ei muutu</li>
 <li>Jaa Wikia-toimintasi ystävillesi Facebookissa halliten täydellisesti sitä, mikä julkaistaan</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Edellinen',
+	'comboajaxlogin-connectmarketing-back' => '« Takaisin',
 	'comboajaxlogin-connectmarketing-forward' => 'Aloita &raquo;',
 	'comboajaxlogin-connectdirections' => 'Syötä Wikia-käyttäjänimesi ja -salasanasi tähän – yhdistämme Wikia- ja Facebook-tunnuksesi automaattisesti.
 
-Kun olet valmis, voit kirjautua sisään helposti käyttämällä kaikilla Facebook Connect -painikkeila.',
-	'comboajaxlogin-post-not-understood' => 'Lomakkeen muodostustavassa oli ongelma.
+Kun olet valmis, voit helposti kirjautua sisään käyttämällä mitä tahansa Facebook Connect -painiketta.',
+	'comboajaxlogin-post-not-understood' => 'Lomakkeen muodostuksessa tapahtui virhe.
 Yritä uudelleen tai [[Special:Contact|tee tästä ilmoitus]].',
 	'comboajaxlogin-readonlytext' => '<h2>Olemme pahoillamme!</h2>
 <p>Et voi luoda tunnusta tällä hetkellä – sivuston tulisi olla pian toiminnassa jälleen. Kyse on seuraavasta:<br /><em>$1</em></p>
 <p>Tarkista <a href="http://twitter.com/wikia">Twitter-</a> tai <a href="http://facebook.com/wikia">Facebook-sivumme</a> saadaksesi lisätietoa.
 <br />
-(Jos sinulla jo on tunnus, voit <a href="#">kirjautua sisään</a> kuten tavallisesti, mutta et voi muokata.)</p>',
+(Jos sinulla jo on tunnus, voit <a href="#">kirjautua sisään</a> kuten tavallisesti, mutta et voi tehdä muokkauksia.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia ei vastaa. Tarkista verkkoyhteytesi.',
 );
 
@@ -618,11 +623,12 @@ Tá tú ert liðug/ur, so kanst tú lættliga rita inn við at brúka einhvønn 
 /** French (français)
  * @author Crochet.david
  * @author IAlex
+ * @author Maxime Corbin
  * @author Peter17
  * @author Wyz
  */
 $messages['fr'] = array(
-	'comboajaxlogin-desc' => "Boîte de dynamique qui permettent aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
+	'comboajaxlogin-desc' => "Boîte dynamique qui permet aux utilisateurs de se connecter, se rappeler de leur mot de passe et d'enregistrer des utilisateurs",
 	'comboajaxlogin-createlog' => 'Se connecter ou créer un compte',
 	'comboajaxlogin-actionmsg' => "Vous devez d'abord vous connecter ou créer un compte avant d'effectuer cette action",
 	'comboajaxlogin-actionmsg-protected' => 'Pour modifier cette page protégée, vous devez d’abord vous connecter ou créer un compte.',
@@ -700,6 +706,20 @@ $messages['hak'] = array(
 	'comboajaxlogin-actionmsg-protected' => '假使愛進行此操作，汝一定愛先登入或者建立一隻新帳號正做得。',
 	'comboajaxlogin-connectmarketing-back' => '« 轉頭',
 	'comboajaxlogin-connectmarketing-forward' => '開始 »',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kolonahe
+ */
+$messages['haw'] = array(
+	'comboajaxlogin-desc' => 'ʻO kēia he pahu kīnamika e ʻae i ke ʻeʻe ʻana o nā mea hoʻohana, i ka hoʻomanaʻo ʻana i ka ʻōlelo hūnā a me ke kāinoa ʻana i nā mea hoʻohana hou',
+	'comboajaxlogin-createlog' => 'ʻEʻe aiʻole kāinoa',
+	'comboajaxlogin-actionmsg' => 'Pono nō e ʻeʻe aiʻole kāinoa no ka hana ʻana i kēia hana',
+	'comboajaxlogin-actionmsg-protected' => 'Pono nō e ʻeʻe aiʻole kāinoa no ka hana ʻana i kēia hana',
+	'comboajaxlogin-connectmarketing-forward' => 'Hoʻomaka »',
+	'comboajaxlogin-connectdirections' => 'E kikokiko i kāu inoa hoʻohana Wikia a me kāu ʻōlelo hūnā ma ʻaneʻi - e hoʻokuʻi mākou i kāu moʻokāki Wikia a me Pukealo i ka paiahope.
+
+Inā pau ka hana, hiki iā ʻoe ke ʻeʻe maʻalahi ma o ka hana ʻana o ka pihi Hoʻokuʻi Pukealo.',
 );
 
 /** Hebrew (עברית)
@@ -905,6 +925,13 @@ $messages['ja'] = array(
 	'comboajaxlogin-ajaxerror' => 'ウィキアからの応答がありません。ネットワーク接続を確認してください。',
 );
 
+/** Georgian (ქართული)
+ * @author GeorgeBarnick
+ */
+$messages['ka'] = array(
+	'comboajaxlogin-createlog' => 'შესვლა ან ახალი ანგარიშის შექმნა',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
  */
@@ -1106,6 +1133,7 @@ $messages['mr'] = array(
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
+ * @author SNN95
  */
 $messages['ms'] = array(
 	'comboajaxlogin-desc' => 'Petak dinamik yang membolehkan pengguna log masuk, ingatkan kata laluan dan daftarkan pengguna',
@@ -1124,8 +1152,8 @@ $messages['ms'] = array(
 <li>Simpan nama pengguna semasa, sejarah, suntingan anda dsb... tiada apa yang berubah selain cara anda log masuk</li>
 <li>Kongsikan kegiatan anda di Wikia dengan rakan-rakan anda Facebook, dengan mengawal sepenuhnya apa yang diterbitkan</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Kembali',
-	'comboajaxlogin-connectmarketing-forward' => 'Mulakan &raquo;',
+	'comboajaxlogin-connectmarketing-back' => '« Kembali',
+	'comboajaxlogin-connectmarketing-forward' => 'Mulakan »',
 	'comboajaxlogin-connectdirections' => 'Taipkan nama pengguna dan kata laluan Wikia anda di sini – kami akan menyambungkan akaun-akaun Wikia dan Facebook secara automatik.
 
 Selepas siap, anda boleh log masuk dengan mudah dengan menekan mana-mana butang Facebook Connect.',
@@ -1271,10 +1299,12 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Jacenty359
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
-	'comboajaxlogin-desc' => 'Dynamiczne okienko, umożliwiające użytkownikom na logowanie, rejestrację i przypomnienie hasła.',
+	'comboajaxlogin-desc' => 'Dynamiczne okienko, umożliwiające użytkownikom logowanie, przypomnienie hasła i rejestrację.',
 	'comboajaxlogin-createlog' => 'Zaloguj się lub utwórz konto',
 	'comboajaxlogin-actionmsg' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
 	'comboajaxlogin-actionmsg-protected' => 'Aby wykonać tę czynność, musisz najpierw zalogować się lub utworzyć konto.',
@@ -1284,18 +1314,18 @@ $messages['pl'] = array(
 <li>Dziel się swoją aktywnością na Wikii z przyjaciółmi na Facebooku.</li>
 <li>Będziesz mieć pełną kontrolę nad publikowanymi informacjami.</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Zaloguj się korzystając z „Facebook Connect”</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Przyłącz swoje konto na Wikii do tego na Facebooku</h1>
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Zaloguj się korzystając z Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Przyłącz swoje konto na Wikii z tym na Facebooku</h1>
 <ul>
 <li>Zachowaj swoją obecną nazwę użytkownika, historię, edycje... Nic się nie zmieni oprócz sposobu logowania.</li>
 <li>Dziel się swoją aktywnością na Wikii z przyjaciółmi na Facebooku, utrzymując pełną kontrolę nad publikowanymi informacjami.</li>
 </ul>',
-	'comboajaxlogin-connectmarketing-back' => '&laquo; Wróć',
-	'comboajaxlogin-connectmarketing-forward' => 'Rozpocznij &raquo;',
-	'comboajaxlogin-connectdirections' => 'Wpisz tutaj swoją nazwę użytkownika i hasło na Wikii – połączymy w tle Twoje konta na Wikii i Facebooku.
+	'comboajaxlogin-connectmarketing-back' => '<< Wróć',
+	'comboajaxlogin-connectmarketing-forward' => 'Rozpocznij >>',
+	'comboajaxlogin-connectdirections' => 'Wpisz tutaj swoją nazwę użytkownika i hasło na Wikii – magicznie połączymy w tle Twoje konta na Wikii i Facebooku.
 
 Gdy skończysz, będziesz mógł się łatwo zalogować korzystając z każdego przycisku „Facebook Connect”.',
-	'comboajaxlogin-post-not-understood' => 'Wystąpił błąd w sposobie, w jaki ten formularz został wypełniony.
+	'comboajaxlogin-post-not-understood' => 'Wystąpił błąd w sposobie, w jaki ten formularz został skonstruowany.
 Spróbuj ponownie lub [[Special:Contact|zgłoś problem]].',
 	'comboajaxlogin-readonlytext' => '<h2>Przepraszamy!</h2>
 <p>W tym momencie nie możesz utworzyć konta. Wkrótce wszystko ponownie wrócić do normy. Przyczyna problemu:<br /><em>$1</em></p>
@@ -1389,6 +1419,7 @@ Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Giro720
  * @author TheGabrielZaum
  */
@@ -1403,7 +1434,7 @@ $messages['pt-br'] = array(
 <li>Partilhe a sua atividade na Wikia com os seus amigos no Facebook</li>
 <li>Controle total do que é publicado</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Autenticar-se com o Facebook Connect</h1>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Entrar com Facebook Connect</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ligue a sua conta Wikia ao Facebook</h1>
 <ul>
 <li>Mantenha o seu nome de usuário, histórico, edições... nada muda, exceto a forma como você entra</li>
@@ -1413,7 +1444,7 @@ $messages['pt-br'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'Começar &raquo;',
 	'comboajaxlogin-connectdirections' => 'Introduza aqui o seu nome de usuário e senha - nós magicamente conectaremos as suas contas Wikia e Facebook nos bastidores.
 
-Quando acabar, poderá autenticar-se usando qualquer botão Conexão Facebook.',
+Quando acabar, poderá autenticar-se usando qualquer botão Facebook Connect.',
 	'comboajaxlogin-post-not-understood' => 'Foi detectado um erro na forma como este formulário foi construído.
 Tente novamente ou [[Special:Contact|reporte este erro]], por favor.',
 	'comboajaxlogin-readonlytext' => '<h2>Desculpe!</h2>
@@ -1509,6 +1540,41 @@ $messages['ru'] = array(
 	'comboajaxlogin-ajaxerror' => 'Викия не отвечает. Пожалуйста, проверьте подключение к сети.',
 );
 
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'comboajaxlogin-desc' => 'Dynâmic kist that permits uisers tae log-in, remynd passwaird n register uisers',
+	'comboajaxlogin-createlog' => 'Log in or cræft aen accoont',
+	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or mak aen accoont',
+	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or mak aen accoont.',
+	'comboajaxlogin-connectmarketing' => "<h1>Connect yer accoonts</h1>
+<ul>
+<li>Keep yer current uisername, histerie, eidits... nathing chynges cept hou ye log in</li>
+<li>Shair yer acteevity oan Wikia wi yer freends oan Facebook</li>
+<li>Compleate control o whit's published</li>
+</ul>",
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Log in wi Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => "<h1>Connect yer Wikia accoont til Facebook</h1>
+<ul>
+<li>Keep yer Nou uisername, histerie, eedits... nathing chynges except hou ye log in</li>
+<li>Shair yer acteevitie oan Wikia wi yer freends oan Facebook, wi compleate control o whit's publeeshed</li>
+</ul>",
+	'comboajaxlogin-connectmarketing-back' => '« laist',
+	'comboajaxlogin-connectmarketing-forward' => 'Get sterted »',
+	'comboajaxlogin-connectdirections' => "Enter yer Wikia uisername an passwaird here - we will magiclie connect yer Wikia n Facebook accoonts in the backgroond.
+
+yince ye'r dun, ye can log in easilie uisin oni Facebook Connect button.",
+	'comboajaxlogin-post-not-understood' => 'Thaur wis ae mistake in hou this form wis constructed.
+Please try again or [[Special:Contact|report this]].',
+	'comboajaxlogin-readonlytext' => '<h2>Sarrie!</h2>
+<p>Ye canna cræft aen accoont the nou - we shid be up n rinnin again shortlie. Here\'s whit\'s happenin:<br /><em>$1</em></p>
+<p>Please check <a href="http://twitter.com/wikia">Twitter</a> or <a href="http://facebook.com/wikia">Facebook</a> fer mair information.
+<br />
+(Gif ye awreadie hae aen accoont, ye can <a href="#">log in</a> aes normal, but ye\'ll naw be able tae eedit.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia is naw respondin. Please check yer netwark connection.',
+);
+
 /** Somali (Soomaaliga)
  * @author Abshirdheere
  */
@@ -1589,10 +1655,40 @@ Kej skůńczysz, bydźesz mjoł mogebność logowańo śe bez knefel „Facebook
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
+	'comboajaxlogin-desc' => 'వాడుకరులు లాగినయేందుకు, సంకేతపదాన్ని గుర్తు తెచ్చుకునేందుకు, కొత్త వాడుకరుల నమోదయేందుకూ వీలు కలిగించే గతిశీల పెట్టె',
+	'comboajaxlogin-createlog' => 'లాగినవండి లేదా ఖాతాను సృష్టించుకోండి',
+	'comboajaxlogin-actionmsg' => 'ఈ పని చెయ్యాలంటే ముందు మీరు లాగినవాలి లేదా ఖాతా సృష్టించుకోవాలి',
+	'comboajaxlogin-actionmsg-protected' => 'ఈ పని చెయ్యాలంటే ముందు మీరు లాగినవాలి లేదా ఖాతా సృష్టించుకోవాలి.',
+	'comboajaxlogin-connectmarketing' => '<h1>మీ ఖాతాలను కనెక్టు చేసుకోండి</h1>
+<ul>
+<li>మీ ప్రస్తుత వాడుకరిపేరును, చరితం, మార్పుచేర్పులు... అన్నీ ఉంచేసుకోండి. ఏమీ మారదు, ఒక్ఖ లాగినయ్యే విధానం తప్ప</li>
+<li>Wikia లో మీ పనులను Facebook లో మీ మిత్రులతో పంచుకోండి</li>
+<li>ప్రచురితమయ్యేదానిపై పూర్తి నియంత్రణ</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Facebook Connect తో లాగినవండి</h1>',
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>మీ Wikia ను Facebook కు కనెక్టు చెయ్యండి</h1>
+<ul>
+<li>మీ ప్రస్తుత వాడుకరిపేరును, చరితం, మార్పుచేర్పులు... అన్నీ ఉంచేసుకోండి. ఏమీ మారదు, ఒక్ఖ లాగినయ్యే విధానం తప్ప</li>
+<li>Wikia లో మీ పనులను Facebook లో మీ మిత్రులతో పంచుకోండి, ప్రచురితమయ్యేదానిపై పూర్తి నియంత్రణతో</li>
+</ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; వెనుకకు',
+	'comboajaxlogin-connectmarketing-forward' => 'మొదలు పెట్టండి »',
+	'comboajaxlogin-connectdirections' => 'మీ Wikia వాడుకరిపేరు, సంకేతపదాన్ని ఇక్కడ ఇవ్వండి - నేపథ్యంలో మేం మీ Wikia, Facebook ఖాతాలను అనుసంధానం చేసేస్తాం.
+
+అది కాగానే, ఏ Facebook Connect బొత్తాన్ని వాడైనా మీరు లాగినైపోవచ్చు.',
+	'comboajaxlogin-post-not-understood' => 'ఈ ఫారమును నిర్మించిన పద్ధతిలో ఏదో లోపం జరిగింది.
+మళ్ళీ ప్రయత్నించండి లేదా [[Special:Contact|దీని గురించి రిపోర్టు చెయ్యండి]].',
+	'comboajaxlogin-readonlytext' => '<h2>సారీ!</h2>
+<p>ఇప్పుడు, ఈ క్షణాన, మీరు ఖాతాను సృష్టించలేరు - కానీ, మేం త్వరలోనే దారికొస్తాం. అసలేం జరుగుతోందంటే:<br /><em>$1</em></p>
+<p>మరింత సమాచారం కోసం<a href="http://twitter.com/wikia">ట్విట్టరు</a> గానీ <a href="http://facebook.com/wikia">ఫేస్‍బుక్</a> గానీ చూడండి.
+<br />
+(మీకు ఈసరికే ఖాతా ఉంటే, మీరు మామూలుగానే <a href="#">లాగిన్ కావచ్చు</a>, కానీ మార్పుచేర్పులు చెయ్యలేరు.)</p>',
+	'comboajaxlogin-ajaxerror' => 'Wikia స్పందించడం లేదు. మీ నెట్‍వర్కు కనెక్షన్ను సరిచూసుకోండి.',
 );
 
 /** Tagalog (Tagalog)
@@ -1764,10 +1860,18 @@ Sau đó, bạn có thể đặng nhập dễ dàng dùng bất cứ nút Facebo
 	'comboajaxlogin-ajaxerror' => 'Wikia chưa trả lời. Xin vui lòng kiểm tra lại kết nối mạng của bạn.',
 );
 
+/** Waray (Winaray)
+ * @author Harvzsf
+ */
+$messages['war'] = array(
+	'comboajaxlogin-createlog' => 'Magpasabot nga masakob o paghímò hin akawnt',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
  * @author Sam Wang
+ * @author User670839245
  * @author Wilsonmess
  * @author Yfdyh000
  */
@@ -1775,17 +1879,17 @@ $messages['zh-hans'] = array(
 	'comboajaxlogin-desc' => '允许用户登录，提醒密码和注册用户的动态框',
 	'comboajaxlogin-createlog' => '登录或创建新账号',
 	'comboajaxlogin-actionmsg' => '若要执行此操作，您必须先登录或创建一个新帐号',
-	'comboajaxlogin-actionmsg-protected' => '若执行此操作，您必须登录或创建一个新账户。',
+	'comboajaxlogin-actionmsg-protected' => '若要执行此操作，您必须先登录或创建一个新帐号。',
 	'comboajaxlogin-connectmarketing' => '<h1>连接您的帐户</h1>
 <ul>
 <li>保留您当前的用户名、历史、编辑记录，一切都不会变化，除了登录方式</li>
 <li>在Facebook上与您的朋友分享您在Wikia上的活动</li>
 <li>您可完全控制将要发布的内容</li>
 </ul>',
-	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>用Facebook Connect登入</h1>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>连接Facebook以登录</h1>',
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>连接您的Wikia到Facebook</h1>
 <ul>
-<li>保存除您登入记录外的用户名、历史记录、编辑等信息</li>
+<li>保留您当前的用户名、历史、编辑记录，一切都不会变化，除了登录方式</li>
 <li>和Facebook上的朋友分享您的活动，并且完全控制发布的内容</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '$laquo; 返回',
@@ -1795,7 +1899,7 @@ $messages['zh-hans'] = array(
 	'comboajaxlogin-post-not-understood' => '构造此窗体时发生错误。
 请重试或[[Special:Contact|报告此问题]]。',
 	'comboajaxlogin-readonlytext' => '<h2>抱歉！</h2>
-<p>您现在不能创建账户——我们将尽快上线并重新运行。在这里查看问题原因：<br /><em>$1</em></p>
+<p>您现在不能创建账户。我们将尽快修复并重新运行。在这里查看问题原因：<br /><em>$1</em></p>
 <p>请查看<a href="http://twitter.com/wikia">Twitter</a> 或 <a href="http://facebook.com/wikia">Facebook</a> 了解更多信息。
 <br />
 （如果您已拥有一个账户，则可以正常<a href="#">登陆</a>，但不能做出任何编辑。）</p>',

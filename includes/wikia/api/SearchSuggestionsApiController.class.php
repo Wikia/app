@@ -45,14 +45,7 @@ class SearchSuggestionsApiController extends WikiaApiController {
 				throw new NotFoundApiException();
 			}
 
-			$this->response->setCacheValidity(
-				86400 /* 24h */,
-				86400 /* 24h */,
-				array(
-					WikiaResponse::CACHE_TARGET_BROWSER,
-					WikiaResponse::CACHE_TARGET_VARNISH
-				)
-			);
+			$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 		} else {
 			throw new NotFoundApiException( 'Link Suggest extension not available' );
 		}

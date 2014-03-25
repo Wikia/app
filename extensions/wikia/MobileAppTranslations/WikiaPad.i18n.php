@@ -35,6 +35,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'main-tab-discover' => '{{Identical|Discover}}',
 	'main-tab-search' => '{{Identical|Search}}',
 	'main-tab-offline' => '{{Identical|Offline}}',
 	'tab-discover-loading-message' => '{{Identical|Loading}}',
@@ -61,6 +62,7 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
+	'main-tab-search' => 'Axtar',
 	'tab-discover-loading-message' => 'Yüklənir…',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Axtarılır...',
@@ -176,6 +178,15 @@ $messages['es'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'Aceptar',
 	'tab-search-loading-message' => 'Buscando...',
 	'browser-loading-message' => 'Cargando...',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'tab-discover-loading-message' => 'Kargatzen...',
+	'tab-discover-no-network-dialog-close-button' => 'Ados',
+	'browser-loading-message' => 'Kargatzen...',
 );
 
 /** Persian (فارسی)
@@ -490,14 +501,18 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
+	'main-tab-discover' => 'Descobrir',
+	'main-tab-personal' => 'Minha Wikia',
 	'main-tab-search' => 'Pesquisar',
-	'main-tab-offline' => 'Desconectado',
+	'main-tab-offline' => 'Offline',
 	'tab-discover-loading-message' => 'Carregando...',
 	'tab-discover-no-network-dialog-title' => 'Rede não disponível',
+	'tab-discover-no-network-dialog-message' => 'Sem conexão de rede detectada',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Pesquisando...',
 	'browser-loading-message' => 'Carregando...',
@@ -584,12 +599,18 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'main-tab-discover' => 'కనుక్కోండి',
 	'main-tab-personal' => 'నా వికియా',
 	'main-tab-search' => 'వెతుకు',
+	'tab-discover-loading-message' => 'లోడవుతోంది...',
+	'tab-discover-no-network-dialog-title' => 'నెట్‍వర్కు లేదు',
 	'tab-discover-no-network-dialog-close-button' => 'సరే',
+	'tab-search-loading-message' => 'వెతుకుతున్నాం...',
+	'browser-loading-message' => 'లోడవుతోంది...',
 );
 
 /** Tagalog (Tagalog)
@@ -615,6 +636,21 @@ $messages['tly'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Нәвејдә...',
 	'browser-loading-message' => 'Бо кардә...',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'main-tab-discover' => 'Keşfet',
+	'main-tab-personal' => "Benim Wikia'm",
+	'main-tab-search' => 'Arama',
+	'main-tab-offline' => 'Çevrimdışı',
+	'tab-discover-loading-message' => 'Yükleniyor...',
+	'tab-discover-no-network-dialog-title' => 'Ağ kullanılamıyor',
+	'tab-discover-no-network-dialog-close-button' => 'TAMAM',
+	'tab-search-loading-message' => 'Aranıyor...',
+	'browser-loading-message' => 'Yükleniyor...',
 );
 
 /** Uyghur (Arabic script) (ئۇيغۇرچە)
@@ -685,4 +721,20 @@ $messages['zh-hans'] = array(
 	'tab-discover-no-network-dialog-close-button' => '确认',
 	'tab-search-loading-message' => '搜寻中⋯',
 	'browser-loading-message' => '载入中...',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'main-tab-discover' => '發現',
+	'main-tab-personal' => '我的Wikia',
+	'main-tab-search' => '搜尋',
+	'main-tab-offline' => '離線',
+	'tab-discover-loading-message' => '載入中',
+	'tab-discover-no-network-dialog-title' => '網路無法使用',
+	'tab-discover-no-network-dialog-message' => '沒有找到網路連接',
+	'tab-discover-no-network-dialog-close-button' => '確定',
+	'tab-search-loading-message' => '搜尋中...',
+	'browser-loading-message' => '載入中...',
 );

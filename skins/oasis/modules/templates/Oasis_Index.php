@@ -33,20 +33,6 @@
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
 
-<? // 1% of JavaScript errors are logged for $wgEnableJSerrorLogging=true non-devbox wikis ?>
-<? if ( ($wg->IsGASpecialWiki || $wg->EnableJavaScriptErrorLogging) && !$wg->DevelEnvironment ): ?>
-<script>
-window.onerror=function(m,u,l){
-var q='//jserrorslog.wikia.com/',i=new Image();
-if(Math.random()<0.01){
-	try{var d=[m,u,l];
-		try{d.push(document.cookie.match(/server.([A-Z]*).cache/)[1])}catch(e){}
-		i.src=q+'l?'+JSON.stringify(d)
-	}catch(e){i.src=q+'e?'+e}
-}return!1}
-</script>
-<? endif ?>
-
 <?= $topScripts ?>
 <?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
@@ -83,23 +69,23 @@ if(Math.random()<0.01){
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
-<?= $ivw ?>
 <?= $amazonDirectTargetedBuy ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
-<?= $body ?>
+<div class="WikiaSiteWrapper">
+	<?= $body ?>
 
-<?php
-	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
-	if (empty($wg->SuppressAds)) {
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
-		if (!$wg->EnableWikiaHomePageExt) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+	<?php
+		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
+		if (empty($wg->SuppressAds)) {
+			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+			if (!$wg->EnableWikiaHomePageExt) {
+				echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+			}
 		}
-	}
-	echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
-?>
-
+		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
+	?>
+</div>
 <? if( $jsAtBottom ): ?>
 	<!--[if lt IE 8]>
 		<script src="<?= $wg->ResourceBasePath ?>/resources/wikia/libraries/json2/json2.js"></script>

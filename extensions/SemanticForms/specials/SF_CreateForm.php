@@ -196,6 +196,13 @@ jQuery(document).ready(function() {
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
+			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateForm' );
+			if ( !$validToken ) {
+				$text = "This appears to be a cross-site request forgery; canceling save.";
+				$wgOut->addHTML( $text );
+				return;
+			}
+
 			// Validate form name
 			if ( $form->getFormName() == "" ) {
 				$form_name_error_str = wfMsg( 'sf_blank_error' );
@@ -271,6 +278,7 @@ END;
 		if ( count( $form_templates ) == 0 ) {
 			$text .= "\t" . Html::element( 'p', null, "(" . wfMsg( 'sf_createtemplate_addtemplatebeforesave' ) . ")" );
 		}
+		$text .= "\t" . Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateForm' ) ) . "\n";
 		$text .= <<<END
 	</form>
 	<hr /><br />

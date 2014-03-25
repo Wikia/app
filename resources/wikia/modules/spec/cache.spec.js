@@ -1,15 +1,14 @@
 describe("CacheTest", function(){
 	var localStorage = {
-		data: {},
-		setItem: function(key, data){
-			localStorage.data[key] = data;
+			data: {},
+			setItem: function(key, data){
+				localStorage[key] = data;
+			},
+			getItem: function(key){
+				return localStorage[key];
+			}
 		},
-		getItem: function(key){
-			return localStorage.data[key];
-		}
-	};
-
-	var wc = modules['wikia.cache'](localStorage);
+		wc = modules['wikia.cache']({}, localStorage);
 
 	it( 'Set then get', function() {
 		wc.set('a1', 'some-value');
@@ -120,7 +119,7 @@ describe("CacheTest", function(){
 		var windowMock = {
 				wgStyleVersion: 1
 			},
-			wc = modules['wikia.cache'](window.localStorage, windowMock);
+			wc = modules['wikia.cache'](windowMock, localStorage);
 
 		wc.setVersioned('f', 'some-value1');
 		expect(wc.getVersioned('f')).toEqual('some-value1');

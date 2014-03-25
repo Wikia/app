@@ -1,4 +1,6 @@
 jQuery(function( $ ) {
+	'use strict';
+
 	var $toolbar,
 		$header = $( '#WikiHeader' ),
 		$button = $header.find( '.share-button' );
@@ -51,16 +53,9 @@ jQuery(function( $ ) {
 					});
 				}
 			);
-		})
+		});
 
 	}
 
-	// Load immediately if user is in "ON" group of "SHARE_BUTTON" experiment.
-	if ( Wikia.AbTest && Wikia.AbTest.getGroup( 'SHARE_BUTTON' ) == 'ON' ) {
-		initialize( $.Event() );
-
-	// Load all required assets for the SharingToolbar, then initialize it
-	} else {
-		$button.one( 'click', initialize );
-	}
+	$button.one( 'click', initialize );
 });

@@ -160,17 +160,17 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 			$moreFiles = false;
 		}
 
-		$caption = wfMsgHtml( 'wikianewfiles-uploadby', $ul ) . "<br />\n" .
+		$caption = wfMessage( 'wikianewfiles-uploadby' )->rawParams( $ul )->params( $ut )->escaped() . "<br />\n" .
 				  "<i>$timeago</i><br />\n";
 
 		if ( count( $links ) ) {
-			$caption .= wfMsg( 'wikianewfiles-postedin' ) . "&nbsp;" . $links[0];
+			$caption .= wfMessage( 'wikianewfiles-postedin' )->escaped() . "&nbsp;" . $links[0];
 		}
 
 		if ( $moreFiles ) {
 			$caption .= ", " . '<a href="' . $nt->getLocalUrl() .
 			'#filelinks" class="wikia-gallery-item-more">' .
-			wfMsgHtml( 'wikianewfiles-more' ) . '</a>';
+			wfMessage( 'wikianewfiles-more' )->escaped() . '</a>';
 		}
 
 		$gallery->add( $nt, $caption );
@@ -189,12 +189,12 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	if ( $shownav && !$wgMiserMode ) {
 		$wgOut->addHTML(
 			Xml::openElement( 'form', array( 'action' => $action, 'method' => 'post', 'id' => 'imagesearch' ) ) .
-			Xml::fieldset( wfMsg( 'newimages-legend' ) ) .
-			Xml::inputLabel( wfMsg( 'newimages-label' ), 'wpIlMatch', 'wpIlMatch', 20, $wpIlMatch ) . ' ' .
-			Xml::submitButton( wfMsg( 'ilsubmit' ), array( 'name' => 'wpIlSubmit' ) ) .
+			Xml::fieldset( wfMessage( 'newimages-legend' )->plain() ) .
+			Xml::inputLabel( wfMessage( 'newimages-label' )->plain(), 'wpIlMatch', 'wpIlMatch', 20, $wpIlMatch ) . ' ' .
+			Xml::submitButton( wfMessage( 'ilsubmit' )->plain(), array( 'name' => 'wpIlSubmit' ) ) .
 			Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' )
-		 );
+		);
 	}
 
 	/**
@@ -212,18 +212,16 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 	/* @var $wgLang Language */
 	$d = $wgLang->date( $now, true );
 	$t = $wgLang->time( $now, true );
-	$dateLink = Linker::link( $titleObj, wfMsgHtml( 'sp-newimages-showfrom', $d, $t ),
+	$dateLink = Linker::link( $titleObj, wfMessage( 'sp-newimages-showfrom' )->rawParams( $d, $t )->escaped(),
 							array( 'class' => 'navigation-filesfrom' ),
 		'from=' . $now . $botpar . $searchpar );
 
 	$botLink = Linker::link( $titleObj,
-						 wfMsgHtml( 'showhidebots', ( $hidebots ? wfMsgHtml( 'show' ) : wfMsgHtml( 'hide' ) ) ),
+						 wfMessage( 'showhidebots', $hidebots ? wfMessage( 'show' )->plain() : wfMessage( 'hide' )->plain() )->escaped(),
 						 array( 'class' => 'navigation-' . ( $hidebots ? 'showbots' : 'hidebots' ) ),
 						 'hidebots=' . ( $hidebots ? '0' : '1' ) . $searchpar );
 
-
-	$opts = array( 'parsemag', 'escapenoentities' );
-	$prevLink = wfMsgExt( 'pager-newer-n', $opts, $wgLang->formatNum( $limit ) );
+	$prevLink = wfMessage( 'pager-newer-n', $wgLang->formatNum( $limit ) )->escaped();
 	if ( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
 		$wmu['prev'] = $firstTimestamp;
 		$prevLink = Linker::link( $titleObj, $prevLink,
@@ -231,7 +229,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 							   'from=' . $firstTimestamp . $botpar . $searchpar );
 	}
 
-	$nextLink = wfMsgExt( 'pager-older-n', $opts, $wgLang->formatNum( $limit ) );
+	$nextLink = wfMessage( 'pager-older-n', $wgLang->formatNum( $limit ) )->escaped();
 	if ( $shownImages > $limit && $lastTimestamp ) {
 		$wmu['next'] = $lastTimestamp;
 		$nextLink = Linker::link( $titleObj, $nextLink,
@@ -239,7 +237,7 @@ function wfSpecialWikiaNewFiles ( $par, $specialPage ) {
 							   'until=' . $lastTimestamp . $botpar . $searchpar );
 	}
 
-	$prevnext = '<p id="newfiles-nav">' . $botLink . ' ' . wfMsgHtml( 'viewprevnext', $prevLink, $nextLink, $dateLink ) . '</p>';
+	$prevnext = '<p id="newfiles-nav">' . $botLink . ' ' . wfMessage( 'viewprevnext' )->rawParams( $prevLink, $nextLink, $dateLink )->escaped() . '</p>';
 
 	if ( count( $images ) ) {
 		$wmu['gallery'] = $gallery;

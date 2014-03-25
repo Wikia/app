@@ -56,12 +56,21 @@ if ( !empty( $wgEnableNirvanaAPI ) ){
 
 	if ( empty( $cacheControl ) ) {
 		$response->setHeader( 'Cache-Control', 'private', true );
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'wikia-php.caching-disabled', [
+			'controller' => $response->getControllerName(),
+			'method' => $response->getMethodName()
+		] );
 	}
 
 	$response->sendHeaders();
+	wfRunHooks( 'NirvanaAfterRespond', [ $app, $response ] );
+
 	$response->render();
 
 	wfLogProfilingData();
+
+	wfRunHooks( 'RestInPeace' );
 
 } else {
 	header( "HTTP/1.1 503 Service Unavailable", true, 503 );

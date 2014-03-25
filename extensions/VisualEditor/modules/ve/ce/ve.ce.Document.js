@@ -17,7 +17,9 @@
  */
 ve.ce.Document = function VeCeDocument( model, surface ) {
 	// Parent constructor
-	ve.Document.call( this, new ve.ce.DocumentNode( model.getDocumentNode(), surface ) );
+	ve.Document.call( this, new ve.ce.DocumentNode(
+		model.getDocumentNode(), surface, { '$': surface.$ }
+	) );
 
 	// Properties
 	this.model = model;
@@ -25,7 +27,7 @@ ve.ce.Document = function VeCeDocument( model, surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.Document, ve.Document );
+OO.inheritClass( ve.ce.Document, ve.Document );
 
 /* Methods */
 
@@ -136,7 +138,7 @@ ve.ce.Document.prototype.getNodeAndOffset = function ( offset ) {
 	}
 	node = this.getNodeFromOffset( offset );
 	startOffset = node.getOffset() + ( ( node.isWrapped() ) ? 1 : 0 );
-	current = [node.$.contents(), 0];
+	current = [node.$element.contents(), 0];
 	stack = [current];
 	while ( stack.length > 0 ) {
 		if ( current[1] >= current[0].length ) {
@@ -208,14 +210,14 @@ ve.ce.Document.prototype.getNearestFocusableNode = function ( offset, direction,
 			}
 			if (
 				this.isOpenElementData( index ) &&
-				ve.dm.nodeFactory.isNodeFocusable( this.getType( index ) )
+				ve.ce.nodeFactory.isNodeFocusable( this.getType( index ) )
 			) {
 				coveredOffset = index + 1;
 				return true;
 			}
 			if (
 				this.isCloseElementData( index ) &&
-				ve.dm.nodeFactory.isNodeFocusable( this.getType( index ) )
+				ve.ce.nodeFactory.isNodeFocusable( this.getType( index ) )
 			) {
 				coveredOffset = index;
 				return true;
@@ -252,7 +254,7 @@ ve.ce.Document.prototype.getRelativeRange = function ( range, direction, unit, e
 	}
 
 	node = this.documentNode.getNodeFromOffset( range.start + 1 );
-	if ( node && ve.dm.nodeFactory.isNodeFocusable( node.type ) ) {
+	if ( node && node.isFocusable() ) {
 		if ( node === this.documentNode.getNodeFromOffset( range.end - 1 ) ) {
 			if ( this.model.data.isContentOffset( range.to ) || !!this.getSlugAtOffset( range.to ) ) {
 				return new ve.Range( direction === 1 ? range.end : range.start );

@@ -9,17 +9,17 @@
  * ContentEditable node factory.
  *
  * @class
- * @extends ve.Factory
+ * @extends OO.Factory
  * @constructor
  */
 ve.ce.NodeFactory = function VeCeNodeFactory() {
 	// Parent constructor
-	ve.Factory.call( this );
+	OO.Factory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.NodeFactory, ve.Factory );
+OO.inheritClass( ve.ce.NodeFactory, OO.Factory );
 
 /* Methods */
 
@@ -33,6 +33,21 @@ ve.inheritClass( ve.ce.NodeFactory, ve.Factory );
 ve.ce.NodeFactory.prototype.canNodeBeSplit = function ( type ) {
 	if ( type in this.registry ) {
 		return this.registry[type].static.canBeSplit;
+	}
+	throw new Error( 'Unknown node type: ' + type );
+};
+
+/**
+ * Check if the node is focusable.
+ *
+ * @method
+ * @param {string} type Node type
+ * @returns {boolean} Whether the node is focusable
+ * @throws {Error} Unknown node type
+ */
+ve.ce.NodeFactory.prototype.isNodeFocusable = function ( type ) {
+	if ( type in this.registry ) {
+		return this.registry[type].static.isFocusable;
 	}
 	throw new Error( 'Unknown node type: ' + type );
 };

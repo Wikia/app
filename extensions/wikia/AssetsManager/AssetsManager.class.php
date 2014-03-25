@@ -728,14 +728,6 @@ class AssetsManager {
 			$request['ttl'] = $options['ttl'];
 		}
 
-		if ( !empty( $options['varnishTTL'] ) ) {
-			$request['varnishTTL'] = $options['varnishTTL'];
-		}
-
-		if ( !empty( $options['browserTTL'] ) ) {
-			$request['browserTTL'] = $options['browserTTL'];
-		}
-
 		$request['cb'] = $wgStyleVersion;
 
 		if ( !empty( $request ) ) {

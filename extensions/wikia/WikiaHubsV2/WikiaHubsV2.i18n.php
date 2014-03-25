@@ -283,6 +283,64 @@ $messages['pl'] = [
 	'wikiahubs-social-googleplus-link-Lifestyle' => '',
 ];
 
+$messages['ja'] = array(
+	// general
+	'wikiahubs-button-cancel' => 'キャンセル',
+	'wikiahubs-search-placeholder' => 'ウィキアを検索する',
+
+	// suggest article
+	'wikiahubs-suggest-article-header' => '記事を投稿する',
+	'wikiahubs-suggest-article-submit-button' => '投稿する',
+	'wikiahubs-suggest-article-what-article' => 'どのURLをシェアしたいですか? (255文字以内で)',
+	'wikiahubs-suggest-article-reason' => 'なぜかっこいいと思いますか? (140文字以内で)',
+	'wikiahubs-suggest-article-success' => '記事についてご提案をいただきありがとうございます。編集者が目を通し確認をいたします。!',
+	'wikiahubs-error-invalid-article-url-length' => '記事ページのurlは最低でも10文字必要です。',
+	'wikiahubs-error-invalid-reason-length' => 'コメントは1から140文字以内でお願いします。',
+
+	// wikia hubs
+	'wikiahubs-vertical-VideoGames' => 'ゲーム',
+	'wikiahubs-vertical-Entertainment' => 'エンターテイメント',
+	'wikiahubs-vertical-Lifestyle' => 'ライフスタイル',
+
+	//WAM
+	'wikiahubs-wam-header' => 'WAM スコア',
+	'wikiahubs-wam-see-full-wam-ranking' => 'WAMについてもっと読む',
+	'wikiahubs-wam-top-wikis-headline' => 'トップウィキア $1 コミュニティー',
+	'wikiahubs-wam-rank' => 'ランキング',
+	'wikiahubs-wam-score' => 'WAM スコア',
+	'wikiahubs-wam-wiki-url' => "名前",
+
+	// from the community
+	'wikiahubs-from-community-promoted' => '宣伝する',
+	'wikiahubs-from-community-caption' => '[$1 $2] から[$3 $4]',
+	'wikiahubs-from-community-headline' => 'コミュニティーから',
+
+	//featured video
+	'wikiahubs-sponsored-by' => '$1によって提供されました。',
+
+	// 404 page
+	'wikiahubs-404-title' => 'お探しのページは見つかりませんでした。',
+	'wikiahubs-404-message' => "お探しのページは見つかりませんでした。 [[$1|ここをクリック]] すると本日のハブに移動します。",
+
+	// off-shot pages
+	'wikiahubs-popular-videos' => 'ポピュラービデオ',
+
+	// social icons
+	'wikiahubs-social-twitter-link-VideoGames' => 'https://twitter.com/Wikia',
+	'wikiahubs-social-facebook-link-VideoGames' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-social-googleplus-link-VideoGames' => 'http://gplus.to/wikia',
+
+	'wikiahubs-social-twitter-link-Entertainment' => 'https://twitter.com/ja_wikiaanime',
+	'wikiahubs-social-facebook-link-Entertainment' => 'http://www.facebook.com/WikiaAnimeJapan',
+	'wikiahubs-social-googleplus-link-Entertainment' => 'http://gplus.to/wikia',
+
+	'wikiahubs-social-twitter-link-Lifestyle' => 'https://twitter.com/Wikia',
+	'wikiahubs-social-facebook-link-Lifestyle' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-social-googleplus-link-Lifestyle' => 'http://gplus.to/wikia',
+);
+
+
+
 $messages['qqq'] = array(
 	// general
 	'wikiahubs-button-cancel' => 'Cancel',

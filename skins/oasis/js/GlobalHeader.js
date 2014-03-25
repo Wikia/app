@@ -1,9 +1,9 @@
 $(function () {
 	'use strict';
 
-	var GLOBAL_NAV_SAMPLING_RATIO = 100, // integer (0-100): 0 - no tracking, 100 - track everything */
+	var GLOBAL_NAV_SAMPLING_RATIO = 10, // integer (0-100): 0 - no tracking, 100 - track everything */
 		track = Wikia.Tracker.buildTrackingFunction({
-			category: 'global-navigation',
+			category: 'global-navigation-sampled',
 			trackingMethod: 'ga'
 		});
 
@@ -12,32 +12,32 @@ $(function () {
 		if (element.hasClass('sprite')) { // wikia logo
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_IMAGE,
-				label: 'wikia-logo'
+				label: 'wikia-logo-sampled'
 			});
 		} else if (element.hasClass('wikia-button')) { //start a wiki button
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
-				label: 'start-wiki'
+				label: 'start-wiki-sampled'
 			});
 		} else if (element.hasClass('ajaxRegister')) { // sign up link
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: 'signup'
+				label: 'signup-sampled'
 			});
 		} else if (element.hasClass('login-button')) { // log in button
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,
-				label: 'login'
+				label: 'login-sampled'
 			});
 		} else if (element.parents('.topNav').exists()) { // hub link
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: 'hub-name-link'
+				label: 'hub-name-link-sampled'
 			});
 		} else if (element.parents('.catnav, .subnav').exists()) { // link in hub menu
 			track({
 				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: 'hub-submenu-link'
+				label: 'hub-submenu-link-sampled'
 			});
 		}
 	}
@@ -48,17 +48,17 @@ $(function () {
 		if (element.parents('.GlobalNavigation').exists()) { // hubs menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
-				label: 'hubs-menu-open'
+				label: 'hubs-menu-open-sampled'
 			});
 		} else if (element.parents('.AccountNavigation').exists()) { // user menu
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
-				label: 'user-menu-open'
+				label: 'user-menu-open-sampled'
 			});
 		} else if (element.parents('.WallNotifications').exists()) { // notifications
 			track({
 				action: Wikia.Tracker.ACTIONS.HOVER,
-				label: 'notifications-menu-open'
+				label: 'notifications-menu-open-sampled'
 			});
 		}
 	}
@@ -67,12 +67,7 @@ $(function () {
 		return GLOBAL_NAV_SAMPLING_RATIO >= Math.floor((Math.random() * 100 + 1));
 	}
 
-	function isTrackedGroup() {
-		var group = window.Wikia.AbTest ? Wikia.AbTest.getGroup( 'DAR_GLOBALNAVIGATIONFIXED' ) : undefined ;
-		return group !== undefined;
-	}
-
-	if (isTrackedGroup() && isSampledPV()) {
+	if (isSampledPV()) {
 		Wikia.log( 'Global nav tracking enabled', 'info', 'GlobalNav' );
 		$('#WikiaHeader').on('click', clickTrackingHandler);
 		$('#WikiaHeader').on('hovermenu-shown', hoverMenuTrackingHandler);

@@ -32,3 +32,4 @@ $wgAutoloadClasses['RelatedPagesController'] = $dir . 'RelatedPagesController.cl
 // messages
 $wgExtensionMessagesFiles['RelatedPages'] = $dir . 'RelatedPages.i18n.php';
 JSMessages::registerPackage( 'RelatedPages', [ 'wikiarelatedpages-heading' ] );
+JSMessages::registerPackage( 'RelatedPagesInContent', [ 'wikiamobile-related-article' , 'wikiamobile-people-also-read'] );

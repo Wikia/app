@@ -2,7 +2,7 @@
 
 class CommentsIndexTest extends WikiaBaseTest {
 
-	/*
+	/**
 	 * Create a fake object emulating the comments_index row fetched from db
 	 */
 	private function getFakeCommentsIndexRow( $v ) {
@@ -24,7 +24,7 @@ class CommentsIndexTest extends WikiaBaseTest {
 		return $rowMock;
 	}
 
-	/*
+	/**
 	 * Make sure the cache is not used when the CommentsIndex objects are just fetched from the database.
 	 */
 	public function testCommentsIndexCacheNotUsedForDB() {
@@ -40,7 +40,20 @@ class CommentsIndexTest extends WikiaBaseTest {
 		CommentsIndex::newFromId(1, 0, $dbMock);
 	}
 
-	/*
+	/**
+	 * Make sure we don't query the db for non-existingarticles
+	 */
+	public function testCommentsIndexSkipDBWhenNoArticle() {
+		$dbMock = $this->getMock( 'stdClass', [ 'selectRow' ] );
+		$dbMock->expects( $this->exactly( 0 ) )
+			->method( 'selectRow' );
+
+		CommentsIndex::newFromId(0, 0, $dbMock);
+	}
+
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.01076 ms
 	 * The purpose of CommentsIndex cache is avoid database queries for CommentsIndex instances that were created
 	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
 	 * make sure it's not fetched from the database

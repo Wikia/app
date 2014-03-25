@@ -64,6 +64,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  */
 $messages['ar'] = array(
 	'stafflog-desc' => 'تسجيل مركزي للموظفين',
@@ -81,17 +82,30 @@ $messages['ar'] = array(
 	'stafflog-filter-type-piggyback' => 'استعارة حساب',
 	'stafflog-filter-type-renameuser' => 'إعادة تسمية المستخدم',
 	'stafflog-filter-type-wikifactory' => 'حالة الويكي',
+	'action-stafflog' => 'رؤية سجل العاملين المركزي',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'stafflog-filter-label' => 'Süzgəc',
+	'stafflog-filter-user' => 'İstifadəçi:',
+	'stafflog-filter-type' => 'Tipi:',
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'stafflog' => 'StaffLog',
 	'stafflog-filter-label' => 'Sil',
 	'stafflog-filter-user' => 'Implijer :',
 	'stafflog-filter-type' => 'Seurt :',
 	'stafflog-filter-apply' => 'Arloañ ar sil',
 	'stafflog-filter-type-block' => 'Stankadennoù',
+	'stafflog-filter-type-wikifactory' => 'Statud ar wiki',
 );
 
 /** Bosnian (bosanski)

@@ -12,17 +12,17 @@
  * @extends ve.ui.MWExtensionInspector
  *
  * @constructor
- * @param {ve.ui.Surface} surface
+ * @param {ve.ui.WindowSet} windowSet Window set this inspector is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWAlienExtensionInspector = function VeUiMWAlienExtensionInspector( surface, config ) {
+ve.ui.MWAlienExtensionInspector = function VeUiMWAlienExtensionInspector( windowSet, config ) {
 	// Parent constructor
-	ve.ui.MWExtensionInspector.call( this, surface, config );
+	ve.ui.MWExtensionInspector.call( this, windowSet, config );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.MWAlienExtensionInspector, ve.ui.MWExtensionInspector );
+OO.inheritClass( ve.ui.MWAlienExtensionInspector, ve.ui.MWExtensionInspector );
 
 /* Static properties */
 
@@ -36,16 +36,21 @@ ve.ui.MWAlienExtensionInspector.static.nodeModel = ve.dm.MWAlienExtensionNode;
 
 /* Methods */
 
-/** */
+/**
+ * @inheritdoc
+ */
+ve.ui.MWAlienExtensionInspector.prototype.getTitle = function () {
+	return this.surface.getView().getFocusedNode().getModel().getExtensionName();
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.MWAlienExtensionInspector.prototype.initialize = function () {
 	// Parent method
 	ve.ui.MWExtensionInspector.prototype.initialize.call( this );
 
-	this.input.$.addClass( 've-ui-mwAlienExtensionInspector-input' );
-};
-
-ve.ui.MWAlienExtensionInspector.prototype.getTitle = function () {
-	return this.surface.getView().getFocusedNode().getModel().getExtensionName();
+	this.input.$element.addClass( 've-ui-mwAlienExtensionInspector-input' );
 };
 
 /* Registration */

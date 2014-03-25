@@ -1,5 +1,7 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Tables module", function () {
+	'use strict';
+
 	var body = getBody();
 
 	body.innerHTML = '<div id="mw-content-text"><table id="TESTTABLE"><tbody><tr style="min-width: 99999px;"><td>some content to TEST wide table</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
@@ -14,7 +16,11 @@ describe("Tables module", function () {
 		},
 		{
 			Features: {},
-			IScroll: function(){},
+			IScroll: function(){
+				return {
+					on: function(){}
+				};
+			},
 			addEventListener: function(){
 
 			},

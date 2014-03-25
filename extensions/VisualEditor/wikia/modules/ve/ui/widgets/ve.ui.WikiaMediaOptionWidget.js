@@ -9,7 +9,7 @@
 
 /**
  * @class
- * @extends ve.ui.OptionWidget
+ * @extends OO.ui.OptionWidget
  *
  * @constructor
  * @param {Mixed} model Item data
@@ -23,17 +23,17 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	this.model = model;
 
 	// Parent constructor
-	ve.ui.OptionWidget.call( this, this.model.title, config );
+	OO.ui.OptionWidget.call( this, this.model.title, config );
 
 	// Properties
 	this.size = config.size || 160;
 	this.mwTitle = new mw.Title( this.model.title ).getNameText();
 	this.image = new Image();
-	this.$image = this.$$( this.image );
-	this.$back = this.$$( '<div>' );
-	this.$front = this.$$( '<div>' );
+	this.$image = this.$( this.image );
+	this.$back = this.$( '<div>' );
+	this.$front = this.$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
-	this.check = new ve.ui.IconButtonWidget( { 'icon': 'unchecked' } );
+	this.check = new OO.ui.IconButtonWidget( { '$': this.$, 'icon': 'unchecked' } );
 
 	// Events
 	this.$image
@@ -43,16 +43,16 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
-	this.check.$.addClass( 've-ui-wikiaMediaOptionWidget-check' );
-	this.$
+	this.check.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
+	this.$element
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.model.type )
 		.css( { 'width': this.size, 'height': this.size } )
-		.prepend( this.$thumb, this.check.$ );
+		.prepend( this.$thumb, this.check.$element );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.WikiaMediaOptionWidget, ve.ui.OptionWidget );
+OO.inheritClass( ve.ui.WikiaMediaOptionWidget, OO.ui.OptionWidget );
 
 /* Methods */
 
@@ -78,7 +78,7 @@ ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
  */
 ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailLoad = function () {
 	this.$thumb.first().addClass( 've-ui-texture-transparency' );
-	this.$
+	this.$element
 		.addClass( 've-ui-mwMediaResultWidget-done' )
 		.removeClass( 've-ui-texture-pending' );
 

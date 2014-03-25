@@ -51,6 +51,13 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'categorygalleries-desc' => 'Паказвае галерэю старонак на старонках катэгорыяў',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -282,6 +289,13 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'categorygalleries-desc' => 'Visar ett sido-galleri på kategorisidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'categorygalleries-desc' => 'పేజీల గ్యాలరీని వర్గ పేజీల్లో చూపిస్తుంది',
 );
 
 /** Tagalog (Tagalog)

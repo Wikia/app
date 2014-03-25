@@ -53,6 +53,7 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
+ * @author Claw eg
  * @author DRIHEM
  */
 $messages['ar'] = array(
@@ -68,11 +69,20 @@ $messages['ar'] = array(
 	'dump-database-request-already-submitted' => 'تم طلب المقلب مؤخرا (منذ 7 أيام على الأقل)',
 	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
+	'dump-database-last-unknown' => 'غير معروف',
+);
+
+/** Azerbaijani (azərbaycanca)
+ * @author Cekli829
+ */
+$messages['az'] = array(
+	'dump-database-last-unknown' => 'Naməlum',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'dump-database' => 'Копіі базы зьвестак',
@@ -87,6 +97,7 @@ $messages['be-tarask'] = array(
 	'dump-database-request-already-submitted' => 'Копія была запытаная нядаўна (меней 7 дзён таму)',
 	'dump-database-request-requested' => 'Запыт копіі базы зьвестак дасланы',
 	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
+	'dump-database-last-unknown' => 'Невядома',
 );
 
 /** Bulgarian (български)
@@ -111,6 +122,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -127,6 +139,7 @@ $messages['br'] = array(
 	'dump-database-request-already-submitted' => "Goulennet ez eus bet krouiñ un diell nevez zo (nebetoc'h eget 7 devezh zo)",
 	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
 	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
+	'dump-database-last-unknown' => 'Dianav',
 );
 
 /** Bosnian (bosanski)
@@ -807,12 +820,13 @@ $messages['ta'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Ravichandra
  */
 $messages['te'] = array(
-	'dump-database-curr-pages' => 'ప్రస్తుర పుటలు',
-	'dump-database-full-pages' => 'ప్రస్తుత పుటలు మరియు చరిత్ర',
-	'dump-database-info-more' => 'మరింత సమాచారం కోసం దయచేసి <a href="http://community.wikia.com/wiki/Help:Database_download">దీన్ని చూడండి</a>',
+	'dump-database-curr-pages' => 'ప్రస్తుత పేజీలు',
+	'dump-database-full-pages' => 'ప్రస్తుత పేజీలు, చరిత్ర',
+	'dump-database-info-more' => 'మరింత సమాచారం కోసం <a href="http://community.wikia.com/wiki/Help:Database_download">ఇది చూడండి</a>',
 );
 
 /** Tagalog (Tagalog)

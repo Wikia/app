@@ -110,13 +110,12 @@ class MultiwikifinderPage {
 	}
 
 	function showResults( ) {
-		global $wgUser, $wgOut, $wgLang, $wgContLang, $wgMemc, $wgExternalDatawareDB;
+		global $wgOut, $wgMemc, $wgExternalDatawareDB;
 
         wfProfileIn( __METHOD__ );
 		$wgOut->setSyndicated( false );
 
-		$num = 0;
-		$key = wfMemcKey( "MultiWikiFinder", $this->mPageTitle, $this->mPageNS, $this->limit, $this->offset );
+		$key = wfMemcKey( "MultiWikiFinder", $this->mPageTitle, $this->mPageNS );
 		$data = $wgMemc->get( $key );
 
 		if ( empty($data) ||
@@ -125,7 +124,7 @@ class MultiwikifinderPage {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			$oRes = $dbr->select(
 				'pages',
-				array( 'page_latest, page_wikia_id, page_id' ),
+				array( 'page_latest, page_wikia_id, page_id, page_is_redirect' ),
 				array(
 					'page_title_lower'	=> mb_strtolower($this->mPageTitle),
 					'page_namespace' 	=> $this->mPageNS,
@@ -140,15 +139,14 @@ class MultiwikifinderPage {
 			$num = $dbr->numRows($oRes);
 
 			$data = array( 'numrec' => 0, 'rows' => array() );
-			$loop = 0;
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#- get last edit TS or not
 				if ( $num <= self::ORDER_ROWS ) {
 					$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
-					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL(), $oGTitle->getServer() );
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL(), $oGTitle->getServer(), $oGTitle->isRedirect() );
 					$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
 				} else {
-					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, "", "" );
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, "", "", $oRow->page_is_redirect );
 					$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
 				}
 				$data['numrec']++;
@@ -158,13 +156,21 @@ class MultiwikifinderPage {
 			$wgMemc->set( $key, $data, 60 * 60 );
 		}
 
-		$num = $this->outputResults( RequestContext::getMain()->getSkin(), $data );
+		$num = $this->outputResults( $data );
 
         wfProfileOut( __METHOD__ );
 		return $num;
 	}
 
-	public function outputResults( $skin, $data ) {
+	public function getRedirectText() {
+		static $text;
+		if ( $text === null ) {
+			$text = wfMessage('multiwikifinder-redirect')->escaped();
+		}
+		return $text;
+	}
+
+	public function outputResults( $data ) {
 		global $wgContLang, $wgLang, $wgOut;
 
         wfProfileIn( __METHOD__ );
@@ -189,7 +195,13 @@ class MultiwikifinderPage {
 			foreach ( $data['order'] as $city_id => $ordered ) {
 				# check loop
 				if ( $loop >= $this->offset && $loop < $this->limit + $this->offset ) {
-					list ($page_id, $page_url, $page_server) = $data['rows'][$city_id];
+					$row_data = $data['rows'][$city_id];
+					if (count($row_data)<=3) {
+						list ($page_id, $page_url, $page_server) = $row_data;
+						$is_redirect = false;
+					} else {
+						list ($page_id, $page_url, $page_server, $is_redirect) = $row_data;
+					}
 					# page url
 					if ( empty($page_url) || empty($page_server) ) {
 						$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $city_id );
@@ -214,9 +226,14 @@ class MultiwikifinderPage {
 
 					if (empty($this->mShow)) {
 						$res = "";
-						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
+						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url, 'is_redirect' => $is_redirect);
 					} else {
-						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), "" );
+						list( $itemTagOpen, $itemTagClose, $itemDetails ) = !$is_redirect ? array( '', '', '' )
+							: array( '<i>', '</i>', $this->getRedirectText() );
+						$itemHtml = Xml::openElement( 'a', array('href' => $page_url) )
+							. $itemTagOpen . $page_url . $itemTagClose
+							. Xml::closeElement( 'a' );
+						$res = wfSpecialList( $itemHtml, $itemDetails );
 					}
 
 					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";

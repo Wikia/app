@@ -27,7 +27,11 @@ EOT;
 EOT;
 		}
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 	public function getEmbedUrl() {

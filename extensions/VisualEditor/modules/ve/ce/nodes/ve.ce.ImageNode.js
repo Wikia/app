@@ -28,17 +28,19 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 	ve.ce.ResizableNode.call( this );
 
 	// Properties
-	this.$image = this.$;
+	this.$image = this.$element;
 
 	// Events
-	this.model.connect( this, { 'update': 'onUpdate' } );
-	this.$.on( 'click', ve.bind( this.onClick, this ) );
+	this.$element.on( 'click', ve.bind( this.onClick, this ) );
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 
 	// Initialization
 	this.$image
 		.addClass( 've-ce-imageNode' )
-		.attr( 'alt', this.model.getAttribute( 'alt' ) )
-		.attr( 'src', this.model.getAttribute( 'src' ) )
+		.attr( {
+			'alt': this.model.getAttribute( 'alt' ),
+			'src': this.getResolvedAttribute( 'src' )
+		} )
 		.css( {
 			'width': this.model.getAttribute( 'width' ),
 			'height': this.model.getAttribute( 'height' )
@@ -47,11 +49,11 @@ ve.ce.ImageNode = function VeCeImageNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.ImageNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.ImageNode, ve.ce.LeafNode );
 
-ve.mixinClass( ve.ce.ImageNode, ve.ce.FocusableNode );
-ve.mixinClass( ve.ce.ImageNode, ve.ce.RelocatableNode );
-ve.mixinClass( ve.ce.ImageNode, ve.ce.ResizableNode );
+OO.mixinClass( ve.ce.ImageNode, ve.ce.FocusableNode );
+OO.mixinClass( ve.ce.ImageNode, ve.ce.RelocatableNode );
+OO.mixinClass( ve.ce.ImageNode, ve.ce.ResizableNode );
 
 /* Static Properties */
 
@@ -62,10 +64,7 @@ ve.ce.ImageNode.static.tagName = 'img';
 /* Methods */
 
 /**
- * Handle attribute change events.
- *
- * Whitelisted attributes will be added or removed in sync with the DOM. They are initially set in
- * the constructor.
+ * Update the rendering of the 'src', 'width' and 'height' attributes when they change in the model.
  *
  * @method
  * @param {string} key Attribute key
@@ -75,20 +74,12 @@ ve.ce.ImageNode.static.tagName = 'img';
 ve.ce.ImageNode.prototype.onAttributeChange = function ( key, from, to ) {
 	if ( from !== to ) {
 		if ( key === 'src' ) {
-			this.$image.attr( 'src', to );
+			this.$image.attr( 'src', this.getResolvedAttribute( 'src' ) );
 		}
 		if ( key === 'width' || key === 'height' ) {
 			this.$image.css( key, to );
 		}
 	}
-};
-
-/**
- * Update method
- *
- * @method
- */
-ve.ce.ImageNode.prototype.onUpdate = function () {
 };
 
 /**

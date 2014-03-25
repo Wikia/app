@@ -28,7 +28,7 @@ ve.dm.Annotation = function VeDmAnnotation( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.Annotation, ve.dm.Model );
+OO.inheritClass( ve.dm.Annotation, ve.dm.Model );
 
 /* Static properties */
 
@@ -36,7 +36,7 @@ ve.inheritClass( ve.dm.Annotation, ve.dm.Model );
  * About grouping is not supported for annotations; setting this to true has no effect.
  *
  * @static
- * @property {boolean} static.enableAboutGrouping
+ * @property {boolean}
  * @inheritable
  */
 ve.dm.Annotation.static.enableAboutGrouping = false;
@@ -44,7 +44,7 @@ ve.dm.Annotation.static.enableAboutGrouping = false;
 /**
  * Automatically apply annotation to content inserted after it.
  *
- * @type {boolean}
+ * @property {boolean}
  */
 ve.dm.Annotation.static.applyToAppendedContent = true;
 

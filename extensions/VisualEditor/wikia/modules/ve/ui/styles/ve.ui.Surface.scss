@@ -5,6 +5,9 @@
  * .Wikia-video-play-button in Wikia videos has z-index=100
  *
  */
-.ve-ui-surface-overlay {
-	z-index: $zTop;
+.ve-ui-surface-overlay-local {
+	z-index: $zTop + 1;
+}
+.ve-ui-surface-overlay-global {
+	z-index: $zTop + 4;
 }

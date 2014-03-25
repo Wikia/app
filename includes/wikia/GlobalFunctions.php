@@ -138,15 +138,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to ".__METHOD__." without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!");
 					$timestamp = rand(0, 1000);
 				}
-			} else if(strtotime($timestamp) > strtotime("now -10 minute")){
-				// To prevent a race-condition, if the image is less than 10 minutes old, don't use cb-value.
-				// This will cause Akamai to only cache for 30 seconds.
-				$timestamp = "";
-			}
-
-			// Add Akamai versions, but only if there is some sort of caching number.
-			if($timestamp != ""){
-				$timestamp += $wg->AkamaiGlobalVersion + $wg->AkamaiLocalVersion;
 			}
 
 			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
@@ -1808,17 +1799,28 @@ function wfGetNamespaces() {
  * @return string - repaired HTML
  */
 function wfFixMalformedHTML( $html ) {
-	$dom_document = new DOMDocument();
+	$domDocument = new DOMDocument();
 
 	// Silence errors when loading html into DOMDocument (it complains when receiving malformed html - which is
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
-    // Make sure loadHTML knows that text is utf-8 (it assumes  ISO-88591)
-    $dom_document->loadHTML( '<meta http-equiv="content-type" content="text/html; charset=utf-8">' . $html );
-    // Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
-    // to html above to declare the charset as UTF-8
-    $html = preg_replace( array( '/^.*?<body>/si', '/^.*?charset=utf-8">/si', 
-        '/<\/body><\/html>$/si', '/<\/head><\/html>$/si', ), '', $dom_document->saveHTML() );
+
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
+	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$domDocument->loadHTML( $htmlHeader . $html );
+
+	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
+	// to html above to declare the charset as UTF-8
+	$html = preg_replace(
+		array(
+			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
+			'/<\/body><\/html>$/si',
+			'/<\/head><\/html>$/si',
+		),
+		'',
+		$domDocument->saveHTML()
+	);
 
 	return $html;
 }

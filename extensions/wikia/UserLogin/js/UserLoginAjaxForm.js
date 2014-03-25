@@ -96,6 +96,14 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 		}, function(json) {
 			window.location = json['redirectUrl'];
 		});
+	} else if ( result === 'closurerequested' ) {
+		$.post( wgScriptPath + '/wikia.php', {
+			controller: 'UserLoginSpecial',
+			method: 'getCloseAccountRedirectUrl',
+			format: 'json'
+		}, function( data ) {
+			window.location = data.redirectUrl;
+		} );
 	} else {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);

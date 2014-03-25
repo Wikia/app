@@ -1,9 +1,9 @@
 @import "skins/oasis/css/core/color";
 
-.ve-ui-context-menu .ve-ui-toolbar-bar {
-	@extend .ve-ui-toolbar-bar;
+.ve-ui-context-menu .oo-ui-toolbar-bar {
+	@extend .oo-ui-toolbar-bar;
 }
 
-.ve-ui-inspector-content .ve-ui-window-icon {
+.ve-ui-inspector-content .oo-ui-window-icon {
 	border-color: $color-page-border;
 }

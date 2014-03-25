@@ -1,4 +1,5 @@
 @import "skins/oasis/css/mixins/background-opacity";
+@import "skins/oasis/css/mixins/border-opacity";
 
 /**
  * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
@@ -6,85 +7,62 @@
 
 .wikia-video-thumbnail {
 	display: inline-block;
-	width: 100%;
 	position: relative;
+
+	&.fluid {
+		width: 100%;
+
+		> img {
+			width: 100%;
+		}
+	}
 
 	// Background circle
 	.play-circle {
-		background: black;
-		border: 1px solid #FFF;
+		// common styles
+		@include background-opacity(#000, 50);
+		@include border-opacity(#FFF, 50);
 		border-radius: 100px;
+		border-style: solid;
+		border-width: 1px;
 		display: block;
-		left: 50%;
-		opacity: .5;
 		position: absolute;
+		left: 50%;
 		top: 50%;
 
 		// only for medium
 		height: 50px;
 		margin: -25px 0 0 -25px; // half of width and height
 		width: 50px;
-	}
 
-	// Arrow container
-	.play-arrow {
-		display: block;
-		left: 50%;
-		overflow: hidden;
-		position: absolute;
-		top: 50%;
-
-		// only for medium
-		height: 30px;
-		margin: -11px 0 0 -4px;
-		width: 25px;
-	}
-
-	// Arrow is a rotated square that's cut in half
-	.play-arrow:after {
-		background: white;
-		border-radius: 2px;
-		content: "";
-		display: block;
-		transform: rotate( 35deg ) skewX( -15deg );
-		-webkit-transform: rotate( 35deg ) skewX( -15deg );  /* Safari and Chrome */
-		-ms-transform: rotate( 35deg ) skewX( -15deg ); /* IE 9 */
-
-		// only for medium
-		height: 20px;
-		margin: 2px 0 0 -10px;
-		width: 20px;
+		&:after {
+			background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+			background-position: -1237px 0px;
+			background-repeat: no-repeat;
+			content: "";
+			display: block;
+			height: 22px;
+			margin: 14px 0 0 18px;
+			width: 18px;
+		}
 	}
 
 	// xsmall sizes are 54% of medium
 	// they are also positioned in the bottom/left instead of center
 	&.xsmall {
 		.play-circle{
-			// sizing
 			height: 27px;
 			width: 27px;
-
-			// positioning
 			bottom: 10px;
-			left: 34px;
+			left: 36px;
 			top: auto;
-		}
 
-		.play-arrow {
-			// sizing
-			height: 16px;
-			width: 13px;
-
-			// positioning
-			bottom: 15px;
-			left: 25px;
-			top: auto;
-		}
-
-		.play-arrow:after {
-			height: 11px;
-			margin: 1px 0 0 -5.5px;
-			width: 11px;
+			&:after {
+				background-position: -1244px -26px;
+				height: 15px;
+				margin: 7px 0 0 10px;
+				width: 9px;
+			}
 		}
 	}
 
@@ -93,31 +71,17 @@
 	// they are also positioned in the bottom/left instead of center
 	&.small {
 		.play-circle{
-			// sizing
 			height: 35px;
 			width: 35px;
-
-			// positioning
 			bottom: 10px;
 			left: 34px;
 			top: auto;
-		}
-
-		.play-arrow {
-			// sizing
-			height: 21px;
-			width: 17.5px;
-
-			// positioning
-			bottom: 16px;
-			left: 28px;
-			top: auto;
-		}
-
-		.play-arrow:after {
-			height: 14px;
-			margin: 2px 0 0 -7px;
-			width: 14px;
+			&:after {
+				background-position: -1210px -81px;
+				height: 15px;
+				margin: 10px 0 0 13px;
+				width: 12px;
+			}
 		}
 	}
 
@@ -127,18 +91,12 @@
 			height: 70px;
 			margin: -35px 0 0 -35px;
 			width: 70px;
-		}
-
-		.play-arrow {
-			height: 420px;
-			margin: -15.5px 0 0 -5.5px;
-			width: 35px;
-		}
-
-		.play-arrow:after {
-			height: 28px;
-			margin: 2px 0 0 -14px;
-			width: 28px;
+			&:after {
+				background-position: -1210px 0px;
+				height: 31px;
+				margin: 20px 0 0 26px;
+				width: 24px;
+			}
 		}
 	}
 
@@ -148,36 +106,29 @@
 			height: 90px;
 			margin: -45px 0 0 -45px;
 			width: 90px;
-		}
-
-		.play-arrow {
-			height: 54px;
-			margin: -20px 0 0 -7px;
-			width: 45px;
-		}
-
-		.play-arrow:after {
-			height: 36px;
-			margin: 3px 0 0 -18px;
-			width: 36px;
+			&:after {
+				background-position: -1210px -34px;
+				height: 42px;
+				margin: 23px 0 0 34px;
+				width: 31px;
+			}
 		}
 	}
 
 	&:hover {
 		.play-circle {
-			opacity: .7;
+			@include background-opacity(#000, 70);
+			@include border-opacity(#FFF, 70);
 		}
 	}
 
 	&.hide-play {
-		.play-circle,
-		.play-arrow {
+		.play-circle {
 			display: none;
 		}
 
 		&:hover {
-			.play-circle,
-			.play-arrow {
+			.play-circle {
 				display: block;
 			}
 		}
@@ -188,14 +139,21 @@
 	}
 
 	.duration {
-		@include background-opacity(#000, 70);
+		background: black;
 		border-radius: 1px 0 0 0;
 		bottom: 0;
 		color: white;
-		font-size: 12px;
+		font-size: 11px;
 		line-height: 17px;
+		opacity: .7;
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;
+	}
+}
+
+.title-thumbnail {
+	.title {
+		font-size: 16px;
 	}
 }

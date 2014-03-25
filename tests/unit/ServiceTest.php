@@ -9,6 +9,11 @@ class ServiceTest extends WikiaBaseTest {
 		$wgMemc = wfGetCache(CACHE_MEMCACHED);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.04016 ms
+	 * @group UsingDB
+	 */
 	function testAvatarService() {
 		$anonName = '10.10.10.10';
 		$userName = 'WikiaBot';
@@ -29,6 +34,11 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertRegExp('/Special:Contributions/', AvatarService::renderLink($anonName));
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.35311 ms
+	 * @group UsingDB
+	 */
 	function testPageStatsService() {
 		global $wgTitle, $wgMemc;
 
@@ -84,8 +94,12 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertTrue(empty($data));
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	function testUserStatsService() {
-		global $wgArticle;
+		$this->markTestSkipped('This is not a unit test');
+
 		$user = User::newFromName('QATestsBot');
 
 		$service = new UserStatsService($user->getId());
@@ -96,16 +110,6 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertInternalType('string', $stats['date']);
 
 		// edits increase - perform fake edit
-		$edits = $stats['edits'];
-
-		$flags = $status = false;
-		UserStatsService::onArticleSaveComplete($wgArticle, $user, false, false, false, false, false, $flags, false, $status, false);
-
-		$stats = $service->getStats();
-
-		$this->assertEquals($edits+1, $stats['edits']);
-
-		// edits increase ("manual")
 		$edits = $stats['edits'];
 
 		$service->increaseEditsCount();

@@ -4,6 +4,9 @@
  * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
+
+/*global difflib,diffview */
+
 ( function ( QUnit ) {
 
 QUnit.config.requireExpects = true;
@@ -94,6 +97,30 @@ function convertNodes( value ) {
 	return value instanceof ve.dm.Node || value instanceof ve.ce.Node ?
 		getNodeTreeSummary( value ) :
 		value;
+}
+
+/**
+ * Undo what QUnit's escapeText does.
+ *
+ * @ignore
+ * @param {string} s
+ * @returns {string}
+ */
+function unescapeText( s ) {
+	return s.replace( /&(#039|quot|lt|gt|amp);/g, function ( match, seq ) {
+		switch ( seq )  {
+		case '#039':
+			return '\'';
+		case 'quot':
+			return '"';
+		case 'lt':
+			return '<';
+		case 'gt':
+			return '>';
+		case 'amp':
+			return '&';
+		}
+	} );
 }
 
 /**
@@ -207,6 +234,29 @@ QUnit.assert.equalRange = function ( actual, expected, message ) {
 		to: expected.to
 	};
 	QUnit.push( QUnit.equiv(actual, expected), actual, expected, message );
+};
+
+QUnit.diff = function ( o, n ) {
+	// o and n are partially HTML escaped by QUnit. As difflib does
+	// its own escaping we should unescape them first.
+	var oLines = difflib.stringAsLines( unescapeText( o ) ),
+		nLines = difflib.stringAsLines( unescapeText( n ) ),
+		sm = new difflib.SequenceMatcher( oLines, nLines ),
+		/*jshint camelcase:false */
+		opcodes = sm.get_opcodes(),
+		$div = $( '<div>' );
+
+	$div.append( diffview.buildView( {
+		baseTextLines: oLines,
+		newTextLines: nLines,
+		opcodes: opcodes,
+		baseTextName: 'Expected',
+		newTextName: 'Result',
+		contextSize: 10,
+		viewType: 0
+	} ) );
+
+	return $div.html();
 };
 
 }( QUnit ) );

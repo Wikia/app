@@ -21,7 +21,7 @@ ve.dm.MWSyntaxHighlightNode = function VeDmMWSyntaxHighlightNode( length, elemen
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWSyntaxHighlightNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.MWSyntaxHighlightNode, ve.dm.LeafNode );
 
 /* Static members */
 

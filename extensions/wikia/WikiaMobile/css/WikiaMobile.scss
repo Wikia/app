@@ -14,6 +14,7 @@
 
 //dependencies
 @import "variables";
+@import "page_header";
 @import 'chevrons';
 @import "infobox";
 @import "sections";
@@ -34,31 +35,11 @@
 @import 'throbber';
 @import "form";
 @import "curtain";
-@import '../../RelatedPages/css/RelatedPages.wikiamobile';
+@import "related_articles";
 
 //mixins
 @import "mixins/transition.scss";
 @import "mixins/box-shadow.scss";
-
-#wkMainCntHdr {
-	margin-bottom: 25px;
-	position: relative;
-
-	h1{
-		margin: 0;
-
-		line-height: 2.2rem;
-		font-size: 2rem;
-		font-weight: 400;
-	}
-
-	div {
-		color: #AAA;
-
-		font-size: .9rem;
-		line-height: 1.2rem;
-	}
-}
 
 #wkPage {
 	//I want page to be at least 405px long to be able to show share and search suggestions
@@ -66,6 +47,7 @@
 	padding: $page-padding+5px 6.25%;
 	//during loading tables might strech horizontally window - lets not show it to user
 	overflow-x: hidden;
+	background-color: white;
 }
 
 //fixes for fluid content

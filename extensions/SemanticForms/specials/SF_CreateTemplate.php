@@ -87,7 +87,7 @@ class SFCreateTemplate extends SpecialPage {
 		$text .= "\t" . wfMsg( 'sf_createtemplate_semanticproperty' ) . ' ' . $dropdown_html . "</p>\n";
 		$text .= "\t<p>" . '<input type="checkbox" name="is_list_' . $id . '" /> ' . wfMsg( 'sf_createtemplate_fieldislist' ) . "\n";
 		$text .= '	&#160;&#160;<input type="button" value="' . wfMsg( 'sf_createtemplate_deletefield' ) . '" class="deleteField" />' . "\n";
-		
+
 		$text .= <<<END
 </p>
 </div>
@@ -153,6 +153,13 @@ END;
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
+			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateTemplate' );
+			if ( !$validToken ) {
+				$text = "This appears to be a cross-site request forgery; canceling save.";
+				$wgOut->addHTML( $text );
+				return;
+			}
+
 			$fields = array();
 			// Cycle through the query values, setting the
 			// appropriate local variables.
@@ -222,6 +229,7 @@ END;
 		), null ) . ' ' . wfMsg( 'sf_createtemplate_standardformat' ) . "\n";
 		$text .= "\t" . Html::input( 'template_format', 'infobox', 'radio', null ) .
 			' ' . wfMsg( 'sf_createtemplate_infoboxformat' ) . "</p>\n";
+		$text .= "\t" . Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateTemplate' ) ) . "\n";
 		$save_button_text = wfMsg( 'savearticle' );
 		$preview_button_text = wfMsg( 'preview' );
 		$text .= <<<END

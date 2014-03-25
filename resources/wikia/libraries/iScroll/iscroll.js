@@ -1,6 +1,6 @@
 
-/*! iScroll v5.0.6 ~ (c) 2008-2013 Matteo Spinelli ~ http://cubiq.org/license */
-var IScroll = (function(window, document, Math) {
+/*! iScroll v5.1.1 ~ (c) 2008-2014 Matteo Spinelli ~ http://cubiq.org/license */
+(function(window, document, Math) {
 	var rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
 		window.setTimeout(callback, 1000 / 60);
 	};
@@ -47,12 +47,13 @@ var IScroll = (function(window, document, Math) {
 			el.removeEventListener(type, fn, !! capture);
 		};
 
-		me.momentum = function(current, start, time, lowerMargin, wrapperSize) {
+		me.momentum = function(current, start, time, lowerMargin, wrapperSize, deceleration) {
 			var distance = current - start,
 				speed = Math.abs(distance) / time,
 				destination,
-				duration,
-				deceleration = 0.0006;
+				duration;
+
+			deceleration = deceleration === undefined ? 0.0006 : deceleration;
 
 			destination = current + (speed * speed) / (2 * deceleration) * (distance < 0 ? -1 : 1);
 			duration = speed / deceleration;
@@ -83,12 +84,14 @@ var IScroll = (function(window, document, Math) {
 			hasTransition: _prefixStyle('transition') in _elementStyle
 		});
 
-		me.isAndroidBrowser = /Android/.test(window.navigator.appVersion) && /Version\/\d/.test(window.navigator.appVersion);
+		// This should find all Android browsers lower than build 535.19 (both stock browser and webview)
+		me.isBadAndroid = /Android /.test(window.navigator.appVersion) && !(/Chrome\/\d/.test(window.navigator.appVersion));
 
 		me.extend(me.style = {}, {
 			transform: _transform,
 			transitionTimingFunction: _prefixStyle('transitionTimingFunction'),
 			transitionDuration: _prefixStyle('transitionDuration'),
+			transitionDelay: _prefixStyle('transitionDelay'),
 			transformOrigin: _prefixStyle('transformOrigin')
 		});
 
@@ -221,7 +224,7 @@ var IScroll = (function(window, document, Math) {
 			var target = e.target,
 				ev;
 
-			if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA') {
+			if (!(/(SELECT|INPUT|TEXTAREA)/i).test(target.tagName)) {
 				ev = document.createEvent('MouseEvents');
 				ev.initMouseEvent('click', true, true, e.view, 1,
 					target.screenX, target.screenY, target.clientX, target.clientY,
@@ -313,7 +316,7 @@ var IScroll = (function(window, document, Math) {
 	}
 
 	IScroll.prototype = {
-		version: '5.0.6',
+		version: '5.1.1',
 
 		_init: function() {
 			this._initEvents();
@@ -329,12 +332,13 @@ var IScroll = (function(window, document, Math) {
 		},
 
 		_transitionEnd: function(e) {
-			if (e.target != this.scroller) {
+			if (e.target != this.scroller || !this.isInTransition) {
 				return;
 			}
 
-			this._transitionTime(0);
+			this._transitionTime();
 			if (!this.resetPosition(this.options.bounceTime)) {
+				this.isInTransition = false;
 				this._execEvent('scrollEnd');
 			}
 		},
@@ -351,8 +355,8 @@ var IScroll = (function(window, document, Math) {
 				return;
 			}
 
-			if (this.options.preventDefault && !utils.isAndroidBrowser && !utils.preventDefaultException(e.target, this.options.preventDefaultException)) {
-				e.preventDefault(); // This seems to break default Android browser
+			if (this.options.preventDefault && !utils.isBadAndroid && !utils.preventDefaultException(e.target, this.options.preventDefaultException)) {
+				e.preventDefault();
 			}
 
 			var point = e.touches ? e.touches[0] : e,
@@ -368,15 +372,16 @@ var IScroll = (function(window, document, Math) {
 
 			this._transitionTime();
 
-			this.isAnimating = false;
 			this.startTime = utils.getTime();
 
 			if (this.options.useTransition && this.isInTransition) {
+				this.isInTransition = false;
 				pos = this.getComputedPosition();
-
 				this._translate(Math.round(pos.x), Math.round(pos.y));
 				this._execEvent('scrollEnd');
-				this.isInTransition = false;
+			} else if (!this.options.useTransition && this.isAnimating) {
+				this.isAnimating = false;
+				this._execEvent('scrollEnd');
 			}
 
 			this.startX = this.x;
@@ -506,8 +511,6 @@ var IScroll = (function(window, document, Math) {
 				time = 0,
 				easing = '';
 
-			this.scrollTo(newX, newY); // ensures that the last position is rounded
-
 			this.isInTransition = 0;
 			this.initiated = 0;
 			this.endTime = utils.getTime();
@@ -516,6 +519,8 @@ var IScroll = (function(window, document, Math) {
 			if (this.resetPosition(this.options.bounceTime)) {
 				return;
 			}
+
+			this.scrollTo(newX, newY); // ensures that the last position is rounded
 
 			// we scrolled less than 10 pixels
 			if (!this.moved) {
@@ -527,6 +532,7 @@ var IScroll = (function(window, document, Math) {
 					utils.click(e);
 				}
 
+				this._execEvent('scrollCancel');
 				return;
 			}
 
@@ -537,11 +543,11 @@ var IScroll = (function(window, document, Math) {
 
 			// start momentum animation if needed
 			if (this.options.momentum && duration < 300) {
-				momentumX = this.hasHorizontalScroll ? utils.momentum(this.x, this.startX, duration, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0) : {
+				momentumX = this.hasHorizontalScroll ? utils.momentum(this.x, this.startX, duration, this.maxScrollX, this.options.bounce ? this.wrapperWidth : 0, this.options.deceleration) : {
 					destination: newX,
 					duration: 0
 				};
-				momentumY = this.hasVerticalScroll ? utils.momentum(this.y, this.startY, duration, this.maxScrollY, this.options.bounce ? this.wrapperHeight : 0) : {
+				momentumY = this.hasVerticalScroll ? utils.momentum(this.y, this.startY, duration, this.maxScrollY, this.options.bounce ? this.wrapperHeight : 0, this.options.deceleration) : {
 					destination: newY,
 					duration: 0
 				};
@@ -622,10 +628,10 @@ var IScroll = (function(window, document, Math) {
 			this.scrollerWidth = this.scroller.offsetWidth;
 			this.scrollerHeight = this.scroller.offsetHeight;
 
-			/* REPLACE END: refresh */
-
 			this.maxScrollX = this.wrapperWidth - this.scrollerWidth;
 			this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
+
+			/* REPLACE END: refresh */
 
 			this.hasHorizontalScroll = this.options.scrollX && this.maxScrollX < 0;
 			this.hasVerticalScroll = this.options.scrollY && this.maxScrollY < 0;
@@ -662,6 +668,18 @@ var IScroll = (function(window, document, Math) {
 			this._events[type].push(fn);
 		},
 
+		off: function(type, fn) {
+			if (!this._events[type]) {
+				return;
+			}
+
+			var index = this._events[type].indexOf(fn);
+
+			if (index > -1) {
+				this._events[type].splice(index, 1);
+			}
+		},
+
 		_execEvent: function(type) {
 			if (!this._events[type]) {
 				return;
@@ -675,7 +693,7 @@ var IScroll = (function(window, document, Math) {
 			}
 
 			for (; i < l; i++) {
-				this._events[type][i].call(this);
+				this._events[type][i].apply(this, [].slice.call(arguments, 1));
 			}
 		},
 
@@ -689,6 +707,8 @@ var IScroll = (function(window, document, Math) {
 
 		scrollTo: function(x, y, time, easing) {
 			easing = easing || utils.ease.circular;
+
+			this.isInTransition = this.options.useTransition && time > 0;
 
 			if (!time || (this.options.useTransition && easing.style)) {
 				this._transitionTimingFunction(easing.style);
@@ -732,7 +752,12 @@ var IScroll = (function(window, document, Math) {
 
 		_transitionTime: function(time) {
 			time = time || 0;
+
 			this.scrollerStyle[utils.style.transitionDuration] = time + 'ms';
+
+			if (!time && utils.isBadAndroid) {
+				this.scrollerStyle[utils.style.transitionDuration] = '0.001s';
+			}
 
 			// INSERT POINT: _transitionTime
 
@@ -815,8 +840,8 @@ var IScroll = (function(window, document, Math) {
 				x = +(matrix[12] || matrix[4]);
 				y = +(matrix[13] || matrix[5]);
 			} else {
-				x = +matrix.left.replace(/[^-\d]/g, '');
-				y = +matrix.top.replace(/[^-\d]/g, '');
+				x = +matrix.left.replace(/[^-\d.]/g, '');
+				y = +matrix.top.replace(/[^-\d.]/g, '');
 			}
 
 			return {
@@ -892,6 +917,7 @@ var IScroll = (function(window, document, Math) {
 				case 'MSTransitionEnd':
 					this._transitionEnd(e);
 					break;
+				case 'wheel':
 				case 'DOMMouseScroll':
 				case 'mousewheel':
 					this._wheel(e);
@@ -908,8 +934,12 @@ var IScroll = (function(window, document, Math) {
 			}
 		}
 	};
-	IScroll.ease = utils.ease;
+	IScroll.utils = utils;
 
-	return IScroll;
+	if (typeof module != 'undefined' && module.exports) {
+		module.exports = IScroll;
+	} else {
+		window.IScroll = IScroll;
+	}
 
-})(window, document, Math);
+})(window, document, Math); 

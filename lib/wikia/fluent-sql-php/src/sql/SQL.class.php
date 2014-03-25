@@ -75,6 +75,12 @@ class SQL {
 	/** @var Offset OFFSET statement */
 	protected $offset;
 
+	/** @var string cache key used to store results */
+	protected $cacheKey;
+
+	/** @var bool whether or not to cache empty results from the query */
+	protected $cacheEmpty = false;
+
 	/** @var int how long to cache the results of this query */
 	protected $cacheTtl = 0;
 
@@ -824,10 +830,20 @@ class SQL {
 	 * the results of the database query
 	 *
 	 * @param int $ttl cache time to live
+	 * @param string|null $cacheKey key to use for caching. if null, one will be auto generated
+	 * @param bool $cacheEmpty whether or not to cache an empty result
 	 * @return SQL
 	 */
-	public function cache($ttl) {
+	public function cache($ttl, $cacheKey=null, $cacheEmpty=false) {
 		$this->cacheTtl = $ttl;
+
+		if (!empty($cacheKey)) {
+			$this->cacheKey = $cacheKey;
+		}
+
+		if ($cacheEmpty) {
+			$this->cacheEmpty = $cacheEmpty;
+		}
 
 		return $this;
 	}
@@ -836,35 +852,38 @@ class SQL {
 	 * run this query, fetching from/setting to the cache if there is a TTL defined
 	 *
 	 * @param mixed $db database to query against
-	 * @param callable $recordProcessor callback to process a row in the result set
-	 * @param string|null $cacheKey optionally forced cache key. If not provided, one will be generated
+	 * @param callable|null $recordProcessor callback to process a row in the result set
 	 * @param mixed|array $defaultReturn default return value if we're unable to query and there is no cache value
 	 * @param bool $autoIterate whether or not this class should iterate over the results for us, or if callable will handle it
 	 * @return mixed|bool results returned by $callback processing of the db query result, or false on error
 	 */
-	public function runLoop($db, callable $recordProcessor, $cacheKey=null, $defaultReturn=[], $autoIterate=true) {
+	public function runLoop($db, callable $recordProcessor=null, $defaultReturn=[], $autoIterate=true) {
 		$breakDown = $this->build();
 		$cache = $this->getCache();
-		$cacheKey = isset($cacheKey) ? $cacheKey : $this->getCacheKey($breakDown);
+
+		if (empty($this->cacheKey)) {
+			$this->cacheKey = $this->getCacheKey($breakDown);
+		}
+
 		$result = false;
 
 		if ($this->cacheEnabled()) {
-			$result = $cache->get($cacheKey);
+			$result = $cache->get($this->cacheKey);
 		}
 
 		if ($result === false || $result === null) {
-			$result = $this->query($db, $breakDown, $recordProcessor, $autoIterate);
+			$result = $this->query($db, $breakDown, $autoIterate, $recordProcessor);
 
-			if ($this->cacheEnabled() && $result) {
-				$cache->set($cacheKey, $result, $this->cacheTtl);
+			if ($this->cacheEnabled() && ($result || $this->cacheEmpty)) {
+				$cache->set($this->cacheKey, $result, $this->cacheTtl);
 			}
 		}
 
 		return $result === false ? $defaultReturn : $result;
 	}
 
-	public function run($db, callable $callback, $cacheKey=null, $defaultReturn=[]) {
-		return $this->runLoop($db, $callback, $cacheKey, $defaultReturn, false);
+	public function run($db, callable $callback=null, $defaultReturn=[]) {
+		return $this->runLoop($db, $callback, $defaultReturn, false);
 	}
 
 	protected function getCacheKey(Breakdown $breakDown) {
@@ -1352,18 +1371,22 @@ class SQL {
 	 *
 	 * @param $db
 	 * @param BreakDown $breakDown
-	 * @param callable $callback
 	 * @param bool $autoIterate whether we should wrap the logic of iterating through db results for the callback
+	 * @param callable $callback
 	 * @throws \InvalidArgumentException
 	 * @return array|mixed query results
 	 */
-	protected function query($db, Breakdown $breakDown, callable $callback, $autoIterate) {
+	protected function query($db, Breakdown $breakDown, $autoIterate, callable $callback=null) {
 		if (!method_exists($db, 'query')) {
 			throw new \InvalidArgumentException;
 		}
 
 		$sql = $this->injectParams($db, $breakDown);
 		$result = $db->query($sql);
+
+		if ($callback == null) {
+			return $result;
+		}
 
 		if ($autoIterate) {
 			$data = $this->autoIterate($result, $callback);

@@ -7,6 +7,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'Video Games',
 	'wam-Entertainment' => 'Entertainment',
@@ -58,16 +59,18 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['qqq'] = array(
-	'wampage-header' => 'Header of the /wam page on corporate wiki',
-	'wampage-header-faq' => 'Header of the /wam/faq page on corporate wiki',
-	'wampage-content' => 'Content of the /wam page on corporate wiki',
-	'wampage-faq' => 'Content of the /wam/faq page on corporate wiki',
-	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text.',
-	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team',
+	'wam-html-title' => 'Title for the WAM pages. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-header-faq' => 'Header of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-content' => 'Content of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text. For information about WAM visit http://www.wikia.com/WAM',
+	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team. For information about WAM visit http://www.wikia.com/WAM',
 );
 
 
 $messages['fr'] = array(
+	'wam-html-title' => 'Moniteur d\'Activité Wikia (WAM) - fr.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Jeux vidéo',
 	'wam-Entertainment' => 'Divertissement',
@@ -119,6 +122,7 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 );
 
 $messages['de'] = array(
+	'wam-html-title' => 'Wikia Aktivitätsmonitor (WAM) - de.wikia.com/WAM',
 	'wampage-header' => 'Wikia Aktivitätsmonitor (WAM)',
 	'wam-Gaming' => 'Videospiele',
 	'wam-Entertainment' => 'Entertainment',
@@ -177,6 +181,7 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 );
 
 $messages['es'] = array(
+	'wam-html-title' => 'Monitor de Actividad de Wikia (WAM) - es.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videojuegos',
 	'wam-Entertainment' => 'Entretenimiento',
@@ -229,6 +234,7 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 );
 
 $messages['pl'] = array(
+	'wam-html-title' => 'Wikia Activity Monitor (WAM) - pl.wikia.com/WAM',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Gry',
 	'wam-Entertainment' => 'Rozrywka',
@@ -271,4 +277,57 @@ WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych społeczności Wi
 	'wam-index-filter-lang-label' => 'Język',
 	'wam-index-filter-language-default' => 'Wszystkie',
 	'wam-index-filter-vertical-default' => 'Wszystkie',
+);
+
+$messages['ja'] = array(
+	'wam-html-title' => 'ウィキアアクティビティモニター(WAM) - ja.wikia.com/WAM',
+	'wampage-header' => 'WAM',
+	'wam-Gaming' => 'ゲーム',
+	'wam-Entertainment' => 'エンターテイメント',
+	'wam-Lifestyle' => 'ライフスタイル',
+	'wampage-header-faq' => 'よくある質問',
+	'wampage-header-wam' => 'WAMスコアとは何ですか?',
+	'wampage-content' => 'ウィキアアクティビティモニター(WAM)とはウィキアバイタリティ-を計測していす。WAMとはカスタム計測機能でウィキアによって開発されビルボードやパーカースコアのように独立な計測方法で数を出し、すべての索引を作っています。
+
+WAMはトップ5000のウィキアサイトを毎日計算しています。WAMは全体と個別のランキングを含んでおり、0から100のスコア付けをしています。WAMランキングはトレンドによって動きがあり、変更がよくされます。ですので、なにがトレンドなのかチェックすることをお勧めします。WAMは我々の[[ゲーム]]、[[エンタテインメント]]、そして[[ライフスタイル]]の拠点となるページを毎日閲覧しています。
+
+[[$1|よくある質問]]',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===WAMはどうやって計算されているのですか?===
+	WAMランキングはアクセス量、コミュニティーの結束力と成長を元にしています。ランキングを操られてほしくないため、申し訳ございませんが詳しい詳細をここで提供することはできません。ですが、全てのコミュニティーが成功へと導けるように数字の測量をしております。
+===なぜWAMランキングを気にする必要があるのでしょうか?===
+	豊富な情報はパワーとなります。我々は常にデータと統計を公開しており、WAMランキングはオンラインコミュニティーのランキングとなる数字を測る方法として大きな前進を象徴しております。コミュニティーの設立者、管理者そして投稿者であるユーザーの皆様がWAMランキングを見る事によってコミュニティーに何が必要なのか知る事ができます。
+===どうしたらWAMスコアが向上しますか?===
+	WAMは複雑なアルゴリズムで成り立っており、即座にあなたのスコアとランキングを改善するための簡単な方法はありません。ですが、時間をかけ手順を踏んでいただけば確実にランクは上に上がります。まずは[[w:c:ja.community:ヘルプ:Attracting_contributors|魅力的な投稿]]をお読み下さい。 ページがアクティブであり積極的に記事が投稿され投稿者の数が多いコミュニティーはWAMのランキングで上位に位置する可能性が高くなります。ですが、システムをゲームとして扱うことはできません。より本格的で関連性が高く質の良いコンテンツは、あなたと他のユーザーの間に共鳴を生む可能性が高くなります。
+
+	[[w:c:ja.community:ヘルプ:Making_a_successful_wiki|成功するページを作るために]]で他の投稿者と連絡をとることもお薦めします。ナビゲーションはわかりやすいですか? 画像や動画がたくさんページに盛り込まれていますか?  コンテンツとのギャップはありませんか? もちろん困ったときには[[w:c:ja.community:ヘルプ:Contents|ヘルプページ]]までお越し下さい。
+
+===WAM データはどれくらい前のものを見ることができますか?===
+	WAM データは2012年1月1日までさかのぼることができます。
+
+===WAMはどこで表示されるのでしょうか?===
+	WAMは現在[[w:c:en:Video Games|ゲーム]],
+[[w:c:en:Entertainment|Entertainment]] そして[[w:c:en:Lifestyle|Lifestyle]] のハブページと各コミュニティーのプレビューのすきまに表示しています。
+
+===WAM スコアをコミュニティーに表示してもいいでしょうか?===
+我々はあなたのコミュニティーにWAMスコアやランキングを表示することはお薦めはしておりますが、その際にはプロダクトページにリンクバックされるようにお願いします。
+
+===WAMについて質問がある場合はどうすればいいですか?===
+コミュニティーサポートである[mailto:support@wikia-inc.com support@wikia-inc.com]までご連絡ください。
+        ',
+
+	'wam-index-header-rank' => 'ランキング',
+	'wam-index-header-score' => 'WAM スコア',
+	'wam-index-header-wiki-name' => 'ウィキア URL',
+	'wam-index-header-vertical' => '個別',
+	'wam-index-header-vertical-rank' => '個別ランキング',
+	'wam-index-header-admins' => '管理者',
+	'wampage-breadcrumb-back-to-wam' => 'WAM スコア',
+	'wam-index-header-peak-rank' => 'ピークランキング',
+	'wam-index-no-results' => 'あなたが検索したコミュニティーはあなたが選択した日付ではトップ5000内にランキングされておりません。WAM ランキングは毎日更新されますのでこまめにチェックして下さい。ご質問塔がございましたら[mailto:support@wikia-inc.com ウィキアコミュニティーサポート]にご連絡下さい。',
+	'wam-index-filter-search-placeholder' => '検索',
+	'wam-index-filter-sort-label' => '個別',
+	'wam-index-filter-date-label' => '日付',
+	'wam-index-filter-lang-label' => '言語',
+	'wam-index-filter-language-default' => '全て',
+	'wam-index-filter-vertical-default' => '全て',
 );

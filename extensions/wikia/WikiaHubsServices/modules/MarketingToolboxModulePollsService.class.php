@@ -6,20 +6,20 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 	public function getFormFields() {
 		$fields = array(
 			'pollsTitle' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-polls-title'),
+				'label' => wfMessage('wikia-hubs-module-polls-title')->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required'
 				)
 			),
 			'pollsQuestion' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-polls-question'),
+				'label' => wfMessage('wikia-hubs-module-polls-question')->text(),
 				'validator' => new WikiaValidatorString(),
 				'attributes' => array(
 					'class' => 'required'
@@ -33,13 +33,13 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 
 		for ($i = 1; $i <= $mandatoryOptionsLimit; $i++) {
 			$fields['pollsOption' . $i] = array(
-				'label' => wfMsg('marketing-toolbox-hub-module-polls-option-mandatory',$i),
+				'label' => wfMessage('wikia-hubs-module-polls-option-mandatory',$i)->text(),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required'
@@ -49,7 +49,7 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 
 		for ($j = $i; $j < $i+$voluntaryOptionsLimit; $j++) {
 			$fields['pollsOption' . $j] = array(
-				'label' => wfMsg('marketing-toolbox-hub-module-polls-option-voluntary',$j),
+				'label' => wfMessage('wikia-hubs-module-polls-option-voluntary',$j)->text(),
 			);
 		}
 
@@ -81,11 +81,10 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 			$model = new MarketingToolboxPollsModel();
 			$optionsLimit = $model->getTotalOptionsLimit();
 
-			$toolBoxModel = $this->getToolboxModel();
 
 			$structuredData['headline'] = $data['pollsTitle'];
 			$structuredData['pollsQuestion'] = $data['pollsQuestion'];
-			$structuredData['hubUrl'] = $toolBoxModel->getHubUrl($this->langCode, $this->verticalId);
+			$structuredData['hubUrl'] = $this->getHubUrl();
 
 			for ($i = 1; $i <= $optionsLimit; $i++) {
 				if(isset($data['pollsOption' . $i])) {
@@ -93,7 +92,6 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 				}
 			}
 		}
-
 		return $structuredData;
 	}
 
@@ -104,7 +102,17 @@ class MarketingToolboxModulePollsService extends MarketingToolboxModuleEditableS
 		return parent::render($data);
 	}
 
-	protected function getToolboxModel() {
-		return new MarketingToolboxModel();
+	protected function getHubUrl() {
+		switch($this->getHubsVersion()) {
+			case 3:
+				global $wgCityId;
+				$url = (new MarketingToolboxV3Model())->getHubUrl( $wgCityId );
+				break;
+			case 2:
+			default:
+				$url = (new MarketingToolboxModel())->getHubUrl( $this->langCode, $this->verticalId );
+		}
+
+		return $url;
 	}
 }

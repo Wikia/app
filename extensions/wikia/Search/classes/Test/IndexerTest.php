@@ -11,6 +11,8 @@ use ReflectionProperty, ReflectionMethod;
 class IndexerTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08802 ms
 	 * @covers Wikia\Search\Indexer::getPages
 	 */
 	public function testGetPages() {
@@ -37,9 +39,9 @@ class IndexerTest extends BaseTest
 		$this->assertEquals(
 				array( 'pages' => array( 123 => $resultArray ), 'missingPages' => array( 234 ) ),
 				$indexer->getPages( array( 123, 234 ) )
-		); 
+		);
 	}
-	
+
 	/**
 	 * @covers Wikia\Search\Indexer::getPage
 	 */
@@ -48,7 +50,7 @@ class IndexerTest extends BaseTest
 		$reflServiceNames = new ReflectionProperty( 'Wikia\Search\Indexer', 'serviceNames' );
 		$reflServiceNames->setAccessible( true );
 		$reflServiceNames->setValue( $indexer, array( 'DefaultContent' ) );
-		$mockIndexService = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'setPageId', 'execute' ) );
+		$mockIndexService = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', array( 'setPageId', 'getResponse' ) );
 		$mockMwService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getWikiId', 'getCanonicalPageIdFromPageId' ) );
 		$indexer
 		    ->expects( $this->any() )
@@ -81,7 +83,7 @@ class IndexerTest extends BaseTest
 		;
 		$mockIndexService
 		    ->expects( $this->once() )
-		    ->method ( 'execute' )
+		    ->method ( 'getResponse' )
 		    ->will   ( $this->returnValue( $resultArray ) )
 		;
 		$this->assertEquals(
@@ -89,8 +91,10 @@ class IndexerTest extends BaseTest
 				$indexer->getPage( 234 )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08473 ms
 	 * @covers Wikia\Search\Indexer::getIndexService
 	 */
 	public function testGetIndexService() {
@@ -109,10 +113,12 @@ class IndexerTest extends BaseTest
 		$this->assertInstanceOf(
 				 'Wikia\Search\IndexService\DefaultContent',
 				$services['DefaultContent']
-		); 
+		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08582 ms
 	 * @covers Wikia\Search\Indexer::getSolrDocument
 	 */
 	public function testGetSolrDocument() {
@@ -144,8 +150,10 @@ class IndexerTest extends BaseTest
 				$result['id']
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08538 ms
 	 * @covers Wikia\Search\Indexer::reindexBatch
 	 */
 	public function testReindexBatch() {
@@ -167,8 +175,10 @@ class IndexerTest extends BaseTest
 				$indexer->reindexBatch( array( 123 ) )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0905 ms
 	 * @covers Wikia\Search\Indexer::updateDocuments
 	 */
 	public function testUpdateDocuments() {
@@ -232,8 +242,10 @@ class IndexerTest extends BaseTest
 				$indexer->updateDocuments( $documents )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.09558 ms
 	 * @covers Wikia\Search\Indexer::reindexWiki
 	 */
 	public function testReindexWiki() {
@@ -257,7 +269,7 @@ class IndexerTest extends BaseTest
 		                  ->getMock();
 		$logger = $this->getMock( 'Wikia', [ 'log' ] );
 		$indexer = $this->getMock( 'Wikia\Search\Indexer', [ 'getLogger' ] );
-		
+
 		$indexer
 		    ->expects( $this->once() )
 		    ->method ( 'getLogger' )
@@ -300,8 +312,10 @@ class IndexerTest extends BaseTest
 		;
 		$this->assertTrue( $indexer->reindexWiki( 123 ) );
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08961 ms
 	 * @covers Wikia\Search\Indexer::deleteWikiDocs
 	 */
 	public function testDeleteWikiDocs() {
@@ -318,7 +332,7 @@ class IndexerTest extends BaseTest
 		$exception = $this->getMockBuilder( 'Exception' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$indexer
 		    ->expects( $this->any() )
 		    ->method ( 'getClient' )
@@ -369,8 +383,10 @@ class IndexerTest extends BaseTest
 				$indexer->deleteWikiDocs( 123 )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0923 ms
 	 * @covers Wikia\Search\Indexer::deleteManyWikiDocs
 	 */
 	public function testDeleteManyWikiDocs() {
@@ -387,7 +403,7 @@ class IndexerTest extends BaseTest
 		$exception = $this->getMockBuilder( 'Exception' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$indexer
 		    ->expects( $this->any() )
 		    ->method ( 'getClient' )
@@ -438,8 +454,10 @@ class IndexerTest extends BaseTest
 				$indexer->deleteManyWikiDocs( array( 123 ) )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08713 ms
 	 * @covers Wikia\Search\Indexer::deleteBatch
 	 */
 	public function testDeleteBatch() {
@@ -456,7 +474,7 @@ class IndexerTest extends BaseTest
 		$exception = $this->getMockBuilder( 'Exception' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$indexer
 		    ->expects( $this->any() )
 		    ->method ( 'getClient' )
@@ -506,8 +524,10 @@ class IndexerTest extends BaseTest
 				$indexer->deleteBatch( array( '123_234' ) )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08382 ms
 	 * @covers Wikia\Search\Indexer::reindexPage
 	 */
 	public function testReindexPage() {
@@ -517,7 +537,7 @@ class IndexerTest extends BaseTest
 		    ->expects( $this->once() )
 		    ->method ( 'getSolrDocument' )
 		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( $doc ) ) 
+		    ->will   ( $this->returnValue( $doc ) )
 		;
 		$indexer
 		    ->expects( $this->once() )
@@ -529,8 +549,10 @@ class IndexerTest extends BaseTest
 				$indexer->reindexPage( 123 )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08377 ms
 	 * @covers Wikia\Search\Indexer::deleteArticle
 	 */
 	public function testDeleteArticle() {
@@ -555,8 +577,10 @@ class IndexerTest extends BaseTest
 				$indexer->deleteArticle( 234 )
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0845 ms
 	 * @covers Wikia\Search\Indexer::getClient
 	 */
 	public function testGetClient() {
@@ -575,7 +599,7 @@ class IndexerTest extends BaseTest
 		$mwService
 		    ->expects( $this->any() )
 		    ->method ( 'getGlobal' )
-		    ->with   ( 'SolrHost' )
+		    ->with   ( 'SolrMaster' )
 		    ->will   ( $this->returnValue( 'search' ) )
 		;
 		$this->assertAttributeEmpty(
@@ -594,8 +618,10 @@ class IndexerTest extends BaseTest
 				$indexer
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08199 ms
 	 * @covers Wikia\Search\Indexer::getLogger
 	 */
 	public function testGetLogger() {
@@ -616,8 +642,10 @@ class IndexerTest extends BaseTest
 				$indexer
 		);
 	}
-	
+
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08387 ms
 	 * @covers Wikia\Search\Indexer::getMwService
 	 */
 	public function testGetMwService() {

@@ -3,7 +3,7 @@
 class RelatedPagesApiController extends WikiaApiController {
 	const PARAMETER_ARTICLE_IDS = 'ids';
 	const PARAMETER_LIMIT = 'limit';
-
+	const CACHE_DURATION = 10800;
 	/**
 	 * Get RelatedPages for a given article ID
 	 *
@@ -44,17 +44,12 @@ class RelatedPagesApiController extends WikiaApiController {
 				throw new MissingParameterApiException( 'ids' );
 			}
 
-			$this->response->setVal( 'items', $related );
-			$this->response->setVal( 'basepath', $this->wg->Server );
-
-			$this->response->setCacheValidity(
-				10800 /* 3 hours */,
-				10800 /* 3 hours */,
-				array(
-					WikiaResponse::CACHE_TARGET_BROWSER,
-					WikiaResponse::CACHE_TARGET_VARNISH
-				)
+			$this->setResponseData(
+				[ 'items' => $related, 'basepath' => $this->wg->Server ],
+				'imgUrl',
+				self::CACHE_DURATION
 			);
+
 
 			wfProfileOut( __METHOD__ );
 		} else {

@@ -1,15 +1,36 @@
 @import 'skins/oasis/css/core/color';
-@import "skins/oasis/css/mixins/clearfix";
+@import 'skins/oasis/css/mixins/clearfix';
+@import 'skins/oasis/css/mixins/transform';
 @import './../mixins/_sprite-VideoPageTool.scss';
 
-/*
- * TODO: Do not release with the definition below
- * @description This is a temporary way to disable the ad on the video wiki homepage so
- * that I can start development on it's various modules
- * https://wikia-inc.atlassian.net/browse/VID-829
- */
+$color-page-border: #bbbdc0;
+
+.WikiaMainContentContainer {
+	padding: 0;
+}
+.WikiaArticleCategories {
+	display: none;
+}
+
+.WikiaArticle {
+	h2 {
+		border-bottom: 0 none;
+	}
+}
 
 .WikiaVideo {
+	padding-bottom: 20px;
+
+	h2 {
+		color: $color-page-border;
+		font-size: 26px;
+		font-weight: 100;
+		line-height: 50px;
+		margin-bottom: 20px;
+		padding-left: 1em;
+		text-transform: uppercase;
+	}
+
 	.wv-sprite {
 		@include sprite-VideoPageTool-base();
 	}
@@ -34,11 +55,17 @@
 			width: 187px;
 		}
 
+		.browse {
+			color: $color-links;
+			float: right;
+			padding-top: 9px;
+		}
+
 		.discover {
 			color: $color-links;
 			position: relative;
 			text-align: right;
-			visibility: hidden;
+			display: none;
 
 			span {
 				display: inline-block;
@@ -61,8 +88,8 @@
 
 			form {
 				padding-top: 5px;
-				position: absolute;
-				right: 10px;
+				padding-left: 24px;
+				float: right;
 			}
 		}
 	}
@@ -82,19 +109,13 @@
 			}
 		}
 
-		.partners-title {
-			font-size: 26px;
-			margin-bottom: 20px;
-			padding-left: 10px;
-		}
-		
 		.partner-link {
 			display: block;
 			font-weight: bold;
 		}
 
 		// Icon classes for partner sprites
-		[class^="ico-"] {
+		[class^='ico-'] {
 			@extend .wv-sprite;
 			display: inline-block;
 			height: 40px;
@@ -127,8 +148,14 @@
 		}
 
 		.ico-screenplay {
-			@include sprite-VideoPageTool('ico_screenplay');
-			width: 35px;
+ 		@include sprite-VideoPageTool('ico_screenplay');
+ 		width: 35px;
 		}
 	}
+}
+
+
+.latest-videos-wrapper {
+	border-bottom: 1px solid #e2e5e2;
+	padding-bottom: 60px;
 }

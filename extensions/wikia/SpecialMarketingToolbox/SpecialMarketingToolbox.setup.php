@@ -31,9 +31,6 @@ $wgAutoloadClasses['MarketingToolboxUserPropertiesHandler'] =  $dir . 'models/Ma
 $wgAutoloadClasses['MarketingToolboxController'] = $dir . 'MarketingToolboxController.class.php';
 $wgAutoloadClasses['MarketingToolboxVideosController'] =  $dir . 'MarketingToolboxVideosController.class.php';
 
-$wgAutoloadClasses['WikiaValidatorToolboxUrl'] =  $dir . 'validators/WikiaValidatorToolboxUrl.class.php';
-$wgAutoloadClasses['WikiaValidatorUsersUrl'] =  $dir . 'validators/WikiaValidatorUsersUrl.class.php';
-
 WikiaUserPropertiesController::registerHandler('MarketingToolboxUserPropertiesHandler');
 
 // hooks
@@ -46,4 +43,4 @@ $wgSpecialPageGroups['MarketingToolbox'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['MarketingToolbox'] = $dir . 'MarketingToolbox.i18n.php';
-JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*'));
+JSMessages::registerPackage('MarketingToolbox', array('marketing-toolbox-*', 'wikia-hubs-*'));

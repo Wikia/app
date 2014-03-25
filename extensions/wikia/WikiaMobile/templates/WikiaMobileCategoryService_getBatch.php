@@ -4,6 +4,6 @@
  */?>
 <ul class=wkLst>
 <? foreach ( $itemsBatch as $item ) :?>
-	<li<?= $item['is_category'] ? ' class=cld' : '';?>><a href="<?= $item['url'] ;?>"><?= $item['name']; ?></a></li>
+	<li<?= !empty( $item['is_category'] ) ? ' class=cld' : '';?>><a href="<?= $item['url'] ;?>"><?= $item['name']; ?></a></li>
 <? endforeach ;?>
 </ul>

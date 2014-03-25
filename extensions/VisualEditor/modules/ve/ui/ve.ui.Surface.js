@@ -9,7 +9,7 @@
  * A surface is a top-level object which contains both a surface model and a surface view.
  *
  * @class
- * @extends ve.Element
+ * @extends OO.ui.Element
  *
  * @constructor
  * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
@@ -18,41 +18,45 @@
  */
 ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	// Parent constructor
-	ve.Element.call( this, config );
+	OO.ui.Element.call( this, config );
 
 	// Mixin constructor
-	ve.EventEmitter.call( this, config );
+	OO.EventEmitter.call( this, config );
 
 	// Properties
-	this.$globalOverlay = $( '<div>' );
-	this.$localOverlay = this.$$( '<div>' );
-	this.$localOverlayBlockers = this.$$( '<div>' );
-	this.$localOverlayControls = this.$$( '<div>' );
-	this.$localOverlayMenus = this.$$( '<div>' );
+	this.$globalOverlay = this.$( '<div>' );
+	this.$localOverlay = this.$( '<div>' );
+	this.$localOverlayBlockers = this.$( '<div>' );
+	this.$localOverlayControls = this.$( '<div>' );
+	this.$localOverlayMenus = this.$( '<div>' );
 	this.model = new ve.dm.Surface(
 		dataOrDoc instanceof ve.dm.Document ? dataOrDoc : new ve.dm.Document( dataOrDoc )
 	);
-	this.view = new ve.ce.Surface( this.model, this, { '$$': this.$$ } );
-	this.context = new ve.ui.Context( this, { '$$': this.$$ } );
-	this.dialogs = new ve.ui.WindowSet( this, ve.ui.dialogFactory );
+	this.view = new ve.ce.Surface( this.model, this, { '$': this.$ } );
+	this.context = new ve.ui.Context( this, { '$': this.$ } );
+	this.dialogs = new ve.ui.WindowSet( this, ve.ui.dialogFactory, { '$': this.$ } );
 	this.commands = {};
+	this.triggers = {};
 	this.enabled = true;
 	this.target = target || null;
+	if ( this.target ) {
+		this.focus = new ve.ui.WikiaFocusWidget( this );
+	}
 
 	// Initialization
-	this.$
+	this.$element
 		.addClass( 've-ui-surface' )
-		.append( this.view.$ );
+		.append( this.view.$element );
 	this.$localOverlay
 		.addClass( 've-ui-surface-overlay ve-ui-surface-overlay-local' )
 		.append( this.$localOverlayBlockers )
 		.append( this.$localOverlayControls )
 		.append( this.$localOverlayMenus );
 	this.$localOverlayMenus
-		.append( this.context.$ );
+		.append( this.context.$element );
 	this.$globalOverlay
 		.addClass( 've-ui-surface-overlay ve-ui-surface-overlay-global' )
-		.append( this.dialogs.$ );
+		.append( this.dialogs.$element );
 
 	// Make instance globally accessible for debugging
 	ve.instances.push( this );
@@ -60,9 +64,9 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.Surface, ve.Element );
+OO.inheritClass( ve.ui.Surface, OO.ui.Element );
 
-ve.mixinClass( ve.ui.Surface, ve.EventEmitter );
+OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
 
 /* Events */
 
@@ -73,12 +77,30 @@ ve.mixinClass( ve.ui.Surface, ve.EventEmitter );
  * @event position
  */
 
+/**
+ * When a command is added to the surface.
+ *
+ * @event addCommand
+ * @param {string} name Symbolic name of command and trigger
+ * @param {ve.ui.Command} command Command that's been registered
+ * @param {ve.ui.Trigger} trigger Trigger to associate with command
+ */
+
 /* Methods */
 
-/** */
+/**
+ * Initialize surface.
+ *
+ * This must be called after the surface has been attached to the DOM.
+ */
 ve.ui.Surface.prototype.initialize = function () {
-	this.view.$.after( this.$localOverlay );
-	$( 'body' ).append( this.$globalOverlay );
+	var $body = this.$( 'body' );
+
+	this.view.$element.after( this.$localOverlay );
+	if ( this.focus ) {
+		$body.append( this.focus.$element );
+	}
+	$body.append( this.$globalOverlay );
 
 	this.view.initialize();
 	// By re-asserting the current selection and forcing a poll we force selection to be something
@@ -132,20 +154,30 @@ ve.ui.Surface.prototype.getContext = function () {
  * Get dialogs window set.
  *
  * @method
- * @returns {ve.ui.WindowSet} Dialogs window set
+ * @returns {OO.ui.WindowSet} Dialogs window set
  */
 ve.ui.Surface.prototype.getDialogs = function () {
 	return this.dialogs;
 };
 
 /**
- * Get the context menu.
+ * Get list of commands keyed by trigger string.
  *
  * @method
- * @returns {ve.ui.Context} Context user interface
+ * @returns {Object.<string,ve.ui.Command>} Commands
  */
 ve.ui.Surface.prototype.getCommands = function () {
 	return this.commands;
+};
+
+/**
+ * Get list of triggers keyed by symbolic name.
+ *
+ * @method
+ * @returns {Object.<string,ve.ui.Trigger>} Triggers
+ */
+ve.ui.Surface.prototype.getTriggers = function () {
+	return this.triggers;
 };
 
 /**
@@ -156,10 +188,10 @@ ve.ui.Surface.prototype.getCommands = function () {
  */
 ve.ui.Surface.prototype.destroy = function () {
 	ve.instances.splice( ve.instances.indexOf( this ), 1 );
-	this.$.remove();
+	this.view.destroy();
+	this.$element.remove();
 	this.$globalOverlay.remove();
 	this.$localOverlay.remove();
-	this.view.destroy();
 };
 
 /**
@@ -201,9 +233,11 @@ ve.ui.Surface.prototype.execute = function ( action, method ) {
 	}
 
 	if ( action instanceof ve.ui.Trigger ) {
+		// Lookup command by trigger
 		trigger = action.toString();
 		if ( trigger in this.commands ) {
-			return this.execute.apply( this, this.commands[trigger] );
+			// Have command call execute with action arguments
+			return this.commands[trigger].execute( this );
 		}
 	} else if ( typeof action === 'string' && typeof method === 'string' ) {
 		// Validate method
@@ -220,39 +254,35 @@ ve.ui.Surface.prototype.execute = function ( action, method ) {
 /**
  * Add all commands from initialization options.
  *
- * @method
- * @param {string[]|Object[]} commands List of symbolic names of commands in the command registry
- */
-ve.ui.Surface.prototype.addCommands = function ( commands ) {
-	var i, len, command;
-
-	for ( i = 0, len = commands.length; i < len; i++ ) {
-		command = ve.ui.commandRegistry.lookup( commands[i] );
-		if ( !command ) {
-			throw new Error( 'No command registered by that name: ' + commands[i] );
-		}
-		this.addTriggers( [ve.ui.triggerRegistry.lookup( commands[i] )], command );
-	}
-};
-
-/**
- * Add triggers to surface.
+ * Commands and triggers must be registered under the same name prior to adding them to the surface.
  *
  * @method
- * @param {ve.ui.Trigger[]} triggers Triggers to associate with command
- * @param {Object} command Command to trigger
+ * @param {string[]} names List of symbolic names of commands in the command registry
+ * @throws {Error} If command has not been registered
+ * @throws {Error} If trigger has not been registered
+ * @throws {Error} If trigger is not complete
  */
-ve.ui.Surface.prototype.addTriggers = function ( triggers, command ) {
-	var i, len, trigger;
+ve.ui.Surface.prototype.addCommands = function ( names ) {
+	var i, len, key, command, trigger;
 
-	for ( i = 0, len = triggers.length; i < len; i++ ) {
-		// Normalize
-		trigger = triggers[i].toString();
-		// Validate
-		if ( trigger.length === 0 ) {
-			throw new Error( 'Incomplete trigger: ' + triggers[i] );
+	for ( i = 0, len = names.length; i < len; i++ ) {
+		command = ve.ui.commandRegistry.lookup( names[i] );
+		if ( !command ) {
+			throw new Error( 'No command registered by that name: ' + names[i] );
 		}
-		this.commands[trigger] = command.action;
+		// Normalize trigger key
+		trigger = ve.ui.triggerRegistry.lookup( names[i] );
+		if ( !trigger ) {
+			throw new Error( 'No trigger registered by that name: ' + names[i] );
+		}
+		key = trigger.toString();
+		// Validate trigger
+		if ( key.length === 0 ) {
+			throw new Error( 'Incomplete trigger: ' + trigger );
+		}
+		this.commands[key] = command;
+		this.triggers[names[i]] = trigger;
+		this.emit( 'addCommand', names[i], command, trigger );
 	}
 };
 
@@ -261,7 +291,7 @@ ve.ui.Surface.prototype.addTriggers = function ( triggers, command ) {
  * @returns {string} 'ltr' or 'rtl'
  */
 ve.ui.Surface.prototype.getDir = function () {
-	return this.$.css( 'direction' );
+	return this.$element.css( 'direction' );
 };
 
 /**

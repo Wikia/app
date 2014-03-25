@@ -36,7 +36,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	protected function prepareActionButton() {
 
-		global $wgTitle, $wgUser, $wgRequest;
+		global $wgTitle, $wgUser, $wgRequest, $wgEnableVisualEditorUI;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
@@ -89,7 +89,7 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if (isset($this->content_actions['ve-edit'])) {
+		else if (isset($this->content_actions['ve-edit']) && $wgEnableVisualEditorUI) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
@@ -596,6 +596,35 @@ class PageHeaderController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Render page header for Hubs
+	 *
+	 * @param: array $params
+	 *    key: showSearchBox (default: false)
+	 */
+	public function executeHubs($params) {
+		global $wgOut, $wgSupressPageTitle;
+		wfProfileIn(__METHOD__);
+
+		$this->displaytitle = true;
+		// Leave this for now. To discuss do we want PageTitle
+		if ( $this->displaytitle) {
+			$this->title = $wgOut->getPageTitle();
+		}
+
+		// number of pages on this wiki
+		$this->tallyMsg = wfMessage('oasis-total-articles-mainpage', SiteStats::articles() )->parse();
+
+		// if page is rendered using one column layout, show search box as a part of page header
+		$this->showSearchBox = isset($params['showSearchBox']) ? $params['showSearchBox'] : false ;
+
+		if (!empty($wgSupressPageTitle)) {
+			$this->title = '';
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,

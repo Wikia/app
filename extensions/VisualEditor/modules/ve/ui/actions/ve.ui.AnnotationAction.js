@@ -20,7 +20,7 @@ ve.ui.AnnotationAction = function VeUiAnnotationAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.AnnotationAction, ve.ui.Action );
+OO.inheritClass( ve.ui.AnnotationAction, ve.ui.Action );
 
 /* Static Properties */
 

@@ -7,11 +7,6 @@
  * @version: $Id$
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is MediaWiki extension and cannot be used standalone.\n";
-	exit( 1 ) ;
-}
-
 class ListusersData {
 	var $mCityId;
 	var $mGroups;
@@ -50,7 +45,7 @@ class ListusersData {
 			'loggedin' 	=> '',
 			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
-	
+
 		if ( $load == 1 ) {
 			$this->load();
 		}

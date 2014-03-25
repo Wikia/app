@@ -5,6 +5,9 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*csslint known-properties:false */
+/* Bug: https://github.com/stubbornella/csslint/issues/436 */
+
 /* Section edit links */
 
 .mw-editsection {

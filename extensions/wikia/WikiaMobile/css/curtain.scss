@@ -9,7 +9,7 @@
 
 	background-color: rgba(0,0,0,.4);
 
-	z-index: 10;
+	z-index: $video-overlay-z-index + 1; //For overlaying TOC handle
 
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 

@@ -10,6 +10,8 @@ use Wikia\Search\Test\BaseTest, ReflectionProperty, ReflectionMethod, Wikia\Sear
 class MatchTest extends BaseTest {
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08484 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::__construct
 	 * @covers Wikia\Search\Match\AbstractMatch::getId
 	 */
@@ -36,6 +38,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08443 ms
 	 * @covers Wikia\Search\Match\AbstractMatch::getResult
 	 */
 	public function testAbstractGetResult() {
@@ -59,6 +63,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08511 ms
 	 * @covers Wikia\Search\Match\Article::hasRedirect
 	 */
 	public function testArticleMatchHasRedirect() {
@@ -93,6 +99,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.10456 ms
 	 * @covers Wikia\Search\Match\Article::createResult
 	 */
 	public function testCreateResultArticle() {
@@ -126,6 +134,7 @@ class MatchTest extends BaseTest {
 		$touched = 'now';
 		$snippet = "This be my long snippet";
 		$highlighted = 'This be my <span class="searchmatch">long</span> snippet&hellip;';
+
 
 		$fieldsArray = array(
 				'id' => sprintf( '%s_%s', $wid, $canonicalPageId ),
@@ -224,6 +233,8 @@ class MatchTest extends BaseTest {
 	}
 	
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08899 ms
 	 * @covers Wikia\Search\Match\Wiki::createResult
 	 */
 	public function testWikiMatchCreateResult() {

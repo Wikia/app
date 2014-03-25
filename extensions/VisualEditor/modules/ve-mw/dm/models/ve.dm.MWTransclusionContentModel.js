@@ -25,7 +25,7 @@ ve.dm.MWTransclusionContentModel = function VeDmMWTransclusionContentModel( tran
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTransclusionContentModel, ve.dm.MWTransclusionPartModel );
+OO.inheritClass( ve.dm.MWTransclusionContentModel, ve.dm.MWTransclusionPartModel );
 
 /* Methods */
 

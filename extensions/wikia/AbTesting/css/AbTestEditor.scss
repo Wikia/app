@@ -1,11 +1,46 @@
 @import "skins/oasis/css/core/color";
 @import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/clearfix";
 
 $abTesting-color-border: mix($color-page, $color-text, 30);
 $abTesting-color-hover: mix($color-page, $color-text, 80);
 $abTesting-color-text-warning: #c27500;
+
+.running {
+  color: #080;
+  font-weight: bold;
+
+  .tooltip-icon {
+    background: #080;
+  }
+}
+.scheduled {
+  color: #FFA500;
+  font-weight: bold;
+
+  .tooltip-icon {
+    background: #FFA500;
+  }
+}
+.not-running {
+// no change
+}
+
+.galegend .tooltip-icon {
+  padding: 2px;
+  border-radius: 50%;
+  color: white;
+  cursor: default;
+  display: inline-block;
+  font-size: 10px;
+  height: 12px;
+  line-height: 12px;
+  text-align: center;
+  margin-top: -5px;
+  width: 12px;
+  vertical-align: middle;
+  font-weight: bold;
+}
 
 .AbTestingEditForm {
 	.input-group {

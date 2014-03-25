@@ -249,7 +249,7 @@ ve.dm.DocumentSynchronizer.prototype.queueEvent = function ( node ) {
 	// Check if this is already queued
 	var
 		args = Array.prototype.slice.call( arguments, 1 ),
-		hash = ve.getHash( args );
+		hash = OO.getHash( args );
 
 	if ( !node.queuedEventHashes ) {
 		node.queuedEventHashes = {};

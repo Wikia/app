@@ -65,6 +65,7 @@ $messages['br'] = array(
 	'piggyback-otherusername' => 'Anv implijer all',
 	'piggyback-wronguser' => "N'eo ket $1 ho anv implijer",
 	'piggyback-loginprompt' => "Adebarzhit hoc'h anv implijer hag ho ker-tremen, mar plij.",
+	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
 );
 
 /** Czech (čeština)
@@ -570,12 +571,20 @@ $messages['uk'] = array(
  * @author Baonguyen21022003
  */
 $messages['vi'] = array(
+	'piggybac-desc' => 'Cho phép đăng nhập như người dùng khác',
+	'piggyback' => 'Piggyback',
+	'piggyback-otherusername' => 'Tên người dùng khác:',
 	'piggyback-nosuchuser' => 'Không có người nào sử dụng tên tài khoản "$1".
 Tên người dùng là trường hợp nhạy cảm.
 Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
 	'piggyback-wronguser' => '$1 không phải là tên người dùng của bạn',
 	'piggyback-loginprompt' => 'Vui lòng nhập lại tên người dùng và mật khẩu của bạn.',
 	'piggyback-firstlogout' => 'Xin vui lòng đăng xuất đầu tiên trở lại tài khoản của bạn.',
+	'piggyback-itisyou' => 'Bạn không thể piggyback chính mình.',
+	'piggyback-issysopto' => 'Bạn không thể piggyback người dùng với quyền piggyback.',
+	'action-piggyback' => 'đăng nhập như người dùng khác',
+	'log-name-piggyback' => 'Nhật trình Piggyback',
+	'log-description-piggyback' => 'Nhật ký này là một kỷ lục của tài khoản piggybacks.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

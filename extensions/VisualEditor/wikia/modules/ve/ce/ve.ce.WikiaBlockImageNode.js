@@ -22,7 +22,7 @@ ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.WikiaBlockImageNode, ve.ce.WikiaBlockMediaNode );
+OO.inheritClass( ve.ce.WikiaBlockImageNode, ve.ce.WikiaBlockMediaNode );
 
 /* Static Properties */
 

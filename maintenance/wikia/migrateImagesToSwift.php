@@ -112,7 +112,7 @@ class MigrateImagesToSwift extends Maintenance {
 
 		// bucket name is fine, leave now
 		if (strlen($bucketName) >= self::SWIFT_BUCKET_NAME_MIN_LENGTH) {
-			if (!$this->hasOption('force')) return false;
+			return false;
 		}
 
 		// keep the old path

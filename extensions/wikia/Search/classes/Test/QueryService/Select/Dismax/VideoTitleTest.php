@@ -11,6 +11,8 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\QueryService\Depe
 class VideoTitleTest extends BaseTest
 {
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1137 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\VideoTitle::getSelectQuery
 	 */
 	public function testGetSelectQuery() {

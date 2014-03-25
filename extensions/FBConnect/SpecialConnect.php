@@ -160,6 +160,9 @@ class SpecialConnect extends SpecialPage {
 		switch ( $par ) {
 		case 'ChooseName':
 			$choice = $wgRequest->getText('wpNameChoice');
+			if ( empty( $this->mEmail ) ) {
+				$this->mEmail = $wgRequest->getText( 'wpEmail' );
+			}
 			if ($wgRequest->getCheck('wpCancel')) {
 				$fb->logout();
 				$this->sendError('fbconnect-cancel', 'fbconnect-canceltext');
@@ -555,6 +558,17 @@ class SpecialConnect extends SpecialPage {
 		//}
 
 		$u->setEmail( $this->mEmail );
+
+		if ( empty( $this->mEmail ) ) {
+			// Write to log in case Facebook does not provide email for the user
+			Wikia::log( __METHOD__, false,
+				sprintf( 'Facebook user "%s" [%d] without email', $this->mName, $this->mId )
+			);
+		} else {
+			// CONN-421: Auto authenticate user's email on FBConnect
+			$u->confirmEmail();
+		}
+
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
 
@@ -847,6 +861,7 @@ class SpecialConnect extends SpecialPage {
 		<form id="chooseNameForm" action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
 			<fieldset id="mw-fbconnect-choosename">
 				<legend>' . wfMsg('fbconnect-chooselegend') . '</legend>
+				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userinfo ) . '">
 				<table>');
 		// Let them attach to an existing user if $fbConnectOnly allows it
 		if (!$fbConnectOnly) {

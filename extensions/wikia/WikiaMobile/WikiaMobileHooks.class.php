@@ -10,10 +10,6 @@ class WikiaMobileHooks {
 	 * @var null
 	 */
 	static private $mediaNsString = null;
-	/**
-	 * @var bool
-	 */
-	static private $displayErrorPage = false;
 
 	/**
 	 * @param $parser Parser
@@ -325,9 +321,14 @@ class WikiaMobileHooks {
 					wfProfileOut( __METHOD__ );
 					return true;
 				}
+			//Do not show error on non-blank help pages (including shared help)
+			} else if ( $ns == NS_HELP && ( $title->isKnown() ||
+					is_callable('SharedHelpArticleExists') && SharedHelpArticleExists( $title ) ) ) {
+				wfProfileOut( __METHOD__ );
+				return true;
 			}
 
-			self::$displayErrorPage = true;
+			WikiaMobileErrorService::$displayErrorPage = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -345,7 +346,7 @@ class WikiaMobileHooks {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
-		if( $app->checkSkin( 'wikiamobile', $skin ) && self::$displayErrorPage ) {
+		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
 			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );

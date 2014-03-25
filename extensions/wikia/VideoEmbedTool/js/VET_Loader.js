@@ -28,7 +28,8 @@
 	var resourcesLoaded = false,
 		modalOnScreen = false,
 		templateHtml = '',
-		VET_loader = {};
+		VET_loader = {},
+		UserLoginModal = window.UserLoginModal;
 
 	/*
 	 * @param {Object} options Control options sent to VET from extensions
@@ -41,7 +42,8 @@
 			elem && elem.stopThrobbing();
 			return;
 		} else if (wgUserName == null) {
-			UserLoginModal.show({
+			UserLoginModal.show( {
+				origin: 'vet',
 				callback: function() {
 					UserLogin.forceLoggedIn = true;
 					window.VET_loader.load(options);

@@ -62,7 +62,8 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$out = $this->wg->Out;
+		$wg = $this->wg;
+		$out = $wg->Out;
 		$titleText = $out->getPageTitle();
 		$title = $out->getTitle();
 		$namespace = ($title instanceof Title) ? $title->getNamespace() : -1;
@@ -84,7 +85,7 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 					$userName = wfMessage( 'wikiamobile-anonymous-edited-by' )->text();
 				} else {
 					//Wrap username in a link to user page
-					$userName = "<a href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
+					$userName = "<a class=userpage-link href='{$user->getUserPage()->getLocalUrl()}'>{$userName}</a>";
 				}
 
 				$this->response->setVal(
@@ -100,7 +101,22 @@ class  WikiaMobilePageHeaderService extends WikiaService {
 						->params( $userName )
 						->text()
 				);
+
 			}
+		}
+
+		if( $wg->EnableArticleCommentsExt &&
+			in_array( $title->getNamespace(), $wg->ContentNamespaces ) &&
+			!$wg->Title->isMainPage() &&
+			$wg->request->getVal( 'action', 'view' ) == 'view'
+		) {
+			$numberOfComments = ArticleCommentList::newFromTitle( $title )->getCountAllNested();
+			$this->response->setVal(
+				'commentCounter',
+				wfMessage( 'wikiamobile-article-comments-counter' )
+					->params( $numberOfComments )
+					->text()
+			);
 		}
 
 		$this->response->setVal( 'editLink', $this->getTitleEditUrl() );

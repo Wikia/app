@@ -113,6 +113,7 @@ $messages['ar'] = array(
 $messages['az'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => 'Təşəkkürlər!',
+	'wikiapoll-vote' => 'Səs ver!',
 	'wikiapoll-question-label' => 'Sual',
 	'wikiapoll-cancel-label' => 'Ləğv et',
 	'wikiapoll-publish-label' => 'Naşir',
@@ -171,6 +172,8 @@ $messages['br'] = array(
 	'wikiapoll-addnewitem-label' => 'Ouzhpennañ un elfenn nevez',
 	'wikiapoll-cancel-label' => 'Nullañ',
 	'wikiapoll-publish-label' => 'Embann',
+	'wikiapoll-error-duplicate' => 'Ur sontadeg en anv-se zo anezhi dija.',
+	'wikiapoll-error-invalid-title' => 'Direizh eo testenn ar goulenn.',
 	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
 	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
 	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
@@ -270,6 +273,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 merduma|$1 merduman}} rey da',
@@ -281,7 +285,7 @@ $messages['diq'] = array(
 	'wikiapoll-editpoll-headline' => 'Anketi bıvurnê',
 	'wikiapoll-question-label' => 'Pers',
 	'wikiapoll-addnewitem-label' => 'Çiyo newe de ke',
-	'wikiapoll-cancel-label' => 'Bıterkne',
+	'wikiapoll-cancel-label' => 'Bıtexelne',
 	'wikiapoll-publish-label' => 'Vıla ke',
 	'wikiamobile-wikiapoll-poll' => 'Anket',
 );
@@ -486,9 +490,14 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author BryghtShadow
+ * @author Tommy6
  */
 $messages['ja'] = array(
 	'wikiapoll-votes' => '{{PLURAL:$1|$1 票}}',
+	'wikiamobile-wikiapoll-open-poll' => '投票にご協力ください',
+	'wikiamobile-wikiapoll-thanks-voting' => 'ご投票ありがとうございます!',
+	'wikiamobile-wikiapoll-poll' => '投票',
+	'wikiamobile-wikiapoll-user-voted' => '「$1」に投票しました',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

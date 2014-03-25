@@ -31,10 +31,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 	const BATCH_SIZE = 100;
 	const COMMUNITY_ID = 177;
 	const DELETION_REASON = 'dead wiki';
-	
+
 	const DELETE_NOW = 'deleteNow';
 	const DELETE_SOON = 'deleteSoon';
-	
+
 	static protected $conditions = array(
 		self::DELETE_NOW => array(
 			'created' => array(
@@ -92,7 +92,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		)
 	);
 	static protected $FETCH_TIME_LIMIT = '-243 days';
-	
+
 	protected $options = array();
 	protected $flags = array(
 //		WikiFactory::FLAG_CREATE_DB_DUMP => true,
@@ -100,14 +100,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 		WikiFactory::FLAG_DELETE_DB_IMAGES => true,
 		WikiFactory::FLAG_FREE_WIKI_URL => true,
 	);
-	
+
 	protected $action = 'clean';
 	protected $ids = null;
 	protected $from = null;
 	protected $to = null;
 	protected $verbose = false;
 	protected $debug = false;
-	
+
 	protected $deletedCount = 0;
 	protected $deletedLimit = 0;
 	protected $readOnly = false;
@@ -119,7 +119,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$this->options = $options;
 		foreach ($this->options as $k => $v) {
 			$k = strtolower($k);
-			
+
 			if ($k == 'action') {
 				$this->action = $v;
 			} else if ($k == 'ids') {
@@ -152,16 +152,16 @@ class AutomatedDeadWikisDeletionMaintenance {
 			$result |= intval($k);
 		return $result;
 	}
-	
+
 	protected $statsCache = null;
-	 
+
 	protected function getStatsCache() {
 		if (empty($this->statsCache)) {
 			$this->statsCache = new WikiEvaluationCache();
 		}
 		return $this->statsCache;
 	}
-	
+
 	protected function ts( $ts ) {
 		if ($ts == 0) {
 			return '1970-01-01 00:00:01';
@@ -169,44 +169,44 @@ class AutomatedDeadWikisDeletionMaintenance {
 			return wfTimestamp( TS_DB, $ts );
 		}
 	}
-		
+
 	protected function updateWikiStats( $wiki ) {
 		$data = $wiki;
-		
+
 		$data['city_id'] = $data['id'];
 		$data['city_public'] = $data['public'];
 		$data['created'] = $this->ts($data['created']);
 		$data['lastedited'] = $this->ts($data['lastedited']);
-		
+
 		$catData = WikiFactory::getCategory($data['id']);
 		$data['city_cat_name'] = $catData ? $catData->cat_name : '';
-		
+
 		unset($data['public']);
 		unset($data['id']);
 		unset($data['url']);
-		
+
 		$this->getStatsCache()->update($data);
 	}
-	
+
 	protected function deleteWikiStats( $id ) {
 		$this->getStatsCache()->delete($id);
 	}
-		
-	
+
+
 	protected $oracle = null;
-	
+
 	protected function getOracle() {
 		if (empty($this->oracle)) {
 			$this->oracle = new WikiEvaluationOracle(self::$conditions);
 		}
 		return $this->oracle;
 	}
-	
+
 	protected $wikis = array();
-	
+
 	protected $deleted = array();
 	protected $toBeDeleted = array();
-	
+
 	protected function parseWikiDescription( $s ) {
 		$s = trim($s);
 		$matches = array();
@@ -223,19 +223,19 @@ class AutomatedDeadWikisDeletionMaintenance {
 		}
 		return false;
 	}
-	
+
 	protected function runEvaluationScript( $ids, &$output = '' ) {
 		global $wgWikiaLocalSettingsPath;
-		
+
 		$idsList = implode(',',$ids);
 		$cmd = "SERVER_ID=" . self::COMMUNITY_ID . " php " . __FILE__ . " ".
 			"--action evaluate --ids {$idsList} --conf {$wgWikiaLocalSettingsPath}";
-			
+
 		$exitCode = null;
 		$output = wfShellExec($cmd, $exitCode);
 		return $exitCode;
 	}
-	
+
 	protected function parseEvaluationScriptOutput( $output, $initialData = array() ) {
 		if ($this->verbose) {
 			echo $output;
@@ -253,7 +253,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 //				var_dump("parsing",$initialData[$data['id']],$data,$wikis[$data['id']]);
 			}
 		}
-		
+
 		return $wikis;
 	}
 
@@ -269,10 +269,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$result[$classification][$id] = $wiki;
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
+	// Current criteria for wikis to skip:
+	// Any wiki which is set "official" in the CityVisualization/ManageWikiaHome tool
+	// Any wiki which has the WikiFactory "protect" flag set
+
 	protected function getWikisList() {
 		global $wgExternalSharedDB;
 
@@ -307,7 +311,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				'v' => array( 'LEFT JOIN', 'l.city_id = v.city_id' ),
 			)
 		);
-		
+
 		$wikis = array();
 		while ($row = $res->fetchRow($res)) {
 			$wikis[] = array(
@@ -320,10 +324,10 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$db->freeResult($res);
 
 		echo "Found ".count($wikis)." wikis for further analysis.\n";
-		
+
 		return $wikis;
 	}
-	
+
 	protected function doDisableWiki( $wikiId, $flags, $reason = '' ) {
 		// TOOD: copied from WikiFactory::disableWiki since it's not released yet
 		WikiFactory::setFlags( $wikiId, $flags );
@@ -334,7 +338,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 		WikiFactory::clearCache( $wikiId );
 		return $res !== false;
 	}
-	
+
 	protected function disableWikis( $wikis, &$deleted = array(), &$notDeleted = array() ) {
 		$flags = $this->getFlags();
 		foreach ($wikis as $id => $wiki) {
@@ -364,7 +368,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 		}
 	}
-	
+
 	protected function batchProcess( $wikis ) {
 		// evaluate wikis in groups of 100 wikis
 		while ($batch = array_splice($wikis,0,self::BATCH_SIZE)) {
@@ -387,9 +391,9 @@ class AutomatedDeadWikisDeletionMaintenance {
 						unset($ids[$wiki['id']]);
 					}
 					$evaluated = $evaluated + $evaluatedNow;
-				}				
+				}
 			}
-			
+
 			// classify wikis
 			$classifications = $this->getOracleClassification($evaluated);
 			// save stats
@@ -409,7 +413,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			}
 		}
 	}
-	
+
 	protected function sendEmail( $from, $to, $subject, $body, $bodyNoEntries, $fname, $wikis ) {
 		$fromAddress = new MailAddress($from);
 		$toAddress = new MailAddress($to);
@@ -426,11 +430,11 @@ class AutomatedDeadWikisDeletionMaintenance {
 			UserMailer::send( $toAddress, $fromAddress, $subject, $bodyNoEntries, null, null , 'dead-wikis' );
 		}
 	}
-	
+
 	protected function sendEmails() {
 		$date = gmdate('Ymd');
 		$dateNice = gmdate('Y-m-d');
-		
+
 		$count = count($this->deleted);
 		echo "Sending e-mail about $count deleted wikis...\n";
 		$this->sendEmail(
@@ -441,7 +445,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"No wiki has been found today.",
 			"wikis-deleted-{$date}",
 			$this->deleted);
-		
+
 		$count = count($this->toBeDeleted);
 		echo "Sending e-mail about $count wikis that may be deleted soon...\n";
 		$this->sendEmail(
@@ -453,7 +457,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			"wikis-to-be-deleted-{$date}",
 			$this->toBeDeleted);
 	}
-	
+
 	protected function actionClean() {
 		$wikis = $this->getWikisList();
 		$this->batchProcess($wikis);
@@ -461,13 +465,13 @@ class AutomatedDeadWikisDeletionMaintenance {
 		if ($this->mailing) {
 			$this->sendEmails();
 		}
-		
+
 		if ($this->debug) {
 #			var_dump("deleted",$this->deleted);
 #			var_dump("to be deleted",$this->toBeDeleted);
 		}
 	}
-	
+
 	protected function actionEvaluate() {
 		global $wgCityId;
 		$ids = $this->ids;
@@ -509,7 +513,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 				$this->error("error: invalid action provided: \"{$this->action}\"",true);
 		}
 	}
-	
+
 	static protected function adjustSettings() {
 		/*
 		$secondsPerDay = 24 * 60 * 60;
@@ -519,14 +523,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 		$start = strtotime('19.03.2012 00:00:00 UTC');
 		$time = time();
 		$passed = intval(($time - $start) / $secondsPerDay);
-		
+
 		$shift = max(0,intval($passed/7)*4 + min($passed%7,3));
 		$weeks = max($minWeek,$maxWeek-$shift);
-	
+
 		$days = $weeks * 7;
 		$ndays = max($weeks-1,$minWeek) * 7;
 		$kdays = $ndays - 2;
-	
+
 		self::$conditions[self::DELETE_NOW]['created']['max'] = "-$days days";
 		self::$conditions[self::DELETE_SOON]['created']['max'] = "-$ndays days";
 		self::$FETCH_TIME_LIMIT = "-$kdays days";

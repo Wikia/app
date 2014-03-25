@@ -9,17 +9,17 @@
  * Action factory.
  *
  * @class
- * @extends ve.Factory
+ * @extends OO.Factory
  * @constructor
  */
 ve.ui.ActionFactory = function VeUiActionFactory() {
 	// Parent constructor
-	ve.Factory.call( this );
+	OO.Factory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.ActionFactory, ve.Factory );
+OO.inheritClass( ve.ui.ActionFactory, OO.Factory );
 
 /* Methods */
 

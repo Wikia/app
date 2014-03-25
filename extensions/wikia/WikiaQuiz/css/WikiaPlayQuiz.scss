@@ -1,8 +1,6 @@
-@import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
 @import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/transform";
 @import "skins/oasis/css/mixins/transition";
 @import "skins/oasis/css/core/color";
@@ -42,9 +40,9 @@ $dark-wiki: 1;
 }
 
 .quiz-bubble {
-	@include border-radius(10px);
 	@include box-shadow(0, 2px, 5px, #000);
 	@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+	border-radius: 10px;
 	color: $color-header-text;
 	font-size: 28px;
 	line-height: 36px;
@@ -145,9 +143,9 @@ $dark-wiki: 1;
 		top: 0;
 		width: $panel-width;
 		.number {
-			@include border-radius(100px);
 			@include box-shadow(0, 5px, 20px, #000, false, -5px);
 			@include linear-gradient($color-header, top, $bubble-color-alt, 0, $color-header, 100%);
+			border-radius: 100px;
 			color: $color-header-text;
 			font-size: 144px;
 			height: 110px;
@@ -166,7 +164,7 @@ $dark-wiki: 1;
 			text-align: center;
 		}
 		.title-image {
-			@include opacity(20);
+			opacity: .2;
 		}
 	}
 	.questions {
@@ -197,8 +195,8 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				@include border-radius($border-radius);
 				background-color: $color-body;
+				border-radius: $border-radius;
 				color: white;
 				font-size: 12px;
 				height: $height;
@@ -231,14 +229,14 @@ $dark-wiki: 1;
 				$border-radius: $logical-height/2;
 				$padding-top: 25px;
 				$height: $logical-height - $padding-top;
-				@include border-radius($border-radius);
-				@include opacity(10);
 				background-color: #999;
+				border-radius: $border-radius;
 				color: white;
 				font-size: 450px;
 				height: $height;
 				left: calc(50% - (#{$question-number-width}/2));
 				line-height: 450px;
+				opacity: .1;
 				padding-top: $padding-top;
 				position: absolute;
 				text-align: center;
@@ -438,8 +436,8 @@ $dark-wiki: 1;
 				$padding-top: 15px;
 				$height: $logical-height - $padding-top;
 				$width: 180px;
-				@include border-radius($border-radius);
 				background-color: $color-links;
+              	border-radius: $border-radius;
 				color: white;
 				font-size: 125px;
 				height: $height;
@@ -502,7 +500,7 @@ $dark-wiki: 1;
 			}
 		}
 		.title-image {
-			@include opacity(20);
+			opacity: .2;
 		}
 	}
 	.more-info {
@@ -520,17 +518,17 @@ $dark-wiki: 1;
 		}
 	}
 	.correct-icon, .wrong-icon {
-		@include opacity(99);
 		@include transition-shorthand(all 200ms ease-in);
 		height: 136px;
 		left: 25px;
+		opacity: .99;
 		position: absolute;
 		top: 25px;
 		width: 132px;
 		z-index: frame-z + 1;
 		&.effect {
-			@include opacity(0);
 			@include transform(translate(0,-136px) scale(2));
+			opacity: 0;
 		}
 	}
 	.correct-icon {
@@ -548,13 +546,13 @@ $dark-wiki: 1;
 
 .QuizStatus {
 	@include linear-gradient($color-header, top, mix($color-header, #fff, 80%), 18%, mix($color-header, #fff, 90%), 35%, $color-header, 53%);
-	@include border-radius(7px);
 	@include box-shadow(0, 2px, 5px, #111);
-	top: -85px;
+	border-radius: 7px;
 	height: 55px;
 	margin: 0 auto;
 	position: relative;
 	text-align: center;
+	top: -85px;
 	width: $panel-width + 14px;
 	img {
 		position: absolute;
@@ -572,7 +570,7 @@ $dark-wiki: 1;
 		padding-top: 20px;
 		width: 110px;
 		.indicator {
-			@include border-radius(7px);
+			border-radius: 7px;
 			background-color: mix($color-header, #fff, 70%);
 			float: left;
 			height: 14px;
@@ -597,11 +595,11 @@ $dark-wiki: 1;
 		width: 7px;
 	}
 	&:before {
-		@include border-radius-sw(7px);
+		border-bottom-left-radius: 7px;
 		left: 0;
 	}
 	&:after {
-		@include border-radius-se(7px);
+		border-bottom-right-radius: 7px;
 		right: 0;
 	}
 }

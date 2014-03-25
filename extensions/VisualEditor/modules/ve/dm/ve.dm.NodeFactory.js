@@ -9,17 +9,17 @@
  * DataModel node factory.
  *
  * @class
- * @extends ve.Factory
+ * @extends OO.Factory
  * @constructor
  */
 ve.dm.NodeFactory = function VeDmNodeFactory() {
 	// Parent constructor
-	ve.Factory.call( this );
+	OO.Factory.call( this );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.NodeFactory, ve.Factory );
+OO.inheritClass( ve.dm.NodeFactory, OO.Factory );
 
 /* Methods */
 
@@ -237,21 +237,6 @@ ve.dm.NodeFactory.prototype.doesNodeHandleOwnChildren = function ( type ) {
 ve.dm.NodeFactory.prototype.isNodeInternal = function ( type ) {
 	if ( type in this.registry ) {
 		return this.registry[type].static.isInternal;
-	}
-	throw new Error( 'Unknown node type: ' + type );
-};
-
-/**
- * Check if the node is focusable.
- *
- * @method
- * @param {string} type Node type
- * @returns {boolean} Whether the node is focusable
- * @throws {Error} Unknown node type
- */
-ve.dm.NodeFactory.prototype.isNodeFocusable = function ( type ) {
-	if ( ve.dm.nodeFactory.lookup( type ) ) {
-		return ve.isMixedIn( ve.ce.nodeFactory.registry[type], ve.ce.FocusableNode );
 	}
 	throw new Error( 'Unknown node type: ' + type );
 };

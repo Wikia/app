@@ -91,19 +91,6 @@ function gracenote_getAnalyticsHtml($google_action){
 } // end gracenote_getAnalyticsHtml()
 
 ////
-// Disable view source when trying to "edit" a page in the Gracenote namespace.
-////
-function gracenote_disableEdit(OutputPage &$out, &$sk){
-	GLOBAL $wgUser,$wgTitle;
-	$retVal = true;
-	if( ($wgTitle->getNamespace() == NS_GRACENOTE)  && (isset($_GET['action']) && $_GET['action']=="edit") && (!$wgUser->isAllowed( 'editgracenote' )) ) {
-		$out->mBodytext = "Sorry, but the source can not be viewed on Gracenote pages due to licensing requirements.";
-		$retVal = false;
-	}
-	return $retVal;
-} // end gracenote_disableEdit()
-
-////
 // Returns a message explaining why print functionality has been disabled.
 ////
 function gracenote_getPrintDisabledNotice(){

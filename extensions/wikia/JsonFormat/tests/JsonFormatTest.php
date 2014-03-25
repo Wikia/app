@@ -29,6 +29,8 @@ class JsonFormatTest extends WikiaBaseTest {
 
 	/* Main tests */
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.21435 ms
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatching( $wikiText, $expectedStructure = null ) {
@@ -41,6 +43,8 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.1468 ms
 	 * @dataProvider StructureProvider
 	 */
 	public function testStructureMatchingWithLazyLoad( $wikiText, $expectedStructure = null ) {
@@ -55,6 +59,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatching( $wikiText, $expectedContent ) {
@@ -66,6 +71,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @dataProvider ContentProvider
 	 */
 	public function testContentMatchingWithLazyLoad( $wikiText, $expectedContent ) {

@@ -9,7 +9,7 @@ class MovieclipsVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
 		$height =  $this->getHeight( $width );
 		$autoplayParam = self::$autoplayParam;
 		$autoplayValue = $autoplay ? self::$autoplayValue : 'false';
@@ -35,7 +35,11 @@ class MovieclipsVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array( 'html' => $html );
+		return array(
+			'html' => $html,
+			'width' => $width,
+			'height' => $height,
+		);
 	}
 
 }
