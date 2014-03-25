@@ -36,7 +36,7 @@ class YoukuApiWrapper extends ApiWrapper {
 			if ( strpos( $path, "_" ) !== false ) {
 				$id = explode( "_", $path )[0];
 			} else {
-				$id = explode( ".html", path )[0];
+				$id = explode( ".html", $path )[0];
 			}
 		};
 
