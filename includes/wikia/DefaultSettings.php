@@ -1341,3 +1341,19 @@ $wgDevESLog = false;
 $wgApiAccess = [
 	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
 ];
+
+/**
+ * Solarium configuration for Lyrics API
+ */
+$wgLyricsSolariumOptions = [
+	'host' => 'search-s16',
+	'port' => 8983,
+	'path' => '/solr/',
+	'core' => 'lyricsapi',
+];
+
+/**
+ * @name $wgEnableLyricsApi
+ * Enables Lyrics API extension (new Lyrics Wikia API)
+ */
+$wgEnableLyricsApi = false;

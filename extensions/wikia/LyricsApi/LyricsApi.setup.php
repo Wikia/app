@@ -17,9 +17,14 @@ $wgExtensionCredits['api'][] = array(
 	'version' => 1.0
 );
 
+// Load needed classes
 $wgAutoloadClasses['AbstractLyricsApiHandler'] = $dir . '/LyricsHandlers/AbstractLyricsApiHandler.class.php';
-$wgAutoloadClasses['MockLyricsApiHandler'] = $dir . '/LyricsHandlers/MockLyricsApiHandler.class.php';
+$wgAutoloadClasses['SolrLyricsApiHandler'] = $dir . '/LyricsHandlers/SolrLyricsApiHandler.class.php';
 $wgAutoloadClasses['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 
-$wgWikiaApiControllers['LyricsApiController'] = "{$dir}/LyricsApiController.class.php";
+// Add new API controller to API controllers list
+$wgWikiaApiControllers['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 
+require_once( $dir . '/LyricsApiConstants.php' );
+
+require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );

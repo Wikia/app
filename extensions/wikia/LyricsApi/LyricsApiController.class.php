@@ -9,23 +9,79 @@ class LyricsApiController extends WikiaController {
 	const PARAM_ALBUM = 'album';
 	const PARAM_SONG = 'song';
 	const PARAM_QUERY = 'query';
+	const PARAM_LIMIT = 'limit';
+	const PARAM_OFFSET = 'offset';
 
 	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
 
+	const SEARCH_RESULTS_DEFAULT_LIMIT = 25;
+	const SEARCH_RESULTS_DEFAULT_OFFSET = 0;
+
 	private $lyricsApiHandler = null;
 
+	/**
+	 * @desc Constructor, gets the configuration from global $wgLyricsSolariumOptions variable and sets data handler
+	 */
 	public function __construct() {
 		parent::__construct();
-		$this->lyricsApiHandler = new MockLyricsApiHandler();
+		$this->lyricsApiHandler = new SolrLyricsApiHandler( [
+			'adapteroptions' => F::app()->wg->LyricsSolariumOptions
+		] );
 	}
 
+	/**
+	 * @desc Calls methods of data handlers with given params. Sets caching and response format to JSON.
+	 *
+	 * @param Array $params
+	 * @param String $method
+	 *
+	 * @throws NotFoundApiException
+	 */
 	private function getData( $params, $method ) {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
 
+		if( is_null( $results ) ) {
+			throw new NotFoundApiException( $this->getNotFoundDetails( $method ) );
+		}
+
 		$this->response->setVal( 'result', $results );
 		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+	}
+
+	/**
+	 * @desc Returns proper details message for NotFoundApiException
+	 *
+	 * @param String $method
+	 *
+	 * @return string
+	 */
+	private function getNotFoundDetails( $method ) {
+		switch( $method ) {
+			case 'getArtist':
+				$details = 'Artist not found';
+				break;
+			case 'getAlbum':
+				$details = 'Album not found';
+				break;
+			case 'getSong':
+				$details = 'Song not found';
+				break;
+			case 'searchArtist':
+				$details = 'Could not found artist which match the criteria';
+				break;
+			case 'searchSong':
+				$details = 'Could not found album which match the criteria';
+				break;
+			case 'searchLyrics':
+				$details = 'Could not found song which match the criteria';
+				break;
+			default:
+				$details = 'No results found';
+		}
+
+		return $details;
 	}
 
 	/**
@@ -128,7 +184,8 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchArtist() {
 		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'searchArtist' );
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->getData( [ $query, $limit, $offset ], 'searchArtist' );
 	}
 
 	/**
@@ -142,7 +199,8 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchSong() {
 		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'searchSong' );
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->getData( [ $query, $limit, $offset ], 'searchSong' );
 	}
 
 	/**
@@ -156,49 +214,29 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function searchLyrics() {
 		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'searchLyrics' );
+		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+		$this->getData( [ $query, $limit, $offset ], 'searchLyrics' );
 	}
 
 	/**
-	 * @desc Gets suggestion of an artist
+	 * @desc Gets limit and offset from request if they're not passed it returns defaults
 	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result artists names
-	 *
+	 * @return array
 	 * @throws InvalidParameterApiException
 	 */
-	public function suggestArtist() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestArtist' );
-	}
+	private function getPaginationParamsFromRequest() {
+		$limit = $this->wg->Request->getVal( self::PARAM_LIMIT, self::SEARCH_RESULTS_DEFAULT_LIMIT );
+		$offset = $this->wg->Request->getVal( self::PARAM_OFFSET, self::SEARCH_RESULTS_DEFAULT_OFFSET );
 
-	/**
-	 * @desc Gets albums suggestions
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result albums names
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	public function suggestAlbum() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestAlbum' );
-	}
+		if( $limit <= 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_LIMIT );
+		}
 
-	/**
-	 * @desc Gets songs suggestions
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @response Array $result songs names
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	public function suggestSong() {
-		$query = $this->getQueryFromRequest();
-		$this->getData( [ $query ], 'suggestSong' );
+		if( $offset < 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_LIMIT );
+		}
+
+		return [ $limit, $offset ];
 	}
 
 }

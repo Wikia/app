@@ -5,27 +5,6 @@
  * @desc Provides mocked data for LyricsApi
  */
 class MockLyricsApiHandler extends AbstractLyricsApiHandler {
-	const API_ENTRY_POINT = 'wikia.php';
-	const API_CONTROLLER_NAME = 'LyricsApi';
-
-	/**
-	 * @desc Builds an URL to the API
-	 *
-	 * @param Array $params params added to the URL
-	 *
-	 * @return string
-	 */
-	private function buildUrl( $params ) {
-		global $wgServer;
-		return implode('',
-			[
-				$wgServer,
-				'/',
-				self::API_ENTRY_POINT,
-				'?',
-				http_build_query( $params )
-			]);
-	}
 
 	private function generateSongs( $count, $artistName, $albumName ) {
 		$songs = [];
@@ -49,21 +28,21 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	/**
-         * @desc Returns an URL to random placekitten.com image
-         *
-         * @return string
-         */
-        private function getImage() {
-                return 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
-        }
+	 * @desc Returns an URL to random placekitten.com image
+	 *
+	 * @return string
+	 */
+	private function getImage() {
+		return 'http://placekitten.com/' . rand(128, 1024) . '/' . rand(128, 1024) . '/';
+	}
 
 	/**
-         * @desc Returns mocked data about an artist
-         *
-         * @param String $artist artist name
-         *
-         * @return stdClass
-         */
+	 * @desc Returns mocked data about an artist
+	 *
+	 * @param String $artist artist name
+	 *
+	 * @return stdClass
+	 */
 	public function getArtist( $artistName ) {
 		$result = new stdClass();
 		$result->name = $artistName;
@@ -103,13 +82,13 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	/**
-         * @desc Returns mocked data about an album
-         *
-         * @param String $artistName
-         * @param String $albumName
-         *
-         * @return StdClass
-         */
+	 * @desc Returns mocked data about an album
+	 *
+	 * @param String $artistName
+	 * @param String $albumName
+	 *
+	 * @return StdClass
+	 */
 	public function getAlbum( $artistName, $albumName ) {
 		$album = new StdClass();
 		$album->name = $albumName;
@@ -122,7 +101,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$artist = new StdClass();
 		$artist->name = $artistName;
-		$artist->image = $this->getImage();
 		$artist->url = $this->buildUrl([
 			'controller' => self::API_CONTROLLER_NAME,
 			'method' => 'getArtist',
@@ -151,7 +129,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$artist = new StdClass();
 		$artist->name = $artistName;
-		$artist->image = $this->getImage();
 		$artist->url = $this->buildUrl([
 			'controller' => self::API_CONTROLLER_NAME,
 			'method' => 'getArtist',
@@ -180,16 +157,17 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for an artist
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchArtist( $query ) {
+	public function searchArtist( $query, $limit, $offset ) {
 		$artists = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$artist = new StdClass();
 			$artist->name = $query . $i;
 			$artist->image = $this->getImage( $artist->name . '.jpg' );
-			$artist->image = $this->getImage();
 			$artist->url = $this->buildUrl([
 				'controller' => self::API_CONTROLLER_NAME,
 				'method' => 'getArtist',
@@ -204,10 +182,12 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for a song
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchSong( $query ) {
+	public function searchSong( $query, $limit, $offset ) {
 		$songs = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$song = new StdClass();
@@ -229,10 +209,12 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Returns mocked search results for lyrics
 	 *
 	 * @param String $query
+	 * @param Integer $limit
+	 * @param Integer $offset
 	 *
 	 * @return array
 	 */
-	public function searchLyrics( $query ) {
+	public function searchLyrics( $query, $limit, $offset ) {
 		$songs = [];
 		for ( $i = 0; $i < 5; $i++ ) {
 			$song = new StdClass();
@@ -247,51 +229,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 			]);
 			$song->highlight = 'i love '.$song->name.' desperately';
 			$songs[] = $song;
-		}
-		return $songs;
-	}
-
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestArtist( $query ) {
-		$artists = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$artists[] = $query. $i;
-		}
-		return $artists;
-	}
-
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestAlbum( $query ) {
-		$albums = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$albums[] = $query. $i;
-		}
-		return $albums;
-	}
-
-	/**
-	 * @desc Returns mocked suggestions for an artist
-	 *
-	 * @param String $query
-	 *
-	 * @return array
-	 */
-	public function suggestSong( $query ) {
-		$songs = [];
-		for ( $i = 0; $i < 5; $i++ ) {
-			$songs[] = $query. $i;
 		}
 		return $songs;
 	}
