@@ -47,6 +47,11 @@ var GptSlotConfig = function() {
 			'PREFOOTER_LEFT_BOXAD': {'size': '300x250', 'tile': 7, 'loc': 'footer'},
 			'PREFOOTER_RIGHT_BOXAD': {'size': '300x250', 'tile': 8, 'loc': 'footer'},
 			'WIKIA_BAR_BOXAD_1': {'size': '300x70', 'tile': 4, 'loc': 'bottom'}
+		},
+		'mobile_remnant': {
+			MOBILE_TOP_LEADERBOARD: {size: '320x50,1x1'},
+			MOBILE_IN_CONTENT: {size: '300x250,1x1'},
+			MOBILE_PREFOOTER: {size: '300x250,1x1'}
 		}
 	};
 
