@@ -449,6 +449,7 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
 		$vars['wikiaPageIsWikiaHomePage'] = WikiaPageType::isWikiaHomePage();
+		$vars['wikiaPageIsCorporate'] = WikiaPageType::isCorporatePage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);
