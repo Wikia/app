@@ -33,27 +33,25 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                                 z-index: 100000; \
                                 background: rgba(0, 0, 0, 0.9); \
                                 color: #fff; \
+                                font-size: 18px; \
                                 font-family: Arial, Helvetica; \
-                                line-height: 16px; \
                             } \
                             .ageGate.noFlashTransparency { \
                                 background: #000; \
                             } \
                             .ageGate .innerElement { \
-                                width: 100%; \
+                                width: 330px; \
                                 height: 160px; \
-                                margin: 0 auto; \
                             } \
                             .ageGate .innerElement.failed { \
                                 display: none; \
                             } \
                             .ageGate .innerElement .title { \
                                 color: #A9DE44; \
-                                margin-bottom: 1px; \
-                                font-size: 10px; \
+                                margin-bottom: 15px; \
                             } \
-                            .ageGate .innerElement .verbiage { \
-                                font-size: 12px; \
+                            .ageGate .innerElement form { \
+                                margin-top: 15px; \
                             } \
                             .ageGate .innerElement .ageRequirement { \
                                 font-weight: bold; \
@@ -91,7 +89,6 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                             } \
                             .ageGate.fancySelects button { \
                                 padding: 6px 24px; \
-                                margin-top: 3px; \
                             }\
                             .ageGate button:hover { \
                                 background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #a5cc52), color-stop(1, #b8e356)); \
@@ -181,12 +178,13 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.rootElement = this.playerRoot.parent();
             this.playerWidth = this.playerRoot.children('.innerWrapper').width();
             this.playerHeight = this.playerRoot.children('.innerWrapper').height();
+            // wikia change begin (move this.isMobile from after adjustForBrowser to before buildAgeGateUI)
+            this.isMobile = this.playerRoot.find('video').size() > 0;
 
             this.buildAgeGateUI();
 
             this.adjustForBrowser();
-
-            this.isMobile = this.playerRoot.find('video').size() > 0;
+            // wikia change end
 
             this.consoleLog("EVENT: onPlayerCreate");
         },
@@ -203,6 +201,15 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('height', this.playerHeight);
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
+            // wikia change begin
+            if (this.isMobile) {
+                ag.css({"height": "auto"});
+                $(".innerElement").css({"padding-bottom": "7px", "height": "auto", "width": "auto"});
+                $(window).on("resize", _.bind(this.repositionAgeGate, this));
+            } else {
+                ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
+            }
+            // wikia change end
 
             $.each(months, function (index, value){
                 ag.find('#month').append('<option value="' + (index + 1) + '">' + value + '</option>');
@@ -264,6 +271,11 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                     this.seek(0);
                     this.pause();
                     this.ageGateRoot.show();
+                    // wikia change begin
+                    if (this.isMobile) {
+                        this.repositionAgeGate();
+                    }
+                    // wikia change end
 
                     // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
                     // and we have to exit
@@ -398,6 +410,15 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
 
             return 'check';
         },
+
+        // wikia change begin
+        repositionAgeGate: function() {
+            this.ageGateRoot.css({
+                "top": ($(window).height() - this.ageGateRoot.height()) / 2 + "px",
+                "left": ($(window).width() - this.ageGateRoot.width()) / 2 + "px"
+            });
+        },
+        // wikia change end
 
         __end_marker: true
     };
