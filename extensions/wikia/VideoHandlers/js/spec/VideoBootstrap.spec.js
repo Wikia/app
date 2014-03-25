@@ -1,6 +1,6 @@
 // TODO: finish creating this test
-describe("VideoBootstrap", function () {
-	"use strict";
+describe('VideoBootstrap', function () {
+	'use strict';
 
 	//var vb = modules['wikia.videoBootstrap'](loader);
 

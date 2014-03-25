@@ -35,7 +35,7 @@ EOT;
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
 				$jsFile,
-				"extensions/wikia/VideoHandlers/js/handlers/OoyalaModule.js",
+				"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaModule.js",
 				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js",
 			),
 		);
