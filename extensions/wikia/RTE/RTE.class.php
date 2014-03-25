@@ -395,13 +395,13 @@ HTML
 		// check user preferences option
 		/* With the new 'defaulteditor' option available from the EditorPreference extension,
 		   the 'enablerichtext' option should no longer influence availability of the RTE.
-		   See Wikia issue VE-742 for more information.
+		   See Wikia issue VE-742 for more information. If defaulteditor is set to the Source
+		   editor, disable the RTE/CK editor.
 		 */
-		/*$userOption = $wgUser->getOption('enablerichtext');
-		if( ($userOption != true) && empty($forcedWysiwyg) ) {
+		if ( $wgUser->getOption('defaulteditor') == 1 ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
-		}*/
+		}
 
 		// check current skin - enable RTE only on Oasis
 		$skinName = get_class(RequestContext::getMain()->getSkin());
@@ -705,15 +705,6 @@ HTML
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
 		// The 'defaulteditor' preference takes the place of this option, so return early here.
-		return true;
-
-		// add RTE related section under "Editing" tab
-		$preferences['enablerichtext'] = array(
-			'type' => 'toggle',
-			'section' => 'editing/rte',
-			'label-message' => 'enablerichtexteditor',
-		);
-
 		return true;
 	}
 

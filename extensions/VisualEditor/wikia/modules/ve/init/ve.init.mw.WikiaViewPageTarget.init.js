@@ -20,8 +20,8 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, vePreferred,
-		plugins = [], veUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, isVePreferred,
+		plugins = [], isVeUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -126,9 +126,9 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
+	isVeUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
-	vePreferred = defaultEditor === 2 || ( defaultEditor === 0 && veUIEnabled );
+	isVePreferred = defaultEditor === 2 || ( defaultEditor === 0 && isVeUIEnabled );
 
 	support = {
 		es5: !!(
@@ -199,7 +199,7 @@
 		},
 
 		setupSkin: function () {
-			if ( userPrefEnabled && vePreferred ) {
+			if ( isVePreferred ) {
 				init.setupTabs();
 				init.setupSectionLinks();
 			}
@@ -286,22 +286,6 @@
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	userPrefEnabled = (
-		// Allow disabling for anonymous users separately from changing the
-		// default preference (bug 50000)
-		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
-
-		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
-		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
-		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
-		// anons as it is likely outdated.
-		(
-			mw.config.get( 'wgUserName' ) === null ?
-				conf.defaultUserOptions.enable :
-				mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable )
-		)
-	);
-
 	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
 	// Whether VisualEditor is available for a specific page based on namespace, etc.
@@ -327,7 +311,7 @@
 	};
 
 	init.canCreatePageUsingVE = function () {
-		return isBrowserSupported && userPrefEnabled && isSkinSupported && vePreferred;
+		return isBrowserSupported && isSkinSupported && isVePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -362,12 +346,12 @@
 			}
 		}
 
-		if ( userPrefEnabled && vePreferred ) {
+		if ( isVePreferred ) {
 			// Redlinks
 			$( setupRedlinks );
 		}
 	}
-	else if ( !userPrefEnabled ) {
+	else {
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
 		$edit = $( '#ca-edit' );

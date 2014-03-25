@@ -92,10 +92,6 @@ class EditorPreference {
 
 				// Alter the edit tab
 				$editTab = $data;
-				if ( $primaryEditor === self::OPTION_EDITOR_SOURCE ) {
-					$editParams['useeditor'] = 'source';
-					$editTab['href'] = $title->getLocalURL( $editParams );
-				}
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
 
 				$newViews['edit'] = $editTab;
