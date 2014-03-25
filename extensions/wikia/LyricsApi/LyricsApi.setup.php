@@ -27,4 +27,4 @@ $wgWikiaApiControllers['LyricsApiController'] = $dir . '/LyricsApiController.cla
 
 require_once( $dir . '/LyricsApiConstants.php' );
 
-require_once( $dir . '../../../lib/vendor/Solarium/Autoloader.php' );
+require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
