@@ -101,7 +101,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	private function getAlbums( $artistName, $albums ) {
 		$albumsList = [];
-		$albums = $this->deSerialize( $albums );
+		$albums = $this->deserialize( $albums );
 
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
@@ -138,7 +138,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	private function getSongs( $artistName, $albumName = '', $songs ) {
 		$songsList = [];
-		$songs = $this->deSerialize( $songs );
+		$songs = $this->deserialize( $songs );
 
 		if ( is_array( $songs ) ) {
 			foreach ( $songs as $solrSong ) {
@@ -258,7 +258,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		if ( $queryResult->genres ) {
-			$album->genres = $this->deSerialize( $queryResult->genres );
+			$album->genres = $this->deserialize( $queryResult->genres );
 		}
 
 		if ( $queryResult->length ) {
