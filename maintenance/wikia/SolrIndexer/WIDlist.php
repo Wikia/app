@@ -11,7 +11,7 @@ class WIDlist extends Maintenance {
 	private $CONFIG = [
 		'adapter' => 'Solarium_Client_Adapter_Curl',
 		'adapteroptions' => [
-			'host' => 'search-s11',
+			'host' => 'search-master',
 			'port' => 8983,
 			'path' => '/solr/',
 			'core' => 'main'
@@ -45,6 +45,7 @@ class WIDlist extends Maintenance {
 		//speedydeletion: 547090, scratchpad: 95, lyrics:43339, colors:32379
 		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(wid:32379)');
 
+        // faceting would be less expensive
 		$select->addParam( 'group', 'true' );
 		$select->addParam( 'group.field', 'wid' );
 		$select->addParam( 'group.ngroups', 'true' );

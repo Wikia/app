@@ -207,16 +207,16 @@ use Swagger\Annotations as SWG;
  * 		description="The title of the article"
  * 	)
  * 	@SWG\Property(
- * 		name="url",
- * 		type="string",
- * 		required="true",
- * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
- * 	)
- * 	@SWG\Property(
  * 		name="ns",
  * 		type="int",
  * 		required="true",
  * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
  * 	@SWG\Property(
  * 		name="revision",
@@ -448,7 +448,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 	@SWG\Model( id="ExpandedArticleResultSet" )
+ * @SWG\Model( id="ExpandedArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
  * 		required="true",
@@ -464,7 +464,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  *
- *  @SWG\Model( id="UnexpandedMostLinkedResultSet" )
+ * @SWG\Model( id="UnexpandedMostLinkedResultSet" )
  * 	@SWG\Property(
  * 		name="items",
  * 		required="true",

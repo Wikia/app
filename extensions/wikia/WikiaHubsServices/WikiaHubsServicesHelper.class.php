@@ -33,8 +33,7 @@ class WikiaHubsServicesHelper
 	public function purgeHomePageVarnish($lang) {
 		$wikiId = $this->getCorporateModel()->getCorporateWikiIdByLang($lang);
 
-		$mainPageName = static::getMainPageNameByWikiId($wikiId);
-		$mainPageTitle = static::getGlobalTitleFromText($mainPageName, $wikiId);
+		$mainPageTitle = $this->getGlobalMainPage($wikiId);
 		$mainPageTitle->purgeSquid();
 	}
 
@@ -49,6 +48,26 @@ class WikiaHubsServicesHelper
 
 		$hubTitle = static::getGlobalTitleFromText(static::getHubName($wikiId, $verticalId), $wikiId);
 		$hubTitle->purgeSquid();
+	}
+
+	/**
+	 * Get global title
+	 *
+	 * @param $mainPageName
+	 * @param $wikiId
+	 *
+	 * @return GlobalTitle|null|Title
+	 */
+	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
+			return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
+	}
+
+	protected function getGlobalMainPage($wikiId) {
+		return GlobalTitle::newMainPage($wikiId);
+	}
+
+	public function purgeHubV3Varnish($wikiId) {
+		$this->getGlobalMainPage($wikiId)->purgeSquid();
 	}
 
 	protected function getCorporateModel() {
@@ -75,45 +94,6 @@ class WikiaHubsServicesHelper
 			throw new Exception('There is no hub page for selected wikiId and vertical');
 		}
 		return $hubsV2Pages[$verticalId];
-	}
-
-	/**
-	 * Get global title
-	 *
-	 * @param $mainPageName
-	 * @param $wikiId
-	 *
-	 * @return GlobalTitle|null|Title
-	 */
-	protected static function getGlobalTitleFromText($mainPageName, $wikiId) {
-		return GlobalTitle::newFromText($mainPageName, NS_MAIN, $wikiId);
-	}
-
-	/**
-	 * Get mainPage name by wikiId
-	 *
-	 * @param $wikiId
-	 *
-	 * @return string
-	 *
-	 * @throws Exception
-	 */
-	protected static function getMainPageNameByWikiId($wikiId) {
-		$dbname = WikiFactory::IDtoDB($wikiId);
-
-		$param = array(
-			'action'      => 'query',
-			'meta'        => 'allmessages',
-			'ammessages'  => 'mainpage',
-		);
-
-		$response = ApiService::foreignCall($dbname, $param);
-		if (!isset($response['query']['allmessages'][0]['*'])) {
-			throw new Exception('There is a problem with getting translation for corporate mainPage name');
-		}
-		$mainPageName = $response['query']['allmessages'][0]['*'];
-
-		return $mainPageName;
 	}
 
 	/**

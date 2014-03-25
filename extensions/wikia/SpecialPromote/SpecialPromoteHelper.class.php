@@ -9,6 +9,9 @@
  *
  */
 
+use \Wikia\Logger\WikiaLogger;
+
+
 class SpecialPromoteHelper extends WikiaObject {
 	const MIN_HEADER_LENGTH = 20;
 	const MAX_HEADER_LENGTH = 75;
@@ -326,8 +329,6 @@ class SpecialPromoteHelper extends WikiaObject {
 			'city_description' => $description
 		);
 
-		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
-
 		$modifiedFiles = $this->extractModifiedFiles($files);
 		if (!empty($modifiedFiles)) {
 			$imageReviewState = $isCorpLang
@@ -352,6 +353,11 @@ class SpecialPromoteHelper extends WikiaObject {
 
 			$updateData['city_images'] = json_encode($additionalImageNames);
 		}
+
+		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data,
+				'updateData' => $updateData, 'cityId' => $cityId]);
+		
+		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
 
 		if( !empty($deletedFiles) ) {
 			if ($isCorpLang) {
@@ -495,6 +501,8 @@ class SpecialPromoteHelper extends WikiaObject {
 			'isApproved' => false,
 			'isAutoApproved' => false
 		];
+		
+		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, 'wikiId' => $wikiId, 'lang' => $langCode] );
 
 		$visualization = new CityVisualization();
 		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
@@ -513,8 +521,7 @@ class SpecialPromoteHelper extends WikiaObject {
 			foreach($additionalImages as $image) {
 				$imageStatuses []= $image['review_status'];
 			}
-		}
-
+		}		
 		foreach($imageStatuses as $status) {
 			switch($status) {
 				case ImageReviewStatuses::STATE_REJECTED:
@@ -531,7 +538,7 @@ class SpecialPromoteHelper extends WikiaObject {
 					break;
 			}
 		}
-
+		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, "imageStatuses" => $imageStatuses] );
 		return $wikiStatus;
 	}
 

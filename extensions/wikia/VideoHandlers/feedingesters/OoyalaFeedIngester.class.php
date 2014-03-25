@@ -109,6 +109,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['characters'] = empty( $video['metadata']['characters'] ) ? '' : $video['metadata']['characters'];
 				$clipData['resolution'] = empty( $video['metadata']['resolution'] ) ? '' : $video['metadata']['resolution'];
 				$clipData['aspectRatio'] = empty( $video['metadata']['aspectratio'] ) ? '' : $video['metadata']['aspectratio'];
+				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
 
 				// For page categories only. Not store in metadata.
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
@@ -199,6 +200,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$metadata['startDate'] = empty( $data['startDate'] ) ? '' :  $data['startDate'];
 		$metadata['source'] = empty( $data['source'] ) ? '' :  $data['source'];
 		$metadata['sourceId'] = empty( $data['sourceId'] ) ? '' :  $data['sourceId'];
+		$metadata['distributor'] = empty( $data['distributor'] ) ? '' :  $data['distributor'];
 		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;

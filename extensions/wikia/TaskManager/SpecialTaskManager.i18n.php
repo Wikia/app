@@ -64,12 +64,14 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'taskmanager' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_title' => 'Diskouez ha merañ trevelloù an drekleur',
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
+	'taskmanager-invert' => 'Eilpennañ an diuzadenn',
 );
 
 /** Catalan (català)

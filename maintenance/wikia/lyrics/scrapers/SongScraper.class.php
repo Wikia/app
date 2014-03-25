@@ -2,12 +2,12 @@
 /**
  * Class SongScraper
  *
- * Scrape Song page from Lyrics API
+ * @desc Scrape Song page from Lyrics API
  */
 class SongScraper extends BaseScraper {
 
 	/**
-	 * Process Song article page
+	 * @desc Process Song article page
 	 *
 	 * @param Article $article
 	 * @return array
@@ -16,7 +16,7 @@ class SongScraper extends BaseScraper {
 		$songData = [
 			'article_id' => $article->getId(),
 		];
-		$songData = array_merge( $songData, $this->getHeader( $article ) );
+
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
 
 		$songData['lyrics'] = $this->getLyrics( $article );
@@ -24,26 +24,7 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get song data from header template
-	 *
-	 * @param Article $article
-	 * @return array
-	 */
-	protected function getHeader( Article $article ) {
-		$result = [];
-		$values = $this->getTemplateValues( 'song', $article->getContent(), '|', false );
-		if ( $values ) {
-			$result['Artist'] = $values[2];
-			if ( $values[1] ) {
-				list( $albumName, $albumYear ) = $this->getAlbumNameYear( $values[1] );
-			}
-			$result['Album'] = $albumName;
-		}
-		return $result;
-	}
-
-	/**
-	 * Get song data from header template
+	 * @desc Get song data from header template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -81,7 +62,7 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Data field mapping
+	 * @desc Data field mapping
 	 *
 	 * @return array
 	 */

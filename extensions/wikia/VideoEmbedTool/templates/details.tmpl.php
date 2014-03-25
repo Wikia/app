@@ -16,7 +16,7 @@ global $wgExtensionsPath;
 		<div class="input-group VideoEmbedNameRow" id="VideoEmbedNameRow">
 			<label class="option-label" for="wpVideoEmbedName"><?= wfMessage( 'vet-name' ) ?></label>
 			<div>
-				<? if( $screenType == 'details' && empty($props['premiumVideo']) ): ?>
+				<? if( $screenType == 'details' && $props['provider'] != 'FILE' ): ?>
 					<input type="text" id="VideoEmbedName" class="VideoEmbedName" name="wpVideoEmbedName" value="<?= htmlspecialchars($props['vname']) ?>" />
 				<? else: ?>
 					<p><?= htmlspecialchars($props['vname']) ?></p>

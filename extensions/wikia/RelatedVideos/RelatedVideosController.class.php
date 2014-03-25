@@ -204,7 +204,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 
 		wfProfileOut(__METHOD__);
 	}

@@ -49,6 +49,7 @@ $wgHooks['ParserBeforeStrip'][] = 'LyricFindHooks::onParserBeforeStrip';
 // @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
 $wgGroupPermissions['*']['editlyricfind'] = false;
 $wgGroupPermissions['staff']['editlyricfind'] = true;
+$wgGroupPermissions['sysop']['editlyricfind'] = true;
 
 $wgHooks['AlternateEdit'][] = 'LyricFindHooks::onAlternateEdit';
 

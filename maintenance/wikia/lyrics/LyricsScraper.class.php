@@ -41,7 +41,7 @@ class LyricsScraper {
 	}
 
 	/**
-	 * Process Lyrics wiki Artist Article
+	 * @desc Process Lyrics wiki Artist Article
 	 *
 	 * @param Article $article
 	 */
@@ -57,7 +57,7 @@ class LyricsScraper {
 	}
 
 	/**
-	 * Process Lyrics wiki Albums
+	 * @desc Process Lyrics wiki Albums
 	 *
 	 * @param array $artistData - Artist data
 	 * @param array $leanAlbumsData - Albums data collected from Artist page
@@ -96,7 +96,7 @@ class LyricsScraper {
 
 
 	/**
-	 * Process Lyrics wiki Songs
+	 * @desc Process Lyrics wiki Songs
 	 *
 	 * @param $artistData - Artist data
 	 * @param $albumData - Fill Album data
@@ -144,7 +144,7 @@ class LyricsScraper {
 
 
 	/**
-	 * Get wiki article from article title
+	 * @desc Get wiki article from article title
 	 *
 	 * @param $titleText Wiki page title text
 	 * @return Article|null
@@ -157,9 +157,8 @@ class LyricsScraper {
 		return null;
 	}
 
-
 	/**
-	 * Helper log function
+	 * @desc Helper log function
 	 *
 	 * @param $text - text to log
 	 */

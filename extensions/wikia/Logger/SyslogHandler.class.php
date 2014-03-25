@@ -5,12 +5,18 @@ use Monolog\Formatter\LineFormatter;
 
 class SyslogHandler extends \Monolog\Handler\SyslogHandler {
 	protected function getDefaultFormatter() {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgDevESLog;
 
-		if ($wgDevelEnvironment) {
-			return new LineFormatter('%message%');
+		if ($wgDevelEnvironment && !$wgDevESLog) {
+			$formatter = new LineFormatter('%message%');
 		} else {
-			return new LogstashFormatter(null);
+			$formatter = new LogstashFormatter(null);
+
+			if ($wgDevelEnvironment && $wgDevESLog) {
+				$formatter->enableDevMode();
+			}
 		}
+
+		return $formatter;
 	}
 }

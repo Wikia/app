@@ -120,4 +120,62 @@ class WikiaLogger {
 	public function emergency($message, $context=[]) {
 		return $this->logger->emergency($message, $context);
 	}
+
+	public static function onWikiaSkinTopScripts(&$vars, &$scripts) {
+		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
+
+		if (!$wgDevelEnvironment) {
+			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
+			$key = "wikialogger-top-script-$onError";
+			$loggingJs = $wgMemc->get($key);
+
+			if (!$loggingJs) {
+				$errorUrl = "//jserrorslog.wikia.com/";
+				$loggingJs = "
+					function syslogReport(priority, message, context) {
+						context = context || null;
+						var url = '$errorUrl',
+							i = new Image(),
+							data = {
+								'@message': message,
+								'syslog_pri': priority
+							};
+
+						if (context) {
+							data['@context'] = context;
+						}
+
+						try {
+							data['@fields'] = { server: document.cookie.match(/server.([A-Z]*).cache/)[1] };
+						} catch (e) {}
+
+						try {
+							i.src = url+'l?'+JSON.stringify(data);
+						} catch (e) {
+							i.src = url+'e?'+e;
+						}
+					}
+				";
+
+				if ($onError) {
+					$loggingJs .= "
+						window.onerror = function(m, u, l) {
+							if (Math.random() < 0.01) {
+								syslogReport(3, m, {'url': u, 'line': l}); // 3 is 'error'
+							}
+
+							return false;
+						}
+					";
+				}
+
+				$loggingJs = \AssetsManagerBaseBuilder::minifyJS($loggingJs);
+				$wgMemc->set($key, $loggingJs, 60*60*24);
+			}
+
+			$scripts = "<script>$loggingJs</script>$scripts";
+		}
+
+		return true;
+	}
 } 

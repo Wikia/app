@@ -3,15 +3,15 @@
 /**
  * Class ArtistScraper
  *
- * Scrape Artist page from Lyrics API
+ * @desc Scrape Artist page from Lyrics API
  */
 class ArtistScraper extends BaseScraper {
 
-
 	/**
-	 * Process Artist article page
+	 * @desc Process Artist article page
 	 *
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
@@ -19,16 +19,19 @@ class ArtistScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 			'name' => $article->getTitle()->getText()
 		];
+
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
 		$artistData = array_merge( $artistData, $this->getFooter( $article ) );
 		$artistData['genres'] = $this->getGenres( $article );
+
 		return $this->sanitizeData( $artistData, $this->getDataMap() );
 	}
 
 	/**
-	 * Get artist data from header template
+	 * @desc Get artist data from header template
 	 *
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	protected function getHeader( Article $article ) {
@@ -36,7 +39,7 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Get artist data from footer template
+	 * @desc Get artist data from footer template
 	 *
 	 * @param Article $article
 	 * @return array
@@ -46,17 +49,18 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Split article page into h2 sections (albums or song groups)
+	 * @desc Split article page into h2 sections (albums or song groups)
 	 *
 	 * @param $text - article content
 	 * @return array - article sections
 	 */
-	function getSections( $text ) {
+	public function getSections( $text ) {
 		// Remove templates
 		$text = preg_replace ( '#\{\{(.+?)\}\}#s', '', $text );
 		$sections = [];
 		$offset = 0;
-		if (preg_match_all('#==(.+?)==#u', $text, $matches, PREG_OFFSET_CAPTURE)) {
+
+		if( preg_match_all( '#==(.+?)==#u', $text, $matches, PREG_OFFSET_CAPTURE ) ) {
 			$positions = $matches[0];
 			array_shift( $positions );
 			foreach ( $positions as $section ) {
@@ -67,17 +71,18 @@ class ArtistScraper extends BaseScraper {
 			}
 			$sections[] = substr( $text, $offset, ( strlen( $text ) - $offset ) );
 		}
+
 		return $sections;
 	}
 
 	/**
-	 * Get list of albums (or song sections from Artist article)
+	 * @desc Get list of albums (or song sections from Artist article)
 	 *
 	 * @param Article $article
 	 * @param string $artistName
 	 * @return array - Albums and song sections
 	 */
-	function getAlbums( Article $article, $artistName ) {
+	public function getAlbums( Article $article, $artistName ) {
 		$albums = [];
 		$text = $article->getContent();
 		$sections = $this->getSections( $text );
@@ -93,12 +98,12 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Extract songs from album section
+	 * @desc Extract songs from album section
 	 *
 	 * @param string $section
 	 * @return array
 	 */
-	function getAlbumSongs( $section ) {
+	public function getAlbumSongs( $section ) {
 		$songs = [];
 		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
 			$number = 1;
@@ -111,54 +116,55 @@ class ArtistScraper extends BaseScraper {
 	}
 
 	/**
-	 * Extract album data from section heading
+	 * @desc Extract album data from section heading
 	 *
 	 * @param string $heading - section heading
 	 * @return array
 	 */
-	function getAlbumData( $heading ) {
+	public function getAlbumData( $heading ) {
 		//==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==
 		$result = [];
-		$headinga = explode( '|', trim( $heading, '][=' ) );
+		$headingArr = explode( '|', trim( $heading, '][= ' ) );
 		$result['title'] = false;
-		if ( count( $headinga ) > 1) {
-			$result['title'] = $headinga[0];
+
+		if ( count( $headingArr ) > 1) {
+			$result['title'] = $headingArr[0];
 			$result['year'] = '';
-			$heading = $headinga[1];
+			$heading = $headingArr[1];
 		}
-		if ( preg_match('#(.+)\(([\d]+)\)#', $heading, $matches) ) {
-			$result['Album'] = $matches[1];
-			$result['year'] = $matches[2];
+
+		if ( preg_match( '#(.+)\(([\d]+)\)#', $heading, $matches ) ) {
+			$result['Album'] = trim( $matches[1] );
+			$result['year'] = trim( $matches[2] );
 		} else {
-			$result['Album'] = $heading;
+			$result['Album'] = trim( $heading );
 		}
+
 		return $result;
 	}
 
 	/**
-	 * Extract album pic
+	 * @desc Extract album pic form {{Album Art}} template
 	 *
 	 * @param string $section - Section text
 	 * @param string $artistName - Artist name
 	 * @return string - image title
 	 */
-	protected function getAlbumPic( $section, $artistName ) {
+	public function getAlbumPic( $section, $artistName ) {
 		$values = $this->getTemplateValues( 'Album Art', $section, '|', false );
-		if ( !$values) {
-			// No image
-			return '';
+		$result = '';
+
+		if ( isset( $values[0] ) && isset( $values[1] ) ) {
+			$result = sprintf( '%s - %s.jpg', $values[0], $values[1] );
+		} else if( isset( $values[0] ) ) {
+			$result = sprintf( '%s - %s.jpg', $artistName, $values[0] );
 		}
-		if ( count( $values ) == 3 && $values[1] == '' ) {
-			// Autogenerated image name
-			// TODO: Check if this is correct
-			return sprintf( '%s - %s.jpg', $artistName, $values[2] );
-		}
-		// Full File Name
-		return $values[1];
+
+		return $result;
 	}
 
 	/**
-	 * Data field mapping
+	 * @desc Data field mapping
 	 *
 	 * @return array
 	 */
