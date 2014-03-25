@@ -8,7 +8,7 @@ define('wikia.videohandler.anyclip', ['wikia.window'], function Anyclip(window) 
 	 */
 	return function (params, vb) {
 		var config = [
-			'#'+params.playerId,
+			'#' + params.playerId,
 			{
 				clipID: params.videoId,
 				autoPlay: params.autoPlay
@@ -24,7 +24,7 @@ define('wikia.videohandler.anyclip', ['wikia.window'], function Anyclip(window) 
 		 * For now, just track that the player was initiated and call that a view
 		 * @todo implement actual event based tracking.
 		 */
-		if(vb) {
+		if (vb) {
 			vb.timeoutTrack();
 		}
 	};
