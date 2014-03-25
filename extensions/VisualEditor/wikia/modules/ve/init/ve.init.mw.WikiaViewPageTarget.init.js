@@ -284,7 +284,7 @@
 
 	isBrowserSupported = support.es5 &&
 		support.contentEditable &&
-		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
+		!$.client.test( init.blacklist, null, true );
 
 	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
