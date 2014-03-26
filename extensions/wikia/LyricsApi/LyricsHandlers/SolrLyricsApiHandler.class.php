@@ -196,7 +196,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getArtist( $artist ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_ARTIST,
+			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
 			'artist_name: %P2%' => $artist,
 		] );
 
@@ -381,7 +381,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchArtist( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_ARTIST,
+			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
 			'search_artist_name: %P2%' => $query,
 		] );
 		$query->setStart( $offset );

@@ -213,7 +213,7 @@ class SolrAdapter implements DataBaseAdapter {
 	public function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
-		$artist['type'] = WIKIA_LYRICS_API_TYPE_ARTIST;
+		$artist['type'] = LyricsApiBase::TYPE_ARTIST;
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
