@@ -203,10 +203,17 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
-		
+
+		// JavaScript
+		if ( document.querySelector( 'html' ).className.indexOf( 'client-js' ) !== -1 ) {
+			defaultData.javaScript = 'yes';
+		} else {
+			defaultData.javaScript = 'no';
+		}
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-v3', finalData );
+	syslogReport( 6, 'veTrack-v4', finalData );
 }
