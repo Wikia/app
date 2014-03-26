@@ -214,7 +214,7 @@ class YoukuApiWrapper extends ApiWrapper {
 		$error_code = "";
 		// true parameter here has json_decode return an array, rather than an object
 		$error_json = json_decode( $content, true );
-		if ( isset( $error_json['error'], $error_json['error']['code'] ) ) {
+		if ( isset( $error_json['error']['code'] ) ) {
 			$error_code = $error_json['error']['code'];
 		}
 
