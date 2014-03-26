@@ -390,7 +390,6 @@ class WikiService extends WikiaModel {
 							. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
 			}
 		}
-		var_dump($imageName);
 		return $imageName;
 	}
 
