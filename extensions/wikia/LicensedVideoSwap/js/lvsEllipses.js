@@ -8,47 +8,51 @@ define('lvs.ellipses', [], function () {
 
 	'use strict';
 
+
 	/**
-	 * @param jQuery $container The wrapper element for the main body of this page
+	 * @param {jQuery} $elem The wrapper element for the main body of this page
+	 */
+	function initPopover($elem) {
+		var popoverTimeout = 0;
+
+		function setPopoverTimeout() {
+			popoverTimeout = setTimeout(function () {
+				$elem.popover('hide');
+			}, 300);
+		}
+
+		$elem.popover({
+			trigger: 'manual',
+			placement: 'top',
+			content: function () {
+				var list = $elem.next().find('ul').clone(),
+					details = list.wrap('<div class="details"></div>');
+
+				return details.parent();
+			}
+		}).on('mouseenter', function () {
+			clearTimeout(popoverTimeout);
+			$('.popover').remove();
+			$elem.popover('show');
+
+		}).on('mouseleave', function () {
+			setPopoverTimeout();
+			$('.popover').mouseenter(function () {
+				clearTimeout(popoverTimeout);
+			}).mouseleave(function () {
+				setPopoverTimeout();
+			});
+		});
+	}
+
+	/**
+	 * @param {jQuery} $container The wrapper element for the main body of this page
 	 */
 	function init($container) {
 		var wrapperWidth,
 			ellipsesWidth,
 			truncatedWidth,
 			undef;
-
-		function initPopover(elem) {
-			var popoverTimeout = 0;
-
-			function setPopoverTimeout() {
-				popoverTimeout = setTimeout(function () {
-					elem.popover('hide');
-				}, 300);
-			}
-
-			elem.popover({
-				trigger: 'manual',
-				placement: 'top',
-				content: function () {
-					var list = elem.next().find('ul').clone(),
-						details = list.wrap('<div class="details"></div>');
-
-					return details.parent();
-				}
-			}).on('mouseenter', function () {
-				clearTimeout(popoverTimeout);
-				$('.popover').remove();
-				elem.popover('show');
-
-			}).on('mouseleave', function () {
-				setPopoverTimeout();
-				$('.popover').mouseenter(function () {
-					clearTimeout(popoverTimeout);
-				}).mouseleave(function () {
-					setPopoverTimeout();
-				});
-			});
-		}
 
 		$container.find('.posted-in').each(function () {
 			var $this = $(this),
