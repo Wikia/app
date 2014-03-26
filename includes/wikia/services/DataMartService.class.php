@@ -4,6 +4,7 @@
  */
 
 use FluentSql\StaticSQL as sql;
+use  Wikia\Logger;
 
 class DataMartService extends Service {
 
@@ -521,8 +522,22 @@ class DataMartService extends Service {
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
 		};
+		$data = [
+			'method' => 'getTopArticlesByPageview_A',
+			'wid'=> $wikiId,
+			'timestamp' => microtime( true ),
+			'randomId' =>  uniqid(),
+		];
+
+		WikiaLogger::instance()->debug( "DataMartService", $data );
 
 		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+
+		$data['timestamp'] = microtime( true ) - $data['timestamp'] ;
+		$data['method'] = 'getTopArticlesByPageview_B';
+
+		WikiaLogger::instance()->debug( "DataMartService", $data);
+
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
