@@ -20,8 +20,8 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, isVePreferred,
-		plugins = [], isVeUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
+		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, isVEPreferred,
+		plugins = [], isVEUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -132,10 +132,10 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	isVeUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
+	isVEUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
-	isVePreferred = defaultEditor === editorPreference['visual'] ||
-		( defaultEditor === editorPreference['default'] && isVeUIEnabled );
+	isVEPreferred = defaultEditor === editorPreference['visual'] ||
+		( defaultEditor === editorPreference['default'] && isVEUIEnabled );
 
 	support = {
 		es5: !!(
@@ -206,7 +206,7 @@
 		},
 
 		setupSkin: function () {
-			if ( isVePreferred ) {
+			if ( isVEPreferred ) {
 				init.setupTabs();
 				init.setupSectionLinks();
 			}
@@ -217,7 +217,7 @@
 		},
 
 		setupSectionLinks: function () {
-			if ( isVePreferred ) {
+			if ( isVEPreferred ) {
 				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 			}
 		},
@@ -290,7 +290,7 @@
 
 	isBrowserSupported = support.es5 &&
 		support.contentEditable &&
-		!$.client.test( init.blacklist, null, true );
+		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
 	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
@@ -317,7 +317,7 @@
 	};
 
 	init.canCreatePageUsingVE = function () {
-		return isBrowserSupported && isSkinSupported && isVePreferred;
+		return isBrowserSupported && isSkinSupported && isVEPreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -352,7 +352,7 @@
 			}
 		}
 
-		if ( isVePreferred ) {
+		if ( isVEPreferred ) {
 			// Redlinks
 			$( setupRedlinks );
 		}
@@ -362,16 +362,12 @@
 		$( 'html' ).addClass( 've-not-available' );
 		$edit = $( '#ca-edit' );
 		$veEdit = $( '#ca-ve-edit' );
-		if ( isElementInDropdown( $veEdit ) ) {
-			// Remove the VE edit link from the tab dropdown
-			$veEdit.parent().remove();
-		} else {
-			// Else the VE edit link is the main edit button -- replace URI with default edit
+		// Remove the VE edit link from the tab dropdown
+		if ( $veEdit.parent( 'li' ).remove().length === 0 ) {
+			// If length is 0, VE edit link is the main edit button -- replace URI with default edit
 			$veEdit.attr( 'href', $edit.attr( 'href' ) );
 			// Remove the alternate edit link in the tab dropdown because it's redundant
-			if ( isElementInDropdown( $edit ) ) {
-				$edit.parent().remove();
-			}
+			$edit.parent( 'li' ).remove();
 		}
 	}
 
@@ -390,9 +386,5 @@
 				}
 			}
 		);
-	}
-
-	function isElementInDropdown( $jqElement ) {
-		return $jqElement.parent().is( 'li' );
 	}
 }() );
