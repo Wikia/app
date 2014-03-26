@@ -213,7 +213,7 @@ class SolrAdapter implements DataBaseAdapter {
 	public function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
 		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
-		$artist['type'] = WIKIA_LYRICS_API_TYPE_ARTIST;
+		$artist['type'] = LyricsApiBase::TYPE_ARTIST;
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
@@ -241,7 +241,7 @@ class SolrAdapter implements DataBaseAdapter {
 		if ( isset( $album['genres'] ) && $album['genres'] ) {
 			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
-		$album['type'] = WIKIA_LYRICS_API_TYPE_ALBUM;
+		$album['type'] = LyricsApiBase::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
 	}
@@ -264,7 +264,7 @@ class SolrAdapter implements DataBaseAdapter {
 				$song['image'] = $album['image'];
 			}
 		}
-		$song['type'] = WIKIA_LYRICS_API_TYPE_SONG;
+		$song['type'] = LyricsApiBase::TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}

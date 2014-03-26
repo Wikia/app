@@ -24,9 +24,10 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->lyricsApiHandler = new SolrLyricsApiHandler( [
-			'adapteroptions' => F::app()->wg->LyricsSolariumOptions
-		] );
+		$lyricsApiBase = new LyricsApiBase();
+		$this->lyricsApiHandler = new SolrLyricsApiHandler(
+			$lyricsApiBase->getConfig()
+		);
 	}
 
 	/**
