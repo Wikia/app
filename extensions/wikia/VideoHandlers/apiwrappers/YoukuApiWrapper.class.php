@@ -169,10 +169,10 @@ class YoukuApiWrapper extends ApiWrapper {
 		$desc = $this->getOriginalDescription();
 
 		if ( $this->getVideoCategory() ) {
-			$desc . "\n\nCategory: " . $this->getVideoCategory();
+			$desc .= "\n\nCategory: " . $this->getVideoCategory();
 		}
 		if ( $this->getVideoKeywords() ) {
-			$desc . "\n\nKeyWords: " . $this->getVideoKeywords();
+			$desc .= "\n\nKeyWords: " . $this->getVideoKeywords();
 		}
 		return $desc;
 	}
