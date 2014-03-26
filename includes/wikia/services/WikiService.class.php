@@ -18,6 +18,7 @@ class WikiService extends WikiaModel {
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
 	const DBNAME_REGEXP = '/^Wikia-Visualization-Main(,[a-z0-9]+)?(\.[a-z0-9]{3,4}$)/';
+	const CV_IMAGENAME = 'Wikia-Visualization-Main';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -386,8 +387,7 @@ class WikiService extends WikiaModel {
 	protected function checkCVImageName( $imageName, $cityId ) {
 		if ( preg_match( self::DBNAME_REGEXP, $imageName, $matches ) ) {
 			if ( empty( $matches[ 1 ] ) ) {
-				$imageName = substr( $imageName, 0, -strlen( $matches[ 2 ] ) )
-							. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
+				$imageName = self::CV_IMAGENAME. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
 			}
 		}
 		return $imageName;
