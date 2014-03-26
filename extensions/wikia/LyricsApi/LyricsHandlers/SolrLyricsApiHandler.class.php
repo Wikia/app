@@ -62,6 +62,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @param String $image image title
 	 */
 	private function appendImages( $obj, $image ) {
+		// Quick fix for wrong data in templates (i.e. metallica.jpg instead of Metallica.jpg)
+		$image = ucfirst( $image );
 		$obj->small_image = $this->getImage( $image );
 		$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
 		$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
@@ -172,7 +174,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		$artist->name = $solrAlbum->artist_name;
 
 		if ( $solrAlbum->image ) {
-			$artist->image = $this->getImage( $solrAlbum->image );
+			$this->appendImages( $artist, $solrAlbum->image );
 		}
 
 		if ( $solrAlbum->albums ) {
