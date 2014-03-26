@@ -357,6 +357,7 @@
 		 * @returns {boolean}
 		 */
 		hasLightbox: function ($link, $thumb, event) {
+			// if any of the following conditions are true, don't open the lightbox
 			return !(
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
