@@ -27,6 +27,12 @@
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
 		},
+		editorPreference = {
+			'default': 0,
+			'source': 1,
+			'visual': 2,
+			'ck': 3
+		}
 		indicatorTimeoutId = null;
 
 	function initIndicator() {
@@ -128,7 +134,8 @@
 	);
 	isVeUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
-	isVePreferred = defaultEditor === 2 || ( defaultEditor === 0 && isVeUIEnabled );
+	isVePreferred = defaultEditor === editorPreference['visual'] ||
+		( defaultEditor === editorPreference['default'] && isVeUIEnabled );
 
 	support = {
 		es5: !!(
@@ -210,8 +217,7 @@
 		},
 
 		setupSectionLinks: function () {
-			// If VE is the default editor for the page...
-			if ( $( 'nav.wikia-menu-button a', '#WikiaPageHeader' ).filter( ':first' ).attr( 'data-id' ) === 've-edit' ) {
+			if ( isVePreferred ) {
 				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 			}
 		},
@@ -386,7 +392,7 @@
 		);
 	}
 
-	function isElementInDropdown( jqElement ) {
-		return jqElement.parent().is( 'li' );
+	function isElementInDropdown( $jqElement ) {
+		return $jqElement.parent().is( 'li' );
 	}
 }() );

@@ -89,10 +89,22 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if ( isset($this->content_actions['ve-edit']) && ( ( $wgEnableVisualEditorUI &&
-			!$wgEnableEditorPreferenceExt ) || ( $wgEnableEditorPreferenceExt &&
-			EditorPreference::shouldShowVisualEditorTab() &&
-			EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL ) ) ) {
+		else if ( isset($this->content_actions['ve-edit']) &&
+				// Visual Editor can be used for Edit tab if...
+				(
+					// VE is enabled for current wiki but EditorPreference extension is disabled
+					(
+						$wgEnableVisualEditorUI &&
+						!$wgEnableEditorPreferenceExt
+					) ||
+					// OR EditorPreference extension is enabled and conditions pass for namespace and user preference
+					(
+						$wgEnableEditorPreferenceExt &&
+						EditorPreference::shouldShowVisualEditorTab() &&
+						EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL
+					)
+				)
+			) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';

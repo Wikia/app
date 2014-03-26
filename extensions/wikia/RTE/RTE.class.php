@@ -398,7 +398,7 @@ HTML
 		   See Wikia issue VE-742 for more information. If defaulteditor is set to the Source
 		   editor, disable the RTE/CK editor.
 		 */
-		if ( $wgUser->getOption('defaulteditor') == 1 ) {
+		if ( $wgUser->getOption('defaulteditor') == EditorPreference::OPTION_EDITOR_SOURCE ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
 		}
@@ -704,7 +704,6 @@ HTML
 		// add JS to hide certain switches when wysiwyg is enabled
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath;
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/RTE/js/RTE.preferences.js\"></script>" );
-		// The 'defaulteditor' preference takes the place of this option, so return early here.
 		return true;
 	}
 
