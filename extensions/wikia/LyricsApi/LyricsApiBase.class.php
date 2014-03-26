@@ -6,8 +6,19 @@
  * @desc Keeps data and methods which are being reused in API controller and maintenance scripts
  */
 class LyricsApiBase {
+	/**
+	 * @desc Field type in lyricsapi solr index which describes an artist
+	 */
 	const TYPE_ARTIST = 'artist';
+
+	/**
+	 * @desc Field type in lyricsapi solr index which describes an album
+	 */
 	const TYPE_ALBUM = 'album';
+
+	/**
+	 * @desc Field type in lyricsapi solr index which describes a song
+	 */
 	const TYPE_SONG = 'song';
 
 	private $baseConfig = [
@@ -33,6 +44,12 @@ class LyricsApiBase {
 		]
 	];
 
+	/**
+	 * @desc Returns an array with adapteroptions for Solarium_Client configuration
+	 * @param bool $master a flag - return the options for master or slave; default === slave
+	 *
+	 * @return array
+	 */
 	public function getAdapterOptions( $master = false ) {
 		if( $master ) {
 			$adapterOptions = array_merge(
@@ -49,6 +66,12 @@ class LyricsApiBase {
 		return $adapterOptions;
 	}
 
+	/**
+	 * @desc Returns configuration for Solarium_Client
+	 * @param bool $master a flag which gets the config for master or slave; default === slave
+	 *
+	 * @return array
+	 */
 	public function getConfig( $master = false ) {
 		$config = array_merge(
 			$this->baseConfig,

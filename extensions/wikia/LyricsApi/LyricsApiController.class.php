@@ -27,7 +27,7 @@ class LyricsApiController extends WikiaController {
 		parent::__construct();
 		$this->lyricsApiBase = new LyricsApiBase();
 		$this->lyricsApiHandler = new SolrLyricsApiHandler(
-			$this->lyricsApiBase->getConfig( true )
+			$this->lyricsApiBase->getConfig()
 		);
 	}
 
