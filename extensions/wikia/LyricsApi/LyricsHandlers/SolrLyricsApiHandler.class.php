@@ -345,7 +345,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getSong( $artist, $album, $song ) {
 		$solrQuery = [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
+			'type: %1%' => LyricsApiBase::TYPE_SONG,
 			'artist_name: %P2%' => $artist,
 			'song_name: %P3%' => $song,
 		];
@@ -412,7 +412,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchSong( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
+			'type: %1%' => LyricsApiBase::TYPE_SONG,
 			'search_song_name: %P2%' => $query,
 		] );
 		$query->setStart( $offset );
@@ -442,7 +442,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function searchLyrics( $query, $limit, $offset ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_SONG,
+			'type: %1%' => LyricsApiBase::TYPE_SONG,
 			'lyrics: %P2%' => $query,
 		] );
 		$query->setStart( $offset );

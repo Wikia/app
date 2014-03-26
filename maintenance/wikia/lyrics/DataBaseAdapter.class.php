@@ -264,7 +264,7 @@ class SolrAdapter implements DataBaseAdapter {
 				$song['image'] = $album['image'];
 			}
 		}
-		$song['type'] = WIKIA_LYRICS_API_TYPE_SONG;
+		$song['type'] = LyricsApiBase::TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}
