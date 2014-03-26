@@ -1,0 +1,109 @@
+@import "skins/oasis/css/mixins/box-sizing";
+
+$color: #0A5FA2;
+$bg-color: #fff;
+$menu-hover-bg-color: #C7D2D8;
+$nav-height: 37px;
+
+// TODO add ABTesting class
+.WikiaHeader {
+	background: none;
+	background-color: $bg-color;
+	border: 0;
+	color: $color;
+
+	.sprite.logo {
+		background-image: url(/skins/oasis/images/GlobalHeaderAB/wikia_logo.png); /* $wgCdnStylePath */
+		background-position: 0;
+	}
+
+	.wikia-header-mask {
+		background: none;
+
+		.page-width-container {
+			width: 100%;
+		}
+	}
+
+	.chevron {
+		border-top-color: $color;
+	}
+
+	nav {
+		height: $nav-height;
+
+		li {
+			@include box-sizing;
+			height: 37px;
+			margin-top: 0;
+			padding-top: 7px;
+
+			& > .wikia-button {
+				background: none;
+				background-color: $color;
+				border: none;
+				font-size: 14px;
+				height: 28px;
+				line-height: 28px;
+				top: -3px;
+			}
+
+			&.start-a-wiki {
+				margin-top: 0;
+				border-left: 0;
+			}
+		}
+	}
+
+
+	.AccountNavigation, #WallNotifications {
+		top: 0;
+		height: $nav-height;
+
+		& > li {
+			height: $nav-height;
+			line-height: $nav-height;
+			padding: 0;
+			& > a {
+				color: $color;
+				&:visited, &:active {
+					color: $color;
+				}
+			}
+		}
+
+		li {
+			&:hover {
+				background: none;
+				background-color: $menu-hover-bg-color;
+			}
+		}
+
+		.bubbles {
+			height: $nav-height;
+			background-position: 0 center;
+		}
+	}
+
+	.GlobalNavigation {
+		& > li {
+			& > a {
+				font-size: 14px;
+				color: $color;
+				&:visited, &:active {
+					color: $color;
+				}
+			}
+
+			&:hover {
+				>a {
+					color: #fff;
+				}
+			}
+		}
+
+		a {
+			border: 0;
+		}
+	}
+}
