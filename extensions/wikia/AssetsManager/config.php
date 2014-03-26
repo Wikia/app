@@ -220,7 +220,7 @@ $config['oasis_jquery'] = array(
 		'//skins/oasis/js/GlobalHeader.js',
 
 		// Lazy rail
-		'//skins/oasis/js/LazyRail.js'
+		'#group_lazy_rail_js',
 	)
 );
 
@@ -1721,5 +1721,13 @@ $config['qualaroo_js'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/Qualaroo/scripts/Qualaroo.js',
+	]
+];
+
+$config['lazy_rail_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//skins/oasis/js/LazyRail.js'
 	]
 ];
