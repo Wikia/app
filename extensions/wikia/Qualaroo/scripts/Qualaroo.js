@@ -8,4 +8,11 @@
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
 	}
+	_kiq.push(['set', {
+		'userLanguage': window.wgUserLanguage,
+		'contentLanguage': window.wgContentLanguage,
+		'pageType': window.wikiaPageType,
+		'isCorporatePage': window.wikiaPageIsCorporate,
+		'verticalName': window.cscoreCat
+	}]);
 })( window );
