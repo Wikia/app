@@ -1,14 +1,14 @@
 /**
  * Controls for swap button and keep button in LicensedVideoSwap
  */
-define( 'lvs.swapkeep', [
+define('lvs.swapkeep', [
 	'wikia.querystring',
 	'lvs.commonajax',
 	'lvs.videocontrols',
 	'jquery',
 	'wikia.nirvana',
 	'lvs.tracker'
-], function( QueryString, commonAjax, videoControls, $, nirvana, tracker ) {
+], function (QueryString, commonAjax, videoControls, $, nirvana, tracker) {
 	'use strict';
 
 	var $parent,
@@ -21,10 +21,10 @@ define( 'lvs.swapkeep', [
 		currTitle,
 		newTitle;
 
-	function doRequest( params ){
+	function doRequest(params) {
 		var qs,
-				data,
-				trackingLabel;
+			data,
+			trackingLabel;
 
 		// Add loading graphic
 		commonAjax.startLoadingGraphic();
@@ -32,18 +32,18 @@ define( 'lvs.swapkeep', [
 		qs = new QueryString();
 		data = {
 			videoTitle: currTitle,
-			sort: qs.getVal( 'sort', 'recent' ),
-			currentPage: qs.getVal( 'currentPage', 1 )
+			sort: qs.getVal('sort', 'recent'),
+			currentPage: qs.getVal('currentPage', 1)
 		};
 
 		// if @params are explicitly passed through, extend our object with them
-		if ( params ) {
+		if (params) {
 			$.extend(data, params);
 		}
 
 		trackingLabel = tracker.labels.KEEP;
 
-		if ( isSwap ) {
+		if (isSwap) {
 			data.newTitle = newTitle;
 			trackingLabel = tracker.labels.SWAP;
 		} else {
@@ -54,10 +54,10 @@ define( 'lvs.swapkeep', [
 			controller: 'LicensedVideoSwapSpecialController',
 			method: isSwap ? 'swapVideo' : 'keepVideo',
 			data: data,
-			callback: function( data ) {
-				commonAjax.success( data, trackingLabel );
+			callback: function (data) {
+				commonAjax.success(data, trackingLabel);
 			},
-			onErrorCallback: function() {
+			onErrorCallback: function () {
 				commonAjax.failure();
 			}
 		});
@@ -66,29 +66,29 @@ define( 'lvs.swapkeep', [
 	function confirmModal() {
 		videoControls.reset();
 		var currTitleText,
-				request;
+			request;
 
 		request = {};
-		currTitleText =  currTitle.replace(/_/g, ' ' );
+		currTitleText = currTitle.replace(/_/g, ' ');
 
 		// Show confirmation modal only on "Keep"
 		$.confirm({
-			okMsg: $.msg( 'lvs-button-yes' ),
-			cancelMsg: $.msg( 'lvs-button-no' ),
-			title: $.msg( 'lvs-confirm-keep-title' ),
-			content: $.msg( 'lvs-confirm-keep-message', currTitleText ),
-			onCancel: function() {
+			okMsg: $.msg('lvs-button-yes'),
+			cancelMsg: $.msg('lvs-button-no'),
+			title: $.msg('lvs-confirm-keep-title'),
+			content: $.msg('lvs-confirm-keep-message', currTitleText),
+			onCancel: function () {
 				request.forever = true;
-				doRequest( request );
+				doRequest(request);
 				// Track click on 'no' button
 				tracker.track({
 					action: tracker.actions.CONFIRM,
 					label: tracker.labels.KEEP
 				});
 			},
-			onOk: function() {
+			onOk: function () {
 				request.forever = false;
-				doRequest( request );
+				doRequest(request);
 
 				// track click on 'yes'
 				tracker.track({
@@ -100,30 +100,30 @@ define( 'lvs.swapkeep', [
 		});
 	}
 
-	function init( $elem ) {
+	function init($elem) {
 		$container = $elem;
 
 		// Event listener for interacting with buttons
-		$container.on( 'mouseover mouseout click', '.swap-button, .keep-button', function( e ) {
-			$button = $( this );
+		$container.on('mouseover mouseout click', '.swap-button, .keep-button', function (e) {
+			$button = $(this);
 
 			$parent = $button.parent();
-			$overlay = $parent.siblings( '.swap-arrow' );
-			$row = $button.closest( '.row' );
-			$keepButton = $row.find( '.keep-button' );
-			isSwap = $button.is( '.swap-button' );
+			$overlay = $parent.siblings('.swap-arrow');
+			$row = $button.closest('.row');
+			$keepButton = $row.find('.keep-button');
+			isSwap = $button.is('.swap-button');
 
-			if ( isSwap ) {
+			if (isSwap) {
 				// swap button hovered
-				if ( e.type === 'mouseover' ) {
-					$overlay.fadeIn( 100 );
-				} else if ( e.type === 'mouseout' ) {
-					$overlay.fadeOut( 100 );
+				if (e.type === 'mouseover') {
+					$overlay.fadeIn(100);
+				} else if (e.type === 'mouseout') {
+					$overlay.fadeOut(100);
 					// swap button clicked
-				} else if ( e.type === 'click' ) {
+				} else if (e.type === 'click') {
 					// Get both titles - current/non-premium video and video to swap it out with
-					newTitle = decodeURIComponent( $button.attr( 'data-video-swap' ) );
-					currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
+					newTitle = decodeURIComponent($button.attr('data-video-swap'));
+					currTitle = decodeURIComponent($keepButton.attr('data-video-keep'));
 					doRequest();
 
 					// Track click action
@@ -133,7 +133,7 @@ define( 'lvs.swapkeep', [
 					});
 				}
 				// Keep button clicked
-			} else if ( e.type === 'click' ) {
+			} else if (e.type === 'click') {
 
 				// Track click actions
 				tracker.track({
@@ -141,11 +141,11 @@ define( 'lvs.swapkeep', [
 					label: tracker.labels.KEEP
 				});
 
-				currTitle = decodeURIComponent( $keepButton.attr( 'data-video-keep' ) );
+				currTitle = decodeURIComponent($keepButton.attr('data-video-keep'));
 				// no new title b/c we're keeping the current video
 				newTitle = '';
 
-				if ( $keepButton.data( 'subsequent-keep' ) ) {
+				if ($keepButton.data('subsequent-keep')) {
 
 					confirmModal();
 
@@ -166,20 +166,20 @@ define( 'lvs.swapkeep', [
 
 	function _getSuggestions() {
 		var arr,
-				$suggestions;
+			$suggestions;
 
 		arr = [];
-		$suggestions = $row.find( '.more-videos .thumbimage' );
+		$suggestions = $row.find('.more-videos .thumbimage');
 
-		if ( $suggestions.length ) {
-			$suggestions.each(function( idx, elem ) {
-					arr.push( $( elem ).data().videoKey );
+		if ($suggestions.length) {
+			$suggestions.each(function (idx, elem) {
+				arr.push($(elem).data().videoKey);
 			});
 		} else {
 			arr.push(
 				$row
-					.find( '.premium .video-wrapper .thumbimage' )
-					.data().videoKey
+				.find('.premium .video-wrapper .thumbimage')
+				.data().videoKey
 			);
 		}
 
