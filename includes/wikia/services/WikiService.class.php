@@ -17,6 +17,7 @@ class WikiService extends WikiaModel {
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
+	const DBNAME_REGEXP = '/^Wikia-Visualization-Main(,[a-z0-9]+)?(\.[a-z0-9]{3,4}$)/';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -366,8 +367,8 @@ class WikiService extends WikiaModel {
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
 			while ( $row = $results->fetchObject() ) {
-				$file = GlobalFile::newFromText( $row->city_main_image, self::WIKIAGLOBAL_CITY_ID );
-
+				$imageName = $this->checkCVImageName( $row->city_main_image, $row->city_id );
+				$file = GlobalFile::newFromText( $imageName, self::WIKIAGLOBAL_CITY_ID );
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
 					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
@@ -381,6 +382,18 @@ class WikiService extends WikiaModel {
 		}
 		return $images;
 	}
+
+	protected function checkCVImageName( $imageName, $cityId ) {
+		if ( preg_match( self::DBNAME_REGEXP, $imageName, $matches ) ) {
+			if ( empty( $matches[ 1 ] ) ) {
+				$imageName = substr( $imageName, 0, -strlen( $matches[ 2 ] ) )
+							. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
+			}
+		}
+		var_dump($imageName);
+		return $imageName;
+	}
+
 
 	public function getWikiWordmark( $wikiId ) {
 		$url = '';
