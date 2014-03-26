@@ -164,8 +164,12 @@ class CombinedSearchService {
 			'title' => Utilities::field( 'title', $lang ), "url", "id", "score", "pageid", "lang", "wid",
 			"article_quality_i", "article_type_s", Utilities::field( 'html', $lang )
 		];
-
 		$config = (new Factory())->getSolariumClientConfig();
+		$config['adapteroptions']['host'] = "dev-search-s4";
+		$config['adapteroptions']['proxy'] = null;
+		$config['adapteroptions']['port'] = "8983";
+
+
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -178,16 +182,17 @@ class CombinedSearchService {
 		$select->setQuery( $query );
 
 		//add filters
-		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
-		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
-		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
-		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
+		#$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
+		#$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
+		#$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
+		#$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
 		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
 		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
 		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(host:*answers.wikia.com)');
+		$select->createFilterQuery( 'article_quality' )->setQuery('article_quality_i:[50 TO *]');
 
 		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
-		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
+		#$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
 
 		$result = $client->select( $select );
 		return $this->extractData( $result, $requestedFields );
