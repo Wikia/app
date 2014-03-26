@@ -23,4 +23,4 @@ $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferences
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
 
 // Default preference
-$wgDefaultUserOptions['defaulteditor'] = 0;
+$wgDefaultUserOptions[PREFERENCE_EDITOR] = 0;

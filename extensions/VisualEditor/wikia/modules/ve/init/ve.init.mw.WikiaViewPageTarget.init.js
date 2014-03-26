@@ -19,9 +19,9 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, $edit, $veEdit, isVEPreferred,
-		plugins = [], isVEUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
+		init, support, getTargetDeferred, $edit, $veEdit, vePreferred,
+		plugins = [], veUIEnabled, browserSupported, skinSupported, defaultEditor,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -128,14 +128,14 @@
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
-	isViewPage = (
+	viewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	isVEUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
-	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
-	isVEPreferred = defaultEditor === editorPreferenceOption.visual ||
-		( defaultEditor === editorPreferenceOption.default && isVEUIEnabled );
+	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
+	defaultEditor = parseInt( mw.user.options.get( 'editor' ) );
+	vePreferred = defaultEditor === editorPreferenceOption.visual ||
+		( defaultEditor === editorPreferenceOption.default && veUIEnabled );
 
 	support = {
 		es5: !!(
@@ -206,7 +206,7 @@
 		},
 
 		setupSkin: function () {
-			if ( isVEPreferred ) {
+			if ( vePreferred ) {
 				init.setupTabs();
 				init.setupSectionLinks();
 			}
@@ -217,7 +217,7 @@
 		},
 
 		setupSectionLinks: function () {
-			if ( isVEPreferred ) {
+			if ( vePreferred ) {
 				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 			}
 		},
@@ -288,11 +288,11 @@
 		}
 	};
 
-	isBrowserSupported = support.es5 &&
+	browserSupported = support.es5 &&
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	isSkinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
+	skinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
 	// Whether VisualEditor is available for a specific page based on namespace, etc.
 	init.isPageEligible = function ( article ) {
@@ -317,7 +317,7 @@
 	};
 
 	init.canCreatePageUsingVE = function () {
-		return isBrowserSupported && isSkinSupported && isVEPreferred;
+		return browserSupported && skinSupported && vePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -328,9 +328,9 @@
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
 	window.mw.libs.ve = init;
 
-	if ( isBrowserSupported && isSkinSupported ) {
+	if ( browserSupported && skinSupported ) {
 		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
-			if ( isViewPage ) {
+			if ( viewPage ) {
 				$( function () {
 					if ( init.activateOnPageLoad ) {
 						initIndicator();
@@ -349,7 +349,7 @@
 			}
 		}
 
-		if ( isVEPreferred ) {
+		if ( vePreferred ) {
 			// Redlinks
 			$( setupRedlinks );
 		}

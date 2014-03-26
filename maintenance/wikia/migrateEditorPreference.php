@@ -38,8 +38,8 @@ foreach ( $allRows as $row ) {
 	$output = 'User ID: '.$row->up_user;
 
 	// User's editor preference will be set to "Source"
-	$user->setOption( 'defaulteditor', 1 );
-	$output .= ' --> Setting defaulteditor to 1 (Source)';
+	$user->setOption( PREFERENCE_EDITOR, 1 );
+	$output .= ' --> Setting editor preference to 1 (Source)';
 
 	$user->saveSettings();
 	echo "$output\n";

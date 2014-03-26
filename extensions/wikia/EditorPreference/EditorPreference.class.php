@@ -20,7 +20,7 @@ class EditorPreference {
 	 * @return bool
 	 */
 	public static function onEditingPreferencesBefore( $user, &$preferences ) {
-		$preferences['defaulteditor'] = array(
+		$preferences[PREFERENCE_EDITOR] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',
@@ -109,7 +109,7 @@ class EditorPreference {
 	 */
 	public static function getPrimaryEditor() {
 		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt;
-		$selectedOption = (int)$wgUser->getOption( 'defaulteditor' );
+		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
 
 		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
