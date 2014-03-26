@@ -20,14 +20,14 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, $veEdit, isVEPreferred,
+		init, support, getTargetDeferred, $edit, $veEdit, isVEPreferred,
 		plugins = [], isVEUIEnabled, isBrowserSupported, isSkinSupported, defaultEditor,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
 		},
-		editorPreference = {
+		editorPreferenceOption = {
 			'default': 0,
 			'source': 1,
 			'visual': 2,
@@ -134,8 +134,8 @@
 	);
 	isVEUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 	defaultEditor = parseInt( mw.user.options.get( 'defaulteditor' ) );
-	isVEPreferred = defaultEditor === editorPreference['visual'] ||
-		( defaultEditor === editorPreference['default'] && isVEUIEnabled );
+	isVEPreferred = defaultEditor === editorPreferenceOption.visual ||
+		( defaultEditor === editorPreferenceOption.default && isVEUIEnabled );
 
 	support = {
 		es5: !!(
@@ -326,10 +326,7 @@
 	//
 	// The VE global was once available always, but now that platform integration initialisation
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
-	//
-	// Most of mw.libs.ve is considered subject to change and private.
-	mw.libs.ve = $.extend( mw.libs.ve, init );
-	window.mw.libs.ve = mw.libs.ve;
+	window.mw.libs.ve = init;
 
 	if ( isBrowserSupported && isSkinSupported ) {
 		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
