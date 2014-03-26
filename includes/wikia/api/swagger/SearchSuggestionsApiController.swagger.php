@@ -42,7 +42,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="Search term for suggestions",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",

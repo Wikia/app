@@ -93,12 +93,12 @@ use Swagger\Annotations as SWG;
  *				),
  * 				@SWG\Parameter(
  *					name="lang",
- *					description="The two chars wiki language code, (eg.: en, de, fr). If not provided will use en.",
+ *					description="Comma separated language codes (eg.: en,de,fr)",
  *					paramType="query",
  *					required="false",
  *					allowMultiple="false",
  *					dataType="string",
- *					defaultValue=""
+ *					defaultValue="en"
  *				)
  *			)
  *		)
@@ -106,5 +106,4 @@ use Swagger\Annotations as SWG;
  *)
  *
  */
-
 die;

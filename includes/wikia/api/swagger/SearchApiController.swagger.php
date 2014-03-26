@@ -380,7 +380,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -408,7 +408,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -463,7 +463,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -473,7 +473,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
+ * 					description="Comma-separated list of verticals (Gaming, Entertainment, Lifestyle)",
  * 					required="false",
  * 					allowMultiple="true",
  * 					dataType="string",
@@ -481,7 +481,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="The two chars wiki language code, (eg.: en, de, fr, all (for any language)). Can handles multiple values, on default will use current wikia content language.",
+ * 					description="Comma separated language codes (eg.: en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -500,7 +500,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch (page)",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -536,7 +536,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -546,7 +546,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="hub",
  * 					paramType="query",
- * 					description="The name of the hub (Gaming, Entertainment, Lifestyle). Separate by comma if more than one provided",
+ * 					description="Comma-separated list of verticals (Gaming, Entertainment, Lifestyle)",
  * 					required="false",
  * 					allowMultiple="true",
  * 					dataType="string",
@@ -554,7 +554,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="The two chars wiki language code, (eg.: en, de, fr, all (for any language)). Can handles multiple values, on default will use current wikia content language.",
+ * 					description="Comma separated language codes (eg.: en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -573,7 +573,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The number of items per batch (page)",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -591,7 +591,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="height",
- * 					description="Thumbnail height in pixels",
+ * 					description="The desired height for the thumbnail",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -599,7 +599,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="width",
- * 					description="Thumbnail width in pixels",
+ * 					description="The desired width for the thumbnail",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -633,7 +633,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="query",
- * 					description="The query to use for the search",
+ * 					description="Search query",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -642,7 +642,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="langs",
- * 					description="The two chars wiki language code set, coma-separated, (eg.: en,de,fr or en,pl)",
+ * 					description="Comma separated language codes (eg.: en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -651,7 +651,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="hubs",
- * 					description="Filter by the verticals, coma-separated, (eg.: Gaming,Entertainment,Lifestyle)",
+ * 					description="Comma-separated list of verticals (Gaming, Entertainment, Lifestyle)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -660,7 +660,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
