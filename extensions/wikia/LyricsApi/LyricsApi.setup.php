@@ -26,6 +26,4 @@ $wgAutoloadClasses['LyricsApiBase'] = $dir . '/LyricsApiBase.class.php';
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 
-require_once( $dir . '/LyricsApiConstants.php' );
-
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
