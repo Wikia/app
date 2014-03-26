@@ -241,7 +241,7 @@ class SolrAdapter implements DataBaseAdapter {
 		if ( isset( $album['genres'] ) && $album['genres'] ) {
 			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
-		$album['type'] = WIKIA_LYRICS_API_TYPE_ALBUM;
+		$album['type'] = LyricsApiBase::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
 	}

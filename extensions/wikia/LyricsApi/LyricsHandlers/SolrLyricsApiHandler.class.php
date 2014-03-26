@@ -227,7 +227,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	public function getAlbum( $artist, $album ) {
 		$query = $this->newQueryFromSearch( [
-			'type: %1%' => WIKIA_LYRICS_API_TYPE_ALBUM,
+			'type: %1%' => LyricsApiBase::TYPE_ALBUM,
 			'artist_name: %P2%' => $artist,
 			'album_name: %P3%' => $album,
 		] );
