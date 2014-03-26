@@ -18,16 +18,15 @@ class LyricsApiController extends WikiaController {
 	const SEARCH_RESULTS_DEFAULT_OFFSET = 0;
 
 	private $lyricsApiHandler = null;
-	private $lyricsApiBase = null;
 
 	/**
 	 * @desc Constructor, gets the configuration from global $wgLyricsSolariumOptions variable and sets data handler
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->lyricsApiBase = new LyricsApiBase();
+		$lyricsApiBase = new LyricsApiBase();
 		$this->lyricsApiHandler = new SolrLyricsApiHandler(
-			$this->lyricsApiBase->getConfig()
+			$lyricsApiBase->getConfig()
 		);
 	}
 
