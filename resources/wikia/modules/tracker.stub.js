@@ -215,5 +215,5 @@ function veTrack( data ) {
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-christian', finalData );
+	syslogReport( 6, 'veTrack-v4', finalData );
 }
