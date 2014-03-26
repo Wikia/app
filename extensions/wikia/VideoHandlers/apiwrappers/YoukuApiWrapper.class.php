@@ -13,36 +13,26 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * @return bool
 	 */
 	public static function isMatchingHostname( $hostname ) {
-		return endsWith( $hostname, "youku.com" ) ? true : false;
+		return endsWith( $hostname, "youku.com" );
 	}
 
 	/**
 	 * Create an api wrapper from a given url
 	 * @param string $url
-	 * @return mixed|null|static
+	 * @return YoukuApiWrapper|null
 	 */
 	public static function newFromUrl( $url ) {
 
 		wfProfileIn( __METHOD__ );
 
-		$id = '';
+		// Youku urls look like this: http://v.youku.com/v_show/id_XNjg3Mzc4MDMy.html?f=22039479&ev=2
+		// or like this: http://v.youku.com/v_show/id_XNjg5MzUwNTcy_ev_5.html. We want to extract the id
+		// which looks like this: XNjg3Mzc4MDMy. Note, those underbars in the second example (_ev_5) are
+		// never part of the id.
 		$parsedUrl = parse_url( $url );
-		if ( !empty( $parsedUrl['path'] ) ){
-			// Youku urls look like this: http://v.youku.com/v_show/id_XNjg3Mzc4MDMy.html?f=22039479&ev=2
-			// or like this: http://v.youku.com/v_show/id_XNjg5MzUwNTcy_ev_5.html. We want to extract the id
-			// which looks like this: XNjg3Mzc4MDMy. Note, those underbars in the second example (_ev_5) are
-			// never part of the id.
-			$path = explode( "id_", $parsedUrl["path"] )[1];
-			if ( strpos( $path, "_" ) !== false ) {
-				$id = explode( "_", $path )[0];
-			} else {
-				$id = explode( ".html", $path )[0];
-			}
-		};
-
-		if ( $id ) {
+		if ( preg_match( '/id_([^_.]+)/', $parsedUrl['path'], $matches ) ) {
 			wfProfileOut( __METHOD__ );
-			return new static( $id );
+			return new static( $matches[1] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -105,7 +95,7 @@ class YoukuApiWrapper extends ApiWrapper {
 
 	/**
 	 * Keywords of the video
-	 * @return mixed|string
+	 * @return string
 	 */
 	protected function getVideoKeywords() {
 		if ( !empty( $this->interfaceObj['tags'] ) ) {
@@ -152,8 +142,10 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * @return float
 	 */
 	public function getAspectRatio() {
-		if ( isset( $this->interfaceObj['file_meta'] ) ) {
-			return $this->interfaceObj['file_meta']['width'] / $this->interfaceObj['file_meta']['height'];
+		if ( isset( $this->interfaceObj['file_meta']['height'], $this->interfaceObj['file_meta']['width'] ) ) {
+			if ( $this->interfaceObj['file_meta']['height'] != 0 ) {
+				return $this->interfaceObj['file_meta']['width'] / $this->interfaceObj['file_meta']['height'];
+			}
 		}
 		return parent::getAspectRatio();
 	}
@@ -182,28 +174,29 @@ class YoukuApiWrapper extends ApiWrapper {
 		if ( $this->getVideoKeywords() ) {
 			$desc . "\n\nKeyWords: " . $this->getVideoKeywords();
 		}
+		return $desc;
 	}
 
 	/**
-	 * Url of video thumbnail
-	 * @return mixed
+	 * Url of video thumbnail. Note: The Youku API guarantees this value to be returned.
+	 * @return string
 	 */
 	public function getThumbnailUrl() {
-		return !empty( $this->interfaceObj['bigThumbnail'] ) ? $this->interfaceObj['bigThumbnail'] :  $this->interfaceObj['thumbnail'];
+		return $this->interfaceObj['bigThumbnail'];
 	}
 
 	/**
 	 * Get url for API. Note: file_meta, audiolang, and show have the API return info for
 	 * aspect ratio, language of video, and characters in video respectively. More information:
 	 * http://open.youku.com/docs/tech_doc.html (warning, it's in Chinese...)
-	 * @return mixed|string
+	 * @return string
 	 */
 	protected function getApiUrl() {
 
 		$params = [
-			"video_id" 	=> $this->videoId,
+			"video_id"  => $this->videoId,
 			"client_id" => F::app()->wg->YoukuConfig['AppKey'],
-			"ext" 		=> "file_meta,audiolang,show"
+			"ext"       => "file_meta,audiolang,show"
 		];
 
 		return static::$API_URL . "?" . http_build_query( $params );
@@ -218,8 +211,12 @@ class YoukuApiWrapper extends ApiWrapper {
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
 
+		$error_code = "";
 		// true parameter here has json_decode return an array, rather than an object
-		$error_code = json_decode( $content, true )['error']['code'];
+		$error_json = json_decode( $content, true );
+		if ( isset( $error_json['error'], $error_json['error']['code'] ) ) {
+			$error_code = $error_json['error']['code'];
+		}
 
 		if ( $error_code == self::VIDEO_NOT_FOUND_ERROR ) {
 			throw new VideoNotFoundException( $status, $content, $apiUrl );
