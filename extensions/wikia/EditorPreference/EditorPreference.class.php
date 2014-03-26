@@ -57,10 +57,7 @@ class EditorPreference {
 
 		foreach ( $links['views'] as $action => $data ) {
 			if ( $action === 'edit' ) {
-				$pageExists = $title->exists() || (
-					$title->getNamespace() === NS_MEDIAWIKI &&
-					$title->getDefaultMessageText() !== false
-				);
+				$pageExists = $title->exists() || $title->getDefaultMessageText() !== false;
 				$veParams = $editParams = $skin->editUrlOptions();
 
 				// Message keys for VE tab and regular Edit tab
