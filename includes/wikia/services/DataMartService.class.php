@@ -4,7 +4,7 @@
  */
 
 use FluentSql\StaticSQL as sql;
-use  Wikia\Logger;
+use Wikia\Logger\WikiaLogger;
 
 class DataMartService extends Service {
 
