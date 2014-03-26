@@ -11,6 +11,8 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	const HIGHLIGHT_PREFIX = '<em>';
 	const HIGHLIGHT_POSTFIX = '</em>';
 
+	const INDEX_FIELD_NAME_LYRICS = 'lyrics';
+
 	/**
 	 * @var Solarium_Client
 	 */
@@ -328,9 +330,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		if( !is_null( $highlights ) ) {
-			foreach( $highlights->getIterator() as $highlight ) {
-				$song->hightlights[] = $highlight;
-			}
+			$song->hightlights = $highlights->getField( self::INDEX_FIELD_NAME_LYRICS );
 		}
 
 		return $song;
@@ -359,7 +359,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			'album_name',
 			'song_name',
 			'image',
-			'lyrics'
+			self::INDEX_FIELD_NAME_LYRICS
 		] );
 
 		$query->setStart( 0 )->setRows( 1 );
@@ -451,7 +451,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		$query->setRows( $limit );
 
 		$hl = $query->getHighlighting();
-		$hl->setFields( 'lyrics' );
+		$hl->setFields( self::INDEX_FIELD_NAME_LYRICS );
 		$hl->setSimplePrefix( self::HIGHLIGHT_PREFIX );
 		$hl->setSimplePostfix( self::HIGHLIGHT_POSTFIX );
 
