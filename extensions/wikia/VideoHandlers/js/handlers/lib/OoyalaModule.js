@@ -178,12 +178,13 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.rootElement = this.playerRoot.parent();
             this.playerWidth = this.playerRoot.children('.innerWrapper').width();
             this.playerHeight = this.playerRoot.children('.innerWrapper').height();
+            // wikia change begin (move this.isMobile from after adjustForBrowser to before buildAgeGateUI)
+            this.isMobile = this.playerRoot.find('video').size() > 0;
 
             this.buildAgeGateUI();
 
             this.adjustForBrowser();
-
-            this.isMobile = this.playerRoot.find('video').size() > 0;
+            // wikia change end
 
             this.consoleLog("EVENT: onPlayerCreate");
         },
@@ -201,7 +202,13 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
             // wikia change begin
-            ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
+            if (this.isMobile) {
+                ag.css({'height': 'auto'});
+                $('.innerElement').css({'padding-bottom': '7px', 'height': 'auto', 'width': 'auto'});
+                $(window).on('resize', _.bind(this.repositionAgeGate, this));
+            } else {
+                ag.children('.innerElement').css('margin', ((this.playerHeight - ag.children('.innerElement').height()) / 2) + 'px ' + ((this.playerWidth - ag.children('.innerElement').width()) / 2) + 'px');
+            }
             // wikia change end
 
             $.each(months, function (index, value){
@@ -264,6 +271,11 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                     this.seek(0);
                     this.pause();
                     this.ageGateRoot.show();
+                    // wikia change begin
+                    if (this.isMobile) {
+                        this.repositionAgeGate();
+                    }
+                    // wikia change end
 
                     // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
                     // and we have to exit
@@ -398,6 +410,15 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
 
             return 'check';
         },
+
+        // wikia change begin
+        repositionAgeGate: function() {
+            this.ageGateRoot.css({
+                'top': ($(window).height() - this.ageGateRoot.height()) / 2 + 'px',
+                'left': ($(window).width() - this.ageGateRoot.width()) / 2 + 'px'
+            });
+        },
+        // wikia change end
 
         __end_marker: true
     };
