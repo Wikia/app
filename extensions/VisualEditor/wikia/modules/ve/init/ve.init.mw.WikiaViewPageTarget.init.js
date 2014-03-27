@@ -21,7 +21,7 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
 		init, support, getTargetDeferred, $edit, $veEdit, vePreferred,
-		plugins = [], veUIEnabled, browserSupported, skinSupported,
+		plugins = [], veUIEnabled, browserSupported,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -282,8 +282,6 @@
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	skinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
-
 	init.isInValidNamespace = function ( article ) {
 		// Only in enabled namespaces
 		return $.inArray(
@@ -293,7 +291,7 @@
 	};
 
 	init.canCreatePageUsingVE = function () {
-		return browserSupported && skinSupported && vePreferred;
+		return browserSupported && vePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -321,8 +319,22 @@
 		);
 	}
 
-	if ( browserSupported && skinSupported ) {
-		if ( viewPage ) {
+	function removeVELink() {
+		// This class may still be used by CSS
+		$( 'html' ).addClass( 've-not-available' );
+		$edit = $( '#ca-edit' );
+		$veEdit = $( '#ca-ve-edit' );
+		// If VE is the main edit link, clone the alternate edit attributes into it
+		if ( vePreferred ) {
+			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$edit.parent().remove();
+		} else {
+			$veEdit.parent().remove();
+		}
+	}
+
+	if ( browserSupported ) {
+		if ( viewPage && init.isInValidNamespace( mw.config.get( 'wgRelevantPageName' ) ) ) {
 			$( function () {
 				if ( init.activateOnPageLoad ) {
 					initIndicator();
@@ -338,22 +350,14 @@
 				}
 				init.setupSkin();
 			} );
+		} else {
+			removeVELink();
 		}
 
 		if ( vePreferred ) {
 			$( setupRedlinks );
 		}
-	} else if ( !viewPage ) {
-		// This class may still be used by CSS
-		$( 'html' ).addClass( 've-not-available' );
-		$edit = $( '#ca-edit' );
-		$veEdit = $( '#ca-ve-edit' );
-		// If VE is the main edit link, clone the alternate edit attributes into it
-		if ( vePreferred ) {
-			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
-			$edit.parent().remove();
-		} else {
-			$veEdit.parent().remove();
-		}
+	} else {
+		removeVELink();
 	}
 }() );
