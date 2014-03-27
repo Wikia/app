@@ -286,20 +286,7 @@
 
 	skinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
-	// Whether VisualEditor is available for a specific page based on namespace, etc.
-	init.isPageEligible = function ( article ) {
-		return (
-			// Disable on redirect pages until redirects are editable (bug 47328)
-			// Property wgIsRedirect is relatively new in core, many cached pages
-			// don't have it yet. We do a best-effort approach using the url query
-			// which will cover all working redirect (the only case where one can
-			// read a redirect page without ?redirect=no is in case of broken or
-			// double redirects).
-			!(
-				article === mw.config.get( 'wgRelevantPageName' ) &&
-				mw.config.get( 'wgIsRedirect', !!uri.query.redirect )
-			) &&
-
+	init.isInValidNamespace = function ( article ) {
 			// Only in enabled namespaces
 			$.inArray(
 				new mw.Title( article ).getNamespaceId(),
@@ -330,7 +317,7 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isPageEligible( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( redlinkArticle ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
@@ -338,7 +325,7 @@
 	}
 
 	if ( browserSupported && skinSupported ) {
-		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) && viewPage ) {
+		if ( viewPage ) {
 			$( function () {
 				if ( init.activateOnPageLoad ) {
 					initIndicator();
@@ -359,8 +346,7 @@
 		if ( vePreferred ) {
 			$( setupRedlinks );
 		}
-	}
-	else {
+	} else if ( !viewPage ) {
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
 		$edit = $( '#ca-edit' );
@@ -369,8 +355,7 @@
 		if ( vePreferred ) {
 			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
 			$edit.parent().remove();
-		}
-		else {
+		} else {
 			$veEdit.parent().remove();
 		}
 	}

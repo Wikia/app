@@ -8,7 +8,6 @@ ini_set( "include_path", dirname(__FILE__)."/../" );
 require_once( "commandLine.inc" );
 
 $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-//$dbr = wfGetDB( DB_MASTER );
 
 $dbName = $dbr->getDBname();
 echo "Database name: $dbName\n";

@@ -45,7 +45,7 @@ class EditorPreference {
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		global $wgUser, $wgEnableRTEExt, $wgEnableVisualEditorExt;
 
-		if ( $skin->skinname !== 'oasis' || !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink() ) {
+		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink() ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
@@ -152,13 +152,13 @@ class EditorPreference {
 	}
 
 	/**
-	 * Checks whether the VisualEditor tab should be shown.
+	 * Checks whether the VisualEditor link should be shown.
 	 *
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink() {
 		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
-		return $wgEnableVisualEditorExt && ( is_array( $wgVisualEditorNamespaces ) ?
+		return !$wgTitle->isRedirect() && $wgEnableVisualEditorExt && ( is_array( $wgVisualEditorNamespaces ) ?
 			in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
 	}
 }
