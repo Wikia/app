@@ -3,14 +3,15 @@ linters:
   BorderZero:
     enabled: true
 
-  #CapitalizationInSelector: #maybe
-  #  enabled: true
+  CapitalizationInSelector:
+    enabled: false
 
-  #ColorKeyword: #maybe
-  #  enabled: true
-
-  Comment:
+  ColorKeyword: #maybe
     enabled: true
+
+  # our block comments get stripped out anyway, and $wgCdnStylePath uses them
+  Comment:
+    enabled: false
 
   DebugStatement:
     enabled: true
@@ -42,10 +43,10 @@ linters:
   NameFormat:
     enabled: true # sprite generator might need to be updated
 
-  PlaceholderInExtend: // do we even support placeholders?
+  PlaceholderInExtend: # do we even support placeholders?
     enabled: true
 
-  PropertySortOrder: // look into this more
+  PropertySortOrder: # look into this more
     enabled: true
 
   PropertySpelling:
@@ -54,13 +55,13 @@ linters:
 
   SelectorDepth:
     enabled: true
-    max_depth: 3
+    max_depth: 4 # was 3 but I found a possible legit use case for 4 in article.scss .toc
 
   Shorthand:
     enabled: true
 
   SingleLinePerSelector:
-    enabled: true
+    enabled: false
 
   SpaceAfterComma:
     enabled: true

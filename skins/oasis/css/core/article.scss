@@ -1,32 +1,34 @@
-@import "color";
-@import "layout";
-@import "../mixins/bodytext";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import 'color';
+@import 'layout';
+@import '../mixins/bodytext';
+@import '../mixins/clearfix';
+@import '../mixins/gradient';
 
 .WikiaArticle {
 	@include bodytext;
 	// Prevent content from escaping the article area
+	min-height: 250px;
 	overflow: hidden;
 	padding: 0 $width-gutter;
 	position: relative;
-	min-height: 250px;
 	word-wrap: break-word;
 	z-index: 1;
 
 	//whatever article has we should clear it so it won't collapse into comments or other features underneeth it
 	&::after {
+		clear: both;
 		content: '';
 		display: block;
-		clear: both;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
 		margin: .5em 0 .2em;
 	}
+
 	h1 {
 		font-size: 24px;
 	}
+
 	h2 {
 		border-bottom: solid 1px $color-headline-border;
 		font-size: 18px;
@@ -34,32 +36,40 @@
 		overflow: hidden;
 		padding-bottom: 3px;
 	}
+
 	h3 {
 		font-size: 16px;
 	}
+
 	h4 {
 		font-size: 14px;
 	}
+
 	h5 {
 		font-size: 12px;
 	}
+
 	h6 {
 		font-size: 11px;
 	}
+
 	.editsection {
 		float: none;
 		font-size: 13px;
 		margin-left: 10px;
 		vertical-align: baseline;
+
 		img {
 			vertical-align: text-bottom;
 		}
 	}
+
 	h1, h5, h6 {
 		.editsection {
 			display: none;
 		}
 	}
+
 	.noarticletext {
 		border: 1px solid $color-article-toc-border;
 		padding: 0 13px;
@@ -86,7 +96,7 @@
 	}
 
 	ul, ol {
-		margin: 0.4em 0 0.5em 2.5em;
+		margin: .4em 0 .5em 2.5em;
 	}
 
 	ol {
@@ -127,51 +137,60 @@
 	.center {
 		text-align: center;
 		width: 100%;
+
 		* {
 			margin-left: auto;
 			margin-right: auto;
 		}
 	}
+
 	.thumbborder {
 		border: 1px solid $color-article-thumb-border;
 	}
+
 	.floatright {
+		border: 0;
 		clear: right;
 		float: right;
-		position: relative;
 		margin: 0 0 6px 6px;
-		border: 0;
-	}
-	.floatleft {
-		float: left;
-		clear: left;
 		position: relative;
-		margin: 0 6px 6px 0;
-		border: 0;
 	}
+
+	.floatleft {
+		border: 0;
+		clear: left;
+		float: left;
+		margin: 0 6px 6px 0;
+		position: relative;
+	}
+
 	.thumbinner {
 		//background-color: $color-article-thumb-background;
-		@include linear-gradient($color-article-thumb-background, top, $color-page, 0%, $color-article-thumb-background, 100%);
+		@include linear-gradient($color-article-thumb-background, top, $color-page, 0, $color-article-thumb-background, 100%);
 		border: 1px solid $color-article-thumb-border;
 		overflow: hidden;
 		padding: 3px;
 		text-align: center;
 	}
+
 	.thumbcaption {
 		line-height: 18px;
-		padding: 4px 1px 0 1px;
+		padding: 4px 1px 0;
 		text-align: left;
 	}
+
 	.tright {
 		clear: right;
 		float: right;
 		margin: 0 0 16px 16px;
 	}
+
 	.tleft {
-		float: left;
 		clear: left;
+		float: left;
 		margin: 0 16px 16px 0;
 	}
+
 	.magnify {
 		float: right;
 		margin-top: 4px;
@@ -183,6 +202,7 @@
 		margin-right: 16px;
 		text-align: left;
 	}
+
 	.picture-attribution .avatar {
 		margin-right: 3px;
 		vertical-align: middle;
@@ -194,34 +214,45 @@
 		border-collapse: separate;
 		margin: 1em 0;
 		padding: 5px;
+
 		ul {
-			margin: 0;
 			list-style: none;
+			margin: 0;
+
+			// example of possibly legit selector depth 4
 			ul {
 				margin-left: 2em;
 			}
+
+			// example of possibly legit selector depth 4
 			li {
 				margin: 0;
 			}
 		}
 	}
+
 	#toctitle {
 		text-align: center;
+
 		h2 {
-			border: none;
+			border: 0;
 			display: inline;
 			font-size: 14px;
 		}
+
 		.toctoggle {
 			font-size: 12px;
 		}
 	}
+
 	p {
-		margin: 0.4em 0 0.5em;
+		margin: .4em 0 .5em;
 	}
+
 	p + p {
 		margin: 1em 0;
 	}
+
 	pre {
 		background-color: $color-module-shadow;
 		border: 1px solid $color-page-border;
@@ -230,17 +261,18 @@
 		padding: 12px;
 		word-wrap: normal;
 	}
+
 	.printfooter {
 		display: none;
 	}
 
 	// FIXME: anyone still using gopher?
-	a.external, a[href^="gopher://"] {
+	a.external, a[href^='gopher://'] {
 		&:after {
-			background-image: url(/skins/oasis/images/sprite.png);	/* $wgCdnStylePath */
+			background-image: url('/skins/oasis/images/sprite.png');	/* $wgCdnStylePath */
 			background-position: -1198px 0;
 			background-repeat: no-repeat;
-			content: "";
+			content: '';
 			display: inline-block;
 			height: 16px;
 			margin-left: 3px;
@@ -254,6 +286,7 @@
 		a {
 			background-image: none;
 			padding-right: 0;
+
 			&:after {
 				display: none;
 			}
@@ -261,14 +294,15 @@
 	}
 
 	#filetoc {
-		text-align: center;
-		border: 1px solid $color-article-toc-border;
 		background-color: $color-article-toc-background;
-		padding: 5px;
+		border: 1px solid $color-article-toc-border;
 		font-size: 12px;
 		margin-bottom: 5px;
 		margin-left: 0;
 		margin-right: 0;
+		padding: 5px;
+		text-align: center;
+
 		li {
 			display: inline;
 			list-style-type: none;
@@ -292,12 +326,14 @@
 	ul.gallery {
 		margin-left: 0;
 	}
-	div.gallerybox, li.gallerybox{
+
+	div.gallerybox, li.gallerybox {
 		div.thumb {
 			background: $color-article-thumb-background;
 			border: 1px solid $color-article-thumb-border;
 		}
 	}
+
 	li.gallerybox {
 		border: 1px solid $color-page-border;
 	}
@@ -307,20 +343,23 @@
 		border: solid 1px $color-links;
 		margin: 1em 0;
 		padding: 0 1em 1em;
+
 		legend {
 			padding: 7px;
 		}
 	}
+
 	.infobox {
-		border: 1px solid $color-page-border;
 		background-color: mix($color-page, #000, 95%);
-		color: $color-text;
-		margin-bottom: 0.5em;
-		margin-left: 1em;
-		padding: 0.2em;
-		float: right;
+		border: 1px solid $color-page-border;
 		clear: right;
-		&[width="100%"] {	/* fb:8918 - 100% width support */
+		color: $color-text;
+		float: right;
+		margin-bottom: .5em;
+		margin-left: 1em;
+		padding: .2em;
+
+		&[width='100%'] {	/* fb:8918 - 100% width support */
 			float: none;
 			margin-left: 0;
 		}
@@ -331,6 +370,7 @@
 		h3 {
 			font-weight: bold;
 		}
+
 		ul {
 			margin-left: 16px;
 		}
@@ -339,19 +379,23 @@
 	//history page
 	#pagehistory li {
 		border-style: none;
+
 		&.selected {
 			background-color: $color-pagehistory;
 			border-style: dashed;
 		}
 	}
+
 	//diff page
 	td.diff-context {
 		background-color: $color-diff-context;
 	}
+
 	td.diff-deletedline,
 	td.diff-addedline {
 		color: #000;
 	}
+
 	table.diff, td.diff-otitle, td.diff-ntitle {
 		background-color: $color-page;
 	}
@@ -371,10 +415,10 @@
 		padding-bottom: 5px;
 
 		th {
-			width: 25%;
-			text-align: right;
 			padding-right: 10px;
+			text-align: right;
 			vertical-align: top;
+			width: 25%;
 		}
 
 		td {
@@ -387,25 +431,27 @@
 		vertical-align: bottom;
 
 		> div {
-			margin: 0.5em 1.4em 1.2em 0;
+			margin: .5em 1.4em 1.2em 0;
 			text-align: center;
 
 			&.tright {
-				margin: 0.5em 0 1.2em 1.4em;
+				margin: .5em 0 1.2em 1.4em;
 			}
 
 			&.tcenter {
-				margin: 0.5em auto 1.2em;
+				margin: .5em auto 1.2em;
 			}
 
 			a {
-				position:relative;
+				position: relative;
 			}
 		}
 	}
+
 	.fullMedia {
 		word-wrap: break-word;
 	}
+
 	// Used in Lightbox - style videos that play on the page
 	// instead of in the lightbox
 	.inline-video {
@@ -413,7 +459,7 @@
 	}
 
 	// foundation block-grid ul's should not have normal ul padding when used in articles
-	ul[class*="block-grid-"] {
+	ul[class*='block-grid-'] {
 		margin: 0;
 		padding: 0;
 	}
@@ -476,6 +522,7 @@
 			padding: 5px 3px 8px;
 			text-align: left;
 		}
+
 		// sections separator
 		.wikia-infobox-section-header {
 			border-top: 1px $color-page-border solid;
@@ -511,6 +558,7 @@
 
 	ul {
 		list-style: none;
+
 		li {
 			border-left: 1px solid $color-page-border;
 			display: inline-block;
@@ -526,7 +574,6 @@
 		}
 	}
 }
-
 
 .TOC_hide #toctitle + ul {
 	display: none;
@@ -557,4 +604,3 @@
 	overflow: visible;
 	z-index: auto;
 }
-
