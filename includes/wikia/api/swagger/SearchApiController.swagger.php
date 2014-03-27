@@ -481,7 +481,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="Comma separated language codes (eg.: en,de,fr)",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
