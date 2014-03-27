@@ -26,7 +26,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 
 	function hasEmbed(slot) {
 		log(['hasEmbed', slot], 5, logGroup);
-		var embedNo = slot.getElementsByTagName('embed').length;
+		var embedNo = slot.getElementsByTagName('embed').length || slot.getElementsByTagName('object').length;
 		log(['hasEmbed', slot, embedNo], 5, logGroup);
 		return !!embedNo;
 	}
