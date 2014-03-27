@@ -15,6 +15,12 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-total' => 'Total amount of slots: $1',
 	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization:',
 
+	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
+	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
+	'manage-wikia-home-hubs-slot-1' => 'Slot 1',
+	'manage-wikia-home-hubs-slot-2' => 'Slot 2',
+	'manage-wikia-home-hubs-slot-3' => 'Slot 3',
+
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
@@ -221,6 +227,12 @@ Parameters:
 	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
 	'manage-wikia-home-stats-success' => 'Message after successful save.',
 	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
+
+	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
+	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
+	'manage-wikia-home-hubs-slot-1' => 'Slot on the left in hubs section on Wikia homepage',
+	'manage-wikia-home-hubs-slot-2' => 'Slot in the center in hubs section on Wikia homepage',
+	'manage-wikia-home-hubs-slot-3' => 'Slot on the right in hubs section on Wikia homepage',
 );
 
 /** Arabic (العربية)
