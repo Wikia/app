@@ -26,6 +26,12 @@ class LyricsApiBase {
 	 */
 	const ADAPTER_OPTIONS_ELEMENT_NAME = 'adapteroptions';
 
+	/**
+	 * @desc A flag which ignores if it's a dev environment or not; default === false
+	 * @var bool
+	 */
+	private $skipDevboxCheck = false;
+
 	private $baseConfig = [
 		'adapter' => 'Solarium_Client_Adapter_Curl',
 		self::ADAPTER_OPTIONS_ELEMENT_NAME => [
@@ -63,7 +69,7 @@ class LyricsApiBase {
 	 * @return array
 	 */
 	public function getAdapterOptions( $master = false ) {
-		if( F::app()->wg->DevelEnvironment ) {
+		if( F::app()->wg->DevelEnvironment && !$this->skipDevboxCheck ) {
 			return array_merge(
 				$this->baseConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ],
 				$this->devboxConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ]
@@ -98,6 +104,13 @@ class LyricsApiBase {
 		);
 
 		return $config;
+	}
+
+	/**
+	 * @desc Sets skipDevboxCheck to true
+	 */
+	public function skipDevboxCheck() {
+		$this->skipDevboxCheck = true;
 	}
 
 }
