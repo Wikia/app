@@ -61,6 +61,9 @@ $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 
+# don't purge all thumbs - PLATFORM-161
+$wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2289,6 +2292,22 @@ class Wikia {
 				break;
 		}
 
+		return true;
+	}
+
+	/**
+	 * Don't send purge requests for each thumbnail.
+	 * Single purge from "LocalFile:purgeCache" does the trick.
+	 *
+	 * @author macbre
+	 * @see PLATFORM-161
+	 *
+	 * @param LocalFile $file
+	 * @param array $urls thumbs to purge
+	 * @return bool
+	 */
+	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
+		$urls = [];
 		return true;
 	}
 }
