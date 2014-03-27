@@ -233,6 +233,10 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_LIMIT );
 		}
 
+		if( $offset < 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_OFFSET );
+		}
+
 		return [ $limit, $offset ];
 	}
 
