@@ -699,7 +699,7 @@ class LocalFile extends File {
 		// Wikia change - begin
 		// @author macbre / BAC-1206
 		$urls = array( $this->getURL() );
-		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, $urls ] );
+		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
 		SquidUpdate::purge( $urls );
 		// Wikia change - end
