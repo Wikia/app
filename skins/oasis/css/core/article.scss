@@ -486,20 +486,12 @@
 .wikia-infobox {
 	$cell-width: 225px;
 
+	@include bodytext;
 	border: 1px $color-page-border solid;
 	float: right;
-	line-height: 12px;
-	padding: 15px 8px 8px 8px;
-
-	margin: {
-		top: 0px;
-		right: 0px;
-		bottom: 16px;
-		left: 16px;
-	}
-
-	@include bodytext;
 	line-height: 15px;
+	margin: 0 0 16px 16px;
+	padding: 15px 8px 8px;
 	width: $cell-width + 20 +2;
 
 	td {
@@ -546,14 +538,14 @@
 
 // /** Interlang Links **/
 .WikiaArticleInterlang {
+	clear: both;
 	margin: 10px;
 	padding: 10px;
-	clear: both;
 
 	h3 {
 		float: left;
-		margin-right: 5px;
 		font-size: inherit;
+		margin-right: 5px;
 	}
 
 	ul {
@@ -568,8 +560,8 @@
 			padding-right: 5px;
 
 			&:first-child {
-				border: none;
-				padding-left: 0px;
+				border: 0;
+				padding-left: 0;
 			}
 		}
 	}
@@ -581,7 +573,7 @@
 
 // Needed for article comments lazy loading
 .WikiaArticleComments.loading {
-	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
 	border-top: 1px solid $color-page;
 	height: 16px;
 	margin: 10px;
@@ -589,13 +581,13 @@
 }
 
 .fluidWidth {
-	width: 100%;
 	height: auto;
+	width: 100%;
 }
 
 .ArticlePreviewInner h1.pagetitle {
-	word-wrap: break-word;
 	line-height: 1.2em;
+	word-wrap: break-word;
 }
 
 // Change overflow on article when VisualEditor is being used
