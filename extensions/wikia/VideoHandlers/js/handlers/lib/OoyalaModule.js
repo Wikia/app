@@ -178,13 +178,12 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.rootElement = this.playerRoot.parent();
             this.playerWidth = this.playerRoot.children('.innerWrapper').width();
             this.playerHeight = this.playerRoot.children('.innerWrapper').height();
-            // wikia change begin (move this.isMobile from after adjustForBrowser to before buildAgeGateUI)
-            this.isMobile = this.playerRoot.find('video').size() > 0;
 
             this.buildAgeGateUI();
 
             this.adjustForBrowser();
-            // wikia change end
+
+            this.isMobile = this.playerRoot.find('video').size() > 0;
 
             this.consoleLog("EVENT: onPlayerCreate");
         },
@@ -202,7 +201,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
             // wikia change begin
-            if (this.isMobile) {
+            if ($('.LightboxModal').length == 0) {
                 ag.css({'height': 'auto'});
                 $('.innerElement').css({'padding-bottom': '7px', 'height': 'auto', 'width': 'auto'});
                 $(window).on('resize', _.bind(this.repositionAgeGate, this));
