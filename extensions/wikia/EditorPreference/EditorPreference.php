@@ -21,6 +21,7 @@ $wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.ph
 // Hooks
 $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferencesBefore';
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
+$wgHooks['MakeGlobalVariablesScript'][] = 'EditorPreference::onMakeGlobalVariablesScript';
 
 // Default preference
 $wgDefaultUserOptions[PREFERENCE_EDITOR] = 0;

@@ -133,9 +133,7 @@
 		!( 'diff' in uri.query )
 	);
 	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
-	defaultEditor = parseInt( mw.user.options.get( 'editor' ) );
-	vePreferred = defaultEditor === editorPreferenceOption.visual ||
-		( defaultEditor === editorPreferenceOption.default && veUIEnabled );
+	vePreferred = mw.config.get( 'wgVisualEditor' ).visualEditorPreferred;
 
 	support = {
 		es5: !!(

@@ -103,6 +103,18 @@ class EditorPreference {
 	}
 
 	/**
+	 * Adds extra variable to the page config.
+	 *
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool true
+	 */
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		$vars['wgVisualEditor']['visualEditorPreferred'] = self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+		return true;
+	}
+
+	/**
 	 * Gets the primary editor by checking user preferences.
 	 *
 	 * @return integer The editor option value
