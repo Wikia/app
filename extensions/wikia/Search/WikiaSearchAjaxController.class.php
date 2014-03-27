@@ -57,7 +57,7 @@ class WikiaSearchAjaxController extends WikiaController {
 
 		$this->response->setVal('text', $text);
 
-$resultsFound = $config ->getResultsFound();
+		$resultsFound = $config ->getResultsFound();
 		$this->response->setVal( 'counter', wfMessage( 'wikiamobile-wikiasearch2-count-of-results' )
 			->numParams(
 				$resultsPerPage * $page - $resultsPerPage + 1,
