@@ -4,17 +4,19 @@ class TvApiController extends WikiaApiController {
 
 	//const PARAMETER_NAMESPACES = 'namespaces';
 	const LIMIT_SETTING = 1;
-	const WIKI_LIMIT = 5;
+	const WIKI_LIMIT = 1;
 	const HUB_SETTING = 'Entertainment';
 	const RANK_SETTING = 'default';
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const MINIMAL_WIKIA_SCORE = 0.5;
+	const MINIMAL_WIKIA_SCORE = 2;
+	const MINIMAL_WIKIA_ARTICLES = 50;
 	const MINIMAL_ARTICLE_SCORE = 1.7;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
+	const QUERY_WORDS_LIMIT = 10;
 	/**
 	 * @var Array wikis
 	 */
@@ -145,37 +147,74 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 
-	protected function setWikiVariables(){
-		$config = $this->getConfigCrossWiki();
-		$resultSet = (new Factory)->getFromConfig( $config )->search();
-		$found = false;
+	/**
+	 * @param string $query Raw query string
+	 * @param string $lang Two letter language code
+	 * @return Solarium_Result_Select
+	 */
+	protected function queryXWikiSolr( $query, $lang ) {
+		$config = (new Factory())->getSolariumClientConfig();
+		$config['adapteroptions']['core'] = 'xwiki';
+		$client = new \Solarium_Client($config);
 
-		foreach( $resultSet->getResults() as $result ) {
-			if ( $result['id'] && $result['url'] && $result['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
-				$found = true;
-			}
-		}
+		$phrase = $this->sanitizeQuery( $query );
+		$query = $this->prepareXWikiQuery( $phrase, $lang );
 
-		return $found;
+		$select = $client->createSelect();
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setQuery( $query );
+		$select->setRows( static::WIKI_LIMIT );
+		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
+
+		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt '.
+			'sitename_txt^4 domains_txt' );
+		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
+		$dismax->setBoostQuery( 'domains_txt:"www.' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10 '.
+			'domains_txt:"' . preg_replace( '|\W|', '', $phrase ) . '.wikia.com"^10' );
+		$dismax->setBoostFunctions( 'wam_i^2' );
+
+		$result = $client->select( $select );
+		return $result;
 	}
 
-	protected function getConfigCrossWiki() {
+	/**
+	 * @param string $query Raw query string
+	 * @return string Sanitized query string
+	 */
+	protected function sanitizeQuery( $query ) {
+		$select = new \Wikia\Search\Query\Select( $query );
+		return $select->getSolrQuery( static::QUERY_WORDS_LIMIT );
+	}
+
+	/**
+	 * @param string $query sanitized query string
+	 * @param string $lang two letter language code
+	 * @return string
+	 */
+	protected function prepareXWikiQuery( $query, $lang ) {
+		return '+("'.$query.'") AND +(lang_s:'.$lang.')';
+	}
+
+	protected function setWikiVariables(){
+		$found = false;
 		$request = $this->getRequest();
-		$searchConfig = new Wikia\Search\Config;
+
 		$query = $request->getVal( 'seriesName', null );
 		if ( empty( $query ) || $query === null ) {
 			throw new InvalidParameterApiException( 'seriesName' );
 		}
-		$searchConfig->setQuery( $query )
-			->setLimit( static::WIKI_LIMIT )
-			->setRank( static::RANK_SETTING )
-			->setInterWiki( true )
-			->setCommercialUse( $this->hideNonCommercialContent() )
-			->setLanguageCode( $request->getVal( 'lang', static::LANG_SETTING ) )
-			->setHub( static::HUB_SETTING )
-		;
-		return $searchConfig;
+		$results = $this->queryXWikiSolr($query, $request->getVal( 'lang', static::LANG_SETTING ) );
+		foreach( $results as $result ) {
+			if ( ( $result['id'] && $result['url'] )
+				&& $result['score'] > static::MINIMAL_WIKIA_SCORE
+				&& $result['articles_i'] > static::MINIMAL_WIKIA_ARTICLES ) {
+				$this->wikis[] = [ 'id' => $result['id'], 'url' => $result['url'] ];
+				$found = true;
+			}
+		}
+		return $found;
 	}
 
 	/**
