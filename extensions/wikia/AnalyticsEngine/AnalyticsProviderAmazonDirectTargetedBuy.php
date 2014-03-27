@@ -28,7 +28,7 @@ SCRIPT;
 
 		return $wgEnableAmazonDirectTargetedBuy
 			&& $wgShowAds
-			&& AdEngine2Controller::areAdsShowableOnPage()
+			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
