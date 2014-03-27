@@ -21,18 +21,12 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
 		init, support, getTargetDeferred, $edit, $veEdit, vePreferred,
-		plugins = [], veUIEnabled, browserSupported, skinSupported, defaultEditor,
+		plugins = [], veUIEnabled, browserSupported, skinSupported,
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
 		},
-		editorPreferenceOption = {
-			'default': 0,
-			'source': 1,
-			'visual': 2,
-			'ck': 3
-		}
 		indicatorTimeoutId = null;
 
 	function initIndicator() {
@@ -326,6 +320,23 @@
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
 	window.mw.libs.ve = init;
 
+	function setupRedlinks() {
+		$( document ).on(
+			'mouseover click',
+			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+			function() {
+				var $element = $( this ),
+					href = $element.attr( 'href' ),
+					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
+
+				if ( init.isPageEligible( redlinkArticle ) ) {
+					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+				}
+			}
+		);
+	}
+
 	if ( browserSupported && skinSupported ) {
 		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) && viewPage ) {
 			$( function () {
@@ -362,22 +373,5 @@
 		else {
 			$veEdit.parent().remove();
 		}
-	}
-
-	function setupRedlinks() {
-		$( document ).on(
-			'mouseover click',
-			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
-			function() {
-				var $element = $( this ),
-					href = $element.attr( 'href' ),
-					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
-					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
-
-				if ( init.isPageEligible( redlinkArticle ) ) {
-					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
-				}
-			}
-		);
 	}
 }() );
