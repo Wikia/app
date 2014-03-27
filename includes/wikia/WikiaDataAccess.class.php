@@ -149,11 +149,20 @@ class WikiaDataAccess {
 			}
 
 			if( is_null( $result ) ) {
-				$result = array(
-					'data' => $getData(),
-					'time' => wfTimestamp( TS_UNIX )
-				);
-				self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+				try{
+					$result = array(
+						'data' => $getData(),
+						'time' => wfTimestamp( TS_UNIX )
+					);
+					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+				} catch ( Exception $e ) {
+					WikiaLogger::instance()->debug( "WikiaDataAccess", [
+						'method' => 'cacheWithLock',
+						'key' => $key,
+						'exceptionMessage' => $e->getMessage()
+					] );
+				}
+
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -180,11 +189,20 @@ class WikiaDataAccess {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data
 					// because we hold the lock other threads won't try to generate it in the same time
-					$result = array(
-						'data' => $getData(),
-						'time' => wfTimestamp( TS_UNIX )
-					);
-					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+					try{
+						$result = array(
+							'data' => $getData(),
+							'time' => wfTimestamp( TS_UNIX )
+						);
+						self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+					} catch ( Exception $e ) {
+						WikiaLogger::instance()->debug( "WikiaDataAccess", [
+							'method' => 'cacheWithLock',
+							'key' => $key,
+							'exceptionMessage' => $e->getMessage()
+						] );
+					}
+
 				} else {
 					// what we already have in $result is good enough
 					// and another thread is generating that data anyway for future requests
