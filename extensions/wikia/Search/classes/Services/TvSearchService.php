@@ -34,9 +34,7 @@ class TvSearchService {
 		$select = $this->prepareXWikiQuery( $query, $lang );
 		$response = $this->querySolr( $select );
 		foreach( $response as $doc ) {
-			if ( ( $doc['id'] && $doc['url'] )
-				&& $doc['score'] > static::MINIMAL_WIKIA_SCORE
-				&& $doc['articles_i'] > static::MINIMAL_WIKIA_ARTICLES ) {
+			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {
 				$result[] = [ 'id' => $doc['id'], 'url' => $doc['url'] ];
 			}
 		}
@@ -84,6 +82,7 @@ class TvSearchService {
 		$select->setQuery( '+("'.$phrase.'") AND +(lang_s:'.$lang.')' );
 		$select->setRows( static::WIKI_LIMIT );
 		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
+		$select->createFilterQuery( 'articles' )->setQuery('articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]');
 
 		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt '.
 			'sitename_txt^4 domains_txt' );
