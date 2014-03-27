@@ -44,11 +44,12 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
-		$wikis = $this->getTvSearchService()->queryXWiki( $seriesName, $lang );
+		$tvs = $this->getTvSearchService();
+		$wikis = $tvs->queryXWiki( $seriesName, $lang );
 		if ( !empty( $wikis ) ) {
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $this->getTvSearchService()->queryMain( $episodeName, $wiki['id'], $lang, $quality );
+				$result = $tvs->queryMain( $episodeName, $wiki['id'], $lang, $quality );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}
