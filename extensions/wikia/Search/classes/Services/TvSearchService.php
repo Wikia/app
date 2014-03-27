@@ -10,7 +10,12 @@ class TvSearchService {
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
 	const MINIMAL_ARTICLE_SCORE = 0.5;
+	const ARTICLE_TYPE = 'tv_episode';
+	const ALLOWED_NAMESPACE = 0;
+	const ARTICLES_LIMIT = 1;
+	const WORDS_QUERY_LIMIT = 10;
 
+	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 	/** @var \Solarium_Client client */
 	private $client;
 	private $provided;
@@ -75,13 +80,17 @@ class TvSearchService {
 
 		$noyearphrase = preg_replace( '|\(\d{4}\)|', '', $query );
 		$phrase = $this->sanitizeQuery( $query );
+		$slang = $this->sanitizeQuery( $lang );
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser('edismax');
 
-		$select->setQuery( '+("'.$phrase.'") AND +(lang_s:'.$lang.')' );
+		$select->setQuery( '+("'.$phrase.'") AND +(lang_s:' . $slang . ')' );
 		$select->setRows( static::WIKI_LIMIT );
-		$select->createFilterQuery( 'A&F' )->setQuery('-(hostname_s:*fanon.wikia.com) AND -(hostname_s:*answers.wikia.com)');
+		foreach( static::$EXCLUDED_WIKIS as $ex ) {
+			$excluded[] = "-(hostname_s:{$ex})";
+		}
+		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
 		$select->createFilterQuery( 'articles' )->setQuery('articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]');
 
 		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt '.
@@ -103,7 +112,7 @@ class TvSearchService {
 
 	protected function sanitizeQuery( $query ) {
 		$select = new Select( $query );
-		return $select->getSolrQuery( 10 );
+		return $select->getSolrQuery( static::WORDS_QUERY_LIMIT );
 	}
 
 	protected function querySolr( $select ) {
@@ -114,25 +123,26 @@ class TvSearchService {
 		$select = $this->getArticleSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
+		$slang = $this->sanitizeQuery( $lang );
 		$preparedQuery = $this->prepareQuery( $phrase, $wikiId, $minQuality );
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser('edismax');
 
 		$select->setQuery( $preparedQuery );
-		$select->setRows( 1 );
-		$select->createFilterQuery( 'ns' )->setQuery('+(ns:0)');
-		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:tv_episode)');
+		$select->setRows( static::ARTICLES_LIMIT );
+		$select->createFilterQuery( 'ns' )->setQuery('+(ns:'. static::ALLOWED_NAMESPACE . ')');
+		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . static::ARTICLE_TYPE . ')');
 
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
-			$this->withLang( 'title', $lang ),
-			$this->withLang( 'redirect_titles_mv', $lang ),
+			$this->withLang( 'title', $slang ),
+			$this->withLang( 'redirect_titles_mv', $slang ),
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			'titleStrict^8',
-			$this->withLang( 'title', $lang ).'^2',
-			$this->withLang( 'redirect_titles_mv', $lang ).'^2',
+			$this->withLang( 'title', $slang ).'^2',
+			$this->withLang( 'redirect_titles_mv', $slang ).'^2',
 		] ) );
 
 		return $select;
