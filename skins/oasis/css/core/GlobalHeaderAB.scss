@@ -1,3 +1,4 @@
+@import "color";
 @import "skins/oasis/css/mixins/box-sizing";
 
 $color: #0A5FA2;
@@ -81,6 +82,7 @@ $nav-height: 37px;
 			& > a {
 				border: 0;
 				color: $color;
+
 				&:visited, &:active {
 					color: $color;
 				}
@@ -118,6 +120,27 @@ $nav-height: 37px;
 	}
 
 	.GlobalNavigation {
+		.video-games-vertical-color .subnav {
+			border-color: $color-wikiahome-videogames;
+		}
+
+		.entertainment-vertical-color .subnav {
+			border-color: $color-wikiahome-entertainment;
+		}
+
+		.lifestyle-vertical-color .subnav {
+			border-color: $color-wikiahome-lifestyle;
+		}
+
+		.topNav .subnav {
+			top: 37px;
+			border-top: 1px solid $menu-top-border-color;
+
+			.catnav li {
+				border: none;
+			}
+		}
+
 		& > li {
 			& > a {
 				font-size: 14px;
@@ -134,7 +157,7 @@ $nav-height: 37px;
 			}
 		}
 
-		a {
+		a, &.vertical-colors li:hover a, &.vertical-colors li:hover + li > a {
 			border: 0;
 		}
 	}

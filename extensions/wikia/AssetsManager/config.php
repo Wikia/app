@@ -218,6 +218,8 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
+		// TODO
+		'//skins/oasis/js/GlobalHeaderAB.js',
 	)
 );
 
