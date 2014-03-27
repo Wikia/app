@@ -336,15 +336,10 @@ class ThemeDesignerController extends WikiaController {
 
 		$data = $wgRequest->getArray( 'settings' );
 
-		// This should not be possible using ThemeDesigner UI, but if this controller ever receives 'false' or a
-		// non-string, the value should be set to an empty string. BugId:VE-894
-		if ( getType( $data['background-image'] ) !== 'string' || $data['background-image'] === 'false' ) {
-			$data['background-image'] = '';
+		if ( $wgRequest->wasPosted() ) {
+			$themeSettings = new ThemeSettings();
+			$themeSettings->saveSettings($data);
 		}
-
-		$themeSettings = new ThemeSettings();
-		$themeSettings->saveSettings($data);
-
 		wfProfileOut( __METHOD__ );
 	}
 
