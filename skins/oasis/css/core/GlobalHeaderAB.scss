@@ -3,6 +3,7 @@
 $color: #0A5FA2;
 $bg-color: #fff;
 $menu-hover-bg-color: #C7D2D8;
+$menu-top-border-color: black;
 $nav-height: 37px;
 
 // TODO add ABTesting class
@@ -94,6 +95,21 @@ $nav-height: 37px;
 		}
 	}
 
+	.AccountNavigation {
+		.subnav.show {
+			border: 0;
+			border-top: 1px solid $menu-top-border-color;
+			top: 37px;
+			& > li {
+				border-top: 0;
+				& > a {
+					padding: 10px 20px;
+					color: $color;
+				}
+			}
+		}
+	}
+
 	.GlobalNavigation {
 		& > li {
 			& > a {
@@ -119,7 +135,7 @@ $nav-height: 37px;
 	#WallNotifications {
 		.subnav.show {
 			border: 0;
-			border-top: 1px solid black;
+			border-top: 1px solid $menu-top-border-color;
 			top: 37px;
 
 			.notifications-header {
