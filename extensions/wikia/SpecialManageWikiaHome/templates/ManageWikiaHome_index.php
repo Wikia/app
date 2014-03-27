@@ -56,6 +56,14 @@
 				<p><input type="submit" name="wikis-in-slots" value="<?= wfMessage('manage-wikia-home-change-button')->text(); ?>"></p>
 			</form>
 		</div>
+
+		<div class="hubs-slot-forms">
+			<h2 class="heading"><?= wfMessage('manage-wikia-home-hubs-slot-heading')->plain(); ?></h2>
+			<form name="hubs-slots" method="post">
+				<?= $hubsForm->renderFormFields(); ?>
+				<input type="submit" name="hubs-slots" />
+			</form>
+		</div>
 	</div>
 
 	<div class="collections-setup">
