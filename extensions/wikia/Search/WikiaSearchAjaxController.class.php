@@ -19,7 +19,7 @@ class WikiaSearchAjaxController extends WikiaController {
 
         $this->response->setVal('status', true);
 
-        $query = urldecode( $this->request->getVal('query') );
+        $query = urldecode( $this->request->getVal('query', $this->request->getVal('search')) );
 
         $page = $this->request->getVal('page', 1);
         $rank = $this->request->getVal('rank', 'default');
