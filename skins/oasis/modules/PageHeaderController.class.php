@@ -36,7 +36,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	protected function prepareActionButton() {
 
-		global $wgTitle, $wgUser, $wgRequest, $wgEnableVisualEditorUI, $wgEnableEditorPreferenceExt;
+		global $wgTitle, $wgUser, $wgRequest;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
