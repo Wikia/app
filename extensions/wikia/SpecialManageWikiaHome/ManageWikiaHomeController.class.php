@@ -81,6 +81,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
+		$this->hubsForm = new HubsForm();
+		$hubSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId);
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
 		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
@@ -134,12 +136,19 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
+			} elseif ( $this->request->getVal('hubs-slots', false)) {
+				$hubSlotsValues = $this->request->getParams();
+				$hubSlotsValues = $this->hubsForm->filterData($hubSlotsValues);
+				$this->helper->saveHubSlotsToWF($hubSlotsValues, $this->corpWikiId);
+				FlashMessages::put(wfMessage('manage-wikia-home-hubs-slot-success')->text());
 			}
 		}
 
 		$this->form->setFieldsValues($collectionValues);
 		$this->statsForm->setFieldsValues($statsValues);
 		$this->verticals = $this->getWikiVerticals();
+		$this->hubSlotsValues = $hubSlotsValues;
+		$this->prepareHubsForm($hubSlotsValues);
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
@@ -506,5 +515,54 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		return $url;
+	}
+
+	private function prepareHubsForm( $hubSlotsValues ) {
+		$wikis = $this->getHubsWikis( '' /*$this->visualizationLang*/ );
+
+		$choices[] = [
+			'value' => 0,
+			'option' => '-- no change --'
+		];
+
+		foreach ($wikis as $wiki) {
+			$choices[] = [
+				'value' => $wiki['id'],
+				'option' => $wiki['name']
+			];
+		}
+
+		$fields = $this->hubsForm->getFields();
+
+		foreach ($fields as $key => $field) {
+			$this->hubsForm->setFieldProperty($key, 'choices', $choices);
+			$this->hubsForm->setFieldProperty($key, 'value', $hubSlotsValues[$key]);
+		}
+	}
+
+	// WikiaHubsApiController::getHubsWikis
+	private function getHubsWikis( $lang ) {
+		$varId = WikiFactory::getVarIdByName( 'wgEnableWikiaHubsV3Ext' );
+		$wikis = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
+
+		if ( !empty( $lang ) ) {
+			foreach ( $wikis as $wikiId => $wiki ) {
+				if ( $wiki['l'] != $lang ) {
+					unset( $wikis[$wikiId] );
+				}
+			}
+		}
+
+		$out = [];
+		foreach ( $wikis as $wikiId => $wiki ) {
+			$out[] = [
+				'id' => $wikiId,
+				'name' => $wiki['t'],
+				'url' => $wiki['u'],
+				'language' => $wiki['l']
+			];
+		}
+
+		return $out;
 	}
 }

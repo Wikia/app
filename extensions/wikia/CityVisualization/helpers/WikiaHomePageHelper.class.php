@@ -305,6 +305,14 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
+	public function getHubSlotsFromWF($corporateId) {
+		return WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+	}
+
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId) {
+		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+	}
+
 	/**
 	 * get total number of pages across Wikia
 	 * @return integer totalPages
