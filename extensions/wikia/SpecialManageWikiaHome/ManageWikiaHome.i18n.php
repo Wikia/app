@@ -20,6 +20,7 @@ $messages['en'] = array(
 	'manage-wikia-home-hubs-slot-1' => 'Slot 1',
 	'manage-wikia-home-hubs-slot-2' => 'Slot 2',
 	'manage-wikia-home-hubs-slot-3' => 'Slot 3',
+	'manage-wikia-home-hubs-slot-no-change-option' => '-- no change --',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
@@ -233,6 +234,7 @@ Parameters:
 	'manage-wikia-home-hubs-slot-1' => 'Slot on the left in hubs section on Wikia homepage',
 	'manage-wikia-home-hubs-slot-2' => 'Slot in the center in hubs section on Wikia homepage',
 	'manage-wikia-home-hubs-slot-3' => 'Slot on the right in hubs section on Wikia homepage',
+	'manage-wikia-home-hubs-slot-no-change-option' => 'Option in select field in hubs slots section to don\'t change hub slot'
 );
 
 /** Arabic (العربية)

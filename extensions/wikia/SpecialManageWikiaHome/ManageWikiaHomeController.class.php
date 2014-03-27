@@ -81,7 +81,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
-		$this->hubsForm = new HubsForm();
+		$this->hubsForm = new HubsSlotsForm();
 		$hubSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId);
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
@@ -518,7 +518,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	private function prepareHubsForm( $hubSlotsValues ) {
-		$wikis = $this->getHubsWikis( '' /*$this->visualizationLang*/ );
+		$response = $this->app->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $this->visualizationLang ]
+		);
+
+		$wikis = $response->getVal('list', []);
 
 		$choices[] = [
 			'value' => 0,
@@ -538,31 +544,5 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->hubsForm->setFieldProperty($key, 'choices', $choices);
 			$this->hubsForm->setFieldProperty($key, 'value', $hubSlotsValues[$key]);
 		}
-	}
-
-	// WikiaHubsApiController::getHubsWikis
-	private function getHubsWikis( $lang ) {
-		$varId = WikiFactory::getVarIdByName( 'wgEnableWikiaHubsV3Ext' );
-		$wikis = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
-
-		if ( !empty( $lang ) ) {
-			foreach ( $wikis as $wikiId => $wiki ) {
-				if ( $wiki['l'] != $lang ) {
-					unset( $wikis[$wikiId] );
-				}
-			}
-		}
-
-		$out = [];
-		foreach ( $wikis as $wikiId => $wiki ) {
-			$out[] = [
-				'id' => $wikiId,
-				'name' => $wiki['t'],
-				'url' => $wiki['u'],
-				'language' => $wiki['l']
-			];
-		}
-
-		return $out;
 	}
 }
