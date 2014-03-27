@@ -64,7 +64,14 @@ $nav-height: 37px;
 			height: $nav-height;
 			line-height: $nav-height;
 			padding: 0;
+
+			&:hover {
+				background: none;
+				background-color: $menu-hover-bg-color;
+			}
+
 			& > a {
+				border: 0;
 				color: $color;
 				&:visited, &:active {
 					color: $color;
@@ -72,16 +79,18 @@ $nav-height: 37px;
 			}
 		}
 
-		li {
-			&:hover {
-				background: none;
-				background-color: $menu-hover-bg-color;
-			}
-		}
-
 		.bubbles {
 			height: $nav-height;
-			background-position: 0 center;
+			background: none;
+
+			&.reddot #bubbles_count {
+				color: $bg-color;
+				background-color: $color;
+				left: 9px;
+				line-height: 17px;
+				padding: 0 5px;
+				top: 0;
+			}
 		}
 	}
 
@@ -104,6 +113,24 @@ $nav-height: 37px;
 
 		a {
 			border: 0;
+		}
+	}
+
+	#WallNotifications {
+		.subnav.show {
+			border: 0;
+			border-top: 1px solid black;
+			top: 37px;
+
+			.notifications-header {
+				span {
+					font-weight: normal;
+				}
+			}
+		}
+
+		#wall-notifications-markasread * {
+			font-size: 13px;
 		}
 	}
 }
