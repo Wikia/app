@@ -306,9 +306,10 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop;
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgAdDriverEnableRemnantGptMobile;
 
-		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
+		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
+		$wgAdDriverEnableRemnantGptMobile = $request->getBool( 'gptremnant', $wgAdDriverEnableRemnantGptMobile );
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
