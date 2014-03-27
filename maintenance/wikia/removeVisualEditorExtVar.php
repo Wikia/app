@@ -39,6 +39,5 @@ while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 		echo "Did not remove variable for {$oRow->city_id} because it was not set\n";
 	}
 	echo "########################################\n";
-	exit();
 }
 $dbr->freeResult( $oRes );
