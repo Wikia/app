@@ -600,7 +600,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -636,7 +636,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -682,7 +682,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -772,7 +772,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -864,7 +864,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -918,7 +918,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",

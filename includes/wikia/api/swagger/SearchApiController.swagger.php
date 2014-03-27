@@ -33,7 +33,7 @@ use Swagger\Annotations as SWG;
  * 		name="ns",
  * 		type="int",
  * 		required="true",
- * 		description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces"
+ * 		description="Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces"
  * 	)
  * 	@SWG\Property(
  * 		name="quality",
@@ -436,7 +436,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Page namespace number, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -660,7 +660,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Comma-separated namespace ids, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
