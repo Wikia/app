@@ -27,28 +27,11 @@ require(
 					adLabel +
 					'</label></div></div>';
 			},
-			adSlots = [],
-			isAdVisible = function ( adSlotName ) {
-				return function ( hop ) {
-					var slot = document.getElementById( adSlotName ),
-						$iframe = $( slot ).find( 'iframe' ).contents();
-
-					// TODO: move this logic to AdProviderGptMobile (and AdEngine2.js:31)
-					if (
-						$iframe.find( 'body *:not(script)' ).length === 0 ||
-						$iframe.find( 'body img' ).width() <= 1
-					) {
-						log( 'Slot seems to be empty: ' + mobileTopLeaderBoard, logLevel, logGroup );
-						hop({method: 'hop'}, 'Null');
-					} else {
-						slot.className += ' show';
-					}
-				}
-			};
+			adSlots = [];
 
 		// Slots
 		log( 'Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup );
-		adSlots.push( [mobileTopLeaderBoard, isAdVisible( mobileTopLeaderBoard )] );
+		adSlots.push( [mobileTopLeaderBoard] );
 
 		if ( window.wgArticleId && (showInContent || showPreFooter ) ) {
 			//this can wait to on load as is under the fold
@@ -56,13 +39,13 @@ require(
 				if ( showInContent ) {
 					log( 'Loading slot: ' + mobileInContent, logLevel, logGroup );
 					$firstSection.before( createSlot( mobileInContent ) );
-					adSlots.push( [mobileInContent, isAdVisible( mobileInContent )] );
+					adSlots.push( [mobileInContent] );
 				}
 
 				if ( showPreFooter ) {
 					log( 'Loading slot: ' + mobilePreFooter, logLevel, logGroup );
 					$footer.after( createSlot( mobilePreFooter ) );
-					adSlots.push( [mobilePreFooter, isAdVisible( mobilePreFooter )] );
+					adSlots.push( [mobilePreFooter] );
 				}
 			} );
 		}

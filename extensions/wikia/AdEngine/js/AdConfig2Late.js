@@ -19,7 +19,7 @@ var AdConfig2Late = function (
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
+		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -27,7 +27,7 @@ var AdConfig2Late = function (
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
-		if (slot[2] === 'Liftium') {
+		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
 			if (adProviderLiftium.canHandleSlot(slot)) {
 				return adProviderLiftium;
 			}

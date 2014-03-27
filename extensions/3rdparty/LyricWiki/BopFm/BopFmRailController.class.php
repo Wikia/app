@@ -34,7 +34,7 @@ class BopFmRailController extends WikiaController {
 				$songName = "";
 			} else {
 				$artist = substr($title, 0, $colonIndex);
-				$songName = substr($title, $colonIndex);
+				$songName = substr($title, $colonIndex+1);
 			}
 			//$pageUrl = urlencode($wg->Title->getFullURL()); // don't pass this to the bop.fm widget
 

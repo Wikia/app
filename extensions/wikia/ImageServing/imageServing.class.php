@@ -31,6 +31,10 @@ class ImageServing {
 	 */
 	private $memc;
 
+	// store up to 20 images for each article (see BAC-734)
+	// ImageServing::getImages() will then take an appropriate slice of them
+	const MAX_LIMIT = 20;
+
 	/**
 	 * @param $articles Integer[] List of articles ids to get images
 	 * @param $width \int image width
@@ -86,12 +90,12 @@ class ImageServing {
 	 *
 	 * @access public
 	 *
-	 * @param $n Integer[] number of images to get for each article
-	 * @param $driver ImageServingDriverBase allow to force driver
+	 * @param $limit Integer number of images to get for each article (up to ImageServing::MAX_LIMIT)
+	 * @param $driver string ImageServingDriverBase allow to force driver
 	 *
-	 * @return  File[]
+	 * @return mixed array of images for each requested article
 	 */
-	public function getImages( $n = 5, $driver = null) {
+	public function getImages( $limit = 5, $driver = null) {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
@@ -103,6 +107,10 @@ class ImageServing {
 			}
 
 			$this->articlesByNS = array();
+
+			wfProfileIn( __METHOD__  . '::fetchMetadata');
+
+			// fetch articles metadata (try from cache)
 			foreach($articles as $key => $value) {
 				$mcValue = $this->memc->get( $this->makeKey($key) );
 
@@ -112,31 +120,37 @@ class ImageServing {
 				}
 			}
 
-			$res = $db->select(
-				array( 'page' ),
-				array(
-					'page_namespace as ns',
-					'page_title as title',
-					'page_id as id'
-				),
-				array(
-					'page_id' =>  $articles
-				),
-				__METHOD__
-			);
+			// fetch articles metadata (from database + cache it)
+			if (!empty($articles)) {
+				$res = $db->select(
+					array( 'page' ),
+					array(
+						'page_namespace as ns',
+						'page_title as title',
+						'page_id as id'
+					),
+					array(
+						'page_id' =>  $articles
+					),
+					__METHOD__
+				);
 
-			while ($row =  $db->fetchRow( $res ) ) {
-				$this->addArticleToList($row);
+				while ($row =  $db->fetchRow( $res ) ) {
+					$this->memc->set( $this->makeKey($row['id']), $row, 86400 );
+					$this->addArticleToList($row);
+				}
 			}
 
+			wfProfileOut( __METHOD__  . '::fetchMetadata');
+
 			if(empty($driver)) {
-				foreach($this->imageServingDrivers as $key => $value ){
+				foreach($this->imageServingDrivers as $key => $value ) {
 					if(!empty($this->articlesByNS[$key])) {
 						/* @var ImageServingDriverBase $driver */
 						$driver = new $value($db, $this, $this->proportionString);
 						$driver->setArticlesList($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);
-						$out = $out + $driver->execute($n);
+						$out = $out + $driver->execute($limit);
 					}
 				}
 
@@ -148,12 +162,17 @@ class ImageServing {
 			//rest of article in MAIN name spaces
 			foreach( $this->articlesByNS as $value ) {
 				$driver->setArticlesList( $value );
-				$out = $out + $driver->execute($n);
+				$out = $out + $driver->execute();
 			}
 
 			if(empty($out)){
-				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $n)? Seems like overkill.
-				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $n, &$out ) );
+				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
+				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
+			}
+
+			// apply limiting
+			foreach($out as &$entry) {
+				$entry = array_slice($entry, 0, $limit);
 			}
 		}
 
@@ -180,14 +199,22 @@ class ImageServing {
 		$this->articlesByNS[$value['ns']][$value['id']] = $value;
 	}
 
-	private function makeKey( $key ) {
-		return wfMemcKey("imageserving-article-details", $key, $this->width, $this->height);
+	/**
+	 * Returns memcache key to be used to cache articles metadata (article id + namespace id)
+	 *
+	 * @param $articleId int
+	 * @return String
+	 */
+	private function makeKey( $articleId ) {
+		return wfMemcKey("imageserving-article-metadata", $articleId);
 	}
 
 	/**
-	 *  !!! deprecated !!! use getImages fetches an array with thumbnails and titles for the supplied files
-	 *  TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility
-	 * @author Federico "Lox" Lucignano
+	 * TODO: remove it image serving work also with FILE_NS we keep this function for backward compatibility
+	 * FIXME: this method will return thumbnails for just a single file (despite allowing a list of files to be passed)
+	 *
+	 * @deprecated use getImages fetches an array with thumbnails and titles for the supplied files
+	 * @@author Federico "Lox" Lucignano
 	 *
 	 * @param Array $fileNames a list of file names to fetch thumbnails for
 	 * @return Array an array containing the url to the thumbnail image and the title associated to the file

@@ -1578,6 +1578,7 @@ $messages['lt'] = array(
 
 /** Latvian (latviešu)
  * @author Sg ghost
+ * @author Srolanh
  */
 $messages['lv'] = array(
 	'wikiadoption' => 'Automātiska wiki pieņemšana',
@@ -1621,6 +1622,10 @@ Vikija komanda<br /><br />
 
 Jūs varat <a href="<span class=" notranslate"="" translate="no">$3 "> atrakstīties</a> no šā saraksta izmaiņas.',
 	'wikiadoption-mail-second-subject' => '#WIKINAME tiks safasēti pieņemšanai drīz',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME ir pieņemts',
+	'tog-adoptionmails' => 'Sūtīt man e-pastu, ja $1 kļūs piiejama citu lietotāju pieņemšanai',
+	'wikiadoption-pref-label' => 'Izmaiņām šajos iestatījumos būs efekts tikai uz e-pastiem no $1.',
+	'wikiadoption-welcome-header' => 'Apsveicam! Jūs esat pieņēmuši {{SITENAME}}!',
 );
 
 /** Macedonian (македонски)
@@ -1979,7 +1984,7 @@ Er is al een tijdje geen actieve beheerder geweest voor {{SITENAME}} en we zoeke
 Door de wiki te adopteren wordt u beheerder en bureaucraat zodat u de hulpmiddelen hebt om de inhoud en de gemeenschap van de wiki te beheren. U kunt andere gebruikers beheerder maken en helpen met het verwijderen, hernoemen en beveiligen van pagina's en bewerkingen terugdraaien.
 <br /><br />
 Bent u klaar om de volgende stap te zetten in uw carrière bij {{SITENAME}}?",
-	'wikiadoption-know-more-header' => 'Wil je meer weten?',
+	'wikiadoption-know-more-header' => 'Wilt u meer weten?',
 	'wikiadoption-know-more-description' => 'Volg deze koppelingen voor meer infomatie. Het staat u natuurlijk ook vrij om contact met ons op te nemen als u vragen hebt.',
 	'wikiadoption-adoption-successed' => 'Gefeliciteerd! U bent nu beheerder van deze wiki.',
 	'wikiadoption-adoption-failed' => 'We hebben geprobeerd u beheerder te maken, maar dit lukte helaas niet. [http://community.wikia.com/Special:Contact Neem contact met ons op] zodat we u verder kunnen helpen.',

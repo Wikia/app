@@ -4,7 +4,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
-	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&bitrateID=$5';
+	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
 	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	protected static $FORMAT_ID_THUMBNAIL = 9;
@@ -18,11 +18,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	// list of bit rate ids in priority for videos
 	protected static $BITRATE_IDS_VIDEO = [
-		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 1,
-		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 2,
-		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 3,
-		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 4,
-		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 5,
+		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 4,
+		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 5,
+		ScreenplayApiWrapper::STANDARD2_43_BITRATE_ID => 2,
+		ScreenplayApiWrapper::STANDARD2_BITRATE_ID    => 3,
+		ScreenplayApiWrapper::HIGHDEF_BITRATE_ID      => 1,
 	];
 
 	// map bit rate id to resolution
@@ -106,9 +106,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$url = str_replace( '$2', $wgScreenplayApiConfig['username'], $url );
 		$url = str_replace( '$3', $wgScreenplayApiConfig['password'], $url );
 		$url = str_replace( '$4', $startDate, $url );
+		$url = str_replace( '$5', $endDate, $url );
 
 		$bitrates = array_keys( self::$BITRATE_IDS_THUMBNAIL + self::$BITRATE_IDS_VIDEO );
-		$url = str_replace( '$5', implode( ',', $bitrates ), $url );
+		$url = str_replace( '$6', implode( ',', $bitrates ), $url );
 
 		if ( isset( $ageGate ) ) {
 			$url .= '&ageGate='.$ageGate;
@@ -217,6 +218,16 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 			// create videos
 			foreach ( $videos as $video ) {
+				// set hd and resolution
+				if ( !empty( $video['stdBitrateCode'] ) ) {
+					$video['hd'] = 0;
+					$video['resolution'] = self::$VIDEO_RESOLUTION[$video['stdBitrateCode']];
+				} else if ( !empty( $video['streamHdUrl'] ) ) {
+					$video['hd'] = 1;
+					$video['resolution'] = self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID];
+				}
+
+				// get addlCategories
 				$addlCategories = $video['addlCategories'];
 				unset( $video['addlCategories'] );
 
@@ -264,16 +275,10 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		if ( $clip['FormatId'] == self::$FORMAT_ID_VIDEO ) {
 			if ( $clip['BitrateId'] == ScreenplayApiWrapper::HIGHDEF_BITRATE_ID ) {
 				$clipData['streamHdUrl'] = $clip['Url'];
-				$clipData['hd'] = 1;
-				$clipData['resolution'] = self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID];
 			} else if ( empty( $clipData['stdBitrateCode'] )
 				|| self::$BITRATE_IDS_VIDEO[$clip['BitrateId']] > self::$BITRATE_IDS_VIDEO[$clipData['stdBitrateCode']] ) {
 				$clipData['stdBitrateCode'] = $clip['BitrateId'];
 				$clipData['streamUrl'] = $clip['Url'];
-
-				if ( $clipData['resolution'] != self::$VIDEO_RESOLUTION[ScreenplayApiWrapper::HIGHDEF_BITRATE_ID] ) {
-					$clipData['resolution'] = self::$VIDEO_RESOLUTION[$clipData['stdBitrateCode']];
-				}
 			}
 		}
 
@@ -468,7 +473,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		if ( $generateUrl ) {
-			$url = empty( $data['streamHdUrl'] ) ? $data['streamUrl'] : $data['streamHdUrl'];
+			$url = empty( $data['streamUrl'] ) ? $data['streamHdUrl'] : $data['streamUrl'];
 			$data['url'] = [
 				'flash' => $url,
 				'iphone' => $url,
