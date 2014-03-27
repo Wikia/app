@@ -297,6 +297,7 @@ class Linker {
 
 			$query['action'] = 'edit';
 			$query['redlink'] = '1';
+			$query['js'] = '0';
 		}
 		$ret = $target->getLinkURL( $query );
 		wfProfileOut( __METHOD__ );

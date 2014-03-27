@@ -36,7 +36,7 @@ class ContentDisplayController extends WikiaController {
 
 		$result = ''; // reset result first
 
-		$editUrl = $title->getLocalUrl( array( 'action' => 'edit', 'section' => $section ) );
+		$editUrl = $title->getLocalUrl( array( 'action' => 'edit', 'section' => $section, 'js' => 0 ) );
 
 		$class = 'editsection';
 
