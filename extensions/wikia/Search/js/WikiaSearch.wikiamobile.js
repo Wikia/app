@@ -8,7 +8,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
     var d = window.document,
         wkSrhInp = d.getElementById('wkSrhInp'),
         wkMainCnt = d.getElementById('wkMainCnt'),
-        wkResCntAct = d.getElementById('wkResCntAct'),
+        wkResultCount = d.getElementById('wkResultCount'),
         wkResultUl = d.getElementById('wkResultUl'),
         wkResultNext = d.getElementById('wkResultNext'),
         wkResultPrev = d.getElementById('wkResultPrev'),
@@ -87,7 +87,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 
 					currentResultFrom = resultsPerPage*currentPage+1-resultsPerPage;
 					currentResultTo = (currentPage == totalPages) ? totalResults :resultsPerPage*currentPage;
-					wkResCntAct.innerHTML = currentResultFrom+'-'+currentResultTo;
+					wkResultCount.innerHTML = result.counter;
 
 					elm.className = elm.className.replace(' active', '');
 					throbber.hide(elm);

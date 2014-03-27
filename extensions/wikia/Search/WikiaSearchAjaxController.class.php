@@ -56,6 +56,18 @@ class WikiaSearchAjaxController extends WikiaController {
         )->render();
 
         $this->response->setVal('text', $text);
+
+		if ( $this->app->checkskin( 'wikiamobile' ) ) {
+			$resultsFound = $config ->getResultsFound();
+			$this->response->setVal( 'counter', wfMessage( 'wikiamobile-wikiasearch2-count-of-results' )
+				->numParams(
+					$resultsPerPage * $page - $resultsPerPage + 1,
+					( $page === $config->getNumPages() ) ? $resultsFound : $resultsPerPage * $page,
+					$resultsFound
+				)
+				->text() );
+		}
+
         wfProfileOut(__METHOD__);
     }
 }
