@@ -287,12 +287,11 @@
 	skinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
 	init.isInValidNamespace = function ( article ) {
-			// Only in enabled namespaces
-			$.inArray(
-				new mw.Title( article ).getNamespaceId(),
-				conf.namespaces
-			) !== -1
-		);
+		// Only in enabled namespaces
+		return $.inArray(
+			new mw.Title( article ).getNamespaceId(),
+			conf.namespaces
+		) !== -1;
 	};
 
 	init.canCreatePageUsingVE = function () {
