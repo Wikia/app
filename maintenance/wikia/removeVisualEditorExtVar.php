@@ -9,7 +9,7 @@ require_once( "commandLine.inc" );
 
 function isVESet( $id ) {
 	$out = WikiFactory::getVarByName( 'wgEnableVisualEditorExt', $id );
-	if ( !is_object($out) || empty( $out->cv_value ) ) {
+	if ( !is_object( $out ) || empty( $out->cv_value ) ) {
 		return false;
 	} else {
 		return true;
@@ -20,8 +20,6 @@ function removeVisualEditorExt( $id ) {
 	WikiFactory::removeVarByName( 'wgEnableVisualEditorExt', $id );
 	WikiFactory::clearCache( $id );
 }
-
-$varid = WikiFactory::getVarIdByName( 'wgEnableVisualEditorExt', true );
 
 $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
