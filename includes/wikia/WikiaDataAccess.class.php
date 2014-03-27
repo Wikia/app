@@ -132,13 +132,16 @@ class WikiaDataAccess {
 		if ( is_null( $result ) ) {
 
 			list($gotLock, $wasLocked) = self::lock( $keyLock );
-			$debugData['timestamp'] = microtime( true ) - $debugData['timestamp'] ;
-			$debugData['method'] = 'cacheWithLock';
-			$debugData['gotLock'] = $gotLock;
-			$debugData['wasLocked'] = $wasLocked;
-			$debugData['line'] = 140;
-			WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
-
+			if ( !empty( $debugData ) ) {
+				$debugData[ 'timestamp' ] = microtime( true ) - $debugData[ 'timestamp' ];
+				$debugData[ 'method' ] = 'cacheWithLock';
+				$debugData[ 'gotLock' ] = $gotLock;
+				$debugData[ 'wasLocked' ] = $wasLocked;
+				$debugData[ 'line' ] = 140;
+				if ( $debugData[ 'timestamp' ] > 10 ) {
+					WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
+				}
+			}
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
@@ -162,11 +165,16 @@ class WikiaDataAccess {
 			} else {
 				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
-				$debugData['timestamp'] = microtime( true ) - $debugData['timestamp'] ;
-				$debugData['method'] = 'cacheWithLock';
-				$debugData['gotLock'] = $gotLock;
-				$debugData['wasLocked'] = $wasLocked;
-				$debugData['line'] = 170;
+				if ( !empty( $debugData ) ) {
+					$debugData[ 'timestamp' ] = microtime( true ) - $debugData[ 'timestamp' ];
+					$debugData[ 'method' ] = 'cacheWithLock';
+					$debugData[ 'gotLock' ] = $gotLock;
+					$debugData[ 'wasLocked' ] = $wasLocked;
+					$debugData[ 'line' ] = 170;
+					if ( $debugData[ 'timestamp' ] > 10 ) {
+						WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
+					}
+				}
 				WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
 				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
