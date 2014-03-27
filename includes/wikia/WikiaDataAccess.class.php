@@ -1,5 +1,5 @@
 <?php
-
+use Wikia\Logger\WikiaLogger;
 /**
  * Abstraction classes for SQL data access (or any other external resource)
  * Intended to simplify code that retrieves data from SQL and caches results
@@ -117,7 +117,7 @@ class WikiaDataAccess {
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE, $debugData = null ) {
 		$app = F::app();
 
 		if ( $command == self::SKIP_CACHE ) {
@@ -132,6 +132,12 @@ class WikiaDataAccess {
 		if ( is_null( $result ) ) {
 
 			list($gotLock, $wasLocked) = self::lock( $keyLock );
+			$debugData['timestamp'] = microtime( true ) - $debugData['timestamp'] ;
+			$debugData['method'] = 'cacheWithLock';
+			$debugData['gotLock'] = $gotLock;
+			$debugData['wasLocked'] = $wasLocked;
+			$debugData['line'] = 140;
+			WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
 
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
@@ -156,7 +162,12 @@ class WikiaDataAccess {
 			} else {
 				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
-
+				$debugData['timestamp'] = microtime( true ) - $debugData['timestamp'] ;
+				$debugData['method'] = 'cacheWithLock';
+				$debugData['gotLock'] = $gotLock;
+				$debugData['wasLocked'] = $wasLocked;
+				$debugData['line'] = 170;
+				WikiaLogger::instance()->debug( "WikiaDataAccess", $debugData );
 				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data

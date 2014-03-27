@@ -531,7 +531,7 @@ class DataMartService extends Service {
 
 		WikiaLogger::instance()->debug( "DataMartService", $data );
 
-		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData, WikiaDataAccess::USE_CACHE, $data );
 
 		$data['timestamp'] = microtime( true ) - $data['timestamp'] ;
 		$data['method'] = 'getTopArticlesByPageview_B';
