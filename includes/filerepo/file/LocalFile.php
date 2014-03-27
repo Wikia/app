@@ -699,7 +699,7 @@ class LocalFile extends File {
 		// Wikia change - begin
 		// @author macbre / BAC-1206
 		$urls = array( $this->getURL() );
-		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
+		wfRunHooks( 'LocalFilePurgeCache', [ $this, $urls ] );
 
 		SquidUpdate::purge( $urls );
 		// Wikia change - end
@@ -759,7 +759,7 @@ class LocalFile extends File {
 				$urls[] = $this->getThumbUrl( $file );
 			}
 
-			wfRunHooks( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
+			wfRunHooks( 'LocalFilePurgeThumbnails', [ $this, $urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 	}
