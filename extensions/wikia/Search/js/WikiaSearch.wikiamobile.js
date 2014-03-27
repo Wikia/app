@@ -50,9 +50,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
         var elm = this,
             forward = (elm.getAttribute('id') == 'wkResultNext'),
             pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
-            condition = (forward) ? (currentPage < totalPages) : (currentPage > 1),
-            currentResultFrom,
-            currentResultTo;
+            condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
         if(currentPage === 1) {
             firstPage = wkResultUl.innerHTML;
@@ -84,9 +82,8 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 					finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
 					wkResultUl.innerHTML = result.text;
+					wkResultUl.setAttribute( 'data-page', currentPage );
 
-					currentResultFrom = resultsPerPage*currentPage+1-resultsPerPage;
-					currentResultTo = (currentPage == totalPages) ? totalResults :resultsPerPage*currentPage;
 					wkResultCount.innerHTML = result.counter;
 
 					elm.className = elm.className.replace(' active', '');

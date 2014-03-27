@@ -19,7 +19,7 @@ class WikiaSearchAjaxController extends WikiaController {
 
         $this->response->setVal('status', true);
 
-        $query = $this->request->getVal('query');
+        $query = urldecode( $this->request->getVal('query') );
 
         $page = $this->request->getVal('page', 1);
         $rank = $this->request->getVal('rank', 'default');
@@ -43,7 +43,7 @@ class WikiaSearchAjaxController extends WikiaController {
 		);
         $config = new Wikia\Search\Config( $params );
         $config->setInterWiki( $isInterWiki )
-               ->setQuery( urldecode($query) );
+               ->setQuery( $query );
         $results = (new QueryService\Factory)->getFromConfig( $config )->search();
 
         $text = $this->app->getView('WikiaSearch', 'WikiaMobileResultList', array(
@@ -57,16 +57,14 @@ class WikiaSearchAjaxController extends WikiaController {
 
         $this->response->setVal('text', $text);
 
-		if ( $this->app->checkskin( 'wikiamobile' ) ) {
-			$resultsFound = $config ->getResultsFound();
-			$this->response->setVal( 'counter', wfMessage( 'wikiamobile-wikiasearch2-count-of-results' )
-				->numParams(
-					$resultsPerPage * $page - $resultsPerPage + 1,
-					( $page === $config->getNumPages() ) ? $resultsFound : $resultsPerPage * $page,
-					$resultsFound
-				)
-				->text() );
-		}
+		$resultsFound = $config ->getResultsFound();
+		$this->response->setVal( 'counter', wfMessage( 'wikiamobile-wikiasearch2-count-of-results' )
+			->numParams(
+				$resultsPerPage * $page - $resultsPerPage + 1,
+				( $page == $config->getNumPages() ) ? $resultsFound : $resultsPerPage * $page,
+				$resultsFound
+			)
+			->text() );
 
         wfProfileOut(__METHOD__);
     }
