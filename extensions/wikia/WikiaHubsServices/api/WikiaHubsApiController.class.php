@@ -249,7 +249,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		return $out;
 	}
 
-	private function isValidCity( $cityId ) {
+	protected function isValidCity( $cityId ) {
 		return WikiaDataAccess::cache(
 			'hubsapi_is_valid_cityid_' . $cityId,
 			6 * 60 * 60,
