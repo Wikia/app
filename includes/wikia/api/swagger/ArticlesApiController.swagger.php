@@ -754,7 +754,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="hub",
- * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.)",
+ * 					description="The name of the vertical (e.g. Gaming)",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -763,7 +763,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="Comma separated language codes (eg.: en,de,fr)",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
