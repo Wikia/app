@@ -52,6 +52,13 @@ $nav-height: 37px;
 			&.start-a-wiki {
 				margin-top: 0;
 				border-left: 0;
+
+				.wikia-button {
+					background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* $wgCdnStylePath */
+					background-position: 8px center;
+					background-repeat: no-repeat;
+					padding-left: 25px;
+				}
 			}
 		}
 	}
