@@ -44,13 +44,27 @@ class LyricsApiBase {
 		]
 	];
 
+	private $devboxConfig = [
+		'adapteroptions' => [
+			'host' => 'dev-search-s4',
+			'port' => 8983,
+		]
+	];
+
 	/**
-	 * @desc Returns an array with adapteroptions for Solarium_Client configuration
-	 * @param bool $master a flag - return the options for master or slave; default === slave
+	 * @desc Returns an array with adapteroptions for Solarium_Client config (on devboxes the $master doesn't count)
+	 * @param bool $master a flag - return the options for master; default === false
 	 *
 	 * @return array
 	 */
 	public function getAdapterOptions( $master = false ) {
+		if( F::app()->wg->DevelEnvironment ) {
+			return array_merge(
+				$this->baseConfig['adapteroptions'],
+				$this->devboxConfig['adapteroptions']
+			);
+		}
+
 		if( $master ) {
 			$adapterOptions = array_merge(
 				$this->baseConfig['adapteroptions'],
