@@ -226,14 +226,10 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	private function getPaginationParamsFromRequest() {
-		$limit = $this->wg->Request->getVal( self::PARAM_LIMIT, self::SEARCH_RESULTS_DEFAULT_LIMIT );
-		$offset = $this->wg->Request->getVal( self::PARAM_OFFSET, self::SEARCH_RESULTS_DEFAULT_OFFSET );
+		$limit = $this->wg->Request->getInt( self::PARAM_LIMIT, self::SEARCH_RESULTS_DEFAULT_LIMIT );
+		$offset = $this->wg->Request->getInt( self::PARAM_OFFSET, self::SEARCH_RESULTS_DEFAULT_OFFSET );
 
 		if( $limit <= 0 ) {
-			throw new InvalidParameterApiException( self::PARAM_LIMIT );
-		}
-
-		if( $offset < 0 ) {
 			throw new InvalidParameterApiException( self::PARAM_LIMIT );
 		}
 
