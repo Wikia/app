@@ -3,7 +3,7 @@
 class YoukuVideoHandler extends VideoHandler {
 
 	protected $apiName = 'YoukuApiWrapper';
-	protected static $urlTemplate =' http://player.youku.com/embed/$1';
+	protected static $urlTemplate = 'http://player.youku.com/embed/$1';
 	protected static $providerDetailUrlTemplate = "http://v.youku.com/v_show/id_$1.html";
 	protected static $providerHomeUrl = 'http://www.youku.com/';
 
