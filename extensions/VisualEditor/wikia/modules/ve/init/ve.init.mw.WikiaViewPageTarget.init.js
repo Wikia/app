@@ -327,28 +327,25 @@
 	window.mw.libs.ve = init;
 
 	if ( browserSupported && skinSupported ) {
-		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) ) {
-			if ( viewPage ) {
-				$( function () {
-					if ( init.activateOnPageLoad ) {
-						initIndicator();
-						if ( window.veTrack ) {
-							veTrack( {
-								action: 've-edit-page-start',
-								trigger: 'activateOnPageLoad'
-							} );
-						}
-						getTarget().done( function ( target ) {
-							target.activate();
+		if ( init.isPageEligible( mw.config.get( 'wgRelevantPageName' ) ) && viewPage ) {
+			$( function () {
+				if ( init.activateOnPageLoad ) {
+					initIndicator();
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
 						} );
 					}
-					init.setupSkin();
-				} );
-			}
+					getTarget().done( function ( target ) {
+						target.activate();
+					} );
+				}
+				init.setupSkin();
+			} );
 		}
 
 		if ( vePreferred ) {
-			// Redlinks
 			$( setupRedlinks );
 		}
 	}
@@ -357,12 +354,13 @@
 		$( 'html' ).addClass( 've-not-available' );
 		$edit = $( '#ca-edit' );
 		$veEdit = $( '#ca-ve-edit' );
-		// Remove the VE edit link from the tab dropdown
-		if ( $veEdit.parent( 'li' ).remove().length === 0 ) {
-			// If length is 0, VE edit link is the main edit button -- replace URI with default edit
-			$veEdit.attr( 'href', $edit.attr( 'href' ) );
-			// Remove the alternate edit link in the tab dropdown because it's redundant
-			$edit.parent( 'li' ).remove();
+		// If VE is the main edit link, clone the alternate edit attributes into it
+		if ( vePreferred ) {
+			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$edit.parent().remove();
+		}
+		else {
+			$veEdit.parent().remove();
 		}
 	}
 

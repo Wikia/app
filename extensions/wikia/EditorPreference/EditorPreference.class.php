@@ -45,7 +45,7 @@ class EditorPreference {
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		global $wgUser, $wgEnableRTEExt, $wgEnableVisualEditorExt;
 
-		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorTab() ) {
+		if ( $skin->skinname !== 'oasis' || !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink() ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
@@ -85,11 +85,14 @@ class EditorPreference {
 					'href' => $title->getLocalURL( $veParams ),
 					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
+					// Visual Editor is main Edit tab if...
+					'main' => $primaryEditor === self::OPTION_EDITOR_VISUAL
 				);
 
 				// Alter the edit tab
 				$editTab = $data;
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
+				$editTab['main'] = !$veTab['main'];
 
 				$newViews['edit'] = $editTab;
 				$newViews['ve-edit'] = $veTab;
@@ -110,7 +113,8 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		$vars['wgVisualEditor']['visualEditorPreferred'] = self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+		$vars['wgVisualEditor']['visualEditorPreferred'] = self::shouldShowVisualEditorLink() &&
+			self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 		return true;
 	}
 
@@ -152,7 +156,7 @@ class EditorPreference {
 	 *
 	 * @return boolean
 	 */
-	public static function shouldShowVisualEditorTab() {
+	public static function shouldShowVisualEditorLink() {
 		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
 		return $wgEnableVisualEditorExt && ( is_array( $wgVisualEditorNamespaces ) ?
 			in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );

@@ -89,37 +89,25 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if ( isset($this->content_actions['ve-edit']) &&
-				// Visual Editor can be used for Edit tab if...
-				(
-					// VE is enabled for current wiki but EditorPreference extension is disabled
-					(
-						$wgEnableVisualEditorUI &&
-						!$wgEnableEditorPreferenceExt
-					) ||
-					// OR EditorPreference extension is enabled and conditions pass for namespace and user preference
-					(
-						$wgEnableEditorPreferenceExt &&
-						EditorPreference::shouldShowVisualEditorTab() &&
-						EditorPreference::getPrimaryEditor() === EditorPreference::OPTION_EDITOR_VISUAL
-					)
-				)
-			) {
+		else if ( isset($this->content_actions['ve-edit']) && $this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
+			unset( $this->content_actions['ve-edit'] );
 		}
 		// edit
 		else if (isset($this->content_actions['edit'])) {
 			$this->action = $this->content_actions['edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'edit';
+			unset( $this->content_actions['edit'] );
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {
 			$this->action = $this->content_actions['viewsource'];
 			$this->actionImage = MenuButtonController::LOCK_ICON;
 			$this->actionName = 'source';
+			unset( $this->content_actions['ve-edit'], $this->content_actions['edit'] );
 		}
 
 		#print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
@@ -129,20 +117,23 @@ class PageHeaderController extends WikiaController {
 	 * Get content actions for dropdown
 	 */
 	protected function getDropdownActions() {
-		global $wgEnableEditorPreferenceExt;
 		$ret = array();
 
-		// items to be added to "edit" dropdown
-		$actions = array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' );
+		$editActions = array();
+		if ( $this->actionName !== 'edit' && isset( $this->content_actions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
+		}
+		if ( $this->actionName !== 've-edit' && isset( $this->content_actions['ve-edit'] ) ) {
+			if ( $this->content_actions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
+			} else {
+				array_push( $editActions, 've-edit' );
+			}
+		}
 
-		// add "edit" to dropdown (if action button is not an edit)
-		if (!in_array($this->actionName, array('edit', 'source'))) {
-			array_unshift($actions, 'edit');
-		}
-		elseif ($wgEnableEditorPreferenceExt && EditorPreference::shouldShowVisualEditorTab() &&
-			$this->actionName !== 've-edit') {
-			array_unshift($actions, 've-edit');
-		}
+		// items to be added to "edit" dropdown
+		$actions = array_merge( $editActions,
+			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
