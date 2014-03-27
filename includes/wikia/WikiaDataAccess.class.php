@@ -161,6 +161,7 @@ class WikiaDataAccess {
 						'key' => $key,
 						'exceptionMessage' => $e->getMessage()
 					] );
+					throw $e;
 				}
 
 			}
@@ -201,6 +202,7 @@ class WikiaDataAccess {
 							'key' => $key,
 							'exceptionMessage' => $e->getMessage()
 						] );
+						throw $e;
 					}
 
 				} else {
