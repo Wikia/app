@@ -85,6 +85,8 @@ class WikiaHomePageController extends WikiaController {
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
 
+		$this->hubsSlots = $this->getHubsSectionSlots();
+
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
 		$batches = $this->getList();
@@ -97,6 +99,45 @@ class WikiaHomePageController extends WikiaController {
 		$this->lang = self::getContentLang();
 
 		OasisController::addBodyClass('WikiaHome');
+	}
+
+	public function getHubsSectionSlots() {
+		global $wgCityId, $wgContLang;
+		$hubSlot = [];
+
+		$response = $this->app->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $wgContLang->getCode() ]
+		);
+
+		$hubs = $response->getVal('list', []);
+
+		$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
+
+		foreach( $hubsSlots as $slot => &$hub ) {
+			$hubId = $hub;
+			if( isset( $hubs[ $hubId ] ) ) {
+				$hub = $hubs[ $hubId ];
+				$hub['hubImage'] = $this->getHubV3Images( $hubId );
+
+				$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
+			}
+		}
+
+		return $hubSlot;
+	}
+
+	private function prepareRenderParams( $slot, $hub ) {
+		return [
+			'classname' => $slot,
+			'heading' => $hub['name'],
+			'heroimageurl' => $hub['hubImage'],
+			'herourl' => $hub['url'],
+			'creative' => '',
+			'moreheading' => '',
+			'morelist' => '',
+		];
 	}
 
 	public function wikiaMobileIndex() {
@@ -431,7 +472,11 @@ class WikiaHomePageController extends WikiaController {
 					$hubImages = [];
 
 					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
-						$sliderData = $this->getHubSliderData($lang, $hubId);
+						$params = [
+							'vertical' => $hubId,
+							'lang' => $lang
+						];
+						$sliderData = $this->getHubSliderData($params);
 
 						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
 							? $sliderData['data']['slides'][0]['photoUrl']
@@ -445,15 +490,37 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $hubImages;
 	}
 
-	protected function getHubSliderData($lang, $hubId) {
+	public function getHubV3Images( $cityId ) {
+		$imageUrl = null;
+
+		$sliderData = $this->getHubSliderData( [ 'city' => $cityId ] );
+
+		if ( isset( $sliderData['data']['slides'][0]['photoName'] ) ) {
+			$imgName = $sliderData['data']['slides'][0]['photoName'];
+
+			$title = GlobalTitle::newFromText( $imgName, NS_FILE, $cityId );
+			if ( $title !== null ) {
+				$file = new GlobalFile( $title );
+				if ( $file !== null ) {
+					$imageUrl = $file->getUrl();
+				}
+			}
+		}
+
+		return $imageUrl;
+
+	}
+
+	protected function getHubSliderData($params) {
+		$sliderParams = [
+			'module' => MarketingToolboxModuleSliderService::MODULE_ID
+		];
+
+		$sliderParams = array_merge( $sliderParams, $params );
 		return $this->app->sendRequest(
 			'WikiaHubsApi',
 			'getModuleData',
-			array(
-				'module' => MarketingToolboxModuleSliderService::MODULE_ID,
-				'vertical' => $hubId,
-				'lang' => $lang
-			)
+			$sliderParams
 		)->getData();
 	}
 
