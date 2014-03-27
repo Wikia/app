@@ -3,6 +3,7 @@
 class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	const CACHE_KEY = 'HubsV3v0.91';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'v3LastPublishedTimestamp';
+	const VERSION = 3;
 
 	public function __construct($app = null) {
 		parent::__construct($app);
