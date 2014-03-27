@@ -318,11 +318,13 @@ class ImagePage extends Article {
 
 				// Convert the secs duration to HH::MM::SS
 				if ( $v['name'] == 'duration' ) {
-					$v['value'] = WikiaFileHelper::formatDuration(str_replace(',', '', $v['value']));
+					$v['value'] = preg_replace("/[^0-9]+/", '', $v['value']);
+					$v['value'] = WikiaFileHelper::formatDuration($v['value']);
 				}
 				// Convert epoch seconds to a date format in the content language format
 				if ( $v['name'] == 'published' ) {
-					$v['value'] = $wg->ContLang->date(str_replace(',', '', $v['value']));
+					$v['value'] = preg_replace("/[^0-9]+/", '', $v['value']);
+					$v['value'] = $wg->ContLang->date($v['value']);
 				}
 				/* Wikia change end */
 
