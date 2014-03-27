@@ -198,10 +198,8 @@
 		},
 
 		setupSkin: function () {
-			if ( vePreferred ) {
-				init.setupTabs();
-				init.setupSectionLinks();
-			}
+			init.setupTabs();
+			init.setupSectionLinks();
 		},
 
 		setupTabs: function () {
