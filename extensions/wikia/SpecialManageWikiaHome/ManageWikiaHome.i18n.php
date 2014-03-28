@@ -17,9 +17,10 @@ $messages['en'] = array(
 
 	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
 	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
-	'manage-wikia-home-hubs-slot-1' => 'Slot 1',
-	'manage-wikia-home-hubs-slot-2' => 'Slot 2',
-	'manage-wikia-home-hubs-slot-3' => 'Slot 3',
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-name' => 'Hub name',
+	'manage-wikia-home-hubs-slot-description' => 'Hub description',
+	'manage-wikia-home-hubs-slot-more-links' => '"More in..." links',
 	'manage-wikia-home-hubs-slot-no-change-option' => '-- no change --',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
@@ -231,10 +232,13 @@ Parameters:
 
 	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
 	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
-	'manage-wikia-home-hubs-slot-1' => 'Slot on the left in hubs section on Wikia homepage',
-	'manage-wikia-home-hubs-slot-2' => 'Slot in the center in hubs section on Wikia homepage',
-	'manage-wikia-home-hubs-slot-3' => 'Slot on the right in hubs section on Wikia homepage',
-	'manage-wikia-home-hubs-slot-no-change-option' => 'Option in select field in hubs slots section to don\'t change hub slot'
+	'manage-wikia-home-hubs-slot' => 'Determines which hub slot from hubs section on wikia homepage will be edited',
+	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
+	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
+	'manage-wikia-home-hubs-slot-more-links' => 'Label for textarea field to add links in "More in ..." hub section on wikia homepage',
+	'manage-wikia-home-hubs-slot-no-change-option' => 'Option in select field in hubs slots section to don\'t change hub slot',
+
+
 );
 
 /** Arabic (العربية)
