@@ -28,6 +28,8 @@ $messages['en'] = array(
 	'wikiahome-stats-new-communities' => 'Communities today',
 	'wikiahome-stats-totalpages' => 'Total Pages',
 
+	'wikiahome-hubs-slot-more-in-heading' => 'More in $1',
+
 	'wikia-home-page-preview' => 'Preview',
 	'wikia-home-page-visit' => 'Visit',
 
@@ -731,6 +733,8 @@ $messages['qqq'] = array(
 	'wikiahome-stats-communities' => 'The text above number telling about our communities in total',
 	'wikiahome-stats-new-communities' => 'The text above number telling about our new communities',
 	'wikiahome-stats-totalpages' => 'The text above number telling about total pages on all our wikis',
+
+	'wikiahome-hubs-slot-more-in-heading' => 'The headline in hub section before more links connected to Hub vertical',
 
 	'wikia-home-page-preview' => 'The text on preview button; when you click the button you\'ll be presented with more detailed information about a wiki; the button is visible when you hover on a wiki image',
 	'wikia-home-page-visit' => 'The text on visit button; when you click the button you\'ll be redirected to chosen wiki; the button is visible when you hover on a wiki image',
