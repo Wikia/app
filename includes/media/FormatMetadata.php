@@ -259,6 +259,7 @@ class FormatMetadata {
 					// else it will just output $val without formatting it.
 					break;
 
+				/** Wikia change start */
 				case 'duration':
 					$val = WikiaFileHelper::formatDuration($val);
 					break;
@@ -267,6 +268,7 @@ class FormatMetadata {
 					global $wgContLang;
 					$val = $wgContLang->date($val);
 					break;
+				/** Wikia change end */
 
 				case 'ExposureProgram':
 					switch( $val ) {
