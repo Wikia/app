@@ -6,19 +6,22 @@
 
 $drawer-width: 300px;
 $drawer-shadow-size: 30px;
+$drawer-base-z-index: $zTop + 10;
 
 .drawer,
+.subdrawer,
 .drawer-blackout {
 	@include transition-shorthand(all 0.2s ease-in-out);
 }
 
-.drawer {
+.drawer,
+.subdrawer {
 	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
 
 	opacity: 0;
 	position: absolute;
-	top: 0;
-	bottom: 0;
+	top: $wikiaglobal-nav-height;
+	bottom: 25px;
 	overflow: hidden;
 	background: $color-page;
 	color: $color-text;
@@ -27,14 +30,15 @@ $drawer-shadow-size: 30px;
 
 	&.fixed {
 		position: fixed;
-		top: $wikiaglobal-nav-height;
-		bottom: 25px;
 	}
 
 	&.open {
 		opacity: 1;
-		z-index: $zTop;
 	}
+}
+
+.drawer {
+	z-index: $drawer-base-z-index;
 
 	&.left {
 		left: -$drawer-width - $drawer-shadow-size;
@@ -52,8 +56,30 @@ $drawer-shadow-size: 30px;
 	}
 }
 
+.subdrawer {
+	z-index: $drawer-base-z-index - 1;
+
+	&.left {
+		left: 0;
+
+		&.open {
+			left: $drawer-width;
+		}
+	}
+	&.right {
+		right: 0;
+
+		&.open {
+			right: $drawer-width;
+		}
+	}
+
+}
+
 .drawer-blackout {
 	@include blackout();
+	background: transparent;
+	z-index: $drawer-base-z-index - 2;
 
 	&.visible {
 		opacity: 1;

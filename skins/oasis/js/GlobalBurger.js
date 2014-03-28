@@ -8,9 +8,10 @@ require([ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 	uiFactory.init( [ 'drawer' ] ).then( function( uiDrawer ) {
 		uiDrawer.createComponent({
 			vars: {
-				style: 'fixed',
+				//style: 'fixed',
 				side: 'left',
-				content: content.join('<br/>')
+				content: content.join('<br/>'),
+				subcontent: content.join('<br/>')
 			}
 		}, function ( drawer ) {
 			console.log(drawer);

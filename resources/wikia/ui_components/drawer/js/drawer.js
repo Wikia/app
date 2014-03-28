@@ -2,9 +2,11 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	'use strict';
 
 	var DRAWER_ID = 'drawer-',
+		SUBDRAWER_ID = 'subdrawer-',
 		BLACKOUT_ID = 'drawer-blackout-',
 		OPEN_CLASS = 'open',
-		CLOSED_CLASS = 'closed',
+		VISIBLE_CLASS = 'visible',
+		ANIMATION_DURATION = 200, //ms
 		drawerDefaults = {
 			type: 'default',
 			vars: {
@@ -37,9 +39,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 
 	function Drawer( params ) {
 		var self = this,
-			side = ( typeof params === 'object' ) ? params.vars.side : params, // drawer side
-			id = DRAWER_ID + side,
-			blackoutId = BLACKOUT_ID + side;
+			side = ( typeof params === 'object' ) ? params.vars.side : params; // drawer side
 
 		if ( typeof( uiComponent ) === 'undefined' ) {
 			throw 'Need uiComponent to render drawer with side ' + side;
@@ -51,8 +51,9 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		// render drawer markup and append to DOM
 		$body.append( uiComponent.render( params ) );
 
-		this.$drawer = $('#' + id);
-		this.$blackout = $('#' + blackoutId);
+		this.$drawer = $('#' + DRAWER_ID + side);
+		this.$subdrawer = $('#' + SUBDRAWER_ID + side);
+		this.$blackout = $('#' + BLACKOUT_ID + side);
 
 		this.$blackout.click(function(e) {
 			e.preventDefault();
@@ -62,18 +63,67 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	}
 
 	Drawer.prototype.open = function() {
-		this.$drawer.addClass('open');
-		this.$blackout.addClass('visible');
+		this.$drawer.addClass(OPEN_CLASS);
+		this.$blackout.addClass(VISIBLE_CLASS);
 	};
 
 	Drawer.prototype.close = function() {
-		this.$drawer.removeClass('open');
-		this.$blackout.removeClass('visible');
+		var self = this,
+			animate = function() {
+				self.$drawer.removeClass(OPEN_CLASS);
+				self.$blackout.removeClass(VISIBLE_CLASS);
+			};
+		if ( this.isOpenSub() ) {
+			this.closeSub();
+			setTimeout(animate, ANIMATION_DURATION);
+		} else {
+			animate();
+		}
 	};
 
 	Drawer.prototype.isOpen = function() {
-		return this.$drawer.hasClass('open');
+		return this.$drawer.hasClass(OPEN_CLASS);
 	};
+
+	Drawer.prototype.openSub = function() {
+		var self = this,
+			animate = function() {
+				self.$subdrawer.addClass(OPEN_CLASS);
+			};
+
+		if ( !this.isOpen() ) {
+			this.open();
+			setTimeout(animate, ANIMATION_DURATION);
+		} else {
+			animate();
+		}
+	};
+
+	Drawer.prototype.closeSub = function() {
+		this.$subdrawer.removeClass(OPEN_CLASS);
+	};
+
+	Drawer.prototype.isOpenSub = function() {
+		return this.$subdrawer.hasClass(OPEN_CLASS);
+	};
+
+	Drawer.prototype.setSubcontent = function(subcontent) {
+		this.$subdrawer.html(subcontent);
+	};
+
+	Drawer.prototype.swipeSubcontent = function(subcontent) {
+		var self = this,
+			animate = function() {
+				self.setSubcontent(subcontent);
+				self.openSub();
+			};
+		if ( this.isOpenSub() ) {
+			this.closeSub();
+			setTimeout(animate, ANIMATION_DURATION);
+		} else {
+			animate();
+		}
+	}
 
 	/** Public API */
 
