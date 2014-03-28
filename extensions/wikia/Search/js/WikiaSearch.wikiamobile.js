@@ -50,13 +50,13 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
         var elm = this,
             forward = (elm.getAttribute('id') == 'wkResultNext'),
             pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
-            condition = (forward) ? (currentPage < totalPages) : (currentPage > 1);
+            canGetNextPage = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
         if(currentPage === 1) {
             firstPage = wkResultUl.innerHTML;
         }
 
-        if(condition){
+        if( canGetNextPage ){
             elm.className += ' active';
             throbber.show(elm, {size: '30px'});
 

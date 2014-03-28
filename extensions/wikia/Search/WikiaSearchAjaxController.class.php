@@ -64,7 +64,8 @@ class WikiaSearchAjaxController extends WikiaController {
 				( $page == $config->getNumPages() ) ? $resultsFound : $resultsPerPage * $page,
 				$resultsFound
 			)
-			->text() );
+			->text()
+		);
 
 	wfProfileOut(__METHOD__);
 	}
