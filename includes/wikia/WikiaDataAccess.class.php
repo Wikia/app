@@ -1,5 +1,5 @@
 <?php
-
+use Wikia\Logger\WikiaLogger;
 /**
  * Abstraction classes for SQL data access (or any other external resource)
  * Intended to simplify code that retrieves data from SQL and caches results
@@ -117,7 +117,7 @@ class WikiaDataAccess {
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE) {
 		$app = F::app();
 
 		if ( $command == self::SKIP_CACHE ) {
@@ -132,7 +132,6 @@ class WikiaDataAccess {
 		if ( is_null( $result ) ) {
 
 			list($gotLock, $wasLocked) = self::lock( $keyLock );
-
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
@@ -140,11 +139,21 @@ class WikiaDataAccess {
 			}
 
 			if( is_null( $result ) ) {
-				$result = array(
-					'data' => $getData(),
-					'time' => wfTimestamp( TS_UNIX )
-				);
-				self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+				try{
+					$result = array(
+						'data' => $getData(),
+						'time' => wfTimestamp( TS_UNIX )
+					);
+					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+				} catch ( Exception $e ) {
+					WikiaLogger::instance()->debug( "WikiaDataAccess", [
+						'method' => 'cacheWithLock',
+						'key' => $key,
+						'exceptionMessage' => $e->getMessage()
+					] );
+					throw $e;
+				}
+
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -156,16 +165,25 @@ class WikiaDataAccess {
 			} else {
 				// we could use the data, but maybe we should regenerate
 				list($gotLock, $wasLocked) = self::lock( $keyLock, false );
-
 				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data
 					// because we hold the lock other threads won't try to generate it in the same time
-					$result = array(
-						'data' => $getData(),
-						'time' => wfTimestamp( TS_UNIX )
-					);
-					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+					try{
+						$result = array(
+							'data' => $getData(),
+							'time' => wfTimestamp( TS_UNIX )
+						);
+						self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+					} catch ( Exception $e ) {
+						WikiaLogger::instance()->debug( "WikiaDataAccess", [
+							'method' => 'cacheWithLock',
+							'key' => $key,
+							'exceptionMessage' => $e->getMessage()
+						] );
+						throw $e;
+					}
+
 				} else {
 					// what we already have in $result is good enough
 					// and another thread is generating that data anyway for future requests
