@@ -6,17 +6,20 @@ class HubsSlotsForm extends FormBuilderService {
 
 		if(empty($fields)) {
 			$fields = [
-				'hub_slot_1' => [
-					'label' => wfMessage('manage-wikia-home-hubs-slot-1')->plain(),
-					'type' => 'select'
+				'hub_slot' => [
+					'label' => wfMessage('manage-wikia-home-hubs-slot-name')->plain(),
+					'type' => 'select',
+					'isArray' => true
 				],
-				'hub_slot_2' => [
-					'label' => wfMessage('manage-wikia-home-hubs-slot-2')->plain(),
-					'type' => 'select'
+				'hub_slot_desc' => [
+					'label' => wfMessage('manage-wikia-home-hubs-slot-description')->plain(),
+					'type' => 'textarea',
+					'isArray' => true
 				],
-				'hub_slot_3' => [
-					'label' => wfMessage('manage-wikia-home-hubs-slot-3')->plain(),
-					'type' => 'select'
+				'hub_slot_more_links' => [
+					'label' => wfMessage('manage-wikia-home-hubs-slot-more-links')->plain(),
+					'type' => 'textarea',
+					'isArray' => true
 				]
 			];
 		}

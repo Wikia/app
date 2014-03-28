@@ -82,10 +82,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
 		$this->hubsForm = new HubsSlotsForm();
-		$hubSlotsValues = $this->helper->getHubSlotsFromWF($this->corpWikiId);
+		$hubSlotsValues = $this->prepareArrayFieldsToShow($this->helper->getHubSlotsFromWF($this->corpWikiId));
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
-		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
+		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
 		$statsValues = $this->helper->getStatsFromWF();
@@ -116,7 +116,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$isValid = $this->form->validate($collectionValues);
 
 				if ($isValid) {
-					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
+					$collectionSavedValues = $this->prepareArrayFieldsForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
 					FlashMessages::put(wfMessage('manage-wikia-home-collections-success')->text());
@@ -139,7 +139,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			} elseif ( $this->request->getVal('hubs-slots', false)) {
 				$hubSlotsValues = $this->request->getParams();
 				$hubSlotsValues = $this->hubsForm->filterData($hubSlotsValues);
-				$this->helper->saveHubSlotsToWF($hubSlotsValues, $this->corpWikiId);
+				$hubSavedSlotsValues = $this->prepareArrayFieldsForSave($hubSlotsValues);
+				$this->helper->saveHubSlotsToWF($hubSavedSlotsValues, $this->corpWikiId);
 				FlashMessages::put(wfMessage('manage-wikia-home-hubs-slot-success')->text());
 			}
 		}
@@ -382,7 +383,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Preparing data received from collection's form to array, which could be easily use to insert data
+	 * Preparing data received from form to array, which could be easily use to insert data
 	 * to database or update already existing data.
 	 *
 	 * Example:
@@ -397,19 +398,19 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
 	 * 		  )
 	 *
-	 * @param array $collectionValues data from form collection's form
-	 * @return array $collections data to save
+	 * @param array $formValues data from form collection's form
+	 * @return array $values data to save
 	 */
-	private function prepareCollectionForSave($collectionValues) {
-		$collections = [];
+	private function prepareArrayFieldsForSave($formValues) {
+		$values = [];
 
-		foreach($collectionValues as $name => $collection) {
-			foreach($collection as $key => $field) {
-				$collections[$key][$name] = $field;
+		foreach($formValues as $name => $fields) {
+			foreach($fields as $key => $field) {
+				$values[$key][$name] = $field;
 			}
 		}
 
-		return $collections;
+		return $values;
 	}
 
 	/**
@@ -428,19 +429,19 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * 			'fieldName2' => array(value1, value2, ... )
 	 * 		  )
 	 *
-	 * @param array $collections data from database
-	 * @return array $collectionValues data to display
+	 * @param array $values data from database
+	 * @return array $formValues data to display
 	 */
-	private function prepareCollectionToShow($collections) {
-		$collectionValues = [];
+	private function prepareArrayFieldsToShow($values) {
+		$dataValues = [];
 
-		foreach($collections as $key => $collection) {
-			foreach($collection as $name => $value) {
-				$collectionValues[$name][$key] = $value;
+		foreach($values as $key => $field) {
+			foreach($field as $name => $value) {
+				$dataValues[$name][$key] = $value;
 			}
 		}
-		
-		return $collectionValues;
+
+		return $dataValues;
 	}
 	
 	private function getWikisPerCollection($collections, $useMaster = false) {
@@ -518,6 +519,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	private function prepareHubsForm( $hubSlotsValues ) {
+		$this->hubsForm->setFieldsValues($hubSlotsValues);
 		$response = $this->app->sendRequest(
 			'WikiaHubsApiController',
 			'getHubsV3List',
