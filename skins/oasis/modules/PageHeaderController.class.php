@@ -89,7 +89,8 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if ( isset($this->content_actions['ve-edit']) && $this->content_actions['ve-edit']['main'] ) {
+		else if ( isset($this->content_actions['ve-edit']) && isset($this->content_actions['ve-edit']['main']) &&
+			$this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
@@ -124,7 +125,7 @@ class PageHeaderController extends WikiaController {
 			array_push( $editActions, 'edit' );
 		}
 		if ( $this->actionName !== 've-edit' && isset( $this->content_actions['ve-edit'] ) ) {
-			if ( $this->content_actions['ve-edit']['main'] ) {
+			if ( isset($this->content_actions['ve-edit']['main']) && $this->content_actions['ve-edit']['main'] ) {
 				array_unshift( $editActions, 've-edit' );
 			} else {
 				array_push( $editActions, 've-edit' );

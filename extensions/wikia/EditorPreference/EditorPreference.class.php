@@ -113,8 +113,7 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		$vars['wgVisualEditor']['visualEditorPreferred'] = self::shouldShowVisualEditorLink() &&
-			self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+		$vars['wgVisualEditor']['visualEditorPreferred'] = self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 		return true;
 	}
 

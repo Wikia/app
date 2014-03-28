@@ -327,7 +327,7 @@
 		$edit = $( '#ca-edit' );
 		$veEdit = $( '#ca-ve-edit' );
 		// If VE is the main edit link, clone the alternate edit attributes into it
-		if ( vePreferred ) {
+		if ( vePreferred && $veEdit.length > 0 ) {
 			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
 			$edit.parent().remove();
 		} else {
