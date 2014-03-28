@@ -259,6 +259,15 @@ class FormatMetadata {
 					// else it will just output $val without formatting it.
 					break;
 
+				case 'duration':
+					$val = WikiaFileHelper::formatDuration($val);
+					break;
+
+				case 'published':
+					global $wgContLang;
+					$val = $wgContLang->date($val);
+					break;
+
 				case 'ExposureProgram':
 					switch( $val ) {
 					case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
@@ -937,6 +946,7 @@ class FormatMetadata {
 	 * @param $lang String lang code of item or false
 	 * @param $default Boolean if it is default value.
 	 * @param $noHtml Boolean If to avoid html (for back-compat)
+	 * @throws MWException
 	 * @return language item (Note: despite how this looks,
 	 * 	this is treated as wikitext not html).
 	 */
