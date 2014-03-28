@@ -38,11 +38,9 @@ class AdEngine2Hooks {
 		wfProfileIn(__METHOD__);
 
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgAdDriverCookieLifetime, $wgHighValueCountriesDefault,
-			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
+			   $wgHighValueCountriesDefault, $wgUser,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
+			   $wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
 			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			   $wgEnableRHonDesktop, $wgOut,
