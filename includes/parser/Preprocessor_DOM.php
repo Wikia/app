@@ -1012,7 +1012,7 @@ class PPFrame_DOM implements PPFrame {
 	 *
 	 * @return PPTemplateFrame_DOM
 	 */
-	function newChild( $args = false, $title = false ) {
+	function newChild( $args = false, $title = false, $indexOffset = 0 ) {
 		$namedArgs = array();
 		$numberedArgs = array();
 		if ( $title === false ) {
@@ -1024,6 +1024,9 @@ class PPFrame_DOM implements PPFrame {
 				$args = $args->node;
 			}
 			foreach ( $args as $arg ) {
+				if ( $arg instanceof PPNode ) {
+					$arg = $arg->node;
+				}
 				if ( !$xpath ) {
 					$xpath = new DOMXPath( $arg->ownerDocument );
 				}
@@ -1033,6 +1036,7 @@ class PPFrame_DOM implements PPFrame {
 				if ( $nameNodes->item( 0 )->hasAttributes() ) {
 					// Numbered parameter
 					$index = $nameNodes->item( 0 )->attributes->getNamedItem( 'index' )->textContent;
+					$index = $index - $indexOffset;
 					$numberedArgs[$index] = $value->item( 0 );
 					unset( $namedArgs[$index] );
 				} else {
@@ -1705,6 +1709,10 @@ class PPCustomFrame_DOM extends PPFrame_DOM {
 			return false;
 		}
 		return $this->args[$index];
+	}
+
+	function getArguments() {
+		return $this->args;
 	}
 }
 
