@@ -4,7 +4,6 @@
  */
 
 use FluentSql\StaticSQL as sql;
-use Wikia\Logger\WikiaLogger;
 
 class DataMartService extends Service {
 
@@ -478,14 +477,6 @@ class DataMartService extends Service {
 			multiple partitions kills kittens
 			*/
 
-			$data = [
-				'method' => 'getTopArticlesByPageview_DATA_A',
-				'wid'=> $wikiId,
-				'timestamp' => microtime( true ),
-				'randomId' =>  uniqid(),
-			];
-			WikiaLogger::instance()->debug( "DataMartService", $data );
-
 			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 			$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
 				->SELECT('namespace_id', 'article_id')
@@ -527,28 +518,11 @@ class DataMartService extends Service {
 				];
 			});
 
-			$data['method'] = 'getTopArticlesByPageview_DATA_B';
-			$data['timestamp'] =  microtime( true ) - $data['timestamp'];
-
-			WikiaLogger::instance()->debug( "DataMartService", $data );
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
 		};
-		$data = [
-			'method' => 'getTopArticlesByPageview_A',
-			'wid'=> $wikiId,
-			'timestamp' => microtime( true ),
-			'randomId' =>  uniqid(),
-		];
 
-		WikiaLogger::instance()->debug( "DataMartService", $data );
-
-		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData, WikiaDataAccess::USE_CACHE );
-
-		$data['timestamp'] = microtime( true ) - $data['timestamp'] ;
-		$data['method'] = 'getTopArticlesByPageview_B';
-
-		WikiaLogger::instance()->debug( "DataMartService", $data);
+		$topArticles = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
 
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
