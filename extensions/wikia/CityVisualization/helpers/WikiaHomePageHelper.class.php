@@ -309,8 +309,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		return WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
 	}
 
-	public function saveHubSlotsToWF($hubSlotsValues, $corporateId) {
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
 		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+
+		WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
 	}
 
 	/**
@@ -971,6 +973,15 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function getStatsMemcacheKey() {
 		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
+
+		return $memKey;
+	}
+
+	/**
+	 * @return string
+	 */
+	static public function getHubSlotsMemcacheKey( $lang ) {
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'hub-slots', $lang, self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
 
 		return $memKey;
 	}

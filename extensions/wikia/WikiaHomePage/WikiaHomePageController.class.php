@@ -104,26 +104,33 @@ class WikiaHomePageController extends WikiaController {
 	public function getHubsSectionSlots() {
 		global $wgCityId, $wgContLang;
 		$hubSlot = [];
+		$langCode = $wgContLang->getCode();
 
 		$response = $this->app->sendRequest(
 			'WikiaHubsApiController',
 			'getHubsV3List',
-			[ 'lang' => $wgContLang->getCode() ]
+			[ 'lang' => $langCode ]
 		);
 
 		$hubs = $response->getVal('list', []);
 
-		$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
+		$hubSlot = WikiaDataAccess::cache(
+			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
+			86400 /* 24 hours */,
+			function() use( $wgCityId, $hubs ) {
+				$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
 
-		foreach( $hubsSlots as $slot => &$hub ) {
-			$hubId = $hub['hub_slot'];
-			if( isset( $hubs[ $hubId ] ) ) {
-				$hub = array_merge($hub, $hubs[ $hubId ]);
-				$hub['hubImage'] = $this->getHubV3Images( $hubId );
+				foreach( $hubsSlots as $slot => &$hub ) {
+					$hubId = $hub['hub_slot'];
+					if( isset( $hubs[ $hubId ] ) ) {
+						$hub = array_merge($hub, $hubs[ $hubId ]);
+						$hub['hubImage'] = $this->getHubV3Images( $hubId );
 
-				$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
+						$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
+					}
+				}
 			}
-		}
+		);
 
 		return $hubSlot;
 	}
