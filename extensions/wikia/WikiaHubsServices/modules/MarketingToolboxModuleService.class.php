@@ -170,6 +170,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$this->verticalId,
 			$this->langCode,
 			$this->getModuleId(),
+			$this->cityId,
 			$skin
 		);
 	}
