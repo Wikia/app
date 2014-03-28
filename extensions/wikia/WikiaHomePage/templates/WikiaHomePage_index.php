@@ -11,11 +11,11 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', array()); ?>
 	</section>
 	<div class="wikiahomepage-hubs">
-		<? if( isset( $hubsSlots[ 'hub_slot_1' ] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots['hub_slot_1'] ) ?>
+		<? if( isset( $hubsSlots[0] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[0] ) ?>
 		<? else: ?>
 			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-				'classname' => 'hub_slot_1',
+				'classname' => 'videogames',
 				'heading' => WfMessage('wikiahome-hubs-videogames-heading')->text(),
 				'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_GAMING]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_GAMING] : null,
 				'herourl' => WfMessage('wikiahome-hubs-videogames-url')->text(),
@@ -24,11 +24,11 @@
 				'morelist' => WfMessage('wikiahome-hubs-videogames-more-list')->parse(),
 			)) ?>
 		<? endif ?>
-		<? if( isset( $hubsSlots[ 'hub_slot_2' ] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots['hub_slot_2'] ) ?>
+		<? if( isset( $hubsSlots[1] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[1] ) ?>
 		<? else: ?>
 			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-				'classname' => 'hub_slot_2',
+				'classname' => 'entertainment',
 				'heading' => WfMessage('wikiahome-hubs-entertainment-heading')->text(),
 				'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT] : null,
 				'herourl' => WfMessage('wikiahome-hubs-entertainment-url')->text(),
@@ -37,11 +37,11 @@
 				'morelist' => WfMessage('wikiahome-hubs-entertainment-more-list')->parse(),
 			)) ?>
 		<? endif ?>
-		<? if( isset( $hubsSlots[ 'hub_slot_3' ] ) ): ?>
-			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots['hub_slot_3'] ) ?>
+		<? if( isset( $hubsSlots[2] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[2] ) ?>
 		<? else: ?>
 			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-				'classname' => 'hub_slot_3',
+				'classname' => 'lifestyle',
 				'heading' => WfMessage('wikiahome-hubs-lifestyle-heading')->text(),
 				'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE] : null,
 				'herourl' => WfMessage('wikiahome-hubs-lifestyle-url')->text(),

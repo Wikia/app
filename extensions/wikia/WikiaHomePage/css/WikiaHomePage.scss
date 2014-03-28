@@ -770,7 +770,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			&:first-child {
 				margin-left: 0;
 			}
-			&.hub_slot_1 {
+			&.videogames {
 				h2 {
 					border-bottom-color: $color-wikiahome-videogames;
 				}
@@ -778,7 +778,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					color: $color-wikiahome-videogames;
 				}
 			}
-			&.hub_slot_2 {
+			&.entertainment {
 				h2 {
 					border-bottom-color: $color-wikiahome-entertainment;
 				}
@@ -786,7 +786,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					color: $color-wikiahome-entertainment;
 				}
 			}
-			&.hub_slot_3 {
+			&.lifestyle {
 				h2 {
 					border-bottom-color: $color-wikiahome-lifestyle;
 				}
