@@ -2,14 +2,72 @@
 set_time_limit(0);
 $options = ['help'];
 $optionsWithArgs = [
-	'class',
-	'data'
+	'call_order',
+	'task_list',
 ];
 require_once(__DIR__."/../commandLine.inc");
 
-$data = json_decode($options['data'], true);
-/** @var \Wikia\Tasks\Tasks\BaseTask $task */
-$task = new $options['class']();
-$task->unserialize($data['@context']);
-$retval = $task->execute($data['@method'], $data['@args']);
-echo json_encode($retval);
+$runner = new TaskRunner($options['task_list'], $options['call_order']);
+echo json_encode($runner->run()->format());
+
+class TaskRunner {
+	private $taskList = [];
+	private $callOrder;
+	private $results = [];
+
+	function __construct($taskList, $callOrder) {
+		$taskList = json_decode($taskList, true);
+		$this->callOrder = json_decode($callOrder, true);
+
+		foreach ($taskList as $taskData) {
+			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
+			$task = new $taskData['class']();
+			$task->unserialize($taskData['context'], $taskData['calls']);
+			$this->taskList []= $task;
+		}
+	}
+
+	function run() {
+		foreach ($this->callOrder as $callData) {
+			list($classIndex, $callIndex) = $callData;
+
+			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
+			$task = $this->taskList[$classIndex];
+			list($method, $args) = $task->getCall($callIndex);
+			foreach ($args as $i => $arg) {
+				if (preg_match('/#([0-9]+)/', trim($arg), $match)) {
+					if (!isset($this->results[$match[1]])) {
+						throw new InvalidArgumentException;
+					}
+
+					$args[$i] = $this->results[$match[1]];
+				}
+			}
+
+			$result = $task->execute($method, $args);
+			$this->results []= $result;
+
+			if ($result instanceof Exception) {
+				break;
+			}
+		}
+
+		return $this;
+	}
+
+	public function format() {
+		$json = (object) [
+			'status' => 'success',
+		];
+
+		$result = $this->results[count($this->results) - 1];
+		if ($result instanceof Exception) {
+			$json->status = 'failure';
+			$json->reason = $result->getMessage();
+		} else {
+			$json->retval = $result;
+		}
+
+		return $json;
+	}
+}

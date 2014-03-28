@@ -23,8 +23,11 @@ class AsyncTask {
 	/** @var  Queue */
 	protected $queue;
 
-	/** @var  BaseTask */
-	protected $task;
+	/** @var  array list of BaseTask calls */
+	protected $classes = [];
+
+	/** @var array list of calls to make */
+	protected $calls = [];
 
 	protected $taskType = 'mediawiki.task';
 
@@ -34,8 +37,7 @@ class AsyncTask {
 
 	protected $dedupCheck = true;
 
-	public function __construct(BaseTask $task=null) {
-		$this->task = $task;
+	public function __construct() {
 	}
 
 	public function prioritize() {
@@ -44,8 +46,16 @@ class AsyncTask {
 		return $this;
 	}
 
-	public function task($task) {
-		$this->task = $task;
+	public function add($taskCall) {
+		list($task, $callIndex) = $taskCall;
+		$classIndex = array_search($task, $this->classes, true);
+
+		if ($classIndex === false) {
+			$this->classes []= $task;
+			$classIndex = count($this->classes) - 1;
+		}
+
+		$this->calls []= [$classIndex, $callIndex];
 
 		return $this;
 	}
@@ -69,26 +79,28 @@ class AsyncTask {
 	}
 
 	public function queue() {
-		$serialized = $this->task->serialize();
-		$idArgs = array_merge($serialized, [
-			'@task' => get_class($this->task).".{$this->task->getMethod()}",
-			'@wikiId' => $this->wikiId,
-		]);
+		$taskList = [];
+		$workId = ['tasks' => [], 'wikiId' => $this->wikiId];
 
-		ksort($idArgs);
+		foreach ($this->classes as $task) {
+			/** @var BaseTask $task */
+			$serialized = $task->serialize();
+			$taskList []= $serialized;
+			$workId['tasks'] []= $serialized;
+		}
 
 		$id = uniqid('mw-');
-		$payload = [
+		$payload = (object) [
 			'id' => $id,
 			'task' => $this->taskType,
 			'args' => [
 				$this->wikiId,
-				get_class($this->task),
-				(object) $serialized
+				$this->calls,
+				$taskList,
 			],
 			'kwargs' => (object) [
 				'created' => time(),
-				'work_id' => md5(json_encode($idArgs)),
+				'work_id' => sha1(json_encode($workId)),
 				'force' => !$this->dedupCheck
 			]
 		];
@@ -96,7 +108,7 @@ class AsyncTask {
 		if ($this->delay) {
 			$scheduledTime = strtotime($this->delay);
 			if ($scheduledTime !== false && $scheduledTime > time()) {
-				$payload['eta'] = gmdate('c', $scheduledTime);
+				$payload->eta = gmdate('c', $scheduledTime);
 			}
 		}
 
@@ -139,5 +151,9 @@ class AsyncTask {
 
 	protected function getQueue() {
 		return $this->queue == null ? new Queue() : $this->queue;
+	}
+
+	protected function taskExists($task) {
+		return array_search($task, $this->classes);
 	}
 }

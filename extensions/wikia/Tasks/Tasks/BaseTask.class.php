@@ -11,19 +11,23 @@ namespace Wikia\Tasks\Tasks;
 
 
 abstract class BaseTask {
-	protected $method;
+	protected $calls = [];
 
-	protected $args = [];
-
+	/**
+	 * @return array [$this, order in which this call should be made]
+	 * @throws \InvalidArgumentException
+	 */
 	public function call(/** args. index0=method, indexN=arg */) {
-		$this->args = func_get_args();
-		$this->method = array_shift($this->args);
+		$args = func_get_args();
+		$method = array_shift($args);
 
-		if (!method_exists($this, $this->method)) {
+		if (!method_exists($this, $method)) {
 			throw new \InvalidArgumentException;
 		}
 
-		return $this;
+		$this->calls []= [$method, $args];
+
+		return [$this, count($this->calls) - 1];
 	}
 
 	public function execute($method, $args) {
@@ -38,19 +42,23 @@ abstract class BaseTask {
 			$result = $e;
 		}
 
-		return $this->format($result);
+		return $result;
 	}
 
-	public function getMethod() {
-		return $this->method;
+	public function getCall($index) {
+		if (!isset($this->calls[$index])) {
+			throw new \InvalidArgumentException;
+		}
+
+		return $this->calls[$index];
 	}
 
 	public function serialize() {
 		$mirror = new \ReflectionClass($this);
 		$result = [
-			'@method' => $this->getMethod(),
-			'@args' => $this->args,
-			'@context' => []
+			'class' => get_class($this),
+			'calls' => $this->calls,
+			'context' => []
 		];
 
 		foreach ($mirror->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
@@ -60,24 +68,11 @@ abstract class BaseTask {
 		return $result;
 	}
 
-	public function unserialize($properties) {
+	public function unserialize($properties, $calls) {
+		$this->calls = $calls;
+
 		foreach ($properties as $name => $value) {
 			$this->$name = $value;
 		}
-	}
-
-	protected function format($result) {
-		$json = (object) [
-			'status' => 'success',
-		];
-
-		if ($result instanceof \Exception) {
-			$json->status = 'failure';
-			$json->reason = $result->getMessage();
-		} else {
-			$json->retval = $result;
-		}
-
-		return $json;
 	}
 }
