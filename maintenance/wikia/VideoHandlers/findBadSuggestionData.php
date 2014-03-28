@@ -6,7 +6,8 @@
  * Find bad data in suggestions
  */
 class FindBadSuggestionData {
-	public static function run( DatabaseMysql $db, $dbname, $test = false, $verbose = false ) {
+	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params = null ) {
+		$dbname = $params['dbname'];
 
 		// Don't process the video wiki
 		if ( $dbname == 'video151' ) {
