@@ -19,6 +19,22 @@
 			<input type="submit" name="stats" />
 		</form>
 	</div>
+	<hr />
+	<div>
+		<h2 class="heading"><?= wfMessage('manage-wikia-home-hubs-slot-heading')->plain(); ?></h2>
+		<form method="post" class="hubs-slots">
+			<? for( $i=0; $i < 3; $i++ ): ?>
+				<div class="hub-slot">
+					<h3><?= wfMessage('manage-wikia-home-hubs-slot', ($i + 1))->plain() ?></h3>
+					<?= $hubsForm->renderField('hub_slot', $i); ?>
+					<?= $hubsForm->renderField('hub_slot_desc', $i); ?>
+					<?= $hubsForm->renderField('hub_slot_more_links', $i); ?>
+				</div>
+			<? endfor ?>
+			<br />
+			<input type="submit" name="hubs-slots" class="hubs-slots-submit" />
+		</form>
+	</div>
 
 	<hr />
 	<p>
@@ -54,14 +70,6 @@
 				<p><input type="hidden" name="visualization-lang" value="<?= $visualizationLang; ?>"></p>
 				<span class="status-msg"></span>
 				<p><input type="submit" name="wikis-in-slots" value="<?= wfMessage('manage-wikia-home-change-button')->text(); ?>"></p>
-			</form>
-		</div>
-
-		<div class="hubs-slot-forms">
-			<h2 class="heading"><?= wfMessage('manage-wikia-home-hubs-slot-heading')->plain(); ?></h2>
-			<form name="hubs-slots" method="post">
-				<?= $hubsForm->renderFormFields(); ?>
-				<input type="submit" name="hubs-slots" />
 			</form>
 		</div>
 	</div>
