@@ -115,7 +115,7 @@ class WikiaDataAccess {
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE, $lockTimeout = self::LOCK_TIMEOUT ) {
 		$app = F::app();
 
 		if ( $command == self::SKIP_CACHE ) {
@@ -129,7 +129,7 @@ class WikiaDataAccess {
 
 		if ( is_null( $result ) ) {
 
-			list($gotLock, $wasLocked) = self::lock( $keyLock );
+			list($gotLock, $wasLocked) = self::lock( $keyLock, true, $lockTimeout );
 
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
@@ -196,12 +196,12 @@ class WikiaDataAccess {
 	 **********************************/
 
 
-	static private function lock( $key, $waitForLock = true ) {
+	static private function lock( $key, $waitForLock = true, $lockTimeout =  self::LOCK_TIMEOUT   ) {
 		$app = F::app();
 		$wasLocked = false;
-		$timeout = $waitForLock ? self::LOCK_TIMEOUT : 1;
+		$timeout = $waitForLock ? $lockTimeout : 1;
 		$gotLock = false;
-		for ( $i = 0; $i < $timeout && !($gotLock = $app->wg->Memc->add( $key, 1, self::LOCK_TIMEOUT )); $i++ ) {
+		for ( $i = 0; $i < $timeout && !($gotLock = $app->wg->Memc->add( $key, 1, $lockTimeout )); $i++ ) {
 			$wasLocked = true;
 			sleep( 1 );
 		}
