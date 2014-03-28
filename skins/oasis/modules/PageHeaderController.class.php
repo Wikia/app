@@ -120,10 +120,10 @@ class PageHeaderController extends WikiaController {
 		$ret = array();
 
 		$editActions = array();
-		if ( $this->actionName !== 'edit' && isset( $this->content_actions['edit'] ) ) {
+		if ( isset( $this->content_actions['edit'] ) ) {
 			array_push( $editActions, 'edit' );
 		}
-		if ( $this->actionName !== 've-edit' && isset( $this->content_actions['ve-edit'] ) ) {
+		if ( isset( $this->content_actions['ve-edit'] ) ) {
 			if ( $this->content_actions['ve-edit']['main'] ) {
 				array_unshift( $editActions, 've-edit' );
 			} else {

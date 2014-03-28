@@ -398,7 +398,7 @@ HTML
 		   See Wikia issue VE-742 for more information. If editor is set to the Source
 		   editor, disable the RTE/CK editor.
 		 */
-		if ( $wgUser->getOption( PREFERENCE_EDITOR ) == EditorPreference::OPTION_EDITOR_SOURCE ) {
+		if ( $wgUser->getOption( PREFERENCE_EDITOR ) == EditorPreference::OPTION_EDITOR_SOURCE && empty( $forcedWysiwyg ) ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor('userpreferences');
 		}
