@@ -55,6 +55,8 @@ exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['NumMessagesToShowOnConnect'];
 exports.TOKEN = chatConfig['ChatCommunicationToken'];
 
 exports.validateConnection = function(cityId) {
+	//TODO: take this out when we will be operating on 2 servers
+	return true;
 	if(typeof arvg.instance != 'undefined') {
 		if(arvg.instance == cityId%instaceNumber){
 			return true;
