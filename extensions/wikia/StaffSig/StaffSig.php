@@ -30,11 +30,11 @@ function wfMakeHelperSignature( $contents, $attributes, $parser ) {
 }
 
 function wfMakeSignatureCommon($href, $title, $iurl=null) {
-	global $wgBlankImgUrl;
+	global $wgExtensionsPath, $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
-		$iurl = wfReplaceImageServer('/extensions/wikia/StaffSig/images/WikiaStaff.png');
+		$iurl = $wgExtensionsPath . '/wikia/StaffSig/images/WikiaStaff.png';
 	}
 
-	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url(\''. $iurl .'\')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
+	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
 }

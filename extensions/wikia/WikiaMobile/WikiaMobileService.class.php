@@ -46,6 +46,12 @@ class WikiaMobileService extends WikiaService {
 			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
 			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
 
+			$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = false;
+
+			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
+				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
+			}
+
 			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 				$this->globalVariables['wgShowAds'] = true;

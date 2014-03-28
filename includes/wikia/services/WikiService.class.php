@@ -11,13 +11,14 @@ class WikiService extends WikiaModel {
 
 	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
-
+	const WIKIAGLOBAL_CITY_ID = 80433;
 	const FLAG_NEW = 1;
 	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-
+	const DBNAME_REGEXP = '/^Wikia-Visualization-Main(,[a-z0-9]+)?(\.[a-z0-9]{3,4}$)/';
+	const CV_IMAGENAME = 'Wikia-Visualization-Main';
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -357,32 +358,41 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
+	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO ) {
 		$images = array();
 		try {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$tables = array('city_visualization');
-			$fields = array('city_id', 'city_main_image');
-			$conds = array('city_id' => $wikiIds);
-			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+			$tables = array( 'city_visualization' );
+			$fields = array( 'city_id', 'city_main_image' );
+			$conds = array( 'city_id' => $wikiIds );
+			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
-			while($row = $results->fetchObject()) {
-				$title = Title::newFromText($row->city_main_image, NS_FILE);
-				$file = wffindFile($title);
-				
-				if ($file instanceof File && $file->exists()) {
-					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
-						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
+			while ( $row = $results->fetchObject() ) {
+				$imageName = $this->checkCVImageName( $row->city_main_image, $row->city_id );
+				$file = GlobalFile::newFromText( $imageName, self::WIKIAGLOBAL_CITY_ID );
+				if ( $file->exists() ) {
+					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
+					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $file, $file->getWidth(), $file->getHeight() ),
 						ImagesService::EXT_JPG
 					);
 				}
 			}
-		} catch(Exception $e) {
-			// for devbox machines
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, false, $e->getMessage() );
 		}
 		return $images;
 	}
+
+	protected function checkCVImageName( $imageName, $cityId ) {
+		if ( preg_match( self::DBNAME_REGEXP, $imageName, $matches ) ) {
+			if ( empty( $matches[ 1 ] ) ) {
+				$imageName = self::CV_IMAGENAME. ',' . WikiFactory::IDtoDB( $cityId ) . $matches[ 2 ];
+			}
+		}
+		return $imageName;
+	}
+
 
 	public function getWikiWordmark( $wikiId ) {
 		$url = '';

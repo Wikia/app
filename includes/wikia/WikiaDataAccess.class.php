@@ -14,6 +14,8 @@ class WikiaDataAccess {
 	 **********************************/
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
+	const LOCK_WAIT_INTERVAL_START = 10; // start with 10ms delay
+	const LOCK_WAIT_INTERVAL_MAX = 1000; // max. delay between lock checks = 1s
 	const CACHE_TIME_FACTOR_FOR_LOCK = 2; // How many times longer cache should be valid when using cacheWithLock
 
 	/**
@@ -134,7 +136,7 @@ class WikiaDataAccess {
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
+				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key, true) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -199,11 +201,12 @@ class WikiaDataAccess {
 	static private function lock( $key, $waitForLock = true, $lockTimeout =  self::LOCK_TIMEOUT   ) {
 		$app = F::app();
 		$wasLocked = false;
-		$timeout = $waitForLock ? $lockTimeout : 1;
-		$gotLock = false;
-		for ( $i = 0; $i < $timeout && !($gotLock = $app->wg->Memc->add( $key, 1, $lockTimeout )); $i++ ) {
+		$timeout = $waitForLock ? (microtime(true) + $lockTimeout ) : 0;
+		$interval = self::LOCK_WAIT_INTERVAL_START;
+		while ( !($gotLock = $app->wg->Memc->add( $key, 1, $lockTimeout )) && microtime(true) < $timeout ) {
 			$wasLocked = true;
-			sleep( 1 );
+			usleep($interval * 1000); // convert ms to us
+			$interval = min( $interval * 2, self::LOCK_WAIT_INTERVAL_MAX );
 		}
 
 		return array($gotLock, $wasLocked);
@@ -213,10 +216,15 @@ class WikiaDataAccess {
 		F::app()->wg->Memc->delete( $key );
 	}
 
-	/*
+	/**
 	 * Internal use by cacheWithLock code-path
+	 *
+	 * @param bool $clearCache set it to true to force checking for updated value
 	 */
-	static private function getDataAndVerify( $app, $key ) {
+	static private function getDataAndVerify( $app, $key, $clearLocalCache = false ) {
+		if ( $clearLocalCache ) {
+			$app->wg->Memc->clearLocalCache( $key );
+		}
 		$result = $app->wg->Memc->get( $key );
 		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
 			$result = null;

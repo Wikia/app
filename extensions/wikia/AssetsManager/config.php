@@ -133,8 +133,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
-		// Related Forum Discussion is on all article pages
-		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		// Survey for first time editors
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
@@ -217,6 +215,9 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
+
+		// Global Header tracking
+		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -624,11 +625,13 @@ $config['wikiamobile_ads_gpt_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -959,6 +962,13 @@ $config['wall_js'] = array(
 		'//extensions/wikia/Wall/js/WallReplyMessageForm.js',
 		'//extensions/wikia/Wall/js/WallSortingBar.js',
 		'//extensions/wikia/Wall/js/WallSetup.js'
+	)
+);
+
+$config['wall_notifications_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/WallNotifications.js',
 	)
 );
 

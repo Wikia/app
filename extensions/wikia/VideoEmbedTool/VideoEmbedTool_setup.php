@@ -44,6 +44,7 @@ JSMessages::registerPackage('VideoEmbedTool', array(
 	'vet-warn3',
 	'vet-insert-error',
 	'vet-imagebutton',
+	'vet-error-while-loading'
 ));
 JSMessages::enqueuePackage('VideoEmbedTool', JSMessages::EXTERNAL);
 

@@ -1,4 +1,4 @@
-/*exported AdProviderRemnantDart*/
+/*exported AdProviderRemnantGpt*/
 var AdProviderRemnantGpt = function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 

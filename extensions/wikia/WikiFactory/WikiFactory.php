@@ -915,13 +915,14 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
-	 * @param integer	$city_id	wiki id in city_list
+	 * @param mixed		$city_id	wiki id in city_list (or array of those)
 	 * @param boolean	$master		choose between master & slave connection
+	 * @param mixed		$default	value to return if no value set in WikiFactory for any city_id
 	 *
-	 * @return mixed value for variable or null otherwise
+	 * @return mixed value for variable or false otherwise
 	 */
-	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
-		// don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
+	static public function getVarValueByName( $cv_name, $city_id, $master = false, $default = false ) {
+		// Don't hit memcache (or make DB query) when getting values for a current wiki (BAC-552)
 		global $wgCityId;
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
@@ -929,29 +930,43 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$value = null;
-		/**
-		 * first read WF Cache for city_id -- maybe value is already stored
-		 * in memcached?
-		 */
-		global $wgWikiFactoryCacheType;
-		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
-		if ( !$master ) {
-			$variables = $oMemc->get( self::getVarsKey( $city_id ) );
-			$value = isset( $variables[ "data" ][ $cv_name ] )
-				? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
-				: null;
+		if ( is_array($city_id) ) {
+			$cityIds = $city_id;
+		} else {
+			$cityIds = array($city_id);
 		}
 
-		if ( is_null( $value ) ) {
-			$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
-			$value = isset( $variable->cv_value )
-				? self::substVariables( unserialize( $variable->cv_value ), $city_id )
-				: false;
+		global $wgWikiFactoryCacheType;
+		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
+
+		foreach ( $cityIds as $city_id ) {
+			$value = null;
+
+			// First read WF Cache for city_id -- maybe value is already stored in memcached?
+			if ( !$master ) {
+				$variables = $oMemc->get( self::getVarsKey( $city_id ) );
+				$value = isset( $variables[ "data" ][ $cv_name ] )
+					? self::substVariables( $variables[ "data" ][ $cv_name ], $city_id )
+					: null;
+			}
+
+			// Then ask memcached or DB for specific var
+			if ( is_null( $value ) ) {
+				$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
+				$value = isset( $variable->cv_value )
+					? self::substVariables( unserialize( $variable->cv_value ), $city_id )
+					: false;
+			}
+
+			// If we found the value return, else proceed to the next city_id
+			if ( !is_null( $value ) ) {
+				wfProfileOut( __METHOD__ );
+				return $value;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $value;
+		return $default;
 	}
 
 	/**
@@ -3015,14 +3030,20 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname', 'city_lang'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ( $oRow = $dbr->fetchObject($oRes) ) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
+			$aWikis[$oRow->city_id] = [
+				'u' => $oRow->city_url,
+				't' => $oRow->city_title,
+				'p' => ( !empty($oRow->city_public) ? true : false ),
+				'd' => $oRow->city_dbname,
+				'l' => $oRow->city_lang
+			];
 		}
 		$dbr->freeResult( $oRes );
 

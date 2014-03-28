@@ -366,7 +366,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'See others who gave Kudos',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|One person|$1 people}} gave Kudos to this message',
-	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos|Kudos}}',
+	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos}}',
 	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
 	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
 	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
@@ -6918,7 +6918,7 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 			<p>A Equipe Wikia</p>
 ___________________________________________<br />
 * Procure ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
-* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar 
+* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
 	'prefs-email-wall-v2' => 'Mural de Mensagens e Fórum',
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
