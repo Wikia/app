@@ -1,6 +1,4 @@
 <?php
-use AdEngine2Service;
-
 /**
  * AdEngine II Hooks
  */
@@ -69,15 +67,10 @@ class AdEngine2Hooks {
 			"wgEnableAdMeldAPIClientPixels" => $wgEnableAdMeldAPIClientPixels,
 			"wgEnableOpenXSPC" => $wgEnableOpenXSPC,
 			// Ad Driver
-			"wgAdDriverCookieLifetime" => $wgAdDriverCookieLifetime,
 			"wgHighValueCountries" => $highValueCountries,
 			"wgAdPageLevelCategoryLangs" => $pageLevelCategoryLanguages,
-			"wgAdDriverUseExpiryStorage" => $wgAdDriverUseExpiryStorage,
-			"wgAdDriverUseCookie" => $wgAdDriverUseCookie,
-			"wgLoadAdDriverOnLiftiumInit" => $wgLoadAdDriverOnLiftiumInit,
 			"wgAdDriverUseSevenOneMedia" => $wgAdDriverUseSevenOneMedia,
 			"wgUserShowAds" => $wgUser->getOption('showAds'),
-			"wgEnableWikiAnswers" => $wgEnableWikiAnswers,
 			"wgOutboundScreenRedirectDelay" => $wgOutboundScreenRedirectDelay,
 			"wgEnableOutboundScreenExt" => $wgEnableOutboundScreenExt,
 			"wgAdDriverTrackState" => $wgAdDriverTrackState,
@@ -121,7 +114,7 @@ class AdEngine2Hooks {
 		$vars['adDriverLastDARTCallNoAds'] = [];
 
 		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
-		$vars['adDriver2ForcedStatus'] = array();
+		$vars['adDriver2ForcedStatus'] = [];
 
 		$variablesToExpose = [
 			// AdEngine2.js
@@ -179,7 +172,7 @@ class AdEngine2Hooks {
 
 		global $wgEnableRHonDesktop;
 
-		$coreGroupIndex = array_search(AdEngine2Controller::ASSET_GROUP_CORE, $jsAssets);
+		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
 			// Do nothing. oasis_shared_core_js must be present for ads to work
 			return true;
@@ -187,11 +180,11 @@ class AdEngine2Hooks {
 
 		if (!AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
-			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Controller::ASSET_GROUP_ADENGINE);
+			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
 		}
 
 		if ($wgEnableRHonDesktop === false) {
-			$jsAssets[] = AdEngine2Controller::ASSET_GROUP_LIFTIUM;
+			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 		return true;
 	}
@@ -206,7 +199,7 @@ class AdEngine2Hooks {
 	static public function onOasisSkinAssetGroupsBlocking(&$jsAssets) {
 		if (AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
-			$jsAssets[] = AdEngine2Controller::ASSET_GROUP_ADENGINE;
+			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
 		}
 		return true;
 	}
