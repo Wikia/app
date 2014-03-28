@@ -76,6 +76,8 @@
 		}, 3000 );
 	}
 
+	initIndicator();
+
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
 	 * @returns {jQuery.Promise}
@@ -337,7 +339,6 @@
 		if ( viewPage && init.isInValidNamespace( mw.config.get( 'wgRelevantPageName' ) ) ) {
 			$( function () {
 				if ( init.activateOnPageLoad ) {
-					initIndicator();
 					if ( window.veTrack ) {
 						veTrack( {
 							action: 've-edit-page-start',

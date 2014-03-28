@@ -17,7 +17,11 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.canUseVisualEditor ) {
+				if ( CreatePage.canUseVisualEditor && $.inArray(
+						new mw.Title( title ).getNamespaceId(),
+						mw.config.get( 'wgVisualEditorConfig' ).namespaces
+					) !== -1
+				) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href = articlePath + '?veaction=edit';
 				} else {
