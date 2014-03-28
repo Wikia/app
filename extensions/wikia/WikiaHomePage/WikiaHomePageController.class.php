@@ -116,9 +116,9 @@ class WikiaHomePageController extends WikiaController {
 		$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
 
 		foreach( $hubsSlots as $slot => &$hub ) {
-			$hubId = $hub;
+			$hubId = $hub['hub_slot'];
 			if( isset( $hubs[ $hubId ] ) ) {
-				$hub = $hubs[ $hubId ];
+				$hub = array_merge($hub, $hubs[ $hubId ]);
 				$hub['hubImage'] = $this->getHubV3Images( $hubId );
 
 				$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
@@ -134,9 +134,9 @@ class WikiaHomePageController extends WikiaController {
 			'heading' => $hub['name'],
 			'heroimageurl' => $hub['hubImage'],
 			'herourl' => $hub['url'],
-			'creative' => '',
-			'moreheading' => '',
-			'morelist' => '',
+			'creative' => $hub['hub_slot_desc'],
+			'moreheading' => wfMessage('wikiahome-hubs-slot-more-in-heading', $hub['name'])->escaped(),
+			'morelist' => $hub['hub_slot_more_links'],
 		];
 	}
 
