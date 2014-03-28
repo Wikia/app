@@ -13,8 +13,12 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'editToken',
-				'value' => $editToken
-
+				'value' => htmlspecialchars( $editToken )
+			),
+			array(
+				'type' => 'hidden',
+				'name' => 'loginToken',
+				'value' => htmlspecialchars( $loginToken ),
 			),
 			array(
 				'type' => 'hidden',
