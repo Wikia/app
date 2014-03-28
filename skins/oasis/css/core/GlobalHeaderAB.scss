@@ -24,6 +24,8 @@ $nav-height: 37px;
 
 		.page-width-container {
 			width: 100%;
+			margin: 0;
+			max-width: 100%;
 		}
 	}
 
@@ -48,6 +50,10 @@ $nav-height: 37px;
 				height: 28px;
 				line-height: 28px;
 				top: -3px;
+
+				&:hover {
+					background-color: #1380d7;
+				}
 			}
 
 			&.start-a-wiki {
@@ -70,9 +76,10 @@ $nav-height: 37px;
 		height: $nav-height;
 
 		& > li {
+			@include box-sizing;
+
 			height: $nav-height;
-			line-height: $nav-height;
-			padding: 0;
+			padding: 7px 0 0;
 
 			&:hover {
 				background: none;
