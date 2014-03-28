@@ -25,8 +25,8 @@ var CreatePage = {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href = articlePath + '?veaction=edit';
 				} else {
-					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
-						.replace( '$1', encodeURIComponent( title ) );
+					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
+						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) );
 				}
 			}
 			else {
