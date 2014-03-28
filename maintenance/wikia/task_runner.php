@@ -8,7 +8,6 @@ $optionsWithArgs = [
 require_once(__DIR__."/../commandLine.inc");
 
 $data = json_decode($options['data'], true);
-//sleep(15);
 /** @var \Wikia\Tasks\Tasks\BaseTask $task */
 $task = new $options['class']();
 $task->unserialize($data['@context']);

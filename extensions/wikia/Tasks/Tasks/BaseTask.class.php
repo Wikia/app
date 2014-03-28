@@ -15,7 +15,7 @@ abstract class BaseTask {
 
 	protected $args = [];
 
-	public function queue(/** args. index0=method, indexN=arg */) {
+	public function call(/** args. index0=method, indexN=arg */) {
 		$this->args = func_get_args();
 		$this->method = array_shift($this->args);
 

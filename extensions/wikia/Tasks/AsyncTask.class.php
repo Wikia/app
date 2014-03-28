@@ -32,6 +32,8 @@ class AsyncTask {
 
 	protected $wikiId = 177;
 
+	protected $dedupCheck = true;
+
 	public function __construct(BaseTask $task=null) {
 		$this->task = $task;
 	}
@@ -60,7 +62,13 @@ class AsyncTask {
 		return $this;
 	}
 
-	public function run() {
+	public function force() {
+		$this->dedupCheck = false;
+
+		return $this;
+	}
+
+	public function queue() {
 		$serialized = $this->task->serialize();
 		$idArgs = array_merge($serialized, [
 			'@task' => get_class($this->task).".{$this->task->getMethod()}",
@@ -80,7 +88,8 @@ class AsyncTask {
 			],
 			'kwargs' => (object) [
 				'created' => time(),
-				'work_id' => md5(json_encode($idArgs))
+				'work_id' => md5(json_encode($idArgs)),
+				'force' => !$this->dedupCheck
 			]
 		];
 
