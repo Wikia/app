@@ -119,12 +119,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->msg = $response->getVal( 'msg', '' );
 			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {	// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
+				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = array(
 					'username' => $this->username,
 					'password' => $this->password,
 					'newpassword' => $this->wg->request->getVal( 'newpassword' ),
 					'retype' => $this->wg->request->getVal( 'retype' ),
 					'editToken' => $this->editToken,
+					'loginToken' => $this->loginToken,
 					'cancel' => $this->wg->request->getVal( 'cancel', false ),
 					'returnto' => $this->returnto
 				);
@@ -530,6 +532,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->newpassword = $this->request->getVal( 'newpassword', '' );
 		$this->retype = $this->request->getVal( 'retype', '' );
 		$this->editToken = $this->request->getVal( 'editToken', '' );
+		$this->loginToken = $this->request->getVal( 'loginToken', '' );
 		$this->returnto = $this->request->getVal( 'returnto', '' );
 
 		// since we don't support ajax GET, use of this parameter simulates a get request
@@ -550,6 +553,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 
 			if( $this->wg->User->matchEditToken( $this->editToken ) ) {
+
+				if ( $this->wg->User->isAnon()
+					&& $this->loginToken !== UserLoginHelper::getLoginToken()
+				) {
+					$this->result = 'error';
+					$this->msg = wfMessage( 'sessionfailure' )->escaped();
+					return;
+				}
+
 				$user =  User::newFromName( $this->username );
 
 				if( !$user || $user->isAnon() ) {
