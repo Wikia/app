@@ -530,7 +530,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$choices[] = [
 			'value' => 0,
-			'option' => '-- no change --'
+			'option' => wfMessage('manage-wikia-home-hubs-slot-no-change-option')->plain()
 		];
 
 		foreach ($wikis as $wiki) {
