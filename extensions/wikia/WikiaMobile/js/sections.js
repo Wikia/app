@@ -175,10 +175,9 @@ define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
 	window.addEventListener( 'scroll', onScroll );
 
 	return {
-		list: function(){
+		list: function () {
 			//make sure we're grabbing the latest version
 			sections = getHeaders();
-
 			return sections;
 		},
 		isSectionLongerThan: isSectionLongerThan,
