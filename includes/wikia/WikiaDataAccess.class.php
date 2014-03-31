@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * Abstraction classes for SQL data access (or any other external resource)
@@ -201,12 +202,20 @@ class WikiaDataAccess {
 	static private function lock( $key, $waitForLock = true ) {
 		$app = F::app();
 		$wasLocked = false;
-		$timeout = $waitForLock ? (microtime(true) + self::LOCK_TIMEOUT) : 0;
+		$start = microtime(true);
+		$timeout = $waitForLock ? ($start + self::LOCK_TIMEOUT) : 0;
 		$interval = self::LOCK_WAIT_INTERVAL_START;
 		while ( !($gotLock = $app->wg->Memc->add( $key, 1, self::LOCK_TIMEOUT )) && microtime(true) < $timeout ) {
 			$wasLocked = true;
 			usleep($interval * 1000); // convert ms to us
 			$interval = min( $interval * 2, self::LOCK_WAIT_INTERVAL_MAX );
+		}
+
+		if ( mt_rand( 1, 100 ) <= 5 ) {  // 5% sampling
+			$lockTime = (int)( ( microtime( true ) - $start ) * 10000.0 );
+
+			WikiaLogger::instance()->debug( 'WikiaDataAccessLock', [ 'waitForLock' => $waitForLock, 'gotLock' => $gotLock,
+				'wasLocked' => $wasLocked, 'lockTime' => $lockTime, 'key' => $key ] );
 		}
 
 		return array($gotLock, $wasLocked);
