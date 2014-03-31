@@ -40,7 +40,6 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 					'isMovable' => MWNamespace::isMovable( $ns ),
 					'isSubject' => MWNamespace::isSubject( $ns ),
 					'isTalk' => MWNamespace::isTalk( $ns ),
-					// 'defaultContentModel' => MWNamespace::getNamespaceContentModel( $ns ),
 					'aliases' => array(),
 				);
 				if ( $ns >= NS_MAIN ) {
