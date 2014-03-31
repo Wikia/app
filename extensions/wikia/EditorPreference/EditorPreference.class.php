@@ -43,7 +43,7 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		global $wgUser, $wgEnableRTEExt, $wgEnableVisualEditorExt;
+		global $wgUser, $wgEnableRTEExt;
 
 		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink() ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make

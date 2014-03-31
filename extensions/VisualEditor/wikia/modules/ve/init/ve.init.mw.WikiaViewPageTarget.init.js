@@ -20,8 +20,8 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
-		init, support, getTargetDeferred, $edit, $veEdit, vePreferred,
-		plugins = [], veUIEnabled, browserSupported,
+		init, support, getTargetDeferred, vePreferred, browserSupported,
+		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -128,7 +128,6 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
 	vePreferred = mw.config.get( 'wgVisualEditor' ).visualEditorPreferred;
 
 	support = {
@@ -199,19 +198,12 @@
 			plugins.push( plugin );
 		},
 
-		setupSkin: function () {
-			init.setupTabs();
-			init.setupSectionLinks();
-		},
-
 		setupTabs: function () {
 			$( '#ca-ve-edit' ).click( init.onEditTabClick );
 		},
 
 		setupSectionLinks: function () {
-			if ( vePreferred ) {
-				$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
-			}
+			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 		},
 
 		onEditTabClick: function ( e ) {
@@ -322,10 +314,10 @@
 	}
 
 	function removeVELink() {
+		var $edit = $( '#ca-edit' ),
+			$veEdit = $( '#ca-ve-edit' );
 		// This class may still be used by CSS
 		$( 'html' ).addClass( 've-not-available' );
-		$edit = $( '#ca-edit' );
-		$veEdit = $( '#ca-ve-edit' );
 		// If VE is the main edit link, clone the alternate edit attributes into it
 		if ( vePreferred && $veEdit.length > 0 ) {
 			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
@@ -349,7 +341,10 @@
 						target.activate();
 					} );
 				}
-				init.setupSkin();
+				init.setupTabs();
+				if ( vePreferred ) {
+					init.setupSectionLinks();
+				}
 			} );
 		} else {
 			removeVELink();
