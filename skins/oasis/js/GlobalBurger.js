@@ -9,6 +9,7 @@ require([ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 		uiDrawer.createComponent({
 			vars: {
 				//style: 'fixed',
+				closeText: 'CLOSE',
 				side: 'left',
 				content: content.join('<br/>'),
 				subcontent: content.join('<br/>')

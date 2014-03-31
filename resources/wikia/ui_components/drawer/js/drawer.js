@@ -12,7 +12,8 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 			type: 'default',
 			vars: {
 				style: '',
-				side: 'right'
+				side: 'right',
+				closeText: 'Close'
 			}
 		},
 		uiComponent,

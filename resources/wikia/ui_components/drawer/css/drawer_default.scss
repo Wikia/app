@@ -1,15 +1,16 @@
-@import "skins/oasis/css/core/layout.scss";
 @import "skins/oasis/css/core/color.scss";
-@import "skins/oasis/css/mixins/transition.scss";
-@import "skins/oasis/css/mixins/box-shadow.scss";
+@import "skins/oasis/css/core/layout.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
+@import "skins/oasis/css/mixins/box-sizing.scss";
+@import "skins/oasis/css/mixins/box-shadow.scss";
+@import "skins/oasis/css/mixins/transition.scss";
 
-$drawer-width: 250px;
-$subdrawer-width: 225px;
-$drawer-shadow-size: 40px;
 $drawer-base-z-index: $zTop + 10;
 $drawer-close-image: '/resources/wikia/ui_components/drawer/images/cross.png';
+$drawer-shadow-size: 40px;
 $drawer-text-color: #0e5ea3;
+$drawer-width: 250px;
+$subdrawer-width: 225px;
 
 .drawer,
 .subdrawer,
@@ -19,19 +20,16 @@ $drawer-text-color: #0e5ea3;
 
 .drawer,
 .subdrawer {
+	@include box-sizing();
 	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
 
-	opacity: 0;
-	position: absolute;
-	//top: $wikiaglobal-nav-height;
-	top: 0;
-	bottom: 25px;
-	overflow: hidden;
 	background: $color-page;
 	color: $drawer-text-color;
-
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	bottom: 25px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
 
 	&.fixed {
 		position: fixed;
@@ -66,12 +64,14 @@ $drawer-text-color: #0e5ea3;
 		background: url($drawer-close-image);
 		background-position: 0 3px;
 		background-repeat: no-repeat;
-		padding-left: 20px;
-		line-height: 20px;
-		vertical-align: middle;
-		font-size: 12px;
 		cursor: pointer;
+		font-size: 12px;
+		line-height: 20px;
 		margin: 7px 0 25px 5px;
+		padding-left: 20px;
+		text-transform: uppercase;
+		vertical-align: middle;
+
 	}
 }
 
