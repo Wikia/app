@@ -29,7 +29,7 @@ class AsyncTask {
 	/** @var array list of calls to make */
 	protected $calls = [];
 
-	protected $taskType = 'mediawiki.task';
+	protected $taskType = 'workers.mediawiki.task';
 
 	protected $delay = 0;
 
