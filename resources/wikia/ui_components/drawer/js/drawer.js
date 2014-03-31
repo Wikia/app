@@ -4,6 +4,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	var DRAWER_ID = 'drawer-',
 		SUBDRAWER_ID = 'subdrawer-',
 		BLACKOUT_ID = 'drawer-blackout-',
+		CLOSEBUTTON_ID = 'drawer-close-button-',
 		OPEN_CLASS = 'open',
 		VISIBLE_CLASS = 'visible',
 		ANIMATION_DURATION = 200, //ms
@@ -39,7 +40,12 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 
 	function Drawer( params ) {
 		var self = this,
-			side = ( typeof params === 'object' ) ? params.vars.side : params; // drawer side
+			side = ( typeof params === 'object' ) ? params.vars.side : params, // drawer side
+			closeFunc = function(ev) {
+				ev.preventDefault();
+
+				self.close();
+			}
 
 		if ( typeof( uiComponent ) === 'undefined' ) {
 			throw 'Need uiComponent to render drawer with side ' + side;
@@ -51,15 +57,12 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		// render drawer markup and append to DOM
 		$body.append( uiComponent.render( params ) );
 
+		// cache important elements
 		this.$drawer = $('#' + DRAWER_ID + side);
 		this.$subdrawer = $('#' + SUBDRAWER_ID + side);
-		this.$blackout = $('#' + BLACKOUT_ID + side);
+		this.$blackout = $('#' + BLACKOUT_ID + side).click(closeFunc);
 
-		this.$blackout.click(function(e) {
-			e.preventDefault();
-
-			self.close();
-		});
+		$('#' + CLOSEBUTTON_ID + side).click(closeFunc);
 	}
 
 	Drawer.prototype.open = function() {
@@ -107,14 +110,14 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		return this.$subdrawer.hasClass(OPEN_CLASS);
 	};
 
-	Drawer.prototype.setSubcontent = function(subcontent) {
+	Drawer.prototype.setSub = function(subcontent) {
 		this.$subdrawer.html(subcontent);
 	};
 
-	Drawer.prototype.swipeSubcontent = function(subcontent) {
+	Drawer.prototype.swipeSub = function(subcontent) {
 		var self = this,
 			animate = function() {
-				self.setSubcontent(subcontent);
+				self.setSub(subcontent);
 				self.openSub();
 			};
 		if ( this.isOpenSub() ) {

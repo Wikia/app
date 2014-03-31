@@ -4,9 +4,12 @@
 @import "skins/oasis/css/mixins/box-shadow.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
 
-$drawer-width: 300px;
-$drawer-shadow-size: 30px;
+$drawer-width: 250px;
+$subdrawer-width: 225px;
+$drawer-shadow-size: 40px;
 $drawer-base-z-index: $zTop + 10;
+$drawer-close-image: '/resources/wikia/ui_components/drawer/images/cross.png';
+$drawer-text-color: #0e5ea3;
 
 .drawer,
 .subdrawer,
@@ -20,13 +23,15 @@ $drawer-base-z-index: $zTop + 10;
 
 	opacity: 0;
 	position: absolute;
-	top: $wikiaglobal-nav-height;
+	//top: $wikiaglobal-nav-height;
+	top: 0;
 	bottom: 25px;
 	overflow: hidden;
 	background: $color-page;
-	color: $color-text;
-	padding: 0;
-	width: $drawer-width;
+	color: $drawer-text-color;
+
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 
 	&.fixed {
 		position: fixed;
@@ -38,6 +43,8 @@ $drawer-base-z-index: $zTop + 10;
 }
 
 .drawer {
+	padding: 10px;
+	width: $drawer-width;
 	z-index: $drawer-base-z-index;
 
 	&.left {
@@ -54,9 +61,23 @@ $drawer-base-z-index: $zTop + 10;
 			right: 0;
 		}
 	}
+
+	.close-button {
+		background: url($drawer-close-image);
+		background-position: 0 3px;
+		background-repeat: no-repeat;
+		padding-left: 20px;
+		line-height: 20px;
+		vertical-align: middle;
+		font-size: 12px;
+		cursor: pointer;
+		margin: 5px 0 25px 5px;
+	}
 }
 
 .subdrawer {
+	padding: 25px;
+	width: $subdrawer-width;
 	z-index: $drawer-base-z-index - 1;
 
 	&.left {
