@@ -174,9 +174,9 @@ class WikiaHomePageController extends WikiaController {
 			'creative' => 		$hub['hub_slot_desc'],
 			'moreheading' => 	wfMessage('wikiahome-hubs-slot-more-in-heading', $hub['name'])->escaped(),
 			'morelist' => 		$wgParser->parse(
-									$hub['hub_slot_more_links'],
-									$wgTitle,
-									$wgOut->parserOptions())->getText(),
+							$hub['hub_slot_more_links'],
+							$wgTitle,
+							$wgOut->parserOptions())->getText(),
 		];
 	}
 
@@ -188,14 +188,14 @@ class WikiaHomePageController extends WikiaController {
 			'heroimageurl' => 	isset($this->hubImages[$categoryId]) ? $this->hubImages[$categoryId] : null,
 			'herourl' => 		WfMessage("wikiahome-hubs-$vertical-url")->text(),
 			'creative' => 		!empty( $hub['hub_slot_desc'] )
-								? $hub['hub_slot_desc']
-								: WfMessage("wikiahome-hubs-$vertical-creative")->text(),
+						? $hub['hub_slot_desc']
+						: WfMessage("wikiahome-hubs-$vertical-creative")->text(),
 			'moreheading' => 	WfMessage("wikiahome-hubs-$vertical-more-heading")->text(),
 			'morelist' => 		!empty( $hub['hub_slot_more_links'] )
-								? $wgParser->parse(
-									$hub['hub_slot_more_links'],
-									$wgTitle, $wgOut->parserOptions())->getText()
-								: WfMessage("wikiahome-hubs-$vertical-more-list")->parse()
+						? $wgParser->parse(
+							$hub['hub_slot_more_links'],
+							$wgTitle, $wgOut->parserOptions())->getText()
+						: WfMessage("wikiahome-hubs-$vertical-more-list")->parse()
 		];
 	}
 
