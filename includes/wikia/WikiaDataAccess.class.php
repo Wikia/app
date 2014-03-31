@@ -212,7 +212,7 @@ class WikiaDataAccess {
 		}
 
 		if ( mt_rand( 1, 100 ) <= 5 ) {  // 5% sampling
-			$lockTime = (int)( ( microtime( true ) - $start ) * 10000.0 );
+			$lockTime = (int)( ( microtime( true ) - $start ) * 1000000 );
 
 			WikiaLogger::instance()->debug( 'WikiaDataAccessLock', [ 'waitForLock' => $waitForLock, 'gotLock' => $gotLock,
 				'wasLocked' => $wasLocked, 'lockTime' => $lockTime, 'key' => $key ] );
