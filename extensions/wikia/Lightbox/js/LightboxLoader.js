@@ -64,13 +64,13 @@
 				$article = $('#WikiaArticle'),
 				$videos = $('#RelatedVideosRL'),
 				$photos = $('#LatestPhotosModule'),
-				$comments = $('#WikiaArticleComments'),
+				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
-				$videosModule = $('#videosModule'), // right rail videos module
+				$videosModule = $('.videos-module-rail'), // right rail videos module
 				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($videos).add($comments).add($footer).add($videosModule)
+			$article.add($photos).add($videos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -82,7 +82,7 @@
 						$slideshowImg,
 						clickSource;
 
-					if (!LightboxLoader.hasLightbox($this, $thumb)) {
+					if (!LightboxLoader.hasLightbox($this, $thumb, e)) {
 						return;
 					}
 
@@ -353,14 +353,18 @@
 		 *
 		 * @param $link Anchor that was clicked
 		 * @param [$thumb] Optional thumbnail image inside clicked anchor
+		 * @param {jQuery} event jQuery click event
 		 * @returns {boolean}
 		 */
-		hasLightbox: function ($link, $thumb) {
+		hasLightbox: function ($link, $thumb, event) {
+			// if any of the following conditions are true, don't open the lightbox
 			return !(
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||
-				$link.hasClass('no-lightbox')
+				$link.hasClass('no-lightbox') ||
+				event.metaKey ||
+				event.ctrlKey
 			);
 		}
 	};

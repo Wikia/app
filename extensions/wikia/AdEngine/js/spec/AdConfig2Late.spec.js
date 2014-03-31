@@ -126,4 +126,20 @@ describe('AdConfig2Late', function () {
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
+
+	it('getProvider returns Liftium without AbTest', function() {
+		var adProviderNullMock = {name: 'NullMock'},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
+			logMock = function() {},
+			windowMock = {wgAdDriverUseSevenOneMedia: false},
+			abTestMock,
+			adConfig;
+
+		adConfig = AdConfig2Late(
+			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		);
+
+		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
+	});
 });

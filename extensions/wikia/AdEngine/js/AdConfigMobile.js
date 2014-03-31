@@ -2,18 +2,34 @@
 
 define(
 	'ext.wikia.adengine.config.mobile',
-	['ext.wikia.adengine.provider.gptmobile', 'ext.wikia.adengine.provider.null'],
-	function (adProviderGpt, adProviderNull) {
+	['wikia.log', 'wikia.window', 'ext.wikia.adengine.provider.directgptmobile','ext.wikia.adengine.provider.remnantgptmobile', 'ext.wikia.adengine.provider.null'],
+	function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
 		'use strict';
 
+		var logGroup = 'AdConfigMobile',
+			logLevel = log.levels.info;
+
 		function getProvider(slot) {
-			if (slot[2] === 'Null') {
-				return adProviderNull;
+			var slotName = slot[0];
+
+			// if we need to hop to particular provider
+			switch(slot[2]) {
+				case 'Null':
+					return adProviderNull;
+				case 'RemnantGptMobile':
+					if (adProviderRemnantGpt.canHandleSlot(slotName)) {
+						return adProviderRemnantGpt;
+					}
+
+					return adProviderNull;
+				default:
+					if (adProviderDirectGpt.canHandleSlot(slotName)) {
+						return adProviderDirectGpt;
+					}
 			}
-			if (adProviderGpt.canHandleSlot(slot[0])) {
-				return adProviderGpt;
-			}
+
 			return adProviderNull;
+
 		}
 
 		return {

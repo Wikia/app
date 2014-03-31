@@ -46,6 +46,12 @@ class WikiaMobileService extends WikiaService {
 			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
 			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
 
+			$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = false;
+
+			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
+				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
+			}
+
 			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 				$this->globalVariables['wgShowAds'] = true;
@@ -232,10 +238,12 @@ class WikiaMobileService extends WikiaService {
 		$toc = '';
 
 		$action = $this->wg->Request->getVal( 'action', 'view' );
+        $nameSpace = $this->wg->Title->getNamespace();;
 
 		//Enable TOC only on view action and on real articles and preview
 		if ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0
+			$this->wg->Title->getArticleId() != 0 &&
+            ( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
 		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
 			$this->scssPackages[] = 'wikiamobile_scss_toc';

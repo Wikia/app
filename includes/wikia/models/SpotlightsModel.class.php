@@ -57,6 +57,80 @@ class SpotlightsModel extends WikiaModel {
 	}
 
 	/**
+	 * Gets recommended wikis from NLP Results for given wiki from topic recommendations
+	 * for current wiki
+	 *
+	 * @return array
+	 */
+	public function getNLPTopicSpotlights() {
+		global $wgNLPSpotlightIds;
+
+		$spotlights = [
+			'data' => [],
+			'status' => 0
+		];
+
+		foreach ( $wgNLPSpotlightIds as &$spotlightId ) {
+			$wikiData = WikiFactory::getWikiByID($spotlightId);
+
+			if ( $wikiData ) {
+				$wikiUrl = $wikiData->city_url;
+				$wikiName = $wikiData->city_title;
+				$wikiImage = $this->getSpotlightImage( $wikiUrl );
+
+				$spotlight = [
+					'image' => $wikiImage ? $wikiImage : self::SPOTLIGHT_PLACEHOLDER,
+					'url' => $wikiUrl,
+					'text' => $wikiName
+				];
+
+				$spotlights['data'] []= $spotlight;
+				$spotlights['status'] = 1;
+			}
+		}
+
+		return $spotlights;
+	}
+
+
+	/**
+	 * Gets recommended wikis from NLP Results for given wiki from
+	 * Latent Dirichlet allocation discovered recommendations
+	 * for current wiki
+	 *
+	 * @return array
+	 */
+	public function getNLPLDaSpotlights() {
+		global $wgNLPLDASpotlightIds;
+
+		$spotlights = [
+			'data' => [],
+			'status' => 0
+		];
+
+		foreach ( $wgNLPLDASpotlightIds as &$spotlightId ) {
+			$wikiData = WikiFactory::getWikiByID($spotlightId);
+
+			if ( $wikiData ) {
+				$wikiUrl = $wikiData->city_url;
+				$wikiName = $wikiData->city_title;
+				$wikiImage = $this->getSpotlightImage( $wikiUrl );
+
+				$spotlight = [
+					'image' => $wikiImage ? $wikiImage : self::SPOTLIGHT_PLACEHOLDER,
+					'url' => $wikiUrl,
+					'text' => $wikiName
+				];
+
+				$spotlights['data'] []= $spotlight;
+				$spotlights['status'] = 1;
+			}
+		}
+
+		return $spotlights;
+	}
+
+	/**
 	 * Gets wiki main image
 	 *
 	 * @param $url Wiki url

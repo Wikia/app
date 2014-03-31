@@ -366,7 +366,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-votes-modal-showmore' => 'See others who gave Kudos',
 	'wall-votes-modal-title' => 'Kudos',
 	'wall-votes-modal-title-desc' => '{{PLURAL:$1|One person|$1 people}} gave Kudos to this message',
-	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos|Kudos}}',
+	'wall-votes-number' => '$1 {{PLURAL:$1|Kudos}}',
 	'wall-votes-number-tooltip' => 'See who gave Kudos to this message',
 	'wall-votes-vote-tooltip' => 'Give Kudos to this message',
 	'wall-votes-voted-tooltip' => 'You\'ve given this message Kudos!',
@@ -1279,7 +1279,9 @@ $messages['br'] = array(
 	'wall-action-all-confirm-notify' => 'Kemenn ur merour',
 	'wall-action-remove-reply-title' => 'Lemel ar respont-mañ',
 	'wall-action-remove-thread-title' => 'Lemel an neudennad-mañ',
+	'wall-confirm-monobook-restore' => "Lavarit dimp perak e fell deoc'h assevel an dra-mañ, mar plij",
 	'wall-delete-error-title' => 'Fazi',
+	'wall-delete-error-content' => "Dilamet e oa bet ar gemennadenn a-raok ha n'eus ket anezhi ken.",
 	'wall-action-remove-confirm' => "Mar plij, displegit dimp perak e fell deoc'h lemel an dra-mañ :",
 	'wall-action-remove-confirm-ok' => 'Dilemel',
 	'wall-action-close-thread-title' => 'Serriñ an neudennad-mañ',
@@ -1301,6 +1303,7 @@ $messages['br'] = array(
 	'wall-action-move-validation-select-wall' => 'Diuzit ur rann, mar plij',
 	'wall-action-move-topics-summary' => "Neudennad dilec'hiet",
 	'wall-action-move-thread-ok' => "Dilec'hiañ an neudennad",
+	'wall-action-move-board-label' => 'Diuzañ un isforom da vont dezhañ',
 	'wall-notifications' => 'Kemennoù',
 	'wall-notifications-all' => 'An holl gemennoù',
 	'wall-notifications-markasread' => 'Merkañ an holl evel lennet',
@@ -1347,6 +1350,7 @@ $messages['br'] = array(
 	'wall-sorting-most-active' => 'Oberiantañ',
 	'wall-sorting-archived' => 'Diellaouet',
 	'wall-deleted-msg-pagetitle' => 'Kemennadenn dilamet',
+	'wall-deleted-msg-text' => "Dilamet eo bet ar gemennadenn emaoc'h o klask gwelet.",
 	'wall-deleted-msg-return-to' => 'Distreiñ da voger $1.',
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
 	'wall-recentchanges-wall-thread' => 'Neudennad voger',
@@ -1392,7 +1396,7 @@ $messages['br'] = array(
 	'wall-history-action-view' => 'gwelet',
 	'wall-history-action-restore' => 'assevel',
 	'wall-history-action-thread-history' => 'istor an neudennad',
-	'wall-thread-history-title' => 'istor an neudennad', # Fuzzy
+	'wall-thread-history-title' => 'Istor an neudennad',
 	'wall-thread-history-thread-created' => '$1 $2 en deus krouet an neudennad-mañ',
 	'wall-thread-history-reply-created' => '$1 $2 en deus laosket ur respont',
 	'wall-thread-history-thread-removed' => '$1 $2 en deus dilammet an neudennad-mañ',
@@ -1406,11 +1410,15 @@ $messages['br'] = array(
 	'wall-thread-history-thread-reopened' => '$2 en deus addigoret an neudennad-mañ',
 	'wall-history-action-restore-reply' => 'Adsevel ar respont',
 	'wall-history-action-restore-thread' => 'Adsevel an neudennad',
+	'mail-notification-new-someone' => '$AUTHOR_NAME en deus skrivet ur gemennadenn nevez e $WIKI.',
+	'mail-notification-new-your' => '$AUTHOR_NAME en deus lezet ur gemennadenn deoc\'h e  $WIKI.',
+	'mail-notification-reply-your' => '$AUTHOR_NAME en deus respontet d\'ho kemennadenn e $WIKI.',
 	'mail-notification-html-greeting' => "Demat deoc'h $1,",
 	'mail-notification-html-button' => 'Gwelet ar gaoz',
 	'tog-enotifwallthread-v2' => 'Kas din ur postel...',
 	'tog-enotifmywall-every' => 'Evit pep kemennadenn ha respont',
 	'tog-enotifmywall-sincevisited' => 'Unan dre neudennad abaoe ma gweladenn ziwezhañ',
+	'wall-message-notifyeveryone' => 'Dreistlinennañ an neudennad-mañ',
 	'wall-quote-author' => '$1 en deus skrivet :',
 	'wall-quote-reply-to' => 'respont da #$1',
 	'wall-topic-input-heading' => 'Tem',
@@ -6647,7 +6655,7 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-recentchanges-thread-history-link' => 'histórico do tópico',
 	'wall-contributions-wall-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">mural de $4</a>',
 	'wall-whatlinkshere-wall-line' => '<a href="$1">$2</a> no <a href="$3">mural de $4</a>',
-	'wall-message-not-found' => 'Esta mensagem não foi encontrada. Se vires este erro, contacta a Wikia em [[Especial:Contact]] e fornece o maior detalhe possível sobre como reproduziste este erro. Obrigado!', # Fuzzy
+	'wall-message-not-found' => 'Esta mensagem não foi encontrada. Se vir este erro, contacte a Wikia através de [[Special:Contact]] e forneça todos os pormenores sobre como reproduzir este erro. Obrigado!',
 	'wall-message-staff-text' => 'Este utilizador é um membro da Equipa da Wikia',
 	'wall-ipballowusertalk' => 'Permitir que este utilizador publique no seu próprio Mural de Mensagens',
 	'wall-ipbwatchuser' => 'Observar o perfil deste utilizador e seguir o seu Mural de Mensagens',
@@ -6910,7 +6918,7 @@ suas preferências de email aqui: http://pt-br.wikia.com/wiki/Especial:Preferên
 			<p>A Equipe Wikia</p>
 ___________________________________________<br />
 * Procure ajuda e conselhos na Central da Comunidade: http://comunidade.wikia.com
-* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar 
+* Quer receber menos mensagens de nós? Você pode cancelar sua inscrição ou alterar
 suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
 	'prefs-email-wall-v2' => 'Mural de Mensagens e Fórum',
 	'tog-enotifwallthread-v2' => 'Enviar-me um email...',
@@ -6978,6 +6986,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Eleferen
  * @author Express2000
+ * @author Ilnur efende
  * @author Kuzura
  * @author Okras
  */
@@ -7313,7 +7322,7 @@ $messages['sco'] = array(
 	'wall-message-no-permission' => 'Ye dinna hae permission tae perform this action oan the message',
 	'wall-thread-removed' => 'Remuived',
 	'wall-thread-isnotifyeveryone' => 'Heilicht',
-	'wall-thread-deleted' => 'Deletit',
+	'wall-thread-deleted' => 'Delytit',
 	'wall-thread-closed' => 'Clawsed',
 	'wall-default-title' => 'Message fae $1',
 	'wall-no-title-warning' => '← Ye didna speecify oni title',
@@ -7347,7 +7356,7 @@ $messages['sco'] = array(
 	'wall-delete-reason' => 'Uiser/admeen action',
 	'wall-user-talk-page-archive-anchor' => 'See archyved tauk page',
 	'wall-user-talk-archive-page-title' => 'Uiser_tauk_archyve',
-	'wall-ipb-disableusertalk' => 'Prevent this uiser fae posting oan their ain Message Waw while blockit',
+	'wall-ipb-disableusertalk' => 'Hinder this uiser fae postin oan thair ain Message Waw while blockit',
 	'wall-action-all-confirm-notify' => 'Notifie aen admeen',
 	'wall-action-remove-reply-title' => 'Remuiv this replie',
 	'wall-action-remove-thread-title' => 'Remui this threed',
@@ -7442,7 +7451,7 @@ The oreeginal post n yer owerveiw will still kyth in the wiki's histerie.",
 	'wall-deleted-msg-pagetitle' => 'Message delytit',
 	'wall-deleted-msg-text' => "The message ye'r tryin tae view haes been delytit.",
 	'wall-deleted-msg-return-to' => "Return til $1's wall.",
-	'wall-deleted-msg-view' => '(View/Restore,)',
+	'wall-deleted-msg-view' => '(See/Restore)',
 	'wall-recentchanges-wall-thread' => 'Waw threed',
 	'wall-recentchanges-new-message' => 'oan <a href="$1">$2\'s waw</a>',
 	'wall-recentchanges-edit' => '(eidited message)',
@@ -7548,7 +7557,7 @@ yer wab-mail preferences here: http://community.wikia.com/Special:Preferences',
 	'tog-enotifwallthread-v2' => 'Wab-mail me…',
 	'tog-enotifmywall-every' => 'Fer ilka message & replie',
 	'tog-enotifmywall-sincevisited' => 'Yince per threed sin ma laist visit',
-	'tog-enotifmywall-reminder' => 'Wi ae dailie wab-mail reminder',
+	'tog-enotifmywall-reminder' => 'Wi ae dailie wab-mail myndin',
 	'tog-enotifmywall-noemail' => 'Nivir. Dinna send me oni wab-mails aneat Message Waws or Forums',
 	'wallshowsource-toggle-v2' => 'Enable {{int:user-action-menu-view-source}} oan threeds',
 	'wallshowsource-toggle' => 'Enable {{int:user-action-menu-view-source}} oan Message Waw posts',
@@ -7558,7 +7567,7 @@ yer wab-mail preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-message-unnotifyeveryone' => 'On-Heilicht this threed',
 	'wall-message-notifyeveryone-tooltip' => 'Ilka loggit-in person oan the wiki will be notified aneat this threed the nex time they visit the wiki',
 	'wall-votes-modal-showmore' => 'See ithers that gave Kudos',
-	'wall-votes-modal-title-desc' => '{{PLURAL:$1|One person|$1 people}} gave Kudos til this message',
+	'wall-votes-modal-title-desc' => '{{PLURAL:$1|Yin person|$1 people}} gave Kudos til this message',
 	'wall-votes-number-tooltip' => 'See wha gave Kudos til this message',
 	'wall-votes-vote-tooltip' => 'Gie Kudos til this message',
 	'wall-votes-voted-tooltip' => "Ye'v gien this message Kudos!",
@@ -8273,6 +8282,7 @@ $messages['tr'] = array(
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
+ * @author Ilnur efende
  */
 $messages['tt-cyrl'] = array(
 	'wall-message-undoremove' => 'Кире кайтару',
@@ -8299,6 +8309,7 @@ $messages['tt-cyrl'] = array(
 	'wall-action-admin-confirm-ok' => 'Бетерү',
 	'wall-action-restore-confirm-ok' => 'Торгызу',
 	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
+	'wn-newmsg' => 'Сез $1 диварында яңа хат калдырдыгыз',
 	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
 	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'mail-notification-subject' => '$1 -- $2',

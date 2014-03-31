@@ -1337,7 +1337,7 @@
 				$.nirvana.sendRequest({
 					controller: 'Lightbox',
 					method: 'getThumbImages',
-					type: 'POST',
+					type: 'GET',
 					format: 'json',
 					data: {
 						to: Lightbox.to,

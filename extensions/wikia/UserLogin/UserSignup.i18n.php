@@ -524,17 +524,23 @@ $messages['bg'] = array(
  * @author Y-M D
  */
 $messages['br'] = array(
+	'usersignup-page-title' => 'Kemer perzh e Wikia',
+	'usersignup-page-captcha-label' => 'Ger dispisaet',
 	'usersignup-error-username-length' => "Oc'ho, ne c'hall ket bezañ ouzhpenn {{PLURAL:$1|un arouezenn|$1 arouezenn}} en hoc'h anv implijer.",
 	'usersignup-error-invalid-user' => 'Implijer direizh. Kevreit da gentañ, mar plij.',
 	'usersignup-error-invalid-email' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'usersignup-error-empty-email' => "Pop, lakait ho chomlec'h postel, mar plij.",
 	'usersignup-error-already-confirmed' => "Kadarnaet ho peus ar chomlec'h postel-mañ dija.",
+	'usersignup-error-password-length' => "Pop, re hir eo ho ker-tremen. Dibabit ur ger-tremen gant 50 arouezenn d'ar muiañ, mar plij.",
 	'usersignup-facebook-heading' => 'Echu eo an enskrivadur',
 	'usersignup-facebook-create-account' => 'Krouiñ ur gont',
+	'usersignup-facebook-email-tooltip' => "Ma fell deoc'h implijout ur chomlec'h postel all e c'hallit cheñch anezhañ diwezhatoc'h en ho Penndibaboù.",
 	'usersignup-facebook-have-an-account-heading' => "Ur gont hoc'h eus dija ?",
 	'usersignup-facebook-proxy-email' => 'Postel dianv Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Goulenn ur postel kadarnaat nevez',
 	'usersignup-user-pref-confirmemail_send' => 'Adkas ma fostel kadarnaat',
 	'usersignup-user-pref-emailauthenticated' => "Trugarez deoc'h ! Kadarnaet eo bet ho postel d'an $2 da $3.",
+	'usersignup-user-pref-noemailprefs' => "War a seblant n'hon eus chomlec'h postel ebet evidoc'h. Lakait ur chomlec'h postel amañ a-us, mar plij.",
 	'usersignup-confirm-page-title' => "Kadarnait ho chomlec'h postel",
 	'usersignup-confirm-email-resend-email' => 'Kas din ur postel kadarnaat all',
 	'usersignup-confirm-email-change-email-content' => "Fellout a ra din implijout ur chomlec'h postel disheñvel.",
@@ -548,9 +554,16 @@ $messages['br'] = array(
 	'usersignup-confirmation-heading' => 'Tost echu',
 	'usersignup-confirmation-heading-email-resent' => 'Kaset ez eus bet ur postel nevez',
 	'usersignup-confirmation-subheading' => 'Gwiriekait ho posteloù',
+	'usersignup-confirmation-email-sent' => 'Kaset hon eus ur postel da "$1".
+
+Klikit war al liamm kadarnaat en ho postel evit echuiñ da grouiñ ho kont.',
 	'usersignup-confirmation-email_subject' => 'Tost echu eo ! Kadarnait ho kont Wikia',
 	'usersignup-confirmation-email-greeting' => 'Ac\'hanta $USERNAME,',
+	'usersignup-confirmation-email-content' => 'Chom a ra ur bazenn evit krouiñ ho kont e Wikia ! Klikit war al liamm amañ dindan evit kadarnaat ho chomlec\'h postel ha kregiñ ganti.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Skipailh Wikia',
+	'usersignup-reconfirmation-email-sent' => "Cheñchet eo bet ho chomlec'h postel e $1. Kaset hon eus ur postel kadarnaat all deoc'h. Kadarnait ar chomlec'h postel nevez, mar plij.",
 	'usersignup-reconfirmation-email_subject' => "Kadarnaat ho cheñchamant chomlec'h postel war Wikia",
 	'usersignup-reconfirmation-email-greeting' => 'Ac\'hanta $USERNAME',
 	'usersignup-reconfirmation-email-signature' => 'Skipailh Wikia',
@@ -564,6 +577,7 @@ $messages['br'] = array(
 	'usersignup-welcome-email-explore-wiki-button' => 'Mont da wikia.com',
 	'usersignup-welcome-email-signature' => 'Skipailh Wikia',
 	'usersignup-heading-byemail' => 'Krouiñ ur gont evit unan bennak all',
+	'usersignup-marketing-login' => "Un implijer oc'h dija ? [[Special:UserLogin|Kevreañ]]",
 	'usersignup-marketing-community-heading' => 'Kenlabourit',
 	'usersignup-marketing-global-heading' => 'Krouiñ',
 	'usersignup-createaccount-byemail' => 'Krouiñ ur gont evit unan bennak all',

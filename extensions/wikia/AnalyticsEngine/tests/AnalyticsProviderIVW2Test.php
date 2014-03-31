@@ -14,7 +14,7 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 	 */
 	private function getAnalyticsProviderIVW2Code($url) {
 		$page = Http::get($url, 'default', array('noProxy' => true));
-		if (preg_match('/"cp":"(RC_WIKIA_[A-Z]+)", \/\/ code/', $page, $m)) {
+		if (preg_match('/\\\\"cp\\\\":\\\\"(RC_WIKIA_[A-Z]+)\\\\"/', $page, $m)) {
 			$path = parse_url($m[1], PHP_URL_PATH);
 			$arr = explode('/', $path);
 			return array_pop($arr);

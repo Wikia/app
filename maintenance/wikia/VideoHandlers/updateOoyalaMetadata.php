@@ -153,7 +153,7 @@ function changeMetadata( $video, $title, $metaKey, $metaFromValue, $metaToValue 
 	}
 
 	if ( $changed ) {
-		$metadata[$metaKey] = implode( ', ', $metaValues );
+		$metadata[$metaKey] = implode( ', ', array_filter( $metaValues ) );
 		/* for debuging
 		echo "\n\tNEW Metadata (".$video['embed_code']."):\n";
 		compareMetadata( $video['metadata'], $metadata );
@@ -207,10 +207,10 @@ if ( isset( $options['help'] ) ) {
 	--player           set player id
 	--remove           remove field from custom metadata (only if the field is empty)
 	--extra            extra conditions to get video assets from ooyala (use ' AND ' to separate each condition)
-	--change           update metadata (will required --from and --to options)
+	--update           update metadata (will required --from and --to options)
 	--from             metadata value that will be updated from (required for --update option)
 	--to               metadata value that will be updated to (required for --update option)
-	--list             set if the metadata value is a list (used with --change option)
+	--list             set if the metadata value is a list (used with --update option, optional)
 	--limit            limit
 	--dry-run          dry run
 	--help             you are reading it right now\n\n" );

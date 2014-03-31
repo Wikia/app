@@ -306,9 +306,13 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
-		global $wgEnableRHonDesktop;
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgAdDriverEnableRemnantGptMobile;
 
-		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
+		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
+		$wgAdDriverEnableRemnantGptMobile = $request->getBool( 'gptremnant', $wgAdDriverEnableRemnantGptMobile );
+
+		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
+		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 
 		return true;
 	}
@@ -318,7 +322,6 @@ class AdEngine2Controller extends WikiaController {
 	 * Register global JS variables bottom (migrated from wfAdEngineSetupJSVars)
 	 *
 	 * @param array $vars
-	 * @param array $scripts
 	 *
 	 * @return bool
 	 */
@@ -332,6 +335,7 @@ class AdEngine2Controller extends WikiaController {
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
+			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			   $wgEnableRHonDesktop, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -417,6 +421,14 @@ class AdEngine2Controller extends WikiaController {
 			$vars['wgEnableRHonDesktop'] = $wgEnableRHonDesktop;
 		}
 
+		if (!empty($wgAdDriverForceDirectGptAd)) {
+			$vars['wgAdDriverForceDirectGptAd'] = $wgAdDriverForceDirectGptAd;
+		}
+
+		if (!empty($wgAdDriverForceLiftiumAd)) {
+			$vars['wgAdDriverForceLiftiumAd'] = $wgAdDriverForceLiftiumAd;
+		}
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -438,6 +450,7 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
 		$vars['wikiaPageIsWikiaHomePage'] = WikiaPageType::isWikiaHomePage();
+		$vars['wikiaPageIsCorporate'] = WikiaPageType::isCorporatePage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);

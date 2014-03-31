@@ -5,6 +5,6 @@
 	</div>
 	<div class="forum-message-body">
 		<?= $reply['messageBody'] ?>
-		<time class="forum-timestamp" datetime="<?= $reply['timeStamp'] ?>"><?= $reply['timeStamp'] ?></time>
+		<time class="forum-timestamp timeago" datetime="<?= $reply['timeStamp'] ?>"><?= $reply['timeStamp'] ?></time>
 	</div>
 </li>

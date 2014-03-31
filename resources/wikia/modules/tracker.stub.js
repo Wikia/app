@@ -174,7 +174,8 @@ function veTrack( data ) {
 	try {
 		// isAnonymous
 		try {
-			defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
+			//defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
+			defaultData.isAnonymous = !wgUserName ? 'yes' : 'no';
 		} catch ( e ) {
 			defaultData.isAnonymous = 'unknown';
 		}
@@ -207,5 +208,5 @@ function veTrack( data ) {
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-v1', finalData );
+	syslogReport( 6, 'veTrack-v3', finalData );
 }

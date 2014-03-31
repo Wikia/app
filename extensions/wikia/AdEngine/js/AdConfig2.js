@@ -78,6 +78,20 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
+
+		// Force Liftium
+		if (window.wgAdDriverForceLiftiumAd) {
+			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
+			return adProviderLater;
+		}
+
+		// Force DirectGpt
+		if (window.wgAdDriverForceDirectGptAd && adProviderDirectGpt.canHandleSlot(slotname)) {
+			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
+			return adProviderDirectGpt;
+		}
+
+
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
 		// TOP_BUTTON is always handled in Later queue, so we need to exclude

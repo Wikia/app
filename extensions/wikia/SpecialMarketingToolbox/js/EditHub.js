@@ -1,4 +1,4 @@
-/*global VET_loader, WMU_skipDetails:true, WMU_show, WMU_openedInEditor:true, confirm, alert */
+/*global WMU_skipDetails:true, WMU_show, WMU_openedInEditor:true, confirm, alert */
 
 var EditHub = function() {};
 

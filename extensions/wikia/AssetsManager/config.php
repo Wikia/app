@@ -133,8 +133,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
 		'//extensions/wikia/Chat2/js/ChatEntryPoint.js',
-		// Related Forum Discussion is on all article pages
-		'//extensions/wikia/Forum/js/RelatedForumDiscussion.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		// Survey for first time editors
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
@@ -217,6 +215,9 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
+
+		// Global Header tracking
+		'//skins/oasis/js/GlobalHeader.js',
 	)
 );
 
@@ -624,11 +625,13 @@ $config['wikiamobile_ads_gpt_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdProviderGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
+		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/WikiaFullGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -790,7 +793,7 @@ $config['filepage_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePage.wikiamobile.js'
+		'//extensions/wikia/FilePage/scripts/FilePage.wikiamobile.js'
 	)
 );
 
@@ -962,6 +965,13 @@ $config['wall_js'] = array(
 	)
 );
 
+$config['wall_notifications_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Wall/js/WallNotifications.js',
+	)
+);
+
 $config['wall_mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1116,8 +1126,8 @@ $config['videopageadmin_scss'] = array(
 	'assets' => array(
 		'//skins/oasis/css/modules/CorporateDatepicker.scss',
 		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
-		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/Admin/VideoPageTool_Header.scss',
+		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool.scss',
+		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool_Header.scss',
 		'//extensions/wikia/VideoPageTool/css/carousel.scss',
 	)
 );
@@ -1182,9 +1192,9 @@ $config['videohomepage_scss'] = array(
 		// Dependencies
 		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
 		// VideoHomePage
-		'//extensions/wikia/VideoPageTool/css/HomePage/main.scss',
+		'//extensions/wikia/VideoPageTool/css/homepage/main.scss',
 		'//extensions/wikia/VideoPageTool/css/carousel.scss',
-		'//extensions/wikia/VideoPageTool/css/HomePage/featured.scss',
+		'//extensions/wikia/VideoPageTool/css/homepage/featured.scss',
 	)
 );
 
@@ -1423,6 +1433,14 @@ $config['analytics_gas_js'] = array(
 	)
 );
 
+$config['analytics_bluekai_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+	)
+);
+
 /** WikiMap Extension **/
 $config['wiki_map_js'] = array(
     'type' => AssetsManager::TYPE_JS,
@@ -1525,13 +1543,13 @@ $config['categoryselect_edit_js'] = array(
 $config['wikia_file_page_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/WikiaFilePage.js',
+		'//extensions/wikia/FilePage/scripts/WikiaFilePage.js',
 	)
 );
 $config['file_page_tabbed_js'] = array(
 	'type'=> AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/FilePage/js/FilePageTabbed.js',
+		'//extensions/wikia/FilePage/scripts/FilePageTabbed.js',
 	)
 );
 $config['file_page_tabbed_css'] = array(

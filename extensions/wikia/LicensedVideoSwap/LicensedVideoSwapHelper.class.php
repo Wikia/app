@@ -84,7 +84,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 						WHERE e.propname = 21
 						  AND e.props = 1
 				  )
-				ORDER BY added_at desc";
+				ORDER BY added_at DESC";
 
 		$result = $db->query( $sql, __METHOD__ );
 
@@ -449,14 +449,19 @@ SQL;
 		// get current suggestions
 		$suggestTitles = array();
 		$suggest = wfGetWikiaPageProp( WPP_LVS_SUGGEST, $articleId );
-		$suggestions = array();
+		$validSuggest = [];
+
 		if ( !empty( $suggest ) ) {
 			if ( $verbose ) {
 				echo "\tExamining the ".count($suggest)." current match(es)\n";
 			}
 
 			foreach ( $suggest as $video ) {
-				$suggestTitles[$video['title']] = 1;
+				// Do some data integrity checking; clean up for VID-1446
+				if (!array_key_exists('title', $video)) {
+					continue;
+				}
+
 				if ( $isKeptVideo && array_key_exists( $video['title'], $historicalSuggestions ) ) {
 					if ( $verbose ) {
 						echo "\t\t[FILTER] Match was already suggested in the past: '".$video['title']."'\n";
@@ -464,7 +469,15 @@ SQL;
 					continue;
 				}
 
-				$suggestions[] = $video;
+				$suggestTitles[$video['title']] = 1;
+				$validSuggest[] = $video;
+			}
+
+			// See if we cleaned up any data
+			if (!$test && (count($validSuggest) != count($suggest))) {
+				// We call wfSetWikiaPageProp below, but only if we get new suggestions.  Write out here
+				// to make sure we get the cleaned version written when necessary.
+				wfSetWikiaPageProp( WPP_LVS_SUGGEST, $articleId, $validSuggest );
 			}
 		}
 
@@ -572,7 +585,7 @@ SQL;
 		}
 
 		// combine current suggestions and new suggestions
-		$videos = array_slice( array_merge( $videos, $suggestions ), 0 , self::NUM_SUGGESTIONS );
+		$videos = array_slice( array_merge( $videos, $validSuggest ), 0 , self::NUM_SUGGESTIONS );
 
 		// If we're just testing don't set any page props
 		if ( !$test ) {
