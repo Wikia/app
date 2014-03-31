@@ -1,15 +1,15 @@
 <?php
+$dir = dirname( __FILE__ );
 
-require_once( dirname(__FILE__) . '/../../Maintenance.php' );
-require_once( dirname(__FILE__) . '/../../../extensions/wikia/LyricsApi/LyricsApiConstants.php' );
+require_once( $dir . '/../../Maintenance.php' );
 
-require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
-require_once( dirname(__FILE__) . '/LyricsScraper.class.php' );
+require_once( $dir . '/DataBaseAdapter.class.php' );
+require_once( $dir . '/LyricsScraper.class.php' );
 
-require_once( dirname(__FILE__) . '/scrapers/BaseScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/ArtistScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/AlbumScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
+require_once( $dir . '/scrapers/BaseScraper.class.php' );
+require_once( $dir . '/scrapers/ArtistScraper.class.php' );
+require_once( $dir . '/scrapers/AlbumScraper.class.php' );
+require_once( $dir . '/scrapers/SongScraper.class.php' );
 
 /**
  * Class LyricsWikiCrawler
