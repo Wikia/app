@@ -79,6 +79,8 @@ class AsyncTask {
 	}
 
 	public function queue() {
+		global $wgDevelEnvironment;
+
 		$taskList = [];
 		$workId = ['tasks' => [], 'wikiId' => $this->wikiId];
 
@@ -110,6 +112,11 @@ class AsyncTask {
 			if ($scheduledTime !== false && $scheduledTime > time()) {
 				$payload->eta = gmdate('c', $scheduledTime);
 			}
+		}
+
+		if (!empty($wgDevelEnvironment) && isset($_SERVER['SERVER_NAME'])) {
+			$callbackUrl = preg_replace('/(.*?)\.(.*)/', 'tasks.$2', $_SERVER['SERVER_NAME']);
+			$payload->kwargs->runner_url = "http://$callbackUrl";
 		}
 
 		$exception = null;
