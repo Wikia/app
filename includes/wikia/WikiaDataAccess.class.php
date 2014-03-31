@@ -119,6 +119,7 @@ class WikiaDataAccess {
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
 	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if ( $command == self::SKIP_CACHE ) {
@@ -177,6 +178,7 @@ class WikiaDataAccess {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $result['data'];
 	}
 
