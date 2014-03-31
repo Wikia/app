@@ -185,7 +185,7 @@ class CombinedSearchService {
 		}
 
 		$boostedTypes = ["character", "tv_series", "tv_episode", "person", "move", "video_game"];
-		$dismax->setBoostQuery( '+(wikititle_en:"'.$phrase.'"^100000)' . " +(article_type_s:(" . implode(" AND ", $boostedTypes) . "))");
+		$dismax->setBoostQuery( '+(wikititle_en:"'.$phrase.'"^100000)' . " +(article_type_s:(" . implode(" OR ", $boostedTypes) . "))");
 
 		$result = $client->select( $select );
 		return $this->extractData( $result, $requestedFields );
