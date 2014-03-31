@@ -1869,6 +1869,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
  * @author Caio1478
  * @author JM Pessanha
  * @author Luckas
@@ -1907,6 +1908,7 @@ $messages['pt-br'] = array(
 	'userlogin-error-mail-error' => 'Ops, ocorreu um problema enviando seu e-mail. Por favor, [[Special:Contact/general|contate-nos]].',
 	'userlogin-password-email-sent' => 'Nós enviamos uma nova senha para o endereço de e-mail para $1.',
 	'userlogin-error-unconfirmed-user' => 'Desculpe, você não confirmou seu endereço de e-mail. Por favor, confirme seu endereço de e-mail primeiro.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'O e-mail de confirmação já foi enviado.',
 	'userlogin-password-page-title' => 'Mude sua senha',
 	'userlogin-oldpassword' => 'Senha antiga',
 	'userlogin-newpassword' => 'Nova senha',
@@ -2068,7 +2070,7 @@ $messages['sco'] = array(
 	'userlogin-error-invalid-username' => 'Onvalid uisername',
 	'userlogin-error-userlogin-unable-info' => "Sorrie, we'r no able tae register yer accoont at this time.",
 	'userlogin-error-user-not-allowed' => 'This uisername isna permited.',
-	'userlogin-error-captcha-createaccount-fail' => 'The waird that ye entered didna match the waird in the kist, try again!',
+	'userlogin-error-captcha-createaccount-fail' => 'The waird that ye entered didna match the waird in the kist, gie it anither shot!',
 	'userlogin-error-userlogin-bad-birthday' => 'Oops, please fil oot day, month, n year.',
 	'userlogin-error-externaldberror' => 'Sorrie! Oor site is currentlie haein aen issue, please try again later.',
 	'userlogin-error-noemailtitle' => 'Please enter ae valid wab-mail address.',

@@ -84,6 +84,13 @@ $messages['hi'] = array(
 	'wikianewfiles-more' => 'और अधिक...',
 );
 
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'wikianewfiles-title' => 'Új fájlok a wikin',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -93,6 +100,17 @@ $messages['lb'] = array(
 	'wikianewfiles-more' => 'méi...',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'wikianewfiles-title' => 'Fail-fail baru di wiki ini',
+	'wikianewfiles-desc' => 'Menganjurkan [[Special:NewFiles|halaman khas]] untuk mengatasi sesetengah pemformatan tajuk',
+	'wikianewfiles-uploadby' => 'oleh {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Dikirim pada',
+	'wikianewfiles-more' => 'selanjutnya...',
+);
+
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
  */
@@ -100,11 +118,33 @@ $messages['pa'] = array(
 	'wikianewfiles-more' => 'ਹੋਰ...',
 );
 
+/** Polish (polski)
+ * @author Pio387
+ * @author Wedkarski
+ */
+$messages['pl'] = array(
+	'wikianewfiles-title' => 'Nowe pliki na tej wiki',
+	'wikianewfiles-uploadby' => 'przez {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Zamieszczony w',
+	'wikianewfiles-more' => 'więcej…',
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
 	'wikianewfiles-more' => 'نور ...',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
+ */
+$messages['pt-br'] = array(
+	'wikianewfiles-title' => 'Novos arquivos nesta wiki',
+	'wikianewfiles-desc' => 'Amplia uma [[Special:NewFiles|página especial]] para sobrepor a formatação do cabeçalho',
+	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Postado em',
+	'wikianewfiles-more' => 'mais...',
 );
 
 /** Russian (русский)
