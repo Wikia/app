@@ -71,7 +71,7 @@ $drawer-text-color: #0e5ea3;
 		vertical-align: middle;
 		font-size: 12px;
 		cursor: pointer;
-		margin: 5px 0 25px 5px;
+		margin: 7px 0 25px 5px;
 	}
 }
 
@@ -100,9 +100,10 @@ $drawer-text-color: #0e5ea3;
 .drawer-blackout {
 	@include blackout();
 	background: transparent;
+	visibility: hidden;
 	z-index: $drawer-base-z-index - 2;
 
 	&.visible {
-		opacity: 1;
+		visibility: visible;
 	}
 }
