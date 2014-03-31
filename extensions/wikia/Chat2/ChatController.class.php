@@ -87,6 +87,10 @@ class ChatController extends WikiaController {
 			}
 		}
 
+		// CONN-436: Invalidate Varnish cache for ChatRail:GetUsers
+		$ajaxUrl = ChatRailController::getUrl( 'GetUsers', [ 'format' => 'json' ] );
+		SquidUpdate::purge([ $ajaxUrl ]);
+
 		wfProfileOut( __METHOD__ );
 	}
 
