@@ -21,45 +21,64 @@ class LyricsApiBase {
 	 */
 	const TYPE_SONG = 'song';
 
+	/**
+	 * @desc Name of the adapter options configuration element in configuration array
+	 */
+	const ADAPTER_OPTIONS_ELEMENT_NAME = 'adapteroptions';
+
 	private $baseConfig = [
 		'adapter' => 'Solarium_Client_Adapter_Curl',
-		'adapteroptions' => [
+		self::ADAPTER_OPTIONS_ELEMENT_NAME => [
 			'path' => '/solr/',
 			'core' => 'lyricsapi'
 		]
 	];
 
 	private $masterConfig = [
-		'adapteroptions' => [
+		self::ADAPTER_OPTIONS_ELEMENT_NAME => [
 			'host' => 'search-s16',
 			'port' => 8983,
 		]
 	];
 
 	private $slaveConfig = [
-		'adapteroptions' => [
+		self::ADAPTER_OPTIONS_ELEMENT_NAME => [
 			'host' => 'search',
 			'port' => null,
 			'proxy' => '127.0.0.1:6081'
 		]
 	];
 
+	private $devboxConfig = [
+		self::ADAPTER_OPTIONS_ELEMENT_NAME => [
+			'host' => 'dev-search-s4',
+			'port' => 8983,
+		]
+	];
+
 	/**
-	 * @desc Returns an array with adapteroptions for Solarium_Client configuration
-	 * @param bool $master a flag - return the options for master or slave; default === slave
+	 * @desc Returns an array with adapteroptions for Solarium_Client config (on devboxes the $master doesn't count)
+	 * @param bool $master a flag - return the options for master; default === false
 	 *
 	 * @return array
 	 */
 	public function getAdapterOptions( $master = false ) {
+		if( F::app()->wg->DevelEnvironment ) {
+			return array_merge(
+				$this->baseConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ],
+				$this->devboxConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ]
+			);
+		}
+
 		if( $master ) {
 			$adapterOptions = array_merge(
-				$this->baseConfig['adapteroptions'],
-				$this->masterConfig['adapteroptions']
+				$this->baseConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ],
+				$this->masterConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ]
 			);
 		} else {
 			$adapterOptions = array_merge(
-				$this->baseConfig['adapteroptions'],
-				$this->slaveConfig['adapteroptions']
+				$this->baseConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ],
+				$this->slaveConfig[ self::ADAPTER_OPTIONS_ELEMENT_NAME ]
 			);
 		}
 
@@ -75,7 +94,7 @@ class LyricsApiBase {
 	public function getConfig( $master = false ) {
 		$config = array_merge(
 			$this->baseConfig,
-			[ 'adapteroptions' => $this->getAdapterOptions( $master ) ]
+			[ self::ADAPTER_OPTIONS_ELEMENT_NAME => $this->getAdapterOptions( $master ) ]
 		);
 
 		return $config;

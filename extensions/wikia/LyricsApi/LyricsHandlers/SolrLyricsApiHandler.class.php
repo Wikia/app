@@ -111,7 +111,10 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			foreach ( $albums as $solrAlbum ) {
 				$responseAlbum = new stdClass();
 				$responseAlbum->name = $solrAlbum->album_name;
-				$this->appendImages( $responseAlbum, $solrAlbum->image );
+
+				if( $solrAlbum->image ) {
+					$this->appendImages( $responseAlbum, $solrAlbum->image );
+				}
 
 				if ( $solrAlbum->release_date ) {
 					$responseAlbum->year = $solrAlbum->release_date;
