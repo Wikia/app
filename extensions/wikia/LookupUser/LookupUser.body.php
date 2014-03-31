@@ -257,7 +257,7 @@ EOT
 		if ( isset( $user->mBirthDate ) ) {
 			$birthDate = $wgLang->date( $user->mBirthDate, true );
 		} else {
-    	$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
+			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
