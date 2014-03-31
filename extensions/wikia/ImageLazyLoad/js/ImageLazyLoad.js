@@ -6,10 +6,17 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 	'use strict';
 
 	var browserSupportsWebP,
-		ImgLzy;
+		ImgLzy,
+		// allow WebP thumbnails for JPG and PNG files only (exclude video thumbnails)
+		// e.g. /muppet/images/thumb/9/98/BBC1_promos_for_Muppets_Tonight/150px-BBC1_promos_for_Muppets_Tonight.jpg
+		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)\//i;
+
+	function logger(msg) {
+		log(msg,  log.levels.info, 'ImgLzy');
+	}
 
 	function checkWebPSupport() {
-		log('checking WebP support...',  log.levels.info, 'ImgLzy');
+		logger('checking WebP support...');
 
 		// @see http://stackoverflow.com/a/5573422
 		var webP = new Image();
@@ -17,7 +24,7 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 		webP.onload = webP.onerror = function () {
 			browserSupportsWebP = webP.height === 2;
 
-			log('has support for WebP: ' + (browserSupportsWebP ? 'yes' : 'no'),  log.levels.info, 'ImgLzy');
+			logger('has support for WebP: ' + (browserSupportsWebP ? 'yes' : 'no'));
 
 			// report WebP support stats to Kibana
 			if ( w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function' ) {
@@ -42,7 +49,7 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 			$( '.scroller' ).on( 'scroll', throttled );
 			$( document ).on( 'tablesorter_sortComplete', proxy );
 
-			log('initialized', log.levels.info, 'ImgLzy');
+			logger('initialized');
 		},
 
 		relativeTop: function( e ) {
@@ -55,7 +62,7 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 
 		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
 		rewriteURLForWebP: function(src) {
-			if ( w.wgEnableWebPThumbnails === true && browserSupportsWebP && src.indexOf( '/images/thumb/' ) > 0 ) {
+			if ( w.wgEnableWebPThumbnails === true && browserSupportsWebP && thumbCheckRegExp.test(src) ) {
 				src = src.replace( /\.[^\./]+$/, '.webp' );
 			}
 			return src;
@@ -143,8 +150,6 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 		},
 
 		checkAndLoad: function() {
-			//var timestart = ( new Date() ).getTime();
-
 			this.verifyCache();
 
 			var onload = function() {
@@ -178,8 +183,6 @@ require( [ 'jquery', 'wikia.log', 'wikia.browserDetect', 'wikia.window' ], funct
 					delete this.cache[ idx ];
 				}
 			}
-			//this.timestats = ( new Date() ).getTime() - timestart;
-			//console.log( this.timestats );
 		}
 	};
 
