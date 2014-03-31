@@ -55,6 +55,13 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+
+		$globalSearch = GlobalTitle::newFromText(
+			'Search',
+			NS_SPECIAL,
+			Wikia::MAIN_CORPORATE_WIKI_ID
+		)->getFullURL();
+		$vars['wgGlobalSearchUrl'] = $globalSearch;
 		return true;
 	}
 

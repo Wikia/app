@@ -78,6 +78,7 @@ class Wikia {
 	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
+	const MAIN_CORPORATE_WIKI_ID = 80433;
 
 	private static $vars = array();
 	private static $cachedLinker;

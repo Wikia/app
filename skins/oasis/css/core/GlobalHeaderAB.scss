@@ -49,14 +49,14 @@ $ab-text-color: #3a3a3a;
 	}
 
 	li {
-		& > .wikia-button, input.login-button {
+		& > .wikia-button, input.login-button, .search-button {
 			background: none;
 			background-color: $color;
 			border: none;
 			font-size: 14px;
-			height: 28px;
-			line-height: 28px;
-			top: -3px;
+			height: 29px;
+			line-height: 29px;
+			top: -4px;
 
 			&:hover {
 				background-color: #1380d7;
@@ -71,8 +71,41 @@ $ab-text-color: #3a3a3a;
 				background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
 				background-position: 8px center;
 				background-repeat: no-repeat;
-				padding-left: 25px;
+				padding: 0 12px 0 25px;
 			}
+		}
+
+		.search-form {
+			margin-top: -4px;
+		}
+
+		.search-box {
+			border: 1px solid $input-border-color;
+			border-radius: 4px;
+			font-size: 14px;
+			height: 17px;
+			margin-right: 3px;
+			width: 400px;
+			padding: 5px 8px;
+		}
+
+		.search-collapsed {
+			.search-box {
+				border-radius: 4px 0 0 4px;
+				margin: 0;
+			}
+
+			.search-button {
+				border-radius: 0 4px 4px 0;
+			}
+		}
+
+		.search-icon {
+			background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
+			background-position: center center;
+			background-repeat: no-repeat;
+			text-indent: -9999px;
+			width: 50px;
 		}
 	}
 
