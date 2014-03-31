@@ -7,7 +7,7 @@ $bg-color: #fff;
 $bg-color-opposite: #000;
 $menu-hover-bg-color: #C7D2D8;
 $menu-border-color: black;
-$nav-height: 37px;
+$nav-height: 41px;
 $input-border-color: mix($bg-color, #000000, 80%);
 $ab-text-color: #3a3a3a;
 
@@ -42,9 +42,9 @@ $ab-text-color: #3a3a3a;
 
 		li {
 			@include box-sizing;
-			height: 37px;
+			height: $nav-height;
 			margin-top: 0;
-			padding-top: 7px;
+			padding-top: 11px;
 		}
 	}
 
@@ -89,7 +89,7 @@ $ab-text-color: #3a3a3a;
 			@include box-sizing;
 
 			height: $nav-height;
-			padding: 7px 0 0;
+			padding: 10px 0 0;
 
 			&:hover {
 				background: none;
@@ -107,16 +107,18 @@ $ab-text-color: #3a3a3a;
 		}
 
 		.bubbles {
+			background-image: url(/skins/oasis/images/GlobalHeaderAB/noti_icon_.png); /* base64 */
+			background-position: 8px 4px;
 			height: $nav-height;
-			background: none;
+			padding: 0 8px;
 
 			&.reddot #bubbles_count {
 				color: $bg-color;
-				background-color: #ffa71c;
-				left: 9px;
-				line-height: 17px;
+				background-color: #f6961d;
+				left: 19px;
+				line-height: 18px;
 				padding: 0 5px;
-				top: 0;
+				top: -4px;
 			}
 		}
 	}
@@ -125,7 +127,7 @@ $ab-text-color: #3a3a3a;
 		.subnav.show {
 			background-color: $bg-color;
 			border: 0;
-			top: 37px;
+			top: $nav-height;
 			& > li {
 				border-top: 0;
 				& > a {
@@ -171,7 +173,7 @@ $ab-text-color: #3a3a3a;
 	.GlobalNavigation {
 
 		.topNav .subnav {
-			top: 37px;
+			top: $nav-height;
 			background-color: $bg-color;
 			border: 2px solid;
 			border-top: 0;
@@ -219,7 +221,7 @@ $ab-text-color: #3a3a3a;
 			@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 			background-color: $bg-color;
 			border: 0;
-			top: 37px;
+			top: $nav-height;
 
 			.notifications-header {
 				span {
