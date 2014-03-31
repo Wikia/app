@@ -12,7 +12,7 @@
 		'userLanguage': window.wgUserLanguage,
 		'contentLanguage': window.wgContentLanguage,
 		'pageType': window.wikiaPageType,
-		'isCorporatePage': window.wikiaPageIsCorporate,
-		'verticalName': window.cscoreCat
+		'isCorporatePage': window.wikiaPageIsCorporate ? 'Yes' : 'No',
+		'verticalName': window.vericalName
 	}]);
 })( window );

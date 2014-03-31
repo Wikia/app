@@ -55,6 +55,7 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['verticalName'] = HubService::getCurrentVertical();
 		return true;
 	}
 

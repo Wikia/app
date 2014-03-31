@@ -3,6 +3,12 @@
 class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 
+	protected static $globalCategoryNames = [
+		WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
+		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
+	];
+
 	/**
 	 * Get proper category to report to Comscore for given cityId
 	 * (wgTitle GLOBAL will be used in case the city is corporate wiki)
@@ -52,6 +58,28 @@ class HubService extends Service {
 			default:
 				return WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		}
+	}
+
+	/**
+	 * Get current wikia's Cannonical Category name
+	 *
+	 * @return string current Cannonical Category's Name
+	 */
+	public static function getCurrentVertical() {
+		global $wgCityId;
+		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
+		return !empty( $categoryId ) ? self::getCanonicalCategoryName( $categoryId ) : '' ;
+	}
+
+	/**
+	 * Get wikia's Cannonical Category name
+	 *
+	 * @param int $categoryId category id
+	 *
+	 * @return string Cannonical Category's Name
+	 */
+	public static function getCanonicalCategoryName( $categoryId ) {
+		return self::$globalCategoryNames[ self::getCanonicalCategoryId( $categoryId ) ];
 	}
 
 	/**
