@@ -17,7 +17,7 @@ if (in_array($borderColor, array('accent', 'color1'))) {
 				<div class="wikia-gallery-row">
 			<?php endif; ?>
 
-			<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem <?= $image['placeholder'] ? 'WikiaPhotoGalleryPreviewItemPlaceholder' : 'WikiaPhotoGalleryPreviewDraggable' ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
+			<span class="wikia-gallery-item WikiaPhotoGalleryPreviewItem<?= $image['placeholder'] ? ' WikiaPhotoGalleryPreviewItemPlaceholder' : 'WikiaPhotoGalleryPreviewDraggable' ;?>" style="width: <?= $width ;?>px;" imageid="<?= $index ;?>">
 				<div class="thumb" style="height: <?= $maxHeight ;?>px;">
 					<div class="gallery-image-wrapper<?= !empty($borderColorClass) ? $borderColorClass : null;?>"
 						 style="position: relative; height: <?= $image['height'] ;?>px; width:<?= $image['width'] ;?>px;<?= (!empty($image['heightCompensation'])) ? " top:{$image['heightCompensation']}px;" : null ;?><?= !empty($borderColorCSS) ? $borderColorCSS : null;?>">
