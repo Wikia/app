@@ -427,14 +427,17 @@ function MWServer:serialize( var )
 			end
 			done[var] = true
 			local buf = { '' }
-			local tmpString
 			local numElements = 0
 			for key, value in pairs(var) do
-				if (isInteger(key)) then
-					buf[#buf + 1] = 'i:' .. key .. ';'
+				local t = type( key )
+				if t == 'number' or t == 'string' then
+					if (isInteger(key)) then
+						buf[#buf + 1] = 'i:' .. key .. ';'
+					else
+						buf[#buf + 1] = recursiveEncode( tostring( key ), level + 1 )
+					end
 				else
-					tmpString = tostring( key )
-					buf[#buf + 1] = recursiveEncode( tostring( key ), level + 1 )
+					error("Cannot use " .. type( key ) .. " as an array key when passing data from Lua to PHP");
 				end
 				buf[#buf + 1] = recursiveEncode( value, level + 1 )
 				numElements = numElements + 1
