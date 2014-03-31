@@ -2,6 +2,7 @@
 $dir = dirname( __FILE__ );
 
 require_once( $dir . '/../../Maintenance.php' );
+require_once( $dir . '/../../../extensions/wikia/LyricsApi/LyricsApiBase.class.php' );
 
 require_once( $dir . '/DataBaseAdapter.class.php' );
 require_once( $dir . '/LyricsScraper.class.php' );
@@ -48,17 +49,10 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgLyricsSolrConfig;
 		$this->db = $this->getDB( DB_SLAVE );
 
-		$this->dba = newDatabaseAdapter( 'solr', [
-			'adapteroptions' => [
-				'host' => $wgLyricsSolrConfig['host'],
-				'port' => $wgLyricsSolrConfig['port'],
-				'path' => $wgLyricsSolrConfig['path'],
-				'core' => $wgLyricsSolrConfig['core'],
-			]
-		] );
+		$lyricsApiBase = new LyricsApiBase();
+		$this->dba = newDatabaseAdapter( 'solr', $lyricsApiBase->getConfig() );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
