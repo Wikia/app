@@ -9,13 +9,12 @@ require([ 'jquery', 'wikia.ui.factory' ], function( $, uiFactory ) {
 		uiDrawer.createComponent({
 			vars: {
 				//style: 'fixed',
-				closeText: 'CLOSE',
+				closeText: 'Close',
 				side: 'left',
 				content: content.join('<br/>'),
 				subcontent: content.join('<br/>')
 			}
 		}, function ( drawer ) {
-			console.log(drawer);
 			window.drawer = drawer;
 		} );
 	} );

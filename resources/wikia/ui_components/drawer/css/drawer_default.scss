@@ -1,8 +1,8 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/core/layout.scss";
 @import "skins/oasis/css/mixins/blackout.scss";
-@import "skins/oasis/css/mixins/box-sizing.scss";
 @import "skins/oasis/css/mixins/box-shadow.scss";
+@import "skins/oasis/css/mixins/box-sizing.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 
 $drawer-base-z-index: $zTop + 10;
@@ -20,12 +20,12 @@ $subdrawer-width: 225px;
 
 .drawer,
 .subdrawer {
-	@include box-sizing();
 	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
+	@include box-sizing;
 
 	background: $color-page;
-	color: $drawer-text-color;
 	bottom: 25px;
+	color: $drawer-text-color;
 	opacity: 0;
 	overflow: hidden;
 	position: absolute;
