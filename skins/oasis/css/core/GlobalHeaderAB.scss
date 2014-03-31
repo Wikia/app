@@ -27,9 +27,9 @@ $ab-text-color: #3a3a3a;
 		background: none;
 
 		.page-width-container {
-			width: 100%;
 			margin: 0;
 			max-width: 100%;
+			width: 100%;
 		}
 	}
 
@@ -64,8 +64,8 @@ $ab-text-color: #3a3a3a;
 		}
 
 		&.start-a-wiki {
-			margin-top: 0;
 			border-left: 0;
+			margin-top: 0;
 
 			.wikia-button {
 				background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
@@ -82,8 +82,8 @@ $ab-text-color: #3a3a3a;
 
 
 	.AccountNavigation, #WallNotifications {
-		top: 0;
 		height: $nav-height;
+		top: 0;
 
 		& > li {
 			@include box-sizing;
@@ -113,8 +113,8 @@ $ab-text-color: #3a3a3a;
 			padding: 0 8px;
 
 			&.reddot #bubbles_count {
-				color: $bg-color;
 				background-color: #f6961d;
+				color: $bg-color;
 				left: 19px;
 				line-height: 18px;
 				padding: 0 5px;
@@ -131,8 +131,8 @@ $ab-text-color: #3a3a3a;
 			& > li {
 				border-top: 0;
 				& > a {
-					padding: 10px 20px;
 					color: $color;
+					padding: 10px 20px;
 
 					&:hover {
 						@include clear-box-shadow;
@@ -173,10 +173,10 @@ $ab-text-color: #3a3a3a;
 	.GlobalNavigation {
 
 		.topNav .subnav {
-			top: $nav-height;
 			background-color: $bg-color;
 			border: 2px solid;
 			border-top: 0;
+			top: $nav-height;
 
 			.catnav li {
 				border: none;
@@ -197,8 +197,8 @@ $ab-text-color: #3a3a3a;
 
 		& > li {
 			& > a {
-				font-size: 14px;
 				color: $color;
+				font-size: 14px;
 				&:visited, &:active {
 					color: $color;
 				}
@@ -226,8 +226,8 @@ $ab-text-color: #3a3a3a;
 			.notifications-header {
 				span {
 					background-color: $bg-color;
-					font-weight: normal;
 					color: $ab-text-color;
+					font-weight: normal;
 				}
 			}
 			.notifications-empty {
