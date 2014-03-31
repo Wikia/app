@@ -3,10 +3,11 @@
 class HubService extends Service {
 	private static $comscore_prefix = 'comscore_';
 
-	protected static $globalCategoryNames = [
+	protected static $canonicalCategoryNames = [
 		WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
+		WikiFactoryHub::CATEGORY_ID_CORPORATE     => 'Wikia',
 	];
 
 	/**
@@ -65,21 +66,16 @@ class HubService extends Service {
 	 *
 	 * @return string current Cannonical Category's Name
 	 */
-	public static function getCurrentVertical() {
+	public static function getCurrentWikiaVerticalName() {
 		global $wgCityId;
-		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
-		return !empty( $categoryId ) ? self::getCanonicalCategoryName( $categoryId ) : '' ;
-	}
+		if ( empty( $wgCityId ) ) {
+			return '';
+		}
 
-	/**
-	 * Get wikia's Cannonical Category name
-	 *
-	 * @param int $categoryId category id
-	 *
-	 * @return string Cannonical Category's Name
-	 */
-	public static function getCanonicalCategoryName( $categoryId ) {
-		return self::$globalCategoryNames[ self::getCanonicalCategoryId( $categoryId ) ];
+		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
+		return !empty( $categoryId )
+			? self::$canonicalCategoryNames[ self::getCanonicalCategoryId( $categoryId ) ]
+			: '' ;
 	}
 
 	/**
@@ -90,7 +86,7 @@ class HubService extends Service {
 	 * @return stdClass ($row->cat_id $row->cat_name)
 	 */
 	public static function getCategoryInfoForCity($cityId) {
-		return self::constructCategoryInfoFromCategoryId(self::getCategoryIdForCity($cityId));
+		return self::constructCategoryInfoFromCategoryId( self::getCategoryIdForCity( $cityId ) );
 	}
 
 	/**
