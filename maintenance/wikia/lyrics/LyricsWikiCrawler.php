@@ -67,7 +67,6 @@ class LyricsWikiCrawler extends Maintenance {
 			$this->setArticleId( $articleId );
 			$this->doScrapeArticle();
 		} else {
-			die('NOT IMPLEMENTED'.PHP_EOL);
 			$this->doScrapeArticlesFromYesterday();
 		}
 	}
@@ -144,8 +143,22 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @desc Scrapes data from articles from yesterday
 	 */
 	public function doScrapeArticlesFromYesterday() {
-		$yesterday = date( "Y-m-d", strtotime( '-1 day' ) );
+		$yesterdayTs = strtotime( '-1 day' );
+		//TODO: removed hardcoded date once it's done
+		$yesterdayTs = strtotime( '12th March 2014' );
+
+		$yesterday = date( "Y-m-d", $yesterdayTs );
 		$this->output( 'Scraping articles from ' . $yesterday );
+		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
+		$this->filterDouble( $pages );
+		$this->groupByType( $pages );
+		echo PHP_EOL . PHP_EOL;
+		print_r( $pages );
+		echo PHP_EOL . PHP_EOL;
+	}
+
+	public function groupByType( $pages ) {
+		return;
 	}
 
 	/**
@@ -210,6 +223,63 @@ class LyricsWikiCrawler extends Maintenance {
 			$limitParams
 		);
 	}
+
+	/**
+	 * @desc Gets page ids from recent changes
+	 *
+	 * @param String $date date in format Ymd
+	 * @param int $limit Number of results
+	 * @param int  $offset Result offset
+	 *
+	 * @return Array
+	 */
+	private function getRecentChangedPages( $date, $limit = 0, $offset = 0 ) {
+		$betweenStart = $date . '000000';
+		$betweenEnd = $date . '235959';
+
+		$options = [ 'ORDER BY' => 'rc_timestamp desc' ];
+
+		if ( $limit ) {
+			$options['LIMIT'] = $limit;
+			$options['OFFSET'] = $offset;
+		}
+
+		$result = $this->db->select(
+			'recentchanges',
+			[ 'rc_cur_id', 'rc_new', 'rc_deleted', 'rc_type' ],
+			[
+				'rc_namespace' => NS_MAIN,
+				'rc_timestamp between ' . $betweenStart . ' and ' . $betweenEnd
+			],
+			__METHOD__,
+			$options
+		);
+
+		$pages = [];
+		if( $result->numRows() > 0 ) {
+			while( $row = $result->fetchRow() ) {
+				$this->addIfNotExists( $pages, $row );
+			}
+		}
+
+		return $pages;
+	}
+
+	/**
+	 * @desc Adds an element to the results array if there is no element with the same rc_cur_id
+	 *
+	 * @param Array $results results array
+	 * @param Array $row an array with elements and each of them has rc_cur_id field
+	 */
+	public function addIfNotExists( &$results, $row ) {
+		if( isset( $row['rc_cur_id'] ) ) {
+			$id = $row['rc_cur_id'];
+			if( !isset( $results[ $id ] ) ) {
+				$results[ $id ] = $row;
+			}
+		}
+	}
+
 }
 
 $maintClass = "LyricsWikiCrawler";
