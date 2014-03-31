@@ -255,10 +255,11 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
 		if ( isset( $user->mBirthDate ) ) {
-			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $wgLang->date( $user->mBirthDate, true ) )->text() );
+			$birthDate = $wgLang->date( $user->mBirthDate, true );
 		} else {
-			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-no-birthdate' )->text() );
+    	$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
 
 
 		$allowedAdoption = $user->getOption( 'AllowAdoption', true );
