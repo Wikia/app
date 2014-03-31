@@ -33,3 +33,4 @@ $wgHooks['ArticleCommentCheck'][] = 'WikiaHomePageController::onArticleCommentCh
 $wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
 $wgHooks['GetRailModuleList'][] = 'WikiaHomePageController::onGetRailModuleList';
 $wgHooks['BeforePageDisplay'][] = 'WikiaHomePageController::onBeforePageDisplay';
+$wgHooks['AddSassParameters'][] = 'WikiaHomePageController::onAddSassParameters';

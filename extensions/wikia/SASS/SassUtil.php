@@ -99,6 +99,8 @@ class SassUtil {
 				$oasisSettings['rtl'] = 'true';
 			}
 
+			wfRunHooks( 'AddSassParameters', [ &$oasisSettings ] );
+
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {
 				if(!empty($val)) {

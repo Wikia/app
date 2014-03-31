@@ -71,7 +71,6 @@ class WikiaHomePageController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 		$this->helper = new WikiaHomePageHelper();
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 
 
@@ -85,7 +84,7 @@ class WikiaHomePageController extends WikiaController {
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
 
-		$this->hubsSlots = $this->getHubsSectionSlots();
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
 
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
@@ -99,26 +98,22 @@ class WikiaHomePageController extends WikiaController {
 		$this->lang = self::getContentLang();
 
 		OasisController::addBodyClass('WikiaHome');
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL(
+			'extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'
+		));
 	}
 
-	public function getHubsSectionSlots() {
-		global $wgCityId, $wgContLang;
+	public function prepareHubsSectionSlots() {
+		global $wgContLang;
 		$langCode = $wgContLang->getCode();
-
-		$response = $this->app->sendRequest(
-			'WikiaHubsApiController',
-			'getHubsV3List',
-			[ 'lang' => $langCode ]
-		);
-
-		$hubs = $response->getVal('list', []);
 
 		$hubSlot = WikiaDataAccess::cache(
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
 			86400 /* 24 hours */,
-			function() use( $wgCityId, $hubs ) {
+			function() use( $langCode ) {
 				$hubSlot = [];
-				$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
+				$hubsSlots = $this->getHubsSectionSlots();
+				$hubsV3List = $this->getHubsV3List( $langCode );
 
 				$verticals = $this->helper->getWikiVerticals();
 
@@ -134,8 +129,8 @@ class WikiaHomePageController extends WikiaController {
 
 				foreach( $hubsSlots as $slot => &$hub ) {
 					$hubId = $hub['hub_slot'];
-					if( is_numeric( $hubId ) && isset( $hubs[ $hubId ] ) ) {
-						$hub = array_merge($hub, $hubs[ $hubId ]);
+					if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
+						$hub = array_merge($hub, $hubsV3List[ $hubId ]);
 						$hub['hubImage'] = $this->getHubV3Images( $hubId );
 
 						$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
@@ -167,7 +162,7 @@ class WikiaHomePageController extends WikiaController {
 	private function prepareRenderParams( $slot, $hub ) {
 		global $wgParser, $wgTitle, $wgOut;
 		return [
-			'classname' =>		$slot,
+			'classname' =>		'hub-slot-' . ($slot + 1),
 			'heading' => 		$hub['name'],
 			'heroimageurl' => 	$hub['hubImage'],
 			'herourl' => 		$hub['url'],
@@ -581,6 +576,50 @@ class WikiaHomePageController extends WikiaController {
 			'getModuleData',
 			$sliderParams
 		)->getData();
+	}
+
+	private function getHubsV3List( $langCode ) {
+		$response = $this->app->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $langCode ]
+		);
+
+		return $response->getVal('list', []);
+	}
+
+	private function getHubsSectionSlots() {
+		global $wgCityId;
+		return $this->helper->getHubSlotsFromWF( $wgCityId );
+	}
+
+	public static function onAddSassParameters( &$oasisSettings ) {
+		global $wgContLang, $wgCityId;
+
+		$settings = [];
+		$helper = new WikiaHomePageHelper();
+
+		$response = F::app()->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $wgContLang->getCode() ]
+		);
+		$hubsV3List = $response->getVal('list', []);
+
+		$hubsSlots = $helper->getHubSlotsFromWF( $wgCityId );
+
+		foreach( $hubsSlots as $slot => $hub ) {
+			$hubId = $hub['hub_slot'];
+			if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
+				$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $wgCityId);
+				$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
+					? $hubSettings['color-buttons']
+					: null;
+			}
+		}
+
+		$oasisSettings = array_merge( $oasisSettings, $settings );
+		return true;
 	}
 
 	/**
