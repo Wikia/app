@@ -684,7 +684,7 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int",
- * 					defaultValue="10",
+ * 					defaultValue="80",
  * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
