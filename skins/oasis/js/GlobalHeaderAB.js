@@ -19,8 +19,10 @@ $(function() {
 			.attr( 'placeholder', 'Search for topics brand and content' )
 			.appendTo( form );
 		$('<input>' )
+			.attr( 'type', 'hidden' )
 			.attr( 'name', 'resultsLang')
-			.val( window.wgUserLanguage);
+			.val( window.wgUserLanguage)
+			.appendTo( form );
 		$('<input>')
 			.addClass( 'search-button' )
 			.attr( 'type', 'submit' )
@@ -32,8 +34,9 @@ $(function() {
 		$( '#WikiaHeader' ).find( '.start-a-wiki' ).after( li );
 	}
 
-	// TODO prepare methods 
+	// TODO prepare methods
 	addSearch();
 	$( '#WikiaHeader' ).find( '.search-form' ).addClass( 'search-collapsed' );
 	$( '#WikiaHeader' ).find( '.search-button' ).addClass( 'search-icon' );
+	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
 });
