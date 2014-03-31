@@ -26,7 +26,7 @@
 	<?  case 'select': ?>
 			<select name="<?= $data['name'] ?>" id="<?= $data['id'] ?>" <?= $data['attributes'] ?>>
 				<? foreach ($data['choices'] as $option): ?>
-					<option value="<?= $option['value'] ?>" <?= $option['value'] == $data['value'] ? 'selected' : '' ?>><?= $option['option'] ?></option>
+					<option value="<?= $option['value'] ?>" <?= ($option['value'] === $data['value']) ? 'selected' : ''; ?>><?= $option['option'] ?></option>
 				<? endforeach ?>
 			</select>
 			<? break; ?>

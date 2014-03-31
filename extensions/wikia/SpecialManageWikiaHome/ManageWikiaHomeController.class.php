@@ -147,7 +147,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->form->setFieldsValues($collectionValues);
 		$this->statsForm->setFieldsValues($statsValues);
-		$this->verticals = $this->getWikiVerticals();
+		$this->verticals = $this->helper->getWikiVerticals();
 		$this->hubSlotsValues = $hubSlotsValues;
 		$this->prepareHubsForm($hubSlotsValues);
 
@@ -208,7 +208,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
-		$this->verticals = $this->getWikiVerticals();
+		$this->verticals = $this->helper->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
@@ -464,14 +464,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $this->wikiaCollectionsModel;
 	}
 
-	private function getWikiVerticals() {
-		return array(
-			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->text(),
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->text(),
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->text()
-		);
-	}
-
 	private function prepareFilterOptions($visualizationLang, $filterOptions) {
 		$options = new stdClass();
 		$options->lang = $visualizationLang;
@@ -520,6 +512,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	private function prepareHubsForm( $hubSlotsValues ) {
 		$this->hubsForm->setFieldsValues($hubSlotsValues);
+
 		$response = $this->app->sendRequest(
 			'WikiaHubsApiController',
 			'getHubsV3List',
@@ -527,24 +520,36 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		);
 
 		$wikis = $response->getVal('list', []);
+		$verticals = $this->helper->getWikiVerticals();
+		$fields = $this->hubsForm->getFields();
+		$hubValues = $fields['hub_slot']['value'];
 
-		$choices[] = [
-			'value' => 0,
-			'option' => wfMessage('manage-wikia-home-hubs-slot-no-change-option')->plain()
-		];
+		$k = 0;
+		foreach ($verticals as $vertical) {
+			if( !isset($fields['hub_slot']['value'][$k]) ) {
+				$hubValues[$k] = $vertical;
+			}
+			$k++;
+
+			$choices[] = [
+				'value' => $vertical,
+				'option' => $vertical
+			];
+		}
 
 		foreach ($wikis as $wiki) {
 			$choices[] = [
-				'value' => $wiki['id'],
+				'value' => sprintf($wiki['id']),
 				'option' => $wiki['name']
 			];
 		}
 
-		$fields = $this->hubsForm->getFields();
+		$choices[] = [
+			'value' => '0',
+			'option' => wfMessage('manage-wikia-home-hubs-slot-empty-option')->plain()
+		];
 
-		foreach ($fields as $key => $field) {
-			$this->hubsForm->setFieldProperty($key, 'choices', $choices);
-			$this->hubsForm->setFieldProperty($key, 'value', $hubSlotsValues[$key]);
-		}
+		$this->hubsForm->setFieldProperty('hub_slot', 'choices', $choices);
+		$this->hubsForm->setFieldProperty('hub_slot', 'value', $hubValues);
 	}
 }

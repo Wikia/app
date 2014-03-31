@@ -381,6 +381,14 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiStats;
 	}
 
+	public function getWikiVerticals() {
+		return array(
+			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->text(),
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->text(),
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->text()
+		);
+	}
+
 	/**
 	 * get avatars for wiki admins
 	 * @param integer $wikiId

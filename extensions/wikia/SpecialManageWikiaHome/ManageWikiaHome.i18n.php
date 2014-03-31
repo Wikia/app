@@ -21,7 +21,7 @@ $messages['en'] = array(
 	'manage-wikia-home-hubs-slot-name' => 'Hub name',
 	'manage-wikia-home-hubs-slot-description' => 'Hub description',
 	'manage-wikia-home-hubs-slot-more-links' => '"More in..." links',
-	'manage-wikia-home-hubs-slot-no-change-option' => '-- no change --',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Empty slot --',
 
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
@@ -236,7 +236,7 @@ Parameters:
 	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
 	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
 	'manage-wikia-home-hubs-slot-more-links' => 'Label for textarea field to add links in "More in ..." hub section on wikia homepage',
-	'manage-wikia-home-hubs-slot-no-change-option' => 'Option in select field in hubs slots section to don\'t change hub slot',
+	'manage-wikia-home-hubs-slot-empty-option' => 'Option in select field in hubs slots section to don\'t display slot on wikia homepage',
 
 
 );

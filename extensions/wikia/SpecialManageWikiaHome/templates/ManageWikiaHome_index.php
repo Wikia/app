@@ -20,6 +20,22 @@
 		</form>
 	</div>
 	<hr />
+
+	<p>
+		<?= wfMessage('manage-wikia-home-visualization-wikis')->text(); ?>
+		<select id="visualizationLanguagesList">
+			<?php foreach($visualizationWikisData as $lang => $wiki): ?>
+			<?php if( $lang === $visualizationLang ): ?>
+				<option value="<?= $lang; ?>" selected="selected"><?= $wiki['url']; ?></option>
+				<?php else: ?>
+				<option value="<?= $lang; ?>"><?= $wiki['url']; ?></option>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</select>
+		<input type="hidden" id="visualizationLang" name="visualizationLang" value="<?= $visualizationLang ?>" />
+		<input type="hidden" id="visualizationWikiId" name="visualizationWikiId" value="<?= $corpWikiId ?>" />
+	</p>
+
 	<div>
 		<h2 class="heading"><?= wfMessage('manage-wikia-home-hubs-slot-heading')->plain(); ?></h2>
 		<form method="post" class="hubs-slots">
@@ -37,20 +53,6 @@
 	</div>
 
 	<hr />
-	<p>
-		<?= wfMessage('manage-wikia-home-visualization-wikis')->text(); ?>
-		<select id="visualizationLanguagesList">
-			<?php foreach($visualizationWikisData as $lang => $wiki): ?>
-			<?php if( $lang === $visualizationLang ): ?>
-				<option value="<?= $lang; ?>" selected="selected"><?= $wiki['url']; ?></option>
-				<?php else: ?>
-				<option value="<?= $lang; ?>"><?= $wiki['url']; ?></option>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		</select>
-		<input type="hidden" id="visualizationLang" name="visualizationLang" value="<?= $visualizationLang ?>" />
-		<input type="hidden" id="visualizationWikiId" name="visualizationWikiId" value="<?= $corpWikiId ?>" />
-	</p>
 
 	<div class="slots-setup">
 		<h2 class="heading">

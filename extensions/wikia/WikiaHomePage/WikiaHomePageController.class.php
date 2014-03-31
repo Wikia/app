@@ -103,7 +103,6 @@ class WikiaHomePageController extends WikiaController {
 
 	public function getHubsSectionSlots() {
 		global $wgCityId, $wgContLang;
-		$hubSlot = [];
 		$langCode = $wgContLang->getCode();
 
 		$response = $this->app->sendRequest(
@@ -118,17 +117,47 @@ class WikiaHomePageController extends WikiaController {
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
 			86400 /* 24 hours */,
 			function() use( $wgCityId, $hubs ) {
+				$hubSlot = [];
 				$hubsSlots = $this->helper->getHubSlotsFromWF( $wgCityId );
+
+				$verticals = $this->helper->getWikiVerticals();
+
+				$k = 0;
+				foreach($verticals as $vertical) {
+					if ( !isset( $hubsSlots[ $k ] ) ) {
+						$hubsSlots[ $k ] = [
+							'hub_slot' => $vertical
+						];
+					}
+					$k++;
+				}
 
 				foreach( $hubsSlots as $slot => &$hub ) {
 					$hubId = $hub['hub_slot'];
-					if( isset( $hubs[ $hubId ] ) ) {
+					if( is_numeric( $hubId ) && isset( $hubs[ $hubId ] ) ) {
 						$hub = array_merge($hub, $hubs[ $hubId ]);
 						$hub['hubImage'] = $this->getHubV3Images( $hubId );
 
 						$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
+					} else {
+						switch( $hubId ) {
+							case 'Video Games':
+								$categoryId = WikiFactoryHub::CATEGORY_ID_GAMING;
+								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'videogames', $categoryId, $hub );
+								break;
+							case 'Entertainment':
+								$categoryId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
+								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'entertainment', $categoryId, $hub );
+								break;
+							case 'Lifestyle':
+								$categoryId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
+								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'lifestyle', $categoryId, $hub );
+								break;
+						}
 					}
 				}
+
+				return $hubSlot;
 			}
 		);
 
@@ -136,14 +165,37 @@ class WikiaHomePageController extends WikiaController {
 	}
 
 	private function prepareRenderParams( $slot, $hub ) {
+		global $wgParser, $wgTitle, $wgOut;
 		return [
-			'classname' => $slot,
-			'heading' => $hub['name'],
-			'heroimageurl' => $hub['hubImage'],
-			'herourl' => $hub['url'],
-			'creative' => $hub['hub_slot_desc'],
-			'moreheading' => wfMessage('wikiahome-hubs-slot-more-in-heading', $hub['name'])->escaped(),
-			'morelist' => $hub['hub_slot_more_links'],
+			'classname' =>		$slot,
+			'heading' => 		$hub['name'],
+			'heroimageurl' => 	$hub['hubImage'],
+			'herourl' => 		$hub['url'],
+			'creative' => 		$hub['hub_slot_desc'],
+			'moreheading' => 	wfMessage('wikiahome-hubs-slot-more-in-heading', $hub['name'])->escaped(),
+			'morelist' => 		$wgParser->parse(
+									$hub['hub_slot_more_links'],
+									$wgTitle,
+									$wgOut->parserOptions())->getText(),
+		];
+	}
+
+	private function prepareHubsV2Params( $vertical, $categoryId, $hub ) {
+		global $wgParser, $wgTitle, $wgOut;
+		return [
+			'classname' => 		$vertical,
+			'heading' => 		WfMessage("wikiahome-hubs-$vertical-heading")->text(),
+			'heroimageurl' => 	isset($this->hubImages[$categoryId]) ? $this->hubImages[$categoryId] : null,
+			'herourl' => 		WfMessage("wikiahome-hubs-$vertical-url")->text(),
+			'creative' => 		!empty( $hub['hub_slot_desc'] )
+								? $hub['hub_slot_desc']
+								: WfMessage("wikiahome-hubs-$vertical-creative")->text(),
+			'moreheading' => 	WfMessage("wikiahome-hubs-$vertical-more-heading")->text(),
+			'morelist' => 		!empty( $hub['hub_slot_more_links'] )
+								? $wgParser->parse(
+									$hub['hub_slot_more_links'],
+									$wgTitle, $wgOut->parserOptions())->getText()
+								: WfMessage("wikiahome-hubs-$vertical-more-list")->parse()
 		];
 	}
 
