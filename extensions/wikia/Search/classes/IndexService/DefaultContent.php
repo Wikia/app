@@ -241,7 +241,7 @@ class DefaultContent extends AbstractService
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
-		$infoboxes = $dom->find( 'table.infobox' );
+		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$result['infoboxes_txt'] = [];
 			$counter = 1;

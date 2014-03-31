@@ -656,7 +656,7 @@ ENDIT;
 		$dom
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'find' )
-		    ->with   ( 'table.infobox' )
+		    ->with   ( 'table.infobox,table.wikia-infobox' )
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
