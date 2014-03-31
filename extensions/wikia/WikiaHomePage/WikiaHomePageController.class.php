@@ -611,7 +611,7 @@ class WikiaHomePageController extends WikiaController {
 		foreach( $hubsSlots as $slot => $hub ) {
 			$hubId = $hub['hub_slot'];
 			if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-				$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $wgCityId);
+				$hubSettings = WikiFactory::getVarValueByName('wgOasisThemeSettings', $hubId);
 				$settings['hub-color-slot-' . ($slot+1)] = isset( $hubSettings['color-buttons'] )
 					? $hubSettings['color-buttons']
 					: null;
