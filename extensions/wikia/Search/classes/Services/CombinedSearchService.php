@@ -184,7 +184,8 @@ class CombinedSearchService {
 			$select->createFilterQuery( 'article_quality' )->setQuery('article_quality_i:[' . $minArticleQuality . ' TO *]');
 		}
 
-		$dismax->setBoostQuery( '+(wikititle_en:"'.$phrase.'"^100000)' . " +(article_type_s:(character OR tv_series OR tv_episode OR person OR move OR video_game))");
+		$boostedTypes = ["character", "tv_series", "tv_episode", "person", "move", "video_game"];
+		$dismax->setBoostQuery( '+(wikititle_en:"'.$phrase.'"^100000)' . " +(article_type_s:(" . implode(" AND ", $boostedTypes) . "))");
 
 		$result = $client->select( $select );
 		return $this->extractData( $result, $requestedFields );
