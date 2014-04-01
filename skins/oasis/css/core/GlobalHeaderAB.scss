@@ -45,6 +45,10 @@ $ab-text-color: #3a3a3a;
 			margin-top: 0;
 			padding-top: 11px;
 		}
+
+		.WikiaLogo {
+			padding-right: 12px;
+		}
 	}
 
 	li {
@@ -85,8 +89,8 @@ $ab-text-color: #3a3a3a;
 			border: 1px solid $input-border-color;
 			border-radius: 4px;
 			font-size: 14px;
-			height: 17px;
-			width: 400px;
+			height: 17px!important;
+			width: 390px;
 			padding: 5px 8px;
 		}
 
@@ -243,6 +247,7 @@ $ab-text-color: #3a3a3a;
 			& > a {
 				color: $color;
 				font-size: 14px;
+				padding: 0 8px;
 				&:visited, &:active {
 					color: $color;
 				}
