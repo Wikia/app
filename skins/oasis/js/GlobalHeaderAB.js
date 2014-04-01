@@ -1,4 +1,4 @@
-// TODO move it somewhere
+/* moved to optimizely
 $(function() {
 	$( '#GlobalNavigation' ).addClass( 'vertical-colors' );
 
@@ -66,3 +66,4 @@ $(function() {
 
 	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
 });
+*/
