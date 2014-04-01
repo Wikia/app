@@ -147,34 +147,10 @@ class LyricsWikiCrawler extends Maintenance {
 		$yesterday = date( "Y-m-d", $yesterdayTs );
 		$this->output( 'Scraping articles from ' . $yesterday );
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
-		$this->groupByType( $pages );
-		// delete deleted pages from index
-		// update new pages and edits
+		// update index with new, updated, moved and restored pages
 		echo PHP_EOL . PHP_EOL;
 		print_r( $pages );
 		echo PHP_EOL . PHP_EOL;
-	}
-
-	/**
-	 * @desc Groups pages in two group: updates and delets
-	 *
-	 * @param Array $pages
-	 * @return array
-	 */
-	public function groupByType( $pages ) {
-		$updates = [];
-		$deletes = [];
-
-		foreach( $pages as $page ) {
-			$pageId = $page['rc_cur_id'];
-			if( $page['rc_deleted'] > 0 ) {
-				$deletes[$pageId] = $page;
-			} else {
-				$updates[$pageId] = $page;
-			}
-		}
-
-		return [ 'updates' => $updates, 'deletes' => $deletes ];
 	}
 
 	/**
