@@ -26,6 +26,7 @@ class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_LANE = 'lane';
 
 	private $articleId = 0;
+	private $articleCategory = null;
 
 	/**
 	 * @var DataBase
@@ -114,18 +115,25 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArticle() {
 		$start = microtime(true);
 		$status = ' ';
-		$this->output( 'Scraping article #' . $this->getArticleId() );
+		$category = $this->getArticleCategory();
+		$this->output( 'Scraping article #' . $this->getArticleId() . ' (' . $category . ') ' );
 		$article = Article::newFromID( $this->getArticleId() );
 		if ( !is_null($article) ) {
-			$scraper = $this->scrapperFactory->newFromArticle( $article );
+			/** @var ArtistScraper | AlbumScraper | SongScraper $scraper | false */
+			$scraper = $this->getScraperByArticleCategory();
 			if ( $scraper ) {
-				$scraper->processArticle( $article );
+				$data = $scraper->processArticle( $article );
+
+				echo PHP_EOL;
+				print_r( $data );
+
 			} else {
 				$status .= 'Unknown article type ';
 			}
 		} else {
 			$status .= 'Article not found ';
 		}
+
 		$this->output( $status . round( microtime( true ) - $start, 2) . 's' . PHP_EOL );
 	}
 
@@ -145,12 +153,13 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArticlesFromYesterday() {
 		$yesterdayTs = strtotime( '-1 day' );
 		$yesterday = date( "Y-m-d", $yesterdayTs );
-		$this->output( 'Scraping articles from ' . $yesterday );
+		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
-		// update index with new, updated, moved and restored pages
-		echo PHP_EOL . PHP_EOL;
-		print_r( $pages );
-		echo PHP_EOL . PHP_EOL;
+		foreach( $pages as $page ) {
+			$this->setArticleId( $page->id );
+			$this->setArticleCategory( $page->category );
+			$this->doScrapeArticle();
+		}
 	}
 
 	/**
@@ -163,12 +172,30 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	/**
+	 * @desc Sets article category
+	 *
+	 * @param String $category article
+	 */
+	public function setArticleCategory( $category ) {
+		$this->articleCategory = strtolower( $category );
+	}
+
+	/**
 	 * @desc Getter - returns article id
 	 *
 	 * @return Integer
 	 */
 	public function getArticleId() {
 		return $this->articleId;
+	}
+
+	/**
+	 * @desc Getter - returns article category
+	 *
+	 * @return String
+	 */
+	public function getArticleCategory() {
+		return $this->articleCategory;
 	}
 
 	/**
@@ -217,40 +244,35 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	/**
-	 * @desc Gets page ids from recent changes
+	 * @desc Gets page ids and their categories from recentchanges and categorylins tables
 	 *
 	 * @param String $date date in format Ymd
-	 * @param int $limit Number of results
-	 * @param int  $offset Result offset
 	 *
 	 * @return Array
 	 */
-	private function getRecentChangedPages( $date, $limit = 0, $offset = 0 ) {
+	private function getRecentChangedPages( $date ) {
 		$betweenStart = $date . '000000';
 		$betweenEnd = $date . '235959';
 
-		$options = [ 'ORDER BY' => 'rc_timestamp desc' ];
+		$table = [ 'r' => 'recentchanges', 'c' => 'categorylinks' ];
+		$fields = [ 'r.rc_cur_id as id', 'c.cl_to as category' ];
+		$where = [
+			'r.rc_cur_id > 0',
+			'rc_namespace' => NS_MAIN,
+			'rc_timestamp between ' . $betweenStart . ' and ' . $betweenEnd
+		];
+		$joins = [ 'c' => [
+			'INNER JOIN',
+			'r.rc_cur_id = c.cl_from AND c.cl_to IN ("Artist", "Album", "Song")'
+		] ];
+		$options = [ 'DISTINCT', 'ORDER BY' => 'rc_timestamp desc' ];
 
-		if ( $limit ) {
-			$options['LIMIT'] = $limit;
-			$options['OFFSET'] = $offset;
-		}
-
-		$result = $this->db->select(
-			'recentchanges',
-			[ 'rc_cur_id' ],
-			[
-				'rc_namespace' => NS_MAIN,
-				'rc_timestamp between ' . $betweenStart . ' and ' . $betweenEnd
-			],
-			__METHOD__,
-			$options
-		);
+		$result = $this->db->select( $table, $fields, $where, __METHOD__, $options, $joins );
 
 		$pages = [];
 		if( $result->numRows() > 0 ) {
-			while( $row = $result->fetchRow() ) {
-				$this->addIfValid( $pages, $row );
+			while( $row = $result->fetchObject() ) {
+				$pages[] = $row;
 			}
 		}
 
@@ -258,26 +280,26 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	/**
-	 * @desc Adds an element to the results array if there is no element with the same rc_cur_id
+	 * @desc Gets correct scraper instance depending on article category
 	 *
-	 * @param Array $results results array
-	 * @param Array $row an array with elements and each of them has rc_cur_id field
+	 * @return AlbumScraper|ArtistScraper|false|SongScraper
 	 */
-	public function addIfValid( &$results, $row ) {
-		if( isset( $row['rc_cur_id'] ) ) {
-			$id = intval( $row['rc_cur_id'] );
+	public function getScraperByArticleCategory() {
+		$scraper = false;
+		$category = $this->getArticleCategory();
 
-			// there are rows with rc_cur_id === 0 in recentchanges
-			// these are rows of deleted pages - we don't want them
-			// in result array because deletes are handled differently
-			if( $id > 0 && !in_array( $id, $results ) ) {
-				$results[] = $id;
-			}
+		if( $category === 'artist' ) {
+			$scraper = new ArtistScraper();
+		} else if( $category === 'album' ) {
+			$scraper = new AlbumScraper();
+		} elseif( $category === 'song' ) {
+			$scraper = new SongScraper();
 		}
+
+		return $scraper;
 	}
 
 }
 
 $maintClass = "LyricsWikiCrawler";
 require_once( DO_MAINTENANCE );
-
