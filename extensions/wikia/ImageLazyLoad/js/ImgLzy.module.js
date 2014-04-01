@@ -15,7 +15,6 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 		log(msg,  log.levels.info, 'ImgLzy');
 	}
 
-	// it's a global, it should be a global
 	ImgLzy = {
 		cache: [],
 		timestats: 0,

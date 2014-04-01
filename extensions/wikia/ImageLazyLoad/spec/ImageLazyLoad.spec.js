@@ -12,7 +12,7 @@ describe('ImgLzy', function () {
 		logMock.levels = {};
 
 		ImgLzy = modules['wikia.ImgLzy'](jQuery, logMock, windowMock);
-		ImgLzy.browserSupportsWebP = supportsWebP === true;
+		ImgLzy.browserSupportsWebP = (supportsWebP === true);
 
 		return ImgLzy;
 	}
