@@ -238,7 +238,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 		$result = $this->db->select(
 			'recentchanges',
-			[ 'rc_cur_id', 'rc_type', 'rc_log_action' ],
+			[ 'rc_cur_id' ],
 			[
 				'rc_namespace' => NS_MAIN,
 				'rc_timestamp between ' . $betweenStart . ' and ' . $betweenEnd
@@ -250,7 +250,7 @@ class LyricsWikiCrawler extends Maintenance {
 		$pages = [];
 		if( $result->numRows() > 0 ) {
 			while( $row = $result->fetchRow() ) {
-				$this->addIfNotExists( $pages, $row );
+				$this->addIfValid( $pages, $row );
 			}
 		}
 
@@ -263,15 +263,15 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @param Array $results results array
 	 * @param Array $row an array with elements and each of them has rc_cur_id field
 	 */
-	public function addIfNotExists( &$results, $row ) {
+	public function addIfValid( &$results, $row ) {
 		if( isset( $row['rc_cur_id'] ) ) {
 			$id = intval( $row['rc_cur_id'] );
 
 			// there are rows with rc_cur_id === 0 in recentchanges
 			// these are rows of deleted pages - we don't want them
 			// in result array because deletes are handled differently
-			if( $id > 0 && !isset( $results[ $id ] ) ) {
-				$results[ $id ] = $row;
+			if( $id > 0 && !in_array( $id, $results ) ) {
+				$results[] = $id;
 			}
 		}
 	}
