@@ -955,11 +955,11 @@ class WikiFactory {
 				$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
 				$value = isset( $variable->cv_value )
 					? self::substVariables( unserialize( $variable->cv_value ), $city_id )
-					: false;
+					: null;
 			}
 
 			// If we found the value return, else proceed to the next city_id
-			if ( !is_null( $value ) ) {
+			if ( !is_null($value) ) {
 				wfProfileOut( __METHOD__ );
 				return $value;
 			}

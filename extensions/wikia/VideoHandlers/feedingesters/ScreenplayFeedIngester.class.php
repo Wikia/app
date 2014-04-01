@@ -10,13 +10,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	protected static $FORMAT_ID_THUMBNAIL = 9;
 	protected static $FORMAT_ID_VIDEO = 20;
 
-	// list of bit rate ids in priority for videos
+	// list of bit rate ids in priority for videos (higer number, higher priority)
 	protected static $BITRATE_IDS_THUMBNAIL = [
 		ScreenplayApiWrapper::MEDIUM_JPEG_BITRATE_ID => 1,
 		ScreenplayApiWrapper::LARGE_JPEG_BITRATE_ID  => 2,
 	];
 
-	// list of bit rate ids in priority for videos
+	// list of bit rate ids in priority for videos (higer number, higher priority)
 	protected static $BITRATE_IDS_VIDEO = [
 		ScreenplayApiWrapper::STANDARD_43_BITRATE_ID  => 4,
 		ScreenplayApiWrapper::STANDARD_BITRATE_ID     => 5,
@@ -82,7 +82,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url );
 		if ( $content === false  ) {
-			print( "ERROR: problem downloading content.\n" );
+			$this->videoErrors("ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -170,6 +170,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		foreach ( $titles as $title ) {
 			if ( empty( $title['Assets'] ) ) {
+				$this->videoSkipped();
 				continue;
 			}
 
@@ -199,11 +200,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$videos = [];
 			foreach ( $title['Assets'] as $clip ) {
 				if ( empty( $clip['EClipId'] ) ) {
+					$this->videoSkipped();
 					continue;
 				}
 
 				// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 				if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $clip['EClipId'], $this->filterByProviderVideoId ) ) {
+					$this->videoSkipped();
 					continue;
 				}
 
@@ -211,6 +214,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				if ( array_key_exists( $clip['EClipId'], $videos) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
+					$this->setResultSummary( 'found' );
 					$clipData['addlCategories'] = $addlCategories;
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $clipData );
 				}
@@ -234,7 +238,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$msg = '';
 				if ( $this->isClipTypeBlacklisted( $video ) ) {
 					if ( $debug ) {
-						print "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n";
+						$this->videoSkipped( "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n" );
 					}
 				} else {
 					$createParams = [
