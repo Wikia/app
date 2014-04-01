@@ -31,7 +31,7 @@
 	var resourcesLoaded = false,
 		modalOnScreen = false,
 		vetLoader = {},
-		UserLoginModal = window.UserLoginModal;
+		template = '';
 
 	function loadResources() {
 		var deferredList = [];
@@ -79,7 +79,7 @@
 			$elem.stopThrobbing();
 			return;
 		} else if (window.wgUserName === null) {
-			UserLoginModal.show({
+			window.UserLoginModal.show({
 				origin: 'vet',
 				callback: function () {
 					window.UserLogin.forceLoggedIn = true;
@@ -105,12 +105,16 @@
 		}
 
 		$.when.apply($, resourceList).done(function (templateResp) {
+			if (!resourcesLoaded) {
+				template = templateResp[0];
+			}
+
 			$elem.stopThrobbing();
 
 			// now that VET is loaded, require it.
 			require(['wikia.vet'], function (vet) {
 
-				vetLoader.modal = $(templateResp[0]).makeModal({
+				vetLoader.modal = $(template).makeModal({
 					width: 939,
 					onClose: function () {
 						vet.close();
