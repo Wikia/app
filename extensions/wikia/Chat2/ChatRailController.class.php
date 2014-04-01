@@ -70,8 +70,15 @@ class ChatRailController extends WikiaController {
 	public function executeGetUsers() {
 		wfProfileIn( __METHOD__ );
 		$this->users = ChatEntryPoint::getChatUsersInfo();
-		// Cache the entire call in varnish (and browser).
-		$this->response->setCacheValidity(self::CACHE_DURATION);
+		if ( count( $this->users ) === 0 ) {
+			// CONN-436: If there are no users in the chat, cache the response in varnish for CACHE_STANDARD and on the
+			// browser for the default CACHE_DURATION time;
+			// Note: Varnish cache will be purged when user opens the chat page
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, self::CACHE_DURATION );
+		} else {
+			// If there are users in the chat, cache both in varnish and browser for default CACHE_DURATION;
+			$this->response->setCacheValidity( self::CACHE_DURATION );
+		}
 		wfProfileOut( __METHOD__ );
 	}
 
