@@ -164,8 +164,8 @@ class CombinedSearchService {
 			'title' => Utilities::field( 'title', $lang ), "url", "id", "score", "pageid", "lang", "wid",
 			"article_quality_i", "article_type_s", Utilities::field( 'html', $lang )
 		];
-
 		$config = (new Factory())->getSolariumClientConfig();
+
 		$client = new \Solarium_Client($config);
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -177,17 +177,15 @@ class CombinedSearchService {
 		$select->setRows(self::MAX_TOTAL_ARTICLES);
 		$select->setQuery( $query );
 
-		//add filters
-		$select->createFilterQuery( 'users' )->setQuery('activeusers:[0 TO *]');
-		$select->createFilterQuery( 'pages' )->setQuery('wikipages:[500 TO *]');
-		$select->createFilterQuery( 'words' )->setQuery('words:[10 TO *]');
-		$select->createFilterQuery( 'wam' )->setQuery('-(wam:0)');
 		$select->createFilterQuery( 'dis' )->setQuery('-(title_en:disambiguation)');
 		//speedydeletion: 547090, scratchpad: 95, lyrics:43339,
 		$select->createFilterQuery( 'banned' )->setQuery('-(wid:547090) AND -(wid:95) AND -(wid:43339) AND -(host:*answers.wikia.com)');
+		if ( $minArticleQuality != null ) {
+			$select->createFilterQuery( 'article_quality' )->setQuery('article_quality_i:[' . $minArticleQuality . ' TO *]');
+		}
 
-		$dismax->setBoostQuery( 'wikititle_en:"'.$phrase.'"^10000');
-		$dismax->setBoostFunctions( 'words^1.5 revcount^1 page_images^5 activeusers^1' );
+		$boostedTypes = ["character", "tv_series", "tv_episode", "person", "move", "video_game"];
+		$dismax->setBoostQuery( '+(wikititle_en:"'.$phrase.'"^100000)' . " +(article_type_s:(" . implode(" OR ", $boostedTypes) . "))");
 
 		$result = $client->select( $select );
 		return $this->extractData( $result, $requestedFields );
@@ -268,9 +266,6 @@ class CombinedSearchService {
 		}
 		$query = '+(' . $hubQuery . '(' . implode(' OR ', $nsArr ) . ') AND (lang:' . $lang .
 			')) AND +((title_en:"'.$query.'") OR (redirect_titles_mv_en:"'.$query.'")) AND +(nolang_txt:"'.$query.'")';
-		if ( $minArticleQuality != null ) {
-			$query .= ' AND +(article_quality_i:[' . $minArticleQuality . ' TO *])';
-		}
 		return $query;
 	}
 
