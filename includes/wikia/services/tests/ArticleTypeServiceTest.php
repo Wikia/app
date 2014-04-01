@@ -2,6 +2,10 @@
 
 
 class ArticleTypeServiceTest extends WikiaBaseTest {
+	
+	private function getArticleTypeService() {
+		return new ArticleTypeService("http://fake-endpoint/");
+	}
 
 	public function testShouldReturnArticleType() {
 		$this->mockArticle(132, "Foo title", "Foo wiki text");
@@ -11,7 +15,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->method("post")
 			->will($this->returnValue('{"classes":{"mini_game":0.26,"tv_episode":0.022},"class":"tv_episode"}'));
 
-		$type = (new ArticleTypeService())->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132);
 
 		$this->assertEquals($type, "tv_episode");
 	}
@@ -27,7 +31,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 		$httpPostMock->expects($this->never())
 			->method("post");
 
-		$type = (new ArticleTypeService())->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132);
 
 		$this->assertEquals($type, null);
 	}
@@ -41,7 +45,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(''));
 
 		try {
-			$type = (new ArticleTypeService())->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132);
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}
@@ -56,7 +60,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(false));
 
 		try {
-			$type = (new ArticleTypeService())->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132);
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}

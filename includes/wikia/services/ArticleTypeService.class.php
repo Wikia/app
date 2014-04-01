@@ -2,11 +2,25 @@
 
 class ArticleTypeService {
 	/**
-	 * endpoint for holmes
+	 * Request timeout in seconds.
 	 */
-	const HOLMES_ENDPOINT = 'http://dev-holmes:8080/holmes/classifications/';
+	const TIMEOUT = 2;
 
-	const TIMEOUT = 10;
+	/**
+	 * @var string
+	 */
+	private $holmesEndpoint;
+
+	/**
+	 * @param string|null $holmesEndpoint root for holmes endpoint
+	 */
+	function __construct( $holmesEndpoint = null ) {
+		if ( is_null( $holmesEndpoint ) ) {
+			// use wgHolmesEndpoint by default
+			$holmesEndpoint = F::app()->wg->HolmesEndpoint;
+		}
+		$this->holmesEndpoint = $holmesEndpoint;
+	}
 
 	/**
 	 * Returns article type for given pageId
@@ -22,7 +36,7 @@ class ArticleTypeService {
 		}
 
 		$json = json_encode( $articleData, JSON_FORCE_OBJECT );
-		$response = Http::post(self::HOLMES_ENDPOINT,
+		$response = Http::post($this->getHolmesClassificationsEndpoint(),
 			[
 				'postData' => $json,
 				'timeout'=> self::TIMEOUT,
@@ -35,11 +49,15 @@ class ArticleTypeService {
 
 		if ( empty( $response ) ) {
 			$wikiId = F::app()->wg->cityId;
-			\Wikia\Logger\WikiaLogger::instance()->error("ArticleTypeService error. Possibly holmes unavailable.", ["wikiId" => $wikiId, "pageId" => $pageId]);
+			\Wikia\Logger\WikiaLogger::instance()->error("ArticleTypeService error. Possibly holmes service unavailable.", ["wikiId" => $wikiId, "pageId" => $pageId]);
 			throw new ServiceUnavailableException('ArticleTypeService error for: ' . $wikiId . '_' . $pageId);
 		}
 
 		return $response[ 'class' ];
+	}
+
+	private function getHolmesClassificationsEndpoint() {
+		return $this->holmesEndpoint . "/classifications";
 	}
 
 	/**
