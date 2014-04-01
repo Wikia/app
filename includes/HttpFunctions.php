@@ -31,6 +31,7 @@ class Http {
 	 *		                    to avoid attacks on intranet services accessible by HTTP.
 	 *    - userAgent           A user agent, if you want to override the default
 	 *                          MediaWiki/$wgVersion
+	 *    - headers             Additional headers for request
 	 * @return Mixed: (bool)false on failure or a string on success
 	 */
 	public static function request( $method, $url, $options = array() ) {
@@ -45,11 +46,13 @@ class Http {
 		}
 
 		$req = MWHttpRequest::factory( $url, $options );
+		// Wikia change - @author: suchy - begin
 		if ( isset( $options[ 'headers' ] ) && is_array( $options[ 'headers' ] ) ) {
 			foreach ( $options[ 'headers' ] as $name => $value ) {
 				$req->setHeader( $name, $value );
 			}
 		}
+		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
 		}
