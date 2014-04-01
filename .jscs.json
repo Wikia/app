@@ -37,5 +37,9 @@
 		"checkParamNames": true,
 		"checkRedundantParams": true,
 		"requireParamTypes": true
-	}
+	},
+	"excludeFiles": [
+		"**/node_modules/**",
+		"**/lib/**"
+	]
 }

@@ -801,6 +801,7 @@ Ange en beskrivning här.',
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
+ * @author Ravichandra
  */
 $messages['te'] = array(
 	'video-page-file-list-header' => 'ఇది, ఈ పేజీల్లో కనిపిస్తుంది',
@@ -816,6 +817,7 @@ $messages['te'] = array(
 	'video-page-default-description-header-and-text' => '==వివరణ==
 ఇక్కడ వివరణ ఇవ్వండి.',
 	'video-page-file-list-pagination' => '$2 లో $1',
+	'file-page-replace-button' => 'భర్తీచేయి',
 	'file-page-tab-about' => 'గురించి',
 	'file-page-tab-history' => 'ఫైలు చరిత్ర',
 	'file-page-tab-metadata' => 'మెటాడేటా',

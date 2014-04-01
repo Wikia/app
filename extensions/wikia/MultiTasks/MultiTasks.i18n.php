@@ -2163,6 +2163,7 @@ $messages['ms'] = array(
 	'multiwikifindpagenames' => 'Cari nama laman',
 	'multiwikienterpagename' => 'Isikan nama laman:',
 	'multiwikirecords' => '$1 wiki ditemui',
+	'multiwikifinder-redirect' => 'lencong',
 	'action-multiwikifinder' => 'cari tajuk tertentu di seluruh Wikia',
 );
 

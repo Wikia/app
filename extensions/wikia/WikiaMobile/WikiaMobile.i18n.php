@@ -99,7 +99,8 @@ $messages['qqq'] = array(
 {{Identical|Log in}}',
 	'wikiamobile-menu' => 'Header on wiki menu',
 	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
-	'wikiamobile-feedback' => 'Link to a feedback form',
+	'wikiamobile-feedback' => 'Link to a feedback form.
+{{Identical|Feedback}}',
 	'wikiamobile-back' => 'Label on a button to go back one level on wiki navigation.
 {{Identical|Back}}',
 	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
@@ -1113,10 +1114,12 @@ $messages['ms'] = array(
 	'wikiamobile-last-edited-on' => 'Kemaskini terakhir pada $1',
 	'wikiamobile-last-edited-by' => 'oleh $1',
 	'wikiamobile-anonymous-edited-by' => 'Tanpa nama',
+	'wikiamobile-trending-articles-heading' => 'Rencana Hangat',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Gaya Hidup]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Permainan]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Pelesenan]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Dasar privasi]]',
 	'mobile-full-site' => 'Laman penuh',
 	'wikiamobile-categories-tagline' => 'Halaman Kategori',
 	'wikiamobile-categories-items-total' => '$1 rencana',
@@ -1137,7 +1140,7 @@ apa kata anda tengok yang ini pula:
 	'wikiamobile-video-views-counter' => 'Dilihat $1 kali',
 	'wikiamobile-video-not-friendly-header' => 'Maaf!',
 	'wikiamobile-video-not-friendly' => 'Video ini tidak boleh ditonton secara mudah alih.',
-	'wikiamobile-toc-header' => 'jadual isi kandungan', # Fuzzy
+	'wikiamobile-toc-header' => 'Jadual isi Kandungan',
 	'wikiamobile-ad-label' => 'iklan',
 	'wikiamobile-image-not-loaded' => 'Gambar tidak tersedia',
 	'wikiamobile-shared-file-not-available' => 'Maaf, perkara ini tidak lagi wujud, tetapi memandangkan anda berada di sini, terokailah wiki ini!',
@@ -1447,6 +1450,7 @@ Tu avissa verificà definitivamende quiste:
  * @author Express2000
  * @author Kuzura
  * @author Lvova
+ * @author NBS
  * @author Okras
  */
 $messages['ru'] = array(

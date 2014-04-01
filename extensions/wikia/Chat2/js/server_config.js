@@ -50,11 +50,13 @@ exports.WIKIA_PROXY = chatConfig[arvg.mode]['ProxyServer'];
 
 /** CONSTANTS **/
 exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['MaxMessagesInBacklog']; // how many messages each room will store for now. only longer than NUM_MESSAGES_TO_SHOW_ON_CONNECT for potential debugging.
-exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['NumMessagesToShowOnConnect'];
+exports.NUM_MESSAGES_TO_SHOW_ON_CONNECT = chatConfig['NumMessagesToShowOnConnect'];
 
 exports.TOKEN = chatConfig['ChatCommunicationToken'];
 
 exports.validateConnection = function(cityId) {
+	//TODO: take this out when we will be operating on 2 servers
+	return true;
 	if(typeof arvg.instance != 'undefined') {
 		if(arvg.instance == cityId%instaceNumber){
 			return true;

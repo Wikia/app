@@ -33,12 +33,12 @@ EOT;
 				'title' => $this->title,
 				'jsFile' => array(
 					$jsFile,
-					"extensions/wikia/VideoHandlers/js/handlers/OoyalaModule.js",
+					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaModule.js",
 				),
 			),
 			'init' => 'wikia.videohandler.ooyala',
 			'scripts' => array(
-				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js"
+				"extensions/wikia/VideoHandlers/js/handlers/Ooyala.js",
 			),
 		);
 	}
