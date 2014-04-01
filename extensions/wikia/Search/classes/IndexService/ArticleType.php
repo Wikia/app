@@ -21,6 +21,14 @@ class ArticleType extends AbstractService {
 		}
 		$pageId = (int) $this->currentPageId;
 
-		return [ "article_type_s" => $articleTypeService->getArticleType( $pageId ) ];
+		try {
+			$type = $articleTypeService->getArticleType($pageId);
+			return [ "article_type_s" => $type];
+		} catch( \ServiceUnavailableException $ex ) {
+			\Wikia\Logger\WikiaLogger::instance()->error("article_type_s update ignored.", ["wikiId" => $this->getService()->getWikiId(), "pageId" => $pageId]);
+			// Don't specify article type in case of service being unavailable.
+			// If indexer is using partial update it should not override existing article type.
+			return [];
+		}
 	}
 }
