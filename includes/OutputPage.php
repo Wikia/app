@@ -2016,6 +2016,11 @@ class OutputPage extends ContextSource {
 					print "</body>\n</html>\n";
 				} else {
 					$response->header( 'Location: ' . $redirect );
+
+					// Wikia change begin
+					// @author macbre
+					ob_end_clean(); // no point in compressing redirects (disable gzip output handler)
+					// Wikia change end
 				}
 			}
 
