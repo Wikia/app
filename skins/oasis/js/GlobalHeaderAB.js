@@ -64,7 +64,5 @@ $(function() {
 		}
 	};
 
-	GlobalSearch.addCollapsedSearch();
-
 	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
 });
