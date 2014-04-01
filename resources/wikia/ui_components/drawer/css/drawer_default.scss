@@ -83,12 +83,20 @@ $subdrawer-width: 225px;
 	&.left {
 		left: 0;
 
+		&.hidden {
+			left: -$drawer-width - $drawer-shadow-size;
+		}
+
 		&.open {
 			left: $drawer-width;
 		}
 	}
 	&.right {
 		right: 0;
+
+		&.hidden {
+			right: -$drawer-width - $drawer-shadow-size;
+		}
 
 		&.open {
 			right: $drawer-width;

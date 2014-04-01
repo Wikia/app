@@ -6,6 +6,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		BLACKOUT_ID = 'drawer-blackout-',
 		CLOSEBUTTON_ID = 'drawer-close-button-',
 		OPEN_CLASS = 'open',
+		HIDDEN_CLASS = 'hidden',
 		VISIBLE_CLASS = 'visible',
 		ANIMATION_DURATION = 200, //ms
 		drawerDefaults = {
@@ -68,6 +69,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 
 	Drawer.prototype.open = function() {
 		this.$drawer.addClass(OPEN_CLASS);
+		this.$subdrawer.removeClass(HIDDEN_CLASS);
 		this.$blackout.addClass(VISIBLE_CLASS);
 	};
 
@@ -75,6 +77,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		var self = this,
 			animate = function() {
 				self.$drawer.removeClass(OPEN_CLASS);
+				self.$subdrawer.addClass(HIDDEN_CLASS);
 				self.$blackout.removeClass(VISIBLE_CLASS);
 			};
 		if ( this.isOpenSub() ) {
@@ -87,6 +90,10 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 
 	Drawer.prototype.isOpen = function() {
 		return this.$drawer.hasClass(OPEN_CLASS);
+	};
+
+	Drawer.prototype.set = function(content) {
+		this.$subdrawer.html(content);
 	};
 
 	Drawer.prototype.openSub = function() {
