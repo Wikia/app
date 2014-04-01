@@ -120,10 +120,14 @@ class ThumbnailVideo extends ThumbnailImage {
 			return $this->renderAsThumbnailImage($options);
 		}
 
+		if ( !(F::app()->checkSkin( 'wikiamobile' ) ) ) {
+			$options['useTemplate'] = true;
+		}
+
 		wfProfileIn( __METHOD__ );
 
 		// Migrate to new system which uses a template instead of this toHtml method
-		if( !empty( $options[ 'useTemplate' ] ) ) {
+		if( !empty( $options['useTemplate'] ) ) {
 			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
 				'file' => $this->file,
 				'url' => $this->url,

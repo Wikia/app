@@ -108,7 +108,7 @@ class ThumbnailVideoController extends WikiaController {
 
 		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $file instanceof OldLocalFile ) {
-			$archive_name = $this->file->getArchiveName();
+			$archive_name = $file->getArchiveName();
 			if ( !empty( $archive_name ) ) {
 				$linkHref .= '?t='.$file->getTimestamp();
 				$linkAttribs['data-timestamp'] = $file->getTimestamp();
