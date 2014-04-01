@@ -282,39 +282,14 @@ class RenameUserProcess {
 
 		//Phalanx test
 
-		if ( class_exists( 'PhalanxService' ) ) {
-			$service = new PhalanxService();
-			$service->setLimit(20);
+		$warning = RenameUserHelper::testBlock( $oun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
 
-			$listingNun = [];
-			$listingOun = [];
-
-			foreach(Phalanx::getAllTypeNames() as $blockType) {
-				$res = $service->match($blockType, $nun);
-
-				if (!empty($res)) {
-					$listingNun[] = $blockType;
-				}
-
-				$res = $service->match($blockType, $oun);
-
-				if (!empty($res)) {
-					$listingOun[] = $blockType;
-				}
-
-			}
-
-			$listingNun = implode(", ", $listingNun);
-			if ( $listingNun != '' ) {
-				$linkToTest = SpecialPage::getTitleFor( 'Phalanx', 'test' )->getLinkURL( [ 'wpBlockText'=>$nun ] );
-				$this->addWarning( wfMessage( 'userrenametool-warning-phalanx-block', $nun, $linkToTest, $listingNun )->text() );
-			}
-
-			$listingOun = implode(", ", $listingOun);
-			if ( $listingOun != '' ) {
-				$linkToTest = SpecialPage::getTitleFor( 'Phalanx', 'test' )->getLinkURL( [ 'wpBlockText'=>$oun ] );
-				$this->addWarning( wfMessage( 'userrenametool-warning-phalanx-block', $oun, $linkToTest, $listingOun )->text() );
-			}
+		$warning = RenameUserHelper::testBlock( $nun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
 		}
 
 		//Invalid old user name entered
