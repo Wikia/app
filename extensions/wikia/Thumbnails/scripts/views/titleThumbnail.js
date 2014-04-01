@@ -8,7 +8,6 @@ define('thumbnails.views.titleThumbnail', [
 		this.model = options.model;
 		this.el = document.createElement(options.el || 'div');
 		this.isFluid = typeof options.isFluid === 'undefined' ? true : options.isFluid;
-		this.ellipses = typeof options.ellipses === 'undefined' ? true : options.ellipses;
 		this.initialize();
 	}
 
