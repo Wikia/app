@@ -33,6 +33,10 @@
 		vetLoader = {},
 		template = '';
 
+	/**
+	 * Load template, js, scss, and messages. Only called the first time VET is opened.
+	 * @returns {Array}
+	 */
 	function loadResources() {
 		var deferredList = [];
 
@@ -79,6 +83,7 @@
 			$elem.stopThrobbing();
 			return;
 		} else if (window.wgUserName === null) {
+			// handle login on article page
 			window.UserLoginModal.show({
 				origin: 'vet',
 				callback: function () {
@@ -87,7 +92,6 @@
 				}
 			});
 			$elem.stopThrobbing();
-			// handle login on article page
 			return;
 		}
 
@@ -105,6 +109,7 @@
 		}
 
 		$.when.apply($, resourceList).done(function (templateResp) {
+			// If this is the first time resources are loaded, cache the template string
 			if (!resourcesLoaded) {
 				template = templateResp[0];
 			}
@@ -127,6 +132,7 @@
 
 				vet.show(options);
 
+				// resources are now officially loaded
 				resourcesLoaded = true;
 			});
 		});
