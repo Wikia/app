@@ -37,8 +37,19 @@ $(function() {
 	// TODO prepare methods
 	addSearch();
 	//$( '#WikiaHeader' ).find( '.search-form' ).addClass( 'search-collapsed' );
-	$( '#WikiaHeader' ).find( '.search-box' ).addClass( 'search-small' );
+	$( '#WikiaHeader' ).find( '.search-box' ).attr( 'placeholder', 'Search...' ).addClass( 'search-small' );
 	//$( '#WikiaHeader' ).find( '.search-button' ).addClass( 'search-icon' );
-	
+
+	$('<input>')
+		.addClass( 'search-button' )
+		.addClass( 'alternative' )
+		.attr( 'type', 'submit' )
+		// TODO i18n
+		.val( 'Search this Wikia' )
+		.click(
+			function() { $(this ).parents( 'form:first' ).attr( 'action', $( '#WikiaSearch' ).attr( 'action' ) ); }
+		)
+		.insertAfter( $( '#WikiaHeader' ).find( '.search-button' ) );
+
 	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
 });

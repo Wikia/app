@@ -87,20 +87,28 @@ $ab-text-color: #3a3a3a;
 			border-radius: 4px;
 			font-size: 14px;
 			height: 17px;
-			margin-right: 3px;
 			width: 400px;
 			padding: 5px 8px;
+		}
+
+		.search-button {
+			margin-left: 3px;
+
+			&.alternative {
+				color: $color;
+				background-color: $menu-hover-bg-color;
+			}
 		}
 
 		.search-collapsed {
 			.search-box {
 				border-radius: 4px 0 0 4px;
 				border-right: 0;
-				margin: 0;
 			}
 
 			.search-button {
 				border-radius: 0 4px 4px 0;
+				margin: 0;
 			}
 		}
 
