@@ -38,7 +38,7 @@ SQL;
 
 				foreach ( $data as $item ) {
 					// If this is an array, the data is bad
-					if ( is_array($item) ) {
+					if ( empty( $item['title'] ) ) {
 						file_put_contents( '/tmp/badData.log', $dbname."\n", FILE_APPEND );
 						echo "\t$dbname - BAD DATA\n";
 
