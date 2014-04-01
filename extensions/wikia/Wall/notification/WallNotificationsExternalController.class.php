@@ -62,7 +62,6 @@ class WallNotificationsExternalController extends WikiaController {
 
 			$all = $wn->getCounts( $this->wg->User->getId() );
 
-
 			foreach($all as $k => $wiki) {
 				$sum += $wiki['unread'];
 				$wikiSitename = $wiki['sitename'];
