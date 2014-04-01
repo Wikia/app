@@ -382,10 +382,10 @@ class WikiaBarModel extends WikiaBarModelBase {
 		return wfSharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
 	}
 
-	public static function getValidImageUrl( $class ) {
+    public static function getValidImageUrl($class) {
         global $wgExtensionsPath;
 
-        $imageUrl = in_array( $class, self::$availableButtonImages )
+        $imageUrl = in_array($class, self::$availableButtonImages)
             ? $wgExtensionsPath . '/wikia/WikiaBar/images/icons/' . $class . '.png'
             : $wgExtensionsPath . '/wikia/WikiaBar/images/wikiabarIcon.png';
         return $imageUrl;
