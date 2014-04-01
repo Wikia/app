@@ -61,11 +61,11 @@ foreach ($videoList as $video):
 				?>
 					<li>
 						<a href="<?= $suggest['fileUrl'] ?>" class="video thumb<? if ( $suggest === reset($suggestions) ): ?> selected<? endif; ?>">
-							<span class="timer">1:30</span>
+							<span class="timer"><?= WikiaFileHelper::formatDuration($suggest['duration']) ?></span>
 							<div class="Wikia-video-play-button"><img class="sprite play small" src=" <?= $wg->BlankImgUrl ?>"></div>
 							<img alt="<?= $suggest['fileTitle'] ?>" src="<?= $suggest['thumbUrl'] ?>" data-video-name="<?= htmlspecialchars($suggest['title']) ?>" data-video-key="<?= htmlspecialchars(urlencode($suggest['title'])) ?>" class="Wikia-video-thumb thumbimage">
 						</a>
-						<p class="suggestion-title"><?=$suggest['fileTitle'] ?></p>
+						<p class="suggestion-title"><?= $suggest['fileTitle'] ?></p>
 					</li>
 				<? endforeach; ?>
 			</ul>

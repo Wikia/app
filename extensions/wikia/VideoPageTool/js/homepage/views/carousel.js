@@ -73,6 +73,8 @@ define('videohomepage.views.carousel', [
 						.ellipses({
 							wordsHidden: 2
 						});
+				},
+				afterAction: function () {
 					self.resizeLastSlide();
 				}
 			});
