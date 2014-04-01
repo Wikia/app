@@ -128,7 +128,7 @@
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	vePreferred = mw.config.get( 'wgVisualEditor' ).visualEditorPreferred;
+	vePreferred = !!mw.config.get( 'wgVisualEditorPreferred' );
 
 	support = {
 		es5: !!(
