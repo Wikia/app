@@ -207,8 +207,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @param int $modelType
 	 * @return bool|WikiaBarModelBase
 	 */
-	protected
-	function getModel($modelType) {
+	protected function getModel($modelType) {
 		switch ($modelType) {
 			case self::WIKIA_BAR_TYPE_DATA_MODEL:
 				$model = new WikiaBarDataModel();
@@ -227,8 +226,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 	 * @param WikiaBarDataValidator $validator
 	 * @return bool|array
 	 */
-	public
-	function parseBarConfigurationMessage($message, WikiaBarDataValidator &$validator) {
+	public function parseBarConfigurationMessage($message, WikiaBarDataValidator &$validator) {
 		wfProfileIn(__METHOD__);
 		$data = array();
 		$valid = true;
@@ -270,8 +268,7 @@ class WikiaBarModel extends WikiaBarModelBase {
 		}
 	}
 
-	protected
-	function structuredData($data) {
+	protected function structuredData($data) {
 		$structuredData = array(
 			'buttons' => array(),
 			'messages' => array()
@@ -377,19 +374,20 @@ class WikiaBarModel extends WikiaBarModelBase {
 		return $structuredData;
 	}
 
-	public
-	function getData() {
+	public function getData() {
 		return $this->getBarContents();
 	}
 
-	protected
-	function getMemcKey() {
+	protected function getMemcKey() {
 		return wfSharedMemcKey('WikiaBarContents', $this->getVertical(), $this->getLang(), self::WIKIA_BAR_MCACHE_VERSION);
 	}
 
 	public static function getValidImageUrl( $class ) {
-		return in_array( $class, self::$availableButtonImages )
-			? '/extensions/wikia/WikiaBar/images/icons/' . $class . '.png'
-			: '/extensions/wikia/WikiaBar/images/wikiabarIcon.png';
-}
+        global $wgExtensionsPath;
+
+        $imageUrl = in_array( $class, self::$availableButtonImages )
+            ? $wgExtensionsPath . '/wikia/WikiaBar/images/icons/' . $class . '.png'
+            : $wgExtensionsPath . '/wikia/WikiaBar/images/wikiabarIcon.png';
+        return $imageUrl;
+    }
 }
