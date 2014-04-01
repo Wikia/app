@@ -39,7 +39,7 @@ define('videosmodule.views.rail', [
 		var self = this;
 
 		// Check for thumb count b/c this may be the control group in which case don't render
-		if (!groupParams.thumbs) {
+		if (!groupParams || !groupParams.thumbs) {
 			return;
 		}
 
