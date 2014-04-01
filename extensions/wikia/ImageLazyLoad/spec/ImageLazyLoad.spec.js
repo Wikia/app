@@ -3,7 +3,7 @@ describe('ImgLzy', function () {
 	'use strict';
 
 	function getImgLzyMock(supportsWebP) {
-		var logMock = function() {},
+		var logMock = function () {},
 			windowMock = {
 				wgEnableWebPThumbnails: true,
 			},
@@ -26,12 +26,10 @@ describe('ImgLzy', function () {
 	expect(typeof ImgLzy.rewriteURLForWebP).toBe('function');
 
 	// test thumbnail URL rewrites
-	urls = [
-		{
+	urls = [{
 			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.jpg/300px-Early_elmo.png',
 			webp: true
-		},
-		{
+		}, {
 			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.png/300px-Early_elmo.png',
 			webp: true
 		},
@@ -52,7 +50,7 @@ describe('ImgLzy', function () {
 		}
 	];
 
-	urls.forEach(function(testCase) {
+	urls.forEach(function (testCase) {
 		var url = ImgLzy.rewriteURLForWebP(testCase.url);
 		expect(url.indexOf('.webp') > -1).toBe(testCase.webp === true);
 	});

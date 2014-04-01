@@ -3,7 +3,7 @@
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, log, w ) {
+define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log, w) {
 	'use strict';
 
 	var ImgLzy,
@@ -12,7 +12,7 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)\//i;
 
 	function logger(msg) {
-		log(msg,  log.levels.info, 'ImgLzy');
+		log(msg, log.levels.info, 'ImgLzy');
 	}
 
 	ImgLzy = {
@@ -20,29 +20,29 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 		timestats: 0,
 		browserSupportsWebP: false,
 
-		init: function() {
-			var proxy = $.proxy( this.checkAndLoad, this ),
-				throttled = $.throttle( 250, proxy );
+		init: function () {
+			var proxy = $.proxy(this.checkAndLoad, this),
+				throttled = $.throttle(250, proxy);
 
 			this.createCache();
 			this.checkAndLoad();
 
-			$( window ).on( 'scroll', throttled );
-			$( '.scroller' ).on( 'scroll', throttled );
-			$( document ).on( 'tablesorter_sortComplete', proxy );
+			$(window).on('scroll', throttled);
+			$('.scroller').on('scroll', throttled);
+			$(document).on('tablesorter_sortComplete', proxy);
 
 			logger('initialized');
 		},
 
-		relativeTop: function( e ) {
-			return e.offset().top - e.parents( '.scroller' ).offset().top;
+		relativeTop: function (e) {
+			return e.offset().top - e.parents('.scroller').offset().top;
 		},
 
-		absTop: function( e ) {
+		absTop: function (e) {
 			return e.offset().top;
 		},
 
-		checkWebPSupport: function() {
+		checkWebPSupport: function () {
 			logger('checking WebP support...');
 
 			// @see http://stackoverflow.com/a/5573422
@@ -54,37 +54,39 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 				logger('has support for WebP: ' + (this.browserSupportsWebP ? 'yes' : 'no'));
 
 				// report WebP support stats to Kibana
-				if ( w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function' ) {
-					syslogReport(log.levels.info, 'webp', {'webp-support': this.browserSupportsWebP ? 'yes' : 'no'});
+				if (w.wgEnableWebPSupportStats === true && typeof syslogReport === 'function') {
+					syslogReport(log.levels.info, 'webp', {
+						'webp-support': this.browserSupportsWebP ? 'yes' : 'no'
+					});
 				}
 			}, this);
 		},
 
 		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
-		rewriteURLForWebP: function(src) {
-			if ( w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbCheckRegExp.test(src) ) {
-				src = src.replace( /\.[^\./]+$/, '.webp' );
+		rewriteURLForWebP: function (src) {
+			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbCheckRegExp.test(src)) {
+				src = src.replace(/\.[^\./]+$/, '.webp');
 			}
 			return src;
 		},
 
-		createCache: function() {
+		createCache: function () {
 			var self = this;
 			self.cache = [];
-			$( 'img.lzy' ).each( function( idx ) {
-				var $el = $( this ),
-					relativeTo = $( '.scroller' ).find( this ),
+			$('img.lzy').each(function (idx) {
+				var $el = $(this),
+					relativeTo = $('.scroller').find(this),
 					topCalc, top;
 
-				if ( relativeTo.length !== 0 ) {
-					relativeTo = relativeTo.parents( '.scroller' );
+				if (relativeTo.length !== 0) {
+					relativeTo = relativeTo.parents('.scroller');
 					topCalc = self.relativeTop;
 				} else {
-					relativeTo = $( window );
+					relativeTo = $(window);
 					topCalc = self.absTop;
 				}
 
-				top = topCalc( $el );
+				top = topCalc($el);
 				self.cache[idx] = {
 					el: this,
 					jq: $el,
@@ -93,68 +95,68 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 					bottom: $el.height() + top,
 					parent: relativeTo
 				};
-			} );
+			});
 		},
 
-		verifyCache: function() {
-			if ( this.cache.length === 0 ) {
+		verifyCache: function () {
+			if (this.cache.length === 0) {
 				return;
 			}
 			// make sure that position of elements in the cache didn't change
 			var lastidx = this.cache.length - 1,
-				randidx = Math.floor( Math.random() * lastidx ),
-				checkidx = [ lastidx, randidx ],
+				randidx = Math.floor(Math.random() * lastidx),
+				checkidx = [lastidx, randidx],
 				changed = false,
 				i,
 				idx,
 				pos,
 				diff;
-			for ( i in checkidx ) {
-				idx = checkidx[ i ];
-				if ( idx in this.cache ) {
-					pos = this.cache[idx].topCalc( this.cache[idx].jq );
-					diff = Math.abs( pos - this.cache[idx].top );
+			for (i in checkidx) {
+				idx = checkidx[i];
+				if (idx in this.cache) {
+					pos = this.cache[idx].topCalc(this.cache[idx].jq);
+					diff = Math.abs(pos - this.cache[idx].top);
 
-					if ( diff > 5 ) {
+					if (diff > 5) {
 						changed = true;
 						break;
 					}
 				}
 			}
-			if ( changed ) {
+			if (changed) {
 				this.createCache();
 			}
 		},
 
-		load: function( image ) {
+		load: function (image) {
 			// this code can only be run from AJAX requests (ie. ImgLzy is registered AFTER DOM ready event
 			// so those are new images in DOM
-			var $img = $( image ),
-				dataSrc = $img.data( 'src' );
+			var $img = $(image),
+				dataSrc = $img.data('src');
 			image.onload = '';
-			if ( dataSrc ) {
-				image.src = this.rewriteURLForWebP( dataSrc );
+			if (dataSrc) {
+				image.src = this.rewriteURLForWebP(dataSrc);
 			}
-			$img.removeClass( 'lzy' ).removeClass( 'lzyPlcHld' );
+			$img.removeClass('lzy').removeClass('lzyPlcHld');
 		},
 
-		parentVisible: function( item ) {
-			if ( item.parent[0] === window ) {
+		parentVisible: function (item) {
+			if (item.parent[0] === window) {
 				return true;
 			}
 
-			var fold = $( window ).scrollTop() + $( window ).height(),
+			var fold = $(window).scrollTop() + $(window).height(),
 				parentTop = item.parent.offset().top;
 
 			return fold > parentTop;
 		},
 
-		checkAndLoad: function() {
+		checkAndLoad: function () {
 			this.verifyCache();
 
-			var onload = function() {
-					this.setAttribute( 'class', this.getAttribute( 'class' ) + ' lzyLoaded' );
-				},
+			var onload = function () {
+				this.setAttribute('class', this.getAttribute('class') + ' lzyLoaded');
+			},
 				scrollTop,
 				scrollSpeed,
 				lastScrollTop,
@@ -163,24 +165,24 @@ define( 'wikia.ImgLzy', [ 'jquery', 'wikia.log', 'wikia.window' ], function( $, 
 				visible,
 				cacheItem;
 
-			for ( idx in this.cache ) {
+			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
 				scrollTop = cacheItem.parent.scrollTop();
-				lastScrollTop = cacheItem.parent.data( 'lastScrollTop' ) || 0;
-				scrollSpeed = Math.min( Math.abs( scrollTop - lastScrollTop ), 1000 ) * 3 + 200;
+				lastScrollTop = cacheItem.parent.data('lastScrollTop') || 0;
+				scrollSpeed = Math.min(Math.abs(scrollTop - lastScrollTop), 1000) * 3 + 200;
 				scrollBottom = scrollTop + cacheItem.parent.height() + scrollSpeed;
 				scrollTop = scrollTop - scrollSpeed;
 
-				cacheItem.parent.data( 'lastScrollTop', lastScrollTop );
+				cacheItem.parent.data('lastScrollTop', lastScrollTop);
 				visible = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
-				if ( visible && this.parentVisible( cacheItem ) ) {
-					cacheItem.jq.addClass( 'lzyTrns' );
+				if (visible && this.parentVisible(cacheItem)) {
+					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					cacheItem.el.src = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
-					cacheItem.jq.removeClass( 'lzy' );
-					delete this.cache[ idx ];
+					cacheItem.el.src = this.rewriteURLForWebP(cacheItem.jq.data('src'));
+					cacheItem.jq.removeClass('lzy');
+					delete this.cache[idx];
 				}
 			}
 		}
