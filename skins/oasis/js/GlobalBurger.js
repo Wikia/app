@@ -81,11 +81,13 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				clearTimeout(timer);
 			});
 
-			$('.WikiaLogo').on('click', function (e) {
+			$('#WikiaHeader').on('click', '#burgerMenuButton', function (e) {
 				e.preventDefault();
 
 				drawer.open();
 			});
+
+			$('<li id="burgerMenuButton">Menu</li>').insertBefore('li.WikiaLogo');
 		});
 	});
 });

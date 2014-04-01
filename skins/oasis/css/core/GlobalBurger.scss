@@ -1,6 +1,22 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 
+#burgerMenuButton {
+	background-image: url(/skins/oasis/images/burger_menu_button.png); /* $wgCdnStylePath */
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	border-right: 1px solid #aad;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 22px;
+	margin: 0 5px 0 17px;
+	padding: 11px 27px 0 20px;
+	text-transform: uppercase;
+}
+
+
 #drawerGlobalNavigation {
 	li {
 		margin-bottom: 12px;
