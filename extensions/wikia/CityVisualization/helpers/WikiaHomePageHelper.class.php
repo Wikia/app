@@ -305,10 +305,23 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 	}
 
+	/**
+	 * Get information about hubs to display on wikia homepage in hubs section
+	 * 	 *
+	 * @param $corporateId corporate wiki id
+	 * @return mixed
+	 */
 	public function getHubSlotsFromWF($corporateId) {
 		return WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
 	}
 
+	/**
+	 * Save data about hub slots displayed on wikia homepage in hubs section
+	 *
+	 * @param $hubSlotsValues data containing hub wiki id, description and links
+	 * @param $corporateId corporate wiki id
+	 * @param $lang language code
+	 */
 	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
 		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
 
@@ -381,6 +394,11 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $wikiStats;
 	}
 
+	/**
+	 * Get main vertical names
+	 *
+	 * @return array
+	 */
 	public function getWikiVerticals() {
 		return array(
 			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->text(),

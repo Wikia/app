@@ -103,6 +103,11 @@ class WikiaHomePageController extends WikiaController {
 		));
 	}
 
+	/**
+	 * Prepare data about hubs to display on Wikia homepage in hubs section
+	 *
+	 * @return Mixed|null
+	 */
 	public function prepareHubsSectionSlots() {
 		global $wgContLang;
 		$langCode = $wgContLang->getCode();
@@ -159,6 +164,13 @@ class WikiaHomePageController extends WikiaController {
 		return $hubSlot;
 	}
 
+	/**
+	 * Prepare parameters needed to display data about hub v3 in hub slot on Wikia homepage
+	 *
+	 * @param $slot slot in hubs section
+	 * @param $hub data about hub
+	 * @return array
+	 */
 	private function prepareRenderParams( $slot, $hub ) {
 		global $wgParser, $wgTitle, $wgOut;
 		return [
@@ -175,6 +187,14 @@ class WikiaHomePageController extends WikiaController {
 		];
 	}
 
+	/**
+	 * Prepare parameters needed to display data about hub v2 in hub slot on Wikia homepage
+	 *
+	 * @param $vertical vertical name
+	 * @param $categoryId category id
+	 * @param $hub data about hub
+	 * @return array
+	 */
 	private function prepareHubsV2Params( $vertical, $categoryId, $hub ) {
 		global $wgParser, $wgTitle, $wgOut;
 		return [
@@ -544,6 +564,12 @@ class WikiaHomePageController extends WikiaController {
 		$this->hubImages = $hubImages;
 	}
 
+	/**
+	 * Get first image from slider from selected hub v3
+	 *
+	 * @param $cityId hub wiki id
+	 * @return null|string
+	 */
 	public function getHubV3Images( $cityId ) {
 		$imageUrl = null;
 
@@ -578,6 +604,12 @@ class WikiaHomePageController extends WikiaController {
 		)->getData();
 	}
 
+	/**
+	 * Get list of hubs v3 in selected language
+	 *
+	 * @param $langCode
+	 * @return null
+	 */
 	private function getHubsV3List( $langCode ) {
 		$response = $this->app->sendRequest(
 			'WikiaHubsApiController',
@@ -593,6 +625,12 @@ class WikiaHomePageController extends WikiaController {
 		return $this->helper->getHubSlotsFromWF( $wgCityId );
 	}
 
+	/**
+	 * Add additional parameter to css url to pass them to scss file
+	 *
+	 * @param $oasisSettings
+	 * @return bool
+	 */
 	public static function onAddSassParameters( &$oasisSettings ) {
 		global $wgContLang, $wgCityId;
 

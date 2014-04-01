@@ -510,6 +510,11 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $url;
 	}
 
+	/**
+	 * Prepare hubs slots setup form in manage wikia home extension
+	 *
+	 * @param $hubSlotsValues
+	 */
 	private function prepareHubsForm( $hubSlotsValues ) {
 		$this->hubsForm->setFieldsValues($hubSlotsValues);
 
