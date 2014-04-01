@@ -80,6 +80,9 @@ $ab-text-color: #3a3a3a;
 		}
 
 		.search-box {
+			&.search-small {
+				width: 200px;
+			}
 			border: 1px solid $input-border-color;
 			border-radius: 4px;
 			font-size: 14px;

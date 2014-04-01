@@ -56,14 +56,29 @@ class OasisController extends WikiaController {
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
 
-		$globalSearch = GlobalTitle::newFromText(
-			'Search',
-			NS_SPECIAL,
-			Wikia::MAIN_CORPORATE_WIKI_ID
-		)->getFullURL();
-		$vars['wgGlobalSearchUrl'] = $globalSearch;
 		return true;
 	}
+
+	/*
+	 * TODO remove after Global Header ABtesting
+	 */
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		$app = F::app();
+		if ( $app->checkSkin( ['oasis'], $skin ) ) {
+			$globalSearch = GlobalTitle::newFromText(
+				'Search',
+				NS_SPECIAL,
+				Wikia::MAIN_CORPORATE_WIKI_ID
+			)->getFullURL();
+
+			$vars['wgGlobalSearchUrl'] = $globalSearch;
+		}
+
+		return true;
+	}
+	/*
+	 *  END TODO
+	 */
 
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be

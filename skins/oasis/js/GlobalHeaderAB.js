@@ -36,7 +36,9 @@ $(function() {
 
 	// TODO prepare methods
 	addSearch();
-	$( '#WikiaHeader' ).find( '.search-form' ).addClass( 'search-collapsed' );
-	$( '#WikiaHeader' ).find( '.search-button' ).addClass( 'search-icon' );
+	//$( '#WikiaHeader' ).find( '.search-form' ).addClass( 'search-collapsed' );
+	$( '#WikiaHeader' ).find( '.search-box' ).addClass( 'search-small' );
+	//$( '#WikiaHeader' ).find( '.search-button' ).addClass( 'search-icon' );
+	
 	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
 });
