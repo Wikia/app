@@ -34,29 +34,7 @@
 			font-size: 13px;
 			font-weight: bold;
 			padding: 10px;
-			//position: relative;
 			text-transform: uppercase;
-
-//			&:before {
-//				border-color: transparent transparent transparent inherit;
-//				border-style: solid;
-//				border-width: 6px 0 6px 6px;
-//				content: '';
-//				height: 0px;
-//				position: absolute;
-//				right: 10px;
-//				width: 0px;
-//			}
-//			&:after {
-//				border-color: transparent transparent transparent inherit;
-//				border-style: solid;
-//				border-width: 6px 0 6px 6px;
-//				content: '';
-//				height: 0px;
-//				position: absolute;
-//				right: 10px;
-//				width: 0px;
-//			}
 		}
 
 		a:hover,
@@ -92,12 +70,6 @@ ul.drawerSubmenu {
 			padding: 3px 0;
 		}
 
-//		a:hover,
-//		&.active a {
-//			color: #fff;
-//			text-decoration: none;
-//		}
-
 		header {
 			text-transform: uppercase;
 			font-weight: bold;
@@ -106,26 +78,13 @@ ul.drawerSubmenu {
 
 	&.video-games-vertical-color {
 		color: $color-wikiahome-videogames;
-
-
-//		a:hover,
-//		&.active a
-//		{ background-color: $color-wikiahome-videogames;}
 	}
 
 	&.lifestyle-vertical-color {
 		color: $color-wikiahome-lifestyle;
-
-//		a:hover,
-//		&.active a
-//		{ background-color: $color-wikiahome-lifestyle;}
 	}
 
 	&.entertainment-vertical-color {
 		color: $color-wikiahome-entertainment;
-
-//		a:hover,
-//		&.active a
-//		{ background-color: $color-wikiahome-entertainment;}
 	}
 }
