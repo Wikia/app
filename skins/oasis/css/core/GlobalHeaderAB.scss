@@ -1,4 +1,5 @@
 @import "color";
+@import "responsive-variables";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
 
@@ -284,4 +285,12 @@ $ab-text-color: #3a3a3a;
 			}
 		}
 	}
+
+	@media screen and (max-width: $breakpoint-small) {
+		.user-mame {
+			display: none;
+		}
+	}
 }
+
+

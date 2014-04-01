@@ -1,11 +1,12 @@
-/* moved to optimizely
+/*// moved to optimizely
 $(function() {
 	$( '#GlobalNavigation' ).addClass( 'vertical-colors' );
 
 	var GlobalSearch = {
 		header: $( '#WikiaHeader' ),
 		addSearch: function () {
-			var li = $('<li>' ),
+			var crossSearch,
+				li = $('<li>' ),
 				form = $('<form>' )
 					.addClass( 'search-form' )
 					.attr( 'method', 'get' )
@@ -34,6 +35,12 @@ $(function() {
 
 			li.append( form );
 			this.header.find( '.start-a-wiki' ).after( li );
+
+			crossSearch = $( '#search-v2-form' ).find( '.SearchInput' );
+			if ( crossSearch.length ) {
+				crossSearch.hide();
+				this.header.find( '.search-box' ).val( $('#search-v2-input' ).val() );
+			}
 		},
 		addCollapsedSearch: function() {
 			this.addSearch();
@@ -64,6 +71,9 @@ $(function() {
 		}
 	};
 
-	$( '#search-v2-form' ).find( '.SearchInput' ).remove();
+	$( '#WikiaHeader' ).addClass('v2');
+	GlobalSearch.addSmallCollapsedSearch();
+
+	$( '#AccountNavigation > li > a:not([class])' ).contents().eq(2).wrap('<span class="user-mame">');
 });
 */
