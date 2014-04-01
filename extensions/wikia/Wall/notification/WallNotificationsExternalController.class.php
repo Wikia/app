@@ -2,7 +2,7 @@
 
 class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
-	const CACHE_DURATION = 60;
+	const CACHE_DURATION = 900;
 
 	var $helper;
 	public function __construct() {
@@ -58,7 +58,7 @@ class WallNotificationsExternalController extends WikiaController {
 		$sum = 0;
 
 		// CONN-464: Skip data collection if user is not logged in
-		if ( $this->wg->User->getId() ) {
+		if ( $this->wg->User->isLoggedIn() ) {
 
 			$all = $wn->getCounts( $this->wg->User->getId() );
 
