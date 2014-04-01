@@ -280,6 +280,43 @@ class RenameUserProcess {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
 		}
 
+		//Phalanx test
+
+		if ( class_exists( 'PhalanxService' ) ) {
+			$service = new PhalanxService();
+			$service->setLimit(20);
+
+			$listingNun = [];
+			$listingOun = [];
+
+			foreach(Phalanx::getAllTypeNames() as $blockType) {
+				$res = $service->match($blockType, $nun);
+
+				if (!empty($res)) {
+					$listingNun[] = $blockType;
+				}
+
+				$res = $service->match($blockType, $oun);
+
+				if (!empty($res)) {
+					$listingOun[] = $blockType;
+				}
+
+			}
+
+			$listingNun = implode(", ", $listingNun);
+			if ( $listingNun != '' ) {
+				$linkToTest = SpecialPage::getTitleFor( 'Phalanx', 'test' )->getLinkURL( [ 'wpBlockText'=>$nun ] );
+				$this->addWarning( wfMessage( 'userrenametool-warning-phalanx-block', $nun, $linkToTest, $listingNun )->text() );
+			}
+
+			$listingOun = implode(", ", $listingOun);
+			if ( $listingOun != '' ) {
+				$linkToTest = SpecialPage::getTitleFor( 'Phalanx', 'test' )->getLinkURL( [ 'wpBlockText'=>$oun ] );
+				$this->addWarning( wfMessage( 'userrenametool-warning-phalanx-block', $oun, $linkToTest, $listingOun )->text() );
+			}
+		}
+
 		//Invalid old user name entered
 		if(!$oun){
 			$this->addError( wfMessage('userrenametool-errorinvalid', $this->mRequestData->oldUsername)->inContentLanguage()->text() );
