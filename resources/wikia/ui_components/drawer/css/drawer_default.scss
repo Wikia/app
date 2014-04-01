@@ -7,7 +7,7 @@
 
 $drawer-base-z-index: $zTop + 10;
 $drawer-close-image: '/resources/wikia/ui_components/drawer/images/cross.png';
-$drawer-shadow-size: 40px;
+$drawer-shadow-size: 15px;
 $drawer-text-color: #0e5ea3;
 $drawer-width: 250px;
 $subdrawer-width: 225px;
@@ -20,7 +20,7 @@ $subdrawer-width: 225px;
 
 .drawer,
 .subdrawer {
-	@include box-shadow(0px, 0px, $drawer-shadow-size, $color-page-shadow);
+	@include box-shadow(0px, 0px, $drawer-shadow-size, #808080);//$color-page-shadow);
 	@include box-sizing;
 
 	background: $color-page;
@@ -67,7 +67,7 @@ $subdrawer-width: 225px;
 		cursor: pointer;
 		font-size: 12px;
 		line-height: 20px;
-		margin: 7px 0 25px 5px;
+		margin: 4px 0 25px 5px;
 		padding-left: 20px;
 		text-transform: uppercase;
 		vertical-align: middle;
