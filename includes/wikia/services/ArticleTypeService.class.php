@@ -8,9 +8,6 @@ class ArticleTypeService {
 
 	const TIMEOUT = 10;
 
-	public function execute() {
-	}
-
 	/**
 	 * Returns article type for given pageId
 	 * @param int $pageId
