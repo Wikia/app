@@ -118,7 +118,7 @@ class WikiaDataAccess {
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE, $lockTimeout = self::LOCK_TIMEOUT ) {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
@@ -133,7 +133,7 @@ class WikiaDataAccess {
 
 		if ( is_null( $result ) ) {
 
-			list($gotLock, $wasLocked) = self::lock( $keyLock );
+			list($gotLock, $wasLocked) = self::lock( $keyLock, true, $lockTimeout );
 
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
@@ -201,13 +201,13 @@ class WikiaDataAccess {
 	 **********************************/
 
 
-	static private function lock( $key, $waitForLock = true ) {
+	static private function lock( $key, $waitForLock = true, $lockTimeout =  self::LOCK_TIMEOUT   ) {
 		$app = F::app();
 		$wasLocked = false;
 		$start = microtime(true);
-		$timeout = $waitForLock ? ($start + self::LOCK_TIMEOUT) : 0;
+		$timeout = $waitForLock ? ( $start + $lockTimeout ) : 0;
 		$interval = self::LOCK_WAIT_INTERVAL_START;
-		while ( !($gotLock = $app->wg->Memc->add( $key, 1, self::LOCK_TIMEOUT )) && microtime(true) < $timeout ) {
+		while ( !($gotLock = $app->wg->Memc->add( $key, 1, $lockTimeout )) && microtime(true) < $timeout ) {
 			$wasLocked = true;
 			usleep($interval * 1000); // convert ms to us
 			$interval = min( $interval * 2, self::LOCK_WAIT_INTERVAL_MAX );
