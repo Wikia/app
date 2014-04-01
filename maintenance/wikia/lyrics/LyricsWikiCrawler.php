@@ -144,9 +144,6 @@ class LyricsWikiCrawler extends Maintenance {
 	 */
 	public function doScrapeArticlesFromYesterday() {
 		$yesterdayTs = strtotime( '-1 day' );
-		//TODO: removed hardcoded date once it's done
-		$yesterdayTs = strtotime( '12th March 2014' );
-
 		$yesterday = date( "Y-m-d", $yesterdayTs );
 		$this->output( 'Scraping articles from ' . $yesterday );
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
@@ -265,7 +262,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 		$result = $this->db->select(
 			'recentchanges',
-			[ 'rc_cur_id', 'rc_new', 'rc_deleted', 'rc_type' ],
+			[ 'rc_cur_id', 'rc_type', 'rc_log_action' ],
 			[
 				'rc_namespace' => NS_MAIN,
 				'rc_timestamp between ' . $betweenStart . ' and ' . $betweenEnd
@@ -292,8 +289,12 @@ class LyricsWikiCrawler extends Maintenance {
 	 */
 	public function addIfNotExists( &$results, $row ) {
 		if( isset( $row['rc_cur_id'] ) ) {
-			$id = $row['rc_cur_id'];
-			if( !isset( $results[ $id ] ) ) {
+			$id = intval( $row['rc_cur_id'] );
+
+			// there are rows with rc_cur_id === 0 in recentchanges
+			// these are rows of deleted pages - we don't want them
+			// in result array because deletes are handled differently
+			if( $id > 0 && !isset( $results[ $id ] ) ) {
 				$results[ $id ] = $row;
 			}
 		}
