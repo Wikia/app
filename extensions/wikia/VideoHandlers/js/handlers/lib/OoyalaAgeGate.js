@@ -201,7 +201,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             ag.css('position', 'absolute');
             ag.css('z-index', '100000');
             // wikia change begin
-            if ($('.LightboxModal').length === 0) {
+            if ($('.wkMobile').length !== 0) {
                 ag.css({'height': 'auto'});
                 $('.innerElement').css({'padding-bottom': '7px', 'height': 'auto', 'width': 'auto'});
                 $(window).on('resize', _.bind(this.repositionAgeGate, this));
@@ -271,7 +271,7 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
                     this.pause();
                     this.ageGateRoot.show();
                     // wikia change begin
-                    if ($('.LightboxModal').length === 0) {
+                    if ($('.wkMobile').length !== 0) {
                         this.repositionAgeGate();
                     }
                     // wikia change end
