@@ -87,6 +87,14 @@ define('wikia.videohandler.ooyala', [
 			log( message, log.levels.error, 'VideoBootstrap' );
 		}
 
+		/* Ooyala doesn't support more than one player type (i.e. age-gate and non-age-gate)
+		 * per page load unless we delete window.OO before we reload the player script.
+		 *
+		 * If they ever fix this we can remove this hack and load params.jsFile with
+		 * video bootstrap
+		 */
+		delete window.OO;
+
 		log( 'Begin getting Ooyala assets', log.levels.info, 'VideoBootstrap' );
 
 		/* the second file depends on the first file */
