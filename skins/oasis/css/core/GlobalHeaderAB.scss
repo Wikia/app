@@ -70,6 +70,8 @@ $ab-text-color: #3a3a3a;
 		&.start-a-wiki {
 			border-left: 0;
 			margin-top: 0;
+			position: absolute;
+			right: 0;
 
 			.wikia-button {
 				background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
@@ -172,6 +174,14 @@ $ab-text-color: #3a3a3a;
 		}
 	}
 
+	.page-width-container > ul:not(:last-child)#AccountNavigation {
+		right: 190px;
+	}
+
+	.AccountNavigation {
+		right: 140px;
+	}
+
 	.AccountNavigation {
 		.subnav.show {
 			background-color: $bg-color;
@@ -267,6 +277,8 @@ $ab-text-color: #3a3a3a;
 	}
 
 	#WallNotifications {
+		right: 140px;
+
 		.subnav.show {
 			@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 			background-color: $bg-color;
@@ -287,8 +299,11 @@ $ab-text-color: #3a3a3a;
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
-		.user-mame {
+		.user-name {
 			display: none;
+		}
+		&.show-new-wiki li.start-a-wiki {
+			display: block;
 		}
 	}
 }
