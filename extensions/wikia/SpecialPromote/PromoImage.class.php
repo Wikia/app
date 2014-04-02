@@ -64,6 +64,11 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
+	public function setCityId($cityId) {
+		$this->dbName = WikiFactory::IDtoDB( $cityId );
+		return $this;
+	}
+
 	public function pathname(){
 		if ($this->isType(self::MAIN)){
 			$path = self::__MAIN_IMAGE_BASE_NAME;
@@ -73,5 +78,10 @@ class PromoImage extends WikiaObject {
 		if (!empty($this->dbName)) {
 			$path .= ',' . $this->dbName;
 		}
+	}
+
+	public function corporateFileByLang($lang){
+		$wiki_id = (new WikiaCorporateModel())->getCorporateWikiIdByLang($lang);
+		return GlobalFile::newFromText($this->pathname(), $wiki_id);
 	}
 }
