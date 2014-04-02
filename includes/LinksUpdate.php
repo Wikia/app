@@ -292,7 +292,9 @@ class LinksUpdate {
 		 * This is necessary to prevent the job queue from smashing the DB with
 		 * large numbers of concurrent invalidations of the same page
 		 */
-		$this->mInvalidationTimestamp = $this->mDb->timestamp();
+		if ( !isset( $this->mInvalidationTimestamp ) ) {
+			$this->mInvalidationTimestamp = $this->mDb->timestamp();
+		}
 		$ids = array();
 
 		$res = $this->mDb->select( 'page', array( 'page_id' ),
@@ -310,8 +312,8 @@ class LinksUpdate {
 			return;
 		}
 
-		wfProfileOut( __METHOD__ );
 		$this->mInvalidationQueue = array_merge( $this->mInvalidationQueue, $ids );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
