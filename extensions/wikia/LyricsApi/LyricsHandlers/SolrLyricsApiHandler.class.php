@@ -68,9 +68,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		$image = ucfirst( $image );
 
 		// MOB-1323 - file provided in artist template but not existing in MW
-		$file = Title::newFromText( $image, NS_FILE );
-		if( $file->exists() ) {
-			$obj->small_image = $this->getImage( $image );
+		$smallImage = $this->getImage( $image );
+		if( !is_null( $smallImage ) ) {
+			$obj->small_image = $smallImage;
 			$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
 			$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
 		}
