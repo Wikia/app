@@ -41,7 +41,6 @@ class ArticleTypeService {
 				'postData' => $json,
 				'timeout'=> self::TIMEOUT,
 				'headers' => [ 'Content-Type'=>'application/json'],
-				'noProxy' => true //only for testing with dev-arturd
 			]
 		);
 
