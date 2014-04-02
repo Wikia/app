@@ -69,12 +69,30 @@ class WikiaAppControllerTest extends PHPUnit_Framework_TestCase {
 			->setMethods( [ '__construct' ] )
 			->disableOriginalConstructor()
 			->getMock();
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+			->setMethods( [ 'isInternal' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		$mockRequest->expects( $this->at( 0 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+		$mockRequest->expects( $this->at( 1 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+		$mockRequest->expects( $this->at( 2 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( true ) );
+		$mock->setRequest( $mockRequest );
 		$refl = new ReflectionMethod( $mock, 'serveImages' );
 		$refl->setAccessible( true );
+
 		$wgApiDisableImages = false;
 		$this->assertTrue( $refl->invoke( $mock ) );
 		$wgApiDisableImages = true;
 		$this->assertFalse( $refl->invoke( $mock ) );
+		// now isInternal will return true
+		$wgApiDisableImages = true;
+		$this->assertTrue( $refl->invoke( $mock ) );
 	}
 
 	/**

@@ -174,6 +174,9 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected function serveImages() {
 		global  $wgApiDisableImages;
+		if($this->request->isInternal()){
+			return true;
+		}
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
 	}
 
