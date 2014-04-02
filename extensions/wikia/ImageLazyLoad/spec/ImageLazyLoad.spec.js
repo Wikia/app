@@ -45,7 +45,7 @@ describe('ImgLzy', function () {
 		},
 		// video thumb
 		{
-			url: 'http://images.macbre.wikia-dev.com/__cb20120603092251/muppet/images/thumb/b/b2/The_Muppets_Bollywood_Spoof_trailer_Official_HD/150px-The_Muppets_Bollywood_Spoof_trailer_Official_HD.jpg',
+			url: 'http://images.macbre.wikia-dev.com/__cb20120603092251/muppet/images/thumb/9/92/The_Muppets_Bollywood_Spoof_trailer_Official_HD/150px-The_Muppets_Bollywood_Spoof_trailer_Official_HD.jpg',
 			webp: false
 		}
 	];
