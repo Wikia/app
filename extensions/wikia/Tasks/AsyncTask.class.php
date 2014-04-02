@@ -141,7 +141,7 @@ class AsyncTask {
 		$connection->close();
 
 		if ($exception !== null) {
-			WikiaLogger::instance()->error("Failed to queue task {$this->task}: {$exception->getMessage()}", $this->args);
+			WikiaLogger::instance()->error("Failed to queue task: {$exception->getMessage()}", $payload->args);
 			throw $exception;
 		}
 
@@ -149,8 +149,10 @@ class AsyncTask {
 	}
 
 	protected function connection() {
+		global $wgTaskBroker;
+
 		if ($this->connection == null) { // TODO: read from config
-			$this->connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+			$this->connection = new AMQPConnection($wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass']);
 		}
 
 		return $this->connection;
