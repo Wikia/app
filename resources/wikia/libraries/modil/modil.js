@@ -222,6 +222,7 @@
 					if (errHandler instanceof funcType) {
 						errHandler.call(context, err);
 					} else {
+						debugger;
 						throw err;
 					}
 				}

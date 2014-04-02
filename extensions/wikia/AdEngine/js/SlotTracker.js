@@ -1,12 +1,15 @@
-/*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
 /*global define*/
 
-var SlotTracker = function (window, log, tracker) {
+define('ext.wikia.adEngine.slotTracker', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker'
+], function (log, window, tracker) {
 	'use strict';
 
-	var logGroup = 'SlotTracker',
+	var logGroup = 'ext.wikia.adEngine.slotTracker',
 		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
 		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
 		stats = {
@@ -70,7 +73,9 @@ var SlotTracker = function (window, log, tracker) {
 	function buildExtraParamsString(extraParams) {
 		var out = [], key;
 		for (key in extraParams) {
-			out.push(key + '=' + extraParams[key]);
+			if (extraParams.hasOwnProperty(key)) {
+				out.push(key + '=' + extraParams[key]);
+			}
 		}
 		return out.join(';');
 	}
@@ -197,6 +202,4 @@ var SlotTracker = function (window, log, tracker) {
 	slotTracker.getStats = getStats;
 
 	return slotTracker;
-};
-
-define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);
+});

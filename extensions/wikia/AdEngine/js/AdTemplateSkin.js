@@ -1,7 +1,10 @@
 /*global define*/
-define('ext.wikia.adengine.template.skin',
-	['wikia.document', 'wikia.window', 'wikia.log', 'wikia.backgroundchanger'],
-	function (document, window, log, backgroundchanger)
+define('ext.wikia.adEngine.template.skin', [
+	'wikia.document',
+	'wikia.window',
+	'wikia.log',
+	'wikia.backgroundchanger'
+], function (document, window, log, backgroundchanger)
 	{
 	'use strict';
 

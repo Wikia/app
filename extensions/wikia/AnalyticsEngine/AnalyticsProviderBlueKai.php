@@ -42,23 +42,26 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 <iframe name="__bkframe" height="0" width="0" frameborder="0" "src="javascript:void(0)" class="hidden"></iframe>
 <script type="text/javascript">
 window.bk_async = function() {
-var i,
-	paramName,
-	allowedParams = {$allowedParams},
-	pageParams = (new AdLogicPageLevelParams(Wikia.log, window)).getPageLevelParams();
+require(['ext.wikia.adEngine.adLogicPageParams'], function(adLogicPageParams){
+	var i,
+		paramName,
+		allowedParams = {$allowedParams},
+		pageParams = adLogicPageParams.getPageLevelParams();
 
-for (param in pageParams){
-	if (pageParams.hasOwnProperty(param) && allowedParams[param]) {
-		if (typeof pageParams[param] === "string") {
-			pageParams[param] = [pageParams[param]];
-		}
-		for(i=0;i<pageParams[param].length;i++) {
-			bk_addPageCtx(param, pageParams[param][i]);
-		}
+	for (param in pageParams){
+		if (pageParams.hasOwnProperty(param) && allowedParams[param]) {
+			if (typeof pageParams[param] === "string") {
+				pageParams[param] = [pageParams[param]];
+			}
+			for(i=0;i<pageParams[param].length;i++) {
+				bk_addPageCtx(param, pageParams[param][i]);
+			}
 
+		}
 	}
-}
-BKTAG.doTag({$siteId}, 1); };
+	BKTAG.doTag({$siteId}, 1);
+});
+};
 (function() {
 var scripts = document.getElementsByTagName('script')[0];
 var s = document.createElement('script');

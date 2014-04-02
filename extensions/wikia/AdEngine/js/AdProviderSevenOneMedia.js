@@ -1,10 +1,14 @@
-/* exported AdProviderSevenOneMedia */
+/*global define*/
 /* jshint maxparams:false */
-
-var AdProviderSevenOneMedia = function (log, window, $, sevenOneMedia) {
+define('ext.wikia.adEngine.provider.71m', [
+	'wikia.log',
+	'wikia.window',
+	'jquery',
+	'ext.wikia.adEngine.sevenOneMediaHelper'
+], function (log, window, $, sevenOneMedia) {
 	'use strict';
 
-	var logGroup = 'AdProviderSevenOneMedia',
+	var logGroup = 'ext.wikia.adEngine.provider.71m',
 		slotMap = {
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',
@@ -101,4 +105,4 @@ var AdProviderSevenOneMedia = function (log, window, $, sevenOneMedia) {
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
-};
+});

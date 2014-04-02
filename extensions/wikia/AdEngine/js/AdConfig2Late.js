@@ -1,5 +1,16 @@
-/*exported AdConfig2Late*/
-var AdConfig2Late = function (
+/*global define*/
+define('ext.wikia.adEngine.adConfigLate', [
+	// regular dependencies
+	'wikia.log',
+	'wikia.window',
+	'ext.wikia.abTest',
+
+	// adProviders
+	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.remnantGpt',
+	'ext.wikia.adEngine.provider.null',
+	'ext.wikia.adEngine.provider.71m'
+], function (
 	// regular dependencies
 	log,
 	window,
@@ -7,12 +18,13 @@ var AdConfig2Late = function (
 
 	// AdProviders
 	adProviderLiftium,
+	adProviderRemnantGpt,
 	adProviderNull,
 	adProviderSevenOneMedia // TODO: move this to the early queue (remove jQuery dependency first)
 ) {
 	'use strict';
 
-	var logGroup = 'AdConfig2',
+	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
@@ -20,6 +32,10 @@ var AdConfig2Late = function (
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
+
+	if (window.wgEnableRHonDesktop) {
+		adProviderLiftium = adProviderRemnantGpt;
+	}
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -67,4 +83,4 @@ var AdConfig2Late = function (
 		getDecorators: function () {},
 		getProvider: getProvider
 	};
-};
+});

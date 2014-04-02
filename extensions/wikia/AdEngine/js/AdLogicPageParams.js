@@ -1,14 +1,16 @@
 /*jshint camelcase:false*/
-var AdLogicPageLevelParams = function (
-	log,
-	window,
-	Krux,             // optional
-	adLogicPageDimensions, // optional
-	abTest            // optional
-) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageParams', [
+	'wikia.log',
+	'wikia.window',
+	'ext.wikia.adEngine.krux',
+	'ext.wikia.adEngine.adLogicPageDimensions',
+	'ext.wikia.abTest'
+], function ( log, window, Krux, adLogicPageDimensions,	abTest) {
 	'use strict';
 
-	var logGroup = 'AdLogicPageLevelParams',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
+		pageParams,
 		hostname = window.location.hostname.toString(),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
@@ -128,6 +130,9 @@ var AdLogicPageLevelParams = function (
 
 	function getPageLevelParams() {
 		log('getPageLevelParams', 9, logGroup);
+		if (pageParams) {
+			return pageParams;
+		}
 
 		var site,
 			zone1,
@@ -172,17 +177,10 @@ var AdLogicPageLevelParams = function (
 		extend(params, decodeLegacyDartParams(window.amzn_targs));
 
 		log(params, 9, logGroup);
-		return params;
+		return pageParams = params;
 	}
 
 	return {
 		getPageLevelParams: getPageLevelParams
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('wikia.adlogicpageparams', ['wikia.log', 'wikia.window'], AdLogicPageLevelParams);
-	}
-}(this));
+});
