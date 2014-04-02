@@ -70,7 +70,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			var delay = 250,
 				timer;
 
-			window.GlobalNavigationDrawer = drawer;
+			window.GlobalNavigationMenu = drawer;
 
 			$('#drawerGlobalNavigation li').click(function (e) {
 				e.preventDefault();
@@ -90,13 +90,13 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				}, delay);
 			});
 
-			$('#WikiaHeader').on('click', '#burgerMenuButton', function (e) {
+			$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {
 				e.preventDefault();
 
 				drawer.open();
 			});
 
-			$('<li id="burgerMenuButton">Menu</li>').insertBefore('li.WikiaLogo');
+			$('<li id="GlobalNavigationMenuButton">Menu</li>').insertBefore('li.WikiaLogo');
 		});
 	});
 });

@@ -1,8 +1,8 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 
-#burgerMenuButton {
-	background-image: url(/skins/oasis/images/burger_menu_button.png); /* $wgCdnStylePath */
+#GlobalNavigationMenuButton {
+	background-image: url(/skins/oasis/images/icon_menu.png); /* $wgCdnStylePath */
 	background-position: 0 50%;
 	background-repeat: no-repeat;
 	border-right: 1px solid #aad;
