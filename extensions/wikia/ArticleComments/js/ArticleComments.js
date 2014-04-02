@@ -576,13 +576,24 @@ if (ArticleComments.loadOnDemand) {
 			return;
 		}
 
-		var content,
+		var userName = window.wgUserName,
+			content,
+			avatarWrapper,
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
 			// TODO: we should be able to load it this way
 			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
 			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')],
 			$comments = $('#WikiaArticleComments');
+
+		if (!ArticleComments.messagesLoaded) {
+			$.getMessages('ArticleCommentsCounter', function() {
+				ArticleComments.messagesLoaded = true;
+				makeRequest();
+			});
+		} else {
+			makeRequest();
+		}
 
 		var belowTheFold = function() {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());
@@ -607,11 +618,24 @@ if (ArticleComments.loadOnDemand) {
 						skin: true
 					},
 					callback: function(response) {
-						content = response;
+						content = $(response);
 					}
 				})
 			).then(function() {
-				$comments.removeClass('loading').html(content);
+				// add avatar to comments
+				avatarWrapper = content.find('div.session');
+				avatarWrapper.append( $('<img>', {
+					src: $comments.data("avatar-url"),
+					alt: userName,
+					width: 50,
+					height: 50
+				}));
+
+				if( userName === null) {
+					avatarWrapper.append( $.msg('oasis-comments-anonymous-prompt'));
+				}
+
+				$comments.removeClass('loading').append(content);
 
 				ArticleComments.init();
 
