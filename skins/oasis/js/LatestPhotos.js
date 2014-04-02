@@ -6,11 +6,14 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		// Special:NewFiles and LatestPhotos module
-		$(".upphotos").on('click.uploadPhotos', $.proxy(this.loginBeforeShowDialog, this));
+		// LatestPhotos module and Special:NewFiles
+		$(".WikiaRail,.mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
+
 		// LatestPhotos module only
-		$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
-			delay: { show: 500, hide: 100 }
+		$(".WikiaRail").on('afterLoad.rail', function() {
+			$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
+				delay: { show: 500, hide: 100 }
+			});
 		});
 	},
 	loginBeforeShowDialog: function(evt) {

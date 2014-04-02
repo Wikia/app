@@ -312,6 +312,7 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
+		'//skins/oasis/js/LatestActivity.js',
 	)
 );
 
@@ -1728,6 +1729,7 @@ $config['lazy_rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js'
+		'//skins/oasis/js/LazyRail.js',
+		'//skins/oasis/js/LatestPhotos.js',
 	]
 ];
