@@ -11,7 +11,7 @@ abstract class AbstractLyricsApiHandler {
 
 	abstract public function getArtist( $artist );
 	abstract public function getAlbum( $artist, $album );
-	abstract public function getSong( $artist, $album, $song );
+	abstract public function getSong( $artist, $song );
 	abstract public function searchArtist( $query, $limit, $offset );
 	abstract public function searchSong( $query, $limit, $offset );
 	abstract public function searchLyrics( $query, $limit, $offset );

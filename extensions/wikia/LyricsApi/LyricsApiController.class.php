@@ -132,7 +132,6 @@ class LyricsApiController extends WikiaController {
 	 * @desc Gets information about a song of given artist from given album
 	 *
 	 * @requestParam String $artist artist's name
-	 * @requestParam String $album album's name
 	 * @requestParam String $song song's name
 	 *
 	 * @response Object $result song's data
@@ -141,7 +140,6 @@ class LyricsApiController extends WikiaController {
 	 */
 	public function getSong() {
 		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
-		$albumName = $this->wg->Request->getVal( self::PARAM_ALBUM );
 		$songName = $this->wg->Request->getVal( self::PARAM_SONG );
 
 		if( empty( $artistName ) ) {
@@ -152,7 +150,7 @@ class LyricsApiController extends WikiaController {
 			throw new InvalidParameterApiException( self::PARAM_SONG );
 		}
 
-		$this->getData( [ $artistName, $albumName, $songName ], 'getSong' );
+		$this->getData( [ $artistName, $songName ], 'getSong' );
 	}
 
 	/**
