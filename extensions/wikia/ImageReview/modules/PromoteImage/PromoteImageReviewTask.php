@@ -215,7 +215,7 @@ class PromoteImageReviewTask extends BatchTask {
 		}
 
 		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$destinationName = $this->getNameWithWiki($destinationName, $dbname);
+		$destinationName = PromoImage::fromPathname($destinationName)->setDBName($dbname)->pathname();
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
 		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
@@ -262,7 +262,7 @@ class PromoteImageReviewTask extends BatchTask {
 			if( !empty($images) ) {
 				$removedImages = array();
 				foreach($images as $image) {
-					$imageName = $this->getNameWithWiki($image['name'], $sourceWikiDbName);
+					$imageName = PromoImage::fromPathname($image['name'])->setDBName($sourceWikiDbName)->pathname();
 					$result = $this->removeSingleImage($corpWikiId, $imageName);
 
 					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
@@ -326,19 +326,6 @@ class PromoteImageReviewTask extends BatchTask {
 			'status' => $retval,
 			'title' => $output,
 		);
-	}
-
-	protected function getNameWithWiki($destinationName, $wikiDBname) {
-		if( !in_array($wikiDBname, $this->dbNamesToBeSkipped) ) {
-			$destinationFileNameArr = explode('.', $destinationName);
-			$destinationFileExt = array_pop($destinationFileNameArr);
-
-			array_splice($destinationFileNameArr, 1, 0, array(',', $wikiDBname));
-
-			return implode('', $destinationFileNameArr).'.'.$destinationFileExt;
-		} else {
-			return $destinationName;
-		}
 	}
 
 	protected function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
