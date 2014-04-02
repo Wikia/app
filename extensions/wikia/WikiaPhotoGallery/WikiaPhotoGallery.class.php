@@ -852,12 +852,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					if ( $isVideo ) {
-						$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
-						$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
-						$linkAttribs['class'] .= ' video';
+						$playButtonSize = ThumbnailVideoController::getThumbnailSize( $image['width'] );
+						$thumbHtml = '<span class="play-circle"></span>';
+						//$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
+						//$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
+						$linkAttribs['class'] .= ' video wikia-video-thumbnail ' . $playButtonSize;
 					} else {
 						$thumbHtml = '';
-						$videoOverlay = '';
+						//$videoOverlay = '';
 					}
 
 					$imgAttribs = array(
@@ -894,7 +896,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					}
 
 					$thumbHtml .= Xml::openElement('img', $imgAttribs);
-					$thumbHtml .= $videoOverlay;
+					//$thumbHtml .= $videoOverlay;
 				} else {
 					$thumbHtml = $image['linkTitle'];
 				}
