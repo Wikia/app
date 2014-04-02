@@ -4,11 +4,6 @@
 @import 'skins/oasis/css/core/color';
 @import 'skins/oasis/css/core/layout';
 
-.videos-module, .videos-module-rail {
-	img {
-		display: block;
-	}
-}
 .videos-module {
 	margin-bottom: 30px;
 
@@ -77,42 +72,36 @@
 		line-height: 18px;
 		padding-top: 11px;
 	}
-
 }
 
-.videos-module-rail {
-	display: none;
-	// For the duration of the AB Test, we'll create a new
-	// definition for span.title here because WikiaRail responsive
-	// overrides are all over the place.
-	> .title {
+.WikiaRail .videos-module-rail {
+	&.hidden, .hidden {
+		display: none;
+	}
+
+	h1 {
 		display: block;
 		font-size: 20px;
-		padding-top: 10px;
-		margin-bottom: 18px;
+		margin-bottom: 13px;
 	}
 
 	.thumbnails {
 
 		a:first-of-type {
-			margin-bottom: 10px;
+			margin-bottom: 7px;
 		}
 
 		.title {
-			display: block;
-			font-size: 16px;
-			height: 50px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.title:last-of-type {
-			height: 40px;
+			font-size: 15px;
+			height: 42px;
 		}
 
 		.title a {
 			color: $color-text;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 
 			&:hover {
 				color: $color-links;
@@ -124,5 +113,11 @@
 .oasis-one-column .videos-module {
 	@media #{$large} {
 		margin-right: $width-rail;
+	}
+}
+
+@media screen and (max-width: $breakpoint-small) {
+	.WikiaRail .videos-module-rail {
+		display: none;
 	}
 }

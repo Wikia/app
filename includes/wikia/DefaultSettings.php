@@ -307,7 +307,6 @@ $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
-$wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -332,7 +331,6 @@ $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/Follow
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
-$wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
 $wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
@@ -369,6 +367,10 @@ $wgAutoloadClasses['Wikia\UI\UIFactoryApiController'] = $IP . '/includes/wikia/u
 $wgAutoloadClasses[ 'PreventBlockedUsers' ] = $IP . '/includes/wikia/traits/PreventBlockedUsers.trait.php';
 $wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/traits//PreventBlockedUsers.trait.php';
 
+// Spotlights AB test
+$wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
+$wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
+$wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -1197,6 +1199,18 @@ $wgAdPageLevelCategoryLangs = null;
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
+ * @name $wgEnableRHonDesktop
+ * Enables RH- hack on Desktop
+ */
+$wgEnableRHonDesktop = false;
+
+/**
+ * @name $wgAdDriverEnableRemnantGptMobile
+ * Enables Remnant Gpti on Mobile experiment
+ */
+$wgAdDriverEnableRemnantGptMobile = false;
+
+/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1215,6 +1229,18 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * Enables GA tracking of state for ad slots on pages
  */
 $wgAdDriverTrackState = false;
+
+/**
+ * @name $wgAdDriverForceDirectGptAd
+ * Forces to use AdProviderDirectGpt for all slots managed by this provider
+ */
+$wgAdDriverForceDirectGptAd = false;
+
+/**
+ * @name $wgAdDriverForceLiftiumAd
+ * Forces to use AdProviderLiftium for all slots managed by this provider
+ */
+$wgAdDriverForceLiftiumAd = false;
 
 /**
  * @name $wgHighValueCountriesDefault
@@ -1280,7 +1306,7 @@ $wgOasisResponsive = null;
  * @name $wgOasisResponsiveDisabledInLangs
  * Disables the Oasis responsive layout in those languages
  */
-$wgOasisResponsiveDisabledInLangs = ['de'];
+$wgOasisResponsiveDisabledInLangs = [];
 
 /**
  * @name $wgOasisResponsiveLimited
@@ -1293,7 +1319,7 @@ $wgOasisResponsiveLimited = null;
  * @name $wgOasisResponsiveLimitedInLangs
  * Enables the limited version of Oasis responsive layout on given languages
  */
-$wgOasisResponsiveLimitedInLangs = [];
+$wgOasisResponsiveLimitedInLangs = ['de'];
 
 /**
  * @name $wgDisableReportTime

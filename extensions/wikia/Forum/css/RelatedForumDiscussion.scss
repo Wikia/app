@@ -30,13 +30,7 @@
 			position: relative;
 			top: -3px;
 		}
-	}
-	
-	.forum-content {
-		&.forum-invisible {
-			opacity: 0;
-		}
-	}
+    }
 	
 	.forum-discussions {
 		.forum-thread {
@@ -85,13 +79,6 @@
 	.forum-see-more {
 		margin-top: 5px;
 		text-align: right;
-	}
-	
-	.forum-zero-state-creative {
-		margin-top: 16px;
-		.talk-two {
-			margin-right: 14px;
-		}
 	}
 	
 	.forum-user-name {

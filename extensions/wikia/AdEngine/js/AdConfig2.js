@@ -10,7 +10,7 @@ var AdConfig2 = function (
 	adDecoratorPageDimensions,
 
 	// adProviders
-	adProviderGpt,
+	adProviderDirectGpt,
 	adProviderEvolve,
 	adProviderLater,
 	adProviderNull
@@ -67,16 +67,30 @@ var AdConfig2 = function (
 		}
 		if (slot[2] === 'AdDriver2') {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderGpt;
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'AdDriver') {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderGpt;
+			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'Liftium') {
 			log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
 			return adProviderLater;
 		}
+
+
+		// Force Liftium
+		if (window.wgAdDriverForceLiftiumAd) {
+			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
+			return adProviderLater;
+		}
+
+		// Force DirectGpt
+		if (window.wgAdDriverForceDirectGptAd && adProviderDirectGpt.canHandleSlot(slotname)) {
+			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
+			return adProviderDirectGpt;
+		}
+
 
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
@@ -95,9 +109,9 @@ var AdConfig2 = function (
 			}
 		}
 
-		if (highValueSlots[slotname] && adProviderGpt.canHandleSlot(slotname)) {
+		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderGpt;
+			return adProviderDirectGpt;
 		}
 
 		// Non-high-value slots go to ad provider Later

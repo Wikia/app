@@ -279,7 +279,7 @@ class ForumHooksHelper {
 		#check namespace(s)
 		if ( $ns == NS_FORUM || $ns == NS_FORUM_TALK ) {
 			if ( !static::canEditOldForum( $app->wg->User ) ) {
-				$action = array( 'class' => '', 'text' => wfMsg( 'viewsource' ), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
+				$action = array( 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( array( 'action' => 'edit' ) ), 'id' => 'ca-viewsource', 'primary' => 1 );
 				$response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
 				$response->setVal( 'action', $action );
 				return false;
@@ -314,16 +314,27 @@ class ForumHooksHelper {
 
 	/**
 	 * Display Related Discussion (Forum posts) in bottom of article
+	 * @param OutputPage $out
+	 * @param string $text article HTML
+	 * @return bool: true because it is a hook
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		$app = F::App();
-		if ( $out->isArticle() && $app->wg->Title->exists()
-			&& $app->wg->Title->getNamespace() == NS_MAIN && !Wikia::isMainPage()
-			&& $app->wg->Request->getVal( 'diff' ) === null
-			&& $app->wg->Request->getVal( 'action' ) !== 'render'
-			&& !( $app->checkSkin( 'wikiamobile' ) )
+		$app = F::app();
+		$title = $out->getTitle();
+		if ( $out->isArticle()
+			&& $title->exists()
+			&& $title->getNamespace() == NS_MAIN
+			&& !Wikia::isMainPage()
+			&& $out->getRequest()->getVal( 'diff' ) === null
+			&& $out->getRequest()->getVal( 'action' ) !== 'render'
+			&& !( $app->checkSkin( 'wikiamobile', $out->getSkin() ) )
 		) {
-			$text .= $app->renderView( 'RelatedForumDiscussionController', 'index');
+			// VOLDEV-46: Omit zero-state, only render if there are related forum threads
+			$messages = RelatedForumDiscussionController::getData( $title->getArticleId() );
+			unset( $messages['lastupdate'] );
+			if ( !empty( $messages ) ) {
+				$text .= $app->renderView( 'RelatedForumDiscussionController', 'index', array( 'messages' => $messages ) );
+			}
 		}
 		return true;
 	}
@@ -336,12 +347,11 @@ class ForumHooksHelper {
 	 */
 
 	static public function onWallAction($action, $parent, $comment_id) {
-		$app = F::App();
 		$title = Title::newFromId($comment_id, Title::GAID_FOR_UPDATE);
 
 		if ( !empty($title) && MWNamespace::getSubject( $title->getNamespace() ) == NS_WIKIA_FORUM_BOARD ) {
 			$threadId = empty($parent) ? $comment_id:$parent;
-			$app->sendRequest( "RelatedForumDiscussion", "purgeCache", array('threadId' => $threadId ));
+			RelatedForumDiscussionController::purgeCache( $threadId );
 
 			//cleare board info
 			$commentsIndex = CommentsIndex::newFromId( $comment_id );

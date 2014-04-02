@@ -5,11 +5,13 @@
  * Ingest video from all premium partners using WikiFactory data
  *
  * @author William Lee (wlee@wikia-inc.com)
+ * @author Saipetch Kongkatong
+ * @author Garth Webb
  */
 
 ini_set( 'display_errors', 'stdout' );
 
-$optionsWithArgs = array( 'u', 's', 'e', 'i' );
+$optionsWithArgs = [ 'u', 's', 'e', 'i' ];
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
@@ -30,11 +32,11 @@ Options:
   -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
   --ra				use ooyala remote asset to ingest video
+  --summary			show summary information
 
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
-                    If none is specified, script will ingest content from all
-		    supported premium providers.
+                    If none is specified, script will ingest content from all supported premium providers.
 
 
 EOT;
@@ -42,22 +44,23 @@ EOT;
 }
 
 // Calculate default date range - start: yesterday, end: tomorrow
-$di = new DateInterval('P1D');
+$di = new DateInterval( 'P1D' );
 $defaultStart = date_create();
 $defaultEnd   = date_create();
-date_add($defaultEnd, $di);
-date_sub($defaultStart, $di);
+date_add( $defaultEnd, $di );
+date_sub( $defaultStart, $di );
 
 // Read input parameters
 $userName     = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
-$endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get($defaultEnd);
-$startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get($defaultStart);
+$endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get( $defaultEnd );
+$startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get( $defaultStart );
 $debug        = isset( $options['d'] );
 $reupload     = isset( $options['r'] );
 $ignoreRecent = isset( $options['i'] ) ? $options['i'] : 0;
 $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
-$provider     = empty( $args[0] ) ? '' : strtolower($args[0]);
+$showSummary  = isset( $options['summary'] );
+$provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
 
 // check if allow to upload file
 if ( $wgEnableUploads === false ) {
@@ -71,7 +74,7 @@ if ( wfReadOnly() ) {
 
 // Make it clear when we're in debug mode
 if ( $debug ) {
-	echo("== DEBUG MODE ==\n");
+	echo( "== DEBUG MODE ==\n" );
 }
 
 // Populate $wgUser
@@ -81,70 +84,79 @@ loadUser( $userName );
 $providersVideoFeed = loadProviders( $provider );
 
 // Loop through each provider and ingest video metadata
-foreach ($providersVideoFeed as $provider) {
-	print("Starting import for provider $provider...\n");
+foreach ( $providersVideoFeed as $provider ) {
+	print( "Starting import for provider $provider...\n" );
 
 	$feedIngester = VideoFeedIngester::getInstance( $provider );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
 	$ingestionData = $feedIngester->getWikiIngestionData();
-	if ( empty($ingestionData) ) {
-		die("No ingestion data found in wikicities. Aborting.");
+	if ( empty( $ingestionData ) ) {
+		die( "No ingestion data found in wikicities. Aborting." );
 	}
 
 	// When necessary download a list of resources into $file and reformat
 	// the start and end date for each provider
 	$file = '';
 	$startDate = $endDate = '';
-	switch ($provider) {
+	switch ( $provider ) {
 		case VideoFeedIngester::PROVIDER_SCREENPLAY:
-			$startDate = date('m/d/y', $startDateTS);
-			$endDate = date('m/d/y', $endDateTS);
-			$file = $feedIngester->downloadFeed($startDate, $endDate);
+			// no file needed
+			$startDate = date( 'm/d/y', $startDateTS );
+			$endDate = date( 'm/d/y', $endDateTS );
+			$remoteAsset = true;
 			break;
 		case VideoFeedIngester::PROVIDER_IGN:
-			$startDate = date('Y-m-d', $startDateTS).'T00:00:00-0800';
-			$endDate = date('Y-m-d', $endDateTS).'T00:00:00-0800';
-			$file = $feedIngester->downloadFeed($startDate, $endDate);
+			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
+			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
+			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
 		case VideoFeedIngester::PROVIDER_REALGRAVITY:
 			// no file needed
-			$startDate = date('Y-m-d', $startDateTS);
+			$startDate = date( 'Y-m-d', $startDateTS );
 			break;
 		case VideoFeedIngester::PROVIDER_ANYCLIP:
 			$file = $feedIngester->downloadFeed( $getAllVideos );
 			break;
 		case VideoFeedIngester::PROVIDER_OOYALA:
 			// no file needed
-			$startDate = date('Y-m-d', $startDateTS).'T00:00:00Z';
-			$endDate = date('Y-m-d', $endDateTS).'T00:00:00Z';
+			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00Z';
+			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00Z';
 			break;
 		case VideoFeedIngester::PROVIDER_IVA:
 			// no file needed
-			$startDate = date('Y-m-d', $startDateTS);
-			$endDate = date('Y-m-d', $endDateTS);
+			$startDate = date( 'Y-m-d', $startDateTS );
+			$endDate = date( 'Y-m-d', $endDateTS );
 			$remoteAsset = true;
 			break;
 		default:
 	}
 
-	$params = array(
-		'debug' => $debug,
-		'startDate' => $startDate,
-		'endDate' => $endDate,
+	$params = [
+		'debug'        => $debug,
+		'startDate'    => $startDate,
+		'endDate'      => $endDate,
 		'ignorerecent' => $ignoreRecent,
-		'remoteAsset' => $remoteAsset,
-	);
+		'remoteAsset'  => $remoteAsset,
+	];
 
-	if ( !empty($ingestionData['keyphrases']) ) {
+	if ( !empty( $ingestionData['keyphrases'] ) ) {
 		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}
 
-	$numCreated = $feedIngester->import($file, $params);
+	$numCreated = $feedIngester->import( $file, $params );
+	$summary[$provider] = $feedIngester->getResultSummary();
 
-	print "Created $numCreated articles!\n\n";
+	// show ingested videos by vertical
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester, $provider ), 'vertical' );
+
+	print "\nCreated $numCreated articles!\n\n";
 }
+
+// show summary
+displaySummary( $showSummary, getContentSummary( $summary ) );
+
 
 function loadUser( $userName ) {
 	global $wgUser;
@@ -166,12 +178,69 @@ function loadProviders ( $provider ) {
 		$providersVideoFeed = VideoFeedIngester::activeProviders();
 	} elseif ( array_search( $provider, VideoFeedIngester::allProviders() ) !== false ) {
 		// If a provider was specified, check it against the list of legal providers
-		$providersVideoFeed = array( $provider );
+		$providersVideoFeed = [ $provider ];
 	} else {
 		// If a provider was given but was not found, die.
-		die("unknown provider $provider. aborting.\n");
+		die( "unknown provider $provider. aborting.\n" );
 	}
 
 	return $providersVideoFeed;
 }
 
+function getContentSummary( $summary ) {
+	$now = date( 'Y-m-d H:i:s' );
+	$content = "Run Date: $now\n";
+
+	// get header
+	$keys = array_keys( current( $summary ) );
+	$header = array_merge( ['provider'], $keys );
+	$content .= implode( "\t\t", array_map( 'ucwords', $header ) )."\n";
+
+	// get body
+	$summary['total'] = array_fill_keys( $keys, 0 );
+	foreach ( $summary as $provider => &$result ) {
+		$body = [ strtoupper( $provider ) ];
+		foreach ( $result as $key => $value ) {
+			$summary['total'][$key] += $value;
+			$body[] = $value;
+		}
+		$content .= implode( "\t\t", $body )."\n";
+	}
+
+	return $content;
+}
+
+function getContentIngestedVideosByCategory( $ingester, $provider ) {
+	$content = "\n\nProvider: ".strtoupper( $provider )."\n";
+	foreach ( $ingester->getResultIngestedVideos() as $category => $msgs ) {
+		$content .= "\nCategory: $category\n";
+		if ( !empty( $msgs ) ) {
+			$content .= implode( '', $msgs );
+			$content .= "\n";
+		}
+	}
+
+	return $content;
+}
+
+function displaySummary( $showSummary, $content, $type = 'summary' ) {
+	if ( empty( $showSummary ) ) {
+		echo $content;
+	} else {
+		$fileVertical = '/tmp/ingestion_vertical';
+		if ( $type == 'summary' ) {
+			// write summary to file
+			$filename = '/tmp/ingestion_summary';
+			file_put_contents( $filename, $content );
+
+			// write ingested videos by vertical to file
+			$content = file_get_contents( $fileVertical );
+			file_put_contents( $filename, $content, FILE_APPEND );
+
+			// delete vertical file
+			unlink( $fileVertical );
+		} else {
+			file_put_contents( $fileVertical, $content, FILE_APPEND );
+		}
+	}
+}

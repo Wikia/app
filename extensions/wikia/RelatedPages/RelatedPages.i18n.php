@@ -31,12 +31,14 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Gagnabil
+ * @author Kuwaity26
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'wikiarelatedpages-desc' => 'يضيف قائمة بصفحات ذات صلة لصفحات',
 	'wikiarelatedpages-heading' => 'اقرأ المزيد',
 	'wikiamobile-related-article' => 'مقالة ذات صلة',
+	'wikiamobile-people-also-read' => 'القراء طالعوا أيضًا',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -65,11 +67,14 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiarelatedpages-desc' => 'Ouzhpennañ ur roll pajennoù liammet gant pajennoù all',
 	'wikiarelatedpages-heading' => "Lenn muioc'h",
+	'wikiamobile-related-article' => 'Pennad damheñvel',
+	'wikiamobile-people-also-read' => 'An dud o deus lennet ivez',
 );
 
 /** Bosnian (bosanski)
@@ -291,6 +296,8 @@ $messages['mn'] = array(
 $messages['ms'] = array(
 	'wikiarelatedpages-desc' => 'Membubuh senarai laman berkaitan pada laman',
 	'wikiarelatedpages-heading' => 'Bacaan lanjut',
+	'wikiamobile-related-article' => 'Rencana Berkenaan',
+	'wikiamobile-people-also-read' => 'Rencana berkenaan',
 );
 
 /** Neapolitan (Napulitano)
@@ -367,11 +374,14 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
  * @author Giro720
  */
 $messages['pt-br'] = array(
 	'wikiarelatedpages-desc' => 'Adiciona a páginas uma lista de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Leia mais',
+	'wikiamobile-related-article' => 'Artigo Relacionado',
+	'wikiamobile-people-also-read' => 'Outras pessoas também leram',
 );
 
 /** tarandíne (tarandíne)

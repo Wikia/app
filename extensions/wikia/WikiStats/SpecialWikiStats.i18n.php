@@ -304,7 +304,9 @@ $messages['qqq'] = array(
 	'wikistats_wikiurl' => '{{Identical|URL}}',
 	'wikistats_wikicreated' => '{{Identical|Created}}',
 	'wikistats_wikilang' => '{{Identical|Language}}',
+	'wikistats_website' => '{{Identical|Website}}',
 	'wikistats_tables' => '{{Identical|Table}}',
+	'wikistats_charts' => '{{Identical|Chart}}',
 	'wikistats_back_to_prevpage' => '{{Identical|Back}}',
 	'wikistats_trend_formula' => '{{Identical|Formula}}',
 	'wikistats_trend_ordered' => 'Typo: wiki -> wikis',
@@ -1272,7 +1274,7 @@ $messages['br'] = array(
 	'wikistats_namespaces' => 'esaouennoù anv',
 	'wikistats_redirects' => 'adkasoù',
 	'wikistats_edited_in_namespace' => 'Kemmet en egorenn anvioù',
-	'wikistats_main_namespace' => 'Endalch <br /> egorenn anvioù', # Fuzzy
+	'wikistats_main_namespace' => 'pennañ',
 	'wikistats_image_namespace' => 'skeudenn',
 	'wikistats_page_requests' => 'goulennoù pajennoù',
 	'wikistats_visits' => 'gweladennoù',
@@ -2129,7 +2131,7 @@ $messages['diq'] = array(
 	'wikistats_active_months' => 'Aşmi',
 	'wikistats_articles_text' => 'Wesiqey',
 	'wikistats_archived' => 'Arşiv',
-	'wikistats_other' => 'Zewmi',
+	'wikistats_other' => 'Zewbi',
 	'wikistats_database' => 'Erzêmelumati',
 	'wikistats_links' => 'Gırey',
 	'wikistats_images' => 'Resımi',
@@ -2224,8 +2226,8 @@ $messages['diq'] = array(
 	'wikistats_blog_comment' => 'Vatışê Blogi',
 	'wikistats_photo_new' => 'Fotrafê newey',
 	'wikistats_video_new' => 'Vidyoyê newey',
-	'wikistats_user_page_edits' => 'Karber:Pela Vurnayışi',
-	'wikistats_user_talk_edits' => 'Karber:Werenayış Vurnayışi',
+	'wikistats_user_page_edits' => 'Karber:Vurnayışê pele',
+	'wikistats_user_talk_edits' => 'Karber:Vurnayışê werênayışi',
 	'wikistats_article_daily' => 'Vurnayışi/roce',
 	'wikistats_image_uploads' => 'Resım barke',
 	'wikistats_video_uploads' => 'Vidyo barke',
@@ -2241,7 +2243,7 @@ $messages['diq'] = array(
 	'wikistats_language_top' => 'Top $1 zıwani',
 	'wikistats_language_all' => 'Zıwani pêro',
 	'wikistats_title' => 'Sername',
-	'wikistats_summary_data' => 'Melumatê mersel',
+	'wikistats_summary_data' => 'Melumatê xulasa',
 	'wikistats_namespaces_top10list' => 'listey Tewr 10a',
 	'wikistats_namespace_top' => 'Verşınasiya Cayênaman',
 );
@@ -2504,6 +2506,7 @@ Por favor [[Special:UserLogin|inicia sesión o crea una cuenta]] si todavía no 
 /** Basque (euskara)
  * @author An13sa
  * @author Subi
+ * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
 	'wikistats' => 'Wikia Estatistikak',
@@ -2540,7 +2543,7 @@ $messages['eu'] = array(
 	'wikistats_words' => 'hitz',
 	'wikistats_interwiki' => 'interwiki',
 	'wikistats_image' => 'irudi',
-	'wikistats_redirects' => 'birzuzenketa',
+	'wikistats_redirects' => 'birbideratze',
 	'wikistats_main_namespace' => 'nagusia',
 	'wikistats_image_namespace' => 'irudi',
 	'wikistats_visits' => 'bisita',
@@ -5627,7 +5630,7 @@ $messages['mk'] = array(
 	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikicreated' => 'Создадено:',
 	'wikistats_wikilang' => 'Јазик:',
-	'wikistats_note_mainstats' => 'Напомена: Износите за првите месеци се премали. За првичниот период нема секогаш зачувана историја на ревизии.',
+	'wikistats_note_mainstats' => 'Напомена: Износите за првите месеци се премали. За првичниот период нема секогаш зачувана историја на преработки.',
 	'wikistats_history_mainstats_value1' => 'x &lt; 0%',
 	'wikistats_history_mainstats_value2' => '0% &lt; x &lt; 25%',
 	'wikistats_history_mainstats_value3' => '25% &lt; x &lt; 75%',
@@ -6798,7 +6801,7 @@ $messages['oc'] = array(
 	'wikistats_see_also' => 'Vejatz tanben :',
 	'wikistats_language_all' => 'Totas las lengas',
 	'wikistats_recordspager' => "Mostrar '''$1''' de '''$2''' sus '''$3''' registraments",
-	'wikistats_title' => 'Titol',
+	'wikistats_title' => 'Títol',
 );
 
 /** Deitsch (Deitsch)

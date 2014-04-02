@@ -2163,6 +2163,7 @@ $messages['ms'] = array(
 	'multiwikifindpagenames' => 'Cari nama laman',
 	'multiwikienterpagename' => 'Isikan nama laman:',
 	'multiwikirecords' => '$1 wiki ditemui',
+	'multiwikifinder-redirect' => 'lencong',
 	'action-multiwikifinder' => 'cari tajuk tertentu di seluruh Wikia',
 );
 
@@ -2450,10 +2451,11 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'multiwikiedit_norecentchanges_caption' => 'Mostrar pas lo cambiament dins los Cambiaments Recents',
+	'multiwikiedit_norecentchanges_caption' => 'Afichar pas lo cambiament dins los Darrièrs Cambiaments',
 );
 
 /** Deitsch (Deitsch)

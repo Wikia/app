@@ -526,7 +526,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
 
 				if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
-					print "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n";
+					$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
 					continue;
 				}
 
@@ -575,7 +575,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				$videoAssets = $program['VideoAssets']['results'];
 				$numVideos = count( $videoAssets );
-				print( "{$program['title']} (Series:{$clipData['series']}): Found $numVideos videos...\n" );
+				print( "{$program['title']} (Series:{$clipData['series']}): ");
+				$this->videoFound( $numVideos );
 
 				// add video assets
 				foreach ( $videoAssets as $videoAsset ) {
@@ -601,7 +602,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$clipData['videoId'] = $videoAsset['Publishedid'];
 
 					if ( !empty( $videoAsset['ExpirationDate'] ) ) {
-						print "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n";
+						$this->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
 						continue;
 					}
 
@@ -773,7 +774,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
 		if ( $resp === false ) {
-			print( "ERROR: problem downloading content.\n" );
+			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 
 			return false;
@@ -802,13 +803,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
-		if ( !empty( $data['language'] ) && strtolower( $data['language'] ) != 'english' ) {
+		if ( !empty( $data['language'] ) && !preg_match( "/\benglish\b/i", $data['language'] ) ) {
 			$categories[] = 'International';
 			$categories[] = $data['language'];
 		}
 
 		// add subtitle
-		if ( !empty( $data['subtitle'] ) && strtolower( $data['subtitle'] ) != 'english' ) {
+		if ( !empty( $data['subtitle'] ) && !preg_match( "/\benglish\b/i", $data['subtitle'] ) ) {
 			$categories[] = 'International';
 			$categories[] = $data['subtitle'];
 		}

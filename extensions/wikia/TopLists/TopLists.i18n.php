@@ -385,6 +385,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+	'toplists-editor-description-placeholder' => 'ДӀаязде цунах лаьцна',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
 	'toplists-image-browser-upload-btn' => 'Харжа',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунд}}',
@@ -1665,6 +1666,13 @@ Ga naar Wikia om de wijzigingen te bekijken! $1
 
 Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
 	'toplists-create-heading' => '<em>Nieuw!</em> Maak je eigen Top 10 aan',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'toplists-editor-description-placeholder' => 'Entratz una descripcion',
 );
 
 /** Polish (polski)

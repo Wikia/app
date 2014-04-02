@@ -1,4 +1,5 @@
 <?php
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * Abstraction classes for SQL data access (or any other external resource)
@@ -14,6 +15,8 @@ class WikiaDataAccess {
 	 **********************************/
 
 	const LOCK_TIMEOUT = 60; // lock for at most 60s
+	const LOCK_WAIT_INTERVAL_START = 10; // start with 10ms delay
+	const LOCK_WAIT_INTERVAL_MAX = 1000; // max. delay between lock checks = 1s
 	const CACHE_TIME_FACTOR_FOR_LOCK = 2; // How many times longer cache should be valid when using cacheWithLock
 
 	/**
@@ -115,7 +118,8 @@ class WikiaDataAccess {
 	* @author Piotr Bablok <pbablok@wikia-inc.com>
 	* @author Jakub Olek <jolek@wikia-inc.com>
 	*/
-	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE ) {
+	static function cacheWithLock( $key, $cacheTime, $getData, $command = self::USE_CACHE, $lockTimeout = self::LOCK_TIMEOUT ) {
+		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if ( $command == self::SKIP_CACHE ) {
@@ -129,12 +133,12 @@ class WikiaDataAccess {
 
 		if ( is_null( $result ) ) {
 
-			list($gotLock, $wasLocked) = self::lock( $keyLock );
+			list($gotLock, $wasLocked) = self::lock( $keyLock, true, $lockTimeout );
 
 			if( $wasLocked && $gotLock ) {
 				self::unlock( $keyLock );
 				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
+				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key, true) : null;
 			}
 
 			if( is_null( $result ) ) {
@@ -174,6 +178,7 @@ class WikiaDataAccess {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $result['data'];
 	}
 
@@ -196,14 +201,23 @@ class WikiaDataAccess {
 	 **********************************/
 
 
-	static private function lock( $key, $waitForLock = true ) {
+	static private function lock( $key, $waitForLock = true, $lockTimeout =  self::LOCK_TIMEOUT   ) {
 		$app = F::app();
 		$wasLocked = false;
-		$timeout = $waitForLock ? self::LOCK_TIMEOUT : 1;
-		$gotLock = false;
-		for ( $i = 0; $i < $timeout && !($gotLock = $app->wg->Memc->add( $key, 1, self::LOCK_TIMEOUT )); $i++ ) {
+		$start = microtime(true);
+		$timeout = $waitForLock ? ( $start + $lockTimeout ) : 0;
+		$interval = self::LOCK_WAIT_INTERVAL_START;
+		while ( !($gotLock = $app->wg->Memc->add( $key, 1, $lockTimeout )) && microtime(true) < $timeout ) {
 			$wasLocked = true;
-			sleep( 1 );
+			usleep($interval * 1000); // convert ms to us
+			$interval = min( $interval * 2, self::LOCK_WAIT_INTERVAL_MAX );
+		}
+
+		if ( mt_rand( 1, 100 ) <= 5 ) {  // 5% sampling
+			$lockTime = (int)( ( microtime( true ) - $start ) * 1000000 );
+
+			WikiaLogger::instance()->debug( 'WikiaDataAccessLock', [ 'waitForLock' => $waitForLock, 'gotLock' => $gotLock,
+				'wasLocked' => $wasLocked, 'lockTime' => $lockTime, 'key' => $key ] );
 		}
 
 		return array($gotLock, $wasLocked);
@@ -213,10 +227,15 @@ class WikiaDataAccess {
 		F::app()->wg->Memc->delete( $key );
 	}
 
-	/*
+	/**
 	 * Internal use by cacheWithLock code-path
+	 *
+	 * @param bool $clearCache set it to true to force checking for updated value
 	 */
-	static private function getDataAndVerify( $app, $key ) {
+	static private function getDataAndVerify( $app, $key, $clearLocalCache = false ) {
+		if ( $clearLocalCache ) {
+			$app->wg->Memc->clearLocalCache( $key );
+		}
 		$result = $app->wg->Memc->get( $key );
 		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
 			$result = null;

@@ -647,6 +647,10 @@ $messages['fi'] = array(
 	'founderprogressbar-list-skipped-task-label' => 'Ohitetut tehtävät',
 	'founderprogressbar-list-skipped-task-desc' => 'Voit suorittaa nämä milloin tahansa.',
 	'founderprogressbar-list-bonus-task-label' => 'Bonustehtävät',
+	'founderprogressbar-task-call-to-action' => 'Siirry tehtävään',
+	'founderprogressbar-completion-message' => 'Onnittelut! Olet tehnyt mahtavan työn ja suorittanut kaikki tehtävät sataprosenttisesti. Wikisi näyttäisi jo todella päässeen vauhtiin. Jatka samaan malliin!',
+	'founderprogressbar-bonus-task-notice' => 'Huom: kukin bonustehtävä voidaan suorittaa useasti. Suorita niin monta, kuin tarvitset päästääksesi sataan prosenttiin.',
+	'founderprogressbar-page-add10-label' => 'Saavuta $1 {{PLURAL:$1|sivu|sivua}}',
 	'founderprogressbar-themedesigner-visit-label' => 'Mukauta teemaasi',
 	'founderprogressbar-total-edit75-label' => 'Saavuta 75 muokkausta',
 	'founderprogressbar-category-edit-label' => 'Muokkaa luokkasivua',
@@ -1507,10 +1511,11 @@ $messages['nl'] = array(
 );
 
 /** Occitan (occitan)
+ * @author Cedric31
  * @author Hulothe
  */
 $messages['oc'] = array(
-	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Cambiaments Recents',
+	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Darrièrs Cambiaments',
 );
 
 /** Polish (polski)

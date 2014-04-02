@@ -1,7 +1,7 @@
 /**
  * view for individual carousel thumbs. Data is thumbnail and video title
  */
-define('shared.views.carouselthumb', [
+define('shared.views.carouselThumb', [
 	'jquery',
 	'videopagetool.templates.mustache',
 	'thumbnails.templates.mustache'
