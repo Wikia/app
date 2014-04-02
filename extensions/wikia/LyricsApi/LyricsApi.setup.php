@@ -18,7 +18,6 @@ $wgExtensionCredits['api'][] = array(
 );
 
 // Load needed classes
-$wgAutoloadClasses['AbstractLyricsApiHandler'] = $dir . '/LyricsHandlers/AbstractLyricsApiHandler.class.php';
 $wgAutoloadClasses['SolrLyricsApiHandler'] = $dir . '/LyricsHandlers/SolrLyricsApiHandler.class.php';
 $wgAutoloadClasses['LyricsApiController'] = $dir . '/LyricsApiController.class.php';
 $wgAutoloadClasses['LyricsApiBase'] = $dir . '/LyricsApiBase.class.php';

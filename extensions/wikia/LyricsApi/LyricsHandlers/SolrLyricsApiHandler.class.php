@@ -1,6 +1,6 @@
 <?php
 
-class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
+class SolrLyricsApiHandler {
 	const IMG_WIDTH_SMALL = 174;
 	const IMG_HEIGHT_SMALL = 174;
 	const IMG_WIDTH_MEDIUM = 300;
@@ -12,6 +12,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	const HIGHLIGHT_POSTFIX = '</em>';
 
 	const INDEX_FIELD_NAME_LYRICS = 'lyrics';
+
+	const API_ENTRY_POINT = 'wikia.php';
+	const API_CONTROLLER_NAME = 'LyricsApi';
 
 	/**
 	 * @var Solarium_Client
@@ -491,6 +494,24 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		}
 
 		return $songs;
+	}
+
+	/**
+	 * @desc Builds an URL to the API
+	 *
+	 * @param Array $params params added to the URL
+	 *
+	 * @return string
+	 */
+	protected function buildUrl( $params ) {
+		return implode('',
+			[
+				F::app()->wg->Server,
+				'/',
+				self::API_ENTRY_POINT,
+				'?',
+				http_build_query( $params )
+			]);
 	}
 
 }
