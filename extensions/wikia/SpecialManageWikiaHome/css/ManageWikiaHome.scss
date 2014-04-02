@@ -143,25 +143,25 @@
 	}
 }
 
-.hubs-slots {
-	.hub-slot {
-		display: inline-block;
-		width: 30%;
-		.input-group {
-			margin: 10px 0;
-			label {
-				display: block;
-			}
-			textarea {
-				height: 75px;
-				width: 80%;
-			}
-		}
+
+.hub-slot {
+	display: inline-block;
+	width: 30%;
+	.input-group {
+		margin: 10px 0;
 	}
-	.hubs-slots-submit {
-		float: none;
+	label {
+		display: block;
+	}
+	textarea {
+		height: 75px;
+		width: 80%;
 	}
 }
+.hubs-slots-submit {
+	float: none;
+}
+
 
 input[type=submit] {
 	float: right;

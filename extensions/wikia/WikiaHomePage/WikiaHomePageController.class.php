@@ -114,52 +114,91 @@ class WikiaHomePageController extends WikiaController {
 
 		$hubSlot = WikiaDataAccess::cache(
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
-			86400 /* 24 hours */,
+			WikiaDataAccess::CACHE_STANDARD /* 24 hours */,
 			function() use( $langCode ) {
 				$hubSlot = [];
 				$hubsSlots = $this->getHubsSectionSlots();
 				$hubsV3List = $this->getHubsV3List( $langCode );
 
-				$verticals = $this->helper->getWikiVerticals();
-
-				$k = 0;
-				foreach($verticals as $vertical) {
-					if ( !isset( $hubsSlots[ $k ] ) ) {
-						$hubsSlots[ $k ] = [
-							'hub_slot' => $vertical
-						];
-					}
-					$k++;
-				}
+				$hubsSlots = $this->fillEmptyHubSlots( $hubsSlots );
 
 				foreach( $hubsSlots as $slot => &$hub ) {
 					$hubId = $hub['hub_slot'];
 					if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
-						$hub = array_merge($hub, $hubsV3List[ $hubId ]);
-						$hub['hubImage'] = $this->getHubV3Images( $hubId );
-
-						$hubSlot[ $slot ] = $this->prepareRenderParams( $slot, $hub );
+						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hub, $hubsV3List, $slot );
 					} else {
-						switch( $hubId ) {
-							case 'Video Games':
-								$categoryId = WikiFactoryHub::CATEGORY_ID_GAMING;
-								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'videogames', $categoryId, $hub );
-								break;
-							case 'Entertainment':
-								$categoryId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
-								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'entertainment', $categoryId, $hub );
-								break;
-							case 'Lifestyle':
-								$categoryId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-								$hubSlot[ $slot ] = $this->prepareHubsV2Params( 'lifestyle', $categoryId, $hub );
-								break;
-						}
+						$hubSlot[ $slot ] = $this->prepareHubV2Slot( $hub );
 					}
 				}
 
 				return $hubSlot;
 			}
 		);
+
+		return $hubSlot;
+	}
+
+	/**
+	 * If hub slots are not set, they are filled with hubs v2 data
+	 *
+	 * @param $hubsSlots
+	 * @return mixed
+	 */
+	private function fillEmptyHubSlots( $hubsSlots ) {
+		$verticals = $this->helper->getWikiVerticals();
+
+		$index = 0;
+		foreach($verticals as $vertical) {
+			if ( !isset( $hubsSlots[ $index ] ) ) {
+				$hubsSlots[ $index ] = [
+					'hub_slot' => $vertical
+				];
+			}
+			$index++;
+		}
+
+		return $hubsSlots;
+	}
+
+	/**
+	 * Prepare data to display hub v3 slot in hubs section on Wikia homepage
+	 *
+	 * @param $hub
+	 * @param $hubsV3List
+	 * @param $slot
+	 * @return array
+	 */
+	private function prepareHubV3Slot( $hub, $hubsV3List, $slot ) {
+		$hubId = $hub['hub_slot'];
+		$hub = array_merge($hub, $hubsV3List[ $hubId ]);
+		$hub['hubImage'] = $this->getHubV3Images( $hubId );
+
+		return $this->prepareRenderParams( $slot, $hub );
+	}
+
+	/**
+	 * Prepare data to display hub v2 slot in hubs section on Wikia homepage
+	 *
+	 * @param $hub
+	 * @return array|null
+	 */
+	private function prepareHubV2Slot( $hub ) {
+		$hubSlot = null;
+
+		switch( $hub['hub_slot'] ) {
+			case 'Video Games':
+				$categoryId = WikiFactoryHub::CATEGORY_ID_GAMING;
+				$hubSlot = $this->prepareHubsV2Params( 'videogames', $categoryId, $hub );
+				break;
+			case 'Entertainment':
+				$categoryId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
+				$hubSlot = $this->prepareHubsV2Params( 'entertainment', $categoryId, $hub );
+				break;
+			case 'Lifestyle':
+				$categoryId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
+				$hubSlot = $this->prepareHubsV2Params( 'lifestyle', $categoryId, $hub );
+				break;
+		}
 
 		return $hubSlot;
 	}
@@ -183,7 +222,8 @@ class WikiaHomePageController extends WikiaController {
 			'morelist' => 		$wgParser->parse(
 							$hub['hub_slot_more_links'],
 							$wgTitle,
-							$wgOut->parserOptions())->getText(),
+							$wgOut->parserOptions()
+						)->getText(),
 		];
 	}
 
@@ -631,7 +671,7 @@ class WikiaHomePageController extends WikiaController {
 	 * @param $oasisSettings
 	 * @return bool
 	 */
-	public static function onAddSassParameters( &$oasisSettings ) {
+	public static function onAfterOasisSettingsInitialized( &$oasisSettings ) {
 		global $wgContLang, $wgCityId;
 
 		$settings = [];

@@ -39,7 +39,7 @@
 	<div>
 		<h2 class="heading"><?= wfMessage('manage-wikia-home-hubs-slot-heading')->plain(); ?></h2>
 		<form method="post" class="hubs-slots">
-			<? for( $i=0; $i < 3; $i++ ): ?>
+			<? for( $i=0; $i < ManageWikiaHomeController::HUB_SLOTS_COUNT; $i++ ): ?>
 				<div class="hub-slot">
 					<h3><?= wfMessage('manage-wikia-home-hubs-slot', ($i + 1))->plain() ?></h3>
 					<?= $hubsForm->renderField('hub_slot', $i); ?>

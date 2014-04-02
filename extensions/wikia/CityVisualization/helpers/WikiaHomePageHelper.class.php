@@ -307,7 +307,7 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	/**
 	 * Get information about hubs to display on wikia homepage in hubs section
-	 * 	 *
+	 *
 	 * @param $corporateId corporate wiki id
 	 * @return mixed
 	 */
@@ -316,7 +316,8 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
-	 * Save data about hub slots displayed on wikia homepage in hubs section
+	 * Save data about hub slots displayed on wikia homepage in hubs section.
+	 * After save memcache is purged to get fresh data on wikia homepage.
 	 *
 	 * @param $hubSlotsValues data containing hub wiki id, description and links
 	 * @param $corporateId corporate wiki id
