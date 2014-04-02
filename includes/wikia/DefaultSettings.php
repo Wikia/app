@@ -1009,7 +1009,9 @@ if( !isset( $wgUseMedusa ) ) {
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemcacheMoxiCluster';
+// CONN-468: test if Moxi has any impact on our memc errors
+//$wgMemCachedClass = 'MemcacheMoxiCluster';
+$wgMemCachedClass = 'MemCachedClientforWiki';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
