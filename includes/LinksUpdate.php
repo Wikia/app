@@ -361,8 +361,9 @@ class LinksUpdate {
 		$logFileName .= "-WIKIA: ";
 
 		error_log( $logFileName . __METHOD__ ." called from:" );
+		$requestClass = get_class( $wgRequest );
 
-		if( get_class( $wgRequest ) != 'FauxRequest' ) {
+		if ( $requestClass !== 'FauxRequest' && $requestClass !== 'DerivativeRequest' ) {
 			$requestUrl = $wgRequest->getFullRequestURL();
 		} else {
 			$requestUrl = "not available";
