@@ -1544,7 +1544,7 @@ $messages['ru'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'comboajaxlogin-desc' => 'Dynâmic kist that permits uisers tae log-in, remynd passwaird n register uisers',
+	'comboajaxlogin-desc' => 'Dynameec kist that lats uisers log-in, remynd passwaird n register uisers',
 	'comboajaxlogin-createlog' => 'Log in or cræft aen accoont',
 	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or mak aen accoont',
 	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or mak aen accoont.',

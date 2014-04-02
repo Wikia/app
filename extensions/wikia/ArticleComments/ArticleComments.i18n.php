@@ -918,7 +918,7 @@ $messages['diq'] = array(
 	'article-comments-cancel' => 'Bıtexelne',
 	'article-comments-delete' => 'bestere',
 	'article-comments-edit' => 'bıvurne',
-	'article-comments-history' => 'Ravêrden',
+	'article-comments-history' => 'tarix',
 	'article-comments-error' => 'Mışewre qeyd nêbı',
 	'article-comments-rc-comment' => 'Vatışê wesiqe (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Vatışê wesiqe da ([[$1]])',
@@ -2500,6 +2500,7 @@ $messages['ms'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Rencana induk / ulasan induk telah dihapuskan.',
 	'article-comments-empty-comment' => "Anda tidak boleh mengirim ulasan kososng. <a href='$1'>Nak padamkan atau tak?</a>",
+	'wikiamobile-article-comments-counter' => '$1 Komen',
 	'wikiamobile-article-comments-header' => 'komen',
 	'wikiamobile-article-comments-more' => 'Muatkan yang selanjutnya',
 	'wikiamobile-article-comments-prev' => 'Muatkan yang sebelumnya',
@@ -2583,6 +2584,53 @@ $messages['mzn'] = array(
 	'article-comments-edit' => 'دچی‌ین',
 	'article-comments-history' => 'تاریخچه',
 	'article-comments-undeleted-comment' => 'نظر صفحۀ وبلاگ $1 وسّه احیاء بیّه',
+);
+
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'article-comments-file-page' => "由 $2</a> 佇 <a href='$3'>$4</a> 發表的<a href='$1'>評論",
+	'article-blog-comments-file-page' => "佇<a href='$5'>$6</a>部落格的文章<a href='$3'>$4</a>有<a href='$1'>來自$2的評論</a>。",
+	'article-comments-anonymous' => '無名氏用者',
+	'article-comments-comments' => '評論 ( $1 )',
+	'article-comments-post' => '發表評論',
+	'article-comments-cancel' => '取消',
+	'article-comments-delete' => '刣掉',
+	'article-comments-edit' => 'siu-kái',
+	'article-comments-history' => 'Le̍k-sú',
+	'article-comments-error' => '無法保存評論',
+	'article-comments-undeleted-comment' => '恢復部落格文章 $1 的評論',
+	'article-comments-rc-comment' => '文章評論 (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-comments' => '文章評論 ([[$1]])',
+	'article-comments-fblogin' => '請 <a href="$1" rel="nofollow">登入，並且連接Facebook</a> 來這个wiki發表評論',
+	'article-comments-fbconnect' => '請 <a href="$1">先共這个口座佮Facebook連結</a>，才來評論',
+	'article-comments-rc-blog-comment' => '部落格評論 (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => '部落格評論([[$1]])',
+	'article-comments-login' => '請先 <a href="$1">登入</a>，才通佇這个wiki貼評論。',
+	'article-comments-toc-item' => '評論',
+	'article-comments-comment-cannot-add' => '你袂當佇這篇文章加評論。',
+	'article-comments-vote' => '參加投票',
+	'article-comments-reply' => '回覆',
+	'article-comments-show-all' => '顯示所有的評論',
+	'article-comments-prev-page' => 'chêng',
+	'article-comments-next-page' => 'ē 1 ê',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-delete-reason' => '原條目/原評論已經予儂刣掉。',
+	'article-comments-empty-comment' => "你袂當發佈空的評論。<a href='$1'>敢欲刣掉？</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|評論|評論}}', # Fuzzy
+	'wikiamobile-article-comments-header' => '評論',
+	'wikiamobile-article-comments-more' => '載較濟咧',
+	'wikiamobile-article-comments-prev' => '載頭前的',
+	'wikiamobile-article-comments-none' => '無儂評論',
+	'wikiamobile-article-comments-view' => '看回覆',
+	'wikiamobile-article-comments-replies' => '回覆',
+	'wikiamobile-article-comments-post-reply' => '貼回覆',
+	'wikiamobile-article-comments-post' => '貼',
+	'wikiamobile-article-comments-placeholder' => '發表評論',
+	'wikiamobile-article-comments-login-post' => '請登入了後，才發表評論。',
+	'wikiamobile-article-comments-post-fail' => '保存評論失敗，請等一下才閣試',
+	'enotif_subject_article_comment' => '$PAGEEDITOR 佇 {{SITENAME}}的文章 "$PAGETITLE"內底發表評論',
 );
 
 /** Neapolitan (Napulitano)
@@ -2822,6 +2870,7 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
+ * @author Wedkarski
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -2853,6 +2902,7 @@ $messages['pl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
 	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Komentarz|Komentarze}}',
 	'wikiamobile-article-comments-header' => 'Komentarze',
 	'wikiamobile-article-comments-more' => 'Załaduj więcej',
 	'wikiamobile-article-comments-prev' => 'Załaduj poprzednie',
