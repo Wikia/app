@@ -218,6 +218,9 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
+
+		// Lazy rail
+		'#group_lazy_rail_js',
 	)
 );
 
@@ -1726,5 +1729,13 @@ $config['imglzy_js'] = [
 	'assets' => [
 		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+	]
+];
+
+$config['lazy_rail_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//skins/oasis/js/LazyRail.js'
 	]
 ];
