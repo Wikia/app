@@ -67,8 +67,10 @@ class GlobalHeaderController extends WikiaController {
 		$returnValue = [
 			'text' => $node['text'],
 			'href' => $node['href'],
-			'specialAttr' => $node['specialAttr']
 		];
+		if ( !empty( $node['specialAttr'] ) ) {
+			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
 
 		if ( isset( $node['children'] ) ) {
 			$children = [];

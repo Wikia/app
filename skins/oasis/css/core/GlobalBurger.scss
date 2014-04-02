@@ -31,7 +31,7 @@
 			background-color: transparent;
 			border-radius: 5px;
 			display: block;
-			font-size: 13px;
+			font-size: 14px;
 			font-weight: bold;
 			padding: 10px;
 			text-transform: uppercase;
@@ -57,8 +57,16 @@
 	}
 }
 
-ul.drawerSubmenu {
+ul.drawerSubmenu,
+header.drawerSubmenu {
 	margin-bottom: 24px;
+	font-size: 14px;
+
+	> a {
+		color: inherit;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
 
 	li {
 		margin-bottom: 6px;
@@ -66,7 +74,6 @@ ul.drawerSubmenu {
 		a {
 			color: inherit;
 			display: block;
-			font-size: 13px;
 			padding: 3px 0;
 		}
 

@@ -17,14 +17,21 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 
 			$.each(menuItemsObj, function () {
 				var subMenu = [],
-					extraClassName = this.specialAttr;
+					extraClassName = this.specialAttr || '';
+
+				subMenu.push('<header class="drawerSubmenu ' + extraClassName + '"><a href="' + this.href + '">' + this.text + '</a></header>');
 
 				$.each(this.children, function () {
 					subMenu.push('<ul class="drawerSubmenu ' + extraClassName + '">');
+
 					subMenu.push('<li><header>' + this.text + '</header></li>');
 
 					$.each(this.children, function () {
-						subMenu.push('<li class="' + this.specialAttr + '" ><a href="' + this.href + '">' + this.text + '</a></li>');
+						if (this.specialAttr) {
+							subMenu.push('<li class="' + this.specialAttr + '" ><a href="' + this.href + '">' + this.text + '</a></li>');
+						} else {
+							subMenu.push('<li><a href="' + this.href + '">' + this.text + '</a></li>');
+						}
 					});
 
 					subMenu.push('</ul>');
