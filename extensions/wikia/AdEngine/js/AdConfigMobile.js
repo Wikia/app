@@ -1,12 +1,14 @@
 /*global define*/
-
-define(
-	'ext.wikia.adengine.config.mobile',
-	['wikia.log', 'wikia.window', 'ext.wikia.adengine.provider.directgptmobile','ext.wikia.adengine.provider.remnantgptmobile', 'ext.wikia.adengine.provider.null'],
-	function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
+define('ext.wikia.adEngine.adConfigMobile', [
+	'wikia.log',
+	'wikia.window',
+	'ext.wikia.adEngine.provider.directGptMobile',
+	'ext.wikia.adEngine.provider.remnantGptMobile',
+	'ext.wikia.adEngine.provider.null'
+	], function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
 		'use strict';
 
-		var logGroup = 'AdConfigMobile',
+		var logGroup = 'ext.wikia.adEngine.adConfigMobile',
 			logLevel = log.levels.info;
 
 		function getProvider(slot) {

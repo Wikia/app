@@ -10,9 +10,9 @@ describe('WikiaDartMobileHelper', function(){
 				wgContentLanguage: 'xx',
 				Features: {positionfixed: true}
 			},
-			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock),
+			adLogicPageParams = AdLogicPageLevelParams(logMock, windowMock),
 			dartUrl = DartUrl(),
-			dartHelper = WikiaDartMobileHelper(logMock, windowMock, adLogicPageLevelParams, dartUrl),
+			dartHelper = WikiaDartMobileHelper(logMock, windowMock, adLogicPageParams, dartUrl),
 			expected = 'http://ad.mo.doubleclick.net/DARTProxy/mobile.handler?k=wka.vertical/_dbname/article;' +
 				's0=vertical;s1=_dbname;s2=article;' +
 				'dmn=exampleorg;' +

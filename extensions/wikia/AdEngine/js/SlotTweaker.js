@@ -1,9 +1,12 @@
-/*exports SlotTweaker*/
 /*global define*/
-var SlotTweaker = function (log, document, window) {
+define('ext.wikia.adEngine.slotTweaker', [
+	'wikia.log',
+	'wikia.document',
+	'wikia.window'
+], function (log, document, window) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.slottweaker',
+	var logGroup = 'ext.wikia.adEngine.slotTweaker',
 		defaultHeightClass = 'default-height',
 		rclass = /[\t\r\n]/g,
 		standardLeaderboardSizeClass = 'standard-leaderboard';
@@ -130,6 +133,4 @@ var SlotTweaker = function (log, document, window) {
 		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
-};
-
-define('ext.wikia.adengine.slottweaker', ['wikia.log', 'wikia.document', 'wikia.window'], SlotTweaker);
+});

@@ -1,11 +1,18 @@
 /**
  * Extension of AdLogicPageLevelParams for Evolve
  */
-var AdLogicPageLevelParamsLegacy = function (log, window, adLogicPageLevelParams, Krux, dartUrl) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
+	'wikia.log',
+	'wikia.window',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.krux',
+	'ext.wikia.adEngine.dartUrl'
+], function (log, window, adLogicPageParams, Krux, dartUrl) {
 	'use strict';
 
-	var logGroup = 'AdLogicPageLevelParamsLegacy',
-		pageParams = adLogicPageLevelParams.getPageLevelParams(),
+	var logGroup = 'ext.wikia.adEngine.adLogicPageParamsLegacy',
+		pageParams = adLogicPageParams.getPageLevelParams(),
 		getCustomKeyValues,
 		getDomainKV,
 		getHostnamePrefix,
@@ -39,4 +46,4 @@ var AdLogicPageLevelParamsLegacy = function (log, window, adLogicPageLevelParams
 		getHostnamePrefix: getHostnamePrefix,
 		getKruxKeyValues: getKruxKeyValues
 	};
-};
+});

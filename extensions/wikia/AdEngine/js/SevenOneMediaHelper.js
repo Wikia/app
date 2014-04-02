@@ -1,15 +1,21 @@
-/* exported SevenOneMediaHelper */
 /* jshint camelcase:false, maxparams:false */
-
-var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, window, $, tracker) {
+/*global define*/
+define('ext.wikia.adEngine.sevenOneMediaHelper', [
+	'jquery',
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.adLogicPageParams'
+], function ($, log, window, tracker, scriptWriter, adLogicPageParams) {
 	'use strict';
 
-	var logGroup = 'SevenOneMediaHelper',
+	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
 		postponedContainerId = 'seven-one-media-ads-postponed',
 		$postponedContainer,
 		myAd,
 		initialized = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		soiKeywordsParams = ['pform', 'media', 'gnre', 'egnre', 's1'],
 
 		slotVars = {
@@ -318,4 +324,4 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 		flushAds: flushAds,
 		trackEnd: trackEnd
 	};
-};
+});

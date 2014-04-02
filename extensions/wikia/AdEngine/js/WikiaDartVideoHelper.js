@@ -1,10 +1,10 @@
 /*global define*/
-define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wikia.adlogicpageparams'], function (log, location, adLogicPageLevelParams) {
+define('ext.wikia.adEngine.dartvideohelper', ['wikia.log', 'wikia.location', 'ext.wikia.adEngine.adLogicPageParams'], function (log, location, adLogicPageParams) {
 	'use strict';
 
 	var logGroup = 'adengine.dartvideohelper',
 		ord = Math.round(Math.random() * 23945290875),
-		pageParams = adLogicPageLevelParams.getPageLevelParams();
+		pageParams = adLogicPageParams.getPageLevelParams();
 
 	pageParams.src = 'ooyala';
 

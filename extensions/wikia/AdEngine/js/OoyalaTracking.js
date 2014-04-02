@@ -1,4 +1,6 @@
+/*global require*/
 require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
+	"use strict";
 	var wikia = window.Wikia = window.Wikia || {};
 
 	/**

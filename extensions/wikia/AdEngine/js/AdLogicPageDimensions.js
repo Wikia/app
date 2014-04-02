@@ -1,9 +1,14 @@
 /*jshint camelcase:false, maxdepth:4*/
-/*exported AdLogicPageDimensions*/
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageDimensions', [
+	'wikia.window',
+	'wikia.document',
+	'wikia.log',
+	'ext.wikia.adEngine.slotTweaker'
+], function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -239,4 +244,4 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		addSlot: add,
 		hasPreFooters: hasPreFooters
 	};
-};
+});

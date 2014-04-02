@@ -4,16 +4,16 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			windowMock = {},
 			kruxMock,
 			paramToTrim,
-			adLogicPageLevelParamsMock = {getPageLevelParams: function() {}},
+			adLogicPageParamsMock = {getPageLevelParams: function() {}},
 			dartUrlMock = {trimParam: function(param) {return param}},
-			adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageLevelParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
-		expect(adLogicPageLevelParamsLegacy.getCustomKeyValues()).toBe('');
+		expect(adLogicPageParamsLegacy.getCustomKeyValues()).toBe('');
 
 		dartUrlMock.trimParam = function(param) {paramToTrim = param; return 'trimmed';};
 
 		windowMock.wgDartCustomKeyValues = 'key1=value1;key2=value2';
-		expect(adLogicPageLevelParamsLegacy.getCustomKeyValues()).toBe('trimmed');
+		expect(adLogicPageParamsLegacy.getCustomKeyValues()).toBe('trimmed');
 		expect(paramToTrim).toBe('key1=value1;key2=value2;');
 	});
 
@@ -22,16 +22,16 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			windowMock,
 			kruxMock = {},
 			paramToTrim,
-			adLogicPageLevelParamsMock = {getPageLevelParams: function() {}},
+			adLogicPageParamsMock = {getPageLevelParams: function() {}},
 			dartUrlMock = {trimParam: function (param) {return param}},
-			adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageLevelParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
-		expect(adLogicPageLevelParamsLegacy.getKruxKeyValues()).toBe('');
+		expect(adLogicPageParamsLegacy.getKruxKeyValues()).toBe('');
 
 		dartUrlMock.trimParam = function (param) {paramToTrim = param; return 'trimmed';};
 		kruxMock.dartKeyValues = 'krux=dart;key=values;';
 
-		expect(adLogicPageLevelParamsLegacy.getKruxKeyValues()).toBe('trimmed');
+		expect(adLogicPageParamsLegacy.getKruxKeyValues()).toBe('trimmed');
 		expect(paramToTrim).toBe('krux=dart;key=values;');
 	});
 
@@ -40,7 +40,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			windowMock,
 			kruxMock,
 			paramToTrim,
-			adLogicPageLevelParamsMock = {getPageLevelParams: function() {
+			adLogicPageParamsMock = {getPageLevelParams: function() {
 				return {
 					dmn: 'examplecom'
 				};
@@ -48,9 +48,9 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			passedKey,
 			passedValue,
 			dartUrlMock = {decorateParam: function(key, value) {passedKey = key; passedValue = value;}},
-			adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageLevelParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
-		adLogicPageLevelParamsLegacy.getDomainKV();
+		adLogicPageParamsLegacy.getDomainKV();
 		expect(passedKey).toBe('dmn');
 		expect(passedValue).toBe('examplecom');
 	});
@@ -60,7 +60,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			windowMock,
 			kruxMock,
 			paramToTrim,
-			adLogicPageLevelParamsMock = {getPageLevelParams: function() {
+			adLogicPageParamsMock = {getPageLevelParams: function() {
 				return {
 					hostpre: 'someprefix'
 				};
@@ -68,9 +68,9 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			passedKey,
 			passedValue,
 			dartUrlMock = {decorateParam: function(key, value) {passedKey = key; passedValue = value;}},
-			adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageLevelParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
-		adLogicPageLevelParamsLegacy.getHostnamePrefix();
+		adLogicPageParamsLegacy.getHostnamePrefix();
 		expect(passedKey).toBe('hostpre');
 		expect(passedValue).toBe('someprefix');
 	});

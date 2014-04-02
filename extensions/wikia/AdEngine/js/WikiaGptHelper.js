@@ -1,21 +1,17 @@
 /*global define, setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gptSlotConfig) {
+define( 'ext.wikia.adEngine.wikiaGptHelper', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.gptSlotConfig'
+], function (log, window, document, adLogicPageParams, gptSlotConfig) {
 	'use strict';
 
-	if (WikiaGptHelper.prototype.singletonInstance) {
-		return WikiaGptHelper.prototype.singletonInstance;
-	}
-
-	if (!(this instanceof WikiaGptHelper)) {
-		return new WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
-	}
-
-	WikiaGptHelper.prototype.singletonInstance = this;
-
-	var logGroup = 'WikiaGptHelper',
+	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
+		pageLevelParams = adLogicPageParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		specialAdSelector = 'script[src*="/ads.saymedia.com/"], script[src*="/native.sharethrough.com/"], .celtra-ad-v3, script[src$="/mmadlib.js"]',
 		slotQueue = [],
@@ -335,12 +331,9 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		});
 	}
 
-	this.pushAd = pushAd;
-	this.flushAds = flushAds;
-};
+	return {
+		pushAd: pushAd,
+		flushAds: flushAds
+	};
 
-define(
-	'ext.wikia.adengine.gpthelper',
-	['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.gptslotconfig'],
-	WikiaGptHelper
-);
+});
