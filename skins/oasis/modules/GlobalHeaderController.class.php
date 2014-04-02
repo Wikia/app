@@ -97,7 +97,7 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setFormat('json');
 		$this->response->setData($menuData);
 		// Cache for 1 day
-		//$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
 	}
 
 	public function menuItems() {
