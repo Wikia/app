@@ -120,7 +120,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 			$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
 			if ( $resp === false ) {
-				print( "ERROR: problem downloading content.\n" );
+				$this->videoErrors( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
 
 				return 0;
@@ -131,7 +131,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			$videos = empty( $response['contents'] ) ? array() : $response['contents'] ;
 
 			$numVideos = count( $videos );
-			print("Found $numVideos videos...\n");
+			$this->videoFound( $numVideos );
 
 			foreach ( $videos as $video ) {
 				$clipData = array();

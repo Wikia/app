@@ -13,7 +13,7 @@ require(['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBoots
 				videoInstance = new VideoBootstrap(element[0], window.playerParams, clickSource);
 
 			$(window).on('lightboxOpened', function() {
-				videoInstance.reload(wgTitle, filePageVideoWidth, false, clickSource);
+				videoInstance.reload(window.wgTitle, filePageVideoWidth, false, clickSource);
 			});
 		}
 	}

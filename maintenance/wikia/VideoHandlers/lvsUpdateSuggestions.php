@@ -19,20 +19,23 @@ class LVSUpdateSuggestions extends Maintenance {
 
 	protected $verbose = false;
 	protected $test    = false;
-	protected $force   = false;
+	protected $clear   = false;
+	protected $refresh = false;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Pre-populate LVS suggestions";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
-		$this->addOption( 'force', 'Force a rebuild of all suggestions', false, false, 'f' );
+		$this->addOption( 'refresh', 'Ignore all TTLs and refresh content', false, false, 'r' );
+		$this->addOption( 'clear', 'Clear all existing suggestions', false, false, 'c' );
 	}
 
 	public function execute() {
-		$this->test = $this->hasOption('test') ? true : false;
+		$this->test    = $this->hasOption('test') ? true : false;
 		$this->verbose = $this->hasOption('verbose') ? true : false;
-		$this->force = $this->hasOption('force') ? true : false;
+		$this->clear   = $this->hasOption('clear') ? true : false;
+		$this->refresh = $this->hasOption('refresh') ? true : false;
 
 		if ( $this->test ) {
 			echo "== TEST MODE ==\n";
@@ -42,7 +45,7 @@ class LVSUpdateSuggestions extends Maintenance {
 		$startTime = time();
 
 		// Clear existing suggestions if we are forcing a rebuild
-		if ( $this->force ) {
+		if ( $this->clear ) {
 			$this->clearSuggestions();
 		}
 
@@ -71,9 +74,9 @@ class LVSUpdateSuggestions extends Maintenance {
 		$suggestExpire = time() - LicensedVideoSwapHelper::SUGGESTIONS_TTL;
 		$pageNS = NS_FILE;
 
-		// Only select videos with nonexistent or expired suggestions unless --force is on
+		// Only select videos with nonexistent or expired suggestions unless --refresh is on
 		$whereExpired = '';
-		if ( ! $this->force ) {
+		if ( ! $this->refresh ) {
 			$whereExpired = " AND (props IS NULL OR props <= $suggestExpire)";
 		}
 
@@ -197,7 +200,6 @@ class LVSUpdateSuggestions extends Maintenance {
 					 "swapTypes"           => $swapTypes,
 					 );
 	}
-
 
 	/**
 	 * Print the message if verbose is enabled

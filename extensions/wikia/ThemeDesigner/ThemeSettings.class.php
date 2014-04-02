@@ -82,19 +82,18 @@ class ThemeSettings {
 				}
 			}
 
-			// special check for color-body-middle
-			if (!isset($settings['color-body-middle']) || !ThemeDesignerHelper::isValidColor($settings["color-body-middle"])) {
-				$settings["color-body-middle"] = $settings["color-body"];
-			}
+		}
+		// special check for color-body-middle
+		if (!isset($settings['color-body-middle']) || !ThemeDesignerHelper::isValidColor($settings["color-body-middle"])) {
+			$settings["color-body-middle"] = $settings["color-body"];
+		}
 
-
-			// add variables that might not be saved already in WF
-			if(!isset($settings['background-fixed'])) {
-				$settings['background-fixed'] = false;
-			}
-			if(!isset($settings['page-opacity'])) {
-				$settings['page-opacity'] = 100;
-			}
+		// add variables that might not be saved already in WF
+		if(!isset($settings['background-fixed'])) {
+			$settings['background-fixed'] = false;
+		}
+		if(!isset($settings['page-opacity'])) {
+			$settings['page-opacity'] = 100;
 		}
 
 		return $settings;
@@ -133,7 +132,9 @@ class ThemeSettings {
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
 		// Verify wordmark length ( CONN-116 )
-		$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+		if ( !empty( $settings[ 'wordmark-text' ]) ) {
+			$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+		}
 
 		if ( empty( $settings[ 'wordmark-text' ] ) ) {
 			// Do not save wordmark if its empty.
