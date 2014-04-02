@@ -67,12 +67,16 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 		$('#GlobalNavigation').remove();
 
 		uiDrawer.createComponent(drawerConfig, function (drawer) {
-			var delay = 300,
+			var delay = 250,
 				timer;
 
 			window.GlobalNavigationDrawer = drawer;
 
-			$('#drawerGlobalNavigation li').hover(function (e) {
+			$('#drawerGlobalNavigation li').click(function (e) {
+				e.preventDefault();
+
+				clearTimeout(timer);
+
 				var $self = $(this),
 					id = $self.data('id');
 
@@ -84,8 +88,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 						drawer.swipeSub(subMenus[id]);
 					}
 				}, delay);
-			}, function (e) {
-				clearTimeout(timer);
 			});
 
 			$('#WikiaHeader').on('click', '#burgerMenuButton', function (e) {
