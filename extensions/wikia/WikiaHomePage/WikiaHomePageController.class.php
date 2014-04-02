@@ -249,7 +249,8 @@ class WikiaHomePageController extends WikiaController {
 			'morelist' => 		!empty( $hub['hub_slot_more_links'] )
 						? $wgParser->parse(
 							$hub['hub_slot_more_links'],
-							$wgTitle, $wgOut->parserOptions())->getText()
+							$wgTitle, $wgOut->parserOptions()
+						  )->getText()
 						: WfMessage("wikiahome-hubs-$vertical-more-list")->parse()
 		];
 	}
