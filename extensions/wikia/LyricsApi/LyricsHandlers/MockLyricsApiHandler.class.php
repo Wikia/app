@@ -18,7 +18,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 					'controller' => self::API_CONTROLLER_NAME,
 					'method' => 'getSong',
 					LyricsApiController::PARAM_ARTIST => $artistName,
-					LyricsApiController::PARAM_ALBUM => $albumName,
 					LyricsApiController::PARAM_SONG => $song->name
 				]);
 			}
@@ -121,7 +120,7 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 	 *
 	 * @return StdClass
 	 */
-	public function getSong( $artistName, $albumName, $songName ) {
+	public function getSong( $artistName, $songName ) {
 		$song = new StdClass();
 		$song->name = $songName;
 		$song->lyrics = str_repeat('Lorem ipsum opusum'.PHP_EOL, 10);
@@ -137,7 +136,9 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 		$song->artist = $artist;
 
 		// Songs without album
-		if ( $albumName ) {
+		if ( ( rand(1, 10) % 2) === 0 ) {
+			$albumName = 'Album #' . rand( 1, 10 );
+
 			$album = new StdClass();
 			$album->name = $albumName;
 			$album->image = $this->getImage( $albumName . '.jpg' );
@@ -197,7 +198,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 				'controller' => self::API_CONTROLLER_NAME,
 				'method' => 'getSong',
 				LyricsApiController::PARAM_ARTIST => 'Mocked Artist',
-				LyricsApiController::PARAM_ALBUM => 'Mocked Album',
 				LyricsApiController::PARAM_SONG => $song->name
 			]);
 			$songs[] = $song;
@@ -224,7 +224,6 @@ class MockLyricsApiHandler extends AbstractLyricsApiHandler {
 				'controller' => self::API_CONTROLLER_NAME,
 				'method' => 'getSong',
 				LyricsApiController::PARAM_ARTIST => 'Mocked Artist',
-				LyricsApiController::PARAM_ALBUM => 'Mocked Album',
 				LyricsApiController::PARAM_SONG => $song->name
 			]);
 			$song->highlight = 'i love '.$song->name.' desperately';
