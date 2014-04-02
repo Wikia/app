@@ -1,0 +1,130 @@
+/* Global CSS */
+
+	.WikiaSearch.localSearchAB {
+		input[type=text] {
+			background-color: mix($color-page, $color-page-opposite, 90%);
+			border-radius: 4px 0 0 4px;
+			color: #838383;
+			height: 24px;
+			margin: 0;
+		}
+
+		input[type=text]:focus {
+			background-color: mix($color-page, $color-page-opposite, 80%);
+		}
+
+		.wikia-button {
+			background-color: $color-buttons;
+			background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */;
+			background-position: center center;
+			background-repeat: no-repeat;
+			border-radius: 0 4px 4px 0;
+			height: 34px;
+			&:hover {
+				background-color: $color-button-highlight;
+			}
+			.search {
+				display: none;
+			}
+		}
+	}
+
+/* End of Global CSS */
+
+/* Variation B */
+
+.WikiaSearch.v1 {
+	input[type=text] {
+		width: 237px;
+	}
+}
+
+
+@media screen and (max-width: $breakpoint-small) {
+
+	#HeaderWikiaSearch.v1 {
+		input[type=text] {
+			width: calc(100% - 43px);
+		}
+	}
+}
+/* End of Variation B */
+
+/* Variation C */
+
+#WikiaPageHeader.v2 {
+	min-height: 75px;
+	padding: 5px 0;
+	.WikiaSearch {
+		margin-bottom: 20px;
+		position: static;
+		width: 100%;
+		input[type=text] {
+			padding: 4px 9px;
+			width: calc(100% - 63px);
+		}
+	}
+	.tally {
+		right: 10px;
+		top: 65px;
+	}
+}
+
+@media screen and (max-width: $breakpoint-small) {
+
+	#HeaderWikiaSearch.v2 {
+		input[type=text] {
+			width: calc(100% - 43px);
+		}
+	}
+
+	#WikiaPageHeader.v2 {
+		height: auto;
+		min-height: 0;
+		.tally {
+			top: 4px;
+		}
+	}
+}
+
+/* End of Variation C */
+
+/* Variation D & E */
+
+#WikiaPageHeader.v3 {
+	height: 75px;
+	padding: 5px 0 0;
+	.WikiaSearch {
+		position: static;
+		width: 100%;
+		input[type=text] {
+			padding: 4px 9px;
+			width: calc(100% - 63px);
+		}
+	}
+	.tally {
+		right: 10px;
+		top: 45px;
+	}
+}
+
+@media screen and (max-width: $breakpoint-small) {
+
+	#HeaderWikiaSearch.v3 {
+		display: none;
+	}
+
+	#WikiaSearch.v3 {
+		display: block;
+	}
+}
+
+/* End of Variation D & E */
+
+/* Variation F */
+#WikiaSearch.v4,
+#HeaderWikiaSearch.v4,
+.WikiaSearch .SearchInput.v4 {
+	display: none;
+}
+/* End of Variation F */
