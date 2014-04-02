@@ -62,6 +62,44 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
+	private function recursiveConvertMenuNodeToArray($index) {
+		$node = $this->menuNodes[$index];
+		$returnValue = [
+			'text' => $node['text'],
+			'href' => $node['href'],
+		];
+		if ( !empty( $node['specialAttr'] ) ) {
+			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
+
+		if ( isset( $node['children'] ) ) {
+			$children = [];
+
+			foreach ($node['children'] as $childId) {
+				$children[] = $this->recursiveConvertMenuNodeToArray($childId);
+			}
+
+			$returnValue['children'] = $children;
+		}
+
+		return $returnValue;
+	}
+
+	public function getGlobalMenuItems() {
+		// convert menuNodes to better json menu
+		$nodes = $this->menuNodes;
+		$menuData = [];
+
+		foreach($nodes[0]['children'] as $id) {
+			$menuData[] = $this->recursiveConvertMenuNodeToArray($id);
+		}
+		// respond
+		$this->response->setFormat('json');
+		$this->response->setData($menuData);
+		// Cache for 1 day
+		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+	}
+
 	public function menuItems() {
 		$index = $this->request->getVal('index', 0);
 		$this->response->setVal('menuNodes', $this->menuNodes);
