@@ -12,8 +12,6 @@ class LyricsApiController extends WikiaController {
 	const PARAM_LIMIT = 'limit';
 	const PARAM_OFFSET = 'offset';
 
-	const RESPONSE_CACHE_VALIDITY = 86400; // 24h
-
 	const SEARCH_RESULTS_DEFAULT_LIMIT = 25;
 	const SEARCH_RESULTS_DEFAULT_OFFSET = 0;
 
@@ -48,7 +46,7 @@ class LyricsApiController extends WikiaController {
 		}
 
 		$this->response->setVal( 'result', $results );
-		$this->response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
