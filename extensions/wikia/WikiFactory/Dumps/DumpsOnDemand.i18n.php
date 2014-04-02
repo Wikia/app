@@ -122,6 +122,7 @@ $messages['bjn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -138,6 +139,7 @@ $messages['br'] = array(
 	'dump-database-request-already-submitted' => "Goulennet ez eus bet krouiñ un diell nevez zo (nebetoc'h eget 7 devezh zo)",
 	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
 	'dump-database-info-more' => 'Mar plij lennit <a href="http://community.wikia.com/wiki/Help:Database_download">amañ</a> evit muioc\'h a ditouroù',
+	'dump-database-last-unknown' => 'Dianav',
 );
 
 /** Bosnian (bosanski)

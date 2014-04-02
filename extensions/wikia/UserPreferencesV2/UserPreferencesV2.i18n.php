@@ -232,6 +232,7 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'prefs-personal' => 'Ma zitouroù',
 	'preferences-v2-username' => 'Ma anv implijer :',
+	'preferences-v2-usergroups' => 'Strolladoù implijerien :',
 	'preferences-v2-gender' => 'Jener :',
 	'preferences-v2-password' => 'Ma ger-tremen :',
 	'preferences-v2-oldsig' => 'Ar sinadur zo evit poent :',
@@ -252,11 +253,13 @@ $messages['br'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Oberiantiz ar wiki',
 	'preferences-v2-redirect-main-page' => 'Pajenn bennañ',
 	'preferences-v2-redirect-recent-changes' => 'Kemmoù diwezhañ',
+	'tog-showAdsv2' => 'Bommoù bruderezh :',
 	'prefs-addressv2' => "Chomlec'h",
 	'preferences-v2-watchdefault' => 'Aozañ',
 	'preferences-v2-watchmoves' => "Dilec'hiañ",
 	'preferences-v2-watchdeletion' => 'Diverkañ',
 	'preferences-v2-watchcreations' => 'Krouiñ',
+	'preferences-v2-showads-enable' => 'Diskouez an holl vommoù bruderezh',
 	'preferences-v2-my-email-address' => "Ma chomlec'h postel :",
 	'tog-editondblclick-v2' => 'Daouglikañ evit aozañ pajennoù',
 	'tog-hidefollowedpages-v2' => "Kuzhat ma fajennoù heuliet d'an holl",
@@ -421,10 +424,11 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
-	'prefs-emailv2' => 'پست الکترونیکی',
+	'prefs-emailv2' => 'رایانامه',
 	'preferences-v2-redirect-wiki-activity' => 'فعالیت‌های ویکی',
 	'preferences-v2-redirect-recent-changes' => 'تغییرات اخیر',
 	'prefs-addressv2' => 'نشانی',
@@ -817,6 +821,15 @@ $messages['nl'] = array(
 	'tog-hidefollowedpages-v2' => "Lijst met gevolgde pagina's voor iedereen verbergen",
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ * @author Hulothe
+ */
+$messages['oc'] = array(
+	'preferences-v2-redirect-recent-changes' => 'Darrièrs cambiaments',
+	'prefs-recent-changesv2' => 'Darrièrs cambiaments, istorics e jornals recents',
+);
+
 /** Polish (polski)
  * @author Chrumps
  * @author Sovq
@@ -873,6 +886,120 @@ $messages['pl'] = array(
 	'tog-editsectiononrightclick-v2' => 'Edytuj sekcje poprzez kliknięcie na nagłówek prawym klawiszem',
 	'tog-editondblclick-v2' => 'Edytuj strony po dwukrotnym kliknięciu',
 	'tog-hidefollowedpages-v2' => 'Ukryj moją listę obserwowanych stron',
+);
+
+/** Portuguese (português)
+ * @author SandroHc
+ */
+$messages['pt'] = array(
+	'prefs-personal' => 'Minhas Informações',
+	'preferences-v2-username' => 'Meu nome de utilizador:',
+	'preferences-v2-usergroups' => 'Meus grupos de utilizador:',
+	'preferences-v2-gender' => 'Meu género:',
+	'preferences-v2-password' => 'Minha senha:',
+	'preferences-v2-oldsig' => 'Assinatura existente:',
+	'preferences-v2-nickname' => 'Assinatura personalizada:',
+	'preferences-v2-fancysig' => 'Eu quero usar wikitext na minha assinatura<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|O que são assinaturas?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Assinatura',
+	'prefs-appearance' => 'Aparência',
+	'preferences-v2-date' => 'Formato de data:',
+	'preferences-v2-time' => 'Fuso horário:',
+	'preferences-v2-skin' => 'Tema:',
+	'prefs-emailv2' => 'E-mail',
+	'prefs-email-me-v2' => 'Enviar-me um e-mail quando...',
+	'tog-enotifwatchlistpages-v2' => '...uma página que estou a seguir é modificada',
+	'tog-enotifusertalkpages-v2' => '...a minha página de discussão é modificada',
+	'tog-enotifminoredits-v2' => '...uma página que estou a seguir é modificada (edição menor)',
+	'tog-marketingallowed-v2' => '...a Wikia tem novidades e eventos',
+	'prefs-email-advanced-v2' => 'Opções Avançadas',
+	'tog-htmlemails-v2' => 'Enviar-me e-mails HTML',
+	'prefs-wikiemail' => 'Opções de {{SITENAME}}. Enviar-me um e-mail quando...',
+	'prefs-email-unsubscribe' => 'Desativar todos os e-mails',
+	'unsubscribe-preferences-toggle-v2' => 'Desativar todos os e-mails da Wikia (substitui todas as outras opções)',
+	'tog-watchlistdigest-v2' => '...uma Compilação Semanal de modificações às minhas páginas seguidas está pronto',
+	'tog-justify-v2' => 'Mostrar parágrafos justificados',
+	'preferences-v2-user-landing-page' => 'Página inicial:',
+	'preferences-v2-redirect-wiki-activity' => 'Atividade na Wiki',
+	'preferences-v2-redirect-main-page' => 'Página Principal',
+	'preferences-v2-redirect-recent-changes' => 'Mudanças Recentes',
+	'preferences-v2-redirect-explanation' => 'A opção da Página inicial permite que escolhas para onde vais sempre que escreves $1 no navegador.',
+	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => 'Sob as Aparências',
+	'prefs-recent-changesv2' => 'Alterações recentes, históricos, e registos',
+	'prefs-followed-pagesv2' => 'Feed de páginas seguidas',
+	'prefs-advanced-displayv2' => 'Opções avançadas de exibição',
+	'tog-highlightbrokenv2' => 'Mostrar links quebrados a vermelho, em vez de com o ponto de interrogação.',
+	'tog-showAdsv2' => 'Anúncios:',
+	'prefs-addressv2' => 'Endereço',
+	'prefs-followed-pages-iv2' => 'Seguir páginas que eu...',
+	'preferences-v2-watchdefault' => 'Editei',
+	'preferences-v2-watchmoves' => 'Movi',
+	'preferences-v2-watchdeletion' => 'Eliminei',
+	'preferences-v2-watchcreations' => 'Criei',
+	'preferences-v2-showads-enable' => 'Mostrar todos os anúncios',
+	'preferences-v2-showads-disable' => 'Não mostrar todos os anúncios',
+	'preferences-v2-my-email-address' => 'Meu e-mail:',
+	'prefs-patrolled-editsv2' => 'Edições patrulhadas',
+	'tog-editsectiononrightclick-v2' => 'Editar secções ao clicar com o botão direito no título da secção',
+	'tog-editondblclick-v2' => 'Editar páginas em duplo clique',
+	'tog-hidefollowedpages-v2' => 'Esconder a minha lista de páginas seguidas de todos',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
+ */
+$messages['pt-br'] = array(
+	'prefs-personal' => 'Minhas Informações',
+	'preferences-v2-username' => 'Meu nome de usuário:',
+	'preferences-v2-usergroups' => 'Meus grupos de usuário:',
+	'preferences-v2-gender' => 'Meu gênero:',
+	'preferences-v2-password' => 'Minha senha:',
+	'preferences-v2-oldsig' => 'Assinatura existente:',
+	'preferences-v2-nickname' => 'Assinatura personalizada:',
+	'preferences-v2-fancysig' => 'Eu quero usar wikitexto na minha assinatura<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|O que são assinaturas?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Assinatura',
+	'prefs-appearance' => 'Aparência',
+	'preferences-v2-date' => 'Formato de data:',
+	'preferences-v2-time' => 'Fuso horário:',
+	'preferences-v2-skin' => 'Layout:',
+	'prefs-emailv2' => 'E-mail',
+	'prefs-email-me-v2' => 'Envie-me um e-mail quando...',
+	'tog-enotifwatchlistpages-v2' => '...uma página que estou seguindo for alterada',
+	'tog-enotifusertalkpages-v2' => '...minha página de discussão for alterada',
+	'tog-enotifminoredits-v2' => '...uma página que estou seguindo tem pequenas alterações',
+	'tog-marketingallowed-v2' => '...a Wikia tenha notícias e eventos',
+	'prefs-email-advanced-v2' => 'Opções Avançadas',
+	'tog-htmlemails-v2' => 'Envie-me e-mails HTML',
+	'prefs-wikiemail' => 'Opções da {{SITENAME}}. Envie-me um e-mail quando...',
+	'prefs-email-unsubscribe' => 'Desativar todos os e-mails',
+	'unsubscribe-preferences-toggle-v2' => 'Desativar todos os e-mails da Wikia (substitui todas as outras opções)',
+	'tog-watchlistdigest-v2' => '...um Boletim Semanal das alterações nas minhas páginas seguidas da Wikia estiver pronto',
+	'tog-justify-v2' => 'Mostrar parágrafos justificados',
+	'preferences-v2-user-landing-page' => 'Página de início:',
+	'preferences-v2-redirect-wiki-activity' => 'Atividade na Wiki',
+	'preferences-v2-redirect-main-page' => 'Página principal',
+	'preferences-v2-redirect-recent-changes' => 'Mudanças Recentes',
+	'preferences-v2-redirect-explanation' => 'A opção Página de início permite que você escolha onde você vai quando você digita $1 no seu navegador.',
+	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => 'Sob o Capô',
+	'prefs-recent-changesv2' => 'Mudanças recentes, históricos e registros',
+	'prefs-followed-pagesv2' => 'Feed de páginas seguidas',
+	'prefs-advanced-displayv2' => 'Opções de visualização avançadas',
+	'tog-highlightbrokenv2' => 'Mostrar links quebrados como vermelho, não com um ponto de interrogação.',
+	'tog-showAdsv2' => 'Anúncios:',
+	'prefs-addressv2' => 'Endereço',
+	'prefs-followed-pages-iv2' => 'Seguir páginas que eu...',
+	'preferences-v2-watchdefault' => 'Editar',
+	'preferences-v2-watchmoves' => 'Mover',
+	'preferences-v2-watchdeletion' => 'Excluir',
+	'preferences-v2-watchcreations' => 'Criar',
+	'preferences-v2-showads-enable' => 'Mostrar todos os anúncios',
+	'preferences-v2-showads-disable' => 'Não mostrar todos os anúncios',
+	'preferences-v2-my-email-address' => 'Meu endereço de e-mail:',
+	'prefs-patrolled-editsv2' => 'Edições patrulhadas',
+	'tog-editsectiononrightclick-v2' => 'Editar seções clicando com o botão direito nos títulos das seções',
+	'tog-editondblclick-v2' => 'Editar páginas com duplo clique',
+	'tog-hidefollowedpages-v2' => 'Ocultar minha lista de páginas seguidas de todos',
 );
 
 /** Russian (русский)
@@ -946,7 +1073,7 @@ $messages['sco'] = array(
 	'preferences-v2-oldsig' => 'Exeestin signature:',
 	'preferences-v2-nickname' => 'Custom signature:',
 	'preferences-v2-fancysig' => 'I want tae uise wikitex in ma signature<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Whit ar signatures?]]',
-	'preferences-v2-fancysig-help-page-name' => 'Heelp:Signature', # Fuzzy
+	'preferences-v2-fancysig-help-page-name' => 'Help:Signature',
 	'prefs-appearance' => 'Appearance',
 	'preferences-v2-date' => 'Date format:',
 	'preferences-v2-time' => 'Time zone:',
@@ -974,7 +1101,7 @@ $messages['sco'] = array(
 	'prefs-recent-changesv2' => 'Recent chynges, histeries, logs',
 	'prefs-followed-pagesv2' => 'Follaed pages feed',
 	'prefs-advanced-displayv2' => 'Advanced displey opties',
-	'tog-highlightbrokenv2' => 'Shaw broken links aes reid, no wi ae speirin maurk.',
+	'tog-highlightbrokenv2' => 'Shaw broken links aes reid, naw wi ae speirin maurk.',
 	'tog-showAdsv2' => 'Ads:',
 	'prefs-addressv2' => 'Address',
 	'prefs-followed-pages-iv2' => 'Follae pages Ah...',
@@ -1120,6 +1247,24 @@ $messages['tr'] = array(
 	'preferences-v2-redirect-recent-changes' => 'Son değişiklikler',
 	'preferences-v2-redirect-explanation' => 'Açılış sayfası seçeneği tarayıcınıza $1 yazdığınızda göreceğiniz sayfayı belirler.',
 	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => 'İzleme Listesi',
+	'prefs-recent-changesv2' => 'Son değişiklikler, geçmiş ve günlükler',
+	'prefs-followed-pagesv2' => 'Besleme sayfaları takibi',
+	'prefs-advanced-displayv2' => 'Gelişmiş görüntüleme seçenekleri',
+	'tog-highlightbrokenv2' => 'Varolmayan bağlantıları soru işareti yerine kırmızı renkle göster.',
+	'tog-showAdsv2' => 'Reklamlar:',
+	'prefs-addressv2' => 'Adres',
+	'preferences-v2-watchdefault' => 'Düzenle',
+	'preferences-v2-watchmoves' => 'Taşı',
+	'preferences-v2-watchdeletion' => 'Sil',
+	'preferences-v2-watchcreations' => 'Oluştur',
+	'preferences-v2-showads-enable' => 'Tüm reklamları göster',
+	'preferences-v2-showads-disable' => 'Tüm reklamları gösterme',
+	'preferences-v2-my-email-address' => 'Benim e-posta adresim:',
+	'prefs-patrolled-editsv2' => 'Devriye düzenlemeleri',
+	'tog-editsectiononrightclick-v2' => 'Bölüm başlığına sağ tıklayarak bölümleri düzenleyebilme olanağı ver',
+	'tog-editondblclick-v2' => 'Çift tıklayarak sayfaları düzenle',
+	'tog-hidefollowedpages-v2' => 'Benim izlediğim sayfalar listesini gizle',
 );
 
 /** Ukrainian (українська)

@@ -161,6 +161,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
 			'wgExtensionsPath',
+			'wikiaPageIsCorporate',
 
 			//article
 			'wgArticlePath',

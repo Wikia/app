@@ -370,6 +370,8 @@ $messages['br'] = array(
 	'userlogin-forgot-password-button' => "Kenderc'hel",
 	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
 	'userlogin-remembermypassword' => 'Chom kevreet',
+	'userlogin-error-noname' => 'Pop, leugnit ar vaezienn anv implijer, mar plij.',
+	'userlogin-error-wrongpasswordempty' => 'Pop, leugnit ar vaezienn ger-tremen, mar plij.',
 	'userlogin-error-edit-account-closed-flag' => 'Diweredekaet eo bet ho kont gant Wikia.',
 	'userlogin-error-cantcreateaccount-text' => "N'eo ket aotreet ho chomlec'h IP da grouiñ kontoù nevez.",
 	'userlogin-error-userexists' => 'Implijet eo an anv implijer-mañ gant unan bennak dija. Esaeit gant unan all !',
@@ -383,6 +385,8 @@ $messages['br'] = array(
 	'userlogin-error-resetpass_forbidden' => "
 N'haller ket cheñch ar gerioù-termen",
 	'userlogin-error-blocked-mailpassword' => "Ne c'hallit ket goulenn ur ger-tremen nevez abalamour m'eo stanket ar chomlec'h IP-mañ gant Wikia.",
+	'userlogin-password-email-sent' => "Kaset hon eus ur ger-tremen nevez d'ar chomlec'h postel evit $1.",
+	'userlogin-error-unconfirmed-user' => "Digarezit, n'ho peus ket kadanaet ho chomlec'h postel. Kadarnait ho chomlec'h postel da gentañ, mar plij.",
 	'userlogin-password-page-title' => 'Cheñch ar ger-tremen',
 	'userlogin-oldpassword' => 'Ger-tremen kozh',
 	'userlogin-newpassword' => 'Ger-tremen nevez',
@@ -1251,6 +1255,13 @@ $messages['ka'] = array(
 	'userlogin-provider-or' => 'ან',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'userlogin-login-heading' => 'Кириу',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1819,11 +1830,13 @@ $messages['pt'] = array(
 	'userlogin-login-heading' => 'Login',
 	'userlogin-forgot-password' => 'Esqueceu a sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
+	'userlogin-forgot-password-go-to-login' => 'Já tens a tua senha? [[Special:UserLogin|Entra]]',
 	'userlogin-remembermypassword' => 'Permanecer ligado',
 	'userlogin-error-noname' => 'Ops, preencha o campo do nome de utilizador.',
 	'userlogin-error-nosuchuser' => 'Hum, nos não reconhecemos este nome. Não se esqueça que os nomes de utilizador são sensíveis a maiúsculas e minúsculas.',
 	'userlogin-error-wrongpassword' => 'Ops, senha incorreta. Certifique-se que o caps lock está desativado e tente novamente.',
 	'userlogin-error-wrongpasswordempty' => 'Ops, preencha o campo da senha.',
+	'userlogin-error-resetpass_announce' => 'parece que uma senha temporária foi usada. Escolhe uma nova senha para continuar autenticado.',
 	'userlogin-error-edit-account-closed-flag' => 'A sua conta foi desativada pela Wikia.',
 	'userlogin-error-cantcreateaccount-text' => 'O seu endereço de IP não está permitido de criar novas contas.',
 	'userlogin-error-userexists' => 'Alguém já tem este nome de utilizador. Tente um diferente!',
@@ -1831,6 +1844,13 @@ $messages['pt'] = array(
 	'userlogin-get-account' => 'Não possui uma conta? <a href="$1" tabindex="$2">Registe-se agora</a>',
 	'userlogin-error-invalid-username' => 'Nome de utilizador inválido',
 	'userlogin-error-user-not-allowed' => 'Este nome de utilizador não é permitido.',
+	'userlogin-error-noemailtitle' => 'Coloque um endereço de e-mail válido.',
+	'userlogin-error-resetpass_forbidden' => 'As senhas não podem ser alteradas',
+	'userlogin-error-blocked-mailpassword' => 'Não podes pedir uma nova senha porque este endereço IP foi bloqueado pela Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'Já enviamos um lembrete da senha para esta conta {{PLURAL:$1|na última hora|nas últimas $1 horas}}. Por favor, verifica o teu e-mail.',
+	'userlogin-password-email-sent' => 'Enviamos uma nova senha para o e-mail de $1.',
+	'userlogin-error-unconfirmed-user' => 'O teu e-mail ainda não foi confirmado. Por favor, confirma-o primeiro.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'O e-mail de confirmação já foi enviado.',
 	'userlogin-password-page-title' => 'Alterar a senha',
 	'userlogin-oldpassword' => 'Senha antiga',
 	'userlogin-newpassword' => 'Nova senha',
@@ -1838,6 +1858,10 @@ $messages['pt'] = array(
 	'userlogin-password-email-greeting' => 'Olá $USERNAME,',
 	'userlogin-password-email-signature' => 'Apoio da Comunidade da Wikia',
 	'userlogin-provider-or' => 'Ou',
+	'userlogin-provider-tooltip-facebook' => 'Clica no botão para entrar com o Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Clica no botão para criar uma conta com o Facebook',
+	'userlogin-facebook-show-preferences' => 'Mostrar preferências de feed do Facebook',
+	'userlogin-facebook-hide-preferences' => 'Esconder preferências de feed do Facebook',
 	'userlogin-loginreqlink' => 'entrar',
 	'userlogin-changepassword-needlogin' => 'Você necessita de $1 para alterar a senha.',
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
@@ -1845,13 +1869,14 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
  * @author Caio1478
  * @author JM Pessanha
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'userlogin-login-heading' => 'Login',
+	'userlogin-login-heading' => 'Entrar',
 	'userlogin-forgot-password' => 'Esqueceu sua senha?',
 	'userlogin-forgot-password-button' => 'Continuar',
 	'userlogin-forgot-password-go-to-login' => 'Já tem sua senha? [[Special:UserLogin|Faça login]]',
@@ -1883,6 +1908,7 @@ $messages['pt-br'] = array(
 	'userlogin-error-mail-error' => 'Ops, ocorreu um problema enviando seu e-mail. Por favor, [[Special:Contact/general|contate-nos]].',
 	'userlogin-password-email-sent' => 'Nós enviamos uma nova senha para o endereço de e-mail para $1.',
 	'userlogin-error-unconfirmed-user' => 'Desculpe, você não confirmou seu endereço de e-mail. Por favor, confirme seu endereço de e-mail primeiro.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'O e-mail de confirmação já foi enviado.',
 	'userlogin-password-page-title' => 'Mude sua senha',
 	'userlogin-oldpassword' => 'Senha antiga',
 	'userlogin-newpassword' => 'Nova senha',
@@ -2044,7 +2070,7 @@ $messages['sco'] = array(
 	'userlogin-error-invalid-username' => 'Onvalid uisername',
 	'userlogin-error-userlogin-unable-info' => "Sorrie, we'r no able tae register yer accoont at this time.",
 	'userlogin-error-user-not-allowed' => 'This uisername isna permited.',
-	'userlogin-error-captcha-createaccount-fail' => 'The waird that ye entered didna match the waird in the kist, try again!',
+	'userlogin-error-captcha-createaccount-fail' => 'The waird that ye entered didna match the waird in the kist, gie it anither shot!',
 	'userlogin-error-userlogin-bad-birthday' => 'Oops, please fil oot day, month, n year.',
 	'userlogin-error-externaldberror' => 'Sorrie! Oor site is currentlie haein aen issue, please try again later.',
 	'userlogin-error-noemailtitle' => 'Please enter ae valid wab-mail address.',
@@ -2308,7 +2334,7 @@ $messages['te'] = array(
 	'userlogin-error-acct_creation_throttle_hit' => 'ఏమనుకోవద్దండి, ఈ ఐపి చిరునామాతో చాలా ఖాతాలు కల్పించారు. మళ్ళీ తర్వాత ఎప్పుడైనా ప్రయత్నించండి.',
 	'userlogin-error-resetpass_forbidden' => 'సంకేతపదాలను మార్చటం కుదరదు',
 	'userlogin-error-blocked-mailpassword' => 'ఈ ఐపి చిరునామాను వికియా నిరోధించడం చేత, మీరు కొత్త సంకేతపదం కొరకు విన్నవించడం కుదరదు.',
-	'userlogin-password-email-sent' => '$1 కొరకు కొత్త దాటుమాటను ఈ ఈ-తపాలా జాడకు పంపినాము.',
+	'userlogin-password-email-sent' => '$1 కొరకు కొత్త సంకేతపదాన్ని ఈ ఈమెయిలు చిరునామాకు పంపించాం.',
 	'userlogin-password-page-title' => 'మీ సంకేతపదాన్ని మార్చుకోండి.',
 	'userlogin-oldpassword' => 'పాత సంకేతపదం',
 	'userlogin-newpassword' => 'కొత్త సంకేతపదం',
@@ -2578,7 +2604,7 @@ ___________________________________________
 $messages['uz'] = array(
 	'userlogin-login-heading' => 'Kirish',
 	'userlogin-forgot-password' => 'Maxfiy so‘zni qayta kiriting:',
-	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos elektron pochta manzilingizni tasdiqlang.',
+	'userlogin-error-unconfirmed-user' => 'Sizning elektron pochta manzilingiz tasdiqlanmagan. Iltimos uni tasdiqlang.',
 	'userlogin-password-page-title' => 'Maxfiy soʻzni oʻzgartirish',
 	'userlogin-oldpassword' => "Eski mahfiy so'z:",
 	'userlogin-newpassword' => "Yangi mahfiy so'z:",

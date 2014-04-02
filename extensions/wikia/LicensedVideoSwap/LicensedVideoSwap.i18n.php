@@ -251,6 +251,7 @@ $messages['br'] = array(
 	'lvs-callout-title-collaborative' => 'Kenlabourat',
 	'lvs-instructions-header' => 'Penaos implijout ar bajenn-mañ',
 	'lvs-button-keep' => "Derc'hel",
+	'lvs-button-swap' => 'Eskemm',
 	'lvs-button-yes' => 'Ya',
 	'lvs-button-no' => 'Ket',
 	'lvs-more-suggestions' => "muioc'h a ginnigoù",
@@ -328,6 +329,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'lvs-history-button-text' => 'Истори',
+	'lvs-posted-in-more' => 'кхин дӀа',
 );
 
 /** German (Deutsch)
@@ -501,6 +503,22 @@ $messages['fa'] = array(
 	'lvs-undo-keep' => 'واگردانی',
 	'lvs-posted-in-more' => 'بیشتر',
 	'lvs-new-flag' => 'جدید',
+);
+
+/** Finnish (suomi)
+ * @author Elseweyr
+ * @author Konstaduck
+ */
+$messages['fi'] = array(
+	'lvs-history-button-text' => 'Historia',
+	'lvs-callout-title-licensed' => '100% lisensoitu',
+	'lvs-callout-title-quality' => 'Korkea laatu',
+	'lvs-instructions-header' => 'Kuinka käyttää tätä sivua',
+	'lvs-button-swap' => 'Vaihda',
+	'lvs-undo-swap' => 'Kumoa',
+	'lvs-posted-in-more' => 'lisää',
+	'lvs-click-here' => 'klikkaa tästä',
+	'lvs-new-flag' => 'Uusi',
 );
 
 /** Faroese (føroyskt)
@@ -1054,17 +1072,17 @@ $messages['sco'] = array(
 	'lvs-confirm-undo-swap-title' => 'Confirm Ondae',
 	'lvs-confirm-undo-swap-message' => 'Ar ye sair ye want tae restore the oreeginal video?',
 	'lvs-confirm-undo-keep-title' => 'Confirm Ondae',
-	'lvs-confirm-undo-keep-message' => 'Ar ye sair ye want tae add this video back ontil the leet?',
+	'lvs-confirm-undo-keep-message' => 'Ar ye sair that ye want tae eik this video back ontil the leet?',
 	'lvs-no-matching-videos' => 'Thaur ar naw premium videos relatit til this video the nou',
 	'lvs-log-swap' => 'Swapt video fae [[{{ns:File}}:$1]] til [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Restored swapt video ([[{{ns:File}}:$1]])',
-	'lvs-log-removed-redirected-link' => 'Remuived reguided link',
+	'lvs-log-removed-redirected-link' => 'Remuived reguidit airtin',
 	'lvs-zero-state' => 'At this time we hae naw matchin videos fae Wikia Video fer videos oan yer wiki. Check back again suin!',
 	'lvs-history-swapped' => 'Swapt "$1" wi "$2"',
 	'lvs-history-swapped-exact' => 'Swapt "$1" wi ae video o the same name',
 	'lvs-history-kept' => 'Kept "$1"',
 	'lvs-history-instructions' => 'To see the histerie fer aw swaps n ondaes, gang til $1.',
-	'lvs-no-monobook-support' => "This page isna supported in Monobuik. Tae get at it in the Wikia layoot, $1. This'll no chynge yer layoot preference",
+	'lvs-no-monobook-support' => "This page isna supported in Monobuik. Tae get at it in the Wikia layoot, $1. This'll naw chynge yer layoot preference",
 	'lvs-click-here' => 'clap here',
 	'lvs-new-flag' => 'New',
 );
@@ -1144,6 +1162,42 @@ $messages['sv'] = array(
 	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
 	'lvs-new-flag' => 'Ny',
+);
+
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'lvs-history-button-text' => 'చరిత్ర',
+	'lvs-instructions-header' => 'ఈ పేజీని వాడటం ఎలా',
+	'lvs-button-keep' => 'ఉంచు',
+	'lvs-button-swap' => 'మార్పిడి',
+	'lvs-button-yes' => 'అవును',
+	'lvs-button-no' => 'వద్దు',
+	'lvs-more-suggestions' => 'మరిన్ని సూచనలు',
+	'lvs-undo-swap' => 'రద్దుచెయ్యి',
+	'lvs-undo-keep' => 'రద్దుచెయ్యి',
+	'lvs-swap-video-success' => 'అభినందనలు. అసలు వీడియోను తొలగించేసాం. దానికి చెందిన అవతారాలు ఇముడ్పులతో సహా, అన్నిటినీ సరిపోలే వికియా వీడియోతో మార్పిడి చేసాం. $1',
+	'lvs-keep-video-success' => 'మీ ప్రస్తుత వీడియోను ఉంచెయ్యాలని నిశ్చయించుకున్నారు. అది ఈ జాబితా నుంచి తొలగించబడింది. $1',
+	'lvs-restore-video-success' => 'వీడియోను ఈ జాబితాకు పునసథాపించారు.',
+	'lvs-error-permission' => 'మీరీ వీడియోను మార్పిడి చెయ్యలేరు.',
+	'lvs-error-permission-access' => 'మీరీ పేజీని చూడలేరు.',
+	'lvs-error-invalid-page-status' => 'మీరీ వీడియోను పునస్థాపించలేరు.',
+	'lvs-error-already-swapped' => 'ఈ వీడియోను ఈసరికే మార్పిడి చేసారు.',
+	'lvs-error-already-kept-forever' => 'ఈ వీడియోను ఈసరికే ఉంచేసారు.',
+	'lvs-posted-in-label-none' => 'ప్రస్తుత వీడియో ఈ వ్యాసాల్లోనూ పెట్టలేదు',
+	'lvs-posted-in-more' => 'మరిన్ని',
+	'lvs-confirm-keep-title' => 'వీడియోను ఉంచండి',
+	'lvs-confirm-undo-swap-message' => 'అసలు వీడియోను పునస్థాపించాలని మీరు నిశ్చయించుకున్నారా?',
+	'lvs-confirm-undo-keep-title' => 'రద్దును నిర్ధారించండి',
+	'lvs-confirm-undo-keep-message' => 'ఈ వీడియోను తిరిగి జాబితాలోకి చేర్చాలని మీరు నిశ్చయించుకున్నారా?',
+	'lvs-log-removed-redirected-link' => 'దారిమార్పు లింకును తొలగించారు',
+	'lvs-history-swapped' => '"$1" ను "$2" తో మార్పిడి చేసాం',
+	'lvs-history-swapped-exact' => '"$1" ను అదేే పేరు గల మరో వీడియోతో మార్పిడి చేసాం',
+	'lvs-history-kept' => '"$1" ను ఉంచేసాం',
+	'lvs-history-instructions' => 'అన్ని మార్పిడులు, రద్దుల చరిత్రను చూసేందుకు $1 కు వెళ్ళండి.',
+	'lvs-click-here' => 'ఇక్కడ నొక్కండి',
+	'lvs-new-flag' => 'కొత్తవి',
 );
 
 /** Turkish (Türkçe)

@@ -278,6 +278,13 @@ $messages['sv'] = array(
 	'healthcheck-desc' => 'En [[Special:HealthCheck|specialsida]] för att kolla serverns stauts',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'healthcheck-desc' => 'సర్వరు స్థితిని పరిశీలించేందుకు ఓ [[Special:HealthCheck|ప్రత్యేక పేజీ]]',
+);
+
 /** Thai (ไทย)
  * @author Akkhaporn
  */

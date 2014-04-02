@@ -1,6 +1,9 @@
 <?php
 
 class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
+	const CACHE_KEY = 'HubsV3v0.91';
+	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'v3LastPublishedTimestamp';
+	const VERSION = 3;
 
 	public function __construct($app = null) {
 		parent::__construct($app);
@@ -21,6 +24,7 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 			'city_id' => $cityId,
 		);
 
+		$conds = $sdb->makeList($conds, LIST_AND);
 		$conds .= ' AND hub_date >= ' . $sdb->timestamp($beginTimestamp)
 			. ' AND hub_date <= ' . $sdb->timestamp($endTimestamp);
 
@@ -108,11 +112,10 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 	 */
 	public function getModuleUrl($cityId, $timestamp, $moduleId) {
 		$specialPage = $this->getSpecialPageClass();
-		return $specialPage::getTitleFor('MarketingToolbox', 'editHub')->getLocalURL(
+		return $specialPage::getTitleFor('EditHub', 'editHub')->getLocalURL(
 			array(
 				'moduleId' => $moduleId,
-				'date' => $timestamp,
-				'cityId' => $cityId,
+				'date' => $timestamp
 			)
 		);
 	}
@@ -388,6 +391,20 @@ class MarketingToolboxV3Model extends AbstractMarketingToolboxModel {
 		$result = $sdb->selectField(self::HUBS_TABLE_NAME, 'unix_timestamp(max(hub_date))', $conds, __METHOD__);
 
 		return $result;
+	}
+
+	/**
+	 * Get hub url
+	 *
+	 * @param $langCode
+	 * @param $verticalId
+	 *
+	 * @return String
+	 */
+	public function getHubUrl($wikiId) {
+		$title = GlobalTitle::newMainPage($wikiId);
+
+		return $title->getFullURL();
 	}
 
 	protected function getMKeyForLastPublishedTimestamp($cityId, $timestamp) {

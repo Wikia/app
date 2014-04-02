@@ -46,7 +46,7 @@ $messages['en'] = array(
 	'videos-error-invalid-video-url' => 'Please enter a valid URL from a supported content provider.',
 	'videos-error-unknown' => 'An unknown error occurred. Code: $1.',
 	'videos-error-old-type-video' => 'Old type of videos no longer supported (VideoPage)',
-	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refesh the page.',
+	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refresh the page.',
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 );

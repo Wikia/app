@@ -657,9 +657,11 @@ $messages['sv'] = array(
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
+ * @author Ravichandra
  * @author Veeven
  */
 $messages['te'] = array(
+	'category-exhibition-sorttype' => 'క్రమ విధానం:',
 	'category-exhibition-alphabetical' => 'అక్షరక్రమంలో',
 	'category-exhibition-mostvisited' => 'ఎక్కువగా చూసినవి',
 	'category-exhibition-recentedits' => 'ఇటీవలే మార్చినది',

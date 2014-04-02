@@ -43,24 +43,4 @@ class WikiaHubsV3HooksTest extends WikiaBaseTest
 			array('Video_Games/01_January_2013', 1356998400),
 		);
 	}
-
-
-	/**
-	 * @dataProvider getCanonicalHrefForHubDataProvider
-	 */
-	public function testGetCanonicalHrefForHub($expectedUrl, $url, $hubName) {
-		$hook = new WikiaHubsV3HooksModel();
-		$url = $hook->getCanonicalHrefForHub($hubName, $url);
-
-		$this->assertEquals($expectedUrl, $url);
-	}
-
-	public function getCanonicalHrefForHubDataProvider() {
-		return array(
-			array('http://www.wikia.com/Video_Games', 'http://www.wikia.com/Video_Games', 'Video_Games'),
-			array('http://www.wikia.com/Video_Games', 'http://www.wikia.com/Video_Games/2013/12/10', 'Video_Games'),
-			array('http://www.wikia.com/Video_Games', 'http://www.wikia.com/Video_Games/2013-01-01', 'Video_Games'),
-			array('http://fr.wikia.com/Jeux_vidéo', 'http://fr.wikia.com/Jeux_vidéo/03-01-2013', 'Jeux_vidéo'),
-		);
-	}
 }

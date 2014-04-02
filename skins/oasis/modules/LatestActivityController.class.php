@@ -1,25 +1,15 @@
 <?php
 class LatestActivityController extends WikiaController {
-	/*
-	var $changeList;
 
-	var $wgBlankImgUrl;
-	var $moduleHeader;
-	var $userName = '';
-	*/
-	
-	const CACHE_DURATION = 30; // in seconds
-	
 	public function init() {
 		$this->userName = '';
 	}
-	
+
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
 
-		global $wgLang, $wgContentNamespaces, $wgStylePath, $wgMemc, $wgUser;
-		//$wgOut->addScript('<script src="'. $wgStylePath .'/oasis/js/LatestActivity.js"></script>');
+		global $wgLang, $wgContentNamespaces, $wgMemc, $wgUser;
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		
 		if( empty($this->userName) ) {
@@ -57,14 +47,14 @@ class LatestActivityController extends WikiaController {
 			$changeList = array();
 			foreach( $feedData['results'] as $change ) {
 				$item = array();
-				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']);
+				$item['time_ago'] = wfTimeFormatAgoOnlyRecent($change['timestamp']); // TODO: format the timestamp on front-end to allow longer caching in memcache?
 				$item['user_name'] = $change['username'];
 				$item['avatar_url'] = AvatarService::getAvatarUrl($item['user_name'], 20);
 				$item['user_href'] = AvatarService::renderLink($item['user_name']);
 				$item['page_title'] = $change['title'];
 				$item['changetype'] = $change['type'];
 				$title = Title::newFromText( $change['title'], $change['ns'] );
-				
+
 				if( !empty($change['articleComment']) && !empty($change['url']) ) {
 					$item['page_href'] = Xml::element('a', array('href' => $change['url']), $item['page_title']);
 				} else {
@@ -105,8 +95,8 @@ class LatestActivityController extends WikiaController {
 		if ($wgUser->isAnon()) {
 			$this->response->addAsset('skins/oasis/js/LatestActivity.js');
 		}
-		// Cache the latest activity call in varnish (and browser).
-		$this->response->setCacheValidity(self::CACHE_DURATION);
+		// Cache the response in CDN and browser
+		$this->response->setCacheValidity(600);
 		
 		wfProfileOut( __METHOD__ );
 	}

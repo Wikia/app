@@ -1,4 +1,5 @@
 /*exported AdEngine2*/
+/*global define*/
 var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	'use strict';
 
@@ -63,3 +64,5 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 
 	return {run: run};
 };
+
+define('ext.wikia.adengine.adengine', ['wikia.log', 'wikia.lazyqueue', 'ext.wikia.adengine.slottracker'], AdEngine2);

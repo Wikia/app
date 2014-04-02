@@ -47,31 +47,31 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 		),
 		419 => array(
 			'name' => 'Outside Lines Travel',
-			'categories' => array()
+			'categories' => array( 'Lifestyle' )
 		),
 		196 => array(
 			'name' => 'VIDCAT Fashion TV',
-			'categories' => array()
+			'categories' => array( 'Lifestyle' )
 		),
 		586 => array(
 			'name' => 'Billboard',
-			'categories' => array()
+			'categories' => array( 'Entertainment' )
 		),
 		628 => array(
 			'name' => 'Sugar Inc. - FitSugar',
-			'categories' => array( 'Health & fitness' )
+			'categories' => array( 'Health & fitness', 'Lifestyle' )
 		),
 		629 => array(
 			'name' => 'Sugar Inc. - FabSugar',
-			'categories' => array( 'Fashion' )
+			'categories' => array( 'Fashion', 'Lifestyle' )
 		),
 		630 => array(
 			'name' => 'Sugar Inc. - BellaSugar',
-			'categories' => array( 'Beauty' )
+			'categories' => array( 'Beauty', 'Lifestyle' )
 		),
 		631 => array(
 			'name' => 'Sugar Inc. - YumSugar',
-			'categories' => array( 'Food' )
+			'categories' => array( 'Food', 'Lifestyle' )
 		),
 	);
 
@@ -120,7 +120,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 
 			$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
 			if ( $resp === false ) {
-				print( "ERROR: problem downloading content.\n" );
+				$this->videoErrors( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
 
 				return 0;
@@ -131,7 +131,7 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 			$videos = empty( $response['contents'] ) ? array() : $response['contents'] ;
 
 			$numVideos = count( $videos );
-			print("Found $numVideos videos...\n");
+			$this->videoFound( $numVideos );
 
 			foreach ( $videos as $video ) {
 				$clipData = array();

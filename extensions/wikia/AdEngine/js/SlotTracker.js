@@ -1,8 +1,9 @@
 /*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
+/*global define*/
 
-var SlotTracker = function (log, tracker) {
+var SlotTracker = function (window, log, tracker) {
 	'use strict';
 
 	var logGroup = 'SlotTracker',
@@ -14,27 +15,30 @@ var SlotTracker = function (log, tracker) {
 		},
 		slotTypes = {
 			CORP_TOP_LEADERBOARD:  'leaderboard',
-			HOME_TOP_LEADERBOARD:  'leaderboard',
-			HUB_TOP_LEADERBOARD:   'leaderboard',
-			TOP_LEADERBOARD:       'leaderboard',
 			CORP_TOP_RIGHT_BOXAD:  'medrec',
 			EXIT_STITIAL_BOXAD_1:  'medrec',
+			HOME_TOP_LEADERBOARD:  'leaderboard',
 			HOME_TOP_RIGHT_BOXAD:  'medrec',
+			HUB_TOP_LEADERBOARD:   'leaderboard',
 			INCONTENT_BOXAD_1:     'medrec',
-			TOP_RIGHT_BOXAD:       'medrec',
+			INVISIBLE_1:           'pixel',
+			INVISIBLE_2:           'pixel',
+			INVISIBLE_SKIN:        'pixel',
+			MOBILE_IN_CONTENT:     'mobile_content',
+			MOBILE_TOP_LEADERBOARD:'mobile_leaderboard',
+			MOBILE_PREFOOTER:      'mobile_prefooter',
 			MODAL_INTERSTITIAL:    'interstitial',
 			MODAL_INTERSTITIAL_1:  'interstitial',
 			MODAL_INTERSTITIAL_2:  'interstitial',
 			MODAL_INTERSTITIAL_3:  'interstitial',
 			MODAL_INTERSTITIAL_4:  'interstitial',
-			INVISIBLE_1:           'pixel',
-			INVISIBLE_2:           'pixel',
-			INVISIBLE_SKIN:        'pixel',
 			LEFT_SKYSCRAPER_2:     'skyscraper',
 			LEFT_SKYSCRAPER_3:     'skyscraper',
 			PREFOOTER_LEFT_BOXAD:  'prefooter',
 			PREFOOTER_RIGHT_BOXAD: 'prefooter',
 			TOP_BUTTON_WIDE:       'button',
+			TOP_LEADERBOARD:       'leaderboard',
+			TOP_RIGHT_BOXAD:       'medrec',
 			WIKIA_BAR_BOXAD_1:     'wikiabar'
 		};
 
@@ -59,9 +63,10 @@ var SlotTracker = function (log, tracker) {
 			return false;
 		}
 		// Don't track state events yet
-		if (eventName.match(/^state/)) {
+		if (!window.wgAdDriverTrackState && eventName.match(/^state/)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -83,7 +88,7 @@ var SlotTracker = function (log, tracker) {
 			gaLabel,
 			gaValue;
 
-		extraParams['pos'] = data.slotname;
+		extraParams.pos = data.slotname;
 
 		gaCategory = ['ad', eventName, data.provider, slotType].join('/');
 		gaAction = buildExtraParamsString(extraParams);
@@ -94,21 +99,15 @@ var SlotTracker = function (log, tracker) {
 		if (interesting) {
 			stats.interestingEvents += 1;
 
-			if (window.wgAdDriverUseNewTracking) {
-				log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
+			log(['Pushing to GA', gaCategory, gaAction, gaLabel, gaValue], 'info', logGroup);
 
-				tracker.track({
-					ga_category: gaCategory,
-					ga_action: gaAction,
-					ga_label: gaLabel,
-					ga_value: Math.round(gaValue),
-					trackingMethod: 'ad'
-				});
-			} else {
-				log(['Not pushing to GA (wgAdDriverUseNewTracking is false)',
-					gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
-				);
-			}
+			tracker.track({
+				ga_category: gaCategory,
+				ga_action: gaAction,
+				ga_label: gaLabel,
+				ga_value: Math.round(gaValue),
+				trackingMethod: 'ad'
+			});
 		} else {
 			log(['Not pushing to GA (not interesting)',
 				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
@@ -166,6 +165,11 @@ var SlotTracker = function (log, tracker) {
 
 			eventsTracked.push(eventName);
 			lastEventTime = timeElapsed;
+
+			if (/\+$/.test(timeBucket)) {
+				eventName = 'error/' + eventName;
+			}
+
 			trackEvent(
 				eventName,
 				{
@@ -197,3 +201,5 @@ var SlotTracker = function (log, tracker) {
 
 	return slotTracker;
 };
+
+define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);

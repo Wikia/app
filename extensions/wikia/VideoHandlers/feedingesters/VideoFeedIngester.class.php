@@ -26,11 +26,11 @@ abstract class VideoFeedIngester {
 
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
-		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_IGN,
 		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
+		self::PROVIDER_SCREENPLAY,
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
@@ -45,6 +45,21 @@ abstract class VideoFeedIngester {
 	protected static $CLIP_FILTER = array();
 	protected static $CLDR_NAMES = array();
 	protected $filterByProviderVideoId = array();
+
+	protected $resultSummary = [
+		'found'    => 0,
+		'ingested' => 0,
+		'skipped'  => 0,
+		'warnings' => 0,
+		'errors'   => 0,
+	];
+
+	protected $resultIngestedVideos = [
+		'Games'         => [],
+		'Entertainment' => [],
+		'Lifestyle'     => [],
+		'International' => [],
+	];
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
 	private static $instances = array();
@@ -191,14 +206,14 @@ abstract class VideoFeedIngester {
 
 		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistVideo($data) ) {
-			print "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}\n";
+			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
 		// See if this video should be filtered (regex match against specific fields)
 		if ( $this->isFilteredVideo($data) ) {
-			print "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}\n";
+			$this->videoSkipped( "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -219,9 +234,9 @@ abstract class VideoFeedIngester {
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
-		if ( !empty($msg) ) {
-			print "Error when generating metadata\n";
-			var_dump($msg);
+		if ( !empty( $msg ) ) {
+			$this->videoWarnings( "Error when generating metadata.\n" );
+			var_dump( $msg );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -234,7 +249,7 @@ abstract class VideoFeedIngester {
 			$dupAssets = $ooyalaAsset->getAssetsBySourceId( $id, $provider );
 			if ( !empty( $dupAssets ) ) {
 				if ( $this->reupload === false ) {
-					print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
+					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists in remote assets.\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
@@ -247,9 +262,7 @@ abstract class VideoFeedIngester {
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
-				if ( $debug ) {
-					print "Not uploading - video already exists and reupload is disabled\n";
-				}
+				$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists and reupload is disabled.\n" );
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
@@ -268,6 +281,7 @@ abstract class VideoFeedIngester {
 		$metadata['destinationTitle'] = $name;
 
 		if ( !$this->validateTitle( $id, $name, $msg ) ) {
+			$this->videoWarnings( "Error: $msg\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -282,7 +296,7 @@ abstract class VideoFeedIngester {
 				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
 					$result = $this->updateRemoteAsset( $id, $name, $metadata, $debug, $dupAssets[0] );
 				} else {
-					echo "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n";
+					$this->videoSkipped( "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
@@ -316,7 +330,6 @@ abstract class VideoFeedIngester {
 		$videoHandlerHelper = new VideoHandlerHelper();
 		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
 
-
 		if ( $debug ) {
 			print "Ready to create video\n";
 			print "id:          $id\n";
@@ -332,6 +345,8 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 
+			$this->videoIngested( "Ingested $name (id: $id).\n", $categories );
+
 			wfProfileOut( __METHOD__ );
 			return 1;
 		} else {
@@ -342,7 +357,7 @@ abstract class VideoFeedIngester {
 				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
 				if ( $timeUnix + $ignoreRecent >= $timeNow ) {
-					print "Recently uploaded, ignoring\n";
+					$this->videoSkipped( "Recently uploaded, ignoring\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
@@ -352,13 +367,17 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
-				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
+				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n", $categories );
+
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
 				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
 				wfProfileOut( __METHOD__ );
 				return 1;
 			}
 		}
+
+		$this->videoWarnings();
+
 		wfProfileOut( __METHOD__ );
 		return 0;
 	}
@@ -376,13 +395,13 @@ abstract class VideoFeedIngester {
 
 		$assetData = $this->generateRemoteAssetData( $name, $metadata );
 		if ( empty( $assetData['url']['flash'] ) ) {
-			echo "Error when generating remote asset data: empty asset url.\n";
+			$this->videoWarnings( "Error when generating remote asset data: empty asset url.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
 		if ( empty( $assetData['duration'] ) || $assetData['duration'] < 0 ) {
-			echo "Error when generating remote asset data: invalid duration ($assetData[duration]).\n";
+			$this->videoWarnings( "Error when generating remote asset data: invalid duration ($assetData[duration]).\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -391,7 +410,7 @@ abstract class VideoFeedIngester {
 		$ooyalaAsset = new OoyalaAsset();
 		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
 		if ( $isExist ) {
-			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			$this->videoSkipped( "SKIP: Uploading Asset: $name ($assetData[provider]). Video already exists in remote assets.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -407,10 +426,14 @@ abstract class VideoFeedIngester {
 		} else {
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
+				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 		}
+
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
 
 		wfProfileOut( __METHOD__ );
 		return 1;
@@ -429,7 +452,7 @@ abstract class VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $dupAsset['embed_code'] ) ) {
-			echo "Error when updating remote asset data: empty asset embed code.\n";
+			$this->videoWarnings( "Error when updating remote asset data: empty asset embed code.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -461,10 +484,14 @@ abstract class VideoFeedIngester {
 		} else {
 			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
 			if ( !$result ) {
+				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 		}
+
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
 
 		wfProfileOut( __METHOD__ );
 		return 1;
@@ -1204,6 +1231,85 @@ abstract class VideoFeedIngester {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
 		return array_filter( $unique );
+	}
+
+	/**
+	 * Set summary result for video found
+	 * @param integer $num - the number of video found
+	 */
+	public function videoFound( $num ) {
+		$msg = "Found $num videos.\n";
+		$this->setResultSummary( 'found', $msg, $num );
+	}
+
+	/**
+	 * Set summary result for skipped video
+	 * @param string $msg
+	 */
+	public function videoSkipped( $msg = '' ) {
+		$this->setResultSummary( 'skipped', $msg );
+	}
+
+	/**
+	 * Set summary result for ingested video
+	 * @param string $msg
+	 */
+	public function videoIngested( $msg = '', $categories = [] ) {
+		if ( !empty( $msg ) ) {
+			foreach ( $categories as $category ) {
+				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
+					$this->resultIngestedVideos[$category][] = $msg;
+				}
+			}
+		}
+
+		$msg .= "\n";
+		$this->setResultSummary( 'ingested', $msg );
+	}
+
+	/**
+	 * Set summary result for warnings
+	 * @param string $msg
+	 */
+	public function videoWarnings( $msg = '' ) {
+		$this->setResultSummary( 'warnings', $msg );
+	}
+
+	/**
+	 * Set summary result for errors
+	 * @param string $msg
+	 */
+	public function videoErrors( $msg = '' ) {
+		$this->setResultSummary( 'errors', $msg );
+	}
+
+	/**
+	 * Set summary result
+	 * @param string $field [found/skipped/ingested/warnings/errors]
+	 * @param string $msg
+	 * @param integer $num
+	 */
+	public function setResultSummary( $field, $msg = '', $num = 1 ) {
+		if ( !empty( $msg ) ) {
+			echo $msg;
+		}
+		$this->resultSummary[$field] += $num;
+	}
+
+	/**
+	 * Get summary result
+	 * @return array
+	 */
+	public function getResultSummary() {
+		return $this->resultSummary;
+	}
+
+	/**
+	 * Get messages for ingested videos by category
+	 * @return array
+	 */
+	public function getResultIngestedVideos() {
+		return $this->resultIngestedVideos;
 	}
 
 }

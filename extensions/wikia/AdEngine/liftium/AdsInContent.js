@@ -13,6 +13,7 @@ var AIC2 = {
 AIC2.enabled = window.top === window.self
 	&& window.wgEnableAdsInContent
 	&& window.wgShowAds
+	&& !window.wgEnableRHonDesktop
 	&& !window.wgIsMainpage
 	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
 

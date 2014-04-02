@@ -55,6 +55,7 @@
 			this.el = el;
 			el.on('click','tr.exp', $.proxy(this.toggleExperimentRow,this));
 			el.on('click','[data-command]', $.proxy(this.clickCommand,this));
+			this.setupShowPastCheckbox();
 		},
 		log: $.proxy($.fn.log,$()),
 		msg: $.proxy(mw.msg,mw),
@@ -281,6 +282,41 @@
 				.on('click','button[name=cancel]',function(){
 					modal.closeModal();
 				});
+		},
+		setupShowPastCheckbox: function() {
+			var self = this,
+				el = $('#show-past-experiments'),
+				off = $.storage.get('abtesting:showpast') || false;
+
+			// load from localstorage
+			if ( off ) {
+				el.prop('checked', false);
+				self.hidePast();
+			}
+
+			// bind
+			el.on('change', function (e) {
+				var state = el.is(':checked');
+
+				if ( state ) {
+					self.showPast();
+				} else {
+					self.hidePast();
+				}
+
+				$.storage.set('abtesting:showpast', state);
+			});
+
+		},
+		hidePast: function() {
+			$('tr.exp td.not-running').each( function() {
+				$( this ).parent().addClass('collapsed').hide();
+			});
+		},
+		showPast: function() {
+			$('tr.exp td.not-running').each( function() {
+				$( this ).parent().show();
+			});
 		}
 	});
 

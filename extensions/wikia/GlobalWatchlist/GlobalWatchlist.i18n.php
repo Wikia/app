@@ -990,6 +990,18 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
 );
 
+/** Telugu (తెలుగు)
+ * @author Chaduvari
+ */
+$messages['te'] = array(
+	'globalwatchlist-desc' => 'అన్ని వికీలలోని పేజీల వారపు వీక్షణజాబితా సంగ్రహాల ఈమెయిళ్ళను పంపుతుంది',
+	'tog-watchlistdigest' => 'వారపు వీక్షణజాబితా సంగ్రహాన్ని నాకు ఈమెయిలు చెయ్యి',
+	'globalwatchlist-digest-email-subject' => 'వారపు సంగ్రహం',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|వ్యాఖ్య|వ్యాఖ్యలు}})',
+	'globalwatchlist-no-page-found' => 'పేజీ ఏదీ కనబడలేదు.',
+	'globalwatchlist-no-blog-page-found' => 'బ్లాగు పేజీ ఏదీ కనబడలేదు.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
