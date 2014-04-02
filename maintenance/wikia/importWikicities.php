@@ -32,7 +32,7 @@ class ImportWikicities extends Maintenance {
 	 * @return bool|mixed S3 command result of false on error
 	 */
 	private function executeS3cmd($cmd, $param) {
-		exec("s3cmd {$cmd} {$param}", $output, $retVal);
+		exec("s3cmd -c /etc/s3cmd/amazon_prod.cfg {$cmd} {$param}", $output, $retVal);
 
 		if ($retVal !== 0) {
 			return false;

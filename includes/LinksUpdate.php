@@ -34,6 +34,8 @@ class LinksUpdate {
 		$mCategories,    //!< Map of category names to sort keys
 		$mInterlangs,    //!< Map of language codes to titles
 		$mProperties,    //!< Map of arbitrary name to value
+		$mInvalidationQueue = [], //!< Array - Queue if pages ids to be invalidated
+		$mInvalidationTimestamp, //!< Timestamp for page_touched condition to avoid double updates
 		$mDb,            //!< Database connection reference
 		$mOptions,       //!< SELECT options to be used (array)
 		$mRecursive;     //!< Whether to queue jobs for recursive updates
@@ -142,7 +144,7 @@ class LinksUpdate {
 
 		# Invalidate all image description pages which had links added or removed
 		$imageUpdates = $imageDeletes + array_diff_key( $this->mImages, $existing );
-		$this->invalidateImageDescriptions( $imageUpdates );
+		$this->queueImageDescriptionsInvalidation( $imageUpdates );
 
 		# External links
 		$existing = $this->getExistingExternals();
@@ -175,7 +177,9 @@ class LinksUpdate {
 		# Invalidate all categories which were added, deleted or changed (set symmetric difference)
 		$categoryInserts = array_diff_assoc( $this->mCategories, $existing );
 		$categoryUpdates = $categoryInserts + $categoryDeletes;
-		$this->invalidateCategories( $categoryUpdates );
+		$this->queueCategoriesInvalidation( $categoryUpdates );
+		# do the actual invalidation in all pages queued so far
+		$this->invalidatePages();
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
 
 		wfRunHooks( 'AfterCategoriesUpdate', array( $categoryInserts, $categoryDeletes, $this->mTitle ) );
@@ -230,9 +234,11 @@ class LinksUpdate {
 
 		# Update the cache of all the category pages and image description
 		# pages which were changed, and fix the category table count
-		$this->invalidateCategories( $categoryUpdates );
+		$this->queueImageDescriptionsInvalidation( $imageUpdates );
+		$this->queueCategoriesInvalidation( $categoryUpdates );
+		# do the actual invalidation in all pages queued so far
+		$this->invalidatePages();
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
-		$this->invalidateImageDescriptions( $imageUpdates );
 
 		# Refresh links of all pages including this page
 		# This will be in a separate transaction
@@ -268,15 +274,17 @@ class LinksUpdate {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Invalidate the cache of a list of pages from a single namespace
-	 *
-	 * @param $namespace Integer
-	 * @param $dbkeys Array
-	 */
-	function invalidatePages( $namespace, $dbkeys ) {
 
+	/**
+	 * Queue pages id's of single namespace for later cache invalidation
+	 *
+	 * @param Integer $namespace
+	 * @param Array $dbkeys array of strings containing pages titles
+	 */
+	function queuePagesInvalidation( $namespace, $dbkeys ) {
+		wfProfileIn( __METHOD__ );
 		if ( !count( $dbkeys ) ) {
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 		/**
@@ -284,19 +292,37 @@ class LinksUpdate {
 		 * This is necessary to prevent the job queue from smashing the DB with
 		 * large numbers of concurrent invalidations of the same page
 		 */
-		$now = $this->mDb->timestamp();
+		if ( !isset( $this->mInvalidationTimestamp ) ) {
+			$this->mInvalidationTimestamp = $this->mDb->timestamp();
+		}
 		$ids = array();
+
 		$res = $this->mDb->select( 'page', array( 'page_id' ),
 			array(
 				'page_namespace' => $namespace,
 				'page_title IN (' . $this->mDb->makeList( $dbkeys ) . ')',
-				'page_touched < ' . $this->mDb->addQuotes( $now )
+				'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
 			), __METHOD__
 		);
 		foreach ( $res as $row ) {
 			$ids[] = $row->page_id;
 		}
 		if ( !count( $ids ) ) {
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		$this->mInvalidationQueue = array_merge( $this->mInvalidationQueue, $ids );
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Invalidate the cache of a list of pages
+	 *
+	 */
+	function invalidatePages() {
+
+		if ( !count( $this->mInvalidationQueue ) ) {
 			return;
 		}
 
@@ -305,19 +331,20 @@ class LinksUpdate {
 		 * We still need the page_touched condition, in case the row has changed since
 		 * the non-locking select above.
 		 */
-		$this->mDb->update( 'page', array( 'page_touched' => $now ),
+		$this->mDb->update( 'page', array( 'page_touched' => $this->mInvalidationTimestamp ),
 			array(
-				'page_id IN (' . $this->mDb->makeList( $ids ) . ')',
-				'page_touched < ' . $this->mDb->addQuotes( $now )
+				'page_id IN (' . $this->mDb->makeList( $this->mInvalidationQueue ) . ')',
+				'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
 			), __METHOD__
 		);
+
 		$this->logPagesInvalidation(
 			[
 				'table' => 'page',
-				'set' => "page_touched = {$now}",
+				'set' => "page_touched = {$this->mInvalidationTimestamp}",
 				'conditions' => [
-					'page_id IN (' . $this->mDb->makeList( $ids ) . ')',
-					'page_touched < ' . $this->mDb->addQuotes( $now )
+					'page_id IN (' . $this->mDb->makeList( $this->mInvalidationQueue ) . ')',
+					'page_touched < ' . $this->mDb->addQuotes( $this->mInvalidationTimestamp )
 					]
 			]
 		);
@@ -348,10 +375,10 @@ class LinksUpdate {
 	}
 
 	/**
-	 * @param $cats
+	 * @param Array $cats array of strings - categories names
 	 */
-	function invalidateCategories( $cats ) {
-		$this->invalidatePages( NS_CATEGORY, array_keys( $cats ) );
+	function queueCategoriesInvalidation( $cats ) {
+		$this->queuePagesInvalidation( NS_CATEGORY, array_keys( $cats ) );
 	}
 
 	/**
@@ -367,10 +394,10 @@ class LinksUpdate {
 	}
 
 	/**
-	 * @param $images
+	 * @param Array $images array of strings - files names
 	 */
-	function invalidateImageDescriptions( $images ) {
-		$this->invalidatePages( NS_FILE, array_keys( $images ) );
+	function queueImageDescriptionsInvalidation( $images ) {
+		$this->queuePagesInvalidation( NS_FILE, array_keys( $images ) );
 	}
 
 	/**
