@@ -66,9 +66,14 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	private function appendImages( $obj, $image ) {
 		// Quick fix for wrong data in templates (i.e. metallica.jpg instead of Metallica.jpg)
 		$image = ucfirst( $image );
-		$obj->small_image = $this->getImage( $image );
-		$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
-		$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+
+		// MOB-1323 - file provided in artist template but not existing in MW
+		$smallImage = $this->getImage( $image );
+		if( !is_null( $smallImage ) ) {
+			$obj->small_image = $smallImage;
+			$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
+			$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+		}
 	}
 
 	/**
