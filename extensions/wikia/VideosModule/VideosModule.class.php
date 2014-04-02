@@ -8,7 +8,7 @@ class VideosModule extends WikiaModel {
 	const POSTED_IN_ARTICLES = 0;
 	const GET_THUMB = true;
 
-	const LIMIT_TRENDING_VIDEOS = 20;
+	const LIMIT_VIDEOS = 20;
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
@@ -114,14 +114,14 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'limit' => $this->getVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
-				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
 
@@ -158,14 +158,14 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'limit'        => $this->getVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
-				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
 
@@ -202,7 +202,7 @@ class VideosModule extends WikiaModel {
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
 				'sort'       => 'trend',
-				'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'limit'      => $this->getVideoLimit( self::LIMIT_VIDEOS ),
 				'category'   => $category,
 			];
 
@@ -211,7 +211,7 @@ class VideosModule extends WikiaModel {
 			$videos = [];
 			if ( !empty( $response['videos'] ) ) {
 				foreach ( $response['videos'] as $video ) {
-					if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+					if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 						break;
 					}
 
