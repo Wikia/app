@@ -75,5 +75,7 @@ $(function() {
 	GlobalSearch.addSmallCollapsedSearch();
 
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
+
+	$( '#AccountNavigation' ).find( '.ajaxRegister' ).clone().prependTo( '#UserLoginDropdown' );
 });
 */

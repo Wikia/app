@@ -53,7 +53,7 @@ $ab-text-color: #3a3a3a;
 	}
 
 	li {
-		& > .wikia-button, input.login-button, .search-button {
+		& > .wikia-button, input.login-button, .search-button, .UserLoginDropdown .ajaxRegister {
 			background: none;
 			background-color: $color;
 			border: none;
@@ -208,13 +208,19 @@ $ab-text-color: #3a3a3a;
 			}
 		}
 
-		.UserLoginDropdown > .sso-login > .sso-login-divider {
-			border-top: solid 1px $input-border-color;
-			margin-top: 14px;
+		.UserLoginDropdown {
+			.ajaxRegister {
+				display: none;
+			}
 
-			& > span {
-				background-color: $bg-color;
-				color: $ab-text-color;
+			& > .sso-login > .sso-login-divider {
+				border-top: solid 1px $input-border-color;
+				margin-top: 14px;
+
+				& > span {
+					background-color: $bg-color;
+					color: $ab-text-color;
+				}
 			}
 		}
 	}
@@ -320,8 +326,27 @@ $ab-text-color: #3a3a3a;
 			padding-left: 30px;
 		}
 
-		.AccountNavigation li:nth-child(2) {
-			display: none;
+		.AccountNavigation {
+			li:nth-child(2) {
+				display: none;
+			}
+
+			.UserLoginDropdown {
+				.ajaxRegister {
+					background-color: gray;
+					border-radius: 4px;
+					color: $bg-color;
+					display: block;
+					margin: 0 auto 15px;
+					text-align: center;
+					text-decoration: none;
+					width: 125px;
+				}
+				.WikiaForm {
+					padding-top: 8px;
+					border-top: 1px solid $menu-hover-bg-color;
+				}
+			}
 		}
 	}
 }
