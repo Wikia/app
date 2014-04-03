@@ -153,34 +153,60 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		}
 	}
 
+	function isImagePresent(document) {
+		var imgs, i, len, w, h;
+			imgs = document.querySelectorAll('img[width][height]');
+
+		for (i = 0, len = imgs.length; i < len; i += 1) {
+			w = imgs[i].getAttribute('width');
+			h = imgs[i].getAttribute('height');
+			if (w > 1 && h > 1) {
+				log(['findAdImage', 'found non-1x1 img'], 'info', logGroup);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	function findAdInIframe(iframe, adCallback, noAdCallback) {
-		var iframeHeight, iframeContentHeight, empty, iframeId;
+		var iframeHeight, iframeContentHeight, iframeId, iframeDoc;
 
 		iframeId = iframe.id;
+		iframeDoc = iframe.contentWindow.document;
 
 		// Because Chrome reports document.body.offsetHeight as the outer
 		// iframe height, we're setting the outer height to 0, so the innerHeight
 		// reports real height of the content. Then we reset the height back
 		iframeHeight = iframe.height;
 		iframe.height = 0;
-		iframeContentHeight = iframe.contentWindow.document.body.offsetHeight;
+		iframeContentHeight = iframeDoc.body.offsetHeight;
 		iframe.height = iframeHeight;
 
 		log(['findAdInIframe', 'height (iframe content)', iframeContentHeight], 'info', logGroup);
 
-		if (iframeContentHeight <= 1) {
-			// Check specifically for ads which can appear empty, even when successful
-			empty = !iframe.contentWindow.document.querySelector(specialAdSelector);
-			log(['findAdInIframe', iframeId, 'empty (iframe content)', empty], 'info', logGroup);
+		if (iframeContentHeight > 1) {
+			log(['findAdInIframe', iframeId, 'height > 1, launching adCallback'], 'info', logGroup);
+			return adCallback();
 		}
 
-		if (empty) {
-			log(['findAdInIframe', iframeId, 'launching noAdCallback'], 'info', logGroup);
-			noAdCallback();
-		} else {
-			log(['findAdInIframe', iframeId, 'launching adCallback'], 'info', logGroup);
-			adCallback();
+		// Check specifically for ads which can appear empty, even when successful
+		if (iframeDoc.querySelector(specialAdSelector)) {
+			log(['findAdInIframe', iframeId, 'special ad, launching adCallback'], 'info', logGroup);
+			return adCallback();
 		}
+
+		// Check for > 1x1 images
+		// This is needed because DART returns a position:absolute div for very simple ads
+		// and thus the body's offsetHeight is 0 :-(
+		if (isImagePresent(iframeDoc)) {
+			log(['findAdInIframe', iframeId, 'image, launching adCallback'], 'info', logGroup);
+			return adCallback();
+		}
+
+		// No ad found
+		log(['findAdInIframe', iframeId, 'launching noAdCallback'], 'info', logGroup);
+		noAdCallback();
 	}
 
 	function pushAd(slotname, success, error, slotMapSrc) {
