@@ -191,7 +191,7 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Gets an artist from Solr index if exists
 	 *
-	 * @param String $artist
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
@@ -221,8 +221,7 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Gets an album from Solr index if exists
 	 *
-	 * @param String $artist
-	 * @param String $album
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
@@ -347,8 +346,7 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Gets a song from Solr index if exists
 	 *
-	 * @param String $artist
-	 * @param String $song
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
@@ -382,11 +380,9 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Searches for an artist in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
 	public function searchArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
@@ -419,11 +415,9 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Searches for a song in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
 	public function searchSong( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
@@ -449,11 +443,9 @@ class SolrLyricsApiHandler {
 	/**
 	 * @desc Searches for a song lyrics in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
 	public function searchLyrics( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
