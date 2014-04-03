@@ -1,12 +1,13 @@
-require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nv, mustache) {
+require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
 	'use strict';
 
 	var menuPromise,
 		drawerPromise,
 		buildSubMenus,
 		buildMainMenu,
+		// TODO: We should change it to one server-based template when we'll be implementing it on production
 		TMPL_MENU_UL = '<ul id="drawerGlobalNavigation">{{items}}</ul>',
-		TMPL_MENU_LI = '<li class="{{className}}" data-id="{{}id}}"><a href="{{href}}">{{text}}</a></li>',
+		TMPL_MENU_LI = '<li class="{{className}}" data-id="{{id}}"><a href="{{href}}">{{text}}</a></li>',
 		TMPL_SUBMENU_HEADER = '<header class="drawerSubmenu {{className}}"><a href="{{href}}">{{text}}</a></header>',
 		TMPL_SUBMENU_UL_START = '<ul class="drawerSubmenu {{className}}">',
 		TMPL_SUBMENU_UL_END = '</ul>',
@@ -14,14 +15,12 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		TMPL_SUBMENU_LI_WITH_CLASS = '<li class="{{className}}"><a href="{{href}}">{{text}}</a></li>',
 		TMPL_SUBMENU_LI_WITHOUT_CLASS = '<li><a href="{{href}}">{{text}}</a></li>';
 
-	menuPromise = nv.sendRequest({
+
+	menuPromise = nirvana.sendRequest({
 		controller: 'GlobalHeaderController',
 		method: 'getGlobalMenuItems',
 		format: 'json',
-		type: 'GET',
-		data: {
-			cb: Date.now()
-		}
+		type: 'GET'
 	});
 
 	drawerPromise = uiFactory.init([ 'drawer' ]);
