@@ -68,90 +68,36 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.03134 ms
-	 */
-	public function testGetEpisodeUrlDevOrSandbox() {
-
-		$mock = $this->getMockBuilder( "\TvApiController" )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getExactMatch','getResponse','setWikiVariables','getApiVersion','checkArticleByQuality','getConfigFromRequest','getResponseFromConfig'] )
-			->getMock();
-
-		$mock->expects( $this->any() )
-			->method( 'getExactMatch' )
-			->will( $this->returnValue(['url'=>'http://unittest.wikia.com/url', 'contentUrl'=>'http://unittest.wikia.com/contentUrl', 'articleId' => 8888]) );
-
-		$mock->expects( $this->any() )
-			->method( 'setWikiVariables' )
-			->will( $this->returnValue(true));
-
-		$mock->expects( $this->any() )
-			->method( 'getApiVersion' )
-			->will( $this->returnValue('test'));
-
-		$mock->expects( $this->any() )
-			->method( 'checkArticleByQuality' )
-			->will( $this->returnCallback( [ $this, 'mock_checkArticleByQuality' ] ) );
-
+	public function testCreateOutput() {
 		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
 			->expects( $this->any() )
 			->method( 'getCurrentStagingHost' )
 			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+		$api = new \TvApiController();
+		$data = [
+			'wiki' => [ 'id' => 1, 'url' => 'http://unittest.wikia.com/url' ],
+			'article' => [ 'articleId' => 2, 'title' => 'fake title', 'url' => 'http://unittest.wikia.com/contentUrl', 'quality' => 10 ]
+		];
 
-		$mockRequest = $this->getMockBuilder( "\WikiaRequest" )
-			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'getInt' ] )
-			->getMock();
+		$method = new \ReflectionMethod( 'TvApiController', 'createOutput' );
+		$method->setAccessible( true );
+		$result = $method->invoke( $api, $data );
 
-		$mockRequest->expects( $this->any() )
-			->method( 'getInt' )
-			->will( $this->returnValue( 0 ) );
-
-		$mockResponse = $this->getMockBuilder( "\WikiaResponse" )
-			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'setValues', 'setCacheValidity' ] )
-			->getMock();
-
-		$mockResponse->expects( $this->any() )
-			->method( 'setValues' )
-			->will( $this->returnCallback( [ $this, 'mock_setValues' ] ) );
-
-		$mock->expects( $this->any() )
-			->method( 'getResponse' )
-			->will( $this->returnValue($mockResponse));
-
-		$this->responseValues = null;
-		$mock->request = $mockRequest;
-		$mock->wikis = [[1]];
-		$mock->getEpisode();
-
-		$this->assertArrayHasKey('url',$this->responseValues);
-		$this->assertEquals( 'http://newhost/url',  $this->responseValues['url'] );
-
-		$this->assertArrayHasKey('contentUrl',$this->responseValues);
-		$this->assertEquals( 'http://newhost/contentUrl',  $this->responseValues['contentUrl'] );
-
+		$this->assertEquals(
+			[
+				'wikiId' =>1,
+				'articleId' => 2,
+				'title' => 'fake title',
+				'url' => 'http://newhost/contentUrl',
+				'quality' => 10,
+				'contentUrl' => 'http://newhost/urlapi/v1/Articles/AsSimpleJson?id=2'
+			],
+			$result );
 	}
 
 	public function mock_getCurrentStagingHost($arg1, $arg2)
 	{
 		return 'newhost';
-	}
-
-	public function mock_setValues($values)
-	{
-		$this->responseValues = $values;
-	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.02327 ms
-	 */
-	public function mock_checkArticleByQuality($arg1, $arg2)
-	{
-		return $arg1;
 	}
 
 	public function testGetTitle() {

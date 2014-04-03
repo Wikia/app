@@ -12,7 +12,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
 	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 7;
+	const CACHE_BUST = 8;
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
@@ -66,6 +66,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
+		global $wgHubRssFeedCityIds;
+
 		$params = $this->request->getParams();
 
 		$hubName = strtolower( (string)$params[ 'par' ] );
@@ -84,7 +86,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		if ( $xml === false ) {
 			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
 			$verticalId = $this->hubs[ $hubName ];
-			$data = $this->model->getRealData( $verticalId );
+			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
+			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
 			$xml = $service->dataToXml( $data, $verticalId );
 			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
 		}
@@ -93,6 +96,5 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setBody( $xml );
 		$this->response->setContentType( 'text/xml' );
 	}
-
 
 }

@@ -129,14 +129,6 @@ class ThumbnailVideoController extends WikiaController {
 			$imgAttribs['style'] .= "vertical-align: {$options['valign']}";
 		}
 
-		// add extra border
-		if ( $file instanceof WikiaLocalFile || $file instanceof WikiaForeignDBFile ) {
-			$extraBorder = $file->addExtraBorder( $width );
-			if ( !empty( $extraBorder ) ) {
-				$imgAttribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
-			}
-		}
-
 		// get extra style for img tag
 		if ( !empty( $options['imgExtraStyle'] ) ) {
 			$imgAttribs['style'] .= $options['imgExtraStyle'];
