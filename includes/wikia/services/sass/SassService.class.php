@@ -226,7 +226,12 @@ class SassService extends WikiaObject {
 			foreach ($filters as $filter) {
 				$styles = $filter->process($styles);
 			}
+			$styles = trim($styles);
 			$end = microtime(true);
+
+			if (empty($styles)) {
+				throw new \Wikia\Sass\Exception('Empty style');
+			}
 
 			$ok = true;
 

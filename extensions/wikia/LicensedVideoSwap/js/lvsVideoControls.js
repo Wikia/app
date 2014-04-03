@@ -2,12 +2,12 @@
  * Handle clicks on play buttons so they play the video
  */
 
-define( 'lvs.videocontrols', [
-		'wikia.videoBootstrap',
-		'wikia.nirvana',
-		'jquery',
-		'lvs.tracker'
-	], function( VideoBootstrap, nirvana, $, tracker ) {
+define('lvs.videocontrols', [
+	'wikia.videoBootstrap',
+	'wikia.nirvana',
+	'jquery',
+	'lvs.tracker'
+], function (VideoBootstrap, nirvana, $, tracker) {
 
 	'use strict';
 
@@ -19,7 +19,7 @@ define( 'lvs.videocontrols', [
 	 */
 	var videoInstances = [];
 
-	function setVerticalAlign( $element, video ) {
+	function setVerticalAlign(/*$element, video*/) {
 		// TODO: once height is set dynamically, let this function run.
 
 		/*
@@ -32,7 +32,7 @@ define( 'lvs.videocontrols', [
 	}
 
 	// remove vertical alignment css
-	function removeVerticalAlign( $element ) {
+	function removeVerticalAlign(/*$element*/) {
 		// TODO: once height is set dynamically, let this function run.
 
 		/*
@@ -43,7 +43,7 @@ define( 'lvs.videocontrols', [
 		*/
 	}
 
-	function syncVideoInteraction( title, premiumTitle ) {
+	function syncVideoInteraction(title, premiumTitle) {
 		nirvana.sendRequest({
 			controller: 'LicensedVideoSwapSpecialController',
 			method: 'playVideo',
@@ -54,17 +54,17 @@ define( 'lvs.videocontrols', [
 		});
 	}
 
-	function init( $container ) {
-		var videoWidth = $container.find( '.grid-3' ).width();
+	function init($container) {
+		var videoWidth = $container.find('.grid-3').width();
 
-		$container.on( 'click', '.video', function(e) {
+		$container.on('click', '.video', function (e) {
 			e.preventDefault();
 
-			var $this = $( this ),
-				fileTitle = decodeURIComponent( $this.children( 'img' ).attr( 'data-video-key' ) ),
+			var $this = $(this),
+				fileTitle = decodeURIComponent($this.children('img').attr('data-video-key')),
 				$element,
 				$thumbList,
-				$row = $this.closest( '.row' ),
+				$row = $this.closest('.row'),
 				$parent = $this.parent(),
 				$wrapper,
 				$newFlag,
@@ -72,28 +72,28 @@ define( 'lvs.videocontrols', [
 				isPremium = 1,
 				nonPremiumTitle;
 
-			$newFlag = $row.find( '.new' );
+			$newFlag = $row.find('.new');
 
 			/*
 			 * For all premium video plays that are 'new' to user, including plays from the 'more suggestions' thumbs
 			 * send a call to backend to persist and track user interaction, then hide 'New' flag
 			 */
-			if ( !$this.closest( '.non-premium' ).length && $newFlag.is( ':visible' ) ) {
-				nonPremiumTitle = $row.find( '.keep-button' ).attr( 'data-video-keep' );
-				syncVideoInteraction( nonPremiumTitle, fileTitle );
+			if (!$this.closest('.non-premium').length && $newFlag.is(':visible')) {
+				nonPremiumTitle = $row.find('.keep-button').attr('data-video-keep');
+				syncVideoInteraction(nonPremiumTitle, fileTitle);
 				$newFlag.fadeOut();
 			}
 
-			$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
+			$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
-			if ( $this.hasClass( 'thumb' ) ) {
+			if ($this.hasClass('thumb')) {
 				// one of the thumbnails was clicked
-				$element = $this.closest( '.row' ).find( '.premium .video-wrapper' );
-				$thumbList = $this.closest( 'ul' );
+				$element = $this.closest('.row').find('.premium .video-wrapper');
+				$thumbList = $this.closest('ul');
 
 				// put outline around the thumbnail that was clicked
-				$thumbList.find( '.selected' ).removeClass( 'selected' );
-				$this.addClass( 'selected' );
+				$thumbList.find('.selected').removeClass('selected');
+				$this.addClass('selected');
 
 				// tracking rank should be 1-indexed, so add 1 to the 0-based index
 				trackingRank = $parent.index() + 1;
@@ -102,18 +102,18 @@ define( 'lvs.videocontrols', [
 				$element = $parent;
 
 				// For tracking purposes, figure out if premium or non-premium was clicked
-				$wrapper = $parent.closest( '.grid-3' );
-				if ( !$wrapper.hasClass( 'premium' ) ) {
+				$wrapper = $parent.closest('.grid-3');
+				if (!$wrapper.hasClass('premium')) {
 					isPremium = 0;
 					trackingRank = 1;
 				}
 			}
 
-			tracker.track( tracker.defaults, {
+			tracker.track(tracker.defaults, {
 				action: tracker.actions.PLAY,
 				label: isPremium ? tracker.labels.PREMIUM : tracker.labels.NON_PREMIUM,
 				value: trackingRank
-			} );
+			});
 
 			nirvana.sendRequest({
 				controller: 'VideoHandler',
@@ -123,36 +123,36 @@ define( 'lvs.videocontrols', [
 					width: videoWidth,
 					autoplay: 1,
 				},
-				callback: function( data ) {
+				callback: function (data) {
 					var videoInstance,
 						vbIndex;
 
 					// Remove styles of previous video
-					removeVerticalAlign( $element );
+					removeVerticalAlign($element);
 
-					videoInstance = new VideoBootstrap( $element[0], data.embedCode, 'licensedVideoSwap' );
+					videoInstance = new VideoBootstrap($element[0], data.embedCode, 'licensedVideoSwap');
 
-					setVerticalAlign( $element, videoInstance );
+					setVerticalAlign($element, videoInstance);
 
 					// Update swap button so it contains the dbkey of the video to swap
-					$row.find( '.swap-button' ).attr( 'data-video-swap', fileTitle );
+					$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
 					/* Track video instances so we can reset them later:
 					 * If the wrapper element already has a player in it, switch it for this new one.
 					 * If not, add it to the videoInstances array.
 					 */
-					vbIndex = $element.data( 'vb-index');
-					if ( !vbIndex ) {
-						$element.data( 'vb-index', videoInstances.length );
-						videoInstances.push( videoInstance );
+					vbIndex = $element.data('vb-index');
+					if (!vbIndex) {
+						$element.data('vb-index', videoInstances.length);
+						videoInstances.push(videoInstance);
 					} else {
-						videoInstances.splice( vbIndex, 1, videoInstance );
+						videoInstances.splice(vbIndex, 1, videoInstance);
 					}
 				}
 			});
 		});
 
-		$container.on( 'contentReset', function() {
+		$container.on('contentReset', function () {
 			// All video instances will have been wiped away with the html reset
 			videoInstances = [];
 		});
@@ -167,11 +167,11 @@ define( 'lvs.videocontrols', [
 			autoPlay = false;
 
 		// loop through all loaded video players on the page
-		for ( i = 0; i < len; i++ ) {
-			vb = videoInstances[ i ];
+		for (i = 0; i < len; i++) {
+			vb = videoInstances[i];
 
 			// reload the player
-			vb.reload( vb.title, playerWidth, autoPlay, clickSource );
+			vb.reload(vb.title, playerWidth, autoPlay, clickSource);
 		}
 	}
 

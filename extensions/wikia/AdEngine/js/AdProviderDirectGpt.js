@@ -109,6 +109,10 @@ var AdProviderDirectGpt = function (log, window, Geo, slotTweaker, cacheStorage,
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
+		if (window.wgAdDriverForceDirectGptAd && slotMap[slotname]) {
+			return true;
+		}
+
 		if (!isHighValueCountry || !slotMap[slotname]) {
 			return false;
 		}

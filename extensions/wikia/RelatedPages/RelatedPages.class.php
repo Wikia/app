@@ -294,16 +294,25 @@ class RelatedPages {
 	 * @param array $categories
 	 */
 	protected function getCategoriesByRank( Array $categories ) {
-		$categoryRank = $this->getCategoryRank();
-
 		$results = array();
+		if ( empty( $categories ) ) {
+			return $results;
+		}
+
+		$category_rank = [];
 		foreach( $categories as $category ) {
-			if( isset($categoryRank[$category]) ) {
-				$results[$categoryRank[$category]] = $category;
+			$category_rank[ $category ] = $this->getCategoryRankByName( $category );
+		}
+
+		if ( !empty( $category_rank ) ) {
+			arsort( $category_rank );
+
+			$rank = 0;
+			foreach ( $category_rank as $category => $not_used ) {
+				$results[ ++$rank ] = $category;
 			}
 		}
 
-		ksort( $results );
 		return count($results) ? array_values( $results ) : $categories;
 	}
 
@@ -349,6 +358,37 @@ class RelatedPages {
 		return $results;
 	}
 
+	private function getCategoryRankByName( $category ) {
+		global $wgContentNamespaces, $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		if ( empty( $this->memcKeyPrefix ) ) {
+			$cacheKey = wfMemcKey( __METHOD__, md5($category) );
+		} else {
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, md5( $category ) );
+		}
+		$count = $wgMemc->get($cacheKey);
+
+		if ( !isset( $count ) ) {
+			$dbr = wfGetDB(DB_SLAVE);
+			$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_("count")->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
+			if( count($wgContentNamespaces) > 0 ) {
+				$join_cond = ( count($wgContentNamespaces) == 1) ? "page_namespace = " . intval(reset($wgContentNamespaces)) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
+				$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
+			}
+
+			$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); });
+
+			$count = ( is_object( $result ) ) ? $result->count : 0;
+			if ( $count > 0 ) {
+				$wgMemc->set($cacheKey, $count, $this->categoryRankCacheTTL * 3600);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $count;
+	}
+
 	/**
 	 * get a snippet of article text
 	 * @param int $articleId Article ID
@@ -380,10 +420,15 @@ class RelatedPages {
 				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
 				!$app->checkSkin( 'wikiamobile' )
 			) {
-				$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+				if ( $app->checkSkin( 'oasis' ) ) {
+					OasisController::addSkinAssetGroup( 'relatedpages_js' );
+				}
+				else {
+					$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
 
-				foreach( $scripts as $script ){
-					$wg->Out->addScript( "<script src='{$script}'></script>" );
+					foreach( $scripts as $script ){
+						$wg->Out->addScript( "<script src='{$script}'></script>" );
+					}
 				}
 			}
 		}

@@ -170,7 +170,7 @@ class TorBlock {
 
 	public static function loadNodesForIP( $ip ) {
 		$url = 'https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip='.$ip;
-		$data = Http::get( $url, 'default', array( 'sslVerifyCert' => false ) );
+		$data = Http::get( $url, 'default', array( 'sslVerifyCert' => false, 'noProxy' => true ) );
 		$lines = explode("\n", $data);
 
 		$nodes = array();
