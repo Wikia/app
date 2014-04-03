@@ -34,19 +34,20 @@ linters:
   IdWithExtraneousSelector:
     enabled: true
 
+  # doesn't support tabs
   Indentation:
-    enabled: false # doesn't support tabs
+    enabled: false
 
   LeadingZero:
     enabled: true
 
   NameFormat:
-    enabled: true # sprite generator might need to be updated
+    enabled: true
 
   PlaceholderInExtend:
     enabled: true
 
-  PropertySortOrder: # look into this more
+  PropertySortOrder:
     enabled: true
 
   PropertySpelling:
@@ -81,7 +82,7 @@ linters:
 
   StringQuotes:
     enabled: true
-    style: single_quotes # or double_quotes
+    style: single_quotes
 
   TrailingSemicolonAfterPropertyValue:
     enabled: true
