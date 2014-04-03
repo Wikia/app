@@ -7,7 +7,7 @@ class ParsoidCacheUpdateJob extends Job {
 	var $type, $table, $start, $end;
 
 	function __construct( $title, $params, $id = 0 ) {
-		parent::__construct( 'ParsoidCacheUpdateJob' . $params['type'], $title, $params, $id );
+		parent::__construct( 'ParsoidCacheUpdateJob', $title, $params, $id );
 		$this->type = $params['type'];
 		if ( isset( $params['table'] ) ) {
 			$this->table = $params['table'];
