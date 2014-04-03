@@ -122,7 +122,6 @@ class EnableVideosModule extends Maintenance {
 				$pos = $pos ? unserialize($pos) : false;
 
 				if ( $enabled ) {
-					$pos = unserialize($pos);
 					echo "\tEnabled on the $pos\n";
 				} else {
 					echo "\tDisabled";
