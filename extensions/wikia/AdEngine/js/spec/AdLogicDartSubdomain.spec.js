@@ -2,7 +2,7 @@ describe('AdLogicDartSubdomain', function(){
 	it('Geo discovery', function() {
 		var geoMock = {getCountryCode: function() {return 'XX';}},
 			undef,
-			adLogic = AdLogicDartSubdomain(geoMock);
+			adLogic = modules['ext.wikia.adEngine.adLogicDartSubdomain'](geoMock);
 
 		// Continent-only checks:
 		geoMock.getContinentCode = function() {return 'NA';};
