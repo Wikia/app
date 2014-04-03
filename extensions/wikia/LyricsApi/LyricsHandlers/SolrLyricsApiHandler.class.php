@@ -206,10 +206,10 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return null|stdClass
 	 */
-	public function getArtist( $artist ) {
+	public function getArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
-			'artist_name: %P2%' => $artist,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
 		] );
 
 		$query->setFields( [
@@ -237,11 +237,11 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return null|stdClass
 	 */
-	public function getAlbum( $artist, $album ) {
+	public function getAlbum( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ALBUM,
-			'artist_name: %P2%' => $artist,
-			'album_name: %P3%' => $album,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'album_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_ALBUM ),
 		] );
 
 		$query->setFields( [
@@ -363,11 +363,11 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return null|stdClass
 	 */
-	public function getSong( $artist, $song ) {
+	public function getSong( LyricsApiSearchParams $searchParams ) {
 		$solrQuery = [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'artist_name: %P2%' => $artist,
-			'song_name: %P3%' => $song,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'song_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_SONG ),
 		];
 
 		$query = $this->newQueryFromSearch( $solrQuery );
@@ -399,13 +399,13 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchArtist( $query, $limit, $offset ) {
+	public function searchArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
-			'search_artist_name: %P2%' => $query,
+			'search_artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$solrArtists = $this->client->select( $query );
 
@@ -436,13 +436,13 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchSong( $query, $limit, $offset ) {
+	public function searchSong( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'search_song_name: %P2%' => $query,
+			'search_song_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$solrSongs = $this->client->select( $query );
 		if ( $solrSongs->getNumFound() <= 0 ) {
@@ -466,13 +466,13 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return array|null|stdClass
 	 */
-	public function searchLyrics( $query, $limit, $offset ) {
+	public function searchLyrics( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'lyrics: %P2%' => $query,
+			'lyrics: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$hl = $query->getHighlighting();
 		$hl->setFields( self::INDEX_FIELD_NAME_LYRICS );

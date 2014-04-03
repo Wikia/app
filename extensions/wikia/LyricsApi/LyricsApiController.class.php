@@ -26,18 +26,37 @@ class LyricsApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Calls methods of data handlers with given params. Sets caching and response format to JSON.
+	 * @desc Validates fields and executes the provided method
 	 *
-	 * @param Array $params
-	 * @param String $method
-	 *
+	 * @param $method - Search method name to be called
+	 * @param array $fields = array of required request field names
+	 * @param bool $pagination - get pagination values from request
 	 * @throws NotFoundApiException
+	 * @throws InvalidParameterApiException
 	 */
-	private function getData( $params, $method ) {
+	private function executeSearch($method, Array $fields = [], $pagination = false) {
+		$searchParams = new LyricsApiSearchParams();
+
+		// Validate fields
+		foreach($fields as $fieldName) {
+			$fieldValue = $this->wg->Request->getVal( $fieldName );
+			if( empty( $fieldValue ) ) {
+				throw new InvalidParameterApiException( $fieldName );
+			}
+			$searchParams->addField( $fieldName, $fieldValue );
+		}
+
+		// Get pagination
+		if ( $pagination ) {
+			list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
+			$searchParams->setLimit( $limit );
+			$searchParams->setOffset( $offset );
+		}
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$results = $this->lyricsApiHandler->$method( $searchParams );
 
-		$results = call_user_func_array( [ $this->lyricsApiHandler, $method ], $params );
-
+		// Validate result
 		if( is_null( $results ) ) {
 			throw new NotFoundApiException( $this->getNotFoundDetails( $method ) );
 		}
@@ -89,13 +108,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArtist() {
-		$artist = $this->wg->Request->getVal( self::PARAM_ARTIST );
-
-		if( empty( $artist ) ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTIST );
-		}
-
-		$this->getData( [ $artist ], 'getArtist' );
+		$this->executeSearch( 'getArtist', [ self::PARAM_ARTIST ] );
 	}
 
 	/**
@@ -109,18 +122,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getAlbum() {
-		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
-		$albumName = $this->wg->Request->getVal( self::PARAM_ALBUM );
-
-		if( empty( $artistName ) ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTIST );
-		}
-
-		if( empty( $albumName ) ) {
-			throw new InvalidParameterApiException( self::PARAM_ALBUM );
-		}
-
-		$this->getData( [ $artistName, $albumName ], 'getAlbum' );
+		$this->executeSearch( 'getAlbum', [ self::PARAM_ARTIST, self::PARAM_ALBUM ] );
 	}
 
 	/**
@@ -134,37 +136,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getSong() {
-		$artistName = $this->wg->Request->getVal( self::PARAM_ARTIST );
-		$songName = $this->wg->Request->getVal( self::PARAM_SONG );
-
-		if( empty( $artistName ) ) {
-			throw new InvalidParameterApiException( self::PARAM_ARTIST );
-		}
-
-		if( empty( $songName ) ) {
-			throw new InvalidParameterApiException( self::PARAM_SONG );
-		}
-
-		$this->getData( [ $artistName, $songName ], 'getSong' );
-	}
-
-	/**
-	 * @desc Re-used in other public methods functionality to get a query param from the request
-	 *
-	 * @requestParam String $query searching phrase
-	 *
-	 * @return String
-	 *
-	 * @throws InvalidParameterApiException
-	 */
-	private function getQueryFromRequest() {
-		$query = $this->wg->Request->getVal( self::PARAM_QUERY );
-
-		if( empty( $query ) ) {
-			throw new InvalidParameterApiException( self::PARAM_QUERY );
-		}
-
-		return $query;
+		$this->executeSearch( 'getSong', [ self::PARAM_ARTIST, self::PARAM_SONG ] );
 	}
 
 	/**
@@ -177,9 +149,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchArtist() {
-		$query = $this->getQueryFromRequest();
-		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
-		$this->getData( [ $query, $limit, $offset ], 'searchArtist' );
+		$this->executeSearch( 'searchArtist', [ self::PARAM_QUERY ], true );
 	}
 
 	/**
@@ -192,9 +162,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchSong() {
-		$query = $this->getQueryFromRequest();
-		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
-		$this->getData( [ $query, $limit, $offset ], 'searchSong' );
+		$this->executeSearch( 'searchSong', [ self::PARAM_QUERY ], true );
 	}
 
 	/**
@@ -207,9 +175,7 @@ class LyricsApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function searchLyrics() {
-		$query = $this->getQueryFromRequest();
-		list( $limit, $offset ) = $this->getPaginationParamsFromRequest();
-		$this->getData( [ $query, $limit, $offset ], 'searchLyrics' );
+		$this->executeSearch( 'searchLyrics', [ self::PARAM_QUERY ], true );
 	}
 
 	/**
