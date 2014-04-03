@@ -6,7 +6,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		buildSubMenus,
 		buildMainMenu,
 		// TODO: We should change it to one server-based template when we'll be implementing it on production
-		TMPL_MENU_UL = '<ul id="drawerGlobalNavigation">{{items}}</ul>',
+		TMPL_MENU_UL = '<ul id="drawerGlobalNavigation">{{{items}}}</ul>',
 		TMPL_MENU_LI = '<li class="{{className}}" data-id="{{id}}"><a href="{{href}}">{{text}}</a></li>',
 		TMPL_SUBMENU_HEADER = '<header class="drawerSubmenu {{className}}"><a href="{{href}}">{{text}}</a></header>',
 		TMPL_SUBMENU_UL_START = '<ul class="drawerSubmenu {{className}}">',
