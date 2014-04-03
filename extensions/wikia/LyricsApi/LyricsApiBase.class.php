@@ -21,4 +21,15 @@ class LyricsApiBase {
 	 */
 	const TYPE_SONG = 'song';
 
+	/**
+	 * @desc Decodes JSON into array/object
+	 *
+	 * @param String $text
+	 *
+	 * @return mixed
+	 */
+	public static function deserialize( $text ) {
+		return json_decode( $text );
+	}
+
 }

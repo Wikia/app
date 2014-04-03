@@ -93,17 +93,6 @@ class SolrLyricsApiHandler {
 	}
 
 	/**
-	 * @desc Decodes JSON into array/object
-	 *
-	 * @param String $text
-	 *
-	 * @return mixed
-	 */
-	private function deserialize( $text ) {
-		return json_decode( $text );
-	}
-
-	/**
 	 * @desc Gets albums of an artist for SolrLyricsApiHandler::getArtist() response
 	 *
 	 * @param String $artistName
@@ -113,7 +102,7 @@ class SolrLyricsApiHandler {
 	 */
 	private function getAlbums( $artistName, $albums ) {
 		$albumsList = [];
-		$albums = $this->deserialize( $albums );
+		$albums = LyricsApiBase::deserialize( $albums );
 
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
@@ -152,7 +141,7 @@ class SolrLyricsApiHandler {
 	 */
 	private function getSongs( $artistName, $songs ) {
 		$songsList = [];
-		$songs = $this->deserialize( $songs );
+		$songs = LyricsApiBase::deserialize( $songs );
 
 		if ( is_array( $songs ) ) {
 			foreach ( $songs as $solrSong ) {
@@ -270,7 +259,7 @@ class SolrLyricsApiHandler {
 		}
 
 		if ( $queryResult->genres ) {
-			$album->genres = $this->deserialize( $queryResult->genres );
+			$album->genres = LyricsApiBase::deserialize( $queryResult->genres );
 		}
 
 		if ( $queryResult->length ) {
