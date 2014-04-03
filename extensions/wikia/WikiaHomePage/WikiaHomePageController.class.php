@@ -114,7 +114,7 @@ class WikiaHomePageController extends WikiaController {
 
 		$hubSlot = WikiaDataAccess::cache(
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
-			WikiaDataAccess::CACHE_STANDARD /* 24 hours */,
+			86400 /* 24 hours */,
 			function() use( $langCode ) {
 				$hubSlot = [];
 				$hubsSlots = $this->getHubsSectionSlots();

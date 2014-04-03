@@ -27,13 +27,6 @@ class WikiaDataAccess {
 	const SKIP_CACHE = 1;
 	const REFRESH_CACHE = 2;
 
-	/**
-	 * Caching times
-	 */
-	const CACHE_LONG = 2592000; // 30 days
-	const CACHE_STANDARD = 86400; // 24 hours
-	const CACHE_SHORT = 10800; // 3 hours
-
 	/***********************************
 	 * Public Interface
 	 **********************************/
