@@ -40,7 +40,7 @@ $ab-text-color: #3a3a3a;
 	nav {
 		height: $nav-height;
 
-		li {
+		& > ul > li {
 			@include box-sizing;
 			height: $nav-height;
 			margin-top: 0;
