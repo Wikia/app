@@ -90,11 +90,6 @@ class ApiRunJob extends ApiBase {
 				$this->maxJobs =  $wgApiRunJobsPerRequest;
 			}
 
-			$this->wikiaLog( array (
-				"type" => isset ( $params[ "type" ] ) ? $params[ "type" ] : "undefined",
-				"maxJobs" => $this->maxJobs
-			) );
-
 			foreach( range( 1, $this->maxJobs ) as $counter ) {
 				if( isset( $params[ "type" ] ) ) {
 					$job = Job::pop_type( $params[ "type" ] );
@@ -124,6 +119,13 @@ class ApiRunJob extends ApiBase {
 			}
 
 		}
+
+		$this->wikiaLog( array (
+			"type" => isset ( $params[ "type" ] ) ? $params[ "type" ] : "undefined",
+			"maxJobs" => $this->maxJobs,
+			"done" => $done
+		) );
+
 		$result[ "left" ]  = $this->checkQueue( $done );
 
 		$this->getResult()->addValue( null, $this->getModuleName(), $result );
