@@ -6,8 +6,8 @@ linters:
   CapitalizationInSelector:
     enabled: false
 
-  ColorKeyword: #maybe
-    enabled: true
+  ColorKeyword:
+    enabled: false
 
   # our block comments get stripped out anyway, and $wgCdnStylePath uses them
   Comment:
