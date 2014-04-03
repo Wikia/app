@@ -87,7 +87,6 @@ class ParsoidCacheUpdateJob extends Job {
 				)
 			);
 		}
-		print_pre($requests);
 		$this->checkCurlResults( CurlMultiClient::request( $requests ) );
 
 		# And now purge the previous revision so that we make efficient use of
