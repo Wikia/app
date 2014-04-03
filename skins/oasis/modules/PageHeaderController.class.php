@@ -605,13 +605,14 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs($params) {
-		global $wgOut, $wgSupressPageTitle;
+		global $wgSupressPageTitle;
+
 		wfProfileIn(__METHOD__);
 
 		$this->displaytitle = true;
 		// Leave this for now. To discuss do we want PageTitle
 		if ( $this->displaytitle) {
-			$this->title = $wgOut->getPageTitle();
+			$this->title = wfMessage('oasis-home')->escaped();
 		}
 
 		// number of pages on this wiki
