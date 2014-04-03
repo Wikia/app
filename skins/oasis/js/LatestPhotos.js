@@ -210,15 +210,15 @@ var UploadPhotos = {
 };
 
 var LatestPhotos = {
-    init: function () {
-        this.carousel = $('.LatestPhotosModule').find('.carousel-container');
-        this.carousel.carousel({attachBlindImages: true})
-    }
+	init: function () {
+		this.carousel = $('.LatestPhotosModule').find('.carousel-container');
+		this.carousel.carousel({attachBlindImages: true})
+	}
 };
 
 $(function () {
-    $(".WikiaRail").on('afterLoad.rail', function () {
-        LatestPhotos.init();
-    });
-    UploadPhotos.init();
+	$(".WikiaRail").on('afterLoad.rail', function () {
+		LatestPhotos.init();
+	});
+	UploadPhotos.init();
 });
