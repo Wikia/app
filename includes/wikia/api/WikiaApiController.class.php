@@ -198,7 +198,11 @@ class WikiaApiController extends WikiaController {
 		}
 		$this->response->setData( $data );
 		if ( $cacheValidity > 0 ) {
-			$this->response->setCacheValidity( $cacheValidity );
+			if ( $this->app->wg->User->isLoggedIn() ) {
+				$this->response->setCachePolicy(WikiaResponse::CACHE_PRIVATE);
+			} else {
+				$this->response->setCacheValidity( $cacheValidity );
+			}
 		}
 	}
 

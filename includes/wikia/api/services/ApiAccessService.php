@@ -65,6 +65,10 @@ class ApiAccessService {
 	 * @return bool result
 	 */
 	public function canUse( $controller, $action ) {
+		if( !$this->userIsAllowedToRead() ) {
+			return false;
+		}
+
 		$access = $this->getApiAccess($controller, $action );
 		$isTest = $this->isTestLocation();
 		$prodVal = $this->getEnvValue();
@@ -81,6 +85,10 @@ class ApiAccessService {
 			}
 		}
 		return (bool)( $access & $prodVal );
+	}
+
+	private function userIsAllowedToRead() {
+		return F::app()->wg->User->isAllowed("read");
 	}
 
 	/**
