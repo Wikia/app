@@ -71,6 +71,9 @@ class WikiaHomePageController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 		$this->helper = new WikiaHomePageHelper();
+		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL(
+			'extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'
+		));
 	}
 
 
@@ -98,9 +101,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->lang = self::getContentLang();
 
 		OasisController::addBodyClass('WikiaHome');
-		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL(
-			'extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'
-		));
 	}
 
 	/**
