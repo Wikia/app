@@ -45,9 +45,9 @@ class ArticleCommentsController extends WikiaController {
 				}
 			}
 
-			$this->page = $this->wg->request->getVal( 'page', 1 );
-			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
-			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
+            $this->page = $this->wg->request->getVal( 'page', 1 );
+            $this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
+            $this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
             // store avatar related stuff in main template so it could be added to lazy loaded comments which could be cached
             $this->avatarUrl = AvatarService::getAvatarUrl(F::app()->wg->User->getName(), AvatarService::AVATAR_SIZE_MEDIUM);
