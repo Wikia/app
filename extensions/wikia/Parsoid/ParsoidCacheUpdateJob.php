@@ -101,7 +101,6 @@ class ParsoidCacheUpdateJob extends Job {
 		}
 		$options = CurlMultiClient::getDefaultOptions();
 		$options[CURLOPT_CUSTOMREQUEST] = "PURGE";
-		print_pre($requests);
 		$this->checkCurlResults( CurlMultiClient::request( $requests, $options ) );
 		return $this->getLastError() == null;
 	}
