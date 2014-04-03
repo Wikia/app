@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class ParsoidCacheUpdateJob extends Job {
 
 	var $type, $table, $start, $end;
@@ -18,8 +20,17 @@ class ParsoidCacheUpdateJob extends Job {
 		}
 	}
 
+	public function wikiaLog( $data ) {
+		WikiaLogger::instance()->debug( "ParsoidCacheUpdateJob", $data );
+	}
+
 	public function run() {
 		global $wgUpdateRowsPerJob;
+
+		$this->wikiaLog( array(
+			"action" => "run",
+			"type" => $this->type
+		) );
 
 		if ( $this->type === 'invalidate' ) {
 			$titles = $this->title->getBacklinkCache()->getLinks( $this->table, $this->start, $this->end );
@@ -77,8 +88,9 @@ class ParsoidCacheUpdateJob extends Job {
 
 		$requests = array();
 		foreach ( $wgParsoidCacheServers as $server ) {
+			$singleUrl = $this->getParsoidURL( $title, $server );
 			$requests[] = array(
-				'url'     => $this->getParsoidURL( $title, $server ),
+				'url'     => $singleUrl,
 				'headers' => array(
 					'X-Parsoid: ' . json_encode( $parsoidInfo ),
 					// Force implicit cache refresh similar to
@@ -86,6 +98,10 @@ class ParsoidCacheUpdateJob extends Job {
 					'Cache-control: no-cache'
 				)
 			);
+			$this->wikiaLog( array(
+				"action" => "invalidateTitle",
+				"get_url" => $singleUrl
+			) );
 		}
 		$this->checkCurlResults( CurlMultiClient::request( $requests ) );
 
@@ -95,9 +111,14 @@ class ParsoidCacheUpdateJob extends Job {
 		$requests = array();
 		foreach ( $wgParsoidCacheServers as $server ) {
 			// @TODO: this triggers a getPreviousRevisionID() query per server
+			$singleUrl = $this->getParsoidURL( $title, $server, true );
 			$requests[] = array(
-				'url' => $this->getParsoidURL( $title, $server, true )
+				'url' => $singleUrl
 			);
+			$this->wikiaLog( array(
+				"action" => "invalidateTitle",
+				"purge_url" => $singleUrl
+			) );
 		}
 		$options = CurlMultiClient::getDefaultOptions();
 		$options[CURLOPT_CUSTOMREQUEST] = "PURGE";

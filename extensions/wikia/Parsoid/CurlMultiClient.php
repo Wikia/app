@@ -13,7 +13,7 @@ class CurlMultiClient {
 	 * @returns array default options
 	 */
 	public static function getDefaultOptions() {
-		globla $wgHTTPProxy;
+		global $wgHTTPProxy;
 		$options = array(
 			CURLOPT_HEADER => 0,
 			CURLOPT_RETURNTRANSFER => 1
