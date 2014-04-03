@@ -48,7 +48,7 @@ $ab-text-color: #3a3a3a;
 		}
 
 		.WikiaLogo {
-			padding-right: 12px;
+			padding: 11px 5px 0 10px;
 		}
 	}
 
@@ -297,7 +297,7 @@ $ab-text-color: #3a3a3a;
 	}
 
 	.page-width-container > ul:not(:last-child)#AccountNavigation {
-		right: 190px;
+		right: 180px;
 	}
 
 	@media screen and (max-width: $breakpoint-small) {
@@ -315,7 +315,7 @@ $ab-text-color: #3a3a3a;
 			}
 
 			.page-width-container > ul:not(:last-child)#AccountNavigation {
-				right: 60px;
+				right: 50px;
 			}
 		}
 
@@ -346,6 +346,14 @@ $ab-text-color: #3a3a3a;
 					padding-top: 8px;
 					border-top: 1px solid $menu-hover-bg-color;
 				}
+			}
+		}
+
+		li .search-box {
+			width: 230px;
+
+			&.search-small {
+				width: 140px;
 			}
 		}
 	}
