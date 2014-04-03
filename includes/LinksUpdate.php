@@ -34,8 +34,10 @@ class LinksUpdate {
 		$mCategories,    //!< Map of category names to sort keys
 		$mInterlangs,    //!< Map of language codes to titles
 		$mProperties,    //!< Map of arbitrary name to value
+		/* Wikia change */
 		$mInvalidationQueue = [], //!< Array - Queue if pages ids to be invalidated
 		$mInvalidationTimestamp, //!< Timestamp for page_touched condition to avoid double updates
+		/* Wikia change end */
 		$mDb,            //!< Database connection reference
 		$mOptions,       //!< SELECT options to be used (array)
 		$mRecursive;     //!< Whether to queue jobs for recursive updates
@@ -144,7 +146,9 @@ class LinksUpdate {
 
 		# Invalidate all image description pages which had links added or removed
 		$imageUpdates = $imageDeletes + array_diff_key( $this->mImages, $existing );
+		/* Wikia change CE-677 @author Kamil Koterba kamil@wikia-inc.com */
 		$this->queueImageDescriptionsInvalidation( $imageUpdates );
+		/* Wikia change end */
 
 		# External links
 		$existing = $this->getExistingExternals();
@@ -177,9 +181,11 @@ class LinksUpdate {
 		# Invalidate all categories which were added, deleted or changed (set symmetric difference)
 		$categoryInserts = array_diff_assoc( $this->mCategories, $existing );
 		$categoryUpdates = $categoryInserts + $categoryDeletes;
+		/* Wikia change CE-677 @author Kamil Koterba kamil@wikia-inc.com */
 		$this->queueCategoriesInvalidation( $categoryUpdates );
 		# do the actual invalidation in all pages queued so far
 		$this->invalidatePages();
+		/* Wikia change end */
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
 
 		wfRunHooks( 'AfterCategoriesUpdate', array( $categoryInserts, $categoryDeletes, $this->mTitle ) );
@@ -234,10 +240,12 @@ class LinksUpdate {
 
 		# Update the cache of all the category pages and image description
 		# pages which were changed, and fix the category table count
+		/* Wikia change CE-677 @author Kamil Koterba kamil@wikia-inc.com */
 		$this->queueImageDescriptionsInvalidation( $imageUpdates );
 		$this->queueCategoriesInvalidation( $categoryUpdates );
 		# do the actual invalidation in all pages queued so far
 		$this->invalidatePages();
+		/* Wikia change end */
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
 
 		# Refresh links of all pages including this page
@@ -277,6 +285,9 @@ class LinksUpdate {
 
 	/**
 	 * Queue pages id's of single namespace for later cache invalidation
+	 *
+	 * method added by Wikia CE-677
+	 * @author Kamil Koterba kamil@wikia-inc.com
 	 *
 	 * @param Integer $namespace
 	 * @param Array $dbkeys array of strings containing pages titles
@@ -319,6 +330,8 @@ class LinksUpdate {
 	/**
 	 * Invalidate the cache of a list of pages
 	 *
+	 * Wikia change CE-677 - part of functionality moved to queuePagesInvalidation method
+	 * @author Kamil Koterba kamil@wikia-inc.com
 	 */
 	function invalidatePages() {
 
@@ -375,6 +388,11 @@ class LinksUpdate {
 	}
 
 	/**
+	 * Queues categories pages for update
+	 *
+	 * method changed by Wikia CE-677
+	 * @author Kamil Koterba kamil@wikia-inc.com
+	 * 
 	 * @param Array $cats array of strings - categories names
 	 */
 	function queueCategoriesInvalidation( $cats ) {
@@ -394,6 +412,11 @@ class LinksUpdate {
 	}
 
 	/**
+	 * Queues flies pages for update
+	 * 
+	 * method changed by Wikia CE-677
+	 * @author Kamil Koterba kamil@wikia-inc.com
+	 * 
 	 * @param Array $images array of strings - files names
 	 */
 	function queueImageDescriptionsInvalidation( $images ) {
