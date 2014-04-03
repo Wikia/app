@@ -419,14 +419,10 @@ var ArticleComments = {
 			ArticleComments.processing = true;
 		}
 
-		if (!ArticleComments.messagesLoaded) {
-			$.getMessages('ArticleCommentsCounter', function() {
-				ArticleComments.messagesLoaded = true;
-				makeRequest();
-			});
-		} else {
-			makeRequest();
-		}
+		// load JS messages
+		loadMessages();
+
+		makeRequest();
 	},
 
 	setPage: function(e) {
@@ -568,6 +564,21 @@ var ArticleComments = {
 	}
 };
 
+	/**
+	 * @desc loads JS messages}
+	 */
+
+function loadMessages() {
+	"use strict";
+
+	if (!ArticleComments.messagesLoaded) {
+		$.getMessages('ArticleCommentsCounter', function() {
+			ArticleComments.messagesLoaded = true;
+		});
+	}
+}
+
+
 if (ArticleComments.loadOnDemand) {
 	$(function() {
 
@@ -575,6 +586,9 @@ if (ArticleComments.loadOnDemand) {
 		if ( !$('#WikiaArticleComments').length ) {
 			return;
 		}
+
+		// load JS messages
+		loadMessages();
 
 		var userName = window.wgUserName,
 			content,
@@ -585,15 +599,6 @@ if (ArticleComments.loadOnDemand) {
 			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
 			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')],
 			$comments = $('#WikiaArticleComments');
-
-		if (!ArticleComments.messagesLoaded) {
-			$.getMessages('ArticleCommentsCounter', function() {
-				ArticleComments.messagesLoaded = true;
-				makeRequest();
-			});
-		} else {
-			makeRequest();
-		}
 
 		var belowTheFold = function() {
 			return $comments.offset().top >= ($window.scrollTop() + $window.height());

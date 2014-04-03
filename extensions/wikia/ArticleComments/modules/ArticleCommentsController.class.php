@@ -4,8 +4,6 @@ class ArticleCommentsController extends WikiaController {
 	private static $content = null;
 
 	public function executeIndex() {
-        global $wgUser;
-
 		wfProfileIn(__METHOD__);
 
 		if (class_exists('ArticleCommentInit') && ArticleCommentInit::ArticleCommentCheck()) {
@@ -52,7 +50,7 @@ class ArticleCommentsController extends WikiaController {
 			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
             // store avatar related stuff in main template so it could be added to lazy loaded comments which could be cached
-            $this->avatarUrl = AvatarService::getAvatarUrl($wgUser->getName(), 50);
+            $this->avatarUrl = AvatarService::getAvatarUrl(F::app()->wg->User->getName(), AvatarService::AVATAR_SIZE_MEDIUM);
 
 			if ( $this->isLoadingOnDemand ) {
 				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
