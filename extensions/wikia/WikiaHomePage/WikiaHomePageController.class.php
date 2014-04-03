@@ -109,8 +109,8 @@ class WikiaHomePageController extends WikiaController {
 	 * @return Mixed|null
 	 */
 	public function prepareHubsSectionSlots() {
-		global $wgContLang;
-		$langCode = $wgContLang->getCode();
+		global $wgLang;
+		$langCode = $wgLang->getCode();
 
 		$hubSlot = WikiaDataAccess::cache(
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
