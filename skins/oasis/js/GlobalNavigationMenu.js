@@ -1,3 +1,4 @@
+/*
 require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
 	'use strict';
 
@@ -17,7 +18,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		TMPL_SUBMENU_LI_HEADER = '<li><header>{{text}}</header></li>',
 		TMPL_SUBMENU_LI_WITH_CLASS = '<li class="{{className}}"><a href="{{href}}">{{text}}</a></li>',
 		TMPL_SUBMENU_LI_WITHOUT_CLASS = '<li><a href="{{href}}">{{text}}</a></li>';
-
 
 	menuPromise = nirvana.sendRequest({
 		controller: 'GlobalHeaderController',
@@ -134,3 +134,4 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		});
 	});
 });
+*/
