@@ -30,6 +30,56 @@ class VideosModule extends WikiaModel {
 	];
 
 	/**
+	 * Get videos added to the wiki
+	 * @param integer $numRequired - number of videos required
+	 * @param string $sort [recent/trend] - how to sort the results
+	 * @return array $videos - list of vertical videos (premium videos)
+	 */
+	public function getLocalVideos( $numRequired, $sort ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$filter = 'all';
+			$limit = $this->getVideoLimit( self::LIMIT_VIDEOS );
+
+			$mediaService = new MediaQueryService();
+			$videoList = $mediaService->getVideoList( $sort, $filter, $limit );
+
+			$videos = [];
+			$videoTitles = [];
+			$helper = new VideoHandlerHelper();
+			foreach ( $videoList as $videoInfo ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+					break;
+				}
+
+				if ( $this->addToList( $videoTitles, $videoInfo['title'] ) ) {
+					// get video detail
+					$videoDetail = $helper->getVideoDetail(
+						$videoInfo,
+						self::THUMBNAIL_WIDTH,
+						self::THUMBNAIL_HEIGHT,
+						self::POSTED_IN_ARTICLES,
+						self::GET_THUMB
+					);
+
+					if ( !empty( $videoDetail ) ) {
+						$videos[] = $this->filterVideoDetail( $videoDetail );
+					}
+				}
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->trimVideoList( $videos, $numRequired );
+	}
+
+	/**
 	 * Get related videos (article related videos and wiki related videos)
 	 * @param integer $articleId
 	 * @param integer $numRequired - number of videos required
@@ -189,19 +239,20 @@ class VideosModule extends WikiaModel {
 	/**
 	 * Get videos by category from the wiki
 	 * @param integer $numRequired - number of videos required
+	 * @param string $sort [recent/trend] - how to sort the results
 	 * @return array $videos - list of vertical videos (premium videos)
 	 */
-	public function getVerticalVideos( $numRequired ) {
+	public function getVerticalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
 
 		$category = $this->getWikiVertical();
-		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$params = [
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
-				'sort'       => 'trend',
+				'sort'       => $sort,
 				'limit'      => $this->getVideoLimit( self::LIMIT_VIDEOS ),
 				'category'   => $category,
 			];
@@ -299,18 +350,27 @@ class VideosModule extends WikiaModel {
 			);
 
 			foreach( $videosDetail as $video ) {
-				$videoList[] = [
-					'title'     => $video['fileTitle'],
-					'url'       => $video['fileUrl'],
-					'thumbnail' => $video['thumbnail'],
-					'videoKey'  => $video['title'],
-				];
+				$videoList[] = $this->filterVideoDetail( $video );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $videoList;
+	}
+
+	/**
+	 * Filter video detail
+	 * @param array $video
+	 * @return array
+	 */
+	protected function filterVideoDetail( $video ) {
+		return [
+			'title'     => $video['fileTitle'],
+			'url'       => $video['fileUrl'],
+			'thumbnail' => $video['thumbnail'],
+			'videoKey'  => $video['title'],
+		];
 	}
 
 	/**

@@ -13,6 +13,8 @@ class VideosModuleController extends WikiaController {
 	 * @requestParam integer articleId (required if verticalOnly is false)
 	 * @requestParam integer limit - number of videos shown in the module
 	 * @requestParam string verticalOnly [true/false] - show vertical videos only
+	 * @requestParam string local [true/false] - show local content
+	 * @requestParam string sort [recent/trend] - how to sort the results
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
@@ -27,26 +29,32 @@ class VideosModuleController extends WikiaController {
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$showVerticalOnly = ( $this->request->getVal( 'verticalOnly' ) == 'true' );
 		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
+		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
+		$sort = $this->request->getVal( 'sort', 'trend' );
 
 		$videos = [];
 		$module = new VideosModule();
 
-		if ( !$showVerticalOnly ) {
-			if ( empty( $articleId ) ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
-				wfProfileOut( __METHOD__ );
-				return;
+		if ( $localContent ) {
+			$videos = $module->getLocalVideos( $numRequired, $sort );
+		} else {
+			if ( !$showVerticalOnly ) {
+				if ( empty( $articleId ) ) {
+					$this->result = 'error';
+					$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
+					wfProfileOut( __METHOD__ );
+					return;
+				}
+
+				// get related videos (article related videos and wiki related videos)
+				$videos = $module->getRelatedVideos( $articleId, $numRequired );
 			}
 
-			// get related videos (article related videos and wiki related videos)
-			$videos = $module->getRelatedVideos( $articleId, $numRequired );
-		}
-
-		// get vertical videos
-		$numRequired = $numRequired - count( $videos );
-		if ( $numRequired > 0 ) {
-			$videos = array_merge( $videos, $module->getVerticalVideos( $numRequired ) );
+			// get vertical videos
+			$numRequired = $numRequired - count( $videos );
+			if ( $numRequired > 0 ) {
+				$videos = array_merge( $videos, $module->getVerticalVideos( $numRequired, $sort ) );
+			}
 		}
 
 		$this->result = "ok";
