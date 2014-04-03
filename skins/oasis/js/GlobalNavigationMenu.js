@@ -1,4 +1,6 @@
+/*
 require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
+ 
 	'use strict';
 
 	var menuPromise,
@@ -135,3 +137,4 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		});
 	});
 });
+*/
