@@ -174,14 +174,6 @@ $ab-text-color: #3a3a3a;
 		}
 	}
 
-	.page-width-container > ul:not(:last-child)#AccountNavigation {
-		right: 190px;
-	}
-
-	.AccountNavigation {
-		right: 140px;
-	}
-
 	.AccountNavigation {
 		.subnav.show {
 			background-color: $bg-color;
@@ -277,8 +269,6 @@ $ab-text-color: #3a3a3a;
 	}
 
 	#WallNotifications {
-		right: 140px;
-
 		.subnav.show {
 			@include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
 			background-color: $bg-color;
@@ -298,12 +288,31 @@ $ab-text-color: #3a3a3a;
 		}
 	}
 
+	#WallNotifications, .AccountNavigation {
+		right: 140px;
+	}
+
+	.page-width-container > ul:not(:last-child)#AccountNavigation {
+		right: 190px;
+	}
+
 	@media screen and (max-width: $breakpoint-small) {
-		.user-name {
+		li.start-a-wiki {
+			display: block;
+		}
+
+		&.hide-new-wiki li.start-a-wiki, .user-name {
 			display: none;
 		}
-		&.show-new-wiki li.start-a-wiki {
-			display: block;
+
+		&.hide-new-wiki {
+			#WallNotifications, .AccountNavigation {
+				right: 10px;
+			}
+
+			.page-width-container > ul:not(:last-child)#AccountNavigation {
+				right: 60px;
+			}
 		}
 	}
 }
