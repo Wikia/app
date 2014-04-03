@@ -122,6 +122,8 @@ class WikiaDispatcher {
 				$controllerName = $app->getBaseName($controllerClassName);  // chop off Service/Controller
 				$method = $response->getMethodName();						// might have been changed
 
+				$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+
 				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
 				wfProfileIn($profilename);
 
@@ -257,6 +259,22 @@ class WikiaDispatcher {
 
 		wfProfileOut(__METHOD__);
 		return $response;
+	}
+
+	/**
+	 * @param WikiaApp $app
+	 * @param $controllerClassName
+	 * @param $method
+	 * @throws PermissionsException
+	 */
+	private function testIfUserHasPermissionsOrThrow(WikiaApp $app, $controllerClassName, $method) {
+		$nirvanaAccessRules = WikiaAccessRules::instance();
+		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor($controllerClassName, $method);
+		foreach ($permissions as $permission) {
+			if (!$app->wg->User->isAllowed($permission)) {
+				throw new PermissionsException($permission);
+			}
+		}
 	}
 }
 
