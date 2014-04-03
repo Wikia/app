@@ -14,7 +14,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 		TMPL_SUBMENU_LI_WITH_CLASS = '<li class="{{className}}"><a href="{{href}}">{{text}}</a></li>',
 		TMPL_SUBMENU_LI_WITHOUT_CLASS = '<li><a href="{{href}}">{{text}}</a></li>';
 
-	menuPromise = nc.sendRequest({
+	menuPromise = nv.sendRequest({
 		controller: 'GlobalHeaderController',
 		method: 'getGlobalMenuItems',
 		format: 'json',
