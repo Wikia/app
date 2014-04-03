@@ -74,6 +74,6 @@ $(function() {
 	$( '#WikiaHeader' ).addClass('v2' ).addClass('hide-new-wiki');
 	GlobalSearch.addSmallCollapsedSearch();
 
-	$( '#AccountNavigation > li > a:not([class])' ).contents().eq(2).wrap('<span class="user-mame">');
+	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
 });
 */

@@ -299,7 +299,7 @@ $ab-text-color: #3a3a3a;
 			display: block;
 		}
 
-		&.hide-new-wiki li.start-a-wiki, .user-name {
+		&.hide-new-wiki li.start-a-wiki, .login-text {
 			display: none;
 		}
 
@@ -311,6 +311,17 @@ $ab-text-color: #3a3a3a;
 			.page-width-container > ul:not(:last-child)#AccountNavigation {
 				right: 60px;
 			}
+		}
+
+		.ajaxLogin {
+			background-image: url(/skins/oasis/images/GlobalHeaderAB/profile.png); /* base64 */;
+			background-position: 10px center;
+			background-repeat: no-repeat;
+			padding-left: 30px;
+		}
+
+		.AccountNavigation li:nth-child(2) {
+			display: none;
 		}
 	}
 }
