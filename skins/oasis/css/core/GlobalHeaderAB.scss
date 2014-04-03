@@ -160,11 +160,12 @@ $ab-text-color: #3a3a3a;
 		.bubbles {
 			background: none;
 			height: $nav-height;
+			text-align: center;
 
 			&.reddot #bubbles_count {
 				background-color: #f6961d;
 				color: $bg-color;
-				left: 9px;
+				left: 0;
 				line-height: 18px;
 				padding: 0 5px;
 				top: 0px;
