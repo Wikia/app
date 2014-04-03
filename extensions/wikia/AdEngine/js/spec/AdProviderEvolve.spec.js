@@ -1,4 +1,8 @@
 describe('AdProviderEvolve', function(){
+	"use strict";
+
+	var slotTweakerMock;
+
 // dart has problems with sending back scripts based on key-val %p
 // http://ad.doubleclick.net/adj/wka.gaming/_starcraft/article;s0=gaming;s1=_starcraft;dmn=wikia-devcom;pos=TOP_LEADERBOARD;ord=7121786175
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
@@ -13,8 +17,8 @@ describe('AdProviderEvolve', function(){
 			, evolveHelperMock = {}
 			, adProviderEvolve;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -40,8 +44,8 @@ describe('AdProviderEvolve', function(){
 			, actual
 			;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		windowMock.wgDBname = 'somedb';
@@ -75,8 +79,8 @@ describe('AdProviderEvolve', function(){
 			, evolveHelperMock = {}
 			, adProviderEvolve;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');

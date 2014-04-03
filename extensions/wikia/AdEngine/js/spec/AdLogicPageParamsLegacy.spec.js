@@ -1,4 +1,4 @@
-describe('AdLogicPageLevelParamsLegacy', function(){
+describe('AdLogicPageParamsLegacy', function(){
 	it('getCustomKeyValues', function() {
 		var logMock = function() {},
 			windowMock = {},
@@ -6,7 +6,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			paramToTrim,
 			adLogicPageParamsMock = {getPageLevelParams: function() {}},
 			dartUrlMock = {trimParam: function(param) {return param}},
-			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = modules['ext.wikia.adEngine.adLogicPageParamsLegacy'](logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
 		expect(adLogicPageParamsLegacy.getCustomKeyValues()).toBe('');
 
@@ -24,7 +24,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			paramToTrim,
 			adLogicPageParamsMock = {getPageLevelParams: function() {}},
 			dartUrlMock = {trimParam: function (param) {return param}},
-			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = modules['ext.wikia.adEngine.adLogicPageParamsLegacy'](logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
 		expect(adLogicPageParamsLegacy.getKruxKeyValues()).toBe('');
 
@@ -48,7 +48,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			passedKey,
 			passedValue,
 			dartUrlMock = {decorateParam: function(key, value) {passedKey = key; passedValue = value;}},
-			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = modules['ext.wikia.adEngine.adLogicPageParamsLegacy'](logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
 		adLogicPageParamsLegacy.getDomainKV();
 		expect(passedKey).toBe('dmn');
@@ -68,7 +68,7 @@ describe('AdLogicPageLevelParamsLegacy', function(){
 			passedKey,
 			passedValue,
 			dartUrlMock = {decorateParam: function(key, value) {passedKey = key; passedValue = value;}},
-			adLogicPageParamsLegacy = AdLogicPageLevelParamsLegacy(logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
+			adLogicPageParamsLegacy = modules['ext.wikia.adEngine.adLogicPageParamsLegacy'](logMock, windowMock, adLogicPageParamsMock, kruxMock, dartUrlMock);
 
 		adLogicPageParamsLegacy.getHostnamePrefix();
 		expect(passedKey).toBe('hostpre');

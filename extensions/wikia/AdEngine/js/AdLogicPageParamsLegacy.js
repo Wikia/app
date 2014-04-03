@@ -1,6 +1,3 @@
-/**
- * Extension of AdLogicPageLevelParams for Evolve
- */
 /*global define*/
 define('ext.wikia.adEngine.adLogicPageParamsLegacy', [
 	'wikia.log',

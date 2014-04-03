@@ -22,12 +22,12 @@ describe('AdProviderDirectGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return false;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderDirectGpt = AdProviderDirectGpt(
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
 			logMock,
 			windowMock,
 			geoMock,
-			slotTweakerMock,
 			cacheStorageMock,
+			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
 			GptSlotConfigMock
@@ -66,12 +66,12 @@ describe('AdProviderDirectGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderDirectGpt = AdProviderDirectGpt(
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
 			logMock,
 			windowMock,
 			geoMock,
-			slotTweakerMock,
 			cacheStorageMock,
+			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
 			GptSlotConfigMock
@@ -114,12 +114,12 @@ describe('AdProviderDirectGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderDirectGpt = AdProviderDirectGpt(
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
 			logMock,
 			windowMock,
 			geoMock,
-			slotTweakerMock,
 			cacheStorageMock,
+			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
 			GptSlotConfigMock
@@ -163,12 +163,12 @@ describe('AdProviderDirectGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderDirectGpt = AdProviderDirectGpt(
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
 			logMock,
 			windowMock,
 			geoMock,
-			slotTweakerMock,
 			cacheStorageMock,
+			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
 			GptSlotConfigMock
@@ -220,12 +220,12 @@ describe('AdProviderDirectGpt', function(){
 		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
 		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
 
-		adProviderDirectGpt = AdProviderDirectGpt(
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
 			logMock,
 			windowMock,
 			geoMock,
-			slotTweakerMock,
 			cacheStorageMock,
+			slotTweakerMock,
 			adLogicHighValueCountryMock,
 			wikiaGptMock,
 			GptSlotConfigMock
