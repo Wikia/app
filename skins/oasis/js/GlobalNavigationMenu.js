@@ -1,55 +1,59 @@
 require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
 	'use strict';
 
+	var menuPromise, drawerPromise, buildSubMenus, buildMainMenu;
 
-	var menuPromise = nirvana.sendRequest({
-			controller: 'GlobalHeaderController',
-			method: 'getGlobalMenuItems',
-			format: 'json',
-			type: 'GET',
-			data: {
-				cb: Date.now()
-			}
-		}),
-		drawerPromise = uiFactory.init([ 'drawer' ]),
-		buildSubMenus = function (menuItemsObj) {
-			var subMenus = [];
+	menuPromise = nirvana.sendRequest({
+		controller: 'GlobalHeaderController',
+		method: 'getGlobalMenuItems',
+		format: 'json',
+		type: 'GET',
+		data: {
+			cb: Date.now()
+		}
+	});
 
-			$.each(menuItemsObj, function () {
-				var subMenu = [],
-					extraClassName = this.specialAttr || '';
+	drawerPromise = uiFactory.init([ 'drawer' ]);
 
-				subMenu.push('<header class="drawerSubmenu ' + extraClassName + '"><a href="' + this.href + '">' + this.text + '</a></header>');
+	buildSubMenus = function (menuItemsObj) {
+		var subMenus = [];
+
+		$.each(menuItemsObj, function () {
+			var subMenu = [],
+				extraClassName = this.specialAttr || '';
+
+			subMenu.push('<header class="drawerSubmenu ' + extraClassName + '"><a href="' + this.href + '">' + this.text + '</a></header>');
+
+			$.each(this.children, function () {
+				subMenu.push('<ul class="drawerSubmenu ' + extraClassName + '">');
+
+				subMenu.push('<li><header>' + this.text + '</header></li>');
 
 				$.each(this.children, function () {
-					subMenu.push('<ul class="drawerSubmenu ' + extraClassName + '">');
-
-					subMenu.push('<li><header>' + this.text + '</header></li>');
-
-					$.each(this.children, function () {
-						if (this.specialAttr) {
-							subMenu.push('<li class="' + this.specialAttr + '" ><a href="' + this.href + '">' + this.text + '</a></li>');
-						} else {
-							subMenu.push('<li><a href="' + this.href + '">' + this.text + '</a></li>');
-						}
-					});
-
-					subMenu.push('</ul>');
+					if (this.specialAttr) {
+						subMenu.push('<li class="' + this.specialAttr + '" ><a href="' + this.href + '">' + this.text + '</a></li>');
+					} else {
+						subMenu.push('<li><a href="' + this.href + '">' + this.text + '</a></li>');
+					}
 				});
-				subMenus.push(subMenu.join(''));
+
+				subMenu.push('</ul>');
 			});
+			subMenus.push(subMenu.join(''));
+		});
 
-			return subMenus;
-		},
-		buildMainMenu = function (menuItemsObj) {
-			var menu = [];
+		return subMenus;
+	};
 
-			$.each(menuItemsObj, function (i) {
-				menu.push('<li class="' + this.specialAttr + '" data-id="' + i + '"><a href="' + this.href + '">' + this.text + '</a></li>');
-			});
+	buildMainMenu = function (menuItemsObj) {
+		var menu = [];
 
-			return '<ul id="drawerGlobalNavigation">' + menu.join('') + '</ul>';
-		};
+		$.each(menuItemsObj, function (i) {
+			menu.push('<li class="' + this.specialAttr + '" data-id="' + i + '"><a href="' + this.href + '">' + this.text + '</a></li>');
+		});
+
+		return '<ul id="drawerGlobalNavigation">' + menu.join('') + '</ul>';
+	};
 
 	$.when(menuPromise, drawerPromise).done(function (menuXhr, uiDrawer) {
 		var menuItems = menuXhr[0],
@@ -57,7 +61,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			subMenus = buildSubMenus( menuItems ),
 			drawerConfig = {
 				vars: {
-					//style: 'fixed',
 					closeText: 'Close',
 					side: 'left',
 					content: mainMenu

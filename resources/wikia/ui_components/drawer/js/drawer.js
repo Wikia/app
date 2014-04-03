@@ -12,7 +12,6 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 		drawerDefaults = {
 			type: 'default',
 			vars: {
-				style: '',
 				side: 'right',
 				closeText: 'Close'
 			}
@@ -108,7 +107,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @param content HTML Content
 	 */
-	Drawer.prototype.set = function(content) {
+	Drawer.prototype.setContent = function(content) {
 		this.$subdrawer.html(content);
 	};
 
@@ -150,7 +149,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @param subcontent HTML Content
 	 */
-	Drawer.prototype.setSub = function(subcontent) {
+	Drawer.prototype.setSubContent = function(subcontent) {
 		this.$subdrawer.html(subcontent);
 	};
 
@@ -162,7 +161,9 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	Drawer.prototype.swipeSub = function(subcontent) {
 		var self = this,
 			animate = function() {
-				self.setSub(subcontent);
+				if (subcontent) {
+					self.setSubContent(subcontent);
+				}
 				self.openSub();
 			};
 		if ( this.isOpenSub() ) {

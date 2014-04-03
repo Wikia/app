@@ -24,16 +24,13 @@ $subdrawer-width: 225px;
 	@include box-sizing;
 
 	background: $color-page;
-	bottom: 25px;
+	bottom: 0;
 	color: $drawer-text-color;
 	opacity: 0;
-	overflow: hidden;
-	position: absolute;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: fixed;
 	top: 0;
-
-	&.fixed {
-		position: fixed;
-	}
 
 	&.open {
 		opacity: 1;
