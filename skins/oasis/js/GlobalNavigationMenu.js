@@ -1,9 +1,20 @@
-require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
+require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nv, mustache) {
 	'use strict';
 
-	var menuPromise, drawerPromise, buildSubMenus, buildMainMenu;
+	var menuPromise,
+		drawerPromise,
+		buildSubMenus,
+		buildMainMenu,
+		TMPL_MENU_UL = '<ul id="drawerGlobalNavigation">{{items}}</ul>',
+		TMPL_MENU_LI = '<li class="{{className}}" data-id="{{}id}}"><a href="{{href}}">{{text}}</a></li>',
+		TMPL_SUBMENU_HEADER = '<header class="drawerSubmenu {{className}}"><a href="{{href}}">{{text}}</a></header>',
+		TMPL_SUBMENU_UL_START = '<ul class="drawerSubmenu {{className}}">',
+		TMPL_SUBMENU_UL_END = '</ul>',
+		TMPL_SUBMENU_LI_HEADER = '<li><header>{{text}}</header></li>',
+		TMPL_SUBMENU_LI_WITH_CLASS = '<li class="{{className}}"><a href="{{href}}">{{text}}</a></li>',
+		TMPL_SUBMENU_LI_WITHOUT_CLASS = '<li><a href="{{href}}">{{text}}</a></li>';
 
-	menuPromise = nirvana.sendRequest({
+	menuPromise = nc.sendRequest({
 		controller: 'GlobalHeaderController',
 		method: 'getGlobalMenuItems',
 		format: 'json',
@@ -22,22 +33,37 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			var subMenu = [],
 				extraClassName = this.specialAttr || '';
 
-			subMenu.push('<header class="drawerSubmenu ' + extraClassName + '"><a href="' + this.href + '">' + this.text + '</a></header>');
+			subMenu.push(mustache.render(TMPL_SUBMENU_HEADER, {
+				className: extraClassName,
+				href: this.href,
+				text: this.text
+			}));
 
 			$.each(this.children, function () {
-				subMenu.push('<ul class="drawerSubmenu ' + extraClassName + '">');
+				subMenu.push(mustache.render(TMPL_SUBMENU_UL_START, {
+					className: extraClassName
+				}));
 
-				subMenu.push('<li><header>' + this.text + '</header></li>');
+				subMenu.push(mustache.render(TMPL_SUBMENU_LI_HEADER, {
+					text: this.text
+				}));
 
 				$.each(this.children, function () {
 					if (this.specialAttr) {
-						subMenu.push('<li class="' + this.specialAttr + '" ><a href="' + this.href + '">' + this.text + '</a></li>');
+						subMenu.push(mustache.render(TMPL_SUBMENU_LI_WITH_CLASS, {
+							className: this.specialAttr,
+							href: this.href,
+							text: this.text
+						}));
 					} else {
-						subMenu.push('<li><a href="' + this.href + '">' + this.text + '</a></li>');
+						subMenu.push(mustache.render(TMPL_SUBMENU_LI_WITHOUT_CLASS, {
+							href: this.href,
+							text: this.text
+						}));
 					}
 				});
 
-				subMenu.push('</ul>');
+				subMenu.push(TMPL_SUBMENU_UL_END);
 			});
 			subMenus.push(subMenu.join(''));
 		});
@@ -49,16 +75,23 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 		var menu = [];
 
 		$.each(menuItemsObj, function (i) {
-			menu.push('<li class="' + this.specialAttr + '" data-id="' + i + '"><a href="' + this.href + '">' + this.text + '</a></li>');
+			menu.push(mustache.render(TMPL_MENU_LI, {
+				className: this.specialAttr,
+				id: i,
+				href: this.href,
+				text: this.text
+			}));
 		});
 
-		return '<ul id="drawerGlobalNavigation">' + menu.join('') + '</ul>';
+		return mustache.render(TMPL_MENU_UL, {
+			items: menu.join('')
+		});
 	};
 
 	$.when(menuPromise, drawerPromise).done(function (menuXhr, uiDrawer) {
 		var menuItems = menuXhr[0],
-			mainMenu = buildMainMenu( menuItems ),
-			subMenus = buildSubMenus( menuItems ),
+			mainMenu = buildMainMenu(menuItems),
+			subMenus = buildSubMenus(menuItems),
 			drawerConfig = {
 				vars: {
 					closeText: 'Close',

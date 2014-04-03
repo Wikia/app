@@ -17,7 +17,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 			}
 		},
 		uiComponent,
-		$body = $( w.document.body );
+		$body = $(w.document.body);
 
 	/**
 	 * THIS FUNCTION IS REQUIRED FOR EACH COMPONENT WITH AMD JS WRAPPER !!!!
@@ -33,30 +33,30 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 * @returns {Object} - new instance of Modal object
 	 */
 
-	function createComponent( params, component ) {
+	function createComponent(params, component) {
 		uiComponent = component; // set reference to UI Component
 
-		return new Drawer( params );
+		return new Drawer(params);
 	}
 
-	function Drawer( params ) {
+	function Drawer(params) {
 		var self = this,
 			side = ( typeof params === 'object' ) ? params.vars.side : params, // drawer side
-			closeFunc = function(ev) {
+			closeFunc = function (ev) {
 				ev.preventDefault();
 
 				self.close();
-			}
+			};
 
-		if ( typeof( uiComponent ) === 'undefined' ) {
+		if (typeof( uiComponent ) === 'undefined') {
 			throw 'Need uiComponent to render drawer with side ' + side;
 		}
 
 		// extend default drawer params with the one passed in constructor call
-		params = $.extend( true, {}, drawerDefaults, params );
+		params = $.extend(true, {}, drawerDefaults, params);
 
 		// render drawer markup and append to DOM
-		$body.append( uiComponent.render( params ) );
+		$body.append(uiComponent.render(params));
 
 		// cache important elements
 		this.$drawer = $('#' + DRAWER_ID + side);
@@ -69,7 +69,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	/**
 	 * Open drawer
 	 */
-	Drawer.prototype.open = function() {
+	Drawer.prototype.open = function () {
 		this.$drawer.addClass(OPEN_CLASS);
 		this.$subdrawer.removeClass(HIDDEN_CLASS);
 		this.$blackout.addClass(VISIBLE_CLASS);
@@ -78,14 +78,14 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	/**
 	 * Close drawer
 	 */
-	Drawer.prototype.close = function() {
+	Drawer.prototype.close = function () {
 		var self = this,
-			animate = function() {
+			animate = function () {
 				self.$drawer.removeClass(OPEN_CLASS);
 				self.$subdrawer.addClass(HIDDEN_CLASS);
 				self.$blackout.removeClass(VISIBLE_CLASS);
 			};
-		if ( this.isOpenSub() ) {
+		if (this.isOpenSub()) {
 			this.closeSub();
 			setTimeout(animate, ANIMATION_DURATION);
 		} else {
@@ -98,7 +98,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @return bool
 	 */
-	Drawer.prototype.isOpen = function() {
+	Drawer.prototype.isOpen = function () {
 		return this.$drawer.hasClass(OPEN_CLASS);
 	};
 
@@ -107,20 +107,20 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @param content HTML Content
 	 */
-	Drawer.prototype.setContent = function(content) {
+	Drawer.prototype.setContent = function (content) {
 		this.$subdrawer.html(content);
 	};
 
 	/**
 	 * Open subdrawer
 	 */
-	Drawer.prototype.openSub = function() {
+	Drawer.prototype.openSub = function () {
 		var self = this,
-			animate = function() {
+			animate = function () {
 				self.$subdrawer.addClass(OPEN_CLASS);
 			};
 
-		if ( !this.isOpen() ) {
+		if (!this.isOpen()) {
 			this.open();
 			setTimeout(animate, ANIMATION_DURATION);
 		} else {
@@ -131,7 +131,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	/**
 	 * Close subdrawer
 	 */
-	Drawer.prototype.closeSub = function() {
+	Drawer.prototype.closeSub = function () {
 		this.$subdrawer.removeClass(OPEN_CLASS);
 	};
 
@@ -140,7 +140,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @return bool
 	 */
-	Drawer.prototype.isOpenSub = function() {
+	Drawer.prototype.isOpenSub = function () {
 		return this.$subdrawer.hasClass(OPEN_CLASS);
 	};
 
@@ -149,7 +149,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @param subcontent HTML Content
 	 */
-	Drawer.prototype.setSubContent = function(subcontent) {
+	Drawer.prototype.setSubContent = function (subcontent) {
 		this.$subdrawer.html(subcontent);
 	};
 
@@ -158,21 +158,21 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 *
 	 * @param subcontent  HTML Content
 	 */
-	Drawer.prototype.swipeSub = function(subcontent) {
+	Drawer.prototype.swipeSub = function (subcontent) {
 		var self = this,
-			animate = function() {
+			animate = function () {
 				if (subcontent) {
 					self.setSubContent(subcontent);
 				}
 				self.openSub();
 			};
-		if ( this.isOpenSub() ) {
+		if (this.isOpenSub()) {
 			this.closeSub();
 			setTimeout(animate, ANIMATION_DURATION);
 		} else {
 			animate();
 		}
-	}
+	};
 
 	/** Public API */
 
