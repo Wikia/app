@@ -52,23 +52,28 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 			$scheduleCloseAccount = $helper->scheduleCloseAccount( $user );
 
+			$this->showForm = false;
+
 			if ( $scheduleCloseAccount ) {
 				$user->logout();
 				$this->introText = $this->msg( 'closemyaccount-scheduled', $this->getLanguage()->formatNum( CloseMyAccountHelper::CLOSE_MY_ACCOUNT_WAIT_PERIOD ) )->parseAsBlock();
-				$this->showForm = false;
 			} else {
 				$this->introText = '';
 				$this->warning = $this->msg( 'closemyaccount-scheduled-failed' )->parse();
-				$this->showForm = false;
 			}
 
 		} else {
 
 			$this->introText = $this->msg( 'closemyaccount-intro-text', $waitPeriod )->parseAsBlock();
+			$this->currentUserMessage = $this->msg( 'closemyaccount-logged-in-as', $user->getName() )->parseAsBlock();
 
 			if ( !$user->isEmailConfirmed() ) {
 				$this->warning = $this->msg( 'closemyaccount-unconfirmed-email' )->parse();
+			} else {
+				$this->currentUserMessage .= $this->msg( 'closemyaccount-current-email', $user->getEmail(), $user->getName() )->parseAsBlock();
 			}
+
+			$this->confirmationText = $this->msg( 'closemyaccount-confirm', $user->getName() )->parse();
 
 			$buttonParams = [
 				'type' => 'button',

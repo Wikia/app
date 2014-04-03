@@ -32,5 +32,5 @@ $wgHooks['UserSendConfirmationMail'][] = 'CloseMyAccountHooks::onUserSendConfirm
 $wgResourceModules['ext.closeMyAccount'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/CloseMyAccount/modules',
-	'styles' => 'ext.closeMyAccount.css',
+	'styles' => 'ext.closeMyAccount.scss',
 ];

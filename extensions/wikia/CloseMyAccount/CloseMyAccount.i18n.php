@@ -25,6 +25,9 @@ If you need any more information on what an account disable actually does, you c
 
 Please note you will have $1 {{PLURAL:$1|day|days}} after making this request to reactivate your account by logging in and following the instructions you will see. After this waiting period, your account will be closed permanently and cannot be restored.",
 	'closemyaccount-unconfirmed-email' => 'Warning: You do not have a confirmed email address associated with this account. You will not be able to reactivate your account within the waiting period without one. Please consider setting an email address in [[Special:Preferences|your preferences]] before proceeding.',
+	'closemyaccount-logged-in-as' => 'You are logged in as {{GENDER:$1|$1}}. [[Special:UserLogout|Not you?]]',
+	'closemyaccount-current-email' => '{{GENDER:$2|Your}} email is set to $1. [[Special:Preferences|Do you wish to change it?]]',
+	'closemyaccount-confirm' => '{{GENDER:$1|I}} have read the [[Help:Close_my_account|help page on closing your account]] and confirm that I want to disable my Wikia account.',
 	'closemyaccount-button-text' => 'Close my account',
 	'closemyaccount-reactivate-button-text' => 'Reactivate my account',
 	'closemyaccount-reactivate-page-title' => 'Reactivate my account',
@@ -72,6 +75,13 @@ $messages['qqq'] = array(
 	'closemyaccount-desc' => '{{desc}}',
 	'closemyaccount-intro-text' => 'Text displayed at the top of the Close My Account form. $1 is the number of days before the account is permanently closed.',
 	'closemyaccount-unconfirmed-email' => 'Warning message displayed when a user attempts to close their account when they do not have a confirmed email set on their account.',
+	'closemyaccount-logged-in-as' => "Message on close account form informing the user which account they are logged in as to make sure they aren't closing the wrong account.
+* $1 is the username",
+	'closemyaccount-current-email' => 'Message on close account form informing the user which email is set for the account they are logged in as to make sure they have access to it.
+* $1 is the email address
+* $2 is the username',
+	'closemyaccount-confirm' => 'Label for a checkbox above submit button on the account closure form.
+* $1 is the username',
 	'closemyaccount-button-text' => 'Text of the submit button to close your account',
 	'closemyaccount-reactivate-button-text' => 'Text of the submit button to reactivate your account',
 	'closemyaccount-reactivate-page-title' => 'Special page name of the reactivate account form.',
