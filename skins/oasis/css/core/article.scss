@@ -495,17 +495,20 @@
 	padding: 15px 8px 8px;
 	width: $cell-width + 20 +2;
 
-	td {
+	%td {
 		overflow: hidden;
 		padding: 2px 3px 7px;
 		vertical-align: top;
 	}
 
+	td {
+		@extend %td;
+	}
+
 	th {
-		@extend td;
+		@extend %td;
 		font-weight: bold;
 		text-align: left;
-		vertical-align: top;
 		width: 20%;
 
 		&.wikia-infobox-header {

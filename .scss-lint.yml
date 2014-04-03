@@ -43,7 +43,7 @@ linters:
   NameFormat:
     enabled: true # sprite generator might need to be updated
 
-  PlaceholderInExtend: # do we even support placeholders?
+  PlaceholderInExtend:
     enabled: true
 
   PropertySortOrder: # look into this more
