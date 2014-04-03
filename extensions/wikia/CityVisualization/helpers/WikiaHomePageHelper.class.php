@@ -312,7 +312,8 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @return mixed
 	 */
 	public function getHubSlotsFromWF($corporateId) {
-		return WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+		return is_array( $hubSlots ) ? $hubSlots : [];
 	}
 
 	/**
