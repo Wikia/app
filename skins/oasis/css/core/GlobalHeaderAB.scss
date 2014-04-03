@@ -158,18 +158,16 @@ $ab-text-color: #3a3a3a;
 		}
 
 		.bubbles {
-			background-image: url(/skins/oasis/images/GlobalHeaderAB/noti_icon.png); /* base64 */
-			background-position: 8px 4px;
+			background: none;
 			height: $nav-height;
-			padding: 0 8px;
 
 			&.reddot #bubbles_count {
 				background-color: #f6961d;
 				color: $bg-color;
-				left: 19px;
+				left: 9px;
 				line-height: 18px;
 				padding: 0 5px;
-				top: -4px;
+				top: 0px;
 			}
 		}
 	}
