@@ -1,6 +1,9 @@
 require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
 	'use strict';
 
+	$('#GlobalNavigation').remove();
+	$('<li id="GlobalNavigationMenuButton">Menu</li>').insertBefore('li.WikiaLogo');
+
 	var menuPromise,
 		drawerPromise,
 		buildSubMenus,
@@ -99,8 +102,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 				}
 			};
 
-		$('#GlobalNavigation').remove();
-
 		uiDrawer.createComponent(drawerConfig, function (drawer) {
 			var delay = 250,
 				timer;
@@ -130,8 +131,6 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 
 				drawer.open();
 			});
-
-			$('<li id="GlobalNavigationMenuButton">Menu</li>').insertBefore('li.WikiaLogo');
 		});
 	});
 });
