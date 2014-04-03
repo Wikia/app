@@ -708,4 +708,24 @@ class WikiaFileHelper extends Service {
 		return $fullUrl;
 	}
 
+	/**
+	 * Get thumbnail size. Mainly used for the class name that determines the size of the play button.
+	 * @param integer $width
+	 * @return string $size
+	 */
+	public static function getThumbnailSize( $width = 0 ) {
+		if ( $width < 200 ) {
+			$size = 'xsmall';
+		} else if ( $width < 270 ) {
+			$size = 'small';
+		} else if ( $width < 470 ) {
+			$size = 'medium';
+		} else if ( $width < 720 ) {
+			$size = 'large';
+		} else {
+			$size = 'xlarge';
+		}
+
+		return $size;
+	}
 }

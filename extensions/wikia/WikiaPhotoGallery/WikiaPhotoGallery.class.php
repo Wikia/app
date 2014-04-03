@@ -82,6 +82,12 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private $mExternalImages = false;
 
+	/**
+	 * @var string play button html
+	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
+	 */
+	private $videoPlayButton = '<span class="play-circle"></span>';
+
 	function __construct() {
 		parent::__construct();
 
@@ -852,14 +858,11 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					if ( $isVideo ) {
-						$playButtonSize = ThumbnailVideoController::getThumbnailSize( $image['width'] );
-						$thumbHtml = '<span class="play-circle"></span>';
-						//$thumbHtml = WikiaFileHelper::videoPlayButtonOverlay( $image['width'], $image['height'] );
-						//$videoOverlay = WikiaFileHelper::videoInfoOverlay( $image['width'], $image['linkTitle'] );
+						$playButtonSize = WikiaFileHelper::getThumbnailSize( $image['width'] );
+						$thumbHtml = $this->videoPlayButton;
 						$linkAttribs['class'] .= ' video wikia-video-thumbnail ' . $playButtonSize;
 					} else {
 						$thumbHtml = '';
-						//$videoOverlay = '';
 					}
 
 					$imgAttribs = array(
@@ -896,7 +899,6 @@ class WikiaPhotoGallery extends ImageGallery {
 					}
 
 					$thumbHtml .= Xml::openElement('img', $imgAttribs);
-					//$thumbHtml .= $videoOverlay;
 				} else {
 					$thumbHtml = $image['linkTitle'];
 				}
@@ -1361,19 +1363,22 @@ class WikiaPhotoGallery extends ImageGallery {
 				// Handle videos
 				$videoHtml = false;
 				$videoPlayButton = false;
+				$navClass = '';
+
 				if( WikiaFileHelper::isFileTypeVideo($file) ) {
 					// Get HTML for main video image
 					$htmlParams = array(
 						'file-link' => true,
 						'linkAttribs' => array( 'class' => 'wikiaPhotoGallery-slider force-lightbox' ),
 						'hideOverlay' => true,
+						'useTemplate' => true,
 					);
 
 					$videoHtml = $file->transform( array( 'width' => $imagesDimensions['w'] ) )->toHtml( $htmlParams );
 
 					// Get play button overlay for video thumb
-					$videoPlayButton = WikiaFileHelper::videoPlayButtonOverlay( $thumbDimensions['w'], $thumbDimensions['h'] );
-
+					$videoPlayButton = $this->videoPlayButton;
+					$navClass = 'xsmall wikia-video-thumbnail';
 				}
 
 				$data = array(
@@ -1391,6 +1396,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					'centerLeft' => ($imagesDimensions['w'] > $adjWidth) ? intval(($imagesDimensions['w'] - $adjWidth)/2) : 0,
 					'videoHtml' => $videoHtml,
 					'videoPlayButton' => $videoPlayButton,
+					'navClass' => $navClass,
 				);
 
 				if ( F::app()->checkSkin( 'wikiamobile' ) ) {

@@ -186,7 +186,7 @@ class ThumbnailVideoController extends WikiaController {
 		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
 		} else {
-			$this->size = $this->getThumbnailSize( $width );
+			$this->size = WikiaFileHelper::getThumbnailSize( $width );
 		}
 
 		// set image attributes
@@ -226,27 +226,4 @@ class ThumbnailVideoController extends WikiaController {
 
 		return $attribs;
 	}
-
-	/**
-	 * Get thumbnail size. Mainly used for the class name that determines the size of the play button.
-	 * @param integer $width
-	 * @return string $size
-	 */
-	// TODO: Move this to a helper class
-	public function getThumbnailSize( $width = 0 ) {
-		if ( $width < 200 ) {
-			$size = 'xsmall';
-		} else if ( $width < 270 ) {
-			$size = 'small';
-		} else if ( $width < 470 ) {
-			$size = 'medium';
-		} else if ( $width < 720 ) {
-			$size = 'large';
-		} else {
-			$size = 'xlarge';
-		}
-
-		return $size;
-	}
-
 }

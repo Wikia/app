@@ -30,6 +30,10 @@
 			display: inline-block;
 			opacity: .8;
 		}
+		.play-circle {
+			// place above absolutely positioned parent
+			z-index: 1;
+		}
 	}
 
 	.selected {
