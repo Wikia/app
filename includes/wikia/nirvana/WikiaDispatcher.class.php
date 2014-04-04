@@ -122,7 +122,9 @@ class WikiaDispatcher {
 				$controllerName = $app->getBaseName($controllerClassName);  // chop off Service/Controller
 				$method = $response->getMethodName();						// might have been changed
 
-				$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+				if ( !$request->isInternal() ) {
+					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+				}
 
 				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
 				wfProfileIn($profilename);

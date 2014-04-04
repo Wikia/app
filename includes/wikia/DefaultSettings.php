@@ -105,6 +105,7 @@ $wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/
 $wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['ControllerNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['PermissionsException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 
 
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
@@ -1363,12 +1364,38 @@ $wgApiAccess = [
 	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
 ];
 
+/**
+ * First matched rule will have an effect. All other rules will be ignored.
+ */
 $wgNirvanaAccessRules = [
+	/* You don't need any permissions to login. */
 	[
-		"class" => "UserLogin",
+		"class" => "UserLoginController",
 		"method" => "*",
 		"requiredPermissions" => [],
 	],
+	[
+		"class" => "UserLoginSpecialController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	[
+		"class" => "UserSignupSpecialController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	[
+		"class" => "FacebookSignupController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	/* We need oasis controller to render  */
+	[
+		"class" => "OasisController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	/* Catch all statement. By default all controllers and services require read permission. */
 	[
 		"class" => "*",
 		"method" => "*",
