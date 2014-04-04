@@ -86,7 +86,7 @@
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
-							echo $app->renderView('Ad', 'Index', array('slotname' => 'HOME_TOP_RIGHT_BOXAD'));
+							echo $app->renderView('Ad', 'Index', ['slotname' => 'HOME_TOP_RIGHT_BOXAD', 'pageTypes' => 'homepage_logged', 'corporate', 'all']);
 						}
 					?>
 					</div>

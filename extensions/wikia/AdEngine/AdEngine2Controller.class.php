@@ -1,5 +1,4 @@
 <?php
-use AdEngine2Service;
 
 /**
  * AdEngine II Controller
@@ -19,7 +18,7 @@ class AdEngine2Controller extends WikiaController {
 			$options['kv_article_id'] = $wgTitle->getArticleID();
 			$options['kv_wpage'] = $wgTitle->getPartialURL();
 		}
-		$cat = self::getCachedCategory();
+		$cat = AdEngine2Service::getCachedCategory();
 		$options['kv_Hub'] = $cat['name'];
 		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
@@ -51,6 +50,7 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	public function ad() {
 		$this->slotname = $this->request->getVal('slotname');
-		$this->showAd = AdEngine2Service::shouldShowAdSlot($this->slotname);
+		$pageTypes = $this->request->getVal('pageTypes');
+		$this->showAd = AdEngine2Service::shouldShowAd($this->slotname, $pageTypes);
 	}
 }

@@ -6,4 +6,6 @@
 </script>
 </div>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
+<?php else: ?>
+<!-- NO AD <?= htmlspecialchars($slotname) ?> -->
 <?php endif; ?>

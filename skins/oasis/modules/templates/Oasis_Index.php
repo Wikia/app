@@ -76,14 +76,14 @@
 	<?= $body ?>
 
 	<?php
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotname' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
 		if (empty($wg->SuppressAds)) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+			echo F::app()->renderView('Ad', 'Index', ['slotname' => 'INVISIBLE_1', 'pageTypes' => ['corporate', 'all']]);
 			if (!$wg->EnableWikiaHomePageExt) {
-				echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+				echo F::app()->renderView('Ad', 'Index', ['slotname' => 'INVISIBLE_2']);
 			}
 		}
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotname' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
 <? if( $jsAtBottom ): ?>

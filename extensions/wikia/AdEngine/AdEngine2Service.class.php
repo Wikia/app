@@ -18,13 +18,21 @@ class AdEngine2Service
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
 
+	private $_allPageTypes = [
+		self::PAGE_TYPE_NO_ADS,
+		self::PAGE_TYPE_HOMEPAGE_LOGGED,
+		self::PAGE_TYPE_CORPORATE,
+		self::PAGE_TYPE_ALL_ADS
+	];
+
 	/**
-	 * Get ad level for the current page. Take into account type of the page and user status.
-	 * Return one of the AD_LEVEL_* const
+	 * Get page type for the current page (ad-wise).
+	 * Take into account type of the page and user status.
+	 * Return one of the PAGE_TYPE_* const
 	 *
 	 * @return string
 	 */
-	public static function getAdLevelForPage()
+	private static function getPageType()
 	{
 		$wg = F::app()->wg;
 
@@ -103,9 +111,7 @@ class AdEngine2Service
 		) {
 			$pageLevel = self::PAGE_TYPE_CORPORATE;
 			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
-				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
-					self::PAGE_TYPE_NO_ADS, self::PAGE_TYPE_HOMEPAGE_LOGGED, self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS
-				))
+				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, self::$_allPageTypes)
 			) {
 				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
 			}
@@ -117,6 +123,17 @@ class AdEngine2Service
 		return $pageLevel;
 	}
 
+	public static function shouldShowAd($slotname, $pageTypes)
+	{
+		$pageType = self::getPageType();
+
+		if (in_array('*', $pageTypes) && $pageType !== self::PAGE_TYPE_NO_ADS) {
+			return true;
+		}
+
+		return in_array($pageType, $pageTypes);
+	}
+
 	/**
 	 * Check if for current page the ads can be displayed or not.
 	 *
@@ -124,7 +141,7 @@ class AdEngine2Service
 	 */
 	public static function areAdsShowableOnPage()
 	{
-		return (self::getAdLevelForPage() !== self::PAGE_TYPE_NO_ADS);
+		return (self::getPageType() !== self::PAGE_TYPE_NO_ADS);
 	}
 
 	public static function getAdsInHeadGroup()
@@ -194,33 +211,5 @@ class AdEngine2Service
 		wfProfileOut(__METHOD__);
 
 		return $cat;
-	}
-
-	public static function shouldShowAdSlot($slotname)
-	{
-		$pageLevel = self::getAdLevelForPage();
-		$allowedPageLevels = self::getPageAdLevelsForSlot($slotname);
-
-		return in_array($pageLevel, $allowedPageLevels);
-	}
-
-	/**
-	 * Return all the page types the slot should appear on
-	 * TODO: this should be configurable when defining the ad slot in the template
-	 *
-	 * @param $slotname
-	 * @return array
-	 */
-	private static function getPageAdLevelsForSlot($slotname)
-	{
-		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
-			return [self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS];
-		}
-
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH|SEVENONEMEDIA_FLUSH/', $slotname)) {
-			return [self::PAGE_TYPE_HOMEPAGE_LOGGED, self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS];
-		}
-
-		return [self::PAGE_TYPE_ALL_ADS];
 	}
 }

@@ -79,7 +79,8 @@ class AdEngine2Hooks {
 		];
 
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
-			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
 
