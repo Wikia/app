@@ -21,6 +21,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * Videos page
 	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
+	 * @requestParam string category
+	 * @requestParam string msg - GlobalNotification message
+	 * @requestParam string msgTitle - for GlobalNotification
+	 * @requestParam string provider
 	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
 	 * @responseParam string sortMsg - selected option (sorting)
@@ -65,13 +69,13 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
-		$category = $this->request->getVal( 'category' );
+		$category = $this->request->getVal( 'category', '' );
 
 		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
-		$msg = $this->request->getVal( 'msg', '');
+		$msg = $this->request->getVal( 'msg', '' );
 
 		if ( !empty( $msg ) ) {
-			$msgTitle = $this->request->getVal( 'msgTitle', '');
+			$msgTitle = $this->request->getVal( 'msgTitle', '' );
 			$msgTitle = urldecode($msgTitle);
 
 			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
@@ -85,12 +89,21 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$addVideo = 1;
 
 		// Filter on a comma separated list of providers if given.
-		$providers = $this->request->getVal('provider', '');
+		$providers = $this->request->getVal( 'provider', '' );
 		// Turn this into an array of providers if this parameters is set
-		$providers = $providers ? explode(',', $providers) : null;
+//		$providers = $providers ? explode( ',', $providers ) : null;
 
 		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page, $providers, $category );
+//		$videos = $specialVideos->getVideos( $sort, $page, $providers, $category );
+
+		$params = [
+			'sort' => $sort,
+			'page' => $page,
+			'category' => $category,
+			'provider' => $providers,
+		];
+		$response = $this->sendSelfRequest( 'getVideos', $params );
+		$videos = $response->getVal( 'videos', [] );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
@@ -124,12 +137,12 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		foreach ( $videos as &$video ) {
-			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
-			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
-			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'], true );
-			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
-		}
+//		foreach ( $videos as &$video ) {
+//			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
+//			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
+//			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'], true );
+//			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
+//		}
 
 		// The new trending in <category> options have a slightly different key format
 		$sortKey = $sort.( empty($category) ? '' : ":$category" );
@@ -153,5 +166,36 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->showAddVideoBtn = $this->wg->User->isAllowed('videoupload');
 	}
+
+	/**
+	 * Get videos
+	 * @requestParam string sort [ recent/popular/trend/premium ]
+	 * @requestParam integer page - page number
+	 * @requestParam string category
+	 * @requestParam string provider
+	 * @responseParam array videos - list of videos
+	 */
+	public function getVideos() {
+		$sort = $this->request->getVal( 'sort', 'trend' );
+		$page = $this->request->getVal( 'page', 1 );
+		$category = $this->request->getVal( 'category' );
+		$providers = $this->request->getVal( 'provider', '' );
+
+		$videos = [
+			[
+				"title" => "THE HOBBIT Trailer HD",
+				"fileKey" => "THE_HOBBIT_Trailer_HD",
+				"fileUrl" => "http://sktest123.wikia.com/wiki/File:THE_HOBBIT_Trailer_HD",
+				"thumbnail" => '<a href="http://sktest123.wikia.com/wiki/File:THE_HOBBIT_Trailer_HD" class="video wikia-video-thumbnail small video image lightbox fluid " itemprop="video" itemscope itemtype="http://schema.org/VideoObject" > <span class="play-circle"></span> <img src="http://images.wikia.com/__cb20120821210514/sktest123/images/thumb/2/28/THE_HOBBIT_Trailer_HD/330px-THE_HOBBIT_Trailer_HD.jpg" data-video-key="THE_HOBBIT_Trailer_HD" data-video-name="THE HOBBIT Trailer HD" alt itemprop="thumbnail" > <span class="duration" itemprop="duration" >02:32</span> <meta itemprop="duration" content="PT02M32S"> </a>',
+				"timestamp" => "20 minutes ago",
+				"viewsTotal" => "14 views",
+				"byUserMsg"=> 'by <a href="http://sktest123.wikia.com/wiki/User:Sktest" class="wikia-gallery-item-user">Sktest</a>',
+				"postedInMsg"=> 'Posted in <a href="/wiki/VideoYoutube">VideoYoutube</a>',
+			],
+		];
+
+		$this->videos = $videos;
+	}
+
 }
 
