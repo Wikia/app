@@ -1,9 +1,10 @@
 <?php
 /**
- * removeProviderDeletedVideos
+ * flagStatusOfVideos
  *
- * This script examines all videos on a wiki and determines if that video has been deleted by the provider.
- * If so, that video is deleted from the wiki.
+ * This script examines all videos on a wiki and determines the status of the video (working, deleted by provider,
+ * private, or other). This status is flagged in the page_wikia_props table using the corresponding constant
+ * value listed inside of the flafStatusOfVideos class
  */
 
 ini_set( 'display_errors', 'stderr' );
@@ -12,9 +13,9 @@ ini_set( 'error_reporting', E_NOTICE );
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 /**
- * Class RemoveProviderDeletedVideos
+ * Class flagStatusOfVideos
  */
-class RemoveProviderDeletedVideos extends Maintenance {
+class flagStatusOfVideos extends Maintenance {
 
 	const STATUS_WORKING = 1;
 	const STATUS_DELETED = 2;
@@ -133,5 +134,5 @@ class RemoveProviderDeletedVideos extends Maintenance {
 	}
 }
 
-$maintClass = "removeProviderDeletedVideos";
+$maintClass = "flagStatusOfVideos";
 require_once( RUN_MAINTENANCE_IF_MAIN );
