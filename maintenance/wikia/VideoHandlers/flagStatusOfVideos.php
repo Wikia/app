@@ -87,27 +87,32 @@ class flagStatusOfVideos extends Maintenance {
 	 */
 	public function getVideos() {
 		$db = wfGetDB( DB_SLAVE );
-		$providers = ( new WikiaSQL() )->SELECT( "video_title" )
-			->FIELD( "video_id" )
-			->FIELD( "provider" )
+		$unprocessedVideos = ( new WikiaSQL() )->SELECT( "img_name" )
+			->FIELD( "img_metadata" )
+			->FIELD( "img_minor_mime" )
 			->FIELD( "page_id" )
-			->FROM( "video_info" )
+			->FROM( "image" )
 			->JOIN( "page" )
-			->ON( "video_title", "page_title")
+			->ON( "page_title", "img_name")
+			->WHERE( "img_major_mime" )->EQUAL_TO( "video" )
 			->run( $db, function ( $result ) {
 				while ( $row = $result->fetchObject( $result ) ) {
-					// Look into why there are null videos
-					if ( is_null( $row->provider ) ) {
-						continue;
-					}
-					$video_detail = [ "video_title" => $row->video_title, "video_id" => $row->video_id ,
-						"page_id" => $row->page_id ];
-					$providers[$row->provider][] = $video_detail;
+					$videos[] = $row;
 				}
-				return $providers;
-			})
-		;
-		return $providers;
+				return $videos;
+			});
+
+		$processedVideos = array();
+		foreach( $unprocessedVideos as $video ) {
+			$videoDetail = [
+				"video_id" => unserialize( $video->img_metadata )['videoId'],
+				"video_title" => $video->img_name,
+				"page_id" => $video->page_id
+			];
+			// img_minor_mime is the video provider
+			$processedVideos[$video->img_minor_mime][] = $videoDetail;
+		}
+		return $processedVideos;
 	}
 
 	/**
