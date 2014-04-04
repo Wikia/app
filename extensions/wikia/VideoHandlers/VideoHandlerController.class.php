@@ -291,7 +291,7 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
 	 * @requestParam string sort [recent/popular/trend]
-	 * @requestParam integer limit
+	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
 	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
@@ -310,6 +310,11 @@ class VideoHandlerController extends WikiaController {
 		$filter = 'all';
 		if ( is_string( $providers ) ) {
 			$providers = [ $providers ];
+		}
+
+		// set maximum limit
+		if ( $limit > 100 ) {
+			$limit = 100;
 		}
 
 		$mediaService = new MediaQueryService();
