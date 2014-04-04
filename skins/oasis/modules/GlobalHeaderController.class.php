@@ -66,6 +66,25 @@ class GlobalHeaderController extends WikiaController {
 		$this->response->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
+	/*
+	 * This (recursive) function generates tree from menuNodes.
+	 * It basically reverts part of NavigationModel parse; changes simple array
+	 * structure to a nested tree of elements; contain text, href
+	 * and specialAttr for given menu node and all it's children nodes.
+	 *
+	 * NOTICE: This approach is (very) suboptimal, but it suits A/B test needs.
+	 * In future (production) approach we'll probably want to refactor NavigationModel
+	 * itself and work on that, but the amount of work needed for that is too large
+	 * for simple A/B test.
+	 *
+	 * Source ticket: CON-804
+	 *
+	 * IMPORTANT: This function will be called 60 times as on 2014-04-04 - three hubs,
+	 * four submenus for each hub, five links in each submenu.
+	 *
+	 * @param $index integer of menuitem index to generate data from
+	 * @return array tree of menu nodes for given index
+	 */
 	private function recursiveConvertMenuNodeToArray($index) {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
