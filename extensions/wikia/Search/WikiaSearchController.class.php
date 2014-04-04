@@ -86,10 +86,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * This is the main search action. Special:Search points here.
 	 */
 	public function index() {
+		global $wgEnableSpecialSearchCaching;
+
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
 		$searchConfig = $this->getSearchConfigFromRequest();
-		$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
+
+		if ( !empty( $wgEnableSpecialSearchCaching ) ) {
+			$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
+		}
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
