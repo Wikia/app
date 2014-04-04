@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="91px"
+	 height="91.062px" viewBox="0 0 91 91.062" style="enable-background:new 0 0 91 91.062;" xml:space="preserve">
+<style type="text/css">
+	.blackCircle{opacity:0.5;}
+	.st0{opacity:0.5;fill:#030303;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+</style>
+<g id="circle">
+	<g class="blackCircle">
+		<g>
+			<g>
+				<path d="M90.5,45.559c0,24.849-20.129,44.998-44.996,44.998C20.658,90.557,0.5,70.408,0.5,45.559
+					c0-24.853,20.158-45.002,45.004-45.002C70.371,0.557,90.5,20.707,90.5,45.559z"/>
+			</g>
+		</g>
+		<g>
+			<g>
+				<path class="st0" d="M90.5,45.559c0,24.849-20.129,44.998-44.996,44.998C20.658,90.557,0.5,70.408,0.5,45.559
+					c0-24.853,20.158-45.002,45.004-45.002C70.371,0.557,90.5,20.707,90.5,45.559z"/>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="triangle">
+	<g>
+		<path class="st1" d="M35.281,25.38c-0.23-0.151-0.418-0.05-0.418,0.225v39.907c0,0.275,0.188,0.376,0.418,0.225l30.255-19.874
+			c0.23-0.151,0.23-0.398,0-0.55L35.281,25.38z"/>
+	</g>
+</g>
+<g id="outline">
+	<circle class="st2" cx="45.5" cy="45.557" r="45"/>
+</g>
+</svg>
