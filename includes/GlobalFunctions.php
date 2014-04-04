@@ -3964,30 +3964,3 @@ function wfUnpack( $format, $data, $length=false ) {
 	}
 	return $result;
 }
-
-/**
- * Go through the backtrace and return the first method that is not in the ingored class
- * @param $ignoreClasses mixed array of ignored class names or a single class name
- * @return string method name
- */
-function wfGetCallerClassMethod( $ignoreClasses ) {
-	// analyze the backtrace to log the source of purge requests
-	$backtrace = wfDebugBacktrace();
-	$method = '';
-
-	if ( is_string( $ignoreClasses ) ) {
-		$ignoreClasses = [ $ignoreClasses ];
-	}
-
-	while ( $entry = array_shift( $backtrace ) ) {
-
-		if ( empty( $entry['class'] ) || in_array( $entry['class'], $ignoreClasses ) ) {
-			continue;
-		}
-
-		$method = $entry['class'] . ':' . $entry['function'];
-		break;
-	}
-
-	return $method;
-}
