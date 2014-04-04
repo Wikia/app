@@ -1,0 +1,27 @@
+<h1>{{header}}</h1>
+
+<p>Execute some tasks. or not. Look at stuff here: <a href="{{flowerUrl}}" target="_blank">here</a>.</p>
+
+<div class="task_selector" id="class_selector">
+		<h3>Class</h3>
+    <select name="task_class">
+        <option value="" selected="selected">Select Class</option>
+				{{#createableTaskList}}
+						<option value="{{name}}">{{value}}</option>
+				{{/createableTaskList}}
+    </select>
+</div>
+
+<div class="task_selector hidden" id="method_selector">
+		<h3>Task</h3>
+		<select name="task_method">
+				<option value="" selected="selected">Select Method</option>
+		</select>
+</div>
+
+<div class="clear"></div>
+
+<div id="task_editor" class="hidden">
+		<pre></pre>
+		<div></div>
+</div>

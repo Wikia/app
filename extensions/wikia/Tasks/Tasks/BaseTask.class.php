@@ -53,6 +53,10 @@ abstract class BaseTask {
 		return $this->calls[$index];
 	}
 
+	public function getAdminNonExecuteables() {
+		return [];
+	}
+
 	public function serialize() {
 		$mirror = new \ReflectionClass($this);
 		$result = [

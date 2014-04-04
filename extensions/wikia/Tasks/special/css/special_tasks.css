@@ -1,0 +1,16 @@
+.hidden {
+    display: none;
+}
+
+.task_selector {
+    float: left;
+    margin-right: 25px;
+}
+
+.clear {
+    clear: both;
+}
+
+#task_editor {
+    margin-top: 15px;
+}
