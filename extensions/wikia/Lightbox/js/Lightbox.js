@@ -21,8 +21,7 @@
 
 		// Carousel vars
 		// overlay for thumb images
-		thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;">' +
-			'<img class="sprite play small" src="' + window.wgBlankImgUrl + '"></div>',
+		thumbPlayButton: '<span class="play-circle"></span>',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 		thumbLoadCount: 20,
@@ -1426,7 +1425,7 @@
 			var container = Lightbox.openModal.carouselContainer,
 				// render carousel
 				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
-					liClass: backfill ? 'back-fill' : '',
+					liClass: 'wikia-video-thumbnail xsmall ' + (backfill ? 'back-fill' : ''),
 					thumbs: thumbs
 				});
 
