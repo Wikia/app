@@ -31,8 +31,12 @@
 	var resourcesLoaded = false,
 		modalOnScreen = false,
 		vetLoader = {},
-		UserLoginModal = window.UserLoginModal;
+		template = '';
 
+	/**
+	 * Load template, js, scss, and messages. Only called the first time VET is opened.
+	 * @returns {Array}
+	 */
 	function loadResources() {
 		var deferredList = [];
 
@@ -79,7 +83,8 @@
 			$elem.stopThrobbing();
 			return;
 		} else if (window.wgUserName === null) {
-			UserLoginModal.show({
+			// handle login on article page
+			window.UserLoginModal.show({
 				origin: 'vet',
 				callback: function () {
 					window.UserLogin.forceLoggedIn = true;
@@ -87,7 +92,6 @@
 				}
 			});
 			$elem.stopThrobbing();
-			// handle login on article page
 			return;
 		}
 
@@ -105,12 +109,17 @@
 		}
 
 		$.when.apply($, resourceList).done(function (templateResp) {
+			// If this is the first time resources are loaded, cache the template string
+			if (!resourcesLoaded) {
+				template = templateResp[0];
+			}
+
 			$elem.stopThrobbing();
 
 			// now that VET is loaded, require it.
 			require(['wikia.vet'], function (vet) {
 
-				vetLoader.modal = $(templateResp[0]).makeModal({
+				vetLoader.modal = $(template).makeModal({
 					width: 939,
 					onClose: function () {
 						vet.close();
@@ -123,6 +132,7 @@
 
 				vet.show(options);
 
+				// resources are now officially loaded
 				resourcesLoaded = true;
 			});
 		});
