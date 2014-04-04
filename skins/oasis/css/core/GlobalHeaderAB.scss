@@ -13,7 +13,7 @@ $input-border-color: mix($bg-color, #000000, 80%);
 $ab-text-color: #3a3a3a;
 
 body.global-header-fixed-at-top {
-	padding-top: 41px;
+	padding-top: $nav-height;
 }
 
 body.global-header-fixed-at-top .WikiaHeader {
