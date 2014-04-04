@@ -48,8 +48,19 @@ class Http {
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
 		}
-		$status = $req->execute();
 
+		// Wikia change - @author: mech - begin
+		// log all the requests we make
+
+		// Wikia change - end
+		$status = $req->execute();
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+			$params = [
+				'reqMethod' => $method,
+				'reqUrl' => $url
+			];
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
+		}
 		if ( $status->isOK() ) {
 			$ret = $req->getContent();
 		} else {
