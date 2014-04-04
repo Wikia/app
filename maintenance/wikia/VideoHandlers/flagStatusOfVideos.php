@@ -74,10 +74,12 @@ class flagStatusOfVideos extends Maintenance {
 		echo "Found " . count( $privateVideos ) . " private videos\n";
 		echo "Found " . count( $otherErrorVideos ) . " other videos\n";
 
-		$this->setStatus( $workingVideos, self::STATUS_WORKING );
-		$this->setStatus( $deletedVideoss, self::STATUS_DELETED );
-		$this->setStatus( $privateVideos, self::STATUS_PRIVATE );
-		$this->setStatus( $otherErrorVideos, self::STATUS_OTHER );
+		if ( !$this->test ) {
+			$this->setStatus( $workingVideos, self::STATUS_WORKING );
+			$this->setStatus( $deletedVideos, self::STATUS_DELETED );
+			$this->setStatus( $privateVideos, self::STATUS_PRIVATE );
+			$this->setStatus( $otherErrorVideos, self::STATUS_OTHER_ERROR );
+		}
 
 	}
 
