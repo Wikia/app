@@ -92,9 +92,6 @@ class LatestActivityController extends WikiaController {
 			}
 		}
 
-		if ($wgUser->isAnon()) {
-			$this->response->addAsset('skins/oasis/js/LatestActivity.js');
-		}
 		// Cache the response in CDN and browser
 		$this->response->setCacheValidity(600);
 		
