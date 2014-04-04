@@ -39,6 +39,11 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
+		// TODO: Should be VisualEditor namespaces eventually
+		global $wgContentNamespaces;
+		if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
+			return;
+		}
 		if ( $title->getNamespace() == NS_FILE ) {
 			$job = new ParsoidCacheUpdateJob( $title, array(
 				'type' => 'OnDependencyChange',
