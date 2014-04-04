@@ -122,10 +122,6 @@ class WikiaDispatcher {
 				$controllerName = $app->getBaseName($controllerClassName);  // chop off Service/Controller
 				$method = $response->getMethodName();						// might have been changed
 
-				if ( !$request->isInternal() ) {
-					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
-				}
-
 				$profilename = __METHOD__ . " ({$controllerClassName}_{$method})";
 				wfProfileIn($profilename);
 
@@ -173,6 +169,10 @@ class WikiaDispatcher {
 					!is_callable( array( $controller, $method ) )
 				) {
 					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
+				}
+
+				if ( !$request->isInternal() ) {
+					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
 				}
 
 				// Initialize the RequestContext object if it is not already set
