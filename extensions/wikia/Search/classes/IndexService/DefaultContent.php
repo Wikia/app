@@ -241,7 +241,7 @@ class DefaultContent extends AbstractService
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
-		$infoboxes = $dom->find( 'table.infobox' );
+		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$result['infoboxes_txt'] = [];
 			$counter = 1;
@@ -254,8 +254,13 @@ class DefaultContent extends AbstractService
 				if ( $infoboxRows ) {
 					foreach ( $infoboxRows as $row ) {
 						$infoboxCells = $row->find( 'td' );
-						if ( count( $infoboxCells ) == 2 ) {
+						$headerCells = $row->find( 'th' );
+						$infoBoxCellCount = count( $infoboxCells );
+						$headerCellCount = count( $headerCells );
+						if ( $infoBoxCellCount == 2  && $headerCellCount == 0 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						} else if ( $infoBoxCellCount == 1 && $headerCellCount == 1 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $headerCells[0]->plaintext . ' | ' . $infoboxCells[0]->plaintext  );
 						}
 					}
 				}
