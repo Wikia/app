@@ -14,7 +14,7 @@ class HubRssFeedModel extends WikiaModel {
 	const MAX_DATE_LOOP = 8; // Number of historical elements
 
 	const MIN_DATE_FOUND = 1262300400; //2010-01-01
-
+	
 	/**
 	 * @var MarketingToolboxModel
 	 */
@@ -44,11 +44,13 @@ class HubRssFeedModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getServicesV3( $cityId ) {
-
+		return [];
 		return [
 			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
-			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION)
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
+			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 		];
+	
 	}
 
 	/**
@@ -58,10 +60,10 @@ class HubRssFeedModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getServicesV2( $verticalId ) {
-
 		return [
-			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
-			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId)
+			//'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
+			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
+			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId)
 		];
 
 	}
@@ -216,6 +218,7 @@ class HubRssFeedModel extends WikiaModel {
 				'ts' => $timestamp
 			] );
 		}
+		print_r($data);
 
 		return $this->normalizeDataFromModules( $data );
 	}
@@ -242,6 +245,13 @@ class HubRssFeedModel extends WikiaModel {
 
 		return $this->normalizeDataFromModules( $data );
 	}
+	
+	public static function getFirstValue($data, $keys) {
+		foreach ($keys as $key) {
+			if (isset($data[$key])) return $data[$key];
+		}
+		return null;		
+	}
 
 	/**
 	 * Normalize data (remove duplicates, populate title, description and image fields).
@@ -250,28 +260,39 @@ class HubRssFeedModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function normalizeDataFromModules( $data ) {
+		$keysForUrl =  [ 'articleUrl', 'url', 'imageLink' ];
+		$keysForTitle =  [ 'shortDesc' , 'articleTitle', 'moduleTitle' ];
+		$keysForDescription = ['longDesc', 'quote', 'description'];
+		$keysForImage = ['photoName', 'imageAlt'];
+		
 		$out = [];
-
+		
 		foreach ( $data as &$result ) {
 
 			$itemList = array_pop( $result );
 
 			if ( is_array( $itemList ) ) {
+				if (array_key_exists("title", $itemList)) {
+					// a single item
+					$itemList = [ $itemList ];
+				}
 				foreach ( $itemList as &$item ) {
+					
 					//removing duplicates
-					$url = isset($item[ 'articleUrl' ]) ? $item[ 'articleUrl' ] : $item[ 'url' ];
+					$url = self::getFirstValue($item, $keysForUrl);
 
 					if ( isset($out[ $url ]) ) {
 						continue;
 					}
 
 					$out[ $url ] = [
-						'title' => isset($item[ 'shortDesc' ]) ? $item[ 'shortDesc' ] : $item[ 'articleTitle' ],
-						'description' => isset($item[ 'longDesc' ]) ? $item[ 'longDesc' ] : $item[ 'quote' ],
+						'title' => self::getFirstValue($item, $keysForTitle),
+						'description' => self::getFirstValue($item, $keysForDescription)
 					];
 
-					if ( !empty($item[ 'photoName' ]) ) {
-						$img = $this->getThumbData( $item[ 'photoName' ] );
+					$photoName = self::getFirstValue($item, $keysForImage);
+					if ( $photoName ) {
+						$img = $this->getThumbData( $photoName );
 
 						if ( !empty($img->url) ) {
 

@@ -134,6 +134,12 @@ class HubRssModelTest extends WikiaBaseTest {
 		$this->assertInstanceOf( get_class( $mockCommunity ), $res[ 'community' ] );
 
 	}
+	
+	public function testGetFirstValue() {
+		$data = ["k1" => 1, "k2" => 2];
+		$this->assertEquals(1, HubRssFeedModel::getFirstValue($data, ["nothing", "k1", "k2", "another nothing"]));
+		$this->assertEquals(2, HubRssFeedModel::getFirstValue($data, ["nothing", "k2", "k1", "another nothing"]));		
+	}
 
 
 	/**
@@ -150,6 +156,11 @@ class HubRssModelTest extends WikiaBaseTest {
 			->setMethods( ['loadData'] )
 			->getMock();
 
+		$mockWikiaspicks = $this->getMockBuilder( 'MarketingToolboxModuleWikiaspicksService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
+
 		$mockSlider->expects( $this->any() )
 			->method( 'loadData' )
 			->will( $this->returnValue( ['a' => [['shortDesc' => 'a1', 'longDesc' => 'a2', 'photoName' => 'a3', 'articleUrl' => 'a4']]] ) );
@@ -157,16 +168,21 @@ class HubRssModelTest extends WikiaBaseTest {
 		$mockCommunity->expects( $this->any() )
 			->method( 'loadData' )
 			->will( $this->returnValue( ['a' => [['articleTitle' => 'b1', 'quote' => 'b2', 'photoName' => 'b3', 'url' => 'b4']]] ) );
-
+			
+		$mockWikiaspicks->expects( $this->any() )
+			->method( 'loadData' )
+			->will( $this->returnValue( ['a' => [["title" => "c1", "text" => "c2", "imageAlt" => 'c3', "imageLink" => "c4"]]] ) );
+			
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
 			->setMethods( ['getServicesV2', 'getThumbData'] )
 			->getMock();
-
+		
 		$mock->expects( $this->any() )
 			->method( 'getServicesV2' )
-			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
+			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity,
+						'wikiaspicks' => $mockWikiaspicks] ) );
 
 		$tmp = new StdClass();
 		$tmp->url = 'xx';
@@ -184,20 +200,29 @@ class HubRssModelTest extends WikiaBaseTest {
 		$res = $methodGDFM->invoke( $mock, [null] );
 
 		$this->assertArrayHasKey( 'a4', $res );
-		$this->assertEquals( $res[ 'a4' ][ 'title' ], 'a1' );
-		$this->assertEquals( $res[ 'a4' ][ 'description' ], 'a2' );
+		$this->assertEquals( 'a1', $res[ 'a4' ][ 'title' ] );
+		$this->assertEquals( 'a2', $res[ 'a4' ][ 'description' ] );
 		$this->assertArrayHasKey( 'img', $res[ 'a4' ] );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'url' ], 'xx' );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'width' ], 500 );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'height' ], 500 );
+		$this->assertEquals( 'xx', $res[ 'a4' ][ 'img' ][ 'url' ]  );
+		$this->assertEquals( 500, $res[ 'a4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'a4' ][ 'img' ][ 'height' ] );
 
 		$this->assertArrayHasKey( 'b4', $res );
-		$this->assertEquals( $res[ 'b4' ][ 'title' ], 'b1' );
-		$this->assertEquals( $res[ 'b4' ][ 'description' ], 'b2' );
+		$this->assertEquals( 'b1', $res[ 'b4' ][ 'title' ] );
+		$this->assertEquals( 'b2', $res[ 'b4' ][ 'description' ] );
 		$this->assertArrayHasKey( 'img', $res[ 'b4' ] );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'url' ], 'xx' );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'width' ], 500 );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'height' ], 500 );
+		$this->assertEquals( 'xx', $res[ 'b4' ][ 'img' ][ 'url' ]);
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'height' ] );
+
+		$this->assertArrayHasKey( 'c4', $res );
+		$this->assertEquals( 'c1' , $res[ 'c4' ][ 'title' ] );
+		$this->assertEquals( 'c2', $res[ 'c4' ][ 'description' ] );
+		$this->assertArrayHasKey( 'img', $res[ 'c4' ] );
+		$this->assertEquals( 'xx', $res[ 'b4' ][ 'img' ][ 'url' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'height' ] );
+
 	}
 
 
@@ -215,6 +240,11 @@ class HubRssModelTest extends WikiaBaseTest {
 			->setMethods( ['loadData'] )
 			->getMock();
 
+		$mockWikiaspicks = $this->getMockBuilder( 'MarketingToolboxModuleWikiaspicksService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
+
 		$mockSlider->expects( $this->any() )
 			->method( 'loadData' )
 			->will( $this->returnValue( ['a' => [['shortDesc' => 'a1', 'longDesc' => 'a2', 'photoName' => 'a3', 'articleUrl' => 'a4']]] ) );
@@ -222,6 +252,10 @@ class HubRssModelTest extends WikiaBaseTest {
 		$mockCommunity->expects( $this->any() )
 			->method( 'loadData' )
 			->will( $this->returnValue( ['a' => [['articleTitle' => 'b1', 'quote' => 'b2', 'photoName' => 'b3', 'url' => 'b4']]] ) );
+
+		$mockWikiaspicks->expects( $this->any() )
+			->method( 'loadData' )
+			->will( $this->returnValue( ['a' => [["moduleTitle" => "c1", "description" => "c2", "fileName" => 'c3', "imageLink" => "c4"]]] ) );
 
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
@@ -231,7 +265,8 @@ class HubRssModelTest extends WikiaBaseTest {
 
 		$mock->expects( $this->any() )
 			->method( 'getServicesV3' )
-			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
+			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity,
+					'wikiaspicks' => $mockWikiaspicks] ) );
 
 		$tmp = new StdClass();
 		$tmp->url = 'xx';
@@ -249,20 +284,28 @@ class HubRssModelTest extends WikiaBaseTest {
 		$res = $methodGDFM->invoke( $mock, [null] );
 
 		$this->assertArrayHasKey( 'a4', $res );
-		$this->assertEquals( $res[ 'a4' ][ 'title' ], 'a1' );
-		$this->assertEquals( $res[ 'a4' ][ 'description' ], 'a2' );
+		$this->assertEquals( 'a1', $res[ 'a4' ][ 'title' ] );
+		$this->assertEquals( 'a2', $res[ 'a4' ][ 'description' ] );
 		$this->assertArrayHasKey( 'img', $res[ 'a4' ] );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'url' ], 'xx' );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'width' ], 500 );
-		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'height' ], 500 );
+		$this->assertEquals( 'xx', $res[ 'a4' ][ 'img' ][ 'url' ]  );
+		$this->assertEquals( 500, $res[ 'a4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'a4' ][ 'img' ][ 'height' ] );
 
 		$this->assertArrayHasKey( 'b4', $res );
-		$this->assertEquals( $res[ 'b4' ][ 'title' ], 'b1' );
-		$this->assertEquals( $res[ 'b4' ][ 'description' ], 'b2' );
+		$this->assertEquals( 'b1', $res[ 'b4' ][ 'title' ] );
+		$this->assertEquals( 'b2', $res[ 'b4' ][ 'description' ] );
 		$this->assertArrayHasKey( 'img', $res[ 'b4' ] );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'url' ], 'xx' );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'width' ], 500 );
-		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'height' ], 500 );
+		$this->assertEquals( 'xx', $res[ 'b4' ][ 'img' ][ 'url' ]);
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'height' ] );
+
+		$this->assertArrayHasKey( 'c4', $res );
+		$this->assertEquals( 'c1' , $res[ 'c4' ][ 'title' ] );
+		$this->assertEquals( 'c2', $res[ 'c4' ][ 'description' ] );
+		$this->assertArrayHasKey( 'img', $res[ 'c4' ] );
+		$this->assertEquals( 'xx', $res[ 'b4' ][ 'img' ][ 'url' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'width' ] );
+		$this->assertEquals( 500, $res[ 'b4' ][ 'img' ][ 'height' ] );
 	}
 
 	/**

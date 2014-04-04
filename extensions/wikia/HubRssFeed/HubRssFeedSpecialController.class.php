@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: krzychu
- * Date: 04.10.13
- * Time: 13:08
- * To change this template use File | Settings | File Templates.
- */
 
 class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const SPECIAL_NAME = 'HubRssFeed';
 	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
 	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 8;
+	const CACHE_BUST = 0;
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
@@ -82,12 +75,13 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$memcKey = wfMemcKey( self::CACHE_KEY, $hubName, self::CACHE_BUST, $langCode );
 
 		$xml = $this->wg->memc->get( $memcKey );
-
+		$xml = false;
 		if ( $xml === false ) {
 			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
 			$verticalId = $this->hubs[ $hubName ];
 			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
 			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
+			//print "\ndata: ";print print_r($data, true);
 			$xml = $service->dataToXml( $data, $verticalId );
 			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
 		}
