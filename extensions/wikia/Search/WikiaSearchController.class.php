@@ -38,13 +38,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const WIKIA_DEFAULT_RESULT = 'result';
 
 	/**
-	 * Default varnish cache time for a search result
-	 * Currently 12 hours.
-	 * @var int
-	 */
-	const VARNISH_CACHE_TIME = 43200;
-
-	/**
 	 * On what max position title can occur and still snippet will be cutted shorter
 	 * @var int
 	 */
@@ -95,8 +88,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	public function index() {
 		$this->handleSkinSettings();
 		//will change template depending on passed ab group
-		/** @var Wikia\Search\Config */
 		$searchConfig = $this->getSearchConfigFromRequest();
+		$this->setVarnishCacheTime( WikiaResponse::CACHE_STANDARD );
 
 		$this->handleLayoutAbTest( $this->getVal( 'ab', null ), $searchConfig->getNamespaces() );
 		if ( $searchConfig->getQuery()->hasTerms() ) {
@@ -106,12 +99,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 			$this->handleArticleMatchTracking( $searchConfig );
 			$search->search();
-
 		}
 
 		$this->setPageTitle( $searchConfig );
 		$this->setResponseValuesFromConfig( $searchConfig );
-		//$this->setVarnishCacheTime( self::VARNISH_CACHE_TIME );
 	}
 
 	/**
@@ -513,6 +504,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$title = $article->getTitle();
 			if ( $this->getVal('fulltext', '0') === '0' ) {
 				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
+				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
 			}
 		} else {
