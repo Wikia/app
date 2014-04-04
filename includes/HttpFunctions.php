@@ -51,16 +51,19 @@ class Http {
 
 		// Wikia change - @author: mech - begin
 		// log all the requests we make
-
-		// Wikia change - end
-		$status = $req->execute();
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+
 			$params = [
 				'reqMethod' => $method,
-				'reqUrl' => $url
+				'reqUrl' => $url,
+				'caller' => wfGetCallerClassMethod( __CLASS__ )
 			];
+			error_log('MECH HTTP ' . json_encode( $params ) );
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
 		}
+		// Wikia change - end
+
+		$status = $req->execute();
 		if ( $status->isOK() ) {
 			$ret = $req->getContent();
 		} else {
