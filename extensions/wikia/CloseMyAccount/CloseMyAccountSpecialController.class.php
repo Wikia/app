@@ -56,7 +56,10 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 			if ( $scheduleCloseAccount ) {
 				$user->logout();
-				$this->introText = $this->msg( 'closemyaccount-scheduled', $this->getLanguage()->formatNum( CloseMyAccountHelper::CLOSE_MY_ACCOUNT_WAIT_PERIOD ) )->parseAsBlock();
+				$this->introText = $this->msg(
+					'closemyaccount-scheduled',
+					$this->getLanguage()->formatNum( CloseMyAccountHelper::CLOSE_MY_ACCOUNT_WAIT_PERIOD )
+				)->parseAsBlock();
 			} else {
 				$this->introText = '';
 				$this->warning = $this->msg( 'closemyaccount-scheduled-failed' )->parse();
@@ -70,7 +73,8 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			if ( !$user->isEmailConfirmed() ) {
 				$this->warning = $this->msg( 'closemyaccount-unconfirmed-email' )->parse();
 			} else {
-				$this->currentUserMessage .= $this->msg( 'closemyaccount-current-email', $user->getEmail(), $user->getName() )->parseAsBlock();
+				$this->currentUserMessage .= $this->msg( 'closemyaccount-current-email',
+					$user->getEmail(), $user->getName() )->parseAsBlock();
 			}
 
 			$this->confirmationText = $this->msg( 'closemyaccount-confirm', $user->getName() )->parse();
@@ -266,7 +270,8 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			// Show how many days they have before their account is permanently closed
 			$daysUntilClosure = $helper->getDaysUntilClosure( $userObj );
 
-			$this->introText = $this->msg( 'closemyaccount-reactivate-intro', $this->getLanguage()->formatNum( $daysUntilClosure ) )->parseAsBlock();
+			$this->introText = $this->msg( 'closemyaccount-reactivate-intro',
+				$this->getLanguage()->formatNum( $daysUntilClosure ) )->parseAsBlock();
 
 			$buttonParams = [
 				'type' => 'button',

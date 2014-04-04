@@ -52,9 +52,11 @@ class CloseMyAccountHelper {
 			return false;
 		}
 
-		$emailTextTemplate = $app->renderView( 'CloseMyAccountSpecial', 'email', [ 'language' => $user->getOption( 'language' ) ] );
+		$emailTextTemplate = $app->renderView( 'CloseMyAccountSpecial', 'email',
+			[ 'language' => $user->getOption( 'language' ) ] );
 
-		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail', 'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
+		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail',
+			'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
 
 		wfProfileOut( __METHOD__ );
 		return $response->isGood();
@@ -100,7 +102,7 @@ class CloseMyAccountHelper {
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure
-			$daysRemaining = self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 60 / 60 / 24 );
+			$daysRemaining = self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 86400 );
 			if ( $daysRemaining < 0 ) {
 				$daysRemaining = 0;
 			}
