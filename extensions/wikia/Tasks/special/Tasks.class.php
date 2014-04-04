@@ -1,4 +1,5 @@
 <?php
+
 class Tasks {
 	const EXTERNAL_TASK_HOOK_NAME = 'tasks_external';
 
@@ -60,7 +61,7 @@ class Tasks {
 					$line = preg_replace('/(\/?\*+\/?\s?)/', '', trim($line));
 					if (empty($line)) {
 						continue;
-					} elseif (preg_match('/^@param ((([a-z]+) \$([a-z0-9_]))|(\$([a-z0-9_]) ([a-z]+)))(.*?)$/', $line, $paramMatches)) {
+					} elseif (preg_match('/^@param ((([a-z]+) \$([a-z0-9_]+))|(\$([a-z0-9_]+) ([a-z]+)))(.*?)$/i', $line, $paramMatches)) {
 						if (!empty($paramMatches[5])) {
 							$paramDocs[$paramMatches[6]] = [
 								'type' => $paramMatches[7],
@@ -94,6 +95,7 @@ class Tasks {
 				$method['params'] []= [
 					'name' => $paramName,
 					'default' => $paramMirror->isDefaultValueAvailable() ? $paramMirror->getDefaultValue() : '',
+					'required' => !$paramMirror->isOptional(),
 					'docs' => isset($paramDocs[$paramName]) ? $paramDocs[$paramName]['doc'] : '',
 					'type' => isset($paramDocs[$paramName]) ? $paramDocs[$paramName]['type'] : '',
 				];
@@ -103,5 +105,30 @@ class Tasks {
 		}
 
 		return $methods;
+	}
+
+	public function createTask($class, $method, $args) {
+		if (empty($class) || empty($method)) {
+			throw new InvalidArgumentException('missing class or method');
+		}
+
+		$methodMirror = new ReflectionMethod($class, $method);
+		foreach ($methodMirror->getParameters() as $i => $paramMirror) {
+			$arg = $args[$i];
+
+			if (!$paramMirror->isOptional() && $arg == "") {
+				throw new InvalidArgumentException("argument {$paramMirror->getName()} is required");
+			}
+		}
+
+		/** @var \Wikia\Tasks\Tasks\BaseTask $task */
+		$task = new $class();
+		$call = call_user_func_array([$task, 'call'], array_merge([$method], $args));
+
+		$taskId = (new \Wikia\Tasks\AsyncTask())
+			->add($call)
+			->queue();
+
+		return $taskId;
 	}
 }

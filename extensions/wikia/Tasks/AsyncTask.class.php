@@ -116,7 +116,7 @@ class AsyncTask {
 
 		if (!empty($wgDevelEnvironment) && isset($_SERVER['SERVER_NAME'])) {
 			$callbackUrl = preg_replace('/(.*?)\.(.*)/', 'tasks.$2', $_SERVER['SERVER_NAME']);
-			$payload->kwargs->runner_url = "http://$callbackUrl";
+			$payload->kwargs->runner_url = "http://$callbackUrl/proxy.php";
 		}
 
 		$exception = null;

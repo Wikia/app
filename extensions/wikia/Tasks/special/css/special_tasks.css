@@ -14,3 +14,19 @@
 #task_editor {
     margin-top: 15px;
 }
+
+#task_edit_fields {
+    margin: 15px 0;
+}
+
+#task_edit_fields tr td:first-child {
+    text-align: right;
+}
+
+#task_edit_fields input[type=number] {
+    width: 50px;
+}
+
+#task_edit_fields input {
+    width: 250px;
+}

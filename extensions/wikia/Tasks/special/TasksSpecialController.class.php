@@ -49,4 +49,20 @@ class TasksSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
 		$this->response->setBody(json_encode($methods));
 	}
+
+	public function createTask() {
+		$class = $this->request->getVal('task_class');
+		$method = $this->request->getVal('task_method');
+		$args = $this->request->getArray('args', []);
+
+		try {
+			$taskId = $this->model->createTask($class, $method, $args);
+		} catch(Exception $e) {
+			$this->response->setException($e);
+			return;
+		}
+
+		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
+		$this->response->setBody(json_encode(['task_id' => $taskId]));
+	}
 }

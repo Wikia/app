@@ -18,7 +18,7 @@ class MathTask extends BaseTask {
 	 * @param $y int the other number to add
 	 * @return mixed
 	 */
-	public function add($x=1, $y=2) {
+	public function add($x, $y) {
 		return $x + $y;
 	}
 
@@ -29,5 +29,9 @@ class MathTask extends BaseTask {
 	 */
 	public function multiply($x, $y) {
 		return $x*$y;
+	}
+
+	public function test() {
+		return 5;
 	}
 } 

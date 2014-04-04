@@ -1,7 +1,8 @@
 <h1>{{header}}</h1>
 
-<p>Execute some tasks. or not. Look at stuff here: <a href="{{flowerUrl}}" target="_blank">here</a>.</p>
+<p>Execute some tasks. or not. Look at stuff <a href="{{flowerUrl}}" target="_blank">here</a>.</p>
 
+<form id="task_edit_form" action="#">
 <div class="task_selector" id="class_selector">
 		<h3>Class</h3>
     <select name="task_class">
@@ -23,5 +24,7 @@
 
 <div id="task_editor" class="hidden">
 		<pre></pre>
-		<div></div>
+		<div id="task_edit_fields"></div>
+		<input type="submit" value="Create Task" />
 </div>
+</form>
