@@ -255,9 +255,10 @@ class DefaultContent extends AbstractService
 					foreach ( $infoboxRows as $row ) {
 						$infoboxCells = $row->find( 'td' );
 						$headerCells = $row->find( 'th' );
-						if ( count( $infoboxCells ) == 2  && count( $headerCells ) == 0 ) {
+						$infoBoxCellCount = count( $infoboxCells );
+						if ( $infoBoxCellCount == 2  && count( $headerCells ) == 0 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
-						} else if ( count( $infoboxCells ) == 1 && count( $headerCells ) == 1 ) {
+						} else if ( $infoBoxCellCount == 1 && count( $headerCells ) == 1 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $headerCells[0]->plaintext . ' | ' . $infoboxCells[0]->plaintext  );
 						}
 					}
