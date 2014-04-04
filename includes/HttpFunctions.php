@@ -58,7 +58,6 @@ class Http {
 				'reqUrl' => $url,
 				'caller' => wfGetCallerClassMethod( __CLASS__ )
 			];
-			error_log('MECH HTTP ' . json_encode( $params ) );
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
 		}
 		// Wikia change - end
