@@ -6,8 +6,8 @@
  * If so, that video is deleted from the wiki.
  */
 
-ini_set('display_errors', 'stderr');
-ini_set('error_reporting', E_NOTICE);
+ini_set( 'display_errors', 'stderr' );
+ini_set( 'error_reporting', E_NOTICE );
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
@@ -32,14 +32,14 @@ class RemoveProviderDeletedVideos extends Maintenance {
 	}
 
 	public function execute() {
-		$this->test     = $this->hasOption('test') ? true : false;
-		$this->verbose  = $this->hasOption('verbose') ? true : false;
+		$this->test     = $this->hasOption( 'test' ) ? true : false;
+		$this->verbose  = $this->hasOption( 'verbose' ) ? true : false;
 		$workingVideos    = array();
-		$deletedVideoss    = array();
+		$deletedVideos    = array();
 		$privateVideos    = array();
 		$otherErrorVideos      = array();
 
-		$this->debug("(debugging output enabled)\n");
+		$this->debug( "(debugging output enabled)\n ");
 		$videoproviders = $this->getVideos();
 
 		foreach( $videoproviders as $provider => $videos ) {
@@ -51,32 +51,32 @@ class RemoveProviderDeletedVideos extends Maintenance {
 					new $class( $video['video_id'] );
 					// If an exception isn't thrown by this
 					// point, we know the video is still good
-					$this->debug("Found working video: " . $video['video_title'] . "\n" );
+					$this->debug( "Found working video: " . $video['video_title'] . "\n" );
 					$workingVideos[] = $video;
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
-						$this->debug("Found deleted video: " . $video['video_title'] . "\n" );
+						$this->debug( "Found deleted video: " . $video['video_title'] . "\n" );
 						$deletedVideoss[] = $video;
 					} elseif ( $e instanceof VideoIsPrivateException ) {
-						$this->debug("Found private video: " . $video['video_title']  . "\n" );
+						$this->debug( "Found private video: " . $video['video_title']  . "\n" );
 						$privateVideos[] = $video;
 					} else {
-						$this->debug("Found other video: " . $video['video_title']  . "\n" );
+						$this->debug( "Found other video: " . $video['video_title']  . "\n" );
 						$otherErrorVideos[] = $video;
 					}
 				}
 			}
 		}
 
-		echo "Found " . count($workingVideos) . " working videos\n";
-		echo "Found " . count($deletedVideoss) . " deleted videos\n";
-		echo "Found " . count($privateVideos) . " private videos\n";
-		echo "Found " . count($otherErrorVideos) . " other videos\n";
+		echo "Found " . count( $workingVideos ) . " working videos\n";
+		echo "Found " . count( $deletedVideos ) . " deleted videos\n";
+		echo "Found " . count( $privateVideos ) . " private videos\n";
+		echo "Found " . count( $otherErrorVideos ) . " other videos\n";
 
-		$this->setStatus($workingVideos, self::STATUS_WORKING);
-		$this->setStatus($deletedVideoss, self::STATUS_DELETED);
-		$this->setStatus($privateVideos, self::STATUS_PRIVATE);
-		$this->setStatus($otherErrorVideos, self::STATUS_OTHER);
+		$this->setStatus( $workingVideos, self::STATUS_WORKING );
+		$this->setStatus( $deletedVideoss, self::STATUS_DELETED );
+		$this->setStatus( $privateVideos, self::STATUS_PRIVATE );
+		$this->setStatus( $otherErrorVideos, self::STATUS_OTHER );
 
 	}
 
@@ -86,17 +86,17 @@ class RemoveProviderDeletedVideos extends Maintenance {
 	 */
 	public function getVideos() {
 		$db = wfGetDB( DB_SLAVE );
-		$providers = (new WikiaSQL())->SELECT("video_title")
-			->FIELD("video_id")
-			->FIELD("provider")
-			->FIELD("page_id")
-			->FROM("video_info")
-			->JOIN("page")
-			->ON("video_title", "page_title")
-			->run($db, function ($result) {
-				while ($row = $result->fetchObject($result)) {
+		$providers = ( new WikiaSQL() )->SELECT( "video_title" )
+			->FIELD( "video_id" )
+			->FIELD( "provider" )
+			->FIELD( "page_id" )
+			->FROM( "video_info" )
+			->JOIN( "page" )
+			->ON( "video_title", "page_title")
+			->run( $db, function ( $result ) {
+				while ( $row = $result->fetchObject( $result ) ) {
 					// Look into why there are null videos
-					if ( is_null($row->provider) ) {
+					if ( is_null( $row->provider ) ) {
 						continue;
 					}
 					$video_detail = [ "video_title" => $row->video_title, "video_id" => $row->video_id ,
@@ -128,7 +128,7 @@ class RemoveProviderDeletedVideos extends Maintenance {
 		foreach ( $videos as $video ) {
 			$sql =  "REPLACE INTO page_wikia_props (page_id, propname, props) ";
 			$sql .= "VALUES ($video[page_id], " . WPP_VIDEO_STATUS . ", $status)";
-			(new WikiaSQL())->RAW($sql)->run($db);
+			( new WikiaSQL() )->RAW( $sql )->run( $db );
 		}
 	}
 }
