@@ -41,28 +41,27 @@ class flagStatusOfVideos extends Maintenance {
 		$otherErrorVideos      = array();
 
 		$this->debug( "(debugging output enabled)\n ");
-		$videoproviders = $this->getVideos();
+		$allVideos = $this->getVideos();
 
-		foreach( $videoproviders as $provider => $videos ) {
+		foreach( $allVideos as $provider => $videos ) {
 			$class = ucfirst( $provider ) . "ApiWrapper";
 			foreach( $videos as $video ) {
 				try {
-					// No need to assign this object to anything, we're
-					// just trying to catch exceptions during its creation
+					// No need to assign this object to anything, we're just trying to catch exceptions during its creation
 					new $class( $video['video_id'] );
-					// If an exception isn't thrown by this
-					// point, we know the video is still good
-					$this->debug( "Found working video: " . $video['video_title'] . "\n" );
+					// If an exception isn't thrown by this point, we know the video is still good
+					$this->debug( "Found working video: " . $video['video_title'] );
 					$workingVideos[] = $video;
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
-						$this->debug( "Found deleted video: " . $video['video_title'] . "\n" );
-						$deletedVideoss[] = $video;
+						$this->debug( "Found deleted video: " . $video['video_title'] );
+						$deletedVideos[] = $video;
 					} elseif ( $e instanceof VideoIsPrivateException ) {
-						$this->debug( "Found private video: " . $video['video_title']  . "\n" );
+						$this->debug( "Found private video: " . $video['video_title'] );
 						$privateVideos[] = $video;
 					} else {
-						$this->debug( "Found other video: " . $video['video_title']  . "\n" );
+						$this->debug( "Found other video: " . $video['video_title'] );
+						$this->debug( $e->getMessage() );
 						$otherErrorVideos[] = $video;
 					}
 				}
@@ -123,7 +122,7 @@ class flagStatusOfVideos extends Maintenance {
 	 */
 	private function debug( $msg ) {
 		if ( $this->verbose ) {
-			echo $msg;
+			echo $msg . "\n";
 		}
 	}
 
