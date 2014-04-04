@@ -1402,3 +1402,9 @@ $wgNirvanaAccessRules = [
 		"requiredPermissions" => ["read"],
 	],
 ];
+
+/*
+ * @name $wgEnableLyricsApi
+ * Enables Lyrics API extension (new Lyrics Wikia API)
+ */
+$wgEnableLyricsApi = false;

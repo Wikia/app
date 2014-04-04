@@ -55,6 +55,7 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
 
@@ -366,7 +367,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgOasisDisableWikiaScriptLoader;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop, $wgOasisDisableWikiaScriptLoader;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -499,7 +500,9 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
+		if (!$wgEnableRHonDesktop) {
+			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
+		}
 
 		wfProfileOut(__METHOD__);
 	}

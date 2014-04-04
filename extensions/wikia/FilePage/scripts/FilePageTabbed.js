@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 	'use strict';
 
 	var Paginator,
@@ -15,7 +15,7 @@ $(function() {
 		trackingMethod: 'both'
 	});
 
-	Paginator = function(el) {
+	Paginator = function (el) {
 		this.$el = $(el);
 		this.$backward = this.$el.find('.left');
 		this.$forward = this.$el.find('.right');
@@ -31,11 +31,11 @@ $(function() {
 
 	Paginator.prototype = {
 		ARTICLES_PER_PAGE: 3,
-		init: function() {
+		init: function () {
 			var self = this,
 				wiki;
 
-			this.$el.on('click', '.arrow', function(e) {
+			this.$el.on('click', '.arrow', function (e) {
 				var prefix,
 					$target;
 
@@ -78,7 +78,7 @@ $(function() {
 				this.$el.show();
 			}
 		},
-		updatePager: function() {
+		updatePager: function () {
 			this.$forward.removeClass('disabled');
 			this.$backward.removeClass('disabled');
 			if (this.currentPage === 0) {
@@ -90,7 +90,7 @@ $(function() {
 
 			this.$current.text(this.currentPage + 1);
 		},
-		updateContent: function() {
+		updateContent: function () {
 			var index = this.currentPage * Paginator.prototype.ARTICLES_PER_PAGE,
 				flatSubSummary = this.flatSummary.slice(index, index + Paginator.prototype.ARTICLES_PER_PAGE),
 				summary = {},
@@ -118,7 +118,7 @@ $(function() {
 					summary: summary,
 					type: this.type
 				},
-				callback: function(html) {
+				callback: function (html) {
 					self.$content.html(html)
 						.stopThrobbing();
 
@@ -128,7 +128,7 @@ $(function() {
 	};
 
 	FilePageTabbed = {
-		init: function() {
+		init: function () {
 			this.initTabCookies();
 
 			this.initRemoveVideo();
@@ -145,8 +145,8 @@ $(function() {
 		/**
 		 * Set cookies for logged in users to save which tab is active when they exit the page
 		 */
-		initTabCookies: function() {
-			require(['wikia.localStorage'], function(ls) {
+		initTabCookies: function () {
+			require(['wikia.localStorage'], function (ls) {
 				if (window.wgUserName) {
 					var selected = ls.WikiaFilePageTab || 'about';
 
@@ -154,9 +154,9 @@ $(function() {
 						.click();
 
 					$(window)
-						.on('wikiaTabClicked', function(e, tab) {
-						ls.WikiaFilePageTab = tab;
-					});
+						.on('wikiaTabClicked', function (e, tab) {
+							ls.WikiaFilePageTab = tab;
+						});
 				} else {
 					$('[data-tab="about"] a')
 						.click();
@@ -166,29 +166,29 @@ $(function() {
 		/**
 		 * Initialize pagination for "Appears in these..." sections
 		 */
-		initPagination: function() {
+		initPagination: function () {
 			$('.page-list-pagination')
-				.each(function() {
+				.each(function () {
 					new Paginator($(this));
 				});
 		},
 		/**
 		 *	Bind event when the "remove" button is clicked in the edit menu
 		 */
-		initRemoveVideo: function() {
+		initRemoveVideo: function () {
 			var self = this;
 
 			$('.WikiaMenuElement')
-				.on('click', '.remove', function(e) {
-				e.preventDefault();
+				.on('click', '.remove', function (e) {
+					e.preventDefault();
 
-				$.showCustomModal($.msg('videohandler-remove-video-modal-title'), '', {
-					id: 'remove-video-modal',
-					buttons: [{
+					$.showCustomModal($.msg('videohandler-remove-video-modal-title'), '', {
+						id: 'remove-video-modal',
+						buttons: [{
 							id: 'ok',
 							defaultButton: true,
 							message: $.msg('videohandler-remove-video-modal-ok'),
-							handler: function() {
+							handler: function () {
 								$.nirvana.sendRequest({
 									controller: 'VideoHandlerController',
 									method: 'removeVideo',
@@ -197,7 +197,7 @@ $(function() {
 									data: {
 										title: window.wgTitle
 									},
-									callback: function(json) {
+									callback: function (json) {
 										if (json.result === 'ok') {
 											window.location = json.redirectUrl;
 										} else {
@@ -209,18 +209,17 @@ $(function() {
 						}, {
 							id: 'cancel',
 							message: $.msg('videohandler-remove-video-modal-cancel'),
-							handler: function() {
+							handler: function () {
 								self.removeVideoModal.closeModal();
 							}
+						}],
+						callback: function () {
+							self.removeVideoModal = $('#remove-video-modal');
 						}
-					],
-					callback: function() {
-						self.removeVideoModal = $('#remove-video-modal');
-					}
+					});
 				});
-			});
 		},
-		initClickTracking: function() {
+		initClickTracking: function () {
 			/*
 			 * Sets up click tracking for the "Appears in xxx" listings
 			 */
@@ -229,18 +228,18 @@ $(function() {
 				$parent;
 
 			elements = [
-					'.page-listing-title a',
-					'.page-listing-image',
-					'.page-listing-wiki',
-					'.see-more-link'
+				'.page-listing-title a',
+				'.page-listing-image',
+				'.page-listing-wiki',
+				'.see-more-link'
 			];
 
 			$pageListings = $('.page-listings');
 
-			$pageListings.on('mousedown', elements.join(', '), function(evt) {
+			$pageListings.on('mousedown', elements.join(', '), function (evt) {
 				evt.preventDefault();
 				var $node = $(this).closest('a'),
-						prefix;
+					prefix;
 
 				$parent = $node.closest('.page-listings');
 

@@ -215,16 +215,6 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['class'] .= ' ' . $options['img-class'];
 		}
 
-		if ( $this->file instanceof WikiaLocalFile || $this->file instanceof WikiaForeignDBFile ) {
-			$extraBorder = $this->file->addExtraBorder( $this->width );
-		}
-		if ( !empty( $extraBorder ) ) {
-			if ( !isset( $attribs['style'] ) ) {
-				$attribs['style'] = '';
-			}
-			$attribs['style'] .= 'border-top: 15px solid black; border-bottom: '.$extraBorder.'px solid black;';
-		}
-
 		if ( isset( $options['imgExtraStyle'] ) ) {
 			if ( !isset( $attribs['style'] ) ) {
 				$attribs['style'] = '';
@@ -250,7 +240,6 @@ class ThumbnailVideo extends ThumbnailImage {
 			$html .= Xml::element( 'div', $timerProp,  $duration );
 		}
 		$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
-		if ( !empty( $extraBorder ) ) $playButtonHeight += ( $extraBorder*2 );
 		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 		$html .= Xml::element( 'img', $attribs, '', true );
 

@@ -10,6 +10,7 @@ $wgAutoloadClasses[ 'ImageLazyLoad'] =  $dir . 'ImageLazyLoad.class.php' ;
 /* Hooks */
 $wgHooks['BeforePageDisplay'][] = 'ImageLazyLoad::onBeforePageDisplay';
 $wgHooks['ParserClearState'][] = 'ImageLazyLoad::onParserClearState';
+$wgHooks['MakeGlobalVariablesScript'][] = 'ImageLazyLoad::onMakeGlobalVariablesScript';
 $wgHooks['ThumbnailImageHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
 $wgHooks['ThumbnailVideoHTML'][] = 'ImageLazyLoad::onThumbnailImageHTML';
 

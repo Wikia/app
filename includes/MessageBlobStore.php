@@ -52,7 +52,7 @@ class MessageBlobStore {
 		foreach ( $modules as $moduleName => $module ) {
 			$messages = array();
 			foreach ( $module->getMessages() as $key ) {
-				$messages[$key] = wfMessage( $key )->inLanguage( $lang )->text();
+				$messages[$key] = wfMessage( $key )->inLanguage( $lang )->plain();
 			}
 
 			if ( !empty( $messages) ) {
