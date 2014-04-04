@@ -12,6 +12,16 @@ $nav-height: 41px;
 $input-border-color: mix($bg-color, #000000, 80%);
 $ab-text-color: #3a3a3a;
 
+body.global-header-fixed-at-top {
+	padding-top: 41px;
+}
+
+body.global-header-fixed-at-top .WikiaHeader {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
 .WikiaHeader.v2 {
 	background: none;
 	background-color: $bg-color;
