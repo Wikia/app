@@ -268,15 +268,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeImage($imageName) {
-		$title = Title::newFromText($imageName, NS_FILE);
-		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
-
-		$visualization = new CityVisualization();
-		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
-
-		if ($file->exists()) {
-			$file->delete('no longer needed');
-		}
+		PromoImage::fromPathname($imageName)->deleteImage();
 	}
 
 	public function saveVisualizationData($data, $langCode) {
@@ -289,30 +281,26 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 
 		$cityId = $this->wg->cityId;
-		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
-		$originalAdditionImagesNames = $this->getAdditionalImagesNames();
+		$promoImages = array();
 
 		$visualizationModel = new CityVisualization();
 		$isCorpLang = $visualizationModel->isCorporateLang($langCode);
-
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if ( strpos( $fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME ) === false ) {
-						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-						$files['mainImage'] = $this->moveTmpFile( $fileName, $dstFileName );
-						$files['mainImage']['modified'] = true;
-					} else {
-						$files['mainImage']['name'] = $fileName;
-						$files['mainImage']['modified'] = false;
-					}
+					$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+					$promoImage->processUploadedFile($fileName);
+
+					array_push($promoImages, $promoImage);
 					break;
 				case 'additionalImagesNames':
 					$additionalImagesNames = $dataContent;
-					$files['additionalImages'] = $this->saveAdditionalFiles($additionalImagesNames);
+					$additionalImages= $this->saveAdditionalFiles($additionalImagesNames);
+
+					$promoImages = array_merge($promoImages, $additionalImages);
 					break;
 				case 'headline':
 					$headline = $dataContent;
@@ -320,7 +308,7 @@ class SpecialPromoteHelper extends WikiaObject {
 				case 'description':
 					$description = $dataContent;
 					break;
-			}
+				}
 		}
 
 		$updateData = array(
@@ -329,41 +317,32 @@ class SpecialPromoteHelper extends WikiaObject {
 			'city_description' => $description
 		);
 
-		$updateData['city_main_image'] = $files['mainImage']['name'];
-		if( $files['additionalImages'] ) {
-			$additionalImageNames = array();
-			foreach( $files['additionalImages'] as $image ) {
-				if( empty($image['deleted']) ) {
-					$additionalImageNames[] = $image['name'];
-				} else if ( in_array($image['deletedname'], $originalAdditionImagesNames) ) {
-					$deletedFiles[$contentLang][$cityId][] = array(
-						'city_id' => $cityId,
-						'name' => $image['deletedname']
-					);
-				}
+		$additionalImageNames = array();
+		$modifiedImageNames = array();
+
+		foreach($promoImages as $promoImage){
+			if ($promoImage->getType() == PromoImage::MAIN){
+				$updateData['city_main_image'] = $promoImage->pathname();
+			} else {
+				array_push($additionalImageNames, $promoImage->pathname());
 			}
 
-			$updateData['city_images'] = json_encode($additionalImageNames);
+			if ($promoImage->isFileChanged()){
+				array_push($modifiedImageNames, $promoImage->pathname());
+			}
 		}
+		$updateData['city_images'] = json_encode($additionalImageNames);
 
 		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, 'files' => $files, 'data'=> $data,
 				'updateData' => $updateData, 'cityId' => $cityId]);
 
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
 
-		$modifiedFiles = $this->extractModifiedFiles($files);
-		if (!empty($modifiedFiles)) {
+		if (!empty($modifiedImageNames)) {
 			$imageReviewState = $isCorpLang
 				? ImageReviewStatuses::STATE_UNREVIEWED
 				: ImageReviewStatuses::STATE_AUTO_APPROVED;
-			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
-		}
-
-		if( !empty($deletedFiles) ) {
-			if ($isCorpLang) {
-				$this->createRemovalTask($deletedFiles);
-			}
-			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
+			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedImageNames, $imageReviewState);
 		}
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
@@ -385,113 +364,47 @@ class SpecialPromoteHelper extends WikiaObject {
 		wfProfileOut(__METHOD__);
 	}
 
-	protected function extractModifiedFiles($files) {
-		$modifiedFiles = array();
-
-		if (!empty($files['mainImage']['modified'])) {
-			$modifiedFiles [] = $files['mainImage']['name'];
-		}
-		foreach ($files['additionalImages'] as $image) {
-			if (!empty($image['modified'])) {
-				$modifiedFiles [] = $image['name'];
-			}
-		}
-		return $modifiedFiles;
-	}
-
 	protected function saveAdditionalFiles($additionalImagesNames) {
-		$files = array();
-		$keys = array();
-		$allKeys = array(1,2,3,4,5,6,7,8,9);
-
-		// find all unchanged files
+		$unchangedTypes = array();
+		$imagesToProcess = array();
+		$allFiles = array();
 		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === 0) {
-				$key = str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-','',
-					str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT,'',$singleFileName)
-				);
+			$promoImage= PromoImage::fromPathname($singleFileName);
 
-				$keys []= $key;
-				$files[$key] = array(
-					'name' => $singleFileName,
-					'modified' => false
-				);
+			if ($promoImage->getType() != PromoImage::INVALID){
+				// FIXME: we should check for and log duplicated types, as this is invalid state of the database
+				array_push($unchangedTypes, $promoImage->getType());
+				array_push($allFiles, $promoImage);
+			} else {
+				array_push($imagesToProcess, $singleFileName);
 			}
 		}
 
-		// find all new files
-		$availableKeys = array_diff($allKeys,$keys);
-		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === false) {
-				$key = array_shift($availableKeys);
-				$dstFileName = $this->getAdditionalImageName($key);
+		$freeImageTypeSlots = array_diff(PromoImage::listAllAdditionalTypes(), $unchangedTypes);
+		foreach($imagesToProcess as $uploadedImageFileName) {
+			$imageType = array_shift($freeImageTypeSlots);
 
-				$file = $this->moveTmpFile($singleFileName, $dstFileName);
-				$files[$key] = array(
-					'name' => $file['name'],
-					'modified' => true
-				);
+			if (!empty($imageType)) {
+				$promoImage = new PromoImage($imageType, $this->wg->DBname);
+				$promoImage->processUploadedFile($uploadedImageFileName);
+				array_push($allFiles, $promoImage);
+			} else {
+				// FIXME: should we log too many uploaded images?
+				break;
 			}
 		}
 
-		foreach($availableKeys as $key) {
-			$dstFileName = $this->getAdditionalImageName($key);
-
-			$this->removeImage($dstFileName);
-
-			$files[$key] = array(
-				'deletedname' => $dstFileName,
-				'deleted' => true
-			);
+		// attempt to Delete Leftover image types from database
+		foreach($freeImageTypeSlots as $imageType){
+			$promoImage = new PromoImage($imageType, $this->wg->DBname);
+			$promoImage->purgeImage();
 		}
 
-		ksort($files);
-
-		return $files;
-	}
-
-	protected function getAdditionalImageName($index) {
-		return implode('-',
-			array(
-				UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME,
-				($index),
-			)
-		) . UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT;
-	}
-
-
-	protected function moveTmpFile($fileName, $dstFileName) {
-
-		$dst_file_title = Title::newFromText($dstFileName, NS_FILE);
-
-		$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($fileName);
-		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
-
-		$file->upload($temp_file->getPath(), '', '');
-		$temp_file->remove();
-
-		$data = array(
-			'url' => $file->getURL(),
-			'name' => $file->getName()
-		);
-
-		return $data;
+		return $allFiles;
 	}
 
 	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
 		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
-	}
-
-	protected function createRemovalTask($taskDeletionList) {
-		if (!empty($taskDeletionList) && class_exists('PromoteImageReviewTask')) {
-			$task = new PromoteImageReviewTask();
-			$task->createTask(
-				array(
-					'deletion_list' => $taskDeletionList,
-				),
-				TASK_QUEUED
-			);
-		}
 	}
 
 	protected function checkWikiStatus($wikiId, $langCode) {
