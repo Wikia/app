@@ -31,6 +31,13 @@ class SolrLyricsApiHandler {
 		$this->client = new Solarium_Client( $config );
 	}
 
+	/**
+	 * @desc Build new artist from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
 	private function buildArtist( $document, $addUrl = true ) {
 		$artist = new stdClass();
 		$artist->name = $document->artist_name;
@@ -44,13 +51,16 @@ class SolrLyricsApiHandler {
 		return $artist;
 	}
 
+	/**
+	 * @desc Build new album from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
 	private function buildAlbum( $document, $addUrl = true ) {
 		$album = new stdClass();
 		$album->name = $document->album_name;
-
-		if ( isset( $document->release_date ) ) {
-			$album->year = $document->release_date;
-		}
 
 		if ( $addUrl ) {
 			$album->url = $this->buildUrl( [
@@ -63,11 +73,18 @@ class SolrLyricsApiHandler {
 		return $album;
 	}
 
+	/**
+	 * @desc Build new song from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
 	private function buildSong( $document, $addUrl = true ) {
 		$song = new stdClass();
 		$song->name = $document->song_name;
 
-		if ( $addUrl && isset( $document->id ) ) {
+		if ( $addUrl && $document->id ) {
 			// Songs without id are only for information
 			$song->url = $this->buildUrl( [
 				'controller' => self::API_CONTROLLER_NAME,
@@ -181,9 +198,11 @@ class SolrLyricsApiHandler {
 		$songs = LyricsApiBase::deserialize( $songs );
 
 		if ( is_array( $songs ) ) {
-			foreach ( $songs as $solrSong ) {
-				$solrSong->artist_name = $artistName;
-				$songsList[] = $this->buildSong( $solrSong );
+			foreach ( $songs as $song ) {
+				// Fill missing song fields
+				$song->artist_name = $artistName;
+				$song->id = isset($song->id) ? $song->id : false;
+				$songsList[] = $this->buildSong( $song );
 			}
 		}
 
@@ -197,8 +216,8 @@ class SolrLyricsApiHandler {
 	 *
 	 * @return stdClass
 	 */
-	private function getOutputArtist( $solrArtist ) {
-		$artist = $this->buildArtist( $solrArtist, false );
+	private function getOutputArtist( $solrArtist, $addUrl = false ) {
+		$artist = $this->buildArtist( $solrArtist, $addUrl );
 
 		if ( $solrArtist->image ) {
 			$this->appendImages( $artist, $solrArtist->image );
@@ -278,6 +297,10 @@ class SolrLyricsApiHandler {
 		}
 
 		$album = $this->buildAlbum( $queryResult, false);
+
+		if ( $queryResult->release_date ) {
+			$album->year = $queryResult->release_date;
+		}
 
 		if ( $queryResult->image ) {
 			$this->appendImages( $album, $queryResult->image );
@@ -397,7 +420,7 @@ class SolrLyricsApiHandler {
 
 		$artists = [];
 		foreach ( $solrArtists as $solrArtist ) {
-			$artists[] = $this->getOutputArtist( $solrArtist );
+			$artists[] = $this->getOutputArtist( $solrArtist, true );
 		}
 
 		return $artists;
