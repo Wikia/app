@@ -15,6 +15,14 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-total' => 'Total amount of slots: $1',
 	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization:',
 
+	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
+	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-name' => 'Hub name',
+	'manage-wikia-home-hubs-slot-description' => 'Hub description',
+	'manage-wikia-home-hubs-slot-more-links' => '"More in..." links',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Empty slot --',
+
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
@@ -221,6 +229,16 @@ Parameters:
 	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
 	'manage-wikia-home-stats-success' => 'Message after successful save.',
 	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
+
+	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
+	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
+	'manage-wikia-home-hubs-slot' => 'Determines which hub slot from hubs section on wikia homepage will be edited',
+	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
+	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
+	'manage-wikia-home-hubs-slot-more-links' => 'Label for textarea field to add links in "More in ..." hub section on wikia homepage',
+	'manage-wikia-home-hubs-slot-empty-option' => 'Option in select field in hubs slots section to don\'t display slot on wikia homepage',
+
+
 );
 
 /** Arabic (العربية)
