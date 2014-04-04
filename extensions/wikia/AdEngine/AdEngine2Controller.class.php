@@ -5,9 +5,6 @@ use AdEngine2Service;
  * AdEngine II Controller
  */
 class AdEngine2Controller extends WikiaController {
-
-	private static $slotsDisplayShinyAdSelfServe = ['CORP_TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'TEST_TOP_RIGHT_BOXAD', 'TOP_RIGHT_BOXAD'];
-
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
@@ -53,21 +50,11 @@ class AdEngine2Controller extends WikiaController {
 	 * Action to display an ad (or not)
 	 */
 	public function ad() {
-		$wgEnableShinyAdsSelfServeUrl = $this->wg->EnableShinyAdsSelfServeUrl;
-		$wgShinyAdsSelfServeUrl = $this->wg->ShinyAdsSelfServeUrl;
-
 		$this->slotname = $this->request->getVal('slotname');
 
-		$this->selfServeUrl = null;
-		if ($wgEnableShinyAdsSelfServeUrl && $wgShinyAdsSelfServeUrl) {
-			if (array_search($this->slotname, self::$slotsDisplayShinyAdSelfServe) !== FALSE) {
-				$this->selfServeUrl = $wgShinyAdsSelfServeUrl;
-			}
-		}
+		$this->pageLevel = AdEngine2Service::getAdLevelForPage();
+		$this->slotLevel = AdEngine2Service::getAdLevelForSlot($this->slotname);
 
-		$this->pageLevel = self::getAdLevelForPage();
-		$this->slotLevel = self::getAdLevelForSlot($this->slotname);
-
-		$this->showAd = (self::compareAdLevels($this->pageLevel, $this->slotLevel) >= 0);
+		$this->showAd = (AdEngine2Service::compareAdLevels($this->pageLevel, $this->slotLevel) >= 0);
 	}
 }

@@ -37,7 +37,6 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 
 				slotTweaker.hide(slotname);
-				slotTweaker.hideSelfServeUrl(slotname);
 
 				success();
 			},

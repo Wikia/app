@@ -8,10 +8,6 @@
 	display: none;
 }
 
-.wikia-ad.hidden , .SelfServeUrl.hidden {
-	display: none !important;
-}
-
 /** Leaderboards **/
 
 .WikiaTopAds {
@@ -90,16 +86,9 @@
 }
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	.SelfServeUrl {
-		line-height: 10px;
-		margin: 0;
-		position: relative;
-		top: -16px;
-	}
 	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
-		margin-bottom: 0;
 		padding: 15px;
 	}
 }
@@ -197,18 +186,6 @@
 body >a >img[src$="noad.gif"] {
 	position: absolute;
 	z-index: 0;
-}
-
-.SelfServeUrl {
-	color: #666;
-	font-size: 10px;
-	margin: -10px 0 10px 0;
-	text-align: center;
-}
-
-.home-top-right-ads .SelfServeUrl {
-	position: relative;
-	z-index: 100;
 }
 
 /** Exitstitial ad */

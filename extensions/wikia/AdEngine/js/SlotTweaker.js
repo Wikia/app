@@ -62,15 +62,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		return slotname.match(/TOP_RIGHT_BOXAD/);
 	}
 
-	function hideSelfServeUrl(slotname) {
-		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
-		if (isMedrec(slotname)) {
-			if (selfServeUrl.length > 0) {
-				selfServeUrl[0].className += ' hidden';
-			}
-		}
-	}
-
 	function isLeaderboard(slotname) {
 		return slotname.indexOf('LEADERBOARD') !== -1;
 	}
@@ -130,7 +121,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
 });

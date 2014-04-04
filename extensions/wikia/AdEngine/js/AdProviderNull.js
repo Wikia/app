@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.provider.null', ['wikia.log', 'ext.wikia.adEngine.slo
 	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname], 5, logGroup);
 		slotTweaker.hide(slotname, true);
-		slotTweaker.hideSelfServeUrl(slotname);
 		success();
 	}
 
