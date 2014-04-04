@@ -58,7 +58,7 @@ $subdrawer-width: 225px;
 	}
 
 	.close-button {
-		background: url($drawer-close-image); /* $wgCdnStylePath */
+		background: url($drawer-close-image); /* base64 */
 		background-position: 0 3px;
 		background-repeat: no-repeat;
 		cursor: pointer;
