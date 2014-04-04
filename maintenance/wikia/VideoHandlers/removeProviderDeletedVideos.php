@@ -19,14 +19,14 @@ class RemoveProviderDeletedVideos extends Maintenance {
 	const STATUS_WORKING = 1;
 	const STATUS_DELETED = 2;
 	const STATUS_PRIVATE = 4;
-	const STATUS_OTHER = 8;
+	const STATUS_OTHER_ERROR = 8;
 
 	protected $verbose = false;
 	protected $test    = false;
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Remove provider deleted videos from wiki";
+		$this->mDescription = "Flag videos which are deleted on provider, private, or have some form of error returned from API";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 	}
@@ -34,10 +34,10 @@ class RemoveProviderDeletedVideos extends Maintenance {
 	public function execute() {
 		$this->test     = $this->hasOption('test') ? true : false;
 		$this->verbose  = $this->hasOption('verbose') ? true : false;
-		$working_videos    = array();
-		$deleted_videoss    = array();
-		$private_videos    = array();
-		$other_videos      = array();
+		$workingVideos    = array();
+		$deletedVideoss    = array();
+		$privateVideos    = array();
+		$otherErrorVideos      = array();
 
 		$this->debug("(debugging output enabled)\n");
 		$videoproviders = $this->getVideos();
@@ -52,31 +52,31 @@ class RemoveProviderDeletedVideos extends Maintenance {
 					// If an exception isn't thrown by this
 					// point, we know the video is still good
 					$this->debug("Found working video: " . $video['video_title'] . "\n" );
-					$working_videos[] = $video;
+					$workingVideos[] = $video;
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug("Found deleted video: " . $video['video_title'] . "\n" );
-						$deleted_videoss[] = $video;
+						$deletedVideoss[] = $video;
 					} elseif ( $e instanceof VideoIsPrivateException ) {
 						$this->debug("Found private video: " . $video['video_title']  . "\n" );
-						$private_videos[] = $video;
+						$privateVideos[] = $video;
 					} else {
 						$this->debug("Found other video: " . $video['video_title']  . "\n" );
-						$other_videos[] = $video;
+						$otherErrorVideos[] = $video;
 					}
 				}
 			}
 		}
 
-		echo "found " . count($working_videos) . " working videos\n";
-		echo "found " . count($deleted_videoss) . " deleted videos\n";
-		echo "found " . count($private_videos) . " private videos\n";
-		echo "found " . count($other_videos) . " other videos\n";
+		echo "Found " . count($workingVideos) . " working videos\n";
+		echo "Found " . count($deletedVideoss) . " deleted videos\n";
+		echo "Found " . count($privateVideos) . " private videos\n";
+		echo "Found " . count($otherErrorVideos) . " other videos\n";
 
-		$this->setStatus($working_videos, self::STATUS_WORKING);
-		$this->setStatus($deleted_videoss, self::STATUS_DELETED);
-		$this->setStatus($private_videos, self::STATUS_PRIVATE);
-		$this->setStatus($other_videos, self::STATUS_OTHER);
+		$this->setStatus($workingVideos, self::STATUS_WORKING);
+		$this->setStatus($deletedVideoss, self::STATUS_DELETED);
+		$this->setStatus($privateVideos, self::STATUS_PRIVATE);
+		$this->setStatus($otherErrorVideos, self::STATUS_OTHER);
 
 	}
 
