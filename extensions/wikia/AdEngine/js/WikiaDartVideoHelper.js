@@ -1,8 +1,8 @@
 /*global define*/
-define('ext.wikia.adEngine.dartvideohelper', ['wikia.log', 'wikia.location', 'ext.wikia.adEngine.adLogicPageParams'], function (log, location, adLogicPageParams) {
+define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ext.wikia.adEngine.adLogicPageParams'], function (log, location, adLogicPageParams) {
 	'use strict';
 
-	var logGroup = 'adengine.dartvideohelper',
+	var logGroup = 'adengine.dartVideoHelper',
 		ord = Math.round(Math.random() * 23945290875),
 		pageParams = adLogicPageParams.getPageLevelParams();
 
