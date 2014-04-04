@@ -103,16 +103,16 @@ body.global-header-fixed-at-top .WikiaHeader {
 			border-radius: 4px;
 			font-size: 14px;
 			height: 17px!important;
-			width: 390px;
 			padding: 5px 8px;
+			width: 390px;
 		}
 
 		.search-button {
 			margin-left: 3px;
 
 			&.alternative {
-				color: $color;
 				background-color: $menu-hover-bg-color;
+				color: $color;
 			}
 		}
 

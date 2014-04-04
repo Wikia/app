@@ -1,4 +1,4 @@
-/*// moved to optimizely
+/*// code moved to optimizely, because optimizely code could be loaded before our js's are ready
 $(function() {
 	$( '#GlobalNavigation' ).addClass( 'vertical-colors' );
 

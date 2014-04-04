@@ -1,4 +1,4 @@
-/*
+/*// code moved to optimizely, because optimizely code could be loaded before our js's are ready
 require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
  
 	'use strict';

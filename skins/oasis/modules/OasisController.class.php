@@ -68,7 +68,7 @@ class OasisController extends WikiaController {
 			$globalSearch = GlobalTitle::newFromText(
 				'Search',
 				NS_SPECIAL,
-				Wikia::MAIN_CORPORATE_WIKI_ID
+				WikiService::WIKIAGLOBAL_CITY_ID
 			)->getFullURL();
 
 			$vars['wgGlobalSearchUrl'] = $globalSearch;
