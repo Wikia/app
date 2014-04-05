@@ -189,7 +189,7 @@ class RenameUserHelper {
 		if ( $blockFound ) {
 			$phalanxTestTitle = SpecialPage::getTitleFor( 'Phalanx', 'test' );
 			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'userrenametool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
-			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text, $linkToTest )->text();
+			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
 		}
 
 		wfProfileOut(__METHOD__);
