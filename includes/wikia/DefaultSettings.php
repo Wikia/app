@@ -82,6 +82,7 @@ $wgAutoloadClasses['WikiaView'] = $IP . '/includes/wikia/nirvana/WikiaView.class
 $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/nirvana/WikiaSkin.class.php';
 $wgAutoloadClasses['WikiaSkinTemplate'] = $IP . '/includes/wikia/nirvana/WikiaSkinTemplate.class.php';
 $wgAutoloadClasses['WikiaFunctionWrapper'] = $IP . '/includes/wikia/nirvana/WikiaFunctionWrapper.class.php';
+$wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAccessRules.class.php';
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
@@ -104,6 +105,7 @@ $wgAutoloadClasses['MethodNotAllowedException'] = "{$IP}/includes/wikia/nirvana/
 $wgAutoloadClasses['NotImplementedException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['ControllerNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
+$wgAutoloadClasses['PermissionsException'] = "{$IP}/includes/wikia/nirvana/WikiaException.php";
 
 
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
@@ -1363,6 +1365,45 @@ $wgApiAccess = [
 ];
 
 /**
+ * First matched rule will have an effect. All other rules will be ignored.
+ */
+$wgNirvanaAccessRules = [
+	/* You don't need any permissions to login. */
+	[
+		"class" => "UserLoginController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	[
+		"class" => "UserLoginSpecialController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	[
+		"class" => "UserSignupSpecialController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	[
+		"class" => "FacebookSignupController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	/* We need oasis controller to render  */
+	[
+		"class" => "OasisController",
+		"method" => "*",
+		"requiredPermissions" => [],
+	],
+	/* Catch all statement. By default all controllers and services require read permission. */
+	[
+		"class" => "*",
+		"method" => "*",
+		"requiredPermissions" => ["read"],
+	],
+];
+
+/*
  * @name $wgEnableLyricsApi
  * Enables Lyrics API extension (new Lyrics Wikia API)
  */
