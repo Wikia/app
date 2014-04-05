@@ -173,22 +173,22 @@ class RenameUserHelper {
 		$service = new PhalanxService();
 		$service->setLimit(20);
 
-		$listing = [];
+		$blockFound = false;
 
 		foreach(Phalanx::getAllTypeNames() as $blockType) {
 			$res = $service->match($blockType, $text);
 
 			if (!empty($res)) {
-				$listing[] = $blockType;
+				$blockFound = true;
+				break;
 			}
 
 		}
 
 		$warning = '';
-		$listing = implode(", ", $listing);
-		if ( $listing != '' ) {
+		if ( $blockFound ) {
 			$linkToTest = SpecialPage::getTitleFor( 'Phalanx', 'test' )->getLinkURL( [ 'wpBlockText'=>$text ] );
-			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text, $linkToTest, $listing )->text();
+			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text, $linkToTest )->text();
 		}
 
 		wfProfileOut(__METHOD__);
