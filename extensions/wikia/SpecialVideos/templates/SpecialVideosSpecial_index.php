@@ -43,17 +43,10 @@
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
 		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-<!--			<a href="<?= $video['fileUrl'] ?>" class="image video">
-				<?= $video['videoPlayButton'] ?>
-				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
-				<?= $video['videoOverlay'] ?>
-			</a>-->
 			<?= $video['thumbnail'] ?>
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= $video['timestamp'] ?></p>
-<!--			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>-->
 			<p><?= $video['postedInMsg']; ?></p>
-<!--			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />-->
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
 					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMsg('specialvideos-remove-modal-title') ?>">

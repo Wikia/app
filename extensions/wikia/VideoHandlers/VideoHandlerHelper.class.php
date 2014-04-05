@@ -270,12 +270,12 @@ class VideoHandlerHelper extends WikiaModel {
 				$userUrl = $user->getUserPage()->getFullURL();
 			}
 
-			$thumbNail = '';
+			$thumbnail = '';
 			// As it stands now, only the Videos Module is using this function to render thumbnails. If we find
 			// we're using this for other parts of the site, we should probably change getThumb to some sort
 			// of associative array rather than a boolean so that these thumbs could be customizabl
 			if ( $getThumb ) {
-				$thumbNail = $thumb->toHtml( [
+				$thumbnail = $thumb->toHtml( [
 					'useTemplate' => true,
 					'fluid' => true,
 					'forceSize' => 'small',
@@ -308,7 +308,7 @@ class VideoHandlerHelper extends WikiaModel {
 				'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
 				'provider' => $file->getProviderName(),
 				'embedUrl' => $file->getHandler()->getEmbedUrl(),
-				'thumbnail' => $thumbNail
+				'thumbnail' => $thumbnail,
 			);
 		} else {
 			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );

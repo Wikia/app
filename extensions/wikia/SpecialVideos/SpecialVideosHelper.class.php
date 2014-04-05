@@ -7,7 +7,6 @@
  */
 class SpecialVideosHelper extends WikiaModel {
 
-	const VIDEOS_PER_PAGE = 24;
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
 	const POSTED_IN_ARTICLES = 5;
@@ -37,12 +36,13 @@ class SpecialVideosHelper extends WikiaModel {
 	/**
 	 * get list of videos
 	 * @param string $sort [recent/popular/trend]
+	 * @param integer $limit
 	 * @param integer $page
 	 * @param array $providers
 	 * @param string $category
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array(), $category = '' ) {
+	public function getVideos( $sort, $limit, $page, $providers = array(), $category = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -53,14 +53,33 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
 
 		$videos = array();
 		$helper = new VideoHandlerHelper();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
-			if ( !empty($videoDetail) ) {
-				$videos[] = $videoDetail;
+			$videoDetail = $helper->getVideoDetail(
+				$videoInfo,
+				self::THUMBNAIL_WIDTH,
+				self::THUMBNAIL_HEIGHT,
+				self::POSTED_IN_ARTICLES,
+				true
+			);
+			if ( !empty( $videoDetail ) ) {
+				$byUserMsg = $this->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
+				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
+				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
+
+				$videos[] = [
+					'title' => $videoDetail['fileTitle'],
+					'fileKey' => $videoDetail['title'],
+					'fileUrl' => $videoDetail['fileUrl'],
+					'thumbnail' => $videoDetail['thumbnail'],
+					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'] ),
+					'viewTotal' => $viewTotal,
+					'byUserMsg' => $byUserMsg,
+					'postedInMsg' => $postedInMsg,
+				];
 			}
 		}
 
