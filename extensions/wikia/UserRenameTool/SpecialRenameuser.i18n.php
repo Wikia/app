@@ -49,7 +49,8 @@ Please go back and try again.',
 	'userrenametool-error-invalid-ip' => 'Invalid IP addresses provided.',
 	'userrenametool-warnings-characters' => 'New username contains illegal characters!',
 	'userrenametool-warnings-maxlength' => 'New username\'s length cannot exceed 255 characters!',
-	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. <a href="$2">See the list of blocks here</a>.',
+	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
+	'userrenametool-see-list-of-blocks' => 'See the list of blocks here',
 	'userrenametool-warn-repeat' => 'Attention! The user "<nowiki>$1</nowiki>" has already been renamed to "<nowiki>$2</nowiki>".
 Continue processing only if you need to update some missing information.',
 	'userrenametool-warn-table-missing' => 'Table "<nowiki>$2</nowiki>" does not exist in database "<nowiki>$1</nowiki>."',
@@ -114,6 +115,7 @@ $messages['qqq'] = array(
 	'userrenametool-warning-phalanx-block' => 'Message to show when there is a Phalanx block on new or old username
 	* Parameter $1 username
 	* Parameter $2 link to Phalanx page that lists the blocks for username phrase',
+	'userrenametool-see-list-of-blocks' => 'Text of link to list of blocks for specific phrase. Used in Phalanx block warning',
 	'userrenametool-info-wiki-finished' => '',
 	'userrenametool-confirm-yes' => '{{Identical|Yes}}',
 	'userrenametool-confirm-no' => '{{Identical|No}}',
@@ -3309,7 +3311,8 @@ Wróć i spróbuj jeszcze raz.',
 	'userrenametool-error-invalid-ip' => 'Wprowadzono niewłaściwy adres IP.',
 	'userrenametool-warnings-characters' => 'Nowa nazwa użytkownika zawiera niedozwolone znaki!',
 	'userrenametool-warnings-maxlength' => 'Nowa nazwa użytkownika nie może przekraczać 255 znaków!',
-	'userrenametool-warning-phalanx-block' => 'Fraza "$1" jest globalnie zablokowana narzędziem Phalanx. <a href="$2">Zobacz listę bloków tutaj</a>.',
+	'userrenametool-warning-phalanx-block' => 'Fraza "$1" jest globalnie zablokowana narzędziem Phalanx. $2.',
+	'userrenametool-see-list-of-blocks' => 'Zobacz listę bloków tutaj',
 	'userrenametool-warn-repeat' => 'Uwaga! Nazwa użytkownika "<nowiki>$1</nowiki>" została już zmieniona na "<nowiki>$2</nowiki>".
 Kontynuuj jedynie jeśli musisz dodać brakujące informacje.',
 	'userrenametool-warn-table-missing' => 'Tabela "<nowiki>$2</nowiki>" nie istnieje w bazie danych "<nowiki>$1</nowiki>.”',
