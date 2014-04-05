@@ -4,7 +4,10 @@
  *
  * This script examines all videos on a wiki and determines the status of the video (working, deleted by provider,
  * private, or other). This status is flagged in the page_wikia_props table using the corresponding constant
- * value listed inside of the flafStatusOfVideos class
+ * value listed inside of the flagStatusOfVideos class
+ *
+ * @author james@wikia-inc.com
+ * @ingroup Maintenance
  */
 
 ini_set( 'display_errors', 'stderr' );
@@ -33,12 +36,12 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	public function execute() {
-		$this->test     = $this->hasOption( 'test' ) ? true : false;
-		$this->verbose  = $this->hasOption( 'verbose' ) ? true : false;
+		$this->test       = $this->hasOption( 'test' ) ? true : false;
+		$this->verbose    = $this->hasOption( 'verbose' ) ? true : false;
 		$workingVideos    = array();
 		$deletedVideos    = array();
 		$privateVideos    = array();
-		$otherErrorVideos      = array();
+		$otherErrorVideos = array();
 
 		$this->debug( "(debugging output enabled)\n ");
 		$allVideos = $this->getVideos();
@@ -83,7 +86,7 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	/**
-	 * Get a list off all videos, grouped by provider, on the wiki
+	 * Get a list off all videos grouped by provider on the wiki
 	 * @return bool|mixed
 	 */
 	public function getVideos() {
@@ -117,16 +120,6 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	/**
-	 * Print the message if verbose is enabled
-	 * @param $msg - The message text to echo to STDOUT
-	 */
-	private function debug( $msg ) {
-		if ( $this->verbose ) {
-			echo $msg . "\n";
-		}
-	}
-
-	/**
 	 * @param $videos - Videos to flag in page_wikia_props table
 	 * @param $status - Status of videos (see constants above)
 	 */
@@ -138,6 +131,17 @@ class flagStatusOfVideos extends Maintenance {
 			( new WikiaSQL() )->RAW( $sql )->run( $db );
 		}
 	}
+
+	/**
+	 * Print the message if verbose is enabled
+	 * @param $msg - The message text to echo to STDOUT
+	 */
+	private function debug( $msg ) {
+		if ( $this->verbose ) {
+			echo $msg . "\n";
+		}
+	}
+
 }
 
 $maintClass = "flagStatusOfVideos";
