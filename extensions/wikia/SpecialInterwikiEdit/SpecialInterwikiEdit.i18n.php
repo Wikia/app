@@ -264,6 +264,19 @@ $messages['gl'] = array(
 	'iwedit-success' => '<p>A ligazón creouse con éxito.</p>',
 );
 
+/** Hebrew (עברית)
+ * @author Yona b
+ */
+$messages['he'] = array(
+	'interwikiedit' => 'עורך קישורי שפה',
+	'iwedit-title' => 'עורך קישורי שפה',
+	'iwedit-language-interwikis' => 'שפות קישורי שפה בלבד',
+	'iwedit-all-interwikis' => 'כל קישורי השפה',
+	'iwedit-update' => 'עדכון',
+	'iwedit-error' => '<p>אירעה שגיאה.</p>',
+	'iwedit-success' => '<p>יצירת קישור עברה בהצלחה.</p>',
+);
+
 /** Hungarian (magyar)
  * @author Dj
  * @author Glanthor Reviol

@@ -3114,6 +3114,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Reasno
  * @author Xiaomingyan
  * @author Yfdyh000
@@ -3129,6 +3130,7 @@ $messages['zh-hans'] = array(
 	'phalanx-type-user-email' => '电子邮件',
 	'phalanx-type-answers-question-title' => '问题标题',
 	'phalanx-type-answers-recent-questions' => '最新问题',
+	'phalanx-label-filter' => '过滤器：',
 	'phalanx-label-reason' => '原因：',
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',

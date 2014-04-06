@@ -1260,6 +1260,7 @@ $messages['ka'] = array(
  */
 $messages['krc'] = array(
 	'userlogin-login-heading' => 'Кириу',
+	'userlogin-loginreqlink' => 'кириу',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
