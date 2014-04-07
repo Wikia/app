@@ -145,13 +145,15 @@ class QuickStatsController extends WikiaController {
 		$number = intval($number);
 
 		if ( $number >= 1000000000 ) {
-			return wfMsg('quickstats-number-shortening-billions', array(round( $number / 1000000000, 1)));
+			$result = wfMessage( 'quickstats-number-shortening-billions', round( $number / 1000000000, 1) )->plain();
 		} elseif ($number >= 1000000 ) {
-			return wfMsg('quickstats-number-shortening-millions', array(round( $number / 1000000, 1)));
+			$result = wfMessage( 'quickstats-number-shortening-millions', round( $number / 1000000, 1) )->plain();
 		} elseif ($number >= 10000 ) {
-			return wfMsg('quickstats-number-shortening', array(round( $number / 1000 , 1)));
+			$result = wfMessage( 'quickstats-number-shortening', round( $number / 1000 , 1) )->plain();
 		} else {
-			return F::app()->wg->Lang->formatNum( $number );
+			$result = F::app()->wg->Lang->formatNum( $number );
 		}
+
+		return $result;
 	}
 }
