@@ -28,7 +28,8 @@ class TasksSpecialController extends WikiaSpecialPageController {
 
 		$this->setVal('header', 'HEADER');
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
-		$this->setVal('flowerUrl', "http://localhost:5555");
+		$this->setVal('flowerUrl', "http://localhost:5555"); // TODO: read from config
+		$this->setVal('ajaxLoading', $this->wg->ExtensionsPath.'/wikia/Tasks/special/images/ajax-loader.gif');
 	}
 
 	public function getMethods() {
@@ -56,13 +57,16 @@ class TasksSpecialController extends WikiaSpecialPageController {
 		$args = $this->request->getArray('args', []);
 
 		try {
-			$taskId = $this->model->createTask($class, $method, $args);
+			list($taskId, $methodCall) = $this->model->createTask($class, $method, $args);
 		} catch(Exception $e) {
 			$this->response->setException($e);
 			return;
 		}
 
 		$this->response->setFormat(WikiaResponse::FORMAT_JSON);
-		$this->response->setBody(json_encode(['task_id' => $taskId]));
+		$this->response->setBody(json_encode([
+			'task_id' => $taskId,
+			'method_call' => $methodCall
+		]));
 	}
 }

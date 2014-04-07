@@ -1,6 +1,6 @@
 <h1>{{header}}</h1>
 
-<p>Execute some tasks. or not. Look at stuff <a href="{{flowerUrl}}" target="_blank">here</a>.</p>
+<p>Execute some tasks. or not. Look at stuff <a href="{{flowerUrl}}/tasks?limit=100" target="_blank">here</a>.</p>
 
 <form id="task_edit_form" action="#">
 <div class="task_selector" id="class_selector">
@@ -28,3 +28,18 @@
 		<input type="submit" value="Create Task" />
 </div>
 </form>
+
+<div id="task_progress_container" class="hidden">
+		<h1>Progress</h1>
+		<table width="100%">
+				<tr>
+						<th>Task</th>
+						<th>State</th>
+						<th>Result</th>
+				</tr>
+		</table>
+</div>
+
+<!-- TODO: do this less ghetto -->
+<div id="flower_url" class="hidden">{{flowerUrl}}</div>
+<div id="ajax_lodaer" class="hidden">{{ajaxLoading}}</div>

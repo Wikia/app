@@ -4,6 +4,8 @@ require(['jquery', 'wikia.nirvana'], function($, nirvana) {
 		taskEditor = $('#task_editor'),
 		methodContainer = $('#method_selector'),
 		form = $('#task_edit_form' ),
+		flowerUrl = $('#flower_url').text(),
+		ajaxLoader = $('#ajax_lodaer').text(),
 		classSelect = $('select[name="task_class"]'),
 		methodSelect = $('select[name="task_method"]'),
 		classMethodData = {};
@@ -43,6 +45,35 @@ require(['jquery', 'wikia.nirvana'], function($, nirvana) {
 		editor += "</table>";
 
 		$('#task_edit_fields').html(editor);
+	};
+
+	var checkTaskStatus = function(taskStatus) {
+		var task_id = taskStatus.attr('id'),
+			indicator = taskStatus.find('.task_progress_indicator').show(),
+			state = taskStatus.find('.task_progress_state'),
+			result = taskStatus.find('.task_progress_result');
+
+		var retry = function() {
+			setTimeout(function() {
+				checkTaskStatus(taskStatus)
+			}, 3000);
+		};
+
+		$.ajax(flowerUrl+'/api/task/status/'+task_id, {
+			success: function(response) {
+				state.text(response.state);
+
+				if (response.ready) {
+					result.text(response.result);
+					indicator.hide();
+				} else {
+					retry();
+				}
+			},
+			error: function(jqxhr, status) {
+				retry();
+			}
+		})
 	};
 
 	classSelect.change(function() {
@@ -106,7 +137,22 @@ require(['jquery', 'wikia.nirvana'], function($, nirvana) {
 			data: $(this).serialize(),
 			format: 'json',
 			callback: function(response) {
-				console.log(response);
+				if (response.exception) {
+					console.log(response.exception);
+					return;
+				}
+
+				var row = '' +
+					'<tr id="'+response.task_id+'">' +
+						'<td>'+response.method_call+'</td>' +
+						'<td class="task_progress_state"></td>' +
+						'<td class="task_progress_result"><img src="'+ajaxLoader+'" /></td>' +
+					'</tr>';
+
+				var taskStatus = $(row).appendTo('#task_progress_container table');
+				$('#task_progress_container').show();
+
+				checkTaskStatus(taskStatus);
 			}
 		});
 

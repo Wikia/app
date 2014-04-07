@@ -12,7 +12,7 @@
 }
 
 #task_editor {
-    margin-top: 15px;
+    margin: 15px 0;
 }
 
 #task_edit_fields {
@@ -29,4 +29,26 @@
 
 #task_edit_fields input {
     width: 250px;
+}
+
+#task_progress_template {
+    display: none;
+}
+
+#task_progress_container table {
+    border-collapse: collapse;
+}
+
+#task_progress_container td, th {
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+#task_progress_container td {
+    text-align: center;
+}
+
+#task_progress_container td:first-child {
+    text-align: left;
+    width: 70%;
 }

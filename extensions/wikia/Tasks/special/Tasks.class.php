@@ -130,12 +130,16 @@ class Tasks {
 			->add($call)
 			->queue();
 
-		return $taskId;
+		return [$taskId, self::formatTaskCall($class, $method, $args)];
 	}
 
 	private static function formatTaskClassName($fullyQualifiedName) {
 		$parts = explode("\\", $fullyQualifiedName);
 		$className = $parts[count($parts) - 1];
 		return preg_replace('/Task$/', '', $className);
+	}
+
+	private static function formatTaskCall($class, $method, $args) {
+		return self::formatTaskClassName($class).'.'.$method.'('.implode(',', $args).')';
 	}
 }
