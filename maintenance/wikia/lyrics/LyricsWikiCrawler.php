@@ -114,17 +114,16 @@ class LyricsWikiCrawler extends Maintenance {
 		$status = ' ';
 		$this->output( 'Scraping article #' . $this->getArticleId() );
 		$article = Article::newFromID( $this->getArticleId() );
+
 		if ( !is_null($article) ) {
-			/** @var ArtistScraper | AlbumScraper | SongScraper $scraper | false */
-			$scraper = $this->getScraperByArticleCategory();
-			if ( $scraper ) {
-				$data = $scraper->processArticle( $article );
-
-				echo PHP_EOL;
-				print_r( $data );
-
+			$categories = CategoryHelper::extractCategoriesFromWikitext( $article->getContent() );
+			if ( !empty( $categories ) ) {
+				//TODO: finish: check if there is Artist category if yes, set article id and call doScrapeArtist()
+				// otherwise get the artist article id by calling convertIntoArtistPages() and then set the article id
+				// and call doScrapeArtist()
+				print_r( $categories );
 			} else {
-				$status .= 'Unknown article type ';
+				$status .= 'Unknown article type (no categories found)';
 			}
 		} else {
 			$status .= 'Article not found ';
@@ -152,8 +151,9 @@ class LyricsWikiCrawler extends Maintenance {
 		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
 		$pages = $this->convertIntoArtistPages( $pages );
-		foreach( $pages as $page ) {
-			$this->setArticleId( $page->id );
+
+		foreach( $pages as $pageId ) {
+			$this->setArticleId( $pageId );
 			$this->doScrapeArtist();
 		}
 	}
@@ -165,19 +165,65 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @return array
 	 */
 	public function convertIntoArtistPages( Array $pages ) {
-		$result = [];
+		$results = [];
 
 		foreach( $pages as $page ) {
 			$category = strtolower( $page->category );
 			if( $category === 'artist' ) {
-				$result[] = $page;
+				$results[] = $page->id;
 			} else {
-				$artistPage = $this->getArtistPage( $page );
-				$result[] = $artistPage;
+				$artistPageId = $this->getArtistPageId( $page );
+
+				if( !in_array( $artistPageId, $results ) ) {
+					$results[] = $artistPageId;
+				}
 			}
 		}
 
-		return $result;
+		return $results;
+	}
+
+	/**
+	 * @desc Based on album/song title creates an instance of Title for the artist and returns artist's page id
+	 *
+	 * @param Object $page an instance of stdClass with two fields: id and category
+	 *
+	 * @return bool|int Returns false if any of the articles couldn't be found
+	 */
+	public function getArtistPageId( $page ) {
+		$articleId = false;
+		$article = Article::newFromID( $page->id );
+
+		if( !is_null( $article) ) {
+			$titleText = $article->getTitle()->getText();
+			$titleExploded = explode( ':', $titleText );
+			$artistTitleText = $titleExploded[0];
+			$artistTitle = Title::newFromText( $artistTitleText );
+
+			if( !is_null( $artistTitle ) ) {
+				$articleId = $artistTitle->getArticleId();
+			} else {
+				wfDebugLog(
+					__METHOD__,
+					sprintf(
+						'Found the article (id: %d) but could not create a Title for artist (%s extracted from %s)',
+						$page->id,
+						$artistTitleText,
+						$titleText
+					)
+				);
+			}
+		} else {
+			wfDebugLog(
+				__METHOD__,
+				sprintf(
+					'Could not find the article (id: %d) for which an artist article should be found',
+					$page->id
+				)
+			);
+		}
+
+		return $articleId;
 	}
 
 	/**
