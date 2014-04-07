@@ -95,6 +95,25 @@ class PromoteImageReviewTask extends BatchTask {
 		return false;
 	}
 
+	function finalizeImageUploadStatus($imageId, $sourceWikiId, $status){
+		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$db->update(
+			'city_visualization_images',
+			array(
+				'reviewer_id = null',
+				'image_review_status' => $status,
+			),
+			array(
+				"city_id " . $sourceWikiId,
+				"page_id" . $imageId,
+				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+			),
+			__METHOD__
+		);
+
+	}
+
 	/**
 	 * @desc This method uploads images from a wiki to corporate wiki (i.e. wikia.com or de.wikia.com) but also it can upload images from corporate wiki to target wikis
 	 *
@@ -119,7 +138,11 @@ class PromoteImageReviewTask extends BatchTask {
 						'id' => $result['id'],
 						'name' => $result['name'],
 					);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_APPROVED);
 				} else {
+
+					//on error move image back to review, so that upload could be retried
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_UNREVIEWED);
 					$isError = true;
 				}
 			}

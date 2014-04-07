@@ -23,14 +23,17 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		$taskAdditionList = array();
 
 		$sqlWhere = array(
-			ImageReviewStatuses::STATE_APPROVED => array(),
+			ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING => array(),
 			ImageReviewStatuses::STATE_REJECTED => array(),
 			ImageReviewStatuses::STATE_QUESTIONABLE => array(),
 		);
 
 		foreach( $images as $image ) {
 			if ($image['state'] == ImageReviewStatuses::STATE_APPROVED) {
-				$sqlWhere[ImageReviewStatuses::STATE_APPROVED][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
+				//for promote Image use temporary approval state as it will be used to supervise image copy
+				$image['state'] = ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING;
+
+				$sqlWhere[ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING][] = "( city_id = $image[wikiId] AND page_id = $image[pageId]) ";
 				$approvalList [] = $image;
 
 				$visualization = new CityVisualization();
@@ -142,6 +145,26 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	/**
 	 * reset state in abandoned work
 	 */
+
+	public function resetFailedTransfers(){
+		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+
+		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : 3600; // 1 sec
+
+		$db->update(
+			'city_visualization_images',
+			array(
+				'reviewer_id = null',
+				'image_review_status' => ImageReviewStatuses::STATE_UNREVIEWED,
+			),
+			array(
+				"review_start < now() - " . $timeLimit,
+				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
+			),
+			__METHOD__
+		);
+	}
+
 	public function resetAbandonedWork() {
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
@@ -156,7 +179,6 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			),
 			array(
 				"review_start < now() - " . $timeLimit,
-				'reviewer_id' => $this->wg->User->getId(),
 				'image_review_status' => ImageReviewStatuses::STATE_IN_REVIEW,
 			),
 			__METHOD__
@@ -203,7 +225,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		// for testing
+		$this->resetFailedTransfers();
 		$this->resetAbandonedWork();
 
 		// get images
