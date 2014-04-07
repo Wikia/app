@@ -163,13 +163,6 @@ $config['abtesting'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 	)
 );
-$config['optimizely'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/Optimizely/js/OptimizelyLoader.js',
-	)
-);
-
 
 /** jQuery **/
 $config['jquery'] = array(
