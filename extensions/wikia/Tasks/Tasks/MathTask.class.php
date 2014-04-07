@@ -12,26 +12,24 @@ namespace Wikia\Tasks\Tasks;
 
 class MathTask extends BaseTask {
 	/**
-	 * add some stuff together!
+	 * add two numbers together
 	 *
-	 * @param int $x some number to add
-	 * @param $y int the other number to add
-	 * @return mixed
+	 * @param double $x some number to add
+	 * @param double $y the other number to add
+	 * @return double
 	 */
 	public function add($x, $y) {
 		return $x + $y;
 	}
 
 	/**
-	 * @param int $x
-	 * @param $y int
-	 * @return mixed
+	 * multiply two numbers together
+	 * 
+	 * @param double $x
+	 * @param double $y
+	 * @return double
 	 */
 	public function multiply($x, $y) {
 		return $x*$y;
-	}
-
-	public function test() {
-		return 5;
 	}
 } 
