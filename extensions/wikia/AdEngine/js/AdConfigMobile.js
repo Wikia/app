@@ -5,38 +5,34 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	'ext.wikia.adEngine.provider.null'
-	], function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
-		'use strict';
+], function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
+	'use strict';
 
-		var logGroup = 'ext.wikia.adEngine.adConfigMobile',
-			logLevel = log.levels.info;
+	function getProvider(slot) {
+		var slotName = slot[0];
 
-		function getProvider(slot) {
-			var slotName = slot[0];
-
-			// if we need to hop to particular provider
-			switch(slot[2]) {
-				case 'Null':
-					return adProviderNull;
-				case 'RemnantGptMobile':
-					if (adProviderRemnantGpt.canHandleSlot(slotName)) {
-						return adProviderRemnantGpt;
-					}
-
-					return adProviderNull;
-				default:
-					if (adProviderDirectGpt.canHandleSlot(slotName)) {
-						return adProviderDirectGpt;
-					}
+		// if we need to hop to particular provider
+		switch (slot[2]) {
+		case 'Null':
+			return adProviderNull;
+		case 'RemnantGptMobile':
+			if (adProviderRemnantGpt.canHandleSlot(slotName)) {
+				return adProviderRemnantGpt;
 			}
 
 			return adProviderNull;
-
+		default:
+			if (adProviderDirectGpt.canHandleSlot(slotName)) {
+				return adProviderDirectGpt;
+			}
 		}
 
-		return {
-			getDecorators: function () { return []; },
-			getProvider: getProvider
-		};
+		return adProviderNull;
+
 	}
-);
+
+	return {
+		getDecorators: function () { return []; },
+		getProvider: getProvider
+	};
+});

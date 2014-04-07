@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.gptSlotConfig', function() {
+define('ext.wikia.adEngine.gptSlotConfig', function () {
 	'use strict';
 
 	var slotMapConfig = {

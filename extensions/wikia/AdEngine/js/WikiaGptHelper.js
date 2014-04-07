@@ -1,6 +1,6 @@
 /*global define, setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define( 'ext.wikia.adEngine.wikiaGptHelper', [
+define('ext.wikia.adEngine.wikiaGptHelper', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',

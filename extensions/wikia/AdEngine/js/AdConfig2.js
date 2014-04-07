@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.adConfig', [
 	adProviderEvolve,
 	adProviderLater,
 	adProviderNull
-	) {
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfig',

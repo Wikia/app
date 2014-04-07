@@ -4,8 +4,7 @@ define('ext.wikia.adEngine.template.skin', [
 	'wikia.window',
 	'wikia.log',
 	'wikia.backgroundchanger'
-], function (document, window, log, backgroundchanger)
-	{
+], function (document, window, log, backgroundchanger) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.template.skin';

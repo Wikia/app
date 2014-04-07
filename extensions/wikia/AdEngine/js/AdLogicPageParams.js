@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.abTest'
-], function ( log, window, Krux, adLogicPageDimensions,	abTest) {
+], function (log, window, Krux, adLogicPageDimensions, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -51,8 +51,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 	}
 
+	// TODO: move the "if" to PHP?
 	function getCategories() {
-
 		if (window.wgAdPageLevelCategoryLangs && (window.wgContentLanguage in window.wgAdPageLevelCategoryLangs)) {
 			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
 				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
@@ -177,7 +177,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		extend(params, decodeLegacyDartParams(window.amzn_targs));
 
 		log(params, 9, logGroup);
-		return pageParams = params;
+		pageParams = params;
+		return params;
 	}
 
 	return {

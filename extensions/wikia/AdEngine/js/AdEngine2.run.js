@@ -71,9 +71,9 @@ require([
 	};
 
 	// Load late ads now
-	window.wgAfterContentAndJS.push(function(){
+	window.wgAfterContentAndJS.push(function () {
 
-		require(['ext.wikia.adEngine.adConfigLate'], function(adConfigLate){
+		require(['ext.wikia.adEngine.adConfigLate'], function (adConfigLate) {
 			log('launching late ads now', 1, module);
 			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
 			tracker.track({

@@ -14,14 +14,14 @@ define('ext.wikia.adEngine.wikiaDartMobileHelper', [
 		categoryStrMaxLength = 300,
 		experiments,
 		experimentsNumber,
-		i = 0,
+		i,
 		ab = [];
 
 	if (window.Wikia && window.Wikia.AbTest) {
 		experiments = window.Wikia.AbTest.getExperiments();
 		experimentsNumber = experiments.length;
 
-		for (; i < experimentsNumber; i += 1) {
+		for (i = 0; i < experimentsNumber; i += 1) {
 			ab.push(experiments[i].id + '_' + experiments[i].group.id);
 		}
 	}

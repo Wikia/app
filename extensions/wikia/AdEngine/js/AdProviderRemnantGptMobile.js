@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 		log(['fillInSlot', slotname], 5, logGroup);
 
 		function hopToNull() {
-			hop({method: 'hop'}, 'Null')
+			hop({method: 'hop'}, 'Null');
 		}
 
 		function showAdAndCallSuccess() {

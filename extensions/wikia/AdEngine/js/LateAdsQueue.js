@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.lateAdsQueue', function() {
-	"use strict";
+define('ext.wikia.adEngine.lateAdsQueue', function () {
+	'use strict';
 	return [];
 });

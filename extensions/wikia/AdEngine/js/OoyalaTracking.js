@@ -1,6 +1,6 @@
 /*global require*/
-require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
-	"use strict";
+require(['wikia.window', 'wikia.tracker'], function (window, tracker) {
+	'use strict';
 	var wikia = window.Wikia = window.Wikia || {};
 
 	/**
@@ -14,7 +14,7 @@ require( ['wikia.window', 'wikia.tracker'], function( window, tracker ) {
 	 * @param {String} id Identifier for video, either title or id
 	 */
 
-	wikia.fliteOoyalaTracker = function( id ) {
+	wikia.fliteOoyalaTracker = function (id) {
 		tracker.track({
 			action: 'content-begin',
 			category: 'video-player-stats',

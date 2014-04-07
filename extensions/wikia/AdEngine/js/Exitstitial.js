@@ -1,8 +1,8 @@
 /**
  * Exitstitial ads
  */
-/*global require*/
-require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function(window, document, location, $) {
+/*global require, setTimeout*/
+require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function (window, document, location, $) {
 	'use strict';
 
 	var modalId = 'ExitstitialInfobox',
@@ -16,13 +16,13 @@ require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function
 		return;
 	}
 
-	$(document).ready(function() {
-		$('.WikiaArticle a.exitstitial').filter('.external, .extiw').click(function(event) {
+	$(document).ready(function () {
+		$('.WikiaArticle a.exitstitial').filter('.external, .extiw').click(function (event) {
 			event.preventDefault();
 
 			var url = $(this).attr('href');
 
-			$.getMessages('AdEngine', function() {
+			$.getMessages('AdEngine', function () {
 				var $goBack = $('<a></a>').attr('href', '').text($.msg('adengine-exitstitial-go-back')),
 					modalTitle = $.msg('adengine-exitstitial-title-template', window.wgSiteName),
 					$modal,
@@ -36,7 +36,7 @@ require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function
 				$modalText.append($goBack);
 				$modalSkip.append($skipAd);
 
-				$goBack.click(function(event) {
+				$goBack.click(function (event) {
 					event.preventDefault();
 					$modal.closeModal();
 				});
@@ -54,8 +54,8 @@ require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function
 				window.adslots2.push([adSlot]);
 
 				// Skip ads after N seconds
-				setTimeout(function() {
-					$skipAd.filter(':visible').each(function() {
+				setTimeout(function () {
+					$skipAd.filter(':visible').each(function () {
 						location.href = url;
 					});
 				}, redirectDelay * 1000);
