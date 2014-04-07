@@ -51,10 +51,6 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	public function ad() {
 		$this->slotname = $this->request->getVal('slotname');
-
-		$this->pageLevel = AdEngine2Service::getAdLevelForPage();
-		$this->slotLevel = AdEngine2Service::getAdLevelForSlot($this->slotname);
-
-		$this->showAd = (AdEngine2Service::compareAdLevels($this->pageLevel, $this->slotLevel) >= 0);
+		$this->showAd = AdEngine2Service::shouldShowAdSlot($this->slotname);
 	}
 }

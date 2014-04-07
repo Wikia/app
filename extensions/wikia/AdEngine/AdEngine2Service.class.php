@@ -3,19 +3,21 @@
 /**
  * AdEngine II Hooks
  */
-class AdEngine2Service {
+class AdEngine2Service
+{
 
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
-	const AD_LEVEL_NONE = 'none';           // show no ads
-	const AD_LEVEL_LIMITED = 'limited';     // show some ads (logged in users on main page)
-	const AD_LEVEL_CORPORATE = 'corporate'; // show some ads (anonymous users on corporate pages)
-	const AD_LEVEL_ALL = 'all';
+	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
+	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
+	const PAGE_TYPE_CORPORATE = 'corporate';             // show some ads (anonymous users on corporate pages)
+	const PAGE_TYPE_ALL_ADS = 'all';                     // show all ads!
 
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
+
 	/**
 	 * Get ad level for the current page. Take into account type of the page and user status.
 	 * Return one of the AD_LEVEL_* const
@@ -39,7 +41,7 @@ class AdEngine2Service {
 			|| $wg->EnableAdEngineExt === false
 			|| !F::app()->checkSkin(['oasis'])
 		) {
-			$pageLevel = AdEngine2Service::AD_LEVEL_NONE;
+			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
 		}
 
@@ -70,7 +72,7 @@ class AdEngine2Service {
 		}
 
 		if (!$runAds) {
-			$pageLevel = AdEngine2Service::AD_LEVEL_NONE;
+			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
 		}
 
@@ -78,18 +80,18 @@ class AdEngine2Service {
 		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
 			// Only leaderboard, medrec and invisible on corporate sites for anonymous users
 			if ($wg->EnableWikiaHomePageExt) {
-				$pageLevel = AdEngine2Service::AD_LEVEL_CORPORATE;
+				$pageLevel = self::PAGE_TYPE_CORPORATE;
 				return $pageLevel;
 			}
 
 			// All ads everywhere else
-			$pageLevel = AdEngine2Service::AD_LEVEL_ALL;
+			$pageLevel = self::PAGE_TYPE_ALL_ADS;
 			return $pageLevel;
 		}
 
 		// Logged in users get some ads on the main pages (except on the corporate sites)
 		if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
-			$pageLevel = AdEngine2Service::AD_LEVEL_LIMITED;
+			$pageLevel = self::PAGE_TYPE_HOMEPAGE_LOGGED;
 			return $pageLevel;
 		}
 
@@ -99,10 +101,10 @@ class AdEngine2Service {
 			!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden) &&
 			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
 		) {
-			$pageLevel = AdEngine2Service::AD_LEVEL_CORPORATE;
+			$pageLevel = self::PAGE_TYPE_CORPORATE;
 			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
 				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, array(
-					AdEngine2Service::AD_LEVEL_NONE, AdEngine2Service::AD_LEVEL_LIMITED, AdEngine2Service::AD_LEVEL_CORPORATE, AdEngine2Service::AD_LEVEL_ALL
+					self::PAGE_TYPE_NO_ADS, self::PAGE_TYPE_HOMEPAGE_LOGGED, self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS
 				))
 			) {
 				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
@@ -111,43 +113,8 @@ class AdEngine2Service {
 		}
 
 		// And no other ads
-		$pageLevel = AdEngine2Service::AD_LEVEL_NONE;
+		$pageLevel = self::PAGE_TYPE_NO_ADS;
 		return $pageLevel;
-	}
-
-	public static function getAdLevelForSlot($slotname)
-	{
-		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
-			return AdEngine2Service::AD_LEVEL_CORPORATE;
-		}
-
-		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH|SEVENONEMEDIA_FLUSH/', $slotname)) {
-			return AdEngine2Service::AD_LEVEL_LIMITED;
-		}
-		return AdEngine2Service::AD_LEVEL_ALL;
-	}
-
-	public static function compareAdLevels($level1, $level2)
-	{
-		if ($level1 === $level2) {
-			return 0;
-		}
-		if ($level1 === AdEngine2Service::AD_LEVEL_NONE || $level2 === AdEngine2Service::AD_LEVEL_ALL) {
-			// $level1 < $level2
-			return -1;
-		}
-		if ($level1 === AdEngine2Service::AD_LEVEL_ALL || $level2 === AdEngine2Service::AD_LEVEL_NONE) {
-			// $level1 > $level2
-			return 1;
-		}
-		if ($level1 === AdEngine2Service::AD_LEVEL_LIMITED) {
-			// $level2 === self::AD_LEVEL_CORPORATE
-			// $level1 < $level2
-			return -1;
-		}
-		// $level1 === self::AD_LEVEL_CORPORATE, $level2 === self::AD_LEVEL_LIMITED
-		// $level1 > $level2
-		return 1;
 	}
 
 	/**
@@ -157,7 +124,7 @@ class AdEngine2Service {
 	 */
 	public static function areAdsShowableOnPage()
 	{
-		return (self::getAdLevelForPage() !== AdEngine2Service::AD_LEVEL_NONE);
+		return (self::getAdLevelForPage() !== self::PAGE_TYPE_NO_ADS);
 	}
 
 	public static function getAdsInHeadGroup()
@@ -227,7 +194,33 @@ class AdEngine2Service {
 		wfProfileOut(__METHOD__);
 
 		return $cat;
-	} // show all ads
+	}
 
+	public static function shouldShowAdSlot($slotname)
+	{
+		$pageLevel = self::getAdLevelForPage();
+		$allowedPageLevels = self::getPageAdLevelsForSlot($slotname);
 
+		return in_array($pageLevel, $allowedPageLevels);
+	}
+
+	/**
+	 * Return all the page types the slot should appear on
+	 * TODO: this should be configurable when defining the ad slot in the template
+	 *
+	 * @param $slotname
+	 * @return array
+	 */
+	private static function getPageAdLevelsForSlot($slotname)
+	{
+		if ($slotname === 'INVISIBLE_1' || $slotname === 'INVISIBLE_SKIN') {
+			return [self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS];
+		}
+
+		if (preg_match('/TOP_LEADERBOARD|TOP_RIGHT_BOXAD|GPT_FLUSH|SEVENONEMEDIA_FLUSH/', $slotname)) {
+			return [self::PAGE_TYPE_HOMEPAGE_LOGGED, self::PAGE_TYPE_CORPORATE, self::PAGE_TYPE_ALL_ADS];
+		}
+
+		return [self::PAGE_TYPE_ALL_ADS];
+	}
 }
