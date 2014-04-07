@@ -44,7 +44,6 @@ class HubRssFeedModel extends WikiaModel {
 	 * @return array
 	 */
 	protected function getServicesV3( $cityId ) {
-		return [];
 		return [
 			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
@@ -61,7 +60,7 @@ class HubRssFeedModel extends WikiaModel {
 	 */
 	protected function getServicesV2( $verticalId ) {
 		return [
-			//'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
+			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
 			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId),
 			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService($this->lang, MarketingToolboxModel::SECTION_HUBS, $verticalId)
 		];
@@ -218,8 +217,6 @@ class HubRssFeedModel extends WikiaModel {
 				'ts' => $timestamp
 			] );
 		}
-		print_r($data);
-
 		return $this->normalizeDataFromModules( $data );
 	}
 
@@ -261,21 +258,22 @@ class HubRssFeedModel extends WikiaModel {
 	 */
 	protected function normalizeDataFromModules( $data ) {
 		$keysForUrl =  [ 'articleUrl', 'url', 'imageLink' ];
-		$keysForTitle =  [ 'shortDesc' , 'articleTitle', 'moduleTitle' ];
-		$keysForDescription = ['longDesc', 'quote', 'description'];
+		$keysForTitle =  [ 'shortDesc' , 'articleTitle', 'title' ];
+		$keysForDescription = ['longDesc', 'quote', 'text'];
 		$keysForImage = ['photoName', 'imageAlt'];
 		
 		$out = [];
 		
 		foreach ( $data as &$result ) {
-
-			$itemList = array_pop( $result );
+			
+			if (array_key_exists("title", $result)) {
+				// a single item from wikiaspicks service, which returns data in different format than others
+				$itemList = [$result];
+			} else {
+				$itemList = array_pop( $result );
+			}
 
 			if ( is_array( $itemList ) ) {
-				if (array_key_exists("title", $itemList)) {
-					// a single item
-					$itemList = [ $itemList ];
-				}
 				foreach ( $itemList as &$item ) {
 					
 					//removing duplicates

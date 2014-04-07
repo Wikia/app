@@ -255,7 +255,7 @@ class HubRssModelTest extends WikiaBaseTest {
 
 		$mockWikiaspicks->expects( $this->any() )
 			->method( 'loadData' )
-			->will( $this->returnValue( ['a' => [["moduleTitle" => "c1", "description" => "c2", "fileName" => 'c3', "imageLink" => "c4"]]] ) );
+			->will( $this->returnValue( ['a' => [["title" => "c1", "text" => "c2", "imageAlt" => 'c3', "imageLink" => "c4"]]] ) );
 
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
