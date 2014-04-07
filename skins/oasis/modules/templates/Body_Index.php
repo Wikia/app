@@ -86,7 +86,7 @@
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
-							echo $app->renderView('Ad', 'Index', ['slotname' => 'HOME_TOP_RIGHT_BOXAD', 'pageTypes' => 'homepage_logged', 'corporate', 'all']);
+							echo $app->renderView('Ad', 'Index', ['slotName' => 'HOME_TOP_RIGHT_BOXAD', 'pageTypes' => 'homepage_logged', 'corporate', 'all_ads']);
 						}
 					?>
 					</div>
@@ -122,8 +122,8 @@
 				<?php } ?>
 
 				<div id="WikiaArticleBottomAd" class="noprint">
-					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_LEFT_BOXAD')) ?>
-					<?= $app->renderView('Ad', 'Index', array('slotname' => 'PREFOOTER_RIGHT_BOXAD')) ?>
+					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD']) ?>
+					<?= $app->renderView('Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD']) ?>
 				</div>
 			</div>
 		</article><!-- WikiaMainContent -->

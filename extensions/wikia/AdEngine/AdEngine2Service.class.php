@@ -1,8 +1,5 @@
 <?php
 
-/**
- * AdEngine II Hooks
- */
 class AdEngine2Service
 {
 
@@ -13,7 +10,7 @@ class AdEngine2Service
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
 	const PAGE_TYPE_CORPORATE = 'corporate';             // show some ads (anonymous users on corporate pages)
-	const PAGE_TYPE_ALL_ADS = 'all';                     // show all ads!
+	const PAGE_TYPE_ALL_ADS = 'all_ads';                 // show all ads!
 
 	const cacheKeyVersion = "2.03a";
 	const cacheTimeout = 1800;
@@ -123,9 +120,13 @@ class AdEngine2Service
 		return $pageLevel;
 	}
 
-	public static function shouldShowAd($slotname, $pageTypes)
+	public static function shouldShowAd($pageTypes = null)
 	{
 		$pageType = self::getPageType();
+
+		if ($pageTypes === null) {
+			$pageTypes = [self::PAGE_TYPE_ALL_ADS];
+		}
 
 		if (in_array('*', $pageTypes) && $pageType !== self::PAGE_TYPE_NO_ADS) {
 			return true;

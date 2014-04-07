@@ -160,7 +160,7 @@ class BodyController extends WikiaController {
 				1500 => array('Search', 'Index', null),
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', ['slotname' => 'TOP_RIGHT_BOXAD']),
+				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -298,9 +298,9 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', ['slotname' => 'TOP_RIGHT_BOXAD']);
-		$railModuleList[1291] = array('Ad', 'Index', ['slotname' => 'MIDDLE_RIGHT_BOXAD']);
-		$railModuleList[1100] = array('Ad', 'Index', ['slotname' => 'LEFT_SKYSCRAPER_2']);
+		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
 

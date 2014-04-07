@@ -3,27 +3,13 @@
 
 <?php
 
-if (WikiaPageType::isWikiaHub()) {
-	$leaderboardName = 'HUB_TOP_LEADERBOARD';
-} elseif ($wg->EnableWikiaHomePageExt) {
-	if (WikiaPageType::isSearch()) {
-		$leaderboardName = 'TOP_LEADERBOARD';
-	} else {
-		$leaderboardName = 'CORP_TOP_LEADERBOARD';
-	}
-} elseif (WikiaPageType::isMainPage()) {
-	$leaderboardName = 'HOME_TOP_LEADERBOARD';
-} else {
-	$leaderboardName = 'TOP_LEADERBOARD';
-}
-
-echo $app->renderView('Ad', 'Index', ['slotname' => $leaderboardName, 'pageTypes' => ['*']]);
-echo $app->renderView('Ad', 'Index', ['slotname' => 'TOP_BUTTON_WIDE']);
+echo $app->renderView('Ad', 'Index', ['slotName' => $leaderboardName, 'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']]);
+echo $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE']);
 
 ?>
 
 </div>
 
-<?= $app->renderView('Ad', 'Index', ['slotname' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'all']]); ?>
+<?= $app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN', 'pageTypes' => ['homepage_logged', 'all_ads']]); ?>
 
 </div>

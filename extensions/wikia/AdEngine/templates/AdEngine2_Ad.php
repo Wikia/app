@@ -1,11 +1,11 @@
 <?php if ($showAd): ?>
-<!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
-<div id="<?= htmlspecialchars($slotname) ?>" class="wikia-ad noprint default-height">
+<!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
+<div id="<?= htmlspecialchars($slotName) ?>" class="wikia-ad noprint default-height">
 <script>
-	window.adslots2.push(<?= json_encode([$slotname, null, 'AdEngine2']) ?>);
+	window.adslots2.push(<?= json_encode([$slotName, null, 'AdEngine2']) ?>);
 </script>
 </div>
-<!-- END SLOTNAME: <?= htmlspecialchars($slotname) ?> -->
+<!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
 <?php else: ?>
-<!-- NO AD <?= htmlspecialchars($slotname) ?> -->
+<!-- NO AD <?= htmlspecialchars($slotName) ?> -->
 <?php endif; ?>
