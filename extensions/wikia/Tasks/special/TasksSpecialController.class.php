@@ -26,7 +26,8 @@ class TasksSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset(__DIR__.'/css/special_tasks.css');
 
 
-		$this->setVal('header', 'HEADER');
+		$this->setVal('header', wfMsg('tasks-title'));
+		$this->setVal('pageDescription', wfMsg('tasks-description'));
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
 		$this->setVal('flowerUrl', "http://localhost:5555"); // TODO: read from config
 		$this->setVal('ajaxLoading', $this->wg->ExtensionsPath.'/wikia/Tasks/special/images/ajax-loader.gif');
