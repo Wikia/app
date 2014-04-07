@@ -2,7 +2,7 @@
 @import "skins/oasis/css/mixins/transition.scss";
 
 #GlobalNavigationMenuButton {
-	background-image: url(/skins/oasis/images/icon_menu.png); /* $wgCdnStylePath */
+	background-image: url(/skins/oasis/images/icon_menu.png); /* base64 */
 	background-position: 0 50%;
 	background-repeat: no-repeat;
 	border-right: 1px solid #aad;
@@ -25,7 +25,7 @@
 			@include transition-shorthand(all 0.2s ease-in-out);
 
 			background-color: transparent;
-			background-image: url(/skins/oasis/images/drawer_chevron.png); /* $wgCdnStylePath */
+			background-image: url(/skins/oasis/images/drawer_chevron.png); /* base64 */
 			background-position: calc(100% - 10px), 50%;
 			background-repeat: no-repeat;
 			background-size: 6px;
@@ -35,6 +35,10 @@
 			font-weight: bold;
 			padding: 10px;
 			text-transform: uppercase;
+
+			&, &:link, &:visited {
+				color: inherit;
+			}
 		}
 
 		a:hover,
@@ -44,16 +48,19 @@
 		}
 
 		&.video-games-vertical-color a:hover,
-		&.video-games-vertical-color.active a
-		{ background-color: $color-wikiahome-videogames;}
+		&.video-games-vertical-color.active a {
+			background-color: $color-wikiahome-videogames;
+		}
 
 		&.lifestyle-vertical-color a:hover,
-		&.lifestyle-vertical-color.active a
-		{ background-color: $color-wikiahome-lifestyle; }
+		&.lifestyle-vertical-color.active a {
+			background-color: $color-wikiahome-lifestyle;
+		}
 
 		&.entertainment-vertical-color a:hover,
-		&.entertainment-vertical-color.active a
-		{ background-color: $color-wikiahome-entertainment; }
+		&.entertainment-vertical-color.active a {
+			background-color: $color-wikiahome-entertainment;
+		}
 	}
 }
 

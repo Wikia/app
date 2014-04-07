@@ -34,7 +34,6 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function index() {
-
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page

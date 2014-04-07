@@ -5,10 +5,12 @@
 @import "skins/oasis/css/mixins/box-sizing.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 
+$drawer-background-color: #fff;
 $drawer-base-z-index: $zTop + 10;
 $drawer-close-image: '/resources/wikia/ui_components/drawer/images/cross.png';
-$drawer-shadow-size: 15px;
 $drawer-text-color: #0e5ea3;
+$drawer-shadow-color: #808080;
+$drawer-shadow-size: 15px;
 $drawer-width: 250px;
 $subdrawer-width: 225px;
 
@@ -20,10 +22,10 @@ $subdrawer-width: 225px;
 
 .drawer,
 .subdrawer {
-	@include box-shadow(0px, 0px, $drawer-shadow-size, #808080);//$color-page-shadow);
+	@include box-shadow(0px, 0px, $drawer-shadow-size, $drawer-shadow-color);
 	@include box-sizing;
 
-	background: $color-page;
+	background: $drawer-background-color;
 	bottom: 0;
 	color: $drawer-text-color;
 	opacity: 0;
@@ -58,7 +60,7 @@ $subdrawer-width: 225px;
 	}
 
 	.close-button {
-		background: url($drawer-close-image); /* $wgCdnStylePath */
+		background: url($drawer-close-image); /* base64 */
 		background-position: 0 3px;
 		background-repeat: no-repeat;
 		cursor: pointer;
