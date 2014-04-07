@@ -136,8 +136,9 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 		// Survey for first time editors
 		'//extensions/wikia/EditorSurvey/js/EditorSurvey.js',
-		// Image and video thumbnail mustache templates
+		// Image and video thumbnail mustache templates and scripts
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		'//extensions/wikia/Thumbnails/scripts/utils/thumbnailVideo.js',
 	)
 );
 

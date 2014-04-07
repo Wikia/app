@@ -22,6 +22,7 @@
 		// Carousel vars
 		// overlay for thumb images
 		thumbPlayButton: '<span class="play-circle"></span>',
+		videoWrapperClass: 'wikia-video-thumbnail xxsmall',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 		thumbLoadCount: 20,
@@ -1200,7 +1201,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1252,7 +1254,8 @@
 							key: key,
 							title: title,
 							type: 'video',
-							playButtonSpan: playButton
+							playButtonSpan: playButton,
+							thumbLiClass: Lightbox.videoWrapperClass
 						});
 
 					}
@@ -1400,7 +1403,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
