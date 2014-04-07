@@ -15,12 +15,6 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 		'Lifestyle' 	=> 'http://www.wikia.com/rss/Lifestyle'
 	];
 
-	/*private $rssUrls  = [
-		'Gaming' 	=> 'http://wikia.szumo.wikia-dev.com/rss/Gaming',
-		//'Entertainment' => 'http://www.wikia.com/rss/Entertainment',
-		//'Lifestyle' 	=> 'http://www.wikia.com/rss/Lifestyle'
-	];*/
-
 	/**
 	 * Check if hubs rss contain data in proper structure
 	 *
