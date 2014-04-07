@@ -51,9 +51,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 	public function execute() {
 		$this->db = $this->getDB( DB_SLAVE );
-
-		$lyricsApiBase = new LyricsApiBase();
-		$this->dba = newDatabaseAdapter( 'solr', $lyricsApiBase->getConfig() );
+		$this->dba = newDatabaseAdapter( 'solr', $this->getConfig() );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
@@ -297,6 +295,22 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 
 		return $scraper;
+	}
+
+	/**
+	 * @desc Gets the default configuration from $wgLyricsApiSolrariumConfig, modifies it and returns modified version
+	 *
+	 * @return Array
+	 */
+	public function getConfig() {
+		$app = F::app();
+
+		$config = $app->wg->LyricsApiSolrariumConfig;
+		$config['adapteroptions']['host'] = $app->wg->SolrMaster;
+		$config['adapteroptions']['port'] = 8983;
+		unset( $config['adapteroptions']['proxy'] );
+
+		return $config;
 	}
 
 }
