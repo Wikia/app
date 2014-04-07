@@ -1,0 +1,20 @@
+<ul class="video-list mobile">
+{{#videos}}
+	<a href="#">
+		<li class="item">
+			<div class="thumbnail">
+				{{{thumbnail}}}
+				<img src="{{thumbUrl}}" alt="{{fileTitle}}">
+			</div><!--
+			leave this comment in to truncate whitespace between elements
+			for display: inline-block
+			--><div class="info">
+				<span class="title">{{fileTitle}}</span>
+				<span class="views">64 views</span>
+			</div>
+		</li>
+	</a>
+{{/videos}}
+</ul>
+<button class="btn load-more">Load More</button>
+
