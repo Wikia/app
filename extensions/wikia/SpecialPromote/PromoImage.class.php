@@ -40,6 +40,7 @@ class PromoImage extends WikiaObject {
 	public function __construct($type, $dbName = null) {
 		parent::__construct();
 		$this->dbName = $dbName;
+		$this->cityId = null;
 		$this->type = $type;
 		$this->fileChanged = false;
 	}
@@ -47,18 +48,36 @@ class PromoImage extends WikiaObject {
 	public function isType($type){
 		return $this->type === $type;
 	}
+
+	public function isAdditional(){
+		return in_array($this->type, self::listAllAdditionalTypes());
+	}
+
 	public function getType(){
 		return $this->type;
 	}
 
 	public function setDBName($dbName) {
 		$this->dbName = $dbName;
+		$this->city = null;
 		return $this;
+	}
+
+	public function isDBSet(){
+		return !empty($this->dbName);
 	}
 
 	public function setCityId($cityId) {
 		$this->dbName = WikiFactory::IDtoDB( $cityId );
+		$this->cityId = $cityId;
 		return $this;
+	}
+
+	public function getCityId(){
+		if (empty($this->cityId)){
+			$this->cityId = WikiFactory::DBtoID($this->dbName);
+		}
+		return $this->cityId;
 	}
 
 	protected function pathnameHelper($withDbName = true, $withExtension = true){
@@ -78,6 +97,11 @@ class PromoImage extends WikiaObject {
 
 	public function pathname(){
 		return $this->pathnameHelper(true, true);
+	}
+
+	public function getOriginFile(){
+		$f = GlobalFile::newFromText($this->pathname(), $this->getCityId());
+		return $f;
 	}
 
 	public function corporateFileByLang($lang){

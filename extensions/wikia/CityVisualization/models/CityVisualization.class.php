@@ -644,11 +644,7 @@ class CityVisualization extends WikiaModel {
 		foreach ($newImages as $image) {
 			$imageData = new stdClass();
 
-			$imageIndex = 0;
-			$matches = array();
-			if (preg_match('/Wikia-Visualization-Add-([0-9])\.png/', $image, $matches)) {
-				$imageIndex = intval($matches[1]);
-			}
+			$imageIndex = PromoImage::fromPathname($image)->getType();
 
 			$title = Title::newFromText($image, NS_FILE);
 

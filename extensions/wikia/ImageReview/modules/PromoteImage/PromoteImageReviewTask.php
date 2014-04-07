@@ -336,20 +336,21 @@ class PromoteImageReviewTask extends BatchTask {
 
 		if( !empty($currentImages) ) {
 			foreach($currentImages as $imageName) {
-				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $images) ) {
-					$data['city_images'][] = $imageName;
+				$promoImage = PromoImage::fromPathname($imageName);
+				if( $promoImage->isAdditional() && !in_array($promoImage->pathname(), $images) ) {
+					$data['city_images'][] = $promoImage->pathname();
 				}
 			}
 		}
 
 		foreach($images as $image) {
-			$imageName = $image['name'];
-			if( $this->getImageType($imageName) === 'main' ) {
-				$data['city_main_image'] = $imageName;
+			$promoImage = PromoImage::fromPathname($image['name']);
+			if( $promoImage->isType(PromoImage::MAIN) ) {
+				$data['city_main_image'] = $promoImage->pathname();
 			}
 
-			if( $this->getImageType($imageName) === 'additional' ) {
-				$data['city_images'][] = $imageName;
+			if( $promoImage->isAdditional() ) {
+				$data['city_images'][] = $promoImage->pathname();
 			}
 		}
 
@@ -362,14 +363,6 @@ class PromoteImageReviewTask extends BatchTask {
 		return $data;
 	}
 
-	protected function getImageType($imageName) {
-		if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName) ) {
-			return 'additional';
-		}
-
-		return 'main';
-	}
-
 	protected function syncAdditionalImages($sourceWikiId, $sourceWikiLang, $deletedImages) {
 		$data = array();
 
@@ -378,8 +371,9 @@ class PromoteImageReviewTask extends BatchTask {
 			$currentImages = $wikiData['images'];
 
 			foreach($currentImages as $imageName) {
-				if( $this->getImageType($imageName) === 'additional' && !in_array($imageName, $deletedImages) ) {
-					$data['city_images'][] = $imageName;
+				$promoImage = PromoImage::fromPathname($imageName);
+				if( $promoImage->isAdditional() && !in_array($promoImage->pathname(), $deletedImages) ) {
+					$data['city_images'][] = $promoImage->pathname();
 				}
 			}
 		}
@@ -404,18 +398,13 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach( $images as $image ) {
 			$imageData = new stdClass();
 
-			$imageName = $image['name'];
-			$imageIndex = 0;
-			$matches = array();
-			if( preg_match('/Wikia-Visualization-Add-([0-9])\.*/', $imageName, $matches) ) {
-				$imageIndex = intval($matches[1]);
-			}
+			$promoImage = PromoImage::fromPathname($image['name']);
 
 			$imageData->city_id = $targetWikiId;
 			$imageData->page_id = $image['id'];
 			$imageData->city_lang_code = $targetWikiLang;
-			$imageData->image_index = $imageIndex;
-			$imageData->image_name = $imageName;
+			$imageData->image_index =  $promoImage->getType();
+			$imageData->image_name = $promoImage->pathname();
 			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;
