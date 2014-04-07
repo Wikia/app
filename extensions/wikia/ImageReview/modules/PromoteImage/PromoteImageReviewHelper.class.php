@@ -4,6 +4,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
 	const LIMIT_IMAGES_FROM_DB = 20;
+	const INVALID_STATUS_TIMEOUT= 3600;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -149,7 +150,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	public function resetFailedTransfers(){
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : 3600; // 1 sec
+		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : self::INVALID_STATUS_TIMEOUT; // 1 sec
 
 		$db->update(
 			'city_visualization_images',
@@ -169,7 +170,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileIn(__METHOD__);
 		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
 
-		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : 3600; // 1 sec
+		$timeLimit = ($this->wg->DevelEnvironment) ? 1 : self::INVALID_STATUS_TIMEOUT; // 1 sec
 
 		$db->update(
 			'city_visualization_images',
