@@ -7,6 +7,9 @@
  */
 class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
+	const VIDEOS_PER_PAGE = 24;
+	const VIDEOS_PER_PAGE_MOBILE = 12;
+
 	public function __construct() {
 		parent::__construct( 'Videos', '', false );
 	}
@@ -15,6 +18,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * Videos page
 	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
+	 * @requestParam string category
+	 * @requestParam string msg - GlobalNotification message
+	 * @requestParam string msgTitle - for GlobalNotification
+	 * @requestParam string provider
 	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
 	 * @responseParam string sortMsg - selected option (sorting)
@@ -74,32 +81,32 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
-		$category = $this->request->getVal( 'category' );
+		$category = $this->request->getVal( 'category', '' );
+		// Filter on a comma separated list of providers if given.
+		$providers = $this->request->getVal( 'provider', '' );
 
 		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
-		$msg = $this->request->getVal( 'msg', '');
+		$msg = $this->request->getVal( 'msg', '' );
 
 		if ( !empty( $msg ) ) {
-			$msgTitle = $this->request->getVal( 'msgTitle', '');
+			$msgTitle = $this->request->getVal( 'msgTitle', '' );
 			$msgTitle = urldecode($msgTitle);
 
 			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
 		}
 
-		if ( !is_numeric($page) ) {
-			$page = 1;
-		}
-
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
-		// Filter on a comma separated list of providers if given.
-		$providers = $this->request->getVal('provider', '');
-		// Turn this into an array of providers if this parameters is set
-		$providers = $providers ? explode(',', $providers) : null;
-
-		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page, $providers, $category );
+		// get videos
+		$params = [
+			'sort' => $sort,
+			'page' => $page,
+			'category' => $category,
+			'provider' => $providers,
+		];
+		$response = $this->sendSelfRequest( 'getVideos', $params );
+		$videos = $response->getVal( 'videos', [] );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
@@ -112,6 +119,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
 		$videoHelper = new VideoHandlerHelper();
+		$specialVideos = new SpecialVideosHelper();
 		$sortingOptions = array_merge( $videoHelper->getSortOptions(), $specialVideos->getFilterOptions() );
 		if ( !array_key_exists( $sort, $sortingOptions ) ) {
 			$sort = 'recent';
@@ -120,8 +128,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Set up pagination
 		$pagination = '';
 		$linkToSpecialPage = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
-		if ( $totalVideos > SpecialVideosHelper::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), SpecialVideosHelper::VIDEOS_PER_PAGE );
+		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
+			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $page - 1 );
 
 			$categoryPagination = $category ? "&category=$category" : "";
@@ -133,18 +141,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			}
 		}
 
-		foreach ( $videos as &$video ) {
-			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
-			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
-			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'], true );
-			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
-		}
-
 		// The new trending in <category> options have a slightly different key format
 		$sortKey = $sort.( empty($category) ? '' : ":$category" );
 
-		$this->thumbHeight = SpecialVideosHelper::THUMBNAIL_HEIGHT;
-		$this->thumbWidth = SpecialVideosHelper::THUMBNAIL_WIDTH;
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
@@ -162,5 +161,38 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$this->showAddVideoBtn = $this->wg->User->isAllowed('videoupload');
 	}
+
+	/**
+	 * Get videos
+	 * @requestParam string sort [ recent/popular/trend/premium ]
+	 * @requestParam integer page - page number
+	 * @requestParam string category
+	 * @requestParam string provider
+	 * @responseParam array videos - list of videos
+	 */
+	public function getVideos() {
+		$sort = $this->request->getVal( 'sort', 'trend' );
+		$page = $this->request->getVal( 'page', 1 );
+		$category = $this->request->getVal( 'category', '' );
+		$providers = $this->request->getVal( 'provider', '' );
+
+		if ( !is_numeric( $page ) ) {
+			$page = 1;
+		}
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$limit = self::VIDEOS_PER_PAGE_MOBILE;
+			$providers = $this->wg->WikiaMobileSupportedVideos;
+		} else {
+			$limit = self::VIDEOS_PER_PAGE;
+			$providers = empty( $providers ) ? [] : explode( ',', $providers );
+		}
+
+		$specialVideos = new SpecialVideosHelper();
+		$videos = $specialVideos->getVideos( $sort, $limit, $page, $providers, $category );
+
+		$this->videos = $videos;
+	}
+
 }
 
