@@ -61,6 +61,11 @@
 		&.entertainment-vertical-color.active a {
 			background-color: $color-wikiahome-entertainment;
 		}
+
+		&.community-vertical-color a:hover,
+		&.community-vertical-color.active a {
+			background-color: $color-wikiahome-community;
+		}
 	}
 }
 
@@ -100,6 +105,10 @@ header.drawerSubmenu {
 
 	&.entertainment-vertical-color {
 		color: $color-wikiahome-entertainment;
+	}
+
+	&.community-vertical-color {
+		color: $color-wikiahome-community;
 	}
 }
 header.drawerSubmenu {
