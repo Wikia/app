@@ -53,14 +53,12 @@ class AssetsManager {
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		global $wgCdnRootUrl, $wgAssetsManagerQuery;
+		global $wgAssetsManagerQuery;
 
 		$params = SassUtil::getSassSettings();
 
 		$vars['sassParams'] = $params;
 		$vars['wgAssetsManagerQuery'] = $wgAssetsManagerQuery;
-		$vars['wgCdnRootUrl'] = $wgCdnRootUrl; // TODO: wgCdnStylePath?
-
 		return true;
 	}
 

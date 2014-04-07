@@ -1723,6 +1723,23 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
 );
 
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'forum-forum-title' => 'Fórum',
+	'forum-active-threads' => '$1 aktív beszélgetés',
+	'forum-active-threads-on-topic' => "$1 aktív beszélgetés erről a témáról: '''$2'''", # Fuzzy
+	'forum-header-total-threads' => '<em>$1</em><span>beszélgetésfolyam<br />ezen a fórumon</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>aktív<br />beszélgetés</span>',
+	'forum-specialpage-heading' => 'Fórum',
+	'forum-specialpage-board-threads' => '$1 beszélgetésfolyam',
+	'forum-specialpage-board-posts' => '$1 hozzászólás',
+	'forum-specialpage-board-lastpostby' => 'Utoljára hozzászólt:',
+	'forum-specialpage-policies-edit' => 'Szerkesztés',
+	'forum-specialpage-policies' => 'A fórum szabályai / GYIK',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  */
@@ -1914,6 +1931,7 @@ $messages['lb'] = array(
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-policies-edit' => 'Änneren',
 	'forum-board-topic-title' => 'Diskussiounen iwwer $1',
+	'forum-board-topics' => 'Themen',
 	'forum-board-new-message-heading' => 'Eng Diskussioun ufänken',
 	'forum-thread-reply-post' => 'Äntwerten',
 	'forum-sorting-option-most-replies' => 'Am aktivsten an de leschte 7 Deeg',
@@ -1946,6 +1964,13 @@ $messages['lv'] = array(
 	'forum-activity-module-heading' => 'Forums Aktivitātes',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forums Valdes',
 	'forum-specialpage-oldforum-link' => 'Vecie forums Arhīvs',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'forum-forum-title' => 'Форум',
 );
 
 /** Malay (Bahasa Melayu)
@@ -2259,7 +2284,7 @@ $messages['pl'] = array(
 	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Aktywny wątek|Aktywne wątki|Aktywnych wątków}}',
 	'forum-active-threads-on-topic' => "{{FORMATNUM:$1}} {{PLURAL:$1|Aktywna dyskusja|Aktywnych dyskusji}} o: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Wątek<br /> na tym forum|Wątki<br /> na tym forum|Wątków<br> na tym forum}}</span>', # Fuzzy
-	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Aktywny<br /> wątek|Aktywne<br /> wątki|Aktywnych<br> wątków}}</span>', # Fuzzy
+	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Aktywny<br /> wątek|Aktywne<br /> wątki|Aktywnych<br /> wątków}}</span>',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Edytuj<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|wątek|wątki|wątków}}',
@@ -2420,7 +2445,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Rozpocznij dyskusję',
 	'forum-related-discussion-new-post-tooltip' => 'Rozpocznij nową dyskusję o $1',
 	'forum-related-discussion-total-replies' => '$1 wiadomości',
-
 	'forum-related-discussion-see-more' => 'Zobacz więcej dyskusji',
 	'forum-confirmation-board-deleted' => '"$1" został usunięty.',
 );
@@ -3021,6 +3045,7 @@ ___________________________________________<br />
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
+ * @author Ravichandra
  */
 $messages['te'] = array(
 	'forum-forum-title' => 'వేదిక',
@@ -3146,6 +3171,7 @@ ___________________________________________<br />
 	'forum-recentchanges-closed-thread' => '[[$3|$4]] లోని తీగ "[[$1|$2]]" ముగించబడింది',
 	'forum-recentchanges-reopened-thread' => '[[$3|$4]] లోని తీగ "[[$1|$2]]" తిరిగి తెరవబడింది',
 	'forum-board-history-title' => 'బోర్డు చరిత్ర',
+	'forum-specialpage-oldforum-link' => 'పాత చర్చాస్థల భాండాగారాలు',
 	'forum-admin-create-new-board-label' => 'కొత్త బోర్డును సృష్టించు',
 	'forum-admin-create-new-board-modal-heading' => 'ఓ కొత్త బోర్డును సృష్టించు',
 	'forum-admin-create-new-board-title' => 'బోర్డు శీర్షిక',
@@ -3175,6 +3201,7 @@ ___________________________________________<br />
 	'forum-board-description-validation-length' => 'ఈ బోర్డుకు ఒక వివరణ రాయండి',
 	'forum-board-id-validation-missing' => 'బోర్డు ఐడీ లేదు',
 	'forum-board-no-board-warning' => 'ఆ శీర్షికతో ఉన్న బోర్డు మాకు కనబడలేదు. వేదిక బోర్డుల జాబితా ఇదిగోండి.',
+	'forum-old-notification-message' => 'ఈ చర్చాస్థలం భద్రపరచబడింది',
 	'forum-old-notification-navigation-button' => 'కొత్త వేదికలను చూడండి',
 	'forum-related-discussion-heading' => '$1 గురించిన చర్చలు',
 	'forum-related-discussion-new-post-button' => 'ఓ చర్చను మొదలుపెట్టండి',

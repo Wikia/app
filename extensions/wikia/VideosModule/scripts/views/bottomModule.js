@@ -99,8 +99,7 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.elContentPresent = function () {
 		var $content = this.$el.children();
 		return !!(
-			$content.length &&
-			!$content.is(':hidden') &&
+			$content.length && !$content.is(':hidden') &&
 			$content.css('visibility') !== 'hidden' &&
 			$content.css('opacity') !== '0' &&
 			$content.height() !== 0
@@ -152,8 +151,12 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
-		track({label: 'module-impression'});
-		track({label: testCase.testGroup});
+		track({
+			label: 'module-impression'
+		});
+		track({
+			label: testCase.testGroup
+		});
 	};
 
 	return VideoModule;

@@ -280,6 +280,18 @@ class RenameUserProcess {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
 		}
 
+		//Phalanx test
+
+		$warning = RenameUserHelper::testBlock( $oun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
+
+		$warning = RenameUserHelper::testBlock( $nun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
+
 		//Invalid old user name entered
 		if(!$oun){
 			$this->addError( wfMessage('userrenametool-errorinvalid', $this->mRequestData->oldUsername)->inContentLanguage()->text() );

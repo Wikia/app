@@ -1,6 +1,6 @@
 <?php
 
-class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
+class SolrLyricsApiHandler {
 	const IMG_WIDTH_SMALL = 174;
 	const IMG_HEIGHT_SMALL = 174;
 	const IMG_WIDTH_MEDIUM = 300;
@@ -12,6 +12,9 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	const HIGHLIGHT_POSTFIX = '</em>';
 
 	const INDEX_FIELD_NAME_LYRICS = 'lyrics';
+
+	const API_ENTRY_POINT = 'wikia.php';
+	const API_CONTROLLER_NAME = 'LyricsApi';
 
 	/**
 	 * @var Solarium_Client
@@ -26,6 +29,71 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	public function __construct( $config ) {
 		$this->cityId = F::app()->wg->CityId;
 		$this->client = new Solarium_Client( $config );
+	}
+
+	/**
+	 * @desc Build new artist from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
+	private function buildArtist( $document, $addUrl = true ) {
+		$artist = new stdClass();
+		$artist->name = $document->artist_name;
+		if ( $addUrl ) {
+			$artist->url = $this->buildUrl( [
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getArtist',
+				LyricsApiController::PARAM_ARTIST => $artist->name,
+			] );
+		}
+		return $artist;
+	}
+
+	/**
+	 * @desc Build new album from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
+	private function buildAlbum( $document, $addUrl = true ) {
+		$album = new stdClass();
+		$album->name = $document->album_name;
+
+		if ( $addUrl ) {
+			$album->url = $this->buildUrl( [
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getAlbum',
+				LyricsApiController::PARAM_ARTIST => $document->artist_name,
+				LyricsApiController::PARAM_ALBUM => $album->name,
+			] );
+		}
+		return $album;
+	}
+
+	/**
+	 * @desc Build new song from document object
+	 *
+	 * @param $document
+	 * @param bool $addUrl
+	 * @return stdClass
+	 */
+	private function buildSong( $document, $addUrl = true ) {
+		$song = new stdClass();
+		$song->name = $document->song_name;
+
+		if ( $addUrl && $document->id ) {
+			// Songs without id are only for information
+			$song->url = $this->buildUrl( [
+				'controller' => self::API_CONTROLLER_NAME,
+				'method' => 'getSong',
+				LyricsApiController::PARAM_ARTIST => $document->artist_name,
+				LyricsApiController::PARAM_SONG => $song->name,
+			] );
+		}
+		return $song;
 	}
 
 	/**
@@ -66,9 +134,14 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	private function appendImages( $obj, $image ) {
 		// Quick fix for wrong data in templates (i.e. metallica.jpg instead of Metallica.jpg)
 		$image = ucfirst( $image );
-		$obj->small_image = $this->getImage( $image );
-		$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
-		$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+
+		// MOB-1323 - file provided in artist template but not existing in MW
+		$smallImage = $this->getImage( $image );
+		if( !is_null( $smallImage ) ) {
+			$obj->small_image = $smallImage;
+			$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
+			$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+		}
 	}
 
 	/**
@@ -85,17 +158,6 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	}
 
 	/**
-	 * @desc Decodes JSON into array/object
-	 *
-	 * @param String $text
-	 *
-	 * @return mixed
-	 */
-	private function deserialize( $text ) {
-		return json_decode( $text );
-	}
-
-	/**
 	 * @desc Gets albums of an artist for SolrLyricsApiHandler::getArtist() response
 	 *
 	 * @param String $artistName
@@ -105,27 +167,16 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 */
 	private function getAlbums( $artistName, $albums ) {
 		$albumsList = [];
-		$albums = $this->deserialize( $albums );
+		$albums = LyricsApiBase::deserialize( $albums );
 
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
-				$responseAlbum = new stdClass();
-				$responseAlbum->name = $solrAlbum->album_name;
+				$solrAlbum->artist_name = $artistName;
+				$responseAlbum = $this->buildAlbum( $solrAlbum );
 
-				if( $solrAlbum->image ) {
+				if ( $solrAlbum->image ) {
 					$this->appendImages( $responseAlbum, $solrAlbum->image );
 				}
-
-				if ( $solrAlbum->release_date ) {
-					$responseAlbum->year = $solrAlbum->release_date;
-				}
-
-				$responseAlbum->url = $this->buildUrl( [
-					'controller' => self::API_CONTROLLER_NAME,
-					'method' => 'getAlbum',
-					LyricsApiController::PARAM_ARTIST => $artistName,
-					LyricsApiController::PARAM_ALBUM => $responseAlbum->name,
-				] );
 
 				$albumsList[] = $responseAlbum;
 			}
@@ -138,30 +189,20 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Gets songs
 	 *
 	 * @param String $artistName
-	 * @param String $albumName there are songs without albums and that's why we allow here an empty string
 	 * @param String $songs
 	 *
 	 * @return array
 	 */
-	private function getSongs( $artistName, $albumName = '', $songs ) {
+	private function getSongs( $artistName, $songs ) {
 		$songsList = [];
-		$songs = $this->deserialize( $songs );
+		$songs = LyricsApiBase::deserialize( $songs );
 
 		if ( is_array( $songs ) ) {
-			foreach ( $songs as $solrSong ) {
-				$responseSong = new stdClass();
-				$responseSong->name = $solrSong->song_name;
-				if ( isset( $solrSong->id ) ) {
-					// Songs without id are only for information
-					$responseSong->url = $this->buildUrl( [
-						'controller' => self::API_CONTROLLER_NAME,
-						'method' => 'getSong',
-						LyricsApiController::PARAM_ARTIST => $artistName,
-						LyricsApiController::PARAM_ALBUM => $albumName,
-						LyricsApiController::PARAM_SONG => $responseSong->name,
-					] );
-				}
-				$songsList[] = $responseSong;
+			foreach ( $songs as $song ) {
+				// Fill missing song fields
+				$song->artist_name = $artistName;
+				$song->id = isset($song->id) ? $song->id : false;
+				$songsList[] = $this->buildSong( $song );
 			}
 		}
 
@@ -171,24 +212,23 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Decorates Solr results with images URLs, albums and songs for an artist
 	 *
-	 * @param Solarium_Document_ReadOnly $solrAlbum
+	 * @param Solarium_Document_ReadOnly $solrArtist
+	 *
 	 * @return stdClass
 	 */
-	private function getOutputArtist( $solrAlbum ) {
-		$artist = new stdClass();
-		$artist->name = $solrAlbum->artist_name;
+	private function getOutputArtist( $solrArtist, $addUrl = false ) {
+		$artist = $this->buildArtist( $solrArtist, $addUrl );
 
-		if ( $solrAlbum->image ) {
-			$this->appendImages( $artist, $solrAlbum->image );
+		if ( $solrArtist->image ) {
+			$this->appendImages( $artist, $solrArtist->image );
 		}
 
-		if ( $solrAlbum->albums ) {
-			$artist->albums = $this->getAlbums( $artist->name, $solrAlbum->albums );
+		if ( $solrArtist->albums ) {
+			$artist->albums = $this->getAlbums( $artist->name, $solrArtist->albums );
 		}
 
-		if ( $solrAlbum->songs ) {
-		// some artists have songs without albums that's why we have an empty string passed here
-			$artist->songs = $this->getSongs( $artist->name, '', $solrAlbum->songs );
+		if ( $solrArtist->songs ) {
+			$artist->songs = $this->getSongs( $artist->name, $solrArtist->songs );
 		}
 
 		return $artist;
@@ -197,14 +237,14 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Gets an artist from Solr index if exists
 	 *
-	 * @param String $artist
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
-	public function getArtist( $artist ) {
+	public function getArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
-			'artist_name: %P2%' => $artist,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
 		] );
 
 		$query->setFields( [
@@ -215,28 +255,27 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		] );
 
 		$query->setStart( 0 )->setRows( 1 );
-		$solrAlbum = $this->getFirstResult( $this->client->select( $query ) );
+		$solrArtist = $this->getFirstResult( $this->client->select( $query ) );
 
-		if ( is_null( $solrAlbum ) ) {
+		if ( is_null( $solrArtist ) ) {
 			return null;
 		}
 
-		return $this->getOutputArtist( $solrAlbum );
+		return $this->getOutputArtist( $solrArtist );
 	}
 
 	/**
 	 * @desc Gets an album from Solr index if exists
 	 *
-	 * @param String $artist
-	 * @param String $album
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
-	public function getAlbum( $artist, $album ) {
+	public function getAlbum( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ALBUM,
-			'artist_name: %P2%' => $artist,
-			'album_name: %P3%' => $album,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'album_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_ALBUM ),
 		] );
 
 		$query->setFields( [
@@ -257,15 +296,18 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			return null;
 		}
 
-		$album = new stdClass();
-		$album->name = $queryResult->album_name;
+		$album = $this->buildAlbum( $queryResult, false);
+
+		if ( $queryResult->release_date ) {
+			$album->year = $queryResult->release_date;
+		}
 
 		if ( $queryResult->image ) {
 			$this->appendImages( $album, $queryResult->image );
 		}
 
 		if ( $queryResult->genres ) {
-			$album->genres = $this->deserialize( $queryResult->genres );
+			$album->genres = LyricsApiBase::deserialize( $queryResult->genres );
 		}
 
 		if ( $queryResult->length ) {
@@ -276,16 +318,10 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 			$album->itunes = $queryResult->itunes;
 		}
 
-		$album->artist = new stdClass();
-		$album->artist->name = $queryResult->artist_name;
-		$album->artist->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getArtist',
-			LyricsApiController::PARAM_ARTIST => $album->artist->name,
-		]);
+		$album->artist = $this->buildArtist( $queryResult );
 
 		if ( $queryResult->songs ) {
-			$album->songs = $this->getSongs( $album->artist->name, $album->name, $queryResult->songs );
+			$album->songs = $this->getSongs( $album->artist->name, $queryResult->songs );
 		}
 
 		return $album;
@@ -295,13 +331,14 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	 * @desc Builds API requests URLs, images URLs and whole song object returned in response results
 	 *
 	 * @param Solarium_Document_ReadOnly $solrSong song object retrieved from solr
-	 * @param Solarium_Result_Select_Highlighting_Result $highlights optional Solarium result object with highlighting
+	 * @param Solarium_Result_Select_Highlighting_Result | null $highlights optional Solarium result object
+	 * with highlighting; default === null
+	 * @param Boolean $addSongUrl flag which tells if add a song url to results or not; default === false
 	 *
 	 * @return stdClass
 	 */
-	private function getOutputSong( $solrSong, $highlights = null ) {
-		$song = new stdClass();
-		$song->name = $solrSong->song_name;
+	private function getOutputSong( $solrSong, $highlights = null, $addSongUrl = false ) {
+		$song = $this->buildSong( $solrSong, $addSongUrl );
 
 		if ( $solrSong->itunes ) {
 			$song->itunes = $solrSong->itunes;
@@ -309,23 +346,10 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$song->lyrics = $solrSong->lyrics;
 
-		$song->artist = new stdClass();
-		$song->artist->name = $solrSong->artist_name;
-		$song->artist->url = $this->buildUrl([
-			'controller' => self::API_CONTROLLER_NAME,
-			'method' => 'getArtist',
-			LyricsApiController::PARAM_ARTIST => $song->artist->name
-		] );
+		$song->artist = $this->buildArtist( $solrSong );
 
 		if ( $solrSong->album_id ) {
-			$song->album = new stdClass();
-			$song->album->name = $solrSong->album_name;
-			$song->album->url = $this->buildUrl([
-				'controller' => self::API_CONTROLLER_NAME,
-				'method' => 'getAlbum',
-				LyricsApiController::PARAM_ARTIST => $song->artist->name,
-				LyricsApiController::PARAM_ALBUM => $song->album->name
-			] );
+			$song->album = $this->buildAlbum( $solrSong );
 		}
 
 		if ( $solrSong->image ) {
@@ -342,17 +366,15 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Gets a song from Solr index if exists
 	 *
-	 * @param String $artist
-	 * @param String $album
-	 * @param String $song
+	 * @param LyricsApiSearchParams $searchParams
 	 *
 	 * @return null|stdClass
 	 */
-	public function getSong( $artist, $album, $song ) {
+	public function getSong( LyricsApiSearchParams $searchParams ) {
 		$solrQuery = [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'artist_name: %P2%' => $artist,
-			'song_name: %P3%' => $song,
+			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'song_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_SONG ),
 		];
 
 		$query = $this->newQueryFromSearch( $solrQuery );
@@ -378,19 +400,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Searches for an artist in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
-	public function searchArtist( $query, $limit, $offset ) {
+	public function searchArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_ARTIST,
-			'search_artist_name: %P2%' => $query,
+			'search_artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$solrArtists = $this->client->select( $query );
 
@@ -400,7 +420,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$artists = [];
 		foreach ( $solrArtists as $solrArtist ) {
-			$artists[] = $this->getOutputArtist( $solrArtist );
+			$artists[] = $this->getOutputArtist( $solrArtist, true );
 		}
 
 		return $artists;
@@ -409,19 +429,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Searches for a song in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
-	public function searchSong( $query, $limit, $offset ) {
+	public function searchSong( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'search_song_name: %P2%' => $query,
+			'search_song_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$solrSongs = $this->client->select( $query );
 		if ( $solrSongs->getNumFound() <= 0 ) {
@@ -430,7 +448,7 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 
 		$songs = [];
 		foreach ( $solrSongs as $solrSong ) {
-			$songs[] = $this->getOutputSong( $solrSong );
+			$songs[] = $this->getOutputSong( $solrSong, null, true );
 		}
 
 		return $songs;
@@ -439,19 +457,17 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 	/**
 	 * @desc Searches for a song lyrics in Solr index
 	 *
-	 * @param String $query
-	 * @param Integer $limit
-	 * @param Integer $offset
+	 * @param LyricsApiSearchParams $searchParams
 	 *
-	 * @return array|null|stdClass
+	 * @return array|null
 	 */
-	public function searchLyrics( $query, $limit, $offset ) {
+	public function searchLyrics( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsApiBase::TYPE_SONG,
-			'lyrics: %P2%' => $query,
+			'lyrics: %P2%' => $searchParams->getField( LyricsApiController::PARAM_QUERY ),
 		] );
-		$query->setStart( $offset );
-		$query->setRows( $limit );
+		$query->setStart( $searchParams->getOffset() );
+		$query->setRows( $searchParams->getLimit() );
 
 		$hl = $query->getHighlighting();
 		$hl->setFields( self::INDEX_FIELD_NAME_LYRICS );
@@ -469,10 +485,28 @@ class SolrLyricsApiHandler extends AbstractLyricsApiHandler {
 		/** @var Solarium_Document_ReadOnly $solrSong */
 		foreach ( $solrSongs as $solrSong ) {
 			$fields = $solrSong->getFields();
-			$songs[] = $this->getOutputSong( $solrSong, $highlighting->getResult( $fields['id'] ) );
+			$songs[] = $this->getOutputSong( $solrSong, $highlighting->getResult( $fields['id'] ), true );
 		}
 
 		return $songs;
+	}
+
+	/**
+	 * @desc Builds an URL to the API
+	 *
+	 * @param Array $params params added to the URL
+	 *
+	 * @return string
+	 */
+	protected function buildUrl( $params ) {
+		return implode('',
+			[
+				F::app()->wg->Server,
+				'/',
+				self::API_ENTRY_POINT,
+				'?',
+				http_build_query( $params )
+			]);
 	}
 
 }
