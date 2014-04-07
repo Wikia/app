@@ -43,6 +43,7 @@
 
 		a:hover,
 		&.active a {
+			background-color: $color-wikiahome-community;
 			color: #fff;
 			text-decoration: none;
 		}
@@ -71,6 +72,7 @@
 
 ul.drawerSubmenu,
 header.drawerSubmenu {
+	color: $color-wikiahome-community;
 	font-size: 13px;
 	margin-bottom: 24px;
 
