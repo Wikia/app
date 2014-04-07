@@ -15,6 +15,14 @@ $messages['en'] = array(
 	'manage-wikia-home-wikis-in-slots-total' => 'Total amount of slots: $1',
 	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualization:',
 
+	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
+	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-name' => 'Hub name',
+	'manage-wikia-home-hubs-slot-description' => 'Hub description',
+	'manage-wikia-home-hubs-slot-more-links' => '"More in..." links',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Empty slot --',
+
 	'manage-wikia-home-wikis-in-slots-success' => 'Numbers slots has been changed.',
 	'manage-wikia-home-collections-success' => 'Collections have been saved.',
 	'manage-wikia-home-collections-add-success' => 'Wiki added successfully to the collection.',
@@ -111,6 +119,13 @@ $messages['qqq'] = array(
 Parameters:
 * $1 - number; amount of slots',
 	'manage-wikia-home-visualization-wikis' => 'A label next to selectbox with a list of wikis where visualization is enabled (corporate wikis)',
+	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
+	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
+	'manage-wikia-home-hubs-slot' => 'Determines which hub slot from hubs section on wikia homepage will be edited',
+	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
+	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
+	'manage-wikia-home-hubs-slot-more-links' => 'Label for textarea field to add links in "More in ..." hub section on wikia homepage',
+	'manage-wikia-home-hubs-slot-empty-option' => "Option in select field in hubs slots section to don't display slot on wikia homepage",
 	'manage-wikia-home-wikis-in-slots-success' => 'Success information after successful change in slots configuration',
 	'manage-wikia-home-collections-success' => 'Success information after successful change in collections configuration',
 	'manage-wikia-home-collections-add-success' => 'Message informing about wiki successfully being added to a collection (themed group of 17 wikis displayed on Home Page like www.wikia.com).',
@@ -948,6 +963,13 @@ $messages['id'] = array(
 	'manage-wikia-home-collection-add-file-button' => 'Tambahkan foto',
 );
 
+/** Japanese (日本語)
+ * @author Dude1717
+ */
+$messages['ja'] = array(
+	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
+);
+
 /** Korean (한국어)
  * @author Clockoon
  * @author Jskang
@@ -976,6 +998,7 @@ $messages['lb'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
 	'manage-wikia-home-stats-visitors-label' => 'Visiteure pro Mount',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Visiteuren',
+	'manage-wikia-home-stats-failure' => "D'Donnéeë goufen net gespäichert. Verbessert w.e.g. d'Feeler am Formulaire a probéiert nach eng Kéier.",
 );
 
 /** لوری (لوری)
@@ -1493,6 +1516,13 @@ $messages['ru'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Возврат для общего числа страниц',
 	'manage-wikia-home-stats-success' => 'Статистика успешно обновлена!',
 	'manage-wikia-home-stats-failure' => 'Данные не были сохранены. Пожалуйста, исправьте ошибки в форме и повторите попытку.',
+);
+
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'manage-wikia-home-stats-failure' => 'Data wisna hained. Please correct the mistaks in the form n gie it anither shot.',
 );
 
 /** Swedish (svenska)

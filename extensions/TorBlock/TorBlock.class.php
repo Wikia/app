@@ -150,6 +150,11 @@ class TorBlock {
 
 		global $wgTorIPs, $wgMemc;
 
+		// we want to trace when the memcache entry expires and we generate new
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'TorBlock::loadExitNodes' );
+		}
+
 		// Set loading key, to prevent DoS of server.
 
 		$wgMemc->set( 'mw-tor-list-status', 'loading', 300 );

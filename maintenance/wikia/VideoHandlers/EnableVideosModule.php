@@ -18,12 +18,14 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
  */
 class EnableVideosModule extends Maintenance {
 
-	protected $verbose = false;
-	protected $test    = false;
-	protected $file    = '';
-	protected $dbname  = '';
-	protected $set     = false;
-	protected $get     = true;
+	protected $verbose  = false;
+	protected $test     = false;
+	protected $file     = '';
+	protected $dbname   = '';
+	protected $set      = false;
+	protected $get      = true;
+	protected $location = 'bottom';
+	protected $enabled  = true;
 
 	public function __construct() {
 		parent::__construct();
@@ -34,15 +36,26 @@ class EnableVideosModule extends Maintenance {
 		$this->addOption( 'dbname', 'A specific dbname', false, true, 'd' );
 		$this->addOption( 'set', 'Set variables', false, false, 's' );
 		$this->addOption( 'get', 'Show current values', false, false, 'g' );
+		$this->addOption( 'enable', 'Enable the module', false, false, 'e' );
+		$this->addOption( 'disable', 'Disable the module', false, false, 'x' );
+		$this->addOption( 'location', 'Set location for Videos Module (bottom or rail)', false, true, 'l' );
 	}
 
 	public function execute() {
-		$this->test    = $this->hasOption('test');
-		$this->verbose = $this->hasOption('verbose');
-		$this->file    = $this->getOption('file', '');
-		$this->dbname  = $this->getOption('dbname', '');
-		$this->set     = $this->hasOption('verbose');
-		$this->get     = $this->hasOption('verbose');
+		$this->test     = $this->hasOption('test');
+		$this->verbose  = $this->hasOption('verbose');
+		$this->file     = $this->getOption('file', '');
+		$this->dbname   = $this->getOption('dbname', '');
+		$this->set      = $this->hasOption('set');
+		$this->get      = $this->hasOption('get');
+		$this->location = $this->getOption('location', 'bottom');
+
+		if ( $this->hasOption('enable') ) {
+			$this->enabled = true;
+		}
+		if ( $this->hasOption('disable') ) {
+			$this->enabled = false;
+		}
 
 		if ( $this->test ) {
 			echo "\n=== TEST MODE ===\n";
@@ -51,6 +64,10 @@ class EnableVideosModule extends Maintenance {
 		// Shouldn't happen ... paranoid programming
 		if ( !$this->set && !$this->get ) {
 			$this->get = true;
+		}
+
+		if ( ! preg_match('/^(bottom|rail)$/', $this->location) ) {
+			echo "\nUnknown location ".$this->location." -- qutiting\n";
 		}
 
 		if ( $this->file ) {
@@ -88,8 +105,8 @@ class EnableVideosModule extends Maintenance {
 			if ( $this->set ) {
 				if ( !$this->test ) {
 					$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt" );
-					WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, 'bottom' );
-					WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, true );
+					WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, $this->location );
+					WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, $this->enabled );
 
 					WikiFactory::clearCache( $id );
 					$this->debug( "\tdone" );

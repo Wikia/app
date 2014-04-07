@@ -3964,4 +3964,3 @@ function wfUnpack( $format, $data, $length=false ) {
 	}
 	return $result;
 }
-

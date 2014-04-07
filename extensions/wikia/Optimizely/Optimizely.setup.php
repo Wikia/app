@@ -11,4 +11,4 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Optimizely'] =  $dir . 'Optimizely.class.php';
 
 // hooks
-$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'Optimizely::onOasisSkinAssetGroupsBlocking';
+$wgHooks['WikiaSkinTopScripts'][] = 'Optimizely::onWikiaSkinTopScripts';
