@@ -80,7 +80,6 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 			$verticalId = $this->hubs[ $hubName ];
 			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
 			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
-			//print "\ndata: ";print print_r($data, true);
 			$xml = $service->dataToXml( $data, $verticalId );
 			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
 		}
