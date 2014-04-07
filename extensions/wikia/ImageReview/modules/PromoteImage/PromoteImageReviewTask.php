@@ -105,13 +105,12 @@ class PromoteImageReviewTask extends BatchTask {
 				'image_review_status' => $status,
 			),
 			array(
-				"city_id " . $sourceWikiId,
-				"page_id" . $imageId,
+				"city_id " => $sourceWikiId,
+				"page_id" => $imageId,
 				'image_review_status' => ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING,
 			),
 			__METHOD__
 		);
-
 	}
 
 	/**
