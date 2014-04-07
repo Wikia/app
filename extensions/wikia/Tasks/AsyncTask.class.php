@@ -31,6 +31,8 @@ class AsyncTask {
 
 	protected $taskType = 'workers.mediawiki.task';
 
+	protected $createdBy = 'mediawiki';
+
 	protected $delay = 0;
 
 	protected $wikiId = 177;
@@ -62,6 +64,12 @@ class AsyncTask {
 
 	public function wikiId($wikiId) {
 		$this->wikiId = $wikiId;
+
+		return $this;
+	}
+
+	public function createdBy($createdBy) {
+		$this->createdBy = $createdBy;
 
 		return $this;
 	}
@@ -101,7 +109,8 @@ class AsyncTask {
 				$taskList,
 			],
 			'kwargs' => (object) [
-				'created' => time(),
+				'created_ts' => time(),
+				'created_by' => $this->createdBy,
 				'work_id' => sha1(json_encode($workId)),
 				'force' => !$this->dedupCheck
 			]

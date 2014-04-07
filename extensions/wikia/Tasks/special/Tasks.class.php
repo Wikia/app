@@ -109,6 +109,8 @@ class Tasks {
 	}
 
 	public function createTask($class, $method, $args) {
+		global $wgUser;
+
 		if (empty($class) || empty($method)) {
 			throw new InvalidArgumentException('missing class or method');
 		}
@@ -127,6 +129,7 @@ class Tasks {
 		$call = call_user_func_array([$task, 'call'], array_merge([$method], $args));
 
 		$taskId = (new \Wikia\Tasks\AsyncTask())
+			->createdBy($wgUser->getName())
 			->add($call)
 			->queue();
 
