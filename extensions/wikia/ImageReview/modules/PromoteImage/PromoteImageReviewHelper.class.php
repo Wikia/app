@@ -285,15 +285,6 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		$commit = false;
-		if (count($invalidImages) > 0) {
-			$db->update(
-				'city_visualization_images',
-				array('image_review_status' => ImageReviewStatuses::STATE_INVALID_IMAGE),
-				array(implode(' OR ', $invalidImages)),
-				__METHOD__
-			);
-			$commit = true;
-		}
 
 		if (count($unusedImages) > 0) {
 			$db->update(
