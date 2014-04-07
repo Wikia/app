@@ -23,6 +23,7 @@ class Tasks {
 			}
 
 			$fullClassName = $baseClassName.$className;
+			$className = self::formatTaskClassName($fullClassName);
 
 			$taskClasses[] = [
 				'name' => $fullClassName,
@@ -130,5 +131,11 @@ class Tasks {
 			->queue();
 
 		return $taskId;
+	}
+
+	private static function formatTaskClassName($fullyQualifiedName) {
+		$parts = explode("\\", $fullyQualifiedName);
+		$className = $parts[count($parts) - 1];
+		return preg_replace('/Task$/', '', $className);
 	}
 }

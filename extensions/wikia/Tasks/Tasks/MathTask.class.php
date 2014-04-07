@@ -24,7 +24,7 @@ class MathTask extends BaseTask {
 
 	/**
 	 * multiply two numbers together
-	 * 
+	 *
 	 * @param double $x
 	 * @param double $y
 	 * @return double
