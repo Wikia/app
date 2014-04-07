@@ -26,7 +26,6 @@ class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_LANE = 'lane';
 
 	private $articleId = 0;
-	private $articleCategory = null;
 
 	/**
 	 * @var DataBase
@@ -113,8 +112,7 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArticle() {
 		$start = microtime(true);
 		$status = ' ';
-		$category = $this->getArticleCategory();
-		$this->output( 'Scraping article #' . $this->getArticleId() . ' (' . $category . ') ' );
+		$this->output( 'Scraping article #' . $this->getArticleId() );
 		$article = Article::newFromID( $this->getArticleId() );
 		if ( !is_null($article) ) {
 			/** @var ArtistScraper | AlbumScraper | SongScraper $scraper | false */
@@ -153,11 +151,33 @@ class LyricsWikiCrawler extends Maintenance {
 		$yesterday = date( "Y-m-d", $yesterdayTs );
 		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
+		$pages = $this->convertIntoArtistPages( $pages );
 		foreach( $pages as $page ) {
 			$this->setArticleId( $page->id );
-			$this->setArticleCategory( $page->category );
-			$this->doScrapeArticle();
+			$this->doScrapeArtist();
 		}
+	}
+
+	/**
+	 * @desc Filters given array and returns only Artist-category pages
+	 *
+	 * @param array $pages
+	 * @return array
+	 */
+	public function convertIntoArtistPages( Array $pages ) {
+		$result = [];
+
+		foreach( $pages as $page ) {
+			$category = strtolower( $page->category );
+			if( $category === 'artist' ) {
+				$result[] = $page;
+			} else {
+				$artistPage = $this->getArtistPage( $page );
+				$result[] = $artistPage;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -170,30 +190,12 @@ class LyricsWikiCrawler extends Maintenance {
 	}
 
 	/**
-	 * @desc Sets article category
-	 *
-	 * @param String $category article
-	 */
-	public function setArticleCategory( $category ) {
-		$this->articleCategory = strtolower( $category );
-	}
-
-	/**
 	 * @desc Getter - returns article id
 	 *
 	 * @return Integer
 	 */
 	public function getArticleId() {
 		return $this->articleId;
-	}
-
-	/**
-	 * @desc Getter - returns article category
-	 *
-	 * @return String
-	 */
-	public function getArticleCategory() {
-		return $this->articleCategory;
 	}
 
 	/**
@@ -275,26 +277,6 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 
 		return $pages;
-	}
-
-	/**
-	 * @desc Gets correct scraper instance depending on article category
-	 *
-	 * @return AlbumScraper|ArtistScraper|false|SongScraper
-	 */
-	public function getScraperByArticleCategory() {
-		$scraper = false;
-		$category = $this->getArticleCategory();
-
-		if( $category === 'artist' ) {
-			$scraper = new ArtistScraper();
-		} else if( $category === 'album' ) {
-			$scraper = new AlbumScraper();
-		} elseif( $category === 'song' ) {
-			$scraper = new SongScraper();
-		}
-
-		return $scraper;
 	}
 
 	/**
