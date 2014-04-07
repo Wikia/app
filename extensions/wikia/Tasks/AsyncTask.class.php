@@ -135,6 +135,7 @@ class AsyncTask {
 			'content_type' => 'application/json',
 			'content-encoding' => 'UTF-8',
 			'immediate' => false,
+			'delivery_mode' => 2, // persistent
 		]);
 
 
