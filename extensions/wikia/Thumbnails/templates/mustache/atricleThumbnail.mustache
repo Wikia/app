@@ -1,0 +1,17 @@
+<figure class="thumb thumbinner t{{align}}">
+	{{{thumbnail}}}
+
+	{{! file page link }}
+	<a href="{{url}}" class="internal sprite details magnify" title="{{thumbnailMore}}"></a>
+
+	{{#caption}}
+		<figcaption class="thumbcaption">
+			{{caption}}
+			{{#addedBy}}
+				<div class="picture-attribution">
+					{{avatar}} {{addedBy}}
+				</div>
+			{{/addedBy}}
+		</figcaption>
+	{{/caption}}
+</figure>

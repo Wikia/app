@@ -708,6 +708,7 @@ class Linker {
 		 * Allow MediaTransformOutput subclasses know if there's a caption
 		 */
 		$mtoParams['caption'] = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
+
 		/**
 		 * Wikia change end
 		 */
@@ -820,7 +821,7 @@ class Linker {
 			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
 		}
 
-		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
+		//$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
 
 		/**
 		 * Wikia change begin - author Federico
@@ -838,7 +839,7 @@ class Linker {
 			 * @author Federico
 			 */
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
-			$s .= $origHTML;
+			//$s .= $origHTML;
 			/**
 			 * Wikia change end
 			 */
@@ -850,7 +851,7 @@ class Linker {
 			 * @author Federico
 			 */
 			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
-			$s .= $origHTML;
+			//$s .= $origHTML;
 			/**
 			 * Wikia change end
 			 */
@@ -860,16 +861,18 @@ class Linker {
 			$params = array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
-				'img-class' => 'thumbimage' );
+				'img-class' => 'thumbimage',
+				'align' => $fp['align'],
+				'inArticle' => true,
+			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-
 			/**
 			 * Wikia change start
 			 * @author Federico
 			 */
 			$origHTML = $thumb->toHtml( $params );
-			$s .= $origHTML;
+			//$s .= $origHTML;
 			/**
 			 * Wikia change end
 			 */
@@ -889,15 +892,15 @@ class Linker {
 							'alt' => "" ) ) ) );
 			}
 		}
-		$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
+		//$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
 
 		/* Wikia change begin - @author: macbre */
 		/* Give extensions ability to add HTML to thumbed / framed images */
 		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
-		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, $origHTML, &$s ) );
+		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, $origHTML, &$origHTML ) );
 		/* Wikia change end */
 
-		return str_replace( "\n", ' ', $s );
+		return str_replace( "\n", ' ', $origHTML );
 	}
 
 	/**

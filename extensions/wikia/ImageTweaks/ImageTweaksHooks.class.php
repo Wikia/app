@@ -21,6 +21,10 @@ class ImageTweaksHooks {
 			return true;
 		}
 
+		if ( WikiaFileHelper::isVideoFile( $file ) ) {
+			return true;
+		}
+
 		wfProfileIn( __METHOD__ );
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
@@ -135,6 +139,13 @@ class ImageTweaksHooks {
 		global $wgRTEParserEnabled;
 		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
+		}
+
+		if ( WikiaFileHelper::isVideoFile( $file ) ) {
+			lizbug('is video');
+			return true;
+		} else {
+			lizbug('is not video');
 		}
 
 
