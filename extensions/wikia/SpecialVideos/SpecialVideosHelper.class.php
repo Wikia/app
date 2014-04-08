@@ -13,6 +13,59 @@ class SpecialVideosHelper extends WikiaModel {
 	public static $verticalCategoryFilters = [ "Games", "Lifestyle", "Entertainment" ];
 
 	/**
+	 * Get meta description tag
+	 * @return string $description
+	 */
+	public function getMetaTagDescription() {
+		$catInfo = HubService::getComscoreCategory( $this->wg->CityId );
+
+		$descriptionKey = 'specialvideos-meta-description';
+
+		switch ( $catInfo->cat_id ) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+				$descriptionKey .= '-gaming';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+				$descriptionKey .= '-entertainment';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+				$descriptionKey .= '-lifestyle';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				$descriptionKey .= '-corporate';
+				break;
+		}
+
+		$description = wfMessage( $descriptionKey, $this->wg->Sitename )->escaped();
+
+		return $description;
+	}
+
+	/**
+	 * get list of sorting options
+	 * @return array $options
+	 */
+	public function getSortOptions() {
+		$options = $this->getSortOptionsMobile();
+		$options['popular'] = wfMessage( 'specialvideos-sort-most-popular' )->plain();
+
+		return $options;
+	}
+
+	/**
+	 * get list of sorting options for mobile
+	 * @return array $options
+	 */
+	public function getSortOptionsMobile() {
+		$options = array(
+			'trend'   => wfMessage( 'specialvideos-sort-trending' )->plain(),
+			'recent'  => wfMessage( 'specialvideos-sort-latest' )->plain(),
+		);
+
+		return $options;
+	}
+
+	/**
 	 * get list of filter options
 	 * @return array $options
 	 */
@@ -103,7 +156,7 @@ class SpecialVideosHelper extends WikiaModel {
 			);
 
 			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = wfMsg( 'specialvideos-uploadby', $userLink );
+			$byUserMsg = wfMessage( 'specialvideos-uploadby', $userLink )->text();
 		}
 
 		return $byUserMsg;
@@ -138,7 +191,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = wfMsg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
+			$postedInMsg = wfMessage( 'specialvideos-posted-in', implode( $articleLinks, ', ' ) )->text();
 		}
 
 		return $postedInMsg;

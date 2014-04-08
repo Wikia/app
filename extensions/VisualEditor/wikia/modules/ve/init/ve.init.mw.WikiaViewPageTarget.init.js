@@ -19,9 +19,9 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, getTargetDeferred, userPrefEnabled, $edit, thisPageIsAvailable,
-		plugins = [], veUIEnabled,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
+		init, support, getTargetDeferred, vePreferred, browserSupported,
+		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
@@ -76,6 +76,8 @@
 		}, 3000 );
 	}
 
+	initIndicator();
+
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
 	 * @returns {jQuery.Promise}
@@ -122,11 +124,11 @@
 	pageExists = !!mw.config.get( 'wgArticleId' ) || mw.config.get( 'wgNamespaceNumber' ) < 0;
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	veEditUri = viewUri.clone().extend( { 'veaction': 'edit' } );
-	isViewPage = (
+	viewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
 		!( 'diff' in uri.query )
 	);
-	veUIEnabled = mw.config.get( 'wgEnableVisualEditorUI' );
+	vePreferred = !!mw.config.get( 'wgVisualEditorPreferred' );
 
 	support = {
 		es5: !!(
@@ -194,15 +196,6 @@
 		 */
 		addPlugin: function( plugin ) {
 			plugins.push( plugin );
-		},
-
-		setupSkin: function () {
-			if ( isViewPage ) {
-				init.setupTabs();
-				if ( veUIEnabled ) {
-					init.setupSectionLinks();
-				}
-			}
 		},
 
 		setupTabs: function () {
@@ -279,58 +272,20 @@
 		}
 	};
 
-	support.visualEditor = support.es5 &&
+	browserSupported = support.es5 &&
 		support.contentEditable &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	userPrefEnabled = (
-		// Allow disabling for anonymous users separately from changing the
-		// default preference (bug 50000)
-		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
+	init.isInValidNamespace = function ( article ) {
+		// Only in enabled namespaces
+		return $.inArray(
+			new mw.Title( article ).getNamespaceId(),
+			conf.namespaces
+		) !== -1;
+	};
 
-		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
-		// User has 'visualeditor-betatempdisable' preference disabled
-		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
-		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
-		// anons as it is likely outdated.
-		(
-			mw.config.get( 'wgUserName' ) === null ?
-				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
-				(
-					mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable ) &&
-					!!mw.user.options.get( 'enablerichtext' )
-				)
-		)
-	);
-
-	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
-	// browser etc.
-	init.isAvailable = function ( article ) {
-		return (
-			// Disable on redirect pages until redirects are editable (bug 47328)
-			// Property wgIsRedirect is relatively new in core, many cached pages
-			// don't have it yet. We do a best-effort approach using the url query
-			// which will cover all working redirect (the only case where one can
-			// read a redirect page without ?redirect=no is in case of broken or
-			// double redirects).
-			!(
-				article === mw.config.get( 'wgRelevantPageName' ) &&
-				mw.config.get( 'wgIsRedirect', !!uri.query.redirect )
-			) &&
-
-			support.visualEditor &&
-
-			userPrefEnabled &&
-
-			// Only in supported skins
-			$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
-
-			// Only in enabled namespaces
-			$.inArray(
-				new mw.Title( article ).getNamespaceId(),
-				conf.namespaces
-			) !== -1
-		);
+	init.canCreatePageUsingVE = function () {
+		return browserSupported && vePreferred;
 	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
@@ -339,55 +294,7 @@
 	//
 	// The VE global was once available always, but now that platform integration initialisation
 	// is properly separated, it doesn't exist until the platform loads VisualEditor core.
-	//
-	// Most of mw.libs.ve is considered subject to change and private.  The exception is that
-	// mw.libs.ve.isAvailable is public, and indicates whether the VE editor itself can be loaded
-	// on this page. See above for why it may be false.
-	mw.libs.ve = init;
-
-	thisPageIsAvailable = init.isAvailable( mw.config.get( 'wgRelevantPageName' ) );
-
-	if ( !thisPageIsAvailable ) {
-		$( 'html' ).addClass( 've-not-available' );
-		$veEdit = $( '#ca-ve-edit' );
-		if ( $veEdit.length > 0 ) {
-			$edit = $( '#ca-edit' );
-			$veEdit.attr( 'href', $edit.attr( 'href' ) );
-			$edit.parent().remove();
-		}
-	} else {
-		$( 'html' ).addClass( 've-available' );
-	}
-
-	if ( !userPrefEnabled ) {
-		return;
-	}
-
-	if ( thisPageIsAvailable ) {
-		$( function () {
-			if ( isViewPage ) {
-				if ( init.activateOnPageLoad ) {
-					if ( window.veTrack ) {
-						veTrack( {
-							action: 've-edit-page-start',
-							trigger: 'activateOnPageLoad'
-						} );
-					}
-					getTarget().done( function ( target ) {
-						target.activate();
-					} );
-				}
-			}
-			init.setupSkin();
-		} );
-	}
-
-	initIndicator();
-
-	// Redlinks
-	if ( veUIEnabled ) {
-		$( setupRedlinks );
-	}
+	window.mw.libs.ve = init;
 
 	function setupRedlinks() {
 		$( document ).on(
@@ -399,10 +306,54 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isAvailable( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( redlinkArticle ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
 		);
+	}
+
+	function removeVELink() {
+		var $edit = $( '#ca-edit' ),
+			$veEdit = $( '#ca-ve-edit' );
+		// This class may still be used by CSS
+		$( 'html' ).addClass( 've-not-available' );
+		// If VE is the main edit link, clone the alternate edit attributes into it
+		if ( vePreferred && $veEdit.length > 0 ) {
+			$veEdit.attr( { href: $edit.attr( 'href' ), accesskey: $edit.attr( 'accesskey' ) } );
+			$edit.parent().remove();
+		} else {
+			$veEdit.parent().remove();
+		}
+	}
+
+	if ( browserSupported ) {
+		if ( viewPage && init.isInValidNamespace( mw.config.get( 'wgRelevantPageName' ) ) ) {
+			$( function () {
+				if ( init.activateOnPageLoad ) {
+					if ( window.veTrack ) {
+						veTrack( {
+							action: 've-edit-page-start',
+							trigger: 'activateOnPageLoad'
+						} );
+					}
+					getTarget().done( function ( target ) {
+						target.activate();
+					} );
+				}
+				init.setupTabs();
+				if ( vePreferred ) {
+					init.setupSectionLinks();
+				}
+			} );
+		} else {
+			removeVELink();
+		}
+
+		if ( vePreferred ) {
+			$( setupRedlinks );
+		}
+	} else {
+		removeVELink();
 	}
 }() );

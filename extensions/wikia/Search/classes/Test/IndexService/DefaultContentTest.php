@@ -633,7 +633,7 @@ ENDIT;
 	 * @slowExecutionTime 0.0881 ms
 	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
 	 */
-	public function testExtractInfoBoxes() {
+	public function testExtractInfoBoxesClassic() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( [ 'removeGarbageFromDom' ] )
@@ -656,7 +656,7 @@ ENDIT;
 		$dom
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'find' )
-		    ->with   ( 'table.infobox' )
+		    ->with   ( 'table.infobox,table.wikia-infobox' )
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
@@ -693,12 +693,106 @@ ENDIT;
 		;
 		$node
 		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'th' )
+		    ->will   ( $this->returnValue( array() ) )
+		;
+		$node
+		    ->expects( $this->at( 3 ) )
 		    ->method ( '__get' )
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( "here   is my \n key" ) )
 		;
 		$node
+		    ->expects( $this->at( 4 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( 'value' ) )
+		;
+		$this->mockClass( 'simple_html_dom', $dom2 );
+		$this->assertEquals(
+				[ 'infoboxes_txt' => [ 'infobox_1 | here is my key | value' ] ],
+				$extract->invoke( $service, $dom, $result )
+		);
+	}
+
+		/**
+	 * @group Slow
+	 * @slowExecutionTime 0.0881 ms
+	 * @covers Wikia\Search\IndexService\DefaultContent::extractInfoBoxes
+	 */
+	public function testExtractInfoBoxesWikia() {
+		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\DefaultContent' )
+		                ->disableOriginalConstructor()
+		                ->setMethods( [ 'removeGarbageFromDom' ] )
+		                ->getMock();
+		$dom = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find'  ] )
+		            ->getMock();
+		$dom2 = $this->getMockBuilder( 'simple_html_dom' )
+		            ->disableOriginalConstructor()
+		            ->setMethods( [ 'find', 'save', 'load'  ] )
+		            ->getMock();
+		$node = $this->getMockBuilder( 'simple_html_dom_node' )
+		             ->disableOriginalConstructor()
+		             ->setMethods( [ '__get', 'find', 'outertext' ] )
+		             ->getMock();
+		$result = array();
+		$extract = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'extractInfoboxes' );
+		$extract->setAccessible( true );
+		$dom
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'table.infobox,table.wikia-infobox' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 0 ) ) 
+		    ->method ( 'outertext' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$service
+		    ->expects( $this->once() )
+		    ->method ( 'removeGarbageFromDom' )
+		    ->with   ( $dom2 ) // commented out due to wikia mock proxy
+		;
+		$dom2
+		    ->expects( $this->at( 0 ) )
+		    ->method ( 'save' )
+		    ->will   ( $this->returnValue( 'foo' ) )
+		;
+		$dom2
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'load' )
+		    ->with   ( 'foo' )
+		;
+		$dom2
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'tr' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 1 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'td' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
+		    ->expects( $this->at( 2 ) )
+		    ->method ( 'find' )
+		    ->with   ( 'th' )
+		    ->will   ( $this->returnValue( array( $node ) ) )
+		;
+		$node
 		    ->expects( $this->at( 3 ) )
+		    ->method ( '__get' )
+		    ->with   ( 'plaintext' )
+		    ->will   ( $this->returnValue( "here   is my \n key" ) )
+		;
+		$node
+		    ->expects( $this->at( 4 ) )
 		    ->method ( '__get' )
 		    ->with   ( 'plaintext' )
 		    ->will   ( $this->returnValue( 'value' ) )
