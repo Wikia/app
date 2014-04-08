@@ -174,6 +174,16 @@ class LyricsWikiCrawler extends Maintenance {
 			} else {
 				$artistPageId = $this->getArtistPageId( $page );
 
+				wfDebugLog(
+					__METHOD__,
+					sprintf(
+						'Found the artist article (id: %d) for %s (id: %d)',
+						$artistPageId,
+						$category,
+						$page->id
+					)
+				);
+
 				if( !in_array( $artistPageId, $results ) ) {
 					$results[] = $artistPageId;
 				}
