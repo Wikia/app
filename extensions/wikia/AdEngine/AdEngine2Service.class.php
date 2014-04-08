@@ -29,7 +29,7 @@ class AdEngine2Service
 	 *
 	 * @return string
 	 */
-	private static function getPageType()
+	public static function getPageType()
 	{
 		$wg = F::app()->wg;
 
