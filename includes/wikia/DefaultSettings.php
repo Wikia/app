@@ -1361,7 +1361,16 @@ $wgDevESLog = false;
  * Restrictions for some api methods
  */
 $wgApiAccess = [
-	'SearchApiController' => [ 'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX ]
+	'SearchApiController' => [
+		'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX,
+		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
+		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
+	],
+	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
+	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**

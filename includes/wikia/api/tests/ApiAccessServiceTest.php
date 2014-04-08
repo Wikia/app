@@ -108,7 +108,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 			->method( 'canUse' )
 			->will( $this->returnValue( false ) );
 
-		$mock->checkUse();
+		$mock->checkUse("something", "something");
 	}
 
 	public function dp_canUse() {
