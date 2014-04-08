@@ -1518,6 +1518,7 @@ $config['special_videos_js_mobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
+		'//extensions/wikia/SpecialVideos/scripts/templates.mustache.js',
 		'//extensions/wikia/SpecialVideos/scripts/mobile/collections/video.js',
 		'//extensions/wikia/SpecialVideos/scripts/mobile/views/index.js',
 		'//extensions/wikia/SpecialVideos/scripts/mobile/controller.js',
