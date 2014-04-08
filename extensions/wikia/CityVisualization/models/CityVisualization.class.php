@@ -299,7 +299,7 @@ class CityVisualization extends WikiaModel {
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
-			'main_image' => $row->city_main_image,
+			'main_image' => PromoImage::fixupIncompletePathname($row->city_main_image, $row->city_id),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];

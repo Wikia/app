@@ -37,6 +37,14 @@ class PromoImage extends WikiaObject {
 		return $obj->pathname();
 	}
 
+	static public function fixupIncompletePathname($pathName, $cityId){
+		$promoImage = self::fromPathname($pathName);
+		if (!$promoImage->isDBSet()) {
+			$promoImage->setCityId($cityId);
+		}
+		return $promoImage->pathname();
+	}
+
 	public function __construct($type, $dbName = null) {
 		parent::__construct();
 		$this->dbName = $dbName;
