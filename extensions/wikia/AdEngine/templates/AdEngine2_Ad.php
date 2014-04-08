@@ -7,5 +7,5 @@
 </div>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
 <?php else: ?>
-<!-- NO AD <?= htmlspecialchars($slotName) ?> -->
+<!-- NO AD <?= htmlspecialchars($slotName) ?> (levels: <?= htmlspecialchars(json_encode($pageTypes)) ?>) -->
 <?php endif; ?>
