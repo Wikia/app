@@ -347,9 +347,7 @@ class PromoteImageReviewTask extends BatchTask {
 			$promoImage = PromoImage::fromPathname($image['name']);
 			if( $promoImage->isType(PromoImage::MAIN) ) {
 				$data['city_main_image'] = $promoImage->pathname();
-			}
-
-			if( $promoImage->isAdditional() ) {
+			} elseif( $promoImage->isAdditional() ) {
 				$data['city_images'][] = $promoImage->pathname();
 			}
 		}
