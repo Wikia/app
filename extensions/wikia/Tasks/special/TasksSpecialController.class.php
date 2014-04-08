@@ -8,7 +8,10 @@
  */
 
 class TasksSpecialController extends WikiaSpecialPageController {
-	/** @var Tasks */
+	use PreventBlockedUsersThrowsError;
+	use UserAllowedRequirementThrowsError;
+
+	/** @var TasksModel */
 	private $model;
 
 	private $flowerUrl;
@@ -18,10 +21,11 @@ class TasksSpecialController extends WikiaSpecialPageController {
 
 		parent::__construct('Tasks', '', false);
 		$this->flowerUrl = $wgFlowerUrl;
+		$this->userAccessRequirementDefault('tasks-user');
 	}
 
 	public function init() {
-		$this->model = F::build('Tasks', ['title' => $this->app->wg->Title]);
+		$this->model = new TasksModel($this->app->wg->Title);
 	}
 
 	public function index() {

@@ -163,7 +163,7 @@ class AsyncTask {
 	protected function connection() {
 		global $wgTaskBroker;
 
-		if ($this->connection == null) { // TODO: read from config
+		if ($this->connection == null) {
 			$this->connection = new AMQPConnection($wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass']);
 		}
 

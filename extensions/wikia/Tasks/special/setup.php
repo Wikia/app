@@ -1,8 +1,15 @@
 <?php
-$app = F::app();
 $dir = __DIR__;
 
-$app->registerClass('Tasks', "$dir/Tasks.class.php");
-$app->registerClass('TasksSpecialController', "$dir/TasksSpecialController.class.php");
-$app->registerSpecialPage('Tasks', 'TasksSpecialController');
-$app->registerExtensionMessageFile('Tasks', "$dir/Tasks.i18n.php");
+$wgAutoloadClasses['TasksModel'] = "$dir/TasksModel.class.php";
+$wgAutoloadClasses['TasksSpecialController'] = "$dir/TasksSpecialController.class.php";
+
+$wgSpecialPages['Tasks'] = 'TasksSpecialController';
+
+$wgExtensionMessagesFiles['Tasks'] = "$dir/Tasks.i18n.php";
+
+$wgAvailableRights []= 'tasks-user';
+$wgGroupPermissions['vstf']['tasks-user'] = true;
+$wgGroupPermissions['helper']['tasks-user'] = true;
+$wgGroupPermissions['staff']['tasks-user'] = true;
+$wgGroupPermissions['util']['tasks-user'] = true;

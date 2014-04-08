@@ -1,6 +1,6 @@
 <?php
 
-class Tasks {
+class TasksModel {
 	const EXTERNAL_TASK_HOOK_NAME = 'tasks_external';
 
 	private $title = null;
