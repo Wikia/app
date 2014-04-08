@@ -41,7 +41,8 @@ define('specialVideos.mobile.views.index', [
 
 		html = '';
 		// if filter is changed, then we user $.fn.html, else $.fn.append
-		insertionMethod = (this.collection.page === 1) ? 'html' : 'append';
+		console.log(this.collection.page);
+		insertionMethod = (this.collection.page > 1) ? 'append' : 'html';
 
 		this.collection.data.videos.forEach(function (item) {
 			html += Mustache.render(templates.video, item);
@@ -65,7 +66,7 @@ define('specialVideos.mobile.views.index', [
 			return;
 		}
 
-		this.collection.fetch($tar.text().toLowerCase())
+		this.collection.fetch($tar.text())
 			.success(function () {
 				$tar.addClass(self.filterActiveClass).siblings().removeClass(self.filterActiveClass);
 				self.render();

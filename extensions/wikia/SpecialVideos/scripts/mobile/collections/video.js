@@ -3,16 +3,24 @@ define('specialVideos.mobile.collections.videos', [
 ], function (nirvana) {
 	'use strict';
 
+	var filters = {
+		trending: 'trend',
+		latest: 'recent'
+	};
+
 	/**
 	 * VideoCollection
 	 * @constructor
 	 */
 	function VideoCollection() {
-		// maintains page number for updating collection via 'load more' interaction
+		// set page to 1, maintains page number for updating collection via 'load more' interaction
 		this.page = 1;
-		// current filter applied to collection (server-side)
-		this.filter = 'trending';
+		this.filter = filters.trending;
 	}
+
+	VideoCollection.prototype.getFilterKey = function (filter) {
+		return filter ? filters[filter.toLowerCase()] : this.filter;
+	};
 
 	/**
 	 * fetch
@@ -27,6 +35,7 @@ define('specialVideos.mobile.collections.videos', [
 		// request will be set with cached filter value
 		if (filter) {
 			this.filter = filter;
+			this.page = 1;
 		}
 
 		// cancel any pending xhr
@@ -35,10 +44,10 @@ define('specialVideos.mobile.collections.videos', [
 		}
 
 		this.xhr = nirvana.getJson('SpecialVideosSpecial', 'getVideos', {
-			sort: this.filter,
+			sort: this.getFilterKey(filter),
 			// if the sort changes, we reset to page 0
 			// otherwise we increment the page number then send request
-			page: filter ? 0 : ++this.page
+			page: filter ? 1 : ++this.page
 		}).success(function (data) {
 			self.data = data;
 		});

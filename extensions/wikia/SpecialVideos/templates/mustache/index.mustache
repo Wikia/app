@@ -1,13 +1,12 @@
 <div id="special-videos">
 	<ul class="filter">
-		<li class="active">Trending</li><!--
+		<li class="active">{{sortingOptions.trend}}</li><!--
 		leave this comment in to truncate whitespace between elements
 		for display: inline-block
-		--><li>Latest</li>
+		--><li>{{sortingOptions.recent}}</li>
 	</ul>
 	<ul class="video-list mobile">
 	{{#videos}}
-		<a href="{{fileUrl}}">
 			<li class="item">
 				<div class="thumbnail">
 					{{{thumbnail}}}
@@ -20,7 +19,6 @@
 					<span class="views">{{viewTotal}} </span>
 				</div>
 			</li>
-		</a>
 	{{/videos}}
 	</ul>
 	<button class="btn load-more">Load More</button>
