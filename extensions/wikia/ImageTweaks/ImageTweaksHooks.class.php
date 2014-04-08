@@ -141,11 +141,9 @@ class ImageTweaksHooks {
 			return true;
 		}
 
+		// video thumbnails use a template now.
 		if ( WikiaFileHelper::isVideoFile( $file ) ) {
-			lizbug('is video');
 			return true;
-		} else {
-			lizbug('is not video');
 		}
 
 

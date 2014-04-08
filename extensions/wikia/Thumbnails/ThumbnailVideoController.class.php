@@ -65,7 +65,6 @@ class ThumbnailVideoController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/thumbnailVideo.mustache' );
 
-
 		// default value
 		$linkAttribs = [];
 
@@ -204,6 +203,48 @@ class ThumbnailVideoController extends WikiaController {
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function articleThumbnail() {
+		global $wgEnableOasisPictureAttribution;
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/atricleThumbnail.mustache' );
+
+		$file = $this->getVal( 'file' );
+		$width = $this->getVal( 'outerWidth' );
+		$url = $this->getVal( 'ur' );
+		$align = $this->getVal( 'align' );
+		$thumbnail = $this->getVal( 'html' );
+		$caption = $this->getVal( 'caption' );
+
+		$alignClass = "t" . $align; // align classes are prefixed by "t"
+		$title = $file->getTitle();
+
+		$addedBy = '';
+		$avatar = '';
+		$attributeTo = $file->getUser();
+		$showPictureAttribution = (
+			F::app()->checkSkin( 'oasis' ) &&
+			!empty( $wgEnableOasisPictureAttribution ) &&
+			// Remove picture attribution for thumbnails 99px wide and under
+			$width > 101
+		);
+
+		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
+			// get link to user page
+			$link = AvatarService::renderLink( $attributeTo );
+			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+		}
+
+		$this->thumbnail = $thumbnail;
+		$this->title = $title;
+		$this->figureClass = $alignClass;
+		$this->url = $url;
+		$this->thumbnailMore = wfMsg( 'thumbnail-more' ); // TODO: wfMessage()
+		$this->caption = $caption;
+		$this->addedBy = $addedBy;
+		$this->width = $width;
 	}
 
 	/**

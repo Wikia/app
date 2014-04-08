@@ -127,7 +127,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		wfProfileIn( __METHOD__ );
 
 		// Migrate to new system which uses a template instead of this toHtml method
-		if( !empty( $options['useTemplate'] ) ) {
+		if ( !empty( $options['useTemplate'] ) ) {
 			$html = $app->renderView( 'ThumbnailVideoController', 'thumbnail',  [
 				'file' => $this->file,
 				'url' => $this->url,
@@ -135,6 +135,11 @@ class ThumbnailVideo extends ThumbnailImage {
 				'height' => $this->height,
 				'options' => $options,
 			] );
+
+			if ( !empty( $options['inArticle'] ) ) {
+				$options['html'] = $html;
+				$html = $app->renderView( 'ThumbnailVideoController', 'articleThumbnail', $options );
+			}
 
 			wfProfileOut( __METHOD__ );
 

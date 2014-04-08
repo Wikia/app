@@ -864,6 +864,9 @@ class Linker {
 				'img-class' => 'thumbimage',
 				'align' => $fp['align'],
 				'inArticle' => true,
+				'outerWidth' => $outerWidth,
+				'file' => $file,
+				'url' => $url,
 			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
