@@ -123,12 +123,30 @@ class AsyncTask {
 			}
 		}
 
-		if (!empty($wgDevelEnvironment) && isset($_SERVER['SERVER_NAME'])) {
-			$callbackUrl = preg_replace('/(.*?)\.(.*)/', 'tasks.$2', $_SERVER['SERVER_NAME']);
-			$payload->kwargs->runner = "http://$callbackUrl/proxy.php";
+		$executionMethod = 'remote_shell';
+		if (!empty($wgDevelEnvironment)) {
+			if (isset($_SERVER['SERVER_NAME'])) {
+				$executionMethod = 'http';
+				$executionRunner = preg_replace('/(.*?)\.(.*)/', 'http://tasks.$2/proxy.php', $_SERVER['SERVER_NAME']);
+			} else {
+				$executionRunner = [
+					gethostbyname(gethostname()),
+					realpath(__DIR__.'/../../../maintenance/wikia/task_runner.php'),
+				];
+			}
 		} else {
-			$payload->kwargs->runner = gethostbyname(gethostname()); // TODO: better way to get local ip?
+			if (isset($_SERVER['SERVER_ADDR'])) {
+				$executionRunner = $_SERVER['SERVER_ADDR'];
+			} else {
+				$executionRunner = gethostbyname(gethostname());
+				WikiaLogger::instance()->error('$_SERVER[\'SERVER_ADDR\'] unavailable for task creation');
+			}
 		}
+
+		$payload->kwargs->executor = [
+			'method' => $executionMethod,
+			'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
+		];
 
 		$exception = null;
 		$connection = $this->connection();
