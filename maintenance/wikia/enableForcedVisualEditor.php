@@ -25,7 +25,6 @@ $wamThreshold = $options['wam'];
 // First get the WAM index
 $wamWikis = array();
 $app = F::app();
-//$app->setIsCli( true );
 $offset = 0;
 $limit = WAMApiController::DEFAULT_PAGE_SIZE;
 echo "Gathering WAM rankings";
