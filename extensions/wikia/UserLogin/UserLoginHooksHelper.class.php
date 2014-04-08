@@ -203,5 +203,23 @@ class UserLoginHooksHelper {
 		}
         return true;
 	}
+
+	public static function withinEmailRegLimit( $sEmail ) {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !self::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 

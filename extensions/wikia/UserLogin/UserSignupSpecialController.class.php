@@ -356,6 +356,40 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
+		// CONN-471: Respect the registration per email limit
+		if ( !UserLoginHooksHelper::withinEmailRegLimit( $email ) ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped();
+			$this->errParam = 'email';
+			return;
+		}
+
+		// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
+		$originalEmail = $user->getEmail();
+		// Test the new email
+		$user->setEmail( $email );
+		$abortError = '';
+
+		// Disable Captcha check
+		global $wgCaptchaTriggers;
+		$oldValue = $wgCaptchaTriggers;
+		$wgCaptchaTriggers['createaccount'] = false;
+
+		if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
+			$this->result = 'error';
+			$this->msg = $abortError;
+			$this->errParam = 'email';
+		}
+
+		// Restore captchaTriggers value
+		$wgCaptchaTriggers = $oldValue;
+		// Restore email
+		$user->setEmail( $originalEmail );
+
+		if ($this->result === 'error') {
+			return;
+		}
+
 		// increase counter for email changes
 		$this->userLoginHelper->incrMemc( $memKey );
 
