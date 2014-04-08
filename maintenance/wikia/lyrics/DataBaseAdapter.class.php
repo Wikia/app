@@ -212,8 +212,16 @@ class SolrAdapter implements DataBaseAdapter {
 	 */
 	public function saveArtist( Array $artist, Array $albums ) {
 		// Add albums data
-		$artist['albums'] = $this->encodeMeta( $this->getAlbumsMetaData( $albums ) );
+		$albumsMetaData = $this->getAlbumsMetaData( $albums );
+
+		if ( !empty( $albumsMetaData['albums'] ) ) {
+			$artist['albums'] = $this->encodeMeta( $albumsMetaData['albums'] );
+		}
+		if ( !empty( $albumsMetaData['songs'] ) ) {
+			$artist['songs'] = $this->encodeMeta( $albumsMetaData['songs'] );
+		}
 		$artist['type'] = LyricsApiBase::TYPE_ARTIST;
+
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
 		}
