@@ -120,6 +120,9 @@ class ThumbnailVideoController extends WikiaController {
 			$imgSrc = $options['src'];
 		}
 
+		// set class for img tag
+		$imgClass = empty( $options['imgClass'] ) ? [] : explode( ' ', $options['imgClass'] );
+
 		// get alt for img tag
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -193,13 +196,14 @@ class ThumbnailVideoController extends WikiaController {
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$imgAttribs['data-params'] = $this->getDataParams( $file, $imgSrc, $videoKey, $options );
+			$imgClass[] = 'media';
 		}
 
 		// set image attributes
 		$this->imgSrc = $imgSrc;
 		$this->videoKey = $videoKey;
 		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
+		$this->imgClass = implode( ' ', array_unique( $imgClass ) );
 		$this->imgAttrs = $this->getAttribs( $imgAttribs );
 
 		// set duration
@@ -238,7 +242,7 @@ class ThumbnailVideoController extends WikiaController {
 			$dataParams['capt'] = 1;
 		}
 
-		return htmlentities( json_encode( $dataParams ) , ENT_QUOTES );
+		return htmlentities( json_encode( [ $dataParams ] ) , ENT_QUOTES );
 	}
 
 	/**
