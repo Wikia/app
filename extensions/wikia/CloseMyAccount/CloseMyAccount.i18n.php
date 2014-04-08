@@ -46,7 +46,7 @@ Please note you will have $1 {{PLURAL:$1|day|days}} from now to reactivate your 
 	'closemyaccount-scheduled-failed' => 'An error occurred while attempting to schedule this account to be closed. Please [[Special:CloseMyAccount|try again]] or [[Special:Contact|contact Wikia]] if the issue persists.',
 
 	/** Email **/
-	'closemyaccount-reactivation-email_subject' => 'Account Reactivation',
+	'closemyaccount-reactivation-email_subject' => 'Wikia account reactivation',
 	'closemyaccount-reactivation-email_body' => 'Hi $2,
 
 You\'re one step away from reactivating your account on Wikia! Click the link below to confirm you were the one who requested this and get started.
