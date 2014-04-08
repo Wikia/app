@@ -1502,7 +1502,7 @@ $config['special_videos_css'] = array(
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
 		'//extensions/wikia/SpecialVideos/styles/SpecialVideos.scss',
-		'//extensions/wikia/WikiaStyleGuide/styles/Dropdown.scss',
+		'//extensions/wikia/WikiaStyleGuide/css/Dropdown.scss',
 	)
 );
 
