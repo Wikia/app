@@ -71,17 +71,19 @@ class flagStatusOfVideos extends Maintenance {
 			}
 		}
 
-		echo "Found " . count( $workingVideos ) . " working videos\n";
-		echo "Found " . count( $deletedVideos ) . " deleted videos\n";
-		echo "Found " . count( $privateVideos ) . " private videos\n";
-		echo "Found " . count( $otherErrorVideos ) . " other videos\n";
-
 		if ( !$this->test ) {
 			$this->setStatus( $workingVideos, self::STATUS_WORKING );
 			$this->setStatus( $deletedVideos, self::STATUS_DELETED );
 			$this->setStatus( $privateVideos, self::STATUS_PRIVATE );
 			$this->setStatus( $otherErrorVideos, self::STATUS_OTHER_ERROR );
+			$this->setAsRemoved( array_merge( $deletedVideos, $privateVideos, $otherErrorVideos ) );
 		}
+
+		echo "\n========SUMMARY========\n";
+		echo "Found " . count( $workingVideos ) . " working videos\n";
+		echo "Found " . count( $deletedVideos ) . " deleted videos\n";
+		echo "Found " . count( $privateVideos ) . " private videos\n";
+		echo "Found " . count( $otherErrorVideos ) . " other videos\n";
 
 	}
 
@@ -131,6 +133,28 @@ class flagStatusOfVideos extends Maintenance {
 			$sql .= "VALUES ($video[page_id], " . WPP_VIDEO_STATUS . ", $status)";
 			$wikiaSQL->RAW( $sql )->run( $db );
 		}
+	}
+
+	/**
+	 * @param $videos - Videos to flag as removed in the video_info table
+	 */
+	private function setAsRemoved ( $videos ) {
+		$videoInfoHelper = new VideoInfoHelper();
+		foreach ( $videos as $video ) {
+			$videoInfo = VideoInfo::newFromTitle( $video['video_title'] );
+			if ( is_null( $videoInfo ) ) {
+				$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
+				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
+				$videoInfo->setRemoved();
+				$videoInfo->addVideo();
+				$this->debug("Video not found in video_info table, adding info for: " . $video['video_title'] );
+			} else {
+				$videoInfo->removeVideo();
+			}
+			$this->debug( "Setting video as removed: " . $video['video_title'] );
+		}
+		$mediaService = new MediaQueryService();
+		$mediaService->clearCacheTotalVideos();
 	}
 
 	/**
