@@ -204,6 +204,12 @@ class UserLoginHooksHelper {
         return true;
 	}
 
+	/**
+	 * @desc Checks if the email provided is wikia mail and within the limit specified by $wgAccountsPerEmail
+	 *
+	 * @param $sEmail - email address to check
+	 * @return bool - TRUE if the email can be registered, otherwise FALSE
+	 */
 	public static function withinEmailRegLimit( $sEmail ) {
 		global $wgAccountsPerEmail, $wgMemc;
 
