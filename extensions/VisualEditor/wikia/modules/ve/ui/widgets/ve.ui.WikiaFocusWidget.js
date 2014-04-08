@@ -104,6 +104,7 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 	var interval, i = 0;
 
+	this.handleRTL();
 	this.hideDistractions();
 	this.adjustLayout();
 
@@ -116,6 +117,13 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 		}
 		i += 1;
 	}, this ), 1000 );
+};
+
+
+ve.ui.WikiaFocusWidget.prototype.handleRTL = function() {
+	if ( this.surface.view.documentView.documentNode.$element.css( 'direction' ) === 'rtl' ) {
+		this.$left = [this.$right, this.$right = this.$left][0];
+	}
 };
 
 ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
