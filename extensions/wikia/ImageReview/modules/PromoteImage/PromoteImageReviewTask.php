@@ -214,8 +214,7 @@ class PromoteImageReviewTask extends BatchTask {
 			return array('status' => 1);
 		}
 
-		$dbname = WikiFactory::IDtoDB($sourceWikiId);
-		$destinationName = PromoImage::fromPathname($destinationName)->setDBName($dbname)->pathname();
+		$destinationName = PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
 
 		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
 		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
@@ -262,7 +261,7 @@ class PromoteImageReviewTask extends BatchTask {
 			if( !empty($images) ) {
 				$removedImages = array();
 				foreach($images as $image) {
-					$imageName = PromoImage::fromPathname($image['name'])->setDBName($sourceWikiDbName)->pathname();
+					$imageName = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($sourceWikiId)->getPathname();
 					$result = $this->removeSingleImage($corpWikiId, $imageName);
 
 					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
@@ -337,8 +336,8 @@ class PromoteImageReviewTask extends BatchTask {
 		if( !empty($currentImages) ) {
 			foreach($currentImages as $imageName) {
 				$promoImage = PromoImage::fromPathname($imageName);
-				if( $promoImage->isAdditional() && !in_array($promoImage->pathname(), $images) ) {
-					$data['city_images'][] = $promoImage->pathname();
+				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images) ) {
+					$data['city_images'][] = $promoImage->getPathname();
 				}
 			}
 		}
@@ -346,9 +345,9 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach($images as $image) {
 			$promoImage = PromoImage::fromPathname($image['name']);
 			if( $promoImage->isType(PromoImage::MAIN) ) {
-				$data['city_main_image'] = $promoImage->pathname();
+				$data['city_main_image'] = $promoImage->getPathname();
 			} elseif( $promoImage->isAdditional() ) {
-				$data['city_images'][] = $promoImage->pathname();
+				$data['city_images'][] = $promoImage->getPathname();
 			}
 		}
 
@@ -370,8 +369,8 @@ class PromoteImageReviewTask extends BatchTask {
 
 			foreach($currentImages as $imageName) {
 				$promoImage = PromoImage::fromPathname($imageName);
-				if( $promoImage->isAdditional() && !in_array($promoImage->pathname(), $deletedImages) ) {
-					$data['city_images'][] = $promoImage->pathname();
+				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $deletedImages) ) {
+					$data['city_images'][] = $promoImage->getPathname();
 				}
 			}
 		}
@@ -396,13 +395,13 @@ class PromoteImageReviewTask extends BatchTask {
 		foreach( $images as $image ) {
 			$imageData = new stdClass();
 
-			$promoImage = PromoImage::fromPathname($image['name']);
+			$promoImage = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($targetWikiId);
 
 			$imageData->city_id = $targetWikiId;
 			$imageData->page_id = $image['id'];
 			$imageData->city_lang_code = $targetWikiLang;
 			$imageData->image_index =  $promoImage->getType();
-			$imageData->image_name = $promoImage->pathname();
+			$imageData->image_name = $promoImage->getPathname();
 			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;

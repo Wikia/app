@@ -32,19 +32,6 @@ class PromoImage extends WikiaObject {
 		return new PromoImage($type, $dbName);
 	}
 
-	static public function makePathname($type, $dbName = null) {
-		$obj = new self($type, $dbName);
-		return $obj->pathname();
-	}
-
-	static public function fixupIncompletePathname($pathName, $cityId){
-		$promoImage = self::fromPathname($pathName);
-		if (!$promoImage->isDBSet()) {
-			$promoImage->setCityId($cityId);
-		}
-		return $promoImage->pathname();
-	}
-
 	public function __construct($type, $dbName = null) {
 		parent::__construct();
 		$this->dbName = $dbName;
@@ -71,50 +58,69 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	public function isDBSet(){
-		return !empty($this->dbName);
+	public function getDBName(){
+		if (empty($this->dbName) and !empty($this->cityId)) {
+			$this->dbName = WikiFactory::IDtoDB($this->$cityId);
+		}
+		return $this->dbName;
+	}
+
+	public function isCityIdSet(){
+		return (!empty($this->dbName) or !empty($this->cityId));
 	}
 
 	public function setCityId($cityId) {
-		$this->dbName = WikiFactory::IDtoDB( $cityId );
 		$this->cityId = $cityId;
+		$this->dbName = null;
 		return $this;
 	}
 
 	public function getCityId(){
-		if (empty($this->cityId)){
+		if (empty($this->cityId) and !empty($this->dbName)){
 			$this->cityId = WikiFactory::DBtoID($this->dbName);
 		}
 		return $this->cityId;
 	}
 
+	//only saves city id if it is not set
+	public function ensureCityIdIsSet($cityId){
+		if (!$this->isCityIdSet()) {
+			$this->setCityId($cityId);
+		}
+		return $this;
+	}
+
 	protected function pathnameHelper($withDbName = true, $withExtension = true){
-		if ($this->isType(self::MAIN)){
-			$path = self::__MAIN_IMAGE_BASE_NAME;
+		if ($this->isType(self::INVALID)){
+			$path = null;
 		} else {
-			$path = self::__ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
-		}
-		if (!empty($this->dbName) and $withDbName) {
-			$path .= ',' . $this->dbName;
-		}
-		if ($withExtension) {
-			$path .= self::__IMAGES_EXT;
+			if ($this->isType(self::MAIN)){
+				$path = self::__MAIN_IMAGE_BASE_NAME;
+			} else {
+				$path = self::__ADDITIONAL_IMAGES_BASE_NAME . "-" . $this->type;
+			}
+			if ($withDbName and $this->isCityIdSet()) {
+				$path .= ',' . $this->getDBName();
+			}
+			if ($withExtension) {
+				$path .= self::__IMAGES_EXT;
+			}
 		}
 		return $path;
 	}
 
-	public function pathname(){
+	public function getPathname(){
 		return $this->pathnameHelper(true, true);
 	}
 
 	public function getOriginFile(){
-		$f = GlobalFile::newFromText($this->pathname(), $this->getCityId());
+		$f = GlobalFile::newFromText($this->getPathname(), $this->getCityId());
 		return $f;
 	}
 
 	public function corporateFileByLang($lang){
 		$wiki_id = (new WikiaCorporateModel())->getCorporateWikiIdByLang($lang);
-		return GlobalFile::newFromText($this->pathname(), $wiki_id);
+		return GlobalFile::newFromText($this->getPathname(), $wiki_id);
 	}
 
 	public function isFileChanged(){
@@ -128,7 +134,7 @@ class PromoImage extends WikiaObject {
 		if ($this->inferType($srcFileName) == self::INVALID) {
 			$this->fileChanged = true;
 
-			$dst_file_title = Title::newFromText($this->pathname(), NS_FILE);
+			$dst_file_title = Title::newFromText($this->getPathname(), NS_FILE);
 
 			$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($srcFileName);
 			$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
@@ -152,7 +158,6 @@ class PromoImage extends WikiaObject {
 	}
 
 	protected function removalTaskHelper($imageName) {
-
 		if( !empty($deletedFiles) ) {
 			$visualization = new CityVisualization();
 
@@ -181,21 +186,23 @@ class PromoImage extends WikiaObject {
 
 	public function purgeImage() {
 		$this->deleteImage();
-		$this->removalTaskHelper($this->pathname());
-		//for legacy compatibility attempt to remove older image path format
-		$this->removalTaskHelper($this->pathnameHelper(false,true));
+		$this->removalTaskHelper($this->getPathname());
+		if ($this->isCityIdSet()){
+			//for legacy compatibility attempt to remove older image path format
+			$this->removalTaskHelper($this->pathnameHelper(false,true));
+		}
 	}
 
 	public function deleteImage() {
-		$this->deleteImageHelper($this->pathname());
-
-		//for legacy compatibility attempt to remove older image path format
-		$this->deleteImageHelper($this->pathnameHelper(false,true));
+		$this->deleteImageHelper($this->getPathname());
+		if ($this->isCityIdSet()){
+			//for legacy compatibility attempt to remove older image path format
+			$this->deleteImageHelper($this->pathnameHelper(false,true));
+		}
 	}
 
 	protected function inferType($fileName, &$dbName = null){
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
-
 		$type = self::INVALID;
 
 		if (preg_match($pattern, $fileName, $matches)){
@@ -212,5 +219,4 @@ class PromoImage extends WikiaObject {
 		}
 		return $type;
 	}
-
 }

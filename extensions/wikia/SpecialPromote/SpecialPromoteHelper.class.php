@@ -321,14 +321,14 @@ class SpecialPromoteHelper extends WikiaObject {
 		$modifiedImageNames = array();
 
 		foreach($promoImages as $promoImage){
-			if ($promoImage->getType() == PromoImage::MAIN){
-				$updateData['city_main_image'] = $promoImage->pathname();
+			if ($promoImage->isType(PromoImage::MAIN)){
+				$updateData['city_main_image'] = $promoImage->getPathname();
 			} else {
-				array_push($additionalImageNames, $promoImage->pathname());
+				array_push($additionalImageNames, $promoImage->getPathname());
 			}
 
 			if ($promoImage->isFileChanged()){
-				array_push($modifiedImageNames, $promoImage->pathname());
+				array_push($modifiedImageNames, $promoImage->getPathname());
 			}
 		}
 		$updateData['city_images'] = json_encode($additionalImageNames);

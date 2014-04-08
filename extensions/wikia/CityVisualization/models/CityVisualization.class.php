@@ -299,7 +299,7 @@ class CityVisualization extends WikiaModel {
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
-			'main_image' => PromoImage::fixupIncompletePathname($row->city_main_image, $row->city_id),
+			'main_image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];
@@ -615,7 +615,9 @@ class CityVisualization extends WikiaModel {
 		);
 
 		while ($row = $result->fetchObject()) {
-			$wikiImages[$row->image_index] = $rowAssigner->returnParsedWikiImageRow($row);
+			$tmp = $rowAssigner->returnParsedWikiImageRow($row);
+			$tmp['image_name'] = PromoImage::fromPathname($tmp['image_name'])->ensureCityIdIsSet($wikiId)->getPathname();
+			$wikiImages[$row->image_index] = $tmp;
 		}
 
 		wfProfileOut(__METHOD__);
@@ -644,7 +646,7 @@ class CityVisualization extends WikiaModel {
 		foreach ($newImages as $image) {
 			$imageData = new stdClass();
 
-			$imageIndex = PromoImage::fromPathname($image)->getType();
+			$imageIndex = PromoImage::fromPathname($image)->ensureCityIdIsSet($cityId)->getType();
 
 			$title = Title::newFromText($image, NS_FILE);
 
