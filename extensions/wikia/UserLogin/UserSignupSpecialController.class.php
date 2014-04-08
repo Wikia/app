@@ -364,32 +364,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
-		$originalEmail = $user->getEmail();
-		// Test the new email
-		$user->setEmail( $email );
-		$abortError = '';
-
-		// Disable Captcha check
-		global $wgCaptchaTriggers;
-		$oldValue = $wgCaptchaTriggers;
-		$wgCaptchaTriggers['createaccount'] = false;
-
-		if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
-			$this->result = 'error';
-			$this->msg = $abortError;
-			$this->errParam = 'email';
-		}
-
-		// Restore captchaTriggers value
-		$wgCaptchaTriggers = $oldValue;
-		// Restore email
-		$user->setEmail( $originalEmail );
-
-		if ($this->result === 'error') {
-			return;
-		}
-
 		// increase counter for email changes
 		$this->userLoginHelper->incrMemc( $memKey );
 
@@ -397,6 +371,25 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped();
 		if ( $email != $user->getEmail() ) {
 			$user->setEmail( $email );
+
+			// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
+			// Disable Captcha check
+			global $wgCaptchaTriggers;
+			$oldValue = $wgCaptchaTriggers;
+			$wgCaptchaTriggers['createaccount'] = false;
+			$abortError = '';
+			if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
+				$this->result = 'error';
+				$this->msg = $abortError;
+				$this->errParam = 'email';
+			}
+
+			// Restore captchaTriggers value
+			$wgCaptchaTriggers = $oldValue;
+
+			if ($this->result === 'error') {
+				return;
+			}
 
 			// send reconfirmation email
 			$result = $user->sendReConfirmationMail();
