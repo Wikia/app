@@ -41,8 +41,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );
 
 		// Change the <title> attribute and the <h1> for the page
-		$this->getContext()->getOutput()->setPageTitle( wfMsg( 'specialvideos-page-title' ) );
-		$this->getContext()->getOutput()->setHTMLTitle( wfMsg( 'specialvideos-html-title' ) );
+		$this->getContext()->getOutput()->setPageTitle( wfMessage( 'specialvideos-page-title' )->text() );
+		$this->getContext()->getOutput()->setHTMLTitle( wfMessage( 'specialvideos-html-title' )->text() );
 
 		// For search engines
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );

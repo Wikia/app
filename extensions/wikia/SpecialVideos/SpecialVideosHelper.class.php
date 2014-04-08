@@ -156,7 +156,7 @@ class SpecialVideosHelper extends WikiaModel {
 			);
 
 			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = wfMsg( 'specialvideos-uploadby', $userLink );
+			$byUserMsg = wfMessage( 'specialvideos-uploadby', $userLink )->text();
 		}
 
 		return $byUserMsg;
@@ -191,7 +191,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		if ( !empty($articleLinks) ) {
-			$postedInMsg = wfMsg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
+			$postedInMsg = wfMessage( 'specialvideos-posted-in', implode( $articleLinks, ', ' ) )->text();
 		}
 
 		return $postedInMsg;
