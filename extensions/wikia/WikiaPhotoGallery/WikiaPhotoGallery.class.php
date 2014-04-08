@@ -860,7 +860,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					if ( $isVideo ) {
 						$playButtonSize = WikiaFileHelper::getThumbnailSize( $image['width'] );
 						$thumbHtml = $this->videoPlayButton;
-						$linkAttribs['class'] .= ' video wikia-video-thumbnail ' . $playButtonSize;
+						$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
 					} else {
 						$thumbHtml = '';
 					}
@@ -1378,7 +1378,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					// Get play button overlay for video thumb
 					$videoPlayButton = $this->videoPlayButton;
-					$navClass = 'xsmall wikia-video-thumbnail';
+					$navClass = 'xsmall video-thumbnail';
 				}
 
 				$data = array(

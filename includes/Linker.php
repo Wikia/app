@@ -775,7 +775,7 @@ class Linker {
 		$thumb = false;
 
 		if ( !$exists ) {
-			$outerWidth = $hp['width'] + 2;
+			$width = $hp['width'];
 		} else {
 			if ( isset( $fp['manualthumb'] ) ) {
 				# Use manually specified thumbnail
@@ -807,9 +807,9 @@ class Linker {
 			}
 
 			if ( $thumb ) {
-				$outerWidth = $thumb->getWidth() + 2;
+				$width = $thumb->getWidth();
 			} else {
-				$outerWidth = $hp['width'] + 2;
+				$width = $hp['width'];
 			}
 		}
 
@@ -835,7 +835,7 @@ class Linker {
 				'title' => $fp['title'],
 				'img-class' => 'thumbimage',
 				'align' => $fp['align'],
-				'outerWidth' => $outerWidth,
+				'outerWidth' => $width,
 				'file' => $file,
 				'url' => $url,
 			);

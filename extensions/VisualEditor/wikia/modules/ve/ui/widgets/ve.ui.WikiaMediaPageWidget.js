@@ -223,6 +223,6 @@ ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 		);
 
 	this.$itemWrapper
-		.addClass( 'wikia-video-thumbnail' )
+		.addClass( 'video-thumbnail' )
 		.prepend( this.$overlay );
 };
