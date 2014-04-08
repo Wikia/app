@@ -1,7 +1,39 @@
 $special-videos-border: 1px solid #d0d0d0;
+$key-blue-color: #054c8b;
 
 #wkPage {
 	padding: 0;
+}
+
+.filter {
+	color: $key-blue-color;
+	font-size: 12px;
+	padding: 10px;
+	text-align: center;
+
+	li {
+		border: 2px solid $key-blue-color;
+		display: inline-block;
+		width: 50%;
+
+		&:first-of-type {
+			border-right: 0;
+			border-radius: 2px 0 0 2px;
+		}
+
+		&:last-of-type {
+			border-radius: 0 2px 2px 0;
+		}
+
+		&.active {
+			background-color: $key-blue-color;
+			color: #fff;
+		}
+
+		&:active {
+			background-color: darken($key-blue-color, 5%);
+		}
+	}
 }
 
 .video-list {

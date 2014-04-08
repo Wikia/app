@@ -1521,7 +1521,9 @@ $config['special_videos_js_mobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
-		'//extensions/wikia/SpecialVideos/scripts/mobile/index.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/collections/video.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/views/index.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/controller.js',
 	)
 );
 
@@ -1529,6 +1531,7 @@ $config['special_videos_css_mobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
+		'//skins/oasis/css/core/video-thumbnail.scss',
 		'//extensions/wikia/SpecialVideos/styles/mobile.scss',
 	)
 );
