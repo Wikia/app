@@ -42,10 +42,10 @@ class VideosModule extends WikiaModel {
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$filter = 'all';
-			$limit = $this->getVideoLimit( self::LIMIT_VIDEOS );
+			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
 
 			$mediaService = new MediaQueryService();
-			$videoList = $mediaService->getVideoList( $sort, $filter, $limit );
+			$videoList = $mediaService->getVideoList( $sort, $filter, $paddedLimit );
 
 			$videos = [];
 			$videoTitles = [];
@@ -113,7 +113,7 @@ class VideosModule extends WikiaModel {
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$service = new VideoEmbedToolSearchService();
-			$service->setLimit( $this->getVideoLimit( $numRequired ) );
+			$service->setLimit( $this->getPaddedVideoLimit( $numRequired ) );
 
 			$category = $this->getSearchVertical();
 			if ( !empty( $category ) ) {
@@ -164,7 +164,7 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit' => $this->getVideoLimit( self::LIMIT_VIDEOS ),
+				'limit' => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
@@ -208,7 +208,7 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getVideoLimit( self::LIMIT_VIDEOS ),
+				'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
@@ -253,7 +253,7 @@ class VideosModule extends WikiaModel {
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
 				'sort'       => $sort,
-				'limit'      => $this->getVideoLimit( self::LIMIT_VIDEOS ),
+				'limit'      => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 				'category'   => $category,
 			];
 
@@ -395,7 +395,7 @@ class VideosModule extends WikiaModel {
 	 * Get video limit (include the number of blacklisted videos)
 	 * @return integer $limit
 	 */
-	protected function getVideoLimit( $numRequired ) {
+	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
 			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
 		}
