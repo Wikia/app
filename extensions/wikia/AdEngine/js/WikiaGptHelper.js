@@ -153,11 +153,10 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		}
 	}
 
-	function findAdInIframe(iframe, adCallback, noAdCallback, delayed) {
+	function findAdInIframe(iframe, adCallback, noAdCallback) {
 		var iframeHeight, iframeContentHeight, empty, iframeId;
 
 		iframeId = iframe.id;
-		delayed = delayed || false;
 
 		// Because Chrome reports document.body.offsetHeight as the outer
 		// iframe height, we're setting the outer height to 0, so the innerHeight
@@ -266,7 +265,6 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 						);
 						callSuccess();
 					}
-
 
 					if (iframe.contentWindow.document.readyState === 'complete') {
 						log(['slotRenderEnded', slotname, 'iframe state complete'], 'info', logGroup);
