@@ -1,6 +1,6 @@
 <?php
 
-class ThumbnailVideoController extends WikiaController {
+class ThumbnailController extends WikiaController {
 
 	/**
 	 * Thumbnail Template
@@ -52,7 +52,7 @@ class ThumbnailVideoController extends WikiaController {
 	 *		itemprop - for RDF metadata
 	 * @responseParam array metaAttrs - for RDF metadata [ array( array( 'itemprop' => '', 'content' => '' ) ) ]
 	 */
-	public function thumbnail() {
+	public function video() {
 		wfProfileIn( __METHOD__ );
 
 		$file = $this->getVal( 'file' );
@@ -205,6 +205,14 @@ class ThumbnailVideoController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @todo Implement image controller
+	 */
+	public function image() {}
+
+	/**
+	 * Article figure tags with thumbnails inside
+	 */
 	public function articleThumbnail() {
 		global $wgEnableOasisPictureAttribution;
 
@@ -219,21 +227,22 @@ class ThumbnailVideoController extends WikiaController {
 		$caption = $this->getVal( 'caption' );
 
 		$alignClass = "t" . $align; // align classes are prefixed by "t"
-		$title = $file->getTitle();
+		$title = $file->getTitle()->getText();
 
 		$addedBy = '';
-		$avatar = '';
 		$attributeTo = $file->getUser();
 		$showPictureAttribution = (
 			F::app()->checkSkin( 'oasis' ) &&
 			!empty( $wgEnableOasisPictureAttribution ) &&
-			// Remove picture attribution for thumbnails 99px wide and under
-			$width > 101
+			// Remove picture attribution for thumbnails less than 100px
+			$width > 99
 		);
 
 		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
 			// get link to user page
 			$link = AvatarService::renderLink( $attributeTo );
+
+			// TODO: change this to "Added by $user X days ago"
 			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
 		}
 

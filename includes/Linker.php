@@ -852,7 +852,7 @@ class Linker {
 		} else {
 			// Render with controller for desktop
 			$params['html'] = $origHTML;
-			$origHTML = F::app()->renderView( 'ThumbnailVideoController', 'articleThumbnail', $params );
+			$origHTML = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
 		}
 		/* Wikia change/refactor end */
 
