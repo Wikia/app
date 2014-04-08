@@ -1,4 +1,7 @@
-define('specialVideos.mobile.views.index', [], function () {
+define('specialVideos.mobile.views.index', [
+	'wikia.mustache',
+	'specialVideos.templates.mustache'
+], function (Mustache, templates) {
 	'use strict';
 
 	/**
@@ -33,7 +36,18 @@ define('specialVideos.mobile.views.index', [], function () {
 	 * @return {SpecialVideosIndexView} instance of class
 	 */
 	SpecialVideosIndexView.prototype.render = function () {
-		console.log('Rendering ', this.collection.data);
+		var html,
+			insertionMethod;
+
+		html = '';
+		// if filter is changed, then we user $.fn.html, else $.fn.append
+		insertionMethod = (this.collection.page === 1) ? 'html' : 'append';
+
+		this.collection.data.videos.forEach(function (item) {
+			html += Mustache.render(templates.video, item);
+		});
+
+		this.$el.find('.video-list')[insertionMethod](html);
 		return this;
 	};
 
@@ -51,12 +65,11 @@ define('specialVideos.mobile.views.index', [], function () {
 			return;
 		}
 
-		this.collection.fetch({
-			filter: $tar.text().toLowerCase()
-		}).success(function () {
-			$tar.addClass(self.filterActiveClass).siblings().removeClass(self.filterActiveClass);
-			self.render();
-		});
+		this.collection.fetch($tar.text().toLowerCase())
+			.success(function () {
+				$tar.addClass(self.filterActiveClass).siblings().removeClass(self.filterActiveClass);
+				self.render();
+			});
 		return false;
 	};
 
