@@ -276,6 +276,27 @@ class SolrAdapter implements DataBaseAdapter {
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}
+
+	/**
+	 * @desc Deletes documents from the Solr index based on given queries
+	 *
+	 * @param Array $artists
+	 * @param String $datetime
+	 * @return Solarium_Result_Update
+	 */
+	public function deleteArtistsWithTimestamp( $artists, $datetime ) {
+		$query = $this->client->createSelect();
+		$queryText = '-timestamp:[' . $query->getHelper()->formatDate( $datetime ) . ' TO *] AND ';
+		$queryText .= implode( ' OR ', $artists['keys'] );
+		$query->setQuery( $queryText, $artists['values'] );
+
+		/** @var Solarium_Query_Update $update */
+		$update = $this->client->createUpdate();
+		$update->addDeleteQuery( $query );
+		$update->addCommit();
+		return $this->client->update( $update );
+	}
+
 }
 
 /**
