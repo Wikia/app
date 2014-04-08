@@ -136,11 +136,6 @@ class ThumbnailVideo extends ThumbnailImage {
 				'options' => $options,
 			] );
 
-			if ( !empty( $options['inArticle'] ) ) {
-				$options['html'] = $html;
-				$html = $app->renderView( 'ThumbnailVideoController', 'articleThumbnail', $options );
-			}
-
 			wfProfileOut( __METHOD__ );
 
 			return $html;
