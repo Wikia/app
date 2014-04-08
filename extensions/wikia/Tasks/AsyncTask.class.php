@@ -125,7 +125,9 @@ class AsyncTask {
 
 		if (!empty($wgDevelEnvironment) && isset($_SERVER['SERVER_NAME'])) {
 			$callbackUrl = preg_replace('/(.*?)\.(.*)/', 'tasks.$2', $_SERVER['SERVER_NAME']);
-			$payload->kwargs->runner_url = "http://$callbackUrl/proxy.php";
+			$payload->kwargs->runner = "http://$callbackUrl/proxy.php";
+		} else {
+			$payload->kwargs->runner = gethostbyname(gethostname()); // TODO: better way to get local ip?
 		}
 
 		$exception = null;
