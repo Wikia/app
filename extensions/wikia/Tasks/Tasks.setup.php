@@ -3,6 +3,8 @@ if (!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
+require_once(__DIR__.'/special/setup.php');
+
 spl_autoload_register(function($class) {
 	if (strpos($class, 'Wikia\\Tasks') === false) {
 		return false;

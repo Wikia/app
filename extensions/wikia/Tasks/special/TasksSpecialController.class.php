@@ -11,8 +11,13 @@ class TasksSpecialController extends WikiaSpecialPageController {
 	/** @var Tasks */
 	private $model;
 
+	private $flowerUrl;
+
 	public function __construct() {
+		global $wgFlowerUrl;
+
 		parent::__construct('Tasks', '', false);
+		$this->flowerUrl = $wgFlowerUrl;
 	}
 
 	public function init() {
@@ -21,16 +26,14 @@ class TasksSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('tasks-title'));
-		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 		$this->response->addAsset(__DIR__.'/js/special_tasks.js');
 		$this->response->addAsset(__DIR__.'/css/special_tasks.css');
 
-
-		$this->setVal('header', wfMsg('tasks-title'));
-		$this->setVal('pageDescription', wfMsg('tasks-description'));
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
-		$this->setVal('flowerUrl', "http://localhost:5555"); // TODO: read from config
-		$this->setVal('ajaxLoading', $this->wg->ExtensionsPath.'/wikia/Tasks/special/images/ajax-loader.gif');
+		$this->setVal('flowerUrl', $this->flowerUrl);
+
+		$this->response->setJsVar('wgFlowerUrl', $this->flowerUrl);
+		$this->response->setJsVar('wgAjaxLoadingIndicator', $this->wg->ExtensionsPath.'/wikia/Tasks/special/images/ajax-loader.gif');
 	}
 
 	public function getMethods() {
