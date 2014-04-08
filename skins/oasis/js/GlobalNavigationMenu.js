@@ -130,6 +130,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 			$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {
 				e.preventDefault();
 
+				$('#drawerGlobalNavigation').find('li').removeClass('active');
 				drawer.open();
 			});
 		});
