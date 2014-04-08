@@ -168,24 +168,28 @@ class LyricsWikiCrawler extends Maintenance {
 		$results = [];
 
 		foreach( $pages as $page ) {
+			$pageId = (int) $page->id;
 			$category = strtolower( $page->category );
-			if( $category === 'artist' ) {
-				$results[] = $page->id;
+
+			if( $category === 'artist' && !in_array( $pageId, $results ) ) {
+				$results[] = $pageId;
 			} else {
-				$artistPageId = $this->getArtistPageId( $page );
+				$artistPageId = $this->getArtistPageId( $pageId );
 
-				wfDebugLog(
-					__METHOD__,
-					sprintf(
-						'Found the artist article (id: %d) for %s (id: %d)',
-						$artistPageId,
-						$category,
-						$page->id
-					)
-				);
+				if( $artistPageId > 0 ) {
+					wfDebugLog(
+						__METHOD__,
+						sprintf(
+							'Found the artist article (id: %d) for %s (id: %d)',
+							$artistPageId,
+							$category,
+							$pageId
+						)
+					);
 
-				if( !in_array( $artistPageId, $results ) ) {
-					$results[] = $artistPageId;
+					if( !in_array( $artistPageId, $results ) ) {
+						$results[] = $artistPageId;
+					}
 				}
 			}
 		}
@@ -196,13 +200,13 @@ class LyricsWikiCrawler extends Maintenance {
 	/**
 	 * @desc Based on album/song title creates an instance of Title for the artist and returns artist's page id
 	 *
-	 * @param Object $page an instance of stdClass with two fields: id and category
+	 * @param Integer $pageId an instance of stdClass with two fields: id and category
 	 *
-	 * @return bool|int Returns false if any of the articles couldn't be found
+	 * @return int Returns 0 if any of the articles couldn't be found
 	 */
-	public function getArtistPageId( $page ) {
-		$articleId = false;
-		$article = Article::newFromID( $page->id );
+	public function getArtistPageId( $pageId ) {
+		$articleId = 0;
+		$article = Article::newFromID( $pageId );
 
 		if( !is_null( $article) ) {
 			$titleText = $article->getTitle()->getText();
@@ -217,7 +221,7 @@ class LyricsWikiCrawler extends Maintenance {
 					__METHOD__,
 					sprintf(
 						'Found the article (id: %d) but could not create a Title for artist (%s extracted from %s)',
-						$page->id,
+						$pageId,
 						$artistTitleText,
 						$titleText
 					)
@@ -228,12 +232,12 @@ class LyricsWikiCrawler extends Maintenance {
 				__METHOD__,
 				sprintf(
 					'Could not find the article (id: %d) for which an artist article should be found',
-					$page->id
+					$pageId
 				)
 			);
 		}
 
-		return $articleId;
+		return (int) $articleId;
 	}
 
 	/**

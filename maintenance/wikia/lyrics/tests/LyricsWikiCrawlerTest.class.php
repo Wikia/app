@@ -41,6 +41,11 @@ class LyricsWikiCrawlerTest extends WikiaBaseTest {
 				[ (object)[ 'id' => 123, 'category' => 'Artist' ], (object)[ 'id' => 101, 'category' => 'Album' ], (object)[ 'id' => 112, 'category' => 'Song' ] ],
 				[ 123, 131 ],
 			],
+			[
+				'different pages passed but an artist with string id and after song of the artist',
+				[ (object)[ 'id' => 123, 'category' => 'Artist' ], (object)[ 'id' => 112, 'category' => 'Song' ], (object)[ 'id' => '131', 'category' => 'Artist' ] ],
+				[ 123, 131 ],
+			],
 		];
 	}
 
