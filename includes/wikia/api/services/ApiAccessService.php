@@ -73,9 +73,9 @@ class ApiAccessService {
 			return false;
 		}
 		$isTest = $this->isTestLocation();
-		//if access needs TEST in url, and we are on test
-		if ( $access & self::URL_TEST && $isTest ) {
-			return true;
+		//if access needs TEST in url, and it's using standard url deny access
+		if ( $access & self::URL_TEST && !$isTest ) {
+			return false;
 		}
 		$access = $access & (self::ENV_DEVELOPMENT | self::ENV_SANDBOX);
 		//no access restriction found

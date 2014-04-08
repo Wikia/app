@@ -81,13 +81,13 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 			->setMethods( [ '__construct', 'getApiAccess', 'isTestLocation', 'getEnvValue' ] )
 			->getMock();
 
-		$mock->expects( $this->once() )
+		$mock->expects( $this->any() )
 			->method( 'getApiAccess' )
 			->will( $this->returnValue( $access ) );
-		$mock->expects( $this->once() )
+		$mock->expects( $this->any() )
 			->method( 'isTestLocation' )
 			->will( $this->returnValue( $test ) );
-		$mock->expects( $this->once() )
+		$mock->expects( $this->any() )
 			->method( 'getEnvValue' )
 			->will( $this->returnValue( $env ) );
 
@@ -120,10 +120,10 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 				\ApiAccessService::URL_TEST | 1, false, 1, false
 			],
 			[
-				4, false, 8, false
+				\ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true,
 			],
 			[
-				4, false, 8 | 4, true
+				\ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false
 			]
 
 		];
