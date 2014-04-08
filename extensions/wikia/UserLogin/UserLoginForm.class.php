@@ -191,8 +191,6 @@ class UserLoginForm extends LoginForm {
 		return true;
 	}
 
-
-
 	/**
 	 * Validates email in terms of maximum registrations per email limit
 	 *
