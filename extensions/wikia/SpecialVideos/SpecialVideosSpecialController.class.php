@@ -15,9 +15,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->response->addAsset('special_videos_css_monobook');
-		$this->response->addAsset('special_videos_js');
-		$this->response->addAsset('special_videos_css');
+		$this->response->addAsset( 'special_videos_css_monobook' );
+		$this->response->addAsset( 'special_videos_js' );
+		$this->response->addAsset( 'special_videos_css' );
 	}
 
 	/**
@@ -38,36 +38,19 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->wg->SupressPageSubtitle = true;
 
 		// enqueue i18n message for javascript
-		JSMessages::enqueuePackage('SpecialVideos', JSMessages::INLINE);
+		JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );
 
 		// Change the <title> attribute and the <h1> for the page
-		$this->getContext()->getOutput()->setPageTitle( wfMsg('specialvideos-page-title') );
-		$this->getContext()->getOutput()->setHTMLTitle( wfMsg('specialvideos-html-title') );
+		$this->getContext()->getOutput()->setPageTitle( wfMsg( 'specialvideos-page-title' ) );
+		$this->getContext()->getOutput()->setHTMLTitle( wfMsg( 'specialvideos-html-title' ) );
 
 		// For search engines
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
+		$specialVideos = new SpecialVideosHelper();
+
 		// Add meta description tag to HTML source
-		$catInfo = HubService::getComscoreCategory($this->wg->CityId);
-
-		$descriptionKey = 'specialvideos-meta-description';
-
-		switch ( $catInfo->cat_id ) {
-			case WikiFactoryHub::CATEGORY_ID_GAMING:
-				$descriptionKey .= '-gaming';
-				break;
-			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
-				$descriptionKey .= '-entertainment';
-				break;
-			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
-				$descriptionKey .= '-lifestyle';
-				break;
-			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
-				$descriptionKey .= '-corporate';
-				break;
-		}
-
-		$this->getContext()->getOutput()->addMeta( 'description', wfMsg($descriptionKey, $this->wg->Sitename) );
+		$this->getContext()->getOutput()->addMeta( 'description', $specialVideos->getMetaTagDescription() );
 
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
@@ -81,7 +64,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $msg ) ) {
 			$msgTitle = $this->request->getVal( 'msgTitle', '' );
-			$msgTitle = urldecode($msgTitle);
+			$msgTitle = urldecode( $msgTitle );
 
 			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
 		}
@@ -99,6 +82,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendSelfRequest( 'getVideos', $params );
 		$videos = $response->getVal( 'videos', [] );
 
+		// get total videos
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
 			$totalVideos = $mediaService->getTotalPremiumVideos();
@@ -109,9 +93,13 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		}
 		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
-		$videoHelper = new VideoHandlerHelper();
-		$specialVideos = new SpecialVideosHelper();
-		$sortingOptions = array_merge( $videoHelper->getSortOptions(), $specialVideos->getFilterOptions() );
+		// get sorting options
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$sortingOptions = $specialVideos->getSortOptionsMobile();
+		} else {
+			$sortingOptions = array_merge( $specialVideos->getSortOptions(), $specialVideos->getFilterOptions() );
+		}
+
 		if ( !array_key_exists( $sort, $sortingOptions ) ) {
 			$sort = 'recent';
 		}
@@ -149,8 +137,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		 * For the purpose of hiding the appropriate UI elements
 		 * Current elements affected: last page of results in Special:Videos
 		 */
-
-		$this->showAddVideoBtn = $this->wg->User->isAllowed('videoupload');
+		$this->showAddVideoBtn = $this->wg->User->isAllowed( 'videoupload' );
 	}
 
 	/**

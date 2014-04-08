@@ -352,20 +352,6 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * get list of sorting options
-	 * @return array $options
-	 */
-	public function getSortOptions() {
-		$options = array(
-			'recent' => wfMessage( 'specialvideos-sort-latest' )->text(),
-			'popular' => wfMessage( 'specialvideos-sort-most-popular' )->text(),
-			'trend' => wfMessage( 'specialvideos-sort-trending' )->text(),
-		);
-
-		return $options;
-	}
-
-	/**
 	 * get select options for template
 	 * @param array $options
 	 * @param string $selected
