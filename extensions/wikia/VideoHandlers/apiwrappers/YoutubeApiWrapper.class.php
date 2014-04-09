@@ -268,11 +268,12 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 */
 	protected function getApiUrl() {
 
-		global $wgYoutubeConfig;
+		$youtubeConfig = F::app()->wg->YoutubeConfig;
+
 
 		$params = [
-			'v' => $wgYoutubeConfig['v'],
-			'key' => $wgYoutubeConfig['DeveloperKey'],
+			'v' => $youtubeConfig['v'],
+			'key' => $youtubeConfig['DeveloperKey'],
 			'alt' => 'json'
 		];
 

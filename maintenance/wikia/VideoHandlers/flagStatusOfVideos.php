@@ -36,13 +36,12 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	public function execute() {
-		$this->test       = $this->hasOption( 'test' ) ? true : false;
-		$this->verbose    = $this->hasOption( 'verbose' ) ? true : false;
+		$this->test       = $this->hasOption( 'test' );
+		$this->verbose    = $this->hasOption( 'verbose' );
 		$workingVideos    = 0;
 		$deletedVideos    = 0;
 		$privateVideos    = 0;
 		$otherErrorVideos = 0;
-		$videoInfoHelper  = new VideoInfoHelper();
 
 		$this->debug( "(debugging output enabled)\n ");
 		$allVideos = $this->getVideos();
@@ -76,7 +75,7 @@ class flagStatusOfVideos extends Maintenance {
 					}
 					if ( !$this->test ) {
 						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
-						$this->setAsRemoved( $video, $videoInfoHelper );
+						$this->setAsRemoved( $video );
 					}
 				}
 			}
@@ -110,11 +109,8 @@ class flagStatusOfVideos extends Maintenance {
 			->ON( "page_title", "img_name")
 			->WHERE( "img_media_type" )->EQUAL_TO( "VIDEO" )
 			->AND_( "page_namespace" )->EQUAL_TO( NS_FILE )
-			->run( $db, function ( $result ) {
-				while ( $row = $result->fetchObject( $result ) ) {
-					$videos[] = $row;
-				}
-				return $videos;
+			->runLoop( $db, function ( &$unprocessedVideos, $row ) {
+				$unprocessedVideos[] = $row;
 			});
 
 		$processedVideos = array();
@@ -133,9 +129,10 @@ class flagStatusOfVideos extends Maintenance {
 	/**
 	 * @param $videos - Flag video as removed in the video_info table
 	 */
-	private function setAsRemoved ( $video, $videoInfoHelper ) {
+	private function setAsRemoved ( $video ) {
 		$videoInfo = VideoInfo::newFromTitle( $video['video_title'] );
 		if ( is_null( $videoInfo ) ) {
+			$videoInfoHelper  = new VideoInfoHelper();
 			$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
 			$videoInfo->setRemoved();
