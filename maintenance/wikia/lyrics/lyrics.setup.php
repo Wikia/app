@@ -1,8 +1,13 @@
 <?php
-require_once( dirname(__FILE__) . '/DataBaseAdapter.class.php' );
-require_once( dirname(__FILE__) . '/LyricsScraper.class.php' );
+$dir = dirname( __FILE__ );
 
-require_once( dirname(__FILE__) . '/scrapers/BaseScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/ArtistScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/AlbumScraper.class.php' );
-require_once( dirname(__FILE__) . '/scrapers/SongScraper.class.php' );
+require_once( $dir . '/../../../extensions/wikia/LyricsApi/LyricsApiBase.class.php' );
+
+require_once( $dir . '/../../../lib/vendor/Solarium/Autoloader.php' );
+require_once( $dir . '/SolrAdapter.class.php' );
+require_once( $dir . '/LyricsScraper.class.php' );
+
+require_once( $dir . '/scrapers/BaseScraper.class.php' );
+require_once( $dir . '/scrapers/ArtistScraper.class.php' );
+require_once( $dir . '/scrapers/AlbumScraper.class.php' );
+require_once( $dir . '/scrapers/SongScraper.class.php' );
