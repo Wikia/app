@@ -4,10 +4,98 @@
 
 $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
+@mixin hoverState($size: '50') {
+	$url: '/skins/oasis/images/videoPlayButtons/' + $size + 'x' + $size + '_hover.png';
+
+	&:hover .play-circle {
+		background-image: url($url); /* base64 */
+	}
+}
+
 // Video Thumbnails
 .video-thumbnail {
+	@include hoverState();
 	display: inline-block;
 	position: relative;
+
+	// play button styles
+	// defaults to 'medium' size
+	.play-circle {
+		background-image: url('/skins/oasis/images/videoPlayButtons/50x50.png'); /* base64 */
+		background-size: 100%;
+		display: block;
+		height: 50px; // only for medium
+		left: 50%;
+		margin: -25px 0 0 -25px; // only for medium
+		position: absolute;
+		top: 50%;
+		width: 50px; // only for medium
+	}
+
+	&.xsmall, &.xxsmall {
+		@include hoverState('27');
+		.play-circle{
+			background-image: url('/skins/oasis/images/videoPlayButtons/27x27.png'); /* base64 */
+			height: 27px;
+			width: 27px;
+			bottom: 10px;
+			left: 36px;
+			top: auto;
+		}
+	}
+
+	&.xxsmall {
+		// same play button size as xsmall but positioned lower
+		.play-circle {
+			bottom: 6px;
+			left: 32px;
+		}
+	}
+
+	&.small {
+		@include hoverState('35');
+		.play-circle{
+			background-image: url('/skins/oasis/images/videoPlayButtons/35x35.png'); /* base64 */
+			height: 35px;
+			width: 35px;
+			bottom: 10px;
+			left: 34px;
+			top: auto;
+		}
+	}
+
+	&.large {
+		@include hoverState('70');
+		.play-circle{
+			background-image: url('/skins/oasis/images/videoPlayButtons/70x70.png'); /* base64 */
+			height: 70px;
+			margin: -35px 0 0 -35px;
+			width: 70px;
+		}
+	}
+
+	&.xlarge {
+		@include hoverState('90');
+		.play-circle{
+			background-image: url('/skins/oasis/images/videoPlayButtons/90x90.png'); /* base64 */
+			height: 90px;
+			margin: -45px 0 0 -45px;
+			width: 90px;
+		}
+	}
+
+	&.hide-play {
+		// Don't show the thumbnail till hover
+		.play-circle {
+			display: none;
+		}
+
+		&:hover {
+			.play-circle {
+				display: block;
+			}
+		}
+	}
 
 	&.fluid {
 		width: 100%;
@@ -32,94 +120,6 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		padding: 0px 6px;
 		position: absolute;
 		right: 0;
-	}
-
-	// play button styles
-	// defaults to 'medium' size
-	// positioned in the center
-	.play-circle {
-		background: url('/skins/oasis/images/icon_play_button.png'); /* base64 */
-		background-size: 100%;
-		display: block;
-		height: 50px; // only for medium
-		left: 50%;
-		margin: -25px 0 0 -25px; // only for medium
-		position: absolute;
-		top: 50%;
-		width: 50px; // only for medium
-	}
-
-	// xsmall
-	// positioned in the bottom/left instead of center
-	&.xsmall, &.xxsmall {
-		.play-circle{
-			height: 27px;
-			width: 27px;
-			bottom: 10px;
-			left: 36px;
-			top: auto;
-		}
-	}
-
-	// xxsmall thumbnails
-	&.xxsmall {
-		// same play button size as xsmall but positioned lower
-		.play-circle {
-			bottom: 6px;
-			left: 32px;
-		}
-	}
-
-	// small thumbnails
-	&.small {
-		// play button is in the bottom/left
-		.play-circle{
-			height: 35px;
-			width: 35px;
-			bottom: 10px;
-			left: 34px;
-			top: auto;
-		}
-	}
-
-	// large thumbnails
-	&.large {
-		// play button is in the center
-		.play-circle{
-			height: 70px;
-			margin: -35px 0 0 -35px;
-			width: 70px;
-		}
-	}
-
-	// xlarge thumbnails
-	&.xlarge {
-		// play button is in the center
-		.play-circle{
-			height: 90px;
-			margin: -45px 0 0 -45px;
-			width: 90px;
-		}
-	}
-
-	// darker opacity on hover state
-	&:hover {
-		.play-circle {
-			background-image: url('/skins/oasis/images/icon_play_button_hover.png'); /* base64 */
-		}
-	}
-
-	// Don't show the thumbnail till hover
-	&.hide-play {
-		.play-circle {
-			display: none;
-		}
-
-		&:hover {
-			.play-circle {
-				display: block;
-			}
-		}
 	}
 }
 
