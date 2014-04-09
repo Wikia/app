@@ -1378,7 +1378,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					// Get play button overlay for video thumb
 					$videoPlayButton = $this->videoPlayButton;
-					$navClass = 'xsmall video-thumbnail';
+					$navClass = 'xxsmall video-thumbnail';
 				}
 
 				$data = array(
