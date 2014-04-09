@@ -226,8 +226,14 @@ class ThumbnailController extends WikiaController {
 		$thumbnail = $this->getVal( 'html' );
 		$caption = $this->getVal( 'caption' );
 
-		$alignClass = "t" . $align; // align classes are prefixed by "t"
-		$title = $file->getTitle()->getText();
+		// align classes are prefixed by "t"
+		$alignClass = "t" . $align;
+
+		// only show titles for videos
+		$title = '';
+		if (WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			$title = $file->getTitle()->getText();
+		}
 
 		$addedBy = '';
 		$attributeTo = $file->getUser();
@@ -242,7 +248,7 @@ class ThumbnailController extends WikiaController {
 			// get link to user page
 			$link = AvatarService::renderLink( $attributeTo );
 
-			// TODO: change this to "Added by $user X days ago"
+			// TODO: change this to "By $user $time days ago"
 			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
 		}
 

@@ -139,19 +139,18 @@
 		clear: right;
 		float: right;
 		position: relative;
-		margin: 0 0 6px 6px;
+		margin: 0 0 10px 20px;
 		border: 0;
 	}
 	.floatleft {
 		float: left;
 		clear: left;
 		position: relative;
-		margin: 0 6px 6px 0;
+		margin: 0 20px 10px 0;
 		border: 0;
 	}
 	// TODO: look into removing this with VID-1551
 	.thumbinner {
-		//background-color: $color-article-thumb-background;
 		@include linear-gradient($color-article-thumb-background, top, $color-page, 0%, $color-article-thumb-background, 100%);
 		border: 1px solid $color-article-thumb-border;
 		overflow: hidden;

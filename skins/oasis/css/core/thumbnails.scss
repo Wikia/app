@@ -2,6 +2,8 @@
 @import "skins/oasis/css/mixins/border-opacity";
 @import "skins/oasis/css/core/color";
 
+$color-subtle-text: mix($color-page, $color-alternate-text, 50%);
+
 // Video Thumbnails
 .video-thumbnail {
 	display: inline-block;
@@ -140,14 +142,9 @@
 		display: block;
 	}
 
-	.details {
-		float: right;
-		margin: -32px 0 0 5px;
-	}
-
 	p, p + p {
 		font-size: 12px;
-		margin: 10px 0;
+		margin: 5px 0;
 		line-height: 16px;
 	}
 
@@ -163,11 +160,15 @@
 		margin-right: 20px;
 	}
 
+	.title {
+		font-weight: bold;
+	}
+
 	.attribution {
-		color: $color-alternate-text;
+		color: $color-subtle-text;
 
 		a {
-			color: $color-alternate-text;
+			color: $color-subtle-text;
 
 			&:hover {
 				color: $color-links;
@@ -178,5 +179,17 @@
 
 	.caption {
 		color: $color-alternate-text;
+	}
+
+	.details {
+		float: right;
+		margin: 0;
+		visibility: hidden;
+	}
+
+	&:hover {
+		.details {
+			visibility: visible;
+		}
 	}
 }
