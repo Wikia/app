@@ -60,10 +60,6 @@ class LyricsWikiCrawler extends Maintenance {
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTIST_ID, 0 ) ) ) && $articleId > 0 ) {
 			$this->setArticleId( $articleId );
 			$this->doScrapeArtist();
-		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTICLE_ID, 0 ) ) ) && $articleId > 0 ) {
-			die('NOT IMPLEMENTED'.PHP_EOL);
-			$this->setArticleId( $articleId );
-			$this->doScrapeArticle();
 		} else {
 			$this->doScrapeArticlesFromYesterday();
 		}
@@ -104,32 +100,6 @@ class LyricsWikiCrawler extends Maintenance {
 			$this->setArticleId( $page->cl_from );
 			$this->doScrapeArtist();
 		}
-	}
-
-	/**
-	 * @desc Scrapes given single article
-	 */
-	public function doScrapeArticle() {
-		$start = microtime(true);
-		$status = ' ';
-		$this->output( 'Scraping article #' . $this->getArticleId() );
-		$article = Article::newFromID( $this->getArticleId() );
-
-		if ( !is_null($article) ) {
-			$categories = CategoryHelper::extractCategoriesFromWikitext( $article->getContent() );
-			if ( !empty( $categories ) ) {
-				//TODO: finish: check if there is Artist category if yes, set article id and call doScrapeArtist()
-				// otherwise get the artist article id by calling convertIntoArtistPages() and then set the article id
-				// and call doScrapeArtist()
-				print_r( $categories );
-			} else {
-				$status .= 'Unknown article type (no categories found)';
-			}
-		} else {
-			$status .= 'Article not found ';
-		}
-
-		$this->output( $status . round( microtime( true ) - $start, 2) . 's' . PHP_EOL );
 	}
 
 	/**
