@@ -128,7 +128,7 @@ class TasksModel {
 		$task = new $class();
 		$call = call_user_func_array([$task, 'call'], array_merge([$method], $args));
 
-		$taskId = (new \Wikia\Tasks\AsyncTask())
+		$taskId = (new \Wikia\Tasks\AsyncTaskList())
 			->createdBy($wgUser->getName())
 			->add($call)
 			->queue();

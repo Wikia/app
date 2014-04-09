@@ -16,7 +16,7 @@ use PhpAmqpLib\Exception\AMQPTimeoutException;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Tasks\BaseTask;
 
-class AsyncTask {
+class AsyncTaskList {
 	/** @var AMQPConnection connection to message broker */
 	protected $connection;
 
