@@ -1,14 +1,14 @@
-<a href="{{fileUrl}}">
-	<li class="item">
-		<div class="thumbnail">
-			{{{thumbnail}}}
-			<img src="{{thumbUrl}}" alt="{{fileTitle}}">
-		</div><!--
-		leave this comment in to truncate whitespace between elements
-		for display: inline-block
-		--><div class="info">
+<li class="item">
+	<div class="thumbnail">
+		{{{thumbnail}}}
+		<img src="{{thumbUrl}}" alt="{{fileTitle}}">
+	</div><!--
+	leave this comment in to truncate whitespace between elements
+	for display: inline-block
+	--><div class="info">
+		<a href="{{fileUrl}}" alt="{{title}}">
 			<span class="title">{{title}}</span>
 			<span class="views">{{viewTotal}} </span>
-		</div>
-	</li>
-</a>
+		</a>
+	</div>
+</li>

@@ -6,20 +6,22 @@
 		--><li>{{sortingOptions.recent}}</li>
 	</ul>
 	<ul class="video-list mobile">
-	{{#videos}}
-			<li class="item">
-				<div class="thumbnail">
-					{{{thumbnail}}}
-					<img src="{{thumbUrl}}" alt="{{fileTitle}}">
-				</div><!--
-				leave this comment in to truncate whitespace between elements
-				for display: inline-block
-				--><div class="info">
+		{{#videos}}
+		<li class="item">
+			<div class="thumbnail">
+				{{{thumbnail}}}
+				<img src="{{thumbUrl}}" alt="{{fileTitle}}">
+			</div><!--
+			leave this comment in to truncate whitespace between elements
+			for display: inline-block
+			--><div class="info">
+				<a href="{{fileUrl}}" alt="{{title}}">
 					<span class="title">{{title}}</span>
 					<span class="views">{{viewTotal}} </span>
-				</div>
-			</li>
-	{{/videos}}
+				</a>
+			</div>
+		</li>
+		{{/videos}}
 	</ul>
 	<button class="btn load-more">Load More</button>
 </div>

@@ -8,15 +8,15 @@ define('specialVideos.mobile.views.index', [
 	 * SpecialVideosIndexView
 	 * @constructor
 	 * @description View class for Special:Videos on mobile
-	 * @param cfg An object that contains 'el' & 'collection' properties
+	 * @param config An object that contains 'el' & 'collection' properties
 	 */
-	function SpecialVideosIndexView(cfg) {
-		this.$el = $(cfg.el);
+	function SpecialVideosIndexView(config) {
+		this.$el = $(config.el);
 		this.$filter = this.$el.find('.filter');
 		this.$loadMoreBtn = this.$el.find('.load-more');
 
-		this.collection = cfg.collection;
-		this.filterActiveClass = cfg.filterActiveClass;
+		this.collection = config.collection;
+		this.filterActiveClass = config.filterActiveClass;
 
 		this.initialize();
 	}
