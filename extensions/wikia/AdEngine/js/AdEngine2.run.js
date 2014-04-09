@@ -71,7 +71,7 @@ require([
 	};
 
 	// Load late ads now
-	window.wgAfterContentAndJS.push(function () {
+	window.AdEngine_loadLateAds = function () {
 
 		require(['ext.wikia.adEngine.adConfigLate'], function (adConfigLate) {
 			log('launching late ads now', 1, module);
@@ -86,7 +86,11 @@ require([
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
 
-	});
+	};
+
+	if (window.wgEnableRHonDesktop) {
+		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
+	}
 
 	// Load Krux asynchronously later
 	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
