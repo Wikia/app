@@ -425,59 +425,26 @@ class OasisController extends WikiaController {
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
 
-		if ( empty($wgOasisDisableWikiaScriptLoader)) {
-			// Load the combined JS
-			$assets = [];
+		$assets = $this->assetsManager->getURL( $assetGroups ) ;
 
-			$assets['oasis_shared_js'] = $this->assetsManager->getURL($assetGroups);
+		// jQueryless version - appears only to be used by the ad-experiment at the moment.
+		// disabled - not needed atm (and skipped in wsl-version anyway)
+		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-			// jQueryless version - appears only to be used by the ad-experiment at the moment.
-			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL($isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
-
-			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-				foreach ($assets as $group => $urls) {
-					foreach ($urls as $index => $u) {
-						$assets[$group][$index] = $this->rewriteJSlinks($assets[$group][$index]);
-					}
-				}
+		// get urls
+		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+			foreach ($assets as $index => $url) {
+				$assets[$index] = $this->rewriteJSlinks( $url );
 			}
+		}
 
-			$assets['references'] = $jsReferences;
+		// as $jsReferences
+		$assets = array_merge($assets, $jsReferences);
 
-			// generate code to load JS files
-			$assets = json_encode($assets);
-			$jsLoader = <<<EOT
-<script type="text/javascript">
-	var wsl_assets = {$assets};
-	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
-
-	(function(){ wsl.loadScript(toload); })();
-</script>
-EOT;
-		} else {
-			// skip WikiaScriptLoader
-
-			$assets = $this->assetsManager->getURL( $assetGroups ) ;
-
-			// jQueryless version - appears only to be used by the ad-experiment at the moment.
-			// disabled - not needed atm (and skipped in wsl-version anyway)
-			// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
-
-			// get urls
-			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-				foreach ($assets as $index => $url) {
-					$assets[$index] = $this->rewriteJSlinks( $url );
-				}
-			}
-
-			// as $jsReferences
-			$assets = array_merge($assets, $jsReferences);
-
-			// generate direct script tags
-			foreach ($assets as $url) {
-				$url = htmlspecialchars( $url );
-				$jsLoader .= "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
-			}
+		// generate direct script tags
+		foreach ($assets as $url) {
+			$url = htmlspecialchars( $url );
+			$jsLoader .= "<script src=\"{$url}\"></script>\n";
 		}
 
 		$tpl = $this->app->getSkinTemplateObj();
