@@ -431,27 +431,21 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isNotBlockedByPhalanx( $user ) {
-		global $wgCaptchaTriggers;
 
-		// Disable Captcha check
-		$oldValue = $wgCaptchaTriggers;
-		$wgCaptchaTriggers['createaccount'] = false;
-		$abortError = '';
-		$phalanxValid = true;
+		return UserLoginHelper::callWithCaptchaDisabled(function($params) {
+			$abortError = '';
+			$phalanxValid = true;
 
-		if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
-			return $this->setResponseFields(
-				'error',
-				$abortError,
-				'email'
-			);
-			$phalanxValid = false;
-		}
-
-		// Restore captchaTriggers value
-		$wgCaptchaTriggers = $oldValue;
-
-		return $phalanxValid;
+			if( !wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) ) ) {
+				return $this->setResponseFields(
+					'error',
+					$abortError,
+					'email'
+				);
+				$phalanxValid = false;
+			}
+			return $phalanxValid;
+		}, array( 'user' => $user ) );
 	}
 
 	/**
