@@ -41,7 +41,6 @@ define('specialVideos.mobile.views.index', [
 
 		html = '';
 		// if filter is changed, then we user $.fn.html, else $.fn.append
-		console.log(this.collection.page);
 		insertionMethod = (this.collection.page > 1) ? 'append' : 'html';
 
 		this.collection.data.videos.forEach(function (item) {
