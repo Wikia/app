@@ -148,7 +148,9 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArticlesFromYesterday() {
 		$yesterdayTs = strtotime( '-1 day' );
 		$yesterday = date( "Y-m-d", $yesterdayTs );
+
 		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
+
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
 		$pages = $this->convertIntoArtistPages( $pages );
 		$start = date( 'Y-m-d\TH:i:s.u\Z' );
@@ -158,7 +160,25 @@ class LyricsWikiCrawler extends Maintenance {
 			$this->doScrapeArtist();
 		}
 
-		$this->deleteOldDocsAfterUpdate( $start, $pages );
+		$artists = $this->getArtistTitlesFromIds( $pages );
+		$this->dba->delDocsByArtistsAndDate( $artists, $start );
+	}
+
+	/**
+	 * @desc Creates instances of Title for given pages ids and returns array of titles' texts
+	 *
+	 * @param Array $pages
+	 * @return array
+	 */
+	public function getArtistTitlesFromIds( $pages ) {
+		$result = [];
+		$artistsTitles = Title::newFromIDs( $pages );
+
+		foreach( $artistsTitles as $artistTitle ) {
+			$result[] = $artistTitle->getText();
+		}
+
+		return $result;
 	}
 
 	/**
@@ -241,27 +261,6 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 
 		return (int) $articleId;
-	}
-
-	/**
-	 * @desc Deletes all docs in the index which are connected with updated artist pages and have timestamp lower than update date
-	 *
-	 * @param String $updateStartDate
-	 * @param Array $pages
-	 *
-	 * @return Solarium_Result_Update
-	 */
-	private function deleteOldDocsAfterUpdate( $updateStartDate, $pages ) {
-		$queries = [];
-		$artistsTitles = Title::newFromIDs( $pages );
-
-		foreach( $artistsTitles as $i => $artistTitle ) {
-			$i++;
-			$queries['keys'][] = 'artist_name: %P' . $i . '%';
-			$queries['values'][] = $artistTitle->getText();
-		}
-
-		$this->dba->deleteArtistsWithTimestamp( $queries, $updateStartDate );
 	}
 
 	/**

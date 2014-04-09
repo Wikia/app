@@ -278,18 +278,26 @@ class SolrAdapter implements DataBaseAdapter {
 	}
 
 	/**
-	 * @desc Deletes documents from the Solr index based on given queries
+	 * @desc Deletes documents from the Solr; the documents should have timestamp lower than given $datetime parameter
+	 * and should belong to one of the artists
 	 *
 	 * @param Array $artists
 	 * @param String $datetime
 	 * @return Solarium_Result_Update
 	 */
-	public function deleteArtistsWithTimestamp( $artists, $datetime ) {
-		$query = $this->client->createSelect();
-		$queryText = '-timestamp:[' . $query->getHelper()->formatDate( $datetime ) . ' TO *] AND ';
-		$queryText .= implode( ' OR ', $artists['keys'] );
-		$query->setQuery( $queryText, $artists['values'] );
+	public function delDocsByArtistsAndDate( $artists, $datetime ) {
+		$placeholders = [];
+		$artistsCount = count( $artists );
+		for( $i = 1; $i <= $artistsCount; $i++ ) {
+			$placeholders[] = 'artist_name: %P' . $i . '%';
+		}
 
+		$query = $this->client->createSelect();
+		$queryText = 'timestamp:[* TO ' . $query->getHelper()->formatDate( $datetime ) . '] AND (';
+		$queryText .= implode( ' OR ', $placeholders );
+		$queryText .= ') ';
+
+		$query->setQuery( $queryText, $artists );
 		/** @var Solarium_Query_Update $update */
 		$update = $this->client->createUpdate();
 		$update->addDeleteQuery( $query );
