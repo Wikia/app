@@ -288,14 +288,25 @@ class VideosModule extends WikiaModel {
 
 		$videoList = [];
 		if ( !empty( $videos ) ) {
+			$thumbOptions = [
+				'useTemplate' => true,
+				'fluid'       => true,
+				'forceSize'   => 'small',
+			];
+
+			$thumbParams = [
+				'width'        => self::THUMBNAIL_WIDTH,
+				'height'       => self::THUMBNAIL_HEIGHT,
+				'thumbOptions' => $thumbOptions,
+				'getThumb'     => true,
+			];
+
 			$helper = new VideoHandlerHelper();
 			$videosDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videos,
-				self::THUMBNAIL_WIDTH,
-				self::THUMBNAIL_HEIGHT,
-				self::POSTED_IN_ARTICLES,
-				self::GET_THUMB
+				$thumbParams,
+				self::POSTED_IN_ARTICLES
 			);
 
 			foreach( $videosDetail as $video ) {

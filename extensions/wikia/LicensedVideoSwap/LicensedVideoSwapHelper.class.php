@@ -524,6 +524,8 @@ SQL;
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
+		$thumbParams = [ 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ];
+
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
 			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
@@ -561,11 +563,12 @@ SQL;
 			}
 
 			// get video detail
-			$videoDetail = $helper->getVideoDetailFromWiki( $this->wg->WikiaVideoRepoDBName,
-															$videoInfo['title'],
-															self::THUMBNAIL_WIDTH,
-															self::THUMBNAIL_HEIGHT,
-															self::POSTED_IN_ARTICLES );
+			$videoDetail = $helper->getVideoDetailFromWiki(
+				$this->wg->WikiaVideoRepoDBName,
+				$videoInfo['title'],
+				$thumbParams,
+				self::POSTED_IN_ARTICLES
+			);
 
 			// Go to the next suggestion if we can't get any details for this one
 			if ( empty( $videoDetail ) ) {

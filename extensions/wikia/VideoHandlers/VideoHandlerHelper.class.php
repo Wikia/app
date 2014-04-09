@@ -244,8 +244,8 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
 	 * @param array $thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
 	 *   Keys:
-	 *     width - the width of the thumbnail to return
-	 *     height - the height of the thumbnail to return
+	 *     width - the width of the thumbnail to return (required)
+	 *     height - the height of the thumbnail to return (required)
 	 *     getThumb - whether to return a fully formed html thumbnail of the video or not
 	 *     thumbOptions - the option of the thumbnail to return
 	 * @param integer $postedInArticles
@@ -275,16 +275,10 @@ class VideoHandlerHelper extends WikiaModel {
 
 			$thumbnail = '';
 			if ( !empty( $thumbParams['getThumb'] ) ) {
-				if ( empty( $thumbParams['thumbOptions'] ) ) {
-					$thumbOptions = [
-						'useTemplate' => true,
-						'fluid'       => true,
-						'forceSize'   => 'small',
-					];
-				} else {
-					$thumbOptions = $thumbParams['thumbOptions'];
+				$thumbOptions = empty( $thumbParams['thumbOptions'] ) ? [] : $thumbParams['thumbOptions'];
+				if ( empty( $thumbOptions['alt'] ) ) {
+					$thumbOptions['alt'] = htmlspecialchars( $title->getText() );
 				}
-
 				$thumbnail = $thumb->toHtml( $thumbOptions );
 			}
 
@@ -330,23 +324,19 @@ class VideoHandlerHelper extends WikiaModel {
 	 * Typically used to get premium video info from video.wikia.com when on another wiki.
 	 * @param string $dbName - The DB name of the wiki that should be used to find video details
 	 * @param array|string $title - The list of title of the video to get details for
-	 * @param integer $thumbWidth - The width of the thumbnail to return
-	 * @param integer $thumbHeight - The height of the thumbnail to return
+	 * @param array $thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
 	 * @param integer $postedInArticles - Cap on number of "posted in" article details to return
-	 * @param boolean $getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @return array - As associative array of video information
 	 */
-	public function getVideoDetailFromWiki( $dbName, $title, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
+	public function getVideoDetailFromWiki( $dbName, $title, $thumbParams, $postedInArticles ) {
 		wfProfileIn( __METHOD__ );
 
 		$params = [
 			'controller'   => 'VideoHandler',
 			'method'       => 'getVideoDetail',
 			'fileTitle'    => $title,
-			'thumbWidth'   => $thumbWidth,
-			'thumbHeight'  => $thumbHeight,
+			'thumbParams'  => $thumbParams,
 			'articleLimit' => $postedInArticles,
-			'getThumb'     => $getThumb
 		];
 
 		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
