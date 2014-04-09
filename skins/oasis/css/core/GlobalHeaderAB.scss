@@ -113,6 +113,11 @@ body.global-header-fixed-at-top .WikiaHeader {
 			&.alternative {
 				background-color: $menu-hover-bg-color;
 				color: $color;
+
+				&:hover {
+					background-color: #1380d7;
+					color: $bg-color;
+				}
 			}
 		}
 
