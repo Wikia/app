@@ -126,12 +126,8 @@ class flagStatusOfVideos extends Maintenance {
 	 * @param $status - Status of videos (see constants above)
 	 */
 	private function setStatus( $videos, $status ) {
-		$db = wfGetDB( DB_MASTER );
-		$wikiaSQL = new WikiaSQL();
 		foreach ( $videos as $video ) {
-			$sql =  "REPLACE INTO page_wikia_props (page_id, propname, props) ";
-			$sql .= "VALUES ($video[page_id], " . WPP_VIDEO_STATUS . ", $status)";
-			$wikiaSQL->RAW( $sql )->run( $db );
+			wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
 		}
 	}
 
