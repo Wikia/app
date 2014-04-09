@@ -1098,7 +1098,7 @@ class WallHooksHelper {
 
 			switch($rc->getAttribute('rc_log_action')) {
 				case 'wall_remove':
-					$actionText = wfMsgExt(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-removed-'.$msgType, array('parseinline'), $wfMsgOpts);
+					$actionText = wfMsgExt(static::getMessagePrefix($rc->getAttribute('rNWall.i18nc_namespace')) . '-removed-'.$msgType, array('parseinline'), $wfMsgOpts);
 					break;
 				case 'wall_restore':
 					$actionText = wfMsgExt(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-restored-'.$msgType, array('parseinline'), $wfMsgOpts);
