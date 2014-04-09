@@ -414,7 +414,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isWithinRegistrationPerEmailLimit( $email ) {
-		if ( !UserLoginHooksHelper::withinEmailRegLimit( $email ) ) {
+		if ( !UserLoginHelper::withinEmailRegLimit( $email ) ) {
 			return $this->setResponseFields(
 				'error',
 				wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(),

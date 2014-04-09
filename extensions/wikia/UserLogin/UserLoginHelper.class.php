@@ -16,6 +16,7 @@ class UserLoginHelper extends WikiaModel {
 	const LIMIT_WIKIS = 3;
 
 	const WIKIA_CITYID_COMMUNITY = 177;
+	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
 
 	/**
 	 * get random avatars from the current wiki
@@ -535,6 +536,41 @@ class UserLoginHelper extends WikiaModel {
 		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
+		return true;
+	}
+
+	/**
+	 * Checks if Email belongs to the wikia domain;
+	 *
+	 * @param string $sEmail Email to check
+	 * @static
+	 * @return bool
+	 */
+	public static function isWikiaEmail( $sEmail ) {
+		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
+	}
+
+	/**
+	 * @desc Checks if the email provided is wikia mail and within the limit specified by $wgAccountsPerEmail
+	 *
+	 * @param $sEmail - email address to check
+	 * @return bool - TRUE if the email can be registered, otherwise FALSE
+	 */
+	public static function withinEmailRegLimit( $sEmail ) {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !self::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				return false;
+			}
+		}
 		return true;
 	}
 

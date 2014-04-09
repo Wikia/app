@@ -2,8 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
-
 	// set default user options and perform other actions after account creation
 	public static function onAddNewAccount( User $user, $byEmail ) {
 		$user->setOption( 'marketingallowed', 1 );
@@ -145,17 +143,6 @@ class UserLoginHooksHelper {
 	}
 
 	/**
-	 * Checks if Email belongs to the wikia domain;
-	 *
-	 * @param string $sEmail Email to check
-	 * @static
-	 * @return bool
-	 */
-	public static function isWikiaEmail( $sEmail ) {
-		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
-	}
-
-	/**
 	 * Returns number of activated accounts for specific email address
 	 *
 	 * @param mixed $sEmail
@@ -188,7 +175,7 @@ class UserLoginHooksHelper {
 		$sEmail = $user->getEmail();
 		if ( isset( $wgAccountsPerEmail )
 			&& is_numeric( $wgAccountsPerEmail )
-			&& !self::isWikiaEmail( $sEmail )
+			&& !UserLoginHelper::isWikiaEmail( $sEmail )
 		) {
 			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
 			$iCount = $wgMemc->get( $key );
@@ -204,28 +191,5 @@ class UserLoginHooksHelper {
         return true;
 	}
 
-	/**
-	 * @desc Checks if the email provided is wikia mail and within the limit specified by $wgAccountsPerEmail
-	 *
-	 * @param $sEmail - email address to check
-	 * @return bool - TRUE if the email can be registered, otherwise FALSE
-	 */
-	public static function withinEmailRegLimit( $sEmail ) {
-		global $wgAccountsPerEmail, $wgMemc;
-
-		if ( isset( $wgAccountsPerEmail )
-			&& is_numeric( $wgAccountsPerEmail )
-			&& !self::isWikiaEmail( $sEmail )
-		) {
-			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
-			$count = $wgMemc->get($key);
-			if ( $count !== false
-				&& (int)$count >= (int)$wgAccountsPerEmail
-			) {
-				return false;
-			}
-		}
-		return true;
-	}
 }
 

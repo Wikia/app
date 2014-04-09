@@ -198,7 +198,7 @@ class UserLoginForm extends LoginForm {
 	 */
 	public function initValidationRegsPerEmail() {
 		$sEmail = $this->mEmail;
-		$result = UserLoginHooksHelper::withinEmailRegLimit( $sEmail );
+		$result = UserLoginHelper::withinEmailRegLimit( $sEmail );
 		if (!$result) {
 			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
 		}
