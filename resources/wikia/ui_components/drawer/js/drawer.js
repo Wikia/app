@@ -70,6 +70,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	 * Open drawer
 	 */
 	Drawer.prototype.open = function () {
+		this.$drawer.scrollTop(0);
 		this.$drawer.addClass(OPEN_CLASS);
 		this.$subdrawer.removeClass(HIDDEN_CLASS);
 		this.$blackout.addClass(VISIBLE_CLASS);
@@ -117,6 +118,7 @@ define('wikia.ui.drawer', ['jquery', 'wikia.window'], function ($, w) {
 	Drawer.prototype.openSub = function () {
 		var self = this,
 			animate = function () {
+				self.$subdrawer.scrollTop(0);
 				self.$subdrawer.addClass(OPEN_CLASS);
 			};
 
