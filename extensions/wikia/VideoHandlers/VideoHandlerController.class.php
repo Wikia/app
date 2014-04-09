@@ -5,6 +5,11 @@
  */
 class VideoHandlerController extends WikiaController {
 
+	const VIDEO_LIMIT = 100;
+	const DEFAULT_THUMBNAIL_WIDTH = 250;
+	const DEFAULT_THUMBNAIL_HEIGHT = 250;
+	const DEFAULT_POSTED_IN_ARTICLES = 10;
+
 	/**
 	 * Get the embed code for the title given by fileTitle
 	 *
@@ -16,35 +21,34 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getEmbedCode( ) {
-		$title = $this->getVal('fileTitle', '');
-		$width = $this->getVal('width', '');
+		$title = $this->getVal( 'fileTitle', '' );
+		$width = $this->getVal( 'width', '' );
 		$autoplay = $this->getVal( 'autoplay', false );
 
 		$error = '';
-		if ( empty($title) ) {
-			$error = wfMessage('videohandler-error-missing-parameter', 'title')->inContentLanguage()->text();
+		if ( empty( $title ) ) {
+			$error = wfMessage( 'videohandler-error-missing-parameter', 'title' )->inContentLanguage()->text();
 		} else {
-			if ( empty($width) ) {
-				$error = wfMessage('videohandler-error-missing-parameter', 'width')->inContentLanguage()->text();
-			}
-			else {
-				$title = Title::newFromText($title, NS_FILE);
-				$file = ($title instanceof Title) ? wfFindFile($title) : false;
+			if ( empty( $width ) ) {
+				$error = wfMessage( 'videohandler-error-missing-parameter', 'width' )->inContentLanguage()->text();
+			} else {
+				$title = Title::newFromText( $title, NS_FILE );
+				$file = ( $title instanceof Title ) ? wfFindFile( $title ) : false;
 				if ( $file === false ) {
-					$error = wfMessage('videohandler-error-video-no-exist')->inContentLanguage()->text();
+					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode($width, $autoplay, true);
-					$this->setVal('videoId', $videoId);
-					$this->setVal('asset', $assetUrl);
-					$this->setVal('embedCode', $embedCode);
+					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$this->setVal( 'videoId', $videoId );
+					$this->setVal( 'asset', $assetUrl );
+					$this->setVal( 'embedCode', $embedCode );
 				}
 			}
 		}
 
-		if ( !empty($error) ) {
-			$this->setVal('error', $error);
+		if ( !empty( $error ) ) {
+			$this->setVal( 'error', $error );
 		}
 	}
 
@@ -84,14 +88,14 @@ class VideoHandlerController extends WikiaController {
 
 		$prefix = '';
 		if ( strpos( $sTitle, ':' ) === 0 ) {
-			$sTitle = substr( $sTitle, 1);
+			$sTitle = substr( $sTitle, 1 );
 			$prefix = ':';
 		}
 		if ( empty( $sTitle ) ) {
 			$this->setVal( 'error', 1 );
 		}
 
-		$sTitle = VideoFileUploader::sanitizeTitle($sTitle, '_');
+		$sTitle = VideoFileUploader::sanitizeTitle( $sTitle, '_' );
 
 		$this->setVal(
 			'result',
@@ -254,9 +258,9 @@ class VideoHandlerController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
-		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
-		$articleLimit = $this->getVal( 'articleLimit', '10' );
+		$thumbWidth = $this->getVal( 'thumbWidth', self::DEFAULT_THUMBNAIL_WIDTH );
+		$thumbHeight = $this->getVal( 'thumbHeight', self::DEFAULT_THUMBNAIL_HEIGHT );
+		$articleLimit = $this->getVal( 'articleLimit', self::DEFAULT_POSTED_IN_ARTICLES );
 		$getThumb = $this->getVal( 'getThumb', false );
 
 		if ( is_string( $fileTitle ) ) {
@@ -291,7 +295,7 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
 	 * @requestParam string sort [recent/popular/trend]
-	 * @requestParam integer limit
+	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
 	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
@@ -310,6 +314,11 @@ class VideoHandlerController extends WikiaController {
 		$filter = 'all';
 		if ( is_string( $providers ) ) {
 			$providers = [ $providers ];
+		}
+
+		// set maximum limit
+		if ( $limit > self::VIDEO_LIMIT ) {
+			$limit = self::VIDEO_LIMIT;
 		}
 
 		$mediaService = new MediaQueryService();

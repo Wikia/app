@@ -1723,6 +1723,23 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
 );
 
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'forum-forum-title' => 'Fórum',
+	'forum-active-threads' => '$1 aktív beszélgetés',
+	'forum-active-threads-on-topic' => "$1 aktív beszélgetés erről a témáról: '''$2'''", # Fuzzy
+	'forum-header-total-threads' => '<em>$1</em><span>beszélgetésfolyam<br />ezen a fórumon</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>aktív<br />beszélgetés</span>',
+	'forum-specialpage-heading' => 'Fórum',
+	'forum-specialpage-board-threads' => '$1 beszélgetésfolyam',
+	'forum-specialpage-board-posts' => '$1 hozzászólás',
+	'forum-specialpage-board-lastpostby' => 'Utoljára hozzászólt:',
+	'forum-specialpage-policies-edit' => 'Szerkesztés',
+	'forum-specialpage-policies' => 'A fórum szabályai / GYIK',
+);
+
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  */
@@ -1947,6 +1964,13 @@ $messages['lv'] = array(
 	'forum-activity-module-heading' => 'Forums Aktivitātes',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forums Valdes',
 	'forum-specialpage-oldforum-link' => 'Vecie forums Arhīvs',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'forum-forum-title' => 'Форум',
 );
 
 /** Malay (Bahasa Melayu)

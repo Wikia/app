@@ -33,7 +33,7 @@ EOT;
 				'title' => $this->title,
 				'jsFile' => array(
 					$jsFile,
-					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaModule.js",
+					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js",
 				),
 			),
 			'init' => 'wikia.videohandler.ooyala',

@@ -78,3 +78,5 @@ define("WPP_VIDEO_STATUS", 24);
 // This should only be used for properties that are simple strings or integers
 $wgWPPNotSerialized = array( WPP_LVS_SUGGEST_DATE, WPP_LVS_EMPTY_SUGGEST, WPP_LVS_STATUS, WPP_LYRICFIND_MARKED_FOR_REMOVAL,
 	WPP_VIDEO_STATUS);
+
+define( 'PREFERENCE_EDITOR', 'editor' );

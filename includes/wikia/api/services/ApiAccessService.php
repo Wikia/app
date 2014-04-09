@@ -43,16 +43,10 @@ class ApiAccessService {
 	 */
 	protected function getEnvValue() {
 		global $wgApiEnvironment;
-		static $val = null;
-		if( $val === null)
-		{
-			$name = isset( $wgApiEnvironment ) ? $wgApiEnvironment : "";
-			if ( isset( $this->envValues[ $name ] ) ) {
-				$val = $this->envValues[ $name ];
-			}
-			else{
-				$val = 0;
-			}
+		$val = 0;
+		$name = isset( $wgApiEnvironment ) ? $wgApiEnvironment : "";
+		if ( isset( $this->envValues[ $name ] ) ) {
+			$val = $this->envValues[ $name ];
 		}
 		return $val;
 	}

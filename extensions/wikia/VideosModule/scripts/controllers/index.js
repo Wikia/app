@@ -13,7 +13,8 @@ require([
 	function onWikiaRailLoad() {
 		return new RailModule({
 			el: document.getElementById('videosModule'),
-			model: new VideoData()
+			model: new VideoData(),
+			isFluid: false
 		});
 	}
 	$(function () {

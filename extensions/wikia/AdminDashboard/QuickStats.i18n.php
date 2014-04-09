@@ -620,6 +620,14 @@ $messages['hi'] = array(
 	'quickstats-number-shortening-billions' => '$1बिलियन',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-number-shortening' => '$1K',
+);
+
 /** Hungarian (magyar)
  * @author TK-999
  */
