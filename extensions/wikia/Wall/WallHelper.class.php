@@ -21,7 +21,7 @@ class WallHelper {
 	}
 
 	public function getArchiveSubPageText() {
-		return wfMsg('wall-user-talk-archive-page-title');
+		return wfMessage( 'wall-user-talk-archive-page-title' )->text();
 	}
 
 	/**
@@ -135,7 +135,7 @@ class WallHelper {
 		$parent = $wmessage->getTopParentObj();
 
 		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
-			$item['wall-url'] = $wmessage->getWallPageUrl();
+			$item['wall-url'] = $wmessage->getArticleTitle()->getPrefixedText();
 
 			$owner = $wmessage->getWallOwner();
 
@@ -150,22 +150,22 @@ class WallHelper {
 				} else {
 					$wmessage->load();
 					$metaTitle = $wmessage->getMetaTitle();
-					$item['title'] = empty($metaTitle) ? wfMsg('wall-no-title') : $metaTitle;
+					$item['title'] = empty($metaTitle) ? wfMessage( 'wall-no-title' )->escaped() : $metaTitle;
 				}
 
 				$item['url'] = $wmessage->getMessagePageUrl();
 				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
-				$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
+				$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">' . wfMessage( 'wall-wiki-activity-wall-owner', $item['wall-owner'] )->escaped() . '</a>' )->text();
 			} else {
 			//child
 				$parent->load();
 
 				if( !in_array(true, array($parent->isRemove(), $parent->isAdminDelete())) ) {
-					$title = wfMsg('wall-no-title'); // in case metadata does not include title field
+					$title = wfMessage( 'wall-no-title' )->escaped(); // in case metadata does not include title field
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData($item, $parent, $title);
 					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
-					$item['wall-msg'] = wfMsg( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">'.wfMsg('wall-wiki-activity-wall-owner', $item['wall-owner']).'</a>');
+					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">' . wfMessage( 'wall-wiki-activity-wall-owner', $item['wall-owner'] )->escaped() . '</a>' )->text();
 				} else {
 				//message was removed or deleted
 					$item = array();
@@ -193,7 +193,6 @@ class WallHelper {
 	 */
 
 	private function mapParentData(&$item, $parent, $title) {
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$metaTitle = $parent->getMetaTitle();
@@ -201,7 +200,7 @@ class WallHelper {
 		if( !empty($metaTitle) ) {
 			$item['title'] = $metaTitle;
 		} else {
-			$item['title'] = wfMsg('wall-no-title');
+			$item['title'] = wfMessage( 'wall-no-title' )->escaped();
 		}
 		$item['url'] = $parent->getMessagePageUrl();
 
@@ -332,7 +331,7 @@ class WallHelper {
 			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
 			if( User::isIP( $data['username']) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
-				$items[$i]['real-name'] = wfMsg('oasis-anon-user');
+				$items[$i]['real-name'] = wfMessage( 'oasis-anon-user' )->escaped();
 			} else {
 				$items[$i]['author'] = "";
 			}
@@ -386,10 +385,10 @@ class WallHelper {
 		$app = F::app();
 		$name = $app->wg->User->getName();
 		if (User::isIP($name)){
-			$name = wfMsg('oasis-anon-user');
+			$name = wfMessage( 'oasis-anon-user' )->escaped();
 			$name{0} = strtolower($name{0});
 		}
-		return wfMsg('wall-default-title', array('$1' => $name));
+		return wfMessage( 'wall-default-title', $name )->text();
 
 	}
 
@@ -558,7 +557,7 @@ class WallHelper {
 			}
 
 			if(isset($namespaces[NS_USER_WALL_MESSAGE])) {
-				$namespaces[NS_USER_WALL_MESSAGE] = wfMsg('wall-recentchanges-wall-thread');
+				$namespaces[NS_USER_WALL_MESSAGE] = wfMessage( 'wall-recentchanges-wall-thread' )->text();
 			}
 		}
 
@@ -638,7 +637,7 @@ class WallHelper {
 				'articleUrl' => $title->getPrefixedText(),
 				'articleFullUrl' => $title->getFullUrl(),
 				'articleTitleVal' => '',
-				'articleTitleTxt' => wfMsg( 'wall-recentchanges-wall-created-title' ),
+				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
 				'wallPageUrl' => $title->getPrefixedText(),
 				'wallPageFullUrl' =>  $title->getFullUrl(),
 				'wallPageName' => $row->page_title,
@@ -654,7 +653,7 @@ class WallHelper {
 				'articleUrl' => $title->getPrefixedText(),
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
-				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMsg( 'wall-recentchanges-deleted-reply-title' ) : $articleTitleTxt,
+				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,
 				'wallPageUrl' => $wm->getArticleTitle()->getPrefixedText(),
 				'wallPageFullUrl' => $wm->getArticleTitle()->getFullUrl(),
 				'wallPageName' => $wm->getArticleTitle()->getText(),
