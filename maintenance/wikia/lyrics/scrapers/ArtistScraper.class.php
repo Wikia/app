@@ -128,7 +128,7 @@ class ArtistScraper extends BaseScraper {
 		$result['title'] = false;
 
 		if ( count( $headingArr ) > 1) {
-			$result['title'] = $headingArr[0];
+			$result['title'] = trim( $headingArr[0] );
 			$result['year'] = '';
 			$heading = $headingArr[1];
 		}
