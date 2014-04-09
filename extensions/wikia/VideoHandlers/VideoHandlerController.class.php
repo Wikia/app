@@ -267,17 +267,16 @@ class VideoHandlerController extends WikiaController {
 			$fileTitles = $fileTitle;
 		}
 
+		$thumbParams = [
+			'width'    => $thumbWidth,
+			'height'   => $thumbHeight,
+			'getThumb' => $getThumb,
+		];
+
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail(
-				[ 'title' => $fileTitle ],
-				$thumbWidth,
-				$thumbHeight,
-				$articleLimit,
-				$getThumb
-			);
-
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $thumbParams, $articleLimit );
 			if ( !empty( $detail ) ) {
 				$videos[] = $detail;
 			}

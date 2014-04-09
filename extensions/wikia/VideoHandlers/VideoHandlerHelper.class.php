@@ -30,7 +30,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$content = '[['.WikiaFileHelper::getVideosCategory().']]';
 
 			$article = new Article( $title );
-			$status = $article->doEdit( $content, wfMessage('videohandler-log-add-video')->inContentLanguage()->plain(), $flags, false, $user );
+			$status = $article->doEdit( $content, wfMessage( 'videohandler-log-add-video' )->inContentLanguage()->plain(), $flags, false, $user );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -140,12 +140,12 @@ class VideoHandlerHelper extends WikiaModel {
 		$headerText = wfMessage( 'videohandler-description' );
 
 		// Grab everything after the description header
-		preg_match("/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches);
+		preg_match( "/^==\s*$headerText\s*==\n*(.+)/sim", $content, $matches );
 
 		$newContent = '';
-		if ( !empty($matches[1]) ) {
+		if ( !empty( $matches[1] ) ) {
 			// Get rid of any H2 headings after the description
-			$newContent = preg_replace('/^==[^=]+==.*/sm', '', $matches[1]);
+			$newContent = preg_replace( '/^==[^=]+==.*/sm', '', $matches[1] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -167,7 +167,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		// Don't include the description section if there's no description text
 		$descSection = '';
-		if ( trim($descText) != '' ) {
+		if ( trim( $descText ) != '' ) {
 			$descSection = "== $headerText ==\n".$descText;
 		}
 
@@ -181,13 +181,13 @@ class VideoHandlerHelper extends WikiaModel {
 
 			// If we find a description header here, exit the loop.  Check for English
 			// and the wiki's language
-			if ( preg_match("/^== *(Description|$headerText)/mi", $sectionText) ) {
+			if ( preg_match( "/^== *(Description|$headerText)/mi", $sectionText ) ) {
 				$sectionFound = 1;
 				break;
 			}
 
 			// If there are no more sections to check, exit the loop
-			if ( trim($sectionText) == '' ) {
+			if ( trim( $sectionText ) == '' ) {
 				break;
 			}
 
@@ -197,7 +197,7 @@ class VideoHandlerHelper extends WikiaModel {
 		// If we found a description section, replace it here
 		if ( $sectionFound ) {
 			// If there were any categories in the original section, put them back in
-			$catText = $this->extractCategories($sectionText);
+			$catText = $this->extractCategories( $sectionText );
 
 			$content = $this->wg->Parser->replaceSection( $content, $section, $descSection."\n".$catText );
 		} else {
@@ -220,8 +220,8 @@ class VideoHandlerHelper extends WikiaModel {
 		$catText = '(?:Category|'.wfMessage( 'nstab-category' ).')';
 		preg_match_all( "/(\[\[$catText:[^\]]+\]\])/", $content, $matches );
 
-		if ( !empty($matches[1]) ) {
-			return implode('', $matches[1]);
+		if ( !empty( $matches[1] ) ) {
+			return implode( '', $matches[1] );
 		} else {
 			return '';
 		}
@@ -242,13 +242,16 @@ class VideoHandlerHelper extends WikiaModel {
 	/**
 	 * get video detail
 	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
-	 * @param integer $thumbWidth
-	 * @param integer $thumbHeight
+	 * @param array $thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
+	 *   Keys:
+	 *     width - the width of the thumbnail to return
+	 *     height - the height of the thumbnail to return
+	 *     getThumb - whether to return a fully formed html thumbnail of the video or not
+	 *     thumbOptions - the option of the thumbnail to return
 	 * @param integer $postedInArticles
-	 * @param bool $getThumb
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $videoInfo, $thumbWidth, $thumbHeight, $postedInArticles, $getThumb = false ) {
+	public function getVideoDetail( $videoInfo, $thumbParams, $postedInArticles ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
@@ -257,29 +260,32 @@ class VideoHandlerHelper extends WikiaModel {
 
 		if ( $file ) {
 			// get thumbnail
-			$thumb = $file->transform( array( 'width' => $thumbWidth, 'height' => $thumbHeight ) );
+			$thumb = $file->transform( [ 'width' => $thumbParams['width'], 'height' => $thumbParams['height'] ] );
 			$thumbUrl = $thumb->getUrl();
 
 			// get user
-			if ( empty($videoInfo['addedBy']) ) {
+			if ( empty( $videoInfo['addedBy'] ) ) {
 				$userName = '';
 				$userUrl = '';
 			} else {
 				$user = User::newFromId( $videoInfo['addedBy'] );
-				$userName = ( User::isIP($user->getName()) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
+				$userName = ( User::isIP( $user->getName() ) ) ? wfMessage( 'oasis-anon-user' )->text() : $user->getName();
 				$userUrl = $user->getUserPage()->getFullURL();
 			}
 
 			$thumbnail = '';
-			// As it stands now, only the Videos Module is using this function to render thumbnails. If we find
-			// we're using this for other parts of the site, we should probably change getThumb to some sort
-			// of associative array rather than a boolean so that these thumbs could be customizabl
-			if ( $getThumb ) {
-				$thumbnail = $thumb->toHtml( [
-					'useTemplate' => true,
-					'fluid' => true,
-					'forceSize' => 'small',
-				] );
+			if ( !empty( $thumbParams['getThumb'] ) ) {
+				if ( empty( $thumbParams['thumbOptions'] ) ) {
+					$thumbOptions = [
+						'useTemplate' => true,
+						'fluid'       => true,
+						'forceSize'   => 'small',
+					];
+				} else {
+					$thumbOptions = $thumbParams['thumbOptions'];
+				}
+
+				$thumbnail = $thumb->toHtml( $thumbOptions );
 			}
 
 			// get article list
@@ -296,16 +302,16 @@ class VideoHandlerHelper extends WikiaModel {
 			$videoDetail = array(
 				'title' => $title->getDBKey(),
 				'fileTitle' => $title->getText(),
-				'description' => $this->getVideoDescription($file), // The description from the File page
+				'description' => $this->getVideoDescription( $file ), // The description from the File page
 				'fileUrl' => $title->getFullURL(),
 				'thumbUrl' => $thumbUrl,
 				'userName' => $userName,
 				'userUrl' => $userUrl,
 				'truncatedList' => $truncatedList,
 				'isTruncated' => $isTruncated,
-				'timestamp' => empty($videoInfo['addedAt']) ? '' : $videoInfo['addedAt'],
+				'timestamp' => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
 				'duration' => $file->getMetadataDuration(),
-				'viewsTotal' => empty($videoInfo['viewsTotal']) ? 0 : $videoInfo['viewsTotal'],
+				'viewsTotal' => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
 				'provider' => $file->getProviderName(),
 				'embedUrl' => $file->getHandler()->getEmbedUrl(),
 				'thumbnail' => $thumbnail,

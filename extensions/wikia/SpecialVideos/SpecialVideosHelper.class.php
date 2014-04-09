@@ -10,6 +10,7 @@ class SpecialVideosHelper extends WikiaModel {
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
 	const POSTED_IN_ARTICLES = 5;
+
 	public static $verticalCategoryFilters = [ "Games", "Lifestyle", "Entertainment" ];
 
 	/**
@@ -73,7 +74,7 @@ class SpecialVideosHelper extends WikiaModel {
 		$options = array();
 
 		$premiumVideos = $this->premiumVideosExist();
-		if ( !empty($premiumVideos) ) {
+		if ( !empty( $premiumVideos ) ) {
 			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
 		}
 
@@ -108,16 +109,30 @@ class SpecialVideosHelper extends WikiaModel {
 		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
 
-		$videos = array();
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$thumbOptions = [
+				'useTemplate' => true,
+				'fluid'       => true,
+				'forceSize'   => 'small',
+			];
+		} else {
+			$thumbOptions = [
+				'showViews'   => true,
+				'fixedHeight' => self::THUMBNAIL_HEIGHT,
+			];
+		}
+
+		$thumbParams = [
+			'width'        => self::THUMBNAIL_WIDTH,
+			'height'       => self::THUMBNAIL_HEIGHT,
+			'thumbOptions' => $thumbOptions,
+			'getThumb'     => true,
+		];
+
+		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $helper->getVideoDetail(
-				$videoInfo,
-				self::THUMBNAIL_WIDTH,
-				self::THUMBNAIL_HEIGHT,
-				self::POSTED_IN_ARTICLES,
-				true
-			);
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $thumbParams, self::POSTED_IN_ARTICLES );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = $this->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
 				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
@@ -149,7 +164,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 */
 	public function getByUserMsg( $userName, $userUrl ) {
 		$byUserMsg = '';
-		if ( !empty($userName) ) {
+		if ( !empty( $userName ) ) {
 			$attribs = array(
 				'href' => $userUrl,
 				'class' => 'wikia-gallery-item-user',
@@ -190,7 +205,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$articleLinks[] = $this->getArticleLink( $article );
 		}
 
-		if ( !empty($articleLinks) ) {
+		if ( !empty( $articleLinks ) ) {
 			$postedInMsg = wfMessage( 'specialvideos-posted-in', implode( $articleLinks, ', ' ) )->text();
 		}
 
