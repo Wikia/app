@@ -455,6 +455,11 @@ class SpecialPromoteHelper extends WikiaObject {
 		return $wikiStatus;
 	}
 
+	public function triggerReindexing() {
+		$sp = new ScribeProducer( 'reindex', Title::newMainPage()->getArticleID() );
+		$sp->reindexPage();
+	}
+
 	public function getWikiStatusMessage($WikiId, $langCode) {
 		$wikiStatus = $this->checkWikiStatus($WikiId, $langCode);
 		if ($wikiStatus['isAutoApproved']) {

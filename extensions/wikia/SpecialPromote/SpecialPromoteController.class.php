@@ -177,6 +177,7 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		try {
 			$this->helper->saveVisualizationData( $data, $this->wg->contLang->getCode() );
 			$this->success = true;
+			$this->helper->triggerReindexing();
 		} catch ( Exception $e ) {
 			$this->success = false;
 			$this->error   = $e->getMessage();
