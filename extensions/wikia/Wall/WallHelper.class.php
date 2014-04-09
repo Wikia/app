@@ -135,7 +135,7 @@ class WallHelper {
 		$parent = $wmessage->getTopParentObj();
 
 		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
-			$item['wall-url'] = $wmessage->getArticleTitle()->getPrefixedText();
+			$item['wall-url'] = $wmessage->getWallPageUrl();
 
 			$owner = $wmessage->getWallOwner();
 
