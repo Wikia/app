@@ -4,7 +4,8 @@ $dir = dirname( __FILE__ );
 require_once( $dir . '/../../Maintenance.php' );
 require_once( $dir . '/../../../extensions/wikia/LyricsApi/LyricsApiBase.class.php' );
 
-require_once( $dir . '/DataBaseAdapter.class.php' );
+require_once( $dir . '/../../../lib/vendor/Solarium/Autoloader.php' );
+require_once( $dir . '/SolrAdapter.class.php' );
 require_once( $dir . '/LyricsScraper.class.php' );
 
 require_once( $dir . '/scrapers/BaseScraper.class.php' );
@@ -33,9 +34,9 @@ class LyricsWikiCrawler extends Maintenance {
 	private $db;
 
 	/**
-	 * @var DataBaseAdapter
+	 * @var SolrAdapter
 	 */
-	private $dba;
+	private $solr;
 
 	public function __construct() {
 		parent::__construct();
@@ -50,7 +51,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 	public function execute() {
 		$this->db = $this->getDB( DB_SLAVE );
-		$this->dba = newDatabaseAdapter( 'solr', $this->getConfig() );
+		$this->solr = new SolrAdapter( $this->getConfig() );
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
@@ -108,7 +109,7 @@ class LyricsWikiCrawler extends Maintenance {
 	public function doScrapeArtist() {
 		$this->output( 'Scraping artist #' . $this->getArticleId() . PHP_EOL );
 		$article = Article::newFromID( $this->getArticleId() );
-		$ls = new LyricsScraper( $this->dba );
+		$ls = new LyricsScraper( $this->solr );
 		$ls->processArtistArticle( $article );
 	}
 
@@ -131,7 +132,7 @@ class LyricsWikiCrawler extends Maintenance {
 		}
 
 		$artists = $this->getArtistTitlesFromIds( $pages );
-		$this->dba->delDocsByArtistsAndDate( $artists, $start );
+		$this->solr->delDocsByArtistsAndDate( $artists, $start );
 	}
 
 	/**

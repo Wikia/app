@@ -1,40 +1,11 @@
 <?php
-require_once( dirname(__FILE__) . '/../../../lib/vendor/Solarium/Autoloader.php' );
-
-/**
- * Interface DataBaseAdapter
- *
- * Database connection interfaca
- */
-interface DataBaseAdapter {
-	function saveArtist( Array $artist, Array $albums);
-	function saveAlbum( Array $artist, Array $album, Array $songs);
-	function saveSong( Array $artist, Array $album, Array $song);
-}
-
-class MockAdapter implements DataBaseAdapter {
-
-	public function saveArtist( Array $artist, Array $albums) {
-		echo 'ARTIST: ' . json_encode( [$artist, $albums], JSON_PRETTY_PRINT ) . PHP_EOL;
-	}
-
-	public function saveAlbum( Array $artist, Array $album, Array $songs) {
-		echo 'ALBUM: ' .json_encode( [$artist, $album, $songs], JSON_PRETTY_PRINT ) . PHP_EOL;
-	}
-
-	public function saveSong( Array $artist, Array $album, Array $song) {
-		echo 'SONG: ' .json_encode( [$artist, $album, $song], JSON_PRETTY_PRINT ) . PHP_EOL;
-	}
-
-}
 
 /**
  * Class SolrAdapter
  *
  * @desc Solr database adapter for Lyrics API scraper
  */
-class SolrAdapter implements DataBaseAdapter {
-
+class SolrAdapter {
 	const MAX_QUEUE_LENGTH = 50;
 
 	private $client;
@@ -305,21 +276,4 @@ class SolrAdapter implements DataBaseAdapter {
 		return $this->client->update( $update );
 	}
 
-}
-
-/**
- * @desc Create new DatabaseAdapter
- *
- * @param $adapterType - Type of adapter to create
- * @param $config - configuration for selected adapter
- * @return DataBaseAdapter
- */
-function newDatabaseAdapter( $adapterType, $config ) {
-	switch ( $adapterType ) {
-		case 'solr':
-			return new SolrAdapter( $config );
-			break;
-		default :
-			return new MockAdapter( $config );
-	}
 }
