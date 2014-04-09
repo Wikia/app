@@ -38,11 +38,11 @@ class flagStatusOfVideos extends Maintenance {
 	public function execute() {
 		$this->test       = $this->hasOption( 'test' ) ? true : false;
 		$this->verbose    = $this->hasOption( 'verbose' ) ? true : false;
-		$workingVideos    = array();
-		$deletedVideos    = array();
-		$privateVideos    = array();
-		$otherErrorVideos = array();
-		$videoInfoHelper = new VideoInfoHelper();
+		$workingVideos    = 0;
+		$deletedVideos    = 0;
+		$privateVideos    = 0;
+		$otherErrorVideos = 0;
+		$videoInfoHelper  = new VideoInfoHelper();
 
 		$this->debug( "(debugging output enabled)\n ");
 		$allVideos = $this->getVideos();
@@ -55,46 +55,43 @@ class flagStatusOfVideos extends Maintenance {
 					new $class( $video['video_id'] );
 					// If an exception isn't thrown by this point, we know the video is still good
 					$this->debug( "Found working video: " . $video['video_title'] );
-					$workingVideos[] = $video;
+					$workingVideos++;
 					if ( !$this->test ) {
 						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_WORKING );
 					}
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
-						$deletedVideos[] = $video;
-						if ( !$this->test ) {
-							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_DELETED );
-						}
+						$deletedVideos++;
+						$status = self::STATUS_DELETED;
 					} elseif ( $e instanceof VideoIsPrivateException ) {
 						$this->debug( "Found private video: " . $video['video_title'] );
-						$privateVideos[] = $video;
-						if ( !$this->test ) {
-							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_PRIVATE);
-						}
+						$privateVideos++;
+						$status = self::STATUS_PRIVATE;
 					} else {
 						$this->debug( "Found other video: " . $video['video_title'] );
 						$this->debug( $e->getMessage() );
-						$otherErrorVideos[] = $video;
-						if ( !$this->test ) {
-							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_OTHER_ERROR);
-						}
+						$otherErrorVideos++;
+						$status = self::STATUS_OTHER_ERROR;
 					}
 					if ( !$this->test ) {
+						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
 						$this->setAsRemoved( $video, $videoInfoHelper );
 					}
 				}
 			}
 		}
 
-		$mediaService = new MediaQueryService();
-		$mediaService->clearCacheTotalVideos();
+		if ( !$this->test ) {
+			$mediaService = new MediaQueryService();
+			$mediaService->clearCacheTotalVideos();
+		}
 
 		echo "\n========SUMMARY========\n";
-		echo "Found " . count( $workingVideos ) . " working videos\n";
-		echo "Found " . count( $deletedVideos ) . " deleted videos\n";
-		echo "Found " . count( $privateVideos ) . " private videos\n";
-		echo "Found " . count( $otherErrorVideos ) . " other videos\n";
+		echo "Found $workingVideos working videos\n";
+		echo "Found $deletedVideos deleted videos\n";
+		echo "Found $privateVideos private videos\n";
+		echo "Found $otherErrorVideos other videos\n";
 
 	}
 
