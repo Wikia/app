@@ -414,7 +414,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isWithinRegistrationPerEmailLimit( $email ) {
-		// CONN-471: Respect the registration per email limit
 		if ( !UserLoginHooksHelper::withinEmailRegLimit( $email ) ) {
 			return $this->setResponseFields(
 				'error',
@@ -432,14 +431,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function isNotBlockedByPhalanx( $user ) {
-		// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
+		global $wgCaptchaTriggers;
 
 		// Disable Captcha check
-		global $wgCaptchaTriggers;
 		$oldValue = $wgCaptchaTriggers;
 		$wgCaptchaTriggers['createaccount'] = false;
 		$abortError = '';
 		$phalanxValid = true;
+
 		if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
 			return $this->setResponseFields(
 				'error',
@@ -481,6 +480,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// check email changes limit
 		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
 
+		// CONN-471: Respect the registration per email limit
 		if ( !( $this->isWithinEmailChangesLimit( $memKey ) && $this->isWithinRegistrationPerEmailLimit( $email ) ) ) {
 			return;
 		}
@@ -495,6 +495,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		if ( $email != $user->getEmail() ) {
 			$user->setEmail( $email );
 
+			// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
 			if ( !$this->isNotBlockedByPhalanx( $user ) ) {
 				return;
 			}
