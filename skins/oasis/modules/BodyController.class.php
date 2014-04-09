@@ -451,6 +451,12 @@ class BodyController extends WikiaController {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
 		}
 
+		// VOLDEV-30
+		// load CSS for Special:LongPages and Special:ShortPages
+		if ( !empty( $wgTitle ) && ( $wgTitle->isSpecial( 'Longpages' ) || $wgTitle->isSpecial( 'Shortpages' ) ) ) {
+			$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialLongShortPages.scss' ) );
+		}
+
 		// Forum Extension
 		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
 			$this->wg->SuppressPageHeader = true;

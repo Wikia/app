@@ -1,0 +1,11 @@
+// Fixes for Special:LongPages and Special:ShortPages
+
+// for lists greater than 1000
+ol[data-specialindent="4"] {
+    margin-left: 3.2em;
+}
+
+// for lists greater than 10000
+ol[data-specialindent="5"] {
+    margin-left: 3.8em;
+}
