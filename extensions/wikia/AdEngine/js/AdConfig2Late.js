@@ -31,10 +31,13 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
+		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
+		adProviderRemnant;
 
 	if (window.wgEnableRHonDesktop) {
-		adProviderLiftium = adProviderRemnantGpt;
+		adProviderRemnant = adProviderRemnantGpt;
+	} else {
+		adProviderRemnant = adProviderLiftium;
 	}
 
 	function getProvider(slot) {
@@ -44,8 +47,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 		log(slot, 5, logGroup);
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderLiftium.canHandleSlot(slot)) {
-				return adProviderLiftium;
+			if (adProviderRemnant.canHandleSlot(slot)) {
+				return adProviderRemnant;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
@@ -72,8 +75,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (adProviderLiftium.canHandleSlot(slotname)) {
-			return adProviderLiftium;
+		if (adProviderRemnant.canHandleSlot(slotname)) {
+			return adProviderRemnant;
 		}
 
 		return adProviderNull;

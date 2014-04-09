@@ -1708,7 +1708,7 @@ Liftium.loadScript = function(url, noblock, callback) {
 		}
 		else {
 			Liftium.d("Using $.getScript", 5);
-			$.getScript(url, callback);
+			$.getScript(url, callback2);
 			return true;
 		}
 	}

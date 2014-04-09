@@ -11,6 +11,8 @@ class AdEngine2Hooks {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
+		// TODO: review top and bottom vars (important for adsinhead)
+
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType;
 
@@ -37,6 +39,8 @@ class AdEngine2Hooks {
 	 */
 	static public function onMakeGlobalVariablesScript(array &$vars) {
 		wfProfileIn(__METHOD__);
+
+		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 			   $wgHighValueCountriesDefault, $wgUser,

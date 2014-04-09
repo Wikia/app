@@ -107,11 +107,6 @@ class AdEngine2Service
 			in_array($wg->Title->getDBkey(), $wg->PagesWithNoAdsForLoggedInUsersOverriden)
 		) {
 			$pageLevel = self::PAGE_TYPE_CORPORATE;
-			if (!empty($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL) &&
-				in_array($wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL, self::$_allPageTypes)
-			) {
-				$pageLevel = $wg->PagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL;
-			}
 			return $pageLevel;
 		}
 
