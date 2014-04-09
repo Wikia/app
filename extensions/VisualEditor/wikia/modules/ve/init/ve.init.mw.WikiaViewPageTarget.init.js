@@ -19,7 +19,7 @@
  * @singleton
  */
 ( function () {
-	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage, skinSupported,
+	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, viewPage,
 		init, support, getTargetDeferred, vePreferred, browserSupported,
 		plugins = [],
 		// Used by tracking calls that go out before ve.track is available.
@@ -129,7 +129,6 @@
 		!( 'diff' in uri.query )
 	);
 	vePreferred = !!mw.config.get( 'wgVisualEditorPreferred' );
-	skinSupported = $.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1;
 
 	support = {
 		es5: !!(
@@ -328,7 +327,7 @@
 		}
 	}
 
-	if ( browserSupported && skinSupported ) {
+	if ( browserSupported ) {
 		if ( viewPage && init.isInValidNamespace( mw.config.get( 'wgRelevantPageName' ) ) ) {
 			$( function () {
 				if ( init.activateOnPageLoad ) {
