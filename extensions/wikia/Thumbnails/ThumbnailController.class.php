@@ -221,7 +221,7 @@ class ThumbnailController extends WikiaController {
 
 		$file = $this->getVal( 'file' );
 		$width = $this->getVal( 'outerWidth' );
-		$url = $this->getVal( 'ur' );
+		$url = $this->getVal( 'url' );
 		$align = $this->getVal( 'align' );
 		$thumbnail = $this->getVal( 'html' );
 		$caption = $this->getVal( 'caption' );

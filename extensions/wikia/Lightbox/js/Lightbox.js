@@ -1429,6 +1429,7 @@
 			var container = Lightbox.openModal.carouselContainer,
 				// render carousel
 				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
+					// todo: use data attribute instead of class here
 					liClass: 'video-thumbnail xsmall ' + (backfill ? 'back-fill' : ''),
 					thumbs: thumbs
 				});
