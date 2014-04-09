@@ -42,6 +42,7 @@ class flagStatusOfVideos extends Maintenance {
 		$deletedVideos    = array();
 		$privateVideos    = array();
 		$otherErrorVideos = array();
+		$videoInfoHelper = new VideoInfoHelper();
 
 		$this->debug( "(debugging output enabled)\n ");
 		$allVideos = $this->getVideos();
@@ -55,29 +56,39 @@ class flagStatusOfVideos extends Maintenance {
 					// If an exception isn't thrown by this point, we know the video is still good
 					$this->debug( "Found working video: " . $video['video_title'] );
 					$workingVideos[] = $video;
+					if ( !$this->test ) {
+						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_WORKING );
+					}
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
 						$deletedVideos[] = $video;
+						if ( !$this->test ) {
+							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_DELETED );
+						}
 					} elseif ( $e instanceof VideoIsPrivateException ) {
 						$this->debug( "Found private video: " . $video['video_title'] );
 						$privateVideos[] = $video;
+						if ( !$this->test ) {
+							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_PRIVATE);
+						}
 					} else {
 						$this->debug( "Found other video: " . $video['video_title'] );
 						$this->debug( $e->getMessage() );
 						$otherErrorVideos[] = $video;
+						if ( !$this->test ) {
+							wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_OTHER_ERROR);
+						}
+					}
+					if ( !$this->test ) {
+						$this->setAsRemoved( $video, $videoInfoHelper );
 					}
 				}
 			}
 		}
 
-		if ( !$this->test ) {
-			$this->setStatus( $workingVideos, self::STATUS_WORKING );
-			$this->setStatus( $deletedVideos, self::STATUS_DELETED );
-			$this->setStatus( $privateVideos, self::STATUS_PRIVATE );
-			$this->setStatus( $otherErrorVideos, self::STATUS_OTHER_ERROR );
-			$this->setAsRemoved( array_merge( $deletedVideos, $privateVideos, $otherErrorVideos ) );
-		}
+		$mediaService = new MediaQueryService();
+		$mediaService->clearCacheTotalVideos();
 
 		echo "\n========SUMMARY========\n";
 		echo "Found " . count( $workingVideos ) . " working videos\n";
@@ -100,7 +111,8 @@ class flagStatusOfVideos extends Maintenance {
 			->FROM( "image" )
 			->JOIN( "page" )
 			->ON( "page_title", "img_name")
-			->WHERE( "img_major_mime" )->EQUAL_TO( "video" )
+			->WHERE( "img_media_type" )->EQUAL_TO( "VIDEO" )
+			->AND_( "page_namespace" )->EQUAL_TO( NS_FILE )
 			->run( $db, function ( $result ) {
 				while ( $row = $result->fetchObject( $result ) ) {
 					$videos[] = $row;
@@ -122,39 +134,20 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	/**
-	 * @param $videos - Videos to flag in page_wikia_props table
-	 * @param $status - Status of videos (see constants above)
+	 * @param $videos - Flag video as removed in the video_info table
 	 */
-	private function setStatus( $videos, $status ) {
-		$db = wfGetDB( DB_MASTER );
-		$wikiaSQL = new WikiaSQL();
-		foreach ( $videos as $video ) {
-			$sql =  "REPLACE INTO page_wikia_props (page_id, propname, props) ";
-			$sql .= "VALUES ($video[page_id], " . WPP_VIDEO_STATUS . ", $status)";
-			$wikiaSQL->RAW( $sql )->run( $db );
+	private function setAsRemoved ( $video, $videoInfoHelper ) {
+		$videoInfo = VideoInfo::newFromTitle( $video['video_title'] );
+		if ( is_null( $videoInfo ) ) {
+			$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
+			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
+			$videoInfo->setRemoved();
+			$videoInfo->addVideo();
+			$this->debug("Video not found in video_info table, adding info for: " . $video['video_title'] );
+		} else {
+			$videoInfo->removeVideo();
 		}
-	}
-
-	/**
-	 * @param $videos - Videos to flag as removed in the video_info table
-	 */
-	private function setAsRemoved ( $videos ) {
-		$videoInfoHelper = new VideoInfoHelper();
-		foreach ( $videos as $video ) {
-			$videoInfo = VideoInfo::newFromTitle( $video['video_title'] );
-			if ( is_null( $videoInfo ) ) {
-				$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
-				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
-				$videoInfo->setRemoved();
-				$videoInfo->addVideo();
-				$this->debug("Video not found in video_info table, adding info for: " . $video['video_title'] );
-			} else {
-				$videoInfo->removeVideo();
-			}
-			$this->debug( "Setting video as removed: " . $video['video_title'] );
-		}
-		$mediaService = new MediaQueryService();
-		$mediaService->clearCacheTotalVideos();
+		$this->debug( "Setting video as removed: " . $video['video_title'] );
 	}
 
 	/**
