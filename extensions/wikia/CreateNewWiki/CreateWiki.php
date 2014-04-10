@@ -266,6 +266,10 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
 		}
 
+		// Force initialize uploader user from correct shared db
+		$uploader = User::newFromName( 'CreateWiki script' );
+		$uploader->getId();
+
 		/**
 		 * wikifactory variables
 		 */
@@ -313,7 +317,7 @@ class CreateWiki {
 		/**
 		 * copy default logo & favicon
 		 */
-		$uploader = User::newFromName( 'CreateWiki script' );
+
 
 		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
 		if ( $res['status'] === true ) {
@@ -355,7 +359,7 @@ class CreateWiki {
 		 * set hub/category
 		 */
 		$oldUser = $wgUser;
-		$wgUser = User::newFromName( 'CreateWiki script' );
+		$wgUser = $uploader;
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
