@@ -42,7 +42,9 @@ class flagStatusOfVideos extends Maintenance {
 		$deletedVideos    = 0;
 		$privateVideos    = 0;
 		$otherErrorVideos = 0;
-		// Only write to memcache, no reads
+		// Only write to memcache, no reads. We want to make sure to always talk to each of the provider's API directly.
+		// Since each time a request is made to these APIs the response is cached for 1 day, disallow memcache reads
+		// so we can be sure to not be pulling stale data.
 		F::app()->wg->AllowMemcacheReads = false;
 		F::app()->wg->AllowMemcacheWrites = true;
 
