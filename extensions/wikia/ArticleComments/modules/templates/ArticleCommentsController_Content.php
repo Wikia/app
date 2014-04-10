@@ -19,8 +19,6 @@
 			?>
 		<? endif ?>
 		<div class="session">
-			<?= $avatar ?>
-			<?= $isAnon ? wfMsg( 'oasis-comments-anonymous-prompt' ) : '' /* wfMsg( 'oasis-comments-user-prompt', $avatar->mUser->getName() ) */ ?>
 		</div>
 		<form action="<?= $title->getFullURL() ?>" method="post" class="article-comm-form" id="article-comm-form">
 			<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
