@@ -325,6 +325,4 @@
 
 	// Exports
 	Wikia.AbTest = AbTest;
-
-	define('ext.wikia.abTest', [], function(){ return AbTest; });
 })( window );

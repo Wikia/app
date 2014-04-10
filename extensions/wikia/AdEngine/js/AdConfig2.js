@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.adConfig', [
 	'wikia.window',
 	'wikia.document',
 	'wikia.geo',
-	'ext.wikia.abTest',
+	'wikia.abTest',
 
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 

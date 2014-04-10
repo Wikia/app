@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.wikiaDartMobileHelper', [
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.dartUrl'
-], function (log, window, adLogicPageParams, dartUrl) {
+	'ext.wikia.adEngine.dartUrl',
+	'wikia.abTest'
+], function (log, window, adLogicPageParams, dartUrl, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaDartMobileHelper',
@@ -17,8 +18,8 @@ define('ext.wikia.adEngine.wikiaDartMobileHelper', [
 		i,
 		ab = [];
 
-	if (window.Wikia && window.Wikia.AbTest) {
-		experiments = window.Wikia.AbTest.getExperiments();
+	if (abTest) {
+		experiments = abTest.getExperiments();
 		experimentsNumber = experiments.length;
 
 		for (i = 0; i < experimentsNumber; i += 1) {

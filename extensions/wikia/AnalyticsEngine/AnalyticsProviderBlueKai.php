@@ -7,7 +7,7 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
-		array_unshift( $jsStaticPackages, 'analytics_bluekai_js' );
+		$jsStaticPackages[] = 'analytics_bluekai_js';
 		return true;
 	}
 

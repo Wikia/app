@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.window',
-	'ext.wikia.abTest',
+	'wikia.abTest',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.liftium',

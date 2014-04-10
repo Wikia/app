@@ -1,11 +1,11 @@
 /*jshint camelcase:false*/
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
-	'ext.wikia.adEngine.krux',
-	'ext.wikia.adEngine.adLogicPageDimensions',
-	'ext.wikia.abTest'
+	require.optional('ext.wikia.adEngine.krux'),
+	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
+	require.optional('wikia.abTest')
 ], function (log, window, Krux, adLogicPageDimensions, abTest) {
 	'use strict';
 
