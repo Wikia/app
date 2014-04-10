@@ -78,6 +78,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
 		}
 
+		if ( !is_numeric($page) ) {
+			$page = 1;
+		}
+
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
@@ -162,10 +166,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
-
-		if ( !is_numeric( $page ) ) {
-			$page = 1;
-		}
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
