@@ -8,7 +8,7 @@ class VideosModule extends WikiaModel {
 	const POSTED_IN_ARTICLES = 0;
 	const GET_THUMB = true;
 
-	const LIMIT_TRENDING_VIDEOS = 20;
+	const LIMIT_VIDEOS = 20;
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
@@ -28,6 +28,56 @@ class VideosModule extends WikiaModel {
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => Wikia\Search\Config::FILTER_CAT_ENTERTAINMENT,
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => Wikia\Search\Config::FILTER_CAT_LIFESTYLE,
 	];
+
+	/**
+	 * Get videos added to the wiki
+	 * @param integer $numRequired - number of videos required
+	 * @param string $sort [recent/trend] - how to sort the results
+	 * @return array $videos - list of vertical videos (premium videos)
+	 */
+	public function getLocalVideos( $numRequired, $sort ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$filter = 'all';
+			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
+
+			$mediaService = new MediaQueryService();
+			$videoList = $mediaService->getVideoList( $sort, $filter, $paddedLimit );
+
+			$videos = [];
+			$videoTitles = [];
+			$helper = new VideoHandlerHelper();
+			foreach ( $videoList as $videoInfo ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+					break;
+				}
+
+				if ( $this->addToList( $videoTitles, $videoInfo['title'] ) ) {
+					// get video detail
+					$videoDetail = $helper->getVideoDetail(
+						$videoInfo,
+						self::THUMBNAIL_WIDTH,
+						self::THUMBNAIL_HEIGHT,
+						self::POSTED_IN_ARTICLES,
+						self::GET_THUMB
+					);
+
+					if ( !empty( $videoDetail ) ) {
+						$videos[] = $this->filterVideoDetail( $videoDetail );
+					}
+				}
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->trimVideoList( $videos, $numRequired );
+	}
 
 	/**
 	 * Get related videos (article related videos and wiki related videos)
@@ -63,7 +113,7 @@ class VideosModule extends WikiaModel {
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$service = new VideoEmbedToolSearchService();
-			$service->setLimit( $this->getVideoLimit( $numRequired ) );
+			$service->setLimit( $this->getPaddedVideoLimit( $numRequired ) );
 
 			$category = $this->getSearchVertical();
 			if ( !empty( $category ) ) {
@@ -114,14 +164,14 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit' => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'limit' => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByWikiTopic', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
-				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
 
@@ -158,14 +208,14 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
 
 			$videos = [];
 			foreach ( $videoResults as $video ) {
-				if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 					break;
 				}
 
@@ -189,20 +239,21 @@ class VideosModule extends WikiaModel {
 	/**
 	 * Get videos by category from the wiki
 	 * @param integer $numRequired - number of videos required
+	 * @param string $sort [recent/trend] - how to sort the results
 	 * @return array $videos - list of vertical videos (premium videos)
 	 */
-	public function getVerticalVideos( $numRequired ) {
+	public function getVerticalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
 
 		$category = $this->getWikiVertical();
-		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$params = [
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
-				'sort'       => 'trend',
-				'limit'      => $this->getVideoLimit( self::LIMIT_TRENDING_VIDEOS ),
+				'sort'       => $sort,
+				'limit'      => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
 				'category'   => $category,
 			];
 
@@ -211,7 +262,7 @@ class VideosModule extends WikiaModel {
 			$videos = [];
 			if ( !empty( $response['videos'] ) ) {
 				foreach ( $response['videos'] as $video ) {
-					if ( count( $videos ) >= self::LIMIT_TRENDING_VIDEOS ) {
+					if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
 						break;
 					}
 
@@ -310,18 +361,27 @@ class VideosModule extends WikiaModel {
 			);
 
 			foreach( $videosDetail as $video ) {
-				$videoList[] = [
-					'title'     => $video['fileTitle'],
-					'url'       => $video['fileUrl'],
-					'thumbnail' => $video['thumbnail'],
-					'videoKey'  => $video['title'],
-				];
+				$videoList[] = $this->filterVideoDetail( $video );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $videoList;
+	}
+
+	/**
+	 * Filter video detail
+	 * @param array $video
+	 * @return array
+	 */
+	protected function filterVideoDetail( $video ) {
+		return [
+			'title'     => $video['fileTitle'],
+			'url'       => $video['fileUrl'],
+			'thumbnail' => $video['thumbnail'],
+			'videoKey'  => $video['title'],
+		];
 	}
 
 	/**
@@ -346,7 +406,7 @@ class VideosModule extends WikiaModel {
 	 * Get video limit (include the number of blacklisted videos)
 	 * @return integer $limit
 	 */
-	protected function getVideoLimit( $numRequired ) {
+	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
 			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
 		}
