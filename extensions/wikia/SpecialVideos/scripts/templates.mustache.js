@@ -1,0 +1,5 @@
+define( 'specialVideos.templates.mustache', [], function() { 'use strict'; return {
+    "index" : '<div id="special-videos"><ul class="filter"><li class="active">Trending</li><!--leave this comment in to truncate whitespace between elementsfor display: inline-block--><li>Latest</li></ul><ul class="video-list mobile">{{#videos}}<a href="{{fileUrl}}"><li class="item"><div class="thumbnail">{{{thumbnail}}}<img src="{{thumbUrl}}" alt="{{fileTitle}}"></div><!--leave this comment in to truncate whitespace between elementsfor display: inline-block--><div class="info"><span class="title">{{title}}</span><span class="views">{{viewTotal}} </span></div></li></a>{{/videos}}</ul><button class="btn load-more">Load More</button></div>',
+    "video" : '<a href="{{fileUrl}}"><li class="item"><div class="thumbnail">{{{thumbnail}}}<img src="{{thumbUrl}}" alt="{{fileTitle}}"></div><!--leave this comment in to truncate whitespace between elementsfor display: inline-block--><div class="info"><span class="title">{{title}}</span><span class="views">{{viewTotal}} </span></div></li></a>',
+    "done": "true"
+  }; });

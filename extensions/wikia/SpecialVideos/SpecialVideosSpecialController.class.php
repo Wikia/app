@@ -14,12 +14,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		parent::__construct( 'Videos', '', false );
 	}
 
-	public function init() {
-		$this->response->addAsset( 'special_videos_css_monobook' );
-		$this->response->addAsset( 'special_videos_js' );
-		$this->response->addAsset( 'special_videos_css' );
-	}
-
 	/**
 	 * Videos page
 	 * @requestParam string sort [ recent/popular/trend/premium ]
@@ -36,6 +30,21 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->wg->SupressPageSubtitle = true;
+
+		$scriptsStr = 'special_videos_js';
+		$stylesStr = 'special_videos_css';
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+			$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/index.mustache' );
+			$scriptsStr .= '_mobile';
+			$stylesStr .= '_mobile';
+		} else {
+			$this->response->addAsset('special_videos_css_monobook');
+		}
+
+		$this->response->addAsset( $scriptsStr );
+		$this->response->addAsset( $stylesStr );
 
 		// enqueue i18n message for javascript
 		JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );
