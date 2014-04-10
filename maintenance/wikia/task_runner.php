@@ -4,24 +4,26 @@ $options = ['help'];
 $optionsWithArgs = [
 	'call_order',
 	'task_list',
+	'created_by',
 ];
 require_once(__DIR__."/../commandLine.inc");
 
-$runner = new TaskRunner($options['task_list'], $options['call_order']);
+$runner = new TaskRunner($options['task_list'], $options['call_order'], $options['created_by']);
 echo json_encode($runner->run()->format());
 
 class TaskRunner {
 	private $taskList = [];
-	private $callOrder;
 	private $results = [];
+	private $callOrder;
 
-	function __construct($taskList, $callOrder) {
+	function __construct($taskList, $callOrder, $createdBy) {
 		$taskList = json_decode($taskList, true);
 		$this->callOrder = json_decode($callOrder, true);
 
 		foreach ($taskList as $taskData) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
+			$task->createdBy($createdBy);
 			$task->unserialize($taskData['context'], $taskData['calls']);
 			$this->taskList []= $task;
 		}

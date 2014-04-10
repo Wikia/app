@@ -31,7 +31,7 @@ class AsyncTaskList {
 
 	protected $taskType = 'workers.mediawiki.task';
 
-	protected $createdBy = 'mediawiki';
+	protected $createdBy = null;
 
 	protected $delay = 0;
 
@@ -68,8 +68,27 @@ class AsyncTaskList {
 		return $this;
 	}
 
+	/**
+	 * set this task as being created by a specific user
+	 *
+	 * @param int|string|\User $createdBy the id, name, or user object
+	 * @return $this
+	 */
 	public function createdBy($createdBy) {
-		$this->createdBy = $createdBy;
+		if (is_int($createdBy)) {
+			$user = \User::newFromId($createdBy);
+			$user->load();
+		} elseif (!($createdBy instanceof \User)) {
+			$user = \User::newFromName($createdBy);
+			$user->load();
+		} else {
+			$user = $createdBy;
+		}
+
+		$this->createdBy = (object) [
+			'name' => $user->getName(),
+			'id' => $user->getId(),
+		];
 
 		return $this;
 	}
@@ -87,7 +106,11 @@ class AsyncTaskList {
 	}
 
 	public function queue() {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgUser;
+
+		if ($this->createdBy == null) {
+			$this->createdBy($wgUser);
+		}
 
 		$taskList = [];
 		$workId = ['tasks' => [], 'wikiId' => $this->wikiId];

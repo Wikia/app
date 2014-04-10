@@ -13,6 +13,8 @@ namespace Wikia\Tasks\Tasks;
 abstract class BaseTask {
 	protected $calls = [];
 
+	protected $createdBy;
+
 	/**
 	 * @return array [$this, order in which this call should be made]
 	 * @throws \InvalidArgumentException
@@ -55,6 +57,21 @@ abstract class BaseTask {
 
 	public function getAdminNonExecuteables() {
 		return [];
+	}
+
+	public function createdBy($createdBy=null) {
+		if ($createdBy !== null) {
+			$this->createdBy = $createdBy;
+		}
+
+		return $this->createdBy;
+	}
+
+	/**
+	 * TODO: link this to the task runner that is currently running, and append to it's log. then return that as part
+	 */
+	public function log() {
+
 	}
 
 	public function serialize() {
