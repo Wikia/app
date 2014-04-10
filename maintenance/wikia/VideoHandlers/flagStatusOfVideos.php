@@ -42,6 +42,9 @@ class flagStatusOfVideos extends Maintenance {
 		$deletedVideos    = 0;
 		$privateVideos    = 0;
 		$otherErrorVideos = 0;
+		// Only write to memcache, no reads
+		F::app()->wg->AllowMemcacheReads = false;
+		F::app()->wg->AllowMemcacheWrites = true;
 
 		$this->debug( "(debugging output enabled)\n ");
 		$allVideos = $this->getVideos();
