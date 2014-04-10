@@ -156,7 +156,7 @@ class LyricsWikiCrawler extends Maintenance {
 			$pageId = (int) $page->id;
 			$category = strtolower( $page->category );
 
-			if( $category === 'artist' && !in_array( $pageId, $results ) ) {
+			if( $category === 'artist' ) {
 				$results[] = $pageId;
 			} else {
 				$artistPageId = $this->getArtistPageId( $pageId );
@@ -172,14 +172,12 @@ class LyricsWikiCrawler extends Maintenance {
 						)
 					);
 
-					if( !in_array( $artistPageId, $results ) ) {
-						$results[] = $artistPageId;
-					}
+					$results[] = $artistPageId;
 				}
 			}
 		}
 
-		return $results;
+		return array_unique( $results );
 	}
 
 	/**
