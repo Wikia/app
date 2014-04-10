@@ -308,7 +308,11 @@ class LyricsWikiCrawler extends Maintenance {
 			'INNER JOIN',
 			'r.rc_cur_id = c.cl_from AND c.cl_to IN ("Artist", "Album", "Song")'
 		] ];
-		$options = [ 'DISTINCT', 'ORDER BY' => 'rc_timestamp desc' ];
+		$options = [
+			'DISTINCT',
+			'ORDER BY' => 'rc_timestamp desc',
+			'USE INDEX' => [ 'r' => 'rc_timestamp' ],
+		];
 
 		$result = $this->db->select( $table, $fields, $where, __METHOD__, $options, $joins );
 
