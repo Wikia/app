@@ -1,10 +1,11 @@
 <?php
 	// get wiki thumbnail and thumbnail tracking
 	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
-	$imageFileName = (new PromoImage(PromoImage::MAIN))->setCityId($result['id'])->getPathname();
+	$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
 
 	$thumbWidth  = 180;
 	$thumbHeight = 120;
+
 	$imageOriginalURL = ImagesService::getImageSrcByTitle( $corporateWikiId, $imageFileName, $thumbWidth, $thumbHeight );
 	if (! empty( $imageOriginalURL ) ) {
 		$imageURL = ImagesService::overrideThumbnailFormat( $imageOriginalURL, ImagesService::EXT_JPG );
