@@ -75,10 +75,10 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	 * @covers ApiAccessService::canUse
 	 * @dataProvider dp_canUse
 	 */
-	public function testCanUse( $access, $test, $env, $result ) {
+	public function testCanUse( $access, $test, $env, $result, $isCorporate ) {
 		$mock = $this->getMockBuilder( "\ApiAccessService" )
 			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'getApiAccess', 'isTestLocation', 'getEnvValue' ] )
+			->setMethods( [ '__construct', 'getApiAccess', 'isTestLocation', 'getEnvValue', 'isCorporateWiki' ] )
 			->getMock();
 
 		$mock->expects( $this->any() )
@@ -90,7 +90,11 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 		$mock->expects( $this->any() )
 			->method( 'getEnvValue' )
 			->will( $this->returnValue( $env ) );
+		$mock->expects( $this->any() )
+			->method( 'isCorporateWiki' )
+			->will( $this->returnValue( $isCorporate ) );
 
+			
 		$this->assertEquals( $result, $mock->canUse( '', '' ) );
 	}
 
@@ -113,19 +117,16 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
 	public function dp_canUse() {
 		return [
-			[
-				\ApiAccessService::URL_TEST | 1, true, 1, true
-			],
-			[
-				\ApiAccessService::URL_TEST | 1, false, 1, false
-			],
-			[
-				\ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true,
-			],
-			[
-				\ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false
-			]
-
+			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, true,
+					\ApiAccessService::ENV_DEVELOPMENT, true, false	],
+			[	\ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, false,
+					\ApiAccessService::ENV_DEVELOPMENT, false, false	],
+			[	\ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true, false ],
+			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false, false ],
+			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, true, true ],
+			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, false, false ],
+			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, false, true ],
+			[ \ApiAccessService::WIKIA_NON_CORPORATE, false, 0, true, false ]
 		];
 	}
 

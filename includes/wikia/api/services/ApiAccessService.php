@@ -74,10 +74,10 @@ class ApiAccessService {
 		}
 		$isTest = $this->isTestLocation();
 		//if access needs TEST in url, and it's using standard url deny access
-		if ( $access & self::URL_TEST && !$isTest ) {
+		if ( ($access & self::URL_TEST) && !$isTest ) {
 			return false;
 		}
-		$access = $access & (self::ENV_DEVELOPMENT | self::ENV_SANDBOX);
+		$access = $access & ~(self::URL_TEST | self::WIKIA_CORPORATE | self::WIKIA_NON_CORPORATE );
 		//no access restriction found
 		if ( !$access ) {
 			return true;
