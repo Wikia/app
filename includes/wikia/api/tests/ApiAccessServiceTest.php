@@ -118,9 +118,9 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	public function dp_canUse() {
 		return [
 			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, true,
-                \ApiAccessService::ENV_DEVELOPMENT, true, false	],
+		                \ApiAccessService::ENV_DEVELOPMENT, true, false	],
 			[ \ApiAccessService::URL_TEST | \ApiAccessService::ENV_DEVELOPMENT, false,
-                \ApiAccessService::ENV_DEVELOPMENT, false, false	],
+		                \ApiAccessService::ENV_DEVELOPMENT, false, false	],
 			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_SANDBOX, true, false ],
 			[ \ApiAccessService::ENV_SANDBOX, false, \ApiAccessService::ENV_DEVELOPMENT, false, false ],
 			[ \ApiAccessService::WIKIA_CORPORATE, false, 0, true, true ],
