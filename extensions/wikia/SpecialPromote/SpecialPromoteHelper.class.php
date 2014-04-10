@@ -457,7 +457,8 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	public function triggerReindexing() {
 		//FIXME: ...
-		ScribeEventProducerController::notifyPageHasChanged(Title::newMainPage(), $this->wg->User);
+		$article = new Article(Title::newMainPage());
+		ScribeEventProducerController::notifyPageHasChanged($article->getPage());
 	}
 
 	public function getWikiStatusMessage($WikiId, $langCode) {

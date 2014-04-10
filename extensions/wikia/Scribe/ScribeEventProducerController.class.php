@@ -111,8 +111,23 @@ class ScribeEventProducerController {
 		return true;
 	}
 
-	static public function notifyPageHasChanged( $oPage, $oUser) {
+	static public function notifyPageHasChanged( $oPage ) {
 		wfProfileIn( __METHOD__ );
+
+		$username = $oPage->getUserText();
+		if ( empty( $username ) ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe: invalid username" );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$oUser = User::newFromName( $username );
+		if ( !$oUser instanceof User ) {
+			Wikia::log( __METHOD__, "error", "Cannot send log using scribe: invalid user object" );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		$oScribeProducer = new ScribeEventProducer( 'edit' );
 		if ( is_object( $oScribeProducer ) ) {
 			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser) ) {
