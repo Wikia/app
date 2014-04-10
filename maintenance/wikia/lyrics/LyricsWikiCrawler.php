@@ -330,11 +330,11 @@ class LyricsWikiCrawler extends Maintenance {
 	 * @return Array
 	 */
 	public function getConfig() {
-		$app = F::app();
+		$wg = F::app()->wg;
 
-		$config = $app->wg->LyricsApiSolrariumConfig;
-		$config['adapteroptions']['host'] = $app->wg->SolrMaster;
-		$config['adapteroptions']['port'] = 8983;
+		$config = $wg->LyricsApiSolrariumConfig;
+		$config['adapteroptions']['host'] = $wg->SolrMaster;
+		$config['adapteroptions']['port'] = $wg->SolrDefaultPort;
 		unset( $config['adapteroptions']['proxy'] );
 
 		return $config;
