@@ -45,12 +45,9 @@ class ArticleCommentsController extends WikiaController {
 				}
 			}
 
-            $this->page = $this->wg->request->getVal( 'page', 1 );
-            $this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
-            $this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
-
-            // store avatar related stuff in main template so it could be added to lazy loaded comments which could be cached
-            $this->avatarUrl = AvatarService::getAvatarUrl(F::app()->wg->User->getName(), AvatarService::AVATAR_SIZE_MEDIUM);
+			$this->page = $this->wg->request->getVal( 'page', 1 );
+			$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
+			$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
 
 			if ( $this->isLoadingOnDemand ) {
 				$this->response->setJsVar( 'wgArticleCommentsLoadOnDemand', true );
@@ -106,9 +103,10 @@ class ArticleCommentsController extends WikiaController {
 		// Uncomment this when surrogate key purging works
 		//$this->wg->Out->tagWithSurrogateKeys( ArticleComment::getSurrogateKey($articleId) );
 
-		// Set cache for a day
+		// When lazy loading this request it shouldn't be cached in the browser
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
-			$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED);
+			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		}
 
 		wfProfileOut( __METHOD__ );
