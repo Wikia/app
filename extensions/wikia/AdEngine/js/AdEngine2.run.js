@@ -21,8 +21,9 @@ require([
 	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.lateAdsQueue',
-	'ext.wikia.adEngine.adLogicHighValueCountry'
-], function (log, window, scriptWriter, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, Krux, slotTracker, lateAdsQueue, adLogicHighValueCountry) {
+	'ext.wikia.adEngine.adLogicHighValueCountry',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, window, scriptWriter, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, Krux, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -110,6 +111,10 @@ require([
 
 	// Register adLogicHighValueCountry as so Liftium can use it
 	window.adLogicHighValueCountry = adLogicHighValueCountry;
+
+	// Register adSlotTweaker so DART creatives can use it
+	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
+	window.adSlotTweaker = slotTweaker;
 
 	// Export page level params, so Krux can read them
 	params = adLogicPageParams.getPageLevelParams();
