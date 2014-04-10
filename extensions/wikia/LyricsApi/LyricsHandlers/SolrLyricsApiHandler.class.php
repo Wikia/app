@@ -93,6 +93,9 @@ class SolrLyricsApiHandler {
 				LyricsApiController::PARAM_SONG => $song->name,
 			] );
 		}
+
+		$this->appendArticleUrl( $song, $document->artist_name, $song->name );
+
 		return $song;
 	}
 
@@ -141,6 +144,20 @@ class SolrLyricsApiHandler {
 			$obj->small_image = $smallImage;
 			$obj->medium_image = $this->getImage( $image, self::IMG_WIDTH_MEDIUM, self::IMG_HEIGHT_MEDIUM );
 			$obj->large_image = $this->getImage( $image, self::IMG_WIDTH_LARGE, self::IMG_HEIGHT_LARGE );
+		}
+	}
+
+	/**
+	 * @desc Appends articleUrl value to the stdClass object
+	 *
+	 * @param stdClass $obj A song or an album object
+	 * @param String $artistName An artist's name
+	 * @param String $secondPart A song or an album's name
+	 */
+	private function appendArticleUrl( $obj, $artistName, $secondPart ) {
+		$title = Title::newFromText( $artistName . ':' . $secondPart );
+		if( !is_null( $title ) ) {
+			$obj->articleUrl = $title->getFullUrl();
 		}
 	}
 
