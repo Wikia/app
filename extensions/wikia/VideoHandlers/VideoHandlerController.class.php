@@ -248,20 +248,16 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
 	 * @requestParam array|string fileTitle - The title of the file to get details for
-	 * @requestParam int thumbWidth - The width of the video thumbnail to return
-	 * @requestParam int thumbHeight - The height of the video thumbnail to return
+	 * @requestParam array thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
-	 * @requestParam bool getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @responseParam array detail - The video details
 	 */
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$thumbWidth = $this->getVal( 'thumbWidth', self::DEFAULT_THUMBNAIL_WIDTH );
-		$thumbHeight = $this->getVal( 'thumbHeight', self::DEFAULT_THUMBNAIL_HEIGHT );
+		$thumbParams = $this->getVal( 'thumbParams', array() );
 		$articleLimit = $this->getVal( 'articleLimit', self::DEFAULT_POSTED_IN_ARTICLES );
-		$getThumb = $this->getVal( 'getThumb', false );
 
 		if ( is_string( $fileTitle ) ) {
 			$singleFile = true;
@@ -271,17 +267,18 @@ class VideoHandlerController extends WikiaController {
 			$fileTitles = $fileTitle;
 		}
 
+		if ( empty( $thumbParams['width'] ) ) {
+			$thumbParams['width'] = self::DEFAULT_THUMBNAIL_WIDTH;
+		}
+
+		if ( empty( $thumbParams['height'] ) ) {
+			$thumbParams['height'] = self::DEFAULT_THUMBNAIL_HEIGHT;
+		}
+
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail(
-				[ 'title' => $fileTitle ],
-				$thumbWidth,
-				$thumbHeight,
-				$articleLimit,
-				$getThumb
-			);
-
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $thumbParams, $articleLimit );
 			if ( !empty( $detail ) ) {
 				$videos[] = $detail;
 			}

@@ -120,6 +120,9 @@ class ThumbnailVideoController extends WikiaController {
 			$imgSrc = $options['src'];
 		}
 
+		// set class for img tag
+		$imgClass = empty( $options['imgClass'] ) ? [] : explode( ' ', $options['imgClass'] );
+
 		// get alt for img tag
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -189,11 +192,18 @@ class ThumbnailVideoController extends WikiaController {
 			$this->size = $this->getThumbnailSize( $width );
 		}
 
+		$videoKey = htmlspecialchars( $title->getDBKey() );
+
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$imgAttribs['data-params'] = $this->getDataParams( $file, $imgSrc, $videoKey, $options );
+			$imgClass[] = 'media';
+		}
+
 		// set image attributes
 		$this->imgSrc = $imgSrc;
-		$this->videoKey = htmlspecialchars( $title->getDBKey() );
+		$this->videoKey = $videoKey;
 		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
+		$this->imgClass = implode( ' ', array_unique( $imgClass ) );
 		$this->imgAttrs = $this->getAttribs( $imgAttribs );
 
 		// set duration
@@ -204,6 +214,35 @@ class ThumbnailVideoController extends WikiaController {
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get data-params attribute (for mobile)
+	 * @param File $file
+	 * @param string $imgSrc
+	 * @param string $videoKey
+	 * @param array $options
+	 * @return string
+	 */
+	protected function getDataParams( $file, $imgSrc, $videoKey, $options ) {
+		if ( is_callable( [ $file, 'getProviderName' ] ) ) {
+			$provider = $file->getProviderName();
+		} else {
+			$provider = '';
+		}
+
+		$dataParams = [
+			'type'     => 'video',
+			'name'     => $videoKey,
+			'full'     => $imgSrc,
+			'provider' => $provider,
+		];
+
+		if ( !empty( $options['caption'] ) ) {
+			$dataParams['capt'] = 1;
+		}
+
+		return htmlentities( json_encode( [ $dataParams ] ) , ENT_QUOTES );
 	}
 
 	/**
