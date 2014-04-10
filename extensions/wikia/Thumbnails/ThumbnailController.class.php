@@ -256,7 +256,7 @@ class ThumbnailController extends WikiaController {
 		$this->title = $title;
 		$this->figureClass = $alignClass;
 		$this->url = $url;
-		$this->thumbnailMore = wfMsg( 'thumbnail-more' ); // TODO: wfMessage()
+		$this->thumbnailMore = wfMessage( 'thumbnail-more' )->escaped();
 		$this->caption = $caption;
 		$this->addedBy = $addedBy;
 		$this->width = $width;
