@@ -749,6 +749,19 @@ $messages['hi'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'आरंभ करें»',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« Zurück',
+	'comboajaxlogin-connectmarketing-forward' => 'Fänge jetzt an »',
+	'comboajaxlogin-connectdirections' => 'Geb dein Wikia-Benutzernoome und das Passwort hie ren - mir tun dann dein Wikia- und Facebook-Benutzerkonto im Hinnergrund verknüpfe.
+
+Sobald du fertich bist, kannst du dich enfach üwer den Facebook-Connect-Knopf oonmelde.',
+	'comboajaxlogin-post-not-understood' => 'Es gab en Fehler beim uffbau von dem Formular.
+Bittschön versuch das wieder erneit orrer [[Special:Contact|meld es]].',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999

@@ -38,7 +38,7 @@ class ApiVisualEditor extends ApiBase {
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
 					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
-						'/' . urlencode( $title->getPrefixedDBkey() ),
+						'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
 				array(

@@ -25,7 +25,6 @@ class CrossWikiCore extends AbstractWikiService
 	 * @see \Wikia\Search\IndexService\AbstractService::execute()
 	 */
 	public function execute() {
-		
 		return array_merge(
 				$this->getWikiBasics(),
 				$this->getWikiStats(),
@@ -61,6 +60,7 @@ class CrossWikiCore extends AbstractWikiService
 		$response['hostname_s'] = $service->getHostName();
 		$response['hostname_txt'] = $response['hostname_s'];
 		$response['domains_txt'] = $service->getDomainsForWikiId( $this->wikiId );
+		$response['wiki_pagetitle_txt'] = str_replace( '$1 - ', '', ( \wfMessage( 'Pagetitle' )->text() ) );
 		return $response;
 	}
 	

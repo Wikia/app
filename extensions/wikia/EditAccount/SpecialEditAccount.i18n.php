@@ -990,6 +990,7 @@ $messages['hu'] = array(
 	'editaccount-submit-realname' => 'Valódi név mentése',
 	'editaccount-submit-clearunsub' => 'Leiratkozás törlése',
 	'editaccount-submit-close' => 'Felhasználói fiók lezárása',
+	'editaccount-submit-button' => 'Mentés',
 	'editaccount-status' => 'Állapotüzenet',
 	'editaccount-success-email' => 'A(z) $1 felhasználói fiók email címe sikeresen megváltoztatva erre: $2.',
 	'editaccount-success-email-blank' => 'A(z) $1 felhasználói fiók email címe sikeresen eltávolítva.',

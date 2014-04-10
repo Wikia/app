@@ -154,69 +154,46 @@ class RenameUserHelper {
 	/**
 	 * testBlock
 	 *
-	 * performs a test of all available filters and returns matching filters
+	 * performs a test of all available phalanx filters and returns warning message if there are any
+
+	 * @author Kamil Koterba <kamil@wikia-inc.com>
 	 *
 	 * @param $text String to match
 	 * @return String with HTML to display via AJAX
-	 *
-	 * @author tor <tor@wikia-inc.com>
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com> (changes for PhalanxII)
-	 *
-	 * @todo PhalanxFallback will be removed in future, this helper has to be rewritten
 	 */
 	public static function testBlock( $text ) {
-		$data = array();
-		$output = '';
+		wfProfileIn(__METHOD__);
 
-		$aModules = Phalanx::getAllTypeNames();
-		$link_unblock = wfMsg('phalanx-link-unblock');
-		$link_modify = wfMsg('phalanx-link-modify');
-		$link_stats = wfMsg('phalanx-link-stats');
 
-		foreach ( $aModules as $module => $name ) {
-			$filters = PhalanxFallback::getFromFilter( $module );
-			$data[$module] = array();
-
-			if ( empty( $filters ) ) {
-				continue;
-			}
-
-			$filter = null;
-			if( defined( "PHALANX_VERSION" ) && PHALANX_VERSION >= 2 ) {
-				$result = PhalanxFallback::findBlocked( $text, $filters, true, $filter );
-			}
-			else {
-				$result = Phalanx::findBlocked( $text, $filters, true, $filter );
-			}
-
-			if( $result['blocked'] == true ) {
-				$data[$module][] = $filter;
-			}
-
-			if ( !empty( $data[$module] ) ) {
-				$output .= Xml::element( 'h2', null, $name );
-
-				$output .= Xml::openElement( 'ul' );
-
-				foreach ( $data[$module] as $match ) {
-					$phalanxUrl = Title::newFromText( 'Phalanx', NS_SPECIAL )->getFullUrl( array( 'id' => $match['id'] ) );
-					$statsUrl = Title::newFromText( 'PhalanxStats', NS_SPECIAL )->getFullUrl() . '/' . $match['id'];
-
-					$line = htmlspecialchars( $match['text'] ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'unblock' ), $link_unblock ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $phalanxUrl, 'class' => 'modify' ), $link_modify ) . ' &bull; ' .
-						Xml::element( 'a', array( 'href' => $statsUrl, 'class' => 'stats' ), $link_stats ) . ' &bull; ' .
-						'#' . $match['id'];
-					$output .= Xml::tags( 'li', null, $line );
-				}
-
-				$output .= Xml::closeElement( 'ul' );
-			}
+		if ( !class_exists( 'PhalanxService' ) ) {
+			wfProfileOut(__METHOD__);
+			return '';
 		}
 
-		if ( empty( $output ) ) {
-			$output = 'No matches found.';
+		$service = new PhalanxService();
+		$service->setLimit(20);
+
+		$blockFound = false;
+
+		foreach(Phalanx::getAllTypeNames() as $blockType) {
+			$res = $service->match($blockType, $text);
+
+			if (!empty($res)) {
+				$blockFound = true;
+				break;
+			}
+
 		}
-		return $output;
+
+		$warning = '';
+		if ( $blockFound ) {
+			$phalanxTestTitle = SpecialPage::getTitleFor( 'Phalanx', 'test' );
+			$linkToTest = Linker::link( $phalanxTestTitle, wfMessage( 'userrenametool-see-list-of-blocks' )->escaped(), [], [ 'wpBlockText' => $text ] );
+			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
+		}
+
+		wfProfileOut(__METHOD__);
+		return $warning;
 	}
+
 }
