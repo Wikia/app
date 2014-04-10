@@ -419,10 +419,14 @@ var ArticleComments = {
 			ArticleComments.processing = true;
 		}
 
-		// load JS messages
-		loadMessages();
-
-		makeRequest();
+		if (!ArticleComments.messagesLoaded) {
+			$.getMessages('ArticleCommentsCounter', function() {
+				ArticleComments.messagesLoaded = true;
+				makeRequest();
+			});
+		} else {
+			makeRequest();
+		}
 	},
 
 	setPage: function(e) {
@@ -564,21 +568,6 @@ var ArticleComments = {
 	}
 };
 
-	/**
-	 * @desc loads JS messages}
-	 */
-
-function loadMessages() {
-	"use strict";
-
-	if (!ArticleComments.messagesLoaded) {
-		$.getMessages('ArticleCommentsCounter', function() {
-			ArticleComments.messagesLoaded = true;
-		});
-	}
-}
-
-
 if (ArticleComments.loadOnDemand) {
 	$(function() {
 
@@ -587,12 +576,7 @@ if (ArticleComments.loadOnDemand) {
 			return;
 		}
 
-		// load JS messages
-		loadMessages();
-
-		var userName = window.wgUserName,
-			content,
-			avatarWrapper,
+		var content,
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
 			// TODO: we should be able to load it this way
@@ -623,24 +607,11 @@ if (ArticleComments.loadOnDemand) {
 						skin: true
 					},
 					callback: function(response) {
-						content = $(response);
+						content = response;
 					}
 				})
 			).then(function() {
-				// add avatar to comments
-				avatarWrapper = content.find('div.session');
-				avatarWrapper.append( $('<img>', {
-					src: $comments.data("avatar-url"),
-					alt: userName,
-					width: 50,
-					height: 50
-				}));
-
-				if( userName === null) {
-					avatarWrapper.append( $.msg('oasis-comments-anonymous-prompt'));
-				}
-
-				$comments.removeClass('loading').append(content);
+				$comments.removeClass('loading').html(content);
 
 				ArticleComments.init();
 
