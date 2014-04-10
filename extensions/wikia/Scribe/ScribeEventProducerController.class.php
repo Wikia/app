@@ -35,6 +35,7 @@ class ScribeEventProducerController {
 		return true;
 	}
 
+
 	static public function onDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
 		wfProfileIn( __METHOD__ );
 
@@ -103,6 +104,19 @@ class ScribeEventProducerController {
 				if ( $oScribeProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
 					$oScribeProducer->sendLog();
 				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	static public function notifyPageHasChanged( $oPage, $oUser) {
+		wfProfileIn( __METHOD__ );
+		$oScribeProducer = new ScribeEventProducer( 'edit' );
+		if ( is_object( $oScribeProducer ) ) {
+			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser) ) {
+				$oScribeProducer->sendLog();
 			}
 		}
 
