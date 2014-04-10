@@ -6,12 +6,18 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
-			return false;
+		if (self::isAnswersWiki()) {
+            return false;
+        }
 
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
-				return true;
-			}
+            return true;
+        }
+
+        // disable if all Wikia email disabled
+        if ( $user->getBoolOption( "unsubscribed" ) ) {
+            return false;
+        }
 		return false;
 	}
 
@@ -30,7 +36,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$wikiService = (new WikiService);
 
 		foreach ($cityList as $cityID) {
-			$user_ids = $wikiService->getWikiAdminIds( $cityID );
+			//$user_ids = $wikiService->getWikiAdminIds( $cityID );
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
 			$page_url = GlobalTitle::newFromText( 'WikiActivity', NS_SPECIAL, $cityID )->getFullUrl();
 
@@ -42,6 +48,11 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				'$USERJOINS' => $founderEmailObj->getNewUsers( $cityID ),
 				'$USEREDITS' => $founderEmailObj->getDailyEdits( $cityID ),
 			);
+
+            $u = User::idFromName(Rafleszczynski);
+            $user_ids = array(
+                $u
+            );
 
 			foreach($user_ids as $user_id) {
 				$user = User::newFromId($user_id);
