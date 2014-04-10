@@ -70,6 +70,11 @@ class SolrLyricsApiHandler {
 				LyricsApiController::PARAM_ALBUM => $album->name,
 			] );
 		}
+
+		if ( $document->release_date ) {
+			$album->year = $document->release_date;
+		}
+
 		return $album;
 	}
 
@@ -172,8 +177,12 @@ class SolrLyricsApiHandler {
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
 				$solrAlbum->artist_name = $artistName;
-				$responseAlbum = $this->buildAlbum( $solrAlbum );
 
+				if( !isset( $solrAlbum->release_date ) ) {
+					$solrAlbum->release_date = false;
+				}
+
+				$responseAlbum = $this->buildAlbum( $solrAlbum );
 				if ( $solrAlbum->image ) {
 					$this->appendImages( $responseAlbum, $solrAlbum->image );
 				}
@@ -297,10 +306,6 @@ class SolrLyricsApiHandler {
 		}
 
 		$album = $this->buildAlbum( $queryResult, false);
-
-		if ( $queryResult->release_date ) {
-			$album->year = $queryResult->release_date;
-		}
 
 		if ( $queryResult->image ) {
 			$this->appendImages( $album, $queryResult->image );
