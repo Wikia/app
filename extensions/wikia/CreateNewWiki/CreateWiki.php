@@ -269,6 +269,8 @@ class CreateWiki {
 		// Force initialize uploader user from correct shared db
 		$uploader = User::newFromName( 'CreateWiki script' );
 		$uploader->getId();
+		$oldUser = $wgUser;
+		$wgUser = $uploader;
 
 		/**
 		 * wikifactory variables
@@ -358,11 +360,10 @@ class CreateWiki {
 		/**
 		 * set hub/category
 		 */
-		$oldUser = $wgUser;
-		$wgUser = $uploader;
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
+
 		$wgUser = $oldUser;
 		unset($oldUser);
 
