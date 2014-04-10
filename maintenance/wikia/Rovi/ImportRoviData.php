@@ -24,8 +24,10 @@ class ImportRoviData extends Maintenance {
 		foreach ( $this->filesOptions as $option => $desc ) {
 			$this->addOption( $option, $desc );
 		}
-		$this->addOption( 'skip', 'skip N rows' );
+		$this->addOption( 'skip', 'Skip N rows' );
+		$this->addOption( 'verbose', 'Show info for each row' );
 		$this->setBatchSize( 200 );
+		register_shutdown_function( array( $this, 'cleanup' ) );
 
 	}
 
@@ -38,7 +40,7 @@ class ImportRoviData extends Maintenance {
 
 	protected function cleanup() {
 		foreach ( $this->cleanupFiles as $fileName ) {
-			if ( unlink( $fileName ) ) {
+			if ( file_exists( $fileName ) && unlink( $fileName ) ) {
 				$this->output( "Removed temporary file $fileName\n" );
 			}
 		}
@@ -57,6 +59,7 @@ class ImportRoviData extends Maintenance {
 		$batchSize = $this->getOption( 'batch-size' );
 		$batchCounter = $batchSize;
 		$skip = (int)$this->getOption( 'skip', 0 );
+		$verbose = (bool)$this->getOption( 'verbose', '0' );
 
 		$db = wfGetDb( DB_MASTER, array(), self::SHARED_DB );
 		$db->begin();
@@ -70,7 +73,11 @@ class ImportRoviData extends Maintenance {
 			foreach ( $data as $k => &$v ) {
 				$data[ $k ] = trim( $v );
 			}
-			$this->output( "[$row] " . $importer->processRow( $data, $db ) . "\n" );
+			$message = $importer->processRow( $data, $db );
+
+			if ( $verbose ) {
+				$this->output( "[$row] " . $message . "\n" );
+			}
 			$batchCounter--;
 			if ( $batchCounter == 0 ) {
 				$db->commit();
@@ -79,6 +86,7 @@ class ImportRoviData extends Maintenance {
 			}
 		}
 		$db->commit();
+		$this->output( $importer->getSummary() );
 	}
 
 	protected function openCsvFile( $optionName ) {
@@ -134,9 +142,7 @@ class ImportRoviData extends Maintenance {
 		if ( empty( $this->files ) ) {
 			$this->error( "No input files", true );
 		}
-
 	}
-
 }
 
 

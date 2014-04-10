@@ -6,10 +6,17 @@ abstract class RoviTableImporter {
 	protected $fields;
 	protected $table;
 	protected $db;
+	protected $stats;
 
 	public function __construct() {
 		$this->command_column = array_search( self::DELTA_COLUMN, $this->fields );
 		unset( $this->fields[ $this->command_column ] );
+		$this->stats = [
+			'INS' => [ 'ok' => 0, 'fail' => 0 ],
+			'UPD' => [ 'ok' => 0, 'fail' => 0 ],
+			'DEL' => [ 'ok' => 0, 'fail' => 0 ],
+			'UNKNOWN' => [ 'total' => 0 ]
+		];
 	}
 
 	protected function preparePKMap( $row ) {
@@ -29,6 +36,7 @@ abstract class RoviTableImporter {
 	}
 
 	public function processRow( array $row, $db ) {
+		$message = '';
 		$primaryKeyMap = $this->preparePKMap( $row );
 		$columnMap = $this->prepareColumnMap( $row );
 		$command = $row[ $this->command_column ];
@@ -50,13 +58,31 @@ abstract class RoviTableImporter {
 					$res = $db->update( $this->table, $columnMap, $primaryKeyMap );
 					break;
 				default:
+					$this->stats[ 'UNKNOWN' ][ 'total' ]++;
 					return "Unknown command: $command";
 			}
+			$message = "$command: $keyFields:" . ( $res ? "OK" : "FAIL" );
+			$this->stats[ $command ][ $res ? 'ok' : 'fail' ]++;
 		} catch ( DBQueryError $e ) {
-			return "EXCEPTION FOUND! ($keyFields): " . $e->error;
+			$this->stats[ $command ][ 'fail' ]++;
+			$message = "EXCEPTION FOUND! ($keyFields): " . $e->error;
 		}
-		return "$command: $keyFields:" . ( $res ? "OK" : "FAIL" );
+
+		return $message;
 	}
+
+	public function getSummary() {
+		$out = '';
+		foreach ( $this->stats as $kind => $stat ) {
+			$out .= $kind . ": ";
+			foreach ( $stat as $keySum => $valSum ) {
+				$out .= $keySum . ': ' . $valSum . ' ';
+			}
+			$out .= "\n";
+		}
+		return $out;
+	}
+
 
 	public function checkFileHeader( $row ) {
 		return ( is_array( $row ) && count( $row ) === count( $this->fields ) + 1 );
