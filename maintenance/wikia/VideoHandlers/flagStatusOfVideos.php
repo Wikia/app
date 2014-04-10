@@ -100,7 +100,7 @@ class flagStatusOfVideos extends Maintenance {
 	 */
 	public function getVideos() {
 		$db = wfGetDB( DB_SLAVE );
-		$unprocessedVideos = ( new WikiaSQL() )->SELECT( "img_name" )
+		$videos = ( new WikiaSQL() )->SELECT( "img_name" )
 			->FIELD( "img_metadata" )
 			->FIELD( "img_minor_mime" )
 			->FIELD( "page_id" )
@@ -109,21 +109,16 @@ class flagStatusOfVideos extends Maintenance {
 			->ON( "page_title", "img_name")
 			->WHERE( "img_media_type" )->EQUAL_TO( "VIDEO" )
 			->AND_( "page_namespace" )->EQUAL_TO( NS_FILE )
-			->runLoop( $db, function ( &$unprocessedVideos, $row ) {
-				$unprocessedVideos[] = $row;
+			->runLoop( $db, function ( &$videos, $row ) {
+				$videoDetail = [
+					"video_id" => unserialize( $row->img_metadata )['videoId'],
+					"video_title" => $row->img_name,
+					"page_id" => $row->page_id
+				];
+				$videos[$row->img_minor_mime][] = $videoDetail;
 			});
 
-		$processedVideos = array();
-		foreach( $unprocessedVideos as $video ) {
-			$videoDetail = [
-				"video_id" => unserialize( $video->img_metadata )['videoId'],
-				"video_title" => $video->img_name,
-				"page_id" => $video->page_id
-			];
-			// img_minor_mime is the video provider
-			$processedVideos[$video->img_minor_mime][] = $videoDetail;
-		}
-		return $processedVideos;
+		return $videos;
 	}
 
 	/**
