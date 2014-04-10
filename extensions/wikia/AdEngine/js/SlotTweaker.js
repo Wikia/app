@@ -20,31 +20,23 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	// TODO: called always with usingClass=true
-	function hide(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+	function hide(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
-			if (usingClass) {
-				slot.className += ' hidden';
-			} else {
-				slot.style.display = 'none';
-			}
+			slot.className += ' hidden';
 		}
 	}
 
-	function show(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+	function show(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
-			if (usingClass) {
-				removeClass(slot, 'hidden');
-			} else {
-				throw 'Showing slot not based on hidden class unsupported';
-			}
+			removeClass(slot, 'hidden');
 		}
 	}
 
@@ -56,10 +48,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		if (slot) {
 			removeClass(slot, defaultHeightClass);
 		}
-	}
-
-	function isMedrec(slotname) {
-		return slotname.match(/TOP_RIGHT_BOXAD/);
 	}
 
 	function isLeaderboard(slotname) {

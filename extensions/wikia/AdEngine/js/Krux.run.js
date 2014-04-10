@@ -1,8 +1,9 @@
 /*global require*/
-require(['wikia.window', 'ext.wikia.adEngine.krux'], function (window, Krux) {
-	"use strict";
+/*jshint camelcase:false*/
+require(['wikia.window', 'ext.wikia.adEngine.krux', 'jquery'], function (window, Krux, $) {
+	'use strict';
 	if (window.wgEnableKruxTargeting) {
-		window.wgAfterContentAndJS.push(function () {
+		$(window).load(function () {
 			window.AdEngine_loadKruxLater(Krux);
 		});
 	}

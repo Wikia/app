@@ -1,10 +1,10 @@
 /**
- * A set of AMD modules wrapping local storage API
+ * AMD module exporting Wikia.AbTest object
  */
-define('wikia.abTest', ['wikia.window'], function(window, undef) {
+/*global define*/
+define('wikia.abTest', ['wikia.window'], function(window) {
 	'use strict';
 	if (window.Wikia && window.Wikia.AbTest) {
 		return window.Wikia.AbTest;
 	}
-	return undef;
 });

@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		pageParams,
 		hostname = window.location.hostname.toString(),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
@@ -129,10 +128,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getPageLevelParams() {
+		// TODO: cache results (keep in mind some of them may change while executing page)
+
 		log('getPageLevelParams', 9, logGroup);
-		if (pageParams) {
-			return pageParams;
-		}
 
 		var site,
 			zone1,
@@ -177,7 +175,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		extend(params, decodeLegacyDartParams(window.amzn_targs));
 
 		log(params, 9, logGroup);
-		pageParams = params;
 		return params;
 	}
 

@@ -42,7 +42,7 @@ if (window.wgEnableKruxTargeting) {
 }
 
 define('ext.wikia.adEngine.krux', function () {
-	"use strict";
+	'use strict';
 
 	return Krux;
 });

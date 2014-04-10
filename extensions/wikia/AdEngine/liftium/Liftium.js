@@ -1552,9 +1552,7 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
-require(['ext.wikia.adEngine.adLogicHighValueCountry'], function(adLogicHighValueCountry){
-	Liftium.isHighValueCountry = adLogicHighValueCountry.isHighValueCountry;
-})
+Liftium.isHighValueCountry = adLogicHighValueCountry.isHighValueCountry;
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1708,7 +1706,7 @@ Liftium.loadScript = function(url, noblock, callback) {
 		}
 		else {
 			Liftium.d("Using $.getScript", 5);
-			$.getScript(url, callback2);
+			$.getScript(url, callback);
 			return true;
 		}
 	}

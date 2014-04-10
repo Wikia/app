@@ -1,6 +1,6 @@
 /*global define*/
 /* jshint maxparams:false */
-define('ext.wikia.adEngine.provider.71m', [
+define('ext.wikia.adEngine.provider.sevenOneMedia', [
 	'wikia.log',
 	'wikia.window',
 	'jquery',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.71m', [
 ], function (log, window, $, sevenOneMedia) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.71m',
+	var logGroup = 'ext.wikia.adEngine.provider.sevenOneMedia',
 		slotMap = {
 			TOP_RIGHT_BOXAD: 'rectangle1',
 			HOME_TOP_RIGHT_BOXAD: 'rectangle1',

@@ -20,8 +20,9 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.lateAdsQueue'
-], function (log, window, scriptWriter, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, Krux, slotTracker, lateAdsQueue) {
+	'ext.wikia.adEngine.lateAdsQueue',
+	'ext.wikia.adEngine.adLogicHighValueCountry'
+], function (log, window, scriptWriter, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, Krux, slotTracker, lateAdsQueue, adLogicHighValueCountry) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -106,6 +107,9 @@ require([
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
+
+	// Register adLogicHighValueCountry as so Liftium can use it
+	window.adLogicHighValueCountry = adLogicHighValueCountry;
 
 	// Export page level params, so Krux can read them
 	params = adLogicPageParams.getPageLevelParams();

@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.null',
-	'ext.wikia.adEngine.provider.71m'
+	'ext.wikia.adEngine.provider.sevenOneMedia'
 ], function (
 	// regular dependencies
 	log,
