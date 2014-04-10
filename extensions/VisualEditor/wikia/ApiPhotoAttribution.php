@@ -8,11 +8,10 @@ class ApiPhotoAttribution extends ApiBase {
 		$file = wfFindFile( $title );
 		if ( $file ) {
 			$username = $file->getUser();
-			$avatarUrl = AvatarService::getAvatarUrl( $username, 16 );
 
 			$this->getResult()->addValue( null, 'username', $username );
-			$this->getResult()->addValue( null, 'avatar', $avatarUrl );
 			$this->getResult()->addValue( null, 'title', $params['file'] );
+			$this->getResult()->addValue( null, 'titleText', $file->getTitle()->getText() );
 		} else {
 			Wikia::log( __METHOD__, false, "ApiPhotoAttribution called for not existing file: " . $params['file'] );
 			$this->dieUsageMsg( 'File does not exist' );

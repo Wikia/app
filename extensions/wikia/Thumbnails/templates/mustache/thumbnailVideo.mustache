@@ -3,8 +3,6 @@
 	class="video video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
 	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
 
-	<span class="play-circle"></span>
-
 	<img
 		src="{{imgSrc}}"
 		{{#imgClass}}class="{{imgClass}}"{{/imgClass}}
@@ -16,6 +14,7 @@
 		{{#imgAttrs}}{{{.}}} {{/imgAttrs}}>
 
 	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>
+	<span class="play-circle"></span>
 
 	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}
 </a>

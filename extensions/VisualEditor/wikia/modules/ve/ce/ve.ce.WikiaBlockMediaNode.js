@@ -95,17 +95,6 @@ ve.ce.WikiaBlockMediaNode.prototype.createImage = function () {
 };
 
 /**
- * Builds the magnify element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaBlockMediaNode.prototype.createMagnify = function () {
-	// It's inside a protected node, so user can't see href/title.
-	return this.$( '<a>' ).addClass( 'internal sprite details magnify ve-no-shield' );
-};
-
-/**
  * Builds the root wrapping element.
  *
  * @method
@@ -132,8 +121,8 @@ ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
 	// Type "frame" or "thumb"
 	} else {
 		$thumb = this.$( '<figure>' )
-			.addClass( 'thumb thumbinner ' + this.getCssClass( 'default', align ) )
-			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ) + 2 );
+			.addClass( 'article-thumb ' + this.getCssClass( 'default', align ) )
+			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ));
 	}
 
 	return $thumb;
@@ -224,10 +213,8 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	$anchor = this.createAnchor().appendTo( $thumb );
 	$image = this.createImage().appendTo( $anchor );
 
-	// Magnifying glass icon
+	// File page link icon
 	if ( type !== 'frameless' && type !== 'none' ) {
-		$thumb.append( this.createMagnify() );
-
 		// Caption
 		if ( this.model.children.length === 1 ) {
 			captionModel = this.model.children[ 0 ];

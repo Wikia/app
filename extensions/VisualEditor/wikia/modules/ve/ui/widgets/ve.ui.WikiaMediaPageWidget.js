@@ -217,10 +217,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 	this.$overlay = this.$( '<span>' )
-		.addClass( 'play-circle' )
-		.add(
-			this.$( '<span>' ).addClass( 'play-arrow' )
-		);
+		.addClass( 'play-circle' );
 
 	this.$itemWrapper
 		.addClass( 'video-thumbnail' )

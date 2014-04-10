@@ -20,6 +20,8 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 
 	// Properties
 	this.$attribution = null;
+	this.$detailsIcon = null;
+	this.$title = null;
 
 	// The minimum allowable width for the attribution to be displayed
 	this.minWidth = 102;
@@ -50,29 +52,45 @@ ve.ce.WikiaMediaCaptionNode.static.tagName = 'figcaption';
  * @returns {jQuery}
  */
 ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
-	var $attribution, $image, $link,
+	var $attribution, $link,
 		attribution = this.model.parent.getAttribute( 'attribution' ),
 		href = new mw.Title( attribution.username, 2 ).getUrl();
 
-	$attribution = this.$( '<div>' )
-		.addClass( 'picture-attribution' );
-
-	$image = this.$( '<img>' )
-		.addClass( 'avatar' )
-		.attr( {
-			alt: attribution.username,
-			height: 16,
-			src: attribution.avatar,
-			width: 16
-		} );
+	$attribution = this.$( '<p>' )
+		.addClass( 'attribution' );
 
 	$link = this.$( '<a>' )
 		.attr( 'href', href )
 		.text( attribution.username );
 
 	return $attribution
-		.append( $image )
 		.append( mw.message( 'oasis-content-picture-added-by', $link[ 0 ].outerHTML ).plain() );
+};
+
+/**
+ * Builds the file page link element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaMediaCaptionNode.prototype.createDetailsIcon = function () {
+	// It's inside a protected node, so user can't see href/title.
+	return this.$( '<a>' ).addClass( 'sprite details ve-no-shield' );
+};
+
+/**
+ * Builds the title element.
+ *
+ * @method
+ * @returns {jQuery} The properly scoped jQuery object
+ */
+ve.ce.WikiaMediaCaptionNode.prototype.createTitle = function () {
+	var attribution = this.model.parent.getAttribute( 'attribution' );
+
+	// It's inside a protected node, so user can't see href/title.
+	return this.$( '<p>' )
+		.addClass( 'title ve-no-shield' )
+		.text( attribution.titleText );
 };
 
 /**
@@ -90,6 +108,9 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 		this.$attribution = this.createAttribution();
 	}
 
+	this.$detailsIcon = this.createDetailsIcon();
+	this.$title = this.createTitle();
+
 	// Parent method
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
@@ -98,6 +119,8 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 		parentModel.getAttribute( 'attribution' ) !== undefined &&
 		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
+		this.$detailsIcon.appendTo( this.$element );
+		this.$title.appendTo( this.$element );
 		this.$attribution.appendTo( this.$element );
 	}
 };

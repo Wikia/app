@@ -566,8 +566,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		);
 	}
 
-	function updateAvatar( result ) {
-		items[result.title].avatar = result.avatar;
+	function updateAttribution( result ) {
 		items[result.title].username = result.username;
 	}
 
@@ -575,7 +574,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 	for ( title in items ) {
 		promises.push(
 			this.getPhotoAttribution( title ).done(
-				ve.bind( updateAvatar, this )
+				ve.bind( updateAttribution, this )
 			)
 		);
 	}
@@ -614,7 +613,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'resource': './' + item.title,
 					'attribution': {
 						'username': item.username,
-						'avatar': item.avatar
 					}
 				}
 			},
