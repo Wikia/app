@@ -6,11 +6,11 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki()) {
+        if (self::isAnswersWiki()) {
             return false;
         }
 
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+        if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
             return true;
         }
 
@@ -18,7 +18,8 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
         if ( $user->getBoolOption( "unsubscribed" ) ) {
             return false;
         }
-		return false;
+
+        return false;
 	}
 
 	/**
