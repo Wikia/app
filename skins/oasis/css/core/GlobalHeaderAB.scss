@@ -4,6 +4,8 @@
 @import "skins/oasis/css/mixins/box-sizing";
 
 $color: #0A5FA2;
+$hover-color: #1380d7;
+$signup-color: gray;
 $bg-color: #fff;
 $bg-color-opposite: #000;
 $menu-hover-bg-color: #C7D2D8;
@@ -66,14 +68,16 @@ body.global-header-fixed-at-top .WikiaHeader {
 		& > .wikia-button, input.login-button, .search-button, .UserLoginDropdown .ajaxRegister {
 			background: none;
 			background-color: $color;
-			border: none;
+			border: 1px solid $color;
 			font-size: 14px;
 			height: 29px;
-			line-height: 29px;
+			line-height: 17px;
+			padding: 5px 10px;
 			top: -4px;
 
 			&:hover {
-				background-color: #1380d7;
+				background-color: $hover-color;
+				border-color: $hover-color;
 			}
 		}
 
@@ -88,6 +92,8 @@ body.global-header-fixed-at-top .WikiaHeader {
 				background-position: 8px center;
 				background-repeat: no-repeat;
 				padding: 0 12px 0 25px;
+				height: 27px;
+				line-height: 27px;
 			}
 		}
 
@@ -112,10 +118,12 @@ body.global-header-fixed-at-top .WikiaHeader {
 
 			&.alternative {
 				background-color: $menu-hover-bg-color;
+				border-color: $menu-hover-bg-color;
 				color: $color;
 
 				&:hover {
-					background-color: #1380d7;
+					background-color: $hover-color;
+					border-color: $hover-color;
 					color: $bg-color;
 				}
 			}
@@ -351,7 +359,9 @@ body.global-header-fixed-at-top .WikiaHeader {
 
 			.UserLoginDropdown {
 				.ajaxRegister {
-					background-color: gray;
+					@include box-sizing;
+					background-color: $signup-color;
+					border-color: $signup-color;
 					border-radius: 4px;
 					color: $bg-color;
 					display: block;
