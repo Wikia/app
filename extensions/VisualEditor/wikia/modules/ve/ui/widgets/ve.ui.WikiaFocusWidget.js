@@ -104,7 +104,10 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 	var interval, i = 0;
 
-	this.handleRTL();
+	if ( this.surface.getView().getDir() === 'rtl' ) {
+		this.switchDirection();
+	}
+
 	this.hideDistractions();
 	this.adjustLayout();
 
@@ -121,16 +124,14 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 
 
 /**
- * Switch this.$left and this.$right for RTE
+ * Switch this.$left and this.$right for RTL
  *
  * @method
  */
-ve.ui.WikiaFocusWidget.prototype.handleRTL = function() {
-	if ( this.surface.view.documentView.documentNode.$element.css( 'direction' ) === 'rtl' ) {
-		// this.$right is assigned to this.$left inside the array.
-		// this.$left is assigned to the first element in the array, this.$right.
-		this.$left = [this.$right, this.$right = this.$left][0];
-	}
+ve.ui.WikiaFocusWidget.prototype.switchDirection = function() {
+	// this.$right is assigned to this.$left inside the array.
+	// this.$left is assigned to the first element in the array, this.$right.
+	this.$left = [this.$right, this.$right = this.$left][0];
 };
 
 ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
