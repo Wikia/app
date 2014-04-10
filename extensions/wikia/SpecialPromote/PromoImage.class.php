@@ -60,7 +60,7 @@ class PromoImage extends WikiaObject {
 
 	public function getDBName(){
 		if (empty($this->dbName) and !empty($this->cityId)) {
-			$this->dbName = WikiFactory::IDtoDB($this->$cityId);
+			$this->dbName = WikiFactory::IDtoDB($this->cityId);
 		}
 		return $this->dbName;
 	}
