@@ -35,10 +35,12 @@ require([
 				model: new VideoData()
 			});
 		}
+		// Append div to end of wikia article to give a consistent element to key off of
+		$('#WikiaArticle').after('<div id="PlaceHolderVMB"></div>');
 		// Track how many impressions we'd get for the videos module in the bottom position, including
 		// pages without a read more section.
 		sloth({
-			on: document.getElementsByClassName('WikiaArticleCategories'),
+			on: document.getElementById('PlaceHolderVMB'),
 			threshold: 0,
 			callback: function () {
 				track();
