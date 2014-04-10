@@ -151,8 +151,8 @@ class SolrLyricsApiHandler {
 	 * @desc Appends articleUrl value to the stdClass object
 	 *
 	 * @param stdClass $obj A song or an album object
-	 * @param String $artistName An artist's name
-	 * @param String $secondPart A song or an album's name
+	 * @param String $artistName Artist name
+	 * @param String $secondPart Song or album name
 	 */
 	private function appendArticleUrl( $obj, $artistName, $secondPart ) {
 		$title = Title::newFromText( $artistName . ':' . $secondPart );
