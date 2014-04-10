@@ -182,29 +182,15 @@ class PromoteImageReviewTask extends BatchTask {
 		global $IP, $wgWikiaLocalSettingsPath;
 
 		$retval = "";
-
-		$dbname = WikiFactory::IDtoDB($sourceWikiId);
 		$imageTitle = GlobalTitle::newFromId($imageId, $sourceWikiId);
 
 		$sourceImageUrl = null;
-		if($imageTitle instanceof GlobalTitle) {
-			$param = array(
-				'action' => 'query',
-				'titles' => $imageTitle->getPrefixedText(),
-				'prop' => 'imageinfo',
-				'iiprop' => 'url',
-			);
 
-			$response = ApiService::foreignCall($dbname, $param);
-
-			if( !empty($response["query"]["pages"][$imageId])
-				&&( !empty($response["query"]["pages"][$imageId]["imageinfo"][0]["url"])) ) {
-				$sourceImageUrl = wfReplaceImageServer($response["query"]["pages"][$imageId]["imageinfo"][0]["url"]);
-			}
-		}
-
-		if( empty($sourceImageUrl) ) {
-			$this->log('Apparently the image ' . $dbname . '/' . $param['titles'] . ' is unaccessible');
+		$sourceFile = \GlobalFile::newFromText($imageTitle->getText(), $sourceWikiId);
+		if ($sourceFile->exists()){
+			$sourceImageUrl = $sourceFile->getUrl();
+		} else {
+			$this->log('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
 			return array('status' => 1);
 		}
 
@@ -226,18 +212,15 @@ class PromoteImageReviewTask extends BatchTask {
 			'command' => $sCommand,
 			'city_url' => $city_url
 		];
-		//WikiaLogger::getInstance()->debug( "PromoteImageReviewTask started", $logdata );
-		
+
 		$output = wfShellExec($sCommand, $retval);
 		
 		$logdata['output'] = $output;
 		$logdata['retval'] = $retval;
 		
 		if( $retval ) {
-			//WikiaLogger::getInstance()->error("PromoteImageReviewTask failed", $logdata);		
 			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
 		} else {
-			//WikiaLogger::getInstance()->debug("PromoteImageReviewTask finished", $logdata);		
 			$this->log('Upload successful: '.$output);
 		}
 
