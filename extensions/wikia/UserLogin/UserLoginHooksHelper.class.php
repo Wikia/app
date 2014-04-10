@@ -113,13 +113,32 @@ class UserLoginHooksHelper {
 		$oldEmail = $user->getEmail();
 		$optionNewEmail = $user->getOption( 'new_email' );
 		if ( ( empty($optionNewEmail) &&  $newEmail != $oldEmail ) || ( !empty($optionNewEmail) &&  $newEmail != $optionNewEmail ) ) {
-			$user->setOption( 'new_email', $newEmail );
-			$user->invalidateEmail();
-			if ( $app->wg->EmailAuthentication ) {
-				$userLoginHelper = (new UserLoginHelper);
-				$result = $userLoginHelper->sendReconfirmationEmail( $user, $newEmail );
-				if ( $result->isGood() ) {
-					$info = 'eauth';
+			// CONN-471 - Validate new user e-mail with Phalanx for Preferences::trySetUserEmail
+
+			// Temporary set the new email so it can be validated
+			$user->setEmail( $newEmail );
+			list( $isPhalanxValid, $abortError ) = UserLoginHelper::callWithCaptchaDisabled(function($params) {
+				$abortError = '';
+				$phalanxValid = wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) );
+				return array($phalanxValid, $abortError);
+			}, array( 'user' => $user ) );
+
+			// Revert to original email
+			$user->setEmail( $oldEmail );
+
+			if ( !$isPhalanxValid ) {
+				$info = $abortError;
+				$result = Status::newGood();
+				$result->setResult( false );
+			} else {
+				$user->setOption( 'new_email', $newEmail );
+				$user->invalidateEmail();
+				if ( $app->wg->EmailAuthentication ) {
+					$userLoginHelper = (new UserLoginHelper);
+					$result = $userLoginHelper->sendReconfirmationEmail( $user, $newEmail );
+					if ( $result->isGood() ) {
+						$info = 'eauth';
+					}
 				}
 			}
 		} elseif ( $newEmail != $oldEmail ) { // if the address is the same, don't change it
