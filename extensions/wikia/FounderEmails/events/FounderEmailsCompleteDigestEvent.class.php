@@ -37,7 +37,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$wikiService = (new WikiService);
 
 		foreach ($cityList as $cityID) {
-			//$user_ids = $wikiService->getWikiAdminIds( $cityID );
+			$user_ids = $wikiService->getWikiAdminIds( $cityID );
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
 			$page_url = GlobalTitle::newFromText( 'WikiActivity', NS_SPECIAL, $cityID )->getFullUrl();
 
@@ -49,11 +49,6 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				'$USERJOINS' => $founderEmailObj->getNewUsers( $cityID ),
 				'$USEREDITS' => $founderEmailObj->getDailyEdits( $cityID ),
 			);
-
-            $u = User::idFromName(Rafleszczynski);
-            $user_ids = array(
-                $u
-            );
 
 			foreach($user_ids as $user_id) {
 				$user = User::newFromId($user_id);
