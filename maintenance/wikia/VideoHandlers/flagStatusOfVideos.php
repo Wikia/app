@@ -115,6 +115,7 @@ class flagStatusOfVideos extends Maintenance {
 					"video_title" => $row->img_name,
 					"page_id" => $row->page_id
 				];
+				// img_minor_mime is the video provider
 				$videos[$row->img_minor_mime][] = $videoDetail;
 			});
 
