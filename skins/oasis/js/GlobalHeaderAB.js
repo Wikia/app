@@ -1,4 +1,4 @@
-// code moved to optimizely, because optimizely code could be loaded before our js's are ready
+/*// code moved to optimizely, because optimizely code could be loaded before our js's are ready
 $(function() {
 	$( '#GlobalNavigation' ).addClass( 'vertical-colors' );
 
@@ -72,11 +72,11 @@ $(function() {
 	};
 
 	$( '#WikiaHeader' ).addClass('v2' ).addClass('hide-new-wiki');
-	GlobalSearch.addSmallSearch();
+	GlobalSearch.addSmallCollapsedSearch();
 
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
 
 	$( '#AccountNavigation' ).find( '.ajaxRegister' ).clone().prependTo( '#UserLoginDropdown' );
 	$( 'body' ).addClass( 'global-header-fixed-at-top' );
 });
-
+*/
