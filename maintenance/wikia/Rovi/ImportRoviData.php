@@ -9,12 +9,15 @@ class ImportRoviData extends Maintenance {
 	const CSV_SEPARATOR = '|';
 	const CSV_MAX_LINE = 2048;
 	const SHARED_DB = "wikicities";
+	const UTF16_TAG = "\xFF\xFE";
+	const UTF16_TAG_LEN = 2;
+	const TMP_DIR = '/tmp';
 	protected $filesOptions = [
 		'seriesFile' => 'A csv file from Rovi containing series data (mostly Series.txt)',
 		'episodesFile' => 'A csv file from Rovi containing episodes data (mostly Episode_Sequence.txt)'
 	];
 	protected $files;
-
+	protected $cleanupFiles = [ ];
 
 	public function __construct() {
 		parent::__construct();
@@ -29,7 +32,16 @@ class ImportRoviData extends Maintenance {
 	public function execute() {
 		$this->checkFiles();
 		$this->loadData( new RoviTableSeriesImporter(), 'seriesFile' );
-		$this->loadData( new RoviTableEpisodeSeriesImporter, 'episodesFile' );
+		$this->loadData( new RoviTableEpisodeSeriesImporter(), 'episodesFile' );
+		$this->cleanup();
+	}
+
+	protected function cleanup() {
+		foreach ( $this->cleanupFiles as $fileName ) {
+			if ( unlink( $fileName ) ) {
+				$this->output( "Removed temporary file $fileName\n" );
+			}
+		}
 	}
 
 	protected function loadData( RoviTableImporter $importer, $optionName ) {
@@ -49,10 +61,14 @@ class ImportRoviData extends Maintenance {
 		$db = wfGetDb( DB_MASTER, array(), self::SHARED_DB );
 		$db->begin();
 		$row = 0;
-		while ( ( $data = fgetcsv( $csv, self::CSV_MAX_LINE, self::CSV_SEPARATOR ) ) !== FALSE ) {
+		while ( ( $line = fgets( $csv, self::CSV_MAX_LINE ) ) !== FALSE ) {
 			$row++;
 			if ( $skip != 0 && $row < $skip ) {
 				continue;
+			}
+			$data = explode( self::CSV_SEPARATOR, $line );
+			foreach ( $data as $k => &$v ) {
+				$data[ $k ] = trim( $v );
 			}
 			$this->output( "[$row] " . $importer->processRow( $data, $db ) . "\n" );
 			$batchCounter--;
@@ -63,7 +79,6 @@ class ImportRoviData extends Maintenance {
 			}
 		}
 		$db->commit();
-
 	}
 
 	protected function openCsvFile( $optionName ) {
@@ -79,6 +94,27 @@ class ImportRoviData extends Maintenance {
 		return $csv;
 	}
 
+	protected function isFileUTF16( $filename ) {
+		$f = fopen( $filename, 'r' );
+		if ( !$f ) {
+			$this->error( "Unable to open file: $filename", true );
+		}
+		$data = fread( $f, self::UTF16_TAG_LEN );
+		$test = ( $data === self::UTF16_TAG );
+		fclose( $f );
+		return $test;
+	}
+
+	protected function convertFileToUTF8( $filename ) {
+		$newName = tempnam( self::TMP_DIR, 'rovi_' );
+		$retVal = 1;
+		system( "iconv -f UTF-16 -t UTF-8 " . escapeshellarg( $filename ) . " > $newName", $retVal );
+		if ( $retVal !== 0 ) {
+			$this->error( "Unable to convert file: $filename to UTF-8 $newName", true );
+		}
+		return $newName;
+	}
+
 	protected function checkFiles() {
 		foreach ( array_keys( $this->filesOptions ) as $optionName ) {
 			if ( $this->hasOption( $optionName ) ) {
@@ -86,9 +122,14 @@ class ImportRoviData extends Maintenance {
 				if ( !file_exists( $fileName ) || !is_readable( $fileName ) ) {
 					$this->error( "Unable to load file for --$optionName ($fileName)", true );
 				}
+				if ( $this->isFileUTF16( $fileName ) ) {
+					$this->output( "$fileName is UTF-16 encoded\n" );
+					$fileName = $this->convertFileToUTF8( $fileName );
+					$this->output( "Converted to UTF-8: $fileName\n" );
+					$this->cleanupFiles[ ] = $fileName;
+				}
 				$this->files[ $optionName ] = $fileName;
 			}
-
 		}
 		if ( empty( $this->files ) ) {
 			$this->error( "No input files", true );
