@@ -60,9 +60,8 @@ class flagStatusOfVideos extends Maintenance {
 					// If an exception isn't thrown by this point, we know the video is still good
 					$this->debug( "Found working video: " . $video['video_title'] );
 					$workingVideos++;
-					if ( !$this->test ) {
-						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], self::STATUS_WORKING );
-					}
+					$status = self::STATUS_WORKING;
+					$removeVideo = false;
 				} catch ( Exception $e ) {
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
@@ -78,10 +77,11 @@ class flagStatusOfVideos extends Maintenance {
 						$otherErrorVideos++;
 						$status = self::STATUS_OTHER_ERROR;
 					}
-					if ( !$this->test ) {
-						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
-						$this->setAsRemoved( $video );
-					}
+					$removeVideo = true;
+				}
+				if ( !$this->test ) {
+					wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
+					$this->setRemovedValue( $video, $removeVideo );
 				}
 			}
 		}
@@ -128,21 +128,22 @@ class flagStatusOfVideos extends Maintenance {
 	}
 
 	/**
-	 * @param $videos - Flag video as removed in the video_info table
+	 * @param $video - Video to flag in the video_info table
+	 * @param $removeVideo - Boolean, whether the video should be deleted or not
+	 * Flag removed status of video in the video_info table. All videos which have some sort of error
+	 * (deleted, private, or other), are flagged as removed, all working videos are flagged as not removed.
 	 */
-	private function setAsRemoved ( $video ) {
+	private function setRemovedValue ( $video, $removeVideo ) {
 		$videoInfo = VideoInfo::newFromTitle( $video['video_title'] );
 		if ( is_null( $videoInfo ) ) {
 			$videoInfoHelper  = new VideoInfoHelper();
 			$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
-			$videoInfo->setRemoved();
-			$videoInfo->addVideo();
-			$this->debug("Video not found in video_info table, adding info for: " . $video['video_title'] );
-		} else {
-			$videoInfo->removeVideo();
 		}
-		$this->debug( "Setting video as removed: " . $video['video_title'] );
+		$videoInfo->setRemoved( $removeVideo );
+		$videoInfo->addVideo();
+		$removedStatus = $removeVideo ? "removed" : "not removed";
+		$this->debug( "Setting video as $removedStatus: " . $video['video_title'] );
 	}
 
 	/**
