@@ -115,7 +115,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
 
-		if( empty( $pages ) ) {
+		if( !empty( $pages ) ) {
 			$pages = $this->convertIntoArtistPages( $pages );
 			$start = date( 'Y-m-d\TH:i:s.u\Z' );
 
