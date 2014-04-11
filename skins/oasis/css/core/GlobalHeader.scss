@@ -66,10 +66,6 @@
 		position: relative;
 		width: $wikiaheader-width;
 	}
-
-	li#displayTimer, li.displayTimer, span#showdate { // Temporary fix by adamk@wikia-inc.com - see CE-738
-		display: none !important;
-	}
 }
 
 .GlobalNavigation {
