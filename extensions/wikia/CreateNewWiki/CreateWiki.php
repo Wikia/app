@@ -299,7 +299,7 @@ class CreateWiki {
 		global $wgDevelEnvironment;
 		if (isset($wgDevelEnvironment)) {
 			$position = $this->mNewWiki->dbw->getMasterPos();
-			$wait = $this->mNewWiki->dbw->masterPosWait($position, 3);
+			$wait = $this->mNewWiki->dbw->masterPosWait($position, 10);
 		}
 
 		/**
