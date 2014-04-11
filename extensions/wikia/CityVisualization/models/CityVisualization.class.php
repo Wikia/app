@@ -579,8 +579,11 @@ class CityVisualization extends WikiaModel {
 
 		while ($row = $result->fetchObject()) {
 			$parsed = WikiImageRowHelper::parseWikiImageRow($row);
-			$name = PromoImage::fromPathname($parsed->name)->ensureCityIdIsSet($wikiId)->getPathname();
-			$wikiImageNames[$parsed->index] = $name;
+			$promoImage = PromoImage::fromPathname($parsed->name);
+			//skip invalid promo image names
+			if ($promoImage->isValid()) {
+				$wikiImageNames[$parsed->index] = $promoImage->getPathname();
+			}
 		}
 
 		wfProfileOut(__METHOD__);

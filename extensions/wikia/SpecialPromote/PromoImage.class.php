@@ -48,6 +48,10 @@ class PromoImage extends WikiaObject {
 		return in_array($this->type, self::listAllAdditionalTypes());
 	}
 
+	public function isValid(){
+		return $this->isType(self::INVALID) or !$this->isCityIdSet();
+	}
+
 	public function getType(){
 		return $this->type;
 	}
