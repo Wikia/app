@@ -124,7 +124,7 @@ class WikiaLogger {
 	public static function onWikiaSkinTopScripts(&$vars, &$scripts) {
 		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
 
-		if (!$wgDevelEnvironment || true ) {
+		if (!$wgDevelEnvironment) {
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
 			$key = "wikialogger-top-script-$onError";
 			$loggingJs = $wgMemc->get($key);
