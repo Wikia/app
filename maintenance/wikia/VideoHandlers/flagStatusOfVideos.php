@@ -139,6 +139,7 @@ class flagStatusOfVideos extends Maintenance {
 			$videoInfoHelper  = new VideoInfoHelper();
 			$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
+			$videoInfo->addVideo();
 		}
 		if ( $removeVideo ) {
 			$videoInfo->removeVideo();
