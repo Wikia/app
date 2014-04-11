@@ -117,17 +117,11 @@ abstract class BaseScraper {
 			$songFields = explode( '|', $matches[1] );
 
 			if ( count( $songFields) > 1 ) {
-				$titleText = $songFields[0];
-				$titleExploded = explode( ':', $titleText );
-
-				if ( count( $titleExploded ) > 1 ) {
-					$songName = $titleExploded[1];
-					$songData = [
-						'title' => $titleText,
-						'song' => $songName,
-						'number' => $number,
-					];
-				}
+				$songData = [
+					'title' => $songFields[0],
+					'song' => $songFields[1],
+					'number' => $number,
+				];
 			}
 		}
 
