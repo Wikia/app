@@ -20,17 +20,13 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 
 	// Properties
 	this.$attribution = null;
-	this.$detailsIcon = null;
-	this.$title = null;
+	this.$details = null;
 
 	// The minimum allowable width for the attribution to be displayed
 	this.minWidth = 102;
 
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
-
-	// DOM changes
-	this.$element.addClass( 'thumbcaption' );
 };
 
 /* Inheritance */
@@ -73,24 +69,9 @@ ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
  * @method
  * @returns {jQuery} The properly scoped jQuery object
  */
-ve.ce.WikiaMediaCaptionNode.prototype.createDetailsIcon = function () {
+ve.ce.WikiaMediaCaptionNode.prototype.createDetails = function () {
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<a>' ).addClass( 'sprite details ve-no-shield' );
-};
-
-/**
- * Builds the title element.
- *
- * @method
- * @returns {jQuery} The properly scoped jQuery object
- */
-ve.ce.WikiaMediaCaptionNode.prototype.createTitle = function () {
-	var attribution = this.model.parent.getAttribute( 'attribution' );
-
-	// It's inside a protected node, so user can't see href/title.
-	return this.$( '<p>' )
-		.addClass( 'title ve-no-shield' )
-		.text( attribution.titleText );
 };
 
 /**
@@ -108,19 +89,19 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 		this.$attribution = this.createAttribution();
 	}
 
-	this.$detailsIcon = this.createDetailsIcon();
-	this.$title = this.createTitle();
+	this.$details = this.createDetails();
 
 	// Parent method
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
+
+	// TODO: make sure this shows up - currently set to visibility: hidden;
+	this.$details.prependTo( this.$element );
 
 	// This logic is from the function onThumbnailAfterProduceHTML() in ImageTweaksHooks.class.php
 	if (
 		parentModel.getAttribute( 'attribution' ) !== undefined &&
 		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
-		this.$detailsIcon.appendTo( this.$element );
-		this.$title.appendTo( this.$element );
 		this.$attribution.appendTo( this.$element );
 	}
 };

@@ -6,25 +6,25 @@
  * DataModel Wikia media caption node.
  *
  * @class
- * @extends ve.dm.MWImageCaptionNode
+ * @extends ve.dm.WikiaMediaCaptionNode
  * @constructor
  * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.WikiaMediaCaptionNode = function VeDmWikiaMediaCaptionNode( length, element ) {
-	ve.dm.MWImageCaptionNode.call( this, length, element );
+ve.dm.WikiaVideoCaptionNode = function VeDmWikiaVideoCaptionNode( length, element ) {
+	ve.dm.WikiaMediaCaptionNode.call( this, length, element );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.dm.WikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
+OO.inheritClass( ve.dm.WikiaVideoCaptionNode, ve.dm.WikiaMediaCaptionNode );
 
 /* Static Properties */
 
-ve.dm.WikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
+ve.dm.WikiaMediaCaptionNode.static.name = 'wikiaVideoCaption';
 
 ve.dm.WikiaMediaCaptionNode.static.parentNodeTypes = [
-	'wikiaBlockImage'
+	'wikiaBlockVideo'
 ];
 
 /* Registration */

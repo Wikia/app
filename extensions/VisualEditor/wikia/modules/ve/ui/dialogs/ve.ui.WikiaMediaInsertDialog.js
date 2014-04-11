@@ -612,7 +612,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'height': item.height,
 					'resource': './' + item.title,
 					'attribution': {
-						'username': item.username,
+						'username': item.username
 					}
 				}
 			},
