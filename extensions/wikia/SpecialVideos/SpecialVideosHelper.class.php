@@ -122,17 +122,18 @@ class SpecialVideosHelper extends WikiaModel {
 			];
 		}
 
-		$thumbParams = [
-			'width'        => self::THUMBNAIL_WIDTH,
-			'height'       => self::THUMBNAIL_HEIGHT,
-			'thumbOptions' => $thumbOptions,
-			'getThumb'     => true,
+		$videoOptions = [
+			'thumbWidth'       => self::THUMBNAIL_WIDTH,
+			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+			'postedInArticles' => self::POSTED_IN_ARTICLES,
+			'thumbOptions'     => $thumbOptions,
+			'getThumbnail'     => true,
 		];
 
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $helper->getVideoDetail( $videoInfo, $thumbParams, self::POSTED_IN_ARTICLES );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = $this->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
 				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
