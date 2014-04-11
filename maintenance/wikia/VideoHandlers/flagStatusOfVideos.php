@@ -140,8 +140,11 @@ class flagStatusOfVideos extends Maintenance {
 			$videoTitle = Title::newFromText( $video['video_title'], NS_FILE );
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
 		}
-		$videoInfo->setRemoved( $removeVideo );
-		$videoInfo->addVideo();
+		if ( $removeVideo ) {
+			$videoInfo->removeVideo();
+		} else {
+			$videoInfo->restoreVideo();
+		}
 		$removedStatus = $removeVideo ? "removed" : "not removed";
 		$this->debug( "Setting video as $removedStatus: " . $video['video_title'] );
 	}
