@@ -105,6 +105,7 @@ class ArtistScraper extends BaseScraper {
 	 */
 	public function getAlbumSongs( $section ) {
 		$songs = [];
+
 		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
 			$number = 1;
 			foreach ( $matches[1] as $song ) {
@@ -112,6 +113,7 @@ class ArtistScraper extends BaseScraper {
 				$number++;
 			}
 		}
+
 		return $songs;
 	}
 
