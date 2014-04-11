@@ -35,9 +35,6 @@ class ChatHelper {
 			self::setMode(true);
 			return true;
 		}
-
-		$basket = self::getServerBasket();
-		self::setServerBasket(($basket)%2 + 1);
 		self::setMode(false);
 		return false;
 	}
@@ -56,12 +53,7 @@ class ChatHelper {
 	}
 
 	static public function getServer($type = 'Main'){
-		global $wgCityId;
-
-		$server = self::getChatConfig($type.'ChatServers');
-		$serversCount = count($server[self::getServerBasket()]);
-
-		$out = explode(':', $server[self::getServerBasket()][$wgCityId%$serversCount]);
+		$out = explode(':', self::getChatConfig($type.'ChatServer'));
 		return array('host' => $out[0], 'port' => $out[1]);
 	}
 
@@ -70,8 +62,8 @@ class ChatHelper {
 	}
 
 	static public function getServersList($type = 'Main') {
-		$server = self::getChatConfig($type.'ChatServers');
-		return $server[self::getServerBasket()];
+		$server = self::getChatConfig($type.'ChatServer');
+		return $server;
 	}
 
 	/**
@@ -127,18 +119,6 @@ class ChatHelper {
 
 		wfProfileOut(__METHOD__);
 		return false;
-	}
-
-	static public function getServerBasket() {
-		$basket	= WikiFactory::getVarValueByName(self::$serversBasket, self::$CentralCityId);
-		if(empty($basket)) {
-			return 1;
-		}
-		return $basket;
-	}
-
-	static private function setServerBasket($basket) {
-		WikiFactory::setVarByName(self::$serversBasket, self::$CentralCityId, $basket);
 	}
 
 	static public function onStaffLogFormatRow($slogType,$result,$time,$linker,&$out) {
