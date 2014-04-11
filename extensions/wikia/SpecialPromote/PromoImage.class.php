@@ -38,6 +38,7 @@ class PromoImage extends WikiaObject {
 		$this->cityId = null;
 		$this->type = $type;
 		$this->fileChanged = false;
+		$this->removed = false;
 	}
 
 	public function isType($type){
@@ -50,6 +51,9 @@ class PromoImage extends WikiaObject {
 
 	public function isValid(){
 		return $this->isType(self::INVALID) or !$this->isCityIdSet();
+	}
+	public function wasRemoved(){
+		return $this->removed;
 	}
 
 	public function getType(){
@@ -145,6 +149,9 @@ class PromoImage extends WikiaObject {
 
 			$file->upload($temp_file->getPath(), '', '');
 			$temp_file->remove();
+		} elseif (!$this->isValid()){
+			// REMOVE old format image
+			$this->purgeImage();
 		}
 		return $this;
 	}
@@ -195,6 +202,7 @@ class PromoImage extends WikiaObject {
 			//for legacy compatibility attempt to remove older image path format
 			$this->removalTaskHelper($this->pathnameHelper(false,true));
 		}
+		return $this;
 	}
 
 	public function deleteImage() {
@@ -203,6 +211,8 @@ class PromoImage extends WikiaObject {
 			//for legacy compatibility attempt to remove older image path format
 			$this->deleteImageHelper($this->pathnameHelper(false,true));
 		}
+		$this->removed = true;
+		return $this;
 	}
 
 	protected function inferType($fileName, &$dbName = null){

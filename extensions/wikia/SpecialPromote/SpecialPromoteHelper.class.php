@@ -322,12 +322,18 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		foreach($promoImages as $promoImage){
 			if ($promoImage->isType(PromoImage::MAIN)){
-				$updateData['city_main_image'] = $promoImage->getPathname();
+				if (!$promoImage->wasRemoved()){
+					$updateData['city_main_image'] = $promoImage->getPathname();
+				} else {
+					$updateData['city_main_image'] = null;
+				}
 			} else {
-				array_push($additionalImageNames, $promoImage->getPathname());
+				if (!$promoImage->wasRemoved()){
+					array_push($additionalImageNames, $promoImage->getPathname());
+				}
 			}
 
-			if ($promoImage->isFileChanged()){
+			if ($promoImage->isFileChanged() and !$promoImage->wasRemoved()){
 				array_push($modifiedImageNames, $promoImage->getPathname());
 			}
 		}
@@ -366,6 +372,7 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	protected function saveAdditionalFiles($additionalImagesNames) {
 		$unchangedTypes = array();
+		$oldIncompatibleFiles = array();
 		$imagesToProcess = array();
 		$allFiles = array();
 		foreach($additionalImagesNames as $singleFileName) {
