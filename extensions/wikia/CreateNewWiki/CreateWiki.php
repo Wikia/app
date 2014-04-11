@@ -364,9 +364,6 @@ class CreateWiki {
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
 
-		$wgUser = $oldUser;
-		unset($oldUser);
-
 		/**
 		 * define wiki type
 		 */
@@ -430,6 +427,10 @@ class CreateWiki {
 		 * Unset database from mNewWiki, because database objects cannot be serialized from MW1.19
 		 */
 		unset($this->mNewWiki->dbw);
+
+		// Restore wgUser
+		$wgUser = $oldUser;
+		unset($oldUser);
 
 		/**
 		 * inform task manager
