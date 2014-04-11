@@ -107,20 +107,23 @@ class flagStatusOfVideos extends Maintenance {
 	 */
 	public function getVideos() {
 		$db = wfGetDB( DB_SLAVE );
-		$videos = ( new WikiaSQL() )->SELECT( "video_title" )
-			->FIELD( "video_id" )
-			->FIELD( "provider" )
+		$videos = ( new WikiaSQL() )->SELECT( "img_name" )
+			->FIELD( "img_metadata" )
+			->FIELD( "img_minor_mime" )
 			->FIELD( "page_id" )
-			->FROM( "video_info" )
+			->FROM( "image" )
 			->JOIN( "page" )
-			->ON( "page_title", "video_title")
+			->ON( "page_title", "img_name")
+			->WHERE( "img_media_type" )->EQUAL_TO( "VIDEO" )
+			->AND_( "page_namespace" )->EQUAL_TO( NS_FILE )
 			->runLoop( $db, function ( &$videos, $row ) {
 				$videoDetail = [
-					"video_id" => $row->video_id,
-					"video_title" => $row->video_title,
+					"video_id" => unserialize( $row->img_metadata )['videoId'],
+					"video_title" => $row->img_name,
 					"page_id" => $row->page_id
 				];
-				$videos[$row->provider][] = $videoDetail;
+				// img_minor_mime is the video provider
+				$videos[$row->img_minor_mime][] = $videoDetail;
 			});
 
 		return $videos;
