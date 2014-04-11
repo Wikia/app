@@ -33,7 +33,7 @@ class ParsoidCacheUpdateJob extends Job {
 				$this->invalidateTitles( $titles );
 			} else {
 				$cache = $this->title->getBacklinkCache();
-				$batches = $cache->partition( $this->table, 50 );
+				$batches = $cache->partition( $this->table, 20 );
 				$jobs = array();
 				foreach ( $batches as $batch ) {
 					 list( $start, $end ) = $batch;
