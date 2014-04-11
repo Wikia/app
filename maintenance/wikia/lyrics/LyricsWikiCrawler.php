@@ -114,16 +114,19 @@ class LyricsWikiCrawler extends Maintenance {
 		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
 
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
-		$pages = $this->convertIntoArtistPages( $pages );
-		$start = date( 'Y-m-d\TH:i:s.u\Z' );
 
-		foreach( $pages as $pageId ) {
-			$this->setArticleId( $pageId );
-			$this->doScrapeArtist();
+		if( empty( $pages ) ) {
+			$pages = $this->convertIntoArtistPages( $pages );
+			$start = date( 'Y-m-d\TH:i:s.u\Z' );
+
+			foreach( $pages as $pageId ) {
+				$this->setArticleId( $pageId );
+				$this->doScrapeArtist();
+			}
+
+			$artists = $this->getArtistTitlesFromIds( $pages );
+			$this->solr->delDocsByArtistsAndDate( $artists, $start );
 		}
-
-		$artists = $this->getArtistTitlesFromIds( $pages );
-		$this->solr->delDocsByArtistsAndDate( $artists, $start );
 	}
 
 	/**
