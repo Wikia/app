@@ -169,28 +169,26 @@ class PromoImage extends WikiaObject {
 	}
 
 	protected function removalTaskHelper($imageName) {
-		if( !empty($deletedFiles) ) {
-			$visualization = new CityVisualization();
+		$visualization = new CityVisualization();
 
-			$content_lang = $this->wg->contLang->getCode();
+		$content_lang = $this->wg->contLang->getCode();
 
-			//create task only for languages which have corporate wiki
-			if ($visualization->isCorporateLang($content_lang)) {
-				if (!empty($taskDeletionList) && class_exists('PromoteImageReviewTask')) {
-					$task = new PromoteImageReviewTask();
-					$deletion_list = array(
-						$content_lang => array(
-							$this->wg->cityId => array($imageName)
-						)
-					);
+		//create task only for languages which have corporate wiki
+		if ($visualization->isCorporateLang($content_lang)) {
+			if (class_exists('PromoteImageReviewTask')) {
+				$task = new PromoteImageReviewTask();
+				$deletion_list = array(
+					$content_lang => array(
+						$this->wg->cityId => array($imageName)
+					)
+				);
 
-					$task->createTask(
-						array(
-							'deletion_list' => $deletion_list
-						),
-						TASK_QUEUED
-					);
-				}
+				$task->createTask(
+					array(
+						'deletion_list' => $deletion_list
+					),
+					TASK_QUEUED
+				);
 			}
 		}
 	}
