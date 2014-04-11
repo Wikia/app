@@ -204,18 +204,9 @@ function veTrack( data ) {
 			defaultData.userLanguage = 'unknown';
 		}
 
-		// js enabled
-		try {
-			uri = new mw.Uri( location.href );
-			defaultData.clickedBeforeJS = !!uri.query.beforejs ? 'yes' : 'no'
-		} catch ( e ) {
-			defaultData.jsEnabled = 'unknown';
-		}
-
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	//syslogReport( 6, 'veTrack-v3', finalData );
-	syslogReport( 6, 'veTrack-christian', finalData );
+	syslogReport( 6, 'veTrack-v3', finalData );
 }
