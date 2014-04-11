@@ -2,20 +2,23 @@
 /* jshint maxparams:false */
 define('ext.wikia.adEngine.provider.ebay', [
 	'wikia.log',
-	'jquery'
-], function (log, $) {
+	'jquery',
+	'wikia.window'
+], function (log, $, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.ebay';
 
 	function canHandleSlot(slotname) {
-		return slotname === 'PREFOOTER_BOX_LEFT';
+		return slotname === 'PREFOOTER_BOX_LEFT' || slotname === 'MOBILE_PREFOOTER';
 	}
 
-	function fillInSlot(slotname, pSuccess, pHop) {
+	function fillInSlot(slotname, pSuccess) {
 		log(['fillInSlot', slotname], 'info', logGroup);
 
-		var params = {};
+		var params = {
+			skin: window.skin
+		};
 
 		$.nirvana.sendRequest({
 			controller: 'AdProviderEbayController',

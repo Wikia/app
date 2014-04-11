@@ -1,4 +1,7 @@
 <style>
+	#ebay-ads {
+		text-align: left;
+	}
 	#ebay-ads li {
 		list-style: disc inside;
 	}
