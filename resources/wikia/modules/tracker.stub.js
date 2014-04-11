@@ -203,7 +203,7 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
-
+		
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
