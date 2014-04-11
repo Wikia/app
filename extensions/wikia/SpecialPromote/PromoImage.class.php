@@ -139,7 +139,8 @@ class PromoImage extends WikiaObject {
 		// uploaded fileName that matches through infer type, means that
 		// file was not really uploaded, and was already present in DB
 		// FIXME: this mechanism is hacky, it should be more durable than string matching
-		if ($this->inferType($srcFileName) == self::INVALID) {
+		$uploadedPromo = PromoImage::fromPathname($srcFileName);
+		if ($uploadedPromo->isType(self::INVALID)) { //we can't upload promo files so if this is not INVALID type it wasn't uploaded
 			$this->fileChanged = true;
 
 			$dst_file_title = Title::newFromText($this->getPathname(), NS_FILE);
@@ -149,7 +150,7 @@ class PromoImage extends WikiaObject {
 
 			$file->upload($temp_file->getPath(), '', '');
 			$temp_file->remove();
-		} elseif (!$this->isValid()){
+		} elseif (!$uploadedPromo->isValid()){
 			// REMOVE old format image
 			$this->purgeImage();
 		}
