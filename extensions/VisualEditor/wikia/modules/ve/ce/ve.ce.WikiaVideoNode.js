@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw: false */
-
 /**
  * VisualEditor ContentEditable Wikia video node.
  * This is an abstract class and as such should not be instantiated directly.
@@ -22,6 +20,7 @@ ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 	// Properties
 	this.$image = $image || this.$image || this.$element;
 	this.$wikiaVideoElements = $( [] );
+	this.size = 'medium';
 
 	// Events
 	this.connect( this, {
@@ -54,14 +53,42 @@ ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
 ve.ce.WikiaVideoNode.prototype.onWikiaVideoSetup = function () {
 	var $parent;
 
+	this.size = this.getSize( this.$image.width() );
+
 	if ( !this.$wikiaVideoElements.length ) {
-		$parent = this.$image.parent().addClass( 'video video-thumbnail' );
+		$parent = this.$image.parent().addClass( 'video video-thumbnail ' + this.size );
 
 		// Play button
 		this.$wikiaVideoElements.add(
 			this.createPlayButton().appendTo( $parent )
 		);
 	}
+};
+
+/**
+ * Get the size string to use as the class name for the video thumbnail wrapper.
+ * It determines the size and location of the play button.
+ * It's duplicated from WikiaFileHelper::getThumbnailSize
+ *
+ * @param width
+ * @returns {string}
+ */
+ve.ce.WikiaVideoNode.prototype.getSize = function( width ) {
+	var size;
+
+	if ( width < 200 ) {
+		size = 'xsmall';
+	} else if ( width < 270 ) {
+		size = 'small';
+	} else if ( width < 470 ) {
+		size = 'medium';
+	} else if ( width < 720 ) {
+		size = 'large';
+	} else {
+		size = 'xlarge';
+	}
+
+	return size;
 };
 
 /**
