@@ -295,6 +295,13 @@ class CreateWiki {
 			return self::ERROR_SQL_FILE_BROKEN;
 		}
 
+		// Hack to slow down the devbox database creation
+		global $wgDevelEnvironment;
+		if (isset($wgDevelEnvironment)) {
+			$position = $this->mNewWiki->dbw->getMasterPos();
+			$wait = $this->mNewWiki->dbw->masterPosWait($position, 3);
+		}
+
 		/**
 		 * import language starter
 		 */
