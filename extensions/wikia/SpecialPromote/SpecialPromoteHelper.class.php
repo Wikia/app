@@ -291,10 +291,24 @@ class SpecialPromoteHelper extends WikiaObject {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
-					$promoImage->processUploadedFile($fileName);
+					// uploaded fileName that matches through infer type, means that
+					// file was not really uploaded, and was already present in DB
+					// FIXME: this mechanism is hacky, it should be more durable than string matching
 
-					array_push($promoImages, $promoImage);
+					$testFile = PromoImage::fromPathname($fileName);
+
+					if (!$testFile->isType(PromoImage::INVALID)) {
+						if (!$testFile->isCityIdSet()){
+							// Remove old image formatted filename: FIXME: remove this sometime in the future :)
+							$testFile->purgeImage();
+							array_push($promoImages, $testFile);
+						}
+					} else {
+						$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+						$promoImage->processUploadedFile($fileName);
+						array_push($promoImages, $promoImage);
+					}
+
 					break;
 				case 'additionalImagesNames':
 					$additionalImagesNames = $dataContent;
@@ -372,13 +386,16 @@ class SpecialPromoteHelper extends WikiaObject {
 
 	protected function saveAdditionalFiles($additionalImagesNames) {
 		$unchangedTypes = array();
-		$oldIncompatibleFiles = array();
 		$imagesToProcess = array();
 		$allFiles = array();
 		foreach($additionalImagesNames as $singleFileName) {
 			$promoImage= PromoImage::fromPathname($singleFileName);
 
-			if ($promoImage->getType() != PromoImage::INVALID){
+			if (!$promoImage->isType(PromoImage::INVALID)){
+				if (!$promoImage->isCityIdSet()){
+					// Remove old image formatted filename: FIXME: remove this sometime in the future
+					$promoImage->purgeImage();
+				}
 				// FIXME: we should check for and log duplicated types, as this is invalid state of the database
 				array_push($unchangedTypes, $promoImage->getType());
 				array_push($allFiles, $promoImage);
