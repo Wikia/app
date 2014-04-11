@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use JsonFormatService;
+use Wikia\JsonFormat\JsonFormatSimplifier;
 use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
@@ -137,9 +139,19 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
+		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-			return $this->prepValuesFromHtml( $html );
+
+		if( $wgSimpleHtmlSearchIndexer ) {
+			$jsonFormatService = new JsonFormatService();
+			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
+			$simplifier = new JsonFormatSimplifier();
+			$text = $simplifier->simplifyToText( $jsonSimple );
+			return [ 'html' => implode( '', $text ) ];
+		} else {
+			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
+				return $this->prepValuesFromHtml( $html );
+			}
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}

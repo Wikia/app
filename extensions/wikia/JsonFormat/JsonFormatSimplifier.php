@@ -181,4 +181,52 @@ class JsonFormatSimplifier {
 			"sections" => $returnSections
 		];
 	}
+
+	public function simplifyToText( \JsonFormatRootNode $rootNode ) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
+		$result = [];
+		$listsSections = [];
+		$sections = [];
+		$this->findSections( $rootNode, $sections );
+
+		for ( $i = sizeof($sections)-1; $i >= 0; $i-=1 ) {
+			$section = $sections[$i];
+			$sectionResult = [];
+			$content = [];
+			$containList = false;
+			$this->getParagraphs( $section, $content );
+			$this->clearEmptyParagraphs( $content );
+			foreach( $content as $node ) {
+				if( $node['type'] == 'paragraph' ) {
+					$sectionResult[] = $node['text'];
+				}
+				if( $node['type'] == 'list' ) {
+					$sectionResult[] = $this->getElements( $node ) . "\n";
+					$containList = true;
+				}
+			}
+			$value = implode('', $sectionResult);
+			if( $containList ) {
+				$listsSections[] = $value;
+			} else {
+				$result[] = $value;
+			}
+		}
+
+		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
+		$timer->stop();
+		return $output;
+	}
+
+	protected function getElements( $node ) {
+		$result = [];
+		foreach( $node['elements'] as $element ) {
+			$text = $element['text'];
+			if( !empty($element['elements']) ) {
+				$text .= ' (' . $this->getElements( $element ) . ')';
+			}
+			$result[] = $text;
+		}
+		return implode(', ', $result);
+	}
 }
