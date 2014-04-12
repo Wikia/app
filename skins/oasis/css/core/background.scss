@@ -191,7 +191,7 @@ body.background-fixed {
 			position: absolute;
 			top: 0;
 			width: $background-width-half;
-			z-index: -2;
+			z-index: -1;
 		}
 		&.background-fixed:after,
 		&.background-fixed:before
@@ -222,7 +222,6 @@ body.background-fixed {
 				height: 100%;
 				position: fixed;
 				top: 0;
-				z-index: -1;
 			}
 		}
 	}
