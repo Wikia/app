@@ -143,13 +143,18 @@ class flagStatusOfVideos extends Maintenance {
 			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $videoTitle );
 			$videoInfo->addVideo();
 		}
+
 		if ( $removeVideo ) {
-			$videoInfo->removeVideo();
+			if ( !$videoInfo->isRemoved() ) {
+				$videoInfo->removeVideo();
+			}
 		} else {
-			$videoInfo->restoreVideo();
+			if ( $videoInfo->isRemoved() ) {
+				$videoInfo->restoreVideo();
+			}
 		}
 		$removedStatus = $removeVideo ? "removed" : "not removed";
-		$this->debug( "Setting video as $removedStatus: " . $video['video_title'] );
+		$this->debug( "Video set as $removedStatus: " . $video['video_title'] );
 	}
 
 	/**
