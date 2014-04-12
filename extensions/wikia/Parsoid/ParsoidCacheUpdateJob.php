@@ -25,30 +25,27 @@ class ParsoidCacheUpdateJob extends Job {
 	}
 
 	public function run() {
-		global $wgUpdateRowsPerJob;
+		$this->wikiaLog( array( "action" => "run", "type" => $this->type ) );
 
-		$this->wikiaLog( array(
-			"action" => "run",
-			"type" => $this->type
-		) );
-
-		if ( $this->type === 'invalidate' ) {
-			$titles = $this->title->getBacklinkCache()->getLinks( $this->table, $this->start, $this->end );
-			$this->invalidateTitles( $titles );
-		} else if ( $this->type === 'OnDependencyChange' ) {
-			$cache = $this->title->getBacklinkCache();
-			$batches = $cache->partition( $this->table, $wgUpdateRowsPerJob );
-			$jobs = array();
-			foreach ( $batches as $batch ) {
-				 list( $start, $end ) = $batch;
-				 $jobs[] = new ParsoidCacheUpdateJob( $this->title, array (
-				 	'type' => 'invalidate',
-				 	'table' => $this->table,
-				 	'start' => $start,
-				 	'end' => $end
-				 ) );
+		if ( $this->type === 'OnDependencyChange' ) {
+			if ( isset( $this->start ) && isset( $this->end ) ) {
+				$titles = $this->title->getBacklinkCache()->getLinks( $this->table, $this->start, $this->end );
+				$this->invalidateTitles( $titles );
+			} else {
+				$cache = $this->title->getBacklinkCache();
+				$batches = $cache->partition( $this->table, 20 );
+				$jobs = array();
+				foreach ( $batches as $batch ) {
+					 list( $start, $end ) = $batch;
+					 $jobs[] = new ParsoidCacheUpdateJob( $this->title, array (
+					 	'type' => 'OnDependencyChange',
+					 	'table' => $this->table,
+					 	'start' => $start,
+					 	'end' => $end
+					 ) );
+				}
+				Job::batchInsert( $jobs );
 			}
-			Job::batchInsert( $jobs );
 		} else if ( $this->type === 'OnEdit' ) {
 			$this->invalidateTitle( $this->title );
 		}
@@ -76,10 +73,46 @@ class ParsoidCacheUpdateJob extends Job {
 	}
 
 	protected function invalidateTitles( $titles ) {
+		global $wgParsoidCacheServers, $wgContentNamespaces;
+
+		$parsoidInfo = array();
+		$parsoidInfo['changedTitle'] = $this->title->getPrefixedDBkey();
+		$parsoidInfo['mode'] = $this->table == 'templatelinks' ? 'templates' : 'files';
+
+		$requests = array();
+		foreach ( $wgParsoidCacheServers as $server ) {
+			foreach ( $titles as $key => $title ) {
+				if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
+					continue;
+				}
+				$singleUrl = $this->getParsoidURL( $title, $server );
+				$parsoidInfo['cacheID'] = $title->getLatestRevID();
+				$requests[] = array(
+					'url'     => $singleUrl,
+					'headers' => array(
+						'X-Parsoid: ' . json_encode( $parsoidInfo ),
+						// Force implicit cache refresh similar to
+						// https://www.varnish-cache.org/trac/wiki/VCLExampleEnableForceRefresh
+						'Cache-control: no-cache'
+					)
+				);
+				$this->wikiaLog( array(
+					"action" => "invalidateTitles",
+					"get_url" => $singleUrl
+				) );
+			}
+		}
+
+		$this->checkCurlResults( CurlMultiClient::request( $requests ) );
+		return $this->getLastError() == null;
 	}
 
 	protected function invalidateTitle( Title $title ) {
-		global $wgParsoidCacheServers;
+		global $wgParsoidCacheServers, $wgContentNamespaces;
+
+		if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
+			return;
+		}
 
 		# First request the new version
 		$parsoidInfo = array();
