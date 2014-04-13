@@ -166,7 +166,7 @@ $( function () {
 			$this.removeClass( 'lu-selected' );
 			$this.val( '<?= wfMessage( 'listusers-select-all' )->escaped() ?>' );
 		} else {
-			$checkbox.attr( 'checked', 'checked' );
+			$checkbox.prop( 'checked', true );
 			$this.addClass( 'lu-selected' );
 			$this.val( '<?= wfMessage( 'listusers-deselect-all' )->escaped() ?>' );
 		}
