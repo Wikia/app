@@ -49,12 +49,14 @@ class ParsoidHooks {
 		} else {
 			$job = new ParsoidCacheUpdateJob( $title, array( 'type' => 'OnEdit' ) );
 			$job->insert();
-
+			// VE-989: Disable temporary this job for templatelinks
+			/*
 			$job = new ParsoidCacheUpdateJob( $title, array(
 				'type' => 'OnDependencyChange',
 				'table' => 'templatelinks'
 			) );
 			$job->insert();
+			*/
 		}
 	}
 
