@@ -354,9 +354,6 @@ class LinkSuggest {
 				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
 					$results[] = $redirTitleFormatted;
-					// VOLDEV-57
-					// @author Cqm
-					// Stop redirects showing in search suggestions
 					$redirects[$titleFormatted] = $redirTitleFormatted;
 
 				}
