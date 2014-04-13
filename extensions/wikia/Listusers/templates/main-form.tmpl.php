@@ -162,7 +162,7 @@ $( function () {
 			$checkbox = $( '.lu_target' );
 		
 		if ( $this.hasClass( 'lu-selected' ) ) {
-			$checkbox.removeAttr( 'checked' );
+			$checkbox.prop( 'checked', false );
 			$this.removeClass( 'lu-selected' );
 			$this.val( '<?= wfMessage( 'listusers-select-all' )->escaped() ?>' );
 		} else {
