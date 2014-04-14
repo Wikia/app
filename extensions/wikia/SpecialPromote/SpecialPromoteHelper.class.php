@@ -298,16 +298,18 @@ class SpecialPromoteHelper extends WikiaObject {
 					$promoImage = PromoImage::fromPathname($fileName);
 
 					if (!$promoImage->isType(PromoImage::INVALID)) {
-						if (!$promoImage->isCityIdSet()){
-							// Remove old image formatted filename: FIXME: remove this sometime in the future :)
-							$promoImage->purgeImage();
+						// check if file exists, if not do not add it to processed files, effectively removing it
+						$file = GlobalFile::newFromText($promoImage->getPathname(), $cityId);
+						if ($file->exists()){
+							array_push($promoImages, $promoImage);
 						}
+
 					} else {
 						$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
 						$promoImage->processUploadedFile($fileName);
+						array_push($promoImages, $promoImage);
 					}
 
-					array_push($promoImages, $promoImage);
 					break;
 				case 'additionalImagesNames':
 					$additionalImagesNames = $dataContent;
