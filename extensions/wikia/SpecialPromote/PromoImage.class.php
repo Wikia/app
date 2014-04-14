@@ -13,18 +13,11 @@ class PromoImage extends WikiaObject {
 
 	const INVALID = -1;
 	const MAIN = 0;
-	const ADDITIONAL_1 = 1;
-	const ADDITIONAL_2 = 2;
-	const ADDITIONAL_3 = 3;
-	const ADDITIONAL_4 = 4;
-	const ADDITIONAL_5 = 5;
-	const ADDITIONAL_6 = 6;
-	const ADDITIONAL_7 = 7;
-	const ADDITIONAL_8 = 8;
-	const ADDITIONAL_9 = 9;
+	const ADDITIONAL_START = 1;
+	const ADDITIONAL_END = 9;
 
 	static public function listAllAdditionalTypes() {
-		return array(1, 2, 3, 4, 5, 6, 7, 8, 9); //ADDITIONAL_1 to ADDITIONAL_9
+		return range(self::ADDITIONAL_START, self::ADDITIONAL_END);
 	}
 
 	static public function fromPathname($pathString){
@@ -217,7 +210,7 @@ class PromoImage extends WikiaObject {
 				$type = self::MAIN;
 			} elseif (!empty($matches[2]) and !empty($matches[3])) { // matches additional images and has a number designation
 				$val = intval($matches[3]);
-				if ($val >= self::ADDITIONAL_1 and $val <= self::ADDITIONAL_9){
+				if ($val >= self::ADDITIONAL_START and $val <= self::ADDITIONAL_END){
 					$type = $val;
 				}
 			}
