@@ -1,5 +1,5 @@
 <?php
-// proxy to run tasks in development.
+set_time_limit(0);
 
 $script = __DIR__.'/../../../../maintenance/wikia/task_runner.php';
 
