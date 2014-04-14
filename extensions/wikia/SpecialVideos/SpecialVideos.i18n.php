@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'specialvideos-meta-description-corporate' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
 	'specialvideos-remove-modal-title' => 'Delete video',
 	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
+	'specialvideos-no-videos' => 'Sorry, there are no videos on {{SITENAME}} yet, but you can add one from the desktop site.',
 
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
@@ -51,6 +52,7 @@ $messages['qqq'] = array(
 	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
+	'specialvideos-no-videos' => 'Message shown when there are no videos added to the wiki',
 
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',

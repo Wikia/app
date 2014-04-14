@@ -27,6 +27,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string sortMsg - selected option (sorting)
 	 * @responseParam array sortingOptions - sorting options
 	 * @responseParam array videos - list of videos
+	 * @responseParam string message
 	 */
 	public function index() {
 		$this->wg->SupressPageSubtitle = true;
@@ -34,7 +35,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$scriptsStr = 'special_videos_js';
 		$stylesStr = 'special_videos_css';
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+
+		if ( $isMobile ) {
 			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 			$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/index.mustache' );
 			$scriptsStr .= '_mobile';
@@ -94,6 +97,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		];
 		$response = $this->sendSelfRequest( 'getVideos', $params );
 		$videos = $response->getVal( 'videos', [] );
+		$message = $response->getVal( 'message', '' );
 
 		// get total videos
 		$mediaService = new MediaQueryService();
@@ -107,7 +111,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
 		// get sorting options
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( $isMobile ) {
 			$sortingOptions = $specialVideos->getSortOptionsMobile();
 		} else {
 			$sortingOptions = array_merge( $specialVideos->getSortOptions(), $specialVideos->getFilterOptions() );
@@ -141,6 +145,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
+		$this->message = $message;
 
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
@@ -167,7 +172,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+
+		if ( $isMobile ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
 			$providers = $this->wg->WikiaMobileSupportedVideos;
 		} else {
@@ -177,8 +184,14 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		$specialVideos = new SpecialVideosHelper();
 		$videos = $specialVideos->getVideos( $sort, $limit, $page, $providers, $category );
+		if ( empty( $videos ) && $isMobile ) {
+			$message = wfMessage( 'specialvideos-no-videos' )->escaped();
+		} else {
+			$message = '';
+		}
 
 		$this->videos = $videos;
+		$this->message = $message;
 	}
 
 }
