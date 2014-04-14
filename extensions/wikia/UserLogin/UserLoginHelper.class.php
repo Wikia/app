@@ -16,6 +16,7 @@ class UserLoginHelper extends WikiaModel {
 	const LIMIT_WIKIS = 3;
 
 	const WIKIA_CITYID_COMMUNITY = 177;
+	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
 
 	/**
 	 * get random avatars from the current wiki
@@ -536,6 +537,70 @@ class UserLoginHelper extends WikiaModel {
 		$user->saveSettings();
 		$user->saveToCache();
 		return true;
+	}
+
+	/**
+	 * Checks if Email belongs to the wikia domain;
+	 *
+	 * @param string $sEmail Email to check
+	 * @static
+	 * @return bool
+	 */
+	public static function isWikiaEmail( $sEmail ) {
+		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
+	}
+
+	/**
+	 * @desc Checks if the email provided is wikia mail and within the limit specified by $wgAccountsPerEmail
+	 *
+	 * @param $sEmail - email address to check
+	 * @return bool - TRUE if the email can be registered, otherwise FALSE
+	 */
+	public static function withinEmailRegLimit( $sEmail ) {
+		global $wgAccountsPerEmail, $wgMemc;
+
+		if ( isset( $wgAccountsPerEmail )
+			&& is_numeric( $wgAccountsPerEmail )
+			&& !self::isWikiaEmail( $sEmail )
+		) {
+			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
+			$count = $wgMemc->get($key);
+			if ( $count !== false
+				&& (int)$count >= (int)$wgAccountsPerEmail
+			) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @desc This function is a workaround for validating user with 'AbortNewAccount' hook without captcha validation.
+	 *
+	 * Currently this is used for both Facebook registrations and Phalanx validation, where the captcha is not
+	 * present. The captcha check is performed in \SimpleCaptcha::confirmUserCreate and is currently bypassed
+	 * by setting $wgCaptchaTriggers['createaccount'] to false.
+	 * After the custom callable is executed, $wgCaptchaTriggers['createaccount'] is reverted to its previous issue.
+	 *
+	 * @param callable $function - custom function to execute with disabled captcha chedk
+	 * @param array $params - array to be passed to the callable function
+	 * @return mixed - result, returned by the callable function
+	 */
+	public static function callWithCaptchaDisabled( $function, $params = array() ) {
+		global $wgCaptchaTriggers;
+
+		// Dissable captcha check
+		$oldValue = $wgCaptchaTriggers;
+		$wgCaptchaTriggers['createaccount'] = false;
+
+		// Execute custom callable
+		if ( is_callable( $function ) ) {
+			$result = $function( $params );
+		}
+		// and bring back the old value
+		$wgCaptchaTriggers = $oldValue;
+
+		return $result;
 	}
 
 }
