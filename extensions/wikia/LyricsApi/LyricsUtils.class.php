@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class LyricsApiBase
+ * Class LyricsUtils
  *
  * @desc Keeps data which are being reused in API controller and maintenance scripts
  */
-class LyricsApiBase {
+class LyricsUtils {
 	/**
 	 * @desc Field type in lyricsapi solr index which describes an artist
 	 */
