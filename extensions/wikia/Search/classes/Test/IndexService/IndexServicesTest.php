@@ -167,7 +167,8 @@ class IndexServicesTest extends BaseTest
 		$this->injectService( $service, $mwservice );
 		$service->setPageId( $this->pageId );
 		$this->assertEquals(
-				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
+				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ),
+					'redirect_titles_mv_em' => array( 'foo', 'bar' ) ),
 				$service->execute()
 		);
 	}
