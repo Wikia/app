@@ -106,7 +106,7 @@ class AsyncTaskList {
 	}
 
 	public function queue() {
-		global $wgDevelEnvironment, $wgUser;
+		global $wgDevelEnvironment, $wgUser, $IP;
 
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
@@ -154,7 +154,7 @@ class AsyncTaskList {
 			} else {
 				$executionRunner = [
 					gethostbyname(gethostname()),
-					realpath(__DIR__.'/../../../maintenance/wikia/task_runner.php'),
+					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				];
 			}
 		} else {
