@@ -285,10 +285,6 @@ class VideoHandlerHelper extends WikiaModel {
 					$thumbOptions['alt'] = htmlspecialchars( $title->getText() );
 				}
 
-				if ( !empty( $thumbOptions['dataParams'] ) ) {
-					$thumbOptions['dataParams'] = ThumbnailHelper::getDataParams( $file, $thumbUrl, $thumbOptions );
-				}
-
 				$thumbnail = $thumb->toHtml( $thumbOptions );
 			}
 

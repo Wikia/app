@@ -13,14 +13,12 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $thumbOptions
 	 * @return string
 	 */
-	public static function getDataParams( $file, $imgUrl, $options ) {
+	public static function getDataParams( $file, $imgSrc, $options ) {
 		if ( is_callable( [ $file, 'getProviderName' ] ) ) {
 			$provider = $file->getProviderName();
 		} else {
 			$provider = '';
 		}
-
-		$imgSrc = empty( $options['src'] ) ? $imgUrl : $options['src'];
 
 		$dataParams = [
 			'type'     => 'video',

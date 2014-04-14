@@ -141,7 +141,7 @@ class ThumbnailVideoController extends WikiaController {
 
 		// set data-params for img tag
 		if ( !empty( $options['dataParams'] ) ) {
-			$imgAttribs['data-params'] = $options['dataParams'];
+			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
 		}
 
 		// set duration
