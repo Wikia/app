@@ -66,7 +66,7 @@ class LyricsWikiCrawler extends Maintenance {
 			$this->addToLogContext( 'artist_id', $articleId );
 		} else {
 			$this->doScrapeArticlesFromYesterday();
-			$this->addToLogContext( 'crawl_type', 'default' );
+			$this->addToLogContext( 'crawl_type', 'yesterday' );
 		}
 		$this->logExecution();
 	}
