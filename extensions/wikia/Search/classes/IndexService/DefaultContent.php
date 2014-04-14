@@ -142,6 +142,7 @@ class DefaultContent extends AbstractService
 		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
 
+		$wgSimpleHtmlSearchIndexer = true;
 		if( $wgSimpleHtmlSearchIndexer ) {
 			$jsonFormatService = new JsonFormatService();
 			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );

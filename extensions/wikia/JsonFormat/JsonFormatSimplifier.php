@@ -189,7 +189,7 @@ class JsonFormatSimplifier {
 		$sections = [];
 		$this->findSections( $rootNode, $sections );
 
-		for ( $i = sizeof($sections)-1; $i >= 0; $i-=1 ) {
+		for ( $i = count($sections)-1; $i >= 0; $i-=1 ) {
 			$section = $sections[$i];
 			$sectionResult = [];
 			$content = [];
@@ -214,18 +214,19 @@ class JsonFormatSimplifier {
 		}
 
 		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
+		$res = implode( '', $output);
 		$timer->stop();
-		return implode( '', $output);
+		return $res;
 	}
 
 	protected function getElements( $node ) {
 		$result = [];
 		foreach( $node['elements'] as $element ) {
-			$text = $element['text'];
+			$text = [ $element['text'] ];
 			if( !empty($element['elements']) ) {
-				$text .= ' (' . $this->getElements( $element ) . ')';
+				$text[] = '(' . $this->getElements( $element ) . ')';
 			}
-			$result[] = $text;
+			$result[] = implode( ' ', $text );
 		}
 		return implode(', ', $result);
 	}
