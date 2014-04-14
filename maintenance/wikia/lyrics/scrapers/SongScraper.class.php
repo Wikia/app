@@ -56,21 +56,6 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * Remove wikitext from the lyrics tag
-	 *
-	 * Borrowed from extensions/3rdparty/LyricWiki/server.php
-	 *
-	 * @param $lyrics
-	 * @return mixed
-	 */
-	function removeWikiTextFromLyrics( $lyrics ) {
-		global $wgParser;
-
-		$lyrics = preg_replace( '/\{\{(.*?)\}\}/', '$1', $lyrics );
-		return trim( $wgParser->stripSectionName( $lyrics ) );
-	}
-
-	/**
 	 * @desc Data field mapping
 	 *
 	 * @return array

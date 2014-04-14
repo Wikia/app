@@ -40,18 +40,25 @@ class LyricsUtils {
 	 * @return String
 	 */
 	public static function removeWikitextFromLyrics( $lyrics ) {
-		// Clean up wikipedia template to be plaintext
-		$lyrics = preg_replace( "/\{\{wp.*\|(.*?)\}\}/", "$1", $lyrics );
+		global $wgParser;
 
-		// Clean up links & category-links to be plaintext
-		$lyrics = preg_replace( "/\[\[([^\|\]]*)\]\]/", "$1", $lyrics ); // links with no alias (no pipe)
-		$lyrics = preg_replace( "/\[\[.*\|(.*?)\]\]/", "$1", $lyrics );
+		$matches = [];
+		preg_match_all( '/\{\{(.*?)\}\}/', $lyrics, $matches );
 
-		// Filter out extra formatting markup
-		$lyrics = preg_replace( "/'''/", "", $lyrics ); // rm bold
-		$lyrics = preg_replace( "/''/", "", $lyrics ); // rm italics
+		if( !empty( $matches[0] ) ) {
+			$toReplace = [];
+			$replaceWith = [];
 
-		return $lyrics;
+			foreach( $matches[0] as $template ) {
+				$toReplace[] = $template;
+				$explodedArr = explode( '|', $template );
+				$replaceWith[] = rtrim( $explodedArr[ count( $explodedArr ) - 1 ], '}' );
+			}
+
+			$lyrics = str_replace( $toReplace, $replaceWith, $lyrics );
+		}
+
+		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 }
