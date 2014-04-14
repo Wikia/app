@@ -138,8 +138,6 @@ class PromoImage extends WikiaObject {
 
 			$file->upload($temp_file->getPath(), '', '');
 			$temp_file->remove();
-		} else {
-
 		}
 		return $this;
 	}
