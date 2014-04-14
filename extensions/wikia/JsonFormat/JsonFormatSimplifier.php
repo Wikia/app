@@ -215,7 +215,7 @@ class JsonFormatSimplifier {
 
 		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
 		$timer->stop();
-		return $output;
+		return implode( '', $output);
 	}
 
 	protected function getElements( $node ) {

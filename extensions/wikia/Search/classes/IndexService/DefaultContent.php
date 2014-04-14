@@ -147,7 +147,7 @@ class DefaultContent extends AbstractService
 			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
 			$simplifier = new JsonFormatSimplifier();
 			$text = $simplifier->simplifyToText( $jsonSimple );
-			return [ 'html' => implode( '', $text ) ];
+			return $this->prepValuesFromHtml( $text );
 		} else {
 			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 				return $this->prepValuesFromHtml( $html );
