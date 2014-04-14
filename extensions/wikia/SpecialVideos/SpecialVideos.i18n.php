@@ -31,6 +31,8 @@ $messages['en'] = array(
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
+
+	'specialvideos-btn-load-more' => 'Load More'
 );
 
 $messages['qqq'] = array(

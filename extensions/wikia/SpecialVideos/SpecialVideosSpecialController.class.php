@@ -147,6 +147,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->videos = $videos;
 		$this->message = $message;
 
+		if ( count($videos) ) {
+			$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
+		}
+
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
 
