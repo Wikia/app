@@ -1,15 +1,28 @@
 @import "color";
+@import "responsive-variables";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
 
 $color: #0A5FA2;
-$bg-color: #FFFFFF;
-$bg-color-opposite: #000000;
+$hover-color: #1380d7;
+$signup-color: gray;
+$bg-color: #fff;
+$bg-color-opposite: #000;
 $menu-hover-bg-color: #C7D2D8;
-$menu-border-color: #000000;
+$menu-border-color: #000;
 $nav-height: 41px;
-$input-border-color: mix($bg-color, #000000, 80%);
-$ab-text-color: #3A3A3A;
+$input-border-color: mix($bg-color, #000, 80%);
+$ab-text-color: #3a3a3a;
+
+body.global-header-fixed-at-top {
+  padding-top: $nav-height;
+}
+
+body.global-header-fixed-at-top .WikiaHeader {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
 .WikiaHeader.v2 {
   background: none;
@@ -18,7 +31,7 @@ $ab-text-color: #3A3A3A;
   color: $color;
 
   .sprite.logo {
-    background-image: url(/skins/oasis/images/GlobalHeaderAB/wikia_logo.png); /* $wgCdnStylePath */
+    background-image: url(/skins/oasis/images/GlobalHeaderAB/wikia_logo.png); /* base64 */
     background-position: 0;
   }
 
@@ -39,7 +52,7 @@ $ab-text-color: #3A3A3A;
   nav {
     height: $nav-height;
 
-    li {
+    & > ul > li, .GlobalNavigation > li {
       @include box-sizing;
       height: $nav-height;
       margin-top: 0;
@@ -48,31 +61,86 @@ $ab-text-color: #3A3A3A;
   }
 
   li {
-    & > .wikia-button, input.login-button {
+    & > .wikia-button, input.login-button, .search-button, .UserLoginDropdown .ajaxRegister {
       background: none;
       background-color: $color;
-      border: none;
+      border: 1px solid $color;
       font-size: 14px;
-      height: 28px;
-      line-height: 28px;
-      top: -3px;
+      height: 29px;
+      line-height: 17px;
+      padding: 5px 10px;
+      top: -4px;
 
       &:hover {
-        color: #fff;
-        background-color: #1380d7;
+        background-color: $hover-color;
+        border-color: $hover-color;
       }
     }
 
     &.start-a-wiki {
-      border-left: 0;
       margin-top: 0;
+      border: none;
 
       .wikia-button {
         background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
         background-position: 8px center;
         background-repeat: no-repeat;
-        padding-left: 25px;
+        padding: 0 12px 0 25px;
+        height: 27px;
+        line-height: 27px;
       }
+    }
+
+    .search-form {
+      margin-top: -4px;
+    }
+
+    .search-box {
+      &.search-small {
+        width: 200px;
+      }
+      border: 1px solid $input-border-color;
+      border-radius: 4px;
+      font-size: 14px;
+      height: 17px!important;
+      padding: 5px 8px;
+      width: 390px;
+    }
+
+    .search-button {
+      margin-left: 3px;
+
+      &.alternative {
+        background-color: $menu-hover-bg-color;
+        border-color: $menu-hover-bg-color;
+        color: $color;
+
+        &:hover {
+          background-color: $hover-color;
+          border-color: $hover-color;
+          color: $bg-color;
+        }
+      }
+    }
+
+    .search-collapsed {
+      .search-box {
+        border-radius: 4px 0 0 4px;
+        border-right: 0;
+      }
+
+      .search-button {
+        border-radius: 0 4px 4px 0;
+        margin: 0;
+      }
+    }
+
+    .search-icon {
+      background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-indent: -9999px;
+      width: 50px;
     }
   }
 
@@ -85,7 +153,7 @@ $ab-text-color: #3A3A3A;
     height: $nav-height;
     top: 0;
 
-    > li {
+    & > li {
       @include box-sizing;
 
       height: $nav-height;
@@ -96,7 +164,7 @@ $ab-text-color: #3A3A3A;
         background-color: $menu-hover-bg-color;
       }
 
-      > a {
+      & > a {
         border: 0;
         color: $color;
 
@@ -105,30 +173,20 @@ $ab-text-color: #3A3A3A;
         }
       }
     }
-  }
 
-  #AccountNavigation li a.new {
-    color: $color !important;
-  }
-
-  #WallNotifications {
     .bubbles {
-      background-image: url(/skins/oasis/images/GlobalHeaderAB/noti_icon.png); /* base64 */
-      background-position: 8px 4px;
+      background: none;
       height: $nav-height;
-      padding: 0 8px;
+      text-align: center;
 
       &.reddot #bubbles_count {
         background-color: #f6961d;
         color: $bg-color;
-        left: 19px;
+        left: 0;
         line-height: 18px;
         padding: 0 5px;
-        top: -4px;
+        top: 0px;
       }
-    }
-    #wall-notifications-markasread * {
-      color: $color;
     }
   }
 
@@ -137,11 +195,9 @@ $ab-text-color: #3A3A3A;
       background-color: $bg-color;
       border: 0;
       top: $nav-height;
-      > li {
+      & > li {
         border-top: 0;
-        height: auto !important;
-
-        > a {
+        & > a {
           color: $color;
           padding: 10px 20px;
 
@@ -170,18 +226,25 @@ $ab-text-color: #3A3A3A;
       }
     }
 
-    .UserLoginDropdown > .sso-login > .sso-login-divider {
-      border-top: solid 1px $input-border-color;
-      margin-top: 14px;
+    .UserLoginDropdown {
+      .ajaxRegister {
+        display: none;
+      }
 
-      > span {
-        background-color: $bg-color;
-        color: $ab-text-color;
+      & > .sso-login > .sso-login-divider {
+        border-top: solid 1px $input-border-color;
+        margin-top: 14px;
+
+        & > span {
+          background-color: $bg-color;
+          color: $ab-text-color;
+        }
       }
     }
   }
 
   .GlobalNavigation {
+
     .topNav .subnav {
       background-color: $bg-color;
       border: 2px solid;
@@ -205,20 +268,21 @@ $ab-text-color: #3A3A3A;
       border-color: $color-wikiahome-lifestyle;
     }
 
-    > li {
-      height: $nav-height;
-      > a {
+    & .topNav {
+      //margin-top: -11px;
+
+      & > a {
         color: $color;
         font-size: 14px;
+        padding: 0 8px;
         &:visited, &:active {
           color: $color;
         }
       }
 
       &:hover {
-        > a, > a:hover, > a:visited, > a:active {
+        >a {
           color: #fff;
-
         }
       }
     }
@@ -246,5 +310,71 @@ $ab-text-color: #3A3A3A;
         color: $ab-text-color;
       }
     }
+    #wall-notifications-markasread * {
+      color: $color;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-small) {
+    li.start-a-wiki {
+      display: block;
+    }
+
+    &.hide-new-wiki li.start-a-wiki, .login-text {
+      display: none;
+    }
+
+    &.hide-new-wiki {
+      #WallNotifications, .AccountNavigation {
+        right: 10px;
+      }
+
+      .page-width-container > ul:not(:last-child)#AccountNavigation {
+        right: 50px;
+      }
+    }
+
+    .ajaxLogin {
+      background-image: url(/skins/oasis/images/GlobalHeaderAB/profile.png); /* base64 */;
+      background-position: 10px center;
+      background-repeat: no-repeat;
+      padding-left: 30px;
+    }
+
+    .AccountNavigation {
+      li:nth-child(2) {
+        display: none;
+      }
+
+      .UserLoginDropdown {
+        .ajaxRegister {
+          @include box-sizing;
+          background-color: $signup-color;
+          border-color: $signup-color;
+          border-radius: 4px;
+          color: $bg-color;
+          display: block;
+          margin: 0 auto 15px;
+          text-align: center;
+          text-decoration: none;
+          width: 125px;
+        }
+        .WikiaForm {
+          padding-top: 8px;
+          border-top: 1px solid $menu-hover-bg-color;
+        }
+      }
+    }
+
+    li .search-box {
+      width: 230px;
+
+      &.search-small {
+        width: 140px;
+      }
+    }
+  }
+  #AccountNavigation li a.new {
+    color: $color !important;
   }
 }
