@@ -8,7 +8,7 @@ require_once( "RoviTableEpisodeSeriesImporter.php" );
 class ImportRoviData extends Maintenance {
 	const CSV_SEPARATOR = '|';
 	const CSV_MAX_LINE = 2048;
-	const SHARED_DB = "wikicities";
+	const DEFAULT_BATCH_SIZE = 200;
 	const UTF16_TAG = "\xFF\xFE";
 	const UTF16_TAG_LEN = 2;
 	const TMP_DIR = '/tmp';
@@ -26,27 +26,18 @@ class ImportRoviData extends Maintenance {
 		}
 		$this->addOption( 'skip', 'Skip N rows' );
 		$this->addOption( 'verbose', 'Show info for each row' );
-		$this->setBatchSize( 200 );
-		register_shutdown_function( array( $this, 'cleanup' ) );
-
+		$this->setBatchSize( self::DEFAULT_BATCH_SIZE );
 	}
 
 	public function execute() {
 		$this->checkFiles();
 		$this->loadData( new RoviTableSeriesImporter(), 'seriesFile' );
 		$this->loadData( new RoviTableEpisodeSeriesImporter(), 'episodesFile' );
-		$this->cleanup();
-	}
-
-	protected function cleanup() {
-		foreach ( $this->cleanupFiles as $fileName ) {
-			if ( file_exists( $fileName ) && unlink( $fileName ) ) {
-				$this->output( "Removed temporary file $fileName\n" );
-			}
-		}
 	}
 
 	protected function loadData( RoviTableImporter $importer, $optionName ) {
+		global $wgExternalDatawareDB;
+		$this->output("Processing: $optionName \n");
 		$csv = $this->openCsvFile( $optionName );
 		if ( !$csv ) {
 			return;
@@ -61,7 +52,7 @@ class ImportRoviData extends Maintenance {
 		$skip = (int)$this->getOption( 'skip', 0 );
 		$verbose = (bool)$this->getOption( 'verbose', '0' );
 
-		$db = wfGetDb( DB_MASTER, array(), self::SHARED_DB );
+		$db = wfGetDb( DB_MASTER, array(), $wgExternalDatawareDB );
 		$db->begin();
 		$row = 0;
 		while ( ( $line = fgets( $csv, self::CSV_MAX_LINE ) ) !== FALSE ) {
@@ -113,28 +104,16 @@ class ImportRoviData extends Maintenance {
 		return $test;
 	}
 
-	protected function convertFileToUTF8( $filename ) {
-		$newName = tempnam( self::TMP_DIR, 'rovi_' );
-		$retVal = 1;
-		system( "iconv -f UTF-16 -t UTF-8 " . escapeshellarg( $filename ) . " > $newName", $retVal );
-		if ( $retVal !== 0 ) {
-			$this->error( "Unable to convert file: $filename to UTF-8 $newName", true );
-		}
-		return $newName;
-	}
 
 	protected function checkFiles() {
 		foreach ( array_keys( $this->filesOptions ) as $optionName ) {
 			if ( $this->hasOption( $optionName ) ) {
 				$fileName = $this->getOption( $optionName );
 				if ( !file_exists( $fileName ) || !is_readable( $fileName ) ) {
-					$this->error( "Unable to load file for --$optionName ($fileName)", true );
+					$this->error( "Unable to load file for --$optionName ($fileName)\n", true );
 				}
 				if ( $this->isFileUTF16( $fileName ) ) {
-					$this->output( "$fileName is UTF-16 encoded\n" );
-					$fileName = $this->convertFileToUTF8( $fileName );
-					$this->output( "Converted to UTF-8: $fileName\n" );
-					$this->cleanupFiles[ ] = $fileName;
+					$this->error("Unable to process UTF-16 file. Convert to UTF-8\n", true);
 				}
 				$this->files[ $optionName ] = $fileName;
 			}
