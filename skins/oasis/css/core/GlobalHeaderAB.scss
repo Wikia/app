@@ -2,6 +2,7 @@
 @import "responsive-variables";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/calc";
 
 $color: #0A5FA2;
 $hover-color: #1380d7;
@@ -97,56 +98,67 @@ body.global-header-fixed-at-top .WikiaHeader {
 			}
 		}
 
-		.search-form {
-			margin-top: -4px;
-		}
+		&.global-search {
+			@include width-calc('100% - 800px');
 
-		.search-box {
-			&.search-small {
-				width: 200px;
+			&.no-verticals {
+				@include width-calc('100% - 600px');
 			}
-			border: 1px solid $input-border-color;
-			border-radius: 4px;
-			font-size: 14px;
-			height: 17px!important;
-			padding: 5px 8px;
-			width: 390px;
-		}
 
-		.search-button {
-			margin-left: 3px;
-
-			&.alternative {
-				background-color: $menu-hover-bg-color;
-				border-color: $menu-hover-bg-color;
-				color: $color;
-
-				&:hover {
-					background-color: $hover-color;
-					border-color: $hover-color;
-					color: $bg-color;
-				}
+			.search-form {
+				margin-top: -4px;
 			}
-		}
 
-		.search-collapsed {
 			.search-box {
-				border-radius: 4px 0 0 4px;
-				border-right: 0;
+				&.search-small {
+					width: 200px;
+				}
+
+				@include width-calc('100% - 300px');
+
+				border: 1px solid $input-border-color;
+				border-radius: 4px;
+				font-size: 14px;
+				height: 17px!important;
+				padding: 5px 8px;
 			}
 
 			.search-button {
-				border-radius: 0 4px 4px 0;
-				margin: 0;
-			}
-		}
+				margin-left: 3px;
 
-		.search-icon {
-			background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
-			background-position: center center;
-			background-repeat: no-repeat;
-			text-indent: -9999px;
-			width: 50px;
+				&.alternative {
+					background-color: $menu-hover-bg-color;
+					border-color: $menu-hover-bg-color;
+					color: $color;
+
+					&:hover {
+						background-color: $hover-color;
+						border-color: $hover-color;
+						color: $bg-color;
+					}
+				}
+			}
+
+			.search-collapsed {
+				.search-box {
+					@include width-calc('100% - 80px');
+					border-radius: 4px 0 0 4px;
+					border-right: 0;
+				}
+
+				.search-button {
+					border-radius: 0 4px 4px 0;
+					margin: 0;
+				}
+			}
+
+			.search-icon {
+				background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
+				background-position: center center;
+				background-repeat: no-repeat;
+				text-indent: -9999px;
+				width: 50px;
+			}
 		}
 	}
 
@@ -377,11 +389,11 @@ body.global-header-fixed-at-top .WikiaHeader {
 			}
 		}
 
-		li .search-box {
-			width: 230px;
+		li.global-search {
+			@include width-calc('100% - 580px');
 
-			&.search-small {
-				width: 140px;
+			&.no-verticals {
+				@include width-calc('100% - 380px');
 			}
 		}
 	}
