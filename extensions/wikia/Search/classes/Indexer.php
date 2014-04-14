@@ -247,7 +247,7 @@ class Indexer
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host' => $master,
-							'port' => 8983,
+							'port' => $mwService->getGlobal( 'SolrDefaultPort' ),
 							'path' => '/solr/'
 							)
 					);
