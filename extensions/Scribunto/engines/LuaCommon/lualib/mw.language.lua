@@ -31,6 +31,7 @@ function language.setupInterface()
 	package.loaded['mw.language'] = language
 end
 
+--[[ Wikia change - Language::isSupportedLanguage and Language::isKnownLanguageTag are not supported in MW 1.19
 function language.isSupportedLanguage( code )
 	return php.isSupportedLanguage( code )
 end
@@ -38,6 +39,7 @@ end
 function language.isKnownLanguageTag( code )
 	return php.isKnownLanguageTag( code )
 end
+]]
 
 function language.isValidCode( code )
 	return php.isValidCode( code )
