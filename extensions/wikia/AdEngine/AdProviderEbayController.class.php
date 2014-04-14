@@ -101,7 +101,7 @@ class AdProviderEbayController extends WikiaController
 	private function buildUrl(array $queryWords,  $siteId = 1) {
 
 		$urlParams = [
-			'keyword' => implode(',', $queryWords),
+			'keyword' => count($queryWords) > 1 ? '(' . implode(',', $queryWords) . ')' : implode(',', $queryWords),
 			'sortOrder' => 'BestMatch',
 			'programid' => $siteId,
 			'campaignid' => 5337465385,
