@@ -17,7 +17,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		gptLoaded = false,
 		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
 		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
-		specialAdSelector = 'script[src*="/ads.saymedia.com/"], .celtra-ad-v3',
+		specialAdSelector = 'script[src*="/ads.saymedia.com/"], script[src*="/native.sharethrough.com/"], .celtra-ad-v3, script[src$="/mmadlib.js"]',
 		slotQueue = [],
 		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},

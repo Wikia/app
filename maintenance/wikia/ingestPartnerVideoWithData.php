@@ -188,23 +188,27 @@ function loadProviders ( $provider ) {
 }
 
 function getContentSummary( $summary ) {
+	$width = 20;
 	$now = date( 'Y-m-d H:i:s' );
 	$content = "Run Date: $now\n";
 
 	// get header
 	$keys = array_keys( current( $summary ) );
-	$header = array_merge( ['provider'], $keys );
-	$content .= implode( "\t\t", array_map( 'ucwords', $header ) )."\n";
+	$content .= sprintf( "%-{$width}s", 'Provider' );
+	foreach( $keys as $field ) {
+		$content .= sprintf( "%{$width}s", ucwords( $field ) );
+	}
+	$content .= "\n";
 
 	// get body
 	$summary['total'] = array_fill_keys( $keys, 0 );
 	foreach ( $summary as $provider => &$result ) {
-		$body = [ strtoupper( $provider ) ];
+		$content .= sprintf( "%-{$width}s", strtoupper( $provider ) );
 		foreach ( $result as $key => $value ) {
 			$summary['total'][$key] += $value;
-			$body[] = $value;
+			$content .= sprintf( "%{$width}s", $value );
 		}
-		$content .= implode( "\t\t", $body )."\n";
+		$content .= "\n";
 	}
 
 	return $content;

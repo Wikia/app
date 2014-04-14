@@ -13,13 +13,22 @@ class SongScraper extends BaseScraper {
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
+		$songArticleId = $article->getId();
 		$songData = [
-			'article_id' => $article->getId(),
+			'article_id' => $songArticleId,
 		];
 
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
-
 		$songData['lyrics'] = $this->getLyrics( $article );
+
+		// MOB-1367 - make sure the song name is the same as song's article title
+		$songTitle = $article->getTitle();
+		if( !is_null( $songTitle ) ) {
+			$songData['song'] = $songTitle->getText();
+		} else {
+			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d)', $songArticleId ) );
+		}
+
 		return $songData;
 	}
 

@@ -3,7 +3,7 @@
 class AnalyticsProviderBlueKai implements iAnalyticsProvider
 {
 
-	const SITE_ID = '11580';
+	const SITE_ID = '11850';
 
 	// Keeping the response size (assets minification) and the number of external requests low (aggregation)
 	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {

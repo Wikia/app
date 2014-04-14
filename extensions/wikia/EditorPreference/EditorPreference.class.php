@@ -45,7 +45,7 @@ class EditorPreference {
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
 		global $wgUser, $wgEnableRTEExt;
 
-		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink() ) {
+		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink( $skin ) ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
@@ -123,7 +123,7 @@ class EditorPreference {
 	 * @return integer The editor option value
 	 */
 	public static function getPrimaryEditor() {
-		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt;
+		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgForceVisualEditor;
 		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
 
 		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
@@ -137,7 +137,7 @@ class EditorPreference {
 		}
 		else {
 			// Default option based on other settings
-			if ( $wgEnableVisualEditorUI ) {
+			if ( $wgEnableVisualEditorUI || ( $wgUser->isAnon() && $wgForceVisualEditor ) ) {
 				return self::OPTION_EDITOR_VISUAL;
 			}
 			elseif ( !$wgEnableVisualEditorUI && $wgEnableRTEExt ) {
@@ -153,11 +153,33 @@ class EditorPreference {
 	/**
 	 * Checks whether the VisualEditor link should be shown.
 	 *
+	 * @param Skin Current skin object
 	 * @return boolean
 	 */
-	public static function shouldShowVisualEditorLink() {
+	public static function shouldShowVisualEditorLink( $skin ) {
 		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
-		return !$wgTitle->isRedirect() && $wgEnableVisualEditorExt && ( is_array( $wgVisualEditorNamespaces ) ?
-			in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
+		return $skin->getSkinName() === 'oasis' &&
+			!$wgTitle->isRedirect() &&
+			$wgEnableVisualEditorExt &&
+			( is_array( $wgVisualEditorNamespaces ) ?
+				in_array( $wgTitle->getNamespace(), $wgVisualEditorNamespaces ) : false );
+	}
+
+	/**
+	 * Set the editor preference for newly-registered users.
+	 *
+	 * @param User $user The current user
+	 * @return boolean
+	 */
+	public static function onAddNewAccount( User $user ) {
+		global $wgForceVisualEditor;
+		if ( $wgForceVisualEditor ) {
+			// Force new users to set VE as preference
+			$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
+			$user->saveSettings();
+		}
+		// If the editor preference is not set here, the default preference
+		// is set in CommonSettings.
+		return true;
 	}
 }

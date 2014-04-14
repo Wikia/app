@@ -159,7 +159,7 @@
 					'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
 					function (e) {
 						var $this = $(this);
-						if (LightboxLoader.hasLightbox($this)) {
+						if (LightboxLoader.hasLightbox($this, null, e)) {
 							e.preventDefault();
 							$this.closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
 						}

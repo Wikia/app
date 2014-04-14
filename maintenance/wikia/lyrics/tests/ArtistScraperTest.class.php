@@ -243,7 +243,7 @@ WIKITEXT
 				'text' => '',
 				'expected' => [
 					'title' => false,
-					'album' => ''
+					'Album' => ''
 				],
 			],
 			[
@@ -251,7 +251,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==',
 				'expected' => [
 					'title' => 'Entombed:Serpent Saints The Ten Amendments (2007)',
-					'album' => 'Serpent Saints - The Ten Amendments',
+					'Album' => 'Serpent Saints - The Ten Amendments',
 					'year' => '2007',
 				],
 			],
@@ -260,7 +260,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Serpent Saints The Ten Amendments|Serpent Saints - The Ten Amendments]]==',
 				'expected' => [
 					'title' => 'Entombed:Serpent Saints The Ten Amendments',
-					'album' => 'Serpent Saints - The Ten Amendments',
+					'Album' => 'Serpent Saints - The Ten Amendments',
 					'year' => '',
 				],
 			],
@@ -269,7 +269,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Macbreður Hákarlsson (2014)|Macbreður Hákarlsson - The Ten Hákarlsson (2014)]]==',
 				'expected' => [
 					'title' => 'Entombed:Macbreður Hákarlsson (2014)',
-					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'Album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
 					'year' => '2014',
 				],
 			],
@@ -277,8 +277,8 @@ WIKITEXT
 				'message' => 'Valid data with UTF-8 characters but the format changed a little bit with whitespaces',
 				'text' => '==[[ Entombed : Macbreður Hákarlsson (2014) | Macbreður Hákarlsson - The Ten Hákarlsson (2014) ]]==',
 				'expected' => [
-					'title' => ' Entombed : Macbreður Hákarlsson (2014) ',
-					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'title' => 'Entombed : Macbreður Hákarlsson (2014)',
+					'Album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
 					'year' => '2014',
 				],
 			],
