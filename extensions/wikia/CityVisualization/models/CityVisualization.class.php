@@ -12,6 +12,8 @@ class CityVisualization extends WikiaModel {
 	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
 	const CITY_VISUALIZATION_IMAGES_TABLE_NAME = 'city_visualization_images';
 
+	const MEMC_IMAGE_NAMES_EXPIRATION_TIME = 86400; // 60 * 60 * 24
+
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
@@ -597,7 +599,7 @@ class CityVisualization extends WikiaModel {
 
 		if (empty($wikiImageNames)) {
 			$wikiImageNames = $this->notCachedGetWikiImageNames($wikiId, $langCode, $filter);
-			$this->wg->Memc->set($memKey, $wikiImageNames, 60 * 60 * 24);
+			$this->wg->Memc->set($memKey, $wikiImageNames, self::MEMC_IMAGE_NAMES_EXPIRATION_TIME);
 		}
 		wfProfileOut(__METHOD__);
 
