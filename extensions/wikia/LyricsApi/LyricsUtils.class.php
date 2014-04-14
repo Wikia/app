@@ -42,21 +42,10 @@ class LyricsUtils {
 	public static function removeWikitextFromLyrics( $lyrics ) {
 		global $wgParser;
 
-		$matches = [];
-		preg_match_all( '/\{\{(.*?)\}\}/', $lyrics, $matches );
-
-		if( !empty( $matches[0] ) ) {
-			$toReplace = [];
-			$replaceWith = [];
-
-			foreach( $matches[0] as $template ) {
-				$toReplace[] = $template;
-				$explodedArr = explode( '|', $template );
-				$replaceWith[] = rtrim( $explodedArr[ count( $explodedArr ) - 1 ], '}' );
-			}
-
-			$lyrics = str_replace( $toReplace, $replaceWith, $lyrics );
-		}
+		$lyrics = preg_replace_callback( '/\{\{(.*?)\}\}/', function( $matches ) {
+			$explodedArr = explode( '|', $matches[1] );
+			return $explodedArr[ count( $explodedArr ) - 1 ];
+		}, $lyrics );
 
 		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
