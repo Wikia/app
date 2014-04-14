@@ -14,6 +14,10 @@ class ArticleType extends AbstractService {
 	 * @return array
 	 */
 	public function execute() {
+		if ( $this->getService()->getLanguageCode() !== "en" ) {
+			return [];
+		}
+
 		$articleTypeService = new \ArticleTypeService();
 
 		if ( $this->currentPageId === null ) {
