@@ -295,20 +295,19 @@ class SpecialPromoteHelper extends WikiaObject {
 					// file was not really uploaded, and was already present in DB
 					// FIXME: this mechanism is hacky, it should be more durable than string matching
 
-					$testFile = PromoImage::fromPathname($fileName);
+					$promoImage = PromoImage::fromPathname($fileName);
 
-					if (!$testFile->isType(PromoImage::INVALID)) {
-						if (!$testFile->isCityIdSet()){
+					if (!$promoImage->isType(PromoImage::INVALID)) {
+						if (!$promoImage->isCityIdSet()){
 							// Remove old image formatted filename: FIXME: remove this sometime in the future :)
-							$testFile->purgeImage();
-							array_push($promoImages, $testFile);
+							$promoImage->purgeImage();
 						}
 					} else {
 						$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
 						$promoImage->processUploadedFile($fileName);
-						array_push($promoImages, $promoImage);
 					}
 
+					array_push($promoImages, $promoImage);
 					break;
 				case 'additionalImagesNames':
 					$additionalImagesNames = $dataContent;
