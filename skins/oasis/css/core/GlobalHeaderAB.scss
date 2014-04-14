@@ -3,13 +3,13 @@
 @import "skins/oasis/css/mixins/box-sizing";
 
 $color: #0A5FA2;
-$bg-color: #fff;
-$bg-color-opposite: #000;
+$bg-color: #FFFFFF;
+$bg-color-opposite: #000000;
 $menu-hover-bg-color: #C7D2D8;
-$menu-border-color: black;
+$menu-border-color: #000000;
 $nav-height: 41px;
 $input-border-color: mix($bg-color, #000000, 80%);
-$ab-text-color: #3a3a3a;
+$ab-text-color: #3A3A3A;
 
 // TODO add ABTesting class
 .WikiaHeader {
