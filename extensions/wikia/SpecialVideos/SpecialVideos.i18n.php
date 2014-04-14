@@ -27,11 +27,9 @@ $messages['en'] = array(
 	'specialvideos-remove-modal-title' => 'Delete video',
 	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
 	'specialvideos-no-videos' => 'Sorry, there are no videos on {{SITENAME}} yet, but you can add one from the desktop site.',
-
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
-
 	'specialvideos-btn-load-more' => 'Load More'
 );
 
