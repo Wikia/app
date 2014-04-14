@@ -825,6 +825,8 @@ class Linker {
 		$origHTML = null;
 
 		/* Wikia change/refactor start - @author Liz */
+
+		// TODO: Look into making this a separate function
 		if ( !$exists ) {
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
 		} elseif ( !$thumb ) {
