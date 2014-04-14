@@ -95,7 +95,9 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
 	// TODO: make sure this shows up - currently set to visibility: hidden;
-	this.$details.prependTo( this.$element );
+	this.$details.prependTo( this.$element )
+		// add class to caption itself
+		.next( 'p' ).addClass( 'caption' );
 
 	// This logic is from the function onThumbnailAfterProduceHTML() in ImageTweaksHooks.class.php
 	if (
