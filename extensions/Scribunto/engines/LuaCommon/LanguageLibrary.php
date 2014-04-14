@@ -15,8 +15,8 @@ class Scribunto_LuaLanguageLibrary extends Scribunto_LuaLibraryBase {
 
 		$statics = array(
 			'getContLangCode',
-			'isSupportedLanguage',
-			'isKnownLanguageTag',
+			// 'isSupportedLanguage', // Wikia change - Not supported in MW 1.19
+			// 'isKnownLanguageTag', // Wikia change - Not supported in MW 1.19
 			'isValidCode',
 			'isValidBuiltInCode',
 			'fetchLanguageName',
@@ -54,15 +54,17 @@ class Scribunto_LuaLanguageLibrary extends Scribunto_LuaLibraryBase {
 		return array( $wgContLang->getCode() );
 	}
 
-	function isSupportedLanguage( $code ) {
-		$this->checkType( 'isSupportedLanguage', 1, $code, 'string' );
-		return array( Language::isSupportedLanguage( $code ) );
-	}
+	/** Wikia change - begin - Language::isSupportedLanguage and Language::isKnownLanguageTag are not supported in MW 1.19 **/
+	// function isSupportedLanguage( $code ) {
+	// 	$this->checkType( 'isSupportedLanguage', 1, $code, 'string' );
+	// 	return array( Language::isSupportedLanguage( $code ) );
+	// }
 
-	function isKnownLanguageTag( $code ) {
-		$this->checkType( 'isKnownLanguageTag', 1, $code, 'string' );
-		return array( Language::isKnownLanguageTag( $code ) );
-	}
+	// function isKnownLanguageTag( $code ) {
+	// 	$this->checkType( 'isKnownLanguageTag', 1, $code, 'string' );
+	// 	return array( Language::isKnownLanguageTag( $code ) );
+	// }
+	/** Wikia change - end **/
 
 	function isValidCode( $code ) {
 		$this->checkType( 'isValidCode', 1, $code, 'string' );
@@ -76,8 +78,11 @@ class Scribunto_LuaLanguageLibrary extends Scribunto_LuaLibraryBase {
 
 	function fetchLanguageName( $code, $inLanguage ) {
 		$this->checkType( 'fetchLanguageName', 1, $code, 'string' );
-		$this->checkTypeOptional( 'fetchLanguageName', 2, $inLanguage, 'string', null );
-		return array( Language::fetchLanguageName( $code, $inLanguage ) );
+		/** Wikia change - begin - remove Language::fetchLanguageName which is unavailable in MW 1.19 **/
+		// $this->checkTypeOptional( 'fetchLanguageName', 2, $inLanguage, 'string', null );
+		// return array( Language::fetchLanguageName( $code, $inLanguage ) );
+		return array( Language::getLanguageName( $code ) );
+		/** Wikia change - end **/
 	}
 
 	/**
@@ -216,8 +221,11 @@ class Scribunto_LuaLanguageLibrary extends Scribunto_LuaLibraryBase {
 
 		if ( $date === '' ) {
 			$cacheKey = $this->getParserOptions()->getTimestamp();
-			$timestamp = new MWTimestamp( $cacheKey );
-			$date = $timestamp->getTimestamp( TS_ISO_8601 );
+			/** Wikia change - begin - MWTimestamp not supported in MW 1.19 **/
+			// $timestamp = new MWTimestamp( $cacheKey );
+			// $date = $timestamp->getTimestamp( TS_ISO_8601 );
+			/** Wikia change - end **/
+			$date = wfTimestampNow();
 		} else {
 			# Correct for DateTime interpreting 'XXXX' as XX:XX o'clock
 			if ( preg_match( '/^[0-9]{4}$/', $date ) ) {
