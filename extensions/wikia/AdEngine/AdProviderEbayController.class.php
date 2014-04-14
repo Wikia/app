@@ -8,7 +8,12 @@ class AdProviderEbayController extends WikiaController
 	public function centerWell()
 	{
 
-		$allProducts = $this->getAllProducts('Harry Potter');
+		// TODO: switch to caching getData method after development and remove next if
+		$allProducts = $this->generateData(['Harry Potter']);
+
+		if (empty($allProducts)) {
+			$allProducts = [];
+		}
 
 		shuffle($allProducts);
 		$rand_keys = array_rand($allProducts, 4);
@@ -22,33 +27,36 @@ class AdProviderEbayController extends WikiaController
 	}
 
 	/**
-	 * @param string $queryWords Keywords to search on eBay
+	 * @param array $queryWords Keywords to search on eBay
 	 * @param $siteId
 	 * @return array of all products
 	 */
-	private function getAllProducts($queryWords,  $siteId = 1)
+	private function generateData(array $queryWords, $siteId = 1)
 	{
 
-		$opts = array(
-			'http' => array(
-				'method' => "GET",
-			)
-		);
+		$result = Http::get($this->buildUrl($queryWords,  $siteId));
 
-		$context = stream_context_create($opts);
-
-		$result = file_get_contents($this->buildUrl($queryWords,  $siteId), false, $context);
+		if ($result === false) {
+			return false;
+		}
 
 		$result = simplexml_load_string($result);
 
 		$allProducts = [];
 
-		foreach ($result->channel->item as $item) {
+		$items = $result->xpath('/rss/channel/item');
+
+		foreach ($items as $item) {
+
+			if ($item->asXML() === '<item/>') {
+				continue;
+			}
+
 			$product = [
-				'title' => (string)$item->title,
-				'link' => (string)$item->link,
+				'title' => (string) $item->title,
+				'link' => (string) $item->link,
 				// TODO: we might remove description after we get design
-				'description' => (string)$item->description,
+				'description' => (string) $item->description,
 				'image' => false
 			];
 
@@ -59,13 +67,12 @@ class AdProviderEbayController extends WikiaController
 			$allProducts[] = $product;
 		}
 
-		// TODO: caching of $all_products result
 		return $allProducts;
 
 	}
 
 	/**
-	 * @param string 	$queryWords Keywords to search on eBay
+	 * @param array  	$queryWords Keywords to search on eBay
 	 * @param int 		$siteId 	One of values below
 	 *
 	 * AT => 3,
@@ -84,10 +91,10 @@ class AdProviderEbayController extends WikiaController
 	 *
 	 * @return string
 	 */
-	private function buildUrl($queryWords,  $siteId = 1) {
+	private function buildUrl(array $queryWords,  $siteId = 1) {
 
 		$urlParams = [
-			'keyword' => $queryWords,
+			'keyword' => implode(',', $queryWords),
 			'sortOrder' => 'BestMatch',
 			'programid' => $siteId,
 			'campaignid' => 5337465385,
