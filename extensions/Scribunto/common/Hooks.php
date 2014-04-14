@@ -36,7 +36,7 @@ class ScribuntoHooks {
 
 	/**
 	 * Called when the interpreter is to be reset.
-	 * 
+	 *
 	 * @param $parser Parser
 	 * @return bool
 	 */
@@ -68,7 +68,7 @@ class ScribuntoHooks {
 	 */
 	public static function invokeHook( &$parser, $frame, $args ) {
 		if ( !@constant( get_class( $frame ) . '::SUPPORTS_INDEX_OFFSET' ) ) {
-			throw new MWException( 
+			throw new MWException(
 				'Scribunto needs MediaWiki 1.20 or later (Preprocessor::SUPPORTS_INDEX_OFFSET)' );
 		}
 
@@ -121,7 +121,7 @@ class ScribuntoHooks {
 			wfProfileOut( __METHOD__ );
 
 			// #iferror-compatible error element
-			return "<strong class=\"error\"><span class=\"scribunto-error\" id=\"$id\">" . 
+			return "<strong class=\"error\"><span class=\"scribunto-error\" id=\"$id\">" .
 				$parserError. "</span></strong>";
 		}
 	}
@@ -141,7 +141,7 @@ class ScribuntoHooks {
 		if( $title->getNamespace() == NS_MODULE ) {
 			$engine = Scribunto::newDefaultEngine();
 			$language = $engine->getGeSHiLanguage();
-			
+
 			if( $wgScribuntoUseGeSHi && $language ) {
 				$geshi = SyntaxHighlight_GeSHi::prepare( $text, $language );
 				$geshi->set_language( $language );
@@ -179,7 +179,7 @@ class ScribuntoHooks {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -199,7 +199,7 @@ class ScribuntoHooks {
 
 	/**
 	 * Adds report of number of evaluations by the single wikitext page.
-	 * 
+	 *
 	 * @param $parser Parser
 	 * @param $report
 	 * @return bool
@@ -221,7 +221,7 @@ class ScribuntoHooks {
 		return true;
 	}
 
-	/** 
+	/**
 	 * EditPageBeforeEditChecks hook
 	 * @param $editor EditPage
 	 * @param $checkboxes Checkbox array
@@ -248,6 +248,27 @@ class ScribuntoHooks {
 		global $wgOut;
 		$wgOut->addModules( 'ext.scribunto.edit' );
 		$editor->editFormTextAfterTools = '<div id="mw-scribunto-console"></div>';
+		return true;
+	}
+
+	/**
+	 * Wikia change - Add modules and console in the editor in Oasis
+	 *
+	 * @param  EditPage $editPage
+	 * @param  Array   $hidden
+	 * @return bool
+	 */
+	public static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
+		$app = F::app();
+		if ( !$app->checkSkin( 'oasis' ) || $editPage->getTitle()->getNamespace() !== NS_MODULE ) {
+			return true;
+		}
+
+		$editPage->addCustomCheckbox( 'scribunto_ignore_errors', wfMessage( 'scribunto-ignore-errors' )->escaped(), false );
+
+		$app->wg->Out->addModules( 'ext.scribunto.edit' );
+		$app->wg->Out->addHtml( '<div class="wikia-scribunto-console"><div id="mw-scribunto-console"></div></div>' );
+
 		return true;
 	}
 
@@ -339,7 +360,7 @@ WIKI;
 	 */
 	public static function parserOutputHook( $outputPage, $parserOutput ) {
 		$outputPage->addModules( 'ext.scribunto' );
-		$outputPage->addInlineScript( 'mw.loader.using("ext.scribunto", function() {' . 
+		$outputPage->addInlineScript( 'mw.loader.using("ext.scribunto", function() {' .
 			Xml::encodeJsCall( 'mw.scribunto.setErrors', array( $parserOutput->scribunto_errors ) )
 			. '});' );
 	}
