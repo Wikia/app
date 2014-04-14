@@ -114,6 +114,8 @@ class SpecialVideosHelper extends WikiaModel {
 				'useTemplate' => true,
 				'fluid'       => true,
 				'forceSize'   => 'small',
+				'imgClass'    => 'media',
+				'dataParams'  => true,
 			];
 		} else {
 			$thumbOptions = [
