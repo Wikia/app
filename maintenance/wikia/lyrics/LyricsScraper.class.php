@@ -32,6 +32,8 @@ class LyricsScraper {
 	 */
 	private $songScraper;
 
+	private $articlesProcessed = 0;
+
 	function __construct( SolrAdapter $solr ) {
 		$this->solr = $solr;
 		$this->context = new RequestContext();
@@ -54,6 +56,7 @@ class LyricsScraper {
 		$albumsData = $this->processAlbums( $artistData, $leanAlbumsData );
 		// Save Artist
 		$this->solr->saveArtist( $artistData, $albumsData );
+		$this->articlesProcessed++;
 	}
 
 	/**
@@ -76,6 +79,7 @@ class LyricsScraper {
 					$albumData = array_merge( $albumData,  $this->albumScraper->processArticle( $albumArticle ) );
 					// Get songs from Album page NOT
 					// $leanSongsData = $this->albumScraper->getSongs( $albumArticle );
+					$this->articlesProcessed++;
 				}
 			}
 			$leanSongsData = $albumData['songs'];
@@ -122,6 +126,7 @@ class LyricsScraper {
 					$songsData[] = $songData;
 
 					if ( isset( $songData['id'] ) && !empty( $songData['lyrics'] ) ) {
+						$this->articlesProcessed++;
 						// Save only songs we have as Wiki pages and have lyrics
 						$this->solr->saveSong(
 							$artistData,
@@ -164,5 +169,14 @@ class LyricsScraper {
 	 */
 	static function log ( $text ) {
 		echo $text;
+	}
+
+	/**
+	 * Returns number of processed documents
+	 *
+	 * @return int
+	 */
+	function getProcessedArticlesCount() {
+		return $this->articlesProcessed;
 	}
 }

@@ -4,6 +4,8 @@ $dir = dirname( __FILE__ );
 require_once( $dir . '/../../Maintenance.php' );
 require_once( $dir . '/lyrics.setup.php' );
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class LyricsWikiCrawler
  *
@@ -18,6 +20,9 @@ class LyricsWikiCrawler extends Maintenance {
 	const OPTION_ARTICLE_LANE = 'lane';
 
 	private $articleId = 0;
+	private $startTime = 0;
+	private $processedArticlesCount = 0;
+	private $logContext = [];
 
 	/**
 	 * @var DataBase
@@ -31,6 +36,7 @@ class LyricsWikiCrawler extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
+		$this->startTime = microtime( true );
 		$this->addOption( self::OPTION_ARTICLE_ID, 'Article ID which we will get data from' );
 		$this->addOption( self::OPTION_ARTIST_ID, 'Artist article ID which we will get data from' );
 		$this->addOption( self::OPTION_ARTICLE_ALL, 'If passed it pulls all articles on lyrics.wikia.com; otherwise it pulls edits from yesterday' );
@@ -46,15 +52,29 @@ class LyricsWikiCrawler extends Maintenance {
 
 		if( $this->hasOption( self::OPTION_ARTICLE_ALL ) ) {
 			$this->doScrapeAllArticles();
+			$this->addToLogContext( 'crawl_type', self::OPTION_ARTICLE_ALL );
 		} elseif ( ( $poolSize = intval( $this->getOption( self::OPTION_ARTICLE_POOL, 0 ) ) ) && $poolSize > 0  &&
 			( $laneNumber = intval( $this->getOption( self::OPTION_ARTICLE_LANE, 0 ) ) ) && $laneNumber > 0 ) {
 			$this->doScrapeLane( $poolSize, $laneNumber );
+			$this->addToLogContext( 'crawl_type', self::OPTION_ARTICLE_LANE );
+			$this->addToLogContext( 'lane', $laneNumber );
+			$this->addToLogContext( 'pool_size', $poolSize );
 		} else if( ( $articleId = intval( $this->getOption( self::OPTION_ARTIST_ID, 0 ) ) ) && $articleId > 0 ) {
 			$this->setArticleId( $articleId );
 			$this->doScrapeArtist();
+			$this->addToLogContext( 'crawl_type', self::OPTION_ARTICLE_LANE );
+			$this->addToLogContext( 'artist_id', $articleId );
 		} else {
 			$this->doScrapeArticlesFromYesterday();
+			$this->addToLogContext( 'crawl_type', 'default' );
 		}
+		$this->logExecution();
+	}
+
+	private function logExecution() {
+		$this->addToLogContext( 'execution_time', microtime( true ) - $this->startTime );
+		$this->addToLogContext( 'processed_articles', $this->processedArticlesCount );
+		WikiaLogger::instance()->info( 'LyricsWikiCrawler', $this->getLogContext() );
 	}
 
 	/**
@@ -102,6 +122,7 @@ class LyricsWikiCrawler extends Maintenance {
 		$article = Article::newFromID( $this->getArticleId() );
 		$ls = new LyricsScraper( $this->solr );
 		$ls->processArtistArticle( $article );
+		$this->processedArticlesCount += $ls->getProcessedArticlesCount();
 	}
 
 	/**
@@ -114,9 +135,12 @@ class LyricsWikiCrawler extends Maintenance {
 		$this->output( 'Scraping articles from ' . $yesterday . PHP_EOL );
 
 		$pages = $this->getRecentChangedPages( date( "Ymd", $yesterdayTs ) );
+		$this->addToLogContext( 'user_updated_articles', count( $pages ) );
 
 		if( !empty( $pages ) ) {
 			$pages = $this->convertIntoArtistPages( $pages );
+			$this->addToLogContext( 'updated_artists', count( $pages ) );
+
 			$start = date( 'Y-m-d\TH:i:s.u\Z' );
 
 			foreach( $pages as $pageId ) {
@@ -343,6 +367,25 @@ class LyricsWikiCrawler extends Maintenance {
 		unset( $config['adapteroptions']['proxy'] );
 
 		return $config;
+	}
+
+	/**
+	 * Adds value to log context
+	 *
+	 * @param $name
+	 * @param $value
+	 */
+	private function addToLogContext( $name, $value ) {
+		$this->logContext[$name] = $value;
+	}
+
+	/**
+	 * Returns logging context
+	 *
+	 * @return array
+	 */
+	public function getLogContext(){
+		return $this->logContext;
 	}
 
 }
