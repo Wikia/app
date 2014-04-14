@@ -5,6 +5,9 @@
 		for display: inline-block
 		--><li>{{sortingOptions.recent}}</li>
 	</ul>
+	{{#message}}
+	<p class="message">{{message}}</p>
+	{{/message}}
 	<ul class="video-list mobile">
 		{{#videos}}
 		<li class="item">
@@ -22,5 +25,7 @@
 		</li>
 		{{/videos}}
 	</ul>
-	<button class="btn load-more">Load More</button>
+	{{#loadMore}}
+	<button class="btn load-more">{{loadMore}}</button>
+	{{/loadMore}}
 </div>
