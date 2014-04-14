@@ -28,6 +28,7 @@ define('specialVideos.mobile.views.index', [
 	SpecialVideosIndexView.prototype.initialize = function () {
 		this.$filter.find('li').on('click', $.proxy(this, 'onFilterClick'));
 		this.$loadMoreBtn.on('click', $.proxy(this, 'onLoadMoreClick'));
+		this.$el.find('.title').on('click', $.proxy(this, 'onTitleClick'));
 	};
 
 	/**
@@ -53,7 +54,6 @@ define('specialVideos.mobile.views.index', [
 
 	/**
 	 * onFilterClick
-	 * @description
 	 * @param evt jQuery event object
 	 * @return {Boolean} false
 	 */
@@ -75,7 +75,6 @@ define('specialVideos.mobile.views.index', [
 
 	/**
 	 * onLoadMoreClick
-	 * @description
 	 * @param evt jQuery event object
 	 * @return {Boolean} false
 	 */
@@ -84,6 +83,20 @@ define('specialVideos.mobile.views.index', [
 		this.collection.fetch().success(function () {
 			self.render();
 		});
+		return false;
+	};
+
+    /**
+     * onTitleClick
+	 * @description This method exists because there isn't a more eloquent way to at arbitrary elements to the
+	 * mechanism that opens the mobile lightbox. When our .title span is clicked, it triggers a click on the
+	 * neighboring image tag.
+     * @param evt jQuery event object
+     * @return {Boolean} false
+     */
+	SpecialVideosIndexView.prototype.onTitleClick = function (evt) {
+		var $tar = $(evt.target);
+		$tar.closest('.info').prev().find('img').trigger('click');
 		return false;
 	};
 
