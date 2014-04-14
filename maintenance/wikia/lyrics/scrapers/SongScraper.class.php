@@ -50,7 +50,7 @@ class SongScraper extends BaseScraper {
 	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
-			return $this->removeWikiTextFromLyrics( $matches[1] );
+			return LyricsUtils::removeWikitextFromLyrics( $matches[1] );
 		}
 		return '';
 	}
