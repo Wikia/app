@@ -64,6 +64,7 @@ class ReCaptcha extends SimpleCaptcha {
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['key'] = $wgReCaptchaPublicKey;
 		$resultArr['captcha']['error'] = $this->recaptcha_error;
+		$resultArr['captcha']['recaptcha'] = true;
 	}
 
 	/**

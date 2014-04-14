@@ -63,6 +63,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.originalDocumentTitle = document.title;
 	this.editSummaryByteLimit = 255;
 	this.tabLayout = mw.config.get( 'wgVisualEditorConfig' ).tabLayout;
+	this.recaptcha = false;
 
 	/**
 	 * @property {jQuery.Promise|null}
@@ -521,31 +522,44 @@ ve.init.mw.ViewPageTarget.prototype.onSaveError = function ( jqXHR, status, data
 	// "question" or "fancy" type of captcha. They all expose differently named properties in the
 	// API for different things in the UI. At this point we only support the FancyCaptha which we
 	// very intuitively detect by the presence of a "url" property.
-	if ( editApi && editApi.captcha && editApi.captcha.url ) {
+	if ( editApi && editApi.captcha ) {
 		trackData.type = 'captcha';
 		ve.track( 'performance.user.saveError', trackData );
-		this.captcha = {
-			input: new OO.ui.TextInputWidget(),
-			id: editApi.captcha.id
-		};
-		this.saveDialog.showMessage(
-			'api-save-error',
-			$( '<div>' ).append(
-				// msg: simplecaptcha-edit, fancycaptcha-edit, ..
-				$( '<p>' ).append(
-					$( '<strong>' ).text( mw.msg( 'captcha-label' ) ),
-					document.createTextNode( mw.msg( 'colon-separator' ) ),
-					$( $.parseHTML( mw.message( 'fancycaptcha-edit' ).parse() ) )
-						.filter( 'a' ).attr( 'target', '_blank' ).end()
+		if ( editApi.captcha.url ) {
+			this.captcha = {
+				input: new OO.ui.TextInputWidget(),
+				id: editApi.captcha.id
+			};
+			this.saveDialog.showMessage(
+				'api-save-error',
+				$( '<div>' ).append(
+					// msg: simplecaptcha-edit, fancycaptcha-edit, ..
+					$( '<p>' ).append(
+						$( '<strong>' ).text( mw.msg( 'captcha-label' ) ),
+						document.createTextNode( mw.msg( 'colon-separator' ) ),
+						$( $.parseHTML( mw.message( 'fancycaptcha-edit' ).parse() ) )
+							.filter( 'a' ).attr( 'target', '_blank' ).end()
+					),
+					$( '<img>' ).attr( 'src', editApi.captcha.url ),
+					this.captcha.input.$element
 				),
-				$( '<img>' ).attr( 'src', editApi.captcha.url ),
-				this.captcha.input.$element
-			),
-			{
-				wrap: false
-			}
-		);
-		return;
+				{
+					wrap: false
+				}
+			);
+			return;
+		} else if ( editApi.captcha.recaptcha ) {
+			// If using Recaptcha
+			this.recaptcha = true;
+			this.captcha = {};
+			this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
+				editApi.captcha.key,
+				've-ui-mwSaveDialog-captcha',
+				{ theme: 'white' }
+			);
+			this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
+			return;
+		}
 	}
 
 	// Handle (other) unknown and/or unrecoverable errors
@@ -925,10 +939,14 @@ ve.init.mw.ViewPageTarget.prototype.onSaveDialogResolveConflict= function () {
  * @returns {Object} Save options, including summary, minor and watch properties
  */
 ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
+	if ( this.recaptcha ) {
+		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
+		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
+	}
 	var options = {
 		'summary': this.saveDialog.editSummaryInput.$input.val(),
 		'captchaid': this.captcha && this.captcha.id,
-		'captchaword': this.captcha && this.captcha.input.getValue()
+		'captchaword': this.captcha && ( this.captcha.word || this.captcha.input.getValue() )
 	};
 	if ( this.sanityCheckPromise.state() === 'rejected' ) {
 		options.needcheck = 1;
@@ -1243,7 +1261,8 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbarButtons = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
-	var sectionTitle = '';
+	var dialogDocument, script,
+		sectionTitle = '';
 
 	this.saveDialog = this.surface.getDialogs().getWindow( 'mwSave' );
 
@@ -1266,6 +1285,12 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	} );
 	// Setup checkboxes
 	this.saveDialog.setupCheckboxes( ve.getObjectValues( this.checkboxes ).join( '\n' ) );
+
+	// Add Recaptcha script
+	dialogDocument = this.saveDialog.frame.$element[0].contentDocument;
+	script = dialogDocument.createElement( 'script' );
+	script.setAttribute( 'src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js' );
+	dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
 };
 
 /**

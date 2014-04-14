@@ -123,6 +123,10 @@
 	max-height: 400px;
 }
 
+.oo-ui-dialog .oo-ui-window-frame.oo-ui-window-frame-captcha {
+	max-height: 480px;
+}
+
 .oo-ui-dialog-closing .oo-ui-window-frame {
 	-webkit-animation: oo-ui-zoom-in 250ms ease-in-out 0 1 reverse;
 	-moz-animation: oo-ui-zoom-in 250ms ease-in-out 0 1 reverse;

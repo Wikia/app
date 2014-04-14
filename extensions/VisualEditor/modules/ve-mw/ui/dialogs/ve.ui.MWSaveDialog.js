@@ -289,6 +289,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 			.addClass( 've-ui-mwSaveDialog-editSummary-count' ).text( this.editSummaryByteLimit )
 	);
 	this.$saveMessages = this.$( '<div>' );
+	this.$captcha = this.$( '<div>' ).attr( 'id', 've-ui-mwSaveDialog-captcha' );
 	this.$saveActions = this.$( '<div>' ).append(
 		this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-dirtymsg' )
 	);
@@ -301,6 +302,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 		this.$editSummaryLabel,
 		this.editSummaryInput.$element,
 		this.$saveOptions,
+		this.$captcha,
 		this.$saveMessages,
 		this.$saveActions,
 		this.$saveFoot
