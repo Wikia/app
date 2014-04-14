@@ -14,7 +14,7 @@ class AdController extends WikiaController {
 	public function executeTop() {
 		if (WikiaPageType::isWikiaHub()) {
 			$leaderboardName = 'HUB_TOP_LEADERBOARD';
-		} elseif ($wg->EnableWikiaHomePageExt) {
+		} elseif ($this->wg->EnableWikiaHomePageExt) {
 			if (WikiaPageType::isSearch()) {
 				$leaderboardName = 'TOP_LEADERBOARD';
 			} else {
