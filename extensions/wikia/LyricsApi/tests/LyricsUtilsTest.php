@@ -31,6 +31,11 @@ class LyricsUtilsTest extends WikiaBaseTest {
 				"Benjamin ''Franklin Peale'', usually '''Franklin Peale''', was an employee and '''''officer''''' of the Philadelphia Mint from 1833 to 1854. Although Peale introduced many innovations to the Mint of the United States, he was eventually dismissed amid allegations he had used his position for personal gain.",
 				"Benjamin Franklin Peale, usually Franklin Peale, was an employee and officer of the Philadelphia Mint from 1833 to 1854. Although Peale introduced many innovations to the Mint of the United States, he was eventually dismissed amid allegations he had used his position for personal gain.",
 			],
+			[
+				'cleaning wikitext links',
+				"Benjamin [[Franklin Peale]], usually [http://wikia.com Franklin Peale], was an employee and '''''officer''''' of the Philadelphia Mint from 1833 to 1854. Although Peale introduced many innovations to the Mint of the United States, he was eventually dismissed amid allegations he had used his position for personal gain.",
+				"Benjamin Franklin Peale, usually Franklin Peale, was an employee and officer of the Philadelphia Mint from 1833 to 1854. Although Peale introduced many innovations to the Mint of the United States, he was eventually dismissed amid allegations he had used his position for personal gain.",
+			],
 		];
 	}
 
