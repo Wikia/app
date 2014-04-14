@@ -152,7 +152,7 @@ class Scribunto_LuaLanguageLibrary extends Scribunto_LuaLibraryBase {
 	 */
 	function gender( $lang, $args ) {
 		$this->checkType( 'gender', 1, $args[0], 'string' );
-		$username = trim( array_shift( $args[0] ) );
+		$username = trim( array_shift( $args ) );
 
 		if ( is_array( $args[0] ) ) {
 			$args = $args[0];
