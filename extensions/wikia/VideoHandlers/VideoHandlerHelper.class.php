@@ -256,7 +256,10 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
+
+		/** @var Title $title */
 		$title = $videoInfo['title'];
+		/** @var LocalFile $file */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		if ( $file ) {

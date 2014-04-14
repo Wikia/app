@@ -266,6 +266,12 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Folder {$this->mNewWiki->images_dir} created\n", true );
 		}
 
+		// Force initialize uploader user from correct shared db
+		$uploader = User::newFromName( 'CreateWiki script' );
+		$uploader->getId();
+		$oldUser = $wgUser;
+		$wgUser = $uploader;
+
 		/**
 		 * wikifactory variables
 		 */
@@ -287,6 +293,13 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_SQL_FILE_BROKEN;
+		}
+
+		// Hack to slow down the devbox database creation
+		global $wgDevelEnvironment;
+		if (isset($wgDevelEnvironment)) {
+			$position = $this->mNewWiki->dbw->getMasterPos();
+			$wait = $this->mNewWiki->dbw->masterPosWait($position, 10);
 		}
 
 		/**
@@ -313,7 +326,7 @@ class CreateWiki {
 		/**
 		 * copy default logo & favicon
 		 */
-		$uploader = User::newFromName( 'CreateWiki script' );
+
 
 		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_LOGO, (object) ['name' => 'Wiki.png'], $uploader );
 		if ( $res['status'] === true ) {
@@ -354,13 +367,9 @@ class CreateWiki {
 		/**
 		 * set hub/category
 		 */
-		$oldUser = $wgUser;
-		$wgUser = User::newFromName( 'CreateWiki script' );
 		$oHub = WikiFactoryHub::getInstance();
 		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
 		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
-		$wgUser = $oldUser;
-		unset($oldUser);
 
 		/**
 		 * define wiki type
@@ -425,6 +434,10 @@ class CreateWiki {
 		 * Unset database from mNewWiki, because database objects cannot be serialized from MW1.19
 		 */
 		unset($this->mNewWiki->dbw);
+
+		// Restore wgUser
+		$wgUser = $oldUser;
+		unset($oldUser);
 
 		/**
 		 * inform task manager

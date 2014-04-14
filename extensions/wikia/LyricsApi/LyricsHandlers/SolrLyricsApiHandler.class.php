@@ -70,6 +70,11 @@ class SolrLyricsApiHandler {
 				LyricsApiController::PARAM_ALBUM => $album->name,
 			] );
 		}
+
+		if ( $document->release_date ) {
+			$album->year = $document->release_date;
+		}
+
 		return $album;
 	}
 
@@ -93,6 +98,9 @@ class SolrLyricsApiHandler {
 				LyricsApiController::PARAM_SONG => $song->name,
 			] );
 		}
+
+		$this->appendArticleUrl( $song, $document->artist_name, $song->name );
+
 		return $song;
 	}
 
@@ -145,6 +153,20 @@ class SolrLyricsApiHandler {
 	}
 
 	/**
+	 * @desc Appends articleUrl value to the stdClass object
+	 *
+	 * @param stdClass $obj A song or an album object
+	 * @param String $artistName Artist name
+	 * @param String $secondPart Song or album name
+	 */
+	private function appendArticleUrl( $obj, $artistName, $secondPart ) {
+		$title = Title::newFromText( $artistName . ':' . $secondPart );
+		if( !is_null( $title ) ) {
+			$obj->articleUrl = $title->getFullUrl();
+		}
+	}
+
+	/**
 	 * @desc Uses ImagesService to create an image URL
 	 *
 	 * @param String $imageTitle
@@ -172,8 +194,12 @@ class SolrLyricsApiHandler {
 		if ( is_array( $albums ) ) {
 			foreach ( $albums as $solrAlbum ) {
 				$solrAlbum->artist_name = $artistName;
-				$responseAlbum = $this->buildAlbum( $solrAlbum );
 
+				if( !isset( $solrAlbum->release_date ) ) {
+					$solrAlbum->release_date = false;
+				}
+
+				$responseAlbum = $this->buildAlbum( $solrAlbum );
 				if ( $solrAlbum->image ) {
 					$this->appendImages( $responseAlbum, $solrAlbum->image );
 				}
@@ -297,10 +323,6 @@ class SolrLyricsApiHandler {
 		}
 
 		$album = $this->buildAlbum( $queryResult, false);
-
-		if ( $queryResult->release_date ) {
-			$album->year = $queryResult->release_date;
-		}
 
 		if ( $queryResult->image ) {
 			$this->appendImages( $album, $queryResult->image );
