@@ -67,4 +67,8 @@ class JsonFormatService extends \WikiaService {
 		$measurement->stop();
 		return $jsonSimple;
 	}
+
+	public function getSimpleFormatForHtml( $html ) {
+		return $this->htmlParser->parse( $html );
+	}
 }
