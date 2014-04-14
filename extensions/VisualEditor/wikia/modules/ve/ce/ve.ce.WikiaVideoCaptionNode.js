@@ -15,8 +15,6 @@
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config ) {
-	alert('constructor called');
-
 	// Parent constructor
 	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
 
@@ -55,12 +53,11 @@ ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
  * @method
  */
 ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
-	alert('on splice called');
 	// Parent method
 	ve.ce.WikiaMediaCaptionNode.prototype.onSplice.apply( this, arguments );
 
 	this.$title = this.createTitle();
-	this.$title.insertAfter( this.$detailsIcon );
+	this.$title.insertAfter( this.$details );
 };
 
 /* Registration */

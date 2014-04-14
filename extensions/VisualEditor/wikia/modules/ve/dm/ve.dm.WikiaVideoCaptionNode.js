@@ -1,5 +1,5 @@
 /*!
- * VisualEditor DataModel WikiaMediaCaptionNode class.
+ * VisualEditor DataModel WikiaVideoCaptionNode class.
  */
 
 /**
@@ -21,12 +21,10 @@ OO.inheritClass( ve.dm.WikiaVideoCaptionNode, ve.dm.WikiaMediaCaptionNode );
 
 /* Static Properties */
 
-ve.dm.WikiaMediaCaptionNode.static.name = 'wikiaVideoCaption';
+ve.dm.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
 
-ve.dm.WikiaMediaCaptionNode.static.parentNodeTypes = [
-	'wikiaBlockVideo'
-];
+ve.dm.WikiaVideoCaptionNode.static.parentNodeTypes = [ 'wikiaBlockVideo' ];
 
 /* Registration */
 
-ve.dm.modelRegistry.register( ve.dm.WikiaMediaCaptionNode );
+ve.dm.modelRegistry.register( ve.dm.WikiaVideoCaptionNode );

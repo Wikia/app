@@ -67,6 +67,7 @@ $wgResourceModules += array(
 			// dm
 			've/dm/ve.dm.WikiaMediaCaptionNode.js',
 			've/dm/ve.dm.WikiaVideoCaptionNode.js',
+			've/dm/ve.dm.WikiaImageCaptionNode.js',
 			've/dm/ve.dm.WikiaBlockMediaNode.js',
 			've/dm/ve.dm.WikiaBlockImageNode.js',
 			've/dm/ve.dm.WikiaBlockVideoNode.js',
@@ -77,6 +78,7 @@ $wgResourceModules += array(
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
 			've/ce/ve.ce.WikiaVideoCaptionNode.js',
+			've/ce/ve.ce.WikiaImageCaptionNode.js',
 			've/ce/ve.ce.WikiaBlockMediaNode.js',
 			've/ce/ve.ce.WikiaBlockImageNode.js',
 			've/ce/ve.ce.WikiaVideoNode.js',
