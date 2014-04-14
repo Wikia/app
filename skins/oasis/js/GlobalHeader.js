@@ -74,4 +74,7 @@ $(function () {
 	} else {
 		Wikia.log( 'Global nav tracking disabled', 'info', 'GlobalNav' );
 	}
+
+	//For AB Tetsing
+	$('#GlobalNavigation').addClass('vertical-colors');
 });
