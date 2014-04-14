@@ -147,7 +147,16 @@ class DefaultContent extends AbstractService
 			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
 			$simplifier = new JsonFormatSimplifier();
 			$text = $simplifier->simplifyToText( $jsonSimple );
-			return $this->prepValuesFromHtml( $text );
+
+			$words = explode( ' ', $text );
+			$wordCount = count( $words );
+			$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
+			$this->pushNolangTxt( $upTo100Words );
+			return [
+					'nolang_txt'           => $upTo100Words,
+					'words'                => $wordCount,
+					$this->field( 'html' ) => $text
+				];
 		} else {
 			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
 				return $this->prepValuesFromHtml( $html );
