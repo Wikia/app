@@ -57,6 +57,7 @@ $messages['qqq'] = array(
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
+	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked'
 );
 
 $messages['de'] = array(
