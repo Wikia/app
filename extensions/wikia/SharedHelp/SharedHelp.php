@@ -205,7 +205,7 @@ function SharedHelpHook(&$out, &$text) {
 			if (!empty ($_SESSION ['SH_redirected'])) {
 				$from_link = Title::newfromText( $helpNs . ":" . $_SESSION ['SH_redirected'] );
 				$redir = $sk->makeKnownLinkObj( $from_link, '', 'redirect=no', '', '', 'rel="nofollow"' );
-				$s = wfMsg( 'redirectedfrom', $redir );
+				$s = wfMessage( 'redirectedfrom', $redir )->text();
 				$out->setSubtitle( $s );
 				$_SESSION ['SH_redirected'] = '';
 			}
@@ -323,7 +323,7 @@ function SharedHelpHook(&$out, &$text) {
 
 			// "this text is stored..."
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SharedHelp/css/shared-help.scss' ));
-			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . $articleLink, $helpSitename ) . '</div>';
+			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMessage( 'shared_help_info' )->parse() . '</div>';
 
 			if(strpos($text, '"noarticletext"') > 0) {
 				$text = '<div class="sharedHelp">' . $info . $content . '<div style="clear:both"></div></div>';
@@ -356,7 +356,7 @@ function SharedHelpEditPageHook(&$editpage) {
 
 	$helpSitename = WikiFactory::getVarValueByName( 'wgSitename', $wgHelpWikiId );
 
-	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">'.wfMsgExt('shared_help_edit_info', 'parseinline', $wgTitle->getDBkey(), $helpSitename).'</div>';
+	$msg = '<div style="border: solid 1px; padding: 10px; margin: 5px" class="sharedHelpEditInfo">' . wfMessage( 'shared_help_edit_info', $wgTitle->getDBkey(), $helpSitename )->parse() .'</div>';
 
 	$editpage->editFormPageTop .= $msg;
 
