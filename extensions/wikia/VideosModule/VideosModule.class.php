@@ -4,9 +4,6 @@ class VideosModule extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 300;
 	const THUMBNAIL_HEIGHT = 309;
-	// We don't care where else this video has been posted, we just want to display it
-	const POSTED_IN_ARTICLES = 0;
-	const GET_THUMB = true;
 
 	const LIMIT_VIDEOS = 20;
 	const CACHE_TTL = 3600;
@@ -14,6 +11,18 @@ class VideosModule extends WikiaModel {
 
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+
+	// options for getting video detail
+	protected static $videoOptions = [
+		'thumbWidth'   => self::THUMBNAIL_WIDTH,
+		'thumbHeight'  => self::THUMBNAIL_HEIGHT,
+		'getThumbnail' => true,
+		'thumbOptions' => [
+			'useTemplate' => true,
+			'fluid'       => true,
+			'forceSize'   => 'small',
+		],
+	];
 
 	// list of page categories for premium videos [ array( categoryId => name ) ]
 	protected static $pageCategories = [
@@ -57,14 +66,7 @@ class VideosModule extends WikiaModel {
 
 				if ( $this->addToList( $videoTitles, $videoInfo['title'] ) ) {
 					// get video detail
-					$videoDetail = $helper->getVideoDetail(
-						$videoInfo,
-						self::THUMBNAIL_WIDTH,
-						self::THUMBNAIL_HEIGHT,
-						self::POSTED_IN_ARTICLES,
-						self::GET_THUMB
-					);
-
+					$videoDetail = $helper->getVideoDetail( $videoInfo, self::$videoOptions );
 					if ( !empty( $videoDetail ) ) {
 						$videos[] = $this->filterVideoDetail( $videoDetail );
 					}
@@ -343,10 +345,7 @@ class VideosModule extends WikiaModel {
 			$videosDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videos,
-				self::THUMBNAIL_WIDTH,
-				self::THUMBNAIL_HEIGHT,
-				self::POSTED_IN_ARTICLES,
-				self::GET_THUMB
+				self::$videoOptions
 			);
 
 			foreach( $videosDetail as $video ) {
