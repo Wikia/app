@@ -393,12 +393,18 @@ class SpecialPromoteHelper extends WikiaObject {
 			$promoImage= PromoImage::fromPathname($singleFileName);
 
 			if (!$promoImage->isType(PromoImage::INVALID)){
-				if (!$promoImage->isCityIdSet()){
-					// Remove old image formatted filename: FIXME: remove this sometime in the future
-					$promoImage->purgeImage();
+				// check if file exists, if not do not add it to processed files, effectively removing it
+				$file = GlobalFile::newFromText($promoImage->getPathname(), $this->wg->cityId);
+				if ($file->exists()){
+					array_push($promoImages, $promoImage);
 				}
-				// FIXME: we should check for and log duplicated types, as this is invalid state of the database
-				array_push($unchangedTypes, $promoImage->getType());
+
+				if (in_array($unchangedTypes, $promoImage->getType())){
+					WikiaLogger::instance()->info("SpecialPromote additional files duplicated type", ['method' => __METHOD__, 'type_duplicated' => $promoImage->getType()]);
+
+				} else {
+					array_push($unchangedTypes, $promoImage->getType());
+				}
 				array_push($allFiles, $promoImage);
 			} else {
 				array_push($imagesToProcess, $singleFileName);
@@ -414,7 +420,7 @@ class SpecialPromoteHelper extends WikiaObject {
 				$promoImage->processUploadedFile($uploadedImageFileName);
 				array_push($allFiles, $promoImage);
 			} else {
-				// FIXME: should we log too many uploaded images?
+				WikiaLogger::instance()->info("SpecialPromote too many uploaded files", ['method' => __METHOD__]);
 				break;
 			}
 		}
