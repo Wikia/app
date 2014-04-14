@@ -3,10 +3,8 @@
 	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
 	$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
 
-	$thumbWidth  = 180;
-	$thumbHeight = 120;
-
-	$imageOriginalURL = ImagesService::getImageSrcByTitle( $corporateWikiId, $imageFileName, $thumbWidth, $thumbHeight );
+	$imageOriginalURL = ImagesService::getImageSrcByTitle( $corporateWikiId, $imageFileName,
+		WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
 	if (! empty( $imageOriginalURL ) ) {
 		$imageURL = ImagesService::overrideThumbnailFormat( $imageOriginalURL, ImagesService::EXT_JPG );
 

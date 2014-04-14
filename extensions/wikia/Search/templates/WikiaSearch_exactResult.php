@@ -4,7 +4,8 @@ $image = (new PromoImage(PromoImage::MAIN))->setCityId($result['id'])->getPathna
 $isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
 
 $thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
-$imageURL = ImagesService::getImageSrcByTitle( (new CityVisualization)->getTargetWikiId( $result['lang_s'] ), $image, 180, 120 );
+$imageURL = ImagesService::getImageSrcByTitle( (new CityVisualization)->getTargetWikiId( $result['lang_s'] ),
+	$image, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
 
 if ( empty( $imageURL ) ) {
 	// display placeholder image if no thumbnail
