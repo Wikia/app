@@ -3,8 +3,9 @@
 define('ext.wikia.adEngine.provider.ebay', [
 	'wikia.log',
 	'jquery',
-	'wikia.window'
-], function (log, $, window) {
+	'wikia.window',
+	'wikia.document'
+], function (log, $, window, document) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.ebay';
@@ -17,8 +18,11 @@ define('ext.wikia.adEngine.provider.ebay', [
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var params = {
-			skin: window.skin
-		};
+				skin: window.skin,
+				title: document.title
+			};
+
+		log(['fillInSlot', slotname, 'Requesting ads', params], 'info', logGroup);
 
 		$.nirvana.sendRequest({
 			controller: 'AdProviderEbayController',

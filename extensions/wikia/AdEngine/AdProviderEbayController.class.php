@@ -2,14 +2,20 @@
 
 class AdProviderEbayController extends WikiaController
 {
-
 	const SERVICE_URI = 'http://rest.ebay.com/epn/v1/find/item.rss?';
 
 	public function centerWell()
 	{
+		$query = preg_replace('/ Wiki$/', '', $this->request->getVal('title'));
 
-		// TODO: switch to caching getData method after development and remove next if
-		$allProducts = $this->generateData(['Harry Potter']);
+		if ($splitTitle = false) {
+			$query = explode(' - ', $query);
+		} else {
+			$query = [$query];
+		}
+
+		$rssUrl = $this->buildUrl($query, 1);
+		$allProducts = $this->generateData($rssUrl);
 
 		if (empty($allProducts)) {
 			$allProducts = [];
@@ -18,23 +24,24 @@ class AdProviderEbayController extends WikiaController
 		shuffle($allProducts);
 		$rand_keys = array_rand($allProducts, 4);
 
-		$this->products = [];
-
+		$products = [];
 		foreach($rand_keys as $key) {
-			$this->products[] = $allProducts[$key];
+			$products[] = $allProducts[$key];
 		}
 
+		$this->products = $products;
+		$this->query = $query;
+		$this->rssUrl = $rssUrl;
 	}
 
 	/**
-	 * @param array $queryWords Keywords to search on eBay
-	 * @param $siteId
+	 * @param string $url URL of the RSS to fetch and parse
 	 * @return array of all products
 	 */
-	private function generateData(array $queryWords, $siteId = 1)
+	private function generateData($url)
 	{
 
-		$result = Http::get($this->buildUrl($queryWords,  $siteId));
+		$result = Http::get($url);
 
 		if ($result === false) {
 			return false;
