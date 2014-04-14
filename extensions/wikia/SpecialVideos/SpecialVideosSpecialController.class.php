@@ -147,7 +147,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$this->videos = $videos;
 		$this->message = $message;
 
-		if ( count($videos) ) {
+		if ( $isMobile && count($videos) ) {
 			$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
 		}
 
