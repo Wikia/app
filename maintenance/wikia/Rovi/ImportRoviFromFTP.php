@@ -58,7 +58,6 @@ class ImportRoviFromFTP extends Maintenance {
 		}
 		$files = $this->downloadFiles( $files );
 		$this->loadDataToDb( $files );
-		//$this->cleanup();
 	}
 
 	protected function loadDataToDb( $files ) {
@@ -161,7 +160,7 @@ class ImportRoviFromFTP extends Maintenance {
 		$localFile = tempnam( $this->tmpdir, 'rovi_' );
 		$this->output( "Downloading file $fileName to $localFile\n" );
 		if ( ftp_get( $this->FTPConnID, $localFile, $fileName, FTP_BINARY ) ) {
-			echo "OK";
+			$this->output( "OK\n" );
 		} else {
 			$this->error( "Unable to download file $fileName", true );
 		}
