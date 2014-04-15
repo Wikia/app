@@ -26,11 +26,17 @@ describe('ImgLzy', function () {
 	expect(typeof ImgLzy.rewriteURLForWebP).toBe('function');
 
 	// test thumbnail URL rewrites
-	urls = [{
+	urls = [
+		{
 			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.jpg/300px-Early_elmo.png',
 			webp: true
-		}, {
+		},
+		{
 			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.png/300px-Early_elmo.png',
+			webp: true
+		},
+		{
+			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/poznan/pl/images/thumb/3/35/Information_icon.svg/16px-Information_icon.svg.png',
 			webp: true
 		},
 		// skip GIFs

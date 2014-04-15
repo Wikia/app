@@ -7,9 +7,9 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 	'use strict';
 
 	var ImgLzy,
-		// allow WebP thumbnails for JPG and PNG files only (exclude video thumbnails)
+		// allow WebP thumbnails for SVG, JPG and PNG files only (exclude video thumbnails)
 		// e.g. /muppet/images/thumb/9/98/BBC1_promos_for_Muppets_Tonight/150px-BBC1_promos_for_Muppets_Tonight.jpg
-		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)(\/)/i;
+		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(svg|jpg|jpeg|jpe|png)(\/)/i;
 
 	function logger(msg) {
 		log(msg, log.levels.info, 'ImgLzy');
