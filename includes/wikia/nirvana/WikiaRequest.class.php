@@ -228,10 +228,10 @@ class WikiaRequest {
 	/*
 	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
 	 * Please be aware how our URL rewrites work before you think about using this.
-	 * @return string
+	 * @return string|null
 	 */
 	public function getScriptUrl() {
-		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : '';
+		$scriptUrl = isset( $_SERVER['SCRIPT_URL'] ) ? $_SERVER['SCRIPT_URL'] : null;
 		return $scriptUrl;
 	}
 }
