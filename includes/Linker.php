@@ -297,7 +297,10 @@ class Linker {
 
 			$query['action'] = 'edit';
 			$query['redlink'] = '1';
-			$query['beforejs'] = '1';
+
+			if ( F::app()->checkSkin( 'oasis' ) ) {
+				$query['beforejs'] = '1';
+			}
 		}
 		$ret = $target->getLinkURL( $query );
 		wfProfileOut( __METHOD__ );

@@ -1034,7 +1034,11 @@ abstract class Skin extends ContextSource {
 	 * @private
 	 */
 	function editUrlOptions() {
-		$options = array( 'action' => 'edit', 'beforejs' => 1 );
+		$options = array( 'action' => 'edit' );
+
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			$options['beforejs'] = '1';
+		}
 
 		if ( !$this->isRevisionCurrent() ) {
 			$options['oldid'] = intval( $this->getRevisionId() );
