@@ -50,24 +50,9 @@ class SongScraper extends BaseScraper {
 	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
-			return $this->removeWikiTextFromLyrics( $matches[1] );
+			return LyricsUtils::removeWikitextFromLyrics( $matches[1] );
 		}
 		return '';
-	}
-
-	/**
-	 * Remove wikitext from the lyrics tag
-	 *
-	 * Borrowed from extensions/3rdparty/LyricWiki/server.php
-	 *
-	 * @param $lyrics
-	 * @return mixed
-	 */
-	function removeWikiTextFromLyrics( $lyrics ) {
-		global $wgParser;
-
-		$lyrics = preg_replace( '/\{\{(.*?)\}\}/', '$1', $lyrics );
-		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 	/**

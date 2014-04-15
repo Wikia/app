@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Class LyricsApiBase
+ * Class LyricsUtils
  *
  * @desc Keeps data which are being reused in API controller and maintenance scripts
  */
-class LyricsApiBase {
+class LyricsUtils {
 	/**
 	 * @desc Field type in lyricsapi solr index which describes an artist
 	 */
@@ -30,6 +30,24 @@ class LyricsApiBase {
 	 */
 	public static function deserialize( $text ) {
 		return json_decode( $text );
+	}
+
+	/**
+	 * @desc Given the lyrics (possibly containing wikitext) this will filter most wikitext out of them
+	 * that is likely to appear in them.
+	 *
+	 * @param String $lyrics
+	 * @return String
+	 */
+	public static function removeWikitextFromLyrics( $lyrics ) {
+		global $wgParser;
+
+		$lyrics = preg_replace_callback( '/\{\{(.*?)\}\}/', function( $matches ) {
+			$explodedArr = explode( '|', $matches[1] );
+			return $explodedArr[ count( $explodedArr ) - 1 ];
+		}, $lyrics );
+
+		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 }
