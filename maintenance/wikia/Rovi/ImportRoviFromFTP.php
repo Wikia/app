@@ -29,7 +29,7 @@ class ImportRoviFromFTP extends Maintenance {
 	protected function rrmdir( $dir ) {
 		foreach ( glob( $dir . '/*' ) as $file ) {
 			if ( is_dir( $file ) ) {
-				rrmdir( $file );
+				$this->rrmdir( $file );
 			} else {
 				unlink( $file );
 			}
