@@ -1,10 +1,15 @@
 /*global require*/
 /*jshint camelcase:false*/
-require(['wikia.window', 'ext.wikia.adEngine.krux', 'jquery'], function (window, Krux, $) {
+require([
+	'wikia.window', 'wikia.log', 'wikia.scriptwriter', 'ext.wikia.adEngine.krux', 'jquery'
+], function (window, log, scriptWriter, Krux, $) {
 	'use strict';
 	if (window.wgEnableKruxTargeting) {
 		$(window).load(function () {
-			window.AdEngine_loadKruxLater(Krux);
+			scriptWriter.callLater(function () {
+				log('Loading Krux code', 8, 'Krux.run.js');
+				Krux.load(window.wgKruxCategoryId);
+			});
 		});
 	}
 });

@@ -11,19 +11,17 @@
 require([
 	'wikia.log',
 	'wikia.window',
-	'wikia.scriptwriter',
 	'wikia.tracker',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.dartHelper',
-	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker'
-], function (log, window, scriptWriter, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, Krux, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
+], function (log, window, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -75,18 +73,6 @@ require([
 	if (window.wgEnableRHonDesktop) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
-
-	// Load Krux asynchronously later
-	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
-	// or on DOM ready, it will be loaded after most (if not all) of the ads
-	window.AdEngine_loadKruxLater = function (Krux) {
-		if (window.wgAdsShowableOnPage) {
-			scriptWriter.callLater(function () {
-				log('Loading Krux code', 8, module);
-				Krux.load(window.wgKruxCategoryId);
-			});
-		}
-	};
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
