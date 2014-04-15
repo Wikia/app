@@ -14,6 +14,9 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 // controller classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
 
+// model classes
+$wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
+
 // special pages
 $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
 $wgSpecialPageGroups[ 'InteractiveMaps' ] = 'wikia';
