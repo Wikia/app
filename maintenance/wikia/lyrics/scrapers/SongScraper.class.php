@@ -23,8 +23,8 @@ class SongScraper extends BaseScraper {
 
 		// MOB-1367 - make sure the song name is the same as song's article title
 		$songTitle = $article->getTitle();
-		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle ) : false;
-		if( !$songName ) {
+		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle->getText() ) : null;
+		if( !is_null( $songName  ) ) {
 			$songData['song'] = $songName;
 		} else {
 			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d) or with invalid name', $songArticleId ) );
@@ -34,22 +34,20 @@ class SongScraper extends BaseScraper {
 	}
 
 	/**
-	 * @desc Gets the string after first colon if found in title text; otherwise false
+	 * @desc Gets the string after last colon if found in title text; otherwise false
 	 *
-	 * @param Title $title Title instance of the song article
+	 * @param String $titleText title text of the song article
 	 *
-	 * @return bool|String
+	 * @return null|String
 	 */
-	private function getSongFromArtistTitle( Title $title ) {
-		$result = false;
-		$titleText = $title->getText();
+	private function getSongFromArtistTitle( $titleText ) {
 		$titleTextExploded = explode( ':', $titleText );
 
 		if( count( $titleTextExploded ) > 1 ) {
-			$result = $titleTextExploded[1];
+			return array_pop( $titleTextExploded );
 		}
 
-		return $result;
+		return null;
 	}
 
 	/**
