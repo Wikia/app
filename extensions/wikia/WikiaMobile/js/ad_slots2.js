@@ -2,7 +2,7 @@
 require(
 	[
 		'jquery', 'JSMessages', 'wikia.window', 'wikia.log',
-		'ext.wikia.adEngine.adengine', 'ext.wikia.adEngine.adConfigMobile'
+		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile'
 	],
 	function ( $, msg, window, log, adEngine, adConfigMobile ) {
 		'use strict';
