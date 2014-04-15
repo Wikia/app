@@ -206,7 +206,12 @@ function (
 					wkPrf.className += ' loaded';
 
 					var wkLgn = document.getElementById( 'wkLgn' ),
-						form = wkLgn.getElementsByTagName( 'form' )[0];
+						form = wkLgn.getElementsByTagName( 'form' )[0],
+						loginToken = document.getElementById('loginToken');
+
+					if (loginToken && w.wgLoginToken) {
+						loginToken.value = w.wgLoginToken;
+					}
 
 					form.setAttribute( 'action',
 						qs( form.getAttribute( 'action' ) )
