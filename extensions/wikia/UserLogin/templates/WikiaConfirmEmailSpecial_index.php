@@ -13,6 +13,16 @@
 				'value' => $code
 			),
 			array(
+				'type' => 'hidden',
+				'name' => 'editToken',
+				'value' => htmlspecialchars( $editToken )
+			),
+			array(
+				'type' => 'hidden',
+				'name' => 'loginToken',
+				'value' => htmlspecialchars( $loginToken ),
+			),
+			array(
 				'type' => 'text',
 				'name' => 'username',
 				'label' => wfMessage('wikiaconfirmemail-username')->escaped(),
