@@ -8,7 +8,7 @@ define('specialVideos.mobile.views.index', [
 	 * SpecialVideosIndexView
 	 * @constructor
 	 * @description View class for Special:Videos on mobile
-	 * @param config An object that contains 'el' & 'collection' properties
+	 * @param {Object} config An object that contains 'el' & 'collection' properties
 	 */
 	function SpecialVideosIndexView(config) {
 		this.$el = $(config.el);
@@ -28,7 +28,7 @@ define('specialVideos.mobile.views.index', [
 	SpecialVideosIndexView.prototype.initialize = function () {
 		this.$filter.find('li').on('click', $.proxy(this, 'onFilterClick'));
 		this.$loadMoreBtn.on('click', $.proxy(this, 'onLoadMoreClick'));
-		this.$el.find('.title').on('click', $.proxy(this, 'onTitleClick'));
+		this.$el.find('.video-list').on('click', '.title', $.proxy(this, 'onTitleClick'));
 	};
 
 	/**
@@ -54,7 +54,7 @@ define('specialVideos.mobile.views.index', [
 
 	/**
 	 * onFilterClick
-	 * @param evt jQuery event object
+	 * @param {Object} evt jQuery event object
 	 * @return {Boolean} false
 	 */
 	SpecialVideosIndexView.prototype.onFilterClick = function (evt) {
@@ -75,7 +75,6 @@ define('specialVideos.mobile.views.index', [
 
 	/**
 	 * onLoadMoreClick
-	 * @param evt jQuery event object
 	 * @return {Boolean} false
 	 */
 	SpecialVideosIndexView.prototype.onLoadMoreClick = function () {
@@ -91,7 +90,7 @@ define('specialVideos.mobile.views.index', [
 	 * @description This method exists because there isn't a more eloquent way to at arbitrary elements to the
 	 * mechanism that opens the mobile lightbox. When our .title span is clicked, it triggers a click on the
 	 * neighboring image tag.
-     * @param evt jQuery event object
+     * @param {Object} evt jQuery event object
      * @return {Boolean} false
      */
 	SpecialVideosIndexView.prototype.onTitleClick = function (evt) {
