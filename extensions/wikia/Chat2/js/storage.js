@@ -228,6 +228,7 @@ RedisStorage.prototype = {
 	},
 
 	removeUserData: function(roomId, user, callback, errback) {
+		logger.debug("removeUserData " + roomId + ":" + user);
 		this._hdel(this.config.getKey_usersInRoom(roomId), user, callback,
 				'Error while trying to remove user ' + user + ' from room ' + roomId + ' : %error%',
 				errback);
