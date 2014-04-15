@@ -568,6 +568,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 
 	function updateAttribution( result ) {
 		items[result.title].username = result.username;
+		items[result.title].titleText = result.titleText;
 	}
 
 	// Attribution request
@@ -592,13 +593,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var count, item, title, type,
+	var count, item, title, type, captionType,
 		typeCount = { 'photo': 0, 'video': 0 },
 		linmod = [];
 
 	for ( title in items ) {
 		item = items[title];
 		type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
+		captionType = ( item.type === 'photo' ) ? 'wikiaImageCaption' : 'wikiaVideoCaption' ;
 		typeCount[item.type]++;
 		linmod.push(
 			{
@@ -612,12 +614,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'height': item.height,
 					'resource': './' + item.title,
 					'attribution': {
-						'username': item.username
+						'username': item.username,
+						'titleText': item.titleText
 					}
 				}
 			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': captionType },
+			{ 'type': '/' + captionType },
 			{ 'type': '/' + type }
 		);
 	}

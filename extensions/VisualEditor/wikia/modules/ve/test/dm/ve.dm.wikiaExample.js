@@ -40,11 +40,11 @@ ve.dm.wikiaExample.domToDataCases = {
 					}
 				} ]
 			},
-			{ 'type': 'wikiaMediaCaption' },
+			{ 'type': 'wikiaImageCaption' },
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
 			'a', 'b', 'c',
 			{ 'type': '/paragraph' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': '/wikiaImageCaption' },
 			{ 'type': '/wikiaBlockImage' },
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }
@@ -76,11 +76,11 @@ ve.dm.wikiaExample.domToDataCases = {
 					}
 				} ]
 			},
-			{ 'type': 'wikiaMediaCaption' },
+			{ 'type': 'wikiaImageCaption' },
 			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
 			'a', 'b', 'c',
 			{ 'type': '/paragraph' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': '/wikiaImageCaption' },
 			{ 'type': '/wikiaBlockVideo' },
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }
