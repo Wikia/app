@@ -336,7 +336,8 @@ class AdEngine2Controller extends WikiaController {
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
 			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			   $wgEnableRHonDesktop, $wgOut, $wgCityId;
+			   $wgEnableRHonDesktop, $wgOut, $wgCityId,
+			   $wgOasisResponsive, $wgOasisResponsiveLimited;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -389,6 +390,7 @@ class AdEngine2Controller extends WikiaController {
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
 			$vars['wgAdDriverUseSevenOneMedia'] = $wgAdDriverUseSevenOneMedia;
 			$vars['wgAdDriverSevenOneMediaCombinedUrl'] = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$vars['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
 
 		if ($wgUser->getOption('showAds')) {
