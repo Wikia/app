@@ -25,7 +25,7 @@ var SevenOneMediaHelper = function (adLogicPageLevelParams, scriptWriter, log, w
 				SOI_PD: true,    // pushdown
 				SOI_BB: true,    // billboard
 				SOI_WP: true,    // wallpaper
-				SOI_FP: true     // fireplace
+				SOI_FP: !window.wgAdDriverSevenOneMediaDisableFirePlaces     // fireplace
 			},
 			'rectangle1': {
 				SOI_RT1: true,
