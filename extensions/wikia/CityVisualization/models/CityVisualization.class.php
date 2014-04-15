@@ -300,8 +300,6 @@ class CityVisualization extends WikiaModel {
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
 			'main_image' => $row->city_main_image,
-			'wikinew' => $this->isNewWiki($row->city_flags),
-			'wikihot' => $this->isHotWiki($row->city_flags),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];
@@ -826,14 +824,6 @@ class CityVisualization extends WikiaModel {
 
 		wfProfileOut(__METHOD__);
 		return $reviewStatus;
-	}
-
-	public static function isNewWiki($wikiFlags) {
-		return (($wikiFlags & WikisModel::FLAG_NEW) == WikisModel::FLAG_NEW);
-	}
-
-	public static function isHotWiki($wikiFlags) {
-		return (($wikiFlags & WikisModel::FLAG_HOT) == WikisModel::FLAG_HOT);
 	}
 
 	public static function isOfficialWiki($wikiFlags) {
