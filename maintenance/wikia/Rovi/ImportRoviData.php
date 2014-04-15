@@ -17,7 +17,11 @@ class ImportRoviData extends Maintenance {
 		'episodesFile' => 'A csv file from Rovi containing episodes data (mostly Episode_Sequence.txt)'
 	];
 	protected $files;
-	protected $cleanupFiles = [ ];
+	protected $db;
+	protected $verbose;
+	protected $batchSize;
+	protected $skip;
+
 
 	public function __construct() {
 		parent::__construct();
@@ -29,14 +33,23 @@ class ImportRoviData extends Maintenance {
 		$this->setBatchSize( self::DEFAULT_BATCH_SIZE );
 	}
 
+	protected function init(){
+		global $wgExternalDatawareDB;
+		$this->db =  wfGetDb( DB_MASTER, array(), $wgExternalDatawareDB );
+		$this->batchSize = $this->getOption( 'batch-size' );
+		$this->verbose = (bool)$this->getOption( 'verbose', '0' );
+		$this->skip = (int)$this->getOption( 'skip', 0 );
+	}
+
 	public function execute() {
+		$this->init();
 		$this->checkFiles();
 		$this->loadData( new RoviTableSeriesImporter(), 'seriesFile' );
 		$this->loadData( new RoviTableEpisodeSeriesImporter(), 'episodesFile' );
 	}
 
+
 	protected function loadData( RoviTableImporter $importer, $optionName ) {
-		global $wgExternalDatawareDB;
 		$this->output("Processing: $optionName \n");
 		$csv = $this->openCsvFile( $optionName );
 		if ( !$csv ) {
@@ -47,36 +60,31 @@ class ImportRoviData extends Maintenance {
 			$this->error( "Header's length for --$optionName is different than defined", true );
 		}
 
-		$batchSize = $this->getOption( 'batch-size' );
-		$batchCounter = $batchSize;
-		$skip = (int)$this->getOption( 'skip', 0 );
-		$verbose = (bool)$this->getOption( 'verbose', '0' );
-
-		$db = wfGetDb( DB_MASTER, array(), $wgExternalDatawareDB );
-		$db->begin();
+		$batchCounter = $this->batchSize;
+		$this->db->begin();
 		$row = 0;
 		while ( ( $line = fgets( $csv, self::CSV_MAX_LINE ) ) !== FALSE ) {
 			$row++;
-			if ( $skip != 0 && $row < $skip ) {
+			if ( $this->skip != 0 && $row <= $this->skip ) {
 				continue;
 			}
 			$data = explode( self::CSV_SEPARATOR, $line );
 			foreach ( $data as $k => &$v ) {
 				$data[ $k ] = trim( $v );
 			}
-			$message = $importer->processRow( $data, $db );
+			$message = $importer->processRow( $data, $this->db );
 
-			if ( $verbose ) {
+			if ( $this->verbose ) {
 				$this->output( "[$row] " . $message . "\n" );
 			}
 			$batchCounter--;
 			if ( $batchCounter == 0 ) {
-				$db->commit();
-				$db->begin();
-				$batchCounter = $batchSize;
+				$this->db->commit();
+				$this->db->begin();
+				$batchCounter = $this->batchSize;
 			}
 		}
-		$db->commit();
+		$this->db->commit();
 		$this->output( $importer->getSummary() );
 	}
 

@@ -21,16 +21,17 @@ abstract class RoviTableImporter {
 
 	protected function preparePKMap( $row ) {
 		$map = [ ];
+		$flipped = array_flip($this->fields );
 		foreach ( $this->primary_key as $field ) {
-			$map[ $field ] = $row[ array_search( $field, $this->fields ) ];
+			$map[ $field ] = $row[ $flipped[ $field ] ];
 		}
 		return $map;
 	}
 
 	protected function prepareColumnMap( $row ) {
 		$map = [ ];
-		foreach ( $this->fields as $field ) {
-			$map[ $field ] = $row[ array_search( $field, $this->fields ) ];
+		foreach ( $this->fields as $key => $field ) {
+			$map[ $field ] = $row[ $key ];
 		}
 		return $map;
 	}

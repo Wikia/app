@@ -3,6 +3,7 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 class ImportRoviFromFTP extends Maintenance {
 	const TMP_DIR = '/tmp';
+	const TMP_DIR_PREFIX = "rovi_";
 	const SHARED_DB = "wikiaglobal";
 	const UPLOAD_SCRIPT_MASK = "/usr/bin/php ImportRoviData.php %s";
 	const FILE_MASK = "/RVU2-0_Infrm/Series/Series_%s_Differential_Delta.zip";
@@ -52,11 +53,12 @@ class ImportRoviFromFTP extends Maintenance {
 		$this->output( "Last delta: $lastDelta \n" );
 		$files = $this->getNewFileList( $lastDelta );
 		if ( !count( $files ) ) {
-			$this->error( "No new files available\n", true );
+			$this->output( "No new files available\n" );
+			exit(0);
 		}
 		$files = $this->downloadFiles( $files );
 		$this->loadDataToDb( $files );
-		$this->cleanup();
+		//$this->cleanup();
 	}
 
 	protected function loadDataToDb( $files ) {
@@ -69,23 +71,21 @@ class ImportRoviFromFTP extends Maintenance {
 			$command = sprintf( self::UPLOAD_SCRIPT_MASK, $filesArg );
 			$this->output( "Run command: $command\n" );
 			$response = wfShellExec( $command, $retVal );
+			$this->output( $response );
 			if ( $retVal !== 0 ) {
 				$this->error( "Command:$command failed.\n", true );
-			} else {
-				$this->output( $response );
 			}
 			$this->setLastUpdateDelta( $file[ 'date' ] );
 		}
 	}
 
 	protected function makeTempDir() {
-		$tempfile = tempnam( self::TMP_DIR, '' );
-		if ( file_exists( $tempfile ) ) {
-			unlink( $tempfile );
-		}
-		mkdir( $tempfile );
-		if ( is_dir( $tempfile ) ) {
-			return $tempfile;
+		do{
+			$tempdir = self::TMP_DIR."/".uniqid(self::TMP_DIR_PREFIX);
+		}while(file_exists($tempdir));
+
+		if ( mkdir($tempdir) ) {
+			return $tempdir;
 		}
 		return false;
 	}
@@ -120,15 +120,15 @@ class ImportRoviFromFTP extends Maintenance {
 
 	protected function getNewFileList( $lastDelta ) {
 		$timestamp = strtotime( $lastDelta );
+		$today = mktime(0,0,0);
 		$files = [ ];
-		while ( true ) {
+		do {
 			$timestamp = strtotime( "+ 1 day", $timestamp );
 			$file = sprintf( self::FILE_MASK, date( 'Ymd', $timestamp ) );
-			if ( !$this->FTPFileExists( $file ) ) {
-				break;
+			if ( $this->FTPFileExists( $file ) ) {
+				$files[ ] = [ 'name' => $file, 'date' => date( 'Y-m-d', $timestamp ) ];
 			}
-			$files[ ] = [ 'name' => $file, 'date' => date( 'Y-m-d', $timestamp ) ];
-		}
+		} while( $timestamp < $today);
 		return $files;
 	}
 
