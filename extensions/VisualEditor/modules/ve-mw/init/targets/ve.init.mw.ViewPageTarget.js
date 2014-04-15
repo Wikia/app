@@ -548,7 +548,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveError = function ( jqXHR, status, data
 				}
 			);
 			return;
-		} else if ( editApi.captcha.recaptcha ) {
+		} else if ( editApi.captcha.type === 'recaptcha' ) {
 			// If using Recaptcha
 			this.recaptcha = true;
 			this.captcha = {};
