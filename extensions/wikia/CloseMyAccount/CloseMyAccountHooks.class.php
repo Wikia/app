@@ -19,6 +19,9 @@ class CloseMyAccountHooks {
 			$result = 'closurerequested';
 			$resultMsg = 'Account closure requested';
 			return false;
+		} elseif ( $wgRequest->getSessionData( 'closeAccountSessionId' ) !== null ) {
+			// Clear close account session ID on logging in to another account
+			unset( $_SESSION['closeAccountSessionId'] );
 		}
 		return true;
 	}

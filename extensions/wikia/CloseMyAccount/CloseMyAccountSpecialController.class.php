@@ -229,6 +229,10 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$this->error = $this->msg( 'closemyaccount-reactivate-error-id' )->escaped();
 			wfProfileOut( __METHOD__ );
 			return;
+		} elseif ( $this->getUser()->isLoggedIn() ) {
+			$this->error = $this->msg( 'closemyaccount-reactivate-error-logged-in' )->escaped();
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		$helper = new CloseMyAccountHelper();
