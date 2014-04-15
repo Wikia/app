@@ -146,30 +146,23 @@ class AsyncTaskList {
 			}
 		}
 
-		$executionMethod = 'remote_shell';
 		if (!empty($wgDevelEnvironment)) {
 			if (isset($_SERVER['SERVER_NAME'])) {
 				$executionMethod = 'http';
 				$executionRunner = preg_replace('/(.*?)\.(.*)/', 'http://tasks.$2/proxy.php', $_SERVER['SERVER_NAME']);
 			} else {
+				$executionMethod = 'remote_shell';
 				$executionRunner = [
 					gethostbyname(gethostname()),
 					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				];
 			}
-		} else {
-			if (isset($_SERVER['SERVER_ADDR'])) {
-				$executionRunner = $_SERVER['SERVER_ADDR'];
-			} else {
-				$executionRunner = gethostbyname(gethostname());
-				WikiaLogger::instance()->error('$_SERVER[\'SERVER_ADDR\'] unavailable for task creation');
-			}
-		}
 
-		$payload->kwargs->executor = [
-			'method' => $executionMethod,
-			'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
-		];
+			$payload->kwargs->executor = [
+				'method' => $executionMethod,
+				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
+			];
+		}
 
 		$exception = null;
 		$connection = $this->connection();
