@@ -267,6 +267,8 @@ body.global-header-fixed-at-top .WikiaHeader {
 			background-color: $bg-color;
 			border: 2px solid;
 			border-top: 0;
+			left: auto;
+			right: 10px;
 			top: $nav-height;
 
 			.catnav li {
@@ -395,6 +397,9 @@ body.global-header-fixed-at-top .WikiaHeader {
 			&.no-verticals {
 				@include width-calc('100% - 380px');
 			}
+		}
+		.GlobalNavigation .topNav .subnav {
+			left: 0;
 		}
 	}
 }
