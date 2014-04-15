@@ -48,7 +48,6 @@ ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
 
 /**
  * Handle splices
- * TODO: move attribution somewhere else?
  *
  * @method
  */
