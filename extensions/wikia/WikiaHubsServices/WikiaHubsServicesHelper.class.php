@@ -127,10 +127,12 @@ class WikiaHubsServicesHelper
 	 * @param array $data
 	 * @return array|false $result
 	 */
-	public static function addVideoToHubsV2Wikis( $module, $data, $wikis ) {
+	public static function addVideoToHubsV2Wikis( $module, $data, $wikis = [] ) {
 		$result = false;
+
 		// get list of videos
 		$videoData = $module->getVideoData( $data );
+
 		// add video to hub v2 wikis
 		foreach( $videoData as $videoUrl ) {
 			if ( !empty($videoUrl) ) {

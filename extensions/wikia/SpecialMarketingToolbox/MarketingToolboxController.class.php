@@ -81,7 +81,6 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		$this->response->addAsset('/extensions/wikia/SpecialMarketingToolbox/js/DatepickerModel.js');
 
 		$this->corporateWikisLanguages = $this->toolboxModel->getCorporateWikisLanguages();
-
 		$this->sections = $this->toolboxModel->getAvailableSections();
 		$this->verticals = $this->getVerticals(MarketingToolboxModel::SECTION_HUBS);
 
