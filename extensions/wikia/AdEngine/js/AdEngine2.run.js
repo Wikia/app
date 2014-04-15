@@ -72,24 +72,6 @@ require([
 		adProviderEvolve.hop(slotname);
 	};
 
-	// Load late ads now
-	window.AdEngine_loadLateAds = function () {
-
-		require(['ext.wikia.adEngine.adConfigLate'], function (adConfigLate) {
-			log('launching late ads now', 1, module);
-			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-			tracker.track({
-				eventName: 'liftium.init',
-				ga_category: 'init2/init',
-				ga_action: 'init',
-				ga_label: 'adengine2 late',
-				trackingMethod: 'ad'
-			});
-			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
-		});
-
-	};
-
 	if (window.wgEnableRHonDesktop) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
@@ -142,3 +124,23 @@ require([
 	};
 
 });
+
+// Load late ads now
+window.AdEngine_loadLateAds = function () {
+	'use strict';
+	require([
+		'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
+	], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+		var module = 'AdEngine_loadLateAds';
+		log('launching late ads now', 1, module);
+		log('work on lateAdsQueue according to AdConfig2Late', 1, module);
+		tracker.track({
+			eventName: 'liftium.init',
+			ga_category: 'init2/init',
+			ga_action: 'init',
+			ga_label: 'adengine2 late',
+			trackingMethod: 'ad'
+		});
+		adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
+	});
+};
