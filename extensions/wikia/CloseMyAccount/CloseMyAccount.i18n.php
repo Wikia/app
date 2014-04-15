@@ -60,7 +60,7 @@ The Wikia Team
 ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com',
-	'closemyaccount-reactivation-email_body-HTML' => '',
+	'closemyaccount-reactivation-email_body-HTML' => '', # do not translate or duplicate this message to other languages
 	'closemyaccount-reactivation-email-greeting' => 'Hi $USERNAME,',
 	'closemyaccount-reactivation-email-content' => 'You\'re one step away from reactivating your account on Wikia! Click the link below to confirm you were the one who requested this and get started.
 
@@ -98,6 +98,7 @@ $messages['qqq'] = array(
 	'closemyaccount-scheduled-failed' => 'Error message displayed when a request to close an account has failed.',
 	'closemyaccount-reactivation-email_subject' => 'Reactivation email subject.',
 	'closemyaccount-reactivation-email_body' => 'Plain text reactivation email body. $2 is the username, $3 is the confirmation url.',
+	'closemyaccount-reactivation-email_body-HTML' => '{{notranslate}}',
 	'closemyaccount-reactivation-email-greeting' => 'Greeting in the HTML version of the reactivation email. $USERNAME is replaced with the user name of the account that was requested to be reactivated.',
 	'closemyaccount-reactivation-email-content' => 'The content of the HTML version of the reactivation email. $CONFIRMURL is replaced with the URL to confirm they are the one who requested that the account is reactivated.',
 	'closemyaccount-reactivation-email-signature' => 'Signature at the bottom of the HTML version of the reactivation email.',
