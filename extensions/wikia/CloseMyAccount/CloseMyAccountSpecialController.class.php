@@ -117,7 +117,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 				$this->forward( __CLASS__, 'reactivateRequest' );
 			} else {
 				$this->success = false;
-				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-empty-code' )->escaped();
+				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-empty-code' )->parse();
 			}
 			wfProfileOut( __METHOD__ );
 			return;
@@ -151,7 +151,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$expUser = User::newFromConfirmationCode( $this->code );
 			if ( !( $expUser instanceof User ) ) {
 				$this->success = false;
-				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-invalid-code' )->escaped();
+				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-invalid-code' )->parse();
 				wfProfileOut( __METHOD__ );
 				return;
 			}
