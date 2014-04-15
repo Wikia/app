@@ -36,7 +36,7 @@ class PageHeaderController extends WikiaController {
 	 */
 	protected function prepareActionButton() {
 
-		global $wgTitle, $wgUser, $wgRequest, $wgEnableVisualEditorUI;
+		global $wgTitle, $wgUser, $wgRequest;
 
 		$isDiff = !is_null($wgRequest->getVal('diff'));
 
@@ -89,22 +89,25 @@ class PageHeaderController extends WikiaController {
 			$this->actionName = 'form-edit';
 		}
 		// ve-edit
-		else if (isset($this->content_actions['ve-edit']) && $wgEnableVisualEditorUI) {
+		else if ( isset($this->content_actions['ve-edit']) && $this->content_actions['ve-edit']['main'] ) {
 			$this->action = $this->content_actions['ve-edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 've-edit';
+			unset( $this->content_actions['ve-edit'] );
 		}
 		// edit
 		else if (isset($this->content_actions['edit'])) {
 			$this->action = $this->content_actions['edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'edit';
+			unset( $this->content_actions['edit'] );
 		}
 		// view source
 		else if (isset($this->content_actions['viewsource'])) {
 			$this->action = $this->content_actions['viewsource'];
 			$this->actionImage = MenuButtonController::LOCK_ICON;
 			$this->actionName = 'source';
+			unset( $this->content_actions['ve-edit'], $this->content_actions['edit'] );
 		}
 
 		#print_pre($this->action); print_pre($this->actionImage); print_pre($this->actionName);
@@ -116,13 +119,21 @@ class PageHeaderController extends WikiaController {
 	protected function getDropdownActions() {
 		$ret = array();
 
-		// items to be added to "edit" dropdown
-		$actions = array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' );
-
-		// add "edit" to dropdown (if action button is not an edit)
-		if (!in_array($this->actionName, array('edit', 'source'))) {
-			array_unshift($actions, 'edit');
+		$editActions = array();
+		if ( isset( $this->content_actions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
 		}
+		if ( isset( $this->content_actions['ve-edit'] ) ) {
+			if ( $this->content_actions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
+			} else {
+				array_push( $editActions, 've-edit' );
+			}
+		}
+
+		// items to be added to "edit" dropdown
+		$actions = array_merge( $editActions,
+			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
 		foreach($actions as $action) {
 			if (isset($this->content_actions[$action])) {
@@ -605,13 +616,14 @@ class PageHeaderController extends WikiaController {
 	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs($params) {
-		global $wgOut, $wgSupressPageTitle;
+		global $wgSupressPageTitle;
+
 		wfProfileIn(__METHOD__);
 
 		$this->displaytitle = true;
 		// Leave this for now. To discuss do we want PageTitle
 		if ( $this->displaytitle) {
-			$this->title = $wgOut->getPageTitle();
+			$this->title = wfMessage('oasis-home')->escaped();
 		}
 
 		// number of pages on this wiki

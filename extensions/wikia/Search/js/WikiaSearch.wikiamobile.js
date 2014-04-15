@@ -8,7 +8,7 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
     var d = window.document,
         wkSrhInp = d.getElementById('wkSrhInp'),
         wkMainCnt = d.getElementById('wkMainCnt'),
-        wkResCntAct = d.getElementById('wkResCntAct'),
+        wkResultCount = d.getElementById('wkResultCount'),
         wkResultUl = d.getElementById('wkResultUl'),
         wkResultNext = d.getElementById('wkResultNext'),
         wkResultPrev = d.getElementById('wkResultPrev'),
@@ -50,15 +50,13 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
         var elm = this,
             forward = (elm.getAttribute('id') == 'wkResultNext'),
             pageIndex = (forward) ? currentPage + 1 : currentPage - 1,
-            condition = (forward) ? (currentPage < totalPages) : (currentPage > 1),
-            currentResultFrom,
-            currentResultTo;
+            canGetNextPage = (forward) ? (currentPage < totalPages) : (currentPage > 1);
 
         if(currentPage === 1) {
             firstPage = wkResultUl.innerHTML;
         }
 
-        if(condition){
+        if( canGetNextPage ){
             elm.className += ' active';
             throbber.show(elm, {size: '30px'});
 
@@ -84,10 +82,9 @@ require(['throbber', 'topbar', 'track', 'wikia.nirvana', 'wikia.window'], functi
 					finished = (forward) ? (currentPage == totalPages) : (currentPage == 1);
 
 					wkResultUl.innerHTML = result.text;
+					wkResultUl.setAttribute( 'data-page', currentPage );
 
-					currentResultFrom = resultsPerPage*currentPage+1-resultsPerPage;
-					currentResultTo = (currentPage == totalPages) ? totalResults :resultsPerPage*currentPage;
-					wkResCntAct.innerHTML = currentResultFrom+'-'+currentResultTo;
+					wkResultCount.innerHTML = result.counter;
 
 					elm.className = elm.className.replace(' active', '');
 					throbber.hide(elm);

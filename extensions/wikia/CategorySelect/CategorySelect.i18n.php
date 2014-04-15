@@ -940,6 +940,7 @@ $messages['oc'] = array(
 	'categoryselect-category-remove' => 'Levar la categoria',
 	'categoryselect-edit-summary' => 'Apondon de categorias',
 	'categoryselect-error-article-doesnt-exist' => 'L’article [id=$1] existís pas.',
+	'categoryselect-error-db-locked' => 'La banca de donadas es varrolhada.',
 );
 
 /** Oriya (ଓଡ଼ିଆ)

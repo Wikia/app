@@ -2,8 +2,9 @@
 
 class OasisController extends WikiaController {
 
-	private static $extraBodyClasses = array();
-	private static  $bodyParametersArray = array();
+	private static $extraBodyClasses = [];
+	private static $bodyParametersArray = [];
+	private static $skinAssetGroups = [];
 
 	/* @var AssetsManager */
 	private $assetsManager;
@@ -54,6 +55,7 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
 
@@ -365,7 +367,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop, $wgOasisDisableWikiaScriptLoader;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -411,37 +413,40 @@ class OasisController extends WikiaController {
 				$this->jsFiles .= $s['tag'];
 			}
 		}
+		$isLoggedIn = $wgUser->isLoggedIn();
 
-		// Load the combined JS
-		$jsAssetGroups = array(
-			'oasis_shared_core_js', 'oasis_shared_js',
-		);
-		if ($wgUser->isLoggedIn()) {
-			$jsAssetGroups[] = 'oasis_user_js';
-		} else {
-			$jsAssetGroups[] = 'oasis_anon_js';
-		}
-		wfRunHooks('OasisSkinAssetGroups', array(&$jsAssetGroups));
-		$assets = array();
+		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
+		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
 
-		$assets['oasis_shared_js'] = $this->assetsManager->getURL($jsAssetGroups);
+		$jsLoader = '';
 
-		// jQueryless version - appears only to be used by the ad-experiment at the moment.
-		$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL( ( $wgUser->isLoggedIn() ) ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
+		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
 
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			foreach ( $assets as $group => $urls ) {
-				foreach ( $urls as $index => $u ) {
-					$assets[$group][$index] = $this->rewriteJSlinks( $assets[$group][$index] );
+		// add groups queued via OasisController::addSkinAssetGroup
+		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
+
+		if ( empty($wgOasisDisableWikiaScriptLoader)) {
+			// Load the combined JS
+			$assets = [];
+
+			$assets['oasis_shared_js'] = $this->assetsManager->getURL($assetGroups);
+
+			// jQueryless version - appears only to be used by the ad-experiment at the moment.
+			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL($isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
+
+			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+				foreach ($assets as $group => $urls) {
+					foreach ($urls as $index => $u) {
+						$assets[$group][$index] = $this->rewriteJSlinks($assets[$group][$index]);
+					}
 				}
 			}
-		}
 
-		$assets['references'] = $jsReferences;
+			$assets['references'] = $jsReferences;
 
-		// generate code to load JS files
-		$assets = json_encode($assets);
-		$jsLoader = <<<EOT
+			// generate code to load JS files
+			$assets = json_encode($assets);
+			$jsLoader = <<<EOT
 <script type="text/javascript">
 	var wsl_assets = {$assets};
 	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
@@ -449,6 +454,31 @@ class OasisController extends WikiaController {
 	(function(){ wsl.loadScript(toload); })();
 </script>
 EOT;
+		} else {
+			// skip WikiaScriptLoader
+
+			$assets = $this->assetsManager->getURL( $assetGroups ) ;
+
+			// jQueryless version - appears only to be used by the ad-experiment at the moment.
+			// disabled - not needed atm (and skipped in wsl-version anyway)
+			// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
+
+			// get urls
+			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+				foreach ($assets as $index => $url) {
+					$assets[$index] = $this->rewriteJSlinks( $url );
+				}
+			}
+
+			// as $jsReferences
+			$assets = array_merge($assets, $jsReferences);
+
+			// generate direct script tags
+			foreach ($assets as $url) {
+				$url = htmlspecialchars( $url );
+				$jsLoader .= "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
+			}
+		}
 
 		$tpl = $this->app->getSkinTemplateObj();
 
@@ -470,7 +500,9 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
+		if (!$wgEnableRHonDesktop) {
+			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
+		}
 
 		wfProfileOut(__METHOD__);
 	}
@@ -600,5 +632,14 @@ EOT;
 
 	public static function addBodyParameter($parameter) {
 		static::$bodyParametersArray[] = $parameter;
+	}
+
+	/**
+	 * Adds given AssetsManager group to Oasis main non-blocking JS request
+	 *
+	 * @param string $group group name
+	 */
+	public static function addSkinAssetGroup($group) {
+		self::$skinAssetGroups[] = $group;
 	}
 }

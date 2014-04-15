@@ -3186,7 +3186,11 @@ $templates
 		# uses whichever one appears later in the HTML source. Make sure
 		# apple-touch-icon is specified first to avoid this.
 		if ( $wgAppleTouchIcon !== false ) {
-			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $wgAppleTouchIcon ) );
+			// Wikia change begin - @author: macbre
+			$appleTouchIcon = wfReplaceImageServer($wgAppleTouchIcon, SassUtil::getCacheBuster());
+			// Wikia change end
+
+			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
 		}
 
 		if ( $wgFavicon !== false ) {

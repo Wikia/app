@@ -385,6 +385,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+	'toplists-editor-description-placeholder' => 'ДӀаязде цунах лаьцна',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
 	'toplists-image-browser-upload-btn' => 'Харжа',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунд}}',

@@ -6,8 +6,9 @@
  *
  */
 class Optimizely {
-	public static function onOasisSkinAssetGroupsBlocking(&$jsAssetGroups) {
-		$jsAssetGroups[] = 'optimizely';
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+
+		$scripts .= '<script src="//cdn.optimizely.com/js/554924358.js" async></script>';
 		return true;
 	}
 }

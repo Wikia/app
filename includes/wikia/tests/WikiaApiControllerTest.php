@@ -50,13 +50,13 @@ class WikiaAppControllerTest extends PHPUnit_Framework_TestCase {
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/wikia.php?...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
-		$this->assertEquals($controller->getApiVersion(), 'internal');
+		$this->assertEquals($controller->getApiVersion(), WikiaApiController::API_ENDPOINT_INTERNAL );
 
 		$requestMock = $this->getMock('WikiaRequest', array('getScriptUrl'), array(), '', false);
 		$requestMock->expects($this->any())->method('getScriptUrl')->will($this->returnValue('/api/test...'));
 		$controller = new WikiaApiController();
 		$controller->setRequest($requestMock);
-		$this->assertEquals($controller->getApiVersion(), 'test');
+		$this->assertEquals($controller->getApiVersion(), WikiaApiController::API_ENDPOINT_TEST );
 	}
 
 	/**
@@ -66,15 +66,56 @@ class WikiaAppControllerTest extends PHPUnit_Framework_TestCase {
 		global $wgApiDisableImages;
 
 		$mock = $this->getMockBuilder( 'WikiaApiController' )
-			->setMethods( [ '__construct' ] )
+			->setMethods( [ '__construct', 'getApiVersion' ] )
 			->disableOriginalConstructor()
 			->getMock();
+
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+			->setMethods( [ 'isInternal' ] )
+			->disableOriginalConstructor()
+			->getMock();
+		//0
+		$mockRequest->expects( $this->at( 0 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+		$mock->expects( $this->at( 0 ) )
+			->method( 'getApiVersion' )
+			->will( $this->returnValue( WikiaApiController::API_ENDPOINT_TEST ) );
+		//1
+		$mockRequest->expects( $this->at( 1 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+		$mock->expects( $this->at( 1 ) )
+			->method( 'getApiVersion' )
+			->will( $this->returnValue( WikiaApiController::API_ENDPOINT_TEST ) );
+		//2
+		$mockRequest->expects( $this->at( 2 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( true ) );
+		//3
+		$mockRequest->expects( $this->at( 3 ) )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+		$mock->expects( $this->at( 2 ) )
+			->method( 'getApiVersion' )
+			->will( $this->returnValue( WikiaApiController::API_ENDPOINT_INTERNAL ) );
+
+		$mock->setRequest( $mockRequest );
 		$refl = new ReflectionMethod( $mock, 'serveImages' );
 		$refl->setAccessible( true );
+
+		//0
 		$wgApiDisableImages = false;
 		$this->assertTrue( $refl->invoke( $mock ) );
+		//1
 		$wgApiDisableImages = true;
 		$this->assertFalse( $refl->invoke( $mock ) );
+		//2 now isInternal will return true
+		$wgApiDisableImages = true;
+		$this->assertTrue( $refl->invoke( $mock ) );
+		//3 now isInternal will return false, but getApiVersion will return 'internal'
+		$wgApiDisableImages = true;
+		$this->assertTrue( $refl->invoke( $mock ) );
 	}
 
 	/**

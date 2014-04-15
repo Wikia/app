@@ -47,7 +47,7 @@ define('videosmodule.views.bottomModule', [
 
 		this.shouldRender = true;
 		this.data = this.model.fetch(groupParams.verticalOnly);
-		// Sloth is a lazy loading service that waits till an element is visisble to load more content
+		// Sloth is a lazy loading service that waits till an element is visible to load more content
 		sloth({
 			on: this.el,
 			threshold: 200,
@@ -99,8 +99,7 @@ define('videosmodule.views.bottomModule', [
 	VideoModule.prototype.elContentPresent = function () {
 		var $content = this.$el.children();
 		return !!(
-			$content.length &&
-			!$content.is(':hidden') &&
+			$content.length && !$content.is(':hidden') &&
 			$content.css('visibility') !== 'hidden' &&
 			$content.css('opacity') !== '0' &&
 			$content.height() !== 0
@@ -152,8 +151,12 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
-		track({label: 'module-impression'});
-		track({label: testCase.testGroup});
+		track({
+			label: 'module-impression'
+		});
+		track({
+			label: testCase.testGroup
+		});
 	};
 
 	return VideoModule;

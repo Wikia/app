@@ -3434,7 +3434,7 @@ Du kan använda din bevakningslista för att hålla koll på de senaste ändring
 	'myhome-feed-article-comment-created-by' => 'ny kommentar av $1',
 	'myhome-feed-article-comment-edited-by' => 'redigerad kommentar av $1',
 	'myhome-feed-by' => 'av $1',
-	'myhome-feed-diff-alt' => 'visa mig förändringen på denna sidan',
+	'myhome-feed-diff-alt' => 'visa mig ändringen på denna sida',
 	'myhome-feed-new-page-details' => 'Ny sida',
 	'myhome-feed-summary-details' => 'Sammanfattning',
 	'myhome-feed-section-edit-details' => 'Redigerade avsnittet',

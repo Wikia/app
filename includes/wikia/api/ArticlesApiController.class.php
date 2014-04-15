@@ -182,15 +182,16 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$this->response->setCacheValidity(self::CLIENT_CACHE_VALIDITY);
-
 		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
 		if ( count( $collection ) > self::MAX_ITEMS ) {
 			$collection = array_slice( $collection, 0, self::MAX_ITEMS );
 		}
 
-		$this->response->setVal( 'items', $collection );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->setResponseData(
+			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
+			'thumbnail',
+			self::CLIENT_CACHE_VALIDITY
+		);
 
 		$batches = null;
 		wfProfileOut( __METHOD__ );
@@ -781,6 +782,7 @@ class ArticlesApiController extends WikiaApiController {
 		if ( $file instanceof LocalFile ) {
 			//media type: photo, video
 			if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
+				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
 				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;

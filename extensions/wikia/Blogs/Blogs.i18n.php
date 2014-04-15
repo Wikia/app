@@ -1194,7 +1194,7 @@ $messages['diq'] = array(
 	'blog-comment-delete' => 'bestere',
 	'blog-comment-hide' => 'bınımne',
 	'blog-comment-unhide' => 'menımne',
-	'blog-comment-history' => 'werenayış',
+	'blog-comment-history' => 'tarix',
 	'blog-comment-edit' => 'bıvurne',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-refresh-label' => 'Newe ke',
@@ -2236,6 +2236,17 @@ $messages['he'] = array(
 	'blog-by' => '$1 על ידי $2',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'createblogpage' => 'Blog oonlehn',
+	'createbloglistingpage' => 'Erstell Blog-Aggregationsseit',
+	'create-blog-spam' => 'Sieht aus wie Spam',
+	'create-blog-cant-edit' => 'Konnt Beoorbeitung net doorrichführe',
+	'create-blog-post-category' => 'Blogbeiträche',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
@@ -2966,7 +2977,7 @@ $messages['ko'] = array(
 	'create-blog-listing-matches' => '일치하는 항목',
 	'create-blog-listing-matches-calculate' => '계산',
 	'create-blog-listing-matches-recalculate' => '재계산',
-	'create-blog-listing-sortby' => '정렬',
+	'create-blog-listing-sortby' => '정렬 기분',
 	'create-blog-listing-sortby-date' => '최신의',
 	'create-blog-listing-sortby-author' => '작성자',
 	'create-blog-listing-sortby-comments' => '댓글 개수',
@@ -3002,6 +3013,14 @@ $messages['ko'] = array(
 	'blogs-reportproblem' => '문제 보고',
 	'blogs-comment-hidden' => '숨겨진 댓글',
 	'blog-comment-sending' => '전송 중..',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'blog-comments-anonymous' => 'Аноним',
+	'blog-refresh-label' => 'Джангырт',
 );
 
 /** Colognian (Ripoarisch)
@@ -3862,19 +3881,28 @@ $messages['oc'] = array(
 	'create-blog-spam' => "Sembla qu'es un corrièr indesirable",
 	'create-blog-cant-edit' => "Impossible d'efectuar la modificacion",
 	'create-blog-post-category' => 'Article de blog',
+	'create-blog-post-category-log' => 'Categoria creada pels bilhets de blog',
 	'create-blog-post-recent-listing' => 'Bilhets recents',
 	'create-blog-post-recent-listing-title' => 'Bilhets recents',
+	'create-blog-post-recent-listing-log' => 'Article creat pels bilhets de blog recents',
+	'create-blog-post-title' => 'Crear un novèl bilhet de blog',
+	'create-blog-post-title-edit' => 'Modificar un bilhet de blog',
+	'create-blog-form-title' => 'Qu’es aquò un bilhet de blog ?',
 	'create-blog-form-post-text' => 'Tèxte del blog',
 	'create-blog-form-post-title' => 'Títol del bilhet de blog',
 	'create-blog-empty-title-error' => 'Títol requesit',
 	'create-blog-empty-post-error' => 'Lo còs del bilhet es void',
+	'create-blog-empty-article-log' => 'Article creat per lista de blogs',
 	'create-blog-invalid-title-error' => 'Títol invalid',
 	'create-listing-confirm-info' => 'Copiatz e pegatz lo còde seguent :',
 	'create-blog-no-login' => 'Pas connectat',
+	'create-blog-categories-textinput' => 'Apondre una categoria novèla',
 	'create-blog-categories-submit' => 'Mandar',
 	'create-blog-save' => 'Publicar la pagina',
 	'create-blog-preview' => 'Afichar la previsualizacion',
 	'create-blog-updated' => 'Bilhet de blog creat o mes a jorn.',
+	'create-blog-listing-title' => 'Crear una novèla pagina de lista de blogs',
+	'create-blog-listing-page-title' => 'Títol de la pagina de lista de blogs',
 	'create-blog-listing-preview' => 'Previsualizar',
 	'create-blog-listing-matches' => 'Correspondéncias',
 	'create-blog-listing-matches-calculate' => 'Calcular',
@@ -3928,6 +3956,7 @@ $messages['oc'] = array(
 	'blog-comment-sending' => 'Mandadís en cors ...',
 	'blog-by' => '$1 per $2',
 	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Recercar dins los articles e las listas de blog',
 	'user-blog-url-link' => 'Blog utilizaire : $1',
 );
 
@@ -4782,8 +4811,8 @@ $messages['sco'] = array(
 	'create-listing-confirm-info' => 'Copie n paste the follaein code:',
 	'create-blog-no-login' => 'Na loggit in',
 	'create-blog-login-required' => 'Ye maun be [{{fullurl:Special:Signup|$1}} loggit in] tae cræft blog posts or leetins.',
-	'create-blog-categories-title' => 'Add this blog post tae thir categeries (clap tae select)',
-	'create-blog-categories-textinput' => 'Add ae new categerie',
+	'create-blog-categories-title' => 'Eik this blog post tae thir categeries (clap tae select)',
+	'create-blog-categories-textinput' => 'Eik ae new categerie',
 	'create-blog-categories-submit' => 'Haun-in',
 	'create-blog-save' => 'Hain page',
 	'create-blog-preview' => 'Shaw luikower',
@@ -4798,7 +4827,7 @@ Cræft blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'create-blog-listing-preview' => 'Luikower',
 	'create-blog-listing-authors' => 'Get blog posts cræftit bi thir writers (separated bi commas)',
 	'create-blog-listing-blog-post-categories-title' => 'Get blog posts fae thir categeries',
-	'create-blog-listing-page-categories-title' => 'Add this blog leetin page til thir categeries',
+	'create-blog-listing-page-categories-title' => 'Eik this blog leetin page til thir categeries',
 	'create-blog-listing-matches' => 'Matches',
 	'create-blog-listing-matches-calculate' => 'Recken',
 	'create-blog-listing-matches-recalculate' => 'Re-recken',
@@ -4824,7 +4853,7 @@ Cræft blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'blog-nopostfound' => 'Nae posts foond.',
 	'blog-writeone' => 'Write yin!',
 	'blog-empty-user-blog' => 'This uiser haesna written onie blog posts yet!',
-	'blog-added' => 'added',
+	'blog-added' => 'eikit',
 	'blog-edited' => 'eeditit',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Nae comments yet!',
@@ -4846,7 +4875,7 @@ Cræft blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'blog-comment-history' => 'histerie',
 	'blog-comment-edit' => 'eedit',
 	'blog-comment-error' => 'Comment coudna be hained',
-	'blog-comment-cannot-add' => 'Ye canna add comment til blog.',
+	'blog-comment-cannot-add' => 'Ye canna eik comment til blog.',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Rate this airticle:',
 	'blog-create-post-label' => 'Cræft blog post',
@@ -5780,7 +5809,7 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Fan tưởng t�
 	'blog-comments-save' => 'Lưu bình luận trên blog',
 	'blog-comments-label' => 'Bình luận',
 	'blog-voting-label' => 'Bỏ phiếu',
-	'blog-comments-info' => 'Hộp này sử dụng phong cách nhập văn bản wiki',
+	'blog-comments-info' => 'Hộp này sử dụng phong cách nhập mã wiki',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Đăng nhập</a> để bình luận',
 	'blog-comments-dsc' => 'Mới nhất trước',
 	'blog-comments-asc' => 'Mới nhất sau cùng',

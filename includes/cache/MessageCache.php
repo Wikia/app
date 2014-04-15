@@ -115,6 +115,10 @@ class MessageCache {
 	function getParserOptions() {
 		if ( !$this->mParserOptions ) {
 			$this->mParserOptions = new ParserOptions;
+			// Wikia change - begin - @author: TK-999
+			// Backporting upstream fix https://git.wikimedia.org/commit/mediawiki%2Fcore.git/ac97386173bde921e4c53c343bc7b40fcfb4d2b9
+			$this->mParserOptions->setEditSection( false );
+			// Wikia change - end
 		}
 		return $this->mParserOptions;
 	}

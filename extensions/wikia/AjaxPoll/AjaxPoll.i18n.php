@@ -400,6 +400,13 @@ $messages['hi'] = array(
 	'ajaxpoll-submitting' => 'कृपया इंतज़ार, अपने वोट प्रस्तुत करने...',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'ajaxpoll-submit' => 'Abstimmen!',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
@@ -627,6 +634,19 @@ $messages['mt'] = array(
 	'ajaxpoll-submit' => 'Ivvota!',
 	'ajaxpoll-closed' => 'Is-sondaġġ huwa magħluq. Iċċekkja r-riżultati.',
 	'ajaxpoll-submitting' => 'Jekk jogħġbok stenna, il-vot tiegħek qiegħed jintbagħat.',
+);
+
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;的投票',
+	'ajaxpoll-thankyou' => '多謝你的投票',
+	'ajaxpoll-error' => '佇處理你的投票時陣有寡問題，請閣試一擺。',
+	'ajaxpoll-summary' => '這項投票是 $1 佇 $2發起的 ，目前為止有 $3 儂投票。',
+	'ajaxpoll-submit' => '投票',
+	'ajaxpoll-closed' => '投票已結束，請看結果。',
+	'ajaxpoll-submitting' => '請小等一下，當咧處理你的投票...',
 );
 
 /** Norwegian Bokmål (norsk bokmål)

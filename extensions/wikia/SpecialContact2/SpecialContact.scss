@@ -51,6 +51,9 @@ img.contactCaptch {
 		display: block;
 		/* VOLDEV-56: Don't use monospaced font */
 		font: inherit;
+		-moz-box-sizing: border-box; 
+		-webkit-box-sizing: border-box; 
+		box-sizing: border-box;
 		width: 100%;
 		height: 15em;
 

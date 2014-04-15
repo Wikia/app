@@ -306,9 +306,13 @@ class AdEngine2Controller extends WikiaController {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 
-		global $wgEnableRHonDesktop;
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgAdDriverEnableRemnantGptMobile;
 
-		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
+		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
+		$wgAdDriverEnableRemnantGptMobile = $request->getBool( 'gptremnant', $wgAdDriverEnableRemnantGptMobile );
+
+		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
+		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 
 		return true;
 	}
@@ -318,7 +322,6 @@ class AdEngine2Controller extends WikiaController {
 	 * Register global JS variables bottom (migrated from wfAdEngineSetupJSVars)
 	 *
 	 * @param array $vars
-	 * @param array $scripts
 	 *
 	 * @return bool
 	 */
@@ -326,13 +329,14 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgAdDriverCookieLifetime, $wgHighValueCountries, $wgHighValueCountriesDefault,
+			   $wgAdDriverCookieLifetime, $wgHighValueCountriesDefault,
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
 			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia,
 			   $wgAdPageLevelCategoryLangs, $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
-			   $wgEnableRHonDesktop, $wgOut;
+			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
+			   $wgEnableRHonDesktop, $wgOut, $wgCityId;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -354,18 +358,12 @@ class AdEngine2Controller extends WikiaController {
 		// AdDriver
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
 
-		// TODO: move the (wiki->community->variable) logic to WikiFactory
-		$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
-		if (empty($highValueCountries)) {
-			// If the variable is not set for given wiki, use the value from the community wiki
-			$highValueCountries = $wgHighValueCountries;
-		}
-		if (empty($highValueCountries)) {
-			// If the variable is set nor for given wiki neither for community, use the default value
-			$highValueCountries = $wgHighValueCountriesDefault;
-		}
-
-		$vars['wgHighValueCountries'] = $highValueCountries;
+		$vars['wgHighValueCountries'] = WikiFactory::getVarValueByName(
+			'wgHighValueCountries',
+			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
+			false,
+			$wgHighValueCountriesDefault
+		);
 
 		$pageLevelCategoryLanguages = $wgAdPageLevelCategoryLangs;
 		if (empty($pageLevelCategoryLanguages)) {
@@ -417,6 +415,14 @@ class AdEngine2Controller extends WikiaController {
 			$vars['wgEnableRHonDesktop'] = $wgEnableRHonDesktop;
 		}
 
+		if (!empty($wgAdDriverForceDirectGptAd)) {
+			$vars['wgAdDriverForceDirectGptAd'] = $wgAdDriverForceDirectGptAd;
+		}
+
+		if (!empty($wgAdDriverForceLiftiumAd)) {
+			$vars['wgAdDriverForceLiftiumAd'] = $wgAdDriverForceLiftiumAd;
+		}
+
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -438,6 +444,7 @@ class AdEngine2Controller extends WikiaController {
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
 		$vars['wikiaPageIsWikiaHomePage'] = WikiaPageType::isWikiaHomePage();
+		$vars['wikiaPageIsCorporate'] = WikiaPageType::isCorporatePage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);

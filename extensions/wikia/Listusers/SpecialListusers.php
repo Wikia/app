@@ -32,9 +32,9 @@ $wgAutoloadClasses['ListusersData']  = __DIR__ . '/SpecialListusers_helper.php';
  * Hooks
  */
 $wgAutoloadClasses['ListusersAjax'] = __DIR__ . '/SpecialListusers_ajax.php';
-$wgAutoloadClasses['ListUsersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
+$wgAutoloadClasses['ListusersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
 
-$wgHooks['SpecialPage_initList'][] = 'ListUsersHooks::ActiveUsers';
+$wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
 $wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
 
 // This tries to write to a database that the devboxes don't have write-permission for.

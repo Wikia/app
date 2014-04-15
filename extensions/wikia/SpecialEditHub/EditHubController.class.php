@@ -409,9 +409,8 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	private function purgeWikiaHomepageHubs() {
-		// TODO temporary disabled until we decide what would happed with hub images on WHP
-		//WikiaDataAccess::cachePurge( WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($this->langCode) );
-		//$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
+		WikiaDataAccess::cachePurge( WikiaHomePageHelper::getHubSlotsMemcacheKey($this->langCode) );
+		$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
 	}
 
 	private function getHubsServicesHelper() {

@@ -18,7 +18,6 @@ var AdConfig2 = function (
 	'use strict';
 
 	var logGroup = 'AdConfig2',
-		cityLang = window.wgContentLanguage,
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
@@ -78,11 +77,30 @@ var AdConfig2 = function (
 			return adProviderLater;
 		}
 
+
+		// Force Liftium
+		if (window.wgAdDriverForceLiftiumAd) {
+			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
+			return adProviderLater;
+		}
+
+		// Force DirectGpt
+		if (window.wgAdDriverForceDirectGptAd && adProviderDirectGpt.canHandleSlot(slotname)) {
+			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
+			return adProviderDirectGpt;
+		}
+
+
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
 		// TOP_BUTTON is always handled in Later queue, so we need to exclude
-		// only WIKIA_BAR_BOXAD_1
-		if (window.wgAdDriverUseSevenOneMedia && slotname !== 'WIKIA_BAR_BOXAD_1') {
+		// only WIKIA_BAR_BOXAD_1.
+		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
+		// is actually requested.
+		if (window.wgAdDriverUseSevenOneMedia &&
+				slotname !== 'WIKIA_BAR_BOXAD_1' &&
+				slotname !== 'GPT_FLUSH'
+				) {
 			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return adProviderLater;
 		}
@@ -106,7 +124,7 @@ var AdConfig2 = function (
 	}
 
 	return {
-		getDecorators: function () {return decorators;},
+		getDecorators: function () { return decorators; },
 		getProvider: getProvider
 	};
 };

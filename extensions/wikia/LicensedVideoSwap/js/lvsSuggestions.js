@@ -7,26 +7,25 @@ define('lvs.suggestions', [], function () {
 	'use strict';
 
 	function init($container) {
-		$container.find('.suggestion-title').each(function (idx, val) {
-			$(val).ellipses();
-		});
+		$container.find('.suggestion-title').ellipses();
 
-		$container.on('click', '.more-link', function (e) {
-			e.preventDefault();
-			var $this = $(this),
-				$toggleDiv = $this.parent().next('.more-videos');
+		$container
+			.off('click.lvsSuggestions')
+			.on('click.lvsSuggestions', '.more-link', function (e) {
+				e.preventDefault();
+				var $this = $(this),
+					$toggleDiv = $this.parent().next('.more-videos');
 
-			// Show suggestions
-			if ($this.hasClass('collapsed')) {
-				$this.removeClass('collapsed');
-				$toggleDiv.slideDown();
-				// Hide suggestions
-			} else {
-				$this.addClass('collapsed');
-				$toggleDiv.slideUp();
-			}
-
-		});
+				if ($this.hasClass('collapsed')) {
+					// Show suggestions
+					$this.removeClass('collapsed');
+					$toggleDiv.slideDown();
+				} else {
+					// Hide suggestions
+					$this.addClass('collapsed');
+					$toggleDiv.slideUp();
+				}
+			});
 	}
 
 	return {
