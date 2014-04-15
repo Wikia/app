@@ -29,7 +29,7 @@ class AsyncTaskList {
 	/** @var array list of calls to make */
 	protected $calls = [];
 
-	protected $taskType = 'workers.mediawiki.task';
+	protected $taskType = 'celery_workers.mediawiki.task';
 
 	protected $createdBy = null;
 
