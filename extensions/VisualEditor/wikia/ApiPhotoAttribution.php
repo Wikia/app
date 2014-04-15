@@ -11,7 +11,7 @@ class ApiPhotoAttribution extends ApiBase {
 
 			$this->getResult()->addValue( null, 'username', $username );
 			$this->getResult()->addValue( null, 'title', $params['file'] );
-			$this->getResult()->addValue( null, 'titleText', $file->getTitle()->getText() );
+			$this->getResult()->addValue( null, 'titleText', $title->getText() );
 		} else {
 			Wikia::log( __METHOD__, false, "ApiPhotoAttribution called for not existing file: " . $params['file'] );
 			$this->dieUsageMsg( 'File does not exist' );

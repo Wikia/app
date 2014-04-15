@@ -213,7 +213,7 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 	$anchor = this.createAnchor().appendTo( $thumb );
 	$image = this.createImage().appendTo( $anchor );
 
-	if ( type !== 'frameless' && type !== 'none' && ( this.model.children.length === 1 ) ) {
+	if ( type !== 'frameless' && type !== 'none' && this.model.children.length === 1 ) {
 		// Caption
 		captionModel = this.model.children[ 0 ];
 		captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
