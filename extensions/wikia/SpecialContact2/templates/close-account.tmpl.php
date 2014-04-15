@@ -3,7 +3,7 @@ if ( !empty($err) ) {
         print $err;
 }
 
-echo wfMessage( 'specialcontact-intro-close-account' )->parse();
+echo wfMessage( 'specialcontact-intro-close-account' )->parseAsBlock();
 ?>
 
 <h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
