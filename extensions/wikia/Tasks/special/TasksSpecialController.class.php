@@ -30,8 +30,8 @@ class TasksSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('tasks-title'));
-		$this->response->addAsset(__DIR__.'/js/special_tasks.js');
-		$this->response->addAsset(__DIR__.'/css/special_tasks.css');
+		$this->response->addAsset('extensions/wikia/Tasks/special/js/special_tasks.js');
+		$this->response->addAsset('extensions/wikia/Tasks/special/css/special_tasks.css');
 
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
 		$this->setVal('flowerUrl', $this->flowerUrl);
