@@ -20,7 +20,11 @@ class SendGridPostbackV3Controller extends WikiaApiController {
 		// Sendgrid uses raw JSON POST format, this is how PHP ingests it
 		$data = file_get_contents("php://input");
 		$events = json_decode($data, true);  // true = return value is array
-		print_tmp($events);
+
+		if (empty($events)) {
+			Wikia::log(__METHOD__, false, "No data to process", true);
+			wfProfileOut( __METHOD__ );
+		}
 
 		foreach ($events as $event) {
 			$email_addr = $this->safe_get($event, 'email', '');
@@ -34,8 +38,7 @@ class SendGridPostbackV3Controller extends WikiaApiController {
 			$reason		= $this->safe_get($event, 'reason', '');
 
 			$generatedToken = wfGetEmailPostbackToken( $email_id, $email_addr );
-			print_tmp($generatedToken);
-			print_tmp($token);
+
 			if ( $this->wg->Request->wasPosted() && $token == $generatedToken ) {
 				Wikia::log( __METHOD__, false, "<postback>" . $email_addr . ", " . $status . ", " . $reason . "</postback>\n", true );
 
