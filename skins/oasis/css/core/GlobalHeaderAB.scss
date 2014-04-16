@@ -108,6 +108,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 
 			.search-form {
 				margin-top: -4px;
+				position: relative;
 			}
 
 			.search-box {
@@ -126,6 +127,8 @@ body.global-header-fixed-at-top .WikiaHeader {
 
 			.search-button {
 				margin-left: 3px;
+				position: absolute;
+				top: 0;
 
 				&.alternative {
 					background-color: $menu-hover-bg-color;
