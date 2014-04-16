@@ -91,6 +91,10 @@ body.global-header-fixed-at-top .WikiaHeader {
         padding: 0 12px 0 25px;
         height: 27px;
         line-height: 27px;
+
+		&:hover {
+		  color: #fff;
+		}
       }
     }
 
