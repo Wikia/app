@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
 
-$script = $IP . '/maintenance/wikia/task_runner.php';
+$script = dirname(__FILE__).'/../../../../maintenance/wikia/task_runner.php';
 
 $wikiId = $_POST['wiki_id'];
 $list = $_POST['task_list'];
