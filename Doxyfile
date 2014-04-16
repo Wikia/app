@@ -17,7 +17,7 @@ PROJECT_NAME           = Wikia
 PROJECT_NUMBER         = 
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = /home/garth/app-doxygen
+OUTPUT_DIRECTORY       = doxygen-out
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -324,7 +324,7 @@ SKIP_FUNCTION_MACROS   = YES
 # Configuration::additions related to external references
 #---------------------------------------------------------------------------
 TAGFILES               =
-GENERATE_TAGFILE       = /home/garth/app-doxygen/html/tagfile.xml
+GENERATE_TAGFILE       = doxygen-out/tagfile.xml
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
 PERL_PATH              = /usr/bin/perl
