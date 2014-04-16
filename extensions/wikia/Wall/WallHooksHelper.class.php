@@ -1083,12 +1083,13 @@ class WallHooksHelper {
 			$actionText = '';
 			$wfMsgOptsBase = static::getMessageOptions($rc);
 
-			$wfMsgOpts = array(
+			$wfMsgOpts = [
 				$wfMsgOptsBase['articleUrl'],
 				$wfMsgOptsBase['articleTitleTxt'],
-				$wfMsgOptsBase['wallPageUrl'],
+				$wfMsgOptsBase['wallTitleTxt'],
 				$wfMsgOptsBase['wallPageName'],
-				$wfMsgOptsBase['actionUser']);
+				$wfMsgOptsBase['actionUser']
+			];
 
 			$msgType = ($wfMsgOptsBase['isThread']) ? 'thread' : 'reply';
 
@@ -1624,15 +1625,15 @@ class WallHooksHelper {
 
 		$ret = $del;
 		if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
-			$wfMsgOpts = array(
+			$wfMsgOpts = [
 				$wfMsgOptsBase['articleFullUrl'],
 				$wfMsgOptsBase['articleTitleTxt'],
-				$wfMsgOptsBase['wallPageUrl'],
+				$wfMsgOptsBase['wallTitleTxt'],
 				$wfMsgOptsBase['wallPageName'],
 				$wfMsgOptsBase['createdAt'],
 				$wfMsgOptsBase['DiffLink'],
 				$wfMsgOptsBase['historyLink']
-			);
+			];
 
 			if( $isThread && $isNew ) {
 				$wfMsgOpts[7] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->text() . ' ');
