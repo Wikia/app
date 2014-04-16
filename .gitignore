@@ -30,5 +30,3 @@ _misc
 # Ignore files created by identifySpamAccounts
 spamAccountIds.txt
 
-# composer lock files. we're keeping composer.json so we know what we're installing
-composer.lock
