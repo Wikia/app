@@ -318,6 +318,13 @@ WIKITEXT
 		];
 	}
 
+	public function testGetAlbumSongsWithEmptySection() {
+		$artistScraperStub = $this->getMock( 'ArtistScraper', [ 'getSongData' ] );
+		$artistScraperStub->expects( $this->exactly(0) )
+			->method( 'getSongData' );
+		$this->assertEquals( [], $artistScraperStub->getAlbumSongs( '' ), 'Empty section' );
+	}
+
 	/**
 	 * @dataProvider getAlbumSongsDataProvider
 	 */
@@ -332,11 +339,6 @@ WIKITEXT
 	public function getAlbumSongsDataProvider() {
 		return [
 			[
-				'Empty section',
-				[],
-				'',
-			],
-			[
 				'Section with an album and songs in ordered list - a whitespace between hash and song link',
 				[
 					'song data',
@@ -346,6 +348,17 @@ WIKITEXT
 					'song data'
 				],
 				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n# '''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n# '''[[NAndy:ROCK|#ROCK]]'''\n# '''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in ordered list - no whitespace between hash and song link',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n#'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n# '''[[NAndy:ROCK|#ROCK]]'''\n#'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
 			]
 		];
 	}
