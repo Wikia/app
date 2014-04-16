@@ -209,6 +209,14 @@ function(
 					track.event( 'video', track.CLICK, {label: 'article'});
 				}
 
+				// tracking call for S:Videos mobile
+				if ( document.body.className.indexOf( 'Special_Videos' ) ) {
+					track.event( 'special-videos-mobile', track.CLICK, {
+						label: 'thumbnail',
+						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t )
+					});
+				}
+
 				openModal( ~~t.getAttribute( 'data-num' ) );
 			}
 		}, true);

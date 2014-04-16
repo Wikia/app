@@ -1,8 +1,9 @@
 define('specialVideos.mobile.views.index', [
 	'wikia.mustache',
 	'media',
-	'specialVideos.templates.mustache'
-], function (Mustache, WikiaMobileMediaControls, templates) {
+	'specialVideos.templates.mustache',
+	'wikia.tracker'
+], function (Mustache, WikiaMobileMediaControls, templates, Tracker) {
 	'use strict';
 
 	/**
@@ -30,6 +31,28 @@ define('specialVideos.mobile.views.index', [
 		this.$filter.find('li').on('click', $.proxy(this, 'onFilterClick'));
 		this.$loadMoreBtn.on('click', $.proxy(this, 'onLoadMoreClick'));
 		this.$el.find('.video-list').on('click', '.title', $.proxy(this, 'onTitleClick'));
+		this.track({
+			action: Tracker.ACTIONS.IMPRESSION,
+			label: 'page'
+		});
+	};
+
+    /**
+     * track
+     * @param {Object} params
+	 * @return {Function} partially applied tracking function
+     */
+	SpecialVideosIndexView.prototype.track = function (params) {
+		if (!params) {
+			return false;
+		}
+		return Tracker.buildTrackingFunction({
+			category: 'special-videos-mobile',
+			trackingMethod: 'both',
+			action: params.action,
+			label: params.label || '',
+			value: params.value || null
+		});
 	};
 
 	/**
@@ -72,6 +95,11 @@ define('specialVideos.mobile.views.index', [
 				$tar.addClass(self.filterActiveClass).siblings().removeClass(self.filterActiveClass);
 				self.render();
 			});
+
+		this.track({
+			action: Tracker.ACTIONS.CLICK,
+			label: 'sort-filter-btn'
+		});
 		return false;
 	};
 
@@ -83,6 +111,10 @@ define('specialVideos.mobile.views.index', [
 		var self = this;
 		this.collection.fetch().success(function () {
 			self.render();
+		});
+		this.track({
+			action: Tracker.ACTIONS.CLICK,
+			label: 'load-more-btn'
 		});
 		return false;
 	};
