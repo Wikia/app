@@ -1,3 +1,5 @@
+@import "skins/oasis/css/mixins/clearfix";
+
 $special-videos-border: 1px solid #d0d0d0;
 $key-blue-color: #054c8b;
 
@@ -11,16 +13,18 @@ $key-blue-color: #054c8b;
 }
 
 .filter {
+	@include clearfix;
 	color: $key-blue-color;
 	font-size: 12px;
 	padding: 0 10px;
 	text-align: center;
 
 	a {
-		 -webkit-tap-highlight-color: blue;
+		-webkit-tap-highlight-color: lighten($key-blue-color, 10%);
 		border: 2px solid $key-blue-color;
-		display: inline-block;
+		display: block;
 		width: 50%;
+		float: left;
 
 		&:first-of-type {
 			border-right: 0;
@@ -33,11 +37,6 @@ $key-blue-color: #054c8b;
 
 		&.active {
 			background-color: $key-blue-color;
-			color: #fff;
-		}
-
-		&:active {
-			background-color: darken($key-blue-color, 10%);
 			color: #fff;
 		}
 	}
