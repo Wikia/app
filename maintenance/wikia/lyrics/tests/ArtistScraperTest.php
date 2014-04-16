@@ -370,6 +370,17 @@ WIKITEXT
 					'song data'
 				],
 				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n* '''[[NAndy:Test 1|Test 1]]'''\n*'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n* '''[[NAndy:Test 2|Test 2]]'''\n* '''[[NAndy:ROCK|#ROCK]]'''\n*'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in mixed lists',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n*'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n* '''[[NAndy:ROCK|#ROCK]]'''\n#'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
 			]
 		];
 	}
