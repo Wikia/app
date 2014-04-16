@@ -212,6 +212,7 @@ class SolrAdapter {
 	public function saveAlbum( Array $artist, Array $album, Array $songs ) {
 		// Add artist meta data
 		$album['artist_name'] = $artist['artist_name'];
+		$album['artist_name_lc_s'] = $artist['artist_name_lc_s'];
 		$album['artist_id'] = $artist['id'];
 		
 		// Add songs meta data
@@ -235,6 +236,7 @@ class SolrAdapter {
 	public function saveSong( Array $artist, Array $album, Array $song ) {
 		$song['artist_id'] = $artist['id'];
 		$song['artist_name'] = $artist['artist_name'];
+		$song['artist_name_lc_s'] = $artist['artist_name_lc_s'];
 		
 		if ( isset( $album['id'] ) ) {
 			$song['album_name'] = $album['album_name'];
