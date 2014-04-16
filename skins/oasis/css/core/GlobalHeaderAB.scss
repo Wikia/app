@@ -58,6 +58,9 @@ body.global-header-fixed-at-top .WikiaHeader {
       margin-top: 0;
       padding-top: 11px;
     }
+	& > ul > li:last-child {
+	  padding-top: 0;
+	}
   }
 
   li {
