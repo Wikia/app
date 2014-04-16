@@ -94,7 +94,8 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 	// Parent method
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
-	// TODO: make sure this shows up - currently set to visibility: hidden;
+	// The details link isn't visible until hover on article pages, so in VE it will just be invisible.
+	// It will still take up space though, so long titles will wrap around it as they do on article pages.
 	this.$details.prependTo( this.$element )
 		// add class to caption itself
 		.next( 'p' ).addClass( 'caption' );
