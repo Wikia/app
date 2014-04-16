@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/* global mw */
+
 /**
  * VisualEditor ContentEditable Wikia media caption item node.
  *
@@ -38,12 +40,15 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
-	var attribution = this.model.parent.getAttribute( 'attribution' );
+	var title,
+		attribution = this.model.parent.getAttribute( 'attribution');
+
+	title = mw.Title.newFromText( attribution.title );
 
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<p>' )
 		.addClass( 'title ve-no-shield' )
-		.text( attribution.titleText );
+		.text( title.getNameText() );
 };
 
 /**
@@ -55,7 +60,12 @@ ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
 	// Parent method
 	ve.ce.WikiaMediaCaptionNode.prototype.onSplice.apply( this, arguments );
 
-	this.$title = this.createTitle();
+	if ( this.$title ) {
+		this.$title = this.$title.detach();
+	} else {
+		this.$title = this.createTitle();
+	}
+
 	this.$title.insertAfter( this.$details );
 };
 

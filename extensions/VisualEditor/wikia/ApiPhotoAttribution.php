@@ -11,8 +11,6 @@ class ApiPhotoAttribution extends ApiBase {
 
 			$this->getResult()->addValue( null, 'username', $username );
 			$this->getResult()->addValue( null, 'title', $params['file'] );
-			// remove this and use mw.newfromtext
-			$this->getResult()->addValue( null, 'titleText', $title->getText() );
 		} else {
 			Wikia::log( __METHOD__, false, "ApiPhotoAttribution called for not existing file: " . $params['file'] );
 			$this->dieUsageMsg( 'File does not exist' );
