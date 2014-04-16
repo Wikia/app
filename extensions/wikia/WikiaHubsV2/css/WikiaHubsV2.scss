@@ -152,7 +152,7 @@ $wikiahubs-line-height: 16px;
 	}
 }
 
-#suggestArticleDialogModal {
+.suggestArticleDialogModal {
 	input[name=articleurl],
 	textarea[name=reason] {
 		@include box-sizing;

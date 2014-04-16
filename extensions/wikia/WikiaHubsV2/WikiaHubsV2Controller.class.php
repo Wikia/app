@@ -70,9 +70,9 @@ class WikiaHubsV2Controller extends WikiaController {
 
 	public function getArticleSuggestModal() {
 		$templateData = [
-			'urlLabel' => wfMessage('wikiahubs-suggest-article-what-article')->text(),
-			'reasonLabel' => wfMessage('wikiahubs-suggest-article-reason')->text(),
-			'successMessage' => wfMessage('wikiahubs-suggest-article-success')->text()
+			'urlLabel' => wfMessage('wikiahubs-suggest-article-what-article')->escaped(),
+			'reasonLabel' => wfMessage('wikiahubs-suggest-article-reason')->escaped(),
+			'successMessage' => wfMessage('wikiahubs-suggest-article-success')->escaped()
 		];
 
 		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
@@ -80,9 +80,9 @@ class WikiaHubsV2Controller extends WikiaController {
 			->setData( $templateData )
 			->render( 'WikiaHubsV2_suggestArticle.mustache' ) );
 
-		$this->setVal( 'title', wfMessage('wikiahubs-suggest-article-header')->text() );
-		$this->setVal( 'labelSubmit', wfMessage( 'wikiahubs-suggest-article-submit-button' )->plain() );
-		$this->setVal( 'labelCancel', wfMessage( 'wikiahubs-suggest-article-close-button' )->plain() );
+		$this->setVal( 'title', wfMessage('wikiahubs-suggest-article-header')->escaped() );
+		$this->setVal( 'labelSubmit', wfMessage( 'wikiahubs-suggest-article-submit-button' )->escaped() );
+		$this->setVal( 'labelCancel', wfMessage( 'wikiahubs-suggest-article-close-button' )->escaped() );
 	}
 
     /**

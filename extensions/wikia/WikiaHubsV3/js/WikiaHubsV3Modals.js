@@ -5,7 +5,6 @@
 		init: function () {
 			// show modal for suggest article
 			$('#suggestArticle').click(function () {
-				$().log(window.wgUserName);
 				if (window.wgUserName) {
 					SuggestModalWikiaHubsV3.suggestArticle();
 				} else {
@@ -39,6 +38,7 @@
 					var modalConfig = {
 						vars: {
 							id: 'suggestArticleDialogModal',
+							classes: ['suggestArticleDialogModal'],
 							size: 'small',
 							title: data.title,
 							content: data.html,
@@ -97,8 +97,6 @@
 									vertical_id: window.wgWikiaHubsVerticalId
 								},
 								e);
-
-							$().log('suggestArticle modal submit');
 						});
 
 						suggestArticleModal.show();
