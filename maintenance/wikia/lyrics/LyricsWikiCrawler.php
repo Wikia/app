@@ -366,6 +366,8 @@ class LyricsWikiCrawler extends Maintenance {
 		$config['adapteroptions']['port'] = $wg->SolrDefaultPort;
 		unset( $config['adapteroptions']['proxy'] );
 
+		$this->output( 'Connecting to host: ' . $config['adapteroptions']['host'] . PHP_EOL );
+
 		return $config;
 	}
 
