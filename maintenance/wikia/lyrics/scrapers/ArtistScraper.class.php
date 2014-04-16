@@ -15,9 +15,11 @@ class ArtistScraper extends BaseScraper {
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
+		$name = $article->getTitle()->getText();
 		$artistData = [
 			'article_id' => $article->getId(),
-			'name' => $article->getTitle()->getText()
+			'name' => $name,
+			'name_lowercase' => mb_strtolower( $name ),
 		];
 
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
@@ -178,6 +180,7 @@ class ArtistScraper extends BaseScraper {
 		return [
 			'article_id' => 'id',
 			'name' => 'artist_name',
+			'name_lowercase' => 'artist_name_lc_s',
 			'pic' => 'image',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
