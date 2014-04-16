@@ -272,6 +272,7 @@ class SpecialVideosHelper extends WikiaModel {
 		$linkToSpecialPage = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl();
 		$totalVideos = $this->getTotalVideos( $videoParams );
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
+			// Paginator::newFromArray allows array and integer param
 			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $videoParams['page'] - 1 );
 
