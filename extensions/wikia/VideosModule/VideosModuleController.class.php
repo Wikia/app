@@ -42,7 +42,7 @@ class VideosModuleController extends WikiaController {
 				if ( empty( $articleId ) ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
-					$this->videos = $videos;
+					$this->videos = [];
 					wfProfileOut( __METHOD__ );
 					return;
 				}
