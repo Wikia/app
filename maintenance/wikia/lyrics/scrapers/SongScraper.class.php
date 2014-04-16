@@ -24,7 +24,7 @@ class SongScraper extends BaseScraper {
 		// MOB-1367 - make sure the song name is the same as song's article title
 		$songTitle = $article->getTitle();
 		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle->getText() ) : null;
-		if( !is_null( $songName  ) ) {
+		if( !is_null( $songName ) ) {
 			$songData['song'] = $songName;
 		} else {
 			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d) or with invalid name', $songArticleId ) );
