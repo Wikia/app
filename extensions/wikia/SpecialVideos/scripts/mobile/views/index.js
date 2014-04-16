@@ -37,11 +37,11 @@ define('specialVideos.mobile.views.index', [
 		});
 	};
 
-    /**
-     * track
-     * @param {Object} params
+	/**
+	 * track
+	 * @param {Object} params
 	 * @return {Function} partially applied tracking function
-     */
+	 */
 	SpecialVideosIndexView.prototype.track = function (params) {
 		if (!params) {
 			return false;
