@@ -1,4 +1,4 @@
-(function( window, $ ){
+(function (window, $) {
 	'use strict';
 
 	var SuggestModalWikiaHubsV2 = {
@@ -8,7 +8,7 @@
 				if (window.wgUserName) {
 					SuggestModalWikiaHubsV2.suggestArticle();
 				} else {
-					window.UserLoginModal.show( {
+					window.UserLoginModal.show({
 						origin: 'wikia-hubs',
 						callback: function () {
 							UserLogin.forceLoggedIn = true;
@@ -20,6 +20,8 @@
 		},
 
 		suggestArticle: function () {
+			$('#suggestArticle').startThrobbing();
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaHubsV2Controller',
 				method: 'getArticleSuggestModal',
@@ -28,11 +30,14 @@
 				data: {'rebuildmessages': true},
 				callback: function (data) {
 					SuggestModalWikiaHubsV2.openModal(data);
+				},
+				onErrorCallback: function() {
+					$('#suggestArticle').stopThrobbing();
 				}
 			});
 		},
 
-		openModal: function(data) {
+		openModal: function (data) {
 			require(['wikia.ui.factory'], function (uiFactory) {
 				uiFactory.init(['modal']).then(function (uiModal) {
 					var modalConfig = {
@@ -42,24 +47,31 @@
 							size: 'small',
 							title: data.title,
 							content: data.html,
-							buttons: [{
-								vars: {
-									value: data.labelSubmit,
-									classes: ['normal', 'primary'],
-									data: [{
-										key: 'event',
-										value: 'submit'
-									}]
+							buttons: [
+								{
+									vars: {
+										value: data.labelSubmit,
+										classes: ['normal', 'primary'],
+										data: [
+											{
+												key: 'event',
+												value: 'submit'
+											}
+										]
+									}
+								},
+								{
+									vars: {
+										value: data.labelCancel,
+										data: [
+											{
+												key: 'event',
+												value: 'close'
+											}
+										]
+									}
 								}
-							}, {
-								vars: {
-									value: data.labelCancel,
-									data: [{
-										key: 'event',
-										value: 'close'
-									}]
-								}
-							}]
+							]
 						}
 					};
 
@@ -71,7 +83,7 @@
 							$formView = $modal.find('.form-view'),
 							$successView = $modal.find('.success-view');
 
-						$modal.on('keyup keydown change', 'textarea[name=reason], input[name=articleurl]', function(e) {
+						$modal.on('keyup keydown change', 'textarea[name=reason], input[name=articleurl]', function (e) {
 							if (($articleurl.val().length === 0) || ($reason.val().length === 0)) {
 								$submitButton.attr('disabled', 'disabled');
 							} else {
@@ -96,9 +108,10 @@
 									reason: $reason.val(),
 									vertical_id: window.wgWikiaHubsVerticalId
 								},
-							e);
+								e);
 						});
 
+						$('#suggestArticle').stopThrobbing();
 						suggestArticleModal.show();
 					});
 				});

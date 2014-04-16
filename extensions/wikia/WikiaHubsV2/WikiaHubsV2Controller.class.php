@@ -70,9 +70,9 @@ class WikiaHubsV2Controller extends WikiaController {
 
 	public function getArticleSuggestModal() {
 		$templateData = [
-			'urlLabel' => wfMessage('wikiahubs-suggest-article-what-article')->escaped(),
-			'reasonLabel' => wfMessage('wikiahubs-suggest-article-reason')->escaped(),
-			'successMessage' => wfMessage('wikiahubs-suggest-article-success')->escaped()
+			'urlLabel' => wfMessage('wikiahubs-suggest-article-what-article')->text(),
+			'reasonLabel' => wfMessage('wikiahubs-suggest-article-reason')->text(),
+			'successMessage' => wfMessage('wikiahubs-suggest-article-success')->text()
 		];
 
 		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
