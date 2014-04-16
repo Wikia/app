@@ -43,8 +43,8 @@ define('specialVideos.mobile.views.index', [
 	 * @return {Function} partially applied tracking function
 	 */
 	SpecialVideosIndexView.prototype.track = Tracker.buildTrackingFunction({
-			category: 'special-videos-mobile',
-			trackingMethod: 'both'
+		category: 'special-videos-mobile',
+		trackingMethod: 'both'
 	});
 
 	/**
