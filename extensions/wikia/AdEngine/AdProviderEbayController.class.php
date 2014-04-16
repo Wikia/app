@@ -8,11 +8,7 @@ class AdProviderEbayController extends WikiaController
 	{
 		$query = preg_replace('/ Wiki$/', '', $this->request->getVal('title'));
 
-		if ($splitTitle = false) {
-			$query = explode(' - ', $query);
-		} else {
-			$query = [$query];
-		}
+		$query = [ $query ];
 
 		$rssUrl = $this->buildUrl($query, 1);
 		$allProducts = $this->generateData($rssUrl);
