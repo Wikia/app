@@ -168,12 +168,12 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get total number of videos
+	 * Get a count of videos that would be returned by $videoParams when passed to getVideos()
 	 * @param array $videoParams
 	 *   [ array( 'sort' => string, 'page' => int, 'category' => string, 'provider' => string ) ]
 	 * @return integer $totalVideos
 	 */
-	public function getTotalVideos( $videoParams ) {
+	protected function getTotalVideos( $videoParams ) {
 		wfProfileIn( __METHOD__ );
 
 		$mediaService = new MediaQueryService();
@@ -272,7 +272,7 @@ class SpecialVideosHelper extends WikiaModel {
 		$linkToSpecialPage = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl();
 		$totalVideos = $this->getTotalVideos( $videoParams );
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
+			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
 			$pages->setActivePage( $videoParams['page'] - 1 );
 
 			$queryString = '';
