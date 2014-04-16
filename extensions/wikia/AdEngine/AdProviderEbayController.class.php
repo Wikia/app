@@ -67,6 +67,12 @@ class AdProviderEbayController extends WikiaController
 				'image' => false
 			];
 
+			$ebayInfo = $item->children('e', true);
+
+			foreach ($ebayInfo as $info) {
+				$product[$info->getName()] = (string) $info;
+			}
+
 			if (preg_match('/img[^s]+src=["\']([^"\']+)/', $product['description'], $imageUrlMatch)) {
 				$product['image'] = $imageUrlMatch[1];
 			}
