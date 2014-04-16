@@ -9,6 +9,7 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Tasks\AsyncTaskList;
 
 abstract class BaseTask {
 	protected $calls = [];
@@ -72,6 +73,24 @@ abstract class BaseTask {
 	 */
 	public function log() {
 
+	}
+
+	public function queue($priority=false, $dupCheck=true) {
+		$taskList = new AsyncTaskList();
+
+		foreach ($this->calls as $i => $call) {
+			$taskList->add([$this, $i]);
+		}
+
+		if ($priority) {
+			$taskList->prioritize();
+		}
+
+		if ($dupCheck) {
+			$taskList->force();
+		}
+
+		return $taskList->queue();
 	}
 
 	public function serialize() {
