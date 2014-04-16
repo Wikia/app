@@ -10,25 +10,26 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 
 	public function index() {
 		$mapsModel = new WikiaMaps( $this->getIntMapServiceConfig() );
-		$search = $this->request->getVal('search_maps', false);
-		$mapOrder = $this->request->getInt('map_order', false);
-		$offset = $this->request->getVal('offset', false);
+		$params = [
+			'city_id' => $this->app->wg->CityId
+		];
 
+		$maps = $mapsModel->cachedRequest( 'getMapInstances', $params );
 
-		$maps = $mapsModel->getMapInstances(
-			$this->app->wg->CityId,
-			$search,
-			$mapOrder,
-			$offset,
-			self::MAPS_PER_PAGE
-		);
 		$this->setVal( 'maps', $maps );
+		$this->setVal( 'wikia-interactive-maps-title', wfMessage( 'wikia-interactive-maps-title' ) );
+		$this->setVal( 'wikia-interactive-maps-create-a-map', wfMessage( 'wikia-interactive-maps-create-a-map' ) );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	private function getIntMapServiceConfig() {
-		return [];
+		return [
+			'protocol' => 'http',
+			'hostname' => '10.10.10.242',
+			'port' => '3000',
+			'version' => 'v1'
+		];
 	}
 
 }

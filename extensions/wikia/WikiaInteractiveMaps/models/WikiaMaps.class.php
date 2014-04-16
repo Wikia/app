@@ -3,27 +3,68 @@
 
 class WikiaMaps {
 
+	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
+
+	const ENTRY_MAP = 'map';
+
 	private $config = [];
 
 	public function __construct( $config ) {
 		$this->config = $config;
 	}
 
-	public function getMapInstances( $cityId, $search, $mapOrder, $offset, $limit ) {
-		return [
-			[
-				'id' => 1,
-				'image' => 'http://placekitten.com/1494/300',
-				'title' => 'Kittenlandia',
-				'created_on' => date('c', time()),
-				'status' => 'Processing',
-			],
-			[
-				'id' => 2,
-				'image' => 'http://placekitten.com/1494/300',
-				'title' => 'Kittenopolis',
-				'created_on' => date('c', time()),
-			]
-		];
+	/**
+	 * @desc Create InteractiveMaps request URL
+	 *
+	 * @param string $entryPoint
+	 * @param array $params
+	 * @return string - URL
+	 */
+	private function buildUrl($entryPoint, Array $params = [] ) {
+		return sprintf(
+			'%s://%s:%d/api/%s/%s%s',
+			$this->config['protocol'],
+			$this->config['hostname'],
+			$this->config['port'],
+			$this->config['version'],
+			$entryPoint,
+			!empty( $params ) ? '?' . http_build_query( $params ) : ''
+		);
+	}
+
+	/**
+	 * @desc Run the local $method with the provided $params array and store the result in MemCcache for $expireTime sec
+	 *
+	 * @param String $method method to execute
+	 * @param Array $params  Array with params to pass to the method
+	 * @param int $expireTime
+	 * @return Mixed
+	 * @throws FatalError
+	 */
+	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
+		$memCacheKey = wfMemcKey( $method, json_encode( $params ) );
+		$memCache = F::App()->wg->Memc;
+		$result = $memCache->get( $memCacheKey );
+		if ( $result === false ) {
+			if ( method_exists( $this, $method ) ) {
+				$result = $this->{ $method }( $params );
+				$memCache->set( $memCacheKey, $result, $expireTime );
+			} else {
+				throw new FatalError( sprintf( 'Method %s not found', $method ) );
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * Get Map instances from IntMaps API server
+	 *
+	 * @param Array $params
+	 * @return mixed
+	 */
+	private function getMapInstances( Array $params ) {
+		$url = $this->buildUrl( self::ENTRY_MAP, $params );
+		$response = Http::get( $url );
+		return json_decode( $response, FALSE );
 	}
 }
