@@ -56,6 +56,7 @@ class AlbumScraper extends BaseScraper {
 			'Cover' => 'image',
 			'year' => 'release_date',
 			'Album' => 'album_name',
+			'album_lowercase' => 'album_name_lc_s',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
 			'Length' => 'length',

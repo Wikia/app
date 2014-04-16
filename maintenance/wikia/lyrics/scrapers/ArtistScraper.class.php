@@ -148,6 +148,8 @@ class ArtistScraper extends BaseScraper {
 			$result['Album'] = trim( $heading );
 		}
 
+		$result['album_name_lc_s'] = mb_strtolower( $result['Album'] );
+
 		return $result;
 	}
 
