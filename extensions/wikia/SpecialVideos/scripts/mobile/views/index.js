@@ -1,7 +1,8 @@
 define('specialVideos.mobile.views.index', [
 	'wikia.mustache',
+	'media',
 	'specialVideos.templates.mustache'
-], function (Mustache, templates) {
+], function (Mustache, WikiaMobileMediaControls, templates) {
 	'use strict';
 
 	/**
@@ -49,6 +50,7 @@ define('specialVideos.mobile.views.index', [
 		});
 
 		this.$el.find('.video-list')[insertionMethod](html);
+		WikiaMobileMediaControls.reset();
 		return this;
 	};
 
