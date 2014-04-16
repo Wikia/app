@@ -30,8 +30,10 @@ define('ext.wikia.adEngine.provider.ebay', [
 			data: params,
 			format: 'html',
 			type: 'get',
+			scripts: true,
 			callback: function (data) {
-				$('#' + slotname).html(data);
+				$('#' + slotname).html(data).height(275);
+
 				pSuccess();
 			}
 		});

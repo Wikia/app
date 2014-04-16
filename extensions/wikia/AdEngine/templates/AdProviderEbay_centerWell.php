@@ -1,34 +1,64 @@
 <!-- eBay center well list unit. -->
 <style>
 #ebay-ads {
-	height: 250px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 10px;
+	height: 275px;
 	overflow: hidden;
 	text-align: center;
 }
 #ebay-ads h1 {
-	font-size: 150%;
 	font-weight: bold;
-	margin: 10px 0;
 	text-align: left;
+	margin-bottom: 15px;
 }
 #ebay-ads ul {
+	display: block;
+	padding: 0;
+	margin: 0;
 	overflow: hidden;
 }
 #ebay-ads li {
-	float: left;
-	margin-left: 4%;
-	width: 22%;
-}
-#ebay-ads li:first-child {
-	margin-left: 0;
+	display: block;
+	height: 50px;
+	width: 100%;
+	margin-bottom: 10px;
 }
 #ebay-ads .image {
-	height: 100px;
-	margin: 10px 0;
+	display: block;
+	height: 50px;
+	float: left;
+	width: 100px;
+	overflow: hidden;
 }
 #ebay-ads .image img {
+	height: 50px;
 	max-height: 100px;
 }
+
+#ebay-ads .info .title {
+	display: block;
+	text-align: left;
+}
+
+#ebay-ads .info .price {
+	display: block;
+	text-align: left;
+}
+
+#ebay-ads li:before,
+#ebay-ads li:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+#ebay-ads li:after {
+	clear: both;
+}
+
+
 </style>
 <section id="ebay-ads">
 <h1>Ebay products:</h1>
@@ -36,14 +66,19 @@
 	<ul>
 		<? foreach ($products as $product): ?>
 			<li>
-				<a href="<?= $product['link'] ?>">
+				<a class="image" href="<?= $product['link'] ?>">
 					<? if ($product['image']): ?>
-						<div class="image">
 							<img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['title']) ?>">
-						</div>
 					<? endif ?>
-					<?= htmlspecialchars($product['title']) ?>
 				</a>
+				<div class="info">
+					<a class="title" href="<?= $product['link'] ?>">
+						<?= htmlspecialchars($product['title']) ?>
+					</a>
+					<div class="price">
+						<?= $product['BuyItNowPrice'] ? $product['BuyItNowPrice'] : $product['CurrentPrice'] ?> $
+					</div>
+				</div>
 			</li>
 		<? endforeach ?>
 	</ul>
