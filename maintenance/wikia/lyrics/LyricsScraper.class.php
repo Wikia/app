@@ -124,6 +124,7 @@ class LyricsScraper {
 					// Song article exists
 					self::log( "\t\t\tSONG: " . $songData['title'] . PHP_EOL );
 					$songData = array_merge( $songData, $this->songScraper->processArticle( $songArticle ) );
+
 					$songData = $this->songScraper->sanitizeData(
 						$songData,
 						$this->songScraper->getDataMap()

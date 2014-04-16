@@ -26,6 +26,7 @@ class SongScraper extends BaseScraper {
 		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle->getText() ) : null;
 		if( !is_null( $songName ) ) {
 			$songData['song'] = $songName;
+			$songData['song_lowercase'] = mb_strtolower( $songName );
 		} else {
 			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d) or with invalid name', $songArticleId ) );
 		}
@@ -94,6 +95,7 @@ class SongScraper extends BaseScraper {
 			'article_id' => 'id',
 			'number' => 'number',
 			'song' => 'song_name',
+			'song_lowercase' => 'song_name_lc_s',
 			'itunes' => 'itunes',
 			'lyrics' => 'lyrics',
 			'romanizedSong' => 'romanized_song_name',
