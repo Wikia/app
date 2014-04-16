@@ -94,15 +94,15 @@ define('wikia.videohandler.ooyala', [
 				type: loader.JS,
 				resources: params.jsFile[ 0 ]
 			}).done(function() {
-					log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-					loader({
-						type: loader.JS,
-						resources: params.jsFile[ 1 ]
-					}).done(function() {
-							log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-							window.OO.Player.create( containerId, params.videoId, createParams );
-						}).fail( loadFail );
+				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				loader({
+					type: loader.JS,
+					resources: params.jsFile[ 1 ]
+				}).done(function() {
+					log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+					window.OO.Player.create( containerId, params.videoId, createParams );
 				}).fail( loadFail );
+			}).fail( loadFail );
 		} else {
 			window.OO.Player.create( containerId, params.videoId, createParams );
 		}
