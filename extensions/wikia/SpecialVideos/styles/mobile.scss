@@ -7,7 +7,7 @@ $key-blue-color: #054c8b;
 
 #wkMainCntHdr {
 	padding: 10px;
-	margin-bottom: -25px;
+	margin-bottom: -15px;
 }
 
 .filter {
@@ -16,7 +16,8 @@ $key-blue-color: #054c8b;
 	padding: 0 10px;
 	text-align: center;
 
-	li {
+	a {
+		 -webkit-tap-highlight-color: blue;
 		border: 2px solid $key-blue-color;
 		display: inline-block;
 		width: 50%;
@@ -36,7 +37,8 @@ $key-blue-color: #054c8b;
 		}
 
 		&:active {
-			background-color: darken($key-blue-color, 5%);
+			background-color: darken($key-blue-color, 10%);
+			color: #fff;
 		}
 	}
 }
