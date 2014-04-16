@@ -20,12 +20,25 @@ class FacebookSignupController extends WikiaController {
 		// try to get connected Wikia account
 		$user = FBConnectDB::getUser($fbUserId);
 
-		if ( ($user instanceof User) && ($fbUserId !== 0) ) {
-			// account is connected - log the user in
-			$user->setCookies();
+		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
+			$this->errorMsg = '';
+			$userAccountDisabled = $user->getOption( 'disabled' );
 
-			$this->loggedIn = true;
-			$this->userName = $user->getName();
+			if( !empty( $userAccountDisabled ) ||
+				( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->getRealName() == CLOSED_ACCOUNT_FLAG )
+			) {
+				// User account was disabled, abort the login
+				$this->loginAborted = true;
+				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
+			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$this->errorMsg ] ) ) {
+				$this->loginAborted = true;
+			} else {
+				// account is connected - log the user in
+				$user->setCookies();
+
+				$this->loggedIn = true;
+				$this->userName = $user->getName();
+			}
 		}
 		else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();

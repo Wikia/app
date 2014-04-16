@@ -119,6 +119,8 @@ var UserLoginFacebook = {
 					qString.addCb().goTo();
 				} );
 			}
+		} else if ( resp.loginAborted ) {
+			window.GlobalNotification.show( resp.errorMsg, 'error' );
 		} else {
 			require( ['wikia.ui.factory'], function( uiFactory ) {
 				$.when(
