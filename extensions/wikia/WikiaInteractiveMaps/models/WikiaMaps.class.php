@@ -8,7 +8,7 @@ class WikiaMaps {
 				'id' => 1,
 				'image' => 'http://placekitten.com/1494/300',
         		'name' => 'Kittenlandia',
-                'updated' => time(),
+                'updated' => date('c', time()),
 			]
 		];
 	}
