@@ -1,7 +1,8 @@
 define('specialVideos.mobile.views.index', [
 	'wikia.mustache',
+	'media',
 	'specialVideos.templates.mustache'
-], function (Mustache, templates) {
+], function (Mustache, WikiaMobileMediaControls, templates) {
 	'use strict';
 
 	/**
@@ -49,6 +50,7 @@ define('specialVideos.mobile.views.index', [
 		});
 
 		this.$el.find('.video-list')[insertionMethod](html);
+		WikiaMobileMediaControls.reset();
 		return this;
 	};
 
@@ -85,14 +87,14 @@ define('specialVideos.mobile.views.index', [
 		return false;
 	};
 
-    /**
-     * onTitleClick
+	/**
+	 * onTitleClick
 	 * @description This method exists because there isn't a more eloquent way to at arbitrary elements to the
 	 * mechanism that opens the mobile lightbox. When our .title span is clicked, it triggers a click on the
 	 * neighboring image tag.
-     * @param {Object} evt jQuery event object
-     * @return {Boolean} false
-     */
+	 * @param {Object} evt jQuery event object
+	 * @return {Boolean} false
+	 */
 	SpecialVideosIndexView.prototype.onTitleClick = function (evt) {
 		var $tar = $(evt.target);
 		$tar.closest('.info').prev().find('img').trigger('click');

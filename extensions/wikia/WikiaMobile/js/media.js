@@ -752,7 +752,6 @@ function(
 	}
 
 	/** @public **/
-
 	return {
 		openModal: openModal,
 		getMedia: function ( whiteList ) {
@@ -786,6 +785,11 @@ function(
 				} )
 			}
 
+		},
+		reset: function () {
+			inited = false;
+			init(document.getElementsByClassName('media'));
+			setup();
 		},
 		skip: function () {
 			if ( currentNum - lastNum > 0 ) {
