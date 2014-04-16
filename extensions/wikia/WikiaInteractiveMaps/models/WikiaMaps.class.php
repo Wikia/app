@@ -14,8 +14,8 @@ class WikiaMaps {
 			[
 				'id' => 1,
 				'image' => 'http://placekitten.com/1494/300',
-        		'title' => 'Kittenlandia',
-                'created_on' => date('c', time()),
+				'title' => 'Kittenlandia',
+				'created_on' => date('c', time()),
 				'status' => 'Processing',
 			],
 			[
