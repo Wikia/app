@@ -70,7 +70,11 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	public function getVideoDebugInfo() {
 		$helper = new VideoHandlerHelper();
 
-		$thumbParams = [ 'width' => 200, 'height' => 200 ];
+		$videoOptions = [
+			'thumbWidth'       => 200,
+			'thumbHeight'      => 200,
+			'postedInArticles' => 5,
+		];
 
 		$db = wfGetDB( DB_SLAVE );
 
@@ -116,7 +120,7 @@ class LicensedVideoSwapHelper extends WikiaModel {
 			}
 
 			// Reuse code from VideoHandlerHelper
-			$videoDetail = $helper->getVideoDetail( ["title" => $row->title ], $thumbParams, 5 );
+			$videoDetail = $helper->getVideoDetail( ["title" => $row->title ], $videoOptions );
 			$debugInfo[ $row->title ]['detail'] = $videoDetail;
 			$debugInfo[ $row->title ]['props'][$name] = $val;
 		}
@@ -346,7 +350,11 @@ SQL;
 		// Get a list of what videos the user has already looked at
 		$visitedList = unserialize( $this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
-		$thumbParams = [ 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ];
+		$videoOptions = [
+			'thumbWidth'       => self::THUMBNAIL_WIDTH,
+			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+			'postedInArticles' => self::POSTED_IN_ARTICLES,
+		];
 
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
@@ -358,7 +366,7 @@ SQL;
 				continue;
 			}
 
-			$videoDetail = $helper->getVideoDetail( $videoInfo, $thumbParams, self::POSTED_IN_ARTICLES );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
 
@@ -524,7 +532,11 @@ SQL;
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
-		$thumbParams = [ 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ];
+		$videoOptions = [
+			'thumbWidth'       => self::THUMBNAIL_WIDTH,
+			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+			'postedInArticles' => self::POSTED_IN_ARTICLES,
+		];
 
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
@@ -566,8 +578,7 @@ SQL;
 			$videoDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videoInfo['title'],
-				$thumbParams,
-				self::POSTED_IN_ARTICLES
+				$videoOptions
 			);
 
 			// Go to the next suggestion if we can't get any details for this one

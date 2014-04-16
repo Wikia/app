@@ -120,9 +120,6 @@ class ThumbnailVideoController extends WikiaController {
 			$imgSrc = $options['src'];
 		}
 
-		// set class for img tag
-		$imgClass = empty( $options['imgClass'] ) ? [] : explode( ' ', $options['imgClass'] );
-
 		// get alt for img tag
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
 
@@ -140,6 +137,11 @@ class ThumbnailVideoController extends WikiaController {
 		// remove style from $imgAttribs if it is empty
 		if ( $imgAttribs['style'] == '' ) {
 			unset( $imgAttribs['style'] );
+		}
+
+		// set data-params for img tag
+		if ( !empty( $options['dataParams'] ) ) {
+			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
 		}
 
 		// set duration
@@ -192,18 +194,11 @@ class ThumbnailVideoController extends WikiaController {
 			$this->size = $this->getThumbnailSize( $width );
 		}
 
-		$videoKey = htmlspecialchars( $title->getDBKey() );
-
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$imgAttribs['data-params'] = $this->getDataParams( $file, $imgSrc, $videoKey, $options );
-			$imgClass[] = 'media';
-		}
-
 		// set image attributes
 		$this->imgSrc = $imgSrc;
-		$this->videoKey = $videoKey;
+		$this->videoKey = htmlspecialchars( $title->getDBKey() );
 		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = implode( ' ', array_unique( $imgClass ) );
+		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
 		$this->imgAttrs = $this->getAttribs( $imgAttribs );
 
 		// set duration
@@ -214,35 +209,6 @@ class ThumbnailVideoController extends WikiaController {
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Get data-params attribute (for mobile)
-	 * @param File $file
-	 * @param string $imgSrc
-	 * @param string $videoKey
-	 * @param array $options
-	 * @return string
-	 */
-	protected function getDataParams( $file, $imgSrc, $videoKey, $options ) {
-		if ( is_callable( [ $file, 'getProviderName' ] ) ) {
-			$provider = $file->getProviderName();
-		} else {
-			$provider = '';
-		}
-
-		$dataParams = [
-			'type'     => 'video',
-			'name'     => $videoKey,
-			'full'     => $imgSrc,
-			'provider' => $provider,
-		];
-
-		if ( !empty( $options['caption'] ) ) {
-			$dataParams['capt'] = 1;
-		}
-
-		return htmlentities( json_encode( [ $dataParams ] ) , ENT_QUOTES );
 	}
 
 	/**

@@ -1,14 +1,16 @@
 define('specialVideos.mobile.views.index', [
 	'wikia.mustache',
-	'specialVideos.templates.mustache'
-], function (Mustache, templates) {
+	'media',
+	'specialVideos.templates.mustache',
+	'wikia.tracker'
+], function (Mustache, WikiaMobileMediaControls, templates, Tracker) {
 	'use strict';
 
 	/**
 	 * SpecialVideosIndexView
 	 * @constructor
 	 * @description View class for Special:Videos on mobile
-	 * @param config An object that contains 'el' & 'collection' properties
+	 * @param {Object} config An object that contains 'el' & 'collection' properties
 	 */
 	function SpecialVideosIndexView(config) {
 		this.$el = $(config.el);
@@ -26,9 +28,24 @@ define('specialVideos.mobile.views.index', [
 	 * @description set up event bindings for view
 	 */
 	SpecialVideosIndexView.prototype.initialize = function () {
-		this.$filter.find('li').on('click', $.proxy(this, 'onFilterClick'));
+		this.$filter.find('a').on('click', $.proxy(this, 'onFilterClick'));
 		this.$loadMoreBtn.on('click', $.proxy(this, 'onLoadMoreClick'));
+		this.$el.find('.video-list').on('click', '.title', $.proxy(this, 'onTitleClick'));
+		this.track({
+			action: Tracker.ACTIONS.IMPRESSION,
+			label: 'page'
+		});
 	};
+
+	/**
+	 * track
+	 * @param {Object} params
+	 * @return {Function} partially applied tracking function
+	 */
+	SpecialVideosIndexView.prototype.track = Tracker.buildTrackingFunction({
+		category: 'special-videos-mobile',
+		trackingMethod: 'both'
+	});
 
 	/**
 	 * render
@@ -48,13 +65,13 @@ define('specialVideos.mobile.views.index', [
 		});
 
 		this.$el.find('.video-list')[insertionMethod](html);
+		WikiaMobileMediaControls.reset();
 		return this;
 	};
 
 	/**
 	 * onFilterClick
-	 * @description
-	 * @param evt jQuery event object
+	 * @param {Object} evt jQuery event object
 	 * @return {Boolean} false
 	 */
 	SpecialVideosIndexView.prototype.onFilterClick = function (evt) {
@@ -65,18 +82,23 @@ define('specialVideos.mobile.views.index', [
 			return;
 		}
 
+		$tar.addClass(this.filterActiveClass).siblings().removeClass(this.filterActiveClass);
 		this.collection.fetch($tar.text())
 			.success(function () {
-				$tar.addClass(self.filterActiveClass).siblings().removeClass(self.filterActiveClass);
 				self.render();
 			});
+
+		this.track({
+			action: Tracker.ACTIONS.CLICK,
+			label: 'sort-filter-btn',
+			value: Array.prototype.indexOf(this.$filter.find('li'), $tar)
+		});
+
 		return false;
 	};
 
 	/**
 	 * onLoadMoreClick
-	 * @description
-	 * @param evt jQuery event object
 	 * @return {Boolean} false
 	 */
 	SpecialVideosIndexView.prototype.onLoadMoreClick = function () {
@@ -84,6 +106,24 @@ define('specialVideos.mobile.views.index', [
 		this.collection.fetch().success(function () {
 			self.render();
 		});
+		this.track({
+			action: Tracker.ACTIONS.CLICK,
+			label: 'load-more-btn'
+		});
+		return false;
+	};
+
+	/**
+	 * onTitleClick
+	 * @description This method exists because there isn't a more eloquent way to at arbitrary elements to the
+	 * mechanism that opens the mobile lightbox. When our .title span is clicked, it triggers a click on the
+	 * neighboring image tag.
+	 * @param {Object} evt jQuery event object
+	 * @return {Boolean} false
+	 */
+	SpecialVideosIndexView.prototype.onTitleClick = function (evt) {
+		var $tar = $(evt.target);
+		$tar.closest('.info').prev().find('img').trigger('click');
 		return false;
 	};
 

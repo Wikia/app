@@ -1,10 +1,13 @@
 <div id="special-videos">
-	<ul class="filter">
-		<li class="active">{{sortingOptions.trend}}</li><!--
+	<div class="filter">
+		<a href="#" class="active">{{sortingOptions.trend}}</a><!--
 		leave this comment in to truncate whitespace between elements
 		for display: inline-block
-		--><li>{{sortingOptions.recent}}</li>
-	</ul>
+		--><a href="#">{{sortingOptions.recent}}</a>
+	</div>
+	{{#message}}
+	<p class="message">{{message}}</p>
+	{{/message}}
 	<ul class="video-list mobile">
 		{{#videos}}
 		<li class="item">
@@ -14,13 +17,13 @@
 			leave this comment in to truncate whitespace between elements
 			for display: inline-block
 			--><div class="info">
-				<a href="{{fileUrl}}" alt="{{title}}">
-					<span class="title">{{title}}</span>
-					<span class="views">{{viewTotal}} </span>
-				</a>
+				<span class="title">{{title}}</span>
+				<span class="views">{{viewTotal}} </span>
 			</div>
 		</li>
 		{{/videos}}
 	</ul>
-	<button class="btn load-more">Load More</button>
+	{{#loadMore}}
+	<button class="btn load-more">{{loadMore}}</button>
+	{{/loadMore}}
 </div>

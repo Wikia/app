@@ -7,9 +7,6 @@
  */
 class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
-	const VIDEOS_PER_PAGE = 24;
-	const VIDEOS_PER_PAGE_MOBILE = 12;
-
 	public function __construct() {
 		parent::__construct( 'Videos', '', false );
 	}
@@ -24,9 +21,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string provider
 	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
+	 * @responseParam string loadMore (For mobile only)
 	 * @responseParam string sortMsg - selected option (sorting)
 	 * @responseParam array sortingOptions - sorting options
 	 * @responseParam array videos - list of videos
+	 * @responseParam string message
 	 */
 	public function index() {
 		$this->wg->SupressPageSubtitle = true;
@@ -34,7 +33,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$scriptsStr = 'special_videos_js';
 		$stylesStr = 'special_videos_css';
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+
+		if ( $isMobile ) {
 			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 			$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/index.mustache' );
 			$scriptsStr .= '_mobile';
@@ -56,10 +57,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// For search engines
 		$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
 
-		$specialVideos = new SpecialVideosHelper();
+		$helper = new SpecialVideosHelper();
 
 		// Add meta description tag to HTML source
-		$this->getContext()->getOutput()->addMeta( 'description', $specialVideos->getMetaTagDescription() );
+		$this->getContext()->getOutput()->addMeta( 'description', $helper->getMetaTagDescription() );
 
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
@@ -85,6 +86,20 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Variable to display the "add video" link at the end of the results
 		$addVideo = 1;
 
+		// get sorting options
+		if ( $isMobile ) {
+			$sortingOptions = $helper->getSortOptionsMobile();
+		} else {
+			$sortingOptions = array_merge( $helper->getSortOptions(), $helper->getFilterOptions() );
+		}
+
+		if ( !array_key_exists( $sort, $sortingOptions ) ) {
+			$sort = 'recent';
+		}
+
+		// The new trending in <category> options have a slightly different key format
+		$sortKey = $sort.( empty( $category ) ? '' : ":$category" );
+
 		// get videos
 		$params = [
 			'sort' => $sort,
@@ -95,52 +110,24 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$response = $this->sendSelfRequest( 'getVideos', $params );
 		$videos = $response->getVal( 'videos', [] );
 
-		// get total videos
-		$mediaService = new MediaQueryService();
-		if ( $sort == 'premium' ) {
-			$totalVideos = $mediaService->getTotalPremiumVideos();
-		} elseif ( $category ) {
-			$totalVideos = $mediaService->getTotalVideosByCategory( $category );
-		} else {
-			$totalVideos = $mediaService->getTotalVideos();
-		}
-		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
-
-		// get sorting options
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$sortingOptions = $specialVideos->getSortOptionsMobile();
-		} else {
-			$sortingOptions = array_merge( $specialVideos->getSortOptions(), $specialVideos->getFilterOptions() );
-		}
-
-		if ( !array_key_exists( $sort, $sortingOptions ) ) {
-			$sort = 'recent';
-		}
-
-		// Set up pagination
+		$message = '';
 		$pagination = '';
-		$linkToSpecialPage = SpecialPage::getTitleFor("Videos")->escapeLocalUrl();
-		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalVideos, '' ), self::VIDEOS_PER_PAGE );
-			$pages->setActivePage( $page - 1 );
-
-			$categoryPagination = $category ? "&category=$category" : "";
-			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s&sort='.$sort.$categoryPagination );
-			// check if we're on the last page
-			if ( $page < $pages->getPagesCount() ) {
-				// we're not so don't show the add video placeholder
-				$addVideo = 0;
+		if ( $isMobile ) {
+			if ( empty( $videos ) ) {
+				$message = wfMessage( 'specialvideos-no-videos' )->escaped();
+			} else {
+				$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
 			}
+		} else {
+			$pagination = $helper->getPagination( $params, $addVideo );
 		}
-
-		// The new trending in <category> options have a slightly different key format
-		$sortKey = $sort.( empty($category) ? '' : ":$category" );
 
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
 		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
+		$this->message = $message;
 
 		// permission checking for video removal
 		$this->isRemovalAllowed = ( $this->wg->User->isAllowed( 'specialvideosdelete' ) && $this->app->checkSkin( 'oasis' ) );
@@ -167,16 +154,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
-			$limit = self::VIDEOS_PER_PAGE_MOBILE;
-			$providers = $this->wg->WikiaMobileSupportedVideos;
-		} else {
-			$limit = self::VIDEOS_PER_PAGE;
-			$providers = empty( $providers ) ? [] : explode( ',', $providers );
-		}
-
-		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $limit, $page, $providers, $category );
+		$helper = new SpecialVideosHelper();
+		$videos = $helper->getVideos( $sort, $page, $providers, $category );
 
 		$this->videos = $videos;
 	}

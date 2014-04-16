@@ -242,16 +242,17 @@ class VideoHandlerHelper extends WikiaModel {
 	/**
 	 * get video detail
 	 * @param array $videoInfo [ array( 'title' => title, 'addedAt' => addedAt , 'addedBy' => addedBy ) ]
-	 * @param array $thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
+	 * @param array $options
+	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
 	 *   Keys:
-	 *     width - the width of the thumbnail to return (required)
-	 *     height - the height of the thumbnail to return (required)
-	 *     getThumb - whether to return a fully formed html thumbnail of the video or not
+	 *     thumbWidth - the width of the thumbnail to return (required)
+	 *     thumbHeight - the height of the thumbnail to return (required)
+	 *     getThumbnail - whether to return a fully formed html thumbnail of the video or not
 	 *     thumbOptions - the option of the thumbnail to return
-	 * @param integer $postedInArticles
+	 *     postedInArticles - the number of "posted in" article details to return
 	 * @return array $videoDetail
 	 */
-	public function getVideoDetail( $videoInfo, $thumbParams, $postedInArticles ) {
+	public function getVideoDetail( $videoInfo, $options ) {
 		wfProfileIn( __METHOD__ );
 
 		$videoDetail = array();
@@ -263,7 +264,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		if ( $file ) {
 			// get thumbnail
-			$thumb = $file->transform( [ 'width' => $thumbParams['width'], 'height' => $thumbParams['height'] ] );
+			$thumb = $file->transform( [ 'width' => $options['thumbWidth'], 'height' => $options['thumbHeight'] ] );
 			$thumbUrl = $thumb->getUrl();
 
 			// get user
@@ -277,22 +278,24 @@ class VideoHandlerHelper extends WikiaModel {
 			}
 
 			$thumbnail = '';
-			if ( !empty( $thumbParams['getThumb'] ) ) {
-				$thumbOptions = empty( $thumbParams['thumbOptions'] ) ? [] : $thumbParams['thumbOptions'];
+			if ( !empty( $options['getThumbnail'] ) ) {
+				$thumbOptions = empty( $options['thumbOptions'] ) ? [] : $options['thumbOptions'];
+
 				if ( empty( $thumbOptions['alt'] ) ) {
 					$thumbOptions['alt'] = htmlspecialchars( $title->getText() );
 				}
+
 				$thumbnail = $thumb->toHtml( $thumbOptions );
 			}
 
 			// get article list
-			if ( empty( $postedInArticles ) ) {
+			if ( empty( $options['postedInArticles'] ) ) {
 				$isTruncated = 0;
 				$truncatedList = array();
 			} else {
 				$mediaQuery = new ArticlesUsingMediaQuery( $title );
 				$articleList = $mediaQuery->getArticleList();
-				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $postedInArticles );
+				list( $truncatedList, $isTruncated ) = WikiaFileHelper::truncateArticleList( $articleList, $options['postedInArticles'] );
 			}
 
 			// video details
@@ -327,19 +330,18 @@ class VideoHandlerHelper extends WikiaModel {
 	 * Typically used to get premium video info from video.wikia.com when on another wiki.
 	 * @param string $dbName - The DB name of the wiki that should be used to find video details
 	 * @param array|string $title - The list of title of the video to get details for
-	 * @param array $thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
-	 * @param integer $postedInArticles - Cap on number of "posted in" article details to return
+	 * @param array $videoOptions
+	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
 	 * @return array - As associative array of video information
 	 */
-	public function getVideoDetailFromWiki( $dbName, $title, $thumbParams, $postedInArticles ) {
+	public function getVideoDetailFromWiki( $dbName, $title, $videoOptions ) {
 		wfProfileIn( __METHOD__ );
 
 		$params = [
 			'controller'   => 'VideoHandler',
 			'method'       => 'getVideoDetail',
 			'fileTitle'    => $title,
-			'thumbParams'  => $thumbParams,
-			'articleLimit' => $postedInArticles,
+			'videoOptions' => $videoOptions,
 		];
 
 		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );

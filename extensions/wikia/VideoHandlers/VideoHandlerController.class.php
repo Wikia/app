@@ -8,7 +8,6 @@ class VideoHandlerController extends WikiaController {
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
 	const DEFAULT_THUMBNAIL_HEIGHT = 250;
-	const DEFAULT_POSTED_IN_ARTICLES = 10;
 
 	/**
 	 * Get the embed code for the title given by fileTitle
@@ -248,7 +247,8 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
 	 * @requestParam array|string fileTitle - The title of the file to get details for
-	 * @requestParam array thumbParams [ array( 'width' => integer, 'height' => integer, 'getThumb' => boolean, 'thumbOptions' => array ) ]
+	 * @requestParam array videoOptions
+	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
 	 * @responseParam array detail - The video details
 	 */
@@ -256,8 +256,7 @@ class VideoHandlerController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$thumbParams = $this->getVal( 'thumbParams', array() );
-		$articleLimit = $this->getVal( 'articleLimit', self::DEFAULT_POSTED_IN_ARTICLES );
+		$videoOptions = $this->getVal( 'videoOptions', array() );
 
 		if ( is_string( $fileTitle ) ) {
 			$singleFile = true;
@@ -267,18 +266,18 @@ class VideoHandlerController extends WikiaController {
 			$fileTitles = $fileTitle;
 		}
 
-		if ( empty( $thumbParams['width'] ) ) {
-			$thumbParams['width'] = self::DEFAULT_THUMBNAIL_WIDTH;
+		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
+			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
 		}
 
-		if ( empty( $thumbParams['height'] ) ) {
-			$thumbParams['height'] = self::DEFAULT_THUMBNAIL_HEIGHT;
+		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
+			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
 		}
 
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $thumbParams, $articleLimit );
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
 			if ( !empty( $detail ) ) {
 				$videos[] = $detail;
 			}
