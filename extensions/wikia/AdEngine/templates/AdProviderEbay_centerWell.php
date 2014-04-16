@@ -5,8 +5,6 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	padding: 10px;
-	height: 275px;
-	overflow: hidden;
 	text-align: center;
 }
 #ebay-ads h1 {

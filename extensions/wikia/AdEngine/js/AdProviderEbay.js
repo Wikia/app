@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 			type: 'get',
 			scripts: true,
 			callback: function (data) {
-				$('#' + slotname).html(data).height(275);
+				$('#' + slotname).html(data).removeClass('default-height');
 
 				pSuccess();
 			}
