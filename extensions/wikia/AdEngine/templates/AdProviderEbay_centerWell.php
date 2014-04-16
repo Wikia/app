@@ -33,7 +33,6 @@
 }
 #ebay-ads .image img {
 	height: 50px;
-	max-height: 100px;
 }
 
 #ebay-ads .info .title {
@@ -54,6 +53,31 @@
 
 #ebay-ads li:after {
 	clear: both;
+}
+
+.ad-in-content #ebay-ads li:last-child {
+	display: none;
+}
+
+.ad-in-content #ebay-ads li{
+	height: 75px;
+}
+.ad-in-content #ebay-ads .image img {
+	height: 75px;
+}
+.ad-in-content #ebay-ads .image {
+	height: 75px;
+}
+.ad-in-content #ebay-ads .info .title {
+	overflow: hidden;
+	max-height: 52px;
+}
+
+.ad-in-content #ebay-ads li:last-child {
+	display: none;
+}
+.ad-in-content #ebay-ads .info {
+	margin-left: 110px;
 }
 
 
