@@ -1,9 +1,24 @@
-<ul>
+<div>
+    <h2>Interactive Maps</h2>
+    <div>
+        <form>
+            <label for="map_order">
+                <select id="map_order" name="map_order">
+                    <option>Newest to oldest</option>
+                </select>
+            </label>
+            <button>Create a Map</button>
+            <input placeholder="Search" name="search_maps" />
+        </form>
+    </div>
+</div>
+<ul class="map_list">
 {{#maps}}
     <li>
-        <img src="{{image}}" alt="{{name}}">
-        <h2>{{name}}</h2>
-        <p>Last Updated{{updated}}</p>
+        {{#status}}<div class="map_status">{{status}}</div>{{/status}}
+        <img src="{{image}}" alt="{{title}}">
+        <h2>{{title}}</h2>
+        <p>Last Updated{{created_on}}</p>
     </li>
 {{/maps}}
 </ul>
