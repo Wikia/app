@@ -1,0 +1,29 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+.ContentHeader {
+	border-bottom: 1px solid $color-page-border;
+	border-top: 1px solid $color-page-border;
+}
+
+.sorting {
+	.arrow {
+		@include arrow( 4px, $color-text );
+	}
+
+	.menu {
+		@include box-shadow( 0, 2px, 5px, $color-text );
+		background: $color-page;
+		border-top: 1px solid $color-page-border;
+		color: $color-text;
+
+		li {
+			&:hover {
+				background: $color-page-border;
+			}
+
+			.option {
+				color: $color-text;
+			}
+		}
+	}
+}

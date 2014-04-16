@@ -13,9 +13,9 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->messages = $this->getVal( 'messages' );
 
 		// loading assets in Monobook that would normally load in oasis
-		if($this->app->checkSkin('monobook')) {
+		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'skins/oasis/css/core/sprite.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/RelatedForumMonobook.scss' );
 		}
 
 		$title = $this->getContext()->getTitle();

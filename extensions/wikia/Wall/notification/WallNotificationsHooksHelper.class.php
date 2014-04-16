@@ -29,28 +29,27 @@ class WallNotificationsHooksHelper {
 	 * @author Piotrek Bablok
 	 */
 	static public function onPersonalUrls(&$personalUrls, &$title) {
-		$app = F::App();
+		$app = F::app();
 		$user = $app->wg->User;
-		if( $user instanceof User && $user->isLoggedIn() ) {
-			if($app->wg->User->getSkin()->getSkinName() == 'monobook') {
-				$personalUrls['wall-notifications'] = array(
-						'text'=>wfMsg('wall-notifications'),
-						//'text'=>print_r($app->wg->User->getSkin(),1),
-						'href'=>'#',
-						'class'=>'wall-notifications-monobook ',
-						'active'=>false
-				);
+		if ( $user instanceof User && $user->isLoggedIn() ) {
+			if( $app->wg->User->getSkin()->getSkinName() == 'monobook' ) {
+				$personalUrls['wall-notifications'] = [
+						'text' => wfMessage( 'wall-notifications' )->text(),
+						'href' => '#',
+						'class' => 'wall-notifications-monobook ',
+						'active' => false
+				];
 				
 				/** 
 				 * none of the Wall "base" extension is enable so we are pre hide the notification drop down 
 				 * and we show it in java script when there are new notification 
 				 */
 				 
-				if(empty($app->wg->EnableWallExt) && empty($app->wg->EnableForumExt)) {
+				if( empty( $app->wg->EnableWallExt ) && empty( $app->wg->EnableForumExt ) ) {
 					$personalUrls['wall-notifications']['class'] .= 'prehide';
 				}
 				
-				$app->wg->Out->addStyle("{$app->wg->ExtensionsPath}/wikia/Wall/css/WallNotificationsMonobook.css");
+				$app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/monobook/WallNotificationsMonobook.scss' ) );
 			}
 		}
 

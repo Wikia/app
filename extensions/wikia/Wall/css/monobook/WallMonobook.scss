@@ -1,0 +1,108 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+#WallBrickHeader {
+	padding-left: 0;
+	font-size: 188%;
+}
+
+.ns-1201 #contentSub {
+	display: none;
+}
+
+.BreadCrumbs {
+	padding-top: 10px;
+}
+
+#Wall {
+	.avatar { float: left; }
+	& .speech-bubble-message { margin-right: 0px; }
+	& .new-message .speech-bubble-message,
+	& .comments > .SpeechBubble.message > .speech-bubble-message {
+		margin-left: 75px;
+	}
+	.SpeechBubble {
+		margin-right: 0px;
+		&.open .speech-bubble-message {
+			margin-left: 50px;
+		}
+		.SpeechBubble {
+			&:before, &:after { display: none; }
+		}
+	}
+	.speech-bubble-message {
+		margin: 0;
+		padding: 0;
+		background: none;
+
+		a.vote {
+			background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");
+		}
+
+		.votes.notlink {
+			color: $color-text;
+		}
+	}
+	.comments .SpeechBubble .msg-title a {
+		color: $color-text;
+	}
+	.message .message .speech-bubble-message {
+		margin-left: 50px;
+	}
+	.buttons-monobook{
+		display: block;
+		a {
+			margin-right: 10px;
+		}
+	}
+	.buttons {
+		display: none;
+	}
+	textarea {
+		background: $color-page;
+		color: $color-text;
+		border: 1px solid $color-page-border;
+	}
+	.SortingBar {
+		background: $color-page;
+		color: $color-text;
+		border: 1px solid $color-page-border;
+	}
+	.timestamp {
+		width: 100%;
+		margin-bottom: 5px;
+		.buttonswrapper {
+			float: right;
+			a {
+				margin: 0 10px 0 5px;
+			}
+		}
+	}
+}
+
+.deleteorremove-infobox {
+	background: $color-page;
+	border-top: 1px dashed $color-page-border;
+
+	.deleteorremove-bubble {
+		background: $color-page;
+		border: 1px solid $color-page-border;
+		box-shadow: 2px 2px 4px 0 $color-text;
+
+		.message {
+			color: $color-text;
+
+			.reason {
+				color: $color-page-border;
+			}
+		}
+	}
+}
+
+.Wall,
+.WallPreview {
+	.quote {
+		background-color: $color-page;
+		border: 1px solid $color-page-border;
+	}
+}

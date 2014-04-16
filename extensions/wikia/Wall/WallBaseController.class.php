@@ -33,9 +33,10 @@ class WallBaseController extends WikiaController{
 			));
 		}
 
-		if( $this->app->checkSkin( 'monobook' ) ) {
+		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
 			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
+			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallMonobook.scss' );
 		}
 	}
 
@@ -470,18 +471,18 @@ class WallBaseController extends WikiaController{
 				//which are needed to click tracking
 				//if you change those keys here, do so in Wall.js file, please
 				$options = array(
-					'nf' => wfMsg('wall-history-sorting-newest-first'),
-					'of' => wfMsg('wall-history-sorting-oldest-first'),
+					'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(),
+					'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(),
 				);
 				break;
 			case 'index':
 			default:
 				$options = array(
-					'nt' => wfMsg('wall-sorting-newest-threads'),
-					'ot' => wfMsg('wall-sorting-oldest-threads'),
-					'nr' => wfMsg('wall-sorting-newest-replies'),
-					//'ma' => wfMsg('wall-sorting-most-active'),
-					//'a' => wfMsg('wall-sorting-archived')
+					'nt' => wfMessage( 'wall-sorting-newest-threads' )->escaped(),
+					'ot' => wfMessage( 'wall-sorting-oldest-threads' )->escaped(),
+					'nr' => wfMessage( 'wall-sorting-newest-replies' )->escaped(),
+					//'ma' => wfMessage( 'wall-sorting-most-active' )->escaped(),
+					//'a' => wfMessage( 'wall-sorting-archived' )->escaped()
 				);
 				break;
 		}
@@ -524,12 +525,12 @@ class WallBaseController extends WikiaController{
 			$wallMessage->load();
 
 			if( $wallMessage->isWallOwner( $this->wg->User ) ) {
-				$wallName = wfMsg('wall-message-mywall');
+				$wallName = wfMessage( 'wall-message-mywall' )->escaped();
 			} else {
 
 				$wallOwner = $wallMessage->getWallOwner()->getName();
 
-				$wallName = wfMsgExt('wall-message-elseswall', array('parsemag'), $wallOwner);
+				$wallName = wfMessage( 'wall-message-elseswall', $wallOwner )->parse();
 			}
 
 			$wallUrl = $wallMessage->getWallUrl();
@@ -599,7 +600,7 @@ class WallBaseController extends WikiaController{
 
 		$wall_message = $this->response->getVal('wall_message');
 		if ( empty($wall_message) ) {
-			$wall_message = User::isIP($wall_username) ? wfMsg('wall-placeholder-message-anon') : wfMsg('wall-placeholder-message', $wall_username);
+			$wall_message = User::isIP($wall_username) ? wfMessage( 'wall-placeholder-message-anon' )->escaped() : wfMessage( 'wall-placeholder-message', $wall_username )->escaped();
 			$this->response->setVal('wall_message', $wall_message);
 		}
 

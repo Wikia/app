@@ -1,0 +1,11 @@
+// Monobook skin specific styling
+@import "../../../../../skins/wikia/css/color";
+
+.mw-recentchanges-table {
+	.WikiaDropdown {
+		.toolbar {
+			background-color: $color-page;
+			border-bottom: 1px solid $color-text;
+		}
+	}
+}

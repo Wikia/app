@@ -39,15 +39,3 @@
 		}
 	}
 }
-
-/* Monobook colorization issue (VOLDEV-36) */
-.skin-monobook {
-	.mw-recentchanges-table {
-		.WikiaDropdown {
-			.toolbar {
-				background-color: white;
-				border-bottom: 1px solid black;
-			}
-		}
-	}
-}
