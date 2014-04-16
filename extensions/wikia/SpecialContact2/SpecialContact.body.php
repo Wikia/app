@@ -296,7 +296,9 @@ class ContactForm extends SpecialPage {
 			}
 		}
 
-		$result = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
+		# send mail to wgSpecialContactEmail
+		# PLATFORM-212 -> To: and From: fields are set to wgSpecialContactEmail, ReplyTo: field is the user email
+		$result = UserMailer::send( $mail_community, $mail_community, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
 
 		if (!$result->isOK()) {
 			$errors .= "\n" . $result->getMessage();
