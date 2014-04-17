@@ -101,6 +101,11 @@ body.global-header-fixed-at-top .WikiaHeader {
 		}
       }
     }
+	a.forgot-password {
+	  &, &:hover {
+	  	color: $color;
+		}
+	}
 
     .search-form {
       margin-top: -4px;
