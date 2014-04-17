@@ -39,45 +39,4 @@ class LyricsUtilsTest extends WikiaBaseTest {
 		];
 	}
 
-	/**
-	 * @param $message
-	 * @param $input
-	 * @param $expected
-	 *
-	 * @dataProvider stemDataProvider
-	 */
-	public function testStem( $message, $input, $expected ) {
-		$this->assertEquals( $expected, LyricsUtils::stem( $input ), $message );
-	}
-
-	public function stemDataProvider() {
-		return [
-			[
-				'lowercase string',
-				'as d',
-				'asd'
-			],
-			[
-				'mixed case string',
-				'Ab So lU te',
-				'absolute'
-			],
-			[
-				'cyrillic characters',
-				'АбВ Гд',
-				'абвгд',
-			],
-			[
-				'punctuation',
-				'!@#%$#%^^%&^&(Z д',
-				'zд'
-			],
-			[
-				'chinese characters',
-				'左小祖咒 - ',
-				'左小祖咒'
-			]
-		];
-	}
-
 }
