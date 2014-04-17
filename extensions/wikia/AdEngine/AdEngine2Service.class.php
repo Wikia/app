@@ -266,7 +266,7 @@ class AdEngine2Service
 		}
 
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
-			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia.fullFluid'], 'scripts');
 			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}

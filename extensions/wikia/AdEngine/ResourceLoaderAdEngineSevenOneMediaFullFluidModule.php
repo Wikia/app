@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
+class ResourceLoaderAdEngineSevenOneMediaFullFluidModule extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // half an hour -- cache scripts from ad.71i.de for this time
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
 	const CACHE_BUSTER = 5;   // increase this any time the local files change
@@ -18,8 +18,8 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 			return false;
 		}
 
-		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.css');
-		$myJs = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.js');
+		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia-FULL-FLUID/my_ad_integration.css');
+		$myJs = file_get_contents(__DIR__ . '/SevenOneMedia-FULL-FLUID/my_ad_integration.js');
 		$excludeAds = 'if (window.myAd && myAd.excludeAds) myAd.excludeAds();';
 
 		// $myCss = CSSMin::minify($myCss);
