@@ -17,10 +17,10 @@
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config ) {
+	this.$title = null;
+
 	// Parent constructor
 	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
-
-	this.$title = null;
 };
 
 /* Inheritance */
@@ -41,7 +41,7 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
 	var title,
-		attribution = this.model.parent.getAttribute( 'attribution');
+		attribution = this.model.parent.getAttribute( 'attribution' );
 
 	title = mw.Title.newFromText( attribution.title );
 
@@ -61,7 +61,7 @@ ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
 	ve.ce.WikiaMediaCaptionNode.prototype.onSplice.apply( this, arguments );
 
 	if ( this.$title ) {
-		this.$title = this.$title.detach();
+		this.$title.detach();
 	} else {
 		this.$title = this.createTitle();
 	}

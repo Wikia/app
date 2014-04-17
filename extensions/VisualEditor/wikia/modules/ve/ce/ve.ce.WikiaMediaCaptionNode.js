@@ -23,7 +23,7 @@ ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config 
 	this.$details = null;
 
 	// The minimum allowable width for the attribution to be displayed
-	this.minWidth = 102;
+	this.minWidth = 100;
 
 	// Parent constructor
 	ve.ce.BranchNode.call( this, model, config );
@@ -85,11 +85,12 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 
 	if ( this.$attribution ) {
 		this.$attribution.detach();
+		this.$details.detach();
 	} else {
 		this.$attribution = this.createAttribution();
+		this.$details = this.createDetails();
 	}
 
-	this.$details = this.createDetails();
 
 	// Parent method
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
