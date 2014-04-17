@@ -213,6 +213,7 @@ class SolrAdapter {
 		// Add artist meta data
 		$album['artist_name'] = $artist['artist_name'];
 		$album['artist_name_lc_s'] = $artist['artist_name_lc_s'];
+		$album['artist_name_stem_s'] = $artist['artist_name_stem_s'];
 		$album['artist_id'] = $artist['id'];
 		
 		// Add songs meta data
@@ -237,9 +238,12 @@ class SolrAdapter {
 		$song['artist_id'] = $artist['id'];
 		$song['artist_name'] = $artist['artist_name'];
 		$song['artist_name_lc_s'] = $artist['artist_name_lc_s'];
-		
+		$song['artist_name_stem_s'] = $artist['artist_name_stem_s'];
+
 		if ( isset( $album['id'] ) ) {
 			$song['album_name'] = $album['album_name'];
+			$song['album_name_lc_s'] = $album['album_name_lc_s'];
+			$song['album_name_stem_s'] = $album['album_name_stem_s'];
 			$song['album_id'] = $album['id'];
 			if ( isset( $album['image'] ) ) {
 				$song['image'] = $album['image'];
