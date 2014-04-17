@@ -54,6 +54,7 @@ function wfCreatePageInit() {
 	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfCreatePageAjaxGetVEDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
 }
 
@@ -138,9 +139,32 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 	return true;
 }
 
+function wfCreatePageAjaxGetVEDialog() {
+	global $wgRequest;
+
+	$sArticle = $wgRequest->getVal( 'article' );
+
+	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+	$template->set_vars( array(
+			'article' => $sArticle
+		)
+	);
+
+	$body['html'] = $template->render( 'dialog-ve' );
+	$body['title'] = wfMsg( 'createpage-dialog-title' );
+	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['cancelLabel'] = wfMsg( 'createpage-button-cancel' );
+
+	$response = new AjaxResponse( json_encode( $body ) );
+	$response->setCacheDuration( 0 ); // no caching
+	$response->setContentType( 'application/json; charset=utf-8' );
+
+	return $response;
+}
+
 function wfCreatePageAjaxGetDialog() {
 	global $wgWikiaCreatePageUseFormatOnly, $wgUser,  $wgCreatePageOptions, $wgExtensionsPath, $wgScript,
-	$wgEnableVideoToolExt, $wgEnableVisualEditorUI;
+	$wgEnableVideoToolExt, $wgEnableVisualEditorUI, $wgRequest;
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$options = array();
@@ -207,6 +231,7 @@ function wfCreatePageAjaxGetDialog() {
 	$body['defaultOption'] = $defaultLayout;
 	$body['title'] = wfMsg( 'createpage-dialog-title' );
 	$body['addPageLabel'] = wfMsg( 'button-createpage' );
+	$body['article'] = $wgRequest->getVal( 'article' );
 
 	$response = new AjaxResponse( json_encode( $body ) );
 	$response->setCacheDuration( 0 ); // no caching
