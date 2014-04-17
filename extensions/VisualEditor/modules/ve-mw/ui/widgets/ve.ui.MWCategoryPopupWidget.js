@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWCategoryPopupWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -27,15 +27,20 @@ ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
 	this.removed = false;
 	this.$title = this.$( '<label>' );
 	this.$menu = this.$( '<div>' );
-	this.removeButton = new OO.ui.IconButtonWidget( {
-		'$': this.$, 'icon': 'remove', 'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
+	this.removeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'frameless': true,
+		'icon': 'remove',
+		'title': ve.msg( 'visualeditor-inspector-remove-tooltip' )
 	} );
 	this.sortKeyInput = new OO.ui.TextInputWidget( { '$': this.$ } );
-	this.sortKeyLabel = new OO.ui.InputLabelWidget(
-		{ '$': this.$, '$input': this.sortKeyInput, 'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' ) }
-	);
+	this.sortKeyField = new OO.ui.FieldLayout( this.sortKeyInput, {
+		'$': this.$,
+		'align': 'top',
+		'label': ve.msg ( 'visualeditor-dialog-meta-categories-sortkey-label' )
+	} );
 	this.$sortKeyForm = this.$( '<form>' ).addClass( 've-ui-mwCategoryPopupWidget-sortKeyForm' )
-		.append( this.sortKeyLabel.$element, this.sortKeyInput.$element );
+		.append( this.sortKeyField.$element );
 
 	// Events
 	this.connect( this, { 'hide': 'onHide' } );
@@ -47,10 +52,12 @@ ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
 	this.$title
 		.addClass( 've-ui-mwCategoryPopupWidget-title oo-ui-icon-tag' )
 		.text( ve.msg( 'visualeditor-dialog-meta-categories-category' ) );
+	this.$hiddenStatus = this.$( '<div>' );
 	this.$menu
 		.addClass( 've-ui-mwCategoryPopupWidget-content' )
 		.append(
 			this.$title,
+			this.$hiddenStatus,
 			this.removeButton.$element.addClass( 've-ui-mwCategoryPopupWidget-removeButton' ),
 			this.$sortKeyForm
 		);
@@ -84,10 +91,6 @@ OO.inheritClass( ve.ui.MWCategoryPopupWidget, OO.ui.PopupWidget );
  * @fires removeCategory
  */
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-page-settings-button-remove-category'
-	} );
 	this.removed = true;
 	this.emit( 'removeCategory', this.category );
 	this.closePopup();
@@ -101,10 +104,6 @@ ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
  * @fires updateSortkey
  */
 ve.ui.MWCategoryPopupWidget.prototype.onSortKeySubmit = function () {
-	ve.track( 'wikia', {
-		'action': ve.track.actions.SUBMIT,
-		'label': 'dialog-page-settings-change-sortkey'
-	} );
 	this.closePopup();
 	return false;
 };
@@ -128,9 +127,9 @@ ve.ui.MWCategoryPopupWidget.prototype.openPopup = function ( item ) {
  *
  * @method
  */
-ve.ui.MWCategoryPopupWidget.prototype.onHide = function() {
+ve.ui.MWCategoryPopupWidget.prototype.onHide = function () {
 	var newSortkey = this.sortKeyInput.$input.val();
-	if ( !this.removed && newSortkey !== this.origSortkey ) {
+	if ( !this.removed && newSortkey !== ( this.origSortkey || '' ) ) {
 		this.emit( 'updateSortkey', this.category, this.sortKeyInput.$input.val() );
 	}
 };
@@ -143,6 +142,11 @@ ve.ui.MWCategoryPopupWidget.prototype.onHide = function() {
  */
 ve.ui.MWCategoryPopupWidget.prototype.loadCategoryIntoPopup = function ( item ) {
 	this.origSortkey = item.sortkey;
+	if ( item.isHidden ) {
+		this.$hiddenStatus.text( ve.msg( 'visualeditor-dialog-meta-categories-hidden' ) );
+	} else {
+		this.$hiddenStatus.empty();
+	}
 	this.sortKeyInput.$input.val( item.sortKey );
 };
 
@@ -173,8 +177,8 @@ ve.ui.MWCategoryPopupWidget.prototype.setDefaultSortKey = function ( value ) {
  * @param {ve.ui.MWCategoryItemWidget} item Category item
  */
 ve.ui.MWCategoryPopupWidget.prototype.setPopup = function ( item ) {
-	var left = item.$arrow.offset().left + ( item.$arrow.width() / 2 ),
-		top = item.$arrow.offset().top + item.$arrow.height(),
+	var left = item.$indicator.offset().left + ( item.$indicator.width() / 2 ),
+		top = item.$indicator.offset().top + item.$indicator.height(),
 		width = this.$menu.outerWidth( true ),
 		height = this.$menu.outerHeight( true );
 

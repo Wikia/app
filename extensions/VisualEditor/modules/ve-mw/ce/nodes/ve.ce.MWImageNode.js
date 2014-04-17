@@ -1,11 +1,9 @@
 /*!
  * VisualEditor ContentEditable MWImageNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-
-/*global mw */
 
 /**
  * ContentEditable MediaWiki image node.
@@ -19,20 +17,31 @@
  * @mixins ve.ce.MWResizableNode
  *
  * @constructor
+ * @param {jQuery} $figure Figure element
+ * @param {jQuery} $image Image element
  * @param {Object} [config] Configuration options
  */
-ve.ce.MWImageNode = function VeCeMWImageNode( $inner, $image, config ) {
+ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
+	config = ve.extendObject( {
+		'enforceMax': false,
+		'minDimensions': { 'width': 1, 'height': 1 }
+	}, config );
+
 	// Parent constructor
 	ve.ce.GeneratedContentNode.call( this );
 
-	this.$inner = $inner;
+	this.$figure = $figure;
 	this.$image = $image;
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this, this.$inner, config );
-	ve.ce.FocusableNode.call( this, this.$inner, config );
-	ve.ce.RelocatableNode.call( this, this.$inner, config );
+	ve.ce.ProtectedNode.call( this, this.$figure, config );
+	ve.ce.FocusableNode.call( this, this.$figure, config );
+	ve.ce.RelocatableNode.call( this, this.$figure, config );
 	ve.ce.MWResizableNode.call( this, this.$image, config );
+	ve.ce.ClickableNode.call( this );
+
+	// Events
+	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -50,24 +59,36 @@ OO.mixinClass( ve.ce.MWImageNode, ve.ce.ResizableNode );
 
 OO.mixinClass( ve.ce.MWImageNode, ve.ce.MWResizableNode );
 
+OO.mixinClass( ve.ce.MWImageNode, ve.ce.ClickableNode );
+
+/* Static Properties */
+
+ve.ce.MWImageNode.static.primaryCommandName = 'mediaEdit';
+
 /* Methods */
+
+/**
+ * Update the rendering of the 'align', src', 'width' and 'height' attributes
+ * when they change in the model.
+ *
+ * @method
+ * @param {string} key Attribute key
+ * @param {string} from Old value
+ * @param {string} to New value
+ */
+ve.ce.MWImageNode.prototype.onAttributeChange = function () {};
 
 /** */
 ve.ce.MWImageNode.prototype.generateContents = function () {
 	var xhr, deferred = $.Deferred();
 
-	xhr = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
+	xhr = ve.init.mw.Target.static.apiRequest( {
 			'action': 'query',
 			'prop': 'imageinfo',
 			'iiprop': 'url',
-			'iiurlwidth': this.model.getAttribute( 'width' ),
-			'iiurlheight': this.model.getAttribute( 'height' ),
-			'titles': this.model.getAttribute( 'resource' ).replace( /^(.+\/)*/, '' ),
-			'format': 'json'
-		},
-		'cache': 'false'
+			'iiurlwidth': this.getModel().getAttribute( 'width' ),
+			'iiurlheight': this.getModel().getAttribute( 'height' ),
+			'titles': this.getModel().getAttribute( 'resource' ).replace( /^(.+\/)*/, '' )
 	} )
 		.done( ve.bind( this.onParseSuccess, this, deferred ) )
 		.fail( ve.bind( this.onParseError, this, deferred ) );
@@ -97,7 +118,7 @@ ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
 
 /** */
 ve.ce.MWImageNode.prototype.render = function ( generateContents ) {
-	this.$image.attr( 'src', ve.resolveUrl( generateContents, this.getModelHtmlDocument() ) );
+	this.$image.attr( 'src', generateContents );
 	if ( this.live ) {
 		this.afterRender();
 	}

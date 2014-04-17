@@ -102,6 +102,17 @@
 				var target = new ve.init.mw.WikiaViewPageTarget();
 				ve.init.mw.targets.push( target );
 
+				if ( ve.debug ) {
+					debugBar = new ve.init.DebugBar();
+					target.on( 'surfaceReady', function () {
+						$( '#content' ).append( debugBar.$element.show() );
+						debugBar.attachToSurface( target.surface );
+						target.surface.on( 'destroy', function () {
+							debugBar.$element.hide();
+						} );
+					} );
+				}
+
 				// Transfer methods
 				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 

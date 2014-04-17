@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface LinkInspector class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -14,12 +14,11 @@
  * @extends ve.ui.LinkInspector
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this inspector is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWLinkInspector = function VeUiMWLinkInspector( windowSet, config ) {
+ve.ui.MWLinkInspector = function VeUiMWLinkInspector( config ) {
 	// Parent constructor
-	ve.ui.LinkInspector.call( this, windowSet, config );
+	ve.ui.LinkInspector.call( this, config );
 };
 
 /* Inheritance */
@@ -31,7 +30,9 @@ OO.inheritClass( ve.ui.MWLinkInspector, ve.ui.LinkInspector );
 ve.ui.MWLinkInspector.static.name = 'link';
 
 ve.ui.MWLinkInspector.static.modelClasses = [
-	ve.dm.MWExternalLinkAnnotation, ve.dm.MWInternalLinkAnnotation
+	ve.dm.MWExternalLinkAnnotation,
+	ve.dm.MWInternalLinkAnnotation,
+	ve.dm.MWNumberedExternalLinkNode
 ];
 
 ve.ui.MWLinkInspector.static.linkTargetInputWidget = ve.ui.MWLinkTargetInputWidget;
@@ -39,16 +40,17 @@ ve.ui.MWLinkInspector.static.linkTargetInputWidget = ve.ui.MWLinkTargetInputWidg
 /* Methods */
 
 /**
- * Gets an annotation object from a target.
+ * Gets an annotation object from a fragment.
  *
  * The type of link is automatically detected based on some crude heuristics.
  *
  * @method
- * @param {string} target Link target
+ * @param {ve.dm.SurfaceFragment} fragment Current selection
  * @returns {ve.dm.MWInternalLinkAnnotation|ve.dm.MWExternalLinkAnnotation|null}
  */
-ve.ui.MWLinkInspector.prototype.getAnnotationFromText = function ( target ) {
-	var title = mw.Title.newFromText( target );
+ve.ui.MWLinkInspector.prototype.getAnnotationFromFragment = function ( fragment ) {
+	var target = fragment.getText(),
+		title = mw.Title.newFromText( target );
 
 	// Figure out if this is an internal or external link
 	if ( ve.init.platform.getExternalLinkUrlProtocolsRegExp().test( target ) ) {
@@ -75,7 +77,9 @@ ve.ui.MWLinkInspector.prototype.getAnnotationFromText = function ( target ) {
 			'type': 'link/mwInternal',
 			'attributes': {
 				'title': target,
-				'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target )
+				// bug 62816: we really need a builder for this stuff
+				'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target ),
+				'lookupTitle': ve.dm.MWInternalLinkAnnotation.static.getLookupTitle( target )
 			}
 		} );
 	} else {
@@ -83,6 +87,27 @@ ve.ui.MWLinkInspector.prototype.getAnnotationFromText = function ( target ) {
 		// for an internal link.
 		return null;
 	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWLinkInspector.prototype.getNodeChanges = function () {
+	var annotations, data,
+		doc = this.linkNode.getDocument(),
+		annotation = this.getAnnotation();
+	if ( annotation instanceof ve.dm.MWInternalLinkAnnotation ) {
+		// We're inspecting a numbered external link node and attempting to set its target
+		// to an internal link. Replace the numbered link node with an internal link annotation,
+		// with the link target as the text.
+		annotations = doc.data.getAnnotationsFromOffset( this.linkNode.getOffset() ).clone();
+		annotations.push( annotation );
+		data = ve.splitClusters( annotation.getAttribute( 'title' ) );
+		ve.dm.Document.static.addAnnotationsToData( data, annotations );
+		return data;
+	}
+	// Parent method
+	return ve.ui.LinkInspector.prototype.getNodeChanges.call( this );
 };
 
 /* Registration */

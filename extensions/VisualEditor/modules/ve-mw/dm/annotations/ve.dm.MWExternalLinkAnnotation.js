@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWExternalLinkAnnotation class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -37,7 +37,6 @@ ve.dm.MWExternalLinkAnnotation.static.matchRdfaTypes = [ 'mw:ExtLink' ];
 
 ve.dm.MWExternalLinkAnnotation.static.toDataElement = function ( domElements ) {
 	var parentResult = ve.dm.LinkAnnotation.static.toDataElement.apply( this, arguments );
-	parentResult.type = 'link/mwExternal';
 	parentResult.attributes.rel = domElements[0].getAttribute( 'rel' );
 	return parentResult;
 };

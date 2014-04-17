@@ -1,0 +1,16 @@
+{
+    "@metadata": {
+        "authors": [
+            "Arystanbek"
+        ]
+    },
+    "tag-visualeditor": "\u003Cspan style=\"background-color:#7FFFD4\"\u003E[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]\u003C/span\u003E",
+    "tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] қолданылып жасаған өңдеме.",
+    "tag-visualeditor-needcheck": "\u003Cspan style=\"background-color:#7FFFD4\"\u003E[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Тексеру]]\u003C/span\u003E",
+    "tag-visualeditor-switched": "\u003Cspan style=\"background-color:#7FFFD4\"\u003E[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Ауысты]]\u003C/span\u003E",
+    "tag-visualeditor-switched-description": "Қатысушы VisualEditor қолданып өңдеуді бастады содан кейін уикимәтін өңдеу режиміне ауыстырды",
+    "visualeditor-feedback-link": "Project:VisualEditor/Пікірлер",
+    "visualeditor-feedback-tool": "Пікір қалдыру",
+    "visualeditor-help-label": "Қолдану нұсқаулығын оқыңыз",
+    "visualeditor-help-title": "Өңдеушіні қалай қолдану туралы қолдану нұсқаулығы"
+}

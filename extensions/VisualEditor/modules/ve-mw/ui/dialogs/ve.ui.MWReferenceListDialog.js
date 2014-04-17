@@ -1,7 +1,7 @@
 /*!
  * VisualEditor user interface MWReferenceListDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -9,26 +9,32 @@
  * Dialog for inserting and editing MediaWiki reference lists.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceListDialog = function VeUiMWReferenceListDialog( windowSet, config ) {
+ve.ui.MWReferenceListDialog = function VeUiMWReferenceListDialog( config ) {
+	// Configuration initialization
+	config = ve.extendObject( { 'size': 'small' }, config );
+
 	// Parent constructor
-	ve.ui.MWDialog.call( this, windowSet, config );
+	ve.ui.Dialog.call( this, config );
+
+	// Properties
+	this.node = null;
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWReferenceListDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWReferenceListDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
 ve.ui.MWReferenceListDialog.static.name = 'referenceList';
 
-ve.ui.MWReferenceListDialog.static.titleMessage = 'visualeditor-dialog-referencelist-title';
+ve.ui.MWReferenceListDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-referencelist-title' );
 
 ve.ui.MWReferenceListDialog.static.icon = 'references';
 
@@ -39,28 +45,28 @@ ve.ui.MWReferenceListDialog.static.icon = 'references';
  */
 ve.ui.MWReferenceListDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.editPanel = new OO.ui.PanelLayout( {
 		'$': this.$, 'scrollable': true, 'padded': true
 	} );
 	this.optionsFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-reference-options-section' ),
-		'icon': 'settings'
+		'$': this.$
 	} );
 
-	this.groupInput = new OO.ui.TextInputWidget( { '$': this.$ } );
-	this.groupLabel = new OO.ui.InputLabelWidget( {
+	this.groupInput = new OO.ui.TextInputWidget( {
 		'$': this.$,
-		'input': this.groupInput,
+		'placeholder': ve.msg( 'visualeditor-dialog-reference-options-group-placeholder' )
+	} );
+	this.groupField = new OO.ui.FieldLayout( this.groupInput, {
+		'$': this.$,
+		'align': 'top',
 		'label': ve.msg( 'visualeditor-dialog-reference-options-group-label' )
 	} );
 
-	this.applyButton = new OO.ui.PushButtonWidget( {
+	this.applyButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-action-apply' ),
 		'flags': ['primary']
 	} );
 
@@ -68,7 +74,7 @@ ve.ui.MWReferenceListDialog.prototype.initialize = function () {
 	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
 
 	// Initialization
-	this.optionsFieldset.$element.append( this.groupLabel.$element, this.groupInput.$element );
+	this.optionsFieldset.addItems( [ this.groupField ] );
 	this.editPanel.$element.append( this.optionsFieldset.$element );
 	this.$body.append( this.editPanel.$element );
 	this.$foot.append( this.applyButton.$element );
@@ -79,39 +85,35 @@ ve.ui.MWReferenceListDialog.prototype.initialize = function () {
  */
 ve.ui.MWReferenceListDialog.prototype.setup = function ( data ) {
 	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this, data );
+	ve.ui.Dialog.prototype.setup.call( this, data );
 
 	var node, refGroup;
 
 	// Prepopulate from existing node if we're editing a node
 	// instead of inserting a new one
-	node = this.surface.getView().getFocusedNode();
-	if ( node instanceof ve.ce.MWReferenceListNode ) {
-		refGroup = node.getModel().getAttribute( 'refGroup' );
-
+	node = this.getFragment().getSelectedNode();
+	if ( node instanceof ve.dm.MWReferenceListNode ) {
+		refGroup = node.getAttribute( 'refGroup' );
+		this.node = node;
 	} else {
 		refGroup = '';
+		this.node = null;
 	}
 
 	this.groupInput.setValue( refGroup );
-
-	/**
-	 * Focused node.
-	 *
-	 * @private
-	 * @property {ve.ce.MWReferenceListNode|undefined}
-	 */
-	this.node = node;
+	this.applyButton.setLabel ( ve.msg (
+			this.node ?
+				'visualeditor-dialog-action-apply' :
+				'visualeditor-dialog-referencelist-insert-button'
+	) );
 };
 
 /**
  * @inheritdoc
  */
 ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
-	var refGroup, listGroup, oldListGroup, attrChanges,
-		doc, model,
-		surfaceModel = this.surface.getModel(),
-		node = this.node;
+	var refGroup, listGroup, oldListGroup, attrChanges, doc,
+		surfaceModel = this.getFragment().getSurface();
 
 	// Data initialization
 	data = data || {};
@@ -121,11 +123,10 @@ ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
 		refGroup = this.groupInput.getValue();
 		listGroup = 'mwReference/' + refGroup;
 
-		if ( node ) {
+		if ( this.node ) {
 			// Edit existing model
 			doc = surfaceModel.getDocument();
-			model = node.getModel();
-			oldListGroup = model.getAttribute( 'listGroup' );
+			oldListGroup = this.node.getAttribute( 'listGroup' );
 
 			if ( listGroup !== oldListGroup ) {
 				attrChanges = {
@@ -134,7 +135,7 @@ ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
 				};
 				surfaceModel.change(
 					ve.dm.Transaction.newFromAttributeChanges(
-						doc, model.getOuterRange().start, attrChanges
+						doc, this.node.getOuterRange().start, attrChanges
 					)
 				);
 			}
@@ -149,12 +150,12 @@ ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
 					}
 				},
 				{ 'type': '/mwReferenceList' }
-			] );
+			] ).collapseRangeToEnd().select();
 		}
 	}
 
 	// Parent method
-	ve.ui.MWDialog.prototype.teardown.call( this, data );
+	ve.ui.Dialog.prototype.teardown.call( this, data );
 };
 
 /* Registration */

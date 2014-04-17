@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"visualeditor": "Editor visual",
+	"visualeditor-aliennode-tooltip": "Iste elemento pote solmente esser modificate con le editor de codice fonte.",
+	"visualeditor-annotationbutton-bold-tooltip": "Grasse",
+	"visualeditor-annotationbutton-code-tooltip": "Codice de computator",
+	"visualeditor-annotationbutton-italic-tooltip": "Italic",
+	"visualeditor-annotationbutton-language-tooltip": "Lingua",
+	"visualeditor-annotationbutton-link-tooltip": "Ligamine",
+	"visualeditor-clearbutton-tooltip": "Rader formatation",
+	"visualeditor-dialog-action-apply": "Applicar modificationes",
+	"visualeditor-dialog-action-cancel": "Cancellar",
+	"visualeditor-dialog-action-goback": "Retornar",
+	"visualeditor-formatdropdown-format-heading1": "Titulo 1",
+	"visualeditor-formatdropdown-format-heading2": "Titulo 2",
+	"visualeditor-formatdropdown-format-heading3": "Titulo 3",
+	"visualeditor-formatdropdown-format-heading4": "Titulo 4",
+	"visualeditor-formatdropdown-format-heading5": "Titulo 5",
+	"visualeditor-formatdropdown-format-heading6": "Titulo 6",
+	"visualeditor-formatdropdown-format-paragraph": "Paragrapho",
+	"visualeditor-formatdropdown-format-preformatted": "Preformatate",
+	"visualeditor-formatdropdown-title": "Cambiar formato",
+	"visualeditor-historybutton-redo-tooltip": "Refacer",
+	"visualeditor-historybutton-undo-tooltip": "Disfacer",
+	"visualeditor-indentationbutton-indent-tooltip": "Augmentar indentation",
+	"visualeditor-indentationbutton-outdent-tooltip": "Reducer indentation",
+	"visualeditor-linkinspector-title": "Modificar ligamine",
+	"visualeditor-listbutton-bullet-tooltip": "Lista a punctos",
+	"visualeditor-listbutton-number-tooltip": "Lista numerate"
+}

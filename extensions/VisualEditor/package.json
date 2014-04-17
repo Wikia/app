@@ -15,10 +15,11 @@
     }
   ],
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.5.4",
-    "grunt-contrib-csslint": "~0.1.2",
-    "grunt-contrib-qunit": "~0.2.1",
-    "grunt-contrib-watch": "~0.4.3"
+    "grunt": "0.4.2",
+    "grunt-contrib-jshint": "0.7.2",
+    "grunt-contrib-csslint": "0.2.0",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-banana-checker": "0.1.0",
+    "grunt-jscs-checker": "0.4.1"
   }
 }
