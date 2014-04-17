@@ -86,15 +86,22 @@ class SearchApiController extends WikiaApiController {
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
 		}
-		if ( $expand ) {
-			$items = array();
-			foreach( $responseValues['items'] as $result ) {
+
+		$items = array();
+		foreach( $responseValues['items'] as $result ) {
+			if ( $expand ) {
 				$items[] = $this->getWikiDetailsService()
 					->getWikiDetails( $result['id'], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
+			} else {
+				$items[] = [
+					'id' => (int) $result['id'],
+					'url' => $result['url'],
+ 				];
 			}
-			$responseValues['items'] = $items;
 		}
-		$this->setResponseData($responseValues);
+		$responseValues['items'] = $items;
+
+		$this->setResponseData($responseValues, 'image');
 	}
 
 	/**
