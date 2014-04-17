@@ -44,9 +44,9 @@ abstract class BaseScraper {
 	 */
 	protected function addPairToResult( $row, &$result ) {
 		$pos = mb_strpos( $row, '=' );
-		if ( $pos !== false) {
-			$key = trim( mb_substr($row, 0, $pos ) );
-			$value = trim( mb_substr($row, $pos + 1 ) );
+		if ( $pos !== false ) {
+			$key = trim( mb_substr( $row, 0, $pos ) );
+			$value = trim( mb_substr( $row, $pos + 1 ) );
 			$result[$key] = trim( $value );
 		}
 	}
