@@ -343,7 +343,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			width = attributes.width;
 
 		// copied from WikiaFileHelper::getThumbnailSize
-		if ( width < 200 ) {
+		if ( width < 100 ) {
+			size = 'xxsmall';
+		} else if ( width < 200 ) {
 			size = 'xsmall';
 		} else if ( width < 270 ) {
 			size = 'small';

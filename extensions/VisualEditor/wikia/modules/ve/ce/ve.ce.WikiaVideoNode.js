@@ -76,7 +76,9 @@ ve.ce.WikiaVideoNode.prototype.onWikiaVideoSetup = function () {
 ve.ce.WikiaVideoNode.prototype.getSize = function( width ) {
 	var size;
 
-	if ( width < 200 ) {
+	if ( width < 100 ) {
+		size = 'xxsmall';
+	} else if ( width < 200 ) {
 		size = 'xsmall';
 	} else if ( width < 270 ) {
 		size = 'small';
