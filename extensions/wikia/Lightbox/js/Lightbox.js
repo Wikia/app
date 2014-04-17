@@ -988,12 +988,7 @@
 				Lightbox.openModal.progress.html(html);
 			};
 
-			beforeMove = function () {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').hide();
-			};
-
 			afterMove = function (idx) {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').show();
 				// if we're close to the end, load more thumbnails
 				if (Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
 					Lightbox.getMediaThumbs.wikiPhotos();
