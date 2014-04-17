@@ -78,7 +78,11 @@ body.global-header-fixed-at-top .WikiaHeader {
         background-color: $hover-color;
         border-color: $hover-color;
       }
+
     }
+	input.login-button {
+	  color: #fff;
+	}
 
     &.start-a-wiki {
       margin-top: 0;
@@ -92,7 +96,7 @@ body.global-header-fixed-at-top .WikiaHeader {
         height: 27px;
         line-height: 27px;
 
-		&:hover {
+		&, &:hover {
 		  color: #fff;
 		}
       }
@@ -323,54 +327,22 @@ body.global-header-fixed-at-top .WikiaHeader {
   }
 
   @media screen and (max-width: $breakpoint-small) {
-    li.start-a-wiki {
-      display: block;
-    }
-
-    &.hide-new-wiki li.start-a-wiki, .login-text {
+    li.start-a-wiki, .login-text {
       display: none;
     }
+	#WallNotifications, .AccountNavigation {
+	  right: 10px;
+	}
 
-    &.hide-new-wiki {
-      #WallNotifications, .AccountNavigation {
-        right: 10px;
-      }
-
-      .page-width-container > ul:not(:last-child)#AccountNavigation {
-        right: 50px;
-      }
-    }
+	.page-width-container > ul:not(:last-child)#AccountNavigation {
+	  right: 50px;
+	}
 
     .ajaxLogin {
       background-image: url(/skins/oasis/images/GlobalHeaderAB/profile.png); /* base64 */;
       background-position: 10px center;
       background-repeat: no-repeat;
-      padding-left: 30px;
-    }
-
-    .AccountNavigation {
-      li:nth-child(2) {
-        display: none;
-      }
-
-      .UserLoginDropdown {
-        .ajaxRegister {
-          @include box-sizing;
-          background-color: $signup-color;
-          border-color: $signup-color;
-          border-radius: 4px;
-          color: $bg-color;
-          display: block;
-          margin: 0 auto 15px;
-          text-align: center;
-          text-decoration: none;
-          width: 125px;
-        }
-        .WikiaForm {
-          padding-top: 8px;
-          border-top: 1px solid $menu-hover-bg-color;
-        }
-      }
+      padding-left: 35px;
     }
 
     li .search-box {
