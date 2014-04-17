@@ -354,9 +354,6 @@ var CreatePage = {
 	}
 };
 
-window.CreatePage = CreatePage;
-
-
 jQuery(function() {
 	'use strict';
 	CreatePage.init( window );
