@@ -975,10 +975,10 @@
 				var template = Lightbox.openModal.progressTemplate,
 					progress,
 					html,
-					firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
+					$firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
 
 				// Track progress based on if we're in backfill content or original content
-				if (firstThumb.hasClass('back-fill')) {
+				if ($firstThumb.data('backfill') === 'true') {
 					progress = trackBackfillProgress(idx1, idx2);
 				} else {
 					progress = trackOriginalProgress(idx1, idx2);
@@ -1421,13 +1421,14 @@
 			}
 		},
 		addThumbsToCarousel: function (thumbs, backfill) {
-			var container = Lightbox.openModal.carouselContainer,
-				// render carousel
-				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
-					// todo: use data attribute instead of class here
-					liClass: 'video-thumbnail xsmall ' + (backfill ? 'back-fill' : ''),
-					thumbs: thumbs
-				});
+			var carouselThumbs,
+				container = Lightbox.openModal.carouselContainer;
+
+			// render carousel
+			carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
+				backfill: backfill,
+				thumbs: thumbs
+			});
 
 			Lightbox.openModal.carousel.append(carouselThumbs);
 
