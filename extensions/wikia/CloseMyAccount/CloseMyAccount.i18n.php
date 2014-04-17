@@ -14,7 +14,7 @@ $messages = array();
 $messages['en'] = array(
 	'closemyaccount' => 'Close My Account',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
-	'closemyaccount-intro-text' => "We are sorry you want to disable your account. Wikia has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
+	'closemyaccount-intro-text' => "We are sorry {{GENDER:$2|you}} want to disable your account. Wikia has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
 
 If you have decided you definitely want to disable your account please be aware:
 * Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used.
@@ -31,7 +31,7 @@ Please note you will have $1 {{PLURAL:$1|day|days}} after making this request to
 	'closemyaccount-button-text' => 'Close my account',
 	'closemyaccount-reactivate-button-text' => 'Reactivate my account',
 	'closemyaccount-reactivate-page-title' => 'Reactivate my account',
-	'closemyaccount-reactivate-intro' => 'You have previously requested that we close your account. You still have $1 {{PLURAL:$1|day|days}} left until your account is closed. If you still wish to close your account, simply go back to browsing Wikia. However, if you would like to reactivate your account, please click the button below and follow the instructions in the email.
+	'closemyaccount-reactivate-intro' => '{{GENDER:$2|You}} have previously requested that we close your account. You still have $1 {{PLURAL:$1|day|days}} left until your account is closed. If you still wish to close your account, simply go back to browsing Wikia. However, if you would like to reactivate your account, please click the button below and follow the instructions in the email.
 
 Would you like to reactivate your account?',
 	'closemyaccount-reactivate-requested' => 'An email has been sent to the address you had set for your account. Please click the link in the email to reactivate your account.',
@@ -39,7 +39,7 @@ Would you like to reactivate your account?',
 	'closemyaccount-reactivate-error-logged-in' => 'Please login to an account that is scheduled to be closed first to request reactivation.',
 	'closemyaccount-reactivate-error-email' => 'No email was set for this account prior to requesting closure so it cannot be reactivated. Please [[Special:Contact|contact Wikia]] if you have any questions.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Account is not scheduled for closure.',
-	'closemyaccount-reactivate-error-invalid-code' => 'You appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
+	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|You}} appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
 	'closemyaccount-reactivate-error-empty-code' => 'A confirmation code needed to reactivate your account has not been provided. If you have requested your account be reactivated, please click the link in the email sent to you. Otherwise, [[Special:UserLogin|login]] to the account you want to reactivate in order to request a confirmation code.',
 	'closemyaccount-reactivate-error-disabled' => 'This account has already been disabled. Please [[Special:Contact|contact Wikia]] if you have any questions.',
 	'closemyaccount-reactivate-error-failed' => 'An error occurred while attempting to reactivate this account. Please try again or [[Special:Contact|contact Wikia]] if the issue persists.',
@@ -76,7 +76,9 @@ To check out the latest happenings on Wikia, visit http://community.wikia.com',
 $messages['qqq'] = array(
 	'closemyaccount' => 'Special page name',
 	'closemyaccount-desc' => '{{desc}}',
-	'closemyaccount-intro-text' => 'Text displayed at the top of the Close My Account form. $1 is the number of days before the account is permanently closed.',
+	'closemyaccount-intro-text' => 'Text displayed at the top of the Close My Account form.
+* $1 is the number of days before the account is permanently closed
+* $2 is the username',
 	'closemyaccount-unconfirmed-email' => 'Warning message displayed when a user attempts to close their account when they do not have a confirmed email set on their account.',
 	'closemyaccount-logged-in-as' => "Message on close account form informing the user which account they are logged in as to make sure they aren't closing the wrong account.
 * $1 is the username",
@@ -88,13 +90,16 @@ $messages['qqq'] = array(
 	'closemyaccount-button-text' => 'Text of the submit button to close your account',
 	'closemyaccount-reactivate-button-text' => 'Text of the submit button to reactivate your account',
 	'closemyaccount-reactivate-page-title' => 'Special page name of the reactivate account form.',
-	'closemyaccount-reactivate-intro' => 'Text displayed at the top of the Reactivate My Account form. $1 is the number of days the user has left to reactivate their account.',
+	'closemyaccount-reactivate-intro' => 'Text displayed at the top of the Reactivate My Account form.
+* $1 is the number of days the user has left to reactivate their account
+* $2 is the username',
 	'closemyaccount-reactivate-requested' => 'Confirmation text displayed when a user has successfully requested their account be reactivated.',
 	'closemyaccount-reactivate-error-id' => 'Error message displayed when trying to access the reactivate form without a valid ID.',
 	'closemyaccount-reactivate-error-logged-in' => 'Error message displayed when trying to access the reactivate form while logged in to an active account.',
 	'closemyaccount-reactivate-error-email' => 'Error message displayed when the user attempts to reactivate an account that does not have a confirmed email address.',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Error message displayed when the user attempts to reactivate an account that is not scheduled for closure.',
-	'closemyaccount-reactivate-error-invalid-code' => 'Error message displayed when a user attempted to reactivate their account with an invalid or expired code.',
+	'closemyaccount-reactivate-error-invalid-code' => 'Error message displayed when a user attempted to reactivate their account with an invalid or expired code.
+* $1 is the username provided by the user',
 	'closemyaccount-reactivate-error-empty-code' => 'Error message displayed when a user tries to reactivate their account without a confirmation code.',
 	'closemyaccount-reactivate-error-disabled' => 'Error message displayed when the user attempts to reactivate an account that has already been closed.',
 	'closemyaccount-reactivate-error-failed' => 'Error message displayed when reactivation of an account has failed.',

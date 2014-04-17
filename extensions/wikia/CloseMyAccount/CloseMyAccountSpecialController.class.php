@@ -67,7 +67,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 		} else {
 
-			$this->introText = $this->msg( 'closemyaccount-intro-text', $waitPeriod )->parseAsBlock();
+			$this->introText = $this->msg( 'closemyaccount-intro-text', $waitPeriod, $user->getName() )->parseAsBlock();
 			$this->currentUserMessage = $this->msg( 'closemyaccount-logged-in-as', $user->getName() )->parseAsBlock();
 
 			if ( !$user->isEmailConfirmed() ) {
@@ -151,7 +151,8 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$expUser = User::newFromConfirmationCode( $this->code );
 			if ( !( $expUser instanceof User ) ) {
 				$this->success = false;
-				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-invalid-code' )->parse();
+				$this->resultMessage = $this->msg( 'closemyaccount-reactivate-error-invalid-code',
+					$this->username )->parse();
 				wfProfileOut( __METHOD__ );
 				return;
 			}
@@ -275,7 +276,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$daysUntilClosure = $helper->getDaysUntilClosure( $userObj );
 
 			$this->introText = $this->msg( 'closemyaccount-reactivate-intro',
-				$this->getLanguage()->formatNum( $daysUntilClosure ) )->parseAsBlock();
+				$this->getLanguage()->formatNum( $daysUntilClosure ), $userObj->getName() )->parseAsBlock();
 
 			$buttonParams = [
 				'type' => 'button',
