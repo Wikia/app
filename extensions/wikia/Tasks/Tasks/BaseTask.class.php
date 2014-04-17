@@ -75,11 +75,15 @@ abstract class BaseTask {
 
 	}
 
-	public function queue($priority=false, $dupCheck=true) {
+	public function queue($wikiId=null, $priority=false, $dupCheck=true) {
 		$taskList = new AsyncTaskList();
 
 		foreach ($this->calls as $i => $call) {
 			$taskList->add([$this, $i]);
+		}
+
+		if ($wikiId) {
+			$taskList->wikiId($wikiId);
 		}
 
 		if ($priority) {
