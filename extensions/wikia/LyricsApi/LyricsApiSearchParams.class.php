@@ -61,4 +61,13 @@ class LyricsApiSearchParams {
 		}
 	}
 
+	/**
+	 * @desc Returns lower cased value of field
+	 * @param $fieldName
+	 * @return string
+	 */
+	public function getLowerCaseField( $fieldName ) {
+		return LyricsUtils::lowercase( $this-> getField( $fieldName ) );
+	}
+
 }

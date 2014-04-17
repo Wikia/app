@@ -15,8 +15,11 @@
 		<!--NAMES-->
 
 		<field name="artist_name" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+		<field name="artist_name_lc" type="string" indexed="true" stored="true" required="true" multiValued="false" />
 		<field name="album_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
+		<field name="album_name_lc" type="string" indexed="true" stored="true" required="false" multiValued="false" />
 		<field name="song_name" type="string" indexed="true" stored="true" required="false" multiValued="false" />
+		<field name="song_name_lc" type="string" indexed="true" stored="true" required="false" multiValued="false" />
 		<!--original + romanized artist name-->
 		<field name="search_artist_name" type="text_general" indexed="true" stored="false" required="false" multiValued="true" />
 		<!--original + romanized album name-->
@@ -95,6 +98,11 @@
 		<dynamicField name="*_s" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 		<dynamicField name="*_i" type="int" indexed="false" stored="true" required="false" multiValued="false" />
 		<dynamicField name="*_d" type="date" indexed="false" stored="true" required="false" multiValued="false" />
+		<dynamicField name="*_t" type="text_general" indexed="false" stored="true" required="false" multiValued="false" />
+		<dynamicField name="*_is" type="string" indexed="true" stored="true" required="false" multiValued="false" />
+		<dynamicField name="*_ii" type="int" indexed="true" stored="true" required="false" multiValued="false" />
+		<dynamicField name="*_id" type="date" indexed="true" stored="true" required="false" multiValued="false" />
+		<dynamicField name="*_it" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
 
 	</fields>
 	<uniqueKey>id</uniqueKey>

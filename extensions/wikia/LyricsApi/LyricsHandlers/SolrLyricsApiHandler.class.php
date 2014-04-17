@@ -270,7 +270,7 @@ class SolrLyricsApiHandler {
 	public function getArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsUtils::TYPE_ARTIST,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
 		] );
 
 		$query->setFields( [
@@ -300,8 +300,8 @@ class SolrLyricsApiHandler {
 	public function getAlbum( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsUtils::TYPE_ALBUM,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
-			'album_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_ALBUM ),
+			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
+			'album_name_lc: %P3%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ALBUM ),
 		] );
 
 		$query->setFields( [
@@ -395,8 +395,8 @@ class SolrLyricsApiHandler {
 	public function getSong( LyricsApiSearchParams $searchParams ) {
 		$solrQuery = [
 			'type: %1%' => LyricsUtils::TYPE_SONG,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
-			'song_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_SONG ),
+			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
+			'song_name_lc: %P3%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG ),
 		];
 
 		$query = $this->newQueryFromSearch( $solrQuery );

@@ -43,17 +43,6 @@ class LyricsUtils {
 	}
 
 	/**
-	 * Stems name to make it searchable
-	 *
-	 * @param string $text
-	 * @return string
-	 */
-	public static function stem( $text ) {
-		$text = self::lowercase( $text );
-		return preg_replace('/[^[:alpha:]]/u', '', $text);
-	}
-
-	/**
 	 * @desc Given the lyrics (possibly containing wikitext) this will filter most wikitext out of them
 	 * that is likely to appear in them.
 	 *
