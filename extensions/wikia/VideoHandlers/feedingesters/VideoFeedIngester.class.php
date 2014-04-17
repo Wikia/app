@@ -27,7 +27,6 @@ abstract class VideoFeedIngester {
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
-		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
