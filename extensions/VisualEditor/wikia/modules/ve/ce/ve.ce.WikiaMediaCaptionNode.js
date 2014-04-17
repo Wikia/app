@@ -112,3 +112,4 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 /* Registration */
 
 ve.ce.nodeFactory.register( ve.ce.WikiaMediaCaptionNode );
+

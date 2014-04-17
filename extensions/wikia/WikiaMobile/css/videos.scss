@@ -25,7 +25,10 @@
 	}
 }
 
-.video{
+//TODO: This temporarily increases the specificity because not all video thumbnails in mobile
+// have been converted over to the new toHtml method. By adding this specificity, we can temporarily
+// support both styles.
+.thumb > .video {
 	display: inline-block;
 	position: relative;
 

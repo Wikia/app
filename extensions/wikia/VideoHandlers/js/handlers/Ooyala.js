@@ -87,29 +87,25 @@ define('wikia.videohandler.ooyala', [
 			log( message, log.levels.error, 'VideoBootstrap' );
 		}
 
-		/* Ooyala doesn't support more than one player type (i.e. age-gate and non-age-gate)
-		 * per page load unless we delete window.OO before we reload the player script.
-		 *
-		 * If they ever fix this we can remove this hack and load params.jsFile with
-		 * video bootstrap
-		 */
-		delete window.OO;
-
-		log( 'Begin getting Ooyala assets', log.levels.info, 'VideoBootstrap' );
-
-		/* the second file depends on the first file */
-		loader({
-			type: loader.JS,
-			resources: params.jsFile[ 0 ]
-		}).done(function() {
-			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
+		if ( typeof window.OO == 'undefined' ) {
+			/* the second file depends on the first file */
 			loader({
 				type: loader.JS,
-				resources: params.jsFile[ 1 ]
+				resources: params.jsFile[ 0 ]
 			}).done(function() {
-				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-				window.OO.Player.create( containerId, params.videoId, createParams );
+				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				loader({
+					type: loader.JS,
+					resources: params.jsFile[ 1 ]
+				}).done(function() {
+					log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+					window.OO.Player.create( containerId, params.videoId, createParams );
+				}).fail( loadFail );
 			}).fail( loadFail );
-		}).fail( loadFail );
+		} else {
+			window.OO.Player.create( containerId, params.videoId, createParams );
+		}
+
 	};
 });
