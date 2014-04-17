@@ -1,11 +1,12 @@
-/*global define*/
+/*global define, require*/
 /* jshint maxparams:false */
 define('ext.wikia.adEngine.provider.ebay', [
 	'wikia.log',
 	'jquery',
 	'wikia.window',
-	'wikia.document'
-], function (log, $, window, document) {
+	'wikia.document',
+	require.optional('wikia.geo')
+], function (log, $, window, document, geo) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.ebay';
@@ -21,6 +22,10 @@ define('ext.wikia.adEngine.provider.ebay', [
 				skin: window.skin,
 				title: document.title
 			};
+
+		if (geo) {
+			params.geo = geo.getCountryCode();
+		}
 
 		log(['fillInSlot', slotname, 'Requesting ads', params], 'info', logGroup);
 

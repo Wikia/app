@@ -43,6 +43,7 @@
 #ebay-ads .info .price {
 	display: block;
 	text-align: left;
+	font-weight: bold;
 }
 
 #ebay-ads li:before,
@@ -83,7 +84,7 @@
 
 </style>
 <section id="ebay-ads">
-<h1>Ebay products:</h1>
+<h1><?= wfMessage('adengine-ebay-title') ?>:</h1>
 <? if ($products): ?>
 	<ul>
 		<? foreach ($products as $product): ?>
@@ -98,14 +99,14 @@
 						<?= htmlspecialchars($product['title']) ?>
 					</a>
 					<div class="price">
-						<?= $product['BuyItNowPrice'] ? $product['BuyItNowPrice'] : $product['CurrentPrice'] ?> $
+						<?= $product['BuyItNowPrice'] ? $product['BuyItNowPrice'] : $product['CurrentPrice'] ?> $ <a href="<?= $product['link'] ?>"><?= wfMessage('adengine-ebay-bid') ?></a>
 					</div>
 				</div>
 			</li>
 		<? endforeach ?>
 	</ul>
 <? else: ?>
-	<p>No matching products</p>
+	<p><?= wfMessage('adengine-ebay-empty') ?></p>
 <? endif ?>
 <div>
 	DEBUG: Query: <?= htmlspecialchars(json_encode($query)) ?> | <a href="<?= htmlspecialchars($rssUrl) ?>">RSS</a>

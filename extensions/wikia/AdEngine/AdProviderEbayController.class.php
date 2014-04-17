@@ -3,21 +3,42 @@
 class AdProviderEbayController extends WikiaController
 {
 	const SERVICE_URI = 'http://rest.ebay.com/epn/v1/find/item.rss?';
+	
+	protected static $ebayLangSiteId = [
+		'AT' => 3,
+		'AU' => 4,
+		'BE' => 5,
+		'CA' => 7,
+		'CH' => 14,
+		'DE' => 11,
+		'ES' => 13,
+		'FR' => 10,
+		'IE' => 2,
+		'IT' => 12,
+		'NL' => 16,
+		'UK' => 15, 'GB' => 15, // Geo for UK users can return both UK OR GB
+		'US' => 1,
+	];
+	
 
 	public function centerWell()
 	{
-		$query = preg_replace('/ Wiki$/', '', $this->request->getVal('title'));
+		$query = [ preg_replace('/ Wiki$/', '', $this->request->getVal('title')) ];
 
-		$query = [ $query ];
+		$siteId = $this->getSiteId($this->request->getVal('geo'));
 
-		$rssUrl = $this->buildUrl($query, 1);
+		$rssUrl = $this->buildUrl($query, $siteId);
 		$allProducts = $this->generateData($rssUrl);
 
 		if (empty($allProducts)) {
 			$allProducts = [];
 		}
 
-		$rand_keys = array_rand($allProducts, 4);
+		if (count($allProducts) > 3) {
+			$rand_keys = array_rand($allProducts, 4);
+		} else {
+			$rand_keys = array_keys($allProducts);
+		}
 
 		$products = [];
 		foreach($rand_keys as $key) {
@@ -83,20 +104,6 @@ class AdProviderEbayController extends WikiaController
 	 * @param array  	$queryWords Keywords to search on eBay
 	 * @param int 		$siteId 	One of values below
 	 *
-	 * AT => 3,
-	 * AU => 4,
-	 * BE => 5,
-	 * CA => 7,
-	 * CH => 14,
-	 * DE => 11,
-	 * ES => 13,
-	 * FR => 10,
-	 * IE => 2,
-	 * IT => 12,
-	 * NL => 16,
-	 * UK => 15,
-	 * US => 1
-	 *
 	 * @return string
 	 */
 	private function buildUrl(array $queryWords,  $siteId = 1) {
@@ -114,6 +121,15 @@ class AdProviderEbayController extends WikiaController
 		];
 
 		return self::SERVICE_URI . http_build_query($urlParams);
+	}
+
+	private function getSiteId($lng) {
+
+		if (isset(self::$ebayLangSiteId[mb_strtoupper($lng)])) {
+			return self::$ebayLangSiteId[mb_strtoupper($lng)];
+		}
+
+		return self::$ebayLangSiteId['US'];
 	}
 
 

@@ -7,6 +7,9 @@ $messages['en'] = array(
 	'adengine-exitstitial-redirecting' => 'Your browser will redirect you to the page you requested in a few seconds.',
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',
+	'adengine-ebay-title' => 'Ebay Products',
+	'adengine-ebay-empty' => 'No matching products',
+	'adengine-ebay-bid' => 'Buy',
 );
 
 /** Message documentation (Message documentation)
@@ -18,6 +21,9 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-redirecting' => 'Text displayed in the box showing up when you click on link to outside the wiki',
 	'adengine-exitstitial-go-back' => 'Text of the link/button that you can close the box with and get back to the content',
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
+	'adengine-ebay-title' => 'Text of title displaying with $wgAdDriverUseEbay = true in PREFOOTER',
+	'adengine-ebay-empty' => 'Text of when no matching products found on ebay',
+	'adengine-ebay-bid' => 'Text is shown after product price',
 );
 
 /** Arabic (العربية)
