@@ -245,6 +245,11 @@ body.global-header-fixed-at-top .WikiaHeader {
 				}
 			}
 		}
+		a.forgot-password {
+			&, &:hover {
+				color: $color;
+			}
+		}
 
 		.UserLoginDropdown {
 			.ajaxRegister {
