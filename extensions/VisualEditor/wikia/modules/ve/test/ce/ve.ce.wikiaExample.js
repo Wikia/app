@@ -219,17 +219,14 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		var $root,
 			$mock,
 			$figcaption,
+			$caption,
 			align = attributes.align,
 			type = attributes.type,
 			width = attributes.width;
 
-		$mock = $( media.html.block[ type ] )
-			.addClass( media.getAlignClass( type, align, $mock ) );
-		$figcaption = $mock.find( 'figcaption' );
+		$mock = $( media.html.block[ type ] );
 
-		if ( rdfaType === 'mw:Video' ) {
-			$figcaption.append( media.html.video.block.title );
-		}
+		$mock.addClass( media.getAlignClass( type, align, $mock ) );
 
 		if ( type === 'frame' || type === 'thumb' ) {
 			$mock.css( 'width', width + 'px' );
@@ -237,6 +234,17 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			// is implemented in ve.ce.WikiaBlockMediaNode.prototype.rebuild
 			// @see https://bugzilla.wikimedia.org/show_bug.cgi?id=54479
 			$mock.append( media.html.block.caption );
+
+			$figcaption = $mock.find( 'figcaption' );
+			$caption = $figcaption.find( '.caption' );
+
+			// DOM order is sprite, title, caption, attribution
+			if ( rdfaType === 'mw:Video' ) {
+				$caption.before( media.html.video.block.title );
+			}
+			if ( width >= media.data.attribution.minWidth ) {
+				$figcaption.append( media.html.block.attribution );
+			}
 		} else {
 			$mock.removeAttr( 'style' );
 		}
@@ -256,9 +264,6 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			width: width
 		} );
 
-		//if ( width >= media.data.attribution.minWidth ) {
-			$figcaption.append( media.html.block.attribution );
-		//}
 
 		return $mock[ 0 ].outerHTML;
 	};
