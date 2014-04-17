@@ -58,6 +58,10 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		}
 	}
 
+	figcaption {
+		text-align: left;
+	}
+
 	.caption {
 		color: $color-alternate-text;
 	}
