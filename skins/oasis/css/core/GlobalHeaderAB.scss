@@ -218,7 +218,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 			& > li {
 				border-top: 0;
 				& > a {
-					color: $color;
+					color: $color!important;
 					padding: 10px 20px;
 
 					&:hover {
