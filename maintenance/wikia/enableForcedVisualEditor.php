@@ -11,6 +11,12 @@ $wgEnableWAMApiExt = true;
 ini_set( 'include_path', dirname(__FILE__).'/../' );
 require_once( 'commandLine.inc' );
 
+function getVEForcedValue( $wikiId ) {
+	$wikiFactoryVar = WikiFactory::getVarByName( 'wgForceVisualEditor', $wikiId );
+	return ( is_object( $wikiFactoryVar ) && $wikiFactoryVar->cv_value ) ?
+		unserialize( $wikiFactoryVar->cv_value ) : false;
+}
+
 // Use the --disable option to set $wgForceVisualEditor to false
 $forceVisualEditor = isset( $options['disable'] ) ? false : true;
 // Highest WAM rank at which to change the variable (lower number = higher rank)
@@ -73,7 +79,7 @@ foreach ( $allWikis as $wiki ) {
 	}
 
 	$wikiFactoryVar = WikiFactory::getVarByName( 'wgForceVisualEditor', $wiki->city_id );
-	if ( is_object( $wikiFactoryVar ) && (bool)$wikiFactoryVar->cv_value !== $forceVisualEditor ) {
+	if ( getVEForcedValue( $wiki->city_id ) !== $forceVisualEditor ) {
 		echo 'Setting $wgForceVisualEditor to '.( $forceVisualEditor ? 'TRUE' : 'FALSE' ).' for '.$wiki->city_title.' ('.$wiki->city_url.") -- $wamText\n";
 		WikiFactory::setVarByName( 'wgForceVisualEditor', $wiki->city_id, $forceVisualEditor );
 		WikiFactory::clearCache( $wiki->city_id );
