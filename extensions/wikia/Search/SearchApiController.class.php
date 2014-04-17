@@ -97,9 +97,6 @@ class SearchApiController extends WikiaApiController {
 		}
 
 		$this->setResponseData($responseValues);
-
-		//$response = $this->getResponse();
-		//$response->setValues( $responseValues );
 	}
 
 	/**
