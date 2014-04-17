@@ -106,7 +106,7 @@ abstract class BaseTask {
 		];
 
 		foreach ($mirror->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-			$result['@context'][$property->getName()] = $property->getValue($this);
+			$result['context'][$property->getName()] = $property->getValue($this);
 		}
 
 		return $result;
