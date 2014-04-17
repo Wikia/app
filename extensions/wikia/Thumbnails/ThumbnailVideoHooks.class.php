@@ -13,7 +13,8 @@ class ThumbnailVideoHooks {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			// not used on mobileskin
 			// part of oasis skin so not needed there
-			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/core/video-thumbnail.scss' ) );
+			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/core/thumbnails.scss' ) );
+			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/core/thumbnails-video.scss' ) );
 		}
 
 		wfProfileOut(__METHOD__);
