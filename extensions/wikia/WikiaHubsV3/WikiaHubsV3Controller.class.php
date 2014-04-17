@@ -97,9 +97,9 @@ class WikiaHubsV3Controller extends WikiaController {
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
-			$this->wg->ContLang->getCode(),
-			MarketingToolboxV3Model::SECTION_HUBS,
-			$this->verticalId,
+			null,
+			null,
+			null,
 			$this->cityId,
 			self::HUBS_VERSION
 		);
