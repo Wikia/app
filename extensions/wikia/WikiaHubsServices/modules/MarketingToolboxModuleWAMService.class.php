@@ -32,6 +32,14 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 			$params['image_width'] = $this->getModel()->getImageWidth();
 		}
 
+		if( empty($this->verticalId) ) {
+			$this->verticalId = WikiFactoryHub::getInstance()->getCategoryId($this->cityId);
+		}
+
+		if( empty($this->langCode) ) {
+			$this->langCode = $this->app->wg->ContLang->getCode();
+		}
+
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
 			'vertical_id' => $this->verticalId,
@@ -177,7 +185,6 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	protected function loadStructuredData($model, $params) {
-
 		try {
 
 			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
