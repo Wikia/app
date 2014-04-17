@@ -13,10 +13,7 @@ class VisualEditorHooks {
 		global $wgVisualEditorSupportedSkins;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
-			$isAvailable = (
-				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
-				$skin->getUser()->getOption( 'enablerichtext' )
-			);
+			$isAvailable = in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
 		}
 		return $isAvailable;
 	}
@@ -92,8 +89,10 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
-		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		if ( self::isAvailable( $skin ) ) {
+			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+			//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		}
 		return true;
 	}
 

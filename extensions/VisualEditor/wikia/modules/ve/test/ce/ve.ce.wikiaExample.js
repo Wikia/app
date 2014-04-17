@@ -19,14 +19,10 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.data = {
 		'attribution': {
-			'minWidth': 102
+			'minWidth': 100
 		},
 		'defaultWidth': 200,
 		'defaultHeight': 100,
-		'video': {
-			'playButtonSmallWidth': 170,
-			'playButtonLargeWidth': 360
-		}
 	};
 
 	media.data.cssClasses = {
@@ -86,18 +82,18 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.block = {
 		'attribution':
-			'<div class="picture-attribution">' +
-				'<img class="avatar" alt="Foo" height="16" src="Foo.png" width="16">' +
+			'<p class="attribution">' +
+				// TODO: update this once the attribution message is changed in VID-1559
 				mw.message( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ).plain() +
-			'</div>',
+			'</p>',
 		'caption':
-			'<figcaption class="thumbcaption ve-ce-branchNode">' +
-				'<p class="ve-ce-generated-wrapper ve-ce-branchNode">abc</p>' +
+			'<figcaption class="ve-ce-branchNode">' +
+				'<a class="sprite details ve-no-shield"></a>' +
+				'<p class="ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
 			'</figcaption>',
 		'frame':
-			'<figure class="thumb thumbinner" style="">' +
+			'<figure class="article-thumb" style="">' +
 				'<a class="image" href="' + fakeLinkUrlResolved + '"><img src="' + fakeImageUrlResolved + '"></a>' +
-				'<a class="internal sprite details magnify ve-no-shield"></a>' +
 			'</figure>',
 		'frameless':
 			'<div class="" style="">' +
@@ -119,23 +115,20 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.html.inline.none = media.html.inline.frameless;
 
 	media.html.video = {
-		//'overlay':
 		'playButton':
-			'<div class="Wikia-video-play-button ve-no-shield" style="">' +
-				'<img class="sprite play" src="">' +
-			'</div>'
+			'<span class="play-circle"></span>'
 	};
 
 	/* Mock HTMLDOM */
 
 	media.htmlDom = {
 		'block':
-			'<figure data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
+			'<figure data-mw=\'{"attribution":{"username":"Foo","titleText":"Bar"}}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
-			'<span data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'>' +
+			'<span data-mw=\'{"attribution":{"username":"Foo","titleText":"Bar"}}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};
@@ -226,7 +219,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			.addClass( media.getAlignClass( type, align, $mock ) );
 
 		if ( type === 'frame' || type === 'thumb' ) {
-			$mock.css( 'width', ( width + 2 ) + 'px' );
+			$mock.css( 'width', width + 'px' );
 			// Caption applies only to "frame" and "thumb" types of media, appropriate logic
 			// is implemented in ve.ce.WikiaBlockMediaNode.prototype.rebuild
 			// @see https://bugzilla.wikimedia.org/show_bug.cgi?id=54479
@@ -320,39 +313,32 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * Anything shared between block and inline videos should go here.
 	 *
 	 * @method
-	 * @param {String} html The base HTML to inherit from.
 	 * @param {Object} attributes The node attributes from which to build the mock.
+	 * @param {String} html The base HTML to inherit from.
 	 * @returns {String} The mocked HTML.
 	 */
 	media.video.getHtml = function ( attributes, html ) {
 		var $mock = $( html ),
 			$mockImage = $mock.find( 'img[src="' + fakeImageUrlResolved + '"]' ),
 			$playButton = $( media.html.video.playButton ),
-			$playButtonImage = $playButton.find( 'img' ),
 			size,
 			width = attributes.width;
 
-		if ( width <= media.data.video.playButtonSmallWidth ) {
+		// copied from WikiaFileHelper::getThumbnailSize
+		if ( width < 200 ) {
+			size = 'xsmall';
+		} else if ( width < 270 ) {
 			size = 'small';
-		} else if ( width > media.data.video.playButtonLargeWidth ) {
+		} else if ( width < 470 ) {
+			size = 'medium';
+		} else if ( width < 720 ) {
 			size = 'large';
+		} else {
+			size = 'xlarge';
 		}
-
-		$playButton.css( {
-			'line-height': attributes.height + 'px',
-			'width': width
-		} );
-
-		$playButtonImage.attr( 'src', mw.config.get( 'wgBlankImgUrl' ) );
-
-		if ( size !== undefined ) {
-			$playButtonImage.addClass( size );
-		}
-
-		$mockImage.addClass( 'Wikia-video-thumb' );
 
 		$mockImage.parent()
-			.addClass( 'video' )
+			.addClass( 'video video-thumbnail ' + size )
 			.prepend( $playButton );
 
 		return $mock[ 0 ].outerHTML;

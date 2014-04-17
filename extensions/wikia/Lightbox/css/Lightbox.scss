@@ -376,6 +376,11 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 				display: block;
 			}
 		}
+		// update .wikia-video-thumb styles - Lightbox thumbs are sooo small, so position play button a little lower
+		.play-circle {
+			bottom: 4px;
+			left: 30px;
+		}
 		.carousel-arrow {
 			cursor: pointer;
 			&.next {

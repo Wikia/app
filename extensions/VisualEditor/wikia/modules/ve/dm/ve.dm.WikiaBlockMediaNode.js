@@ -5,6 +5,7 @@
 
 /**
  * DataModel Wikia media node.
+ * This is an abstract class and should not be called directly
  *
  * @class
  * @abstract
@@ -22,10 +23,6 @@ ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( length, element ) 
 OO.inheritClass( ve.dm.WikiaBlockMediaNode, ve.dm.MWBlockImageNode );
 
 /* Static Properties */
-
-ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaMediaCaption' ];
-
-ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaMediaCaption';
 
 ve.dm.WikiaBlockMediaNode.static.typeToRdfa = null;
 

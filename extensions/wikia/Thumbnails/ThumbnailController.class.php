@@ -1,6 +1,6 @@
 <?php
 
-class ThumbnailVideoController extends WikiaController {
+class ThumbnailController extends WikiaController {
 
 	/**
 	 * Thumbnail Template
@@ -52,7 +52,7 @@ class ThumbnailVideoController extends WikiaController {
 	 *		itemprop - for RDF metadata
 	 * @responseParam array metaAttrs - for RDF metadata [ array( array( 'itemprop' => '', 'content' => '' ) ) ]
 	 */
-	public function thumbnail() {
+	public function video() {
 		wfProfileIn( __METHOD__ );
 
 		$file = $this->getVal( 'file' );
@@ -64,7 +64,6 @@ class ThumbnailVideoController extends WikiaController {
 		// use mustache for template
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/thumbnailVideo.mustache' );
-
 
 		// default value
 		$linkAttribs = [];
@@ -108,7 +107,7 @@ class ThumbnailVideoController extends WikiaController {
 
 		// this is used for video thumbnails on file page history tables to insure you see the older version of a file when thumbnail is clicked.
 		if ( $file instanceof OldLocalFile ) {
-			$archive_name = $this->file->getArchiveName();
+			$archive_name = $file->getArchiveName();
 			if ( !empty( $archive_name ) ) {
 				$linkHref .= '?t='.$file->getTimestamp();
 				$linkAttribs['data-timestamp'] = $file->getTimestamp();
@@ -137,6 +136,11 @@ class ThumbnailVideoController extends WikiaController {
 		// remove style from $imgAttribs if it is empty
 		if ( $imgAttribs['style'] == '' ) {
 			unset( $imgAttribs['style'] );
+		}
+
+		// set data-params for img tag
+		if ( !empty( $options['dataParams'] ) ) {
+			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
 		}
 
 		// set duration
@@ -186,7 +190,7 @@ class ThumbnailVideoController extends WikiaController {
 		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
 		} else {
-			$this->size = $this->getThumbnailSize( $width );
+			$this->size = WikiaFileHelper::getThumbnailSize( $width );
 		}
 
 		// set image attributes
@@ -204,6 +208,63 @@ class ThumbnailVideoController extends WikiaController {
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @todo Implement image controller
+	 */
+	public function image() {}
+
+	/**
+	 * Article figure tags with thumbnails inside
+	 */
+	public function articleThumbnail() {
+		global $wgEnableOasisPictureAttribution;
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/atricleThumbnail.mustache' );
+
+		$file = $this->getVal( 'file' );
+		$width = $this->getVal( 'outerWidth' );
+		$url = $this->getVal( 'url' );
+		$align = $this->getVal( 'align' );
+		$thumbnail = $this->getVal( 'html' );
+		$caption = $this->getVal( 'caption' );
+
+		// align classes are prefixed by "t"
+		$alignClass = "t" . $align;
+
+		// only show titles for videos
+		$title = '';
+		if (WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			$title = $file->getTitle()->getText();
+		}
+
+		$addedBy = '';
+		$attributeTo = $file->getUser();
+		$showPictureAttribution = (
+			F::app()->checkSkin( 'oasis' ) &&
+			!empty( $wgEnableOasisPictureAttribution ) &&
+			// Remove picture attribution for thumbnails less than 100px
+			$width > 99
+		);
+
+		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
+			// get link to user page
+			$link = AvatarService::renderLink( $attributeTo );
+
+			// TODO: change this to "By $user $time days ago"
+			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+		}
+
+		$this->thumbnail = $thumbnail;
+		$this->title = $title;
+		$this->figureClass = $alignClass;
+		$this->url = $url;
+		$this->thumbnailMore = wfMessage( 'thumbnail-more' )->escaped();
+		$this->caption = $caption;
+		$this->addedBy = $addedBy;
+		$this->width = $width;
 	}
 
 	/**
@@ -226,26 +287,4 @@ class ThumbnailVideoController extends WikiaController {
 
 		return $attribs;
 	}
-
-	/**
-	 * Get thumbnail size
-	 * @param integer $width
-	 * @return string $size
-	 */
-	protected function getThumbnailSize( $width = 0 ) {
-		if ( $width < 200 ) {
-			$size = 'xsmall';
-		} else if ( $width < 270 ) {
-			$size = 'small';
-		} else if ( $width < 470 ) {
-			$size = 'medium';
-		} else if ( $width < 720 ) {
-			$size = 'large';
-		} else {
-			$size = 'xlarge';
-		}
-
-		return $size;
-	}
-
 }

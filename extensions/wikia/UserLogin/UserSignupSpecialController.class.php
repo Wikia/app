@@ -285,6 +285,170 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * @desc Sets validation status
+	 *
+	 * @param string $result validation result
+	 * @param string $message validatation message
+	 * @param $field
+	 * @return bool
+	 */
+	private function setResponseFields($result, $message, $field = false) {
+		$this->result = $result;
+		$this->msg = $message;
+		if ( $field !== false ) {
+			$this->errParam = $field;
+		}
+		return false;
+	}
+
+	/**
+	 * @desc Checks if the email is set and is valid and sets the proper response if not
+	 *
+	 * @param string $email Email address to check
+	 * @return bool
+	 */
+	private function isValidEmailFieldValue($email) {
+		// error if empty
+		if ( empty( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-empty-email' )->escaped(),
+				'email'
+			);
+		}
+
+		// validate new email
+		if ( !Sanitizer::validateEmail( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-invalid-email' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the username and sets the proper response if empty
+	 *
+	 * @param string $username
+	 * @return bool
+	 */
+	private function isValidUsernameField($username) {
+		if ( empty( $username ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-noname' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if user is valid and and sets the proper response if not
+	 * @param User $user
+	 * @return bool
+	 */
+	private function isValidUser( User $user ) {
+		if ( $user instanceof User && $user->getID() != 0 ) {
+			// break if user is already confirmed
+			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				return $this->setResponseFields(
+					'confirmed',
+					wfMessage(
+						'usersignup-error-confirmed-user', $user->getName(), $user->getUserPage()->getFullURL()
+					)->parse(),
+					'username'
+				);
+			}
+		} else { // user doesn't exist
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-nosuchuser' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the the user session is valid and and sets the proper response if not
+	 *
+	 * @param $user
+	 * @return bool
+	 */
+	private function isValidSession( $user ) {
+		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
+			return $this->setResponseFields(
+				'invalidsession',
+				wfMessage( 'usersignup-error-invalid-user' )->escaped(),
+				'username'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the email change is below the set limit and sets the proper response if not
+	 *
+	 * @param $memKey
+	 * @return bool
+	 */
+	private function isWithinEmailChangesLimit( $memKey ) {
+		$emailChanges = intval( $this->wg->Memc->get( $memKey ) );
+		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'usersignup-error-too-many-changes' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the email is within registrations per email limit and sets the proper response if not
+	 *
+	 * @param $email
+	 * @return bool
+	 */
+	private function isWithinRegistrationPerEmailLimit( $email ) {
+		if ( !UserLoginHelper::withinEmailRegLimit( $email ) ) {
+			return $this->setResponseFields(
+				'error',
+				wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(),
+				'email'
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * @desc Checks if the user/email is not blocked in phalanx and sets the proper response if not
+	 *
+	 * @param $user
+	 * @return bool
+	 */
+	private function isNotBlockedByPhalanx( $user ) {
+
+		return UserLoginHelper::callWithCaptchaDisabled(function($params) {
+			$abortError = '';
+			$phalanxValid = true;
+
+			if( !wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) ) ) {
+				return $this->setResponseFields(
+					'error',
+					$abortError,
+					'email'
+				);
+				$phalanxValid = false;
+			}
+			return $phalanxValid;
+		}, array( 'user' => $user ) );
+	}
+
+	/**
 	 * change user's email and send reconfirmation email
 	 * @requestParam string username
 	 * @requestParam string email
@@ -293,76 +457,42 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function changeUnconfirmedUserEmail() {
-
 		// get new email from request
 		$email = $this->request->getVal( 'email', '' );
-
-		// error if empty
-		if ( empty( $email ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-empty-email' )->escaped();
-			$this->errParam = 'email';
-			return;
-		}
-
-		// validate new email
-		if ( !Sanitizer::validateEmail( $email ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-invalid-email' )->escaped();
-			$this->errParam = 'email';
-			return;
-		}
-
-		// get username from request
 		$username = $this->request->getVal( 'username' );
-		if ( empty( $username ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-			$this->errParam = 'username';
+
+		if ( !( $this->isValidEmailFieldValue( $email ) && $this->isValidUsernameField( $username ) ) )	{
 			return;
 		}
 
 		$user = User::newFromName( $username );
-		if ( $user instanceof User && $user->getID() != 0 ) {
-			// break if user is already confirmed
-			if ( !$user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
-				$this->result = 'confirmed';
-				$this->msg = wfMessage( 'usersignup-error-confirmed-user', $username, $user->getUserPage()->getFullURL() )->parse();
-				$this->errParam = 'username';
-				return;
-			}
-		} else { // user doesn't exist
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-			$this->errParam = 'username';
-			return;
-		}
 
-		// error if session is invalid
-		if ( !( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
-			$this->result = 'invalidsession';
-			$this->msg = wfMessage( 'usersignup-error-invalid-user' )->escaped();
-			$this->errParam = 'username';
+		if ( !( $this->isValidUser( $user ) && $this->isValidSession( $user ) ) ) {
 			return;
 		}
 
 		// check email changes limit
 		$memKey = wfSharedMemcKey( 'wikialogin', 'email_changes', $user->getId() );
-		$emailChanges = intval( $this->wg->Memc->get( $memKey ) );
-		if ( $emailChanges >= UserLoginHelper::LIMIT_EMAIL_CHANGES ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'usersignup-error-too-many-changes' )->escaped();
-			$this->errParam = 'email';
+
+		// CONN-471: Respect the registration per email limit
+		if ( !( $this->isWithinEmailChangesLimit( $memKey ) && $this->isWithinRegistrationPerEmailLimit( $email ) ) ) {
 			return;
 		}
 
 		// increase counter for email changes
 		$this->userLoginHelper->incrMemc( $memKey );
 
-		$this->result = 'ok';
-		$this->msg = wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped();
+		$this->setResponseFields(
+			'ok',
+			wfMessage( 'usersignup-reconfirmation-email-sent', $email )->escaped()
+		);
 		if ( $email != $user->getEmail() ) {
 			$user->setEmail( $email );
+
+			// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
+			if ( !$this->isNotBlockedByPhalanx( $user ) ) {
+				return;
+			}
 
 			// send reconfirmation email
 			$result = $user->sendReConfirmationMail();
@@ -374,8 +504,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wg->Memc->set( $memKey, 1, 24*60*60 );
 
 			if( !$result->isGood() ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
+				$this->setResponseFields(
+					'error',
+					wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse()
+				);
 			}
 		}
 	}

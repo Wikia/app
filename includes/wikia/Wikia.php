@@ -2201,7 +2201,7 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
-		global $wgStyleVersion;
+		global $wgStyleVersion, $wgUser, $wgCacheEpoch;
 		$touched = $article->getTouched();
 
 		// don't emit the default touched value set in WikiPage class (see CONN-430)
@@ -2210,7 +2210,14 @@ class Wikia {
 			return true;
 		}
 
-		$eTag = sprintf( '%s-%s', $touched, $wgStyleVersion );
+		// use the same rules as in OutputPage::checkLastModified
+		$timestamps = [
+			'page' => $touched,
+			'user' => $wgUser->getTouched(),
+			'epoch' => $wgCacheEpoch,
+		];
+
+		$eTag = sprintf( '%s-%s', max($timestamps), $wgStyleVersion );
 		return true;
 	}
 

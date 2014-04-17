@@ -8,9 +8,9 @@
 class LyricsScraper {
 
 	/**
-	 * @var DataBaseAdapter
+	 * @var SolrAdapter
 	 */
-	private $dba;
+	private $solr;
 
 	/**
 	 * @var RequestContext
@@ -32,8 +32,8 @@ class LyricsScraper {
 	 */
 	private $songScraper;
 
-	function __construct( DataBaseAdapter $dba ) {
-		$this->dba = $dba;
+	function __construct( SolrAdapter $solr ) {
+		$this->solr = $solr;
 		$this->context = new RequestContext();
 		$this->artistScraper = new ArtistScraper();
 		$this->albumScraper = new AlbumScraper();
@@ -53,7 +53,7 @@ class LyricsScraper {
 		self::log( "\tARTIST: " . $artistData['artist_name'] . PHP_EOL );
 		$albumsData = $this->processAlbums( $artistData, $leanAlbumsData );
 		// Save Artist
-		$this->dba->saveArtist( $artistData, $albumsData );
+		$this->solr->saveArtist( $artistData, $albumsData );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class LyricsScraper {
 			$albumData['songs'] = $songsData;
 			if ( isset( $albumData['id'] ) ) {
 				// Save only albums which are actual wiki pages
-				$this->dba->saveAlbum( $artistData, $albumData, $songsData );
+				$this->solr->saveAlbum( $artistData, $albumData, $songsData );
 			}
 			$albumsData[] = $albumData;
 		}
@@ -123,7 +123,7 @@ class LyricsScraper {
 
 					if ( isset( $songData['id'] ) && !empty( $songData['lyrics'] ) ) {
 						// Save only songs we have as Wiki pages and have lyrics
-						$this->dba->saveSong(
+						$this->solr->saveSong(
 							$artistData,
 							$albumData,
 							$songData

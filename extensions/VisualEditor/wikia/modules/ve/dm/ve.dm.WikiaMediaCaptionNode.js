@@ -4,6 +4,7 @@
 
 /**
  * DataModel Wikia media caption node.
+ * This is an abstract class and should not be called directly
  *
  * @class
  * @extends ve.dm.MWImageCaptionNode
@@ -22,11 +23,6 @@ OO.inheritClass( ve.dm.WikiaMediaCaptionNode, ve.dm.MWImageCaptionNode );
 /* Static Properties */
 
 ve.dm.WikiaMediaCaptionNode.static.name = 'wikiaMediaCaption';
-
-ve.dm.WikiaMediaCaptionNode.static.parentNodeTypes = [
-	'wikiaBlockImage',
-	'wikiaBlockVideo'
-];
 
 /* Registration */
 

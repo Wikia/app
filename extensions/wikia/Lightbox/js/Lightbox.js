@@ -21,8 +21,8 @@
 
 		// Carousel vars
 		// overlay for thumb images
-		thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;">' +
-			'<img class="sprite play small" src="' + window.wgBlankImgUrl + '"></div>',
+		thumbPlayButton: '<span class="play-circle"></span>',
+		videoWrapperClass: 'video-thumbnail xxsmall',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 		thumbLoadCount: 20,
@@ -1201,7 +1201,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1253,7 +1254,8 @@
 							key: key,
 							title: title,
 							type: 'video',
-							playButtonSpan: playButton
+							playButtonSpan: playButton,
+							thumbLiClass: Lightbox.videoWrapperClass
 						});
 
 					}
@@ -1401,7 +1403,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
@@ -1426,7 +1429,8 @@
 			var container = Lightbox.openModal.carouselContainer,
 				// render carousel
 				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
-					liClass: backfill ? 'back-fill' : '',
+					// todo: use data attribute instead of class here
+					liClass: 'video-thumbnail xsmall ' + (backfill ? 'back-fill' : ''),
 					thumbs: thumbs
 				});
 

@@ -15,6 +15,11 @@ $dir = dirname( __FILE__ );
 
 // Main classes
 $wgAutoloadClasses['ThumbnailVideo'] = $dir . '/ThumbnailVideo.class.php';
-$wgAutoloadClasses['ThumbnailVideoController'] = $dir . '/ThumbnailVideoController.class.php';
+$wgAutoloadClasses['ThumbnailController'] = $dir . '/ThumbnailController.class.php';
+$wgAutoloadClasses['ThumbnailVideoHooks'] = $dir . '/ThumbnailVideoHooks.class.php';
 $wgAutoloadClasses['ThumbnailImageController'] = $dir . '/ThumbnailImageController.class.php';
+$wgAutoloadClasses['ThumbnailHelper'] = $dir . '/ThumbnailHelper.class.php';
+
+// Hooks
+$wgHooks['BeforePageDisplay'][] = 'ThumbnailVideoHooks::onBeforePageDisplay';
 

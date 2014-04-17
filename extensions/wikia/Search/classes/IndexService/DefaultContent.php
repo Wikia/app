@@ -72,6 +72,7 @@ class DefaultContent extends AbstractService
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
+				'title_em'                   => $titleStr,
 				'url'                        => $service->getUrlFromPageId( $pageId ),
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
