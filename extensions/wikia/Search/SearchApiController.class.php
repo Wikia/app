@@ -86,7 +86,6 @@ class SearchApiController extends WikiaApiController {
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
 		}
-
 		if ( $expand ) {
 			$items = array();
 			foreach( $responseValues['items'] as $result ) {
@@ -95,7 +94,6 @@ class SearchApiController extends WikiaApiController {
 			}
 			$responseValues['items'] = $items;
 		}
-
 		$this->setResponseData($responseValues);
 	}
 
