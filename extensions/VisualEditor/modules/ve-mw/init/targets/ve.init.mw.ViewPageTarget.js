@@ -1288,7 +1288,7 @@ ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
 	var tearDown = ve.bind( function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}, this ) );
+	}, this );
 
 	if ( animate ) {
 		this.toolbar.$bar.slideUp( 'fast', tearDown );
