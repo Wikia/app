@@ -895,11 +895,17 @@ class WallHooksHelper {
 
 				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $pageText));
 
-				# Bolden pages watched by this user
-				# Check if the user is following the thread or the board
-				$user = $app->wg->User;
-				if ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) ) {
-					$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
+				# VOLDEV-3: Bolden pages watched by this user
+				$user = $list->getUser();
+				# bolding on Watchlist can be removed, on RC, it can not
+				$isWatchlist = $list->getTitle()->equals( SpecialPage::getTitleFor( 'Watchlist' ) );
+				if ( $app->wg->ShowUpdatedMarker
+					&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
+					&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
+						|| !$isWatchlist
+					)
+				) {
+					$articleLink = '<strong class="mw-watched">' . $articleLink . '</strong>';
 				}
 			}
 
@@ -1307,6 +1313,21 @@ class WallHooksHelper {
 			$wm->load();
 			$wallMsgTitle = $wm->getMetaTitle();
 			$headerTitle = wfMsg(static::getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $pageText));
+
+			// VOLDEV-3: Bolden pages watched by this user
+			$user = $oChangeList->getUser();
+			// bolding on Watchlist can be removed, on RC, it can not
+			$isWatchlist = $oChangeList->getTitle()->equals( SpecialPage::getTitleFor( 'Watchlist' ) );
+			if ( F::app()->wg->ShowUpdatedMarker
+				&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
+				&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
+					|| !$isWatchlist
+				)
+			) {
+				$headerTitle = '<strong class="mw-watched">' . $headerTitle . '</strong>';
+			}
+
+			$headerTitle .= $oChangeList->getLanguage()->getDirMark();
 		}
 
 		wfProfileOut(__METHOD__);
