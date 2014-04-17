@@ -67,11 +67,11 @@ class LyricsUtils {
 	 * @param string $affToken
 	 * @return bool|string
 	 */
-	public static function generateITunesUrl( $field, $affToken = '') {
+	public static function generateITunesUrl( $field, $affToken = '' ) {
 		if ( $field ) {
 			$country = 'us';
 			$segments = explode( '&cc=', $field );
-			if ( count( $segments ) > 1) {
+			if ( count( $segments ) > 1 ) {
 				$field = $segments[ 0 ];
 				$country = $segments[ 1 ];
 			}
