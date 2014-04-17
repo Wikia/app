@@ -9,20 +9,22 @@ class VideoEmbedToolController extends WikiaController {
 		// empty on purpose
 	}
 
-	/*
+	/**
 	 *   Example of use:
+	 *
 	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedTool&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
-	 *   svStart     - offset
-	 *   svSize      - limit
-	 *   videoWidth  - thumbnail width
-	 *   videoHeight - thumbnail height
-	 *   articleId 	 - the suggestions should be related to this article
+	 *
+	 *   @requestParam svStart - offset
+	 *   @requestParam svSize - limit
+	 *   @requestParam videoWidth - thumbnail width
+	 *   @requestParam videoHeight - thumbnail height
+	 *   @requestParam articleId - the suggestions should be related to this article
 	 */
 	public function getSuggestedVideos() {
 		if ( $this->wg->VETEnableSuggestions != true ) {
 			// Return empty set if wgVETEnableSuggestions is not enabled
 			$result = array(
-				'caption' => wfMsg( 'vet-suggestions' ),
+				'caption' => wfMessage( 'vet-suggestions' )->plain(),
 				'totalItemCount' => 0,
 				'currentSetItemCount' => 0,
 				'items' => array()
@@ -36,14 +38,15 @@ class VideoEmbedToolController extends WikiaController {
 			        ->setLimit( $request->getInt( 'svSize', 20 ) )
 			        ->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) );
 			$response = $service->getSuggestionsForArticleId( $this->request->getInt('articleId', 0 ) );
-			
+
 			$result = array(
 					'searchQuery' => $service->getSuggestionQuery(),
-					'caption' => wfMsg( 'vet-suggestions' ),
+					'caption' => wfMessage( 'vet-suggestions' )->plain(),
 					'totalItemCount' => $response['totalItemCount'],
 					'nextStartFrom' => $response['nextStartFrom'],
 					'currentSetItemCount' => count($response['items']),
-					'items' => $response['items']
+					'items' => $response['items'],
+					'addMessage' => wfMessage('vet-add-from-preview')->plain()
 			);
 
 			$this->response->setData( $result );
@@ -63,13 +66,16 @@ class VideoEmbedToolController extends WikiaController {
 		        ->setSearchType( $searchType );
 		$response = $service->videoSearch( $phrase );
 
+		// Grep help: can be either vet-search-results-WVL or vet-search-results-local
+		$captionKey = 'vet-search-results-'.($searchType == 'premium' ? 'WVL' : 'local');
 		$result = array (
 			'searchQuery' => $phrase,
-			'caption' => wfMsgExt( ( ( $searchType == 'premium' ) ? 'vet-search-results-WVL' : 'vet-search-results-local' ), array('parsemag'),  $response['totalItemCount'], $phrase ),
+			'caption' => wfMessage( $captionKey, $response['totalItemCount'], $phrase )->text(),
 			'totalItemCount' => $response['totalItemCount'],
 			'nextStartFrom' => $response['nextStartFrom'],
 			'currentSetItemCount' => count( $response['items'] ),
-			'items' => $response['items']
+			'items' => $response['items'],
+			'addMessage' => wfMessage('vet-add-from-preview')->plain()
 		);
 
 		$this->response->setData( $result );
