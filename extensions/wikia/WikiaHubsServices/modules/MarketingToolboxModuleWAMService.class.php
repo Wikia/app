@@ -200,11 +200,9 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 	public function getWamPageUrl () {
 		if ( $this->getHubsVersion() == MarketingToolboxV3Model::VERSION ) {
-			$wikiaCorporateModel = new WikiaCorporateModel();
-
 			try {
-				$wikiId = $wikiaCorporateModel->getCorporateWikiIdByLang( $this->langCode );
-			} catch (Exception $e) {
+				$wikiId = (new WikiaCorporateModel())->getCorporateWikiIdByLang( $this->langCode );
+			} catch ( Exception $e ) {
 				$wikiId = WikiService::WIKIAGLOBAL_CITY_ID;
 			}
 
