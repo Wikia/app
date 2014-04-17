@@ -7,6 +7,27 @@
 class ThumbnailHelper extends WikiaModel {
 
 	/**
+	 * Get attributes for mustache template
+	 * Don't use this for values that need to be escaped.
+	 * Wrap attributes in three curly braces so quote markes don't get escaped.
+	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
+	 * @param array $attrs [ array( key => value ) ]
+	 * @return array [ array( 'key="value"' ) ]
+	 */
+	public static function getAttribs( $attrs ) {
+		$attribs = [];
+		foreach ( $attrs as $key => $value ) {
+			$str = $key;
+			if ( !empty( $value ) ) {
+				$str .= "=" . '"' . $value . '"';
+			}
+			$attribs[] = $str;
+		}
+
+		return $attribs;
+	}
+
+	/**
 	 * Get data-params attribute (for video on mobile)
 	 * @param File $file
 	 * @param string $imgSrc

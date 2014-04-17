@@ -185,7 +185,7 @@ class ThumbnailController extends WikiaController {
 		// set link attributes
 		$this->linkHref = $linkHref;
 		$this->linkClasses = array_unique( $linkClasses );
-		$this->linkAttrs = $this->getAttribs( $linkAttribs );
+		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttribs );
 
 		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
@@ -198,11 +198,11 @@ class ThumbnailController extends WikiaController {
 		$this->videoKey = htmlspecialchars( $title->getDBKey() );
 		$this->videoName = htmlspecialchars( $title->getText() );
 		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
-		$this->imgAttrs = $this->getAttribs( $imgAttribs );
+		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
 
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
-		$this->durationAttrs = $this->getAttribs( $durationAttribs );
+		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
 
 		// set meta
 		$this->metaAttrs = $metaAttribs;
@@ -219,7 +219,7 @@ class ThumbnailController extends WikiaController {
 	 * Article figure tags with thumbnails inside
 	 */
 	public function articleThumbnail() {
-		global $wgEnableOasisPictureAttribution;
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/atricleThumbnail.mustache' );
@@ -236,15 +236,15 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
-		if (WikiaFileHelper::isFileTypeVideo( $file ) ) {
+		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 			$title = $file->getTitle()->getText();
 		}
 
 		$addedBy = '';
 		$attributeTo = $file->getUser();
 		$showPictureAttribution = (
-			F::app()->checkSkin( 'oasis' ) &&
-			!empty( $wgEnableOasisPictureAttribution ) &&
+			$this->app->checkSkin( 'oasis' ) &&
+			!empty( $this->wg->EnableOasisPictureAttribution ) &&
 			// Remove picture attribution for thumbnails less than 100px
 			$width > 99
 		);
@@ -265,26 +265,8 @@ class ThumbnailController extends WikiaController {
 		$this->caption = $caption;
 		$this->addedBy = $addedBy;
 		$this->width = $width;
+
+		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Get attributes for mustache template
-	 * Don't use this for values that need to be escaped.
-	 * Wrap attributes in three curly braces so quote markes don't get escaped.
-	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
-	 * @param array $attrs [ array( key => value ) ]
-	 * @return array [ array( 'key="value"' ) ]
-	 */
-	protected function getAttribs( $attrs ) {
-		$attribs = [];
-		foreach ( $attrs as $key => $value ) {
-			$str = $key;
-			if ( !empty( $value ) ) {
-				$str .= "=" . '"' . $value . '"';
-			}
-			$attribs[] = $str;
-		}
-
-		return $attribs;
-	}
 }
