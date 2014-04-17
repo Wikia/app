@@ -31,310 +31,309 @@ body.global-header-fixed-at-top .WikiaHeader {
   color: $color;
 
   .sprite.logo {
-    background-image: url(/skins/oasis/images/GlobalHeaderAB/wikia_logo.png); /* base64 */
-    background-position: 0;
+	background-image: url(/skins/oasis/images/GlobalHeaderAB/wikia_logo.png); /* base64 */
+	background-position: 0;
   }
 
   .wikia-header-mask {
-    background: none;
+	background: none;
 
-    .page-width-container {
-      margin: 0;
-      max-width: 100%;
-      width: 100%;
-    }
+	.page-width-container {
+	  margin: 0;
+	  max-width: 100%;
+	  width: 100%;
+	}
   }
 
   .chevron {
-    border-top-color: $color;
+	border-top-color: $color;
   }
 
   nav {
-    height: $nav-height;
+	height: $nav-height;
 
-    & > ul > li, .GlobalNavigation > li {
-      @include box-sizing;
-      height: $nav-height;
-      margin-top: 0;
-      padding-top: 11px;
-    }
+	& > ul > li, .GlobalNavigation > li {
+	  @include box-sizing;
+	  height: $nav-height;
+	  margin-top: 0;
+	  padding-top: 11px;
+	}
 	& > ul > li:last-child {
 	  padding-top: 0;
 	}
   }
 
   li {
-    & > .wikia-button, input.login-button, .search-button, .UserLoginDropdown .ajaxRegister {
-      background: none;
-      background-color: $color;
-      border: 1px solid $color;
-      font-size: 14px;
-      height: 29px;
-      line-height: 17px;
-      padding: 5px 10px;
-      top: -4px;
+	& > .wikia-button, input.login-button, .search-button, .UserLoginDropdown .ajaxRegister {
+	  background: none;
+	  background-color: $color;
+	  border: 1px solid $color;
+	  font-size: 14px;
+	  height: 29px;
+	  line-height: 17px;
+	  padding: 5px 10px;
+	  top: -4px;
 
-      &:hover {
-        background-color: $hover-color;
-        border-color: $hover-color;
-      }
+	  &:hover {
+		background-color: $hover-color;
+		border-color: $hover-color;
+	  }
 
-    }
+	}
 	input.login-button {
 	  color: #fff;
 	}
 
-    &.start-a-wiki {
-      margin-top: 0;
-      border: none;
+	&.start-a-wiki {
+	  margin-top: 0;
+	  border: none;
 
-      .wikia-button {
-        background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
-        background-position: 8px center;
-        background-repeat: no-repeat;
-        padding: 0 12px 0 25px;
-        height: 27px;
-        line-height: 27px;
+	  .wikia-button {
+		background-image: url(/skins/oasis/images/GlobalHeaderAB/plus.png); /* base64 */
+		background-position: 8px center;
+		background-repeat: no-repeat;
+		padding: 0 12px 0 25px;
+		height: 27px;
+		line-height: 27px;
 
 		&, &:hover {
 		  color: #fff;
 		}
-      }
-    }
+	  }
+	}
 	a.forgot-password {
 	  &, &:hover {
-	  	color: $color;
-		}
+		color: $color;
+	  }
 	}
 
-    .search-form {
-      margin-top: -4px;
-    }
+	.search-form {
+	  margin-top: -4px;
+	}
 
-    .search-box {
-      &.search-small {
-        width: 200px;
-      }
-      border: 1px solid $input-border-color;
-      border-radius: 4px;
-      font-size: 14px;
-      height: 17px!important;
-      padding: 5px 8px;
-      width: 390px;
-    }
+	.search-box {
+	  &.search-small {
+		width: 200px;
+	  }
+	  border: 1px solid $input-border-color;
+	  border-radius: 4px;
+	  font-size: 14px;
+	  height: 17px !important;
+	  padding: 5px 8px;
+	  width: 390px;
+	}
 
-    .search-button {
-      margin-left: 3px;
+	.search-button {
+	  margin-left: 3px;
 
-      &.alternative {
-        background-color: $menu-hover-bg-color;
-        border-color: $menu-hover-bg-color;
-        color: $color;
+	  &.alternative {
+		background-color: $menu-hover-bg-color;
+		border-color: $menu-hover-bg-color;
+		color: $color;
 
-        &:hover {
-          background-color: $hover-color;
-          border-color: $hover-color;
-          color: $bg-color;
-        }
-      }
-    }
+		&:hover {
+		  background-color: $hover-color;
+		  border-color: $hover-color;
+		  color: $bg-color;
+		}
+	  }
+	}
 
-    .search-collapsed {
-      .search-box {
-        border-radius: 4px 0 0 4px;
-        border-right: 0;
-      }
+	.search-collapsed {
+	  .search-box {
+		border-radius: 4px 0 0 4px;
+		border-right: 0;
+	  }
 
-      .search-button {
-        border-radius: 0 4px 4px 0;
-        margin: 0;
-      }
-    }
+	  .search-button {
+		border-radius: 0 4px 4px 0;
+		margin: 0;
+	  }
+	}
 
-    .search-icon {
-      background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
-      background-position: center center;
-      background-repeat: no-repeat;
-      text-indent: -9999px;
-      width: 50px;
-    }
+	.search-icon {
+	  background-image: url(/skins/oasis/images/GlobalHeaderAB/search_icon.png); /* base64 */
+	  background-position: center center;
+	  background-repeat: no-repeat;
+	  text-indent: -9999px;
+	  width: 50px;
+	}
   }
 
   .UserLoginDropdown .WikiaForm input.login-button[type="submit"] {
-    margin: 0;
+	margin: 0;
   }
 
-
   .AccountNavigation, #WallNotifications {
-    height: $nav-height;
-    top: 0;
+	height: $nav-height;
+	top: 0;
 
-    & > li {
-      @include box-sizing;
+	& > li {
+	  @include box-sizing;
 
-      height: $nav-height;
-      padding: 10px 0 0;
+	  height: $nav-height;
+	  padding: 10px 0 0;
 
-      &:hover {
-        background: none;
-        background-color: $menu-hover-bg-color;
-      }
+	  &:hover {
+		background: none;
+		background-color: $menu-hover-bg-color;
+	  }
 
-      & > a {
-        border: 0;
-        color: $color;
+	  & > a {
+		border: 0;
+		color: $color;
 
-        &:visited, &:active {
-          color: $color;
-        }
-      }
-    }
+		&:visited, &:active {
+		  color: $color;
+		}
+	  }
+	}
 
-    .bubbles {
-      background: none;
-      height: $nav-height;
-      text-align: center;
+	.bubbles {
+	  background: none;
+	  height: $nav-height;
+	  text-align: center;
 
-      &.reddot #bubbles_count {
-        background-color: #f6961d;
-        color: $bg-color;
-        left: 0;
-        line-height: 18px;
-        padding: 0 5px;
-        top: 0px;
-      }
-    }
+	  &.reddot #bubbles_count {
+		background-color: #f6961d;
+		color: $bg-color;
+		left: 0;
+		line-height: 18px;
+		padding: 0 5px;
+		top: 0px;
+	  }
+	}
   }
 
   .AccountNavigation {
-    .subnav.show {
-      background-color: $bg-color;
-      border: 0;
-      top: $nav-height;
-      & > li {
-        border-top: 0;
-        & > a {
-          color: $color;
-          padding: 10px 20px;
+	.subnav.show {
+	  background-color: $bg-color;
+	  border: 0;
+	  top: $nav-height;
+	  & > li {
+		border-top: 0;
+		& > a {
+		  color: $color;
+		  padding: 10px 20px;
 
-          &:hover {
-            @include clear-box-shadow;
-            background-color: $menu-hover-bg-color
-          }
-        }
-      }
-    }
+		  &:hover {
+			@include clear-box-shadow;
+			background-color: $menu-hover-bg-color
+		  }
+		}
+	  }
+	}
 
-    label {
-      color: $ab-text-color;
-    }
+	label {
+	  color: $ab-text-color;
+	}
 
-    .input-group {
-      input[type="text"], input[type="password"] {
-        @include box-shadow(1px, 1px, 1px, mix($input-border-color, $bg-color, 50%), true, 0);
-        background-color: mix($bg-color-opposite, $bg-color, 6%);
-        border: 1px solid $input-border-color;
-        color: $ab-text-color;
+	.input-group {
+	  input[type="text"], input[type="password"] {
+		@include box-shadow(1px, 1px, 1px, mix($input-border-color, $bg-color, 50%), true, 0);
+		background-color: mix($bg-color-opposite, $bg-color, 6%);
+		border: 1px solid $input-border-color;
+		color: $ab-text-color;
 
-        &:focus {
-          background-color: mix($bg-color-opposite, $bg-color, 6%);
-        }
-      }
-    }
+		&:focus {
+		  background-color: mix($bg-color-opposite, $bg-color, 6%);
+		}
+	  }
+	}
 
-    .UserLoginDropdown {
-      .ajaxRegister {
-        display: none;
-      }
+	.UserLoginDropdown {
+	  .ajaxRegister {
+		display: none;
+	  }
 
-      & > .sso-login > .sso-login-divider {
-        border-top: solid 1px $input-border-color;
-        margin-top: 14px;
+	  & > .sso-login > .sso-login-divider {
+		border-top: solid 1px $input-border-color;
+		margin-top: 14px;
 
-        & > span {
-          background-color: $bg-color;
-          color: $ab-text-color;
-        }
-      }
-    }
+		& > span {
+		  background-color: $bg-color;
+		  color: $ab-text-color;
+		}
+	  }
+	}
   }
 
   .GlobalNavigation {
 
-    .topNav .subnav {
-      background-color: $bg-color;
-      border: 2px solid;
-      border-top: 0;
-      top: $nav-height;
+	.topNav .subnav {
+	  background-color: $bg-color;
+	  border: 2px solid;
+	  border-top: 0;
+	  top: $nav-height;
 
-      .catnav li {
-        border: none;
-      }
-    }
+	  .catnav li {
+		border: none;
+	  }
+	}
 
-    .video-games-vertical-color .subnav {
-      border-color: $color-wikiahome-videogames;
-    }
+	.video-games-vertical-color .subnav {
+	  border-color: $color-wikiahome-videogames;
+	}
 
-    .entertainment-vertical-color .subnav {
-      border-color: $color-wikiahome-entertainment;
-    }
+	.entertainment-vertical-color .subnav {
+	  border-color: $color-wikiahome-entertainment;
+	}
 
-    .lifestyle-vertical-color .subnav {
-      border-color: $color-wikiahome-lifestyle;
-    }
+	.lifestyle-vertical-color .subnav {
+	  border-color: $color-wikiahome-lifestyle;
+	}
 
-    & .topNav {
-      //margin-top: -11px;
+	& .topNav {
+	  //margin-top: -11px;
 
-      & > a {
-        color: $color;
-        font-size: 14px;
-        padding: 0 8px;
-        &:visited, &:active {
-          color: $color;
-        }
-      }
+	  & > a {
+		color: $color;
+		font-size: 14px;
+		padding: 0 8px;
+		&:visited, &:active {
+		  color: $color;
+		}
+	  }
 
-      &:hover {
-        >a {
-          color: #fff;
-        }
-      }
-    }
+	  &:hover {
+		> a {
+		  color: #fff;
+		}
+	  }
+	}
 
-    a, &.vertical-colors li:hover a, &.vertical-colors li:hover + li > a {
-      border: 0;
-    }
+	a, &.vertical-colors li:hover a, &.vertical-colors li:hover + li > a {
+	  border: 0;
+	}
   }
 
   #WallNotifications {
-    .subnav.show {
-      @include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
-      background-color: $bg-color;
-      border: 0;
-      top: $nav-height;
+	.subnav.show {
+	  @include box-shadow(0, 5px, 10px, rgba(0, 0, 0, 0.5));
+	  background-color: $bg-color;
+	  border: 0;
+	  top: $nav-height;
 
-      .notifications-header {
-        span {
-          background-color: $bg-color;
-          color: $ab-text-color;
-          font-weight: normal;
-        }
-      }
-      .notifications-empty {
-        color: $ab-text-color;
-      }
-    }
-    #wall-notifications-markasread * {
-      color: $color;
-    }
+	  .notifications-header {
+		span {
+		  background-color: $bg-color;
+		  color: $ab-text-color;
+		  font-weight: normal;
+		}
+	  }
+	  .notifications-empty {
+		color: $ab-text-color;
+	  }
+	}
+	#wall-notifications-markasread * {
+	  color: $color;
+	}
   }
 
   @media screen and (max-width: $breakpoint-small) {
-    li.start-a-wiki, .login-text {
-      display: none;
-    }
+	li.start-a-wiki, .login-text {
+	  display: none;
+	}
 	#WallNotifications, .AccountNavigation {
 	  right: 10px;
 	}
@@ -343,15 +342,15 @@ body.global-header-fixed-at-top .WikiaHeader {
 	  right: 50px;
 	}
 
-    li .search-box {
-      width: 230px;
+	li .search-box {
+	  width: 230px;
 
-      &.search-small {
-        width: 140px;
-      }
-    }
+	  &.search-small {
+		width: 140px;
+	  }
+	}
   }
   #AccountNavigation li a.new {
-    color: $color !important;
+	color: $color !important;
   }
 }
