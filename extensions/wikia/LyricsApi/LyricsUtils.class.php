@@ -60,4 +60,29 @@ class LyricsUtils {
 		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
+	/**
+	 * @desc Generate iTunes link from the itunes data field
+	 *
+	 * @param string $field
+	 * @param string $affToken
+	 * @return bool|string
+	 */
+	public static function generateITunesUrl( $field, $affToken = '') {
+		if ( $field ) {
+			$country = 'us';
+			$segments = explode( '&cc=', $field );
+			if ( count( $segments ) > 1) {
+				$field = $segments[ 0 ];
+				$country = $segments[ 1 ];
+			}
+			return sprintf(
+				'http://itunes.apple.com/%s/album/%s&at=%s',
+				$country,
+				$field,
+				$affToken
+			);
+		}
+		return false;
+	}
+
 }
