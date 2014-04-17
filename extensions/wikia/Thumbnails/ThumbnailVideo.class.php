@@ -36,8 +36,8 @@ class ThumbnailVideo extends ThumbnailImage {
 		// handle videos comming from shared repo (video.wikia.com)
 		if ( !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
 			// replace with a proper video domain for production
-			$domain = parse_url($this->url, PHP_URL_HOST);
-			$this->url = str_replace("http://{$domain}/", $wgWikiaVideoImageHost, $this->url);
+			$domain = parse_url( $this->url, PHP_URL_HOST );
+			$this->url = str_replace( "http://{$domain}/", $wgWikiaVideoImageHost, $this->url );
 		}
 
 		#var_dump(__METHOD__); var_dump($this->url);
@@ -117,7 +117,7 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		// Check if the editor is requesting, if so, render image thumbnail instead
 		if ( !empty( $app->wg->RTEParserEnabled ) ) {
-			return $this->renderAsThumbnailImage($options);
+			return $this->renderAsThumbnailImage( $options );
 		}
 
 		if ( !(F::app()->checkSkin( 'wikiamobile' ) ) ) {
@@ -184,6 +184,10 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 		$linkAttribs['class'] = empty( $linkAttribs['class'] ) ? $extraClasses : $linkAttribs['class'] . ' ' . $extraClasses;
 
+		if ( !empty( $options['fixedHeight'] ) ) {
+			$this->height = $options['fixedHeight'];
+		}
+
 		$attribs = array(
 			'alt' => $alt,
 			'src' => empty( $options['src'] ) ? $this->url : $options['src'] ,
@@ -231,7 +235,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		}
 
 		if ( isset( $options['constHeight'] ) ) {
-			$this->appendHtmlCrop($linkAttribs, $options);
+			$this->appendHtmlCrop( $linkAttribs, $options );
 		}
 
 		$html = Xml::openElement( 'a', $linkAttribs );
@@ -243,13 +247,20 @@ class ThumbnailVideo extends ThumbnailImage {
 			}
 			$html .= Xml::element( 'div', $timerProp,  $duration );
 		}
-		$playButtonHeight =  ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) ? $options['constHeight'] : $this->height;
+
+		if ( isset( $options['constHeight'] ) && $this->height > $options['constHeight'] ) {
+			$playButtonHeight = $options['constHeight'];
+		} else {
+			$playButtonHeight = $this->height;
+		}
+
 		$html .= WikiaFileHelper::videoPlayButtonOverlay( $this->width, $playButtonHeight );
 		$html .= Xml::element( 'img', $attribs, '', true );
 
 
 		if ( empty( $options['hideOverlay'] ) ) {
-			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle );
+			$showViews = empty( $options['showViews'] ) ? false : true;
+			$html .= WikiaFileHelper::videoInfoOverlay( $this->width, $videoTitle, $showViews );
 		}
 
 		$html .= ( $linkAttribs && isset( $linkAttribs['href'] ) ) ? Xml::closeElement( 'a' ) : '';

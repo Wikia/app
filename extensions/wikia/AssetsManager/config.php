@@ -1492,7 +1492,7 @@ $config['special_videos_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
-		'//extensions/wikia/SpecialVideos/js/SpecialVideos.js',
+		'//extensions/wikia/SpecialVideos/scripts/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
 	)
 );
@@ -1501,7 +1501,7 @@ $config['special_videos_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'oasis', 'monobook' ),
 	'assets' => array(
-		'//extensions/wikia/SpecialVideos/css/SpecialVideos.scss',
+		'//extensions/wikia/SpecialVideos/styles/SpecialVideos.scss',
 		'//extensions/wikia/WikiaStyleGuide/css/Dropdown.scss',
 	)
 );
@@ -1511,6 +1511,26 @@ $config['special_videos_css_monobook'] = array(
 	'skin' => array( 'monobook' ),
 	'assets' => array(
 		'//skins/oasis/css/wikiagrid.scss',
+	)
+);
+
+$config['special_videos_js_mobile'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/SpecialVideos/scripts/templates.mustache.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/collections/video.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/views/index.js',
+		'//extensions/wikia/SpecialVideos/scripts/mobile/controller.js',
+	)
+);
+
+$config['special_videos_css_mobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//skins/oasis/css/core/video-thumbnail.scss',
+		'//extensions/wikia/SpecialVideos/styles/mobile.scss',
 	)
 );
 
