@@ -44,7 +44,7 @@ class WallBaseController extends WikiaController{
 
 		$this->addAsset();
 
-		$title = $this->request->getVal('title', $this->app->wg->Title);
+		$title = $this->request->getVal('title', $this->getContext()->getTitle() );
 		$id = $this->request->getVal('id', null);
 
 		$this->getThread($id);
@@ -56,7 +56,7 @@ class WallBaseController extends WikiaController{
 		if( count($this->threads) > 0 ) {
 			$wn = new WallNotifications();
 			foreach($this->threads as $key => $val ){
-				$all = $wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
+				$all = $wn->markRead( $this->getContext()->getUser()->getId(), $this->wg->CityId, $key );
 				break;
 			}
 		}
@@ -68,7 +68,9 @@ class WallBaseController extends WikiaController{
 		if(!empty($title) && $title->exists() && in_array(MWNamespace::getSubject( $title->getNamespace() ), $this->app->wg->WallNS) ) {
 			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->load();
-			$this->app->wg->Out->setPageTitle( $wallMessage->getMetaTitle() );
+			// VOLDEV-3: fix Thread watchlist issues
+			$this->getContext()->getUser()->clearNotification( $title );
+			$this->getContext()->getOutput()->setPageTitle( $wallMessage->getMetaTitle() );
 		}
 
 		//TODO: keep the varnish cache and do purging on post

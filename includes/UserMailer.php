@@ -550,6 +550,10 @@ class EmailNotification {
 			}
 		}
 
+		// Wikia change - begin - @author: TK-999
+		wfRunHooks( 'UserMailerBeforeSendEmail', [ $this, $title, &$sendEmail ] );
+		// Wikia change - end
+
 		if ( !$sendEmail ) {
 			return;
 		}

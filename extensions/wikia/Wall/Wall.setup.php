@@ -75,11 +75,12 @@ $wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
 $wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
 $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
 
-$wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
+$wgHooks['UserMailerBeforeSendEmail'][] = 'WallHooksHelper::onUserMailerBeforeSendEmail';
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 //recent changes adjusting
 
+$wgHooks['RecentChange_beforeSave'][] = 'WallHooksHelper::onRecentChangeBeforeSave';
 $wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
 $wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';

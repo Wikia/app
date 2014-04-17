@@ -675,6 +675,32 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Adjusting Recent Changes for Wall
+	 * Change RC db key to affect Watchlist behavior
+	 * @author TK-999 <https://github.com/TK-999>
+	 * @param RecentChange $rc
+	 * @return bool true because it is a hook
+	 */
+	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
+		wfProfileIn( __METHOD__ );
+		$app = F::app();
+
+		if (  MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
+			$wm = new WallMessage( $rc->getTitle() );
+			$wm->load();
+
+			if ( !$wm->isMain() ) {
+				$parentTitle = $wm->getTopParentObj()->getTitle();
+				$rc->mAttribs['rc_namespace'] = $parentTitle->getNamespace();
+				$rc->mAttribs['rc_title'] = $parentTitle->getDBKey();
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 	static public function onRecentChangeSave( $recentChange ){
 		wfProfileIn( __METHOD__ );
 		// notifications
@@ -1480,10 +1506,18 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onAllowNotifyOnPageChange( $editor, $title ) {
+	/**
+	 * Don't send email for Wall changes
+	 * @param EmailNotification $notif
+	 * @param Title $title
+	 * @param bool $sendEmail
+	 * @return bool
+	 */
+	static public function onUserMailerBeforeSendEmail( EmailNotification $notif, Title $title, &$sendEmail ) {
 		$app = F::app();
-		if( in_array(MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING){
-			return false;
+
+		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
+			$sendEmail = false;
 		}
 		return true;
 	}
