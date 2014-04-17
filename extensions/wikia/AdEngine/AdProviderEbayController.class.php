@@ -17,7 +17,6 @@ class AdProviderEbayController extends WikiaController
 			$allProducts = [];
 		}
 
-		shuffle($allProducts);
 		$rand_keys = array_rand($allProducts, 4);
 
 		$products = [];
