@@ -408,6 +408,7 @@ class SolrLyricsApiHandler {
 			'album_name',
 			'song_name',
 			'image',
+			'itunes',
 			self::INDEX_FIELD_NAME_LYRICS
 		] );
 
