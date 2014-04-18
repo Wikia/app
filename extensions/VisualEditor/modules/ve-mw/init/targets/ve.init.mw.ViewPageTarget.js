@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, confirm, alert */
+/* global mw, confirm, alert, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
@@ -213,12 +213,10 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
 };
 
 /**
- * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @inheritdoc
  */
-ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
-	var setup,
-		$firstHeading = $( '#WikiaPageHeader' );
+ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
+	var $firstHeading = $( '#WikiaPageHeader' );
 	// Parent method
 	ve.init.mw.Target.prototype.setUpToolbar.call( this );
 
@@ -227,23 +225,16 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
 	// Move the toolbar to before #firstHeading if it exists
 	if ( $firstHeading.length ) {
-		//this.toolbar.$element.insertBefore( $firstHeading );
 		this.toolbar.$element.insertAfter( $firstHeading );
 	}
-	setup = ve.bind( function () {
+	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
 		// Check the surface wasn't torn down while the toolbar was animating
 		if ( this.surface ) {
 			this.toolbar.initialize();
 			this.surface.emit( 'position' );
 			this.surface.getContext().update();
 		}
-	}, this );
-
-	if ( animate ) {
-		this.toolbar.$bar.slideDown( 'fast', setup );
-	} else {
-		setup();
-	}
+	}, this ) );
 };
 
 /**
@@ -300,7 +291,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 			// Check we got as far as setting up the surface
 			if ( this.active ) {
 				// If we got as far as setting up the surface, tear that down
-				this.tearDownSurface( true );
+				this.tearDownSurface();
 			}
 
 			// Show/restore components that are otherwise handled by tearDownSurface
@@ -744,9 +735,8 @@ ve.init.mw.ViewPageTarget.prototype.checkForWikitextWarning = function () {
 		return;
 	}
 	text = ve.ce.getDomText( node.$element[0] );
-	textMatches = text.match( /\[\[|\{\{|''|<nowiki|<ref|~~~|^==|^\*|^\#/ );
 
-	if ( textMatches && !this.wikitextWarning ) {
+	if ( text.match( /\[\[|\{\{|''|<nowiki|<ref|~~~|^==|^\*|^\#/ ) ) {
 		$.showModal(
 			ve.msg( 'visualeditor-wikitext-warning-title' ),
 			$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
@@ -1000,7 +990,7 @@ ve.init.mw.ViewPageTarget.prototype.startSanityCheck = function () {
  *
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( animate ) {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
 	// Update UI
 	if ( this.$document ) {
 		this.$document.blur();
@@ -1290,20 +1280,13 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
 /**
  * Hide the toolbar.
  *
- * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
-	var tearDown = ve.bind( function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
+	this.toolbar.$bar.slideUp( 'fast', ve.bind( function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}, this );
-
-	if ( animate ) {
-		this.toolbar.$bar.slideUp( 'fast', tearDown );
-	} else {
-		tearDown();
-	}
+	}, this ) );
 };
 
 /**

@@ -14,11 +14,11 @@ class ApiVisualEditor extends ApiBase {
 	 * Parsoid HTTP proxy configuration for MWHttpRequest
 	 */
 	protected function getProxyConf() {
-		global $wgVisualEditorParsoidHTTPProxy;
+		global $wgVisualEditorParsoidHTTPProxy, $wgDevelEnvironment;
 		if ( $wgVisualEditorParsoidHTTPProxy ) {
 			return array( 'proxy' => $wgVisualEditorParsoidHTTPProxy );
 		} else {
-			return array( 'noProxy' => true );
+			return array( 'noProxy' => !empty( $wgDevelEnvironment ) );
 		}
 	}
 
@@ -60,7 +60,6 @@ class ApiVisualEditor extends ApiBase {
 					array(
 						'method'  => 'GET',
 						'timeout' => $wgVisualEditorParsoidTimeout,
-						'noProxy' => !empty( $wgDevelEnvironment )
 					)
 				)
 			);
@@ -155,14 +154,13 @@ class ApiVisualEditor extends ApiBase {
 
 		$req = MWHttpRequest::factory(
 			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
-				'/' . urlencode( $title->getPrefixedDBkey() ),
+				'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 			array_merge(
 				$this->getProxyConf(),
 				array(
 					'method' => 'POST',
 					'postData' => $postData,
 					'timeout' => $wgVisualEditorParsoidTimeout,
-					'noProxy' => !empty( $wgDevelEnvironment )
 				)
 			)
 		);
