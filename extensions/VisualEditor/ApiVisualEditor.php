@@ -26,7 +26,8 @@ class ApiVisualEditor extends ApiBase {
 		global $wgVisualEditorParsoidURL,
 			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout,
-			$wgVisualEditorParsoidForwardCookies;
+			$wgVisualEditorParsoidForwardCookies,
+			$wgDevelEnvironment;
 
 		$restoring = false;
 
@@ -50,8 +51,8 @@ class ApiVisualEditor extends ApiBase {
 			$oldid = $parserParams['oldid'];
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
-					$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
-						'/' . urlencode( $title->getPrefixedDBkey() ),
+					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+						'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
 				array_merge(
@@ -59,6 +60,7 @@ class ApiVisualEditor extends ApiBase {
 					array(
 						'method'  => 'GET',
 						'timeout' => $wgVisualEditorParsoidTimeout,
+						'noProxy' => !empty( $wgDevelEnvironment )
 					)
 				)
 			);
@@ -138,23 +140,29 @@ class ApiVisualEditor extends ApiBase {
 		global $wgVisualEditorParsoidURL,
 			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout,
-			$wgVisualEditorParsoidForwardCookies;
+			$wgVisualEditorParsoidForwardCookies,
+			$wgDevelEnvironment;
 
-		if ( $parserParams['oldid'] === 0 ) {
-			$parserParams['oldid'] = '';
+		$postData = array( 'content' => $html );
+		if ( isset( $parserParams['oldwt'] ) ) {
+			$postData['oldwt'] = $parserParams['oldwt'];
+		} else {
+			if ( $parserParams['oldid'] === 0 ) {
+				$parserParams['oldid'] = '';
+			}
+			$postData['oldid'] = $parserParams['oldid'];
 		}
+
 		$req = MWHttpRequest::factory(
-			$wgVisualEditorParsoidURL . '/' . $wgVisualEditorParsoidPrefix .
+			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
 				'/' . urlencode( $title->getPrefixedDBkey() ),
 			array_merge(
 				$this->getProxyConf(),
 				array(
 					'method' => 'POST',
-					'postData' => array(
-						'content' => $html,
-						'oldid' => $parserParams['oldid']
-					),
+					'postData' => $postData,
 					'timeout' => $wgVisualEditorParsoidTimeout,
+					'noProxy' => !empty( $wgDevelEnvironment )
 				)
 			)
 		);
@@ -299,8 +307,19 @@ class ApiVisualEditor extends ApiBase {
 		return $langlinks;
 	}
 
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri, eg: http://muppet.wikia.com/api.php
+	 * @return String
+	 */
+	protected function getApiSource() {
+		global $wgVisualEditorParsoidPrefix;
+		return empty( $wgVisualEditorParsoidPrefix ) ?
+				wfExpandUrl( wfScript( 'api' ) ) : $wgVisualEditorParsoidPrefix;
+	}
+
 	public function execute() {
-		global $wgVisualEditorNamespaces;
+		global $wgVisualEditorNamespaces, $wgVisualEditorParsoidURL, $wgVisualEditorParsoidTimeout, $wgDevelEnvironment;
 
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
@@ -315,17 +334,41 @@ class ApiVisualEditor extends ApiBase {
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldwt'] ) ) {
+			$parserParams['oldwt'] = $params['oldwt'];
+		} else if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
 		}
 
 		switch ( $params['paction'] ) {
+			case 'parsewt':
+				$postData = array(
+					'wt' => $params['wikitext']
+				);
+				$content = Http::post(
+					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+						'/' . urlencode( $page->getPrefixedDBkey() ),
+					array(
+						'postData' => $postData,
+						'timeout' => $wgVisualEditorParsoidTimeout,
+						'noProxy' => !empty( $wgDevelEnvironment )
+					)
+				);
+				$result = array(
+					'result' => 'success',
+					'content' => $content
+				);
+				break;
 			case 'parse':
 				$parsed = $this->getHTML( $page, $parserParams );
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
-				$notices = $page->getEditNotices();
+				// TODO: In MW 1.19.7 method getEditNotices does not exist so for now fallback to just an empty
+				// but in future figure out what's the proper backward compatibility solution.
+				// #back-compat
+				// $notices = $page->getEditNotices();
+				$notices = array();
 				if ( $user->isAnon() ) {
 					$notices[] = $this->msg( 'anoneditwarning' )->parseAsBlock();
 				}
@@ -544,6 +587,7 @@ class ApiVisualEditor extends ApiBase {
 			'paction' => array(
 				ApiBase::PARAM_REQUIRED => true,
 				ApiBase::PARAM_TYPE => array(
+					'parsewt',
 					'parse',
 					'parsefragment',
 					'serialize',
@@ -557,6 +601,7 @@ class ApiVisualEditor extends ApiBase {
 			'starttimestamp' => null,
 			'oldid' => null,
 			'html' => null,
+			'oldwt' => null,
 			'cachekey' => null,
 		);
 	}

@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/* global mw */
 
 /**
  * Initialization MediaWiki target.
@@ -29,6 +29,7 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.pageName = pageName;
 	this.pageExists = mw.config.get( 'wgArticleId', 0 ) !== 0;
 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
+	this.wikitext = null;
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
 	this.submitUrl = ( new mw.Uri( mw.util.getUrl( this.pageName ) ) )
@@ -929,8 +930,7 @@ ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 	this.events.timings.activationStart = ve.now();
 	// Start loading the module immediately
 	mw.loader.using(
-		// Wait for site and user JS before running plugins
-		this.modules.concat( additionalModules || [] ),
+		this.modules,
 		ve.bind( ve.init.mw.Target.onModulesReady, this )
 	);
 
@@ -1155,12 +1155,15 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 	data = ve.extendObject( {}, options, {
 		'action': 'visualeditoredit',
 		'page': this.pageName,
-		'oldid': this.revid,
 		'basetimestamp': this.baseTimeStamp,
 		'starttimestamp': this.startTimeStamp,
 		'token': this.editToken
 	} );
-
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}
 	this.saving = this.tryWithPreparedCacheKey( doc, data, 'save' )
 		.done( ve.bind( ve.init.mw.Target.onSave, this ) )
 		.fail( ve.bind( this.onSaveError, this ) );
@@ -1176,15 +1179,22 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
  * @returns {boolean} Diffing has been started
 */
 ve.init.mw.Target.prototype.showChanges = function ( doc ) {
+	var data;
 	if ( this.diffing ) {
 		return false;
 	}
-	this.diffing = this.tryWithPreparedCacheKey( doc, {
+
+	data = {
 		'action': 'visualeditor',
 		'paction': 'diff',
 		'page': this.pageName,
-		'oldid': this.revid
-	}, 'diff' )
+	};
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}
+	this.diffing = this.tryWithPreparedCacheKey( doc, data, 'diff' )
 		.done( ve.bind( ve.init.mw.Target.onShowChanges, this ) )
 		.fail( ve.bind( ve.init.mw.Target.onShowChangesError, this ) );
 
@@ -1250,20 +1260,35 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
  * @returns {boolean} Serializing has been started
 */
 ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
+	var data;
 	// Prevent duplicate requests
 	if ( this.serializing ) {
 		return false;
 	}
 	this.serializeCallback = callback;
-	this.serializing = this.tryWithPreparedCacheKey( doc, {
+	data = {
 		'action': 'visualeditor',
 		'paction': 'serialize',
 		'page': this.pageName,
 		'oldid': this.revid
-	}, 'serialize' )
+	};
+	if ( this.wikitext !== null ) {
+		data.oldwt = this.wikitext;
+	} else {
+		data.oldid = this.revid;
+	}
+	this.serializing = this.tryWithPreparedCacheKey( doc, data, 'serialize' )
 		.done( ve.bind( ve.init.mw.Target.onSerialize, this ) )
 		.fail( ve.bind( ve.init.mw.Target.onSerializeError, this ) );
 	return true;
+};
+
+/**
+ * @method
+ * @param {string} wikitext
+ */
+ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
+	this.wikitext = wikitext;
 };
 
 /**

@@ -213,10 +213,12 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
 };
 
 /**
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @inheritdoc
  */
-ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
-	var $firstHeading = $( '#firstHeading' );
+ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function ( animate ) {
+	var setup,
+		$firstHeading = $( '#WikiaPageHeader' );
 	// Parent method
 	ve.init.mw.Target.prototype.setUpToolbar.call( this );
 
@@ -225,16 +227,23 @@ ve.init.mw.ViewPageTarget.prototype.setUpToolbar = function () {
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
 	// Move the toolbar to before #firstHeading if it exists
 	if ( $firstHeading.length ) {
-		this.toolbar.$element.insertBefore( $firstHeading );
+		//this.toolbar.$element.insertBefore( $firstHeading );
+		this.toolbar.$element.insertAfter( $firstHeading );
 	}
-	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
+	setup = ve.bind( function () {
 		// Check the surface wasn't torn down while the toolbar was animating
 		if ( this.surface ) {
 			this.toolbar.initialize();
 			this.surface.emit( 'position' );
 			this.surface.getContext().update();
 		}
-	}, this ) );
+	}, this );
+
+	if ( animate ) {
+		this.toolbar.$bar.slideDown( 'fast', setup );
+	} else {
+		setup();
+	}
 };
 
 /**

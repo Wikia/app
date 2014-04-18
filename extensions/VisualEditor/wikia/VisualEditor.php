@@ -145,7 +145,7 @@ $wgResourceModules += array(
 	),
 );
 
-$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
+//$wgVisualEditorPluginModules[] = 'ext.visualEditor.wikiaCore';
 
 /* Messages */
 
