@@ -1012,6 +1012,8 @@ class PPFrame_DOM implements PPFrame {
 	 *
 	 * @return PPTemplateFrame_DOM
 	 */
+	/** Wikia change - Backported $indexOffset is supported in newChild()
+	    for Scribunto support from https://git.wikimedia.org/commit/mediawiki%2Fcore/7fc5234 **/
 	function newChild( $args = false, $title = false, $indexOffset = 0 ) {
 		$namedArgs = array();
 		$numberedArgs = array();
@@ -1711,6 +1713,8 @@ class PPCustomFrame_DOM extends PPFrame_DOM {
 		return $this->args[$index];
 	}
 
+	/** Wikia change - Backported $indexOffset is supported in newChild()
+	    for Scribunto support from https://git.wikimedia.org/commit/mediawiki%2Fcore/7fc5234 **/
 	function getArguments() {
 		return $this->args;
 	}

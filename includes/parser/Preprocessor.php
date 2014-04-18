@@ -62,6 +62,8 @@ interface PPFrame {
 
 	const RECOVER_ORIG = 27; // = 1|2|8|16 no constant expression support in PHP yet
 
+	/** Wikia change - begin - Backported $indexOffset is supported in newChild()
+	    for Scribunto support from https://git.wikimedia.org/commit/mediawiki%2Fcore/7fc5234 **/
 	/** This constant exists when $indexOffset is supported in newChild() */
 	const SUPPORTS_INDEX_OFFSET = 1;
 
@@ -75,6 +77,7 @@ interface PPFrame {
 	 * @return PPFrame
 	 */
 	function newChild( $args = false, $title = false, $indexOffset = 0 );
+	/** Wikia change - end **/
 
 	/**
 	 * Expand a document tree node
