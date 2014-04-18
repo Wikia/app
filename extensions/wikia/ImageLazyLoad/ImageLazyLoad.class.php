@@ -149,7 +149,6 @@ class ImageLazyLoad  {
 		return true;
 	}
 
-
 	/**
 	 * Check for valid lazy loaded image
 	 * @global boolean $wgRTEParserEnabled
