@@ -18,7 +18,10 @@ $(function () {
 		}
 
 		//Don't show banner if device isn't iOS or Android, website is loaded in app or user dismissed banner
-		if (type && !standalone && !cookie.get('sb-closed') && !cookie.get('sb-installed')) {
+		if (type && !standalone && !cookie.get('sb-closed') && !cookie.get('sb-installed') &&
+			window.wgAppName &&
+			window.wgAppIcon
+		) {
 			loader({
 				type: loader.MULTI,
 				resources: {
