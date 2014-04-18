@@ -615,6 +615,15 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 250",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
@@ -692,6 +701,15 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameter(
  * 					name="category",
  * 					description="Return only articles belonging to the provided valid category title",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 250",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
