@@ -27,7 +27,6 @@ abstract class VideoFeedIngester {
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
-		self::PROVIDER_REALGRAVITY,
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
@@ -36,6 +35,7 @@ abstract class VideoFeedIngester {
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
+		self::PROVIDER_REALGRAVITY,
 	];
 
 	protected static $API_WRAPPER;
