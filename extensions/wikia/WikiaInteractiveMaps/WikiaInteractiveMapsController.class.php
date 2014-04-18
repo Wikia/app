@@ -2,16 +2,27 @@
 
 class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 
-	const MAPS_PER_PAGE = 10;
-
+	/**
+	 * @desc Special page constructor
+	 *
+	 * @param null $name
+	 * @param string $restriction
+	 * @param bool $listed
+	 * @param bool $function
+	 * @param string $file
+	 * @param bool $includable
+	 */
 	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		parent::__construct( 'InteractiveMaps', $restriction, $listed, $function, $file, $includable );
 	}
 
+	/**
+	 * Interactive maps special page
+	 */
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
 
-		$mapsModel = new WikiaMaps( $this->getIntMapServiceConfig() );
+		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$params = [
 			'city_id' => $this->app->wg->CityId
 		];
@@ -29,20 +40,4 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
-
-	/**
-	 * Get API Service configuration
-	 *
-	 * @return array
-	 */
-	private function getIntMapServiceConfig() {
-		// TODO: Move this to config once we have the api server deployed
-		return [
-			'protocol' => 'http',
-			'hostname' => '10.10.10.242',
-			'port' => '3000',
-			'version' => 'v1'
-		];
-	}
-
 }
