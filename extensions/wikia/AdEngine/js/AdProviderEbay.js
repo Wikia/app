@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 	'jquery',
 	'wikia.window',
 	'wikia.document',
-	require.optional('wikia.geo')
+	'wikia.geo'
 ], function (log, $, window, document, geo) {
 	'use strict';
 
