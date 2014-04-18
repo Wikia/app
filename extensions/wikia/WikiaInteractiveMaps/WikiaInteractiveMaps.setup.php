@@ -3,7 +3,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Wikia Interactive Maps',
-	'authors' => [
+	'author' => [
 		'Andrzej "nAndy" Łukaszewski',
 		'Evgeniy "aquilax" Vasilev',
 	],
