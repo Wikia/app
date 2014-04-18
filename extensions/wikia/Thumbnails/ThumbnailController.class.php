@@ -123,7 +123,8 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// get alt for img tag
-		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
+		$imgAttribs['alt'] = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+		$imgAttribs['alt'] = htmlspecialchars( $imgAttribs['alt'] );
 
 		// set valign for img tag
 		$imgAttribs['style'] = '';
@@ -172,14 +173,6 @@ class ThumbnailController extends WikiaController {
 			}
 		}
 
-		// data-src attribute in case of lazy loading
-		if ( !empty( $options['usePreloading'] ) ) {
-			$this->dataSrc = $imgSrc;
-		} else if ( !empty( $this->wg->EnableAdsLazyLoad ) && empty( $options['noLazyLoad'] ) ) {
-			$this->dataSrc = '';
-			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $imgSrc, $imgClass, $imgAttribs );
-		}
-
 		// check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $width;
@@ -206,6 +199,16 @@ class ThumbnailController extends WikiaController {
 		$this->imgClass = $imgClass;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
 
+		// data-src attribute in case of lazy loading
+		$this->noscript = '';
+		if ( !empty( $options['usePreloading'] ) ) {
+			$this->dataSrc = $imgSrc;
+		} else if ( !empty( $this->wg->EnableAdsLazyLoad ) && empty( $options['noLazyLoad'] ) ) {
+			$this->dataSrc = '';
+			$this->noscript = $this->app->renderView( 'ThumbnailController', 'imgThumbnail', $this->response->getData() );
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
+		}
+
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
 		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
@@ -214,6 +217,12 @@ class ThumbnailController extends WikiaController {
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function imgThumbnail() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/imgThumbnail.mustache' );
+		$this->response->setData( $this->request->getParams() );
 	}
 
 	/**
