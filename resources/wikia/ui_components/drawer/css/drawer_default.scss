@@ -39,6 +39,10 @@ $subdrawer-width: 225px;
 	}
 }
 
+.subdrawer {
+	-webkit-overflow-scrolling: touch;
+}
+
 .drawer {
 	padding: 10px;
 	width: $drawer-width;
