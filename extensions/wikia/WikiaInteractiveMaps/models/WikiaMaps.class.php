@@ -33,7 +33,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Run the local $method with the provided $params array and store the result in MemCcache for $expireTime sec
+	 * @desc Run the local $method with the provided $params array and store the result in Memcache for $expireTime sec
 	 *
 	 * @param String $method method to execute
 	 * @param Array $params  Array with params to pass to the method
