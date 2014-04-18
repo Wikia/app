@@ -22,11 +22,8 @@ class FacebookSignupController extends WikiaController {
 
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$this->errorMsg = '';
-			$userAccountDisabled = $user->getOption( 'disabled' );
 
-			if( !empty( $userAccountDisabled ) ||
-				( defined( 'CLOSED_ACCOUNT_FLAG' ) && $user->getRealName() == CLOSED_ACCOUNT_FLAG )
-			) {
+			if ( $this->isAccountDisabled( $user ) ) {
 				// User account was disabled, abort the login
 				$this->loginAborted = true;
 				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
@@ -171,5 +168,19 @@ class FacebookSignupController extends WikiaController {
 	private function getFacebookUserId() {
 		$fbApi = new FBConnectAPI();
 		return $fbApi->user();
+	}
+
+	/**
+	 * Check if account is disabled
+	 *
+	 * @param  User    $user User account
+	 * @return boolean       true if the account is disabled,
+	 *                       false otherwise
+	 */
+	private function isAccountDisabled( User $user ) {
+		return $user->getBoolOption( 'disabled' ) || (
+			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
+			$user->getRealName() == CLOSED_ACCOUNT_FLAG
+		);
 	}
 }
