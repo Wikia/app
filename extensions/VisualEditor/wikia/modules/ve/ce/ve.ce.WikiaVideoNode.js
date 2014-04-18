@@ -33,6 +33,8 @@ ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 
 ve.ce.WikiaVideoNode.static = {};
 
+/* Static methods */
+
 /**
  * Get the size string to use as the class name for the video thumbnail wrapper.
  * It determines the size and location of the play button.
