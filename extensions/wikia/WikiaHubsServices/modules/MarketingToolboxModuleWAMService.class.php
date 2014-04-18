@@ -206,9 +206,25 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 	}
 
 	public function getWamPageUrl () {
-		$devboxUrl = ($this->app->wg->DevelEnvironment == true) ? '/wiki' : '';
-		return !empty($this->app->wg->WAMPageConfig['pageName']) ? $devboxUrl.'/'.$this->app->wg->WAMPageConfig['pageName'] : '#';
+		if ( $this->getHubsVersion() == MarketingToolboxV3Model::VERSION ) {
+			try {
+				$wikiId = (new WikiaCorporateModel())->getCorporateWikiIdByLang( $this->langCode );
+			} catch ( Exception $e ) {
+				$wikiId = WikiService::WIKIAGLOBAL_CITY_ID;
+			}
+
+			$wamPageConfig = WikiFactory::getVarByName( 'wgWAMPageConfig', $wikiId )->cv_value;
+			$pageName = ( !empty( $wamPageConfig['pageName'] ) ) ? $wamPageConfig['pageName'] : 'WAM';
+
+			$url = GlobalTitle::newFromText( $pageName, NS_MAIN, $wikiId )->getFullURL();
+		} else {
+			$devboxUrl = ( $this->app->wg->DevelEnvironment == true ) ? '/wiki' : '';
+			$url = !empty( $this->app->wg->WAMPageConfig['pageName'] ) ? $devboxUrl.'/'.$this->app->wg->WAMPageConfig['pageName'] : '#';
+		}
+
+		return $url;
 	}
+
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
