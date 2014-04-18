@@ -99,7 +99,7 @@
 						<?= htmlspecialchars($product['title']) ?>
 					</a>
 					<div class="price">
-						<?= $product['BuyItNowPrice'] ? $product['BuyItNowPrice'] : $product['CurrentPrice'] ?> $ <a href="<?= $product['link'] ?>"><?= wfMessage('adengine-ebay-bid') ?></a>
+						<?= $product['price_tag']?> <a href="<?= $product['link'] ?>"><?= wfMessage('adengine-ebay-bid') ?></a>
 					</div>
 				</div>
 			</li>

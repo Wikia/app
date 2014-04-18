@@ -93,6 +93,10 @@ class AdProviderEbayController extends WikiaController
 				$product['image'] = $imageUrlMatch[1];
 			}
 
+			if (preg_match('/<td><strong>([^<]+)<\/strong>/', $product['description'], $currencyMatch)) {
+				$product['price_tag'] = $currencyMatch[1];
+			}
+
 			$allProducts[] = $product;
 		}
 
