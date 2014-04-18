@@ -16,6 +16,8 @@ $optionsWithArgs = [ 'u', 's', 'e', 'i' ];
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
+use \Wikia\Logger\WikiaLogger;
+
 // commandLine.inc transforms -h and --help into 'help'
 if ( isset( $options['help'] ) ) {
 	print <<<EOT
@@ -188,6 +190,8 @@ function loadProviders ( $provider ) {
 }
 
 function getContentSummary( $summary ) {
+	$log = WikiaLogger::instance();
+
 	$width = 20;
 	$now = date( 'Y-m-d H:i:s' );
 	$content = "Run Date: $now\n";
@@ -207,8 +211,25 @@ function getContentSummary( $summary ) {
 		foreach ( $result as $key => $value ) {
 			$summary['total'][$key] += $value;
 			$content .= sprintf( "%{$width}s", $value );
+
+			// Make provider data available for kibana
+			$log->info("Video ingestion complete: $provider",
+				[
+					"provider" => $provider,
+					"key" => $key,
+					"value" => $value,
+				]);
 		}
 		$content .= "\n";
+	}
+
+	// Make the summary data available to kibana
+	foreach ( $summary['total'] as $key => $value ) {
+		$log->info("Video ingestion total $key: $value",
+			[
+				"key" => $key,
+				"value" => $value,
+			]);
 	}
 
 	return $content;
