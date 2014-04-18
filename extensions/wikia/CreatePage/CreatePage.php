@@ -142,11 +142,9 @@ function wfCreatePageOnGetPreferences( $user, &$preferences ) {
 function wfCreatePageAjaxGetVEDialog() {
 	global $wgRequest;
 
-	$sArticle = $wgRequest->getVal( 'article' );
-
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$template->set_vars( array(
-			'article' => $sArticle
+			'article' => $wgRequest->getVal( 'article' )
 		)
 	);
 
