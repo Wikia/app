@@ -43,7 +43,7 @@ ve.ce.WikiaVideoNode.static = {};
  * @param width
  * @returns {string}
  */
-ve.ce.WikiaVideoNode.static.getSize = function( width ) {
+ve.ce.WikiaVideoNode.static.getSizeString = function( width ) {
 	var size;
 
 	if ( width < 100 ) {
@@ -84,7 +84,7 @@ ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
 ve.ce.WikiaVideoNode.prototype.onWikiaVideoSetup = function () {
 	var $parent;
 
-	this.size = this.constructor.static.getSize( this.$image.width() );
+	this.size = this.constructor.static.getSizeString( this.$image.width() );
 
 	if ( !this.$wikiaVideoElements.length ) {
 		$parent = this.$image.parent().addClass( 'video video-thumbnail ' + this.size );
