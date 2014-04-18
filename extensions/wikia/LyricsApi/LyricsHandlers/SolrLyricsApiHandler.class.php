@@ -27,7 +27,9 @@ class SolrLyricsApiHandler {
 	public $cityId;
 
 	public function __construct( $config ) {
-		$this->cityId = F::app()->wg->CityId;
+		$wg = F::app()->wg;
+		$this->cityId = $wg->CityId;
+		$this->itunesAffiliateToken = $wg->LyricsItunesAffiliateToken;
 		$this->client = new Solarium_Client( $config );
 	}
 
@@ -337,7 +339,7 @@ class SolrLyricsApiHandler {
 		}
 
 		if ( $queryResult->itunes ) {
-			$album->itunes = $queryResult->itunes;
+			$album->itunes = LyricsUtils::generateITunesUrl( $queryResult->itunes, $this->itunesAffiliateToken );
 		}
 
 		$album->artist = $this->buildArtist( $queryResult );
@@ -363,7 +365,7 @@ class SolrLyricsApiHandler {
 		$song = $this->buildSong( $solrSong, $addSongUrl );
 
 		if ( $solrSong->itunes ) {
-			$song->itunes = $solrSong->itunes;
+			$song->itunes = LyricsUtils::generateITunesUrl( $solrSong->itunes, $this->itunesAffiliateToken );
 		}
 
 		$song->lyrics = $solrSong->lyrics;
