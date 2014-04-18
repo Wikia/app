@@ -196,7 +196,7 @@ class ThumbnailController extends WikiaController {
 		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
 		} else {
-			$this->size = WikiaFileHelper::getThumbnailSize( $width );
+			$this->size = ThumbnailHelper::getThumbnailSize( $width );
 		}
 
 		// set image attributes

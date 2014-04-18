@@ -68,7 +68,7 @@ ve.ce.WikiaVideoNode.prototype.onWikiaVideoSetup = function () {
 /**
  * Get the size string to use as the class name for the video thumbnail wrapper.
  * It determines the size and location of the play button.
- * It's duplicated from WikiaFileHelper::getThumbnailSize
+ * It's duplicated from ThumbnailHelper::getThumbnailSize
  *
  * @param width
  * @returns {string}
