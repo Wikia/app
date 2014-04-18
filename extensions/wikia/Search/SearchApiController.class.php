@@ -81,7 +81,7 @@ class SearchApiController extends WikiaApiController {
 			$params = $this->getDetailsParams();
 		}
 
-		$responseValues = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( ['id', 'url'], true );
+		$responseValues = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( ['id', 'lang_s'], true );
 
 		if ( empty( $responseValues['items'] ) ) {
 			throw new NotFoundApiException();
@@ -95,7 +95,7 @@ class SearchApiController extends WikiaApiController {
 			} else {
 				$items[] = [
 					'id' => (int) $result['id'],
-					'url' => $result['url'],
+					'language' => $result['lang_s'],
  				];
 			}
 		}
