@@ -19,7 +19,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		logGroup = 'ext.wikia.adEngine.provider.evolve',
 		ord = Math.round(Math.random() * 23456787654),
 		slotForSkin = 'INVISIBLE_SKIN',
-		hoppedSlots = {},
 		hopTo = 'Liftium',
 		iface,
 		undef;
@@ -139,34 +138,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		return url;
 	}
 
-	function sanitizeSlotname(slotname) {
-		log('sanitizeSlotname', 5, logGroup);
-		log(slotname, 5, logGroup);
-
-		var re = new RegExp('[A-Z1-9_]+'),
-			out = re.exec(slotname),
-			undef;
-
-		log(out, 8, logGroup);
-
-		if (out) {
-			out = out[0];
-		}
-
-		if (slotMap[out] === undef) {
-			log('error, unknown slotname', 1, logGroup);
-			out = '';
-		}
-
-		log(out, 7, logGroup);
-		return out;
-	}
-
-	function hop(slotname) {
-		log(['hop', slotname], 5, logGroup);
-		hoppedSlots[sanitizeSlotname(slotname)] = true;
-	}
-
 	function fillInSlot(slotname, pSuccess, pHop) {
 		log('fillInSlot', 5, logGroup);
 		log(slotname, 5, logGroup);
@@ -192,7 +163,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 				var slot = document.getElementById(slotname),
 					height;
 
-				if (hoppedSlots[slotname]) {
+				if (evolveSlotConfig.isHopped(slotname)) {
 					pHop({method: 'hop'}, hopTo);
 					return;
 				}
@@ -221,14 +192,13 @@ define('ext.wikia.adEngine.provider.evolve', [
 	iface = {
 		name: 'Evolve',
 		fillInSlot: fillInSlot,
-		canHandleSlot: evolveSlotConfig.canHandleSlot,
-		hop: hop
+		canHandleSlot: evolveSlotConfig.canHandleSlot
 	};
 
 	// TODO: @mech rethink
 	// TODO: @rychu change tests
 	if (window.wgInsideUnitTest) {
-		iface.sanitizeSlotname = sanitizeSlotname;
+		iface.sanitizeSlotname = evolveSlotConfig.sanitizeSlotname;
 		iface.getUrl = getUrl;
 	}
 

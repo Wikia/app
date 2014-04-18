@@ -220,6 +220,10 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.window';
 		}
 		if (AdEngine2Service::areAdsInHead()) {
+			$scriptModules[] = 'wikia.document';
+			$scriptModules[] = 'wikia.abtest';
+			$scriptModules[] = 'wikia.cache';
+			$scriptModules[] = 'wikia.localStorage';
 			$scriptModules[] = 'wikia.location';
 			$scriptModules[] = 'wikia.log';
 			$scriptModules[] = 'wikia.querystring';

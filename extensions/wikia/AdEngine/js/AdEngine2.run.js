@@ -14,14 +14,14 @@ require([
 	'wikia.tracker',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
-	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.evolveSlotConfig',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker'
-], function (log, window, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -67,7 +67,7 @@ require([
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		adProviderEvolve.hop(slotname);
+		evolveSlotConfig.hop(slotname);
 	};
 
 	if (window.wgEnableRHonDesktop) {
@@ -114,19 +114,22 @@ require([
 // Load late ads now
 window.AdEngine_loadLateAds = function () {
 	'use strict';
-	require([
-		'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
-	], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
-		var module = 'AdEngine_loadLateAds';
-		log('launching late ads now', 1, module);
-		log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2 late',
-			trackingMethod: 'ad'
+
+	window.wgAfterContentAndJS.push(function() {
+		require([
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+			var module = 'AdEngine_loadLateAds';
+			log('launching late ads now', 1, module);
+			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
+			tracker.track({
+				eventName: 'liftium.init',
+				ga_category: 'init2/init',
+				ga_action: 'init',
+				ga_label: 'adengine2 late',
+				trackingMethod: 'ad'
+			});
+			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
-		adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 	});
 };
