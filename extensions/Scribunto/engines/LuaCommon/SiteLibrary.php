@@ -6,7 +6,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 	private $pagesInCategoryCache = array();
 
 	function register() {
-		global $wgContLang, $wgNamespaceAliases;
+		global $wgContLang, $wgNamespaceAliases, $wgNonincludableNamespaces;
 
 		$lib = array(
 			'loadSiteStats' => array( $this, 'loadSiteStats' ),
@@ -36,7 +36,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 					'hasGenderDistinction' => MWNamespace::hasGenderDistinction( $ns ),
 					'isCapitalized' => MWNamespace::isCapitalized( $ns ),
 					'isContent' => MWNamespace::isContent( $ns ),
-					'isIncludable' => !MWNamespace::isNonincludable( $ns ),
+					'isIncludable' => !( $wgNonincludableNamespaces && in_array( $ns, $wgNonincludableNamespaces ) ), // Wikia change - MWNamespace::isNonincludable is not supported in MW 1.19
 					'isMovable' => MWNamespace::isMovable( $ns ),
 					'isSubject' => MWNamespace::isSubject( $ns ),
 					'isTalk' => MWNamespace::isTalk( $ns ),

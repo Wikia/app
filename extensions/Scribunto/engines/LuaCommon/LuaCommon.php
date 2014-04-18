@@ -207,7 +207,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		 * in console input, and for producing an informative error message
 		 * if there is an error in prevQuestions.
 		 *
-		 * Maybe each console line could be evaluated as a different chunk, 
+		 * Maybe each console line could be evaluated as a different chunk,
 		 * apparently that's what lua.c does.
 		 */
 		$code = "return function (__init)\n" .
@@ -231,7 +231,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		}
 		$code .= "end\n";
 
-		$contentModule = $this->newModule( 
+		$contentModule = $this->newModule(
 			$params['content'], $params['title']->getPrefixedDBkey() );
 		$contentInit = $contentModule->getInitChunk();
 
@@ -248,7 +248,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			'print' => isset( $ret[1] ) ? $ret[1] : '',
 		);
 	}
-		
+
 	/**
 	 * Workalike for luaL_checktype()
 	 *
@@ -385,6 +385,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 	 * Handler for expandTemplate()
 	 */
 	function expandTemplate( $frameId, $titleText, $args ) {
+		global $wgNonincludableNamespaces;
 		$frame = $this->getFrameById( $frameId );
 		if ( $frame === false ) {
 			throw new Scribunto_LuaError( 'attempt to call mw.expandTemplate with no frame' );
@@ -398,7 +399,8 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		if ( $frame->depth >= $this->parser->mOptions->getMaxTemplateDepth() ) {
 			throw new Scribunto_LuaError( 'expandTemplate: template depth limit exceeded' );
 		}
-		if ( MWNamespace::isNonincludable( $title->getNamespace() ) ) {
+		// Wikia change - MWNamespace::isNonincludable is not supported in MW 1.19
+		if ( $wgNonincludableNamespaces && in_array( $title->getNamespace(), $wgNonincludableNamespaces ) ) {
 			throw new Scribunto_LuaError( 'expandTemplate: template inclusion denied' );
 		}
 
@@ -411,7 +413,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		}
 
 		$newFrame = $this->parser->getPreprocessor()->newCustomFrame( $args );
-		$text = $this->doCachedExpansion( $newFrame, $dom, 
+		$text = $this->doCachedExpansion( $newFrame, $dom,
 			array(
 				'template' => $finalTitle->getPrefixedDBkey(),
 				'args' => $args
@@ -455,7 +457,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		$hash = md5( serialize( $cacheKey ) );
 		if ( !isset( $this->expandCache[$hash] ) ) {
 			if ( is_scalar( $input ) ) {
-				$dom = $this->parser->getPreprocessor()->preprocessToObj( 
+				$dom = $this->parser->getPreprocessor()->preprocessToObj(
 					$input, Parser::PTD_FOR_INCLUSION );
 			} else {
 				$dom = $input;
@@ -512,7 +514,7 @@ class Scribunto_LuaModule extends ScribuntoModuleBase {
 	public function getInitChunk() {
 		if ( !$this->initChunk ) {
 			$this->initChunk = $this->engine->getInterpreter()->loadString(
-				$this->code, 
+				$this->code,
 				// Prepending an "=" to the chunk name avoids truncation or a "[string" prefix
 				'=' . $this->chunkName );
 		}
@@ -587,7 +589,7 @@ class Scribunto_LuaError extends ScribuntoException {
 				$title = Title::newFromText( $short_src );
 				if ( $title && $title->getNamespace() === NS_MODULE ) {
 					$title->setFragment( '#mw-ce-l' . $currentline );
-					$src = Html::rawElement( 'a', 
+					$src = Html::rawElement( 'a',
 						array( 'href' => $title->getFullURL( 'action=edit' ) ),
 						$src );
 				}
