@@ -150,5 +150,5 @@ abstract class WikiaSuperFactory {
  * @author ADi
  *
  */
-abstract class F extends WikiaSuperFactory { }
+//abstract class F extends WikiaSuperFactory { }
 
