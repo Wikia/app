@@ -1,14 +1,15 @@
 /*jshint camelcase:false*/
-var AdLogicPageLevelParams = function (
-	log,
-	window,
-	Krux,             // optional
-	adLogicPageDimensions, // optional
-	abTest            // optional
-) {
+/*global define, require*/
+define('ext.wikia.adEngine.adLogicPageParams', [
+	'wikia.log',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.krux'),
+	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
+	require.optional('wikia.abTest')
+], function (log, window, Krux, adLogicPageDimensions, abTest) {
 	'use strict';
 
-	var logGroup = 'AdLogicPageLevelParams',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = window.location.hostname.toString(),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
@@ -49,8 +50,8 @@ var AdLogicPageLevelParams = function (
 		}
 	}
 
+	// TODO: move the "if" to PHP?
 	function getCategories() {
-
 		if (window.wgAdPageLevelCategoryLangs && (window.wgContentLanguage in window.wgAdPageLevelCategoryLangs)) {
 			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
 				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
@@ -127,6 +128,8 @@ var AdLogicPageLevelParams = function (
 	}
 
 	function getPageLevelParams() {
+		// TODO: cache results (keep in mind some of them may change while executing page)
+
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
@@ -178,11 +181,4 @@ var AdLogicPageLevelParams = function (
 	return {
 		getPageLevelParams: getPageLevelParams
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('wikia.adlogicpageparams', ['wikia.log', 'wikia.window'], AdLogicPageLevelParams);
-	}
-}(this));
+});

@@ -9,7 +9,7 @@
 
 define('wikia.videohandler.ooyala', [
 	'wikia.window',
-	require.optional('ext.wikia.adengine.dartvideohelper'),
+	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
 ], function (window, dartVideoHelper, loader, log) {
@@ -68,7 +68,7 @@ define('wikia.videohandler.ooyala', [
 
 		if (window.wgAdVideoTargeting && window.wgShowAds) {
 			if (!dartVideoHelper) {
-				throw 'ext.wikia.adengine.dartvideohelper is not defined and it should as we need to display ads';
+				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 			createParams['google-ima-ads-manager'] = {
 				adTagUrl: dartVideoHelper.getUrl(),

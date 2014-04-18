@@ -1,4 +1,5 @@
-var AdLogicHighValueCountry = function (window) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window'], function (window) {
 	'use strict';
 
 	var highValueCountries,
@@ -43,4 +44,4 @@ var AdLogicHighValueCountry = function (window) {
 		isHighValueCountry: isHighValueCountry,
 		getMaxCallsToDART: getMaxCallsToDART
 	};
-};
+});

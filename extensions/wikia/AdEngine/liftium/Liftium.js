@@ -1552,7 +1552,9 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
-Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
+Liftium.isHighValueCountry = function (countryCode) {
+	return window.adLogicHighValueCountry.isHighValueCountry(countryCode);
+}
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){

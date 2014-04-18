@@ -1,8 +1,14 @@
 /*global define*/
-define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.adengine.slottweaker', 'ext.wikia.adengine.gpthelper', 'ext.wikia.adengine.gptslotconfig'], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
+define('ext.wikia.adEngine.provider.remnantGptMobile', [
+	'wikia.log',
+	'wikia.document',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.wikiaGptHelper',
+	'ext.wikia.adEngine.gptSlotConfig'
+], function (log, document, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderDartRemnantMobile',
+	var logGroup = 'ext.wikia.adEngine.provider.remnantGptMobile',
 		slotMap = gptSlotConfig.getConfig('mobile_remnant');
 
 	function canHandleSlot(slotname) {
@@ -13,7 +19,7 @@ define('ext.wikia.adengine.provider.remnantgptmobile', ['wikia.log', 'ext.wikia.
 		log(['fillInSlot', slotname], 5, logGroup);
 
 		function hopToNull() {
-			hop({method: 'hop'}, 'Null')
+			hop({method: 'hop'}, 'Null');
 		}
 
 		function showAdAndCallSuccess() {
