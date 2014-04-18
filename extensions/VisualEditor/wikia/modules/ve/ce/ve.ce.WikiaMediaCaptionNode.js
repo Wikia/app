@@ -18,7 +18,7 @@
  */
 ve.ce.WikiaMediaCaptionNode = function VeCeWikiaMediaCaptionNode( model, config ) {
 
-	// Properties
+	// Properties - needed for onSplice method that is called when parent constructor is called
 	this.$attribution = null;
 	this.$details = null;
 
@@ -85,21 +85,23 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 
 	if ( this.$attribution ) {
 		this.$attribution.detach();
-		this.$details.detach();
 	} else {
 		this.$attribution = this.createAttribution();
-		this.$details = this.createDetails();
 	}
-
 
 	// Parent method
 	ve.ce.BranchNode.prototype.onSplice.apply( this, arguments );
 
-	// The details link isn't visible until hover on article pages, so in VE it will just be invisible.
-	// It will still take up space though, so long titles will wrap around it as they do on article pages.
-	this.$details.prependTo( this.$element )
-		// add class to caption itself
-		.next( 'p' ).addClass( 'caption' );
+	// Not actually visible in VE view but it will take up space so the video title can wrap around it.
+	if ( !this.$details ) {
+		this.$details = this.createDetails();
+	}
+	this.$details.prependTo( this.$element );
+
+	// add class to caption itself
+	if ( this.children.length ) {
+		this.children[0].$element.addClass( 'caption' );
+	}
 
 	// This logic is from the function onThumbnailAfterProduceHTML() in ImageTweaksHooks.class.php
 	if (
