@@ -114,6 +114,9 @@ class ThumbnailController extends WikiaController {
 			}
 		}
 
+		// get class for img tag
+		$imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
+
 		// update src for img tag
 		if ( !empty( $options['src'] ) ) {
 			$imgSrc = $options['src'];
@@ -172,6 +175,9 @@ class ThumbnailController extends WikiaController {
 		// data-src attribute in case of lazy loading
 		if ( !empty( $options['usePreloading'] ) ) {
 			$this->dataSrc = $imgSrc;
+		} else if ( RequestContext::getMain()->getTitle()->isContentPage() ) {
+			$this->dataSrc = '';
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $imgSrc, $imgClass, $imgAttribs );
 		}
 
 		// check fluid
@@ -197,7 +203,7 @@ class ThumbnailController extends WikiaController {
 		$this->imgSrc = $imgSrc;
 		$this->videoKey = htmlspecialchars( $title->getDBKey() );
 		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
+		$this->imgClass = $imgClass;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
 
 		// set duration
