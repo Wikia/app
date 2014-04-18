@@ -142,6 +142,9 @@ $messages['es'] = array(
 	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
 	'adengine-exitstitial-go-back' => '¿Quieres volver atrás?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
+	'adengine-ebay-title' => 'los productos de Ebay',
+	'adengine-ebay-empty' => 'No hay productos a juego',
+	'adengine-ebay-bid' => 'Comprar',
 );
 
 /** Estonian (eesti)
