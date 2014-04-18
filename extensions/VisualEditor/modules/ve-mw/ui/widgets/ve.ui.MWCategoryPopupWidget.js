@@ -91,6 +91,10 @@ OO.inheritClass( ve.ui.MWCategoryPopupWidget, OO.ui.PopupWidget );
  * @fires removeCategory
  */
 ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-page-settings-button-remove-category'
+	} );
 	this.removed = true;
 	this.emit( 'removeCategory', this.category );
 	this.closePopup();
@@ -104,6 +108,10 @@ ve.ui.MWCategoryPopupWidget.prototype.onRemoveCategory = function () {
  * @fires updateSortkey
  */
 ve.ui.MWCategoryPopupWidget.prototype.onSortKeySubmit = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.SUBMIT,
+		'label': 'dialog-page-settings-change-sortkey'
+	} );
 	this.closePopup();
 	return false;
 };

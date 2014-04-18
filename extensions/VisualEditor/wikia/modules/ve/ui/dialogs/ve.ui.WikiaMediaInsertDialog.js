@@ -8,20 +8,19 @@
  * Dialog for inserting MediaWiki media objects.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
  * @param {Object} [config] Config options
  */
-ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( surface, config ) {
+ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.Dialog.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
@@ -69,7 +68,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	};
 
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
@@ -407,7 +406,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this );
+	ve.ui.Dialog.prototype.setup.call( this );
 	this.pages.setPage( 'main' );
 
 	// If the policy height (which has a max-height property set) is the same as the first child of the policy
@@ -447,7 +446,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
 	this.dropTarget.teardown();
 
 	// Parent method
-	ve.ui.MWDialog.prototype.teardown.call( this, action );
+	ve.ui.Dialog.prototype.teardown.call( this, action );
 };
 
 /**

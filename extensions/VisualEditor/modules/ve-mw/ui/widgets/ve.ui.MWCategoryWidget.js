@@ -115,6 +115,10 @@ ve.ui.MWCategoryWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 		if ( value in this.categories ) {
 			this.categories[value].metaItem.remove();
 		}
+		ve.track( 'wikia', {
+			'action': ve.track.actions.ADD,
+			'label': 'dialog-page-settings-category-suggestion'
+		} );
 		// Add new item
 		categoryItem = this.input.getCategoryItemFromValue( value );
 		this.queryCategoryHiddenStatus( [categoryItem.name] ).done( function () {

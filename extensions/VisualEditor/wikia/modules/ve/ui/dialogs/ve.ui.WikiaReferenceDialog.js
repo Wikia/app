@@ -9,12 +9,11 @@
  * @extends ve.ui.MWReferenceDialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaReferenceDialog = function VeUiWikiaReferenceDialog( windowSet, config ) {
+ve.ui.WikiaReferenceDialog = function VeUiWikiaReferenceDialog( config ) {
 	// Parent constructor
-	ve.ui.MWReferenceDialog.call( this, windowSet, config );
+	ve.ui.MWReferenceDialog.call( this, config );
 };
 
 /* Inheritance */

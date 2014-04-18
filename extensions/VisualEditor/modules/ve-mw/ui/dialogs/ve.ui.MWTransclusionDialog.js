@@ -38,7 +38,7 @@ ve.ui.MWTransclusionDialog.static.name = 'transclusion';
 ve.ui.MWTransclusionDialog.static.icon = 'template';
 
 ve.ui.MWTransclusionDialog.static.title =
-	OO.ui.deferMsg( 'visualeditor-dialog-transclusion-title' );
+	OO.ui.deferMsg( 'wikia-visualeditor-dialog-transclusion-title' );
 
 /**
  * Map of symbolic mode names and CSS classes.
@@ -99,6 +99,10 @@ ve.ui.MWTransclusionDialog.prototype.onOutlineControlsRemove = function () {
  * Handle add template button click events.
  */
 ve.ui.MWTransclusionDialog.prototype.onAddTemplateButtonClick = function () {
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-add-template'
+	} );
 	this.addPart( new ve.dm.MWTemplatePlaceholderModel( this.transclusion ) );
 };
 
@@ -484,6 +488,10 @@ ve.ui.MWTransclusionDialog.prototype.saveChanges = function () {
 		surfaceModel = surfaceFragment.getSurface(),
 		obj = this.transclusion.getPlainObject();
 
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-template-button-save'
+	} );
 	if ( this.transclusionNode instanceof ve.dm.MWTransclusionNode ) {
 		this.transclusion.updateTransclusionNode( surfaceModel, this.transclusionNode );
 	} else if ( obj !== null ) {

@@ -9,20 +9,19 @@
  * Dialog for editing wikitext in source mode.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
  * @param {Object} [config] Config options
  */
-ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( surface, config ) {
+ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.Dialog.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
@@ -36,7 +35,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.openCount = 0;
@@ -79,7 +78,7 @@ ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
 	this.timings.serializeStart = ve.now();
 
 	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this );
+	ve.ui.Dialog.prototype.setup.call( this );
 
 	this.$frame.startThrobbing();
 	this.surface.getTarget().serialize(

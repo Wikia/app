@@ -385,7 +385,7 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	this.saveButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg(
 			 // visualeditor-savedialog-label-restore, visualeditor-savedialog-label-save
-			'visualeditor-savedialog-label-' + ( this.restoring ? 'restore' : 'save' )
+			'wikia-visualeditor-savedialog-label-' + ( this.restoring ? 'restore' : 'save' )
 		),
 		'flags': ['constructive']
 	} );
