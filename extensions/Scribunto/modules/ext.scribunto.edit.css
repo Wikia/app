@@ -65,3 +65,18 @@
 	margin-top: 1em;
 	border-bottom: 1px solid red;
 }
+
+/** Wikia change - Fixes for Oasis **/
+.wikia-scribunto-console #mw-scribunto-console {
+	background-color: #FFF;
+	margin-top: 5px;
+	padding: 10px 0 10px;
+}
+
+.wikia-scribunto-console .mw-scribunto-console-fieldset {
+	padding: 10px;
+}
+
+.wikia-scribunto-console .mw-scribunto-console-fieldset div {
+	margin-bottom: 10px;
+}
