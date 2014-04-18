@@ -1,6 +1,6 @@
 <?
 
-class ThumbnailVideoHooks {
+class ThumbnailHooks {
 
 	/**
 	 * @param OutputPage $out
