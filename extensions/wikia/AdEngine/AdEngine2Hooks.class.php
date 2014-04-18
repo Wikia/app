@@ -66,22 +66,22 @@ class AdEngine2Hooks {
 		);
 
 		$variablesToExpose = [
-			"wgEnableAdsInContent" => $wgEnableAdsInContent,
-			"wgEnableAdMeldAPIClient" => $wgEnableAdMeldAPIClient,
-			"wgEnableAdMeldAPIClientPixels" => $wgEnableAdMeldAPIClientPixels,
-			"wgEnableOpenXSPC" => $wgEnableOpenXSPC,
+			'wgEnableAdsInContent' => $wgEnableAdsInContent,
+			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
+			'wgEnableAdMeldAPIClientPixels' => $wgEnableAdMeldAPIClientPixels,
+			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 			// Ad Driver
-			"wgHighValueCountries" => $highValueCountries,
-			"wgAdPageLevelCategoryLangs" => $pageLevelCategoryLanguages,
+			'wgHighValueCountries' => $highValueCountries,
+			'wgAdPageLevelCategoryLangs' => $pageLevelCategoryLanguages,
 			'wgAdPageType' => $wgAdPageType,
-			"wgAdDriverUseSevenOneMedia" => $wgAdDriverUseSevenOneMedia,
-			"wgUserShowAds" => $wgUser->getOption('showAds'),
-			"wgOutboundScreenRedirectDelay" => $wgOutboundScreenRedirectDelay,
-			"wgEnableOutboundScreenExt" => $wgEnableOutboundScreenExt,
-			"wgAdDriverTrackState" => $wgAdDriverTrackState,
-			"wgEnableRHonDesktop" => $wgEnableRHonDesktop,
-			"wgAdDriverForceDirectGptAd" => $wgAdDriverForceDirectGptAd,
-			"wgAdDriverForceLiftiumAd" => $wgAdDriverForceLiftiumAd
+			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgUserShowAds' => $wgUser->getOption('showAds'),
+			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
+			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
+			'wgAdDriverTrackState' => $wgAdDriverTrackState,
+			'wgEnableRHonDesktop' => $wgEnableRHonDesktop,
+			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
+			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 		];
 
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
@@ -145,7 +145,7 @@ class AdEngine2Hooks {
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
 			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
-			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff
+			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
 		];
 
 		// WikiaDartHelper.js
