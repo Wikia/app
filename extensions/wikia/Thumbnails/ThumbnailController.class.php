@@ -175,7 +175,7 @@ class ThumbnailController extends WikiaController {
 		// data-src attribute in case of lazy loading
 		if ( !empty( $options['usePreloading'] ) ) {
 			$this->dataSrc = $imgSrc;
-		} else if ( RequestContext::getMain()->getTitle()->isContentPage() ) {
+		} else if ( empty( $options['noLazyLoad'] ) ) {
 			$this->dataSrc = '';
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $imgSrc, $imgClass, $imgAttribs );
 		}
