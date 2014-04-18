@@ -39,4 +39,38 @@ class LyricsUtilsTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @param $message
+	 * @param $field
+	 * @param $affToken
+	 * @param $expected
+	 *
+	 * @dataProvider generateITunesUrlDataProvider
+	 */
+	public function testGenerateITunesURL( $message, $field, $affToken, $expected ) {
+		$this->assertEquals( $expected, LyricsUtils::generateITunesUrl( $field, $affToken), $message );
+	}
+
+	public function generateITunesUrlDataProvider() {
+		return [
+			[
+				'empty field',
+				'',
+				'0',
+				false
+			],
+			[
+				'use default country',
+				'id292721355?i=292721406',
+				'30',
+				'http://itunes.apple.com/us/album/id292721355?i=292721406&at=30'
+			],
+			[
+				'use cusotom country',
+				'id251299901?i=251299941&cc=gb',
+				'31',
+				'http://itunes.apple.com/gb/album/id251299901?i=251299941&at=31'
+			],
+		];
+	}
 }

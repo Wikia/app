@@ -15,9 +15,11 @@ class ArtistScraper extends BaseScraper {
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
+		$name = $article->getTitle()->getText();
 		$artistData = [
 			'article_id' => $article->getId(),
-			'name' => $article->getTitle()->getText()
+			'name' => $name,
+			'name_lowercase' => LyricsUtils::lowercase( $name ),
 		];
 
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
@@ -146,6 +148,8 @@ class ArtistScraper extends BaseScraper {
 			$result['Album'] = trim( $heading );
 		}
 
+		$result['album_name_lc'] = LyricsUtils::lowercase( $result['Album'] );
+
 		return $result;
 	}
 
@@ -178,6 +182,7 @@ class ArtistScraper extends BaseScraper {
 		return [
 			'article_id' => 'id',
 			'name' => 'artist_name',
+			'name_lowercase' => 'artist_name_lc',
 			'pic' => 'image',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
