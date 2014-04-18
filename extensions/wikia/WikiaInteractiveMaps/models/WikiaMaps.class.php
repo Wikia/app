@@ -33,27 +33,18 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Run the local $method with the provided $params array and store the result in Memcache for $expireTime sec
+	 * Call method and store the result in cache for $expireTime
 	 *
-	 * @param String $method method to execute
-	 * @param Array $params  Array with params to pass to the method
+	 * @param $method
+	 * @param array $params
 	 * @param int $expireTime
-	 * @return Mixed
-	 * @throws FatalError
+	 * @return Mixed|null
 	 */
-	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
-		$memCacheKey = wfMemcKey( $method, json_encode( $params ) );
-		$memCache = F::App()->wg->Memc;
-		$result = $memCache->get( $memCacheKey );
-		if ( $result === false ) {
-			if ( method_exists( $this, $method ) ) {
-				$result = $this->{ $method }( $params );
-				$memCache->set( $memCacheKey, $result, $expireTime );
-			} else {
-				throw new FatalError( sprintf( 'Method %s not found', $method ) );
-			}
-		}
-		return $result;
+	public function cachedRequest( $method,  Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
+		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
+		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
+			return $this->{ $method }( $params );
+		});
 	}
 
 	/**
@@ -62,7 +53,7 @@ class WikiaMaps {
 	 * @param Array $params
 	 * @return mixed
 	 */
-	private function getMapInstances( Array $params ) {
+	private function getMapsFromApi( Array $params ) {
 		// TODO: Remove mock when we have real data
 		return [
 			[

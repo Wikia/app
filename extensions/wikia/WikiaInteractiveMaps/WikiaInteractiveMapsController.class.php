@@ -16,7 +16,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 			'city_id' => $this->app->wg->CityId
 		];
 
-		$maps = $mapsModel->cachedRequest( 'getMapInstances', $params );
+		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
 		$this->setVal( 'maps', $maps );
 		$messages = [
