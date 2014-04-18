@@ -35,6 +35,7 @@ abstract class VideoFeedIngester {
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
+		self::PROVIDER_REALGRAVITY,
 	];
 
 	protected static $API_WRAPPER;
