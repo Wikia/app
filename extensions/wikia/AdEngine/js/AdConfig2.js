@@ -8,10 +8,10 @@ define('ext.wikia.adEngine.adConfig', [
 	'wikia.abTest',
 
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
+	'ext.wikia.adEngine.evolveSlotConfig',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.later',
 	'ext.wikia.adEngine.provider.null'
 ], function (
@@ -23,10 +23,10 @@ define('ext.wikia.adEngine.adConfig', [
 	abTest,
 
 	adDecoratorPageDimensions,
+	evolveSlotConfig,
 
 	// adProviders
 	adProviderDirectGpt,
-	adProviderEvolve,
 	adProviderLater,
 	adProviderNull
 ) {
@@ -77,7 +77,7 @@ define('ext.wikia.adEngine.adConfig', [
 		// Force providers:
 		if (slot[2] === 'Evolve') {
 			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-			return adProviderEvolve;
+			return adProviderLater;
 		}
 		if (slot[2] === 'AdDriver2') {
 			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
@@ -122,9 +122,9 @@ define('ext.wikia.adEngine.adConfig', [
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
+			if (evolveSlotConfig.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Later (Evolve)'], 'info', logGroup);
+				return adProviderLater;
 			}
 		}
 
