@@ -1417,3 +1417,9 @@ $wgNirvanaAccessRules = [
  * Enables Lyrics API extension (new Lyrics Wikia API)
  */
 $wgEnableLyricsApi = false;
+
+/*
+ * @name $wgLyricsItunesAffiliateToken
+ * iTunes affiliate token needed in new Lyrics API
+ */
+$wgLyricsItunesAffiliateToken = '';
