@@ -2,6 +2,16 @@
 
 class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 
+	/*
+	 * Map image height
+	 */
+	const MAP_HEIGHT = 300;
+
+	/**
+	 * Map image width
+	 */
+	const MAP_WIDTH = 1600;
+
 	/**
 	 * @desc Special page constructor
 	 *
@@ -28,6 +38,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 		];
 
 		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
+
+		// Add map size to maps
+		array_walk( $maps, function( &$map ) {
+			$map[ 'map_width' ] = self::MAP_WIDTH;
+			$map[ 'map_height' ] = self::MAP_HEIGHT;
+		});
 
 		$this->setVal( 'maps', $maps );
 		$messages = [

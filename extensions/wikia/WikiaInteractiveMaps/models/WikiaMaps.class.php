@@ -3,10 +3,19 @@
 
 class WikiaMaps {
 
+	/**
+	 * Default memory cache expire time
+	 */
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 
+	/**
+	 * Entry point for map
+	 */
 	const ENTRY_MAP = 'map';
 
+	/**
+	 * @var array API Connection config
+	 */
 	private $config = [];
 
 	public function __construct( $config ) {
@@ -60,13 +69,13 @@ class WikiaMaps {
 				'id' =>  1,
 				'status' => 'Processing',
 				'title' => 'Title 1',
-				'image' => 'http://placekitten.com/2000/300',
+				'image' => 'http://placekitten.com/1602/300',
 				'last_updated' => date('c')
 			],
 			[
 				'id' =>  1,
 				'title' => 'Title 2',
-				'image' => 'http://placekitten.com/2001/300',
+				'image' => 'http://placekitten.com/1601/300',
 				'last_updated' => date('c')
 			]
 		];
