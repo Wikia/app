@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.adConfig', [
 	log,
 	window,
 	document,
-	Geo,
+	geo,
 	abTest,
 
 	adDecoratorPageDimensions,
@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.adConfig', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfig',
-		country = Geo.getCountryCode(),
+		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
 		decorators = [adDecoratorPageDimensions];
