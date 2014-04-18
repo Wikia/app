@@ -102,7 +102,7 @@ class CloseMyAccountHelper {
 
 		if ( $requestDate !== null ) {
 			// Number of days remaining until closure
-			$daysRemaining = self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 86400 );
+			$daysRemaining = (int)( self::CLOSE_MY_ACCOUNT_WAIT_PERIOD - floor( ( time() - strtotime( $requestDate ) ) / 86400 ) );
 			if ( $daysRemaining < 0 ) {
 				$daysRemaining = 0;
 			}
