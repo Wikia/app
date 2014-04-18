@@ -1,0 +1,37 @@
+@import "skins/oasis/css/mixins/background-opacity";
+@import "skins/oasis/css/core/color";
+
+
+.maps-controls {
+	position: absolute;
+	right: 0;
+}
+
+.WikiaArticle {
+	ul.map-list {
+		list-style: none;
+		margin: 0;
+
+		.map-image {
+			position: relative;
+		}
+
+		.map-status {
+			@include background-opacity(#fff, 40);
+			padding: 0.6em;
+		 	position: absolute;
+			right: 0;
+		}
+		.map-info {
+			bottom: 2em;
+			color: $color-text-light;
+			left: 2em;
+			position: absolute;
+
+			h2 {
+				border: 0;
+			}
+		}
+
+	}
+}

@@ -63,8 +63,28 @@ class WikiaMaps {
 	 * @return mixed
 	 */
 	private function getMapInstances( Array $params ) {
+		// TODO: Remove mock when we have real data
+		return [
+			[
+				'id' =>  1,
+				'status' => 'Processing',
+				'title' => 'Title 1',
+				'image' => 'http://placekitten.com/2000/300',
+				'last_updated' => date('c')
+			],
+			[
+				'id' =>  1,
+				'title' => 'Title 2',
+				'image' => 'http://placekitten.com/2001/300',
+				'last_updated' => date('c')
+			]
+		];
+
 		$url = $this->buildUrl( self::ENTRY_MAP, $params );
 		$response = Http::get( $url );
-		return json_decode( $response, FALSE );
+		if ( $response !== false ) {
+			return json_decode( $response, FALSE );
+		}
+		return false;
 	}
 }
