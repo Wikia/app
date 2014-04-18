@@ -864,7 +864,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption>' +
 				'</figure><a href="{{url}}" title="{{title}}" data-phrase="' +
-				data.searchQuery + '" data-pos="{{pos}}">Add video</a></li>{{/items}}';
+				data.searchQuery + '" data-pos="{{pos}}">{{addMessage}}</a></li>{{/items}}';
 
 			html = $.mustache(template, data);
 			this.cachedSelectors.carousel.find('ul').append(html);
