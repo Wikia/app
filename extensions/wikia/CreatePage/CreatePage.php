@@ -144,7 +144,7 @@ function wfCreatePageAjaxGetVEDialog() {
 
 	$template = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	$template->set_vars( array(
-			'article' => $wgRequest->getVal( 'article' )
+			'article' => urldecode( $wgRequest->getVal( 'article' ) )
 		)
 	);
 
