@@ -4,9 +4,9 @@
 
 /**
  * DataModel Wikia media caption node.
- * This is an abstract class and should not be called directly
  *
  * @class
+ * @abstract
  * @extends ve.dm.MWImageCaptionNode
  * @constructor
  * @param {number} [length] Length of content data in document

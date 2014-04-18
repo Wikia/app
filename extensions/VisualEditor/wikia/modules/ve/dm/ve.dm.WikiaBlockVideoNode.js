@@ -28,7 +28,6 @@ ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaVideoCaption' ];
 
 ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaVideoCaption';
 
-
 ve.dm.WikiaBlockVideoNode.static.rdfaToType = {
 	'mw:Video/Thumb': 'thumb',
 	'mw:Video/Frame': 'frame',
