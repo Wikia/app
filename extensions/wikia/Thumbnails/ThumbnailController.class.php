@@ -251,31 +251,18 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
-		$addedAt = '';
-		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
-			$title = $file->getTitle()->getText();
-			$videoInfo = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
-			if ( !empty( $videoInfo ) ) {
-				$addedAt = $videoInfo->getAddedAt();
-			} else {
-				$addedAt = $file->getTimestamp();
-			}
-			$addedAt = wfTimeFormatAgo( $addedAt );
-		}
-
 		$addedBy = '';
-		$attributeTo = $file->getUser();
-		$showPictureAttribution = (
-			$this->app->checkSkin( 'oasis' ) &&
-			!empty( $this->wg->EnableOasisPictureAttribution ) &&
-			// Remove picture attribution for thumbnails less than 100px
-			$width > 99
-		);
+		if ( $file instanceof File ) {
+			$isVideo = WikiaFileHelper::isVideoFile( $file );
+			if ( $isVideo ) {
+				$title = $file->getTitle()->getText();
+			}
 
-		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
-			// get link to user page
-			$link = AvatarService::renderLink( $attributeTo );
-			$addedBy = wfMessage( 'thumbnails-added-by', $link, $addedAt )->text();
+			if ( $this->app->checkSkin( 'oasis' ) && !empty( $this->wg->EnableOasisPictureAttribution )
+				// Remove picture attribution for thumbnails less than 100px
+				&& $width > 99 ) {
+				$addedBy = ThumbnailHelper::getByUserMsg( $file, $isVideo );
+			}
 		}
 
 		$this->thumbnail = $thumbnail;
