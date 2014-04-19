@@ -251,8 +251,16 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
+		$addedAt = '';
 		if ( WikiaFileHelper::isFileTypeVideo( $file ) ) {
 			$title = $file->getTitle()->getText();
+			$videoInfo = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
+			if ( !empty( $videoInfo ) ) {
+				$addedAt = $videoInfo->getAddedAt();
+			} else {
+				$addedAt = $file->getTimestamp();
+			}
+			$addedAt = wfTimeFormatAgo( $addedAt );
 		}
 
 		$addedBy = '';
@@ -267,9 +275,7 @@ class ThumbnailController extends WikiaController {
 		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
 			// get link to user page
 			$link = AvatarService::renderLink( $attributeTo );
-
-			// TODO: change this to "By $user $time days ago"
-			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+			$addedBy = wfMessage( 'thumbnails-added-by', $link, $addedAt )->text();
 		}
 
 		$this->thumbnail = $thumbnail;
