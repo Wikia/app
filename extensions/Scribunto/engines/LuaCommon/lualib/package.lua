@@ -88,7 +88,7 @@ local sentinel = function () end
 --
 function _G.require (modname)
 	assert (type(modname) == "string", format (
-		"bad argument #1 to `require' (string expected, got %s)", type(name)))
+		"bad argument #1 to `require' (string expected, got %s)", type(modname)))
 	local p = _LOADED[modname]
 	if p then -- is it there?
 		if p == sentinel then
