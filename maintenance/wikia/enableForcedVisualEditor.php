@@ -81,8 +81,9 @@ foreach ( $allWikis as $wiki ) {
 	$wikiFactoryVar = WikiFactory::getVarByName( 'wgForceVisualEditor', $wiki->city_id );
 	if ( getVEForcedValue( $wiki->city_id ) !== $forceVisualEditor ) {
 		echo 'Setting $wgForceVisualEditor to '.( $forceVisualEditor ? 'TRUE' : 'FALSE' ).' for '.$wiki->city_title.' ('.$wiki->city_url.") -- $wamText\n";
-		WikiFactory::setVarByName( 'wgForceVisualEditor', $wiki->city_id, $forceVisualEditor );
-		WikiFactory::clearCache( $wiki->city_id );
+		// Safety switch: Uncomment two lines below if you know what you are doing.
+		//WikiFactory::setVarByName( 'wgForceVisualEditor', $wiki->city_id, $forceVisualEditor );
+		//WikiFactory::clearCache( $wiki->city_id );
 	}
 }
 
