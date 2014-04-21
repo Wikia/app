@@ -8,7 +8,7 @@ class ImageLazyLoad  {
 
 	const START_LAZY_LOADED_IMAGE = 4;
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
-	const IMG_ONLOAD = "if(typeof ImgLzy=='object'){ImgLzy.load(this)}";
+	const IMG_ONLOAD = "if(typeof ImgLzy==='object'){ImgLzy.load(this)}";
 
 	private static $isWikiaMobile = null;
 	private static $enabled = null;
@@ -151,7 +151,7 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Check for valid lazy loaded image
+	 * Check whether or not the image is valid for lazy loading
 	 * @global boolean $wgRTEParserEnabled
 	 * @global type $wgParser
 	 * @param string $imgSrc
@@ -178,10 +178,13 @@ class ImageLazyLoad  {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
+
 	/**
 	 * Get class attribute for img tag
 	 * @param array $attrbs
