@@ -65,17 +65,17 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 
 					// types casting for proper caching;
 					$aData[] = array(
-						'id'			=> $item['page_id'],
-						'title'			=> $itemTitle->getText(),
-						'key'			=> $itemTitle->getDBKey(),
-						'img'			=> (string) $imageSrc,
-						'url'			=> $itemTitle->getFullURL(),
-						'dimensions'	=> array( 'w' => (int) $forceWidth, 'h' => (int) $forceHeight ),
-						'class'			=> $elementClass,
-						'data-ref'		=> $itemTitle->getPrefixedURL(),
-						'targetUrl'		=> $linkFullUrl,
-						'targetText'	=> $linkText,
-						'isVideo'	    => $isVideo,
+						'id'         => $item['page_id'],
+						'title'      => $itemTitle->getText(),
+						'key'        => $itemTitle->getDBKey(),
+						'img'        => (string)$imageSrc,
+						'url'        => $itemTitle->getFullURL(),
+						'dimensions' => array('w' => (int)$forceWidth, 'h' => (int)$forceHeight),
+						'class'      => $elementClass,
+						'data-ref'   => $itemTitle->getPrefixedURL(),
+						'targetUrl'  => $linkFullUrl,
+						'targetText' => $linkText,
+						'isVideo'    => $isVideo,
 					);
 				};
 
