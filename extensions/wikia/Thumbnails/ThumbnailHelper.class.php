@@ -78,4 +78,26 @@ class ThumbnailHelper extends WikiaModel {
 		return htmlentities( json_encode( [ $dataParams ] ) , ENT_QUOTES );
 	}
 
+	/**
+	 * Get message for by user section
+	 * @param File $file
+	 * @param boolean $isVideo
+	 * @return string $addedBy
+	 */
+	public static function getByUserMsg( $file, $isVideo ) {
+		$addedAt = $file->getTimestamp();
+		if ( $isVideo ) {
+			$videoInfo = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );
+			if ( !empty( $videoInfo ) ) {
+				$addedAt = $videoInfo->getAddedAt();
+			}
+		}
+
+		// get link to user page
+		$link = AvatarService::renderLink( $file->getUser() );
+		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt ) )->text();
+
+		return $addedBy;
+	}
+
 }
