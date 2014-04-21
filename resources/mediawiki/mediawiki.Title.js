@@ -19,7 +19,6 @@
 	 * @throws {Error} When the title is invalid
 	 */
 	function Title( title, namespace ) {
-		debugger;
 		var parsed = parse( title, namespace );
 		if ( !parsed ) {
 			throw new Error( 'Unable to parse title' );
