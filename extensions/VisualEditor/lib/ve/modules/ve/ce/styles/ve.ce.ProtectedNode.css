@@ -5,8 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ce-protectedNode,
-.ve-ce-protectedNode * {
+.ve-ce-protectedNode, 
+.ve-ce-protectedNode *:not(.ve-no-shield):not(.ve-ce-protectedNode-shield) {
 	position: relative !important;
 	top: 0 !important;
 	left: 0 !important;

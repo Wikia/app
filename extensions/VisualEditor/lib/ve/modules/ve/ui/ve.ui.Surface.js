@@ -15,8 +15,9 @@
  * @constructor
  * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
  * @param {Object} [config] Configuration options
+ * @param {ve.init.mw.Target} [target] Target instance (optional)
  */
-ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
+ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	var documentModel;
 
 	// Parent constructor
@@ -47,6 +48,10 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config ) {
 	this.triggers = {};
 	this.pasteRules = {};
 	this.enabled = true;
+	this.target = target || null;
+	if ( this.target ) {
+		this.focus = new ve.ui.WikiaFocusWidget( this );
+	}
 
 	// Events
 	this.dialogs.connect( this, { 'close': 'onDialogClose' } );
@@ -113,9 +118,14 @@ ve.ui.Surface.prototype.onDialogClose = function () {
  * This must be called after the surface has been attached to the DOM.
  */
 ve.ui.Surface.prototype.initialize = function () {
+	var $body = $( 'body' );
+
 	this.getView().$element.after( this.$localOverlay );
+	if ( this.focus ) {
+		$body.append( this.focus.$element );
+	}
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
-	$( 'body' ).append( this.$globalOverlay );
+	$body.append( this.$globalOverlay );
 
 	this.getView().initialize();
 	this.getModel().startHistoryTracking();
@@ -342,4 +352,12 @@ ve.ui.Surface.prototype.setPasteRules = function ( pasteRules ) {
  */
 ve.ui.Surface.prototype.getDir = function () {
 	return this.$element.css( 'direction' );
+};
+
+/**
+ * @method
+ * @returns {ve.init.mw.Target}
+ */
+ve.ui.Surface.prototype.getTarget = function () {
+	return this.target;
 };

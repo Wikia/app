@@ -48,6 +48,14 @@ ve.ui.FormatTool.static.requiresRange = true;
 /**
  * @inheritdoc
  */
+ve.ui.FormatTool.prototype.onSelect = function () {
+	ve.track( 'tool.format.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.FormatTool.prototype.onUpdateState = function ( nodes ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );

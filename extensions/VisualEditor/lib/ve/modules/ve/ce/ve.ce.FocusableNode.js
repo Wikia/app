@@ -65,7 +65,9 @@ ve.ce.FocusableNode.static.isFocusable = true;
  * @method
  */
 ve.ce.FocusableNode.prototype.onFocusableSetup = function () {
-	this.surface = this.root.getSurface();
+	if ( this.live ) {
+		this.surface = this.root.getSurface();
+	}
 };
 
 /**
