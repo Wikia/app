@@ -74,11 +74,12 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  */
 $messages['br'] = array(
 	'spellchecker-desc' => 'Pourchas a ra un etrefas gwiriañ ar reizhskrivañ evit ar vodulenn PHP enchant',
-	'enablespellchecker' => 'Gweredekaat ar reizhskriver', # Fuzzy
+	'enablespellchecker' => 'Gweredekaat ar reizhskriver er mod gwelet',
 	'spellchecker-info' => 'Titouroù war ar reizhskriver',
 	'spellchecker-info-languages' => 'Yezhoù hegerz ($1)',
 	'spellchecker-info-provider' => 'Pourvezer',

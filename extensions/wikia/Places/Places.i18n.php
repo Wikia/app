@@ -194,10 +194,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'places-editor-search' => 'Cı geyre',
-	'places-geolocation-modal-error-title' => 'Xelato',
+	'places-geolocation-modal-error-title' => 'Xeta',
 );
 
 /** Spanish (español)
@@ -246,6 +247,7 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'places' => 'Paikkoja tässä wikissä',
 	'places-in-category' => 'Paikat luokassa $1',
+	'places-on-map' => '{{PLURAL:$1|$1 paikka|$1 paikkaa}} tällä kartalla',
 	'places-editor-search' => 'Etsi',
 	'places-editor-title-create-new' => 'Lisää paikkatunniste',
 	'places-editor-title-edit' => 'Muokkaa paikkatunnistetta',
@@ -264,10 +266,10 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'places' => 'Placer sur ce wiki',
+	'places' => 'Lieux sur ce wiki',
 	'places-desc' => "Fournit le support des balises <nowiki><place> et <places></nowiki> pour marquer géographiquement les pages, ainsi qu'une [[Special:Places|carte de toutes les pages marquées]]",
 	'places-in-category' => 'Endroits dans la catégorie $1',
-	'places-on-map' => '{{PLURAL:$1|$1 emplacement|$1 emplacements}} sur cette carte',
+	'places-on-map' => '{{PLURAL:$1|$1 lieu|$1 lieux}} sur cette carte',
 	'places-modal-go-to-special' => 'Afficher {{PLURAL:$1|$1 emplacement|$1 emplacements}} ([[Special:Places|voir tout]])',
 	'places-toolbar-button-tooltip' => 'Cliquez pour ajouter une balise géographique à cette page',
 	'places-toolbar-button-address' => "Veuillez indiquer l'adresse à utiliser comme balise géographique pour cette page.",

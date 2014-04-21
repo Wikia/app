@@ -909,7 +909,7 @@ $messages['gl'] = array(
 	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-fix-background' => 'fixo',
 	'themedesigner-not-split-background' => 'non dividir',
-	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.", # Fuzzy
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.",
 	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -925,7 +925,7 @@ $messages['gl'] = array(
 	'themedesigner-pick-an-image' => 'Elixir unha imaxe',
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
 	'themedesigner-upload-your-own' => 'Subir o teu',
-	'themedesigner-button-upload' => 'Cargar',
+	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif ou png. O máximo {{PLURAL:$1|é $1|son $1}} kB',
 	'themedesigner-default' => 'Por defecto',
@@ -1718,7 +1718,7 @@ $messages['ps'] = array(
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
 	'themedesigner-color' => 'آرنی',
-	'themedesigner-graphic' => 'ګرافيک',
+	'themedesigner-graphic' => 'گرافيک',
 	'themedesigner-buttons' => 'تڼۍ',
 	'themedesigner-links' => 'تړنې',
 	'themedesigner-small' => 'وړوکی',
@@ -2345,6 +2345,7 @@ $messages['wuu'] = array(
  * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
  */
@@ -2389,7 +2390,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-upload' => '上载',
 	'themedesigner-button-upload-wordmark' => '上传',
 	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
-	'themedesigner-default' => '磨人',
+	'themedesigner-default' => '默认',
 	'themedesigner-font' => '字体',
 	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',

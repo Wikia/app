@@ -371,7 +371,9 @@ $messages['br'] = array(
 	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
 	'userlogin-remembermypassword' => 'Chom kevreet',
 	'userlogin-error-noname' => 'Pop, leugnit ar vaezienn anv implijer, mar plij.',
+	'userlogin-error-nosuchuser' => "Hem, n'anavezomp ket an anv-mañ. Na zisoñjit ket eo kizidik an anvioù implijer ouzh ar pennlizherennoù.",
 	'userlogin-error-wrongpasswordempty' => 'Pop, leugnit ar vaezienn ger-tremen, mar plij.',
+	'userlogin-error-login-userblocked' => "Stanket eo bet hoc'h anv implijer ha ne c'hall ket bezañ implijet da gevreañ.",
 	'userlogin-error-edit-account-closed-flag' => 'Diweredekaet eo bet ho kont gant Wikia.',
 	'userlogin-error-cantcreateaccount-text' => "N'eo ket aotreet ho chomlec'h IP da grouiñ kontoù nevez.",
 	'userlogin-error-userexists' => 'Implijet eo an anv implijer-mañ gant unan bennak dija. Esaeit gant unan all !',
@@ -717,6 +719,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Elseweyr
  * @author Stryn
  * @author Ville96
  */
@@ -740,17 +743,58 @@ $messages['fi'] = array(
 	'userlogin-error-invalidemailaddress' => 'Syötä kelvollinen sähköpostiosoite.',
 	'userlogin-get-account' => 'Eikö sinulla ole tiliä? <a href="$1" tabindex="$2">Rekisteröidy</a>',
 	'userlogin-error-invalid-username' => 'Virheellinen käyttäjätunnus',
+	'userlogin-error-userlogin-unable-info' => 'Valitettavasti emme voi rekisteröidä tiliäsi tällä hetkellä.',
 	'userlogin-error-user-not-allowed' => 'Tämä käyttäjätunnus ei ole sallittu.',
+	'userlogin-error-captcha-createaccount-fail' => 'Syöttämäsi sana ei vastaa ruudussa näkyvää sanaa, yritä uudelleen!',
 	'userlogin-error-userlogin-bad-birthday' => 'Oho, täytä kuukausi, päivä ja vuosi.',
+	'userlogin-error-externaldberror' => 'Pahoittelut! Sivustossamme on tällä hetkellä ongelma, yritä myöhemmin uudelleen.',
 	'userlogin-error-noemailtitle' => 'Syötä kelvollinen sähköpostiosoite.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Pahoittelut: tämä IP-osoite on tänään luonut liian monta tiliä. Yritä myöhemmin uudelleen.',
+	'userlogin-error-resetpass_forbidden' => 'Salasanoja ei voi vaihtaa.',
+	'userlogin-error-blocked-mailpassword' => 'Et voi pyytää uutta salasanaa, sillä Wikia on estänyt tämä IP-osoitteen.',
+	'userlogin-error-throttled-mailpassword' => 'Olemme jo lähettäneet salasanavihjeen tälle tilille viimeisen {{PLURAL:$1|tunnin|$1 tunnin}} sisällä. Ole hyvä ja tarkista sähköpostisi.',
+	'userlogin-error-mail-error' => 'Hups, sähköpostisi lähetyksessä ilmeni ongelma. Ole hyvä ja [[Special:Contact/general|ota meihin yhteyttä]].',
 	'userlogin-password-email-sent' => 'Olemme lähettäneet uuden salasanan käyttäjän $1 sähköpostiosoitteeseen.',
+	'userlogin-error-unconfirmed-user' => 'Anteeksi, mutta et ole vahvistanut sähköpostiosoitettasi. Ole hyvä ja vahvista sähköpostiosoitteesi ensin.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Muistutus sähköpostin vahvistamisesta on jo lähetetty.',
 	'userlogin-password-page-title' => 'Vaihda salasanasi',
 	'userlogin-oldpassword' => 'Vanha salasana',
 	'userlogin-newpassword' => 'Uusi salasana',
 	'userlogin-retypenew' => 'Kirjoita uusi salasana uudelleen',
+	'userlogin-password-email-subject' => 'Salasanan vaihtaminen',
 	'userlogin-password-email-greeting' => 'Hei $USERNAME,',
+	'userlogin-password-email-content' => 'Ole hyvä ja käytä kirjautuessasi Wikiaan seuraavaa tilapäistä salasanaa: "$NEWPASSWORD"
+<br /><br />
+Mikäli et pyytänyt uutta salasanaa, älä huoli! Tilisi on turvassa. Sinun ei tarvitse välittää tästä sähköpostista, vaan voit jatkaa kirjautumista vanhalla salasanallasi.
+<br /><br />
+Kysymyksiä tai huolia? Älä epäröi <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">ottaa meihin yhteyttä</a>.',
+	'userlogin-password-email-signature' => 'Wikian Tuki',
+	'userlogin-password-email-body' => 'Hei $2,
+
+Ole hyvä ja käytä kirjautuessasi Wikiaan seuraavaa tilapäistä salasanaa: "$3"
+
+Mikäli et pyytänyt uutta salasanaa, älä huoli! Tilisi on turvassa. Sinun ei tarvitse välittää tästä sähköpostista, vaan voit jatkaa kirjautumista vanhalla salasanallasi.
+
+Kysymyksiä tai huolia? Älä epäröi ottaa meihin yhteyttä: http://community.wikia.com/wiki/Special:Contact/account-issue
+
+Wikian Tuki
+
+
+___________________________________________
+
+Nähdäksesi, mitä Wikiassa tapahtuu, käy sivulla http://yhteiso.wikia.com
+Haluatko hallinnoida, mitä sähköpostia sinulle tulee? Siirry asetuksiisi: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line1' => 'Nähdäksesi mitä Wikiassa tapahtuu, käy sivulla <a style="color:#2a87d5;text-decoration:none;" href="http://yhteiso.wikia.com">yhteiso.wikia.com</a>',
+	'userlogin-email-footer-line2' => 'Haluatko hallinnoida, mitä sähköpostia sinulle tulee? Siirry <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">asetuksiisi</a>',
 	'userlogin-provider-or' => 'Tai',
+	'userlogin-provider-tooltip-facebook' => 'Klikkaa painiketta kirjautuaksesi Facebookin kautta',
+	'userlogin-provider-tooltip-facebook-signup' => 'Klikkaa painiketta rekisteröityäksesi Facebookin kautta',
+	'userlogin-facebook-show-preferences' => 'Näytä Facebook-syötteen asetukset',
+	'userlogin-facebook-hide-preferences' => 'Piilota Facebook-syötteen asetukset',
 	'userlogin-loginreqlink' => 'kirjaudu sisään',
+	'userlogin-changepassword-needlogin' => '$1 vaihtaaksesi salasanasi.',
+	'wikiamobile-sendpassword-label' => 'Lähetä uusi salasana',
+	'wikiamobile-facebook-connect-fail' => 'Valitettavasti Facebook-tilisi ei ole tällä hetkellä yhdistetty mihinkään Wikia-tiliin.',
 );
 
 /** Faroese (føroyskt)
