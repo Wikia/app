@@ -406,8 +406,15 @@ SQL;
 			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
 			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );
 			$globalUsage = array();
-        
 			while ( $row = $db->fetchObject( $result ) ) {
+
+				// Don't show private wikis in the list of global usage for a video
+				$wikiId = WikiFactory::DBtoID( $row->gil_wiki );
+				$isPrivate = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wikiId )->cv_value;
+				if ( $isPrivate ) {
+					continue;
+				}
+
 				$globalUsage[$row->gil_wiki][] = [
 					'image' => $row->gil_page_title,
 					'id' => $row->gil_page,
