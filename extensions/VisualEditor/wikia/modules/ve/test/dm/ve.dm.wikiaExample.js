@@ -15,7 +15,7 @@ ve.dm.wikiaExample.createExampleDocument = function ( name, store ) {
 
 ve.dm.wikiaExample.domToDataCases = {
 	'thumb image': {
-		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","avatar":"Foo.png"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockImage',
@@ -30,13 +30,13 @@ ve.dm.wikiaExample.domToDataCases = {
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
 					'attribution': {
-						'titleText': 'Bar',
+						'title': 'Bar',
 						'username': 'Foo'
 					}
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","titleText":"Bar"}}'
+						'data-mw': '{"attribution":{"username":"Foo","title":"Bar"}}'
 					}
 				} ]
 			},
@@ -51,7 +51,7 @@ ve.dm.wikiaExample.domToDataCases = {
 		]
 	},
 	'thumb video': {
-		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","titleText":"Bar"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockVideo',
@@ -66,13 +66,13 @@ ve.dm.wikiaExample.domToDataCases = {
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
 					'attribution': {
-						'avatar': 'Foo.png',
-						'username': 'Foo'
+						'username': 'Foo',
+						'title': 'Bar'
 					}
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","avatar":"Foo.png"}}'
+						'data-mw': '{"attribution":{"username":"Foo","title":"Bar"}}'
 					}
 				} ]
 			},

@@ -677,7 +677,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			// attach handlers - play button (open video preview)
 			this.cachedSelectors.carousel.on('click', 'li a.video', function (event) {
 				event.preventDefault();
-				var videoTitle = $('.Wikia-video-thumb', this).attr('data-video-key');
+				var videoTitle = $(this).find('[data-video-key]').attr('data-video-key');
 				self.fetchVideoPlayer(videoTitle);
 
 				tracking({

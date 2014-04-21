@@ -237,7 +237,7 @@ class ThumbnailController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/atricleThumbnail.mustache' );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/articleThumbnail.mustache' );
 
 		$file = $this->getVal( 'file' );
 		$width = $this->getVal( 'outerWidth' );
@@ -268,8 +268,8 @@ class ThumbnailController extends WikiaController {
 			// get link to user page
 			$link = AvatarService::renderLink( $attributeTo );
 
-			// TODO: change this to "By $user $time days ago"
-			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+			// TODO: change this to "By $user $time days ago" VID-1559
+			$addedBy = wfMessage( 'oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
 		}
 
 		$this->thumbnail = $thumbnail;

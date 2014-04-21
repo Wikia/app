@@ -5,7 +5,6 @@
 
 /**
  * DataModel Wikia media node.
- * This is an abstract class and should not be called directly
  *
  * @class
  * @abstract
