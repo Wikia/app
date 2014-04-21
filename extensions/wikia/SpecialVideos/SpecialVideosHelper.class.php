@@ -122,6 +122,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$limit = self::VIDEOS_PER_PAGE;
 			$providers = empty( $providers ) ? [] : explode( ',', $providers );
 			$thumbOptions = [
+				'fluid'       => true,
 				'showViews'   => true,
 				'fixedHeight' => self::THUMBNAIL_HEIGHT,
 			];

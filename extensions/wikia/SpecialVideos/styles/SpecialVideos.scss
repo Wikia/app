@@ -54,11 +54,10 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 }
 
-.VideoGrid {
+.video-grid {
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
 	margin-bottom: 18px;
-	width: $width-outside;
 	// Override article p styles
 	p, p + p {
 		margin: 0;
@@ -73,25 +72,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	.info-overlay-views {
 		display: inline;
 	}
-	.grid-2, .grid-2.alpha {
-		margin-bottom: 18px;
-	}
 
-	//TODO: Special videos layout needs redesign for liquid layout (liquid layout no longer support WikiaGrid)
-	//      This is temporary solution that should be removed after redesing
-	@if ( $responsive-layout-enabled ) {
-		.grid-2 {
-			margin-left: 10px;
-			width: 330px;
-			&.alpha {
-				margin-left: 0;
-			}
-		}
-	}
-
-	.alpha {
-		clear: both;
-	}
 	.add-video-placeholder {
 		opacity: .5;
 		background-image: $placeholder-bg-img;
@@ -114,7 +95,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	.video-element {
+	li {
 		position: relative;
 		&:hover .remove {
 			display: block;

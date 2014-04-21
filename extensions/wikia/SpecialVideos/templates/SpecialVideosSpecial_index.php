@@ -37,12 +37,12 @@
 </div>
 
 
-<div class="WikiaGrid VideoGrid">
+<ul class="video-grid small-block-grid-3 large-block-grid-4">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
-		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+		<li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<?= $video['thumbnail'] ?>
 			<p><?= $video['title'] ?></p>
 			<p><?= $video['byUserMsg'] ?></p>
@@ -53,7 +53,7 @@
 					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMsg('specialvideos-remove-modal-title') ?>">
 				</a>
 			<? endif; ?>
-		</div>
+		</li>
 
 		<?php $counter++; ?>
 	<?php endforeach; ?>
@@ -62,12 +62,12 @@
 
 		<!-- Check user permissions, only admins may upload videos, hide element for non-admins -->
 		<? if ($showAddVideoBtn): ?>
-			<div class="grid-2 <?= $alpha ?>">
+			<li class="add-video">
 				<div class="add-video-placeholder addVideo"></div>
 					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video')->text(); ?></a></p>
-			</div>
+			</li>
 		<? endif; ?>
 		<?php endif; ?>
-</div>
+</ul>
 <?= $pagination ?>
 <div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
