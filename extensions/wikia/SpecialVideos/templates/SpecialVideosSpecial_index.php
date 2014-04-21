@@ -44,6 +44,7 @@
 
 		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<?= $video['thumbnail'] ?>
+			<p><?= $video['title'] ?></p>
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= $video['timestamp'] ?></p>
 			<p><?= $video['postedInMsg']; ?></p>
