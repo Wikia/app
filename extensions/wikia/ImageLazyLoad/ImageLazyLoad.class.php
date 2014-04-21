@@ -6,12 +6,12 @@
 
 class ImageLazyLoad  {
 
+	const START_LAZY_LOADED_IMAGE = 4;
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
+	const IMG_ONLOAD = "if(typeof ImgLzy==='object'){ImgLzy.load(this)}";
 
 	private static $isWikiaMobile = null;
 	private static $enabled = null;
-
-	private static $onload = "if(typeof ImgLzy=='object'){ImgLzy.load(this)}";
 
 	public static function isEnabled() {
 		if ( is_null( self::$enabled ) ) {
@@ -48,7 +48,7 @@ class ImageLazyLoad  {
 			/* for AJAX requests - makes sure that they are handled properly */
 			/* ImgLzy.load is not executed for main content because ImgLzy object is initiated on DOM ready event and those images */
 			/* are base64 encoded so they are "loaded" with the content itself */
-			$lazyImageAttribs[ 'onload' ] = self::$onload;
+			$lazyImageAttribs[ 'onload' ] = self::IMG_ONLOAD;
 
 			$count = 0;
 			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html, $count );
@@ -143,14 +143,15 @@ class ImageLazyLoad  {
 			$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
 			$dataSrc = $imgSrc;
 			$imgSrc = wfBlankImgUrl();
-			$imgAttribs['onload'] = self::$onload;
+			$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
+			$imgAttribs = array_merge( $imgAttribs, $attribs );
 		}
 
 		return true;
 	}
 
 	/**
-	 * Check for valid lazy loaded image
+	 * Check whether or not the image is valid for lazy loading
 	 * @global boolean $wgRTEParserEnabled
 	 * @global type $wgParser
 	 * @param string $imgSrc
@@ -173,14 +174,17 @@ class ImageLazyLoad  {
 				$wgParser->lazyLoadedImagesCount += 1;
 
 				// Skip first few images in article
-				if ( $wgParser->lazyLoadedImagesCount < 4 ) {
+				if ( $wgParser->lazyLoadedImagesCount < self::START_LAZY_LOADED_IMAGE ) {
 					return false;
 				}
 			}
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
+
 	/**
 	 * Get class attribute for img tag
 	 * @param array $attrbs

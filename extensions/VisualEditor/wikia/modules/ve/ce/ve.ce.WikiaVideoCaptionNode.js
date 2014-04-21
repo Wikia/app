@@ -17,10 +17,12 @@
  * @param {Object} [config] Config options
  */
 ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config ) {
+
+	// Properties - needed for onSplice method that is called when parent constructor is called
+	this.$title = null;
+
 	// Parent constructor
 	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
-
-	this.$title = null;
 };
 
 /* Inheritance */
@@ -41,7 +43,7 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
 	var title,
-		attribution = this.model.parent.getAttribute( 'attribution');
+		attribution = this.model.parent.getAttribute( 'attribution' );
 
 	title = mw.Title.newFromText( attribution.title );
 
@@ -60,12 +62,9 @@ ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
 	// Parent method
 	ve.ce.WikiaMediaCaptionNode.prototype.onSplice.apply( this, arguments );
 
-	if ( this.$title ) {
-		this.$title = this.$title.detach();
-	} else {
+	if ( !this.$title ) {
 		this.$title = this.createTitle();
 	}
-
 	this.$title.insertAfter( this.$details );
 };
 

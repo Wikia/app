@@ -22,7 +22,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			'minWidth': 100
 		},
 		'defaultWidth': 200,
-		'defaultHeight': 100,
+		'defaultHeight': 100
 	};
 
 	media.data.cssClasses = {
@@ -116,19 +116,24 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.video = {
 		'playButton':
-			'<span class="play-circle"></span>'
+			'<span class="play-circle ve-no-shield"></span>'
+	};
+
+	media.html.video.block = {
+		'title':
+			'<p class="title ve-no-shield">Bar</p>'
 	};
 
 	/* Mock HTMLDOM */
 
 	media.htmlDom = {
 		'block':
-			'<figure data-mw=\'{"attribution":{"username":"Foo","titleText":"Bar"}}\'>' +
+			'<figure data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
-			'<span data-mw=\'{"attribution":{"username":"Foo","titleText":"Bar"}}\'>' +
+			'<span data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};
@@ -200,23 +205,28 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.block = { 'mw:Image': {}, 'mw:Video': {} };
 
+
 	/**
 	 * Get the mocked HTML output for a block media node.
 	 * Anything shared between block media types should go in here.
 	 *
 	 * @method
 	 * @param {Object} attributes The node attributes from which to build the mock.
+	 * @param {String} rdfaType The node's RDFa type: 'mw:Image' or 'mw:Video'
 	 * @returns {String} The mocked HTML.
 	 */
-	media.block.getHtml = function ( attributes ) {
+	media.block.getHtml = function ( attributes, rdfaType ) {
 		var $root,
 			$mock,
+			$figcaption,
+			$caption,
 			align = attributes.align,
 			type = attributes.type,
 			width = attributes.width;
 
-		$mock = $( media.html.block[ type ] )
-			.addClass( media.getAlignClass( type, align, $mock ) );
+		$mock = $( media.html.block[ type ] );
+
+		$mock.addClass( media.getAlignClass( type, align, $mock ) );
 
 		if ( type === 'frame' || type === 'thumb' ) {
 			$mock.css( 'width', width + 'px' );
@@ -224,6 +234,17 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			// is implemented in ve.ce.WikiaBlockMediaNode.prototype.rebuild
 			// @see https://bugzilla.wikimedia.org/show_bug.cgi?id=54479
 			$mock.append( media.html.block.caption );
+
+			$figcaption = $mock.find( 'figcaption' );
+			$caption = $figcaption.find( '.caption' );
+
+			// DOM order is sprite, title, caption, attribution
+			if ( rdfaType === 'mw:Video' ) {
+				$caption.before( media.html.video.block.title );
+			}
+			if ( width >= media.data.attribution.minWidth ) {
+				$figcaption.append( media.html.block.attribution );
+			}
 		} else {
 			$mock.removeAttr( 'style' );
 		}
@@ -243,9 +264,6 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			width: width
 		} );
 
-		if ( width >= media.data.attribution.minWidth ) {
-			$mock.find( 'figcaption' ).append( media.html.block.attribution );
-		}
 
 		return $mock[ 0 ].outerHTML;
 	};
@@ -267,7 +285,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	 * @returns {String} The mocked HTML.
 	 */
 	media.block[ 'mw:Video' ].getHtml = function ( attributes ) {
-		return media.video.getHtml( attributes, media.block.getHtml( attributes ) );
+		return media.video.getHtml( attributes, media.block.getHtml( attributes, 'mw:Video' ) );
 	};
 
 	/* Inline Media */
@@ -325,7 +343,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			width = attributes.width;
 
 		// copied from ThumbnailHelper::getThumbnailSize
-		if ( width < 200 ) {
+		if ( width < 100 ) {
+			size = 'xxsmall';
+		} else if ( width < 200 ) {
 			size = 'xsmall';
 		} else if ( width < 270 ) {
 			size = 'small';
@@ -339,7 +359,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 		$mockImage.parent()
 			.addClass( 'video video-thumbnail ' + size )
-			.prepend( $playButton );
+			.append( $playButton );
 
 		return $mock[ 0 ].outerHTML;
 	};

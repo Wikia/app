@@ -568,7 +568,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 
 	function updateAttribution( result ) {
 		items[result.title].username = result.username;
-		items[result.title].titleText = result.titleText;
+		items[result.title].title = result.title;
 	}
 
 	// Attribution request
@@ -615,7 +615,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'resource': './' + item.title,
 					'attribution': {
 						'username': item.username,
-						'titleText': item.titleText
+						'title': item.title
 					}
 				}
 			},
