@@ -1712,8 +1712,6 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 
 		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
-		'//extensions/wikia/VideosModule/scripts/models/abTestBottom.js',
-		'//extensions/wikia/VideosModule/scripts/models/abTestRail.js',
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/bottomModule.js',
