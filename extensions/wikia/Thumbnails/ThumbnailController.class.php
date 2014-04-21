@@ -254,7 +254,7 @@ class ThumbnailController extends WikiaController {
 			$link = AvatarService::renderLink( $attributeTo );
 
 			// TODO: change this to "By $user $time days ago" VID-1559
-			$addedBy = wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+			$addedBy = wfMessage( 'oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
 		}
 
 		$this->thumbnail = $thumbnail;
