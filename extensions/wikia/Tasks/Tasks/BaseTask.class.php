@@ -105,18 +105,29 @@ abstract class BaseTask {
 			'context' => []
 		];
 
-		foreach ($mirror->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-			$result['context'][$property->getName()] = $property->getValue($this);
+		foreach ($mirror->getProperties() as $property) {
+			if ($property->class == 'Wikia\\Tasks\\Tasks\\BaseTask') {
+				continue;
+			}
+
+			$property->setAccessible(true);
+			$result['context'][$property->name] = $property->getValue($this);
 		}
 
 		return $result;
 	}
 
 	public function unserialize($properties, $calls) {
+		$mirror = new \ReflectionClass($this);
+
 		$this->calls = $calls;
 
 		foreach ($properties as $name => $value) {
-			$this->$name = $value;
+			if ($mirror->hasProperty($name)) {
+				$property = $mirror->getProperty($name);
+				$property->setAccessible(true);
+				$property->setValue($this, $value);
+			}
 		}
 	}
 }
