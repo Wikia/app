@@ -258,8 +258,9 @@ class ThumbnailController extends WikiaController {
 				$title = $file->getTitle()->getText();
 			}
 
-			if ( $this->app->checkSkin( 'oasis' ) && !empty( $this->wg->EnableOasisPictureAttribution )
-				// Remove picture attribution for thumbnails less than 100px
+			// For oasis skin only. Remove picture attribution for thumbnails less than 100px
+			if ( $this->app->checkSkin( 'oasis' )
+				&& !empty( $this->wg->EnableOasisPictureAttribution )
 				&& $width > 99 ) {
 				$addedBy = ThumbnailHelper::getByUserMsg( $file, $isVideo );
 			}

@@ -84,7 +84,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param boolean $isVideo
 	 * @return string $addedBy
 	 */
-	public function getByUserMsg( $file, $isVideo ) {
+	public static function getByUserMsg( $file, $isVideo ) {
 		$addedAt = $file->getTimestamp();
 		if ( $isVideo ) {
 			$videoInfo = VideoInfo::newFromTitle( $file->getTitle()->getDBkey() );

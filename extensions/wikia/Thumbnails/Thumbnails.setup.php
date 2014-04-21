@@ -11,7 +11,7 @@ $wgExtensionCredits['videohandlers'][] = [
 	'descriptionmsg' => 'thumbnails-extension-description',
 ];
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // Main classes
 $wgAutoloadClasses['ThumbnailVideo'] = $dir . 'ThumbnailVideo.class.php';
