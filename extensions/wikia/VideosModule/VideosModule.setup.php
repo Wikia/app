@@ -35,7 +35,6 @@ $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML'
 if ( F::app()->wg->VideosModuleABTest == 'rail' ) {
 	$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
 }
-$wgHooks['MakeGlobalVariablesScript'][] = 'VideosModuleHooks::onMakeGlobalVariablesScript';
 
 /**
  * messages
