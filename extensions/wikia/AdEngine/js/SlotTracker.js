@@ -1,12 +1,15 @@
-/*exported SlotTracker*/
 /*global setTimeout*/
 /*jshint camelcase:false, maxparams:5*/
 /*global define*/
 
-var SlotTracker = function (window, log, tracker) {
+define('ext.wikia.adEngine.slotTracker', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker'
+], function (log, window, tracker) {
 	'use strict';
 
-	var logGroup = 'SlotTracker',
+	var logGroup = 'ext.wikia.adEngine.slotTracker',
 		timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
 		timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
 		stats = {
@@ -14,32 +17,32 @@ var SlotTracker = function (window, log, tracker) {
 			interestingEvents: 0
 		},
 		slotTypes = {
-			CORP_TOP_LEADERBOARD:  'leaderboard',
-			CORP_TOP_RIGHT_BOXAD:  'medrec',
-			EXIT_STITIAL_BOXAD_1:  'medrec',
-			HOME_TOP_LEADERBOARD:  'leaderboard',
-			HOME_TOP_RIGHT_BOXAD:  'medrec',
-			HUB_TOP_LEADERBOARD:   'leaderboard',
-			INCONTENT_BOXAD_1:     'medrec',
-			INVISIBLE_1:           'pixel',
-			INVISIBLE_2:           'pixel',
-			INVISIBLE_SKIN:        'pixel',
-			MOBILE_IN_CONTENT:     'mobile_content',
-			MOBILE_TOP_LEADERBOARD:'mobile_leaderboard',
-			MOBILE_PREFOOTER:      'mobile_prefooter',
-			MODAL_INTERSTITIAL:    'interstitial',
-			MODAL_INTERSTITIAL_1:  'interstitial',
-			MODAL_INTERSTITIAL_2:  'interstitial',
-			MODAL_INTERSTITIAL_3:  'interstitial',
-			MODAL_INTERSTITIAL_4:  'interstitial',
-			LEFT_SKYSCRAPER_2:     'skyscraper',
-			LEFT_SKYSCRAPER_3:     'skyscraper',
-			PREFOOTER_LEFT_BOXAD:  'prefooter',
-			PREFOOTER_RIGHT_BOXAD: 'prefooter',
-			TOP_BUTTON_WIDE:       'button',
-			TOP_LEADERBOARD:       'leaderboard',
-			TOP_RIGHT_BOXAD:       'medrec',
-			WIKIA_BAR_BOXAD_1:     'wikiabar'
+			CORP_TOP_LEADERBOARD:   'leaderboard',
+			CORP_TOP_RIGHT_BOXAD:   'medrec',
+			EXIT_STITIAL_BOXAD_1:   'medrec',
+			HOME_TOP_LEADERBOARD:   'leaderboard',
+			HOME_TOP_RIGHT_BOXAD:   'medrec',
+			HUB_TOP_LEADERBOARD:    'leaderboard',
+			INCONTENT_BOXAD_1:      'medrec',
+			INVISIBLE_1:            'pixel',
+			INVISIBLE_2:            'pixel',
+			INVISIBLE_SKIN:         'pixel',
+			MOBILE_IN_CONTENT:      'mobile_content',
+			MOBILE_TOP_LEADERBOARD: 'mobile_leaderboard',
+			MOBILE_PREFOOTER:       'mobile_prefooter',
+			MODAL_INTERSTITIAL:     'interstitial',
+			MODAL_INTERSTITIAL_1:   'interstitial',
+			MODAL_INTERSTITIAL_2:   'interstitial',
+			MODAL_INTERSTITIAL_3:   'interstitial',
+			MODAL_INTERSTITIAL_4:   'interstitial',
+			LEFT_SKYSCRAPER_2:      'skyscraper',
+			LEFT_SKYSCRAPER_3:      'skyscraper',
+			PREFOOTER_LEFT_BOXAD:   'prefooter',
+			PREFOOTER_RIGHT_BOXAD:  'prefooter',
+			TOP_BUTTON_WIDE:        'button',
+			TOP_LEADERBOARD:        'leaderboard',
+			TOP_RIGHT_BOXAD:        'medrec',
+			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		};
 
 	// The filtering function
@@ -73,7 +76,9 @@ var SlotTracker = function (window, log, tracker) {
 	function buildExtraParamsString(extraParams) {
 		var out = [], key;
 		for (key in extraParams) {
-			out.push(key + '=' + extraParams[key]);
+			if (extraParams.hasOwnProperty(key)) {
+				out.push(key + '=' + extraParams[key]);
+			}
 		}
 		return out.join(';');
 	}
@@ -111,7 +116,7 @@ var SlotTracker = function (window, log, tracker) {
 		} else {
 			log(['Not pushing to GA (not interesting)',
 				gaCategory, gaAction, gaLabel, gaValue], 'debug', logGroup
-			);
+					);
 		}
 	}
 
@@ -200,6 +205,4 @@ var SlotTracker = function (window, log, tracker) {
 	slotTracker.getStats = getStats;
 
 	return slotTracker;
-};
-
-define('ext.wikia.adengine.slottracker', ['wikia.window', 'wikia.log', 'wikia.tracker'], SlotTracker);
+});

@@ -224,3 +224,11 @@ class MethodNotFoundException extends NotFoundException {
 		parent::__construct("Method not found: $name");
 	}	
 }
+
+class PermissionsException extends ForbiddenException {
+	protected $message = "No Permissions";
+
+	function __construct( $requiredPermission ) {
+		$this->details = "Current User don't have required permissions: " . $requiredPermission;
+	}
+}

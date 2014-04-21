@@ -117,6 +117,7 @@ $messages['fa'] = array(
  * @author Elseweyr
  */
 $messages['fi'] = array(
+	'signup-desc' => 'Lisää alias [[{{#Special:Signup}}]] sivulle [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Rekisteröidy',
 );
 

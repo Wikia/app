@@ -868,6 +868,7 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
+ * @author Fitoschido
  * @author Geitost
  * @author Translationista
  * @author VegaDark
@@ -936,7 +937,7 @@ Por favor, contáctalo para más información.',
 	'chat-user-menu-talk-page' => 'Página de discusión',
 	'chat-user-menu-contribs' => 'Contribuciones',
 	'chat-user-menu-private' => 'Mensaje Privado',
-	'chat-user-menu-give-chat-mod' => 'Dar estado de moderador',
+	'chat-user-menu-give-chat-mod' => 'Otorgar permiso de moderador',
 	'chat-user-menu-kick' => 'Expulsar',
 	'chat-user-menu-ban' => 'Banear',
 	'chat-user-menu-private-block' => 'Bloquear mensajes privados',
@@ -1446,6 +1447,8 @@ $messages['hu'] = array(
 	'chat-you-were-kicked' => '$1 kirúgott.',
 	'chat-user-was-banned' => '$1 felhasználót letiltotta $2 $3.',
 	'chat-you-were-banned' => '$1 letiltott.',
+	'chat-user-was-unbanned' => '$2 eltávolította $1 tiltását.',
+	'chat-ban-cannt-undo' => 'A tiltást már visszavonták.',
 	'chat-user-permanently-disconnected' => 'A kapcsolatod megszakadt. Ellenőrizd az internet kapcsolatodat és frissítsed a böngésző ablakot!',
 	'chat-err-connected-from-another-browser' => 'Egy másik böngészőből csatlakoztál. Ez a kapcsolat meg fog szakadni.',
 	'chat-err-communicating-with-mediawiki' => 'Hiba a MediaWiki-kiszolgálóval történő kommunikáció közben.',
@@ -1453,6 +1456,8 @@ $messages['hu'] = array(
 	'chat-ban-modal-label-reason' => 'Indoklás',
 	'chat-log-reason-undo' => 'visszavonás',
 	'chat-ban-undolink' => 'visszavonás',
+	'chat-ban-modal-button-ok' => 'Felhasználó kitiltása',
+	'chat-ban-modal-button-change-ban' => 'Tiltás módosítása',
 	'chat-ban-modal-button-cancel' => 'Mégse',
 	'chat-ban-modal-change-ban-label' => 'Csere az alábbira:',
 	'chat-ban-modal-end-ban' => 'Tiltás megszüntetése',
@@ -1487,6 +1492,7 @@ $messages['hu'] = array(
 	'group-bannedfromchat-member' => 'Beszélgetésből kitiltva',
 	'chat-ban-log-change-ban-link' => 'tiltás megváltoztatása',
 	'chat-browser-is-notsupported' => 'A böngésződet nem támogatjuk. A legjobb élményért használj egy <a href="http://community.wikia.com/wiki/Help:Supported_browsers">újabbat</a>.',
+	'chat-status-away' => 'Távol',
 );
 
 /** Interlingua (interlingua)
@@ -2667,7 +2673,7 @@ $messages['ps'] = array(
 	'chat-user-joined' => '$1 بانډار کې ورگډ شو.',
 	'chat-private-messages' => 'شخصي پيغامونه',
 	'chat-user-parted' => '$1 له بانډاره وواته.',
-	'chat-user-blocked' => '$1 په $2 بنديز ولګاوه.',
+	'chat-user-blocked' => '$1 په $2 بنديز ولگاوه.',
 	'chat-user-allow' => '$1 $2 ته اجازه ورکړه.',
 	'chat-kick-you-need-permission' => 'تاسې د يوه کارن د شړلو رښته نه لرۍ.',
 	'chat-ban-modal-label-reason' => 'سبب',

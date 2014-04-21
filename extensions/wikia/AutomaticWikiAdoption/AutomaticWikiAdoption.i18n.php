@@ -1131,6 +1131,18 @@ Ferramentas de axuda:
 [[Special:UserRights|Xestionar os dereitos]]',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'wikiadoption' => 'Automatische Wiki-Adoption',
+	'wikiadoption-desc' => 'Ermöchlicht die automatische Adoption von en Wiki',
+	'wikiadoption-header' => 'Das Wiki adoptiere',
+	'wikiadoption-button-adopt' => 'Jo, ich möcht {{SITENAME}} adoptiere!',
+	'wikiadoption-adopt-inquiry' => 'Meahr erfoohre!',
+	'wikiadoption-log-reason' => 'Automatische Wiki-Adoption',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999

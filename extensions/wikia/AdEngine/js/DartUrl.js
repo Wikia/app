@@ -18,7 +18,8 @@
  * @return {Object}
  * @constructor
  */
-var DartUrl = function () {
+/*global define*/
+define('ext.wikia.adEngine.dartUrl', function () {
 	'use strict';
 
 	var logGroup = 'DartUrlUtils';
@@ -108,11 +109,4 @@ var DartUrl = function () {
 		trimParam: trimParam,
 		urlBuilder: urlBuilder
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('wikia.darturl', DartUrl);
-	}
-}(this));
+});

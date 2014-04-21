@@ -7,6 +7,8 @@
 
 class WikiaApiController extends WikiaController {
 	const DEFAULT_FORMAT_INDEX = 0;
+	const API_ENDPOINT_TEST = 'test';
+	const API_ENDPOINT_INTERNAL = 'internal';
 
 	private $allowedFormats = array(
 		'json',
@@ -157,9 +159,9 @@ class WikiaApiController extends WikiaController {
 		if (stripos($this->request->getScriptUrl(), "/api/v1")===0) {
 			return 1;
 		} else if (stripos($this->request->getScriptUrl(), "/api/test")===0) {
-			return 'test';
+			return self::API_ENDPOINT_TEST;
 		} else {
-			return 'internal';
+			return self::API_ENDPOINT_INTERNAL;
 		}
 	}
 	
@@ -174,6 +176,9 @@ class WikiaApiController extends WikiaController {
 	 */
 	protected function serveImages() {
 		global  $wgApiDisableImages;
+		if($this->request->isInternal() || $this->getApiVersion() == self::API_ENDPOINT_INTERNAL ){
+			return true;
+		}
 		return ( isset( $wgApiDisableImages ) && $wgApiDisableImages === true ) ? false : true;
 	}
 

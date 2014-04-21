@@ -3134,7 +3134,8 @@ $messages['mk'] = array(
 	'closed-wiki' => 'Затворено вики',
 	'closed-wiki-info' => 'Ова вики е затворено',
 	'disabled-wiki-info' => 'Ова вики е оневозможено',
-	'closed-wiki-dump-exists' => 'Можете да си ги повратите содржините, доколку сакате.<br />(ако вашето вики е затворено од неодамна, може да треба накратко да почекате за да се создадат податотеките)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Можете да си ги повратите содржините, доколку сакате.<br />(Ако вашето вики е затворено од неодамна, може да треба накратко да почекате за да се создадат податотеките)',
+	'closed-wiki-dump-links' => '[$1 Тековни страници] (оваа страница е обично најдобра за работа со ботови)<br />[$2 Тековни страници и историја] (предупредување: оваа податотека може да е многу голема)',
 	'closed-wiki-dump-noexists' => 'Ова вики е затворено. Складираната резервна содржина ќе биде достапна во рок од 24 часа. Проверете подоцна.',
 	'closed-wiki-create-wiki' => 'Создај ново вики',
 	'closed-wiki-policy' => 'Прикажи ги правилата за затворање на Викија',
@@ -4260,6 +4261,7 @@ regist.',
  * @author Aristóbulo
  * @author Cainamarques
  * @author Caio1478
+ * @author Cybermandrake
  * @author Daemorris
  * @author Giro720
  * @author JM Pessanha
@@ -4374,7 +4376,7 @@ $messages['pt-br'] = array(
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
 	'disabled-wiki-info' => 'Essa wiki foi desabilitada',
-	'closed-wiki-dump-exists' => 'Você pode [$1 recuperar seu conteúdo] se desejar.<br />(Caso sua wiki tenha sido fechada recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Você pode recuperar seu conteúdo se desejar.<br />(Caso seu wiki tenha sido fechado recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
 	'closed-wiki-dump-links' => '[$1 Páginas atuais] (esta versão normalmente é a melhor para a utilização por bots)<br />[$2 Páginas e histórico atuais] (atenção: este ficheiro pode ser muito grande)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. O esvaziamento do conteúdo estará disponível em 24 horas. Cheque novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Crie uma nova Wiki',

@@ -267,19 +267,20 @@ $1
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'lightbox_details_tooltip' => 'Teferruatê resimi bıvin',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
 	'lightbox-blog-link' => 'Grey blogi',
-	'lightbox-send' => 'Bırş',
+	'lightbox-send' => 'Bırışe',
 	'lightbox-share-button-email' => 'E-posta',
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
-	'lightbox-share-email-error-caption' => 'Xırab',
+	'lightbox-share-email-error-caption' => 'Xeta',
 );
 
 /** Esperanto (Esperanto)

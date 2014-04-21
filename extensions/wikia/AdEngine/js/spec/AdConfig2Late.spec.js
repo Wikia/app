@@ -7,7 +7,10 @@ describe('AdConfig2Late', function () {
 		'GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
 	].join('');
 
-	it('getProvider returns Liftium if it can handle it', function() {
+	var adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function() {return false;}};
+
+
+		it('getProvider returns Liftium if it can handle it', function() {
 		var adProviderNullMock = {name: 'NullMock'},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
@@ -16,8 +19,14 @@ describe('AdConfig2Late', function () {
 			abTestMock = {inGroup: function () {return false;}},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
@@ -32,8 +41,14 @@ describe('AdConfig2Late', function () {
 			abTestMock = {inGroup: function () {return false;}},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock');
@@ -48,8 +63,14 @@ describe('AdConfig2Late', function () {
 			abTestMock = {inGroup: function () {return false;}},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderSevenOneMedia, 'adProviderSevenOneMediaMock');
@@ -68,8 +89,14 @@ describe('AdConfig2Late', function () {
 			},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderSevenOneMediaMock');
@@ -88,8 +115,14 @@ describe('AdConfig2Late', function () {
 			},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderSevenOneMediaMock');
@@ -104,10 +137,15 @@ describe('AdConfig2Late', function () {
 			abTestMock = {inGroup: function () {}},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
-
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderSevenOneMediaMock');
 	});
 
@@ -120,10 +158,15 @@ describe('AdConfig2Late', function () {
 			abTestMock = {inGroup: function () {}},
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
-
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
 
@@ -136,8 +179,14 @@ describe('AdConfig2Late', function () {
 			abTestMock,
 			adConfig;
 
-		adConfig = AdConfig2Late(
-			logMock, windowMock, abTestMock, adProviderLiftiumMock, adProviderNullMock, adProviderSevenOneMedia
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			adProviderLiftiumMock,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');

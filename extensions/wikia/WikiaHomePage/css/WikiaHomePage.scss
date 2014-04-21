@@ -7,6 +7,10 @@
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
 
+$hub-color-slot-1 : get_command_line_param("hub-color-slot-1", $color-wikiahome-videogames);
+$hub-color-slot-2 : get_command_line_param("hub-color-slot-2", $color-wikiahome-entertainment);
+$hub-color-slot-3 : get_command_line_param("hub-color-slot-3", $color-wikiahome-lifestyle);
+
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
 	-moz-animation: InterstitialToggle 900ms;
@@ -794,6 +798,30 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					color: $color-wikiahome-lifestyle;
 				}
 			}
+			&.hub-slot-1 {
+				h2 {
+					border-bottom-color: $hub-color-slot-1;
+				}
+				ul li a {
+					color: $hub-color-slot-1;
+				}
+			}
+			&.hub-slot-2 {
+				h2 {
+					border-bottom-color: $hub-color-slot-2;
+				}
+				ul li a {
+					color: $hub-color-slot-2;
+				}
+			}
+			&.hub-slot-3 {
+				h2 {
+					border-bottom-color: $hub-color-slot-3;
+				}
+				ul li a {
+					color: $hub-color-slot-3;
+				}
+			}
 		}
 	}
 
@@ -873,12 +901,6 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 			font-size: 9px;
 			margin-right: 5px;
 			padding: 3px;
-		}
-		.hot {
-			background-color: #993399;
-		}
-		.new {
-			background-color: #1c629b;
 		}
 		.official {
 			background-image: url("/extensions/wikia/WikiaHomePage/images/OfficialTag.png"); /* base64 */

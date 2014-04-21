@@ -400,6 +400,13 @@ $messages['hi'] = array(
 	'ajaxpoll-submitting' => 'कृपया इंतज़ार, अपने वोट प्रस्तुत करने...',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'ajaxpoll-submit' => 'Abstimmen!',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol

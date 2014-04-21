@@ -167,7 +167,8 @@ class IndexServicesTest extends BaseTest
 		$this->injectService( $service, $mwservice );
 		$service->setPageId( $this->pageId );
 		$this->assertEquals(
-				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ) ),
+				array( \Wikia\Search\Utilities::field( 'redirect_titles' ) => array( 'foo', 'bar' ),
+					'redirect_titles_mv_em' => array( 'foo', 'bar' ) ),
 				$service->execute()
 		);
 	}
@@ -228,7 +229,7 @@ class IndexServicesTest extends BaseTest
 		                ->getMock();
 		
 		$desc = "This is my description";
-		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'new' => 1, 'hot' => 0 ] ];
+		$vizInfo = [ 'desc' => $desc, 'flags' => [ 'promoted' => 1 ] ];
 		$service
 		    ->expects( $this->once() )
 		    ->method ( "getService" )
@@ -250,7 +251,7 @@ class IndexServicesTest extends BaseTest
 		    ->with   ( 123 )
 		    ->will   ( $this->returnValue( $vizInfo ) )
 		;
-		$expected = [ 'wiki_description_txt' => $desc, 'wiki_new_b' => 'true', 'wiki_hot_b' => 'false', 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'false' ];
+		$expected = [ 'wiki_description_txt' => $desc, 'wiki_official_b' => 'false', 'wiki_promoted_b' => 'true' ];
 		$this->assertEquals(
 				$expected,
 				$service->execute()

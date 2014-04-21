@@ -56,7 +56,8 @@ Write the first section of your page here.
 ==Section heading==
 
 Write the second section of your page here.', // Does include video placeholder, and is overridden on messages wiki
-
+	'createpage-ve-body' => 'The article *$1* does not yet exist on this wikia. You can help out by adding a few sentences.',
+	'createpage-button-cancel' => 'Cancel',
 );
 
 /** Message documentation (Message documentation)

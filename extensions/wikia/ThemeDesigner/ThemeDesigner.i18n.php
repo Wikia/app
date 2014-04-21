@@ -741,17 +741,21 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Crt
+ * @author Elseweyr
  * @author Ilkea
  * @author Nike
  * @author VezonThunder
  */
 $messages['fi'] = array(
+	'action-themedesigner' => 'käytä Teemansuunnittelijaa',
 	'themedesigner-or' => 'tai',
 	'themedesigner-desc' => 'Mahdollistaa teeman suunnittelun wikille wikiylläpitäjille.',
 	'themedesigner-title' => 'Wikia-teemasuunnittelija',
 	'themedesigner-background' => 'Tausta',
 	'themedesigner-page' => 'Sivu',
-	'themedesigner-color' => 'väri', # Fuzzy
+	'themedesigner-color' => 'pääväri',
+	'themedesigner-color-middle' => 'keskiväri',
+	'themedesigner-rules-color-middle' => 'Eri väri keskellä sivua',
 	'themedesigner-graphic' => 'graafinen',
 	'themedesigner-buttons' => 'painikkeet',
 	'themedesigner-links' => 'linkit',
@@ -763,6 +767,8 @@ $messages['fi'] = array(
 	'themedesigner-large' => 'Suuri',
 	'themedesigner-tile-background' => 'laatta',
 	'themedesigner-fix-background' => 'korjaa',
+	'themedesigner-not-split-background' => 'ei halkaisua',
+	'themedesigner-rules-not-split-background' => "Jos taustagrafiikkasi on leveämpi, kuin $1 pikseliä, sinulla on mahdollisuus '''olla halkaisematta''' taustakuvaa.",
 	'themedesigner-transparency' => 'läpinäkyvyys',
 	'themedesigner-tab-theme' => 'Teema',
 	'themedesigner-tab-customize' => 'Mukauta',
@@ -791,7 +797,16 @@ $messages['fi'] = array(
 	'themedesigner-dont-use-a-graphic' => 'poista',
 	'themedesigner-history-item' => '$1 : $2',
 	'themedesigner-button-change-text' => 'Vaihda tekstiä',
+	'themedesigner-reason' => 'Teemansuunnittelija - käyttäjän $1 tallentama',
+	'themedesigner-size-error' => 'Virheellinen tiedostokoko',
+	'themedesigner-dimensions-error' => 'Kuva ylitti mittarajoitukset',
+	'themedesigner-type-error' => 'Väärä tiedostotyyppi',
+	'themedesigner-unknown-error' => 'On tapahtunut virhe, jota emme valitettavasti pystyneet tunnistamaan. Ole hyvä ja yritä uudelleen',
+	'themedesigner-manual-upload-error' => 'Käytä Teemansuunnittelijaa lataamaan wikillesi logotyyppi tai taustakuva',
+	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Esikatselu',
+	'themedesigner-wordmark-preview-error' => 'Hups! Wikin nimi ei voi olla tyhjä -- ole hyvä ja syötä tallennettava nimi',
+	'themedesigner-upload-disabled' => 'Pahoittelumme: kuvien tallennus on väliakiaisesti poissa käytöstä. Palaa tekemään muutoksesi vähän ajan kuluttua.',
 );
 
 /** French (français)
@@ -894,7 +909,7 @@ $messages['gl'] = array(
 	'themedesigner-tile-background' => 'mosaico',
 	'themedesigner-fix-background' => 'fixo',
 	'themedesigner-not-split-background' => 'non dividir',
-	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.", # Fuzzy
+	'themedesigner-rules-not-split-background' => "Se o gráfico de fondo é máis largo que $1px, hai unha opción para ''non'' dividir a imaxe.",
 	'themedesigner-transparency' => 'transparencia',
 	'themedesigner-tab-theme' => 'Tema visual',
 	'themedesigner-tab-customize' => 'Personalizar',
@@ -910,7 +925,7 @@ $messages['gl'] = array(
 	'themedesigner-pick-an-image' => 'Elixir unha imaxe',
 	'themedesigner-dont-use-a-background' => 'Non usar unha imaxe de fondo',
 	'themedesigner-upload-your-own' => 'Subir o teu',
-	'themedesigner-button-upload' => 'Cargar',
+	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif ou png. O máximo {{PLURAL:$1|é $1|son $1}} kB',
 	'themedesigner-default' => 'Por defecto',
@@ -1278,6 +1293,7 @@ $messages['mk'] = array(
 	'themedesigner-tile-background' => 'поле',
 	'themedesigner-fix-background' => 'поправи',
 	'themedesigner-not-split-background' => 'не двој',
+	'themedesigner-rules-not-split-background' => "Ако позадинската слика ви е поширок од $1 пиксели, можете да изберете да ''не'' ја раздвојувате сликата.",
 	'themedesigner-transparency' => 'проѕирност',
 	'themedesigner-tab-theme' => 'Изглед',
 	'themedesigner-tab-customize' => 'Прилагоди',
@@ -1316,6 +1332,7 @@ $messages['mk'] = array(
 	'themedesigner-wodmark-preview' => 'Преглед',
 	'themedesigner-wordmark-preview-error' => 'Упс! Името на викито не може да стои празно.
 Внесете име за да можете да го зачувате викито.',
+	'themedesigner-upload-disabled' => 'Нажалост, подигањата се привремено оневозможени. Навратете се набргу',
 );
 
 /** Mongolian (монгол)
@@ -1701,7 +1718,7 @@ $messages['ps'] = array(
 	'themedesigner-background' => 'مخينه',
 	'themedesigner-page' => 'مخ',
 	'themedesigner-color' => 'آرنی',
-	'themedesigner-graphic' => 'ګرافيک',
+	'themedesigner-graphic' => 'گرافيک',
 	'themedesigner-buttons' => 'تڼۍ',
 	'themedesigner-links' => 'تړنې',
 	'themedesigner-small' => 'وړوکی',
@@ -2328,6 +2345,7 @@ $messages['wuu'] = array(
  * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
  */
@@ -2372,7 +2390,7 @@ $messages['zh-hans'] = array(
 	'themedesigner-button-upload' => '上载',
 	'themedesigner-button-upload-wordmark' => '上传',
 	'themedesigner-rules-background' => 'jpg，gif或png。{{PLURAL:$1|$1 kilobyte|$1 kilobytes}}限制',
-	'themedesigner-default' => '磨人',
+	'themedesigner-default' => '默认',
 	'themedesigner-font' => '字体',
 	'themedesigner-size' => '大小',
 	'themedesigner-button-save' => '保存',
