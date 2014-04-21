@@ -222,7 +222,7 @@ class ThumbnailController extends WikiaController {
 		global $wgEnableOasisPictureAttribution;
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/atricleThumbnail.mustache' );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/articleThumbnail.mustache' );
 
 		$file = $this->getVal( 'file' );
 		$width = $this->getVal( 'outerWidth' );
