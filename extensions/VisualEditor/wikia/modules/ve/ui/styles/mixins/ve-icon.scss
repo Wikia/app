@@ -18,9 +18,9 @@ $basePath: "/extensions/VisualEditor";
 	@if $vendor == mw {
 		$vendorPath: "/modules/ve-mw/ui/styles/images/icons/";
 	} @elseif $vendor == oo {
-		$vendorPath: "/modules/oojs-ui/images/icons/";
+		$vendorPath: "/lib/ve/lib/oojs-ui/images/icons/";
 	} @elseif $vendor == ve {
-		$vendorPath: "/modules/ve/ui/styles/images/icons/";
+		$vendorPath: "/lib/ve/modules/ve/ui/styles/images/icons/";
 	} @elseif $vendor == wikia {
 		$vendorPath: "/wikia/modules/ve/ui/styles/images/icons/";
 	}
