@@ -20,34 +20,47 @@ class AsyncTaskList {
 	/** @var AMQPConnection connection to message broker */
 	protected $connection;
 
-	/** @var  Queue */
+	/** @var Queue the queue this task list will go into */
 	protected $queue;
 
-	/** @var  array list of BaseTask calls */
+	/** @var array list of BaseTask classes needed to execute the task list */
 	protected $classes = [];
 
 	/** @var array list of calls to make */
 	protected $calls = [];
 
+	/** @var string celery task type */
 	protected $taskType = 'celery_workers.mediawiki.task';
 
+	/** @var mixed user id and name of the user executing the task */
 	protected $createdBy = null;
 
+	/** @var int how long to delay execution (from now, in seconds) */
 	protected $delay = 0;
 
+	/** @var int the wiki id to execute the task in */
 	protected $wikiId = 177;
 
+	/** @var bool whether or not to perform task deduplication */
 	protected $dedupCheck = true;
 
-	public function __construct() {
-	}
-
+	/**
+	 * put this task into the priority queue
+	 *
+	 * @return $this
+	 */
 	public function prioritize() {
 		$this->queue = new PriorityQueue();
 
 		return $this;
 	}
 
+	/**
+	 * add a task call to the task list
+	 *
+	 * @param array $taskCall result from calling BaseTask->call()
+	 * @return $this
+	 */
 	public function add($taskCall) {
 		list($task, $callIndex) = $taskCall;
 		$classIndex = array_search($task, $this->classes, true);
@@ -62,6 +75,12 @@ class AsyncTaskList {
 		return $this;
 	}
 
+	/**
+	 * set this task list to run in a wiki's context
+	 *
+	 * @param int $wikiId
+	 * @return $this
+	 */
 	public function wikiId($wikiId) {
 		$this->wikiId = $wikiId;
 
@@ -93,18 +112,36 @@ class AsyncTaskList {
 		return $this;
 	}
 
+	/**
+	 * set this task to execute sometime in the future instead of ASAP
+	 *
+	 * @param int $time number of seconds to delay the task
+	 * @return $this
+	 */
 	public function delay($time) {
 		$this->delay = $time;
 
 		return $this;
 	}
 
+	/**
+	 * skip task de-duplication
+	 *
+	 * @return $this
+	 */
 	public function force() {
 		$this->dedupCheck = false;
 
 		return $this;
 	}
 
+	/**
+	 * put this task list into the queue
+	 *
+	 * @return string the task list's id
+	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 */
 	public function queue() {
 		global $wgDevelEnvironment, $wgUser, $IP;
 
@@ -194,6 +231,9 @@ class AsyncTaskList {
 		return $id;
 	}
 
+	/**
+	 * @return AMQPConnection connection to message broker
+	 */
 	protected function connection() {
 		global $wgTaskBroker;
 
@@ -204,11 +244,10 @@ class AsyncTaskList {
 		return $this->connection;
 	}
 
+	/**
+	 * @return Queue queue this task list will go into
+	 */
 	protected function getQueue() {
 		return $this->queue == null ? new Queue() : $this->queue;
-	}
-
-	protected function taskExists($task) {
-		return array_search($task, $this->classes);
 	}
 }
