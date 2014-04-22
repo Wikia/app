@@ -54,23 +54,43 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 }
 
-.video-grid {
+.special-videos-grid {
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
+	color: $color-alternate-text;
 	margin-bottom: 18px;
+
 	// Override article p styles
 	p, p + p {
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 18px;
 		margin: 0;
-		white-space: nowrap;
-		text-overflow: ellipsis;
 		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
+
+	li {
+		position: relative;
+		&:hover .remove {
+			display: block;
+		}
+	}
+
+	img {
+		// handle failed image loads
+		max-height: 208px;
+	}
+
 	.video {
-		margin-bottom: 8px;
+		margin-bottom: 2px;
 	}
-	// can be removed after article cache clears on 2/6/2014
-	.info-overlay-views {
-		display: inline;
+
+	.title {
+		color: $color-text;
+		font-size: 20px;
+		line-height: 38px;
 	}
 
 	.add-video-placeholder {
@@ -95,24 +115,18 @@ $placeholder-bg-color: darken($color-page, 10%);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	li {
-		position: relative;
-		&:hover .remove {
-			display: block;
-		}
-		.remove {
-			background-color: #ddd;	/* hardcoded because this is admin only feature */
-			cursor: pointer;
-			display: none;
-			padding: 0px 2px 4px 5px;
-			position: absolute;
-			right: 0;
-			top: 0;
-			z-index: 101;
-		}
+	.remove {
+		background-color: #ddd;
+		cursor: pointer;
+		display: none;
+		margin-right: 12px;
+		padding: 0px 2px 4px 5px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 101;
 	}
 }
-
 .messageHolder {
 	display: none;
 }

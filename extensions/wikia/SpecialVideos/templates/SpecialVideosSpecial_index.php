@@ -33,18 +33,17 @@
 			</ul>
 		</div>
 	</div>
-
 </div>
 
 
-<ul class="video-grid small-block-grid-3 large-block-grid-4">
+<ul class="special-videos-grid small-block-grid-3 large-block-grid-3 x-large-block-grid-4">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
 		<li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<?= $video['thumbnail'] ?>
-			<p><?= $video['title'] ?></p>
+			<p class="title" title="<?= $video['title'] ?>"><?= $video['title'] ?></p>
 			<p><?= $video['byUserMsg'] ?></p>
 			<p itemprop="uploadDate"><?= $video['timestamp'] ?></p>
 			<p><?= $video['postedInMsg']; ?></p>

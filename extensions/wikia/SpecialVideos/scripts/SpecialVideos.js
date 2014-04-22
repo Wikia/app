@@ -1,8 +1,11 @@
+/* global GlobalNotification */
+
 /**
  * JS file for Special:Videos page. Runs on Monobook and Oasis.
  */
 
 $(function() {
+'use strict';
 
 var SpecialVideos = {
 	init: function() {
@@ -76,7 +79,7 @@ var SpecialVideos = {
 	 * Only used in Oasis.
 	 */
 	initRemoveVideo: function() {
-		$('.VideoGrid').on('click', '.remove', function(e) {
+		$('.special-videos-grid').on('click', '.remove', function(e) {
 			var videoElement = $(e.target).parents('.video-element'),
 				videoName = videoElement.find('.video > img').attr('data-video-name');
 			if(videoName) {
@@ -95,7 +98,8 @@ var SpecialVideos = {
 							callback: function(json) {
 								// print error message if error
 								if(json.result === 'ok') {
-									(new Wikia.Querystring(window.location)).addCb().goTo();	// reload page with cb
+									// reload page with cb
+									(new Wikia.Querystring(window.location)).addCb().goTo();
 								} else {
 									GlobalNotification.show(json['msg'], 'error');
 								}
