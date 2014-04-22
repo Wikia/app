@@ -154,7 +154,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'fileKey' => $videoDetail['title'],
 					'fileUrl' => $videoDetail['fileUrl'],
 					'thumbnail' => $videoDetail['thumbnail'],
-					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'] ),
+					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
 					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
 					'postedInMsg' => $postedInMsg,
