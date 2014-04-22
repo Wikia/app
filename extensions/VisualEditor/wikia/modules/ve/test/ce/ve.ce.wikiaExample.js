@@ -342,7 +342,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			size,
 			width = attributes.width;
 
-		// copied from WikiaFileHelper::getThumbnailSize
+		// copied from ThumbnailHelper::getThumbnailSize
 		if ( width < 100 ) {
 			size = 'xxsmall';
 		} else if ( width < 200 ) {

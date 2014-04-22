@@ -3,15 +3,8 @@
 	class="video video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
 	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
 
-	<img
-		src="{{imgSrc}}"
-		{{#imgClass}}class="{{imgClass}}"{{/imgClass}}
-		data-video-key="{{videoKey}}"
-		data-video-name="{{videoName}}"
-		{{#dataSrc}}data-src="{{dataSrc}}" {{/dataSrc}}
-		{{#imgWidth}}width="{{imgWidth}}" {{/imgWidth}}
-		{{#imgHeight}}height="{{imgHeight}}" {{/imgHeight}}
-		{{#imgAttrs}}{{{.}}} {{/imgAttrs}}>
+	{{>imgThumbnail}}
+	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
 
 	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>
 	<span class="play-circle"></span>

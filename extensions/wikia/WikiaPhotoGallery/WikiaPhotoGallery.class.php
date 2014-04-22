@@ -858,7 +858,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					if ( $isVideo ) {
-						$playButtonSize = WikiaFileHelper::getThumbnailSize( $image['width'] );
+						$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
 						$thumbHtml = $this->videoPlayButton;
 						$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
 					} else {
