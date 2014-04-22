@@ -13,13 +13,4 @@ class WikiImageRowHelper {
 		$this->reviewed = $row->image_reviewed;
 		$this->review_status = intval($row->image_review_status);
 	}
-
-	public function asArray(){
-		return array(
-			'image_name' => $this->name,
-			'image_index' => intval($this->index),
-			'image_reviewed' => $this->reviewed,
-			'image_status' => $$this->review_status
-		);
-	}
 }
