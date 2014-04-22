@@ -47,8 +47,8 @@ class TvSearchService {
 		return $result;
 	}
 
-	public function queryMain( $query, $lang, $movieQuery = null, $wikiId = null, $minQuality = null ) {
-		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, $movieQuery );
+	public function queryMain( $query, $lang, $type = null, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, $type );
 		$response = $this->querySolr( $select );
 		foreach( $response as $item ) {
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
@@ -120,8 +120,7 @@ class TvSearchService {
 		return $this->client->select( $select );
 	}
 
-	protected function prepareArticlesQuery( $query, $lang, $wikiId = null, $minQuality = null, $movie = null ) {
-		$type = empty( $movie ) ? self::EPISODE_TYPE : self::MOVIE_TYPE;
+	protected function prepareArticlesQuery( $query, $lang, $wikiId = null, $minQuality = null, $type = null ) {
 		$select = $this->getArticleSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -134,7 +133,9 @@ class TvSearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:'. static::ALLOWED_NAMESPACE . ')');
-		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . $type . ')');
+		if( !empty( $type ) ) {
+			$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . $type . ')');
+		}
 
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
@@ -163,7 +164,8 @@ class TvSearchService {
 		if ( !empty( $wikiId ) ) {
 			$options[] = '+(wid:' . $wikiId . ')';
 		}
-		return '+("'. $query . '")' . implode( ' AND ', $options );
+		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
+		return '+("'. $query . '")' . $options;
 	}
 
 	protected function withLang( $field, $lang ) {

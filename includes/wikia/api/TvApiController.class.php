@@ -11,6 +11,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
+	const MOVIEPEDIA_WIKI = 559;
 	/** @var Array wikis */
 	protected $wikis = [];
 	/** @var TvSearchService tvService */
@@ -39,7 +40,12 @@ class TvApiController extends WikiaApiController {
 	protected function findMovie( $movieName ) {
 		$tvs = $this->getTvSearchService();
 
-		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, true );
+		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, $tvs::MOVIE_TYPE );
+		if ( !empty( $result ) ) {
+			return $result;
+		}
+		//else try moviepedia
+		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, null, self::MOVIEPEDIA_WIKI );
 		if ( !empty( $result ) ) {
 			return $result;
 		}
@@ -72,7 +78,7 @@ class TvApiController extends WikiaApiController {
 		if ( !empty( $wikis ) ) {
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $lang, false, $wiki[ 'id' ], $quality );
+				$result = $tvs->queryMain( $episodeName, $lang, $tvs::EPISODE_TYPE, $wiki[ 'id' ], $quality );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}
