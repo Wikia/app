@@ -37,7 +37,7 @@ class TaskRunner {
 			$task = $this->taskList[$classIndex];
 			list($method, $args) = $task->getCall($callIndex);
 			foreach ($args as $i => $arg) {
-				if (preg_match('/#([0-9]+)/', trim($arg), $match)) {
+				if (preg_match('/^#([0-9]+)$/', trim($arg), $match)) {
 					if (!isset($this->results[$match[1]])) {
 						throw new InvalidArgumentException;
 					}
