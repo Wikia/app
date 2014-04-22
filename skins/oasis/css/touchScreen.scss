@@ -7,21 +7,31 @@
 }
 
 //make bigger inputs for finger
+//TODO: Check if it's actually used and if not remove it
 input {
 	font-size: 15pt;
 }
 
-.AccountNavigation .UserLoginDropdown .WikiaForm input[type=text],
-.AccountNavigation .UserLoginDropdown .WikiaForm input[type=password] {
+.AccountNavigation .UserLoginDropdown .WikiaForm,
+.UserLogin .WikiaForm,
+.WikiaSignup .form-container .WikiaForm {
+  input[type=text],
+  input[type=password],
+  input[type=submit] {
 	height: 30px;
+  }
+  input[type=text],
+  input[type=password] {
 	font-size: 14px;
+  }
 }
 
-.AccountNavigation .UserLoginDropdown .WikiaForm input[type=submit] {
-	height: 30px;
+.WikiaSignup .form-container .WikiaForm select {
+	height: 35px;
+	width: 32%; //TODO: Make it fill the whole container
 }
 
-//hide facbook description
+//hide facebook description
 #AjaxLoginConnectMarketing div {
 	h1:nth-of-type(2), ul {
 		display: none;
@@ -29,6 +39,8 @@ input {
 }
 
 //fixes for register form
+//TODO: Remove the hacks and do it properly
+//seems to be used in extensions/wikia/SpecialSignup/templates/Signup.php
 #wpName2, #wpEmail, #uselang, #wpBirthYear {
 	position: absolute !important;
 	left: 35px !important;
