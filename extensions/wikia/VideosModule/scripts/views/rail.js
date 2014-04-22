@@ -5,8 +5,7 @@ define('videosmodule.views.rail', [
 ], function (TitleThumbnailView, Tracker, log) {
 	'use strict';
 
-	var track,
-		numVids = 5;
+	var track;
 
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-rail',
@@ -22,6 +21,7 @@ define('videosmodule.views.rail', [
 		this.$thumbs = this.$el.find('.thumbnails');
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		this.numVids = 5;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -65,7 +65,7 @@ define('videosmodule.views.rail', [
 			return;
 		}
 
-		for (i = 0; i < numVids; i++) {
+		for (i = 0; i < this.numVids; i++) {
 			thumbHtml.push(new TitleThumbnailView({
 					el: 'li',
 					model: videos[i],
@@ -79,7 +79,7 @@ define('videosmodule.views.rail', [
 			.append(thumbHtml)
 			.find('img[data-video-key]').on('load error', function () {
 				imgCount += 1;
-				if (imgCount === numVids) {
+				if (imgCount === self.numVids) {
 					$imagesLoaded.resolve();
 				}
 			});
