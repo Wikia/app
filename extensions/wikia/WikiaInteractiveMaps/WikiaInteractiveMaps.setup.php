@@ -24,5 +24,8 @@ $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
 $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
 $wgSpecialPageGroups[ 'InteractiveMaps' ] = 'wikia';
 
+// hooks
+$wgHooks['ParserFirstCallInit'][] = 'WikiaInteractiveMapsController::parserTagInit';
+
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
