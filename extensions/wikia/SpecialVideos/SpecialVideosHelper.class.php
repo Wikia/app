@@ -9,7 +9,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
-	const POSTED_IN_ARTICLES = 5;
+	const POSTED_IN_ARTICLES = 100;
 
 	const VIDEOS_PER_PAGE = 24;
 	const VIDEOS_PER_PAGE_MOBILE = 12;
@@ -147,7 +147,6 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'],$videoDetail['timestamp'] );
-				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
@@ -158,7 +157,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
 					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
-					'postedInMsg' => $postedInMsg,
+					'truncatedList' => $videoDetail['truncatedList'],
 				];
 			}
 		}
