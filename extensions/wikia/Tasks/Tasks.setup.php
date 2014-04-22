@@ -20,6 +20,11 @@ spl_autoload_register(function($class) {
 		$path .= "/{$next}";
 	}
 
-	require_once("{$path}/{$class}.class.php");
-	return true;
+	$file = "{$path}/{$class}.class.php";
+	if (file_exists($file)) {
+		require_once($file);
+		return true;
+	}
+
+	return false;
 });
