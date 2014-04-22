@@ -1,15 +1,11 @@
 define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
-	'videosmodule.models.abTestRail',
 	'wikia.tracker',
 	'wikia.log'
-], function (TitleThumbnailView, abTest, Tracker, log) {
+], function (TitleThumbnailView, Tracker, log) {
 	'use strict';
 
-	// Keep AB test variables private
-	var testCase,
-		groupParams,
-		track;
+	var track;
 
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-rail',
@@ -18,9 +14,6 @@ define('videosmodule.views.rail', [
 		label: 'module-impression'
 	});
 
-	testCase = abTest();
-	groupParams = testCase.getGroupParams();
-
 	function VideoModule(options) {
 		// this.el is the container for the right rail videos module
 		this.el = options.el;
@@ -28,6 +21,7 @@ define('videosmodule.views.rail', [
 		this.$thumbs = this.$el.find('.thumbnails');
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		this.numVids = 5;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -38,18 +32,13 @@ define('videosmodule.views.rail', [
 	VideoModule.prototype.init = function () {
 		var self = this;
 
-		// Check for thumb count b/c this may be the control group in which case don't render
-		if (!groupParams || !groupParams.thumbs) {
-			return;
-		}
-
 		self.$thumbs.addClass('hidden');
 		self.$el
 			.startThrobbing()
 			.removeClass('hidden');
 
 		this.model
-			.fetch(groupParams.verticalOnly)
+			.fetch()
 			.complete(function () {
 				self.render();
 			});
@@ -68,7 +57,7 @@ define('videosmodule.views.rail', [
 		if (!len) {
 			this.$el.addClass('hidden');
 			log(
-				'No videos were returned for VideosModule rail, ' + testCase.testGroup,
+				'No videos were returned for VideosModule rail',
 				log.levels.error,
 				'VideosModule',
 				true
@@ -76,7 +65,7 @@ define('videosmodule.views.rail', [
 			return;
 		}
 
-		for (i = 0; i < groupParams.thumbs; i++) {
+		for (i = 0; i < this.numVids; i++) {
 			thumbHtml.push(new TitleThumbnailView({
 					el: 'li',
 					model: videos[i],
@@ -90,7 +79,7 @@ define('videosmodule.views.rail', [
 			.append(thumbHtml)
 			.find('img[data-video-key]').on('load error', function () {
 				imgCount += 1;
-				if (imgCount === groupParams.thumbs) {
+				if (imgCount === self.numVids) {
 					$imagesLoaded.resolve();
 				}
 			});

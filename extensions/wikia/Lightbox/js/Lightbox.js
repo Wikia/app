@@ -828,11 +828,12 @@
 				});
 			}
 		},
+		// order by priority position in carousel backfill
 		carouselTypes: [
+			'videosModule',
 			'relatedVideos',
 			'articleMedia',
-			'latestPhotos',
-			'videosModule'
+			'latestPhotos'
 		],
 		setUpCarousel: function () {
 			// Load backfill content from DOM
