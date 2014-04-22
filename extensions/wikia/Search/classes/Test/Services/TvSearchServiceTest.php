@@ -23,7 +23,9 @@ class TvSearchServiceTest extends BaseTest {
 			'articleId' => 13508,
 			'title' => "The Rains of Castamere (episode)",
 			'url' => "http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)",
-			'quality' => 99
+			'quality' => 99,
+			'wikiId' => 1,
+			'wikiHost' => 'gameofthrones.wikia.com'
 		], $res );
 	}
 
@@ -39,7 +41,7 @@ class TvSearchServiceTest extends BaseTest {
 
 		$res = $tvs->queryXWiki( 'game of thrones', 'en' );
 
-		$this->assertEquals( [ ['id' => 130814, 'url' => 'http://gameofthrones.wikia.com/' ] ], $res );
+		$this->assertEquals( [ ['id' => '130814', 'wikiHost' => 'http://gameofthrones.wikia.com/' ] ], $res );
 	}
 
 	/**
@@ -58,7 +60,9 @@ class TvSearchServiceTest extends BaseTest {
 			'articleId' => 13508,
 			'title' => "The Rains of Castamere (episode)",
 			'url' => "http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)",
-			'quality' => 99
+			'quality' => 99,
+			'wikiId' => 1,
+			'wikiHost' => 'gameofthrones.wikia.com'
 		], $res );
 	}
 
@@ -95,7 +99,7 @@ class TvSearchServiceTest extends BaseTest {
 	}
 	
 	private function getSolariumMainResponse() {
-		$body = '{"responseHeader":{"status":0,"QTime":6,"params":{"pf":"titleStrict^8 title_en^2 redirect_titles_mv_en^2","fl":"*,score","start":"0","q":"+(\"The Rains of Castamere\") AND +(wid:130814)","qf":"titleStrict title_en redirect_titles_mv_en","wt":"json","fq":["+(ns:0)","+(article_type_s:tv_episode)"],"defType":"edismax","rows":"1"}},"response":{"numFound":1,"start":0,"maxScore":12.947323,"docs":[{"pageid":13508,"id":"130814_13508","title_en":"The Rains of Castamere (episode)","url":"http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)","article_quality_i":99,"score":12.947323}]}}';
+		$body = '{"responseHeader":{"status":0,"QTime":6,"params":{"pf":"titleStrict^8 title_en^2 redirect_titles_mv_en^2","fl":"*,score","start":"0","q":"+(\"The Rains of Castamere\") AND +(wid:130814)","qf":"titleStrict title_en redirect_titles_mv_en","wt":"json","fq":["+(ns:0)","+(article_type_s:tv_episode)"],"defType":"edismax","rows":"1"}},"response":{"numFound":1,"start":0,"maxScore":12.947323,"docs":[{"wid":"1","host":"gameofthrones.wikia.com","pageid":13508,"id":"130814_13508","title_en":"The Rains of Castamere (episode)","url":"http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)","article_quality_i":99,"score":12.947323}]}}';
 		$mock = new \Solarium_Client_Response(
 			$body,
 			[ 'HTTP/1.1 200 OK' ]

@@ -40,7 +40,7 @@ class TvSearchService {
 		$response = $this->querySolr( $select );
 		foreach( $response as $doc ) {
 			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$result[] = [ 'id' => $doc['id'], 'url' => $doc['url'] ];
+				$result[] = [ 'id' => $doc['id'], 'wikiHost' => $doc['url'] ];
 			}
 		}
 		return $result;
@@ -174,6 +174,8 @@ class TvSearchService {
 			'title' => $item['title_'.$lang],
 			'url' => $item['url'],
 			'quality' => $item['article_quality_i'],
+			'wikiId' => $item['wid'],
+			'wikiHost' => $item['host']
 		];
 	}
 }
