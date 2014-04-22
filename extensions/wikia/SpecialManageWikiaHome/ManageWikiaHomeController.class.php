@@ -59,6 +59,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$this->exportListAsCSVUri = $this->getExportListAsCSVUri();
+
 		$this->setVal('slotsInTotal', WikiaHomePageHelper::SLOTS_IN_TOTAL);
 		$this->infoMsg = FlashMessages::pop();
 
@@ -276,6 +278,70 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	public function getWikisInVisualisationAsCSV() {
+		wfProfileIn(__METHOD__);
+
+		if (!$this->checkAccess()) {
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+
+		// get data
+		if (empty($this->visualizationLang)) {
+			$visualizationLang = $this->request->getVal('visualizationLang', $this->wg->contLang->getCode());
+		} else {
+			$visualizationLang = $this->visualizationLang;
+		}
+		$list = $this->helper->getWikisForStaffTool($this->prepareFilterOptions($visualizationLang, []));
+		$collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$verticals = $this->helper->getWikiVerticals();
+
+		// turn off usual rendering
+		global $wgOut;
+		$wgOut->disable();
+
+		// set up headers
+		header("Cache-Control: public");
+		header("Content-Description: File Transfer");
+		header("Content-Disposition: attachment; filename=ManageWikiaHomeWikisList-".$visualizationLang.".csv");
+		header("Content-Type: application/octet-stream", true);
+		header("Content-Transfer-Encoding: binary");
+
+		// output data in csv format
+		$out = fopen('php://output', 'w');
+		// header
+		$outHeader = ['ID','Vertical','Title','Is blocked?','Is promoted?','Is official?'];
+		foreach ($collections as $collection) {
+			$outHeader[] = 'In collection: '.$collection['name']. '?';
+		}
+		fputcsv($out, $outHeader);
+
+		foreach ($list as $wiki) {
+			$outLine = [
+				$wiki->city_id,
+				$verticals[$wiki->city_vertical],
+				$wiki->city_title,
+				CityVisualization::isBlockedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isPromotedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isOfficialWiki($wiki->city_flags) ? 1 : 0,
+			];
+			foreach ($collections as $collection) {
+				$outLine[] = in_array($collection['id'], $wiki->collections) ? 1 : 0;
+			}
+			fputcsv($out, $outLine);
+		}
+
+		fclose($out);
+
+		wfProfileOut(__METHOD__);
+	}
+
+	private function getExportListAsCSVUri() {
+		global $wgServer, $wgScriptPath;
+
+		return $wgServer . $wgScriptPath. '/wikia.php?controller=ManageWikiaHome&method=getWikisInVisualisationAsCSV';
+	}
+
 	public function isWikiBlocked() {
 		wfProfileIn(__METHOD__);
 
@@ -298,7 +364,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->status = false;
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
-			
+
 			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
@@ -430,24 +496,24 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		return $dataValues;
 	}
-	
+
 	private function getWikisPerCollection($collections, $useMaster = false) {
 		$wikisPerCollections = [];
-		
+
 		foreach($collections as $key => $collection) {
 			$collectionId = $collection['id'];
 			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId, $useMaster);
 			$wikisPerCollections[$collectionId] = $wikis;
 		}
-		
+
 		return $wikisPerCollections;
 	}
-	
+
 	private function getWikiaCollectionsModel() {
 		if( !isset($this->wikiaCollectionsModel) ) {
 			$this->wikiaCollectionsModel = new WikiaCollectionsModel();
 		}
-		
+
 		return $this->wikiaCollectionsModel;
 	}
 

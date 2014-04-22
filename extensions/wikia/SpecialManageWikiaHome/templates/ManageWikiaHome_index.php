@@ -131,6 +131,7 @@
 	<div class="wikis-setup">
 		<h2 class="heading">
 			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->text() ?>
+			<a href="<?= $exportListAsCSVUri ?>" target="_blank" class="export-list-button button">Download complete list as CSV file.</a>
 		</h2>
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
