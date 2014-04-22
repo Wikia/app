@@ -1,6 +1,10 @@
 <?php
 class WikiaInteractiveMapsParserTagController extends WikiaController {
 
+	const DEFAULT_ZOOM = 7;
+	const DEFAULT_WIDTH = 700;
+	const DEFAULT_HEIGHT = 200;
+
 	/**
 	 * @desc Name of the parser tag
 	 */
@@ -67,19 +71,32 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'getMapByIdFromApi',
 			[ 'id' => $this->getVal( 'map-id' ) ]
 		);
+
 		$this->setVal( 'map', (object) $map );
-
-		$params = new stdClass();
-		$params->lat = $this->getVal( 'lat' );
-		$params->long = $this->getVal( 'long' );
-		$params->zoom = $this->getVal( 'zoom' );
-		$params->width = $this->getVal( 'width' );
-		$params->height = $this->getVal( 'height' );
-		$this->setVal( 'params', $params );
-
+		$this->setVal( 'params', $this->getMapPlaceholderParams() );
 		$this->setVal( 'mapPageUrl', '#' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * @desc Gets map placeholder params from request
+	 *
+	 * @return stdClass
+	 */
+	private function getMapPlaceholderParams() {
+		$params = new stdClass();
+
+		$params->lat = $this->request->getInt( 'lat', 0 );
+		$params->long = $this->request->getInt( 'long', 0 );
+		$params->zoom = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
+		$params->width = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
+		$params->height = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+
+		$params->width .= 'px';
+		$params->height .= 'px';
+
+		return $params;
 	}
 
 	private function validateParseTagParams( Array $params ) {
