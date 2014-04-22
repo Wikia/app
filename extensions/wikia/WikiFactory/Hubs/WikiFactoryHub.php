@@ -187,7 +187,8 @@ class WikiFactoryHub {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @return integer	category id from city_cat_mapping table
+	 * @param $city_id
+	 * @return integer category id from city_cat_mapping table
 	 */
 	public function getCategoryId( $city_id ) {
 		global $wgExternalSharedDB, $wgMemc;

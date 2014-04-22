@@ -39,6 +39,62 @@ class VideosModule extends WikiaModel {
 	];
 
 	/**
+	 * Look for 'Staff Picks' on the video wiki.  These are videos that have been added to the
+	 * "Staff Pick DBNAME" category (where DBNAME is this wiki's DB NAME) or the "Staff Pick Global"
+	 * category.
+	 *
+	 * @return array
+	 */
+	public function getStaffPicks() {
+		wfProfileIn( __METHOD__ );
+
+		// Try to get the staff video picks from cache first
+		$memcKey = wfMemcKey( 'videomodule', 'staff_videos', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+
+		// If none are there call out to the video wiki to look for some
+		if ( !is_array( $videos ) ) {
+
+			// Look for picks specific to this wiki
+			$params = [
+				'controller' => 'SpecialVideosSpecialController',
+				'method' => 'getVideos',
+				'sort' => 'recent',
+				'category' => 'Staff_Pick_'.$this->app->wg->DBname,
+			];
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+
+			// Look for global wikia-wide picks
+			$params['category'] = 'Staff_Pick_Global';
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+			$combinedVideos = array_merge($wikiResults, $globalResults);
+
+			// Adjust the key names and reduce what we send to the front end
+			$videos = [];
+			foreach ( $combinedVideos as $video ) {
+
+				$videos[] = [
+					'title'     => $video['title'],
+					'videoKey'  => $video['fileKey'],
+					'url'       => $video['fileUrl'],
+					'thumbnail' => $video['thumbnail'],
+				];
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $videos;
+	}
+
+	/**
 	 * Get videos added to the wiki
 	 * @param integer $numRequired - number of videos required
 	 * @param string $sort [recent/trend] - how to sort the results
@@ -147,7 +203,6 @@ class VideosModule extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videos;
-
 	}
 
 	/**
@@ -392,7 +447,8 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Get video limit (include the number of blacklisted videos)
-	 * @return integer $limit
+	 * @param int $numRequired
+	 * @return integer
 	 */
 	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
@@ -405,13 +461,12 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Trim randomized list of videos
+	 * Trim a list of videos down to $numRequired and make a note that we're using it
 	 * @param array $videos
 	 * @param integer $numRequired
 	 * @return array $videos
 	 */
 	protected function trimVideoList( $videos, $numRequired ) {
-		shuffle( $videos );
 		array_splice( $videos, $numRequired );
 		foreach ( $videos as $video ) {
 			$this->existingVideos[$video['videoKey']] = true;
@@ -419,5 +474,4 @@ class VideosModule extends WikiaModel {
 
 		return $videos;
 	}
-
 }
