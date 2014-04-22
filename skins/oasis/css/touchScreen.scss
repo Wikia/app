@@ -13,7 +13,12 @@ input {
 
 .AccountNavigation .UserLoginDropdown .WikiaForm input[type=text],
 .AccountNavigation .UserLoginDropdown .WikiaForm input[type=password] {
+	height: 30px;
 	font-size: 14px;
+}
+
+.AccountNavigation .UserLoginDropdown .WikiaForm input[type=submit] {
+	height: 30px;
 }
 
 //hide facbook description
