@@ -11,6 +11,12 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'imap';
 
 	/**
+	 * @desc Validate error after validating parser tag arguments
+	 * @var string
+	 */
+	private $validateError = '';
+
+	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
 	 * @param Parser $parser
@@ -32,17 +38,19 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return String
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
-		if( !$this->validateParseTagParams( $args ) ) {
+		$params = $this->sanitizeMapPlaceholderParams( $args );
+
+		if( !$this->validateParseTagParams( $params ) ) {
 			return $this->sendRequest(
 				'WikiaInteractiveMapsParserTagController',
 				'parserTagError',
-				$args
+				$params
 			);
 		} else {
 			return $this->sendRequest(
 				'WikiaInteractiveMapsParserTagController',
 				'mapThumbnail',
-				$args
+				$params
 			);
 		}
 	}
@@ -54,10 +62,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function parserTagError() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->setVal(
-			'errorMessage',
-			wfMessage( 'wikia-interactive-maps-parser-tag-error', 'Error' )
-		);
+		$this->setVal( 'errorMessage', $this->getValidateError() );
 	}
 
 	/**
@@ -85,22 +90,73 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return stdClass
 	 */
 	private function getMapPlaceholderParams() {
-		$params = new stdClass();
+		$params = [];
 
-		$params->lat = $this->request->getInt( 'lat', 0 );
-		$params->long = $this->request->getInt( 'long', 0 );
-		$params->zoom = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
-		$params->width = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
-		$params->height = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$params['lat'] = $this->request->getVal( 'lat', 0 );
+		$params['long'] = $this->request->getVal( 'long', 0 );
+		$params['zoom'] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
+		$params['width'] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
+		$params['height'] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
 
-		$params->width .= 'px';
-		$params->height .= 'px';
+		$params['width'] .= 'px';
+		$params['height'] .= 'px';
 
-		return $params;
+		return (object) $params;
 	}
 
+	/**
+	 * @desc Sanitizes given data
+	 *
+	 * @param Array $data
+	 *
+	 * @return Array
+	 */
+	public function sanitizeMapPlaceholderParams( $data ) {
+		$result = [];
+		$validParams = [ 'map-id', 'lat', 'long', 'zoom', 'width', 'height' ];
+
+		foreach( $validParams as $param ) {
+			if ( isset( $data[$param] ) ) {
+				$result[$param] = $data[$param];
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @desc Returns validate error
+	 * @return string
+	 */
+	public function getValidateError() {
+		return $this->validateError;
+	}
+
+	/**
+	 * @desc Returns validate error
+	 * @param String $errorMsg
+	 * @return String
+	 */
+	public function setValidateError( $errorMsg ) {
+		return $this->validateError = $errorMsg;
+	}
+
+	/**
+	 * @desc Validates data provided in parser tag arguments
+	 *
+	 * @param Array $params an array with parser tag arguments
+	 * @return bool
+	 */
 	private function validateParseTagParams( Array $params ) {
-		return true;
+		$valid = true;
+		$mapId = intval( $params['map-id'] );
+
+		if( $mapId <= 0 ) {
+			$this->setValidateError( wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped() );
+			$valid = false;
+		}
+
+		return $valid;
 	}
 
 }
