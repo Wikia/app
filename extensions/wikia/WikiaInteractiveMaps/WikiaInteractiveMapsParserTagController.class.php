@@ -67,7 +67,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'getMapByIdFromApi',
 			[ 'id' => $this->getVal( 'map-id' ) ]
 		);
-		$this->setVal( 'map', $map );
+		$this->setVal( 'map', (object) $map );
 
 		$params = new stdClass();
 		$params->lat = $this->getVal( 'lat' );
@@ -80,11 +80,10 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'mapPageUrl', '#' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		return $this->response->toString();
 	}
 
 	private function validateParseTagParams( Array $params ) {
-		return false;
+		return true;
 	}
 
 }
