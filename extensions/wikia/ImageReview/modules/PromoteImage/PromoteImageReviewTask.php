@@ -96,7 +96,7 @@ class PromoteImageReviewTask extends BatchTask {
 	}
 
 	function finalizeImageUploadStatus($imageId, $sourceWikiId, $status){
-		$db = wfGetDB(DB_MASTER, array(), $this->wg->ExternalSharedDB);
+		$db = wfGetDB(DB_MASTER, array(), F::app()->wg->ExternalSharedDB);
 
 		$db->update(
 			'city_visualization_images',
@@ -137,6 +137,7 @@ class PromoteImageReviewTask extends BatchTask {
 						'id' => $result['id'],
 						'name' => $result['name'],
 					);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_APPROVED);
 				} else {
 					//on error move image back to review, so that upload could be retried
 					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_UNREVIEWED);
