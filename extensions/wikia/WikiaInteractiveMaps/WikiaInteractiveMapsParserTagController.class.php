@@ -2,7 +2,7 @@
 class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 	/**
-	 * Name of the parser tag
+	 * @desc Name of the parser tag
 	 */
 	const PARSER_TAG_NAME = 'imap';
 
@@ -29,22 +29,62 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
 		if( !$this->validateParseTagParams( $args ) ) {
-			return $this->getParserTagError();
+			return $this->sendRequest(
+				'WikiaInteractiveMapsParserTagController',
+				'parserTagError',
+				$args
+			);
 		} else {
-			return $this->getMapThumbnail();
+			return $this->sendRequest(
+				'WikiaInteractiveMapsParserTagController',
+				'mapThumbnail',
+				$args
+			);
 		}
 	}
 
-	public function getParserTagError() {
-		return 'WIKIA INTERACTIVE MAPS PLACEHOLDER ERROR OCCURRED';
+	/**
+	 * @desc Displays parser tag error
+	 *
+	 * @return string
+	 */
+	public function parserTagError() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->setVal(
+			'errorMessage',
+			wfMessage( 'wikia-interactive-maps-parser-tag-error', 'Error' )
+		);
 	}
 
-	public function getMapThumbnail() {
-		return 'WIKIA INTERACTIVE MAPS PLACEHOLDER';
+	/**
+	 * @desc Renders interactive maps placeholder
+	 *
+	 * @return null|string
+	 */
+	public function mapThumbnail() {
+		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+		$map = $mapsModel->cachedRequest(
+			'getMapByIdFromApi',
+			[ 'id' => $this->getVal( 'map-id' ) ]
+		);
+		$this->setVal( 'map', $map );
+
+		$params = new stdClass();
+		$params->lat = $this->getVal( 'lat' );
+		$params->long = $this->getVal( 'long' );
+		$params->zoom = $this->getVal( 'zoom' );
+		$params->width = $this->getVal( 'width' );
+		$params->height = $this->getVal( 'height' );
+		$this->setVal( 'params', $params );
+
+		$this->setVal( 'mapPageUrl', '#' );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		return $this->response->toString();
 	}
 
 	private function validateParseTagParams( Array $params ) {
-		return true;
+		return false;
 	}
 
 }

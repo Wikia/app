@@ -88,13 +88,13 @@ class WikiaMaps {
 		return false;
 	}
 
-	private function getMapByIdFromApi( $mapId ) {
+	private function getMapByIdFromApi( Array $params ) {
 		// TODO: Remove mock when we have real data
 		return [
-			'id' =>  1,
+			'id' =>  $params['id'],
 			'status' => 'Processing',
 			'title' => 'Title 1',
-			'image' => 'http://placekitten.com/1602/300',
+			'image' => 'http://placekitten.com/700/200',
 			'last_updated' => date('c')
 		];
 	}
