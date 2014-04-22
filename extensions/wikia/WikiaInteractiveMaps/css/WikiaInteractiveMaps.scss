@@ -24,6 +24,7 @@
 	h3, 
 	p {
 		border: 0;
+		bottom: 1rem;
 		color: $color-text-light;
 		left: 2rem;
 		position: absolute;
@@ -31,9 +32,5 @@
 
 	h3 {
 	  bottom: 2.8rem;
-	}
-
-	p {
-	  bottom: 1rem;
 	}
 }
