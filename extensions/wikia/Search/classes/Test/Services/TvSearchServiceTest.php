@@ -10,6 +10,26 @@ class TvSearchServiceTest extends BaseTest {
 	/**
 	 * @test
 	 */
+	public function shouldReturnCorrectArticleFormatForNoWikiIdQuery() {
+		$mock = $this->getSolariumMock();
+		$mock->expects( $this->once() )
+			->method( 'select' )
+			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
+		$tvs = new TvSearchService( $mock );
+
+		$res = $tvs->queryMain( 'The Rains of Castamere', 'en' );
+
+		$this->assertEquals( [
+			'articleId' => 13508,
+			'title' => "The Rains of Castamere (episode)",
+			'url' => "http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)",
+			'quality' => 99
+		], $res );
+	}
+
+	/**
+	 * @test
+	 */
 	public function shouldReturnCorrectWikiFormat() {
 		$mock = $this->getSolariumMock();
 		$mock->expects( $this->once() )
@@ -32,7 +52,7 @@ class TvSearchServiceTest extends BaseTest {
 			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
 		$tvs = new TvSearchService( $mock );
 
-		$res = $tvs->queryMain( 'The Rains of Castamere', 130814, 'en' );
+		$res = $tvs->queryMain( 'The Rains of Castamere', 'en', 130814 );
 
 		$this->assertEquals( [
 			'articleId' => 13508,

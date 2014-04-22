@@ -46,8 +46,8 @@ class TvSearchService {
 		return $result;
 	}
 
-	public function queryMain( $query, $wikiId, $lang, $minQuality = null ) {
-		$select = $this->prepareArticlesQuery( $query, $wikiId, $lang, $minQuality );
+	public function queryMain( $query, $lang, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality );
 		$response = $this->querySolr( $select );
 		foreach( $response as $item ) {
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
@@ -119,7 +119,7 @@ class TvSearchService {
 		return $this->client->select( $select );
 	}
 
-	protected function prepareArticlesQuery( $query, $wikiId, $lang, $minQuality = null ) {
+	protected function prepareArticlesQuery( $query, $lang, $wikiId = null, $minQuality = null ) {
 		$select = $this->getArticleSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -153,12 +153,15 @@ class TvSearchService {
 		return $this->client->createSelect();
 	}
 
-	protected function prepareQuery( $query, $wikiId, $minQuality ) {
-		$quality = '';
+	protected function prepareQuery( $query, $wikiId = null, $minQuality = null ) {
+		$options = [];
 		if ( !empty( $minQuality ) ) {
-			$quality = ' AND +(article_quality_i:[' . $minQuality . ' TO *])';
+			$options[] = '+(article_quality_i:[' . $minQuality . ' TO *])';
 		}
-		return '+("'. $query . '") AND +(wid:' . $wikiId . ')' . $quality;
+		if ( !empty( $wikiId ) ) {
+			$options[] = '+(wid:' . $wikiId . ')';
+		}
+		return '+("'. $query . '")' . implode( ' AND ', $options );
 	}
 
 	protected function withLang( $field, $lang ) {
