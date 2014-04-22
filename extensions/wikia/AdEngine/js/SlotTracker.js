@@ -210,6 +210,7 @@ define('ext.wikia.adEngine.slotTracker', [
 	}
 
 	slotTracker.getStats = getStats;
+	slotTracker.getTimeBucket = getTimeBucket; // for AdEngine_trackPageInteractive
 
 	return slotTracker;
 });
