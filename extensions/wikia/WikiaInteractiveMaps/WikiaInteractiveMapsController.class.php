@@ -31,6 +31,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->wg->SuppressPageHeader = true;
+		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$params = [
@@ -46,6 +47,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		});
 
 		$this->setVal( 'maps', $maps );
+		$this->setVal( 'hasMaps', !empty( $maps ) );
 		$messages = [
 			'wikia-interactive-maps-title' => wfMessage( 'wikia-interactive-maps-title' ),
 			'wikia-interactive-maps-create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),

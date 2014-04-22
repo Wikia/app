@@ -6,12 +6,11 @@
 	right: 0;
 }
 
-
 .WikiaArticle .map-list {
 	list-style: none;
 	margin: 0;
 
-	.map-image {
+	li {
 		position: relative;
 	}
 
@@ -21,14 +20,19 @@
 		position: absolute;
 		right: 0;
 	}
-	.map-info {
-		bottom: 2em;
-		color: $color-text-light;
-		left: 2em;
-		position: absolute;
 
-		h2 {
-			border: 0;
-		}
+	h3, p {
+		border: 0;
+		color: $color-text-light;
+		left: 30px;
+		position: absolute;
+	}
+
+	h3 {
+	  bottom: 2.2em;
+	}
+
+	p {
+	  bottom: 1em;
 	}
 }

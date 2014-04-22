@@ -1,21 +1,22 @@
-<div class="maps-controls">
-    <button id="createMap">{{messages.wikia-interactive-maps-create-a-map}}</button>
-</div>
+<nav class="maps-controls">
+	<button id="createMap">{{messages.wikia-interactive-maps-create-a-map}}</button>
+</nav>
 <h2>{{messages.wikia-interactive-maps-title}}</h2>
+{{#hasMaps}}
 <ul class="map-list">
 {{#maps}}
-    <li>
-        <div class="map-image">
-            {{#status}}<div class="map-status">{{status}}</div>{{/status}}
-            <a href="#"><img src="{{image}}" alt="{{title}}"  height="{{map_height}}" width="{{map_width}}"/></a>
-            <div class="map-info">
-                <h2>{{title}}</h2>
-                <p>{{last_updated}}</p>
-            </div>
-        </div>
-    </li>
-{{/maps}}
-{{^maps}}
-    <div>{{messages.wikia-interactive-maps-no-maps}}</div>
+	<li>
+		{{^status}}<a href="#">{{/status}}
+			{{#status}}<div class="map-status">{{status}}</div>{{/status}}
+			<img src="{{image}}" alt="{{title}}"  height="{{map_height}}" width="{{map_width}}"/>
+			<h3>{{title}}</h3>
+			<p>{{last_updated}}</p>
+		{{^status}}</a>{{/status}}
+	</li>
 {{/maps}}
 </ul>
+{{/hasMaps}}
+{{^hasMaps}}
+	<p>{{messages.wikia-interactive-maps-no-maps}}</p>
+{{/hasMaps}}
+
