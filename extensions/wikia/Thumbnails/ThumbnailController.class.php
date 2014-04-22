@@ -201,10 +201,12 @@ class ThumbnailController extends WikiaController {
 
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
+		$this->dataSrc = '';
 		if ( !empty( $options['usePreloading'] ) ) {
 			$this->dataSrc = $imgSrc;
-		} else if ( !empty( $this->wg->EnableAdsLazyLoad ) && empty( $options['noLazyLoad'] ) ) {
-			$this->dataSrc = '';
+		} else if ( !empty( $this->wg->EnableAdsLazyLoad )
+			&& empty( $options['noLazyLoad'] )
+			&& ImageLazyLoad::isValidLazyLoadedImage( $this->imgSrc ) ) {
 			$this->noscript = $this->app->renderView( 'ThumbnailController', 'imgThumbnail', $this->response->getData() );
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}

@@ -139,15 +139,11 @@ class ImageLazyLoad  {
 	 * @return boolean
 	 */
 	public static function setLazyLoadingAttribs( &$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs ) {
-		if ( self::isValidLazyLoadedImage( $imgSrc ) ) {
-			$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
-			$dataSrc = $imgSrc;
-			$imgSrc = wfBlankImgUrl();
-			$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
-			$imgAttribs = array_merge( $imgAttribs, $attribs );
-		}
-
-		return true;
+		$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
+		$dataSrc = $imgSrc;
+		$imgSrc = wfBlankImgUrl();
+		$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
+		$imgAttribs = array_merge( $imgAttribs, $attribs );
 	}
 
 	/**
