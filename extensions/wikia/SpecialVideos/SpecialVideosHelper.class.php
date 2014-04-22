@@ -146,7 +146,7 @@ class SpecialVideosHelper extends WikiaModel {
 		foreach ( $videoList as $videoInfo ) {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
-				$byUserMsg = $this->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
+				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'],$videoDetail['timestamp'] );
 				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
@@ -190,27 +190,6 @@ class SpecialVideosHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
-	}
-
-	/**
-	 * get message for by user section
-	 * @param string $userName
-	 * @param string $userUrl
-	 * @return string $byUserMsg
-	 */
-	public function getByUserMsg( $userName, $userUrl ) {
-		$byUserMsg = '';
-		if ( !empty( $userName ) ) {
-			$attribs = array(
-				'href' => $userUrl,
-				'class' => 'wikia-gallery-item-user',
-			);
-
-			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = wfMessage( 'specialvideos-uploadby', $userLink )->text();
-		}
-
-		return $byUserMsg;
 	}
 
 	/**

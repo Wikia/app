@@ -93,11 +93,7 @@ class ThumbnailHelper extends WikiaModel {
 			}
 		}
 
-		// get link to user page
-		$link = AvatarService::renderLink( $file->getUser() );
-		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
-
-		return $addedBy;
+		return WikiaFileHelper::getByUserMsg( $file->getUser(), $addedAt );
 	}
 
 }
