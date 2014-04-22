@@ -104,13 +104,13 @@ class JsonFormatSimplifier {
 	}
 
 	private function clearParagraphs( &$paragraphs ) {
-		$paragraphs = array_slice( array_filter( array_map ( function( $element ) {
+		$paragraphs = array_values( array_filter( array_map ( function( $element ) {
 			if ( $element["type"] == "paragraph" ) {
 				$element['text'] = trim($element['text']);
 				if ($element['text'] == "") return false;
 			}
 			return $element;
-		}, $paragraphs )), 0 );
+		}, $paragraphs )));
 	}
 
 	private function newParagraph( &$sectionElements) {
