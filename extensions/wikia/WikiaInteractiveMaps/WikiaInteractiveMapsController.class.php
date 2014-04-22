@@ -1,8 +1,12 @@
 <?php
 
 class WikiaInteractiveMapsController extends WikiaSpecialPageController{
+	/**
+	 * Name of the parser tag
+	 */
+	const PARSER_TAG_NAME = 'imap';
 
-	/*
+	/**
 	 * Map image height
 	 */
 	const MAP_HEIGHT = 300;
@@ -56,4 +60,30 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController{
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
+
+	/**
+	 * @desc Parser hook: used to register parser tag in MW
+	 *
+	 * @param Parser $parser
+	 * @return bool
+	 */
+	public static function parserTagInit( Parser $parser ) {
+		$parser->setHook( self::PARSER_TAG_NAME, [ new self(), 'renderPlaceholder' ] );
+		return true;
+	}
+
+	/**
+	 * @desc Renders interactive map thumbnail in place of interactive map parser tag in the article content
+	 *
+	 * @param String $input
+	 * @param Array $args
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 *
+	 * @return String
+	 */
+	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
+		return 'Wikia Interactive Map placeholder';
+	}
+
 }
