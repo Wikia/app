@@ -39,7 +39,7 @@ class TvApiController extends WikiaApiController {
 	protected function findMovie( $movieName ) {
 		$tvs = $this->getTvSearchService();
 
-		$result = $tvs->queryMain( $movieName, self::LANG_SETTING );
+		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, true );
 		if ( !empty( $result ) ) {
 			return $result;
 		}
@@ -72,7 +72,7 @@ class TvApiController extends WikiaApiController {
 		if ( !empty( $wikis ) ) {
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $lang, $wiki[ 'id' ], $quality );
+				$result = $tvs->queryMain( $episodeName, $lang, false, $wiki[ 'id' ], $quality );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}

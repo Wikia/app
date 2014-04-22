@@ -10,7 +10,8 @@ class TvSearchService {
 	const MINIMAL_WIKIA_SCORE = 2;
 	const MINIMAL_WIKIA_ARTICLES = 50;
 	const MINIMAL_ARTICLE_SCORE = 0.5;
-	const ARTICLE_TYPE = 'tv_episode';
+	const EPISODE_TYPE = 'tv_episode';
+	const MOVIE_TYPE = 'movie';
 	const ALLOWED_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
 	const WORDS_QUERY_LIMIT = 10;
@@ -46,8 +47,8 @@ class TvSearchService {
 		return $result;
 	}
 
-	public function queryMain( $query, $lang, $wikiId = null, $minQuality = null ) {
-		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality );
+	public function queryMain( $query, $lang, $movieQuery = null, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, $movieQuery );
 		$response = $this->querySolr( $select );
 		foreach( $response as $item ) {
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
@@ -119,7 +120,8 @@ class TvSearchService {
 		return $this->client->select( $select );
 	}
 
-	protected function prepareArticlesQuery( $query, $lang, $wikiId = null, $minQuality = null ) {
+	protected function prepareArticlesQuery( $query, $lang, $wikiId = null, $minQuality = null, $movie = null ) {
+		$type = empty( $movie ) ? self::EPISODE_TYPE : self::MOVIE_TYPE;
 		$select = $this->getArticleSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -132,7 +134,7 @@ class TvSearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 		$select->createFilterQuery( 'ns' )->setQuery('+(ns:'. static::ALLOWED_NAMESPACE . ')');
-		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . static::ARTICLE_TYPE . ')');
+		$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . $type . ')');
 
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
