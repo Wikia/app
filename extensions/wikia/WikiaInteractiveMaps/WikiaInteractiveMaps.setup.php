@@ -16,6 +16,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 
 // controller classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . 'WikiaInteractiveMapsParserTagController.class.php';
 
 // model classes
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
@@ -25,7 +26,7 @@ $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
 $wgSpecialPageGroups[ 'InteractiveMaps' ] = 'wikia';
 
 // hooks
-$wgHooks['ParserFirstCallInit'][] = 'WikiaInteractiveMapsController::parserTagInit';
+$wgHooks['ParserFirstCallInit'][] = 'WikiaInteractiveMapsParserTagController::parserTagInit';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
