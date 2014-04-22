@@ -16,6 +16,37 @@ class TvApiController extends WikiaApiController {
 	/** @var TvSearchService tvService */
 	protected $tvService;
 
+	public function getMovie() {
+		$movieName = $this->getRequiredParam( 'movieName' );
+
+		$result = $this->findMovie( $movieName );
+		$output = $this->createOutput( $result );
+
+		$response = $this->getResponse();
+		$response->setValues( $output );
+
+		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+	}
+
+	protected function getRequiredParam( $name ) {
+		$query = $this->getRequest()->getVal( $name, null );
+		if ( empty( $query ) || $query === null ) {
+			throw new InvalidParameterApiException( $name );
+		}
+		return $query;
+	}
+
+	protected function findMovie( $movieName ) {
+		$tvs = $this->getTvSearchService();
+
+		$result = $tvs->queryMain( $movieName, self::LANG_SETTING );
+		if ( !empty( $result ) ) {
+			return $result;
+		}
+		//movie was not found
+		throw new NotFoundApiException();
+	}
+
 	public function getEpisode() {
 		$request = $this->getRequest();
 		$seriesName = $this->getRequiredParam( 'seriesName' );
@@ -35,27 +66,19 @@ class TvApiController extends WikiaApiController {
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
 
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
-	}
-
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
 		$tvs = $this->getTvSearchService();
 		$wikis = $tvs->queryXWiki( $seriesName, $lang );
 		if ( !empty( $wikis ) ) {
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $wiki['id'], $lang, $quality );
+				$result = $tvs->queryMain( $episodeName, $lang, $wiki[ 'id' ], $quality );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
-						return [ 'wiki' => $wiki, 'article' => $result ];
+						return array_merge( $wiki, $result );
 					}
 				}
 			}
@@ -128,15 +151,15 @@ class TvApiController extends WikiaApiController {
 	protected function createOutput( $data ) {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
 
-		$result = array_merge( [ 'wikiId' => (int) $data['wiki']['id'] ], $data['article'] );
-		$result[ 'contentUrl' ] = $data['wiki']['url'] . self::API_URL . $data['article'][ 'articleId' ];
+		$data[ 'contentUrl' ] = 'http://' . $data[ 'wikiHost' ] . '/' . self::API_URL . $data[ 'articleId' ];
+		unset( $data['wikiHost'] );
 
 		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$result[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "contentUrl" ] );
-			$result[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "url" ] );
+			$data[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "contentUrl" ] );
+			$data[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "url" ] );
 		}
 
-		return $result;
+		return $data;
 	}
 
 	protected function replaceHost( $details ) {

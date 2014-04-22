@@ -75,8 +75,12 @@ class TvApiControllerTest extends \WikiaBaseTest {
 			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
 		$api = new \TvApiController();
 		$data = [
-			'wiki' => [ 'id' => 1, 'url' => 'http://unittest.wikia.com/url' ],
-			'article' => [ 'articleId' => 2, 'title' => 'fake title', 'url' => 'http://unittest.wikia.com/contentUrl', 'quality' => 10 ]
+			'wikiId' => 1,
+			'wikiHost' => 'unittest.wikia.com/url',
+			'articleId' => 2,
+			'title' => 'fake title',
+			'url' => 'http://unittest.wikia.com/contentUrl',
+			'quality' => 10
 		];
 
 		$method = new \ReflectionMethod( 'TvApiController', 'createOutput' );
@@ -90,7 +94,7 @@ class TvApiControllerTest extends \WikiaBaseTest {
 				'title' => 'fake title',
 				'url' => 'http://newhost/contentUrl',
 				'quality' => 10,
-				'contentUrl' => 'http://newhost/urlapi/v1/Articles/AsSimpleJson?id=2'
+				'contentUrl' => 'http://newhost/url/api/v1/Articles/AsSimpleJson?id=2'
 			],
 			$result );
 	}
