@@ -53,6 +53,7 @@ function(
 		currentMedia,
 		currentWrapper,
 		currentWrapperStyle,
+		disableSwipe,
 		wkMdlImages,
 		qs = querystring(),
 		shrImg = encodeURIComponent( qs.getVal( 'file', '' ) ) || null,
@@ -709,7 +710,8 @@ function(
 						refresh();
 					}
 				},
-				circle: true
+				circle: true,
+				disableSwipe: disableSwipe
 			} );
 
 			function tap ( ev ) {
@@ -798,6 +800,9 @@ function(
 			inited = false;
 			init(document.getElementsByClassName('media'));
 			setup();
+		},
+		disableSwipe: function () {
+			disableSwipe = true;
 		},
 		skip: function () {
 			if ( currentNum - lastNum > 0 ) {
