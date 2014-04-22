@@ -1,6 +1,6 @@
 <?php
 
-class WikiaInteractiveMapsController extends WikiaSpecialPageController{
+class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/*
 	 * Map image height
