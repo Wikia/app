@@ -13,14 +13,52 @@ class SongScraper extends BaseScraper {
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
+		$songArticleId = $article->getId();
 		$songData = [
-			'article_id' => $article->getId(),
+			'article_id' => $songArticleId,
 		];
 
 		$songData = array_merge( $songData, $this->getFooter( $article ) );
-
 		$songData['lyrics'] = $this->getLyrics( $article );
+
+		// MOB-1367 - make sure the song name is the same as song's article title
+		$songTitle = $article->getTitle();
+		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle->getText() ) : null;
+		if( !is_null( $songName ) ) {
+			$songData['song'] = $songName;
+		} else {
+			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d) or with invalid name', $songArticleId ) );
+		}
+
 		return $songData;
+	}
+
+	/**
+	 * @desc If there is {{TranslatedSong}} template returns true; false otherwise
+	 *
+	 * @param Article $article
+	 * @return Boolean
+	 */
+	public function isSongTraslation( Article $article ) {
+		$translation = $this->getTemplateValues( 'TranslatedSong', $article->getContent() );
+		return !empty( $translation['current'] );
+	}
+
+	/**
+	 * @desc Gets the string after last colon if found in title text; otherwise false
+	 *
+	 * @param String $titleText title text of the song article
+	 *
+	 * @return null|String
+	 */
+	protected function getSongFromArtistTitle( $titleText ) {
+		$titleTextExploded = explode( ':', $titleText );
+
+		if( count( $titleTextExploded ) > 1 ) {
+			return array_pop( $titleTextExploded );
+		}
+
+		return null;
 	}
 
 	/**
@@ -41,24 +79,9 @@ class SongScraper extends BaseScraper {
 	 */
 	protected function getLyrics( $article ) {
 		if ( preg_match('#<lyrics>(.*?)<\/lyrics>#s', $article->getContent(), $matches ) ) {
-			return $this->removeWikiTextFromLyrics( $matches[1] );
+			return LyricsUtils::removeWikitextFromLyrics( $matches[1] );
 		}
 		return '';
-	}
-
-	/**
-	 * Remove wikitext from the lyrics tag
-	 *
-	 * Borrowed from extensions/3rdparty/LyricWiki/server.php
-	 *
-	 * @param $lyrics
-	 * @return mixed
-	 */
-	function removeWikiTextFromLyrics( $lyrics ) {
-		global $wgParser;
-
-		$lyrics = preg_replace( '/\{\{(.*?)\}\}/', '$1', $lyrics );
-		return trim( $wgParser->stripSectionName( $lyrics ) );
 	}
 
 	/**

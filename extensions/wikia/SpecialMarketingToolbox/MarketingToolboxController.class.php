@@ -169,7 +169,8 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				// send request to add popular/featured videos
 				if ( $module->isVideoModule() ) {
-					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleValues  );
+					$wikis[] = $this->getHubWikiForVideo();
+					$response = WikiaHubsServicesHelper::addVideoToHubsV2Wikis( $module, $selectedModuleValues, $wikis );
 				}
 
 				$nextUrl = $this->getNextModuleUrl();
@@ -437,5 +438,15 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 			'sectionId' => $this->sectionId,
 			'verticalId' => $this->verticalId
 		];
+	}
+
+	private function getHubWikiForVideo() {
+		$wikiaCorporateModel = new WikiaCorporateModel();
+		$wikiId = $wikiaCorporateModel->getCorporateWikiIdByLang( $this->langCode );
+		$hubsV2Wikis = WikiaHubsServicesHelper::getHubsV2Wikis();
+		if ( isset( $hubsV2Wikis[ $wikiId ] ) ) {
+			return $hubsV2Wikis[ $wikiId ];
+		}
+		return false;
 	}
 }

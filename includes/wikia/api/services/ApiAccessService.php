@@ -2,9 +2,11 @@
 
 class ApiAccessService {
 
-	const URL_TEST = 128;
 	const ENV_DEVELOPMENT = 1;
 	const ENV_SANDBOX = 2;
+	const WIKIA_CORPORATE = 32;
+	const WIKIA_NON_CORPORATE = 64;
+	const URL_TEST = 128;	
 
 	/**
 	 * @var WikiaRequest
@@ -29,7 +31,11 @@ class ApiAccessService {
 		if ( is_array( $wgApiAccess ) && isset( $wgApiAccess[ $controller ] ) ) {
 			$actions = $wgApiAccess[ $controller ];
 			if ( is_array( $actions ) ) {
-				return isset( $actions[ $action ] ) ? $actions[ $action ] : 0;
+				if ( isset( $actions[ $action ] ) ) {
+					return $actions[ $action ];
+				} else if ( isset ( $actions[ '*' ] ) ) {
+					return $actions[ '*' ];
+				} 
 			} else {
 				return $actions;
 			}
@@ -60,20 +66,23 @@ class ApiAccessService {
 	 */
 	public function canUse( $controller, $action ) {
 		$access = $this->getApiAccess($controller, $action );
+		if ( ($access & self::WIKIA_NON_CORPORATE) && $this->isCorporateWiki() ) {
+			return false;
+		}
+		if ( ($access & self::WIKIA_CORPORATE) && !($this->isCorporateWiki()) ) {
+			return false;
+		}
 		$isTest = $this->isTestLocation();
-		$prodVal = $this->getEnvValue();
+		//if access needs TEST in url, and it's using standard url deny access
+		if ( ($access & self::URL_TEST) && !$isTest ) {
+			return false;
+		}
+		$access = $access & ~(self::URL_TEST | self::WIKIA_CORPORATE | self::WIKIA_NON_CORPORATE );
 		//no access restriction found
 		if ( !$access ) {
 			return true;
 		}
-		//if access needs TEST in url, and we are not on test
-		if ( $access & self::URL_TEST ) {
-			if ( !$isTest ) {
-				return false;
-			} elseif ( $access === self::URL_TEST ) {
-				return true;
-			}
-		}
+		$prodVal = $this->getEnvValue();
 		return (bool)( $access & $prodVal );
 	}
 
@@ -96,7 +105,11 @@ class ApiAccessService {
 		if ( $result === null ) {
 			$result = ( stripos( $this->request->getScriptUrl(), '/api/test' ) !== false );
 		}
-
 		return $result;
 	}
+	protected function isCorporateWiki() {
+		global $wgEnableWikiaHomePageExt;
+		return !empty($wgEnableWikiaHomePageExt);
+	}
+	
 }

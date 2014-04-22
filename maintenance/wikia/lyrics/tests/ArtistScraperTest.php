@@ -243,7 +243,7 @@ WIKITEXT
 				'text' => '',
 				'expected' => [
 					'title' => false,
-					'album' => ''
+					'Album' => ''
 				],
 			],
 			[
@@ -251,7 +251,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Serpent Saints The Ten Amendments (2007)|Serpent Saints - The Ten Amendments (2007)]]==',
 				'expected' => [
 					'title' => 'Entombed:Serpent Saints The Ten Amendments (2007)',
-					'album' => 'Serpent Saints - The Ten Amendments',
+					'Album' => 'Serpent Saints - The Ten Amendments',
 					'year' => '2007',
 				],
 			],
@@ -260,7 +260,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Serpent Saints The Ten Amendments|Serpent Saints - The Ten Amendments]]==',
 				'expected' => [
 					'title' => 'Entombed:Serpent Saints The Ten Amendments',
-					'album' => 'Serpent Saints - The Ten Amendments',
+					'Album' => 'Serpent Saints - The Ten Amendments',
 					'year' => '',
 				],
 			],
@@ -269,7 +269,7 @@ WIKITEXT
 				'text' => '==[[Entombed:Macbreður Hákarlsson (2014)|Macbreður Hákarlsson - The Ten Hákarlsson (2014)]]==',
 				'expected' => [
 					'title' => 'Entombed:Macbreður Hákarlsson (2014)',
-					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'Album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
 					'year' => '2014',
 				],
 			],
@@ -277,8 +277,8 @@ WIKITEXT
 				'message' => 'Valid data with UTF-8 characters but the format changed a little bit with whitespaces',
 				'text' => '==[[ Entombed : Macbreður Hákarlsson (2014) | Macbreður Hákarlsson - The Ten Hákarlsson (2014) ]]==',
 				'expected' => [
-					'title' => ' Entombed : Macbreður Hákarlsson (2014) ',
-					'album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
+					'title' => 'Entombed : Macbreður Hákarlsson (2014)',
+					'Album' => 'Macbreður Hákarlsson - The Ten Hákarlsson',
 					'year' => '2014',
 				],
 			],
@@ -315,6 +315,84 @@ WIKITEXT
 				'text' => '{{Album Art|Test|Goddess of Tears}}',
 				'artistName' => 'Silent Cry',
 			],
+		];
+	}
+
+	public function testGetAlbumSongsWithEmptySection() {
+		$artistScraperStub = $this->getMock( 'ArtistScraper', [ 'getSongData' ] );
+		$artistScraperStub->expects( $this->exactly(0) )
+			->method( 'getSongData' );
+		$this->assertEquals( [], $artistScraperStub->getAlbumSongs( '' ), 'Empty section' );
+	}
+
+	/**
+	 * @dataProvider getAlbumSongsDataProvider
+	 */
+	public function testGetAlbumSongs( $message, $expected, $section ) {
+		$artistScraperMock = $this->getMock( 'ArtistScraper', [ 'getSongData' ] );
+		$artistScraperMock->expects( $this->any() )
+			->method( 'getSongData' )
+			->will( $this->returnValue( 'song data' ) );
+		$this->assertEquals( $expected, $artistScraperMock->getAlbumSongs( $section ), $message );
+	}
+
+	public function getAlbumSongsDataProvider() {
+		return [
+			[
+				'Section with an album and songs in ordered list - a whitespace between hash and song link',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n# '''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n# '''[[NAndy:ROCK|#ROCK]]'''\n# '''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in ordered list - no whitespace between hash and song link',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n#'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n# '''[[NAndy:ROCK|#ROCK]]'''\n#'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in unordered list',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n* '''[[NAndy:Test 1|Test 1]]'''\n*'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n* '''[[NAndy:Test 2|Test 2]]'''\n* '''[[NAndy:ROCK|#ROCK]]'''\n*'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in mixed lists',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n# '''[[NAndy:Test 1|Test 1]]'''\n*'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n# '''[[NAndy:Test 2|Test 2]]'''\n* '''[[NAndy:ROCK|#ROCK]]'''\n#'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			],
+			[
+				'Section with an album and songs in mixed lists and elements which aren\'t songs',
+				[
+					'song data',
+					'song data',
+					'song data',
+					'song data',
+					'song data'
+				],
+				"\n\n==[[NAndy:Test (2014)|Test (2014)]]==\n\n* '''Disc 1'''\n\n# '''[[NAndy:Test 1|Test 1]]'''\n*'''[[NAndy:Test 1/ru|Test 1/ru]]'''\n* '''Disc 2'''\n\n# '''[[NAndy:Test 2|Test 2]]'''\n* '''[[NAndy:ROCK|#ROCK]]'''\n#'''[[NAndy:Test 3|Test 3]]'''\n\n\n\n[[Category:Artist]]\n[[Category:NAndy Tests]]",
+			]
 		];
 	}
 
