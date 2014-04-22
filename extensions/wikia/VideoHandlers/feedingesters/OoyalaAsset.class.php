@@ -83,7 +83,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $sourceId
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
-	 * @param integer $limit
+	 * @param int $max
 	 * @return array $assets
 	 */
 	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
