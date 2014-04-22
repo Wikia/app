@@ -16,7 +16,7 @@
 
 	.map-status {
 		@include background-opacity(#fff, 40);
-		padding: 0.6em;
+		padding: 0.6rem;
 		position: absolute;
 		right: 0;
 	}
@@ -24,15 +24,15 @@
 	h3, p {
 		border: 0;
 		color: $color-text-light;
-		left: 30px;
+		left: 2rem;
 		position: absolute;
 	}
 
 	h3 {
-	  bottom: 2.2em;
+	  bottom: 2.8rem;
 	}
 
 	p {
-	  bottom: 1em;
+	  bottom: 1rem;
 	}
 }
