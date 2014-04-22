@@ -82,7 +82,7 @@ abstract class BaseTask {
 	 * @return array black list of method names to hide on Special:Tasks
 	 */
 	public function getAdminNonExecuteables() {
-		return [];
+		return ['__construct'];
 	}
 
 	public function createdBy($createdBy=null) {
@@ -150,7 +150,8 @@ abstract class BaseTask {
 			}
 
 			$property->setAccessible(true);
-			$result['context'][$property->name] = $property->getValue($this);
+			$value = $property->getValue($this);
+			$result['context'][$property->name] = is_object($value) ? serialize($value) : $value;
 		}
 
 		return $result;
@@ -169,6 +170,9 @@ abstract class BaseTask {
 
 		foreach ($properties as $name => $value) {
 			if ($mirror->hasProperty($name)) {
+				$deserialized = @unserialize($value);
+				$value = $deserialized === false ? $value : $deserialized;
+
 				$property = $mirror->getProperty($name);
 				$property->setAccessible(true);
 				$property->setValue($this, $value);
