@@ -50,7 +50,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 						);
 
 						if ( $isVideo ) {
-							$videoSizeClass = WikiaFileHelper::getThumbnailSize( $forceWidth );
+							$videoSizeClass = ThumbnailHelper::getThumbnailSize( $forceWidth );
 							$elementClass .= ' video video-thumbnail ' . $videoSizeClass;
 						}
 					}

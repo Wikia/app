@@ -114,13 +114,17 @@ class ThumbnailController extends WikiaController {
 			}
 		}
 
+		// get class for img tag
+		$imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
+
 		// update src for img tag
 		if ( !empty( $options['src'] ) ) {
 			$imgSrc = $options['src'];
 		}
 
 		// get alt for img tag
-		$imgAttribs['alt'] = empty( $options['alt'] ) ? '' : $options['alt'];
+		$imgAttribs['alt'] = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+		$imgAttribs['alt'] = htmlspecialchars( $imgAttribs['alt'] );
 
 		// set valign for img tag
 		$imgAttribs['style'] = '';
@@ -169,11 +173,6 @@ class ThumbnailController extends WikiaController {
 			}
 		}
 
-		// data-src attribute in case of lazy loading
-		if ( !empty( $options['usePreloading'] ) ) {
-			$this->dataSrc = $imgSrc;
-		}
-
 		// check fluid
 		if ( empty( $options[ 'fluid' ] ) ) {
 			$this->imgWidth = $width;
@@ -185,29 +184,45 @@ class ThumbnailController extends WikiaController {
 		// set link attributes
 		$this->linkHref = $linkHref;
 		$this->linkClasses = array_unique( $linkClasses );
-		$this->linkAttrs = $this->getAttribs( $linkAttribs );
+		$this->linkAttrs = ThumbnailHelper::getAttribs( $linkAttribs );
 
 		if ( !empty( $options['forceSize'] ) ) {
 			$this->size = $options['forceSize'];
 		} else {
-			$this->size = WikiaFileHelper::getThumbnailSize( $width );
+			$this->size = ThumbnailHelper::getThumbnailSize( $width );
 		}
 
 		// set image attributes
 		$this->imgSrc = $imgSrc;
 		$this->videoKey = htmlspecialchars( $title->getDBKey() );
 		$this->videoName = htmlspecialchars( $title->getText() );
-		$this->imgClass = empty( $options['imgClass'] ) ? '' : $options['imgClass'];
-		$this->imgAttrs = $this->getAttribs( $imgAttribs );
+		$this->imgClass = $imgClass;
+		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
+
+		// data-src attribute in case of lazy loading
+		$this->noscript = '';
+		if ( !empty( $options['usePreloading'] ) ) {
+			$this->dataSrc = $imgSrc;
+		} else if ( !empty( $this->wg->EnableAdsLazyLoad ) && empty( $options['noLazyLoad'] ) ) {
+			$this->dataSrc = '';
+			$this->noscript = $this->app->renderView( 'ThumbnailController', 'imgThumbnail', $this->response->getData() );
+			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
+		}
 
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
-		$this->durationAttrs = $this->getAttribs( $durationAttribs );
+		$this->durationAttrs = ThumbnailHelper::getAttribs( $durationAttribs );
 
 		// set meta
 		$this->metaAttrs = $metaAttribs;
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function imgThumbnail() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/imgThumbnail.mustache' );
+		$this->response->setData( $this->request->getParams() );
 	}
 
 	/**
@@ -219,7 +234,7 @@ class ThumbnailController extends WikiaController {
 	 * Article figure tags with thumbnails inside
 	 */
 	public function articleThumbnail() {
-		global $wgEnableOasisPictureAttribution;
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/articleThumbnail.mustache' );
@@ -236,25 +251,19 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
-		if (WikiaFileHelper::isFileTypeVideo( $file ) ) {
-			$title = $file->getTitle()->getText();
-		}
-
 		$addedBy = '';
-		$attributeTo = $file->getUser();
-		$showPictureAttribution = (
-			F::app()->checkSkin( 'oasis' ) &&
-			!empty( $wgEnableOasisPictureAttribution ) &&
-			// Remove picture attribution for thumbnails less than 100px
-			$width > 99
-		);
+		if ( $file instanceof File ) {
+			$isVideo = WikiaFileHelper::isVideoFile( $file );
+			if ( $isVideo ) {
+				$title = $file->getTitle()->getText();
+			}
 
-		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
-			// get link to user page
-			$link = AvatarService::renderLink( $attributeTo );
-
-			// TODO: change this to "By $user $time days ago" VID-1559
-			$addedBy = wfMessage( 'oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text();
+			// For oasis skin only. Remove picture attribution for thumbnails less than 100px
+			if ( $this->app->checkSkin( 'oasis' )
+				&& !empty( $this->wg->EnableOasisPictureAttribution )
+				&& $width > 99 ) {
+				$addedBy = ThumbnailHelper::getByUserMsg( $file, $isVideo );
+			}
 		}
 
 		$this->thumbnail = $thumbnail;
@@ -265,26 +274,8 @@ class ThumbnailController extends WikiaController {
 		$this->caption = $caption;
 		$this->addedBy = $addedBy;
 		$this->width = $width;
+
+		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Get attributes for mustache template
-	 * Don't use this for values that need to be escaped.
-	 * Wrap attributes in three curly braces so quote markes don't get escaped.
-	 * Ex: {{# attrs }}{{{ . }}} {{/ attrs }}
-	 * @param array $attrs [ array( key => value ) ]
-	 * @return array [ array( 'key="value"' ) ]
-	 */
-	protected function getAttribs( $attrs ) {
-		$attribs = [];
-		foreach ( $attrs as $key => $value ) {
-			$str = $key;
-			if ( !empty( $value ) ) {
-				$str .= "=" . '"' . $value . '"';
-			}
-			$attribs[] = $str;
-		}
-
-		return $attribs;
-	}
 }
