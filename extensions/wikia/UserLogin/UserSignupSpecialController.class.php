@@ -87,6 +87,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->createAccountButtonLabel = wfMessage('usersignup-createaccount-byemail')->escaped();
 		}
 
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->wg->Out->setPageTitle('Create Account');
+			$this->overrideTemplate( 'WikiaMobileIndex' );
+		}
+
 		// process signup
 		$redirected = $this->request->getVal('redirected', '');
 		if ($this->wg->Request->wasPosted() && empty($redirected)) {
