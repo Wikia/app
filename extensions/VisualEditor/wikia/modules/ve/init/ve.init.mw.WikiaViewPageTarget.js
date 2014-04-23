@@ -29,28 +29,41 @@ OO.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 /* Static Properties */
 
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
-	{ 'include': [ 'undo', 'redo' ] },
+	// History
+	{ 'include': [ 'undo' ] },
+	// Format
 	{
 		'type': 'menu',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
 		'include': [ { 'group': 'format' } ],
 		'promote': [ 'paragraph' ],
 		'demote': [ 'preformatted', 'heading1' ]
 	},
-	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
-	{ 'include': [ 'number', 'bullet' ] },
-	{ 'include': [ 'wikiaMediaInsert' ] },
+	// Style
+	{ 'include': [ 'bold', 'italic', 'link' ] },
 	{
+		'type': 'list',
+		'icon': 'text-style',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		'include': [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+	},
+	// Insert
+	{
+		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		'indicator': 'down',
 		'include': '*',
-		'exclude': [ 'mediaInsert', 'code', 'wikiaSourceMode' ]
+		'promote': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ],
+		'exclude': [ 'redo', 'code', 'specialcharacter', 'gallery', 'mediaInsert', 'wikiaSourceMode' ]
 	}
 ];
 
 ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
-	{ 'include': [ 'help', 'notices' ] },
 	{
 		'type': 'list',
 		'icon': 'menu',
-		'include': [ 'meta', 'categories', 'languages', 'wikiaSourceMode' ]
+		'include': [ 'meta', 'categories', 'wikiaSourceMode', 'help', 'notices', 'commandHelp' ]
 	}
 ];
 
