@@ -466,7 +466,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/abtest.js',
+		'//resources/wikia/modules/abTest.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
