@@ -108,11 +108,18 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function sanitizeMapPlaceholderParams( $data ) {
 		$result = [];
-		$validParams = [ 'map-id', 'lat', 'long', 'zoom', 'width', 'height' ];
+		$validParams = [
+			'map-id' => 'id',
+			'lat' => 'lat',
+			'long' => 'long',
+			'zoom' => 'zoom',
+			'width' => 'width',
+			'height' => 'height',
+		];
 
-		foreach( $validParams as $param ) {
-			if ( isset( $data[$param] ) ) {
-				$result[$param] = $data[$param];
+		foreach( $validParams as $key => $mapTo ) {
+			if ( isset( $data[$key] ) ) {
+				$result[$mapTo] = $data[$key];
 			}
 		}
 
@@ -127,10 +134,35 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	private function validateParseTagParams( Array $params ) {
 		$error = '';
-		$mapId = isset( $params['map-id'] ) ? intval( $params['map-id'] ) : 0;
 
+		$mapId = isset( $params['id'] ) ? intval( $params['id'] ) : 0;
 		if( $mapId <= 0 ) {
 			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped();
+		}
+
+		$lat = isset( $params['lat'] ) ? $params['lat'] : null;
+		if( !is_null( $lat ) && !is_numeric( $lat ) ) {
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-latitude' )->escaped();
+		}
+
+		$long = isset( $params['long'] ) ? $params['long'] : null;
+		if( !is_null( $long ) && !is_numeric( $long ) ) {
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-longitude' )->escaped();
+		}
+
+		$zoom = isset( $params['zoom'] ) ? intval( $params['zoom'] ) : null;
+		if( !is_null( $zoom ) && $zoom < 0 ) {
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-zoom' )->escaped();
+		}
+
+		$width = isset( $params['width'] ) ? intval( $params['width'] ) : null;
+		if( !is_null( $width ) && $width <= 0 ) {
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-width' )->escaped();
+		}
+
+		$height = isset( $params['height'] ) ? intval( $params['height'] ) : null;
+		if( !is_null( $height ) && $height <= 0 ) {
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-height' )->escaped();
 		}
 
 		return $error;

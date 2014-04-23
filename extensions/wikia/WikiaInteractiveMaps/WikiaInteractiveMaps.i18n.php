@@ -7,7 +7,12 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
 	'wikia-interactive-maps-no-maps' => 'No maps found. Create new map now.',
 
-	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => "Wikia Interactive Maps error occurred: invalid map id. Please make sure you map-id parameter is set in your tag and it's a number.",
+	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => "Wikia Interactive Maps error occurred: invalid map id. Please make sure your map-id parameter is set in your tag and it's a number.",
+	'wikia-interactive-maps-parser-tag-error-invalid-latitude' => "Wikia Interactive Maps error occurred: invalid lat. Please make sure your latitude parameter is a number or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-longitude' => "Wikia Interactive Maps error occurred: invalid long. Please make sure your longitude parameter is a number or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => "Wikia Interactive Maps error occurred: invalid zoom. Please make sure your zoom parameter is an integer number higher or equal 0 or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-width' => "Wikia Interactive Maps error occurred: invalid width. Please make sure your width parameter is an integer number higher than 0 or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Wikia Interactive Maps error occurred: invalid height. Please make sure your height parameter is an integer number higher than 0 or remove it to set it to default value.",
 ];
 
 $messages[ 'qqq' ] = [
@@ -16,4 +21,9 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-no-maps' => 'Shown when there are no maps created for this wiki',
 
 	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => 'Interactive maps error after try of parsing wikitext tag; the map-id is not passed or is not a valid number',
+	'wikia-interactive-maps-parser-tag-error-invalid-latitude' => 'Interactive maps error after try of parsing wikitext tag; an invalid latitude value has been passed',
+	'wikia-interactive-maps-parser-tag-error-invalid-longitude' => 'Interactive maps error after try of parsing wikitext tag; an invalid longitude has been passed',
+	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => 'Interactive maps error after try of parsing wikitext tag; an invalid zoom has been passed',
+	'wikia-interactive-maps-parser-tag-error-invalid-width' => 'Interactive maps error after try of parsing wikitext tag; an invalid width has been passed',
+	'wikia-interactive-maps-parser-tag-error-invalid-height' => 'Interactive maps error after try of parsing wikitext tag; an invalid height has been passed',
 ];
