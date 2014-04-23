@@ -3,6 +3,7 @@
 use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Tasks\AsyncTaskList;
+use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 
 class ParsoidCacheUpdateTask extends BaseTask {
 	/** @var \Title */
@@ -35,7 +36,9 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
 			$task = new ParsoidCacheUpdateTask( $this->title->mArticleID, $table );
-			$taskLists[ ] = ( new AsyncTaskList() )->add( $task->call( 'onDependencyChange', $table, $start, $end ) );
+			$taskLists[ ] = ( new AsyncTaskList() )
+				->useQueue(ParsoidPurgePriorityQueue::NAME)
+				->add( $task->call( 'onDependencyChange', $table, $start, $end ) );
 		}
 
 		$result = [];
