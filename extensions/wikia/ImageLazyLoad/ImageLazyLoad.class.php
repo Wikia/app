@@ -136,7 +136,6 @@ class ImageLazyLoad  {
 	 * @param string $imgSrc
 	 * @param string $imgClass
 	 * @param array $imgAttribs
-	 * @return boolean
 	 */
 	public static function setLazyLoadingAttribs( &$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs ) {
 		$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
