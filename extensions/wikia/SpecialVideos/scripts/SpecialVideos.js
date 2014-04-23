@@ -9,9 +9,19 @@ $(function () {
 
 	var SpecialVideos = {
 		init: function () {
+			this.$wrapper = $('.special-videos-grid');
+			this.initEllipses();
 			this.initDropdown();
 			this.initAddVideo();
 			this.initRemoveVideo();
+		},
+		initEllipses: function() {
+			var self = this;
+			$(window)
+				.on('resize.specialvideos', function () {
+					self.$wrapper.find('.title').ellipses();
+				})
+				.trigger('resize.specialvideos');
 		},
 		/**
 		 * Initializes the wikia style guide dropdown which allows
@@ -81,7 +91,7 @@ $(function () {
 		 * Only used in Oasis.
 		 */
 		initRemoveVideo: function () {
-			$('.special-videos-grid').on('click', '.remove', function (e) {
+			this.$wrapper.on('click', '.remove', function (e) {
 				var videoElement = $(e.target).parents('.video-element'),
 					videoName = videoElement.find('.video > img').attr('data-video-name');
 				if (videoName) {

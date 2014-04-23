@@ -104,6 +104,8 @@ $placeholder-bg-color: darken($color-page, 10%);
 		color: $color-text;
 		font-size: 20px;
 		line-height: 38px;
+		overflow: visible;
+		white-space: normal;
 	}
 
 	.add-video-placeholder {
