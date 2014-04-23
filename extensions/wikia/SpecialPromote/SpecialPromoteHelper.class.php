@@ -497,7 +497,8 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function triggerReindexing() {
-		//FIXME: ...
+		// FIXME: currently reindexing of only SpecialPromote data is impossible, some page must be indexed with it
+		// so MainPage took the bullet, if in future search reindexing would be more selective, attempt to reindex only SpecialPromote data
 		$article = new Article(Title::newMainPage());
 		ScribeEventProducerController::notifyPageHasChanged($article->getPage());
 	}
