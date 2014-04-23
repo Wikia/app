@@ -27,7 +27,20 @@ require([
 	var module = 'AdEngine2.run',
 		params,
 		param,
-		value;
+		value,
+		startQueue = function() {
+			log('work on window.adslots2 according to AdConfig2', 1, module);
+			tracker.track({
+				eventName: 'liftium.init',
+				ga_category: 'init2/init',
+				ga_action: 'init',
+				ga_label: 'adengine2',
+				trackingMethod: 'ad'
+			});
+			window.adslots2 = window.adslots2 || [];
+			adEngine.run(adConfig, window.adslots2, 'queue.early');
+		};
+
 
 	// Don't show ads when Sony requests the page
 	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
@@ -35,18 +48,11 @@ require([
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
-	window.wgAfterContentAndJS.push(function () {
-		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2, 'queue.early');
-	});
+	if (window.wgAdsInHeadGroup === 1) {
+		setTimeout(startQueue, 0);
+	} else {
+		window.wgAfterContentAndJS.push(startQueue);
+	}
 
 	window.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -67,7 +73,9 @@ require([
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		evolveSlotConfig.hop(slotname);
+		require(['ext.wikia.adEngine.provider.evolve'], function(adProviderEvolve) {
+			adProviderEvolve.hop(slotname);
+		});
 	};
 
 	if (window.wgEnableRHonDesktop) {
