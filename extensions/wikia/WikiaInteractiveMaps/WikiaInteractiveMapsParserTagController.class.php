@@ -28,14 +28,15 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return String
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
+		$errorMessage = '';
 		$params = $this->sanitizeMapPlaceholderParams( $args );
-		$error = $this->validateParseTagParams( $params );
+		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
-		if( !empty($error) ) {
+		if( !$isValid ) {
 			return $this->sendRequest(
 				'WikiaInteractiveMapsParserTagController',
 				'parserTagError',
-				[ 'errorMessage' => $error ]
+				[ 'errorMessage' => $errorMessage ]
 			);
 		} else {
 			return $this->sendRequest(
@@ -126,42 +127,50 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @desc Validates data provided in parser tag arguments, returns empty string if there is no error
 	 *
 	 * @param Array $params an array with parser tag arguments
+	 * @param String $errorMessage a variable where the error message will be assigned to
+	 *
 	 * @return String
 	 */
-	private function validateParseTagParams( Array $params ) {
-		$error = '';
+	public function validateParseTagParams( Array $params, &$errorMessage ) {
+		$isValid = true;
 
 		$mapId = isset( $params['id'] ) ? intval( $params['id'] ) : 0;
 		if( $mapId <= 0 ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped();
+			$isValid = false;
 		}
 
 		$lat = isset( $params['lat'] ) ? $params['lat'] : null;
 		if( !is_null( $lat ) && !is_numeric( $lat ) ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-latitude' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-latitude' )->escaped();
+			$isValid = false;
 		}
 
 		$long = isset( $params['long'] ) ? $params['long'] : null;
 		if( !is_null( $long ) && !is_numeric( $long ) ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-longitude' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-longitude' )->escaped();
+			$isValid = false;
 		}
 
 		$zoom = isset( $params['zoom'] ) ? intval( $params['zoom'] ) : null;
 		if( !is_null( $zoom ) && $zoom < 0 ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-zoom' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-zoom' )->escaped();
+			$isValid = false;
 		}
 
 		$width = isset( $params['width'] ) ? intval( $params['width'] ) : null;
 		if( !is_null( $width ) && $width <= 0 ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-width' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-width' )->escaped();
+			$isValid = false;
 		}
 
 		$height = isset( $params['height'] ) ? intval( $params['height'] ) : null;
 		if( !is_null( $height ) && $height <= 0 ) {
-			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-height' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-height' )->escaped();
+			$isValid = false;
 		}
 
-		return $error;
+		return $isValid;
 	}
 
 }
