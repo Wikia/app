@@ -15,6 +15,10 @@ use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
 use Wikia\Logger\WikiaLogger;
+use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
+use Wikia\Tasks\Queues\ParsoidPurgeQueue;
+use Wikia\Tasks\Queues\PriorityQueue;
+use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncTaskList {
@@ -51,8 +55,32 @@ class AsyncTaskList {
 	 * @return $this
 	 */
 	public function prioritize() {
-		$this->queue = new PriorityQueue();
+		return $this->useQueue(PriorityQueue::NAME);
+	}
 
+	/**
+	 * tell this task list to use a specific queue
+	 *
+	 * @param string $queue which queue to add this task list to
+	 * @return $this
+	 */
+	public function useQueue($queue) {
+		switch ($queue) {
+			case PriorityQueue::NAME:
+				$queue = new PriorityQueue();
+				break;
+			case ParsoidPurgeQueue::NAME:
+				$queue = new ParsoidPurgeQueue();
+				break;
+			case ParsoidPurgePriorityQueue::NAME:
+				$queue = new ParsoidPurgePriorityQueue();
+				break;
+			default:
+				$queue = new Queue();
+				break;
+		}
+
+		$this->queue = $queue;
 		return $this;
 	}
 

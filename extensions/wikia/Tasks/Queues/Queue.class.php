@@ -7,10 +7,12 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
-namespace Wikia\Tasks;
+namespace Wikia\Tasks\Queues;
 
 
 class Queue {
+	const NAME = 'Queue';
+
 	protected $name;
 	protected $routingKey;
 

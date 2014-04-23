@@ -10,6 +10,7 @@
 namespace Wikia\Tasks\Tasks;
 
 use Wikia\Tasks\AsyncTaskList;
+use Wikia\Tasks\PriorityQueue;
 
 abstract class BaseTask {
 	/** @var array calls this task will make */
@@ -17,6 +18,15 @@ abstract class BaseTask {
 
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
+
+	/** @var string wrapper for AsyncTaskList->queue() */
+	private $queueName = null;
+
+	/** @var int wrapper for AsyncTaskList->wikiId() */
+	private $wikiId = null;
+
+	/** @var boolean wrapper for AsyncTaskList->force() */
+	private $force = false;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
@@ -110,27 +120,24 @@ abstract class BaseTask {
 	/**
 	 * convenience method wrapping AsyncTaskList
 	 *
-	 * @param int|null $wikiId wiki to execute the task on
-	 * @param bool $priority whether or not this should go into the priority queue
-	 * @param bool $dupCheck whether or not to perform job de-duplication checks
 	 * @return string the task's id
 	 */
-	public function queue($wikiId=null, $priority=false, $dupCheck=true) {
+	public function queue() {
 		$taskList = new AsyncTaskList();
 
 		foreach ($this->calls as $i => $call) {
 			$taskList->add([$this, $i]);
 		}
 
-		if ($wikiId) {
-			$taskList->wikiId($wikiId);
+		if ($this->wikiId) {
+			$taskList->wikiId($this->wikiId);
 		}
 
-		if ($priority) {
-			$taskList->prioritize();
+		if ($this->queueName) {
+			$taskList->useQueue($this->queueName);
 		}
 
-		if ($dupCheck) {
+		if ($this->force) {
 			$taskList->force();
 		}
 
@@ -184,5 +191,24 @@ abstract class BaseTask {
 				$property->setValue($this, $value);
 			}
 		}
+	}
+
+	// following are wrappers that will eventually call the same functions in AsyncTaskList
+	public function wikiId($wikiId) {
+		$this->wikiId = $wikiId;
+		return $this;
+	}
+
+	public function prioritize() {
+		return $this->useQueue(PriorityQueue::NAME);
+	}
+
+	public function useQueue($queueName) {
+		$this->queueName = $queueName;
+		return $this;
+	}
+
+	public function force() {
+		$this->force = true;
 	}
 }
