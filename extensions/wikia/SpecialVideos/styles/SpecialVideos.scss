@@ -79,7 +79,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 
 	img {
-		// handle failed image loads
+		// handle failed image loads so they maintain somewhat reasonable proportions
 		max-height: 208px;
 	}
 
