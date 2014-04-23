@@ -4,10 +4,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const DEFAULT_ZOOM = 7;
 	const DEFAULT_WIDTH = 700;
 	const DEFAULT_HEIGHT = 200;
-
-	/**
-	 * @desc Name of the parser tag
-	 */
 	const PARSER_TAG_NAME = 'imap';
 
 	/**
