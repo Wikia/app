@@ -30,7 +30,7 @@ spl_autoload_register(function($class) {
 });
 
 class TaskExecutors {
-	static $modernExecutors = [
+	private static $modernExecutors = [
 		'parsoid',
 	];
 
