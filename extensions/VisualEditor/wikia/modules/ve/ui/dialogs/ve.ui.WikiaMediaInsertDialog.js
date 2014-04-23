@@ -77,16 +77,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.dropTarget = new ve.ui.WikiaDropTargetWidget( {
 		'$': this.$,
 		'$document': this.frame.$document,
-		'$overlay': this.surface.$globalOverlay
+		'$overlay': this.$overlay
 	} );
-	this.insertButton = new OO.ui.PushButtonWidget( {
+	this.insertButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
 	this.license = { 'promise': null, 'html': null };
-	this.pages = new OO.ui.PagedLayout( { '$': this.$, 'attachPagesPanel': true } );
+	this.pages = new OO.ui.BookletLayout( { '$': this.$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$': this.$,
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
@@ -145,8 +145,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Initialization
 	this.$mainPage.append( this.upload.$element, this.$policy, this.$policyReadMore );
 
-	this.pages.addPage( 'main', { '$content': this.$mainPage } );
-	this.pages.addPage( 'search', { '$content': this.search.$element } );
+	this.mainPage = new OO.ui.PageLayout( 'main', { '$content': this.$mainPage } );
+	this.searchPage = new OO.ui.PageLayout( 'search', { '$content': this.search.$element } );
+	this.pages.addPages( [ this.mainPage, this.searchPage ] );
 
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
@@ -159,7 +160,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
-	this.surface.$globalOverlay.append( this.mediaPreview.$element );
+	this.$overlay.append( this.mediaPreview.$element );
 };
 
 

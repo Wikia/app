@@ -64,7 +64,7 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',
-/*
+
 			// dm
 			've/dm/ve.dm.WikiaMediaCaptionNode.js',
 			've/dm/ve.dm.WikiaBlockMediaNode.js',
@@ -98,7 +98,6 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js'
-*/
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -142,7 +141,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-video-preview-not-available',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core'
+			'ext.visualEditor.core.desktop',
 		)
 	),
 );

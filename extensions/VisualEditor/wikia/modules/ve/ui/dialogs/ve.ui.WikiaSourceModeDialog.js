@@ -44,7 +44,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 		'$': this.$,
 		'multiline': true
 	});
-	this.applyButton = new OO.ui.PushButtonWidget( {
+	this.applyButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
 		'flags': ['primary']

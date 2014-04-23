@@ -33,7 +33,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	this.$uploadLabel = this.$( '<span>' )
 		.text( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-label' ) );
 
-	this.uploadButton = new OO.ui.PushButtonWidget( uploadButtonConfig );
+	this.uploadButton = new OO.ui.ButtonWidget( uploadButtonConfig );
 
 	this.$form = this.$( '<form>' );
 	this.$file = this.$( '<input>' ).attr( {
