@@ -43,7 +43,9 @@
 
 		<li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<?= $video['thumbnail'] ?>
-			<p class="title" title="<?= $video['title'] ?>"><?= $video['title'] ?></p>
+			<p class="title">
+				<a href="<?= $video['fileUrl'] ?>" title="<?= $video['title'] ?>"><?= $video['title'] ?></a>
+			</p>
 			<p class="by-views">
 				<?= $video['byUserMsg'] ?>
 				<span class="diamond">&diams;</span>
