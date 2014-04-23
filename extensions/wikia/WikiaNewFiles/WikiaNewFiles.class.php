@@ -9,7 +9,6 @@ class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
 		$this->mName  = 'WikiaNewFiles';
 		$this->setHeaders();
-		Wikia::addAssetsToOutput( '/skins/oasis/js/LatestPhotos.js' );
 
 		wfSpecialWikiaNewFiles( $par, $this );
 	}

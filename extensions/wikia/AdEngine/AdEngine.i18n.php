@@ -109,10 +109,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Metalhead64
+ * @author Perhelion
  */
 $messages['de'] = array(
 	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
-	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in einigen Sekunden auf die angeforderte Seite weiter.',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
 );
@@ -216,6 +217,16 @@ $messages['haw'] = array(
 	'adengine-exitstitial-redirecting' => 'E hāʻawi ana kāu polokalamu pūnaewele i ka ʻaoʻao āu  i noi ai ma kahi o kekahi mau kekona.',
 	'adengine-exitstitial-go-back' => 'Makemake e hoʻihoʻi?',
 	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
+);
+
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in weniche Sekunde uff die oongeforderte Seit weiter.',
+	'adengine-exitstitial-go-back' => 'Retuar gehn?',
+	'adengine-exitstitial-button' => 'Die Oonzeiche üwerspringe',
 );
 
 /** Hungarian (magyar)

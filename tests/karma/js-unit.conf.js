@@ -67,8 +67,8 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
+			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+			'extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
@@ -143,7 +143,13 @@ module.exports = function(config) {
 
 			// LyricFind PV tracking
 			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
-			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js'
+			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js',
+
+			// ImageLazyLoad
+			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
+			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
 		]
 	});
 };

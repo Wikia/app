@@ -451,6 +451,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			// Use the default thumb options from Featured Assets since that's the only type of
 			// asset this controller returns.
 			$thumbOptions = VideoPageToolAssetFeatured::$defaultThumbOptions;
+			$thumbOptions['noLightbox'] = false;
 			$helper = new VideoPageToolHelper();
 			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
 		}

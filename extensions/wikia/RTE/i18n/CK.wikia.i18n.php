@@ -981,7 +981,7 @@ $messages['de-formal'] = array(
  */
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
-	'rte-ck-errorPopupTitle' => 'Xırab',
+	'rte-ck-errorPopupTitle' => 'Xeta!',
 	'rte-ck-hoverPreview-comment-title' => 'Vatış',
 	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
@@ -989,7 +989,7 @@ $messages['diq'] = array(
 	'rte-ck-image-photo' => 'Fotraf',
 	'rte-ck-justify-center' => 'Miyan fi',
 	'rte-ck-link-add' => 'Gre deke',
-	'rte-ck-link-error-title' => 'Xırab',
+	'rte-ck-link-error-title' => 'Xeta',
 	'rte-ck-link-external-linkText' => 'Metnê gri',
 	'rte-ck-link-external-tab' => 'Gırêy teberi',
 	'rte-ck-link-external-url' => 'GRE',
@@ -2003,6 +2003,13 @@ $messages['ko'] = array(
 	'rte-ck-link-status-external' => '바깥 링크',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'rte-ck-modeSwitch-toWysiwyg' => 'Визуал редактор',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -2978,7 +2985,7 @@ $messages['ps'] = array(
 	'rte-ck-templateDropDown-label' => 'کينډۍ',
 	'rte-ck-templateDropDown-title' => 'يوه کينډۍ ټاکل',
 	'rte-ck-templateEditor-dialog-insert' => 'ورټومبل',
-	'rte-ck-templateEditor-dialog-magicWords' => 'کوډګريز وييونه',
+	'rte-ck-templateEditor-dialog-magicWords' => 'کوډگريز وييونه',
 	'rte-ck-templateEditor-editor-previewButton' => 'مخليدنه',
 	'rte-ck-templateEditor-editor-previewTitle' => 'مخليدنه',
 	'rte-ck-video-add' => 'يوه ويډيو ورگډول',

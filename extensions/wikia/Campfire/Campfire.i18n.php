@@ -198,6 +198,7 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'campfire-page-header' => '$1 vum $2',
+	'campfire-licensed-under' => 'Lizenséiert ënner $1',
 );
 
 /** Macedonian (македонски)

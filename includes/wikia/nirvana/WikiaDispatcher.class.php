@@ -171,6 +171,10 @@ class WikiaDispatcher {
 					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
 				}
 
+				if ( !$request->isInternal() ) {
+					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+				}
+
 				// Initialize the RequestContext object if it is not already set
 				// SpecialPageController context is already set by SpecialPageFactory::execute by the time it gets here
 				if ($controller->getContext() === null) {
@@ -257,6 +261,22 @@ class WikiaDispatcher {
 
 		wfProfileOut(__METHOD__);
 		return $response;
+	}
+
+	/**
+	 * @param WikiaApp $app
+	 * @param $controllerClassName
+	 * @param $method
+	 * @throws PermissionsException
+	 */
+	private function testIfUserHasPermissionsOrThrow(WikiaApp $app, $controllerClassName, $method) {
+		$nirvanaAccessRules = WikiaAccessRules::instance();
+		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor($controllerClassName, $method);
+		foreach ($permissions as $permission) {
+			if (!$app->wg->User->isAllowed($permission)) {
+				throw new PermissionsException($permission);
+			}
+		}
 	}
 }
 

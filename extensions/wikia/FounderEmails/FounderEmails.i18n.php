@@ -392,6 +392,8 @@ $messages['qqq'] = array(
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-body' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-body-HTML' => '{{doc-singularthey}}',
+	'founderemails-email-0-day-addpages-heading' => '{{Identical|Add page}}',
+	'founderemails-email-0-day-addpages-button' => '{{Identical|Add page}}',
 	'founderemails-email-0-day-addphotos-button' => '{{Identical|Add photo}}',
 	'founderemails-email-0-day-customizetheme-button' => '{{Identical|Customize}}',
 	'founderemails-email-views-digest-subject' => '"views" means site views/visits.',
@@ -1994,7 +1996,7 @@ Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
  */
 $messages['es'] = array(
 	'founderemails-desc' => 'Ayuda a informar a los fundadores sobre los cambios que ocurrieron en su wiki',
-	'tog-founderemailsenabled' => 'Mandadme por correo electrónico las actualizaciones que hacen otras personas (solamente fundadores)',
+	'tog-founderemailsenabled' => 'Enviarme por correo electrónico las actualizaciones que hacen otras personas (solamente fundadores)',
 	'founderemails-email-user-registered-subject' => 'Alguien nuevo se unió a $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Hola $USERNAME,
 
@@ -2140,7 +2142,7 @@ $PAGEURL
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ey $USERNAME,<br /><br />
 ¡Parece que alguien ha editado en tu wiki! ¿Por qué no <a href="$MYHOMEURL">echas un vistazo</a> para ver qué ha cambiado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => '¡Alguien registró una cuenta en tu wiki QA!',
+	'founderemails-answers-email-user-registered-subject' => '¡Alguien registró una cuenta en tu wiki de respuestas!',
 	'founderemails-answers-email-user-registered-body' => 'Ey $USERNAME,
 
 ¡Parece que $EDITORNAME se ha registrado en tu wiki! ¿Por qué no vas a su página de discusión $EDITORTALKPAGEURL para saludarle?
@@ -2149,7 +2151,7 @@ $PAGEURL
 	'founderemails-answers-email-user-registered-body-HTML' => 'Ey $USERNAME,<br /><br />
 ¡Parece que $EDITORNAME se ha registrado en tu wiki! ¿Por qué no vas a su <a href="$EDITORTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
-	'founderemails-answers-email-0-days-passed-subject' => '¡Bienvenido a Wikia QA!',
+	'founderemails-answers-email-0-days-passed-subject' => '¡Bienvenido a Wikia Respuestas!',
 	'founderemails-answers-email-0-days-passed-body' => '¡Felicitaciones por crear $WIKINAME, ahora eres parte de la comunidad de Wikia!
 
 -- El equipo de Wikia',
@@ -2215,7 +2217,7 @@ Dado que hay mucha actividad, quizás quieras cambiar tus preferencias de correo
 <div style="font-style: italic; font-size: 120%;">-- El Equipo de Wikia</div>',
 	'founderemails-email-lot-happening-greeting' => 'Hola $USERNAME,',
 	'founderemails-email-lot-happening-headline' => '¡Felicitaciones! ¡Hay muchas cosas ocurriendo hoy en $WIKINAME!',
-	'founderemails-email-lot-happening-content' => 'Si todavía no lo has hecho, puedes ir a Wiki Actividad y ver todo en gran trabajo que ha estado ocurriendo. Dado que hay mucha actividad, quizás quieras cambiar tus preferencias de correo electrónico a modo resumido. Con el modo resumido solamente recibirás un mensaje de correo electrónico con una lista de toda la actividad diaria de tu wiki.',
+	'founderemails-email-lot-happening-content' => 'Si todavía no lo has hecho, puedes ir a Wiki Actividad y ver todo el gran trabajo que ha estado ocurriendo. Dado que hay mucha actividad, quizás quieras cambiar tus preferencias de correo electrónico a modo resumido. Con el modo resumido solamente recibirás un mensaje de correo electrónico con una lista de toda la actividad diaria de tu wiki.',
 	'founderemails-email-lot-happening-signature' => '-- El Equipo de Wikia',
 	'founderemails-email-lot-happening-button' => 'Ver las actividades',
 	'founderemails-email-footer-line1' => 'Para ver las últimas noticias en Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>',
@@ -9165,6 +9167,7 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Liye
  * @author Qiyue2001
  * @author Sam Wang
  * @author Sora
@@ -9189,6 +9192,22 @@ Wikia团队',
 $EDITORNAME在你的维基上注册了！何不访问一下新成员的<a href="$EDITORTALKPAGEURL">对话页</a>去打个招呼呢？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
 	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
+	'founderemails-email-0-days-passed-body' => '$USERNAME，很高兴见到您：
+恭喜您成功创建 $WIKINAME, $WIKIURL。
+以下几个有用的小提示能帮助您开始：
+添加页面。Wiki帮您分享有关您独特主题的所有信息。
+添加照片。有视觉效果的页面总是更棒！在您的主页和页面上添加照片。
+自定义您的主题。自定义您的Wiki主题和文体，让它更鲜明。使用主题设计器为您的页面添加自定义色彩，让您的主题独一无二。
+我们不会冷落您。我们就在这里帮您一步步将 $WIKINAME做的更好。访问http://community.wikia.com的论坛，建议和帮助，或者将您的问题发送邮件给我们！
+
+享受建立wiki的过程！Wikia团队 
+
+-------------------------------------------
+查阅Wikia最近更新，请访问 http://community.wikia.com
+管理您收到的邮件，请前往http://messaging.wikia.com/wiki/Special:Preferences.
+点击链接退订所有来自Wikia的邮件 $UNSUBSCRIBEURL',
+	'founderemails-email-0-days-passed-body-HTML' => '成功创建<strong>$WIKINAME</strong>- 您已经是Wikia社区的一员了！<br><br>
+<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>', # Fuzzy
 	'founderemails-email-3-days-passed-subject' => '您的维基最近如何',
 	'founderemails-email-3-days-passed-body' => '您好$USERNAME：
 

@@ -7,6 +7,25 @@ class JsonSimplifierTest extends WikiaBaseTest {
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 		parent::setUp();
 	}
+	
+	public function testImages() {
+		// PLA-1362
+		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+
+		$text = 'A fake but valid image:'.
+			'<a href="http://example.com" class="image">'.
+			'<img src="http://example.com/image.png"></a>'.
+			'And a blank, invalid one:'.
+			'<a href="http://example.com" class="image">'.
+			'<img alt="Quote3" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///'.
+			'yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="20" height="22"></a>';
+		$jsonOutput = $htmlParser->parse( $text );	
+		$jsonSimple = $simplifier->simplify( $jsonOutput, "Images" );
+		$images = $jsonSimple['sections'][0]['images'];
+		$this->assertEquals( "http://example.com/image.png", $images[0]['src'] );
+		$this->assertEquals( 1, count($images), "Blank image has not been skipped" );		
+	}	
 
 
 	/**

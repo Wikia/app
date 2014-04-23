@@ -17,8 +17,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
-	const HOT_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageHotWikiSlots';
-	const NEW_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageNewWikiSlots';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -65,14 +63,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfHotWikiSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::HOT_WIKI_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfNewWikiSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::NEW_WIKI_SLOTS_VAR_NAME);
-	}
-
 	public function getNumberOfSlotsForType($wikiId, $slotTypeName) {
 		switch ($slotTypeName) {
 			case 'entertainment':
@@ -83,12 +73,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				break;
 			case 'lifestyle':
 				$slots = $this->getNumberOfLifestyleSlots($wikiId);
-				break;
-			case 'hot':
-				$slots = $this->getNumberOfHotWikiSlots($wikiId);
-				break;
-			case 'new':
-				$slots = $this->getNumberOfNewWikiSlots($wikiId);
 				break;
 			default:
 				$slots = 0;
@@ -306,6 +290,31 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get information about hubs to display on wikia homepage in hubs section
+	 *
+	 * @param $corporateId corporate wiki id
+	 * @return mixed
+	 */
+	public function getHubSlotsFromWF($corporateId) {
+		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+		return is_array( $hubSlots ) ? $hubSlots : [];
+	}
+
+	/**
+	 * Save data about hub slots displayed on wikia homepage in hubs section.
+	 * After save memcache is purged to get fresh data on wikia homepage.
+	 *
+	 * @param $hubSlotsValues data containing hub wiki id, description and links
+	 * @param $corporateId corporate wiki id
+	 * @param $lang language code
+	 */
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
+		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+
+		WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
+	}
+
+	/**
 	 * get total number of pages across Wikia
 	 * @return integer totalPages
 	 */
@@ -369,6 +378,19 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 
 		return $wikiStats;
+	}
+
+	/**
+	 * Get main vertical names
+	 *
+	 * @return array
+	 */
+	public function getWikiVerticals( $lang = 'en' ) {
+		return array(
+			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->inLanguage( $lang )->text(),
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->inLanguage( $lang )->text(),
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->inLanguage( $lang )->text()
+		);
 	}
 
 	/**
@@ -495,8 +517,6 @@ class WikiaHomePageHelper extends WikiaModel {
 			'headline' => '',
 			'description' => '',
 			'url' => '',
-			'new' => 0,
-			'hot' => 0,
 			'official' => 0,
 			'promoted' => 0,
 			'blocked' => 0,
@@ -517,8 +537,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['description'] = $wikiData['description'];
 
 				// wiki status
-				$wikiInfo['new'] = intval(CityVisualization::isNewWiki($wikiData['flags']));
-				$wikiInfo['hot'] = intval(CityVisualization::isHotWiki($wikiData['flags']));
 				$wikiInfo['official'] = intval(CityVisualization::isOfficialWiki($wikiData['flags']));
 				$wikiInfo['promoted'] = intval(CityVisualization::isPromotedWiki($wikiData['flags']));
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
@@ -963,6 +981,15 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function getStatsMemcacheKey() {
 		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
+
+		return $memKey;
+	}
+
+	/**
+	 * @return string
+	 */
+	static public function getHubSlotsMemcacheKey( $lang ) {
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'hub-slots', $lang, self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
 
 		return $memKey;
 	}

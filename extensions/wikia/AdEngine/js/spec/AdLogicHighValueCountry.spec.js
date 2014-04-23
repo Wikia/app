@@ -2,7 +2,7 @@ describe('AdLogicHighValueCountry', function(){
 
 	it('wgHighValueCountries present in window', function() {
 		var windowMock = {wgHighValueCountries: {'XX': 5, 'YY': 7, 'ZZ': 0, 'aa': 7}},
-			adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
+			adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry'](windowMock),
 			undef;
 
 		expect(adLogicHighValueCountry.isHighValueCountry('aa')).toBeFalsy('aa isHighValueCountry');
@@ -42,7 +42,7 @@ describe('AdLogicHighValueCountry', function(){
 
 	it('wgHighValueCountries not present in window', function() {
 		var windowMock = {},
-			adLogicHighValueCountry = AdLogicHighValueCountry(windowMock),
+			adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry'](windowMock),
 			undef;
 
 		expect(adLogicHighValueCountry.isHighValueCountry('CA')).toBeTruthy('CA isHighValueCountry');

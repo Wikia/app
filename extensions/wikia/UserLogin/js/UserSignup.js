@@ -26,7 +26,7 @@ var UserSignup = {
 		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
 			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
-			
+
 		// dom pre-cache
 		this.submitButton = this.wikiaForm.inputs['submit'];
 		if( window.wgUserLoginDisableCaptcha !== true ) {
@@ -35,6 +35,6 @@ var UserSignup = {
     }
 };
 
-$(function() {
+$( window ).load(function() {
 	UserSignup.init();
 });

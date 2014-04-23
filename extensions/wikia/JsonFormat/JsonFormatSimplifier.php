@@ -84,20 +84,21 @@ class JsonFormatSimplifier {
 
 	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
-			if ( $childNode->getType() == 'section' ) {
+			$type = $childNode->getType();
+			if ( $type == 'section' ) {
 				return;
-			} else if ( $childNode->getType() == 'image' ) {
+			} else if ( $type == 'image' && !$childNode->isBlank() ) {
 				/** @var \JsonFormatImageNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc()
 				];
-			} else if ( $childNode->getType() == 'imageFigure' ) {
+			} else if ( $type == 'imageFigure' ) {
 				/** @var \JsonFormatImageFigureNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc(),
 					"caption" => $childNode->getCaption()
 				];
-			} else if ( $childNode->getType() == 'paragraph' ) {
+			} else if ( $type == 'paragraph' ) {
 				$this->getParagraphs( $childNode, $paragraphs );
 			}
 		}
@@ -180,5 +181,54 @@ class JsonFormatSimplifier {
 		return [
 			"sections" => $returnSections
 		];
+	}
+
+	public function simplifyToText( \JsonFormatRootNode $rootNode ) {
+		$timer = Time::start([__CLASS__, __METHOD__]);
+		$result = [];
+		$listsSections = [];
+		$sections = [];
+		$this->findSections( $rootNode, $sections );
+
+		for ( $i = count($sections)-1; $i >= 0; $i-=1 ) {
+			$section = $sections[$i];
+			$sectionResult = [];
+			$content = [];
+			$containList = false;
+			$this->getParagraphs( $section, $content );
+			$this->clearEmptyParagraphs( $content );
+			foreach( $content as $node ) {
+				if( $node['type'] == 'paragraph' ) {
+					$sectionResult[] = $node['text'];
+				}
+				if( $node['type'] == 'list' ) {
+					$sectionResult[] = $this->getElements( $node ) . "\n";
+					$containList = true;
+				}
+			}
+			$value = implode('', $sectionResult);
+			if( $containList ) {
+				$listsSections[] = $value;
+			} else {
+				$result[] = $value;
+			}
+		}
+
+		$output = array_merge( array_reverse($result), array_reverse( $listsSections ) );
+		$res = implode( '', $output);
+		$timer->stop();
+		return $res;
+	}
+
+	protected function getElements( $node ) {
+		$result = [];
+		foreach( $node['elements'] as $element ) {
+			$text = [ $element['text'] ];
+			if( !empty($element['elements']) ) {
+				$text[] = '(' . $this->getElements( $element ) . ')';
+			}
+			$result[] = implode( ' ', $text );
+		}
+		return implode(', ', $result);
 	}
 }
