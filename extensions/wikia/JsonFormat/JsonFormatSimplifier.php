@@ -84,20 +84,21 @@ class JsonFormatSimplifier {
 
 	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
-			if ( $childNode->getType() == 'section' ) {
+			$type = $childNode->getType();
+			if ( $type == 'section' ) {
 				return;
-			} else if ( $childNode->getType() == 'image' ) {
+			} else if ( $type == 'image' && !$childNode->isBlank() ) {
 				/** @var \JsonFormatImageNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc()
 				];
-			} else if ( $childNode->getType() == 'imageFigure' ) {
+			} else if ( $type == 'imageFigure' ) {
 				/** @var \JsonFormatImageFigureNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc(),
 					"caption" => $childNode->getCaption()
 				];
-			} else if ( $childNode->getType() == 'paragraph' ) {
+			} else if ( $type == 'paragraph' ) {
 				$this->getParagraphs( $childNode, $paragraphs );
 			}
 		}
