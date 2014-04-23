@@ -23,10 +23,6 @@ OO.inheritClass( ve.dm.WikiaBlockMediaNode, ve.dm.MWBlockImageNode );
 
 /* Static Properties */
 
-ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaMediaCaption' ];
-
-ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaMediaCaption';
-
 ve.dm.WikiaBlockMediaNode.static.typeToRdfa = null;
 
 ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, converter ) {

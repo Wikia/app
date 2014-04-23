@@ -5,11 +5,15 @@
  */
 
 class ImageLazyLoad  {
-	static private $isWikiaMobile = null;
-	static private $enabled = null;
-	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 
-	static public function isEnabled() {
+	const START_LAZY_LOADED_IMAGE = 4;
+	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
+	const IMG_ONLOAD = "if(typeof ImgLzy==='object'){ImgLzy.load(this)}";
+
+	private static $isWikiaMobile = null;
+	private static $enabled = null;
+
+	public static function isEnabled() {
 		if ( is_null( self::$enabled ) ) {
 			$app = F::app();
 			self::$enabled = false;
@@ -26,29 +30,8 @@ class ImageLazyLoad  {
 		return self::$enabled;
 	}
 
-	static public function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
-		global $wgRTEParserEnabled, $wgParser;
-
-		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
-
-			// Don't lazy-load data elements
-			if ( startsWith( $attribs[ 'src' ], 'data:' ) ) {
-				return true;
-			}
-
-			if ( !empty( $wgParser ) ) {
-				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
-					$wgParser->lazyLoadedImagesCount = 0;
-				}
-
-				$wgParser->lazyLoadedImagesCount += 1;
-
-				// Skip first few images in article
-				if ( $wgParser->lazyLoadedImagesCount < 4 ) {
-					return true;
-				}
-			}
-
+	public static function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
+		if ( self::isValidLazyLoadedImage( $attribs[ 'src' ] ) ) {
 			$origImgAlt = Xml::element( 'img', $attribs, '', true );
 
 			// Remove empty alt attributes (messes up string replace later if not removed)
@@ -61,25 +44,23 @@ class ImageLazyLoad  {
 			$lazyImageAttribs = $attribs;
 			$lazyImageAttribs[ 'data-src' ] = $lazyImageAttribs[ 'src' ];
 			$lazyImageAttribs[ 'src' ] = wfBlankImgUrl();
-			$lazyImageAttribs[ 'class' ] = ( ( !empty( $lazyImageAttribs[ 'class' ] ) ) ? $lazyImageAttribs[ 'class' ] . ' ' : '' ) . self::LAZY_IMAGE_CLASSES;
+			$lazyImageAttribs[ 'class' ] = self::getImgClass( $lazyImageAttribs );
 			/* for AJAX requests - makes sure that they are handled properly */
 			/* ImgLzy.load is not executed for main content because ImgLzy object is initiated on DOM ready event and those images */
 			/* are base64 encoded so they are "loaded" with the content itself */
-			$lazyImageAttribs[ 'onload' ] = 'if(typeof ImgLzy=="object"){ImgLzy.load(this)}';
+			$lazyImageAttribs[ 'onload' ] = self::IMG_ONLOAD;
 
 			$count = 0;
 			$html = str_replace( $origImg, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html, $count );
-			if($count == 0) {
+			if ( $count == 0 ) {
 				$html = str_replace( $origImgAlt, Xml::element( 'img', $lazyImageAttribs ) . "<noscript>{$origImg}</noscript>", $html );
-			} else {
 			}
-
 		}
 
 		return true;
 	}
 
-	static public function onGalleryBeforeRenderImage( &$image ) {
+	public static function onGalleryBeforeRenderImage( &$image ) {
 		global $wgRTEParserEnabled, $wgParser;
 
 		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
@@ -110,14 +91,14 @@ class ImageLazyLoad  {
 
 	}
 
-	static function onParserClearState( &$parser ) {
+	public static function onParserClearState( &$parser ) {
 		if ( !empty( $parser->lazyLoadedImagesCount ) ) {
 			$parser->lazyLoadedImagesCount = 0;
 		}
 		return true;
 	}
 
-	static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
 		global $wgExtensionsPath;
 		if ( self::isEnabled() ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $wgExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
@@ -134,7 +115,7 @@ class ImageLazyLoad  {
 	 * @param array $vars JS variables
 	 * @return bool true
 	 */
-	static function onMakeGlobalVariablesScript( Array &$vars ) {
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		global $wgEnableWebPSupportStats, $wgEnableWebPThumbnails;
 
 		if ( self::isEnabled() ) {
@@ -148,4 +129,69 @@ class ImageLazyLoad  {
 		}
 		return true;
 	}
+
+	/**
+	 * Set attributes for lazy loading (for video thumbnail)
+	 * @param string $dataSrc
+	 * @param string $imgSrc
+	 * @param string $imgClass
+	 * @param array $imgAttribs
+	 * @return boolean
+	 */
+	public static function setLazyLoadingAttribs( &$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs ) {
+		if ( self::isValidLazyLoadedImage( $imgSrc ) ) {
+			$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
+			$dataSrc = $imgSrc;
+			$imgSrc = wfBlankImgUrl();
+			$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
+			$imgAttribs = array_merge( $imgAttribs, $attribs );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check whether or not the image is valid for lazy loading
+	 * @global boolean $wgRTEParserEnabled
+	 * @global type $wgParser
+	 * @param string $imgSrc
+	 * @return boolean
+	 */
+	public static function isValidLazyLoadedImage( $imgSrc ) {
+		global $wgRTEParserEnabled, $wgParser;
+
+		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
+			// Don't lazy-load data elements
+			if ( startsWith( $imgSrc, 'data:' ) ) {
+				return false;
+			}
+
+			if ( !empty( $wgParser ) ) {
+				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
+					$wgParser->lazyLoadedImagesCount = 0;
+				}
+
+				$wgParser->lazyLoadedImagesCount += 1;
+
+				// Skip first few images in article
+				if ( $wgParser->lazyLoadedImagesCount < self::START_LAZY_LOADED_IMAGE ) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get class attribute for img tag
+	 * @param array $attrbs
+	 * @return string
+	 */
+	protected static function getImgClass( $attrbs ) {
+		return ( empty( $attrbs['class'] ) ? '' : $attrbs['class'] . ' ' ) . self::LAZY_IMAGE_CLASSES;
+	}
+
 }

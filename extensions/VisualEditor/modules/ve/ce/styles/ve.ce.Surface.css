@@ -75,6 +75,6 @@
 	line-height: inherit;
 }
 
-.ve-ce-surface .thumbcaption .ve-ce-branchNode-slug {
+.ve-ce-surface figcaption .ve-ce-branchNode-slug {
 	display: none;
 }
