@@ -61,7 +61,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	margin-bottom: 18px;
 
 	// Override article p styles
-	p, p + p {
+	p, p + p, .posted-in {
 		font-size: 12px;
 		font-weight: normal;
 		line-height: 18px;
@@ -81,6 +81,19 @@ $placeholder-bg-color: darken($color-page, 10%);
 	img {
 		// handle failed image loads
 		max-height: 208px;
+	}
+
+	.by-views {
+		white-space: normal;
+	}
+
+	.views {
+		white-space: nowrap;
+	}
+
+	.diamond {
+		font-size: 7px;
+		vertical-align: top;
 	}
 
 	.video {
@@ -109,11 +122,35 @@ $placeholder-bg-color: darken($color-page, 10%);
 			opacity: .65;
 		}
 	}
+	// TODO: add ellipses/more js with VID-1601
 	.posted-in {
 		overflow: hidden;
-		padding-right: 5px;
-		text-overflow: ellipsis;
 		white-space: nowrap;
+		width: 100%;
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
+		}
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
+		a.ellipses {
+			float: right;
+			display: none;
+		}
+		> div {
+			display: inline-block;
+			&.processed {
+				float: left; // ie10 layout
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 	}
 	.remove {
 		background-color: #ddd;
