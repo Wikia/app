@@ -1371,7 +1371,7 @@ $wgDevESLog = false;
  */
 $wgApiAccess = [
 	'SearchApiController' => [
-		'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX,
+		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
 		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
 		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
 	],
