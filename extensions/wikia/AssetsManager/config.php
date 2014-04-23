@@ -1530,7 +1530,7 @@ $config['special_videos_css_mobile'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
-		'//skins/oasis/css/core/video-thumbnail.scss',
+		'//skins/oasis/css/core/thumbnails.scss',
 		'//extensions/wikia/SpecialVideos/styles/mobile.scss',
 	)
 );
