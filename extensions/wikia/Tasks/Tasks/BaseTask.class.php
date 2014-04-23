@@ -19,6 +19,12 @@ abstract class BaseTask {
 	protected $createdBy;
 
 	/**
+	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
+	 * inserting large, serialized classes into rabbitmq
+	 */
+	public function init() {}
+
+	/**
 	 * set this task to call a method in this class. the first argument to this method should be the method to execute,
 	 * and subsequent arguments are arguments passed to that method. Example: call('add', 2, 3) would call the method
 	 * add with 2 and 3 as parameters.

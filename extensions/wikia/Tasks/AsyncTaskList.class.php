@@ -9,6 +9,7 @@
 
 namespace Wikia\Tasks;
 
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPRuntimeException;
@@ -138,11 +139,12 @@ class AsyncTaskList {
 	/**
 	 * put this task list into the queue
 	 *
+	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
 	 * @return string the task list's id
 	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
-	public function queue() {
+	public function queue(AMQPChannel $channel=null) {
 		global $wgDevelEnvironment, $wgUser, $IP;
 
 		if ($this->createdBy == null) {
@@ -201,9 +203,6 @@ class AsyncTaskList {
 			];
 		}
 
-		$exception = null;
-		$connection = $this->connection();
-		$channel = $connection->channel();
 		$message = new AMQPMessage(json_encode($payload), [
 			'content_type' => 'application/json',
 			'content-encoding' => 'UTF-8',
@@ -211,21 +210,27 @@ class AsyncTaskList {
 			'delivery_mode' => 2, // persistent
 		]);
 
+		if ($channel === null) {
+			$exception = null;
+			$connection = $this->connection();
+			$channel = $connection->channel();
+			try {
+				$channel->basic_publish($message, '', $this->getQueue()->name());
+			} catch (AMQPRuntimeException $e) {
+				$exception = $e;
+			} catch (AMQPTimeoutException $e) {
+				$exception = $e;
+			}
 
-		try {
-			$channel->basic_publish($message, '', $this->getQueue()->name());
-		} catch (AMQPRuntimeException $e) {
-			$exception = $e;
-		} catch (AMQPTimeoutException $e) {
-			$exception = $e;
-		}
+			$channel->close();
+			$connection->close();
 
-		$channel->close();
-		$connection->close();
-
-		if ($exception !== null) {
-			WikiaLogger::instance()->error("Failed to queue task: {$exception->getMessage()}", $payload->args);
-			throw $exception;
+			if ($exception !== null) {
+				WikiaLogger::instance()->error("Failed to queue task: {$exception->getMessage()}", $payload->args);
+				throw $exception;
+			}
+		} else {
+			$channel->batch_basic_publish($message, '', $this->getQueue()->name());
 		}
 
 		return $id;
@@ -249,5 +254,42 @@ class AsyncTaskList {
 	 */
 	protected function getQueue() {
 		return $this->queue == null ? new Queue() : $this->queue;
+	}
+
+	/**
+	 * send a group of AsyncTaskList objects to the broker
+	 *
+	 * @param array $taskLists AsyncTaskList objects to insert into the queue
+	 * @return array list of task ids
+	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 */
+	public static function batch($taskLists) {
+		global $wgTaskBroker;
+
+		$connection = new AMQPConnection($wgTaskBroker['host'], $wgTaskBroker['port'], $wgTaskBroker['user'], $wgTaskBroker['pass']);
+		$channel = $connection->channel();
+		$exception = null;
+		$ids = [];
+
+		foreach ($taskLists as $task) {
+			/** @var AsyncTaskList $task */
+			$ids []= $task->queue($channel);
+		}
+
+		try {
+			$channel->publish_batch();
+		} catch (AMQPRuntimeException $e) {
+			$exception = $e;
+		} catch (AMQPTimeoutException $e) {
+			$exception = $e;
+		}
+
+		if ($exception !== null) {
+			WikiaLogger::instance()->error("Failed to queue task group");
+			throw $exception;
+		}
+
+		return $ids;
 	}
 }
