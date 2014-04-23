@@ -9,6 +9,8 @@ class VideosModule extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
+	const MAX_STAFF_PICKS = 10;
+
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
 
@@ -55,17 +57,18 @@ class VideosModule extends WikiaModel {
 		// If none are there call out to the video wiki to look for some
 		if ( !is_array( $videos ) ) {
 
-			// Look for picks specific to this wiki
+			// Look for picks specific to this wiki.  Don't get a thumbnail
+			// since we'll be generating it below
 			$params = [
-				'controller' => 'SpecialVideosSpecialController',
-				'method' => 'getVideos',
-				'sort' => 'recent',
-				'category' => 'Staff_Pick_'.$this->app->wg->DBname,
+				'controller'   => 'SpecialVideosSpecialController',
+				'method'       => 'getVideos',
+				'sort'         => 'recent',
+				'getThumbnail' => false,
+				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
 			];
 
 			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
 			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
-
 
 			// Look for global wikia-wide picks
 			$params['category'] = 'Staff_Pick_Global';
@@ -75,16 +78,30 @@ class VideosModule extends WikiaModel {
 
 			$combinedVideos = array_merge($wikiResults, $globalResults);
 
-			// Adjust the key names and reduce what we send to the front end
+			// Sort the combined array by the updated field, which is YYYY-MM-DD hh:mm:ss
+			usort($combinedVideos, function ($a, $b) {
+				return strcmp( $b['updated'], $a['updated'] );
+			});
+
+			// Use this to get thumbnail info below
+			$helper = new VideoHandlerHelper();
+
+			// Adjust the key names, eliminate some of the fields and cap the number
+			// we send to the front end at 10
 			$videos = [];
 			foreach ( $combinedVideos as $video ) {
+				$videoDetail = $helper->getVideoDetail( $video, self::$videoOptions );
 
 				$videos[] = [
 					'title'     => $video['title'],
 					'videoKey'  => $video['fileKey'],
 					'url'       => $video['fileUrl'],
-					'thumbnail' => $video['thumbnail'],
+					'thumbnail' => $videoDetail['thumbnail'],
 				];
+
+				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
+					break;
+				}
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
