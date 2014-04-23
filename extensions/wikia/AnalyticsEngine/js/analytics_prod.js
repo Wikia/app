@@ -136,12 +136,6 @@
 				window.addEventListener( "load", abOnLoadHandler, false );
 			}
 		}
-
-		/**** Back-end A/B test for order of loading test ****/
-		if ( window.wgAdsInHeadGroup !== 0 ) {
-			_gaqWikiaPush( ['_setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-			abCustomVarsForAds.push( ['ads._setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-		}
 	}
 
 	// Unleash

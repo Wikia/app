@@ -140,33 +140,10 @@ class AdEngine2Service
 		return (self::getPageType() !== self::PAGE_TYPE_NO_ADS);
 	}
 
-	public static function getAdsInHeadGroup()
-	{
-		static $cached = null;
-
-		if ($cached === null) {
-			if (F::app()->wg->LoadAdsInHead) {
-				// Get into a random 50/50 group:
-				$cached = mt_rand(1, 2);
-			} else {
-				$cached = 0;
-			}
-
-			// Override from URL
-			$cached = F::app()->wg->Request->getInt('adsinhead', $cached);
-
-			// Only accept 0, 1 and 2
-			if ($cached > 2 || $cached < 0) {
-				$cached = 0;
-			}
-		}
-
-		return $cached;
-	}
-
 	public static function areAdsInHead()
 	{
-		return self::getAdsInHeadGroup() === 1;
+		global $wgLoadAdsInHead;
+		return $wgLoadAdsInHead;
 	}
 
 	public static function getCachedCategory()

@@ -14,7 +14,7 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType;
+			$wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead;
 
 		$wgNoExternals = $request->getBool('noexternals', $wgNoExternals);
 		$wgLiftiumOnLoad = $request->getBool('liftiumonload', (bool) $wgLiftiumOnLoad);
@@ -25,6 +25,8 @@ class AdEngine2Hooks {
 		$wgAdDriverForceDirectGptAd = $request->getBool('forcedirectgpt', $wgAdDriverForceDirectGptAd);
 		$wgAdDriverForceLiftiumAd = $request->getBool('forceliftium', $wgAdDriverForceLiftiumAd);
 		$wgAdPageType = AdEngine2Service::getPageType();
+
+		$wgLoadAdsInHead = $request->getBool('adsinhead', $wgLoadAdsInHead);
 
 		return true;
 	}
@@ -128,7 +130,6 @@ class AdEngine2Hooks {
 		$variablesToExpose = [
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
-			'wgAdsInHeadGroup' => AdEngine2Service::getAdsInHeadGroup(),
 			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(),
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,
