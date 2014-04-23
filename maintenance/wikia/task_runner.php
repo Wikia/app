@@ -25,6 +25,7 @@ class TaskRunner {
 			$task = new $taskData['class']();
 			$task->createdBy($createdBy);
 			$task->unserialize($taskData['context'], $taskData['calls']);
+			$task->init();
 			$this->taskList []= $task;
 		}
 	}
