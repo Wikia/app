@@ -1,9 +1,8 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.template.skin', [
 	'wikia.document',
 	'wikia.window',
-	'wikia.log',
-	'wikia.backgroundchanger'
+	'wikia.log'
 ], function (document, window, log, backgroundchanger) {
 	'use strict';
 
@@ -27,27 +26,30 @@ define('ext.wikia.adEngine.template.skin', [
 			i,
 			len,
 			pixelElement,
-			pixelUrl,
-			bcParams;
+			pixelUrl;
 
 		params = params || {};
 
 		if (window.wgOasisResponsive) {
-			bcParams = {
-				skinImage: params.skinImage,
-				skinImageWidth: 1700,
-				skinImageHeight: 800,
-				backgroundTiled: false,
-				backgroundFixed: true,
-				backgroundDynamic: true
-			};
-			if (params.backgroundColor) {
-				bcParams.backgroundColor = '#' + params.backgroundColor;
-			}
-			if (params.middleColor) {
-				bcParams.backgroundMiddleColor = '#' + params.middleColor;
-			}
-			backgroundchanger.load(bcParams);
+			window.wgAfterContentAndJS.push(function () {
+				require('wikia.backgroundchanger', backgroundchanger, function () {
+					var bcParams = {
+						skinImage: params.skinImage,
+						skinImageWidth: 1700,
+						skinImageHeight: 800,
+						backgroundTiled: false,
+						backgroundFixed: true,
+						backgroundDynamic: true
+					};
+					if (params.backgroundColor) {
+						bcParams.backgroundColor = '#' + params.backgroundColor;
+					}
+					if (params.middleColor) {
+						bcParams.backgroundMiddleColor = '#' + params.middleColor;
+					}
+					backgroundchanger.load(bcParams);
+				});
+			});
 		} else {
 			adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 		}
