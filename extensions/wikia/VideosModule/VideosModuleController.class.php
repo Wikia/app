@@ -60,7 +60,7 @@ class VideosModuleController extends WikiaController {
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
-		$this->staff_videos = $module->getStaffPicks();
+		$this->staffVideos = $module->getStaffPicks();
 
 		// set cache
 		$this->response->setCacheValidity( 600 );
