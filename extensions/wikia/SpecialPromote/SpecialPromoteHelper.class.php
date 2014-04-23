@@ -295,19 +295,19 @@ class SpecialPromoteHelper extends WikiaObject {
 					// file was not really uploaded, and was already present in DB
 					// FIXME: this mechanism is hacky, it should be more durable than string matching
 
-					$promoImage = PromoImage::fromPathname($fileName);
+					$promoMainImage = PromoImage::fromPathname($fileName);
 
-					if (!$promoImage->isType(PromoImage::INVALID)) {
+					if (!$promoMainImage->isType(PromoImage::INVALID)) {
 						// check if file exists, if not do not add it to processed files, effectively removing it
-						$file = GlobalFile::newFromText($promoImage->getPathname(), $cityId);
+						$file = GlobalFile::newFromText($promoMainImage->getPathname(), $cityId);
 						if ($file->exists()){
-							array_push($promoImages, $promoImage);
+							array_push($promoImages, $promoMainImage);
 						}
 
 					} else {
-						$promoImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
-						$promoImage->processUploadedFile($fileName);
-						array_push($promoImages, $promoImage);
+						$promoMainImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+						$promoMainImage->processUploadedFile($fileName);
+						array_push($promoImages, $promoMainImage);
 					}
 
 					break;
@@ -324,6 +324,14 @@ class SpecialPromoteHelper extends WikiaObject {
 					$description = $dataContent;
 					break;
 				}
+		}
+
+		//attempt to cleanup if there used to be a promo main image
+		if (empty($promoMainImage)){
+			$promoMainImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+			if ($promoMainImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
+				$promoMainImage->deleteImageFromCorporate();
+			}
 		}
 
 		$updateData = array(
@@ -425,10 +433,12 @@ class SpecialPromoteHelper extends WikiaObject {
 			}
 		}
 
-		// attempt to Delete Leftover image types from database
+		// attempt to Delete Leftover image types from corporate wiki
 		foreach($freeImageTypeSlots as $imageType){
 			$promoImage = new PromoImage($imageType, $this->wg->DBname);
-			$promoImage->purgeImage();
+			if ($promoImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
+				$promoImage->deleteImageFromCorporate();
+			}
 		}
 
 		return $allFiles;

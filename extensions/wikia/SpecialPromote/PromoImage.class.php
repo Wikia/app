@@ -181,12 +181,18 @@ class PromoImage extends WikiaObject {
 
 	public function purgeImage() {
 		$this->deleteImage();
-		$this->removalTaskHelper($this->getPathname());
+		$this->deleteImageFromCorporate();
 		if ($this->isCityIdSet()){
 			//for legacy compatibility attempt to remove older image path format
 			$this->removalTaskHelper($this->pathnameHelper(false,true));
 		}
 		return $this;
+	}
+
+	public function deleteImageFromCorporate(){
+		if ($this->isCityIdSet()){
+			$this->removalTaskHelper($this->getPathname());
+		}
 	}
 
 	public function deleteImage() {
