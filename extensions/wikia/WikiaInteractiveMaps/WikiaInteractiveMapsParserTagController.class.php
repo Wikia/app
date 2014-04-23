@@ -11,12 +11,6 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'imap';
 
 	/**
-	 * @desc Validate error after validating parser tag arguments
-	 * @var string
-	 */
-	private $validateError = '';
-
-	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
 	 * @param Parser $parser
@@ -39,12 +33,13 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
 		$params = $this->sanitizeMapPlaceholderParams( $args );
+		$error = $this->validateParseTagParams( $params );
 
-		if( !$this->validateParseTagParams( $params ) ) {
+		if( !empty($error) ) {
 			return $this->sendRequest(
 				'WikiaInteractiveMapsParserTagController',
 				'parserTagError',
-				$params
+				[ 'errorMessage' => $error ]
 			);
 		} else {
 			return $this->sendRequest(
@@ -61,8 +56,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return string
 	 */
 	public function parserTagError() {
+		$this->setVal( 'errorMessage', $this->getVal( 'errorMessage' ) );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->setVal( 'errorMessage', $this->getValidateError() );
 	}
 
 	/**
@@ -125,38 +120,20 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns validate error
-	 * @return string
-	 */
-	public function getValidateError() {
-		return $this->validateError;
-	}
-
-	/**
-	 * @desc Returns validate error
-	 * @param String $errorMsg
-	 * @return String
-	 */
-	public function setValidateError( $errorMsg ) {
-		return $this->validateError = $errorMsg;
-	}
-
-	/**
-	 * @desc Validates data provided in parser tag arguments
+	 * @desc Validates data provided in parser tag arguments, returns empty string if there is no error
 	 *
 	 * @param Array $params an array with parser tag arguments
-	 * @return bool
+	 * @return String
 	 */
 	private function validateParseTagParams( Array $params ) {
-		$valid = true;
-		$mapId = intval( $params['map-id'] );
+		$error = '';
+		$mapId = isset( $params['map-id'] ) ? intval( $params['map-id'] ) : 0;
 
 		if( $mapId <= 0 ) {
-			$this->setValidateError( wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped() );
-			$valid = false;
+			$error = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped();
 		}
 
-		return $valid;
+		return $error;
 	}
 
 }
