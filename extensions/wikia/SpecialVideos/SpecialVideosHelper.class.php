@@ -9,7 +9,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
-	const POSTED_IN_ARTICLES = 5;
+	const POSTED_IN_ARTICLES = 100;
 
 	const VIDEOS_PER_PAGE = 24;
 	const VIDEOS_PER_PAGE_MOBILE = 12;
@@ -122,6 +122,7 @@ class SpecialVideosHelper extends WikiaModel {
 			$limit = self::VIDEOS_PER_PAGE;
 			$providers = empty( $providers ) ? [] : explode( ',', $providers );
 			$thumbOptions = [
+				'fluid'       => true,
 				'showViews'   => true,
 				'fixedHeight' => self::THUMBNAIL_HEIGHT,
 			];
@@ -145,8 +146,7 @@ class SpecialVideosHelper extends WikiaModel {
 		foreach ( $videoList as $videoInfo ) {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
-				$byUserMsg = $this->getByUserMsg( $videoDetail['userName'], $videoDetail['userUrl'] );
-				$postedInMsg = $this->getPostedInMsg( $videoDetail['truncatedList'], $videoDetail['isTruncated'] );
+				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
@@ -157,7 +157,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
 					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
-					'postedInMsg' => $postedInMsg,
+					'truncatedList' => $videoDetail['truncatedList'],
 				];
 			}
 		}
@@ -189,27 +189,6 @@ class SpecialVideosHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $totalVideos;
-	}
-
-	/**
-	 * get message for by user section
-	 * @param string $userName
-	 * @param string $userUrl
-	 * @return string $byUserMsg
-	 */
-	public function getByUserMsg( $userName, $userUrl ) {
-		$byUserMsg = '';
-		if ( !empty( $userName ) ) {
-			$attribs = array(
-				'href' => $userUrl,
-				'class' => 'wikia-gallery-item-user',
-			);
-
-			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = wfMessage( 'specialvideos-uploadby', $userLink )->text();
-		}
-
-		return $byUserMsg;
 	}
 
 	/**
