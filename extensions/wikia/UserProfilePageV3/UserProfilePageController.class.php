@@ -185,6 +185,8 @@ class UserProfilePageController extends WikiaController {
 				'action' => array(
 					'href' => $this->title->getLocalUrl($editQuery),
 					'text' => wfMsg('user-action-menu-edit-profile'),
+					'id' => 'ca-edit',
+					'accesskey' => 'e',
 				),
 				'image' => MenuButtonController::EDIT_ICON,
 				'name' => 'editprofile',
@@ -205,6 +207,8 @@ class UserProfilePageController extends WikiaController {
 							'action' => array(
 								'href' => $this->title->getLocalUrl($editQuery),
 								'text' => wfMsg('user-action-menu-edit'),
+								'id' => 'ca-edit',
+								'accesskey' => 'e',
 							),
 							'image' => MenuButtonController::EDIT_ICON,
 							'name' => 'editprofile',
@@ -214,6 +218,8 @@ class UserProfilePageController extends WikiaController {
 							'action' => array(
 								'href' => $title->getLocalUrl(array_merge($editQuery, array('section' => 'new'))),
 								'text' => wfMsg('user-action-menu-leave-message'),
+								'id' => 'ca-addsection',
+								'accesskey' => '+',
 							),
 							'image' => MenuButtonController::MESSAGE_ICON,
 							'name' => 'leavemessage',
@@ -221,6 +227,8 @@ class UserProfilePageController extends WikiaController {
 								'edit' => array(
 									'href' => $this->title->getFullUrl($editQuery),
 									'text' => wfMsg('user-action-menu-edit'),
+									'id' => 'ca-edit',
+									'accesskey' => 'e',
 								)
 							),
 						);
@@ -254,6 +262,8 @@ class UserProfilePageController extends WikiaController {
 				$actionButtonArray['dropdown']['rename'] = array(
 					'href' => $renameUrl,
 					'text' => wfMsg('user-action-menu-rename'),
+					'id' => 'ca-move',
+					'accesskey' => 'm',
 				);
 			}
 
@@ -263,6 +273,8 @@ class UserProfilePageController extends WikiaController {
 				$actionButtonArray['dropdown']['protect'] = array(
 					'href' => $this->title->getLocalUrl(array('action' => $protectStatus)),
 					'text' => wfMsg('user-action-menu-' . $protectStatus),
+					'id' => 'ca-protect',
+					'accesskey' => '=',
 				);
 			}
 
@@ -270,12 +282,16 @@ class UserProfilePageController extends WikiaController {
 				$actionButtonArray['dropdown']['delete'] = array(
 					'href' => $this->title->getLocalUrl(array('action' => 'delete')),
 					'text' => wfMsg('user-action-menu-delete'),
+					'id' => 'ca-delete',
+					'accesskey' => 'd',
 				);
 			}
 
 			$actionButtonArray['dropdown']['history'] = array(
 				'href' => $this->title->getLocalUrl(array('action' => 'history')),
 				'text' => wfMsg('user-action-menu-history'),
+				'id' => 'ca-history',
+				'accesskey' => 'h',
 			);
 		}
 
