@@ -153,9 +153,12 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$page = $this->request->getVal( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
+		$getThumbnail = $this->request->getVal( 'getThumbnail', true );
+
+		$options = ['getThumbnail'=> $getThumbnail ];
 
 		$helper = new SpecialVideosHelper();
-		$videos = $helper->getVideos( $sort, $page, $providers, $category );
+		$videos = $helper->getVideos( $sort, $page, $providers, $category, $options );
 
 		$this->videos = $videos;
 	}

@@ -4,7 +4,7 @@
  *
  * @define ads
  * @require events
- * @require dartmobilehelper
+ * @require ext.wikia.adEngine.wikiaDartMobileHelper
  * @require domwriter
  * @require cookies
  *
@@ -13,7 +13,7 @@
  */
 
 /*global window, document, define, require, setTimeout, setInterval, clearInterval, Features, AdConfig*/
-define('ads', ['wikia.cookies', 'wikia.window', 'wikia.dartmobilehelper', 'wikia.scriptwriter'], function (ck, window, dartHelper, scriptWriter) {
+define('ads', ['wikia.cookies', 'wikia.window', 'ext.wikia.adEngine.wikiaDartMobileHelper', 'wikia.scriptwriter'], function (ck, window, dartHelper, scriptWriter) {
 	'use strict';
 
 	var STOP_COOKIE_NAME = 'wkStopAd',

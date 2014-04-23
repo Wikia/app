@@ -96,9 +96,10 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @param integer $page
 	 * @param array $providers
 	 * @param string $category
+	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array(), $category = '' ) {
+	public function getVideos( $sort, $page, $providers = array(), $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -137,7 +138,7 @@ class SpecialVideosHelper extends WikiaModel {
 			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
 			'postedInArticles' => self::POSTED_IN_ARTICLES,
 			'thumbOptions'     => $thumbOptions,
-			'getThumbnail'     => true,
+			'getThumbnail'     => ( array_key_exists( 'getThumbnail', $options) ? $options['getThumbnail'] : true ),
 		];
 
 		// get video detail
@@ -155,6 +156,7 @@ class SpecialVideosHelper extends WikiaModel {
 					'fileUrl' => $videoDetail['fileUrl'],
 					'thumbnail' => $videoDetail['thumbnail'],
 					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
+					'updated' => $videoDetail['timestamp'],
 					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
 					'truncatedList' => $videoDetail['truncatedList'],

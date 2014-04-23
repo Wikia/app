@@ -219,6 +219,16 @@ $messages['haw'] = array(
 	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in weniche Sekunde uff die oongeforderte Seit weiter.',
+	'adengine-exitstitial-go-back' => 'Retuar gehn?',
+	'adengine-exitstitial-button' => 'Die Oonzeiche üwerspringe',
+);
+
 /** Hungarian (magyar)
  * @author Liteon
  */

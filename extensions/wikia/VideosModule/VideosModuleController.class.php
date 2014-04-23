@@ -2,7 +2,7 @@
 
 class VideosModuleController extends WikiaController {
 
-	const VIDEOS_PER_PAGE = 8;
+	const VIDEOS_PER_PAGE = 20;
 
 	/**
 	 * VideosModule
@@ -42,6 +42,7 @@ class VideosModuleController extends WikiaController {
 				if ( empty( $articleId ) ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'videosmodule-error-no-articleId' )->plain();
+					$this->videos = [];
 					wfProfileOut( __METHOD__ );
 					return;
 				}
@@ -60,6 +61,7 @@ class VideosModuleController extends WikiaController {
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
+		$this->staffVideos = $module->getStaffPicks();
 
 		// set cache
 		$this->response->setCacheValidity( 600 );

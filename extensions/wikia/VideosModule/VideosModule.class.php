@@ -9,6 +9,8 @@ class VideosModule extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
+	const MAX_STAFF_PICKS = 10;
+
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
 
@@ -37,6 +39,77 @@ class VideosModule extends WikiaModel {
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => Wikia\Search\Config::FILTER_CAT_ENTERTAINMENT,
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => Wikia\Search\Config::FILTER_CAT_LIFESTYLE,
 	];
+
+	/**
+	 * Look for 'Staff Picks' on the video wiki.  These are videos that have been added to the
+	 * "Staff Pick DBNAME" category (where DBNAME is this wiki's DB NAME) or the "Staff Pick Global"
+	 * category.
+	 *
+	 * @return array
+	 */
+	public function getStaffPicks() {
+		wfProfileIn( __METHOD__ );
+
+		// Try to get the staff video picks from cache first
+		$memcKey = wfMemcKey( 'videomodule', 'staff_videos', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+
+		// If none are there call out to the video wiki to look for some
+		if ( !is_array( $videos ) ) {
+
+			// Look for picks specific to this wiki.  Don't get a thumbnail
+			// since we'll be generating it below
+			$params = [
+				'controller'   => 'SpecialVideosSpecialController',
+				'method'       => 'getVideos',
+				'sort'         => 'recent',
+				'getThumbnail' => false,
+				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
+			];
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+			// Look for global wikia-wide picks
+			$params['category'] = 'Staff_Pick_Global';
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+			$combinedVideos = array_merge($wikiResults, $globalResults);
+
+			// Sort the combined array by the updated field, which is YYYY-MM-DD hh:mm:ss
+			usort($combinedVideos, function ($a, $b) {
+				return strcmp( $b['updated'], $a['updated'] );
+			});
+
+			// Use this to get thumbnail info below
+			$helper = new VideoHandlerHelper();
+
+			// Adjust the key names, eliminate some of the fields and cap the number
+			// we send to the front end at 10
+			$videos = [];
+			foreach ( $combinedVideos as $video ) {
+				$videoDetail = $helper->getVideoDetail( $video, self::$videoOptions );
+
+				$videos[] = [
+					'title'     => $video['title'],
+					'videoKey'  => $video['fileKey'],
+					'url'       => $video['fileUrl'],
+					'thumbnail' => $videoDetail['thumbnail'],
+				];
+
+				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
+					break;
+				}
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $videos;
+	}
 
 	/**
 	 * Get videos added to the wiki
@@ -147,7 +220,6 @@ class VideosModule extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videos;
-
 	}
 
 	/**
@@ -392,7 +464,8 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Get video limit (include the number of blacklisted videos)
-	 * @return integer $limit
+	 * @param int $numRequired
+	 * @return integer
 	 */
 	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
@@ -405,13 +478,12 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Trim randomized list of videos
+	 * Trim a list of videos down to $numRequired and make a note that we're using it
 	 * @param array $videos
 	 * @param integer $numRequired
 	 * @return array $videos
 	 */
 	protected function trimVideoList( $videos, $numRequired ) {
-		shuffle( $videos );
 		array_splice( $videos, $numRequired );
 		foreach ( $videos as $video ) {
 			$this->existingVideos[$video['videoKey']] = true;
@@ -419,5 +491,4 @@ class VideosModule extends WikiaModel {
 
 		return $videos;
 	}
-
 }

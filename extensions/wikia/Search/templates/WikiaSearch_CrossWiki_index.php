@@ -7,6 +7,12 @@
 
 			<input type="text" name="search" id="search-v2-input" value="<?=$query;?>" />
 			<input type="hidden" name="fulltext" value="Search" />
+			<? if ( !empty($hub) ): ?>
+				<input type="hidden" name="hub" value="<?=$hub?>" />
+			<? endif ?>
+			<? if ( !empty($resultsLang) ): ?>
+				<input type="hidden" name="resultsLang" value="<?=$resultsLang?>" />
+			<? endif ?>
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>"><img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 		</div>
 

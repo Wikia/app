@@ -176,7 +176,7 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * @param string $provider
-	 * @return null
+	 * @return VideoFeedIngester|null
 	 */
 	public static function getInstance($provider='') {
 		if ( empty($provider) ) {
@@ -1253,6 +1253,7 @@ abstract class VideoFeedIngester {
 	/**
 	 * Set summary result for ingested video
 	 * @param string $msg
+	 * @param array $categories
 	 */
 	public function videoIngested( $msg = '', $categories = [] ) {
 		if ( !empty( $msg ) ) {
