@@ -132,45 +132,93 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return String
 	 */
 	public function validateParseTagParams( Array $params, &$errorMessage ) {
-		$isValid = true;
+		$isValid = false;
 
-		$mapId = isset( $params['id'] ) ? intval( $params['id'] ) : 0;
-		if( $mapId <= 0 ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-map-id' )->escaped();
-			$isValid = false;
+		if( empty( $params ) ) {
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->escaped();
+			return $isValid;
 		}
 
-		$lat = isset( $params['lat'] ) ? $params['lat'] : null;
-		if( !is_null( $lat ) && !is_numeric( $lat ) ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-latitude' )->escaped();
-			$isValid = false;
-		}
-
-		$long = isset( $params['long'] ) ? $params['long'] : null;
-		if( !is_null( $long ) && !is_numeric( $long ) ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-longitude' )->escaped();
-			$isValid = false;
-		}
-
-		$zoom = isset( $params['zoom'] ) ? intval( $params['zoom'] ) : null;
-		if( !is_null( $zoom ) && $zoom < 0 ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-zoom' )->escaped();
-			$isValid = false;
-		}
-
-		$width = isset( $params['width'] ) ? intval( $params['width'] ) : null;
-		if( !is_null( $width ) && $width <= 0 ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-width' )->escaped();
-			$isValid = false;
-		}
-
-		$height = isset( $params['height'] ) ? intval( $params['height'] ) : null;
-		if( !is_null( $height ) && $height <= 0 ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-invalid-height' )->escaped();
-			$isValid = false;
+		foreach( $params as $param => $value ) {
+			$isValid = $this->isTagParamValid( $param, $params, $errorMessage );
 		}
 
 		return $isValid;
+	}
+
+	/**
+	 * @desc Checks if parameter from parameters array is valid
+	 *
+	 * @param String $paramName name of parameter which should get validated
+	 * @param Array $params parameters passed from parser tag arguments
+	 * @param String $errorMessage reference to a string variable which will get error message if one occurs
+	 *
+	 * @return bool
+	 */
+	private function isTagParamValid( $paramName, Array $params, &$errorMessage ) {
+		$isValid = false;
+
+		$validator = $this->buildParamValidator( $paramName );
+		if( $validator ) {
+			$isValid = $validator->isValid( $params[$paramName] );
+
+			if( !$isValid ) {
+				$errorMessage = $validator->getError()->getMsg();
+			}
+		}
+
+		return $isValid;
+	}
+
+	/**
+	 * @desc Small factory method to create validators for params; returns false if validator can't be created
+	 *
+	 * @param String $paramName
+	 * @return bool|WikiaValidator
+	 */
+	private function buildParamValidator( $paramName ) {
+		$validator = false;
+
+		switch( $paramName ) {
+			case 'id':
+				$validator = new WikiaValidatorInteger(
+					[ 'required' => true ],
+					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-map-id' ]
+				);
+				break;
+			case 'lat':
+				$validator = new WikiaValidatorNumeric(
+					[],
+					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude' ]
+				);
+				break;
+			case 'long':
+				$validator = new WikiaValidatorNumeric(
+					[],
+					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude' ]
+				);
+				break;
+			case 'zoom':
+				$validator = new WikiaValidatorInteger(
+					[ 'min' => 0 ],
+					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom' ]
+				);
+				break;
+			case 'width':
+				$validator = new WikiaValidatorInteger(
+					[ 'min' => 1 ],
+					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width' ]
+				);
+				break;
+			case 'height':
+				$validator = new WikiaValidatorInteger(
+					[ 'min' => 1 ],
+					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height' ]
+				);
+				break;
+		}
+
+		return $validator;
 	}
 
 }

@@ -50,7 +50,12 @@ class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 			],
 			[
 				'Valid latitude parameter',
-				[ 'id' => 1, 'lat' => "0x32" ],
+				[ 'id' => 1, 'lat' => 0x32 ],
+				true
+			],
+			[
+				'Invalid latitude parameter',
+				[ 'id' => 1, 'lat' => '0x32' ],
 				true
 			],
 			[
@@ -69,9 +74,9 @@ class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 				true
 			],
 			[
-				'Valid zoom parameter - should get casted to 0',
+				'Invalid zoom parameter',
 				[ 'id' => 1, 'zoom' => 'abc' ],
-				true
+				false
 			],
 			[
 				'Invalid zoom parameter',
@@ -94,13 +99,13 @@ class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 				true
 			],
 			[
-				'Valid width parameter - should get casted to 100',
-				[ 'id' => 1, 'zoom' => '100px' ],
-				true
+				'Invalid width parameter',
+				[ 'id' => 1, 'width' => 0 ],
+				false
 			],
 			[
 				'Invalid width parameter',
-				[ 'id' => 1, 'width' => 0 ],
+				[ 'id' => 1, 'width' => '100px' ],
 				false
 			],
 			[
