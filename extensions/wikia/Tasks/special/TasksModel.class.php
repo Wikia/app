@@ -1,7 +1,7 @@
 <?php
 
 class TasksModel {
-	const EXTERNAL_TASK_HOOK_NAME = 'tasks_external';
+	const EXTERNAL_TASK_HOOK_NAME = 'SpecialTasksAdmin';
 
 	private $title = null;
 	private $app = null;
@@ -31,7 +31,7 @@ class TasksModel {
 			];
 		}
 
-		wfRunHooks(self::EXTERNAL_TASK_HOOK_NAME, [$taskClasses]);
+		wfRunHooks(self::EXTERNAL_TASK_HOOK_NAME, [&$taskClasses]);
 		return $taskClasses;
 	}
 

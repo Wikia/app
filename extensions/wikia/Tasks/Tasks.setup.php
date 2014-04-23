@@ -28,3 +28,17 @@ spl_autoload_register(function($class) {
 
 	return false;
 });
+
+class TaskExecutors {
+	static $modernExecutors = [
+		'parsoid',
+	];
+
+	static function isLegacy($taskName) {
+		return !self::isModern($taskName);
+	}
+
+	static function isModern($taskName) {
+		return in_array($taskName, self::$modernExecutors);
+	}
+}
