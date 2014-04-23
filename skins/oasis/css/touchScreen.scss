@@ -7,28 +7,40 @@
 }
 
 //make bigger inputs for finger
-//TODO: Check if it's actually used and if not remove it
 input {
-	font-size: 15pt;
-}
-
-.AccountNavigation .UserLoginDropdown .WikiaForm,
-.UserLogin .WikiaForm,
-.WikiaSignup .form-container .WikiaForm {
-  input[type=text],
-  input[type=password],
-  input[type=submit] {
 	height: 30px;
-  }
-  input[type=text],
-  input[type=password] {
-	font-size: 14px;
-  }
 }
 
-.WikiaSignup .form-container .WikiaForm select {
+select {
 	height: 35px;
-	width: 32%; //TODO: Make it fill the whole container
+}
+
+.AccountNavigation .UserLoginDropdown .WikiaForm {
+	input[type=text],
+	input[type=password],
+	input[type=button],
+	input[type=submit] {
+		height: 30px;
+	}
+}
+
+.WikiaSignup select {
+	width: 103px;
+}
+
+//greater height of inputs makes the one-line-labels break
+.search-filter-sort,
+td.mw-input,
+.wikitable td {
+	input[type=checkbox],
+	input[type=radio] {
+		position: relative;
+		top: 9px;
+	}
+}
+
+td.mw-label {
+	vertical-align: middle;
 }
 
 //hide facebook description
