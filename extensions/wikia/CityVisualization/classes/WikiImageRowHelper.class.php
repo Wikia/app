@@ -11,6 +11,8 @@ class WikiImageRowHelper {
 		$this->name = $row->image_name;
 		$this->index = $row->image_index;
 		$this->reviewed = $row->image_reviewed;
-		$this->review_status = intval($row->image_review_status);
+		if (!empty($row->image_review_status)){
+			$this->review_status = intval($row->image_review_status);
+		}
 	}
 }

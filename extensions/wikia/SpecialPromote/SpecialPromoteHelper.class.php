@@ -297,13 +297,12 @@ class SpecialPromoteHelper extends WikiaObject {
 
 					$promoMainImage = PromoImage::fromPathname($fileName);
 
-					if (!$promoMainImage->isType(PromoImage::INVALID)) {
-						// check if file exists, if not do not add it to processed files, effectively removing it
+					if ($promoMainImage->isType(PromoImage::MAIN)) {
+						//check if file exists on current wiki
 						$file = GlobalFile::newFromText($promoMainImage->getPathname(), $cityId);
 						if ($file->exists()){
 							array_push($promoImages, $promoMainImage);
 						}
-
 					} else {
 						$promoMainImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
 						$promoMainImage->processUploadedFile($fileName);
@@ -381,6 +380,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$corpWikiId = $visualizationModel->getTargetWikiId($langCode);
 		// wiki info cache
 		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
+		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $langCode));
 		// wiki list cache
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)

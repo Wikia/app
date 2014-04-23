@@ -33,7 +33,7 @@ var SpecialPromote = function () {
 	this.imageIndex = null;
 	this.status = {
 		title: false,
-		description: false,
+		description: false
 	};
 
 	this.ADDITIONAL_IMAGES_LIMIT = 9;
