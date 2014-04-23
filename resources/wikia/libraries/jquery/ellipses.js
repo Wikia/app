@@ -3,7 +3,15 @@
  * @author Liz Lee <lizlee at wikia dash inc dot com>
  * @author Kenneth Kouot <kenkouot at wikia dash inc dot com>
  * @description A jQuery plugin for applying ellipses to text that wraps over one line (which could otherwise be
- * handled by CSS)
+ * handled by CSS).
+ *
+ * To use with fluid layouts, you can initiate like:
+ * $(window)
+ *    .on('resize.namespace', function () {
+ *        $elem.ellipses();
+ *    })
+ *    .trigger('resize.namespace');
+
  */
 (function (exports) {
 	'use strict';
