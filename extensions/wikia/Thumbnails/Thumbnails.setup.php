@@ -11,11 +11,17 @@ $wgExtensionCredits['videohandlers'][] = [
 	'descriptionmsg' => 'thumbnails-extension-description',
 ];
 
-$dir = dirname( __FILE__ );
+$dir = dirname( __FILE__ ) . '/';
 
 // Main classes
-$wgAutoloadClasses['ThumbnailVideo'] = $dir . '/ThumbnailVideo.class.php';
-$wgAutoloadClasses['ThumbnailVideoController'] = $dir . '/ThumbnailVideoController.class.php';
-$wgAutoloadClasses['ThumbnailImageController'] = $dir . '/ThumbnailImageController.class.php';
-$wgAutoloadClasses['ThumbnailHelper'] = $dir . '/ThumbnailHelper.class.php';
+$wgAutoloadClasses['ThumbnailVideo'] = $dir . 'ThumbnailVideo.class.php';
+$wgAutoloadClasses['ThumbnailController'] = $dir . 'ThumbnailController.class.php';
+$wgAutoloadClasses['ThumbnailHooks'] = $dir . 'ThumbnailHooks.class.php';
+$wgAutoloadClasses['ThumbnailImageController'] = $dir . 'ThumbnailImageController.class.php';
+$wgAutoloadClasses['ThumbnailHelper'] = $dir . 'ThumbnailHelper.class.php';
 
+// Hooks
+$wgHooks['BeforePageDisplay'][] = 'ThumbnailHooks::onBeforePageDisplay';
+
+// i18n mapping
+$wgExtensionMessagesFiles['Thumbnails'] = $dir . 'Thumbnails.i18n.php' ;

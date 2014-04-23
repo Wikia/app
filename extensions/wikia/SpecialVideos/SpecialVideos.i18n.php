@@ -30,7 +30,8 @@ $messages['en'] = array(
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
-	'specialvideos-btn-load-more' => 'Load More'
+	'specialvideos-btn-load-more' => 'Load More',
+	'specialvideos-posted-in-label' => 'Posted in',
 );
 
 $messages['qqq'] = array(
@@ -57,7 +58,8 @@ $messages['qqq'] = array(
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
-	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked'
+	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked',
+	'specialvideos-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted. Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 );
 
 $messages['de'] = array(

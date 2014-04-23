@@ -401,6 +401,7 @@ $color-related-videos-background: darken($color-page, 20%);
 			.video {
 				display: block;
 				float: left;
+				height: auto;
 				margin-right: 12px;
 				width: 150px;
 				.playButton {
