@@ -241,7 +241,11 @@ ___________________________________________
  * @author Basharh
  */
 $messages['arc'] = array(
+	'article-comments-delete' => 'ܫܘܦ',
+	'article-comments-edit' => 'ܫܚܠܦ',
 	'article-comments-history' => 'ܬܫܥܝܬܐ',
+	'article-comments-prev-page' => 'ܕܩܕܡ',
+	'article-comments-next-page' => 'ܕܒܬܪ',
 );
 
 /** Assamese (অসমীয়া)
@@ -498,6 +502,7 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -531,6 +536,7 @@ $messages['br'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Diverket eo bet ar bajenn kar / an evezhiadenn kar.',
 	'article-comments-empty-comment' => "N'hallit ket degas un evezhiadenn c'houllo. <a href='$1'>Diverkañ anezhi ?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Evezhiadenn}}',
 	'wikiamobile-article-comments-header' => 'Displegadennoù',
 	'wikiamobile-article-comments-more' => "Lenn muioc'h",
 	'wikiamobile-article-comments-prev' => 'Kargañ an hini kent',
@@ -936,8 +942,8 @@ $messages['diq'] = array(
 	'wikiamobile-article-comments-none' => 'Vatış çıno',
 	'wikiamobile-article-comments-view' => 'Cewabi bıvin',
 	'wikiamobile-article-comments-replies' => 'cewabi',
-	'wikiamobile-article-comments-post-reply' => 'Cewab bırşe',
-	'wikiamobile-article-comments-post' => 'Bırş',
+	'wikiamobile-article-comments-post-reply' => 'Yew cewab bırışe',
+	'wikiamobile-article-comments-post' => 'Bırışe',
 	'wikiamobile-article-comments-placeholder' => 'Mışewre bırşe',
 	'wikiamobile-article-comments-login-post' => 'Mışewre rıştışi rê şıma ra recay ma qeyd bê',
 	'enotif_body_article_comment-HTML' => '<p>Bırayo  $WATCHINGUSERNAME,
@@ -1030,6 +1036,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author DJ Nietzsche
+ * @author Fitoschido
  * @author Ihojose
  * @author VegaDark
  */
@@ -1043,7 +1050,7 @@ $messages['es'] = array(
 	'article-comments-delete' => '(borrar)',
 	'article-comments-edit' => '(editar)',
 	'article-comments-history' => '(Historial)',
-	'article-comments-error' => 'El comentario no pudo ser guardado',
+	'article-comments-error' => 'No se pudo guardar el comentario',
 	'article-comments-undeleted-comment' => 'Comentario no borrado para la página del blog $1',
 	'article-comments-rc-comment' => 'Comentario de artículo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Comentarios de artículo ([[$1]])',
@@ -1544,6 +1551,12 @@ $messages['hi'] = array(
 $messages['hrx'] = array(
 	'article-comments-edit' => 'beoorbeite',
 	'article-comments-history' => 'Versione',
+	'article-comments-vote' => 'Abstimme',
+	'article-comments-reply' => 'Antworte',
+	'article-comments-show-all' => 'All Kommentare oonzeiche',
+	'article-comments-prev-page' => 'Vorriche',
+	'article-comments-next-page' => 'Nächst',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-header' => 'Kommentare',
 	'wikiamobile-article-comments-more' => 'Weitre loode',
 	'wikiamobile-article-comments-prev' => 'Voariche loode',
@@ -2136,6 +2149,7 @@ $messages['lb'] = array(
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
 	'wikiamobile-article-comments-view' => 'Äntwerte kucken',
 	'wikiamobile-article-comments-replies' => 'Äntwerten',
+	'wikiamobile-article-comments-placeholder' => 'Bemierkung derbäisetzen',
 	'wikiamobile-article-comments-post-fail' => "D'Bemierkung konnt net gespäichert ginn, probéiert w.e.g. méi spéit nach eng Kéier",
 );
 
@@ -3061,11 +3075,11 @@ $messages['ps'] = array(
 	'article-comments-history' => 'پېښليک',
 	'article-comments-error' => 'تبصره مو نه شي خوندي کېدلی',
 	'article-comments-rc-comments' => 'د ليکنې تبصرې ([[$1]])',
-	'article-comments-rc-blog-comment' => 'بلاګ تبصره (<span class="plainlinks">[$1 $2]</span>)',
-	'article-comments-rc-blog-comments' => 'د بلاګ تبصرې ([[$1]])',
+	'article-comments-rc-blog-comment' => 'بلاگ تبصره (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'د بلاگ تبصرې ([[$1]])',
 	'article-comments-login' => 'دلته د يوې تبصرې د خپرولو لپاره لطفاً <a href="$1">غونډال ته ننوځۍ</a>.',
 	'article-comments-toc-item' => 'تبصرې',
-	'article-comments-comment-cannot-add' => 'تاسې دې ليکنه کې يوه تبصره نه شی ورګډولی.',
+	'article-comments-comment-cannot-add' => 'تاسې دې ليکنه کې يوه تبصره نه شی ورگډولی.',
 	'article-comments-vote' => 'مثبته رايه',
 	'article-comments-reply' => 'ځوابول',
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
@@ -3367,8 +3381,8 @@ $messages['ru'] = array(
 - Команда Викия
 
 ___________________________________________
-* Вы можете найти помощь и совет на Центральной Вики: http://community.wikia.com
-* Хотите контролировать, какие электронные письма вы хотите получать? Вы можете настроить рассылку или отписаться от неё на странице личных настроек: http://community.wikia.com/Special:Preferences',
+* Найти помощь и совет можно на Community Central (http://community.wikia.com) и Вики Сообщества (http://ru.community.wikia.com)
+* Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Привет $WATCHINGUSERNAME,
 <br /><br />
 Новый комментарий был добавлен к странице $PAGETITLE на {{SITENAME}}. Uы можете посмотреть все комментарии по этой ссылке:  $PAGETITLE_URL#WikiaArticleComments

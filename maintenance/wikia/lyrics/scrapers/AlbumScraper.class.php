@@ -18,6 +18,8 @@ class AlbumScraper extends BaseScraper {
 			'article_id' => $article->getId(),
 		];
 		$albumData = array_merge( $albumData, $this->getHeader( $article ) );
+		$albumData['album_lowercase'] = LyricsUtils::lowercase( $albumData['Album'] );
+
 		$albumData['genres'] = $this->getGenres( $article );
 		if ( isset( $albumData['Genre']) && !in_array($albumData['Genre'], $albumData['genres'] ) ) {
 			$albumData['genres'][] = $albumData['Genre'];
@@ -56,6 +58,7 @@ class AlbumScraper extends BaseScraper {
 			'Cover' => 'image',
 			'year' => 'release_date',
 			'Album' => 'album_name',
+			'album_lowercase' => 'album_name_lc',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',
 			'Length' => 'length',

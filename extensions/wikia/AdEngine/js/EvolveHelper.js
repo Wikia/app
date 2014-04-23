@@ -1,7 +1,8 @@
-var EvolveHelper = function (log, window) {
+/*global define*/
+define('ext.wikia.adEngine.evolveHelper', ['wikia.log', 'wikia.window'], function (log, window) {
 	'use strict';
 
-	var logGroup = 'EvolveHelper',
+	var logGroup = 'ext.wikia.adEngine.evolveHelper',
 		getSect;
 
 	getSect = function () {
@@ -38,4 +39,4 @@ var EvolveHelper = function (log, window) {
 	return {
 		getSect: getSect
 	};
-};
+});

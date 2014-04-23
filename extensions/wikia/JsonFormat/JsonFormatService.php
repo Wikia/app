@@ -2,7 +2,7 @@
 
 class JsonFormatService extends \WikiaService {
 
-	const SIMPLE_JSON_SCHEMA_VERSION = 1;
+	const SIMPLE_JSON_SCHEMA_VERSION = 2;
 	const SIMPLE_JSON_CACHE_EXPIRATION = 14400; //4 hour
 
 	private $htmlParser;
@@ -66,5 +66,9 @@ class JsonFormatService extends \WikiaService {
 
 		$measurement->stop();
 		return $jsonSimple;
+	}
+
+	public function getSimpleFormatForHtml( $html ) {
+		return $this->htmlParser->parse( $html );
 	}
 }

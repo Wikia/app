@@ -2398,7 +2398,7 @@ $messages['diq'] = array(
 	'wall-message-delete' => 'Bestere',
 	'wall-user-talk-archive-page-title' => 'Karber_behse_arşiw',
 	'wall-action-all-confirm-cancel' => 'Bıtexelne',
-	'wall-delete-error-title' => 'Xırab',
+	'wall-delete-error-title' => 'Xeta',
 	'wall-action-remove-confirm-ok' => 'Hewad',
 	'wall-action-admin-confirm-ok' => 'Bestere',
 	'wall-action-restore-confirm-ok' => 'Timar bike',
@@ -4844,6 +4844,13 @@ $messages['lb'] = array(
 	'wall-topic-edit-cancel' => 'Ofbriechen',
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'wall-button-save-changes' => 'ذخیره کردن آلشتیا',
+);
+
 /** Latvian (latviešu)
  * @author Edgars2007
  * @author Sg ghost
@@ -6506,8 +6513,8 @@ $messages['ps'] = array(
 	'wall-action-admin-confirm-ok' => 'ړنگول',
 	'wall-action-restore-confirm-ok' => 'بيازېرمل',
 	'wall-action-rev-confirm-ok' => 'هو، ړنگ دې شي',
-	'wall-notifications' => 'يادګيرنې',
-	'wall-notifications-all' => 'ټولې يادګيرنې',
+	'wall-notifications' => 'يادگيرنې',
+	'wall-notifications-all' => 'ټولې يادگيرنې',
 	'wall-notifications-markasread' => 'ټول لوستی په نخښه کول',
 	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي گانې',
 	'wall-notifications-markasread-this-wiki' => 'همدا ويکي',

@@ -191,7 +191,7 @@ class SolrAdapter {
 		if ( !empty( $albumsMetaData['songs'] ) ) {
 			$artist['songs'] = $this->encodeMeta( $albumsMetaData['songs'] );
 		}
-		$artist['type'] = LyricsApiBase::TYPE_ARTIST;
+		$artist['type'] = LyricsUtils::TYPE_ARTIST;
 
 		if ( isset( $artist['genres'] ) && $artist['genres'] ) {
 			$artist['genres'] = json_encode( array_values( $artist['genres'] ) );
@@ -212,6 +212,7 @@ class SolrAdapter {
 	public function saveAlbum( Array $artist, Array $album, Array $songs ) {
 		// Add artist meta data
 		$album['artist_name'] = $artist['artist_name'];
+		$album['artist_name_lc'] = $artist['artist_name_lc'];
 		$album['artist_id'] = $artist['id'];
 		
 		// Add songs meta data
@@ -220,7 +221,7 @@ class SolrAdapter {
 		if ( isset( $album['genres'] ) && $album['genres'] ) {
 			$album['genres'] = json_encode( array_values( $album['genres'] ) );
 		}
-		$album['type'] = LyricsApiBase::TYPE_ALBUM;
+		$album['type'] = LyricsUtils::TYPE_ALBUM;
 		$doc = $this->newDocFromData( $album );
 		$this->add( $doc );
 	}
@@ -235,15 +236,17 @@ class SolrAdapter {
 	public function saveSong( Array $artist, Array $album, Array $song ) {
 		$song['artist_id'] = $artist['id'];
 		$song['artist_name'] = $artist['artist_name'];
-		
+		$song['artist_name_lc'] = $artist['artist_name_lc'];
+
 		if ( isset( $album['id'] ) ) {
 			$song['album_name'] = $album['album_name'];
+			$song['album_name_lc'] = $album['album_name_lc'];
 			$song['album_id'] = $album['id'];
 			if ( isset( $album['image'] ) ) {
 				$song['image'] = $album['image'];
 			}
 		}
-		$song['type'] = LyricsApiBase::TYPE_SONG;
+		$song['type'] = LyricsUtils::TYPE_SONG;
 		$doc = $this->newDocFromData( $song );
 		$this->add( $doc );
 	}

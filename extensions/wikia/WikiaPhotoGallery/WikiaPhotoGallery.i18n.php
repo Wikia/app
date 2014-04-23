@@ -1583,7 +1583,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-finish' => 'Qediya',
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => "$1'i sera",
-	'wikiaPhotoGallery-error-caption' => 'Xırab',
+	'wikiaPhotoGallery-error-caption' => 'Xeta',
 	'wikiaPhotoGallery-upload-findtitle' => 'Bıvin',
 	'wikiaPhotoGallery-upload-findbutton' => 'Bıvin',
 	'wikiaPhotoGallery-upload-page-next' => "8'ê peyêni",

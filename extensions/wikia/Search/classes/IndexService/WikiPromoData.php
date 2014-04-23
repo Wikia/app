@@ -29,8 +29,6 @@ class WikiPromoData extends AbstractWikiService
 			$detail = $service->getVisualizationInfoForWikiId( $service->getWikiId() );
 			$this->result = array(
 				'wiki_description_txt' => $detail['desc'],
-				'wiki_new_b' => empty( $detail['flags']['new'] ) ? 'false' : 'true',
-				'wiki_hot_b' => empty( $detail['flags']['hot'] ) ? 'false' : 'true',
 				'wiki_official_b' => empty( $detail['flags']['official'] ) ? 'false' : 'true',
 				'wiki_promoted_b' => empty( $detail['flags']['promoted'] ) ? 'false' : 'true',
 			);

@@ -1031,7 +1031,6 @@ $messages['es'] = array(
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Tema<br /> Activo|Temas<br /> Activos}}</span>',
 	'forum-specialpage-heading' => 'Foro',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Puedes editarlo<span>',
-	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|tema|temas}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|mensaje|mensajes}}',
 	'forum-specialpage-board-lastpostby' => 'Último mensaje escrito por',
@@ -1164,7 +1163,6 @@ ___________________________________________ <br />
 	'forum-related-discussion-new-post-button' => 'Comienza un tema',
 	'forum-related-discussion-new-post-tooltip' => 'Comienza un tema acerca de $1',
 	'forum-related-discussion-total-replies' => '$1 mensajes',
-
 	'forum-related-discussion-see-more' => 'Ver más temas',
 	'forum-confirmation-board-deleted' => '"$1" ha sido borrado.',
 );
@@ -2275,6 +2273,7 @@ $messages['oc'] = array(
 /** Polish (polski)
  * @author Chrumps
  * @author Cotidianis
+ * @author Pan Cube
  * @author Pio387
  * @author Rzuwig
  * @author Vuh
@@ -2283,7 +2282,7 @@ $messages['pl'] = array(
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Aktywny wątek|Aktywne wątki|Aktywnych wątków}}',
 	'forum-active-threads-on-topic' => "{{FORMATNUM:$1}} {{PLURAL:$1|Aktywna dyskusja|Aktywnych dyskusji}} o: '''[[$2]]'''",
-	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Wątek<br /> na tym forum|Wątki<br /> na tym forum|Wątków<br> na tym forum}}</span>', # Fuzzy
+	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Wątek<br /> na tym forum|Wątki<br /> na tym forum|Wątków<br /> na tym forum}}</span>',
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Aktywny<br /> wątek|Aktywne<br /> wątki|Aktywnych<br /> wątków}}</span>',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Edytuj<span>',
@@ -2404,7 +2403,7 @@ ___________________________________________<br />
 	'forum-recentchanges-history-link' => 'historia subforum',
 	'forum-recentchanges-thread-history-link' => 'historia wątku',
 	'forum-recentchanges-closed-thread' => '{{GENDER:$5|zamknął|zamknęła}} wątek "[[$1|$2]]" w [[$3|$4]]', # Fuzzy
-	'forum-recentchanges-reopened-thread' => '{{GENDER:$5|reaktywował|reaktywowała}} wątek "[[$1|$2]]" w [[$3|$4]]', # Fuzzy
+	'forum-recentchanges-reopened-thread' => '$5 {{GENDER:$5|reaktywował|reaktywowała}} wątek "[[$1|$2]]" w [[$3|$4]]', # Fuzzy
 	'forum-board-history-title' => 'Historia subforum',
 	'forum-specialpage-oldforum-link' => 'Archiwum poprzedniego forum',
 	'forum-admin-page-breadcrumb' => 'Administracja forum',
@@ -3800,6 +3799,7 @@ ___________________________________________<br />
  * @author Ffaarr
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Liye
  * @author User670839245
  * @author Yfdyh000
  * @author 御坂美琴
@@ -3889,12 +3889,17 @@ $messages['zh-hans'] = array(
 	'forum-admin-page-breadcrumb' => '管理员面板管理',
 	'forum-admin-create-new-board-label' => '创建新面板',
 	'forum-admin-create-new-board-modal-heading' => '创建新面板',
+	'forum-admin-create-new-board-title' => '板块标题',
+	'forum-admin-create-new-board-description' => '版块描述',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
+	'forum-admin-link-label' => '管理版块',
+	'forum-autoboard-title-2' => '新闻和公告',
 	'forum-autoboard-body-2' => '重大消息信息',
 	'forum-autoboard-title-4' => '问答',
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
 	'forum-board-destination-empty' => '（请选择面板）',
+	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
 	'forum-related-discussion-heading' => '关于$1的讨论',
 	'forum-related-discussion-new-post-button' => '开始讨论',
