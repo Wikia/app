@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.evolveSlotConfig', function () {
 		'INVISIBLE_SKIN': {'tile': 1, 'size': '1000x1000'}
 	};
 
-	function getConfig(src) {
+	function getConfig() {
 		return slotMapConfig;
 	}
 
