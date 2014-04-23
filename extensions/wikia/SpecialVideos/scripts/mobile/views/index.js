@@ -20,6 +20,7 @@ define('specialVideos.mobile.views.index', [
 		this.collection = config.collection;
 		this.filterActiveClass = config.filterActiveClass;
 
+		WikiaMobileMediaControls.disableSwipe();
 		this.initialize();
 	}
 
