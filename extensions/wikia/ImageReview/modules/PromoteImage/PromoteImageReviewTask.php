@@ -240,18 +240,18 @@ class PromoteImageReviewTask extends BatchTask {
 
 		foreach($wikis as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
-			$sourceWikiDbName = WikiFactory::IDtoDB($sourceWikiId);
 
 			if( !empty($images) ) {
 				$removedImages = array();
-				foreach($images as $image) {
-					$imageName = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($sourceWikiId)->getPathname();
-					$result = $this->removeSingleImage($corpWikiId, $imageName);
+				foreach($images as $imageName) {
+					if (PromoImage::fromPathname($imageName)->isValid()) {
+						$result = $this->removeSingleImage($corpWikiId, $imageName);
 
-					if( $result['status'] === 0 || $app->wg->DevelEnvironment ) {
-					//almost all the time on devboxes images aren't removed because of no permissions
-					//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
-						$removedImages[] = $imageName;
+						if( $result['status'] === 0 ) {
+							//almost all the time on devboxes images aren't removed because of no permissions
+							//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
+							$removedImages[] = $imageName;
+						}
 					}
 				}
 			}
