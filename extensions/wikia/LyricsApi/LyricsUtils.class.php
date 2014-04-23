@@ -88,7 +88,7 @@ class LyricsUtils {
 				parse_str( $linkParts[ 1 ], $params );
 			}
 			// Add affiliate token param
-			$params['at'] = $affToken;
+			$params[ 'at' ] = $affToken;
 			// Generate final URL
 			return sprintf(
 				'http://itunes.apple.com/%s/%s/%s?%s',
