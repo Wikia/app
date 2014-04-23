@@ -146,7 +146,7 @@ class SpecialVideosHelper extends WikiaModel {
 		foreach ( $videoList as $videoInfo ) {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
-				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'],$videoDetail['timestamp'] );
+				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
 				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
