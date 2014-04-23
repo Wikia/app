@@ -39,7 +39,7 @@ class CategoryExhibitionSectionMedia extends CategoryExhibitionSection {
 						} else {
 							$calculatedWidth = $this->thumbMedia;
 						}
-						$forceWidth	= floor( $calculatedWidth );
+						$forceWidth = floor( $calculatedWidth );
 						$forceHeight = floor( $calculatedWidth / $proportions );
 
 						$imageServing = new ImageServing( array( $item['page_id'] ), $calculatedWidth , array( "w" => $image->width, "h" => $image->height ) );

@@ -120,7 +120,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			return $this->renderAsThumbnailImage( $options );
 		}
 
-		if ( !(F::app()->checkSkin( 'wikiamobile' ) ) ) {
+		if ( !F::app()->checkSkin( 'wikiamobile' ) ) {
 			$options['useTemplate'] = true;
 		}
 
