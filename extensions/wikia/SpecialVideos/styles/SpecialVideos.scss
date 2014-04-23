@@ -61,7 +61,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 	margin-bottom: 18px;
 
 	// Override article p styles
-	p, .posted-in {
+	p, p + p, .posted-in {
 		font-size: 12px;
 		font-weight: normal;
 		line-height: 18px;
