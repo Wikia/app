@@ -455,7 +455,7 @@
 			// 1 do nothing -- GET
 			$params1 = array(
 				'username' => 'WikiaUser',
-				'loginToken' => self::LOGIN_TOKEN
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest1 = array( 'wasPosted' => false );
 			$mockWgUserParams1 = null;
@@ -467,7 +467,7 @@
 			$params2 = array(
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
-				'loginToken' => self::LOGIN_TOKEN
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
 
@@ -478,7 +478,7 @@
 			// 4 redirect page -- cancel request + empty returnto
 			$params4 = array(
 				'cancel' => true,
-				'returnto' => ''
+				'returnto' => '',
 			);
 			$mockHelperParams4 = array(
 				'doRedirect' => array(
@@ -514,7 +514,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
-				'loginToken' => self::LOGIN_TOKEN
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams9 = array(
 				'load' => null,
@@ -528,7 +528,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
-				'loginToken' => self::LOGIN_TOKEN
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams10 = array(
 				'load' => null,
@@ -612,7 +612,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
-				'loginToken' => 'faked'
+				'loginToken' => 'faked',
 			);
 			$expMsg16 = wfMessage( 'sessionfailure' )->escaped();
 
