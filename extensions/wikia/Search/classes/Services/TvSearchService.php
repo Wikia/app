@@ -62,7 +62,7 @@ class TvSearchService {
 		$select = $this->prepareMovieQuery( $query, $lang, $wikiId, $minQuality, $type );
 		$response = $this->querySolr( $select );
 		foreach( $response as $item ) {
-			if ( $item['score'] > 5 ) {
+			if ( $item['score'] > 1.5 ) {
 				return $this->getDataFromItem( $item, $lang );
 			}
 		}
@@ -80,6 +80,11 @@ class TvSearchService {
 				if ( $core !== null ) {
 					$config['adapteroptions']['core'] = $core;
 				}
+				//TODO: remove this temporary config change
+				$config['adapteroptions']['host'] = 'search-master';
+				$config['adapteroptions']['port'] = '8983';
+				unset($config['adapteroptions']['proxy']);
+
 				$this->client = new \Solarium_Client( $config );
 			}
 		} else {
@@ -184,6 +189,7 @@ class TvSearchService {
 		$select->createFilterQuery( 'excl' )->setQuery( implode( ' AND ', $excluded ) );
 
 		$dismax->setQueryFields( implode( ' ', [
+			'title_em^10',
 			'titleStrict',
 			$this->withLang( 'title', $slang ),
 			$this->withLang( 'redirect_titles_mv', $slang ),
