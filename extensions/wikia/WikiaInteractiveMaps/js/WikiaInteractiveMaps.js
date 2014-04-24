@@ -1,4 +1,4 @@
-require([ 'jquery' ], function( $ ) {
+require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 	'use strict';
 
 	$(function() {
@@ -8,16 +8,26 @@ require([ 'jquery' ], function( $ ) {
 		 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 		 */
 		function showMap( $target ) {
-			var $anchor = $( $target.parent()),
-				mapId = $anchor.data( 'map-id' );
+			var $anchor = $( $target.parent() ),
+				tagParams = getDataParams( $anchor ),
+				templatePath = '',
+				iframe = '';
+
+			// just because the path is to long JSHint shows an error here, should we ignore it and keep it in one line?
+			templatePath += 'extensions/wikia/WikiaInteractiveMaps/templates/';
+			templatePath += 'WikiaInteractiveMapsController_mapIframe.mustache';
+
+			loadTemplate( templatePath ).done( function( template ) {
+				iframe = mustache.render( template, { url: getMapUrl( tagParams ) } );
+			} );
 
 			require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
 				uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
 					var modalConfig = {
 						vars: {
-							id: 'interactiveMap-' + mapId,
+							id: 'interactiveMap-' + tagParams['map-id'],
 							size: 'large',
-							content: getMapInIframe( getDataParams( $anchor ) )
+							content: iframe
 						}
 					};
 
@@ -62,12 +72,26 @@ require([ 'jquery' ], function( $ ) {
 		}
 
 		/**
-		 * @desc Builds and returns map in an iframe
-		 * @param params
-		 * @returns {string}
+		 * @desc Loads the template with wikia.loader module and returns promise
+		 * @param {String} templatePath path to the template
+		 * @returns {*} promise
 		 */
-		function getMapInIframe( params ) {
-			return 'Map URL: ' + getMapUrl( params );
+		function loadTemplate( templatePath ) {
+			var dfd = new $.Deferred();
+
+			require( ['wikia.loader' ], function( loader ) {
+				loader( {
+					type: loader.MULTI,
+					resources: {
+						mustache: templatePath
+					}
+				} ).done( function( data ) {
+					// data.mustache[0] is the mustache template loaded by wikia.loader
+					dfd.resolve( data.mustache[0] );
+				} );
+			} );
+
+			return dfd.promise();
 		}
 
 		/** Attach events */
