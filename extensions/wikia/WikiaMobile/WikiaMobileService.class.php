@@ -163,6 +163,10 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'BlueKai',
 					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'Datonics',
+					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
