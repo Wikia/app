@@ -118,6 +118,11 @@ class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 				[ 'id' => 1, 'width' => 'abc' ],
 				false
 			],
+			[
+				'Invalid first parameter but valid second one',
+				[ 'id' => 'abc', 'width' => '100' ],
+				false
+			],
 		];
 	}
 
