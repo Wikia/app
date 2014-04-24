@@ -72,7 +72,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
-	var doc = this.surface.getModel().getDocument();
+	var doc = this.fragment.document;
 
 	this.openCount++;
 	this.timings.serializeStart = ve.now();
@@ -81,8 +81,9 @@ ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
 	ve.ui.Dialog.prototype.setup.call( this );
 
 	this.$frame.startThrobbing();
-	this.surface.getTarget().serialize(
-		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
+	// Use the WikiaViewPageTarget object as the target here
+	ve.init.mw.targets[0].serialize(
+		ve.dm.converter.getDomFromModel( doc, false ),
 		ve.bind( this.onSerialize, this )
 	);
 };
@@ -164,7 +165,8 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 
 	// TODO: This whole approach is based on ve.init.mw.ViewPageTarget.js and contains a lot of code
 	// duplication, it should be discussed with WMF guys and refactored.
-	target = this.surface.getTarget();
+	// Get the WikiaViewPageTarget object here
+	target = ve.init.mw.targets[0];
 
 	target.deactivating = true;
 	target.tearDownToolbarButtons();

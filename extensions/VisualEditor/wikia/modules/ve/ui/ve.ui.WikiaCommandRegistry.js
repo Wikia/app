@@ -10,3 +10,6 @@
 ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'wikiaMediaInsert', 'dialog', 'open', 'wikiaMediaInsert' )
 );
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'wikiaSourceMode', 'dialog', 'open', 'wikiaSourceMode' )
+);
