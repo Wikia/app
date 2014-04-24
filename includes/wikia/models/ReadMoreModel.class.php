@@ -124,7 +124,7 @@ class ReadMoreModel extends WikiaModel {
 		foreach( $keys as $key ) {
 			$recommendationIds = explode( '_', $key );
 			if ( empty( $recommendationIds[0] ) ) {
-				break;
+				continue;
 			}
 
 			if ( $recommendationIds[0] == $this->getWikiId() ) {
