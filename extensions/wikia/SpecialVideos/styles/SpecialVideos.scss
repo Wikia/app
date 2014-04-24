@@ -104,11 +104,12 @@ $placeholder-bg-color: darken($color-page, 10%);
 
 	.views {
 		white-space: nowrap;
-	}
-
-	.diamond {
-		font-size: 7px;
-		vertical-align: top;
+		&:before {
+			content: '\2666';
+			font-size: 7px;
+			padding-right: 3px;
+			vertical-align: top;
+		}
 	}
 
 	.title {

@@ -49,7 +49,6 @@
 				</p>
 				<p class="by-views">
 					<?= $video['byUserMsg'] ?>
-					<span class="diamond">&diams;</span>
 					<span class="views"><?= $video['viewTotal'] ?></span>
 				</p>
 				<div class="posted-in">
