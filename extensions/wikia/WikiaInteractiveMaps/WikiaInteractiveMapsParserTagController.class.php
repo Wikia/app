@@ -84,14 +84,14 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	private function getMapPlaceholderParams() {
 		$params = [];
 
-		$params['lat'] = $this->request->getVal( 'lat', 0 );
-		$params['long'] = $this->request->getVal( 'long', 0 );
-		$params['zoom'] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
-		$params['width'] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
-		$params['height'] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$params[ 'lat' ] = $this->request->getVal( 'lat', 0 );
+		$params[ 'long' ] = $this->request->getVal( 'long', 0 );
+		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
+		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
+		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
 
-		$params['width'] .= 'px';
-		$params['height'] .= 'px';
+		$params[ 'width' ] .= 'px';
+		$params[ 'height' ] .= 'px';
 
 		return (object) $params;
 	}
@@ -115,8 +115,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		];
 
 		foreach( $validParams as $key => $mapTo ) {
-			if ( isset( $data[$key] ) ) {
-				$result[$mapTo] = $data[$key];
+			if ( isset( $data[ $key ] ) ) {
+				$result[ $mapTo ] = $data[ $key ];
 			}
 		}
 
@@ -160,7 +160,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		$validator = $this->buildParamValidator( $paramName );
 		if( $validator ) {
-			$isValid = $validator->isValid( $params[$paramName] );
+			$isValid = $validator->isValid( $params[ $paramName ] );
 
 			if( !$isValid ) {
 				$errorMessage = $validator->getError()->getMsg();
