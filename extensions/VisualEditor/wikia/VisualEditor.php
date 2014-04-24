@@ -145,6 +145,8 @@ $wgResourceModules += array(
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
+			'ext.visualEditor.mwimage',
+			'ext.visualEditor.mwmeta',
 		)
 	),
 );
