@@ -43,6 +43,22 @@ class MathHooks {
 	 */
 	static function mathTagHook( $content, $attributes, $parser ) {
 		global $wgContLang, $wgUseMathJax;
+
+		// Wikia change - begin - @author: TK-999
+		// Fix colorization issues across skins
+		global $wgTexvcBackgroundColor;
+		$skin = RequestContext::getMain()->getSkin();
+		if ( SassUtil::isThemeDark() ) {
+			$wgTexvcBackgroundColor = 'Transparent'; // set bg to alpha transparency
+
+			// Set fallback text color for non-oasis skins
+			if ( $skin->getSkinName() != 'oasis' ) {
+				$color = '\definecolor{text}{RGB}{0,0,0}';
+				$content = $color . '{\color{text}' . $content . '}';
+			}
+		}
+		// Wikia change - end
+
 		$renderedMath = MathRenderer::renderMath(
 			$content, $attributes, $parser->getOptions()
 		);
