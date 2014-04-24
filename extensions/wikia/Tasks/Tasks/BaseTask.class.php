@@ -134,7 +134,7 @@ abstract class BaseTask {
 		}
 
 		if ($this->queueName) {
-			$taskList->useQueue($this->queueName);
+			$taskList->setPriority($this->queueName);
 		}
 
 		if ($this->force) {
@@ -200,10 +200,10 @@ abstract class BaseTask {
 	}
 
 	public function prioritize() {
-		return $this->useQueue(PriorityQueue::NAME);
+		return $this->setPriority(PriorityQueue::NAME);
 	}
 
-	public function useQueue($queueName) {
+	public function setPriority($queueName) {
 		$this->queueName = $queueName;
 		return $this;
 	}

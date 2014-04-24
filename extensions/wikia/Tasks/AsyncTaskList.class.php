@@ -55,7 +55,7 @@ class AsyncTaskList {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->useQueue(PriorityQueue::NAME);
+		return $this->setPriority(PriorityQueue::NAME);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class AsyncTaskList {
 	 * @param string $queue which queue to add this task list to
 	 * @return $this
 	 */
-	public function useQueue($queue) {
+	public function setPriority($queue) {
 		switch ($queue) {
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
