@@ -73,6 +73,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'params', $this->getMapPlaceholderParams() );
 		$this->setVal( 'mapPageUrl', '#' );
 
+		// TODO: find out where to move it so it's loaded only once but maybe not on all article pages, huh? ;)
+		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
