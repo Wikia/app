@@ -284,7 +284,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		if (!$this->checkAccess()) {
 			wfProfileOut(__METHOD__);
-			$this->response->setHeader("Cache-Control", "no-cache");
+			$this->response->setHeader('Cache-Control', 'no-cache');
 			throw new PermissionsException('managewikiahome');
 		}
 
@@ -302,12 +302,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$wgOut->disable();
 
 		// set up headers
-		$this->response->setFormat(null);
-		$this->response->setHeader("Cache-Control", "private");
-		$this->response->setHeader("Content-Description", "File Transfer");
-		$this->response->setHeader("Content-Disposition", "attachment; filename=ManageWikiaHomeWikisList-".$visualizationLang.".csv");
-		$this->response->setHeader("Content-Type", "application/octet-stream");
-		$this->response->setHeader("Content-Transfer-Encoding", "binary");
+		$this->response->setFormat(WikiaResponse::FORMAT_RAW);
+		$this->response->setHeader('Cache-Control', 'private');
+		$this->response->setHeader('Content-Description', 'File Transfer');
+		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
+		$this->response->setHeader('Content-Type', 'application/octet-stream');
+		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
 
 		// output data in csv format
 		$out = fopen('php://output', 'w');
