@@ -107,7 +107,8 @@ $wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePerm
 //JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', array(
 	'oasis-comments-header',
-	'oasis-comments-showing-most-recent'
+	'oasis-comments-showing-most-recent',
+	'oasis-comments-anonymous-prompt'
 ));
 
 JSMessages::registerPackage( 'WikiaMobileComments', array(
