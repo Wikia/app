@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.template.skin', [
 
 		if (window.wgOasisResponsive) {
 			window.wgAfterContentAndJS.push(function () {
-				require('wikia.backgroundchanger', backgroundchanger, function () {
+				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					var bcParams = {
 						skinImage: params.skinImage,
 						skinImageWidth: 1700,
