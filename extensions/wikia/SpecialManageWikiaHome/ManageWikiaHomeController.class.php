@@ -285,7 +285,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		if (!$this->checkAccess()) {
 			wfProfileOut(__METHOD__);
 			http_response_code(403);
-			header("Cache-Control: private");
+			header("Cache-Control: no-cache");
 			die;
 		}
 
