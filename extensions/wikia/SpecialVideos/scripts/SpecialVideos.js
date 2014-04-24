@@ -19,7 +19,7 @@ $(function () {
 			var self = this;
 			$(window)
 				.on('resize.specialvideos', function () {
-					self.$wrapper.find('.title').ellipses();
+					self.$wrapper.find('.title a').ellipses();
 				})
 				.trigger('resize.specialvideos');
 		},

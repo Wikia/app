@@ -60,6 +60,14 @@ $placeholder-bg-color: darken($color-page, 10%);
 	color: $color-alternate-text;
 	margin-bottom: 18px;
 
+	a {
+		color: $color-alternate-text;
+		&:hover {
+			color: $color-links;
+			text-decoration: none;
+		}
+	}
+
 	// Override article p styles
 	p, p + p, .posted-in {
 		font-size: 12px;
@@ -72,6 +80,8 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 
 	li {
+		margin: 0;
+		padding-bottom: 5px;
 		position: relative;
 		&:hover .remove {
 			display: block;
@@ -83,29 +93,38 @@ $placeholder-bg-color: darken($color-page, 10%);
 		max-height: 208px;
 	}
 
+	.info {
+		height: 150px;
+		margin-top: 5px;
+	}
+
 	.by-views {
 		white-space: normal;
 	}
 
 	.views {
 		white-space: nowrap;
-	}
-
-	.diamond {
-		font-size: 7px;
-		vertical-align: top;
-	}
-
-	.video {
-		margin-bottom: 2px;
+		&:before {
+			content: '\2666';
+			font-size: 7px;
+			padding-right: 3px;
+			vertical-align: top;
+		}
 	}
 
 	.title {
-		color: $color-text;
-		font-size: 20px;
-		line-height: 38px;
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 26px;
+		margin-bottom: 5px;
 		overflow: visible;
 		white-space: normal;
+		a {
+			color: $color-text;
+			&:hover {
+				color: $color-links;
+			}
+		}
 	}
 
 	.add-video-placeholder {
