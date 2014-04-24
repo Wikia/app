@@ -67,7 +67,7 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 		'type': 'list',
 		'icon': 'menu',
 		'indicator': 'down',
-		'include': [ 'wikiaMeta', 'categories', 'wikiaSourceMode', 'help', 'notices', 'commandHelp' ]
+		'include': [ 'wikiaMeta', 'categories', 'wikiaSourceMode', 'wikiaHelp', 'commandHelp' ]
 	}
 ];
 

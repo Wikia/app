@@ -67,8 +67,8 @@ ve.ui.WikiaMetaDialogTool = function VeUiWikiaMetaDialogTool( toolbar, config ) 
 	ve.ui.MWMetaDialogTool.call( this, toolbar, config );
 };
 OO.inheritClass( ve.ui.WikiaMetaDialogTool, ve.ui.MWMetaDialogTool );
-ve.ui.MWMetaDialogTool.static.name = 'wikiaMeta';
-ve.ui.MWMetaDialogTool.static.icon = 'advanced';
-ve.ui.MWMetaDialogTool.static.title =
+ve.ui.WikiaMetaDialogTool.static.name = 'wikiaMeta';
+ve.ui.WikiaMetaDialogTool.static.icon = 'settings';
+ve.ui.WikiaMetaDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialog-meta-settings-label' );
 ve.ui.toolFactory.register( ve.ui.WikiaMetaDialogTool );
