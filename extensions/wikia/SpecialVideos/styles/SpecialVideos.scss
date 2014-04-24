@@ -80,7 +80,8 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 
 	li {
-		padding-bottom: 65px;
+		margin: 0;
+		padding-bottom: 5px;
 		position: relative;
 		&:hover .remove {
 			display: block;
@@ -90,6 +91,11 @@ $placeholder-bg-color: darken($color-page, 10%);
 	img {
 		// handle failed image loads so they maintain somewhat reasonable proportions
 		max-height: 208px;
+	}
+
+	.info {
+		height: 128px;
+		margin-top: 5px;
 	}
 
 	.by-views {
@@ -105,15 +111,11 @@ $placeholder-bg-color: darken($color-page, 10%);
 		vertical-align: top;
 	}
 
-	.video {
-		margin-bottom: 2px;
-	}
-
 	.title {
 		font-size: 18px;
 		font-weight: bold;
 		line-height: 26px;
-		margin: 5px 0;
+		margin-bottom: 5px;
 		overflow: visible;
 		white-space: normal;
 		a {

@@ -43,24 +43,26 @@
 
 		<li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
 			<?= $video['thumbnail'] ?>
-			<p class="title">
-				<a href="<?= $video['fileUrl'] ?>" title="<?= $video['title'] ?>"><?= $video['title'] ?></a>
-			</p>
-			<p class="by-views">
-				<?= $video['byUserMsg'] ?>
-				<span class="diamond">&diams;</span>
-				<span class="views"><?= $video['viewTotal'] ?></span>
-			</p>
-			<div class="posted-in">
-				<a class="ellipses" href="<?= $video['seeMoreLink'] ?>"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
-				<? if ( count($video['truncatedList']) ): ?>
-					<?= wfMessage('specialvideos-posted-in-label')->plain() ?>
-					<ul>
-						<? foreach( $video['truncatedList'] as $article ): ?>
-							<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
-						<? endforeach; ?>
-					</ul>
-				<? endif; ?>
+			<div class="info">
+				<p class="title">
+					<a href="<?= $video['fileUrl'] ?>" title="<?= $video['title'] ?>"><?= $video['title'] ?></a>
+				</p>
+				<p class="by-views">
+					<?= $video['byUserMsg'] ?>
+					<span class="diamond">&diams;</span>
+					<span class="views"><?= $video['viewTotal'] ?></span>
+				</p>
+				<div class="posted-in">
+					<a class="ellipses" href="<?= $video['seeMoreLink'] ?>"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
+					<? if ( count($video['truncatedList']) ): ?>
+						<?= wfMessage('specialvideos-posted-in-label')->plain() ?>
+						<ul>
+							<? foreach( $video['truncatedList'] as $article ): ?>
+								<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
+							<? endforeach; ?>
+						</ul>
+					<? endif; ?>
+				</div>
 			</div>
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
