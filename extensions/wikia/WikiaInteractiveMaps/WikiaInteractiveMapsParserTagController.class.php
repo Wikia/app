@@ -140,7 +140,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		}
 
 		foreach( $params as $param => $value ) {
-			$isValid = $this->isTagParamValid( $param, $params, $errorMessage );
+			$isValid = $this->isTagParamValid( $param, $value, $errorMessage );
 
 			if( !$isValid ) {
 				return $isValid;
@@ -154,17 +154,17 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @desc Checks if parameter from parameters array is valid
 	 *
 	 * @param String $paramName name of parameter which should get validated
-	 * @param Array $params parameters passed from parser tag arguments
+	 * @param String|Mixed $paramValue value of the parameter
 	 * @param String $errorMessage reference to a string variable which will get error message if one occurs
 	 *
 	 * @return bool
 	 */
-	private function isTagParamValid( $paramName, Array $params, &$errorMessage ) {
+	private function isTagParamValid( $paramName, $paramValue, &$errorMessage ) {
 		$isValid = false;
 
 		$validator = $this->buildParamValidator( $paramName );
 		if( $validator ) {
-			$isValid = $validator->isValid( $params[ $paramName ] );
+			$isValid = $validator->isValid( $paramValue );
 
 			if( !$isValid ) {
 				$errorMessage = $validator->getError()->getMsg();
