@@ -31,10 +31,10 @@ require([ 'jquery' ], function( $ ) {
 		/**
 		 * @desc Creates an object with data from data-* parameters of a jQuery wrapper on DOM element
 		 * @param $el jQuery wrapped DOM element from which the data will be extracted
-		 * @returns {Object} with map-id, lat, long and zoom parameters
+		 * @returns {Object} with map-id, lat, lon and zoom parameters
 		 */
 		function getDataParams( $el ) {
-			var result = { 'map-id': null, 'lat': null, 'long': null, 'zoom': null },
+			var result = { 'map-id': null, 'lat': null, 'lon': null, 'zoom': null },
 				paramName;
 
 			for( paramName in result ) {
@@ -56,7 +56,7 @@ require([ 'jquery' ], function( $ ) {
 
 			url = config.protocol + '://';
 			url += config.hostname + ':' + config.port + '/api/' + config.version + '/render/';
-			url += params['map-id'] + '/' + params.zoom + '/' + params.lat + '/' + params.long;
+			url += params['map-id'] + '/' + params.zoom + '/' + params.lat + '/' + params.lon;
 
 			return url;
 		}

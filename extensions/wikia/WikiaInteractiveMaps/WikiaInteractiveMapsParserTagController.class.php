@@ -91,7 +91,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = [];
 
 		$params[ 'lat' ] = $this->request->getVal( 'lat', 0 );
-		$params[ 'long' ] = $this->request->getVal( 'long', 0 );
+		$params[ 'lon' ] = $this->request->getVal( 'lon', 0 );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
 		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
 		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
@@ -114,7 +114,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$validParams = [
 			'map-id' => 'id',
 			'lat' => 'lat',
-			'long' => 'long',
+			'lon' => 'lon',
 			'zoom' => 'zoom',
 			'width' => 'width',
 			'height' => 'height',
@@ -202,7 +202,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude' ]
 				);
 				break;
-			case 'long':
+			case 'lon':
 				$validator = new WikiaValidatorNumeric(
 					[],
 					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude' ]
