@@ -70,8 +70,8 @@ define('wikia.videohandler.ooyala', [
 			if (!dartVideoHelper) {
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
-			createParams['google-ima-ads-manager'] = {
-				adTagUrl: dartVideoHelper.getUrl(),
+			createParams.vast = {
+				tagUrl: dartVideoHelper.getUrl(),
 				showInAdControlBar: true
 			};
 		}

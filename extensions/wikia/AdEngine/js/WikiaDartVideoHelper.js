@@ -38,14 +38,27 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 	 */
 	function getUrl() {
 		log('getUrl', 5, logGroup);
-		var out = 'http://pubads.g.doubleclick.net/gampad/ads?' +
-			'env=vp&gdfp_req=1&impl=s&output=xml_vast2&' +
-			'iu=/5441/wka.' + pageParams.s0 + '//' + pageParams.s1 + '//' + pageParams.s2 + '&' +
-			'sz=320x240&' +
-			'unviewed_position_start=1&' +
-			'url=' + encodeURIComponent(location.href) + '&' +
-			'cust_params=' + encodeURIComponent(getCustParams()) + '&' +
-			'correlator=' + ord;
+		var key, out,
+			params = {
+				iu: '/5441/wka.ooyalavideo',
+				correlator: ord,
+				ad_rule: '0',
+				output: 'xml_vast2',
+				gdfp_req: '1',
+				env: 'vp',
+				impl: 's',
+				unviewed_position_start: 1,
+				sz: '320x240',
+				t: encodeURIComponent(getCustParams())
+			};
+
+		out = 'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs';
+
+		for(key in params) {
+			if (params.hasOwnProperty(key)) {
+				out = out + '&' + key + '=' + params[key];
+			}
+		}
 
 		log(out, 5, logGroup);
 		return out;
