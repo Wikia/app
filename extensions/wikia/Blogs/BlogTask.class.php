@@ -32,4 +32,8 @@ class BlogTask extends BaseTask {
 
 		return $articles;
 	}
+
+	public function maintenance() {
+		return \BlogArticle::wfMaintenance();
+	}
 } 

@@ -31,8 +31,9 @@ spl_autoload_register(function($class) {
 
 class TaskExecutors {
 	private static $modernExecutors = [
-		'ParsoidCacheUpdateJob',
 		'BloglistDeferredPurgeJob',
+		'BlogTask',
+		'ParsoidCacheUpdateJob',
 	];
 
 	static function isLegacy($taskName) {

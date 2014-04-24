@@ -189,12 +189,18 @@ Class WikiFactoryChangedHooks {
 			/**
 			 * add task to TaskManager
 			 */
-			if (!class_exists('BlogTask')) {
-				global $IP;
-				extAddBatchTask("$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask");
+			if (TaskExecutors::isModern('BlogTask')) {
+				$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
+				$task->call('maintenance');
+				$task->queue();
+			} else {
+				if (!class_exists('BlogTask')) {
+					global $IP;
+					extAddBatchTask("$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask");
+				}
+				$Task = new BlogTask();
+				$Task->createTask(array("city_id" => $city_id), TASK_QUEUED);
 			}
-			$Task = new BlogTask();
-			$Task->createTask(array("city_id" => $city_id), TASK_QUEUED);
 		}
 		return true;
 	}
