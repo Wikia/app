@@ -84,6 +84,7 @@ $wgResourceModules += array(
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
+			've/ui/dialogs/ve.ui.WikiaMediaEditDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',

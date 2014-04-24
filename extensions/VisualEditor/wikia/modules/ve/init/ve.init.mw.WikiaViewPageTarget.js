@@ -38,7 +38,8 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
 		'include': [ { 'group': 'format' } ],
 		'promote': [ 'paragraph' ],
-		'demote': [ 'preformatted', 'heading1' ]
+		'demote': [ 'preformatted' ],
+		'exclude': [ 'heading1' ]
 	},
 	// Style
 	{ 'include': [ 'bold', 'italic', 'link' ] },
@@ -51,11 +52,10 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 	},
 	// Insert
 	{
+		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': '*',
-		'promote': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ],
-		'exclude': [ 'redo', 'code', 'specialcharacter', 'gallery', 'mediaInsert', 'wikiaSourceMode' ]
+		'include': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -63,6 +63,7 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	{
 		'type': 'list',
 		'icon': 'menu',
+		'indicator': 'down',
 		'include': [ 'meta', 'categories', 'wikiaSourceMode', 'help', 'notices', 'commandHelp' ]
 	}
 ];
