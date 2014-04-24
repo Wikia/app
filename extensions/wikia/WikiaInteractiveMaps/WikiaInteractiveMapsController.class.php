@@ -1,15 +1,11 @@
 <?php
-
+/**
+ * Class WikiaInteractiveMapsController
+ * @desc Special:WikiaInteractiveMaps controller
+ */
 class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
-	/*
-	 * Map image height
-	 */
 	const MAP_HEIGHT = 300;
-
-	/**
-	 * Map image width
-	 */
 	const MAP_WIDTH = 1600;
 
 	/**
@@ -58,4 +54,5 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
+
 }
