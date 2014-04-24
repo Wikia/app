@@ -141,6 +141,10 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 
 		foreach( $params as $param => $value ) {
 			$isValid = $this->isTagParamValid( $param, $params, $errorMessage );
+
+			if( !$isValid ) {
+				return $isValid;
+			}
 		}
 
 		return $isValid;
