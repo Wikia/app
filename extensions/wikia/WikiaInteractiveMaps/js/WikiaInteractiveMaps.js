@@ -2,7 +2,7 @@ require([ 'jquery' ], function( $ ) {
 	'use strict';
 
 	$(function() {
-		var mapParams = { 'id': null, 'lat': null, 'long': null, 'zoom': null };
+		var mapParams = { 'map-id': null, 'lat': null, 'long': null, 'zoom': null };
 
 		/**
 		 * @desc Shows a modal with map inside

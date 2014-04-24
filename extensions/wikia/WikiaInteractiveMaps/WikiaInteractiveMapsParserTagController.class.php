@@ -72,9 +72,10 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'map', (object) $map );
 		$this->setVal( 'params', $this->getMapPlaceholderParams() );
 		$this->setVal( 'mapPageUrl', '#' );
+		$this->setVal( 'jsSnippet', JSSnippets::addToStack([
+			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+		]) );
 
-		// TODO: find out where to move it so it's loaded only once but maybe not on all article pages, huh? ;)
-		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
@@ -137,7 +138,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$isValid = false;
 
 		if( empty( $params ) ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->plain();
 			return $isValid;
 		}
 
