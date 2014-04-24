@@ -40,12 +40,12 @@ class TvApiController extends WikiaApiController {
 	protected function findMovie( $movieName ) {
 		$tvs = $this->getTvSearchService();
 
-		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, $tvs::MOVIE_TYPE );
+		$result = $tvs->queryMovie( $movieName, self::LANG_SETTING, $tvs::MOVIE_TYPE, null, 50 );
 		if ( !empty( $result ) ) {
 			return $result;
 		}
 		//else try moviepedia
-		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, null, self::MOVIEPEDIA_WIKI );
+		$result = $tvs->queryMain( $movieName, self::LANG_SETTING, null, self::MOVIEPEDIA_WIKI, 50 );
 		if ( !empty( $result ) ) {
 			return $result;
 		}

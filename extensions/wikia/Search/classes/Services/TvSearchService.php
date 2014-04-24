@@ -58,6 +58,17 @@ class TvSearchService {
 		return null;
 	}
 
+	public function queryMovie( $query, $lang, $type = null, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareMovieQuery( $query, $lang, $wikiId, $minQuality, $type );
+		$response = $this->querySolr( $select );
+		foreach( $response as $item ) {
+			if ( $item['score'] > 5 ) {
+				return $this->getDataFromItem( $item, $lang );
+			}
+		}
+		return null;
+	}
+
 	protected function setClient( $client = null, $config = null, $core = null ) {
 		if ( $client === null ) {
 			if ( $this->provided ) {
@@ -136,6 +147,41 @@ class TvSearchService {
 		if( !empty( $type ) ) {
 			$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . $type . ')');
 		}
+
+		$dismax->setQueryFields( implode( ' ', [
+			'titleStrict',
+			$this->withLang( 'title', $slang ),
+			$this->withLang( 'redirect_titles_mv', $slang ),
+		] ) );
+		$dismax->setPhraseFields( implode( ' ', [
+			'titleStrict^8',
+			$this->withLang( 'title', $slang ).'^2',
+			$this->withLang( 'redirect_titles_mv', $slang ).'^2',
+		] ) );
+
+		return $select;
+	}
+
+	protected function prepareMovieQuery( $query, $lang, $wikiId = null, $minQuality = null, $type = null ) {
+		$select = $this->getArticleSelect();
+
+		$phrase = $this->sanitizeQuery( $query );
+		$slang = $this->sanitizeQuery( $lang );
+		$preparedQuery = $this->prepareQuery( $phrase, $wikiId, $minQuality );
+
+		$dismax = $select->getDisMax();
+		$dismax->setQueryParser('edismax');
+
+		$select->setQuery( $preparedQuery );
+		$select->setRows( static::ARTICLES_LIMIT );
+		$select->createFilterQuery( 'ns' )->setQuery('+(ns:'. static::ALLOWED_NAMESPACE . ')');
+		if( !empty( $type ) ) {
+			$select->createFilterQuery( 'type' )->setQuery('+(article_type_s:' . $type . ')');
+		}
+		foreach( ['uncyclopedia.wikia.com'] as $ex ) {
+			$excluded[] = "-(host:{$ex})";
+		}
+		$select->createFilterQuery( 'excl' )->setQuery( implode( ' AND ', $excluded ) );
 
 		$dismax->setQueryFields( implode( ' ', [
 			'titleStrict',
