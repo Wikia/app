@@ -66,7 +66,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$map = $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
-			[ 'id' => $this->getVal( 'map-id' ) ]
+			[ 'id' => $this->getVal( 'id' ) ]
 		);
 
 		$this->setVal( 'map', (object) $map );
