@@ -11,20 +11,19 @@ class ReadMoreModel extends WikiaModel {
 	private $wikiId;
 	private $articleId;
 
-	private function setWikiId( $wikiId ) {
-		$this->wikiId = $wikiId;
-	}
+	public function __construct( $wikiId = null, $articleId = null ) {
+		global $wgCityId, $wgTitle;
 
-	private function setArticleId ( $articleId ) {
+		if ( is_null( $wikiId ) ) {
+			$wikiId = $wgCityId;
+		}
+
+		if ( is_null( $articleId ) ) {
+			$articleId = $wgTitle->getArticleID();
+		}
+
 		$this->articleId = $articleId;
-	}
-
-	private function getWikiId() {
-		return $this->wikiId;
-	}
-
-	private function getArticleId() {
-		return $this->articleId;
+		$this->wikiId = $wikiId;
 	}
 
 	/**
@@ -36,20 +35,7 @@ class ReadMoreModel extends WikiaModel {
 	 *
 	 * @return array recommendation data with article title, description, url and image
 	 */
-	public function getRecommendedArticles( $wikiId = null, $articleId = null ) {
-		global $wgCityId, $wgTitle;
-
-		if ( is_null( $wikiId ) ) {
-			$wikiId = $wgCityId;
-		}
-
-		if ( is_null( $articleId ) ) {
-			$articleId = $wgTitle->getArticleID();
-		}
-
-		$this->setArticleId( $articleId );
-		$this->setWikiId( $wikiId );
-
+	public function getRecommendedArticles() {
 		$recommendations = WikiaDataAccess::cache(
 			$this->getMemcKey(),
 			60 * 60 * 24 /* 24 hours */,
@@ -76,8 +62,8 @@ class ReadMoreModel extends WikiaModel {
 	 */
 	private function getDataFromSolr() {
 		$service = new SolrDocumentService();
-		$service->setWikiId( $this->getWikiId() );
-		$service->setArticleId( $this->getArticleId() );
+		$service->setWikiId( $this->wikiId );
+		$service->setArticleId( $this->articleId );
 
 		$result = $service->getResult();
 
@@ -127,7 +113,7 @@ class ReadMoreModel extends WikiaModel {
 				continue;
 			}
 
-			if ( $recommendationIds[0] == $this->getWikiId() ) {
+			if ( $recommendationIds[0] == $this->wikiId ) {
 				$articleIds[$recommendationIds[1]] = $recommendationIds[1];
 			}
 		}
@@ -171,8 +157,8 @@ class ReadMoreModel extends WikiaModel {
 		return wfSharedMemcKey(
 			'readmorenlp',
 			self::MEMC_VER,
-			$this->getWikiId(),
-			$this->getArticleId()
+			$this->wikiId,
+			$this->articleId
 		);
 	}
 }
