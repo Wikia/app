@@ -11,6 +11,7 @@ class WikiService extends WikiaModel {
 
 	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
+	const WIKIAGLOBAL_CITY_ID = 80433;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
