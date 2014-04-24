@@ -63,6 +63,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return null|string
 	 */
 	public function mapThumbnail() {
+		global $wgIntMapConfig;
+
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$map = $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
@@ -76,6 +78,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
 		]) );
 
+		$this->response->setJsVar( 'wgIntMapConfig', $wgIntMapConfig );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

@@ -2,20 +2,72 @@ require([ 'jquery' ], function( $ ) {
 	'use strict';
 
 	$(function() {
-		var mapParams = { 'map-id': null, 'lat': null, 'long': null, 'zoom': null };
-
 		/**
 		 * @desc Shows a modal with map inside
 		 *
 		 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 		 */
 		function showMap( $target ) {
-			var $anchor = $( $target.parent() ),
-				param;
+			var $anchor = $( $target.parent()),
+				mapId = $anchor.data( 'map-id' );
 
-			for( param in mapParams ) {
-				console.log( param + ': ' + $anchor.data( param ) );
+			require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
+				uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
+					var modalConfig = {
+						vars: {
+							id: 'interactiveMap-' + mapId,
+							size: 'large',
+							content: getMapInIframe( getDataParams( $anchor ) )
+						}
+					};
+
+					uiModal.createComponent( modalConfig, function ( mapModal ) {
+						mapModal.show();
+					});
+				});
+			});
+		}
+
+		/**
+		 * @desc Creates an object with data from data-* parameters of a jQuery wrapper on DOM element
+		 * @param $el jQuery wrapped DOM element from which the data will be extracted
+		 * @returns {Object} with map-id, lat, long and zoom parameters
+		 */
+		function getDataParams( $el ) {
+			var result = { 'map-id': null, 'lat': null, 'long': null, 'zoom': null },
+				paramName;
+
+			for( paramName in result ) {
+				result[ paramName ] = $el.data( paramName );
 			}
+
+			return result;
+		}
+
+		/**
+		 * @desc Build and returns map URL
+		 * @param {Object} params gathered from DOM element data-* attributes
+		 * @see getDataParams()
+		 * @returns {string}
+		 */
+		function getMapUrl( params ) {
+			var config = window.wgIntMapConfig,
+				url;
+
+			url = config.protocol + '://';
+			url += config.hostname + ':' + config.port + '/api/' + config.version + '/render/';
+			url += params['map-id'] + '/' + params.zoom + '/' + params.lat + '/' + params.long;
+
+			return url;
+		}
+
+		/**
+		 * @desc Builds and returns map in an iframe
+		 * @param params
+		 * @returns {string}
+		 */
+		function getMapInIframe( params ) {
+			return 'Map URL: ' + getMapUrl( params );
 		}
 
 		/** Attach events */
