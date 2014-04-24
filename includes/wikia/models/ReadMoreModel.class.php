@@ -54,9 +54,13 @@ class ReadMoreModel extends WikiaModel {
 			$this->getMemcKey(),
 			60 * 60 * 24 /* 24 hours */,
 			function() {
+				$recommendations = [];
+
 				$result = $this->getDataFromSolr();
 				$recommendationsKeys = $this->getRecommendationsKeys( $result );
-				$recommendations = $this->prepareRecommendationsData( $recommendationsKeys );
+				if ( !empty( $recommendationsKeys ) ) {
+					$recommendations = $this->prepareRecommendationsData( $recommendationsKeys );
+				}
 
 				return $recommendations;
 			}
