@@ -126,4 +126,4 @@
 		SuggestModalWikiaHubsV3.init();
 	});
 
-})(this, jQuery);
+})(window, jQuery);

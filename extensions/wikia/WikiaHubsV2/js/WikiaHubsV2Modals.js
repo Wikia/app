@@ -125,4 +125,4 @@
 		SuggestModalWikiaHubsV2.init();
 	});
 
-})(this, jQuery);
+})(window, jQuery);
