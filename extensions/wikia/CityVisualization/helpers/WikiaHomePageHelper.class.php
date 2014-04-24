@@ -653,9 +653,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$reviewStatus = false;
 
-		$rowAssigner = new WikiImageReviewStatusRowHelper();
 		if ($imageId > 0) {
-			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
+			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId);
 		}
 
 		wfProfileOut(__METHOD__);
