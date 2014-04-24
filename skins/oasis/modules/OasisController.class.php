@@ -367,13 +367,13 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop, $wgOasisDisableWikiaScriptLoader;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
 
-		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
-		$this->wikiaScriptLoader = '';
+		// load AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
+		$this->globalBlockingScripts = '';
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
@@ -385,7 +385,7 @@ class OasisController extends WikiaController {
 				$blockingFile = $this->rewriteJSlinks( $blockingFile );
 			}
 
-			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
+			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
 		// move JS files added to OutputPage to list of files to be loaded using WSL
