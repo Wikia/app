@@ -61,10 +61,13 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 
 ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	{
+		'include': [ 'notices' ]
+	},
+	{
 		'type': 'list',
 		'icon': 'menu',
 		'indicator': 'down',
-		'include': [ 'meta', 'categories', 'wikiaSourceMode', 'help', 'notices', 'commandHelp' ]
+		'include': [ 'wikiaMeta', 'categories', 'wikiaSourceMode', 'help', 'notices', 'commandHelp' ]
 	}
 ];
 

@@ -53,3 +53,22 @@ ve.ui.WikiaSourceModeDialogTool.static.title =
 ve.ui.WikiaSourceModeDialogTool.static.commandName = 'wikiaSourceMode';
 
 ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
+
+/**
+ * UserInterface WikiaMetaDialog tool.
+ *
+ * @class
+ * @extends ve.ui.MWMetaDialogTool
+ * @constructor
+ * @param {OO.ui.Toolbar} toolbar
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaMetaDialogTool = function VeUiWikiaMetaDialogTool( toolbar, config ) {
+	ve.ui.MWMetaDialogTool.call( this, toolbar, config );
+};
+OO.inheritClass( ve.ui.WikiaMetaDialogTool, ve.ui.MWMetaDialogTool );
+ve.ui.MWMetaDialogTool.static.name = 'wikiaMeta';
+ve.ui.MWMetaDialogTool.static.icon = 'advanced';
+ve.ui.MWMetaDialogTool.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-meta-settings-label' );
+ve.ui.toolFactory.register( ve.ui.WikiaMetaDialogTool );
