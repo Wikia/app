@@ -280,10 +280,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 	public function getWikisInVisualisationAsCSV() {
 		wfProfileIn(__METHOD__);
+		global $wgOut;
 
 		if (!$this->checkAccess()) {
 			wfProfileOut(__METHOD__);
-			return false;
+			http_response_code(403);
+			header("Cache-Control: private");
+			die;
 		}
 
 		// get data
@@ -297,11 +300,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$verticals = $this->helper->getWikiVerticals();
 
 		// turn off usual rendering
-		global $wgOut;
 		$wgOut->disable();
 
 		// set up headers
-		header("Cache-Control: public");
+		header("Cache-Control: private");
 		header("Content-Description: File Transfer");
 		header("Content-Disposition: attachment; filename=ManageWikiaHomeWikisList-".$visualizationLang.".csv");
 		header("Content-Type: application/octet-stream", true);
