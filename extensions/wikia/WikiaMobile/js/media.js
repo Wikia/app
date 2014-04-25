@@ -206,15 +206,16 @@ function(
 			if ( isMedia ) {
 				!inited && setup();
 
-				if ( className.indexOf( 'Wikia-video-thumb' ) > -1 ) {
+				if ( className.indexOf( 'video-thumbnail' ) > -1 ) {
 					track.event( 'video', track.CLICK, {label: 'article'});
 				}
 
 				// tracking call for S:Videos mobile
 				if ( document.body.className.indexOf( 'Special_Videos' ) ) {
-					track.event( 'special-videos-mobile', track.CLICK, {
+					track.event( 'special-videos', track.CLICK, {
 						label: 'thumbnail',
-						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t )
+						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
+						method: 'both'
 					});
 				}
 
