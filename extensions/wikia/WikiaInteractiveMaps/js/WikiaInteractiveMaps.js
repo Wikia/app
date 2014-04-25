@@ -10,7 +10,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		var tagParams = getDataParams($target),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
-			cacheKey = 'wikia-interactive-maps-map-iframe',
+			cacheKey = 'wikia_interactive_maps_map_iframe',
 			iframe = '';
 
 		loadTemplate(templatePath, cacheKey).done(function (template) {
@@ -65,6 +65,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	 * @todo Talk to Platform Team about making it global, so other teams can re-use it
 	 *
 	 * @param {String} templatePath path to the template
+	 * @param {String} cacheKey the key in local storage
 	 * @returns {$.Deferred}
 	 */
 	function loadTemplate(templatePath, cacheKey) {
