@@ -114,7 +114,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 					vars: {
 						id: 'interactiveMapError',
 						size: 'small',
-						content: $.msg( 'wikia-interactive-maps-map-placeholder-error' )
+						content: $.msg('wikia-interactive-maps-map-placeholder-error')
 					}
 				};
 
