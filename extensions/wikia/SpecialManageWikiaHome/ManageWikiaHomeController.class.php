@@ -330,7 +330,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->response->setHeader('Cache-Control', 'private');
 		$this->response->setHeader('Content-Description', 'File Transfer');
 		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
-//		$this->response->setHeader('Content-Type', 'application/octet-stream');
 		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
 
 		$this->response->setContentType( 'application/octet-stream' );
