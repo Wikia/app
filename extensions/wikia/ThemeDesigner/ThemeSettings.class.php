@@ -131,6 +131,9 @@ class ThemeSettings {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
 
+		// Notify extensions - @author: TK-999
+		wfRunHooks( 'UpdateThemeSettings', [ $this, &$settings, $cityId ] );
+
 		// Verify wordmark length ( CONN-116 )
 		if ( !empty( $settings[ 'wordmark-text' ]) ) {
 			$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );

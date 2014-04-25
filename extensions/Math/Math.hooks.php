@@ -45,7 +45,7 @@ class MathHooks {
 		global $wgContLang, $wgUseMathJax;
 
 		// Wikia change - begin - @author: TK-999
-		// Fix colorization issues across skins
+		// VOLDEV-59: Fix Math colorization issues across skins
 		global $wgTexvcBackgroundColor;
 		$skin = RequestContext::getMain()->getSkin();
 		if ( SassUtil::isThemeDark() ) {
@@ -176,5 +176,61 @@ class MathHooks {
 
 		//$parser->getOutput()->addHeadItem( $html, 'mathjax' );
 		$parser->getOutput()->addModules( array( 'ext.math.mathjax.enabler' ) );
+	}
+
+	/**
+	 * Wikia change
+	 * Hook: ThemeDesignerUpdateSettings
+	 * Empty cached images if Oasis theme changes to avoid mismatched colors
+	 * @author TK-999
+	 * @param ThemeSettings $themeSettings
+	 * @param array $newSettings
+	 * @param int $cityId
+	 * @return bool true because it's a hook
+	 */
+	public static function onUpdateThemeSettings( ThemeSettings $themeSettings, array &$newSettings, $cityId ) {
+		global $wgEnableSwiftFileBackend;
+		wfProfileIn( __METHOD__ );
+		$oldSettings = $themeSettings->getSettings();
+
+		// empty cached images only on dark/light changes
+		if ( SassUtil::isThemeDark( $oldSettings ) != SassUtil::isThemeDark( $newSettings ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$fileHashes = $dbr->select( 'math', 'math_outputhash', [], __METHOD__ );
+
+			if ( !$fileHashes ) {
+				return true;
+			}
+
+			$dummyRenderer = new MathRenderer( '' ); // for file paths
+			// try Swift backend
+			if ( !empty( $wgEnableSwiftFileBackend ) ) {
+				$swift = \Wikia\SwiftStorage::newFromWiki( $cityId );
+				foreach ( $fileHashes as $row ) {
+					$xhash = unpack( 'H32md5', $dbr->decodeBlob( $row->math_outputhash ) . "                " );
+					$dummyRenderer->hash = $xhash[ 'md5' ];
+					$remotePath = $dummyRenderer->getSwiftPath();
+					$swift->remove( $remotePath );
+				}
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+
+			// NFS fallback if Swift is not available
+			wfSuppressWarnings();
+			foreach ( $fileHashes as $row ) {
+				$xhash = unpack( 'H32md5', $dbr->decodeBlob( $row->math_outputhash ) . "                " );
+				$dummyRenderer->hash = $xhash[ 'md5' ];
+				$filename = $dummyRenderer->_getHashPath() . "/{$dummyRenderer->hash}.png";
+
+				if ( file_exists( $filename ) ) {
+					unlink( $filename );
+				}
+			}
+			wfRestoreWarnings();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }
