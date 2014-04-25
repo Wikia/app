@@ -252,7 +252,7 @@ class OasisController extends WikiaController {
 			}
 		}
 
-		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
+		// setup loading of JS/CSS
 		$this->loadJs();
 
 		// FIXME: create separate module for stats stuff?
