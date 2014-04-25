@@ -1017,8 +1017,12 @@ function wfUrlencodeExt($s_url) {
  * Given a timestamp, converts it to the "x minutes/hours/days ago" format.
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>, Sean Colombo
+ *
+ * @param string $stamp
+ * @param boolean $hideCurrentYear
+ * @return string
  */
-function wfTimeFormatAgo($stamp){
+function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ){
 	wfProfileIn(__METHOD__);
 	global $wgLang;
 
@@ -1053,7 +1057,10 @@ function wfTimeFormatAgo($stamp){
 	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
 		//remove year from user's date format
-		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
+		$format = $wgLang->getDateFormatString( 'date', 'default' );
+		if ( $hideCurrentYear ) {
+			$format = trim( $format, ' ,yY' );
+		}
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
 

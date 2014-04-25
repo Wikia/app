@@ -139,18 +139,18 @@
 		clear: right;
 		float: right;
 		position: relative;
-		margin: 0 0 6px 6px;
+		margin: 0 0 10px 20px;
 		border: 0;
 	}
 	.floatleft {
 		float: left;
 		clear: left;
 		position: relative;
-		margin: 0 6px 6px 0;
+		margin: 0 20px 10px 0;
 		border: 0;
 	}
+	// TODO: look into removing this with VID-1551
 	.thumbinner {
-		//background-color: $color-article-thumb-background;
 		@include linear-gradient($color-article-thumb-background, top, $color-page, 0%, $color-article-thumb-background, 100%);
 		border: 1px solid $color-article-thumb-border;
 		overflow: hidden;
@@ -162,27 +162,32 @@
 		padding: 4px 1px 0 1px;
 		text-align: left;
 	}
+	// TODO: look into removing this with VID-1551
 	.tright {
 		clear: right;
 		float: right;
 		margin: 0 0 16px 16px;
 	}
+	// TODO: look into removing this with VID-1551
 	.tleft {
 		float: left;
 		clear: left;
 		margin: 0 16px 16px 0;
 	}
+	// TODO: look into removing this with VID-1551
 	.magnify {
 		float: right;
 		margin-top: 4px;
 	}
 
+	// TODO: look into removing this with VID-1551
 	.picture-attribution {
 		display: block;
 		font-size: 11px;
 		margin-right: 16px;
 		text-align: left;
 	}
+	// TODO: look into removing this with VID-1551
 	.picture-attribution .avatar {
 		margin-right: 3px;
 		vertical-align: middle;

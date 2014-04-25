@@ -53,6 +53,7 @@ function(
 		currentMedia,
 		currentWrapper,
 		currentWrapperStyle,
+		disableSwipe,
 		wkMdlImages,
 		qs = querystring(),
 		shrImg = encodeURIComponent( qs.getVal( 'file', '' ) ) || null,
@@ -207,6 +208,14 @@ function(
 
 				if ( className.indexOf( 'Wikia-video-thumb' ) > -1 ) {
 					track.event( 'video', track.CLICK, {label: 'article'});
+				}
+
+				// tracking call for S:Videos mobile
+				if ( document.body.className.indexOf( 'Special_Videos' ) ) {
+					track.event( 'special-videos-mobile', track.CLICK, {
+						label: 'thumbnail',
+						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t )
+					});
 				}
 
 				openModal( ~~t.getAttribute( 'data-num' ) );
@@ -701,7 +710,8 @@ function(
 						refresh();
 					}
 				},
-				circle: true
+				circle: true,
+				disableSwipe: disableSwipe
 			} );
 
 			function tap ( ev ) {
@@ -752,7 +762,6 @@ function(
 	}
 
 	/** @public **/
-
 	return {
 		openModal: openModal,
 		getMedia: function ( whiteList ) {
@@ -786,6 +795,14 @@ function(
 				} )
 			}
 
+		},
+		reset: function () {
+			inited = false;
+			init(document.getElementsByClassName('media'));
+			setup();
+		},
+		disableSwipe: function () {
+			disableSwipe = true;
 		},
 		skip: function () {
 			if ( currentNum - lastNum > 0 ) {

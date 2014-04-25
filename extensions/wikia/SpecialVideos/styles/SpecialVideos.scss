@@ -54,44 +54,79 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 }
 
-.VideoGrid {
+.special-videos-grid {
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
+	color: $color-alternate-text;
 	margin-bottom: 18px;
-	width: $width-outside;
-	// Override article p styles
-	p, p + p {
-		margin: 0;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
-	.video {
-		margin-bottom: 8px;
-	}
-	// can be removed after article cache clears on 2/6/2014
-	.info-overlay-views {
-		display: inline;
-	}
-	.grid-2, .grid-2.alpha {
-		margin-bottom: 18px;
+
+	a {
+		color: $color-alternate-text;
+		&:hover {
+			color: $color-links;
+			text-decoration: none;
+		}
 	}
 
-	//TODO: Special videos layout needs redesign for liquid layout (liquid layout no longer support WikiaGrid)
-	//      This is temporary solution that should be removed after redesing
-	@if ( $responsive-layout-enabled ) {
-		.grid-2 {
-			margin-left: 10px;
-			width: 330px;
-			&.alpha {
-				margin-left: 0;
+	// Override article p styles
+	p, p + p, .posted-in {
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 18px;
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	li {
+		margin: 0;
+		padding-bottom: 5px;
+		position: relative;
+		&:hover .remove {
+			display: block;
+		}
+	}
+
+	img {
+		// handle failed image loads so they maintain somewhat reasonable proportions
+		max-height: 208px;
+	}
+
+	.info {
+		height: 150px;
+		margin-top: 5px;
+	}
+
+	.by-views {
+		white-space: normal;
+	}
+
+	.views {
+		white-space: nowrap;
+		&:before {
+			content: '\2666';
+			font-size: 7px;
+			padding-right: 3px;
+			vertical-align: top;
+		}
+	}
+
+	.title {
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 26px;
+		margin-bottom: 5px;
+		overflow: visible;
+		white-space: normal;
+		a {
+			color: $color-text;
+			&:hover {
+				color: $color-links;
 			}
 		}
 	}
 
-	.alpha {
-		clear: both;
-	}
 	.add-video-placeholder {
 		opacity: .5;
 		background-image: $placeholder-bg-img;
@@ -108,30 +143,48 @@ $placeholder-bg-color: darken($color-page, 10%);
 			opacity: .65;
 		}
 	}
+	// TODO: add ellipses/more js with VID-1601
 	.posted-in {
 		overflow: hidden;
-		padding-right: 5px;
-		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-	.video-element {
-		position: relative;
-		&:hover .remove {
-			display: block;
+		width: 100%;
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
 		}
-		.remove {
-			background-color: #ddd;	/* hardcoded because this is admin only feature */
-			cursor: pointer;
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
+		a.ellipses {
+			float: right;
 			display: none;
-			padding: 0px 2px 4px 5px;
-			position: absolute;
-			right: 0;
-			top: 0;
-			z-index: 101;
 		}
+		> div {
+			display: inline-block;
+			&.processed {
+				float: left; // ie10 layout
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+	.remove {
+		background-color: #ddd;
+		cursor: pointer;
+		display: none;
+		margin-right: 12px;
+		padding: 0px 2px 4px 5px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 101;
 	}
 }
-
 .messageHolder {
 	display: none;
 }

@@ -7,11 +7,67 @@
  */
 class SpecialVideosHelper extends WikiaModel {
 
-	const VIDEOS_PER_PAGE = 24;
 	const THUMBNAIL_WIDTH = 330;
 	const THUMBNAIL_HEIGHT = 211;
-	const POSTED_IN_ARTICLES = 5;
+	const POSTED_IN_ARTICLES = 100;
+
+	const VIDEOS_PER_PAGE = 24;
+	const VIDEOS_PER_PAGE_MOBILE = 12;
+
 	public static $verticalCategoryFilters = [ "Games", "Lifestyle", "Entertainment" ];
+
+	/**
+	 * Get meta description tag
+	 * @return string $description
+	 */
+	public function getMetaTagDescription() {
+		$catInfo = HubService::getComscoreCategory( $this->wg->CityId );
+
+		$descriptionKey = 'specialvideos-meta-description';
+
+		switch ( $catInfo->cat_id ) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+				$descriptionKey .= '-gaming';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+				$descriptionKey .= '-entertainment';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+				$descriptionKey .= '-lifestyle';
+				break;
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				$descriptionKey .= '-corporate';
+				break;
+		}
+
+		$description = wfMessage( $descriptionKey, $this->wg->Sitename )->escaped();
+
+		return $description;
+	}
+
+	/**
+	 * get list of sorting options
+	 * @return array $options
+	 */
+	public function getSortOptions() {
+		$options = $this->getSortOptionsMobile();
+		$options['popular'] = wfMessage( 'specialvideos-sort-most-popular' )->plain();
+
+		return $options;
+	}
+
+	/**
+	 * get list of sorting options for mobile
+	 * @return array $options
+	 */
+	public function getSortOptionsMobile() {
+		$options = array(
+			'trend'   => wfMessage( 'specialvideos-sort-trending' )->plain(),
+			'recent'  => wfMessage( 'specialvideos-sort-latest' )->plain(),
+		);
+
+		return $options;
+	}
 
 	/**
 	 * get list of filter options
@@ -21,7 +77,7 @@ class SpecialVideosHelper extends WikiaModel {
 		$options = array();
 
 		$premiumVideos = $this->premiumVideosExist();
-		if ( !empty($premiumVideos) ) {
+		if ( !empty( $premiumVideos ) ) {
 			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
 		}
 
@@ -40,9 +96,10 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @param integer $page
 	 * @param array $providers
 	 * @param string $category
+	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array(), $category = '' ) {
+	public function getVideos( $sort, $page, $providers = array(), $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -52,15 +109,59 @@ class SpecialVideosHelper extends WikiaModel {
 			$filter = 'all';
 		}
 
-		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers, $category );
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$limit = self::VIDEOS_PER_PAGE_MOBILE;
+			$providers = $this->wg->WikiaMobileSupportedVideos;
+			$thumbOptions = [
+				'useTemplate' => true,
+				'fluid'       => true,
+				'forceSize'   => 'small',
+				'imgClass'    => 'media',
+				'dataParams'  => true,
+			];
+		} else {
+			$limit = self::VIDEOS_PER_PAGE;
+			$providers = empty( $providers ) ? [] : explode( ',', $providers );
+			$thumbOptions = [
+				'fluid'          => true,
+				'showViews'      => true,
+				'fixedHeight'    => self::THUMBNAIL_HEIGHT,
+				'hidePlayButton' => true,
+			];
+		}
 
-		$videos = array();
+		// get video list
+		$mediaService = new MediaQueryService();
+		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+		$videoOptions = [
+			'thumbWidth'       => self::THUMBNAIL_WIDTH,
+			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+			'postedInArticles' => self::POSTED_IN_ARTICLES,
+			'thumbOptions'     => $thumbOptions,
+			'getThumbnail'     => ( array_key_exists( 'getThumbnail', $options) ? $options['getThumbnail'] : true ),
+		];
+
+		// get video detail
+		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $videoList as $videoInfo ) {
-			$videoDetail = $helper->getVideoDetail( $videoInfo, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT, self::POSTED_IN_ARTICLES );
-			if ( !empty($videoDetail) ) {
-				$videos[] = $videoDetail;
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+			if ( !empty( $videoDetail ) ) {
+				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
+				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
+
+				$videos[] = [
+					'title' => $videoDetail['fileTitle'],
+					'fileKey' => $videoDetail['title'],
+					'fileUrl' => $videoDetail['fileUrl'],
+					'thumbnail' => $videoDetail['thumbnail'],
+					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
+					'updated' => $videoDetail['timestamp'],
+					'viewTotal' => $viewTotal,
+					'byUserMsg' => $byUserMsg,
+					'truncatedList' => $videoDetail['truncatedList'],
+				];
 			}
 		}
 
@@ -70,24 +171,27 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
-	 * get message for by user section
-	 * @param string $userName
-	 * @param string $userUrl
-	 * @return string $byUserMsg
+	 * Get a count of videos that would be returned by $videoParams when passed to getVideos()
+	 * @param array $videoParams
+	 *   [ array( 'sort' => string, 'page' => int, 'category' => string, 'provider' => string ) ]
+	 * @return integer $totalVideos
 	 */
-	public function getByUserMsg( $userName, $userUrl ) {
-		$byUserMsg = '';
-		if ( !empty($userName) ) {
-			$attribs = array(
-				'href' => $userUrl,
-				'class' => 'wikia-gallery-item-user',
-			);
+	protected function getTotalVideos( $videoParams ) {
+		wfProfileIn( __METHOD__ );
 
-			$userLink = Xml::element( 'a', $attribs, $userName, false );
-			$byUserMsg = wfMsg( 'specialvideos-uploadby', $userLink );
+		$mediaService = new MediaQueryService();
+		if ( $videoParams['sort'] == 'premium' ) {
+			$totalVideos = $mediaService->getTotalPremiumVideos();
+		} else if ( !empty( $videoParams['category'] ) ) {
+			$totalVideos = $mediaService->getTotalVideosByCategory( $videoParams['category'] );
+		} else {
+			$totalVideos = $mediaService->getTotalVideos();
 		}
+		$totalVideos = $totalVideos + 1; // adding 'add video' placeholder to video array count
 
-		return $byUserMsg;
+		wfProfileOut( __METHOD__ );
+
+		return $totalVideos;
 	}
 
 	/**
@@ -118,8 +222,8 @@ class SpecialVideosHelper extends WikiaModel {
 			$articleLinks[] = $this->getArticleLink( $article );
 		}
 
-		if ( !empty($articleLinks) ) {
-			$postedInMsg = wfMsg( 'specialvideos-posted-in', implode($articleLinks, ', ') );
+		if ( !empty( $articleLinks ) ) {
+			$postedInMsg = wfMessage( 'specialvideos-posted-in', implode( $articleLinks, ', ' ) )->text();
 		}
 
 		return $postedInMsg;
@@ -134,6 +238,44 @@ class SpecialVideosHelper extends WikiaModel {
 		$videoExist = (bool) $mediaService->getTotalPremiumVideos();
 
 		return $videoExist;
+	}
+
+	/**
+	 * Get pagination (HTML)
+	 * @param array $videoParams
+	 *   [ array( 'sort' => string, 'page' => int, 'category' => string, 'provider' => string ) ]
+	 * @param int $addVideo
+	 * @return string $pagination
+	 */
+	public function getPagination( $videoParams, &$addVideo  ) {
+		wfProfileIn( __METHOD__ );
+
+		$pagination = '';
+		$linkToSpecialPage = SpecialPage::getTitleFor( "Videos" )->escapeLocalUrl();
+		$totalVideos = $this->getTotalVideos( $videoParams );
+		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
+			// Paginator::newFromArray allows array and integer param
+			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
+			$pages->setActivePage( $videoParams['page'] - 1 );
+
+			$queryString = '';
+			foreach( [ 'sort', 'category', 'provider'] as $key ) {
+				if ( !empty( $videoParams[$key] ) ) {
+					$queryString .= "&$key=".$videoParams[$key];
+				}
+			}
+
+			$pagination = $pages->getBarHTML( $linkToSpecialPage.'?page=%s'.$queryString );
+			// check if we're on the last page
+			if ( $videoParams['page'] < $pages->getPagesCount() ) {
+				// we're not so don't show the add video placeholder
+				$addVideo = 0;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $pagination;
 	}
 
 }
