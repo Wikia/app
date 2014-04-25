@@ -3150,7 +3150,7 @@ class User {
 			'user_real_name' => $user->mRealName,
 			'user_token' => strval( $user->mToken ),
 			'user_registration' => $dbw->timestamp( $user->mRegistration ),
-			'user_birthdate' => $dbw->timestampOrNull( $user->mBirthDate ), // Wikia. Added to reflect our user table layout.
+			'user_birthdate' => $user->mBirthDate, // Wikia. Added to reflect our user table layout.
 			'user_editcount' => 0,
 		);
 		foreach ( $params as $name => $value ) {
@@ -3191,7 +3191,7 @@ class User {
 				'user_real_name' => $this->mRealName,
 				'user_token' => strval( $this->mToken ),
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
-				'user_birthdate' => $dbw->timestampOrNull( $this->mBirthDate ), // Wikia. Added to reflect our user table layout.
+				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
 			), __METHOD__
 		);
