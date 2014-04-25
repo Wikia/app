@@ -411,6 +411,9 @@ SQL;
 				// Don't show private wikis in the list of global usage for a video
 				$wikiId = WikiFactory::DBtoID( $row->gil_wiki );
 				$isPrivate = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wikiId )->cv_value;
+				// getVarByName returns a serialized value, eg 'b:1'
+				$isPrivate = unserialize( $isPrivate );
+
 				if ( $isPrivate ) {
 					continue;
 				}
