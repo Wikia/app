@@ -1,5 +1,17 @@
-/*exported AdConfig2Late*/
-var AdConfig2Late = function (
+/*global define*/
+define('ext.wikia.adEngine.adConfigLate', [
+	// regular dependencies
+	'wikia.log',
+	'wikia.window',
+	'wikia.abTest',
+
+	// adProviders
+	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.remnantGpt',
+	'ext.wikia.adEngine.provider.null',
+	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.ebay'
+], function (
 	// regular dependencies
 	log,
 	window,
@@ -7,19 +19,28 @@ var AdConfig2Late = function (
 
 	// AdProviders
 	adProviderLiftium,
+	adProviderRemnantGpt,
 	adProviderNull,
-	adProviderSevenOneMedia // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderEbay
 ) {
 	'use strict';
 
-	var logGroup = 'AdConfig2',
+	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED');
+		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
+		adProviderRemnant;
+
+	if (window.wgEnableRHonDesktop) {
+		adProviderRemnant = adProviderRemnantGpt;
+	} else {
+		adProviderRemnant = adProviderLiftium;
+	}
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -28,8 +49,8 @@ var AdConfig2Late = function (
 		log(slot, 5, logGroup);
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderLiftium.canHandleSlot(slot)) {
-				return adProviderLiftium;
+			if (adProviderRemnant.canHandleSlot(slot)) {
+				return adProviderRemnant;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
@@ -56,8 +77,18 @@ var AdConfig2Late = function (
 			}
 		}
 
-		if (adProviderLiftium.canHandleSlot(slotname)) {
-			return adProviderLiftium;
+		// Ebay integration
+		if (window.wgAdDriverUseEbay) {
+			if (slotname === 'PREFOOTER_LEFT_BOXAD') {
+				return adProviderEbay;
+			}
+			if (slotname === 'PREFOOTER_RIGHT_BOXAD') {
+				return adProviderNull;
+			}
+		}
+
+		if (adProviderRemnant.canHandleSlot(slotname)) {
+			return adProviderRemnant;
 		}
 
 		return adProviderNull;
@@ -67,4 +98,4 @@ var AdConfig2Late = function (
 		getDecorators: function () {},
 		getProvider: getProvider
 	};
-};
+});

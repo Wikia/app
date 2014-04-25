@@ -543,8 +543,6 @@ class WikiaHomePageController extends WikiaController {
 			$wikiName = trim(str_replace(self::$wikiIndicator, '', $data[0]));
 			$wikiUrl = trim($data[1]);
 			$wikiDesc = !empty($data[3]) ? trim($data[3]) : '';
-			$wikiHot = !empty($data[4]) ? trim($data[4]) : false;
-			$wikiNew = !empty($data[5]) ? trim($data[5]) : false;
 
 			$wikiImgName = trim($data[2]);
 			$wikiImg = wfFindFile($wikiImgName);
@@ -560,8 +558,6 @@ class WikiaHomePageController extends WikiaController {
 				'wikiurl' => $wikiUrl,
 				'wikidesc' => $wikiDesc,
 				'image' => $wikiImgName,
-				'wikinew' => $wikiNew,
-				'wikihot' => $wikiHot,
 				'wikipromoted' => false,
 				'wikiblocked' => false
 

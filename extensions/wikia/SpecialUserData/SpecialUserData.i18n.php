@@ -33,9 +33,11 @@ $messages['ar'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'userdata' => 'Tapout roadennoù an implijer',
 	'userdata-submit' => 'Tapout roadennoù',
 );
 

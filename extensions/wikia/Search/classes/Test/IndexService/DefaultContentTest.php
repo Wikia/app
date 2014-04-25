@@ -216,6 +216,7 @@ class DefaultContentTest extends BaseTest
 				'pageid' => 123,
 				'title_en' => 'my title',
 				'titleStrict' => 'my title',
+				'title_em' => 'my title',
 				'url' => 'http://foo.wikia.com/wiki/Foo',
 				'ns' => 0,
 				'host' => 'foo.wikia.com',

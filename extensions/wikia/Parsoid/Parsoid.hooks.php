@@ -39,18 +39,13 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
-		// TODO: Should be VisualEditor namespaces eventually
 		global $wgContentNamespaces;
-		if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			return;
-		}
 		if ( $title->getNamespace() == NS_FILE ) {
 			$job = new ParsoidCacheUpdateJob( $title, array(
 				'type' => 'OnDependencyChange',
 				'table' => 'imagelinks'
 			) );
-			// Not supported yet
-			//$job->insert();
+			$job->insert();
 		} else {
 			$job = new ParsoidCacheUpdateJob( $title, array( 'type' => 'OnEdit' ) );
 			$job->insert();
@@ -59,8 +54,7 @@ class ParsoidHooks {
 				'type' => 'OnDependencyChange',
 				'table' => 'templatelinks'
 			) );
-			// Not supported yet
-			//$job->insert();
+			$job->insert();
 		}
 	}
 

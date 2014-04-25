@@ -54,6 +54,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
+		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
@@ -67,14 +68,15 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
@@ -99,7 +101,6 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.configLateAds.js',
 
 	),
 );
@@ -210,7 +211,7 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
-
+		
 		// Lazy rail
 		'#group_lazy_rail_js',
 	)
@@ -463,6 +464,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/abtest.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -598,7 +600,7 @@ $config['wikiamobile_ads_js'] = array(
 		'//resources/wikia/modules/scriptwriter.js',
 
 		//advertisement "core"
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -615,14 +617,16 @@ $config['wikiamobile_ads_gpt_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		// Modules
+		'//resources/wikia/modules/geo.js',
 		'//resources/wikia/modules/lazyqueue.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -1433,7 +1437,7 @@ $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => array( 'wikiamobile' ),
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 	)
 );
 

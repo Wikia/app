@@ -142,6 +142,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wikiaPageIsHub',
 			'wikiaPageType',
 			'wgAdVideoTargeting',
+			'wgAdDriverUseEbay',
 
 			//server/wiki
 			'wgServer',
@@ -189,9 +190,10 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//skin
 			'skin',
 
-			//facebook login
+			//login
 			'fbAppId',
-			'fbUseMarkup'
+			'fbUseMarkup',
+			'wgLoginToken'
 		];
 }
 

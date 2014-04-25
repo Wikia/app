@@ -395,7 +395,7 @@ $messages['es'] = array(
 	'categoryselect-modal-category-sortkey' => 'Opcionalmente, puedes afabetizar este artículo en la categoría "$1" con el nombre:',
 	'categoryselect-tooltip-add' => 'Presiona Enter o Retroceso cuando termines.',
 	'tog-disablecategoryselect' => 'Desactivar el módulo de categorías (sólo se aplica si la edición en modo visual está desactivada)',
-	'tog-disablecategoryselect-v2' => 'Desactivar módulo de Categorías en el modo fuente',
+	'tog-disablecategoryselect-v2' => 'Desactivar módulo de categorías en el modo fuente',
 );
 
 /** Basque (euskara)
@@ -1020,7 +1020,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'categoryselect-button-add' => 'وېشنيزه ورګډول',
+	'categoryselect-button-add' => 'وېشنيزه ورگډول',
 	'categoryselect-button-cancel' => 'ناگارل',
 	'categoryselect-button-save' => 'خوندي کول',
 	'categoryselect-category-add' => 'وېشنيزه ورگډول...',

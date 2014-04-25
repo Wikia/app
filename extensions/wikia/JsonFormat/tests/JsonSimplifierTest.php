@@ -7,6 +7,25 @@ class JsonSimplifierTest extends WikiaBaseTest {
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 		parent::setUp();
 	}
+	
+	public function testImages() {
+		// PLA-1362
+		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+
+		$text = 'A fake but valid image:'.
+			'<a href="http://example.com" class="image">'.
+			'<img src="http://example.com/image.png"></a>'.
+			'And a blank, invalid one:'.
+			'<a href="http://example.com" class="image">'.
+			'<img alt="Quote3" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///'.
+			'yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="20" height="22"></a>';
+		$jsonOutput = $htmlParser->parse( $text );	
+		$jsonSimple = $simplifier->simplify( $jsonOutput, "Images" );
+		$images = $jsonSimple['sections'][0]['images'];
+		$this->assertEquals( "http://example.com/image.png", $images[0]['src'] );
+		$this->assertEquals( 1, count($images), "Blank image has not been skipped" );		
+	}	
 
 
 	/**
@@ -115,6 +134,20 @@ class JsonSimplifierTest extends WikiaBaseTest {
 			->method( $method )
 			->will( $this->returnValue( $value ) );
 	}
-
-
+	
+	public function testPrehistoricIceMan() {
+		// PLA-1343
+		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+		$text = '<p><b>"Prehistoric Ice Man"</b> is the eighteenth and final episode of '.
+						'<a href="/wiki/Season_Two" title="Season Two">Season Two</a>, and the 31st '.
+						'overall episode of <i>South Park</i>. It originally aired on January 20, 1999'.
+						'<sup id="cite_ref-0" class="reference"><a href="#cite_note-0">[1]</a></sup>.</p>';
+		$jsonOutput = $htmlParser->parse($text);	
+		$jsonSimple = $simplifier->simplify( $jsonOutput, "Prehistoric Ice Man" );	
+		$this->assertEquals("paragraph", $jsonSimple['sections'][0]['content'][0]['type']);
+		$paragraph = $jsonSimple['sections'][0]['content'][0]['text'];
+		$this->assertEquals('"Prehistoric Ice Man" is the eighteenth and final episode of Season Two, '.
+			'and the 31st overall episode of South Park. It originally aired on January 20, 1999.', $paragraph);		
+	}
 }
