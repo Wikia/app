@@ -1262,6 +1262,12 @@ $wgAdVideoTargeting = false;
 $wgAdDriverUseGptMobile = false;
 
 /**
+ * @name $wgAdDriverUseGptMobileDisabledInLangs
+ * Disable wgAdDriverUseGptMobile if wiki is this language
+ */
+$wgAdDriverUseGptMobileDisabledInLangs = ['en'];
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
