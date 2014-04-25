@@ -41,6 +41,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 
 	/**
 	 * @desc Creates an object with data from data-* parameters of a jQuery wrapper on DOM element
+	 *
 	 * @param $el jQuery wrapped DOM element from which the data will be extracted
 	 * @returns {Object} with map-id, lat, lon and zoom parameters
 	 */
@@ -63,6 +64,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 
 	/**
 	 * @desc Loads the template with wikia.loader module and returns promise
+	 *
 	 * @param {String} templatePath path to the template
 	 * @returns {*} promise
 	 */
