@@ -59,8 +59,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		$this->exportListAsCSVUri = $this->getExportListAsCSVUri();
-
 		$this->setVal('slotsInTotal', WikiaHomePageHelper::SLOTS_IN_TOTAL);
 		$this->infoMsg = FlashMessages::pop();
 
@@ -74,6 +72,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->corpWikiId = $this->visualizationWikisData[$this->visualizationLang]['wikiId'];
 
 		$this->filterOptions = array_merge($this->initFilterOptions(), $this->request->getParams());
+
+		$this->exportListAsCSVUri = $this->getExportListAsCSVUri();
 
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
@@ -289,28 +289,14 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		// get data
-		if (empty($this->visualizationLang)) {
-			$visualizationLang = $this->request->getVal('visualizationLang', $this->wg->contLang->getCode());
-		} else {
-			$visualizationLang = $this->visualizationLang;
-		}
+		$visualizationLang = $this->request->getVal('lang', $this->wg->contLang->getCode());
 		$list = $this->helper->getWikisForStaffTool($this->prepareFilterOptions($visualizationLang, []));
 		$collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
 		$verticals = $this->helper->getWikiVerticals();
 
-		// turn off usual rendering
-		$wgOut->disable();
-
-		// set up headers
-		$this->response->setFormat(WikiaResponse::FORMAT_RAW);
-		$this->response->setHeader('Cache-Control', 'private');
-		$this->response->setHeader('Content-Description', 'File Transfer');
-		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
-		$this->response->setHeader('Content-Type', 'application/octet-stream');
-		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
-
 		// output data in csv format
-		$out = fopen('php://output', 'w');
+		$out = fopen('php://memory', 'w');
+
 		// header
 		$outHeader = ['ID','Vertical','Title','Is blocked?','Is promoted?','Is official?'];
 		foreach ($collections as $collection) {
@@ -332,8 +318,23 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			}
 			fputcsv($out, $outLine);
 		}
-
+		fseek($out, 0);
+		$csv = stream_get_contents($out);
 		fclose($out);
+
+		// turn off usual rendering
+		$wgOut->disable();
+
+		// set up headers
+		$this->response->setFormat(WikiaResponse::FORMAT_RAW);
+		$this->response->setHeader('Cache-Control', 'private');
+		$this->response->setHeader('Content-Description', 'File Transfer');
+		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
+//		$this->response->setHeader('Content-Type', 'application/octet-stream');
+		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
+
+		$this->response->setContentType( 'application/octet-stream' );
+		$this->response->setBody( $csv );
 
 		wfProfileOut(__METHOD__);
 	}
@@ -341,7 +342,13 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	private function getExportListAsCSVUri() {
 		global $wgServer, $wgScriptPath;
 
-		return $wgServer . $wgScriptPath. '/wikia.php?controller=ManageWikiaHome&method=getWikisInVisualisationAsCSV';
+		$params = [
+			'controller' => 'ManageWikiaHome',
+			'method' => 'getWikisInVisualisationAsCSV',
+			'lang' => $this->visualizationLang
+		];
+
+		return $wgServer . $wgScriptPath . '/wikia.php?' . http_build_query( $params );
 	}
 
 	public function isWikiBlocked() {
