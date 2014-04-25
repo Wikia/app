@@ -1185,8 +1185,8 @@ class User {
 		}
 
 		// Wikia. The following if/else statement has been added to reflect our user table layout.
-		if ( isset( $row->user_birthdate ) ) {
-			$this->mBirthDate = date( 'Y-m-d H:i:s', strtotime( $row->user_birthdate ) );
+		if ( isset( $row->user_birthdate ) && $row->user_birthdate !== '0000-00-00' ) {
+			$this->mBirthDate = $row->user_birthdate;
 		} else {
 			$all = false;
 		}
