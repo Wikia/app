@@ -83,26 +83,17 @@ class VideosModule extends WikiaModel {
 				return strcmp( $b['updated'], $a['updated'] );
 			});
 
-			// Use this to get thumbnail info below
-			$helper = new VideoHandlerHelper();
-
-			// Adjust the key names, eliminate some of the fields and cap the number
-			// we send to the front end at 10
+			// Cap the number of videos we send to the front end at MAX_STAFF_PICKS
 			$videos = [];
 			foreach ( $combinedVideos as $video ) {
-				$videoDetail = $helper->getVideoDetail( $video, self::$videoOptions );
-
-				$videos[] = [
-					'title'     => $video['title'],
-					'videoKey'  => $video['fileKey'],
-					'url'       => $video['fileUrl'],
-					'thumbnail' => $videoDetail['thumbnail'],
-				];
+				$videos[] = $video['fileKey'];
 
 				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
 					break;
 				}
 			}
+
+			$videos = $this->getVideosDetail( $videos );
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
@@ -404,9 +395,9 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get detail of the videos
-	 * @param array $videos - list of video title
-	 * @return array $videoList
+	 * Call 'VideoHandlerHelper::getVideoDetail' on the video wiki for each of a list of video titles
+	 * @param array $videos A list of video titles
+	 * @return array A list of video details for each title passed
 	 */
 	public function getVideosDetail( $videos ) {
 		wfProfileIn( __METHOD__ );
