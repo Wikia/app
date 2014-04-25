@@ -371,6 +371,7 @@ $wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsM
 $wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
 $wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
