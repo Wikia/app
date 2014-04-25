@@ -18,7 +18,7 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 			templatePath += 'WikiaInteractiveMapsController_mapIframe.mustache';
 
 			loadTemplate( templatePath ).done( function( template ) {
-				iframe = mustache.render( template, { url: getMapUrl( tagParams ) } );
+				iframe = mustache.render( template, { url: tagParams['map-url'] } );
 			} );
 
 			require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
@@ -46,6 +46,7 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 		function getDataParams( $el ) {
 			var result = {
 					'map-id': null,
+					'map-url': null,
 					'lat': null,
 					'lon': null,
 					'zoom': null
@@ -57,23 +58,6 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 			}
 
 			return result;
-		}
-
-		/**
-		 * @desc Build and returns map URL
-		 * @param {Object} params gathered from DOM element data-* attributes
-		 * @see getDataParams()
-		 * @returns {string}
-		 */
-		function getMapUrl( params ) {
-			var config = window.wgIntMapConfig,
-				url;
-
-			url = config.protocol + '://';
-			url += config.hostname + ':' + config.port + '/api/' + config.version + '/render/';
-			url += params['map-id'] + '/' + params.zoom + '/' + params.lat + '/' + params.lon;
-
-			return url;
 		}
 
 		/**

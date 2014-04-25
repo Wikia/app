@@ -5,6 +5,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const DEFAULT_WIDTH = 700;
 	const DEFAULT_HEIGHT = 200;
 	const PARSER_TAG_NAME = 'imap';
+	const RENDER_ENTRY_POINT = 'render';
 
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
@@ -29,7 +30,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
 		$errorMessage = '';
-		$params = $this->sanitizeMapPlaceholderParams( $args );
+		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
 		if( !$isValid ) {
@@ -63,22 +64,25 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return null|string
 	 */
 	public function mapThumbnail() {
-		global $wgIntMapConfig;
-
+		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+		$mapId = $this->getVal( 'id' );
 		$map = $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
-			[ 'id' => $this->getVal( 'id' ) ]
+			[ 'id' => $mapId ]
+		);
+		$map[ 'url' ] = $mapsModel->cachedRequest(
+			'getMapRenderUrl',
+			[ $mapId . '/' . $params->zoom . '/' . $params->lat . '/' . $params->lon ]
 		);
 
 		$this->setVal( 'map', (object) $map );
-		$this->setVal( 'params', $this->getMapPlaceholderParams() );
+		$this->setVal( 'params', $params );
 		$this->setVal( 'mapPageUrl', '#' );
 		$this->setVal( 'jsSnippet', JSSnippets::addToStack([
 			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
 		]) );
 
-		$this->response->setJsVar( 'wgIntMapConfig', $wgIntMapConfig );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
@@ -109,7 +113,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 *
 	 * @return Array
 	 */
-	public function sanitizeMapPlaceholderParams( $data ) {
+	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
 		$validParams = [
 			'map-id' => 'id',

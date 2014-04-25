@@ -3,15 +3,9 @@
 
 class WikiaMaps {
 
-	/**
-	 * Default memory cache expire time
-	 */
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
-
-	/**
-	 * Entry point for map
-	 */
-	const ENTRY_MAP = 'map';
+	const ENTRY_POINT_MAP = 'map';
+	const ENTRY_POINT_RENDER = 'render';
 
 	/**
 	 * @var array API Connection config
@@ -29,7 +23,7 @@ class WikiaMaps {
 	 * @param array $params
 	 * @return string - URL
 	 */
-	private function buildUrl($entryPoint, Array $params = [] ) {
+	private function buildUrl( $entryPoint, Array $params = [] ) {
 		return sprintf(
 			'%s://%s:%d/api/%s/%s%s',
 			$this->config['protocol'],
@@ -49,11 +43,11 @@ class WikiaMaps {
 	 * @param int $expireTime
 	 * @return Mixed|null
 	 */
-	public function cachedRequest( $method,  Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
+	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
 			return $this->{ $method }( $params );
-		});
+		}, WikiaDataAccess::REFRESH_CACHE );
 	}
 
 	/**
@@ -80,7 +74,7 @@ class WikiaMaps {
 			]
 		];
 
-		$url = $this->buildUrl( self::ENTRY_MAP, $params );
+		$url = $this->buildUrl( self::ENTRY_POINT_MAP, $params );
 		$response = Http::get( $url );
 		if ( $response !== false ) {
 			return json_decode( $response, FALSE );
@@ -97,6 +91,18 @@ class WikiaMaps {
 			'image' => 'http://placekitten.com/700/200',
 			'last_updated' => date('c')
 		];
+	}
+
+	/**
+	 * @desc Returns render empty point for map
+	 *
+	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
+	 *                      rest of the array elements will get added as URI parameters after ? sign
+	 * @return string
+	 */
+	private function getMapRenderUrl( Array $params ) {
+		$entryPointParams = array_pop( $params );
+		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}
 
 }
