@@ -291,7 +291,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
 			// Check we got as far as setting up the surface
 			if ( this.active ) {
 				// If we got as far as setting up the surface, tear that down
-				this.tearDownSurface();
+				this.tearDownSurface( true );
 			}
 
 			// Show/restore components that are otherwise handled by tearDownSurface
@@ -988,15 +988,16 @@ ve.init.mw.ViewPageTarget.prototype.startSanityCheck = function () {
 /**
  * Switch to viewing mode.
  *
+ * @param {boolean} animate Should elements like the toolbar animate when hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( animate ) {
 	// Update UI
 	if ( this.$document ) {
 		this.$document.blur();
 		this.$document = null;
 	}
-	this.tearDownToolbar();
+	this.tearDownToolbar( animate );
 	this.restoreDocumentTitle();
 	if ( this.surface.mwTocWidget ) {
 		this.surface.mwTocWidget.teardown();
@@ -1280,13 +1281,20 @@ ve.init.mw.ViewPageTarget.prototype.hideTableOfContents = function () {
 /**
  * Hide the toolbar.
  *
+ * @param {boolean} animate Whether or not to animate the toolbar's hiding and showing.
  * @method
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
-	this.toolbar.$bar.slideUp( 'fast', ve.bind( function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( animate ) {
+	var tearDown = ve.bind( function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}, this ) );
+	}, this );
+
+	if ( animate ) {
+		this.toolbar.$bar.slideUp( 'fast', tearDown );
+	} else {
+		tearDown();
+	}
 };
 
 /**

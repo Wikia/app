@@ -151,7 +151,7 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
-	var target;
+	var target, parseStart;
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
 		return this.onParseError.call( this );
 	}
@@ -169,20 +169,19 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	target.saveDialog.reset();
-	target.saveDialog.close();
 
 	target.tearDownSurface( false );
+	target.deactivating = false;
 
 	target.wikitext = this.sourceModeTextarea.getValue();
 
 	target.activating = true;
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	parseStart = this.timings.parseStart;
 	target.setUpSurface( target.doc, ve.bind( function() {
 		this.editNotices = {};
 		this.setupToolbarButtons();
-		this.setupSaveDialog();
 		this.attachToolbarButtons();
 		this.$document[0].focus();
 		this.activating = false;
@@ -190,9 +189,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.SUCCESS,
 			'label': 'dialog-source-parse',
-			'value': ve.now() - this.timings.parseStart
+			'value': ve.now() - parseStart
 		} );
-	}, target ), false );
+	}, target ) );
 };
 
 /**
