@@ -7,8 +7,7 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 	 */
 	function showMap($target) {
-		var $anchor = $($target.parent()),
-			tagParams = getDataParams($anchor),
+		var tagParams = getDataParams($target),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
 			iframe = '';
@@ -84,9 +83,9 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	}
 
 	/** Attach events */
-	$('body').on('click', '.wikia-interactive-map-thumbnail img', function (event) {
+	$('body').on('click', '.wikia-interactive-map-thumbnail', function (event) {
 		event.preventDefault();
-		showMap($(event.target));
+		showMap($(event.currentTarget));
 	});
 
 });
