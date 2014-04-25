@@ -10,9 +10,10 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		var tagParams = getDataParams($target),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
+			cacheKey = 'wikia-interactive-maps-map-iframe',
 			iframe = '';
 
-		loadTemplate(templatePath).done(function (template) {
+		loadTemplate(templatePath, cacheKey).done(function (template) {
 			iframe = mustache.render(template, {
 				url: tagParams['map-url']
 			});
@@ -59,24 +60,36 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	}
 
 	/**
-	 * @desc Loads the template with wikia.loader module and returns promise
+	 * @desc Checks if template is cached in LocalStorage and if not loads it by using loader
+	 *
+	 * @todo Talk to Platform Team about making it global, so other teams can re-use it
 	 *
 	 * @param {String} templatePath path to the template
-	 * @returns {*} promise
+	 * @returns {$.Deferred}
 	 */
-	function loadTemplate(templatePath) {
+	function loadTemplate(templatePath, cacheKey) {
 		var dfd = new $.Deferred();
 
-		require(['wikia.loader'], function (loader) {
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: templatePath
-				}
-			}).done(function (data) {
-				// data.mustache[0] is the mustache template loaded by wikia.loader
-				dfd.resolve(data.mustache[0]);
-			});
+		require(['wikia.loader', 'wikia.cache'], function (loader, cache) {
+			var template = cache.getVersioned(cacheKey);
+
+			if (template) {
+				dfd.resolve(template);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: templatePath
+					}
+				}).done(function (data) {
+					template = data.mustache[0];
+
+					dfd.resolve(template);
+
+					cache.setVersioned(cacheKey, template, 604800); //7days
+				});
+			}
+
 		});
 
 		return dfd.promise();
