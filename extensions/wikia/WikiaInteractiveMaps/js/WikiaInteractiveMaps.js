@@ -1,15 +1,15 @@
-require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
+require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	'use strict';
 
-	$(function() {
+	$(function () {
 		/**
 		 * @desc Shows a modal with map inside
 		 *
 		 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 		 */
-		function showMap( $target ) {
-			var $anchor = $( $target.parent() ),
-				tagParams = getDataParams( $anchor ),
+		function showMap($target) {
+			var $anchor = $($target.parent()),
+				tagParams = getDataParams($anchor),
 				templatePath = '',
 				iframe = '';
 
@@ -17,12 +17,14 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 			templatePath += 'extensions/wikia/WikiaInteractiveMaps/templates/';
 			templatePath += 'WikiaInteractiveMapsController_mapIframe.mustache';
 
-			loadTemplate( templatePath ).done( function( template ) {
-				iframe = mustache.render( template, { url: tagParams['map-url'] } );
-			} );
+			loadTemplate(templatePath).done(function (template) {
+				iframe = mustache.render(template, {
+					url: tagParams['map-url']
+				});
+			});
 
-			require( [ 'wikia.ui.factory' ], function ( uiFactory ) {
-				uiFactory.init( [ 'modal' ] ).then( function ( uiModal ) {
+			require(['wikia.ui.factory'], function (uiFactory) {
+				uiFactory.init(['modal']).then(function (uiModal) {
 					var modalConfig = {
 						vars: {
 							id: 'interactiveMap-' + tagParams['map-id'],
@@ -31,7 +33,7 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 						}
 					};
 
-					uiModal.createComponent( modalConfig, function ( mapModal ) {
+					uiModal.createComponent(modalConfig, function (mapModal) {
 						mapModal.show();
 					});
 				});
@@ -43,18 +45,18 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 		 * @param $el jQuery wrapped DOM element from which the data will be extracted
 		 * @returns {Object} with map-id, lat, lon and zoom parameters
 		 */
-		function getDataParams( $el ) {
+		function getDataParams($el) {
 			var result = {
-					'map-id': null,
-					'map-url': null,
-					'lat': null,
-					'lon': null,
-					'zoom': null
-				},
+				'map-id': null,
+				'map-url': null,
+				'lat': null,
+				'lon': null,
+				'zoom': null
+			},
 				paramName;
 
-			for( paramName in result ) {
-				result[ paramName ] = $el.data( paramName );
+			for (paramName in result) {
+				result[paramName] = $el.data(paramName);
 			}
 
 			return result;
@@ -65,28 +67,28 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 		 * @param {String} templatePath path to the template
 		 * @returns {*} promise
 		 */
-		function loadTemplate( templatePath ) {
+		function loadTemplate(templatePath) {
 			var dfd = new $.Deferred();
 
-			require( ['wikia.loader' ], function( loader ) {
-				loader( {
+			require(['wikia.loader'], function (loader) {
+				loader({
 					type: loader.MULTI,
 					resources: {
 						mustache: templatePath
 					}
-				} ).done( function( data ) {
+				}).done(function (data) {
 					// data.mustache[0] is the mustache template loaded by wikia.loader
-					dfd.resolve( data.mustache[0] );
-				} );
-			} );
+					dfd.resolve(data.mustache[0]);
+				});
+			});
 
 			return dfd.promise();
 		}
 
 		/** Attach events */
-		$('body').on('click', '.wikia-interactive-map-thumbnail img', function(event) {
+		$('body').on('click', '.wikia-interactive-map-thumbnail img', function (event) {
 			event.preventDefault();
-			showMap( $(event.target) );
+			showMap($(event.target));
 		});
 	});
 });
