@@ -9,12 +9,9 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	function showMap($target) {
 		var $anchor = $($target.parent()),
 			tagParams = getDataParams($anchor),
-			templatePath = '',
+			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
+				'WikiaInteractiveMapsController_mapIframe.mustache',
 			iframe = '';
-
-		// just because the path is to long JSHint shows an error here, should we ignore it and keep it in one line?
-		templatePath += 'extensions/wikia/WikiaInteractiveMaps/templates/';
-		templatePath += 'WikiaInteractiveMapsController_mapIframe.mustache';
 
 		loadTemplate(templatePath).done(function (template) {
 			iframe = mustache.render(template, {
