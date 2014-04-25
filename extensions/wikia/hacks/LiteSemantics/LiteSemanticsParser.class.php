@@ -1,13 +1,13 @@
 <?php
 /**
  * Lite Semantics Pull Parser
- * 
+ *
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  * @see http://www.codem.com.au/streams/2009/web-development/consuming-xml-fast-with-php-and-xmlreader.html
  */
 
  //test http://codepad.org/xKYZa2RQ
- 
+
 class LiteSemanticsParser extends WikiaObject{
 	const DATA_TAG_OPENING = '<data';
 	const DATA_TAG_CLOSING = '</data>';
@@ -16,8 +16,6 @@ class LiteSemanticsParser extends WikiaObject{
 
 	function __construct(){
 		$this->xmlReader = new XMLReader();
-
-		F::setInstance( __CLASS__, $this );
 	}
 
 	public function parse( $text, Title $title = null ){
@@ -35,7 +33,7 @@ class LiteSemanticsParser extends WikiaObject{
 			}
 
 			$markup = substr( $text, $startIndex, $endIndex - $startIndex );
-			
+
 			if (
 				$this->xmlReader->xml( $markup ) &&
 				$this->xmlReader->read() &&
@@ -46,8 +44,8 @@ class LiteSemanticsParser extends WikiaObject{
 				while ( $this->xmlReader->moveToNextAttribute() ) {
 					$data->setAttribute( new LiteSemanticsAttribute( $this->xmlReader->name, $this->xmlReader->value ) );
 				}
-				
-				
+
+
 				while (
 					$this->xmlReader->read()
 				){

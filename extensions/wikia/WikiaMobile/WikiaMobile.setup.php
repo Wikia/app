@@ -142,6 +142,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wikiaPageIsHub',
 			'wikiaPageType',
 			'wgAdVideoTargeting',
+			'wgAdDriverUseEbay',
 
 			//server/wiki
 			'wgServer',

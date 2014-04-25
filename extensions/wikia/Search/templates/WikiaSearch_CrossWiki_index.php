@@ -43,19 +43,20 @@
 					<? endif; ?>
 
 				<ul class="Results inter-wiki">
-					<?php $pos = 0; ?>
-					<?php foreach( $results as $result ): ?>
-					<?php
+					<?
+					$pos = 0;
+					foreach( $results as $result ) {
 						$pos++;
 						echo $app->getView( 'WikiaSearch', 'CrossWiki_result', array(
 							'result' => $result,
 							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
 							'query' => $query,
 							'hub' => $hub,
+							'corporateWikiId' => $corporateWikiId,
 							'wgExtensionsPath' => $wgExtensionsPath
 						));
+					}
 					?>
-					<?php endforeach; ?>
 				</ul>
 
 				<?= $paginationLinks; ?>

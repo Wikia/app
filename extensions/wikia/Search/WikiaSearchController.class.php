@@ -61,6 +61,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
 
+	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
+	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -580,7 +583,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
 
-		$isMonobook = $this->app->checkSkin( 'monobook') ;
+		$isMonobook = $this->app->checkSkin( 'monobook' );
 
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
@@ -693,10 +696,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return boolean true
 	 */
 	protected function handleSkinSettings() {
+		global $wgCityId;
 		$this->wg->Out->addHTML( JSSnippets::addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 		if ( $this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
+
+			$this->setVal('corporateWikiId', $wgCityId );
 			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();
