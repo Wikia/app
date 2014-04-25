@@ -7,8 +7,8 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 	 */
 	function showMap($target) {
-		var mapId = $target.data( 'map-id' ),
-			mapUrl = $target.data( 'map-url' ),
+		var mapId = $target.data('map-id'),
+			mapUrl = $target.data('map-url'),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
 			cacheKey = 'wikia_interactive_maps_map_iframe',
