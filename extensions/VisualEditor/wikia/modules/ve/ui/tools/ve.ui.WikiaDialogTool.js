@@ -57,7 +57,7 @@ ve.ui.WikiaSourceModeDialogTool.static.commandName = 'wikiaSourceMode';
  */
 ve.ui.WikiaSourceModeDialogTool.prototype.onSelect = function () {
 	var command = this.getCommand();
-	if ( !command.data.length < 2 ) {
+	if ( command.data.length < 2 ) {
 		command.data.push( { 'target': this.toolbar.getTarget() } );
 	}
 	ve.ui.DialogTool.prototype.onSelect.apply( this, arguments );
