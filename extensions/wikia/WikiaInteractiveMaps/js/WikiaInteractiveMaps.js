@@ -44,7 +44,12 @@ require([ 'jquery', 'wikia.mustache' ], function( $, mustache ) {
 		 * @returns {Object} with map-id, lat, lon and zoom parameters
 		 */
 		function getDataParams( $el ) {
-			var result = { 'map-id': null, 'lat': null, 'lon': null, 'zoom': null },
+			var result = {
+					'map-id': null,
+					'lat': null,
+					'lon': null,
+					'zoom': null
+				},
 				paramName;
 
 			for( paramName in result ) {
