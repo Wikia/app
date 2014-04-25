@@ -92,7 +92,7 @@ define('specialVideos.mobile.views.index', [
 		this.track({
 			action: Tracker.ACTIONS.CLICK,
 			label: 'sort-filter-btn',
-			value: Array.prototype.indexOf(this.$filter.find('li'), $tar)
+			value: $tar.index()
 		});
 
 		return false;
