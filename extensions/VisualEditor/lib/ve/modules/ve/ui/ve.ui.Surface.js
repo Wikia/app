@@ -50,7 +50,7 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.enabled = true;
 	this.target = target || null;
 	if ( this.target ) {
-//		this.focus = new ve.ui.WikiaFocusWidget( this );
+		this.focus = new ve.ui.WikiaFocusWidget( this );
 	}
 
 	// Events
