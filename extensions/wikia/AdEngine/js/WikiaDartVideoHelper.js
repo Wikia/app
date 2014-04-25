@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 	}
 
 	/**
-	 * Get URL for Google IMAv3 call
+	 * Get URL for VAST call
 	 *
 	 * @return {String} URL of DART script
 	 */
@@ -54,9 +54,9 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 
 		out = 'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs';
 
-		for(key in params) {
+		for (key in params) {
 			if (params.hasOwnProperty(key)) {
-				out = out + '&' + key + '=' + params[key];
+				out += '&' + key + '=' + params[key];
 			}
 		}
 
