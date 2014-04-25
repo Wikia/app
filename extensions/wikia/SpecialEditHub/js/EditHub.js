@@ -104,7 +104,7 @@
 			validator = this.form.validate({
 				errorElement: 'p',
 				onkeyup: false,
-				onfocusout: function (element /*, event*/) {
+				onfocusout: function (element) {
 					if ($.proxy(this.settings.isValidatable, this)(element)) {
 						this.element(element);
 					}
@@ -243,7 +243,7 @@
 			}
 		},
 
-		popularVideosRemoveAll: function (/*event*/) {
+		popularVideosRemoveAll: function () {
 			if (window.confirm($.msg('wikia-hubs-module-popular-videos-clear-confirm')) === true) {
 				$('.popular-videos-list .module-box').remove();
 			}
