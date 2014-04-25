@@ -7,7 +7,8 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
 	 */
 	function showMap($target) {
-		var tagParams = getDataParams($target),
+		var mapId = $target.data( 'map-id' ),
+			mapUrl = $target.data( 'map-url' ),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
 			cacheKey = 'wikia_interactive_maps_map_iframe',
@@ -16,14 +17,14 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		loadTemplate(templatePath, cacheKey)
 			.done(function (template) {
 				iframe = mustache.render(template, {
-					url: tagParams['map-url']
+					url: mapUrl
 				});
 
 				require(['wikia.ui.factory'], function (uiFactory) {
 					uiFactory.init(['modal']).then(function (uiModal) {
 						var modalConfig = {
 							vars: {
-								id: 'interactiveMap-' + tagParams['map-id'],
+								id: 'interactiveMap-' + mapId,
 								size: 'large',
 								content: iframe
 							}
@@ -38,29 +39,6 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 			.fail(function () {
 				showUnexpectedErrorModal();
 			});
-	}
-
-	/**
-	 * @desc Creates an object with data from data-* parameters of a jQuery wrapper on DOM element
-	 *
-	 * @param $el jQuery wrapped DOM element from which the data will be extracted
-	 * @returns {Object} with map-id, lat, lon and zoom parameters
-	 */
-	function getDataParams($el) {
-		var result = {
-			'map-id': null,
-			'map-url': null,
-			'lat': null,
-			'lon': null,
-			'zoom': null
-		},
-			paramName;
-
-		for (paramName in result) {
-			result[paramName] = $el.data(paramName);
-		}
-
-		return result;
 	}
 
 	/**
