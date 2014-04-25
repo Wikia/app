@@ -100,7 +100,7 @@ class WikiaMaps {
 	 *                      rest of the array elements will get added as URI parameters after ? sign
 	 * @return string
 	 */
-	private function getMapRenderUrl( Array $params ) {
+	public function getMapRenderUrl( Array $params ) {
 		$entryPointParams = array_pop( $params );
 		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}

@@ -71,17 +71,16 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
-		$map[ 'url' ] = $mapsModel->cachedRequest(
-			'getMapRenderUrl',
-			[ $mapId . '/' . $params->zoom . '/' . $params->lat . '/' . $params->lon ]
-		);
+		$map[ 'url' ] = $mapsModel->getMapRenderUrl( [
+			$mapId . '/' . $params->zoom . '/' . $params->lat . '/' . $params->lon,
+		] );
 
 		$this->setVal( 'map', (object) $map );
 		$this->setVal( 'params', $params );
 		$this->setVal( 'mapPageUrl', '#' );
-		$this->setVal( 'jsSnippet', JSSnippets::addToStack([
+		$this->setVal( 'jsSnippet', JSSnippets::addToStack( [
 			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
-		]) );
+		] ) );
 
 		JSMessages::enqueuePackage( 'WikiaInteractiveMaps', JSMessages::EXTERNAL );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
