@@ -52,10 +52,6 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 		'settings',
 		{ '$': this.$ }
 	);
-	this.advancedSettingsPage = new ve.ui.MWAdvancedSettingsPage(
-		'advancedSettings',
-		{ '$': this.$ }
-	);
 	this.categoriesPage = new ve.ui.MWCategoriesPage(
 		'categories',
 		{
@@ -76,7 +72,6 @@ ve.ui.MWMetaDialog.prototype.initialize = function () {
 	this.$foot.append( this.applyButton.$element );
 	this.bookletLayout.addPages( [
 		this.settingsPage,
-		this.advancedSettingsPage,
 		this.categoriesPage,
 		this.languagesPage
 	] );
@@ -104,7 +99,6 @@ ve.ui.MWMetaDialog.prototype.setup = function ( data ) {
 
 	// Let each page set itself up ('languages' page doesn't need this yet)
 	this.settingsPage.setup( surfaceModel.metaList, data );
-	this.advancedSettingsPage.setup( surfaceModel.metaList, data );
 	this.categoriesPage.setup( surfaceModel.metaList, data );
 };
 
@@ -124,7 +118,6 @@ ve.ui.MWMetaDialog.prototype.teardown = function ( data ) {
 
 	// Let each page tear itself down ('languages' page doesn't need this yet)
 	this.settingsPage.teardown( data );
-	this.advancedSettingsPage.teardown( data );
 	this.categoriesPage.teardown( data );
 
 	// Return to normal tracking behavior

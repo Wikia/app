@@ -80,18 +80,8 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 			'align': 'top'
 		}
 	);
-	this.enableStaticRedirectInput = new OO.ui.CheckboxInputWidget( { '$': this.$ } );
-	this.enableStaticRedirectField = new OO.ui.FieldLayout(
-		this.enableStaticRedirectInput,
-		{
-			'$': this.$,
-			'align': 'inline',
-			'label': ve.msg( 'visualeditor-dialog-meta-settings-redirect-staticlabel' )
-		}
-	);
 	this.enableRedirectInput.connect( this, { 'change': 'onEnableRedirectChange' } );
 	this.redirectTargetInput.connect( this, { 'change': 'onRedirectTargetChange' } );
-	this.enableStaticRedirectInput.connect( this, { 'change': 'onEnableStaticRedirectChange' } );
 
 	// Disable section edit links items
 	this.disabledSectionEditLinks = new OO.ui.FieldLayout(
@@ -106,7 +96,6 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 	this.settingsFieldset.addItems( [
 		this.enableRedirectField,
 		this.redirectTargetField,
-		this.enableStaticRedirectField,
 		this.tableOfContents,
 		this.disabledSectionEditLinks
 	] );
@@ -162,10 +151,8 @@ ve.ui.MWSettingsPage.prototype.getTableOfContentsMetaItem = function () {
  */
 ve.ui.MWSettingsPage.prototype.onEnableRedirectChange = function ( value ) {
 	this.redirectTargetInput.setDisabled( !value );
-	this.enableStaticRedirectInput.setDisabled( !value );
 	if ( !value ) {
 		this.redirectTargetInput.setValue( '' );
-		this.enableStaticRedirectInput.setValue( false );
 	}
 	this.redirectOptionsTouched = true;
 };
@@ -178,28 +165,12 @@ ve.ui.MWSettingsPage.prototype.onRedirectTargetChange = function () {
 };
 
 /**
- * Handle static redirect state change events.
- */
-ve.ui.MWSettingsPage.prototype.onEnableStaticRedirectChange = function () {
-	this.redirectOptionsTouched = true;
-};
-
-/**
  * Get the redirect item
  *
  * @returns {Object|null} Redirect target, if any
  */
 ve.ui.MWSettingsPage.prototype.getRedirectTargetItem = function () {
 	return this.metaList.getItemsInGroup( 'mwRedirect' )[0] || null;
-};
-
-/**
- * Get the static redirect item
- *
- * @returns {Object|null} Redirect target, if any
- */
-ve.ui.MWSettingsPage.prototype.getRedirectStaticItem = function () {
-	return this.metaList.getItemsInGroup( 'mwStaticRedirect' )[0] || null;
 };
 
 /**
@@ -228,8 +199,7 @@ ve.ui.MWSettingsPage.prototype.setup = function ( metaList ) {
 
 		// Redirect items
 		redirectTargetItem = this.getRedirectTargetItem(),
-		redirectTarget = redirectTargetItem && redirectTargetItem.getAttribute( 'title' ) || '',
-		redirectStatic = this.getRedirectStaticItem();
+		redirectTarget = redirectTargetItem && redirectTargetItem.getAttribute( 'title' ) || '';
 
 	// Table of Contents items
 	tableOfContentsField.selectItem( tableOfContentsField.getItemFromData( tableOfContentsMode ) );
@@ -239,8 +209,6 @@ ve.ui.MWSettingsPage.prototype.setup = function ( metaList ) {
 	this.enableRedirectInput.setValue( !!redirectTargetItem );
 	this.redirectTargetInput.setValue( redirectTarget );
 	this.redirectTargetInput.setDisabled( !redirectTargetItem );
-	this.enableStaticRedirectInput.setValue( !!redirectStatic );
-	this.enableStaticRedirectInput.setDisabled( !redirectTargetItem );
 	this.redirectOptionsTouched = false;
 
 	// Disable section edit links items
@@ -265,9 +233,6 @@ ve.ui.MWSettingsPage.prototype.teardown = function ( data ) {
 		currentRedirectTargetItem = this.getRedirectTargetItem(),
 		newRedirectData = this.redirectTargetInput.getValue(),
 		newRedirectItemData = { 'type': 'mwRedirect', 'attributes': { 'title': newRedirectData } },
-
-		currentStaticRedirectItem = this.getRedirectStaticItem(),
-		newStaticRedirectState = this.enableStaticRedirectInput.getValue(),
 
 		// Disable section edit links items
 		currentDisableSectionEditLinksItem = this.getDisableSectionEditLinksItem(),
@@ -315,13 +280,6 @@ ve.ui.MWSettingsPage.prototype.teardown = function ( data ) {
 				// HACK: Putting this at index 0, offset 0 so that it works – bug 61862
 				this.metaList.insertMeta( newRedirectItemData, 0, 0 );
 			}
-		}
-
-		if ( currentStaticRedirectItem && ( !newStaticRedirectState || !newRedirectData ) ) {
-			currentStaticRedirectItem.remove();
-		}
-		if ( !currentStaticRedirectItem && newStaticRedirectState && newRedirectData ) {
-			this.metaList.insertMeta( { 'type': 'mwStaticRedirect' } );
 		}
 	}
 

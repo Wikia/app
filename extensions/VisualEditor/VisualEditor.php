@@ -855,7 +855,7 @@ $wgResourceModules += array(
 			'modules/ve-mw/ui/widgets/ve.ui.MWCategoryWidget.js',
 
 			'modules/ve-mw/ui/pages/ve.ui.MWSettingsPage.js',
-			'modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js',
+			//'modules/ve-mw/ui/pages/ve.ui.MWAdvancedSettingsPage.js',
 			'modules/ve-mw/ui/pages/ve.ui.MWCategoriesPage.js',
 			'modules/ve-mw/ui/pages/ve.ui.MWLanguagesPage.js',
 
