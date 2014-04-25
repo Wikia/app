@@ -1739,7 +1739,7 @@ $config['lazy_rail_js'] = [
 	]
 ];
 
-/** jQuery **/
+/** Qualaroo blocking **/
 $config['qualaroo_blocking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
