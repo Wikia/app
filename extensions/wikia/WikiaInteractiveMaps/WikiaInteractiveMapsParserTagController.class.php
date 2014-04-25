@@ -83,6 +83,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
 		]) );
 
+		JSMessages::enqueuePackage( 'WikiaInteractiveMaps', JSMessages::EXTERNAL );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

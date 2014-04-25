@@ -30,3 +30,6 @@ $wgHooks['ParserFirstCallInit'][] = 'WikiaInteractiveMapsParserTagController::pa
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
+JSMessages::registerPackage( 'WikiaInteractiveMaps', [
+	'wikia-interactive-maps-map-placeholder-error',
+] );

@@ -13,27 +13,31 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 			cacheKey = 'wikia_interactive_maps_map_iframe',
 			iframe = '';
 
-		loadTemplate(templatePath, cacheKey).done(function (template) {
-			iframe = mustache.render(template, {
-				url: tagParams['map-url']
-			});
-		});
-
-		require(['wikia.ui.factory'], function (uiFactory) {
-			uiFactory.init(['modal']).then(function (uiModal) {
-				var modalConfig = {
-					vars: {
-						id: 'interactiveMap-' + tagParams['map-id'],
-						size: 'large',
-						content: iframe
-					}
-				};
-
-				uiModal.createComponent(modalConfig, function (mapModal) {
-					mapModal.show();
+		loadTemplate(templatePath, cacheKey)
+			.done(function (template) {
+				iframe = mustache.render(template, {
+					url: tagParams['map-url']
 				});
+
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(function (uiModal) {
+						var modalConfig = {
+							vars: {
+								id: 'interactiveMap-' + tagParams['map-id'],
+								size: 'large',
+								content: iframe
+							}
+						};
+
+						uiModal.createComponent(modalConfig, function (mapModal) {
+							mapModal.show();
+						});
+					});
+				});
+			})
+			.fail(function () {
+				showUnexpectedErrorModal();
 			});
-		});
 	}
 
 	/**
@@ -88,12 +92,37 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 					dfd.resolve(template);
 
 					cache.setVersioned(cacheKey, template, 604800); //7days
+				}).fail(function () {
+					dfd.reject();
 				});
 			}
 
 		});
 
 		return dfd.promise();
+	}
+
+	/**
+	 * @desc Fired once an unexpected error (in example template didn't load) occurs, shows an error modal
+	 *
+	 * @see loadTemplate()
+	 */
+	function showUnexpectedErrorModal() {
+		require(['wikia.ui.factory'], function (uiFactory) {
+			uiFactory.init(['modal']).then(function (uiModal) {
+				var modalConfig = {
+					vars: {
+						id: 'interactiveMapError',
+						size: 'small',
+						content: $.msg( 'wikia-interactive-maps-map-placeholder-error' )
+					}
+				};
+
+				uiModal.createComponent(modalConfig, function (errorModal) {
+					errorModal.show();
+				});
+			});
+		});
 	}
 
 	/** Attach events */

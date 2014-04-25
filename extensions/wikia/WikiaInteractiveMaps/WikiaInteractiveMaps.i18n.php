@@ -14,6 +14,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => "Wikia Interactive Maps error occurred: invalid zoom. Please make sure your zoom parameter is an integer number higher or equal 0 or remove it to set it to default value.",
 	'wikia-interactive-maps-parser-tag-error-invalid-width' => "Wikia Interactive Maps error occurred: invalid width. Please make sure your width parameter is an integer number higher than 0 or remove it to set it to default value.",
 	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Wikia Interactive Maps error occurred: invalid height. Please make sure your height parameter is an integer number higher than 0 or remove it to set it to default value.",
+
+	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
 ];
 
 $messages[ 'qqq' ] = [
@@ -28,4 +30,6 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => 'Interactive maps error after try of parsing wikitext tag; an invalid zoom has been passed',
 	'wikia-interactive-maps-parser-tag-error-invalid-width' => 'Interactive maps error after try of parsing wikitext tag; an invalid width has been passed',
 	'wikia-interactive-maps-parser-tag-error-invalid-height' => 'Interactive maps error after try of parsing wikitext tag; an invalid height has been passed',
+
+	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
 ];
