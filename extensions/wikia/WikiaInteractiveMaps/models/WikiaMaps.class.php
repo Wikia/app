@@ -47,7 +47,7 @@ class WikiaMaps {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
 			return $this->{ $method }( $params );
-		}, WikiaDataAccess::REFRESH_CACHE );
+		});
 	}
 
 	/**
