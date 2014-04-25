@@ -40,67 +40,9 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	static public function onMakeGlobalVariablesScript(array &$vars) {
-		wfProfileIn(__METHOD__);
-
-		// TODO: review top and bottom vars (important for adsinhead)
-
-		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgHighValueCountriesDefault, $wgUser,
-			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
-			   $wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
-			   $wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
-			   $wgAdPageLevelCategoryLangsDefault, $wgAdDriverTrackState,
-			   $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			   $wgOasisResponsive, $wgOasisResponsiveLimited,
-			   $wgEnableRHonDesktop, $wgAdPageType, $wgOut;
-
-		$highValueCountries = WikiFactory::getVarValueByName(
-			'wgHighValueCountries',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgHighValueCountriesDefault
-		);
-
-		$pageLevelCategoryLanguages = WikiFactory::getVarValueByName(
-			'wgAdPageLevelCategoryLangs',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgAdPageLevelCategoryLangsDefault
-		);
-
-		$variablesToExpose = [
-			'wgEnableAdsInContent' => $wgEnableAdsInContent,
-			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
-			'wgEnableAdMeldAPIClientPixels' => $wgEnableAdMeldAPIClientPixels,
-			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
-			// Ad Driver
-			'wgHighValueCountries' => $highValueCountries,
-			'wgAdPageLevelCategoryLangs' => $pageLevelCategoryLanguages,
-			'wgAdPageType' => $wgAdPageType,
-			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
-			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
-			'wgUserShowAds' => $wgUser->getOption('showAds'),
-			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
-			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
-			'wgAdDriverTrackState' => $wgAdDriverTrackState,
-			'wgEnableRHonDesktop' => $wgEnableRHonDesktop,
-			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
-			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
-		];
-
-		if (!empty($wgAdDriverUseSevenOneMedia)) {
-			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
-			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
-			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
+		foreach (AdEngine2Service::getBottomJsVariables() as $varName => $varValue) {
+			$vars[$varName] = $varValue;
 		}
-
-		foreach($variablesToExpose as $varName => $varValue) {
-			if ((bool) $varValue === true) {
-				$vars[$varName] = $varValue;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -113,61 +55,9 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopScripts(&$vars, &$scripts) {
-		global $wgRequest, $wgCityId, $wgEnableKruxTargeting, $wgNoExternals, $wgAdVideoTargeting, $wgLiftiumOnLoad,
-			   $wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
-
-		wfProfileIn(__METHOD__);
-
-		// ad slots container
-		$vars['adslots2'] = [];
-
-		// Used to hop by DART ads
-		$vars['adDriverLastDARTCallNoAds'] = [];
-
-		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
-		$vars['adDriver2ForcedStatus'] = [];
-
-		$variablesToExpose = [
-			// AdEngine2.js
-			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
-			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
-			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(),
-			'wgAdVideoTargeting' => $wgAdVideoTargeting,
-			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
-
-			// generic type of page: forum/search/article/home/...
-			'wikiaPageType' => WikiaPageType::getPageType(),
-			'wikiaPageIsHub' => WikiaPageType::isWikiaHub(),
-			'wikiaPageIsWikiaHomePage' => WikiaPageType::isWikiaHomePage(),
-			'wikiaPageIsCorporate' => WikiaPageType::isCorporatePage(),
-
-			// category/hub
-			'cscoreCat' => HubService::getCategoryInfoForCity($wgCityId)->cat_name,
-
-			// Krux
-			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
-			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
-			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
-			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
-		];
-
-		// WikiaDartHelper.js
-		$cat = AdEngine2Service::getCachedCategory();
-		$vars['cityShort'] = $cat['short'];
-
-		if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
-			$cat = AdEngine2Service::getCachedCategory();
-			$variablesToExpose['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
+		foreach (AdEngine2Service::getTopJsVariables() as $varName => $varValue) {
+			$vars[$varName] = $varValue;
 		}
-
-		foreach($variablesToExpose as $varName => $varValue) {
-			if ((bool) $varValue === true) {
-				$vars[$varName] = $varValue;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
 		return true;
 	}
 
@@ -214,6 +104,16 @@ class AdEngine2Hooks {
 		return true;
 	}
 
+	/**
+	 * Add the resource loader modules needed for AdEngine to work.
+	 *
+	 * Note the dependency resolver does not work at this time, so we need to add every
+	 * module needed including their dependencies.
+	 *
+	 * @param $scriptModules
+	 * @param $skin
+	 * @return bool
+	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
 			$scriptModules[] = 'wikia.cookies';

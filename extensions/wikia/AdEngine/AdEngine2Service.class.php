@@ -185,4 +185,183 @@ class AdEngine2Service
 
 		return $cat;
 	}
+
+	/**
+	 * Get all the variables that should be exposed to JavaScript
+	 *
+	 * @return array
+	 */
+	private static function getJsVariables()
+	{
+		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
+			$wgHighValueCountriesDefault, $wgUser,
+			$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
+			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
+			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
+			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
+			$wgOasisResponsive, $wgOasisResponsiveLimited,
+			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
+			$wgRequest, $wgEnableKruxTargeting, $wgNoExternals,
+			$wgAdVideoTargeting, $wgLiftiumOnLoad,
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
+
+		$vars = [];
+
+		$highValueCountries = WikiFactory::getVarValueByName(
+			'wgHighValueCountries',
+			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
+			false,
+			$wgHighValueCountriesDefault
+		);
+
+		$variablesToExpose = [
+			'wgEnableAdsInContent' => $wgEnableAdsInContent,
+			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
+			'wgEnableAdMeldAPIClientPixels' => $wgEnableAdMeldAPIClientPixels,
+			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
+
+			// Ad Driver
+			'wgHighValueCountries' => $highValueCountries,
+			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
+			'wgAdPageType' => $wgAdPageType,
+			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
+			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgUserShowAds' => $wgUser->getOption('showAds'),
+			'wgOutboundScreenRedirectDelay' => $wgOutboundScreenRedirectDelay,
+			'wgEnableOutboundScreenExt' => $wgEnableOutboundScreenExt,
+			'wgAdDriverTrackState' => $wgAdDriverTrackState,
+			'wgEnableRHonDesktop' => $wgEnableRHonDesktop,
+			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
+			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
+			'wgAdVideoTargeting' => $wgAdVideoTargeting,
+
+			// AdEngine2.js
+			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
+			'wgShowAds' => AdEngine2Service::areAdsShowableOnPage(),
+			'wgAdsShowableOnPage' => AdEngine2Service::areAdsShowableOnPage(), // not used
+			'wgAdDriverStartLiftiumOnLoad' => $wgLiftiumOnLoad,
+
+			// generic type of page: forum/search/article/home/...
+			'wikiaPageType' => WikiaPageType::getPageType(),
+			'wikiaPageIsHub' => WikiaPageType::isWikiaHub(),
+			'wikiaPageIsCorporate' => WikiaPageType::isCorporatePage(),
+
+			// category/hub
+			'cscoreCat' => HubService::getCategoryInfoForCity($wgCityId)->cat_name,
+
+			// Krux
+			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
+			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
+			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
+			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
+
+			// WikiaDartHelper.js
+			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+		];
+
+		if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
+			$cat = AdEngine2Service::getCachedCategory();
+			$variablesToExpose['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
+		}
+
+		if (!empty($wgAdDriverUseSevenOneMedia)) {
+			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
+			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
+		}
+
+		foreach($variablesToExpose as $varName => $varValue) {
+			if ((bool) $varValue === true) {
+				$vars[$varName] = $varValue;
+			}
+		}
+
+		// ad slots container
+		$vars['adslots2'] = [];
+
+		// Used to hop by DART ads
+		$vars['adDriverLastDARTCallNoAds'] = [];
+
+		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+		$vars['adDriver2ForcedStatus'] = [];
+
+		return $vars;
+	}
+
+	/**
+	 * Get names of variables from getJsVariables to expose in top
+	 *
+	 * @return array
+	 */
+	private static function getTopJsVariableNames()
+	{
+		$topVars = [
+			'adDriver2ForcedStatus',         // DART creatives
+			'adDriverLastDARTCallNoAds',     // TODO: remove var
+			'adslots2',                      // AdEngine2_Ad.php
+			'wgAdsShowableOnPage',           // TODO: remove var
+			'wgEnableKruxTargeting',         // Krux.js
+			'wgKruxCategoryId',              // Krux.run.js
+			'wgShowAds',                     // analytics_prod.js
+			'wgUserShowAds',                 // JWPlayer.class.php
+			'wikiaPageIsCorporate',          // analytics_prod.js
+			'wikiaPageType',                 // analytics_prod.js
+		];
+		if (self::areAdsInHead()) {
+			$topVars = array_merge($topVars, [
+				'cityShort',                     // AdLogicPageParams.js
+				'cscoreCat',                     // analytics_prod.js, AdLogicPageParams.js
+				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
+				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
+				'wgAdDriverTrackState',          // SlotTracker.js
+				'wgAdDriverUseCatParam',         // AdLogicPageParams.js
+				'wgDartCustomKeyValues',         // AdLogicPageParams.js
+				'wgEnableRHonDesktop',           // AdEngine2.run.js
+				'wgHighValueCountries',          // AdLogicHighValueCountry.js
+				'wgLoadAdsInHead',               // AdEngine2.run.js
+				'wgUsePostScribe',               // AdEngine2.run.js, scriptwriter.js
+				'wgWikiDirectedAtChildren',      // AdLogicPageParams.js
+				'wikiaPageIsHub',                // AdLogicPageParams.js
+			]);
+		}
+		return $topVars;
+	}
+
+	/**
+	 * Get variables to expose in top of HTML
+	 *
+	 * @return array
+	 */
+	public static function getTopJsVariables()
+	{
+		$allVars = self::getJsVariables();
+		$topVars = [];
+
+		$keysToInclude = self::getTopJsVariableNames();
+		foreach ($keysToInclude as $key) {
+			if (isset($allVars[$key])) {
+				$topVars[$key] = $allVars[$key];
+			}
+		}
+		return $topVars;
+	}
+
+	/**
+	 * Get variables to expose in bottom of HTML
+	 *
+	 * @return array
+	 */
+	public static function getBottomJsVariables()
+	{
+		// Remember in PHP this actually makes an array copy:
+		$bottomVars = self::getJsVariables();
+
+		$keysToExclude = self::getTopJsVariableNames();
+		foreach ($keysToExclude as $key) {
+			unset($bottomVars[$key]);
+		}
+
+		return $bottomVars;
+	}
 }

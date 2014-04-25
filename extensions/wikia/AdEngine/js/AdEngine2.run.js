@@ -176,7 +176,7 @@ window.AdEngine_loadLateAds = function () {
 				'adsinhead: ' + adsinhead,
 				'wgNowBased: ' + wgNowBased,
 				'performanceBased: ' + performanceBased
-			], 'info', 'AdEngine_trackPageInteractive');
+			], 'info', 'AdEngine_track');
 
 			tracker.track({
 				ga_category: 'ad/performance/' + timeTo + '/wgNow',
