@@ -367,7 +367,7 @@ class WikiService extends WikiaModel {
 				$promoImage = PromoImage::fromPathname($row->city_main_image);
 				$promoImage->ensureCityIdIsSet($row->city_id);
 
-				$file = $promoImage->corporateFileByLang('en');
+				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
 					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
