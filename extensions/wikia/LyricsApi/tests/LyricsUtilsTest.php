@@ -118,4 +118,45 @@ class LyricsUtilsTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @param String $message
+	 * @param String $input
+	 * @param String $expected
+	 *
+	 * @dataProvider removeBracketsDataProvider
+	 */
+	public function testRemoveBrackets( $message, $input, $expected ) {
+		$this->assertEquals( $expected, LyricsUtils::removeBrackets( $input ), $message );
+	}
+
+	public function removeBracketsDataProvider() {
+		return [
+			[
+				'empty string',
+				'',
+				''
+			],
+			[
+				'empty parenthesis',
+				'()',
+				''
+			],
+			[
+				'parenthesis at the end',
+				'Happy (From "Despicable Me 2")',
+				'Happy'
+			],
+			[
+				'two parenthesis at the end',
+				'Happy (From "Despicable Me 2") (German version)',
+				'Happy'
+			],
+			[
+				'two parenthesis at the end',
+				'Happy (From "Despicable Me 2") (German version)',
+				'Happy'
+			],
+		];
+	}
 }

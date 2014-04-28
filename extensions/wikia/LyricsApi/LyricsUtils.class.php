@@ -101,4 +101,8 @@ class LyricsUtils {
 		return false;
 	}
 
+	public static function removeBrackets( $string ) {
+		return trim( preg_replace( '#\((.*?)\)#s', '', $string ) );
+	}
+
 }
