@@ -131,7 +131,7 @@
 	<div class="wikis-setup">
 		<h2 class="heading">
 			<?= wfMessage('manage-wikia-home-wikis-in-visualization-heading')->escaped() ?>
-			<a href="<?= $exportListAsCSVUri ?>" target="_blank" class="export-list-button button"><?= wfMessage('manage-wikia-home-wiki-list-download')->escaped() ?></a>
+			<a href="<?= $exportListAsCSVUri ?>" title="<?= wfMessage('manage-wikia-home-wiki-list-download-tooltip')->escaped() ?>" target="_blank" class="export-list-button button"><?= wfMessage('manage-wikia-home-wiki-list-download')->escaped() ?></a>
 		</h2>
 
 		<form id="wiki-name-filter" class="wiki-name-filter" name="wiki-name-filter" method="get">
