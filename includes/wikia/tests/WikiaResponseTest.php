@@ -10,20 +10,13 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	const TEST_VAL_NAME = 'testMsg';
 	const TEST_VAL_VALUE = 'This is a test value!';
 
-	protected $app = null;
-
 	/**
 	 * @var WikiaResponse
 	 */
 	protected $object = null;
 
 	protected function setUp() {
-		$this->app = F::app();
 		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
-	}
-
-	protected function tearDown() {
-		F::setInstance( 'App', $this->app );
 	}
 
 	public function settingHeadersDataProvider() {

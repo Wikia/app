@@ -241,7 +241,7 @@ class SolrLyricsApiHandler {
 	 * @desc Decorates Solr results with images URLs, albums and songs for an artist
 	 *
 	 * @param Solarium_Document_ReadOnly $solrArtist
-	 *
+	 * @param Bool $addUrl
 	 * @return stdClass
 	 */
 	private function getOutputArtist( $solrArtist, $addUrl = false ) {
@@ -249,6 +249,14 @@ class SolrLyricsApiHandler {
 
 		if ( $solrArtist->image ) {
 			$this->appendImages( $artist, $solrArtist->image );
+		}
+
+		if ( $solrArtist->itunes ) {
+			$artist->itunes = LyricsUtils::generateITunesUrl(
+				$solrArtist->itunes,
+				LyricsUtils::TYPE_ARTIST,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		if ( $solrArtist->albums ) {
@@ -279,7 +287,8 @@ class SolrLyricsApiHandler {
 			'artist_name',
 			'image',
 			'albums',
-			'songs'
+			'songs',
+			'itunes'
 		] );
 
 		$query->setStart( 0 )->setRows( 1 );
@@ -339,7 +348,11 @@ class SolrLyricsApiHandler {
 		}
 
 		if ( $queryResult->itunes ) {
-			$album->itunes = LyricsUtils::generateITunesUrl( $queryResult->itunes, $this->itunesAffiliateToken );
+			$album->itunes = LyricsUtils::generateITunesUrl(
+				$queryResult->itunes,
+				LyricsUtils::TYPE_ALBUM,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		$album->artist = $this->buildArtist( $queryResult );
@@ -365,7 +378,11 @@ class SolrLyricsApiHandler {
 		$song = $this->buildSong( $solrSong, $addSongUrl );
 
 		if ( $solrSong->itunes ) {
-			$song->itunes = LyricsUtils::generateITunesUrl( $solrSong->itunes, $this->itunesAffiliateToken );
+			$song->itunes = LyricsUtils::generateITunesUrl(
+				$solrSong->itunes,
+				LyricsUtils::TYPE_SONG,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		$song->lyrics = $solrSong->lyrics;
@@ -381,7 +398,7 @@ class SolrLyricsApiHandler {
 		}
 
 		if( !is_null( $highlights ) ) {
-			$song->hightlights = $highlights->getField( self::INDEX_FIELD_NAME_LYRICS );
+			$song->highlights = $highlights->getField( self::INDEX_FIELD_NAME_LYRICS );
 		}
 
 		return $song;

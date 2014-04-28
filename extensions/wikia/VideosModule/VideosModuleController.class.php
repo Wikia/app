@@ -2,7 +2,7 @@
 
 class VideosModuleController extends WikiaController {
 
-	const VIDEOS_PER_PAGE = 8;
+	const VIDEOS_PER_PAGE = 20;
 
 	/**
 	 * VideosModule
@@ -61,6 +61,7 @@ class VideosModuleController extends WikiaController {
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
+		$this->staffVideos = $module->getStaffPicks();
 
 		// set cache
 		$this->response->setCacheValidity( 600 );

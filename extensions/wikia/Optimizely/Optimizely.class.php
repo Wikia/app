@@ -7,8 +7,13 @@
  */
 class Optimizely {
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
-		$scripts .= '<script src="//cdn.optimizely.com/js/554924358.js" async></script>';
+		if ($wgDevelEnvironment) {
+			$scripts .= '<script src="' . $wgOptimizelyDevUrl . '" async></script>';
+		} else {
+			$scripts .= '<script src="' . $wgOptimizelyUrl . '" async></script>';
+		}
 		return true;
 	}
 }

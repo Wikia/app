@@ -66,6 +66,14 @@ function wfOasisSetup() {
 	$wgHooks['SkinCopyrightFooter'][] = 'CorporateFooterController::onSkinCopyrightFooter';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 
+	/*
+	 * TODO remove after Global Header ABtesting
+	 */
+	$wgHooks['WikiaSkinTopScripts'][] = 'OasisController::onWikiaSkinTopScripts';
+	/*
+	 *  END TODO
+	 */
+
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
 	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);

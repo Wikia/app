@@ -113,7 +113,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 		$this->interpreter->registerLibrary( 'mw_interface', $interfaceFuncs );
 		$moduleFileName = $this->normalizeModuleFileName( $moduleFileName );
 		$package = $this->loadLibraryFromFile( $moduleFileName );
-		if ( $package['setupInterface'] ) {
+		if ( !empty( $package['setupInterface'] ) ) {
 			$this->interpreter->callFunction( $package['setupInterface'], $setupOptions );
 		}
 		return $package;

@@ -33,31 +33,42 @@
 			</ul>
 		</div>
 	</div>
-
 </div>
 
 
-<div class="WikiaGrid VideoGrid">
+<ul class="special-videos-grid small-block-grid-3 large-block-grid-3 x-large-block-grid-4">
 	<?php $counter = 0 ?>
 	<?php foreach( $videos as $video ): ?>
 		<?php $alpha = $counter % 3 == 0 ? ' alpha' : ''; ?>
 
-		<div class="grid-2 video-element<?= $alpha ?>" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-			<a href="<?= $video['fileUrl'] ?>" class="image video">
-				<?= $video['videoPlayButton'] ?>
-				<img itemprop="thumbnail" alt="<?= $video['fileTitle'] ?>" src="<?= $video['thumbUrl'] ?>" width="<?= $thumbWidth ?>" height="<?= $thumbHeight ?>" data-video-name="<?= htmlspecialchars($video['fileTitle']) ?>" data-video-key="<?= htmlspecialchars(urlencode($video['title'])) ?>" class="Wikia-video-thumb thumbimage">
-				<?= $video['videoOverlay'] ?>
-			</a>
-			<p><?= $video['byUserMsg'] ?></p>
-			<p itemprop="uploadDate"><?= wfTimeFormatAgo($video['timestamp']) ?></p>
-			<p><?= $video['postedInMsg']; ?></p>
-			<meta itemprop="embedUrl" content="<?= $video['embedUrl'] ?>" />
+		<li itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+			<?= $video['thumbnail'] ?>
+			<div class="info">
+				<p class="title">
+					<a href="<?= $video['fileUrl'] ?>" title="<?= $video['title'] ?>"><?= $video['title'] ?></a>
+				</p>
+				<p class="by-views">
+					<?= $video['byUserMsg'] ?>
+					<span class="views"><?= $video['viewTotal'] ?></span>
+				</p>
+				<div class="posted-in">
+					<a class="ellipses" href="<?= $video['seeMoreLink'] ?>"><?= wfMessage('lvs-posted-in-more')->plain() ?></a>
+					<? if ( count($video['truncatedList']) ): ?>
+						<?= wfMessage('specialvideos-posted-in-label')->plain() ?>
+						<ul>
+							<? foreach( $video['truncatedList'] as $article ): ?>
+								<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
+							<? endforeach; ?>
+						</ul>
+					<? endif; ?>
+				</div>
+			</div>
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
 					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMsg('specialvideos-remove-modal-title') ?>">
 				</a>
 			<? endif; ?>
-		</div>
+		</li>
 
 		<?php $counter++; ?>
 	<?php endforeach; ?>
@@ -66,12 +77,12 @@
 
 		<!-- Check user permissions, only admins may upload videos, hide element for non-admins -->
 		<? if ($showAddVideoBtn): ?>
-			<div class="grid-2 <?= $alpha ?>">
+			<li class="add-video">
 				<div class="add-video-placeholder addVideo"></div>
 					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video')->text(); ?></a></p>
-			</div>
+			</li>
 		<? endif; ?>
 		<?php endif; ?>
-</div>
+</ul>
 <?= $pagination ?>
 <div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>

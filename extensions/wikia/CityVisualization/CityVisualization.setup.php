@@ -22,10 +22,7 @@ $wgExtensionCredits['other'][] = array(
 
 // helper hierarchy
 // row assigners
-$wgAutoloadClasses['WikiImageRowAssigner'] = $dir.'classes/WikiImageRowAssigner.class.php';
 $wgAutoloadClasses['WikiImageRowHelper'] = $dir.'classes/WikiImageRowHelper.class.php';
-$wgAutoloadClasses['WikiImageNameRowHelper'] = $dir.'classes/WikiImageNameRowHelper.class.php';
-$wgAutoloadClasses['WikiImageReviewStatusRowHelper'] = $dir.'classes/WikiImageReviewStatusRowHelper.class.php';
 
 // getdata helpers
 $wgAutoloadClasses['WikiGetDataHelper'] = $dir.'classes/WikiGetDataHelper.class.php';

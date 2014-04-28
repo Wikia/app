@@ -675,7 +675,7 @@ class Linker {
 
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
 		/* Give extensions the ability to add HTML to full size unframed images */
-		wfRunHooks( 'ImageAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$s ) );
+		wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
 		/* Wikia change end */
 
 		return str_replace( "\n", ' ', $prefix . $s . $postfix );
@@ -708,6 +708,7 @@ class Linker {
 		 * Allow MediaTransformOutput subclasses know if there's a caption
 		 */
 		$mtoParams['caption'] = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
+
 		/**
 		 * Wikia change end
 		 */
@@ -774,7 +775,7 @@ class Linker {
 		$thumb = false;
 
 		if ( !$exists ) {
-			$outerWidth = $hp['width'] + 2;
+			$width = $hp['width'];
 		} else {
 			if ( isset( $fp['manualthumb'] ) ) {
 				# Use manually specified thumbnail
@@ -806,98 +807,58 @@ class Linker {
 			}
 
 			if ( $thumb ) {
-				$outerWidth = $thumb->getWidth() + 2;
+				$width = $thumb->getWidth();
 			} else {
-				$outerWidth = $hp['width'] + 2;
+				$width = $hp['width'];
 			}
 		}
 
 		# ThumbnailImage::toHtml() already adds page= onto the end of DjVu URLs
 		# So we don't need to pass it here in $query. However, the URL for the
-		# zoom icon still needs it, so we make a unique query for it. See bug 14771
+		# zoom/file page icon still needs it, so we make a unique query for it. See bug 14771
 		$url = $title->getLocalURL( $query );
 		if ( $page ) {
 			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
 		}
 
-		$s = "<div class=\"thumb t{$fp['align']}\"><div class=\"thumbinner\" style=\"width:{$outerWidth}px;\">";
-
-		/**
-		 * Wikia change begin - author Federico
-		 * allow access tot he $params variable
-		 */
 		$params = array();
 		$origHTML = null;
-		/**
-		 * Wikia change end
-		 */
 
+		/* Wikia change/refactor start - @author Liz */
+
+		// TODO: Look into making this a separate function
 		if ( !$exists ) {
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			$zoomIcon = '';
 		} elseif ( !$thumb ) {
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
 			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			$zoomIcon = '';
 		} else {
 			$params = array(
 				'alt' => $fp['alt'],
 				'title' => $fp['title'],
-				'img-class' => 'thumbimage' );
+				'img-class' => 'thumbimage',
+				'align' => $fp['align'],
+				'outerWidth' => $width,
+				'file' => $file,
+				'url' => $url,
+			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-
-			/**
-			 * Wikia change start
-			 * @author Federico
-			 */
 			$origHTML = $thumb->toHtml( $params );
-			$s .= $origHTML;
-			/**
-			 * Wikia change end
-			 */
-
-			if ( isset( $fp['framed'] ) ) {
-				$zoomIcon = "";
-			} else {
-				$zoomIcon = Html::rawElement( 'div', array( 'class' => 'magnify' ),
-					Html::rawElement( 'a', array(
-						'href' => $url,
-						'class' => 'internal',
-						'title' => wfMsg( 'thumbnail-more' ) ),
-						Html::element( 'img', array(
-							'src' => $wgStylePath . '/common/images/magnify-clip' . ( $wgContLang->isRTL() ? '-rtl' : '' ) . '.png',
-							'width' => 15,
-							'height' => 11,
-							'alt' => "" ) ) ) );
-			}
 		}
-		$s .= '  <div class="thumbcaption">' . $zoomIcon . $fp['caption'] . "</div></div></div>";
 
-		/* Wikia change begin - @author: macbre */
-		/* Give extensions ability to add HTML to thumbed / framed images */
-		/* @author: wladek - added outerWidth parameter for BugId: 3734 */
-		wfRunHooks( 'ThumbnailAfterProduceHTML', array( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $params, $zoomIcon, $url,  $time, $origHTML, &$s ) );
-		/* Wikia change end */
+		$isMobile = F::app()->checkSkin( 'wikiamobile' );
 
-		return str_replace( "\n", ' ', $s );
+		if ( $isMobile ) {
+			// Hook only used for mobile now
+			wfRunHooks( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
+		} else {
+			// Render with controller for desktop
+			$params['html'] = $origHTML;
+			$origHTML = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
+		}
+		/* Wikia change/refactor end */
+
+		return str_replace( "\n", ' ', $origHTML );
 	}
 
 	/**

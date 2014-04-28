@@ -21,8 +21,8 @@
 
 		// Carousel vars
 		// overlay for thumb images
-		thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;">' +
-			'<img class="sprite play small" src="' + window.wgBlankImgUrl + '"></div>',
+		thumbPlayButton: '<span class="play-circle"></span>',
+		videoWrapperClass: 'video-thumbnail xxsmall',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 		thumbLoadCount: 20,
@@ -828,11 +828,12 @@
 				});
 			}
 		},
+		// order by priority position in carousel backfill
 		carouselTypes: [
+			'videosModule',
 			'relatedVideos',
 			'articleMedia',
-			'latestPhotos',
-			'videosModule'
+			'latestPhotos'
 		],
 		setUpCarousel: function () {
 			// Load backfill content from DOM
@@ -975,10 +976,10 @@
 				var template = Lightbox.openModal.progressTemplate,
 					progress,
 					html,
-					firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
+					$firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
 
 				// Track progress based on if we're in backfill content or original content
-				if (firstThumb.hasClass('back-fill')) {
+				if ($firstThumb.data('backfill') === 'true') {
 					progress = trackBackfillProgress(idx1, idx2);
 				} else {
 					progress = trackOriginalProgress(idx1, idx2);
@@ -988,12 +989,7 @@
 				Lightbox.openModal.progress.html(html);
 			};
 
-			beforeMove = function () {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').hide();
-			};
-
 			afterMove = function (idx) {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').show();
 				// if we're close to the end, load more thumbnails
 				if (Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
 					Lightbox.getMediaThumbs.wikiPhotos();
@@ -1201,7 +1197,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1253,7 +1250,8 @@
 							key: key,
 							title: title,
 							type: 'video',
-							playButtonSpan: playButton
+							playButtonSpan: playButton,
+							thumbLiClass: Lightbox.videoWrapperClass
 						});
 
 					}
@@ -1401,7 +1399,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
@@ -1423,12 +1422,14 @@
 			}
 		},
 		addThumbsToCarousel: function (thumbs, backfill) {
-			var container = Lightbox.openModal.carouselContainer,
-				// render carousel
-				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
-					liClass: backfill ? 'back-fill' : '',
-					thumbs: thumbs
-				});
+			var carouselThumbs,
+				container = Lightbox.openModal.carouselContainer;
+
+			// render carousel
+			carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
+				backfill: backfill,
+				thumbs: thumbs
+			});
 
 			Lightbox.openModal.carousel.append(carouselThumbs);
 
