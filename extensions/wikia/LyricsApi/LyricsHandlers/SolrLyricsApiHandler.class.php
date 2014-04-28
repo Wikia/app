@@ -408,10 +408,11 @@ class SolrLyricsApiHandler {
 	 * @desc Gets a song from Solr index if exists
 	 *
 	 * @param LyricsApiSearchParams $searchParams
+	 * @param Boolean $useFallback
 	 *
 	 * @return null|stdClass
 	 */
-	public function getSong( LyricsApiSearchParams $searchParams ) {
+	public function getSong( LyricsApiSearchParams $searchParams, $useFallback = true ) {
 		$solrQuery = [
 			'type: %1%' => LyricsUtils::TYPE_SONG,
 			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
@@ -433,10 +434,26 @@ class SolrLyricsApiHandler {
 		$solrSong = $this->getFirstResult( $this->client->select( $query ) );
 
 		if ( is_null( $solrSong ) ) {
-			return null;
+			if( $useFallback ) {
+				return $this->getSongBracketsFallback( $searchParams );
+			} else {
+				return null;
+			}
 		}
 
 		return $this->getOutputSong( $solrSong );
+	}
+
+	/**
+	 * @desc Fallback for cases described in LYR-144
+	 *
+	 * @param LyricsApiSearchParams $searchParams
+	 * @return null|stdClass
+	 */
+	public function getSongBracketsFallback( LyricsApiSearchParams $searchParams ) {
+		$failedSongName = $searchParams->getField( LyricsApiController::PARAM_SONG );
+		$searchParams->addField( LyricsApiController::PARAM_SONG, LyricsUtils::removeBrackets( $failedSongName ) );
+		return $this->getSong( $searchParams, false );
 	}
 
 	/**
