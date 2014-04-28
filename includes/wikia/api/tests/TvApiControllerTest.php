@@ -68,42 +68,6 @@ class TvApiControllerTest extends \WikiaBaseTest {
 
 	}
 
-	public function testCreateOutput() {
-		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
-			->expects( $this->any() )
-			->method( 'getCurrentStagingHost' )
-			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
-		$api = new \TvApiController();
-		$data = [
-			'wikiId' => 1,
-			'wikiHost' => 'unittest.wikia.com/url',
-			'articleId' => 2,
-			'title' => 'fake title',
-			'url' => 'http://unittest.wikia.com/contentUrl',
-			'quality' => 10
-		];
-
-		$method = new \ReflectionMethod( 'TvApiController', 'createOutput' );
-		$method->setAccessible( true );
-		$result = $method->invoke( $api, $data );
-
-		$this->assertEquals(
-			[
-				'wikiId' =>1,
-				'articleId' => 2,
-				'title' => 'fake title',
-				'url' => 'http://newhost/contentUrl',
-				'quality' => 10,
-				'contentUrl' => 'http://newhost/url/api/v1/Articles/AsSimpleJson?id=2'
-			],
-			$result );
-	}
-
-	public function mock_getCurrentStagingHost($arg1, $arg2)
-	{
-		return 'newhost';
-	}
-
 	public function testGetTitle() {
 
 		$mock = $this->getMockBuilder( '\TvApiController' )

@@ -11,6 +11,11 @@ class TvSearchServiceTest extends BaseTest {
 	 * @test
 	 */
 	public function shouldReturnCorrectArticleFormatForNoWikiIdQuery() {
+		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+			->expects( $this->any() )
+			->method( 'getCurrentStagingHost' )
+			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+
 		$mock = $this->getSolariumMock();
 		$mock->expects( $this->once() )
 			->method( 'select' )
@@ -22,10 +27,10 @@ class TvSearchServiceTest extends BaseTest {
 		$this->assertEquals( [
 			'articleId' => 13508,
 			'title' => "The Rains of Castamere (episode)",
-			'url' => "http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)",
+			'url' => "http://newhost/wiki/The_Rains_of_Castamere_(episode)",
 			'quality' => 99,
 			'wikiId' => 1,
-			'wikiHost' => 'gameofthrones.wikia.com'
+			'contentUrl' => 'http://newhost/api/v1/Articles/AsSimpleJson?id=13508'
 		], $res );
 	}
 
@@ -41,13 +46,18 @@ class TvSearchServiceTest extends BaseTest {
 
 		$res = $tvs->queryXWiki( 'game of thrones', 'en' );
 
-		$this->assertEquals( [ ['id' => '130814', 'wikiHost' => 'http://gameofthrones.wikia.com/' ] ], $res );
+		$this->assertEquals( [ ['id' => '130814' ] ], $res );
 	}
 
 	/**
 	 * @test
 	 */
 	public function shouldReturnCorrectArticleFormat() {
+		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+			->expects( $this->any() )
+			->method( 'getCurrentStagingHost' )
+			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+
 		$mock = $this->getSolariumMock();
 		$mock->expects( $this->once() )
 			->method( 'select' )
@@ -59,11 +69,16 @@ class TvSearchServiceTest extends BaseTest {
 		$this->assertEquals( [
 			'articleId' => 13508,
 			'title' => "The Rains of Castamere (episode)",
-			'url' => "http://gameofthrones.wikia.com/wiki/The_Rains_of_Castamere_(episode)",
+			'url' => "http://newhost/wiki/The_Rains_of_Castamere_(episode)",
 			'quality' => 99,
 			'wikiId' => 1,
-			'wikiHost' => 'gameofthrones.wikia.com'
+			'contentUrl' => 'http://newhost/api/v1/Articles/AsSimpleJson?id=13508'
 		], $res );
+	}
+
+	public function mock_getCurrentStagingHost($arg1, $arg2)
+	{
+		return 'newhost';
 	}
 
 	private function getSolariumMock() {
