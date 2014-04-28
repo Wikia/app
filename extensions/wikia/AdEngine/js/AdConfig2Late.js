@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderRemnant.canHandleSlot(slot)) {
+			if (adProviderRemnant.canHandleSlot(slotname)) {
 				return adProviderRemnant;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
