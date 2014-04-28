@@ -164,8 +164,18 @@ class LyricsUtilsTest extends WikiaBaseTest {
 			],
 			[
 				'all kinds of brackets',
-				'Give Me Everything (Tonight) (Prod. By Afrojack) (Final) ( 2o11 ) [ www.MzHipHop.com ]',
+				'Give Me Everything (Tonight) (Prod. By Afrojack) (Final) ( 2o11 ) [ www.example.com ]',
 				'Give Me Everything'
+			],
+			[
+				'an opened parenthesis but not closed',
+				'Give Me Everything (Tonight',
+				'Give Me Everything (Tonight'
+			],
+			[
+				'an opened square bracket but not closed',
+				'Give Me Everything [Tonight',
+				'Give Me Everything [Tonight'
 			],
 		];
 	}
