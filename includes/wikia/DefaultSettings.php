@@ -150,6 +150,7 @@ $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/Rela
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -161,6 +162,7 @@ $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -1368,6 +1370,7 @@ $wgApiAccess = [
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE

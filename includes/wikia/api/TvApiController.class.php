@@ -11,44 +11,10 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
-	const DEFAULT_MOVIE_QUALITY = 80;
 	/** @var Array wikis */
 	protected $wikis = [];
 	/** @var TvSearchService tvService */
 	protected $tvService;
-
-	public function getMovie() {
-		$movieName = $this->getRequiredParam( 'movieName' );
-		$lang = $this->getRequest()->getVal( 'lang', static::LANG_SETTING );
-
-		$result = $this->findMovie( $movieName, $lang );
-		$output = $this->createOutput( $result );
-
-		$response = $this->getResponse();
-		$response->setValues( $output );
-
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
-	}
-
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
-	}
-
-	protected function findMovie( $movieName, $lang, $minQuality = self::DEFAULT_MOVIE_QUALITY ) {
-		$tvs = $this->getTvSearchService();
-
-		$result = $tvs->queryMovie( $movieName, $lang, $tvs::MOVIE_TYPE, null, $minQuality );
-		if (!empty($result)) {
-			return $result;
-		}
-
-		//movie was not found
-		throw new NotFoundApiException();
-	}
 
 	public function getEpisode() {
 		$request = $this->getRequest();
@@ -67,6 +33,14 @@ class TvApiController extends WikiaApiController {
 		$response->setValues( $output );
 
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+	}
+
+	protected function getRequiredParam( $name ) {
+		$query = $this->getRequest()->getVal( $name, null );
+		if ( empty( $query ) || $query === null ) {
+			throw new InvalidParameterApiException( $name );
+		}
+		return $query;
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
