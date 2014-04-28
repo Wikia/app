@@ -22,9 +22,6 @@ class AnalyticsProviderBlueKai implements iAnalyticsProvider
 		$siteId = self::SITE_ID;
 
 		$allowedParams = json_encode([
-				's0' => true,
-				's1' => true,
-				's2' => true,
 				'esrb' => true,
 				'gnre' => true,
 				'pub' => true,
