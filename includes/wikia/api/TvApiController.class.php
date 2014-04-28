@@ -2,7 +2,9 @@
 
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\Services\TvSearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\EpisodeEntitySearchService;
+
 
 class TvApiController extends WikiaApiController {
 
@@ -11,8 +13,10 @@ class TvApiController extends WikiaApiController {
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/** @var Array wikis */
 	protected $wikis = [];
-	/** @var TvSearchService tvService */
-	protected $tvService;
+	/** @var SeriesEntitySearchService seriesService */
+	protected $seriesService;
+	/** @var EpisodeEntitySearchService episodeService */
+	protected $episodeService;
 
 	public function getEpisode() {
 		$request = $this->getRequest();
@@ -33,12 +37,18 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
-		$tvs = $this->getTvSearchService();
-		$wikis = $tvs->queryXWiki( $seriesName, $lang );
+		$seriesService = $this->getSeriesService();
+		$seriesService->setLang( $lang )
+			->setQuality( $quality );
+		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
+			$episodeService = $this->getEpisodeService();
+			$episodeService->setLang( $lang )
+				->setQuality( $quality );
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $lang, $wiki[ 'id' ], $quality );
+				$episodeService->setWikiId( $wiki['id'] );
+				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}
@@ -53,11 +63,18 @@ class TvApiController extends WikiaApiController {
 		throw new NotFoundApiException();
 	}
 
-	protected function getTvSearchService() {
-		if ( !isset( $this->tvService ) ) {
-			$this->tvService = new TvSearchService();
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
 		}
-		return $this->tvService;
+		return $this->seriesService;
+	}
+
+	protected function getEpisodeService() {
+		if ( !isset( $this->episodeService ) ) {
+			$this->episodeService = new EpisodeEntitySearchService();
+		}
+		return $this->episodeService;
 	}
 
 	protected function getTitle( $text, $wikiId ) {
