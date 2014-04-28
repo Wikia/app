@@ -32,14 +32,14 @@
 								'url': url
 							},
 							callback: function (response) {
-								var selectedModule = window.wgEditHubModuleIdSelected,
+								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
 
 								window.GlobalNotification.hide();
 								if (response.error) {
 									window.GlobalNotification.show(response.error, 'error');
 								} else {
-									if (selectedModule === window.wgEditHubModuleIdFeaturedVideo) {
+									if (selectedModule === parseInt(window.wgEditHubModuleIdFeaturedVideo)) {
 										box = $this.parents('.module-box:first');
 										if (!box.length) {
 											box = $('.EditHubMain');
@@ -55,7 +55,7 @@
 										// Close VET modal
 										VET.close();
 									}
-									else if (selectedModule === window.wgEditHubModuleIdPopularVideos) {
+									else if (selectedModule === parseInt(window.wgEditHubModuleIdPopularVideos)) {
 										$.when(
 												$.loadMustache(),
 												Wikia.getMultiTypePackage({
