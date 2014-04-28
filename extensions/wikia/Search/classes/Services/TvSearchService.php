@@ -52,8 +52,8 @@ class TvSearchService {
 		return $result;
 	}
 
-	public function queryMain( $query, $lang, $type = null, $wikiId = null, $minQuality = null ) {
-		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, $type );
+	public function queryMain( $query, $lang, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, static::EPISODE_TYPE );
 		$response = $this->querySolr( $select );
 		foreach( $response as $item ) {
 			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
@@ -63,8 +63,8 @@ class TvSearchService {
 		return null;
 	}
 
-	public function queryMovie( $query, $lang, $type = null, $wikiId = null, $minQuality = null ) {
-		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality, $type, static::$EXCLUDED_WIKIS_MOVIES );
+	public function queryMovie( $query, $lang, $wikiId = null, $minQuality = null ) {
+		$select = $this->prepareArticlesQuery( $query, $lang, $wikiId, $minQuality,  static::MOVIE_TYPE, static::$EXCLUDED_WIKIS_MOVIES );
 		$dismax = $select->getDisMax();
 		$dismax->setQueryFields( 'title_em^10 ' . $dismax->getQueryFields() );
 

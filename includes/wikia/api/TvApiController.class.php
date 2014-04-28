@@ -38,7 +38,7 @@ class TvApiController extends WikiaApiController {
 		if ( !empty( $wikis ) ) {
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $lang, $tvs::EPISODE_TYPE, $wiki[ 'id' ], $quality );
+				$result = $tvs->queryMain( $episodeName, $lang, $wiki[ 'id' ], $quality );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}

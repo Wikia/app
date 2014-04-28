@@ -26,7 +26,7 @@ class MoviesApiController extends WikiaApiController {
 	protected function findMovie( $movieName, $lang, $minQuality ) {
 		$tvs = $this->getTvSearchService();
 
-		$result = $tvs->queryMovie( $movieName, $lang, $tvs::MOVIE_TYPE, null, $minQuality );
+		$result = $tvs->queryMovie( $movieName, $lang, null, $minQuality );
 		if (!empty($result)) {
 			return $result;
 		}

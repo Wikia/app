@@ -54,7 +54,7 @@ class TvSearchServiceTest extends BaseTest {
 			->will( $this->returnValue( $this->getResultMock( 'getSolariumMainResponse' ) ) );
 		$tvs = new TvSearchService( $mock );
 
-		$res = $tvs->queryMain( 'The Rains of Castamere', 'en', 130814 );
+		$res = $tvs->queryMain( 'The Rains of Castamere', 'en' );
 
 		$this->assertEquals( [
 			'articleId' => 13508,
