@@ -43,9 +43,12 @@ class ReadMoreModel extends WikiaModel {
 				$recommendations = [];
 
 				$result = $this->getDataFromSolr();
-				$recommendationsKeys = $this->getRecommendationsKeys( $result );
-				if ( !empty( $recommendationsKeys ) ) {
-					$recommendations = $this->prepareRecommendationsData( $recommendationsKeys );
+
+				if ( !is_null( $result ) ) {
+					$recommendationsKeys = $this->getRecommendationsKeys( $result );
+					if ( !empty( $recommendationsKeys ) ) {
+						$recommendations = $this->prepareRecommendationsData( $recommendationsKeys );
+					}
 				}
 
 				return $recommendations;
@@ -145,15 +148,35 @@ class ReadMoreModel extends WikiaModel {
 		return $recommendations;
 	}
 
+	/**
+	 * Get Title's form articles ids
+	 *
+	 * @param $ids
+	 * @return Title[]
+	 */
 	protected function getTitlesFromIds( $ids ) {
 		return Title::newFromIDs( $ids );
 	}
 
+	/**
+	 * Get images for given articles ids
+	 *
+	 * @param $ids
+	 * @return mixed
+	 */
 	protected function getImagesFromIds ( $ids ) {
 		$imageServing = new ImageServing( array_keys( $ids ), 200, array( 'w' => 2, 'h' => 1 ) );
 		return $imageServing->getImages( 1 );
 	}
 
+	/**
+	 * Get data for given article
+	 *
+	 * @param ArticleService $articleService
+	 * @param Title $title
+	 * @param array $images
+	 * @return array
+	 */
 	public function getRecommendationData( $articleService, $title, $images ) {
 		$recommendation = [];
 
