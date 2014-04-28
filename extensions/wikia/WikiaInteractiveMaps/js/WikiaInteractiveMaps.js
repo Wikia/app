@@ -74,7 +74,6 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 					dfd.reject();
 				});
 			}
-
 		});
 
 		return dfd.promise();
@@ -108,5 +107,4 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 		event.preventDefault();
 		showMap($(event.currentTarget));
 	});
-
 });
