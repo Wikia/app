@@ -1045,7 +1045,15 @@ class Config
 	 */
 	public function getResultsFound() {
 		$results = $this->getResults();
-		return $results === null ? 0 : $results->getResultsFound();
+		$numResults = 0;
+		if($results ){
+			$numResults = $results->getResultsFound() + $this->mustAddMatchedRecords();
+		}
+		return $numResults;
+	}
+
+	public function mustAddMatchedRecords(){
+		return ($this->getPage() > 1 && $this->hasMatch()) ? 1 : 0;
 	}
 
 	/**

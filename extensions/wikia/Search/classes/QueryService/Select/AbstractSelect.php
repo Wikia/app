@@ -360,7 +360,14 @@ abstract class AbstractSelect
 	protected function prepareRequest() {
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
-			$config->setStart( ( $config->getPage() - 1 ) * $config->getLength() );
+			$length = $config->getLimit();
+			/*if( $config->hasMatch() && $config->getPage() > 1 && $length > 0 ) {
+				$length--;
+			}*/
+
+			$start = ( $config->getPage() - 1 ) * $length;
+			//var_dump($length, $start);
+			$config->setStart(  $start );
 		}
 		return $this;
 	}
