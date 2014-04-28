@@ -211,7 +211,7 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
-
+		
 		// Lazy rail
 		'#group_lazy_rail_js',
 	)
