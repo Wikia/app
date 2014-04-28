@@ -157,6 +157,18 @@ class LyricsUtilsTest extends WikiaBaseTest {
 				'Happy (From "Despicable Me 2") (German version)',
 				'Happy'
 			],
+			[
+				'square brackets',
+				'Take My Hand [ Remix] [feat. Cassadee Pope]',
+				'Take My Hand'
+			],
+			/*
+			[
+				'all kinds of brackets',
+				'Give Me Everything (Tonight) (Prod. By Afrojack) (Final) ( 2o11 ) [ www.MzHipHop.com ]',
+				'Give Me Everything'
+			],
+			*/
 		];
 	}
 }
