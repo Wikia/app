@@ -6,7 +6,7 @@
  */
 class ReadMoreModel extends WikiaModel {
 
-	const MEMC_VER = '1.00';
+	const MEMC_VER = '1.01';
 
 	private $wikiId;
 	private $articleId;
@@ -136,6 +136,7 @@ class ReadMoreModel extends WikiaModel {
 		$articleService = new ArticleService();
 
 		$titles = $this->getTitlesFromIds( $articleIds );
+		$titles = $this->prepareTitlesInOrder( $titles, $articleIds );
 		$images = $this->getImagesFromIds( $articleIds );
 
 		foreach ( $titles as $title ) {
@@ -146,6 +147,17 @@ class ReadMoreModel extends WikiaModel {
 		}
 
 		return $recommendations;
+	}
+
+	private function prepareTitlesInOrder( $titles, $order ) {
+		foreach ( $titles as $title ) {
+			$articleId = $title->getArticleID();
+			if ( isset( $order[ $articleId ] ) ) {
+				$order[ $articleId ] = $title;
+			}
+		}
+
+		return $order;
 	}
 
 	/**
@@ -180,7 +192,7 @@ class ReadMoreModel extends WikiaModel {
 	public function getRecommendationData( $articleService, $title, $images ) {
 		$recommendation = [];
 
-		if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
+		if ( !empty( $title ) && $title instanceof Title && $title->exists() && !$title->isRedirect() ) {
 			$articleId = $title->getArticleID();
 			if ( $articleId ) {
 				$article = $articleService->setArticleById( $articleId );
