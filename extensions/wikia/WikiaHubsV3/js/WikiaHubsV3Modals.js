@@ -12,7 +12,7 @@
 					window.UserLoginModal.show({
 						origin: 'wikia-hubs',
 						callback: function () {
-							UserLogin.forceLoggedIn = true;
+							window.UserLogin.forceLoggedIn = true;
 							SuggestModalWikiaHubsV3.suggestArticle();
 						}
 					});
@@ -84,13 +84,14 @@
 							$formView = $modal.find('.form-view'),
 							$successView = $modal.find('.success-view');
 
-						$modal.on('keyup keydown change', 'textarea[name=reason], input[name=articleurl]', function (e) {
-							if (($articleurl.val().length === 0) || ($reason.val().length === 0)) {
-								$submitButton.attr('disabled', 'disabled');
-							} else {
-								$submitButton.removeAttr('disabled');
-							}
-						});
+						$modal.on('keyup keydown change', 'textarea[name=reason], input[name=articleurl]',
+							function () {
+								if (($articleurl.val().length === 0) || ($reason.val().length === 0)) {
+									$submitButton.attr('disabled', 'disabled');
+								} else {
+									$submitButton.removeAttr('disabled');
+								}
+							});
 
 						suggestArticleModal.bind('submit', function (event) {
 							event.preventDefault();
@@ -99,8 +100,8 @@
 							$successView.removeClass('hidden');
 
 							// send tracking
-
-							WikiaHubs.trackClick(
+							/* jshint camelcase: false */
+							window.WikiaHubs.trackClick(
 								'get-promoted',
 								Wikia.Tracker.ACTIONS.SUBMIT,
 								'suggest-article-submit',
@@ -109,7 +110,8 @@
 									reason: $reason.val(),
 									vertical_id: window.wgWikiaHubsVerticalId
 								},
-								e);
+								event);
+							/* jshint camelcase: true */
 						});
 
 						$('#suggestArticle').stopThrobbing();
@@ -124,4 +126,4 @@
 		SuggestModalWikiaHubsV3.init();
 	});
 
-})(this, jQuery);
+})(window, jQuery);
