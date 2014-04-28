@@ -92,8 +92,8 @@ $(function () {
 		 */
 		initRemoveVideo: function () {
 			this.$wrapper.on('click', '.remove', function (e) {
-				var videoElement = $(e.target).parents('.video-element'),
-					videoName = videoElement.find('.video > img').attr('data-video-name');
+				var $video = $(this).prevAll('.video-thumbnail'),
+					videoName = $video.children('img').attr('data-video-name');
 				if (videoName) {
 					$.confirm({
 						title: $.msg('specialvideos-remove-modal-title'),
