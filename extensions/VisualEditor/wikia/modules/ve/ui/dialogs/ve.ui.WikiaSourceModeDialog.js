@@ -27,7 +27,7 @@ OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.Dialog );
 
 ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
-ve.ui.WikiaSourceModeDialog.static.titleMessage = 'wikia-visualeditor-dialog-wikiasourcemode-title';
+ve.ui.WikiaSourceModeDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
 
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 

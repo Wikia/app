@@ -26,7 +26,7 @@ OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.Dialog );
 
 ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
-ve.ui.WikiaMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-insert-title';
+ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
 
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
@@ -566,16 +566,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		);
 	}
 
-	function updateAvatar( result ) {
-		items[result.title].avatar = result.avatar;
+	function updateAttribution( result ) {
 		items[result.title].username = result.username;
+		items[result.title].title = result.title;
 	}
 
 	// Attribution request
 	for ( title in items ) {
 		promises.push(
 			this.getPhotoAttribution( title ).done(
-				ve.bind( updateAvatar, this )
+				ve.bind( updateAttribution, this )
 			)
 		);
 	}
@@ -593,13 +593,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  * @param {Object} items Items to insert
  */
 ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var count, item, title, type,
+	var count, item, title, type, captionType,
 		typeCount = { 'photo': 0, 'video': 0 },
 		linmod = [];
 
 	for ( title in items ) {
 		item = items[title];
 		type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
+		captionType = ( item.type === 'photo' ) ? 'wikiaImageCaption' : 'wikiaVideoCaption';
 		typeCount[item.type]++;
 		linmod.push(
 			{
@@ -614,12 +615,12 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'resource': './' + item.title,
 					'attribution': {
 						'username': item.username,
-						'avatar': item.avatar
+						'title': item.title
 					}
 				}
 			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': captionType },
+			{ 'type': '/' + captionType },
 			{ 'type': '/' + type }
 		);
 	}
