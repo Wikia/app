@@ -198,6 +198,9 @@ abstract class ApiWrapper {
 						case '403':
 							throw new VideoIsPrivateException($status, $content, $apiUrl);
 							break;
+						case '404':
+							throw new VideoNotFoundException($status, $content, $apiUrl);
+							break;
 						default:
 					}
 				}

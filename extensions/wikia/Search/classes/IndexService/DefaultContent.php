@@ -4,6 +4,8 @@
  * @author relwell
  */
 namespace Wikia\Search\IndexService;
+use JsonFormatService;
+use Wikia\JsonFormat\JsonFormatSimplifier;
 use Wikia\Search\Utilities, simple_html_dom;
 /**
  * This is intended to provide core article content
@@ -72,6 +74,7 @@ class DefaultContent extends AbstractService
 				'pageid'                     => $pageId,
 				$this->field( 'title' )      => $titleStr,
 				'titleStrict'                => $titleStr,
+				'title_em'                   => $titleStr,
 				'url'                        => $service->getUrlFromPageId( $pageId ),
 				'ns'                         => $service->getNamespaceFromPageId( $pageId ),
 				'host'                       => $service->getHostName(),
@@ -137,9 +140,28 @@ class DefaultContent extends AbstractService
 	 * @return array
 	 */
 	protected function getPageContentFromParseResponse( array $response ) {
+		global $wgSimpleHtmlSearchIndexer;
 		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-		if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
-			return $this->prepValuesFromHtml( $html );
+
+		if( $wgSimpleHtmlSearchIndexer ) {
+			$jsonFormatService = new JsonFormatService();
+			$jsonSimple = $jsonFormatService->getSimpleFormatForHtml( $html );
+			$simplifier = new JsonFormatSimplifier();
+			$text = $simplifier->simplifyToText( $jsonSimple );
+
+			$words = explode( ' ', $text );
+			$wordCount = count( $words );
+			$upTo100Words = implode( ' ', array_slice( $words, 0, min( array( $wordCount, 100 ) ) ) );
+			$this->pushNolangTxt( $upTo100Words );
+			return [
+					'nolang_txt'           => $upTo100Words,
+					'words'                => $wordCount,
+					$this->field( 'html' ) => $text
+				];
+		} else {
+			if ( $this->getService()->getGlobal( 'AppStripsHtml' ) ) {
+				return $this->prepValuesFromHtml( $html );
+			}
 		}
 		return [ 'html' => html_entity_decode($html, ENT_COMPAT, 'UTF-8') ];
 	}
@@ -241,7 +263,7 @@ class DefaultContent extends AbstractService
 	 */
 	protected function extractInfoboxes( simple_html_dom $dom ) {
 		$result = array();
-		$infoboxes = $dom->find( 'table.infobox' );
+		$infoboxes = $dom->find( 'table.infobox,table.wikia-infobox' );
 		if ( count( $infoboxes ) > 0 ) {
 			$result['infoboxes_txt'] = [];
 			$counter = 1;
@@ -254,8 +276,13 @@ class DefaultContent extends AbstractService
 				if ( $infoboxRows ) {
 					foreach ( $infoboxRows as $row ) {
 						$infoboxCells = $row->find( 'td' );
-						if ( count( $infoboxCells ) == 2 ) {
+						$headerCells = $row->find( 'th' );
+						$infoBoxCellCount = count( $infoboxCells );
+						$headerCellCount = count( $headerCells );
+						if ( $infoBoxCellCount == 2  && $headerCellCount == 0 ) {
 							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $infoboxCells[0]->plaintext . ' | ' . $infoboxCells[1]->plaintext  );
+						} else if ( $infoBoxCellCount == 1 && $headerCellCount == 1 ) {
+							$result['infoboxes_txt'][] = "infobox_{$counter} | " . preg_replace( '/\s+/', ' ', $headerCells[0]->plaintext . ' | ' . $infoboxCells[0]->plaintext  );
 						}
 					}
 				}

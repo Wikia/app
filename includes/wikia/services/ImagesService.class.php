@@ -34,7 +34,7 @@ class ImagesService extends Service {
 			$param['imgHeight']  = $imgHeight;
 		}
 
-		$response = ApiService::foreignCall($dbname, $param);
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		$imageSrc = (empty($response['image']['imagecrop'])) ? '' : $response['image']['imagecrop'];
 		$imagePage = (empty($response['imagepage']['imagecrop'])) ? '' : $response['imagepage']['imagecrop'];
@@ -84,7 +84,7 @@ class ImagesService extends Service {
 		);
 
 		$imagePage = $title->getFullUrl();
-		$response = ApiService::foreignCall($dbname, $param);
+		$response = ApiService::foreignCall($dbname, $param, ApiService::API, true);
 
 		if (!empty($response['query']['pages'])) {
 			$imagePageData = array_shift($response['query']['pages']);

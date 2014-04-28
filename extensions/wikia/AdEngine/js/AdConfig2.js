@@ -1,5 +1,20 @@
-/*exported AdConfig2*/
-var AdConfig2 = function (
+/*global define*/
+define('ext.wikia.adEngine.adConfig', [
+	// regular dependencies
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'wikia.geo',
+	'wikia.abTest',
+
+	'ext.wikia.adEngine.adDecoratorPageDimensions',
+
+	// adProviders
+	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.provider.later',
+	'ext.wikia.adEngine.provider.null'
+], function (
 	// regular dependencies
 	log,
 	window,
@@ -17,8 +32,7 @@ var AdConfig2 = function (
 ) {
 	'use strict';
 
-	var logGroup = 'AdConfig2',
-		cityLang = window.wgContentLanguage,
+	var logGroup = 'ext.wikia.adEngine.adConfig',
 		country = Geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
@@ -66,11 +80,11 @@ var AdConfig2 = function (
 			return adProviderEvolve;
 		}
 		if (slot[2] === 'AdDriver2') {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
 			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
 			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'Liftium') {
@@ -95,8 +109,13 @@ var AdConfig2 = function (
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
 		// TOP_BUTTON is always handled in Later queue, so we need to exclude
-		// only WIKIA_BAR_BOXAD_1
-		if (window.wgAdDriverUseSevenOneMedia && slotname !== 'WIKIA_BAR_BOXAD_1') {
+		// only WIKIA_BAR_BOXAD_1.
+		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
+		// is actually requested.
+		if (window.wgAdDriverUseSevenOneMedia &&
+				slotname !== 'WIKIA_BAR_BOXAD_1' &&
+				slotname !== 'GPT_FLUSH'
+				) {
 			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return adProviderLater;
 		}
@@ -120,7 +139,7 @@ var AdConfig2 = function (
 	}
 
 	return {
-		getDecorators: function () {return decorators;},
+		getDecorators: function () { return decorators; },
 		getProvider: getProvider
 	};
-};
+});

@@ -1,7 +1,8 @@
+/*global require*/
 require(
 	[
 		'jquery', 'JSMessages', 'wikia.window', 'wikia.log',
-		'ext.wikia.adengine.adengine', 'ext.wikia.adengine.config.mobile'
+		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile'
 	],
 	function ( $, msg, window, log, adEngine, adConfigMobile ) {
 		'use strict';

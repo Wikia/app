@@ -189,9 +189,10 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//skin
 			'skin',
 
-			//facebook login
+			//login
 			'fbAppId',
-			'fbUseMarkup'
+			'fbUseMarkup',
+			'wgLoginToken'
 		];
 }
 

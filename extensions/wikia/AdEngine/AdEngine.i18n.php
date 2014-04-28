@@ -109,10 +109,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Metalhead64
+ * @author Perhelion
  */
 $messages['de'] = array(
 	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
-	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in einigen Sekunden auf die angeforderte Seite weiter.',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
 );

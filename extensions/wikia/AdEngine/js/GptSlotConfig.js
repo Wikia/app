@@ -1,6 +1,5 @@
-/*exported GptSlotConfig*/
 /*global define*/
-var GptSlotConfig = function() {
+define('ext.wikia.adEngine.gptSlotConfig', function () {
 	'use strict';
 
 	var slotMapConfig = {
@@ -67,6 +66,4 @@ var GptSlotConfig = function() {
 		getConfig: getConfig
 	};
 
-};
-
-define('ext.wikia.adengine.gptslotconfig', [], GptSlotConfig);
+});

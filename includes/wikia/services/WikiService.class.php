@@ -12,8 +12,6 @@ class WikiService extends WikiaModel {
 	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
 	const WIKIAGLOBAL_CITY_ID = 80433;
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
@@ -844,8 +842,6 @@ class WikiService extends WikiaModel {
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
 					'image' => $row->city_main_image,
 					'flags' => array(
-						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),
-						'hot' => ( ( $row->city_flags & self::FLAG_HOT ) == self::FLAG_HOT ),
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
 					)

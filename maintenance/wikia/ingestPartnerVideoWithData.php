@@ -16,6 +16,8 @@ $optionsWithArgs = [ 'u', 's', 'e', 'i' ];
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
+use \Wikia\Logger\WikiaLogger;
+
 // commandLine.inc transforms -h and --help into 'help'
 if ( isset( $options['help'] ) ) {
 	print <<<EOT
@@ -188,24 +190,38 @@ function loadProviders ( $provider ) {
 }
 
 function getContentSummary( $summary ) {
+	$log = WikiaLogger::instance();
+
+	$width = 20;
 	$now = date( 'Y-m-d H:i:s' );
 	$content = "Run Date: $now\n";
 
 	// get header
 	$keys = array_keys( current( $summary ) );
-	$header = array_merge( ['provider'], $keys );
-	$content .= implode( "\t\t", array_map( 'ucwords', $header ) )."\n";
+	$content .= sprintf( "%-{$width}s", 'Provider' );
+	foreach( $keys as $field ) {
+		$content .= sprintf( "%{$width}s", ucwords( $field ) );
+	}
+	$content .= "\n";
 
 	// get body
 	$summary['total'] = array_fill_keys( $keys, 0 );
-	foreach ( $summary as $provider => &$result ) {
-		$body = [ strtoupper( $provider ) ];
+	foreach ( $summary as $provider => $result ) {
+		$content .= sprintf( "%-{$width}s", strtoupper( $provider ) );
 		foreach ( $result as $key => $value ) {
 			$summary['total'][$key] += $value;
-			$body[] = $value;
+			$content .= sprintf( "%{$width}s", $value );
 		}
-		$content .= implode( "\t\t", $body )."\n";
+
+		// Make provider data available to kibana
+		$result['provider'] = $provider;
+		$log->info( "Video ingestion complete: $provider", $result );
+
+		$content .= "\n";
 	}
+
+	// Make the summary data available to kibana
+	$log->info("Video ingestion totals", $summary['total']);
 
 	return $content;
 }

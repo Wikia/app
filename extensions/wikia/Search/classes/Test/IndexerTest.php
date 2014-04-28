@@ -597,10 +597,10 @@ class IndexerTest extends BaseTest
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$mwService
-		    ->expects( $this->any() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'SolrMaster' )
-		    ->will   ( $this->returnValue( 'search' ) )
+			->expects( $this->any() )
+			->method ( 'getGlobal' )
+			// first called with 'SolrMaster' then with 'SolrDefaultPort'
+			->will   ( $this->onConsecutiveCalls( 'search', 1234 ) )
 		;
 		$this->assertAttributeEmpty(
 				'client',

@@ -68,7 +68,24 @@ class WikiaHubsV2Controller extends WikiaController {
 		}
 	}
 
-	/**
+	public function getArticleSuggestModal() {
+		$templateData = [
+			'urlLabel' => wfMessage('wikiahubs-suggest-article-what-article')->text(),
+			'reasonLabel' => wfMessage('wikiahubs-suggest-article-reason')->text(),
+			'successMessage' => wfMessage('wikiahubs-suggest-article-success')->text()
+		];
+
+		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $templateData )
+			->render( 'WikiaHubsV2_suggestArticle.mustache' ) );
+
+		$this->setVal( 'title', wfMessage('wikiahubs-suggest-article-header')->escaped() );
+		$this->setVal( 'labelSubmit', wfMessage( 'wikiahubs-suggest-article-submit-button' )->escaped() );
+		$this->setVal( 'labelCancel', wfMessage( 'wikiahubs-suggest-article-close-button' )->escaped() );
+	}
+
+    /**
 	 * Check if user has access to see hub page in future date
 	 *
 	 * @return bool

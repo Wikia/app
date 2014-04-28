@@ -2,8 +2,6 @@
 
 class UserLoginHooksHelper {
 
-	const WIKIA_EMAIL_DOMAIN = "@wikia-inc.com";
-
 	// set default user options and perform other actions after account creation
 	public static function onAddNewAccount( User $user, $byEmail ) {
 		$user->setOption( 'marketingallowed', 1 );
@@ -115,13 +113,32 @@ class UserLoginHooksHelper {
 		$oldEmail = $user->getEmail();
 		$optionNewEmail = $user->getOption( 'new_email' );
 		if ( ( empty($optionNewEmail) &&  $newEmail != $oldEmail ) || ( !empty($optionNewEmail) &&  $newEmail != $optionNewEmail ) ) {
-			$user->setOption( 'new_email', $newEmail );
-			$user->invalidateEmail();
-			if ( $app->wg->EmailAuthentication ) {
-				$userLoginHelper = (new UserLoginHelper);
-				$result = $userLoginHelper->sendReconfirmationEmail( $user, $newEmail );
-				if ( $result->isGood() ) {
-					$info = 'eauth';
+			// CONN-471 - Validate new user e-mail with Phalanx for Preferences::trySetUserEmail
+
+			// Temporary set the new email so it can be validated
+			$user->setEmail( $newEmail );
+			list( $isPhalanxValid, $abortError ) = UserLoginHelper::callWithCaptchaDisabled(function($params) {
+				$abortError = '';
+				$phalanxValid = wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) );
+				return array($phalanxValid, $abortError);
+			}, array( 'user' => $user ) );
+
+			// Revert to original email
+			$user->setEmail( $oldEmail );
+
+			if ( !$isPhalanxValid ) {
+				$info = $abortError;
+				$result = Status::newGood();
+				$result->setResult( false );
+			} else {
+				$user->setOption( 'new_email', $newEmail );
+				$user->invalidateEmail();
+				if ( $app->wg->EmailAuthentication ) {
+					$userLoginHelper = (new UserLoginHelper);
+					$result = $userLoginHelper->sendReconfirmationEmail( $user, $newEmail );
+					if ( $result->isGood() ) {
+						$info = 'eauth';
+					}
 				}
 			}
 		} elseif ( $newEmail != $oldEmail ) { // if the address is the same, don't change it
@@ -141,18 +158,12 @@ class UserLoginHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
-		return true;
-	}
 
-	/**
-	 * Checks if Email belongs to the wikia domain;
-	 *
-	 * @param string $sEmail Email to check
-	 * @static
-	 * @return bool
-	 */
-	public static function isWikiaEmail( $sEmail ) {
-		return substr( $sEmail, strpos( $sEmail, '@' ) ) == self::WIKIA_EMAIL_DOMAIN;
+		if (F::app()->checkSkin('wikiamobile')) {
+			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
+		}
+
+		return true;
 	}
 
 	/**
@@ -188,7 +199,7 @@ class UserLoginHooksHelper {
 		$sEmail = $user->getEmail();
 		if ( isset( $wgAccountsPerEmail )
 			&& is_numeric( $wgAccountsPerEmail )
-			&& !self::isWikiaEmail( $sEmail )
+			&& !UserLoginHelper::isWikiaEmail( $sEmail )
 		) {
 			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
 			$iCount = $wgMemc->get( $key );
@@ -203,5 +214,6 @@ class UserLoginHooksHelper {
 		}
         return true;
 	}
+
 }
 

@@ -26,7 +26,7 @@ if ( !empty( $result ) ) {
 	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ;?>
 	<? endif;?>
 	<form method=post action="<?= $formPostAction ?>">
-		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
+		<input type=hidden name=loginToken id='loginToken' value='<?= $loginToken ?>'>
 		<input type=hidden name=keeploggedin value=true>
 		<? if ( !empty( $returnto ) ): ?>
 			<input type=hidden name=returnto value="<?= $returnto; ?>">

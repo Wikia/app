@@ -66,7 +66,7 @@ class WikiaHubsV3Hooks {
 		$title = Title::newFromText($wgRequest->getVal( 'title' ));
 		$mainPageTitle = Title::newMainPage();
 
-		if ( $title->isSubpageOf($mainPageTitle) ) {
+		if ( $title instanceof Title && $title->isSubpageOf($mainPageTitle) ) {
 			$url = $mainPageTitle->getFullURL();
 		}
 
