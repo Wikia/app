@@ -408,18 +408,19 @@ class SolrLyricsApiHandler {
 	 * @desc Gets a song from Solr index if exists
 	 *
 	 * @param LyricsApiSearchParams $searchParams
-	 * @param Boolean $useFallback
 	 *
 	 * @return null|stdClass
 	 */
-	public function getSong( LyricsApiSearchParams $searchParams, $useFallback = true ) {
-		$solrQuery = [
-			'type: %1%' => LyricsUtils::TYPE_SONG,
-			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
-			'song_name_lc: %P3%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG ),
-		];
+	public function getSong( LyricsApiSearchParams $searchParams ) {
+		$query = $this->client->createSelect();
+		$queryHelper = $query->getHelper();
+		$lowerCaseSongName = $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG );
+		$queryText = 'type:"' . $queryHelper->escapeTerm( LyricsUtils::TYPE_SONG ) . '" AND ' .
+			'artist_name_lc:"' . $queryHelper->escapeTerm( $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ) ) . '" AND ' .
+			'( song_name_lc:"' . $queryHelper->escapeTerm( $lowerCaseSongName ) . '" OR ' .
+			'song_name_lc:"' . $queryHelper->escapeTerm( LyricsUtils::removeBrackets( $lowerCaseSongName ) ) . '" )';
 
-		$query = $this->newQueryFromSearch( $solrQuery );
+		$query->setQuery( $queryText );
 		$query->setFields( [
 			'artist_name',
 			'album_id',
@@ -434,26 +435,10 @@ class SolrLyricsApiHandler {
 		$solrSong = $this->getFirstResult( $this->client->select( $query ) );
 
 		if ( is_null( $solrSong ) ) {
-			if( $useFallback ) {
-				return $this->getSongBracketsFallback( $searchParams );
-			} else {
-				return null;
-			}
+			return null;
 		}
 
 		return $this->getOutputSong( $solrSong );
-	}
-
-	/**
-	 * @desc Fallback for cases described in LYR-144
-	 *
-	 * @param LyricsApiSearchParams $searchParams
-	 * @return null|stdClass
-	 */
-	public function getSongBracketsFallback( LyricsApiSearchParams $searchParams ) {
-		$failedSongName = $searchParams->getField( LyricsApiController::PARAM_SONG );
-		$searchParams->addField( LyricsApiController::PARAM_SONG, LyricsUtils::removeBrackets( $failedSongName ) );
-		return $this->getSong( $searchParams, false );
 	}
 
 	/**
