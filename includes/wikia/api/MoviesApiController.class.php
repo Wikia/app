@@ -66,4 +66,8 @@ class MoviesApiController extends WikiaApiController {
 		return $data;
 	}
 
+	protected function replaceHost( $details ) {
+		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
+	}
+
 }
