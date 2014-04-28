@@ -43,46 +43,32 @@ class RealGravityDelete extends Maintenance {
 
 		// Find all RealGravity file pages
 		$pageIds = (new WikiaSQL())
-			->SELECT( 'page_id' )
+			->SELECT( 'page_id', 'page_title' )
 			->FROM( 'video_info' )
 				->JOIN( 'page' )->ON( 'video_title', 'page_title' )
 			->WHERE( 'provider' )->EQUAL_TO( 'RealGravity' )
 				->AND_( 'premium' )->EQUAL_TO( 1 )
 				->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
 			->runLoop( $db, function( &$ids, $row ) {
-				$ids[] = $row->page_id;
+				$ids[$row->page_id] = $row->page_title;
 			});
 
 		// Iterate through each file page and delete it
-		foreach ( $pageIds as $id ) {
+		foreach ( $pageIds as $id => $title ) {
 			$this->debug( "Found page ID $id:\n" );
 
 			$article = Article::newFromID( $id );
 			if ( $article instanceof Article ) {
-				$videoKey = $article->getTitle()->getDBkey();
+				$this->debug( "\tDeleting file page ('$title') ... " );
 
-				$this->debug( "\tDeleting file page ('$videoKey') ... " );
-
-				$suppress = true;
 				if ( $this->test ) {
 					$res = true;
 				} else {
+					$suppress = true;
 					$res = $article->doDeleteArticle( "Removing RealGravity content", $suppress );
 				}
 
 				if ( $res === true ) {
-					$this->debug("done\n");
-
-					// If this was successful, remove the video_info row
-					$this->debug("\tDeleting video info: ");
-
-					$video = new VideoInfo();
-					$video->setVideoTitle( $videoKey );
-
-					if ( !$this->test ) {
-						$video->deleteVideo();
-					}
-
 					$this->debug("done\n");
 				} else {
 					$this->debug("\t-- ERROR\n");
@@ -90,6 +76,18 @@ class RealGravityDelete extends Maintenance {
 			} else {
 				$this->debug("\tNo article found\n");
 			}
+
+			// Also remove the video_info row
+			$this->debug("\tDeleting video info: ");
+
+			$video = new VideoInfo();
+			$video->setVideoTitle( $title );
+
+			if ( !$this->test ) {
+				$video->deleteVideo();
+			}
+
+			$this->debug("done\n");
 		}
 
 		$delta = F::app()->wg->lang->formatTimePeriod( time() - $startTime );
