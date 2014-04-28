@@ -3,6 +3,7 @@ namespace Wikia\Search\Services;
 
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\Query\Select;
+use WikiFactory;
 
 class TvSearchService {
 
@@ -16,6 +17,8 @@ class TvSearchService {
 	const ALLOWED_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
 	const WORDS_QUERY_LIMIT = 10;
+	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
+	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 	private static $EXCLUDED_WIKIS_MOVIES = [ 'uncyclopedia.wikia.com' ];
@@ -43,7 +46,7 @@ class TvSearchService {
 		$response = $this->querySolr( $select );
 		foreach( $response as $doc ) {
 			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$result[] = [ 'id' => $doc['id'], 'wikiHost' => $doc['url'] ];
+				$result[] = [ 'id' => $doc['id'] ];
 			}
 		}
 		return $result;
@@ -195,13 +198,26 @@ class TvSearchService {
 	}
 
 	protected function getDataFromItem( $item, $lang ) {
-		return [
+		global $wgStagingEnvironment, $wgDevelEnvironment;
+
+		$data = [
+			'wikiId' => $item['wid'],
 			'articleId' => $item['pageid'],
 			'title' => $item['title_'.$lang],
 			'url' => $item['url'],
 			'quality' => $item['article_quality_i'],
-			'wikiId' => $item['wid'],
-			'wikiHost' => $item['host']
 		];
+
+		$data[ 'contentUrl' ] = 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'];
+		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
+			$data[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "contentUrl" ] );
+			$data[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "url" ] );
+		}
+
+		return $data;
+	}
+
+	protected function replaceHost( $details ) {
+		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 }

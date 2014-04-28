@@ -8,8 +8,6 @@ class TvApiController extends WikiaApiController {
 
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
-	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/** @var Array wikis */
 	protected $wikis = [];
@@ -27,10 +25,9 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$result = $this->findEpisode( $seriesName, $episodeName, $lang, $minQuality );
-		$output = $this->createOutput( $result );
 
 		$response = $this->getResponse();
-		$response->setValues( $output );
+		$response->setValues( $result );
 
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
@@ -55,7 +52,7 @@ class TvApiController extends WikiaApiController {
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
-						return array_merge( $wiki, $result );
+						return $result;
 					}
 				}
 			}
@@ -123,23 +120,5 @@ class TvApiController extends WikiaApiController {
 			->setPageId( (int)$articleId )
 			->setNamespaces( [ static::NAMESPACE_SETTING ] );
 		return $searchConfig;
-	}
-
-	protected function createOutput( $data ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-
-		$data[ 'contentUrl' ] = 'http://' . $data[ 'wikiHost' ] . '/' . self::API_URL . $data[ 'articleId' ];
-		unset( $data['wikiHost'] );
-
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$data[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "contentUrl" ] );
-			$data[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "url" ] );
-		}
-
-		return $data;
-	}
-
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 }
