@@ -23,4 +23,9 @@ if (extension_loaded('xdebug')) {
 
 require_once 'PHPUnit/Autoload.php';
 
-PHPUnit_TextUI_Command::main();
+if ( isset( $params['slow-list'] ) ) {
+	PHPUnit_TextUI_Command::main();
+} else {
+	include_once('SlowTestsFinder.php');
+	SlowTestsFinder::main();
+}
