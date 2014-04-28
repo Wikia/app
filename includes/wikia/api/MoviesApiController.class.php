@@ -22,14 +22,6 @@ class MoviesApiController extends WikiaApiController {
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
 
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
-	}
-
 	protected function findMovie( $movieName, $lang, $minQuality = self::DEFAULT_MOVIE_QUALITY ) {
 		$tvs = $this->getTvSearchService();
 

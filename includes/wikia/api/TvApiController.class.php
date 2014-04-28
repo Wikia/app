@@ -32,14 +32,6 @@ class TvApiController extends WikiaApiController {
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
 
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
-	}
-
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
 		$tvs = $this->getTvSearchService();
 		$wikis = $tvs->queryXWiki( $seriesName, $lang );
