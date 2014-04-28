@@ -12,8 +12,8 @@ class ReadMoreController extends WikiaController {
 	 * @return array
 	 */
 	static private function getReadMoreResponseFromModel( $wikiId = null, $articleId = null ) {
-		$recommendationsModel = new ReadMoreModel();
-		$recommendations = $recommendationsModel->getRecommendedArticles( $wikiId, $articleId );
+		$recommendationsModel = new ReadMoreModel( $wikiId, $articleId );
+		$recommendations = $recommendationsModel->getRecommendedArticles();
 
 		return $recommendations;
 	}
