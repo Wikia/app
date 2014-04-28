@@ -11,7 +11,7 @@ class TvApiController extends WikiaApiController {
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
-	const MOVIEPEDIA_WIKI = 559;
+	const DEFAULT_MOVIE_QUALITY = 80;
 	/** @var Array wikis */
 	protected $wikis = [];
 	/** @var TvSearchService tvService */
@@ -19,8 +19,9 @@ class TvApiController extends WikiaApiController {
 
 	public function getMovie() {
 		$movieName = $this->getRequiredParam( 'movieName' );
+		$lang = $this->getRequest()->getVal( 'lang', static::LANG_SETTING );
 
-		$result = $this->findMovie( $movieName );
+		$result = $this->findMovie( $movieName, $lang );
 		$output = $this->createOutput( $result );
 
 		$response = $this->getResponse();
@@ -37,19 +38,13 @@ class TvApiController extends WikiaApiController {
 		return $query;
 	}
 
-	protected function findMovie( $movieName ) {
+	protected function findMovie( $movieName, $lang, $minQuality = self::DEFAULT_MOVIE_QUALITY ) {
 		$tvs = $this->getTvSearchService();
 
-		$result = $tvs->queryMovie( $movieName, self::LANG_SETTING, $tvs::MOVIE_TYPE, null, 80 );
+		$result = $tvs->queryMovie( $movieName, $lang, $tvs::MOVIE_TYPE, null, $minQuality );
 		if (!empty($result)) {
 			return $result;
 		}
-		//else try moviepedia
-//		$moviepediaResult = $tvs->queryMovie( $movieName, self::LANG_SETTING, null, self::MOVIEPEDIA_WIKI, 50 );
-
-//		if ( !empty( $moviepediaResult ) ) {
-//			return $moviepediaResult;
-//		}
 
 		//movie was not found
 		throw new NotFoundApiException();
