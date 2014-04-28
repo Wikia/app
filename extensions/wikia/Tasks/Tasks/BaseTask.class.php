@@ -25,8 +25,8 @@ abstract class BaseTask {
 	/** @var int wrapper for AsyncTaskList->wikiId() */
 	private $wikiId = null;
 
-	/** @var boolean wrapper for AsyncTaskList->force() */
-	private $force = false;
+	/** @var boolean wrapper for AsyncTaskList->dupCheck() */
+	private $dupCheck = false;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
@@ -137,8 +137,8 @@ abstract class BaseTask {
 			$taskList->setPriority($this->queueName);
 		}
 
-		if ($this->force) {
-			$taskList->force();
+		if ($this->dupCheck) {
+			$taskList->dupCheck();
 		}
 
 		return $taskList->queue();
@@ -208,7 +208,7 @@ abstract class BaseTask {
 		return $this;
 	}
 
-	public function force() {
-		$this->force = true;
+	public function dupCheck() {
+		$this->dupCheck = true;
 	}
 }

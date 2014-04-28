@@ -47,7 +47,7 @@ class AsyncTaskList {
 	protected $wikiId = 177;
 
 	/** @var bool whether or not to perform task deduplication */
-	protected $dedupCheck = true;
+	protected $dupCheck = false;
 
 	/**
 	 * put this task into the priority queue
@@ -158,8 +158,8 @@ class AsyncTaskList {
 	 *
 	 * @return $this
 	 */
-	public function force() {
-		$this->dedupCheck = false;
+	public function dupCheck() {
+		$this->dupCheck = true;
 
 		return $this;
 	}
@@ -202,7 +202,7 @@ class AsyncTaskList {
 				'created_ts' => time(),
 				'created_by' => $this->createdBy,
 				'work_id' => sha1(json_encode($workId)),
-				'force' => !$this->dedupCheck
+				'force' => !$this->dupCheck
 			]
 		];
 
