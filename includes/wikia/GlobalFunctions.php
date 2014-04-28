@@ -676,7 +676,7 @@ function getMenu() {
 			$JSurl = Xml::encodeJsVar($wgScript . '?action=ajax&rs=getMenu&v=' . $wgRequest->getVal('v') .
 				'&words=' . urlencode(implode(',', $menuArray['magicWords'])));
 
-			$content .= "wsl.loadScriptAjax({$JSurl}, function() {\n";
+			$content .= "jQuery.load({$JSurl}, function() {\n";
 			unset($menuArray['magicWords']);
 
 			$usingCallback = true;
