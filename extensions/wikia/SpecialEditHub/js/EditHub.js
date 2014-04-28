@@ -281,13 +281,15 @@
 					sectionId: qs.getVal('sectionId')
 				},
 				callback: function (data) {
-					if (data.success) {
-						window.open(data.hubUrl);
-						var container = $('.grid-4.alpha:first'),
-							info = $('<p />').addClass('success').text(data.successText);
 
-						container.find('p.success').remove().prepend(info);
+					if (data.success) {
+						var info = $('<p />').addClass('success').text(data.successText);
+
+						$('.grid-4.alpha:first p.success').remove();
+						$('#edit-hub-form').prepend(info);
 						info.get(0).scrollIntoView();
+
+						window.open(data.hubUrl);
 					} else {
 						window.alert(data.errorMsg);
 					}
