@@ -162,13 +162,11 @@ class LyricsUtilsTest extends WikiaBaseTest {
 				'Take My Hand [ Remix] [feat. Cassadee Pope]',
 				'Take My Hand'
 			],
-			/*
 			[
 				'all kinds of brackets',
 				'Give Me Everything (Tonight) (Prod. By Afrojack) (Final) ( 2o11 ) [ www.MzHipHop.com ]',
 				'Give Me Everything'
 			],
-			*/
 		];
 	}
 }
