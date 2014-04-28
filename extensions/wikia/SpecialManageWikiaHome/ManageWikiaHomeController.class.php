@@ -73,6 +73,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->filterOptions = array_merge($this->initFilterOptions(), $this->request->getParams());
 
+		$this->exportListAsCSVUri = $this->getExportListAsCSVUri();
+
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
 		$videoGamesAmount = $this->request->getVal('video-games-amount', $this->helper->getNumberOfVideoGamesSlots($this->visualizationLang));
@@ -276,6 +278,78 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	public function getWikisInVisualisationAsCSV() {
+		wfProfileIn(__METHOD__);
+		global $wgOut;
+
+		if (!$this->checkAccess()) {
+			wfProfileOut(__METHOD__);
+			$this->response->setHeader('Cache-Control', 'no-cache');
+			throw new PermissionsException('managewikiahome');
+		}
+
+		// get data
+		$visualizationLang = $this->request->getVal('lang', $this->wg->contLang->getCode());
+		$list = $this->helper->getWikisForStaffTool($this->prepareFilterOptions($visualizationLang, []));
+		$collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$verticals = $this->helper->getWikiVerticals();
+
+		// output data in csv format
+		$out = fopen('php://memory', 'w');
+
+		// header
+		$outHeader = ['ID','Vertical','Title','Is blocked?','Is promoted?','Is official?'];
+		foreach ($collections as $collection) {
+			$outHeader[] = 'In collection: '.$collection['name']. '?';
+		}
+		fputcsv($out, $outHeader);
+
+		foreach ($list as $wiki) {
+			$outLine = [
+				$wiki->city_id,
+				$verticals[$wiki->city_vertical],
+				$wiki->city_title,
+				CityVisualization::isBlockedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isPromotedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isOfficialWiki($wiki->city_flags) ? 1 : 0,
+			];
+			foreach ($collections as $collection) {
+				$outLine[] = in_array($collection['id'], $wiki->collections) ? 1 : 0;
+			}
+			fputcsv($out, $outLine);
+		}
+		fseek($out, 0);
+		$csv = stream_get_contents($out);
+		fclose($out);
+
+		// turn off usual rendering
+		$wgOut->disable();
+
+		// set up headers
+		$this->response->setFormat(WikiaResponse::FORMAT_RAW);
+		$this->response->setHeader('Cache-Control', 'private');
+		$this->response->setHeader('Content-Description', 'File Transfer');
+		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
+		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
+
+		$this->response->setContentType( 'application/octet-stream' );
+		$this->response->setBody( $csv );
+
+		wfProfileOut(__METHOD__);
+	}
+
+	private function getExportListAsCSVUri() {
+		global $wgServer, $wgScriptPath;
+
+		$params = [
+			'controller' => 'ManageWikiaHome',
+			'method' => 'getWikisInVisualisationAsCSV',
+			'lang' => $this->visualizationLang
+		];
+
+		return $wgServer . $wgScriptPath . '/wikia.php?' . http_build_query( $params );
+	}
+
 	public function isWikiBlocked() {
 		wfProfileIn(__METHOD__);
 
@@ -298,7 +372,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->status = false;
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
-			
+
 			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
@@ -430,24 +504,24 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		return $dataValues;
 	}
-	
+
 	private function getWikisPerCollection($collections, $useMaster = false) {
 		$wikisPerCollections = [];
-		
+
 		foreach($collections as $key => $collection) {
 			$collectionId = $collection['id'];
 			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId, $useMaster);
 			$wikisPerCollections[$collectionId] = $wikis;
 		}
-		
+
 		return $wikisPerCollections;
 	}
-	
+
 	private function getWikiaCollectionsModel() {
 		if( !isset($this->wikiaCollectionsModel) ) {
 			$this->wikiaCollectionsModel = new WikiaCollectionsModel();
 		}
-		
+
 		return $this->wikiaCollectionsModel;
 	}
 
