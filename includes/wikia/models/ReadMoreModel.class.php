@@ -104,7 +104,7 @@ class ReadMoreModel extends WikiaModel {
 	 * @param array $keys recommendation keys
 	 * @return array
 	 */
-	private function getRecommendedArticleIds( $keys ) {
+	public function getRecommendedArticleIds( $keys ) {
 		$articleIds = [];
 
 		foreach( $keys as $key ) {
@@ -113,7 +113,7 @@ class ReadMoreModel extends WikiaModel {
 				continue;
 			}
 
-			if ( $recommendationIds[0] == $this->wikiId ) {
+			if ( $recommendationIds[0] == $this->wikiId && !empty( $recommendationIds[1] ) ) {
 				$articleIds[$recommendationIds[1]] = $recommendationIds[1];
 			}
 		}
@@ -127,30 +127,50 @@ class ReadMoreModel extends WikiaModel {
 	 * @param $articleIds
 	 * @return array
 	 */
-	private function getRecommendationsData( $articleIds ) {
+	public function getRecommendationsData( $articleIds ) {
 		$recommendations = [];
 
 		$articleService = new ArticleService();
 
-		$titles = Title::newFromIDs( $articleIds );
-		$imageServing = new ImageServing( array_keys( $articleIds ), 200, array( 'w' => 2, 'h' => 1 ) );
-		$images = $imageServing->getImages( 1 );
+		$titles = $this->getTitlesFromIds( $articleIds );
+		$images = $this->getImagesFromIds( $articleIds );
 
 		foreach ( $titles as $title ) {
-			if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
-				$articleId = $title->getArticleID();
-				$article = $articleService->setArticleById( $articleId );
+			$recommendations = array_merge(
+				$recommendations,
+				$this->getRecommendationData( $articleService, $title, $images )
+			);
+		}
 
-				$recommendations[ $articleId ] = [
+		return $recommendations;
+	}
+
+	protected function getTitlesFromIds( $ids ) {
+		return Title::newFromIDs( $ids );
+	}
+
+	protected function getImagesFromIds ( $ids ) {
+		$imageServing = new ImageServing( array_keys( $ids ), 200, array( 'w' => 2, 'h' => 1 ) );
+		return $imageServing->getImages( 1 );
+	}
+
+	public function getRecommendationData( $articleService, $title, $images ) {
+		$recommendation = [];
+
+		if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
+			$articleId = $title->getArticleID();
+			if ( $articleId ) {
+				$article = $articleService->setArticleById( $articleId );
+				$recommendation[ $articleId ] = [
 					'title' => $title->getPrefixedText(),
 					'url' => $title->getLocalURL(),
-					'text' => $article->getTextSnippet(),
+					'text' => isset( $article ) ? $article->getTextSnippet() : '',
 					'image' => isset( $images[ $articleId ] ) ? $images[ $articleId ][0][ 'url' ] : null
 				];
 			}
 		}
 
-		return $recommendations;
+		return $recommendation;
 	}
 
 	private function getMemcKey() {
