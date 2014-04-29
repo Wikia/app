@@ -56,6 +56,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * @desc Returns human message based on the tiles processing status in database
+	 *
+	 * @param Integer $status status of tiles processing for the map
+	 *
+	 * @return String
+	 */
 	public function getMapStatusText( $status ) {
 		$message = '';
 
