@@ -23,7 +23,7 @@ abstract class BaseTask {
 	protected $title;
 
 	/** @var int the title id this task is operating on, if any. */
-	private $titleId;
+	protected $titleId;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;

@@ -18,7 +18,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		$taskLists = [ ];
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
-			$task = new ParsoidCacheUpdateTask( $this->title->mArticleID, $table );
+			$task = (new ParsoidCacheUpdateTask())->titleId($this->title->mArticleID);
 			$taskLists[ ] = ( new AsyncTaskList() )
 				->setPriority(ParsoidPurgePriorityQueue::NAME)
 				->add( $task->call( 'onDependencyChange', $table, $start, $end ) );
