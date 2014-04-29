@@ -21,7 +21,6 @@
 				'value' => htmlspecialchars($username),
 				'placeholder' => wfMessage('yourname')->text(),
 				'isRequired' => true,
-				'noDivWrapper' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'username'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
 			),
@@ -31,7 +30,6 @@
 				'value' => Sanitizer::encodeAttribute( $email ),
 				'placeholder' => wfMessage('email')->text(),
 				'isRequired' => true,
-				'noDivWrapper' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
 			),
@@ -47,7 +45,6 @@
 				'value' => '',
 				'placeholder' => wfMessage('yourpassword')->text(),
 				'isRequired' => true,
-				'noDivWrapper' => true,
 				'isInvalid' => (!empty($errParam) && $errParam === 'password'),
 				'errorMsg' => (!empty($msg) ? $msg : '')
 			),
@@ -61,10 +58,11 @@
 				'params' => array('birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn),
 			),
 			array(
-				'type' => 'submit',
-				'class' => 'wkBtn main',
-				'noDivWrapper' => true,
-				'value' => $createAccountButtonLabel
+				'type' => 'nirvanaview',
+				'controller' => 'UserSignupSpecial',
+				'view' => 'WikiaMobileSubmit',
+				'class' => 'submit-pane',
+				'params' => array('createAccountButtonLabel' => $createAccountButtonLabel)
 			)
 		)
 	);
