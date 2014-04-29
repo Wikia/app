@@ -649,7 +649,8 @@ function ban(client, socket, msg){
     	var kickEvent = new models.KickEvent({
     		kickedUserName: userToBan,
     		time: time,
-    		moderatorName: client.myUser.get('name')
+    		moderatorName: client.myUser.get('name'),
+    		reason: reason
     	});
     	
     	broadcastToRoom(client, socket, { 
