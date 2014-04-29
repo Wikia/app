@@ -27,6 +27,7 @@ $wgSpecialPages['CloseMyAccount'] = 'CloseMyAccountSpecialController';
 $wgSpecialPageGroups['CloseMyAccount'] = 'wikia';
 
 $wgHooks['WikiaUserLoginSuccess'][] = 'CloseMyAccountHooks::onWikiaUserLoginSuccess';
+$wgHooks['FacebookUserLoginSuccess'][] = 'CloseMyAccountHooks::onFacebookUserLoginSuccess';
 $wgHooks['UserSendConfirmationMail'][] = 'CloseMyAccountHooks::onUserSendConfirmationMail';
 
 $wgResourceModules['ext.closeMyAccount'] = [
