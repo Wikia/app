@@ -79,7 +79,7 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int",
- * 					defaultValue="80",
+ * 					defaultValue="10",
  * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  *				),
  * 				@SWG\Parameter(
@@ -90,6 +90,15 @@ use Swagger\Annotations as SWG;
  *					allowMultiple="false",
  *					dataType="string",
  *					defaultValue="en"
+ *				),
+ * 				@SWG\Parameter(
+ *					name="releaseYear",
+ *					description="Release year",
+ *					paramType="query",
+ *					required="false",
+ *					allowMultiple="false",
+ *					dataType="int",
+ *					defaultValue=""
  *				)
  *			)
  *		)
