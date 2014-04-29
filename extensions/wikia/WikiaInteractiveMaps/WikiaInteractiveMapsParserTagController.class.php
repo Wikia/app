@@ -78,11 +78,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$this->setVal( 'map', (object) $map );
 		$this->setVal( 'params', $params );
 		$this->setVal( 'mapPageUrl', '#' );
-		$this->setVal( 'jsSnippet', JSSnippets::addToStack( [
-			'/extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
-		] ) );
 
-		JSMessages::enqueuePackage( 'WikiaInteractiveMaps', JSMessages::EXTERNAL );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
