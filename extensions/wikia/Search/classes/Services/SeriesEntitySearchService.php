@@ -23,24 +23,24 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$slang = $this->sanitizeQuery( $this->getLang() );
 
 		$dismax = $select->getDisMax();
-		$dismax->setQueryParser('edismax');
+		$dismax->setQueryParser( 'edismax' );
 
-		$select->setQuery( '+("'.$phrase.'") AND +(lang_s:' . $slang . ')' );
+		$select->setQuery( '+("' . $phrase . '") AND +(lang_s:' . $slang . ')' );
 		$select->setRows( static::WIKI_LIMIT );
 
-		$excluded = [];
-		foreach( static::$EXCLUDED_WIKIS as $ex ) {
-			$excluded[] = "-(hostname_s:{$ex})";
+		$excluded = [ ];
+		foreach ( static::$EXCLUDED_WIKIS as $ex ) {
+			$excluded[ ] = "-(hostname_s:{$ex})";
 		}
 		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
-		$select->createFilterQuery( 'articles' )->setQuery('articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]');
+		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
-		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt '.
+		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt ' .
 			'sitename_txt^4 domains_txt' );
 		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
 
 		$domain = strtolower( preg_replace( '|[\W-]+|', '', $this->sanitizeQuery( $noyearphrase ) ) );
-		$dismax->setBoostQuery( 'domains_txt:"www.' . $domain . '.wikia.com"^10 '.
+		$dismax->setBoostQuery( 'domains_txt:"www.' . $domain . '.wikia.com"^10 ' .
 			'domains_txt:"' . $domain . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
@@ -48,10 +48,10 @@ class SeriesEntitySearchService extends EntitySearchService {
 	}
 
 	protected function consumeResponse( $response ) {
-		$result = [];
-		foreach( $response as $doc ) {
-			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {
-				$result[] = [ 'id' => $doc['id'] ];
+		$result = [ ];
+		foreach ( $response as $doc ) {
+			if ( ( $doc[ 'id' ] && $doc[ 'url' ] ) && $doc[ 'score' ] > static::MINIMAL_WIKIA_SCORE ) {
+				$result[ ] = [ 'id' => $doc[ 'id' ] ];
 			}
 		}
 		return $result;

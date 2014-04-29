@@ -2,15 +2,12 @@
 
 namespace Wikia\Search\Services;
 
-use WikiFactory;
-
 class EpisodeEntitySearchService extends EntitySearchService {
 
 	const ALLOWED_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
 	const MINIMAL_ARTICLE_SCORE = 0.5;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const EPISODE_TYPE = 'tv_episode';
 
 	protected function prepareQuery( $query ) {
@@ -21,11 +18,11 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$preparedQuery = $this->createQuery( $phrase );
 
 		$dismax = $select->getDisMax();
-		$dismax->setQueryParser('edismax');
+		$dismax->setQueryParser( 'edismax' );
 
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:'. static::ALLOWED_NAMESPACE . ')' );
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
 		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
@@ -35,39 +32,39 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			'titleStrict^8',
-			$this->withLang( 'title', $slang ).'^2',
-			$this->withLang( 'redirect_titles_mv', $slang ).'^2',
+			$this->withLang( 'title', $slang ) . '^2',
+			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
 		return $select;
 	}
 
 	protected function consumeResponse( $response ) {
-		foreach( $response as $item ) {
-			if ( $item['score'] > static::MINIMAL_ARTICLE_SCORE ) {
+		foreach ( $response as $item ) {
+			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
 				return [
-					'wikiId' => $item['wid'],
-					'articleId' => $item['pageid'],
-					'title' => $item['title_'.$this->getLang()],
-					'url' => $this->replaceHostUrl( $item['url'] ),
-					'quality' => $item['article_quality_i'],
-					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'] ),
+					'wikiId' => $item[ 'wid' ],
+					'articleId' => $item[ 'pageid' ],
+					'title' => $item[ 'title_' . $this->getLang() ],
+					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
+					'quality' => $item[ 'article_quality_i' ],
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
 				];
 			}
 		}
 		return null;
 	}
 
-	protected function createQuery($query) {
-		$options = [];
+	protected function createQuery( $query ) {
+		$options = [ ];
 		if ( $this->getQuality() !== null ) {
-			$options[] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		if ( $this->getWikiId() !== null ) {
-			$options[] = '+(wid:' . $this->getWikiId() . ')';
+			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
 		}
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
-		return '+("'. $query . '")' . $options;
+		return '+("' . $query . '")' . $options;
 	}
 
 }

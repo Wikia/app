@@ -20,7 +20,7 @@ class EntitySearchService {
 		$config = $this->getConfig();
 		$core = $this->getCore();
 		if ( $core ) {
-			$config['adapteroptions']['core'] = $core;
+			$config[ 'adapteroptions' ][ 'core' ] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
 	}
@@ -72,7 +72,7 @@ class EntitySearchService {
 	}
 
 	protected function getConfig() {
-		return (new Factory())->getSolariumClientConfig();
+		return ( new Factory() )->getSolariumClientConfig();
 	}
 
 	protected function getCore() {
@@ -93,7 +93,7 @@ class EntitySearchService {
 	}
 
 	protected function withLang( $field, $lang ) {
-		return $field.'_'.$lang;
+		return $field . '_' . $lang;
 	}
 
 	protected function replaceHostUrl( $url ) {
