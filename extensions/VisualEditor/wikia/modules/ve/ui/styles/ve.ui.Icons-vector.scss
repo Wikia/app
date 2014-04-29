@@ -134,3 +134,6 @@
 .oo-ui-indicator-down {
 	@include ve-icon(down, oo-indicators);
 }
+.oo-ui-window-icon {
+	@include ve-icon(window, oo);
+}
