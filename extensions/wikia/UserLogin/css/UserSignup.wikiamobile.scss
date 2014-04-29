@@ -5,73 +5,69 @@ $input-color: #333;
 $border-color: #D0D0D0;
 
 h1 {
-  color: $main-color;
+	color: $main-color;
 }
 
 fieldset {
-  border: 0;
-  padding: 0;
+	border: 0;
+	padding: 0;
 }
 
 .input-group {
-  margin: 0 0 10px 0;
+	margin: 0 0 10px 0;
 
-  input {
-	margin: 0;
-	color: $input-color;
-	background-color: #FFF;
-	border-radius: 2px;
-	border-color: $border-color;
-	font-size: 0.9rem;
-
-	&:active {
-	  //border-color: #ffff00;
-	}
-  }
-
-  &.error {
 	input {
-	  border-color: $error-border;
+		margin: 0;
+		color: $input-color;
+		background-color: #FFF;
+		border-radius: 2px;
+		border-color: $border-color;
+		font-size: 0.9rem;
 	}
-  }
+
+	&.error {
+		input {
+			border-color: $error-border;
+		}
+	}
 }
 
 .wikia-terms {
-  font-size: .8rem;
-  color: #999;
-  margin: 0;
+	font-size: .8rem;
+	color: #999;
+	margin: 0;
 }
 
 select {
-  -webkit-appearance: none;
-  border-radius: 2px;
-  border-color: $border-color;
-  height: 30px;
-  width: 32%;
-  margin: 2px;
-  padding-left: 5%;
-  background-color: #FFF;
+	-webkit-appearance: none;
+	border-radius: 2px;
+	border-color: $border-color;
+	height: 30px;
+	width: 32%;
+	margin: 2px;
+	padding-left: 5%;
+	background-color: #FFF;
 
-  &:last-of-type {
-	margin-left: -2px;
-  }
+	&:last-of-type {
+		margin-left: -2px;
+	}
 }
 
 .error-msg {
-  background-color: $main-background-color;
-  color: $main-color;
-  font-size: .8rem;
-  margin: 10px 0;
+	background-color: $main-background-color;
+	color: $main-color;
+	font-size: .8rem;
+	margin: 10px 0;
 }
 
 input[type=submit] {
-  background-color: $main-color;
-  border-radius: 3px;
-  color: white;
-  margin-bottom: 10px;
+	background-color: $main-color;
+	border-radius: 3px;
+	color: white;
+	margin-bottom: 10px;
 
-  &[disabled=disabled] {
-	background-color: grey;
-  }
+	&[disabled=disabled] {
+		background-color: grey;
+	}
 }
 
