@@ -28,8 +28,7 @@ describe('VideosModule -- sData Data: ', function () {
 		instance.fetch();
 		expect(nirvana.getJson).toHaveBeenCalled();
 		expect(nirvana.getJson).toHaveBeenCalledWith('VideosModuleController', 'index', {
-			articleId: null,
-			verticalOnly: null
+			articleId: null
 		});
 		expect(instance.data).toBe('foo');
 	});
