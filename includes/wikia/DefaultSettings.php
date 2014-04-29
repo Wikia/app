@@ -1261,7 +1261,7 @@ $wgAdVideoTargeting = false;
  * @name $wgAdDriverUseGptMobile
  * Enables experimental AdEngine on mobile skin (for GPT)
  */
-$wgAdDriverUseGptMobile = false;
+$wgAdDriverUseGptMobile = true;
 
 /**
  * @name $wgAdDriverUseGptMobileDisabledInLangs
