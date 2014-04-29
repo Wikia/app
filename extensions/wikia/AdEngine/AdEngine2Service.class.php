@@ -312,6 +312,7 @@ class AdEngine2Service
 			$topVars = array_merge($topVars, [
 				'cityShort',                     // AdLogicPageParams.js
 				'cscoreCat',                     // analytics_prod.js, AdLogicPageParams.js
+				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
 				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
 				'wgAdDriverTrackState',          // SlotTracker.js
