@@ -5,9 +5,6 @@
  */
 class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
-	const MAP_HEIGHT = 300;
-	const MAP_WIDTH = 1600;
-
 	/**
 	 * @desc Special page constructor
 	 *
@@ -36,13 +33,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
-		// Add map size to maps
-		array_walk( $maps, function( &$map ) {
-			$map->map_width = self::MAP_WIDTH;
-			$map->map_height = self::MAP_HEIGHT;
-			$map->status = $this->getMapStatusText( $map->status );
-		});
-
 		$this->setVal( 'maps', $maps );
 		$this->setVal( 'hasMaps', !empty( $maps ) );
 		$messages = [
@@ -54,28 +44,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-	}
-
-	/**
-	 * @desc Returns human message based on the tiles processing status in database
-	 *
-	 * @param Integer $status status of tiles processing for the map
-	 *
-	 * @return String
-	 */
-	public function getMapStatusText( $status ) {
-		$message = '';
-
-		switch( $status ) {
-			case WikiaMaps::STATUS_DONE:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
-				break;
-			case WikiaMaps::STATUS_PROCESSING:
-				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
-				break;
-		}
-
-		return $message;
 	}
 
 }

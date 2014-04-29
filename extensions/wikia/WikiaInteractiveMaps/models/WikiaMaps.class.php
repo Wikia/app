@@ -11,6 +11,9 @@ class WikiaMaps {
 	const STATUS_PROCESSING = 1;
 	const STATUS_FAILED = 3;
 
+	const MAP_HEIGHT = 300;
+	const MAP_WIDTH = 1600;
+
 	/**
 	 * @var array API Connection config
 	 */
@@ -51,7 +54,7 @@ class WikiaMaps {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
 			return $this->{ $method }( $params );
-		});
+		} );
 	}
 
 	/**
@@ -66,12 +69,18 @@ class WikiaMaps {
 		$response = Http::get( $url );
 
 		if ( $response !== false ) {
-			$results = json_decode( $response );
-			foreach( $results as $map ) {
-				if( $map->status !== static::STATUS_FAILED ) {
-					$maps[] = $map;
+			$maps = json_decode( $response );
+
+			// Add map size to maps and human status messages
+			array_walk( $maps, function( &$map ) {
+				if( $map->status === static::STATUS_FAILED ) {
+					unset( $map );
+				} else {
+					$map->map_width = static::MAP_WIDTH;
+					$map->map_height = static::MAP_HEIGHT;
+					$map->status = $this->getMapStatusText( $map->status );
 				}
-			}
+			} );
 		}
 
 		if( !empty( $maps ) ) {
@@ -119,6 +128,28 @@ class WikiaMaps {
 	public function getMapRenderUrl( Array $params ) {
 		$entryPointParams = array_shift( $params );
 		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
+	}
+
+	/**
+	 * @desc Returns human message based on the tiles processing status in database
+	 *
+	 * @param Integer $status status of tiles processing for the map
+	 *
+	 * @return String
+	 */
+	public function getMapStatusText( $status ) {
+		$message = '';
+
+		switch( $status ) {
+			case static::STATUS_DONE:
+				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
+				break;
+			case static::STATUS_PROCESSING:
+				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
+				break;
+		}
+
+		return $message;
 	}
 
 }
