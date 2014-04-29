@@ -66,7 +66,7 @@ class WikiaMaps {
 		$response = Http::get( $url );
 
 		if ( $response !== false ) {
-			$results = json_decode( $response, false );
+			$results = json_decode( $response );
 			foreach( $results as $map ) {
 				if( $map->status !== static::STATUS_FAILED ) {
 					$maps[] = $map;
@@ -95,11 +95,11 @@ class WikiaMaps {
 		$url = $this->buildUrl( self::ENTRY_POINT_MAP . '/' . $mapId, $params );
 		$response = Http::get( $url );
 
-		$map = json_decode( $response, false );
+		$map = json_decode( $response );
 		$map->id = $mapId;
 		if( !empty( $map->tile_set_url ) ) {
 			$response = Http::get( $map->tile_set_url );
-			$tilesData = json_decode( $response, false );
+			$tilesData = json_decode( $response );
 
 			if( !is_null( $tilesData ) ) {
 				$map->image = $tilesData->image;
