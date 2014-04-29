@@ -14,7 +14,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct('UserSignup', '', false);
 
-		$this->disableCaptchaForAutomatedTests();
+		$this->disableCaptcha();
 	}
 
 	public function init() {
@@ -87,7 +87,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->createAccountButtonLabel = wfMessage('usersignup-createaccount-byemail')->escaped();
 		}
 
-		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+		if ( $this->app->checkSkin( 'wikiamobile' )) {
 			$this->wg->Out->setPageTitle('Create Account');
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
@@ -556,10 +556,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->errParam = $signupForm->errParam;
 	}
 
-	private function disableCaptchaForAutomatedTests() {
+	private function disableCaptcha() {
 		global $wgHooks;
-		//Disable captcha for automated tests
-		if ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) {
+		//Disable captcha for automated tests and wikia mobile
+		if ( $this->app->checkSkin( 'wikiamobile' ) || (in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1) ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
