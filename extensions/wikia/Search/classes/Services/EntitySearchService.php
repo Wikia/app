@@ -34,16 +34,6 @@ class EntitySearchService {
 		return $result;
 	}
 
-	protected function prepareQuery( $phrase ) {
-		$select = $this->getSelect();
-
-		return $select;
-	}
-
-	protected function consumeResponse( $response ) {
-		return $response;
-	}
-
 	public function getLang() {
 		return $this->lang;
 	}
@@ -69,6 +59,16 @@ class EntitySearchService {
 	public function setWikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
 		return $this;
+	}
+
+	protected function prepareQuery( $query ) {
+		$select = $this->getSelect();
+
+		return $select;
+	}
+
+	protected function consumeResponse( $response ) {
+		return $response;
 	}
 
 	protected function getConfig() {
