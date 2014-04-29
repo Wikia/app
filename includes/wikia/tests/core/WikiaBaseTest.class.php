@@ -39,6 +39,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private $mockMessageCacheGet = null;
 
 	private static $testRunTime = 0;
+	private static $numberSlowTests = 0;
 
 	/**
 	 * Print out currently run test
@@ -51,6 +52,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		echo "\nRunning '{$testClass}'...";
 
 		self::$testRunTime = microtime( true );
+		self::$numberSlowTests = 0;
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::initialize();
@@ -64,7 +66,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		global $wgAnnotateTestSpeed;
 
 		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
-		echo "done in {$time} ms";
+		echo "done in {$time} ms [" . self::$numberSlowTests . ' slow tests]';
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::execute();
@@ -101,6 +103,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
 
+		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations() ) ) {
+			self::$numberSlowTests++;
+		}
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
