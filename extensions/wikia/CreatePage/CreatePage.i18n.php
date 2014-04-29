@@ -56,7 +56,7 @@ Write the first section of your page here.
 ==Section heading==
 
 Write the second section of your page here.', // Does include video placeholder, and is overridden on messages wiki
-	'createpage-ve-body' => 'The article *$1* does not yet exist on this wikia. You can help out by adding a few sentences.',
+	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this wikia. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Cancel',
 );
 
@@ -451,9 +451,11 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 ==Überschrift des Abschnittes==
 
 Schreibe den zweiten Abschnitt deines Artikels hier.',
+	'createpage-ve-body' => 'Der <b>$1</b> Artikel existiert auf diesem Wiki nicht. Du kannst helfen, indem du ein paar Sätze hinzufügst.',
+	'createpage-button-cancel' => 'Abbrechen',
 );
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
+/** German (formal address) (Deutsch (Sie-Form))
  * @author LWChris
  */
 $messages['de-formal'] = array(
@@ -494,6 +496,8 @@ Schreiben Sie den ersten Abschnitt Ihres Artikels hier.
 ==Überschrift des Abschnittes==
 
 Schreiben Sie den zweiten Abschnitt Ihres Artikels hier.',
+	'createpage-ve-body' => 'Der <b>$1</b> Artikel existiert auf diesem Wiki nicht. Du kannst helfen, indem du ein paar Sätze hinzufügst.',
+	'createpage-button-cancel' => 'Abbrechen',
 );
 
 /** Zazaki (Zazaki)
@@ -573,6 +577,8 @@ Escribe aquí la primera sección de tu artículo.
 ==Encabezado de sección==
 
 Escribe aquí la segunda sección de tu artículo.',
+	'createpage-ve-body' => 'El artículo <b>$1</b> aún no existe en esta wikia. Puedes ayudar agregando unas pocas frases.',
+	'createpage-button-cancel' => 'Cancelar',
 );
 
 /** Basque (euskara)
@@ -753,6 +759,8 @@ $messages['fr'] = array(
 == Titre de section ==
 
 Écrivez la deuxième section de votre article ici.',
+	'createpage-ve-body' => 'L\'article <b>$1</b> n\'existe pas dans ce wikia. Vous pouvez aider en ajoutant quelques phrases.',
+	'createpage-button-cancel' => 'Annuler',
 );
 
 /** Galician (galego)
@@ -1092,6 +1100,8 @@ Scrivi qui la prima sezione del tuo articolo.
 ==Titolo della sezione==
 
 Scrivi qui la seconda sezione del tuo articolo.',
+	'createpage-ve-body' => 'L\'articolo <b>$1</b> non è ancora disponibile su questo wikia. Puoi dare il tuo contributo aggiungendo qualche frase.',
+	'createpage-button-cancel' => 'Annulla',
 );
 
 /** Japanese (日本語)
@@ -1138,6 +1148,8 @@ $messages['ja'] = array(
 
 == 節見出し ==
 ここに2番目の節を書く。',
+	'createpage-ve-body' => '<b>$1</b>という記事はこのウィキアには存在しません。記事を作成するにはいくつかの文章を加えて下さい。',
+	'createpage-button-cancel' => 'キャンセル',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1600,9 +1612,11 @@ Schrijf hier de eerste paragraaf van uw pagina.
 
 ==Paragraafkop==
 Schrijf hier de tweede paragraaf van uw pagina.',
+	'createpage-ve-body' => 'Het artikel <b>$1</b> bestaat nog niet op deze wikia. U kunt helpen door een paar zinnen toe te voegen.',
+	'createpage-button-cancel' => 'Annuleren',
 );
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
+/** Nederlands (informeel)
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
@@ -1720,6 +1734,8 @@ Tutaj napisz treść pierwszej sekcji strony.
 ==Nagłówek sekcji==
 
 Tutaj napisz treść drugiej sekcji strony.',
+	'createpage-ve-body' => 'Artykuł <b>$1</b> nie istnieje jeszcze w tej wikia. Możesz pomóc, dodając kilka zdań.',
+	'createpage-button-cancel' => 'Anuluj',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1866,6 +1882,8 @@ Escreva aqui a primeira secção da sua página.
 ==Cabeçalho de secção==
 
 Escreva aqui a segunda secção da sua página.',
+	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe nesta wikia. Você pode ajudar adicionando algumas frases.',
+	'createpage-button-cancel' => 'Cancelar',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1923,6 +1941,8 @@ Escreva a primeira seção do seu artigo aqui.
 ==Cabeçalho de seção==
 
 Escreva a segunda seção do seu artigo aqui.',
+	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe nesta wikia. Você pode ajudar adicionando algumas frases.',
+	'createpage-button-cancel' => 'Cancelar',
 );
 
 /** Romanian (română)
@@ -1997,6 +2017,8 @@ $messages['ru'] = array(
 ==Заголовок секции==
 
 Напишите здесь вторую секцию вашей статьи.',
+	'createpage-ve-body' => 'Статья <b>$1</b> еще не существует на этом сервисе wikia. Вы можете помочь, добавив несколько предложений.',
+	'createpage-button-cancel' => 'Отмена',
 );
 
 /** Sakha (саха тыла)
@@ -2465,9 +2487,11 @@ $messages['zh-hans'] = array(
 ==标题项==
 
 在这里撰写第二项。',
+	'createpage-ve-body' => '文章<b>$1</b>在此维基上不存在。您可以进行创建。',
+	'createpage-button-cancel' => '取消',
 );
 
-/** Traditional Chinese (中文（繁體）‎)
+/** Traditional Chinese (中文（繁體)
  * @author Anakmalaysia
  * @author Ffaarr
  * @author Oapbtommy
@@ -2488,9 +2512,11 @@ $messages['zh-hant'] = array(
 	'createpage-dialog-message2' => '你想叫它什麼？',
 	'createpage-error-article-blocked' => '對不起，您不能在這個時候創建該頁面。',
 	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
+	'createpage-ve-body' => '文章<b>$1</b>在此維基上不存在。您可以進行創建。',
+	'createpage-button-cancel' => '取消',
 );
 
-/** Chinese (Hong Kong) (中文（香港）‎)
+/** Chinese (Hong Kong) (中文（香港）)
  * @author Anakmalaysia
  */
 $messages['zh-hk'] = array(

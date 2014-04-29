@@ -29,9 +29,12 @@ class ArticleTypeService {
 	 * @return string|null
 	 */
 	public function getArticleType( $pageId ) {
+		if ( !$pageId ) {
+			return null;
+		}
 		$articleData = $this->getArticleDataByArticleId($pageId);
 
-		if(is_null($articleData)) {
+		if ( is_null($articleData) ) {
 			return null;
 		}
 
@@ -65,15 +68,14 @@ class ArticleTypeService {
 	 */
 	private function getArticleDataByArticleId($pageId) {
 		$art = Article::newFromID($pageId);
-
-		if (!$art) {
-			return null;
-		} else {
-			return [
-				'title' => $art->getTitle()->getText(),
-				'wikiText' => $art->getPage()->getRawText()
-			];
-		}
+		if ($art) {
+			$title = $art->getTitle()->getText();
+			$text = $art->getPage()->getRawText();
+			if (!empty($title) && !empty($text)) {
+				return [ 'title' => $title, 'wikiText' => $text	];
+			}
+		} 
+		return null;
 	}
 }
 

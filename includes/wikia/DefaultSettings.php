@@ -61,8 +61,7 @@ global $wgAutoloadClasses;
 /**
  * Nirvana framework classes
  */
-$wgAutoloadClasses['F'] = $IP . '/includes/wikia/nirvana/WikiaSuperFactory.class.php';
-$wgAutoloadClasses['WF'] = $IP . '/includes/wikia/nirvana/WikiaSuperFactory.class.php';
+$wgAutoloadClasses['F'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaApp'] = $IP . '/includes/wikia/nirvana/WikiaApp.class.php';
 $wgAutoloadClasses['WikiaObject'] = $IP . '/includes/wikia/nirvana/WikiaObject.class.php';
 $wgAutoloadClasses['WikiaHookDispatcher'] = $IP . '/includes/wikia/nirvana/WikiaHookDispatcher.class.php';
@@ -86,7 +85,6 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
-$wgAutoloadClasses['WikiaAppMock'] = $IP . '/includes/wikia/tests/core/WikiaAppMock.class.php';
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
@@ -1263,7 +1261,13 @@ $wgAdVideoTargeting = false;
  * @name $wgAdDriverUseGptMobile
  * Enables experimental AdEngine on mobile skin (for GPT)
  */
-$wgAdDriverUseGptMobile = false;
+$wgAdDriverUseGptMobile = true;
+
+/**
+ * @name $wgAdDriverUseGptMobileDisabledInLangs
+ * Disable wgAdDriverUseGptMobile if wiki is this language
+ */
+$wgAdDriverUseGptMobileDisabledInLangs = ['en'];
 
 /**
  * trusted proxy service registry
@@ -1364,7 +1368,7 @@ $wgDevESLog = false;
  */
 $wgApiAccess = [
 	'SearchApiController' => [
-		'getCombined' => ApiAccessService::URL_TEST | ApiAccessService::ENV_SANDBOX,
+		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
 		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
 		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
 	],

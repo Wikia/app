@@ -64,10 +64,11 @@ class LyricsUtils {
 	 * @desc Generate iTunes link from the itunes data field
 	 *
 	 * @param string $field
+	 * @param string $linkType
 	 * @param string $affToken
 	 * @return bool|string
 	 */
-	public static function generateITunesUrl( $field, $affToken = '' ) {
+	public static function generateITunesUrl( $field, $linkType, $affToken = '' ) {
 		if ( $field ) {
 			$country = 'us';
 			$segments = explode( '&cc=', $field );
@@ -75,14 +76,33 @@ class LyricsUtils {
 				$field = $segments[ 0 ];
 				$country = $segments[ 1 ];
 			}
+			// Segment is artist for artists and album for albums and songs
+			$segment = $linkType == self::TYPE_ARTIST ? self::TYPE_ARTIST : self::TYPE_ALBUM;
+			$linkParts = explode( '?', $field );
+			$path = $linkParts[ 0 ];
+			// Fix paths without leading id
+			$path = substr( $path, 0, 2 ) === 'id' ? $path : 'id' . $path;
+			// Get params if any (for songs)
+			$params = [];
+			if ( isset( $linkParts[ 1 ] ) ) {
+				parse_str( $linkParts[ 1 ], $params );
+			}
+			// Add affiliate token param
+			$params[ 'at' ] = $affToken;
+			// Generate final URL
 			return sprintf(
-				'http://itunes.apple.com/%s/album/%s&at=%s',
+				'http://itunes.apple.com/%s/%s/%s?%s',
 				$country,
-				$field,
-				$affToken
+				$segment,
+				$path,
+				http_build_query( $params )
 			);
 		}
 		return false;
+	}
+
+	public static function removeBrackets( $string ) {
+		return trim( preg_replace( '#(\(|\[)(.*?)(\)|\])#s', '', $string ) );
 	}
 
 }

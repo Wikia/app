@@ -255,7 +255,7 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
 		if ( isset( $user->mBirthDate ) ) {
-			$birthDate = $wgLang->date( $user->mBirthDate );
+			$birthDate = $wgLang->date( strtotime( $user->mBirthDate ) );
 		} else {
 			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}

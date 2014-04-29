@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.null',
-	'ext.wikia.adEngine.provider.sevenOneMedia'
+	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.ebay'
 ], function (
 	// regular dependencies
 	log,
@@ -20,7 +21,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderLiftium,
 	adProviderRemnantGpt,
 	adProviderNull,
-	adProviderSevenOneMedia // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderEbay
 ) {
 	'use strict';
 
@@ -71,6 +73,16 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
+				return adProviderNull;
+			}
+		}
+
+		// Ebay integration
+		if (window.wgAdDriverUseEbay) {
+			if (slotname === 'PREFOOTER_LEFT_BOXAD') {
+				return adProviderEbay;
+			}
+			if (slotname === 'PREFOOTER_RIGHT_BOXAD') {
 				return adProviderNull;
 			}
 		}

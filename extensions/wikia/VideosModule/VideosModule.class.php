@@ -4,16 +4,27 @@ class VideosModule extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 300;
 	const THUMBNAIL_HEIGHT = 309;
-	// We don't care where else this video has been posted, we just want to display it
-	const POSTED_IN_ARTICLES = 0;
-	const GET_THUMB = true;
 
 	const LIMIT_VIDEOS = 20;
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
+	const MAX_STAFF_PICKS = 10;
+
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+
+	// options for getting video detail
+	protected static $videoOptions = [
+		'thumbWidth'   => self::THUMBNAIL_WIDTH,
+		'thumbHeight'  => self::THUMBNAIL_HEIGHT,
+		'getThumbnail' => true,
+		'thumbOptions' => [
+			'useTemplate' => true,
+			'fluid'       => true,
+			'forceSize'   => 'small',
+		],
+	];
 
 	// list of page categories for premium videos [ array( categoryId => name ) ]
 	protected static $pageCategories = [
@@ -28,6 +39,68 @@ class VideosModule extends WikiaModel {
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => Wikia\Search\Config::FILTER_CAT_ENTERTAINMENT,
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => Wikia\Search\Config::FILTER_CAT_LIFESTYLE,
 	];
+
+	/**
+	 * Look for 'Staff Picks' on the video wiki.  These are videos that have been added to the
+	 * "Staff Pick DBNAME" category (where DBNAME is this wiki's DB NAME) or the "Staff Pick Global"
+	 * category.
+	 *
+	 * @return array
+	 */
+	public function getStaffPicks() {
+		wfProfileIn( __METHOD__ );
+
+		// Try to get the staff video picks from cache first
+		$memcKey = wfMemcKey( 'videomodule', 'staff_videos', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+
+		// If none are there call out to the video wiki to look for some
+		if ( !is_array( $videos ) ) {
+
+			// Look for picks specific to this wiki.  Don't get a thumbnail
+			// since we'll be generating it below
+			$params = [
+				'controller'   => 'SpecialVideosSpecialController',
+				'method'       => 'getVideos',
+				'sort'         => 'recent',
+				'getThumbnail' => false,
+				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
+			];
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+			// Look for global wikia-wide picks
+			$params['category'] = 'Staff_Pick_Global';
+
+			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
+
+			$combinedVideos = array_merge($wikiResults, $globalResults);
+
+			// Sort the combined array by the updated field, which is YYYY-MM-DD hh:mm:ss
+			usort($combinedVideos, function ($a, $b) {
+				return strcmp( $b['updated'], $a['updated'] );
+			});
+
+			// Cap the number of videos we send to the front end at MAX_STAFF_PICKS
+			$videos = [];
+			foreach ( $combinedVideos as $video ) {
+				$videos[] = $video['fileKey'];
+
+				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
+					break;
+				}
+			}
+
+			$videos = $this->getVideosDetail( $videos );
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $videos;
+	}
 
 	/**
 	 * Get videos added to the wiki
@@ -57,14 +130,7 @@ class VideosModule extends WikiaModel {
 
 				if ( $this->addToList( $videoTitles, $videoInfo['title'] ) ) {
 					// get video detail
-					$videoDetail = $helper->getVideoDetail(
-						$videoInfo,
-						self::THUMBNAIL_WIDTH,
-						self::THUMBNAIL_HEIGHT,
-						self::POSTED_IN_ARTICLES,
-						self::GET_THUMB
-					);
-
+					$videoDetail = $helper->getVideoDetail( $videoInfo, self::$videoOptions );
 					if ( !empty( $videoDetail ) ) {
 						$videos[] = $this->filterVideoDetail( $videoDetail );
 					}
@@ -145,7 +211,6 @@ class VideosModule extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $videos;
-
 	}
 
 	/**
@@ -330,9 +395,9 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get detail of the videos
-	 * @param array $videos - list of video title
-	 * @return array $videoList
+	 * Call 'VideoHandlerHelper::getVideoDetail' on the video wiki for each of a list of video titles
+	 * @param array $videos A list of video titles
+	 * @return array A list of video details for each title passed
 	 */
 	public function getVideosDetail( $videos ) {
 		wfProfileIn( __METHOD__ );
@@ -343,10 +408,7 @@ class VideosModule extends WikiaModel {
 			$videosDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videos,
-				self::THUMBNAIL_WIDTH,
-				self::THUMBNAIL_HEIGHT,
-				self::POSTED_IN_ARTICLES,
-				self::GET_THUMB
+				self::$videoOptions
 			);
 
 			foreach( $videosDetail as $video ) {
@@ -393,7 +455,8 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Get video limit (include the number of blacklisted videos)
-	 * @return integer $limit
+	 * @param int $numRequired
+	 * @return integer
 	 */
 	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
@@ -406,13 +469,12 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Trim randomized list of videos
+	 * Trim a list of videos down to $numRequired and make a note that we're using it
 	 * @param array $videos
 	 * @param integer $numRequired
 	 * @return array $videos
 	 */
 	protected function trimVideoList( $videos, $numRequired ) {
-		shuffle( $videos );
 		array_splice( $videos, $numRequired );
 		foreach ( $videos as $video ) {
 			$this->existingVideos[$video['videoKey']] = true;
@@ -420,5 +482,4 @@ class VideosModule extends WikiaModel {
 
 		return $videos;
 	}
-
 }

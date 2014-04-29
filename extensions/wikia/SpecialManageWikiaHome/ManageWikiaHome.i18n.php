@@ -45,6 +45,8 @@ $messages['en'] = array(
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Clear',
 
+	'manage-wikia-home-wiki-list-download' => 'Download complete list',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Comma separated values (CSV file) with UTF-8 encoding.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Wiki name',
@@ -236,6 +238,8 @@ Parameters:
 	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
 	'manage-wikia-home-stats-success' => 'Message after successful save.',
 	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
+	'manage-wikia-home-wiki-list-download' => 'Label for button that downloads complete wiki list.',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Tooltip for button that downloads complete wiki list - explains format (CSV) and encoding (UTF-8).',
 );
 
 /** Arabic (العربية)

@@ -3,15 +3,7 @@
 require_once( dirname( __FILE__ ) . '/../FBConnectAPI.php');
 require_once( dirname( __FILE__ ) . '/../facebook-client/facebook.php');
 
-class FBConnectApiTest extends PHPUnit_Framework_TestCase {
-
-	protected function setUp() {
-		$this->app = F::app();
-	}
-
-	protected function tearDown(){
-		F::setInstance('App', $this->app);
-	}
+class FBConnectApiTest extends WikiaBaseTest {
 
 	public function testUser() {
 		$anything = rand();
@@ -26,7 +18,7 @@ class FBConnectApiTest extends PHPUnit_Framework_TestCase {
 		      ->will($this->returnValue($facebook));
 
 		$result = $fbApi->user();
-		$this->assertEquals($anything, $result); 
+		$this->assertEquals($anything, $result);
 	}
 
 	/**
@@ -36,11 +28,9 @@ class FBConnectApiTest extends PHPUnit_Framework_TestCase {
 		$this->fbAppId = $fbAppId;
 		$this->fbAppSecret = $fbAppSecret;
 
-		$app = $this->getMock('WikiaApp', array('getGlobal'));
-		$app->expects($this->any())
-		    ->method('getGlobal')
-			->will($this->returnCallback(array($this, 'isConfigSetupGlobalsCallback')));
-		F::setInstance('App', $app);
+		$this->mockGlobalVariable("fbAppId", $this->fbAppId);
+		$this->mockGlobalVariable("fbAppSecret", $this->fbAppSecret);
+
 		$result = FBConnectAPI::isConfigSetup();
 		$this->assertEquals($expected, $result);
 	}
@@ -55,13 +45,5 @@ class FBConnectApiTest extends PHPUnit_Framework_TestCase {
 			array(false, 'YOUR_APP_KEY', null),
 			array(false, 'YOUR_APP_KEY', 'YOUR_SECRET'),
 		);
-	}
-
-	public function isConfigSetupGlobalsCallback($globalName) {
-		switch($globalName) {
-			case 'fbAppId': return $this->fbAppId;
-			case 'fbAppSecret': return $this->fbAppSecret;
-			default: return null;
-		}
 	}
 }

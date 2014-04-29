@@ -8,7 +8,6 @@ define('lvs.ellipses', [], function () {
 
 	'use strict';
 
-
 	/**
 	 * @param {jQuery} $elem The wrapper element for the main body of this page
 	 */

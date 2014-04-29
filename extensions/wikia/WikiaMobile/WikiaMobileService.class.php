@@ -163,6 +163,10 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'BlueKai',
 					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'Datonics',
+					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
@@ -186,14 +190,16 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+			&& empty( $this->wg->WikiaMobileSmartBannerConfig['disabled'] )
+		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_smartbanner_init_js';
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
-			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
 			$this->globalVariables['wgAppIcon'] = $this->wg->WikiaMobileSmartBannerConfig['icon'];
 
-			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig['meta'] );
 		}
 
 		wfProfileOut( __METHOD__ );

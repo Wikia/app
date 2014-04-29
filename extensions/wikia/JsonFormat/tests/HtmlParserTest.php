@@ -91,7 +91,7 @@ class HtmlParserTest extends WikiaBaseTest {
 
 	public function testParseSectionWithContent() {
 		$htmlParser = new HtmlParser();
-		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1> content');
+		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1>content');
 
 		$this->assertEquals( 'root', $node->getType() );
 		$this->assertEquals( 1, sizeof($node->getChildren()) );

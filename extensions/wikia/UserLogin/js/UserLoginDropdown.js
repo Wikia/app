@@ -26,6 +26,8 @@ var UserLoginDropdown = {
 	show: function() {
 		if(!this.dropdown.hasClass('show')) {
 			this.dropdown.addClass('show');
+			this.dropdown.trigger('hovermenu-shown');
+
 			if(!this.loginAjaxForm) {
 				this.loginAjaxForm = new UserLoginAjaxForm(this.dropdown);
 
@@ -41,6 +43,7 @@ var UserLoginDropdown = {
 	},
 	hide: function() {
 		this.dropdown.removeClass('show');
+		this.dropdown.trigger('hovermenu-hidden');
 
 		$('body').unbind('.loginDropdown');
 	},
