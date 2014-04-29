@@ -655,6 +655,25 @@ $config['wikiamobile_autocomplete_js'] = array(
 	)
 );
 
+$config['wikiamobile_usersignup_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/UserLogin/css/UserSignup.wikiamobile.scss'
+	)
+);
+
+$config['wikiamobile_usersignup_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js'
+	)
+);
+
 $config['wikiamobile_categorypage_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
