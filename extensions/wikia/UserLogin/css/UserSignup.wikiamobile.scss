@@ -1,0 +1,70 @@
+$main-color: #054C8B;
+$main-background-color: #E2F3F7;
+$error-border: #BE1E2D;
+$input-color: #333;
+
+h1 {
+  color: $main-color;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.input-group {
+  margin: 0 0 10px 0;
+
+  input {
+	margin: 0;
+	color: $input-color;
+
+	&:active {
+	  //border-color: #ffff00;
+	}
+  }
+
+  &.error {
+	input {
+	  border-color: $error-border;
+	}
+  }
+}
+
+.wikia-terms {
+  font-size: .8rem;
+  color: #999;
+  margin: 0;
+}
+
+select {
+  -webkit-appearance: none;
+  border-radius: 3px;
+  height: 30px;
+  width: 32%;
+  padding-left: 5%;
+
+  &:after {
+	content: '';
+	display: block;
+  }
+}
+
+.error-msg {
+  background-color: $main-background-color;
+  color: $main-color;
+  font-size: .8rem;
+  margin: 10px 0;
+}
+
+input[type=submit] {
+  background-color: $main-color;
+  border-radius: 3px;
+  border: 0;
+  color: white;
+  margin-bottom: 10px;
+
+  &[disabled=disabled] {
+	background-color: grey;
+  }
+}
