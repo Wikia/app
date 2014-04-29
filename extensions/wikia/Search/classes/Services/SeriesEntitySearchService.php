@@ -15,7 +15,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 		return static::XWIKI_CORE;
 	}
 
-	public function prepareQuery( $query ) {
+	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$noyearphrase = preg_replace( '|\(\d{4}\)|', '', $query );
@@ -47,7 +47,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 		return $select;
 	}
 
-	public function consumeResponse( $response ) {
+	protected function consumeResponse( $response ) {
 		$result = [];
 		foreach( $response as $doc ) {
 			if ( ( $doc['id'] && $doc['url'] ) && $doc['score'] > static::MINIMAL_WIKIA_SCORE ) {

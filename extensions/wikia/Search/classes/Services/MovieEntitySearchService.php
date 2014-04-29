@@ -14,7 +14,7 @@ class MovieEntitySearchService extends EntitySearchService {
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	private static $EXCLUDED_WIKIS = [ 'uncyclopedia.wikia.com' ];
 
-	public function prepareQuery( $query ) {
+	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
@@ -51,10 +51,17 @@ class MovieEntitySearchService extends EntitySearchService {
 		return $select;
 	}
 
-	public function consumeResponse( $response ) {
+	protected function consumeResponse( $response ) {
 		foreach( $response as $item ) {
 			if ( $item['score'] > static::MINIMAL_MOVIE_SCORE ) {
-				return $this->getDataFromItem($item);
+				return [
+					'wikiId' => $item['wid'],
+					'articleId' => $item['pageid'],
+					'title' => $item['title_'.$this->getLang()],
+					'url' => $this->replaceHostUrl( $item['url'] ),
+					'quality' => $item['article_quality_i'],
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'] ),
+				];
 			}
 		}
 		return null;
@@ -66,30 +73,6 @@ class MovieEntitySearchService extends EntitySearchService {
 			$result .= ' AND +(article_quality_i:[' . $this->getQuality() . ' TO *])';
 		}
 		return $result;
-	}
-
-	protected function getDataFromItem( $item ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-
-		$data = [
-			'wikiId' => $item['wid'],
-			'articleId' => $item['pageid'],
-			'title' => $item['title_'.$this->getLang()],
-			'url' => $item['url'],
-			'quality' => $item['article_quality_i'],
-		];
-
-		$data[ 'contentUrl' ] = 'http://' . $item['host'] . '/' . self::API_URL . $item['pageid'];
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$data[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "contentUrl" ] );
-			$data[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $data[ "url" ] );
-		}
-
-		return $data;
-	}
-
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 
 }
