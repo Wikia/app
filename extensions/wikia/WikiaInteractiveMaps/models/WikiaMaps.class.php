@@ -7,6 +7,10 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 
+	const STATUS_DONE = 0;
+	const STATUS_PROCESSING = 1;
+	const STATUS_FAILED = 3;
+
 	/**
 	 * @var array API Connection config
 	 */
@@ -47,7 +51,7 @@ class WikiaMaps {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
 			return $this->{ $method }( $params );
-		});
+		}, WikiaDataAccess::REFRESH_CACHE);
 	}
 
 	/**
@@ -57,10 +61,21 @@ class WikiaMaps {
 	 * @return mixed
 	 */
 	private function getMapsFromApi( Array $params ) {
+		$maps = [];
 		$url = $this->buildUrl( self::ENTRY_POINT_MAP, $params );
 		$response = Http::get( $url );
+
 		if ( $response !== false ) {
-			return json_decode( $response, false );
+			$results = json_decode( $response, false );
+			foreach( $results as $map ) {
+				if( $map->status !== static::STATUS_FAILED ) {
+					$maps[] = $map;
+				}
+			}
+		}
+
+		if( !empty( $maps ) ) {
+			return $maps;
 		}
 
 		return false;

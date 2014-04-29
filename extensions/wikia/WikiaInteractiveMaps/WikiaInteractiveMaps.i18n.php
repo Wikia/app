@@ -16,6 +16,9 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Wikia Interactive Maps error occurred: invalid height. Please make sure your height parameter is an integer number higher than 0 or remove it to set it to default value.",
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
+
+	'wikia-interactive-maps-map-status-done' => 'Ready to use',
+	'wikia-interactive-maps-map-status-processing' => 'Processing...',
 ];
 
 $messages[ 'qqq' ] = [

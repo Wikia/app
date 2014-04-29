@@ -40,6 +40,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		array_walk( $maps, function( &$map ) {
 			$map->map_width = self::MAP_WIDTH;
 			$map->map_height = self::MAP_HEIGHT;
+			$map->status = $this->getMapStatusText( $map->status );
 		});
 
 		$this->setVal( 'maps', $maps );
@@ -53,6 +54,21 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function getMapStatusText( $status ) {
+		$message = '';
+
+		switch( $status ) {
+			case WikiaMaps::STATUS_DONE:
+				$message = wfMessage( 'wikia-interactive-maps-map-status-done' )->plain();
+				break;
+			case WikiaMaps::STATUS_PROCESSING:
+				$message = wfMessage( 'wikia-interactive-maps-map-status-processing' )->plain();
+				break;
+		}
+
+		return $message;
 	}
 
 }
