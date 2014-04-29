@@ -7,6 +7,8 @@
 class ReadMoreModel extends WikiaModel {
 
 	const MEMC_VER = '1.01';
+	const IMAGE_WIDTH = 200;
+	const ARTICLE_IMAGES_NUMBER = 1;
 
 	private $wikiId;
 	private $articleId;
@@ -177,8 +179,8 @@ class ReadMoreModel extends WikiaModel {
 	 * @return mixed
 	 */
 	protected function getImagesFromIds ( $ids ) {
-		$imageServing = new ImageServing( array_keys( $ids ), 200, array( 'w' => 2, 'h' => 1 ) );
-		return $imageServing->getImages( 1 );
+		$imageServing = new ImageServing( array_keys( $ids ), self::IMAGE_WIDTH, array( 'w' => 2, 'h' => 1 ) );
+		return $imageServing->getImages( self::ARTICLE_IMAGES_NUMBER );
 	}
 
 	/**
