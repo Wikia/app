@@ -11,7 +11,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
-	public function getCore() {
+	protected function getCore() {
 		return static::XWIKI_CORE;
 	}
 
