@@ -59,7 +59,7 @@ We've run phpunit tests locally only on linux machines, requirements:
 * runkit http://php.net/manual/en/book.runkit.php
 * config ( https://github.com/Wikia/config ) repo cloned into /usr/wikia/source/config
 
-### Getting slow tests list
+**Getting slow tests list**
 In ```tests``` directory type in ```./php-slow-list```
 
 This script will list all slow test cases with execution time.
