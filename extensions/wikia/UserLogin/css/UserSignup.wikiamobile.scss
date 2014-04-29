@@ -3,6 +3,7 @@ $main-background-color: #E2F3F7;
 $error-border: #BE1E2D;
 $input-color: #333;
 $border-color: #D0D0D0;
+$background-color: #FFF;
 
 h1 {
 	color: $main-color;
@@ -19,7 +20,7 @@ fieldset {
 	input {
 		margin: 0;
 		color: $input-color;
-		background-color: #FFF;
+		background-color: $background-color;
 		border-radius: 2px;
 		border-color: $border-color;
 		font-size: 0.9rem;
@@ -46,7 +47,7 @@ select {
 	width: 32%;
 	margin: 2px;
 	padding-left: 5%;
-	background-color: #FFF;
+	background-color: $background-color;
 
 	&:last-of-type {
 		margin-left: -2px;
@@ -67,7 +68,7 @@ input[type=submit] {
 	margin-bottom: 10px;
 
 	&[disabled=disabled] {
-		background-color: grey;
+		background-color: $border-color;
 	}
 }
 
