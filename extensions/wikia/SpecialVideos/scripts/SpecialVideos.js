@@ -91,7 +91,7 @@ $(function () {
 		 * Only used in Oasis.
 		 */
 		initRemoveVideo: function () {
-			this.$wrapper.on('click', '.remove', function (e) {
+			this.$wrapper.on('click', '.remove', function () {
 				var $video = $(this).prevAll('.video-thumbnail'),
 					videoName = $video.children('img').attr('data-video-name');
 				if (videoName) {
@@ -113,7 +113,7 @@ $(function () {
 										// reload page with cb
 										(new Wikia.Querystring(window.location)).addCb().goTo();
 									} else {
-										GlobalNotification.show(json['msg'], 'error');
+										GlobalNotification.show(json.msg, 'error');
 									}
 
 								}
