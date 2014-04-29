@@ -20,7 +20,7 @@ class MoviesApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $result );
 
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	protected function findMovie( $movieName, $lang, $minQuality ) {
