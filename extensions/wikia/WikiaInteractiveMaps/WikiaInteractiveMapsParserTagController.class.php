@@ -71,7 +71,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
-		$map[ 'url' ] = $mapsModel->getMapRenderUrl( [
+		$map->url = $mapsModel->getMapRenderUrl( [
 			$mapId . '/' . $params->zoom . '/' . $params->lat . '/' . $params->lon,
 		] );
 

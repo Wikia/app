@@ -51,13 +51,13 @@ class WikiaMaps {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
 			return $this->{ $method }( $params );
-		}, WikiaDataAccess::REFRESH_CACHE);
+		});
 	}
 
 	/**
 	 * Get Map instances from IntMaps API server
 	 *
-	 * @param Array $params
+	 * @param Array $params an array with parameters which will be added to the url after ? sign
 	 * @return mixed
 	 */
 	private function getMapsFromApi( Array $params ) {
@@ -81,15 +81,32 @@ class WikiaMaps {
 		return false;
 	}
 
+	/**
+	 * @desc Sends requests to IntMap service to get data about a map and tiles it's connected with
+	 *
+	 * @param Array $params the first element is required and it should be map id passed rest of the array elements
+	 *                      will get added as URI parameters after ? sign
+	 * @return mixed
+	 *
+	 * @todo: change the service API in the way that we don't have to send two requests
+	 */
 	private function getMapByIdFromApi( Array $params ) {
-		// TODO: Remove mock when we have real data
-		return [
-			'id' =>  $params['id'],
-			'status' => 'Processing',
-			'title' => 'Title 1',
-			'image' => 'http://placekitten.com/700/200',
-			'last_updated' => date('c')
-		];
+		$mapId = array_shift( $params );
+		$url = $this->buildUrl( self::ENTRY_POINT_MAP . '/' . $mapId, $params );
+		$response = Http::get( $url );
+
+		$map = json_decode( $response, false );
+		$map->id = $mapId;
+		if( !empty( $map->tile_set_url ) ) {
+			$response = Http::get( $map->tile_set_url );
+			$tilesData = json_decode( $response, false );
+
+			if( !is_null( $tilesData ) ) {
+				$map->image = $tilesData->image;
+			}
+		}
+
+		return $map;
 	}
 
 	/**
@@ -100,7 +117,7 @@ class WikiaMaps {
 	 * @return string
 	 */
 	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_pop( $params );
+		$entryPointParams = array_shift( $params );
 		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}
 
