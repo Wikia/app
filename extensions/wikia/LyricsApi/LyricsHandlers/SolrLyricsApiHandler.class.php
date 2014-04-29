@@ -412,13 +412,18 @@ class SolrLyricsApiHandler {
 	 * @return null|stdClass
 	 */
 	public function getSong( LyricsApiSearchParams $searchParams ) {
-		$solrQuery = [
-			'type: %1%' => LyricsUtils::TYPE_SONG,
-			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
-			'song_name_lc: %P3%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG ),
+		$query = $this->client->createSelect();
+		$lowerCaseSongName = $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG );
+		$queryText = 'type:%1% AND artist_name_lc:%P2% AND ( song_name_lc:%P3% OR song_name_lc:%P4% )';
+
+		$params = [
+			LyricsUtils::TYPE_SONG,
+			$searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
+			$lowerCaseSongName,
+			LyricsUtils::removeBrackets( $lowerCaseSongName ),
 		];
 
-		$query = $this->newQueryFromSearch( $solrQuery );
+		$query->setQuery( $queryText, $params );
 		$query->setFields( [
 			'artist_name',
 			'album_id',
