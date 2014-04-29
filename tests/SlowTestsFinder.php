@@ -9,7 +9,7 @@ class SlowTestsFinder extends PHPUnit_TextUI_Command {
 
 	public static function main($exit = TRUE) {
 		$command = new static();
-		return $command->run($_SERVER['argv'], $exit);
+		return $command->run( $_SERVER['argv'], $exit );
 	}
 
 	public function run( array $argv, $exit = TRUE ) {
@@ -28,7 +28,7 @@ class SlowTestsFinder extends PHPUnit_TextUI_Command {
 			}
 		} else {
 			if ( WikiaTestSpeedAnnotator::isMarkedAsSlow( $test->getAnnotations() ) ) {
-				$this->collectSlowTest($test);
+				$this->collectSlowTest( $test );
 				$this->displaySlowTest( $test );
 			}
 		}
@@ -51,7 +51,7 @@ class SlowTestsFinder extends PHPUnit_TextUI_Command {
 		if ( !empty( $this->slowTestsList ) ) {
 			print PHP_EOL . PHP_EOL . 'List of slow test classes:' . PHP_EOL;
 
-			foreach ( $this->slowTestsList as $testName => $count) {
+			foreach ( $this->slowTestsList as $testName => $count ) {
 				print $testName . ' - ' . $count . ' slow tests' . PHP_EOL;
 			}
 		}

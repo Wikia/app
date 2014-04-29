@@ -103,7 +103,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
 
-		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations()) ) {
+		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations() ) ) {
 			self::$numberSlowTests++;
 		}
 

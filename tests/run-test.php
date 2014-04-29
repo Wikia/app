@@ -26,6 +26,6 @@ require_once 'PHPUnit/Autoload.php';
 if ( !isset( $params['slow-list'] ) ) {
 	PHPUnit_TextUI_Command::main();
 } else {
-	include_once('SlowTestsFinder.php');
+	include_once( 'SlowTestsFinder.php' );
 	SlowTestsFinder::main();
 }
