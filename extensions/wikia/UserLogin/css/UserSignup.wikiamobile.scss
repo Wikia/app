@@ -2,6 +2,7 @@ $main-color: #054C8B;
 $main-background-color: #E2F3F7;
 $error-border: #BE1E2D;
 $input-color: #333;
+$border-color: #D0D0D0;
 
 h1 {
   color: $main-color;
@@ -18,6 +19,10 @@ fieldset {
   input {
 	margin: 0;
 	color: $input-color;
+	background-color: #FFF;
+	border-radius: 2px;
+	border-color: $border-color;
+	font-size: 0.9rem;
 
 	&:active {
 	  //border-color: #ffff00;
@@ -39,14 +44,16 @@ fieldset {
 
 select {
   -webkit-appearance: none;
-  border-radius: 3px;
+  border-radius: 2px;
+  border-color: $border-color;
   height: 30px;
   width: 32%;
+  margin: 2px;
   padding-left: 5%;
+  background-color: #FFF;
 
-  &:after {
-	content: '';
-	display: block;
+  &:last-of-type {
+	margin-left: -2px;
   }
 }
 
@@ -60,7 +67,6 @@ select {
 input[type=submit] {
   background-color: $main-color;
   border-radius: 3px;
-  border: 0;
   color: white;
   margin-bottom: 10px;
 

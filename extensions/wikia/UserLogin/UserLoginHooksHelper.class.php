@@ -216,7 +216,6 @@ class UserLoginHooksHelper {
 	}
 
 	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
-
 		if ( F::app()->wg->Title->isSpecial( 'UserSignup' ) ) {
 			$scssPackages[] =  'wikiamobile_usersignup_scss';
 			$jsExtensionPackages[] =  'wikiamobile_usersignup_js';
