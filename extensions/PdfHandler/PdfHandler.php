@@ -61,4 +61,10 @@ $wgAutoloadClasses['PdfHandler'] = $dir . 'PdfHandler_body.php';
 $wgAutoloadClasses['CreatePdfThumbnailsJob'] = $dir . 'CreatePdfThumbnailsJob.class.php';
 $wgMediaHandlers['application/pdf'] = 'PdfHandler';
 $wgJobClasses['createPdfThumbnailsJob'] = 'CreatePdfThumbnailsJob';
-$wgHooks['UploadVerifyFile'][] = 'CreatePdfThumbnailsJob::insertJobs';
+$wgHooks['UploadVerifyFile'][] = function($upload, $mime, &$error) {
+	if (TaskExecutors::isModern('CreatePdfThumbnailsJob')) {
+		PdfHandlerTask::onUploadVerifyFile($upload, $mime, $error);
+	} else {
+		CreatePdfThumbnailsJob::insertJobs($upload, $mime, $error);
+	}
+};

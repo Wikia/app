@@ -6,23 +6,6 @@ use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 
 class ParsoidCacheUpdateTask extends BaseTask {
-	/** @var \Title */
-	private $title;
-
-	/** @var int */
-	private $titleId;
-
-	public function __construct( $titleId = null ) {
-		$this->titleId = $titleId;
-	}
-
-	public function init() {
-		$this->title = Title::newFromID( $this->titleId );
-		if ( $this->title == null ) {
-			throw new Exception( "unable to instantiate title with id {$this->titleId}" );
-		}
-	}
-
 	/**
 	 * find which articles depend on this resource being changed
 	 *

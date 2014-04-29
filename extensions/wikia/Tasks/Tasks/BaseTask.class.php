@@ -10,7 +10,7 @@
 namespace Wikia\Tasks\Tasks;
 
 use Wikia\Tasks\AsyncTaskList;
-use Wikia\Tasks\PriorityQueue;
+use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
 	/** @var array calls this task will make */
@@ -18,6 +18,12 @@ abstract class BaseTask {
 
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
+
+	/** @var \Title title instantiation of $this->titleId */
+	protected $title;
+
+	/** @var int the title id this task is operating on, if any. */
+	private $titleId;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -32,7 +38,16 @@ abstract class BaseTask {
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
 	 * inserting large, serialized classes into rabbitmq
 	 */
-	public function init() {}
+	public function init() {
+		if (!$this->titleId) {
+			return;
+		}
+
+		$this->title = \Title::newFromID($this->titleId);
+		if ( $this->title == null ) {
+			throw new \Exception( "unable to instantiate title with id {$this->titleId}" );
+		}
+	}
 
 	/**
 	 * set this task to call a method in this class. the first argument to this method should be the method to execute,
@@ -154,7 +169,9 @@ abstract class BaseTask {
 		$result = [
 			'class' => get_class($this),
 			'calls' => $this->calls,
-			'context' => []
+			'context' => [
+				'titleId' => $this->titleId
+			]
 		];
 
 		foreach ($mirror->getProperties() as $property) {
@@ -191,6 +208,12 @@ abstract class BaseTask {
 				$property->setValue($this, $value);
 			}
 		}
+	}
+
+	public function titleId($titleId) {
+		$this->titleId = $titleId;
+
+		return $this;
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
