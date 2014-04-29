@@ -11,12 +11,11 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 			mapUrl = $target.data('map-url'),
 			templatePath = 'extensions/wikia/WikiaInteractiveMaps/templates/' +
 				'WikiaInteractiveMapsController_mapIframe.mustache',
-			cacheKey = 'wikia_interactive_maps_map_iframe',
-			iframe = '';
+			cacheKey = 'wikia_interactive_maps_map_iframe';
 
 		loadTemplate(templatePath, cacheKey)
 			.done(function (template) {
-				iframe = mustache.render(template, {
+				var iframe = mustache.render(template, {
 					url: mapUrl
 				});
 
