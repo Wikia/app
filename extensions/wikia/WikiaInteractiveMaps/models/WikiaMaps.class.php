@@ -57,28 +57,12 @@ class WikiaMaps {
 	 * @return mixed
 	 */
 	private function getMapsFromApi( Array $params ) {
-		// TODO: Remove mock when we have real data
-		return [
-			[
-				'id' =>  1,
-				'status' => 'Processing',
-				'title' => 'Title 1',
-				'image' => 'http://placekitten.com/1602/300',
-				'last_updated' => date('c')
-			],
-			[
-				'id' =>  1,
-				'title' => 'Title 2',
-				'image' => 'http://placekitten.com/1601/300',
-				'last_updated' => date('c')
-			]
-		];
-
 		$url = $this->buildUrl( self::ENTRY_POINT_MAP, $params );
 		$response = Http::get( $url );
 		if ( $response !== false ) {
-			return json_decode( $response, FALSE );
+			return json_decode( $response, false );
 		}
+
 		return false;
 	}
 

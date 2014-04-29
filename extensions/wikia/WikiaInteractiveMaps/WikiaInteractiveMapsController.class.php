@@ -38,8 +38,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		// Add map size to maps
 		array_walk( $maps, function( &$map ) {
-			$map[ 'map_width' ] = self::MAP_WIDTH;
-			$map[ 'map_height' ] = self::MAP_HEIGHT;
+			$map->map_width = self::MAP_WIDTH;
+			$map->map_height = self::MAP_HEIGHT;
 		});
 
 		$this->setVal( 'maps', $maps );
