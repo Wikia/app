@@ -6,6 +6,8 @@
  * @var $wikiaMenuNodes array
  * @var $wikiMenuNodes array
  * @var $blacklist
+ * @var $specialVideosUrl string
+ * @var $showVideoLink boolean
  */
 ?>
 <header class="wkPrfHead up"><?= wfMessage('wikiamobile-menu')->text() ?></header>
@@ -126,5 +128,8 @@
 		}
 	}
 ?>
+	<? if ( $showVideoLink ) { ?>
+		<li><a href="<?= $specialVideosUrl ?>"><?= wfMessage('wikiamobile-videos')->escaped() ?></a></li>
+	<? } ?>
 </ul>
 </nav>
