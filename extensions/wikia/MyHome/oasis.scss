@@ -28,7 +28,7 @@
 			margin: 0;
 		}
 	}
-	
+
 	.Wikia-video-play-button {
 		margin: auto;
 	}
@@ -89,6 +89,10 @@
 				&[data-image-link] {
 					height: 160px;
 					padding: 0;
+				}
+
+				img {
+					display: inline;
 				}
 			}
 		}
