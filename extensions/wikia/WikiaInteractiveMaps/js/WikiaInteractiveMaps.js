@@ -2,6 +2,44 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 	'use strict';
 
 	/**
+	 * @desc Checks if template is cached in LocalStorage and if not loads it by using loader
+	 *
+	 * @todo Talk to Platform Team about making it global, so other teams can re-use it
+	 *
+	 * @param {String} templatePath path to the template
+	 * @param {String} cacheKey the key in local storage
+	 * @returns {$.Deferred}
+	 */
+	function loadTemplate(templatePath, cacheKey) {
+		var dfd = new $.Deferred();
+
+		require(['wikia.loader', 'wikia.cache'], function (loader, cache) {
+			var template = cache.getVersioned(cacheKey);
+
+			if (template) {
+				dfd.resolve(template);
+			} else {
+				loader({
+					type: loader.MULTI,
+					resources: {
+						mustache: templatePath
+					}
+				}).done(function (data) {
+					template = data.mustache[0];
+
+					dfd.resolve(template);
+
+					cache.setVersioned(cacheKey, template, 604800); //7days
+				}).fail(function () {
+					dfd.reject();
+				});
+			}
+		});
+
+		return dfd.promise();
+	}
+
+	/**
 	 * @desc Shows a modal with map inside
 	 *
 	 * @param {Object} $target - map thumbnail jQuery object that gives context to which map should be shown
@@ -38,44 +76,6 @@ require(['jquery', 'wikia.mustache'], function ($, mustache) {
 			.fail(function () {
 				showUnexpectedErrorModal();
 			});
-	}
-
-	/**
-	 * @desc Checks if template is cached in LocalStorage and if not loads it by using loader
-	 *
-	 * @todo Talk to Platform Team about making it global, so other teams can re-use it
-	 *
-	 * @param {String} templatePath path to the template
-	 * @param {String} cacheKey the key in local storage
-	 * @returns {$.Deferred}
-	 */
-	function loadTemplate(templatePath, cacheKey) {
-		var dfd = new $.Deferred();
-
-		require(['wikia.loader', 'wikia.cache'], function (loader, cache) {
-			var template = cache.getVersioned(cacheKey);
-
-			if (template) {
-				dfd.resolve(template);
-			} else {
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: templatePath
-					}
-				}).done(function (data) {
-					template = data.mustache[0];
-
-					dfd.resolve(template);
-
-					cache.setVersioned(cacheKey, template, 604800); //7days
-				}).fail(function () {
-					dfd.reject();
-				});
-			}
-		});
-
-		return dfd.promise();
 	}
 
 	/**
