@@ -498,7 +498,8 @@ class VisualEditorHooks {
 					'lib/ve/lib/jquery.i18n/src/jquery.i18n.emitter.js',
 					'lib/ve/lib/jquery.i18n/src/jquery.i18n.language.js',
 				),
-				'dependencies' => 'mediawiki.libs.pluralruleparser',
+				// Line below commented out as a part of VE-908/VE-1010
+				//'dependencies' => 'mediawiki.libs.pluralruleparser',
 				'languageScripts' => array(
 					'bs' => 'lib/ve/lib/jquery.i18n/src/languages/bs.js',
 					'dsb' => 'lib/ve/lib/jquery.i18n/src/languages/dsb.js',
