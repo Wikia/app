@@ -21,5 +21,13 @@
     "grunt-contrib-watch": "0.5.3",
     "grunt-banana-checker": "0.1.0",
     "grunt-jscs-checker": "0.4.1"
+  },
+  "description": "VisualEditor provides a visual editor for wiki pages. It is written in JavaScript and runs in a web browser.",
+  "main": "Gruntfile.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "~0.4.4",
+    "grunt-cli": "~0.1.13"
   }
 }

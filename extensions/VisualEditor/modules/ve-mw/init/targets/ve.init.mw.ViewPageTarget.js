@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw, confirm, alert, veTrack */
+/* global mw, confirm, alert */
 
 /**
  * Initialization MediaWiki view page target.
@@ -724,9 +724,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.checkForWikitextWarning = function () {
 	var text, node, doc = this.surface.getView().getDocument(),
-		selection = this.surface.getModel().getSelection(),
-		textMatches,
-		viewPageTarget = this;
+		selection = this.surface.getModel().getSelection();
 	if ( !selection ) {
 		return;
 	}
