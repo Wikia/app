@@ -59,15 +59,15 @@ WikiaForm.prototype.getInputGroup = function(paramName) {
 	var inputGroup = this.inputGroups[paramName]; //cache lookup
 	if(!inputGroup) {
 		inputGroup = this.inputs[paramName].closest('.input-group');
-		if(!inputGroup.exists()) {	// fallback - check if input has been dynamically added
+		if(!inputGroup.length !== 0) {	// fallback - check if input has been dynamically added
 			var input = this.el.find('input[name=' + paramName + ']');
-			if(input.exists()) {
+			if(input.length !== 0) {
 				inputGroup = input.closest('.input-group');
 			}
 		}
 
 		// cache if found
-		if(inputGroup.exists()) {
+		if(inputGroup.length !== 0) {
 			this.inputGroups[paramName] = inputGroup;
 		}
 	}
