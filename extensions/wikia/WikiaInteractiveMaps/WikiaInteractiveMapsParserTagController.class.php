@@ -5,6 +5,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const DEFAULT_WIDTH = 700;
 	const DEFAULT_HEIGHT = 200;
 	const PARSER_TAG_NAME = 'imap';
+	const RENDER_ENTRY_POINT = 'render';
 
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
@@ -29,7 +30,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
 		$errorMessage = '';
-		$params = $this->sanitizeMapPlaceholderParams( $args );
+		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
 		if( !$isValid ) {
@@ -63,14 +64,19 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 * @return null|string
 	 */
 	public function mapThumbnail() {
+		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+		$mapId = $this->getVal( 'id' );
 		$map = $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
-			[ 'id' => $this->getVal( 'map-id' ) ]
+			[ 'id' => $mapId ]
 		);
+		$map->url = $mapsModel->getMapRenderUrl( [
+			$mapId . '/' . $params->zoom . '/' . $params->lat . '/' . $params->lon,
+		] );
 
 		$this->setVal( 'map', (object) $map );
-		$this->setVal( 'params', $this->getMapPlaceholderParams() );
+		$this->setVal( 'params', $params );
 		$this->setVal( 'mapPageUrl', '#' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -85,7 +91,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = [];
 
 		$params[ 'lat' ] = $this->request->getVal( 'lat', 0 );
-		$params[ 'long' ] = $this->request->getVal( 'long', 0 );
+		$params[ 'lon' ] = $this->request->getVal( 'lon', 0 );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
 		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
 		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
@@ -103,12 +109,12 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 *
 	 * @return Array
 	 */
-	public function sanitizeMapPlaceholderParams( $data ) {
+	public function sanitizeParserTagArguments( $data ) {
 		$result = [];
 		$validParams = [
 			'map-id' => 'id',
 			'lat' => 'lat',
-			'long' => 'long',
+			'lon' => 'lon',
 			'zoom' => 'zoom',
 			'width' => 'width',
 			'height' => 'height',
@@ -135,7 +141,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$isValid = false;
 
 		if( empty( $params ) ) {
-			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->escaped();
+			$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-require-parameters' )->plain();
 			return $isValid;
 		}
 
@@ -196,7 +202,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude' ]
 				);
 				break;
-			case 'long':
+			case 'lon':
 				$validator = new WikiaValidatorNumeric(
 					[],
 					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude' ]
