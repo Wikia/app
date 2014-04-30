@@ -353,8 +353,12 @@ class CreateWiki {
 		}
 		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
 		$job_params->sDbStarter = $this->sDbStarter;
-		$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
-		$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+
+		if (!TaskExecutors::isModern('CreateWikiLocalJob')) {
+			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
+			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 
 		/**
@@ -439,21 +443,33 @@ class CreateWiki {
 		$wgUser = $oldUser;
 		unset($oldUser);
 
-		/**
-		 * inform task manager
-		 */
-		$Task = new LocalMaintenanceTask();
-		$Task->createTask(
-			array(
-				"city_id" => $this->mNewWiki->city_id,
-				"command" => "maintenance/runJobs.php",
-				"type"    => "CWLocal",
-				"data"    => $this->mNewWiki,
-				"server"  => rtrim( $this->mNewWiki->url, "/" )
-			),
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
+		if (TaskExecutors::isModern('CreateWikiLocalJob')) {
+			$creationTask = new CreateNewWikiTask();
+
+			(new \Wikia\Tasks\AsyncTaskList())
+				->wikiId($this->mNewWiki->city_id)
+				->prioritize()
+				->add($creationTask->call('postCreationSetup', $job_params))
+				->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
+				->queue();
+		} else {
+			/**
+			 * inform task manager
+			 */
+			$Task = new LocalMaintenanceTask();
+			$Task->createTask(
+				array(
+					"city_id" => $this->mNewWiki->city_id,
+					"command" => "maintenance/runJobs.php",
+					"type"    => "CWLocal",
+					"data"    => $this->mNewWiki,
+					"server"  => rtrim( $this->mNewWiki->url, "/" )
+				),
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
+			);
+		}
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 
 		wfProfileOut( __METHOD__ );

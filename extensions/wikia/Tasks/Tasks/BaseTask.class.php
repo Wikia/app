@@ -174,7 +174,8 @@ abstract class BaseTask {
 			]
 		];
 
-		foreach ($mirror->getProperties() as $property) {
+		$propertyMask = \ReflectionProperty::IS_PROTECTED | \ReflectionProperty::IS_PUBLIC;
+		foreach ($mirror->getProperties($propertyMask) as $property) {
 			if ($property->class == 'Wikia\\Tasks\\Tasks\\BaseTask') {
 				continue;
 			}

@@ -35,6 +35,7 @@ class TaskExecutors {
 		'BlogTask',
 		'ParsoidCacheUpdateJob',
 		'CreatePdfThumbnailsJob',
+		'CreateWikiLocalJob',
 	];
 
 	static function isLegacy($taskName) {
