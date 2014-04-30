@@ -6,12 +6,12 @@
 <ul class="map-list">
 {{#maps}}
 	<li>
-		{{^status}}<a href="#">{{/status}}
-			{{#status}}<div class="map-status">{{status}}</div>{{/status}}
+		{{#done}}<a href="{{base_url}}/{{id}}">{{/done}}
+			{{^done}}<div class="map-status">{{status_message}}</div>{{/done}}
 			<img src="{{image}}" alt="{{title}}" height="{{map_height}}" width="{{map_width}}"/>
 			<h3>{{title}}</h3>
 			<p>{{updated_on}}</p>
-		{{^status}}</a>{{/status}}
+		{{#done}}</a>{{/done}}
 	</li>
 {{/maps}}
 </ul>

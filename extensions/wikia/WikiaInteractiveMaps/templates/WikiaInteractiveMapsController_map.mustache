@@ -1,0 +1,7 @@
+<h2>{{title}}</h2>
+{{#map_found}}
+<iframe src="{{url}}" name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}"></iframe>
+{{/map_found}}
+{{^map_found}}
+    <p>{{messages.wikia-interactive-maps-map-not-found-error}}</p>
+{{/map_found}}
