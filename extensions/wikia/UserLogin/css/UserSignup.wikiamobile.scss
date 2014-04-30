@@ -37,7 +37,7 @@ fieldset {
 .success {
 	input {
 		background: {
-			image: url(/extensions/wikia/UserLogin/images/check.png); /* base64 */
+			image: url('/extensions/wikia/UserLogin/images/check.png'); /* base64 */
 			position: center right;
 			size: 14px 10px;
 			repeat: no-repeat;
@@ -85,3 +85,10 @@ input[type=submit] {
 	}
 }
 
+//ToDo: appropriate styles for confirmation login page
+.UserConfirm {
+	.subheading {
+		font-size: 0.8rem;
+		margin-top: 0;
+	}
+}
