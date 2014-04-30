@@ -29,9 +29,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
 		if ( is_numeric( $this->getPar() ) ) {
-			$this->forward('WikiaInteractiveMaps', 'map' );
+			$this->forward( 'WikiaInteractiveMaps', 'map' );
 		} else {
-			$this->forward('WikiaInteractiveMaps', 'main' );
+			$this->forward( 'WikiaInteractiveMaps', 'main' );
 		}
 	}
 
