@@ -2,7 +2,7 @@
 class WikiaInteractiveMapsHooks {
 
 	/**
-	 * @desc Adds the JS asset to the bottom scripts
+	 * @brief Adds the JS asset to the bottom scripts
 	 *
 	 * @param $skin
 	 * @param String $text
