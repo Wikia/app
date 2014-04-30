@@ -96,7 +96,9 @@ if (cluster.isMaster) {
 
 	io.configure(function () {
 		io.set('flash policy port', config.FLASH_POLICY_PORT );
-		io.set('transports', [ 'websocket', 'xhr-polling' ]);
+		io.set('transports', [ 'xhr-polling' ]);
+		// TODO: get websocket working again
+		// io.set('transports', [ 'websocket', 'xhr-polling' ]);
 		io.set('log level', loggerModule.getSocketIOLogLevel());
 		io.set('authorization', authConnection );
 		io.set('store', redisStore);
