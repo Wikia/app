@@ -85,3 +85,22 @@ ve.ui.WikiaMetaDialogTool.static.icon = 'settings';
 ve.ui.WikiaMetaDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialog-meta-settings-label' );
 ve.ui.toolFactory.register( ve.ui.WikiaMetaDialogTool );
+
+/**
+ * UserInterface WikiaCommandHelpDialogTool tool.
+ *
+ * @class
+ * @extends ve.ui.MWCommandHelpDialogTool
+ * @constructor
+ * @param {OO.ui.Toolbar} toolbar
+ * @param {Object} [config] Configuration options
+ */
+ve.ui.WikiaCommandHelpDialogTool = function VeUiWikiaCommandHelpDialogTool( toolbar, config ) {
+	ve.ui.MWCommandHelpDialogTool.call( this, toolbar, config );
+};
+OO.inheritClass( ve.ui.WikiaCommandHelpDialogTool, ve.ui.MWCommandHelpDialogTool );
+ve.ui.WikiaCommandHelpDialogTool.static.name = 'wikiaCommandHelp';
+ve.ui.WikiaCommandHelpDialogTool.static.icon = 'keyboard';
+ve.ui.WikiaCommandHelpDialogTool.static.title =
+	OO.ui.deferMsg( 'visualeditor-dialog-command-help-title' );
+ve.ui.toolFactory.register( ve.ui.WikiaCommandHelpDialogTool );
