@@ -6,6 +6,15 @@
  *
  */
 class Optimizely {
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		global $wgNoExternals;
+
+		if ( empty( $wgNoExternals ) ) {
+			$jsStaticPackages[] = 'optimizely_blocking_js';
+		}
+
+		return true;
+	}
 
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		global $wgNoExternals;
