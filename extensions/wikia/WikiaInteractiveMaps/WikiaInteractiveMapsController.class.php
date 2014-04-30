@@ -35,6 +35,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * @desc Main Special:InteractiveMaps page
+	 */
 	public function main() {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$params = [
@@ -60,6 +63,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	/**
+	 * @desc Single map page
+	 */
 	public function map() {
 		$mapId = (int)$this->getPar();
 		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
