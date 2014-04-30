@@ -7,7 +7,11 @@
 }
 
 //make bigger inputs for finger
-input {
+input,
+input[type=button],
+input[type=submit],
+input[type=reset],
+button {
 	height: 30px;
 }
 
@@ -17,9 +21,7 @@ select {
 
 .AccountNavigation .UserLoginDropdown .WikiaForm {
 	input[type=text],
-	input[type=password],
-	input[type=button],
-	input[type=submit] {
+	input[type=password] {
 		height: 30px;
 	}
 }
