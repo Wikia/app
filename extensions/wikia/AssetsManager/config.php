@@ -1764,3 +1764,11 @@ $config['qualaroo_blocking_js'] = array(
 		'//extensions/wikia/Qualaroo/scripts/QualarooBlocking.js',
 	)
 );
+
+/** Optimizely Blocking **/
+$config['optimizely_blocking_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
+	)
+);
