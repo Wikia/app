@@ -234,7 +234,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			// is implemented in ve.ce.WikiaBlockMediaNode.prototype.rebuild
 			// @see https://bugzilla.wikimedia.org/show_bug.cgi?id=54479
 			$mock.append( media.html.block.caption );
-			+
+
 			$figcaption = $mock.find( 'figcaption' );
 			$caption = $figcaption.find( '.caption' );
 
