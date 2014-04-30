@@ -21,4 +21,3 @@ $wgAutoloadClasses['Optimizely'] =  $dir . 'Optimizely.class.php';
 // hooks
 $wgHooks['WikiaSkinTopScripts'][] = 'Optimizely::onWikiaSkinTopScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'Optimizely::onOasisSkinAssetGroupsBlocking';
-$wgHooks['WikiaMobileAssetsPackages'][] = 'Optimizely::onWikiaMobileAssetsPackages';

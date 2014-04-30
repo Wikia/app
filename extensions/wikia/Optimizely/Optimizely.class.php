@@ -6,16 +6,6 @@
  *
  */
 class Optimizely {
-	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
-		global $wgNoExternals;
-
-		if ( empty( $wgNoExternals ) ) {
-			$jsStaticPackages[] = 'optimizely_blocking_js';
-		}
-
-		return true;
-	}
-
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		global $wgNoExternals;
 
@@ -26,8 +16,15 @@ class Optimizely {
 		return true;
 	}
 
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
+
+		// load optimizely_blocking_js on wikiamobile
+		if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
+			foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
+				$scripts .= '<script src="' . $script . '"></script>';
+			}
+		}
 
 		$scripts .= '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
 
