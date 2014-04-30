@@ -34,6 +34,7 @@ class TaskExecutors {
 		'BloglistDeferredPurgeJob',
 		'BlogTask',
 		'ParsoidCacheUpdateJob',
+		'CreatePdfThumbnailsJob',
 	];
 
 	static function isLegacy($taskName) {

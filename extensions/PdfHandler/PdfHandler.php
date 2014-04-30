@@ -49,6 +49,7 @@ $wgPdfHandlerDpi = 150;
 // This setting, if enabled, will put creating thumbnails into a job queue,
 // so they do not have to be created on-the-fly,
 // but rather inconspicuously during normal wiki browsing
+// if setting to true, make sure to migrate CreatePdfThumbnailsJob to PdfHandlerTask!
 $wgPdfCreateThumbnailsInJobQueue = false;
 
 // To upload new PDF files you'll need to do this too:
@@ -59,12 +60,21 @@ $wgExtensionMessagesFiles['PdfHandler'] = $dir . 'PdfHandler.i18n.php';
 $wgAutoloadClasses['PdfImage'] = $dir . 'PdfHandler.image.php';
 $wgAutoloadClasses['PdfHandler'] = $dir . 'PdfHandler_body.php';
 $wgAutoloadClasses['CreatePdfThumbnailsJob'] = $dir . 'CreatePdfThumbnailsJob.class.php';
+$wgAutoloadClasses['PdfHandlerTask'] = $dir . 'PdfHandlerTask.class.php';
 $wgMediaHandlers['application/pdf'] = 'PdfHandler';
 $wgJobClasses['createPdfThumbnailsJob'] = 'CreatePdfThumbnailsJob';
 $wgHooks['UploadVerifyFile'][] = function($upload, $mime, &$error) {
+	global $wgPdfCreateThumbnailsInJobQueue;
+	if ( !$wgPdfCreateThumbnailsInJobQueue ) {
+		return true;
+	}
+	if (!MimeMagic::singleton()->isMatchingExtension('pdf', $mime)) {
+		return true; // not a PDF, abort
+	}
+
 	if (TaskExecutors::isModern('CreatePdfThumbnailsJob')) {
-		PdfHandlerTask::onUploadVerifyFile($upload, $mime, $error);
+		return PdfHandlerTask::onUploadVerifyFile($upload, $mime, $error);
 	} else {
-		CreatePdfThumbnailsJob::insertJobs($upload, $mime, $error);
+		return CreatePdfThumbnailsJob::insertJobs($upload, $mime, $error);
 	}
 };
