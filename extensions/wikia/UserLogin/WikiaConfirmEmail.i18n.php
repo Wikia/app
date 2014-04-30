@@ -318,12 +318,15 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  */
 $messages['pt'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',
 	'wikiaconfirmemail-error-invalid-code' => 'Código de confirmação inválido',
+	'wikiaconfirmemail-login-button' => 'Confirmar e iniciar sessão',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
+	'wikiaconfirmemail-subheading' => 'Inicie sessão com o seu nome de utilizador e palavra-chave para que nós saibamos que recebeu o e-mail.',
 	'wikiaconfirmemail-username' => 'Nome de utilizador',
 );
 

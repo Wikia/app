@@ -547,7 +547,7 @@ $messages['ps'] = array(
 	'category-exhibition-page-header' => 'د "$1" وېشنيزې مخونه',
 	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
 	'category-exhibition-media-header' => 'د "$1" وېشنيزې رسنۍ',
-	'category-exhibition-blogs-header' => 'د بلاګ پوستونه',
+	'category-exhibition-blogs-header' => 'د بلاگ پوستونه',
 	'category-exhibition-display-old' => 'د وېشنيزې لړليک کتل',
 );
 

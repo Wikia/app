@@ -2,19 +2,21 @@
 
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\Services\TvSearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\EpisodeEntitySearchService;
+
 
 class TvApiController extends WikiaApiController {
 
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
-	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/** @var Array wikis */
 	protected $wikis = [];
-	/** @var TvSearchService tvService */
-	protected $tvService;
+	/** @var SeriesEntitySearchService seriesService */
+	protected $seriesService;
+	/** @var EpisodeEntitySearchService episodeService */
+	protected $episodeService;
 
 	public function getEpisode() {
 		$request = $this->getRequest();
@@ -27,35 +29,32 @@ class TvApiController extends WikiaApiController {
 		}
 
 		$result = $this->findEpisode( $seriesName, $episodeName, $lang, $minQuality );
-		$output = $this->createOutput( $result );
 
 		$response = $this->getResponse();
-		$response->setValues( $output );
+		$response->setValues( $result );
 
 		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
 	}
 
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
-	}
-
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
-		$tvs = $this->getTvSearchService();
-		$wikis = $tvs->queryXWiki( $seriesName, $lang );
+		$seriesService = $this->getSeriesService();
+		$seriesService->setLang( $lang )
+			->setQuality( $quality );
+		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
+			$episodeService = $this->getEpisodeService();
+			$episodeService->setLang( $lang )
+				->setQuality( $quality );
 			$result = null;
 			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $wiki['id'], $lang, $quality );
+				$episodeService->setWikiId( $wiki['id'] );
+				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki['id'] );
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
-						return [ 'wiki' => $wiki, 'article' => $result ];
+						return $result;
 					}
 				}
 			}
@@ -64,11 +63,18 @@ class TvApiController extends WikiaApiController {
 		throw new NotFoundApiException();
 	}
 
-	protected function getTvSearchService() {
-		if ( !isset( $this->tvService ) ) {
-			$this->tvService = new TvSearchService();
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
 		}
-		return $this->tvService;
+		return $this->seriesService;
+	}
+
+	protected function getEpisodeService() {
+		if ( !isset( $this->episodeService ) ) {
+			$this->episodeService = new EpisodeEntitySearchService();
+		}
+		return $this->episodeService;
 	}
 
 	protected function getTitle( $text, $wikiId ) {
@@ -123,23 +129,5 @@ class TvApiController extends WikiaApiController {
 			->setPageId( (int)$articleId )
 			->setNamespaces( [ static::NAMESPACE_SETTING ] );
 		return $searchConfig;
-	}
-
-	protected function createOutput( $data ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-
-		$result = array_merge( [ 'wikiId' => (int) $data['wiki']['id'] ], $data['article'] );
-		$result[ 'contentUrl' ] = $data['wiki']['url'] . self::API_URL . $data['article'][ 'articleId' ];
-
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$result[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "contentUrl" ] );
-			$result[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "url" ] );
-		}
-
-		return $result;
-	}
-
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 }

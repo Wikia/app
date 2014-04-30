@@ -749,6 +749,29 @@ $messages['hi'] = array(
 	'comboajaxlogin-connectmarketing-forward' => 'आरंभ करें»',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'comboajaxlogin-desc' => 'Dynamisch Box, wos Benutzer ermöchliche tut, sich oonzumelle, Passwörter zu merke und Benutzer zu registriere',
+	'comboajaxlogin-createlog' => 'Benutzerkonto',
+	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführe, musst du dich zuerst oonmelle orrer en Benutzerkonto erstelle',
+	'comboajaxlogin-actionmsg-protected' => 'Um die geschützte Seit zu beoorbeite, musst du dich zunächst oonmelle orrer en Benutzerkonto oonlehn.',
+	'comboajaxlogin-connectmarketing' => '<h1>Verbindt deine Kontos</h1>
+<ul>
+<li>Behall dein aktuell Benutzernoome, Versionsgeschicht, Beoorbeitunge... ännert sich nixs, ausser, wie du in </li> einlogge <li>Teile deine Aktivitäte uff Wikia mit dein Freinde uff Facebook</li>
+<li>komplett Kontroll dodrüwer, was veröffentlicht/publiziert weard.</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mit Facebook Connect oonmelde</h1>',
+	'comboajaxlogin-connectmarketing-back' => '« Zurück',
+	'comboajaxlogin-connectmarketing-forward' => 'Fänge jetzt an »',
+	'comboajaxlogin-connectdirections' => 'Geb dein Wikia-Benutzernoome und das Passwort hie ren - mir tun dann dein Wikia- und Facebook-Benutzerkonto im Hinnergrund verknüpfe.
+
+Sobald du fertich bist, kannst du dich enfach üwer den Facebook-Connect-Knopf oonmelde.',
+	'comboajaxlogin-post-not-understood' => 'Es gab en Fehler beim uffbau von dem Formular.
+Bittschön versuch das wieder erneit orrer [[Special:Contact|meld es]].',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author TK-999

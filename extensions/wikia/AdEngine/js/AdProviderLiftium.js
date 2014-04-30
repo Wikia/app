@@ -1,10 +1,15 @@
-/*exported AdProviderLiftium*/
+/*global define, Liftium*/
 /*jshint maxparams:false*/
-
-var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWriter, window) {
+define('ext.wikia.adEngine.provider.liftium', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, window, document, scriptWriter, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'AdProviderLiftium',
+	var logGroup = 'ext.wikia.adEngine.provider.liftium',
 		adNum = 200, // TODO global-ize it (move to Liftium?)!
 		slotMap,
 		canHandleSlot,
@@ -110,4 +115,4 @@ var AdProviderLiftium = function (log, document, slotTweaker, Liftium, scriptWri
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
-};
+});

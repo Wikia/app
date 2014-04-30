@@ -51,6 +51,10 @@ class AnalyticsEngine {
 				return new AnalyticsProviderIVW2();
 			case 'BlueKai':
 				return new AnalyticsProviderBlueKai();
+			case 'Datonics':
+				return new AnalyticsProviderDatonics();
+			case 'ClarityRay':
+				return new AnalyticsProviderClarityRay();
 		}
 
 		return null;

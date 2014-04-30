@@ -1,8 +1,10 @@
-/*exported AdDecoratorPageDimensions*/
-var AdDecoratorPageDimensions = function (adLogicPageDimensions, log) {
+/*global define*/
+define('ext.wikia.adEngine.adDecoratorPageDimensions', [
+	'ext.wikia.adEngine.adLogicPageDimensions', 'wikia.log'
+], function (adLogicPageDimensions, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.decorator.shortpage';
+	var logGroup = 'ext.wikia.adEngine.adDecoratorPageDimensions';
 
 	/**
 	 * fillInSlot decorator. Returns function to call instead.
@@ -32,4 +34,4 @@ var AdDecoratorPageDimensions = function (adLogicPageDimensions, log) {
 	}
 
 	return decorator;
-};
+});

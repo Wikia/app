@@ -1,30 +1,35 @@
-// Relies on AdLogicPageLevelParams, DartUrl
-
-var WikiaDartMobileHelper = function (log, window, adLogicPageLevelParams, dartUrl) {
+/*global define*/
+define('ext.wikia.adEngine.wikiaDartMobileHelper', [
+	'wikia.log',
+	'wikia.window',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.dartUrl',
+	'wikia.abTest'
+], function (log, window, adLogicPageParams, dartUrl, abTest) {
 	'use strict';
 
-	var logGroup = 'WikiaDartMobileHelper',
-		features = window.Features, // TODO: AMD
+	var logGroup = 'ext.wikia.adEngine.wikiaDartMobileHelper',
+		features = window.Features || {},
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 0,
 		categoryStrMaxLength = 300,
 		experiments,
 		experimentsNumber,
-		i = 0,
+		i,
 		ab = [];
 
-	if (window.Wikia && window.Wikia.AbTest) {
-		experiments = window.Wikia.AbTest.getExperiments();
+	if (abTest) {
+		experiments = abTest.getExperiments();
 		experimentsNumber = experiments.length;
 
-		for (; i < experimentsNumber; i += 1) {
+		for (i = 0; i < experimentsNumber; i += 1) {
 			ab.push(experiments[i].id + '_' + experiments[i].group.id);
 		}
 	}
 
 	function getMobileUrl(params) {
 		var slotname = params.slotname,
-			pageParams = adLogicPageLevelParams.getPageLevelParams(),
+			pageParams = adLogicPageParams.getPageLevelParams(),
 			url = dartUrl.urlBuilder(
 				'ad.mo.doubleclick.net',
 				'DARTProxy/mobile.handler?k=wka.' + pageParams.s0 + '/' + pageParams.s1 + '/' + pageParams.s2
@@ -83,11 +88,4 @@ var WikiaDartMobileHelper = function (log, window, adLogicPageLevelParams, dartU
 		 */
 		getMobileUrl: getMobileUrl
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('wikia.dartmobilehelper', ['wikia.log', 'wikia.window', 'wikia.adlogicpageparams', 'wikia.darturl'], WikiaDartMobileHelper);
-	}
-}(this));
+});

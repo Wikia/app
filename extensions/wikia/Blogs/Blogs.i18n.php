@@ -2236,6 +2236,57 @@ $messages['he'] = array(
 	'blog-by' => '$1 על ידי $2',
 );
 
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'createblogpage' => 'Blog oonlehn',
+	'createbloglistingpage' => 'Erstell Blog-Aggregationsseit',
+	'create-blog-spam' => 'Sieht aus wie Spam',
+	'create-blog-cant-edit' => 'Konnt Beoorbeitung net doorrichführe',
+	'create-blog-post-category' => 'Blogbeiträche',
+	'create-blog-post-recent-listing' => 'Letzte Beiträge',
+	'create-blog-post-recent-listing-title' => 'Letzte Beiträge',
+	'create-blog-form-post-title' => 'Der Beitrooch sein Titel',
+	'create-blog-empty-title-error' => 'Titel erforderlich',
+	'create-blog-invalid-title-error' => 'Ungülticher Titel',
+	'create-listing-confirm-info' => 'Kopier den follichende Code:',
+	'create-blog-categories-submit' => 'Hinzufüche',
+	'create-blog-save' => 'Eintrooch speichre',
+	'create-blog-preview' => 'Vorschau',
+	'create-blog-updated' => 'Blogbeitrooch erstellt orrer aktualisiert.',
+	'create-blog-permission-denied' => 'Fehler beim Speichre von der Blog-Seit: Erlaubnis verweichert',
+	'create-blog-listing-preview' => 'Vorschau',
+	'create-blog-listing-matches' => 'Treffer',
+	'create-blog-listing-matches-calculate' => 'Berechne',
+	'create-blog-listing-matches-recalculate' => 'Erneit berechne',
+	'create-blog-listing-sortby' => 'Sortiere noh',
+	'create-blog-listing-sortby-date' => 'Neiest',
+	'create-blog-listing-sortby-author' => 'Verfasser',
+	'create-blog-listing-sortby-comments' => 'Kommentarzähler',
+	'create-blog-listing-output-as-box' => 'Code zum Einfüche generiere',
+	'create-blog-listing-output-as-page' => 'Neie Blog-Aggregationsseit erstelle',
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog-Listier Tag uff der Seit net gefund',
+	'blog-header' => 'Blogbeiträche in der Kategorie "$1"',
+	'blog-defaulttitle' => 'Blogs',
+	'blog-continuereading' => 'Weiterlese &raquo;',
+	'blog-readfullpost' => 'Mehr lese',
+	'blog-olderposts' => 'Ältre Beiträge',
+	'blog-newerposts' => 'Neiere Beiträge',
+	'blog-writeone' => 'Schreib en!',
+	'blog-added' => 'hinzugefücht',
+	'blog-edited' => 'beoorbeitet',
+	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'Noch ken Kommentare!',
+	'blog-comment-post' => 'Kommentiere',
+	'blog-comments' => 'Kommentare',
+	'blog-rc-comments' => 'Blog-Kommentare',
+	'blog-comments-new' => 'Neier Blog-Kommentar',
+	'blog-voting-label' => 'Bewertung',
+	'blog-comment-delete' => 'abwische',
+	'blog-comment-hide' => 'verberriche',
+);
+
 /** Hungarian (magyar)
  * @author Dani
  * @author Glanthor Reviol
@@ -2861,8 +2912,10 @@ $messages['ja'] = array(
 /** Georgian (ქართული)
  * @author DevaMK
  * @author GeorgeBarnick
+ * @author Otogi
  */
 $messages['ka'] = array(
+	'create-blog-categories-textinput' => 'ახალი კატეგორიის დამატება',
 	'create-blog-categories-submit' => 'მიღება',
 	'create-blog-listing-preview' => 'წინასწარ',
 	'create-blog-listing-sortby' => 'სორტირება',
@@ -3004,6 +3057,14 @@ $messages['ko'] = array(
 	'blog-comment-sending' => '전송 중..',
 );
 
+/** Karachay-Balkar (къарачай-малкъар)
+ * @author Iltever
+ */
+$messages['krc'] = array(
+	'blog-comments-anonymous' => 'Аноним',
+	'blog-refresh-label' => 'Джангырт',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -3090,6 +3151,7 @@ $messages['lb'] = array(
 );
 
 /** لوری (لوری)
+ * @author Bonevarluri
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3097,10 +3159,12 @@ $messages['lrc'] = array(
 	'create-blog-save' => 'بلگه ضبط بوئه',
 	'create-blog-preview' => 'پيش سیل  نشون بيئه',
 	'create-blog-listing-preview' => 'پيش سيل',
+	'create-blog-listing-matches' => 'یکی بیین',
 	'create-blog-listing-matches-calculate' => 'حساوکردن',
 	'create-blog-listing-sortby' => 'جور كردن وا',
 	'create-blog-listing-sortby-author' => 'نيسنه',
 	'create-blog-listing-sortby-comments' => 'نظر اشمار',
+	'blog-writeone' => 'یکی بنیسید!',
 	'blog-added' => 'اضاف بیه',
 	'blog-edited' => 'ویرایشت بیه',
 	'blog-zero-comments' => 'هیش نظری تا ایسه نی!',
@@ -3862,19 +3926,28 @@ $messages['oc'] = array(
 	'create-blog-spam' => "Sembla qu'es un corrièr indesirable",
 	'create-blog-cant-edit' => "Impossible d'efectuar la modificacion",
 	'create-blog-post-category' => 'Article de blog',
+	'create-blog-post-category-log' => 'Categoria creada pels bilhets de blog',
 	'create-blog-post-recent-listing' => 'Bilhets recents',
 	'create-blog-post-recent-listing-title' => 'Bilhets recents',
+	'create-blog-post-recent-listing-log' => 'Article creat pels bilhets de blog recents',
+	'create-blog-post-title' => 'Crear un novèl bilhet de blog',
+	'create-blog-post-title-edit' => 'Modificar un bilhet de blog',
+	'create-blog-form-title' => 'Qu’es aquò un bilhet de blog ?',
 	'create-blog-form-post-text' => 'Tèxte del blog',
 	'create-blog-form-post-title' => 'Títol del bilhet de blog',
 	'create-blog-empty-title-error' => 'Títol requesit',
 	'create-blog-empty-post-error' => 'Lo còs del bilhet es void',
+	'create-blog-empty-article-log' => 'Article creat per lista de blogs',
 	'create-blog-invalid-title-error' => 'Títol invalid',
 	'create-listing-confirm-info' => 'Copiatz e pegatz lo còde seguent :',
 	'create-blog-no-login' => 'Pas connectat',
+	'create-blog-categories-textinput' => 'Apondre una categoria novèla',
 	'create-blog-categories-submit' => 'Mandar',
 	'create-blog-save' => 'Publicar la pagina',
 	'create-blog-preview' => 'Afichar la previsualizacion',
 	'create-blog-updated' => 'Bilhet de blog creat o mes a jorn.',
+	'create-blog-listing-title' => 'Crear una novèla pagina de lista de blogs',
+	'create-blog-listing-page-title' => 'Títol de la pagina de lista de blogs',
 	'create-blog-listing-preview' => 'Previsualizar',
 	'create-blog-listing-matches' => 'Correspondéncias',
 	'create-blog-listing-matches-calculate' => 'Calcular',
@@ -3883,7 +3956,9 @@ $messages['oc'] = array(
 	'create-blog-listing-sortby-date' => 'Mai recents',
 	'create-blog-listing-sortby-author' => 'Autor',
 	'create-blog-listing-sortby-comments' => 'Nombre de comentaris',
+	'blog-emptyparam' => 'Lo nom del paramètre pòt pas èsser void',
 	'blog-defaulttitle' => 'Blogs',
+	'blog-continuereading' => 'Contunhar la lectura &raquo;',
 	'blog-readfullpost' => 'Legir la seguida',
 	'blog-olderposts' => 'Bilhets mai ancians',
 	'blog-newerposts' => 'Bilhets mai recents',
@@ -3928,6 +4003,7 @@ $messages['oc'] = array(
 	'blog-comment-sending' => 'Mandadís en cors ...',
 	'blog-by' => '$1 per $2',
 	'blogs-searchprofile' => 'Blogs',
+	'blogs-searchprofile-tooltip' => 'Recercar dins los articles e las listas de blog',
 	'user-blog-url-link' => 'Blog utilizaire : $1',
 );
 
@@ -4206,15 +4282,15 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'createblogpage' => 'بلاګ جوړول',
-	'create-blog-post-category' => 'د بلاګ پوستونه',
+	'createblogpage' => 'بلاگ جوړول',
+	'create-blog-post-category' => 'بلاگ پوستونه',
 	'create-blog-post-recent-listing' => 'وروستني يادښتونه',
 	'create-blog-post-recent-listing-title' => 'وروستني يادښتونه',
-	'create-blog-post-title' => 'يو نوی بلاګ يادښت جوړول',
-	'create-blog-post-title-edit' => 'بلاګ يادښت سمول',
-	'create-blog-form-title' => 'يو بلاګ يادښت څه دی؟',
-	'create-blog-form-post-text' => 'د بلاګ متن',
-	'create-blog-form-post-title' => 'د بلاګ ليکنې سرليک',
+	'create-blog-post-title' => 'يو نوی بلاگ يادښت جوړول',
+	'create-blog-post-title-edit' => 'بلاگ يادښت سمول',
+	'create-blog-form-title' => 'يو بلاگ يادښت څه دی؟',
+	'create-blog-form-post-text' => 'د بلاگ متن',
+	'create-blog-form-post-title' => 'د بلاگ ليکنې سرليک',
 	'create-blog-empty-title-error' => 'سرليک غواړي',
 	'create-blog-invalid-title-error' => 'ناسم سرليک',
 	'create-blog-categories-textinput' => 'يوه نوې وېشنيزه ورگډول',
@@ -4227,23 +4303,23 @@ $messages['ps'] = array(
 	'create-blog-listing-sortby-date' => 'تر ټولو وروستني',
 	'create-blog-listing-sortby-author' => 'ليکوال',
 	'create-blog-listing-sortby-comments' => 'د تبصرو شمېر',
-	'blog-defaulttitle' => 'بلاګونه',
+	'blog-defaulttitle' => 'بلاگونه',
 	'blog-readfullpost' => 'نور لوستل',
 	'blog-olderposts' => 'زاړه يادښتونه',
 	'blog-newerposts' => 'نوي يادښتونه',
 	'blog-nbrcomments' => '{{PLURAL:$1|يوه تبصره|$1 تبصرې}}',
 	'blog-nopostfound' => 'يادښتونه و نه موندل شول',
 	'blog-writeone' => 'يو متن ليکل!',
-	'blog-empty-user-blog' => 'دې کارن تر اوسه پورې بلاګ يادښتونه نه دي ليکلي!',
+	'blog-empty-user-blog' => 'دې کارن تر اوسه پورې بلاگ يادښتونه نه دي ليکلي!',
 	'blog-added' => 'ورگډ شو',
 	'blog-edited' => 'سم کړي',
-	'blog-page' => 'بلاګ',
+	'blog-page' => 'بلاگ',
 	'blog-zero-comments' => 'تر اوسه تبصرې نلري!',
 	'blog-comment-post' => 'تبصره کول',
 	'blog-comments' => 'تبصرې',
-	'blog-rc-comments' => 'د بلاګ تبصرې',
-	'blog-comments-new' => 'په بلاګ کې نوې تبصره',
-	'blog-comments-save' => 'په بلاګ کې تبصره خوندي کول',
+	'blog-rc-comments' => 'د بلاگ تبصرې',
+	'blog-comments-new' => 'په بلاگ کې نوې تبصره',
+	'blog-comments-save' => 'په بلاگ کې تبصره خوندي کول',
 	'blog-comments-label' => 'تبصره ليکنه',
 	'blog-voting-label' => 'رايه اچونه',
 	'blog-comments-login' => 'نظر ورکولو لپاره <a href="$1" rel="nofollow">غونډال ته ننوځۍ</a>',
@@ -4256,23 +4332,23 @@ $messages['ps'] = array(
 	'blog-comment-history' => 'پېښليک',
 	'blog-comment-edit' => 'سمول',
 	'blog-comment-error' => 'تبصره مو نه شي خوندي کېدلی',
-	'blog-comment-cannot-add' => 'تاسې بلاګ کې تبصره نشی ورګډولی.',
+	'blog-comment-cannot-add' => 'تاسې بلاگ کې تبصره نشی ورگډولی.',
 	'blog-page-rate' => 'دا ليکنه ارزول:',
-	'blog-create-post-label' => 'بلاګ يادښت جوړول',
-	'blog-create-label' => 'د بلاګ ليکنه ليکل',
-	'blog-create-next-label' => 'د بلاګ نوې ليکنه ليکل',
-	'blog-create-listing-label' => 'بلاګ لړليک جوړول',
+	'blog-create-post-label' => 'بلاگ يادښت جوړول',
+	'blog-create-label' => 'بلاگ ليکنه ليکل',
+	'blog-create-next-label' => 'د بلاگ نوې ليکنه ليکل',
+	'blog-create-listing-label' => 'بلاگ لړليک جوړول',
 	'blog-refresh-label' => 'بياتازه کول',
-	'blog-userblog' => 'د $1 بلاګ',
+	'blog-userblog' => 'د $1 بلاگ',
 	'blog-fromsitename' => 'د $1 لخوا',
-	'right-blog-articles-edit' => 'بلاګ ليکنې سمول',
-	'right-blog-articles-move' => 'بلاګ ليکنې لېږدول',
-	'blogs-recent-url-text' => 'وروستني بلاګ يادښتونه',
-	'blog-desc' => 'د بلاګ ليکنې',
+	'right-blog-articles-edit' => 'بلاگ ليکنې سمول',
+	'right-blog-articles-move' => 'بلاگ ليکنې لېږدول',
+	'blogs-recent-url-text' => 'وروستني بلاگ يادښتونه',
+	'blog-desc' => 'د بلاگ ليکنې',
 	'blog-comment-sending' => 'د لېږلو په حال کې ...',
 	'blog-by' => '$1 په مرسته د $2',
-	'blogs-searchprofile' => 'بلاګونه',
-	'user-blog-url-link' => 'کارن بلاګ:$1',
+	'blogs-searchprofile' => 'بلاگونه',
+	'user-blog-url-link' => 'کارن بلاگ:$1',
 );
 
 /** Portuguese (português)

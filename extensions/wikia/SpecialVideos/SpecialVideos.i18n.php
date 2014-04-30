@@ -26,10 +26,12 @@ $messages['en'] = array(
 	'specialvideos-meta-description-corporate' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
 	'specialvideos-remove-modal-title' => 'Delete video',
 	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
-
+	'specialvideos-no-videos' => 'Sorry, there are no videos on {{SITENAME}} yet, but you can add one from the desktop site.',
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
+	'specialvideos-btn-load-more' => 'Load More',
+	'specialvideos-posted-in-label' => 'Posted in',
 );
 
 $messages['qqq'] = array(
@@ -51,10 +53,13 @@ $messages['qqq'] = array(
 	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
+	'specialvideos-no-videos' => 'Message shown when there are no videos added to the wiki',
 
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
+	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked',
+	'specialvideos-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted. Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 );
 
 $messages['de'] = array(

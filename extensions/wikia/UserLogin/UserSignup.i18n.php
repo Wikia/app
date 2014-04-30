@@ -2373,6 +2373,7 @@ ___________________________________________
  */
 $messages['krc'] = array(
 	'usersignup-facebook-create-account' => 'Аккаунт къурау',
+	'usersignup-confirm-email-update' => 'Джангырт',
 );
 
 /** Macedonian (македонски)

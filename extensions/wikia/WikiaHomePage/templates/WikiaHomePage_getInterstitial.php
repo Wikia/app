@@ -4,12 +4,6 @@
 		<? if($wikiInfo['official'] == 1): ?>
 			<strong class="official"></strong>
 		<? endif; ?>
-		<? if($wikiInfo['hot'] == 1): ?>
-			<strong class="hot"><?= wfMsg('wikia-home-page-hot') ?></strong>
-		<? endif; ?>
-		<? if($wikiInfo['new'] == 1): ?>
-			<strong class="new"><?= wfMsg('wikia-home-page-new') ?></strong>
-		<? endif; ?>
 	</span>
 	<h1><?= htmlspecialchars($wikiInfo['name']) ?></h1>
 	<ul class="stats">

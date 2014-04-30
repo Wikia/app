@@ -7,6 +7,9 @@ $messages['en'] = array(
 	'adengine-exitstitial-redirecting' => 'Your browser will redirect you to the page you requested in a few seconds.',
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',
+	'adengine-ebay-title' => 'Ebay Products',
+	'adengine-ebay-empty' => 'No matching products',
+	'adengine-ebay-bid' => 'Buy',
 );
 
 /** Message documentation (Message documentation)
@@ -18,6 +21,9 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-redirecting' => 'Text displayed in the box showing up when you click on link to outside the wiki',
 	'adengine-exitstitial-go-back' => 'Text of the link/button that you can close the box with and get back to the content',
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
+	'adengine-ebay-title' => 'Text of title displaying with $wgAdDriverUseEbay = true in PREFOOTER',
+	'adengine-ebay-empty' => 'Text of when no matching products found on ebay',
+	'adengine-ebay-bid' => 'Text is shown after product price',
 );
 
 /** Arabic (العربية)
@@ -109,10 +115,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Metalhead64
+ * @author Perhelion
  */
 $messages['de'] = array(
 	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
-	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in einigen Sekunden auf die angeforderte Seite weiter.',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
 );
@@ -135,6 +142,9 @@ $messages['es'] = array(
 	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
 	'adengine-exitstitial-go-back' => '¿Quieres volver atrás?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
+	'adengine-ebay-title' => 'los productos de Ebay',
+	'adengine-ebay-empty' => 'No hay productos a juego',
+	'adengine-ebay-bid' => 'Comprar',
 );
 
 /** Estonian (eesti)
@@ -216,6 +226,16 @@ $messages['haw'] = array(
 	'adengine-exitstitial-redirecting' => 'E hāʻawi ana kāu polokalamu pūnaewele i ka ʻaoʻao āu  i noi ai ma kahi o kekahi mau kekona.',
 	'adengine-exitstitial-go-back' => 'Makemake e hoʻihoʻi?',
 	'adengine-exitstitial-button' => 'Lele i kēia Hoʻolaha Kūʻai',
+);
+
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'adengine-exitstitial-title-template' => 'Du verlässt $1 …',
+	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in weniche Sekunde uff die oongeforderte Seit weiter.',
+	'adengine-exitstitial-go-back' => 'Retuar gehn?',
+	'adengine-exitstitial-button' => 'Die Oonzeiche üwerspringe',
 );
 
 /** Hungarian (magyar)

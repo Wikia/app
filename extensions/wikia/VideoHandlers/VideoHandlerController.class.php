@@ -5,6 +5,10 @@
  */
 class VideoHandlerController extends WikiaController {
 
+	const VIDEO_LIMIT = 100;
+	const DEFAULT_THUMBNAIL_WIDTH = 250;
+	const DEFAULT_THUMBNAIL_HEIGHT = 250;
+
 	/**
 	 * Get the embed code for the title given by fileTitle
 	 *
@@ -16,35 +20,34 @@ class VideoHandlerController extends WikiaController {
 	 * @responseParam string|embedCode The HTML to embed on the page to play the video given by fileTitle
 	 */
 	public function getEmbedCode( ) {
-		$title = $this->getVal('fileTitle', '');
-		$width = $this->getVal('width', '');
+		$title = $this->getVal( 'fileTitle', '' );
+		$width = $this->getVal( 'width', '' );
 		$autoplay = $this->getVal( 'autoplay', false );
 
 		$error = '';
-		if ( empty($title) ) {
-			$error = wfMessage('videohandler-error-missing-parameter', 'title')->inContentLanguage()->text();
+		if ( empty( $title ) ) {
+			$error = wfMessage( 'videohandler-error-missing-parameter', 'title' )->inContentLanguage()->text();
 		} else {
-			if ( empty($width) ) {
-				$error = wfMessage('videohandler-error-missing-parameter', 'width')->inContentLanguage()->text();
-			}
-			else {
-				$title = Title::newFromText($title, NS_FILE);
-				$file = ($title instanceof Title) ? wfFindFile($title) : false;
+			if ( empty( $width ) ) {
+				$error = wfMessage( 'videohandler-error-missing-parameter', 'width' )->inContentLanguage()->text();
+			} else {
+				$title = Title::newFromText( $title, NS_FILE );
+				$file = ( $title instanceof Title ) ? wfFindFile( $title ) : false;
 				if ( $file === false ) {
-					$error = wfMessage('videohandler-error-video-no-exist')->inContentLanguage()->text();
+					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
 					$assetUrl = $file->getPlayerAssetUrl();
-					$embedCode = $file->getEmbedCode($width, $autoplay, true);
-					$this->setVal('videoId', $videoId);
-					$this->setVal('asset', $assetUrl);
-					$this->setVal('embedCode', $embedCode);
+					$embedCode = $file->getEmbedCode( $width, $autoplay, true );
+					$this->setVal( 'videoId', $videoId );
+					$this->setVal( 'asset', $assetUrl );
+					$this->setVal( 'embedCode', $embedCode );
 				}
 			}
 		}
 
-		if ( !empty($error) ) {
-			$this->setVal('error', $error);
+		if ( !empty( $error ) ) {
+			$this->setVal( 'error', $error );
 		}
 	}
 
@@ -84,14 +87,14 @@ class VideoHandlerController extends WikiaController {
 
 		$prefix = '';
 		if ( strpos( $sTitle, ':' ) === 0 ) {
-			$sTitle = substr( $sTitle, 1);
+			$sTitle = substr( $sTitle, 1 );
 			$prefix = ':';
 		}
 		if ( empty( $sTitle ) ) {
 			$this->setVal( 'error', 1 );
 		}
 
-		$sTitle = VideoFileUploader::sanitizeTitle($sTitle, '_');
+		$sTitle = VideoFileUploader::sanitizeTitle( $sTitle, '_' );
 
 		$this->setVal(
 			'result',
@@ -244,20 +247,16 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
 	 * @requestParam array|string fileTitle - The title of the file to get details for
-	 * @requestParam int thumbWidth - The width of the video thumbnail to return
-	 * @requestParam int thumbHeight - The height of the video thumbnail to return
+	 * @requestParam array videoOptions
+	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
-	 * @requestParam bool getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @responseParam array detail - The video details
 	 */
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$thumbWidth = $this->getVal( 'thumbWidth', '250' );
-		$thumbHeight = $this->getVal( 'thumbHeight', '250' );
-		$articleLimit = $this->getVal( 'articleLimit', '10' );
-		$getThumb = $this->getVal( 'getThumb', false );
+		$videoOptions = $this->getVal( 'videoOptions', array() );
 
 		if ( is_string( $fileTitle ) ) {
 			$singleFile = true;
@@ -267,17 +266,18 @@ class VideoHandlerController extends WikiaController {
 			$fileTitles = $fileTitle;
 		}
 
+		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
+			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
+		}
+
+		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
+			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
+		}
+
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail(
-				[ 'title' => $fileTitle ],
-				$thumbWidth,
-				$thumbHeight,
-				$articleLimit,
-				$getThumb
-			);
-
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
 			if ( !empty( $detail ) ) {
 				$videos[] = $detail;
 			}
@@ -291,7 +291,7 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Get list of videos (controller that provides access to MediaQueryService::getVideoList method)
 	 * @requestParam string sort [recent/popular/trend]
-	 * @requestParam integer limit
+	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
 	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
@@ -310,6 +310,11 @@ class VideoHandlerController extends WikiaController {
 		$filter = 'all';
 		if ( is_string( $providers ) ) {
 			$providers = [ $providers ];
+		}
+
+		// set maximum limit
+		if ( $limit > self::VIDEO_LIMIT ) {
+			$limit = self::VIDEO_LIMIT;
 		}
 
 		$mediaService = new MediaQueryService();

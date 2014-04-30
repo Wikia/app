@@ -651,12 +651,14 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Hym411
+ * @author 아라
  */
 $messages['ko'] = array(
 	'preferences-v2-password' => '나의 비밀번호:',
 	'preferences-v2-redirect-main-page' => '대문',
 	'tog-showAdsv2' => '광고:',
 	'preferences-v2-watchdefault' => '편집',
+	'preferences-v2-watchmoves' => '옮기기',
 	'preferences-v2-watchdeletion' => '삭제',
 	'tog-editondblclick-v2' => '두번 클릭하여 이 문서 편집',
 );
@@ -697,12 +699,32 @@ $messages['lb'] = array(
 	'tog-hidefollowedpages-v2' => "D'lëscht vun de Säiten déi ech iwwerwaache viru D'lëscht vun de Säiten déi ech iwwerwaache viru jiddwerengem verstoppen",
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'preferences-v2-redirect-recent-changes' => 'آلشتیا تازه باو',
+);
+
 /** Latvian (latviešu)
  * @author Sg ghost
  */
 $messages['lv'] = array(
 	'tog-enotifusertalkpages-v2' => '...my lietotāja diskusija lapas tiek mainīts',
 	'preferences-v2-redirect-wiki-activity' => 'Viki Aktivitātes',
+);
+
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'prefs-personal' => 'Мое инфо',
+	'preferences-v2-username' => 'Моето корисничко име:',
+	'preferences-v2-usergroups' => 'Моите кориснички групи:',
+	'preferences-v2-gender' => 'Мојот пол:',
+	'preferences-v2-password' => 'Мојата лозинка:',
+	'preferences-v2-oldsig' => 'Постоечки потпис:',
+	'preferences-v2-nickname' => 'Прилагоден потпис:',
 );
 
 /** Malay (Bahasa Melayu)

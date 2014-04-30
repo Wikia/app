@@ -27,6 +27,24 @@ $messages['qqq'] = array(
 	'wikianewfiles-more' => 'Text displayed when there are more articles the file is posted in.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikianewfiles-title' => 'ملفات جديدة في هذه الويكي',
+	'wikianewfiles-desc' => 'يعرض [[Special:NewFiles|صفحة خاصة]] لتجاوز بعض تنسيقات العنوان.',
+	'wikianewfiles-uploadby' => 'من قبل {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'نشرت في',
+	'wikianewfiles-more' => 'المزيد...',
+);
+
+/** Breton (brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'wikianewfiles-more' => "muioc'h...",
+);
+
 /** Bosnian (bosanski)
  * @author DzWiki
  */
@@ -75,6 +93,17 @@ $messages['fr'] = array(
 	'wikianewfiles-more' => 'plus…',
 );
 
+/** Galician (galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikianewfiles-title' => 'Novos ficheiros do wiki',
+	'wikianewfiles-desc' => 'Ofrece unha [[Special:NewFiles|páxina especial]] para anular parte do formato da cabeceira',
+	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Publicado en',
+	'wikianewfiles-more' => 'máis...',
+);
+
 /** Hindi (हिन्दी)
  * @author Adithyavr
  */
@@ -100,6 +129,17 @@ $messages['lb'] = array(
 	'wikianewfiles-more' => 'méi...',
 );
 
+/** Macedonian (македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wikianewfiles-title' => 'Нови податотеки на ова вики',
+	'wikianewfiles-desc' => 'Додаток за [[Special:NewFiles|специјална страница]] што менува извесни форматирања на заглавијата',
+	'wikianewfiles-uploadby' => 'од {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Објавено во',
+	'wikianewfiles-more' => 'повеќе...',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
@@ -111,6 +151,14 @@ $messages['ms'] = array(
 	'wikianewfiles-more' => 'selanjutnya...',
 );
 
+/** Dutch (Nederlands)
+ * @author SPQRobin
+ */
+$messages['nl'] = array(
+	'wikianewfiles-title' => 'Nieuwe bestanden op deze wiki',
+	'wikianewfiles-uploadby' => 'door {{GENDER:$2|$1}}',
+);
+
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
  */
@@ -119,11 +167,13 @@ $messages['pa'] = array(
 );
 
 /** Polish (polski)
+ * @author Pan Cube
  * @author Pio387
  * @author Wedkarski
  */
 $messages['pl'] = array(
 	'wikianewfiles-title' => 'Nowe pliki na tej wiki',
+	'wikianewfiles-desc' => 'Rozszerza [[Special:NewFiles|stronę specjalną]] aby zastąpić niektóre formatowania nagłówków',
 	'wikianewfiles-uploadby' => 'przez {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Zamieszczony w',
 	'wikianewfiles-more' => 'więcej…',

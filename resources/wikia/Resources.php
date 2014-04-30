@@ -28,6 +28,7 @@ return [
 			'wikia.thumbnailer',
 			'wikia.tracker',
 			'wikia.window',
+			'wikia.abTest',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -108,6 +109,13 @@ return [
 			'amd',
 			'wikia.querystring',
 			'wikia.cookies',
+		],
+	],
+	'wikia.abTest' => [
+		'scripts' => 'resources/wikia/modules/abTest.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
 		],
 	],
 	'wikia.thumbnailer' => [

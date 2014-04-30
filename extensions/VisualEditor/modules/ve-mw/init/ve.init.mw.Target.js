@@ -507,8 +507,7 @@ ve.init.mw.Target.prototype.load = function () {
 	}
 	// Start loading the module immediately
 	mw.loader.using(
-		// Wait for site and user JS before running plugins
-		this.modules.concat( [ 'site', 'user' ] ),
+		this.modules,
 		ve.bind( ve.init.mw.Target.onModulesReady, this )
 	);
 

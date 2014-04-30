@@ -11,33 +11,15 @@
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', array()); ?>
 	</section>
 	<div class="wikiahomepage-hubs">
-		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-			'classname' => 'videogames',
-			'heading' => WfMessage('wikiahome-hubs-videogames-heading')->text(),
-			'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_GAMING]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_GAMING] : null,
-			'herourl' => WfMessage('wikiahome-hubs-videogames-url')->text(),
-			'creative' => WfMessage('wikiahome-hubs-videogames-creative')->text(),
-			'moreheading' => WfMessage('wikiahome-hubs-videogames-more-heading')->text(),
-			'morelist' => WfMessage('wikiahome-hubs-videogames-more-list')->parse(),
-		)) ?>
-		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-			'classname' => 'entertainment',
-			'heading' => WfMessage('wikiahome-hubs-entertainment-heading')->text(),
-			'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT] : null,
-			'herourl' => WfMessage('wikiahome-hubs-entertainment-url')->text(),
-			'creative' => WfMessage('wikiahome-hubs-entertainment-creative')->text(),
-			'moreheading' => WfMessage('wikiahome-hubs-entertainment-more-heading')->text(),
-			'morelist' => WfMessage('wikiahome-hubs-entertainment-more-list')->parse(),
-		)) ?>
-		<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', array(
-			'classname' => 'lifestyle',
-			'heading' => WfMessage('wikiahome-hubs-lifestyle-heading')->text(),
-			'heroimageurl' => isset($hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE]) ? $hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE] : null,
-			'herourl' => WfMessage('wikiahome-hubs-lifestyle-url')->text(),
-			'creative' => WfMessage('wikiahome-hubs-lifestyle-creative')->text(),
-			'moreheading' => WfMessage('wikiahome-hubs-lifestyle-more-heading')->text(),
-			'morelist' => WfMessage('wikiahome-hubs-lifestyle-more-list')->parse(),
-		)) ?>
+		<? if( isset( $hubsSlots[0] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[0] ) ?>
+		<? endif ?>
+		<? if( isset( $hubsSlots[1] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[1] ) ?>
+		<? endif ?>
+		<? if( isset( $hubsSlots[2] ) ): ?>
+			<?= F::app()->renderView('WikiaHomePageController', 'renderHubSection', $hubsSlots[2] ) ?>
+		<? endif ?>
 	</div>
 	<div class="wikiahomepage-community">
 		<section class="wikiahomepage-community-section grid-2 alpha">

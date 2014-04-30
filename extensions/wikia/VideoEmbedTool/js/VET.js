@@ -488,8 +488,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 		jqXHR.abort();
 		jqXHR = $.ajax(
-			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo&' + params.join('&'), {
-				method: 'get',
+			window.wgScriptPath + '/index.php?action=ajax&rs=VET&method=insertFinalVideo', {
+				type: 'POST',
+				data: params.join('&'),
 				complete: callback
 			}
 		);
@@ -677,7 +678,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			// attach handlers - play button (open video preview)
 			this.cachedSelectors.carousel.on('click', 'li a.video', function (event) {
 				event.preventDefault();
-				var videoTitle = $('.Wikia-video-thumb', this).attr('data-video-key');
+				var videoTitle = $(this).find('[data-video-key]').attr('data-video-key');
 				self.fetchVideoPlayer(videoTitle);
 
 				tracking({
@@ -864,7 +865,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption>' +
 				'</figure><a href="{{url}}" title="{{title}}" data-phrase="' +
-				data.searchQuery + '" data-pos="{{pos}}">Add video</a></li>{{/items}}';
+				data.searchQuery + '" data-pos="{{pos}}">{{addMessage}}</a></li>{{/items}}';
 
 			html = $.mustache(template, data);
 			this.cachedSelectors.carousel.find('ul').append(html);

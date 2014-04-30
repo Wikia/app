@@ -91,24 +91,6 @@ class SpecialRenameuser extends SpecialPage {
 			if ( $olduser->getOption( 'wasRenamed', 0 ) ) {
 				$errors[] = wfMsg( 'userrenametool-previously-renamed', $oldusername );
 			}
-			$phalanxMatches = RenameUserHelper::testBlock( $oldusername );
-			if ( $phalanxMatches !== 'No matches found.' ) {
-				$errors[] = Xml::tags(
-					'p',
-					null,
-					wfMsg( 'userrenametool-phalanx-matches', htmlspecialchars( $oldusername ) )
-				) . $phalanxMatches;
-			}
-		}
-		if ( !empty( $newusername ) ) {
-			$phalanxMatches = RenameUserHelper::testBlock( $newusername );
-			if ( $phalanxMatches !== 'No matches found.' ) {
-				$errors[] = Xml::tags(
-					'p',
-					null,
-					wfMsg( 'userrenametool-phalanx-matches', htmlspecialchars( $newusername ) )
-				) . $phalanxMatches;
-			}
 		}
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
