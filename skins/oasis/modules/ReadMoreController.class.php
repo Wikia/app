@@ -24,12 +24,16 @@ class ReadMoreController extends WikiaController {
 	 * Sends a JSON response with the NLP recommendations for the requested article.
 	 */
 	public function getReadMoreArticles() {
-		$this->response->setFormat( 'json' );
 		$request = $this->wg->request;
+
 		$articleId = $request->getInt( 'articleId', null );
 		$type = $request->getInt( 'type', self::TYPE_RANDOM );
+
 		$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
 		$recommendations = $this->getRecommendations( $type, self::SPOTLIGHTS_NUMBER, $recommendations );
+
+		$this->response->setFormat( 'json' );
+		$this->response->setCacheValidity( 900 /* 15min */ );
 		$this->setVal( 'recommendations', $recommendations );
 	}
 
