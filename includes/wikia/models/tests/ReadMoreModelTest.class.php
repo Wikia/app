@@ -69,31 +69,6 @@ class ReadMoreModelTest extends WikiaBaseTest {
 		$this->assertEquals($expected, $recommendation);
 	}
 
-	public function getRecommendedArticlesDataProvider() {
-		return [
-			[
-				[
-					'id' => 123,
-					'pageid' => 234,
-					'url' => 'http://muppet.wikia.com/Gonzo',
-					'ns' => 0,
-					'hub' => 'Gaming',
-					'lang' => 'en',
-					'title' => 'Title',
-					'recommendations_ss' => [
-						'123_1',
-						'123_5',
-						'123_43',
-						'123_55',
-						'123_123',
-						'123_200',
-						'123_321'
-					]
-				]
-			]
-		];
-	}
-
 	public function getRecommendedArticleIdsDataProvider() {
 		return [
 			[
@@ -175,24 +150,6 @@ class ReadMoreModelTest extends WikiaBaseTest {
 				[
 					'1' => '1',
 				]
-			]
-		];
-	}
-
-	public function getRecommendationsDataDataProvider() {
-		return [
-			[
-				['wikiId' => 123],
-				[
-					'1' => '1',
-					'5' => '5',
-					'43' => '43',
-					'55' => '55',
-					'123' => '123',
-					'200' => '200',
-					'321' => '321'
-				],
-				$this->getArticlesData()
 			]
 		];
 	}
