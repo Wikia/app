@@ -17,7 +17,8 @@ class ReadMoreModelTest extends WikiaBaseTest {
 	 * @dataProvider getRecommendedArticleIdsDataProvider
 	 */
 	public function testGetRecommendedArticleIds( $wiki, $recommendationKeys, $expected ) {
-		$readMoreModel = new ReadMoreModel( $wiki[ 'wikiId' ], 100 );
+		$this->mockGlobalVariable('wgCityId', $wiki['wikiId']);
+		$readMoreModel = new ReadMoreModel( 100 );
 		$articleIds = $readMoreModel->getRecommendedArticleIds( $recommendationKeys );
 		$this->assertEquals($expected, $articleIds);
 	}
@@ -62,8 +63,7 @@ class ReadMoreModelTest extends WikiaBaseTest {
 
 		}
 
-
-		$readMoreModelMock = new ReadMoreModel( 100, 100 );
+		$readMoreModelMock = new ReadMoreModel( 100 );
 		$recommendation = $readMoreModelMock->getRecommendationData($articleServiceMock, $titleMock, $this->images);
 
 		$this->assertEquals($expected, $recommendation);

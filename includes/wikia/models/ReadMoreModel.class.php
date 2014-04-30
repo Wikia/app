@@ -13,19 +13,15 @@ class ReadMoreModel extends WikiaModel {
 	private $wikiId;
 	private $articleId;
 
-	public function __construct( $wikiId = null, $articleId = null ) {
+	public function __construct( $articleId = null ) {
 		global $wgCityId, $wgTitle;
-
-		if ( is_null( $wikiId ) ) {
-			$wikiId = $wgCityId;
-		}
 
 		if ( is_null( $articleId ) ) {
 			$articleId = $wgTitle->getArticleID();
 		}
 
 		$this->articleId = $articleId;
-		$this->wikiId = $wikiId;
+		$this->wikiId = $wgCityId;
 	}
 
 	/**

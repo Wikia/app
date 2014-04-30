@@ -14,8 +14,8 @@ class ReadMoreController extends WikiaController {
 	 *
 	 * @return array
 	 */
-	static private function getReadMoreResponseFromModel( $wikiId = null, $articleId = null ) {
-		$recommendationsModel = new ReadMoreModel( $wikiId, $articleId );
+	static private function getReadMoreResponseFromModel( $articleId = null ) {
+		$recommendationsModel = new ReadMoreModel( $articleId );
 		$recommendations = $recommendationsModel->getRecommendedArticles();
 
 		return $recommendations;
@@ -30,7 +30,7 @@ class ReadMoreController extends WikiaController {
 		$articleId = $request->getInt( 'articleId', null );
 		$type = $request->getInt( 'type', self::TYPE_RANDOM );
 
-		$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
+		$recommendations = self::getReadMoreResponseFromModel( $articleId );
 		$recommendations = $this->prepareRecommendations( $type, self::SPOTLIGHTS_NUMBER, $recommendations );
 
 		$this->response->setFormat( 'json' );
@@ -67,7 +67,7 @@ class ReadMoreController extends WikiaController {
 
 		$articleId = $wgTitle->getArticleID();
 		if ( $articleId ) {
-			$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
+			$recommendations = self::getReadMoreResponseFromModel( $articleId );
 			if ( count( $recommendations ) >= self::SPOTLIGHTS_NUMBER ) {
 				$vars['launchReadMoreABTest'] = true;
 			}
