@@ -75,7 +75,8 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
-
+		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
 	),
@@ -138,8 +139,6 @@ $config['oasis_noads_extensions_js'] = array(
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
-		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
