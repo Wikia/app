@@ -9,7 +9,7 @@ class VideosModule extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
-	const MAX_STAFF_PICKS = 10;
+	const MAX_STAFF_PICKS = 5;
 
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
