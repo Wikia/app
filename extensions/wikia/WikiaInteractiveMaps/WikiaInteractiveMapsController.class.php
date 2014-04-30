@@ -28,7 +28,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$params = [
-			'city_id' => $this->app->wg->CityId
+			'city_id' => $this->app->wg->CityId,
+			'sort' => $this->getVal( 'sort', null )
 		];
 
 		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
