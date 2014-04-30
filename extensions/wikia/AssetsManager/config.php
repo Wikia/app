@@ -1768,6 +1768,7 @@ $config['qualaroo_blocking_js'] = array(
 /** Optimizely Blocking **/
 $config['optimizely_blocking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	)
