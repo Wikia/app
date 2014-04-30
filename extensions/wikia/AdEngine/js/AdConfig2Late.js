@@ -4,8 +4,10 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.abTest',
+	'wikia.geo',
 
 	// adProviders
+	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.null',
@@ -16,8 +18,10 @@ define('ext.wikia.adEngine.adConfigLate', [
 	log,
 	window,
 	abTest,
+	geo,
 
 	// AdProviders
+	adProviderEvolve,
 	adProviderLiftium,
 	adProviderRemnantGpt,
 	adProviderNull,
@@ -27,6 +31,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
+		country = geo.getCountryCode(),
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
@@ -48,12 +53,25 @@ define('ext.wikia.adEngine.adConfigLate', [
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
+
+		if (slot[2] === 'Evolve') {
+			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+			return adProviderEvolve;
+		}
+
 		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
-			if (adProviderRemnant.canHandleSlot(slot)) {
+			if (adProviderRemnant.canHandleSlot(slotname)) {
 				return adProviderRemnant;
 			}
 			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
+		}
+
+		if (country === 'AU' || country === 'CA' || country === 'NZ') {
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+				return adProviderEvolve;
+			}
 		}
 
 		// First ask SevenOne Media

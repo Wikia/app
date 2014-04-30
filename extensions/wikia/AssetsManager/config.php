@@ -58,15 +58,10 @@ $config['adengine2_js'] = array(
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
-		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
+		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -76,7 +71,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
@@ -94,6 +88,13 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
+		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
+		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
+		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 
 		// adengine2 low prio
 		// @requires adengine2 core already loaded
@@ -465,7 +466,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/abtest.js',
+		'//resources/wikia/modules/abTest.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
