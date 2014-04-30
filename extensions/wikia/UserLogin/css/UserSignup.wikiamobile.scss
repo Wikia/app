@@ -24,11 +24,24 @@ fieldset {
 		border-radius: 2px;
 		border-color: $border-color;
 		font-size: 0.9rem;
+		padding-right: 10px;
 	}
 
 	&.error {
 		input {
 			border-color: $error-border;
+		}
+	}
+}
+
+.success {
+	input {
+		background: {
+			image: url(/extensions/wikia/UserLogin/images/check.png); /* base64 */
+			position: center right;
+			size: 14px 10px;
+			repeat: no-repeat;
+			origin: content-box;
 		}
 	}
 }
@@ -44,7 +57,7 @@ select {
 	border-radius: 2px;
 	border-color: $border-color;
 	height: 30px;
-	width: 32%;
+	width: 31%;
 	margin: 2px;
 	padding-left: 5%;
 	background-color: $background-color;

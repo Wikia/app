@@ -83,7 +83,7 @@ WikiaForm.prototype.showInputError = function(paramName, msg) {
 	var inputGroup = this.getInputGroup(paramName);
 
 	if(inputGroup) {
-		inputGroup.addClass('error');
+		inputGroup.addClass('error').removeClass('success');
 		this.showErrorMsg(inputGroup, msg);
 	}
 };
@@ -91,7 +91,7 @@ WikiaForm.prototype.showInputError = function(paramName, msg) {
 WikiaForm.prototype.clearInputError = function(paramName) {
 	var inputGroup = this.getInputGroup(paramName);
 
-	inputGroup.removeClass('error');
+	inputGroup.removeClass('error').addClass('success');
 
 	this.clearErrorMsg(inputGroup);
 };
