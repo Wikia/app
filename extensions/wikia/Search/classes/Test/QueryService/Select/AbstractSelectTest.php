@@ -626,7 +626,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 	public function testPrepareRequest() {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
                            ->disableOriginalConstructor()
-                           ->setMethods( array( 'getPage', 'setStart', 'getLength' ) )
+                           ->setMethods( array( 'getPage', 'setStart', 'getLength', 'mustAddMatchedRecords' ) )
                            ->getMock();
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\AbstractSelect' )
 		                   ->disableOriginalConstructor()
@@ -642,6 +642,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->any() )
 		    ->method ( 'getPage' )
 		    ->will   ( $this->returnValue( 2 ) )
+		;
+		$mockConfig
+			->expects( $this->any() )
+			->method ( 'mustAddMatchedRecords' )
+			->will   ( $this->returnValue( 0 ) )
 		;
 		$mockConfig
 		    ->expects( $this->any() )
@@ -978,7 +983,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'getNumPages', 'getPage', 'getStart', 'getLimit', 'getResultsFound' ] )
+		                   ->setMethods( [ 'getNumPages', 'getPage', 'getStart', 'getLimit', 'getResultsFound', 'mustAddMatchedRecords' ] )
 		                   ->getMock();
 		
 		$expectedFields = [ 'id', 'title' ];
@@ -1007,7 +1012,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->will   ( $this->returnValue( 200 ) )
 		;
 		$mockConfig
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getPage' )
 		    ->will   ( $this->returnValue( 1 ) )
 		;
@@ -1025,6 +1030,11 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->once() )
 		    ->method ( 'getStart' )
 		    ->will   ( $this->returnValue( 0 ) )
+		;
+		$mockConfig
+			->expects( $this->once() )
+			->method ( 'mustAddMatchedRecords' )
+			->will   ( $this->returnValue( 0 ) )
 		;
 		$this->assertEquals(
 				[ 'total' => 200, 'batches' => 10, 'currentBatch' => 1, 'next' => 20, 'items' => $results ],

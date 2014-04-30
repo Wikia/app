@@ -200,9 +200,13 @@ abstract class AbstractSelect
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) + $this->config->mustAddMatchedRecords() : 0,
+					'next' => 0,
 					'items' => $resultSet->toArray( $fields, $keyField )
 					];
+			if ( $total > 0 ) {
+				$response[ 'next' ] = min( [ $numPages * $limit, $config->getStart() + $limit ] ) +
+					$config->mustAddMatchedRecords();
+			}
 		} else if ( $fields ) {
 			$response = $resultSet->toArray( $fields, $keyField );
 		} else {

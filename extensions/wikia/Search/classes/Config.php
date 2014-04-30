@@ -1050,12 +1050,20 @@ class Config
 		return $numResults;
 	}
 
-	public function mustAddMatchedRecords(){
-		return ($this->getPage() > 1 && $this->hasMatch()) ? 1 : 0;
+	/**
+	 * Compensation for manually added result
+	 * @return int
+	 */
+	public function mustAddMatchedRecords() {
+		return ( $this->getPage() > 1 && $this->hasMatch() ) ? 1 : 0;
 	}
 
-	public function mustSubMatchedRecords(){
-		return ($this->getPage() <= 1 && $this->hasMatch()) ? 1 : 0;
+	/**
+	 * Compensation for manually added result
+	 * @return int
+	 */
+	public function mustSubMatchedRecords() {
+		return ( $this->getPage() <= 1 && $this->hasMatch() ) ? 1 : 0;
 	}
 
 	/**
