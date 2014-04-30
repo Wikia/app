@@ -1,7 +1,7 @@
 <input type="submit" value="<?= $createAccountButtonLabel ?>" name="submit">
-<p class="wikia_terms">
+<p class="wikia_terms signup-footer">
 	<?= wfMessage('prefs-help-terms')->parse() ?>
 </p>
-<p class="wikia_terms">
+<p class="signup-footer">
 	<?= wfMessage('wikiamobile-go-to-login')->parse() ?>
 </p>
