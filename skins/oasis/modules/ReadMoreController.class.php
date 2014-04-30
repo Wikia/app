@@ -1,6 +1,8 @@
 <?php
 class ReadMoreController extends WikiaController {
-	const MIN_SPOTLIGHTS_NUMBER = 3;
+	const SPOTLIGHTS_NUMBER = 3;
+	const TYPE_RANDOM = 1;
+	const TYPE_MOST_RELATED = 2;
 
 	/**
 	 * Gets a response from ReadMoreModel with the recommended articles.
@@ -24,8 +26,29 @@ class ReadMoreController extends WikiaController {
 	public function getReadMoreArticles() {
 		$this->response->setFormat( 'json' );
 		$request = $this->wg->request;
-		$articleId = $request->getInt( 'articleId', 0 );
-		$this->setVal( 'recommendations', self::getReadMoreResponseFromModel( null, $articleId ) );
+		$articleId = $request->getInt( 'articleId', null );
+		$type = $request->getInt( 'type', self::TYPE_RANDOM );
+		$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
+		$recommendations = $this->getRecommendations( $type, self::SPOTLIGHTS_NUMBER, $recommendations );
+		$this->setVal( 'recommendations', $recommendations );
+	}
+
+	/**
+	 * Get number of recommendations by type.
+	 *
+	 * @param int $type 		most related or random
+	 * @param int $number 		number of recommendations
+	 * @param $recommendations
+	 * @return array
+	 */
+	private function getRecommendations( $type, $number, $recommendations ) {
+		if ( $type == self::TYPE_RANDOM ) {
+			shuffle($recommendations);
+		}
+
+		$recommendations = array_slice( $recommendations, 0, $number );
+
+		return $recommendations;
 	}
 
 	/**
@@ -40,7 +63,7 @@ class ReadMoreController extends WikiaController {
 		$articleId = $wgTitle->getArticleID();
 		if ( $articleId ) {
 			$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
-			if ( count( $recommendations ) >= self::MIN_SPOTLIGHTS_NUMBER ) {
+			if ( count( $recommendations ) >= self::SPOTLIGHTS_NUMBER ) {
 				$vars['launchReadMoreABTest'] = true;
 			}
 		}

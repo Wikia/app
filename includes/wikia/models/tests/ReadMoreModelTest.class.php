@@ -166,12 +166,10 @@ class ReadMoreModelTest extends WikiaBaseTest {
 				true, // Title exists
 				false, // Title is redirected
 				[
-					1 => [
-						'title' => $titles[1]['title'],
-						'url' =>  $titles[1]['url'],
-						'text' => $articles[1]['text'],
-						'image' => $images[1][0]['url'],
-					]
+					'title' => $titles[1]['title'],
+					'url' =>  $titles[1]['url'],
+					'text' => $articles[1]['text'],
+					'image' => $images[1][0]['url'],
 				]
 			],
 			// Existing article
@@ -180,12 +178,10 @@ class ReadMoreModelTest extends WikiaBaseTest {
 				true, // Title exists
 				false, // Title is redirected
 				[
-					123 => [
 						'title' => $titles[123]['title'],
 						'url' =>  $titles[123]['url'],
 						'text' => $articles[123]['text'],
 						'image' => $images[123][0]['url'],
-					]
 				]
 			],
 			// Existing article without image
@@ -194,12 +190,10 @@ class ReadMoreModelTest extends WikiaBaseTest {
 				true, // Title exists
 				false, // Title is redirected
 				[
-					200 => [
 						'title' => $titles[200]['title'],
 						'url' =>  $titles[200]['url'],
 						'text' => $articles[200]['text'],
 						'image' => null,
-					]
 				]
 			],
 			// Not existing article (article id is null)

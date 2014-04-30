@@ -142,10 +142,10 @@ class ReadMoreModel extends WikiaModel {
 		$images = $this->getImagesFromIds( $articleIds );
 
 		foreach ( $titles as $title ) {
-			$recommendations = array_merge(
-				$recommendations,
-				$this->getRecommendationData( $articleService, $title, $images )
-			);
+			$recommendation = $this->getRecommendationData( $articleService, $title, $images );
+			if ( !empty( $recommendation ) ) {
+				$recommendations[] = $recommendation;
+			}
 		}
 
 		return $recommendations;
@@ -198,11 +198,11 @@ class ReadMoreModel extends WikiaModel {
 			$articleId = $title->getArticleID();
 			if ( $articleId ) {
 				$article = $articleService->setArticleById( $articleId );
-				$recommendation[ $articleId ] = [
+				$recommendation = [
 					'title' => $title->getPrefixedText(),
 					'url' => $title->getLocalURL(),
 					'text' => isset( $article ) ? $article->getTextSnippet() : '',
-					'image' => isset( $images[ $articleId ] ) ? $images[ $articleId ][0][ 'url' ] : null
+					'image' => isset( $images[ $articleId ][0][ 'url' ] ) ? $images[ $articleId ][0][ 'url' ] : null
 				];
 			}
 		}
