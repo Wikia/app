@@ -2,14 +2,15 @@
 	'use strict';
 
 	window.optimizelyUniqueExperiment = function (currentExperiment, mutuallyExclusiveExperiments) {
-		var active, currentInCookie, key;
+		var active, currentInCookie, key, allExperiments;
 
 		if (mutuallyExclusiveExperiments) {
 			active = mutuallyExclusiveExperiments;
 		} else {
 			active = [];
-			for (key in window.optimizely.allExperiments) {
-				if ('enabled' in window.optimizely.allExperiments[key]) {
+			allExperiments = window.optimizely.allExperiments;
+			for (key in allExperiments) {
+				if (allExperiments.hasOwnProperty(key) && ('enabled' in allExperiments[key]) && allExperiments[key]) {
 					active.push(key);
 				}
 			}
