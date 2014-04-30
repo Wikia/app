@@ -160,6 +160,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ab: getAb()
 		};
 
+		if (window.wgArticleId) {
+			params.pageid = zone1 + '/' + window.wgArticleId;
+		}
+
 		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
 			params.hasp = 'yes';
 		} else {
