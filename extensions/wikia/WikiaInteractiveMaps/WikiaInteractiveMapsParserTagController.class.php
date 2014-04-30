@@ -4,6 +4,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const DEFAULT_ZOOM = 7;
 	const DEFAULT_WIDTH = 700;
 	const DEFAULT_HEIGHT = 200;
+	const DEFAULT_LATITUDE = 0;
+	const DEFAULT_LONGITUDE = 0;
 	const PARSER_TAG_NAME = 'imap';
 	const RENDER_ENTRY_POINT = 'render';
 
@@ -90,8 +92,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	private function getMapPlaceholderParams() {
 		$params = [];
 
-		$params[ 'lat' ] = $this->request->getVal( 'lat', 0 );
-		$params[ 'lon' ] = $this->request->getVal( 'lon', 0 );
+		$params[ 'lat' ] = $this->request->getVal( 'lat', static::DEFAULT_LATITUDE );
+		$params[ 'lon' ] = $this->request->getVal( 'lon', static::DEFAULT_LONGITUDE );
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
 		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
 		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );

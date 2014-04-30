@@ -62,9 +62,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	public function map() {
 		$mapId = (int)$this->getPar();
-		$zoom = $this->request->getInt('zoom', 0);
-		$lat = $this->request->getInt('lat', 0);
-		$lon = $this->request->getInt('lon', 0);
+		$zoom = $this->request->getInt( 'zoom', WikiaInteractiveMapsParserTagController::DEFAULT_ZOOM );
+		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
+		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$map = $mapsModel->cachedRequest(
