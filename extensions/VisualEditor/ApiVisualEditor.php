@@ -398,8 +398,10 @@ class ApiVisualEditor extends ApiBase {
 						$noticeMsg = 'protectedpagewarning';
 					}
 
-					$notices[] = $this->msg( $noticeMsg )->parseAsBlock() .
-						$this->getLastLogEntry( $page, 'protect' );
+					// Note: getLastLogEntry() uses ApiBase::getContext(), which is not supported by current version
+					//$notices[] = $this->msg( $noticeMsg )->parseAsBlock() .
+					//	$this->getLastLogEntry( $page, 'protect' );
+					$notices[] = $this->msg( $noticeMsg )->parseAsBlock();
 				}
 
 				// Show notice when editing user / user talk page of a user that doesn't exist
@@ -418,10 +420,15 @@ class ApiVisualEditor extends ApiBase {
 							$this->msg( 'userpage-userdoesnotexist', wfEscapeWikiText( $targetUsername ) ) .
 							"\n</div>";
 					} elseif ( $targetUser->isBlocked() ) { // Show log extract if the user is currently blocked
+						// Note: getLastLogEntry() uses ApiBase::getContext(), which is not supported by current version
+						//$notices[] = $this->msg(
+						//	'blocked-notice-logextract',
+						//	$targetUser->getName() // Support GENDER in notice
+						//)->parseAsBlock() . $this->getLastLogEntry( $targetUser->getUserPage(), 'block' );
 						$notices[] = $this->msg(
 							'blocked-notice-logextract',
 							$targetUser->getName() // Support GENDER in notice
-						)->parseAsBlock() . $this->getLastLogEntry( $targetUser->getUserPage(), 'block' );
+						)->parseAsBlock();
 					}
 				}
 
