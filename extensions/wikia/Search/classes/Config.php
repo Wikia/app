@@ -349,9 +349,7 @@ class Config
 	 * @return integer
 	 */
 	public function getLength() {
-		return ( $this->hasMatch() && $this->getStart() === 0 )
-			? $this->limit - 1
-			: $this->limit;
+		return $this->limit - $this->mustSubMatchedRecords();
 	}
 
 
@@ -1054,6 +1052,10 @@ class Config
 
 	public function mustAddMatchedRecords(){
 		return ($this->getPage() > 1 && $this->hasMatch()) ? 1 : 0;
+	}
+
+	public function mustSubMatchedRecords(){
+		return ($this->getPage() <= 1 && $this->hasMatch()) ? 1 : 0;
 	}
 
 	/**

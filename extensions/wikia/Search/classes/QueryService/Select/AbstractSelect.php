@@ -200,7 +200,7 @@ abstract class AbstractSelect
 					'total' => $total,
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
-					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
+					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) + $this->config->mustAddMatchedRecords() : 0,
 					'items' => $resultSet->toArray( $fields, $keyField )
 					];
 		} else if ( $fields ) {
@@ -361,12 +361,8 @@ abstract class AbstractSelect
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
 			$length = $config->getLimit();
-			/*if( $config->hasMatch() && $config->getPage() > 1 && $length > 0 ) {
-				$length--;
-			}*/
+			$start = ( $config->getPage() - $config->mustAddMatchedRecords() - 1  ) * $length;
 
-			$start = ( $config->getPage() - 1 ) * $length;
-			//var_dump($length, $start);
 			$config->setStart(  $start );
 		}
 		return $this;
