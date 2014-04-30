@@ -74,7 +74,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$url = $mapsModel->getMapRenderUrl( [ implode( '/', [ $mapId, $zoom, $lat, $lon ] ) ] );
+			$url = $mapsModel->buildUrl( [
+				WikiaMaps::ENTRY_POINT_RENDER,
+				$mapId,
+				$zoom,
+				$lat,
+				$lon
+			] );
 
 			$this->setVal( 'title', $map->title );
 			$this->setVal( 'map_found', true );

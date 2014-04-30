@@ -120,18 +120,6 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Returns render empty point for map
-	 *
-	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
-	 *                      rest of the array elements will get added as URI parameters after ? sign
-	 * @return string
-	 */
-	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_shift( $params );
-		return $this->buildUrl( [ self::ENTRY_POINT_RENDER, $entryPointParams ], $params );
-	}
-
-	/**
 	 * @desc Returns human message based on the tiles processing status in database
 	 *
 	 * @param Integer $status status of tiles processing for the map
