@@ -16,7 +16,7 @@ class WikiaInteractiveMapsHooks {
 			$text .= sprintf(
 				'<script src="%s/%s"></script>',
 				$wgExtensionsPath,
-				'wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js'
+				'wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsPraserTag.js'
 			);
 		}
 
