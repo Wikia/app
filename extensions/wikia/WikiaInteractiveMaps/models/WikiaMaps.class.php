@@ -19,15 +19,25 @@ class WikiaMaps {
 	 */
 	private $config = [];
 
+	/**
+	 * @var array Sorting options array message key => sorting column pairs
+	 */
+	private $sortingOptions = [
+		'wikia-interactive-maps-sort-newest-to-oldest' => 'created_on_desc',
+		'wikia-interactive-maps-sort-alphabetical' => 'name_asc',
+		'wikia-interactive-maps-sort-recently-updated' => 'updated_on_desc',
+	];
+
 	public function __construct( $config ) {
 		$this->config = $config;
 	}
 
 	/**
-	 * @desc Create InteractiveMaps request URL
+	 * @brief Create InteractiveMaps request URL
 	 *
 	 * @param string $entryPoint
 	 * @param array $params
+	 *
 	 * @return string - URL
 	 */
 	private function buildUrl( $entryPoint, Array $params = [] ) {
@@ -43,11 +53,12 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Call method and store the result in cache for $expireTime
+	 * @brief Call method and store the result in cache for $expireTime
 	 *
 	 * @param $method
 	 * @param array $params
 	 * @param int $expireTime
+	 *
 	 * @return Mixed|null
 	 */
 	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
@@ -58,9 +69,10 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Get Map instances from IntMaps API server
+	 * @brief Get Map instances from IntMaps API server
 	 *
 	 * @param Array $params an array with parameters which will be added to the url after ? sign
+	 *
 	 * @return mixed
 	 */
 	private function getMapsFromApi( Array $params ) {
@@ -91,7 +103,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Sends requests to IntMap service to get data about a map and tiles it's connected with
+	 * @brief Sends requests to IntMap service to get data about a map and tiles it's connected with
 	 *
 	 * @param Array $params the first element is required and it should be map id passed rest of the array elements
 	 *                      will get added as URI parameters after ? sign
@@ -119,10 +131,11 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Returns render empty point for map
+	 * @brief Returns render empty point for map
 	 *
 	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
 	 *                      rest of the array elements will get added as URI parameters after ? sign
+	 *
 	 * @return string
 	 */
 	public function getMapRenderUrl( Array $params ) {
@@ -131,7 +144,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @desc Returns human message based on the tiles processing status in database
+	 * @brief Returns human message based on the tiles processing status in database
 	 *
 	 * @param Integer $status status of tiles processing for the map
 	 *
@@ -150,6 +163,37 @@ class WikiaMaps {
 		}
 
 		return $message;
+	}
+
+	/**
+	 * @brief Returns an array of sorting options instances
+	 *
+	 * @return array
+	 */
+	public function getSortingOptions() {
+		$options = [];
+
+		foreach( $this->sortingOptions as $msgKey => $value ) {
+			$options[] = $this->buildSortingOption( $msgKey, $value );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * @brief Creates a stdClass representing sorting option
+	 *
+	 * @param String $msgKey message key for MW wfMessage() function
+	 * @param String $value value of the option
+	 *
+	 * @return stdClass
+	 */
+	private function buildSortingOption( $msgKey, $value ) {
+		$option = new stdClass();
+		$option->name = wfMessage( $msgKey )->plain();
+		$option->value = $value;
+
+		return $option;
 	}
 
 }

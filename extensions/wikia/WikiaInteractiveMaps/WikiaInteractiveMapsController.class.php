@@ -41,6 +41,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
 		];
 		$this->setVal( 'messages', $messages );
+		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions() );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );

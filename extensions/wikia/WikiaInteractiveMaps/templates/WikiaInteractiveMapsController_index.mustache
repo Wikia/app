@@ -1,4 +1,9 @@
 <nav class="maps-controls">
+	<select id="filterMaps">
+		{{#sortingOptions}}
+			<option value="{{value}}">{{name}}</option>
+		{{/sortingOptions}}
+	</select>
 	<button id="createMap">{{messages.wikia-interactive-maps-create-a-map}}</button>
 </nav>
 <h2>{{messages.wikia-interactive-maps-title}}</h2>
