@@ -94,7 +94,7 @@ class VideosModule extends WikiaModel {
 				if ( $this->addToList( $videos, $video['fileKey'] ) ) {
 					// Adding videos to the existingVideos array is normally done using trimVideoList. Since there's
 					// nothing to trim, just add it to existingVideos directly.
-					$this->existingVideos['fileKey'] = true;
+					$this->existingVideos[$video['fileKey']] = true;
 				}
 			}
 
