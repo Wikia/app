@@ -3,6 +3,7 @@ class ReadMoreController extends WikiaController {
 	const SPOTLIGHTS_NUMBER = 3;
 	const TYPE_RANDOM = 1;
 	const TYPE_MOST_RELATED = 2;
+	const CACHE_DURATION = 900; /* 15min */
 
 	/**
 	 * Gets a response from ReadMoreModel with the recommended articles.
@@ -30,10 +31,10 @@ class ReadMoreController extends WikiaController {
 		$type = $request->getInt( 'type', self::TYPE_RANDOM );
 
 		$recommendations = self::getReadMoreResponseFromModel( null, $articleId );
-		$recommendations = $this->getRecommendations( $type, self::SPOTLIGHTS_NUMBER, $recommendations );
+		$recommendations = $this->prepareRecommendations( $type, self::SPOTLIGHTS_NUMBER, $recommendations );
 
 		$this->response->setFormat( 'json' );
-		$this->response->setCacheValidity( 900 /* 15min */ );
+		$this->response->setCacheValidity( self::CACHE_DURATION );
 		$this->setVal( 'recommendations', $recommendations );
 	}
 
@@ -45,7 +46,7 @@ class ReadMoreController extends WikiaController {
 	 * @param $recommendations
 	 * @return array
 	 */
-	private function getRecommendations( $type, $number, $recommendations ) {
+	private function prepareRecommendations( $type, $number, $recommendations ) {
 		if ( $type == self::TYPE_RANDOM ) {
 			shuffle($recommendations);
 		}
