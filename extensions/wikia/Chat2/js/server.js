@@ -77,10 +77,6 @@ if (cluster.isMaster) {
 	    res.render('index');
 	});
 
-	app.get('/healthcheck', function(req, res){
-		res.send('ok\n');
-	});
-
 	// TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
 	logger.info("Pruning old room memberships...");
 	storage.purgeAllMembers();
