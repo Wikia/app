@@ -1,22 +1,11 @@
 /** REQUIRES, OTHER SETUP **/
 var config = require("./server_config.js");
 var cluster = require('cluster');
-// redis store is necessary to support more than 1 process
-var RedisStore = require('socket.io/lib/stores/redis')
-  , redis  = require('socket.io/node_modules/redis')
-  , pub    = redis.createClient()
-  , sub    = redis.createClient()
-  , client = redis.createClient();
-redisStore = new RedisStore({
-		  redisPub : pub
-		, redisSub : sub
-		, redisClient : client
-		});
 
 if (cluster.isMaster) {
   // Fork workers.
 	var numCPUs = require('os').cpus().length;
-	numCPUs = 4;  // just hardcode to 4 for now
+	numCPUs = 2;
   for (var i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
@@ -35,7 +24,8 @@ if (cluster.isMaster) {
 
 	var app = require('express').createServer()
 	    , jade = require('jade')
-	    , sio = require('./lib/socket.io.8.7/socket.io.js')
+//	    , sio = require('./lib/socket.io.8.7/socket.io.js')
+		, sio = require('socket.io')
 	    , _ = require('underscore')._
 	    , Backbone = require('backbone')
 	    , storage = require('./storage').redisFactory()
@@ -88,14 +78,27 @@ if (cluster.isMaster) {
 		logger.info('App listening on http://' + addr.address + ':' + addr.port);
 	});
 
+	// redis store is necessary to support more than 1 process
+	var RedisStore = require('socket.io/lib/stores/redis')
+	  , redis  = require('socket.io/node_modules/redis')
+	  , pub    = redis.createClient()
+	  , sub    = redis.createClient()
+	  , client = redis.createClient();
+
 	var io = sio.listen(server);
 
 	io.configure(function () {
 		io.set('flash policy port', config.FLASH_POLICY_PORT );
-		io.set('transports', [ 'websocket', 'xhr-polling' ]);
+		io.set('transports', [  'xhr-polling'  ]);
 		io.set('log level', loggerModule.getSocketIOLogLevel());
 		io.set('authorization', authConnection );
-		io.set('store', redisStore);
+
+		io.set('store', new RedisStore({
+		  redisPub : pub
+		, redisSub : sub
+		, redisClient : client
+		}));
+
 	});
 
 	logger.info("Updating runtime stats");
@@ -416,7 +419,7 @@ function finishConnectingUser(client, socket ){
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
 		logger.debug("existingId=" + existingId);
-		var oldClient = (typeof existingId != "undefined") ? socket.socket(existingId) : false;
+		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
 		logger.debug("oldClient=" + oldClient);
 
 		if(oldClient && oldClient.userKey != client.userKey ){
@@ -905,7 +908,7 @@ function broadcastToRoom(client, socket, data, users, callback){
 	// Get the set of members from redis.
 	logger.debug("Broadcasting to room " + roomId);
 	storage.getUsersInRoom(roomId, function(usernameToUser) {
-		//logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ));
+		logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ", "usernameToData:", users);
 
 		var usernameToUserFiltered = {};
 
@@ -915,11 +918,11 @@ function broadcastToRoom(client, socket, data, users, callback){
 					usernameToUserFiltered[users[i]] = usernameToUser[users[i]];
 				}
 			}
-		} else if (usernameToUser != 'undefined') {
+		} else {
 			usernameToUserFiltered = usernameToUser;
 		}
 
-		//logger.debug(usernameToUserFiltered);
+		//logger.debug(usernameToDataFiltered);
 		_.each(usernameToUserFiltered, function(userModel){
 			logger.debug("\tSENDING TO " + userModel.get('name'));
 			var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
