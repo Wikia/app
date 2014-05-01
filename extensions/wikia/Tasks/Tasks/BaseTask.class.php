@@ -129,7 +129,7 @@ abstract class BaseTask {
 	 * of retval
 	 */
 	public function log($line) {
-		
+
 	}
 
 	/**
