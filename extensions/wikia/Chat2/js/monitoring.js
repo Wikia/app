@@ -9,7 +9,7 @@ var logger = require('./logger').logger;
 
 function execCMD(com, callback) {
 	var exec = require('child_process').exec;
-	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) };
+	var puts = function(error, stdout, stderr) { callback(parseFloat(stdout)) };	
 	exec(com, puts);
 }
 
@@ -30,9 +30,9 @@ function getStats(storage, successCallback, errorCallback){
 		out.redis_used_cpu_sys = data.used_cpu_sys;
 		out.redis_used_cpu_user = data.used_cpu_user;
 		out.redis_used_cpu_by_days = (out.redis_used_cpu_sys + out.redis_used_cpu_user)/out.redis_uptime_in_days;
-
+		
 		out = getEventsStats(out);
-
+		
 		storage.getRuntimeStats(function(data) {
 			out.runtime = (parseInt(new Date().getTime()) - parseInt(data.laststart) + parseInt(data.runtime) );
 			out.avg_runtime = out.runtime/(parseInt(data.startcount) + 1);
@@ -44,7 +44,7 @@ function getStats(storage, successCallback, errorCallback){
 						out.redis_cpup = cpu;
 						successCallback(out);
 					});
-				});
+				});				
 			}, errorCallback);
 		}, errorCallback);
 	}, errorCallback);
@@ -64,19 +64,19 @@ function getRedisStats(storage, callback, errorCallback) {
         //logger.debug(stats);
         if(data.indexOf('allocation_stats')) {
             callback(stats);
-        }
+        }    	
     },
     errorCallback);
 }
 
-exports.startMonitoring = startMonitoring = function(interval, storage) {
+exports.startMonitoring = startMonitoring = function(interval, storage) {   
 	    logger.info('startMonitoring...');
         setInterval(function(){
             getStats(storage, function(out){
                     for( var i in out) {
-                            var CMDstring = 'gmetric --name="' + i + '_' + 1 + '" --value='+ out[i] +' --type=float --unit=n --dmax=90 --group=Chat';
+                            var CMDstring = 'gmetric --name="' + i + '_' + config.INSTANCE + '" --value='+ out[i] +' --type=float --unit=n --dmax=90 --group=Chat';
                             execCMD(CMDstring, function() {});
-                            //logger.info(CMDstring);
+                            //logger.info(CMDstring);   
                     }
             });
         }, interval);
@@ -84,11 +84,11 @@ exports.startMonitoring = startMonitoring = function(interval, storage) {
 
 /**
  * Redis data model:
- *
+ * 
  * score: timestamp
  * value: timestamp:value
  * http://redis.io/commands#sorted_set
- *
+ * 
  *  4 time periods needed
  *  - removing samples from redis db (24h)
  *  - sampling rate (10 secs)
@@ -106,7 +106,7 @@ function cleanUpSamples(eventName, tsLimit) {
 	while ((eventSamples[eventName].length > 0) && (eventSamples[eventName][0].ts < tsLimit)) {
 		resultCache[eventName] -= eventSamples[eventName][0].count;
 		eventSamples[eventName].shift();
-	}
+	} 	
 };
 
 function getEventsStats(data) {
@@ -132,8 +132,8 @@ exports.incrEventCounter = incrEventCounter = function(eventName) {
 		eventSamples[eventName][length-1].count += 1;
 	}
 	resultCache[eventName]++;
-
-
+	
+	
 	/**
 	 * Samples should be cleaned up in getEventsStats,
 	 * but we remove the very old samples here just in case

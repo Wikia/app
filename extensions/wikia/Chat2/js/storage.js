@@ -12,7 +12,7 @@ RedisStorage.prototype = {
 	onError: function(err) {
 		logger.error(err);
 	},
-
+	
 	_redisCallback: function(err, result, callback, errorMsg, errback, both, processResult) {
 		if (err) {
 			if (typeof errorMsg == 'string') {
@@ -27,7 +27,7 @@ RedisStorage.prototype = {
 		}
 		if (typeof both == "function") both(result);
 	},
-
+	
 	getListOfRooms: function(cityId, type, users, callback, errback) {
 		logger.debug("GET list of rooms");
 		var self = this;
@@ -41,10 +41,10 @@ RedisStorage.prototype = {
 				logger.warning("Warning: First room not found even though there were rooms a moment ago for cityId: " + cityId);
 				errback();
 			}
-
+			
 		}, errorMsg, errback);
 	},
-
+		
 	createChatRoom: function(cityId, extraDataString, type, users, callback, errback) {
 		var self = this;
 		self._incr(
@@ -97,19 +97,19 @@ RedisStorage.prototype = {
 			errback
 		);
 	},
-
+	
 	getRoomData: function(roomId, key, callback, errback) {
 		var roomKey = this.config.getKey_room(roomId);
 		if ( key === null )  {
 			this._hgetall(roomKey, callback,
-				"Warning: couldn't get hash data for room w/key '"+ roomKey + "': %error%",
+				"Warning: couldn't get hash data for room w/key '"+ roomKey + "': %error%", 
 				function(errorMsg){
 					logger.warning(errorMsg);
 					errback();
 				});
 		} else {
-			this._hget(roomKey, key, callback,
-					'Error: while getting ' + key +' of room: "'+ roomId + '": %error%',
+			this._hget(roomKey, key, callback, 
+					'Error: while getting ' + key +' of room: "'+ roomId + '": %error%', 
 					errback);
 		}
 	},
@@ -136,70 +136,75 @@ RedisStorage.prototype = {
 		}
 
 	},
-
+	
 	getRuntimeStats: function(callback, errback, both) {
 		this._hgetall(this.config.getKey_runtimeStats(), callback,
 				'Error while getting runtime stats: %error%',
 				errback, both);
 	},
-
+	
 	setRuntimeStats: function(data, callback, errback) {
 		this._hmset(this.config.getKey_runtimeStats(), data, callback,
 				'Error while setting runtime stats: %error%',
 				errback);
 	},
-
+	
 	getUserCount: function(callback, errback) {
 		this._hget(this.config.getKey_userCount(), 'count', callback,
 				'Error while getting user count: %error%',
 				errback);
 	},
-
+	
 	resetUserCount: function(callback, errback) {
 		this._hset(this.config.getKey_userCount(), 'count', 0, callback,
 				'Error while setting user count: %error%',
 				errback);
 	},
-
+	
 	increaseUserCount: function(count, callback, errback) {
 		this._hincrby(this.config.getKey_userCount(), 'count', count, callback,
 				'Error while increasing user count: %error%',
 				errback);
 	},
-
-    purgeAllMembers: function(callback, errback) {
-            var self = this;
-            self._keys(self.config.getKeyPrefix_usersInRoom()+":*", function(data) {
-                    _.each(data, function(usersInRoomKey) {
-                            var parts = usersInRoomKey.split(':');
-                            var roomId = parts[1];
-                            self.getRoomData(roomId, 'wgCityId', function(wgCityId) {
-                                logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
-                                self._del(usersInRoomKey, self._redis.print, null, self._redis.print);
-                            });
-                    });
-            },
-            'Error: while trying to get all room membership lists: %error%',
-            errback);
-    },
-
+	
+        purgeAllMembers: function(callback, errback) {
+                var self = this;
+                self._keys(self.config.getKeyPrefix_usersInRoom()+":*", function(data) {
+                        _.each(data, function(usersInRoomKey) {
+                                var parts = usersInRoomKey.split(':');
+                                var roomId = parts[1];
+                                self.getRoomData(roomId, 'wgCityId', function(wgCityId) {
+                                        if(self.config.validateConnection(wgCityId)) {
+                                                logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
+                                                self._del(usersInRoomKey, self._redis.print, null, self._redis.print);
+                                                logger.debug("\tCleaning users out of room with key: " + usersInRoomKey);
+                                        } else {
+                                                logger.debug("\tNot cleaning users out of room with key: " + usersInRoomKey);
+                                        }
+                                });
+                        });
+                },
+                'Error: while trying to get all room membership lists: %error%',
+                errback);
+        },
+	
 	getUsersAllowedInPrivateRoom: function(roomId, callback, errback) {
 		this._hkeys(this.config.getKey_usersAllowedInPrivRoom(roomId), callback,
 				'Error while getting users allowed in private room ' + roomId + ' %error%',
 				errback);
 	},
-
+	
 	countUsersInRoom: function(roomId, callback, errback) {
 		this._hlen(this.config.getKey_usersInRoom(roomId), callback,
 				'Error while couting users in room ' + roomId + ' %error%',
-				errback);
+				errback);		
 	},
-
+	
 	getUsersInRoom: function(roomId, callback, errback, both) {
 		var self = this;
 		self._hgetall(self.config.getKey_usersInRoom( roomId ), callback,
-			'Error while trying to find members of room ' + roomId + ' : %error%',
-			errback, both,
+			'Error while trying to find members of room ' + roomId + ' : %error%', 
+			errback, both, 
 			function(usernameToData) {
 				if (usernameToData) {
 				    for (var userName in usernameToData) {
@@ -210,47 +215,47 @@ RedisStorage.prototype = {
 			}
 		);
 	},
-
+	
 	getUserData: function(roomId, user, callback, errback, both) {
 		this._hget(this.config.getKey_usersInRoom(roomId), user, callback,
 			'Error while getting user ' + user + ' data for room ' + roomId +' : %error%',
-			errback, both,
+			errback, both, 
 			function(userData) {
 				return JSON.parse( userData );
 			}
 		);
 	},
-
+	
 	setUserData: function(roomId, user, userData, callback, errback, both) {
 		this._hset(this.config.getKey_usersInRoom(roomId), user, JSON.stringify(userData), callback,
 				'Error while setting user ' + user + ' data for room ' + roomId +' : %error%',
 				errback, both);
 	},
-
+	
 	removeUserData: function(roomId, user, callback, errback) {
 		this._hdel(this.config.getKey_usersInRoom(roomId), user, callback,
 				'Error while trying to remove user ' + user + ' from room ' + roomId + ' : %error%',
 				errback);
 	},
-
+	
 	deleteChatRoomEntries: function(roomId, callback, errback, both) {
 		this._del(this.config.getKey_chatEntriesInRoom(roomId), callback,
 				'Error while removing chat entries in room ' + roomId + ' %error%',
 				errback, both);
 	},
-
+	
 	getChatRoomEntries: function(roomId, start, end, callback, errback, both) {
-		this._lrange(this.config.getKey_chatEntriesInRoom(roomId), start, end, callback,
+		this._lrange(this.config.getKey_chatEntriesInRoom(roomId), start, end, callback, 
 				'Error while loading chat room ' + roomId + ' entries: %error%',
 				errback, both);
 	},
-
+	
 	getNextChatEntryId: function(callback, errback, both) {
 		this._incr('next.chatentry.id', callback,
 				'Error while getting next char entry id: %error%',
 				errback, both);
 	},
-
+	
 	addChatEntry: function(roomId, data, callback, errback, both) {
 		var self = this;
 		self._rpush(self.config.getKey_chatEntriesInRoom(roomId), data, function(result) {
@@ -261,11 +266,11 @@ RedisStorage.prototype = {
 		'Error while adding chat entry for room ' + roomId + ' : %error%',
 		null, both);
 	},
-
+	
 	getRoomState: function(roomId, both) {
 		var self = this;
 		var nodeChatModel = new self.models.NodeChatModel();
-
+		
 		self.getChatRoomEntries(roomId, (-1 * self.config.NUM_MESSAGES_TO_SHOW_ON_CONNECT), -1,
 		function(data) {
 			if (data) {
@@ -283,7 +288,7 @@ RedisStorage.prototype = {
 		function() {
 			// Load the initial userList - called after getChatRoomEntries callback
 			logger.debug("Finding members of roomId " + roomId);
-			self.getUsersInRoom(roomId, function(usernameToUser) {
+			self.getUsersInRoom(roomId, function(usernameToUser) { 
 				if(usernameToUser){
 					_.each(usernameToUser, function(userModel){
 						//logger.debug("Room member of " + roomId + ": ");
@@ -299,7 +304,7 @@ RedisStorage.prototype = {
 			});
 		});
 	},
-
+	
 	/**
 	 * To prevent the messages backlog from expanding indefinitely, we call this (currently when a message is added) to make
 	 * sure we're not storing too many messages.
@@ -320,99 +325,99 @@ RedisStorage.prototype = {
 		// Seems like this message can appear before purging :/
 		logger.debug("Done pruning any old messages in room (if needed).");
 	},
-
+	
 	info: function(callback, errback, both) {
 		var self = this;
 		this._rc.info(function(err, result) {
-			self._redisCallback(err, result, callback,
-					'Error while getting info: %error%', errback, both);
+			self._redisCallback(err, result, callback, 
+					'Error while getting info: %error%', errback, both);			
 		});
 	},
-
+	
 	_llen: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.llen(key, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_lrange: function(key, start, end, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.lrange(key, start, end, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hgetall: function(key, callback, errorMsg, errback, both, formatResult) {
 		var self = this;
 		self._rc.hgetall(key, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both, formatResult);
 		});
 	},
-
+	
 	_incr: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.incr(key, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hmset: function(key, data, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hmset(key, data, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_rpush: function(key, data, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.rpush(key, data, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hset: function(key, entryKey, entryValue, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hset(key, entryKey, entryValue, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hget: function(key, data, callback, errorMsg, errback, both, processResult) {
 		var self = this;
 		self._rc.hget(key, data, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both, processResult);
-		});
+		});		
 	},
-
+	
 	_hdel: function(key, entryKey, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hdel(key, entryKey, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_keys: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.keys(key, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
-		});
+		});	
 	},
-
+	
 	_hincrby: function(key, entryKey, entryValue, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hincrby(key, entryKey, entryValue, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hkeys: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hkeys(key, function(err, result) {
 			self._redisCallback(err, result, callback, errorMsg, errback, both);
 		});
 	},
-
+	
 	_hlen: function(key, callback, errorMsg, errback, both) {
 		var self = this;
 		self._rc.hlen(key, function(err, result) {
