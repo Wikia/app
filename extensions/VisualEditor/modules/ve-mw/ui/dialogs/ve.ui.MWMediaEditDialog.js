@@ -135,7 +135,8 @@ ve.ui.MWMediaEditDialog.static.pasteRules = ve.extendObject(
  * @inheritdoc
  */
 ve.ui.MWMediaEditDialog.prototype.initialize = function () {
-	var altTextFieldset, positionFieldset, borderField, positionField;
+	//var altTextFieldset, positionFieldset, borderField, positionField;
+	var positionFieldset;
 	// Parent method
 	ve.ui.Dialog.prototype.initialize.call( this );
 
@@ -169,7 +170,7 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 	} );
 
 	// Alt text
-	altTextFieldset = new OO.ui.FieldsetLayout( {
+	/* altTextFieldset = new OO.ui.FieldsetLayout( {
 		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-media-alttext-section' ),
 		'icon': 'parameter'
@@ -183,7 +184,7 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 
 	// Build alt text fieldset
 	altTextFieldset.$element
-		.append( this.altTextInput.$element );
+		.append( this.altTextInput.$element );*/
 
 	// Position
 	this.positionInput =  new OO.ui.ButtonSelectWidget( {
@@ -207,14 +208,14 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		} ),
 	], 0 );
 
-	this.positionCheckbox = new OO.ui.CheckboxInputWidget( {
+	/* this.positionCheckbox = new OO.ui.CheckboxInputWidget( {
 		'$': this.$
 	} );
 	positionField = new OO.ui.FieldLayout( this.positionCheckbox, {
 		'$': this.$,
 		'align': 'inline',
 		'label': ve.msg( 'visualeditor-dialog-media-position-checkbox' )
-	} );
+	} );*/
 
 	positionFieldset = new OO.ui.FieldsetLayout( {
 		'$': this.$,
@@ -224,12 +225,12 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 
 	// Build position fieldset
 	positionFieldset.$element.append( [
-		positionField.$element,
+		//positionField.$element,
 		this.positionInput.$element
 	] );
 
 	// Type
-	this.typeFieldset = new OO.ui.FieldsetLayout( {
+	/* this.typeFieldset = new OO.ui.FieldsetLayout( {
 		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-media-type-section' ),
 		'icon': 'parameter'
@@ -270,7 +271,7 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 	this.typeFieldset.$element.append( [
 		this.typeInput.$element,
 		borderField.$element
-	] );
+	] );*/
 
 	// Size
 	this.sizeFieldset = new OO.ui.FieldsetLayout( {
@@ -308,19 +309,19 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 
 	// Events
 	this.applyButton.connect( this, { 'click': [ 'close', { 'action': 'apply' } ] } );
-	this.positionCheckbox.connect( this, { 'change': 'onPositionCheckboxChange' } );
+	//this.positionCheckbox.connect( this, { 'change': 'onPositionCheckboxChange' } );
 	this.sizeWidget.connect( this, { 'change': 'onSizeWidgetChange' } );
-	this.typeInput.connect( this, { 'select': 'onTypeChange' } );
+	//this.typeInput.connect( this, { 'select': 'onTypeChange' } );
 
 	// Initialization
 	this.generalSettingsPage.$element.append( [
-		this.captionFieldset.$element,
-		altTextFieldset.$element
+		this.captionFieldset.$element
+		//altTextFieldset.$element
 	] );
 
 	this.advancedSettingsPage.$element.append( [
 		positionFieldset.$element,
-		this.typeFieldset.$element,
+		//this.typeFieldset.$element,
 		this.sizeFieldset.$element
 	] );
 
@@ -368,13 +369,13 @@ ve.ui.MWMediaEditDialog.prototype.onTypeChange = function ( item ) {
 			this.scalable.setEnforcedMax( false );
 		}
 		// Disable border option
-		this.borderCheckbox.setDisabled( true );
-		this.borderCheckbox.setValue( false );
+		//this.borderCheckbox.setDisabled( true );
+		//this.borderCheckbox.setValue( false );
 	} else {
 		// Don't limit maximum dimensions on basic and frameless images
 		this.scalable.setEnforcedMax( false );
 		// Enable border option
-		this.borderCheckbox.setDisabled( false );
+		//this.borderCheckbox.setDisabled( false );
 	}
 
 	// Re-validate the existing dimensions
@@ -489,18 +490,18 @@ ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
 	);
 
 	// Set initial alt text
-	this.altTextInput.setValue( this.mediaNode.getAttribute( 'alt' ) || '' );
+	//this.altTextInput.setValue( this.mediaNode.getAttribute( 'alt' ) || '' );
 
 	// Set initial position
 	if (
 		!this.mediaNode.getAttribute( 'align' ) ||
 		this.mediaNode.getAttribute( 'align' ) === 'none'
 	) {
-		this.positionCheckbox.setValue( false );
+		//this.positionCheckbox.setValue( false );
 		this.positionInput.setDisabled( true );
 		this.positionInput.selectItem( null );
 	} else {
-		this.positionCheckbox.setValue( true );
+		//this.positionCheckbox.setValue( true );
 		this.positionInput.setDisabled( false );
 		if ( this.mediaNode.getAttribute( 'align' ) === 'default' ) {
 			// Assume wiki default according to wiki dir
@@ -523,10 +524,10 @@ ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
 	}
 
 	// Border flag
-	this.borderCheckbox.setValue( !!this.mediaNode.getAttribute( 'borderImage' ) );
+	//this.borderCheckbox.setValue( !!this.mediaNode.getAttribute( 'borderImage' ) );
 
 	// Set image type
-	this.typeInput.selectItem( null );
+	/* this.typeInput.selectItem( null );
 	if ( this.mediaNode.getAttribute( 'type' ) !== undefined ) {
 		this.typeInput.selectItem(
 			this.typeInput.getItemFromData( this.mediaNode.getAttribute( 'type' ) )
@@ -536,7 +537,7 @@ ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
 		this.typeInput.selectItem(
 			this.typeInput.getItemFromData( 'none' )
 		);
-	}
+	}*/
 
 	// Initialization
 	this.captionSurface.$element.addClass( 'WikiaArticle' );
@@ -577,9 +578,10 @@ ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
 
 		// Get all the details and their fallbacks
 		imageSizeType = this.sizeWidget.getSizeType() || 'default';
-		imageType = this.typeInput.getSelectedItem() ? this.typeInput.getSelectedItem().getData() : '';
-		imageAlignmentCheckbox = this.positionCheckbox.getValue();
-		if ( imageAlignmentCheckbox && this.positionInput.getSelectedItem() ) {
+		//imageType = this.typeInput.getSelectedItem() ? this.typeInput.getSelectedItem().getData() : '';
+		//imageAlignmentCheckbox = this.positionCheckbox.getValue();
+		//if ( imageAlignmentCheckbox && this.positionInput.getSelectedItem() ) {
+		if ( this.positionInput.getSelectedItem() ) {
 			imageAlignmentValue = this.positionInput.getSelectedItem().getData();
 		}
 
@@ -589,19 +591,19 @@ ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
 			transactionAttributes.defaultSize = true;
 			originalDimensions = this.scalable.getOriginalDimensions();
 			// Figure out the default size
-			if ( imageType === 'thumb' || imageType === 'frame' ) {
+			/* if ( imageType === 'thumb' || imageType === 'frame' ) {
 				// Default is thumb-default unless the image is originally smaller
 				if ( originalDimensions.width > this.defaultThumbSize ) {
 					attr = this.scalable.getDimensionsFromValue( { 'width': this.defaultThumbSize } );
 				} else {
 					attr = originalDimensions;
 				}
-			} else {
+			} else {*/
 				// Default is full size
 				if ( originalDimensions ) {
 					attr = originalDimensions;
 				}
-			}
+			//}
 
 			// Apply
 			if ( attr ) {
@@ -619,7 +621,7 @@ ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
 		}
 
 		// Set alternate text
-		attr = $.trim( this.altTextInput.getValue() );
+		/* attr = $.trim( this.altTextInput.getValue() );
 		originalAlt = this.mediaNode.getAttribute( 'alt' );
 		// Allow the user to submit an empty alternate text but
 		// not if there was no alternate text originally to avoid
@@ -634,7 +636,7 @@ ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
 			originalAlt !== undefined
 		) {
 			transactionAttributes.alt = attr;
-		}
+		}*/
 
 		if ( !imageAlignmentCheckbox ) {
 			// Only change to 'none' if alignment was originally
@@ -668,19 +670,19 @@ ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
 		}
 
 		// Border
-		if (
+		/* if (
 			!this.borderCheckbox.isDisabled() &&
 			this.borderCheckbox.getValue() === true
 		) {
 			transactionAttributes.borderImage = true;
 		} else {
 			transactionAttributes.borderImage = false;
-		}
+		}*/
 
 		// Image type
-		if ( imageType ) {
+		/* if ( imageType ) {
 			transactionAttributes.type = imageType;
-		}
+		}*/
 		surfaceModel.change(
 			ve.dm.Transaction.newFromAttributeChanges( doc, this.mediaNode.getOffset(), transactionAttributes )
 		);

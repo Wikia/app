@@ -17,8 +17,6 @@
  * @cfg {Object} [defaults] Default dimensions
  */
 ve.ui.DimensionsWidget = function VeUiDimensionsWidget( config ) {
-	var labelTimes, labelPx;
-
 	// Configuration
 	config = config || {};
 
@@ -28,37 +26,17 @@ ve.ui.DimensionsWidget = function VeUiDimensionsWidget( config ) {
 	this.widthInput = new OO.ui.TextInputWidget( {
 		'$': this.$
 	} );
-	this.heightInput = new OO.ui.TextInputWidget( {
-		'$': this.$
-	} );
 
 	this.defaults = config.defaults || { 'width': '', 'height': '' };
 	this.renderDefaults();
 
-	labelTimes = new OO.ui.LabelWidget( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dimensionswidget-times' )
-	} );
-	labelPx = new OO.ui.LabelWidget( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dimensionswidget-px' )
-	} );
-
 	// Events
 	this.widthInput.connect( this, { 'change': 'onWidthChange' } );
-	this.heightInput.connect( this, { 'change': 'onHeightChange' } );
 
 	// Setup
 	this.$element
 		.addClass( 've-ui-dimensionsWidget' )
-		.append( [
-			this.widthInput.$element,
-			labelTimes.$element
-				.addClass( 've-ui-dimensionsWidget-label-times' ),
-			this.heightInput.$element,
-			labelPx.$element
-				.addClass( 've-ui-dimensionsWidget-label-px' )
-		] );
+		.append( this.widthInput.$element );
 };
 
 /* Inheritance */
@@ -69,11 +47,6 @@ OO.inheritClass( ve.ui.DimensionsWidget, OO.ui.Widget );
 
 /**
  * @event widthChange
- * @param {string} value The new width
- */
-
-/**
- * @event heightChange
  * @param {string} value The new width
  */
 
@@ -89,20 +62,11 @@ ve.ui.DimensionsWidget.prototype.onWidthChange = function ( value ) {
 };
 
 /**
- * Respond to height change, propagate the input change event
- * @param {string} value The new changed value
- * @fires heightChange
- */
-ve.ui.DimensionsWidget.prototype.onHeightChange = function ( value ) {
-	this.emit( 'heightChange', value );
-};
-
-/**
  * Set default dimensions
  * @param {Object} dimensions Default dimensions, width and height
  */
 ve.ui.DimensionsWidget.prototype.setDefaults = function ( dimensions ) {
-	if ( dimensions.width && dimensions.height ) {
+	if ( dimensions.width ) {
 		this.defaults = ve.copy( dimensions );
 		this.renderDefaults();
 	}
@@ -113,7 +77,6 @@ ve.ui.DimensionsWidget.prototype.setDefaults = function ( dimensions ) {
  */
 ve.ui.DimensionsWidget.prototype.renderDefaults = function () {
 	this.widthInput.$input.attr( 'placeholder', this.getDefaults().width );
-	this.heightInput.$input.attr( 'placeholder', this.getDefaults().height );
 };
 
 /**
@@ -149,7 +112,6 @@ ve.ui.DimensionsWidget.prototype.isEmpty = function () {
  */
 ve.ui.DimensionsWidget.prototype.clear = function () {
 	this.widthInput.setValue( '' );
-	this.heightInput.setValue( '' );
 };
 
 /**
@@ -163,14 +125,10 @@ ve.ui.DimensionsWidget.prototype.reset = function () {
  * Set the dimensions value of the inputs
  * @param {Object} dimensions The width and height values of the inputs
  * @param {number} dimensions.width The value of the width input
- * @param {number} dimensions.height The value of the height input
  */
 ve.ui.DimensionsWidget.prototype.setDimensions = function ( dimensions ) {
 	if ( dimensions.width ) {
 		this.setWidth( dimensions.width );
-	}
-	if ( dimensions.height ) {
-		this.setHeight( dimensions.height );
 	}
 };
 
@@ -178,12 +136,10 @@ ve.ui.DimensionsWidget.prototype.setDimensions = function ( dimensions ) {
  * Return the current dimension values in the widget
  * @returns {Object} dimensions The width and height values of the inputs
  * @returns {number} dimensions.width The value of the width input
- * @returns {number} dimensions.height The value of the height input
  */
 ve.ui.DimensionsWidget.prototype.getDimensions = function () {
 	return {
-		'width': this.widthInput.getValue(),
-		'height': this.heightInput.getValue()
+		'width': this.widthInput.getValue()
 	};
 };
 
@@ -197,9 +153,6 @@ ve.ui.DimensionsWidget.prototype.setDisabled = function ( isDisabled ) {
 	if ( this.widthInput ) {
 		this.widthInput.setDisabled( isDisabled );
 	}
-	if ( this.heightInput ) {
-		this.heightInput.setDisabled( isDisabled );
-	}
 };
 
 /**
@@ -211,25 +164,9 @@ ve.ui.DimensionsWidget.prototype.getWidth = function () {
 };
 
 /**
- * Get the current value in the height input
- * @returns {string} Input value
- */
-ve.ui.DimensionsWidget.prototype.getHeight = function () {
-	return this.heightInput.getValue();
-};
-
-/**
  * Set a value for the width input
  * @param {string} value
  */
 ve.ui.DimensionsWidget.prototype.setWidth = function ( value ) {
 	this.widthInput.setValue( value );
-};
-
-/**
- * Set a value for the height input
- * @param {string} value
- */
-ve.ui.DimensionsWidget.prototype.setHeight = function ( value ) {
-	this.heightInput.setValue( value );
 };
