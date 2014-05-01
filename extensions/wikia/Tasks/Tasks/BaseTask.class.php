@@ -128,8 +128,8 @@ abstract class BaseTask {
 	 * TODO: link this to the task runner that is currently running, and append to it's log. then return that as part
 	 * of retval
 	 */
-	public function log() {
-
+	public function log($line) {
+		
 	}
 
 	/**

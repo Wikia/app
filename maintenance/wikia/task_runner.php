@@ -9,7 +9,12 @@ $optionsWithArgs = [
 require_once(__DIR__."/../commandLine.inc");
 
 $runner = new TaskRunner($options['task_list'], $options['call_order'], $options['created_by']);
-echo json_encode($runner->run()->format());
+
+ob_start();
+$runner->run();
+ob_end_clean();
+
+echo json_encode($runner->format());
 
 class TaskRunner {
 	private $taskList = [];
@@ -38,6 +43,10 @@ class TaskRunner {
 			$task = $this->taskList[$classIndex];
 			list($method, $args) = $task->getCall($callIndex);
 			foreach ($args as $i => $arg) {
+				if (is_array($arg) || is_object($arg)) {
+					continue;
+				}
+
 				if (preg_match('/^#([0-9]+)$/', trim($arg), $match)) {
 					if (!isset($this->results[$match[1]])) {
 						throw new InvalidArgumentException;

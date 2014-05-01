@@ -9,8 +9,6 @@
 
 use Wikia\Tasks\Tasks\BaseTask;
 
-include_once( "$IP/extensions/CheckUser/install.inc" );
-
 class CreateNewWikiTask extends BaseTask {
 	const DEFAULT_USER = 'Default';
 
@@ -22,33 +20,34 @@ class CreateNewWikiTask extends BaseTask {
 	private $wikiLang;
 
 	public function init() {
+		global $IP;
+
 		parent::init();
 
 		$this->title = Title::newFromText( NS_MAIN, "Main" );
+		require_once( "$IP/extensions/CheckUser/install.inc" );
 	}
 
 	public function postCreationSetup( $params ) {
-		global $wgUser, $wgErrorLog, $wgDebugLogFile, $wgServer, $wgInternalServer;
+		global $wgUser, $wgErrorLog, $wgServer, $wgInternalServer;
 
-		$wgServer = rtrim( $params->url, '/' );
+		$wgServer = rtrim( $params['url'], '/' );
 		$wgInternalServer = $wgServer;
 
-		$debugLogFile = $wgDebugLogFile;
-		$wgDebugLogFile = 'php://stdout';
 		$wgErrorLog = false;
 
-		if ( $params->founderId ) {
-			Wikia::log( __METHOD__, 'user', "Loading user with user id = {$params->founderId}" );
-			$this->founder = User::newFromId( $params->founderId );
+		if ( $params['founderId'] ) {
+			Wikia::log( __METHOD__, 'user', "Loading user with user id = {$params['founderId']}" );
+			$this->founder = User::newFromId( $params['founderId'] );
 			$this->founder->load();
 		} else {
 			Wikia::log( __METHOD__, 'user', "Founder user_id is unknown" );
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
-			Wikia::log( __METHOD__, 'user', "Cannot load user with user_id = {$params->founderId}" );
-			if ( !empty( $params->founderName ) ) {
-				$this->founder = User::newFromName( $params->founderName );
+			Wikia::log( __METHOD__, 'user', "Cannot load user with user_id = {$params['founderId']}" );
+			if ( !empty( $params['founderName'] ) ) {
+				$this->founder = User::newFromName( $params['founderName'] );
 				$this->founder->load();
 			}
 		}
@@ -56,7 +55,7 @@ class CreateNewWikiTask extends BaseTask {
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			global $wgExternalAuthType;
 			if ( $wgExternalAuthType ) {
-				$extUser = ExternalUser::newFromName( $params->founderName );
+				$extUser = ExternalUser::newFromName( $params['founderName'] );
 				if ( is_object( $extUser ) ) {
 					$extUser->linkToLocal( $extUser->getId() );
 				}
@@ -65,8 +64,8 @@ class CreateNewWikiTask extends BaseTask {
 
 		$wgUser = User::newFromName( 'CreateWiki script' );
 
-		$this->wikiName = isset( $params->sitename ) ? $params->sitename : WikiFactory::getVarValueByName( 'wgSitename', $params->city_id, true );
-		$this->wikiLang = isset( $params->language ) ? $params->language : WikiFactory::getVarValueByName( 'wgLanguageCode', $params->city_id );
+		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
+		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
 
 		$this->moveMainPage();
 		$this->changeStarterContributions( $params );
@@ -75,13 +74,11 @@ class CreateNewWikiTask extends BaseTask {
 		$this->protectKeyPages();
 		$this->sendRevisionToScribe();
 
-		$hookParams = [ 'title' => $params->sitename, 'url' => $params->url, 'city_id' => $params->city_id ];
+		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
-		if ( empty( $params->disableCompleteHook ) ) {
+		if ( empty( $params['disableCompleteHook'] ) ) {
 			wfRunHooks( 'CreateWikiLocalJob-complete', array( $hookParams ) );
 		}
-
-		$wgDebugLogFile = $debugLogFile;
 
 		return true;
 	}
@@ -119,6 +116,8 @@ class CreateNewWikiTask extends BaseTask {
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( WikiFactory::getVarsKey( $wgCityId ) );
+
+		return true;
 	}
 
 	/**
@@ -204,13 +203,13 @@ class CreateNewWikiTask extends BaseTask {
 	private function changeStarterContributions( $params ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$contributor = User::newFromName( self::DEFAULT_USER );
+		$lastRevTimestamp = 0;
 
 		/**
 		 * BugId:15644 - We want to change contributions only for
 		 * revisions created during the starter import - (timestamp not
 		 * greater than the timestamp of the latest starter revision.
 		 */
-		$sCondsRev = array();
 		$updateSql = ( new WikiaSQL() )
 			->UPDATE( 'revision' )
 			->SET( 'rev_user', $contributor->getId() )
@@ -220,11 +219,11 @@ class CreateNewWikiTask extends BaseTask {
 		/**
 		 * determine the timestamp of the latest starter revision
 		 */
-		if ( !empty( $params->sDbStarter ) ) {
-			$starterDb = wfGetDb( DB_SLAVE, array(), $params->sDbStarter );
+		if ( !empty( $params['sDbStarter'] ) ) {
+			$starterDb = wfGetDb( DB_SLAVE, array(), $params['sDbStarter'] );
 
 			if ( is_object( $starterDb ) ) {
-				( new WikiaSQL() )
+				$lastRevTimestamp = ( new WikiaSQL() )
 					->SELECT( 'max(rev_timestamp)' )->AS_( 'rev_timestamp' )
 					->FROM( 'revision' )
 					->run( $starterDb, function ( ResultWrapper $res ) use ( $updateSql ) {
@@ -234,14 +233,14 @@ class CreateNewWikiTask extends BaseTask {
 							$updateSql->WHERE( 'rev_timestamp' )->LESS_THAN_OR_EQUAL( $row->rev_timestamp );
 						}
 
-						return;
+						return $row->rev_timestamp;
 					} );
 
 				$starterDb->close();
 			}
 		}
 
-		Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$sCondsRev}" );
+		Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$lastRevTimestamp}" );
 
 		$updateSql->run( $dbw );
 		$rows = $dbw->affectedRows();

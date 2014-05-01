@@ -33,9 +33,9 @@ class TaskExecutors {
 	private static $modernExecutors = [
 		'BloglistDeferredPurgeJob',
 		'BlogTask',
-		'ParsoidCacheUpdateJob',
 		'CreatePdfThumbnailsJob',
 		'CreateWikiLocalJob',
+		'ParsoidCacheUpdateJob',
 	];
 
 	static function isLegacy($taskName) {
