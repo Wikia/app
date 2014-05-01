@@ -33,7 +33,11 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( model, confi
 	this.$back = this.$( '<div>' );
 	this.$front = this.$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
-	this.check = new OO.ui.ButtonWidget( { '$': this.$, 'icon': 'unchecked' } );
+	this.check = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'icon': 'unchecked',
+		'frameless': true
+	} );
 
 	// Events
 	this.$image

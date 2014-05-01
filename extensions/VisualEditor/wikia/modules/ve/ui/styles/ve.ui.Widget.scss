@@ -4,6 +4,11 @@
 
 /* Button */
 
+.oo-ui-buttonWidget {
+	white-space: nowrap;
+}
+
+// Is this used any longer?
 .oo-ui-iconButtonWidget .oo-ui-buttonWidget-button {
 	&:hover,
 	&:focus {

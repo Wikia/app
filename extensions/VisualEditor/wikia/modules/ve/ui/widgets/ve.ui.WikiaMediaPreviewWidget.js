@@ -17,7 +17,8 @@ ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 	this.closeButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'title': ve.msg( 'visualeditor-dialog-action-close' ),
-		'icon': 'close'
+		'icon': 'close',
+		'frameless': true
 	} );
 
 	this.$titlebar = this.$( '<div>' )

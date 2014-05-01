@@ -22,7 +22,7 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
 		'flags': ['constructive']
 	};
-	if ( !config.hideIcon ) {
+	if ( config.icon ) {
 		uploadButtonConfig.icon = 'upload-small';
 	}
 

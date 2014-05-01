@@ -96,7 +96,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
 	this.timings = {};
-	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$ } );
 
 	this.$cart = this.$( '<div>' );
 	this.$content = this.$( '<div>' );
@@ -113,7 +113,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$policyReadMoreLink = this.$( '<a>' )
 		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-read-more' ) );
 	this.$policyReadMore.append( this.$policyReadMoreLink );
-
+	// Core VE used to pass VeUiSurface to this constructor. Getting it now with DOM traversal.
+	this.$globalOverlay = this.$frame.closest('.ve-ui-surface-overlay-global');
 
 	// Events
 	this.cartModel.connect( this, {
@@ -160,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
-	this.$overlay.append( this.mediaPreview.$element );
+	this.$globalOverlay.append( this.mediaPreview.$element );
 };
 
 
