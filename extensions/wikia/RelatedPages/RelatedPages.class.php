@@ -459,6 +459,7 @@ class RelatedPages {
 
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
+		// File pages handle their own rendering of related pages wrapper
 		if ( ( $skin === 'oasis' || $skin === 'monobook') && $wgTitle->getNamespace() !== NS_FILE ){
 			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}

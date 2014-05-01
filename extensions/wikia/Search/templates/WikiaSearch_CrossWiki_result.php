@@ -1,17 +1,16 @@
 <?php
 	// get wiki thumbnail and thumbnail tracking
-	$image = $result['image_s'];
 	$isOnWikiMatch = isset($result['onWikiMatch']) && $result['onWikiMatch'];
-	if (! empty( $image ) ) {
-		$thumbWidth  = 180;
-		$thumbHeight = 120;
+	$imageFileName = PromoImage::fromPathname($result['image_s'])->ensureCityIdIsSet($result['id'])->getPathname();
 
-		$targetWikiId = (new CityVisualization)->getTargetWikiId( $result['lang_s'] );
-		$imageURL = ImagesService::getImageSrcByTitle( $targetWikiId, $result['image_s'], $thumbWidth, $thumbHeight );
-		$imageURL = ImagesService::overrideThumbnailFormat( $imageURL, ImagesService::EXT_JPG );
+	$imageOriginalURL = ImagesService::getImageSrcByTitle( $corporateWikiId, $imageFileName,
+		WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH, WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT );
+	if (! empty( $imageOriginalURL ) ) {
+		$imageURL = ImagesService::overrideThumbnailFormat( $imageOriginalURL, ImagesService::EXT_JPG );
 
 		$thumbTracking = 'class="wiki-thumb-tracking" data-pos="' . $pos . '" data-event="search_click_wiki-thumb"';
 	}
+
 	if ( empty( $imageURL ) ) {
 		// display placeholder image if no thumbnail
 		$imageURL = $wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';

@@ -58,8 +58,7 @@ var send = function(data) {
 
 exports.trackServerStart = function() {
 	var data = {
-		"action": "server_start",
-		"server_id": config.INSTANCE
+		"action": "server_start"
 	};
 
 	send(data);
@@ -80,8 +79,7 @@ exports.trackEvent = function(client, action) {
 		"room_id": client.roomId,
 		"city_id": client.cityId,
 		"privateroom": client.privateRoom,
-		"action": action,
-		"server_id": config.INSTANCE
+		"action": action
 	};
 
 	send(data);

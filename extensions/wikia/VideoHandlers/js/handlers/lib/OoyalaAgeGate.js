@@ -188,6 +188,37 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.consoleLog("EVENT: onPlayerCreate");
         },
 
+        validateAgeRequired: function() {
+            if(this.ageRequired && !this.ageVerified) {
+                var action = this.readCookies();
+                if(action != 'pass') {
+                    this.seek(0);
+                    this.pause();
+                    this.ageGateRoot.show();
+                    // wikia change begin
+                    if ($('.wkMobile').length !== 0) {
+                        this.repositionAgeGate();
+                    }
+                    // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
+                    // and we have to exit
+                    if(this.isMobile) {
+                        this.playerRoot.find('video')[0].webkitExitFullScreen();
+                    }
+                    if(this.isOldIE) {
+                        this.playerElementRoot.hide();
+                    }
+                    if(action == 'fail') {
+                        this.failAgeValidation();
+                        return false;
+                    }
+                    else
+                        if(action == 'check') {
+                            return false;
+                    }
+                }
+            }
+        },
+
         buildAgeGateUI: function () {
             var ag = NaN;
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -233,6 +264,8 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
             this.ageGateRoot.find('.title').html(this.content.title);
 
             this.consoleLog("EVENT: onContentReady (" + this.duration + ")");
+
+            this.validateAgeRequired();
         },
 
         // Handles PLAYHEAD_TIME_CHANGED event
@@ -248,62 +281,24 @@ OO.plugin("AgeGateModule", function (OO, _, $, W) {
 
         onWillPlayAds: function(funcLabel, data) {
             this.currentPlaybackType = 'ad';
-
             this.onPlay();
-
             this.consoleLog("EVENT: onWillPlayAds");
         },
 
         onAdsPlayed: function(funcLabel, data) {
             this.currentPlaybackType = 'content';
-
             this.consoleLog("EVENT: onAdsPlayed");
         },
 
         onPlay: function () {
             this.consoleLog("EVENT: onPlay");
-
-            if(this.ageRequired && !this.ageVerified) {
-                var action = this.readCookies();
-
-                if(action != 'pass') {
-                    this.seek(0);
-                    this.pause();
-                    this.ageGateRoot.show();
-                    // wikia change begin
-                    if ($('.wkMobile').length !== 0) {
-                        this.repositionAgeGate();
-                    }
-                    // wikia change end
-
-                    // If this is the HTML5 player, it may well be in full-screen (e.g. iPhone),
-                    // and we have to exit
-                    if(this.isMobile) {
-                        this.playerRoot.find('video')[0].webkitExitFullScreen();
-                    }
-
-                    if(this.isOldIE) {
-                        this.playerElementRoot.hide();
-                    }
-
-                    if(action == 'fail') {
-                        this.failAgeValidation();
-
-                        return false;
-                    } else if(action == 'check') {
-
-                        return false;
-                    }
-                }
-            }
-
+            this.validateAgeRequired();
             this.playing = true;
         },
 
         onPause: function () {
             this.pause();
             this.playing = false;
-
             this.consoleLog("EVENT: onPause");
         },
 

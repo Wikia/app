@@ -12,17 +12,21 @@ describe('AdConfig2Late', function () {
 
 		it('getProvider returns Liftium if it can handle it', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {},
 			abTestMock = {inGroup: function () {return false;}},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -34,17 +38,21 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Null if Liftium cannot handle it', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return false;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {},
 			abTestMock = {inGroup: function () {return false;}},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -56,17 +64,21 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia)', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {wgAdDriverUseSevenOneMedia: true},
 			abTestMock = {inGroup: function () {return false;}},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -78,6 +90,7 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Null for 71M disaster recovery with wgAdDriverUseSevenOneMedia', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
@@ -87,12 +100,15 @@ describe('AdConfig2Late', function () {
 					return (experiment === 'SEVENONEMEDIA_DR' && group === 'DISABLED');
 				}
 			},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -104,6 +120,7 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Liftium for 71M disaster recovery without wgAdDriverUseSevenOneMedia', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
@@ -113,12 +130,15 @@ describe('AdConfig2Late', function () {
 					return (experiment === 'SEVENONEMEDIA_DR' && group === 'DISABLED');
 				}
 			},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -130,17 +150,21 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Null for IE8 with wgAdDriverUseSevenOneMedia', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {wgAdDriverUseSevenOneMedia: true, navigator: {userAgent: uaIE8}},
 			abTestMock = {inGroup: function () {}},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -151,17 +175,21 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Liftium for IE8 without wgAdDriverUseSevenOneMedia', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {wgAdDriverUseSevenOneMedia: false, navigator: {userAgent: uaIE8}},
 			abTestMock = {inGroup: function () {}},
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,
@@ -172,17 +200,21 @@ describe('AdConfig2Late', function () {
 
 	it('getProvider returns Liftium without AbTest', function() {
 		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
 			logMock = function() {},
 			windowMock = {wgAdDriverUseSevenOneMedia: false},
 			abTestMock,
+			geoMock = { getCountryCode: function() { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
 			logMock,
 			windowMock,
 			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderRemnantGpt,
 			adProviderNullMock,

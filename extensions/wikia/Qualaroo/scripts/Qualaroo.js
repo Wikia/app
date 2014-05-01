@@ -10,12 +10,14 @@
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
 	}
+
 	_kiq.push(['set', {
 		'userLanguage': window.wgUserLanguage,
 		'contentLanguage': window.wgContentLanguage,
 		'pageType': window.wikiaPageType,
 		'isCorporatePage': (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
-		'verticalName': window.verticalName
+		'verticalName': window.verticalName,
+		'visitorType': window.visitorType
 	}]);
 
 	window._kiq = _kiq;

@@ -15,10 +15,12 @@ describe('AdProviderEvolve', function(){
 			, documentMock
 			, kruxMock
 			, evolveHelperMock = {}
-			, adProviderEvolve;
+			, adProviderEvolve
+			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
+			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -42,10 +44,11 @@ describe('AdProviderEvolve', function(){
 			, adProviderEvolve
 			, expected
 			, actual
+			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
 			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
 		);
 
 		windowMock.wgDBname = 'somedb';
@@ -77,10 +80,12 @@ describe('AdProviderEvolve', function(){
 			, windowMock = {wgInsideUnitTest: true}
 			, kruxMock = {}
 			, evolveHelperMock = {}
-			, adProviderEvolve;
+			, adProviderEvolve
+			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
+			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');

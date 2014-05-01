@@ -708,4 +708,18 @@ class WikiaFileHelper extends Service {
 		return $fullUrl;
 	}
 
+	/**
+	 * Get message for by user section
+	 * @param string $userName
+	 * @param string $addedAt
+	 * @return string $addedBy
+	 */
+	public static function getByUserMsg( $userName, $addedAt ) {
+		// get link to user page
+		$link = AvatarService::renderLink( $userName );
+		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
+
+		return $addedBy;
+	}
+
 }

@@ -137,9 +137,12 @@
 					}
 
 					// Display video inline, don't open lightbox
-					isVideo = $this.children('.Wikia-video-play-button').length;
-					if ((isVideo && $thumb.width() >= self.videoThumbWidthThreshold) &&
-						(!$this.hasClass('force-lightbox'))) {
+					isVideo = $this.children('.play-circle').length;
+					if (
+						isVideo &&
+						$thumb.width() >= self.videoThumbWidthThreshold &&
+						!$this.hasClass('force-lightbox')
+					) {
 						clickSource = window.wgWikiaHubType ?
 							LightboxTracker.clickSource.HUBS :
 							LightboxTracker.clickSource.EMBED;

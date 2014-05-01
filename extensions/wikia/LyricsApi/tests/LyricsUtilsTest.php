@@ -118,4 +118,65 @@ class LyricsUtilsTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @param String $message
+	 * @param String $input
+	 * @param String $expected
+	 *
+	 * @dataProvider removeBracketsDataProvider
+	 */
+	public function testRemoveBrackets( $message, $input, $expected ) {
+		$this->assertEquals( $expected, LyricsUtils::removeBrackets( $input ), $message );
+	}
+
+	public function removeBracketsDataProvider() {
+		return [
+			[
+				'empty string',
+				'',
+				''
+			],
+			[
+				'empty parenthesis',
+				'()',
+				''
+			],
+			[
+				'parenthesis at the end',
+				'Happy (From "Despicable Me 2")',
+				'Happy'
+			],
+			[
+				'two parenthesis at the end',
+				'Happy (From "Despicable Me 2") (German version)',
+				'Happy'
+			],
+			[
+				'two parenthesis at the end',
+				'Happy (From "Despicable Me 2") (German version)',
+				'Happy'
+			],
+			[
+				'square brackets',
+				'Take My Hand [ Remix] [feat. Cassadee Pope]',
+				'Take My Hand'
+			],
+			[
+				'all kinds of brackets',
+				'Give Me Everything (Tonight) (Prod. By Afrojack) (Final) ( 2o11 ) [ www.example.com ]',
+				'Give Me Everything'
+			],
+			[
+				'an opened parenthesis but not closed',
+				'Give Me Everything (Tonight',
+				'Give Me Everything (Tonight'
+			],
+			[
+				'an opened square bracket but not closed',
+				'Give Me Everything [Tonight',
+				'Give Me Everything [Tonight'
+			],
+		];
+	}
 }

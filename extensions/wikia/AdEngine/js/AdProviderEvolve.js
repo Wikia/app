@@ -10,8 +10,9 @@ define('ext.wikia.adEngine.provider.evolve', [
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicPageParamsLegacy',
 	'ext.wikia.adEngine.krux',
-	'ext.wikia.adEngine.evolveHelper'
-], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper) {
+	'ext.wikia.adEngine.evolveHelper',
+	'ext.wikia.adEngine.evolveSlotConfig'
+], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper, evolveSlotConfig) {
 	'use strict';
 
 	var slotMap,
@@ -23,14 +24,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		iface,
 		undef;
 
-	slotMap = {
-		'HOME_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'HOME_TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
-		'HUB_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'LEFT_SKYSCRAPER_2': {'tile': 3, 'size': '160x600'},
-		'TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'}
-	};
+	slotMap = evolveSlotConfig.getConfig();
 
 	function hasEmbed(slot) {
 		log(['hasEmbed', slot], 5, logGroup);
@@ -227,15 +221,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 5, logGroup);
 
-		if (slotMap[slotname]) {
-			return true;
-		}
-
-		if (slotname === slotForSkin) {
-			return true;
-		}
-
-		return false;
+		return evolveSlotConfig.canHandleSlot(slotname);
 	}
 
 	iface = {

@@ -12,6 +12,8 @@ class CityVisualization extends WikiaModel {
 	const CITY_VISUALIZATION_TABLE_NAME = 'city_visualization';
 	const CITY_VISUALIZATION_IMAGES_TABLE_NAME = 'city_visualization_images';
 
+	const MEMC_IMAGE_NAMES_EXPIRATION_TIME = 86400; // 60 * 60 * 24
+
 	const PROMOTED_SLOTS = 3;
 	const PROMOTED_ARRAY_KEY = 'promoted';
 	const DEMOTED_ARRAY_KEY = 'demoted';
@@ -299,7 +301,7 @@ class CityVisualization extends WikiaModel {
 			'wikiid' => $row->city_id,
 			'wikiname' => $row->city_title,
 			'wikiurl' => $row->city_url,
-			'main_image' => $row->city_main_image,
+			'main_image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 			'wikiofficial' => $this->isOfficialWiki($row->city_flags),
 			'wikipromoted' => $this->isPromotedWiki($row->city_flags),
 		];
@@ -452,10 +454,6 @@ class CityVisualization extends WikiaModel {
 		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
 	}
 
-	public function getWikiImagesCacheKey($wikiId, $langCode) {
-		return $this->getVisualizationElementMemcKey('wiki_data_visualization_images', $wikiId, $langCode);
-	}
-
 	public function getWikiImageNamesCacheKey($wikiId, $langCode) {
 		return $this->getVisualizationElementMemcKey('wiki_data_visualization_image_names', $wikiId, $langCode);
 	}
@@ -563,20 +561,34 @@ class CityVisualization extends WikiaModel {
 		return $conditions;
 	}
 
-	public function getWikiImages($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
+	public function notCachedGetWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = $this->getWikiImagesCacheKey($wikiId, $langCode);
-		$wikiImages = $this->wg->Memc->get($memKey);
+		$wikiImageNames = array();
+		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
+		$conditions = $this->getWikiImagesConditions($wikiId, $langCode, $filter);
 
-		if (empty($wikiImages)) {
-			$rowAssigner = new WikiImageRowHelper();
-			$wikiImages = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
-			$this->wg->Memc->set($memKey, $wikiImages, 60 * 60 * 24);
+		$result = $db->select(
+			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
+			array(
+				'image_name',
+				'image_index'
+			),
+			$conditions,
+			__METHOD__
+		);
+
+		while ($row = $result->fetchObject()) {
+			$parsed = WikiImageRowHelper::parseWikiImageRow($row);
+			$promoImage = PromoImage::fromPathname($parsed->name);
+			//skip invalid promo image names
+			if ($promoImage->isValid()) {
+				$wikiImageNames[$parsed->index] = $promoImage->getPathname();
+			}
 		}
-		wfProfileOut(__METHOD__);
 
-		return $wikiImages;
+		wfProfileOut(__METHOD__);
+		return $wikiImageNames;
 	}
 
 	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
@@ -586,41 +598,12 @@ class CityVisualization extends WikiaModel {
 		$wikiImageNames = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImageNames)) {
-			$rowAssigner = new WikiImageNameRowHelper();
-			$wikiImageNames = $this->getWikiImageData($wikiId, $langCode, $rowAssigner, $filter);
-			$this->wg->Memc->set($memKey, $wikiImageNames, 60 * 60 * 24);
+			$wikiImageNames = $this->notCachedGetWikiImageNames($wikiId, $langCode, $filter);
+			$this->wg->Memc->set($memKey, $wikiImageNames, self::MEMC_IMAGE_NAMES_EXPIRATION_TIME);
 		}
 		wfProfileOut(__METHOD__);
 
 		return $wikiImageNames;
-	}
-
-	public function getWikiImageData($wikiId, $langCode, WikiImageRowAssigner $rowAssigner, $filter = ImageReviewStatuses::STATE_APPROVED) {
-		wfProfileIn(__METHOD__);
-
-		$wikiImages = array();
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-
-		$conditions = $this->getWikiImagesConditions($wikiId, $langCode, $filter);
-
-		$result = $db->select(
-			array(self::CITY_VISUALIZATION_IMAGES_TABLE_NAME),
-			array(
-				'image_name',
-				'image_index',
-				'image_review_status',
-			),
-			$conditions,
-			__METHOD__
-		);
-
-		while ($row = $result->fetchObject()) {
-			$wikiImages[$row->image_index] = $rowAssigner->returnParsedWikiImageRow($row);
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $wikiImages;
 	}
 
 	public function saveImagesForReview($cityId, $langCode, $images, $imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED) {
@@ -644,11 +627,7 @@ class CityVisualization extends WikiaModel {
 		foreach ($newImages as $image) {
 			$imageData = new stdClass();
 
-			$imageIndex = 0;
-			$matches = array();
-			if (preg_match('/Wikia-Visualization-Add-([0-9])\.png/', $image, $matches)) {
-				$imageIndex = intval($matches[1]);
-			}
+			$imageIndex = PromoImage::fromPathname($image)->ensureCityIdIsSet($cityId)->getType();
 
 			$title = Title::newFromText($image, NS_FILE);
 
@@ -801,7 +780,7 @@ class CityVisualization extends WikiaModel {
 		return $wikiImages;
 	}
 
-	public function getImageReviewStatus($wikiId, $pageId, WikiImageRowAssigner $rowAssigner) {
+	public function getImageReviewStatus($wikiId, $pageId) {
 		wfProfileIn(__METHOD__);
 		$reviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
 
@@ -819,7 +798,7 @@ class CityVisualization extends WikiaModel {
 		);
 
 		while ($row = $result->fetchObject()) {
-			$reviewStatus = $rowAssigner->returnParsedWikiImageRow($row);
+			$reviewStatus = WikiImageRowHelper::parseWikiImageRow($row)->review_status;
 		}
 
 		wfProfileOut(__METHOD__);

@@ -28,7 +28,7 @@
 			margin: 0;
 		}
 	}
-	
+
 	.Wikia-video-play-button {
 		margin: auto;
 	}
@@ -72,25 +72,9 @@
 
 		li {
 			list-style: none;
-			border: solid 1px $color-page-border;
 			float: left;
-			margin: 4px 4px 4px 0;
+			margin: 0 10px 10px 0;
 			position: relative;
-
-			a {
-				cursor: pointer;
-				display: table-cell;
-				text-align: center;
-				vertical-align: middle;
-				width: 160px;
-				padding: 5px 0;
-
-				// anchors that lead to images have a set height
-				&[data-image-link] {
-					height: 160px;
-					padding: 0;
-				}
-			}
 		}
 	}
 

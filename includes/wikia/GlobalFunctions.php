@@ -660,79 +660,6 @@ function wfGetCurrentUrl( $as_string = false ) {
 	return ( $as_string ) ? $arr[ "url" ]: $arr ;
 }
 
-/**
- * @TODO: remove?
- */
-global $wgAjaxExportList;
-$wgAjaxExportList[] = 'getMenu';
-function getMenu() {
-	global $wgRequest, $wgMemc, $wgScript;
-	$content = '';
-
-	$id = $wgRequest->getVal('id');
-	if($id) {
-		$menuArray = $wgMemc->get($id);
-		if(!empty($menuArray['magicWords'])) {
-			$JSurl = Xml::encodeJsVar($wgScript . '?action=ajax&rs=getMenu&v=' . $wgRequest->getVal('v') .
-				'&words=' . urlencode(implode(',', $menuArray['magicWords'])));
-
-			$content .= "wsl.loadScriptAjax({$JSurl}, function() {\n";
-			unset($menuArray['magicWords']);
-
-			$usingCallback = true;
-		}
-
-		// fallback (RT #20893)
-		if ($menuArray === null) {
-			$menuArray = array('mainMenu' => array());
-		}
-
-		$content .= 'window.menuArray = '.json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
-		$duration = 60 * 60 * 24 * 7; // one week
-
-		// close JS code
-		if(!empty($usingCallback)) {
-			$content .= "\n});";
-		}
-	}
-
-	$words = urldecode($wgRequest->getVal('words'));
-	if($words) {
-		$magicWords = array();
-		$map = array('voted' => array('highest_ratings', 'GetTopVotedArticles'), 'popular' => array('most_popular', 'GetMostPopularArticles'), 'visited' => array('most_visited', 'GetMostVisitedArticles'), 'newlychanged' => array('newly_changed', 'GetNewlyChangedArticles'), 'topusers' => array('community', 'GetTopFiveUsers'));
-		$words = explode(',', $words);
-		foreach($words as $word) {
-			if(isset($map[$word])) {
-				$magicWords[$word] = DataProvider::$map[$word][1]();
-				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$map[$word][0])->getLocalURL(), 'text' => '-more-');
-				if($word == 'popular') {
-					$magicWords[$word][] = array('className' => 'Monaco-sidebar_edit', 'url' => Title::makeTitle(NS_MEDIAWIKI, 'Most popular articles')->getLocalUrl(), 'text' => '-edit-');
-				}
-			} else if(substr($word, 0, 8) == 'category') {
-				$name = substr($word, 8);
-				$articles = getMenuHelper($name);
-				foreach($articles as $key => $val) {
-					$title = Title::newFromId($val);
-					if(is_object($title)) {
-						$magicWords[$word][] = array('text' => $title->getText(), 'url' => $title->getLocalUrl());
-					}
-				}
-				$magicWords[$word][] = array('className' => 'Monaco-sidebar_more', 'url' => Title::makeTitle(NS_CATEGORY, $name)->getLocalURL(), 'text' => '-more-');
-			}
-		}
-		$content .= 'window.magicWords = '.json_encode($magicWords).';';
-		$duration = 60 * 60 * 12; // two days
-	}
-
-	if(!empty($content)) {
-		header("Content-Type: text/javascript");
-//		header("Content-Length: " . strlen($content) );
-		header("Cache-Control: s-maxage={$duration}, must-revalidate, max-age=0");
-		header("X-Pass-Cache-Control: max-age={$duration}");
-		echo $content;
-		exit();
-	}
-}
 
 function getMenuHelper($name, $limit = 7) {
 	global $wgMemc;
@@ -1017,8 +944,12 @@ function wfUrlencodeExt($s_url) {
  * Given a timestamp, converts it to the "x minutes/hours/days ago" format.
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>, Sean Colombo
+ *
+ * @param string $stamp
+ * @param boolean $hideCurrentYear
+ * @return string
  */
-function wfTimeFormatAgo($stamp){
+function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ){
 	wfProfileIn(__METHOD__);
 	global $wgLang;
 
@@ -1053,7 +984,10 @@ function wfTimeFormatAgo($stamp){
 	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
 		//remove year from user's date format
-		$format = trim($wgLang->getDateFormatString('date', 'default'), ' ,yY');
+		$format = $wgLang->getDateFormatString( 'date', 'default' );
+		if ( $hideCurrentYear ) {
+			$format = trim( $format, ' ,yY' );
+		}
 		$res = $wgLang->sprintfDate($format, wfTimestamp(TS_MW, $stamp));
 	}
 

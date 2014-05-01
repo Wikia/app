@@ -517,7 +517,6 @@ return array(
 		'scripts' => array(
 			'resources/mediawiki/mediawiki.js',
 			'resources/wikia/wikia.mediawiki.js',
-//            'skins/wikia/js/WikiaScriptLoader.js',
         ),
         // Wikia change - end
 		'debugScripts' => 'resources/mediawiki/mediawiki.log.js',

@@ -51,7 +51,6 @@
 		public function videosModuleDataProvider() {
 			$requestParams1 = [
 				'articleId' => null,
-				'verticalOnly' => null,
 				'limit' => null,
 				'local' => null,
 				'sort' => null,
@@ -63,19 +62,9 @@
 				'videos' => [],
 			];
 
-			$requestParams2 = [
-				'articleId' => null,
-				'verticalOnly' => false,
-				'limit' => null,
-				'local' => null,
-				'sort' => null,
-			];
-
 			return [
 				// Related videos + no article id
 				[ $requestParams1, $expectedData1 ],
-				// Related videos + no article id + verticalOnly = false
-				[ $requestParams2, $expectedData1 ],
 			];
 		}
 

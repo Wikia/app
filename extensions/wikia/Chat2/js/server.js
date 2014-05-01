@@ -1,112 +1,151 @@
 /** REQUIRES, OTHER SETUP **/
 var config = require("./server_config.js");
+var cluster = require('cluster');
+// redis store is necessary to support more than 1 process
+var RedisStore = require('socket.io/lib/stores/redis')
+  , redis  = require('socket.io/node_modules/redis')
+  , pub    = redis.createClient()
+  , sub    = redis.createClient()
+  , client = redis.createClient();
+redisStore = new RedisStore({
+		  redisPub : pub
+		, redisSub : sub
+		, redisClient : client
+		});
 
-var app = require('express').createServer()
-    , jade = require('jade')
-    , sio = require('./lib/socket.io.8.7/socket.io.js')
-    , _ = require('underscore')._
-    , Backbone = require('backbone')
-    , storage = require('./storage').redisFactory()
-    , models = require('./models/models')
-    , mwBridge = require('./WMBridge.js').WMBridge
-    , loggerModule = require('./logger.js')
-    , tracker = require('./tracker.js')
-    , logger = loggerModule.logger;
-var http = require("http");
+if (cluster.isMaster) {
+  // Fork workers.
+	var numCPUs = require('os').cpus().length;
+	numCPUs = 4;  // just hardcode to 4 for now
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
 
-var monitoring = require('./monitoring.js');
-monitoring.startMonitoring(50000, storage);
-// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
-//process.on('uncaughtException', function (err) {
-//  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
-//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
-//	process.exit(1);
-//});
+  cluster.on('online', function(worker) {
+    console.log('A worker with #' + worker.id);
+  });
+  cluster.on('listening', function(worker, address) {
+    console.log('A worker is now connected to ' + address.address + ':' + address.port);
+  });
+  cluster.on('exit', function(worker, code, signal) {
+    console.log('worker ' + worker.process.pid + ' died');
+  });
 
-/** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
+} else {
 
-// This includes and starts the API server (which MediaWiki makes requests to).
-logger.info("== Starting the API Server ==");
-require("./server_api.js");
+	var app = require('express').createServer()
+	    , jade = require('jade')
+	    , sio = require('./lib/socket.io.8.7/socket.io.js')
+	    , _ = require('underscore')._
+	    , Backbone = require('backbone')
+	    , storage = require('./storage').redisFactory()
+	    , models = require('./models/models')
+	    , mwBridge = require('./WMBridge.js').WMBridge
+	    , loggerModule = require('./logger.js')
+	    , tracker = require('./tracker.js')
+	    , logger = loggerModule.logger;
 
-// Start the Node Chat server (which browsers connect to).
-logger.info("== Starting Node Chat Server ==");
-tracker.trackServerStart();
-//configure express to use jade
-app.set('view engine', 'jade');
-app.set('view options', {layout: false});
+	var monitoring = require('./monitoring.js');
+	monitoring.startMonitoring(50000, storage);
 
-//setup routes
-app.get('/*.(js|css)', function(req, res){
-    res.sendfile('./'+req.url);
-});
+	// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
+	//process.on('uncaughtException', function (err) {
+	//  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
+	//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
+	//	process.exit(1);
+	//});
 
-app.get('/', function(req, res){
-    res.render('index');
-});
+	/** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
 
-// TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
-logger.info("Pruning old room memberships...");
-storage.purgeAllMembers();
+	// This includes and starts the API server (which MediaWiki makes requests to).
+	logger.info("== Starting the API Server ==");
+	require("./server_api.js");
 
+	// Start the Node Chat server (which browsers connect to).
+	logger.info("== Starting Node Chat Server ==");
+	tracker.trackServerStart();
+	//configure express to use jade
+	app.set('view engine', 'jade');
+	app.set('view options', {layout: false});
 
-logger.info('i am going to listening on http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
+	//setup routes
+	app.get('/*.(js|css)', function(req, res){
+	    res.sendfile('./'+req.url);
+	});
 
-app.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
-	var addr = app.address();
-	logger.info('   app listening on http://' + addr.address + ':' + addr.port);
-});
+	app.get('/', function(req, res){
+	    res.render('index');
+	});
 
+	app.get('/healthcheck', function(req, res){
+		res.send('ok\n');
+	});
 
-var io = sio.listen(app);
+	// TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
+	logger.info("Pruning old room memberships...");
+	storage.purgeAllMembers();
 
-logger.info("Updating runtime stats");
+	logger.info('App config http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
 
-storage.getRuntimeStats(function(data) {
-	var started = parseInt(new Date().getTime());
-	if ( (!data) || isNaN(data.runtime) || isNaN(data.laststart))  {
-		data = {
-			laststart : started, 
-			startcount: 0,
-			runtime: 0 
-		};
-	} else {
-		data.startcount++;
-		data.runtime = parseInt(data.runtime) + started - parseInt(data.laststart); 
-		data.laststart = started;
-	}
-	logger.debug(data);
-	storage.setRuntimeStats(data);
-}, null, startServer);
+	server = app.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
+		var addr = app.address();
+		logger.info('App listening on http://' + addr.address + ':' + addr.port);
+	});
 
-//create local state
-var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
+	var io = sio.listen(server);
 
-io.configure(function () {
-	io.set('flash policy port', config.FLASH_POLICY_PORT );
-	io.set('transports', [  'xhr-polling'  ]);
-	io.set('log level', loggerModule.getSocketIOLogLevel());
-	io.set('authorization', authConnection );  
-});
+	io.configure(function () {
+		io.set('flash policy port', config.FLASH_POLICY_PORT );
+		io.set('transports', [ 'xhr-polling' ]);
+		// TODO: get websocket working again
+		// io.set('transports', [ 'websocket', 'xhr-polling' ]);
+		io.set('log level', loggerModule.getSocketIOLogLevel());
+		io.set('authorization', authConnection );
+		io.set('store', redisStore);
+	});
+
+	logger.info("Updating runtime stats");
+
+	storage.getRuntimeStats(function(data) {
+		var started = parseInt(new Date().getTime());
+		if ( (!data) || isNaN(data.runtime) || isNaN(data.laststart))  {
+			data = {
+				laststart : started,
+				startcount: 0,
+				runtime: 0
+			};
+		} else {
+			data.startcount++;
+			data.runtime = parseInt(data.runtime) + started - parseInt(data.laststart);
+			data.laststart = started;
+		}
+		logger.debug(data);
+		storage.setRuntimeStats(data);
+	}, null, startServer);
+
+	//create local state
+	var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
+
+}
 
 function startServer() {
 	logger.info("Chat server running on port " + config.CHAT_SERVER_PORT);
-	
+
 	storage.resetUserCount();
-	
+
 	io.sockets.on('connection', function(client){
 
 		//TODO: use client.handshake.clientData and remove rewrite
 		if(!client.handshake || !client.handshake.clientData) {
 			return false;
 		}
-		
+
 		for(var key in client.handshake.clientData) {
 			client[key] = client.handshake.clientData[key];
 		}
 		monitoring.incrEventCounter('connects');
 		storage.increaseUserCount(1);
-		
+
 		// On initial connection, just wait around for the client to send it's authentication info.
 		client.on('message', function(msg){
 			messageDispatcher(client, io.sockets, msg);}
@@ -118,10 +157,10 @@ function startServer() {
 			clientDisconnect(client, io.sockets);
 		});
 
-		client.sessionId = client.id; //for 0.6 
+		client.sessionId = client.id; //for 0.6
 
 		clearChatBuffer(client);
-		
+
 		logger.debug("Raw connection recieved. Waiting for authentication info from client.");
 	});
 }
@@ -215,13 +254,13 @@ function messageDispatcher(client, socket, data){
 
 
 /**
- *  open private chat with other users 
+ *  open private chat with other users
  */
 
 function openPrivateRoom(client, socket, data){
-	var roomInfo = new models.OpenPrivateRoom();	
+	var roomInfo = new models.OpenPrivateRoom();
 	roomInfo.mport(data);
-	
+
 	storage.getUsersAllowedInPrivateRoom(roomInfo.get('roomId'), function(users) {
 		var privateRoom = new models.OpenPrivateRoom( { roomId : roomInfo.get('roomId'), users: users } );
 		broadcastToRoom(client, socket, {
@@ -250,40 +289,20 @@ function authConnection(handshakeData, authcallback){
 		authcallback(null, false); // error first callback style
 		return false;
 	}
-	
+
 	var roomId = handshakeData.query.roomId;
 	var name = handshakeData.query.name;
 	var key = handshakeData.query.key;
-	
+
 	var callback = function(data) {
-		if(!config.validateConnection(data.wgCityId)) {
-			logger.warning("User failed authentication. Wrong node js server for : ", data);
-			authcallback(null, false); // error first callback style
-			return false;
-		}
-		
-		if(!data.activeBasket) {
-			logger.warning("User failed authentication. Wrong node js server for : " + data.wgCityId);
-			authcallback(null, false); // error first callback style
-			return false;			
-		}
-		
-		if(!config.validateActiveBasket(data.activeBasket)) {
-			io.sockets.emit({
-				event: 'disableReconnect'
-			});
-			
-			logger.error('this basket of servers is not valid now and it should not be in use we are going to disconnect every one');
-			authcallback(null, false); // error first callback style			
-		}
-		
+
 		if((data.canChat) && (data.isLoggedIn) && data.username == name ){
 			var errback = function() {
 				logger.info("User try to conect with someone else private room");
 				authcallback(null, false); // error first callback style
-				//it is hack attempts no meesage for this				
+				//it is hack attempts no meesage for this
 			};
-			
+
 			storage.getUsersAllowedInPrivateRoom(roomId, function(users) {
 				if(users.length == 0 || _.indexOf(users, data.username) !== -1 ) { //
 					var client = {};
@@ -303,16 +322,16 @@ function authConnection(handshakeData, authcallback){
 					client.ATTEMPTED_NAME = data.username;
 					// User has been approved & their data has been set on the client. Put them into the chat.
 					client.wgServer = data.wgServer;
-					client.wgArticlePath = data.wgArticlePath; 
-			
+					client.wgArticlePath = data.wgArticlePath;
+
 					handshakeData.clientData = client;
 					logger.debug("User authentication success.");
 					monitoring.incrEventCounter('logins');
-										
-					authcallback(null, true); // error first callback style 
+
+					authcallback(null, true); // error first callback style
 				} else {
 					errback();
-				}				
+				}
 			}, errback);
 		} else {
 			logger.error("User failed authentication. Error from server was: " + data.errorMsg);
@@ -331,7 +350,7 @@ function authConnection(handshakeData, authcallback){
 
 function clearChatBuffer(client) {
 	// TODO: REFACTOR THESE TO USE THE VALUE STORED IN THE 'chat' OBJ IN REDIS (remove the setting of these client vars from the ajax request also).
-	
+
 	// BugzId 5752 - clear chat buffer if this is the first user in the room (to avoid confusion w/past chats).
 	storage.countUsersInRoom(client.roomId, function(numInRoom) {
 		if((numInRoom) && (numInRoom > 0)){
@@ -340,12 +359,12 @@ function clearChatBuffer(client) {
 			// Nobody is in the room yet, so clear the back-buffer before doing the rest of the setup (as per BugzId 5752).
 			logger.debug(client.username + " is the first person to re-enter a now-empty room " + client.roomId + ".");
 			logger.debug("Deleting the back-buffer before connecting them the rest of the way.");
-			
+
 			storage.deleteChatRoomEntries(client.roomId, null, null, function() {
 				finishConnectingUser( client, io.sockets );
-			});			
-		}		
-	});	
+			});
+		}
+	});
 }
 
 
@@ -368,8 +387,8 @@ function sendRoomDataToClient(client) {
  */
 function finishConnectingUser(client, socket ){
 	logger.debug( 'finishConnectingUser:' + (new Date().getTime()));
-	
-	storage.getRoomState(client.roomId, function(nodeChatModel) {	
+
+	storage.getRoomState(client.roomId, function(nodeChatModel) {
 		// Initial connection of the user (unless they're already connected).
 		var connectedUser = nodeChatModel.users.findByName(client.username);
                 newConnectedUser = new models.User({
@@ -385,7 +404,7 @@ function finishConnectingUser(client, socket ){
 
 		if(connectedUser) {
 			nodeChatModel.users.remove(connectedUser);
-		}		
+		}
 
 		nodeChatModel.users.add(newConnectedUser);
 		connectedUser = newConnectedUser;
@@ -402,8 +421,9 @@ function finishConnectingUser(client, socket ){
 		// If this same user is already in the sessionIdsByKey hash, then they must be connected in
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-		
-		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
+		logger.debug("existingId=" + existingId);
+		var oldClient = (typeof existingId != "undefined") ? socket.socket(existingId) : false;
+		logger.debug("oldClient=" + oldClient);
 
 		if(oldClient && oldClient.userKey != client.userKey ){
 			oldClient.donotSendPart = true;
@@ -416,7 +436,7 @@ function finishConnectingUser(client, socket ){
 				// this will only kick the other instance of this same user connected to the room.
 				logger.debug('kickUserFromRoom');
 					kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
-					logger.debug('kickUserFromRoom call back');	
+					logger.debug('kickUserFromRoom call back');
 					// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
 					// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
 					// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
@@ -451,7 +471,7 @@ function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
 	var userData = client.myUser.attributes;
 	delete userData.id;
-	logger.debug("clientConencted");
+	logger.debug("clientConnected");
 	tracker.trackEvent(client, 'connect');
 	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	storage.setUserData(client.roomId, client.myUser.get('name'), userData,
@@ -467,7 +487,7 @@ function formallyAddClient(client, socket, connectedUser){
 			broadcastUserListToMediaWiki(client, false);
 			//Conenction complted
 		}
-	);	
+	);
 } // end formallyAddClient()
 
 /**
@@ -477,7 +497,7 @@ function formallyAddClient(client, socket, connectedUser){
  * sometimes to prevent race conditions).
  */
 function clientDisconnect(client, socket) {
-	logger.debug("clientDisconnect"); 
+	logger.debug("clientDisconnect");
 	// Remove the in-memory mapping of this user in this room to their sessionId
 	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
 		if(sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] == client.sessionId ) {
@@ -495,7 +515,7 @@ function clientDisconnect(client, socket) {
 		logger.debug("Disconnected: " + client.myUser.get('name') + " and about to remove them from the room in redis & broadcast the part and InlineAlert...");
 		storage.removeUserData(client.roomId, client.myUser.get('name'), function(data) {
 			broadcastDisconnectionInfo(client, socket);
-		});		
+		});
 	}
 } // end clientDisconnect()
 
@@ -505,7 +525,7 @@ function clientDisconnect(client, socket) {
 function broadcastDisconnectionInfo(client, socket){
 	// Delay before sending part messages because there are occasional disconnects/reconnects or just ppl refreshing their browser
 	// and that's really not useful information to anyone that under-the-hood they were disconnected for a moment (BugzId 5753).
-	
+
 	if(client.donotSendPart) {
 		return true;
 	}
@@ -542,7 +562,7 @@ function broadcastUserListToMediaWiki(client, removeClient){
 		}
 		logger.debug("Sending status update to media wiki")
 		if(!client.privateRoom) {
-			mwBridge.setUsersList(client.roomId, users);	
+			mwBridge.setUsersList(client.roomId, users);
 		}
 	});
 } // end api_getUsersInRoom()
@@ -586,7 +606,7 @@ function logout(client, socket, msg) {
 	client.logout = true;
 	// I'm still not sure if we should call kickUserFromRoom here or not...
 	broadcastToRoom(client, socket, {
-			event: 'logout', 
+			event: 'logout',
 			data: logoutEvent.xport()
 		},
 		null,
@@ -602,7 +622,7 @@ function logout(client, socket, msg) {
  */
 function kick(client, socket, msg){
 	var kickCommand = new models.KickCommand();
-    kickCommand.mport(msg);	
+    kickCommand.mport(msg);
 
 	var userToKick = kickCommand.get('userToKick');
 	storage.getRoomState(client.roomId, function(nodeChatModel) {
@@ -651,17 +671,17 @@ function ban(client, socket, msg){
     		time: time,
     		moderatorName: client.myUser.get('name')
     	});
-    	
-    	broadcastToRoom(client, socket, { 
+
+    	broadcastToRoom(client, socket, {
 			event: 'ban',
-			data: kickEvent.xport()		
+			data: kickEvent.xport()
 		},
 		null,
 		function() {
 			client.donotSendPart = true;
 			kickUserFromRoom(client, socket, userToBanObj, client.roomId);
 		});
-		
+
 	}, function(data){
 		sendInlineAlertToClient(client, data.error, data.errorWfMsg, data.errorMsgParams);
 	});
@@ -675,10 +695,10 @@ function giveChatMod(client, socket, msg){
 	giveChatModCommand.mport(msg);
 
 	var userNameToPromote = giveChatModCommand.get('userToPromote');
-		
+
 	mwBridge.giveChatMod(client.roomId, userNameToPromote, client.handshake, client.userKey, function(data){
 		// Build a user that looks like the one that got banned... then kick them!
-			
+
 		storage.getRoomState(client.roomId, function(nodeChatModel) {
 			// Initial connection of the user (unless they're already connected).
 			var promotedUser = nodeChatModel.users.findByName(userNameToPromote);
@@ -717,7 +737,7 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
 		if(typeof callback == "function"){
 			callback();
 		}
-	});	
+	});
 } // end kickUserFromRoom()
 
 /**
@@ -757,17 +777,17 @@ function kickUserFromServer(client, socket, userToKick, roomId){
  * Sets the current user's status and broadcasts it out to the other users in the same room.
  */
 function setStatus(client, socket, setStatusData){
-	
+
 	logger.debug("SetStatusCommand", setStatusData);
 	logger.debug("SetStatusCommand1");
 	var setStatusCommand = new models.SetStatusCommand();
 	logger.debug("SetStatusCommand2");
-	
+
     setStatusCommand.mport(setStatusData);
 
 	var userName = client.myUser.get('name');
 	var roomId = client.roomId;
-	
+
 	storage.getUserData(roomId, userName, function(userData) {
 		if(userData){
 			// Modify the user's status and store them back in the hash
@@ -784,7 +804,7 @@ function setStatus(client, socket, setStatusData){
 		} else {
 			logger.warning("Attempted to set status for user '" + userName + "', but that user was not found in room '" + roomId + "'");
 		}
-	});	
+	});
 } // end setStatus()
 
 
@@ -843,8 +863,8 @@ function storeAndBroadcastChatEntry(client, socket, chatEntry, callback){
 
         var expandedMsg = chatEntry.get('id') + ' ' + chatEntry.get('name') + ': ' + chatEntry.get('text');
         logger.debug('(' + client.sessionId + ':' + chatEntry.get('name') + ') ' + expandedMsg);
-        
-        storage.addChatEntry(client.roomId, chatEntry.xport(), null, null, function() {		
+
+        storage.addChatEntry(client.roomId, chatEntry.xport(), null, null, function() {
 			// Send to everyone in the room.
 			broadcastChatEntryToRoom(client, socket, chatEntry, callback);
         });
@@ -891,30 +911,30 @@ function broadcastToRoom(client, socket, data, users, callback){
 	// Get the set of members from redis.
 	logger.debug("Broadcasting to room " + roomId);
 	storage.getUsersInRoom(roomId, function(usernameToUser) {
-		logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ", "usernameToData:", users);
+		//logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ));
 
 		var usernameToUserFiltered = {};
-		
+
 		if((users instanceof Array) && users.length > 0) {
 			for( var i in users ) {
 				if(typeof(usernameToUser[users[i]]) != 'undefined') {
-					usernameToUserFiltered[users[i]] = usernameToUser[users[i]];	
+					usernameToUserFiltered[users[i]] = usernameToUser[users[i]];
 				}
 			}
-		} else {
+		} else if (usernameToUser != 'undefined') {
 			usernameToUserFiltered = usernameToUser;
 		}
-		
-		//logger.debug(usernameToDataFiltered);
-		_.each(usernameToUserFiltered, function(userModel){			
+
+		//logger.debug(usernameToUserFiltered);
+		_.each(usernameToUserFiltered, function(userModel){
 			logger.debug("\tSENDING TO " + userModel.get('name'));
 			var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
-			
+
 			if(socketId){
 				//logger.debug("============ SOCKET "+socketId+" ==========================================");
 				//logger.debug(socket.socket(socketId));
 				//logger.debug("============ /SOCKET "+socketId+" ==========================================");
-				
+
 				if( typeof socket.socket(socketId).sessionId  == "undefined"){
 					// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
 					// problem. This logging should help in debugging if this becomes an issue.
@@ -925,11 +945,11 @@ function broadcastToRoom(client, socket, data, users, callback){
 				}
 			}
 		});
-		
+
 		if(typeof callback == "function"){
 			callback();
 		}
-	});	
+	});
 } // end broadcastToRoom()
 
 /**
@@ -937,7 +957,7 @@ function broadcastToRoom(client, socket, data, users, callback){
  */
 function debugObject(obj, padding){
 	if (!logger.isDebug()) return;
-	
+
 	if(!padding){padding = '';}
 
 	if(typeof(obj) == 'object'){
