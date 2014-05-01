@@ -31,10 +31,10 @@ spl_autoload_register(function($class) {
 
 class TaskExecutors {
 	private static $modernExecutors = [
-		'BloglistDeferredPurgeJob',
-		'BlogTask',
-		'CreatePdfThumbnailsJob',
-		'CreateWikiLocalJob',
+//		'BloglistDeferredPurgeJob',
+//		'BlogTask',
+//		'CreatePdfThumbnailsJob',
+//		'CreateWikiLocalJob',
 		'ParsoidCacheUpdateJob',
 	];
 
