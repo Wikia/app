@@ -122,7 +122,8 @@ ve.ce.WikiaBlockMediaNode.prototype.createThumb = function () {
 	} else {
 		$thumb = this.$( '<figure>' )
 			.addClass( 'article-thumb ' + this.getCssClass( 'default', align ) )
-			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ));	}
+			.css( 'width', parseInt( this.model.getAttribute( 'width' ), 10 ));
+	}
 
 	return $thumb;
 };

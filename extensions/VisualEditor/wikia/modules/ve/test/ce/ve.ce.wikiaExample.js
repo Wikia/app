@@ -13,7 +13,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		fakeLinkUrlResolved = ve.resolveUrl( fakeLinkUrl, document ),
 		fakeImageUrl = 'Bar',
 		fakeImageUrlResolved = ve.resolveUrl( fakeImageUrl, document ),
-		media = {};
+		media = {},
+		defaultThumbWidth = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize,
+		defaultThumbHeight = ( defaultThumbWidth / 2 );
 
 	/* Data */
 
@@ -21,8 +23,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		'attribution': {
 			'minWidth': 100
 		},
-		'defaultWidth': 200,
-		'defaultHeight': 100
+		'defaultWidth': defaultThumbWidth,
+		'defaultHeight': defaultThumbHeight
 	};
 
 	media.data.cssClasses = {
