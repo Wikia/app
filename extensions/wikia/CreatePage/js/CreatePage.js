@@ -52,6 +52,12 @@ var CreatePage = {
 			e.preventDefault();
 		}
 
+		// VE and <createbox>
+		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+			CreatePage.checkTitle( titleText );
+			return;
+		}
+
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
