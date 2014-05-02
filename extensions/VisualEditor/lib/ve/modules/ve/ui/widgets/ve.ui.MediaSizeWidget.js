@@ -96,11 +96,11 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 	);
 
 	// Buttons
-	/* this.fullSizeButton = new OO.ui.ButtonWidget( {
+	this.fullSizeButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'visualeditor-mediasizewidget-button-originaldimensions' ),
 		'classes': ['ve-ui-mediaSizeWidget-button-fullsize']
-	} );*/
+	} );
 
 	// Build GUI
 	this.$element
@@ -110,7 +110,7 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 			// TODO: when upright is supported by Parsoid
 			// fieldScale.$element,
 			fieldCustom.$element,
-			//this.fullSizeButton.$element,
+			this.fullSizeButton.$element,
 			this.$( '<div>' )
 				.addClass( 've-ui-mediaSizeWidget-label-error' )
 				.append( this.errorLabel.$element )
@@ -118,12 +118,13 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 
 	// Events
 	this.dimensionsWidget.connect( this, {
-		'widthChange': ['onDimensionsChange', 'width']
+		'widthChange': ['onDimensionsChange', 'width'],
+		'heightChange': ['onDimensionsChange', 'height']
 	} );
 	// TODO: when upright is supported by Parsoid
 	// this.scaleInput.connect( this, { 'change': 'onScaleChange' } );
 	this.sizeTypeSelectWidget.connect( this, { 'select': 'onSizeTypeSelect' } );
-	//this.fullSizeButton.connect( this, { 'click': 'onFullSizeButtonClick' } );
+	this.fullSizeButton.connect( this, { 'click': 'onFullSizeButtonClick' } );
 
 };
 
@@ -280,11 +281,11 @@ ve.ui.MediaSizeWidget.prototype.setScalable = function ( scalable ) {
 	this.setCurrentDimensions( this.scalable.getCurrentDimensions() );
 
 	// If we don't have original dimensions, disable the full size button
-	/* if ( !this.scalable.getOriginalDimensions() ) {
+	if ( !this.scalable.getOriginalDimensions() ) {
 		this.fullSizeButton.setDisabled( true );
 	} else {
 		this.fullSizeButton.setDisabled( false );
-	}*/
+	}
 };
 
 /**
@@ -367,10 +368,11 @@ ve.ui.MediaSizeWidget.prototype.setCurrentDimensions = function ( dimensions ) {
 	// Normalize the new dimensions
 	this.currentDimensions = this.scalable.getDimensionsFromValue( dimensions );
 
-	if ( this.currentDimensions.width ) {
+	if ( this.currentDimensions.width || this.currentDimensions.height ) {
 		// This will only update if the value has changed
 		// Set width & height individually as they may be 0
 		this.dimensionsWidget.setWidth( this.currentDimensions.width );
+		this.dimensionsWidget.setHeight( this.currentDimensions.height );
 	}
 
 	// Update scalable object
@@ -467,7 +469,10 @@ ve.ui.MediaSizeWidget.prototype.isValid = function () {
 			this.dimensionsWidget.isEmpty()
 		) {
 			return true;
-		} else if ( $.isNumeric( this.dimensionsWidget.getWidth() ) ) {
+		} else if (
+			$.isNumeric( this.dimensionsWidget.getWidth() ) &&
+			$.isNumeric( this.dimensionsWidget.getHeight() )
+		) {
 			return this.scalable.isCurrentDimensionsValid();
 		} else {
 			return false;
