@@ -23,7 +23,6 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	// Parent constructor
 	OO.ui.PageLayout.call( this, model.getId(), config );
-	//OO.ui.Widget.call( this, config );
 
 	// Properties
 	this.editable = !!config.editable;
