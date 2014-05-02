@@ -63,7 +63,6 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 	if ( item ) {
 		this.emit( 'preview', item );
-		item.setSelected( false );
 	}
 };
 

@@ -334,9 +334,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 			'remove': 'onMediaPageRemove',
 			'preview': 'onMediaPreview'
 		} );
-		this.pages.addPage( item.getId(), { '$content': page.$element } );
+		this.pages.addPages( [ page ] );
 	}
-
 	this.results.setChecked( items, true );
 };
 
@@ -647,7 +646,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		} );
 	}
 
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+	this.getFragment().collapseRangeToEnd().insertContent( linmod );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,

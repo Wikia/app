@@ -7,7 +7,7 @@
 
 /**
  * @class
- * @extends OO.ui.Widget
+ * @extends OO.ui.PageLayout
  *
  * @constructor
  * @param {Object} model Page item model
@@ -22,7 +22,8 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	config = config || {};
 
 	// Parent constructor
-	OO.ui.Widget.call( this, config );
+	OO.ui.PageLayout.call( this, model.getId(), config );
+	//OO.ui.Widget.call( this, config );
 
 	// Properties
 	this.editable = !!config.editable;
@@ -39,7 +40,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 		'readOnly': !this.editable,
 		'value': this.model.basename
 	} );
-	this.titleLabel = new OO.ui.InputLabelWidget( {
+	this.titleLabel = new OO.ui.LabelWidget( {
 		'$': this.$,
 		'input': this.title,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' )
@@ -84,7 +85,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaMediaPageWidget, OO.ui.Widget );
+OO.inheritClass( ve.ui.WikiaMediaPageWidget, OO.ui.PageLayout );
 
 /* Events */
 

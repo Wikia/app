@@ -236,23 +236,23 @@ $width-cart: 101px;
 	.ve-ui-wikiaMediaOptionWidget-check {
 		background-color: $color-page;
 		cursor: pointer;
-		height: 32px;
 		position: absolute;
 		right: 5px;
 		top: 5px;
 
-		.oo-ui-iconedElement-icon {
-			background-color: $color-page;
-			height: 32px;
-			width: 32px;
+		.oo-ui-buttonedElement-button {
+			.oo-ui-iconedElement-icon {
+				background-color: $color-page;
+				height: 32px;
+				margin: 0;
+				position: static;
+				width: 32px;
 
-			&.oo-ui-icon-checked {
-				@include ve-icon(checked, wikia, $color-buttons);
-				background-color: $color-buttons;
+				&.oo-ui-icon-checked {
+					@include ve-icon(checked, wikia, $color-buttons);
+					background-color: $color-buttons;
+				}
 			}
-		}
-		.oo-ui-labeledElement-label {
-			display: none;
 		}
 	}
 
