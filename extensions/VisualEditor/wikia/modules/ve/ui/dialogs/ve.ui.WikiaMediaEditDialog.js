@@ -43,6 +43,13 @@ ve.ui.WikiaMediaEditDialog.static.toolbarGroups = [
 	}
 ];
 
+/* Methods */
+
+ve.ui.WikiaMediaEditDialog.prototype.setup = function ( data ) {
+	ve.ui.MWMediaEditDialog.prototype.setup.call( this, data );
+	this.captionSurface.$element.addClass( 'WikiaArticle' );
+};
+
 /* Registration */
 
 ve.ui.dialogFactory.register( ve.ui.WikiaMediaEditDialog );

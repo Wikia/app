@@ -540,7 +540,6 @@ ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
 	}*/
 
 	// Initialization
-	this.captionSurface.$element.addClass( 'WikiaArticle' );
 	this.captionFieldset.$element.append( this.captionSurface.$element );
 	this.captionSurface.initialize();
 };

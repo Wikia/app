@@ -33,8 +33,15 @@ ve.ui.WikiaReferenceDialog.static.toolbarGroups = [
 		'indicator': 'down',
 		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
 		'include': [ 'subscript', 'superscript', 'strikethrough', 'underline', 'clear' ]
-	}	
+	}
 ];
+
+/* Methods */
+
+ve.ui.WikiaReferenceDialog.prototype.setup = function ( data ) {
+	ve.ui.MWReferenceDialog.prototype.setup.call( this, data );
+	this.referenceSurface.$element.addClass( 'WikiaArticle' );
+};
 
 /* Registration */
 
