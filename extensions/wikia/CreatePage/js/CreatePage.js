@@ -55,7 +55,7 @@ var CreatePage = {
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			if ( CreatePage.canUseVisualEditor ) {
+			if ( CreatePage.canUseVisualEditor && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
 			} else {
