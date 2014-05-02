@@ -45,7 +45,7 @@ class ParsoidHooks {
 				'type' => 'OnDependencyChange',
 				'table' => 'imagelinks'
 			) );
-			$job->insert();
+			//$job->insert();
 		} else {
 			$job = new ParsoidCacheUpdateJob( $title, array( 'type' => 'OnEdit' ) );
 			$job->insert();
@@ -54,7 +54,7 @@ class ParsoidHooks {
 				'type' => 'OnDependencyChange',
 				'table' => 'templatelinks'
 			) );
-			$job->insert();
+			//$job->insert();
 		}
 	}
 
