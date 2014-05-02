@@ -146,6 +146,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-query-failed',
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
+			'accesskey-save',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
