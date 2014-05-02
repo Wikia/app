@@ -3,7 +3,7 @@ $main-background-color: #E2F3F7;
 $error-border: #BE1E2D;
 $input-color: #333;
 $border-color: #D0D0D0;
-$background-color: #FFF;
+$transparent: rgba(0,0,0,0);
 
 h1 {
 	color: $main-color;
@@ -18,12 +18,14 @@ fieldset {
 	margin: 0 0 10px 0;
 
 	input {
-		margin: 0;
+		background-color: $transparent;
+		border: {
+			radius: 2px;
+			color: $border-color;
+		}
 		color: $input-color;
-		background-color: $background-color;
-		border-radius: 2px;
-		border-color: $border-color;
 		font-size: 0.9rem;
+		margin: 0;
 		padding-right: 10px;
 	}
 
@@ -34,15 +36,12 @@ fieldset {
 	}
 }
 
-.success {
-	input {
-		background: {
-			image: url('/extensions/wikia/UserLogin/images/check.png'); /* base64 */
-			position: center right;
-			size: 14px 10px;
-			repeat: no-repeat;
-			origin: content-box;
-		}
+.success:not(.birthday-group) {
+	background: {
+		image: url('/extensions/wikia/UserLogin/images/check.png'); /* base64 */
+		position: right 10px center;
+		size: 14px 10px;
+		repeat: no-repeat;
 	}
 }
 
@@ -53,14 +52,24 @@ fieldset {
 }
 
 select {
-	-webkit-appearance: none;
-	border-radius: 2px;
-	border-color: $border-color;
+	background: {
+		color: $transparent;
+		image: url('/extensions/wikia/UserLogin/images/chevronline.png'); /* base64 */
+		size: contain;
+		position: center right;
+		repeat: no-repeat;
+	}
+	border: {
+		radius: 2px;
+		color: $border-color;
+	}
 	height: 30px;
-	width: 31%;
 	margin: 2px;
 	padding-left: 5%;
-	background-color: $background-color;
+	width: 31%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 
 	&:last-of-type {
 		margin-left: -2px;

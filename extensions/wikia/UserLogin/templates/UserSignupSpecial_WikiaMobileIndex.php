@@ -25,7 +25,7 @@
 				'errorMsg' => (!empty($msg) ? $msg : '')
 			),
 			array(
-				'type' => 'text',
+				'type' => 'email',
 				'name' => 'email',
 				'value' => Sanitizer::encodeAttribute( $email ),
 				'placeholder' => wfMessage('email')->text(),
@@ -53,6 +53,7 @@
 				'controller' => 'UserSignupSpecial',
 				'view' => 'birthday',
 				'isRequired' => true,
+				'class' => 'birthday-group',
 				'isInvalid' => (!empty($errParam) && $errParam === 'birthyear') || (!empty($errParam) && $errParam === 'birthmonth') || (!empty($errParam) && $errParam === 'birthday'),
 				'errorMsg' => (!empty($msg) ? $msg : ''),
 				'params' => array('birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn),
