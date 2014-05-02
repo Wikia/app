@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
@@ -251,6 +252,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  */
 $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
+	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
 	'usersignup-confirm-page-title-wikiamobile' => 'Page title for Special:UserSignup on mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',

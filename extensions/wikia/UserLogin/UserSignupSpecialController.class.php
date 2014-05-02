@@ -88,7 +88,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $this->app->checkSkin( 'wikiamobile' )) {
-			$this->wg->Out->setPageTitle('Create Account');
+			$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title-wikiamobile')->escaped());
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
