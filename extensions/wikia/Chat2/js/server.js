@@ -170,86 +170,103 @@ function startServer() {
  * is not authenticated, this won't listen to anything other than authentications.
  */
 function messageDispatcher(client, socket, data){
-	// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
-	var sessionId = false;
-	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-			var sessionId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-	}
-	if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
-		client.json.send({
-				event: 'forceReconnect'
-		});
-		// Message ignored. Log the reason.
-		if(sessionId === false || typeof sessionId == "undefined"){
-				logger.debug("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
-		} else if(sessionId != client.sessionId){
-				var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
-				msg += "(" + client.myUser.get('name');
-				msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
-				msg += "and is in the process of having its connection closed.";
-				logger.debug(msg);
-		}
-	} else {
-		// The user is authenticated.  Dispatch to appropriate place for the message.
-		var dataObj;
-		try{
-			dataObj = JSON.parse(data);
-		} catch(e){
-			logger.error("Error: while parsing raw incoming json (to msg dispatcher). Error was: ", e, "JSON-string that didn't parse was:\n" + data);
-			return true;
-		}
-		if(typeof dataObj.attrs == 'undefined'){
-			dataObj.attrs = {};
-		}
-		if(typeof dataObj.attrs.msgType == 'undefined'){
-			dataObj.attrs.msgType = "[msgType was undefined]";
-		}
 
-		switch(dataObj.attrs.msgType){
-			case 'chat':
-				logger.debug("Dispatching to message handler.");
-				chatMessage(client, socket, data);
-				client.msgCount++;
-				break;
-			case 'command':
-				switch(dataObj.attrs.command){ // all commands should be in lowercase
-					case 'initquery':
-						sendRoomDataToClient(client);
-						break;
-					case 'logout':
-						logger.debug("Loging out user: " + client.myUser.get('name'));
-						logout(client, socket, data);
-						break;
-					case 'kick':
-						logger.info("Kicking user: " + dataObj.attrs.userToKick);
-						kick(client, socket, data);
-						break;
-					case 'ban':
-						logger.info("Banning user: " + dataObj.attrs.userToBan);
-						ban(client, socket, data);
-						break;
-					case 'openprivate':
-						logger.debug( "openPrivateRoom" );
-						openPrivateRoom(client, socket, data);
-						break;
-					case 'givechatmod':
-						logger.info("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
-						giveChatMod(client, socket, data);
-						break;
-					case 'setstatus':
-						logger.debug("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
-						setStatus(client, socket, data);
-						break;
-					default:
-						logger.warning("Unrecognized command: " + dataObj.attrs.command);
-					break;
-				}
-				break;
-			default:
-				logger.error("ERROR: Could not find recognized msgType to handle data: ", data);
-				break;
-		}
+	// The user is authed. Check to make sure their client sessionId still exists. If it doesn't, we probably banned them.
+	if (client === null || typeof client == 'undefined' || typeof client.myUser == 'undefined' ) {
+		logger.info("received message from null client");
+		logger.info(client);
+		return;
 	}
+	var userName = client.myUser.get('name');
+	var roomId = client.roomId;
+
+	logger.debug("entering messageDispatcher: " + userName + " " + roomId);
+
+	storage.getUserData(roomId, userName, function(userData) {
+		logger.debug(userData);
+		if ( userData === null ) {
+			logger.error("ERROR: Could not find user " + userName + " in room " + roomId );
+			return;
+		}
+		var sessionId = userData.sessionId;
+		logger.debug('got userData.sessionId: ' + sessionId);
+
+		if(sessionId === false || (typeof sessionId == "undefined") || (sessionId != client.sessionId)){
+			client.json.send({
+					event: 'forceReconnect'
+			});
+			// Message ignored. Log the reason.
+			if(sessionId === false || typeof sessionId == "undefined"){
+					logger.debug("GOT A MESSAGE WITH NO socket.io sessionId. ASSUMING THEY ARE BANNED AND SKIPPING.");
+			} else if(sessionId != client.sessionId){
+					var msg = "Got a message from a user with a mismatched client-id. This implies that the user sending the message ";
+					msg += "(" + client.myUser.get('name');
+					msg += ") has connected from a newer browser and the old browser which sent the message has been closed ";
+					msg += "and is in the process of having its connection closed.";
+					logger.debug(msg);
+			}
+		} else {
+			// The user is authenticated.  Dispatch to appropriate place for the message.
+			var dataObj;
+			try{
+				dataObj = JSON.parse(data);
+			} catch(e){
+				logger.error("Error: while parsing raw incoming json (to msg dispatcher). Error was: ", e, "JSON-string that didn't parse was:\n" + data);
+				return true;
+			}
+			if(typeof dataObj.attrs == 'undefined'){
+				dataObj.attrs = {};
+			}
+			if(typeof dataObj.attrs.msgType == 'undefined'){
+				dataObj.attrs.msgType = "[msgType was undefined]";
+			}
+
+			logger.debug("Dispatching message: " + dataObj.attrs.msgType);
+			switch(dataObj.attrs.msgType){
+				case 'chat':
+					chatMessage(client, socket, data);
+					client.msgCount++;
+					break;
+				case 'command':
+					switch(dataObj.attrs.command){ // all commands should be in lowercase
+						case 'initquery':
+							sendRoomDataToClient(client);
+							break;
+						case 'logout':
+							logger.debug("Logging out user: " + client.myUser.get('name'));
+							logout(client, socket, data);
+							break;
+						case 'kick':
+							logger.info("Kicking user: " + dataObj.attrs.userToKick);
+							kick(client, socket, data);
+							break;
+						case 'ban':
+							logger.info("Banning user: " + dataObj.attrs.userToBan);
+							ban(client, socket, data);
+							break;
+						case 'openprivate':
+							logger.debug( "openPrivateRoom" );
+							openPrivateRoom(client, socket, data);
+							break;
+						case 'givechatmod':
+							logger.info("Giving chatmoderator status to user: " + dataObj.attrs.userToPromote);
+							giveChatMod(client, socket, data);
+							break;
+						case 'setstatus':
+							logger.debug("Setting status for " + client.myUser.get('name') + " to " + dataObj.attrs.statusState + " with message '" + dataObj.attrs.statusMessage + "'.");
+							setStatus(client, socket, data);
+							break;
+						default:
+							logger.warning("Unrecognized command: " + dataObj.attrs.command);
+						break;
+					}
+					break;
+				default:
+					logger.error("ERROR: Could not find recognized msgType to handle data: ", data);
+					break;
+			}
+		}
+	});
 } // end messageDispatcher()
 
 
@@ -391,16 +408,16 @@ function finishConnectingUser(client, socket ){
 	storage.getRoomState(client.roomId, function(nodeChatModel) {
 		// Initial connection of the user (unless they're already connected).
 		var connectedUser = nodeChatModel.users.findByName(client.username);
-                newConnectedUser = new models.User({
+        var newConnectedUser = new models.User({
                 	name: client.username,
-                        avatarSrc: client.avatarSrc,
-                        isModerator: client.isChatMod,
-                        isCanGiveChatMod: client.isCanGiveChatMod,
-                        isStaff: client.isStaff,
-                        editCount: client.editCount,
-                        since: client.wikiaSince
+                    avatarSrc: client.avatarSrc,
+                    isModerator: client.isChatMod,
+                    isCanGiveChatMod: client.isCanGiveChatMod,
+                    isStaff: client.isStaff,
+                    editCount: client.editCount,
+                    since: client.wikiaSince,
+                    sessionId: client.sessionId
                 });
-
 
 		if(connectedUser) {
 			nodeChatModel.users.remove(connectedUser);
@@ -418,47 +435,53 @@ function finishConnectingUser(client, socket ){
 			logger.warning("\t\t============== POSSIBLE IDENTITY PROBLEM!!!!!! - END ==============");
 		}
 
-		// If this same user is already in the sessionIdsByKey hash, then they must be connected in
-		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
-		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-		logger.debug("existingId=" + existingId);
-		var oldClient = (typeof existingId != "undefined") ? socket.socket(existingId) : false;
-		logger.debug("oldClient=" + oldClient);
+		// If this same user is already in redis then they must be connected in
+		// another browser. Kick that other instance before continuing
+		// If this user is NOT in a room just add them
+		storage.getUserData(client.roomId, client.myUser.get('name'), function(userData) {
 
-		if(oldClient && oldClient.userKey != client.userKey ){
-			oldClient.donotSendPart = true;
-			if(!oldClient.logout) {
-				tracker.trackEvent(client, 'disconnect');
+			if (userData == null) {
+				logger.debug("userData is null, adding " + client.myUser.get('name')  + " to room " + client.roomId);
+				// Put the user info into the room hash in redis
+				formallyAddClient(client, socket, connectedUser);
+				return;
 			}
-			// Send the old client a notice that they're about to be disconnected and why.
-			sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
-				// Looks like we're kicking ourself, but since we're not in the sessionIdsByKey map yet,
-				// this will only kick the other instance of this same user connected to the room.
-				logger.debug('kickUserFromRoom');
-					kickUserFromRoom(oldClient, socket, client.myUser, client.roomId, function(){
-					logger.debug('kickUserFromRoom call back');
-					// This needs to be done after the user is removed from the room.  Since clientDisconnect() is called asynchronously,
-					// the user is explicitly removed from the room first, then clientDisconnect() is prevented from attempting to remove
-					// the user (since that may get called at some point after formallyAddClient() adds the user intentionally).
-					formallyAddClient(client, socket, connectedUser);
+
+			var existingId = userData.sessionId;
+			logger.debug("existingId=" + existingId);
+			var oldClient = (typeof existingId != "undefined") ? socket.socket(existingId) : false;
+			logger.debug("oldClient=" + oldClient);
+
+			// user has connected in a different session
+			if( oldClient && oldClient.userKey != client.userKey ){
+				oldClient.donotSendPart = true;
+				if(!oldClient.logout) {
+					tracker.trackEvent(client, 'disconnect');
+				}
+				// Send the old client a notice that they're about to be disconnected and why.
+				sendInlineAlertToClient(oldClient, '', 'chat-err-connected-from-another-browser', [], function(){
+					// this should only kick the other instance of this same user connected to the room.
+					logger.debug('kickUserFromServer');
+						kickUserFromServer(oldClient, socket, client.myUser, client.roomId, function(){
+						logger.debug('kickUserFromServer call back');
+						// add the new client
+						formallyAddClient(client, socket, connectedUser);
+					});
 				});
-			});
-		} else {
-			//we have double connection for the same window
-			if(oldClient){
+			} else if ( oldClient && oldClient.userKey == client.userKey ) {
+				//we have double connection for the same window -- does this actually happen?
+				logger.debug("double connection -- does this actually happen?")
 				monitoring.incrEventCounter('double_connects');
 				tracker.trackEvent(client, 'disconnect');
 				oldClient.donotSendPart = true;
-                                setTimeout(function(){
-                                        if(oldClient){
-                                                oldClient.disconnect();
-                                        }
-                                }, 1000 * 30);
+	            setTimeout(function(){
+	                if(oldClient){
+	                    oldClient.disconnect();
+	                }
+	            }, 1000 * 30);
 			}
-			// Put the user info into the room hash in redis, and add the client to the in-memory (not redis) hash of connected sockets.
-			formallyAddClient(client, socket, connectedUser);
-		}
-	});
+		}); // end storage.getUserData
+	}); // end storage.getRoomState
 } // end finishConnectingUser()
 
 /**
@@ -471,9 +494,10 @@ function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
 	var userData = client.myUser.attributes;
 	delete userData.id;
-	logger.debug("clientConnected");
+	userData.sessionId = client.sessionId;
+	logger.debug("formallyAddClient");
 	tracker.trackEvent(client, 'connect');
-	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
+
 	storage.setUserData(client.roomId, client.myUser.get('name'), userData,
 		null,
 		null,
@@ -493,29 +517,16 @@ function formallyAddClient(client, socket, connectedUser){
 /**
  * Called when a client disconnects from the server.
  *
- * If client has property 'doNotRemoveFromRedis' set to true, then the user will be removed from the room hash in redis (this is used
- * sometimes to prevent race conditions).
  */
 function clientDisconnect(client, socket) {
 	logger.debug("clientDisconnect");
-	// Remove the in-memory mapping of this user in this room to their sessionId
-	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-		if(sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] == client.sessionId ) {
-			delete sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-		} else {
-			return true;
-		}
-	}
 
-	// Remove the user from the set of usernames in the current room (in redis).
-	if(client.doNotRemoveFromRedis){
-//		logger.debug("Not removing user from room, just broadcasting their part & the associated inline alert for " + client.myUser.get('name'));
+	if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
 		broadcastDisconnectionInfo(client, socket);
-	} else if(typeof client.myUser != 'undefined' && typeof client.myUser.get != 'undefined'){
-		logger.debug("Disconnected: " + client.myUser.get('name') + " and about to remove them from the room in redis & broadcast the part and InlineAlert...");
-		storage.removeUserData(client.roomId, client.myUser.get('name'), function(data) {
-			broadcastDisconnectionInfo(client, socket);
-		});
+
+		if (client.doNotRemoveFromRedis == false) {
+			storage.removeUserData(client.roomId, client.myUser.get('name'));
+		}
 	}
 } // end clientDisconnect()
 
@@ -747,8 +758,10 @@ function kickUserFromRoom(client, socket, userToKick, roomId, callback){
  */
 function kickUserFromServer(client, socket, userToKick, roomId){
 	// Force-close the kicked user's connection so that they can't interact anymore.
-	logger.debug("Force-closing connection for kicked user: " + userToKick.get('name'));
-	var kickedClientId = sessionIdsByKey[config.getKey_userInRoom(userToKick.get('name'), roomId)];
+	logger.debug("Force-closing connection for kicked user: ");
+	logger.debug(userToKick);
+
+	var kickedClientId = userToKick.sessionId;
 
 	if(typeof kickedClientId != 'undefined'){
 		// If we're kicking the user (for whatever reason) they shouldn't try to auto-reconnect.
@@ -908,7 +921,7 @@ function broadcastChatEntryToRoom(client, socket, chatEntry, callback){
 //TODO: use native join/emit from 0.7 sockets.io
 function broadcastToRoom(client, socket, data, users, callback){
 	var roomId = client.roomId;
-	// Get the set of members from redis.
+	//logger.debug(data);
 	logger.debug("Broadcasting to room " + roomId);
 	storage.getUsersInRoom(roomId, function(usernameToUser) {
 		//logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ));
@@ -928,18 +941,18 @@ function broadcastToRoom(client, socket, data, users, callback){
 		//logger.debug(usernameToUserFiltered);
 		_.each(usernameToUserFiltered, function(userModel){
 			logger.debug("\tSENDING TO " + userModel.get('name'));
-			var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
-
+			var socketId = userModel.get('sessionId');
+			logger.debug("sending to " + socketId);
 			if(socketId){
 				//logger.debug("============ SOCKET "+socketId+" ==========================================");
 				//logger.debug(socket.socket(socketId));
 				//logger.debug("============ /SOCKET "+socketId+" ==========================================");
 
 				if( typeof socket.socket(socketId).sessionId  == "undefined"){
-					// This happened once (and before this check was here, crashed the server).  Not sure if this is just a normal side-effect of the concurrency or is a legit
-					// problem. This logging should help in debugging if this becomes an issue.
+					// This can happen if a user logs in with two browsers, is kicked from the first one and then reloads the first one
+					// It fails to kick out the second browser and leaves things in this state.  Kicking the user entirely fixes it.
 					logger.warning("Somehow the client socket for " + userModel.get('name') + " is totally closed but their socketId is still in the hash. Potentially a race-condition?");
-					delete sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];
+					storage.removeUserData(roomId, userModel.get('name'));
 				} else {
 					io.sockets.socket(socketId).json.send(data);
 				}
