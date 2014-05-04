@@ -119,6 +119,7 @@
 							<? break; ?>
 							<? case 'text': ?>
 							<? case 'url': ?>
+							<? case 'email': ?>
 								<input type="<?= $type ?>" <?= $inputAttributes ?>>
 							<? break; ?>
 							<? case 'textarea': ?>

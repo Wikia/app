@@ -215,5 +215,17 @@ class UserLoginHooksHelper {
         return true;
 	}
 
+	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
+		$title = F::app()->wg->Title;
+
+		if ( $title->isSpecial( 'UserSignup' ) ) {
+			$scssPackages[] =  'wikiamobile_usersignup_scss';
+			$jsExtensionPackages[] =  'wikiamobile_usersignup_js';
+		} else if ( $title->isSpecial( 'WikiaConfirmEmail' ) ) {
+			$scssPackages[] = 'wikiamobile_usersignup_scss';
+		}
+
+		return true;
+	}
 }
 
