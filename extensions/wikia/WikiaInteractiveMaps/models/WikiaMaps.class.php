@@ -26,18 +26,18 @@ class WikiaMaps {
 	/**
 	 * @desc Create InteractiveMaps request URL
 	 *
-	 * @param string $entryPoint
+	 * @param array $segments
 	 * @param array $params
 	 * @return string - URL
 	 */
-	private function buildUrl( $entryPoint, Array $params = [] ) {
+	public function buildUrl( Array $segments, Array $params = [] ) {
 		return sprintf(
 			'%s://%s:%d/api/%s/%s%s',
 			$this->config['protocol'],
 			$this->config['hostname'],
 			$this->config['port'],
 			$this->config['version'],
-			$entryPoint,
+			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
 		);
 	}
@@ -65,7 +65,7 @@ class WikiaMaps {
 	 */
 	private function getMapsFromApi( Array $params ) {
 		$maps = [];
-		$url = $this->buildUrl( self::ENTRY_POINT_MAP, $params );
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = Http::get( $url );
 
 		if ( $response !== false ) {
@@ -78,7 +78,8 @@ class WikiaMaps {
 				} else {
 					$map->map_width = static::MAP_WIDTH;
 					$map->map_height = static::MAP_HEIGHT;
-					$map->status = $this->getMapStatusText( $map->status );
+					$map->status_message = $this->getMapStatusText( $map->status );
+					$map->done = (int)$map->status === static::STATUS_DONE;
 				}
 			} );
 		}
@@ -101,7 +102,7 @@ class WikiaMaps {
 	 */
 	private function getMapByIdFromApi( Array $params ) {
 		$mapId = array_shift( $params );
-		$url = $this->buildUrl( self::ENTRY_POINT_MAP . '/' . $mapId, $params );
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = Http::get( $url );
 
 		$map = json_decode( $response );
@@ -116,18 +117,6 @@ class WikiaMaps {
 		}
 
 		return $map;
-	}
-
-	/**
-	 * @desc Returns render empty point for map
-	 *
-	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
-	 *                      rest of the array elements will get added as URI parameters after ? sign
-	 * @return string
-	 */
-	public function getMapRenderUrl( Array $params ) {
-		$entryPointParams = array_shift( $params );
-		return $this->buildUrl( self::ENTRY_POINT_RENDER . '/' . $entryPointParams, $params );
 	}
 
 	/**
