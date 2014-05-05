@@ -419,24 +419,7 @@ class ApiVisualEditor extends ApiBase {
 						$notices[] = "<div class=\"mw-userpage-userdoesnotexist error\">\n" .
 							$this->msg( 'userpage-userdoesnotexist', wfEscapeWikiText( $targetUsername ) ) .
 							"\n</div>";
-					} elseif ( $targetUser->isBlocked() ) { // Show log extract if the user is currently blocked
-						// Note: getLastLogEntry() uses ApiBase::getContext(), which is not supported by current version
-						//$notices[] = $this->msg(
-						//	'blocked-notice-logextract',
-						//	$targetUser->getName() // Support GENDER in notice
-						//)->parseAsBlock() . $this->getLastLogEntry( $targetUser->getUserPage(), 'block' );
-						$notices[] = $this->msg(
-							'blocked-notice-logextract',
-							$targetUser->getName() // Support GENDER in notice
-						)->parseAsBlock();
 					}
-				}
-
-				if ( $user->isBlockedFrom( $page ) && $user->getBlock()->prevents( 'edit' ) !== false ) {
-					$notices[] = call_user_func_array(
-						array( $this, 'msg' ),
-						$user->getBlock()->getPermissionsError( $this->getContext() )
-					)->parseAsBlock();
 				}
 
 				// HACK: Build a fake EditPage so we can get checkboxes from it

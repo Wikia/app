@@ -157,8 +157,9 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink( $skin ) {
-		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
+		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgUser;
 		return $skin->getSkinName() === 'oasis' &&
+			!$wgUser->isBlockedFrom( $skin->getRelevantTitle() ) &&
 			!$wgTitle->isRedirect() &&
 			$wgEnableVisualEditorExt &&
 			( is_array( $wgVisualEditorNamespaces ) ?
