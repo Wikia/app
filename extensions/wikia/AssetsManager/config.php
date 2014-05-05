@@ -85,24 +85,17 @@ $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
-		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
-
-		// adengine2 low prio
-		// @requires adengine2 core already loaded
-		// @requires liftium loaded later (TODO FIXME)
+		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
-
+		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
+		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 	),
 );
 
