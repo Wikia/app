@@ -51,7 +51,7 @@ class ApiVisualEditor extends ApiBase {
 			$oldid = $parserParams['oldid'];
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
-					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+					$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ) .
 						'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
@@ -153,7 +153,7 @@ class ApiVisualEditor extends ApiBase {
 		}
 
 		$req = MWHttpRequest::factory(
-			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+			$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ) .
 				'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 			array_merge(
 				$this->getProxyConf(),
@@ -307,13 +307,11 @@ class ApiVisualEditor extends ApiBase {
 
 	/**
 	 * @protected
-	 * @description Simple helper to retrieve relevant api uri, eg: http://muppet.wikia.com/api.php
+	 * @description Simple helper to retrieve relevant api uri
 	 * @return String
 	 */
 	protected function getApiSource() {
-		global $wgVisualEditorParsoidPrefix;
-		return empty( $wgVisualEditorParsoidPrefix ) ?
-				wfExpandUrl( wfScript( 'api' ) ) : $wgVisualEditorParsoidPrefix;
+		return wfExpandUrl( wfScript( 'api' ) );
 	}
 
 	public function execute() {
@@ -344,7 +342,7 @@ class ApiVisualEditor extends ApiBase {
 					'wt' => $params['wikitext']
 				);
 				$content = Http::post(
-					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
+					$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ).
 						'/' . urlencode( $page->getPrefixedDBkey() ),
 					array(
 						'postData' => $postData,
