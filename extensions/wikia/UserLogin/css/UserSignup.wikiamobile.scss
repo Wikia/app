@@ -82,6 +82,7 @@ select {
 	color: $main-color;
 	font-size: .8rem;
 	margin: 10px 0;
+	word-wrap: break-word;
 }
 
 input[type=submit] {
