@@ -4,7 +4,7 @@
 	window.optimizelyUniqueExperiment = function (currentExperiment, mutuallyExclusiveExperiments) {
 		if (window.optimizelyCachedExperiment) { return false; }
 		
-		var active, currentInCookie, key, allExperiments;
+		var active, currentInCookie, key, allExperiments, result;
 
 		if (mutuallyExclusiveExperiments) {
 			active = mutuallyExclusiveExperiments;
