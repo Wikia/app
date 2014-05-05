@@ -6,7 +6,7 @@
 <ul class="map-list">
 {{#maps}}
 	<li>
-		{{#done}}<a href="{{base_url}}/{{id}}">{{/done}}
+		{{#done}}<a href="{{baseUrl}}/{{id}}">{{/done}}
 			{{^done}}<div class="map-status">{{status_message}}</div>{{/done}}
 			<img src="{{image}}" alt="{{title}}" height="{{map_height}}" width="{{map_width}}"/>
 			<h3>{{title}}</h3>

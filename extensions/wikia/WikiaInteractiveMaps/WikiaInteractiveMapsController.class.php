@@ -51,7 +51,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$url = $this->getContext()->getTitle()->getFullURL();
 
-		$this->setVal( 'base_url', $url );
+		$this->setVal( 'baseUrl', $url );
 		$messages = [
 			'wikia-interactive-maps-title' => wfMessage( 'wikia-interactive-maps-title' ),
 			'wikia-interactive-maps-create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
@@ -89,11 +89,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			] );
 
 			$this->setVal( 'title', $map->title );
-			$this->setVal( 'map_found', true );
+			$this->setVal( 'mapFound', true );
 			$this->setVal( 'url', $url );
 			$this->setVal( 'height', self::MAP_HEIGHT );
 		} else {
-			$this->setVal( 'map_found', false );
+			$this->setVal( 'mapFound', false );
 			$this->setVal( 'title', wfMessage( 'error' ) );
 			$this->setVal( 'messages', [
 				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
