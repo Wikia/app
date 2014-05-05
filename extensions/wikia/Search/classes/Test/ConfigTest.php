@@ -1364,16 +1364,19 @@ class ConfigTest extends BaseTest {
 	public function testGetLengthWithMatch() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
-		               ->setMethods( [ 'mustSubMatchedRecords' ] )
+		               ->setMethods( [ 'getPage', 'hasMatch' ] )
 		               ->getMock();
-		
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'mustSubMatchedRecords' )
-		    ->will   ( $this->returnValue( 1 ) )
+
+		$config->expects( $this->any() )
+			->method( 'getPage' )
+			->will( $this->returnValue( 0 ) )
 		;
-		$config->setLimit( 1 )
+		$config->expects( $this->any() )
+			->method( 'hasMatch' )
+			->will( $this->returnValue( true ) )
 		;
+		$config->setLimit( 1 );
+
 		$this->assertEquals(
 				$config->getLength(),
 				0,
@@ -1399,23 +1402,6 @@ class ConfigTest extends BaseTest {
 			->will( $this->returnValue( true ) )
 		;
 		$this->assertEquals( 1, $config->mustAddMatchedRecords() );
-	}
-
-	/**
-	 * @covers Wikia\Search\Config::mustSubMatchedRecords
-	 */
-	public function testMustSubMatchedRecords() {
-		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getPage', 'hasMatch' ] )
-			->getMock();
-		$config->expects( $this->any() )
-			->method( 'getPage' )
-			->will( $this->returnValue( 0 ) );
-		$config->expects( $this->any() )
-			->method( 'hasMatch' )
-			->will( $this->returnValue( true ) );
-		$this->assertEquals( 1, $config->mustSubMatchedRecords() );
 	}
 	
 	/**
