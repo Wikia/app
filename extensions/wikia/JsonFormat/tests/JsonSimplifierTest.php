@@ -56,6 +56,25 @@ EOD;
 		$this->assertEquals(2, count($jsonSimple['sections']), "There should be 2 sections");		
 	}
 	
+	public function testLists() {
+		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+
+		$text = <<<'EOD'
+<ul><li>"<a href="/wiki/Casa_Bonita" title="Casa Bonita">Casa Bonita</a>"
+</li><li>"<a href="/wiki/Sexual_Healing" title="Sexual Healing">Sexual Healing</a>"
+</li><li>"<a href="/wiki/Make_Love,_Not_Warcraft" title="Make Love, Not Warcraft">Make Love, Not Warcraft</a>"
+</li></ul>
+EOD;
+
+		$jsonOutput = $htmlParser->parse( $text );	
+		$jsonSimple = $simplifier->simplify( $jsonOutput, "Chips-A-Ho!" );
+		$this->assertEquals( "list", $jsonSimple['sections'][0]['content'][0]['type'] );
+		$this->assertEquals( '"Casa Bonita"', $jsonSimple['sections'][0]['content'][0]['elements'][0]['text'] );
+		print_r($jsonSimple);
+		
+	}
+	
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.01676 ms
