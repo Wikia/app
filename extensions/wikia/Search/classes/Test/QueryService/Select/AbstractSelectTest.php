@@ -1037,7 +1037,7 @@ class AbstractSelectTest extends Wikia\Search\Test\BaseTest {
 			->will   ( $this->returnValue( 0 ) )
 		;
 		$this->assertEquals(
-				[ 'total' => 200, 'batches' => 10, 'currentBatch' => 1, 'next' => 20, 'items' => $results ],
+				[ 'total' => 200, 'batches' => 10, 'currentBatch' => 1, 'next' => 21, 'items' => $results ],
 				$mockSelect->searchAsApi( $expectedFields, true )
 		);
 	}

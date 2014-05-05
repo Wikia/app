@@ -205,7 +205,7 @@ abstract class AbstractSelect
 					];
 			if ( $total > 0 ) {
 				$response[ 'next' ] = min( [ $numPages * $limit, $config->getStart() + $limit ] ) +
-					$config->mustAddMatchedRecords();
+					$config->mustAddMatchedRecords() + 1;
 			}
 		} else if ( $fields ) {
 			$response = $resultSet->toArray( $fields, $keyField );
