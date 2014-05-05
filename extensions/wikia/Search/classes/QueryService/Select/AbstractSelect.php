@@ -365,7 +365,7 @@ abstract class AbstractSelect
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
 			$start = ( $config->getPage() - $config->mustAddMatchedRecords() - 1  ) * $config->getLimit();
-			$config->setStart(  $start );
+			$config->setStart( $start );
 		}
 		return $this;
 	}
