@@ -25,7 +25,7 @@
 
 		currentInCookie = currentInCookie || active[Math.floor(Math.random() * active.length)];
 
-		return currentInCookie === currentExperiment;
+		return parseInt(currentInCookie, 10) === parseInt(currentExperiment, 10);
 	};
 
 })(window, document);
