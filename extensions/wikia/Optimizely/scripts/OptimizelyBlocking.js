@@ -30,7 +30,7 @@
 		result = parseInt(currentInCookie, 10) === parseInt(currentExperiment, 10);
 		
 		if (result) {
-			window.optimizely.cachedExperiment = currentExperiment;
+			window.optimizelyCachedExperiment = currentExperiment;
 		}
 		
 		return result;
