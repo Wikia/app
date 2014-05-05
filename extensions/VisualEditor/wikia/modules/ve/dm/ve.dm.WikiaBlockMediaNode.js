@@ -31,6 +31,6 @@ ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, convert
 		),
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = JSON.parse( mwDataJSON );
-	dataElement[0].attributes.attribution = mwData.attribution;
+	dataElement[0].attributes.user = mwData.user;
 	return dataElement;
 };

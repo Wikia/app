@@ -613,10 +613,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'width': item.width,
 					'height': item.height,
 					'resource': './' + item.title,
-					'attribution': {
-						'username': item.username,
-						'title': item.title
-					}
+					'user': item.username
 				}
 			},
 			{ 'type': captionType },
