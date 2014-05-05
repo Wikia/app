@@ -2,6 +2,10 @@
 	'use strict';
 
 	window.optimizelyUniqueExperiment = function (currentExperiment, mutuallyExclusiveExperiments) {
+		if (window.optimizely.cachedExperiment) { return false; }
+		
+		window.optimizely.cachedExperiment = currentExperiment;
+		
 		var active, currentInCookie, key, allExperiments;
 
 		if (mutuallyExclusiveExperiments) {
