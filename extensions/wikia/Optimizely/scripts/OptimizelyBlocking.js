@@ -2,9 +2,7 @@
 	'use strict';
 
 	window.optimizelyUniqueExperiment = function (currentExperiment, mutuallyExclusiveExperiments) {
-		if (window.optimizely.cachedExperiment) { return false; }
-		
-		window.optimizely.cachedExperiment = currentExperiment;
+		if (window.optimizelyCachedExperiment) { return false; }
 		
 		var active, currentInCookie, key, allExperiments;
 
@@ -29,7 +27,13 @@
 
 		currentInCookie = currentInCookie || active[Math.floor(Math.random() * active.length)];
 
-		return parseInt(currentInCookie, 10) === parseInt(currentExperiment, 10);
+		result = parseInt(currentInCookie, 10) === parseInt(currentExperiment, 10);
+		
+		if (result) {
+			window.optimizely.cachedExperiment = currentExperiment;
+		}
+		
+		return result;
 	};
 
 })(window, document);
