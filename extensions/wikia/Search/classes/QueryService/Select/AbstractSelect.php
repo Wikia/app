@@ -364,9 +364,7 @@ abstract class AbstractSelect
 	protected function prepareRequest() {
 		$config = $this->getConfig();
 		if ( $config->getPage() > 1 ) {
-			$length = $config->getLimit();
-			$start = ( $config->getPage() - $config->mustAddMatchedRecords() - 1  ) * $length;
-
+			$start = ( $config->getPage() - $config->mustAddMatchedRecords() - 1  ) * $config->getLimit();
 			$config->setStart(  $start );
 		}
 		return $this;
