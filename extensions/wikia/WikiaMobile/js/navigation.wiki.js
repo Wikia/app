@@ -44,6 +44,13 @@ require( ['wikia.window', 'wikia.nirvana', 'track', 'wikia.cache'],
 
 					event.stopPropagation();
 
+					// track clicks on special videos nav link
+					if ( $element.hasClass( 'video-link' ) ) {
+						track.event( 'wikinav', track.CLICK, {
+							label: 'special-videos'
+						});
+					}
+
 					if ( hasChildren ) {
 						$ul = $this.find( 'ul' ).first().addClass( 'cur' );
 

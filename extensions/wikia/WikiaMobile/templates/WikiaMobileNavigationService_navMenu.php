@@ -129,7 +129,7 @@
 	}
 ?>
 	<? if ( $showVideoLink ) { ?>
-		<li><a href="<?= $specialVideosUrl ?>"><?= wfMessage('wikiamobile-videos')->escaped() ?></a></li>
+		<li><a class="video-link" href="<?= $specialVideosUrl ?>"><?= wfMessage('wikiamobile-videos')->escaped() ?></a></li>
 	<? } ?>
 </ul>
 </nav>
