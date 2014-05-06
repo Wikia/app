@@ -47,7 +47,6 @@ class JsonFormatSimplifier {
 				$type = $children[ $i ]->getType();
 				if ( $type == 'list' ) {
 					$elements = array_merge( $elements, self::processList( $children[ $i ] ) );
-					
 				}
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
