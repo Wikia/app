@@ -112,7 +112,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 
 	//WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
-	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.'
+	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
+	'wikiamobile-go-to-login' => 'Have an account? [[Special:UserLogin|Log in now >]]'
 );
 
 /** Message documentation (Message documentation)
@@ -188,6 +189,7 @@ $messages['qqq'] = array(
 * $1 is an action link using the message {{msg-wikia|userlogin-loginreqlink}}.',
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
+	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account'
 );
 
 /** Aragonese (aragonés)

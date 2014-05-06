@@ -21,26 +21,20 @@ console.log(arvg);
 var dns = require('dns');
 var fs = require('fs');
 
-arvg.instance = arvg.instance - 1;
 var chatConfig = JSON.parse(fs.readFileSync(process.env.WIKIA_CONFIG_ROOT + '/ChatConfig.json'));
 
-var instaceNumber = chatConfig[arvg.mode]['MainChatServers'][arvg.basket].length;
+var chatServer = chatConfig[arvg.mode]['MainChatServer'].split(':');
+var apiServer = chatConfig[arvg.mode]['ApiChatServer'].split(':');
 
+exports.FLASH_POLICY_PORT = 10843;
 
-var chatServer = chatConfig[arvg.mode]['MainChatServers'][arvg.basket][arvg.instance].split(':');
-var apiServer = chatConfig[arvg.mode]['ApiChatServers'][arvg.basket][arvg.instance].split(':');
-
-
-exports.FLASH_POLICY_PORT = 10843 + arvg.instance;
 exports.CHAT_SERVER_HOST = chatServer[0];
 exports.CHAT_SERVER_PORT = parseInt(chatServer[1]);
 
-exports.BASKET = arvg.basket;
-exports.INSTANCE = arvg.instance + 1;
 exports.API_SERVER_HOST = apiServer[0];
 exports.API_SERVER_PORT = parseInt(apiServer[1]);
 
-var redisServer = chatConfig[arvg.mode]['RedisServer'][arvg.basket].split(':');
+var redisServer = chatConfig[arvg.mode]['RedisServer'].split(':');
 
 exports.REDIS_HOST = redisServer[0];
 exports.REDIS_PORT = redisServer[1];
@@ -53,31 +47,6 @@ exports.MAX_MESSAGES_IN_BACKLOG = chatConfig['MaxMessagesInBacklog']; // how man
 exports.NUM_MESSAGES_TO_SHOW_ON_CONNECT = chatConfig['NumMessagesToShowOnConnect'];
 
 exports.TOKEN = chatConfig['ChatCommunicationToken'];
-
-exports.validateConnection = function(cityId) {
-	//TODO: take this out when we will be operating on 2 servers
-	return true;
-	if(typeof arvg.instance != 'undefined') {
-		if(arvg.instance == cityId%instaceNumber){
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
-exports.validateActiveBasket = function(basket) {
-	//TODO: take this out when we will be operating on 2 servers
-	return true;
-
-	if(typeof arvg.basket != 'undefined') {
-		if(arvg.basket == basket){
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
 
 exports.logLevel = (typeof arvg.loglevel != 'undefined') ? arvg.loglevel : "CRITICAL" ;
 
@@ -97,8 +66,8 @@ exports.getKey_nextRoomId = function(){ return "next.room.id"; }
 exports.getKeyPrefix_room = function(){ return "room"; }
 
 
-exports.getKey_userCount = function(){ return "UserCounts_" + exports.INSTANCE; }
-exports.getKey_runtimeStats = function(){ return "runtimeStats_"  + exports.INSTANCE; }
+exports.getKey_userCount = function(){ return "UserCounts"; }
+exports.getKey_runtimeStats = function(){ return "runtimeStats"; }
 
 exports.getKey_sessionData = function(key){ return "session_data:" + key; }
 

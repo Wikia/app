@@ -3,8 +3,7 @@
  * Once AMD is available, this file will be almost no longer needed.
  */
 
-/*global document, window */
-/*global require*/
+/*global window, require, setTimeout*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
@@ -14,39 +13,28 @@ require([
 	'wikia.tracker',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
-	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.evolveSlotConfig',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.slotTweaker'
-], function (log, window, tracker, adEngine, adConfig, adProviderEvolve, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker) {
+	'ext.wikia.adEngine.slotTweaker',
+	require.optional('wikia.abTest')
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
 		params,
 		param,
-		value;
+		value,
+		adsinhead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
 	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
-
-	window.wgAfterContentAndJS.push(function () {
-		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2, 'queue.early');
-	});
 
 	window.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -67,12 +55,10 @@ require([
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		adProviderEvolve.hop(slotname);
+		require(['ext.wikia.adEngine.provider.evolve'], function(adProviderEvolve) {
+			adProviderEvolve.hop(slotname);
+		});
 	};
-
-	if (window.wgEnableRHonDesktop) {
-		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
-	}
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
@@ -109,24 +95,121 @@ require([
 		});
 	};
 
+	function startEarlyQueue() {
+		// Start ads
+		window.AdEngine_trackStartEarlyAds();
+		log('work on window.adslots2 according to AdConfig2', 1, module);
+		tracker.track({
+			eventName: 'liftium.init',
+			ga_category: 'init2/init',
+			ga_action: 'init',
+			ga_label: 'adengine2',
+			trackingMethod: 'ad'
+		});
+		window.adslots2 = window.adslots2 || [];
+		adEngine.run(adConfig, window.adslots2, 'queue.early');
+	}
+
+	if (adsinhead) {
+		setTimeout(startEarlyQueue, 0);
+	} else {
+		window.wgAfterContentAndJS.push(startEarlyQueue);
+	}
+
+	if (window.wgEnableRHonDesktop) {
+		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
+	}
 });
 
 // Load late ads now
 window.AdEngine_loadLateAds = function () {
 	'use strict';
-	require([
-		'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
-	], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
-		var module = 'AdEngine_loadLateAds';
-		log('launching late ads now', 1, module);
-		log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2 late',
-			trackingMethod: 'ad'
+
+	window.wgAfterContentAndJS.push(function () {
+		require([
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+			var module = 'AdEngine_loadLateAds';
+			window.AdEngine_trackStartLateAds();
+			log('launching late ads now', 1, module);
+			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
+			tracker.track({
+				eventName: 'liftium.init',
+				ga_category: 'init2/init',
+				ga_action: 'init',
+				ga_label: 'adengine2 late',
+				trackingMethod: 'ad'
+			});
+			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
-		adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 	});
 };
+
+// Tracking functions for ads in head metrics
+(function (window) {
+	'use strict';
+
+	function trackTime(timeTo) {
+		var wgNowBased, performanceBased;
+
+		if (!window.wgLoadAdsInHead) {
+			return;
+		}
+
+		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
+		performanceBased = window.performance && Math.round(window.performance.now());
+
+		require([
+			'wikia.log',
+			'wikia.tracker',
+			'ext.wikia.adEngine.slotTracker',
+			require.optional('wikia.abTest')
+		], function (log, tracker, slotTracker, abTest) {
+			var adsinhead = abTest && abTest.getGroup('ADS_IN_HEAD');
+
+			if (!adsinhead) {
+				return;
+			}
+
+			log([
+				'time to: ' + timeTo,
+				'adsinhead: ' + adsinhead,
+				'wgNowBased: ' + wgNowBased,
+				'performanceBased: ' + performanceBased
+			], 'info', 'AdEngine_track');
+
+			tracker.track({
+				ga_category: 'ad/performance/' + timeTo + '/wgNow',
+				ga_action: 'adsinhead=' + adsinhead,
+				ga_label: slotTracker.getTimeBucket(wgNowBased / 1000),
+				ga_value: wgNowBased,
+				trackingMethod: 'ad'
+			});
+
+			if (performanceBased) {
+				tracker.track({
+					ga_category: 'ad/performance/' + timeTo + '/performance',
+					ga_action: 'adsinhead=' + adsinhead,
+					ga_label: slotTracker.getTimeBucket(performanceBased / 1000),
+					ga_value: performanceBased,
+					trackingMethod: 'ad'
+				});
+			}
+		});
+	}
+
+	// Measure time to page interactive
+	window.AdEngine_trackPageInteractive = function () {
+		trackTime('interactivePage');
+	};
+
+	// Measure time to load early queue
+	window.AdEngine_trackStartEarlyAds = function () {
+		trackTime('startEarlyAds');
+	};
+
+	// Measure time to load late queue
+	window.AdEngine_trackStartLateAds = function () {
+		trackTime('startLateAds');
+	};
+}(window));

@@ -58,15 +58,10 @@ $config['adengine2_js'] = array(
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
-		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
+		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
-		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
-		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
-		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -76,7 +71,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
@@ -91,17 +85,17 @@ $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdMeldAPIClient.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
-
-		// adengine2 low prio
-		// @requires adengine2 core already loaded
-		// @requires liftium loaded later (TODO FIXME)
+		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
+		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
-
+		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
+		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 	),
 );
 
@@ -151,7 +145,6 @@ $config['oasis_noads_extensions_js'] = array(
 $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/wikia/js/WikiaScriptLoader.js',
 		'//skins/wikia/js/JqueryLoader.js',
 		'//resources/wikia/modules/lazyqueue.js',
 	)
@@ -465,7 +458,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
-		'//resources/wikia/modules/abtest.js',
+		'//resources/wikia/modules/abTest.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -655,6 +648,25 @@ $config['wikiamobile_autocomplete_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/WikiaMobile/js/autocomplete.js'
+	)
+);
+
+$config['wikiamobile_usersignup_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//extensions/wikia/UserLogin/css/UserSignup.wikiamobile.scss'
+	)
+);
+
+$config['wikiamobile_usersignup_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'wikiamobile',
+	'assets' => array(
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js'
 	)
 );
 
@@ -1724,14 +1736,6 @@ $config['videos_module_js'] = [
 	]
 ];
 
-$config['qualtrics_zone_code_injector_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/QualtricsZoneCodeInjector/scripts/QualtricsZoneCodeInjector.js',
-	]
-];
-
 $config['qualaroo_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
@@ -1756,3 +1760,20 @@ $config['lazy_rail_js'] = [
 		'//skins/oasis/js/LatestPhotos.js',
 	]
 ];
+
+/** Qualaroo blocking **/
+$config['qualaroo_blocking_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/Qualaroo/scripts/QualarooBlocking.js',
+	)
+);
+
+/** Optimizely Blocking **/
+$config['optimizely_blocking_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
+	)
+);

@@ -28,7 +28,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 	connect: function() {
 		var url = 'http://' + WIKIA_NODE_HOST + ':' + WIKIA_NODE_PORT;
 		$().log(url, 'Chat server');
-		
+
 		if( this.socket ) {
 			if(this.socket.socket.connected) {
 				return true;
@@ -50,10 +50,10 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 
 			socket.on('message', this.proxy( this.onMsgReceived, this ) );
 			socket.on('connect', this.proxy( function(){this.onConnect(socket, [ 'xhr-polling' ]); }, this ) );
-			
+
 			var connectionFail = this.proxy( function(delay, count) {
 				if(count == 8) {
-					if(socket) { 
+					if(socket) {
 						socket.disconnect();
 					}
 					this.fire( "reConnectFail", {} );

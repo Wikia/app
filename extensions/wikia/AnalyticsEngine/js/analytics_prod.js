@@ -94,7 +94,7 @@
 	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['_setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3],
+		['_setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
 		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
 	);
 
@@ -136,12 +136,6 @@
 				window.addEventListener( "load", abOnLoadHandler, false );
 			}
 		}
-
-		/**** Back-end A/B test for order of loading test ****/
-		if ( window.wgAdsInHeadGroup !== 0 ) {
-			_gaqWikiaPush( ['_setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-			abCustomVarsForAds.push( ['ads._setCustomVar', 39, 'ADSINHEAD', 'ADSINHEAD_' + window.wgAdsInHeadGroup, 3] );
-		}
 	}
 
 	// Unleash
@@ -173,7 +167,7 @@
 	window._gaq.push( ['ads._setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
-		['ads._setCustomVar', 14, 'HasAds', window.wgAdsShowableOnPage ? 'Yes' : 'No', 3],
+		['ads._setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
 		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
 	);
 

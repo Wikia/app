@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
@@ -46,6 +47,7 @@ $messages['en'] = array(
 
 	// confirm email
 	'usersignup-confirm-page-title' => 'Confirm your email',
+	'usersignup-confirm-page-title-wikiamobile' => 'Check your email',
 	'usersignup-confirm-email-resend-email' => "Send me another confirmation email",
 	'usersignup-confirm-email-change-email-content' => "I want to use a different email address.",
 	'usersignup-confirm-email-change-email' => 'Change my email address',
@@ -59,11 +61,15 @@ $messages['en'] = array(
 
 	// confirmation email
 	'usersignup-confirmation-heading' => 'Almost there',
+	'usersignup-confirmation-heading-wikiamobile' => 'Check your email',
 	'usersignup-confirmation-heading-email-resent' => 'New email sent',
 	'usersignup-confirmation-subheading' => 'Check your email',
 	'usersignup-confirmation-email-sent' => "We sent an email to '''$1'''.
 
 Click the confirmation link in your email to finish creating your account.",  // intentional line break
+	'usersignup-confirmation-email-sent-wikiamobile' => "We sent an email to '''$1'''.
+
+Click the confirmation link in your email to finish creating your account. Thanks!",
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
 	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
@@ -246,6 +252,8 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  */
 $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
+	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
+	'usersignup-confirm-page-title-wikiamobile' => 'Page title for Special:UserSignup on mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
@@ -294,6 +302,7 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-confirmation-heading-email-resent' => 'Confirm page heading when email has been re-sent.',
 	'usersignup-confirmation-subheading' => 'Confirm page sub heading.',
 	'usersignup-confirmation-email-sent' => 'Confirm page action validation stating email has been sent to $1 e-mail address.  Bold $1, and leave a purposeful line break between line 1 and line 2.',
+	'usersignup-confirmation-email-sent-wikiamobile' => 'Confirm page action validation stating email has been sent to $1 e-mail address on mobile skin.',
 	'usersignup-confirmation-email_subject' => 'Confirmation email subject',
 	'usersignup-confirmation-email-greeting' => 'Confirmation email template greeting.',
 	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',

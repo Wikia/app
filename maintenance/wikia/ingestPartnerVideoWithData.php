@@ -204,24 +204,30 @@ function getContentSummary( $summary ) {
 	}
 	$content .= "\n";
 
-	// get body
-	$summary['total'] = array_fill_keys( $keys, 0 );
+	// Create the summary body
+	$totals = array_fill_keys( $keys, 0 );
 	foreach ( $summary as $provider => $result ) {
 		$content .= sprintf( "%-{$width}s", strtoupper( $provider ) );
 		foreach ( $result as $key => $value ) {
-			$summary['total'][$key] += $value;
+			$totals[$key] += $value;
 			$content .= sprintf( "%{$width}s", $value );
 		}
+		$content .= "\n";
 
 		// Make provider data available to kibana
 		$result['provider'] = $provider;
 		$log->info( "Video ingestion complete: $provider", $result );
-
-		$content .= "\n";
 	}
 
+	// Write the totals line
+	$content .= sprintf( "%-{$width}s", 'TOTAL' );
+	foreach ( $totals as $key => $value ) {
+		$content .= sprintf( "%{$width}s", $value );
+	}
+	$content .= "\n";
+
 	// Make the summary data available to kibana
-	$log->info("Video ingestion totals", $summary['total']);
+	$log->info("Video ingestion totals", $totals);
 
 	return $content;
 }

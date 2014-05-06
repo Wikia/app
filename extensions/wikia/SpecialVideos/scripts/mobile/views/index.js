@@ -32,6 +32,7 @@ define('specialVideos.mobile.views.index', [
 		this.$filter.find('a').on('click', $.proxy(this, 'onFilterClick'));
 		this.$loadMoreBtn.on('click', $.proxy(this, 'onLoadMoreClick'));
 		this.$el.find('.video-list').on('click', '.title', $.proxy(this, 'onTitleClick'));
+		this.$el.find('.video-list').on('click', '.play-circle', $.proxy(this, 'onPlayButtonClick'));
 		this.track({
 			action: Tracker.ACTIONS.IMPRESSION,
 			label: 'page'
@@ -44,7 +45,7 @@ define('specialVideos.mobile.views.index', [
 	 * @return {Function} partially applied tracking function
 	 */
 	SpecialVideosIndexView.prototype.track = Tracker.buildTrackingFunction({
-		category: 'special-videos-mobile',
+		category: 'wikiamobile-special-videos',
 		trackingMethod: 'both'
 	});
 
@@ -111,6 +112,19 @@ define('specialVideos.mobile.views.index', [
 			action: Tracker.ACTIONS.CLICK,
 			label: 'load-more-btn'
 		});
+		return false;
+	};
+
+    /**
+     * onPlayButtonClick
+	 * @description This method exists because there isn't a more eloquent way to at arbitrary elements to the
+	 * mechanism that opens the mobile lightbox. When our .play-circle span is clicked, it triggers a click on the
+	 * neighboring image tag.
+	 * @param {Object} evt jQuery event object
+	 * @return {Boolean} false
+     */
+	SpecialVideosIndexView.prototype.onPlayButtonClick = function (evt) {
+		$(evt.target).prevAll('img').trigger('click');
 		return false;
 	};
 

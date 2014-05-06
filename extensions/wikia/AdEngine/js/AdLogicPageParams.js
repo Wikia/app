@@ -50,9 +50,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 	}
 
-	// TODO: move the "if" to PHP?
 	function getCategories() {
-		if (window.wgAdPageLevelCategoryLangs && (window.wgContentLanguage in window.wgAdPageLevelCategoryLangs)) {
+		if (window.wgAdDriverUseCatParam) {
 			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
 				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
 				return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');

@@ -148,6 +148,7 @@ $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/Rela
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -159,6 +160,7 @@ $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
 $wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
+$wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 
 //Wikia Api exceptions classes
 $wgAutoloadClasses[ 'ApiAccessService' ] = "{$IP}/includes/wikia/api/services/ApiAccessService.php";
@@ -368,7 +370,10 @@ $wgAutoloadClasses[ 'PreventBlockedUsersThrowsError' ] = $IP . '/includes/wikia/
 // Spotlights AB test
 $wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
 $wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
+$wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
+$wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -1170,20 +1175,11 @@ $wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR'
 $wgAmazonDirectTargetedBuyCountries = null;
 
 /**
- * @name $wgAdPageLevelCategoryLangsDefault
- * The default value for $wgAdPageLevelCategoryLangs
- * $wgAdPageLevelCategoryLangs overrides this
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAdPageLevelCategoryLangsDefault = [ 'en' => true ];
-
-/**
- * @name $wgAdPageLevelCategoriesLangs
+ * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = null;
+$wgAdPageLevelCategoryLangs = [ 'en' => true ];;
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1259,13 +1255,13 @@ $wgAdVideoTargeting = false;
  * @name $wgAdDriverUseGptMobile
  * Enables experimental AdEngine on mobile skin (for GPT)
  */
-$wgAdDriverUseGptMobile = false;
+$wgAdDriverUseGptMobile = true;
 
 /**
  * @name $wgAdDriverUseGptMobileDisabledInLangs
  * Disable wgAdDriverUseGptMobile if wiki is this language
  */
-$wgAdDriverUseGptMobileDisabledInLangs = ['en'];
+$wgAdDriverUseGptMobileDisabledInLangs = [];
 
 /**
  * trusted proxy service registry
@@ -1372,6 +1368,7 @@ $wgApiAccess = [
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
