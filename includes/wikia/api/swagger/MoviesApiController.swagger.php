@@ -50,7 +50,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/api/v1/Movies/Movie",
+ * 	path="/Movies/Movie",
  * 	description="Get article against movie name",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
