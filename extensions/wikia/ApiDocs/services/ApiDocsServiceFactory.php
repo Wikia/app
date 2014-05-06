@@ -22,7 +22,7 @@ class ApiDocsServiceFactory {
 	public function getApiDocsService( $request ) {
 		global $IP;
 		$matches = [];
-		if ( preg_match( "/(\/api\/[^\/]+)\//", $request->getScriptUrl(), $matches ) ) {
+		if ( preg_match( "/(\/api\/[^\/]+)/", $request->getScriptUrl(), $matches ) ) {
 			$pathPrefix = $matches[1];
 			$docsService = new ApiDocsService(
 				Swagger::discover( $IP . self::SWAGGER_PATH ),
