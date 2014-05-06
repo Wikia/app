@@ -48,7 +48,10 @@ class VideoEmbedToolController extends WikiaController {
 			$service->setStart( $request->getInt( 'svStart', 0 ) )
 			        ->setLimit( $request->getInt( 'svSize', 20 ) )
 			        ->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) );
-			$response = $service->getSuggestionsForArticleId( $this->request->getInt('articleId', 0 ) );
+			$articleId = $this->request->getInt('articleId', 0 );
+			if ( $articleId > 0 ) {
+				$response = $service->getSuggestionsForArticleId( $articleId );
+			}
 
 			$result = [
 					'searchQuery' => $service->getSuggestionQuery(),
@@ -56,7 +59,7 @@ class VideoEmbedToolController extends WikiaController {
 					'totalItemCount' => $response['totalItemCount'],
 					'nextStartFrom' => $response['nextStartFrom'],
 					'currentSetItemCount' => count($response['items']),
-					'items' => $response['items'],
+					'items' => empty( $response['items'] ) ? [] : $response['items'],
 					'addMessage' => wfMessage('vet-add-from-preview')->plain()
 			];
 
