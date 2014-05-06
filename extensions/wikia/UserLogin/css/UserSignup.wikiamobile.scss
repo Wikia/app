@@ -1,9 +1,11 @@
+$color: #8f8f8f;
 $main-color: #054C8B;
 $main-background-color: #E2F3F7;
 $error-border: #BE1E2D;
 $input-color: #333;
 $border-color: #D0D0D0;
 $transparent: rgba(0,0,0,0);
+$font-size: .9rem;
 
 h1 {
 	color: $main-color;
@@ -24,10 +26,22 @@ fieldset {
 			color: $border-color;
 		}
 		color: $input-color;
-		font-size: 0.9rem;
+		font-size: $font-size;
 		margin: 0;
 		padding-right: 10px;
 		-webkit-appearance: none;
+
+		&::-webkit-input-placeholder {
+			color: $color;
+		}
+		&::-moz-placeholder {
+			color: $color;
+		}
+	}
+
+	label {
+		width: 100%;
+		font-size: $font-size;
 	}
 
 	&.error {
@@ -64,17 +78,17 @@ select {
 		radius: 2px;
 		color: $border-color;
 	}
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 	height: 30px;
-	margin: 2px;
+	margin: 0;
+	max-width: 32%;
 	padding-left: 5%;
-	width: 31%;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-
-	&:last-of-type {
-		margin-left: -2px;
-	}
 }
 
 .error-msg {
@@ -82,6 +96,9 @@ select {
 	color: $main-color;
 	font-size: .8rem;
 	margin: 10px 0;
+	padding-left: 10px;
+	text-align: left;
+	width: 100%;
 	word-wrap: break-word;
 }
 
@@ -94,6 +111,28 @@ input[type=submit] {
 	&[disabled=disabled] {
 		background-color: $border-color;
 	}
+}
+
+.birthday-group {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.submit-pane {
+	margin-top: 25px;
+}
+
+.login a {
+	font-weight: 800;
 }
 
 //ToDo: appropriate styles for confirmation login page
