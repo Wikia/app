@@ -37,13 +37,14 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgOut, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
 
 		// Set page title and other stuff
 		$this->setHeaders();
+		$user = $this->getUser();
 
 		# If the user isn't permitted to access this special page, display an error
-		if ( !$wgUser->isAllowed( 'editaccount' ) ) {
+		if ( !$user->isAllowed( 'editaccount' ) ) {
 			throw new PermissionsError( 'editaccount' );
 		}
 
@@ -54,13 +55,14 @@ class EditAccount extends SpecialPage {
 		}
 
 		# If user is blocked, s/he doesn't need to access this page
-		if ( $wgUser->isBlocked() ) {
+		if ( $user->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
+		$request = $this->getRequest();
 
-		$action = $wgRequest->getVal( 'wpAction' );
+		$action = $request->getVal( 'wpAction' );
 		#get name to work on. subpage is supported, but form submit name trumps
-		$userName = $wgRequest->getVal( 'wpUserName', $par );
+		$userName = $request->getVal( 'wpUserName', $par );
 
 		if( $userName !== null ) {
 			#got a name, clean it up
@@ -107,21 +109,32 @@ class EditAccount extends SpecialPage {
 		// FB:23860
 		if ( !( $this->mUser instanceof User ) ) $action = '';
 
-		$changeReason = $wgRequest->getVal( 'wpReason' );
+		// CSRF protection for EditAccount (CE-774)
+		if ( ( $action !== '' && $action !== 'displayuser' && $action !== 'closeaccount' )
+			&& ( !$request->wasPosted()
+				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
+		) {
+			$this->getOutput()->addHTML(
+				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
+			);
+			return;
+		}
+
+		$changeReason = $request->getVal( 'wpReason' );
 
 		switch( $action ) {
 			case 'setemail':
-				$newEmail = $wgRequest->getVal( 'wpNewEmail' );
+				$newEmail = $request->getVal( 'wpNewEmail' );
 				$this->mStatus = $this->setEmail( $newEmail, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setpass':
-				$newPass = $wgRequest->getVal( 'wpNewPass' );
+				$newPass = $request->getVal( 'wpNewPass' );
 				$this->mStatus = $this->setPassword( $newPass, $changeReason );
 				$template = 'displayuser';
 				break;
 			case 'setrealname':
-				$newRealName = $wgRequest->getVal( 'wpNewRealName' );
+				$newRealName = $request->getVal( 'wpNewRealName' );
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
@@ -179,6 +192,7 @@ class EditAccount extends SpecialPage {
 				'emailStatus' => null,
 				'disabled' => null,
 				'changeEmailRequested' => null,
+				'editToken' => $user->getEditToken(),
 			) );
 
 		if( is_object( $this->mUser ) ) {
