@@ -1,0 +1,23 @@
+These are the release notes for the Contest extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Contest
+Latest version of the release notes: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/Contest/RELEASE-NOTES?view=co
+
+
+=== Version 0.2 ===
+
+* Added filter options for the contestant pager on Special:Contest.
+* Added nicer handling of requests of non-existing contests on Special:ContestWelcome.
+
+=== Version 0.1 ===
+2011-10-20
+
+Initial release with these features:
+
+* Admin interface for managing contests and their challenges.
+* Landing and signup pages for each contest.
+* Personal contest list and submission interface for each user.
+* Summary pages per contest listing contestants, which can be filtered and sorted.
+* Judging interface that allows for rating and commenting on each participant.
+* All contests, challenges, contestants, comments and votes can be queried and exported via the API.
+* Signup and reminder emails.
