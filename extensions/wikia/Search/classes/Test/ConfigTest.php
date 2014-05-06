@@ -1364,25 +1364,44 @@ class ConfigTest extends BaseTest {
 	public function testGetLengthWithMatch() {
 		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
 		               ->disableOriginalConstructor()
-		               ->setMethods( [ 'hasMatch', 'getStart' ] )
+		               ->setMethods( [ 'getPage', 'hasMatch' ] )
 		               ->getMock();
-		
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'hasMatch' )
-		    ->will   ( $this->returnValue( true ) )
+
+		$config->expects( $this->any() )
+			->method( 'getPage' )
+			->will( $this->returnValue( 0 ) )
 		;
-		$config
-		    ->expects( $this->once() )
-		    ->method ( "getStart" )
-		    ->will   ( $this->returnValue( 0 ) )
+		$config->expects( $this->any() )
+			->method( 'hasMatch' )
+			->will( $this->returnValue( true ) )
 		;
-		$this->assertAttributeEquals(
-				$config->getLength() + 1,
-				'limit',
-				$config,
-				'Wikia\Search\Config::getLength should be limit -1 if we have a match'
+		$config->setLimit( 1 );
+
+		$this->assertEquals(
+				$config->getLength(),
+				0,
+				'Wikia\Search\Config::getLength should be limit 0 if we have a match and are on first page'
 		);
+	}
+
+	/**
+	 * @covers Wikia\Search\Config::mustAddMatchedRecords
+	 */
+	public function testMustAddMatchedRecords() {
+		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getPage', 'hasMatch' ] )
+			->getMock()
+		;
+		$config->expects( $this->any() )
+			->method( 'getPage' )
+			->will( $this->returnValue( 2 ) )
+		;
+		$config->expects( $this->any() )
+			->method( 'hasMatch' )
+			->will( $this->returnValue( true ) )
+		;
+		$this->assertEquals( 1, $config->mustAddMatchedRecords() );
 	}
 	
 	/**
