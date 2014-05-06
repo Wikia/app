@@ -18,6 +18,7 @@
 		</div>
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		<input type="hidden" name="wpAction" value="closeaccountconfirm" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</fieldset>
 </form>
 <!-- e:<?= __FILE__ ?> -->
