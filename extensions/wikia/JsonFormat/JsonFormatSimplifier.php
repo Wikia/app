@@ -52,8 +52,7 @@ class JsonFormatSimplifier {
 				elseif ( $type == 'listItem' ) {
 					$listItem = true;
 					$arr = $this->processList( $children[ $i ] );
-					$out[ ] = array_shift( $arr );
-					
+					$out[ ] = array_shift( $arr );				
 				}
 				$i++;
 			}
