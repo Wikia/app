@@ -17,8 +17,6 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
-	const HOT_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageHotWikiSlots';
-	const NEW_WIKI_SLOTS_VAR_NAME = 'wgWikiaHomePageNewWikiSlots';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -65,14 +63,6 @@ class WikiaHomePageHelper extends WikiaModel {
 		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::VIDEO_GAMES_SLOTS_VAR_NAME);
 	}
 
-	public function getNumberOfHotWikiSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::HOT_WIKI_SLOTS_VAR_NAME);
-	}
-
-	public function getNumberOfNewWikiSlots($lang) {
-		return $this->getVarFromWikiFactory($this->getCorpWikiIdByLang($lang), self::NEW_WIKI_SLOTS_VAR_NAME);
-	}
-
 	public function getNumberOfSlotsForType($wikiId, $slotTypeName) {
 		switch ($slotTypeName) {
 			case 'entertainment':
@@ -83,12 +73,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				break;
 			case 'lifestyle':
 				$slots = $this->getNumberOfLifestyleSlots($wikiId);
-				break;
-			case 'hot':
-				$slots = $this->getNumberOfHotWikiSlots($wikiId);
-				break;
-			case 'new':
-				$slots = $this->getNumberOfNewWikiSlots($wikiId);
 				break;
 			default:
 				$slots = 0;
@@ -533,8 +517,6 @@ class WikiaHomePageHelper extends WikiaModel {
 			'headline' => '',
 			'description' => '',
 			'url' => '',
-			'new' => 0,
-			'hot' => 0,
 			'official' => 0,
 			'promoted' => 0,
 			'blocked' => 0,
@@ -555,8 +537,6 @@ class WikiaHomePageHelper extends WikiaModel {
 				$wikiInfo['description'] = $wikiData['description'];
 
 				// wiki status
-				$wikiInfo['new'] = intval(CityVisualization::isNewWiki($wikiData['flags']));
-				$wikiInfo['hot'] = intval(CityVisualization::isHotWiki($wikiData['flags']));
 				$wikiInfo['official'] = intval(CityVisualization::isOfficialWiki($wikiData['flags']));
 				$wikiInfo['promoted'] = intval(CityVisualization::isPromotedWiki($wikiData['flags']));
 				$wikiInfo['blocked'] = intval(CityVisualization::isBlockedWiki($wikiData['flags']));
@@ -673,9 +653,8 @@ class WikiaHomePageHelper extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$reviewStatus = false;
 
-		$rowAssigner = new WikiImageReviewStatusRowHelper();
 		if ($imageId > 0) {
-			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId, $rowAssigner);
+			$reviewStatus = $this->getVisualization()->getImageReviewStatus($this->wg->CityId, $imageId);
 		}
 
 		wfProfileOut(__METHOD__);

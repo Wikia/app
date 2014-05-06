@@ -230,6 +230,7 @@ var STATUS_STATE_AWAY = 'away';
 	models.User = Backbone.Model.extend({
 		defaults: {
 			'name': '',
+			'sessionId': '',
 			'since': '',
 			'statusMessage': '',
 			'statusState': STATUS_STATE_PRESENT,

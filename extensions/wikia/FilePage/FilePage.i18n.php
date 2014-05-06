@@ -455,6 +455,7 @@ $messages['ka'] = array(
 $messages['lb'] = array(
 	'video-page-from-provider' => 'Vu(n) $1',
 	'video-page-see-more-info' => 'Méi Informatioune weisen',
+	'video-page-see-less-info' => 'Manner Informatioune weisen',
 	'video-page-description-heading' => 'Beschreiwung',
 	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
 	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',

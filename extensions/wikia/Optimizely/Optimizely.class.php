@@ -6,9 +6,28 @@
  *
  */
 class Optimizely {
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		global $wgNoExternals;
 
-		$scripts .= '<script src="//cdn.optimizely.com/js/554924358.js" async></script>';
+		if ( empty( $wgNoExternals ) ) {
+			$jsAssetGroups[] = 'optimizely_blocking_js';
+		}
+
+		return true;
+	}
+
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
+		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
+
+		// load optimizely_blocking_js on wikiamobile
+		if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
+			foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
+				$scripts .= '<script src="' . $script . '"></script>';
+			}
+		}
+
+		$scripts .= '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
+
 		return true;
 	}
 }

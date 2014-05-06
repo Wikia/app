@@ -131,7 +131,8 @@ $messages['qqq'] = array(
 	'cnw-desc-headline' => 'H1 for this step',
 	'cnw-desc-creative' => 'Creative or instruction for this step following H1',
 	'cnw-desc-placeholder' => 'Placeholder for the textarea',
-	'cnw-desc-tip1' => 'First Tip label',
+	'cnw-desc-tip1' => 'First Tip label.
+{{Identical|Hint}}',
 	'cnw-desc-tip1-creative' => 'The first tip<br />
 Be carefull to keep it short as there are 3 successive balloon tips to display in a small space',
 	'cnw-desc-tip2' => 'Second Tip label',
@@ -741,7 +742,7 @@ $messages['diq'] = array(
 	'cnw-or' => 'ya na',
 	'cnw-title' => 'Wikiyo newe vıraze',
 	'cnw-name-wiki-headline' => 'Wikiyo newe pêkerdış',
-	'cnw-name-wiki-label' => 'Namey wiki da şıma',
+	'cnw-name-wiki-label' => 'Nameyê wikiyê şıma',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-login' => 'Qeyd be',
 	'cnw-signup' => 'Hesab vıraze',
@@ -886,12 +887,13 @@ $messages['fa'] = array(
  * @author Ilkea
  * @author Lukkipoika
  * @author Nike
+ * @author Pxos
  * @author Tofu II
  * @author VezonThunder
  * @author Ville96
  */
 $messages['fi'] = array(
-	'createnewwiki-desc' => 'Ohjattu wikin luonti', # Fuzzy
+	'createnewwiki-desc' => 'Ohjattu wikin luonti',
 	'cnw-next' => 'Seuraava',
 	'cnw-back' => 'Takaisin',
 	'cnw-or' => 'tai',
@@ -946,7 +948,7 @@ $messages['fi'] = array(
 	'cnw-error-general' => 'Oho, jokin meni pieleen meidän puolellamme! Ole hyvä ja yritä uudelleen tai [[Special:Contact|ota meihin yhteyttä]] saadaksesi apua.',
 	'cnw-error-general-heading' => 'Pahoittelumme',
 	'cnw-badword-header' => 'Hei siellä',
-	'cnw-badword-msg' => 'Hei, vältä käyttämästä näitä rumia sanoja tai kiellettyjä sanoja Wikisi kuvauksesta: $1',
+	'cnw-badword-msg' => 'Hei, äläpä käytä seuraavia rumia tai kiellettyjä sanoja Wikisi kuvauksessa: $1',
 	'cnw-error-wiki-limit-header' => 'Wikien enimmäis määrä saavutettu',
 	'cnw-error-wiki-limit' => 'Hei, olet rajoitettu luomaan {{PLURAL:$1|$1 wikin|$1 wikiä}} päivässä. Odota 24 tuntia ennen wikin luontia.',
 	'cnw-error-blocked-header' => 'Käyttäjätunnus estetty',
@@ -1603,7 +1605,7 @@ $messages['ko'] = array(
 	'cnw-desc-tip2' => '잠깐',
 	'cnw-desc-tip3' => '전문 팁',
 	'cnw-desc-choose' => '분류를 선택하세요',
-	'cnw-desc-select-one' => '1개 선택',
+	'cnw-desc-select-one' => '하나 선택',
 	'cnw-desc-default-lang' => '위키 언어는 $1입니다',
 	'cnw-desc-change-lang' => '바꾸기',
 	'cnw-desc-lang' => '언어',
@@ -1650,9 +1652,12 @@ $messages['lb'] = array(
 	'cnw-name-wiki-label' => 'Gitt Ärer Wiki en Numm',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-login' => 'Aloggen',
+	'cnw-login-prompt' => 'Hutt Dir schonn e Benotzerkont?',
 	'cnw-auth-headline' => 'Aloggen',
 	'cnw-userauth-headline' => 'Hutt Dir e Benotzerkont?',
+	'cnw-userauth-creative' => 'Aloggen',
 	'cnw-userauth-marketing-heading' => 'Hutt Dir kee Benotzerkont?',
+	'cnw-desc-creative' => 'Beschreift Äert Thema',
 	'cnw-desc-tip1' => 'Tipp',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-choose' => 'Eng Kategorie wielen',
@@ -1660,6 +1665,8 @@ $messages['lb'] = array(
 	'cnw-desc-all-ages' => 'All Alter',
 	'cnw-desc-change-lang' => 'änneren',
 	'cnw-desc-lang' => 'Sprooch',
+	'cnw-desc-wiki-submit-error' => 'Sicht w.e.g. eng Kategorie eraus',
+	'cnw-error-general-heading' => 'Eis Entschëllegungen',
 	'cnw-error-blocked-header' => 'Benotzerkont gespaart',
 	'cnw-error-anon-user-header' => 'Loggt Iech w.e.g. an',
 	'cnw-error-unconfirmed-email-header' => 'Är E-Mail-Adress gouf net confirméiert',
@@ -2141,11 +2148,46 @@ $messages['nl-informal'] = array(
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'createnewwiki-desc' => 'Assistent de creacion de wiki',
 	'cnw-next' => 'Seguent',
 	'cnw-back' => 'Precedent',
 	'cnw-or' => 'o',
+	'cnw-title' => 'Crear un novèl wiki',
 	'cnw-name-wiki-headline' => 'Començar un Wiki',
+	'cnw-name-wiki-creative' => "Wikia es lo melhor endrech per bastir un site Web e crear una comunautat a l'entorn de çò que vos agrada.",
+	'cnw-name-wiki-label' => 'Nomenatz vòstre wiki',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-name-wiki-domain-label' => 'Donatz una adreça a vòstre wiki',
+	'cnw-name-wiki-submit-error' => 'O planhèm ! Vos cal emplenar los dos camps çaisús per contunhar.',
+	'cnw-login' => 'Se connectar',
+	'cnw-signup' => 'Crear un compte',
+	'cnw-signup-prompt' => 'Cal un compte ?',
+	'cnw-call-to-signup' => 'Inscrivètz-vos aicí',
+	'cnw-login-prompt' => 'Avètz ja un compte ?',
+	'cnw-call-to-login' => 'Connectatz-vos aicí',
+	'cnw-auth-headline' => 'Se connectar',
+	'cnw-auth-headline2' => 'S’inscriure',
+	'cnw-auth-creative' => 'Connectatz-vos a vòstre compte per contunhar de bastir vòstre wiki.',
+	'cnw-auth-facebook-signup' => 'S’identificar amb Facebook',
+	'cnw-auth-facebook-login' => 'Se connectar amb Facebook',
+	'cnw-userauth-headline' => 'Avètz un compte?',
+	'cnw-userauth-creative' => 'Se connectar',
+	'cnw-userauth-marketing-heading' => 'Avètz pas encara de compte ?',
+	'cnw-userauth-signup-button' => 'S’inscriure',
+	'cnw-desc-headline' => 'De qué parla vòstre wiki ?',
+	'cnw-desc-creative' => 'Descrivètz lo subjècte',
+	'cnw-desc-tip1' => 'Astúcia',
+	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip3' => 'Conselh d’expèrt',
+	'cnw-desc-choose' => 'Causissètz una categoria',
+	'cnw-desc-select-one' => 'Ne seleccionar una',
+	'cnw-desc-all-ages' => 'Totas las paginas',
+	'cnw-desc-default-lang' => 'Vòstre wiki serà en $1',
+	'cnw-desc-change-lang' => 'modificar',
+	'cnw-desc-lang' => 'Lenga',
+	'cnw-desc-wiki-submit-error' => 'Causissètz una categoria',
+	'cnw-theme-headline' => 'Causissètz un tèma',
+	'cnw-error-general-heading' => 'O planhèm',
 );
 
 /** Pälzisch (Pälzisch)
@@ -3390,6 +3432,7 @@ $messages['zh'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Liye
  * @author Sam Wang
  * @author TianyinLee
  * @author User670839245
@@ -3462,6 +3505,8 @@ $messages['zh-hans'] = array(
 	'cnw-error-torblock' => '不能使用Tor网络创建Wiki。',
 	'cnw-error-bot' => '我们发现您可能是一个及其软件。如果这是个错误，请联系并告诉我们您被误认为是一个机器人，然后让我们协助您创建Wiki：[http://www.wikia.com/Special:Contact/general 联系我们]',
 	'cnw-error-bot-header' => '您已被识别为机器人',
+	'cnw-error-unconfirmed-email-header' => '您的电子柚子尚未得到证实',
+	'cnw-error-unconfirmed-email' => '您需要验证邮件以创建Wiki',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

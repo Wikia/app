@@ -1,10 +1,10 @@
 /*global define*/
-define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wikia.adlogicpageparams'], function (log, location, adLogicPageLevelParams) {
+define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ext.wikia.adEngine.adLogicPageParams'], function (log, location, adLogicPageParams) {
 	'use strict';
 
-	var logGroup = 'adengine.dartvideohelper',
+	var logGroup = 'adengine.dartVideoHelper',
 		ord = Math.round(Math.random() * 23945290875),
-		pageParams = adLogicPageLevelParams.getPageLevelParams();
+		pageParams = adLogicPageParams.getPageLevelParams();
 
 	pageParams.src = 'ooyala';
 
@@ -32,20 +32,33 @@ define('ext.wikia.adengine.dartvideohelper', ['wikia.log', 'wikia.location', 'wi
 	}
 
 	/**
-	 * Get URL for Google IMAv3 call
+	 * Get URL for VAST call
 	 *
 	 * @return {String} URL of DART script
 	 */
 	function getUrl() {
 		log('getUrl', 5, logGroup);
-		var out = 'http://pubads.g.doubleclick.net/gampad/ads?' +
-			'env=vp&gdfp_req=1&impl=s&output=xml_vast2&' +
-			'iu=/5441/wka.' + pageParams.s0 + '//' + pageParams.s1 + '//' + pageParams.s2 + '&' +
-			'sz=320x240&' +
-			'unviewed_position_start=1&' +
-			'url=' + encodeURIComponent(location.href) + '&' +
-			'cust_params=' + encodeURIComponent(getCustParams()) + '&' +
-			'correlator=' + ord;
+		var key, out,
+			params = {
+				iu: '/5441/wka.ooyalavideo',
+				correlator: ord,
+				ad_rule: '0',
+				output: 'xml_vast2',
+				gdfp_req: '1',
+				env: 'vp',
+				impl: 's',
+				unviewed_position_start: 1,
+				sz: '320x240',
+				t: encodeURIComponent(getCustParams())
+			};
+
+		out = 'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs';
+
+		for (key in params) {
+			if (params.hasOwnProperty(key)) {
+				out += '&' + key + '=' + params[key];
+			}
+		}
 
 		log(out, 5, logGroup);
 		return out;

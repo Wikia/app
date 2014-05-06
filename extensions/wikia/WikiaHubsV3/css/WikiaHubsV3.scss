@@ -1,6 +1,7 @@
 @import "../../../../skins/oasis/css/core/color";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
 @import "Colors";
 @import 'Explore';
 @import 'HubsPopularVideos';
@@ -177,29 +178,18 @@ $wikiahubs-line-height: 16px;
 	}
 }
 
-.WikiaHubsModal {
-	.WikiaForm {
-		input[type="text"],
-		textarea {
-			width: 450px;
-			padding: 7px;
-			margin-bottom: 10px;
-		}
-		.default-value {
-			input[type="text"] {
-				color: #666666;
-			}
-		}
-		.submit-button {
-			float: right;
-			.secondary {
-				margin-right: 10px;
-			}
-		}
-	}
-	.success-view {
-		display: none;
-	}
+.suggestArticleDialogModal {
+  input[name=articleurl],
+  textarea[name=reason] {
+	@include box-sizing;
+
+	margin-bottom: 10px;
+	padding: 7px;
+	width: 100%;
+  }
+  section.hidden {
+	display: none;
+  }
 }
 
 .WikiaGrid {

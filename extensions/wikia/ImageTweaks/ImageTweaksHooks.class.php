@@ -15,82 +15,48 @@ class ImageTweaksHooks {
 			self::$isWikiaMobile = ( !empty( $isOasis ) ) ? false : $app->checkSkin( 'wikiamobile' );
 	}
 
-	static public function onThumbnailAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $outerWidth, $thumb, $thumbParams, $zoomIcon, $url,  $time, $origHTML, &$html ){
-		global $wgRTEParserEnabled, $wgEnableOasisPictureAttribution;
-		if ( !empty( $wgRTEParserEnabled ) ) {
-			return true;
-		}
-
-		wfProfileIn( __METHOD__ );
-		if ( is_null(self::$isWikiaMobile) ) {
-			self::init();
-		}
-
-		if ( self::$isWikiaMobile ) {
-			$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
-			$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
-
-			if( is_object( $thumb ) ) {
-				$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
-			} else {
-				$isSmall = false;
-			}
-
-			$html = F::app()->sendRequest(
-				'WikiaMobileMediaService',
-				'renderFigureTag',
-				array(
-					'class' => [( $linked ) ? 'link' : 'thumb'],
-					'content' => $origHTML,
-					//force the caption wrapper to exist if it's a linked image without caption
-					'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
-					'isSmall' => $isSmall
-				),
-				true
-			)->toString();
-		} elseif ( self::$isOasis ) {
-			/**
-			 * Change img src from magnify-clip.png to blank.gif. Image is set via CSS Background
-			 * @author: Christian, Marooned
-			 */
-			$zoomIcon =  Html::rawElement(
-				'a',
-				array(
-					'href' => $url,
-					'class' => "internal sprite details magnify",
-					'title' => wfMsg( 'thumbnail-more' )
-				),
-				''
-			);
-
-			$html = self::getTag(
-				$origHTML,
-				$frameParams['align'],
-				$outerWidth,
-				( !empty( $frameParams['caption'] ) || self::$isOasis ),
-				$frameParams['caption'],
-				$zoomIcon,
-				(
-					self::$isOasis &&
-					!empty( $wgEnableOasisPictureAttribution ) &&
-					!empty( $file ) &&
-					//BugId: 3734 Remove picture attribution for thumbnails 99px wide and under
-					$outerWidth >= 102
-				),
-				( !empty( $file ) ) ? $file->getUser() : null
-			);
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	static public function onImageAfterProduceHTML( $title, $file, $frameParams, $handlerParams, $thumb, $params, $time, $origHTML, &$html ){
+	// Only run on mobile now
+	static public function onThumbnailAfterProduceHTML( $frameParams, $thumb, $origHTML, &$html ){
 		global $wgRTEParserEnabled;
 		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
 		}
 
+		wfProfileIn( __METHOD__ );
+
+		$linked = !empty( $frameParams['link-url'] ) || !empty( $frameParams['link-title'] );
+		$caption = ( !empty( $frameParams['caption'] ) ) ? $frameParams['caption'] : null;
+
+		if( is_object( $thumb ) ) {
+			$isSmall = WikiaMobileMediaService::isSmallImage( $thumb->getWidth(), $thumb->getHeight() );
+		} else {
+			$isSmall = false;
+		}
+
+		$html = F::app()->sendRequest(
+			'WikiaMobileMediaService',
+			'renderFigureTag',
+			array(
+				'class' => [( $linked ) ? 'link' : 'thumb'],
+				'content' => $origHTML,
+				//force the caption wrapper to exist if it's a linked image without caption
+				'caption' => ( $linked && empty( $caption ) ) ? '' :  $caption,
+				'isSmall' => $isSmall
+			),
+			true
+		)->toString();
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	// Only run on mobile now
+	static public function onImageAfterProduceHTML( $frameParams, $thumb, $origHTML, &$html ){
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			return true;
+		}
 
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
@@ -131,9 +97,15 @@ class ImageTweaksHooks {
 		return true;
 	}
 
+	// still used on desktop and mobile
 	static public function onThumbnailImageHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		global $wgRTEParserEnabled;
 		if ( !empty( $wgRTEParserEnabled ) ) {
+			return true;
+		}
+
+		// video thumbnails use a template now.
+		if ( WikiaFileHelper::isVideoFile( $file ) ) {
 			return true;
 		}
 
@@ -263,18 +235,20 @@ class ImageTweaksHooks {
 		return true;
 	}
 
+	// Only used on mobile
 	static public function onThumbnailVideoHTML( $options, $linkAttribs, $imageAttribs, File $file, &$html ){
 		global $wgRTEParserEnabled;
 		if ( !empty( $wgRTEParserEnabled ) ) {
 			return true;
 		}
 
-		wfProfileIn( __METHOD__ );
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
 		}
 
 		if ( self::$isWikiaMobile ) {
+			wfProfileIn( __METHOD__ );
+
 			/**
 			 * WikiaMobile: lazy loading images in a SEO-friendly manner
 			 * @author Federico "Lox" Lucignano <federico@wikia-inc.com
@@ -342,50 +316,10 @@ class ImageTweaksHooks {
 				$data,
 				true
 			)->toString();
+
+			wfProfileOut( __METHOD__ );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
-	}
-
-	static private function getTag( $imageHTML, $align, $width, $showCaption = false, $caption = '',  $zoomIcon = '', $showPictureAttribution = false, $attributeTo = null ){
-		/**
-		 * Images SEO
-		 * @author: Marooned, Federico
-		 */
-		wfProfileIn( __METHOD__ );
-
-		$html = "<figure class=\"thumb" .
-			( ( !empty( $align ) ) ? " t{$align}" : '' ) .
-			" thumbinner\" style=\"width:{$width}px;\">{$imageHTML}{$zoomIcon}";
-
-		if ( !empty( $showCaption ) ) {
-			$html .= "<figcaption class=\"thumbcaption\">{$caption}";
-		}
-
-		//picture attribution
-		if ( !empty( $showPictureAttribution ) && !empty( $attributeTo ) ) {
-			wfProfileIn( __METHOD__ . '::PictureAttribution' );
-
-			// render avatar and link to user page
-			$avatar = AvatarService::renderAvatar( $attributeTo, 16 );
-			$link = AvatarService::renderLink( $attributeTo );
-
-			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
-				$avatar .
-				wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text() .
-				Xml::closeElement( 'div' );
-
-			wfProfileOut( __METHOD__ . '::PictureAttribution' );
-		}
-
-		if ( !empty( $showCaption ) ) {
-			$html .= '</figcaption>';
-		}
-
-		$html .= '</figure>';
-
-		wfProfileOut( __METHOD__ );
-		return $html;
 	}
 }

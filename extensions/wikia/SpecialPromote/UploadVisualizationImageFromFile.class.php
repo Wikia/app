@@ -45,28 +45,6 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		return $warnings;
 	}
 
-	static public function isVisualizationImageName($fileName) {
-		$destName = strtolower($fileName);
-
-		$visualizationImageNames = array(
-			strtolower(self::VISUALIZATION_MAIN_IMAGE_NAME),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-1.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-2.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-3.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-4.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-5.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-6.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-7.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-8.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-			strtolower(self::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-9.' . self::VISUALIZATION_ADDITIONAL_IMAGES_EXT),
-		);
-
-		if( in_array($destName, $visualizationImageNames) ) {
-			return true;
-		}
-		return false;
-	}
-
 	/**
 	 * @desc A file upload verification hook; if it returns false UploadBase::verifyUpload() will return UploadBase::HOOK_ABORTED error; we return it here when somebody tries to upload visualization files manually not on development environment
 	 *
@@ -78,9 +56,8 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	 */
 	static public function UploadVerification($destName, $tempPath, &$error) {
 		global $wgDevelEnvironment;
-		$result = self::isVisualizationImageName($destName);
 
-		if( $result && !$wgDevelEnvironment ) {
+		if( !PromoImage::fromPathname($destName)->isType(PromoImage::INVALID) && !$wgDevelEnvironment ) {
 			$error = wfMsg('promote-manual-upload-error');
 			return false;
 		}

@@ -2,7 +2,7 @@
 
 abstract class UserLoginBaseTest extends WikiaBaseTest {
 
-	const TEST_CITY_ID = 79860;
+	const TEST_CITY_ID = 165;
 
 	protected $skinOrg = null;
 

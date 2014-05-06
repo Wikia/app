@@ -84,32 +84,34 @@ class JsonFormatSimplifier {
 
 	private function getImages( \JsonFormatContainerNode $containerNode, &$images ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
-			if ( $childNode->getType() == 'section' ) {
+			$type = $childNode->getType();
+			if ( $type == 'section' ) {
 				return;
-			} else if ( $childNode->getType() == 'image' ) {
+			} else if ( $type == 'image' && !$childNode->isBlank() ) {
 				/** @var \JsonFormatImageNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc()
 				];
-			} else if ( $childNode->getType() == 'imageFigure' ) {
+			} else if ( $type == 'imageFigure' ) {
 				/** @var \JsonFormatImageFigureNode $childNode  */
 				$images[] = [
 					"src" => $childNode->getSrc(),
 					"caption" => $childNode->getCaption()
 				];
-			} else if ( $childNode->getType() == 'paragraph' ) {
+			} else if ( $type == 'paragraph' ) {
 				$this->getParagraphs( $childNode, $paragraphs );
 			}
 		}
 	}
 
-	private function clearEmptyParagraphs( &$paragraphs ) {
-		$paragraphs = array_slice( array_filter( $paragraphs, function( $element ) {
+	private function clearParagraphs( &$paragraphs ) {
+		$paragraphs = array_values( array_filter( array_map ( function( $element ) {
 			if ( $element["type"] == "paragraph" ) {
-				return strlen( trim( $element["text"] ) ) > 0;
+				$element['text'] = trim($element['text']);
+				if ($element['text'] == "") return false;
 			}
-			return true;
-		}), 0 );
+			return $element;
+		}, $paragraphs )));
 	}
 
 	private function newParagraph( &$sectionElements) {
@@ -121,17 +123,13 @@ class JsonFormatSimplifier {
 	 * @param String $inlineText
 	 */
 	private function appendInline( &$sectionElements, $inlineText ) {
-		$inlineText = trim( $inlineText, " " );
-		if ( $inlineText == "" ) {
-			return;
+		if ( trim($inlineText) != "" ) {
+			if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+				$sectionElements[] = [ "type" => "paragraph", "text" => $inlineText ];
+			} else {
+				$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
+			}
 		}
-		if( sizeof( $sectionElements ) == 0 ) {
-			$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
-		}
-		if ( $sectionElements[ sizeof($sectionElements) - 1 ]["type"] != "paragraph" ) {
-			$sectionElements[] = [ "type" => "paragraph", "text" => "" ];
-		}
-		$sectionElements[ sizeof($sectionElements) - 1 ]["text"] .= " " . $inlineText;
 	}
 
 	private function findSections( \JsonFormatNode $node, &$sections ) {
@@ -161,7 +159,7 @@ class JsonFormatSimplifier {
 			$content = [];
 			$images = [];
 			$this->getParagraphs( $section, $content );
-			$this->clearEmptyParagraphs( $content );
+			$this->clearParagraphs( $content );
 			$this->getImages( $section, $images );
 			if ( sizeof($content) == 0 && sizeof($images) == 0
 				&& ( ( sizeof($returnSections) == 0 ) || ($section->getLevel() >= $returnSections[sizeof($returnSections)-1]["level"]) )

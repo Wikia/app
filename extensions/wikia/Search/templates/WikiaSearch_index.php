@@ -98,9 +98,9 @@
 
 			</div>
 			<div class="SearchAdsTopWrapper WikiaRail <?= !empty($isGridLayoutEnabled) ? 'grid-2' : '' ?> alpha">
-				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'TOP_RIGHT_BOXAD')); ?>
+				<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']); ?>
 				<?= $topWikiArticles ?>
-				<?= F::app()->renderView('Ad', 'Index', array('slotname' => 'LEFT_SKYSCRAPER_2')); ?>
+				<?= F::app()->renderView('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
 			</div>
 	</form>

@@ -46,7 +46,7 @@
 			width: 100%;
 		}
 
-	} else {
+	} @else {
 		width: 735px;
 	}
 
@@ -169,4 +169,8 @@ input[type=submit] {
 
 .alternative {
 	color: $color-alternate-text;
+}
+
+.export-list-button {
+	float: right;
 }

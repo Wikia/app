@@ -202,6 +202,7 @@ $messages['el'] = array(
 
 /** Spanish (español)
  * @author Absay
+ * @author Fitoschido
  * @author Locos epraix
  * @author VegaDark
  */
@@ -216,7 +217,7 @@ $messages['es'] = array(
 	'cloakcheck-process-notexist' => 'El nombre de usuario no existe.',
 	'cloakcheck-process-username' => 'Nombre de usuario: $1',
 	'cloakcheck-process-accountage-yes' => 'La cuenta tiene la edad suficiente.',
-	'cloakcheck-process-accountage-no' => 'La cuenta es demasiado nueva.',
+	'cloakcheck-process-accountage-no' => 'La cuenta es demasiado reciente.',
 	'cloakcheck-process-emailconf-yes' => 'Dirección de correo electrónico confirmada.',
 	'cloakcheck-process-emailconf-no' => 'Dirección de correo electrónico no confirmada.',
 	'cloakcheck-process-edits-yes' => 'El usuario tiene suficiente ediciones.',

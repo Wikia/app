@@ -79,6 +79,8 @@ class ArticlesApiController extends WikiaApiController {
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
+		$limit = $this->request->getInt( static::PARAMETER_LIMIT, 0 );
+
 		$ids = null;
 
 		if ( !empty( $category )) {
@@ -182,9 +184,12 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		//if no mainpages were found and deleted we want to always return collection of self::MAX_ITEMS items
-		if ( count( $collection ) > self::MAX_ITEMS ) {
-			$collection = array_slice( $collection, 0, self::MAX_ITEMS );
+		$limitCollectionSize = self::MAX_ITEMS;
+		if ( $limit > 0 && $limit < self::MAX_ITEMS ) {
+			$limitCollectionSize = $limit;
+		}
+		if ( count( $collection ) > $limitCollectionSize ) {
+			$collection = array_slice( $collection, 0, $limitCollectionSize );
 		}
 
 		$this->setResponseData(

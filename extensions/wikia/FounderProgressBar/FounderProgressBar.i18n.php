@@ -587,7 +587,7 @@ $messages['es'] = array(
 	'founderprogressbar-bonus-page-add5-description' => '¿Qué wiki puede salir perjudicado de tener más contenido? Añade cinco páginas más para completar esta tarea de bonificación.',
 	'founderprogressbar-bonus-edit50-label' => 'Editar {{PLURAL:$1|$1 página|$1 páginas}} más',
 	'founderprogressbar-bonus-edit50-description' => 'Apunta alto y consigue 50 ediciones más para completar esta tarea de bonificación.',
-	'founderprogressbar-browse-page-name' => 'Navegador',
+	'founderprogressbar-browse-page-name' => 'Explorar',
 );
 
 /** Estonian (eesti)

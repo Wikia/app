@@ -43,10 +43,12 @@ abstract class BaseScraper {
 	 * @param Array $result
 	 */
 	protected function addPairToResult( $row, &$result ) {
-		$keyValue = explode( '=', $row );
-		if ( count( $keyValue ) == 2 ) {
-			$result[trim( $keyValue[0] )] = trim( $keyValue[1] );
-		} // else not a key => value pair
+		$pos = mb_strpos( $row, '=' );
+		if ( $pos !== false ) {
+			$key = trim( mb_substr( $row, 0, $pos ) );
+			$value = trim( mb_substr( $row, $pos + 1 ) );
+			$result[$key] = trim( $value );
+		}
 	}
 
 	/**

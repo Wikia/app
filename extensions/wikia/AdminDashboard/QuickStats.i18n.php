@@ -624,8 +624,17 @@ $messages['hi'] = array(
  * @author Paul Beppler
  */
 $messages['hrx'] = array(
+	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
+	'quickstats-header-views' => 'Affrufe',
+	'quickstats-header-edits' => 'Beoorbeitunge',
+	'quickstats-header-photos' => 'Fotos',
+	'quickstats-header-likes' => 'Gefällt mir',
+	'quickstats-totals-label' => 'Gesamt',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Sieh weitre Statistike]]',
 	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Hungarian (magyar)

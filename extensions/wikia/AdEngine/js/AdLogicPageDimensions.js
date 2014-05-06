@@ -1,9 +1,14 @@
 /*jshint camelcase:false, maxdepth:4*/
-/*exported AdLogicPageDimensions*/
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageDimensions', [
+	'wikia.window',
+	'wikia.document',
+	'wikia.log',
+	'ext.wikia.adEngine.slotTweaker'
+], function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -124,13 +129,13 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			if (ad.state === 'none') {
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}
@@ -239,4 +244,4 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		addSlot: add,
 		hasPreFooters: hasPreFooters
 	};
-};
+});

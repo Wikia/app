@@ -22,8 +22,10 @@ class JsonFormatTest extends WikiaBaseTest {
 			}
 			//else leave it as it is
 		} else {
-			$this->hooks = $wgHooks['ThumbnailImageHTML'];
-			unset( $wgHooks['ThumbnailImageHTML'] );
+			if (array_key_exists('ThumbnailImageHTML', $wgHooks)) {
+				$this->hooks = $wgHooks['ThumbnailImageHTML'];
+				unset( $wgHooks['ThumbnailImageHTML'] );
+			}
 		}
 	}
 
@@ -162,7 +164,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 							1 => [
 								'child' => [
 									0 => [
-										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo."
+										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo. "
 									]
 								]
 							]
@@ -176,7 +178,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 					0 => [
 						'child' => [
 							0 => [
-								'text' => "mollis in sollicitudin non"
+								'text' => "mollis in sollicitudin non "
 							]
 						]
 					]
