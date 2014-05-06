@@ -1261,7 +1261,7 @@ $wgAdDriverUseGptMobile = true;
  * @name $wgAdDriverUseGptMobileDisabledInLangs
  * Disable wgAdDriverUseGptMobile if wiki is this language
  */
-$wgAdDriverUseGptMobileDisabledInLangs = ['en'];
+$wgAdDriverUseGptMobileDisabledInLangs = [];
 
 /**
  * trusted proxy service registry
