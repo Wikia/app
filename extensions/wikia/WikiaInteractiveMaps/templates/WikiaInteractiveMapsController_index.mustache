@@ -1,7 +1,7 @@
 <nav class="maps-controls">
 	<select id="orderMapList">
 		{{#sortingOptions}}
-			<option value="{{value}}">{{name}}</option>
+			<option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
 		{{/sortingOptions}}
 	</select>
 	<button id="createMap">{{messages.wikia-interactive-maps-create-a-map}}</button>

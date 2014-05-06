@@ -26,10 +26,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->out->setHTMLTitle( wfMessage( 'wikia-interactive-maps-title' )->escaped() );
 
+		$selectedSort = $this->getVal( 'sort', null );
+		$this->setVal( 'selectedSort', $selectedSort );
+
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$params = [
 			'city_id' => $this->app->wg->CityId,
-			'sort' => $this->getVal( 'sort', null )
+			'sort' => $selectedSort
 		];
 
 		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
@@ -42,7 +45,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
 		];
 		$this->setVal( 'messages', $messages );
-		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions() );
+		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions( $selectedSort ) );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );

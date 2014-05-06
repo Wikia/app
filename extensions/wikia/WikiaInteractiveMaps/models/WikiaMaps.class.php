@@ -168,13 +168,15 @@ class WikiaMaps {
 	/**
 	 * @brief Returns an array of sorting options instances
 	 *
+	 * @param String $selectedSort
+	 *
 	 * @return array
 	 */
-	public function getSortingOptions() {
+	public function getSortingOptions( $selectedSort = null ) {
 		$options = [];
 
 		foreach( $this->sortingOptions as $msgKey => $value ) {
-			$options[] = $this->buildSortingOption( $msgKey, $value );
+			$options[] = $this->buildSortingOption( $msgKey, $value, $selectedSort );
 		}
 
 		return $options;
@@ -185,13 +187,18 @@ class WikiaMaps {
 	 *
 	 * @param String $msgKey message key for MW wfMessage() function
 	 * @param String $value value of the option
+	 * @param String $selected value of already selected option; null by default
 	 *
 	 * @return stdClass
 	 */
-	private function buildSortingOption( $msgKey, $value ) {
+	private function buildSortingOption( $msgKey, $value, $selected = null ) {
 		$option = new stdClass();
 		$option->name = wfMessage( $msgKey )->plain();
 		$option->value = $value;
+
+		if( !is_null( $selected ) && $selected === $value ) {
+			$option->selected = true;
+		}
 
 		return $option;
 	}
