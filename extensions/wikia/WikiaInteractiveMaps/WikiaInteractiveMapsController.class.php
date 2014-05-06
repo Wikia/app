@@ -40,8 +40,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function main() {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+
+		$selectedSort = $this->getVal( 'sort', null );
+                $this->setVal( 'selectedSort', $selectedSort );
+
 		$params = [
-			'city_id' => $this->app->wg->CityId
+			'city_id' => $this->app->wg->CityId,
+			'sort' => $selectedSort
 		];
 
 		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
@@ -50,14 +55,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setVal( 'hasMaps', !empty( $maps ) );
 
 		$url = $this->getContext()->getTitle()->getFullURL();
-
 		$this->setVal( 'baseUrl', $url );
+
 		$messages = [
 			'wikia-interactive-maps-title' => wfMessage( 'wikia-interactive-maps-title' ),
 			'wikia-interactive-maps-create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
 		];
 		$this->setVal( 'messages', $messages );
+		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions( $selectedSort ) );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -103,3 +109,4 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 }
+

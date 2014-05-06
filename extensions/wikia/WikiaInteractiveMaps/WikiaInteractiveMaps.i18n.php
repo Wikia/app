@@ -19,6 +19,11 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-map-status-done' => 'Ready to use',
 	'wikia-interactive-maps-map-status-processing' => 'Processing...',
+
+	'wikia-interactive-maps-sort-newest-to-oldest' => 'Newest to Oldest',
+	'wikia-interactive-maps-sort-alphabetical' => 'Alphabetical',
+	'wikia-interactive-maps-sort-recently-updated' => 'Recently updated',
+
 	'wikia-interactive-maps-map-not-found-error' => 'Map not found',
 ];
 
@@ -36,5 +41,11 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-invalid-height' => 'Interactive maps error after try of parsing wikitext tag; an invalid height has been passed',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
+
+	'wikia-interactive-maps-sort-newest-to-oldest' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list from newest map to oldest',
+	'wikia-interactive-maps-sort-alphabetical' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list in alphabetical order',
+	'wikia-interactive-maps-sort-recently-updated' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list so the recently update maps are on the top',
+
 	'wikia-interactive-maps-map-not-found-error' => 'Error message, shown when map is not found',
 ];
+
