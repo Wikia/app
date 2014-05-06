@@ -50,7 +50,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/api/v1/Tv/Episode",
+ * 	path="/Tv/Episode",
  * 	description="Get article against series name and episode name",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
