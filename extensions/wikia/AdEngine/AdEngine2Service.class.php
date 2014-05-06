@@ -248,7 +248,7 @@ class AdEngine2Service
 			'wikiaPageIsCorporate' => WikiaPageType::isCorporatePage(),
 
 			// category/hub
-			'cscoreCat' => HubService::getCategoryInfoForCity($wgCityId)->cat_name,
+			'cscoreCat' => HubService::getComscoreCategory($wgCityId)->cat_name,
 
 			// Krux
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
