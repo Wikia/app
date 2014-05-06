@@ -9,20 +9,24 @@ use Swagger\Swagger;
  * Creates Wikia\ApiDocs\Services\IApiDocsService instance
  */
 class ApiDocsServiceFactory {
+	
+	const SWAGGER_PATH = "/includes/wikia/api/swagger";
+	const API_DOC_PATH = "Docs/Api?name=";
+	
 	/**
 	 * Will create cached ApiDocsService.
 	 * @see Wikia\ApiDocs\Services\ApiDocsService
 	 * @see Wikia\ApiDocs\Services\CachingApiDocsService
 	 * @return IApiDocsService
 	 */
-	public function getApiDocsService($request) {
+	public function getApiDocsService( $request ) {
 		global $IP;
 		$matches = [];
 		if ( preg_match( "/(\/api\/[^\/]+)\//", $request->getScriptUrl(), $matches ) ) {
 			$pathPrefix = $matches[1];
 			$docsService = new ApiDocsService(
-				Swagger::discover( $IP . "/includes/wikia/api/swagger" ),
-				function( $x ) { return "Docs/Api?name=" . $x; } ,
+				Swagger::discover( $IP . self::SWAGGER_PATH ),
+				function( $x ) { return self::API_DOC_PATH . $x; } ,
 				$pathPrefix
 			);
 			return new CachingApiDocsService( $docsService, \F::app()->wg->CacheBuster . $pathPrefix );	

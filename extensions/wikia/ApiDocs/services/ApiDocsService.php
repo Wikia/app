@@ -75,14 +75,3 @@ class ApiDocsService implements IApiDocsService {
 	}
 }
 
-/*
-$errors = [];
-
-\Swagger\Logger::getInstance()->log = function ($entry, $type) use (&$errors) {
-	$type = $type === E_USER_NOTICE ? 'INFO' : 'WARN';
-	if ($entry instanceof \Exception) {
-		$entry = $entry->getMessage();
-	}
-	$errors[] = '[' . $type . '] ' . $entry . "\n";
-};
-*/
