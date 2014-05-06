@@ -71,8 +71,6 @@ EOD;
 		$jsonSimple = $simplifier->simplify( $jsonOutput, "Chips-A-Ho!" );
 		$this->assertEquals( "list", $jsonSimple['sections'][0]['content'][0]['type'] );
 		$this->assertEquals( '"Casa Bonita"', $jsonSimple['sections'][0]['content'][0]['elements'][0]['text'] );
-		print_r($jsonSimple);
-		
 	}
 	
 	/**
