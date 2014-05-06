@@ -14,10 +14,12 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop,
-			$wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead;
+			$wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead,
+			$wgAdDriverUseLiftium2013;
 
 		$wgNoExternals = $request->getBool('noexternals', $wgNoExternals);
 		$wgLiftiumOnLoad = $request->getBool('liftiumonload', (bool) $wgLiftiumOnLoad);
+		$wgAdDriverUseLiftium2013 = $request->getBool('useliftium2013', (bool) $wgAdDriverUseLiftium2013);
 		$wgAdVideoTargeting = $request->getBool('videotargetting', (bool) $wgAdVideoTargeting);
 
 		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
@@ -70,7 +72,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgEnableRHonDesktop;
+		global $wgEnableRHonDesktop, $wgAdDriverUseLiftium2013;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -84,7 +86,11 @@ class AdEngine2Hooks {
 		}
 
 		if ($wgEnableRHonDesktop === false) {
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
+			if ($wgAdDriverUseLiftium2013) {
+				$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM_2013;
+			} else {
+				$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
+			}
 		}
 		return true;
 	}

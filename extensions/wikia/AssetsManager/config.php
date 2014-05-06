@@ -45,6 +45,13 @@ $config['liftium_ads_js'] = array(
 	),
 );
 
+$config['liftium_2013_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/lib/Liftium2013.js',
+	),
+);
+
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
