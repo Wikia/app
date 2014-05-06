@@ -215,6 +215,9 @@ class LightboxController extends WikiaController {
 
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat( 'json' );
+
+		// set cache control to 15 minutes
+		$this->response->setCacheValidity( 900 );
 	}
 
 	/**
