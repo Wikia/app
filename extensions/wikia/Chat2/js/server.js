@@ -14,22 +14,24 @@ redisStore = new RedisStore({
 		});
 
 if (cluster.isMaster) {
-  // Fork workers.
-	var numCPUs = require('os').cpus().length;
-	numCPUs = 4;  // just hardcode to 4 for now
-  for (var i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+    // Fork workers.
+    var numCPUs = require('os').cpus().length;
+    numCPUs = 4;  // just hardcode to 4 for now
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
 
-  cluster.on('online', function(worker) {
-    console.log('A worker with #' + worker.id);
-  });
-  cluster.on('listening', function(worker, address) {
-    console.log('A worker is now connected to ' + address.address + ':' + address.port);
-  });
-  cluster.on('exit', function(worker, code, signal) {
-    console.log('worker ' + worker.process.pid + ' died');
-  });
+    cluster.on('online', function(worker) {
+        console.log('A worker with pid ' + worker.process.pid + ' started');
+    });
+    cluster.on('listening', function(worker, address) {
+        console.log('A worker is now connected to ' + address.address + ':' + address.port);
+    });
+    cluster.on('exit', function(worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' died from ' + signal + ' with ' + code);
+        // If a worker dies fork a new one
+        cluster.fork();
+    });
 
 } else {
 
