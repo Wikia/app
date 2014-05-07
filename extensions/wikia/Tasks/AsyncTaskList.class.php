@@ -173,7 +173,7 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP;
+		global $wgDevelEnvironment, $wgUser, $IP, $wgStagingList;
 
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
@@ -213,6 +213,7 @@ class AsyncTaskList {
 			}
 		}
 
+		$hostname = gethostname();
 		if (!empty($wgDevelEnvironment)) {
 			if (isset($_SERVER['SERVER_NAME'])) {
 				$executionMethod = 'http';
@@ -220,7 +221,7 @@ class AsyncTaskList {
 			} else {
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
-					gethostbyname(gethostname()),
+					gethostbyname($hostname),
 					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				];
 			}
@@ -228,6 +229,14 @@ class AsyncTaskList {
 			$payload->kwargs->executor = [
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
+			];
+		} elseif (in_array($hostname, $wgStagingList)) { // force preview/verify to run on preview/verify server
+			$payload->kwargs->executor = [
+				'method' => 'remote_shell',
+				'runner' => [
+					gethostbyname($hostname),
+					realpath( $IP . '/maintenance/wikia/task_runner.php'),
+				],
 			];
 		}
 
