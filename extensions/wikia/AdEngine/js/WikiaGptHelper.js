@@ -11,8 +11,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
-		pageLevelParams = adLogicPageParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 		specialAdSelector = 'script[src*="/ads.saymedia.com/"], script[src*="/native.sharethrough.com/"], .celtra-ad-v3, script[src$="/mmadlib.js"]',
 		slotQueue = [],
 		providerSlotMap = gptSlotConfig.getConfig(),
@@ -62,6 +60,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 				var name,
 					value,
 					pubads = googletag.pubads(),
+					pageLevelParams = adLogicPageParams.getPageLevelParams(),
+					path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 					slotname,
 					slotnameGpt,
 					sizes,
