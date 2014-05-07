@@ -189,7 +189,7 @@ Class WikiFactoryChangedHooks {
 			/**
 			 * add task to TaskManager
 			 */
-			if (TaskExecutors::isModern('BlogTask')) {
+			if (TaskRunner::isModern('BlogTask')) {
 				$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
 				$task->call('maintenance');
 				$task->queue();

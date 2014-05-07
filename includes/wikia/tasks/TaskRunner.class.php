@@ -2,7 +2,7 @@
 /**
  * TaskRunner
  *
- * Executes BaseTask methods
+ * Executes BaseTask methods and determines which jobs run in legacy mode
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
@@ -72,5 +72,20 @@ class TaskRunner {
 		}
 
 		return $json;
+	}
+
+	// TODO: remove once we are completely off old job/task systems
+	static function isLegacy($taskName) {
+		return !self::isModern($taskName);
+	}
+
+	static function isModern($taskName) {
+		return in_array($taskName, [
+//		'BloglistDeferredPurgeJob',
+//		'BlogTask',
+//		'CreatePdfThumbnailsJob',
+//		'CreateWikiLocalJob',
+			'ParsoidCacheUpdateJob',
+		]);
 	}
 }

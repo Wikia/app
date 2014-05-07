@@ -42,7 +42,7 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
-		if (TaskExecutors::isModern('ParsoidCacheUpdateJob')) {
+		if (TaskRunner::isModern('ParsoidCacheUpdateJob')) {
 			self::updateTitleModern($title);
 			return;
 		}
