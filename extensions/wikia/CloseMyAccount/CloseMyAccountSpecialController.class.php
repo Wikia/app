@@ -16,6 +16,15 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 *
 	 * Handles requesting account closure.
 	 *
+	 * @requestParam  string token - User's edit token
+	 * @responseParam string showForm - Whether or not to show the request form
+	 * @responseParam string introText - The introductory text that explains the
+	 *                                   CloseMyAccount process
+	 * @responseParam string warning - Text of any warnings to show to the user
+	 * @responseParam string currentUserMessage - Text to confirm the current user
+	 *                                            details
+	 * @responseParam string confirmationText - Text for the confirmation text box
+	 * @responseParam string submitButton - The HTML for the submit button
 	 * @return void
 	 */
 	public function index() {
@@ -105,6 +114,14 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 * that has requested closure, this forwards to the reactivateRequest
 	 * method.
 	 *
+	 * @requestParam string code - The confirmation code for reactivating an account
+	 * @requestParam string username - The user name of the account to reactivate
+	 * @requestParam string password - The password for the account to reactivate
+	 * @requestParam string editToken - The edit token for the current user
+	 * @requestParam string loginToken - The login token for the current user
+	 * @responseParam boolean success - Whether or not reactivation was successful
+	 * @responseParam string resultMessage - The result of the form submission
+	 * @responseParam string errParam - The form item an error is related to
 	 * @return void
 	 */
 	public function reactivate() {
@@ -126,12 +143,24 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->setPageTitle( $this->msg( 'closemyaccount-reactivate-page-title' )->plain() );
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
+		$user = $this->getUser();
+
 		$this->username = $this->request->getVal( 'username', '' );
 		$this->password = $this->request->getVal( 'password', '' );
+		$this->loginToken = UserLoginHelper::getLoginToken();
+		$this->editToken = $user->getEditToken();
 
 		$helper = new CloseMyAccountHelper();
 
-		if ( $this->request->wasPosted() ) {
+		if ( $this->request->wasPosted() && $user->matchEditToken( $this->request->getVal( 'editToken' ) ) ) {
+			if ( $user->isAnon()
+				&& $this->request->getVal( 'loginToken' ) !== UserLoginHelper::getLoginToken()
+			) {
+				$this->success = false;
+				$this->resultMessage = $this->msg( 'sessionfailure' )->escaped();
+				return;
+			}
+
 			if ( $this->username === '' ) {
 				$this->success = false;
 				$this->resultMessage = $this->msg( 'userlogin-error-noname' )->escaped();
@@ -216,6 +245,11 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 	 * This is the form users will be taken to after successfully attempting
 	 * to login to an account that has requested closure.
 	 *
+	 * @responseParam boolean showForm - Whether or not to show the request form
+	 * @responseParam string error - Whether or not an error occurred
+	 * @responseParam string introText - The introductory text that explains the
+	 *                                   reactivation process
+	 * @responseParam string submitButton - The HTML for the submit button
 	 * @return void
 	 */
 	public function reactivateRequest() {

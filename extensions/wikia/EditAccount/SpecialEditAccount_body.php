@@ -144,7 +144,7 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$keepEmail = !$wgRequest->getBool( 'clearemail', false );
+				$keepEmail = !$request->getBool( 'clearemail', false );
 				$this->mStatus = self::closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2, $keepEmail );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;

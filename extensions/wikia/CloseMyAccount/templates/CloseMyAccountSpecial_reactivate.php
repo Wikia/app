@@ -15,6 +15,16 @@ if ( empty( $code ) ) {
 				'value' => $code,
 			],
 			[
+				'type' => 'hidden',
+				'name' => 'editToken',
+				'value' => htmlspecialchars( $editToken )
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'loginToken',
+				'value' => htmlspecialchars( $loginToken ),
+			],
+			[
 				'type' => 'text',
 				'name' => 'username',
 				'label' => wfMessage( 'wikiaconfirmemail-username' )->escaped(),
