@@ -647,6 +647,7 @@ require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
+require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /*
  * @name wgWikiaStaffLanguages
