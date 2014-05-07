@@ -30,14 +30,14 @@ class TasksSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->wg->Out->setPageTitle(wfMsg('tasks-title'));
-		$this->response->addAsset('extensions/wikia/Tasks/special/js/special_tasks.js');
-		$this->response->addAsset('extensions/wikia/Tasks/special/css/special_tasks.css');
+		$this->response->addAsset('extensions/wikia/Tasks/js/special_tasks.js');
+		$this->response->addAsset('extensions/wikia/Tasks/css/special_tasks.css');
 
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
 		$this->setVal('flowerUrl', $this->flowerUrl);
 
 		$this->response->setJsVar('wgFlowerUrl', $this->flowerUrl);
-		$this->response->setJsVar('wgAjaxLoadingIndicator', $this->wg->ExtensionsPath.'/wikia/Tasks/special/images/ajax-loader.gif');
+		$this->response->setJsVar('wgAjaxLoadingIndicator', $this->wg->ExtensionsPath.'/wikia/Tasks/images/ajax-loader.gif');
 	}
 
 	public function getMethods() {
