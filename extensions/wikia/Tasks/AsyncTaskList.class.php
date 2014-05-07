@@ -221,7 +221,7 @@ class AsyncTaskList {
 			} else {
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
-					gethostbyname($hostname),
+					$hostname,
 					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				];
 			}
@@ -234,7 +234,7 @@ class AsyncTaskList {
 			$payload->kwargs->executor = [
 				'method' => 'remote_shell',
 				'runner' => [
-					gethostbyname($hostname),
+					$hostname,
 					realpath( $IP . '/maintenance/wikia/task_runner.php'),
 				],
 			];
