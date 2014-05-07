@@ -19,9 +19,9 @@ define('ext.wikia.adEngine.provider.ebay', [
 		log(['fillInSlot', slotname], 'info', logGroup);
 
 		var params = {
-				skin: window.skin,
-				title: document.title
-			};
+			skin: window.skin,
+			title: document.title
+		};
 
 		if (geo) {
 			params.geo = geo.getCountryCode();
@@ -37,7 +37,16 @@ define('ext.wikia.adEngine.provider.ebay', [
 			type: 'get',
 			scripts: true,
 			callback: function (data) {
-				$('#' + slotname).html(data).removeClass('default-height');
+				var slot = $('#' + slotname).html(data).addClass('ebay-ads').removeClass('default-height');
+
+				if (window.wikiaPageType === 'article') {
+					// TODO: Revise logic of moving PREFOOTER ads before comments
+					if (window.skin === 'wikiamobile') {
+						slot.insertAfter('#wkRltdCnt');
+					}
+				} else {
+					slot.addClass('ebay-ads-responsive');
+				}
 
 				pSuccess();
 			}

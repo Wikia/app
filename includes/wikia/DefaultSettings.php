@@ -1207,7 +1207,7 @@ $wgEnableAdEngineExt = true;
 
 /**
  * @name $wgAdDriverUseEbay
- * Whether enable AdProviderEbay (true) or not (false)
+ * Whether to enable AdProviderEbay (true) or not (false)
  */
 $wgAdDriverUseEbay = false;
 

@@ -1,0 +1,106 @@
+@import "../../WikiaMobile/css/variables";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+
+.ebay-ads {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  text-align: left !important;
+
+  float: none !important;
+
+  position: relative;
+  left: 0;
+  padding: 0 !important;
+
+  h2 {
+    margin-bottom: 50px;
+  }
+
+  .powered-by {
+    position: absolute;
+    top: 90px;
+    font: 14px/28px "helvetica neue", arial, sans-serif;
+
+    margin-top: -5px;
+
+    svg {
+      position: relative;
+      top: 9px;
+    }
+
+    .ebay-logo-svg {
+      fill: $page-text-color;
+    }
+  }
+
+  ul {
+    display: block;
+    padding: 0;
+    margin: 0;
+    font: 14px/18px "helvetica neue", arial, sans-serif;
+
+    li {
+      @include clearfix;
+
+      display: block;
+      margin: 0 0 24px;
+      padding: 0;
+    }
+
+  }
+
+  .image {
+    display: block;
+    float: left;
+    width: 130px;
+    height: 88px;
+    overflow: hidden;
+    margin-right: 15px;
+    margin-bottom: 24px;
+    text-align: center;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .info {
+    & > a {
+      display: block;
+      color: $link-color;
+    }
+
+    .title {
+      display: block;
+      max-height: 55px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      &:after {
+        content: "";
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 45%;
+        height: 1.2em;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+      }
+    }
+
+    .price {
+      span {
+        display: none;
+
+        &:first-child {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .debug {
+    display: none;
+  }
+}

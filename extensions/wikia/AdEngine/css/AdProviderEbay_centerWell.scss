@@ -1,0 +1,166 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/box-sizing";
+
+.ebay-ads {
+  @include box-sizing;
+  float:none !important;
+
+  position: relative;
+  font-family: "helvetica neue", arial, sans-serif;
+  padding: 0 20px;
+
+  h1 {
+    font-size: 30px;
+    line-height: 36px;
+    margin-bottom: 30px;
+  }
+
+  .powered-by {
+    position: relative;
+    font-size: 15px;
+    float: right;
+    margin-top: -5px;
+
+    svg {
+      position: relative;
+      top: 9px;
+    }
+
+    .ebay-logo-svg {
+      fill: $color-text;
+    }
+  }
+
+  ul {
+    display: block;
+    padding: 0;
+    margin: 0;
+    @include clearfix;
+
+
+    li {
+      @include clearfix;
+
+      display: block;
+      margin: 0 0 36px;
+      padding: 0;
+      height: 144px;
+    }
+
+  }
+
+  .image {
+    display: block;
+    float: left;
+    width: 204px;
+    height: 144px;
+    overflow: hidden;
+    margin-right: 36px;
+    text-align: center;
+
+    img {
+      height: 144px;
+    }
+  }
+
+  .info {
+    & > a {
+      display: block;
+    }
+
+    .title {
+      font-size: 18px;
+      line-height: 30px;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      display: inline-block;
+      border: 1px solid $color-links;
+      border-radius: 2px;
+      color: $color-links;
+      font-size: 18px;
+      line-height: 30px;
+      text-decoration: none !important;
+
+      &:hover {
+        color: $color-page;
+        background: $color-links;
+        border-color: $color-page;
+
+
+        span {
+          border-color: $color-page;
+        }
+      }
+
+      span {
+        display: inline-block;
+        border-right: 1px solid $color-links;
+        border-radius: 2px;
+        padding: 10px 15px;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  .debug {
+    text-align: center;
+  }
+}
+
+@media all and (min-width: 1280px) and (max-width: 1599px) {
+  .ebay-ads-responsive {
+
+    ul li {
+      float: left;
+      width: 50%;
+
+      &:nth-child(n+3) {
+        display: none;
+      }
+    }
+
+
+  }
+}
+
+@media all and (min-width: 1600px) {
+  .ebay-ads-responsive {
+    ul li {
+      float: left;
+      width: 30%;
+      margin-right: 1.5%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .image {
+      width: 175px;
+      margin-right: 20px;
+    }
+
+    .info {
+      min-width: 380px;
+
+      .title {
+        font-size: 17px;
+        line-height: 25px;
+      }
+
+      .price {
+        font-size: 16px;
+
+        span {
+          padding: 10px 10px;
+        }
+      }
+    }
+  }
+}

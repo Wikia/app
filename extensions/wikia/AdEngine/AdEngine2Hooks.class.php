@@ -132,4 +132,14 @@ class AdEngine2Hooks {
 		}
 		return true;
 	}
+
+	public static function onWikiaMobileAssetsPackages(&$jsBodyPackages, &$jsExtensionPackages, &$scssPackages) {
+		global $wgAdDriverUseEbay;
+
+		if ($wgAdDriverUseEbay) {
+			$scssPackages[] = 'adengine2_ebay_scss_wikiamobile';
+		}
+
+		return true;
+	}
 }
