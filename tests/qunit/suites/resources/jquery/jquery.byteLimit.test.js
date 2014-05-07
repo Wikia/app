@@ -56,7 +56,7 @@ var byteLimitTest = function( options ) {
 
 		if ( opt.hasLimit ) {
 			expect(3);
-
+			debugger;
 			ltOrEq( $.byteLength( newVal ), opt.limit, 'Prevent keypresses after byteLimit was reached, length never exceeded the limit' );
 			equal( $.byteLength( rawVal ), $.byteLength( opt.expected ), 'Not preventing keypresses too early, length has reached the expected length' );
 			equal( rawVal, opt.expected, 'New value matches the expected string' );
@@ -156,7 +156,8 @@ byteLimitTest({
 			}
 
 			// Return without namespace prefix
-			return new mw.Title( '' + val ).getMain();
+			var title = mw.Title.newFromText( String( val ) );
+			return title ? title.getMain() : '';
 		} ),
 	sample: 'User:Sample',
 	hasLimit: true,
@@ -176,7 +177,8 @@ byteLimitTest({
 			}
 
 			// Return without namespace prefix
-			return new mw.Title( '' + val ).getMain();
+			var title = mw.Title.newFromText( String( val ) );
+			return title ? title.getMain() : '';
 		} ),
 	sample: 'User:Sample',
 	hasLimit: true,
