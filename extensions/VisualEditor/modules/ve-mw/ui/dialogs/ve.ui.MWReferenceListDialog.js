@@ -141,7 +141,7 @@ ve.ui.MWReferenceListDialog.prototype.teardown = function ( data ) {
 			}
 		} else {
 			// Create new model
-			surfaceModel.getFragment().collapseRangeToEnd().insertContent( [
+			this.getFragment().collapseRangeToEnd().insertContent( [
 				{
 					'type': 'mwReferenceList',
 					'attributes': {
