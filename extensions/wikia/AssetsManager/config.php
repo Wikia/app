@@ -1514,7 +1514,6 @@ $config['special_videos_css_monobook'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'monobook' ),
 	'assets' => array(
-		'//skins/oasis/css/wikiagrid.scss',
 		'//skins/oasis/css/lib/foundation.custom/foundation.custom.scss',
 	)
 );
