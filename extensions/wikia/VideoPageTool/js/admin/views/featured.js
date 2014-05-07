@@ -32,7 +32,9 @@ define('videopageadmin.views.featured', [
 					messages: {
 						required: function (len, elem) {
 							var msg;
-							if ($(elem).hasClass('alt-thumb')) {
+							if ($(elem).hasClass('video-key')) {
+								msg = $.msg('videopagetool-formerror-videokey');
+							} else if ($(elem).hasClass('alt-thumb')) {
 								msg = $.msg('videopagetool-formerror-altthumb');
 							} else {
 								msg = $.msg('htmlform-required');
