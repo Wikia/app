@@ -42,7 +42,7 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
-	var title = new mw.Title( this.model.parent.getAttribute('resource').substring( 2 ) );
+	var title = new mw.Title( this.model.parent.getAttribute('resource').replace( "./", "" ) );
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<p>' )
 		.addClass( 'title ve-no-shield' )

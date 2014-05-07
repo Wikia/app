@@ -130,12 +130,12 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.htmlDom = {
 		'block':
-			'<figure data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<figure data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
-			'<span data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<span data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};
