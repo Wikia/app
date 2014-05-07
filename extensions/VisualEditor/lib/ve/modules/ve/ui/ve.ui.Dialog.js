@@ -56,6 +56,9 @@ ve.ui.Dialog.prototype.teardown = function () {
 	}
 
 	this.fragment = null;
+
+	var label = ve.track.nameToLabel( this.constructor.static.name );
+	ve.track( 'wikia', { 'action': ve.track.actions.CLOSE, 'label': 'dialog-' + label } );
 };
 
 /**
@@ -95,15 +98,4 @@ ve.ui.Dialog.prototype.setup = function () {
 	}
 
 	ve.track( 'wikia', params );
-};
-
-/**
- * @inheritdoc
- */
-ve.ui.Dialog.prototype.teardown = function () {
-	var label = ve.track.nameToLabel( this.constructor.static.name );
-
-	OO.ui.Dialog.prototype.teardown.apply( this, arguments );
-
-	ve.track( 'wikia', { 'action': ve.track.actions.CLOSE, 'label': 'dialog-' + label } );
 };
