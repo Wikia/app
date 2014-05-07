@@ -206,13 +206,11 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 			$userData->$property = $config['value'];
 
 			if ($property == 'name') {
+				$otherUser = $this->getMock( 'User', [] );
+				$this->mockClassStaticMethod('User', 'newFromName', $otherUser);
 				$userIdentityBoxMock->expects( $this->once() )
 					->method( 'doSpamCheck' )
-					// the `name` property uses a static method on `User` to
-					// inflate a user object to perform the spam check against;
-					// static methods on different classes cannot be mocked.
-					// FIXME Correctly mock this in a consistent way so that
-					// `name` can be tested specifically
+					->with( $otherUser )
 					->will( $this->returnValue(!$config['spam']) );
 
 				$userMock->expects( $this->once() )
