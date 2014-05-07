@@ -84,20 +84,27 @@ class Result extends ReadWrite {
 	 * @return string
 	 */
 	public function getTitle() {
+		$result = '';
 		if ( isset( $this->_fields[Utilities::field('title')] )  ) {
-			return $this->_fields[Utilities::field('title')];
+			$result = $this->_fields[Utilities::field('title')];
+		} else if ( isset( $this->_fields['title'] ) ) {
+			$result = $this->_fields['title'];
+		} else if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) { // for video wiki
+			$result = $this->_fields[Utilities::field('title', 'en')];
+		}
+		
+		if (!empty($this->_fields['ns']) &&
+				$this->_fields['ns'] == \NS_FILE &&
+				strpos($result, ":") !== FALSE) {
+			// strip 'File:' prefix (in content language) from title
+			// we could try to use Title class or wgContLang->getNsText here, but none of those actually
+			// will allow us to remove namespace prefix in a simple and working way, while
+			// a simple explode with limit will work
+			list ($prefix, $rest) = explode(":", $result, 2);
+			$result = $rest;
 		}
 
-		if ( isset( $this->_fields['title'] ) ) {
-			return $this->_fields['title'];
-		}
-
-		// for video wiki
-		if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) {
-			return $this->_fields[Utilities::field('title', 'en')];
-		}
-
-		return '';
+		return $result;
 	}
 
 	/**
