@@ -1,6 +1,7 @@
 <?php
 
 $wgAutoloadClasses['TaskExecutors'] = __DIR__."/TaskExecutors.class.php";
+$wgAutoloadClasses['TaskRunner'] = __DIR__."/TaskRunner.class.php";
 
 spl_autoload_register(function($class) {
 	if (strpos($class, 'Wikia\\Tasks') === false) {
