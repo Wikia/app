@@ -62,6 +62,7 @@
 
 .ve-ce-surface-paste * {
 	height: 1px !important;
+	margin: 0 !important; /* Wikia change: Fixes VE-1057 */
 	width: 1px !important;
 }
 
