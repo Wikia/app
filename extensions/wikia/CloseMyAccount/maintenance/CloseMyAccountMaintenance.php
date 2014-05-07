@@ -67,6 +67,8 @@ class CloseMyAccountMaintenance extends Maintenance {
 
 				$userObj->saveSettings();
 
+				$closeAccountHelper->track( $userObj, 'account-closed' );
+
 				$usersClosed[] = $userObj->getName();
 			}
 		}
