@@ -1206,6 +1206,12 @@ $wgAdDriverEnableRemnantGptMobile = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseEbay
+ * Whether enable AdProviderEbay (true) or not (false)
+ */
+$wgAdDriverUseEbay = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
