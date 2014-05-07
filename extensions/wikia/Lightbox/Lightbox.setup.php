@@ -13,7 +13,6 @@ $wgExtensionCredits['lightbox'][] = array(
 		'Liz Lee',
 		'Saipetch Kongkatong',
 		'Garth Webb',
-		'Kenneth Kouot',
 		'James Sutterfield',
 	),
 );
