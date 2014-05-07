@@ -317,7 +317,7 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isInValidNamespace( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( decodeURIComponent( redlinkArticle ) ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}
