@@ -84,7 +84,7 @@ test( 'Transformation', function () {
 
 	title = new mw.Title( '   MediaWiki:  Foo   bar   .js   ' );
 	// Don't ask why, it's the way the backend works. One space is kept of each set
-	equal( title.getName(), 'Foo_bar_.js', "Merge multiple spaces to a single space." );
+	equal( title.getName(), 'Foo_bar_', "Merge multiple spaces to a single space." );
 });
 
 test( 'Main text for filename', function () {
