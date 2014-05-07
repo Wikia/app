@@ -47,7 +47,7 @@ QUnit.asyncTest( 'parsedMessage', 3, function ( assert ) {
 	platform.getInitializedPromise().done( function () {
 		QUnit.start();
 		assert.ok(
-			/^(&lt;)?platformtest-quux(&gt;)?$/.test( platform.getMessage( 'platformtest-quux' ) ),
+			/^(&lt;)?platformtest-quux(&gt;)?$/.test( platform.getParsedMessage( 'platformtest-quux' ) ),
 			'any brackets in fallbacks are HTML-escaped'
 		);
 
