@@ -1,6 +1,8 @@
 @import "mixins/ve-icon";
 
-// Toolbar icons
+.oo-ui-window-icon {
+	@include ve-icon(window, oo);
+}
 .oo-ui-icon-alert {
 	@include ve-icon(alert, oo);
 }
@@ -133,9 +135,6 @@
 }
 .oo-ui-indicator-down {
 	@include ve-icon(down, oo-indicators);
-}
-.oo-ui-window-icon {
-	@include ve-icon(window, oo);
 }
 .oo-ui-icon-keyboard {
 	@include ve-icon(keyboard, wikia);
