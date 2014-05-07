@@ -55,6 +55,10 @@ class PhalanxHooks extends WikiaObject {
 			return true;
 		}
 
+		if (!$typeId) {
+			$typeId = PhalanxModel::determineTypeId($text);
+		}
+
 		$model = PhalanxModel::newFromType($typeId, $text);
 
 		if (is_null($model)) {
