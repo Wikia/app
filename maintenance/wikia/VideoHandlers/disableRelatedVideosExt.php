@@ -65,7 +65,7 @@ class disableRelatedVideosExt extends Maintenance {
 			echo "Running on $db ...\n";
 
 			// get wiki ID
-			$id = $this->dbname2id( $db );
+			$id = WikiFactory::DBtoID( $db );
 
 
 			if ( empty( $id ) ) {
@@ -83,18 +83,6 @@ class disableRelatedVideosExt extends Maintenance {
 			}
 
 		}
-	}
-
-	function dbname2id( $db ) {
-		$dbr = wfGetDB( DB_SLAVE, null, 'wikicities' );
-		$row = $dbr->selectRow(
-			array( "city_list" ),
-			array( "city_id" ),
-			array( "city_dbname" => $db ),
-			__METHOD__
-		);
-		$city_id = is_object( $row ) ? $row->city_id : null;
-		return $city_id;
 	}
 
 	function debug( $msg ) {
