@@ -1517,6 +1517,30 @@ $messages['km'] = array(
 	'phalanx-link-stats' => 'ស្ថិតិ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'phalanx-type-title' => 'ಪುಟದ ಶೀರ್ಷಿಕೆ',
+	'phalanx-type-user' => 'ಬಳಕೆದಾರ',
+	'phalanx-type-user-email' => 'ಇ-ಅಂಚೆ',
+	'phalanx-label-filter' => 'ಶೋಧಕ:',
+	'phalanx-label-reason' => 'ಕಾರಣ:',
+	'phalanx-label-expiry' => 'ಮುಕ್ತಾಯ:',
+	'phalanx-label-type' => 'ನಮೂನೆ:',
+	'phalanx-label-lang' => 'ಭಾಷೆ:',
+	'phalanx-format-text' => 'ಸಾದಾ ಪಠ್ಯ',
+	'phalanx-test-submit' => 'ಪಠ್ಯ',
+	'phalanx-link-unblock' => 'ತಡೆಯನ್ನು ತಗೆ',
+	'phalanx-link-modify' => 'ಪರಿಷ್ಕರಿಸು',
+	'phalanx-stats-table-type' => 'ನಮೂನೆ',
+	'phalanx-stats-table-create' => 'ಸೃಷ್ಟಿಸಲ್ಪಟ್ಟಿದೆ',
+	'phalanx-stats-table-expire' => 'ಮುಕ್ತಾಯ',
+	'phalanx-stats-table-language' => 'ಭಾಷೆ',
+	'phalanx-stats-table-text' => 'ಪಠ್ಯ',
+	'phalanx-stats-table-reason' => 'ಕಾರಣ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  */

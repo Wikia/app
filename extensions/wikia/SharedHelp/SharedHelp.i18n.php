@@ -43,6 +43,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  * @author Malhargan
  */
 $messages['ar'] = array(
@@ -50,6 +51,7 @@ $messages['ar'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 	'sharedhelp-searchprofile' => 'صفحات المساعدة',
 	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',
+	'shared_help_was_redirect' => 'هذه الصفحة عبارة عن صفحة تحويل لصفحة $1',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -244,6 +246,13 @@ $messages['ja'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'sharedhelp-searchprofile' => 'ಸಹಾಯ ಪುಟಗಳು',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -300,6 +309,14 @@ $messages['ms'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Laman perbincangan dicipta secara automatik',
 	'sharedhelp-searchprofile' => 'Halaman bantuan',
 	'sharedhelp-searchprofile-tooltip' => 'Cari dalam halaman Bantuan',
+	'shared_help_info' => 'Soalan? Tanya di [[w:Special:Forum|Forum Komuniti]].',
+	'shared_help_edit_info' => "Teks bantuan di dalam petak ini tersimpan di [[w:Help:$1|Help:$1]] di Wikia $2. Rujuk [[Help:Shared Help]] untuk keterangan lanjut.
+
+Sebarang perubahan yang dikenakan kepada ''semua'' wiki harus dilakukan kepada salinan Wikia $2. [[w:Help_talk:$1|Cadangkan perubahan di sini]].
+
+Teks seharusnya terletak di halaman ini jika anda ingin menerangkan penggunaan, gaya dan garis panduan dasar yang hanya berkenaan dengan {{SITENAME}}. Teks yang ditambahkan pada petak suntingan ini akan disiarkan di atas teks bantuan dalam petak.",
+	'shared_help_search_info' => 'Untuk mencari pertolongan mengenai penyuntingan, sila kunjungi [http://c.wikia.com/wiki/Special:Search?search=$1 Community Central]',
+	'shared_help_was_redirect' => 'Halaman ini adalah lencongan ke $1',
 );
 
 /** Norwegian Bokmål (norsk bokmål)

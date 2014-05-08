@@ -2389,7 +2389,7 @@ $messages['diq'] = array(
 	'wall-default-title' => "$1'i ra mesac",
 	'wall-button-to-preview-comment' => 'Verqayt',
 	'wall-button-to-cancel-preview' => 'Bıvurne',
-	'wall-button-to-submit-comment' => 'Nusne',
+	'wall-button-to-submit-comment' => 'Bırışe',
 	'wall-button-to-submit-reply' => 'Cewab bıde',
 	'wall-button-cancel-changes' => 'Bıtexelne',
 	'wall-button-done-source' => 'Qeyd kerd',
@@ -2402,7 +2402,7 @@ $messages['diq'] = array(
 	'wall-action-remove-confirm-ok' => 'Hewad',
 	'wall-action-admin-confirm-ok' => 'Bestere',
 	'wall-action-restore-confirm-ok' => 'Timar bike',
-	'wall-action-rev-confirm-ok' => 'E, besternê',
+	'wall-action-rev-confirm-ok' => 'Eya, bestere',
 	'wall-notifications' => 'Mengeney',
 	'wall-notifications-all' => 'Tebliği pêro',
 	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
@@ -4380,6 +4380,7 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Minerva Titani
  * @author Sactage
  */
@@ -4395,7 +4396,7 @@ $messages['it'] = array(
 	'wall-notifications-notifyeveryone' => 'Evidenziata da $1',
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
-	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
 );
 
 /** Japanese (日本語)

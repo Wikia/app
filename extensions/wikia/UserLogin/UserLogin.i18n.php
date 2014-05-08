@@ -189,7 +189,7 @@ $messages['qqq'] = array(
 * $1 is an action link using the message {{msg-wikia|userlogin-loginreqlink}}.',
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
-	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account'
+	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account',
 );
 
 /** Aragonese (aragonés)
@@ -599,6 +599,7 @@ Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}
 	'userlogin-changepassword-needlogin' => 'Du musst dich $1, um dein Passwort zu ändern.',
 	'wikiamobile-sendpassword-label' => 'Schicke neues Passwort',
 	'wikiamobile-facebook-connect-fail' => 'Dein Facebook-Konto ist momentan nicht mit deinem Wikia-Benutzerkonto verbunden.',
+	'wikiamobile-go-to-login' => 'Hast du bereits ein Benutzerkonto? [[Special:UserLogin|Jetzt anmelden >]]',
 );
 
 /** Zazaki (Zazaki)
@@ -911,6 +912,7 @@ Vous souhaitez contrôler les courriels que vous recevez ? Allez à : {{fullurl:
 	'userlogin-changepassword-needlogin' => 'Vous devez $1 pour changer votre mot de passe.',
 	'wikiamobile-sendpassword-label' => 'Envoyer un nouveau mot de passe',
 	'wikiamobile-facebook-connect-fail' => 'Désolé, votre compte Facebook n’est pour le moment pas relié à un compte Wikia.',
+	'wikiamobile-go-to-login' => 'Vous avez un compte ? [[Special:UserLogin|Connectez-vous maintenant >]]',
 );
 
 /** Galician (galego)
@@ -1191,7 +1193,7 @@ $messages['it'] = array(
 <br /><br />
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 <br /><br />
-Domande o dubbi? Sentiti libero di contattarci.', # Fuzzy
+Domande o dubbi? Sentiti libero di <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">contattarci</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
 	'userlogin-password-email-body' => 'Ciao $2,
 
@@ -1199,7 +1201,7 @@ Per favore usa questa password temporarea per effettuare il login su Wikia: "$3"
 
 Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questa email e continuare a effettuare il login su Wikia con la tua vecchia password.
 
-Domande o dubbi? Sentiti libero di contattarci.
+Domande o dubbi? Sentiti libero di contattarci: http://community.wikia.com/wiki/Special:Contact/account-issue
 
 Wikia Community Support
 
@@ -1207,7 +1209,7 @@ Wikia Community Support
 ___________________________________________
 
 Per tenerti informato sulle novità di Wikia, visita http://it.community.wikia.com
-Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}', # Fuzzy
+Vuoi controllare quali email ricevi? Vai a: {{fullurl:{{ns:special}}:Preferenze}}',
 	'userlogin-email-footer-line1' => 'Per tenerti informato sulle novità di Wikia, visita <a style="color:#2a87d5;text-decoration:none;" href="http://it.community.wikia.com">it.community.wikia.com</a>',
 	'userlogin-email-footer-line2' => '
 Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">Preferenze</a>',
@@ -1540,6 +1542,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'userlogin-changepassword-needlogin' => 'Anda perlu $1 untuk menukar kata laluan baru.',
 	'wikiamobile-sendpassword-label' => 'Hantar kata laluan baru',
 	'wikiamobile-facebook-connect-fail' => 'Maaf, akaun Facebook anda sekarang tidak berpautan dengan sebarang akaun Wikia.',
+	'wikiamobile-go-to-login' => 'Ada akaun? [[Special:UserLogin|Log masuk sekarang >]]',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -2090,6 +2093,7 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'Вам нужно $1, чтобы изменить свой пароль.',
 	'wikiamobile-sendpassword-label' => 'Отправить новый пароль',
 	'wikiamobile-facebook-connect-fail' => 'К сожалению, ваш аккаунт на Facebook в настоящее время не связан с учётной записью Викия.',
+	'wikiamobile-go-to-login' => 'Есть учётная запись? [[Special:UserLogin|Тогда войдите>]]',
 );
 
 /** Scots (Scots)
@@ -2320,6 +2324,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'userlogin-changepassword-needlogin' => 'Du måste $1 för att ändra ditt lösenord.',
 	'wikiamobile-sendpassword-label' => 'Skicka nytt lösenord',
 	'wikiamobile-facebook-connect-fail' => 'Tyvärr, ditt Facebook-konto är för tillfället inte är länkat med ett Wikia-konto.',
+	'wikiamobile-go-to-login' => 'Har du ett konto? [[Special:UserLogin|Logga in nu >]]',
 );
 
 /** Tamil (தமிழ்)
