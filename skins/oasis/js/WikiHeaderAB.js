@@ -14,17 +14,21 @@ $(function() {
 
 	navigation.find( '.nav-item' ).each(function() {
 		var elem = $( this ),
-			seeAll = elem.find( '> a' ).clone().wrap('<section class="see-all"></section>').parent(),
+			seeAll = elem.find( '> a' ).clone(),
 			elem2 = elem.find( '.subnav-2'),
-			size = 'normal';
-			if (elem2.size() === 3) {
-				size = 'wide';
-			} else if (elem.size() > 3) {
-				size = 'full';
+			size = elem2.first().children().length;
+
+			if (size === 3) {
+				size = 'submenu-wide';
+			} else if (size > 3) {
+				size = 'submenu-full';
+			} else {
+				size = '';
 			}
-			elem2.wrap('<section class="submenu" data-size="' + size + '"></section>');
+			elem2.wrap('<section class="submenu ' + size + '"></section>');
+			elem2.append($('<div class="clearfix"></div>'));
 			// TODO i18n
-			elem2.append( seeAll.text( 'See all in ' + seeAll.text() ) );
+			elem2.append( seeAll.text( 'See all in ' + seeAll.text() ).wrap('<section class="see-all"></section>').parent() );
 	});
 
 	navigation.children().wrapAll('<section class="local-navigation-container"></section>');
