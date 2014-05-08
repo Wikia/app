@@ -11,9 +11,11 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
-		pageLevelParams = adLogicPageParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
-		specialAdSelector = 'script[src*="/ads.saymedia.com/"], script[src*="/native.sharethrough.com/"], .celtra-ad-v3, script[src$="/mmadlib.js"]',
+		specialAdSelector = [
+			'script[src*="/ads.saymedia.com/"]',
+			'script[src*="/native.sharethrough.com/"]',
+			'.celtra-ad-v3, script[src$="/mmadlib.js"]'
+		].join(','),
 		slotQueue = [],
 		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},
@@ -62,6 +64,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 				var name,
 					value,
 					pubads = googletag.pubads(),
+					pageLevelParams = adLogicPageParams.getPageLevelParams(),
+					path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 					slotname,
 					slotnameGpt,
 					sizes,
@@ -151,7 +155,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 	function isImagePresent(document) {
 		var imgs, i, len, w, h;
-			imgs = document.querySelectorAll('img[width][height]');
+		imgs = document.querySelectorAll('img[width][height]');
 
 		for (i = 0, len = imgs.length; i < len; i += 1) {
 			w = imgs[i].getAttribute('width');

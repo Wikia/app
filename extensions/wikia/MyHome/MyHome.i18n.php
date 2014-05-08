@@ -1292,6 +1292,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Elseweyr
  * @author Ilkea
  * @author Nedergard
  * @author Nike
@@ -1326,14 +1327,14 @@ Aloita kirjoittaminen luomalla '''[[Special:CreatePage|uusi sivu]]'''.",
 	'myhome-feed-image' => 'kuva lisätty',
 	'myhome-feed-video' => 'video lisätty',
 	'myhome-feed-categorization' => 'luokittelu',
-	'myhome-feed-created-by' => 'luonut käyttäjä $1',
+	'myhome-feed-created-by' => 'luonut $1',
 	'myhome-feed-added-by' => 'lisännyt käyttäjä $1',
-	'myhome-feed-edited-by' => 'muokannut käyttäjä $1',
-	'myhome-feed-posted-by' => 'lähettänyt käyttäjä $1',
-	'myhome-feed-comment-by' => 'kommentoinut käyttäjä $1',
+	'myhome-feed-edited-by' => 'muokannut $1',
+	'myhome-feed-posted-by' => '$1 julkaisi tämän',
+	'myhome-feed-comment-by' => '$1 jätti kommentin',
 	'myhome-feed-deleted-by' => 'poistanut käyttäjä $1',
 	'myhome-feed-moved-by' => 'siirtänyt käyttäjä $1',
-	'myhome-feed-article-comment-created-by' => 'uuden kommentin lähettänyt käyttäjä $1',
+	'myhome-feed-article-comment-created-by' => '$1 jätti kommentin',
 	'myhome-feed-article-comment-edited-by' => 'muokkasi käyttäjän $1 kommenttia',
 	'myhome-feed-by' => 'tehnyt käyttäjä $1',
 	'myhome-feed-diff-alt' => 'näytä muutokset tällä sivulla',
@@ -2097,16 +2098,24 @@ $messages['ka'] = array(
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'myhome-watchlist-feed' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿ',
+	'myhome-user-contributions-feed' => 'ಕಾಣಿಕೆಗಳು',
 	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
 	'myhome-feed-edit' => 'ಸಂಪಾದಿಸು',
 	'myhome-feed-talkpage' => 'ಚರ್ಚಾ ಪುಟ',
 	'myhome-feed-blogcomment' => 'ಬ್ಲಾಗ್ ಇಗೆ  ಟಿಪ್ಪಣಿ',
 	'myhome-feed-delete' => 'ಅಳಿಸಲಾಗಿದೆ',
 	'myhome-feed-categorization' => 'ವರ್ಗೀಕರಣ',
+	'myhome-feed-new-page-details' => 'ಹೊಸ ಪುಟ',
+	'myhome-feed-summary-details' => 'ಸಾರಾಂಶ',
+	'myhome-feed-new-blog-comment-details' => 'ಟಿಪ್ಪಣಿ',
+	'myhome-feed-new-article-comment-details' => 'ಟಿಪ್ಪಣಿ',
+	'myhome-feed-redirect-details' => 'ಪುನರ್ನಿರ್ದೇಶನಗಳು',
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
+	'myhome-namespace-blog' => 'ಬ್ಲಾಗ್',
 	'myhome-community-corner-edit' => 'ಸಂದೇಶವನ್ನು ಸಂಪಾದಿಸು',
 );
 

@@ -210,6 +210,12 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 					continue;
 				}
 
+				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+				if ( in_array( $clip['TrailerTypeId'], [ 1, 2, 20 ] ) && $clip['TrailerVersion'] == 1 ) {
+					$this->videoSkipped();
+					continue;
+				}
+
 				$clip['AgeGate'] = $params['ageGate'];
 				if ( array_key_exists( $clip['EClipId'], $videos) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );

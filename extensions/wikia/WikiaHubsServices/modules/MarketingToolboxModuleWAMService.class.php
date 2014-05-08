@@ -42,7 +42,7 @@ class MarketingToolboxModuleWAMService extends MarketingToolboxModuleNonEditable
 
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
-			'vertical_id' => $this->verticalId,
+			'vertical_id' => HubService::getCanonicalCategoryId($this->verticalId),
 			'wiki_lang' => $this->langCode,
 			'exclude_blacklist' => true,
 			'fetch_admins' => true,

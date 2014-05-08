@@ -161,6 +161,9 @@ class SpecialVideosHelper extends WikiaModel {
 					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
 					'truncatedList' => $videoDetail['truncatedList'],
+					'duration' => $videoDetail['duration'],
+					'thumbUrl' => $videoDetail['thumbUrl'],
+					'embedUrl' => $videoDetail['embedUrl'],
 				];
 			}
 		}

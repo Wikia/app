@@ -1379,6 +1379,14 @@ Jika Anda memerlukan bantuan untuk merawat wiki ini, Anda juga dapat mengizinkan
 Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan dalam daftar ini.',
+	'wikiadoption-mail-second-content' => 'Hai $1,
+Oh, tidak! Sudah hampir 60 hari sejak adanya pengurus aktif pada #WIKINAME. Penting bahwa pengurus secara teratur muncul dan berkontribusi sehingga wiki dapat berlanjut untuk berjalan dengan mulus.<br /><br />
+
+Karena sudah begitu banyak hari sejak kemunculan pengurus saat ini, #WIKINAME kini akan ditawarkan untuk diadopsi ke penyunting lain.
+
+Tim Wikia
+
+Anda dapat berhenti berlangganan dari perubahan dalam daftar ini: $3',
 	'wikiadoption-mail-second-content-HTML' => 'Hai $1,<br /><br />
 Oh, tidak! Sudah hampir 60 hari sejak adanya pengurus aktif pada #WIKINAME. Penting bahwa pengurus secara teratur muncul dan berkontribusi sehingga wiki dapat berlanjut untuk berjalan dengan mulus.<br /><br />
 
@@ -1406,6 +1414,7 @@ Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan pada daftar ini.',
 	'wikiadoption-pref-label' => 'Mengubah preferensi ini hanya akan mempengaruhi surel dari $1.',
+	'wikiadoption-welcome-header' => 'Selamat! Anda telah mengadopsi {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Anda sekarang adalah birokrat di wiki ini. Dengan status baru Anda sekarang Anda memiliki akses ke seluruh peralatan yang akan membantu Anda mengelola {{SITENAME}}.
 <br /><br />
 Hal paling penting yang dapat Anda lakukan untuk membantu {{SITENAME}} tumbuh adalah terus menyunting.
@@ -1527,7 +1536,7 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'wikiadoption' => '자동 위키 합치기',
-	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장기능',
+	'wikiadoption-desc' => '미디어위키를 위한 자동 위키 합치기 확장 기능',
 	'wikiadoption-header' => '이 위키 합치기',
 	'wikiadoption-button-adopt' => '네, {{SITENAME}}을 합칩니다',
 	'wikiadoption-adopt-inquiry' => '자세히 찾기!',

@@ -374,6 +374,14 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'places-editor-search' => 'ಹುಡುಕು',
+	'places-geolocation-modal-error-title' => 'ದೋಷ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

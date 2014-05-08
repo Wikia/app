@@ -94,7 +94,7 @@ class DocsApiController extends WikiaController {
 				$result[] = $apiElem;
 			}
 		}
-		return [ 'apis' => $result ];
+		return [ 'apis' => $result, 'models' => $apiDoc['models'] ];
 	}
 
 	public function getApi() {
