@@ -38,12 +38,17 @@ class AssetsConfig {
 	}
 
 	public static function getEPLAssets( $combine ) {
-		// This class always exists at the moment, this is just in case it goes away at some point
+		global $wgOasisResponsive;
+		$files = [];
+
 		if (class_exists('EditPageLayoutHelper')) {
-			return EditPageLayoutHelper::getAssets();
-		} else {
-			return array();
+			$files = EditPageLayoutHelper::getAssets();
 		}
+		if ( !empty( $wgOasisResponsive ) ) {
+			array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
+		}
+
+		return $files;
 	}
 
 	/**
