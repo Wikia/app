@@ -12,7 +12,9 @@ class TasksModel {
 	}
 
 	public function getTaskClasses() {
-		$dir = __DIR__.'/../Tasks/*.class.php';
+		global $IP;
+
+		$dir = "${IP}/includes/wikia/tasks/Tasks/*.class.php";
 		$baseClassName = 'Wikia\\Tasks\\Tasks\\';
 		$taskClasses = [];
 

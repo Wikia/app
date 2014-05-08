@@ -354,7 +354,7 @@ class CreateWiki {
 		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
 		$job_params->sDbStarter = $this->sDbStarter;
 
-		if (!TaskExecutors::isModern('CreateWikiLocalJob')) {
+		if (!TaskRunner::isModern('CreateWikiLocalJob')) {
 			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
 			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
 		}
@@ -443,7 +443,7 @@ class CreateWiki {
 		$wgUser = $oldUser;
 		unset($oldUser);
 
-		if (TaskExecutors::isModern('CreateWikiLocalJob')) {
+		if (TaskRunner::isModern('CreateWikiLocalJob')) {
 			$creationTask = new CreateNewWikiTask();
 
 			(new \Wikia\Tasks\AsyncTaskList())

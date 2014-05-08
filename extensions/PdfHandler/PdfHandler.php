@@ -72,7 +72,7 @@ $wgHooks['UploadVerifyFile'][] = function($upload, $mime, &$error) {
 		return true; // not a PDF, abort
 	}
 
-	if (TaskExecutors::isModern('CreatePdfThumbnailsJob')) {
+	if (TaskRunner::isModern('CreatePdfThumbnailsJob')) {
 		return PdfHandlerTask::onUploadVerifyFile($upload, $mime, $error);
 	} else {
 		return CreatePdfThumbnailsJob::insertJobs($upload, $mime, $error);

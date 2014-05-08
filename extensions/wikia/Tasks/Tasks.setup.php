@@ -1,48 +1,22 @@
 <?php
+/**
+ * This extension is for the Special:Tasks page, and for the proxy executor.
+ */
 if (!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-require_once(__DIR__.'/special/setup.php');
+$dir = __DIR__;
 
-spl_autoload_register(function($class) {
-	if (strpos($class, 'Wikia\\Tasks') === false) {
-		return false;
-	}
+$wgAutoloadClasses['TasksModel'] = "$dir/TasksModel.class.php";
+$wgAutoloadClasses['TasksSpecialController'] = "$dir/TasksSpecialController.class.php";
 
-	$path = __DIR__;
-	$parts = explode('\\', $class);
-	$class = end($parts);
-	$parts = array_slice($parts, 2, -1);
+$wgSpecialPages['Tasks'] = 'TasksSpecialController';
 
-	while (count($parts) > 0) {
-		$next = array_shift($parts);
-		$path .= "/{$next}";
-	}
+$wgExtensionMessagesFiles['Tasks'] = "$dir/Tasks.i18n.php";
 
-	$file = "{$path}/{$class}.class.php";
-	if (file_exists($file)) {
-		require_once($file);
-		return true;
-	}
-
-	return false;
-});
-
-class TaskExecutors {
-	private static $modernExecutors = [
-//		'BloglistDeferredPurgeJob',
-//		'BlogTask',
-//		'CreatePdfThumbnailsJob',
-//		'CreateWikiLocalJob',
-		'ParsoidCacheUpdateJob',
-	];
-
-	static function isLegacy($taskName) {
-		return !self::isModern($taskName);
-	}
-
-	static function isModern($taskName) {
-		return in_array($taskName, self::$modernExecutors);
-	}
-}
+$wgAvailableRights []= 'tasks-user';
+$wgGroupPermissions['vstf']['tasks-user'] = true;
+$wgGroupPermissions['helper']['tasks-user'] = true;
+$wgGroupPermissions['staff']['tasks-user'] = true;
+$wgGroupPermissions['util']['tasks-user'] = true;
