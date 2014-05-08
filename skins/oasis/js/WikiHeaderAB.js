@@ -15,8 +15,14 @@ $(function() {
 	navigation.find( '.nav-item' ).each(function() {
 		var elem = $( this ),
 			seeAll = elem.find( '> a' ).clone().wrap('<section class="see-all"></section>').parent(),
-			elem2 = elem.find( '.subnav-2' );
-			elem2.wrap('<section class="submenu" data-elements="' + elem2.size() + '"></section>');
+			elem2 = elem.find( '.subnav-2'),
+			size = 'normal';
+			if (elem2.size() === 3) {
+				size = 'wide';
+			} else if (elem.size() > 3) {
+				size = 'full';
+			}
+			elem2.wrap('<section class="submenu" data-size="' + size + '"></section>');
 			// TODO i18n
 			elem2.append( seeAll.text( 'See all in ' + seeAll.text() ) );
 	});
