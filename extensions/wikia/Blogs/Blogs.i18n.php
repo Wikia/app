@@ -2938,6 +2938,7 @@ $messages['km'] = array(
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'blog-file-page' => "<a href='$1'>$2</a> ಅನ್ನು  <a href='$3'>$4 ಇನ   </a> ಬ್ಲಾಗ್ ಮೇಲೆ ಹಾಕಿ.",
@@ -2946,6 +2947,7 @@ $messages['kn'] = array(
 	'create-blog-spam' => 'ಸ್ಪ್ಯಾಮ್ ಹಾಗೆ ಕಾನುತದೆ',
 	'create-blog-cant-edit' => 'ಸಂಪಾದನೆ ಮಾಡಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ.',
 	'create-blog-post-category' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳು',
+	'create-blog-post-category-body' => 'ಇದೊಂದು ಸ್ವಯಂಚಲಿತವಾಗಿ ರಚಿಸಲಾದ ಬ್ಲಾಗ್‍ಗಳ ಪಟ್ಟಿ',
 	'create-blog-post-recent-listing' => 'ಇತ್ತೀಚಿನ  ಪೋಸ್ಟ್ ಗಳು',
 	'create-blog-post-recent-listing-title' => 'ಇತ್ತೀಚಿನ  ಪೋಸ್ಟ್ ಗಳು',
 	'create-blog-post-recent-listing-log' => 'ಇತ್ತೀಚಿನ ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳಿಗೆ ಲೇಖನ ನಿರ್ಮಾಣ ಮಾಡಿದು',
@@ -2953,6 +2955,25 @@ $messages['kn'] = array(
 	'create-blog-post-title-edit' => 'ಒಂದು ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಅನ್ನು ಸಂಪಾದನೆ ಮಾದಿ.',
 	'create-blog-form-title' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಅಂದರೆ ಎಂತ?',
 	'create-blog-form-post-text' => 'ಬ್ಲಾಗ್ ಪಥ್ಯ',
+	'create-blog-form-post-title' => 'ಬ್ಲಾಗ್‍ಗಳ ಶೀರ್ಷಿಕೆ',
+	'create-blog-empty-title-error' => 'ಶೀರ್ಷಿಕೆ ಆವಶ್ಯಕ',
+	'create-blog-invalid-title-error' => 'ಅಸಿಂಧು ತಲೆಬರಹ',
+	'create-blog-no-login' => 'ಲಾಗಿನ್ ಆಗಿಲ್ಲ',
+	'create-blog-categories-textinput' => 'ಹೊಸ ವರ್ಗ ಸೇರಿಸು',
+	'create-blog-categories-submit' => 'ಸಲ್ಲಿಸಿ',
+	'create-blog-save' => 'ಪುಟವನ್ನು ಉಳಿಸಿ',
+	'create-blog-preview' => 'ಮುನ್ನೋಟ ತೋರಿಸಿ',
+	'create-blog-listing-preview' => 'ಮುನ್ನೋಟ',
+	'create-blog-listing-matches-calculate' => 'ಲೆಕ್ಕಮಾಡು',
+	'create-blog-listing-matches-recalculate' => 'ಪುನಃ ಲೆಕ್ಕಮಾಡು',
+	'create-blog-listing-sortby' => 'ಇದರಂತೆ ವಿಂಗಡಿಸು',
+	'create-blog-listing-sortby-date' => 'ಅತ್ಯಂತ ಇತ್ತೀಚಿನ',
+	'create-blog-listing-sortby-author' => 'ಕರ್ತೃ',
+	'create-blog-listing-sortby-comments' => 'ಟಿಪ್ಪಣಿ ಗಣನೆ',
+	'create-blog-listing-output-as-box' => 'ನಕಲು ಮಾಡಲು ಮತ್ತು ಅಂಟಿಸಲು ಬೇಕಾದ ಸಂಕೇತಗಳನ್ನು ರಚಿಸು',
+	'create-blog-listing-output-as-page' => 'ಹೊಸ ಪುಟದ ಪಟ್ಟಿಯನ್ನು ಸೃಜಿಸು',
+	'blog-defaulttitle' => 'ಬ್ಲಾಗ್‍ಗಳು',
+	'blog-readfullpost' => 'ಇನ್ನೂ ಓದಿ',
 	'blog-nbrcomments' => '{{PLURAL:$1|ಒಂದು ಟಿಪ್ಪಣಿ|$1 ಟಿಪ್ಪಣಿಗಳು}}',
 	'blog-nopostfound' => 'ಒಂದು ಸಹ ಪೋಸ್ಟ್ ಸಿಗಲಿಲ್ಲ',
 	'blog-writeone' => 'ಒಂದು ಬರಿ!',
@@ -2978,7 +2999,16 @@ $messages['kn'] = array(
 	'blog-comment-edit' => 'ಸಂಪಾದಿಸಿ',
 	'blog-comment-error' => 'ಟಿಪ್ಪಣಿ ಅನ್ನು ಉಳಿಸಲಿಕ್ಕೆ ಆಗಲಿಲ್ಲ',
 	'blog-avatar-preferences-title' => 'ಅವತಾರ',
+	'blog-page-rate' => 'ಈ ಲೇಖನದ ಸ್ಥಾನನಿರ್ಣಯ ಮಾಡು:',
 	'blog-create-listing-label' => 'ಬ್ಲಾಗ್ ಲಿಸ್ಟಿಂಗ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
+	'blogs-reportproblem' => 'ಸಮಸ್ಯೆಯ ವರದಿ ಮಾಡು',
+	'right-blog-articles-edit' => 'ಬ್ಲಾಗ್ ಬರಹಗಳನ್ನು ಸಂಪಾದಿಸು',
+	'right-blog-articles-move' => 'ಹೊಸ ಬ್ಲಾಗ್ ಬರಹಗಳು',
+	'blogs-recent-url-text' => 'ಇತ್ತೀಚಿನ ಬ್ಲಾಗ್ ಬರಹಗಳು',
+	'blog-desc' => 'ಬ್ಲಾಗ್ ಬರಹಗಳು',
+	'blog-comment-sending' => 'ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ....',
+	'blog-by' => '$1 ಇಂದ $2',
+	'blogs-searchprofile' => 'ಬ್ಲಾಗ್‍ಗಳು',
 );
 
 /** Korean (한국어)

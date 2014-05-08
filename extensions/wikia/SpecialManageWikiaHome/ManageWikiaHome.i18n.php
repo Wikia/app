@@ -149,6 +149,8 @@ Parameters:
 {{Identical|Filter}}',
 	'manage-wikia-home-wiki-filter-reset' => 'A label on a reseting form button, which reset all filters.
 {{Identical|Clear}}',
+	'manage-wikia-home-wiki-list-download' => 'Label for button that downloads complete wiki list.',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Tooltip for button that downloads complete wiki list - explains format (CSV) and encoding (UTF-8).',
 	'manage-wikia-home-wiki-list-id' => 'Table column header which describes column containing wiki Id.
 {{Identical|ID}}',
 	'manage-wikia-home-wiki-list-vertical' => 'Table column header which describes column containing wiki vertical name.
@@ -238,8 +240,6 @@ Parameters:
 	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
 	'manage-wikia-home-stats-success' => 'Message after successful save.',
 	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
-	'manage-wikia-home-wiki-list-download' => 'Label for button that downloads complete wiki list.',
-	'manage-wikia-home-wiki-list-download-tooltip' => 'Tooltip for button that downloads complete wiki list - explains format (CSV) and encoding (UTF-8).',
 );
 
 /** Arabic (العربية)
@@ -551,6 +551,8 @@ $messages['de'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Fang an, den Namen des Wikis einzugeben und die Liste wird kürzer:',
 	'manage-wikia-home-wiki-filter' => 'Filtern',
 	'manage-wikia-home-wiki-filter-reset' => 'Löschen',
+	'manage-wikia-home-wiki-list-download' => 'Vollständige Liste herunterladen',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Kommagetrennte Werte (CSV-Datei) mit UTF-8-Kodierung.',
 	'manage-wikia-home-wiki-list-id' => 'Kennung',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
 	'manage-wikia-home-wiki-list-headline' => 'Name des Wikis',
@@ -834,6 +836,8 @@ $messages['fr'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Commencez à saisir le nom du wiki et la liste se raccourcira :',
 	'manage-wikia-home-wiki-filter' => 'Filtre',
 	'manage-wikia-home-wiki-filter-reset' => 'Effacer',
+	'manage-wikia-home-wiki-list-download' => 'Télécharger la liste complète',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Valeurs séparées par des virgules (fichier CSV) avec encodage UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Thème',
 	'manage-wikia-home-wiki-list-headline' => 'Nom du wiki',
@@ -999,6 +1003,28 @@ $messages['ja'] = array(
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'manage-wikia-home-change-button' => 'ಬದಲಿಸಿ',
+	'manage-wikia-home-wiki-filter' => 'ಶೋಧಕ',
+	'manage-wikia-home-wiki-filter-reset' => 'ಅಳಿಸಿ',
+	'manage-wikia-home-wiki-list-collection' => 'ಸಂಗ್ರಹಣೆ',
+	'manage-wikia-home-wiki-list-blocked-no' => 'ಇಲ್ಲ',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'ಹೌದು',
+	'manage-wikia-home-wiki-list-promoted-no' => 'ಇಲ್ಲ',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'ಹೌದು',
+	'manage-wikia-home-wiki-list-official-no' => 'ಇಲ್ಲ',
+	'manage-wikia-home-wiki-list-official-yes' => 'ಹೌದು',
+	'manage-wikia-home-modal-button-no' => 'ಇಲ್ಲ',
+	'manage-wikia-home-modal-button-yes' => 'ಹೌದು',
+	'manage-wikia-home-collections-setup-save-button' => 'ಉಳಿಸಿ',
+	'manage-wikia-home-collections-enabled-field-label' => 'ಶಕ್ತಗೊಳಿಸಿ',
+	'manage-wikia-home-collections-name-field-label' => 'ಸಂಗ್ರಹ ಹೆಸರು',
+	'manage-wikia-home-collection-add-file-button' => 'ಚಿತ್ರ ಸೇರಿಸಿ',
+);
+
 /** Korean (한국어)
  * @author Clockoon
  * @author Jskang
@@ -1077,6 +1103,13 @@ $messages['ms'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Persediaan slot',
 	'manage-wikia-home-wikis-in-slots-total' => 'Jumlah slot: $1',
 	'manage-wikia-home-visualization-wikis' => 'Wiki korporat dengan visualisasi:',
+	'manage-wikia-home-hubs-slot-heading' => 'Persediaan slot hab',
+	'manage-wikia-home-hubs-slot-success' => 'Slot hab telah disimpan.',
+	'manage-wikia-home-hubs-slot' => 'Slot $1',
+	'manage-wikia-home-hubs-slot-name' => 'Nama hab',
+	'manage-wikia-home-hubs-slot-description' => 'Huraian hab',
+	'manage-wikia-home-hubs-slot-more-links' => 'Pautan-pautan "Banyak lagi di..."',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Slot kosong --',
 	'manage-wikia-home-wikis-in-slots-success' => 'Slot nombor telah diubah.',
 	'manage-wikia-home-collections-success' => 'Koleksi telah disimpan.',
 	'manage-wikia-home-collections-add-success' => 'Wiki ini berjaya ditambahkan ke dalam koleksi.',
@@ -1094,6 +1127,8 @@ $messages['ms'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Mula taipkan nama wiki, dan senarai akan mengecil:',
 	'manage-wikia-home-wiki-filter' => 'Tapis',
 	'manage-wikia-home-wiki-filter-reset' => 'Padamkan',
+	'manage-wikia-home-wiki-list-download' => 'Muat turun senarai lengkap',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Nilai-nilai terpisah koma (fail CSV) dengan pengekodan UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
 	'manage-wikia-home-wiki-list-headline' => 'Nama wiki',
@@ -1553,6 +1588,8 @@ $messages['ru'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Начните вводить имя вики, и список станет короче:',
 	'manage-wikia-home-wiki-filter' => 'Фильтр',
 	'manage-wikia-home-wiki-filter-reset' => 'Очистить',
+	'manage-wikia-home-wiki-list-download' => 'Скачать полный список',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'CSV-файл в кодировке UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Вертикальное',
 	'manage-wikia-home-wiki-list-headline' => 'Название проекта',
@@ -1651,6 +1688,8 @@ $messages['sv'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Börja med att skriva ett wiki-namn så kommer listan att förkorta det:',
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Rensa',
+	'manage-wikia-home-wiki-list-download' => 'Ladda ned fullständig lista',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Kommaseparerade värden (CSV-fil) med kodningen UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertikal',
 	'manage-wikia-home-wiki-list-headline' => 'Wiki-namn',
@@ -1950,4 +1989,12 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-stats-mobile-percentage-label' => '% 移动端访客',
 	'manage-wikia-home-stats-success' => '统计更新成功！',
 	'manage-wikia-home-stats-failure' => '数据未保存。请更正表单中的错误并重试。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'managewikiahome' => '管理Wikia首頁',
+	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有權限使用此特殊頁面。',
 );

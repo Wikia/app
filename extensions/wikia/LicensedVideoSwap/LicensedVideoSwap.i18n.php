@@ -728,6 +728,20 @@ $messages['ja'] = array(
 	'lvs-button-swap' => '差し替え',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lvs-history-button-text' => 'ಇತಿಹಾಸ',
+	'lvs-button-yes' => 'ಹೌದು',
+	'lvs-button-no' => 'ಇಲ್ಲ',
+	'lvs-more-suggestions' => 'ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ',
+	'lvs-undo-swap' => 'ಕಳಚು',
+	'lvs-undo-keep' => 'ಕಳಚು',
+	'lvs-posted-in-more' => 'ಹೆಚ್ಚು',
+	'lvs-new-flag' => 'ಹೊಸ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

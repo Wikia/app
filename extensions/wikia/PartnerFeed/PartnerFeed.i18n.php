@@ -371,6 +371,13 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

@@ -3164,7 +3164,7 @@ In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua fo
 	'wikiaPhotoGallery-upload-title-gallery' => 'Creatore Gallerie - Trova e carica foto',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Carica',
 	'wikiaPhotoGallery-upload-uploadtext' => "'''Oppure''' carica una foto dal tuo computer",
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Carica', # Fuzzy
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Carica foto',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'questa pagina',
 	'wikiaPhotoGallery-upload-existingtext-recentupload' => 'Caricamenti più recenti',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Seleziona',

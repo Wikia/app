@@ -449,6 +449,17 @@ $messages['ka'] = array(
 	'file-page-more-links' => 'იხილე სრული სია',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'video-page-description-heading' => 'ವಿವರ',
+	'video-page-file-list-pagination' => '$1 ಇಂದ $2',
+	'file-page-tab-about' => 'ಕುರಿತು',
+	'file-page-tab-history' => 'ಕಡತದ ಇತಿಹಾಸ',
+	'file-page-tab-metadata' => 'ಮೇಲ್ದರ್ಜೆ ಮಾಹಿತಿ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

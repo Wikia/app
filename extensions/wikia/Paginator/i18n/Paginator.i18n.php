@@ -178,6 +178,14 @@ $messages['it'] = array(
 	'paginator-back' => 'Indietro',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'paginator-next' => 'ನಂತರ',
+	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

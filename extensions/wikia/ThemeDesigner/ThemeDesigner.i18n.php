@@ -1182,6 +1182,18 @@ $messages['km'] = array(
 	'themedesigner-unknown-error' => 'មានបញ្ហាកើតឡើង ដោយយើងមិនដឹងថាមកពីមូលហេតុអ្វី។ សូមសាកល្បងម្ដងទៀត',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'themedesigner-page' => 'ಪುಟ',
+	'themedesigner-color' => 'ಮುಖ್ಯ',
+	'themedesigner-small' => 'ಸಣ್ಣ',
+	'themedesigner-large' => 'ದೊಡ್ಡದು',
+	'themedesigner-size' => 'ಗಾತ್ರ',
+	'themedesigner-button-save' => 'ಉಳಿಸಿ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Hym411
