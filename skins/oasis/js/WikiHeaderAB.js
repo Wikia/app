@@ -14,11 +14,11 @@ $(function() {
 
 	navigation.find( '.nav-item' ).each(function() {
 		var elem = $( this ),
-			newItem = elem.find( '> a' ).clone();
-
-		elem.find( '.subnav-2' ).wrap('<section class="submenu"></div>' )
+			seeAll = elem.find( '> a' ).clone().wrap('<section class="see-all"></section>').parent(),
+			elem2 = elem.find( '.subnav-2' );
+			elem2.wrap('<section class="submenu" data-elements="' + elem2.size() + '"></section>');
 			// TODO i18n
-			.parent().append(newItem.text( 'See all in ' + newItem.text() ).wrap('<section class="see-all"></section>') );
+			elem2.append( seeAll.text( 'See all in ' + seeAll.text() ) );
 	});
 
 	navigation.children().wrapAll('<section class="local-navigation-container"></section>');
