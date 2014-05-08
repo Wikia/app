@@ -12,8 +12,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-invalid-latitude' => "Wikia Interactive Maps error occurred: invalid lat. Please make sure your latitude parameter is a number or remove it to set it to default value.",
 	'wikia-interactive-maps-parser-tag-error-invalid-longitude' => "Wikia Interactive Maps error occurred: invalid lon. Please make sure your longitude parameter is a number or remove it to set it to default value.",
 	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => "Wikia Interactive Maps error occurred: invalid zoom. Please make sure your zoom parameter is an integer number higher or equal 0 or remove it to set it to default value.",
-	'wikia-interactive-maps-parser-tag-error-invalid-width' => "Wikia Interactive Maps error occurred: invalid width. Please make sure your width parameter is an integer number higher than 0 or remove it to set it to default value.",
-	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Wikia Interactive Maps error occurred: invalid height. Please make sure your height parameter is an integer number higher than 0 or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-width' => "Wikia Interactive Maps error occurred: invalid width. Please make sure your width parameter is an integer number higher than 100 and lower then 1270 or remove it to set it to default value.",
+	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Wikia Interactive Maps error occurred: invalid height. Please make sure your height parameter is an integer number higher than 50 and lower then 500 or remove it to set it to default value.",
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
 

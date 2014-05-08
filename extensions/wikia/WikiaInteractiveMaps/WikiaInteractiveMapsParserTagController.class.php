@@ -1,9 +1,15 @@
 <?php
 class WikiaInteractiveMapsParserTagController extends WikiaController {
 
+	//TODO: figure out max and min height and width - PO design decision
 	const DEFAULT_ZOOM = 7;
+	const MIN_ZOOM = 0;
 	const DEFAULT_WIDTH = 700;
+	const MAX_WIDTH = 1270;
+	const MIN_WIDTH = 100;
 	const DEFAULT_HEIGHT = 200;
+	const MAX_HEIGHT = 500;
+	const MIN_HEIGHT = 50;
 	const DEFAULT_LATITUDE = 0;
 	const DEFAULT_LONGITUDE = 0;
 	const PARSER_TAG_NAME = 'imap';
@@ -217,20 +223,36 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 				break;
 			case 'zoom':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 0 ],
+					[ 'min' => static::MIN_ZOOM ],
 					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom' ]
 				);
 				break;
 			case 'width':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 1 ],
-					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width' ]
+					[
+						'min' => static::MIN_WIDTH,
+						'max' => static::MAX_WIDTH
+					],
+					[
+						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
+						//TODO: we should be able to pass const MIN and MAX values to the message
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-invalid-width'
+					]
 				);
 				break;
 			case 'height':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 1 ],
-					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height' ]
+					[
+						'min' => static::MIN_HEIGHT,
+						'max' => static::MAX_HEIGHT
+					],
+					[
+						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height',
+						//TODO: we should be able to pass const MIN and MAX values to the message
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-invalid-width'
+					]
 				);
 				break;
 		}
