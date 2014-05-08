@@ -128,9 +128,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		];
 
 		foreach( $validParams as $key => $mapTo ) {
-			$param = $data[ $key ];
-			if ( isset( $param ) && !empty( $param ) ) {
-				$result[ $mapTo ] = $param;
+			if ( !empty( $data[ $key ] ) ) {
+				$result[ $mapTo ] = $data[ $key ];
 			}
 		}
 
