@@ -180,3 +180,7 @@
 	margin: 0;
 	color: #999;
 }
+
+#ve-ui-mwSaveDialog-captcha #recaptcha_area {
+	margin: 5px auto 0 auto;
+}
