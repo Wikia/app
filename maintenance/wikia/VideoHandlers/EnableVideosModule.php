@@ -24,12 +24,11 @@ class EnableVideosModule extends Maintenance {
 	protected $dbname   = '';
 	protected $set      = false;
 	protected $get      = true;
-	protected $location = 'bottom';
 	protected $enabled  = true;
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Pre-populate LVS suggestions";
+		$this->mDescription = "Manage VideosModule enable/disable";
 		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
 		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 		$this->addOption( 'file', 'File of dbnames', false, true, 'f' );
@@ -38,7 +37,6 @@ class EnableVideosModule extends Maintenance {
 		$this->addOption( 'get', 'Show current values', false, false, 'g' );
 		$this->addOption( 'enable', 'Enable the module', false, false, 'e' );
 		$this->addOption( 'disable', 'Disable the module', false, false, 'x' );
-		$this->addOption( 'location', 'Set location for Videos Module (bottom or rail)', false, true, 'l' );
 	}
 
 	public function execute() {
@@ -48,7 +46,6 @@ class EnableVideosModule extends Maintenance {
 		$this->dbname   = $this->getOption('dbname', '');
 		$this->set      = $this->hasOption('set');
 		$this->get      = $this->hasOption('get');
-		$this->location = $this->getOption('location', 'bottom');
 
 		if ( $this->hasOption('enable') ) {
 			$this->enabled = true;
@@ -64,10 +61,6 @@ class EnableVideosModule extends Maintenance {
 		// Shouldn't happen ... paranoid programming
 		if ( !$this->set && !$this->get ) {
 			$this->get = true;
-		}
-
-		if ( ! preg_match('/^(bottom|rail)$/', $this->location) ) {
-			echo "\nUnknown location ".$this->location." -- qutiting\n";
 		}
 
 		if ( $this->file ) {
@@ -87,8 +80,7 @@ class EnableVideosModule extends Maintenance {
 			echo "Running on $db ...\n";
 
 			// get wiki ID
-			$id = $this->dbname2id( $db );
-
+			$id = WikiFactory::DBtoID( $db );
 
 			if ( empty( $id ) ) {
 				echo "\t$db: ERROR (not found in WikiFactory)\n";
@@ -104,42 +96,25 @@ class EnableVideosModule extends Maintenance {
 
 			if ( $this->set ) {
 				if ( !$this->test ) {
-					$this->debug( "\tSetting ... wgVideosModuleABTest, wgEnableVideosModuleExt" );
-					WikiFactory::setVarByName( 'wgVideosModuleABTest', $id, $this->location );
+					$this->debug( "\tSetting ... wgEnableVideosModuleExt" );
 					WikiFactory::setVarByName( 'wgEnableVideosModuleExt', $id, $this->enabled );
 
 					WikiFactory::clearCache( $id );
 					$this->debug( "\tdone" );
 				}
 			} else if ( $this->get ) {
-				$pos = WikiFactory::getVarByName( 'wgVideosModuleABTest', $id );
-				$pos = $pos->cv_value;
-
 				$enabled = WikiFactory::getVarByName( 'wgEnableVideosModuleExt', $id );
 				$enabled = $enabled->cv_value;
 
 				$enabled = $enabled ? unserialize($enabled) : false;
-				$pos = $pos ? unserialize($pos) : false;
 
 				if ( $enabled ) {
-					echo "\tEnabled on the $pos\n";
+					echo "\tEnabled\n";
 				} else {
 					echo "\tDisabled";
 				}
 			}
 		}
-	}
-
-	function dbname2id( $db ) {
-		$dbr = wfGetDB( DB_SLAVE, null, 'wikicities' );
-		$row = $dbr->selectRow(
-			array( "city_list" ),
-			array( "city_id" ),
-			array( "city_dbname" => $db ),
-			__METHOD__
-		);
-		$city_id = is_object( $row ) ? $row->city_id : null;
-		return $city_id;
 	}
 
 	function debug( $msg ) {
