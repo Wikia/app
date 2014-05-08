@@ -2,13 +2,9 @@
 <section id="ebay-ads">
 <?php if ($isMobile) { ?>
 <h2> <?= $title ?>:</h2>
-<div class="powered-by">Powered by
-	<?= $app->renderPartial('AdProviderEbay', 'ebayLogo', array('width' => '80px', 'height' => '30px', 'viewBox' => '20 75 270 120') ); ?>
-</div>
-<?php } else { ?>
-<div class="powered-by">Powered by
-<?= $app->renderPartial('AdProviderEbay', 'ebayLogo', array('width' => '80px', 'height' => '30px', 'viewBox' => '20 75 270 120') ); ?>
-</div>
+<?php } ?>
+<div class="powered-by">Powered by <? include 'extensions/wikia/AdEngine/assets/ebay.svg' ?></div>
+<?php if (!$isMobile) { ?>
 <h1> <?= $title ?>:</h1>
 <?php } ?>
 <? if ($products): ?>

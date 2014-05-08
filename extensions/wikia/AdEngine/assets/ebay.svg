@@ -1,5 +1,5 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="<?= (isset($width) ? $width : '228px') ?>" height="<?= (isset($height) ? $height : '228px') ?>" viewBox="<?= (isset($viewBox) ? $viewBox : '0 0 228 228') ?>"  xml:space="preserve">
+	 width="80px" height="30px" viewBox="20 75 270 120"  xml:space="preserve">
 <g class="ebay-logo-svg">
 	<path d="M42.243,108.29c-32.38-0.006-33.639,25.201-33.473,31.745c0,0-1.586,29.47,32.681,29.47
 			c29.444,0,30.894-18.491,30.894-18.491l-13.547,0.027c0,0-2.638,10.186-17.292,9.914c-18.837-0.351-19.569-18.601-19.569-18.601
