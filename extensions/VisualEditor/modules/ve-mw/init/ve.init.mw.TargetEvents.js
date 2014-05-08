@@ -18,8 +18,8 @@ ve.init.mw.TargetEvents = function ( target ) {
 	this.timings = { 'saveRetries': 0 };
 	// Events
 	this.target.connect( this, {
-		'saveWorkFlowBegin': 'onSaveWorkflowBegin',
-		'saveWorlFlowEnd': 'onSaveWorkflowEnd',
+		'saveWorkflowBegin': 'onSaveWorkflowBegin',
+		'saveWorkflowEnd': 'onSaveWorkflowEnd',
 		'saveInitiated': 'onSaveInitated',
 		'save': 'onSaveComplete',
 		'saveReview': 'onSaveReview',
@@ -86,7 +86,11 @@ ve.init.mw.TargetEvents.prototype.onSaveInitated = function () {
 ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
 	this.track( 'performance.user.saveComplete', { 'duration': ve.now() - this.timings.saveInitiated } );
 	this.timings.saveRetries = 0;
-};
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-save-publish',
+		'duration': ve.now() - this.timings.saveInitiated
+	} );};
 
 /**
  * Track a save error by type

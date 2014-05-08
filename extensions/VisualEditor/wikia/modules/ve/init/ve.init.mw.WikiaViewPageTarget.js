@@ -88,16 +88,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-review-changes-button',
-		'duration': this.timings.saveDialogReview - this.timings.saveDialogOpen
-	} );
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
-	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-save-publish',
-		'duration': this.timings.saveDialogSave - this.timings.saveDialogOpen
+		'duration': this.events.timings.saveReview - this.events.timings.saveWorkflowBegin
 	} );
 };
 
