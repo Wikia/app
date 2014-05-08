@@ -39,12 +39,7 @@ define('ext.wikia.adEngine.provider.ebay', [
 			callback: function (data) {
 				var slot = $('#' + slotname).html(data).addClass('ebay-ads').removeClass('default-height');
 
-				if (window.wikiaPageType === 'article') {
-					// TODO: Revise logic of moving PREFOOTER ads before comments
-					if (window.skin === 'wikiamobile') {
-						slot.insertAfter('#wkRltdCnt');
-					}
-				} else {
+				if (window.wikiaPageType !== 'article') {
 					slot.addClass('ebay-ads-responsive');
 				}
 
