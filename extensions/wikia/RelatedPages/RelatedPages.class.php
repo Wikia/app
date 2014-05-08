@@ -118,7 +118,7 @@ class RelatedPages {
 
 		if ( count($categories) > 0 ) {
 			//RT#80681/RT#139837: apply category blacklist
-			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
+			$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
 			$categories = $this->getCategoriesByRank( $categories );
 
 			if( count( $categories ) > $this->categoriesLimit ) {
@@ -139,14 +139,14 @@ class RelatedPages {
 	protected function afterGet( $pages, $limit ){
 		wfProfileIn( __METHOD__ );
 
-		$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
-		$images = $imageServing->getImages(1); // get just one image per article
+		$imageServing = new ImageServing( array_keys( $pages ), 200, array( 'w' => 2, 'h' => 1 ) );
+		$images = $imageServing->getImages( 1 ); // get just one image per article
 
 		foreach( $pages as $pageId => $data ) {
-			$data['imgUrl'] = isset( $images[$pageId] ) ? $images[$pageId][0]['url'] : null;
-			$data['text'] = $this->getArticleSnippet( $pageId );
+			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'text' ] = empty( $data[ 'imgUrl' ] ) ? $this->getArticleSnippet( $pageId ) : null;
 			$this->pushData( $data );
-			if (count($this->getData()) >= $limit) {
+			if ( count( $this->getData() ) >= $limit ) {
 				break;
 			}
 		}
@@ -163,13 +163,13 @@ class RelatedPages {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__, $category);
+		if ( empty( $this->memcKeyPrefix ) ) {
+			$cacheKey = wfMemcKey( __METHOD__, $category );
 		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category);
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
 		}
 		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
+		if( is_array( $cache ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cache;
 		}
