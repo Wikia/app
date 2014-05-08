@@ -18,8 +18,16 @@ $(function() {
 
 		elem.find( '.subnav-2' ).wrap('<section class="submenu"></div>' )
 			// TODO i18n
-			.parent().append( newItem.text( 'See all in ' + newItem.text() ) );
+			.parent().append(newItem.text( 'See all in ' + newItem.text() ).wrap('<section class="see-all"></section>') );
 	});
 
+	navigation.children().wrapAll('<section class="local-navigation-container"></section>');
+
 	navigation.insertAfter( '#WikiaHeader' );
+
+	$('.nav-item').click(function(e){
+		e.preventDefault();
+
+		$(this).toggleClass('active');
+	});
 });
