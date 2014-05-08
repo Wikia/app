@@ -155,7 +155,8 @@ ve.ui.MWSaveDialog.prototype.swapPanel = function ( panel ) {
 					.parent().show().addClass( 'mw-ajax-loader' );
 				this.editSummaryXhr = new mw.Api().post( {
 					action: 'parse',
-					summary: currentEditSummaryWikitext
+					summary: currentEditSummaryWikitext,
+					page: mw.config.get( 'wgRelevantPageName' ) /* Wikia change for VE-1054. Page param required in our version of Api.php */
 				} ).done( function ( result ) {
 					if ( result.parse.parsedsummary['*'] === '' ) {
 						dialog.$reviewEditSummary.parent().hide();
