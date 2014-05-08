@@ -45,7 +45,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 					$params
 				);
 			} else {
-				$this->setMapNotFoundErrorMsg( $errorMessage );
+				$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
 			}
 		}
 
@@ -96,24 +96,13 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	 *
 	 * @return object - map object
 	 */
-	private function getMapObj($mapId) {
+	private function getMapObj( $mapId ) {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 
-		$map = $mapsModel->cachedRequest(
+		return $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
-
-		return $map;
-	}
-
-	/**
-	 * @desc Set error message for map not found
-	 *
-	 * @param String $errorMessage a variable where the error message will be assigned to
-	 */
-	private function setMapNotFoundErrorMsg(&$errorMessage) {
-		$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
 	}
 
 	/**
