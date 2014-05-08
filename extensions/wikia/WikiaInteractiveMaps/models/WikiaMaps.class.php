@@ -118,7 +118,6 @@ class WikiaMaps {
 		$response = Http::get( $url );
 
 		$map = json_decode( $response );
-		$map->id = $mapId;
 		if( !empty( $map->tile_set_url ) ) {
 			$response = Http::get( $map->tile_set_url );
 			$tilesData = json_decode( $response );

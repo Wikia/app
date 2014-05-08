@@ -35,19 +35,25 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );
 
-		if( !$isValid ) {
-			return $this->sendRequest(
-				'WikiaInteractiveMapsParserTagController',
-				'parserTagError',
-				[ 'errorMessage' => $errorMessage ]
-			);
-		} else {
-			return $this->sendRequest(
-				'WikiaInteractiveMapsParserTagController',
-				'mapThumbnail',
-				$params
-			);
+		if( $isValid ) {
+			$params[ 'map' ] = $this->getMapObj( $params[ 'id' ] );
+
+			if ( !empty( $params [ 'map' ] ) ) {
+				return $this->sendRequest(
+					'WikiaInteractiveMapsParserTagController',
+					'mapThumbnail',
+					$params
+				);
+			} else {
+				$errorMessage = wfMessage( 'wikia-interactive-maps-parser-tag-error-no-map-found' )->plain();
+			}
 		}
+
+		return $this->sendRequest(
+			'WikiaInteractiveMapsParserTagController',
+			'parserTagError',
+			[ 'errorMessage' => $errorMessage ]
+		);
 	}
 
 	/**
@@ -68,25 +74,35 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	public function mapThumbnail() {
 		$params = $this->getMapPlaceholderParams();
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-		$mapId = $this->getVal( 'id' );
-		$map = $mapsModel->cachedRequest(
-			'getMapByIdFromApi',
-			[ 'id' => $mapId ]
-		);
 
-		$map->url = $mapsModel->buildUrl([
+		$params->map->url = $mapsModel->buildUrl([
 			WikiaMaps::ENTRY_POINT_RENDER,
-			$mapId,
+			$params->map->id,
 			$params->zoom,
 			$params->lat,
 			$params->lon,
 		]);
 
-		$this->setVal( 'map', (object) $map );
+		$this->setVal( 'map', (object) $params->map );
 		$this->setVal( 'params', $params );
-		$this->setVal( 'mapPageUrl', '#' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * @desc Get map object from API
+	 *
+	 * @param integer $mapId - map object id
+	 *
+	 * @return object - map object
+	 */
+	private function getMapObj( $mapId ) {
+		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
+
+		return $mapsModel->cachedRequest(
+			'getMapByIdFromApi',
+			[ 'id' => $mapId ]
+		);
 	}
 
 	/**
@@ -102,6 +118,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
 		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
 		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$params[ 'map' ] = $this->request->getVal( 'map' );
 
 		$params[ 'width' ] .= 'px';
 		$params[ 'height' ] .= 'px';
