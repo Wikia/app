@@ -1293,13 +1293,16 @@ OO.ui.Window.prototype.open = function ( data ) {
 			this.visible = true;
 			this.emit( 'opening', data );
 			this.setup( data );
-			// Focus the content div (which has a tabIndex) to inactivate
-			// (but not clear) selections in the parent frame.
-			// Must happen after setup runs (otherwise focusing it doesn't work)
-			// but before 'open' is emitted (so subclasses can give focus to something else)
-			this.frame.$content.focus();
 			this.emit( 'open', data );
-			this.opening = false;
+			setTimeout( OO.ui.bind( function () {
+				// Focus the content div (which has a tabIndex) to inactivate
+				// (but not clear) selections in the parent frame.
+				// Must happen after 'open' is emitted (to ensure it is visible)
+				// but before 'ready' is emitted (so subclasses can give focus to something else)
+				this.frame.$content.focus();
+				this.emit( 'ready', data );
+				this.opening = false;
+			}, this ) );			
 		}, this ) );
 	}
 
