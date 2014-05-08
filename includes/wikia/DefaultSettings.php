@@ -1298,25 +1298,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
 $wgOasisResponsive = null;
 
 /**
- * @name $wgOasisResponsiveDisabledInLangs
- * Disables the Oasis responsive layout in those languages
- */
-$wgOasisResponsiveDisabledInLangs = [];
-
-/**
- * @name $wgOasisResponsiveLimited
- * Enables the limited version of Oasis responsive layout
- * Null means disabled on all and enabled for languages defined in $wgOasisResponsiveLimitedInLangs
- */
-$wgOasisResponsiveLimited = null;
-
-/**
- * @name $wgOasisResponsiveLimitedInLangs
- * Enables the limited version of Oasis responsive layout on given languages
- */
-$wgOasisResponsiveLimitedInLangs = ['de'];
-
-/**
  * @name $wgDisableReportTime
  * Turns off <!-- Served by ... in ... ms --> HTML comment
  */
