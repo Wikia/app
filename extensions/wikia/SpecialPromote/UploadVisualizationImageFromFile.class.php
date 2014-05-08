@@ -55,13 +55,14 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	 * @return bool true because it's a hook
 	 */
 	static public function UploadVerification($destName, $tempPath, &$error) {
-		global $wgDevelEnvironment;
+		$promoImage = PromoImage::fromPathname($destName);
 
-		if( !PromoImage::fromPathname($destName)->isType(PromoImage::INVALID) && !$wgDevelEnvironment ) {
-			$error = wfMsg('promote-manual-upload-error');
-			return false;
+		if($promoImage->isValid() and ($promoImage->getCityId() == F::app()->wg->cityId)){
+				// you cannot upload to this wiki an image with database name the same as this wiki
+				$error = wfMsg('promote-manual-upload-error');
+				return false;
+		} else {
+			return true;
 		}
-
-		return true;
 	}
 }
