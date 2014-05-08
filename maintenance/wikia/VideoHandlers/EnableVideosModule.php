@@ -111,7 +111,7 @@ class EnableVideosModule extends Maintenance {
 				if ( $enabled ) {
 					echo "\tEnabled\n";
 				} else {
-					echo "\tDisabled";
+					echo "\tDisabled\n";
 				}
 			}
 		}
