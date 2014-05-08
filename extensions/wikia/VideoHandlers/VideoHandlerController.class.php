@@ -338,10 +338,13 @@ class VideoHandlerController extends WikiaController {
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 				if ( $file ) {
 					$videoInfo['videoId'] = $file->getVideoId();
+					$videoInfo['videoName'] = $file->getTitle()->getText();
+
 					$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
 					$videoInfo['thumbUrl'] = $thumb->getUrl();
 				} else {
 					$videoInfo['videoId'] = '';
+					$videoInfo['videoName'] = '';
 					$videoInfo['thumbUrl'] = '';
 				}
 			}
