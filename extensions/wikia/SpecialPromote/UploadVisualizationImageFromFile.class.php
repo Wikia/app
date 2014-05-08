@@ -58,9 +58,9 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 		$promoImage = PromoImage::fromPathname($destName);
 
 		if($promoImage->isValid() and ($promoImage->getCityId() == F::app()->wg->cityId)){
-				// you cannot upload to this wiki an image with database name the same as this wiki
-				$error = wfMsg('promote-manual-upload-error');
-				return false;
+			// you cannot upload to this wiki an image with database name the same as this wiki
+			$error = wfMsg('promote-manual-upload-error');
+			return false;
 		} else {
 			return true;
 		}
