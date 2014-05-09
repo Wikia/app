@@ -67,7 +67,8 @@ class Result extends ReadWrite {
 				$textAsString = $this->fixSnippeting( $textAsString, true );
 			}
 		}
-		return $this->removeFilePrefix($textAsString);
+		$textAsString = $this->removePrefix($this->findFilePrefix($this->getTitle(false)), $textAsString);
+		return $textAsString;
 	}
 
 	/**
@@ -83,7 +84,7 @@ class Result extends ReadWrite {
 	 * @see    WikiaSearchResultTest::testTitleFieldMethods
 	 * @return string
 	 */
-	public function getTitle() {
+	public function getTitle($removePrefix = true) {
 		$result = '';
 		if ( isset( $this->_fields[Utilities::field('title')] )  ) {
 			$result = $this->_fields[Utilities::field('title')];
@@ -91,28 +92,40 @@ class Result extends ReadWrite {
 			$result = $this->_fields['title'];
 		} else if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) { // for video wiki
 			$result = $this->_fields[Utilities::field('title', 'en')];
-		}	
-		return $this->removeFilePrefix($result);
+		}
+		if ($removePrefix) {
+			$result = $this->removePrefix($this->findFilePrefix($result), $result);
+		}
+		return $result;
+	}
+	
+	public function removePrefix($prefix, $value) {
+		if ($prefix && (strpos($value, $prefix) === 0)) {
+			return substr($value, strlen($prefix));
+		} else {
+			return $value;
+		}
 	}
 	
 	/**
-	 * Strip the file prefix from title or description if result is in File namespace.
+	 * Find the file prefix in title, if result is in File namespace.
 	 * @param  string $value
 	 * @return string
 	 */
 	
-	public function removeFilePrefix($value) {
+	public function findFilePrefix($title) {
 		if (!empty($this->_fields['ns']) &&
 				$this->_fields['ns'] == \NS_FILE &&
-				strpos($value, ":") !== FALSE) {
-			// strip 'File:' prefix (in content language) from title or description
+				strpos($title, ":") !== false) {
+			// strip 'File:' prefix (in content language) from title
 			// we could try to use Title class or wgContLang->getNsText here, but none of those actually
 			// will allow us to remove namespace prefix in a simple and working way, while
 			// a simple explode with limit will work
-			list ($prefix, $rest) = explode(":", $value, 2);
-			return $rest;
+			// if description is passed, remove found prefix if it's in description
+			list ($prefix, $rest) = explode(":", $title, 2);
+			return $prefix . ':';
 		}
-		return $value;
+		return '';
 	}
 
 	/**
