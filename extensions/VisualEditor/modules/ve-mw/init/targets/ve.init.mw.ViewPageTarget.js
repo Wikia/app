@@ -557,7 +557,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
 			), false
 		);
 	} else if ( editApi.captcha.type === 'recaptcha' ) {
-		// If using Recaptcha
+		// If using reCAPTCHA
 		this.recaptcha = true;
 		this.captcha = {};
 		this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
