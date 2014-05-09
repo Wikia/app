@@ -87,8 +87,8 @@ class UserProfilePageController extends WikiaController {
 
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 
-		$this->app->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' ) );
-		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/UserProfilePageV3/js/UserProfilePage.js' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
 
 		$sessionUser = $this->wg->User;
 
