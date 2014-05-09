@@ -67,7 +67,7 @@ class Result extends ReadWrite {
 				$textAsString = $this->fixSnippeting( $textAsString, true );
 			}
 		}
-		return $textAsString;
+		return $this->removeFilePrefix($textAsString);
 	}
 
 	/**
@@ -91,20 +91,28 @@ class Result extends ReadWrite {
 			$result = $this->_fields['title'];
 		} else if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) { // for video wiki
 			$result = $this->_fields[Utilities::field('title', 'en')];
-		}
-		
+		}	
+		return $this->removeFilePrefix($result);
+	}
+	
+	/**
+	 * Strip the file prefix from title or description if result is in File namespace.
+	 * @param  string $value
+	 * @return string
+	 */
+	
+	public function removeFilePrefix($value) {
 		if (!empty($this->_fields['ns']) &&
 				$this->_fields['ns'] == \NS_FILE &&
-				strpos($result, ":") !== FALSE) {
-			// strip 'File:' prefix (in content language) from title
+				strpos($value, ":") !== FALSE) {
+			// strip 'File:' prefix (in content language) from title or description
 			// we could try to use Title class or wgContLang->getNsText here, but none of those actually
 			// will allow us to remove namespace prefix in a simple and working way, while
 			// a simple explode with limit will work
-			list ($prefix, $rest) = explode(":", $result, 2);
-			$result = $rest;
+			list ($prefix, $rest) = explode(":", $value, 2);
+			return $rest;
 		}
-
-		return $result;
+		return $value;
 	}
 
 	/**
