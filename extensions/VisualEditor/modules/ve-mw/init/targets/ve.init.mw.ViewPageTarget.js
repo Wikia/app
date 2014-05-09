@@ -60,7 +60,6 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	);
 	this.originalDocumentTitle = document.title;
 	this.tabLayout = mw.config.get( 'wgVisualEditorConfig' ).tabLayout;
-	this.recaptcha = false;
 
 	/**
 	 * @property {jQuery.Promise|null}
@@ -538,35 +537,14 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * @param {Object} editApi
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
-	if ( editApi.captcha.url ) {
-		this.captcha = {
-			input: new OO.ui.TextInputWidget(),
-			id: editApi.captcha.id
-		};
-		this.showSaveError(
-			$( '<div>' ).append(
-				// msg: simplecaptcha-edit, fancycaptcha-edit, ..
-				$( '<p>' ).append(
-					$( '<strong>' ).text( mw.msg( 'captcha-label' ) ),
-					document.createTextNode( mw.msg( 'colon-separator' ) ),
-					$( $.parseHTML( mw.message( 'fancycaptcha-edit' ).parse() ) )
-						.filter( 'a' ).attr( 'target', '_blank' ).end()
-				),
-				$( '<img>' ).attr( 'src', editApi.captcha.url ),
-				this.captcha.input.$element
-			), false
-		);
-	} else if ( editApi.captcha.type === 'recaptcha' ) {
-		// If using reCAPTCHA
-		this.recaptcha = true;
-		this.captcha = {};
-		this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
-			editApi.captcha.key,
-			've-ui-mwSaveDialog-captcha',
-			{ theme: 'white'}
-		);
-		this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
-	}
+	this.captcha = {};
+	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
+		editApi.captcha.key,
+		've-ui-mwSaveDialog-captcha',
+		{ theme: 'white'}
+	);
+	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
+
 	this.events.trackSaveError( 'captcha' );
 };
 
@@ -823,7 +801,6 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function () {
 
 	// Reset any old captcha data
 	if ( this.captcha ) {
-		this.saveDialog.clearMessage( 'captcha' );
 		delete this.captcha;
 	}
 
@@ -895,7 +872,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 			}
 		} );
 	// Inject captcha params here if Recaptcha is used
-	if ( this.recaptcha ) {
+	if ( this.captcha ) {
 		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
 		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
 	}
@@ -903,7 +880,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
 		'wpCaptchaId': this.captcha && this.captcha.id,
-		'wpCaptchaWord': this.captcha && ( this.captcha.word || this.captcha.input.getValue() )
+		'wpCaptchaWord': this.captcha && this.captcha.word
 	} );
 	return fields;
 };
