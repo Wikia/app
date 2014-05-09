@@ -202,7 +202,7 @@ class AdEngine2Service
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting, $wgNoExternals,
+			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
 
@@ -260,7 +260,7 @@ class AdEngine2Service
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
 		];
 
-		if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
+		if (!empty($wgEnableKruxTargeting)) {
 			$cat = AdEngine2Service::getCachedCategory();
 			$variablesToExpose['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 		}
