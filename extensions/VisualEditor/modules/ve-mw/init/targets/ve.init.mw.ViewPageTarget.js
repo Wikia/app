@@ -871,7 +871,7 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 				fields[$this.prop( 'name' )] = $this.val();
 			}
 		} );
-	// Inject captcha params here if Recaptcha is used
+	// Inject captcha params here if reCAPTCHA is used
 	if ( this.captcha ) {
 		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
 		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
