@@ -86,7 +86,7 @@
 
 		if ( kruxSegments.length ) {
 			markedSegments = uniqueKruxSegmentsKeys.filter(function(n) {
-				return kruxSegments.indexOf(n) !== -1
+				return kruxSegments.indexOf(n) !== -1;
 			});
 			if (markedSegments.length) {
 				kruxSegment = uniqueKruxSegments[markedSegments[0]];
