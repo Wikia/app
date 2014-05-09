@@ -252,9 +252,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
-						//TODO: we should be able to pass const MIN and MAX values to the message
-						'too_small' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
-						'too_big' => 'wikia-interactive-maps-parser-tag-error-invalid-width'
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-width',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-width'
 					]
 				);
 				break;
@@ -266,9 +265,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height',
-						//TODO: we should be able to pass const MIN and MAX values to the message
-						'too_small' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
-						'too_big' => 'wikia-interactive-maps-parser-tag-error-invalid-width'
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-height',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-height'
 					]
 				);
 				break;
