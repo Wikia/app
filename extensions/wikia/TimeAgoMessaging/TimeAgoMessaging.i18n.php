@@ -420,6 +420,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  */
@@ -435,7 +436,7 @@ $messages['nl'] = array(
 	'timeago-hour-from-now' => 'over {{PLURAL:$1|een uur|$1 uur}}',
 	'timeago-minute-from-now' => 'over {{PLURAL:$1|een minuut|$1 minuten}}',
 	'timeago-month-from-now' => 'over {{PLURAL:$1|een maand|$1 maanden}}',
-	'timeago-second-from-now' => 'over een minuut',
+	'timeago-second-from-now' => 'een minuut van nu',
 );
 
 /** Occitan (occitan)

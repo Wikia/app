@@ -1879,9 +1879,26 @@ $messages['ja'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'swm-label-preview' => 'ಮುನ್ನೋಟ',
+	'swm-label-edit' => 'ಸಂಪಾದಿಸಿ',
+	'swm-label-remove' => 'ತೆಗೆ',
+	'swm-label-list' => 'ಪಟ್ಟಿ',
+	'swm-label-recipient-users' => 'ಬಳಕೆದಾರರು',
+	'swm-label-mode-wikis-all' => 'ಎಲ್ಲಾ ವಿಕಿಗಳು',
+	'swm-label-mode-wikis-wiki' => 'ಆಯ್ದ ವಿಕಿಗಳು',
+	'swm-label-mode-wikis-wiki-multi' => 'ವಿಕಿಗಳ ಪಟ್ಟಿ',
+	'swm-label-mode-users-active' => 'ಸಕ್ರಿಯ ಬಳಕೆದಾರರು',
+	'swm-label-mode-users-anon' => 'ಎಲ್ಲಾ ಅನಾಮಧೇಯ ಸದಸ್ಯರು',
+	'swm-label-content' => 'ಮಾಹಿತಿ',
+	'swm-label-comment' => 'ಟಿಪ್ಪಣಿ',
+	'swm-label-language' => 'ಭಾಷೆ',
 	'swm-list-table-lang' => 'ಭಾಷೆಗಳು',
+	'swm-yes' => 'ಹೌದು',
+	'swm-no' => 'ಇಲ್ಲ',
+	'swm-mode-users-editcount-more' => 'ಹೆಚ್ಚು',
 );
 
 /** Korean (한국어)

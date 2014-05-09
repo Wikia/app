@@ -132,7 +132,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = /usr/wikia/source/wiki/extensions/wikia /usr/wikia/source/wiki/includes /usr/wikia/source/wiki/languages /usr/wikia/source/wiki/maintenance/wikia /usr/wikia/source/wiki/skins
+INPUT                  = extensions/wikia includes languages maintenance/wikia skins
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.c \
                          *.cc \

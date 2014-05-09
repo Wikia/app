@@ -1980,9 +1980,35 @@ $messages['ja'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'rte-ck-bucket-insert' => 'ಸೇರ್ಪಡಿಸು',
+	'rte-ck-errorPopupTitle' => 'ದೋಷ!',
+	'rte-ck-hoverPreview-comment-title' => 'ಟಿಪ್ಪಣಿ',
+	'rte-ck-hoverPreview-delete' => 'ಅಳಿಸಿ',
+	'rte-ck-hoverPreview-edit' => 'ಸಂಪಾದಿಸಿ',
+	'rte-ck-image-photo' => 'ಭಾವಚಿತ್ರಗಳು',
+	'rte-ck-link-error-title' => 'ದೋಷ',
+	'rte-ck-link-external-tab' => 'ಬಾಹ್ಯ ಸಂಪರ್ಕ',
+	'rte-ck-link-internal-pageName' => 'ಪುಟದ ಹೆಸರು',
+	'rte-ck-link-internal-tab' => 'ಆಂತರಿಕ ಸಂಪರ್ಕ',
+	'rte-ck-link-status-external' => 'ಬಾಹ್ಯ ಸಂಪರ್ಕ',
+	'rte-ck-media-delete' => 'ತೆಗೆ',
+	'rte-ck-media-edit' => 'ಪರಿಷ್ಕರಿಸು',
+	'rte-ck-modeSwitch-toSource' => 'ಆಕರ',
+	'rte-ck-signature-label' => 'ಸಹಿ',
 	'rte-ck-templateDropDown-label' => 'ಟೆಂಪ್ಲೇಟು',
+	'rte-ck-templateEditor-dialog-insert' => 'ಸೇರ್ಪಡಿಸು',
+	'rte-ck-templateEditor-dialog-magicWords' => 'ಜಾದೂ ಶಬ್ದಗಳು',
+	'rte-ck-templateEditor-editor-parameters' => 'ಪರಿಮಿತಿಗಳು',
+	'rte-ck-templateEditor-editor-previewButton' => 'ಮುನ್ನೋಟ',
+	'rte-ck-templateEditor-editor-previewTitle' => 'ಮುನ್ನೋಟ',
+	'rte-ck-templateEditor-title' => 'ಸಿದ್ಧವಿನ್ಯಾಸ ಸಂಪಾದಕರು',
+	'rte-ck-format-tag_h2' => 'ತಲೆಬರಹ ೨',
+	'rte-ck-format-tag_h3' => 'ತಲೆಬರಹ ೩',
+	'rte-ck-format-tag_h4' => 'ತಲೆಬರಹ ೪',
+	'rte-ck-format-tag_h5' => 'ತಲೆಬರಹ ೫',
 );
 
 /** Korean (한국어)

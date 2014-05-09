@@ -607,6 +607,16 @@ $1
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lightbox-share-button-email' => 'ಇ-ಅಂಚೆ',
+	'lightbox-share-button-www' => 'ಹಂಚು',
+	'lightbox-share-email-page-label-address' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'lightbox-share-email-error-caption' => 'ದೋಷ',
+);
+
 /** Korean (한국어)
  * @author Cafeinlove
  */

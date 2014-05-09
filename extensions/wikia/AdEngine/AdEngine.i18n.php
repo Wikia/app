@@ -29,12 +29,16 @@ $messages['qqq'] = array(
 /** Arabic (العربية)
  * @author Claw eg
  * @author Kuwaity26
+ * @author Test Create account
  */
 $messages['ar'] = array(
 	'adengine-exitstitial-title-template' => 'أنت تغادر $1...',
-	'adengine-exitstitial-redirecting' => 'المتصفح الخاص بك سيقوم بتحويلك إلى الصفحة التي طلبتها في بضع ثوان.',
+	'adengine-exitstitial-redirecting' => 'المتصفح الخاص بك سيقوم بتحويلك إلى الصفحة التي طلبتها في بضع ثوانٍ.',
 	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
+	'adengine-ebay-title' => 'منتجات Ebay',
+	'adengine-ebay-empty' => 'لا يوجد منتجات متطابقة',
+	'adengine-ebay-bid' => 'شراء',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -122,6 +126,9 @@ $messages['de'] = array(
 	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
+	'adengine-ebay-title' => 'Ebay-Produkte',
+	'adengine-ebay-empty' => 'Keine passenden Produkte',
+	'adengine-ebay-bid' => 'Kaufen',
 );
 
 /** Greek (Ελληνικά)
@@ -257,6 +264,27 @@ $messages['id'] = array(
 	'adengine-exitstitial-button' => 'Lewati Iklan ini',
 );
 
+/** Italian (italiano)
+ * @author Ontsed
+ * @author PeppeAeco
+ */
+$messages['it'] = array(
+	'adengine-exitstitial-title-template' => 'Stai lasciando  $1 ...',
+	'adengine-exitstitial-redirecting' => 'Il browser ti reindirizzerà alla pagina richiesta in pochi secondi.',
+	'adengine-exitstitial-go-back' => 'Vuoi tornare indietro?',
+	'adengine-exitstitial-button' => 'Ignora questo annuncio',
+	'adengine-ebay-title' => 'Prodotti Ebay',
+	'adengine-ebay-empty' => 'Nessun prodotto corrispondente',
+	'adengine-ebay-bid' => 'Compra',
+);
+
+/** Japanese (日本語)
+ * @author Barrel0116
+ */
+$messages['ja'] = array(
+	'adengine-ebay-bid' => '買う',
+);
+
 /** Georgian (ქართული)
  * @author GeorgeBarnick
  */
@@ -268,12 +296,16 @@ $messages['ka'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'adengine-exitstitial-title-template' => 'ನೀವು $1 ಬಿಡುತ ಇದ್ದೀರಿ.',
 	'adengine-exitstitial-redirecting' => 'ನಿಮ್ಮ ಬ್ರೌಸರ್ ನೀವು ಕೇಳಿದ ಪುಟಕ್ಕೆ ನಿಮ್ಮನ ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲೇ ಕಲಿಸುತದೆ.',
 	'adengine-exitstitial-go-back' => 'ವಾಪುಸು ಹೋಗ ಬೇಕ?',
 	'adengine-exitstitial-button' => 'ಈ ಎಡನ್ನು ಜಿಗಿ ಬೇಕ?',
+	'adengine-ebay-title' => 'ಇಬೇ ಉತ್ಪನ್ನಗಳು',
+	'adengine-ebay-empty' => 'ಸಮನಾದ ಉತ್ಪನ್ನವಿಲ್ಲ',
+	'adengine-ebay-bid' => 'ಖರೀದಿಸು',
 );
 
 /** Korean (한국어)
@@ -299,12 +331,14 @@ $messages['lb'] = array(
 
 /** Lezghian (лезги)
  * @author Lezgia
+ * @author Migraghvi
  */
 $messages['lez'] = array(
 	'adengine-exitstitial-title-template' => 'Куь акъечlза', # Fuzzy
 	'adengine-exitstitial-redirecting' => 'Куь браузерди рукъурда тlaлабнай чъинал са кьве секудла',
-	'adengine-exitstitial-go-back' => 'Кlанзани хквез?',
-	'adengine-exitstitial-button' => 'Лугьунар ахъагъа',
+	'adengine-exitstitial-go-back' => 'Элкъвена хквез кӀанзавани?',
+	'adengine-exitstitial-button' => 'Реклама кими авун',
+	'adengine-ebay-title' => 'Ebay-дин продуктар',
 );
 
 /** لوری (لوری)
@@ -354,6 +388,9 @@ $messages['mk'] = array(
 	'adengine-exitstitial-redirecting' => 'Прелистувачот за некоја секунда ќе ве одведе на страницата што ја побаравте.',
 	'adengine-exitstitial-go-back' => 'Сакате да се вратите назад?',
 	'adengine-exitstitial-button' => 'Прескокни ја рекламава',
+	'adengine-ebay-title' => 'Производи од Ebay',
+	'adengine-ebay-empty' => 'Нема такви производи',
+	'adengine-ebay-bid' => 'Купи',
 );
 
 /** Malayalam (മലയാളം)
@@ -381,6 +418,9 @@ $messages['ms'] = array(
 	'adengine-exitstitial-redirecting' => 'Pelayar anda akan membawa anda ke halaman yang anda minta dalam beberapa saat.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
+	'adengine-ebay-title' => 'Produk eBay',
+	'adengine-ebay-empty' => 'Tiada produk sepadan',
+	'adengine-ebay-bid' => 'Beli',
 );
 
 /** Maltese (Malti)
@@ -506,6 +546,7 @@ $messages['sco'] = array(
 );
 
 /** Slovenian (slovenščina)
+ * @author Dbc334
  * @author Mitja i
  */
 $messages['sl'] = array(
@@ -513,6 +554,9 @@ $messages['sl'] = array(
 	'adengine-exitstitial-redirecting' => 'Kmalu boste preusmerjeni na zahtevano stran.',
 	'adengine-exitstitial-go-back' => 'Želite nazaj?',
 	'adengine-exitstitial-button' => 'Preskočite ta oglas',
+	'adengine-ebay-title' => 'Izdelki Ebay',
+	'adengine-ebay-empty' => 'Ni ujemajočih izdelkov',
+	'adengine-ebay-bid' => 'Kupi',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -527,12 +571,16 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'adengine-exitstitial-title-template' => 'Du lämnar $1…',
 	'adengine-exitstitial-redirecting' => 'Din webbläsare kommer att omdirigera dig till den sida du begärt inom några sekunder.',
 	'adengine-exitstitial-go-back' => 'Vill du gå tillbaka?',
 	'adengine-exitstitial-button' => 'Hoppa över denna annons',
+	'adengine-ebay-title' => 'Ebay-produkter',
+	'adengine-ebay-empty' => 'Inga överensstämmande produkter',
+	'adengine-ebay-bid' => 'Köp',
 );
 
 /** Silesian (ślůnski)
@@ -591,6 +639,13 @@ $messages['vi'] = array(
 $messages['war'] = array(
 	'adengine-exitstitial-title-template' => 'Naíwas ka na han $1...',
 	'adengine-exitstitial-go-back' => '¿Karúyag mo bumálik?',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'adengine-ebay-bid' => 'קויפן',
 );
 
 /** Chinese (中文)

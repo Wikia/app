@@ -753,6 +753,9 @@ $messages['mk'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Спроведи измени',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Помош со форматирање',
+	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Мора да сте најавени за да ставате слики и видеа.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'На ова вики можат да се додаваат само лиценцирани содржини од <a href="http://video.wikia.com" target="_blank">Викиината видеотека</a>. Појдете на <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> за да пребарате видеа.',
+	'wikia-visualeditor-notification-media-query-failed' => 'Нажалост, не можев да најдам поддржана слика или видео на таа URL-адреса.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Дозволата е одбиена',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Нажалост, ова видео не е достапно за преглед.',
 	'wikia-visualeditor-loading' => 'Го вчитувам ВизуеленУредник...',
@@ -873,15 +876,16 @@ $messages['nb'] = array(
 /** Dutch (Nederlands)
  * @author Arent
  * @author Siebrand
+ * @author Sjoerddebruin
  */
 $messages['nl'] = array(
-	'wikia-visualeditor-preference-enable' => 'Beta Visuele tekstbewerker inschakelen',
+	'wikia-visualeditor-preference-enable' => 'Beta van visuele tekstverwerker inschakelen',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media toevoegen',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Media toevoegen',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Naam',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licentie',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Item verwijderen',
-	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Nieuwe afbeeldingen toevoegen aan deze Wikia', # Fuzzy
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'Sleep afbeeldingen om te uploaden',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'Uploaden',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'Die afbeelding is te groot. $1 megabyte is de maximale grootte.',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'Alleen de volgende bestandstypen worden ondersteund: $1',
@@ -889,9 +893,9 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'Zoek naar iets of geef een URL op',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'Voorvertoning is binnenkort beschikbaar!',
 	'wikia-visualeditor-help-label' => 'Bekende problemen',
-	'wikia-visualeditor-help-link' => 'Help: Visuele tekstbewerker',
-	'wikia-visualeditor-beta-warning' => "Dit is Wikia's betaintegratie van de Visuele tekstbewerker.  Er zijn enkele ruwe kantjes, maar we hopen dat u het een enorme verbetering vindt!",
-	'wikia-visualeditor-wikitext-warning' => 'U gebruikt de betaversie van de Visuele tekstbewerker. U kunt in deze weergave geen wikitekst gebruiken. Selecteer "Brontekstmodus" in het menu "Meer" om wikitekst te gebruiken.',
+	'wikia-visualeditor-help-link' => 'Help:Visuele tekstverwerker',
+	'wikia-visualeditor-beta-warning' => "Dit is Wikia's betaintegratie van de visuele tekstverwerker.  Er zijn enkele ruwe kantjes, maar we hopen dat u het een enorme verbetering vindt!",
+	'wikia-visualeditor-wikitext-warning' => 'U gebruikt de betaversie van de visuele tekstverwerker. U kunt in deze weergave geen wikitekst gebruiken. Selecteer "Brontekstmodus" in het menu "Meer" om wikitekst te gebruiken.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Dit element kan helaas alleen in de klassieke tekstverwerker bewerkt worden.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Sjabloon',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Sjabloon',
