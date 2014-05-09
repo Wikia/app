@@ -10,7 +10,7 @@
 		current: {
 			type: '', // image or video
 			title: '', // currently displayed file name
-			carouselType: '', // articleMedia, relatedVideos, or latestPhotos
+			carouselType: '', // articleMedia or latestPhotos
 			index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
@@ -831,7 +831,6 @@
 		// order by priority position in carousel backfill
 		carouselTypes: [
 			'videosModule',
-			'relatedVideos',
 			'articleMedia',
 			'latestPhotos'
 		],
@@ -1218,58 +1217,6 @@
 
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			},
-			// Get related videos from DOM
-			relatedVideos: function (backfill) {
-				var cached = LightboxLoader.cache.relatedVideos,
-					thumbArr = [],
-					playButton = Lightbox.thumbPlayButton,
-					RVI = window.RelatedVideosIds,
-					i,
-					arrLength,
-					key,
-					title;
-
-				if (!window.RelatedVideosIds) {
-					return;
-				}
-
-				if (cached.length) {
-					thumbArr = cached;
-				} else {
-
-					for (i = 0, arrLength = RVI.length; i < arrLength; i++) {
-						key = RVI[i].key;
-						title = RVI[i].title;
-
-						if (!key) {
-							key = title.replace(/ /g, '_');
-						}
-
-						thumbArr.push({
-							thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
-							key: key,
-							title: title,
-							type: 'video',
-							playButtonSpan: playButton,
-							thumbLiClass: Lightbox.videoWrapperClass
-						});
-
-					}
-
-					// Fill relatedVideos cache
-					LightboxLoader.cache.relatedVideos = thumbArr;
-
-					// Count backfill items for progress bar
-					if (backfill) {
-						Lightbox.backfillCount += thumbArr.length;
-					}
-				}
-
-				// Add thumbs to current lightbox cache
-				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
-				Lightbox.addThumbsToCarousel(thumbArr, backfill);
-			},
 			// Get latest photos from DOM
 			latestPhotos: function (backfill) {
 				var cached = LightboxLoader.cache.latestPhotos,
@@ -1462,14 +1409,6 @@
 				trackingCarouselType = '';
 
 			switch (id) {
-				// Related Videos
-				case 'RelatedVideosRL':
-					clickSource = clickSource || VPS.RV;
-
-					carouselType = 'relatedVideos';
-					trackingCarouselType = 'related-videos';
-					break;
-
 				// Embeded in Article Comments
 				case 'WikiaArticleComments':
 					clickSource = clickSource || VPS.EMBED;

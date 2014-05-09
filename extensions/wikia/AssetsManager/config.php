@@ -1036,23 +1036,6 @@ $config['forum_mini_editor_js'] = array(
 	)
 );
 
-/** RelatedVideos **/
-$config['relatedvideos_js'] = array(
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
-	)
-);
-
-$config['relatedvideos_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
-	)
-);
-
 $config['VET_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
