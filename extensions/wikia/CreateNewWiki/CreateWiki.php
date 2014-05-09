@@ -299,7 +299,7 @@ class CreateWiki {
 		// before the tables are created on the slave, and the uploadImage function hits the slave
 		global $wgDevelEnvironment;
 		if (isset($wgDevelEnvironment)) {
-			sleep(10);
+			sleep(15);
 		}
 
 		/**
