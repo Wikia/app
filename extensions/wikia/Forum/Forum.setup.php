@@ -64,7 +64,7 @@ $wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
 
 // make sure that when an article is deleted, that if it has a comments_index
 // that record is properly marked as deleted
-$wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
+$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
 
 
 // forum discussion on article
