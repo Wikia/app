@@ -136,7 +136,7 @@ ve.ui.MWMediaEditDialog.static.pasteRules = ve.extendObject(
  */
 ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 	//var altTextFieldset, positionFieldset, borderField, positionField;
-	var positionFieldset;
+	var positionFieldset, positionField;
 	// Parent method
 	ve.ui.Dialog.prototype.initialize.call( this );
 
@@ -549,8 +549,8 @@ ve.ui.MWMediaEditDialog.prototype.setup = function ( data ) {
  * @inheritdoc
  */
 ve.ui.MWMediaEditDialog.prototype.teardown = function ( data ) {
-	var newDoc, doc, originalAlt, attr, transactionAttributes = {},
-		imageSizeType, imageType, imageAlignmentCheckbox,
+	var newDoc, doc, /* originalAlt, */ attr, transactionAttributes = {},
+		imageSizeType, /* imageType, */ imageAlignmentCheckbox,
 		imageAlignmentValue, originalDimensions,
 		surfaceModel = this.getFragment().getSurface();
 

@@ -740,10 +740,10 @@ ve.init.mw.ViewPageTarget.prototype.checkForWikitextWarning = function () {
 			$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
 				.filter( 'a' ).attr( 'target', '_blank ' ).end(),
 			{
-				'onClose': function() {
+				'onClose': function () {
 					ve.track( 'wikia', { 'action': ve.track.actions.CLOSE, 'label': 'modal-wikitext-warning' } );
 				},
-				'onCreate': function() {
+				'onCreate': function () {
 					ve.track( 'wikia', { 'action': ve.track.actions.OPEN, 'label': 'modal-wikitext-warning' } );
 				}
 			}

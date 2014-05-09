@@ -917,10 +917,9 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * A side-effect of calling this method is that it requests {this.modules} be loaded.
  *
  * @method
- * @param {string[]} [additionalModules=[]] Resource loader modules
  * @returns {boolean} Loading has been started
 */
-ve.init.mw.Target.prototype.load = function ( additionalModules ) {
+ve.init.mw.Target.prototype.load = function () {
 	var data, start, xhr, target = this;
 
 	// Prevent duplicate requests
