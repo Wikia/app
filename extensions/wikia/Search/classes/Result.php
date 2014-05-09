@@ -115,7 +115,7 @@ class Result extends ReadWrite {
 	 */
 	
 	public function findFilePrefix($title) {
-		if (!empty($this->_fields['ns']) &&	$this->_fields['ns'] == \NS_FILE &&	strpos($title, ":") !== false) {
+		if (!empty($this->_fields['ns']) && $this->_fields['ns'] == \NS_FILE && strpos($title, ":") !== false) {
 			/**
 			 * find 'File:' prefix (in content language) in title
 			 * we could try to use Title class or wgContLang->getNsText here, but none of those actually
