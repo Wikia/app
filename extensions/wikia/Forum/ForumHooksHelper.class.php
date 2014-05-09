@@ -493,4 +493,18 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	// FIXME: how do we test this? see extensions/wikia/Search/classes/Test/HooksTest.php
+	static public function onArticleDeleteComplete( &$page, &$user, $reason, $id) {
+		$title = $page->getTitle();
+		var_dump(get_class($title), $title->getNamespace());
+		if($title instanceof Title) {
+			$wallMessage = WallMessage::newFromTitle($title);
+			// FIXME: check to see if it isn't already removed, deleted, or archived?
+			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
+		}
+
+		return true;
+	}
+
 }

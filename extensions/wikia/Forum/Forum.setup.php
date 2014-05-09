@@ -62,6 +62,11 @@ $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissions
 $wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
 
+// make sure that when an article is deleted, that if it has a comments_index
+// that record is properly marked as deleted
+$wgHooks['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
+
+
 // forum discussion on article
 //It need to be first one !!!
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
