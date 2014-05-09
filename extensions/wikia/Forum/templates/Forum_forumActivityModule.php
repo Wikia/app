@@ -5,7 +5,7 @@
 		<li>
 			<?= AvatarService::renderAvatar($value['user']->getName(), 20); ?>
 			<em>
-				<a href="<?= $value['wall_message']->getMessagePageUrl(true); ?>" title="<?= $value['metatitle']; ?>"><?= $value['metatitle']; ?></a>
+				<a href="<?= $value['wall_message']->getMessagePageUrl(true); ?>" title="<?= htmlspecialchars( $value['metatitle'] ); ?>"><?= $value['metatitle']; ?></a>
 			</em>
 			<div class="edited-by">
 				<?php $user = '<a href="'.$value['user']->getUserPage()->getFullUrl().'">'.$value['display_username'].'</a>'; ?>
