@@ -4,14 +4,14 @@
 	"--eg-iframe": "../.docs/eg-iframe.html",
 	"--warnings": ["-no_doc"],
 	"--builtin-classes": true,
-	"--external": "HTMLDocument,Window",
+	"--external": "HTMLDocument,Window,Node",
 	"--output": "../docs",
 	"--": [
 		"./external.js",
-		"../modules/oojs",
-		"../modules/oojs-ui",
-		"../modules/unicodejs",
-		"../modules/ve",
+		"../lib/ve/.docs/external.js",
+		"../lib/ve/lib/oojs",
+		"../lib/ve/lib/oojs-ui",
+		"../lib/ve/modules",
 		"../modules/ve-mw"
 	]
 }

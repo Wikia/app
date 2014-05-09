@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VisualEditor Tests</title>
+
+		<!-- Load test framework -->
+		<link rel="stylesheet" href="../../../lib/jsdifflib/diffview.css">
+		<link rel="stylesheet" href="../../../lib/qunit/qunit.css">
+		<script src="../../../lib/jsdifflib/diffview.js"></script>
+		<script src="../../../lib/jsdifflib/difflib.js"></script>
+		<script src="../../../lib/qunit/qunit.js"></script>
+
+		<!-- No need for VisualEditor styles here -->
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture">test markup</div>
+
+		<!-- SCRIPTS -->
+
+		<!-- Load plugins for test framework -->
+		<script src="ve.qunit.js"></script>
+
+		<!-- Load test suites -->
+		<script src="ve.test.utils.js"></script>
+		<script src="ve.test.js"></script>
+		<script src="ve.Range.test.js"></script>
+		<script src="ve.Document.test.js"></script>
+		<script src="ve.Node.test.js"></script>
+		<script src="ve.BranchNode.test.js"></script>
+		<script src="ve.LeafNode.test.js"></script>
+		<script src="dm/ve.dm.example.js"></script>
+		<script src="dm/ve.dm.AnnotationSet.test.js"></script>
+		<script src="dm/ve.dm.NodeFactory.test.js"></script>
+		<script src="dm/ve.dm.Node.test.js"></script>
+		<script src="dm/ve.dm.Converter.test.js"></script>
+		<script src="dm/ve.dm.BranchNode.test.js"></script>
+		<script src="dm/ve.dm.LeafNode.test.js"></script>
+		<script src="dm/nodes/ve.dm.TextNode.test.js"></script>
+		<script src="dm/ve.dm.Document.test.js"></script>
+		<script src="dm/ve.dm.DocumentSynchronizer.test.js"></script>
+		<script src="dm/ve.dm.IndexValueStore.test.js"></script>
+		<script src="dm/ve.dm.InternalList.test.js"></script>
+		<script src="dm/ve.dm.LinearData.test.js"></script>
+		<script src="dm/ve.dm.Transaction.test.js"></script>
+		<script src="dm/ve.dm.TransactionProcessor.test.js"></script>
+		<script src="dm/ve.dm.Surface.test.js"></script>
+		<script src="dm/ve.dm.SurfaceFragment.test.js"></script>
+		<script src="dm/ve.dm.ModelRegistry.test.js"></script>
+		<script src="dm/ve.dm.MetaList.test.js"></script>
+		<script src="dm/ve.dm.Model.test.js"></script>
+		<script src="dm/lineardata/ve.dm.FlatLinearData.test.js"></script>
+		<script src="dm/lineardata/ve.dm.ElementLinearData.test.js"></script>
+		<script src="dm/lineardata/ve.dm.MetaLinearData.test.js"></script>
+		<script src="ce/ve.ce.test.js"></script>
+		<script src="ce/ve.ce.Document.test.js"></script>
+		<script src="ce/ve.ce.Surface.test.js"></script>
+		<script src="ce/ve.ce.NodeFactory.test.js"></script>
+		<script src="ce/ve.ce.Node.test.js"></script>
+		<script src="ce/ve.ce.BranchNode.test.js"></script>
+		<script src="ce/ve.ce.ContentBranchNode.test.js"></script>
+		<script src="ce/ve.ce.LeafNode.test.js"></script>
+		<script src="ce/nodes/ve.ce.TextNode.test.js"></script>
+		<script src="init/ve.init.Platform.test.js"></script>
+		<script src="ui/ve.ui.Trigger.test.js"></script>
+		<script src="ui/actions/ve.ui.FormatAction.test.js"></script>
+		<script src="ui/actions/ve.ui.IndentationAction.test.js"></script>
+		<script src="ui/actions/ve.ui.ListAction.test.js"></script>
+
+		<!-- IME tests -->
+		<script src="ce/ve.ce.TestRunner.js"></script>
+		<script src="ce/ve.ce.imetests.test.js"></script>
+		<script src="ce/imetests/backspace-chromium-ubuntu-none.js"></script>
+		<script src="ce/imetests/backspace-firefox-ubuntu-none.js"></script>
+		<script src="ce/imetests/backspace-ie-win-none.js"></script>
+		<script src="ce/imetests/input-chrome-win-chinese-traditional-handwriting.js"></script>
+		<script src="ce/imetests/input-chrome-win-greek.js"></script>
+		<script src="ce/imetests/input-chrome-win-welsh.js"></script>
+		<script src="ce/imetests/input-chromium-ubuntu-ibus-chinese-cantonese.js"></script>
+		<script src="ce/imetests/input-chromium-ubuntu-ibus-japanese-anthy--hiraganaonly.js"></script>
+		<script src="ce/imetests/input-chromium-ubuntu-ibus-korean-korean.js"></script>
+		<script src="ce/imetests/input-chromium-ubuntu-ibus-malayalam-swanalekha.js"></script>
+		<script src="ce/imetests/input-firefox-ubuntu-ibus-chinese-cantonese.js"></script>
+		<script src="ce/imetests/input-firefox-ubuntu-ibus-japanese-anthy--hiraganaonly.js"></script>
+		<script src="ce/imetests/input-firefox-ubuntu-ibus-korean-korean.js"></script>
+		<script src="ce/imetests/input-firefox-ubuntu-ibus-malayalam.swanalekha.js"></script>
+		<script src="ce/imetests/input-firefox-win-chinese-traditional-handwriting.js"></script>
+		<script src="ce/imetests/input-firefox-win-greek.js"></script>
+		<script src="ce/imetests/input-firefox-win-welsh.js"></script>
+		<script src="ce/imetests/input-ie-win-chinese-traditional-handwriting.js"></script>
+		<script src="ce/imetests/input-ie-win-greek.js"></script>
+		<script src="ce/imetests/input-ie-win-korean.js"></script>
+		<script src="ce/imetests/input-ie-win-welsh.js"></script>
+		<script src="ce/imetests/leftarrow-chromium-ubuntu-none.js"></script>
+		<script src="ce/imetests/leftarrow-firefox-ubuntu-none.js"></script>
+		<script src="ce/imetests/leftarrow-ie-win-none.js"></script>
+	</body>
+</html>

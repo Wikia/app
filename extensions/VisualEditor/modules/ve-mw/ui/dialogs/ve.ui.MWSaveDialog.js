@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWSaveDialog class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,57 +10,62 @@
 /**
  * Dialog for saving MediaWiki articles.
  *
+ * Note that most methods are not safe to call before the dialog has initialized, except where
+ * noted otherwise.
+ *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.WindowSet} windowSet Window set this dialog is part of
  * @param {Object} [config] Config options
  */
-ve.ui.MWSaveDialog = function VeUiMWSaveDialog( windowSet, config ) {
+ve.ui.MWSaveDialog = function VeUiMWSaveDialog( config ) {
 	// Configuration initialization
-	config = ve.extendObject( { 'small': true }, config );
+	config = ve.extendObject( { 'size': 'medium' }, config );
 
 	// Parent constructor
-	ve.ui.MWDialog.call( this, windowSet, config );
+	ve.ui.Dialog.call( this, config );
 
 	// Properties
 	this.sanityCheckVerified = false;
 	this.editSummaryByteLimit = 255;
 	this.restoring = false;
 	this.messages = {};
+	this.setupDeferred = $.Deferred();
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWSaveDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.MWSaveDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
 ve.ui.MWSaveDialog.static.name = 'mwSave';
 
-ve.ui.MWSaveDialog.static.titleMessage = 'visualeditor-savedialog-title-save';
+ve.ui.MWSaveDialog.static.title =
+	OO.ui.deferMsg( 'visualeditor-savedialog-title-save' );
+
+/* Events */
+
+/**
+ * @event save
+ * Emitted when the user clicks the save button
+ */
+
+/**
+ * @event review
+ * Emitted when the user clicks the review changes button
+ */
+
+/**
+ * @event resolve
+ * Emitted when the user clicks the resolve conflict button
+ */
 
 /* Methods */
 
-ve.ui.MWSaveDialog.prototype.onSaveButtonClick = function () {
-	this.emit( 'save' );
-};
-
-ve.ui.MWSaveDialog.prototype.onReviewButtonClick = function () {
-	this.emit( 'review' );
-};
-
-ve.ui.MWSaveDialog.prototype.onReviewGoodButtonClick = function () {
-	this.swapPanel( 'save' );
-};
-
-ve.ui.MWSaveDialog.prototype.onResolveConflictButtonClick = function () {
-	this.emit( 'resolve' );
-};
-
 /**
- * Set review content and show review panel
+ * Set review content and show review panel.
  *
  * @param {string} content Diff HTML or wikitext
  */
@@ -69,6 +74,13 @@ ve.ui.MWSaveDialog.prototype.setDiffAndReview = function ( content ) {
 	this.reviewGoodButton.setDisabled( false );
 	this.$loadingIcon.hide();
 	this.swapPanel( 'review' );
+};
+
+/**
+ * Clear the diff displayed in the review panel, if any.
+ */
+ve.ui.MWSaveDialog.prototype.clearDiff = function () {
+	this.$reviewViewer.empty();
 };
 
 /**
@@ -88,7 +100,9 @@ ve.ui.MWSaveDialog.prototype.setSanityCheck = function ( verified ) {
  * @throws {Error} Unknown saveDialog panel
  */
 ve.ui.MWSaveDialog.prototype.swapPanel = function ( panel ) {
-	var dialog = this,
+	var currentEditSummaryWikitext,
+		size = 'medium',
+		dialog = this,
 		panelObj = dialog[panel + 'Panel'];
 
 	if ( ve.indexOf( panel, [ 'save', 'review', 'conflict', 'nochanges' ] ) === -1 ) {
@@ -104,7 +118,7 @@ ve.ui.MWSaveDialog.prototype.swapPanel = function ( panel ) {
 	// Reset save button if we disabled it for e.g. unrecoverable spam error
 	this.saveButton.setDisabled( false );
 
-	switch( panel ) {
+	switch ( panel ) {
 		case 'save':
 			if ( !this.sanityCheckVerified ) {
 				this.showMessage( 'dirtywarning', mw.msg( 'visualeditor-savedialog-warning-dirty' ) );
@@ -124,14 +138,37 @@ ve.ui.MWSaveDialog.prototype.swapPanel = function ( panel ) {
 			} );
 			break;
 		case 'conflict':
-			this.saveButton.$element.hide();
+			this.saveButton.setDisabled( true ).$element.hide();
 			this.reviewButton.$element.hide();
 			this.reviewGoodButton.$element.hide();
 			this.resolveConflictButton.$element.show();
 			break;
 		case 'review':
-			// Make room for the diff by transitioning to a non-small window
-			this.$frame.removeClass( 've-ui-window-frame-small' );
+			size = 'large';
+			currentEditSummaryWikitext = this.editSummaryInput.getValue();
+			if ( this.lastEditSummaryWikitext === undefined || this.lastEditSummaryWikitext !== currentEditSummaryWikitext ) {
+				if ( this.editSummaryXhr ) {
+					this.editSummaryXhr.abort();
+				}
+				this.lastEditSummaryWikitext = currentEditSummaryWikitext;
+				this.$reviewEditSummary.empty()
+					.parent().show().addClass( 'mw-ajax-loader' );
+				this.editSummaryXhr = new mw.Api().post( {
+					action: 'parse',
+					summary: currentEditSummaryWikitext,
+					page: mw.config.get( 'wgRelevantPageName' ) /* Wikia change for VE-1054. Page param required in our version of Api.php */
+				} ).done( function ( result ) {
+					if ( result.parse.parsedsummary['*'] === '' ) {
+						dialog.$reviewEditSummary.parent().hide();
+					} else {
+						dialog.$reviewEditSummary.html( ve.msg( 'parentheses', result.parse.parsedsummary['*'] ) );
+					}
+				} ).fail( function () {
+					dialog.$reviewEditSummary.parent().hide();
+				} ).always( function () {
+					dialog.$reviewEditSummary.parent().removeClass( 'mw-ajax-loader' );
+				} );
+			}
 			/* falls through */
 		case 'nochanges':
 			this.saveButton.$element.hide();
@@ -141,13 +178,10 @@ ve.ui.MWSaveDialog.prototype.swapPanel = function ( panel ) {
 			break;
 	}
 
-	if ( panel !== 'review' ) {
-		// Restore original "small" size
-		this.$frame.addClass( 've-ui-window-frame-small' );
-	}
-
+	// Set the size
+	this.setSize( size );
 	// Show the target panel
-	this.panel.showItem( panelObj );
+	this.panel.setItem( panelObj );
 
 	mw.hook( 've.saveDialog.stateChanged' ).fire();
 
@@ -224,27 +258,37 @@ ve.ui.MWSaveDialog.prototype.reset = function () {
 };
 
 /**
- * Initialize MediaWiki page specific checkboxes
+ * Initialize MediaWiki page specific checkboxes.
  *
- * @param {string} checkboxes Multiline HTML
+ * This method is safe to call even when the dialog hasn't been initialized yet.
+ *
+ * @param {jQuery} $checkboxes jQuery collection of checkboxes
  */
-ve.ui.MWSaveDialog.prototype.setupCheckboxes = function ( checkboxes ) {
-	this.$saveOptions.find( '.ve-ui-mwSaveDialog-checkboxes' )
-		.html( checkboxes )
-		.find( 'a' )
-			.attr( 'target', '_blank' )
-			.end()
-		.find( '#wpMinoredit' )
-			.prop( 'checked', mw.user.options.get( 'minordefault' ) )
-			.prop( 'tabIndex', 0 )
-			.end()
-		.find( '#wpWatchthis' )
-			.prop( 'checked',
-				mw.user.options.get( 'watchdefault' ) ||
-				( mw.user.options.get( 'watchcreations' ) && !this.pageExists ) ||
-				mw.config.get( 'wgVisualEditor' ).isPageWatched
-			).prop( 'tabIndex', 0 );
-	// TODO: Need to set all checkboxes provided by api tabindex to 0 for proper accessibility
+ve.ui.MWSaveDialog.prototype.setupCheckboxes = function ( $checkboxes ) {
+	var saveDialog = this;
+	this.setupDeferred.done( function () {
+		saveDialog.$saveOptions.find( '.ve-ui-mwSaveDialog-checkboxes' )
+			.html( $checkboxes )
+			.find( 'a' )
+				.attr( 'target', '_blank' )
+				.end()
+			.find( 'input' )
+				.prop( 'tabIndex', 0 );
+	} );
+};
+
+/**
+ * Change the edit summary prefilled in the save dialog.
+ *
+ * This method is safe to call even when the dialog hasn't been initialized yet.
+ *
+ * @param {string} summary Edit summary to prefill
+ */
+ve.ui.MWSaveDialog.prototype.setEditSummary = function ( summary ) {
+	var saveDialog = this;
+	this.setupDeferred.done( function () {
+		saveDialog.editSummaryInput.setValue( summary );
+	} );
 };
 
 /**
@@ -253,7 +297,7 @@ ve.ui.MWSaveDialog.prototype.setupCheckboxes = function ( checkboxes ) {
 ve.ui.MWSaveDialog.prototype.initialize = function () {
 	var saveDialog = this;
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.savePanel = new OO.ui.PanelLayout( { '$': this.$, 'scrollable': true } );
@@ -267,26 +311,22 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	);
 	this.editSummaryInput.$element.addClass( 've-ui-mwSaveDialog-summary' );
 	this.editSummaryInput.$input
-		.placeholder()
 		.byteLimit( this.editSummaryByteLimit )
 		.prop( 'tabIndex', 0 );
-	this.editSummaryInput.on( 'change', ve.bind( function () {
-		var $textarea = this.editSummaryInput.$input,
-			$editSummaryCount = this.savePanel.$element.find( '.ve-ui-mwSaveDialog-editSummary-count' );
+	this.editSummaryInput.on( 'change', function () {
 		// TODO: This looks a bit weird, there is no unit in the UI, just numbers
 		// Users likely assume characters but then it seems to count down quicker
 		// than expected. Facing users with the word "byte" is bad? (bug 40035)
-		setTimeout( function () {
-			$editSummaryCount.text(
-				saveDialog.editSummaryByteLimit - $.byteLength( $textarea.val() )
-			);
-		} );
-	}, this ) );
+		saveDialog.savePanel.$element.find( '.ve-ui-mwSaveDialog-editSummary-count' ).text(
+			saveDialog.editSummaryByteLimit - $.byteLength( saveDialog.editSummaryInput.getValue() )
+		);
+	} );
 
 	this.$saveOptions = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-options' ).append(
 		this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-checkboxes' ),
-		new OO.ui.InputLabelWidget( { '$': this.$, 'label': 'text' } ).$element
+		new OO.ui.LabelWidget( { '$': this.$, 'label': 'text' } ).$element
 			.addClass( 've-ui-mwSaveDialog-editSummary-count' ).text( this.editSummaryByteLimit )
+			.attr( 'title', ve.msg( 'visualeditor-editsummary-bytes-remaining' ) )
 	);
 	this.$saveMessages = this.$( '<div>' );
 	this.$saveActions = this.$( '<div>' ).append(
@@ -309,8 +349,17 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	// Review panel
 	this.reviewPanel = new OO.ui.PanelLayout( { '$': this.$, 'scrollable': true } );
 	this.$reviewViewer = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-viewer' );
+	this.$reviewEditSummary = this.$( '<span>' ).addClass( 've-ui-mwSaveDialog-summaryPreview' ).addClass( 'comment' );
 	this.$reviewActions = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-actions' );
-	this.reviewPanel.$element.append( this.$reviewViewer, this.$reviewActions );
+	this.reviewPanel.$element.append(
+		$( '<br>' ),
+		$( '<div>' )
+			.addClass( 'mw-summary-preview' )
+			.text( ve.msg( 'summary-preview' ) )
+			.append( $( '<br>' ), this.$reviewEditSummary ),
+		this.$reviewViewer,
+		this.$reviewActions
+	);
 
 	// Conflict panel
 	this.conflictPanel = new OO.ui.PanelLayout( { '$': this.$, 'scrollable': true } );
@@ -327,40 +376,42 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	this.nochangesPanel.$element.append( this.$noChanges );
 
 	// Panel stack
-	this.panel = new OO.ui.StackPanelLayout( { '$': this.$, 'scrollable': true } );
+	this.panel = new OO.ui.StackLayout( { '$': this.$, 'scrollable': true } );
 	this.panel.$element.addClass( 've-ui-mwSaveDialog-panel' );
 	this.panel.addItems( [this.savePanel, this.reviewPanel, this.conflictPanel, this.nochangesPanel], 0 );
 
 	/* Buttons */
 
 	// Save button for "save" panel
-	this.saveButton = new OO.ui.PushButtonWidget( {
+	this.saveButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg(
 			 // visualeditor-savedialog-label-restore, visualeditor-savedialog-label-save
 			'wikia-visualeditor-savedialog-label-' + ( this.restoring ? 'restore' : 'save' )
 		),
 		'flags': ['constructive']
 	} );
-	this.saveButton.connect( this, { 'click': 'onSaveButtonClick' } );
+	if ( ve.msg( 'accesskey-save' ) !== '-' && ve.msg( 'accesskey-save' ) !== '' ) {
+		this.saveButton.$button.attr( 'accesskey', ve.msg( 'accesskey-save' ) );
+	}
+	this.saveButton.connect( this, { 'click': [ 'emit', 'save' ] } );
 
 	// Review button for "save" panel
-	this.reviewButton = new OO.ui.PushButtonWidget( {
+	this.reviewButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg( 'visualeditor-savedialog-label-review' )
 	} );
-	this.reviewButton.connect( this, { 'click': 'onReviewButtonClick' } );
+	this.reviewButton.connect( this, { 'click': [ 'emit', 'review' ] } );
 
 	// Review good button on "review" panel
-	this.reviewGoodButton = new OO.ui.PushButtonWidget( {
-		'label': ve.msg( 'visualeditor-savedialog-label-review-good' ),
-		'flags': ['constructive']
+	this.reviewGoodButton = new OO.ui.ButtonWidget( {
+		'label': ve.msg( 'visualeditor-savedialog-label-review-good' )
 	} );
-	this.reviewGoodButton.connect( this, { 'click': 'onReviewGoodButtonClick' } );
+	this.reviewGoodButton.connect( this, { 'click': [ 'swapPanel', 'save' ] } );
 	// Resolve conflict
-	this.resolveConflictButton = new OO.ui.PushButtonWidget( {
+	this.resolveConflictButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg( 'visualeditor-savedialog-label-resolve-conflict' ),
 		'flags': ['constructive']
 	} );
-	this.resolveConflictButton.connect( this, { 'click': 'onResolveConflictButtonClick' } );
+	this.resolveConflictButton.connect( this, { 'click': [ 'emit', 'resolve' ] } );
 
 	this.$loadingIcon = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-working' );
 
@@ -373,6 +424,15 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 		this.resolveConflictButton.$element,
 		this.$loadingIcon
 	);
+
+	this.setupDeferred.resolve();
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWSaveDialog.prototype.setup = function () {
+	this.swapPanel( 'save' );
 };
 
 /* Registration */

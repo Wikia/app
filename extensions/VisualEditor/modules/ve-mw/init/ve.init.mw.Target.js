@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization Target class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -20,8 +20,7 @@
  *  revision id here. Defaults to loading the latest version (see #load).
  */
 ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) {
-	var i, len, prefName, prefValue, conf = mw.config.get( 'wgVisualEditorConfig' ),
-		extraModules = [ 'experimental'/* , 'language'*//*, 'mwalienextension'*/, 'mwmath'/*, 'mwhiero'*/ ];
+	var conf = mw.config.get( 'wgVisualEditorConfig' );
 
 	// Parent constructor
 	ve.init.Target.call( this, $container );
@@ -33,53 +32,37 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.wikitext = null;
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
-	this.apiUrl = mw.util.wikiScript( 'api' );
 	this.submitUrl = ( new mw.Uri( mw.util.getUrl( this.pageName ) ) )
 		.extend( { 'action': 'submit' } );
+	this.events = new ve.init.mw.TargetEvents( this );
 
 	this.modules = [
-			'ext.visualEditor.core',
+			'ext.visualEditor.mwcore',
+			'ext.visualEditor.mwlink',
 			'ext.visualEditor.data'
 		]
 		.concat(
 			document.createElementNS && document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' ).createSVGRect ?
-				['ext.visualEditor.viewPageTarget.icons-vector', 'ext.visualEditor.icons-vector'] :
-				['ext.visualEditor.viewPageTarget.icons-raster', 'ext.visualEditor.icons-raster']
+				this.constructor.static.iconModuleStyles.vector :
+				this.constructor.static.iconModuleStyles.raster
 		)
 		.concat( conf.pluginModules || [] );
-	for ( i = 0, len = extraModules.length; i < len; i++ ) {
-		prefName = 'visualeditor-enable-' + extraModules[i];
-		prefValue = mw.config.get( 'wgUserName' ) === null ?
-			conf.defaultUserOptions[prefName] :
-			mw.user.options.get( prefName, conf.defaultUserOptions[prefName] );
-		if ( prefValue && prefValue !== '0' ) {
-			this.modules.push( 'ext.visualEditor.' + extraModules[i] );
-		}
-	}
 
 	this.pluginCallbacks = [];
 	this.modulesReady = $.Deferred();
-	this.loading = false;
-	this.saving = false;
-	this.serializing = false;
-	this.submitting = false;
-	this.baseTimeStamp = null;
-	this.startTimeStamp = null;
-	this.doc = null;
-	this.editNotices = null;
-	this.checkboxes = null;
-	this.remoteNotices = [];
-	this.localNoticeMessages = [];
+	this.preparedCacheKeyPromise = null;
+	this.clearState();
 	this.isMobileDevice = (
 		'ontouchstart' in window ||
 			( window.DocumentTouch && document instanceof window.DocumentTouch )
 	);
 };
 
-/**
- * @event load
- * @param {HTMLDocument} dom
- */
+/* Inheritance */
+
+OO.inheritClass( ve.init.mw.Target, ve.init.Target );
+
+/* Events */
 
 /**
  * @event editConflict
@@ -87,7 +70,9 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 
 /**
  * @event save
- * @param {string} html
+ * @param {string} html Rendered page HTML from server
+ * @param {string} categoriesHtml Rendered categories HTML from server
+ * @param {number} [newid] New revision id, undefined if unchanged
  */
 
 /**
@@ -97,6 +82,59 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 
 /**
  * @event noChanges
+ */
+
+/**
+ * @event saveAsyncBegin
+ * Fired when we're waiting for network
+ */
+
+/**
+ * @event saveAsyncComplete
+ * Fired when we're no longer waiting for network
+ */
+
+/**
+ * @event saveErrorEmpty
+ * Fired when save API returns no data object
+ */
+
+/**
+ * @event saveErrorSpamBlacklist
+ * Fired when save is considered spam or blacklisted
+ * @param {Object} editApi
+ */
+
+/**
+ * @event saveErrorAbuseFilter
+ * Fired when AbuseFilter throws warnings
+ * @param {Object} editApi
+ */
+
+/**
+ * @event saveErrorBadToken
+ * Fired on save if we have to fetch a new edit token
+ *  this is mainly for analytical purposes.
+ */
+
+/**
+ * @event saveErrorNewUser
+ * Fired when user is logged in as a new user
+ * @param {boolean|undefined} isAnon Is newly logged in user anonymous. If
+ *  undefined, user is logged in
+ */
+
+/**
+ * @event saveErrorCaptcha
+ * Fired when saveError indicates captcha field is required
+ * @param {Object} editApi
+ */
+
+/**
+ * @event saveErrorUnknown
+ * Fired for any other type of save error
+ * @param {Object} editApi
+ * @param {Object|null} data API response data
  */
 
 /**
@@ -127,11 +165,173 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
  * @param {Mixed|null} error HTTP status text
  */
 
-/* Inheritance */
+/**
+ * @event serializeComplete
+ * Fired when serialization is complete
+ */
 
-OO.inheritClass( ve.init.mw.Target, ve.init.Target );
+/**
+ * @event sanityCheckComplete
+ */
+
+/* Static Properties */
+
+ve.init.mw.Target.static.citationToolsLimit = 5;
+
+ve.init.mw.Target.static.toolbarGroups = [
+	// History
+	{ 'include': [ 'undo', 'redo' ] },
+	// Format
+	{
+		'type': 'menu',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+		'include': [ { 'group': 'format' } ],
+		'promote': [ 'paragraph' ],
+		'demote': [ 'preformatted', 'heading1' ]
+	},
+	// Style
+	{
+		'type': 'list',
+		'icon': 'text-style',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		'include': [ { 'group': 'textStyle' }, 'clear' ],
+		'promote': [ 'bold', 'italic' ],
+		'demote': [ 'strikethrough', 'code', 'underline', 'clear' ]
+	},
+	// Link
+	{ 'include': [ 'link' ] },
+	// Cite
+	{
+		'type': 'list',
+		'label': 'Cite',
+		'indicator': 'down',
+		'include': [ { 'group': 'cite' } ]
+	},
+	// Structure
+	{
+		'type': 'bar',
+		'include': [ 'number', 'bullet', 'outdent', 'indent' ]
+	},
+	// Insert
+	{
+		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		'indicator': 'down',
+		'include': '*',
+		'promote': [ 'reference', 'mediaInsert' ],
+		'demote': [ 'language', 'specialcharacter' ]
+	}
+];
+
+ve.init.mw.Target.static.pasteRules = {
+	'external': {
+		'blacklist': [
+			// Annotations
+			'link', 'textStyle/span', 'textStyle/underline',
+			// Nodes
+			'image', 'div', 'alienInline', 'alienBlock'
+		],
+		'removeHtmlAttributes': true
+	},
+	'all': null
+};
+
+/**
+ * Defines modules needed to style icons.
+ *
+ * @static
+ * @inheritable
+ * @property {Object} iconModuleStyles
+ * @property {string[]} iconModuleStyles.vector Modules that should be loaded when SVG supported
+ * @property {string[]} iconModuleStyles.raster Modules that should be loaded when SVG is not supported
+ */
+ve.init.mw.Target.static.iconModuleStyles = {
+	'vector': ['ext.visualEditor.viewPageTarget.icons-vector', 'ext.visualEditor.icons-vector'],
+	'raster': ['ext.visualEditor.viewPageTarget.icons-raster', 'ext.visualEditor.icons-raster']
+};
+
+/**
+ * Name of target class. Used by TargetEvents to identify which target we are tracking.
+ *
+ * @static
+ * @property {string}
+ * @inheritable
+ */
+ve.init.mw.Target.static.name = 'mwTarget';
 
 /* Static Methods */
+
+/**
+ * Send an AJAX request to the MediaWiki API.
+ *
+ * This method has special behavior for certain options. If the request type is POST, then
+ * contentType will default to multipart/form-data. If the content type is multipart/form-data,
+ * then the necessary emulation will be performed to make this content type actually work.
+ *
+ * @param {Object} data Query string parameters (for GET requests) or POST data (for POST requests)
+ * @param {Object} [settings] Additional AJAX settings, or overrides of default settings
+ * @returns {jqXHR} Return value of $.ajax()
+ */
+ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
+	var key, formData;
+	data = ve.extendObject( { 'format': 'json' }, data );
+	settings = ve.extendObject( {
+		'url': mw.util.wikiScript( 'api' ),
+		'dataType': 'json',
+		'type': 'GET',
+		// Wait up to 100 seconds
+		'timeout': 100000,
+	}, settings );
+
+	// If multipart/form-data has been requested and emulation is possible, emulate it
+	if (
+		settings.type === 'POST' && window.FormData && (
+			settings.contentType === undefined ||
+			settings.contentType === 'multipart/form-data'
+		)
+	) {
+		formData = new FormData();
+		for ( key in data ) {
+			formData.append( key, data[key] );
+		}
+		settings.data = formData;
+		// Prevent jQuery from mangling our FormData object
+		settings.processData = false;
+		// Prevent jQuery from overriding the Content-Type header
+		settings.contentType = false;
+	} else {
+		settings.data = data;
+		if ( settings.contentType === 'multipart/form-data' ) {
+			// We were asked to emulate but can't, so drop the Content-Type header, otherwise
+			// it'll be wrong and the server will fail to decode the POST body
+			delete settings.contentType;
+		}
+	}
+
+	return $.ajax( settings );
+};
+
+/**
+ * Take a target document with a possibly relative base URL, and modify it to be absolute.
+ * The base URL of the target document is resolved using the base URL of the source document.
+ * @param {HTMLDocument} targetDoc Document whose base URL should be resolved
+ * @param {HTMLDocument} sourceDoc Document whose base URL should be used for resolution
+ */
+ve.init.mw.Target.static.fixBase = function ( targetDoc, sourceDoc ) {
+	var $base;
+	if ( !targetDoc.baseURI ) {
+		$base = $( 'base', targetDoc );
+		if ( $base.length ) {
+			// Modify the existing <base> tag
+			$base.attr( 'href', ve.resolveUrl( $base.attr( 'href' ), sourceDoc ) );
+		} else {
+			// No <base> tag, add one
+			$base = $( '<base>', targetDoc ).attr( 'href', sourceDoc.baseURI );
+			$( 'head', sourceDoc ).append( $base );
+		}
+	}
+};
 
 /**
  * Handle the RL modules for VE and registered plugin modules being loaded.
@@ -148,8 +348,11 @@ ve.init.mw.Target.onModulesReady = function () {
 			promises.push( callbackResult );
 		}
 	}
+	this.generateCitationFeatures();
 	// Dereference the callbacks
 	this.pluginCallbacks = [];
+	// Add the platform promise to the list
+	promises.push( ve.init.platform.getInitializedPromise() );
 	// Create a master promise tracking all the promises we got, and wait for it
 	// to be resolved
 	$.when.apply( $, promises ).done( this.modulesReady.resolve ).fail( this.modulesReady.reject );
@@ -159,8 +362,8 @@ ve.init.mw.Target.onModulesReady = function () {
  * Handle response to a successful load request.
  *
  * This method is called within the context of a target instance. If successful the DOM from the
- * server will be parsed, stored in {this.doc} and then {ve.init.mw.Target.onReady} will be called once
- * the modules are ready.
+ * server will be parsed, stored in {this.doc} and then {this.onReady} will be called once modules
+ * are ready.
  *
  * @static
  * @method
@@ -188,24 +391,43 @@ ve.init.mw.Target.onLoad = function ( response ) {
 		this.originalHtml = data.content;
 		this.doc = ve.createDocumentFromHtml( this.originalHtml );
 
+		// Parsoid outputs a protocol-relative <base> tag, so absolutize it
+		this.constructor.static.fixBase( this.doc, document );
+
 		this.remoteNotices = ve.getObjectValues( data.notices );
-		this.checkboxes = data.checkboxes;
+		this.$checkboxes = $( ve.getObjectValues( data.checkboxes ).join( '' ) );
+		// Populate checkboxes with default values for minor and watch
+		this.$checkboxes
+			.filter( '#wpMinoredit' )
+				.prop( 'checked', mw.user.options.get( 'minordefault' ) )
+			.end()
+			.filter( '#wpWatchthis' )
+				.prop( 'checked',
+					mw.user.options.get( 'watchdefault' ) ||
+					( mw.user.options.get( 'watchcreations' ) && !this.pageExists ) ||
+					mw.config.get( 'wgVisualEditor' ).isPageWatched
+				);
 
 		this.baseTimeStamp = data.basetimestamp;
 		this.startTimeStamp = data.starttimestamp;
 		this.revid = data.oldid;
+
+		// Populate link cache
+		if ( data.links ) {
+			ve.init.platform.linkCache.set( data.links );
+		}
+
 		// Everything worked, the page was loaded, continue as soon as the modules are loaded
-		this.modulesReady.done( ve.bind( ve.init.mw.Target.onReady, this ) );
+		this.modulesReady.done( ve.bind( this.onReady, this ) );
 	}
 };
 
 /**
  * Handle the edit notices being ready for rendering.
  *
- * @static
  * @method
  */
-ve.init.mw.Target.onNoticesReady = function () {
+ve.init.mw.Target.prototype.onNoticesReady = function () {
 	var i, len, noticeHtmls, tmp, el;
 
 	// Since we're going to parse them, we might as well save these nodes
@@ -234,6 +456,9 @@ ve.init.mw.Target.onNoticesReady = function () {
 
 	for ( i = 0, len = noticeHtmls.length; i < len; i++ ) {
 		el = $( '<div>' )
+			// Public class for usage by third parties to change styling of
+			// edit notices within VisualEditor (bug 43013).
+			.addClass( 'mw-ve-editNotice' )
 			.html( noticeHtmls[i] )
 			.get( 0 );
 
@@ -249,18 +474,18 @@ ve.init.mw.Target.onNoticesReady = function () {
 /**
  * Handle both DOM and modules being loaded and ready.
  *
- * This method is called within the context of a target instance.
- *
- * @static
  * @method
- * @fires load
+ * @fires surfaceReady
  */
-ve.init.mw.Target.onReady = function () {
+ve.init.mw.Target.prototype.onReady = function () {
 	// We need to wait until onReady as local notices may require special messages
-	ve.init.mw.Target.onNoticesReady.call( this );
-
+	this.onNoticesReady();
 	this.loading = false;
-	this.emit( 'load', this.doc );
+	this.edited = false;
+	this.setUpSurface( this.doc, ve.bind( function () {
+		this.startSanityCheck();
+		this.emit( 'surfaceReady' );
+	}, this ) );
 };
 
 /**
@@ -296,44 +521,151 @@ ve.init.mw.Target.onSave = function ( response ) {
 	this.saving = false;
 	var data = response.visualeditoredit;
 	if ( !data && !response.error ) {
-		ve.init.mw.Target.onSaveError.call( this, null, 'Invalid response from server', response );
+		this.onSaveError( null, 'Invalid response from server', response );
 	} else if ( response.error ) {
 		if ( response.error.code === 'editconflict' ) {
 			this.emit( 'editConflict' );
 		} else {
-			ve.init.mw.Target.onSaveError.call( this, null, 'Save failure', response );
+			this.onSaveError( null, 'Save failure', response );
 		}
 	} else if ( data.result !== 'success' ) {
 		// Note, this could be any of db failure, hookabort, badtoken or even a captcha
-		ve.init.mw.Target.onSaveError.call( this, null, 'Save failure', response );
+		this.onSaveError( null, 'Save failure', response );
 	} else if ( typeof data.content !== 'string' ) {
-		ve.init.mw.Target.onSaveError.call(
-			this,
-			null,
-			'Invalid HTML content in response from server',
-			response
-		);
+		this.onSaveError( null, 'Invalid HTML content in response from server', response );
 	} else {
-		this.emit( 'save', data.content, data.newrevid );
+		this.emit( 'save', data.content, data.categorieshtml, data.newrevid );
 	}
 };
 
 /**
  * Handle an unsuccessful save request.
  *
- * @static
  * @method
- * @this ve.init.mw.Target
  * @param {Object} jqXHR
  * @param {string} status Text status message
  * @param {Object|null} data API response data
- * @fires saveError
+ * @fires saveAsyncBegin
+ * @fires saveAsyncComplete
+ * @fires saveErrorEmpty
+ * @fires saveErrorSpamBlacklist
+ * @fires saveErrorAbuseFilter
+ * @fires saveErrorBadToken
+ * @fires saveErrorNewUser
+ * @fires saveErrorCaptcha
+ * @fires saveErrorUnknown
  */
-ve.init.mw.Target.onSaveError = function ( jqXHR, status, data ) {
+ve.init.mw.Target.prototype.onSaveError = function ( jqXHR, status, data ) {
+	var api, editApi,
+		viewPage = this;
 	this.saving = false;
-	this.emit( 'saveError', jqXHR, status, data );
-};
+	this.emit( 'saveAsyncComplete' );
 
+	// Handle empty response
+	if ( !data ) {
+		this.emit( 'saveErrorEmpty' );
+		return;
+	}
+	editApi = data && data.visualeditoredit && data.visualeditoredit.edit;
+
+	// Handle spam blacklist error (either from core or from Extension:SpamBlacklist)
+	if ( editApi && editApi.spamblacklist ) {
+		this.emit( 'saveErrorSpamBlacklist', editApi );
+		return;
+	}
+
+	// Handle warnings/errors from Extension:AbuseFilter
+	// TODO: Move this to a plugin
+	if ( editApi && editApi.info && editApi.info.indexOf( 'Hit AbuseFilter:' ) === 0 && editApi.warning ) {
+		this.emit( 'saveErrorAbuseFilter', editApi );
+		return;
+	}
+
+	// Handle token errors
+	if ( data.error && data.error.code === 'badtoken' ) {
+		api = new mw.Api();
+		this.emit( 'saveAsyncBegin' );
+		api.get( {
+			// action=query&meta=userinfo and action=tokens&type=edit can't be combined
+			// but action=query&meta=userinfo and action=query&prop=info can, however
+			// that means we have to give it titles and deal with page ids.
+			'action': 'query',
+			'meta': 'userinfo',
+			'prop': 'info',
+			// Try to send the normalised form so that it is less likely we get extra data like
+			// data.normalised back that we don't need.
+			'titles': new mw.Title( viewPage.pageName ).toText(),
+			'indexpageids': '',
+			'intoken': 'edit'
+		} )
+			.always( function () {
+				viewPage.emit( 'saveErrorBadToken' );
+				viewPage.emit( 'saveAsyncComplete' );
+			} )
+			.done( function ( data ) {
+				var userMsg,
+					userInfo = data.query && data.query.userinfo,
+					pageInfo = data.query && data.query.pages && data.query.pageids &&
+						data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
+					editToken = pageInfo && pageInfo.edittoken,
+					isAnon = mw.user.isAnon();
+
+				if ( userInfo && editToken ) {
+					viewPage.editToken = editToken;
+
+					if (
+						( isAnon && userInfo.anon !== undefined ) ||
+							// Comparing id instead of name to pretect against possible
+							// normalisation and against case where the user got renamed.
+							mw.config.get( 'wgUserId' ) === userInfo.id
+					) {
+						// New session is the same user still
+						viewPage.saveDocument();
+					} else {
+						// The now current session is a different user
+						if ( isAnon ) {
+							// New session is an anonymous user
+							mw.config.set( {
+								// wgUserId is unset for anonymous users, not set to null
+								'wgUserId': undefined,
+								// wgUserName is explicitly set to null for anonymous users,
+								// functions like mw.user.isAnon rely on this.
+								'wgUserName': null
+							} );
+						} else {
+							// New session is a different user
+							mw.config.set( { 'wgUserId': userInfo.id, 'wgUserName': userInfo.name } );
+							userMsg = 'visualeditor-savedialog-identify-user---' + userInfo.name;
+							mw.messages.set(
+								userMsg,
+								mw.messages.get( 'visualeditor-savedialog-identify-user' )
+									.replace( /\$1/g, userInfo.name )
+							);
+						}
+						viewPage.emit( 'saveErrorNewUser', isAnon );
+					}
+
+				}
+			} );
+		return;
+	}
+
+	// Handle captcha
+	// Captcha "errors" usually aren't errors. We simply don't know about them ahead of time,
+	// so we save once, then (if required) we get an error with a captcha back and try again after
+	// the user solved the captcha.
+	// TODO: ConfirmEdit API is horrible, there is no reliable way to know whether it is a "math",
+	// "question" or "fancy" type of captcha. They all expose differently named properties in the
+	// API for different things in the UI. At this point we only support the FancyCaptha which we
+	// very intuitively detect by the presence of a "url" property.
+	if ( editApi && editApi.captcha && editApi.captcha.url ) {
+		this.emit( 'saveErrorCaptcha', editApi );
+		return;
+	}
+
+	// Handle (other) unknown and/or unrecoverable errors
+	this.emit( 'saveErrorUnknown', editApi, data );
+};
 
 /**
  * Handle a successful show changes request.
@@ -347,6 +679,7 @@ ve.init.mw.Target.onSaveError = function ( jqXHR, status, data ) {
  */
 ve.init.mw.Target.onShowChanges = function ( response ) {
 	var data = response.visualeditor;
+	this.diffing = false;
 	if ( !data && !response.error ) {
 		ve.init.mw.Target.onShowChangesError.call( this, null, 'Invalid response from server', null );
 	} else if ( response.error ) {
@@ -367,7 +700,7 @@ ve.init.mw.Target.onShowChanges = function ( response ) {
 };
 
 /**
- * Handle errors during saveChanges action.
+ * Handle errors during showChanges action.
  *
  * @static
  * @method
@@ -378,7 +711,7 @@ ve.init.mw.Target.onShowChanges = function ( response ) {
  * @fires showChangesError
  */
 ve.init.mw.Target.onShowChangesError = function ( jqXHR, status, error ) {
-	this.saving = false;
+	this.diffing = false;
 	this.emit( 'showChangesError', jqXHR, status, error );
 };
 
@@ -391,6 +724,7 @@ ve.init.mw.Target.onShowChangesError = function ( jqXHR, status, error ) {
  * @method
  * @param {Object} data API response data
  * @param {string} status Text status message
+ * @fires serializeComplete
  */
 ve.init.mw.Target.onSerialize = function ( response ) {
 	this.serializing = false;
@@ -410,6 +744,7 @@ ve.init.mw.Target.onSerialize = function ( response ) {
 	} else {
 		if ( typeof this.serializeCallback === 'function' ) {
 			this.serializeCallback( data.content );
+			this.emit( 'serializeComplete' );
 			delete this.serializeCallback;
 		}
 	}
@@ -433,6 +768,91 @@ ve.init.mw.Target.onSerializeError = function ( jqXHR, status, error ) {
 };
 
 /* Methods */
+
+/**
+ * Add reference insertion tools from on-wiki data.
+ *
+ * By adding a definition in JSON to MediaWiki:Visualeditor-cite-tool-definition, the cite menu can
+ * be populated with tools that create refrences containing a specific templates. The content of the
+ * definition should be an array containing a series of objects, one for each tool. Each object must
+ * contain a `name`, `icon` and `template` property. An optional `title` property can also be used
+ * to define the tool title in plain text. The `name` property is a unique identifier for the tool,
+ * and also provides a fallback title for the tool by being transformed into a message key. The name
+ * is prefixed with `visualeditor-cite-tool-name-`, and messages can be defined on Wiki. Some common
+ * messages are pre-defined for tool names such as `web`, `book`, `news` and `journal`.
+ *
+ * Example:
+ * [ { "name": "web", "icon": "cite-web", "template": "Cite web" }, ... ]
+ *
+ */
+ve.init.mw.Target.prototype.generateCitationFeatures = function () {
+	var i, len, item, name, data, tool, tools, dialog,
+		limit = this.constructor.static.citationToolsLimit;
+
+	if ( !ve.ui.MWCitationDialog ) {
+		// Citation module isn't loaded, so skip this
+		return;
+	}
+
+	/*jshint loopfunc:true */
+
+	try {
+		// Must use mw.message to avoid JSON being parsed as Wikitext
+		tools = JSON.parse( mw.message( 'visualeditor-cite-tool-definition.json' ).plain() );
+	} catch ( e ) { }
+
+	if ( ve.isArray( tools ) ) {
+		for ( i = 0, len = Math.min( limit, tools.length ); i < len; i++ ) {
+			item = tools[i];
+			data = { 'template': item.template };
+			// Generate transclusion tool
+			name = 'cite-transclusion-' + item.name;
+			tool = function GeneratedMWTransclusionDialogTool( toolbar, config ) {
+				ve.ui.MWTransclusionDialogTool.call( this, toolbar, config );
+			};
+			OO.inheritClass( tool, ve.ui.MWTransclusionDialogTool );
+			tool.static.group = 'cite-transclusion';
+			tool.static.name = name;
+			tool.static.icon = item.icon;
+			tool.static.title = item.title;
+			tool.static.commandName = name;
+			tool.static.template = item.template;
+			tool.static.autoAddToCatchall = false;
+			tool.static.autoAddToGroup = true;
+			ve.ui.toolFactory.register( tool );
+			ve.ui.commandRegistry.register(
+				new ve.ui.Command( name, 'dialog', 'open', 'transclusion', data )
+			);
+			// Generate citation tool
+			name = 'cite-' + item.name;
+			tool = function GeneratedMWCitationDialogTool( toolbar, config ) {
+				ve.ui.MWCitationDialogTool.call( this, toolbar, config );
+			};
+			OO.inheritClass( tool, ve.ui.MWCitationDialogTool );
+			tool.static.group = 'cite';
+			tool.static.name = name;
+			tool.static.icon = item.icon;
+			tool.static.title = item.title;
+			tool.static.commandName = name;
+			tool.static.template = item.template;
+			tool.static.autoAddToCatchall = false;
+			tool.static.autoAddToGroup = true;
+			ve.ui.toolFactory.register( tool );
+			ve.ui.commandRegistry.register(
+				new ve.ui.Command( name, 'dialog', 'open', name, data )
+			);
+			// Generate dialog
+			dialog = function GeneratedMWCitationDialog( config ) {
+				ve.ui.MWCitationDialog.call( this, config );
+			};
+			OO.inheritClass( dialog, ve.ui.MWCitationDialog );
+			dialog.static.name = name;
+			dialog.static.icon = item.icon;
+			dialog.static.title = item.title;
+			ve.ui.dialogFactory.register( dialog );
+		}
+	}
+};
 
 /**
  * Add a plugin module or callback.
@@ -500,11 +920,13 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * @returns {boolean} Loading has been started
 */
 ve.init.mw.Target.prototype.load = function () {
-	var data, start;
+	var data, start, xhr, target = this;
+
 	// Prevent duplicate requests
 	if ( this.loading ) {
 		return false;
 	}
+	this.events.timings.activationStart = ve.now();
 	// Start loading the module immediately
 	mw.loader.using(
 		this.modules,
@@ -514,8 +936,7 @@ ve.init.mw.Target.prototype.load = function () {
 	data = {
 		'action': 'visualeditor',
 		'paction': 'parse',
-		'page': this.pageName,
-		'format': 'json'
+		'page': this.pageName
 	};
 
 	// Only request the API to explicitly load the currently visible revision if we're restoring
@@ -529,17 +950,9 @@ ve.init.mw.Target.prototype.load = function () {
 	// Load DOM
 	start = ve.now();
 
-	this.loading = $.ajax( {
-		'url': this.apiUrl,
-		'data': data,
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false'
-	} )
-		.then( function ( data, status, jqxhr ) {
-			ve.track( 'performance.system.domLoad', {
+	xhr = this.constructor.static.apiRequest( data );
+	this.loading = xhr.then( function ( data, status, jqxhr ) {
+			target.events.track( 'performance.system.domLoad', {
 				'bytes': $.byteLength( jqxhr.responseText ),
 				'duration': ve.now() - start,
 				'cacheHit': /hit/i.test( jqxhr.getResponseHeader( 'X-Cache' ) ),
@@ -548,9 +961,172 @@ ve.init.mw.Target.prototype.load = function () {
 			return jqxhr;
 		} )
 		.done( ve.bind( ve.init.mw.Target.onLoad, this ) )
-		.fail( ve.bind( ve.init.mw.Target.onLoadError, this ) );
+		.fail( ve.bind( ve.init.mw.Target.onLoadError, this ) )
+		.promise( { 'abort': xhr.abort } );
 
 	return true;
+};
+
+/**
+ * Clear the state of this target, preparing it to be reactivated later.
+ */
+ve.init.mw.Target.prototype.clearState = function () {
+	this.clearPreparedCacheKey();
+	this.loading = false;
+	this.saving = false;
+	this.diffing = false;
+	this.serializing = false;
+	this.submitting = false;
+	this.baseTimeStamp = null;
+	this.startTimeStamp = null;
+	this.doc = null;
+	this.originalHtml = null;
+	this.editNotices = null;
+	this.$checkboxes = null;
+	this.remoteNotices = [];
+	this.localNoticeMessages = [];
+	this.sanityCheckFinished = false;
+	this.sanityCheckVerified = false;
+};
+
+/**
+ * Serialize the current document and store the result in the serialization cache on the server.
+ *
+ * This function returns a promise that is resolved once serialization is complete, with the
+ * cache key passed as the first parameter.
+ *
+ * If there's already a request pending for the same (reference-identical) HTMLDocument, this
+ * function will not initiate a new request but will return the promise for the pending request.
+ * If a request for the same document has already been completed, this function will keep returning
+ * the same promise (which will already have been resolved) until clearPreparedCacheKey() is called.
+ *
+ * @param {HTMLDocument} doc Document to serialize
+ * @returns {jQuery.Promise} Abortable promise, resolved with the cache key.
+ */
+ve.init.mw.Target.prototype.prepareCacheKey = function ( doc ) {
+	var xhr, html, start = ve.now(), deferred = $.Deferred(), target = this;
+
+	if ( this.preparedCacheKeyPromise && this.preparedCacheKeyPromise.doc === doc ) {
+		return this.preparedCacheKeyPromise;
+	}
+	this.clearPreparedCacheKey();
+
+	html = this.getHtml( doc );
+	xhr = this.constructor.static.apiRequest( {
+		'action': 'visualeditor',
+		'paction': 'serializeforcache',
+		'html': html,
+		'page': this.pageName,
+		'oldid': this.revid
+	}, { 'type': 'POST' } )
+		.done( function ( response ) {
+			var trackData = { 'duration': ve.now() - start };
+			if ( response.visualeditor && typeof response.visualeditor.cachekey === 'string' ) {
+				target.events.track( 'performance.system.serializeforcache', trackData );
+				deferred.resolve( response.visualeditor.cachekey );
+			} else {
+				target.events.track( 'performance.system.serializeforcache.nocachekey', trackData );
+				deferred.reject();
+			}
+		} )
+		.fail( function () {
+			target.events.track( 'performance.system.serializeforcache.fail', { 'duration': ve.now() - start } );
+			deferred.reject();
+		} );
+
+	this.preparedCacheKeyPromise = deferred.promise( {
+		'abort': xhr.abort,
+		'html': html,
+		'doc': doc
+	} );
+	return this.preparedCacheKeyPromise;
+};
+
+/**
+ * Get the prepared wikitext, if any. Same as prepareWikitext() but does not initiate a request
+ * if one isn't already pending or finished. Instead, it returns a rejected promise in that case.
+ *
+ * @param {HTMLDocument} doc Document to serialize
+ * @returns {jQuery.Promise} Abortable promise, resolved with the cache key.
+ */
+ve.init.mw.Target.prototype.getPreparedCacheKey = function ( doc ) {
+	var deferred;
+	if ( this.preparedCacheKeyPromise && this.preparedCacheKeyPromise.doc === doc ) {
+		return this.preparedCacheKeyPromise;
+	}
+	deferred = $.Deferred();
+	deferred.reject();
+	return deferred.promise();
+};
+
+/**
+ * Clear the promise for the prepared wikitext cache key, and abort it if it's still in progress.
+ */
+ve.init.mw.Target.prototype.clearPreparedCacheKey = function () {
+	if ( this.preparedCacheKeyPromise ) {
+		this.preparedCacheKeyPromise.abort();
+		this.preparedCacheKeyPromise = null;
+	}
+};
+
+/**
+ * Try submitting an API request with a cache key for prepared wikitext, falling back to submitting
+ * HTML directly if there is no cache key present or pending, or if the request for the cache key
+ * fails, or if using the cache key fails with a badcachekey error.
+ *
+ * @param {HTMLDocument} doc Document to submit
+ * @param {Object} options POST parameters to send. Do not include 'html', 'cachekey' or 'format'.
+ * @param {string} [eventName] If set, log an event when the request completes successfully. The
+ *  full event name used will be 'performance.system.{eventName}.withCacheKey' or .withoutCacheKey
+ *  depending on whether or not a cache key was used.
+ * @returns {jQuery.Promise}
+ */
+ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, eventName ) {
+	var data, preparedCacheKey = this.getPreparedCacheKey( doc ), target = this;
+	data = ve.extendObject( {}, options, { 'format': 'json' } );
+
+	function ajaxRequest( cachekey ) {
+		var start = ve.now();
+		if ( typeof cachekey === 'string' ) {
+			data.cachekey = cachekey;
+		} else {
+			// Getting a cache key failed, fall back to sending the HTML
+			data.html = preparedCacheKey && preparedCacheKey.html || target.getHtml( doc );
+			// If using the cache key fails, we'll come back here with cachekey still set
+			delete data.cachekey;
+		}
+		return target.constructor.static.apiRequest( data, { 'type': 'POST' } )
+			.then( function ( response, status, jqxhr ) {
+				var fullEventName, eventData = {
+					'bytes': $.byteLength( jqxhr.responseText ),
+					'duration': ve.now() - start,
+					'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+				};
+				if ( response.error && response.error.code === 'badcachekey' ) {
+					// Log the failure if eventName was set
+					if ( eventName ) {
+						fullEventName = 'performance.system.' + eventName + '.badCacheKey';
+						target.events.track( fullEventName, eventData );
+					}
+					// This cache key is evidently bad, clear it
+					target.clearPreparedCacheKey();
+					// Try again without a cache key
+					return ajaxRequest( null );
+				}
+
+				// Log data about the request if eventName was set
+				if ( eventName ) {
+					fullEventName = 'performance.system.' + eventName +
+						( typeof cachekey === 'string' ? '.withCacheKey' : '.withoutCacheKey' );
+					target.events.track( fullEventName, eventData );
+				}
+				return jqxhr;
+			} );
+	}
+
+	// If we successfully get prepared wikitext, then invoke ajaxRequest() with the cache key,
+	// otherwise invoke it without.
+	return preparedCacheKey.then( ajaxRequest, ajaxRequest );
 };
 
 /**
@@ -569,19 +1145,17 @@ ve.init.mw.Target.prototype.load = function () {
  * @returns {boolean} Saving has been started
 */
 ve.init.mw.Target.prototype.save = function ( doc, options ) {
-	var data, start;
+	var data;
 	// Prevent duplicate requests
 	if ( this.saving ) {
 		return false;
 	}
 
-	data = $.extend( {}, options, {
-		'format': 'json',
+	data = ve.extendObject( {}, options, {
 		'action': 'visualeditoredit',
 		'page': this.pageName,
 		'basetimestamp': this.baseTimeStamp,
 		'starttimestamp': this.startTimeStamp,
-		'html': this.getHtml( doc ),
 		'token': this.editToken
 	} );
 	if ( this.wikitext !== null ) {
@@ -589,87 +1163,57 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 	} else {
 		data.oldid = this.revid;
 	}
-	// Save DOM
-	start = ve.now();
-
-	this.saving = $.ajax( {
-		'url': this.apiUrl,
-		'data': data,
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000
-	} )
-		.then( function ( data, status, jqxhr ) {
-			ve.track( 'performance.system.domSave', {
-				'bytes': $.byteLength( jqxhr.responseText ),
-				'duration': ve.now() - start,
-				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
-			} );
-			return jqxhr;
-		} )
+	this.saving = this.tryWithPreparedCacheKey( doc, data, 'save' )
 		.done( ve.bind( ve.init.mw.Target.onSave, this ) )
-		.fail( ve.bind( ve.init.mw.Target.onSaveError, this ) );
+		.fail( ve.bind( this.onSaveError, this ) );
 
 	return true;
 };
 
 /**
- * Post DOM data to the Parsoid API to retreive wikitext diff.
+ * Post DOM data to the Parsoid API to retrieve wikitext diff.
  *
  * @method
  * @param {HTMLDocument} doc Document to compare against (via wikitext)
+ * @returns {boolean} Diffing has been started
 */
 ve.init.mw.Target.prototype.showChanges = function ( doc ) {
-	var start = ve.now(),
-		data = {
-			'format': 'json',
-			'action': 'visualeditor',
-			'paction': 'diff',
-			'page': this.pageName,
-			'html': this.getHtml( doc )
-		};
+	var data;
+	if ( this.diffing ) {
+		return false;
+	}
+
+	data = {
+		'action': 'visualeditor',
+		'paction': 'diff',
+		'page': this.pageName,
+	};
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
 	} else {
 		data.oldid = this.revid;
 	}
-	$.ajax( {
-		'url': this.apiUrl,
-		'data': data,
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000
-	} )
-		.then( function ( data, status, jqxhr ) {
-			ve.track( 'performance.system.domDiff', {
-				'bytes': $.byteLength( jqxhr.responseText ),
-				'duration': ve.now() - start,
-				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
-			} );
-			return jqxhr;
-		} )
+	this.diffing = this.tryWithPreparedCacheKey( doc, data, 'diff' )
 		.done( ve.bind( ve.init.mw.Target.onShowChanges, this ) )
 		.fail( ve.bind( ve.init.mw.Target.onShowChangesError, this ) );
+
+	return true;
 };
 
 /**
- * Post DOM data to the Parsoid API.
+ * Post wikitext to MediaWiki.
  *
  * This method performs a synchronous action and will take the user to a new page when complete.
  *
- *     target.submit( wikitext, { 'summary': 'test', 'minor': true, 'watch': false } );
+ *     target.submit( wikitext, { 'wpSummary': 'test', 'wpMinorEdit': 1, 'wpSave': 1 } );
  *
  * @method
  * @param {string} wikitext Wikitext to submit
- * @param {Object} options Saving options
- *  - {string} summary Edit summary
- *  - {boolean} minor Edit is a minor edit
- *  - {boolean} watch Watch the page
+ * @param {Object} fields Other form fields to add (e.g. wpSummary, wpWatchthis, etc.). To actually
+ *  save the wikitext, add { 'wpSave': 1 }. To go to the diff view, add { 'wpDiff': 1 }.
  * @returns {boolean} Submitting has been started
 */
-ve.init.mw.Target.prototype.submit = function ( wikitext, options ) {
+ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
 	// Prevent duplicate requests
 	if ( this.submitting ) {
 		return false;
@@ -677,24 +1221,22 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, options ) {
 	// Save DOM
 	this.submitting = true;
 	var key,
-		$form = $( '<form method="post" enctype="multipart/form-data"></form>' ),
-		params = {
+		$form = $( '<form method="post" enctype="multipart/form-data" style="display: none;"></form>' ),
+		params = ve.extendObject( {
 			'format': 'text/x-wiki',
+			'model': 'wikitext',
 			'oldid': this.revid,
-			'wpStarttime': this.baseTimeStamp,
-			'wpEdittime': this.startTimeStamp,
+			'wpStarttime': this.startTimeStamp,
+			'wpEdittime': this.baseTimeStamp,
 			'wpTextbox1': wikitext,
-			'wpSummary': options.summary,
-			'wpWatchthis': Number( options.watch ),
-			'wpMinoredit': Number( options.minor ),
-			'wpEditToken': this.editToken,
-			'wpSave': 1
-		};
+			'wpEditToken': this.editToken
+		}, fields );
 	// Add params as hidden fields
 	for ( key in params ) {
-		$form.append( $( '<input type="hidden">' ).attr( { 'name': key, 'value': params[key] } ) );
+		$form.append( $( '<input>' ).attr( { 'type': 'hidden', 'name': key, 'value': params[key] } ) );
 	}
 	// Submit the form, mimicking a traditional edit
+	// Firefox requires the form to be attached
 	$form.attr( 'action', this.submitUrl ).appendTo( 'body' ).submit();
 	return true;
 };
@@ -714,46 +1256,27 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, options ) {
  * @method
  * @param {HTMLDocument} doc Document to serialize
  * @param {Function} callback Function to call when complete, accepts error and wikitext arguments
- * @returns {boolean} Serializing has beeen started
+ * @returns {boolean} Serializing has been started
 */
 ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
-	var data, start = ve.now();
+	var data;
 	// Prevent duplicate requests
 	if ( this.serializing ) {
 		return false;
 	}
-	// Load DOM
-	this.serializing = true;
 	this.serializeCallback = callback;
 	data = {
 		'action': 'visualeditor',
 		'paction': 'serialize',
-		'html': this.getHtml( doc ),
 		'page': this.pageName,
-		'format': 'json'
+		'oldid': this.revid
 	};
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
 	} else {
 		data.oldid = this.revid;
 	}
-	$.ajax( {
-		'url': this.apiUrl,
-		'data': data,
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false'
-	} )
-		.then( function ( data, status, jqxhr ) {
-			ve.track( 'performance.system.domSerialize', {
-				'bytes': $.byteLength( jqxhr.responseText ),
-				'duration': ve.now() - start,
-				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
-			} );
-			return jqxhr;
-		} )
+	this.serializing = this.tryWithPreparedCacheKey( doc, data, 'serialize' )
 		.done( ve.bind( ve.init.mw.Target.onSerialize, this ) )
 		.fail( ve.bind( ve.init.mw.Target.onSerializeError, this ) );
 	return true;
@@ -774,4 +1297,178 @@ ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
  */
 ve.init.mw.Target.prototype.getEditNotices = function () {
 	return this.editNotices;
+};
+
+// FIXME: split out view specific functionality, emit to subclass
+
+/**
+ * Create a surface.
+ *
+ * @method
+ * @param {ve.dm.Document} dmDoc Document model
+ * @returns {ve.ui.Surface}
+ */
+ve.init.mw.Target.prototype.createSurface = function ( dmDoc ) {
+	return new ve.ui.DesktopSurface( dmDoc, {}, this );
+};
+
+/**
+ * Switch to editing mode.
+ *
+ * @method
+ * @param {HTMLDocument} doc HTML DOM to edit
+ * @param {Function} [callback] Callback to call when done
+ */
+ve.init.mw.Target.prototype.setUpSurface = function ( doc, callback ) {
+	var target = this;
+	setTimeout( function () {
+		// Build model
+		var dmDoc = ve.dm.converter.getModelFromDom(
+			doc, null,
+			mw.config.get( 'wgVisualEditor' ).pageLanguageCode,
+			mw.config.get( 'wgVisualEditor' ).pageLanguageDir
+		);
+		setTimeout( function () {
+			// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
+			target.surface = target.createSurface( dmDoc );
+			target.surface.$element.addClass( 've-init-mw-viewPageTarget-surface' );
+			setTimeout( function () {
+				// Initialize surface
+				target.surface.getContext().hide();
+				target.$document = target.surface.$element.find( '.ve-ce-documentNode' );
+				target.$element.append( target.surface.$element );
+				target.setUpToolbar();
+
+				// Add appropriately mw-content-ltr or mw-content-rtl class
+				target.surface.view.$element.addClass(
+					'mw-content-' + mw.config.get( 'wgVisualEditor' ).pageLanguageDir
+				);
+				target.active = true;
+				// Now that the surface is attached to the document and ready,
+				// let it initialize itself
+				target.surface.initialize();
+				setTimeout( callback );
+			} );
+		} );
+	} );
+};
+
+/**
+ * Set up the toolbar and insert it into the DOM.
+ *
+ * The default implementation inserts it before the surface, but subclasses can override this.
+ */
+ve.init.mw.Target.prototype.setUpToolbar = function () {
+	this.toolbar = new ve.ui.TargetToolbar( this, this.surface, { 'shadow': true, 'actions': true } );
+	this.toolbar.setup( this.constructor.static.toolbarGroups );
+	this.surface.addCommands( this.constructor.static.surfaceCommands );
+	this.toolbar.$element.insertBefore( this.surface.$element );
+};
+
+/**
+ * Fire off the sanity check. Must be called before the surface is activated.
+ *
+ * To access the result, check whether #sanityCheckPromise has been resolved or rejected
+ * (it's asynchronous, so it may still be pending when you check).
+ *
+ * @method
+ * @fires sanityCheckComplete
+ */
+ve.init.mw.Target.prototype.startSanityCheck = function () {
+	// We have to get a copy of the data now, before we unlock the surface and let the user edit,
+	// but we can defer the actual conversion and comparison
+	var viewPage = this,
+		doc = viewPage.surface.getModel().getDocument(),
+		data = new ve.dm.FlatLinearData( doc.getStore().clone(), ve.copy( doc.getFullData() ) ),
+		oldDom = viewPage.doc,
+		d = $.Deferred();
+
+	// Reset
+	viewPage.sanityCheckFinished = false;
+	viewPage.sanityCheckVerified = false;
+
+	setTimeout( function () {
+		// We can't compare oldDom.body and newDom.body directly, because the attributes on the
+		// <body> were ignored in the conversion. So compare each child separately.
+		var i,
+			len = oldDom.body.childNodes.length,
+			newDoc = new ve.dm.Document( data, oldDom, undefined, doc.getInternalList(), doc.getInnerWhitespace(), doc.getLang(), doc.getDir() ),
+			newDom = ve.dm.converter.getDomFromModel( newDoc );
+
+		// Explicitly unlink our full copy of the original version of the document data
+		data = undefined;
+
+		if ( len !== newDom.body.childNodes.length ) {
+			// Different number of children, so they're definitely different
+			d.reject();
+			return;
+		}
+		for ( i = 0; i < len; i++ ) {
+			if ( !oldDom.body.childNodes[i].isEqualNode( newDom.body.childNodes[i] ) ) {
+				d.reject();
+				return;
+			}
+		}
+		d.resolve();
+	} );
+
+	viewPage.sanityCheckPromise = d.promise()
+		.done( function () {
+			// If we detect no roundtrip errors,
+			// don't emphasize "review changes" to the user.
+			viewPage.sanityCheckVerified = true;
+		})
+		.always( function () {
+			viewPage.sanityCheckFinished = true;
+			viewPage.emit( 'sanityCheckComplete' );
+		} );
+};
+
+/**
+ * Move the cursor in the editor to section specified by this.section.
+ * Do nothing if this.section is undefined.
+ *
+ * @method
+ */
+ve.init.mw.Target.prototype.restoreEditSection = function () {
+	if ( this.section !== undefined ) {
+		var offset, offsetNode, nextNode,
+			target = this,
+			surfaceView = this.surface.getView(),
+			surfaceModel = surfaceView.getModel(),
+			$section = this.$document.find( 'h1, h2, h3, h4, h5, h6' ).eq( this.section - 1 ),
+			headingNode = $section.data( 'view' ),
+			lastHeadingLevel = -1;
+
+		if ( $section.length ) {
+			this.initialEditSummary = '/* ' +
+				ve.graphemeSafeSubstring( $section.text(), 0, 244 ) + ' */ ';
+		}
+
+		if ( headingNode ) {
+			// Find next sibling which isn't a heading
+			offsetNode = headingNode;
+			while ( offsetNode instanceof ve.ce.HeadingNode && offsetNode.getModel().getAttribute( 'level' ) > lastHeadingLevel ) {
+				lastHeadingLevel = offsetNode.getModel().getAttribute( 'level' );
+				// Next sibling
+				nextNode = offsetNode.parent.children[ve.indexOf( offsetNode, offsetNode.parent.children ) + 1];
+				if ( !nextNode ) {
+					break;
+				}
+				offsetNode = nextNode;
+			}
+			offset = surfaceModel.getDocument().data.getNearestContentOffset(
+				offsetNode.getModel().getOffset(), 1
+			);
+			surfaceModel.setSelection( new ve.Range( offset ) );
+			// Scroll to heading:
+			// Wait for toolbar to animate in so we can account for its height
+			setTimeout( function () {
+				var $window = $( OO.ui.Element.getWindow( target.$element ) );
+				$window.scrollTop( headingNode.$element.offset().top - target.toolbar.$element.height() );
+			}, 200 );
+		}
+
+		this.section = undefined;
+	}
 };
