@@ -67,6 +67,35 @@
 		}
 	}
 
+	function getKruxSegment() {
+		var kruxSegment = 'not set',
+			uniqueKruxSegments = {
+				ocry7a4xg: 'Action Strategist 2014',
+				ocr1te1tc: 'Digital DNA 2014',
+				ocr6m2jd6: 'Inquisitive Minds 2014',
+				ocr05ve5z: 'Culture Caster 2014',
+				ocr88oqh9: 'Social Entertainers 2014'
+			},
+			uniqueKruxSegmentsKeys= Object.keys(uniqueKruxSegments),
+			markedSegments = [],
+			kruxSegments = [];
+
+		if (window.localStorage) {
+			kruxSegments = ( window.localStorage.kxsegs || '' ).split( ',' );
+		}
+
+		if ( kruxSegments.length ) {
+			markedSegments = uniqueKruxSegmentsKeys.filter(function(n) {
+				return kruxSegments.indexOf(n) !== -1
+			});
+			if (markedSegments.length) {
+				kruxSegment = uniqueKruxSegments[markedSegments[0]];
+			}
+		}
+
+		return kruxSegment;
+	}
+
 	// All domains that host content for wikia.
 	possible_domains = ['wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
 		'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
@@ -95,7 +124,8 @@
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
 		['_setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
-		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
+		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
+		['_setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
 	);
 
 	/**** Include A/B testing status ****/
@@ -168,7 +198,8 @@
 		['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
 		['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
 		['ads._setCustomVar', 14, 'HasAds', window.wgShowAds ? 'Yes' : 'No', 3],
-		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3]
+		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
+		['ads._setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
 	);
 
 	/**** Include A/B testing status ****/
