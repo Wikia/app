@@ -75,6 +75,7 @@
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion"; // on every article page
 @import "extensions/wikia/TOC/css/toc.scss";
+@import "extensions/wikia/VideosModule/styles/VideosModule";
 
 // CSS (needs leading slash and file extension)
 @import "/extensions/wikia/CreatePage/css/CreatePage.css";
@@ -93,5 +94,4 @@
 @import "core/responsive-core";
 @import "core/responsive-mainpage-tag";
 
-// VideosModule test
-@import "modules/VideosModule";
+// VideosModule
