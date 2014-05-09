@@ -33,10 +33,10 @@ $(function () {
 		} else {
 			$this.addClass('nav-item-narrow');
 		}
-		$subNav.wrap('<section class="submenu ' + sizeClass + '"></section>');
-		$subNav.append($('<div class="clearfix"></div>'));
-		// TODO i18n
-		$subNav.append($seeAll.html('See all in ' + $seeAll.text() + svgChevron)
+		$subNav.wrap('<section class="submenu ' + sizeClass + '"></section>')
+			.parent().append($('<div class="clearfix"></div>') )
+			// TODO i18n
+			.append($seeAll.html('See all in ' + $seeAll.text() + svgChevron)
 			.wrap('<section class="see-all"></section>').parent());
 	});
 
