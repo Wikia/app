@@ -440,7 +440,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
 	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
+		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
@@ -484,8 +484,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 /**
  * @method
  * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragment ) {
 	var i, promises = [];
 
 	this.timings.insertStart = ve.now();
@@ -508,15 +509,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	$.when.apply( $, promises ).done( ve.bind( function() {
-		this.insertPermanentMedia( cartItems );
+		this.insertPermanentMedia( cartItems, fragment );
 	}, this ) );
 };
 
 /**
  * @method
  * @param {Object} cartItems Cart items to insert.
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems, fragment ) {
 	var items = {},
 		promises = [],
 		types = {
@@ -582,7 +584,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 
 	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
-		ve.bind( this.insertPermanentMediaCallback, this, items )
+		ve.bind( this.insertPermanentMediaCallback, this, items, fragment )
 	);
 };
 
@@ -591,8 +593,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  *
  * @method
  * @param {Object} items Items to insert
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
 	var count, item, title, type, captionType,
 		typeCount = { 'photo': 0, 'video': 0 },
 		linmod = [];
@@ -643,7 +646,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		} );
 	}
 
-	this.getFragment().collapseRangeToEnd().insertContent( linmod );
+	fragment.collapseRangeToEnd().insertContent( linmod );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,
