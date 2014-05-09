@@ -44,6 +44,7 @@ class AssetsConfig {
 		if (class_exists('EditPageLayoutHelper')) {
 			$files = EditPageLayoutHelper::getAssets();
 		}
+		// $wgOasisResponsive determines if the EditPreview extension is loaded
 		if ( !empty( $wgOasisResponsive ) ) {
 			array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
 		}
