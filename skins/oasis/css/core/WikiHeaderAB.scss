@@ -1,34 +1,32 @@
 @import "color";
 
-$header-color-primary: #333;
-$header-color-secondary: #ddd;
+$header-color-primary: $color-links;
+$header-color-secondary: $color-page;
 
 .WikiHeaderV2 {
 	background: $header-color-secondary;
-	height: 80px;
-	z-index: 2;
+	height: 60px;
 	position: relative;
+	z-index: 2;
 
 	.local-navigation-container {
+		/*left: 50%;
+		position: absolute;
+		margin-left: -520px;*/
 		width: 1040px;
 		margin: 0 auto;
 	}
 
 	.wordmark {
 		float: left;
+		height: 40px;
 		margin: 0;
-		height: 55px;
-		padding: 13px 20px 12px 0;
+		padding: 10px 20px 10px 0;
 
 		img {
-			max-height: 55px;
-			max-width: 212px;
+			max-height: 40px;
+			max-width: 154px;
 		}
-	}
-
-	.hiddenLinks {
-		position: absolute;
-		top: -1000px;
 	}
 }
 
@@ -42,16 +40,15 @@ $header-color-secondary: #ddd;
 			display: inline-block;
 
 			> a {
+				background: $header-color-secondary;
+				color: $header-color-primary;
 				display: table-cell;
-				height: 80px;
-				vertical-align: middle;
-
-				padding: 0 20px;
 				font-size: 18px;
 				font-weight: bold;
-				color: $header-color-primary;
-				background: $header-color-secondary;
+				height: 60px;
+				padding: 0 20px;
 				text-decoration: none;
+				vertical-align: middle;
 
 				&:hover {
 					background: $header-color-primary;
@@ -59,23 +56,60 @@ $header-color-secondary: #ddd;
 				}
 			}
 
-			.submenu {
-				display: none;
+			&:hover, &.active {
+				.submenu {
+					display: block;
+				}
+				> a {
+					background: $header-color-primary;
+					color: $header-color-secondary;
+				}
+			}
 
-				position: absolute;
+			&.nav-item-narrow:nth-child(n + 3) {
+				direction: rtl;
+			}
+
+			.submenu {
 				background: $header-color-primary;
 				color: $header-color-secondary;
+				display: none;
 				padding: 30px 20px 40px 20px;
+				position: absolute;
 
 				&.submenu-full {
-					margin-left: -520px;
+					box-sizing: border-box;
 					left: 50%;
+					margin-left: -520px;
 					width: 1040px;
+
+//					-moz-column-count: 4;
+//					-webkit-column-count: 4;
+//					column-count: 4;
+//					page-break-inside: avoid; // FF26+
+//					-webkit-column-break-inside: avoid;
+//					column-break-inside: avoid;
+//
+//					ul.subnav-2-column {
+//						float: left;
+//					}
+//					li.subnav-2-item {
+//						float: none;
+//						display: inline-block;
+//					}
+//					&.submenu-size-5 {
+//						li.subnav-2-item:nth-child(3):after {
+//							-moz-column-break-before: always;
+//							-webkit-column-break-before: always;
+//							break-before: column;
+//						}
+//					}
 				}
 
 				&.submenu-wide {
-					margin-left: -395px;
+					box-sizing: border-box;
 					left: 50%;
+					margin-left: -395px;
 					width: 790px;
 				}
 
@@ -89,14 +123,27 @@ $header-color-secondary: #ddd;
 				}
 
 				.subnav-2a {
+					border-bottom: 1px solid $header-color-secondary;
+					box-sizing: border-box;
 					display: inline-block;
 					font-size: 18px;
 					font-weight: bold;
 					line-height: 20px;
-					text-transform: uppercase;
-					border-bottom: 1px solid $header-color-secondary;
 					padding-bottom: 10px;
+					padding-right: 10px;
+					position: relative;
+					text-transform: uppercase;
 					width: 100%;
+
+					svg {
+						position: absolute;
+						right: 0;
+						top: calc(50% - 9px);
+
+						polygon {
+							fill: $header-color-secondary;
+						}
+					}
 				}
 				li.subnav-2-item {
 					float: left;
@@ -116,44 +163,112 @@ $header-color-secondary: #ddd;
 					margin-top: 15px;
 				}
 				li.subnav-3-item {
-					margin-top: 25px;
+					margin-top: 12px;
 				}
 				.see-all {
-					display: table-cell;
-					height: 40px;
 					border-top: 1px solid $header-color-secondary;
-					position: absolute;
-					left: 15px;
-					right: 15px;
 					bottom: 0;
-					vertical-align: middle;
-					text-align: right;
-					line-height: 40px;
+					display: table-cell;
 					font-size: 18px;
 					font-weight: bold;
+					height: 40px;
+					left: 0;
+					line-height: 40px;
+					padding-right: 40px;
+					position: absolute;
+					right: 0;
+					text-align: right;
 					text-transform: uppercase;
+					vertical-align: middle;
 
 					&:before {
 						clear: both;
 					}
-				}
-			}
 
-			&:hover, &.active {
-				.submenu {
-					display: block;
+					svg {
+						margin-left: 10px;
+
+						polygon {
+							fill: $header-color-secondary;
+						}
+					}
 				}
 			}
-//			&:nth-child(3) {
-//				.submenu {
-//					display: block;
-//				}
-//			}
+		}
+	}
+}
+
+@media screen and (max-width: 1365px) {
+	.WikiHeaderV2 {
+		.local-navigation-container {
+			//margin-left: -384px;
+			width: 768px;
+			.wordmark {
+				padding-right: 18px;
+			}
+		}
+	}
+
+	.WikiNavV2 {
+		.nav {
+			.nav-item {
+				> a {
+					font-size: 15px;
+					font-weight: bold;
+					padding: 0 18px;
+				}
+
+				.submenu {
+					padding: 30px 20px 40px 20px;
+
+					&.submenu-full {
+						margin-left: -384px;
+						width: 768px;
+					}
+
+					&.submenu-wide {
+						margin-left: -292px;
+						width: 584px;
+					}
+
+					.subnav-2a {
+						font-size: 15px;
+						line-height: 20px;
+						padding-bottom: 10px;
+						padding-right: 10px;
+					}
+					li.subnav-2-item {
+						margin: 0 20px 30px 20px;
+						width: 152px;
+					}
+					.subnav-3a {
+						font-size: 15px;
+						font-weight: normal;
+						line-height: 20px;
+					}
+					ul.subnav-3 {
+						margin-top: 10px;
+					}
+					li.subnav-3-item {
+						margin-top: 10px;
+					}
+					.see-all {
+						font-size: 15px;
+
+						svg {
+							margin-left: 10px;
+						}
+					}
+				}
+			}
 		}
 	}
 }
 
 // hacks for existing elements
+#WikiaPageHeader.WikiaPageHeader.WikiaPageHeaderV2 {
+	margin: 10px 0;
+}
 .WikiNavV2 {
 	> h1, > .navbackground  {
 		display: none;

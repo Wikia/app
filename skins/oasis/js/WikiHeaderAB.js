@@ -1,7 +1,13 @@
 $(function () {
 	'use strict';
-	var navigation;
-	navigation = $('#WikiHeader').detach();
+	var navigation = $('#WikiHeader').detach(),
+		svgChevron = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"' +
+			' x="0px" y="0px" width="5px" height="9px" viewBox="0 0 5 9" ' +
+			' enable-background="new 0 0 5 9" xml:space="preserve">' +
+			' <polygon points="0.725,0 0,0.763 3.553,4.501 0,8.237 0.725,9 5,4.505 4.994,4.501 5,4.495"/> ' +
+			' </svg>';
+
+	$('.WikiaPageHeader').addClass('WikiaPageHeaderV2');
 	navigation.find('.buttons').hide();
 	navigation.find('.WikiHeaderSearch').hide();
 	navigation.removeClass('WikiHeader').addClass('WikiHeaderV2');
@@ -9,37 +15,31 @@ $(function () {
 	navigation.find('.accent').removeClass('accent');
 	navigation.find('.marked').removeClass('marked');
 	navigation.find('.chevron').remove();
-
 	navigation.find('> nav').unbind();
 
 	navigation.find('.nav-item').each(function () {
-		var elem = $(this),
-			seeAll = elem.find('> a').clone(),
-			elem2 = elem.find('.subnav-2'),
-			length = elem.find('.subnav-2 > li').length,
+		var $this = $(this),
+			$seeAll = $this.find('> a').clone(),
+			$subNav = $this.find('.subnav-2'),
+			$items = $this.find('.subnav-2 > li'),
+			noOfItems = $items.length,
 			sizeClass = '';
 
-		if (length === 3) {
+		$items.find('.subnav-2a').append(svgChevron);
+		if (noOfItems === 3) {
 			sizeClass = 'submenu-wide';
-		} else if (length > 3) {
+		} else if (noOfItems > 3) {
 			sizeClass = 'submenu-full';
 		} else {
-			sizeClass = '';
+			$this.addClass('nav-item-narrow');
 		}
-		elem2.wrap('<section class="submenu ' + sizeClass + '"></section>');
-		elem2.append($('<div class="clearfix"></div>'));
+		$subNav.wrap('<section class="submenu ' + sizeClass + '"></section>');
+		$subNav.append($('<div class="clearfix"></div>'));
 		// TODO i18n
-		elem2.append(seeAll.text('See all in ' + seeAll.text()).wrap('<section class="see-all"></section>').parent());
+		$subNav.append($seeAll.html('See all in ' + $seeAll.text() + svgChevron)
+			.wrap('<section class="see-all"></section>').parent());
 	});
 
 	navigation.children().wrapAll('<section class="local-navigation-container"></section>');
-
 	navigation.insertAfter('#WikiaHeader');
-
-	// temp
-	$('.nav-item').click(function (e) {
-		e.preventDefault();
-
-		$(this).toggleClass('active');
-	});
 });
