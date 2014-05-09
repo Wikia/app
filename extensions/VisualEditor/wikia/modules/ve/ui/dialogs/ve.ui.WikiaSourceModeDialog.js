@@ -70,7 +70,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaSourceModeDialog.prototype.setup = function ( data ) {
-	var doc = this.fragment.document;
+	var doc = this.getFragment().getDocument();
 
 	this.target = data.target;
 	this.openCount++;
