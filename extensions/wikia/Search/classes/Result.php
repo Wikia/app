@@ -115,8 +115,8 @@ class Result extends ReadWrite {
 	
 	public function findFilePrefix($title) {
 		if (!empty($this->_fields['ns']) &&
-				$this->_fields['ns'] == \NS_FILE &&
-				strpos($title, ":") !== false) {
+			$this->_fields['ns'] == \NS_FILE &&
+			strpos($title, ":") !== false) {
 			// strip 'File:' prefix (in content language) from title
 			// we could try to use Title class or wgContLang->getNsText here, but none of those actually
 			// will allow us to remove namespace prefix in a simple and working way, while
