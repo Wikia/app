@@ -13,7 +13,7 @@ define('thumbnails.views.titleThumbnail', [
 
 	TitleView.prototype.render = function () {
 		this.el.className += ' title-thumbnail';
-		this.el.innerHTML = Mustache.render(templates.titleThumbnail, this.model);
+		this.el.innerHTML = Mustache.render(templates.Thumbnail_title, this.model);
 		this.$el = $(this.el);
 		return this;
 	};
