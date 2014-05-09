@@ -113,7 +113,6 @@ class Result extends ReadWrite {
 	 * @param  string $value
 	 * @return string
 	 */
-	
 	public function findFilePrefix($title) {
 		if (!empty($this->_fields['ns']) && $this->_fields['ns'] == \NS_FILE && strpos($title, ":") !== false) {
 			/**
