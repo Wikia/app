@@ -15,6 +15,7 @@ class EntitySearchService {
 	private $lang;
 	private $quality;
 	private $wikiId;
+	private $hubs;
 
 	public function __construct( $client = null ) {
 		$config = $this->getConfig();
@@ -59,6 +60,14 @@ class EntitySearchService {
 	public function setWikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
 		return $this;
+	}
+
+	public function getHubs() {
+		return $this->hubs;
+	}
+
+	public function setHubs( $hubs ) {
+		$this->hubs = $hubs;
 	}
 
 	protected function prepareQuery( $query ) {
