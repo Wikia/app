@@ -79,10 +79,6 @@
   max-height: 690px;
 }
 
-.oo-ui-dialog .oo-ui-window-frame.oo-ui-window-frame-captcha {
-  max-height: 480px;
-}
-
 .oo-ui-dialog .oo-ui-frame {
   width: 100%;
   height: 100%;
