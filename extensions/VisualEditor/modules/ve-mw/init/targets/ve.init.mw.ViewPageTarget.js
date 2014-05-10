@@ -537,23 +537,14 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * @param {Object} editApi
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
-	this.captcha = {
-		input: new OO.ui.TextInputWidget(),
-		id: editApi.captcha.id
-	};
-	this.showSaveError(
-		$( '<div>' ).append(
-			// msg: simplecaptcha-edit, fancycaptcha-edit, ..
-			$( '<p>' ).append(
-				$( '<strong>' ).text( mw.msg( 'captcha-label' ) ),
-				document.createTextNode( mw.msg( 'colon-separator' ) ),
-				$( $.parseHTML( mw.message( 'fancycaptcha-edit' ).parse() ) )
-					.filter( 'a' ).attr( 'target', '_blank' ).end()
-			),
-			$( '<img>' ).attr( 'src', editApi.captcha.url ),
-			this.captcha.input.$element
-		), false
+	this.captcha = {};
+	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
+		editApi.captcha.key,
+		've-ui-mwSaveDialog-captcha',
+		{ theme: 'white'}
 	);
+	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
+
 	this.events.trackSaveError( 'captcha' );
 };
 
@@ -810,7 +801,6 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function () {
 
 	// Reset any old captcha data
 	if ( this.captcha ) {
-		this.saveDialog.clearMessage( 'captcha' );
 		delete this.captcha;
 	}
 
@@ -881,10 +871,16 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 				fields[$this.prop( 'name' )] = $this.val();
 			}
 		} );
+	// Inject captcha params here if reCAPTCHA is used
+	if ( this.captcha ) {
+		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
+		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
+	}
+
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
 		'wpCaptchaId': this.captcha && this.captcha.id,
-		'wpCaptchaWord': this.captcha && this.captcha.input.getValue()
+		'wpCaptchaWord': this.captcha && this.captcha.word
 	} );
 	return fields;
 };
@@ -1119,6 +1115,7 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbarButtons = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
+	var dialogDocument, script;
 	this.saveDialog = this.surface.getDialogs().getWindow( 'mwSave' );
 	// Connect to save dialog
 	this.saveDialog.connect( this, {
@@ -1130,6 +1127,12 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	// Setup edit summary and checkboxes
 	this.saveDialog.setEditSummary( this.initialEditSummary );
 	this.saveDialog.setupCheckboxes( this.$checkboxes );
+
+	// Add Recaptcha script
+	dialogDocument = this.saveDialog.frame.$element[0].contentDocument;
+	script = dialogDocument.createElement( 'script' );
+	script.setAttribute( 'src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js' );
+	dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
 };
 
 /**
