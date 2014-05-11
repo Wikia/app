@@ -812,7 +812,7 @@ Mediawiki.pullArticleContentCallback = function (callback) {
 	
 		} catch (e) {
 			// Javascript Error
-			Mediawiki.error("Error during login callback");
+			Mediawiki.error("Error during pullArticleContent callback");
 			Mediawiki.d(Mediawiki.print_r(e));
 		}
 	};
