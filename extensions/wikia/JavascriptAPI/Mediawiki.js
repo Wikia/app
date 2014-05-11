@@ -781,42 +781,41 @@ Mediawiki.pullArticleContent = function (title, callback, options){
 		}
 	}
 
-	// Store the callback
-	Mediawiki.pullArticleCallback = callback;
-
-	return Mediawiki.apiCall(apiParams, Mediawiki.pullArticleContentCallback, callback);
+	return Mediawiki.apiCall(apiParams, Mediawiki.pullArticleContentCallback(callback), callback);
 };
 
 
-Mediawiki.pullArticleContentCallback = function (result) {
-	var cresult = Mediawiki.checkResult(result);
-	if (cresult !== true) {
-		Mediawiki.error("API Error pulling content: " + cresult);
-		return;
-	}
-	try {
-		if (!Mediawiki.e(result.query.pages[-1])) {
-			// Missing article
-			Mediawiki.runCallback(Mediawiki.pullArticleCallback, null);
-		} else {
-			for (var pageid in result.query.pages){
-				var content = result.query.pages[pageid].revisions[0]['*'];
-				break;
-			}
-
-			if (Mediawiki.e(content)) {
-				content = null;
-			}
-
-			Mediawiki.runCallback(Mediawiki.pullArticleCallback, content);
+Mediawiki.pullArticleContentCallback = function (callback) {
+	return function (result) {
+		var cresult = Mediawiki.checkResult(result);
+		if (cresult !== true) {
+			Mediawiki.error("API Error pulling content: " + cresult);
+			return;
 		}
-
-
-	} catch (e) {
-		// Javascript Error
-		Mediawiki.error("Error during login callback");
-		Mediawiki.d(Mediawiki.print_r(e));
-	}
+		try {
+			if (!Mediawiki.e(result.query.pages[-1])) {
+				// Missing article
+				Mediawiki.runCallback(callback, null);
+			} else {
+				for (var pageid in result.query.pages){
+					var content = result.query.pages[pageid].revisions[0]['*'];
+					break;
+				}
+	
+				if (Mediawiki.e(content)) {
+					content = null;
+				}
+	
+				Mediawiki.runCallback(callback, content);
+			}
+	
+	
+		} catch (e) {
+			// Javascript Error
+			Mediawiki.error("Error during login callback");
+			Mediawiki.d(Mediawiki.print_r(e));
+		}
+	};
 };
 
 
