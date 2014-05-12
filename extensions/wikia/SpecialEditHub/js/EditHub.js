@@ -298,6 +298,7 @@
 		}
 	};
 
+	window.EditHub = EditHub;
 	$(function () {
 		EditHub.init();
 	});
