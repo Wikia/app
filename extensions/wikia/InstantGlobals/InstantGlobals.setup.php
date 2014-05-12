@@ -6,6 +6,10 @@
  * Variables are exposed via ResourceLoader module with a short CDN caching time, allowing us to make critial config
  * changes with no need to wait 24h for CDN cache to invalidate.
  *
+ * - InstantGlobalsModule::$variables contains the list of WF variables to be emitted by the module
+ * - variables values are taken from Community Wiki
+ * - caching time on both server and client-side is 300 sec
+ *
  * @author macbre
  */
 
