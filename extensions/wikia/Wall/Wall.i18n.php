@@ -704,6 +704,11 @@ checkbox on Special:Block',
 	'wall-deleted-reply' => 'Confirmation message after deleting a reply',
 	'wall-history' => 'toolbar link to wall history.
 {{Identical|History}}',
+	'wall-history-username-full' => 'username on wall history page. Parameters:
+* $1 is preferred name
+* $2 is username',
+	'wall-history-username-short' => 'username on wall history page. Parameters:
+* $2 is username',
 	'wall-history-title' => 'heading on wall history page',
 	'wall-history-who-involved-wall-title' => "heading on who's involved box on wall history page",
 	'wall-history-who-involved-thread-title' => "heading on who's involved box on thread history page",
@@ -837,7 +842,8 @@ checkbox on Special:Block',
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
-	'wall-topic-edit-save' => 'Edit Topics - Save button',
+	'wall-topic-edit-save' => 'Edit Topics - Save button.
+{{Identical|Save}}',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button.
 {{Identical|Cancel}}',
 );
@@ -4816,6 +4822,7 @@ $messages['lb'] = array(
 	'wall-action-all-confirm-cancel' => 'Ofbriechen',
 	'wall-delete-error-title' => 'Feeler',
 	'wall-action-remove-confirm-ok' => 'Ewechhuelen',
+	'wall-action-close-confirm-ok' => 'Zoumaachen',
 	'wall-action-admin-thread-title' => 'Dës Rubrik läschen',
 	'wall-action-admin-reply-title' => 'Dës Äntwert läschen',
 	'wall-action-admin-confirm-ok' => 'Läschen',

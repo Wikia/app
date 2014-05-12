@@ -9796,6 +9796,7 @@ $messages['zh-hans'] = array(
 	'wikistats_xls_cancel' => '取消',
 	'wikistats_select_btn' => '选择',
 	'wikistats_ns_statistics_legend' => '名字空间',
+	'wikistats_search_text' => '搜索：',
 	'wikistats_article_total' => '所有条目',
 	'wikistats_article_created' => '创建条目',
 	'wikistats_blog_comment' => '博客评论',

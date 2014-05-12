@@ -101,6 +101,7 @@ $messages['qqq'] = array(
 	'founderprogressbar-list-task-label' => '{{Identical|Task}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
+	'founderprogressbar-browse-page-name' => '{{Identical|Browse}}',
 );
 
 /** Arabic (العربية)

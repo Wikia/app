@@ -805,7 +805,7 @@ $messages['br'] = array(
 	'wikiaPhotoGallery-back' => 'Distreiñ',
 	'wikiaPhotoGallery-finish' => 'Echuiñ',
 	'wikiaPhotoGallery-feed-caption' => '$1, dre <a href="$2">$3</a>',
-	'wikiaPhotoGallery-lightbox-caption' => 'Dre $1',
+	'wikiaPhotoGallery-lightbox-caption' => 'Eus $1',
 	'wikiaPhotoGallery-add-gallery' => "Ensoc'hañ ur skeudennaoueg pe ur c'hinnig luc'hvannoù",
 	'wikiaPhotoGallery-viewmode-addphoto' => "Ouzhpennañ ur skeudenn d'ar skeudennaoueg-mañ",
 	'wikiaPhotoGallery-edit-abort' => "Ar c'hemm e oac'h o klask ober a zo bet harzhet gant ur sonnell eus un astenn",
