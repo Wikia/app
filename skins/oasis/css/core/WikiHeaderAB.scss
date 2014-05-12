@@ -27,6 +27,17 @@ $header-color-secondary: $color-page;
 			max-height: 40px;
 			max-width: 154px;
 		}
+		&.text a {
+			color: $header-color-primary;
+			display: inline-block;
+			font-size: 20px;
+			font-weight: bold;
+			padding: 10px 0;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
 	}
 }
 
@@ -68,6 +79,10 @@ $header-color-secondary: $color-page;
 
 			&.nav-item-narrow:nth-child(n + 3) {
 				direction: rtl;
+
+				.submenu {
+					direction: ltr;
+				}
 			}
 
 			.submenu {
