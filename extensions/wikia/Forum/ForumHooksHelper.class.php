@@ -507,9 +507,9 @@ class ForumHooksHelper {
 	 * @return bool true
 	 *
 	 */
-	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id) {
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
 		$title = $page->getTitle();
-		if($title instanceof Title) {
+		if ( $title instanceof Title ) {
 			$wallMessage = WallMessage::newFromTitle($title);
 			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
 		}
