@@ -119,11 +119,11 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	private function getMapPlaceholderParams() {
 		$params = [];
 
-		$params[ 'lat' ] = $this->request->getVal( 'lat', static::DEFAULT_LATITUDE );
-		$params[ 'lon' ] = $this->request->getVal( 'lon', static::DEFAULT_LONGITUDE );
-		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
-		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
-		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$params[ 'lat' ] = $this->request->getVal( 'lat', self::DEFAULT_LATITUDE );
+		$params[ 'lon' ] = $this->request->getVal( 'lon', self::DEFAULT_LONGITUDE );
+		$params[ 'zoom' ] = $this->request->getInt( 'zoom', self::DEFAULT_ZOOM );
+		$params[ 'width' ] = $this->request->getInt( 'width', self::DEFAULT_WIDTH );
+		$params[ 'height' ] = $this->request->getInt( 'height', self::DEFAULT_HEIGHT );
 		$params[ 'map' ] = $this->request->getVal( 'map' );
 
 		$params[ 'width' ] .= 'px';
@@ -240,15 +240,15 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 				break;
 			case 'zoom':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => static::MIN_ZOOM ],
+					[ 'min' => self::MIN_ZOOM ],
 					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom' ]
 				);
 				break;
 			case 'width':
 				$validator = new WikiaValidatorInteger(
 					[
-						'min' => static::MIN_WIDTH,
-						'max' => static::MAX_WIDTH
+						'min' => self::MIN_WIDTH,
+						'max' => self::MAX_WIDTH
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
@@ -260,8 +260,8 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 			case 'height':
 				$validator = new WikiaValidatorInteger(
 					[
-						'min' => static::MIN_HEIGHT,
-						'max' => static::MAX_HEIGHT
+						'min' => self::MIN_HEIGHT,
+						'max' => self::MAX_HEIGHT
 					],
 					[
 						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height',
