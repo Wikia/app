@@ -260,6 +260,13 @@ $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'spellchecker-info-spellcheck-languages' => 'ಭಾಷೆ',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

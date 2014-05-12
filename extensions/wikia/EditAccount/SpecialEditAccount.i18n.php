@@ -1208,10 +1208,13 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author BryghtShadow
  */
 $messages['ja'] = array(
+	'editaccount' => 'アカウントの編集',
 	'editaccount-label-reason' => '理由:',
+	'editaccount-submit-pass' => 'パスワードを保存',
 	'editaccount-submit-button' => '保存',
 	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
 	'editaccount-labal-account-status' => 'アカウントの状態',
@@ -1265,6 +1268,45 @@ $messages['km'] = array(
 	'editaccount-log-entry-close' => 'បានបិទគណនី $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">គណនីនេះត្រូវបានបិទហើយ។</div>', # Fuzzy
 	'right-editaccount' => 'កែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដទៃ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'editaccount' => 'ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸು',
+	'editaccount-frame-manage' => 'ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸು',
+	'editaccount-frame-usage' => 'ಟಿಪ್ಪಣಿಗಳು',
+	'editaccount-label-select' => 'ಒಂದು ಬಳಕೆದಾರ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+	'editaccount-submit-account' => 'ಖಾತೆಯನ್ನು ನಿರ್ವಹಿಸಿ',
+	'editaccount-frame-account' => 'ಬಳಕೆದಾರ $1 ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸಲಾಗುತ್ತಿದೆ',
+	'editaccount-frame-close' => 'ಬಳಕೆದಾರ ಖಾತೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸು:$1',
+	'editaccount-label-email' => 'ಇ-ಅಂಚೆ ವಿಳಾಸವನ್ನು ಸ್ಥಾಪಿಸಿ',
+	'editaccount-label-pass' => 'ಹೊಸ ಪಾಸ್ವರ್ಡ್  ಹೊಂದಿಸಿ',
+	'editaccount-label-realname' => 'ಹೊಸ ನಿಜನಾಮವನ್ನು ಹೊಂದಿಸು',
+	'editaccount-label-reason' => 'ಕಾರಣ:',
+	'editaccount-submit-email' => 'ಮಿಂಚಂಚೆಯನ್ನು ದೃಢಪಡಿಸಿ ಮತ್ತು ಉಳಿಸಿ',
+	'editaccount-submit-pass' => 'ಪ್ರವೇಶಪದವನ್ನು ಉಳಿಸಿ',
+	'editaccount-submit-realname' => 'ನಿಜನಾಮವನ್ನು ಉಳಿಸಿ',
+	'editaccount-submit-close' => 'ಖಾತೆಯನ್ನು ಮುಚ್ಚಿ',
+	'editaccount-submit-button' => 'ಉಳಿಸಿ',
+	'editaccount-success-email-blank' => 'ಖಾತೆ $1 ಯ ವಿಳಾಸವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ತೆರೆವುಗೊಳಿಸಲಾಗಿದೆ.',
+	'editaccount-success-pass' => '$1 ಪ್ರವೇಶಪದವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-success-realname' => '$1 ರ ನಿಜನಾಮವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ.',
+	'editaccount-success-close' => '$1 ಖಾತೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ.',
+	'editaccount-invalid-email' => '"$1" ವು ಒಂದು ಸಿಂಧು ಮಿಂಚಂಚೆ ವಿಳಾಸವಲ್ಲ!',
+	'editaccount-nouser' => 'ಖಾತೆ"$1" ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ!',
+	'editaccount-labal-account-status' => 'ಖಾತೆಯ ಸ್ಥಿತಿ',
+	'editaccount-labal-email-status' => 'ಮಿಂಚಂಚೆ ಸ್ಥಿತಿ',
+	'editaccount-status-confirmed' => 'ದೃಡಪಡಿಸಿದ',
+	'editaccount-status-unconfirmed' => 'ದೃಡಪಡಿಸದ',
+	'editaccount-status-realuser' => 'ನಿಜ ಬಳಕೆದಾರ',
+	'editaccount-status-tempuser' => 'ತಾತ್ಕಾಲಿಕ ಬಳಕೆದಾರ',
+	'editaccount-log' => 'ಬಳಕೆದಾರ ಖಾತೆಗಳ ದಿನಚರಿ',
+	'editaccount-log-entry-email' => '$2 ಬಳಕೆದಾರರ ಮಿಂಚಂಚೆಯನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-pass' => '$2 ರ ಪ್ರವೇಶಪದವನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-realname' => '$2 ರ ನಿಜನಾಮವನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-close' => '$2 ಖಾತೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ',
 );
 
 /** Korean (한국어)

@@ -657,7 +657,7 @@ class SQL {
 		return call_user_func_array([$this, 'VALUE'], func_get_args());
 	}
 
-	public function SET($field, $value) {
+	public function SET($field, $value=null) {
 		$set = new Set($field, $value);
 		$this->set []= $set;
 

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWTransclusionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -31,6 +31,7 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 	ve.ce.FocusableNode.call( this );
 	ve.ce.RelocatableNode.call( this );
 	ve.ce.GeneratedContentNode.call( this );
+	ve.ce.ClickableNode.call( this );
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwTransclusionNode' );
@@ -41,12 +42,10 @@ ve.ce.MWTransclusionNode = function VeCeMWTransclusionNode( model, config ) {
 OO.inheritClass( ve.ce.MWTransclusionNode, ve.ce.LeafNode );
 
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.ProtectedNode );
-
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.FocusableNode );
-
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.RelocatableNode );
-
 OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.GeneratedContentNode );
+OO.mixinClass( ve.ce.MWTransclusionNode, ve.ce.ClickableNode );
 
 /* Static Properties */
 
@@ -54,31 +53,23 @@ ve.ce.MWTransclusionNode.static.name = 'mwTransclusion';
 
 ve.ce.MWTransclusionNode.static.renderHtmlAttributes = false;
 
+ve.ce.MWTransclusionNode.static.primaryCommandName = 'transclusion';
+
 /* Methods */
 
 /** */
 ve.ce.MWTransclusionNode.prototype.generateContents = function ( config ) {
 	var xhr, deferred = $.Deferred();
-	xhr = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'visualeditor',
-			'paction': 'parsefragment',
-			'page': mw.config.get( 'wgRelevantPageName' ),
-			'wikitext': ( config && config.wikitext ) || this.model.getWikitext(),
-			'token': mw.user.tokens.get( 'editToken' ),
-			'format': 'json'
-		},
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false'
-	} )
+	xhr = ve.init.mw.Target.static.apiRequest( {
+		'action': 'visualeditor',
+		'paction': 'parsefragment',
+		'page': mw.config.get( 'wgRelevantPageName' ),
+		'wikitext': ( config && config.wikitext ) || this.model.getWikitext()
+	}, { 'type': 'POST' } )
 		.done( ve.bind( this.onParseSuccess, this, deferred ) )
 		.fail( ve.bind( this.onParseError, this, deferred ) );
 
-	return deferred.promise( { abort: xhr.abort} );
+	return deferred.promise( { abort: xhr.abort } );
 };
 
 /**
@@ -94,7 +85,7 @@ ve.ce.MWTransclusionNode.prototype.onParseSuccess = function ( deferred, respons
 		return this.onParseError.call( this, deferred );
 	}
 
-	contentNodes = this.$( response.visualeditor.content ).get();
+	contentNodes = $.parseHTML( response.visualeditor.content );
 	// HACK: if $content consists of a single paragraph, unwrap it.
 	// We have to do this because the PHP parser wraps everything in <p>s, and inline templates
 	// will render strangely when wrapped in <p>s.

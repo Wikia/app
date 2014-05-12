@@ -37,3 +37,11 @@
 		overflow: visible;
 	}
 }
+
+.oo-ui-dialog .oo-ui-window-frame.oo-ui-window-frame-captcha {
+	max-height: 480px;
+}
+
+#ve-ui-mwSaveDialog-captcha #recaptcha_area {
+	margin: 5px auto 0 auto;
+}

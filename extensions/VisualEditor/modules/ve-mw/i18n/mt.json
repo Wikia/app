@@ -1,0 +1,25 @@
+{
+    "@metadata": {
+        "authors": [
+            "Chrisportelli"
+        ]
+    },
+    "visualeditor-beta-appendix": "beta",
+    "visualeditor-beta-label": "beta",
+    "visualeditor-beta-warning": "VisualEditor huwa f'verżjoni 'beta'. Tista' tiltaqa' ma' xi kwistjonijiet tas-softwer, u ma tkunx tista' teditja xi partijiet tal-paġna. Agħfas fuq \"{{int:visualeditor-ca-editsource}}\" biex taqleb għall-modalità tat-test wiki – bidliet li mhumiex issjejvjati jintilfu.",
+    "visualeditor-ca-editsource": "Editja s-sors",
+    "visualeditor-ca-editsource-section": "editja s-sors",
+    "visualeditor-dialog-beta-welcome-action-continue": "Kompli",
+    "visualeditor-dialog-beta-welcome-content": "Dan huwa l-mod ġdid u eħfef kif teditja. Għadu xorta f'verżjoni beta, li jfisser li tista' ssib xi partijiet tal-paġna li ma tistax teditja, jew issieħeb ruħek ma' xi kwistjonijiet li jkunu meħtieġa li jitranġaw. Inħeġġuk li tirrevedi l-bidliet tiegħek, u nilqgħu senjalazzjonijiet ta' kwalunkwe problema li sibt fl-użu tal-VisualEditor (agħfas il-buttuna \"{{int:visualeditor-help-tool}}\" sabiex tibgħat il-messaġġ tiegħek). Tista' tibqa' tuża l-editur tat-test wiki billi tagħfas fuq \"$1\" minflok – bidliet li mhumiex issjejvjati jintilfu.",
+    "visualeditor-dialog-beta-welcome-title": "Merħba fil-VisualEditor",
+    "visualeditor-dialog-meta-categories-input-newcategorylabel": "Kategorija ġdida",
+    "visualeditor-dialog-meta-categories-input-placeholder": "Żid kategorija",
+    "visualeditor-dialog-meta-categories-section": "Kategoriji",
+    "visualeditor-dialog-meta-languages-code-label": "Kodiċi tal-lingwa",
+    "visualeditor-dialog-meta-languages-label": "Lingwi",
+    "visualeditor-dialog-meta-languages-section": "Lingwi",
+    "visualeditor-dialog-reference-title": "Referenza",
+    "visualeditor-dialog-referencelist-title": "Lista ta' referenzi",
+    "visualeditor-dialog-transclusion-placeholder": "Mudell ġdid",
+    "visualeditor-wikitext-warning-link": "Help:Sintassi"
+}

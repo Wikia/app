@@ -39,6 +39,7 @@ $wgResourceModules += array(
 		'scripts' => 've/init/ve.init.mw.WikiaViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
+			'jquery.byteLength',
 			'mediawiki.Title',
 			'mediawiki.Uri',
 			'mediawiki.util',
@@ -86,12 +87,17 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 
 			// ui
+			've/ui/ve.ui.WikiaCommandRegistry.js',
+			've/ui/dialogs/ve.ui.WikiaMediaEditDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
+			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
+			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
@@ -142,9 +148,12 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-query-failed',
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
+			'accesskey-save',
 		),
 		'dependencies' => array(
-			'ext.visualEditor.core'
+			'ext.visualEditor.core.desktop',
+			'ext.visualEditor.mwimage',
+			'ext.visualEditor.mwmeta',
 		)
 	),
 );
