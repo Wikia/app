@@ -51,7 +51,7 @@ class CloseMyAccountTest extends WikiaBaseTest {
 		$userMock->expects( $this->any() )
 			->method( 'saveSettings' );
 
-		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isClosed', 'isScheduledForClosure' ] );
+		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isClosed', 'isScheduledForClosure', 'track' ] );
 
 		$helperMock->expects( $this->any() )
 			->method( 'isClosed' )
@@ -60,6 +60,9 @@ class CloseMyAccountTest extends WikiaBaseTest {
 		$helperMock->expects( $this->any() )
 			->method( 'isScheduledForClosure' )
 			->will( $this->returnValue( $isScheduledForClosure ) );
+
+		$helperMock->expects( $this->any() )
+			->method( 'track' );
 
 		$result = $helperMock->reactivateAccount( $userMock );
 
@@ -94,11 +97,14 @@ class CloseMyAccountTest extends WikiaBaseTest {
 			->method( 'sendConfirmationMail' )
 			->will( $this->returnValue( $statusMock ) );
 
-		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isScheduledForClosure' ] );
+		$helperMock = $this->getMock( 'CloseMyAccountHelper', [ 'isScheduledForClosure', 'track' ] );
 
 		$helperMock->expects( $this->once() )
 			->method( 'isScheduledForClosure' )
 			->will( $this->returnValue( $isScheduledForClosure ) );
+
+		$helperMock->expects( $this->any() )
+			->method( 'track' );
 
 		$result = $helperMock->requestReactivation( $userMock, $this->app );
 

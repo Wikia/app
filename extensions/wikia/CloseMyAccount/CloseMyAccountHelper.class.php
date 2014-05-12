@@ -28,6 +28,8 @@ class CloseMyAccountHelper {
 		$user->setOption( 'requested-closure-date', wfTimestamp( TS_DB ) );
 		$user->saveSettings();
 
+		$this->track( $user, 'request-closure' );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -58,6 +60,8 @@ class CloseMyAccountHelper {
 		$response = $user->sendConfirmationMail( 'reactivateaccount', 'ReactivationMail',
 			'closemyaccount-reactivation-email', /*$ip_arg = */true, $emailTextTemplate );
 
+		$this->track( $user, 'request-reactivation' );
+
 		wfProfileOut( __METHOD__ );
 		return $response->isGood();
 	}
@@ -84,6 +88,8 @@ class CloseMyAccountHelper {
 		$user->setOption( 'requested-closure', null );
 		$user->setOption( 'requested-closure-date', null );
 		$user->saveSettings();
+
+		$this->track( $user, 'account-reactivated' );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -131,6 +137,32 @@ class CloseMyAccountHelper {
 	public function isScheduledForClosure( User $user ) {
 		return (bool)$user->getOption( 'requested-closure', false )
 			&& ( $user->getOption( 'requested-closure-date', false ) !== false );
+	}
+
+	/**
+	 * Track an event
+	 *
+	 * @param  User   $user   User account the event is affecting
+	 * @param  string $action The type of close account event, can be one of
+	 *                        request-closure, request-reactivation, account-reactivated,
+	 *                        account-closed
+	 * @return void
+	 */
+	public function track( User $user, $action ) {
+		global $wgUser, $wgDevelEnvironment;
+		// Make sure the right user is set for the user ID that will be collected
+		// when called from the maintenance script
+		$oldUser = $wgUser;
+		$wgUser = $user;
+
+		Track::event( 'trackingevent', [
+			'ga_action' => 'submit',
+			'ga_category' => 'closemyaccount',
+			'ga_label' => $action,
+			'beacon' => $wgDevelEnvironment ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
+
+		$wgUser = $oldUser;
 	}
 
 }
