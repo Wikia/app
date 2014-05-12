@@ -104,7 +104,7 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 	var interval, i = 0;
 
-	if ( this.surface.getView().getDir() === 'rtl' ) {
+	if ( this.surface.getDir() === 'rtl' ) {
 		this.switchDirection();
 	}
 

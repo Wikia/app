@@ -1,12 +1,12 @@
 /*!
  * VisualEditor DataModel MWAlienExtensionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
 /**
- * DataModel MediaWiki math node.
+ * DataModel MediaWiki alien extension node.
  *
  * @class
  * @extends ve.dm.MWExtensionNode

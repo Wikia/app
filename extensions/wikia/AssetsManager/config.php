@@ -268,7 +268,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/modules/csspropshelper.js',
 		'//resources/wikia/modules/fluidlayout.js',
-		'//extensions/wikia/EditPreview/js/preview.js',
 
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -280,6 +279,8 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/CorporateFooter.js',
 		'//skins/oasis/js/buttons.js',
 		'//skins/oasis/js/WikiHeader.js',
+		// TODO remove
+		'//skins/oasis/js/WikiHeaderAB.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/isTouchScreen.js',
@@ -1036,23 +1037,6 @@ $config['forum_mini_editor_js'] = array(
 	)
 );
 
-/** RelatedVideos **/
-$config['relatedvideos_js'] = array(
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
-	)
-);
-
-$config['relatedvideos_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
-	)
-);
-
 $config['VET_js'] = array(
 	'skin' => array( 'oasis' ),
 	'type' => AssetsManager::TYPE_JS,
@@ -1526,7 +1510,7 @@ $config['special_videos_css_monobook'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => array( 'monobook' ),
 	'assets' => array(
-		'//skins/oasis/css/wikiagrid.scss',
+		'//skins/oasis/css/lib/foundation.custom/foundation.custom.scss',
 	)
 );
 

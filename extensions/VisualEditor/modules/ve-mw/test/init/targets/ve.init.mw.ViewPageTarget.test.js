@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization ViewPageTarget tests.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -144,6 +144,16 @@ QUnit.test( 'compatibility', function ( assert ) {
 			{
 				'msg': 'BlackBerry',
 				'userAgent': 'Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+',
+				'matches': [ 'blacklist' ]
+			},
+			{
+				'msg': 'Amazon Silk desktop',
+				'userAgent': 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us; Silk/1.0.13.81_10003810) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16 Silk-Accelerated=true',
+				'matches': [ 'blacklist' ]
+			},
+			{
+				'msg': 'Amazon Silk mobile',
+				'userAgent': 'Mozilla/5.0 (Linux; U; Android 4.0.3; en-us; KFTT Build/IML74K) AppleWebKit/535.19 (KHTML, like Gecko) Silk/2.1 Mobile Safari/535.19 Silk-Accelerated=true',
 				'matches': [ 'blacklist' ]
 			}
 		];

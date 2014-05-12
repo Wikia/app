@@ -1,0 +1,72 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWCategoryItemWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwCategoryItemWidget {
+	position: relative;
+	float: left;
+}
+
+.ve-ui-mwCategoryItemWidget-button {
+	position: relative;
+	padding: 0.5em 0.75em 0.5em 1.125em;
+	margin: 0.75em 0.75em 0 0;
+	vertical-align: top;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	opacity: 0.8;
+	/* Animation */
+	-webkit-transition: border-color 100ms;
+	-moz-transition: border-color 100ms;
+	-o-transition: border-color 100ms;
+	transition: border-color 100ms;
+
+	/* Gray */
+	border-radius: 1.25em;
+	border: 1px #c9c9c9 solid;
+	background-color: #ffffff;
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		GradientType=0,startColorstr=#ffffff, endColorstr=#f0f0f0
+	);
+	background-image: -webkit-gradient(
+		linear, right top, right bottom, color-stop(0%,#ffffff), color-stop(100%,#f0f0f0)
+	);
+	background-image: -webkit-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -ms-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: -o-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	background-image: linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+}
+
+.ve-ui-mwCategoryItemWidget-button:hover {
+	opacity: 1;
+}
+
+.ve-ui-mwCategoryItemWidget-label {
+	display: block;
+	padding-right: 1.5em;
+	color: #333;
+}
+
+.ve-ui-mwCategoryItemWidget-button:active {
+	border-color: #ddd;
+	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+	color: black;
+}
+
+.ve-ui-mwCategoryItemWidget.oo-ui-indicatedElement .oo-ui-indicatedElement-indicator {
+	position: absolute;
+	right: 0;
+	top: 0.125em;
+	width: 2.25em;
+	height: 2.25em;
+	background-repeat: no-repeat;
+	background-position: center center;
+}

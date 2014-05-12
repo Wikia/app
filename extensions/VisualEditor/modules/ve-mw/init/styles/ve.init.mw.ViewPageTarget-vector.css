@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization ViewPageTarget Vector skin styles.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -19,12 +19,23 @@
 }
 
 .ve-init-mw-viewPageTarget-toolbar {
-	margin: -1em;
+	margin: -1em -1em 1em -1em;
 	-webkit-transition: margin 200ms ease-out;
 	-moz-transition: margin 200ms ease-out;
 	-o-transition: margin 200ms ease-out;
 	transition: margin 200ms ease-out;
 	position: relative;
+}
+
+.ve-init-debugBar {
+	padding: 1em;
+	margin: 1em -1em -1em -1em;
+	border-top: solid 1px #ccc;
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.15) inset;
+}
+
+.ve-init-debugBar ol {
+	margin-left: 0;
 }
 
 .ve-ui-surface-overlay-global {

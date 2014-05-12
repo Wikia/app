@@ -1,6 +1,8 @@
 @import "mixins/ve-icon";
 
-// Toolbar icons
+.oo-ui-window-icon {
+	@include ve-icon(window, oo);
+}
 .oo-ui-icon-alert {
 	@include ve-icon(alert, oo);
 }
@@ -22,10 +24,10 @@
 .oo-ui-icon-clear {
 	@include ve-icon(clear, oo);
 }
-.oo-ui-icon-number-list {
+.ve-ui-dir-block-ltr .oo-ui-icon-number-list {
 	@include ve-icon(number-list-ltr, ve);
 }
-.oo-ui-icon-bullet-list {
+.ve-ui-dir-block-ltr .oo-ui-icon-bullet-list {
 	@include ve-icon(bullet-list-ltr, ve);
 }
 .oo-ui-icon-media {
@@ -55,10 +57,10 @@
 .oo-ui-icon-superscript {
 	@include ve-icon(superscript, ve);
 }
-.oo-ui-icon-indent-list {
+.ve-ui-dir-block-ltr .oo-ui-icon-indent-list {
 	@include ve-icon(indent-list-ltr, ve);
 }
-.oo-ui-icon-outdent-list {
+.ve-ui-dir-block-ltr .oo-ui-icon-outdent-list {
 	@include ve-icon(outdent-list-ltr, ve);
 }
 .oo-ui-icon-reference {
@@ -127,4 +129,13 @@
 }
 .oo-ui-icon-picture {
 	@include ve-icon(picture, oo);
+}
+.oo-ui-icon-text-style {
+	@include ve-icon(text-style, ve);
+}
+.oo-ui-indicator-down {
+	@include ve-icon(down, oo-indicators);
+}
+.oo-ui-icon-keyboard {
+	@include ve-icon(keyboard, wikia);
 }
