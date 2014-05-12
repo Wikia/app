@@ -76,15 +76,15 @@ class WikiaMaps {
 	 * @return mixed
 	 */
 	private function getMapsFromApi( Array $params ) {
-		$maps = [];
+		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = Http::get( $url );
 
 		if ( $response !== false ) {
-			$maps = json_decode( $response );
+			$mapsData = json_decode( $response );
 
 			// Add map size to maps and human status messages
-			array_walk( $maps, function( &$map ) {
+			array_walk( $mapsData->items, function( &$map ) {
 				if( $map->status === static::STATUS_FAILED ) {
 					unset( $map );
 				} else {
@@ -96,8 +96,8 @@ class WikiaMaps {
 			} );
 		}
 
-		if( !empty( $maps ) ) {
-			return $maps;
+		if( isset( $mapsData->total ) ) {
+			return $mapsData;
 		}
 
 		return false;

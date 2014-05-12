@@ -6,6 +6,7 @@
 class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	const MAP_HEIGHT = 600;
+	const MAPS_PER_PAGE = 10;
 
 	/**
 	 * @desc Special page constructor
@@ -42,17 +43,22 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 
 		$selectedSort = $this->getVal( 'sort', null );
-                $this->setVal( 'selectedSort', $selectedSort );
+		$this->setVal( 'selectedSort', $selectedSort );
+		$currentPage = $this->request->getInt( 'page', 1 );
+
+		$offset = $this->getPaginationOffset( $currentPage, self::MAPS_PER_PAGE );
 
 		$params = [
 			'city_id' => $this->app->wg->CityId,
-			'sort' => $selectedSort
+			'sort' => $selectedSort,
+			'offset' => $offset,
+			'limit' => self::MAPS_PER_PAGE,
 		];
 
-		$maps = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
+		$mapsResponse = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
-		$this->setVal( 'maps', $maps );
-		$this->setVal( 'hasMaps', !empty( $maps ) );
+		$this->setVal( 'maps', $mapsResponse->items );
+		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 
 		$url = $this->getContext()->getTitle()->getFullURL();
 		$this->setVal( 'baseUrl', $url );
@@ -64,6 +70,30 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		];
 		$this->setVal( 'messages', $messages );
 		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions( $selectedSort ) );
+
+		$urlParams = [];
+		if ( !is_null( $selectedSort ) ) {
+			$urlParams['sort'] = $selectedSort;
+		}
+
+		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
+
+		$pagination = false;
+		$totalMaps = (int)$mapsResponse->total;
+
+		if ( $totalMaps > self::MAPS_PER_PAGE ) {
+			$pagination = $this->app->renderView(
+				'PaginationController',
+				'index',
+				array(
+					'totalItems' => $totalMaps,
+					'itemsPerPage' => self::MAPS_PER_PAGE,
+					'currentPage' => $currentPage,
+					'url' => $url
+				)
+			);
+		}
+		$this->setVal( 'pagination', $pagination );
 
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
@@ -106,6 +136,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			] );
 		}
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * Generates offset value based on current page and items per page
+	 *
+	 * @param int $currentPage
+	 * @param int $itemsPerPage
+	 * @return int mixed
+	 */
+	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
+		return ($currentPage - 1) * $itemsPerPage;
 	}
 
 }
