@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Tasks\Queues\ParsoidPurgeQueue;
+use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
+
 /**
  * Hooks for events that should trigger Parsoid cache updates.
  */
@@ -39,7 +42,11 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
-		global $wgContentNamespaces;
+		if (TaskRunner::isModern('ParsoidCacheUpdateJob')) {
+			self::updateTitleModern($title);
+			return;
+		}
+
 		if ( $title->getNamespace() == NS_FILE ) {
 			$job = new ParsoidCacheUpdateJob( $title, array(
 				'type' => 'OnDependencyChange',
@@ -58,4 +65,33 @@ class ParsoidHooks {
 		}
 	}
 
+	private static function updateTitleModern(Title $title) {
+		global $wgCityId;
+
+		if ( $title->getNamespace() == NS_FILE ) {
+			$task = ( new ParsoidCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->titleId( $title->mArticleID )
+				->setPriority(ParsoidPurgeQueue::NAME);
+
+			$task->call( 'findDependencies', 'imagelinks' );
+			$task->queue();
+		} else {
+			$task = ( new ParsoidCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->titleId( $title->mArticleID )
+				->setPriority(ParsoidPurgePriorityQueue::NAME);
+
+			$task->call( 'onEdit' );
+			$task->queue();
+
+			$task = ( new ParsoidCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->titleId( $title->mArticleID )
+				->setPriority(ParsoidPurgeQueue::NAME);
+
+			$task->call( 'findDependencies', 'templatelinks' );
+			$task->queue();
+		}
+	}
 }

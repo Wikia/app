@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cedric31"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "Gras",
+	"visualeditor-annotationbutton-italic-tooltip": "Italica",
+	"visualeditor-annotationbutton-link-tooltip": "Ligam",
+	"visualeditor-historybutton-redo-tooltip": "Refar",
+	"visualeditor-historybutton-undo-tooltip": "Anullar",
+	"visualeditor-indentationbutton-indent-tooltip": "Aumentar l’indentacion",
+	"visualeditor-indentationbutton-outdent-tooltip": "Demesir l’indentacion",
+	"visualeditor-mediasizewidget-label-custom": "Personalizat",
+	"visualeditor-mediasizewidget-label-scale": "Escala",
+	"visualeditor-mediasizewidget-label-scale-percent": "% de la talha d'una vinheta",
+	"visualeditor-mediasizewidget-sizeoptions-custom": "Personalizat",
+	"visualeditor-mediasizewidget-sizeoptions-default": "Per defaut",
+	"visualeditor-mediasizewidget-sizeoptions-scale": "Escala"
+}

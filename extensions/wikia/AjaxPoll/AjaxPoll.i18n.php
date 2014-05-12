@@ -121,6 +121,8 @@ $messages['bg'] = array(
 $messages['bn'] = array(
 	'ajaxpoll-thankyou' => 'আপনার ভোটের জন্য ধন্যবাদ!',
 	'ajaxpoll-submit' => 'ভোট!',
+	'ajaxpoll-closed' => 'জরিপ বন্ধ করা হয়েছে। ফল উপোভোগ করুন।',
+	'ajaxpoll-submitting' => 'দয়া করে অপেক্ষা করুন, আপনার ভোট দেয়া হচ্ছে....',
 );
 
 /** Tibetan (བོད་ཡིག)

@@ -473,7 +473,7 @@ class SpecialConnect extends SpecialPage {
 			wfRunHooks( 'AddNewAccount', array( $user, false ) );
 
 			// Mark that the user is a Facebook user
-			$user->addGroup('fb-user');
+			// $user->addGroup('fb-user'); // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 			// Store which fields should be auto-updated from Facebook when the user logs in.
 			$updateFormPrefix = "wpUpdateUserInfo";

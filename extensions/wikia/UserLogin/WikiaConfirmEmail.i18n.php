@@ -327,7 +327,7 @@ $messages['pt'] = array(
 	'wikiaconfirmemail-login-button' => 'Confirmar e iniciar sessão',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
 	'wikiaconfirmemail-subheading' => 'Inicie sessão com o seu nome de utilizador e palavra-chave para que nós saibamos que recebeu o e-mail.',
-	'wikiaconfirmemail-username' => 'Nome de utilizador',
+	'wikiaconfirmemail-username' => 'Nome de usuário',
 );
 
 /** Brazilian Portuguese (português do Brasil)

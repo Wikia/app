@@ -20,9 +20,12 @@ class Set implements ClauseBuild {
 
 	public function build(Breakdown $bk, $tabs) {
 		$bk->append(" " . $this->column);
-		$bk->append(" =");
-		$bk->append(" ?");
-		$bk->addParameter($this->value);
+
+		if ($this->value !== null) {
+			$bk->append(" =");
+			$bk->append(" ?");
+			$bk->addParameter($this->value);
+		}
 	}
 
 }

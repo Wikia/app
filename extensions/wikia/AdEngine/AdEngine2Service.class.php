@@ -202,7 +202,7 @@ class AdEngine2Service
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
-			$wgRequest, $wgEnableKruxTargeting, $wgNoExternals,
+			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
 
@@ -260,13 +260,13 @@ class AdEngine2Service
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
 		];
 
-		if (!empty($wgEnableKruxTargeting) && empty($wgNoExternals)) {
+		if (!empty($wgEnableKruxTargeting)) {
 			$cat = AdEngine2Service::getCachedCategory();
 			$variablesToExpose['wgKruxCategoryId'] = WikiFactoryHub::getInstance()->getKruxId($cat['id']);
 		}
 
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
-			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
+			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia.fullFluid'], 'scripts');
 			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}

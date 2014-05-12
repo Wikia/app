@@ -15,7 +15,7 @@ ve.dm.wikiaExample.createExampleDocument = function ( name, store ) {
 
 ve.dm.wikiaExample.domToDataCases = {
 	'thumb image': {
-		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockImage',
@@ -29,14 +29,11 @@ ve.dm.wikiaExample.domToDataCases = {
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
-					'attribution': {
-						'title': 'Bar',
-						'username': 'Foo'
-					}
+					'user': 'Foo'
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","title":"Bar"}}'
+						'data-mw': '{"user":"Foo"}'
 					}
 				} ]
 			},
@@ -51,7 +48,7 @@ ve.dm.wikiaExample.domToDataCases = {
 		]
 	},
 	'thumb video': {
-		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
+		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
 			{
 				'type': 'wikiaBlockVideo',
@@ -65,14 +62,11 @@ ve.dm.wikiaExample.domToDataCases = {
 					'resource': 'FooBar',
 					'originalClasses': 'mw-halign-right foobar',
 					'unrecognizedClasses': ['foobar'],
-					'attribution': {
-						'username': 'Foo',
-						'title': 'Bar'
-					}
+					'user': 'Foo'
 				},
 				'htmlAttributes': [ {
 					'values': {
-						'data-mw': '{"attribution":{"username":"Foo","title":"Bar"}}'
+						'data-mw': '{"user":"Foo"}'
 					}
 				} ]
 			},

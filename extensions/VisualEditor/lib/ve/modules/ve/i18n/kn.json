@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vikassy"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "ದಪ್ಪ",
+	"visualeditor-annotationbutton-italic-tooltip": "ಓರೆಯಾದ",
+	"visualeditor-annotationbutton-language-tooltip": "ಭಾಷೆ",
+	"visualeditor-clipboard-copy": "ನಕಲು",
+	"visualeditor-clipboard-cut": "ಕತ್ತರಿಸು",
+	"visualeditor-clipboard-paste": "ಅಂಟಿಸು",
+	"visualeditor-dialog-action-cancel": "ರದ್ದು",
+	"visualeditor-dialog-action-goback": "ಹಿಂದೆ ಹೋಗಿ",
+	"visualeditor-help-tool": "ಸಹಾಯ",
+	"visualeditor-inspector-close-tooltip": "ಮುಚು",
+	"visualeditor-inspector-remove-tooltip": "ತೆಗೆ",
+	"visualeditor-languageinspector-title": "ಭಾಷೆ",
+	"visualeditor-languageinspector-widget-label-direction": "ನಿರ್ದೇಶನ",
+	"visualeditor-languageinspector-widget-label-language": "ಭಾಷೆ",
+	"visualeditor-shortcuts-history": "ಇತಿಹಾಸ",
+	"visualeditor-shortcuts-other": "ಇತರ",
+	"visualeditor-specialcharacter-button-tooltip": "ವಿಷೇಶ ಅಕ್ಷರಗಳು",
+	"visualeditor-specialcharacterinspector-title": "ವಿಷೇಶ ಅಕ್ಷರಗಳು",
+	"visualeditor-toolbar-insert": "ಸೇರ್ಪಡಿಸು",
+	"visualeditor-version-label": "ಆವೃತ್ತಿ"
+}

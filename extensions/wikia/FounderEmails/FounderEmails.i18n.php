@@ -6688,7 +6688,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
-	'tog-founderemailsenabled' => 'Enviar-me por correio eletrónico atualizações sobre aquilo que os outros fazem (só para fundadores)',
+	'tog-founderemailsenabled' => 'Enviar-me por e-mail atualizações sobre aquilo que os outros fazem (só para fundadores)',
 	'founderemails-email-user-registered-subject' => 'Alguém novo registou-se na $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
 
@@ -6775,11 +6775,11 @@ Envolva mais pessoas no seu projeto e mostre o trabalho maravilhoso que tem esta
 
 A sua mãe não mandou Partilhar? Use o botão Partilhar na página principal da sua wiki, nos artigos e nas fotos para mostrá-las aos seus amigos e Seguidores do Facebook, do Twitter e de outros sites populares.
 
-Aproveite o poder do correio eletrónico. Envie mensagens a quem esteja interessado no assunto ou em ajudá-lo(a), como um amigo ou amiga, ou colega de trabalho. Também pode enviar fotografias diretamente da sua wiki usando o botão mensagem.
+Aproveite o poder do e-mail. Envie mensagens a quem esteja interessado no assunto ou em ajudá-lo(a), como um amigo ou amiga, ou colega de trabalho. Também pode enviar fotografias diretamente da sua wiki usando o botão mensagem.
 
-Junte-se a sites semelhantes. Peça ajuda aos utilizadores de outros sites e fóruns acerca do mesmo assunto da sua wiki. Se possível, contate os administradores e pergunte-lhes se estão dispostos a uma troca de links - eles colocam no site um link para a sua wiki e você coloca na wiki um link para o site deles.
+Junte-se a sites semelhantes. Peça ajuda aos usuários de outros sites e fóruns acerca do mesmo assunto da sua wiki. Se possível, contate os administradores e pergunte-lhes se estão dispostos a uma troca de links - eles colocam no site um link para a sua wiki e você coloca na wiki um link para o site deles.
 
-Também pode pedir ajuda a outros utilizadores aqui da Wikia, por mensagem no fórum da http://pt.wikia.com ou nos fóruns da http://community.wikia.com.
+Também pode pedir ajuda a outros usuários aqui da Wikia, por mensagem no fórum da http://pt.wikia.com ou nos fóruns da http://community.wikia.com.
 
 Continue o bom trabalho!
 

@@ -854,16 +854,16 @@ div#userloginForm .captcha {
 	background-color: white;
 }
 
-div#userlogin form#userlogin2 label { 
-	font-size: 115%; 
-	font-weight: bold; 
-} 
-  	
-div#userlogin form#userlogin2 input { 
-	margin-bottom: 4px; 
-}  
+div#userlogin form#userlogin2 label {
+	font-size: 115%;
+	font-weight: bold;
+}
 
-#signupWhyProvide { 
+div#userlogin form#userlogin2 input {
+	margin-bottom: 4px;
+}
+
+#signupWhyProvide {
 	display: none;
 }
 
@@ -1003,7 +1003,7 @@ div.gallerybox div.thumb {
 }
 
 .gallerybox .bigButton {
-	font-size: 80%;	
+	font-size: 80%;
 }
 
 /*BARTEK*/
@@ -1215,7 +1215,7 @@ div.mw-lag-warn-high {
 
 .wikiaPlaceholder {
 	vertical-align: bottom;
-}	
+}
 .wikiaPlaceholder .wikia-button {
 	display: block;
 	text-align: center;
@@ -1225,12 +1225,12 @@ div.mw-lag-warn-high {
 .wikiaPlaceholder > div {
 	margin: 0.5em 1.4em 1.2em 0;
 	text-align: center;
-}		
+}
 
 .wikiaPlaceholder > div.tright {
 	margin: 0.5em 0 1.2em 1.4em;
 }
-		
+
 .wikiaPlaceholder > div.tcenter {
 	margin: 0.5em auto 1.2em;
 }
