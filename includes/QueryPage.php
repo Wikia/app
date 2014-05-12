@@ -603,8 +603,16 @@ abstract class QueryPage extends SpecialPage {
 	 * @param $offset
 	 * @return string
 	 */
-	function openList( $offset ) {
-		return "\n<ol start='" . ( $offset + 1 ) . "' class='special'>\n";
+	// begin Wikia change
+	// @author Cqm
+	// VOLDEV-30
+	// handle ordered lists above 1000
+	function openList( $offset, $num ) {
+		$indent = strlen( strval( $offset + 1 + $num ) );
+
+		// add value of $indent to be used as a hook for css
+		return "\n<ol start='" . ( $offset + 1 ) . "' class='special' data-specialindent='" . $indent . "'>\n";
+		// end Wikia change
 	}
 
 	/**

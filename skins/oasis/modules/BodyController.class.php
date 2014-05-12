@@ -440,6 +440,46 @@ class BodyController extends WikiaController {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('skins/oasis/css/modules/SpecialAllpages.scss'));
 		}
 
+		// VOLDEV-30
+		// load CSS for special pages with ordered lists
+		$olSpecial = array(
+			'Ancientpages',
+			'Brokenredirects',
+			'Deadendpages',
+			'Doubleredirects',
+			'Fewestrevisions',
+			'Linksearch',
+			'Listredirects',
+			'Lonelypages',
+			'Longpages',
+			'Mostcategories',
+			'Mostlinkedcategories',
+			'Mostlinkedpages',
+			'Mostlinkedtemplates',
+			'Mostpopularcategories',
+			'Mostrevisions',
+			'Shortpages',
+			'Uncategorizedcategories',
+			'Uncategorizedpages',
+			'Uncategorizedtemplates',
+			'Unusedcategories',
+			'Unusedtemplates',
+			'Unwatchedpages',
+			'Wantedcategories',
+			'Wantedfiles',
+			'Wantedpages',
+			'Wantedtemplates',
+			'Withoutinterwiki',
+		);
+
+		if ( !empty( $wgTitle ) ) {
+			foreach ( $olSpecial as $special ) {
+				if ( $wgTitle->isSpecial( $special ) ) {
+					$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialLongShortPages.scss' ) );
+				}
+			}
+		}
+
 		// Forum Extension
 		if (!empty($this->wg->EnableForumExt) && ForumHelper::isForum()) {
 			$this->wg->SuppressPageHeader = true;
