@@ -82,7 +82,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url );
 		if ( $content === false  ) {
-			$this->videoErrors("ERROR: problem downloading content.\n" );
+			$this->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -211,7 +211,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				}
 
 				$clip['AgeGate'] = $params['ageGate'];
-				if ( array_key_exists( $clip['EClipId'], $videos) ) {
+				if ( array_key_exists( $clip['EClipId'], $videos ) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
 					$this->setResultSummary( 'found' );
