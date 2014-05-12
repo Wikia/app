@@ -85,6 +85,10 @@ $header-color-secondary: $color-page;
 				}
 			}
 
+			&.no-see-all .submenu {
+				padding-bottom: 20px;
+			}
+
 			.submenu {
 				background: $header-color-primary;
 				color: $header-color-secondary;
@@ -98,27 +102,15 @@ $header-color-secondary: $color-page;
 					margin-left: -520px;
 					width: 1040px;
 
-//					-moz-column-count: 4;
-//					-webkit-column-count: 4;
-//					column-count: 4;
-//					page-break-inside: avoid; // FF26+
-//					-webkit-column-break-inside: avoid;
-//					column-break-inside: avoid;
-//
-//					ul.subnav-2-column {
-//						float: left;
-//					}
-//					li.subnav-2-item {
-//						float: none;
-//						display: inline-block;
-//					}
-//					&.submenu-size-5 {
-//						li.subnav-2-item:nth-child(3):after {
-//							-moz-column-break-before: always;
-//							-webkit-column-break-before: always;
-//							break-before: column;
-//						}
-//					}
+					.subnav-2-column {
+						float: left;
+						display: block;
+						width: 250px;
+
+						.subnav-2-item {
+							float: none;
+						}
+					}
 				}
 
 				&.submenu-wide {

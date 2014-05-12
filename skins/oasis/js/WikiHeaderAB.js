@@ -24,9 +24,12 @@ $(function () {
 			$items = $subNav.children(),
 			noOfItems = $items.length,
 			sizeClass = '',
+			seeAllText = (noOfItems > 2) ? ('See all in ' + $seeAll.text()) : 'See all',
 			$columns = $(),
 			$columnUl,
 			i = 0;
+
+		window.temp = $subNav;
 
 		$items.find('.subnav-2a').append(svgChevron);
 		if (noOfItems === 3) {
@@ -36,19 +39,23 @@ $(function () {
 		} else {
 			$this.addClass('nav-item-narrow');
 		}
+
 		$subNav.wrap('<section class="submenu ' + sizeClass + '"></section>')
-			.parent().append($('<div class="clearfix"></div>') )
-			// TODO i18n
-			.append($seeAll.html('See all in ' + $seeAll.text() + svgChevron)
-			.wrap('<section class="see-all"></section>').parent());
+			.parent().append($('<div class="clearfix"></div>'));
 
-		for ( i = 0; i < 4; i++ ) {
-			if ( $items.length > i ) {
-				$columnUl = $( '<ul>' );
-				$columnUl.append( $items.get( i ) );
-				$columnUl.append( $items.get( i + 4 ) );
+		if ($seeAll.attr('href') !== '#') {
+			$subNav.append($seeAll.html(seeAllText + svgChevron).wrap('<section class="see-all"></section>').parent());
+		} else {
+			$this.addClass('no-see-all');
+		}
 
-				$columns = $columns.add( $( '<li>' ).append( $columnUl ) );
+		for (i = 0; i < 4; i++) {
+			if ($items.length > i) {
+				$columnUl = $('<ul class="subnav-2-column">');
+				$columnUl.append($items.get(i));
+				$columnUl.append($items.get(i + 4));
+
+				$columns = $columns.add($('<li>').append($columnUl));
 			}
 		}
 		$subNav.append($columns);
