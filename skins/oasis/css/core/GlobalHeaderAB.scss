@@ -11,7 +11,7 @@ $bg-color: #fff;
 $bg-color-opposite: #000;
 $menu-hover-bg-color: #C7D2D8;
 $menu-border-color: black;
-$nav-height: 41px;
+$nav-height: 50px;
 $input-border-color: mix($bg-color, #000000, 80%);
 $ab-text-color: #3a3a3a;
 
@@ -57,11 +57,11 @@ body.global-header-fixed-at-top .WikiaHeader {
 			@include box-sizing;
 			height: $nav-height;
 			margin-top: 0;
-			padding-top: 11px;
+			padding-top: 15px;
 		}
 
 		.WikiaLogo {
-			padding: 11px 5px 0 10px;
+			padding: 15px 5px 0 10px;
 		}
 	}
 
@@ -117,6 +117,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 				}
 
 				@include width-calc('100% - 300px');
+
 				border: 1px solid $input-border-color;
 				border-radius: 4px;
 				float: left;
@@ -147,6 +148,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 					@include width-calc('100% - 80px');
 					border-radius: 4px 0 0 4px;
 					border-right: 0;
+					max-width: 410px;
 				}
 
 				.search-button {
@@ -178,7 +180,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 			@include box-sizing;
 
 			height: $nav-height;
-			padding: 10px 0 0;
+			padding: 14px 0 0;
 
 			&:hover {
 				background: none;
@@ -297,7 +299,7 @@ body.global-header-fixed-at-top .WikiaHeader {
 		}
 
 		& .topNav {
-			margin-top: -11px;
+			margin-top: -15px;
 
 			& > a {
 				color: $color;
