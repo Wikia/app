@@ -43,9 +43,9 @@ class CleanupCommentsIndex {
 		 revision.rev_id = comments_index.first_rev_id
 		)
 		WHERE comments_index.removed = 0 AND
-					comments_index.deleted = 0 AND
-					comments_index.archived = 0 AND
-					revision.rev_id IS NULL
+			comments_index.deleted = 0 AND
+			comments_index.archived = 0 AND
+			revision.rev_id IS NULL
 SQL;
 		$ret = $db->query( $sql );
 		$row = $db->fetchObject( $ret );
@@ -66,12 +66,12 @@ SQL;
 			SELECT parent_page_id, first_rev_id, removed, deleted, archived
 			FROM comments_index
 			LEFT JOIN revision ON (
-							revision.rev_id = comments_index.first_rev_id
+				revision.rev_id = comments_index.first_rev_id
 			)
 			WHERE comments_index.removed = 0 AND
-						comments_index.deleted = 0 AND
-						comments_index.archived = 0 AND
-						revision.rev_id IS NULL
+				comments_index.deleted = 0 AND
+				comments_index.archived = 0 AND
+				revision.rev_id IS NULL
 		);
 SQL;
 		$db->query($sql);
