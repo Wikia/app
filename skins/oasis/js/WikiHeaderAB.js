@@ -21,9 +21,12 @@ $(function () {
 		var $this = $(this),
 			$seeAll = $this.find('> a').clone(),
 			$subNav = $this.find('.subnav-2'),
-			$items = $this.find('.subnav-2 > li'),
+			$items = $subNav.children(),
 			noOfItems = $items.length,
-			sizeClass = '';
+			sizeClass = '',
+			$columns = $(),
+			$columnUl,
+			i = 0;
 
 		$items.find('.subnav-2a').append(svgChevron);
 		if (noOfItems === 3) {
@@ -38,6 +41,17 @@ $(function () {
 			// TODO i18n
 			.append($seeAll.html('See all in ' + $seeAll.text() + svgChevron)
 			.wrap('<section class="see-all"></section>').parent());
+
+		for ( i = 0; i < 4; i++ ) {
+			if ( $items.length > i ) {
+				$columnUl = $( '<ul>' );
+				$columnUl.append( $items.get( i ) );
+				$columnUl.append( $items.get( i + 4 ) );
+
+				$columns = $columns.add( $( '<li>' ).append( $columnUl ) );
+			}
+		}
+		$subNav.append($columns);
 	});
 
 	navigation.children().wrapAll('<section class="local-navigation-container"></section>');
