@@ -41,6 +41,7 @@
 		}
 	}
 	@media screen and (max-width: $breakpoint-small) {
+		// only show three videos on tablet portrait view
 		li:nth-child(n+4) {
 			display: none;
 		}
