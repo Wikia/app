@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Prevent auto adoption',
 	'editaccount-label-toggleadopt-allow' => 'Allow auto adoption',
 	'editaccount-label-reason' => 'Reason:',
+	'editaccount-label-clearemail' => 'Clear email address',
 	'editaccount-submit-email' => 'Save and confirm email address',
 	'editaccount-submit-pass' => 'Save password',
 	'editaccount-submit-realname' => 'Save real name',
@@ -99,6 +100,7 @@ $messages['qqq'] = array(
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-label-reason' => 'Label for reason field.
 {{Identical|Reason}}',
+	'editaccount-label-clearemail' => "Label for check box to clear a user's email on disabling their account",
 	'editaccount-submit-pass' => '{{Identical|Save password}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',

@@ -1,11 +1,13 @@
 {{{introText}}}
-
 {{#warning}}
 <p class="error">{{{warning}}}</p>
 {{/warning}}
-
 {{#showForm}}
 <form method="POST" name="CloseMyAccountForm" id="CloseMyAccountForm" class="CloseMyAccountForm">
+	{{{currentUserMessage}}}
+	<div class="input-group">
+		<label for="wpConfirm"><input type="checkbox" name="wpConfirm" id="wpConfirm" required /> {{{confirmationText}}}</label>
+	</div>
 	{{{submitButton}}}
 	<input type="hidden" name="token" value="{{editToken}}" />
 </form>

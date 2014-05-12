@@ -144,7 +144,8 @@ class EditAccount extends SpecialPage {
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
-				$this->mStatus = $this->closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2 );
+				$keepEmail = !$request->getBool( 'clearemail', false );
+				$this->mStatus = self::closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2, $keepEmail );
 				$template = $this->mStatus ? 'selectuser' : 'displayuser';
 				break;
 			case 'clearunsub':
@@ -349,15 +350,17 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Scrambles the user's password, sets an empty e-mail and marks as disabled
+	 * Clears the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param $user User User account to close
-	 * @param $changeReason String reason for change
-	 * @param $mStatusMsg String Main error message
-	 * @param $mStatusMsg2 String Secondary (non-critical) error message
-	 * @return Boolean: true on success, false on failure
+	 * @param  User    $user         User account to close
+	 * @param  string  $changeReason Reason for change
+	 * @param  string  $mStatusMsg   Main error message
+	 * @param  string  $mStatusMsg2  Secondary (non-critical) error message
+	 * @param  boolean $keepEmail    Optionally keep the email address in a
+	 *                               user option
+	 * @return boolean               true on success, false on failure
 	 */
-	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '' ) {
+	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
 		global $wgEnableFacebookConnectExt;
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
@@ -386,12 +389,12 @@ class EditAccount extends SpecialPage {
 		}
 
 		# close account and invalidate cache + cluster data
-		Wikia::invalidateUser( $user, true, true );
+		Wikia::invalidateUser( $user, true, $keepEmail, true );
 		if ( !empty( $wgEnableFacebookConnectExt ) ) {
 			self::disconnectFBConnect( $user );
 		}
 
-		if ( $user->getEmail() == ''  ) {
+		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
 			// Log what was done
 			$log = new LogPage( 'editaccnt' );
