@@ -59,6 +59,7 @@ you should definitely check this out:
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
 	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
+	'wikiamobile-videos' => 'Videos',
 
 	//toc
 	'wikiamobile-toc-header' => 'Table of Contents',
@@ -136,6 +137,7 @@ $messages['qqq'] = array(
 	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
 	'wikiamobile-video-not-friendly' => "Message displayed in modal - to indicate that this video won't be loaded in mobile skin",
+	'wikiamobile-videos' => 'Generic translation of the word "videos". Mainly used as a navigation link.',
 	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed.
 {{Identical|Table of contents}}',
 	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',

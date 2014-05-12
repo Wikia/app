@@ -20,7 +20,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
-		googletag;
+		googletag,
+		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
 
 	function convertSizesToGpt(slotsize) {
 		log(['convertSizeToGpt', slotsize], 'debug', logGroup);
@@ -35,6 +36,27 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		}
 
 		return sizes;
+	}
+
+	function filterOutSizesBiggerThanScreenSize(sizes) {
+		log(['filterOutSizesBiggerThanScreenSize', sizes], 'debug', logGroup);
+		var goodSizes = [], i, len, minWidth;
+
+		minWidth = document.documentElement.offsetWidth;
+
+		for (i = 0, len = sizes.length; i < len; i += 1) {
+			if (sizes[i][0] <= minWidth) {
+				goodSizes.push(sizes[i]);
+			}
+		}
+
+		if (goodSizes.length === 0) {
+			log(['filterOutSizesBiggerThanScreenSize', 'No sizes left. Returning fallbackSize only'], 'error', logGroup);
+			goodSizes.push(fallbackSize);
+		}
+
+		log(['filterOutSizesBiggerThanScreenSize', 'result', goodSizes], 'debug', logGroup);
+		return goodSizes;
 	}
 
 	function loadGpt() {
@@ -102,7 +124,11 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 								slotnameGpt = slotname + '_' + slotMapSrc;
 								slotItem = slotMap[slotname];
+
 								sizes = convertSizesToGpt(slotItem.size);
+								if (slotname.match(/TOP_LEADERBOARD/)) {
+									sizes = filterOutSizesBiggerThanScreenSize(sizes);
+								}
 
 								slotPath = path + '/' + slotname + '_' + slotMapSrc;
 

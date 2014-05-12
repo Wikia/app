@@ -293,8 +293,10 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
-	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
+	 * @requestParam string|array providers - Only videos hosted by these providers will be returned. Default: all providers.
 	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @requestParam integer width - the width of the thumbnail to return
+	 * @requestParam integer height - the height of the thumbnail to return
 	 * @responseParam array $videos
 	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
 	 */
@@ -306,10 +308,19 @@ class VideoHandlerController extends WikiaController {
 		$page = $this->getVal( 'page', 1 );
 		$providers = $this->getVal( 'providers', array() );
 		$category = $this->getVal( 'category', '' );
+		$width = $this->getVal( 'width', 0 );
+		$height = $this->getVal( 'height', 0 );
 
 		$filter = 'all';
 		if ( is_string( $providers ) ) {
-			$providers = [ $providers ];
+			// get providers for mobile
+			if ( $providers == 'mobile' ) {
+				$providers = $this->wg->WikiaMobileSupportedVideos;
+			} elseif ( $providers == 'mobileApp' ) {
+				$providers = $this->wg->WikiaMobileAppSupportedVideos;
+			} else {
+				$providers = [ $providers ];
+			}
 		}
 
 		// set maximum limit
@@ -319,6 +330,25 @@ class VideoHandlerController extends WikiaController {
 
 		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+		// get video id and thumbnail url for mobile
+		if ( !empty( $width ) && !empty( $height ) ) {
+			foreach ( $videoList as &$videoInfo ) {
+				$title = $videoInfo['title'];
+				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+				if ( $file ) {
+					$videoInfo['videoId'] = $file->getVideoId();
+					$videoInfo['videoName'] = $file->getTitle()->getText();
+
+					$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
+					$videoInfo['thumbUrl'] = $thumb->getUrl();
+				} else {
+					$videoInfo['videoId'] = '';
+					$videoInfo['videoName'] = '';
+					$videoInfo['thumbUrl'] = '';
+				}
+			}
+		}
 
 		$this->videos = $videoList;
 

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWInlineImageNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -50,11 +50,14 @@ ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
 		this.$image.css( 'vertical-align', valign );
 	}
 
+	if ( this.$element.css( 'direction' ) === 'rtl' ) {
+		this.showHandles( ['sw'] );
+	} else {
+		this.showHandles( ['se'] );
+	}
+
 	// DOM changes
 	this.$element.addClass( 've-ce-mwInlineImageNode' );
-
-	// Events
-	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -73,12 +76,7 @@ ve.ce.MWInlineImageNode.static.name = 'mwInlineImage';
 /* Methods */
 
 /**
- * Update the rendering of the 'src', 'width' and 'height' attributes when they change in the model.
- *
- * @method
- * @param {string} key Attribute key
- * @param {string} from Old value
- * @param {string} to New value
+ * @inheritdoc
  */
 ve.ce.MWInlineImageNode.prototype.onAttributeChange = function ( key, from, to ) {
 	if ( key === 'height' || key === 'width' ) {
