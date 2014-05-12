@@ -71,11 +71,13 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 		},
 
 		createCache: function () {
-			var self = this;
+			var self = this,
+				$scroller = $('.scroller');
+
 			self.cache = [];
 			$('img.lzy').each(function (idx) {
 				var $el = $(this),
-					relativeTo = $('.scroller').find(this),
+					relativeTo = $scroller.find(this),
 					topCalc, top;
 
 				if (relativeTo.length !== 0) {
