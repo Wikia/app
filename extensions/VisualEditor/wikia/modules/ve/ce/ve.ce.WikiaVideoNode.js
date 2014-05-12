@@ -33,7 +33,7 @@ ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 
 ve.ce.WikiaVideoNode.static = {};
 
-/* Static methods */
+/* Static Methods */
 
 /**
  * Get the size string to use as the class name for the video thumbnail wrapper.

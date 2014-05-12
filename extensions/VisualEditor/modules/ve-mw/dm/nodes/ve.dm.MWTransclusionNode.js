@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -23,6 +23,12 @@ ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode( length, element ) {
 
 	// Mixin constructors
 	ve.dm.GeneratedContentNode.call( this );
+
+	// Properties
+	this.partsList = null;
+
+	// Events
+	this.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -80,41 +86,71 @@ ve.dm.MWTransclusionNode.static.toDataElement = function ( domElements, converte
 		}
 	};
 
-	index = this.storeGeneratedContents( dataElement, domElements, converter.getStore() );
-	dataElement.attributes.originalIndex = index;
+	if ( !domElements[0].getAttribute( 'data-ve-no-generated-contents' ) ) {
+		index = this.storeGeneratedContents( dataElement, domElements, converter.getStore() );
+		dataElement.attributes.originalIndex = index;
+	}
 
 	return dataElement;
 };
 
 ve.dm.MWTransclusionNode.static.toDomElements = function ( dataElement, doc, converter ) {
-	var el,
-		index = converter.getStore().indexOfHash( OO.getHash( this.getHashObject( dataElement ) ) ),
+	var els, currentDom, i, len, wrapper,
+		index = converter.getStore().indexOfHash( OO.getHash( [ this.getHashObject( dataElement ), undefined ] ) ),
 		originalMw = dataElement.attributes.originalMw;
 
 	// If the transclusion is unchanged just send back the
 	// original DOM elements so selser can skip over it
 	if (
-		index === dataElement.attributes.originalIndex ||
-		( originalMw && ve.compare( dataElement.attributes.mw, JSON.parse( originalMw ) ) )
+		dataElement.attributes.originalDomElements && (
+			index === dataElement.attributes.originalIndex ||
+			( originalMw && ve.compare( dataElement.attributes.mw, JSON.parse( originalMw ) ) )
+		)
 	) {
 		// The object in the store is also used for CE rendering so return a copy
 		return ve.copyDomElements( dataElement.attributes.originalDomElements, doc );
 	} else {
 		if ( dataElement.attributes.originalDomElements ) {
-			el = doc.createElement( dataElement.attributes.originalDomElements[0].nodeName );
+			els = [ doc.createElement( dataElement.attributes.originalDomElements[0].nodeName ) ];
 		} else {
-			el = doc.createElement( 'span' );
+			els = [ doc.createElement( 'span' ) ];
+			if ( converter.isForClipboard() ) {
+				// For the clipboard use the current DOM contents but mark as ignored
+				// for the converter
+				currentDom = converter.getStore().value( index );
+				if ( currentDom ) {
+					currentDom = ve.copyDomElements( currentDom, doc );
+					// i = 0 is the data-mw span
+					for ( i = 1, len = currentDom.length; i < len; i++ ) {
+						// Wrap plain text nodes so we can give them an attribute
+						if ( currentDom[i].nodeType === Node.TEXT_NODE ) {
+							wrapper = doc.createElement( 'span' );
+							wrapper.appendChild( currentDom[i] );
+							currentDom[i] = wrapper;
+						}
+						currentDom[i].setAttribute( 'data-ve-ignore', 'true' );
+						els.push( currentDom[i] );
+					}
+				}
+			}
 		}
 		// All we need to send back to Parsoid is the original transclusion marker, with a
 		// reconstructed data-mw property.
-		el.setAttribute( 'typeof', 'mw:Transclusion' );
-		el.setAttribute( 'data-mw', JSON.stringify( dataElement.attributes.mw ) );
-		return [ el ];
+		els[0].setAttribute( 'typeof', 'mw:Transclusion' );
+		els[0].setAttribute( 'data-mw', JSON.stringify( dataElement.attributes.mw ) );
+		// Mark the element as not having valid generated contents with it in case it is
+		// inserted into another editor (e.g. via paste).
+		els[0].setAttribute( 'data-ve-no-generated-contents', true );
+		// TODO: Include last-known generated contents in the output for rich
+		// paste into a non-VE editor
+		return els;
 	}
 };
 
 /**
- * Escape a template parameter. Helper function for getWikitext().
+ * Escape a template parameter. Helper function for #getWikitext.
+ *
+ * @static
  * @param {string} param Parameter value
  * @returns {string} Escaped parameter value
  */
@@ -178,6 +214,56 @@ ve.dm.MWTransclusionNode.static.escapeParameter = function ( param ) {
 /* Methods */
 
 /**
+ * Handle attribute change events.
+ *
+ * @method
+ * @param {string} key Attribute key
+ * @param {string} from Old value
+ * @param {string} to New value
+ */
+ve.dm.MWTransclusionNode.prototype.onAttributeChange = function ( key ) {
+	if ( key === 'mw' ) {
+		this.partsList = null;
+	}
+};
+
+/**
+ * Check if transclusion contains only a single template.
+ *
+ * @param {string} [template] Name of single template, omit to allow any template name
+ * @return {boolean} Transclusion only contains a single template
+ */
+ve.dm.MWTransclusionNode.prototype.isSingleTemplate = function ( template ) {
+	var partsList = this.getPartsList();
+	return partsList.length === 1 &&
+		( template === undefined || partsList[0].template === template );
+};
+
+/**
+ * Get a simplified description of the transclusion's parts.
+ *
+ * @returns {Object[]} List of objects with either template or content properties
+ */
+ve.dm.MWTransclusionNode.prototype.getPartsList = function () {
+	var i, len, part, content;
+
+	if ( !this.partsList ) {
+		this.partsList = [];
+		content = this.getAttribute( 'mw' );
+		for ( i = 0, len = content.parts.length; i < len; i++ ) {
+			part = content.parts[i];
+			this.partsList.push(
+				part.template ?
+					{ 'template': part.template.target.wt } :
+					{ 'content': part }
+			);
+		}
+	}
+
+	return this.partsList;
+};
+
+/**
  * Get the wikitext for this transclusion.
  *
  * @method
@@ -210,6 +296,16 @@ ve.dm.MWTransclusionNode.prototype.getWikitext = function () {
 		}
 	}
 	return wikitext;
+};
+
+/** */
+ve.dm.MWTransclusionNode.prototype.getClonedElement = function () {
+	var clone = ve.dm.LeafNode.prototype.getClonedElement.call( this );
+	delete clone.attributes.originalMw;
+	delete clone.attributes.originalDomElements;
+	// Remove about attribute to prevent about grouping of duplicated transclusions
+	this.constructor.static.removeHtmlAttribute( clone, 'about' );
+	return clone;
 };
 
 /* Concrete subclasses */

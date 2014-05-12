@@ -196,17 +196,3 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgLoginToken'
 		];
 }
-
-//list of Videos provides that we support
-if ( empty( $wgWikiaMobileSupportedVideos ) ) {
-	$wgWikiaMobileSupportedVideos = [
-		'screenplay',
-		'ign',
-		'ooyala',
-		'youtube',
-		'dailymotion',
-		'vimeo',
-		'bliptv',
-		'uStream'
-	];
-}

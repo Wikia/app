@@ -268,7 +268,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/modules/csspropshelper.js',
 		'//resources/wikia/modules/fluidlayout.js',
-		'//extensions/wikia/EditPreview/js/preview.js',
 
 		// oasis specific files
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -1033,23 +1032,6 @@ $config['forum_mini_editor_js'] = array(
 //		'//extensions/wikia/MiniEditor/js/Forum/Forum.EditMessageForm.js',
 		'//extensions/wikia/MiniEditor/js/Forum/Forum.NewMessageForm.js',
 //		'//extensions/wikia/MiniEditor/js/Forum/Forum.ReplyMessageForm.js'
-	)
-);
-
-/** RelatedVideos **/
-$config['relatedvideos_js'] = array(
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/js/RelatedVideos.js'
-	)
-);
-
-$config['relatedvideos_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array( 'oasis' ), //we have no support for relatedvideos in wikiamobile and monobook as for now
-	'assets' => array(
-		'//extensions/wikia/RelatedVideos/css/RelatedVideos.scss'
 	)
 );
 

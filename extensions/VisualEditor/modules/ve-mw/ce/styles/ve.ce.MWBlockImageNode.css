@@ -1,0 +1,57 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki MWBlockImageNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+/*csslint regex-selectors:false, overqualified-elements:false */
+
+figure[typeof*='mw:Image'] {
+	margin: 0;
+}
+
+figure[typeof*='mw:Image'] a {
+	border: 0;
+}
+
+/* TODO: Merge with div.tright styles */
+/* Due to a weird cssjanus bug, noflip rules
+   are set as single-rules rather than for the
+   whole class */
+figure[typeof*='mw:Image'].mw-halign-right {
+	/* @noflip */
+	clear: right;
+	/* @noflip */
+	float: right;
+}
+
+figure[typeof*='mw:Image'].mw-halign-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* TODO: Merge with div.tleft styles */
+/* Due to a weird cssjanus bug, noflip rules
+   are set as single-rules rather than for the
+   whole class */
+figure[typeof*='mw:Image'].mw-halign-left {
+	/* @noflip */
+	clear: left;
+	/* @noflip */
+	float: left;
+}
+
+figure:not([typeof='mw:Image/Thumb']) figcaption .magnify {
+	display:none;
+}
+
+/* TODO: Merge with div.thumbinner styles */
+figure[typeof='mw:Image/Thumb'], figure[typeof='mw:Image/Frame'] {
+	overflow: hidden;
+	text-align: center;
+}
+
+/* Hide outer shield for centered images */
+figure[typeof*='mw:Image'].mw-halign-center + .ve-ce-protectedNode-shield {
+	display: none;
+}
