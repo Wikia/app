@@ -1115,7 +1115,7 @@ ve.init.mw.ViewPageTarget.prototype.detachToolbarButtons = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
-	var dialogDocument, script;
+	var dialogFrame, dialogDocument, script;
 	this.saveDialog = this.surface.getDialogs().getWindow( 'mwSave' );
 	// Connect to save dialog
 	this.saveDialog.connect( this, {
@@ -1129,10 +1129,14 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	this.saveDialog.setupCheckboxes( this.$checkboxes );
 
 	// Add Recaptcha script
-	dialogDocument = this.saveDialog.frame.$element[0].contentDocument;
-	script = dialogDocument.createElement( 'script' );
-	script.setAttribute( 'src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js' );
-	dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
+	dialogFrame = this.saveDialog.frame.$element[0];
+	dialogDocument = dialogFrame.contentDocument;
+	$( dialogFrame ).load( function () {
+		script = dialogDocument.createElement( 'script' );
+		script.type = 'text/javascript';
+		script.src = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+		dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
+	});
 };
 
 /**
