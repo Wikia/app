@@ -76,7 +76,7 @@
 				ocr05ve5z: 'Culture Caster 2014',
 				ocr88oqh9: 'Social Entertainers 2014'
 			},
-			uniqueKruxSegmentsKeys= Object.keys(uniqueKruxSegments),
+			uniqueKruxSegmentsKeys = Object.keys(uniqueKruxSegments),
 			markedSegments = [],
 			kruxSegments = [];
 
