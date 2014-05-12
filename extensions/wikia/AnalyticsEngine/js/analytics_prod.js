@@ -70,7 +70,7 @@
 	function getKruxSegment() {
 		var kruxSegment = 'not set',
 			uniqueKruxSegments = {
-				ocry7a4xg: 'Action Strategist 2014',
+				ocry7a4xg: 'Game Heroes 2014',
 				ocr1te1tc: 'Digital DNA 2014',
 				ocr6m2jd6: 'Inquisitive Minds 2014',
 				ocr05ve5z: 'Culture Caster 2014',
