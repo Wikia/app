@@ -1,0 +1,8 @@
+{
+	"config": {
+		"vendor-dir": "lib/composer"
+	},
+	"require": {
+		"videlalvaro/php-amqplib": "2.2.*"
+	}
+}

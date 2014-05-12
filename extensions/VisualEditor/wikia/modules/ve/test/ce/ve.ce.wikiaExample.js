@@ -13,7 +13,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		fakeLinkUrlResolved = ve.resolveUrl( fakeLinkUrl, document ),
 		fakeImageUrl = 'Bar',
 		fakeImageUrlResolved = ve.resolveUrl( fakeImageUrl, document ),
-		media = {};
+		media = {},
+		defaultThumbWidth = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize,
+		defaultThumbHeight = ( defaultThumbWidth / 2 );
 
 	/* Data */
 
@@ -21,8 +23,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 		'attribution': {
 			'minWidth': 100
 		},
-		'defaultWidth': 200,
-		'defaultHeight': 100
+		'defaultWidth': defaultThumbWidth,
+		'defaultHeight': defaultThumbHeight
 	};
 
 	media.data.cssClasses = {
@@ -121,19 +123,19 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.video.block = {
 		'title':
-			'<p class="title ve-no-shield">Bar</p>'
+			'<p class="title ve-no-shield">FooBar</p>'
 	};
 
 	/* Mock HTMLDOM */
 
 	media.htmlDom = {
 		'block':
-			'<figure data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<figure data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
 		'inline':
-			'<span data-mw=\'{"attribution":{"username":"Foo","title":"Bar"}}\'>' +
+			'<span data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
 	};

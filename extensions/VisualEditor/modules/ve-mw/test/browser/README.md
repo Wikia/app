@@ -1,1 +1,1 @@
-Please see https://github.com/wikimedia/qa-browsertests for instructions on how to run tests.
+Please see https://github.com/wikimedia/mediawiki-selenium for instructions on how to run tests.

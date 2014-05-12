@@ -6,56 +6,87 @@
 
 /*jshint node:true */
 module.exports = function ( grunt ) {
-	var fs = require( 'fs' ),
-		exec = require( 'child_process' ).exec;
+	var modules = grunt.file.readJSON( 'lib/ve/build/modules.json' );
 
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-csslint' );
-	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+	grunt.loadNpmTasks( 'grunt-banana-checker' );
+	grunt.loadNpmTasks( 'grunt-jscs-checker' );
+	grunt.loadTasks( 'lib/ve/build/tasks' );
+	grunt.loadTasks( 'build/tasks' );
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
+		jsduckcatconfig: {
+			main: {
+				target: '.docs/categories.json',
+				from: [
+					'.docs/mw-categories.json',
+					{
+						file: 'lib/ve/.docs/categories.json',
+						aggregate: {
+							'VisualEditor (core)': [
+								'General',
+								'Initialization',
+								'DataModel',
+								'ContentEditable',
+								'User Interface',
+								'Tests'
+							]
+						},
+						include: ['UnicodeJS', 'OOJS UI', 'Upstream']
+					}
+				]
+			}
+		},
+		buildloader: {
+			egiframe: {
+				target: '.docs/eg-iframe.html',
+				template: '.docs/eg-iframe.html.template',
+				modules: modules,
+				pathPrefix: 'lib/ve/',
+				indent: '\t\t'
+			}
+		},
 		jshint: {
-			options: JSON.parse( grunt.file.read( '.jshintrc' )
-				.replace( /\/\*(?:(?!\*\/)[\s\S])*\*\//g, '' ).replace( /\/\/[^\n\r]*/g, '' ) ),
-			all: ['*.js', 'modules/{syntaxhighlight,unicodejs,ve,ve-mw}/**/*.js', 'wikia/**/*.js']
+			options: {
+				jshintrc: '.jshintrc'
+			},
+			all: [
+				'*.js',
+				'{.docs,build}/**/*.js',
+				'modules/**/*.js'
+			]
+		},
+		jscs: {
+			src: [
+				'<%= jshint.all %>'
+			]
 		},
 		csslint: {
 			options: {
 				csslintrc: '.csslintrc'
 			},
-			all: ['modules/{ve,ve-mw}/**/*.css', 'wikia/**/*.css'],
+			all: [
+				'modules/*/**/*.css'
+			],
 		},
-		qunit: {
-			ve: 'modules/ve/test/index-phantomjs-tmp.html'
+		banana: {
+			all: 'modules/ve-{mw,wmf}/i18n/'
 		},
 		watch: {
-			files: ['<%= jshint.all %>', '<%= csslint.all %>', '.{jshintrc,jshintignore,csslintrc}'],
+			files: [
+				'.{jshintrc,jscs.json,jshintignore,csslintrc}',
+				'<%= jshint.all %>',
+				'<%= csslint.all %>'
+			],
 			tasks: ['test']
 		}
 	} );
 
-	grunt.registerTask( 'pre-qunit', function () {
-		var done = this.async();
-		grunt.file.setBase( __dirname + '/modules/ve/test' );
-		exec( 'php index.php > index-phantomjs-tmp.html', function ( err, stdout, stderr ) {
-			if ( err || stderr ) {
-				grunt.log.error( err || stderr );
-				done( false );
-			} else {
-				grunt.file.setBase( __dirname );
-				done( true );
-			}
-		} );
-	} );
-
-	grunt.event.on( 'qunit.done', function () {
-		fs.unlinkSync( __dirname + '/modules/ve/test/index-phantomjs-tmp.html' );
-	} );
-
-	grunt.registerTask( 'lint', ['jshint', 'csslint'] );
-	grunt.registerTask( 'unit', ['pre-qunit', 'qunit'] );
-	grunt.registerTask( 'test', ['lint', 'unit'] );
-	grunt.registerTask( 'default', 'test' );
+	grunt.registerTask( 'build', ['jsduckcatconfig', 'buildloader'] );
+	grunt.registerTask( 'lint', ['jshint', 'jscs', 'csslint', 'banana' ] );
+	grunt.registerTask( 'test', ['build', 'lint'] );
+	grunt.registerTask( 'default', ['test'] );
 };

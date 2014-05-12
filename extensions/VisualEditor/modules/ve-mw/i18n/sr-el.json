@@ -1,0 +1,17 @@
+{
+    "@metadata": {
+        "authors": [
+            "Milicevic01",
+            "Msannakoval"
+        ]
+    },
+    "visualeditor-categories-tool": "Kategorije",
+    "visualeditor-dialog-beta-welcome-content": "Ovo je naš novi, lakši način za uređivanje. Još uvek je u beta verziji, što znači da ćete možda naići na delove stranice koje ne možete uređivati, ili probleme koje treba srediti. Ohrabrujemo vas da pregledate svoje promene, i pozivamo da nas izvestite o bilo kom problemu na koji ste naišli koristeći VisualEditor (kliknite na „{{int:visualeditor-help-tool}}“ dugme da pošaljete izveštaj o problemima). Možete nastaviti da koriste uređivač vikiteksta klikom na „$1“ - ali nesačuvane promene biće izgubljene.",
+    "visualeditor-dialog-meta-languages-label": "Jezici",
+    "visualeditor-languages-tool": "Jezici",
+    "visualeditor-preference-core-description": "Uključuje VisualEditor. Neće biti dostupan na stranicama za razgovor i još nekim imenskim prostorima.",
+    "visualeditor-preference-enable": "Uključuje VisualEditor. Neće biti dostupan na stranicama za razgovor i još nekim imenskim prostorima.",
+    "visualeditor-savedialog-label-review-good": "Nazad na čuvanje izmena",
+    "visualeditor-toolbar-cancel": "Otkaži",
+    "visualeditor-wikitext-warning-title": "Detektovan vikitekst"
+}
