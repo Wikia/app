@@ -66,6 +66,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		5  => 'NC-17',
 	];
 
+	// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+	private static $EXCLUDE_TRAILER_TYPE = [ 1, 2, 20 ];
+
 	/**
 	 * Download feed from API
 	 * @param string $startDate
@@ -211,7 +214,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				}
 
 				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
-				if ( in_array( $clip['TrailerTypeId'], [ 1, 2, 20 ] ) && $clip['TrailerVersion'] == 1 ) {
+				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
 					$this->videoSkipped();
 					continue;
 				}
