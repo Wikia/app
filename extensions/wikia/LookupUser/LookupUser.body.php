@@ -178,7 +178,7 @@ EOT
 			);
 
 			foreach ( $dRows as $row ) {
-				if ($loop === 0) {
+				if ( $loop === 0 ) {
 					$userTarget = $oRow->user_name;
 				}
 				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
