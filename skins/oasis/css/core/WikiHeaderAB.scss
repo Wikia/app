@@ -10,9 +10,6 @@ $header-color-secondary: $color-page;
 	z-index: 2;
 
 	.local-navigation-container {
-		/*left: 50%;
-		position: absolute;
-		margin-left: -520px;*/
 		width: 1040px;
 		margin: 0 auto;
 	}
@@ -86,7 +83,7 @@ $header-color-secondary: $color-page;
 			}
 
 			&.no-see-all .submenu {
-				padding-bottom: 20px;
+				padding-bottom: 5px;
 			}
 
 			.submenu {
@@ -226,11 +223,15 @@ $header-color-secondary: $color-page;
 				}
 
 				.submenu {
-					padding: 30px 20px 40px 20px;
+					padding: 30px 12px 40px 12px;
 
 					&.submenu-full {
 						margin-left: -384px;
 						width: 768px;
+
+						.subnav-2-column {
+							width: 184px;
+						}
 					}
 
 					&.submenu-wide {
@@ -245,7 +246,7 @@ $header-color-secondary: $color-page;
 						padding-right: 10px;
 					}
 					li.subnav-2-item {
-						margin: 0 20px 30px 20px;
+						margin: 0 12px 30px 12px;
 						width: 152px;
 					}
 					.subnav-3a {
@@ -261,6 +262,7 @@ $header-color-secondary: $color-page;
 					}
 					.see-all {
 						font-size: 15px;
+						padding-right: 24px;
 
 						svg {
 							margin-left: 10px;

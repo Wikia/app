@@ -44,7 +44,8 @@ $(function () {
 			.parent().append($('<div class="clearfix"></div>'));
 
 		if ($seeAll.attr('href') !== '#') {
-			$subNav.append($seeAll.html(seeAllText + svgChevron).wrap('<section class="see-all"></section>').parent());
+			$subNav.parent().append($seeAll.html(seeAllText + svgChevron)
+				.wrap('<section class="see-all"></section>').parent());
 		} else {
 			$this.addClass('no-see-all');
 		}
