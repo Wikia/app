@@ -62,26 +62,26 @@ SQL;
 		printf("%s: fixing bad comments_index rows...\n", $dbname);
 
 		$sql = <<<SQL
-CREATE TEMPORARY TABLE temporary_bad_comments_index_records AS (
-		SELECT parent_page_id, first_rev_id, removed, deleted, archived
-		FROM comments_index
-		LEFT JOIN revision ON (
-						revision.rev_id = comments_index.first_rev_id
-		)
-		WHERE comments_index.removed = 0 AND
-					comments_index.deleted = 0 AND
-					comments_index.archived = 0 AND
-					revision.rev_id IS NULL
-);
+		CREATE TEMPORARY TABLE temporary_bad_comments_index_records AS (
+			SELECT parent_page_id, first_rev_id, removed, deleted, archived
+			FROM comments_index
+			LEFT JOIN revision ON (
+							revision.rev_id = comments_index.first_rev_id
+			)
+			WHERE comments_index.removed = 0 AND
+						comments_index.deleted = 0 AND
+						comments_index.archived = 0 AND
+						revision.rev_id IS NULL
+		);
 SQL;
 		$db->query($sql);
 		$row = $db->fetchObject( $ret );
 
 		$sql = <<<SQL
-UPDATE comments_index, temporary_bad_comments_index_records
-				SET comments_index.deleted = 1
-				WHERE comments_index.parent_page_id = temporary_bad_comments_index_records.parent_page_id AND
-							comments_index.first_rev_id = temporary_bad_comments_index_records.first_rev_id;
+		UPDATE comments_index, temporary_bad_comments_index_records
+			SET comments_index.deleted = 1
+			WHERE comments_index.parent_page_id = temporary_bad_comments_index_records.parent_page_id AND
+				comments_index.first_rev_id = temporary_bad_comments_index_records.first_rev_id;
 SQL;
 		$db->query($sql);
 		$row = $db->fetchObject( $ret );
