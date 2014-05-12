@@ -5,11 +5,10 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	visualEditorEnabled: !!mw.config.get( 'wgVisualEditor' ),
+	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
 
 	checkTitle: function( title ) {
 		'use strict';
-
 		$.getJSON( CreatePage.context.wgScript, {
 			action: 'ajax',
 			rs: 'wfCreatePageAjaxCheckTitle',
@@ -18,12 +17,12 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.visualEditorEnabled ) {
+				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href =  articlePath + '?veaction=edit';
+					location.href = articlePath + '?veaction=edit';
 				} else {
-					location.href = CreatePage.options[ CreatePage.pageLayout ].submitUrl
-						.replace( '$1', encodeURIComponent( title ) );
+					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
+						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) );
 				}
 			}
 			else {
@@ -35,7 +34,7 @@ var CreatePage = {
 	openDialog: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorEnabled && !$( e.target ).hasClass( 'createpage' ) ) {
+		if ( CreatePage.canUseVisualEditor && !$( e.target ).hasClass( 'createpage' ) ) {
 			return;
 		}
 
@@ -125,6 +124,11 @@ var CreatePage = {
 
 							$( '#wpCreatePageDialogTitle' ).focus();
 
+							// Hide formats if ve is available
+							if ( CreatePage.canUseVisualEditor ) {
+								$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
+							}
+
 							createPageModal.show();
 
 							CreatePage.loading = false;
@@ -167,7 +171,7 @@ var CreatePage = {
 	redLinkClick: function( e, titleText ) {
 		'use strict';
 
-		if ( CreatePage.visualEditorEnabled ) {
+		if ( CreatePage.canUseVisualEditor ) {
 			return;
 		}
 

@@ -42,6 +42,12 @@
 				// Clicking okay in a confirmation modal
 				CONFIRM: 'confirm',
 
+				// Generic disable
+				DISABLE: 'disable',
+
+				// Generic enable
+				ENABLE: 'enable',
+
 				// Generic error (generally AJAX)
 				ERROR: 'error',
 
@@ -158,3 +164,49 @@
 	}
 
 })( window, undefined );
+
+// Temporary code for tracking VE and CK related events in Kibana.
+function veTrack( data ) {
+	if ( ! window.syslogReport ) {
+		return;
+	}
+	var defaultData = {}, uri, finalData;
+	try {
+		// isAnonymous
+		try {
+			//defaultData.isAnonymous = mw.user.anonymous() ? 'yes' : 'no';
+			defaultData.isAnonymous = !wgUserName ? 'yes' : 'no';
+		} catch ( e ) {
+			defaultData.isAnonymous = 'unknown';
+		}
+
+		// isRedlink
+		try {
+			uri = new mw.Uri( location.href );
+			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no'
+		} catch ( e ) {
+			defaultData.isRedlink = 'unknown';
+		}
+
+		defaultData.referrer = document.referrer;
+
+		// contentLanguage
+		try {
+			defaultData.contentLanguage = mw.config.get( 'wgContentLanguage' );
+		} catch ( e ) {
+			defaultData.contentLanguage = 'unknown';
+		}
+
+		// userLanguage
+		try {
+			defaultData.userLanguage = mw.config.get( 'wgUserLanguage' );
+		} catch ( e ) {
+			defaultData.userLanguage = 'unknown';
+		}
+		
+		finalData = $.extend( {}, defaultData, data );
+	} catch( e ) {
+		finalData = { failed: true };
+	}
+	syslogReport( 6, 'veTrack-v3', finalData );
+}

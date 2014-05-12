@@ -1,0 +1,60 @@
+{
+	"highlighter" :
+	[
+		{
+			"match" : "/(\\+|-|\\*|\\/|%|\\!|@|&|\\||\\^|<|>|\\=|,|;|\\?|:|\\.)/g",
+			"style" : "ve-ce-mwSynHi-symbol"
+		},
+		{
+			"match" : "/[\\W|^]((break|case|catch|const|continue|default|delete|do|else|finally|for|function|get|goto|if|in|instanceof|new|prototype|return|set|static|switch|this|throw|try|typeof|var|void))(?!\\w)/gm",
+			"style" : "ve-ce-mwSynHi-keyword"
+		},
+		{
+			"match" : "/[\\W|^]((false|null|true|undefined|NaN|Infinity))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-metaconstant"
+		},
+		{
+			"match" : "/[\\W|^]((__proto__|__defineGetter__|__defineSetter__|hasOwnProperty|hasProperty|jQuery|each|size|length|selector|context|eq|index|data|removeData|queue|dequeue|noConflictattr|removeAttr|addClass|hasClass|removeClass|toggleClass|html|text|val|filter|not|slice|add|children|closest|contents|find|next|nextAll|parent|parents|prev|prevAll|siblings|andSelf|end|append|appendTo|prepend|prependTo|after|before|insertAfter|insertBefore|wrap|wrapAll|wrapInner|replaceWith|replaceAll|empty|remove|clone|css|offset|offsetParent|position|scrollTop|scrollLeft|height|width|innerHeight|innerWidth|outerHeight|outerWidth|ready|bind|one|trigger|triggerHandler|unbind|live|die|hover|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|mousedown|mouseenter|mouseleave|mousemove|mouseout|mouseover|mouseup|resize|scroll|select|submit|unload|show|hide|toggle|slideDown|slideUp|slideToggle|fadeIn|fadeOut|fadeTo|animate|stop|ajax|load|get|getJSON|getScript|post|ajaxComplete|ajaxError|ajaxSend|ajaxStart|ajaxStop|ajaxSuccess|ajaxSetup|serialize|serializeArray|support|browser|version|boxModal|extend|grep|makeArray|map|inArray|merge|unique|isArray|isFunction|trim|param))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-magicwords"
+		},
+		{
+			"match" : "/[\\W|^]((Object|Function|Date|Math|String|Number|Boolean|Array))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-typeconstructor"
+		},
+		{
+			"match" : "/[\\W|^]((abstract|boolean|byte|char|class|debugger|double|enum|export|extends|final|float|implements|import|int|interface|long|native|short|super|synchronized|throws|transient|volatile))(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-reserved"
+		},
+		{
+			"match" : "/(\\\\)/g",
+			"style" : "ve-ce-mwSynHi-escape"
+		},
+		{
+			"match" : "/(\\(|\\)|\\[|\\]|\\{|\\})/g",
+			"style" : "ve-ce-mwSynHi-bracket"
+		},
+		{
+			"match" : "/(['\\\"][^]*?['\\\"])/g",
+			"style" : "ve-ce-mwSynHi-string"
+		},
+		{
+			"match" : "/\\W([0-9]+)(?!\\w)/g",
+			"style" : "ve-ce-mwSynHi-number"
+		},
+		{
+			"match" : "/(\\w*)\\(\\)/g",
+			"style" : "ve-ce-mwSynHi-method"
+		},
+		{
+			"match" : "/(\\/\\/.*$)/gm",
+			"style" : "ve-ce-mwSynHi-comment-single"
+		},
+		{
+			"match" : "/(\\/\\*[^]*?\\*\\/)/g",
+			"style" : "ve-ce-mwSynHi-comment-multi"
+		}
+	],
+	"validator" :
+	[
+	]
+}

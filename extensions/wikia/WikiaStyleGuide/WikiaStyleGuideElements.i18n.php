@@ -55,11 +55,13 @@ $messages['bn'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
 	'wikiastyleguide-dropdown-all' => 'An holl',
 	'wikiastyleguide-dropdown-select-all' => 'Diuzañ pep tra',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 ha $2 ouzhpenn',
 );
 
 /** Catalan (català)
@@ -90,12 +92,21 @@ $messages['es'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Ebraminio
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'wikiastyleguide-dropdown-all' => 'همه',
 	'wikiastyleguide-dropdown-select-all' => 'انتخاب همه',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 و $2 بیشتر',
 	'wikiastyleguide-tooltip-icon-question-mark' => '؟',
+);
+
+/** Finnish (suomi)
+ * @author Elseweyr
+ */
+$messages['fi'] = array(
+	'wikiastyleguide-dropdown-select-all' => 'Valitse kaikki',
 );
 
 /** French (français)
@@ -115,6 +126,15 @@ $messages['gl'] = array(
 	'wikiastyleguide-dropdown-all' => 'Todos',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar todo',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 máis',
+);
+
+/** Hungarian (magyar)
+ * @author TK-999
+ */
+$messages['hu'] = array(
+	'wikiastyleguide-dropdown-all' => 'Összes',
+	'wikiastyleguide-dropdown-select-all' => 'Összes kijelölése',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 és $2 további',
 );
 
 /** Macedonian (македонски)
@@ -180,6 +200,15 @@ $messages['pt'] = array(
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e mais $2',
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
+ */
+$messages['pt-br'] = array(
+	'wikiastyleguide-dropdown-all' => 'Todos',
+	'wikiastyleguide-dropdown-select-all' => 'Selecionar Todos',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 e mais $2',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
@@ -232,4 +261,13 @@ $messages['zh-hans'] = array(
 	'wikiastyleguide-dropdown-all' => '全部',
 	'wikiastyleguide-dropdown-select-all' => '全选',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1与$2以及更多',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'wikiastyleguide-dropdown-all' => '全部',
+	'wikiastyleguide-dropdown-select-all' => '全選',
+	'wikiastyleguide-dropdown-selected-items-list' => '$1和$2以及更多',
 );

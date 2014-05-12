@@ -72,7 +72,7 @@ QUnit.test( 'convertToData', 2, function ( assert ) {
 
 	internalList.queueItemHtml( 'reference', 'foo', 'Bar' );
 	internalList.queueItemHtml( 'reference', 'bar', 'Baz' );
-	assert.deepEqual( internalList.convertToData( ve.dm.converter ), expectedData, 'Data matches' );
+	assert.deepEqual( internalList.convertToData( ve.dm.converter, doc ), expectedData, 'Data matches' );
 	assert.deepEqual( internalList.getItemHtmlQueue(), [], 'Items html is emptied after conversion' );
 } );
 

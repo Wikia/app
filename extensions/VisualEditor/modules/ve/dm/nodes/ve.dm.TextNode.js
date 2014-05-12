@@ -20,7 +20,7 @@ ve.dm.TextNode = function VeDmTextNode( length ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.TextNode, ve.dm.LeafNode );
+OO.inheritClass( ve.dm.TextNode, ve.dm.LeafNode );
 
 /* Static Properties */
 

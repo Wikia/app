@@ -16,6 +16,9 @@ class WallNotificationsTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group UsingDB
+	 */
 	public function testNotifyEveryoneForMainThread() {
 		$wn = $this->getMock('WallNotifications', array('sendEmails','addNotificationLinks'));
 

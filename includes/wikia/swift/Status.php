@@ -21,6 +21,10 @@ abstract class Status implements IStatusProvider {
 	}
 	public function completed( $n ) { $this->completed += $n; $this->done += $n; }
 	public function failed( $n ) { $this->failed += $n; $this->done += $n; }
+	public function resetFailed() {
+		$this->done -= $this->failed;
+		$this->failed = 0;
+	}
 	public function getPercent() {
 		if ( $this->total === null ) { return null; }
 		else if ( $this->total == 0 ) { return 1; }

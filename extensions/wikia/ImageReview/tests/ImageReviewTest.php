@@ -12,6 +12,10 @@ class ImageReviewTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.08867 ms
+	 */
 	public function testImageReviewSpecialControllerIndexCorrect() {
 		$this->setStubsForImageReviewSpecialControllerTests(false);
 
@@ -22,6 +26,10 @@ class ImageReviewTest extends WikiaBaseTest {
 		$this->assertEquals($this->fakeCorrectImages, $imagesList);
 	}
 
+	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.07902 ms
+	 */
 	public function testImageReviewSpecialControllerIndexError() {
 		$this->setStubsForImageReviewSpecialControllerTests(true);
 

@@ -6,6 +6,7 @@
  * @see http://www.mediawiki.org/wiki/Manual:Image_administration#Data_storage
  *
  * @author Moli
+ * @author wladek
  * @ingroup Maintenance
  */
 
@@ -26,10 +27,10 @@ require_once( __DIR__ . '/../../includes/wikia/swift/all.php' );
 class MigrateWikisToSwift3 extends Maintenance {
 
 	const THREADS_DEFAULT = 40;
+	const DELAY_DEFAULT = 0;
 
 	const SCRIPT_PATH = '/var/log/migration_queue';
-	const CMD = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
-	
+
 	private $disabled_wikis = [ 717284, 298117 ];
 	private $db;
 	
@@ -37,6 +38,10 @@ class MigrateWikisToSwift3 extends Maintenance {
 	private $time = 0;
 
 	private $dc = null;
+	private $dryRun = null;
+	private $noDeletes = null;
+	private $calculateMd5 = null;
+	private $syncSecondary = null;
 
 	/**
 	 * Set script options
@@ -48,8 +53,14 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$this->addOption( 'all', 'Do not skip top 200 wikis.' );
 		$this->addOption( 'reverse', 'Reversed order' );
 		$this->addOption( 'threads', 'Number of threads (default: 40)' );
+		$this->addOption( 'delay', 'Number of seconds to wait before spawning next process (default: 0)' );
 		$this->addOption( 'debug', 'Enable debug mode' );
-		$this->addOption( 'force', 'Re-run script for migrated Wikis' );
+		$this->addOption( 'force', 'Perform the migration even if $wgEnableSwiftFileBackend = true' );
+		$this->addOption( 'dry-run', 'Perform file uploads but don\'t switch wiki to Swift' );
+		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
+		$this->addOption( 'md5', 'Calculate md5 of files only' );
+		$this->addOption( 'sync', 'Synchronize the secondary DC only' );
+		$this->addOption( 'stats-only', 'Print statistics only' );
 		$this->addOption( 'dc', 'Target datacenter(s), comma-separated list (default: local datacenter)' );
 		$this->mDescription = 'Migrate images for all Wikis';
 	}
@@ -70,13 +81,23 @@ class MigrateWikisToSwift3 extends Maintenance {
 		$limit = $this->getOption( 'limit', -1 );
 		$debug = $this->hasOption( 'debug' );
 		$force = $this->hasOption( 'force' );
-		$wikis = $this->getOption( 'wiki', '' );
+		$wikis = $this->getOption( 'wiki', null );
+		$forceAll = $this->hasOption( 'all' );
+		$this->dryRun = $this->hasOption('dry-run');
+		$this->noDeletes = $this->hasOption('no-deletes');
+		$this->calculateMd5 = $this->hasOption('md5');
+		$this->syncSecondary = $this->hasOption('sync');
 
-		$this->dc = $this->getOption('dc',$wgWikiaDatacenter);
+		if ( $this->syncSecondary ) {
+			$force = true;
+			$forceAll = true;
+		}
+
+		$this->dc = $this->getOption('dc','sjc,res');
 
 		# don't migrate top 200 Wikis
 		$top200Wikis = array();
-		if ( $this->hasOption('all') ) {
+		if ( !$forceAll ) {
 			$top200Wikis = DataMartService::getWAM200Wikis();
 
 			if ( count($top200Wikis) != 200 ) {
@@ -95,14 +116,39 @@ class MigrateWikisToSwift3 extends Maintenance {
 			$this->disabled_wikis[$k] = intval($v);
 		}
 
+		if ( $this->syncSecondary ) {
+			$this->disabled_wikis = array();
+		}
+
+		$wikiIds = null;
+		if ( $wikis !== null ) {
+			$wikiIds = array();
+			foreach (explode(',',$wikis) as $id) {
+				if ( is_numeric($id) && $id >= 0 ) {
+					$wikiIds[] = $id;
+				}
+			}
+			if ( count($wikiIds) == 0 ) {
+				$wikiIds = null;
+			}
+		}
+
 		$this->db = $this->getDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$order = $this->hasOption('reverse') ? " DESC" : "";
 		$res = $this->db->select(
 			array( 'city_list', 'city_variables' ),
 			array( 'city_id', 'city_dbname' ),
+			array_merge(
 			array(
-				'cv_value is null or cv_value != "b:1;"', // wgEnableSwiftBackend == true
+				'city_public' => 1,
+			),
+			( !$force ? array(
+				'cv_value is null or cv_value != "b:1;"', // not "wgEnableSwiftBackend == true"
+				) : array() ),
+			( is_array($wikiIds) ? array(
+				'city_id' => $wikiIds,
+				) : array() )
 			),
 			__CLASS__,
 			array_merge(array(
@@ -118,39 +164,85 @@ class MigrateWikisToSwift3 extends Maintenance {
 				)
 			)
 		);
+		$this->output(sprintf("Found %d wikis in database...\n",$res->numRows()));
 
 		$this->output("Building list of wiki IDs...\n");
+		$removedCount = 0;
 		$queue = array();
 		while ( $row = $res->fetchObject() ) {
 			$id = intval($row->city_id);
 			$dbname = $row->city_dbname;
 			if ( !in_array( $id, $this->disabled_wikis ) ) {
 				$queue[$id] = $dbname;
+			} else {
+				$removedCount++;
 			}
 		}
+		$this->output(sprintf("Skipped %d wikis that are on blacklist...\n",$removedCount));
 		$this->output(sprintf("Scheduling %d wikis for migration...\n",count($queue)));
+
+		if ( $this->hasOption('stats-only') ) {
+			return;
+		}
 
 		$this->output( "\nRun migrateImagesToSwift script \n" );
 
 		$this->output( "Building list of processes to run...\n");
 		$processes = array();
 		foreach ( $queue as $id => $dbname ) {
-			$processes[] = $this->getProcess($id,$dbname);
+			if ( $this->calculateMd5 ) {
+				$process = $this->getMd5Process($id,$dbname);
+			} elseif ( $this->syncSecondary ) {
+				$process = $this->getSyncProcess($id,$dbname);
+			} else {
+				$process = $this->getMigrationProcess($id,$dbname);
+			}
+			$processes[] = $process;
 		}
 
 		$threads = $this->getOption('threads',self::THREADS_DEFAULT);
+		$threads = intval($threads);
+		$threadDelay = $this->getOption('delay',self::DELAY_DEFAULT);
+		$threadDelay = intval($threadDelay);
 		$this->output( "Using {$threads} threads...\n");
-		$runner = new \Wikia\Swift\Process\Runner($processes,$threads);
+		$runner = new \Wikia\Swift\Process\Runner($processes,$threads,$threadDelay);
 		$runner->run();
 
 		$this->output( sprintf( "\nMigrated %d Wikis in %s\n", $migrated, Wikia::timeDuration( time() - $this->time ) ) );
 		$this->output( "\nDone!\n" );
 	}
 
-	protected function getProcess( $cityId, $dbname ) {
-		$opts = "--dry-run --local --dc={$this->dc} --debug" ;
+	const CMD_MD5 = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 calculateImagesMd5.php %s --conf %s" >> %s 2>&1';
+	protected function getMd5Process( $cityId, $dbname ) {
+		$opts = "--local --debug" ;
+//		$logFile = $this->getLogPath($dbname);
+		$logFile = '/dev/null';
+		$cmd = sprintf( self::CMD_MD5, $cityId, $opts, $this->getOption('conf'), $logFile );
+		return new \Wikia\Swift\Process\Process($cmd);
+	}
+
+	const CMD_SYNC = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 syncSwiftImagesBetweenDC.php %s --conf %s" >> %s 2>&1';
+	protected function getSyncProcess( $cityId, $dbname ) {
+		$opts = "--debug" ;
 		$logFile = $this->getLogPath($dbname);
-		$cmd = sprintf( self::CMD, $cityId, $opts, $this->getOption('conf'), $logFile );
+		$cmd = sprintf( self::CMD_SYNC, $cityId, $opts, $this->getOption('conf'), $logFile );
+		return new \Wikia\Swift\Process\Process($cmd);
+	}
+
+	const CMD_MIGRATION = '/bin/bash -c "SERVER_ID=%d php -ddisplay_errors=1 migrateImagesToSwift_bulk.php %s --conf %s" >> %s 2>&1';
+	protected function getMigrationProcess( $cityId, $dbname ) {
+		$opts = "--local --diff --debug --threads=10" ;
+		$opts .= " --dc={$this->dc}";
+		if ( $this->dryRun ) {
+			$opts .= " --dry-run";
+		} else {
+			$opts .= " --wait --force";
+		}
+		if ( $this->noDeletes ) {
+			$opts .= " --no-deletes";
+		}
+		$logFile = $this->getLogPath($dbname);
+		$cmd = sprintf( self::CMD_MIGRATION, $cityId, $opts, $this->getOption('conf'), $logFile );
 		return new \Wikia\Swift\Process\Process($cmd);
 	}
 }

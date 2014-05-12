@@ -11,9 +11,9 @@
 class ApiVisualEditor extends ApiBase {
 
 	protected function getHTML( $title, $parserParams ) {
-		global $wgDevelEnvironment,
-			$wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidTimeout;
+		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidPrefix,
+			$wgVisualEditorParsoidTimeout, $wgVisualEditorParsoidForwardCookies,
+			$wgDevelEnvironment;
 
 		$restoring = false;
 
@@ -38,7 +38,7 @@ class ApiVisualEditor extends ApiBase {
 
 			$req = MWHttpRequest::factory( wfAppendQuery(
 					$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
-						'/' . urlencode( $title->getPrefixedDBkey() ),
+						'/' . wfUrlencode( $title->getPrefixedDBkey() ),
 					$parserParams
 				),
 				array(
@@ -47,10 +47,27 @@ class ApiVisualEditor extends ApiBase {
 					'noProxy' => !empty( $wgDevelEnvironment )
 				)
 			);
+			// Forward cookies, but only if configured to do so and if there are read restrictions
+			if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
+				$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
+			}
 			$status = $req->execute();
 
 			if ( $status->isOK() ) {
 				$content = $req->getContent();
+				// Pass thru performance data from Parsoid to the client, unless the response was
+				// served directly from Varnish, in  which case discard the value of the XPP header
+				// and use it to declare the cache hit instead.
+				$xCache = $req->getResponseHeader( 'X-Cache' );
+				if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+					$xpp = 'cached-response=true';
+				} else {
+					$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
+				}
+				if ( $xpp !== null ) {
+					$resp = $this->getRequest()->response();
+					$resp->header( 'X-Parsoid-Performance: ' . $xpp );
+				}
 			} elseif ( $status->isGood() ) {
 				$this->dieUsage( $req->getContent(), 'parsoidserver-http-'.$req->getStatus() );
 			} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
@@ -85,13 +102,9 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function postHTML( $title, $html, $parserParams ) {
-		global $wgDevelEnvironment,
-			$wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidTimeout;
-
-		if ( $parserParams['oldid'] === 0 ) {
-			$parserParams['oldid'] = '';
-		}
+		global $wgVisualEditorParsoidURL, $wgVisualEditorParsoidPrefix,
+			$wgVisualEditorParsoidTimeout, $wgVisualEditorParsoidForwardCookies,
+			$wgDevelEnvironment;
 
 		$postData = array( 'content' => $html );
 		if ( isset( $parserParams['oldwt'] ) ) {
@@ -103,15 +116,27 @@ class ApiVisualEditor extends ApiBase {
 			$postData['oldid'] = $parserParams['oldid'];
 		}
 
-		return Http::post(
+		$req = MWHttpRequest::factory(
 			$wgVisualEditorParsoidURL . '/' . $this->getApiSource() .
 				'/' . urlencode( $title->getPrefixedDBkey() ),
 			array(
+				'method' => 'POST',
 				'postData' => $postData,
 				'timeout' => $wgVisualEditorParsoidTimeout,
 				'noProxy' => !empty( $wgDevelEnvironment )
 			)
 		);
+		// Forward cookies, but only if configured to do so and if there are read restrictions
+		if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
+			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
+		}
+		$status = $req->execute();
+		if ( !$status->isOK() ) {
+			// TODO proper error handling, merge with getHTML above
+			return false;
+		}
+		// TODO pass through X-Parsoid-Performance header, merge with getHTML above
+		return $req->getContent();
 	}
 
 	protected function parseWikitext( $title ) {

@@ -14,7 +14,7 @@ ve.ce.NodeFactoryNodeStub = function VeCeNodeFactoryNodeStub( a, b ) {
 	this.b = b;
 };
 
-ve.inheritClass( ve.ce.NodeFactoryNodeStub, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.NodeFactoryNodeStub, ve.ce.LeafNode );
 
 ve.ce.NodeFactoryNodeStub.static.name = 'node-factory-node-stub';
 

@@ -38,7 +38,7 @@ class HttpResponse {
 class HttpRunner {
 	use LoggerFeature;
 
-	const FETCH_BATCH_LIMIT = 10;
+	const FETCH_BATCH_LIMIT = 500;
 	const CURL_EXEC_LIMIT = 10000;
 
 	protected $sources;
@@ -105,8 +105,8 @@ class HttpRunner {
 						$statusCallback($this);
 					}
 				}
-				$this->log(11,sprintf("select_time=%.5f exec_count=%d info_count=%d added_count=%d\n",
-						$st, $i, $j, $k ));
+//				$this->logTrace(11,sprintf("select_time=%.5f exec_count=%d info_count=%d added_count=%d\n",
+//						$st, $i, $j, $k ));
 			} while ($inactiveFor <= 3 || !empty($this->active) );
 		}
 
@@ -164,7 +164,7 @@ class HttpRunner {
 
 }
 
-class SimpleHttpGetReqeuest {
+class SimpleHttpGetRequest {
 	protected $hostnames;
 	protected $url;
 	protected $retryLimit;

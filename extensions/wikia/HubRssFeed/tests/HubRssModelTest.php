@@ -18,10 +18,19 @@ class HubRssModelTest extends WikiaBaseTest {
 		$dir = dirname( __FILE__ ) . '/../';
 		global $wgAutoloadClasses;
 		$wgAutoloadClasses['MarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
+		$wgAutoloadClasses['AbstractMarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/AbstractMarketingToolboxModel.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleSliderService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleSliderService.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFromthecommunityService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleWikiaspicksService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleWikiaspicksService.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleEditableService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleFeaturedvideoService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFeaturedvideoService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleExploreService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleExploreService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModulePollsService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModulePollsService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModulePopularvideosService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModulePopularvideosService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleWAMService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleWAMService.class.php';
+		$wgAutoloadClasses['MarketingToolboxModuleNonEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleNonEditableService.class.php';
 		$wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleService.class.php';
+		$wgAutoloadClasses['MarketingToolboxV3Model']	= $dir . '../WikiaHubsServices/models/MarketingToolboxV3Model.class.php';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 		$this->mockToolbox = $this->getMockBuilder( 'MarketingToolboxModel' )
 			->disableOriginalConstructor();
@@ -36,7 +45,8 @@ class HubRssModelTest extends WikiaBaseTest {
 	public function testConstruct() {
 		$mockToolbox = $this->mockToolbox->setMethods( ['__construct'] )->getMock();
 
-		$this->mockClass( 'MarketingToolboxModel', $mockToolbox );
+		$this->mockClass( 'MarketingToolboxV2Model', $mockToolbox );
+		$this->mockClass( 'MarketingToolboxV3Model', $mockToolbox );
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->setConstructorArgs( ['en'] )
@@ -48,7 +58,10 @@ class HubRssModelTest extends WikiaBaseTest {
 		$propApp = $refl->getProperty( 'app' );
 		$propApp->setAccessible( true );
 
-		$propToolbox = $refl->getProperty( 'marketingToolboxModel' );
+		$propToolbox = $refl->getProperty( 'marketingToolboxV2Model' );
+		$propToolbox->setAccessible( true );
+
+		$propToolbox = $refl->getProperty( 'marketingToolboxV3Model' );
 		$propToolbox->setAccessible( true );
 
 		//checking for $this->app inside controller
@@ -59,36 +72,9 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers  HubRssFeedModel::isValidVerticalId
+	 * @covers  HubRssFeedModel::getServicesV2
 	 */
-	public function testIsValidVerticalId() {
-		$mockToolbox = $this->mockToolbox->setMethods( ['getVerticalsIds'] )->getMock();
-
-		$mockToolbox->expects( $this->any() )
-			->method( 'getVerticalsIds' )
-			->will( $this->returnValue( [1, 2, 3] ) );
-
-		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct'] )
-			->getMock();
-
-		$refl = new \ReflectionObject($mock);
-
-		$propToolbox = $refl->getProperty( 'marketingToolboxModel' );
-		$propToolbox->setAccessible( true );
-		$propToolbox->setValue( $mock, $mockToolbox );
-
-
-		$this->assertTrue( $mock->isValidVerticalId( 1 ) );
-		$this->assertFalse( $mock->isValidVerticalId( 5 ) );
-
-	}
-
-	/**
-	 * @covers  HubRssFeedModel::getServices
-	 */
-	public function testGetServices() {
+	public function testGetServicesV2() {
 		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
 			->setMethods( ['__construct'] )
 			->disableOriginalConstructor()
@@ -108,7 +94,39 @@ class HubRssModelTest extends WikiaBaseTest {
 			->getMock();
 
 		$refl = new \ReflectionObject($mock);
-		$methodServices = $refl->getMethod( 'getServices' );
+		$methodServices = $refl->getMethod( 'getServicesV2' );
+		$methodServices->setAccessible( true );
+
+		$res = $methodServices->invoke( $mock, [null] );
+		$this->assertInstanceOf( get_class( $mockSlider ), $res[ 'slider' ] );
+		$this->assertInstanceOf( get_class( $mockCommunity ), $res[ 'community' ] );
+
+	}
+
+	/**
+	 * @covers  HubRssFeedModel::getServicesV3
+	 */
+	public function testGetServicesV3() {
+		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
+			->setMethods( ['__construct'] )
+			->disableOriginalConstructor()
+			->getMock();
+
+		$mockCommunity = $this->getMockBuilder( 'MarketingToolboxModuleFromthecommunityService' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct'] )
+			->getMock();
+
+		$this->mockClass( 'MarketingToolboxModuleSliderService', $mockSlider );
+		$this->mockClass( 'MarketingToolboxModuleFromthecommunityService', $mockCommunity );
+
+		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct'] )
+			->getMock();
+
+		$refl = new \ReflectionObject($mock);
+		$methodServices = $refl->getMethod( 'getServicesV3' );
 		$methodServices->setAccessible( true );
 
 		$res = $methodServices->invoke( $mock, [null] );
@@ -119,9 +137,9 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 	/**
-	 * @covers  HubRssFeedModel::getDataFromModules
+	 * @covers  HubRssFeedModel::getDataFromModulesV2
 	 */
-	public function testGetDataFromModules() {
+	public function testGetDataFromModulesV2() {
 		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
 			->disableOriginalConstructor()
 			->setMethods( ['loadData'] )
@@ -143,11 +161,11 @@ class HubRssModelTest extends WikiaBaseTest {
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['getServices', 'getThumbData'] )
+			->setMethods( ['getServicesV2', 'getThumbData'] )
 			->getMock();
 
 		$mock->expects( $this->any() )
-			->method( 'getServices' )
+			->method( 'getServicesV2' )
 			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
 
 		$tmp = new StdClass();
@@ -160,7 +178,7 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 		$refl = new \ReflectionObject($mock);
-		$methodGDFM = $refl->getMethod( 'getDataFromModules' );
+		$methodGDFM = $refl->getMethod( 'getDataFromModulesV2' );
 		$methodGDFM->setAccessible( true );
 
 		$res = $methodGDFM->invoke( $mock, [null] );
@@ -180,37 +198,100 @@ class HubRssModelTest extends WikiaBaseTest {
 		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'url' ], 'xx' );
 		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'width' ], 500 );
 		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'height' ], 500 );
+	}
 
 
+	/**
+	 * @covers  HubRssFeedModel::getDataFromModulesV3
+	 */
+	public function testGetDataFromModulesV3() {
+		$mockSlider = $this->getMockBuilder( 'MarketingToolboxModuleSliderService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
+
+		$mockCommunity = $this->getMockBuilder( 'MarketingToolboxModuleFromthecommunityService' )
+			->disableOriginalConstructor()
+			->setMethods( ['loadData'] )
+			->getMock();
+
+		$mockSlider->expects( $this->any() )
+			->method( 'loadData' )
+			->will( $this->returnValue( ['a' => [['shortDesc' => 'a1', 'longDesc' => 'a2', 'photoName' => 'a3', 'articleUrl' => 'a4']]] ) );
+
+		$mockCommunity->expects( $this->any() )
+			->method( 'loadData' )
+			->will( $this->returnValue( ['a' => [['articleTitle' => 'b1', 'quote' => 'b2', 'photoName' => 'b3', 'url' => 'b4']]] ) );
+
+
+		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
+			->disableOriginalConstructor()
+			->setMethods( ['getServicesV3', 'getThumbData'] )
+			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getServicesV3' )
+			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity] ) );
+
+		$tmp = new StdClass();
+		$tmp->url = 'xx';
+		$tmp->width = 500;
+		$tmp->height = 500;
+		$mock->expects( $this->any() )
+			->method( 'getThumbData' )
+			->will( $this->returnValue( $tmp ) );
+
+
+		$refl = new \ReflectionObject($mock);
+		$methodGDFM = $refl->getMethod( 'getDataFromModulesV3' );
+		$methodGDFM->setAccessible( true );
+
+		$res = $methodGDFM->invoke( $mock, [null] );
+
+		$this->assertArrayHasKey( 'a4', $res );
+		$this->assertEquals( $res[ 'a4' ][ 'title' ], 'a1' );
+		$this->assertEquals( $res[ 'a4' ][ 'description' ], 'a2' );
+		$this->assertArrayHasKey( 'img', $res[ 'a4' ] );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'url' ], 'xx' );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'width' ], 500 );
+		$this->assertEquals( $res[ 'a4' ][ 'img' ][ 'height' ], 500 );
+
+		$this->assertArrayHasKey( 'b4', $res );
+		$this->assertEquals( $res[ 'b4' ][ 'title' ], 'b1' );
+		$this->assertEquals( $res[ 'b4' ][ 'description' ], 'b2' );
+		$this->assertArrayHasKey( 'img', $res[ 'b4' ] );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'url' ], 'xx' );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'width' ], 500 );
+		$this->assertEquals( $res[ 'b4' ][ 'img' ][ 'height' ], 500 );
 	}
 
 	/**
-	 * @covers  HubRssFeedModel::getRealData
+	 * @covers  HubRssFeedModel::getRealDataV2
 	 */
-	public function testGetRealData() {
+	public function testGetRealDataV2() {
 		$mockToolbox = $this->mockToolbox->setMethods( ['getLastPublishedTimestamp'] )->getMock();
 
 		$mockToolbox->expects( $this->any() )
 			->method( 'getLastPublishedTimestamp', '__construct' )
 			->will( $this->returnCallback( 'HubRssModelTest::mock_getLastPublishedTimestamp' ) );
 
-		$this->mockClass( 'MarketingToolboxModel', $mockToolbox );
+		$this->mockClass( 'MarketingToolboxV2Model', $mockToolbox );
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['getDataFromModules'] )
+			->setMethods( ['getDataFromModulesV2'] )
 			->getMock();
 
 		$refl = new \ReflectionObject($mock);
-		$prop = $refl->getProperty( 'marketingToolboxModel' );
+		$prop = $refl->getProperty( 'marketingToolboxV2Model' );
 		$prop->setAccessible( true );
 		$prop->setValue( $mock, $mockToolbox );
 
 		$mock->expects( $this->any() )
-			->method( 'getDataFromModules' )
-			->will( $this->returnCallback( 'HubRssModelTest::mock_getDataFromModules' ) );
+			->method( 'getDataFromModulesV2' )
+			->will( $this->returnCallback( 'HubRssModelTest::mock_getDataFromModulesV2' ) );
 
-		$res = $mock->getRealData( 0 );
+		$res = $mock->getRealDataV2( 1 ); // non-zero number
 
 		$this->assertArrayHasKey( 'url_1', $res );
 		$this->assertEquals( HubRssFeedModel::MIN_DATE_FOUND, $res[ 'url_1' ][ 'timestamp' ] );
@@ -231,7 +312,87 @@ class HubRssModelTest extends WikiaBaseTest {
 
 	}
 
-	public static function mock_getDataFromModules( $verticalid, $timestamp = null ) {
+	/**
+	 * @covers  HubRssFeedModel::getRealDataV3
+	 */
+	public function testGetRealDataV3() {
+		$mockToolbox = $this->mockToolbox->setMethods( ['getLastPublishedTimestamp'] )->getMock();
+
+		$mockToolbox->expects( $this->any() )
+			->method( 'getLastPublishedTimestamp', '__construct' )
+			->will( $this->returnCallback( 'HubRssModelTest::mock_getLastPublishedTimestamp' ) );
+
+		$this->mockClass( 'MarketingToolboxV3Model', $mockToolbox );
+
+		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
+			->disableOriginalConstructor()
+			->setMethods( ['getDataFromModulesV3'] )
+			->getMock();
+
+		$refl = new \ReflectionObject($mock);
+		$prop = $refl->getProperty( 'marketingToolboxV3Model' );
+		$prop->setAccessible( true );
+		$prop->setValue( $mock, $mockToolbox );
+
+		$mock->expects( $this->any() )
+			->method( 'getDataFromModulesV3' )
+			->will( $this->returnCallback( 'HubRssModelTest::mock_getDataFromModulesV3' ) );
+
+		$res = $mock->getRealDataV3( 1 ); // non-zero number
+
+		$this->assertArrayHasKey( 'url_1', $res );
+		$this->assertEquals( HubRssFeedModel::MIN_DATE_FOUND, $res[ 'url_1' ][ 'timestamp' ] );
+
+		$this->assertArrayHasKey( 'url_2', $res );
+		$this->assertEquals( 1001, $res[ 'url_2' ][ 'timestamp' ] );
+
+		$this->assertArrayNotHasKey( 'url_3', $res );
+
+		$this->assertArrayHasKey( 'url_4', $res );
+		$this->assertEquals( 991, $res[ 'url_4' ][ 'timestamp' ] );
+
+		$item1 = array_shift( $res );
+		$item2 = array_shift( $res );
+		$item3 = array_shift( $res );
+
+		$this->assertTrue( $item1[ 'timestamp' ] >= $item2[ 'timestamp' ] && $item2[ 'timestamp' ] >= $item3[ 'timestamp' ] );
+
+	}
+
+	public static function mock_getDataFromModulesV2( $verticalid, $timestamp = null ) {
+		$timestamp = (int)$timestamp;
+
+		$lastEntry = 1001 - (HubRssFeedModel::MAX_DATE_LOOP * 10);
+
+		$arr = [
+			0 => [
+				'url_1' => ['title' => 'a1', 'description' => 'a2', 'img' => 'a3'],
+				'url_2' => ['title' => 'b1', 'description' => 'b2', 'img' => 'b3'],
+				'url_4' => ['title' => 'b1', 'description' => 'b2', 'img' => 'b3']
+			],
+
+			991 => [
+				'url_1' => ['title' => 'a1', 'description' => 'a2', 'img' => 'a3'],
+				'url_4' => ['title' => 'b1', 'description' => 'b2', 'img' => 'b3']],
+
+			981 => [
+				'url_1' => ['title' => 'a1', 'description' => 'a2', 'img' => 'a3'],
+				'url_3' => ['title' => 'c1', 'description' => 'c2', 'img' => 'c3']
+			],
+
+			$lastEntry => [
+				'url_1' => ['title' => 'a1', 'description' => 'a2', 'img' => 'a3'],
+			]
+		];
+
+		if ( !array_key_exists( $timestamp, $arr ) ) {
+			return null;
+		}
+
+		return $arr[ $timestamp ];
+	}
+
+	public static function mock_getDataFromModulesV3( $cityId, $timestamp = null ) {
 		$timestamp = (int)$timestamp;
 
 		$lastEntry = 1001 - (HubRssFeedModel::MAX_DATE_LOOP * 10);
@@ -265,7 +426,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	}
 
 
-	public static function mock_getLastPublishedTimestamp( $a, $b, $c, $timestamp ) {
+	public static function mock_getLastPublishedTimestamp( $params, $timestamp ) {
 		if ( $timestamp === null ) {
 			$timestamp = 1001;
 		}

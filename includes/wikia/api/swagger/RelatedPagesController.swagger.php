@@ -28,7 +28,7 @@ use Swagger\Annotations as SWG;
  * 		name="url",
  * 		type="string",
  * 		required="true",
- * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response"
  * 	)
  * 	@SWG\Property(
  * 		name="title",
@@ -45,8 +45,14 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="imgUrl",
  * 		type="string",
- * 		required="true",
+ * 		required="false",
  * 		description="The absolute URL of the image"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="text",
+ * 		type="string",
+ * 		required="false",
+ * 		description="Snippet of the article"
  * 	)
  * 
  * @SWG\Api(
@@ -65,7 +71,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="ids",
- * 					description="Id of an article to fetch related pages for",
+ * 					description="Comma-separated list of article ids",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -74,7 +80,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="Limit the number of related pages to return",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

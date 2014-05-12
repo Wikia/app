@@ -1,0 +1,45 @@
+{
+	"requireCurlyBraces": ["if", "else", "for", "while", "do"],
+	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return", "function"],
+	"requireParenthesesAroundIIFE": true,
+	"requireSpacesInFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireMultipleVarDecl": true,
+	"disallowEmptyBlocks": true,
+	"disallowSpacesInsideArrayBrackets": true,
+	"disallowSpacesInsideParentheses": true,
+	"disallowSpaceAfterObjectKeys": true,
+	"requireCommaBeforeLineBreak": true,
+	"requireOperatorBeforeLineBreak": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"disallowLeftStickedOperators": ["?", "+", "/", "*", "-", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"disallowRightStickedOperators": ["?", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"requireRightStickedOperators": ["!"],
+	"requireLeftStickedOperators": [","],
+	"disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~"],
+	"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
+	"requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
+	"requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
+	"requireCamelCaseOrUpperCaseIdentifiers": true,
+	"disallowKeywords": [ "with" ],
+	"disallowMultipleLineStrings": true,
+	"disallowMultipleLineBreaks": true,
+	"validateLineBreaks": "LF",
+	"validateQuoteMarks": "'",
+	"disallowTrailingWhitespace": true,
+	"disallowKeywordsOnNewLine": ["else"],
+	"requireLineFeedAtFileEnd": true,
+	"maximumLineLength": 120,
+	"requireCapitalizedConstructors": true,
+	"safeContextKeyword": "self",
+	"requireDotNotation": true,
+	"validateJSDoc": {
+		"checkParamNames": true,
+		"checkRedundantParams": true,
+		"requireParamTypes": true
+	},
+	"excludeFiles": [
+		"**/node_modules/**",
+		"**/lib/**"
+	]
+}

@@ -41,7 +41,6 @@ class AssetsManagerController extends WikiaController {
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
-		$ttl = $this->request->getInt( 'ttl', 0 );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -141,10 +140,7 @@ class AssetsManagerController extends WikiaController {
 			wfProfileOut( $profileId );
 		}
 
-		// handle cache time
-		if ( $ttl > 0 ) {
-			$this->response->setCacheValidity( $ttl );
-		}
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		$this->response->setFormat( 'json' );
 		wfProfileOut( __METHOD__ );

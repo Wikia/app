@@ -877,21 +877,7 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$urls = array();
-			$articleId = $title->getArticleId();
-
-			// Only page 1 is cached in varnish when lazy loading is on
-			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
-			$urls[] = ArticleCommentsController::getUrl(
-				'Content',
-				array(
-					'format' => 'html',
-					'articleId' => $articleId,
-					'page' => 1,
-					'skin' => 'true'
-				)
-			);
-
+			$urls = self::getSquidURLs( $title );
 			$squidUpdate = new SquidUpdate( $urls );
 			$squidUpdate->doUpdate();
 
@@ -908,20 +894,31 @@ class ArticleComment {
 			}
 		}
 
-		/*
-		// TODO: use this when surrogate key purging works correctly
-		$parentTitle = Title::newFromText( $commentTitle->getBaseText() );
-
-		if ($parentTitle) {
-			if ( empty( $wgArticleCommentsLoadOnDemand ) ) {
-				// need to invalidate parsed article if it includes comments in the body
-				$parentTitle->invalidateCache();
-			}
-			SquidUpdate::VarnishPurgeKey( self::getSurrogateKey( $parentTitle->getArticleID() ) );
-		}
-		*/
-
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param Title $title
+	 */
+	public static function getSquidURLs( Title $title ) {
+		$urls = [];
+		$articleId = $title->getArticleId();
+
+		// Only page 1 is cached in varnish when lazy loading is on
+		// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+		$urls[] = ArticleCommentsController::getUrl(
+			'Content',
+			array(
+				'format' => 'html',
+				'articleId' => $articleId,
+				'page' => 1,
+				'skin' => 'true'
+			)
+		);
+
+		wfRunHooks( 'ArticleCommentGetSquidURLs', array( $title, &$urls ) );
+
+		return $urls;
 	}
 
 	/**

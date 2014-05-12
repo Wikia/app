@@ -9,7 +9,6 @@ class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
 		$this->mName  = 'WikiaNewFiles';
 		$this->setHeaders();
-		Wikia::addAssetsToOutput('/skins/oasis/js/LatestPhotos.js');
 
 		wfSpecialWikiaNewFiles( $par, $this );
 	}
@@ -18,6 +17,6 @@ class WikiaNewFiles extends SpecialNewFiles {
 	 * @see SpecialPage::getDescription
 	 */
 	public function getDescription() {
-		return wfMsg( 'wikianewfiles-title' );
+		return $this->msg( 'wikianewfiles-title' )->text();
 	}
 }

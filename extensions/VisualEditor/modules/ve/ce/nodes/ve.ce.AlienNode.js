@@ -27,7 +27,7 @@ ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 	ve.ce.GeneratedContentNode.call( this );
 
 	// DOM changes
-	this.$.addClass( 've-ce-alienNode' );
+	this.$element.addClass( 've-ce-alienNode' );
 
 	// TODO: Find a better way to do this.
 	// Update tooltip in constructor to allow Wikia messages to load first
@@ -37,11 +37,11 @@ ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.AlienNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.AlienNode, ve.ce.LeafNode );
 
-ve.mixinClass( ve.ce.AlienNode, ve.ce.ProtectedNode );
+OO.mixinClass( ve.ce.AlienNode, ve.ce.ProtectedNode );
 
-ve.mixinClass( ve.ce.AlienNode, ve.ce.GeneratedContentNode );
+OO.mixinClass( ve.ce.AlienNode, ve.ce.GeneratedContentNode );
 
 /* Static Properties */
 
@@ -74,12 +74,12 @@ ve.ce.AlienBlockNode = function VeCeAlienBlockNode( model ) {
 	ve.ce.AlienNode.call( this, model );
 
 	// DOM changes
-	this.$.addClass( 've-ce-alienBlockNode' );
+	this.$element.addClass( 've-ce-alienBlockNode' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.AlienBlockNode, ve.ce.AlienNode );
+OO.inheritClass( ve.ce.AlienBlockNode, ve.ce.AlienNode );
 
 /* Static Properties */
 
@@ -98,12 +98,12 @@ ve.ce.AlienInlineNode = function VeCeAlienInlineNode( model ) {
 	ve.ce.AlienNode.call( this, model );
 
 	// DOM changes
-	this.$.addClass( 've-ce-alienInlineNode' );
+	this.$element.addClass( 've-ce-alienInlineNode' );
 };
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.AlienInlineNode, ve.ce.AlienNode );
+OO.inheritClass( ve.ce.AlienInlineNode, ve.ce.AlienNode );
 
 /* Static Properties */
 

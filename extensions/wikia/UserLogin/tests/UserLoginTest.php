@@ -34,6 +34,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.44648 ms
 		 * @dataProvider loginDataProvider
 		 */
 		public function testLogin( $requestParams, $mockLoginFormParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg, $expErrParam='', $expUsername = null ) {
@@ -63,6 +65,10 @@
 			$this->assertEquals( $expUsername, $responseData, 'expUsername' );
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50558 ms
+		 */
 		public function testWikiaMobileLoginTemplate() {
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -81,6 +87,10 @@
 			$this->tearDownMobileSkin();
 		}
 
+		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.50775 ms
+		 */
 		public function testWikiaMobileChangePasswordTemplate(){
 			$mobileSkin = Skin::newFromKey( 'wikiamobile' );
 			$this->setUpMockObject( 'User', array( 'getSkin' => $mobileSkin ), true, 'wgUser' );
@@ -276,6 +286,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.49809 ms
 		 * @dataProvider mailPasswordDataProvider
 		 */
 		public function testMailPassword( $requestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockLoginFormParams, $expResult, $expMsg, $expErrParam='' ) {
@@ -408,10 +420,14 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.55212 ms
 		 * @dataProvider changePasswordDataProvider
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {
 			// setup
+			$params['loginToken'] = '1234567890';
+			$this->mockStaticMethod( 'UserLoginHelper', 'getLoginToken', $params['loginToken'] );
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest', $params );
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
@@ -682,6 +698,8 @@
 		}
 
 		/**
+		 * @group Slow
+		 * @slowExecutionTime 0.05041 ms
 		 * @param String $query
 		 * @param String $expected
 		 * @param Array $wfArrayToCGI mocked results for global function wfArrayToCGI()

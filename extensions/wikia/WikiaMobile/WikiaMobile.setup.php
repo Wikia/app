@@ -53,6 +53,7 @@ $wgAutoloadClasses['WikiaMobileCategoryService'] = "{$dir}/WikiaMobileCategorySe
 $wgAutoloadClasses['WikiaMobileSharingService'] = "{$dir}/WikiaMobileSharingService.class.php";
 $wgAutoloadClasses['WikiaMobileErrorService'] = "{$dir}/WikiaMobileErrorService.class.php";
 $wgAutoloadClasses['WikiaMobileMediaService'] = "{$dir}/WikiaMobileMediaService.class.php";
+$wgAutoloadClasses['WikiaMobileTrendingArticlesService'] = "{$dir}/WikiaMobileTrendingArticlesService.class.php";
 
 /**
  * models
@@ -160,6 +161,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgDisableAnonymousEditing',
 			'wgNamespaceIds',
 			'wgExtensionsPath',
+			'wikiaPageIsCorporate',
 
 			//article
 			'wgArticlePath',

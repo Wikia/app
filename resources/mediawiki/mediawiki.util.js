@@ -599,6 +599,9 @@
 		}
 	};
 
+	// #back-compat for VE
+	util.getUrl = util.wikiGetlink;
+
 	mw.util = util;
 
 } )( jQuery, mediaWiki );

@@ -1,102 +1,23 @@
-var SlotTweaker = function(log, document, window) {
+/*exports SlotTweaker*/
+/*global define*/
+var SlotTweaker = function (log, document, window) {
 	'use strict';
 
-	var logGroup = 'SlotTweaker'
-		, addDefaultHeight, removeClass, removeDefaultHeight, hide, show, removeTopButtonIfNeeded
-		, defaultHeightClass = 'default-height'
-		, rclass = /[\t\r\n]/g
-		, isMedrec, hideSelfServeUrl
-		, isLeaderboard, isStandardLeaderboardSize, adjustLeaderboardSize
-		, standardLeaderboardSizeClass = 'standard-leaderboard'
-	;
+	var logGroup = 'ext.wikia.adengine.slottweaker',
+		defaultHeightClass = 'default-height',
+		rclass = /[\t\r\n]/g,
+		standardLeaderboardSizeClass = 'standard-leaderboard';
 
-	removeClass = function(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' '
-			, newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+	function removeClass(element, cls) {
+		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' ',
+			newClasses = elClasses.replace(' ' + cls + ' ', ' ');
 
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.className = newClasses;
-	};
+	}
 
-	removeDefaultHeight = function(slotname) {
-		var slot = document.getElementById(slotname);
-
-		log('removeDefaultHeight ' + slotname, 6, logGroup);
-
-		if (slot) {
-			removeClass(slot, defaultHeightClass);
-		}
-	};
-
-	isMedrec = function (slotname) {
-		return slotname.match(/TOP_RIGHT_BOXAD/);
-	};
-
-	hideSelfServeUrl = function (slotname) {
-		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
-		if (isMedrec(slotname)) {
-			if (selfServeUrl.length > 0) {
-				selfServeUrl[0].className += ' hidden';
-			}
-		}
-	};
-
-	isLeaderboard = function (slotname) {
-		return slotname.indexOf('LEADERBOARD') !== -1;
-	};
-
-	isStandardLeaderboardSize = function (slotname) {
-		var slot = document.getElementById(slotname),
-			isStandardSize;
-
-		if (slot) {
-			isStandardSize = slot.offsetHeight >= 90
-				&& slot.offsetHeight <= 95
-				&& slot.offsetWidth <= 728;
-
-			log(
-				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
-				3,
-				logGroup
-			);
-
-			return isStandardSize;
-		}
-		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
-	};
-
-	addDefaultHeight = function(slotname) {
-		var slot = document.getElementById(slotname);
-
-		log('addDefaultHeight ' + slotname, 6, logGroup);
-
-		if (slot) {
-			slot.className += ' ' + defaultHeightClass;
-		}
-	};
-
-	// TODO: fix it, it's a hack!
-	adjustLeaderboardSize = function(slotname) {
-		var slot = document.getElementById(slotname);
-
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			slot.className += ' ' + standardLeaderboardSizeClass;
-		}
-	};
-
-	// TODO: fix it, it's a hack!
-	removeTopButtonIfNeeded = function(slotname) {
-		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
-			log('removing TOP_BUTTON_WIDE', 3, logGroup);
-			hide('TOP_BUTTON_WIDE');
-		}
-		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
-		}
-	};
-
-	hide = function(slotname, usingClass) {
+	// TODO: called always with usingClass=true
+	function hide(slotname, usingClass) {
 		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
 
 		var slot = document.getElementById(slotname);
@@ -108,9 +29,9 @@ var SlotTweaker = function(log, document, window) {
 				slot.style.display = 'none';
 			}
 		}
-	};
+	}
 
-	show = function(slotname, usingClass) {
+	function show(slotname, usingClass) {
 		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
 
 		var slot = document.getElementById(slotname);
@@ -122,7 +43,83 @@ var SlotTweaker = function(log, document, window) {
 				throw 'Showing slot not based on hidden class unsupported';
 			}
 		}
-	};
+	}
+
+	function removeDefaultHeight(slotname) {
+		var slot = document.getElementById(slotname);
+
+		log('removeDefaultHeight ' + slotname, 6, logGroup);
+
+		if (slot) {
+			removeClass(slot, defaultHeightClass);
+		}
+	}
+
+	function isMedrec(slotname) {
+		return slotname.match(/TOP_RIGHT_BOXAD/);
+	}
+
+	function hideSelfServeUrl(slotname) {
+		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
+		if (isMedrec(slotname)) {
+			if (selfServeUrl.length > 0) {
+				selfServeUrl[0].className += ' hidden';
+			}
+		}
+	}
+
+	function isLeaderboard(slotname) {
+		return slotname.indexOf('LEADERBOARD') !== -1;
+	}
+
+	function isStandardLeaderboardSize(slotname) {
+		var slot = document.getElementById(slotname),
+			isStandardSize;
+
+		if (slot) {
+			isStandardSize = slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
+
+			log(
+				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
+				3,
+				logGroup
+			);
+
+			return isStandardSize;
+		}
+		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
+	}
+
+	function addDefaultHeight(slotname) {
+		var slot = document.getElementById(slotname);
+
+		log('addDefaultHeight ' + slotname, 6, logGroup);
+
+		if (slot) {
+			slot.className += ' ' + defaultHeightClass;
+		}
+	}
+
+	// TODO: fix it, it's a hack!
+	function adjustLeaderboardSize(slotname) {
+		var slot = document.getElementById(slotname);
+
+		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+			slot.className += ' ' + standardLeaderboardSizeClass;
+		}
+	}
+
+	// TODO: fix it, it's a hack!
+	function removeTopButtonIfNeeded(slotname) {
+		if (isLeaderboard(slotname) && !isStandardLeaderboardSize(slotname)) {
+			log('removing TOP_BUTTON_WIDE', 3, logGroup);
+			hide('TOP_BUTTON_WIDE');
+		}
+		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
+			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
+		}
+	}
 
 	return {
 		addDefaultHeight: addDefaultHeight,
@@ -134,3 +131,5 @@ var SlotTweaker = function(log, document, window) {
 		show: show
 	};
 };
+
+define('ext.wikia.adengine.slottweaker', ['wikia.log', 'wikia.document', 'wikia.window'], SlotTweaker);

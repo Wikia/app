@@ -228,7 +228,7 @@ EOT
 		$name = $user->getName();
 		if( $user->getEmail() ) {
 			$email = $user->getEmail();
-			$email_output = wfMessage( 'lookupuser-email', $email, $name )->text();
+			$email_output = wfMessage( 'lookupuser-email', $email, urlencode( $email ) )->text();
 		} else {
 			$email_output = wfMessage( 'lookupuser-no-email' )->text();
 		}
@@ -254,6 +254,13 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-registration', $registration )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
+		if ( isset( $user->mBirthDate ) ) {
+			$birthDate = $wgLang->date( $user->mBirthDate, true );
+		} else {
+			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
+		}
+		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-birthdate', $birthDate )->text() );
+
 
 		$newEmail = $user->getOption( 'new_email' );
 		if ( !empty( $newEmail ) ) {

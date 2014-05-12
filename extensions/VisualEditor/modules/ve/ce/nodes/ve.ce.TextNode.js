@@ -21,7 +21,7 @@ ve.ce.TextNode = function VeCeTextNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.TextNode, ve.ce.LeafNode );
+OO.inheritClass( ve.ce.TextNode, ve.ce.LeafNode );
 
 /* Static Properties */
 

@@ -9,14 +9,14 @@
  * MediaWiki transclusion part model.
  *
  * @class
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  * @param {ve.dm.MWTransclusionModel} transclusion Transclusion
  */
 ve.dm.MWTransclusionPartModel = function VeDmMWTransclusionPartModel( transclusion ) {
 	// Mixin constructors
-	ve.EventEmitter.call( this );
+	OO.EventEmitter.call( this );
 
 	// Properties
 	this.transclusion = transclusion;
@@ -25,7 +25,7 @@ ve.dm.MWTransclusionPartModel = function VeDmMWTransclusionPartModel( transclusi
 
 /* Inheritance */
 
-ve.mixinClass( ve.dm.MWTransclusionPartModel, ve.EventEmitter );
+OO.mixinClass( ve.dm.MWTransclusionPartModel, OO.EventEmitter );
 
 /* Methods */
 

@@ -61,7 +61,13 @@
 		"require": false,
 		"Backbone": false,
 		"Mustache": false,
-		"_": false
+		"_": false,
+		"describe": false,
+		"it": false,
+		"expect": false,
+		"beforeEach": false,
+		"modules": false,
+		"spyOn": false
 	},
 	"jquery": true,
 	"node": true,

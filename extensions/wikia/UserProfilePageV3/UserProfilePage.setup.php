@@ -54,6 +54,7 @@ $wgHooks['BeforeDisplayNoArticleText'][] = 'UserProfilePageHooks::onBeforeDispla
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
+
 $wgHooks['WikiFactoryChanged'][] = 'UserProfilePageHooks::onWikiFactoryChanged';
 $wgHooks['WikiFactoryVariableRemoved'][] = 'UserProfilePageHooks::onWikiFactoryVariableRemoved';
 

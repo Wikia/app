@@ -2,13 +2,14 @@
 @import "../../../../skins/oasis/css/core/layout";
 @import "../../../../skins/oasis/css/mixins/clearfix";
 @import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/opacity";
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/mixins/transform";
-@import "../../../../skins/oasis/css/mixins/border-radius";
 @import "../../UserLogin/mixins/tooltip-icon";
+
+$hub-color-slot-1 : get_command_line_param("hub-color-slot-1", $color-wikiahome-videogames);
+$hub-color-slot-2 : get_command_line_param("hub-color-slot-2", $color-wikiahome-entertainment);
+$hub-color-slot-3 : get_command_line_param("hub-color-slot-3", $color-wikiahome-lifestyle);
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;
@@ -295,9 +296,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				}
 				.collections-button {
 					border: 0;
-					@include border-radius(0);
-					@include border-radius-ne(3px);
-					@include border-radius-se(3px);
+					border-bottom-right-radius: 3px;
+					border-radius: 0;
+					border-top-right-radius: 3px;
 					height: 43px;
 					padding: 0;
 					right: 15px;
@@ -397,15 +398,15 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					@include box-shadow(0, 0, 15px, #333, false, 0px);
 				}
 				.hotNew {
-					@include opacity(0);
 					@include transition-shorthand(0 all ease-out 200ms);
+					opacity: 0;
 				}
 				.preview-pane {
 					@include transition-shorthand(220ms all ease-in 250ms);
-					@include opacity(100);
 					bottom: 0;
+					opacity: 1;
 					.hotNew {
-						@include opacity(100);
+						opacity: 1;
 					}
 				}
 				span {
@@ -439,8 +440,8 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				word-break: break-all;
 			}
 			.preview-pane {
-				@include opacity(0);
 				bottom: -85px;
+				opacity: 0;
 				position: absolute;
 				width: 100%;
 				span {
@@ -465,7 +466,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 				padding: 8px 0 0 10px;
 				width: 100%;
 				a {
-					@include border-radius(3px);
+					border-radius: 3px;
 					color: #fff;
 					$button-color-top: rgba(#444, .4);
 					$button-color-bottom: rgba(#666, .4);
@@ -570,7 +571,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 		&.loaded {
 			.content-area {
-				@include opacity(100);
+				opacity: 1;
 			}
 		}
 		h2 {
@@ -588,7 +589,7 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 		}
 		.content-area {
 			@include transition-shorthand(250ms opacity);
-			@include opacity(0);
+			opacity: 0;
 		}
 		.preview-header {
 			border-bottom: 1px solid $color-page-border;
@@ -797,6 +798,30 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					color: $color-wikiahome-lifestyle;
 				}
 			}
+			&.hub-slot-1 {
+				h2 {
+					border-bottom-color: $hub-color-slot-1;
+				}
+				ul li a {
+					color: $hub-color-slot-1;
+				}
+			}
+			&.hub-slot-2 {
+				h2 {
+					border-bottom-color: $hub-color-slot-2;
+				}
+				ul li a {
+					color: $hub-color-slot-2;
+				}
+			}
+			&.hub-slot-3 {
+				h2 {
+					border-bottom-color: $hub-color-slot-3;
+				}
+				ul li a {
+					color: $hub-color-slot-3;
+				}
+			}
 		}
 	}
 
@@ -851,9 +876,9 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 					&.wikiahomepage-community-image {
 						background-position: 0px 0px;
 						height: 54px;
-						left: 45px;
+						left: 40px;
 						top: 26px;
-						width: 243px;
+						width: 253px;
 					}
 					&.wikiahomepage-highlight-image {
 						background-position: 0px -54px;
@@ -871,11 +896,11 @@ $color-wikiahome-border-primary-brand-color: #c7d1d8;
 	}
 	.hotNew {
 		strong {
+			border-radius: 2px;
 			color: #fff;
 			font-size: 9px;
 			margin-right: 5px;
 			padding: 3px;
-			@include border-radius(2px);
 		}
 		.hot {
 			background-color: #993399;

@@ -40,8 +40,8 @@ class RelatedPagesController extends WikiaController {
 			$this->pages = $wgMemc->get( $mKey );
 			$this->srcAttrName = $this->app->checkSkin( 'monobook' ) ? 'src' : 'data-src';
 
-			if ( empty($this->pages) ) {
-				$this->pages = $this->prepareTemplateVars( $relatedPages->get( $articleid ) );
+			if ( empty( $this->pages ) ) {
+				$this->pages = $relatedPages->get( $articleid );
 
 				if ( count( $this->pages ) > 0) {
 					$wgMemc->set( $mKey, $this->pages, 3 * 3600 );
@@ -55,36 +55,4 @@ class RelatedPagesController extends WikiaController {
 		$this->relatedPagesHeading = wfMessage( 'wikiarelatedpages-heading' )->plain();
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
-
-	/**
-	 * @desc Converts array results from RelatedPages::get() method to array for mustache template
-	 *
-	 * @param Array $relatedPages array with results of RelatedPages::get() method
-	 *
-	 * @return array of stdObjects for mustache
-	 */
-	private function prepareTemplateVars( $relatedPages ) {
-		wfProfileIn( __METHOD__ );
-
-		$templateVars = [];
-		foreach( $relatedPages as $page ) {
-			$tplVar = new stdClass();
-			$tplVar->pageUrl = $page[ 'url' ];
-			$tplVar->pageTitle = $page[ 'title' ];
-
-			if( !empty( $page[ 'text' ] ) ) {
-				$tplVar->artSnippet = $page[ 'text' ];
-			}
-
-			if( !empty( $page[ 'imgUrl' ] ) ) {
-				$tplVar->imgUrl = $page[ 'imgUrl' ];
-			}
-
-			$templateVars[] = $tplVar;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $templateVars;
-	}
-
 }

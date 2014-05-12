@@ -69,6 +69,11 @@ class FixMalformedHTMLTest extends WikiaBaseTest {
 				'auto-closing nested tags',
 				'<table><tr><td><div>Test</td></tr></table>',
 				'<table><tr><td><div>Test</div></td></tr></table>'
+			],
+			[
+				'html5 fugure, figurecaption tags',
+				'<figure><img src="http://example.com/1.jpg"><figcaption>Added</figcaption></figure> asdasd',
+				'<figure><img src="http://example.com/1.jpg"><figcaption>Added</figcaption></figure> asdasd'
 			]
 		];
 	}

@@ -170,8 +170,8 @@ class MediaWikiService
 	
 	/**
 	 * Performs an API request, but still returns the data 
-	 * @param unknown_type $pageId
-	 * @return multitype:
+	 * @param int $pageId
+	 * @return Mixed
 	 **/
 	public function getBacklinksCountFromPageId( $pageId ) {
 		$title = $this->getTitleStringFromPageId( $pageId );
@@ -267,7 +267,7 @@ class MediaWikiService
 	 * @return string
 	 */
 	public function getMediaDataFromPageId( $pageId ) {
-		if (! $this->pageIdHasFile( $pageId ) ) {
+		if ( ! $this->pageIdHasFile( $pageId ) ) {
 			return '';
 		}
 		
@@ -287,7 +287,7 @@ class MediaWikiService
 	/**
 	 * Returns the value of a mediawiki api call for statistics
 	 * @param int $pageId
-	 * @return multitype:
+	 * @return array
 	 */
 	public function getApiStatsForPageId( $pageId ) {
 		return \ApiService::call( array(
@@ -317,7 +317,7 @@ class MediaWikiService
 	
 	/**
 	 * Determines whether or not a page "exists"
-	 * @param unknown_type $pageId
+	 * @param int $pageId
 	 * @return boolean
 	 */
 	public function pageIdExists( $pageId ) {
@@ -471,16 +471,17 @@ class MediaWikiService
 		$searchEngine = new \SearchEngine();
 		$title = $searchEngine->getNearMatch( $term );
 		$articleId = ( $title !== null ) ? $title->getArticleId() : 0;
-		if( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
+		if ( ( $articleId > 0 ) && ( in_array( $title->getNamespace(), $namespaces ) ) ) {
 			$this->getPageFromPageId( $articleId );
 			$articleMatch = new \Wikia\Search\Match\Article( $title->getArticleId(), $this ,$term);
 		}
 		return $articleMatch;
 	}
-	
+
 	/**
 	 * Provided a prepped domain string, (e.g. 'runescape'), return a wiki match.
 	 * @param string $domain
+	 * @param string $lang
 	 * @return \Wikia\Search\Match\Wiki|NULL
 	 */
 	public function getWikiMatchByHost( $domain, $lang = null ) {
@@ -492,7 +493,7 @@ class MediaWikiService
 			} else {
 				$wikiId = ( $interWikiComId = $this->getWikiIdByHost( "{$langCode}.{$domain}.wikia.com" ) ) !== null ? $interWikiComId : $this->getWikiIdByHost( "{$domain}.{$langCode}" );
 			}
-			
+
 			if ( isset( $wikiId ) ) {
 				$wiki = $this->getWikiFromWikiId( $wikiId );
 				//exclude wikis which lang does not match current one, and wikis that are closed
@@ -518,7 +519,7 @@ class MediaWikiService
 			__METHOD__
 		);
 		$result = [];
-		while( $row = $dbw->fetchObject( $dbResult ) ) {
+		while ( $row = $dbw->fetchObject( $dbResult ) ) {
 			$result[] = $row->city_domain;
 		}
 		return $result;
@@ -545,7 +546,7 @@ class MediaWikiService
 	/**
 	 * Returns the article ID of a main page for the wiki ID passed.
 	 * @param int $wikiId
-	 * @return Ambigous <number, boolean>
+	 * @return int|boolean
 	 */
 	public function getMainPageIdForWikiId( $wikiId ) {
 		return $this->getMainPageTitleForWikiId( $wikiId )->getArticleId();
@@ -630,7 +631,7 @@ class MediaWikiService
 	 * @return array
 	 */
 	public function getVisualizationInfoForWikiId( $wikiId ) {
-		$visualization = (new \WikisModel )->getDetails( [ $wikiId ] );
+		$visualization = (new \WikisModel )->getDetails( [ $wikiId ], true );
 		$visualization = empty( $visualization ) ? [ [] ] : $visualization;
 		return array_shift( $visualization );
 	}
@@ -650,8 +651,8 @@ class MediaWikiService
 			unset( $statsInfo[$key] );
 		}
 		return $statsInfo;
-	}	
-	
+	}
+
 	/**
 	 * Determines if the current globally registered language code is supported by search for dynamic support.
 	 * @return boolean
@@ -695,7 +696,7 @@ class MediaWikiService
 	public function getThumbnailHtml( $pageId, $transformParams = null, /* WikiaGrid 1 column width */ $htmlParams = array( 'desc-link'=>true, 'img-class'=>'thumbimage', 'duration'=>true ) ) {
 		$html = '';
 		$img = $this->getFileForPageId( $pageId );
-		if (! empty( $img ) ) {
+		if ( ! empty( $img ) ) {
 			$transformParams[ 'width' ] = (isset( $transformParams[ 'width' ] ) ) ? $transformParams[ 'width' ] : static::THUMB_DEFAULT_WIDTH;
 			$transformParams[ 'height' ] = (isset( $transformParams[ 'height' ] ) ) ? $transformParams[ 'height' ] : static::THUMB_DEFAULT_HEIGHT;
 			$thumb = $img->transform( $transformParams );
@@ -719,7 +720,7 @@ class MediaWikiService
 
 			return \WikiaFileHelper::getVideoThumbnailHtml( $title, $transformParams['width'], $transformParams['height'], false );
 		} catch ( \Exception $ex ) {
-			// we have some isses on dev box (no starter database).
+			// we have some issues on dev box (no starter database).
 			// swallow the exception for now. Should we log this event ?
 			return '';
 		}
@@ -742,10 +743,11 @@ class MediaWikiService
 		}
 		return $videoViews;
 	}
-	
+
 	/**
 	 * Returns a number formatted according to the current language.
 	 * @param string $number
+	 * @return string
 	 */
 	public function formatNumber( $number ) {
 		return $this->app->wg->Lang->formatNum( $number ); 
@@ -768,10 +770,11 @@ class MediaWikiService
 	public function getHostName() {
 		return substr( $this->getGlobal( 'Server' ), 7);
 	}
-	
+
 	/**
 	 * Wrapper for wfMessage('foo')->text()
 	 * @param string $messageName
+	 * @param array $params
 	 * @return string
 	 */
 	public function getSimpleMessage( $messageName, array $params = array() ) {
@@ -790,11 +793,11 @@ class MediaWikiService
 	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
 	 * @return string
 	 */
-	public function shortNumForMsg($number, $msgName) {
-		if ($number >= 1000000) {
+	public function shortNumForMsg( $number, $msgName ) {
+		if ( $number >= 1000000 ) {
 			$shortNum = floor($number / 1000000);
 			$msgName = $msgName . '-M';
-		} else if ($number >= 1000) {
+		} else if ( $number >= 1000 ) {
 			$shortNum = floor($number / 1000);
 			$msgName = $msgName . '-k';
 		} else {
@@ -840,7 +843,7 @@ class MediaWikiService
 	 * consumer logic
 	 * 
 	 * @param string $key
-	 * @return multitype
+	 * @return array
 	 */
 	public function getCacheResultFromString( $key ) {
 		return $this->getCacheResult( $this->getCacheKey( $key ) );
@@ -870,10 +873,11 @@ class MediaWikiService
 		$this->app->wg->Memc->set( $this->getCacheKey( $key ), $value, $ttl );
 		return $this;
 	}
-	
+
 	/**
 	 * Provides a format, provided a revision's default timestamp format.
 	 * @param string $timestamp
+	 * @return string|boolean
 	 */
 	protected function getFormattedTimestamp( $timestamp ) {
 		return wfTimestamp( TS_ISO_8601, $timestamp );
@@ -891,7 +895,7 @@ class MediaWikiService
 	/**
 	 * Returns an instance of stdClass with attributes corresponding to rows in the city_list table 
 	 * @param int $wikiId
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	protected function getWikiFromWikiId( $wikiId ) {
 		return (new \WikiFactory)->getWikiById( $wikiId );
@@ -900,10 +904,10 @@ class MediaWikiService
 	/**
 	 * Give a page id, provide a file
 	 * @param int $pageId
-	 * @return File
+	 * @return \File
 	 */
 	protected function getFileForPageId( $pageId ) {
-		if (! isset( self::$pageIdsToFiles[$pageId] ) ) {
+		if ( ! isset( self::$pageIdsToFiles[$pageId] ) ) {
 			self::$pageIdsToFiles[$pageId] = wfFindFile( $this->getTitleFromPageId( $pageId ) );
 		}
 		return self::$pageIdsToFiles[$pageId];
@@ -912,7 +916,7 @@ class MediaWikiService
     /**
 	 * Standard interface for this class's services to access a page
 	 * @param int $pageId
-	 * @return Article
+	 * @return \Article
 	 * @throws \Exception
 	 */
 	protected function getPageFromPageId( $pageId ) {
@@ -923,7 +927,7 @@ class MediaWikiService
 		}
 		$page = \Article::newFromID( $pageId );
 
-		if( $page === null ) {
+		if ( $page === null ) {
 			throw new \Exception( 'Invalid Article ID' );
 		}
 
@@ -932,7 +936,7 @@ class MediaWikiService
 			$redirectTarget = $page->getRedirectTarget();
 		}
 
-		if( $redirectTarget ) {
+		if ( $redirectTarget ) {
 			self::$redirectArticles[$pageId] = $page;
 			$page = new \Article( $redirectTarget );
 			$newId = $page->getID();
@@ -953,7 +957,7 @@ class MediaWikiService
 	 */
 	protected function getTitleString( \Title $title ) {
 		wfProfileIn( __METHOD__ );
-		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ){
+		if ( in_array( $title->getNamespace(), array( NS_WIKIA_FORUM_BOARD_THREAD, NS_USER_WALL_MESSAGE ) ) ) {
 			$wm = \WallMessage::newFromId( $title->getArticleID() );
 			$wm->load();
 			
@@ -993,7 +997,7 @@ class MediaWikiService
 	/**
 	 * Returns an instance of GlobalTitle provided a Wiki ID
 	 * @param int $wikiId
-	 * @return GlobalTitle
+	 * @return \GlobalTitle
 	 */
 	protected function getMainPageTitleForWikiId( $wikiId ) {
 		$response = (new \ApiService)->foreignCall(
@@ -1020,7 +1024,7 @@ class MediaWikiService
 	 */
 	protected function getTitleFromPageId( $pageId ) {
 		wfProfileIn( __METHOD__ );
-		if (! isset( static::$pageIdsToTitles[$pageId] ) ) {
+		if ( ! isset( static::$pageIdsToTitles[$pageId] ) ) {
 			$page = $this->getPageFromPageId( $pageId );
 			static::$pageIdsToTitles[$pageId] = $page->getTitle();
 		}

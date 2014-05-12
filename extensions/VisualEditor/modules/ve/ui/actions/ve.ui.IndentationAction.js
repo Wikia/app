@@ -20,7 +20,7 @@ ve.ui.IndentationAction = function VeUiIndentationAction( surface ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ui.IndentationAction, ve.ui.Action );
+OO.inheritClass( ve.ui.IndentationAction, ve.ui.Action );
 
 /* Static Properties */
 
@@ -188,7 +188,7 @@ ve.ui.IndentationAction.prototype.indentListItem = function ( listItem ) {
 
 	// TODO If this listItem has a child list, split&unwrap it
 
-	surfaceModel.change( null, selection );
+	surfaceModel.setSelection( selection );
 };
 
 /**

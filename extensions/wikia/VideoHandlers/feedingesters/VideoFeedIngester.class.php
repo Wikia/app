@@ -1,45 +1,68 @@
 <?php
 
+/**
+ * Class VideoFeedIngester
+ */
 abstract class VideoFeedIngester {
+
+	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
-	public static $PROVIDERS = array(
-		self::PROVIDER_SCREENPLAY,
+
+	// Caching constants; all integers are seconds
+	const CACHE_KEY = 'videofeedingester-2';
+	const CACHE_EXPIRY = 3600;
+	const THROTTLE_INTERVAL = 1;
+
+	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
+	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
+
+	// Determines if a duplicate video found should be re-uploaded or ignored
+	public $reupload = false;
+
+	// Providers from which we ingest daily video data
+	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
+		self::PROVIDER_REALGRAVITY,
+		self::PROVIDER_OOYALA,
+		self::PROVIDER_IVA,
+		self::PROVIDER_SCREENPLAY,
+	];
+
+	// These providers are not ingested daily, but can be ingested from if specifically named
+	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
-	public static $PROVIDERS_DEFAULT = array(
-		self::PROVIDER_SCREENPLAY,
-		self::PROVIDER_IGN,
-		self::PROVIDER_REALGRAVITY,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-	);
+	];
+
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array();
-	private static $instances = array();
+	protected static $CLDR_NAMES = array();
 	protected $filterByProviderVideoId = array();
 
-	protected static $CLDR_NAMES = array();
+	protected $resultSummary = [
+		'found'    => 0,
+		'ingested' => 0,
+		'skipped'  => 0,
+		'warnings' => 0,
+		'errors'   => 0,
+	];
 
-	const CACHE_KEY = 'videofeedingester-2';
-	const CACHE_EXPIRY = 3600;
-	const THROTTLE_INTERVAL = 1;	// seconds
+	protected $resultIngestedVideos = [
+		'Games'         => [],
+		'Entertainment' => [],
+		'Lifestyle'     => [],
+		'International' => [],
+	];
 
-	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 	private static $WIKI_INGESTION_DATA_FIELDS = array('keyphrases');
-
-	public $reupload = false;
+	private static $instances = array();
 
 	abstract public function import($content='', $params=array());
 
@@ -50,6 +73,31 @@ abstract class VideoFeedIngester {
 	 * @return array - A list of category names
 	 */
 	abstract public function generateCategories( $data, $addlCategories );
+
+	/**
+	 * Return a list of all the providers we actively ingest from
+	 * @return array
+	 */
+	public static function activeProviders() {
+		return self::$ACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all the providers that are legal to ingest from but from whom
+	 * we do not ingest automatically.
+	 * @return array
+	 */
+	public static function inactiveProviders() {
+		return self::$INACTIVE_PROVIDERS;
+	}
+
+	/**
+	 * Return a list of all available providers
+	 * @return array
+	 */
+	public static function allProviders() {
+		return array_merge( self::$ACTIVE_PROVIDERS, self::$INACTIVE_PROVIDERS );
+	}
 
 	/**
 	 * Generate name for video.
@@ -158,14 +206,14 @@ abstract class VideoFeedIngester {
 
 		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistVideo($data) ) {
-			print "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}\n";
+			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
 		// See if this video should be filtered (regex match against specific fields)
 		if ( $this->isFilteredVideo($data) ) {
-			print "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}\n";
+			$this->videoSkipped( "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -186,9 +234,9 @@ abstract class VideoFeedIngester {
 		$id = $data['videoId'];
 		$name = $this->generateName($data);
 		$metadata = $this->generateMetadata($data, $msg);
-		if ( !empty($msg) ) {
-			print "Error when generating metadata\n";
-			var_dump($msg);
+		if ( !empty( $msg ) ) {
+			$this->videoWarnings( "Error when generating metadata.\n" );
+			var_dump( $msg );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -201,7 +249,7 @@ abstract class VideoFeedIngester {
 			$dupAssets = $ooyalaAsset->getAssetsBySourceId( $id, $provider );
 			if ( !empty( $dupAssets ) ) {
 				if ( $this->reupload === false ) {
-					print "Not uploading [$name (Id: $id)] - video already exists in remote assets.\n";
+					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists in remote assets.\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
@@ -214,9 +262,7 @@ abstract class VideoFeedIngester {
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
-				if ( $debug ) {
-					print "Not uploading - video already exists and reupload is disabled\n";
-				}
+				$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists and reupload is disabled.\n" );
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
@@ -234,7 +280,8 @@ abstract class VideoFeedIngester {
 		}
 		$metadata['destinationTitle'] = $name;
 
-		if ( !$this->validateTitle($id, $name, $msg, $debug) ) {
+		if ( !$this->validateTitle( $id, $name, $msg ) ) {
+			$this->videoWarnings( "Error: $msg\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -249,7 +296,7 @@ abstract class VideoFeedIngester {
 				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
 					$result = $this->updateRemoteAsset( $id, $name, $metadata, $debug, $dupAssets[0] );
 				} else {
-					echo "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n";
+					$this->videoSkipped( "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
@@ -272,7 +319,8 @@ abstract class VideoFeedIngester {
 			}
 		}
 
-		// parepare article body
+		// prepare article body
+		/** @var ApiWrapper $apiWrapper */
 		$apiWrapper = new static::$API_WRAPPER($id, $metadata);
 
 		// add category
@@ -281,7 +329,6 @@ abstract class VideoFeedIngester {
 		// add description header
 		$videoHandlerHelper = new VideoHandlerHelper();
 		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
-
 
 		if ( $debug ) {
 			print "Ready to create video\n";
@@ -298,6 +345,8 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 
+			$this->videoIngested( "Ingested $name (id: $id).\n", $categories );
+
 			wfProfileOut( __METHOD__ );
 			return 1;
 		} else {
@@ -308,22 +357,27 @@ abstract class VideoFeedIngester {
 				$timeUnix = intval(wfTimestamp( TS_UNIX, $time ) );
 				$timeNow = intval(wfTimestamp( TS_UNIX, time() ) );
 				if ( $timeUnix + $ignoreRecent >= $timeNow ) {
-					print "Recently uploaded, ignoring\n";
+					$this->videoSkipped( "Recently uploaded, ignoring\n" );
 					wfProfileOut( __METHOD__ );
 					return 0;
 				}
 			}
+			/** @var Title $uploadedTitle */
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL($uploadedTitle->getFullURL());
-				print "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n\n";
+				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n", $categories );
+
 				wfWaitForSlaves(self::THROTTLE_INTERVAL);
 				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
 				wfProfileOut( __METHOD__ );
 				return 1;
 			}
 		}
+
+		$this->videoWarnings();
+
 		wfProfileOut( __METHOD__ );
 		return 0;
 	}
@@ -341,13 +395,13 @@ abstract class VideoFeedIngester {
 
 		$assetData = $this->generateRemoteAssetData( $name, $metadata );
 		if ( empty( $assetData['url']['flash'] ) ) {
-			echo "Error when generating remote asset data: empty asset url.\n";
+			$this->videoWarnings( "Error when generating remote asset data: empty asset url.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
 		if ( empty( $assetData['duration'] ) || $assetData['duration'] < 0 ) {
-			echo "Error when generating remote asset data: invalid duration ($assetData[duration]).\n";
+			$this->videoWarnings( "Error when generating remote asset data: invalid duration ($assetData[duration]).\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -356,7 +410,7 @@ abstract class VideoFeedIngester {
 		$ooyalaAsset = new OoyalaAsset();
 		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
 		if ( $isExist ) {
-			print( "Skip (Uploading Asset): $name ($assetData[provider]): video already exists in remote assets.\n" );
+			$this->videoSkipped( "SKIP: Uploading Asset: $name ($assetData[provider]). Video already exists in remote assets.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -372,10 +426,14 @@ abstract class VideoFeedIngester {
 		} else {
 			$result = $ooyalaAsset->addRemoteAsset( $assetData );
 			if ( !$result ) {
+				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 		}
+
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
 
 		wfProfileOut( __METHOD__ );
 		return 1;
@@ -394,7 +452,7 @@ abstract class VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $dupAsset['embed_code'] ) ) {
-			echo "Error when updating remote asset data: empty asset embed code.\n";
+			$this->videoWarnings( "Error when updating remote asset data: empty asset embed code.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -426,10 +484,14 @@ abstract class VideoFeedIngester {
 		} else {
 			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
 			if ( !$result ) {
+				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
 		}
+
+		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
+		$this->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
 
 		wfProfileOut( __METHOD__ );
 		return 1;
@@ -465,13 +527,13 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Returns whether the given video title has a value title object
 	 * @param $videoId
 	 * @param $name
 	 * @param $msg
-	 * @param $isDebug
-	 * @return int
+	 * @return bool
 	 */
-	protected function validateTitle($videoId, $name, &$msg, $isDebug) {
+	protected function validateTitle( $videoId, $name, &$msg ) {
 
 		wfProfileIn( __METHOD__ );
 		$sanitizedName = VideoFileUploader::sanitizeTitle($name);
@@ -479,10 +541,10 @@ abstract class VideoFeedIngester {
 		if ( is_null($title) ) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			wfProfileOut( __METHOD__ );
-			return 0;
+			return false;
 		}
 		wfProfileOut( __METHOD__ );
-		return 1;
+		return true;
 	}
 
 	/**
@@ -506,7 +568,7 @@ abstract class VideoFeedIngester {
 		// partner API search keywords. Value is an array of categories
 		// relevant to wikis
 		$rawData = $this->getWikiIngestionDataFromSource();
-		foreach ( $rawData as $cityId=>$cityData ) {
+		foreach ( $rawData as $cityId => $cityData ) {
 			if ( is_array($cityData) ) {
 				foreach ( self::$WIKI_INGESTION_DATA_FIELDS as $field ) {
 					if ( !empty($cityData[$field]) && is_array($cityData[$field]) ) {
@@ -1129,6 +1191,10 @@ abstract class VideoFeedIngester {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 			if ( empty( self::$CLDR_NAMES ) ) {
+
+				// Initialize some variables that will be overwritten by the following include
+				$languageNames = $countryNames = [];
+
 				// include cldr extension for language code
 				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
 				self::$CLDR_NAMES = array(
@@ -1165,6 +1231,85 @@ abstract class VideoFeedIngester {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
 		return array_filter( $unique );
+	}
+
+	/**
+	 * Set summary result for video found
+	 * @param integer $num - the number of video found
+	 */
+	public function videoFound( $num ) {
+		$msg = "Found $num videos.\n";
+		$this->setResultSummary( 'found', $msg, $num );
+	}
+
+	/**
+	 * Set summary result for skipped video
+	 * @param string $msg
+	 */
+	public function videoSkipped( $msg = '' ) {
+		$this->setResultSummary( 'skipped', $msg );
+	}
+
+	/**
+	 * Set summary result for ingested video
+	 * @param string $msg
+	 */
+	public function videoIngested( $msg = '', $categories = [] ) {
+		if ( !empty( $msg ) ) {
+			foreach ( $categories as $category ) {
+				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
+					$this->resultIngestedVideos[$category][] = $msg;
+				}
+			}
+		}
+
+		$msg .= "\n";
+		$this->setResultSummary( 'ingested', $msg );
+	}
+
+	/**
+	 * Set summary result for warnings
+	 * @param string $msg
+	 */
+	public function videoWarnings( $msg = '' ) {
+		$this->setResultSummary( 'warnings', $msg );
+	}
+
+	/**
+	 * Set summary result for errors
+	 * @param string $msg
+	 */
+	public function videoErrors( $msg = '' ) {
+		$this->setResultSummary( 'errors', $msg );
+	}
+
+	/**
+	 * Set summary result
+	 * @param string $field [found/skipped/ingested/warnings/errors]
+	 * @param string $msg
+	 * @param integer $num
+	 */
+	public function setResultSummary( $field, $msg = '', $num = 1 ) {
+		if ( !empty( $msg ) ) {
+			echo $msg;
+		}
+		$this->resultSummary[$field] += $num;
+	}
+
+	/**
+	 * Get summary result
+	 * @return array
+	 */
+	public function getResultSummary() {
+		return $this->resultSummary;
+	}
+
+	/**
+	 * Get messages for ingested videos by category
+	 * @return array
+	 */
+	public function getResultIngestedVideos() {
+		return $this->resultIngestedVideos;
 	}
 
 }

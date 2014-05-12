@@ -2,11 +2,11 @@
  * @description Generalized model for jQuery.ui Datepicker, based/refactored from SpecialMarketingToolbox implementation
  * @dependencies Model datepicker
  */
-define( 'videopageadmin.models.datepicker', [], function() {
+define('videopageadmin.models.datepicker', [], function () {
 
 	'use strict';
 
-	function Datepicker( params ) {
+	function Datepicker(params) {
 		this.language = params.language;
 		this.controller = params.controller;
 		this.method = params.method;
@@ -15,20 +15,20 @@ define( 'videopageadmin.models.datepicker', [], function() {
 	}
 
 	Datepicker.prototype = {
-		init: function() {
+		init: function () {
 			this.specialDates = {};
 			this.collectedMonths = {};
 
 			this.__monthCollectRadius = 2;
 		},
-		getStatus: function( day ) {
-			var fullDay = $.datepicker.formatDate( 'yy-mm-dd', day );
+		getStatus: function (day) {
+			var fullDay = $.datepicker.formatDate('yy-mm-dd', day);
 
-			if ( this.specialDates[fullDay] ) {
+			if (this.specialDates[fullDay]) {
 				return this.specialDates[fullDay];
 			}
 		},
-		collectData: function( year, month ) {
+		collectData: function (year, month) {
 			var beginTimestamp,
 				endTimestamp,
 				maxDate,
@@ -37,22 +37,22 @@ define( 'videopageadmin.models.datepicker', [], function() {
 				datesLength,
 				i;
 
-			dates = this.getMonthsToCollect( year, month );
+			dates = this.getMonthsToCollect(year, month);
 			datesLength = dates.length;
 
-			if ( datesLength ) {
+			if (datesLength) {
 
-				maxDate = new Date( Math.max.apply( null, dates ) );
-				maxDate.setMonth( maxDate.getMonth() + 1 );
+				maxDate = new Date(Math.max.apply(null, dates));
+				maxDate.setMonth(maxDate.getMonth() + 1);
 				endTimestamp = maxDate.getTime() / 1000 - maxDate.getTimezoneOffset() * 60;
-				minDate = new Date( Math.min.apply( null, dates ) );
+				minDate = new Date(Math.min.apply(null, dates));
 				beginTimestamp = minDate.getTime() / 1000 - minDate.getTimezoneOffset() * 60;
 
-				for ( i = 0; i < datesLength; i++ ) {
-					this.setCollected( dates[i].getFullYear(), dates[i].getMonth() + 1 );
+				for (i = 0; i < datesLength; i++) {
+					this.setCollected(dates[i].getFullYear(), dates[i].getMonth() + 1);
 				}
 
-				return $.nirvana.sendRequest( {
+				return $.nirvana.sendRequest({
 					controller: this.controller,
 					method: this.method,
 					type: 'POST',
@@ -61,39 +61,39 @@ define( 'videopageadmin.models.datepicker', [], function() {
 						'startTime': beginTimestamp,
 						'endTime': endTimestamp
 					},
-					callback: $.proxy( function( response ) {
-						$.extend( this.specialDates, response.info );
-					}, this )
-				} );
+					callback: $.proxy(function (response) {
+						$.extend(this.specialDates, response.info);
+					}, this)
+				});
 			}
 		},
-		setCollected: function( theYear, theMonth ) {
-			this.collectedMonths[this.getMonthKey( theYear, theMonth )] = true;
+		setCollected: function (theYear, theMonth) {
+			this.collectedMonths[this.getMonthKey(theYear, theMonth)] = true;
 		},
-		isCollected: function( theYear, theMonth ) {
-			return ( this.getMonthKey( theYear, theMonth ) in this.collectedMonths );
+		isCollected: function (theYear, theMonth) {
+			return (this.getMonthKey(theYear, theMonth) in this.collectedMonths);
 		},
-		getMonthsToCollect: function( theYear, theMonth ) {
+		getMonthsToCollect: function (theYear, theMonth) {
 			var out,
 				tmpDate,
 				i;
 
 			out = [];
-			tmpDate = new Date( theYear, theMonth - 1 );
+			tmpDate = new Date(theYear, theMonth - 1);
 
-			for ( i = -this.__monthCollectRadius; i <= this.__monthCollectRadius; i++ ) {
-				tmpDate.setFullYear( theYear );
-				tmpDate.setMonth( theMonth - 1 + i );
-				if ( !this.isCollected( tmpDate.getFullYear(), tmpDate.getMonth() + 1 ) ) {
-					out.push( new Date( tmpDate.getFullYear(), tmpDate.getMonth(), 1, 0, 0, 0, 0 ) );
+			for (i = -this.__monthCollectRadius; i <= this.__monthCollectRadius; i++) {
+				tmpDate.setFullYear(theYear);
+				tmpDate.setMonth(theMonth - 1 + i);
+				if (!this.isCollected(tmpDate.getFullYear(), tmpDate.getMonth() + 1)) {
+					out.push(new Date(tmpDate.getFullYear(), tmpDate.getMonth(), 1, 0, 0, 0, 0));
 				}
 			}
 			return out;
 		},
-		getMonthKey: function( theYear, theMonth ) {
+		getMonthKey: function (theYear, theMonth) {
 			return theYear + '-' + theMonth;
 		}
 	};
 
 	return Datepicker;
-} );
+});

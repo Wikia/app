@@ -172,6 +172,10 @@ class ForumExternalController extends WallExternalController {
 			return true;
 		}
 
+		/**
+		 * @var ForumBoard $board
+		 * @var ForumBoard $destinationBoard
+		 */
 		$board = ForumBoard::newFromId( $boardId );
 		$destinationBoard = ForumBoard::newFromId( $destinationBoardId );
 

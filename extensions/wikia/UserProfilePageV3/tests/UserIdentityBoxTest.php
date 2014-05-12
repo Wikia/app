@@ -10,6 +10,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider doParserFilterDataProvider
+	 * @group UsingDB
 	 *
 	 * @author Sergey Naumov
 	 */

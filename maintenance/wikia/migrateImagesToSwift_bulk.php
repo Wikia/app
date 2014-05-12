@@ -6,6 +6,7 @@
  * @see http://www.mediawiki.org/wiki/Manual:Image_administration#Data_storage
  *
  * @author Macbre
+ * @author wladek
  * @ingroup Maintenance
  */
 
@@ -16,6 +17,7 @@ require_once( __DIR__ . '/../../includes/wikia/swift/all.php' );
  * Maintenance script class
  */
 class MigrateImagesToSwiftBulk2 extends Maintenance {
+	use \Wikia\Swift\Logger\LoggerFeature;
 
 	const REASON = 'Images migration script';
 
@@ -32,12 +34,18 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 	const LOCAL_PATH = '/raid/images/by_id/';
 
+	const MD5_CACHE_DIRECTORY = '/raid/migration/md5';
+
 	// connections to Swift backends images will be migrated to
 	/* @var \Wikia\SwiftStorage[] $swiftBackends */
 	private $swiftBackends;
 	private $timePerDC = [];
 
 	private $shortBucketNameFixed = false;
+
+	private $areUploadsDisabled = false;
+	/** @var \Wikia\Swift\File\Md5Cache $md5Cache */
+	private $md5Cache;
 
 	// stats
 	private $imagesCnt = 0;
@@ -51,12 +59,11 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	private $pathPrefix = null;
 	private $useDiff = false;
 	private $useLocalFiles = false;
+	private $useDeletes = true;
 	private $threads = self::THREADS_DEFAULT;
 	private $hammer = null;
 
 	private $debug = false;
-	/** @var Wikia\Swift\Logger\Logger $logger */
-	private $logger;
 
 	/**
 	 * Set script options
@@ -70,6 +77,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$this->addOption( 'bucket', 'Force a different bucket name than the default one (for testing only!)' );
 		$this->addOption( 'debug', 'Show a lot of debugging stuff.' );
 		$this->addOption( 'diff', 'Use incremental strategy while uploading files.' );
+		$this->addOption( 'no-deletes', 'Do not remove orphans in ceph' );
 		$this->addOption( 'threads', 'Total number of threads (gets split across DCs) (default: '.self::THREADS_DEFAULT.', max. '.self::THREADS_MAX.').' );
 		$this->addOption( 'local', 'Read files from local file system (uses: /raid/images/by_id/).' );
 		$this->addOption( 'wait', 'Add en extra 180 seconds sleep after disabling uploads.' );
@@ -82,6 +90,9 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	 */
 	private function init() {
 		global $wgUploadDirectory, $wgDBname, $wgCityId;
+
+		$this->setupMd5Cache();
+
 		$this->shortBucketNameFixed = $this->fixShortBucketName();
 
 		$bucketName = $this->getOption('bucket', false);
@@ -135,7 +146,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		// bucket name is fine, leave now
 		if (strlen($bucketName) >= self::SWIFT_BUCKET_NAME_MIN_LENGTH) {
-			if (!$this->hasOption('force')) return false;
+			return false;
 		}
 
 		// keep the old path
@@ -149,8 +160,16 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$wgUploadDirectory = '/' . join('/', $parts);
 		$wgUploadPath = 'http://images.wikia.com/' . join('/', array_slice($parts, 2)); // remove /images/ and first letter parts
 
-		self::log( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
+		self::logWikia( __CLASS__, "short bucket name fix applied - '{$bucketName}', <{$wgUploadPath}>, <{$wgUploadDirectory}>, NFS: <{$wgUploadDirectoryNFS}>" , self::LOG_MIGRATION_PROGRESS );
 		return true;
+	}
+
+	protected function setupMd5Cache() {
+		global $wgDBname;
+		$md5Cache = \Wikia\Swift\File\Md5Cache::getInstance();
+		$md5CacheFile = sprintf("%s/%s/%s/%s.md5list",self::MD5_CACHE_DIRECTORY,substr($wgDBname,0,1),substr($wgDBname,0,2),$wgDBname);
+		$md5Cache->setCacheFile($md5CacheFile);
+		$this->md5Cache = $md5Cache;
 	}
 
 	protected function rewriteLocalPath( $path ) {
@@ -256,6 +275,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		$src = $this->rewriteLocalPath( $uploadDir . '/' . $path );
 
 		$this->allFiles[] = array(
+			'row' => $row,
 			'src' => $src,
 			'dest' => ltrim( $this->pathPrefix . '/' . $path, '/'),
 			'metadata' => $metadata,
@@ -270,13 +290,13 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	 * @param $msg string message to log
 	 * @param $group string file to log to
 	 */
-	private static function log($method, $msg, $group) {
+	private static function logWikia($method, $msg, $group) {
 		\Wikia::log($group . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
 	}
 
 	private function fatal($method, $msg, $group) {
 		\Wikia::log($group . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
-		$this->logger->log(0,$msg);
+		$this->logError($msg);
 		die($msg . PHP_EOL);
 	}
 
@@ -284,7 +304,8 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		global $wgDBname, $wgCityId, $wgExternalSharedDB, $wgUploadDirectory, $wgUploadDirectoryNFS;
 
 		$this->debug = $this->hasOption( 'debug' );
-		$this->logger = new \Wikia\Swift\Logger\Logger($this->debug ? 5 : 0,-1,10);
+
+		$this->logger = new \Wikia\Swift\Logger\Logger($this->debug ? 10 : 10,-1,10);
 		$this->logger->setFile('/var/log/migration/'.$wgDBname.'.log');
 		$this->logger = $this->logger->prefix($wgDBname);
 
@@ -302,6 +323,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		$this->useDiff = $this->getOption('diff',false);
 		$this->useLocalFiles = $this->getOption('local',false);
+		$this->useDeletes = !$this->hasOption('no-deletes');
 
 		$this->threads = intval($this->getOption('threads',self::THREADS_DEFAULT));
 		$this->threads = min(self::THREADS_MAX,max(1,$this->threads));
@@ -376,7 +398,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		// ok, so let's start...
 		$this->time = time();
 
-		self::log( __CLASS__, 'migration started', self::LOG_MIGRATION_PROGRESS );
+		self::logWikia( __CLASS__, 'migration started', self::LOG_MIGRATION_PROGRESS );
 
 		// wait a bit to prevent deadlocks (from 0 to 2 sec)
 		usleep( mt_rand(0,2000) * 1000 );
@@ -389,13 +411,15 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 
 		// block uploads via WikiFactory
 		if (!$isDryRun) {
+			register_shutdown_function(array($this,'unlockWiki'));
+			$this->areUploadsDisabled = true;
 			WikiFactory::setVarByName( 'wgEnableUploads',     $wgCityId, false, self::REASON );
 			WikiFactory::setVarByName( 'wgUploadMaintenance', $wgCityId, true,  self::REASON );
 
 			$this->output( "Uploads and image operations disabled\n\n" );
 
 			if ( $this->hasOption('wait') ) {
-				$this->output( "Sleeping for 180 seconds to allow Apache to finish handling upload requests." );
+				$this->output( "Sleeping for 180 seconds to let Apache finish uploads...\n" );
 				sleep(180);
 			}
 		}
@@ -471,18 +495,14 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		// summary
 		$totalTime = time() - $this->time;
 
-		$report = sprintf( 'Migrated %d files (%d MB) with %d fails in %s (%.2f files/sec, %.2f kB/s) - DCs: %s',
+		$report = sprintf( 'Migrated %d files with %d fails in %s',
 			$this->migratedImagesCnt,
-			round( $this->migratedImagesSize / 1024 / 1024 ),
 			$this->migratedImagesFailedCnt,
-			Wikia::timeDuration( $totalTime ),
-			floor( $this->imagesCnt ) / ( time() - $this->time ),
-			( $this->migratedImagesSize / 1024 ) / ( time() - $this->time ),
-			join(', ', $statsPerDC)
+			Wikia::timeDuration( $totalTime )
 		);
 
 		$this->output( "\n{$report}\n" );
-		self::log( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
+		self::logWikia( __CLASS__, 'migration completed - ' . $report, self::LOG_MIGRATION_PROGRESS );
 
 		// if running in --dry-run, leave now
 		if ($isDryRun) {
@@ -493,6 +513,9 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		// unlock the wiki
 		$dbw->ping();
 		$dbw->replace( 'city_image_migrate', [ 'city_id' ], [ 'city_id' => $wgCityId, 'locked' => 0 ], __CLASS__ );
+
+		$dbr = $this->getDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbr->ping();
 
 		// update wiki configuration
 		// enable Swift storage via WikiFactory
@@ -514,6 +537,7 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		// wgEnableUploads = true / wgUploadMaintenance = false (remove values from WF to give them the default value)
 		WikiFactory::removeVarByName( 'wgEnableUploads',     $wgCityId, self::REASON );
 		WikiFactory::removeVarByName( 'wgUploadMaintenance', $wgCityId, self::REASON );
+		$this->areUploadsDisabled = false;
 
 		$this->output( "\nUploads and image operations enabled\n" );
 
@@ -521,23 +545,20 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 	}
 
 	protected function processQueue() {
-		global $wgFSSwiftDC, $wgDBname;
+		global $wgFSSwiftDC;
 
-//		var_dump($this->allFiles);
-//		return;
-
-		$logger = $this->logger;
+		$this->logDebug(sprintf("Found %d entries in md5 cache",$this->md5Cache->getCachedCount()));
 
 		$targets = array();
 		foreach($this->swiftBackends as $dc => $swift) {
 			$hostnames = $wgFSSwiftDC[$dc]['servers'];
 			if ( $this->hammer !== null ) {
 				if ( !in_array($this->hammer,$hostnames) ) {
-					$logger->log(0,"Skipping DC {$dc} due to --hammer argument");
+					$this->logError("Skipping DC {$dc} due to --hammer argument");
 					continue;
 				} else {
 					$hostnames = array( $this->hammer );
-					$logger->log(0,"Using only {$this->hammer} for DC {$dc}");
+					$this->logError("Using only {$this->hammer} for DC {$dc}");
 				}
 			}
 			$authConfig = $wgFSSwiftDC[$dc]['config'];
@@ -547,26 +568,64 @@ class MigrateImagesToSwiftBulk2 extends Maintenance {
 		}
 
 		if ( empty($targets) ) {
-			$logger->log(0,"No DC remamining after applying --hammer");
+			$this->logError("No DC remaining after applying --hammer");
 			return;
 		}
 
 		$files = $this->allFiles;
-//		$files[2]['src'] = $files[1]['src'];
 
 		if ( $this->useDiff ) {
 			$migration = new \Wikia\Swift\Wiki\DiffMigration($targets,$files);
 			$remoteFilter = new \Wikia\Swift\Wiki\WikiFilesFilter($this->pathPrefix);
 			$migration->setRemoteFilter($remoteFilter);
+			$migration->setUseDeletes($this->useDeletes);
 		} else {
 			$migration = new \Wikia\Swift\Wiki\SimpleMigration($targets,$files);
 		}
 		$migration->setThreads(400);
-		$migration->setLogger($logger);
+		$migration->copyLogger($this);
 		$migration->run();
 
-		$logger->log(1,"Finished migration.");
+		$invalid = $migration->getInvalid();
+		$completed = $migration->getCompleted();
+		$failed = $migration->getFailed();
 
+		$this->migratedImagesCnt = count($invalid);
+		foreach($migration->getListNames() as $listName) {
+			$completedCount = array_key_exists($listName,$completed) ? count($completed[$listName]) : 0;
+			$failedCount = array_key_exists($listName,$failed) ? count($failed[$listName]) : 0;
+			$this->logError(sprintf("%s: completed=%d failed=%d invalid=%d",
+				$listName,
+				$completedCount,
+				$failedCount,
+				count($invalid)
+			));
+			$this->migratedImagesCnt += $completedCount;
+			$this->migratedImagesCnt += $failedCount;
+			$this->migratedImagesFailedCnt += $failedCount;
+			$results = $failed[$listName];
+			/** @var \Wikia\Swift\Transaction\OperationResult $result */
+			foreach ($results as $result) {
+				$result->logError($result->getError());
+				// re-emit logs with increased severity
+				$logs = $result->getLogs();
+				foreach ($logs as $message ) {
+					$result->logError($message);
+				}
+
+			}
+		}
+
+		$this->logInfo("Finished migration.");
+	}
+
+	public function unlockWiki() {
+		global $wgCityId;
+		if ( $this->areUploadsDisabled ) {
+			WikiFactory::removeVarByName( 'wgEnableUploads',     $wgCityId, self::REASON );
+			WikiFactory::removeVarByName( 'wgUploadMaintenance', $wgCityId, self::REASON );
+			$this->areUploadsDisabled = false;
+		}
 	}
 
 }

@@ -2,20 +2,17 @@
 
 //variables
 $slotWidth: 300px; //in content width
-$slotWidthMax: 320px; //top leaderboard width
 $slotTopHeight: 50px;
 
-#wkAdTopLeader {
+#MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-
-	width: $slotWidthMax;
-	height: $slotTopHeight;
 
 	margin: 0 auto;
 	text-align: center;
 
-	//inverted as this ad is to have 100% fill
-	&.hide {
+	height: 50px;
+
+	&.hidden, .hidden {
 		display: none;
 	}
 }
@@ -23,37 +20,29 @@ $slotTopHeight: 50px;
 .ad-in-content {
 	visibility: hidden;
 
+	position: relative;
+	margin: 1rem auto;
+
+	//compensate for wkPage margin
+	left: -3.125%;
+	min-width: $slotWidth;
+
 	&.show {
 		visibility: visible;
 
-		position: relative;
-		margin: 0 auto;
-		//compensate for wkPage margin
-		left: -3.125%;
-
 		padding: 15px 0;
-		height: 270px;
-		width: 300px;
+		text-align: center;
 
 		border-top: 1px solid $border-color;
+	}
+
+	&.hidden, .hidden {
+		display: none;
 	}
 }
 
 #wkAdBeforeFooter.show {
 	margin-top: 10px;
-}
-
-.wkAdWrapper {
-	display: inline-block;
-
-	height: 250px;
-	width: $slotWidth;
-
-	background: rgba(0,0,0,.3);
-
-	&.show {
-		background: transparent;
-	}
 }
 
 .wkAdLabel {

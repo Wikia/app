@@ -13,7 +13,7 @@ class UnitTestController extends WikiaController {
 
 	// This should fail -- module legacy code
 	public function failureWithParams($params) {
-		$this->foo2 = $params['foo2'];
+		$this->foo2 = isset($params['foo2']) ? $params['foo2']: null;
 	}
 
 	// "execute" functions can have params -- module legacy code only

@@ -7,33 +7,29 @@ function ( sections, window, $, mustache, toc, track ) {
 	//private
 	var open = 'open',
 		active = 'active',
-		$document = $( window.document ),
+		doc = window.document,
+		$document = $( doc ),
 		$anchors,
-		sideMenuCapable = ( Features.positionfixed && Features.overflow ),
-		$ol,
-		inited,
-		$toc = $( '#wkTOC' ),
-		$tocHandle = $( '#wkTOCHandle' ),
+		sideMenuCapable = ( window.Features.positionfixed && window.Features.overflow ),
+		sideMenuInited,
+		$toc = $( doc.getElementById( 'wkTOC' ) ),
+		$tocHandle = $( doc.getElementById( 'wkTOCHandle' ) ),
 		tocScroll,
 		inPageToc,
-		tocTemplate;
-
-	if ( sideMenuCapable ) {
-		$toc.addClass( 'side-menu-capable' );
-	}
+		tocMarkup,
+		headers = sections.list(),
+		show = headers.length > 0;
 
 	/**
 	 * @desc Creates object representing a section
-	 *
 	 * @param {Object} header - Processed element object for single article header
 	 * @param {Integer} level - The actual level on which the element will be rendered
-	 *
 	 * @returns {Object} - returns TOC section object
 	 */
-	function createSection( header, level ) {
+	function createSection ( header, level ) {
 		return {
 			id: header.id,
-			name: header.textContent.trim(),
+			name: header.innerText.trim(),
 			level: level,
 			firstLevel: level === 1,
 			sections: []
@@ -41,10 +37,19 @@ function ( sections, window, $, mustache, toc, track ) {
 	}
 
 	/**
+	 * @desc Filters headers with nothing to show
+	 * @param {Object} header - DOM element of header
+	 * @returns {Object} or {Boolean} false if filtered
+	 */
+	function filter ( header ) {
+		return !header.innerText.trim() ? false : header;
+	}
+
+	/**
 	 * @desc Renders toc for a given page
 	 * @returns HTML String
 	 */
-	function renderToc () {
+	function createTocMarkup () {
 		var ol = '<ol class="toc-list level{{level}}">{{#sections}}{{> lis}}{{/sections}}</ol>',
 			lis = '{{#.}}<li{{#sections.length}} class="has-children{{#firstLevel}}' +
 				' first-children{{/firstLevel}}"{{/sections.length}}>' +
@@ -53,10 +58,10 @@ function ( sections, window, $, mustache, toc, track ) {
 				'{{#sections.length}}{{> ol}}{{/sections.length}}</li>{{/.}}',
 			wrap = '<div id="tocWrapper"><div id="scroller">{{> ol}}</div></div>',
 			tocData = toc.getData(
-				sections.list,
-				createSection
+				headers,
+				createSection,
+				filter
 			);
-
 		if ( tocData.sections.length ) {
 			return mustache.render( wrap, tocData, {
 				ol: ol,
@@ -93,8 +98,9 @@ function ( sections, window, $, mustache, toc, track ) {
 	 * @param event Event
 	 * @param data Data passed from sections evetn
 	 * @param scrollTo weather to scroll to the element used to force it on TOC open
+	 * @param time time in which to scroll to an element
 	 */
-	function onSectionChange ( event, data, scrollTo ) {
+	function onSectionChange ( event, data, scrollTo, time ) {
 		$anchors.removeClass( 'current' );
 
 		if ( data && data.id ) {
@@ -112,58 +118,64 @@ function ( sections, window, $, mustache, toc, track ) {
 
 			if ( scrollTo ) {
 				toggleLi( $currentLi, true );
-				tocScroll.scrollToElement( $current[0] );
+				tocScroll.scrollToElement( $current[0], time );
 			}
 		}
 	}
 
 	/**
-	 * @desc Handles appending the toc to a side menu
+	 * @desc Handles rendering TOC
 	 */
-	function init () {
-		if ( !inited ) {
-			$toc.on( 'click', 'header', function () {
-				onClose( 'header' );
-				window.scrollTo( 0, 0 );
-			} )
-			.on( 'click', 'li', function ( event ) {
-				var $li = $( this ),
-					$a = $li.find( 'a' ).first();
+	function renderToc () {
+		$toc.find( '#tocWrapper' ).remove();
 
-				event.stopPropagation();
-				event.preventDefault();
+		$anchors = $toc
+			.append( createTocMarkup() )
+			.find( 'li > a' );
 
-				if ( !toggleLi( $li ) ) {
-					onClose( 'element' );
-				}
+		var wrapper = doc.getElementById( 'tocWrapper' );
 
-				sections.scrollTo( $a.attr( 'href' ) );
-			} );
+		if ( wrapper ) {
+			tocScroll = new window.IScroll( wrapper, {
+				click: true,
+				scrollY: true,
+				scrollX: false
+			});
+		}
+	}
 
-			$ol = $toc
-				.append( renderToc() )
-				.find( '.level' );
+	/**
+	 * @desc Handles appending TOC to a side menu
+	 */
+	function initSideMenu () {
+		$toc.on( 'click', 'header', function () {
+			onClose( 'header' );
+			window.scrollTo( 0, 0 );
+		} )
+		.on( 'click', 'li', function ( event ) {
+			var $li = $( this ),
+				$a = $li.find( 'a' ).first();
 
-			$anchors = $ol.find( 'li > a' );
+			event.stopPropagation();
+			event.preventDefault();
 
-			var wrapper = document.getElementById( 'tocWrapper' );
-
-			if ( wrapper ) {
-				tocScroll = new window.IScroll( wrapper, {
-					click: true,
-					scrollY: true,
-					scrollX: false
-				});
+			if ( !toggleLi( $li ) ) {
+				onClose( 'element' );
 			}
 
-			inited = true;
-		}
+			sections.scrollTo( $a.attr( 'href' ) );
+		} );
+
+		renderToc();
+
+		sideMenuInited = true;
 	}
 
 	/**
 	 * @desc Used in fallback mode
 	 */
-	function onTap (){
+	function scrollToToc ( event ) {
+		event.stopPropagation();
 		inPageToc.scrollIntoView();
 
 		track.event( 'newtoc', track.CLICK, {
@@ -172,16 +184,32 @@ function ( sections, window, $, mustache, toc, track ) {
 	}
 
 	/**
+	 * @desc Opens / Closes side menu with TOC
+	 * @param event
+	 */
+	function toggleSideMenu ( event ) {
+		event.stopPropagation();
+
+		if ( $toc.hasClass( active ) ) {
+			onClose();
+		} else {
+			onOpen();
+		}
+	}
+
+	/**
 	 * @desc Fires on opening of a Side menu toc
+	 * At first trigger it renders internal markup
 	 */
 	function onOpen () {
 		$toc.addClass( active );
 		$document.on( 'section:changed', onSectionChange );
-
-		init();
+		$.event.trigger( 'curtain:show' );
+		if ( !sideMenuInited ) {
+			initSideMenu();
+		}
 
 		onSectionChange( null, sections.current()[0], true );
-		$.event.trigger( 'curtain:show' );
 
 		track.event( 'newtoc', track.CLICK, {
 			label: 'open'
@@ -191,47 +219,37 @@ function ( sections, window, $, mustache, toc, track ) {
 	/**
 	 * @desc Fires on closing of a Side menu toc
 	 */
-	function onClose( event ) {
+	function onClose ( event ) {
 		if ( $toc.hasClass( active ) ) {
 			$toc.removeClass( active );
 			$document.off( 'section:changed', onSectionChange );
 
 			track.event( 'newtoc', track.CLICK, {
-				label: (typeof event === 'string' ? event : 'close')
+				label: ( typeof event === 'string' ? event : 'close' )
 			} );
 		}
 
 		$.event.trigger( 'curtain:hide' );
 	}
 
-	$document.on( 'curtain:hidden', onClose );
-
-	if ( !sideMenuCapable ) {
-		tocTemplate = renderToc();
-
-		if ( tocTemplate ) {
-			$ol = $document.find('#mw-content-text')
+	if ( show ) {
+		$document.on( 'curtain:hidden', onClose );
+		//If TOC as a section, create markup right away
+		if ( !sideMenuCapable ) {
+			tocMarkup = createTocMarkup();
+			$document.find( '#mw-content-text' )
 				.append(
-					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocTemplate + '</div>'
+					'<div class="in-page-toc"><h2>' + $toc.find( 'header' ).text() + '</h2>' + tocMarkup + '</div>'
 				).find('.level');
 
-			inPageToc = document.getElementsByClassName('in-page-toc')[0];
+			inPageToc = doc.getElementsByClassName( 'in-page-toc' )[0];
+			$tocHandle.on( 'click', scrollToToc );
+		//If TOC as side-menu, render at first opening
 		} else {
-			$tocHandle.hide();
+			$tocHandle.on( 'click', toggleSideMenu );
 		}
+
+		$toc.removeClass( 'hidden' );
 	}
 
-	$tocHandle.on( 'click', function ( event ) {
-		event.stopPropagation();
-
-		if ( sideMenuCapable ) {
-			if ( $toc.hasClass( active ) ) {
-				onClose();
-			} else {
-				onOpen();
-			}
-		} else {
-			onTap();
-		}
-	} );
 } );

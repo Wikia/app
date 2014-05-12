@@ -9,7 +9,7 @@
  * Generic node.
  *
  * @abstract
- * @mixins ve.EventEmitter
+ * @mixins OO.EventEmitter
  *
  * @constructor
  */
@@ -156,8 +156,8 @@ ve.Node.prototype.getRoot = function () {
  *
  * @method
  * @param {ve.Node} root Node to use as root
- * @emits root
- * @emits unroot
+ * @fires root
+ * @fires unroot
  */
 ve.Node.prototype.setRoot = function ( root ) {
 	if ( root !== this.root ) {
@@ -197,7 +197,7 @@ ve.Node.prototype.setDocument = function ( doc ) {
  *
  * @method
  * @param {ve.Node} parent Node to attach to
- * @emits attach
+ * @fires attach
  */
 ve.Node.prototype.attach = function ( parent ) {
 	this.parent = parent;
@@ -210,7 +210,7 @@ ve.Node.prototype.attach = function ( parent ) {
  * Detach the node from its parent.
  *
  * @method
- * @emits detach
+ * @fires detach
  */
 ve.Node.prototype.detach = function () {
 	var parent = this.parent;

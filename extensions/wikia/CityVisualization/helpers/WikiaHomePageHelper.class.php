@@ -9,6 +9,9 @@
  * @author Sebastian Marzjan
  *
  */
+use \Wikia\Logger\WikiaLogger;
+
+ 
 class WikiaHomePageHelper extends WikiaModel {
 
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
@@ -303,6 +306,31 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get information about hubs to display on wikia homepage in hubs section
+	 *
+	 * @param $corporateId corporate wiki id
+	 * @return mixed
+	 */
+	public function getHubSlotsFromWF($corporateId) {
+		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+		return is_array( $hubSlots ) ? $hubSlots : [];
+	}
+
+	/**
+	 * Save data about hub slots displayed on wikia homepage in hubs section.
+	 * After save memcache is purged to get fresh data on wikia homepage.
+	 *
+	 * @param $hubSlotsValues data containing hub wiki id, description and links
+	 * @param $corporateId corporate wiki id
+	 * @param $lang language code
+	 */
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
+		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+
+		WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
+	}
+
+	/**
 	 * get total number of pages across Wikia
 	 * @return integer totalPages
 	 */
@@ -366,6 +394,19 @@ class WikiaHomePageHelper extends WikiaModel {
 		}
 
 		return $wikiStats;
+	}
+
+	/**
+	 * Get main vertical names
+	 *
+	 * @return array
+	 */
+	public function getWikiVerticals( $lang = 'en' ) {
+		return array(
+			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->inLanguage( $lang )->text(),
+			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->inLanguage( $lang )->text(),
+			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->inLanguage( $lang )->text()
+		);
 	}
 
 	/**
@@ -654,6 +695,9 @@ class WikiaHomePageHelper extends WikiaModel {
 		if ($imageTitle instanceof Title) {
 			$imageId = $imageTitle->getArticleID();
 		}
+		WikiaLogger::instance()->debug( "Special:Promote", ['method' => __METHOD__, 'imageName' => $imageName,
+			'imageTitle' => $imageTitle, 'imageId' => $imageId] );
+		
 
 		wfProfileOut(__METHOD__);
 		return $imageId;
@@ -957,6 +1001,15 @@ class WikiaHomePageHelper extends WikiaModel {
 	 */
 	public function getStatsMemcacheKey() {
 		$memKey = wfSharedMemcKey( 'wikiahomepage', 'stats', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
+
+		return $memKey;
+	}
+
+	/**
+	 * @return string
+	 */
+	static public function getHubSlotsMemcacheKey( $lang ) {
+		$memKey = wfSharedMemcKey( 'wikiahomepage', 'hub-slots', $lang, self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION );
 
 		return $memKey;
 	}

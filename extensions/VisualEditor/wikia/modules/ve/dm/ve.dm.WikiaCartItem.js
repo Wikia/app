@@ -42,7 +42,7 @@ ve.dm.WikiaCartItem = function VeDmWikiaCartItem(
  * @returns {boolean} True if the item is temporary, false otherwise.
  */
 ve.dm.WikiaCartItem.prototype.isTemporary = function () {
-	return !!this.temporaryFileName || this.provider === 'wikia';
+	return !!this.temporaryFileName;
 };
 
 /**
@@ -92,3 +92,19 @@ ve.dm.WikiaCartItem.prototype.getId = function () {
 	return this.isTemporary() ? this.temporaryFileName : this.title;
 };
 
+/**
+ * @method
+ * @description Makes a copy of this Wikia cart item
+ * @returns {ve.dm.WikiaCartItem} Copy of Wikia cart item
+ */
+ve.dm.WikiaCartItem.prototype.clone = function () {
+	return new ve.dm.WikiaCartItem (
+		this.title,
+		this.url,
+		this.type,
+		this.temporaryFileName,
+		this.provider,
+		this.videoId,
+		this.license
+	);
+};

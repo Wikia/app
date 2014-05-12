@@ -21,7 +21,7 @@ ve.dm.MWTransclusionMetaItem = function VeDmMWTransclusionMetaItem( element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.MWTransclusionMetaItem, ve.dm.AlienMetaItem );
+OO.inheritClass( ve.dm.MWTransclusionMetaItem, ve.dm.AlienMetaItem );
 
 /* Static Properties */
 

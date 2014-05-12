@@ -5,7 +5,6 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/box-shadow";
 @import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/transition";
 
 // local mixins
@@ -85,12 +84,12 @@ $fieldset-padding: 12px;
 	text-decoration: none;
 
 	.chevron {
-		@include opacity(50);
 		border-top-color: $color-links;
 		border-bottom-color: $color-page;
 		float: left;
 		height: 2px;
 		margin: 5px 4px 0 0;
+		opacity: .5;
 		vertical-align: bottom;
 	}
 

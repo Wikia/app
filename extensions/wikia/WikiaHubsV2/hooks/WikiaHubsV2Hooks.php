@@ -18,6 +18,11 @@ class WikiaHubsV2Hooks {
 
 		$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
 
+		if ( $model->isHubsPage( $hubName ) ) {
+			$redirectService = new RedirectService('hubsv2');
+			$redirectService->redirectIfURLExists();
+		}
+
 		if( $model->isHubsPage($hubName) && !self::isOffShotPage($title) ) {
 			$hubTimestamp = $model->getTimestampFromSplitDbKey($dbKeyNameSplit);
 
@@ -32,7 +37,7 @@ class WikiaHubsV2Hooks {
 		}
 
 		if( $model->isHubsPage($hubName) && self::isOffShotPage($title) ) {
-			$hubsModel = new WikiaHubsV2Model();
+			$hubsModel = new WikiaHubsModel();
 			$canonicalHubName = $hubsModel->getCanonicalVerticalName($model->getHubPageId($dbKeyNameSplit[0]));
 			OasisController::addBodyClass('WikiaHubs' . mb_ereg_replace(' ', '', $canonicalHubName));
 

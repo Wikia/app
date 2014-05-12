@@ -113,6 +113,14 @@ $messages['fa'] = array(
 	'signup' => 'ثبت‌نام',
 );
 
+/** Finnish (suomi)
+ * @author Elseweyr
+ */
+$messages['fi'] = array(
+	'signup-desc' => 'Lisää alias [[{{#Special:Signup}}]] sivulle [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Rekisteröidy',
+);
+
 /** French (français)
  * @author Wyz
  */

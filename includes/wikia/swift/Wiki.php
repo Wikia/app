@@ -32,12 +32,16 @@ class Target {
 abstract class Migration {
 	use LoggerFeature;
 
+	const BATCH_RETRY_LIMIT = 3;
+
 	protected $targets;
 	protected $files;
 	protected $threads = 10;
 
 	protected $operations;
 	protected $targetOperationLists;
+
+	protected $invalidFiles = array();
 
 	public function __construct( array $targets, $files ) {
 		$this->targets = $targets;
@@ -49,6 +53,7 @@ abstract class Migration {
 	}
 
 	protected function buildOperations() {
+		$this->invalidFiles = array();
 		$operations = array();
 		foreach ($this->files as $file) {
 			$localFile = new Local($file['src'],$file['metadata'],$file['mime']);
@@ -57,8 +62,12 @@ abstract class Migration {
 
 			$localFile->loadExists();
 			if ( !$localFile->exists() ) {
-				$this->log(0,"File not found: " . $localFile->getLocalPath() );
+				$this->invalidFiles[] = $localFile;
+				$this->logError("File not found: " . $localFile->getLocalPath() );
 				continue;
+			}
+			if ( !is_readable($localFile->getLocalPath()) ) {
+				$this->logError("Permissions problem (read denied): " . $localFile->getLocalPath());
 			}
 
 			$operations[$upload->getId()] = $upload;
@@ -75,7 +84,7 @@ abstract class Migration {
 		$targetRunners = array();
 		/** @var Target $target */
 		foreach ($this->targets as $target) {
-			$this->log(2,"Building operation list for: ".$target->getCluster()->getName());
+			$this->logInfo("Building operation list for: ".$target->getCluster()->getName());
 			$targetRunner = new ThrottledOperationList($target,$this->getOperationsFor($target));
 			$targetRunner->setThreads($threadsPerRunner);
 			$targetRunner->copyLogger($this);
@@ -96,12 +105,72 @@ abstract class Migration {
 		}
 		$statusPrinter = new StatusPrinter(new AggregateStatus($statuses));
 
-		$httpRunner = new HttpRunner($this->targetOperationLists);
-		$httpRunner->copyLogger($this);
-		$httpRunner->setStatusCallback(array($statusPrinter,'printStatus'));
-		$httpRunner->run();
+		$this->logInfo("Starting to execute queued operations...");
+
+		for ($r=0;$r<self::BATCH_RETRY_LIMIT;$r++) {
+			$httpRunner = new HttpRunner($this->targetOperationLists);
+			$httpRunner->copyLogger($this);
+			$httpRunner->setStatusCallback(array($statusPrinter,'printStatus'));
+			$httpRunner->run();
+
+			$failedCount = $this->getFailedCount();
+			if ( $failedCount == 0 ) {
+				break;
+			}
+
+			if ( $r < self::BATCH_RETRY_LIMIT - 1 ) {
+				$this->logError(sprintf("%d operations failed in last batch, retrying(%d)...",$failedCount,$r));
+				sleep(10);
+				/** @var OperationList $list */
+				foreach ($this->targetOperationLists as $list) {
+					$list->retry();
+				}
+			}
+		}
 
 		$statusPrinter->finish();
+	}
+
+	public function getInvalid() {
+		return $this->invalidFiles;
+	}
+
+	public function getListNames() {
+		$names = array();
+		/** @var OperationList $list */
+		foreach ($this->targetOperationLists as $list) {
+			$names[] = $list->getName();
+		}
+		return $names;
+	}
+
+	public function getCompleted() {
+		$result = array();
+		/** @var OperationList $list */
+		foreach ($this->targetOperationLists as $list) {
+			$completed = $list->getCompleted();
+			$result[$list->getName()] = $completed;
+		}
+		return $result;
+	}
+
+	public function getFailed() {
+		$result = array();
+		/** @var OperationList $list */
+		foreach ($this->targetOperationLists as $list) {
+			$failed = $list->getFailed();
+			$result[$list->getName()] = $failed;
+		}
+		return $result;
+	}
+
+	public function getFailedCount() {
+		$failedCount = 0;
+		/** @var OperationList $list */
+		foreach ($this->targetOperationLists as $list) {
+			$failedCount += count($list->getFailed());
+		}
+		return $failedCount;
 	}
 
 }
@@ -112,12 +181,16 @@ class SimpleMigration extends Migration {
 
 class DiffMigration extends Migration {
 	protected $remoteFilter;
+	protected $useDeletes = true;
 	public function setRemoteFilter( $remoteFilter ) {
 		$this->remoteFilter = $remoteFilter;
 	}
+	public function setUseDeletes( $useDeletes ) {
+		$this->useDeletes = $useDeletes;
+	}
 
 	protected function getOperationsFor( Target $target ) {
-		$builder = new DiffOperationListBuilder($target,$this->operations,$this->remoteFilter);
+		$builder = new DiffOperationListBuilder($target,$this->operations,$this->remoteFilter,$this->useDeletes);
 		$builder->copyLogger($this);
 		return $builder->build();
 	}
@@ -126,13 +199,19 @@ class DiffMigration extends Migration {
 class DiffOperationListBuilder {
 	use LoggerFeature;
 
+	/** @var Target $target */
+	protected $target;
+	protected $operations;
 	/** @var WikiFilesFilter $filter */
 	protected $remoteFilter;
+	protected $useDeletes;
 
-	public function __construct( Target $target, $operations, $remoteFilter ) {
+
+	public function __construct( Target $target, $operations, $remoteFilter, $useDeletes = true ) {
 		$this->target = $target;
 		$this->operations = $operations;
 		$this->remoteFilter = $remoteFilter;
+		$this->useDeletes = $useDeletes;
 	}
 
 	protected function getLoggerPrefix() { return $this->target->getCluster()->getName(); }
@@ -141,15 +220,16 @@ class DiffOperationListBuilder {
 		$operations = $this->operations;
 		$target = $this->target;
 
-		$this->log(3,"Calculating diff of files in file system and ceph");
+		$this->logDebug("Calculating diff of files in file system and ceph");
 		$requests = array();
 		/** @var Operation $operation */
 		foreach ($operations as $operation) {
 			$requests[$operation->getRemote()->getRemotePath()] = $operation;
 		}
 
-		$this->log(3,sprintf("Found %d files in file system",count($requests)));
+		$this->logDebug(sprintf("Found %d files in file system",count($requests)));
 
+		$this->logDebug("Fetching list of objects from ceph...");
 		$cluster = $target->getCluster();
 		$container = $target->getContainer();
 		$bucket = new Bucket($cluster,$container);
@@ -159,20 +239,23 @@ class DiffOperationListBuilder {
 			$existing = $this->remoteFilter->filter($existing);
 		}
 
-		$this->log(3,sprintf("Found %d files in ceph",count($existing)));
+		$this->logDebug(sprintf("Found %d files in ceph",count($existing)));
 //		var_dump(array_keys($requests),array_keys($existing));
 //		die();
 //
-		// delete orhapns
-		$deleteRequests = array();
-		foreach ($existing as $k => $remote) {
-			if ( empty($requests[$k]) ) {
-				$deleteRequests[] = new Delete($remote);
-				unset($existing[$k]);
-			}
-		}
 
-		$this->log(3,sprintf("Found %d extra files in ceph, scheduling deletes",count($deleteRequests)));
+		$deleteRequests = array();
+		if ( $this->useDeletes ) {
+			// delete orhapns
+			foreach ($existing as $k => $remote) {
+				if ( empty($requests[$k]) ) {
+					$deleteRequests[] = new Delete($remote);
+					unset($existing[$k]);
+				}
+			}
+
+			$this->logDebug(sprintf("Found %d extra files in ceph, scheduling deletes",count($deleteRequests)));
+		}
 
 		// skip already existing files
 		/** @var Operation $request */
@@ -188,12 +271,21 @@ class DiffOperationListBuilder {
 			}
 		}
 
-		$this->log(3,sprintf("Found %d exact files, skipping",count($operations)-count($requests)));
+		$this->logDebug(sprintf("Found %d exact files, skipping",count($operations)-count($requests)));
 
 		// prevent key-clashing (which shouldn't happen btw.)
 		$requests = array_merge(array_values($requests),array_values($deleteRequests));
 
-		$this->log(3,sprintf("Final operation list contains %d operations",count($requests)));
+		$this->logDebug(sprintf("Final operation list contains %d operations",count($requests)));
+
+		if ( count($requests) <= 400000 ) {
+			/** @var Operation $request */
+			foreach ($requests as $request) {
+				$this->logDebug($request->getDescription());
+			}
+		} else {
+			$this->logDebug("Skipped listing all requests due to number of them");
+		}
 
 		return $requests;
 	}
@@ -215,7 +307,7 @@ class WikiFilesFilter {
 	protected function getLoggerPrefix() { return 'files-filter'; }
 
 	public function filter( $files ) {
-		$this->log(3,sprintf("Got %d files to process...",count($files)));
+		$this->logDebug(sprintf("Got %d files to process...",count($files)));
 		/** @var Remote $remote */
 		foreach ($files as $k => $remote) {
 			$path = $remote->getRemotePath();
@@ -223,7 +315,35 @@ class WikiFilesFilter {
 				unset($files[$k]);
 			}
 		}
-		$this->log(3,sprintf("Returning %d files that matched the wiki files regex...",count($files)));
+		$this->logDebug(sprintf("Returning %d files that matched the wiki files regex...",count($files)));
+		return $files;
+	}
+}
+
+class AvatarFilesFilter {
+	use LoggerFeature;
+
+	protected $prefix;
+	protected $regex;
+
+	public function __construct( $prefix ) {
+		$this->prefix = ltrim($prefix,'/');
+		$prefixRegex = preg_quote($this->prefix);
+		$this->regex = "#^$prefixRegex/[0-9a-fA-F]/[0-9a-fA-F]{2}/#";
+	}
+
+	protected function getLoggerPrefix() { return 'files-filter'; }
+
+	public function filter( $files ) {
+		$this->logDebug(sprintf("Got %d files to process...",count($files)));
+		/** @var Remote $remote */
+		foreach ($files as $k => $remote) {
+			$path = $remote->getRemotePath();
+			if ( !preg_match($this->regex,$path) ) {
+				unset($files[$k]);
+			}
+		}
+		$this->logDebug(sprintf("Returning %d files that matched the wiki files regex...",count($files)));
 		return $files;
 	}
 }

@@ -28,12 +28,12 @@ $.getAssetManagerGroupUrl = function( groups, params ) {
 
 	params = params || {};
 
-	// Don't minify asset if we're on devbox
-	if ( window.wgDevelEnvironment ) {
+	// Don't minify the response when allinone=0
+	if ( window.debug === true ) {
 		params.minify = 0;
 	}
 
-	return wgAssetsManagerQuery .
+	return wgCdnRootUrl + wgAssetsManagerQuery .
 		replace( '%1$s', 'groups' ) .
 		replace( '%2$s', groups.join( ',' ) ) .
 		replace( '%3$s', $.isEmptyObject( params ) ? '-' : encodeURIComponent( $.param( params ) ) ) .
@@ -306,7 +306,8 @@ $.fn.startThrobbing = function() {
 };
 
 $.fn.stopThrobbing = function() {
-	return this.find('.wikiaThrobber').remove();
+	this.find('.wikiaThrobber').remove();
+	return this;
 };
 $.preloadThrobber = function() {
 	var img = new Image();

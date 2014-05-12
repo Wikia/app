@@ -15,8 +15,8 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 	protected $sectionsLimit;
 	protected $linksLimit;
 
-	public function __construct($langCode, $sectionId, $verticalId) {
-		parent::__construct($langCode, $sectionId, $verticalId);
+	public function __construct($langCode, $sectionId, $verticalId, $cityId = 0, $hubVersion = 2) {
+		parent::__construct($langCode, $sectionId, $verticalId, $cityId, $hubVersion);
 
 		$this->model = new MarketingToolboxExploreModel();
 		$this->sectionsLimit = $this->model->getFormSectionsLimit();
@@ -26,13 +26,13 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 	public function getFormFields() {
 		$formFields = array(
 			'exploreTitle' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-explore-title'),
+				'label' => wfMsg('wikia-hubs-module-explore-title'),
 				'validator' => new WikiaValidatorString(
 					array(
 						'required' => true,
 						'min' => 1
 					),
-					array('too_short' => 'marketing-toolbox-validator-string-short')
+					array('too_short' => 'wikia-hubs-validator-string-short')
 				),
 				'attributes' => array(
 					'class' => 'required explore-mainbox-input'
@@ -45,15 +45,15 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 				),
 				'validator' => new WikiaValidatorFileTitle(
 					array(),
-					array('wrong-file' => 'marketing-toolbox-validator-wrong-file')
+					array('wrong-file' => 'wikia-hubs-validator-wrong-file')
 				)
 			),
 			'imageLink' => array(
-				'label' => wfMsg('marketing-toolbox-hub-module-explore-link-url'),
-				'validator' => new WikiaValidatorToolboxUrl(
+				'label' => wfMsg('wikia-hubs-module-explore-link-url'),
+				'validator' => new WikiaValidatorRestrictiveUrl(
 					array(),
 					array(
-						'wrong' => 'marketing-toolbox-validator-wrong-url'
+						'wrong' => 'wikia-hubs-validator-wrong-url'
 					)
 				),
 				'icon' => true,
@@ -78,7 +78,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$fieldName = self::SECTION_FIELD_PREFIX . $sectionIdx;
 		return array(
 			$fieldName => array(
-				'label' => wfMsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $sectionIdx),
+				'label' => wfMessage('wikia-hubs-module-explore-header')->params( $sectionIdx )->text(),
 				'validator' => new WikiaValidatorDependent(
 					array(
 						'required' => false,
@@ -88,7 +88,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 								'min' => 1
 							),
 							array(
-								'too_short' => 'marketing-toolbox-validator-string-short'
+								'too_short' => 'wikia-hubs-validator-string-short'
 							)
 						),
 						'dependentFields' => $this->getDependentFields($sectionIdx)
@@ -105,12 +105,12 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 		$linkUrlFieldName = $this->generateUrlFieldName($sectionIdx, $linkIdx);
 
 		$linkUrlField = array(
-			'label' => wfMsg('marketing-toolbox-hub-module-explore-link-url'),
+			'label' => wfMessage('wikia-hubs-module-explore-link-url')->text(),
 			'labelclass' => "wikiaUrlLabel",
-			'validator' => new WikiaValidatorToolboxUrl(
+			'validator' => new WikiaValidatorRestrictiveUrl(
 				array(),
 				array(
-					'wrong' => 'marketing-toolbox-validator-wrong-url'
+					'wrong' => 'wikia-hubs-validator-wrong-url'
 				)
 			),
 			'attributes' => array(
@@ -121,7 +121,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 
 		$linkHeaderFieldName = $this->generateHeaderFieldName($sectionIdx, $linkIdx);
 		$linkHeaderField = array(
-			'label' => wfMsgExt('marketing-toolbox-hub-module-explore-header', array('parseinline'), $this->lettersMap[$linkIdx]),
+			'label' => wfMessage('wikia-hubs-module-explore-header')->params($this->lettersMap[$linkIdx])->text(),
 			'validator' => new WikiaValidatorDependent(
 				array(
 					'required' => false,
@@ -131,7 +131,7 @@ class MarketingToolboxModuleExploreService extends MarketingToolboxModuleEditabl
 							'min' => 1
 						),
 						array(
-							'too_short' => 'marketing-toolbox-hub-module-explore-link-text-too-short-error'
+							'too_short' => 'wikia-hubs-module-explore-link-text-too-short-error'
 						)
 					),
 					'dependentFields' => array(

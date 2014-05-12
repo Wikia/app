@@ -172,8 +172,8 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The namespace value of the given article"
  * 	)
- * 
- * @SWG\Model( id="ExpandedArticle" )
+ *
+ * @SWG\Model( id="PopularArticle" )
  * 	@SWG\Property(
  * 		name="id",
  * 		type="int",
@@ -192,11 +192,31 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
+ *
+ * @SWG\Model( id="ExpandedArticle" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
  * 	@SWG\Property(
  * 		name="ns",
  * 		type="int",
  * 		required="true",
  * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
  * 	@SWG\Property(
  * 		name="revision",
@@ -304,10 +324,28 @@ use Swagger\Annotations as SWG;
  * 		description="An internal identification number for Article"
  * 	)
  * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
  * 		name="title",
  * 		type="string",
  * 		required="true",
  * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="quality",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
  * 	)
  * 	@SWG\Property(
  * 		name="url",
@@ -316,16 +354,9 @@ use Swagger\Annotations as SWG;
  * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
  * 	)
  * 	@SWG\Property(
- * 		name="ns",
- * 		type="int",
- * 		required="true",
- * 		description="The namespace value of the given article"
- * 	)
- * 	@SWG\Property(
- * 		name="abstract",
- * 		type="string",
- * 		required="true",
- * 		description="A snippet of text from the beginning of the article"
+ * 		name="creator",
+ * 		type="Creator",
+ * 		description="Data about the author of the article (creator of the first revision)"
  * 	)
  * 	@SWG\Property(
  * 		name="creation_date",
@@ -343,10 +374,22 @@ use Swagger\Annotations as SWG;
  * 		type="OriginalDimension",
  * 		description="The original dimensions of the thumbnail for the article, if available"
  * 	)
+ *
+ *
+ *
+ * @SWG\Model( id="PopularListArticleResultSet" )
  * 	@SWG\Property(
- * 		name="creator",
- * 		type="Creator",
- * 		description="Data about the author of the article (creator of the first revision)"
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:PopularArticle",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
  * 	)
  *
  * @SWG\Model( id="UnexpandedListArticleResultSet" )
@@ -369,6 +412,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
+ *
  * @SWG\Model( id="ExpandedListArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -389,7 +433,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 
+ *
  * @SWG\Model( id="UnexpandedArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
@@ -404,7 +448,7 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 	@SWG\Model( id="ExpandedArticleResultSet" )
+ * @SWG\Model( id="ExpandedArticleResultSet" )
  * 	@SWG\Property(
  * 		name="items",
  * 		required="true",
@@ -418,7 +462,128 @@ use Swagger\Annotations as SWG;
  * 		required="true",
  * 		description="Common URL prefix for relative URLs"
  * 	)
- * 
+ *
+ *
+ * @SWG\Model( id="UnexpandedMostLinkedResultSet" )
+ * 	@SWG\Property(
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:UnexpandedMostLinked",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
+ * 	)
+ *
+ * 	@SWG\Model( id="ExpandedMostLinkedResultSet" )
+ * 	@SWG\Property(
+ * 		name="items",
+ * 		required="true",
+ * 		type="Array",
+ * 		items="$ref:ExpandedMostLinked",
+ * 		description="Standard container name for element collection (list)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="basepath",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Common URL prefix for relative URLs"
+ * 	)
+ *
+ *
+ *   @SWG\Model( id="UnexpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="backlink_cnt",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of backlinks for the article"
+ * 	)
+ *
+ * @SWG\Model( id="ExpandedMostLinked" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="An internal identification number for Article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="title",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The title of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The relative URL of the Article. Absolute URL: obtained from combining relative URL with basepath attribute from response."
+ * 	)
+ * 	@SWG\Property(
+ * 		name="ns",
+ * 		type="int",
+ * 		required="true",
+ * 		description="The namespace value of the given article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="revision",
+ * 		type="Revision",
+ * 		required="true",
+ * 		description="The latest revision for this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="comments",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of comments on this article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="type",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The functional type of the document (e.g. article, file, category)"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="abstract",
+ * 		type="string",
+ * 		required="true",
+ * 		description="A snippet of text from the beginning of the article"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="backlink_cnt",
+ * 		type="int",
+ * 		required="true",
+ * 		description="Number of backlinks for the article"
+ * 	)
+ *
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/Top",
  * 	description="Get the most viewed articles on this wiki",
@@ -435,7 +600,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -471,7 +636,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -486,6 +651,16 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue="20"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="minArticleQuality",
+ * 					description="Minimal value of article quality. Ranges from 0 to 99",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10",
+ * 					@SWG\AllowableValues(valueType="RANGE",min="0", max="99")
  * 				)
  * 			)
  * 		)
@@ -507,7 +682,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -528,7 +703,41 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * 
- * 
+ *
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/MostLinked",
+ * 	description="Get the most linked articles on this wiki",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get the most linked articles on this wiki",
+ * 			nickname="getTop",
+ * 			responseClass="UnexpandedMostLinkedResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ *  @SWG\Api(
+ * 	path="/api/v1/Articles/MostLinked?expand=1",
+ * 	description="Get the most linked articles on this wiki (expanded results)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get the most linked articles on this wiki (expanded results)",
+ * 			nickname="getTop",
+ * 			responseClass="ExpandedMostLinkedResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Invalid parameter or category" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/TopByHub",
  * 	description="View the most popular wikis in a given hub. Available only on the www.wikia.com main domain.",
@@ -545,7 +754,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="hub",
- * 					description="The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter",
+ * 					description="The name of the vertical (e.g. Gaming)",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -554,7 +763,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="lang",
- * 					description="Specifies the desired language of the resulting wikis, by language code",
+ * 					description="Comma separated language codes (e.g. en,de,fr)",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -563,7 +772,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -574,8 +783,62 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
- * 
- * 
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/Popular?expand=1",
+ * 	description="Get popular articles for the current wiki (from the beginning of time)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get popular articles for the current wiki (from the beginning of time)",
+ * 			nickname="getPopular",
+ * 			responseClass="ExpandedArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Limit parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 10",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ * @SWG\Api(
+ * 	path="/api/v1/Articles/Popular",
+ * 	description="Get popular articles for the current wiki (from the beginning of time)",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get popular articles for the current wiki (from the beginning of time)",
+ * 			nickname="getPopular",
+ * 			responseClass="PopularListArticleResultSet",
+ * 			@SWG\ErrorResponses(
+ * 				@SWG\ErrorResponse( code="400", reason="Limit parameter is invalid" ),
+ * 				@SWG\ErrorResponse( code="404", reason="Results not found" )
+ * 			),
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 10",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
  * @SWG\Api(
  * 	path="/api/v1/Articles/List",
  * 	description="Get articles list in alphabetical order",
@@ -601,7 +864,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -610,7 +873,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -619,7 +882,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="offset",
- * 					description="If provided, lists results starting with the provided offset position",
+ * 					description="Lexicographically minimal article title.",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -632,11 +895,11 @@ use Swagger\Annotations as SWG;
  * )
  * @SWG\Api(
  * 	path="/api/v1/Articles/List?expand=1",
- * 	description="Get articles list in alphabetical order (expanded results)",
+ * 	description="Get a list of pages on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get articles list in alphabetical order (expanded results)",
+ * 			summary="Get a list of pages on the current wiki",
  * 			nickname="getList",
  * 			responseClass="ExpandedListArticleResultSet",
  * 			@SWG\ErrorResponses(
@@ -655,7 +918,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Page namespace number, see more: http://www.mediawiki.org/wiki/help:namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="true",
@@ -664,7 +927,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="The maximum number of results to get",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -673,7 +936,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="offset",
- * 					description="Offset to start fetching data from",
+ * 					description="Lexicographically minimal article title.",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -700,7 +963,7 @@ use Swagger\Annotations as SWG;
  * 				@SWG\Parameters(
  * 					@SWG\Parameter(
  * 						name="ids",
- * 						description="A string with a comma-separated list of article IDs",
+ * 						description="Comma-separated list of article ids",
  * 						paramType="query",
  * 						required="true",
  * 						allowMultiple="true",

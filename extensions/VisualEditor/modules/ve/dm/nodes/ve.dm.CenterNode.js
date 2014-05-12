@@ -21,7 +21,7 @@ ve.dm.CenterNode = function VeDmCenterNode( children, element ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.dm.CenterNode, ve.dm.BranchNode );
+OO.inheritClass( ve.dm.CenterNode, ve.dm.BranchNode );
 
 /* Static Properties */
 

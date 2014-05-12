@@ -30,13 +30,13 @@ class Base
 	
 	/**
 	 * Query fields to boost for the cross-wiki core
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $interWikiQueryFields = [
 			'headline_txt' => 300,
 			'description' => 250,
 			'categories' => 50,
-			'articles' => 75,
+			'articles_i' => 75,
 			'top_categories' => 150,
 			'top_articles' => 200,
 			'sitename_txt' => 500
@@ -44,7 +44,7 @@ class Base
 	
 	/**
 	 * Language-specific fields added for i18n
-	 * @var unknown_type
+	 * @var array
 	 */
 	protected $videoQueryFields = [
 			'title'                 => 100,
@@ -67,10 +67,10 @@ class Base
 	protected $tieParams = [
 			'default' => 0.01,
 			];
-	
-	
+
 	/**
 	 * Returns query fields to be injected into the config.
+	 * @param string $queryService
 	 * @return array
 	 */
 	public function getQueryFieldsToBoosts( $queryService = null ) {
@@ -84,9 +84,10 @@ class Base
 		}
 		return $this->defaultQueryFields;
 	}
-	
+
 	/**
 	 * Provides a tie param configured for the provided query service, with a default back-off
+	 * @param string $queryService
 	 * @return int
 	 */
 	public function getTieParam( $queryService = null ) {

@@ -5,6 +5,7 @@ class MastheadTest extends WikiaBaseTest {
 	/**
 	 * Test Masthead::getPurgeUrl method
 	 *
+	 * @group UsingDB
 	 * @dataProvider getPurgeUrlDataProvider
 	 *
 	 * @param $avatarOption string value of 'avatar' user option for mocked User object

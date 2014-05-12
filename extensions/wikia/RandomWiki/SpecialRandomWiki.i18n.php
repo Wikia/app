@@ -325,10 +325,11 @@ $messages['sah'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Nikola Smolenski
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'randomwiki' => 'Насумична викија',
+	'randomwiki' => 'Насумични вики',
 );
 
 /** Swedish (svenska)

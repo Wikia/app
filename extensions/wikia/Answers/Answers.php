@@ -284,9 +284,6 @@ function fnAddAnswerJSGlobalVariables(Array &$vars){
 	global $wgMinimalPasswordLength;
 	$vars['wgMinimalPasswordLength'] = $wgMinimalPasswordLength;
 
-	global $wgAfterContentAndJS;
-	$vars['wgAfterContentAndJS'] = ($wgAfterContentAndJS?$wgAfterContentAndJS:array());
-
 	global $wgIsMainpage;
 	$vars['wgIsMainpage'] = ($wgIsMainpage?$wgIsMainpage:false);
 
@@ -596,12 +593,10 @@ class CategoryWithAds extends CategoryViewer{
 		);
 
 		$count = 0;
-		$this->nextPage = null;
 		while( $x = $dbr->fetchObject ( $res ) ) {
 			if( ++$count > $this->limit ) {
 				// We've reached the one extra which shows that there are
 				// additional pages to be had. Stop here...
-				$this->nextPage = $x->cl_sortkey;
 				break;
 			}
 

@@ -7,19 +7,28 @@ class Runner {
 	protected $active = array();
 
 	protected $threads;
+	protected $delay;
 
-	public function __construct( $processes, $threads ) {
+	public function __construct( $processes, $threads, $delay = 0 ) {
 		$this->queue = $processes;
 		$this->threads = $threads;
+		$this->delay = $delay;
 	}
 
 	public function run() {
+		$lastSpawned = 0;
 		while ( !empty($this->queue) || !empty($this->active) ) {
 			while ( !empty($this->queue) && count($this->active) < $this->threads ) {
+				if ( $this->delay != 0 ) {
+					if ( $lastSpawned + $this->delay > time() ) {
+						break;
+					}
+				}
 				/** @var Process $process */
 				$process = array_shift($this->queue);
 				$process->start();
 				$this->active[] = $process;
+				$lastSpawned = time();
 			}
 			foreach ($this->active as $k => $process) {
 				if ( !$process->isRunning() ) {
@@ -27,7 +36,6 @@ class Runner {
 				}
 			}
 			usleep(100);
-
 		}
 	}
 

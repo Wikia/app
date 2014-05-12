@@ -280,6 +280,18 @@ class RenameUserProcess {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
 		}
 
+		//Phalanx test
+
+		$warning = RenameUserHelper::testBlock( $oun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
+
+		$warning = RenameUserHelper::testBlock( $nun );
+		if ( !empty( $warning ) ) {
+			$this->addWarning( $warning );
+		}
+
 		//Invalid old user name entered
 		if(!$oun){
 			$this->addError( wfMessage('userrenametool-errorinvalid', $this->mRequestData->oldUsername)->inContentLanguage()->text() );
@@ -832,6 +844,9 @@ class RenameUserProcess {
 			$this->renameInTable($dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task);
 		}
 
+		/* Reset local editcount */
+		$this->resetEditCountWiki();
+
 		$hookName = 'UserRename::AfterLocal';
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks));
@@ -967,6 +982,28 @@ class RenameUserProcess {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	/**
+	 * Reset local editcount for renamed user and fake user
+	 * @author Kamil Koterba
+	 * @since Feb 2014
+	 */
+	private function resetEditCountWiki() {
+		// Renamed user
+		$uss = new UserStatsService( $this->mUserId );
+		$uss->resetEditCountWiki();
+
+		// FakeUser
+		if ( $this->mFakeUserId != 0 ) {
+			$uss = new UserStatsService( $this->mFakeUserId );
+			$uss->resetEditCountWiki();
+		} else {
+			// use OldUsername if FakeUser isn't set
+			$oldUser = User::newFromName( $this->mOldUsername );
+			$uss = new UserStatsService( $oldUser->getId() );
+			$uss->resetEditCountWiki();
+		}
 	}
 
 	/**

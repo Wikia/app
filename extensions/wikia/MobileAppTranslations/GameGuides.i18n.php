@@ -224,6 +224,7 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'activityindicator-message' => 'Bar beno...',
@@ -233,10 +234,10 @@ $messages['diq'] = array(
 	'window-article-button-back' => 'Peyser',
 	'window-article-menu-search-label' => 'Cı geyre',
 	'window-article-menu-dashboard-label' => 'Zerreki şınasnayş',
-	'window-article-menu-cancel-label' => 'Bıterkne',
+	'window-article-menu-cancel-label' => 'Bıtexelne',
 	'searchview-no-results' => 'Qandê "%s" neticey çıniyê',
 	'searchview-button-back-list' => 'Peyser şo lista',
-	'searchview-button-back-article' => 'Peyd şo wesiqa',
+	'searchview-button-back-article' => 'Peyser şo meqale',
 	'searchbar-hint' => 'Geyreno %s...',
 	'alert-download-updated-wikis-button-ok' => 'Temam',
 );
@@ -266,6 +267,15 @@ $messages['es'] = array(
 	'error-json-parse' => 'Hubo un problema con los datos devueltos desde nuestros servidores, lo sentimos.\\nInténtalo de nuevo.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'activityindicator-message' => 'Kargatzen...',
+	'window-category-load-batch' => 'Gehiago',
+	'window-article-button-close' => 'Itxi',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -282,17 +292,29 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Nedergard
  */
 $messages['fi'] = array(
 	'activityindicator-message' => 'Ladataan...',
+	'window-wikis-title' => 'Wikian Pelioppaat',
+	'window-wikis-wikilist-search-hint' => 'Etsi huippupelejämme...',
 	'window-category-load-batch' => 'Lisää',
 	'window-article-button-close' => 'Sulje',
 	'window-article-button-back' => 'Takaisin',
 	'window-article-menu-search-label' => 'Etsi',
+	'window-article-menu-dashboard-label' => 'Oppaiden sisällöt',
 	'window-article-menu-cancel-label' => 'Peruuta',
+	'searchview-no-results' => 'Ei tuloksia haulle "%s"',
 	'searchview-button-back-list' => 'Palaa luetteloon',
+	'searchview-button-back-article' => 'Palaa artikkeliin',
+	'searchbar-hint' => 'Etsi %s...',
+	'alert-download-updated-wikis-message' => 'Käytettävissä olevien oppaiden luetteloa päivitetään.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Tämän sovelluksen pävitys on saatavilla ja se on vaadittu.',
+	'error-no-connection' => 'Ei internet-yhteyttä.\\nOle hyvä ja yritä uudelleen.',
+	'error-server' => 'Pahoittelut: palvelimemme palautti virheen.\\nOle hyvä ja yritä uudelleen.',
+	'error-json-parse' => 'Pahooittelut: palvelimemme palauttaman tiedon kanssa ilmeni ongelma.\\nOle hyvä ja yritä uudelleen.',
 );
 
 /** Faroese (føroyskt)
@@ -542,7 +564,7 @@ $messages['mk'] = array(
 	'alert-download-updated-wikis-message' => 'Списокот на водичи на располагање ќе биде дополнет.',
 	'alert-download-updated-wikis-button-ok' => 'Ок',
 	'error-update-required' => 'Овој приложен програм има поднова што мора да ја направите.',
-	'error-no-connection' => 'Не сте поврзани со интернет.\\nОбидете се подоцна.',
+	'error-no-connection' => 'Не сте поврзани со семрежјето.\\nОбидете се подоцна.',
 	'error-server' => 'Нажалост, нашите опслужувачи одговорија со грешка.\\nОбидете се подоцна.',
 	'error-json-parse' => 'Нажалост, се појави проблем со податоците што ги вратија нашите опслужувачи.\\nОбидете се подоцна.',
 );
@@ -728,18 +750,30 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Caio1478
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
 	'activityindicator-message' => 'Carregando...',
+	'window-wikis-title' => 'Guias de Jogos da Wikia',
+	'window-wikis-wikilist-search-hint' => 'Pesquisar nossos Melhores Jogos...',
 	'window-category-load-batch' => 'Mais',
 	'window-article-button-close' => 'Fechar',
 	'window-article-button-back' => 'Voltar',
 	'window-article-menu-search-label' => 'Pesquisar',
+	'window-article-menu-dashboard-label' => 'Guia de conteúdos',
 	'window-article-menu-cancel-label' => 'Cancelar',
+	'searchview-no-results' => 'Nenhum resultado para "%s"',
+	'searchview-button-back-list' => 'Voltar à lista',
+	'searchview-button-back-article' => 'Voltar ao artigo',
 	'searchbar-hint' => 'Pesquisar %s...',
+	'alert-download-updated-wikis-message' => 'A lista dos guias disponíveis será atualizada.',
 	'alert-download-updated-wikis-button-ok' => 'Ok',
+	'error-update-required' => 'Uma atualização para este aplicativo está disponível e é necessária.',
+	'error-no-connection' => 'Sem conexão com a internet disponível.\\nPor favor, tente novamente.',
+	'error-server' => 'Nossos servidores respondeu com um erro, desculpe.\\nPor favor, tente novamente.',
+	'error-json-parse' => 'Houve um problema com os dados retornados a partir de nossos servidores, desculpe.\\nPor favor, tente novamente.',
 );
 
 /** tarandíne (tarandíne)
@@ -821,13 +855,26 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'activityindicator-message' => 'లోడవుతోంది...',
+	'window-wikis-title' => 'వికియా ఆటల మార్గదర్శి',
+	'window-category-load-batch' => 'మరిన్ని',
+	'window-article-button-close' => 'మూసివేయి',
+	'window-article-button-back' => 'వెనక్కి',
 	'window-article-menu-search-label' => 'వెతుకు',
+	'window-article-menu-dashboard-label' => 'మార్గదర్శి విషయాలు',
 	'window-article-menu-cancel-label' => 'రద్దుచేయి',
-	'searchview-no-results' => '"%s"కి ఫలితాలేమీ లేవు',
+	'searchview-no-results' => '"%s" కు ఫలితాలేమీ లేవు',
+	'searchview-button-back-list' => 'తిరిగి జాబితాకు',
+	'searchview-button-back-article' => 'తిరిగి వ్యాసానికి',
+	'searchbar-hint' => '%s లో వెతుకు...',
 	'alert-download-updated-wikis-button-ok' => 'సరే',
+	'error-no-connection' => 'అంతర్జాల కనెక్షను లేదు.\\nమళ్ళీ ప్రయత్నించండి.',
+	'error-server' => 'మా సర్వర్లు లోపం చూస్పిస్తున్నాయి, సారీ.\\nమళ్ళీ ప్రయత్నించండి.',
+	'error-json-parse' => 'మా సర్వర్ల నుండి వచ్చిన డేటాలో ఏదో సమస్య ఉంది, సారీ.\\nమళ్ళీ ప్రయత్నించండి.',
 );
 
 /** Tagalog (Tagalog)
@@ -863,6 +910,22 @@ $messages['tly'] = array(
 	'window-article-menu-search-label' => 'Нәве',
 	'window-article-menu-cancel-label' => 'Ләғв кардеј',
 	'alert-download-updated-wikis-button-ok' => 'OK',
+);
+
+/** Turkish (Türkçe)
+ * @author Incelemeelemani
+ */
+$messages['tr'] = array(
+	'window-category-load-batch' => 'Daha fazla',
+	'window-article-button-close' => 'Kapat',
+	'window-article-button-back' => 'Geri',
+	'window-article-menu-search-label' => 'Ara',
+	'window-article-menu-dashboard-label' => 'Kılavuz içeriği',
+	'window-article-menu-cancel-label' => 'Vazgeç',
+	'searchview-button-back-list' => 'Listeye geri dön',
+	'searchview-button-back-article' => 'Makaleye geri dön',
+	'searchbar-hint' => 'Aranan %s...',
+	'alert-download-updated-wikis-button-ok' => 'Tamam',
 );
 
 /** Ukrainian (українська)
@@ -948,5 +1011,7 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'activityindicator-message' => '載入中...',
+	'window-wikis-title' => 'Wikia 遊戲指南',
 	'window-article-button-close' => '關閉',
 );

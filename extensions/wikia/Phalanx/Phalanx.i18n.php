@@ -169,6 +169,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Claw eg
  * @author OsamaK
  */
 $messages['ar'] = array(
@@ -220,6 +221,33 @@ $messages['ar'] = array(
 	'phalanx-legend-listing' => 'المرشحات المطبقة حاليا',
 	'phalanx-unblock-message' => 'تمت إزالة عملية المنع رقم #$1 بنجاح',
 	'phalanx-help-type-content' => 'هذا المرشح يمنع عملية تحرير من أن يتم حفظها، إذا كان محتواها يتطابق مع أي من العبارات المدرجة في القائمة السوداء.',
+	'phalanx-help-type-summary' => 'هذا المرشح يمنع حفظ تعديل، إن كان المحتوى المكتوب يطابق أي جملة محظورة.',
+	'phalanx-help-type-title' => 'هذا المرشح يمنع إنشاء صفحة، إن كان عنوانها يطابق أي جملة محظورة.
+
+	ولا يمنع صفحة موجودة مسبقًا من التحرير.',
+	'phalanx-help-type-user' => 'هذا المرشح يمنع مستخدم (مثل برنامج ميدياويكي المحلي تمامًا)، إن كان الاسم أو عنوان الآيبي يطابق أيًا من الأسماء أو عنوانين الآيبي المحظورة.',
+	'phalanx-help-type-wiki-creation' => 'هذا المرشح يمنع إنشاء ويكي، إن كان اسم أو عنوان URL الخاص بها يطابق أي جملة محظورة.',
+	'phalanx-help-type-answers-question-title' => 'هذا المرشح يمنع إنشاء (صفحة) سؤال، إن كان عنوانه يطابق أي جملة محظورة.
+
+ملحوظة: يعمل فقط على ويكيات الإجابات.',
+	'phalanx-help-type-answers-recent-questions' => 'هذا المرشح يمنع عرض (صفحات) أسئلة في عدد من النتائج (التطبيقات، القوائم، قوائم الوسوم).
+ولا يمنع إنشاء هذه الصفحات.
+
+ملحوظة: يعمل فقط على ويكيات الإجابات.',
+	'phalanx-help-type-user-email' => 'المرشح يمنع إنشاء حساب باستخدام عنوان بريد إلكتروني محظور.',
+	'phalanx-user-block-reason-ip' => 'عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر لك أو بواسطة شخص يشارك بعنوان الآيبي الخاص بك.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].',
+	'phalanx-user-block-reason-exact' => 'اسم المستخدم أو عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].',
+	'phalanx-user-block-reason-similar' => 'اسم المستخدم هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر بواسطة بواسطة مستخدم باسم مماثل.
+رجاءً [[Special:Contact|أخبر ويكيا]] بالمشكلة.',
+	'phalanx-user-block-new-account' => 'اسم المستخدم غير متوفر للتسجيل. الرجاء اختيار اسم آخر.',
+	'phalanx-user-block-withreason-ip' => 'عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا كلها بسبب التخريب أو تشويش آخر بواسطتك أو بواسطة شخص يشارك عنوان الآيبي الخاص بك.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].<br />الذي قام بالحظر أعطى أيضًا هذا السبب الإضافي: $1.',
+	'phalanx-user-block-withreason-exact' => 'اسم المستخدم أو عنوان الآيبي هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر.
+إن كنت تظن أنه يوجد خطأ، رجاءً [[Special:Contact|اتصل بويكيا]].<br />الذي قام بالمنع أعطى أيضًا هذا السبب الإضافي: $1.',
+	'phalanx-user-block-withreason-similar' => 'اسم المستخدم هذا ممنوع من التحرير عبر شبكة ويكيا بالكامل بسبب التخريب أو تشويش آخر بواسطة بواسطة مستخدم باسم مماثل.
+رجاءً [[Special:Contact|أخبر ويكيا]] بالمشكلة.<br />الذي قام بالمنع أعطى أيضًا هذا السبب الإضافي: $1.',
 	'phalanx-title-move-summary' => 'سبب المنع الذي أدخلته يحتوي على عبارة محظورة.',
 	'phalanx-content-spam-summary' => 'تم العثور على النص في موجز للصفحة.',
 	'phalanx-stats-title' => 'إحصائيات الفالانكس',
@@ -291,12 +319,15 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'phalanx' => 'Phalanx',
+	'phalanx-type-content' => "endalc'had ar bajenn",
+	'phalanx-type-summary' => 'diverradur eus ar bajenn',
 	'phalanx-type-title' => 'anv ar bajenn',
 	'phalanx-type-user' => 'implijer',
 	'phalanx-type-user-email' => 'postel',
 	'phalanx-type-answers-question-title' => 'titl ar goulenn',
 	'phalanx-type-answers-recent-questions' => 'goulennoù graet nevez zo',
 	'phalanx-type-wiki-creation' => 'Krouiñ ur wiki',
+	'phalanx-add-block' => "Arloañ ar bloc'h",
 	'phalanx-edit-block' => "Enrollañ ar bloc'h",
 	'phalanx-label-filter' => 'Sil :',
 	'phalanx-label-reason' => 'Abeg :',
@@ -312,6 +343,10 @@ $messages['br'] = array(
 	'phalanx-format-exact' => 'rik',
 	'phalanx-tab-main' => 'Merañ ar siloù',
 	'phalanx-tab-secondary' => 'Amprouiñ ar siloù',
+	'phalanx-block-success' => "Ouzhpennet eo bet ar bloc'h",
+	'phalanx-block-failure' => "Ur fazi a oa bet pa oad oc'h ouzhpennañ ar bloc'h",
+	'phalanx-modify-success' => "Kemmet eo bet ar bloc'h",
+	'phalanx-modify-failure' => "Ur fazi a oa bet pa oad o kemmañ ar bloc'h",
 	'phalanx-test-submit' => 'Amprouiñ',
 	'phalanx-test-results-legend' => "Disoc'hoù an amprouad",
 	'phalanx-display-row-blocks' => 'stankadennoù : $1',
@@ -328,6 +363,7 @@ $messages['br'] = array(
 	'phalanx-stats-table-user' => 'Ouzhpennet gant',
 	'phalanx-stats-table-type' => 'Seurt',
 	'phalanx-stats-table-create' => 'Krouet',
+	'phalanx-stats-table-expire' => "A ya d'e dermen",
 	'phalanx-stats-table-exact' => 'Rik',
 	'phalanx-stats-table-language' => 'Yezh',
 	'phalanx-stats-table-text' => 'Testenn',
@@ -776,6 +812,19 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanx' => 'Puede administrar bloqueos globales y filtros de spam',
 	'right-phalanxexempt' => 'Exento de las reglas de Phalanx',
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'phalanx-label-filter' => 'Iragazkia:',
+	'phalanx-label-reason' => 'Arrazoia:',
+	'phalanx-label-type' => 'Mota:',
+	'phalanx-label-lang' => 'Hizkuntza:',
+	'phalanx-view-type' => 'Blokeo mota...',
+	'phalanx-stats-table-language' => 'Hizkuntza',
+	'phalanx-stats-table-reason' => 'Arrazoia',
 );
 
 /** Persian (فارسی)
@@ -2382,7 +2431,7 @@ Se acredita que este bloqueio foi feito em erro [[Special:Contact|contacte a Wik
 [[Special:Contact|Contacte a Wikia]] acerca deste problema, por favor.',
 	'phalanx-user-block-new-account' => 'O nome de utilizador não está disponível para registo. Escolha outro, por favor.',
 	'phalanx-user-block-withreason-ip' => 'Este endereço IP está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação conduzidas por si ou por outra pessoa que partilha o seu endereço IP atual.
-Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
+Se acredita que este bloqueio foi feito em erro, [[Special:Contact|contacte a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-exact' => 'Este nome de utilizador ou endereço IP estão impedidos de editar as wikis da Wikia, devido a atividades de vandalismo ou outra forma de perturbação.
 Se acredita que este bloqueio foi feito em erro [[Special:Contact|contate a Wikia]], por favor.<br />O autor do bloqueio apresentou também este motivo adicional: $1.',
 	'phalanx-user-block-withreason-similar' => 'Este nome de utilizador está impedido de editar as wikis da Wikia, devido a atividades de vandalismo ou outras formas de perturbação exercidas por outro utilizador com um nome semelhante.
@@ -2787,12 +2836,13 @@ Var god [[Special:Contact|kontakta Wikia]] om problemet.<br />Blockeringen gav o
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
-	'phalanx-type-content' => 'పుట విషయం',
-	'phalanx-type-summary' => 'పుట సారాంశం',
-	'phalanx-type-title' => 'పుట శీర్షిక',
+	'phalanx-type-content' => 'పేజీ విషయం',
+	'phalanx-type-summary' => 'పేజీ సారాంశం',
+	'phalanx-type-title' => 'పేజీ శీర్షిక',
 	'phalanx-type-user' => 'వాడుకరి',
 	'phalanx-type-answers-recent-questions' => 'ఇటీవలి ప్రశ్నలు',
 	'phalanx-label-reason' => 'కారణం:',
@@ -2800,6 +2850,7 @@ $messages['te'] = array(
 	'phalanx-label-lang' => 'భాష:',
 	'phalanx-test-results-legend' => 'పరీక్షా ఫలితాలు',
 	'phalanx-link-stats' => 'గణాంకాలు',
+	'phalanx-stats-table-user' => 'చేర్చినవారు',
 	'phalanx-stats-table-type' => 'రకం',
 	'phalanx-stats-table-language' => 'భాష',
 	'phalanx-stats-table-text' => 'పాఠ్యం',
@@ -3063,6 +3114,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Reasno
  * @author Xiaomingyan
  * @author Yfdyh000
@@ -3078,6 +3130,7 @@ $messages['zh-hans'] = array(
 	'phalanx-type-user-email' => '电子邮件',
 	'phalanx-type-answers-question-title' => '问题标题',
 	'phalanx-type-answers-recent-questions' => '最新问题',
+	'phalanx-label-filter' => '过滤器：',
 	'phalanx-label-reason' => '原因：',
 	'phalanx-label-expiry' => '截止日期：',
 	'phalanx-label-type' => '类型：',

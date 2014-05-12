@@ -97,6 +97,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03649 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexCached() {
@@ -104,6 +106,8 @@ class HubRssControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group Slow
+	 * @slowExecutionTime 0.03315 ms
 	 * @covers  HubRssFeedSpecialController::index
 	 */
 	public function testIndexNotCached( $cached = false ) {
@@ -115,7 +119,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mockModel = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getRealData'] )
+			->setMethods( ['__construct', 'getRealDataV2'] )
 			->getMock();
 
 
@@ -128,7 +132,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			$mockService->expects( $this->never() )
 				->method( 'dataToXml' );
 			$mockModel->expects( $this->never() )
-				->method( 'getRealData' );
+				->method( 'getRealDataV2' );
 		}
 		else
 		{
@@ -136,7 +140,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 				->method( 'dataToXml' )
 				->will( $this->returnValue( '<rss/>' ) );
 			$mockModel->expects( $this->once() )
-				->method( 'getRealData' )
+				->method( 'getRealDataV2' )
 				->will( $this->returnValue( [''] ) );
 		}
 

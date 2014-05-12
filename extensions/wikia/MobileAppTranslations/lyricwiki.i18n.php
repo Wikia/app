@@ -380,6 +380,17 @@ $messages['es'] = array(
 	'ringtone-matcher-by-song' => 'Enviar tono %s a su teléfono.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'app-loading' => 'Kargatzen...',
+	'app-nonetwork-dialog-close-button' => 'Ados',
+	'search-hint-text' => "adib. 'John Lennon:Imagine'",
+	'login-username-hint' => 'Erabiltzaile izena',
+	'login-password-hint' => 'Pasahitza',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -397,6 +408,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  * @author Ville96
  */
 $messages['fi'] = array(
@@ -414,6 +426,8 @@ $messages['fi'] = array(
 	'search-hint-text' => "esim: 'John Lennon:Imagine'",
 	'search-no-match-found' => 'Ei osumia.',
 	'search-no-match-found-query' => 'Hakusana: %s',
+	'search-results-title' => 'Tulokset haulle: %s',
+	'login-label' => 'Kirjaudu LyricWikiin',
 	'login-username-hint' => 'Käyttäjätunnus',
 	'login-password-hint' => 'Salasana',
 	'login-submit-button' => 'Kirjaudu sisään',
@@ -428,6 +442,7 @@ $messages['fi'] = array(
 	'about-feedback-0' => 'Palautetta ohjelmasta? Lähetä minulle sähköpostia: %s (englanniksi)',
 	'about-heading-rate' => 'Arvioi ohjelma Marketissa!',
 	'about-rate-0-android' => 'Jos pidät tästä sovelluksesta, niin miksi et antaisi sille 5 tähteä Android Marketissa?',
+	'about-rate-0-ios' => 'Jos pidät tästä sovelluksesta, anna sille 5 tähteä App Storessa!',
 	'gracenote-takedown' => 'Valitettavasti emme tekijänoikeussyistä voi näyttää etsimäsi kappaleen koko sanoja. Tätä tapahtuu alle prosentille sanoituksistamme. Yritä uudelleen myöhemmin.',
 	'lyrics-artist-byline' => 'esittäjä: %s',
 	'ringtone-matcher-by-song' => 'Lähetä %s soittoäänenä puhelimeesi!',
@@ -1087,15 +1102,36 @@ $messages['pt-br'] = array(
 	'app-tab-search' => 'Pesquisar',
 	'app-tab-about' => 'Sobre',
 	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'CdD',
+	'app-async-error-title' => 'Ops',
+	'app-async-error-message' => 'Problema temporário com a conexão. Por favor, tente novamente mais tarde.',
+	'app-nonetwork-dialog-title' => 'Rede não disponível',
+	'app-nonetwork-dialog-message' => 'Nenhuma conexão de rede detectada.',
 	'app-nonetwork-dialog-close-button' => 'OK',
 	'search-go' => 'Ir!',
+	'search-hint-text' => "ex. 'John Lennon:Imagine'",
+	'search-no-match-found' => 'Nenhum resultado foi encontrado.',
+	'search-no-match-found-query' => 'Pesquisou por: %s',
+	'search-results-title' => 'Resultados da pesquisa para: %s',
+	'login-label' => 'Entrar na LyricWiki',
 	'login-username-hint' => 'Nome de usuário',
 	'login-password-hint' => 'Senha',
 	'login-submit-button' => 'Login',
 	'about-heading' => 'LyricWiki',
 	'about-credits' => 'por %s',
-	'about-heading-tips' => 'Procurando',
-	'about-heading-licensing' => 'Direitos de autor',
+	'about-heading-tips' => 'Pesquisando',
+	'about-tips-0' => 'Comece a digitar o nome do artista para auto-completar enquanto você digita.',
+	'about-tips-1' => 'As fotos na tela principal são as Top 9 músicas no iTunes agora.',
+	'about-heading-licensing' => 'Direitos autorais',
+	'about-licensing-0' => 'Este aplicativo é 100% legal. Os royalties são pagos aos detentores de direitos das canções através do Gracenote - assim como no site da LyricWiki.',
+	'about-heading-feedback' => 'Feedback',
+	'about-feedback-0' => 'Quer dizer-nos algo sobre o aplicativo? Envie-me um e-mail: %s',
+	'about-heading-rate' => 'Classifique o aplicativo, por favor!',
+	'about-rate-0-android' => 'Se você gosta deste aplicativo, por favor classifique-o com 5 estrelas na Play Store!',
+	'about-rate-0-ios' => 'Se você gosta deste aplicativo, por favor classifique-o com 5 estrelas na App Store!',
+	'gracenote-takedown' => 'Doh! Infelizmente, não são licenciados para exibir as letras completas para esta música no momento (isso acontece por menos de 1% de nossas músicas). Por favor, tente novamente na próxima semana.',
+	'lyrics-artist-byline' => 'por %s',
+	'ringtone-matcher-by-song' => 'Enviar o Toque %s para o seu Celular',
 );
 
 /** tarandíne (tarandíne)
@@ -1245,15 +1281,33 @@ $messages['sv'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Chaduvari
  * @author Veeven
  */
 $messages['te'] = array(
+	'app-loading' => 'లోడవుతోంది...',
+	'app-tab-search' => 'వెతుకు',
 	'app-tab-about' => 'గురించి',
+	'app-tab-browse' => 'అ..క్ష',
+	'app-async-error-title' => 'అడెడె',
+	'app-async-error-message' => 'కనెక్షనుతో తాత్కాలికంగా సమస్య ఉంది. మళ్ళీ తరువాత ప్రయత్నించండి.',
+	'app-nonetwork-dialog-title' => 'నెట్‍వర్కు లేదు',
 	'app-nonetwork-dialog-close-button' => 'సరే',
 	'search-go' => 'వెళ్ళు!',
+	'search-no-match-found' => 'సరిపోలినవి ఏమీ కనబడలేదు.',
+	'search-no-match-found-query' => '%s కోసం వెతికాం',
+	'search-results-title' => '%s కి ఫలితాలు',
+	'login-label' => 'LyricWiki లోకి లాగినవండి',
 	'login-username-hint' => 'వాడుకరి పేరు',
 	'login-password-hint' => 'సంకేతపదం',
+	'login-submit-button' => 'లాగినవండి',
+	'about-heading' => 'LyricWiki',
+	'about-credits' => '%s చే',
+	'about-heading-tips' => 'వెతుకుతున్నాం',
 	'about-heading-licensing' => 'కాపీహక్కులు',
+	'about-heading-feedback' => 'ఫీడుబ్యాకు',
+	'about-feedback-0' => 'యాప్ గురించి ఏమైనా చెప్పాలనుకుంటున్నారా? నాకు ఈమెయిలు చెయ్యండి: %s',
+	'lyrics-artist-byline' => '%s చే',
 );
 
 /** Tagalog (Tagalog)
@@ -1308,11 +1362,29 @@ $messages['tly'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Incelemeelemani
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'app-loading' => 'Yükleniyor...',
+	'app-tab-search' => 'Arama',
+	'app-tab-about' => 'Hakkında',
+	'app-tab-browse' => 'A..Z',
+	'app-tab-sotd' => 'SotD',
+	'app-async-error-title' => 'Oops',
+	'app-async-error-message' => 'Geçici bağlantı sorunu. Lütfen daha sonra yeniden deneyin.',
+	'app-nonetwork-dialog-title' => 'Ağ kullanılamıyor',
+	'app-nonetwork-dialog-close-button' => 'TAMAM',
+	'search-go' => 'Git!',
+	'search-hint-text' => "örn. 'John Lennon:Hayal'",
+	'search-no-match-found' => 'Eşleşme bulunamadı.',
+	'search-no-match-found-query' => 'Aranan: %s',
+	'search-results-title' => 'Arama sonuçları: %s',
+	'login-label' => 'LyricWiki girişi',
 	'login-username-hint' => 'Kullanıcı adı',
 	'login-password-hint' => 'Parola',
+	'about-heading' => 'LyricWiki',
+	'about-heading-tips' => 'Aranıyor',
 	'about-heading-licensing' => 'Telif hakları',
 );
 

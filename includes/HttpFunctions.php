@@ -48,9 +48,37 @@ class Http {
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
 		}
+
+		// Wikia change - @author: mech - begin
+		$requestTime = microtime( true );
+		// Wikia change - end
+
 		$status = $req->execute();
 
-		if ( $status->isOK() ) {
+		// Wikia change - @author: mech - begin
+		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks' ] );
+		$isOk = $status->isOK();
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
+
+			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+			$params = [
+				'statusCode' => $req->getStatus(),
+				'reqMethod' => $method,
+				'reqUrl' => $url,
+				'caller' => $caller,
+				'isOk' => $isOk,
+				'requestTimeMS' => $requestTime
+			];
+			if ( !$isOk ) {
+				$params[ 'statusMessage' ] = $status->getMessage();
+			}
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
+
+		}
+
+		if ( $isOk ) {
+		// Wikia change - end
 			$ret = $req->getContent();
 		} else {
 			$ret = false;

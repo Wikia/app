@@ -26,9 +26,9 @@ ve.ce.WikiaBlockVideoNode = function VeCeWikiaBlockVideoNode( model, config ) {
 
 /* Inheritance */
 
-ve.inheritClass( ve.ce.WikiaBlockVideoNode, ve.ce.WikiaBlockMediaNode );
+OO.inheritClass( ve.ce.WikiaBlockVideoNode, ve.ce.WikiaBlockMediaNode );
 
-ve.mixinClass( ve.ce.WikiaBlockVideoNode, ve.ce.WikiaVideoNode );
+OO.mixinClass( ve.ce.WikiaBlockVideoNode, ve.ce.WikiaVideoNode );
 
 /* Static Properties */
 
