@@ -1,9 +1,15 @@
 <?php
 class WikiaInteractiveMapsParserTagController extends WikiaController {
 
+	//TODO: figure out max and min height and width - PO design decision
 	const DEFAULT_ZOOM = 7;
+	const MIN_ZOOM = 0;
 	const DEFAULT_WIDTH = 700;
+	const MAX_WIDTH = 1270;
+	const MIN_WIDTH = 100;
 	const DEFAULT_HEIGHT = 200;
+	const MAX_HEIGHT = 500;
+	const MIN_HEIGHT = 50;
 	const DEFAULT_LATITUDE = 0;
 	const DEFAULT_LONGITUDE = 0;
 	const PARSER_TAG_NAME = 'imap';
@@ -113,11 +119,11 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	private function getMapPlaceholderParams() {
 		$params = [];
 
-		$params[ 'lat' ] = $this->request->getVal( 'lat', static::DEFAULT_LATITUDE );
-		$params[ 'lon' ] = $this->request->getVal( 'lon', static::DEFAULT_LONGITUDE );
-		$params[ 'zoom' ] = $this->request->getInt( 'zoom', static::DEFAULT_ZOOM );
-		$params[ 'width' ] = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
-		$params[ 'height' ] = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
+		$params[ 'lat' ] = $this->request->getVal( 'lat', self::DEFAULT_LATITUDE );
+		$params[ 'lon' ] = $this->request->getVal( 'lon', self::DEFAULT_LONGITUDE );
+		$params[ 'zoom' ] = $this->request->getInt( 'zoom', self::DEFAULT_ZOOM );
+		$params[ 'width' ] = $this->request->getInt( 'width', self::DEFAULT_WIDTH );
+		$params[ 'height' ] = $this->request->getInt( 'height', self::DEFAULT_HEIGHT );
 		$params[ 'map' ] = $this->request->getVal( 'map' );
 
 		$params[ 'width' ] .= 'px';
@@ -234,20 +240,34 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 				break;
 			case 'zoom':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 0 ],
+					[ 'min' => self::MIN_ZOOM ],
 					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom' ]
 				);
 				break;
 			case 'width':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 1 ],
-					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width' ]
+					[
+						'min' => self::MIN_WIDTH,
+						'max' => self::MAX_WIDTH
+					],
+					[
+						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-width',
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-width',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-width'
+					]
 				);
 				break;
 			case 'height':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => 1 ],
-					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height' ]
+					[
+						'min' => self::MIN_HEIGHT,
+						'max' => self::MAX_HEIGHT
+					],
+					[
+						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-height',
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-height',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-height'
+					]
 				);
 				break;
 		}
