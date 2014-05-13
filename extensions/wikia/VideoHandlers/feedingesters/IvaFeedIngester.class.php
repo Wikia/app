@@ -975,7 +975,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return preg_replace( '/\s*,\s*/', ' ', $this->getUniqueArray( $categories ) );
 	}
 
 	/**
