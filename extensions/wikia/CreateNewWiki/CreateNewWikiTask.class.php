@@ -214,7 +214,7 @@ class CreateNewWikiTask extends BaseTask {
 			->UPDATE( 'revision' )
 			->SET( 'rev_user', $contributor->getId() )
 			->SET( 'rev_user_text', $contributor->getName() )
-			->SET( 'rev_timestamp = date_format(now(), "%Y%m%d%H%i%S")' );
+			->SET_RAW( 'rev_timestamp', 'date_format(now(), "%Y%m%d%H%i%S")' );
 
 		/**
 		 * determine the timestamp of the latest starter revision
