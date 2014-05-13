@@ -10,6 +10,7 @@
  * - variables values are taken from Community Wiki
  * - caching time on both server and client-side is 300 sec
  * - RL module is only loaded in Oasis
+ * - values are available in Wikia.InstantGlobals object
  *
  * @author macbre
  */
