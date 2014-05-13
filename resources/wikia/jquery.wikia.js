@@ -594,6 +594,18 @@ $(function() {
 	if ( typeof $.fn.timeago != 'undefined' ) {
 		$( '.timeago' ).timeago();
 	}
+
+	// Activate content-toggling links for Infoboxes
+	$('.infoboxToggleContent').on('click', function() {
+		var targetId = $(this).data('target-id'),
+		    target   = $("#" + targetId);
+		if( target.css('display') == "none" ) {
+			target.show();
+		} else {
+			target.hide();
+		}
+	});
+
 });
 
 var $window = $(window);
