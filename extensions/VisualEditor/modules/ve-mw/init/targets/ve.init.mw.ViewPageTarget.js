@@ -1131,7 +1131,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	// Add Recaptcha script
 	dialogFrame = this.saveDialog.frame.$element[0];
 	dialogDocument = dialogFrame.contentDocument;
-	$( dialogFrame ).load( function () {
+	$( dialogFrame ).on( 'load', function () {
 		script = dialogDocument.createElement( 'script' );
 		script.src = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
 		dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
