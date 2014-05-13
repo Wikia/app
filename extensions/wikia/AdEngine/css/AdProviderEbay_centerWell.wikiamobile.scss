@@ -8,21 +8,17 @@
   text-align: left !important;
 
   float: none !important;
+  border-top: 0 !important;
 
   position: relative;
   left: 0;
   padding: 0 !important;
 
-  h2 {
-    margin-bottom: 50px;
-  }
-
   .powered-by {
-    position: absolute;
-    top: 90px;
     font: 14px/28px "helvetica neue", arial, sans-serif;
 
     margin-top: -5px;
+    margin-bottom: 15px;
 
     svg {
       position: relative;
