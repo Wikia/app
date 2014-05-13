@@ -40,6 +40,6 @@ $wgHooks['WikiaSkinTopShortTTLModules'][] =  'InstantGlobalsHooks::onWikiaSkinTo
 /**
  * register Resource Loader module
  */
-$wgResourceModules['wikia.ext.instantglobals'] = [
+$wgResourceModules['wikia.ext.instantGlobals'] = [
 	'class' => 'InstantGlobalsModule',
 ];
