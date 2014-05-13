@@ -5,7 +5,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 	private static $code = <<< SCRIPT
 		<script>
 			require(['wikia.geo'], function (geo) {
-				if (geo.getCountryCode() in %%COUNTRIES%%) {
+				if (window.wgAmazonDirectTargetedBuyCountries && wgAmazonDirectTargetedBuyCountries.indexOf(geo.getCountryCode()) > -1) {
 					var aax_src='3006',
 						aax_url = encodeURIComponent(document.location),
 						s = document.createElement('script'),
@@ -33,33 +33,11 @@ SCRIPT;
 	}
 
 	public function getSetupHtml($params = array()) {
-		global $wgAmazonDirectTargetedBuyCountriesDefault, $wgCityId;
-
 		static $called = false;
 		$code = '';
 
 		if (!$called && self::isEnabled()) {
-			$called = true;
-			$countriesJS = [];
-
-			$amazonCountries = WikiFactory::getVarValueByName(
-				'wgAmazonDirectTargetedBuyCountries',
-				[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-				false,
-				$wgAmazonDirectTargetedBuyCountriesDefault
-			);
-
-			if (is_array($amazonCountries)) {
-				foreach ($amazonCountries as $countryCode) {
-					if (is_string($countryCode)) {
-						$countriesJS[$countryCode] = true;
-					}
-				}
-			}
-
-			if ($countriesJS) {
-				$code = str_replace('%%COUNTRIES%%', json_encode($countriesJS), self::$code);
-			}
+			$code = self::$code;
 		}
 
 		return $code;
