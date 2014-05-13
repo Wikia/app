@@ -46,7 +46,7 @@ class SQLBuilderUpdateTest extends FluentSqlTest {
 
 		$sql = (new SQL)
 			->UPDATE('some_table')
-			->SET_RAW('some_field', 'null', true)
+			->SET_RAW('some_field', 'null')
 				->SET('some_other_field', null)
 				->SET('another_field', 'null')
 			->WHERE('something')->EQUAL_TO(4);
