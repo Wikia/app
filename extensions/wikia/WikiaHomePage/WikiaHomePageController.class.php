@@ -109,8 +109,8 @@ class WikiaHomePageController extends WikiaController {
 	 * @return Mixed|null
 	 */
 	public function prepareHubsSectionSlots() {
-		global $wgLang;
-		$langCode = $wgLang->getCode();
+		global $wgContLang;
+		$langCode = $wgContLang->getCode();
 
 		$hubSlot = WikiaDataAccess::cache(
 			WikiaHomePageHelper::getHubSlotsMemcacheKey( $langCode ),
@@ -630,7 +630,7 @@ class WikiaHomePageController extends WikiaController {
 
 	protected function getHubSliderData($params) {
 		$sliderParams = [
-			'module' => MarketingToolboxModuleSliderService::MODULE_ID
+			'module' => WikiaHubsModuleSliderService::MODULE_ID
 		];
 
 		$sliderParams = array_merge( $sliderParams, $params );

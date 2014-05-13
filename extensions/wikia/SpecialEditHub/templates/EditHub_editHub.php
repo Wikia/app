@@ -24,7 +24,7 @@
 			<?=$moduleContent?>
 
 			<div class="submits">
-				<?php if( $selectedModuleId == MarketingToolboxModulePopularvideosService::MODULE_ID ): ?>
+				<?php if( $selectedModuleId == WikiaHubsModulePopularvideosService::MODULE_ID ): ?>
 					<input id="edit-hub-removeall" name="removeall" class="secondary" type="button" value="<?= wfMessage('edit-hub-edithub-removeall-button')->escaped(); ?>" />
 				<?php else: ?>
                 	<input id="edit-hub-clearall" name="clearall" class="secondary" type="button" value="<?= wfMessage('edit-hub-edithub-clearall-button')->escaped(); ?>" />

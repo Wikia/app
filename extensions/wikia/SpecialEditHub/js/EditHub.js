@@ -60,7 +60,7 @@
 												$.loadMustache(),
 												Wikia.getMultiTypePackage({
 													mustache: 'extensions/wikia/WikiaHubsServices/modules/templates/' +
-														'MarketingToolbox_popularVideoRow.mustache'
+														'WikiaHubs_popularVideoRow.mustache'
 												})
 											).done(function (libData, packagesData) {
 												initThis.popularVideosAdd(packagesData[0].mustache[0], response);

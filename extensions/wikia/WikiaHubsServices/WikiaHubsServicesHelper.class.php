@@ -123,7 +123,7 @@ class WikiaHubsServicesHelper
 
 	/**
 	 * add video to hubs v2 wikis
-	 * @param MarketingToolboxModuleService $module
+	 * @param WikiaHubsModuleService $module
 	 * @param array $data
 	 * @return array|false $result
 	 */

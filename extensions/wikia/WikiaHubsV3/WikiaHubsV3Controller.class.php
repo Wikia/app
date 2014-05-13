@@ -21,9 +21,9 @@ class WikiaHubsV3Controller extends WikiaController {
 	protected $model;
 	
 	/**
-	 * @var MarketingToolboxModel
+	 * @var EditHubModel
 	 */
-	protected $marketingToolboxModel;
+	protected $editHubModelModel;
 
 	protected $format;
 	protected $verticalId;
@@ -45,7 +45,7 @@ class WikiaHubsV3Controller extends WikiaController {
 			$this->overrideTemplate('404');
 			return;
 		}
-		$toolboxModel = new MarketingToolboxV3Model();
+		$toolboxModel = new EditHubModel();
 
 		$this->modules = array();
 
@@ -103,7 +103,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	/**
 	 * Render one module with given data
 	 *
-	 * @param MarketingToolboxV3Model $toolboxModel
+	 * @param EditHubModel $toolboxModel
 	 * @param string $moduleName
 	 * @param array  $moduleData
 	 *
@@ -112,7 +112,7 @@ class WikiaHubsV3Controller extends WikiaController {
 	protected function renderModule( $toolboxModel, $moduleId, $moduleName ) {
 		$params = $this->getParams();
 
-		$module = MarketingToolboxModuleService::getModuleByName(
+		$module = WikiaHubsModuleService::getModuleByName(
 			$moduleName,
 			null,
 			null,
@@ -168,14 +168,14 @@ class WikiaHubsV3Controller extends WikiaController {
 	}
 
 	/**
-	 * @return MarketingToolboxModel
+	 * @return EditHubModel
 	 */
-	protected function getMarketingToolboxModel() {
-		if( !$this->marketingToolboxModel ) {
-			$this->marketingToolboxModel = new MarketingToolboxV3Model($this->app);
+	protected function getEditHubModelModel() {
+		if( !$this->editHubModelModel ) {
+			$this->editHubModelModel = new EditHubModel($this->app);
 		}
 		
-		return $this->marketingToolboxModel;
+		return $this->editHubModelModel;
 	}
 
 	protected function initFormat() {
@@ -199,4 +199,6 @@ class WikiaHubsV3Controller extends WikiaController {
 	protected function initHubTimestamp() {
 		$this->hubTimestamp = $this->getRequest()->getVal('hubTimestamp');
 	}
+
+
 }

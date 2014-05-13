@@ -33,12 +33,8 @@ $wgAutoloadClasses['WikiaHubsModel'] =  $dir . '../WikiaHubsServices/models/Wiki
 
 $wgAutoloadClasses['WikiaHubsV3SuggestModel'] =  $dir . 'models/WikiaHubsV3SuggestModel.class.php';
 
-$wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.class.php';
-
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubsV3'] = $dir . 'WikiaHubsV3.i18n.php';
-// TODO: We need this to support both hub versions. Remove after hubs v3 release @WikiaHubsV2Remove tag
-$wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . '../WikiaHubsV2/WikiaHubsV2.i18n.php';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'WikiaHubsV3Hooks::onArticleFromTitle';

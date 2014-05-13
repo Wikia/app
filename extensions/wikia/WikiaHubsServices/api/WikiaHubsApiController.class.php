@@ -43,7 +43,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	/**
 	 * Get explore module data from given date and city id
 	 *
-	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
+	 * @requestParam integer $module [REQUIRED] module id see EditHubModel.class.php from line 9 to 17
 	 * @requestParam integer $city [REQUIRED] (1) city id of givenhub
 	 * @requestParam integer $vertical [REQUIRED] (2) vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
@@ -71,7 +71,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	/**
 	 * Get explore module data from given date and city id
 	 *
-	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
+	 * @requestParam integer $module [REQUIRED] module id see EditHubModel.class.php from line 9 to 17
 	 * @requestParam integer $city [REQUIRED] city id of given hub
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
 	 *
@@ -103,7 +103,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		}
 
 		$moduleName = $model->getNotTranslatedModuleName($moduleId);
-		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, null, MarketingToolboxModel::SECTION_HUBS, null, $cityId, 3);
+		$moduleService = WikiaHubsModuleService::getModuleByName($moduleName, null, EditHubModel::SECTION_HUBS, null, $cityId, 3);
 
 
 		if( $this->isValidModuleService($moduleService) ) {
@@ -123,84 +123,13 @@ class WikiaHubsApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
-	 * Get hub module data from given date and vertical
-	 *
-	 * @deprecated use getModuleDataV3
-	 *
-	 * @requestParam integer $module [REQUIRED] module id see MarketingToolboxModel.class.php from line 9 to 17
-	 * @requestParam integer $vertical [REQUIRED] vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
-	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
-	 * @requestParam string $lang [OPTIONAL] default set to EN
-	 *
-	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
-	 *
-	 * @example
-	 * @example &module=1&vertical=2&ts=1359504000
-	 * @example &module=1&vertical=2&ts=1359504000&lang=de
-	 */
-
-	public function getModuleDataV2() {
-		wfProfileIn( __METHOD__ );
-		
-		$moduleId = $this->request->getInt(self::PARAMETER_MODULE);
-		$verticalId = $this->request->getInt(self::PARAMETER_VERTICAL);
-		$timestamp = $this->request->getInt(self::PARAMETER_TIMESTAMP, strtotime('00:00'));
-		$lang = $this->request->getVal(self::PARAMETER_LANG, self::DEFAULT_LANG);
-		
-		$model = $this->getModel();
-
-		if( !$this->isValidModule($model, $moduleId) ) {
-			throw new InvalidParameterApiException( self::PARAMETER_MODULE );
-		}
-		
-		if( !$this->isValidVertical($model, $verticalId) ) {
-			throw new InvalidParameterApiException( self::PARAMETER_VERTICAL );
-		}
-
-		if( !$this->isValidTimestamp($timestamp) ) {
-			throw new InvalidParameterApiException( self::PARAMETER_TIMESTAMP );
-		}
-		
-		$moduleName = $model->getNotTranslatedModuleName($moduleId);
-		$moduleService = MarketingToolboxModuleService::getModuleByName($moduleName, $lang, MarketingToolboxModel::SECTION_HUBS, $verticalId);
-		
-		if( $this->isValidModuleService($moduleService) ) {
-			$moduleService->setShouldFilterCommercialData( $this->hideNonCommercialContent() );
-			$data = $moduleService->loadData($model, [
-				'lang' => $lang,
-				'vertical_id' => $verticalId,
-				'ts' => $timestamp,
-			]);
-			$this->response->setVal('data', $data);
-		} else {
-			throw new BadRequestApiException();
-		}
-		
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		
-		wfProfileOut( __METHOD__ );
-	}
-	
-	protected function getModel() {
-		return new MarketingToolboxModel($this->app);
-	}
-
 	protected function getModelV3() {
-		return new MarketingToolboxV3Model($this->app);
+		return new EditHubModel($this->app);
 	}
 	
-	protected function isValidModule(AbstractMarketingToolboxModel $model, $moduleId) {
+	protected function isValidModule(EditHubModel $model, $moduleId) {
 		if( $moduleId > 0 ) {
 			return in_array($moduleId, $model->getModulesIds());
-		}
-		
-		return false;
-	}
-
-	protected function isValidVertical(MarketingToolboxModel $model, $verticalId) {
-		if( $verticalId > 0 ) {
-			return in_array($verticalId, $model->getVerticalsIds());
 		}
 		
 		return false;
@@ -215,7 +144,7 @@ class WikiaHubsApiController extends WikiaApiController {
 	}
 	
 	protected function isValidModuleService($moduleService) {
-		return ($moduleService instanceof MarketingToolboxModuleService);
+		return ($moduleService instanceof WikiaHubsModuleService);
 	}
 
 	/**

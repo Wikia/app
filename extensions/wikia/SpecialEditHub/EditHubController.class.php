@@ -13,7 +13,7 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->toolboxModel = new MarketingToolboxV3Model();
+		$this->toolboxModel = new EditHubModel();
 	}
 
 	/**
@@ -112,8 +112,8 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$this->wg->Out->addJsConfigVars([
 			'wgEditHubModuleIdSelected' => $this->selectedModuleId,
-			'wgEditHubModuleIdPopularVideos' => MarketingToolboxModulePopularvideosService::MODULE_ID,
-			'wgEditHubModuleIdFeaturedVideo' => MarketingToolboxModuleFeaturedvideoService::MODULE_ID
+			'wgEditHubModuleIdPopularVideos' => WikiaHubsModulePopularvideosService::MODULE_ID,
+			'wgEditHubModuleIdFeaturedVideo' => WikiaHubsModuleFeaturedvideoService::MODULE_ID
 		]);
 
 		$this->checkDate($this->date);
@@ -137,7 +137,7 @@ class EditHubController extends WikiaSpecialPageController {
 		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
 
 		// TODO remove not used params after HubsV2 removal
-		$module = MarketingToolboxModuleService::getModuleByName(
+		$module = WikiaHubsModuleService::getModuleByName(
 			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
 			null,
 			null,
@@ -146,7 +146,7 @@ class EditHubController extends WikiaSpecialPageController {
 			3 // Hub vesion - TODO remove while removal of HubsV2
 		);
 
-		$form = new FormBuilderService(MarketingToolboxV3Model::FORM_FIELD_PREFIX);
+		$form = new FormBuilderService(EditHubModel::FORM_FIELD_PREFIX);
 		$form->setFields($module->getFormFields());
 
 		if ($this->request->wasPosted()) {
@@ -402,7 +402,7 @@ class EditHubController extends WikiaSpecialPageController {
 		$module->purgeMemcache($this->date);
 		$this->getHubsServicesHelper()->purgeHubV3Varnish($wgCityId);
 
-		if( $this->selectedModuleId == MarketingToolboxModuleSliderService::MODULE_ID
+		if( $this->selectedModuleId == WikiaHubsModuleSliderService::MODULE_ID
 			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
 				$this->purgeWikiaHomepageHubs();
 		}

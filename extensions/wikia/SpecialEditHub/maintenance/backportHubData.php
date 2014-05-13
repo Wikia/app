@@ -15,7 +15,7 @@ require_once( "../../../../maintenance/Maintenance.php" );
 class backportHubData extends Maintenance {
 	CONST LOG_FORMAT = "%12s\n%12s%12s%12s%15s%12s\n";
 
-	static $moduleToMigrate = 6; //MarketingToolboxModuleFromthecommunityService::MODULE_ID
+	static $moduleToMigrate = 6; //WikiaHubsModuleFromthecommunityService::MODULE_ID
 	static $ftcHeadline = [
 		'en' =>	'From the Community',
 		'de' =>	'Aus der Community',
