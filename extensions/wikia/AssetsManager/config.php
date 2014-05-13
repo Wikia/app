@@ -582,29 +582,6 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		//libraries
-		//I wan't to minimize how much data we have to transfer
-		//We currently don't have JS minimizer so I used minified version of it
-		'//resources/wikia/libraries/postscribe/postscribe.min.js',
-		'//resources/wikia/modules/scriptwriter.js',
-
-		//advertisement "core"
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-
-		//modules
-		'//resources/wikia/modules/geo.js',
-		'//extensions/wikia/WikiaMobile/js/ads.js',
-		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
-	)
-);
-
 $config['wikiamobile_ads_gpt_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
