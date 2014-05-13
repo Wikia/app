@@ -421,7 +421,7 @@ class VideoPageToolProgram extends WikiaModel {
 
 		// Make sure we've got a publishedBy value here
 		if ( empty( $this->getPublishedBy ) ) {
-			$this->setPublishedBy( F::app()->wg->User->getId() );
+			$this->setPublishedBy( $this->wg->User->getId() );
 		}
 
 		$db = $this->getMasterDB();
