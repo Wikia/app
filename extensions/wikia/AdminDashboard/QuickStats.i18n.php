@@ -210,7 +210,9 @@ $messages['bho'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'quickstats-header-label' => 'দ্রুত পরিসংখ্যান',
 	'quickstats-header-date' => 'তারিখ',
+	'quickstats-header-views' => 'দৃষ্টিকোণ',
 	'quickstats-header-edits' => 'সম্পাদনাসমূহ',
 	'quickstats-header-photos' => 'চিত্রসমূহ',
 	'quickstats-header-likes' => 'পছন্দসমূহ',

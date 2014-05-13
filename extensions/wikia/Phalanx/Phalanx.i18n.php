@@ -3160,6 +3160,7 @@ $messages['zh-hans'] = array(
 	'phalanx-label-type' => '类型：',
 	'phalanx-label-lang' => '语言：',
 	'phalanx-format-text' => '纯文本',
+	'phalanx-link-unblock' => '解封',
 	'phalanx-stats-table-type' => '类型',
 	'phalanx-stats-table-create' => '以创造',
 	'phalanx-stats-table-expire' => '到期',

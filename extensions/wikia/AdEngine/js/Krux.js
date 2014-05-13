@@ -1,6 +1,7 @@
 // krux ad targeting. must come before dart urls are constructed
+/*global Krux,define,unescape*/
 window.Krux || ((Krux = function () {
-	Krux.q.push(arguments)
+	Krux.q.push(arguments);
 }).q = []);
 Krux.load = function (confid) {
 	var k = document.createElement('script');
@@ -14,6 +15,7 @@ Krux.load = function (confid) {
 
 if (window.wgEnableKruxTargeting) {
 	(function () {
+		'use strict';
 		function retrieve(n) {
 			var m, k = 'kx' + n;
 			if (window.localStorage) {

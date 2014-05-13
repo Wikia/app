@@ -13,6 +13,8 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	 * @return array list of task ids that will purge the dependencies in parsoid
 	 */
 	public function findDependencies( $table ) {
+		global $wgCityId;
+
 		$cache = $this->title->getBacklinkCache();
 		$batches = $cache->partition( $table, 20 );
 		$taskLists = [ ];
@@ -21,6 +23,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			$task = (new ParsoidCacheUpdateTask())->titleId($this->title->mArticleID);
 			$taskLists[ ] = ( new AsyncTaskList() )
 				->setPriority(ParsoidPurgePriorityQueue::NAME)
+				->wikiId($wgCityId)
 				->add( $task->call( 'onDependencyChange', $table, $start, $end ) );
 		}
 

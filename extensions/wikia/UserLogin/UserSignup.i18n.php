@@ -1152,14 +1152,16 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
+ * @author Fitoschido
  * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'usersignup-page-title' => 'Únete a Wikia',
+	'usersignup-page-title-wikiamobile' => 'Crear una cuenta',
 	'usersignup-page-captcha-label' => 'Palabra borrosa',
 	'usersignup-error-username-length' => 'Vaya, tu nombre no puede ser más de {{PLURAL:$1|un caracter|$1 caracteres}}.',
-	'usersignup-error-invalid-user' => 'Usuario inválido. Por favor identifícate primero.',
+	'usersignup-error-invalid-user' => 'El usuario no es válido. Inicia sesión primero.',
 	'usersignup-error-invalid-email' => 'Por favor escribe una dirección de correo electrónico válida.',
 	'usersignup-error-symbols-in-username' => 'Vaya, tu nombre de usuario sólo puede contener letras y números.',
 	'usersignup-error-empty-email' => 'Vaya, por favor escribe tu dirección de correo electrónico.',
@@ -1185,6 +1187,7 @@ $messages['es'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => '¡Oh, no! Tu correo electrónico no está confirmado. Hemos enviado un correo electrónico, haz clic en el enlace de confirmación para confirmar.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Parece que no tenemos una dirección de correo electrónico para ti. Ve a tus [[Special:Preferences|preferencias]] para ingresar uno.',
 	'usersignup-confirm-page-title' => 'Confirma tu correo electrónico',
+	'usersignup-confirm-page-title-wikiamobile' => 'Revisa tu correo electrónico',
 	'usersignup-confirm-email-resend-email' => 'Enviarme otra confirmación de correo electrónico',
 	'usersignup-confirm-email-change-email-content' => 'Quiero usar una dirección de correo electrónico diferente.',
 	'usersignup-confirm-email-change-email' => 'Cambiar mi correo electrónico',
@@ -1196,6 +1199,7 @@ $messages['es'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => '¡Felicitaciones!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Ya estás confirmado',
 	'usersignup-confirmation-heading' => '¡Ya casi!',
+	'usersignup-confirmation-heading-wikiamobile' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-heading-email-resent' => 'Nuevo correo electrónico enviado',
 	'usersignup-confirmation-subheading' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-email-sent' => "Hemos enviado un correo electrónico a '''$1'''.

@@ -145,7 +145,8 @@ $messages['qqq'] = array(
 * $1 - the URL address to usersignup page. Please append userlang as appropriate.
 * $2 - the tabindex of this link tag.
 {{Identical|Do not have an account}}',
-	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid',
+	'userlogin-error-invalid-username' => 'Error message upon signup attempt stating username is badly formatted, or invalid.
+{{Identical|Invalid username}}',
 	'userlogin-error-userlogin-unable-info' => 'Error message upon signup attempt stating account cannot be create currently.',
 	'userlogin-error-user-not-allowed' => 'Error message upon signup attempt stating username is unacceptable.',
 	'userlogin-error-captcha-createaccount-fail' => 'Error message upon signup attempt stating CAPTCHA has failed or not entered correctly.',
@@ -203,6 +204,7 @@ $messages['an'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
+ * @author Kuwaity26
  * @author Mutarjem horr
  * @author ترجمان05
  */
@@ -211,7 +213,7 @@ $messages['ar'] = array(
 	'userlogin-forgot-password' => 'هل نسيت كلمتك للمرور؟',
 	'userlogin-forgot-password-button' => 'واصل',
 	'userlogin-forgot-password-go-to-login' => 'لديك كلمة مرورك فعلا؟ [[Special:UserLogin|سجل الدخول]]',
-	'userlogin-remembermypassword' => 'إبقى مسجلاً الدخول',
+	'userlogin-remembermypassword' => 'ابق مسجل الدخول',
 	'userlogin-error-noname' => 'عفوا، يرجى ملء خانة اسم المستخدم.',
 	'userlogin-error-sessionfailure' => 'انتهت مهلة تسجيل الدخول الخاصة بك. الرجاء تسجيل الدخول مرة أخرى.',
 	'userlogin-error-nosuchuser' => 'لا يمكننا قبول هذا الاسم. تذكر أن أسماء المستخدمين حساسة لحالة الأحرف.',
@@ -706,6 +708,7 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 	'userlogin-changepassword-needlogin' => 'Necesitas $1 para cambiar la contraseña.',
 	'wikiamobile-sendpassword-label' => 'Enviar una nueva contraseña',
 	'wikiamobile-facebook-connect-fail' => 'Lo sentimos, pero tu cuenta en Facebook no está actualmente vinculada con una cuenta Wikia.',
+	'wikiamobile-go-to-login' => '¿Tienes una cuenta? [[Special:UserLogin|Inicia sesión >]]',
 );
 
 /** Persian (فارسی)
@@ -1390,7 +1393,7 @@ $messages['mk'] = array(
 	'userlogin-forgot-password-go-to-login' => 'Веќе имате лозинка? [[Special:UserLogin|Најавете се]]',
 	'userlogin-remembermypassword' => 'Задржи ме најавен',
 	'userlogin-error-noname' => 'Пополнете го полето за корисничко име.',
-	'userlogin-error-sessionfailure' => 'Најавната сесија ви истече. Најавете се повторно.',
+	'userlogin-error-sessionfailure' => 'Најавната седница ви истече. Најавете се повторно.',
 	'userlogin-error-nosuchuser' => 'Ова име не се признава. Не заборавајте дека системот разликува мали и големи букви.',
 	'userlogin-error-wrongpassword' => 'Погрешна лозинка. Проверете да не пишувате со големи букви и обидете се повторно.',
 	'userlogin-error-wrongpasswordempty' => 'Пополнете го полето за лозинка.',
