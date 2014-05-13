@@ -2,6 +2,8 @@
 /**
  * Implements InstantGlobals: fast changing WF variables in JavaScript
  *
+ * Emits Wikia.InstantGlobals key / value object.
+ *
  * @author macbre
  */
 class InstantGlobalsModule extends ResourceLoaderModule {
@@ -15,7 +17,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	/**
 	 * Get variables values
 	 *
-	 * @return array
+	 * @return object key / value list variables
 	 */
 	private function getVariablesValues() {
 		$ret = [];
@@ -29,18 +31,13 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 			}
 		}
 
-		return $ret;
+		return (object) $ret;
 	}
 
 	public function getScript(ResourceLoaderContext $context) {
-		$items = [];
+		$variables = $this->getVariablesValues();
 
-		foreach($this->getVariablesValues() as $name => $value) {
-			$encValue = Xml::encodeJsVar( $value );
-			$items[] = "$name=$encValue";
-		}
-
-		return 'var ' . join(',', $items);
+		return sprintf('Wikia.InstantGlobals = %s', json_encode($variables));
 	}
 
 	/**
