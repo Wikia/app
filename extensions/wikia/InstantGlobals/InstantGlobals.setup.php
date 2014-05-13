@@ -9,6 +9,7 @@
  * - InstantGlobalsModule::$variables contains the list of WF variables to be emitted by the module
  * - variables values are taken from Community Wiki
  * - caching time on both server and client-side is 300 sec
+ * - RL module is only loaded in Oasis
  *
  * @author macbre
  */
