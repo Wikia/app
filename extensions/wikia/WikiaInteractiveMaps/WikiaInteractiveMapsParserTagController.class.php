@@ -4,6 +4,7 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	//TODO: figure out max and min height and width - PO design decision
 	const DEFAULT_ZOOM = 7;
 	const MIN_ZOOM = 0;
+	const MAX_ZOOM = 16;
 	const DEFAULT_WIDTH = 700;
 	const MAX_WIDTH = 1270;
 	const MIN_WIDTH = 100;
@@ -11,7 +12,11 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 	const MAX_HEIGHT = 500;
 	const MIN_HEIGHT = 50;
 	const DEFAULT_LATITUDE = 0;
+	const MIN_LATITUDE = -90;
+	const MAX_LATITUDE = 90;
 	const DEFAULT_LONGITUDE = 0;
+	const MIN_LONGITUDE = -180;
+	const MAX_LONGITUDE = 180;
 	const PARSER_TAG_NAME = 'imap';
 	const RENDER_ENTRY_POINT = 'render';
 
@@ -228,20 +233,44 @@ class WikiaInteractiveMapsParserTagController extends WikiaController {
 				break;
 			case 'lat':
 				$validator = new WikiaValidatorNumeric(
-					[],
-					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude' ]
+					[
+						'min' => self::MIN_LATITUDE,
+						'max' => self::MAX_LATITUDE
+
+					],
+					[
+						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-latitude',
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-latitude',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-latitude'
+					]
 				);
 				break;
 			case 'lon':
 				$validator = new WikiaValidatorNumeric(
-					[],
-					[ 'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude' ]
+					[
+						'min' => self::MIN_LONGITUDE,
+						'max' => self::MAX_LONGITUDE
+
+					],
+					[
+						'not_numeric' => 'wikia-interactive-maps-parser-tag-error-invalid-longitude',
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-longitude',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-longitude'
+					]
 				);
 				break;
 			case 'zoom':
 				$validator = new WikiaValidatorInteger(
-					[ 'min' => self::MIN_ZOOM ],
-					[ 'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom' ]
+					[
+						'min' => self::MIN_ZOOM,
+						'max' => self::MAX_ZOOM
+
+					],
+					[
+						'not_int' => 'wikia-interactive-maps-parser-tag-error-invalid-zoom',
+						'too_small' => 'wikia-interactive-maps-parser-tag-error-min-zoom',
+						'too_big' => 'wikia-interactive-maps-parser-tag-error-max-zoom'
+					]
 				);
 				break;
 			case 'width':
