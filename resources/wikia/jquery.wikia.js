@@ -600,8 +600,10 @@ $(function() {
 		var targetId = $(this).data('target-id'),
 		    target   = $("#" + targetId);
 		if( target.css('display') == "none" ) {
+			$(this).html('[hide]'); 
 			target.show();
 		} else {
+			$(this).html('[show]');
 			target.hide();
 		}
 	});
