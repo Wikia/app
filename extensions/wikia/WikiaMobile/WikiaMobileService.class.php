@@ -43,7 +43,7 @@ class WikiaMobileService extends WikiaService {
 		$mobileAdService = new WikiaMobileAdService();
 
 		if ( $mobileAdService->shouldLoadAssets() ) {
-			$this->jsBodyPackages[] = 'wikiamobile_ads_gpt_js';
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
 			if ( $this->wg->AdDriverTrackState ) {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;

@@ -582,7 +582,7 @@ $config['wikiamobile_tables_js'] = array(
 	)
 );
 
-$config['wikiamobile_ads_gpt_js'] = array(
+$config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
@@ -607,7 +607,7 @@ $config['wikiamobile_ads_gpt_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Run!
-		'//extensions/wikia/WikiaMobile/js/ad_slots2.js',
+		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
 
