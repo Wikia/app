@@ -255,16 +255,16 @@ class VideoEmbedTool {
 		$ns_file = $wgContLang->getFormattedNsText( $title->getNamespace() );
 		$caption = $wgRequest->getVal( 'caption' );
 
-		$size = $wgRequest->getVal( 'size' );
 		$width = $wgRequest->getVal( 'width' );
 		$width = empty( $width ) ? 335 : $width;
 		$layout = $wgRequest->getVal( 'layout' );
 
 		header( 'X-screen-type: summary' );
 		$tag = $ns_file . ":" . $oTitle->getText();
-		if ( !empty( $size ) ) {
-			$tag .= "|$size";
-		}
+
+		// all videos added via VET will be shown as thumbnails / "framed"
+		$tag .= "|thumb";
+
 		if ( !empty( $layout ) ) {
 			$tag .= "|$layout";
 		}
@@ -278,8 +278,8 @@ class VideoEmbedTool {
 		$button_message = wfMessage( 'vet-return' )->plain();
 
 		// Adding a video from article view page
-		$editingFromArticle = $wgRequest->getVal( 'placeholder' );
-		if ( $editingFromArticle ) {
+		$editFromViewMode = $wgRequest->getVal( 'placeholder' );
+		if ( $editFromViewMode ) {
 			Wikia::setVar( 'EditFromViewMode', true );
 
 			$article_title = $wgRequest->getVal( 'article' );
@@ -298,19 +298,35 @@ class VideoEmbedTool {
 				$placeholder_tag = $placeholder[0];
 				$file = wfFindFile( $title );
 				$embed_code = $file->transform( array( 'width'=>$width ) )->toHtml();
-				$html_params = array(
-					'imageHTML' => $embed_code,
+
+				$params = array(
+					'alt' => $title->getText(),
+					'title' => $title->getText(),
+					'img-class' => 'thumbimage',
 					'align' => $layout,
-					'width' => $width,
-					'showCaption' => !empty( $caption ),
-					'caption' => $caption,
-					'showPictureAttribution' => true,
+					'outerWidth' => $width,
+					'file' => $file,
+					'url' => $file->getUrl(),
+					'html' => $embed_code,
 				);
 
-				// Get all html to insert into article view page
-				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
-				$image_data = $image_service->getData();
-				$embed_code = $image_data['tag'];
+				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
+
+
+//				$html_params = array(
+//					'imageHTML' => $embed_code,
+//					'align' => $layout,
+//					'width' => $width,
+//					'showCaption' => true,
+//					'title' => $title->getText(),
+//					'caption' => $caption,
+//					'showPictureAttribution' => true,
+//				);
+//
+//				// Get all html to insert into article view page
+//				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
+//				$image_data = $image_service->getData();
+//				$embed_code = $image_data['tag'];
 
 				// Make output match what's in a saved article
 				if ( $layout == 'center' ) {

@@ -53,19 +53,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			$('#VideoEmbedBack').hide();
 
 			setTimeout(function () {
-				if (presets.thumb || presets.thumbnail) {
-					$('#VideoEmbedThumbOption').prop('checked', true);
-					$('#VET_StyleThumb').addClass('selected');
-				} else {
-					var sizeDiv = $('#VideoEmbedSizeRow').find('div');
-					sizeDiv.children('input').removeClass('show');
-					sizeDiv.children('p').addClass('show');
-					$('#VideoEmbedThumbOption').prop('checked', false);
-					$('#VideoEmbedNoThumbOption').prop('checked', true);
-					$('#VET_StyleThumb').removeClass('selected');
-					$('#VET_StyleNoThumb').addClass('selected');
-				}
-
 				if (presets.align && presets.align === 'left') {
 					$('#VideoEmbedLayoutLeft').attr('checked', 'checked').parent().addClass('selected');
 				} else if (presets.align && presets.align === 'center') {
@@ -78,14 +65,11 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					readjustSlider(presets.width);
 					$('#VideoEmbedManualWidth').val(presets.width);
 				}
-
 			}, 200);
+
 			if (presets.caption) {
 				$('#VideoEmbedCaption').val(presets.caption);
 			}
-
-			// show width slider
-			toggleSizing(true);
 
 			// show alignment row
 			$('#VideoEmbedLayoutRow').show();
@@ -138,10 +122,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 				extraData.href = $('#VideoEmbedHref').val();
 				extraData.width = $('#VideoEmbedManualWidth').val();
-
-				if ($('#VideoEmbedThumbOption').is(':checked')) {
-					extraData.thumb = 1;
-				}
 
 				if ($('#VideoEmbedLayoutLeft').is(':checked')) {
 					extraData.align = 'left';
@@ -197,20 +177,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	/*
 	 * Functions/methods
 	 */
-
-	function toggleSizing(enable) {
-		if (enable) {
-			$('#VideoEmbedThumbOption').attr('disabled', false);
-			$('#VideoEmbedNoThumbOption').attr('disabled', false);
-			$('#VideoEmbedWidthRow').show();
-			$('#VideoEmbedSizeRow').show();
-		} else {
-			$('#VideoEmbedThumbOption').attr('disabled', true);
-			$('#VideoEmbedNoThumbOption').attr('disabled', true);
-			$('#VideoEmbedWidthRow').hide();
-			$('#VideoEmbedSizeRow').hide();
-		}
-	}
 
 	function manualWidthInput() {
 		var val = parseInt(this.value); // jshint ignore:line
@@ -362,18 +328,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			loadMain();
 		}
 
-		$('#VideoEmbedThumbOption').on('change', function () {
-			tracking({
-				label: 'display-thumbnail-with-caption'
-			});
-		});
-
-		$('#VideoEmbedNoThumbOption').on('change', function () {
-			tracking({
-				label: 'display-thumbnail-only'
-			});
-		});
-
 		$('#VideoEmbedCaption').placeholder();
 	}
 
@@ -411,12 +365,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		params.push('name=' + encodeURIComponent($nameInput.val()));
 
 		if ($('#VideoEmbedThumb').length) {
-			params.push('size=' + ($('#VideoEmbedThumbOption').is(':checked') ? 'thumb' : 'full'));
 			params.push('width=' + $('#VideoEmbedManualWidth').val());
 			if ($('#VideoEmbedLayoutLeft').is(':checked')) {
 				params.push('layout=left');
-			} else if ($('#VideoEmbedLayoutGallery').is(':checked')) {
-				params.push('layout=gallery');
 			} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
 				params.push('layout=center');
 			} else {
@@ -455,11 +406,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 						if (wikitext) {
 							options.wikitext = wikitext;
-						}
-						if ($('#VideoEmbedThumbOption').is(':checked')) {
-							options.thumb = 1;
-						} else {
-							options.thumb = null;
 						}
 						if ($('#VideoEmbedLayoutLeft').is(':checked')) {
 							options.align = 'left';
@@ -558,7 +504,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	 * todo: rename this function, because it does not only send query to embed
 	 */
 	function sendQueryEmbed(query) {
-		var searchType, callback;
+		var searchType, callback, data;
 
 		// If callbackAfterSelect returns false, end here. Otherwise, move on to the next screen.
 		if (callbackAfterSelect(query, VET) !== false) {
@@ -578,12 +524,16 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			};
 			searchType = VETExtended.searchCachedStuff.searchType;
+			data = 'action=ajax&rs=VET&method=insertVideo&url=' +
+				encodeURIComponent(query) +
+				'&searchType=' +
+				searchType;
 
 			jqXHR.abort();
 			jqXHR = $.ajax(
 				window.wgScriptPath + '/index.php', {
 					method: 'post',
-					data: 'action=ajax&rs=VET&method=insertVideo&url=' + encodeURIComponent(query) + '&searchType=' + searchType,
+					data: data,
 					complete: callback
 				}
 			);
@@ -777,20 +727,10 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 			$videoEmbedDetails = $('#VideoEmbedDetails');
 			// attach handlers - selection border around position options in video display options tab
-			$videoEmbedDetails.on('click', '#VideoEmbedLayoutRow span, #VideoEmbedSizeRow span', function () {
-
+			$videoEmbedDetails.on('click', '#VideoEmbedLayoutRow span', function () {
 				var parent = $(this).parent();
 				parent.find('span').removeClass('selected');
 				$(this).addClass('selected');
-
-				// show/hide caption input for 'Style' option
-				if ($(this).is('#VET_StyleThumb')) {
-					parent.children('p').removeClass('show');
-					parent.children('input').addClass('show');
-				} else {
-					parent.children('input').removeClass('show');
-					parent.children('p').addClass('show');
-				}
 			});
 
 			// attach handler - submit display options tab
@@ -924,7 +864,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				this.createCarousel();
 			}
 		},
-
 
 		// METHOD: show preview of the selected video
 		showVideoPreview: function (data) {
@@ -1101,23 +1040,18 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 	function handleLayout(e) {
 		var label,
-			$target = $(e.target),
-			toggleTo = true;
-
-		if ($target.is('#VideoEmbedLayoutGallery')) {
-			toggleTo = false;
-		}
+			$target = $(e.target);
 
 		switch ($target.attr('id')) {
-			case 'VideoEmbedLayoutCenter':
-				label = 'center';
-				break;
-			case 'VideoEmbedLayoutLeft':
-				label = 'left';
-				break;
-			case 'VideoEmbedLayoutRight':
-				label = 'right';
-				break;
+		case 'VideoEmbedLayoutCenter':
+			label = 'center';
+			break;
+		case 'VideoEmbedLayoutLeft':
+			label = 'left';
+			break;
+		case 'VideoEmbedLayoutRight':
+			label = 'right';
+			break;
 		}
 
 		if (label !== undefined) {
@@ -1125,8 +1059,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				label: 'display-position-' + label
 			});
 		}
-
-		toggleSizing(toggleTo);
 	}
 
 	function handleClose(e) {
@@ -1144,9 +1076,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	$(document)
 		.on(
 			'click.VET',
-			'#VideoEmbedLayoutLeft, #VideoEmbedLayoutCenter, #VideoEmbedLayoutRight, #VideoEmbedLayoutGallery',
+			'#VideoEmbedLayoutLeft, #VideoEmbedLayoutCenter, #VideoEmbedLayoutRight',
 			handleLayout
-		)
+	)
 		.on('change.VET, keyup.VET', '#VideoEmbedManualWidth', manualWidthInput)
 		.on('keypress.VET', '#VideoEmbedUrl', onVideoEmbedUrlKeypress)
 		.on('click.VET', '#VideoEmbedUrlSubmit', preQuery)
@@ -1154,7 +1086,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			'click.VET',
 			'#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton',
 			insertFinalVideo
-		)
+	)
 		.on('click.VET', '.vet-close', handleClose);
 
 	// globally available functions

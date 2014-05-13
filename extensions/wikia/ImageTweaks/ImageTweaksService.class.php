@@ -12,18 +12,23 @@ class ImageTweaksService extends WikiaService {
 		$imageHTML = $this->request->getVal('imageHTML');
 		$align = $this->request->getVal('align');
 		$width = $this->request->getVal('width');
+		$title = $this->request->getVal('title');
 		$showCaption = $this->request->getVal('showCaption', false);
 		$caption = $this->request->getVal('caption', '');
 		$zoomIcon = $this->request->getVal('zoomIcon', '');
 		$showPictureAttribution = $this->request->getVal('showPictureAttribution', false);
 		$attributeTo = $this->request->getVal('$attributeTo', null);
 
-		$html = "<figure class=\"thumb" .
+		$html = "<figure class=\"article-thumb" .
 			( ( !empty( $align ) ) ? " t{$align}" : '' ) .
-			" thumbinner\" style=\"width:{$width}px;\">{$imageHTML}{$zoomIcon}";
+			" style=\"width:{$width}px;\">{$imageHTML}{$zoomIcon}";
 
 		if ( !empty( $showCaption ) ) {
-			$html .= "<figcaption class=\"thumbcaption\">{$caption}";
+			$html .= "<figcaption>{$caption}";
+		}
+
+		if ( !empty( $title ) ) {
+			$html .= '<p class="title">' . $title . '</p>';
 		}
 
 		//picture attribution
@@ -31,11 +36,12 @@ class ImageTweaksService extends WikiaService {
 			wfProfileIn( __METHOD__ . '::PictureAttribution' );
 
 			// render avatar and link to user page
-			$avatar = AvatarService::renderAvatar( $attributeTo, 16 );
 			$link = AvatarService::renderLink( $attributeTo );
 
-			$html .= Xml::openElement( 'div', array( 'class' => 'picture-attribution' ) ) .
-				$avatar .
+			$html .= '<p class="attribution">' . ThumbnailHelper::getByUserMsg( $file, $isVideo )
+
+
+				Xml::openElement( 'p', array( 'class' => 'attribution' ) ) .
 				wfMessage('oasis-content-picture-added-by', $link, $attributeTo )->inContentLanguage()->text() .
 				Xml::closeElement( 'div' );
 

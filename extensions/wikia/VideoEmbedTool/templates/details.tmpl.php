@@ -36,18 +36,7 @@ global $wgExtensionsPath;
 	<div class="preview-options">
 		<div class="input-group VideoEmbedSizeRow" id="VideoEmbedSizeRow">
 			<label class="option-label"><?= wfMessage('vet-style') ?></label>
-			<div>
-				<span id="VET_StyleThumb" class="selected">
-					<input type="radio" id="VideoEmbedThumbOption" class="hidden" name="style" checked="checked" />
-					<label for="VideoEmbedThumbOption" class="vet-style-label VideoEmbedThumbOption" title="<?= wfMessage( 'vet-thumbnail' ) ?>"><?= wfMessage( 'vet-thumbnail' ) ?></label>
-				</span>
-				<span id="VET_StyleNoThumb">
-					<input type="radio" id="VideoEmbedNoThumbOption" class="hidden" name="style" />
-					<label for="VideoEmbedNoThumbOption" class="vet-style-label VideoEmbedNoThumbOption" title="<?= wfMessage( 'vet-no-thumbnail' ) ?>"><?= wfMessage( 'vet-no-thumbnail' ) ?></label>
-				</span>
-				<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMessage( 'vet-caption' ) ?>" class="show VideoEmbedCaption" />
-				<p><?= wfMessage( 'vet-no-caption' ) ?></p>
-			</div>
+			<input id="VideoEmbedCaption" type="text" placeholder="<?= wfMessage( 'vet-caption' ) ?>" class="VideoEmbedCaption" />
 		</div>
 		<div class="input-group" id="VideoEmbedWidthRow">
 			<label class="option-label" for="VideoEmbedManualWidth"><?= wfMessage('vet-width') ?></label>
@@ -72,10 +61,6 @@ global $wgExtensionsPath;
 				<span id="VET_LayoutRightBox" <? if($screenType == 'details') { ?>class="selected" <? } ?>>
 					<input type="radio" id="VideoEmbedLayoutRight" name="layout" class="hidden" <? if($screenType == 'details') { ?>checked="checked" <? } ?> />
 					<label for="VideoEmbedLayoutRight" class="vet-layout-label VideoEmbedLayoutRight" title="<?= wfMessage( 'vet-right' ) ?>"><?= wfMessage( 'vet-right' ) ?></label>
-				</span>
-				<span id="VET_LayoutGalleryBox" style="display:none">
-					<input type="radio" id="VideoEmbedLayoutGallery" name="layout" />
-					<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" alt="<?= wfMessage( 'vet-gallery' ) ?>" title="<?= wfMessage( 'vet-gallery' ) ?>" /></label>
 				</span>
 			</div>
 		</div>

@@ -66,7 +66,7 @@
 			};
 		} else if (mode === 'edit') {
 			callback = function (embedData) {
-				if (element != 'undefined') {
+				if (element !== 'undefined') {
 					var wikitext = '';
 
 					// Handle video placeholders in the editor [[File:Placeholder|video]]
@@ -75,11 +75,7 @@
 						RTE.mediaEditor.update(element, wikitext, embedData);
 					} else {
 						// generate wikitext
-						wikitext = '[[' + embedData.href;
-
-						if (embedData.thumb) {
-							wikitext += '|thumb';
-						}
+						wikitext = '[[' + embedData.href + '|thumb';
 
 						if (embedData.align) {
 							wikitext += '|' + embedData.align;
@@ -121,6 +117,6 @@
 		window.vetLoader.load(options);
 	};
 
-	window.VET_WikiaEditor = editorVET;
+	window.VET_WikiaEditor = editorVET; // jshint ignore:line
 
 })(window, jQuery);
