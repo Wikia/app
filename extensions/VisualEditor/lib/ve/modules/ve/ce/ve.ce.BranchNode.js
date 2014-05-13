@@ -215,6 +215,7 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
  * @method
  */
 ve.ce.BranchNode.prototype.setupSlugs = function () {
+	return;
 	var key, slug, i, len, first, last, childTypes,
 		doc = this.getElementDocument();
 
@@ -280,6 +281,7 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
  * @returns {HTMLElement}
  */
 ve.ce.BranchNode.prototype.getSlugAtOffset = function ( offset ) {
+	return null;
 	var i,
 		startOffset = this.model.getOffset() + ( this.isWrapped() ? 1 : 0 );
 
