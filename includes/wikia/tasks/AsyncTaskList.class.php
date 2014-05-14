@@ -144,8 +144,9 @@ class AsyncTaskList {
 	/**
 	 * set this task to execute sometime in the future instead of ASAP
 	 *
-	 * @param string $time any format supported by http://php.net/strtotime
+	 * @param string $time any format supported by strtotime()
 	 * @return $this
+	 * @link http://php.net/strtotime
 	 */
 	public function delay($time) {
 		$this->delay = $time;
