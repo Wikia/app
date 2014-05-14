@@ -471,7 +471,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		foreach($formValues as $name => $fields) {
 			foreach($fields as $key => $field) {
-				$values[$key][$name] = $field;
+				$values[$key][$name] = trim($field);
 			}
 		}
 
