@@ -165,7 +165,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				lastScrollTop,
 				scrollBottom,
 				idx,
-				visible,
+				inViewport,
 				cacheItem;
 
 			for (idx in this.cache) {
@@ -177,10 +177,10 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				scrollTop = scrollTop - scrollSpeed;
 
 				cacheItem.parent.data('lastScrollTop', lastScrollTop);
-				visible = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
+				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
-				if (visible && this.parentVisible(cacheItem) && cacheItem.jq.is(':visible')) {
+				if (inViewport && this.parentVisible(cacheItem) && cacheItem.jq.is(':visible')) {
 					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
 					cacheItem.el.src = this.rewriteURLForWebP(cacheItem.jq.data('src'));
