@@ -312,22 +312,6 @@ class VideoEmbedTool {
 
 				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
 
-
-//				$html_params = array(
-//					'imageHTML' => $embed_code,
-//					'align' => $layout,
-//					'width' => $width,
-//					'showCaption' => true,
-//					'title' => $title->getText(),
-//					'caption' => $caption,
-//					'showPictureAttribution' => true,
-//				);
-//
-//				// Get all html to insert into article view page
-//				$image_service = F::app()->sendRequest( 'ImageTweaksService', 'getTag', $html_params );
-//				$image_data = $image_service->getData();
-//				$embed_code = $image_data['tag'];
-
 				// Make output match what's in a saved article
 				if ( $layout == 'center' ) {
 					$embed_code = '<div class="center">'.$embed_code.'</div>';
