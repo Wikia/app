@@ -143,7 +143,9 @@
 	}
 }
 
-
+.hubs-slots {
+	@include clearfix;
+}
 .hub-slot {
 	display: inline-block;
 	width: 30%;
