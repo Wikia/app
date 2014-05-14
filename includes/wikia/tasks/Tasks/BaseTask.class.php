@@ -20,10 +20,10 @@ abstract class BaseTask {
 	protected $createdBy;
 
 	/** @var \Title title instantiation of $this->titleId */
-	protected $title;
+	protected $title = null;
 
 	/** @var int the title id this task is operating on, if any. */
-	protected $titleId;
+	protected $titleId = null;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -35,14 +35,14 @@ abstract class BaseTask {
 	private $dupCheck = false;
 
 	/** @var string wrapper for AsyncTaskList->delay() */
-	private $delay = false;
+	private $delay = null;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
 	 * inserting large, serialized classes into rabbitmq
 	 */
 	public function init() {
-		if (!$this->titleId) {
+		if ($this->titleId === null) {
 			return;
 		}
 
