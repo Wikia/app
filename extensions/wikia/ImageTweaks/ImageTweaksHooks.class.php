@@ -109,12 +109,10 @@ class ImageTweaksHooks {
 			return true;
 		}
 
-
 		wfProfileIn( __METHOD__ );
 		if ( is_null(self::$isWikiaMobile) ) {
 			self::init();
 		}
-
 		if (
 			/**
 			 * Images SEO project
@@ -137,21 +135,22 @@ class ImageTweaksHooks {
 
 			if ( is_array( $linkAttribs ) ) {
 				if ( !empty( $file ) ) {
-					$linkAttribs['href'] = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
-					$fullImageUrl = $linkAttribs['href'];
+					// $fullImageUrl only used on mobile
+					$fullImageUrl = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 				}
 
 				if ( !empty ( $options['custom-url-link'] ) ) {
+					// $link only used on mobile
 					$link = $options['custom-url-link'];
 				} elseif (
 					!empty( $options['custom-title-link'] ) &&
 					$options['custom-title-link'] instanceof Title
 				) {
+					// Caption is set but image is not a "thumb" so the caption gets set as the title attribute
 					$title = $options['custom-title-link'];
 					$linkAttribs['title'] = $title->getFullText();
 					$link = $title->getLinkUrl();
 				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
-					$linkAttribs['href'] = wfReplaceImageServer( $file->getUrl(), $file->getTimestamp() );
 					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
 				}
 
