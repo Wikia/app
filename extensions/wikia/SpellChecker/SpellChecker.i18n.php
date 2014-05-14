@@ -22,6 +22,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
+	'spellchecker-info-provider' => '{{Identical|Provider}}',
 	'spellchecker-info-spellcheck-languages' => '{{Identical|Language}}',
 );
 

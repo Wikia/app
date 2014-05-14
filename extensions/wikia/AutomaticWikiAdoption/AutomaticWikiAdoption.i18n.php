@@ -341,6 +341,13 @@ $messages['bg'] = array(
 	'wikiadoption-adoption-successed' => 'Поздравления! Вече сте администратор на това уики!',
 );
 
+/** Bengali (বাংলা)
+ * @author Tauhid16
+ */
+$messages['bn'] = array(
+	'wikiadoption-know-more-header' => 'আরো জানতে চান?',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael
@@ -1545,7 +1552,13 @@ $messages['ko'] = array(
 	'wikiadoption-adoption-successed' => '축하합니다! 당신은 이제 이 위키의 관리자입니다!',
 	'wikiadoption-adoption-failed' => '죄송합니다. 저희는 당신을 관리자로 만들기 위해 노력했지만, 불가능했습니다. [http://community.wikia.com/Special:Contact 저희에게 연락]해 주시면 도와드리겠습니다.',
 	'wikiadoption-not-allowed' => '죄송합니다. 당신은 현재 이 위키를 합칠 수 없습니다.',
+	'wikiadoption-not-enough-edits' => '이런! 이 위키를 합치려면 편집 10번 이상이 필요합니다.',
+	'wikiadoption-adopted-recently' => '이런! 최근에 다른 위키를 합친 적이 있습니다. 새 위키를 합치기 전에 기다려야 합니다.',
+	'wikiadoption-log-reason' => '자동 위키 합치기',
 	'wikiadoption-mail-first-subject' => '오랜만이군요',
+	'wikiadoption-mail-second-subject' => '#WIKINAME 이 합쳐질 대상이 될 수 있습니다',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME 이 합쳐졌습니다',
+	'wikiadoption-welcome-header' => '축하합니다! {{SITENAME}} 프로젝트를 합쳤습니다!',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

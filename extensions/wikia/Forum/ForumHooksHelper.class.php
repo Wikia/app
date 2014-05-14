@@ -493,4 +493,28 @@ class ForumHooksHelper {
 
 		return true;
 	}
+
+	/**
+	 * Ensure that the comments_index record (if it exists) for an article is marked as deleted
+	 * when an article is deleted. This event must be run inside the transaction in WikiPage::doDeleteArticleReal
+	 * otherwise the Article referenced will no longer exist and the lookup for it's associated
+	 * comments_index row will fail.
+	 *
+	 * @param WikiPage
+	 * @param [not used]
+	 * @param [not used]
+	 * @param [not used]
+	 * @return bool true
+	 *
+	 */
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$page, &$user, $reason, $id ) {
+		$title = $page->getTitle();
+		if ( $title instanceof Title ) {
+			$wallMessage = WallMessage::newFromTitle($title);
+			$wallMessage->setInCommentsIndex(WPP_WALL_ADMINDELETE, 1);
+		}
+
+		return true;
+	}
+
 }

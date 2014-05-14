@@ -24,11 +24,13 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			var proxy = $.proxy(this.checkAndLoad, this),
 				throttled = $.throttle(250, proxy);
 
+			this.$scroller = $('.scroller');
+
 			this.createCache();
 			this.checkAndLoad();
 
 			$(window).on('scroll', throttled);
-			$('.scroller').on('scroll', throttled);
+			this.$scroller.on('scroll', throttled);
 			$(document).on('tablesorter_sortComplete', proxy);
 
 			logger('initialized');
@@ -72,10 +74,11 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 
 		createCache: function () {
 			var self = this;
+
 			self.cache = [];
 			$('img.lzy').each(function (idx) {
 				var $el = $(this),
-					relativeTo = $('.scroller').find(this),
+					relativeTo = self.$scroller.find(this),
 					topCalc, top;
 
 				if (relativeTo.length !== 0) {

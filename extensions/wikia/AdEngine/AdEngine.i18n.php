@@ -86,7 +86,12 @@ $messages['bho'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'adengine-exitstitial-title-template' => 'আপনি $1 ছেড়ে যাচ্ছেন',
+	'adengine-exitstitial-redirecting' => 'আপনার ব্রাউজার আপনার অনুরোধ করা পাতার মধ্যে কিছুক্ষণের মধ্যে পুনঃনির্দেশ করবে।',
 	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
+	'adengine-exitstitial-button' => 'এই বিজ্ঞাপনটি বাদ দিন',
+	'adengine-ebay-title' => 'ইবেয়ের পণ্য',
+	'adengine-ebay-bid' => 'কিনুন',
 );
 
 /** Breton (brezhoneg)
@@ -317,6 +322,8 @@ $messages['ko'] = array(
 	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
+	'adengine-ebay-title' => '이베이 제품',
+	'adengine-ebay-bid' => '구매',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
