@@ -260,8 +260,7 @@ describe('AdLogicPageParams', function(){
 			windowMock = {
 				location: {hostname: 'an.example.org'},
 				wgCategories: [],
-				wgContentLanguage: 'en',
-				wgAdPageLevelCategoryLangs: { en: true }
+				wgAdDriverUseCatParam: true
 			},
 			adLogicPageDimensionsMock,
 			kruxMock,
@@ -284,10 +283,10 @@ describe('AdLogicPageParams', function(){
 		params = adLogicPageParams.getPageLevelParams();
 		expect(params.cat).toEqual(['a_category', 'another_category', 'yet_another_category'], '4 categories stripped down to first 3');
 
-		windowMock.wgContentLanguage = 'zh';
+		windowMock.wgAdDriverUseCatParam = false;
 		adLogicPageParams = modules['ext.wikia.adEngine.adLogicPageParams'](logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock);
 		params = adLogicPageParams.getPageLevelParams();
-		expect(params.cat).toEqual(undef, 'wgContentLanguage not in wgAdPageLevelCategoryLangs');
+		expect(params.cat).toEqual(undef, 'wgAdDriverUseCatParam false');
 	});
 
 	it('getPageLevelParams abTest info', function() {

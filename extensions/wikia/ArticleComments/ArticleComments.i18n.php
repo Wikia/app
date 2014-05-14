@@ -479,15 +479,33 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'article-comments-cancel' => 'বাতিল',
+	'article-comments-delete' => 'অপসারণ',
 	'article-comments-edit' => 'সম্পাদনা',
 	'article-comments-history' => 'ইতিহাস',
+	'article-comments-error' => 'মন্তব্য সংরক্ষণ করা সম্ভব নয়',
+	'article-comments-toc-item' => 'মন্তব্যসমূহ',
+	'article-comments-comment-cannot-add' => 'এই নিবন্ধনে আপনি কোনো মন্তব্য যুক্ত করেতে পারবেননা।',
+	'article-comments-vote' => 'পক্ষে ভোট দিন',
 	'article-comments-reply' => 'উত্তর',
 	'article-comments-show-all' => 'সকল মন্তব্য দেখাও',
 	'article-comments-prev-page' => 'পূর্ব',
 	'article-comments-next-page' => 'পর',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'মন্তব্যসমূহ',
+	'wikiamobile-article-comments-more' => 'আরও লোড করুন',
+	'wikiamobile-article-comments-prev' => 'পূর্বেরটি লোড করুন',
+	'wikiamobile-article-comments-none' => 'কোন মন্তব্য নেই',
+	'wikiamobile-article-comments-view' => 'ফিরতি বার্তাসমূহ দেখাও',
+	'wikiamobile-article-comments-replies' => 'ফিরতি বার্তাসমূহ',
+	'wikiamobile-article-comments-post-reply' => 'ফিরতি বার্তা লেখুন',
+	'wikiamobile-article-comments-post' => 'পোস্ট',
+	'wikiamobile-article-comments-placeholder' => 'মন্তব্য প্রকাশ করুন',
+	'wikiamobile-article-comments-login-post' => 'মন্তব্য করার জন্য দয়া করে প্রবেশ করুন',
+	'wikiamobile-article-comments-post-fail' => 'মন্তব্য সংরক্ষণ করা সম্ভব হয়নি দয়া করে পরে চেষ্টা করুন',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -2048,6 +2066,7 @@ $messages['ko'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '상위 글/ 상위 댓글이 삭제됨',
 	'article-comments-empty-comment' => "빈 댓글을 쓸 수 없습니다. <a href='$1'>삭제 하시겠습니까?</a>",
+	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|의견}} $1개',
 	'wikiamobile-article-comments-header' => '댓글',
 	'wikiamobile-article-comments-more' => '더 불러오기',
 	'wikiamobile-article-comments-prev' => '이전 불러오기',
@@ -2060,6 +2079,15 @@ $messages['ko'] = array(
 	'wikiamobile-article-comments-login-post' => '덧글을 남기려면 로그인하세요.',
 	'wikiamobile-article-comments-post-fail' => '덧글을 저장하는데 실패했습니다. 잠시 후에 시도해 주세요.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 이(가) {{SITENAME}}의 "$PAGETITLE"에 덧글을 달았습니다',
+	'enotif_body_article_comment' => '$WATCHINGUSERNAME님 안녕하세요,
+
+{{SITENAME}}의 $PAGETITLE 에서 새 덧글이 있습니다. 모든 덧글을 보려면 다음 링크를 사용하세요: $PAGETITLE_URL#WikiaArticleComments
+
+- 위키아 커뮤니티 지원
+
+___________________________________________
+* 중앙 커뮤니티에서 도움말과 조언을 찾으세요: http://community.wikia.com
+* 메시지를 적게 받고 싶습니까? 여기서 구독 취소하거나 이메일 환경 설정을 바꿀 수 있습니다: http://community.wikia.com/Special:Preferences',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)

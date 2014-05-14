@@ -29,8 +29,6 @@ $dir = __DIR__;
  */
 require_once( $dir . "/BatchTask.php" );
 extAddBatchTask( $dir."/Tasks/MultiRestoreTask.php", "multirestore", "MultiRestoreTask" );
-extAddBatchTask( $dir."/Tasks/PageGrabberTask.php", "pagegrabber", "PageGrabberTask" );
-extAddBatchTask( $dir."/Tasks/PageGrabberDumpTask.php", "pagegrabberdump", "PageGrabberDumpTask" );
 extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
 extAddBatchTask( $dir."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
 extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );

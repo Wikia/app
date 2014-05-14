@@ -60,6 +60,7 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'quickstats-header-label' => 'إحصائيات سريعة',
@@ -72,7 +73,7 @@ $messages['ar'] = array(
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|مشاهدة المزيد من الإحصائيات]]',
 	'quickstats-number-shortening' => '$1 ألف',
 	'quickstats-number-shortening-millions' => '$1 مليون',
-	'quickstats-number-shortening-billions' => '$1 بليون',
+	'quickstats-number-shortening-billions' => '$1 مليار',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
@@ -123,6 +124,7 @@ $messages['azb'] = array(
 	'quickstats-header-views' => 'گؤرونوشلر',
 	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
 	'quickstats-header-photos' => 'شکیل‌لر',
+	'quickstats-number-shortening' => '$1 مین',
 );
 
 /** Bashkir (башҡортса)
@@ -208,7 +210,9 @@ $messages['bho'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'quickstats-header-label' => 'দ্রুত পরিসংখ্যান',
 	'quickstats-header-date' => 'তারিখ',
+	'quickstats-header-views' => 'দৃষ্টিকোণ',
 	'quickstats-header-edits' => 'সম্পাদনাসমূহ',
 	'quickstats-header-photos' => 'চিত্রসমূহ',
 	'quickstats-header-likes' => 'পছন্দসমূহ',
@@ -1534,6 +1538,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Vincent Liu
  */
 $messages['zh-hant'] = array(
 	'quickstats-header-label' => '快速統計資訊',
@@ -1544,9 +1549,9 @@ $messages['zh-hant'] = array(
 	'quickstats-header-likes' => '按讚的數目',
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|查看更多統計]]',
-	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening' => '$1千',
 	'quickstats-number-shortening-millions' => '$1百萬',
-	'quickstats-number-shortening-billions' => '$十億', # Fuzzy
+	'quickstats-number-shortening-billions' => '$10億',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

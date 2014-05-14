@@ -720,13 +720,6 @@ jQuery(function($){
 				});
 			}
 		});
-
-		/** related-videos-module **/
-
-		$wikiaRail.find('.RelatedVideosModule').on('mousedown', 'a', {
-			category: 'related-videos-module',
-			label: 'video-thumbnail'
-		}, trackWithEventData);
 	}
 
 	// Exports

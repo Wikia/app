@@ -4045,6 +4045,7 @@ Anda selalu dapat menuju ke aktivitas wiki untuk melihat seluruh perubahan menar
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Minerva Titani
  */
 $messages['it'] = array(
@@ -4255,13 +4256,13 @@ Sembra che qualcuno abbia modificato la tua wiki! Perché non <a href="$MYHOMEUR
 	'founderemails-lot-happening-subject' => '$WIKINAME è in fase di riscaldamento!',
 	'founderemails-lot-happening-body' => 'Ciao $USERNAME,
 
-Congratulazioni! Oggi c\'è stato un gran movimento nella $WIKINAME!
+Congratulazioni, c\'è stato un gran movimento nella $WIKINAME, $WIKIURL.
 
 Se non l\'hai già fatto, puoi visitare la Wiki Activity per vedere tutto quello che è accaduto.
 
 Poiché le attività recenti sono tante, potresti voler cambiare le tue preferenze per le e-mail alla modalità "riassunto giornaliero". In questo modo, riceverai ogni giorno un\'unica e-mail che elenca tutte le attività giornaliere della tua wiki.
 
-Il Team di Wikia', # Fuzzy
+Il Team di Wikia',
 	'founderemails-lot-happening-body-HTML' => 'Ehi $USERNAME,<br /><br />
 C\'è stato molto movimento nella tua wiki oggi! Perché non controlli $MYHOMEURL per vedere cosa è cambiato?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Il Team di Wikia</div>',
@@ -4318,7 +4319,9 @@ Oggi $WIKINAME è stata vista da  $1  {{PLURAL:$1|persona|persone}}.
 
 Continua ad aggiungere nuovi contenuti e a promuovere la tua wiki per incoraggiare più persone a leggere, modificare e spargere la parola sulla tua wiki.
 
-Il Team di Wikia', # Fuzzy
+$WIKIURL
+
+Il Team di Wikia',
 	'founderemails-email-views-digest-greeting' => 'Ciao $USERNAME,',
 	'founderemails-email-views-digest-headline' => 'Oggi $WIKINAME è stata vista da  $1  {{PLURAL:$1|persona|persone}}.',
 	'founderemails-email-views-digest-content' => 'Continua ad aggiungere nuovi contenuti e a promuovere la tua wiki per incoraggiare più persone a leggere, modificare e spargere la parola sulla tua wiki.',
@@ -4327,7 +4330,7 @@ Il Team di Wikia', # Fuzzy
 	'founderemails-email-complete-digest-subject' => 'Le attività recenti su $WIKINAME',
 	'founderemails-email-complete-digest-body' => 'Ciao $USERNAME,
 
-È tempo per il tuo aggiornamento quotidiano sulle attività di $WIKINAME.
+È tempo per il tuo aggiornamento quotidiano sulle attività di $WIKINAME, $WIKIURL.
 
  $1  {{PLURAL:$1| persona|persone}} hanno visualizzato la tua wiki.
 
@@ -4343,7 +4346,7 @@ Dai il benvenuto nella tua wiki alle nuove persone con un messaggio nella loro p
 
 Puoi sempre visualizzare la wiki activity per conoscere tutte le modifiche effettuate su $WIKINAME. Controllala spesso, poiché, come fondatore, la tua community ha bisogno che tu guidi e gestisca la wiki.
 
-Il Team di Wikia', # Fuzzy
+Il Team di Wikia',
 	'founderemails-email-complete-digest-greeting' => 'Ciao $USERNAME,',
 	'founderemails-email-complete-digest-headline' => 'È tempo per l\'aggiornamento quotidiano sulle attività di $WIKINAME.',
 	'founderemails-email-complete-digest-content-heading1' => '$1 {{PLURAL:$1|persona ha|persone hanno}} visualizzato la tua wiki.',
@@ -6685,7 +6688,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
-	'tog-founderemailsenabled' => 'Enviar-me por correio eletrónico atualizações sobre aquilo que os outros fazem (só para fundadores)',
+	'tog-founderemailsenabled' => 'Enviar-me por e-mail atualizações sobre aquilo que os outros fazem (só para fundadores)',
 	'founderemails-email-user-registered-subject' => 'Alguém novo registou-se na $WIKINAME',
 	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
 
@@ -6772,11 +6775,11 @@ Envolva mais pessoas no seu projeto e mostre o trabalho maravilhoso que tem esta
 
 A sua mãe não mandou Partilhar? Use o botão Partilhar na página principal da sua wiki, nos artigos e nas fotos para mostrá-las aos seus amigos e Seguidores do Facebook, do Twitter e de outros sites populares.
 
-Aproveite o poder do correio eletrónico. Envie mensagens a quem esteja interessado no assunto ou em ajudá-lo(a), como um amigo ou amiga, ou colega de trabalho. Também pode enviar fotografias diretamente da sua wiki usando o botão mensagem.
+Aproveite o poder do e-mail. Envie mensagens a quem esteja interessado no assunto ou em ajudá-lo(a), como um amigo ou amiga, ou colega de trabalho. Também pode enviar fotografias diretamente da sua wiki usando o botão mensagem.
 
-Junte-se a sites semelhantes. Peça ajuda aos utilizadores de outros sites e fóruns acerca do mesmo assunto da sua wiki. Se possível, contate os administradores e pergunte-lhes se estão dispostos a uma troca de links - eles colocam no site um link para a sua wiki e você coloca na wiki um link para o site deles.
+Junte-se a sites semelhantes. Peça ajuda aos usuários de outros sites e fóruns acerca do mesmo assunto da sua wiki. Se possível, contate os administradores e pergunte-lhes se estão dispostos a uma troca de links - eles colocam no site um link para a sua wiki e você coloca na wiki um link para o site deles.
 
-Também pode pedir ajuda a outros utilizadores aqui da Wikia, por mensagem no fórum da http://pt.wikia.com ou nos fóruns da http://community.wikia.com.
+Também pode pedir ajuda a outros usuários aqui da Wikia, por mensagem no fórum da http://pt.wikia.com ou nos fóruns da http://community.wikia.com.
 
 Continue o bom trabalho!
 

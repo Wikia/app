@@ -62,6 +62,7 @@ $messages['en'] = array(
 	'videopagetool-category-instructions' => 'Note: A minimum of three modules must be programmed in order to save or publish this page.',
 
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
+	'videopagetool-formerror-videokey' => 'Please add a video',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
 	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
@@ -139,6 +140,7 @@ $messages['qqq'] = array(
 
 	'videopagetool-success-publish' => 'This text appears if your changes have been published successfully',
 	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
+	'videopagetool-formerror-videokey' => 'Error message for required video to be added',
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
 	'videopagetool-date-header' => 'Shows the date that you\'re programming for at the top of the form.',
 

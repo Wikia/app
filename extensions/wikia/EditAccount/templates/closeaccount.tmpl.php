@@ -14,10 +14,17 @@
 			<input id="wpReason" name="wpReason" type="text" />
 		</div>
 		<div>
+			<label for="wpClearEmail">
+				<input id="wpClearEmail" type="checkbox" name="clearemail" />
+				<?= wfMessage( 'editaccount-label-clearemail' )->escaped() ?>
+			</label>
+		</div>
+		<div>
 			<input type="submit" value="<?= wfMsg('editaccount-submit-close') ?>" />
 		</div>
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
 		<input type="hidden" name="wpAction" value="closeaccountconfirm" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</fieldset>
 </form>
 <!-- e:<?= __FILE__ ?> -->

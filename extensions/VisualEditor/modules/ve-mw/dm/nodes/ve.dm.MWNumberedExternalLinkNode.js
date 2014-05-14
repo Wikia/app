@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWNumberedExternalLinkNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -40,7 +40,7 @@ ve.dm.MWNumberedExternalLinkNode.static.matchFunction = function ( element ) {
 
 ve.dm.MWNumberedExternalLinkNode.static.toDataElement = function ( domElements ) {
 	return {
-		'type': 'link/mwNumberedExternal',
+		'type': this.name,
 		'attributes': {
 			'href': domElements[0].getAttribute( 'href' )
 		}

@@ -44,19 +44,4 @@ class ApiDocsServiceTest extends \WikiaBaseTest {
 		$this->assertEquals( "path_for_baz" , $result["apis"][0]["path"] );
 	}
 
-	public function testGetDoc() {
-		$swaggerMock = $this->getMockBuilder( '\Swagger\Swagger' )
-			->disableOriginalConstructor()->getMock();
-
-		$swaggerMock->expects( $this->once() )
-			->method( "getResource" )
-			->with( "foo", false, false )
-			->will( $this->returnValue( [ "basePath" => "foo" ] ) );
-
-		$apiDocsService = new ApiDocsService( $swaggerMock, function($foo) {  } );
-
-		$result = $apiDocsService->getDoc( "foo" );
-
-		$this->assertEquals( [ "basePath" => "foo" ], $result );
-	}
 }

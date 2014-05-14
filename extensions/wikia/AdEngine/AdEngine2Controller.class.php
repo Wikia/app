@@ -54,5 +54,6 @@ class AdEngine2Controller extends WikiaController {
 
 		$this->showAd = AdEngine2Service::shouldShowAd($pageTypes);
 		$this->slotName = $slotName;
+		$this->pageTypes = $pageTypes;
 	}
 }

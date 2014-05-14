@@ -22,13 +22,14 @@ class DocsApiController extends WikiaController {
 	 *
 	 */
 	public function __construct() {
-		parent::__construct(  );
-		$this->docsService = (new ApiDocsServiceFactory)->getApiDocsService();
+		parent::__construct(  );		
 	}
 
 	public function init(){
 		parent::init();
-		$this->accessService = new ApiAccessService( $this->getRequest() );
+		$request = $this->getRequest() ;
+		$this->accessService = new ApiAccessService( $request );
+		$this->docsService = (new ApiDocsServiceFactory)->getApiDocsService( $request );
 	}
 
 	/**
@@ -93,7 +94,7 @@ class DocsApiController extends WikiaController {
 				$result[] = $apiElem;
 			}
 		}
-		return [ 'apis' => $result ];
+		return [ 'apis' => $result, 'models' => $apiDoc['models'] ];
 	}
 
 	public function getApi() {

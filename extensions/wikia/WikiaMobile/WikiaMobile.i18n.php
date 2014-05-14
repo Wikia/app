@@ -59,6 +59,7 @@ you should definitely check this out:
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
 	'wikiamobile-video-not-friendly-header' => 'Oh snap!',
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
+	'wikiamobile-videos' => 'Videos',
 
 	//toc
 	'wikiamobile-toc-header' => 'Table of Contents',
@@ -97,7 +98,8 @@ $messages['qqq'] = array(
 {{Identical|Password}}',
 	'wikiamobile-login-submit' => 'Label on a blue button prompting user to log in.
 {{Identical|Log in}}',
-	'wikiamobile-menu' => 'Header on wiki menu',
+	'wikiamobile-menu' => 'Header on wiki menu.
+{{Identical|Menu}}',
 	'wikiamobile-article-categories' => 'Message displayed on category section on an article',
 	'wikiamobile-feedback' => 'Link to a feedback form.
 {{Identical|Feedback}}',
@@ -136,6 +138,8 @@ $messages['qqq'] = array(
 	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
 	'wikiamobile-video-not-friendly' => "Message displayed in modal - to indicate that this video won't be loaded in mobile skin",
+	'wikiamobile-videos' => 'Generic translation of the word "videos". Mainly used as a navigation link.
+{{Identical|Video}}',
 	'wikiamobile-toc-header' => 'Message displayed on top of right side bar where table of content is displayed.
 {{Identical|Table of contents}}',
 	'wikiamobile-ad-label' => 'Message shown to a user on page next to advertisement - to distinguish that below is an ad',
@@ -166,6 +170,13 @@ $messages['ady-cyrl'] = array(
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
+);
+
+/** Tunisian Spoken Arabic ( زَوُن)
+ * @author Aħmedbaɛl
+ */
+$messages['aeb'] = array(
+	'wikiamobile-videos' => 'Videouet',
 );
 
 /** Afrikaans (Afrikaans)
@@ -204,10 +215,12 @@ $messages['ar'] = array(
 	'wikiamobile-last-edited-on' => 'آخر تعديل في $1',
 	'wikiamobile-last-edited-by' => 'بواسطة $1',
 	'wikiamobile-anonymous-edited-by' => 'مجهول',
+	'wikiamobile-trending-articles-heading' => 'مقالات متداولة',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|نمط الحياة]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|الترفيه]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ألعاب الڤيديو]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|الترخيص]]',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|سياسة الخصوصية]]',
 	'mobile-full-site' => 'موقع الحاسب',
 	'wikiamobile-categories-tagline' => 'صفحة التصنيف',
 	'wikiamobile-categories-items-total' => '{{PLURAL:$1|مقالة واحدة|مقالتين|$1 مقالات|$1 مقالة}}',
@@ -457,6 +470,7 @@ $1',
 	'wikiamobile-video-views-counter' => '{{PLURAL:$1|Ein Aufruf|$1 Aufrufe}}',
 	'wikiamobile-video-not-friendly-header' => 'Verdammt!',
 	'wikiamobile-video-not-friendly' => 'Dieses Video ist auf mobilen Geräten leider nicht verfügbar.',
+	'wikiamobile-videos' => 'Videos',
 	'wikiamobile-toc-header' => 'Inhaltsverzeichnis',
 	'wikiamobile-ad-label' => 'Anzeige',
 	'wikiamobile-image-not-loaded' => 'Das Bild ist nicht verfügbar',
@@ -717,6 +731,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|vue|vues}}',
 	'wikiamobile-video-not-friendly-header' => 'Crac !',
 	'wikiamobile-video-not-friendly' => 'Désolé, cette vidéo n’est pas disponible sur mobile.',
+	'wikiamobile-videos' => 'Vidéos',
 	'wikiamobile-toc-header' => 'Table des matières',
 	'wikiamobile-ad-label' => 'publicité',
 	'wikiamobile-image-not-loaded' => 'L’image n’est pas disponible',
@@ -1052,12 +1067,15 @@ $messages['lb'] = array(
 	'wikiamobile-password' => 'Passwuert',
 	'wikiamobile-login-submit' => 'Aloggen',
 	'wikiamobile-menu' => 'Menü',
+	'wikiamobile-feedback' => 'Feedback',
+	'wikiamobile-back' => 'Zréck',
 	'wikiamobile-profile' => 'Profil',
 	'wikiamobile-anonymous-edited-by' => 'Anonym',
 	'wikiamobile-categories-tagline' => 'Säit vun der Kategorie',
 	'wikiamobile-media-group-footer' => '1 vu(n) $1',
 	'wikiamobile-video-not-friendly-header' => 'Oh merde!',
 	'wikiamobile-video-not-friendly' => 'Pardon, dëse Video ass op mobilen Apparater net disponibel.',
+	'wikiamobile-videos' => 'Videoen',
 	'wikiamobile-toc-header' => 'Inhaltsverzeechnes',
 	'wikiamobile-ad-label' => 'Reklamm',
 	'wikiamobile-page-not-found' => 'Ups! <b>$1</b> gëtt et net.',
@@ -1181,7 +1199,7 @@ $messages['ms'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Hiburan]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Permainan]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Pelesenan]]',
-	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Dasar privasi]]', # Fuzzy
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|Dasar Privasi]]',
 	'mobile-full-site' => 'Laman penuh',
 	'wikiamobile-categories-tagline' => 'Halaman Kategori',
 	'wikiamobile-categories-items-total' => '$1 rencana',
@@ -1212,6 +1230,13 @@ apa kata anda tengok yang ini pula:
 	'wikiasmartbanner-googleplay' => 'Di Google Play',
 	'wikiasmartbanner-price' => 'percuma',
 	'wikiasmartbanner-view' => 'lihat',
+);
+
+/** Maltese (Malti)
+ * @author CharlieTheCabbie
+ */
+$messages['mt'] = array(
+	'wikiamobile-videos' => 'Vidjows',
 );
 
 /** Neapolitan (Napulitano)
@@ -1309,6 +1334,7 @@ $1',
 	'wikiamobile-video-views-counter' => '{{PLURAL:$1|1 keer|$1 keer}} bekeken',
 	'wikiamobile-video-not-friendly-header' => 'Verdorie!',
 	'wikiamobile-video-not-friendly' => 'Deze video is helaas niet beschikbaar voor mobiel...',
+	'wikiamobile-videos' => "Video's",
 	'wikiamobile-toc-header' => 'Inhoudsopgave',
 	'wikiamobile-ad-label' => 'advertentie',
 	'wikiamobile-image-not-loaded' => 'Afbeelding is niet beschikbaar',
@@ -1584,6 +1610,7 @@ $messages['ru'] = array(
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|просмотр|просмотра|просмотров}}',
 	'wikiamobile-video-not-friendly-header' => 'Вот чёрт!',
 	'wikiamobile-video-not-friendly' => 'К сожалению, это видео не доступно на мобильном устройстве.',
+	'wikiamobile-videos' => 'Видео',
 	'wikiamobile-toc-header' => 'Содержание',
 	'wikiamobile-ad-label' => 'реклама',
 	'wikiamobile-image-not-loaded' => 'Изображение недоступно',
@@ -1611,6 +1638,13 @@ $messages['sco'] = array(
 	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Preevacie Policie]]',
 	'wikiamobile-categories-blogs' => 'Blog posts',
 	'wikiamobile-toc-header' => 'Buird o Contents',
+);
+
+/** Sinhala (සිංහල)
+ * @author Sahan.ssw
+ */
+$messages['si'] = array(
+	'wikiamobile-videos' => 'වීඩියෝ',
 );
 
 /** Slovak (slovenčina)
@@ -1695,6 +1729,7 @@ $1',
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visning|visningar}}',
 	'wikiamobile-video-not-friendly-header' => 'Attans!',
 	'wikiamobile-video-not-friendly' => 'Tyvärr, detta videoklipp är inte tillgänglig för mobiler.',
+	'wikiamobile-videos' => 'Videor',
 	'wikiamobile-toc-header' => 'Innehållsförteckning',
 	'wikiamobile-ad-label' => 'annons',
 	'wikiamobile-image-not-loaded' => 'Bilden är inte tillgänglig',

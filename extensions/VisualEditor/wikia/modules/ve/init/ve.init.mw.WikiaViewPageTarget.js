@@ -29,28 +29,45 @@ OO.inheritClass( ve.init.mw.WikiaViewPageTarget, ve.init.mw.ViewPageTarget );
 /* Static Properties */
 
 ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
-	{ 'include': [ 'undo', 'redo' ] },
+	// History
+	{ 'include': [ 'undo' ] },
+	// Format
 	{
 		'type': 'menu',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
 		'include': [ { 'group': 'format' } ],
 		'promote': [ 'paragraph' ],
-		'demote': [ 'preformatted', 'heading1' ]
+		'demote': [ 'preformatted' ],
+		'exclude': [ 'heading1' ]
 	},
-	{ 'include': [ 'bold', 'italic', 'link', 'clear' ] },
-	{ 'include': [ 'number', 'bullet' ] },
-	{ 'include': [ 'wikiaMediaInsert' ] },
+	// Style
+	{ 'include': [ 'bold', 'italic', 'link' ] },
 	{
-		'include': '*',
-		'exclude': [ 'mediaInsert', 'code', 'wikiaSourceMode' ]
+		'type': 'list',
+		'icon': 'text-style',
+		'indicator': 'down',
+		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		'include': [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+	},
+	// Insert
+	{
+		'type': 'list',
+		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		'indicator': 'down',
+		'include': [ 'wikiaMediaInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
 	}
 ];
 
 ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
-	{ 'include': [ 'help', 'notices' ] },
+	{
+		'include': [ 'notices' ]
+	},
 	{
 		'type': 'list',
 		'icon': 'menu',
-		'include': [ 'meta', 'categories', 'languages', 'wikiaSourceMode' ]
+		'indicator': 'down',
+		'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
 	}
 ];
 
@@ -71,16 +88,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.track( 'wikia', {
 		'action': ve.track.actions.CLICK,
 		'label': 'dialog-save-review-changes-button',
-		'duration': this.timings.saveDialogReview - this.timings.saveDialogOpen
-	} );
-};
-
-ve.init.mw.WikiaViewPageTarget.prototype.onSaveDialogSave = function () {
-	ve.init.mw.ViewPageTarget.prototype.onSaveDialogSave.call( this );
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-save-publish',
-		'duration': this.timings.saveDialogSave - this.timings.saveDialogOpen
+		'duration': this.events.timings.saveReview - this.events.timings.saveWorkflowBegin
 	} );
 };
 

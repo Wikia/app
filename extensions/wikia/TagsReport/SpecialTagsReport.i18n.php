@@ -375,6 +375,15 @@ $messages['ja'] = array(
 	'tagsreportgenerated' => '$1 $2 に生成',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'tagsreportgo' => 'ತೋರಿಸು',
+	'tagsreportnoresults' => 'ಯಾವುದೇ ಫಲಿತಾಂಶಗಳಿಲ್ಲ',
+	'tagsreportmainnspace' => 'ಮುಖ್ಯ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

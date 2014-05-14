@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Manuae"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Des komma bloß im Source-Modus ännare.",
+	"visualeditor-annotationbutton-bold-tooltip": "Fedd",
+	"visualeditor-annotationbutton-code-tooltip": "Computercode",
+	"visualeditor-annotationbutton-italic-tooltip": "Schräsch",
+	"visualeditor-annotationbutton-language-tooltip": "Schbrooch",
+	"visualeditor-annotationbutton-link-tooltip": "Ling'g",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "Duaschschdaische",
+	"visualeditor-annotationbutton-subscript-tooltip": "Index",
+	"visualeditor-annotationbutton-superscript-tooltip": "Nuffschdelle",
+	"visualeditor-annotationbutton-underline-tooltip": "Unnaschdraische",
+	"visualeditor-clearbutton-tooltip": "Formadierunge wegnemme",
+	"visualeditor-clipboard-copy": "Kobiere",
+	"visualeditor-clipboard-cut": "Ausschnaide",
+	"visualeditor-clipboard-paste": "Noifiesche",
+	"visualeditor-clipboard-paste-special": "Als Glaategschd oifiesche",
+	"visualeditor-dialog-action-apply": "Ännarunge schbaischare",
+	"visualeditor-dialog-action-cancel": "Abbresche",
+	"visualeditor-dialog-action-goback": "Zrigg",
+	"visualeditor-dialog-command-help-title": "Taschdaduakeazl",
+	"visualeditor-formatdropdown-format-heading-label": "Iwwaschrifd (1-6)",
+	"visualeditor-formatdropdown-format-heading1": "Iwwaschrifd 1",
+	"visualeditor-formatdropdown-format-heading2": "Iwwaschrifd 2",
+	"visualeditor-formatdropdown-format-heading3": "Iwwaschrifd 3",
+	"visualeditor-formatdropdown-format-heading4": "Iwwaschrifd 4",
+	"visualeditor-formatdropdown-format-heading5": "Iwwaschrifd 5",
+	"visualeditor-formatdropdown-format-heading6": "Iwwaschrifd 6",
+	"visualeditor-help-tool": "Hilf",
+	"visualeditor-inspector-close-tooltip": "Schließe",
+	"visualeditor-inspector-remove-tooltip": "Wegnemme",
+	"visualeditor-languageinspector-title": "Schbrooch",
+	"visualeditor-languageinspector-widget-label-language": "Schbrooch",
+	"visualeditor-shortcuts-history": "Gschischd",
+	"visualeditor-toolbar-insert": "Oifiesche"
+}

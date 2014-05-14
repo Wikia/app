@@ -1,5 +1,5 @@
 Given(/^I can see the References User Interface$/) do
-  on(VisualEditorPage).title.should match 'Reference'
+  on(VisualEditorPage).title.should match "Reference"
 end
 
 When(/^I click Insert reference$/) do
@@ -9,18 +9,14 @@ end
 When(/^I click Edit for VisualEditor$/) do
   on(VisualEditorPage) do |page|
     page.edit_ve_element.when_present.click
-    #This begin/rescue clause dismisses the VE warning message when it exists, and does not fail when it does not exist
-    begin
-      page.beta_warning_element.when_present.click
-    rescue
-    end
-    page.content_element.fire_event('onfocus')
+    # no longer need to dismiss beta warning here https://gerrit.wikimedia.org/r/#/c/119217/
+    page.content_element.when_present(10).fire_event("onfocus")
   end
 end
 
 When(/^I click Reference$/) do
   on(VisualEditorPage) do |page|
-    page.more_menu_element.when_present.click
+    page.insert_menu_element.when_present.click
     page.ve_references_element.when_present.click
   end
 end
@@ -36,6 +32,6 @@ Then(/^I should see Insert reference button enabled$/) do
   on(VisualEditorPage).insert_reference_element.should be_visible
 end
 
-Then(/^link to More menu should be visible$/) do
-  on(VisualEditorPage).more_menu_element.should be_visible
+Then(/^link to Insert menu should be visible$/) do
+  on(VisualEditorPage).insert_menu_element.should be_visible
 end

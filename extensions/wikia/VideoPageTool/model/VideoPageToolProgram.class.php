@@ -419,6 +419,11 @@ class VideoPageToolProgram extends WikiaModel {
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
 		}
 
+		// Make sure we've got a publishedBy value here
+		if ( empty( $this->getPublishedBy ) ) {
+			$this->setPublishedBy( $this->wg->User->getId() );
+		}
+
 		$db = $this->getMasterDB();
 
 		( new WikiaSQL() )

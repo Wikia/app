@@ -49,15 +49,15 @@ ve.ce.WikiaMediaCaptionNode.static.tagName = 'figcaption';
  */
 ve.ce.WikiaMediaCaptionNode.prototype.createAttribution = function () {
 	var $attribution, $link,
-		attribution = this.model.parent.getAttribute( 'attribution' ),
-		href = new mw.Title( attribution.username, 2 ).getUrl();
+		user = this.model.parent.getAttribute( 'user' ),
+		href = new mw.Title( user, 2 ).getUrl();
 
 	$attribution = this.$( '<p>' )
 		.addClass( 'attribution' );
 
 	$link = this.$( '<a>' )
 		.attr( 'href', href )
-		.text( attribution.username );
+		.text( user );
 
 	return $attribution
 		.append( mw.message( 'oasis-content-picture-added-by', $link[ 0 ].outerHTML ).plain() );
@@ -105,7 +105,7 @@ ve.ce.WikiaMediaCaptionNode.prototype.onSplice = function () {
 
 	// This logic is from the function onThumbnailAfterProduceHTML() in ImageTweaksHooks.class.php
 	if (
-		parentModel.getAttribute( 'attribution' ) !== undefined &&
+		parentModel.getAttribute( 'user' ) !== undefined &&
 		parentModel.getAttribute( 'width' ) >= this.minWidth
 	) {
 		this.$attribution.appendTo( this.$element );

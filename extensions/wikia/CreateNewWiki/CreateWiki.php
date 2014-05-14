@@ -295,11 +295,11 @@ class CreateWiki {
 			return self::ERROR_SQL_FILE_BROKEN;
 		}
 
-		// Hack to slow down the devbox database creation
+		// Hack to slow down the devbox database creation because createTables() returns
+		// before the tables are created on the slave, and the uploadImage function hits the slave
 		global $wgDevelEnvironment;
 		if (isset($wgDevelEnvironment)) {
-			$position = $this->mNewWiki->dbw->getMasterPos();
-			$wait = $this->mNewWiki->dbw->masterPosWait($position, 10);
+			sleep(15);
 		}
 
 		/**

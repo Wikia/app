@@ -1742,6 +1742,9 @@ $messages['hu'] = array(
  * @author C5st4wr6ch
  */
 $messages['id'] = array(
+	'forum-sorting-option-newest-replies' => 'Balasan Terbaru',
+	'forum-sorting-option-most-replies' => 'Paling Aktif dalam 7 Hari',
+	'forum-discussion-placeholder-title' => 'Apa yang Anda ingin bicarakan?',
 	'forum-discussion-placeholder-message-short' => 'Kirim pesan baru',
 );
 
@@ -1917,6 +1920,14 @@ ___________________________________________<br />
 
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'forum-specialpage-policies-edit' => 'ಸಂಪಾದಿಸಿ',
+	'forum-thread-reply-post' => 'ಉತ್ತರಿಸಿ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

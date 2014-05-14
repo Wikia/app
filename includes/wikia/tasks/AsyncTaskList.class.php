@@ -174,7 +174,7 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP, $wgStagingList;
+		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
 
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
@@ -231,7 +231,7 @@ class AsyncTaskList {
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
 			];
-		} elseif (in_array($hostname, $wgStagingList)) { // force preview/verify to run on preview/verify server
+		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname])) { // force preview/verify to run on preview/verify server
 			$payload->kwargs->executor = [
 				'method' => 'remote_shell',
 				'runner' => [

@@ -9,10 +9,10 @@ class VideosModule extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
-	const MAX_STAFF_PICKS = 10;
+	const MAX_STAFF_PICKS = 5;
 
 	protected $blacklistCount = null;	// number of blacklist videos
-	protected $existingVideos = [];		// list of existing vides [ titleKey => true ]
+	protected $existingVideos = [];		// list of existing videos [ titleKey => true ]
 
 	// options for getting video detail
 	protected static $videoOptions = [
@@ -76,20 +76,25 @@ class VideosModule extends WikiaModel {
 			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
 			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
 
-			$combinedVideos = array_merge($wikiResults, $globalResults);
+			$combinedVideos = array_merge( $wikiResults, $globalResults );
 
 			// Sort the combined array by the updated field, which is YYYY-MM-DD hh:mm:ss
-			usort($combinedVideos, function ($a, $b) {
+			usort( $combinedVideos, function ( $a, $b ) {
 				return strcmp( $b['updated'], $a['updated'] );
-			});
+			} );
 
 			// Cap the number of videos we send to the front end at MAX_STAFF_PICKS
 			$videos = [];
 			foreach ( $combinedVideos as $video ) {
-				$videos[] = $video['fileKey'];
 
 				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
 					break;
+				}
+
+				if ( $this->addToList( $videos, $video['fileKey'] ) ) {
+					// Adding videos to the existingVideos array is normally done using trimVideoList. Since there's
+					// nothing to trim, just add it to existingVideos directly.
+					$this->existingVideos[$video['fileKey']] = true;
 				}
 			}
 
