@@ -183,8 +183,8 @@ $wgResourceModules += array(
 			)
 		),
 		'dependencies' => array(
-			'ext.visualEditor.base',
 			'ext.visualEditor.mediawiki',
+			'ext.visualEditor.base',
 			'ext.visualEditor.core.desktop',
 			'jquery.placeholder',
 			'mediawiki.feedback',
