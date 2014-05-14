@@ -187,7 +187,7 @@ class JsonFormatSimplifier {
 			$content = [];
 			$containList = false;
 			$this->getParagraphs( $section, $content );
-			$this->clearEmptyParagraphs( $content );
+			$this->clearParagraphs( $content );
 			foreach( $content as $node ) {
 				if( $node['type'] == 'paragraph' ) {
 					$sectionResult[] = $node['text'];
