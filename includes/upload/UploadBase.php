@@ -634,7 +634,8 @@ abstract class UploadBase {
 	 * @return Title The title of the file or null in case the name was illegal
 	 */
 	public function getTitle() {
-		if ( $this->mTitle !== false ) {
+		// Wikia change: If title is NULL, try again to set it, as many times as this function is called
+		if ( $this->mTitle !== false && $this->mTitle !== null ) {
 			return $this->mTitle;
 		}
 
