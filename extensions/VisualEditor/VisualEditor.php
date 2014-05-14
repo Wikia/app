@@ -504,6 +504,7 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'rangy',
 			'unicodejs.wordbreak',
+			'ext.visualEditor.mediawiki',
 			'ext.visualEditor.base',
 		),
 		'messages' => array(
