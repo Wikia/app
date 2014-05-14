@@ -64,44 +64,42 @@
 				}
 
 			};
-		} else if (mode === 'edit') {
+		} else if (mode === 'edit' && element) {
 			callback = function (embedData) {
-				if (element !== 'undefined') {
-					var wikitext = '';
+				var wikitext = '';
 
-					// Handle video placeholders in the editor [[File:Placeholder|video]]
-					if (element.hasClass('media-placeholder')) {
-						wikitext = embedData.wikitext;
+				// Handle video placeholders in the editor [[File:Placeholder|video]]
+				if (element.hasClass('media-placeholder')) {
+					wikitext = embedData.wikitext;
+					RTE.mediaEditor.update(element, wikitext, embedData);
+				} else {
+					// generate wikitext
+					wikitext = '[[' + embedData.href + '|thumb';
+
+					if (embedData.align) {
+						wikitext += '|' + embedData.align;
+					}
+
+					if (embedData.width) {
+						wikitext += '|' + embedData.width + 'px';
+					}
+
+					if (embedData.caption) {
+						wikitext += '|' + embedData.caption;
+					}
+
+					wikitext += ']]';
+
+					if (element) {
+						// update existing video
 						RTE.mediaEditor.update(element, wikitext, embedData);
+
+						require(['wikia.vet'], function (vet) {
+							vet.close();
+						});
 					} else {
-						// generate wikitext
-						wikitext = '[[' + embedData.href + '|thumb';
-
-						if (embedData.align) {
-							wikitext += '|' + embedData.align;
-						}
-
-						if (embedData.width) {
-							wikitext += '|' + embedData.width + 'px';
-						}
-
-						if (embedData.caption) {
-							wikitext += '|' + embedData.caption;
-						}
-
-						wikitext += ']]';
-
-						if (element) {
-							// update existing video
-							RTE.mediaEditor.update(element, wikitext, embedData);
-
-							require(['wikia.vet'], function (vet) {
-								vet.close();
-							});
-						} else {
-							// add new video
-							RTE.mediaEditor.addVideo(wikitext, embedData);
-						}
+						// add new video
+						RTE.mediaEditor.addVideo(wikitext, embedData);
 					}
 				}
 			};
