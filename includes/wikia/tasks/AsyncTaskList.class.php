@@ -155,7 +155,7 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * skip task de-duplication
+	 * enable task de-duplication check
 	 *
 	 * @return $this
 	 */
