@@ -142,7 +142,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				}
 			}
 		});
-
 	}
 
 	// macbre: move back button inside dialog content and add before provided selector (Oasis changes)
@@ -796,7 +795,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					}
 				}
 			}
-
 		},
 
 		// METHOD: add items to carousel
@@ -843,7 +841,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 							self.fetchSearch();
 						}
 					}
-
 					previousIndexStart = indexStart;
 				}
 			});
@@ -971,12 +968,10 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					}
 				});
 			}
-
 		},
 
 		// METHOD: fetch part of search results
 		fetchSearch: function () {
-
 			var self = this,
 				svStart = this.searchCachedStuff.fetchedResoultsCount,
 				svSize = 20, // number of requested items
@@ -1033,9 +1028,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					}
 				});
 			}
-
 		}
-
 	};
 
 	function handleLayout(e) {
@@ -1078,7 +1071,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			'click.VET',
 			'#VideoEmbedLayoutLeft, #VideoEmbedLayoutCenter, #VideoEmbedLayoutRight',
 			handleLayout
-	)
+		)
 		.on('change.VET, keyup.VET', '#VideoEmbedManualWidth', manualWidthInput)
 		.on('keypress.VET', '#VideoEmbedUrl', onVideoEmbedUrlKeypress)
 		.on('click.VET', '#VideoEmbedUrlSubmit', preQuery)
@@ -1086,7 +1079,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			'click.VET',
 			'#VideoEmbedRenameButton, #VideoEmbedExistingButton, #VideoEmbedOverwriteButton',
 			insertFinalVideo
-	)
+		)
 		.on('click.VET', '.vet-close', handleClose);
 
 	// globally available functions
