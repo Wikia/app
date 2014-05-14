@@ -75,7 +75,7 @@ require(['sloth', 'wikia.window', 'jquery'], function (sloth, w, $) {
 								relatedPages.push({
 									url: page.url,
 									title: page.title,
-									imgUrl: page.imgUrl || '',
+									imgUrl: page.imgUrl || null,
 									text: page.imgUrl ? undefined : page.text
 								} );
 							}

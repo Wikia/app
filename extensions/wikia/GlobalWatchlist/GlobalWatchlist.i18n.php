@@ -819,10 +819,11 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Luckas
  */
 $messages['pt'] = array(
 	'globalwatchlist-desc' => 'Envia mensagens mensais de resumo das páginas vigiadas em todas as wikis',
-	'tog-watchlistdigest' => 'Enviar-me, por correio eletrónico, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
+	'tog-watchlistdigest' => 'Enviar-me, por e-mail, uma Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páginas da Compilação Semanal de Mudanças nas Páginas Vigiadas',
 	'globalwatchlist-see-more' => 'Para ver mudanças adicionais, verifique as páginas vigiadas locais',
 	'globalwatchlist-digest-email-subject' => 'Compilação Semanal',

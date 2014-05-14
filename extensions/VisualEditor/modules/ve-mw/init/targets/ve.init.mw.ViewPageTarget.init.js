@@ -5,7 +5,7 @@
  * for MediaWiki itself (see mediawiki/core:/resources/startup.js).
  * Avoid use of: ES5, SVG, HTML5 DOM, ContentEditable etc.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -33,8 +33,26 @@
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred()
 				.done( function () {
-					var target = new ve.init.mw.ViewPageTarget();
+					var debugBar, target = new ve.init.mw.ViewPageTarget();
 					ve.init.mw.targets.push( target );
+
+					if ( ve.debug ) {
+						debugBar = new ve.init.DebugBar();
+						target.on( 'surfaceReady', function () {
+							$( '#content' ).append( debugBar.$element.show() );
+							debugBar.attachToSurface( target.surface );
+							target.surface.on( 'destroy', function () {
+								debugBar.$element.hide();
+							} );
+						} );
+					}
+
+					// Tee tracked events to MediaWiki firehose, if available (1.23+).
+					if ( mw.track ) {
+						ve.trackSubscribeAll( function ( topic, data ) {
+							mw.track.call( null, 've.' + topic, data );
+						} );
+					}
 
 					// Transfer methods
 					ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -127,7 +145,7 @@
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
 		},
 
@@ -175,7 +193,7 @@
 					$caVeEdit = $( caVeEdit );
 					$caVeEditLink = $caVeEdit.find( 'a' );
 				}
-			} else {
+			} else if ( $caEdit.length && $caVeEdit.length ) {
 				// Make the state of the page consistent with the config if needed
 				/*jshint bitwise:false */
 				if ( reverseTabOrder ^ conf.tabPosition === 'before' ) {
@@ -193,9 +211,22 @@
 			}
 
 			// Alter the edit tab (#ca-edit)
-			if ( tabMessages[action + 'source'] !== null ) {
-				$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+			if ( $( '#ca-view-foreign' ).length ) {
+				if ( tabMessages[action + 'localdescriptionsource'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'localdescriptionsource'] ) );
+				}
+			} else {
+				if ( tabMessages[action + 'source'] !== null ) {
+					$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
+				}
 			}
+
+			if ( conf.tabPosition === 'before' ) {
+				$caEdit.addClass( 'collapsible' );
+			} else {
+				$caVeEdit.addClass( 'collapsible' );
+			}
+
 			// Process appendix messages
 			if ( tabMessages[action + 'appendix'] !== null ) {
 				$caVeEditLink.append(
@@ -356,16 +387,6 @@
 	init.isAvailable = (
 		support.visualEditor &&
 
-		userPrefEnabled &&
-
-		// Disable on redirect pages until redirects are editable (bug 47328)
-		// Property wgIsRedirect is relatively new in core, many cached pages
-		// don't have it yet. We do a best-effort approach using the url query
-		// which will cover all working redirect (the only case where one can
-		// read a redirect page without ?redirect=no is in case of broken or
-		// double redirects).
-		!mw.config.get( 'wgIsRedirect', !!uri.query.redirect ) &&
-
 		// Only in supported skins
 		$.inArray( mw.config.get( 'skin' ), conf.skins ) !== -1 &&
 
@@ -374,6 +395,9 @@
 			new mw.Title( mw.config.get( 'wgRelevantPageName' ) ).getNamespaceId(),
 			conf.namespaces
 		) !== -1 &&
+
+		// Not on pages which are outputs of the Page Translation feature
+		mw.config.get( 'wgTranslatePageTranslation' ) !== 'translation' &&
 
 		// Only for pages with a wikitext content model
 		mw.config.get( 'wgPageContentModel' ) === 'wikitext'
@@ -391,7 +415,7 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( init.isAvailable ) {
+	if ( init.isAvailable && userPrefEnabled ) {
 		$( 'html' ).addClass( 've-available' );
 	} else {
 		$( 'html' ).addClass( 've-not-available' );
@@ -399,22 +423,17 @@
 		// for e.g. "Edit" > "Edit source" even when VE is not available.
 	}
 
-	if ( !userPrefEnabled ) {
-		// However if ve is not available because of user preferences (as opposed
-		// to because of the page, namespace, browser etc.) then we do want to
-		// return early as in that case even transformation of edit source should
-		// not be done.
-		return;
-	}
-
 	$( function () {
-		if ( init.isAvailable && isViewPage ) {
-			if ( uri.query.veaction === 'edit' ) {
+		if ( init.isAvailable ) {
+			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				getTarget().done( function ( target ) {
 					target.activate();
 				} );
 			}
 		}
-		init.setupSkin();
+
+		if ( userPrefEnabled ) {
+			init.setupSkin();
+		}
 	} );
 }() );

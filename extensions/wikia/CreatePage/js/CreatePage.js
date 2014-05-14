@@ -52,10 +52,16 @@ var CreatePage = {
 			e.preventDefault();
 		}
 
+		// VE and <createbox>
+		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+			CreatePage.checkTitle( titleText );
+			return;
+		}
+
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			if ( CreatePage.canUseVisualEditor ) {
+			if ( CreatePage.canUseVisualEditor && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
 			} else {

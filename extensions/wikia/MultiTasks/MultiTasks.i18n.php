@@ -1781,6 +1781,7 @@ $messages['km'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'multitasks-link-back-label' => 'ಇಲ್ಲಿ',
@@ -1790,6 +1791,7 @@ $messages['kn'] = array(
 	'multiwikiedit_all_wikis' => 'ಎಲ್ಲಾ ವಿಕಿಗಳು',
 	'multiwikiedit_selected_wikis' => 'ಆಯ್ದ ವಿಕಿಗಳು',
 	'multidelete_button' => 'ಅಳಿಸು',
+	'multidelete_select_all' => 'ಎಲ್ಲವನ್ನೂ ಆಯ್ಕೆ ಮಾಡಿ',
 	'multidelete_this_wiki' => 'ಈ ವಿಕಿ',
 	'multidelete_all_wikis' => 'ಎಲ್ಲಾ ವಿಕಿಗಳು',
 	'multidelete_selected_wikis' => 'ಆಯ್ದ ವಿಕಿಗಳು',

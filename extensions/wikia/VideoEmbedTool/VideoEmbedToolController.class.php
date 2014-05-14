@@ -48,17 +48,24 @@ class VideoEmbedToolController extends WikiaController {
 			$service->setStart( $request->getInt( 'svStart', 0 ) )
 			        ->setLimit( $request->getInt( 'svSize', 20 ) )
 			        ->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) );
-			$response = $service->getSuggestionsForArticleId( $this->request->getInt('articleId', 0 ) );
 
-			$result = [
-					'searchQuery' => $service->getSuggestionQuery(),
-					'caption' => wfMessage( 'vet-suggestions' )->plain(),
-					'totalItemCount' => $response['totalItemCount'],
-					'nextStartFrom' => $response['nextStartFrom'],
-					'currentSetItemCount' => count($response['items']),
-					'items' => $response['items'],
-					'addMessage' => wfMessage('vet-add-from-preview')->plain()
-			];
+			// Only get suggestions if we have an article
+			$articleId = $this->request->getInt('articleId', 0 );
+			if ( $articleId > 0 ) {
+				$response = $service->getSuggestionsForArticleId( $articleId );
+
+				$result = [
+						'searchQuery' => $service->getSuggestionQuery(),
+						'caption' => wfMessage( 'vet-suggestions' )->plain(),
+						'totalItemCount' => $response['totalItemCount'],
+						'nextStartFrom' => $response['nextStartFrom'],
+						'currentSetItemCount' => count($response['items']),
+						'items' => $response['items'],
+						'addMessage' => wfMessage('vet-add-from-preview')->plain()
+				];
+			} else {
+				$result = [ 'items' => [] ];
+			}
 
 			$this->response->setData( $result );
 		}

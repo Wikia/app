@@ -26,20 +26,24 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserLogin.scss');
-	
+
 		// hide things in the skin
 		$this->wg->SuppressWikiHeader = false;
 		$this->wg->SuppressPageHeader = false;
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
-		
+
 		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
 		$this->code = $this->request->getVal( 'code', $par );
 		$this->username = $this->request->getVal( 'username', '' );
 		$this->password = $this->request->getVal( 'password', '' );
+		$this->editToken = $this->wg->User->getEditToken();
+		$this->loginToken = UserLoginHelper::getLoginToken();
+		$editTokenReq = $this->request->getVal( 'editToken', '' );
+		$loginTokenReq = $this->request->getVal( 'loginToken', '' );
 
 		if ( $this->code == '' ) {
 			$this->result = 'error';
@@ -47,7 +51,16 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $this->wg->request->wasPosted() ) {
+		if ( $this->wg->request->wasPosted() && $this->wg->User->matchEditToken( $editTokenReq ) ) {
+
+			if ( $this->wg->User->isAnon()
+				&& $loginTokenReq !== UserLoginHelper::getLoginToken()
+			) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'sessionfailure' )->escaped();
+				return;
+			}
+
 			if ( $this->username == '' ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
@@ -88,10 +101,11 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
-				$this->wg->User->setCookies();
-				LoginForm::clearLoginToken();
-				UserLoginHelper::clearNotConfirmedUserSession();
-				$userLoginHelper->clearPasswordThrottle( $this->username );
+
+				// Log user in
+				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
+
+				$result = $response->getVal( 'result', '' );
 
 				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
 
@@ -139,8 +153,14 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					$user->saveSettings();
 
 					// redirect user
-					$userPage = $user->getUserPage();
-					$this->wg->out->redirect( $userPage->getFullURL() );
+					if ( $result === 'closurerequested' ) {
+						$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
+						$redirectUrl = $response->getVal( 'redirectUrl' );
+						$this->wg->Out->redirect( $redirectUrl );
+					} else {
+						$userPage = $user->getUserPage();
+						$this->wg->out->redirect( $userPage->getFullURL() );
+					}
 					return;
 
 				}

@@ -101,6 +101,7 @@ $messages['qqq'] = array(
 	'founderprogressbar-list-task-label' => '{{Identical|Task}}',
 	'founderprogressbar-photo-add10-label' => 'Goal.',
 	'founderprogressbar-category-add3-label' => '',
+	'founderprogressbar-browse-page-name' => '{{Identical|Browse}}',
 );
 
 /** Arabic (العربية)
@@ -1100,6 +1101,13 @@ $messages['ja'] = array(
 	'founderprogressbar-wordmark-edit-label' => 'ロゴをアップロードする',
 	'founderprogressbar-blogpost-add-label' => 'ブログの記事を投稿する',
 	'founderprogressbar-bonus-photo-add10-description' => 'さらに画像を追加し、ウィキをより魅力的なものにしましょう。画像を10件追加すると、ボーナスタスクのクレジットを1つ獲得できます。',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'founderprogressbar-task-completed' => 'ಪೂರ್ಣ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2266,6 +2274,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
@@ -2293,7 +2302,7 @@ $messages['zh-hans'] = array(
 	'founderprogressbar-mainpage-edit-label' => '完成您的首页',
 	'founderprogressbar-photo-add10-label' => '达到$1{{PLURAL:$1|照片|照片}}',
 	'founderprogressbar-category-add3-label' => '达到$1{{PLURAL:$1|类别|类别}}',
-	'founderprogressbar-commcentral-visit-label' => '访问创立者与管理人员在红心',
+	'founderprogressbar-commcentral-visit-label' => '访问创始人与管理员中心',
 	'founderprogressbar-commcentral-visit-description' => '你不是一个人！创始人和管理员中心是Wikia分享建议和技巧的社区，您在那里可以找到帮助页面，指导和Wikia员工的联系方式。',
 	'founderprogressbar-wikiactivity-visit-label' => '访问维基动态',
 	'founderprogressbar-profile-edit-label' => '填写您的档案页',
@@ -2328,23 +2337,34 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'founderprogressbar-widget-label' => '{{SITENAME}}的進展',
 	'founderprogressbar-progress-label' => '完成的任務',
 	'founderprogressbar-progress-see-full-list' => '查看完整清單',
 	'founderprogressbar-progress-hide-full-list' => '隱藏完整清單',
 	'founderprogressbar-skip-for-now' => '先跳過',
 	'founderprogressbar-task-completed' => '已完成',
 	'founderprogressbar-list-label' => '{{SITENAME}}的任務',
+	'founderprogressbar-list-description1' => '準備好要推動您的 wiki走上成功之路了嗎？ 完成的所有下面列出來的任務，讓您的進度條達到 100%！您的wiki上的任何人的貢獻都會加進這個任務清單中。',
+	'founderprogressbar-list-description2' => '任務區列出了所有您需要完成的任務。如果您跳過一個任務，它將移動到「已跳過的任務」之中，您仍可以在任何時候完成它們。您是否覺得列表上的某些任務永遠不適合您的維基嗎？别擔心--當只有「已跳過任務」仍未完成時，我們會解鎖您的獎勵任务。完成獎勵任務來彌補你要永遠跳過的任務，讓完成率達到夢寐以求的100%吧。',
 	'founderprogressbar-list-task-label' => '任務',
 	'founderprogressbar-list-skipped-task-label' => '跳過的任務',
 	'founderprogressbar-list-skipped-task-desc' => '您可以在任何時候完成這些。',
+	'founderprogressbar-list-bonus-task-label' => '獎勵任務',
+	'founderprogressbar-list-bonus-task-desc' => '完成任務列表以解鎖其他獎勵任務',
 	'founderprogressbar-task-call-to-action' => '進入該任務',
 	'founderprogressbar-completion-message' => '恭喜 ！你已經做了令人驚異的工作，完成的所有100%的任務 。你的 wiki 已經走向成功之路，或甚至已經成功。繼續保持優異的工作 ！',
+	'founderprogressbar-bonus-task-notice' => '注意：每個獎勵任務都可以多次完成。多完成幾次來達到100%吧。',
+	'founderprogressbar-page-add10-label' => '達到$1{{PLURAL:$1|頁|頁}}',
+	'founderprogressbar-page-add10-description' => '開始你的維基最好的方法就是增加與你的主題相關資訊的頁面。頁面最好至少要有一到二段，且連結到其他頁面。',
 	'founderprogressbar-themedesigner-visit-label' => '自訂您的樣式',
+	'founderprogressbar-themedesigner-visit-description' => '主題設計器允許您為自己的wiki選擇一種樣式，或使用我們簡單的工具，創建您自己的樣式。自訂樣式能的讓您的 wiki 變得獨特。',
 	'founderprogressbar-mainpage-edit-label' => '完成你的首頁',
 	'founderprogressbar-mainpage-edit-description' => '當人們訪問你的 wiki 時，首頁是他們首先看到的。請確保它能告訴他們你的 wiki的主題、他們可以如何編輯 wiki，並突顯出某些 wiki 中最棒的內容。',
 	'founderprogressbar-photo-add10-label' => '達到 $1   {{PLURAL:$1| Photo|圖片}}',
 	'founderprogressbar-photo-add10-description' => '圖片有助於展示你的wiki的主題，而且研究顯示，視覺效果更能吸引人。我們建議如果有的話，每一頁至少放一張圖片，',
 	'founderprogressbar-category-add3-label' => '達到 $1   {{PLURAL:$1| Category|分類}}',
+	'founderprogressbar-category-add3-description' => '分類是組織你的wiki最好的方法之一，也讓人們很容易找到想要的頁面。簡單的分類就好，過多的分類反而可能造成混淆',
+	'founderprogressbar-commcentral-visit-label' => '訪問創建者與管理員中心',
 	'founderprogressbar-profile-edit-label' => '填寫您的檔案頁',
 	'founderprogressbar-profile-edit-description' => '設定檔頁可告訴來你的 wiki的人更多關於你的事，也有助於建立社群的感覺。',
 	'founderprogressbar-photo-add20-label' => '達到 $1 {{PLURAL:$1|Photo|圖片}}',

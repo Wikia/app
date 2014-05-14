@@ -30,6 +30,7 @@ $messages['en'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Prevent auto adoption',
 	'editaccount-label-toggleadopt-allow' => 'Allow auto adoption',
 	'editaccount-label-reason' => 'Reason:',
+	'editaccount-label-clearemail' => 'Clear email address',
 	'editaccount-submit-email' => 'Save and confirm email address',
 	'editaccount-submit-pass' => 'Save password',
 	'editaccount-submit-realname' => 'Save real name',
@@ -99,6 +100,7 @@ $messages['qqq'] = array(
 	'editaccount-label-toggleadopt-allow' => 'Label for option to allow user to automatically adopting a wiki.',
 	'editaccount-label-reason' => 'Label for reason field.
 {{Identical|Reason}}',
+	'editaccount-label-clearemail' => "Label for check box to clear a user's email on disabling their account",
 	'editaccount-submit-pass' => '{{Identical|Save password}}',
 	'editaccount-submit-button' => 'Text of the submission button.
 {{Identical|Save}}',
@@ -1208,10 +1210,13 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author BryghtShadow
  */
 $messages['ja'] = array(
+	'editaccount' => 'アカウントの編集',
 	'editaccount-label-reason' => '理由:',
+	'editaccount-submit-pass' => 'パスワードを保存',
 	'editaccount-submit-button' => '保存',
 	'editaccount-invalid-email' => "''$1'' は有効なメールアドレスではありません。",
 	'editaccount-labal-account-status' => 'アカウントの状態',
@@ -1265,6 +1270,45 @@ $messages['km'] = array(
 	'editaccount-log-entry-close' => 'បានបិទគណនី $2',
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">គណនីនេះត្រូវបានបិទហើយ។</div>', # Fuzzy
 	'right-editaccount' => 'កែប្រែចំណង់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ដទៃ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'editaccount' => 'ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸು',
+	'editaccount-frame-manage' => 'ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸು',
+	'editaccount-frame-usage' => 'ಟಿಪ್ಪಣಿಗಳು',
+	'editaccount-label-select' => 'ಒಂದು ಬಳಕೆದಾರ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+	'editaccount-submit-account' => 'ಖಾತೆಯನ್ನು ನಿರ್ವಹಿಸಿ',
+	'editaccount-frame-account' => 'ಬಳಕೆದಾರ $1 ಖಾತೆಯನ್ನು ಸಂಪಾದಿಸಲಾಗುತ್ತಿದೆ',
+	'editaccount-frame-close' => 'ಬಳಕೆದಾರ ಖಾತೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸು:$1',
+	'editaccount-label-email' => 'ಇ-ಅಂಚೆ ವಿಳಾಸವನ್ನು ಸ್ಥಾಪಿಸಿ',
+	'editaccount-label-pass' => 'ಹೊಸ ಪಾಸ್ವರ್ಡ್  ಹೊಂದಿಸಿ',
+	'editaccount-label-realname' => 'ಹೊಸ ನಿಜನಾಮವನ್ನು ಹೊಂದಿಸು',
+	'editaccount-label-reason' => 'ಕಾರಣ:',
+	'editaccount-submit-email' => 'ಮಿಂಚಂಚೆಯನ್ನು ದೃಢಪಡಿಸಿ ಮತ್ತು ಉಳಿಸಿ',
+	'editaccount-submit-pass' => 'ಪ್ರವೇಶಪದವನ್ನು ಉಳಿಸಿ',
+	'editaccount-submit-realname' => 'ನಿಜನಾಮವನ್ನು ಉಳಿಸಿ',
+	'editaccount-submit-close' => 'ಖಾತೆಯನ್ನು ಮುಚ್ಚಿ',
+	'editaccount-submit-button' => 'ಉಳಿಸಿ',
+	'editaccount-success-email-blank' => 'ಖಾತೆ $1 ಯ ವಿಳಾಸವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ತೆರೆವುಗೊಳಿಸಲಾಗಿದೆ.',
+	'editaccount-success-pass' => '$1 ಪ್ರವೇಶಪದವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-success-realname' => '$1 ರ ನಿಜನಾಮವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ.',
+	'editaccount-success-close' => '$1 ಖಾತೆಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ.',
+	'editaccount-invalid-email' => '"$1" ವು ಒಂದು ಸಿಂಧು ಮಿಂಚಂಚೆ ವಿಳಾಸವಲ್ಲ!',
+	'editaccount-nouser' => 'ಖಾತೆ"$1" ಅಸ್ತಿತ್ವದಲ್ಲಿಲ್ಲ!',
+	'editaccount-labal-account-status' => 'ಖಾತೆಯ ಸ್ಥಿತಿ',
+	'editaccount-labal-email-status' => 'ಮಿಂಚಂಚೆ ಸ್ಥಿತಿ',
+	'editaccount-status-confirmed' => 'ದೃಡಪಡಿಸಿದ',
+	'editaccount-status-unconfirmed' => 'ದೃಡಪಡಿಸದ',
+	'editaccount-status-realuser' => 'ನಿಜ ಬಳಕೆದಾರ',
+	'editaccount-status-tempuser' => 'ತಾತ್ಕಾಲಿಕ ಬಳಕೆದಾರ',
+	'editaccount-log' => 'ಬಳಕೆದಾರ ಖಾತೆಗಳ ದಿನಚರಿ',
+	'editaccount-log-entry-email' => '$2 ಬಳಕೆದಾರರ ಮಿಂಚಂಚೆಯನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-pass' => '$2 ರ ಪ್ರವೇಶಪದವನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-realname' => '$2 ರ ನಿಜನಾಮವನ್ನು ಬದಲಾಯಿಸಲಾಗಿದೆ',
+	'editaccount-log-entry-close' => '$2 ಖಾತೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ',
 );
 
 /** Korean (한국어)
@@ -1914,12 +1958,12 @@ $messages['pt'] = array(
 	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Editar uma conta',
 	'editaccount-frame-usage' => 'Nota',
-	'editaccount-usage' => 'Os dados do utilizador são mantidos em caches separadas para cada wiki. Ao reiniciar a palavra-chave ou o endereço de correio eletrónico, será desfeita somente a cache desta wiki. Para evitar problemas de cache, direcione o utilizador para esta wiki para se autenticar com uma palavra-chave nova.',
+	'editaccount-usage' => 'Os dados do usuário são mantidos em caches separadas para cada wiki. Ao reiniciar a senha ou o endereço de e-mail, será desfeita somente a cache desta wiki. Para evitar problemas de cache, direcione o usuário para esta wiki para se autenticar com uma senha nova.',
 	'editaccount-label-select' => 'Selecionar uma conta de utilizador',
 	'editaccount-submit-account' => 'Administrar conta',
 	'editaccount-frame-account' => 'A editar a conta: $1',
 	'editaccount-frame-close' => 'Desativar a conta: $1',
-	'editaccount-label-email' => 'Definir endereço de correio eletrónico novo',
+	'editaccount-label-email' => 'Definir novo endereço de e-mail',
 	'editaccount-label-pass' => 'Definir palavra-chave nova',
 	'editaccount-label-realname' => 'Definir nome verdadeiro novo',
 	'editaccount-label-clearunsub' => 'Não subscrito',
@@ -1927,7 +1971,7 @@ $messages['pt'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Impedir a adoção automática de wikis',
 	'editaccount-label-toggleadopt-allow' => 'Permitir a adoção automática de wikis',
 	'editaccount-label-reason' => 'Motivo:',
-	'editaccount-submit-email' => 'Gravar e confirmar o correio eletrónico',
+	'editaccount-submit-email' => 'Salvar e confirmar endereço de e-mail',
 	'editaccount-submit-pass' => 'Gravar palavra-chave',
 	'editaccount-submit-realname' => 'Gravar o nome verdadeiro',
 	'editaccount-submit-clearunsub' => 'Limpar indicação de não subscrito',
@@ -1965,7 +2009,7 @@ $messages['pt'] = array(
 	'editaccount-email-change-requested' => 'O utilizador solicitou a alteração do correio eletrónico para $1 nas Preferências. Para confirmar a alteração, introduza o novo endereço de correio eletrónico pedido no campo abaixo e clique "Gravar e confirmar."',
 	'editaccount-log' => 'Registo de contas de utilizador',
 	'editaccount-log-header' => 'Esta página lista as alterações feitas às suas preferências pela Equipa da Wikia.',
-	'editaccount-log-entry-email' => 'alterou o correio eletrónico do utilizador $2',
+	'editaccount-log-entry-email' => 'alterou o e-mail do usuário $2',
 	'editaccount-log-entry-pass' => 'alterou a palavra-chave do utilizador $2',
 	'editaccount-log-entry-realname' => 'alterou o nome verdadeiro do utilizador $2',
 	'editaccount-log-entry-close' => 'desativou a conta $2',

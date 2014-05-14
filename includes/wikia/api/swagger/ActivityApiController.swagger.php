@@ -52,7 +52,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Activity/LatestActivity",
+ * 	path="/Activity/LatestActivity",
  * 	description="Get information about the latest user activity on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

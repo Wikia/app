@@ -36,4 +36,21 @@ class SQLBuilderUpdateTest extends FluentSqlTest {
 
 		$this->assertEquals($expected, $actual);
 	}
+
+	public function testUpdate3() {
+		$expected = "
+			UPDATE some_table
+			SET some_field = null, some_other_field = '', another_field = 'null'
+			WHERE something = '4'
+		";
+
+		$sql = (new SQL)
+			->UPDATE('some_table')
+			->SET_RAW('some_field', 'null')
+				->SET('some_other_field', null)
+				->SET('another_field', 'null')
+			->WHERE('something')->EQUAL_TO(4);
+
+		$this->assertEquals($expected, $sql->injectParams(null, $sql->build()));
+	}
 }

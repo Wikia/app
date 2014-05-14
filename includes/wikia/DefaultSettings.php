@@ -1272,7 +1272,7 @@ $wgAdDriverUseGptMobile = true;
  * @name $wgAdDriverUseGptMobileDisabledInLangs
  * Disable wgAdDriverUseGptMobile if wiki is this language
  */
-$wgAdDriverUseGptMobileDisabledInLangs = ['en'];
+$wgAdDriverUseGptMobileDisabledInLangs = [];
 
 /**
  * trusted proxy service registry
@@ -1307,25 +1307,6 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Null means enabled on all and disabled for languages defined in $wgOasisResponsiveDisabledInLangs
  */
 $wgOasisResponsive = null;
-
-/**
- * @name $wgOasisResponsiveDisabledInLangs
- * Disables the Oasis responsive layout in those languages
- */
-$wgOasisResponsiveDisabledInLangs = [];
-
-/**
- * @name $wgOasisResponsiveLimited
- * Enables the limited version of Oasis responsive layout
- * Null means disabled on all and enabled for languages defined in $wgOasisResponsiveLimitedInLangs
- */
-$wgOasisResponsiveLimited = null;
-
-/**
- * @name $wgOasisResponsiveLimitedInLangs
- * Enables the limited version of Oasis responsive layout on given languages
- */
-$wgOasisResponsiveLimitedInLangs = ['de'];
 
 /**
  * @name $wgDisableReportTime
@@ -1435,3 +1416,9 @@ $wgEnableLyricsApi = false;
  * iTunes affiliate token needed in new Lyrics API
  */
 $wgLyricsItunesAffiliateToken = '';
+
+/*
+ * @name wgEnableSpecialSearchCaching
+ * Enables caching of search results on CDN
+ */
+$wgEnableSpecialSearchCaching = true;

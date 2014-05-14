@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWAlienExtensionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -30,6 +30,8 @@ OO.inheritClass( ve.ce.MWAlienExtensionNode, ve.ce.MWExtensionNode );
 /* Static Properties */
 
 ve.ce.MWAlienExtensionNode.static.name = 'mwAlienExtension';
+
+ve.ce.MWAlienExtensionNode.static.primaryCommandName = 'alienExtension';
 
 /* Registration */
 

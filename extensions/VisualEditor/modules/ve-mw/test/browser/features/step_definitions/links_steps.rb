@@ -1,9 +1,13 @@
 When(/^I click the Link button$/) do
+  sleep 1 #Chrome seems to not honor when_present correctly as of 5 Dec 2013
   on(VisualEditorPage).ve_link_icon_element.when_present.click
 end
 
 Given(/^I can see the Link User Inteface$/) do
- on(VisualEditorPage).ve_link_ui.should match Regexp.escape('Hyperlink')
+  on(VisualEditorPage) do |page|
+    page.ve_link_ui_element.when_present
+    page.ve_link_ui.should match Regexp.escape("Hyperlink")
+  end
 end
 
 When(/^I click the blue text$/) do
@@ -17,9 +21,9 @@ end
 Then(/^an external link appears in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.links_diff_view.include? 'example.com'
+      page.links_diff_view.include? "example.com"
     end
-    page.links_diff_view.should match Regexp.escape('[http://www.example.com Editing] ')
+    page.links_diff_view.should match Regexp.escape("[http://www.example.com Editing] ")
   end
 end
 
@@ -30,9 +34,9 @@ end
 Then(/^an internal link appears in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.links_diff_view.include? 'Main Page'
+      page.links_diff_view.include? "Main Page"
     end
-    page.links_diff_view.should match Regexp.escape('[[Main Page|Editing]]')
+    page.links_diff_view.should match Regexp.escape("[[Main Page|Editing]]")
   end
 end
 
@@ -43,9 +47,9 @@ end
 Then(/^a non\-existing link appears in the diff view$/) do
   on(VisualEditorPage) do |page|
     page.wait_until(10) do
-      page.links_diff_view.include? 'DoesNotExist'
+      page.links_diff_view.include? "DoesNotExist"
     end
-    page.links_diff_view.should match Regexp.escape('[[DoesNotExist|Editing]]')
+    page.links_diff_view.should match Regexp.escape("[[DoesNotExist|Editing]]")
   end
 end
 

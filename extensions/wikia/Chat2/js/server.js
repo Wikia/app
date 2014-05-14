@@ -1,132 +1,89 @@
 /** REQUIRES, OTHER SETUP **/
 var config = require("./server_config.js");
-var cluster = require('cluster');
-// redis store is necessary to support more than 1 process
-var RedisStore = require('socket.io/lib/stores/redis')
-  , redis  = require('socket.io/node_modules/redis')
-  , pub    = redis.createClient()
-  , sub    = redis.createClient()
-  , client = redis.createClient();
-redisStore = new RedisStore({
-		  redisPub : pub
-		, redisSub : sub
-		, redisClient : client
-		});
 
-if (cluster.isMaster) {
-  // Fork workers.
-	var numCPUs = require('os').cpus().length;
-	numCPUs = 4;  // just hardcode to 4 for now
-  for (var i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+var app = require('express').createServer()
+    , jade = require('jade')
+    , sio = require('./lib/socket.io.8.7/socket.io.js')
+    , _ = require('underscore')._
+    , Backbone = require('backbone')
+    , storage = require('./storage').redisFactory()
+    , models = require('./models/models')
+    , mwBridge = require('./WMBridge.js').WMBridge
+    , loggerModule = require('./logger.js')
+    , tracker = require('./tracker.js')
+    , logger = loggerModule.logger;
+var http = require("http");
 
-  cluster.on('online', function(worker) {
-    console.log('A worker with #' + worker.id);
-  });
-  cluster.on('listening', function(worker, address) {
-    console.log('A worker is now connected to ' + address.address + ':' + address.port);
-  });
-  cluster.on('exit', function(worker, code, signal) {
-    console.log('worker ' + worker.process.pid + ' died');
-  });
+var monitoring = require('./monitoring.js');
+monitoring.startMonitoring(50000, storage);
+// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
+//process.on('uncaughtException', function (err) {
+//  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
+//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
+//	process.exit(1);
+//});
 
-} else {
+/** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
 
-	var app = require('express').createServer()
-	    , jade = require('jade')
-	    , sio = require('./lib/socket.io.8.7/socket.io.js')
-	    , _ = require('underscore')._
-	    , Backbone = require('backbone')
-	    , storage = require('./storage').redisFactory()
-	    , models = require('./models/models')
-	    , mwBridge = require('./WMBridge.js').WMBridge
-	    , loggerModule = require('./logger.js')
-	    , tracker = require('./tracker.js')
-	    , logger = loggerModule.logger;
+// This includes and starts the API server (which MediaWiki makes requests to).
+logger.info("== Starting the API Server ==");
+require("./server_api.js");
 
-	var monitoring = require('./monitoring.js');
-	monitoring.startMonitoring(50000, storage);
+// Start the Node Chat server (which browsers connect to).
+logger.info("== Starting Node Chat Server ==");
+tracker.trackServerStart();
+//configure express to use jade
+app.set('view engine', 'jade');
+app.set('view options', {layout: false});
 
-	// TODO: Consider using this to catch uncaught exceptions (and then exit anyway):
-	//process.on('uncaughtException', function (err) {
-	//  logger.error('Caught exception: ' + err, 'Stacktrace: ', err.stack, 'Full, raw error: ', err);
-	//	// TODO: is there some way to email us here (if on production) so that we know the server crashed?
-	//	process.exit(1);
-	//});
+//setup route (just for healthcheck)
+app.get('/*', function(req, res){
+    res.send('ok');
+});
 
-	/** DONE WITH CONFIGS & REQUIRES... BELOW IS THE ACTUAL APP CODE! **/
+// TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
+logger.info("Pruning old room memberships...");
+storage.purgeAllMembers();
 
-	// This includes and starts the API server (which MediaWiki makes requests to).
-	logger.info("== Starting the API Server ==");
-	require("./server_api.js");
 
-	// Start the Node Chat server (which browsers connect to).
-	logger.info("== Starting Node Chat Server ==");
-	tracker.trackServerStart();
-	//configure express to use jade
-	app.set('view engine', 'jade');
-	app.set('view options', {layout: false});
+logger.info('i am going to listening on http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
 
-	//setup routes
-	app.get('/*.(js|css)', function(req, res){
-	    res.sendfile('./'+req.url);
-	});
+app.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
+	var addr = app.address();
+	logger.info('   app listening on http://' + addr.address + ':' + addr.port);
+});
 
-	app.get('/', function(req, res){
-	    res.render('index');
-	});
 
-	app.get('/healthcheck', function(req, res){
-		res.send('ok\n');
-	});
+var io = sio.listen(app);
 
-	// TODO: MUST REMOVE THIS WHEN WE HAVE MULTIPLE NODE SERVERS! (and figure out another solution to prune entries who are no longer connected... perhaps prune any time you try to send to them & they're not there?).
-	logger.info("Pruning old room memberships...");
-	storage.purgeAllMembers();
+logger.info("Updating runtime stats");
 
-	logger.info('App config http://' +  config.CHAT_SERVER_HOST + ':' + config.CHAT_SERVER_PORT);
+storage.getRuntimeStats(function(data) {
+	var started = parseInt(new Date().getTime());
+	if ( (!data) || isNaN(data.runtime) || isNaN(data.laststart))  {
+		data = {
+			laststart : started,
+			startcount: 0,
+			runtime: 0
+		};
+	} else {
+		data.startcount++;
+		data.runtime = parseInt(data.runtime) + started - parseInt(data.laststart);
+		data.laststart = started;
+	}
+	logger.debug(data);
+	storage.setRuntimeStats(data);
+}, null, startServer);
 
-	server = app.listen(config.CHAT_SERVER_PORT, config.CHAT_SERVER_HOST, function () {
-		var addr = app.address();
-		logger.info('App listening on http://' + addr.address + ':' + addr.port);
-	});
+//create local state
+var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
 
-	var io = sio.listen(server);
-
-	io.configure(function () {
-		io.set('flash policy port', config.FLASH_POLICY_PORT );
-		io.set('transports', [ 'xhr-polling' ]);
-		// TODO: get websocket working again
-		// io.set('transports', [ 'websocket', 'xhr-polling' ]);
-		io.set('log level', loggerModule.getSocketIOLogLevel());
-		io.set('authorization', authConnection );
-		io.set('store', redisStore);
-	});
-
-	logger.info("Updating runtime stats");
-
-	storage.getRuntimeStats(function(data) {
-		var started = parseInt(new Date().getTime());
-		if ( (!data) || isNaN(data.runtime) || isNaN(data.laststart))  {
-			data = {
-				laststart : started,
-				startcount: 0,
-				runtime: 0
-			};
-		} else {
-			data.startcount++;
-			data.runtime = parseInt(data.runtime) + started - parseInt(data.laststart);
-			data.laststart = started;
-		}
-		logger.debug(data);
-		storage.setRuntimeStats(data);
-	}, null, startServer);
-
-	//create local state
-	var sessionIdsByKey = {}; // for each room/username combo, store the sessionId so that we can send targeted messages.
-
-}
+io.configure(function () {
+	io.set('flash policy port', config.FLASH_POLICY_PORT );
+	io.set('transports', [  'xhr-polling'  ]);
+	io.set('log level', loggerModule.getSocketIOLogLevel());
+	io.set('authorization', authConnection );
+});
 
 function startServer() {
 	logger.info("Chat server running on port " + config.CHAT_SERVER_PORT);
@@ -295,6 +252,26 @@ function authConnection(handshakeData, authcallback){
 	var key = handshakeData.query.key;
 
 	var callback = function(data) {
+		if(!config.validateConnection(data.wgCityId)) {
+			logger.warning("User failed authentication. Wrong node js server for : ", data);
+			authcallback(null, false); // error first callback style
+			return false;
+		}
+
+		if(!data.activeBasket) {
+			logger.warning("User failed authentication. Wrong node js server for : " + data.wgCityId);
+			authcallback(null, false); // error first callback style
+			return false;
+		}
+
+		if(!config.validateActiveBasket(data.activeBasket)) {
+			io.sockets.emit({
+				event: 'disableReconnect'
+			});
+
+			logger.error('this basket of servers is not valid now and it should not be in use we are going to disconnect every one');
+			authcallback(null, false); // error first callback style
+		}
 
 		if((data.canChat) && (data.isLoggedIn) && data.username == name ){
 			var errback = function() {
@@ -421,9 +398,8 @@ function finishConnectingUser(client, socket ){
 		// If this same user is already in the sessionIdsByKey hash, then they must be connected in
 		// another browser. Kick that other instance before continuing (multiple instances cause all kinds of weirdness.
 		var existingId = sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)];
-		logger.debug("existingId=" + existingId);
-		var oldClient = (typeof existingId != "undefined") ? socket.socket(existingId) : false;
-		logger.debug("oldClient=" + oldClient);
+
+		var oldClient = existingId != "undefined" ? socket.socket(existingId):false;
 
 		if(oldClient && oldClient.userKey != client.userKey ){
 			oldClient.donotSendPart = true;
@@ -471,7 +447,7 @@ function formallyAddClient(client, socket, connectedUser){
 	// Add the user to the set of users in the room in redis.
 	var userData = client.myUser.attributes;
 	delete userData.id;
-	logger.debug("clientConnected");
+	logger.debug("clientConencted");
 	tracker.trackEvent(client, 'connect');
 	sessionIdsByKey[config.getKey_userInRoom(client.myUser.get('name'), client.roomId)] = client.sessionId;
 	storage.setUserData(client.roomId, client.myUser.get('name'), userData,
@@ -911,7 +887,7 @@ function broadcastToRoom(client, socket, data, users, callback){
 	// Get the set of members from redis.
 	logger.debug("Broadcasting to room " + roomId);
 	storage.getUsersInRoom(roomId, function(usernameToUser) {
-		//logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ));
+		logger.debug("Raw data from key " + config.getKey_usersInRoom( roomId ) + ": ", "usernameToData:", users);
 
 		var usernameToUserFiltered = {};
 
@@ -921,11 +897,11 @@ function broadcastToRoom(client, socket, data, users, callback){
 					usernameToUserFiltered[users[i]] = usernameToUser[users[i]];
 				}
 			}
-		} else if (usernameToUser != 'undefined') {
+		} else {
 			usernameToUserFiltered = usernameToUser;
 		}
 
-		//logger.debug(usernameToUserFiltered);
+		//logger.debug(usernameToDataFiltered);
 		_.each(usernameToUserFiltered, function(userModel){
 			logger.debug("\tSENDING TO " + userModel.get('name'));
 			var socketId = sessionIdsByKey[ config.getKey_userInRoom(userModel.get('name'), roomId) ];

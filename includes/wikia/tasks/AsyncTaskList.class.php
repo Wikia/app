@@ -144,8 +144,9 @@ class AsyncTaskList {
 	/**
 	 * set this task to execute sometime in the future instead of ASAP
 	 *
-	 * @param int $time number of seconds to delay the task
+	 * @param string $time any format supported by strtotime()
 	 * @return $this
+	 * @link http://php.net/strtotime
 	 */
 	public function delay($time) {
 		$this->delay = $time;
@@ -154,7 +155,7 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * skip task de-duplication
+	 * enable task de-duplication check
 	 *
 	 * @return $this
 	 */
@@ -173,7 +174,7 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP, $wgStagingList;
+		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
 
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
@@ -230,7 +231,7 @@ class AsyncTaskList {
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
 			];
-		} elseif (in_array($hostname, $wgStagingList)) { // force preview/verify to run on preview/verify server
+		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname])) { // force preview/verify to run on preview/verify server
 			$payload->kwargs->executor = [
 				'method' => 'remote_shell',
 				'runner' => [
