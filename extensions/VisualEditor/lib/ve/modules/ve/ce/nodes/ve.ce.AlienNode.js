@@ -28,11 +28,6 @@ ve.ce.AlienNode = function VeCeAlienNode( model, config ) {
 
 	// DOM changes
 	this.$element.addClass( 've-ce-alienNode' );
-
-	// TODO: Find a better way to do this.
-	// Update tooltip in constructor to allow Wikia messages to load first
-	ve.ce.AlienNode.static.$phantomTemplate
-		.attr( 'title', ve.msg( 'wikia-visualeditor-aliennode-tooltip' ) );
 };
 
 /* Inheritance */
@@ -47,12 +42,21 @@ OO.mixinClass( ve.ce.AlienNode, ve.ce.GeneratedContentNode );
 
 ve.ce.AlienNode.static.name = 'alien';
 
-ve.ce.AlienNode.static.$phantomTemplate = ve.ce.AlienNode.static.$phantomTemplate.clone()
-	.addClass( 've-ce-alienNode-phantom' )
-	.attr( 'title', ve.msg( 'visualeditor-aliennode-tooltip' ) );
-
 /* Methods */
 
+/**
+ * @inheritdoc
+ */
+ve.ce.AlienNode.prototype.createPhantom = function () {
+	// Mixin method
+	return ve.ce.ProtectedNode.prototype.createPhantom.call( this )
+		.addClass( 've-ce-alienNode-phantom' )
+		.attr( 'title', ve.msg( 'visualeditor-aliennode-tooltip' ) );
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ce.AlienNode.prototype.generateContents = function ( config )  {
 	var deferred = $.Deferred();
 	deferred.resolve( ( config && config.domElements ) || this.model.getAttribute( 'domElements' ) || [] );

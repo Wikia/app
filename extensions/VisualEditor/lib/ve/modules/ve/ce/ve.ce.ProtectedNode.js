@@ -34,31 +34,31 @@ ve.ce.ProtectedNode = function VeCeProtectedNode( $phantomable ) {
 
 ve.ce.ProtectedNode.static = {};
 
+/* Methods */
+
 /**
- * Template for shield elements.
+ * Create a shield element.
  *
  * Uses data URI to inject a 1x1 transparent GIF image into the DOM.
  *
- * @property {jQuery}
- * @static
- * @inheritable
+ * @returns {jQuery} A shield element
  */
-ve.ce.ProtectedNode.static.$shieldTemplate = $( '<img>' )
-	.addClass( 've-ce-protectedNode-shield' )
-	.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' );
+ve.ce.ProtectedNode.prototype.createShield = function () {
+	return this.$( '<img>' )
+		.addClass( 've-ce-protectedNode-shield' )
+		.attr( 'src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' );
+};
 
 /**
- * Phantom element template.
+ * Create a phantom element.
  *
- * @property {jQuery}
- * @static
- * @inheritable
+ * @returns {jQuery} A phantom element
  */
-ve.ce.ProtectedNode.static.$phantomTemplate = $( '<div>' )
-	.addClass( 've-ce-protectedNode-phantom' )
-	.attr( 'draggable', false );
-
-/* Methods */
+ve.ce.ProtectedNode.prototype.createPhantom = function () {
+	return this.$( '<div>' )
+		.addClass( 've-ce-protectedNode-phantom' )
+		.attr( 'draggable', false );
+};
 
 /**
  * Handle setup events.
@@ -67,8 +67,7 @@ ve.ce.ProtectedNode.static.$phantomTemplate = $( '<div>' )
  */
 ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 	var $shield,
-		node = this,
-		$shieldTemplate = this.constructor.static.$shieldTemplate;
+		node = this;
 
 	// Exit if already setup or not unattached
 	if ( this.isSetup || !this.root ) {
@@ -105,7 +104,7 @@ ve.ce.ProtectedNode.prototype.onProtectedSetup = function () {
 			) {
 				return;
 			}
-			$shield = node.$( node.$.context.importNode( $shieldTemplate[0], true ) )
+			$shield = node.createShield()
 				.appendTo( $this )
 				.on( 'dblclick', function () {
 					node.emit( 'dblclick' );
@@ -224,14 +223,13 @@ ve.ce.ProtectedNode.prototype.onProtectedResizeStart = function () {
  * @method
  */
 ve.ce.ProtectedNode.prototype.createPhantoms = function () {
-	var $phantomTemplate = this.constructor.static.$phantomTemplate,
-		surface = this.root.getSurface(),
+	var surface = this.root.getSurface(),
 		node = this;
 
 	this.$phantomable.find( '.ve-ce-protectedNode-shield:visible' ).each(
 		ve.bind( function () {
 			this.$phantoms = this.$phantoms.add(
-				this.$( this.$.context.importNode( $phantomTemplate[0], true ) )
+				this.createPhantom()
 					.on( 'mousedown', ve.bind( this.onPhantomMouseDown, this ) )
 					.on( 'dblclick', function () {
 						node.emit( 'dblclick' );
