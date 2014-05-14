@@ -20,10 +20,10 @@ abstract class BaseTask {
 	protected $createdBy;
 
 	/** @var \Title title instantiation of $this->titleId */
-	protected $title;
+	protected $title = null;
 
 	/** @var int the title id this task is operating on, if any. */
-	protected $titleId;
+	protected $titleId = null;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -34,12 +34,15 @@ abstract class BaseTask {
 	/** @var boolean wrapper for AsyncTaskList->dupCheck() */
 	private $dupCheck = false;
 
+	/** @var string wrapper for AsyncTaskList->delay() */
+	private $delay = null;
+
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
 	 * inserting large, serialized classes into rabbitmq
 	 */
 	public function init() {
-		if (!$this->titleId) {
+		if ($this->titleId === null) {
 			return;
 		}
 
@@ -156,6 +159,10 @@ abstract class BaseTask {
 			$taskList->dupCheck();
 		}
 
+		if ($this->delay) {
+			$taskList->delay($this->delay);
+		}
+
 		return $taskList->queue();
 	}
 
@@ -211,6 +218,11 @@ abstract class BaseTask {
 		}
 	}
 
+	/**
+	 * Set this task to operate on a specific title
+	 * @param int $titleId
+	 * @return $this
+	 */
 	public function titleId($titleId) {
 		$this->titleId = $titleId;
 
@@ -218,21 +230,51 @@ abstract class BaseTask {
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
+
+	/**
+	 * @see AsyncTaskList::wikiId
+	 * @param $wikiId
+	 * @return $this
+	 */
 	public function wikiId($wikiId) {
 		$this->wikiId = $wikiId;
 		return $this;
 	}
 
+	/**
+	 * @see AsyncTaskList::prioritize
+	 * @return $this
+	 */
 	public function prioritize() {
 		return $this->setPriority(PriorityQueue::NAME);
 	}
 
+	/**
+	 * @see AsyncTaskList::setPriority
+	 * @param $queueName
+	 * @return $this
+	 */
 	public function setPriority($queueName) {
 		$this->queueName = $queueName;
 		return $this;
 	}
 
+	/**
+	 * @see AsyncTaskList::dupCheck
+	 * @return $this
+	 */
 	public function dupCheck() {
 		$this->dupCheck = true;
+		return $this;
+	}
+
+	/**
+	 * @see AsyncTaskList::delay
+	 * @param $time
+	 * @return $this
+	 */
+	public function delay($time) {
+		$this->delay = $time;
+		return $this;
 	}
 }
