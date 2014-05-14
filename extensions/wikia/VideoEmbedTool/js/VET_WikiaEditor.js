@@ -117,6 +117,6 @@
 		window.vetLoader.load(options);
 	};
 
-	window.VET_WikiaEditor = editorVET; // jshint ignore:line
+	window.vetWikiaEditor = editorVET;
 
 })(window, jQuery);

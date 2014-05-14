@@ -1,4 +1,7 @@
+/* global WikiaEditor, WMU_show, WikiaPhotoGallery, insertTags, skin, wmu_imagebutton */
 (function(window, $) {
+	'use strict';
+
 	var buttons = window.wgEditorExtraButtons,
 		extensionsPath = window.wgExtensionsPath,
 		mediawikiButtons = window.mwCustomEditButtons;
@@ -8,7 +11,7 @@
 	}
 
 	function checkGallery() {
-		return typeof window.WikiaPhotoGallery != 'undefined';
+		return typeof window.WikiaPhotoGallery !== 'undefined';
 	}
 
 	function getTextarea() {
@@ -27,7 +30,7 @@
 		forceLogin: true,
 		clicksource: function() {
 			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-				WMU_show({});
+				WMU_show({}); // jshint ignore:line
 			});
 		},
 		ckcommand: 'addimage'
@@ -49,7 +52,7 @@
 		precondition: checkGallery
 	};
 
-	buttons['InsertSlideshow'] = {
+	buttons.InsertSlideshow = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slideshow',
 		titleId: 'wikia-editor-media-slideshow-tooltip',
@@ -65,7 +68,7 @@
 		precondition: checkGallery
 	};
 
-	buttons['InsertSlider'] = {
+	buttons.InsertSlider = {
 		type: 'button',
 		labelId: 'wikia-editor-media-slider',
 		titleId: 'wikia-editor-media-slider-tooltip',
@@ -82,7 +85,7 @@
 	};
 
 	if( window.wgEnableVideoToolExt ) {
-		buttons['InsertVideo'] = {
+		buttons.InsertVideo = {
 			type: 'button',
 			labelId: 'wikia-editor-media-video',
 			titleId: 'wikia-editor-media-video-tooltip',
@@ -90,7 +93,7 @@
 			forceLogin: true,
 			clicksource: function() {
 				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					window.VET_WikiaEditor({
+					window.vetWikiaEditor({
 						target: {
 							id: 'mw-editbutton-vet'
 						}
@@ -101,33 +104,33 @@
 		};
 	}
 
-	buttons['SourceBold'] = {
+	buttons.SourceBold = {
 		type: 'button',
 		labelId: 'wikia-editor-source-bold',
 		titleId: 'wikia-editor-source-bold-tooltip',
 		className: 'cke_button_bold',
 		clicksource: function() {
-			insertTags( "'''", "'''", "Bold text", getTextarea());
+			insertTags( "'''", "'''", 'Bold text', getTextarea());
 		}
 	};
 
-	buttons['SourceItalic'] = {
+	buttons.SourceItalic = {
 		type: 'button',
 		labelId: 'wikia-editor-source-italic',
 		titleId: 'wikia-editor-source-italic-tooltip',
 		className: 'cke_button_italic',
 		clicksource: function() {
-			insertTags( "''", "''", "Italic text", getTextarea());
+			insertTags( "''", "''", 'Italic text', getTextarea());
 		}
 	};
 
-	buttons['SourceLink'] = {
+	buttons.SourceLink = {
 		type: 'button',
 		labelId: 'wikia-editor-source-link',
 		titleId: 'wikia-editor-source-link-tooltip',
 		className: 'cke_button_link',
 		clicksource: function() {
-			insertTags( "[[", "]]", "Link title", getTextarea());
+			insertTags( '[[', ']]', 'Link title', getTextarea());
 		}
 	};
 
@@ -135,15 +138,15 @@
 	 * Mediawiki toolbar buttons (Oasis skin only)
 	 */
 
-	if ( skin == 'oasis' && mediawikiButtons ) {
+	if ( skin === 'oasis' && mediawikiButtons ) {
 		if ( window.wgEnableWikiaMiniUploadExt ) {
 			mediawikiButtons.push({
 				imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
-				speedTip: wmu_imagebutton,
+				speedTip: wmu_imagebutton, // jshint ignore:line
 				imageId: 'mw-editbutton-wmu',
 				onclick: function( event ) {
 					WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-						WMU_show( event );
+						WMU_show( event ); // jshint ignore:line
 					});
 				}
 			});
@@ -170,11 +173,11 @@
 				imageId: 'mw-editbutton-vet',
 				onclick: function( event ) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						window.VET_WikiaEditor( event );
+						window.vetWikiaEditor( event );
 					});
 				}
 			});
 		}
 	}
 
-})(this, jQuery);
+})(window, jQuery);
