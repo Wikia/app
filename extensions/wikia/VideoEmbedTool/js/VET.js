@@ -389,45 +389,45 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					screenType = jqXHR.getResponseHeader('X-Screen-Type');
 				}
 				switch ($.trim(screenType)) {
-				case 'error':
-					data.responseText = data.responseText.replace(/<script.*script>/, '');
-					GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
-					break;
-				case 'summary':
-					switchScreen('Summary');
-					$('#VideoEmbedBack').hide();
-					$('#VideoEmbed' + curScreen).html(data.responseText);
-					updateHeader();
+					case 'error':
+						data.responseText = data.responseText.replace(/<script.*script>/, '');
+						GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+						break;
+					case 'summary':
+						switchScreen('Summary');
+						$('#VideoEmbedBack').hide();
+						$('#VideoEmbed' + curScreen).html(data.responseText);
+						updateHeader();
 
-					if (!$('#VideoEmbedCreate').length && !$('#VideoEmbedReplace').length) {
-						wikitext = $('#VideoEmbedTag').val();
-						options = {};
+						if (!$('#VideoEmbedCreate').length && !$('#VideoEmbedReplace').length) {
+							wikitext = $('#VideoEmbedTag').val();
+							options = {};
 
-						if (wikitext) {
-							options.wikitext = wikitext;
-						}
-						if ($('#VideoEmbedLayoutLeft').is(':checked')) {
-							options.align = 'left';
-						} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
-							options.align = 'center';
+							if (wikitext) {
+								options.wikitext = wikitext;
+							}
+							if ($('#VideoEmbedLayoutLeft').is(':checked')) {
+								options.align = 'left';
+							} else if ($('#VideoEmbedLayoutCenter').is(':checked')) {
+								options.align = 'center';
+							} else {
+								options.align = null;
+							}
+
+							options.caption = $('#VideoEmbedCaption').val();
+
+							options.placeholderIndex = embedPresets.placeholderIndex;
+
+							callbackAfterEmbed(options);
 						} else {
-							options.align = null;
+							$('#VideoEmbedSuccess').hide();
+							$('#VideoEmbedTag').hide();
+							$('#VideoEmbedPageSuccess').show();
 						}
-
-						options.caption = $('#VideoEmbedCaption').val();
-
-						options.placeholderIndex = embedPresets.placeholderIndex;
-
-						callbackAfterEmbed(options);
-					} else {
-						$('#VideoEmbedSuccess').hide();
-						$('#VideoEmbedTag').hide();
-						$('#VideoEmbedPageSuccess').show();
+						break;
+					default:
+						break;
 					}
-					break;
-				default:
-					break;
-				}
 			}
 		};
 
