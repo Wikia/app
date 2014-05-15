@@ -7,7 +7,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IvaApiWrapper';
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
-	protected static $FEED_URL_ASSET = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets()?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
+	protected static $FEED_URL_ASSET = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
 	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
 
 	private static $VIDEO_SETS = array(
@@ -442,8 +442,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	// exclude song and movie types
 	protected static $EXCLUDE_MEDIA_IDS = [
-		3, 12, 14, 15, 33, 36,	// song types
-		0, 5, 6, 10, 20,		// movie types
+		3, 12, 14, 15, 33, 36,
+		0, 5, 6, 10, 20,
 	];
 
 	protected static $MEDIA_IDS_MOVIE = [ 0, 5, 6, 10, 20 ];
