@@ -4,6 +4,9 @@ class MixedFeedModel extends WikiaModel {
 	const GA_ACCOUNT = 62731403;
 	const MIN_IMAGE_SIZE = 200;
 	const DAY_QUARTER = 21600;
+	const FAKE_HUB_GAMEOFTHRONES = -1;
+	const FAKE_HUB_ELDERSCROLLS = -2;
+	const FAKE_HUB_MARVEL = -3;
 	private $ga;
 	private $quarter;
 

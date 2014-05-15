@@ -16,9 +16,9 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	];
 
 	protected $customRss = [
-		'gameofthrones' => -1,
-		'elderscrolls' => -2,
-		'marvel' => -3
+		'gameofthrones' => MixedFeedModel::FAKE_HUB_GAMEOFTHRONES,
+		'elderscrolls' => MixedFeedModel::FAKE_HUB_ELDERSCROLLS,
+		'marvel' => MixedFeedModel::FAKE_HUB_MARVEL
 	];
 
 	/**
