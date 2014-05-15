@@ -55,7 +55,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'contentpages',
-				'max' => '3',
+				'max' => '5',
 			),
 			array(
 				'type' => 'int',
@@ -82,7 +82,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'contentpages',
-				'max' => '3',
+				'max' => '5',
 			),
 			array(
 				'type' => 'int',

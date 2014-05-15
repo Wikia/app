@@ -379,6 +379,9 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
+	if ( window.veTrack ) {
+		veTrack( { action: 've-edit-page-stop' } );
+	}
 	mw.hook( 've.activationComplete' ).fire();
 };
 
