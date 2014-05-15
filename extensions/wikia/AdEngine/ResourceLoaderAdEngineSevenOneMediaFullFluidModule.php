@@ -6,14 +6,12 @@ class ResourceLoaderAdEngineSevenOneMediaFullFluidModule extends ResourceLoaderM
 	const CACHE_BUSTER = 5;   // increase this any time the local files change
 
 	private function generateData() {
-		$random = mt_rand();
-
-		$global = Http::get('http://ad.71i.de/global_js/globalV6.js?' . $random);
+		$global = Http::get('http://ad.71i.de/global_js/globalV6.js');
 		if ($global === false) {
 			return false;
 		}
 
-		$site = Http::get('http://ad.71i.de/global_js/Sites/wikia.js?' . $random);
+		$site = Http::get('http://ad.71i.de/global_js/Sites/wikia.js');
 		if ($site === false) {
 			return false;
 		}
