@@ -22,7 +22,6 @@ ve.ce.WikiaInlineVideoNode = function VeCeWikiaInlineVideoNode( model, config ) 
 
 	// Mixin constructors
 	ve.ce.WikiaVideoNode.call( this );
-	alert('wikia inline video node inited');
 };
 
 /* Inheritance */
