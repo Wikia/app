@@ -32,8 +32,8 @@ class CleanupCommentsIndex {
 	 * Check the comments_index table for bad records. Emits a line to STDOUT
 	 * indicating the how many were found.
 	 *
-	 * @param DatabaseMysql
-	 * @param string the database name
+	 * @param DatabaseMysql $db the db handle
+	 * @param string $dbname the database name
 	 */
 	public static function checkCommentsIndex( DatabaseMysql $db, $dbname ) {
 		$sql = <<<SQL
@@ -55,8 +55,8 @@ SQL;
 	/**
 	 * Fixes the bad rows in the comments_index table by marking them with deleted=1.
 	 *
-	 * @param DatabaseMysql
-	 * @param string the database name
+	 * @param DatabaseMysql $db the db handle
+	 * @param string $dbname the database name
 	 */
 	public function fixCommentsIndex( DatabaseMysql $db, $dbname ) {
 		printf("%s: fixing bad comments_index rows...\n", $dbname);
@@ -90,7 +90,7 @@ SQL;
 	/**
 	 * Check to see if the comments_index table exists.
 	 *
-	 * @param DatabaseMysql
+	 * @param DatabaseMysql $db the db handle
 	 */
 	public static function commentsIndexExists( DatabaseMysql $db ) {
 		return $db->query("SHOW TABLES LIKE 'comments_index'")->numRows() > 0;
