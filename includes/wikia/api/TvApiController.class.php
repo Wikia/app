@@ -91,7 +91,7 @@ class TvApiController extends WikiaApiController {
 		if ( $title->exists() ) {
 			$articleId = (int)$title->getArticleID();
 			return [
-				'wikiId'=>$wikiId,
+				'wikiId' => $wikiId,
 				'articleId' => $articleId,
 				'title' => $title->getText(),
 				'url' => $title->getFullURL(),
