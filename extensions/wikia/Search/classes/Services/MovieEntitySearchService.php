@@ -71,5 +71,4 @@ class MovieEntitySearchService extends EntitySearchService {
 		}
 		return $result;
 	}
-
 }
