@@ -10,12 +10,9 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	protected $skinName;
 	private $shouldFilterCommercialData = false;
 
-	public function __construct($langCode, $sectionId, $verticalId, $cityId = 0) {
+	public function __construct($cityId) {
 		parent::__construct();
 
-		$this->langCode = $langCode;
-		$this->sectionId = $sectionId;
-		$this->verticalId = $verticalId;
 		$this->cityId = $cityId;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 	}
@@ -29,9 +26,9 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	 * @param $verticalId
 	 * @return WikiaHubsModuleService
 	 */
-	static public function getModuleByName($name, $langCode, $sectionId, $verticalId, $cityId = 0) {
+	static public function getModuleByName($name, $cityId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
-		return new $moduleClassName($langCode, $sectionId, $verticalId, $cityId);
+		return new $moduleClassName($cityId);
 	}
 
 

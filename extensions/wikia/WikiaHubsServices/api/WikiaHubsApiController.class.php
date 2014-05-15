@@ -103,7 +103,7 @@ class WikiaHubsApiController extends WikiaApiController {
 		}
 
 		$moduleName = $model->getNotTranslatedModuleName($moduleId);
-		$moduleService = WikiaHubsModuleService::getModuleByName($moduleName, null, EditHubModel::SECTION_HUBS, null, $cityId);
+		$moduleService = WikiaHubsModuleService::getModuleByName($moduleName, $cityId);
 
 
 		if( $this->isValidModuleService($moduleService) ) {

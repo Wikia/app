@@ -114,9 +114,6 @@ class WikiaHubsV3Controller extends WikiaController {
 
 		$module = WikiaHubsModuleService::getModuleByName(
 			$moduleName,
-			null,
-			null,
-			null,
 			$this->cityId
 		);
 

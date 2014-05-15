@@ -136,12 +136,8 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$selectedModuleValues = $modulesData['moduleList'][$this->selectedModuleId]['data'];
 
-		// TODO remove not used params after HubsV2 removal
 		$module = WikiaHubsModuleService::getModuleByName(
 			$this->editHubModel->getNotTranslatedModuleName($this->selectedModuleId),
-			null,
-			null,
-			null,
 			$wgCityId
 		);
 
