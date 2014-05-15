@@ -96,13 +96,17 @@ class TvApiController extends WikiaApiController {
 				'title' => $title->getText(),
 				'url' => $title->getFullURL(),
 				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
-				'contentUrl' => $this->getEpisodeService()->replaceHostUrl(
-							WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
-							.EpisodeEntitySearchService::API_URL . $articleId
-					)
+				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
 			];
 		}
 		return null;
+	}
+
+	protected function getContentUrl($wikiId, $articleId){
+		return $this->getEpisodeService()->replaceHostUrl(
+			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
+			.EpisodeEntitySearchService::API_URL . $articleId
+		);
 	}
 
 	protected function createTitle($text, $wikiId) {
