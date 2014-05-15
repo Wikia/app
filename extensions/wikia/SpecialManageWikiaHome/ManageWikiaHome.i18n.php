@@ -17,6 +17,7 @@ $messages['en'] = array(
 
 	'manage-wikia-home-hubs-slot-heading' => 'Hubs slots setup',
 	'manage-wikia-home-hubs-slot-success' => 'Hubs slots have been saved.',
+	'manage-wikia-home-hubs-slot-error' => 'There was an error while saving. Please try again.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Hub name',
 	'manage-wikia-home-hubs-slot-description' => 'Hub description',
@@ -123,6 +124,7 @@ Parameters:
 	'manage-wikia-home-visualization-wikis' => 'A label next to selectbox with a list of wikis where visualization is enabled (corporate wikis)',
 	'manage-wikia-home-hubs-slot-heading' => 'Header for Wikia homepage hubs slots management section',
 	'manage-wikia-home-hubs-slot-success' => 'Message after successful save.',
+	'manage-wikia-home-hubs-slot-error' => 'Message when error occured.',
 	'manage-wikia-home-hubs-slot' => 'Determines which hub slot from hubs section on wikia homepage will be edited',
 	'manage-wikia-home-hubs-slot-name' => 'Label for select list with hub wiki names.',
 	'manage-wikia-home-hubs-slot-description' => 'Label for textarea field to shortly describe hub.',
