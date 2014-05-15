@@ -17,16 +17,20 @@
 					<? endif ?>
 				</a>
 				<div class="info">
-					<a target="_blank" class="title" href="<?= $product['link'] ?>">
-						<?= htmlspecialchars($product['title']) ?>
-					</a>
-					<a target="_blank" href="<?= $product['link'] ?>" class="price">
-						<span>
-							<?= $product['price_tag']?>
-						</span><span>
-							<?= wfMessage('adengine-ebay-buy-it-now') ?>
-						</span>
-					</a>
+					<div class="title">
+						<a target="_blank"  href="<?= $product['link'] ?>">
+							<?= htmlspecialchars($product['title']) ?>
+						</a>
+					</div>
+					<div class="price">
+						<a target="_blank" href="<?= $product['link'] ?>" >
+							<span>
+								<?= $product['price_tag']?>
+							</span><?php if (!$isMobile) { ?><span>
+								<?= wfMessage('adengine-ebay-buy-it-now') ?>
+							</span><?php } ?>
+						</a>
+					</div>
 				</div>
 			</li>
 		<? endforeach ?>

@@ -65,7 +65,7 @@
   }
 
   .info {
-    & > a {
+    a {
       display: block;
     }
 
@@ -75,7 +75,7 @@
       margin-bottom: 20px;
     }
 
-    .price {
+    .price a {
       display: inline-block;
       border: 1px solid $color-links;
       border-radius: 2px;

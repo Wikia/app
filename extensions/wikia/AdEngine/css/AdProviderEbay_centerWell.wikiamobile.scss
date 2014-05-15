@@ -62,13 +62,12 @@
   }
 
   .info {
-    & > a {
-      display: block;
+
+    a {
       color: $link-color;
     }
 
     .title {
-      display: block;
       max-height: 55px;
       margin-bottom: 24px;
       position: relative;
@@ -85,15 +84,6 @@
       }
     }
 
-    .price {
-      span {
-        display: none;
-
-        &:first-child {
-          display: inline-block;
-        }
-      }
-    }
   }
 
   .debug {
