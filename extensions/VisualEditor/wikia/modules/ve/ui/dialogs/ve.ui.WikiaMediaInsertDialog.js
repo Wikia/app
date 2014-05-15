@@ -568,20 +568,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		);
 	}
 
-//	function updateAttribution( result ) {
-//		items[result.title].username = result.username;
-//		items[result.title].title = result.title;
-//	}
-//
-//	// Attribution request
-//	for ( title in items ) {
-//		promises.push(
-//			this.getPhotoAttribution( title ).done(
-//				ve.bind( updateAttribution, this )
-//			)
-//		);
-//	}
-
 	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
 		ve.bind( this.insertPermanentMediaCallback, this, items, fragment )
@@ -654,29 +640,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		'value': ve.now() - this.timings.insertStart
 	} );
 };
-
-/**
- * Gets photo attribution information
- *
- * @method
- * @param {string} title Title of the file
- * @returns {jQuery.Promise}
- */
-//ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) {
-//	var deferred = $.Deferred();
-//	$.ajax( {
-//		'url': mw.util.wikiScript( 'api' ),
-//		'data': {
-//			'action': 'apiphotoattribution',
-//			'format': 'json',
-//			'file': title
-//		},
-//		'success': function ( data ) {
-//			deferred.resolve( data );
-//		}
-//	} );
-//	return deferred.promise();
-//};
 
 /**
  * Gets imageinfo for titles
