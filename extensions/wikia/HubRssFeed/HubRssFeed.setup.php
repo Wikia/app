@@ -7,6 +7,7 @@ if ( !defined('MEDIAWIKI') ) {
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
 $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'HubRssFeedModel.class.php';
+$wgAutoloadClasses['MixedFeedModel']	= $dir . 'MixedFeedModel.class.php';
 $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';

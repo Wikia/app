@@ -105,7 +105,7 @@ class EntitySearchService {
 		return $field . '_' . $lang;
 	}
 
-	protected function replaceHostUrl( $url ) {
+	public function replaceHostUrl( $url ) {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
 		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 			return preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $url );

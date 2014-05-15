@@ -888,6 +888,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( "Unable to find any article with " . self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME . '=' . $articleId );
 		}
 
+
 		$jsonFormatService = new JsonFormatService();
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 

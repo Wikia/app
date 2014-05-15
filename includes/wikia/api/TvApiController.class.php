@@ -91,10 +91,12 @@ class TvApiController extends WikiaApiController {
 		if ( $title->exists() ) {
 			$articleId = (int)$title->getArticleID();
 			return [
+				'wikiId' => $title->getCityId(),
 				'articleId' => $articleId,
 				'title' => $title->getText(),
 				'url' => $title->getFullURL(),
-				'quality' => $this->getArticleQuality( $wikiId, $articleId )
+				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
+				'contentUrl' => $this->episodeService->replaceHostUrl( WikiFactory::DBtoUrl(WikiFactory::IDtoDB($wikiId)) . EpisodeEntitySearchService::API_URL . $articleId ),
 			];
 		}
 		return null;

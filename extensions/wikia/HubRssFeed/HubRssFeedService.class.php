@@ -23,6 +23,12 @@ class HubRssFeedService {
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE =>
 		['t' => 'Wikia Lifestyle Community feed',
 			'd' => 'From Wikia community - Lifestyle'],
+
+		-1 => [ 't' => 'Game of Thrones', 'd' => 'Wikia TV Feed' ],
+
+		-2 => [ 't' => 'Elder scrolls', 'd' => 'Wikia Gaming Feed' ],
+
+		-3 => [ 't' => 'Marvel', 'd' => 'Wikia Marvell Related Feed' ]
 	];
 
 	protected $lang;
