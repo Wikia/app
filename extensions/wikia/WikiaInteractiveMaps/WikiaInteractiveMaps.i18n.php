@@ -27,6 +27,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Wikia Interactive Maps error occurred: Map not found.',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
+	'wikia-interactive-maps-api-error-message' => 'Unexpected error has occurred.',
 
 	'wikia-interactive-maps-map-status-done' => 'Ready to use',
 	'wikia-interactive-maps-map-status-processing' => 'Processing...',
@@ -57,6 +58,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
+	'wikia-interactive-maps-api-error-message' => 'Backend connection error.',
 
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list from newest map to oldest',
 	'wikia-interactive-maps-sort-alphabetical' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list in alphabetical order',
