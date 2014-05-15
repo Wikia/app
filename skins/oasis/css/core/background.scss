@@ -158,8 +158,8 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 			width: $width-middle;
 
 			&:after {
-				right: 50%;
 				margin-right: $gradient-offset;
+				right: 50%;
 			}
 
 			&:before {
