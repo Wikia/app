@@ -12,8 +12,8 @@ class WikiaHubsPopularvideosServiceTest extends WikiaBaseTest
 	 * @dataProvider getDataStructureDataProvider
 	 */
 	public function testGetDataStructureDataProvider($inputData, $videoData, $thumbSize, $expectedData) {
-		$popularVideosMock = $this->getMock( 'WikiaHubsModulePopularvideosService', array( 'getToolboxModel', 'getModuleModel'), array('en',1,1) );
-		$toolboxModelMock = $this->getMock( 'EditHubModel', array( 'getVideoData' ) );
+		$popularVideosMock = $this->getMock( 'WikiaHubsModulePopularvideosService', array( 'getEditHubModel', 'getModuleModel'), array('en',1,1) );
+		$editHubModelMock = $this->getMock( 'EditHubModel', array( 'getVideoData' ) );
 		$popularVideoModelMock = $this->getMock( 'WikiaHubsPopularvideosModel', array( 'getVideoThumbSize' ) );
 
 		$map = [];
@@ -28,15 +28,15 @@ class WikiaHubsPopularvideosServiceTest extends WikiaBaseTest
 			->method( 'getVideoThumbSize')
 			->will( $this->returnValue($thumbSize) );
 
-		$toolboxModelMock
+		$editHubModelMock
 			->expects( $this->any() )
 			->method( 'getVideoData' )
 			->will( $this->returnValueMap($map) );
 
 		$popularVideosMock
 			->expects( $this->any() )
-			->method( 'getToolboxModel' )
-			->will( $this->returnValue( $toolboxModelMock ) );
+			->method( 'getEditHubModel' )
+			->will( $this->returnValue( $editHubModelMock ) );
 
 		$popularVideosMock
 			->expects( $this->any() )

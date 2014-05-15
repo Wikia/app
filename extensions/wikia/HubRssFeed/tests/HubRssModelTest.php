@@ -12,7 +12,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockBuilder
 	 */
-	protected $mockToolbox;
+	protected $mockEditHubsModel;
 
 	public function setUp() {
 		$dir = dirname( __FILE__ ) . '/../';
@@ -30,7 +30,7 @@ class HubRssModelTest extends WikiaBaseTest {
 		$wgAutoloadClasses['WikiaHubsModuleService'] =  $dir . '../WikiaHubsServices/modules/WikiaHubsModuleService.class.php';
 		$wgAutoloadClasses['EditHubModel']	= $dir . '../WikiaHubsServices/models/EditHubModel.class.php';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
-		$this->mockToolbox = $this->getMockBuilder( 'EditHubModel' )
+		$this->mockEditHubsModel = $this->getMockBuilder( 'EditHubModel' )
 			->disableOriginalConstructor();
 
 		parent::setUp();
@@ -41,7 +41,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::__construct
 	 */
 	public function testConstruct() {
-		$mockToolbox = $this->mockToolbox->setMethods( ['__construct'] )->getMock();
+		$mockToolbox = $this->mockEditHubsModel->setMethods( ['__construct'] )->getMock();
 
 		$this->mockClass( 'EditHubModel', $mockToolbox );
 
@@ -192,7 +192,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::getRealDataV3
 	 */
 	public function testGetRealDataV3() {
-		$mockToolbox = $this->mockToolbox->setMethods( ['getLastPublishedTimestamp'] )->getMock();
+		$mockToolbox = $this->mockEditHubsModel->setMethods( ['getLastPublishedTimestamp'] )->getMock();
 
 		$mockToolbox->expects( $this->any() )
 			->method( 'getLastPublishedTimestamp', '__construct' )

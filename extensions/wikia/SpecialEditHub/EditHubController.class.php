@@ -1,7 +1,7 @@
 <?php
 
 class EditHubController extends WikiaSpecialPageController {
-	protected $toolboxModel;
+	protected $editHubModel;
 	private $hubsServicesHelper;
 
 	public function __construct() {
@@ -13,7 +13,7 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->toolboxModel = new EditHubModel();
+		$this->editHubModel = new EditHubModel();
 	}
 
 	/**
@@ -89,7 +89,7 @@ class EditHubController extends WikiaSpecialPageController {
 		$datetime = new DateTime('@' . $date);
 		if ($datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
 			$datetime->setTime(0, 0, 0);
-			$url = $this->toolboxModel->getModuleUrl(
+			$url = $this->editHubModel->getModuleUrl(
 				$wgCityId,
 				$datetime->getTimestamp(),
 				$this->selectedModuleId
@@ -121,7 +121,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$this->flashMessage = FlashMessages::pop();
 
-		$modulesData = $this->toolboxModel->getModulesData(
+		$modulesData = $this->editHubModel->getModulesData(
 			$wgCityId,
 			$this->date,
 			$this->selectedModuleId
@@ -138,12 +138,11 @@ class EditHubController extends WikiaSpecialPageController {
 
 		// TODO remove not used params after HubsV2 removal
 		$module = WikiaHubsModuleService::getModuleByName(
-			$this->toolboxModel->getNotTranslatedModuleName($this->selectedModuleId),
+			$this->editHubModel->getNotTranslatedModuleName($this->selectedModuleId),
 			null,
 			null,
 			null,
-			$wgCityId,
-			3 // Hub vesion - TODO remove while removal of HubsV2
+			$wgCityId
 		);
 
 		$form = new FormBuilderService(EditHubModel::FORM_FIELD_PREFIX);
@@ -155,7 +154,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 			$isValid = $form->validate($selectedModuleValues);
 			if ($isValid) {
-				$this->toolboxModel->saveModule(
+				$this->editHubModel->saveModule(
 					[
 						// TODO remove lang and vertical after HubsV2 removal
 						'cityId' => $wgCityId,
@@ -195,7 +194,7 @@ class EditHubController extends WikiaSpecialPageController {
 		if ($this->request->wasPosted()) {
 			$this->retriveDataFromUrl();
 
-			$result = $this->toolboxModel->publish(
+			$result = $this->editHubModel->publish(
 				$wgCityId,
 				$this->date
 			);
@@ -206,7 +205,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 				$this->hubUrl = Title::newMainPage()->getFullURL() . '/' . $date->format('Y-m-d');
 				$this->successText = wfMessage('edit-hub-module-publish-success', $this->wg->lang->date($this->date))->escaped();
-				if ( $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
+				if ( $this->date == $this->editHubModel->getLastPublishedTimestamp( $wgCityId, null, true)) {
 					$this->purgeWikiaHomepageHubs();
 				}
 			} else {
@@ -218,7 +217,7 @@ class EditHubController extends WikiaSpecialPageController {
 	private function getNextModuleUrl() {
 		global $wgCityId;
 
-		$moduleIds = $this->toolboxModel->getEditableModulesIds();
+		$moduleIds = $this->editHubModel->getEditableModulesIds();
 
 		$actualModuleIndex = array_search($this->selectedModuleId, $moduleIds);
 
@@ -228,7 +227,7 @@ class EditHubController extends WikiaSpecialPageController {
 			$nextModuleId = $moduleIds[$actualModuleIndex];
 		}
 
-		$nextUrl = $this->toolboxModel->getModuleUrl(
+		$nextUrl = $this->editHubModel->getModuleUrl(
 			$wgCityId,
 			$this->date,
 			$nextModuleId
@@ -288,7 +287,7 @@ class EditHubController extends WikiaSpecialPageController {
 		global $wgCityId;
 
 		$this->footerData = array(
-			'allModulesSaved' => $this->toolboxModel->checkModulesSaved($wgCityId, $timestamp)
+			'allModulesSaved' => $this->editHubModel->checkModulesSaved($wgCityId, $timestamp)
 		);
 	}
 
@@ -319,7 +318,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$beginTimestamp = $this->getVal('beginTimestamp', time());
 		$endTimestamp = $this->getVal('endTimestamp', time());
-		$this->calendarData = $this->toolboxModel->getCalendarData($wgCityId, $beginTimestamp, $endTimestamp);
+		$this->calendarData = $this->editHubModel->getCalendarData($wgCityId, $beginTimestamp, $endTimestamp);
 	}
 
 
@@ -360,7 +359,7 @@ class EditHubController extends WikiaSpecialPageController {
 
 		$fileName = $this->getVal('fileHandler', false);
 		if ($fileName) {
-			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->toolboxModel->getThumbnailSize(), ImagesService::EXT_JPG);
+			$imageData = ImagesService::getLocalFileThumbUrlAndSizes($fileName, $this->editHubModel->getThumbnailSize(), ImagesService::EXT_JPG);
 			$this->fileUrl = $imageData->url;
 			$this->imageWidth = $imageData->width;
 			$this->imageHeight = $imageData->height;
@@ -388,9 +387,9 @@ class EditHubController extends WikiaSpecialPageController {
 		$videoInfo = $response->getVal('videoInfo');
 		$fileName = $videoInfo[0]->getText();
 
-		$this->videoData = $this->toolboxModel->getVideoData(
+		$this->videoData = $this->editHubModel->getVideoData(
 			$fileName,
-			$this->toolboxModel->getThumbnailSize()
+			$this->editHubModel->getThumbnailSize()
 		);
 		$this->videoFileName = $fileName;
 		$this->videoUrl = $url;
@@ -403,7 +402,7 @@ class EditHubController extends WikiaSpecialPageController {
 		$this->getHubsServicesHelper()->purgeHubV3Varnish($wgCityId);
 
 		if( $this->selectedModuleId == WikiaHubsModuleSliderService::MODULE_ID
-			&& $this->date == $this->toolboxModel->getLastPublishedTimestamp( $wgCityId, null )) {
+			&& $this->date == $this->editHubModel->getLastPublishedTimestamp( $wgCityId, null )) {
 				$this->purgeWikiaHomepageHubs();
 		}
 	}

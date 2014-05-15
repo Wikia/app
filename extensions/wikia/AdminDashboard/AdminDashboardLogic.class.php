@@ -109,7 +109,6 @@ class AdminDashboardLogic {
 				"WhereIsExtension",
 				"WikiActivity",
 				"WikiaConfirmEmail",
-				"WikiaHubsV2", //TODO: remove after HubsV3 release @WikiaHubsV2Remove
 				"WikiaHubsV3",
 				"WikiaSearch",
 				"WikiaStyleGuide",

@@ -98,13 +98,13 @@ class WikiaHubsModulePopularvideosService extends WikiaHubsModuleEditableService
 		$structuredData = array();
 
 		if(!empty($data)) {
-			$toolboxModel = $this->getToolboxModel();
+			$editHubModel = $this->getEditHubModel();
 			$moduleModel = $this->getModuleModel();
 
 			$structuredData['header'] = $data['header'];
 			$structuredData['videos'] = null;
 			foreach($data['video'] as $key => $video) {
-				$videoData = $toolboxModel->getVideoData($video, $moduleModel->getVideoThumbSize());
+				$videoData = $editHubModel->getVideoData($video, $moduleModel->getVideoThumbSize());
 
 				$structuredData['videos'][] = array(
 					'title' => $videoData['title'],
@@ -120,7 +120,7 @@ class WikiaHubsModulePopularvideosService extends WikiaHubsModuleEditableService
 		return $structuredData;
 	}
 
-	public function getToolboxModel() {
+	public function getEditHubModel() {
 		return new EditHubModel();
 	}
 

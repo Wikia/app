@@ -16,12 +16,12 @@ class WikiaHubsModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 	public function testGetStructuredData($inputData, $expectedData, $mockedVideoData) {
 		$moduleMock = $this->getMock(
 			'WikiaHubsModuleFeaturedvideoService',
-			array('getImageInfo', 'getToolboxModel'),
+			array('getImageInfo', 'getEditHubModel'),
 			array('en', 1, 1)
 		);
 
-		$toolboxModelMock = $this->getMock('EditHubModel', array('getVideoData'));
-		$toolboxModelMock->expects($this->once())
+		$editHubModelMock = $this->getMock('EditHubModel', array('getVideoData'));
+		$editHubModelMock->expects($this->once())
 			->method('getVideoData')
 			->with($this->equalTo($inputData['video']))
 			->will($this->returnValue($mockedVideoData));
@@ -36,8 +36,8 @@ class WikiaHubsModuleFeaturedvideoServiceTest extends WikiaBaseTest {
 			->will($this->returnValue($mockReturnVal));
 
 		$moduleMock->expects($this->once())
-			->method('getToolboxModel')
-			->will($this->returnValue($toolboxModelMock));
+			->method('getEditHubModel')
+			->will($this->returnValue($editHubModelMock));
 
 		$structuredData = $moduleMock->getStructuredData($inputData);
 

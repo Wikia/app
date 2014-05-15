@@ -1265,40 +1265,6 @@ $config['wikiahomepage_scss_wikiamobile'] = array(
 	)
 );
 
-/** WikiaHubsV2 **/
-//TODO: remove after HubsV3 release @WikiaHubsV2Remove
-$config['wikiahubs_v2'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2.js'
-	)
-);
-
-$config['wikiahubs_v2_modal'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/js/WikiaHubsV2Modals.js'
-	)
-);
-
-$config['wikiahubs_v2_scss'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array('oasis'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2.scss'
-	)
-);
-
-$config['wikiahubs_v2_scss_mobile'] = array(
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => array('wikiamobile'),
-	'assets' => array(
-		'//extensions/wikia/WikiaHubsV2/css/WikiaHubsV2Mobile.scss'
-	)
-);
-
 /** WikiaHubsV3 **/
 $config['wikiahubs_v3'] = array(
 	'type' => AssetsManager::TYPE_JS,

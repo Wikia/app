@@ -52,54 +52,6 @@ class EditHubModelTest extends WikiaBaseTest {
 		}
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.05283 ms
-	 */
-	public function testGetAvailableSections() {
-		$mockMsg = $this->getGlobalFunctionMock( 'wfMessage' );
-
-		$mockMsg->expects($this->at(0))
-			->method('wfMessage')
-			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
-			->will($this->returnValue('test name for hubs section'));
-
-		$model = new EditHubModel();
-
-		$sections = $model->getAvailableSections();
-		$this->assertArrayHasKey(EditHubModel::SECTION_HUBS, $sections);
-		$this->assertEquals('test name for hubs section', $sections[EditHubModel::SECTION_HUBS]);
-	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.05268 ms
-	 */
-	public function testGetSectionName() {
-		$mockMsg = $this->getGlobalFunctionMock( 'wfMessage' );
-
-		$mockMsg->expects($this->at(0))
-			->method('wfMessage')
-			->with($this->equalTo('marketing-toolbox-section-hubs-button'))
-			->will($this->returnValue('test name for hubs section'));
-
-		$model = new EditHubModel();
-
-		$this->assertEquals(
-			'test name for hubs section',
-			$model->getSectionName(EditHubModel::SECTION_HUBS)
-		);
-	}
-
-	public function testGetAvailableVerticals() {
-		$model = new EditHubModel();
-		$verticals = $model->getAvailableVerticals(EditHubModel::SECTION_HUBS);
-
-		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_GAMING, $verticals);
-		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, $verticals);
-		$this->assertArrayHasKey(WikiFactoryHub::CATEGORY_ID_LIFESTYLE, $verticals);
-	}
-
 	public function testGetModuleUrl() {
 		$params = array(
 			'moduleId' => WikiaHubsModuleSliderService::MODULE_ID,
@@ -144,11 +96,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	 */
 	public function testGetModulesDataFromDefault() {
 		$moduleParams = array(
-			'params' => array(
-				'langCode' => 'pl',
-				'sectionId' => EditHubModel::SECTION_HUBS,
-				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-			),
+			'cityId' => 1213456,
 			'timestamp' => 789654,
 			'activeModule' => WikiaHubsModuleWikiaspicksService::MODULE_ID
 		);
@@ -173,7 +121,7 @@ class EditHubModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->once())
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['cityId']),
 			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(array()));
@@ -187,7 +135,7 @@ class EditHubModelTest extends WikiaBaseTest {
 			->will($this->returnValue(0));
 
 		$modulesData = $modelMock->getModulesData(
-			$moduleParams['params'],
+			$moduleParams['cityId'],
 			$moduleParams['timestamp'],
 			$moduleParams['activeModule']
 		);
@@ -226,11 +174,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	 */
 	public function testGetModulesDataWithoutDefaults() {
 		$moduleParams = array(
-			'params' => array(
-				'langCode' => 'pl',
-				'sectionId' => EditHubModel::SECTION_HUBS,
-				'verticalId' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-			),
+			'cityId' => 1213456,
 			'timestamp' => 789654,
 			'activeModule' => WikiaHubsModuleWikiaspicksService::MODULE_ID
 		);
@@ -295,14 +239,14 @@ class EditHubModelTest extends WikiaBaseTest {
 		$modelMock->expects($this->at(1))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['cityId']),
 			$this->equalTo($lastPublishTimestamp)
 		)
 			->will($this->returnValue($mockedModulesData));
 		$modelMock->expects($this->at(2))
 			->method('getModulesDataFromDb')
 			->with(
-			$this->equalTo($moduleParams['params']),
+			$this->equalTo($moduleParams['cityId']),
 			$this->equalTo($moduleParams['timestamp'])
 		)
 			->will($this->returnValue(
@@ -323,7 +267,7 @@ class EditHubModelTest extends WikiaBaseTest {
 		$modelMock->setUserClass($userMock);
 
 		$modulesData = $modelMock->getModulesData(
-			$moduleParams['params'],
+			$moduleParams['cityId'],
 			$moduleParams['timestamp'],
 			$moduleParams['activeModule']
 		);
@@ -792,28 +736,6 @@ class EditHubModelTest extends WikiaBaseTest {
 			'url' => 'http://www.wikia.com/',
 			'db' => 'wikiaglobal',
 			'lang' => 'en'
-		),
-	);
-
-	private $hubsV2Pages = array(
-		'en' => array (
-			2 => 'Video_Games',
-			3 => 'Entertainment',
-			9 => 'Lifestyle',
-		),
-		'de' => array (
-			2 => 'Videospiele',
-			3 => 'Entertainment',
-		),
-		'fr' => array (
-			2 => 'Mode_de_vie',
-			3 => 'Jeux_vidéo',
-			9 => 'Divertissement',
-		),
-		'es' => array (
-			2 => 'Videojuegos',
-			3 => 'Entretenimiento',
-			9 => 'Lista_de_Wikis',
 		),
 	);
 }

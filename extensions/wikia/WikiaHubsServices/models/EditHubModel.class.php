@@ -12,8 +12,6 @@ class EditHubModel extends WikiaModel {
 	protected $modules = array();
 	protected $editableModules = array();
 	protected $nonEditableModules = array();
-	protected $sections = array();
-	protected $verticals = array();
 	protected $modulesCount;
 	protected $specialPageClass = 'SpecialPage';
 	protected $userClass = 'User';
@@ -50,18 +48,6 @@ class EditHubModel extends WikiaModel {
 		$this->modules = $this->editableModules + $this->nonEditableModules;
 
 		$this->modulesCount = count($this->editableModules);
-
-		$this->sections = array(
-			self::SECTION_HUBS => wfMessage('marketing-toolbox-section-hubs-button')
-		);
-
-		$this->verticals = array(
-			self::SECTION_HUBS => array(
-				WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('marketing-toolbox-section-games-button'),
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('marketing-toolbox-section-entertainment-button'),
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('marketing-toolbox-section-lifestyle-button'),
-			)
-		);
 	}
 
 	/**
@@ -297,7 +283,7 @@ class EditHubModel extends WikiaModel {
 	}
 
 	/**
-	 * Get url to edit module page in Marketing Toolbox
+	 * Get url to edit module page in Edit Hub
 	 *
 	 * @param $cityId
 	 * @param $timestamp
@@ -353,7 +339,7 @@ class EditHubModel extends WikiaModel {
 
 		if( wfReadOnly() ) {
 			$results->success = false;
-			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-read-only');
+			$results->errorMsg = wfMsg('edit-hub-module-publish-error-read-only');
 
 			wfProfileOut(__METHOD__);
 			return $results;
@@ -378,7 +364,7 @@ class EditHubModel extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		if( !$this->checkModulesSaved($cityId, $timestamp) ) {
 			$results->success = false;
-			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-modules-not-saved');
+			$results->errorMsg = wfMsg('edit-hub-module-publish-error-modules-not-saved');
 
 			wfProfileOut(__METHOD__);
 			return;
@@ -403,7 +389,7 @@ class EditHubModel extends WikiaModel {
 			$results->success = true;
 		} else {
 			$results->success = false;
-			$results->errorMsg = wfMsg('marketing-toolbox-module-publish-error-db-error');
+			$results->errorMsg = wfMsg('edit-hub-module-publish-error-db-error');
 		}
 
 		$actualPublishedTimestamp = $this->getLastPublishedTimestamp($cityId);
@@ -592,62 +578,6 @@ class EditHubModel extends WikiaModel {
 		}
 
 		return $videoData;
-	}
-
-	/**
-	 * Get avalable sections
-	 *
-	 * @return array
-	 */
-	public function getAvailableSections() {
-		return $this->sections;
-	}
-
-	/**
-	 * Get section name
-	 *
-	 * @param int $sectionId sectionId
-	 *
-	 * @return string section name
-	 */
-	public function getSectionName($sectionId) {
-		return $this->sections[$sectionId];
-	}
-
-	/**
-	 * Get vertical ids
-	 *
-	 * @param int $sectionId section id
-	 *
-	 * @return array vertical ids
-	 */
-	public function getVerticalsIds($sectionId = self::SECTION_HUBS) {
-		return array_keys($this->verticals[$sectionId]);
-	}
-
-	/**
-	 * Get vertical name
-	 *
-	 * @param int $sectionId section id
-	 * @param int $verticalId vertical id
-	 *
-	 * @return string vertical name
-	 */
-	public function getVerticalName($sectionId, $verticalId) {
-		return $this->verticals[$sectionId][$verticalId];
-	}
-
-	/**
-	 * Get available verticals for selected section
-	 *
-	 * @param int $sectionId
-	 * @return array
-	 */
-	public function getAvailableVerticals($sectionId) {
-		if (isset($this->verticals[$sectionId])) {
-			return $this->verticals[$sectionId];
-		}
-		return null;
 	}
 
 	/**

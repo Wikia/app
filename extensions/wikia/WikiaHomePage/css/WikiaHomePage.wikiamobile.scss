@@ -1,5 +1,6 @@
 @import '../../../../skins/oasis/css/core/color';
 @import '../../../../skins/oasis/css/mixins/clearfix';
+@import "Colors";
 
 .wkhome {
 	>h1 {
@@ -12,14 +13,14 @@
 	.wkhome-section {
 		@include clearfix;
 		margin-top: 10px;
-		&.wkhome-games .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-videogames;
+		&.hub-slot-1 .wkhome-hero {
+			border-top: 5px solid $hub-color-slot-1;
 		}
-		&.wkhome-entertainment .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-entertainment;
+		&.hub-slot-2 .wkhome-hero {
+			border-top: 5px solid $hub-color-slot-2;
 		}
-		&.wkhome-lifestyle .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-lifestyle;
+		&.hub-slot-3 .wkhome-hero {
+			border-top: 5px solid $hub-color-slot-3;
 		}
 		&.wkhome-community .wkhome-hero {
 			background-color: #f4f4f4;

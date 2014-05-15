@@ -26,14 +26,14 @@ class HubRssFeedModel extends WikiaModel {
 	}
 
 	/*
-	 * Set up marketing toolbox model (for HubsV2 and HubsV3)
+	 * Set up EditHubModel
 	 */
 	private function setUpModel() {
 		$this->editHubModel = new EditHubModel($this->app);
 	}
 
 	/**
-	 * Get services to get data from (for HubsV2)
+	 * Get services to get data from
 	 *
 	 * @param $cityId
 	 * @return array

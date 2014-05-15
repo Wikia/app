@@ -46,7 +46,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.8';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.9';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;

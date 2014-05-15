@@ -127,9 +127,9 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
 
 
-		$toolboxModel = $this->getToolboxModel();
+		$editHubModel = $this->getEditHubModel();
 		$moduleModel = new WikiaHubsFeaturedvideoModel();
-		$videoData = $toolboxModel->getVideoData($data['video'], $moduleModel->getVideoThumbSize());
+		$videoData = $editHubModel->getVideoData($data['video'], $moduleModel->getVideoThumbSize());
 
 		$structuredData['video'] = array(
 			'title' => isset($videoData['title']) ? $videoData['title'] : null,
@@ -142,7 +142,7 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 		return $structuredData;
 	}
 
-	protected function getToolboxModel() {
+	protected function getEditHubModel() {
 		return new EditHubModel();
 	}
 

@@ -84,9 +84,6 @@ class WikiaHomePageController extends WikiaController {
 		$this->response->addAsset('wikiahomepage_scss');
 		$this->response->addAsset('wikiahomepage_js');
 
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
-		$this->hubImages = $response->getVal('hubImages', '');
-
 		$this->hubsSlots = $this->prepareHubsSectionSlots();
 
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
@@ -120,14 +117,10 @@ class WikiaHomePageController extends WikiaController {
 				$hubsSlots = $this->getHubsSectionSlots();
 				$hubsV3List = $this->getHubsV3List( $langCode );
 
-				$hubsSlots = $this->fillEmptyHubSlots( $hubsSlots );
-
 				foreach( $hubsSlots as $slot => &$hub ) {
 					$hubId = $hub['hub_slot'];
 					if( is_numeric( $hubId ) && isset( $hubsV3List[ $hubId ] ) ) {
 						$hubSlot[ $slot ] = $this->prepareHubV3Slot( $hub, $hubsV3List, $slot );
-					} else {
-						$hubSlot[ $slot ] = $this->prepareHubV2Slot( $hub );
 					}
 				}
 
@@ -136,28 +129,6 @@ class WikiaHomePageController extends WikiaController {
 		);
 
 		return $hubSlot;
-	}
-
-	/**
-	 * If hub slots are not set, they are filled with hubs v2 data
-	 *
-	 * @param $hubsSlots
-	 * @return mixed
-	 */
-	private function fillEmptyHubSlots( $hubsSlots ) {
-		$verticals = $this->helper->getWikiVerticals();
-
-		$index = 0;
-		foreach($verticals as $vertical) {
-			if ( !isset( $hubsSlots[ $index ] ) ) {
-				$hubsSlots[ $index ] = [
-					'hub_slot' => $vertical
-				];
-			}
-			$index++;
-		}
-
-		return $hubsSlots;
 	}
 
 	/**
@@ -174,33 +145,6 @@ class WikiaHomePageController extends WikiaController {
 		$hub['hubImage'] = $this->getHubV3Images( $hubId );
 
 		return $this->prepareRenderParams( $slot, $hub );
-	}
-
-	/**
-	 * Prepare data to display hub v2 slot in hubs section on Wikia homepage
-	 *
-	 * @param $hub
-	 * @return array|null
-	 */
-	private function prepareHubV2Slot( $hub ) {
-		$hubSlot = null;
-
-		switch( $hub['hub_slot'] ) {
-			case 'Video Games':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_GAMING;
-				$hubSlot = $this->prepareHubsV2Params( 'videogames', $categoryId, $hub );
-				break;
-			case 'Entertainment':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
-				$hubSlot = $this->prepareHubsV2Params( 'entertainment', $categoryId, $hub );
-				break;
-			case 'Lifestyle':
-				$categoryId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
-				$hubSlot = $this->prepareHubsV2Params( 'lifestyle', $categoryId, $hub );
-				break;
-		}
-
-		return $hubSlot;
 	}
 
 	/**
@@ -227,39 +171,9 @@ class WikiaHomePageController extends WikiaController {
 		];
 	}
 
-	/**
-	 * Prepare parameters needed to display data about hub v2 in hub slot on Wikia homepage
-	 *
-	 * @param $vertical vertical name
-	 * @param $categoryId category id
-	 * @param $hub data about hub
-	 * @return array
-	 */
-	private function prepareHubsV2Params( $vertical, $categoryId, $hub ) {
-		global $wgParser, $wgTitle, $wgOut;
-		return [
-			'classname' => 		$vertical,
-			'heading' => 		WfMessage("wikiahome-hubs-$vertical-heading")->text(),
-			'heroimageurl' => 	isset($this->hubImages[$categoryId]) ? $this->hubImages[$categoryId] : null,
-			'herourl' => 		WfMessage("wikiahome-hubs-$vertical-url")->text(),
-			'creative' => 		!empty( $hub['hub_slot_desc'] )
-						? $hub['hub_slot_desc']
-						: WfMessage("wikiahome-hubs-$vertical-creative")->text(),
-			'moreheading' => 	WfMessage("wikiahome-hubs-$vertical-more-heading")->text(),
-			'morelist' => 		!empty( $hub['hub_slot_more_links'] )
-						? $wgParser->parse(
-							$hub['hub_slot_more_links'],
-							$wgTitle, $wgOut->parserOptions()
-						  )->getText()
-						: WfMessage("wikiahome-hubs-$vertical-more-list")->parse()
-		];
-	}
-
 	public function wikiaMobileIndex() {
-		//$this->response->addAsset('extensions/wikia/WikiaHomePage/css/WikiaHomePageMobile.scss');
-		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->lang = $this->wg->contLang->getCode();
-		$this->hubImages = $response->getVal('hubImages', '');
+		$this->hubsSlots = $this->prepareHubsSectionSlots();
 	}
 
 	public function footer() {
@@ -566,41 +480,6 @@ class WikiaHomePageController extends WikiaController {
 			throw new Exception(wfMsg('wikia-home-parse-wiki-too-few-parameters'));
 		}
 	}
-
-	/**
-	 * get list of images for Hub
-	 * @responseParam array hubImages
-	 */
-	public function getHubImages() {
-		$lang = $this->wg->contLang->getCode();
-
-		$hubImages = [];
-		if ($this->app->wg->EnableWikiaHubsV2Ext) {
-			$hubImages = WikiaDataAccess::cache(
-				WikiaHubsServicesHelper::getWikiaHomepageHubsMemcacheKey($lang),
-				24 * 60 * 60,
-				function () use ($lang) {
-					$hubImages = [];
-
-					foreach ($this->app->wg->WikiaHubsV2Pages as $hubId => $hubName) {
-						$params = [
-							'vertical' => $hubId,
-							'lang' => $lang
-						];
-						$sliderData = $this->getHubSliderData($params);
-
-						$hubImages[$hubId] = isset($sliderData['data']['slides'][0]['photoUrl'])
-							? $sliderData['data']['slides'][0]['photoUrl']
-							: null;
-					}
-					return $hubImages;
-				}
-			);
-		}
-
-		$this->hubImages = $hubImages;
-	}
-
 	/**
 	 * Get first image from slider from selected hub v3
 	 *
@@ -729,6 +608,26 @@ class WikiaHomePageController extends WikiaController {
 		$this->creative = $this->request->getVal('creative');
 		$this->moreheading = $this->request->getVal('moreheading');
 		$this->morelist = $this->request->getVal('morelist');
+	}
+
+	/**
+	 * renders a single hub section on mobile
+	 */
+	public function wikiaMobileRenderHubSection() {
+		// biz logic here
+		$heroUrl = $this->request->getVal('herourl');
+		$heroImageUrl = $this->request->getVal('heroimageurl');
+
+		// Don't show HUB if we don't have data ~ we don't have image URL and/or HUB URL
+		if ( empty( $heroImageUrl ) || empty( $heroUrl ) ) {
+			return false;
+		}
+
+		$this->classname = $this->request->getVal('classname');
+		$this->heading = $this->request->getVal('heading');
+		$this->heroimageurl = $heroImageUrl;
+		$this->herourl = $heroUrl;
+		$this->creative = $this->request->getVal('creative');
 	}
 
 	/**
