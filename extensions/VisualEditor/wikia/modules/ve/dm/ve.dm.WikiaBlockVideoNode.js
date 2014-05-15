@@ -29,10 +29,11 @@ ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaVideoCaption' ];
 ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaVideoCaption';
 
 ve.dm.WikiaBlockVideoNode.static.rdfaToType = {
+	// videos are always "thumb" regardless of user input
 	'mw:Video/Thumb': 'thumb',
-	'mw:Video/Frame': 'frame',
-	'mw:Video/Frameless': 'frameless',
-	'mw:Video': 'none'
+	'mw:Video/Frame': 'thumb',
+	'mw:Video/Frameless': 'thumb',
+	'mw:Video': 'thumb'
 };
 
 /* Registration */
