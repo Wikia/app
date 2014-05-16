@@ -11,6 +11,8 @@ class VideosModuleController extends WikiaController {
 	 * to the local wiki. Finally, if still more or needed, get trending premium
 	 * videos related to the vertical of the wiki.
 	 * @requestParam integer limit - number of videos shown in the module
+	 * @requestParam string local [true/false] - show local content
+	 * @requestParam string sort [recent/trend] - how to sort the results
 	 * @responseParam string $result [ok/error]
 	 * @responseParam string $msg - result message
 	 * @responseParam array $videos - list of videos
@@ -23,11 +25,19 @@ class VideosModuleController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
 		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
+		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
+		$sort = $this->request->getVal( 'sort', 'trend' );
 
 		$module = new VideosModule();
+		if ( $localContent ) {
+			$videos = $module->getLocalVideos( $numRequired, $sort );
+		} else {
+			$videos = $module->getWikiRelatedVideosTopics( $numRequired );
+		}
+
 		$this->result = "ok";
 		$this->msg = '';
-		$this->videos = $module->getWikiRelatedVideosTopics( $numRequired );
+		$this->videos = $videos;
 		$this->staffVideos = $module->getStaffPicks();
 
 		// set cache

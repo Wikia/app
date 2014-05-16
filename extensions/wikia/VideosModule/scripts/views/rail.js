@@ -62,7 +62,7 @@ define('videosmodule.views.rail', [
 		if (videos.length + staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
 			log(
-				'No videos were returned for VideosModule rail',
+				'Not enough videos were returned for VideosModule rail',
 				log.levels.error,
 				'VideosModule',
 				true
