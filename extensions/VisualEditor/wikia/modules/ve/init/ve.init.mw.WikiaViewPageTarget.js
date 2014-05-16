@@ -103,7 +103,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	mw.hook( 've.cancelButton' ).fire();
 	// Trigger Qualaroo survey for anonymous users abandoning edit
 	if ( mw.user.anonymous() && window._kiq ) {
-		_kiq.push( ['set', { 'event': 'abandon_ve' } ] );
+		_kiq.push( ['set', { 'event': 'abandon_ve_cancel' } ] );
 	}
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
