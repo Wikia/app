@@ -14,7 +14,7 @@ class WikiaHubsModulePollsServiceTest extends WikiaBaseTest
 	 * @dataProvider getPollsDataProvider
 	 */
 	public function testGetWikitext($pollsData, $expectedData) {
-		$pollsModule = new WikiaHubsModulePollsService('en',1,1);
+		$pollsModule = new WikiaHubsModulePollsService( 123456 );
 		$renderedData = $pollsModule->getWikitext($pollsData);
 		$this->assertEquals($expectedData,$renderedData,'wikitext');
 	}

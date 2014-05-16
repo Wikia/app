@@ -22,7 +22,7 @@ class WikiaHubsModuleSliderServiceTest extends WikiaBaseTest
 
 		$this->mockGlobalVariable('wgContLang', $contLangMock);
 
-		$sliderModule = new WikiaHubsModuleSliderService('en',1,1);
+		$sliderModule = new WikiaHubsModuleSliderService( 123456 );
 		$renderedText = $sliderModule->getWikitext($structuredData);
 
 

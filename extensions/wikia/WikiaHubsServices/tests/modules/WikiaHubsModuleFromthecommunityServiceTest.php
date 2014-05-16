@@ -23,7 +23,7 @@ class WikiaHubsModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	public function testGetValidator($index, $fieldName, $validatorClass, $ownValidatorClass) {
 
 		$method = self::getProtectedMethod('WikiaHubsModuleFromthecommunityService', 'getValidator');
-		$obj = new WikiaHubsModuleFromthecommunityService('en', 1, 1);
+		$obj = new WikiaHubsModuleFromthecommunityService( 123456 );
 		$validator = $method->invokeArgs($obj, array($index, $fieldName));
 
 		$this->assertInstanceOf($validatorClass, $validator);
@@ -41,7 +41,7 @@ class WikiaHubsModuleFromthecommunityServiceTest extends WikiaBaseTest {
 	 */
 	public function testGetJsValidator($index, $fieldName, $validationString) {
 		$method = self::getProtectedMethod('WikiaHubsModuleFromthecommunityService', 'getJsValidator');
-		$obj = new WikiaHubsModuleFromthecommunityService('en', 1, 1);
+		$obj = new WikiaHubsModuleFromthecommunityService( 123456 );
 		$validationString = $method->invokeArgs($obj, array($index, $fieldName));
 
 		$this->assertEquals($validationString, $validationString);
