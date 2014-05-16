@@ -16,7 +16,7 @@ class DataFeedProvider {
 		if ($imageObj) {
 			$width = $imageObj->getWidth();
 			$height = $imageObj->getHeight();
-			$options = [ 'noLightbox' => 1 ];
+			$options = [ 'noLightbox' => true ];
 
 			if ($width > self::UPLOAD_THUMB_WIDTH || $height > self::UPLOAD_THUMB_WIDTH) {
 				$thumbObj = $imageObj->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH, 'height' => self::UPLOAD_THUMB_WIDTH ) );
