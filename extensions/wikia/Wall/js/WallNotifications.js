@@ -118,9 +118,6 @@ var WallNotifications = $.createClass(Object, {
 				controller: 'WallNotificationsExternalController',
 				method: 'getUpdateCounts',
 				format: 'json',
-				data: {
-					username: wgTitle
-				},
 				callback: callback
 			});
 		}
