@@ -57,6 +57,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$mapsResponse = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
+		if ( !$mapsResponse ) {
+			$this->forward( 'WikiaInteractiveMaps', 'error' );
+			return;
+		}
+
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 
@@ -113,6 +118,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
+
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
@@ -135,6 +141,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				'wikia-interactive-maps-map-not-found-error' => wfMessage( 'wikia-interactive-maps-map-not-found-error' )
 			] );
 		}
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * @desc API Error page
+	 */
+	public function error() {
+		$this->setVal( 'messages', [
+			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-api-error-message' )
+		] );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
