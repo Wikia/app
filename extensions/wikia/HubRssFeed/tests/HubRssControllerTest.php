@@ -119,7 +119,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mockModel = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'getRealDataV2'] )
+			->setMethods( ['__construct', 'getRealDataV3'] )
 			->getMock();
 
 
@@ -132,7 +132,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			$mockService->expects( $this->never() )
 				->method( 'dataToXml' );
 			$mockModel->expects( $this->never() )
-				->method( 'getRealDataV2' );
+				->method( 'getRealDataV3' );
 		}
 		else
 		{
@@ -140,7 +140,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 				->method( 'dataToXml' )
 				->will( $this->returnValue( '<rss/>' ) );
 			$mockModel->expects( $this->once() )
-				->method( 'getRealDataV2' )
+				->method( 'getRealDataV3' )
 				->will( $this->returnValue( [''] ) );
 		}
 
