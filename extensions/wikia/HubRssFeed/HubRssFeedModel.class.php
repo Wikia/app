@@ -40,9 +40,9 @@ class HubRssFeedModel extends WikiaModel {
 	 */
 	protected function getServicesV3( $cityId ) {
 		return [
-			'slider' => new WikiaHubsModuleSliderService($this->lang, EditHubModel::SECTION_HUBS, 0, $cityId),
-			'community' => new WikiaHubsModuleFromthecommunityService($this->lang, EditHubModel::SECTION_HUBS, 0, $cityId),
-			'wikiaspicks' => new WikiaHubsModuleWikiaspicksService($this->lang, EditHubModel::SECTION_HUBS, 0, $cityId),
+			'slider' => new WikiaHubsModuleSliderService( $cityId ),
+			'community' => new WikiaHubsModuleFromthecommunityService( $cityId ),
+			'wikiaspicks' => new WikiaHubsModuleWikiaspicksService( $cityId ),
 		];
 	
 	}

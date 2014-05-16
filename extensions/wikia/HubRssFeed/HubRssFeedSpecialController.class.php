@@ -79,7 +79,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
 			$verticalId = $this->hubs[ $hubName ];
 			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
-			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
+			$data = $this->model->getRealDataV3( $cityId );
 			$xml = $service->dataToXml( $data, $verticalId );
 			$this->wg->memc->set( $memcKey, $xml, self::CACHE_TIME );
 		}

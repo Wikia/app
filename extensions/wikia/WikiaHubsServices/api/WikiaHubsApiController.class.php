@@ -44,28 +44,19 @@ class WikiaHubsApiController extends WikiaApiController {
 	 * Get explore module data from given date and city id
 	 *
 	 * @requestParam integer $module [REQUIRED] module id see EditHubModel.class.php from line 9 to 17
-	 * @requestParam integer $city [REQUIRED] (1) city id of givenhub
-	 * @requestParam integer $vertical [REQUIRED] (2) vertical id see WikiFactoryHub::CATEGORY_ID_GAMING, WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT, WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	 * @requestParam integer $city [REQUIRED] city id of givenhub
 	 * @requestParam integer $timestamp [OPTIONAL] unix timestamp, default current date
-	 * @requestParam string $lang [OPTIONAL] (2) default set to EN
 	 *
-	 * We need either (1) or (2)
 	 *
 	 * @responseParam array $data - Data return by hub module - structure depends on $module parameter
 	 *
 	 * @example &module=1&city=2
 	 * @example &module=1&city=2&ts=1359504000
-	 * @example &module=1&vertical=2&ts=1359504000
-	 * @example &module=1&vertical=2&ts=1359504000&lang=de
 	 *
 	 */
 
 	public function getModuleData() {
-		if ( $this->request->getInt( self::PARAMETER_CITY ) !== 0 ) {
-			$this->getModuleDataV3();
-		} else {
-			$this->getModuleDataV2();
-		}
+		$this->getModuleDataV3();
 	}
 
 	/**
