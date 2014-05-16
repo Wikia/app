@@ -113,11 +113,11 @@ var WallNotifications = $.createClass(Object, {
 
 		if ( this.updateInProgress == false ) {
 			this.updateInProgress = true;
+
 			$.nirvana.sendRequest({
 				controller: 'WallNotificationsExternalController',
 				method: 'getUpdateCounts',
 				format: 'json',
-				type: 'GET',
 				callback: callback
 			});
 		}
