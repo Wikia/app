@@ -66,6 +66,9 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		5  => 'NC-17',
 	];
 
+	// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+	private static $EXCLUDE_TRAILER_TYPE = [ 1, 2, 20 ];
+
 	/**
 	 * Download feed from API
 	 * @param string $startDate
@@ -206,6 +209,12 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 				// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 				if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $clip['EClipId'], $this->filterByProviderVideoId ) ) {
+					$this->videoSkipped();
+					continue;
+				}
+
+				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
+				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
 					$this->videoSkipped();
 					continue;
 				}

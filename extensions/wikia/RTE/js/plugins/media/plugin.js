@@ -1,3 +1,4 @@
+/* global CKEDITOR, RTE, WikiaEditor */
 CKEDITOR.plugins.add('rte-media',
 {
 	init: function(editor) {
@@ -39,7 +40,7 @@ CKEDITOR.plugins.add('rte-media',
 			editor.addCommand('addvideo', {
 				exec: function(editor) {
 					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-						RTE.tools.callFunction(window.VET_WikiaEditor);
+						RTE.tools.callFunction(window.vetWikiaEditor);
 					});
 				}
 			});
@@ -301,7 +302,7 @@ CKEDITOR.plugins.add('rte-media',
 			if (!UserLogin.isForceLogIn()) {
 				var self = this;
 				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-					RTE.tools.callFunction(window.VET_WikiaEditor, $(self));
+					RTE.tools.callFunction(window.vetWikiaEditor, $(self));
 				});
 			}
 		});
@@ -317,7 +318,8 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	setupPlaceholder: function(placeholder) {
-		var self = this;
+		var images, videos,
+			self = this;
 
 		// no image placeholders to setup - leave
 		if (!placeholder.exists()) {
@@ -347,7 +349,7 @@ CKEDITOR.plugins.add('rte-media',
 		});
 
 		// setup image / video placeholder separatelly
-		var images = placeholder.filter('.image-placeholder');
+		images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
 		images.bind('click.placeholder edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
@@ -357,13 +359,19 @@ CKEDITOR.plugins.add('rte-media',
 			});
 		});
 
-		var videos = placeholder.filter('.video-placeholder');
+		videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
-		videos.bind('click.placeholder edit.placeholder', function(ev) {
+		videos.bind('click.placeholder edit.placeholder', function() {
+			WikiaEditor.track({
+				category: 'vet',
+				trackingMethod: 'both',
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				label: 'create-page-add-video'
+			});
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
-				RTE.tools.callFunction(window.VET_WikiaEditor, $(self), {isPlaceholder: true});
+				RTE.tools.callFunction(window.vetWikiaEditor, $(self), {isPlaceholder: true});
 			});
 		});
 

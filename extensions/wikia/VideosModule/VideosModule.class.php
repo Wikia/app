@@ -151,27 +151,6 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get related videos (article related videos and wiki related videos)
-	 * @param integer $articleId
-	 * @param integer $numRequired - number of videos required
-	 * @return array $videos - list of related videos
-	 */
-	public function getRelatedVideos( $articleId, $numRequired ) {
-		// Get article related videos
-		// @TODO find a better way to find article related videos, until then, skip this.
-		$videos = [];  //$this->getArticleRelatedVideos( $articleId, $numRequired );
-
-		// Add videos from getWikiRelatedVideos if we didn't hit our video count limit
-		$numRequired = $numRequired - count( $videos );
-		if ( $numRequired > 0 ) {
-//			$videos = array_merge( $videos, $this->getWikiRelatedVideos( $numRequired ) );
-			$videos = array_merge( $videos, $this->getWikiRelatedVideosTopics( $numRequired ) );
-		}
-
-		return $videos;
-	}
-
-	/**
 	 * Use the VideoEmbedToolSearchService to find premium videos related to the current article.
 	 * @param integer $articleId - ID of the article being viewed.
 	 * @param integer $numRequired - number of videos required
