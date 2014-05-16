@@ -256,7 +256,7 @@ class AdEngine2Service
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
 			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
 
-			// WikiaDartHelper.js
+			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
 		];
 
