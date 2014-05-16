@@ -135,10 +135,15 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 					new mw.Title( this.pageName ).toText()
 				)
 		} );
-		if ( window.history.replaceState ) {
-			delete currentUri.query.venotify;
-			window.history.replaceState( this.popState, document.title, currentUri );
-		}
+
+		delete currentUri.query.venotify;
+	}
+
+	if ( window.history.replaceState ) {
+		// This is to stop the back button breaking when it's supposed to take us back out
+		// of VE. It used to only be called when venotify is used. FIXME: there should be
+		// a much better solution than this.
+		window.history.replaceState( this.popState, document.title, currentUri );
 	}
 
 	this.setupSkinTabs();
