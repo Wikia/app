@@ -247,3 +247,21 @@ ve.ce.Node.prototype.destroy = function () {
 ve.ce.Node.prototype.getModelHtmlDocument = function () {
 	return this.model.getDocument() && this.model.getDocument().getHtmlDocument();
 };
+
+/**
+ * Gets the height of the contents of a node.
+ * Use when a node's children are floated.
+ *
+ * @returns {number} Height of node contents
+ */
+ve.ce.Node.prototype.getContentsHeight = function () {
+	var height = this.$element.height();
+
+	if ( !this.$element.hasClass( 'clearfix' ) ) {
+		this.$element.addClass( 'clearfix' );
+		height = this.$element.height();
+		this.$element.removeClass( 'clearfix' );
+	}
+
+	return height;
+};

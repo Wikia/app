@@ -21,6 +21,10 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	ve.ui.Context.call( this, surface, config );
 
 	// Properties
+	this.$window = this.$( this.getElementWindow() );
+	this.floatThreshold = 10;
+	this.floating = false;
+	this.focusedNodeContentsHeight = null;
 	this.visible = false;
 	this.showing = false;
 	this.hiding = false;
@@ -50,7 +54,7 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'relocationStart': 'onRelocationStart',
 		'relocationEnd': 'onRelocationEnd',
 		'focus': 'onSurfaceFocus',
-		'blur': 'onSurfaceBlur'
+		'blur': 'onSurfaceBlur',
 	} );
 	this.inspectors.connect( this, {
 		'opening': 'onInspectorOpening',
@@ -59,8 +63,9 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'close': 'onInspectorClose'
 	} );
 
-	this.$( this.getElementWindow() ).on( {
-		'resize': ve.bind( this.onWindowResize, this )
+	this.$window.on( {
+		'resize': ve.bind( this.onWindowResize, this ),
+		'scroll': ve.bind( this.onWindowScroll, this )
 	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );
@@ -85,6 +90,80 @@ OO.inheritClass( ve.ui.DesktopContext, ve.ui.Context );
 ve.ui.DesktopContext.prototype.onWindowResize = function () {
 	// Update, no transition, reposition only
 	this.update( false, true );
+};
+
+/**
+ * Handle window scroll events.
+ */
+ve.ui.DesktopContext.prototype.onWindowScroll = function () {
+	var toolbar = this.surface.target.toolbar;
+
+	// Context menu is visible and embedded and the toolbar is floating
+	if ( this.visible && this.embedded && toolbar.floating ) {
+		this.determineFloat();
+	}
+
+	// Context menu is floating but toolbar is not. Stop floating!
+	if ( this.visible && this.embedded && this.floating && !toolbar.floating ) {
+		this.unfloat();
+	}
+};
+
+ve.ui.DesktopContext.prototype.determineFloat = function () {
+	var toolbar = this.surface.target.toolbar,
+		offset = this.$element.offset(),
+		focusedNode = this.surface.getView().getFocusedNode(),
+		windowScrollTop = this.$window.scrollTop(),
+		focusedNodeBounds = {
+			'top': focusedNode.$element.offset().top,
+			'bottom': this.focusedNodeContentsHeight + focusedNode.$element.offset().top
+		},
+		contextBounds = {
+			'top': windowScrollTop + toolbar.$element.height() + this.floatThreshold,
+			'bottom': windowScrollTop + toolbar.$element.height() + this.floatThreshold + this.popup.$popup.height()
+		};
+
+	if (
+		this.floating &&
+		// Scrolling below bottom of focused node
+		( focusedNodeBounds.bottom < contextBounds.bottom ) ||
+		// Scrolling above top of focused node
+		( focusedNodeBounds.top > contextBounds.top )
+	) {
+		this.unfloat();
+	}
+
+	if (
+		!this.floating &&
+		( focusedNodeBounds.top <= contextBounds.top ) &&
+		( focusedNodeBounds.bottom >= contextBounds.bottom )
+	) {
+		this.float();
+	}
+};
+
+ve.ui.DesktopContext.prototype.float = function () {
+	var offset = this.$element.offset(),
+		toolbar = this.surface.target.toolbar;
+
+	if ( !this.floating ) {
+		this.$element
+			.css( 'position', 'fixed' )
+			.offset( {
+				'top': this.$window.scrollTop() + toolbar.$element.height() + this.floatThreshold,
+				'left': offset.left
+			} );
+
+		this.floating = true;
+	}
+};
+
+ve.ui.DesktopContext.prototype.unfloat = function () {
+	if ( this.floating ) {
+		this.$element.css( 'position', 'absolute' );
+		this.floating = false;
+		this.update();
+	}
 };
 
 /**
@@ -436,11 +515,7 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 				inspector.$element.css( 'opacity', 1 );
 			}, this ), 200 );
 		} else {
-			this.embedded = (
-				focusedNode &&
-				focusedNode.$focusable.outerHeight() > this.$menu.outerHeight() * 2 &&
-				focusedNode.$focusable.outerWidth() > this.$menu.outerWidth() * 2
-			);
+			this.setEmbedded( focusedNode );
 			this.popup.useTail( !this.embedded );
 			this.$menu.show();
 		}
@@ -449,9 +524,27 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 
 		this.visible = true;
 		this.showing = false;
+		this.determineFloat();
+		this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
 	}
 
 	return this;
+};
+
+ve.ui.DesktopContext.prototype.setEmbedded = function ( focusedNode ) {
+	var targetHeight = this.$menu.outerHeight() * 2,
+		targetWidth = this.$menu.outerWidth() * 2,
+		embedded = false;
+
+	if (
+		focusedNode &&
+		targetHeight < Math.max( focusedNode.$focusable.outerHeight(), focusedNode.$shields.height() ) &&
+		targetWidth < Math.max( focusedNode.$focusable.outerWidth(),  focusedNode.$shields.width() )
+	) {
+		embedded = true;
+	}
+
+	this.embedded = embedded;
 };
 
 /**
@@ -473,6 +566,7 @@ ve.ui.DesktopContext.prototype.hide = function () {
 		this.$element.css( 'visibility', 'hidden' );
 		this.visible = false;
 		this.hiding = false;
+		this.unfloat();
 	}
 	return this;
 };
