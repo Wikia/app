@@ -16,14 +16,15 @@ class DataFeedProvider {
 		if ($imageObj) {
 			$width = $imageObj->getWidth();
 			$height = $imageObj->getHeight();
+			$options = [ 'noLightbox' => 1 ];
 
 			if ($width > self::UPLOAD_THUMB_WIDTH || $height > self::UPLOAD_THUMB_WIDTH) {
 				$thumbObj = $imageObj->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH, 'height' => self::UPLOAD_THUMB_WIDTH ) );
 				$width = $thumbObj->getWidth();
 				$height = $thumbObj->getHeight();
-				$html = $thumbObj->toHtml();
+				$html = $thumbObj->toHtml( $options );
 			} else {
-				$html = $imageObj->getUnscaledThumb()->toHtml();
+				$html = $imageObj->getUnscaledThumb()->toHtml( $options );
 			}
 
 			wfProfileOut(__METHOD__);
