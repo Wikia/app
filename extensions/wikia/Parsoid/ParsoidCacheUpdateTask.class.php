@@ -20,7 +20,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 		$taskLists = [ ];
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
-			$task = (new ParsoidCacheUpdateTask())->titleId($this->title->mArticleID);
+			$task = (new ParsoidCacheUpdateTask())->title($this->title);
 			$taskLists[ ] = ( new AsyncTaskList() )
 				->setPriority(ParsoidPurgePriorityQueue::NAME)
 				->wikiId($wgCityId)
