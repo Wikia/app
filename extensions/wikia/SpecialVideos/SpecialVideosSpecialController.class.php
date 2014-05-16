@@ -37,7 +37,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		if ( $isMobile ) {
 			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-			$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/index.mustache' );
 			$scriptsStr .= '_mobile';
 			$stylesStr .= '_mobile';
 		} else {
