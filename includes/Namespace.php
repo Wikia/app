@@ -93,10 +93,18 @@ class MWNamespace {
 	 * @return int
 	 */
 	public static function getTalk( $index ) {
+		global $wgEnableWallExt;
 		self::isMethodValidFor( $index, __METHOD__ );
 		return self::isTalk( $index )
 			? $index
-			: $index + 1;
+			// begin wikia change
+			// @author Cqm
+			// VOLDEV-66
+			// fix method for when wikia wall extension is enabled
+			: $index == NS_USER && !empty( $wgEnableWallExt )
+				? NS_USER_WALL
+			// end wikia change
+				: $index + 1;
 	}
 
 	/**
