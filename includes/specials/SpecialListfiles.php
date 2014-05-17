@@ -194,6 +194,7 @@ class ImageListPager extends TablePager {
 	}
 
 	function formatValue( $field, $value ) {
+		global $wgUser;
 		switch ( $field ) {
 			case 'thumb':
 				$file = wfLocalFile( $value );
@@ -213,6 +214,17 @@ class ImageListPager extends TablePager {
 						array( 'href' => wfLocalFile( $filePage )->getURL() ),
 						$imgfile
 					);
+					// begin wikia change
+					// @author Cqm
+					// VOLDEV-65
+					if ( $wgUser->isAllowed( 'delete' ) ) {
+						$delete = Xml::element( 'a',
+							array( 'href', $filePage . '?action=delete' ),
+							wfMessage( 'delete' )->escaped()
+						);
+						return "$link ($download) ($delete)";
+					}
+					// end wikia change
 					return "$link ($download)";
 				} else {
 					return htmlspecialchars( $value );
