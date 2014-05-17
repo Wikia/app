@@ -107,6 +107,11 @@ $namespaceNames['no'] = array(
 	SF_NS_FORM_TALK      => 'Skjemadiskusjon'
 );
 
+$namespaceNames['pl'] = array(
+	SF_NS_FORM	=> 'Formularz',
+	SF_NS_FORM_TALK	=> 'Dyskusja_formularza',
+);
+
 $namespaceNames['ru'] = array(
 	SF_NS_FORM           => 'Форма',
 	SF_NS_FORM_TALK      => 'Обсуждение_формы'

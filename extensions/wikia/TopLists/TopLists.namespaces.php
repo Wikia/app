@@ -49,10 +49,8 @@ $namespaces['fr'] = array(
  * Italian (Italiano)
  */
 $namespaces['it'] = array(
-	/*
-	NS_TOPLIST	=> '',
-	NS_TOPLIST_TALK	=> '',
-	*/
+	NS_TOPLIST	=> 'Lista_top_10',
+	NS_TOPLIST_TALK	=> 'Discussioni_lista_top_10',
 );
 
 /**
