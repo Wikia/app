@@ -55,8 +55,12 @@ $namespaces['fr'] = array(
  */
 $namespaces['it'] = array(
 	NS_USER_WALL			=> 'Bacheca',
-	NS_USER_WALL_MESSAGE		=> 'Discussione',
+	NS_USER_WALL_MESSAGE		=> 'Conversazione',
 	NS_USER_WALL_MESSAGE_GREETING	=> 'Benvenuto_bacheca',
+);
+
+$namespaceAliases = array(
+	'Discussione' => NS_USER_WALL_MESSAGE,
 );
 
 /**
