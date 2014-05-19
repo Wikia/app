@@ -26,7 +26,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$url = $this->initFeedUrl( $startDate, $endDate );
 
-		print("Connecting to $url...\n");
+		print( "Connecting to $url...\n" );
 
 		$content = $this->getUrlContent( $url );
 		if ( !$content ) {
