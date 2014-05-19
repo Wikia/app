@@ -68,8 +68,8 @@ define('ext.wikia.adEngine.wikiaGptHop', [
 		noAdCallback();
 	}
 
-	function onAdLoad(slotname, gptEvent, slotDiv, adCallback, noAdCallback) {
-		var status, height, gptEmpty, empty, iframe;
+	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
+		var status, height, gptEmpty, empty;
 
 		// Check the explicit status
 		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
@@ -98,7 +98,6 @@ define('ext.wikia.adEngine.wikiaGptHop', [
 		}
 
 		// On mobile skin we investigate the iframe contents
-		iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
 
 		// No iframe, this is weird, but we assume this means an ad, no hopping!
 		if (!iframe) {
