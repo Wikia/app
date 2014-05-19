@@ -97,11 +97,7 @@ class HubService extends Service {
 	public static function getCategoryInfoForCurrentPage() {
 		$cityId = F::app()->wg->CityId;
 
-		$categoryId = null;
-
-		if( empty($categoryId) ) {
-			$categoryId = self::getCategoryIdForCity($cityId);
-		}
+		$categoryId = self::getCategoryIdForCity($cityId);
 
 		return self::constructCategoryInfoFromCategoryId($categoryId);
 	}

@@ -4,7 +4,6 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	const CLASS_NAME_SUFFIX = 'Service';
 
 	protected $langCode;
-	protected $sectionId;
 	protected $verticalId;
 	protected $cityId;
 	protected $skinName;
@@ -22,7 +21,6 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	/**
 	 * @param $name
 	 * @param $langCode
-	 * @param $sectionId
 	 * @param $verticalId
 	 * @return WikiaHubsModuleService
 	 */
