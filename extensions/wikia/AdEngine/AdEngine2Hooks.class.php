@@ -49,6 +49,21 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	static public function onInstantGlobalsGetVariables(array &$vars)
+	{
+		$vars[] = 'wgHighValueCountries';
+		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+
+		return true;
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars

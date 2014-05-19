@@ -8,12 +8,6 @@
  */
 class InstantGlobalsModule extends ResourceLoaderModule {
 
-	// list of WikiFactory variables whose values should be taken from Community Wiki
-	private $variables = [
-		'wgHighValueCountries',
-		'wgAmazonDirectTargetedBuyCountries',
-	];
-
 	/**
 	 * Get variables values
 	 *
@@ -22,7 +16,11 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	private function getVariablesValues() {
 		$ret = [];
 
-		foreach($this->variables as $name) {
+		$variables = [];
+
+		wfRunHooks( 'InstantGlobalsGetVariables', [ &$variables ] );
+
+		foreach($variables as $name) {
 			$value = WikiFactory::getVarValueByName($name, Wikia::COMMUNITY_WIKI_ID);
 
 			// don't emit "falsy" values
