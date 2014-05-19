@@ -36,7 +36,6 @@ CKEDITOR.plugins.add('rte-media', {
 			command: 'addimage'
 		});
 
-
 		// check for existance of VideoEmbedTool
 		if (window.wgEnableVideoToolExt) {
 			// register "Add Video" command
@@ -161,7 +160,6 @@ CKEDITOR.plugins.add('rte-media', {
 		}];
 
 		RTE.overlay.add(media, standardButtons);
-
 
 		// unbind previous events
 		media.unbind('.media');
