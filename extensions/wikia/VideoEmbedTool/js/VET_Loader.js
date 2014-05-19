@@ -1,3 +1,5 @@
+/* global Wikia */
+
 /* VET Loader
  *
  * @author Hyun Lim, Liz Lee
@@ -144,6 +146,8 @@
 	 * @param object options - options to be passed to vetLoader.load(). See above for example.
 	 */
 	$.fn.addVideoButton = function (options) {
+		var track;
+
 		$.preloadThrobber();
 
 		return this.each(function () {

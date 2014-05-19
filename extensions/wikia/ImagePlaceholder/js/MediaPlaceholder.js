@@ -37,10 +37,30 @@
 
 			// Handle clicks on image placeholders (video placeholders are handled differently)
 			this.WikiaArticle.on( 'click', '.wikiaImagePlaceholder a', function( e ) {
-				var $this = $( this ),
+				var open,
+					$this = $( this ),
 					props = self.getProps( $this );
 
 				e.preventDefault();
+
+				open = function () {
+					window.WMU_show(window.event, { // jshint ignore:line
+						gallery: -2,
+						box: props.placeholderIndex,
+						align: props.align,
+						thumb: props.thumb,
+						size: props.width,
+						caption: props.caption,
+						link: props.link,
+						track: {
+							action: Wikia.Tracker.ACTIONS.CLICK,
+							category: 'image-placeholder',
+							label: 'view-mode',
+							//method: 'ga'
+						}
+
+					});
+				};
 
 				// Provide immediate feedback once button is clicked
 				$this.startThrobbing();
@@ -57,17 +77,11 @@
 					).done( function() {
 						self.imageLoaded = true;
 						$this.stopThrobbing();
-						window.WMU_show( // jshint ignore:line
-							window.event, -2, props.placeholderIndex, props.align, props.thumb,
-							props.width, props.caption, props.link
-						);
+						open();
 					} );
 				} else {
 					$this.stopThrobbing();
-					window.WMU_show( // jshint ignore:line
-						window.event, -2, props.placeholderIndex, props.align, props.thumb, props.width,
-						props.caption, props.link
-					);
+					open();
 				}
 			} );
 		},
@@ -86,7 +100,13 @@
 						'article=' + encodeURIComponent( window.wgTitle ),
 						'ns=' + window.wgNamespaceNumber
 					],
-					callbackAfterEmbed: $.proxy( self.videoEmbedCallback, self )
+					callbackAfterEmbed: $.proxy( self.videoEmbedCallback, self ),
+					track: {
+						action: Wikia.Tracker.ACTIONS.CLICK,
+						category: 'video-placeholder',
+						label: 'view-mode',
+						//method: 'ga'
+					}
 				} );
 			} );
 		},
