@@ -101,15 +101,15 @@
 }
 
 /* captionsize  */
-.wikia-gallery-caption-size-small .lightbox-caption {
+.wikia-gallery-caption-size-small .lightbox-caption, .wikia-gallery-caption-size-small .title {
 	font-size: 9px;
 }
 
-.wikia-gallery-caption-size-medium .lightbox-caption {
+.wikia-gallery-caption-size-medium .lightbox-caption, .wikia-gallery-caption-size-medium .title {
 	font-size: 12px;
 }
 
-.wikia-gallery-caption-size-large .lightbox-caption {
+.wikia-gallery-caption-size-large .lightbox-caption, .wikia-gallery-caption-size-large .title {
 	font-size: 16px;
 }
 
@@ -137,11 +137,14 @@
 }
 
 .wikia-gallery-captions-left .wikia-gallery-item .lightbox-caption,
-.wikia-gallery-captions-right .wikia-gallery-item .lightbox-caption {
+.wikia-gallery-captions-right .wikia-gallery-item .lightbox-caption,
+.wikia-gallery-captions-left .wikia-gallery-item .title,
+.wikia-gallery-captions-right .wikia-gallery-item .title{
 	padding: 3px;
 }
 
-.wikia-gallery-captions-center .wikia-gallery-item .lightbox-caption {
+.wikia-gallery-captions-center .wikia-gallery-item .lightbox-caption,
+.wikia-gallery-captions-center .wikia-gallery-item .title {
 	padding: 3px 0 3px 0;
 }
 
@@ -153,8 +156,12 @@
 	text-align: left;
 }
 
+.wikia-gallery-item .title + .lightbox-caption {
+	margin-top: 0;
+}
+
 /* captions below images */
-.wikia-gallery-item > .lightbox-caption {
+.wikia-gallery-item > .lightbox-caption, .wikia-gallery-item .title {
 	margin-top: 10px;
 	display:block;
 }
