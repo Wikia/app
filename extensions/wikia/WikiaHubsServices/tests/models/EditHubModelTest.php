@@ -77,14 +77,7 @@ class EditHubModelTest extends WikiaBaseTest {
 		$model = new EditHubModel();
 		$model->setSpecialPageClass($specialPageMock);
 
-		$url = $model->getModuleUrl(
-			array(
-				'langCode' => $params['region'],
-				'sectionId' => $params['sectionId'],
-				'verticalId' => $params['verticalId']
-			),
-			$params['date'],
-			$params['moduleId']
+		$url = $model->getModuleUrl( $params['date'], $params['moduleId']
 		);
 
 		$this->assertEquals('test returned url', $url);
@@ -329,7 +322,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	public function testSaveModuleInsert() {
 		$params = array(
 			'langCode' => 'pl',
-			'sectionId' => EditHubModel::SECTION_HUBS,
+			'cityId' => 123456,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 		);
 
@@ -360,7 +353,7 @@ class EditHubModelTest extends WikiaBaseTest {
 					'vertical_id' => $dataToInsert['verticalId'],
 					'module_id' => $dataToInsert['moduleId'],
 					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp']),
-					'city_id' => 0
+					'city_id' => 123456
 				)
 			)
 		);
@@ -391,7 +384,7 @@ class EditHubModelTest extends WikiaBaseTest {
 	public function testSaveModuleUpdate() {
 		$params = array(
 			'langCode' => 'pl',
-			'sectionId' => EditHubModel::SECTION_HUBS,
+			'cityId' => 123456,
 			'verticalId' => WikiFactoryHub::CATEGORY_ID_GAMING,
 		);
 
@@ -426,7 +419,7 @@ class EditHubModelTest extends WikiaBaseTest {
 					'vertical_id' => $dataToInsert['verticalId'],
 					'module_id' => $dataToInsert['moduleId'],
 					'hub_date' => $dbMock->timestamp($dataToInsert['timestamp']),
-					'city_id' => 0
+					'city_id' => 123456
 				)
 			)
 		);

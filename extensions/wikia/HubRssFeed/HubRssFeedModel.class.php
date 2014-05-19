@@ -58,13 +58,8 @@ class HubRssFeedModel extends WikiaModel {
 			return [];
 		}
 
-		$params = [
-			'sectionId' => EditHubModel::SECTION_HUBS,
-			'cityId' => $cityId,
-		];
-
 		$currentData = $this->getDataFromModulesV3( $cityId );
-		$timestamp = $this->editHubModel->getLastPublishedTimestamp( $params );
+		$timestamp = $this->editHubModel->getLastPublishedTimestamp( $cityId );
 
 		foreach ( $currentData as &$val ) {
 			$val[ 'timestamp' ] = $timestamp;
@@ -74,7 +69,7 @@ class HubRssFeedModel extends WikiaModel {
 		$prevTimestamp = $timestamp - 1;
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
-			$prevTimestamp = $this->editHubModel->getLastPublishedTimestamp( $params, $prevTimestamp );
+			$prevTimestamp = $this->editHubModel->getLastPublishedTimestamp( $cityId, $prevTimestamp );
 			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp );
 
 			if ( $prevData === null ) {

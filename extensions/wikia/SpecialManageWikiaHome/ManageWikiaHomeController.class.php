@@ -586,7 +586,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		);
 
 		$wikis = $response->getVal('list', []);
-				$fields = $this->hubsForm->getFields();
+		$fields = $this->hubsForm->getFields();
 		$hubValues = $fields['hub_slot']['value'];
 
 		foreach ($wikis as $wiki) {

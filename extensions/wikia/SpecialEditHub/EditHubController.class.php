@@ -90,7 +90,6 @@ class EditHubController extends WikiaSpecialPageController {
 		if ($datetime->format('H') != 0 || $datetime->format('i') != 0 || $datetime->format('s') != 0) {
 			$datetime->setTime(0, 0, 0);
 			$url = $this->editHubModel->getModuleUrl(
-				$wgCityId,
 				$datetime->getTimestamp(),
 				$this->selectedModuleId
 			);
@@ -224,7 +223,6 @@ class EditHubController extends WikiaSpecialPageController {
 		}
 
 		$nextUrl = $this->editHubModel->getModuleUrl(
-			$wgCityId,
 			$this->date,
 			$nextModuleId
 		);

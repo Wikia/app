@@ -3,7 +3,6 @@
 class EditHubModel extends WikiaModel {
 	const CACHE_KEY = 'HubsV3v0.91';
 	const CACHE_KEY_LAST_PUBLISHED_TIMESTAMP = 'v3LastPublishedTimestamp';
-	const SECTION_HUBS = 1;
 	const HUBS_TABLE_NAME = '`wikia_hub_modules`';
 	const FORM_THUMBNAIL_SIZE = 149;
 	const FORM_FIELD_PREFIX = 'WikiaHubs';
@@ -122,7 +121,7 @@ class EditHubModel extends WikiaModel {
 				$modulesData['activeModuleName'] = $this->getModuleName($moduleId);
 			}
 			$module['name'] = $this->getModuleName($moduleId);
-			$module['href'] = $this->getModuleUrl($cityId, $timestamp, $moduleId);
+			$module['href'] = $this->getModuleUrl( $timestamp, $moduleId );
 		}
 		$modulesData['moduleList'] = $moduleList;
 
@@ -285,12 +284,12 @@ class EditHubModel extends WikiaModel {
 	/**
 	 * Get url to edit module page in Edit Hub
 	 *
-	 * @param $cityId
 	 * @param $timestamp
 	 * @param $moduleId
+	 * @internal param $cityId
 	 * @return mixed
 	 */
-	public function getModuleUrl($cityId, $timestamp, $moduleId) {
+	public function getModuleUrl( $timestamp, $moduleId ) {
 		$specialPage = $this->getSpecialPageClass();
 		return $specialPage::getTitleFor('EditHub', 'editHub')->getLocalURL(
 			array(
