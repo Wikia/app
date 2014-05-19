@@ -29,6 +29,7 @@ ve.ce.FocusableNode = function VeCeFocusableNode( $focusable ) {
 	this.focused = false;
 	this.$focusable = $focusable || this.$element;
 	this.$highlights = this.$( [] );
+	this.$window = null;
 	this.surface = null;
 
 	// Events
@@ -79,8 +80,12 @@ ve.ce.FocusableNode.prototype.onFocusableLive = function () {
 	var surfaceModel = this.root.getSurface().getModel();
 
 	if ( this.live ) {
+		this.$window = $( this.getElementWindow() );
+
+		this.$window.on( 'resize.ve-ce-focusableNode', $.throttle( 500, ve.bind( this.onWindowResize, this ) ) );
 		surfaceModel.connect( this, { 'history': 'onFocusableHistory' } );
 	} else {
+		this.$window.off( 'resize.ve-ce-focusableNode' );
 		surfaceModel.disconnect( this, { 'history': 'onFocusableHistory' } );
 	}
 };
@@ -218,4 +223,15 @@ ve.ce.FocusableNode.prototype.clearHighlight = function () {
 ve.ce.FocusableNode.prototype.redrawHighlight = function () {
 	this.clearHighlight();
 	this.createHighlight();
+};
+
+/**
+ * Handle window resize event.
+ *
+ * @method
+ */
+ve.ce.FocusableNode.prototype.onWindowResize = function () {
+	if ( this.focused ) {
+		this.redrawHighlight();
+	}
 };

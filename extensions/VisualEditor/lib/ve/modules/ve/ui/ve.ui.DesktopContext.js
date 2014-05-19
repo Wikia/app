@@ -62,10 +62,13 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'closing': 'onInspectorClosing',
 		'close': 'onInspectorClose'
 	} );
+	this.surface.getView().getDocument().getDocumentNode().connect( this, {
+		'teardown': 'onSurfaceTeardown'
+	} );
 
 	this.$window.on( {
-		'resize': ve.bind( this.onWindowResize, this ),
-		'scroll': ve.bind( this.onWindowScroll, this )
+		'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
+		'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
 	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );
@@ -83,6 +86,13 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 OO.inheritClass( ve.ui.DesktopContext, ve.ui.Context );
 
 /* Methods */
+
+/**
+ * Handle surface teardown.
+ */
+ve.ui.DesktopContext.prototype.onSurfaceTeardown = function () {
+	this.$window.off('.ve-ui-desktopContext');
+};
 
 /**
  * Handle window resize events.
@@ -143,15 +153,12 @@ ve.ui.DesktopContext.prototype.determineFloat = function () {
 };
 
 ve.ui.DesktopContext.prototype.float = function () {
-	var offset = this.$element.offset(),
-		toolbar = this.surface.target.toolbar;
-
 	if ( !this.floating ) {
 		this.$element
-			.css( 'position', 'fixed' )
-			.offset( {
-				'top': this.$window.scrollTop() + toolbar.$element.height() + this.floatThreshold,
-				'left': offset.left
+			.css( {
+				'position': 'fixed',
+				'top': this.surface.target.toolbar.$element.height() + this.floatThreshold,
+				'left': this.$element.offset().left
 			} );
 
 		this.floating = true;
@@ -468,6 +475,11 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 	}
 
 	if ( position ) {
+
+		if ( this.floating ) {
+			position.x += surfaceOffset.left;
+			position.y = this.surface.target.toolbar.$element.height() + this.floatThreshold;
+		}
 		this.$element.css( { 'left': position.x, 'top': position.y } );
 	}
 
@@ -522,10 +534,13 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 
 		this.updateDimensions( transition );
 
+		if ( focusedNode ) {
+			this.determineFloat();
+			this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
+		}
+
 		this.visible = true;
 		this.showing = false;
-		this.determineFloat();
-		this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
 	}
 
 	return this;

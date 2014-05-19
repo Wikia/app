@@ -250,18 +250,33 @@ ve.ce.Node.prototype.getModelHtmlDocument = function () {
 
 /**
  * Gets the height of the contents of a node.
- * Use when a node's children are floated.
+ *
+ * If a node contains floated descendants, 'clearfix' will cause the node to expand to contain the floats.
+ * However, if the element is beside a float, 'clearfix' will cause the node to expand to the height of the
+ * floated node beside it.
+ * To avoid this, the node will both 'clearfix' and clear floats.
+ * If the node contains fluid content, clearing floats may widen and shorten the contents of the node. In this case,
+ * it is preferred to use the original, taller height.
  *
  * @returns {number} Height of node contents
  */
 ve.ce.Node.prototype.getContentsHeight = function () {
-	var height = this.$element.height();
+	var clearedHeight
+		height = this.$element.height(),
+		clear = this.$element.css( 'clear' ),
+		clearfix = this.$element.hasClass( 'clearfix' );
 
-	if ( !this.$element.hasClass( 'clearfix' ) ) {
+	if ( !clearfix ) {
 		this.$element.addClass( 'clearfix' );
-		height = this.$element.height();
+	}
+	this.$element.css( 'clear', 'both' );
+
+	clearedHeight = this.$element.height();
+
+	if ( !clearfix ) {
 		this.$element.removeClass( 'clearfix' );
 	}
+	this.$element.css( 'clear', clear );
 
-	return height;
+	return Math.max( height, clearedHeight );
 };
