@@ -1,4 +1,4 @@
-/* global CKEDITOR, RTE, WikiaEditor, UserLogin */
+/* global CKEDITOR, RTE, WikiaEditor, UserLogin, CreateWikiaPoll */
 CKEDITOR.plugins.add('rte-media', {
 	init: function (editor) {
 		'use strict';
@@ -111,7 +111,7 @@ CKEDITOR.plugins.add('rte-media', {
 		};
 
 		standardButtons = [{
-			label: msgs['edit'],
+			label: msgs.edit,
 			'class': 'RTEMediaOverlayEdit',
 			callback: function (node) {
 				var category = getTrackingCategory(node);
@@ -244,7 +244,7 @@ CKEDITOR.plugins.add('rte-media', {
 			if (re.test(wikitext)) {
 				// switch alignment which is already in wikitext
 				// example: [[File:Spiderpig.jpg|thumb|left|left something]]
-				wikitext = wikitext.replace(re, "|" + newAlign + "$1");
+				wikitext = wikitext.replace(re, '|' + newAlign + '$1');
 			} else {
 				// there's no alignment in wikitext - add left/right after the first pipe
 				// example: [[File:Spiderpig.jpg|thumb|foo]] or [[File:Spiderpig.png]]
@@ -260,7 +260,8 @@ CKEDITOR.plugins.add('rte-media', {
 			target.setData(data);
 
 			// re-align image in editor
-			target.removeClass('alignNone alignLeft alignRight').addClass(newAlign == 'left' ? 'alignLeft' : 'alignRight');
+			target.removeClass('alignNone alignLeft alignRight')
+				.addClass(newAlign === 'left' ? 'alignLeft' : 'alignRight');
 		});
 
 		// update position of image caption ("..." icon)
@@ -292,7 +293,7 @@ CKEDITOR.plugins.add('rte-media', {
 	setupImage: function (image) {
 		'use strict';
 
-		image.bind('edit.media', function (ev) {
+		image.bind('edit.media', function () {
 			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
@@ -308,7 +309,7 @@ CKEDITOR.plugins.add('rte-media', {
 	addWikiText: function (wikiText, editedElement) {
 		'use strict';
 
-		if (typeof editedElement != "undefined" && editedElement !== false) {
+		if (typeof editedElement !== 'undefined' && editedElement !== false) {
 			RTE.mediaEditor.update(editedElement, wikiText);
 		} else {
 			RTE.mediaEditor.addVideo(wikiText, {});
@@ -367,7 +368,7 @@ CKEDITOR.plugins.add('rte-media', {
 		});
 
 		// setup events once more on each drag&drop
-		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function (ev, extra) {
+		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function (ev) {
 			var target = $(ev.target);
 
 			// keep image/video placeholders
@@ -379,11 +380,11 @@ CKEDITOR.plugins.add('rte-media', {
 		// setup image / video placeholder separatelly
 		images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
-		images.bind('click.placeholder edit.placeholder', function (ev) {
+		images.bind('click.placeholder edit.placeholder', function () {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load('WikiaMiniUpload').done(function () {
-				RTE.tools.callFunction(window.WMU_show, $(self), {
+				RTE.tools.callFunction(window.WMU_show, $(self), { // jshint ignore:line
 					isPlaceholder: true,
 					track: {
 						action: Wikia.Tracker.ACTIONS.CLICK,
@@ -464,13 +465,15 @@ RTE.mediaEditor = {
 	addImage: function (wikitext, params) {
 		'use strict';
 
+		var wikitextParams, data;
+
 		RTE.log('adding an image');
 
 		// parse wikitext: get image name
-		var wikitextParams = wikitext.substring(2, wikitext.length - 2).split('|');
+		wikitextParams = wikitext.substring(2, wikitext.length - 2).split('|');
 
 		// set wikitext and metadata
-		var data = {
+		data = {
 			type: 'image',
 			title: wikitextParams.shift().replace(/^[^:]+:/, ''), // get image name (without namespace prefix)
 			params: params,
@@ -504,10 +507,11 @@ RTE.mediaEditor = {
 
 		// render an image and replace old one
 		RTE.tools.parseRTE(wikitext, function (html) {
-			var editor = RTE.getInstance();
+			var editor = RTE.getInstance(),
+				newMedia;
 
 			//RT#52431 - proper context
-			var newMedia = $(html, editor.document.$).children('img');
+			newMedia = $(html, editor.document.$).children('img');
 
 			//fix for IE7, the above line of code is returning an empty element
 			//since $(html) strips the enclosing <p> tag out for some reason
@@ -531,7 +535,7 @@ RTE.mediaEditor = {
 	},
 
 	// update given media (wikitext will parser to HTML, params stored in metadata)
-	update: function (media, wikitext, params) {
+	update: function (media, wikitext) {
 		'use strict';
 
 		var self = this;
