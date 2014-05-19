@@ -361,7 +361,7 @@ CKEDITOR.plugins.add('rte-media',
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'image-placeholder',
 						label: 'edit-mode',
-						//method: 'ga'
+						method: 'ga'
 					}
 				});
 			});
@@ -370,12 +370,6 @@ CKEDITOR.plugins.add('rte-media',
 		videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
 		videos.bind('click.placeholder edit.placeholder', function() {
-//			WikiaEditor.track({
-//				category: 'vet',
-//				trackingMethod: 'both',
-//				action: Wikia.Tracker.ACTIONS.CLICK,
-//				label: 'create-page-add-video'
-//			});
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
 			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
@@ -385,7 +379,7 @@ CKEDITOR.plugins.add('rte-media',
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'image-placeholder',
 						label: 'edit-mode',
-						//method: 'ga'
+						method: 'ga'
 					}
 				});
 			});
