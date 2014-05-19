@@ -19,7 +19,7 @@ describe('Method ext.wikia.adEngine.wikiaGptHop.onAdLoad', function () {
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.slotDiv, mocks.success, mocks.hop);
+			gptHop.onAdLoad(slotName, gptEvent, {}, mocks.success, mocks.hop);
 
 			if (successOrHop === 'success') {
 				expect(mocks.success.calls.length).toBe(1, 'Success callback should be called once');
@@ -39,11 +39,8 @@ describe('Method ext.wikia.adEngine.wikiaGptHop.onAdLoad', function () {
 				hop: noop,
 				window: {skin: 'wikiamobile'},
 				iframe: {},
-				iframeDoc: {},
-				slotDiv: {}
+				iframeDoc: {}
 			};
-
-			mocks.slotDiv.querySelector = function () { return mocks.iframe; };
 
 			mocks.iframe.contentWindow = {};
 			mocks.iframe.contentWindow.document = mocks.iframeDoc;
@@ -65,7 +62,7 @@ describe('Method ext.wikia.adEngine.wikiaGptHop.onAdLoad', function () {
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'hop');
 
-			gptHop.onAdLoad(slotName, gptEvent, mocks.slotDiv, mocks.success, mocks.hop);
+			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
 
 			if (successOrHop === 'success') {
 				expect(mocks.success.calls.length).toBe(1, 'Success callback should be called once');

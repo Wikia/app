@@ -229,7 +229,9 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 					slotDiv.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
 					slotDiv.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
 
-					gptHop.onAdLoad(slotname, event, slotDiv, callSuccess, callError);
+					var iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+
+					gptHop.onAdLoad(slotname, event, iframe, callSuccess, callError);
 				}
 			});
 
