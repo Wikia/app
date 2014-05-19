@@ -34,4 +34,7 @@ $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfter
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
 JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 	'wikia-interactive-maps-map-placeholder-error',
+	'wikia-interactive-maps-create-map',
+	'wikia-interactive-maps-create-map-next-btn',
+	'wikia-interactive-maps-create-map-back-btn'
 ] );

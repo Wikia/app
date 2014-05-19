@@ -36,6 +36,10 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-sort-recently-updated' => 'Recently updated',
 
 	'wikia-interactive-maps-map-not-found-error' => 'Map not found',
+
+	'wikia-interactive-maps-create-map' => 'Create a Map',
+	'wikia-interactive-maps-create-map-next-btn' => 'Next',
+	'wikia-interactive-maps-create-map-back-btn' => 'Back'
 ];
 
 $messages[ 'qqq' ] = [
@@ -63,5 +67,9 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-sort-recently-updated' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list so the recently update maps are on the top',
 
 	'wikia-interactive-maps-map-not-found-error' => 'Error message, shown when map is not found',
+
+	'wikia-interactive-maps-create-map' => 'Header for create map modal',
+	'wikia-interactive-maps-create-map-next-btn' => 'Next button for create map modal',
+	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal'
 ];
 
