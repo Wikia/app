@@ -559,7 +559,10 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= JSSnippets::addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
+			array(
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+			),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
