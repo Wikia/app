@@ -475,8 +475,7 @@ class EditHubModel extends WikiaModel {
 	/**
 	 * Get hub url
 	 *
-	 * @param $langCode
-	 * @param $verticalId
+	 * @param int $wikiId
 	 *
 	 * @return String
 	 */
