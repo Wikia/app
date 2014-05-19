@@ -54,7 +54,7 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'relocationStart': 'onRelocationStart',
 		'relocationEnd': 'onRelocationEnd',
 		'focus': 'onSurfaceFocus',
-		'blur': 'onSurfaceBlur',
+		'blur': 'onSurfaceBlur'
 	} );
 	this.inspectors.connect( this, {
 		'opening': 'onInspectorOpening',
