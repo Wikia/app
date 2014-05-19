@@ -68,6 +68,10 @@ class ParsoidHooks {
 	private static function updateTitleModern(Title $title) {
 		global $wgCityId;
 
+		if ( $wgCityId  === 304 /* runescape */ ) {
+			return;
+		}
+
 		if ( $title->getNamespace() == NS_FILE ) {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
