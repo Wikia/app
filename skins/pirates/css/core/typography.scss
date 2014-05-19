@@ -1,0 +1,196 @@
+$wordmark-font: get_command_line_param("wordmark-font", "default");
+
+@if $wordmark-font == "cpmono" {
+	@font-face {
+		font-family: 'CPMono_v07Bold';
+		src: url('/skins/pirates/fonts/cpmono/CPMono_v07_Bold-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/cpmono/CPMono_v07_Bold-webfont.woff') format('woff'), url('/skins/pirates/fonts/cpmono/CPMono_v07_Bold-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/cpmono/CPMono_v07_Bold-webfont.svg#webfont8SZ0NIeo') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-cpmono {
+		font-family: "CPMono_v07Bold";
+	}
+}
+
+
+@if $wordmark-font == "fontin" {
+	@font-face {
+		font-family: 'FontinSansBold';
+		src: url('/skins/pirates/fonts/fontin/fontin_sans_b_45b-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/fontin/fontin_sans_b_45b-webfont.woff') format('woff'), url('/skins/pirates/fonts/fontin/fontin_sans_b_45b-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/fontin/fontin_sans_b_45b-webfont.svg#webfontaOEEV2k6') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-fontin {
+		font-family: "FontinSansBold";
+	}
+}
+
+
+@if $wordmark-font == "garton" {
+	@font-face {
+		font-family: 'GartonMedium';
+		src: url('/skins/pirates/fonts/garton/garto16-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/garton/garto16-webfont.woff') format('woff'), url('/skins/pirates/fonts/garton/garto16-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/garton/garto16-webfont.svg#webfont9jUXe5iO') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-garton {
+		font-family: "GartonMedium";
+	}
+}
+
+
+@if $wordmark-font == "idolwild" {
+	@font-face {
+		font-family: 'IdolwildRegular';
+		src: url('/skins/pirates/fonts/idolwild/idolwild-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/idolwild/idolwild-webfont.woff') format('woff'), url('/skins/pirates/fonts/idolwild/idolwild-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/idolwild/idolwild-webfont.svg#webfont2KYBVKLT') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-idolwild {
+		font-family: "IdolwildRegular";
+	}
+}
+
+
+@if $wordmark-font == "imfell" {
+	@font-face {
+		font-family: 'IMFELLDWPicaPRORegular';
+		src: url('/skins/pirates/fonts/imfell/fepirm27c-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/imfell/fepirm27c-webfont.woff') format('woff'), url('/skins/pirates/fonts/imfell/fepirm27c-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/imfell/fepirm27c-webfont.svg#webfontkY4YPcYZ') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-imfell {
+		font-family: "IMFELLDWPicaPRORegular";
+	}
+}
+
+
+@if $wordmark-font == "josefin" {
+	@font-face {
+		font-family: 'JosefinSansStdLight';
+		src: url('/skins/pirates/fonts/josefin/JosefinSansStd-Light-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/josefin/JosefinSansStd-Light-webfont.woff') format('woff'), url('/skins/pirates/fonts/josefin/JosefinSansStd-Light-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/josefin/JosefinSansStd-Light-webfont.svg#webfontmMSjIQwC') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-josefin {
+		font-family: "JosefinSansStdLight";
+	}
+}
+
+
+@if $wordmark-font == "megalopolis" {
+	@font-face {
+		font-family: 'MEgalopolisExtraRegular';
+		src: url('/skins/pirates/fonts/megalopolis/megalopolisextra-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/megalopolis/megalopolisextra-webfont.woff') format('woff'), url('/skins/pirates/fonts/megalopolis/megalopolisextra-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/megalopolis/megalopolisextra-webfont.svg#webfont0XV5Gd7h') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-megalopolis {
+		font-family: "MEgalopolisExtraRegular";
+	}
+}
+
+
+@if $wordmark-font == "orbitron" {
+	@font-face {
+		font-family: 'OrbitronMedium';
+		src: url('/skins/pirates/fonts/orbitron/orbitron-medium-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/orbitron/orbitron-medium-webfont.woff') format('woff'), url('/skins/pirates/fonts/orbitron/orbitron-medium-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/orbitron/orbitron-medium-webfont.svg#webfont5FiGFJOa') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-orbitron {
+		font-family: "OrbitronMedium";
+	}
+}
+
+
+@if $wordmark-font == "pixiefont" {
+	@font-face {
+		font-family: 'PixieFontRegular';
+		src: url('/skins/pirates/fonts/pixiefont/PixieFont-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/pixiefont/PixieFont-webfont.woff') format('woff'), url('/skins/pirates/fonts/pixiefont/PixieFont-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/pixiefont/PixieFont-webfont.svg#webfont78rOR6Do') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-pixiefont {
+		font-family: "PixieFontRegular";
+	}
+}
+
+
+@if $wordmark-font == "prociono" {
+	@font-face {
+		font-family: 'ProcionoRegular';
+		src: url('/skins/pirates/fonts/prociono/Prociono-Regular-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/prociono/Prociono-Regular-webfont.woff') format('woff'), url('/skins/pirates/fonts/prociono/Prociono-Regular-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/prociono/Prociono-Regular-webfont.svg#webfontnTm7Rj2p') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-prociono {
+		font-family: "ProcionoRegular";
+	}
+}
+
+
+@if $wordmark-font == "tangerine" {
+	@font-face {
+		font-family: 'TangerineRegular';
+		src: url('/skins/pirates/fonts/tangerine/Tangerine_Regular-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/tangerine/Tangerine_Regular-webfont.woff') format('woff'), url('/skins/pirates/fonts/tangerine/Tangerine_Regular-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/tangerine/Tangerine_Regular-webfont.svg#webfonthdkJyIIt') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-tangerine {
+		font-family: "TangerineRegular";
+	}
+}
+
+
+@if $wordmark-font == "titillium" {
+	@font-face {
+		font-family: 'TitilliumText22LRegular';
+		src: url('/skins/pirates/fonts/titillium/TitilliumText22L003-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/titillium/TitilliumText22L003-webfont.woff') format('woff'), url('/skins/pirates/fonts/titillium/TitilliumText22L003-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/titillium/TitilliumText22L003-webfont.svg#webfontCVZ9BHQN') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-titillium {
+		font-family: "TitilliumText22LRegular";
+	}
+}
+
+
+@if $wordmark-font == "veggieburger" {
+	@font-face {
+		font-family: 'VeggieburgerBold';
+		src: url('/skins/pirates/fonts/veggieburger/VeggiBol-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/veggieburger/VeggiBol-webfont.woff') format('woff'), url('/skins/pirates/fonts/veggieburger/VeggiBol-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/veggieburger/VeggiBol-webfont.svg#webfont2sUWj2TL') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-veggieburger {
+		font-family: "VeggieburgerBold";
+	}
+}
+
+
+@if $wordmark-font == "yanone" {
+	@font-face {
+		font-family: 'YanoneKaffeesatzRegular';
+		src: url('/skins/pirates/fonts/yanone/YanoneKaffeesatz-Regular-webfont.eot'); /* $wgCdnStylePath */
+		src: local('☺'), url('/skins/pirates/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff') format('woff'), url('/skins/pirates/fonts/yanone/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype'), url('/skins/pirates/fonts/yanone/YanoneKaffeesatz-Regular-webfont.svg#webfontlKPF1zIT') format('svg'); /* $wgCdnStylePath */
+		font-weight: normal;
+		font-style: normal;
+	}
+	#WikiHeader .wordmark, .font-yanone {
+		font-family: "YanoneKaffeesatzRegular";
+	}
+}

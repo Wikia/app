@@ -1,0 +1,121 @@
+@import "color";
+@import "../mixins/gradient";
+
+// old comments
+.commentslikes {
+	li {
+		border-left: solid 1px $color-page-border;
+		border-bottom: none !important;
+		float: left;
+		line-height: 20px;
+		padding: 0 10px;
+	}
+	li:first-child {
+		border-left: none;
+	}
+	.likes {
+		padding-right: 0;
+		height: 22px;
+		width: 90px;
+	}
+	.commentsbubble {
+		@include linear-gradient($color-module-shadow, top, $color-page, 0%, $color-module-shadow, 100%);
+		border: solid 1px $color-page-border;
+		border-radius: 2px;
+		display: inline-block;
+		height: 14px;
+		line-height: 15px;
+		margin: 0 3px;
+		min-width: 15px;
+		padding: 0 5px;
+		position: relative;
+		text-align: center;
+
+		// "comments-like" styling
+		$left: 3px;
+		$top: 14px;
+		$size: 5px;
+
+		&:before {
+			border-color: $color-page-border $color-page-border transparent transparent;
+			border-style: solid;
+			border-width: $size;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left;
+			width: 0px;
+		}
+		&:after {
+			border-color: $color-module-shadow $color-module-shadow transparent transparent;
+			border-style: solid;
+			border-width: $size - 1px;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left + 1px;
+			width: 0px;
+		}
+	}
+	// old-style comments
+	.wikia-chiclet-button {
+		vertical-align: middle;
+		margin: 0 3px;
+	}
+	.comments {
+		 // IE7
+		*position: relative;
+		*top: -2px;
+		// Opera (RT #75110)
+		white-space: nowrap;
+	}
+}
+
+// WikiaNav - begin
+a.comments {
+	> .commentsbubble {
+		background-color: $color-page;
+		font-size: 9px;
+		vertical-align: top;
+		border: solid 1px $color-page-border;
+		display: inline-block;
+		height: 11px;
+		line-height: 11px;
+		margin: 2px 3px 0 3px;
+		min-width: 15px;
+		padding: 0;
+		position: relative;
+		text-align: center;
+
+		// "comments-like" styling
+		$left: 3px;
+		$top: 11px;
+		$size: 3px;
+
+		&:before {
+			border-color: $color-page-border $color-page-border transparent transparent;
+			border-style: solid;
+			border-width: $size;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left;
+			width: 0px;
+		}
+		&:after {
+			border-color: $color-page $color-page transparent transparent;
+			border-style: solid;
+			border-width: $size - 1px;
+			content: " ";
+			height: 0px;
+			position: absolute;
+			top: $top;
+			left: $left + 1px;
+			width: 0px;
+		}
+	}
+}
+// WikiaNav - end

@@ -1,0 +1,27 @@
+@mixin ribbon( $text-color, $background-color, $font-size, $ribbon-size, $padding ) {
+	color: $text-color;
+	font-size: $font-size;
+	line-height: 14px;
+	padding: $padding;
+	background-color: $background-color;
+
+	&:before, &:after {
+		content: '';
+		position: absolute;
+		height: 0;
+		width: 0;
+		border-width: $ribbon-size;
+		border-style: solid;
+		right: -( $ribbon-size );
+		top: 0;
+		visibility: visible;
+	}
+
+	&:before {
+		border-color: transparent transparent $background-color transparent;
+	}
+
+	&:after {
+		border-color: $background-color transparent transparent transparent;
+	}
+}

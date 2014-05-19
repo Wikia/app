@@ -1,0 +1,22 @@
+@import "skins/pirates/css/core/color";
+
+.pirates-article {
+	font-size: 14px;
+	line-height: 1.6;
+	padding: 20px;
+
+	dd {
+		border-left: 8px solid $color-links;
+		font-size: 18px;
+		padding-left: 20px;
+	}
+
+	h1 {
+		font-size: 40px;
+	}
+
+	header {
+		text-align: center;
+		margin: 20px 0;
+	}
+}

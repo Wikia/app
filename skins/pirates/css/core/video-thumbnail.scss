@@ -1,0 +1,159 @@
+@import "skins/pirates/css/mixins/background-opacity";
+@import "skins/pirates/css/mixins/border-opacity";
+
+/**
+ * Style the refactored video thumbnails and allow for responsive and non-responsive thumbnails.
+ */
+
+.wikia-video-thumbnail {
+	display: inline-block;
+	position: relative;
+
+	&.fluid {
+		width: 100%;
+
+		> img {
+			width: 100%;
+		}
+	}
+
+	// Background circle
+	.play-circle {
+		// common styles
+		@include background-opacity(#000, 50);
+		@include border-opacity(#FFF, 50);
+		border-radius: 100px;
+		border-style: solid;
+		border-width: 1px;
+		display: block;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+
+		// only for medium
+		height: 50px;
+		margin: -25px 0 0 -25px; // half of width and height
+		width: 50px;
+
+		&:after {
+			background-image: url(/skins/pirates/images/sprite.png); /* $wgCdnStylePath */
+			background-position: -1237px 0px;
+			background-repeat: no-repeat;
+			content: "";
+			display: block;
+			height: 22px;
+			margin: 14px 0 0 18px;
+			width: 18px;
+		}
+	}
+
+	// xsmall sizes are 54% of medium
+	// they are also positioned in the bottom/left instead of center
+	&.xsmall {
+		.play-circle{
+			height: 27px;
+			width: 27px;
+			bottom: 10px;
+			left: 36px;
+			top: auto;
+
+			&:after {
+				background-position: -1244px -26px;
+				height: 15px;
+				margin: 7px 0 0 10px;
+				width: 9px;
+			}
+		}
+	}
+
+
+	// small sizes are 70% of medium
+	// they are also positioned in the bottom/left instead of center
+	&.small {
+		.play-circle{
+			height: 35px;
+			width: 35px;
+			bottom: 10px;
+			left: 34px;
+			top: auto;
+			&:after {
+				background-position: -1210px -81px;
+				height: 15px;
+				margin: 10px 0 0 13px;
+				width: 12px;
+			}
+		}
+	}
+
+	// large sizes are 140% of medium size
+	&.large {
+		.play-circle{
+			height: 70px;
+			margin: -35px 0 0 -35px;
+			width: 70px;
+			&:after {
+				background-position: -1210px 0px;
+				height: 31px;
+				margin: 20px 0 0 26px;
+				width: 24px;
+			}
+		}
+	}
+
+	// xlarge sizes are 180% of medium size
+	&.xlarge {
+		.play-circle{
+			height: 90px;
+			margin: -45px 0 0 -45px;
+			width: 90px;
+			&:after {
+				background-position: -1210px -34px;
+				height: 42px;
+				margin: 23px 0 0 34px;
+				width: 31px;
+			}
+		}
+	}
+
+	&:hover {
+		.play-circle {
+			@include background-opacity(#000, 70);
+			@include border-opacity(#FFF, 70);
+		}
+	}
+
+	&.hide-play {
+		.play-circle {
+			display: none;
+		}
+
+		&:hover {
+			.play-circle {
+				display: block;
+			}
+		}
+	}
+
+	&.responsive .wikia-video-thumb {
+		width: 100%;
+	}
+
+	.duration {
+		background: black;
+		border-radius: 1px 0 0 0;
+		bottom: 0;
+		color: white;
+		font-size: 11px;
+		line-height: 17px;
+		opacity: .7;
+		padding: 0px 6px;
+		position: absolute;
+		right: 0;
+	}
+}
+
+.title-thumbnail {
+	.title {
+		font-size: 16px;
+	}
+}

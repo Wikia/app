@@ -1,0 +1,246 @@
+@import "color";
+@import "layout";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+
+/** Hide invisible slots and 1x1 iframes **/
+.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"] {
+	display: none;
+}
+
+.wikia-ad.hidden {
+	display: none !important;
+}
+
+/** Leaderboards **/
+
+.WikiaTopAds {
+	font-size: 0;
+	margin: 0 auto;
+	position: relative;
+	padding: 10px 0;
+	text-align: center;
+	width: $width-outside;
+	z-index: 0;
+	.WikiaTopAdsInner {
+		@include clearfix;
+		display: inline-block;
+		>div {
+			float: right;
+		}
+	}
+	.standard-leaderboard {
+		max-width: 728px;
+	}
+	.wikia-ad {
+		>img {
+			float: right;	/* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
+		}
+	}
+}
+
+#TOP_BUTTON_WIDE {
+  margin-right: 10px;
+}
+
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+	>div {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	>div[id^=Liftium_] {
+		text-align: center;
+	}
+	&.default-height {
+		height: 90px;
+	}
+}
+
+/** Skyscrapers **/
+#LEFT_SKYSCRAPER_2 {
+	// FIXME: this is bad. Is it necessary?
+	@extend section;
+}
+
+#LEFT_SKYSCRAPER_3 {
+	clear: both;
+	position: absolute;
+	right: 80px;
+	top: -640px;
+}
+
+#RIGHT_SKYSCRAPER {
+	// FIXME: this is bad. Is it necessary?
+	@extend .module;
+	text-align: center;
+	img {
+		margin: 40px auto;
+	}
+}
+
+/** Box ads **/
+.home-top-right-ads {
+	float: right;
+}
+#HOME_TOP_RIGHT_BOXAD {
+	margin-bottom: 10px;
+	position: relative;
+	width: 300px;
+	z-index: 100;
+}
+/* grid layout transition temp code.  remove and integrate into main code after transition is complete */
+.WikiaGrid {
+	#HOME_TOP_RIGHT_BOXAD,
+	#TOP_RIGHT_BOXAD {
+		background-color: mix($color-page, $color-page-opposite, 95%);
+		padding: 15px;
+	}
+}
+/* end transistion temp code */
+
+#TOP_BOXAD {
+	img {
+		display: block;
+	}
+}
+
+#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+	margin-bottom: 10px;
+	z-index: 100;
+}
+
+#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+
+#PREFOOTER_LEFT_BOXAD {
+	float: left;
+	margin: 0 15px;
+}
+
+#PREFOOTER_RIGHT_BOXAD {
+	margin: 0 15px;
+}
+
+#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
+	height: 250px;
+}
+
+/** Spotlights **/
+#SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
+	width: 269px;
+	&.SPOTLIGHT_GLOBALNAV {
+		width: 255px;
+	}
+}
+
+// changes for $wgEnableSpotlightsV2
+.GlobalNavigation {
+	.subnav {
+		.SPOTLIGHT_GLOBALNAV {
+			left: 10px;
+			margin-top: 17px;
+			position: relative;
+		}
+	}
+}
+
+.WikiaSpotlight {
+	background-color: $color-page;
+	color: $color-text;
+	display: inline-block;
+	width: 270px;
+}
+
+#SPOTLIGHT_FOOTER {
+	@include clearfix;
+	@include linear-gradient(false, top, rgba($color-module-shadow, 0), 50%, $color-module-shadow, 100%);
+	border: none;
+	list-style: none;
+	margin: 0;
+	padding: 0px 20px 33px;
+	text-align: center;
+
+	.item-1 {
+		float: left;
+	}
+
+	.item-2 {
+		float: right;
+	}
+
+	.WikiaSpotlight {
+		max-height: 123px;
+		max-width: 255px;
+		width: 30%;
+
+		img {
+			height: auto;
+			width: 100%;
+		}
+	}
+}
+
+/** Invisible ads **/
+#INVISIBLE_1, #INVISIBLE_2 {
+	position: absolute;
+}
+
+/** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
+body >a >img[src$="noad.gif"] {
+	position: absolute;
+	z-index: 0;
+}
+
+/** Exitstitial ad */
+#ExitstitialInfobox {
+	p {
+		border-bottom: 1px solid #ccc;
+		padding-bottom: 5px;
+	}
+	.close-exitstitial-ad {
+		font-size: 120%;
+		text-align: center;
+	}
+	.ad-centered-wrapper {
+		height: 400px;
+		margin-bottom: 20px;
+		margin-top: 20;
+	}
+}
+
+.ad-centered-wrapper {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+	> div {
+		display: table-cell;
+		vertical-align: middle;
+		> div {
+			display: inline-block;
+		}
+	}
+}
+
+// Right rail ads centering
+#LEFT_SKYSCRAPER_2 {
+	font-size: 0;
+	text-align: center;
+	> div, > iframe {
+		display: inline-block;
+	}
+}
+
+// Floating medrec
+#WikiaAdInContentPlaceHolder {
+	position: absolute;
+	#INCONTENT_BOXAD_1 {
+		height: 250px;
+		width: 300px;
+		position: relative;
+		@if ( not $responsive-layout-enabled ) {
+			margin-left: 15px;
+			margin-right: 15px;
+		}
+	}
+}

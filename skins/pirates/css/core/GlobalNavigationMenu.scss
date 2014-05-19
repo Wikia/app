@@ -1,0 +1,118 @@
+@import "skins/pirates/css/core/color.scss";
+@import "skins/pirates/css/mixins/transition.scss";
+
+#GlobalNavigationMenuButton {
+	background-image: url(/skins/pirates/images/icon_menu.png); /* base64 */
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	border-right: 1px solid #aad;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 22px;
+	margin: 0 5px 0 17px;
+	padding: 15px 20px 0 20px;
+	text-transform: uppercase;
+}
+
+
+#drawerGlobalNavigation {
+	li {
+		margin-bottom: 12px;
+
+		a {
+			@include transition-shorthand(all 0.2s ease-in-out);
+
+			background-color: transparent;
+			background-image: url(/skins/pirates/images/drawer_chevron.png); /* base64 */
+			background-position: right 50%;
+			background-repeat: no-repeat;
+			background-size: 12px;
+			border-radius: 5px;
+			display: block;
+			font-size: 14px;
+			font-weight: bold;
+			padding: 10px;
+			text-transform: uppercase;
+
+			&, &:link, &:visited {
+				color: inherit;
+			}
+		}
+
+		a:hover,
+		&.active a {
+			background-color: $color-wikiahome-community;
+			color: #fff;
+			text-decoration: none;
+		}
+
+		&.video-games-vertical-color a:hover,
+		&.video-games-vertical-color.active a {
+			background-color: $color-wikiahome-videogames;
+		}
+
+		&.lifestyle-vertical-color a:hover,
+		&.lifestyle-vertical-color.active a {
+			background-color: $color-wikiahome-lifestyle;
+		}
+
+		&.entertainment-vertical-color a:hover,
+		&.entertainment-vertical-color.active a {
+			background-color: $color-wikiahome-entertainment;
+		}
+
+		&.community-vertical-color a:hover,
+		&.community-vertical-color.active a {
+			background-color: $color-wikiahome-community;
+		}
+	}
+}
+
+ul.drawerSubmenu,
+header.drawerSubmenu {
+	color: $color-wikiahome-community;
+	font-size: 13px;
+	margin-bottom: 24px;
+
+	> a {
+		color: inherit;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	li {
+		margin-bottom: 6px;
+
+		a {
+			color: inherit;
+			display: block;
+			padding: 3px 0;
+		}
+
+		header {
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+
+	&.video-games-vertical-color {
+		color: $color-wikiahome-videogames;
+	}
+
+	&.lifestyle-vertical-color {
+		color: $color-wikiahome-lifestyle;
+	}
+
+	&.entertainment-vertical-color {
+		color: $color-wikiahome-entertainment;
+	}
+
+	&.community-vertical-color {
+		color: $color-wikiahome-community;
+	}
+}
+header.drawerSubmenu {
+	font-size: 14px;
+}

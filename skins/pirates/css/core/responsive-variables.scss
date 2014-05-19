@@ -1,0 +1,26 @@
+@import "color";
+@import "layout";
+
+// ADEN-975 Limited fluid is meant for German wikis
+$limit-fluid: get_command_line_param("limitFluid");
+
+// Layout
+$width-adskin: 170px;
+$width-adskins: $width-adskin * 2;
+$width-gradient: 40px;
+$width-outside-half: $width-outside / 2;
+$width-outside-min: 768px;
+$width-outside-max: 1600px;
+@if ($limit-fluid == 1) {
+	$width-outside-max: 1030px;
+}
+$width-outside-max-half: $width-outside-max / 2;
+$width-padding: $width-gutter / 2;
+
+// Breakpoints
+$breakpoint-content: $width-outside;
+$breakpoint-fluid: $width-outside + $width-adskins;
+$breakpoint-max: $width-outside-max + $width-adskins;
+$breakpoint-min: $width-outside-min;
+$breakpoint-small: 1023px;
+

@@ -1,0 +1,75 @@
+@import "color";
+@import "layout";
+@import "../mixins/box-shadow";
+@import "../mixins/clearfix";
+@import "../mixins/gradient";
+@import "../mixins/forms";
+@import "../mixins/menus";
+
+.WikiaSearch {
+	@include clearfix;
+	margin-bottom: 10px;
+	position: relative;
+
+	.autocomplete {
+		border-top: 0;
+	}
+
+	input[type="text"] {
+		@include input-field;
+		background: lighten($color-page, 5%);
+		color: $color-text;
+		height: 18px;
+		float: left;
+		font-size: 15px;
+		margin-right: 8px;
+		padding: 4px 9px;
+		width: $wikia-search-base-width + 29px;
+	}
+
+	input[type="text"]:focus {
+		background: lighten($color-page, 10%);
+	}
+
+	.wikia-button {
+		border-radius: 3px;
+		float: left;
+		height: 28px;
+		margin-top: 0;
+		position: static;
+		vertical-align: top;
+		width: 43px;
+		img.sprite.search {
+			height: 16px;
+			width: 19px;
+		}
+	}
+
+	input[type="submit"] {
+		display: none;
+	}
+}
+
+.mw-search-result-shoutout > .mw-search-result-title {
+	font-size: 108%;
+	font-weight: bold;
+}
+
+.mw-search-result-redirect {
+	color: $color-alternate-text;
+
+	.mw-search-result-title {
+		color: $color-alternate-text;
+	}
+}
+
+// WikiaNav - begin
+.wikinav2 {
+	.WikiaRail > .WikiaSearch,
+	.WikiaSearchHeader > .WikiaSearch {
+		padding-bottom: 0px;
+		margin-bottom: 10px;
+	}
+}
+// WikiaNav - end
+

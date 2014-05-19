@@ -1,0 +1,182 @@
+@import "color";
+@import "../mixins/clearfix";
+
+// While these styles are used primarily for the Oasis skin,
+// they are also used by Monobook, so please test there also.
+.WikiaArticleComments {
+	border-top: 1px solid $color-page-border;
+	padding-top: 10px;
+
+	h1 {
+		font-size: 22px;
+		margin-left: 5px;
+	}
+
+	.controls {
+		float: right;
+		font-size: 11px;
+		line-height: 25px;
+		list-style: none;
+
+		li {
+			float: left;
+			margin-left: 5px;
+
+			a {
+				border-left: 1px solid $color-page-border;
+				padding: 0 5px;
+			}
+
+			&:first-child {
+				a {
+					border: 0;
+				}
+			}
+		}
+
+		.selected {
+			color: $color-text;
+			cursor: default;
+		}
+	}
+
+	.session {
+		@include clearfix;
+		font-size: 12px;
+		line-height: 14px;
+		padding-right: 5px;
+		float: left;
+		width: 60px;
+
+		.avatar {
+			vertical-align: middle;
+		}
+	}
+
+	// Error message container
+	.article-comm-info {
+		display: none;
+	}
+
+	.article-comments {
+		border-top: 1px solid $color-page-border;
+		margin-top: 10px;
+		padding-top: 15px;
+	}
+
+	.comments {
+		clear: both;
+		list-style: none;
+
+		&.loading {
+			opacity: .7;
+		}
+
+		.article-comm-text {
+			padding: 0;
+			min-height: 0;
+			width: 100%;
+		}
+	}
+
+	.no-comments-allowed {
+		padding: 10px;
+	}
+
+	.sub-comments {
+		list-style: none;
+		margin-bottom: 15px;
+		margin-left: 85px;
+
+		textarea {
+			width: 420px;
+		}
+
+		.article-comm-text {
+			overflow: hidden;
+			padding: 0;
+			width: 100%;
+		}
+	}
+
+	form {
+		@include clearfix;
+		margin: 10px 0;
+	}
+
+	textarea {
+		border: 1px solid $color-page-border;
+		height: 75px;
+		margin: 15px 5px;
+		line-height: 21px;
+		margin: 5px 0 15px 0;
+		padding: 2px;
+		font-size: 12px;
+		font-family: "Helvetica", "Arial", sans-serif;
+	}
+
+	.article-comm-form {
+		margin-top: 0;
+
+		textarea {
+			margin-top: 0;
+			width: 569px;
+		}
+	}
+
+	.throbber {
+		visibility: hidden;
+		margin-right: 6px;
+		margin-top: 3px;
+		float: right;
+	}
+
+	.wikia-button {
+		float: right;
+	}
+
+	.edited-by .wikia-button {
+		margin-right: 5px;
+	}
+
+	.article-comm-history {
+		padding-left: 10px;
+	}
+
+	.article-comments-pagination {
+		margin: 0 auto 10px;
+		text-align: center;
+		color: $color-links;
+
+		a {
+			color: $color-links;
+			padding: 2px 8px;
+			margin: 0 4px;
+
+			&.accent {
+				color: White;
+				background-color: $color-links;
+			}
+		}
+	}
+
+	.upper-pagination {
+		padding-top: 15px;
+		margin-bottom: 10px;
+		border-top: 1px solid $color-page-border;
+	}
+}
+
+.skin-monobook .WikiaArticleComments {
+	margin-top: 10px;
+}
+
+#article-comments-pagination-link-prev {
+	border-right: solid 1px $color-links;
+	padding-right: 16px;
+}
+
+#article-comments-pagination-link-next {
+	border-left: solid 1px $color-links;
+	padding-left: 16px;
+}

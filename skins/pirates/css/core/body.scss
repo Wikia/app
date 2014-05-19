@@ -1,0 +1,73 @@
+@import "color";
+@import "layout";
+@import "../mixins/clearfix";
+
+body {
+	color: $color-text;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	overflow-x: auto;
+	padding: 0 0 30px 0;
+}
+
+a {
+	color: $color-links;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.clearfix {
+	@include clearfix;
+}
+
+.skiplinkcontainer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	h1 {
+		display: none;
+	}
+	.skiplink {
+		display: block;
+		margin: 0 auto;
+		right: 0;
+		width: 100px;
+		position: absolute;
+		top: -9999px;
+		&:active,
+		&:focus {
+			top: 0px;
+		}
+	}
+}
+
+// for backward compatibility with Monaco
+.color1 {
+	background-color: $color-buttons;
+	color: $color-button-text;
+}
+.color1 a {
+	color: $color-button-text;
+}
+.color2 {
+	background-color: $color-page-border;
+}
+.dark_text_1 {
+	color: $color-links;
+}
+.dark_text_2 {
+	color: $color-links;
+}
+.accent	{
+	background-color: $color-menu-highlight;
+	border-color: $color-links;
+	color: $color-text;
+}
+.neutral {
+	background-color: $color-page-border;
+	border-color: $color-page;
+	color: $color-text;
+}

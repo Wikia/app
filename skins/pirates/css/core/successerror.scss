@@ -1,0 +1,53 @@
+.success {
+	color: green;
+	font-size: larger;
+}
+.error {
+	color: red;
+	font-size: larger;
+}
+
+.successbox, .errorbox {
+	border-width: 1px;
+	border-style: solid;
+	float: none;
+	font-size: 12px;
+	line-height: normal;
+	margin: 5px 0 15px;
+	padding: 5px 25px;
+	position: relative;
+	.sprite.error, .sprite.ok {
+		position: absolute;
+		top: 4px;
+		left: 5px;
+	}
+	h1, h2 {
+		text-decoration: underline;
+	}
+	a {
+		text-decoration: underline;
+	}
+	li {
+		list-style: disc outside none;
+		margin: 0 0 0 20px;
+		padding: 4px 0 0;
+	}
+}
+
+.successbox {
+	border-color: green;
+	background-color: #dfd;
+	color: green;
+	a {
+		color: green;
+	}
+}
+
+.errorbox {
+	border-color: #A91000;
+	background: #F2CFD2;
+	color: #A91000;
+	a {
+		color: #A91000;
+	}
+}

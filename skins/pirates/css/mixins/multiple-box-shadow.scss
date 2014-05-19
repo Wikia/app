@@ -1,0 +1,10 @@
+// To use this mixin:
+//
+// 1. create an arguments variable in your scss file
+// 2. pass it to mixin call
+
+
+@mixin multiple-box-shadow($arguments) {
+	box-shadow: $arguments;
+	-webkit-box-shadow: $arguments;
+}

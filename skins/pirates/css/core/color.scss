@@ -1,0 +1,173 @@
+// Main Color Variables //
+$color-body: get_command_line_param("color-body", #BACDD8); // default: light blue
+$color-body-middle: get_command_line_param("color-body-middle", $color-body); // default: same as color-body
+$color-page: get_command_line_param("color-page", #FFF); // default: white
+$color-buttons: get_command_line_param("color-buttons", #006CB0); // default: blue
+$color-links: get_command_line_param("color-links", #006CB0); // default: blue
+$color-header: get_command_line_param("color-header", #3A5766); // default: blue
+$background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
+$page-opacity: get_command_line_param("page-opacity", 100) / 100;	// default: 1
+
+// Verticals colors
+$color-wikiahome-videogames: #8ca038;
+$color-wikiahome-entertainment: #07b2e0;
+$color-wikiahome-lifestyle: #ff6600;
+$color-wikiahome-community: #002e54;
+
+// Darkened verticals colors for buttons
+$color-wikiahome-videogames-dark: #607727;
+$color-wikiahome-entertainment-dark: #0496bd;
+$color-wikiahome-lifestyle-dark: #c75000; // TODO: replace with value verified by design
+
+$color-wikiahome-community-dark: #141e24;
+
+////////// DO NOT CHANGE PER THEME - BASED ON ABOVE VALUES //////////
+// Mixing colors
+
+// Theme
+$sprite-theme: "dark";
+$is-dark-wiki: false;
+@if lightness($color-page) < 50 {
+	$sprite-theme: "light";
+	$is-dark-wiki: true;
+}
+
+// Text color
+$color-text-dark: #3a3a3a;
+$color-text-light: #D5D4D4;
+
+$color-text: $color-text-dark;
+@if $is-dark-wiki {
+	$color-text: $color-text-light;
+}
+
+// Generic Error text color
+$color-text-error: mix(#ff0000, #d4d4d4, 75%);
+@if $is-dark-wiki {
+	$color-text-error: mix(#ff0000, #2b2b2b, 60%);
+}
+
+// Opposite page color (use this as the mixing value to darken, lighten towards the opposite of page darkness)
+$color-page-opposite: #000;
+@if $is-dark-wiki {
+	$color-page-opposite: #fff;
+}
+
+// Alternate text (used for secondary information, less important)
+$color-alternate-text: mix($color-page, #000000, 50%);
+@if $is-dark-wiki {
+	$color-alternate-text: mix($color-page, #ffffff, 50%);
+}
+
+// GlobalHeader
+$color-header-alt: mix($color-header, #000, 25%);
+$color-header-text: white;
+@if lightness($color-header) > 75 {
+	$color-header-text: black;
+}
+$color-menu-highlight: mix($color-links, $color-page, 20%);
+
+// Tools Menu
+$color-tools-nav: mix($color-buttons, $color-page, 20%);
+@if lightness($color-page) < 50 {
+	$color-tools-nav: lighten($color-tools-nav, 8%);
+}
+
+// Modules
+// Rail modules now use solid colors, but there are still components that use the module highlight and shadow vars
+$color-module-background: $color-page;
+@if $is-dark-wiki {
+	$color-module-background: mix($color-page, #FFFFFF, 97%);
+}
+$color-module-highlight: lighten($color-page, 2%);
+$color-module-shadow: darken($color-page, 5%);
+
+// Page Borders
+$color-page-border: mix($color-page, #000000, 80%);
+@if $is-dark-wiki {
+	$color-page-border: mix($color-page, #ffffff, 80%);
+}
+$color-page-border-subtle: mix($color-page-border, $color-page, 50%);
+
+
+$color-page-shadow: #333;
+@if $is-dark-wiki {
+	$color-page-shadow: #000;
+}
+
+// Buttons
+$color-button-highlight: lighten($color-buttons, 10%);
+$color-button-text: white;
+@if lightness($color-buttons) > 55 {
+	$color-button-text: black;
+}
+$color-secondary-button-highlight: mix($color-page, #FFFFFF, 94%);
+$color-secondary-button: mix($color-page, #000000, 90%);
+$color-secondary-button-border: mix($color-page, #000000, 80%);
+
+@if lightness($color-page) < 50 {
+	$color-secondary-button-highlight: lighten($color-page, 8%);
+	$color-secondary-button: lighten($color-page, 3%);
+	$color-secondary-button-border: lighten($color-page, 10%);
+}
+
+// Speech Bubbles (Article Comments, Wall)
+$color-speech-bubble: mix($color-text, $color-page, 5%);
+$color-speech-bubble-alt: mix($color-links, $color-page, 5%);
+
+$color-speech-bubble-current: $color-speech-bubble;
+
+@if $is-dark-wiki {
+	$color-speech-bubble-current: mix(#ff63f6, $color-speech-bubble, 10%);
+} @else {
+	$color-speech-bubble-current: mix(#ff4481, $color-speech-bubble, 10%);
+}
+
+// TOC
+$color-article-toc-background: transparent;
+$color-article-toc-border: darken(lighten($color-page, 100%), 15%);
+@if $is-dark-wiki {
+	$color-article-toc-border: lighten(darken($color-page, 100%), 25%);
+}
+
+// Images
+$color-article-thumb-background: darken($color-page, 5%);
+$color-article-thumb-border: darken(lighten($color-page, 100%), 15%);
+@if $is-dark-wiki {
+	$color-article-thumb-border: lighten(darken($color-page, 100%), 25%);
+}
+
+// Headline border
+$color-headline-border: $color-page-border;
+
+// User pages tabs
+$color-tab-background: $color-page-border;
+$color-tab-background-top: mix($color-tab-background, $color-page, 50%);
+$color-tab-background-bottom: mix($color-tab-background, $color-page, 80%);
+$color-active-tab-background-top: mix($color-buttons, $color-page, 50%);
+$color-active-tab-background-bottom: mix($color-buttons, $color-page, 80%);
+$color-active-tab-shadow: #4E4E4E;
+$color-tab-hover-background: mix($color-links, $color-page, 30%);
+
+// Notifications
+$color-confirmation-background: #90e491;
+$color-confirmation-text: #002a39;
+$color-notification-background: $color-buttons;
+$color-notification-highlight: $color-button-highlight;
+$color-notification-text: $color-button-text;
+$color-notification-links: $color-button-text;
+$color-notification-details-background: darken($color-notification-background, 10%);
+$color-notification-details-text: $color-button-text;
+
+//Error handling
+$color-error: #FF3333;
+
+//Diff and History pages
+$color-pagehistory: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-pagehistory: lighten($color-page, 15%);
+}
+$color-diff-context: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-diff-context: lighten($color-page, 15%);
+}
