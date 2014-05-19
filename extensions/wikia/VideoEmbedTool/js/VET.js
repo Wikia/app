@@ -202,8 +202,6 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	}
 
 	function show(options) {
-		var track = options && options.track;
-
 		// set vars for this instance of VET
 		vetOptions = options;
 		embedPresets = options.embedPresets;
@@ -216,19 +214,14 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			action: Wikia.Tracker.ACTIONS.OPEN
 		});
 
-		// WikiaEditor sends options via event.data, so see if tracking is sent that way too.
-		if (!track && event && event.data && event.data.track) {
-			track = event.data.track;
-		}
-
 		// Any extra tracking
-		if (track) {
+		if (options.track) {
 			Wikia.Tracker.track({
-				action: track.action || Wikia.Tracker.ACTIONS.OPEN,
-				category: track.category || 'vet',
-				label: track.label || '',
-				value: track.value || null,
-				trackingMethod: track.method || 'both'
+				action: options.track.action || Wikia.Tracker.ACTIONS.OPEN,
+				category: options.track.category || 'vet',
+				label: options.track.label || '',
+				value: options.track.value || null,
+				trackingMethod: options.track.method || 'both'
 			});
 		}
 
