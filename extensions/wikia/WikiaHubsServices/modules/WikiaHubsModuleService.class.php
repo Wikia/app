@@ -20,8 +20,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 
 	/**
 	 * @param $name
-	 * @param $langCode
-	 * @param $verticalId
+	 * @param $cityId
 	 * @return WikiaHubsModuleService
 	 */
 	static public function getModuleByName($name, $cityId) {
