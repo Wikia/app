@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window', 'wikia.ins
 		'US': 3
 	};
 
-	highValueCountries = globals && globals.wgHighValueCountries ?  globals.wgHighValueCountries : defaultHighValueCountries;
+	highValueCountries = globals.wgHighValueCountries ?  globals.wgHighValueCountries : defaultHighValueCountries;
 
 	isHighValueCountry = function (country) {
 		if (country && highValueCountries) {

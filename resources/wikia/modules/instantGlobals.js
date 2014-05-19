@@ -7,4 +7,6 @@ define('wikia.instantGlobals', ['wikia.window'], function(window) {
 	if (window.Wikia && window.Wikia.InstantGlobals) {
 		return window.Wikia.InstantGlobals;
 	}
+
+	return {};
 });

@@ -5,7 +5,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 	private static $code = <<< SCRIPT
 		<script>
 			require(['wikia.geo', 'wikia.instantGlobals'], function (geo, globals) {
-				if (globals && globals.wgAmazonDirectTargetedBuyCountries && globals.wgAmazonDirectTargetedBuyCountries.indexOf(geo.getCountryCode()) > -1) {
+				if (globals.wgAmazonDirectTargetedBuyCountries && globals.wgAmazonDirectTargetedBuyCountries.indexOf(geo.getCountryCode()) > -1) {
 					var aax_src='3006',
 						aax_url = encodeURIComponent(document.location),
 						s = document.createElement('script'),
