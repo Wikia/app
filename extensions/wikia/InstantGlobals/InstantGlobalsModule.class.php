@@ -9,10 +9,7 @@
 class InstantGlobalsModule extends ResourceLoaderModule {
 
 	// list of WikiFactory variables whose values should be taken from Community Wiki
-	private $variables = [
-		'wgHighValueCountries',
-		'wgAmazonDirectTargetedBuyCountries',
-	];
+	private $variables = [];
 
 	/**
 	 * Get variables values
