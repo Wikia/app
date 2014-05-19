@@ -1,26 +1,29 @@
-/* global CKEDITOR, RTE, WikiaEditor */
-CKEDITOR.plugins.add('rte-media',
-{
-	init: function(editor) {
+/* global CKEDITOR, RTE, WikiaEditor, UserLogin */
+CKEDITOR.plugins.add('rte-media', {
+	init: function (editor) {
+		'use strict';
+
 		var self = this;
 
-		editor.on('wysiwygModeReady', function() {
+		editor.on('wysiwygModeReady', function () {
+			var media, placeholders;
+
 			// get all media (images / videos) - don't include placeholders
-			var media = RTE.tools.getMedia();
+			media = RTE.tools.getMedia();
 
 			// regenerate media menu
 			self.setupMedia(media);
 
 			// get all image / video placeholders
-			var placeholders =  RTE.getEditor().find('.media-placeholder');
+			placeholders = RTE.getEditor().find('.media-placeholder');
 			self.setupPlaceholder(placeholders);
 		});
 
 		// register "Add Image" command
 		editor.addCommand('addimage', {
-			exec: function() {
-				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-					RTE.tools.callFunction(window.WMU_show);
+			exec: function () {
+				WikiaEditor.load('WikiaMiniUpload').done(function () {
+					RTE.tools.callFunction(window.WMU_show); // jshint ignore:line
 				});
 			}
 		});
@@ -38,8 +41,8 @@ CKEDITOR.plugins.add('rte-media',
 		if (window.wgEnableVideoToolExt) {
 			// register "Add Video" command
 			editor.addCommand('addvideo', {
-				exec: function(editor) {
-					WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				exec: function () {
+					WikiaEditor.load('VideoEmbedTool').done(function () {
 						RTE.tools.callFunction(window.vetWikiaEditor);
 					});
 				}
@@ -52,8 +55,7 @@ CKEDITOR.plugins.add('rte-media',
 				className: 'RTEVideoButton',
 				command: 'addvideo'
 			});
-		}
-		else {
+		} else {
 			RTE.log('VET is not enabled here - disabling "Video" button');
 		}
 
@@ -62,9 +64,18 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	// setup both images and videos (including placeholders)
-	setupMedia: function(media) {
+	setupMedia: function (media) {
+		'use strict';
+
 		var self = this,
-			editor = RTE.getInstance();
+			editor = RTE.getInstance(),
+			msgs,
+			getTrackingCategory,
+			standardButtons,
+			mediaWithCaption,
+			image,
+			video,
+			poll;
 
 		// no media to setup - leave
 		if (!media.exists()) {
@@ -75,21 +86,23 @@ CKEDITOR.plugins.add('rte-media',
 		media.attr('data-rte-instance', RTE.instanceId);
 
 		// setup overlay
-		var msgs = RTE.getInstance().lang.media;
+		msgs = RTE.getInstance().lang.media;
 
-		var getTrackingCategory = function( node ) {
+		getTrackingCategory = function (node) {
 			var type;
 
-			switch( node.attr( 'type' ) ) {
-				case 'image':
-				case 'image-placeholder': {
-					type = node.hasClass( 'video' ) ? 'vet' : 'photo-tool';
+			switch (node.attr('type')) {
+			case 'image':
+			case 'image-placeholder':
+				{
+					type = node.hasClass('video') ? 'vet' : 'photo-tool';
 					break;
 				}
-				case 'image-gallery': {
-					type = ( node.hasClass( 'image-slideshow' ) ?
-							'slideshow' : node.hasClass( 'image-gallery-slider' ) ?
-							'slider' : 'gallery' ) + '-tool';
+			case 'image-gallery':
+				{
+					type = (node.hasClass('image-slideshow') ?
+						'slideshow' : node.hasClass('image-gallery-slider') ?
+						'slider' : 'gallery') + '-tool';
 					break;
 				}
 			}
@@ -97,56 +110,55 @@ CKEDITOR.plugins.add('rte-media',
 			return type;
 		};
 
-		var standardButtons = [
-			{
-				label: msgs['edit'],
-				'class': 'RTEMediaOverlayEdit',
-				callback: function(node) {
-					var category = getTrackingCategory( node );
+		standardButtons = [{
+			label: msgs['edit'],
+			'class': 'RTEMediaOverlayEdit',
+			callback: function (node) {
+				var category = getTrackingCategory(node);
 
-					if ( category ) {
-						WikiaEditor.track({
-							category: category,
-							label: 'modify'
-						});
-					}
-
-					node.trigger('edit');
-				}
-			},
-			{
-				label: msgs['delete'],
-				'class': 'RTEMediaOverlayDelete',
-				callback: function(node) {
-					var msgMediaType = self.getMediaTypeForMsg(node);
-					var category = getTrackingCategory( node );
-
-					if ( category ) {
-						WikiaEditor.track({
-							category: category,
-							label: 'remove'
-						});
-					}
-
-					// show modal version of confirm()
-					var title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
-					var msg = RTE.getInstance().lang[msgMediaType].confirmDelete;
-
-					RTE.tools.confirm(title, msg, function() {
-						RTE.tools.removeElement(node);
-
-						var wikiaEditor = RTE.getInstanceEditor();
-
-						// Resize editor area
-						wikiaEditor.fire('editorResize');
-						wikiaEditor.editorFocus();
-
-					}).data( 'tracking', {
-						category: category
+				if (category) {
+					WikiaEditor.track({
+						category: category,
+						label: 'modify'
 					});
 				}
+
+				node.trigger('edit');
 			}
-		];
+		}, {
+			label: msgs['delete'],
+			'class': 'RTEMediaOverlayDelete',
+			callback: function (node) {
+				var msgMediaType, category, title, msg;
+
+				msgMediaType = self.getMediaTypeForMsg(node);
+				category = getTrackingCategory(node);
+
+				if (category) {
+					WikiaEditor.track({
+						category: category,
+						label: 'remove'
+					});
+				}
+
+				// show modal version of confirm()
+				title = RTE.getInstance().lang[msgMediaType].confirmDeleteTitle;
+				msg = RTE.getInstance().lang[msgMediaType].confirmDelete;
+
+				RTE.tools.confirm(title, msg, function () {
+					var wikiaEditor = RTE.getInstanceEditor();
+
+					RTE.tools.removeElement(node);
+
+					// Resize editor area
+					wikiaEditor.fire('editorResize');
+					wikiaEditor.editorFocus();
+
+				}).data('tracking', {
+					category: category
+				});
+			}
+		}];
 
 		RTE.overlay.add(media, standardButtons);
 
@@ -158,8 +170,16 @@ CKEDITOR.plugins.add('rte-media',
 		RTE.tools.unselectable(media);
 
 		// setup events once more on each drag&drop
-		RTE.getEditor().unbind('dropped.media').bind('dropped.media', function(ev, extra) {
-			var target = $(ev.target);
+		RTE.getEditor().unbind('dropped.media').bind('dropped.media', function (ev, extra) {
+			var target = $(ev.target),
+				parentNode,
+				editorX,
+				editorWidth,
+				data,
+				newAlign,
+				oldAlign,
+				wikitext,
+				re;
 
 			// handle images and videos only
 			if (!target.hasClass('image') && !target.hasClass('video') && !target.hasClass('media-placeholder')) {
@@ -167,7 +187,7 @@ CKEDITOR.plugins.add('rte-media',
 			}
 
 			// don't allow images to be drag&dropped into headers (RT #67987)
-			var parentNode = target.parent();
+			parentNode = target.parent();
 			if ((/h\d/i).test(parentNode.attr('nodeName'))) {
 				// move image outside the header
 				parentNode.after(target);
@@ -176,14 +196,14 @@ CKEDITOR.plugins.add('rte-media',
 			}
 
 			// calculate relative positon
-			var editorX = parseInt(extra.pageX - $(this).offset().left);
-			var editorWidth = parseInt($(this).width());
+			editorX = parseInt(extra.pageX - $(this).offset().left);
+			editorWidth = parseInt($(this).width());
 
 			// choose new image alignment
-			var data = target.getData();
-			var newAlign = false;
+			data = target.getData();
+			newAlign = false;
 
-			var oldAlign = data.params.align;
+			oldAlign = data.params.align;
 			if (!oldAlign) {
 				// get default alignment if none is specified in wikitext
 				oldAlign = (target.hasClass('thumb') || target.hasClass('frame')) ? 'right' : 'left';
@@ -194,20 +214,20 @@ CKEDITOR.plugins.add('rte-media',
 				}
 			}
 
-			switch(oldAlign) {
-				case 'left':
-					// switch to right if x > 66% of width
-					if (editorX > parseInt(editorWidth * 0.66)) {
-						newAlign = 'right';
-					}
-					break;
+			switch (oldAlign) {
+			case 'left':
+				// switch to right if x > 66% of width
+				if (editorX > parseInt(editorWidth * 0.66)) {
+					newAlign = 'right';
+				}
+				break;
 
-				case 'right':
-					// switch to left if x < 33% of width
-					if (editorX < parseInt(editorWidth * 0.33)) {
-						newAlign = 'left';
-					}
-					break;
+			case 'right':
+				// switch to left if x < 33% of width
+				if (editorX < parseInt(editorWidth * 0.33)) {
+					newAlign = 'left';
+				}
+				break;
 			}
 
 			if (!newAlign) {
@@ -218,15 +238,14 @@ CKEDITOR.plugins.add('rte-media',
 			RTE.log('media alignment: ' + oldAlign + ' -> ' + newAlign);
 
 			// update image meta data and wikitext
-			var wikitext = data.wikitext;
-			var re = new RegExp('\\|' + oldAlign + '(\\||])');
+			wikitext = data.wikitext;
+			re = new RegExp('\\|' + oldAlign + '(\\||])');
 
 			if (re.test(wikitext)) {
 				// switch alignment which is already in wikitext
 				// example: [[File:Spiderpig.jpg|thumb|left|left something]]
 				wikitext = wikitext.replace(re, "|" + newAlign + "$1");
-			}
-			else {
+			} else {
 				// there's no alignment in wikitext - add left/right after the first pipe
 				// example: [[File:Spiderpig.jpg|thumb|foo]] or [[File:Spiderpig.png]]
 				wikitext = wikitext.replace(/(\||\])/, '|' + newAlign + '$1');
@@ -245,19 +264,19 @@ CKEDITOR.plugins.add('rte-media',
 		});
 
 		// update position of image caption ("..." icon)
-		var mediaWithCaption = media.filter('.withCaption');
-		mediaWithCaption.each(function() {
-			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10)  + 'px');
+		mediaWithCaption = media.filter('.withCaption');
+		mediaWithCaption.each(function () {
+			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10) + 'px');
 		});
 
 		// images / videos / poll specific setup
-		var image = media.filter('img.image');
+		image = media.filter('img.image');
 		self.setupImage(image);
 
-		var video = media.filter('img.video');
+		video = media.filter('img.video');
 		self.setupVideo(video);
 
-		var poll = media.filter('img.placeholder-poll');
+		poll = media.filter('img.placeholder-poll');
 		self.setupPoll(poll);
 
 		// RT #69635
@@ -270,22 +289,26 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	// image specific setup
-	setupImage: function(image) {
-		image.bind('edit.media', function(ev) {
+	setupImage: function (image) {
+		'use strict';
+
+		image.bind('edit.media', function (ev) {
 			RTE.log('image clicked');
 
 			// call WikiaMiniUpload and provide WMU with image clicked
 			if (!UserLogin.isForceLogIn()) {
 				var self = this;
-				WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
-					RTE.tools.callFunction(window.WMU_show, $(self));
+				WikiaEditor.load('WikiaMiniUpload').done(function () {
+					RTE.tools.callFunction(window.WMU_show, $(self)); // jshint ignore:line
 				});
 			}
 		});
 	},
 
-	addWikiText: function(wikiText, editedElement) {
-		if ( typeof editedElement  != "undefined" && editedElement !== false ) {
+	addWikiText: function (wikiText, editedElement) {
+		'use strict';
+
+		if (typeof editedElement != "undefined" && editedElement !== false) {
 			RTE.mediaEditor.update(editedElement, wikiText);
 		} else {
 			RTE.mediaEditor.addVideo(wikiText, {});
@@ -293,15 +316,16 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	// video specific setup
-	setupVideo: function(video) {
-		var self = this;
-		video.bind('edit.media', function(ev) {
+	setupVideo: function (video) {
+		'use strict';
+
+		video.bind('edit.media', function () {
 			RTE.log('video clicked');
 
 			// call VideoEmbedTool and provide VET with video clicked
 			if (!UserLogin.isForceLogIn()) {
 				var self = this;
-				WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+				WikiaEditor.load('VideoEmbedTool').done(function () {
 					RTE.tools.callFunction(window.vetWikiaEditor, $(self));
 				});
 			}
@@ -309,15 +333,19 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	// poll specific setup
-	setupPoll: function(poll) {
-		poll.bind('edit.media', function(ev) {
+	setupPoll: function (poll) {
+		'use strict';
+
+		poll.bind('edit.media', function (ev) {
 			RTE.log('poll clicked');
 
 			CreateWikiaPoll.showEditor(ev);
 		});
 	},
 
-	setupPlaceholder: function(placeholder) {
+	setupPlaceholder: function (placeholder) {
+		'use strict';
+
 		var images, videos,
 			self = this;
 
@@ -333,13 +361,13 @@ CKEDITOR.plugins.add('rte-media',
 		placeholder.unbind('.placeholder');
 
 		// setup events
-		placeholder.bind('contextmenu.placeholder', function(ev) {
+		placeholder.bind('contextmenu.placeholder', function (ev) {
 			// don't show CK context menu
 			ev.stopPropagation();
 		});
 
 		// setup events once more on each drag&drop
-		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function(ev, extra) {
+		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function (ev, extra) {
 			var target = $(ev.target);
 
 			// keep image/video placeholders
@@ -351,10 +379,10 @@ CKEDITOR.plugins.add('rte-media',
 		// setup image / video placeholder separatelly
 		images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.getInstance().lang.imagePlaceholder.tooltip);
-		images.bind('click.placeholder edit.placeholder', function(ev) {
+		images.bind('click.placeholder edit.placeholder', function (ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			var self = this;
-			WikiaEditor.load( 'WikiaMiniUpload' ).done(function() {
+			WikiaEditor.load('WikiaMiniUpload').done(function () {
 				RTE.tools.callFunction(window.WMU_show, $(self), {
 					isPlaceholder: true,
 					track: {
@@ -369,10 +397,10 @@ CKEDITOR.plugins.add('rte-media',
 
 		videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.getInstance().lang.videoPlaceholder.tooltip);
-		videos.bind('click.placeholder edit.placeholder', function() {
+		videos.bind('click.placeholder edit.placeholder', function () {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			var self = this;
-			WikiaEditor.load( 'VideoEmbedTool' ).done(function() {
+			WikiaEditor.load('VideoEmbedTool').done(function () {
 				RTE.tools.callFunction(window.vetWikiaEditor, $(self), {
 					isPlaceholder: true,
 					track: {
@@ -392,33 +420,35 @@ CKEDITOR.plugins.add('rte-media',
 	},
 
 	// maps media type to messages' group name
-	getMediaTypeForMsg: function(media) {
+	getMediaTypeForMsg: function (media) {
+		'use strict';
+
 		var type;
 
-		switch($(media).attr('type')) {
-			case 'image':
-				type = 'image';
-				break;
+		switch ($(media).attr('type')) {
+		case 'image':
+			type = 'image';
+			break;
 
-			case 'video':
-				type = 'video';
-				break;
+		case 'video':
+			type = 'video';
+			break;
 
-			case 'image-placeholder':
-				type = 'imagePlaceholder';
-				break;
+		case 'image-placeholder':
+			type = 'imagePlaceholder';
+			break;
 
-			case 'video-placeholder':
-				type = 'videoPlaceholder';
-				break;
+		case 'video-placeholder':
+			type = 'videoPlaceholder';
+			break;
 
-			case 'image-gallery':
-				type = 'photoGallery';
-				break;
+		case 'image-gallery':
+			type = 'photoGallery';
+			break;
 
-			case 'poll':
-				type = 'poll';
-				break;
+		case 'poll':
+			type = 'poll';
+			break;
 		}
 
 		return type;
@@ -431,11 +461,13 @@ RTE.mediaEditor = {
 	plugin: false,
 
 	// add an image (wikitext will parser to HTML, params stored in metadata)
-	addImage: function(wikitext, params) {
+	addImage: function (wikitext, params) {
+		'use strict';
+
 		RTE.log('adding an image');
 
 		// parse wikitext: get image name
-		var wikitextParams = wikitext.substring(2, wikitext.length-2).split('|');
+		var wikitextParams = wikitext.substring(2, wikitext.length - 2).split('|');
 
 		// set wikitext and metadata
 		var data = {
@@ -449,7 +481,9 @@ RTE.mediaEditor = {
 	},
 
 	// add a video (wikitext will parser to HTML, params stored in metadata)
-	addVideo: function(wikitext, params) {
+	addVideo: function (wikitext, params) {
+		'use strict';
+
 		RTE.log('adding a video');
 
 		// set wikitext and metadata
@@ -463,11 +497,13 @@ RTE.mediaEditor = {
 	},
 
 	// add given media
-	_add: function(wikitext, data) {
+	_add: function (wikitext, data) {
+		'use strict';
+
 		var self = this;
 
 		// render an image and replace old one
-		RTE.tools.parseRTE(wikitext, function(html) {
+		RTE.tools.parseRTE(wikitext, function (html) {
 			var editor = RTE.getInstance();
 
 			//RT#52431 - proper context
@@ -475,7 +511,7 @@ RTE.mediaEditor = {
 
 			//fix for IE7, the above line of code is returning an empty element
 			//since $(html) strips the enclosing <p> tag out for some reason
-			if(!newMedia.exists()){
+			if (!newMedia.exists()) {
 				newMedia = $(html, editor.document.$);
 			}
 
@@ -495,14 +531,15 @@ RTE.mediaEditor = {
 	},
 
 	// update given media (wikitext will parser to HTML, params stored in metadata)
-	update: function(media, wikitext, params) {
+	update: function (media, wikitext, params) {
+		'use strict';
+
 		var self = this;
 
 		// render an image and replace old one
-		RTE.tools.parseRTE(wikitext, function(html) {
-			var editor = RTE.getInstance();
-
-			var newMedia = $(html).children('img');
+		RTE.tools.parseRTE(wikitext, function (html) {
+			var editor = RTE.getInstance(),
+				newMedia = $(html).children('img');
 
 			// replace old one with new one
 			newMedia.insertAfter(media);
