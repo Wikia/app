@@ -118,6 +118,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
+			$scriptModules[] = 'wikia.instantGlobals';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 			$scriptModules[] = 'wikia.window';
