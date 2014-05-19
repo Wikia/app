@@ -195,8 +195,7 @@ class AdEngine2Service
 	private static function getJsVariables()
 	{
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			$wgHighValueCountriesDefault, $wgUser,
-			$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
 			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
@@ -216,7 +215,6 @@ class AdEngine2Service
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
 			// Ad Driver
-			'wgHighValueCountriesDefault' => $wgHighValueCountriesDefault,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
