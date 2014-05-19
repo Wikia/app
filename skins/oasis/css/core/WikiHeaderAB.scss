@@ -1,292 +1,247 @@
-@import "color";
-
-$header-color-primary: $color-links;
-$header-color-secondary: $color-page;
-
 .WikiHeaderV2 {
-	background: $header-color-secondary;
-	height: 60px;
-	position: relative;
-	z-index: 2;
-
-	.local-navigation-container {
-		width: 1040px;
-		margin: 0 auto;
-	}
-
-	.wordmark {
-		float: left;
-		height: 40px;
-		margin: 0;
-		padding: 10px 20px 10px 0;
-
-		img {
-			max-height: 40px;
-			max-width: 154px;
-		}
-		&.text a {
-			color: $header-color-primary;
-			display: inline-block;
-			font-size: 20px;
-			font-weight: bold;
-			padding: 10px 0;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-	}
+  height: 60px;
+  position: relative;
+  z-index: 3900000;
+}
+.WikiHeaderV2 .local-navigation-container {
+  width: 1040px;
+  margin: 0 auto;
+}
+.WikiHeaderV2 .wordmark {
+  float: left;
+  height: 40px;
+  margin: 0;
+  padding: 10px 20px 10px 0;
+    font-size: 30px;
+    font-weight: bold;
+}
+.WikiHeaderV2 .wordmark img {
+  max-height: 40px;
+  max-width: 154px;
+}
+.WikiHeaderV2 .wordmark.text a {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0;
+}
+.WikiHeaderV2 .wordmark.text a:hover {
+  text-decoration: none;
 }
 
 .WikiNavV2 {
-	float: left;
-
-	.nav {
-		display: inline-block;
-
-		.nav-item {
-			display: inline-block;
-
-			> a {
-				background: $header-color-secondary;
-				color: $header-color-primary;
-				display: table-cell;
-				font-size: 18px;
-				font-weight: bold;
-				height: 60px;
-				padding: 0 20px;
-				text-decoration: none;
-				vertical-align: middle;
-
-				&:hover {
-					background: $header-color-primary;
-					color: $header-color-secondary;
-				}
-			}
-
-			&:hover, &.active {
-				.submenu {
-					display: block;
-				}
-				> a {
-					background: $header-color-primary;
-					color: $header-color-secondary;
-				}
-			}
-
-			&.nav-item-narrow:nth-child(n + 3) {
-				direction: rtl;
-
-				.submenu {
-					direction: ltr;
-				}
-			}
-
-			&.no-see-all .submenu {
-				padding-bottom: 5px;
-			}
-
-			.submenu {
-				background: $header-color-primary;
-				color: $header-color-secondary;
-				display: none;
-				padding: 30px 20px 40px 20px;
-				position: absolute;
-
-				&.submenu-full {
-					box-sizing: border-box;
-					left: 50%;
-					margin-left: -520px;
-					width: 1040px;
-
-					.subnav-2-column {
-						float: left;
-						display: block;
-						width: 250px;
-
-						.subnav-2-item {
-							float: none;
-						}
-					}
-				}
-
-				&.submenu-wide {
-					box-sizing: border-box;
-					left: 50%;
-					margin-left: -395px;
-					width: 790px;
-				}
-
-				a {
-					color: inherit;
-					text-decoration: none;
-
-					&:hover {
-						text-decoration: underline;
-					}
-				}
-
-				.subnav-2a {
-					border-bottom: 1px solid $header-color-secondary;
-					box-sizing: border-box;
-					display: inline-block;
-					font-size: 18px;
-					font-weight: bold;
-					line-height: 20px;
-					padding-bottom: 10px;
-					padding-right: 10px;
-					position: relative;
-					text-transform: uppercase;
-					width: 100%;
-
-					svg {
-						position: absolute;
-						right: 0;
-						top: calc(50% - 9px);
-
-						polygon {
-							fill: $header-color-secondary;
-						}
-					}
-				}
-				li.subnav-2-item {
-					float: left;
-					margin: 0 20px 30px 20px;
-					width: 210px;
-
-					&:nth-child(5) {
-						clear: left;
-					}
-				}
-				.subnav-3a {
-					font-size: 18px;
-					font-weight: normal;
-					line-height: 20px;
-				}
-				ul.subnav-3 {
-					margin-top: 15px;
-				}
-				li.subnav-3-item {
-					margin-top: 12px;
-				}
-				.see-all {
-					border-top: 1px solid $header-color-secondary;
-					bottom: 0;
-					display: table-cell;
-					font-size: 18px;
-					font-weight: bold;
-					height: 40px;
-					left: 0;
-					line-height: 40px;
-					padding-right: 40px;
-					position: absolute;
-					right: 0;
-					text-align: right;
-					text-transform: uppercase;
-					vertical-align: middle;
-
-					&:before {
-						clear: both;
-					}
-
-					svg {
-						margin-left: 10px;
-
-						polygon {
-							fill: $header-color-secondary;
-						}
-					}
-				}
-			}
-		}
-	}
+  float: left;
+max-width: 846px;
+}
+.WikiNavV2 .nav {
+  display: inline-block;
+}
+.WikiNavV2 .nav .nav-item {
+  display: inline-block;
+}
+.WikiNavV2 .nav .nav-item > a {
+  display: table-cell;
+  font-size: 18px;
+  font-weight: bold;
+  height: 60px;
+  padding: 0 20px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.WikiNavV2 .nav .nav-item:hover .submenu, .WikiNavV2 .nav .nav-item:active .submenu, .WikiNavV2 .nav .nav-item.active .submenu {
+  display: block;
+}
+.WikiNavV2 .nav .nav-item.nav-item-narrow:nth-child(n + 3) {
+  direction: rtl;
+}
+.WikiNavV2 .nav .nav-item.nav-item-narrow:nth-child(n + 3) .submenu {
+  direction: ltr;
+}
+.WikiNavV2 .nav .nav-item.no-see-all .submenu {
+  padding-bottom: 5px;
+}
+.WikiNavV2 .nav .nav-item .submenu {
+  display: none;
+  padding: 30px 20px 40px;
+  position: absolute;
+}
+.WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
+  width: 500px;
+}
+.WikiNavV2 .nav .nav-item .submenu.submenu-full {
+  box-sizing: border-box;
+  left: 50%;
+  margin-left: -520px;
+  width: 1040px;
+}
+.WikiNavV2 .nav .nav-item .subnav-2-column-wrapper {
+  float: left;
+  display: block;
+  width: 250px;
+}
+.WikiNavV2 .nav .nav-item .subnav-2-column .subnav-2-item {
+  float: none;
+}
+.WikiNavV2 .nav .nav-item .submenu.submenu-wide {
+  box-sizing: border-box;
+  left: 50%;
+  margin-left: -395px;
+  width: 790px;
+}
+.WikiNavV2 .nav .nav-item .submenu a {
+  color: inherit;
+  text-decoration: none;
+}
+.WikiNavV2 .nav .nav-item .submenu a:hover {
+  text-decoration: underline;
+}
+.WikiNavV2 .nav .nav-item .submenu .subnav-2a {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  position: relative;
+  text-transform: uppercase;
+  width: 100%;
+}
+.WikiNavV2 .nav .nav-item .submenu .subnav-2a svg {
+  position: absolute;
+  right: 0;
+  top: -webkit-calc(50% - 9px);
+  top: calc(50% - 9px);
+}
+.WikiNavV2 .nav .nav-item .submenu li.subnav-2-item {
+  float: left;
+  margin: 0 20px 30px;
+  width: 210px;
+}
+.WikiNavV2 .nav .nav-item .submenu li.subnav-2-item:nth-child(5) {
+  clear: left;
+}
+.WikiNavV2 .nav .nav-item .submenu .subnav-3a {
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 20px;
+}
+.WikiNavV2 .nav .nav-item .submenu ul.subnav-3 {
+  margin-top: 15px;
+}
+.WikiNavV2 .nav .nav-item .submenu li.subnav-3-item {
+  margin-top: 12px;
+}
+.WikiNavV2 .nav .nav-item .submenu .see-all {
+  bottom: 0;
+  display: table-cell;
+  font-size: 18px;
+  font-weight: bold;
+  height: 40px;
+  left: 0;
+  line-height: 40px;
+  padding-right: 40px;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.WikiNavV2 .nav .nav-item .submenu .see-all:before {
+  clear: both;
+}
+.WikiNavV2 .nav .nav-item .submenu .see-all svg {
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 1365px) {
-	.WikiHeaderV2 {
-		.local-navigation-container {
-			//margin-left: -384px;
-			width: 768px;
-			.wordmark {
-				padding-right: 18px;
-			}
-		}
-	}
+  .WikiHeaderV2 .local-navigation-container {
+    width: 768px;
+  }
+  .WikiHeaderV2 .local-navigation-container .wordmark {
+    padding-right: 18px;
+  }
 
-	.WikiNavV2 {
-		.nav {
-			.nav-item {
-				> a {
-					font-size: 15px;
-					font-weight: bold;
-					padding: 0 18px;
-				}
-
-				.submenu {
-					padding: 30px 12px 40px 12px;
-
-					&.submenu-full {
-						margin-left: -384px;
-						width: 768px;
-
-						.subnav-2-column {
-							width: 184px;
-						}
-					}
-
-					&.submenu-wide {
-						margin-left: -292px;
-						width: 584px;
-					}
-
-					.subnav-2a {
-						font-size: 15px;
-						line-height: 20px;
-						padding-bottom: 10px;
-						padding-right: 10px;
-					}
-					li.subnav-2-item {
-						margin: 0 12px 30px 12px;
-						width: 152px;
-					}
-					.subnav-3a {
-						font-size: 15px;
-						font-weight: normal;
-						line-height: 20px;
-					}
-					ul.subnav-3 {
-						margin-top: 10px;
-					}
-					li.subnav-3-item {
-						margin-top: 10px;
-					}
-					.see-all {
-						font-size: 15px;
-						padding-right: 24px;
-
-						svg {
-							margin-left: 10px;
-						}
-					}
-				}
-			}
-		}
-	}
+  .WikiNavV2 {
+max-width: 596px;
+  }
+  .WikiNavV2 .nav .nav-item > a {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0 18px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu {
+    padding: 30px 12px 40px;
+  }
+.WikiNavV2 .nav .nav-item .submenu.submenu-width-2 {
+  width: 368px;
 }
-
-// hacks for existing elements
+  .WikiNavV2 .nav .nav-item .submenu.submenu-full {
+    margin-left: -384px;
+    width: 768px;
+  }
+  .WikiNavV2 .nav .nav-item .subnav-2-column-wrapper {
+    float: left;
+    display: block;
+    width: 184px;
+  }
+  .WikiNavV2 .nav .nav-item .subnav-2-column .subnav-2-item {
+    float: none;
+  }
+  .WikiNavV2 .nav .nav-item .subnav-2-column {
+    width: 184px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu.submenu-wide {
+    margin-left: -292px;
+    width: 584px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu .subnav-2a {
+    font-size: 15px;
+    line-height: 20px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu li.subnav-2-item {
+    margin: 0 12px 30px;
+    width: 160px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu .subnav-3a {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 20px;
+    word-break: break-word;
+  }
+  .WikiNavV2 .nav .nav-item .submenu ul.subnav-3 {
+    margin-top: 10px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu li.subnav-3-item {
+    margin-top: 10px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu .see-all {
+    font-size: 15px;
+    padding-right: 24px;
+  }
+  .WikiNavV2 .nav .nav-item .submenu .see-all svg {
+    margin-left: 10px;
+  }
+}
 #WikiaPageHeader.WikiaPageHeader.WikiaPageHeaderV2 {
-	margin: 10px 0;
-}
-.WikiNavV2 {
-	> h1, > .navbackground  {
-		display: none;
-	}
+  margin: 10px 0;
 }
 
-.WikiHeaderV2 {
-	.hiddenLinks {
-		position: absolute;
-		top: -1000px;
-	}
+.WikiNavV2 > h1, .WikiNavV2 > .navbackground {
+  display: none;
+}
+
+.WikiHeaderV2 .hiddenLinks {
+  position: absolute;
+  top: -1000px;
+}
+
+@media screen and (max-width: 1023px) {
+  .WikiNavV2 .nav .nav-item > a {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0 15px;
+  }
 }
