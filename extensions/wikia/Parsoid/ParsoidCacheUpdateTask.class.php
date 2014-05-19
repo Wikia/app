@@ -50,8 +50,8 @@ class ParsoidCacheUpdateTask extends BaseTask {
 
 		$oldid = $prev ? $title->getPreviousRevisionID( $title->getLatestRevID() ) : $title->getLatestRevID();
 
-		return $wgVisualEditorParsoidURL . '/' . wfExpandUrl( wfScript( 'api' ) ) . '/' .
-			wfUrlencode( $title->getPrefixedDBkey() ) . '?oldid=' . $oldid;
+		return $wgVisualEditorParsoidURL . '/' . urlencode( wfExpandUrl( wfScript( 'api' ) ) ). '/' .
+			urlencode( $title->getPrefixedDBkey() ) . '?oldid=' . $oldid;
 	}
 
 	protected function checkCurlResults( $results ) {
