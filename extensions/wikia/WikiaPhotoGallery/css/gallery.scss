@@ -1,0 +1,20 @@
+@import 'skins/oasis/css/core/color';
+
+.wikia-gallery-item {
+	// mimicking paragraph tags
+	%p {
+		font-size: 12px;
+		line-height: 16px;
+		margin: 10px 0 5px;
+	}
+
+	.title {
+		@extend %p;
+		font-weight: bold;
+	}
+
+	.lightbox-caption {
+		@extend %p;
+		color: $color-alternate-text;
+	}
+}
