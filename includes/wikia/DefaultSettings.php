@@ -1015,6 +1015,13 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
+ * Extension for running multiple version of Mediawiki
+ */
+if( !isset( $wgUseMedusa ) ) {
+	$wgUseMedusa = false;
+}
+
+/**
  * Memcached class name
  */
 $wgMemCachedClass = 'MemcacheMoxiCluster';
@@ -1201,6 +1208,12 @@ $wgEnableRHonDesktop = false;
  * Enables Remnant Gpti on Mobile experiment
  */
 $wgAdDriverEnableRemnantGptMobile = false;
+
+/**
+ * @name $wgEnableAdEngineExt
+ * Enables ad engine
+ */
+$wgEnableAdEngineExt = true;
 
 /**
  * @name $wgAdDriverUseEbay
