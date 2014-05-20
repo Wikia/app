@@ -125,7 +125,7 @@ CKEDITOR.plugins.add('rte-media', {
 				node.trigger('edit');
 			}
 		}, {
-			label: msgs['delete'],
+			label: msgs.delete,
 			'class': 'RTEMediaOverlayDelete',
 			callback: function (node) {
 				var msgMediaType, category, title, msg;
