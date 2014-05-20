@@ -9,9 +9,9 @@ class MercuryApiController extends WikiaController {
 	}
 
 	public function getCommentsPerArticleCount() {
-		$articleId = $this->getVal( self::PARAM_ARTICLE_ID, null );
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
 
-		if( is_null( $articleId ) ) {
+		if( $articleId === 0 ) {
 			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
 		}
 
@@ -19,6 +19,7 @@ class MercuryApiController extends WikiaController {
 		if ( empty( $title ) ) {
 			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
 		}
+
 		$articleCommentList = new ArticleCommentList();
 		$articleCommentList->setTitle( $title );
 		$count = $articleCommentList->getCountAll();
