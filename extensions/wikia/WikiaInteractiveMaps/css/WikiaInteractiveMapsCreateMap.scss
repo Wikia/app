@@ -1,4 +1,17 @@
 
-.hidden {
-	display: none !important;
+.intMapCreateMapModal {
+	.hidden {
+		display: none !important;
+	}
+
+	.WikiaForm .input-group {
+		float: none;
+		padding-left: 0;
+		padding-right: 0;
+		width: 100%;
+		input {
+			box-sizing: border-box;
+			width: 100%;
+		}
+	}
 }

@@ -41,7 +41,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-next-btn' => 'Next',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
-	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map'
+	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Title'
 ];
 
 $messages[ 'qqq' ] = [
@@ -74,6 +75,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-next-btn' => 'Next button for create map modal',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
-	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type'
+	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title'
 ];
 

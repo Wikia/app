@@ -5,8 +5,9 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		body = doc.getElementsByTagName('body')[0],
 
 		createMapModal, // placeholder for holding reference to modal instance
-		modalSections,
-		modalButtons,
+		modalSections,// placeholder for caching create map flow modal sections
+		modalButtons, // placeholder for caching create map modal buttons
+		lastStep = 0, // holds last step of create map flow
 		currentStep = 0, // holds current step of create map flow
 		steps = [ // holds config for each step
 			{
@@ -17,6 +18,13 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				buttons: {
 					intMapBack: true
 				}
+			},
+			{
+				id: 'intMapsAddTitle',
+				buttons: {
+					intMapBack: true,
+					intMapNext: true
+				}
 			}
 		],
 		hiddenClass = 'hidden',
@@ -24,6 +32,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		modalConfig = {
 			vars: {
 				id: 'intMapCreateMapModal',
+				classes: ['intMapCreateMapModal'],
 				size: 'medium',
 				content: '',
 				title: $.msg('wikia-interactive-maps-create-map'),
@@ -57,18 +66,29 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			}
 		},
 		templateData = {
-			typeGeo: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-			typeCustom: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
-			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
-		};
-
-	// TODO: move it somewhere else
-	body.addEventListener('click', function(event) {
-		if (event.target.id === 'intMapCustom') {
-			event.preventDefault();
-			switchStep(1);
+			mapType: [
+				{
+					type: 'Geo',
+					name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+				},
+				{
+					type: 'Custom',
+					name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
+				}
+			],
+			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file'),
+			titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder')
+		},
+		modalEvents = {
+			next: nextStep,
+			back: previousStep,
+			intMapCustom: function() {
+				switchStep(1);
+			},
+			intMapGeo: function() {
+				switchStep(2);
+			}
 		}
-	});
 
 	/**
 	 * @desc Entry point for create map modal
@@ -76,15 +96,13 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function init(templates) {
-		renderModalContentMarkup(modalConfig, templates[0], templateData)
+		renderModalContentMarkup(modalConfig, templates[0], templateData);
 		createModal(modalConfig, function() {
-			// attach handlers to modal events
-			createMapModal.bind('next', nextStep);
-			createMapModal.bind('back', previousStep);
-
 			// cache modal sections and buttons
 			modalSections = createMapModal.$content.children();
 			modalButtons = createMapModal.$element.find('.buttons').children();
+
+			bindEvents(createMapModal, modalEvents);
 
 			// set initial step
 			switchStep(0);
@@ -124,6 +142,34 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	}
 
 	/**
+	 * @desc binds events to modal
+	 * @param {object} modal - instance of modal component
+	 * @param {object} events - events to be bind to the modal
+	 */
+
+	function bindEvents(modal, events) {
+		Object.keys(events).forEach(function(event) {
+			modal.bind(event, events[event]);
+		})
+	}
+
+	/**
+	 * @desc switches to the next step in create map flow
+	 */
+
+	function nextStep() {
+		switchStep(currentStep + 1)
+	}
+
+	/**
+	 * @desc switches to the previous step in create map flow
+	 */
+
+	function previousStep() {
+		switchStep(lastStep)
+	}
+
+	/**
 	 * @desc switches to the given step in create map flow
 	 * @param {number} index - step index
 	 */
@@ -140,23 +186,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function setStep(index) {
+		lastStep = currentStep;
 		currentStep = index;
-	}
-
-	/**
-	 * @desc switches to the next step in create map flow
-	 */
-
-	function nextStep() {
-		switchStep(currentStep + 1)
-	}
-
-	/**
-	 * @desc switches to the previous step in create map flow
-	 */
-
-	function previousStep() {
-		switchStep(currentStep - 1)
 	}
 
 	/**
