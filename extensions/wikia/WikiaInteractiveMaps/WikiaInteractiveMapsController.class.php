@@ -141,6 +141,43 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Upload a file entry point
+	 */
+	public function uploadMap() {
+		$upload = new UploadFromFile();
+		$upload->initializeFromRequest( $this->wg->Request );
+		$details = $upload->verifyUpload();
+		$uploadStatus = [ 'status' => 'error' ];
+
+		if( empty( $this->wg->EnableUploads ) ) {
+			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
+		} else {
+			if ( $details[ 'status' ] !== UploadBase::OK ) {
+				$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse() ];
+			} else {
+				$warnings = $upload->checkWarnings();
+
+				if ( !empty( $warnings ) ) {
+					$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
+				} else {
+					//save temp file
+					$file = $upload->stashFile();
+
+					$uploadStatus[ 'status' ] = 'uploadattempted';
+					if ( $file instanceof File ) {
+						$uploadStatus[ 'isGood' ] = true;
+						$uploadStatus[ 'file' ] = $file;
+					} else {
+						$uploadStatus[ 'isGood' ] = false;
+					}
+				}
+			}
+		}
+
+		$this->setVal( 'results', $uploadStatus );
+	}
+
+	/**
 	 * Generates offset value based on current page and items per page
 	 *
 	 * @param int $currentPage
