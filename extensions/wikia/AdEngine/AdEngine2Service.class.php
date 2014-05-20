@@ -208,13 +208,6 @@ class AdEngine2Service
 
 		$vars = [];
 
-		$highValueCountries = WikiFactory::getVarValueByName(
-			'wgHighValueCountries',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgHighValueCountriesDefault
-		);
-
 		$variablesToExpose = [
 			'wgEnableAdsInContent' => $wgEnableAdsInContent,
 			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
@@ -222,7 +215,7 @@ class AdEngine2Service
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
 			// Ad Driver
-			'wgHighValueCountries' => $highValueCountries,
+			'wgHighValueCountriesDefault' => $wgHighValueCountriesDefault,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
