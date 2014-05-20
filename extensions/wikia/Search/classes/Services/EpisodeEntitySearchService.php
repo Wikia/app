@@ -66,5 +66,4 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
 		return '+("' . $query . '")' . $options;
 	}
-
 }

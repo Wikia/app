@@ -56,5 +56,4 @@ class SeriesEntitySearchService extends EntitySearchService {
 		}
 		return $result;
 	}
-
 }
