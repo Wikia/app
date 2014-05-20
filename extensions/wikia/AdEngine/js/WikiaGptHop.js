@@ -49,12 +49,6 @@ define('ext.wikia.adEngine.wikiaGptHop', [
 			return adCallback();
 		}
 
-		// Check specifically for ads which can appear empty, even when successful
-		if (iframeDoc.querySelector(specialAdSelector)) {
-			log(['findAdInIframe', iframeId, 'special ad, launching adCallback'], 'info', logGroup);
-			return adCallback();
-		}
-
 		// Check for > 1x1 images
 		// This is needed because DART returns a position:absolute div for very simple ads
 		// and thus the body's offsetHeight is 0 :-(
@@ -68,47 +62,7 @@ define('ext.wikia.adEngine.wikiaGptHop', [
 		noAdCallback();
 	}
 
-	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
-		var status, height, gptEmpty, empty;
-
-		// Check the explicit status
-		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
-
-		if (status === 'success') {
-			log(['onAdLoad', slotname, 'running ad callback (forced status)'], 'info', logGroup);
-			return adCallback();
-		}
-
-		// Now, let's base our decision on slot height (1x1 means hop)
-		height = gptEvent.size && gptEvent.size[1];
-		gptEmpty = gptEvent.isEmpty;
-		log(['onAdLoad', slotname, 'height', height, 'gptEmpty', gptEmpty], 'info', logGroup);
-
-		empty = gptEmpty || height <= 1;
-
-		if (empty) {
-			log(['onAdLoad', slotname, 'running noAd callback (hop)'], 'info', logGroup);
-			return noAdCallback();
-		}
-
-		// On non-mobile skin that's it, success!
-		if (window.skin !== 'wikiamobile') {
-			log(['onAdLoad', slotname, 'running ad callback'], 'info', logGroup);
-			return adCallback();
-		}
-
-		// On mobile skin we investigate the iframe contents
-
-		// No iframe, this is weird, but we assume this means an ad, no hopping!
-		if (!iframe) {
-			log(
-				['onAdLoad', slotname, 'running ad callback (no ad iframe found)'],
-				'error',
-				logGroup
-			);
-			adCallback();
-		}
-
+	function inspectIframe(slotname, iframe, adCallback, noAdCallback) {
 		if (iframe.contentWindow.document.readyState === 'complete') {
 			log(['onAdLoad', slotname, 'iframe state complete'], 'info', logGroup);
 			setTimeout(function () {
@@ -120,6 +74,72 @@ define('ext.wikia.adEngine.wikiaGptHop', [
 				findAdInIframe(iframe, adCallback, noAdCallback);
 			});
 		}
+	}
+
+	function getAdDetectMethod(slotname, gptEvent, iframe) {
+		var status, height, gptEmpty, iframeOk = false;
+
+		log(['getAdDetectMethod', slotname], 'info', logGroup);
+
+		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
+
+		if (status === 'success') {
+			return 'forced_success';
+		}
+
+		height = gptEvent.size && gptEvent.size[1];
+		gptEmpty = gptEvent.isEmpty;
+
+		if (gptEmpty || height <= 1) {
+			return 'empty';
+		}
+
+		if (window.skin !== 'wikiamobile') {
+			return 'always_success';
+		}
+
+		try {
+			iframeOk = !!iframe.contentWindow.document.querySelector;
+		} catch (e) {}
+
+		if (!iframeOk) {
+			log(
+				['getAdDetectMethod', slotname, 'running ad callback (no ad iframe found)'],
+				'error',
+				logGroup
+			);
+			return 'always_success';
+		}
+
+		// Check specifically for some ads
+		if (iframe.contentWindow.document.querySelector(specialAdSelector)) {
+			log(['getAdDetectMethod', slotname, 'special ad'], 'info', logGroup);
+			return 'always_success';
+		}
+
+		return 'inspect_iframe';
+	}
+
+	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
+
+		var hopMethod = getAdDetectMethod(slotname, gptEvent, iframe);
+
+		log(['onAdLoad', slotname, 'hopStrategy' , hopMethod], 'info', logGroup);
+
+		if (hopMethod === 'forced_success' || hopMethod === 'always_success') {
+			return adCallback();
+		}
+
+		if (hopMethod === 'empty') {
+			return noAdCallback();
+		}
+
+		// On mobile skin we investigate the iframe contents
+		if (hopMethod === 'inspect_iframe') {
+			return inspectIframe(slotname, iframe, adCallback, noAdCallback);
+		}
+
+		throw 'Incorrect hop method. Cannot detect ad state.';
 	}
 
 	return {
