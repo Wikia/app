@@ -16,7 +16,7 @@ $wgExtensionCredits['api'][] = array(
 );
 
 // Load needed classes
-$wgAutoloadClasses['MercuryController'] = $dir . '/MercuryController.class.php';
+$wgAutoloadClasses['MercuryApiController'] = $dir . '/MercuryApiController.class.php';
 
 // Add new API controller to API controllers list
-$wgWikiaApiControllers['MercuryController'] = $dir . '/MercuryController.class.php';
+$wgWikiaApiControllers['MercuryApiController'] = $dir . '/MercuryApiController.class.php';

@@ -1,6 +1,6 @@
 <?php
 
-class MercuryController extends WikiaController {
+class MercuryApiController extends WikiaController {
 
 	const PARAM_ARTICLE_ID = 'articleId';
 
