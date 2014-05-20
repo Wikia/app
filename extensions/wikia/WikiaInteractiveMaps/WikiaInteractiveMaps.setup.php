@@ -44,5 +44,6 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-next-btn',
 	'wikia-interactive-maps-create-map-back-btn',
 	'wikia-interactive-maps-create-map-choose-type-geo',
-	'wikia-interactive-maps-create-map-choose-type-custom'
+	'wikia-interactive-maps-create-map-choose-type-custom',
+	'wikia-interactive-maps-create-map-title-placeholder'
 ] );

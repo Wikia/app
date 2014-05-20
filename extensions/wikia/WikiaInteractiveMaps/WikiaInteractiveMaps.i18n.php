@@ -46,6 +46,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-warning' => 'There were some issues while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Title'
 ];
 
 $messages[ 'qqq' ] = [
@@ -82,5 +83,6 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
 	'wikia-interactive-maps-image-uploads-error' => 'An error displayed to a user when a file upload fails because of backend errors',
 	'wikia-interactive-maps-image-uploads-warning' => 'An error displayed to a user when a file upload fails because of backend warnings',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title'
 ];
 

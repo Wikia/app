@@ -1,11 +1,21 @@
 <div id="intMapsChooseType" class="intMapsChooseType">
-	<a href="" title="{{typeCustom}}" id="intMapCustom" class="intMapCustom">{{typeCustom}}</a>
-	<a href="" title="{{typeGeo}}" id="intMapGeo" class="intMapGeo">{{typeGeo}}</a>
-
+	{{#mapType}}
+		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="intMap{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
+	{{/mapType}}
 </div>
 
 <div id="intMapsChooseTileSet" class="intMapsChooseTileSet">
 	<form>
-		<input type="file" value="{{uploadFileBtn}}">
+		<input type="file" id="intMapUpload">
+	</form>
+</div>
+
+<div id="intMapsAddTitle" class="intMapsAddTitle">
+	<form class="WikiaForm">
+		<div class="input-group">
+			<input type="text" id="intMapTitle" placeholder="{{titlePlaceholder}}">
+		</div>
+
+		<img src="" alt="" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
 	</form>
 </div>
