@@ -2,8 +2,6 @@
 
 class VideosModuleController extends WikiaController {
 
-	const VIDEOS_PER_PAGE = 20;
-
 	/**
 	 * VideosModule
 	 * Returns videos to populate the Videos Module. First try and get premium videos
@@ -24,7 +22,7 @@ class VideosModuleController extends WikiaController {
 		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
-		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );
+		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
 		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
 		$sort = $this->request->getVal( 'sort', 'trend' );
 
@@ -32,7 +30,10 @@ class VideosModuleController extends WikiaController {
 		if ( $localContent ) {
 			$videos = $module->getLocalVideos( $numRequired, $sort );
 		} else {
-			$videos = $module->getWikiRelatedVideosTopics( $numRequired );
+			$videos = $module->getVideosByCategory( $numRequired );
+			if ( empty( $videos ) ) {
+				$videos = $module->getWikiRelatedVideosTopics( $numRequired );
+			}
 		}
 
 		$this->result = "ok";

@@ -389,11 +389,11 @@ class MediaQueryService extends WikiaService {
 	 * @param integer $page Specify a page of results (DEFAULT $page = 1)
 	 * @param array $providers An array of content providers.  Only videos hosted by these providers
 	 *                        will be returned (DEFAULT all providers)
-	 * @param string $category A category name.  Only videos tagged with this category will be returned
+	 * @param array|string $categories - category names.  Only videos tagged with these categories will be returned
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $sort = 'recent', $type = 'all', $limit = 0, $page = 1, $providers = array(), $category = '' ) {
+	public function getVideoList( $sort = 'recent', $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		// Determine the sort column
@@ -403,6 +403,10 @@ class MediaQueryService extends WikiaService {
 			$sortCol = 'views_7day';
 		} else {
 			$sortCol = 'added_at';
+		}
+
+		if ( !is_array( $categories ) ) {
+			$categories = [ $categories ];
 		}
 
 		// Setup the base query cache for a minimal amount of time
@@ -417,10 +421,10 @@ class MediaQueryService extends WikiaService {
 			->WHERE( 'removed' )->EQUAL_TO( 0 )
 			->ORDER_BY( $sortCol )->DESC();
 
-		if ( $category ) {
+		if ( $categories ) {
 				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
 					  ->JOIN( 'categorylinks' )->ON( 'page_id', 'cl_from' )
-					  ->AND_( 'cl_to' )->EQUAL_TO( $category )
+					  ->AND_( 'cl_to' )->IN( $categories )
 					  ->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE );
 		}
 

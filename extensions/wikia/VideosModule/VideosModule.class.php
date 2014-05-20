@@ -64,10 +64,10 @@ class VideosModule extends WikiaModel {
 				'method'       => 'getVideos',
 				'sort'         => 'recent',
 				'getThumbnail' => false,
-				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
+				'category'     => 'Staff_Pick_'.$this->wg->DBname,
 			];
 
-			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
+			$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
 			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
 
 			// Look for global wikia-wide picks
@@ -275,6 +275,58 @@ class VideosModule extends WikiaModel {
 			// get video detail
 			if ( !empty( $videos ) ) {
 				$videos = $this->getVideosDetail( $videos );
+			}
+
+			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->trimVideoList( $videos, $numRequired );
+	}
+
+	/**
+	 * Get videos by categories
+	 * @param integer $numRequired
+	 * @return array $videos
+	 */
+	public function getVideosByCategory( $numRequired ) {
+		wfProfileIn( __METHOD__ );
+
+		$memcKey = wfMemcKey( 'videomodule', 'category_videos', self::CACHE_VERSION );
+		$videos = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $videos ) ) {
+			$videos = [];
+			if ( !empty( $this->wg->VideosModuleCategories ) ) {
+				if ( is_array( $this->wg->VideosModuleCategories ) ) {
+					$categories = $this->wg->VideosModuleCategories;
+				} else {
+					$categories = [ $this->wg->VideosModuleCategories ];
+				}
+
+				$params = [
+					'controller' => 'VideoHandler',
+					'method'     => 'getVideoList',
+					'sort'       => 'recent',
+					'limit'      => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
+					'category'   => $categories,
+				];
+
+				$response = ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA );
+
+				$videos = [];
+				if ( !empty( $response['videos'] ) ) {
+					foreach ( $response['videos'] as $video ) {
+						if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+							break;
+						}
+
+						$this->addToList( $videos, $video['title'] );
+					}
+
+					// get video detail
+					$videos = $this->getVideosDetail( $videos );
+				}
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
