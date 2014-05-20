@@ -194,7 +194,6 @@ class ImageListPager extends TablePager {
 	}
 
 	function formatValue( $field, $value ) {
-		global $wgUser;
 		switch ( $field ) {
 			case 'thumb':
 				$file = wfLocalFile( $value );
@@ -217,10 +216,10 @@ class ImageListPager extends TablePager {
 					// begin wikia change
 					// @author Cqm
 					// VOLDEV-65
-					if ( $wgUser->isAllowed( 'delete' ) ) {
+					if ( $this->getUser()->isAllowed( 'delete' ) ) {
 						// convert message to lower case to match exisiting file link
 						// do it like this so it works for non-english characters, such as accents, etc.
-						$deleteMsg = wfMessage( 'delete' )->escaped();
+						$deleteMsg = $this->msg( 'delete' )->escaped();
 						$deleteMsg = mb_strtolower( $deleteMsg, mb_detect_encoding( $deleteMsg ) );
 
 						$delete = Xml::element( 'a',
