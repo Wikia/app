@@ -1015,13 +1015,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Extension for running multiple version of Mediawiki
- */
-if( !isset( $wgUseMedusa ) ) {
-	$wgUseMedusa = false;
-}
-
-/**
  * Memcached class name
  */
 $wgMemCachedClass = 'MemcacheMoxiCluster';
