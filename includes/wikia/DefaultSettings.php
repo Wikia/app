@@ -40,19 +40,21 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
+
+require_once("$IP/lib/composer/autoload.php");
 /**
  * wikia library incudes
  */
 require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
-
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
+
+require_once ( $IP."/lib/wikia/Logger/WikiaLogger.setup.php");
+set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
 }
-
-require_once("$IP/lib/composer/autoload.php");
 
 /**
  * autoload classes
@@ -637,11 +639,6 @@ $wgLangCreationVariables = array();
 $wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 $wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
-
-/**
- * Logger
- */
-require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
 
 /**
  * Tasks
