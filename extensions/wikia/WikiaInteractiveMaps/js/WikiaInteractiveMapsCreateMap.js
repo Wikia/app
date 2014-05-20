@@ -1,10 +1,7 @@
 define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache'], function($, w, mustache) {
 	'use strict';
 
-	var doc = w.document,
-		body = doc.getElementsByTagName('body')[0],
-
-		createMapModal, // placeholder for holding reference to modal instance
+	var createMapModal, // placeholder for holding reference to modal instance
 		modalSections,// placeholder for caching create map flow modal sections
 		modalButtons, // placeholder for caching create map modal buttons
 		lastStep = 0, // holds last step of create map flow
@@ -41,7 +38,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 						vars: {
 							value: $.msg('wikia-interactive-maps-create-map-next-btn'),
 							classes: ['normal', 'primary'],
-							id: "intMapNext",
+							id: 'intMapNext',
 							data: [
 								{
 									key: 'event',
@@ -53,7 +50,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					{
 						vars: {
 							value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
-							id: "intMapBack",
+							id: 'intMapBack',
 							data: [
 								{
 									key: 'event',
@@ -88,7 +85,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			intMapGeo: function() {
 				switchStep(2);
 			}
-		}
+		};
 
 	/**
 	 * @desc Entry point for create map modal
@@ -136,8 +133,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					createMapModal = modal;
 
 					cb();
-				})
-			})
+				});
+			});
 		});
 	}
 
@@ -150,7 +147,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	function bindEvents(modal, events) {
 		Object.keys(events).forEach(function(event) {
 			modal.bind(event, events[event]);
-		})
+		});
 	}
 
 	/**
@@ -158,7 +155,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function nextStep() {
-		switchStep(currentStep + 1)
+		switchStep(currentStep + 1);
 	}
 
 	/**
@@ -166,7 +163,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function previousStep() {
-		switchStep(lastStep)
+		switchStep(lastStep);
 	}
 
 	/**
@@ -219,5 +216,5 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 	return {
 		init: init
-	}
+	};
 });
