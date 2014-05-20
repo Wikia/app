@@ -868,6 +868,7 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Armando-Martin
  * @author Benfutbol10
+ * @author Fitoschido
  * @author Geitost
  * @author Translationista
  * @author VegaDark
@@ -936,7 +937,7 @@ Por favor, contáctalo para más información.',
 	'chat-user-menu-talk-page' => 'Página de discusión',
 	'chat-user-menu-contribs' => 'Contribuciones',
 	'chat-user-menu-private' => 'Mensaje Privado',
-	'chat-user-menu-give-chat-mod' => 'Dar estado de moderador',
+	'chat-user-menu-give-chat-mod' => 'Otorgar permiso de moderador',
 	'chat-user-menu-kick' => 'Expulsar',
 	'chat-user-menu-ban' => 'Banear',
 	'chat-user-menu-private-block' => 'Bloquear mensajes privados',
@@ -2672,7 +2673,7 @@ $messages['ps'] = array(
 	'chat-user-joined' => '$1 بانډار کې ورگډ شو.',
 	'chat-private-messages' => 'شخصي پيغامونه',
 	'chat-user-parted' => '$1 له بانډاره وواته.',
-	'chat-user-blocked' => '$1 په $2 بنديز ولګاوه.',
+	'chat-user-blocked' => '$1 په $2 بنديز ولگاوه.',
 	'chat-user-allow' => '$1 $2 ته اجازه ورکړه.',
 	'chat-kick-you-need-permission' => 'تاسې د يوه کارن د شړلو رښته نه لرۍ.',
 	'chat-ban-modal-label-reason' => 'سبب',

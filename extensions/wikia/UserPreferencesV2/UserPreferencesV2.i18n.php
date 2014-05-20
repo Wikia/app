@@ -699,6 +699,13 @@ $messages['lb'] = array(
 	'tog-hidefollowedpages-v2' => "D'lëscht vun de Säiten déi ech iwwerwaache viru D'lëscht vun de Säiten déi ech iwwerwaache viru jiddwerengem verstoppen",
 );
 
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'preferences-v2-redirect-recent-changes' => 'آلشتیا تازه باو',
+);
+
 /** Latvian (latviešu)
  * @author Sg ghost
  */

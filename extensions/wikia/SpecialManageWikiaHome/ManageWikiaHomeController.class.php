@@ -78,8 +78,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$videoGamesAmount = $this->request->getVal('video-games-amount', $this->helper->getNumberOfVideoGamesSlots($this->visualizationLang));
 		$entertainmentAmount = $this->request->getVal('entertainment-amount', $this->helper->getNumberOfEntertainmentSlots($this->visualizationLang));
 		$lifestyleAmount = $this->request->getVal('lifestyle-amount', $this->helper->getNumberOfLifestyleSlots($this->visualizationLang));
-		$hotWikisAmount = $this->request->getVal('hot-wikis-amount', $this->helper->getNumberOfHotWikiSlots($this->visualizationLang));
-		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
@@ -156,8 +154,6 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
 		$this->setVal('lifestyleAmount', $lifestyleAmount);
-		$this->setVal('hotWikisAmount', $hotWikisAmount);
-		$this->setVal('newWikisAmount', $newWikisAmount);
 		$this->setVal('wikisPerCollection', $wikisPerCollection);
 
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
@@ -225,21 +221,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		wfProfileOut(__METHOD__);
 	}
 
-	//todo: make from isAnySlotNumberNegative() and isHotOrNewSlotNumberNegative() one method
 	protected function isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) {
 		return intval($videoGamesAmount) < 0
 			|| intval($entertainmentAmount) < 0
 			|| intval($lifestyleAmount) < 0;
-	}
-
-	protected function isHotOrNewSlotNumberNegative($hotWikisAmount, $newWikisAmount) {
-		return intval($hotWikisAmount) < 0
-			|| intval($newWikisAmount) < 0;
-	}
-
-	protected function isHotOrNewSlotNumberTooBig($hotWikisAmount, $newWikisAmount) {
-		return intval($hotWikisAmount) > WikiaHomePageHelper::SLOTS_IN_TOTAL
-			|| intval($newWikisAmount) > WikiaHomePageHelper::SLOTS_IN_TOTAL;
 	}
 
 	public function onWrongRights() {

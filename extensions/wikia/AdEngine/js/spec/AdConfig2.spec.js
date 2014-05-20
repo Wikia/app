@@ -13,8 +13,13 @@ describe('AdConfig2', function(){
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMock,
+			abTestMock,
+			adDecoratorPageDimensionsMock
 
 			// AdProviders
 			, adProviderDirectGptMock
@@ -41,8 +46,13 @@ describe('AdConfig2', function(){
 			, highValueSlot = 'TOP_LEADERBOARD'
 			;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMock,
+			abTestMock,
+			adDecoratorPageDimensionsMock
 
 			// AdProviders
 			, adProviderDirectGptMock
@@ -69,8 +79,13 @@ describe('AdConfig2', function(){
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMockAU, adDecoratorPageDimensionsMock, abTestMock
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMockAU,
+			abTestMock,
+			adDecoratorPageDimensionsMock
 
 			// AdProviders
 			, adProviderDirectGptMock
@@ -95,8 +110,13 @@ describe('AdConfig2', function(){
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMock,
+			abTestMock,
+			adDecoratorPageDimensionsMock
 
 			// AdProviders
 			, adProviderDirectGptMock
@@ -121,8 +141,13 @@ describe('AdConfig2', function(){
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMock,
+			abTestMock,
+			adDecoratorPageDimensionsMock
 
 			// AdProviders
 			, adProviderDirectGptMock
@@ -147,9 +172,14 @@ describe('AdConfig2', function(){
 			, abTestMock = {inGroup: function() {return false;}}
 			, adConfig;
 
-		adConfig = AdConfig2(
-			logMock, windowMock, documentMock, geoMock, adDecoratorPageDimensionsMock, abTestMock
-
+		adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			windowMock,
+			documentMock,
+			geoMock,
+			abTestMock,
+			adDecoratorPageDimensionsMock
+			
 			// AdProviders
 			, adProviderDirectGptMock
 			, adProviderEvolveMock

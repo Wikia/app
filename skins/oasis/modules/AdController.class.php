@@ -3,7 +3,8 @@
 class AdController extends WikiaController {
 
 	public function index() {
-		$this->slotname = $this->request->getVal('slotname');
+		$this->slotName = $this->request->getVal('slotName');
+		$this->pageTypes = $this->request->getVal('pageTypes');
 	}
 
 	public function executeConfig() {
@@ -11,5 +12,19 @@ class AdController extends WikiaController {
 	}
 	
 	public function executeTop() {
+		if (WikiaPageType::isWikiaHub()) {
+			$leaderboardName = 'HUB_TOP_LEADERBOARD';
+		} elseif ($this->wg->EnableWikiaHomePageExt) {
+			if (WikiaPageType::isSearch()) {
+				$leaderboardName = 'TOP_LEADERBOARD';
+			} else {
+				$leaderboardName = 'CORP_TOP_LEADERBOARD';
+			}
+		} elseif (WikiaPageType::isMainPage()) {
+			$leaderboardName = 'HOME_TOP_LEADERBOARD';
+		} else {
+			$leaderboardName = 'TOP_LEADERBOARD';
+		}
+		$this->leaderboardName = $leaderboardName;
 	}
 }

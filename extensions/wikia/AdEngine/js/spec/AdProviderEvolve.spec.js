@@ -1,11 +1,15 @@
 describe('AdProviderEvolve', function(){
+	"use strict";
+
+	var slotTweakerMock;
+
 // dart has problems with sending back scripts based on key-val %p
 // http://ad.doubleclick.net/adj/wka.gaming/_starcraft/article;s0=gaming;s1=_starcraft;dmn=wikia-devcom;pos=TOP_LEADERBOARD;ord=7121786175
 // yields window.AdEngine2.hop('=TOP_LEADERBOARD;ord=7121786175');
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 	it('sanitizeSlotname', function() {
 		var  logMock = function() {}
-			, adLogicPageLevelParamsLegacyMock
+			, adLogicPageParamsLegacyMock
 			, scriptWriterMock
 			, windowMock = { wgInsideUnitTest: true }
 			, documentMock
@@ -13,8 +17,8 @@ describe('AdProviderEvolve', function(){
 			, evolveHelperMock = {}
 			, adProviderEvolve;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageLevelParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -24,7 +28,7 @@ describe('AdProviderEvolve', function(){
 
 	it('getUrl', function() {
 		var logMock = function() {}
-			, adLogicPageLevelParamsLegacyMock = {
+			, adLogicPageParamsLegacyMock = {
 				getDomainKV: function() {return 'dmn=mock;';},
 				getHostnamePrefix: function() {return 'hostpre=mock;';},
 				getCustomKeyValues: function() {return '';},
@@ -40,8 +44,8 @@ describe('AdProviderEvolve', function(){
 			, actual
 			;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageLevelParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		windowMock.wgDBname = 'somedb';
@@ -67,7 +71,7 @@ describe('AdProviderEvolve', function(){
 
 	it('Evolve canHandleSlot AU', function() {
 		var logMock = function() {}
-			, adLogicPageLevelParamsLegacyMock
+			, adLogicPageParamsLegacyMock
 			, scriptWriterMock
 			, documentMock
 			, windowMock = {wgInsideUnitTest: true}
@@ -75,8 +79,8 @@ describe('AdProviderEvolve', function(){
 			, evolveHelperMock = {}
 			, adProviderEvolve;
 
-		adProviderEvolve = AdProviderEvolve(
-			adLogicPageLevelParamsLegacyMock, scriptWriterMock, logMock, windowMock, documentMock, kruxMock, evolveHelperMock
+		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');

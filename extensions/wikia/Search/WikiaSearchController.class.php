@@ -541,6 +541,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 			->setBoostGroup			 ( $this->getVal( 'ab' ) )
 		;
+
+		if ( $this->isCorporateWiki() ) {
+			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+		}
+
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
@@ -597,6 +602,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
 		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
+
+		if ( $this->isCorporateWiki() ) {
+			$resultsLang = $searchConfig->getLanguageCode();
+			if ( $resultsLang != $this->app->wg->ContLang->getCode() ) {
+				$this->setVal( 'resultsLang', $resultsLang );
+			}
+		}
 
 		if( $this->currentPage == $this->pagesCount ) {
 			$this->setVal( 'shownResultsEnd', $this->resultsFound );

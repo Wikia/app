@@ -40,19 +40,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 	}
 
 	function addNewAccount() {
-		// FIXME: an ugly hack to disable captcha checking
-		global $wgCaptchaTriggers;
-
-		$oldValue = $wgCaptchaTriggers;
-
-		$wgCaptchaTriggers['createaccount'] = false;
-
-		$ret = $this->addNewAccountInternal();
-
-		// and bring back the old value
-		$wgCaptchaTriggers = $oldValue;
-
-		return $ret;
+		return UserLoginHelper::callWithCaptchaDisabled(function() {
+			return $this->addNewAccountInternal();
+		});
 	}
 
 	public function initUser( User $user, $autocreate ) {
