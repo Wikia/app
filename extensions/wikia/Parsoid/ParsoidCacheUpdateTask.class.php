@@ -65,6 +65,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	}
 
 	protected function invalidateTitles( $table, $titles ) {
+		return true;
 		global $wgParsoidCacheServers, $wgContentNamespaces;
 
 		$parsoidInfo = array();
@@ -97,6 +98,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 	}
 
 	protected function invalidateTitle( Title $title ) {
+		return true;
 		global $wgParsoidCacheServers, $wgContentNamespaces;
 
 		if ( !in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
