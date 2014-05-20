@@ -1,10 +1,6 @@
 @import "mixins/slideshow-nav";
 
 // only add navigation styles to oasis skin
-.skin-oasis {
-	.wikia-slideshow {
-		.wikia-slideshow-prev-next {
-			@include slideshow-nav;
-		}
-	}
+.skin-oasis .wikia-slideshow-prev-next {
+	@include slideshow-nav;
 }
