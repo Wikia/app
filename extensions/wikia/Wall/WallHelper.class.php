@@ -634,7 +634,7 @@ class WallHelper {
 			$title = Title::newFromText( $row->page_title, NS_USER_WALL );
 
 			$out = array(
-				'articleUrl' => $title->getPrefixedText(),
+				'articleTitle' => $title->getPrefixedText(),
 				'articleFullUrl' => $title->getFullUrl(),
 				'articleTitleVal' => '',
 				'articleTitleTxt' => wfMessage(  'wall-recentchanges-wall-created-title' )->text(),
@@ -650,7 +650,7 @@ class WallHelper {
 			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
 
 			$out = array(
-				'articleUrl' => $title->getPrefixedText(),
+				'articleTitle' => $title->getPrefixedText(),
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
 				'articleTitleTxt' => empty( $articleTitleTxt ) ? wfMessage( 'wall-recentchanges-deleted-reply-title' )->text() : $articleTitleTxt,

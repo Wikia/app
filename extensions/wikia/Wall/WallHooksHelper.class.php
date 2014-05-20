@@ -889,11 +889,11 @@ class WallHooksHelper {
 				}
 
 				$title = $wm->getMetaTitle();
-				$wallUrl = $wm->getArticleTitle()->getPrefixedText();
+				$titleText = $wm->getArticleTitle()->getPrefixedText();
 				$pageText = $wm->getMainPageText();
 				$class = '';
 
-				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> ' . wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', array( $wallUrl, $pageText ) )->parse();
+				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> ' . wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', array( $titleText, $pageText ) )->parse();
 
 				# Bolden pages watched by this user
 				# Check if the user is following the thread or the board
@@ -1562,7 +1562,7 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onContributionsLineEnding(&$contribsPager, &$ret, $row) {
+	static public function onContributionsLineEnding( ContribsPager &$contribsPager, &$ret, $row) {
 
 		if( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject($row->page_namespace), array(NS_USER_WALL) ) ) {
 			return static::contributionsLineEndingProcess( $contribsPager, $ret, $row );
@@ -1570,91 +1570,82 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function contributionsLineEndingProcess( &$contribsPager, &$ret, $row ) {
-
+	static public function contributionsLineEndingProcess( ContribsPager &$contribsPager, &$ret, $row ) {
 		wfProfileIn(__METHOD__);
-
-		$app = F::app();
 
 		$rev = new Revision($row);
 		$page = $rev->getTitle();
 		$page->resetArticleId($row->rev_page);
-		$skin = $app->wg->User->getSkin();
 
 		$wfMsgOptsBase = self::getMessageOptions(null, $row);
 
 		$isThread = $wfMsgOptsBase['isThread'];
 		$isNew = $wfMsgOptsBase['isNew'];
 
-		$wfMsgOptsBase['createdAt'] = Xml::element('a', array('href' => $wfMsgOptsBase['articleFullUrl']), $app->wg->Lang->timeanddate( wfTimestamp(TS_MW, $row->rev_timestamp), true) );
-
-		if( $isNew ) {
-			$wfMsgOptsBase['DiffLink'] = wfMessage( 'diff' )->text();
-		} else {
-			$query = array(
-				'diff' => 'prev',
-				'oldid' => $row->rev_id,
-			);
-
-			$wfMsgOptsBase['DiffLink'] = Xml::element('a', array(
-				'href' => $rev->getTitle()->getLocalUrl($query),
-			), wfMessage( 'diff' )->text() );
-		}
-
-		$wallMessage = new WallMessage($page);
-		$historyLink = $wallMessage->getMessagePageUrl(true).'?action=history';
-		$wfMsgOptsBase['historyLink'] = Xml::element( 'a', array( 'href' => $historyLink ), wfMessage( 'hist' )->text() );
-
 		// Don't show useless link to people who cannot hide revisions
-		$canHide = $app->wg->User->isAllowed('deleterevision');
-		if( $canHide || ($rev->getVisibility() && $app->wg->User->isAllowed('deletedhistory')) ) {
-			if( !$rev->userCan(Revision::DELETED_RESTRICTED) ) {
-				$del = $skin->revDeleteLinkDisabled($canHide); // revision was hidden from sysops
-			} else {
-				$query = array(
-					'type'		=> 'revision',
-					'target'	=> $page->getPrefixedDbkey(),
-					'ids'		=> $rev->getId()
-				);
-				$del = $skin->revDeleteLink($query, $rev->isDeleted(Revision::DELETED_RESTRICTED), $canHide);
-			}
+		$del = Linker::getRevDeleteLink( $contribsPager->getUser(), $rev, $page );
+		if ( $del !== '' ) {
 			$del .= ' ';
 		} else {
 			$del = '';
 		}
 
+		// VOLDEV-40: remove html messages
 		$ret = $del;
-		if(wfRunHooks('WallContributionsLine', array(MWNamespace::getSubject($row->page_namespace), $wallMessage, $wfMsgOptsBase, &$ret) )) {
-			$wfMsgOpts = [
-				$wfMsgOptsBase['articleFullUrl'],
-				$wfMsgOptsBase['articleTitleTxt'],
-				$wfMsgOptsBase['wallTitleTxt'],
-				$wfMsgOptsBase['wallPageName'],
-				$wfMsgOptsBase['createdAt'],
-				$wfMsgOptsBase['DiffLink'],
-				$wfMsgOptsBase['historyLink']
-			];
+		$ret .= Linker::linkKnown(
+			$page,
+			$contribsPager->getLanguage()->userTimeAndDate( $row->rev_timestamp, $contribsPager->getUser() ),
+			[],
+			[ 'oldid' => $row->rev_id ]
+		) . ' (';
 
-			if( $isThread && $isNew ) {
-				$wfMsgOpts[7] = Xml::element( 'strong', array(), wfMessage( 'newpageletter' )->text() . ' ');
-			} else {
-				$wfMsgOpts[7] = '';
-			}
-
-			$ret .= wfMessage( 'wall-contributions-wall-line', $wfMsgOpts )->text();
-
+		if( $isNew ) {
+			$ret .= $contribsPager->msg( 'diff' )->text();
+		} else {
+			$ret .= Linker::linkKnown(
+				$page,
+				$contribsPager->msg( 'diff' )->text(),
+				[],
+				[
+					'diff' => 'prev',
+					'oldid' => $row->rev_id
+				]
+			);
 		}
+
+		$wallMessage = new WallMessage($page);
+		$threadId = $wallMessage->getMessagePageId();
+		$threadTitle = Title::newFromText( $threadId, NS_USER_WALL_MESSAGE );
+		$ret .= ' | '. Linker::linkKnown( $threadTitle, $contribsPager->msg( 'hist' )->text(), [], [ 'action' => 'history' ] ) . ') ';
+
+		$wfMsgOpts = [
+			$wfMsgOptsBase['articleTitle'],
+			$wfMsgOptsBase['articleTitleTxt'],
+			$wfMsgOptsBase['wallTitleTxt'],
+			$wfMsgOptsBase['wallPageName']
+		];
+
+		if( $isThread && $isNew ) {
+			$ret .= ChangesList::flag( 'newpage' ) . ' ';
+		}
+
+		if ( MWNamespace::getSubject( $row->page_namespace ) === NS_WIKIA_FORUM_BOARD && empty( $wfMsgOptsBase['articleTitleVal'] ) ) {
+			$wfMsgOptsBase['articleTitleTxt'] = $contribsPager->msg( 'forum-recentchanges-deleted-reply-title' )->text();
+		}
+
+		$prefix = MWNamespace::getSubject( $row->page_namespace ) === NS_WIKIA_FORUM_BOARD ? 'forum' : 'wall';
+		$ret .= $contribsPager->msg( $prefix . '-contributions-line', $wfMsgOpts )->parse();
 
 		if( !$isNew ) {
 			$summary = $rev->getComment();
 
 			if(empty($summary)) {
-				$msg = wfMessage( static::getMessagePrefix( $row->page_namespace ) . '-edit' )->inContentLanguage()->text();
+				$msg = $contribsPager->msg( $prefix . '-edit' )->inContentLanguage()->text();
 			} else {
-				$msg = wfMessage( 'wall-recentchanges-summary', $summary )->inContentLanguage()->text();
+				$msg = Linker::revComment( $rev, false, true );
 			}
 
-			$ret .= ' ' . Xml::openElement( 'span', array( 'class' => 'comment' ) ) . $msg . Xml::closeElement( 'span' );
+			$ret .= ' ' . $contribsPager->getLanguage()->getDirMark() . $msg;
 		}
 
 		wfProfileOut(__METHOD__);
