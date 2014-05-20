@@ -190,7 +190,7 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-recentchanges-wall-thread' => 'Wall thread',
 	'wall-recentchanges-new-message' => 'on [[$1|$2\'s wall]]',
-	'wall-recentchanges-edit' => '(edited message)',
+	'wall-recentchanges-edit' => 'edited message',
 
 	'wall-recentchanges-removed-thread' => 'removed thread "[[$1|$2]]" from [[$3|$4\'s wall]]',
 	'wall-recentchanges-removed-reply' => 'removed reply from "[[$1|$2]]" from [[$3|$4\'s wall]]',
@@ -631,7 +631,6 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-recentchanges-wall-thread' => 'label for recent changes filter',
 	'wall-recentchanges-new-message' => 'Recent changes item, $2 is wall owner',
 	'wall-recentchanges-edit' => 'Recent changes item, default summary for editing a message',
-	'wall-recentchanges-summary' => 'Recent changes item, summary for editing a message',
 	'wall-recentchanges-removed-thread' => 'Recent changes item. Parameters:
 * $2 is thread title
 * $4 is wall owner
@@ -1021,8 +1020,8 @@ $messages['ar'] = array(
 	'wall-deleted-msg-view' => '(عرض/استرجاع)',
 	'wall-recentchanges-wall-thread' => 'نقاش في الجدار',
 	'wall-recentchanges-new-message' => 'على [[$1|جدار $2]]',
-	'wall-recentchanges-edit' => '(تم تعديل الرسالة)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'تم تعديل الرسالة',
+
 	'wall-recentchanges-removed-thread' => 'قام بحذف النقاش "[[$1|$2]]"  من [[$3|جدار $4]]',
 	'wall-recentchanges-removed-reply' => 'حذف الرد من  "[[$1|$2]]" من [[$3|جدار $4]]',
 	'wall-recentchanges-restored-thread' => 'أعاد النقاش "[[$1|$2]]" إلى [[$3|جدار $4]]',
@@ -1169,18 +1168,11 @@ $messages['az'] = array(
 	'wall-action-rev-confirm-ok' => 'Bəli, sil',
 	'wall-notifications-markasread-all-wikis' => 'Bütün vikilər',
 	'wall-notifications-markasread-this-wiki' => 'Bu viki',
-	'wall-recentchanges-summary' => '($1)',
+
 	'wall-history' => 'Tarix',
 	'wall-history-action-view' => 'görünüş',
 	'mail-notification-html-greeting' => 'Salam $1,',
 	'wall-topic-edit-save' => 'Saxla',
-);
-
-/** South Azerbaijani (تورکجه)
- * @author Erdemaslancan
- */
-$messages['azb'] = array(
-	'wall-recentchanges-summary' => '($1)',
 );
 
 /** Bulgarian (български)
@@ -1351,8 +1343,8 @@ $messages['br'] = array(
 	'wall-deleted-msg-view' => '(Gwelet/Adsevel)',
 	'wall-recentchanges-wall-thread' => 'Neudennad voger',
 	'wall-recentchanges-new-message' => 'war [[$1|moger $2]]',
-	'wall-recentchanges-edit' => '(kemennadenn aozet)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'kemennadenn aozet',
+
 	'wall-recentchanges-removed-thread' => 'en deus dilamet an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
 	'wall-recentchanges-removed-reply' => 'en deus dilamet ur respont da "[[$1|$2]]" eus [[$3|moger $4]]',
 	'wall-recentchanges-deleted-thread' => 'en deus diverket an neudennad "[[$1|$2]]" eus [[$3|moger $4]]',
@@ -1595,8 +1587,8 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-deleted-msg-view' => '(Veure/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Tema del mur',
 	'wall-recentchanges-new-message' => 'al [[$1|mur de $2]]',
-	'wall-recentchanges-edit' => '(missatge editat)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'missatge editat',
+
 	'wall-recentchanges-removed-thread' => 'retirat el tema "[[$1|$2]]" del mur de [[$3|$4]]',
 	'wall-recentchanges-removed-reply' => 'retirada la resposta "[[$1|$2]]" del mur de [[$3|$4]]',
 	'wall-recentchanges-restored-thread' => 'restaurat el tema "[[$1|$2]]" en el mur de [[$3|$4]]',
@@ -1901,8 +1893,8 @@ Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii
 	'wall-deleted-msg-view' => '(Zobrazit/obnovení)',
 	'wall-recentchanges-wall-thread' => 'Vlákno zdi',
 	'wall-recentchanges-new-message' => 'na [[$1|zdi {{GENDER:$2|uživatele|uživatelky|uživatele}} $2]]',
-	'wall-recentchanges-edit' => '(upravená zpráva)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'upravená zpráva',
+
 	'wall-recentchanges-removed-thread' => 'odstranil vlákno "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
 	'wall-recentchanges-removed-reply' => 'odstranil odpověď z vlákna "[[$1|$2]]" ze [[$3|zdi uživatele $4]]',
 	'wall-recentchanges-restored-thread' => 'obnovil vlákno "[[$1|$2]]" na [[$3|zdi uživatele $4]]',
@@ -2220,8 +2212,8 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-deleted-msg-view' => '(Einsehen/Wiederherstellen)',
 	'wall-recentchanges-wall-thread' => 'Nachrichtenthread',
 	'wall-recentchanges-new-message' => 'auf [[$1|$2s Nachrichtenseite]]',
-	'wall-recentchanges-edit' => '(Nachricht bearbeitet)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'Nachricht bearbeitet',
+
 	'wall-recentchanges-removed-thread' => 'hat die Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite entfernt.',
 	'wall-recentchanges-removed-reply' => 'Antwort zu "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite entfernt',
 	'wall-recentchanges-restored-thread' => 'Diskussion "[[$1|$2]]" auf [[$3|$4]]s Nachrichtenseite wiederhergestellt',
@@ -2405,7 +2397,7 @@ $messages['diq'] = array(
 	'wall-notifications-markasread-this-wiki' => 'E na wiki',
 	'wall-sorting-archived' => 'Arşivya',
 	'wall-recentchanges-new-message' => '[[$1|dêsê $2\'i deyo]]',
-	'wall-recentchanges-summary' => '($1)',
+
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mesacê Dêsi',
 	'wall-recentchanges-thread-group' => '$1\'i dês dê<a href="$2"> ra kewt dês dê $3\'i</a>',
 	'wall-recentchanges-history-link' => 'tarixê dêsi',
@@ -2670,8 +2662,8 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Tema del muro',
 	'wall-recentchanges-new-message' => 'en el [[$1|muro de $2]]',
-	'wall-recentchanges-edit' => '(mensaje editado)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'mensaje editado',
+
 	'wall-recentchanges-removed-thread' => 'retirado el tema "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-removed-reply' => 'retirada la respuesta "[[$1|$2]]" del muro de [[$3|$4]]',
 	'wall-recentchanges-restored-thread' => 'restaurado el tema "[[$1|$2]]" en el muro de [[$3|$4]]',
@@ -3033,8 +3025,8 @@ Tätä ei voi peruuttaa.',
 	'wall-deleted-msg-view' => '(Näytä/Palauta)',
 	'wall-recentchanges-wall-thread' => 'Viestiseinät',
 	'wall-recentchanges-new-message' => '[[$1|$2:n seinällä]]',
-	'wall-recentchanges-edit' => '(muokattu viesti)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'muokattu viesti',
+
 	'wall-recentchanges-removed-thread' => 'poisti keskustelun "[[$1|$2]]" [[$3|$4:n seinältä]]',
 	'wall-recentchanges-removed-reply' => 'vastaus "[[$1|$2]]" siirettiin pois [[$3|$4:n seinältä]]',
 	'wall-recentchanges-restored-thread' => 'palautettiin keskustelu "[[$1|$2]]" [[$3|$4 seinälle]]',
@@ -3359,8 +3351,8 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-deleted-msg-view' => '(Visualiser/Restaurer)',
 	'wall-recentchanges-wall-thread' => 'Fil de mur',
 	'wall-recentchanges-new-message' => 'sur le [[$1|mur de $2]]',
-	'wall-recentchanges-edit' => '(message modifié)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'message modifié',
+
 	'wall-recentchanges-removed-thread' => 'a retiré le fil « [[$1|$2]] » du [[$3|mur de $4]]',
 	'wall-recentchanges-removed-reply' => 'a retiré une réponse à « [[$1|$2]] » sur le [[$3|mur de $4]]',
 	'wall-recentchanges-restored-thread' => 'a restauré le fil « [[$1|$2]] » sur le [[$3|mur de $4]]',
@@ -3668,8 +3660,8 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-deleted-msg-view' => '(Ollar/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Fío do muro',
 	'wall-recentchanges-new-message' => 'no [[$1|muro de $2]]',
-	'wall-recentchanges-edit' => '(mensaxe editada)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'mensaxe editada',
+
 	'wall-recentchanges-removed-thread' => 'eliminou o fío "[[$1|$2]]" do [[$3|muro de $4]]',
 	'wall-recentchanges-removed-reply' => 'eliminou a resposta "[[$1|$2]]" do [[$3|muro de $4]]',
 	'wall-recentchanges-restored-thread' => 'restaurou o fío "[[$1|$2]]" no [[$3|muro de $4]]',
@@ -3983,8 +3975,8 @@ Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
 	'wall-deleted-msg-view' => '(Megtekintés/Visszaállítás)',
 	'wall-recentchanges-wall-thread' => 'Üzenőfali beszélgetésfolyamok',
 	'wall-recentchanges-new-message' => '[[$1|$2 üzenőfalán]]',
-	'wall-recentchanges-edit' => '(üzenet szerkesztése)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'üzenet szerkesztése',
+
 	'wall-recentchanges-removed-thread' => 'eltávolította a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfaláról]]',
 	'wall-recentchanges-removed-reply' => 'eltávolított egy választ a(z) "[[$1|$2]]" beszélgetésfolyamból [[$3|$4 üzenőfalán]]',
 	'wall-recentchanges-restored-thread' => 'visszaállította a(z) "[[$1|$2]]" beszélgetésfolyamot [[$3|$4 üzenőfalára]]',
@@ -4248,7 +4240,7 @@ Le message original e tu summario apparera totevia in le historia del wiki.',
 	'wall-deleted-msg-return-to' => 'Retornar al muro de $1.',
 	'wall-deleted-msg-view' => '(Vider/Restaurar)',
 	'wall-recentchanges-new-message' => 'sur le [[$1|muro de $2]]',
-	'wall-recentchanges-edit' => '(message modificate)',
+	'wall-recentchanges-edit' => 'message modificate',
 	'wall-recentchanges-removed-thread' => 'removeva le discussion "[[$1|$2]]" del [[$3|muro de $4]]',
 	'wall-recentchanges-removed-reply' => 'removeva un responsa de "[[$1|$2]]" del [[$3|muro de $4]]',
 	'wall-recentchanges-restored-thread' => 'restaurava le discussion "[[$1|$2]]" sur le [[$3|muro de $4]]',
@@ -4556,8 +4548,8 @@ $messages['ja'] = array(
 	'wall-deleted-msg-view' => '(閲覧/復帰)',
 	'wall-recentchanges-wall-thread' => 'メッセージウォールのスレッド',
 	'wall-recentchanges-new-message' => '-- [[$1|$2 のウォール]]',
-	'wall-recentchanges-edit' => '(メッセージを編集)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'メッセージを編集',
+
 	'wall-recentchanges-removed-thread' => 'が [[$3|$4 のウォール]]からスレッド「[[$1|$2]]」を除去しました',
 	'wall-recentchanges-removed-reply' => 'が [[$3|$4 のウォール]]のスレッド「[[$1|$2]]」から返信を除去しました',
 	'wall-recentchanges-restored-thread' => 'が [[$3|$4 のウォール]]にスレッド「[[$1|$2]]」を復帰しました',
@@ -4714,7 +4706,7 @@ $messages['ka'] = array(
  * @author Erdemaslancan
  */
 $messages['kbd'] = array(
-	'wall-recentchanges-summary' => '($1)',
+
 );
 
 /** Korean (한국어)
@@ -5018,8 +5010,8 @@ $messages['mk'] = array(
 	'wall-deleted-msg-view' => '(Погл./Врати)',
 	'wall-recentchanges-wall-thread' => 'Нишка на ѕидот',
 	'wall-recentchanges-new-message' => 'на [[$1|ѕидот на $2]]',
-	'wall-recentchanges-edit' => '(изменета порака)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'изменета порака',
+
 	'wall-recentchanges-removed-thread' => 'ја отстрани нишката „[[$1|$2]]“ од [[$3|ѕидот на $4]]',
 	'wall-recentchanges-removed-reply' => 'отстрани одговор од „[[$1|$2]]“ на [[$3|ѕидот на $4]]',
 	'wall-recentchanges-restored-thread' => 'ја врати нишката „[[$1|$2]]“ на [[$3|ѕидот на $4]]',
@@ -5329,8 +5321,8 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-deleted-msg-view' => '(Lihat/Pulihkan)',
 	'wall-recentchanges-wall-thread' => 'Tred papan',
 	'wall-recentchanges-new-message' => 'di [[$1|papan $2]]',
-	'wall-recentchanges-edit' => '(pesanan tersunting)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'pesanan tersunting',
+
 	'wall-recentchanges-removed-thread' => 'membuang tred "[[$1|$2]]" dari [[$3|papan $4]]',
 	'wall-recentchanges-removed-reply' => 'membuang balasan "[[$1|$2]]" dari [[$3|papan $4]]',
 	'wall-recentchanges-restored-thread' => 'memulihkan tred "[[$1|$2]]" pada [[$3|papan $4]]',
@@ -5644,8 +5636,8 @@ Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-deleted-msg-return-to' => 'Tilbake til $1 sin beskjedtavle',
 	'wall-deleted-msg-view' => '(Vis/Gjenopprett)',
 	'wall-recentchanges-new-message' => 'på [[$1|$2 sin beskjedtavle]]',
-	'wall-recentchanges-edit' => '(redigert beskjed)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'redigert beskjed',
+
 	'wall-recentchanges-removed-thread' => 'fjernet tråden «[[$1|$2]]» fra [[$3|$4 sin beskjedtavle]]',
 	'wall-recentchanges-removed-reply' => 'fjernet svaret fra «[[$1|$2]]» fra [[$3|$4 sin beskjedtavle]]',
 	'wall-recentchanges-restored-thread' => 'gjenopprettet tråden «[[$1|$2]]» på [[$3|$4 sin beskjedtavle]]',
@@ -5941,8 +5933,8 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-deleted-msg-view' => '(Bekijken/terugplaatsen)',
 	'wall-recentchanges-wall-thread' => 'Prikboarddraad',
 	'wall-recentchanges-new-message' => 'op het [[$1|prikbord van $2]]',
-	'wall-recentchanges-edit' => '(bericht bewerkt)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'bericht bewerkt',
+
 	'wall-recentchanges-removed-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-removed-reply' => 'heeft een antwoord uit de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-restored-thread' => 'heeft de draad "[[$1|$2]]" op het [[$3|prikbord van $4]] teruggeplaatst',
@@ -6077,7 +6069,7 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
  * @author Erdemaslancan
  */
 $messages['nn'] = array(
-	'wall-recentchanges-summary' => '($1)',
+
 );
 
 /** Occitan (occitan)
@@ -6118,7 +6110,7 @@ $messages['oc'] = array(
 	'wall-notifications-all' => 'Totas las notificacions',
 	'wall-notifications-markasread-all-wikis' => 'Totes los wikis',
 	'wall-notifications-markasread-this-wiki' => 'Aqueste wiki',
-	'wall-recentchanges-summary' => '($1)',
+
 	'wall-history' => 'Istoric',
 	'wall-history-title' => 'Istoric del mur',
 	'wall-history-thread-created' => '$1 creat per $2',
@@ -6326,8 +6318,8 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-deleted-msg-view' => '(pokaż/przywróć)',
 	'wall-recentchanges-wall-thread' => 'Wątek na tablicy',
 	'wall-recentchanges-new-message' => 'na [[$1|tablicy użytkownika $2]]',
-	'wall-recentchanges-edit' => '(edytowano wiadomość)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'edytowano wiadomość',
+
 	'wall-recentchanges-removed-thread' => 'usunął/usunęła wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-removed-reply' => 'usunął/usunęła odpowiedź w "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'wall-recentchanges-restored-thread' => 'przywrócił(a) wątek "[[$1|$2]]" na [[$3|tablicy użytkownika $4]]',
@@ -6699,8 +6691,8 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
 	'wall-recentchanges-wall-thread' => 'Tópico do Mural',
 	'wall-recentchanges-new-message' => 'no [[$1|mural de $2]]',
-	'wall-recentchanges-edit' => '(mensagem editada)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'mensagem editada',
+
 	'wall-recentchanges-removed-thread' => 'removeu o tópico "[[$1|$2]]" do [[$3|mural de $4]]',
 	'wall-recentchanges-removed-reply' => 'removeu a resposta de "[[$1|$2]]" do [[$3|mural de $4]]',
 	'wall-recentchanges-restored-thread' => 'restaurou o tópico "[[$1|$2]]" no [[$3|mural de $4]]',
@@ -6924,7 +6916,7 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-notifications-wall-disabled' => 'O Mural de Mensagens foi desativado nesta wiki. Impossível carregar notificações.',
 	'wall-sorting-archived' => 'Arquivado',
 	'wall-deleted-msg-view' => '(Ver/Restaurar)',
-	'wall-recentchanges-edit' => '(mensagem editada)',
+	'wall-recentchanges-edit' => 'mensagem editada',
 	'wall-recentchanges-deleted-reply-title' => 'Uma resposta no mural de mensagens',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mural de Mensagens',
 	'wall-wiki-activity-on' => 'no $1',
@@ -7209,8 +7201,8 @@ $messages['ru'] = array(
 	'wall-deleted-msg-view' => '(Просмотреть/Восстановить)',
 	'wall-recentchanges-wall-thread' => 'Стена темы',
 	'wall-recentchanges-new-message' => 'на [[$1|стене $2]]',
-	'wall-recentchanges-edit' => '(сообщение исправлено)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'сообщение исправлено',
+
 	'wall-recentchanges-removed-thread' => 'удалена тема "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-removed-reply' => 'удалён ответ в теме "[[$1|$2]]" на [[$3|стене $4]]',
 	'wall-recentchanges-restored-thread' => 'восстановлена тема "[[$1|$2]]" на [[$3|стене $4]]',
@@ -7516,7 +7508,7 @@ The oreeginal post n yer owerveiw will still kyth in the wiki's histerie.",
 	'wall-deleted-msg-view' => '(See/Restore)',
 	'wall-recentchanges-wall-thread' => 'Waw threed',
 	'wall-recentchanges-new-message' => 'oan [[$1|$2\'s waw]]',
-	'wall-recentchanges-edit' => '(eidited message)',
+	'wall-recentchanges-edit' => 'eidited message',
 	'wall-recentchanges-removed-thread' => 'remuived threed "[[$1|$2]]" fae [[$3|$4\'s waw]]',
 	'wall-recentchanges-removed-reply' => 'remuived replie fae "[[$1|$2]]" fae [[$3|$4\'s waw]]',
 	'wall-recentchanges-restored-thread' => 'restored threed "[[$1|$2]]" til [[$3|$4\'s waw]]',
@@ -7804,8 +7796,8 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-deleted-msg-view' => '(Visa/återställ)',
 	'wall-recentchanges-wall-thread' => 'Väggtråd',
 	'wall-recentchanges-new-message' => 'på [[$1|$2s vägg]]',
-	'wall-recentchanges-edit' => '(redigerat meddelande)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'redigerat meddelande',
+
 	'wall-recentchanges-removed-thread' => 'tog bort tråden "[[$1|$2]]" från [[$3|$4s vägg]]',
 	'wall-recentchanges-removed-reply' => 'tog bort svar från "[[$1|$2]]" från [[$3|$4s vägg]]',
 	'wall-recentchanges-restored-thread' => 'återställde tråden "[[$1|$2]]" på [[$3|$4s vägg]]',
@@ -8129,7 +8121,7 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-deleted-msg-return-to' => 'Bumalik sa dingding ni $1.',
 	'wall-deleted-msg-view' => '(Tingnan/Papanumbalikin)',
 	'wall-recentchanges-new-message' => 'sa ibabaw ng [[$1|dingding ni $2]]',
-	'wall-recentchanges-edit' => '(binagong mensahe)',
+	'wall-recentchanges-edit' => 'binagong mensahe',
 	'wall-recentchanges-removed-thread' => 'tinanggal ang sinulid na "[[$1|$2]]" mula sa [[$3|dingding ni $4]]',
 	'wall-recentchanges-removed-reply' => 'tinanggal ang tugon mula sa "[[$1|$2]]" magmula sa [[$3|dingding ni $4]]',
 	'wall-recentchanges-restored-thread' => 'ipinanumbalik ang sinulid na "[[$1|$2]]" papunta sa [[$3|dingding ni $4]]',
@@ -8275,7 +8267,7 @@ $messages['tly'] = array(
 	'wall-no-title' => 'Бе ном',
 	'wall-button-to-cancel-preview' => 'Сәрост кардеј',
 	'wall-delete-error-title' => 'Сәһв',
-	'wall-recentchanges-summary' => '($1)',
+
 	'wall-history-rail-block' => 'бә гырд гәтеј',
 	'wall-history-action-view' => 'тәмшо кардеј',
 );
@@ -8340,7 +8332,7 @@ $messages['tr'] = array(
 	'wall-notifications-markasread-this-wiki' => 'Bu wiki',
 	'wall-notifications-empty' => 'Herhangi bir bildiriminiz yok',
 	'wall-notifications-loading' => 'Yükleme bildirimleri',
-	'wall-recentchanges-summary' => '($1)',
+
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -8560,8 +8552,8 @@ $messages['uk'] = array(
 	'wall-deleted-msg-view' => '(Подивитися/Відновити)',
 	'wall-recentchanges-wall-thread' => 'Стіна гілки',
 	'wall-recentchanges-new-message' => 'на [[$1|Стіні $2]]',
-	'wall-recentchanges-edit' => '(Повідомлення було відредаговано)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'Повідомлення було відредаговано',
+
 	'wall-recentchanges-removed-thread' => 'видалене обговорення "[[$1|$2]]" зі [[$3|стіни $4]]',
 	'wall-recentchanges-removed-reply' => 'відповідь з обговорення "[[$1|$2]]" на [[$3|стіні $4]] видалена.',
 	'wall-recentchanges-restored-thread' => 'Обговорення "[[$1|$2]]" зі [[$3|стіни $4]] відновлено',
@@ -8859,8 +8851,8 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-deleted-msg-view' => '(Xem/Khôi phục)',
 	'wall-recentchanges-wall-thread' => 'Luồng trên tường',
 	'wall-recentchanges-new-message' => 'trên [[$1|tường của $2]]',
-	'wall-recentchanges-edit' => '(sửa đổi tin nhắn)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => 'sửa đổi tin nhắn',
+
 	'wall-recentchanges-removed-thread' => 'dời bỏ luồng "[[$1|$2]]" từ [[$3|tường của $4]]',
 	'wall-recentchanges-removed-reply' => 'dời bỏ trả lời từ "[[$1|$2]]" từ [[$3|tường của $4]]',
 	'wall-recentchanges-restored-thread' => 'khôi phục luồng "[[$1|$2]]" từ [[$3|tường của $4]]',
@@ -9073,7 +9065,7 @@ Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istw
 	'wall-deleted-msg-return-to' => 'Rivni å meur da $1.',
 	'wall-deleted-msg-view' => '(Vey/Rapexhî)',
 	'wall-recentchanges-new-message' => 'sol [[$1|meur da $2]]',
-	'wall-recentchanges-edit' => '(messaedje candjî)',
+	'wall-recentchanges-edit' => 'messaedje candjî',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Meur di messaedjes',
 	'wall-recentchanges-thread-group' => '«$1» sol <a href="$2">meur da $3</a>',
 	'wall-recentchanges-history-link' => 'istwere do meur',
@@ -9187,7 +9179,7 @@ $messages['zh-hans'] = array(
 	'wall-deleted-msg-pagetitle' => '信息已删除',
 	'wall-deleted-msg-return-to' => '返回$1的留言墙',
 	'wall-recentchanges-new-message' => '在[[$1|$2的信息墙上]]',
-	'wall-recentchanges-summary' => '($1)',
+
 	'wall-recentchanges-namespace-selector-message-wall' => '留言墙',
 	'wall-message-staff-text' => '该用户是Wikia工作人员',
 	'wall-wiki-activity-on' => '在$1上',
@@ -9371,8 +9363,8 @@ $messages['zh-hant'] = array(
 	'wall-deleted-msg-view' => '（查看/還原）',
 	'wall-recentchanges-wall-thread' => '牆上的討論串',
 	'wall-recentchanges-new-message' => '在[[$1|$2的訊息牆上]]',
-	'wall-recentchanges-edit' => '(編輯訊息)',
-	'wall-recentchanges-summary' => '($1)',
+	'wall-recentchanges-edit' => '編輯訊息',
+
 	'wall-recentchanges-removed-thread' => '從[[$3|$4的訊息牆 wall]]移除討論串 "[[$1|$2]]"',
 	'wall-recentchanges-removed-reply' => '從[[$3|$4的訊息牆]]的"[[$1|$2]]"討論串移除回覆',
 	'wall-recentchanges-restored-thread' => '將討論串"[[$1|$2]]" 恢復到[[$3|$4\'的訊息牆]]',

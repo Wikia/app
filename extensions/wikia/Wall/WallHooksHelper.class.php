@@ -1039,12 +1039,10 @@ class WallHooksHelper {
 				$summary = $rc->mAttribs['rc_comment'];
 
 				if(empty($summary)) {
-					$msg = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-edit' )->inContentLanguage()->text();
-				} else {
-					$msg = wfMessage( 'wall-recentchanges-summary', $summary )->inContentLanguage()->text();
+					$summary = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-edit' )->inContentLanguage()->text();
 				}
 
-				$comment .= Xml::element( 'span', array('class' => 'comment'), $msg );
+				$comment .= Linker::commentBlock( $summary, $rc->getTitle() );
 			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 				//this will be deletion/removal/restore summary
 				$text = $rc->getAttribute('rc_comment');
