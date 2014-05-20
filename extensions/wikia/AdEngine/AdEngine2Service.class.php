@@ -5,6 +5,7 @@ class AdEngine2Service
 
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
