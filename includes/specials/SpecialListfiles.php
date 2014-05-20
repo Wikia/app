@@ -218,10 +218,16 @@ class ImageListPager extends TablePager {
 					// @author Cqm
 					// VOLDEV-65
 					if ( $wgUser->isAllowed( 'delete' ) ) {
+						// convert message to lower case to match exisiting file link
+						// do it like this so it works for non-english characters, such as accents, etc.
+						$deleteMsg = wfMessage( 'delete' )->escaped();
+						$deleteMsg = mb_strtolower( $deleteMsg, mb_detect_encoding( $deleteMsg ) );
+
 						$delete = Xml::element( 'a',
-							array( 'href', $filePage . '?action=delete' ),
-							wfMessage( 'delete' )->escaped()
+							array( 'href' => $filePage->getLocalUrl() . '?action=delete' ),
+							$deleteMsg
 						);
+
 						return "$link ($download) ($delete)";
 					}
 					// end wikia change
