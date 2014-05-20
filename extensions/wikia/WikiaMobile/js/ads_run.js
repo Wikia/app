@@ -13,7 +13,7 @@ require(
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
 			doc = window.document,
-			logGroup = 'ad_slots',
+			logGroup = 'ads_run',
 			logLevel = log.levels.info,
 			$firstSection = $( 'h2[id]' ).first(),
 			$footer = $( '#wkMainCntFtr' ),

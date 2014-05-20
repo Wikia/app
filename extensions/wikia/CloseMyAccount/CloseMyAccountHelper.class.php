@@ -159,7 +159,7 @@ class CloseMyAccountHelper {
 			'ga_action' => 'submit',
 			'ga_category' => 'closemyaccount',
 			'ga_label' => $action,
-			'beacon' => $wgDevelEnvironment ? 'ThisIsFake' : wfGetBeaconId(),
+			'beacon' => !empty( $wgDevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
 		] );
 
 		$wgUser = $oldUser;

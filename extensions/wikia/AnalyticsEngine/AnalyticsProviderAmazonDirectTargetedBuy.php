@@ -24,9 +24,10 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 SCRIPT;
 
 	public static function isEnabled() {
-		global $wgEnableAmazonDirectTargetedBuy, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAmazonDirectTargetedBuy, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
 		return $wgEnableAmazonDirectTargetedBuy
+			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;

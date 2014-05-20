@@ -43,14 +43,13 @@ class WikiaMobileService extends WikiaService {
 		$mobileAdService = new WikiaMobileAdService();
 
 		if ( $mobileAdService->shouldLoadAssets() ) {
-			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
-			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
-			if ($this->wg->AdDriverTrackState) {
+			if ( $this->wg->AdDriverTrackState ) {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
+			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
 				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 

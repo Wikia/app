@@ -37,11 +37,12 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgEnableUserLoginExt, $wgExternalAuthType, $wgTitle;
+		global $wgEnableUserLoginExt, $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
 		$user = $this->getUser();
+		$output = $this->getOutput();
 
 		# If the user isn't permitted to access this special page, display an error
 		if ( !$user->isAllowed( 'editaccount' ) ) {
@@ -50,7 +51,7 @@ class EditAccount extends SpecialPage {
 
 		# Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$output->readOnlyPage();
 			return;
 		}
 
@@ -58,6 +59,9 @@ class EditAccount extends SpecialPage {
 		if ( $user->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
+
+		$output->addModuleStyles( 'ext.editAccount' );
+
 		$request = $this->getRequest();
 
 		$action = $request->getVal( 'wpAction' );
@@ -114,7 +118,7 @@ class EditAccount extends SpecialPage {
 			&& ( !$request->wasPosted()
 				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
 		) {
-			$this->getOutput()->addHTML(
+			$output->addHTML(
 				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
 			);
 			return;
@@ -167,7 +171,7 @@ class EditAccount extends SpecialPage {
 				$template = 'selectuser';
 		}
 
-		$wgOut->setPageTitle( wfMsg( 'editaccount-title' ) );
+		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$oTmpl->set_Vars( array(
@@ -221,7 +225,7 @@ class EditAccount extends SpecialPage {
 		}
 
 		// HTML output
-		$wgOut->addHTML( $oTmpl->render( $template ) );
+		$output->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**
@@ -318,7 +322,7 @@ class EditAccount extends SpecialPage {
 			}
 			$this->mStatusMsg = wfMsgExt( $message, array( 'parsemag' ), $params );
 			return false;
-	 }
+		}
 	}
 
 	/**
