@@ -1,41 +1,30 @@
-require(['wikia.querystring', 'jquery', 'wikia.window', 'wikia.mustache'], function (qs, $, w, mustache) {
+require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	'use strict';
 
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
-		orderingOptions = doc.getElementById('orderMapList'),
 
-		templates = {},
-		templatesData = {
-			mapType: {
-				types: [
-					{
-						title: $.msg('wikia-interactive-maps-create-map-choose-type-geo'),
-						type: 'geo'
-					},
-					{
-						title: $.msg('wikia-interactive-maps-create-map-choose-type-custom'),
-						type: 'custom'
-
-					}
-				]
-			}
-		};
+		// create map modal assets
+		cacheKey = 'wikia_interactive_maps_create_map',
+		source = {
+			messages: ['WikiaInteractiveMapsCreateMap'],
+			scripts: ['intMap_createMap_js'],
+			styles: ['extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMapsCreateMap.scss'],
+			mustache: ['extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache']
+		}
 
 	// attach handlers
-	orderingOptions.addEventListener('change', function(event) {
-		sortMapList(event.target.value);
-	});
+	body.addEventListener('change', function(event) {
+		var target = event.target;
 
-	body.addEventListener('click', function(event) {
-		if (event.target.id === 'createMap') {
-			createMap();
+		if (target.id === 'orderMapList') {
+			sortMapList(target.value);
 		}
 	});
 
 	body.addEventListener('click', function(event) {
-		if (event.target.id === 'intMap-custom') {
-			changeStep()
+		if (event.target.id === 'createMap') {
+			loadModal(convertSource(source), cacheKey);
 		}
 	});
 
@@ -49,83 +38,78 @@ require(['wikia.querystring', 'jquery', 'wikia.window', 'wikia.mustache'], funct
 		qs().setVal('sort', sortType, false).goTo();
 	}
 
+	/**
+	 * @desc loads all assets for create map modal and initialize it
+	 * @param {object} source - object with paths to different assets
+	 * @param {string} cacheKey - local storage key
+	 */
 
-	function createMap() {
-		require(['wikia.ui.factory'], function (uiFactory) {
-			$.when(
-				uiFactory.init(['modal']),
-				loadTemplates()
-			).done(function (uiModal, templates) {
-				var modalConfig = {
-						vars: {
-							id: 'intMapCreate',
-							size: 'medium',
-							content: mustache.render(templates[0], templatesData.mapType),
-							title: $.msg('wikia-interactive-maps-create-map')
-						}
-					};
+	function loadModal(source, cacheKey) {
+		getAssets(source, cacheKey).then(function(assets) {
+			addAssetsToDOM(assets);
 
-				uiModal.createComponent(modalConfig, function (mapModal) {
-					mapModal.show();
-				});
+			require(['wikia.intMaps.createMapUI'], function(createMapUI) {
+				createMapUI.init(assets.mustache);
 			});
 		});
 	}
 
 	/**
-	 * @desc load templates for create maps modal
+	 * @desc gets assets
+	 * @param {object} source - object with paths to different assets
+	 * @param {string} cacheKey - local storage key
+	 * @returns {object} - promise
 	 */
-	function loadTemplates() {
-		var dfd = new $.Deferred();
 
-		require(['wikia.loader', 'wikia.cache'], function (loader, cache) {
-			// TODO: add caching for templates
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap_chooseType.mustache,' +
-						'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap_chooseTileSetType.mustache'
-				}
-			}).done(function (data) {
-				dfd.resolve(data.mustache);
-			});
+	function getAssets(source, cacheKey) {
+		var dfd = new $.Deferred(),
+			assets;
+
+		require(['wikia.cache'], function(cache) {
+			assets = cache.getVersioned(cacheKey);
+
+			if (assets) {
+				dfd.resolve(assets);
+			} else {
+				require(['wikia.loader'], function(loader) {
+					loader({
+						type: loader.MULTI,
+						resources: source
+					}).done(function(assets) {
+						dfd.resolve(assets)
+					});
+				});
+			}
 		});
 
-		return dfd;
+		return dfd.promise();
 	}
 
-	function chooseTileSetType(modal) {
-		modal.setContent()
+	/**
+	 * @desc adds scripts and styles to DOM
+	 * @param {object} assets - object with assets
+	 */
+
+	function addAssetsToDOM(assets) {
+		require(['wikia.loader'], function(loader) {
+			loader.processScript(assets.scripts);
+			loader.processStyle(assets.styles);
+		});
 	}
 
-	function renderTileSetStep(template) {
-		return mustache.render(template, {});
+	/**
+	 * @desc converts paths to assets in arrays to comma separated strings
+	 * @param {object} source - object with arrays of paths to different type assets
+	 * @returns {object} - object with arrays converted to comma separated strings
+	 */
+
+	function convertSource(source) {
+		var convertedSource = {};
+
+		Object.keys(source).forEach(function(type) {
+			convertedSource[type] = source[type].join();
+		});
+
+		return convertedSource;
 	}
 });
-
-//buttons: [
-//								{
-//									vars: {
-//										value: $.msg('wikia-interactive-maps-create-map-next-btn'),
-//										classes: ['normal', 'primary'],
-//										data: [
-//											{
-//												key: 'event',
-//												value: 'next'
-//											}
-//										]
-//									}
-//								},
-//								{
-//									vars: {
-//										value: $.msg('wikia-interactive-maps-create-map-back-btn'),
-//										data: [
-//											{
-//												key: 'event',
-//												value: 'back'
-//											}
-//										]
-//									}
-//								}
-//							]
-

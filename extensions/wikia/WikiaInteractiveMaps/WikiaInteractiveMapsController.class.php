@@ -95,8 +95,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 		$this->setVal( 'pagination', $pagination );
 
-		F::build('JSMessages')->enqueuePackage('WikiaInteractiveMaps', JSMessages::EXTERNAL);
-
 		$this->response->addAsset( 'extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMaps.scss' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}

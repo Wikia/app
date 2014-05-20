@@ -1734,3 +1734,11 @@ $config['lazy_rail_js'] = [
 		'//skins/oasis/js/LatestPhotos.js',
 	]
 ];
+
+$config['intMap_createMap_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMap.js'
+	]
+];
