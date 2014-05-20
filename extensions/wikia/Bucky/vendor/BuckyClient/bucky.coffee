@@ -395,7 +395,7 @@ exportDef = ->
           md5: /\/[0-9a-f]{32}/ig
           id: /\/[0-9;_\-]+/g
           email: /\/[^/]+@[^/]+/g
-          domain: [/\/[^/]+\.[a-z]{2,3}\//ig, '/']
+          domain: [new RegExp("\/[^/]+\.[a-z]{2,3}\/","ig"), '/']
 
         enabled: ['guid', 'sha1', 'md5', 'id', 'email', 'domain']
 
