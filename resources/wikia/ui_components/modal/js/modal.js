@@ -178,8 +178,14 @@ define( 'wikia.ui.modal', [
 		/** ATTACHING EVENT HANDLERS TO MODAL */
 
 		// trigger custom buttons events based on button 'data-event' attribute
-		this.$element.on( 'click', 'button', $.proxy( function( event ) {
-			var modalEventName = $( event.target ).data( 'event' );
+		this.$element.on( 'click', 'button, a.modalEvent', $.proxy( function( event ) {
+			var $target = $( event.target),
+				modalEventName = $target.data( 'event' );
+
+			if ($target.is('a')) {
+				event.preventDefault();
+			}
+
 			if ( modalEventName ) {
 				this.trigger( modalEventName, event );
 			}
