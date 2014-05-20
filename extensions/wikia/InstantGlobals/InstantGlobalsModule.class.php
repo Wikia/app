@@ -16,7 +16,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	private function getVariablesValues() {
 		global $wgInstantGlobalsOverride;
 
-		if (!empty($wgInstantGlobalsOverride) && is_array($wgInstantGlobalsOverride)) {
+		if ( !empty( $wgInstantGlobalsOverride ) && is_array( $wgInstantGlobalsOverride ) ) {
 			$override = $wgInstantGlobalsOverride;
 		} else {
 			$override = [];
@@ -26,18 +26,18 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 
 		$variables = [];
 
-		wfRunHooks('InstantGlobalsGetVariables', [&$variables]);
+		wfRunHooks( 'InstantGlobalsGetVariables', [&$variables] );
 
-		foreach($variables as $name) {
+		foreach ( $variables as $name ) {
 			// Use the value on community but override with the $wgInstantGlobalsOverride
-			if (array_key_exists($override, $name)) {
+			if ( array_key_exists( $name, $override ) ) {
 				$value = $override[$name];
 			} else {
-				$value = WikiFactory::getVarValueByName($name, Wikia::COMMUNITY_WIKI_ID);
+				$value = WikiFactory::getVarValueByName( $name, Wikia::COMMUNITY_WIKI_ID );
 			}
 
 			// don't emit "falsy" values
-			if (!empty($value)) {
+			if ( !empty( $value ) ) {
 				$ret[$name] = $value;
 			}
 		}
@@ -45,10 +45,10 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 		return (object) $ret;
 	}
 
-	public function getScript(ResourceLoaderContext $context) {
+	public function getScript( ResourceLoaderContext $context ) {
 		$variables = $this->getVariablesValues();
 
-		return sprintf('Wikia.InstantGlobals = %s', json_encode($variables));
+		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
 	}
 
 	/**
