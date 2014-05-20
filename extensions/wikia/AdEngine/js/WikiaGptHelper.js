@@ -6,8 +6,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.gptSlotConfig',
-	'ext.wikia.adEngine.wikiaGptHop'
-], function (log, window, document, adLogicPageParams, gptSlotConfig, gptHop) {
+	'ext.wikia.adEngine.wikiaGptAdDetect'
+], function (log, window, document, adLogicPageParams, gptSlotConfig, gptAdDetect) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
@@ -231,7 +231,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 					var iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
 
-					gptHop.onAdLoad(slotname, event, iframe, callSuccess, callError);
+					gptAdDetect.onAdLoad(slotname, event, iframe, callSuccess, callError);
 				}
 			});
 

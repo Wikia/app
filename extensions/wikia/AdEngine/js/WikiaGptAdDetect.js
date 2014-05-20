@@ -1,11 +1,11 @@
 /*global define, setTimeout*/
-define('ext.wikia.adEngine.wikiaGptHop', [
+define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window'
 ], function (log, window) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wikiaGptHop',
+	var logGroup = 'ext.wikia.adEngine.wikiaGptAdDetect',
 		specialAdSelector = [
 			'script[src*="/ads.saymedia.com/"]',
 			'script[src*="/native.sharethrough.com/"]',
