@@ -25,6 +25,7 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	OO.ui.Toolbar.call( this, ve.ui.toolFactory, ve.ui.toolGroupFactory, options );
 
 	// Properties
+	this.inContextMenu = options.inContextMenu;
 	this.surface = surface;
 	this.floating = false;
 	this.floatable = false;

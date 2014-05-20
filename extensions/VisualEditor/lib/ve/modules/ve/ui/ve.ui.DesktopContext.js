@@ -299,7 +299,7 @@ ve.ui.DesktopContext.prototype.update = function ( transition, repositionOnly ) 
 			if ( this.toolbar ) {
 				this.toolbar.destroy();
 			}
-			this.toolbar = new ve.ui.Toolbar( this.surface );
+			this.toolbar = new ve.ui.Toolbar( this.surface, { 'inContextMenu': true } );
 			this.toolbar.setup( [ { 'include': tools } ] );
 			this.$menu.append( this.toolbar.$element );
 			this.show( transition, repositionOnly );

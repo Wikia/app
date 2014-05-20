@@ -1302,7 +1302,7 @@ OO.ui.Window.prototype.open = function ( data ) {
 				this.frame.$content.focus();
 				this.emit( 'ready', data );
 				this.opening = false;
-			}, this ) );			
+			}, this ) );
 		}, this ) );
 	}
 
@@ -2715,6 +2715,9 @@ OO.ui.Tool = function OoUiTool( toolGroup, config ) {
 	OO.ui.Tool.super.call( this, config );
 
 	// Mixin constructors
+	if ( toolGroup.getToolbar().inContextMenu ) {
+		config.icon = this.constructor.static.contextIcon;
+	}
 	OO.ui.IconedElement.call( this, this.$( '<span>' ), config );
 
 	// Properties
