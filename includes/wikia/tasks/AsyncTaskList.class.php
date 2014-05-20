@@ -172,11 +172,12 @@ class AsyncTaskList {
 	 * put this task list into the queue
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
+	 * @param str $taskType allows the override of the default task type
 	 * @return string the task list's id
 	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
-	public function queue(AMQPChannel $channel=null) {
+	public function queue(AMQPChannel $channel=null, $taskType=null) {
 		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
 
 		if ($this->createdBy == null) {
@@ -196,7 +197,7 @@ class AsyncTaskList {
 		$id = $this->generateId();
 		$payload = (object) [
 			'id' => $id,
-			'task' => $this->taskType,
+			'task' => $taskType ?: $this->taskType,
 			'args' => [
 				$this->wikiId,
 				$this->calls,
