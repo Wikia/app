@@ -2,7 +2,9 @@
 /**
  * Class definition for WikiaSearchController.
  */
-// Someday there will be a namespace declaration here.
+
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Responsible for handling search requests.
  * @author relwell
@@ -249,9 +251,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
+
+		$minDuration = $this->getVal( 'minseconds' );
+		$maxDuration = $this->getVal( 'maxseconds' );
+
+		if ( $minDuration && $maxDuration ) {
 			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 		}
+
+		$log = WikiaLogger::instance();
+		$log->info( __METHOD__.' - Querying SOLR', [ 'title'       => $title,
+													 'limit'       => $limit,
+													 'mm'          => $mm,
+													 'minDuration' => $minDuration,
+													 'maxDuration' => $maxDuration ] );
+
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
@@ -302,6 +316,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 				$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
 			}
+
+			$log = WikiaLogger::instance();
+			$log->info( __METHOD__.' - Querying SOLR', [ 'topics'     => $topics,
+														'limit'       => $limit,
+														'mm'          => $mm,
+														'minDuration' => $minDuration,
+														'maxDuration' => $maxDuration ] );
+
 			$this->getResponse()->setFormat( 'json' );
 			$this->getResponse()->setData( $queryService->searchAsApi() );
 		}

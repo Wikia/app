@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class VideosModule extends WikiaModel {
 
 	const THUMBNAIL_WIDTH = 300;
@@ -9,6 +11,8 @@ class VideosModule extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
+	const STAFF_PICK_PREFIX = 'Staff_Pick_';
+	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
 	const MAX_STAFF_PICKS = 5;
 
 	protected $blacklistCount = null;	// number of blacklist videos
@@ -50,12 +54,18 @@ class VideosModule extends WikiaModel {
 	public function getStaffPicks() {
 		wfProfileIn( __METHOD__ );
 
+		$log = WikiaLogger::instance();
+
 		// Try to get the staff video picks from cache first
 		$memcKey = wfMemcKey( 'videomodule', 'staff_videos', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
 
+		// This is the staff pick category specific to this wiki
+		$category = self::STAFF_PICK_PREFIX.$this->wg->DBname;
+
 		// If none are there call out to the video wiki to look for some
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', ['category' => $category] );
 
 			// Look for picks specific to this wiki.  Don't get a thumbnail
 			// since we'll be generating it below
@@ -64,14 +74,14 @@ class VideosModule extends WikiaModel {
 				'method'       => 'getVideos',
 				'sort'         => 'recent',
 				'getThumbnail' => false,
-				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
+				'category'     => $category,
 			];
 
 			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
 			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
 
 			// Look for global wikia-wide picks
-			$params['category'] = 'Staff_Pick_Global';
+			$params['category'] = self::STAFF_PICK_GLOBAL_CATEGORY;
 
 			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
 			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
@@ -101,6 +111,8 @@ class VideosModule extends WikiaModel {
 			$videos = $this->getVideosDetail( $videos );
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', ['category' => $category] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -115,10 +127,16 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getLocalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
+		$log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
+
+		$loggingParams = [ 'num' => $numRequired, 'sort' => $sort ];
+
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', $loggingParams );
+
 			$filter = 'all';
 			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
 
@@ -143,6 +161,8 @@ class VideosModule extends WikiaModel {
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -158,14 +178,22 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getArticleRelatedVideos( $articleId, $numRequired ) {
 		wfProfileIn( __METHOD__ );
+		$log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'article_related_videos', self::CACHE_VERSION, $articleId );
 		$videos = $this->wg->Memc->get( $memcKey );
+		$category = $this->getSearchVertical();
+
+		$loggingParams = [ 'articleId' => $articleId,
+						   'num'       => $numRequired,
+						   'category'  => $category ];
+
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', $loggingParams );
+
 			$service = new VideoEmbedToolSearchService();
 			$service->setLimit( $this->getPaddedVideoLimit( $numRequired ) );
 
-			$category = $this->getSearchVertical();
 			if ( !empty( $category ) ) {
 				$service->getConfig()->setFilterQueryByCode( $category );
 			}
@@ -190,6 +218,8 @@ class VideosModule extends WikiaModel {
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -204,10 +234,16 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getWikiRelatedVideos( $numRequired ) {
 		wfProfileIn( __METHOD__ );
+		$log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
+
+		$loggingParams = [ 'num' => $numRequired ];
+
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', $loggingParams );
+
 			// Strip Wiki off the end of the wiki name if it exists
 			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
@@ -234,6 +270,8 @@ class VideosModule extends WikiaModel {
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -248,10 +286,16 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getWikiRelatedVideosTopics( $numRequired ) {
 		wfProfileIn( __METHOD__ );
+		$log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
+
+		$loggingParams = [ 'num' => $numRequired ];
+
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', $loggingParams );
+
 			// Strip Wiki off the end of the wiki name if it exists
 			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
@@ -278,6 +322,8 @@ class VideosModule extends WikiaModel {
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -293,11 +339,19 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getVerticalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
+		$log = WikiaLogger::instance();
 
 		$category = $this->getWikiVertical();
 		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
+
+		$loggingParams = [ 'category' => $category,
+						   'num'      => $numRequired,
+						   'sort'     => $sort ];
+
 		if ( !is_array( $videos ) ) {
+			$log->info( __METHOD__.' memc MISS', $loggingParams );
+
 			$params = [
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
@@ -323,6 +377,8 @@ class VideosModule extends WikiaModel {
 			}
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+		} else {
+			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );

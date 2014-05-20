@@ -2,6 +2,9 @@
 /**
  * Class definition for VideoEmbedToolSearchService, intended to be an interface between VET and Search
  */
+
+use \Wikia\Logger\WikiaLogger;
+
 class VideoEmbedToolSearchService
 {
 	use Wikia\Search\Traits\ArrayConfigurableTrait;
@@ -109,10 +112,16 @@ class VideoEmbedToolSearchService
 	 * @return array
 	 */
 	public function getSuggestedVideosByArticleId( $articleId ) {
+		$log = WikiaLogger::instance();
+
 		$this->setSuggestionQueryByArticleId( $articleId );
 		$query = $this->getSuggestionQuery();
 		$query =  (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
 		$expectedFields = $this->getExpectedFields();
+
+		$log->info( __METHOD__.' - Querying SOLR', [ 'query'          => $query,
+													 'expectedFields' => $expectedFields ] );
+
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )
 									->setRequestedFields( $expectedFields )
