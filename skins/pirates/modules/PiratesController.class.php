@@ -165,8 +165,6 @@ class PiratesController extends WikiaController {
 	private function setScripts($jsPackages) {
 		global $wgOut;
 
-		//print_r($jsPackages);die;
-
 		if (is_array($jsPackages)) {
 			foreach ($jsPackages as $package) {
 				$wgOut->addScriptFile($this->wg->ExtensionsPath . '/' . $package);
@@ -177,7 +175,6 @@ class PiratesController extends WikiaController {
 		// this is bad but some extensions could have added some scripts to bottom queue
 		// todo: make it not run twice during each request
 		$this->bottomScripts = $this->getSkin()->bottomScripts();
-		//print_r($this->bottomScripts);die;
 
 		// setup loading of JS/CSS
 		$this->loadJs();
