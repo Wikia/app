@@ -99,6 +99,7 @@ class TaskRunner {
 //		'CreateWikiLocalJob',
 			'ParsoidCacheUpdateJob',
 			//'UserRollback',
+			//'UserRename',
 		]);
 	}
 }
