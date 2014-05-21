@@ -51,8 +51,8 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		getAssets(source, cacheKey).then(function(assets) {
 			addAssetsToDOM(assets);
 
-			require(['wikia.intMaps.createMapUI'], function(createMapUI) {
-				createMapUI.init(assets.mustache);
+			require(['wikia.intMaps.createMap.ui'], function(createMap) {
+				createMap.init(assets.mustache);
 			});
 		});
 	}
