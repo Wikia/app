@@ -12,6 +12,8 @@ class TaskRunner {
 	private $results = [];
 	private $callOrder;
 
+	private $exception;
+
 	function __construct($taskList, $callOrder, $createdBy) {
 		$taskList = json_decode($taskList, true);
 		$this->callOrder = json_decode($callOrder, true);
@@ -21,12 +23,24 @@ class TaskRunner {
 			$task = new $taskData['class']();
 			$task->createdBy($createdBy);
 			$task->unserialize($taskData['context'], $taskData['calls']);
-			$task->init();
+
+			try {
+				$task->init();
+			} catch (Exception $e) {
+				$this->exception = $e;
+				break;
+			}
+
 			$this->taskList []= $task;
 		}
 	}
 
 	function run() {
+		if ($this->exception) {
+			$this->results []= $this->exception;
+			return;
+		}
+
 		foreach ($this->callOrder as $callData) {
 			list($classIndex, $callIndex) = $callData;
 
@@ -54,8 +68,6 @@ class TaskRunner {
 				break;
 			}
 		}
-
-		return $this;
 	}
 
 	public function format() {

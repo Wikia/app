@@ -81,6 +81,22 @@ $config['adengine2_js'] = array(
 	),
 );
 
+$config['adengine2_ebay_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.scss'
+	)
+);
+
+$config['adengine2_ebay_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.wikiamobile.scss'
+	)
+);
+
 $config['oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
