@@ -122,11 +122,11 @@ ve.ui.Toolbar.prototype.onWindowResize = function () {
 	update.offset = offset;
 
 	if ( this.floating ) {
-		parent = this.$element.parent();
-		parentOffset = parent.offset();
+		$parent = this.$element.parent();
+		parentOffset = $parent.offset();
 		update.css = {
 			'left': parentOffset.left,
-			'right': this.$window.width() - parent.outerWidth() - parentOffset.left
+			'right': this.$window.width() - $parent.outerWidth() - parentOffset.left
 		};
 		this.$bar.css( update.css );
 	}
