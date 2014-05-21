@@ -149,38 +149,32 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		if( empty( $this->wg->EnableUploads ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
+		} else if( $uploadResults[ 'status' ] !== UploadBase::OK ) {
+			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse() ];
+		} else if( ( $warnings = $upload->checkWarnings() ) && !empty( $warnings ) ) {
+			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
 		} else {
-			if ( $uploadResults[ 'status' ] !== UploadBase::OK ) {
-				$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse() ];
+			//save temp file
+			$file = $upload->stashFile();
+
+			$uploadStatus[ 'status' ] = 'uploadattempted';
+			if ( $file instanceof File && $file->exists() ) {
+				$uploadStatus[ 'isGood' ] = true;
+				$originalWidth = $file->getWidth();
+
+				// $originalHeight = $file->getHeight();
+				// $imageServing = new ImageServing( null, $originalWidth );
+				// $uploadStatus[ 'fileUrl' ] = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
+
+				// OK, so I couldn't use ImageService because it works only on uploaded files
+				// image serving worked with stashed files but it cuts it in a weird way
+				// not to block this any longer I came with the line below but we need to sort it out
+				// and write in a cleaner way
+				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
+
+				$uploadStatus[ 'fileUrl' ] = wfReplaceImageServer( $file->getThumbUrl( $originalWidth . "px-" . $file->getName() ) );
 			} else {
-				$warnings = $upload->checkWarnings();
-
-				if ( !empty( $warnings ) ) {
-					$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
-				} else {
-					//save temp file
-					$file = $upload->stashFile();
-
-					$uploadStatus[ 'status' ] = 'uploadattempted';
-					if ( $file instanceof File && $file->exists() ) {
-						$uploadStatus[ 'isGood' ] = true;
-						$originalWidth = $file->getWidth();
-
-						// $originalHeight = $file->getHeight();
-						// $imageServing = new ImageServing( null, $originalWidth );
-						// $uploadStatus[ 'fileUrl' ] = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
-
-						// OK, so I couldn't use ImageService because it works only on uploaded files
-						// image serving worked with stashed files but it cuts it in a weird way
-						// not to block this any longer I came with the line below but we need to sort it out
-						// and write in a cleaner way
-						// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
-
-						$uploadStatus[ 'fileUrl' ] = wfReplaceImageServer( $file->getThumbUrl( $originalWidth . "px-" . $file->getName() ) );
-					} else {
-						$uploadStatus[ 'isGood' ] = false;
-					}
-				}
+				$uploadStatus[ 'isGood' ] = false;
 			}
 		}
 
