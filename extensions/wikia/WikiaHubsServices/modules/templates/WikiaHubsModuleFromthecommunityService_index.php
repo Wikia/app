@@ -24,7 +24,7 @@
 			<div class="wikiahubs-ftc-subtitle">
 				<p class="plaintext plainlinks">
 					<?= wfMessage(
-						'wikiahubs-from-community-caption',
+						'wikiahubs-v3-from-community-caption',
 						$entry['userUrl'],
 						$entry['userName'],
 						$entry['articleUrl'],

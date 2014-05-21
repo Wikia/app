@@ -2,23 +2,23 @@
 	<div class="title">
 		<img src="<?= $wg->BlankImgUrl; ?>" class="logo" />
 		<h2>
-			<?= wfMessage('wikiahubs-wam-header')->text(); ?>
+			<?= wfMessage('wikiahubs-v3-wam-header')->text(); ?>
 		</h2>
 		<a href="<?= $wamPageUrl; ?>" class="read-more">
-			<?= wfMessage('wikiahubs-wam-see-full-wam-ranking')->text(); ?>
+			<?= wfMessage('wikiahubs-v3-wam-see-full-wam-ranking')->text(); ?>
 		</a>
 	</div>
 	<h3>
-		<?= wfMessage('wikiahubs-wam-top-wikis-headline', $verticalName)->text(); ?>
+		<?= wfMessage('wikiahubs-v3-wam-top-wikis-headline', $verticalName)->text(); ?>
 	</h3>
 	<?php if( !empty($ranking) ): ?>
 		<table class="score-table">
 			<thead>
 				<tr>
-					<th><?= wfMessage('wikiahubs-wam-rank')->text() ?></th>
-					<th><?= wfMessage('wikiahubs-wam-score')->text() ?></th>
+					<th><?= wfMessage('wikiahubs-v3-wam-rank')->text() ?></th>
+					<th><?= wfMessage('wikiahubs-v3-wam-score')->text() ?></th>
 					<th></th>
-					<th><?= wfMessage('wikiahubs-wam-wiki-url')->text() ?></th>
+					<th><?= wfMessage('wikiahubs-v3-wam-wiki-url')->text() ?></th>
 				</tr>
 			</thead>
 			<tbody>
