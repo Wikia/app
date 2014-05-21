@@ -4,7 +4,7 @@ namespace Wikia\Search\Services;
 
 class EpisodeEntitySearchService extends EntitySearchService {
 
-	const ALLOWED_NAMESPACE = 0;
+	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
 	const MINIMAL_ARTICLE_SCORE = 0.5;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
@@ -22,7 +22,10 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
+
+		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
+		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
