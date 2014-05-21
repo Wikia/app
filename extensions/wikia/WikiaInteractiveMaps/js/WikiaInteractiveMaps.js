@@ -8,7 +8,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		cacheKey = 'wikia_interactive_maps_create_map',
 		source = {
 			messages: ['WikiaInteractiveMapsCreateMap'],
-			scripts: ['intMap_createMap_js'],
+			scripts: ['int_map_create_map_js'],
 			styles: ['extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMapsCreateMap.scss'],
 			mustache: [
 				'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache'
