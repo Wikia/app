@@ -919,7 +919,6 @@ class CreateWiki {
 		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
 		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
 		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
-		$this->mWFSettingVars['wgEnableEditEnhancements'] = true;
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;

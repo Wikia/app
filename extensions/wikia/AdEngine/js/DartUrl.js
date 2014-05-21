@@ -17,6 +17,8 @@
  *
  * @return {Object}
  * @constructor
+ *
+ * TODO: This file is only used by JWPlayer. Remove it when JWPlayer is removed
  */
 /*global define*/
 define('ext.wikia.adEngine.dartUrl', function () {

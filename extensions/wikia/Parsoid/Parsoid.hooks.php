@@ -71,7 +71,7 @@ class ParsoidHooks {
 		if ( $title->getNamespace() == NS_FILE ) {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
-				->titleId( $title->mArticleID )
+				->title( $title )
 				->setPriority(ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'imagelinks' );
@@ -79,7 +79,7 @@ class ParsoidHooks {
 		} else {
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
-				->titleId( $title->mArticleID )
+				->title( $title )
 				->setPriority(ParsoidPurgePriorityQueue::NAME);
 
 			$task->call( 'onEdit' );
@@ -87,7 +87,7 @@ class ParsoidHooks {
 
 			$task = ( new ParsoidCacheUpdateTask() )
 				->wikiId( $wgCityId )
-				->titleId( $title->mArticleID )
+				->title( $title )
 				->setPriority(ParsoidPurgeQueue::NAME);
 
 			$task->call( 'findDependencies', 'templatelinks' );

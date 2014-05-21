@@ -71,13 +71,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 		&:after {
 			background-position: $background-position-after 0;
+			/* @noflip */
 			margin-right: 0;
+			/* @noflip */
 			right: $background-offset-right;
 		}
 
 		&:before {
 			background-position: $background-position-before 0;
+			/* @noflip */
 			margin-left: 0;
+			/* @noflip */
 			left: $background-offset-left;
 		}
 
@@ -135,13 +139,17 @@ $background-is-wide: if( $background-width > $breakpoint-fluid, true, false );
 
 		&:after {
 			background-position: $background-position-after 0;
+			/* @noflip */
 			right: 50%;
+			/* @noflip */
 			margin-right: $background-margin;
 		}
 
 		&:before {
 			background-position: 0;
+			/* @noflip */
 			left: 50%;
+			/* @noflip */
 			margin-left: $background-margin;
 		}
 
@@ -201,13 +209,17 @@ body.background-fixed {
 
 		&:after {
 			background-position: -$background-width-half 0;
+			/* @noflip */
 			right: 50%;
+			/* @noflip */
 			margin-right: -$background-width-half;
 		}
 
 		&:before {
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+			/* @noflip */
 			left: 50.1%;
+			/* @noflip */
 			margin-left: -$background-width-half;
 		}
 

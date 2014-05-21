@@ -11,6 +11,8 @@
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 abstract class WikiaController extends WikiaDispatchableObject {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
+
 	final public function allowsExternalRequests(){
 		return true;
 	}
