@@ -56,7 +56,7 @@ class MercuryApiController extends WikiaController {
 
 		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title, self::NUMBER_CONTRIBUTORS );
 
-		$this->response->setVal( 'userIds', $usersIds );
+		$this->response->setVal( 'items', $usersIds );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
