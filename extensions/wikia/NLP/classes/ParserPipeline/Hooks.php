@@ -46,13 +46,12 @@ class Hooks
 	private static function parseEvent( Title $title, $task ) {
 		global $wgCityId;
 
-		$docId = sprintf( '%d_%d', $wgCityId, $title->getArticleId() );
-
 		$taskList = new AsyncBackendTaskList();
 
 		$taskList->taskType( $task )
-				 ->add( $docId )
+				 ->add( $title->getArticleId() )
 				 ->wikiId( $wgCityId )
+				 ->wikiUrl( preg_replace( '/\/wiki\/*$/', '', $title->getFullURL() ) )
 				 ->setPriority( Wikia\Tasks\Queues\NlpPipelineQueue::NAME )
 				 ->queue();
 	}

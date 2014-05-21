@@ -13,13 +13,18 @@ namespace Wikia\Tasks;
 class AsyncBackendTaskList extends AsyncTaskList
 {
 	/**
+	 * @var str it's useful to have the base URL for the wiki for making API calls, etc.
+	 */
+	protected $wikiUrl;
+
+	/**
 	 * add a task call to the task list
 	 *
-	 * @param string $documentId
+	 * @param string $pageId
 	 * @return $this
 	 */
-	public function add($documentId) {
-		$this->workId['docids'][] = $documentId;
+	public function add($pageId) {
+		$this->workId['page_ids'][] = $documentId;
 		return $this;
 	}
 
@@ -28,7 +33,7 @@ class AsyncBackendTaskList extends AsyncTaskList
 	 * @return array
 	 */
 	protected function payloadArgs() {
-		return $this->workId['docids'];
+		return [$this->wikUrl, $this->workId['page_ids']];
 	}
 
 	/**
@@ -36,7 +41,7 @@ class AsyncBackendTaskList extends AsyncTaskList
 	 * @return $this
 	 */
 	protected function initializeWorkId() {
-		$this->workId = ['docids' => []];
+		$this->workId = [$this->wikiUrl, 'page_ids' => []];
 		return $this;
 	}
 
