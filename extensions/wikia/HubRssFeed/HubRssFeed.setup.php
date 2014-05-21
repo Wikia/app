@@ -11,6 +11,8 @@ $wgAutoloadClasses['MixedFeedModel']	= $dir . 'MixedFeedModel.class.php';
 $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 $wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';
 $wgAutoloadClasses['TVEpisodePremiereService']	= $dir . 'TVEpisodePremiereService.class.php';
+$wgAutoloadClasses['BaseRssModel']	= $dir . 'BaseRssModel.class.php';
+$wgAutoloadClasses['TvRssModel']	= $dir . 'TvRssModel.class.php';
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(

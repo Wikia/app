@@ -41,6 +41,13 @@ class RssFeedService {
 		return $this->data;
 	}
 
+	/**
+	 * @param $data
+	 */
+	public function setData($data) {
+		$this->data = $data;
+	}
+
 	public function addElem($title, $descr, $url, $timestamp, $img = null) {
 		$this->data[$url] = array(
 			"title" => $title,

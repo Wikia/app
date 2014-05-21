@@ -16,8 +16,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	];
 
 	protected $customFeeds = [
-		'tv' => 'customRssTV',
-		'games'=>'gamesRssTv'
+		TvRssModel::FEED_NAME=>true
 	];
 
 	/**
@@ -74,7 +73,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		if ( !isset( $this->hubs[ $hubName ] ) ) {
 			if ( isset( $this->customFeeds[$hubName] ) ) {
-				return $this->forward( 'HubRssFeedSpecial', $this->customFeeds[$hubName] );
+				return $this->forward( 'HubRssFeedSpecial', 'customRss' );
 			}
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
 		}
@@ -97,6 +96,20 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );
 		$this->response->setContentType( 'text/xml' );
+	}
+
+	public function customRss() {
+		$service = new RssFeedService();
+		$par = $this->request->getVal( 'par' );
+		$model = BaseRssModel::newFromName( $par );
+		$service->setFeedLang( $model->getFeedLanguage() );
+		$service->setFeedDescription( $model->getFeedDescription() );
+		$service->setFeedUrl( SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() . ucfirst( $par ) );
+		$service->setData( $model->getFeedData() );
+		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
+		$this->response->setBody( $service->toXml() );
+		$this->response->setContentType( 'text/xml' );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 	}
 
 	public function gamesRssTV() {
