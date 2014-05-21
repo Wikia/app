@@ -25,7 +25,7 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	OO.ui.Toolbar.call( this, ve.ui.toolFactory, ve.ui.toolGroupFactory, options );
 
 	// Properties
-	this.inContextMenu = options.inContextMenu;
+	this.inContextMenu = !!options.inContextMenu || false;
 	this.surface = surface;
 	this.floating = false;
 	this.floatable = false;
@@ -351,4 +351,13 @@ ve.ui.Toolbar.prototype.disableFloatable = function () {
 	}
 
 	this.floatable = false;
+};
+
+/**
+ * Gets value of this.inContextMenu
+ *
+ * @returns {boolean}
+ */
+ve.ui.Toolbar.prototype.isInContextMenu = function () {
+	return this.inContextMenu;
 };

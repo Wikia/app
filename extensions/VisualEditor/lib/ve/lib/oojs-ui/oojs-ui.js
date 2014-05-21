@@ -2715,7 +2715,7 @@ OO.ui.Tool = function OoUiTool( toolGroup, config ) {
 	OO.ui.Tool.super.call( this, config );
 
 	// Mixin constructors
-	if ( toolGroup.getToolbar().inContextMenu ) {
+	if ( toolGroup.getToolbar().isInContextMenu() ) {
 		config.icon = this.constructor.static.contextIcon;
 	}
 	OO.ui.IconedElement.call( this, this.$( '<span>' ), config );
