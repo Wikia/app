@@ -207,6 +207,8 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 			'label': ve.msg( 'visualeditor-dialog-media-position-right' )
 		} ),
 	], 0 );
+	// Wikia change: make buttons secondary for theming
+	this.positionInput.$element.find( 'a' ).addClass( 'secondary' );
 
 	this.positionCheckbox = new OO.ui.CheckboxInputWidget( {
 		'$': this.$

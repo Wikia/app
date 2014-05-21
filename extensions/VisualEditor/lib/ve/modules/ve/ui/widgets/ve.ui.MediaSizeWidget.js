@@ -52,6 +52,8 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' )
 		} )
 	] );
+	// Wikia change: make buttons secondary for theming
+	this.sizeTypeSelectWidget.$element.find( 'a' ).addClass( 'secondary' );
 
 	// Define scale
 	this.scaleInput = new OO.ui.TextInputWidget( {

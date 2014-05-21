@@ -423,6 +423,8 @@ ve.ui.MWTransclusionDialog.prototype.initialize = function () {
 		'flags': ['primary']
 	} );
 	this.modeButton = new OO.ui.ButtonWidget( { '$': this.$ } );
+	// Wikia change: make button secondary for theming
+	this.modeButton.$element.find( 'a' ).addClass( 'secondary' );
 	this.bookletLayout = new OO.ui.BookletLayout( {
 		'$': this.$,
 		'continuous': true,
