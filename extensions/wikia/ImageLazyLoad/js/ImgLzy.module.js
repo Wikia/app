@@ -166,7 +166,8 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				scrollBottom,
 				idx,
 				visible,
-				cacheItem;
+				cacheItem,
+				imgSrc;
 
 			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
@@ -183,8 +184,11 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				if (visible && this.parentVisible(cacheItem)) {
 					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					cacheItem.el.src = this.rewriteURLForWebP(cacheItem.jq.data('src'));
-					cacheItem.jq.removeClass('lzy');
+					imgSrc = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
+					if ( imgSrc ) {
+						cacheItem.el.src = imgSrc;
+					}
+					cacheItem.jq.removeClass( 'lzy' ).removeClass( 'lzyPlcHld' );
 					delete this.cache[idx];
 				}
 			}
