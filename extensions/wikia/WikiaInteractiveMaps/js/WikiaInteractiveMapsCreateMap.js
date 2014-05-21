@@ -22,7 +22,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					intMapBack: true,
 					intMapNext: true
 				}
-			}
+			},
 		],
 		hiddenClass = 'hidden',
 
@@ -103,6 +103,16 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 			// set initial step
 			switchStep(0);
+
+			// TODO: move it to a better place
+			window.document.getElementsByTagName('body')[0].addEventListener('change', function(event) {
+				var target = event.target,
+					form = $(target).parent().get(0);
+
+				if (target.id === 'intMapUpload') {
+					uploadMap( form );
+				}
+			});
 
 			createMapModal.show();
 		});
@@ -212,6 +222,43 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		buttons.forEach(function(id) {
 			modalButtons.filter('#'+  id).removeClass(hiddenClass);
 		});
+	}
+
+	/**
+	 * @desc Sends and AJAX request to upload map image
+	 * @param {FormData} form
+	 */
+
+	function uploadMap( form ) {
+		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
+
+		$.ajax({
+			type: 'POST',
+			url: window.wgScriptPath + entryPoint,
+			data: new FormData(form),
+			success: function (response) {
+				if( response.results && response.results.isGood ) {
+					$('#intMapPreviewImage').attr('src', response.results.fileUrl);
+					nextStep();
+				} else {
+					handleUploadErrors( response );
+				}
+			},
+			error: function( response ) {
+				handleUploadErrors( response );
+			},
+			contentType: false,
+			processData: false
+		});
+	}
+
+	/**
+	 * @desc Handles upload errors&exceptions
+	 * @param {Object} response
+	 */
+
+	function handleUploadErrors( response ) {
+		// TODO: handle errors (MOB-1626)
 	}
 
 	return {
