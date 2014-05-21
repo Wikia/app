@@ -50,6 +50,9 @@ class AsyncTaskList {
 	/** @var bool whether or not to perform task deduplication */
 	protected $dupCheck = false;
 
+	/** @var array allows us to store information about this specific task */
+	protected $workId;
+
 	/**
 	 * put this task into the priority queue
 	 *
@@ -179,54 +182,40 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * put this task list into the queue
-	 *
-	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
-	 * @return string the task list's id
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * Initializes the data we're using to identify a set of tasks so we can reuse the runner without leaky state
+	 * @return $this
 	 */
-	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
+	protected function initializeWorkId() {
+		$this->workId = ['tasks' => [], 'wikiId' => $this->wikiId];
+		return $this;
+	}
 
-		if ($this->createdBy == null) {
-			$this->createdBy($wgUser);
-		}
-
-		$taskList = [];
-		$workId = ['tasks' => [], 'wikiId' => $this->wikiId];
-
+	/**
+	 * Returns the "args" value of the payload. Required in base class to valuate work id
+	 * @return array
+	 */
+	protected function payloadArgs() {
 		foreach ($this->classes as $task) {
 			/** @var BaseTask $task */
 			$serialized = $task->serialize();
 			$taskList []= $serialized;
-			$workId['tasks'] []= $serialized;
+			$this->workId['tasks'] []= $serialized;
 		}
-
-		$id = $this->generateId();
-		$payload = (object) [
-			'id' => $id,
-			'task' => $this->taskType,
-			'args' => [
+		return [
 				$this->wikiId,
 				$this->calls,
 				$taskList,
-			],
-			'kwargs' => (object) [
-				'created_ts' => time(),
-				'created_by' => $this->createdBy,
-				'work_id' => sha1(json_encode($workId)),
-				'force' => !$this->dupCheck
-			]
-		];
+			];
+	}
 
-		if ($this->delay) {
-			$scheduledTime = strtotime($this->delay);
-			if ($scheduledTime !== false && $scheduledTime > time()) {
-				$payload->eta = gmdate('c', $scheduledTime);
-			}
-		}
 
+	/**
+	 * Allows us to determine execution method and runner for a given environment
+	 * @return array
+	 */
+	protected function getExecutor() {
+		global $wgDevelEnvironment, $IP, $wgPreviewHostname, $wgVerifyHostname;
+		$executor = [];
 		$hostname = gethostname();
 		if (!empty($wgDevelEnvironment)) {
 			if (isset($_SERVER['SERVER_NAME'])) {
@@ -240,12 +229,12 @@ class AsyncTaskList {
 				];
 			}
 
-			$payload->kwargs->executor = [
+			$executor = [
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
 			];
 		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname])) { // force preview/verify to run on preview/verify server
-			$payload->kwargs->executor = [
+			$executor = [
 				'method' => 'remote_shell',
 				'runner' => [
 					$hostname,
@@ -253,6 +242,46 @@ class AsyncTaskList {
 				],
 			];
 		}
+		return $executor;
+	}
+
+	/**
+	 * put this task list into the queue
+	 *
+	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
+	 * @return string the task list's id
+	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 */
+	public function queue(AMQPChannel $channel=null) {
+		global $wgUser;
+
+		if ($this->createdBy == null) {
+			$this->createdBy($wgUser);
+		}
+
+		$taskList = [];
+
+		$id = $this->generateId();
+		$payload = (object) [
+			'id' => $id,
+			'task' => $this->taskType,
+			'args' => $this->payloadArgs(),
+			'kwargs' => (object) [
+				'created_ts' => time(),
+				'created_by' => $this->createdBy,
+				'work_id' => sha1(json_encode($workId)),
+				'force' => !$this->dupCheck,
+				'executor' => $this->getExecutor()
+			]
+		];
+
+		if ($this->delay) {
+			$scheduledTime = strtotime($this->delay);
+			if ($scheduledTime !== false && $scheduledTime > time()) {
+				$payload->eta = gmdate('c', $scheduledTime);
+			}
+		}		
 
 		$message = new AMQPMessage(json_encode($payload), [
 			'content_type' => 'application/json',
