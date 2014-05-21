@@ -6,7 +6,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 
 	const DEFAULT_NAMESPACE = 0;
 	const ARTICLES_LIMIT = 1;
-	const MINIMAL_ARTICLE_SCORE = 0.5;
+	const MINIMAL_ARTICLE_SCORE = 0.4;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
 
@@ -23,10 +23,10 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 
-//		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
-//		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
-//		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::DEFAULT_NAMESPACE . ')' );
+		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
+		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
+//		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::DEFAULT_NAMESPACE . ')' );
 		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
