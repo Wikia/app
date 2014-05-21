@@ -1,7 +1,9 @@
 define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache'], function($, w, mustache) {
 	'use strict';
 
-	var createMapModal, // placeholder for holding reference to modal instance
+	var doc = w.document,
+		body = doc.getElementsByTagName('body')[0],
+		createMapModal, // placeholder for holding reference to modal instance
 		modalSections,// placeholder for caching create map flow modal sections
 		modalButtons, // placeholder for caching create map modal buttons
 		lastStep = 0, // holds last step of create map flow
@@ -87,6 +89,15 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			}
 		};
 
+	// TODO: figure out where is better place to place it and move it there
+	body.addEventListener('change', function(event) {
+		var target = event.target;
+
+		if (target.id === 'intMapUpload') {
+			uploadMap( $(target).parent().get(0) );
+		}
+	});
+
 	/**
 	 * @desc Entry point for create map modal
 	 * @param {array} templates - mustache templates
@@ -103,16 +114,6 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 			// set initial step
 			switchStep(0);
-
-			// TODO: move it to a better place
-			window.document.getElementsByTagName('body')[0].addEventListener('change', function(event) {
-				var target = event.target,
-					form = $(target).parent().get(0);
-
-				if (target.id === 'intMapUpload') {
-					uploadMap( form );
-				}
-			});
 
 			createMapModal.show();
 		});
