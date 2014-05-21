@@ -40,6 +40,9 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
+		$dismax->setQueryPhraseSlop(1);
+		$dismax->setPhraseSlop(1);
+
 		return $select;
 	}
 
