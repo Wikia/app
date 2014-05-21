@@ -9,6 +9,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		modalSections,
 		// placeholder for caching create map modal buttons
 		modalButtons,
+		// placeholder for validation error name
+		validationError,
 		// holds last step of create map flow
 		lastStep = 0,
 		// holds current step of create map flow
@@ -26,6 +28,17 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			},
 			{
 				id: 'intMapsAddTitle',
+				buttons: {
+					intMapBack: true,
+					intMapNext: true
+				},
+				errorContainer: '.title-validation-msg',
+				errorMsgKeys: {
+					invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
+				}
+			},
+			{
+				id: 'intMapsPinTypes',
 				buttons: {
 					intMapBack: true,
 					intMapNext: true
@@ -211,7 +224,11 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function nextStep() {
-		switchStep(currentStep + 1);
+		if( canMoveToNextStep() ) {
+			switchStep(currentStep + 1);
+		} else {
+			displayError( currentStep );
+		}
 	}
 
 	/**
@@ -268,6 +285,56 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		buttons.forEach(function(id) {
 			modalButtons.filter('#'+  id).removeClass(hiddenClass);
 		});
+	}
+
+	/**
+	 * Returns true if switching to next step is allowed
+	 * @returns {boolean}
+	 */
+
+	function canMoveToNextStep() {
+		var canMove = true;
+
+		switch(currentStep) {
+			case 2:
+			// the step after choosing/uploading map
+			// it requires valid map title
+				canMove = isMapTitleValid();
+				break;
+		}
+
+		return canMove;
+	}
+
+	/**
+	 * Validates map title
+	 * @returns {boolean}
+	 */
+
+	function isMapTitleValid() {
+		var title = $('#intMapTitle').val(),
+			result = true;
+
+		if( title.length === 0 || !title.trim() ) {
+			validationError = 'invalidTitle';
+			result = false;
+		}
+
+		return result;
+	}
+
+	/**
+	 * Gets correct data from steps configuration to display a validation error
+	 * @param index
+	 */
+	
+	function displayError(index) {
+		var $errorContainer = $(steps[index].errorContainer),
+			errorMessage = $.msg(steps[index].errorMsgKeys[validationError]);
+
+		$errorContainer.html('');
+		$errorContainer.html(errorMessage);
+		$errorContainer.removeClass(hiddenClass);
 	}
 
 	return {
