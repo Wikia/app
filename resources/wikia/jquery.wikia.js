@@ -287,11 +287,6 @@ $.showCustomModal('title', '<b>content</b>',
 		return false;
 	};
 
-	// https://github.com/Modernizr/Modernizr/issues/84
-	$.fn.isTouchscreen = function () {
-		return ('ontouchstart' in window);
-	};
-
 	/**
 	 * Tests whether first element in current collection is a child of node matching selector provided
 	 *

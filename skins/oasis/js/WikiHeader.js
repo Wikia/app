@@ -1,7 +1,7 @@
 (function ( window, $ ) {
 	'use strict';
 
-	var isTouchScreen = $().isTouchscreen(),
+	var isTouchScreen = Wikia.isTouchscreen(),
 		WikiHeader = {
 			lastSubnavClicked: -1,
 			isDisplayed: false,
