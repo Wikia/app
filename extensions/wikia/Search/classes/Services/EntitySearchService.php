@@ -15,6 +15,7 @@ class EntitySearchService {
 	private $lang;
 	private $quality;
 	private $wikiId;
+	private $namespace;
 
 	public function __construct( $client = null ) {
 		$config = $this->getConfig();
@@ -59,6 +60,14 @@ class EntitySearchService {
 	public function setWikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
 		return $this;
+	}
+
+	public function getNamespace() {
+		return $this->namespace;
+	}
+
+	public function setNamespace( $namespace ) {
+		$this->namespace = $namespace;
 	}
 
 	protected function prepareQuery( $query ) {
