@@ -1,8 +1,8 @@
 define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache'], function($, w, mustache) {
 	'use strict';
 
-	var doc = w.document,
-		body = doc.getElementsByTagName('body')[0],
+	var body = $('body'),
+
 		// placeholder for holding reference to modal instance
 		createMapModal,
 		// placeholder for caching create map flow modal sections
@@ -16,24 +16,26 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		// holds config for each step
 		steps = [
 			{
-				id: 'intMapsChooseType'
+				id: '#intMapsChooseType'
 			},
 			{
-				id: 'intMapsChooseTileSet',
+				id: '#intMapsChooseTileSet',
 				buttons: {
-					intMapBack: true
+					'#intMapBack': true
 				}
 			},
 			{
-				id: 'intMapsAddTitle',
+				id: '#intMapsAddTitle',
 				buttons: {
-					intMapBack: true,
-					intMapNext: true
+					'#intMapBack': true,
+					'#intMapNext': true
 				}
 			}
 		],
 		// class used for hiding elements
 		hiddenClass = 'hidden',
+
+		uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 		// modal configuration
 		modalConfig = {
 			vars: {
@@ -71,6 +73,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				]
 			}
 		},
+		// placeholder for mustache templates
+		templates,
 		// data for mustache template
 		templateData = {
 			mapType: [
@@ -83,8 +87,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
 				}
 			],
-			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file'),
-			titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder')
+			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
 		},
 		// modal event handlers
 		modalEvents = {
@@ -99,59 +102,22 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		};
 
 	// TODO: figure out where is better place to place it and move it there
-	body.addEventListener('change', function(event) {
-		var target = event.target;
-
-		if (target.id === 'intMapUpload') {
-			uploadMap( $(target).parent().get(0) );
-		}
+	body.on('change', '#intMapUpload', function(event) {
+		uploadMapImage($(event.target).parent());
 	});
 
-	/**
-	 * @desc Sends and AJAX request to upload map image
-	 * @param {object} form
-	 */
-
-	function uploadMap( form ) {
-		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
-
-		$.ajax({
-			type: 'POST',
-			url: w.wgScriptPath + entryPoint,
-			data: new FormData(form),
-			success: function (response) {
-				var res = response.results;
-				if( res && res.isGood ) {
-					$('#intMapPreviewImage').attr('src', res.fileUrl);
-					nextStep();
-				} else {
-					handleUploadErrors( response );
-				}
-			},
-			error: function( response ) {
-				handleUploadErrors( response );
-			},
-			contentType: false,
-			processData: false
-		});
-	}
-
-	/**
-	 * @desc Handles upload errors&exceptions
-	 * @param {object} response
-	 */
-
-	function handleUploadErrors( response ) {
-		// TODO: handle errors (MOB-1626)
-	}
 
 	/**
 	 * @desc Entry point for create map modal
-	 * @param {array} templates - mustache templates
+	 * @param {array} tmpl - mustache templates
 	 */
 
-	function init(templates) {
+	function init(tmpl) {
+		// set reference to mustache templates
+		templates = tmpl;
+
 		renderModalContentMarkup(modalConfig, templates[0], templateData);
+
 		createModal(modalConfig, function() {
 			// cache modal sections and buttons
 			modalSections = createMapModal.$content.children();
@@ -252,7 +218,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		var id = steps[index].id;
 
 		modalSections.addClass(hiddenClass);
-		modalSections.filter('#' + id).removeClass(hiddenClass);
+		modalSections.filter(id).removeClass(hiddenClass);
 	}
 
 	/**
@@ -266,8 +232,62 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		modalButtons.addClass(hiddenClass);
 
 		buttons.forEach(function(id) {
-			modalButtons.filter('#'+  id).removeClass(hiddenClass);
+			modalButtons.filter(id).removeClass(hiddenClass);
 		});
+	}
+
+	/**
+	 * @desc Sends and AJAX request to upload map image
+	 * @param {object} form
+	 */
+
+	function uploadMapImage(form) {
+		$.ajax({
+			contentType: false,
+			data: new FormData(form),
+			processData: false,
+			type: 'POST',
+			url: w.wgScriptPath + uploadEntryPoint,
+			success: function(response) {
+				console.log(response);
+				var data = response.results;
+
+				if (data && data.isGood) {
+					preparePreviewStep(data);
+					switchStep(2);
+				} else {
+					handleUploadErrors(response);
+				}
+			},
+			error: function(response) {
+				handleUploadErrors(response);
+			}
+		});
+	}
+
+	/**
+	 * @desc prepares image preview and  data for requests to int map service
+	 * @param {object} data - params needed to display image preview and prepare data for requests to int map service
+	 */
+
+	function preparePreviewStep(data) {
+		var templateData = {
+				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
+				orgImage: data.fileUrl,
+				tileSetId: data.tileSetId,
+				userName: w.wgUserName
+			};
+
+		$(steps[2].id).append(mustache.render(templates[1], templateData));
+	}
+
+	/**
+	 * @desc Handles upload errors&exceptions
+	 * @param {object} response
+	 */
+
+	function handleUploadErrors( response ) {
+		// TODO: handle errors (MOB-1626)
 	}
 
 	return {
