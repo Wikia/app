@@ -1,4 +1,4 @@
-define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache'], function($, w, mustache) {
+define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache'], function ($, w, mustache) {
 	'use strict';
 
 	var doc = w.document,
@@ -16,35 +16,30 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		// holds current step of create map flow
 		currentStep = 0,
 		// holds config for each step
-		steps = [
-			{
-				id: 'intMapsChooseType'
-			},
-			{
-				id: 'intMapsChooseTileSet',
-				buttons: {
-					intMapBack: true
-				}
-			},
-			{
-				id: 'intMapsAddTitle',
-				buttons: {
-					intMapBack: true,
-					intMapNext: true
-				},
-				errorContainer: '.title-validation-msg',
-				errorMsgKeys: {
-					invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
-				}
-			},
-			{
-				id: 'intMapsPinTypes',
-				buttons: {
-					intMapBack: true,
-					intMapNext: true
-				}
+		steps = [{
+			id: 'intMapsChooseType'
+		}, {
+			id: 'intMapsChooseTileSet',
+			buttons: {
+				intMapBack: true
 			}
-		],
+		}, {
+			id: 'intMapsAddTitle',
+			buttons: {
+				intMapBack: true,
+				intMapNext: true
+			},
+			errorContainer: '.title-validation-msg',
+			errorMsgKeys: {
+				invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
+			}
+		}, {
+			id: 'intMapsPinTypes',
+			buttons: {
+				intMapBack: true,
+				intMapNext: true
+			}
+		}],
 		// class used for hiding elements
 		hiddenClass = 'hidden',
 		// modal configuration
@@ -55,47 +50,37 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				size: 'medium',
 				content: '',
 				title: $.msg('wikia-interactive-maps-create-map-header'),
-				buttons: [
-					{
-						vars: {
-							value: $.msg('wikia-interactive-maps-create-map-next-btn'),
-							classes: ['normal', 'primary'],
-							id: 'intMapNext',
-							data: [
-								{
-									key: 'event',
-									value: 'next'
-								}
-							]
-						}
-					},
-					{
-						vars: {
-							value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
-							id: 'intMapBack',
-							data: [
-								{
-									key: 'event',
-									value: 'back'
-								}
-							]
-						}
+				buttons: [{
+					vars: {
+						value: $.msg('wikia-interactive-maps-create-map-next-btn'),
+						classes: ['normal', 'primary'],
+						id: 'intMapNext',
+						data: [{
+							key: 'event',
+							value: 'next'
+						}]
 					}
-				]
+				}, {
+					vars: {
+						value: $.msg('wikia-interactive-maps-create-map-back-btn'),
+						id: 'intMapBack',
+						data: [{
+							key: 'event',
+							value: 'back'
+						}]
+					}
+				}]
 			}
 		},
 		// data for mustache template
 		templateData = {
-			mapType: [
-				{
-					type: 'Geo',
-					name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
-				},
-				{
-					type: 'Custom',
-					name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
-				}
-			],
+			mapType: [{
+				type: 'Geo',
+				name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+			}, {
+				type: 'Custom',
+				name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
+			}],
 			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file'),
 			titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder')
 		},
@@ -103,20 +88,20 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		modalEvents = {
 			next: nextStep,
 			back: previousStep,
-			intMapCustom: function() {
+			intMapCustom: function () {
 				switchStep(1);
 			},
-			intMapGeo: function() {
+			intMapGeo: function () {
 				switchStep(2);
 			}
 		};
 
 	// TODO: figure out where is better place to place it and move it there
-	body.addEventListener('change', function(event) {
+	body.addEventListener('change', function (event) {
 		var target = event.target;
 
 		if (target.id === 'intMapUpload') {
-			uploadMap( $(target).parent().get(0) );
+			uploadMap($(target).parent().get(0));
 		}
 	});
 
@@ -125,7 +110,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 * @param {object} form
 	 */
 
-	function uploadMap( form ) {
+	function uploadMap(form) {
 		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
 
 		$.ajax({
@@ -134,15 +119,15 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			data: new FormData(form),
 			success: function (response) {
 				var res = response.results;
-				if( res && res.isGood ) {
+				if (res && res.isGood) {
 					$('#intMapPreviewImage').attr('src', res.fileUrl);
 					nextStep();
 				} else {
-					handleUploadErrors( response );
+					handleUploadErrors(response);
 				}
 			},
-			error: function( response ) {
-				handleUploadErrors( response );
+			error: function (response) {
+				handleUploadErrors(response);
 			},
 			contentType: false,
 			processData: false
@@ -154,7 +139,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 * @param {object} response
 	 */
 
-	function handleUploadErrors( response ) {
+	function handleUploadErrors(response) {
 		// TODO: handle errors (MOB-1626)
 	}
 
@@ -165,7 +150,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 	function init(templates) {
 		renderModalContentMarkup(modalConfig, templates[0], templateData);
-		createModal(modalConfig, function() {
+		createModal(modalConfig, function () {
 			// cache modal sections and buttons
 			modalSections = createMapModal.$content.children();
 			modalButtons = createMapModal.$element.find('.buttons').children();
@@ -214,7 +199,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function bindEvents(modal, events) {
-		Object.keys(events).forEach(function(event) {
+		Object.keys(events).forEach(function (event) {
 			modal.bind(event, events[event]);
 		});
 	}
@@ -224,10 +209,10 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function nextStep() {
-		if( canMoveToNextStep() ) {
+		if (canMoveToNextStep()) {
 			switchStep(currentStep + 1);
 		} else {
-			displayError( currentStep );
+			displayError(currentStep);
 		}
 	}
 
@@ -282,8 +267,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 		modalButtons.addClass(hiddenClass);
 
-		buttons.forEach(function(id) {
-			modalButtons.filter('#'+  id).removeClass(hiddenClass);
+		buttons.forEach(function (id) {
+			modalButtons.filter('#' + id).removeClass(hiddenClass);
 		});
 	}
 
@@ -295,12 +280,12 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	function canMoveToNextStep() {
 		var canMove = true;
 
-		switch(currentStep) {
-			case 2:
+		switch (currentStep) {
+		case 2:
 			// the step after choosing/uploading map
 			// it requires valid map title
-				canMove = isMapTitleValid();
-				break;
+			canMove = isMapTitleValid();
+			break;
 		}
 
 		return canMove;
@@ -315,7 +300,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		var title = $('#intMapTitle').val(),
 			result = true;
 
-		if( title.length === 0 || !title.trim() ) {
+		if (title.length === 0 || !title.trim()) {
 			validationError = 'invalidTitle';
 			result = false;
 		}
@@ -327,7 +312,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 * Gets correct data from steps configuration to display a validation error
 	 * @param index
 	 */
-	
+
 	function displayError(index) {
 		var $errorContainer = $(steps[index].errorContainer),
 			errorMessage = $.msg(steps[index].errorMsgKeys[validationError]);
@@ -341,4 +326,3 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		init: init
 	};
 });
-
