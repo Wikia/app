@@ -14,6 +14,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		// holds current step of create map flow
 		currentStep = 0,
 		// holds config for each step
+		// TODO: maybe it would be better to use object instead of array
 		steps = [
 			{
 				id: '#intMapsChooseType'
@@ -103,7 +104,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 	// TODO: figure out where is better place to place it and move it there
 	body.on('change', '#intMapUpload', function(event) {
-		uploadMapImage($(event.target).parent());
+		uploadMapImage($(event.target).parent().get(0));
 	});
 
 
@@ -275,10 +276,11 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
 				orgImage: data.fileUrl,
 				tileSetId: data.tileSetId,
+				thumbnailUrl: data.fileThumbUrl,
 				userName: w.wgUserName
 			};
 
-		$(steps[2].id).append(mustache.render(templates[1], templateData));
+		$(steps[2].id).html(mustache.render(templates[1], templateData));
 	}
 
 	/**
