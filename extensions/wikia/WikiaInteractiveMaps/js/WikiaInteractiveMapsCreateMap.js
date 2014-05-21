@@ -3,7 +3,6 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
-
 		// placeholder for holding reference to modal instance
 		createMapModal,
 		// placeholder for caching create map flow modal sections
@@ -48,7 +47,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 						vars: {
 							value: $.msg('wikia-interactive-maps-create-map-next-btn'),
 							classes: ['normal', 'primary'],
-							id: "intMapNext",
+							id: 'intMapNext',
 							data: [
 								{
 									key: 'event',
@@ -60,7 +59,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					{
 						vars: {
 							value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
-							id: "intMapBack",
+							id: 'intMapBack',
 							data: [
 								{
 									key: 'event',
@@ -98,6 +97,53 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				switchStep(2);
 			}
 		};
+
+	// TODO: figure out where is better place to place it and move it there
+	body.addEventListener('change', function(event) {
+		var target = event.target;
+
+		if (target.id === 'intMapUpload') {
+			uploadMap( $(target).parent().get(0) );
+		}
+	});
+
+	/**
+	 * @desc Sends and AJAX request to upload map image
+	 * @param {object} form
+	 */
+
+	function uploadMap( form ) {
+		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
+
+		$.ajax({
+			type: 'POST',
+			url: w.wgScriptPath + entryPoint,
+			data: new FormData(form),
+			success: function (response) {
+				var res = response.results;
+				if( res && res.isGood ) {
+					$('#intMapPreviewImage').attr('src', res.fileUrl);
+					nextStep();
+				} else {
+					handleUploadErrors( response );
+				}
+			},
+			error: function( response ) {
+				handleUploadErrors( response );
+			},
+			contentType: false,
+			processData: false
+		});
+	}
+
+	/**
+	 * @desc Handles upload errors&exceptions
+	 * @param {object} response
+	 */
+
+	function handleUploadErrors( response ) {
+		// TODO: handle errors (MOB-1626)
+	}
 
 	/**
 	 * @desc Entry point for create map modal
@@ -143,8 +189,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					createMapModal = modal;
 
 					cb();
-				})
-			})
+				});
+			});
 		});
 	}
 
@@ -157,7 +203,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	function bindEvents(modal, events) {
 		Object.keys(events).forEach(function(event) {
 			modal.bind(event, events[event]);
-		})
+		});
 	}
 
 	/**
@@ -165,7 +211,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function nextStep() {
-		switchStep(currentStep + 1)
+		switchStep(currentStep + 1);
 	}
 
 	/**
@@ -173,7 +219,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function previousStep() {
-		switchStep(lastStep)
+		switchStep(lastStep);
 	}
 
 	/**
@@ -226,5 +272,6 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 
 	return {
 		init: init
-	}
+	};
 });
+

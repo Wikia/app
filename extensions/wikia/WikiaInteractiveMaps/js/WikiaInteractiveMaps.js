@@ -10,8 +10,10 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 			messages: ['WikiaInteractiveMapsCreateMap'],
 			scripts: ['int_map_create_map_js'],
 			styles: ['extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMapsCreateMap.scss'],
-			mustache: ['extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache']
-		}
+			mustache: [
+				'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache'
+			]
+		};
 
 	// attach handlers
 	body.addEventListener('change', function(event) {
@@ -30,8 +32,8 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 
 	/**
-	 @desc reload the page after choosing ordering option
-	 @param {string} sortType - sorting method
+	 * @desc reload the page after choosing ordering option
+	 * @param {string} sortType - sorting method
 	 */
 
 	function sortMapList(sortType) {
@@ -76,7 +78,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 						type: loader.MULTI,
 						resources: source
 					}).done(function(assets) {
-						dfd.resolve(assets)
+						dfd.resolve(assets);
 					});
 				});
 			}
