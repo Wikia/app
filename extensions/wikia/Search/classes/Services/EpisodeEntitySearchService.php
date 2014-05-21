@@ -23,9 +23,10 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 
-		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
-		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
-		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
+//		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
+//		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
+//		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::DEFAULT_NAMESPACE . ')' );
 		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
