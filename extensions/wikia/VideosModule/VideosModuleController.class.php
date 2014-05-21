@@ -1,6 +1,7 @@
 <?php
 
 class VideosModuleController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	const VIDEOS_PER_PAGE = 20;
 
@@ -22,8 +23,6 @@ class VideosModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$numRequired = $this->request->getVal( 'limit', self::VIDEOS_PER_PAGE );

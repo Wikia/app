@@ -4,7 +4,7 @@ use Wikia\ApiDocs\Services\ApiDocsServiceFactory;
 use Wikia\ApiDocs\Services\IApiDocsService;
 
 class DocsApiController extends WikiaController {
-	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const DEFAULT_LICENSE_VALUE = "http://creativecommons.org/licenses/by-sa/3.0/";
 	const LICENSE_ICONS_URL = 'files/license/cc-by.svg';
 
@@ -36,8 +36,6 @@ class DocsApiController extends WikiaController {
 	 *
 	 */
 	public function index() {
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
-
 		$css = [ AssetsManager::getInstance()->getSassCommonURL( '//extensions/wikia/ApiDocs/css/ApiDocs.scss', false, ['color-header' => '#004c7f']) ];
 		$this->setVal( 'css', $css );
 
@@ -56,13 +54,11 @@ class DocsApiController extends WikiaController {
 	}
 
 	public function licenseMessage() {
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 		$this->response->setVal( 'licenseUrl', $this->licenseUrl() );
 		$this->response->setVal( 'licenses', $this->getLicenseIconUrls() );
 	}
 
 	public function licenseWarning() {
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 		$this->response->setVal( 'licenseClasses', $this->getLicenseClassString() );
 		$this->response->setVal( 'licenseName', $this->app->wg->RightsText );
 		$this->response->setVal( 'licenseUrl', $this->licenseUrl() );
