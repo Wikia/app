@@ -41,6 +41,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
+		$dismax->setQueryPhraseSlop(1);
+		$dismax->setPhraseSlop(1);
+
 		return $select;
 	}
 
