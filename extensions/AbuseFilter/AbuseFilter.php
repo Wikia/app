@@ -79,6 +79,7 @@ $wgHooks['ContributionsToolLinks'][] = 'AbuseFilterHooks::onContributionsToolLin
 $wgHooks['UploadVerification'][] = 'AbuseFilterHooks::onUploadVerification';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AbuseFilterHooks::onMakeGlobalVariablesScript';
 $wgHooks['UserRename::Local'][] = 'AbuseFilterHooks::onUserRenameLocal';
+$wgHooks['UserRename::LocalIP'][] = 'AbuseFilterHooks::onUserRenameLocalIP';
 
 $wgAvailableRights[] = 'abusefilter-modify';
 $wgAvailableRights[] = 'abusefilter-log-detail';

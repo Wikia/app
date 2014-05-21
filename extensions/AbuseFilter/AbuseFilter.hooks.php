@@ -339,4 +339,26 @@ class AbuseFilterHooks {
 
 		return true;
 	}
+
+	/**
+	 * Register tables that need to be updated when a user is renamed by IP
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param int $userId
+	 * @param string $oldUsername
+	 * @param string $newUsername
+	 * @param UserRenameProcess $process
+	 * @param int $wgCityId
+	 * @param array $tasks
+	 * @return bool
+	 */
+	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
+		$tasks[] = array(
+			'table' => 'abuse_filter_log',
+			'userid_column' => 'afl_user',
+			'username_column' => 'afl_user_text',
+		);
+
+		return true;
+	}
 }

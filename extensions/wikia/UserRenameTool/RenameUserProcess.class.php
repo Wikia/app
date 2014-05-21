@@ -74,7 +74,6 @@ class RenameUserProcess {
 		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
 		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
 		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
-		[ 'table' => 'abuse_filter_log', 'userid_column' => 'afl_user', 'username_column' => 'afl_user_text' ],
 	];
 
 	private $mRequestData = null;
