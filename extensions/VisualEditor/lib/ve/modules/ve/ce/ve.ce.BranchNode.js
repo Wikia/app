@@ -215,9 +215,6 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
  * @method
  */
 ve.ce.BranchNode.prototype.setupSlugs = function () {
-	if ( this.canHaveChildrenNotContent() ) {
-		return;
-	}
 	var key, slug, i, len, first, last, childTypes,
 		doc = this.getElementDocument();
 
@@ -229,10 +226,13 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 		delete this.slugs[key];
 	}
 
+	var block = false, inline = false;
 	if ( this.canHaveChildrenNotContent() ) {
 		slug = ve.ce.BranchNode.$blockSlugTemplate[0];
+		block = true;
 	} else {
 		slug = ve.ce.BranchNode.$inlineSlugTemplate[0];
+		inline = true;
 	}
 
 	// If this content branch no longer has any rendered children, insert a slug to keep the node
@@ -247,18 +247,37 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 			this.$element[0].appendChild( this.slugs[0] );
 		}
 	} else {
+
+		if ( block ) {
+			var oneContent = false;
+			for ( i = 0, len = this.children.length; i < len; i++ ) {
+				if ( this.children[i].canContainContent() ) {
+					oneContent = true;
+					break;
+				}
+			}
+		}
+
 		// Iterate over all children of this branch and add slugs in appropriate places
 		for ( i = 0, len = this.children.length; i < len; i++ ) {
 			// Don't put slugs after internal nodes.
 			if ( ve.dm.nodeFactory.isNodeInternal( this.children[i].model.type ) ) {
 				continue;
 			}
+
+			if ( inline || ( block && !oneContent && this.type === 'document' ) )  {
+
 			// First sluggable child (left side)
 			if ( i === 0 && this.children[i].canHaveSlugBefore() ) {
 				this.slugs[i] = doc.importNode( slug, true );
 				first = this.children[i].$element[0];
 				first.parentNode.insertBefore( this.slugs[i], first );
 			}
+
+			}
+
+			if ( inline ) {
+
 			if ( this.children[i].canHaveSlugAfter() ) {
 				if (
 					// Last sluggable child (right side)
@@ -270,6 +289,8 @@ ve.ce.BranchNode.prototype.setupSlugs = function () {
 					last = this.children[i].$element[this.children[i].$element.length - 1];
 					last.parentNode.insertBefore( this.slugs[i + 1], last.nextSibling );
 				}
+			}
+
 			}
 		}
 	}
