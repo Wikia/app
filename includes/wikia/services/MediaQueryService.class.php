@@ -405,10 +405,6 @@ class MediaQueryService extends WikiaService {
 			$sortCol = 'added_at';
 		}
 
-		if ( !is_array( $categories ) ) {
-			$categories = [ $categories ];
-		}
-
 		// Setup the base query cache for a minimal amount of time
 		$query = (new WikiaSQL())->cache( 5 )
 			->SELECT( 'video_title' )
