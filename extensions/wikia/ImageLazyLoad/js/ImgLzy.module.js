@@ -188,7 +188,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 					if ( imgSrc ) {
 						cacheItem.el.src = imgSrc;
 					}
-					cacheItem.jq.removeClass( 'lzy' ).removeClass( 'lzyPlcHld' );
+					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[idx];
 				}
 			}
