@@ -24,7 +24,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 					intMapBack: true,
 					intMapNext: true
 				}
-			},
+			}
 		],
 		hiddenClass = 'hidden',
 
@@ -97,6 +97,44 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			uploadMap( $(target).parent().get(0) );
 		}
 	});
+
+	/**
+	 * @desc Sends and AJAX request to upload map image
+	 * @param {object} form
+	 */
+
+	function uploadMap( form ) {
+		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
+
+		$.ajax({
+			type: 'POST',
+			url: w.wgScriptPath + entryPoint,
+			data: new FormData(form),
+			success: function (response) {
+				var res = response.results;
+				if( res && res.isGood ) {
+					$('#intMapPreviewImage').attr('src', res.fileUrl);
+					nextStep();
+				} else {
+					handleUploadErrors( response );
+				}
+			},
+			error: function( response ) {
+				handleUploadErrors( response );
+			},
+			contentType: false,
+			processData: false
+		});
+	}
+
+	/**
+	 * @desc Handles upload errors&exceptions
+	 * @param {object} response
+	 */
+
+	function handleUploadErrors( response ) {
+		// TODO: handle errors (MOB-1626)
+	}
 
 	/**
 	 * @desc Entry point for create map modal
@@ -223,43 +261,6 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 		buttons.forEach(function(id) {
 			modalButtons.filter('#'+  id).removeClass(hiddenClass);
 		});
-	}
-
-	/**
-	 * @desc Sends and AJAX request to upload map image
-	 * @param {FormData} form
-	 */
-
-	function uploadMap( form ) {
-		var entryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json';
-
-		$.ajax({
-			type: 'POST',
-			url: window.wgScriptPath + entryPoint,
-			data: new FormData(form),
-			success: function (response) {
-				if( response.results && response.results.isGood ) {
-					$('#intMapPreviewImage').attr('src', response.results.fileUrl);
-					nextStep();
-				} else {
-					handleUploadErrors( response );
-				}
-			},
-			error: function( response ) {
-				handleUploadErrors( response );
-			},
-			contentType: false,
-			processData: false
-		});
-	}
-
-	/**
-	 * @desc Handles upload errors&exceptions
-	 * @param {Object} response
-	 */
-
-	function handleUploadErrors( response ) {
-		// TODO: handle errors (MOB-1626)
 	}
 
 	return {
