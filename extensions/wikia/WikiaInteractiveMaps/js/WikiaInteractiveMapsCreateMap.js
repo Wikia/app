@@ -42,7 +42,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				classes: ['intMapCreateMapModal'],
 				size: 'medium',
 				content: '',
-				title: $.msg('wikia-interactive-maps-create-map'),
+				title: $.msg('wikia-interactive-maps-create-map-header'),
 				buttons: [
 					{
 						vars: {

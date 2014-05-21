@@ -37,7 +37,7 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-map-not-found-error' => 'Map not found',
 
-	'wikia-interactive-maps-create-map' => 'Create a Map',
+	'wikia-interactive-maps-create-map-header' => 'Create a Map',
 	'wikia-interactive-maps-create-map-next-btn' => 'Next',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
@@ -71,7 +71,7 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-map-not-found-error' => 'Error message, shown when map is not found',
 
-	'wikia-interactive-maps-create-map' => 'Header for create map modal',
+	'wikia-interactive-maps-create-map-header' => 'Header for create map modal',
 	'wikia-interactive-maps-create-map-next-btn' => 'Next button for create map modal',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
