@@ -5,6 +5,7 @@
  */
 class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
+	const MAP_PREVIEW_WIDTH = 660;
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
 
@@ -172,13 +173,25 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				// and write in a cleaner way
 				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
 
-				$uploadStatus[ 'fileUrl' ] = wfReplaceImageServer( $file->getThumbUrl( $originalWidth . "px-" . $file->getName() ) );
+				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
+				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, self::MAP_PREVIEW_WIDTH );
 			} else {
 				$uploadStatus[ 'isGood' ] = false;
 			}
 		}
 
 		$this->setVal( 'results', $uploadStatus );
+	}
+
+	/**
+	 * Creates stashed image's thumb url and returns it
+	 *
+	 * @param File $file stashed upload file
+	 * @param Integer $width width of the thumbnail
+	 * @return String
+	 */
+	private function getStashedImageThumb( $file, $width ) {
+		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
 	}
 
 	/**
