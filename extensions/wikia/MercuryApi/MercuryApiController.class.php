@@ -12,6 +12,12 @@ class MercuryApiController extends WikiaController {
 		$this->mercuryApi = new MercuryApi();
 	}
 
+	/**
+	 * @desc Returns number of comments per article
+	 *
+	 * @throws NotFoundApiException
+	 * @throws InvalidParameterApiException
+	 */
 	public function getArticleCommentsCount() {
 		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
 
@@ -30,6 +36,12 @@ class MercuryApiController extends WikiaController {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
+	/**
+	 * @desc Returns user ids for top contributors
+	 *
+	 * @throws NotFoundApiException
+	 * @throws InvalidParameterApiException
+	 */
 	public function getTopContributorsPerArticle() {
 		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
 
@@ -42,9 +54,18 @@ class MercuryApiController extends WikiaController {
 			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
 		}
 
-		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title , self::NUMBER_CONTRIBUTORS);
+		$usersIds = $this->mercuryApi->topContributorsPerArticle( $title, self::NUMBER_CONTRIBUTORS );
 
 		$this->response->setVal( 'userIds', $usersIds );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
-} 
+
+	/**
+	 * @desc Returns theme settings for the current wiki
+	 */
+	public function getWikiTheme() {
+		$theme = $this->mercuryApi->getWikiTheme();
+		$this->response->setVal( 'theme', $theme );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
+}
