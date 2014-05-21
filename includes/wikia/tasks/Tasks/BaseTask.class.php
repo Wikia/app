@@ -19,11 +19,11 @@ abstract class BaseTask {
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
 
-	/** @var \Title title instantiation of $this->titleId */
+	/** @var \Title title this task is operating on */
 	protected $title = null;
 
-	/** @var int the title id this task is operating on, if any. */
-	protected $titleId = null;
+	/** @var array params needed to instantiate $this->title. */
+	protected $titleParams = [];
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -42,11 +42,11 @@ abstract class BaseTask {
 	 * inserting large, serialized classes into rabbitmq
 	 */
 	public function init() {
-		if ($this->titleId === null) {
+		if (empty($this->titleParams)) {
 			return;
 		}
 
-		$this->title = \Title::newFromID($this->titleId);
+		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
 		if ( $this->title == null ) {
 			throw new \Exception( "unable to instantiate title with id {$this->titleId}" );
 		}
@@ -177,7 +177,7 @@ abstract class BaseTask {
 			'class' => get_class($this),
 			'calls' => $this->calls,
 			'context' => [
-				'titleId' => $this->titleId
+				'titleParams' => $this->titleParams,
 			]
 		];
 
@@ -218,13 +218,11 @@ abstract class BaseTask {
 		}
 	}
 
-	/**
-	 * Set this task to operate on a specific title
-	 * @param int $titleId
-	 * @return $this
-	 */
-	public function titleId($titleId) {
-		$this->titleId = $titleId;
+	public function title(\Title $title) {
+		$this->titleParams = [
+			'namespace' => $title->getNamespace(),
+			'dbKey' => $title->getDBkey()
+		];
 
 		return $this;
 	}

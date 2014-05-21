@@ -1,10 +1,10 @@
 /*
-	$Revision: 1.12 $Date: 2014/03/25 13:03:04 $
+	$Revision: 1.13 $Date: 2014/04/17 07:11:32 $
 	SevenOne Media Ad Integration for de.wikia.com
 */
 
 .ad-version:after {
-	content: '$Revision: 1.12 $';
+	content: '$Revision: 1.13 $';
 	display: none;
 }
 .ad-wrapper div,
@@ -78,11 +78,22 @@
 	keep width and horizontal margins synced with .WikiaPage
 */
 #ads-outer {
-	max-width: 1030px;
+	max-width: 1600px;
 }
 @media screen and (max-width: 1030px) {
 	#ads-outer {
 		width: auto;
+	}
+}
+@media screen and (min-width: 1370px) {
+	#ads-outer {
+		width: auto;
+		margin: 0 170px;
+	}
+}
+@media screen and (min-width: 1940px) {
+	#ads-outer {
+		margin: 0 auto;
 	}
 }
 

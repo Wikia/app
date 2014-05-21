@@ -1,6 +1,7 @@
 <?php
 
 class ThumbnailController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * Thumbnail Template
@@ -60,10 +61,6 @@ class ThumbnailController extends WikiaController {
 		$width = $this->getVal( 'width', 0 );
 		$height = $this->getVal( 'height', 0 );
 		$options = $this->getVal( 'options', array() );
-
-		// use mustache for template
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/thumbnailVideo.mustache' );
 
 		// default value
 		$linkAttribs = [];
@@ -223,8 +220,6 @@ class ThumbnailController extends WikiaController {
 	}
 
 	public function imgThumbnail() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/imgThumbnail.mustache' );
 		$this->response->setData( $this->request->getParams() );
 	}
 
@@ -238,9 +233,6 @@ class ThumbnailController extends WikiaController {
 	 */
 	public function articleThumbnail() {
 		wfProfileIn( __METHOD__ );
-
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/articleThumbnail.mustache' );
 
 		$file = $this->getVal( 'file' );
 		$width = $this->getVal( 'outerWidth' );
