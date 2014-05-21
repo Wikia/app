@@ -58,6 +58,8 @@ class CrossWikiCore extends AbstractWikiService
 		$response['url'] = $wiki->city_url;
 		$response['dbname_s'] = $wiki->city_dbname;
 		$response['hostname_s'] = $service->getHostName();
+		$response['main_wikia_domain'] = $response['hostname_s'];
+
 		$response['hostname_txt'] = $response['hostname_s'];
 		$response['domains_txt'] = $service->getDomainsForWikiId( $this->wikiId );
 		$response['wiki_pagetitle_txt'] = str_replace( '$1 - ', '', ( \wfMessage( 'Pagetitle' )->text() ) );
