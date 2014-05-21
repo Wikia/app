@@ -1,65 +1,89 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: suchy
- * Date: 07.10.13
- * Time: 09:05
- * To change this template use File | Settings | File Templates.
- */
+class RssFeedService {
 
-class HubRssFeedService {
 	/** This is DateTime::RFC822 with one small change. We use 4 digits year after recommendation from feedvalidator.org */
 	const DATE_FORMAT = "D, d M Y H:i:s O";
+	protected $feedDescription = "";
+	protected $feedTitle = "";
+	protected $feedUrl = "";
+	protected $feedLang = "en";
+	protected $data = [];
 
-	protected $descriptions = [
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
-		['t' => 'Wikia Entertainment Community feed',
-			'd' => 'From Wikia community - Entertainment'],
-
-		WikiFactoryHub::CATEGORY_ID_GAMING =>
-		['t' => 'Wikia Gaming Community feed',
-			'd' => 'From Wikia community - Gaming'],
-
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE =>
-		['t' => 'Wikia Lifestyle Community feed',
-			'd' => 'From Wikia community - Lifestyle'],
-
-		MixedFeedModel::FAKE_HUB_GAMEOFTHRONES =>
-		[ 't' => 'Game of Thrones',
-			'd' => 'Wikia TV Feed' ],
-
-		MixedFeedModel::FAKE_HUB_ELDERSCROLLS =>
-		[ 't' => 'Wikia Gaming Feed',
-			'd' => 'Wikia Gaming Feed' ],
-
-		MixedFeedModel::FAKE_HUB_MARVEL =>
-		[ 't' => 'Marvel',
-			'd' => 'Wikia Marvell Related Feed' ]
-	];
-
-	protected $lang;
-
-	protected $url;
-
-	public function __construct( $lang, $url ) {
-		$this->lang = $lang;
-		$this->url = $url;
+	/**
+	 * @param string $feedDescription
+	 */
+	public function setFeedDescription( $feedDescription ) {
+		$this->feedDescription = $feedDescription;
 	}
 
+	/**
+	 * @param string $feedLang
+	 */
+	public function setFeedLang( $feedLang ) {
+		$this->feedLang = $feedLang;
+	}
 
-	public function dataToXml( $data, $verticalId ) {
+	/**
+	 * @param string $feedTitle
+	 */
+	public function setFeedTitle( $feedTitle ) {
+		$this->feedTitle = $feedTitle;
+	}
+
+	/**
+	 * @param string $feedUrl
+	 */
+	public function setFeedUrl( $feedUrl ) {
+		$this->feedUrl = $feedUrl;
+	}
+
+	public function getData() {
+		return $this->data;
+	}
+
+	public function addElem($title, $descr, $url, $timestamp, $img = null) {
+		$this->data[$url] = array(
+			"title" => $title,
+			"description" => $descr,
+			"timestamp" => $timestamp,
+			"img" => $img
+		);
+	}
+
+	public function getArticleDetails($wikiId, $articleId, $url) {
+		$domain = WikiFactory::DBtoUrl(WikiFactory::IDtoDB($wikiId));
+		//TODO: REFACTOR THE HACK
+
+		if ( $domain ) {
+			$callUrl = sprintf( '%sapi/v1/Articles/Details?ids=%u', $domain, $articleId );
+			$details = Http::get($callUrl);
+			if (empty($details)) {
+				$details = file_get_contents($callUrl);
+			}
+			$data = json_decode( $details );
+			if ( $data ) {
+				return $data;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public function toXml() {
 		$doc = new DOMDocument();
 		$doc->loadXML( file_get_contents( dirname( __FILE__ ) . '/templates/rss.xml' ) );
 		$rssList = $doc->getElementsByTagName( 'rss' );
 		$rss = $rssList->item( 0 );
 		$channel = $rss->appendChild( new DOMElement('channel') );
 
-		self::appendTextNode( $doc, $channel, 'title', $this->descriptions[ $verticalId ][ 't' ] );
-		self::appendTextNode( $doc, $channel, 'description', $this->descriptions[ $verticalId ][ 'd' ] );
-		self::appendAtomLink( $doc, $channel, $this->url );
-		self::appendTextNode( $doc, $channel, 'link', $this->url);
-		self::appendTextNode( $doc, $channel, 'language', $this->lang );
+		self::appendTextNode( $doc, $channel, 'title', $this->feedTitle );
+		self::appendTextNode( $doc, $channel, 'description', $this->feedDescription );
+		self::appendAtomLink( $doc, $channel, $this->feedUrl );
+		self::appendTextNode( $doc, $channel, 'link', $this->feedUrl);
+		self::appendTextNode( $doc, $channel, 'language', $this->feedLang );
 		self::appendTextNode( $doc, $channel, 'generator', 'MediaWiki 1.19.7' );
+
+		$data = $this->getData();
 
 		$maxTimestamp = 0;
 		foreach ( $data as $url => $item ) {
@@ -90,7 +114,6 @@ class HubRssFeedService {
 		}
 		return $doc->saveXML();
 	}
-
 
 	private static function appendCDATA( DOMDocument $doc, DOMElement $node, $name, $data = '' ) {
 		$cdata = $doc->createCDATASection( $data );
