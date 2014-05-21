@@ -12,7 +12,7 @@ class TvApiController extends WikiaApiController {
 	const NAMESPACE_SETTING = 0;
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	/** @var Array wikis */
-	protected $wikis = [];
+	protected $wikis = [ ];
 	/** @var SeriesEntitySearchService seriesService */
 	protected $seriesService;
 	/** @var EpisodeEntitySearchService episodeService */
@@ -33,7 +33,7 @@ class TvApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $result );
 
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
@@ -46,11 +46,12 @@ class TvApiController extends WikiaApiController {
 			$episodeService->setLang( $lang )
 				->setQuality( $quality );
 			$result = null;
-			foreach( $wikis as $wiki ) {
-				$episodeService->setWikiId( $wiki['id'] );
+			foreach ( $wikis as $wiki ) {
+				$episodeService->setWikiId( $wiki[ 'id' ] );
+				$episodeService->setNamespace( WikiFactory::getVarValueByName( 'wgContentNamespaces', $wiki[ 'id' ] ) );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
-					$result = $this->getTitle( $episodeName, $wiki['id'] );
+					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
@@ -102,14 +103,14 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 
-	protected function getContentUrl($wikiId, $articleId){
+	protected function getContentUrl( $wikiId, $articleId ) {
 		return $this->getEpisodeService()->replaceHostUrl(
 			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
-			.EpisodeEntitySearchService::API_URL . $articleId
+			. EpisodeEntitySearchService::API_URL . $articleId
 		);
 	}
 
-	protected function createTitle($text, $wikiId) {
+	protected function createTitle( $text, $wikiId ) {
 		return GlobalTitle::newFromText( $text, NS_MAIN, $wikiId );
 	}
 
@@ -124,7 +125,7 @@ class TvApiController extends WikiaApiController {
 
 	protected function getQualityFromSolr( $wikiId, $articleId ) {
 		$config = $this->getConfigById( $wikiId, $articleId );
-		return ( new Factory )->getFromConfig( $config )->searchAsApi( ['article_quality_i' => 'quality'  ], false );
+		return ( new Factory )->getFromConfig( $config )->searchAsApi( [ 'article_quality_i' => 'quality' ], false );
 	}
 
 	protected function getConfigById( $wikiId, $articleId ) {
