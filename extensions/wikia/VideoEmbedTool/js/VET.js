@@ -209,9 +209,21 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		callbackAfterSelect = options.callbackAfterSelect || $.noop;
 		callbackAfterEmbed = options.callbackAfterEmbed || $.noop;
 
+		// VET tracking
 		tracking({
 			action: Wikia.Tracker.ACTIONS.OPEN
 		});
+
+		// Any extra tracking
+		if (options.track) {
+			Wikia.Tracker.track({
+				action: options.track.action || Wikia.Tracker.ACTIONS.OPEN,
+				category: options.track.category || 'vet',
+				label: options.track.label || '',
+				value: options.track.value || null,
+				trackingMethod: options.track.method || 'both'
+			});
+		}
 
 		if (wysiwygStart === 2) {
 			if (options.size) {

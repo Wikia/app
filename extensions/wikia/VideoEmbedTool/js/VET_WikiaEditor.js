@@ -11,11 +11,18 @@
 			triggeredFromRTE = event && event.type === 'rte',
 			callback = null,
 			wikiaEditor,
+			track = null,
 			options;
 
-		if (event && event.data && event.data.element) {
-			// Video or Placeholder element was clicked in RTE
-			element = event.data.element;
+		if (event && event.data ) {
+			if (event.data.element) {
+				// Video or Placeholder element was clicked in RTE
+				element = event.data.element;
+			}
+			if (event.data.track) {
+				// extra tracking info sent from extension
+				track = event.data.track;
+			}
 		}
 
 		if (triggeredFromRTE) {
@@ -109,7 +116,8 @@
 			callbackAfterEmbed: callback,
 			embedPresets: embedPresets,
 			onClose: onClose,
-			startPoint: startPoint
+			startPoint: startPoint,
+			track: track
 		};
 
 		window.vetLoader.load(options);

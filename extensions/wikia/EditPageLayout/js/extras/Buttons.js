@@ -30,7 +30,7 @@
 		forceLogin: true,
 		clicksource: function () {
 			WikiaEditor.load('WikiaMiniUpload').done(function () {
-				WMU_show({}); // jshint ignore:line
+				WMU_show(); // jshint ignore:line
 			});
 		},
 		ckcommand: 'addimage'
@@ -144,9 +144,9 @@
 				imageFile: extensionsPath + '/wikia/WikiaMiniUpload/images/button_wmu.png',
 				speedTip: wmu_imagebutton, // jshint ignore:line
 				imageId: 'mw-editbutton-wmu',
-				onclick: function (event) {
+				onclick: function () {
 					WikiaEditor.load('WikiaMiniUpload').done(function () {
-						WMU_show(event); // jshint ignore:line
+						WMU_show(); // jshint ignore:line
 					});
 				}
 			});

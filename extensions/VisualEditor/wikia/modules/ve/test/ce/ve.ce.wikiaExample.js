@@ -20,9 +20,6 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	/* Data */
 
 	media.data = {
-		'attribution': {
-			'minWidth': 100
-		},
 		'defaultWidth': defaultThumbWidth,
 		'defaultHeight': defaultThumbHeight
 	};
@@ -83,14 +80,8 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	};
 
 	media.html.block = {
-		'attribution':
-			'<p class="attribution">' +
-				// TODO: update this once the attribution message is changed in VID-1559
-				mw.message( 'oasis-content-picture-added-by', '<a href="/wiki/User:Foo">Foo</a>' ).plain() +
-			'</p>',
 		'caption':
 			'<figcaption class="ve-ce-branchNode">' +
-				'<a class="sprite details ve-no-shield"></a>' +
 				'<p class="ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
 			'</figcaption>',
 		'frame':
@@ -240,12 +231,9 @@ ve.ce.wikiaExample = ( function ( utils ) {
 			$figcaption = $mock.find( 'figcaption' );
 			$caption = $figcaption.find( '.caption' );
 
-			// DOM order is sprite, title, caption, attribution
+			// DOM order is title, caption
 			if ( rdfaType === 'mw:Video' ) {
 				$caption.before( media.html.video.block.title );
-			}
-			if ( width >= media.data.attribution.minWidth ) {
-				$figcaption.append( media.html.block.attribution );
 			}
 		} else {
 			$mock.removeAttr( 'style' );
