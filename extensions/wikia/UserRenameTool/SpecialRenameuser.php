@@ -65,14 +65,8 @@ $wgLogNames['renameuser']              = 'userrenametool-logpage';
 $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 
 //task types
-/*
-if(function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
-	extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
-}
-else
-	die('The User Rename Tool extension requires the Task Manager extension to be enabled.');
- */
+extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
+extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
 
 //hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';

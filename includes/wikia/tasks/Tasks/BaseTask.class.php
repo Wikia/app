@@ -29,7 +29,7 @@ abstract class BaseTask {
 	private $queueName = null;
 
 	/** @var int wrapper for AsyncTaskList->wikiId() */
-	private $wikiId = null;
+	private $wikiId = AsyncTaskList::DEFAULT_WIKI_ID;
 
 	/** @var boolean wrapper for AsyncTaskList->dupCheck() */
 	private $dupCheck = false;
@@ -138,32 +138,39 @@ abstract class BaseTask {
 	/**
 	 * convenience method wrapping AsyncTaskList
 	 *
-	 * @return string the task's id
+	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$taskList = new AsyncTaskList();
+		$isArray = is_array($this->wikiId);
+		$wikiIds = (array)$this->wikiId;
 
-		foreach ($this->calls as $i => $call) {
-			$taskList->add([$this, $i]);
+		$taskLists = [];
+		foreach ($wikiIds as $wikiId) {
+			$taskList = new AsyncTaskList();
+
+			foreach ($this->calls as $i => $call) {
+				$taskList->add([$this, $i]);
+			}
+
+			$taskList->wikiId( $wikiId );
+
+			if ($this->queueName) {
+				$taskList->setPriority($this->queueName);
+			}
+
+			if ($this->dupCheck) {
+				$taskList->dupCheck();
+			}
+
+			if ($this->delay) {
+				$taskList->delay($this->delay);
+			}
+
+			$taskLists[] = $taskList;
 		}
 
-		if ($this->wikiId) {
-			$taskList->wikiId($this->wikiId);
-		}
-
-		if ($this->queueName) {
-			$taskList->setPriority($this->queueName);
-		}
-
-		if ($this->dupCheck) {
-			$taskList->dupCheck();
-		}
-
-		if ($this->delay) {
-			$taskList->delay($this->delay);
-		}
-
-		return $taskList->queue();
+		$tasks = AsyncTaskList::batch($taskLists);
+		return ($isArray ? $tasks : $tasks[0]);
 	}
 
 	/**

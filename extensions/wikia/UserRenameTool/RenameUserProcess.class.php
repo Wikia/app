@@ -491,32 +491,30 @@ class RenameUserProcess {
 			return false;
 		}
 
-		/*
-		//create a new task for the Task Manager to store the logs for the global process
-		$this->mGlobalTask = new UserRenameGlobalTask();
-		$this->mGlobalTask->createTask(
-			array(
-				'requestor_id' => $this->mRequestorId,
-				'requestor_name' => $this->mRequestorName,
-				'rename_user_id' => $this->mUserId,
-				'rename_old_name' => $this->mOldUsername,
-				'rename_new_name' => $this->mNewUsername,
-				'reason' => $this->mReason,
-				'tasks' => array()
-			),
-			TASK_STARTED,
-			BatchTask::PRIORITY_HIGH
-		);
+		if ( !TaskRunner::isModern('UserRename') ) {
+			//create a new task for the Task Manager to store the logs for the global process
+			$this->mGlobalTask = new UserRenameGlobalTask();
+			$this->mGlobalTask->createTask(
+				array(
+					'requestor_id' => $this->mRequestorId,
+					'requestor_name' => $this->mRequestorName,
+					'rename_user_id' => $this->mUserId,
+					'rename_old_name' => $this->mOldUsername,
+					'rename_new_name' => $this->mNewUsername,
+					'reason' => $this->mReason,
+					'tasks' => array()
+				),
+				TASK_STARTED,
+				BatchTask::PRIORITY_HIGH
+			);
+			$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
+			$this->addLog("---USERNAMES LOG BEGIN---\n".$this->getInternalLog()."---USERNAMES LOG END---");
 
-		$this->addLogDestination(self::LOG_BATCH_TASK, $this->mGlobalTask);
-		 */
+			$tasks = array($this->mGlobalTask->getID());
 
-		$this->addLog("---USERNAMES LOG BEGIN---\n".$this->getInternalLog()."---USERNAMES LOG END---");
-
-		//$tasks = array($this->mGlobalTask->getID());
-
-		// Put the starting line to log
-		//$this->addMainLog("start", RenameUserLogFormatter::start($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
+			// Put the starting line to log
+			$this->addMainLog("start", RenameUserLogFormatter::start($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
+		}
 
 		// Execute the worker
 		$status = false;
@@ -528,7 +526,9 @@ class RenameUserProcess {
 			$this->addError(wfMessage('userrenametool-error-cannot-rename-unexpected')->inContentLanguage()->text());
 		}
 
-		//$this->mGlobalTask->closeTask($status);
+		if ( !TaskRunner::isModern('UserRename') ) {
+			$this->mGlobalTask->closeTask($status);
+		}
 
 		// Analyze status
 		if (!$status) {
@@ -673,25 +673,6 @@ class RenameUserProcess {
 		$this->addLog("Initializing update of global shared DB's.");
 		$this->updateGlobal();
 
-		// create a new task for the Task Manager to handle all the global tables
-		$this->addLog("Setting up a task for processing global DB");
-		/*
-		$task = new UserRenameGlobalTask();
-		$task->createTask(
-				array(
-					'rename_user_id'  => $this->mUserId,
-					'rename_old_name' => $this->mOldUsername,
-					'rename_new_name' => $this->mNewUsername,
-					'tasks'           => array()
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-		);
-		$this->addLog("Task created with ID " . $task->getID());
-		 */
-
-		$this->addLog("Setting up a task for processing local DB's");
-		$taskLists = [ ];
 		$callParams = array(
 			'requestor_id' => $this->mRequestorId,
 			'requestor_name' => $this->mRequestorName,
@@ -702,18 +683,39 @@ class RenameUserProcess {
 			'phalanx_block_id' => $this->mPhalanxBlockId,
 			'reason' => $this->mReason,
 		);
-		foreach ( $wikiIDs as $wikiCityId ) {
-			$task = new UserRenameTask();
-			$taskLists[ ] = ( new AsyncTaskList() )
-				->wikiId( $wikiCityId )
-				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME )
-				->add( $task->call('renameUser', $callParams) );
-		}
-		if ( !empty($taskLists) ) {
-			AsyncTaskList::batch( $taskLists );
-		}
+		if ( TaskRunner::isModern('UserRename') ) {
+			$task = ( new UserRenameTask() )
+				->wikiId( $wikiIDs )
+				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 
-		$this->addLog("User rename global task end.");
+			$task->call( 'renameUser', $callParams );
+			$task->queue();
+		} else {
+			// create a new task for the Task Manager to handle all the global tables
+			$this->addLog("Setting up a task for processing global DB");
+			$task = new UserRenameGlobalTask();
+			$task->createTask(
+				array(
+					'rename_user_id'  => $this->mUserId,
+					'rename_old_name' => $this->mOldUsername,
+					'rename_new_name' => $this->mNewUsername,
+					'tasks'           => array(),
+				),
+				TASK_QUEUED,
+				BatchTask::PRIORITY_HIGH
+			);
+			$this->addLog("Task created with ID " . $task->getID());
+
+			$this->addLog("Setting up a task for processing local DB's");
+			$callParams['city_ids'] = $wikiIDs;
+			$callParams['global_task_id'] = $this->mGlobalTask->getID();
+			//create a new task for the Task Manager to handle all the local tables per each wiki
+			$task = new UserRenameLocalTask();
+			$task->createTask( $callParams, TASK_QUEUED, BatchTask::PRIORITY_HIGH );
+
+			$this->addLog("Task created with ID " . $task->getID());
+			$this->addLog("User rename global task end.");
+		}
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -1039,8 +1041,8 @@ class RenameUserProcess {
 		wfRunHooks($hookName, array($this->mRequestorId, $this->mRequestorName, $this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
 		$tasks = array();
-	//	if ( isset($this->mGlobalTask) )
-	//		$tasks[] = $this->mGlobalTask->getID();
+		if ( isset($this->mGlobalTask) )
+			$tasks[] = $this->mGlobalTask->getID();
 		if ( isset($this->mLogTask) )
 			$tasks[] = $this->mLogTask->getID();
 
@@ -1220,11 +1222,9 @@ class RenameUserProcess {
 			$o->mRequestorName = $requestor->getName();
 		}
 
-		/*
 		if (!empty($data['global_task_id'])) {
 			$o->mGlobalTask = UserRenameGlobalTask::newFromID($data['global_task_id']);
 		}
-		 */
 
 		$o->addLog("newFromData(): Requestor id={$o->mRequestorId} name={$o->mRequestorName}");
 
