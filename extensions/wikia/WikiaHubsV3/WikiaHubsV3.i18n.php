@@ -22,11 +22,6 @@ $messages['en'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
 
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Video Games',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle',
-	
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Read more about WAM',
@@ -77,11 +72,6 @@ $messages['de'] = array(
 	'wikiahubs-v3-wam-score' => 'WAM-Punktzahl',
 	'wikiahubs-v3-wam-wiki-url' => "Name",
 
-	// wikia hubs
-	'wikiahubs-v3-vertical-video-games' => 'Videospiele',
-	'wikiahubs-v3-vertical-entertainment' => 'Entertainment',
-	'wikiahubs-v3-vertical-lifestyle' => 'Lifestyle',
-
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Artikel vorschlagen',
 	'wikiahubs-v3-from-community-caption' => 'Von [$1 $2] aus [$3 $4]',
@@ -124,11 +114,6 @@ $messages['fr'] = array(
 	'wikiahubs-v3-wam-rank' => 'Classement',
 	'wikiahubs-v3-wam-score' => 'Score WAM',
 	'wikiahubs-v3-wam-wiki-url' => "Nom",
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Jeux vidéo',
-	'wikiahubs-v3-vertical-Entertainment' => 'Divertissement',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Mode de vie',
 
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Promouvoir',
@@ -173,11 +158,6 @@ $messages['es'] = array(
 	'wikiahubs-v3-wam-score' => 'Puntuación en el WAM',
 	'wikiahubs-v3-wam-wiki-url' => "Nombre",
 
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Videojuegos',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entretenimiento',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Otros',
-
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Promociónate',
 	'wikiahubs-v3-from-community-caption' => 'De [$1 $2] en [$3 $4]',
@@ -209,11 +189,6 @@ $messages['pl'] = [
 	'wikiahubs-v3-suggest-article-success' => 'Dzięki za zasugerowanie artykułu, nasi edytorzy przyjrzą się zgłoszeniu. Zajrzyj wkrótce aby zobaczyć artykuł na stronie.!',
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Adres URL artykułu musi mieć co najmniej 10 znaków',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Komentarz musi mieć od 1 do 140 znaków',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Gry',
-	'wikiahubs-v3-vertical-Entertainment' => 'Rozrywka',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle',
 
 	//WAM
 	'wikiahubs-v3-wam-header' => 'Punktacja WAM',
@@ -258,11 +233,6 @@ $messages['ja'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => '記事ページのurlは最低でも10文字必要です。',
 	'wikiahubs-v3-error-invalid-reason-length' => 'コメントは1から140文字以内でお願いします。',
 
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'ゲーム',
-	'wikiahubs-v3-vertical-Entertainment' => 'エンターテイメント',
-	'wikiahubs-v3-vertical-Lifestyle' => 'ライフスタイル',
-
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM スコア',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'WAMについてもっと読む',
@@ -306,11 +276,6 @@ $messages['qqq'] = array(
 	'wikiahubs-v3-suggest-article-success' => 'Get promoted - message after successful add',
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Get promoted - Article url validation error message',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Get promoted - Reason validation error message',
-
-	// wikia hubs
-	'wikiahubs-v3-vertical-VideoGames' => 'Video Games hub name',
-	'wikiahubs-v3-vertical-Entertainment' => 'Entertainment hub name',
-	'wikiahubs-v3-vertical-Lifestyle' => 'Lifestyle hub name',
 
 	//WAM
 	'wikiahubs-v3-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
