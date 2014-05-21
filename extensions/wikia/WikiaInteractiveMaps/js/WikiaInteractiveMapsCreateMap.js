@@ -4,12 +4,18 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
 
-		createMapModal, // placeholder for holding reference to modal instance
-		modalSections,// placeholder for caching create map flow modal sections
-		modalButtons, // placeholder for caching create map modal buttons
-		lastStep = 0, // holds last step of create map flow
-		currentStep = 0, // holds current step of create map flow
-		steps = [ // holds config for each step
+		// placeholder for holding reference to modal instance
+		createMapModal,
+		// placeholder for caching create map flow modal sections
+		modalSections,
+		// placeholder for caching create map modal buttons
+		modalButtons,
+		// holds last step of create map flow
+		lastStep = 0,
+		// holds current step of create map flow
+		currentStep = 0,
+		// holds config for each step
+		steps = [
 			{
 				id: 'intMapsChooseType'
 			},
@@ -27,8 +33,9 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				}
 			}
 		],
+		// class used for hiding elements
 		hiddenClass = 'hidden',
-
+		// modal configuration
 		modalConfig = {
 			vars: {
 				id: 'intMapCreateMapModal',
@@ -65,6 +72,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				]
 			}
 		},
+		// data for mustache template
 		templateData = {
 			mapType: [
 				{
@@ -79,6 +87,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file'),
 			titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder')
 		},
+		// modal event handlers
 		modalEvents = {
 			next: nextStep,
 			back: previousStep,
@@ -88,7 +97,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			intMapGeo: function() {
 				switchStep(2);
 			}
-		}
+		};
 
 	/**
 	 * @desc Entry point for create map modal
@@ -103,10 +112,8 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 			modalButtons = createMapModal.$element.find('.buttons').children();
 
 			bindEvents(createMapModal, modalEvents);
-
-			// set initial step
+			// set initial create map step
 			switchStep(0);
-
 			createMapModal.show();
 		});
 	}
