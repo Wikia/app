@@ -190,14 +190,11 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->canonicalVerticalName = str_replace(' ', '', $this->model->getCanonicalVerticalNameById($this->cityId));
 		$this->wg->out->setPageTitle($this->verticalName);
 
-		# For the main page, overwrite the <title> element with the con-
-		# tents of 'pagetitle-view-mainpage' instead of the default (if
-		# that's not empty).
-		# This message always exists because it is in the i18n files
+		// For the main page, overwrite the <title> element with the contents of 'pagetitle-view-mainpage'.
 		if ( $this->getContext()->getTitle()->isMainPage() ) {
 			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
 			if ( !$msg->isDisabled() ) {
-				$this->wg->out->setHTMLTitle( $msg->title( $this->getContext()->getTitle() )->text() );
+				$this->wg->out->setHTMLTitle( $msg->title( $this->getContext()->getTitle() ) );
 			}
 		}
 	}
