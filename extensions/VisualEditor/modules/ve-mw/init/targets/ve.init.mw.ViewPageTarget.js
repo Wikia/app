@@ -1045,7 +1045,8 @@ ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = null;
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
 	this.toolbarCancelButton = new OO.ui.ButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
-	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
+	// Wikia change: make button secondary for theming
+	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' ).find( 'a' ).addClass( 'secondary' );
 	this.toolbarSaveButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),
 		'flags': ['constructive'],

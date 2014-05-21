@@ -233,6 +233,8 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 		'$': this.$,
 		'label': ve.msg ( 'visualeditor-dialog-reference-useexisting-label' )
 	} );
+	// Wikia change: make button secondary for theming
+	this.selectButton.$element.find( 'a' ).addClass( 'secondary' );
 	this.backButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'visualeditor-dialog-action-goback' )

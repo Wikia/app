@@ -1,0 +1,24 @@
+@import "skins/oasis/css/core/buttons";
+
+.oo-ui-buttonedElement-framed {
+	&.oo-ui-flaggableElement-constructive,
+	&.oo-ui-flaggableElement-primary {
+		.oo-ui-buttonedElement-button {
+			@extend .button;
+		}
+	}
+	&.oo-ui-widget-disabled {
+		.oo-ui-buttonedElement-button {
+			@extend .button[disabled];
+		}
+	}
+	.oo-ui-buttonedElement-button {
+		@extend .button;
+		padding: 0.2em 0.8em !important;
+		margin: 0.1em 0 !important;
+
+		&.oo-ui-buttonedElement-active {
+			@extend .button.active;
+		}
+	}
+}

@@ -58,6 +58,8 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 			'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-label' )
 		}
 	);
+	// Wikia change: make all buttons secondary for theming
+	this.tableOfContents.$element.find( 'a' ).addClass( 'secondary' );
 
 	// Redirect items
 	this.enableRedirectInput = new OO.ui.CheckboxInputWidget( { '$': this.$ } );
