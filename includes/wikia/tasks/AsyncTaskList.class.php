@@ -169,15 +169,24 @@ class AsyncTaskList {
 	}
 
 	/**
+	 * Lets us set the task type so that we can use other tasks in celery-workers lib
+	 * @param str $type
+	 * @return $this
+	 */
+	public function taskType( $type ) {
+		$this->taskType = $type;
+		return $this;
+	}
+
+	/**
 	 * put this task list into the queue
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
-	 * @param str $taskType allows the override of the default task type
 	 * @return string the task list's id
 	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
-	public function queue(AMQPChannel $channel=null, $taskType=null) {
+	public function queue(AMQPChannel $channel=null) {
 		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
 
 		if ($this->createdBy == null) {
@@ -197,7 +206,7 @@ class AsyncTaskList {
 		$id = $this->generateId();
 		$payload = (object) [
 			'id' => $id,
-			'task' => $taskType ?: $this->taskType,
+			'task' => $this->taskType,
 			'args' => [
 				$this->wikiId,
 				$this->calls,
