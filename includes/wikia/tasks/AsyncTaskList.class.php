@@ -81,6 +81,7 @@ class AsyncTaskList {
 				break;
 			case NlpPipelineQueue::NAME:
 				$queue = new NlpPipelineQueue();
+				break;
 			default:
 				$queue = new Queue();
 				break;
@@ -195,6 +196,7 @@ class AsyncTaskList {
 	 * @return array
 	 */
 	protected function payloadArgs() {
+		$taskList = [];
 		foreach ($this->classes as $task) {
 			/** @var BaseTask $task */
 			$serialized = $task->serialize();
@@ -256,11 +258,11 @@ class AsyncTaskList {
 	public function queue(AMQPChannel $channel=null) {
 		global $wgUser;
 
+		$this->initializeWorkId();
+
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
 		}
-
-		$taskList = [];
 
 		$id = $this->generateId();
 		$payload = (object) [
@@ -270,7 +272,7 @@ class AsyncTaskList {
 			'kwargs' => (object) [
 				'created_ts' => time(),
 				'created_by' => $this->createdBy,
-				'work_id' => sha1(json_encode($workId)),
+				'work_id' => sha1(json_encode($this->workId)),
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
 			]

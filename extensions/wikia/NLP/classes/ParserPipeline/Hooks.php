@@ -2,30 +2,26 @@
 
 namespace \Wikia\NLP\ParserPipeline;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
+use Wikia\Tasks\AsyncBackendTaskList;
 use \Title;
 
 class Hooks
 {
 	
 	public static function onArticleEditUpdates( $article, $editInfo, $changed ) {
-		global $wgContentNamespaces, $wgCityId;
+		global $wgContentNamespaces;
 		$title = $article->getTitle();
 		if ( $changed && in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			$task = ( new NlpParseContentTask() )
-				->wikiId( $wgCityId )
-				->title( $title )
-				->setPriority( NlpPipelineQueue::NAME );
-			$task->call( 'parse' );
-			$task->queue();
+			self::parseEvent( $title, 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
 
 	public static function onArticleDeleteComplete( $article, User $user, $reason, $id ) {
-		global $wgContentNamespaces, $wgCityId;
+		global $wgContentNamespaces;
 		$title = $article->getTitle();
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::deleteTitleParse( $title );
+			self::parseEvent( $title, 'celery_workers.nlp_pipeline.delete' );
 		}
 		return true;
 	}
@@ -33,36 +29,32 @@ class Hooks
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
 		global $wgContentNamespaces;
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseTitle( $title );
+			self::parseEvent( $title, 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
 
 	public static function onTitleMoveComplete( Title $title, Title $newtitle, User $user, $oldid, $newid ) {
+		global $wgContentNamespaces;
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::deleteTitleParse( $title );
-			self::parseTitle( $newTitle );			
+			self::parseEvent( $title, 'celery_workers.nlp_pipeline.delete' );
+			self::parseEvent( $newtitle, 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
 
-	private static function parseTitle( Title $title ) {
-		$task = ( new NlpParseContentTask() )
-				->wikiId( $wgCityId )
-				->title( $title )
-				->setPriority( NlpPipelineQueue::NAME );
-		$task->call( 'parse' );
-		$task->queue();		
-	}
+	private static function parseEvent( Title $title, $task ) {
+		global $wgCityId;
 
-	private static function deleteTitleParse( Title $title ) {
-		$task = ( new NlpParseContentTask() )
-				->wikiId( $wgCityId )
-				->title( $title )
-				->setPriority( NlpPipelineQueue::NAME );
-		$task->call( 'delete_parse' );
-		$task->queue();
-	}
+		$docId = sprintf( '%d_%d', $wgCityId, $title->getArticleId() );
 
+		$taskList = new AsyncBackendTaskList();
+
+		$taskList->taskType( $task )
+				 ->add( $docId )
+				 ->wikiId( $wgCityId )
+				 ->setPriority( Wikia\Tasks\Queues\NlpPipelineQueue::NAME )
+				 ->queue();
+	}
 
 }
