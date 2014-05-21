@@ -15,8 +15,8 @@ class WikiaHubsModuleExploreService extends WikiaHubsModuleEditableService {
 	protected $sectionsLimit;
 	protected $linksLimit;
 
-	public function __construct($langCode, $sectionId, $verticalId, $cityId = 0, $hubVersion = 2) {
-		parent::__construct($langCode, $sectionId, $verticalId, $cityId, $hubVersion);
+	public function __construct($cityId) {
+		parent::__construct($cityId);
 
 		$this->model = new WikiaHubsExploreModel();
 		$this->sectionsLimit = $this->model->getFormSectionsLimit();
