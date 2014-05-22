@@ -65,7 +65,10 @@ class VideosModule extends WikiaModel {
 
 		// If none are there call out to the video wiki to look for some
 		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', ['category' => $category] );
+			$log->info( __METHOD__.' memc MISS', [
+				'method'   => __METHOD__,
+				'category' => $category
+			] );
 
 			// Look for picks specific to this wiki.  Don't get a thumbnail
 			// since we'll be generating it below
@@ -112,7 +115,10 @@ class VideosModule extends WikiaModel {
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		} else {
-			$log->info( __METHOD__.' memc HIT', ['category' => $category] );
+			$log->info( __METHOD__.' memc HIT', [
+				'method'   => __METHOD__,
+				'category' => $category
+			] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -132,7 +138,7 @@ class VideosModule extends WikiaModel {
 		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
 
-		$loggingParams = [ 'num' => $numRequired, 'sort' => $sort ];
+		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
 
 		if ( !is_array( $videos ) ) {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );
@@ -184,9 +190,12 @@ class VideosModule extends WikiaModel {
 		$videos = $this->wg->Memc->get( $memcKey );
 		$category = $this->getSearchVertical();
 
-		$loggingParams = [ 'articleId' => $articleId,
-						   'num'       => $numRequired,
-						   'category'  => $category ];
+		$loggingParams = [
+			'method'    => __METHOD__,
+			'articleId' => $articleId,
+			'num'       => $numRequired,
+			'category'  => $category
+		];
 
 		if ( !is_array( $videos ) ) {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );
@@ -239,7 +248,7 @@ class VideosModule extends WikiaModel {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
 
-		$loggingParams = [ 'num' => $numRequired ];
+		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
 
 		if ( !is_array( $videos ) ) {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );
@@ -291,7 +300,7 @@ class VideosModule extends WikiaModel {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION );
 		$videos = $this->wg->Memc->get( $memcKey );
 
-		$loggingParams = [ 'num' => $numRequired ];
+		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
 
 		if ( !is_array( $videos ) ) {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );
@@ -345,9 +354,12 @@ class VideosModule extends WikiaModel {
 		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
 
-		$loggingParams = [ 'category' => $category,
-						   'num'      => $numRequired,
-						   'sort'     => $sort ];
+		$loggingParams = [
+			'method'   => __METHOD__,
+			'category' => $category,
+			'num'      => $numRequired,
+			'sort'     => $sort
+		];
 
 		if ( !is_array( $videos ) ) {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );

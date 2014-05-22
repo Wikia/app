@@ -119,8 +119,11 @@ class VideoEmbedToolSearchService
 		$query =  (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
 		$expectedFields = $this->getExpectedFields();
 
-		$log->info( __METHOD__.' - Querying SOLR', [ 'query'          => $query,
-													 'expectedFields' => $expectedFields ] );
+		$log->info( __METHOD__.' - Querying SOLR', [
+			'method'         => __METHOD__,
+			'query'          => $query,
+			'expectedFields' => $expectedFields
+		] );
 
 		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
 		                            ->setQuery( $query )

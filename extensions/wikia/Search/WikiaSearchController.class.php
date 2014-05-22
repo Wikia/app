@@ -260,11 +260,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$log = WikiaLogger::instance();
-		$log->info( __METHOD__.' - Querying SOLR', [ 'title'       => $title,
-													 'limit'       => $limit,
-													 'mm'          => $mm,
-													 'minDuration' => $minDuration,
-													 'maxDuration' => $maxDuration ] );
+		$log->info( __METHOD__.' - Querying SOLR', [
+			'method'      => __METHOD__,
+			'title'       => $title,
+			'limit'       => $limit,
+			'mm'          => $mm,
+			'minDuration' => $minDuration,
+			'maxDuration' => $maxDuration
+		] );
 
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
@@ -318,11 +321,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 
 			$log = WikiaLogger::instance();
-			$log->info( __METHOD__.' - Querying SOLR', [ 'topics'     => $topics,
-														'limit'       => $limit,
-														'mm'          => $mm,
-														'minDuration' => $minDuration,
-														'maxDuration' => $maxDuration ] );
+			$log->info( __METHOD__.' - Querying SOLR', [
+				'method'      => __METHOD__,
+				'topics'     => $topics,
+				'limit'       => $limit,
+				'mm'          => $mm,
+				'minDuration' => $minDuration,
+				'maxDuration' => $maxDuration
+			] );
 
 			$this->getResponse()->setFormat( 'json' );
 			$this->getResponse()->setData( $queryService->searchAsApi() );
