@@ -50,60 +50,12 @@ class VideosModule extends WikiaModel {
 	public function getStaffPicks() {
 		wfProfileIn( __METHOD__ );
 
-		// Try to get the staff video picks from cache first
-		$memcKey = wfMemcKey( 'videomodule', 'staff_videos', self::CACHE_VERSION );
-		$videos = $this->wg->Memc->get( $memcKey );
-
-		// If none are there call out to the video wiki to look for some
-		if ( !is_array( $videos ) ) {
-
-			// Look for picks specific to this wiki.  Don't get a thumbnail
-			// since we'll be generating it below
-			$params = [
-				'controller'   => 'SpecialVideosSpecialController',
-				'method'       => 'getVideos',
-				'sort'         => 'recent',
-				'getThumbnail' => false,
-				'category'     => 'Staff_Pick_'.$this->app->wg->DBname,
-			];
-
-			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
-			$wikiResults = empty( $response['videos'] ) ? [] : $response['videos'];
-
-			// Look for global wikia-wide picks
-			$params['category'] = 'Staff_Pick_Global';
-
-			$response = ApiService::foreignCall( 'video151', $params, ApiService::WIKIA );
-			$globalResults = empty( $response['videos'] ) ? [] : $response['videos'];
-
-			$combinedVideos = array_merge( $wikiResults, $globalResults );
-
-			// Sort the combined array by the updated field, which is YYYY-MM-DD hh:mm:ss
-			usort( $combinedVideos, function ( $a, $b ) {
-				return strcmp( $b['updated'], $a['updated'] );
-			} );
-
-			// Cap the number of videos we send to the front end at MAX_STAFF_PICKS
-			$videos = [];
-			foreach ( $combinedVideos as $video ) {
-
-				if ( count($videos) >= self::MAX_STAFF_PICKS ) {
-					break;
-				}
-
-				if ( $this->addToList( $videos, $video['fileKey'] ) ) {
-					// Adding videos to the existingVideos array is normally done using trimVideoList. Since there's
-					// nothing to trim, just add it to existingVideos directly.
-					$this->existingVideos[$video['fileKey']] = true;
-				}
-			}
-
-			$videos = $this->getVideosDetail( $videos );
-
-			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
-		}
+		$categories = [ 'Staff_Pick_'.$this->wg->DBname, 'Staff_Pick_Global' ];
+		$limit = self::MAX_STAFF_PICKS;
+		$videos = $this->getVideoListFromVideoWiki( $categories, $limit );
 
 		wfProfileOut( __METHOD__ );
+
 		return $videos;
 	}
 
@@ -286,23 +238,50 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get videos by category from the wiki
-	 * @param integer $numRequired - number of videos required
-	 * @param string $sort [recent/trend] - how to sort the results
-	 * @return array $videos - list of vertical videos (premium videos)
+	 * Get videos from the Video wiki that are in categories listed in wgVideosModuleCategories
+	 * @param integer $numRequired
+	 * @return array $videos
 	 */
-	public function getVerticalVideos( $numRequired, $sort ) {
+	public function getVideosByCategory( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 
-		$category = $this->getWikiVertical();
-		$memcKey = wfSharedMemcKey( 'videomodule', 'vertical_videos', self::CACHE_VERSION, $category, $sort );
+		if ( empty( $this->wg->VideosModuleCategories ) ) {
+			wfProfileOut( __METHOD__ );
+			return [];
+		}
+
+		if ( is_array( $this->wg->VideosModuleCategories ) ) {
+			$categories = $this->wg->VideosModuleCategories;
+		} else {
+			$categories = [ $this->wg->VideosModuleCategories ];
+		}
+
+		$videos = $this->getVideoListFromVideoWiki( $categories );
+
+		wfProfileOut( __METHOD__ );
+
+		return $this->trimVideoList( $videos, $numRequired );
+	}
+
+	/**
+	 * Get video list from Video wiki
+	 * @param array|string $category
+	 * @param string $sort [recent/popular/trend]
+	 * @return array $videos
+	 */
+	public function getVideoListFromVideoWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent' ) {
+		wfProfileIn( __METHOD__ );
+
+		sort( $category );
+		$hashCategory = md5( json_encode( $category ) );
+		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort );
 		$videos = $this->wg->Memc->get( $memcKey );
 		if ( !is_array( $videos ) ) {
 			$params = [
 				'controller' => 'VideoHandler',
 				'method'     => 'getVideoList',
 				'sort'       => $sort,
-				'limit'      => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
+				'limit'      => $this->getPaddedVideoLimit( $limit ),
 				'category'   => $category,
 			];
 
@@ -311,7 +290,7 @@ class VideosModule extends WikiaModel {
 			$videos = [];
 			if ( !empty( $response['videos'] ) ) {
 				foreach ( $response['videos'] as $video ) {
-					if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+					if ( count( $videos ) >= $limit ) {
 						break;
 					}
 
@@ -324,6 +303,24 @@ class VideosModule extends WikiaModel {
 
 			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $videos;
+	}
+
+	/**
+	 * Get videos from the Video wiki that are in this wiki's vertical category
+	 * @param integer $numRequired - number of videos required
+	 * @param string $sort [recent/trend] - how to sort the results
+	 * @return array $videos - list of vertical videos (premium videos)
+	 */
+	public function getVerticalVideos( $numRequired, $sort ) {
+		wfProfileIn( __METHOD__ );
+
+		$category = $this->getWikiVertical();
+		$limit = self::LIMIT_VIDEOS;
+		$videos = $this->getVideoListFromVideoWiki( $category, $limit, $sort );
 
 		wfProfileOut( __METHOD__ );
 
