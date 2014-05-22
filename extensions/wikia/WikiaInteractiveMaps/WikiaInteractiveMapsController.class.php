@@ -149,7 +149,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest( $this->wg->Request );
 		$uploadResults = $upload->verifyUpload();
-		$uploadStatus = [ 'status' => 'error' ];
+		$uploadStatus = [ 'success' => false ];
 
 		if( empty( $this->wg->EnableUploads ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
@@ -161,9 +161,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			//save temp file
 			$file = $upload->stashFile();
 
-			$uploadStatus[ 'status' ] = 'uploadattempted';
 			if ( $file instanceof File && $file->exists() ) {
-				$uploadStatus[ 'isGood' ] = true;
+				$uploadStatus[ 'success' ] = true;
 				$originalWidth = $file->getWidth();
 
 				// $originalHeight = $file->getHeight();
@@ -179,11 +178,39 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
 				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, self::MAP_PREVIEW_WIDTH );
 			} else {
-				$uploadStatus[ 'isGood' ] = false;
+				$uploadStatus[ 'success' ] = false;
 			}
 		}
 
 		$this->setVal( 'results', $uploadStatus );
+	}
+
+	/**
+	 * Entry point to create a map from either existing tiles or new image
+	 * @requestParam Integer $tileSetId an unique id of existing tiles
+	 * @requestParam String $image an URL to image which the tiles will be created from
+	 * @throws BadRequestApiException
+	 */
+	public function createMap() {
+		$results = [ 'success' => false ];
+		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
+		$imageUrl = trim( $this->request->getVal( 'image', '' ) );
+
+		if( $tileSetId === 0 && empty( $imageUrl ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
+
+		if( $tileSetId > 0 ) {
+		// create map from existing tiles
+			$results['mapUrl'] = true;
+			$results['mapUrl'] = 'http://fake-map-from-existing-tiles-url.com';
+		} else {
+		// create tiles set and then map
+			$results['mapUrl'] = true;
+			$results['mapUrl'] = 'http://fake-map-from-new-image-url.com';
+		}
+
+		$this->setVal( 'results', $results );
 	}
 
 	/**

@@ -19,7 +19,7 @@ define('wikia.intMaps.createMap.bridge', ['jquery', 'wikia.window', 'wikia.intMa
 			success: function(response) {
 				var data = response.results;
 
-				if (data && data.isGood) {
+				if (data && data.success) {
 					success(data);
 				} else {
 					error(response);

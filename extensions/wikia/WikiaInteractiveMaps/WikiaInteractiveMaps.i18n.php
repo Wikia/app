@@ -41,12 +41,15 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-next-btn' => 'Next',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back',
 
+	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
+	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
+
+	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
+
 	'wikia-interactive-maps-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
 	'wikia-interactive-maps-image-uploads-error' => 'There was an error while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
 	'wikia-interactive-maps-image-uploads-warning' => 'There were some issues while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
-	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
-	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
-	'wikia-interactive-maps-create-map-title-placeholder' => 'Title'
 ];
 
 $messages[ 'qqq' ] = [
@@ -80,9 +83,12 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal',
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
+
+	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
+
 	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
 	'wikia-interactive-maps-image-uploads-error' => 'An error displayed to a user when a file upload fails because of backend errors',
 	'wikia-interactive-maps-image-uploads-warning' => 'An error displayed to a user when a file upload fails because of backend warnings',
-	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title'
 ];
 
