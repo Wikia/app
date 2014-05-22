@@ -11,7 +11,8 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 			scripts: ['int_map_create_map_js'],
 			styles: ['extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMapsCreateMap.scss'],
 			mustache: [
-				'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache'
+				'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap.mustache',
+				'extensions/wikia/WikiaInteractiveMaps/templates/WikiaInteractiveMapsController_createMap_mapServiceReqParams.mustache'
 			]
 		};
 
@@ -50,8 +51,8 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		getAssets(source, cacheKey).then(function(assets) {
 			addAssetsToDOM(assets);
 
-			require(['wikia.intMaps.createMapUI'], function(createMapUI) {
-				createMapUI.init(assets.mustache);
+			require(['wikia.intMaps.createMap.ui'], function(createMap) {
+				createMap.init(assets.mustache);
 			});
 		});
 	}
