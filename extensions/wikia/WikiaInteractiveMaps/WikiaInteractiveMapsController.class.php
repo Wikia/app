@@ -15,6 +15,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private $mapsModel;
 
 	/**
+	 * Keeps data needed while creating map/tile set process
+	 * @var Array
+	 */
+	private $creationData;
+
+	/**
 	 * @desc Special page constructor
 	 *
 	 * @param null $name
@@ -193,10 +199,40 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @throws BadRequestApiException
 	 */
 	public function createMap() {
-		$results = [ 'success' => false ];
 		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
-		$imageUrl = trim( $this->request->getVal( 'image', '' ) );
-		$mapTitle = trim( $this->request->getVal( 'title', '' ) );
+		$this->setCreationData( 'tileSetId', $tileSetId );
+		$this->setCreationData( 'image', trim( $this->request->getVal( 'image', '' ) ) );
+		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
+
+		$this->validateMapCreation();
+
+		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
+		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
+
+		if( $tileSetId > 0 ) {
+			$results = $this->createMapFromTilesetId();
+		} else {
+			$results = $this->createTileset();
+
+			if( true === $results['success'] ) {
+				$this->setCreationData( 'tileSetId', $results['id'] );
+				$results = $this->createMapFromTilesetId();
+			}
+		}
+
+		$this->setVal( 'results', $results );
+	}
+
+	/**
+	 * Helper method to validate creation data
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function validateMapCreation() {
+		$tileSetId = $this->getCreationData( 'tileSetId' );
+		$imageUrl = $this->getCreationData( 'image' );
+		$mapTitle = $this->getCreationData( 'title' );
 
 		if( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
@@ -206,29 +242,88 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			throw new InvalidParameterApiException( 'title' );
 		}
 
-		if( $tileSetId > 0 ) {
-			$mapData['title'] = $mapTitle;
-			$mapData['tile_set_id'] = $tileSetId;
-			$mapData['city_id'] = (int) $this->wg->CityId;
-			$mapData['created_by'] = $this->wg->User->getName();
-			$result = $this->mapsModel->saveMap( $mapData );
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
+	}
 
-			if( !$result ) {
-				$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
-			} else {
-				$result = json_decode( $result );
-				$results['success'] = true;
-				$results['mapId'] = $result->id;
-				$results['mapUrl'] = $result->url;
-				$results['message'] = $result->message;
-			}
+	/**
+	 * Helper method which sends request to maps service to create tiles' set
+	 * and then processes the response providing results array
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function createTileset() {
+		$results['success'] = false;
+
+		$response = $this->mapsModel->saveTileset( [
+			'name' => $this->getCreationData( 'title' ),
+			'url' => $this->getCreationData( 'image' ),
+			'created_by' => $this->getCreationData( 'creatorName' ),
+		] );
+
+		if( !$response ) {
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
 		} else {
-		// create tiles set and then map
+			$result = json_decode( $response );
 			$results['success'] = true;
-			$results['mapUrl'] = 'http://fake-map-from-new-image-url.com';
+			$results['id'] = $result->id;
 		}
 
-		$this->setVal( 'results', $results );
+		return $results;
+	}
+
+	/**
+	 * Helper method which sends request to maps service to create a map from existing tiles' set
+	 * and processes the response providing results array
+	 * @return Array
+	 */
+	private function createMapFromTilesetId() {
+		$results['success'] = false;
+
+		$response = $this->mapsModel->saveMap( [
+			'title' => $this->getCreationData( 'title' ),
+			'tile_set_id' => $this->getCreationData( 'tileSetId' ),
+			'city_id' => $this->getCreationData( 'cityId' ),
+			'created_by' => $this->getCreationData( 'creatorName' ),
+		] );
+
+		if( !$response ) {
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
+		} else {
+			$response = json_decode( $response );
+
+			$results['success'] = true;
+			$results['mapId'] = $response->id;
+			$results['mapUrl'] = $response->url;
+			$results['message'] = $response->message;
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Getter for creation data
+	 * @param String $name name of the data key
+	 * @param Bool $default
+	 * @return Mixed
+	 */
+	private function getCreationData( $name, $default = false ) {
+		if( isset( $this->creationData[ $name ] ) ) {
+			return $this->creationData[ $name ];
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Setter of creation data
+	 * @param String $name
+	 * @param Mixed $value
+	 */
+	private function setCreationData( $name, $value ) {
+		$this->creationData[ $name ] = $value;
 	}
 
 	/**

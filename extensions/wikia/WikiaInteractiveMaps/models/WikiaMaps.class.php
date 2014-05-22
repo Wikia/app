@@ -6,6 +6,7 @@ class WikiaMaps {
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
+	const ENTRY_POINT_TILE_SET = 'tile_set';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -191,6 +192,21 @@ class WikiaMaps {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ] );
 		return Http::post( $url, [
 			'postData' => json_encode( $mapData ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			]
+		] );
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * @param Array $tileSetData array with required parameters to service API
+	 * @return string|boolean
+	 */
+	public function saveTileset( $tileSetData ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] );
+		return Http::post( $url, [
+			'postData' => json_encode( $tileSetData ),
 			'headers' => [
 				'Authorization' => $this->config['token']
 			]
