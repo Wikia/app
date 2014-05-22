@@ -40,7 +40,8 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 	this.sizeTypeSelectWidget.addItems( [
 		new OO.ui.ButtonOptionWidget( 'default', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' )
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-default' ),
+			'flags': ['secondary']
 		} ),
 		// TODO: when upright is supported by Parsoid
 		// new OO.ui.ButtonOptionWidget( 'scale', {
@@ -49,11 +50,10 @@ ve.ui.MediaSizeWidget = function VeUiMediaSizeWidget( scalable, config ) {
 		// } ),
 		new OO.ui.ButtonOptionWidget( 'custom', {
 			'$': this.$,
-			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' )
+			'label': ve.msg( 'visualeditor-mediasizewidget-sizeoptions-custom' ),
+			'flags': ['secondary']
 		} )
 	] );
-	// Wikia change: make buttons secondary for theming
-	this.sizeTypeSelectWidget.$element.find( 'a' ).addClass( 'secondary' );
 
 	// Define scale
 	this.scaleInput = new OO.ui.TextInputWidget( {
