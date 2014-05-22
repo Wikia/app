@@ -57,11 +57,13 @@ class CrossWikiCore extends AbstractWikiService
 		$response['touched_dt'] = str_replace( ' ', 'T', $wiki->city_last_timestamp ) . 'Z';
 		$response['url'] = $wiki->city_url;
 		$response['dbname_s'] = $wiki->city_dbname;
-		$response['hostname_s'] = $service->getHostName();
-		$response['main_wikia_domain'] = $response['hostname_s'];
 
+		$response['hostname_s'] = $service->getHostName();
 		$response['hostname_txt'] = $response['hostname_s'];
+
 		$response['domains_txt'] = $service->getDomainsForWikiId( $this->wikiId );
+		$response['all_domains_mv_wd'] = $response['domains_txt'];
+
 		$response['wiki_pagetitle_txt'] = str_replace( '$1 - ', '', ( \wfMessage( 'Pagetitle' )->text() ) );
 		return $response;
 	}
