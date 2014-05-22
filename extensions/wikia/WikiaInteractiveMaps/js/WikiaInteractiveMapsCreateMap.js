@@ -29,7 +29,6 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 				intMapBack: true,
 				intMapNext: true
 			},
-			errorContainer: '.title-validation-msg',
 			errorMsgKeys: {
 				invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
 			}
@@ -314,7 +313,7 @@ define('wikia.intMaps.createMapUI', ['jquery', 'wikia.window', 'wikia.mustache']
 	 */
 
 	function displayError(index) {
-		var $errorContainer = $(steps[index].errorContainer),
+		var $errorContainer = $('.map-creation-error'),
 			errorMessage = $.msg(steps[index].errorMsgKeys[validationError]);
 
 		$errorContainer.html('');

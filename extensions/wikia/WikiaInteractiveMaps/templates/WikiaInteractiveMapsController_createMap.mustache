@@ -1,3 +1,5 @@
+<p class="map-creation-error error hidden"></p>
+
 <div id="intMapsChooseType" class="intMapsChooseType">
 	{{#mapType}}
 		<h3><a href="" title="{{name}}" id="intMap{{type}}" class="intMap{{type}} modalEvent" data-event="intMap{{type}}">{{name}}</a></h3>
@@ -12,7 +14,6 @@
 
 <div id="intMapsAddTitle" class="intMapsAddTitle">
 	<form class="WikiaForm">
-		<p class="error hidden title-validation-msg"></p>
 		<div class="input-group">
 			<input type="text" id="intMapTitle" placeholder="{{titlePlaceholder}}">
 		</div>
