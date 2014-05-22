@@ -323,7 +323,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$log = WikiaLogger::instance();
 			$log->info( __METHOD__.' - Querying SOLR', [
 				'method'      => __METHOD__,
-				'topics'     => $topics,
+				'topics'      => $topics,
 				'limit'       => $limit,
 				'mm'          => $mm,
 				'minDuration' => $minDuration,

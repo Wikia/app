@@ -395,7 +395,7 @@ class VideosModule extends WikiaModel {
 
 		$name = '';
 
-		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $this->wg->CityId );
 		if ( !empty( $categoryId ) ) {
 			// get vertical id
 			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
@@ -419,7 +419,7 @@ class VideosModule extends WikiaModel {
 
 		$name = '';
 
-		$categoryId = WikiFactoryHub::getCategoryId( $this->wg->CityId );
+		$categoryId = WikiFactoryHub::getInstance()->getCategoryId( $this->wg->CityId );
 		if ( !empty( $categoryId ) ) {
 			// get vertical id
 			$verticalId = HubService::getCanonicalCategoryId( $categoryId );
