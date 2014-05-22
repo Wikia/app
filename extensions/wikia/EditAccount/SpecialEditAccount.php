@@ -42,9 +42,13 @@ $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'editaccount';
 
 // Set up the new special page
-$dir = dirname( __FILE__ ) . '/';
-$wgExtensionMessagesFiles['EditAccount'] = $dir . 'SpecialEditAccount.i18n.php';
-$wgAutoloadClasses['EditAccount'] = $dir . 'SpecialEditAccount_body.php';
+$wgExtensionMessagesFiles['EditAccount'] = __DIR__ . '/SpecialEditAccount.i18n.php';
+$wgAutoloadClasses['EditAccount'] = __DIR__ . '/SpecialEditAccount_body.php';
 $wgSpecialPages['EditAccount'] = 'EditAccount';
-// Special page group for MW 1.13+
 $wgSpecialPageGroups['EditAccount'] = 'users';
+
+$wgResourceModules['ext.editAccount'] = [
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/EditAccount/modules',
+	'styles' => 'ext.editAccount.scss',
+];

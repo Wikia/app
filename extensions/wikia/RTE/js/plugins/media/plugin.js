@@ -404,7 +404,7 @@ CKEDITOR.plugins.add('rte-media', {
 					isPlaceholder: true,
 					track: {
 						action: Wikia.Tracker.ACTIONS.CLICK,
-						category: 'image-placeholder',
+						category: 'video-placeholder',
 						label: 'edit-mode',
 						method: 'ga'
 					}
