@@ -349,4 +349,3 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 }
-

@@ -70,6 +70,21 @@ class WikiaMaps {
 	}
 
 	/**
+	 * Wrapper for Http::post() with authorization token attached
+	 * @param String $url
+	 * @param Array $data
+	 * @return string|bool
+	 */
+	private function postRequest( $url, $data ) {
+		return Http::post( $url, [
+			'postData' => json_encode( $data ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			]
+		] );
+	}
+
+	/**
 	 * @brief Get Map instances from IntMaps API server
 	 *
 	 * @param Array $params an array with parameters which will be added to the url after ? sign
@@ -189,28 +204,22 @@ class WikiaMaps {
 	 * @return string|boolean
 	 */
 	public function saveMap( $mapData ) {
-		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ] );
-		return Http::post( $url, [
-			'postData' => json_encode( $mapData ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			]
-		] );
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_MAP ] ),
+			$mapData
+		);
 	}
 
 	/**
 	 * Sends a request to IntMap Service API to create a map with given parameters
 	 * @param Array $tileSetData array with required parameters to service API
-	 * @return string|boolean
+	 * @return string|bool
 	 */
 	public function saveTileset( $tileSetData ) {
-		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] );
-		return Http::post( $url, [
-			'postData' => json_encode( $tileSetData ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			]
-		] );
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] ),
+			$tileSetData
+		);
 	}
 
 	/**
