@@ -27,9 +27,9 @@ if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
 }
 
-if ( $wgContLang->getCode() == 'en' && $wgEnableNlpPipelineEvents ) {
-	$wgHooks['ArticleEditUpdates'] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
-	$wgHooks['ArticleDeleteComplete'] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
-	$wgHooks['ArticleUndelete'] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';
-	$wgHooks['TitleMoveComplete'] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onTitleMoveComplete';
+if ( $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
+	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
+	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
+	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';
+	$wgHooks['TitleMoveComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onTitleMoveComplete';
 }
