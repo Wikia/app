@@ -52,7 +52,7 @@ class VideosModule extends WikiaModel {
 
 		$categories = [ 'Staff_Pick_'.$this->wg->DBname, 'Staff_Pick_Global' ];
 		$limit = self::MAX_STAFF_PICKS;
-		$videos = $this->getVideoListFromWiki( $categories, $limit );
+		$videos = $this->getVideoListFromVideoWiki( $categories, $limit );
 
 		wfProfileOut( __METHOD__ );
 
@@ -238,7 +238,7 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get videos by categories
+	 * Get videos from the Video wiki that are in categories listed in wgVideosModuleCategories
 	 * @param integer $numRequired
 	 * @return array $videos
 	 */
@@ -256,7 +256,7 @@ class VideosModule extends WikiaModel {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
 
-		$videos = $this->getVideoListFromWiki( $categories );
+		$videos = $this->getVideoListFromVideoWiki( $categories );
 
 		wfProfileOut( __METHOD__ );
 
@@ -264,12 +264,12 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get video list from external wiki
+	 * Get video list from Video wiki
 	 * @param array|string $category
 	 * @param string $sort [recent/popular/trend]
 	 * @return array $videos
 	 */
-	public function getVideoListFromWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent' ) {
+	public function getVideoListFromVideoWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent' ) {
 		wfProfileIn( __METHOD__ );
 
 		sort( $category );
@@ -310,7 +310,7 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Get videos by category from the wiki
+	 * Get videos from the Video wiki that are in this wiki's vertical category
 	 * @param integer $numRequired - number of videos required
 	 * @param string $sort [recent/trend] - how to sort the results
 	 * @return array $videos - list of vertical videos (premium videos)
@@ -320,7 +320,7 @@ class VideosModule extends WikiaModel {
 
 		$category = $this->getWikiVertical();
 		$limit = self::LIMIT_VIDEOS;
-		$videos = $this->getVideoListFromWiki( $category, $limit, $sort );
+		$videos = $this->getVideoListFromVideoWiki( $category, $limit, $sort );
 
 		wfProfileOut( __METHOD__ );
 
