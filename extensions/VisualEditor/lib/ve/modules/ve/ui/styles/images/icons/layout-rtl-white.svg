@@ -2,8 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
 	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="italic-i" style="opacity:0.75;">
-	<polygon id="i" style="fill-rule:evenodd;clip-rule:evenodd;" points="12.5,17.999 12.749,17.005 11.249,17.005 13.758,6.968
-		15.258,6.968 15.5,6.001 10.5,6.001 10.258,6.968 11.758,6.968 9.249,17.005 7.749,17.005 7.5,17.999"/>
+<g id="layout-rtl" style="opacity:0.75;fill:white;">
+	<path id="text" style="fill-rule:evenodd;clip-rule:evenodd;" d="M5,19v-6h8V5h6v14H5z"/>
+	<path id="float" style="fill-rule:evenodd;clip-rule:evenodd;" d="M5,5v6h6V5H5z M6,6h4v4H6V6z"/>
 </g>
 </svg>

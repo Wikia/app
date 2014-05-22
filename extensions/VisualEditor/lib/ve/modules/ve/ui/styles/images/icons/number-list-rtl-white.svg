@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
 	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-<g id="number-list-rtl" style="opacity:0.75;">
+<g id="number-list-rtl" style="opacity:0.75;fill:white;">
 	<polygon id="bottom_dot" points="18,16 18,17 19.993,17 20.023,18 19,18 19,19 20,19 20,20 18,20 18,21 20.023,21 21,19.998
 		21,18.998 20.044,18.467 21,17.967 21,16.998 19.993,16"/>
 	<polygon id="middle_dot" points="18,9 18,10 20.116,10 18,12.187 18,13.998 21,13.936 21,13 18.882,13 21,10.812 21,9.78 20.331,9"/>
