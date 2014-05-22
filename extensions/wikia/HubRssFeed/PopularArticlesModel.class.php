@@ -48,8 +48,6 @@ class PopularArticlesModel {
 			}
 		}
 
-		$sdb->close();
-
 		return $page_ids;
 	}
 
