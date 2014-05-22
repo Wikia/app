@@ -21,7 +21,6 @@ $wgAutoloadClasses['Wikia\NLP\Entities\PageEntitiesService'] =  $dir . 'classes/
 $wgAutoloadClasses['Wikia\NLP\Entities\WikiEntitiesService'] =  $dir . 'classes/Entities/WikiEntitiesService.php';
 $wgAutoloadClasses['Wikia\NLP\Entities\Hooks'] =  $dir . 'classes/Entities/Hooks.php';
 $wgAutoloadClasses['Wikia\NLP\ParserPipeline\Hooks'] = $dir . 'classes/ParserPipeline/Hooks.php';
-$wgAutoloadClasses['Wikia\NLP\ParserPipeline\NlpParseContentTask'] = $dir . 'classes/ParserPipeline/NlpParseContentTask.php';
 
 if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
