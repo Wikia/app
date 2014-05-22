@@ -109,71 +109,8 @@ ve.ui.DesktopContext.prototype.onWindowScroll = function () {
 	var toolbar = this.surface.getTarget().getToolbar();
 
 	// Context menu is visible and embedded and the toolbar is floating
-	if ( this.visible && this.embedded && toolbar.floating ) {
-		this.determineFloat();
-	}
-
-	// Context menu is floating but toolbar is not. Stop floating!
-	if ( this.visible && this.embedded && this.floating && !toolbar.floating ) {
-		this.unfloat();
-	}
-};
-
-/**
- * Determine if the context menu should float or unfloat.
- * Based on the size of the focused node and the scroll position.
- */
-ve.ui.DesktopContext.prototype.determineFloat = function () {
-	var toolbar = this.surface.getTarget().getToolbar(),
-		toolbarHeight = toolbar.$element.height(),
-		offset = this.$element.offset(),
-		focusedNode = this.surface.getView().getFocusedNode(),
-		focusedNodeOffset = focusedNode.$element.offset(),
-		windowScrollTop = this.$window.scrollTop(),
-		focusedNodeBounds = {
-			'top': focusedNodeOffset.top,
-			'bottom': this.focusedNodeContentsHeight + focusedNodeOffset.top
-		},
-		contextBounds = {
-			'top': windowScrollTop + toolbarHeight + this.floatThreshold,
-			'bottom': windowScrollTop + toolbarHeight + this.floatThreshold + this.popup.$popup.height()
-		};
-
-	if (
-		this.floating &&
-		// Scrolling below bottom of focused node
-		( focusedNodeBounds.bottom < contextBounds.bottom ) ||
-		// Scrolling above top of focused node
-		( focusedNodeBounds.top > contextBounds.top )
-	) {
-		this.unfloat();
-	}
-
-	if (
-		!this.floating &&
-		( focusedNodeBounds.top <= contextBounds.top ) &&
-		( focusedNodeBounds.bottom >= contextBounds.bottom )
-	) {
-		this.float();
-	}
-};
-
-ve.ui.DesktopContext.prototype.float = function () {
-	if ( !this.floating ) {
-		this.$element.css( {
-			'position': 'fixed',
-			'top': this.surface.target.toolbar.$element.height() + this.floatThreshold,
-			'left': this.$element.offset().left
-		} );
-		this.floating = true;
-	}
-};
-
-ve.ui.DesktopContext.prototype.unfloat = function () {
-	if ( this.floating ) {
-		this.$element.css( 'position', 'absolute' );
-		this.floating = false;
-		this.update();
+	if ( this.visible && this.embedded && toolbar.isFloating() ) {
+		this.handleFloat();
 	}
 };
 
@@ -481,7 +418,7 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 	if ( position ) {
 		if ( this.floating ) {
 			position.x += surfaceOffset.left;
-			position.y = this.surface.target.toolbar.$element.height() + this.floatThreshold;
+			position.y = this.surface.getTarget().getToolbar().$element.height() + this.floatThreshold;
 		}
 		this.$element.css( { 'left': position.x, 'top': position.y } );
 	}
@@ -530,7 +467,9 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 				inspector.$element.css( 'opacity', 1 );
 			}, this ), 200 );
 		} else {
-			this.determineEmbedded( focusedNode );
+			if ( focusedNode ) {
+				this.embedded = this.shouldBeEmbedded( focusedNode );
+			}
 			this.popup.useTail( !this.embedded );
 			this.$menu.show();
 		}
@@ -538,7 +477,7 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 		this.updateDimensions( transition );
 
 		if ( focusedNode ) {
-			this.determineFloat();
+			this.handleFloat();
 			this.focusedNodeContentsHeight = focusedNode.getContentsHeight();
 		}
 
@@ -547,26 +486,6 @@ ve.ui.DesktopContext.prototype.show = function ( transition, repositionOnly ) {
 	}
 
 	return this;
-};
-
-/**
- * Determine if the context menu should appear embedded.
- * Based on the size of the focused node and the size of the context menu.
- */
-ve.ui.DesktopContext.prototype.determineEmbedded = function ( focusedNode ) {
-	var targetHeight = this.$menu.outerHeight() * 2,
-		targetWidth = this.$menu.outerWidth() * 2,
-		embedded = false;
-
-	if (
-		focusedNode &&
-		targetHeight < Math.max( focusedNode.$focusable.outerHeight(), focusedNode.$shields.height() ) &&
-		targetWidth < Math.max( focusedNode.$focusable.outerWidth(),  focusedNode.$shields.width() )
-	) {
-		embedded = true;
-	}
-
-	this.embedded = embedded;
 };
 
 /**
@@ -591,4 +510,80 @@ ve.ui.DesktopContext.prototype.hide = function () {
 		this.unfloat();
 	}
 	return this;
+};
+
+/**
+ * Determine if the context menu should appear embedded.
+ * Based on the size of the focused node and the size of the context menu.
+ *
+ * @param {ve.ce.Node} focusedNode
+ * @return {boolean} Should the context menu be embedded
+ */
+ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
+	var targetHeight = this.$menu.outerHeight() * 2,
+		targetWidth = this.$menu.outerWidth() * 2;
+
+	return (
+		targetHeight < Math.max( focusedNode.$focusable.outerHeight(), focusedNode.$shields.height() ) &&
+		targetWidth < Math.max( focusedNode.$focusable.outerWidth(),  focusedNode.$shields.width() )
+	);
+};
+
+/**
+ * Handle floating or unfloating the context menu.
+ */
+ve.ui.DesktopContext.prototype.handleFloat = function () {
+	if ( this.shouldFloat() ) {
+		if ( !this.floating ) {
+			this.float();
+		}
+	} else if ( this.floating ) {
+		this.unfloat();
+	}
+};
+
+/**
+ * Determine if the context menu should float or unfloat.
+ * Based on the size of the focused node and the scroll position.
+ *
+ * @return {boolean} Should the context menu be floated
+ */
+ve.ui.DesktopContext.prototype.shouldFloat = function () {
+	var toolbar = this.surface.getTarget().getToolbar(),
+		toolbarHeight = toolbar.$element.height(),
+		offset = this.$element.offset(),
+		focusedNode = this.surface.getView().getFocusedNode(),
+		focusedNodeOffset = focusedNode.$element.offset(),
+		windowScrollTop = this.$window.scrollTop(),
+		focusedNodeBounds = {
+			'top': focusedNodeOffset.top,
+			'bottom': this.focusedNodeContentsHeight + focusedNodeOffset.top
+		},
+		contextBounds = {
+			'top': windowScrollTop + toolbarHeight + this.floatThreshold,
+			'bottom': windowScrollTop + toolbarHeight + this.floatThreshold + this.popup.getPopup().height()
+		};
+
+	return ( focusedNodeBounds.top <= contextBounds.top && focusedNodeBounds.bottom >= contextBounds.bottom );
+};
+
+/*
+ * Make the context menu float
+ */
+ve.ui.DesktopContext.prototype.float = function () {
+	this.$element.css( {
+		'position': 'fixed',
+		'top': this.surface.getTarget().getToolbar().$element.height() + this.floatThreshold,
+		'left': this.$element.offset().left
+	} );
+	this.floating = true;
+};
+
+/*
+ * Make the context menu not float
+ */
+ve.ui.DesktopContext.prototype.unfloat = function () {
+	this.$element.css( 'position', 'absolute' );
+	this.floating = false;
+	this.update();
 };

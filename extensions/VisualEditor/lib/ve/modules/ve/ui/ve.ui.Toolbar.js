@@ -362,3 +362,10 @@ ve.ui.Toolbar.prototype.disableFloatable = function () {
 
 	this.floatable = false;
 };
+
+/**
+ * Return floating state
+ */
+ve.ui.Toolbar.prototype.isFloating = function () {
+	return this.floating;
+};

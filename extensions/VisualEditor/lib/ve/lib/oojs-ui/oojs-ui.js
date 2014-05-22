@@ -7440,6 +7440,14 @@ OO.ui.PopupWidget.prototype.display = function ( width, height, transition ) {
 	return this;
 };
 /**
+ * Getter for this.$popup
+ */
+OO.ui.PopupWidget.prototype.getPopup = function () {
+	return this.$popup;
+};
+
+
+/**
  * Button that shows and hides a popup.
  *
  * @class
