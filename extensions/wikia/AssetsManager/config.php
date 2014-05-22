@@ -1739,6 +1739,8 @@ $config['int_map_create_map_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMap.js'
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMapConfig.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMapBridge.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMapUI.js',
 	]
 ];
