@@ -109,7 +109,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $service->toXml() );
 		$this->response->setContentType( 'text/xml' );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
+		$this->response->setCacheValidity( /*WikiaResponse::CACHE_SHORT*/ 1 );
 	}
 
 	public function gamesRssTV() {
