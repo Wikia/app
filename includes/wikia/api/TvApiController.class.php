@@ -48,10 +48,20 @@ class TvApiController extends WikiaApiController {
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
-				$episodeService->setNamespace( WikiFactory::getVarValueByName( 'wgContentNamespaces', $wiki[ 'id' ] ) );
+				$namespaces = WikiFactory::getVarValueByName( 'wgContentNamespaces', $wiki[ 'id' ] );
+				$episodeService->setNamespace( $namespaces );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
+				}
+				if ( $result === null ) {
+					$namespaceNames = WikiFactory::getVarValueByName( 'wgExtraNamespacesLocal', $wiki[ 'id' ] );
+					foreach ( $namespaces as $ns ) {
+						if ( $ns % 2 == 0 && isset( $namespaceNames[ $ns ] ) ) {
+							$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
+							if ( $result !== null ) break;
+						}
+					}
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
