@@ -39,7 +39,6 @@ $wgExtensionMessagesFiles['WikiaHubsV3'] = $dir . 'WikiaHubsV3.i18n.php';
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'WikiaHubsV3Hooks::onArticleFromTitle';
 $wgHooks['WikiaCanonicalHref'][] = 'WikiaHubsV3Hooks::onWikiaCanonicalHref';
-$wgHooks['ParserFirstCallInit'][] = 'WikiaHubsV3Hooks::onParserFirstCallInit';
 
 // foreign file repo
 $wgForeignFileRepos[] = array(
