@@ -41,7 +41,13 @@ require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
 
+/**
+ * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
+ * dependencies added via composer to lib/composer until external dependencies with composer/packagist
+ * can be eliminated.
+ */
 require_once("$IP/lib/composer/autoload.php");
+
 /**
  * wikia library incudes
  */
@@ -50,7 +56,15 @@ require_once("$IP/lib/composer/autoload.php");
 require_once ( $IP."/lib/Wikia/fluent-sql-php/src/init.php");
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
+/**
+ * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
+ * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
+ */
 require_once ( $IP."/lib/Wikia/autoloader.php");
+
+/**
+ * Set WikiaLogger as the error handler.
+ */
 set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
 
 global $wgDBname;
