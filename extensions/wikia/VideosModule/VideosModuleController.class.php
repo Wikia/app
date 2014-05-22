@@ -1,6 +1,7 @@
 <?php
 
 class VideosModuleController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * VideosModule
@@ -20,8 +21,6 @@ class VideosModuleController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/rail.mustache' );
 		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
 		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
 		$sort = $this->request->getVal( 'sort', 'trend' );
