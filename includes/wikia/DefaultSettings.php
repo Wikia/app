@@ -552,7 +552,6 @@ include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" )
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
-include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
@@ -1030,13 +1029,6 @@ $wgSearchType = 'SearchEngineDummy';
 $wgMaxLevelOneNavElements = 4;
 $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
-
-/**
- * Extension for running multiple version of Mediawiki
- */
-if( !isset( $wgUseMedusa ) ) {
-	$wgUseMedusa = false;
-}
 
 /**
  * Memcached class name
