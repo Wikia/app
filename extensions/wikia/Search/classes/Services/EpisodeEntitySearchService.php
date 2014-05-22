@@ -26,15 +26,16 @@ class EpisodeEntitySearchService extends EntitySearchService {
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
-//		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::DEFAULT_NAMESPACE . ')' );
 		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::EPISODE_TYPE . ')' );
 
 		$dismax->setQueryFields( implode( ' ', [
+			'title_em^8',
 			'titleStrict',
 			$this->withLang( 'title', $slang ),
 			$this->withLang( 'redirect_titles_mv', $slang ),
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
+			'title_em^8',
 			'titleStrict^8',
 			$this->withLang( 'title', $slang ) . '^2',
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
