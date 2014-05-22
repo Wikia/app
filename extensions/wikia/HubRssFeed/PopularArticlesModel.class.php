@@ -91,7 +91,6 @@ class PopularArticlesModel {
 			$pageviews_map[$object->article_id] = $object->pageviews;
 		}
 
-		$ddb->close();
 	}
 
 	/**
