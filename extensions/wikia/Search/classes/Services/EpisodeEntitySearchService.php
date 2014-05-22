@@ -9,6 +9,7 @@ class EpisodeEntitySearchService extends EntitySearchService {
 	const MINIMAL_ARTICLE_SCORE = 0.4;
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
 	const EPISODE_TYPE = 'tv_episode';
+	const DEFAULT_SLOP = 1;
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -41,8 +42,8 @@ class EpisodeEntitySearchService extends EntitySearchService {
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
 		] ) );
 
-		$dismax->setQueryPhraseSlop(1);
-		$dismax->setPhraseSlop(1);
+		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
+		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
 
 		return $select;
 	}
