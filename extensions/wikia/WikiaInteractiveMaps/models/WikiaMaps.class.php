@@ -183,6 +183,21 @@ class WikiaMaps {
 	}
 
 	/**
+	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * @param Array $mapData array with required parameters to service API
+	 * @return string|boolean
+	 */
+	public function saveMap( $mapData ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ] );
+		return Http::post( $url, [
+			'postData' => json_encode( $mapData ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			]
+		] );
+	}
+
+	/**
 	 * @brief Creates a stdClass representing sorting option
 	 *
 	 * @param String $msgKey message key for MW wfMessage() function

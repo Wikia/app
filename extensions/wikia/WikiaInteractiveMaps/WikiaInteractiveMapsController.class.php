@@ -189,24 +189,42 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Entry point to create a map from either existing tiles or new image
 	 * @requestParam Integer $tileSetId an unique id of existing tiles
 	 * @requestParam String $image an URL to image which the tiles will be created from
+	 * @requestParam String $title map title
 	 * @throws BadRequestApiException
 	 */
 	public function createMap() {
 		$results = [ 'success' => false ];
 		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
 		$imageUrl = trim( $this->request->getVal( 'image', '' ) );
+		$mapTitle = trim( $this->request->getVal( 'title', '' ) );
 
-		if( $tileSetId === 0 && empty( $imageUrl ) ) {
+		if( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
+		if( empty( $mapTitle ) ) {
+			throw new InvalidParameterApiException( 'title' );
+		}
+
 		if( $tileSetId > 0 ) {
-		// create map from existing tiles
-			$results['mapUrl'] = true;
-			$results['mapUrl'] = 'http://fake-map-from-existing-tiles-url.com';
+			$mapData['title'] = $mapTitle;
+			$mapData['tile_set_id'] = $tileSetId;
+			$mapData['city_id'] = (int) $this->wg->CityId;
+			$mapData['created_by'] = $this->wg->User->getName();
+			$result = $this->mapsModel->saveMap( $mapData );
+
+			if( !$result ) {
+				$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
+			} else {
+				$result = json_decode( $result );
+				$results['success'] = true;
+				$results['mapId'] = $result->id;
+				$results['mapUrl'] = $result->url;
+				$results['message'] = $result->message;
+			}
 		} else {
 		// create tiles set and then map
-			$results['mapUrl'] = true;
+			$results['success'] = true;
 			$results['mapUrl'] = 'http://fake-map-from-new-image-url.com';
 		}
 

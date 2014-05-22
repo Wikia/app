@@ -46,6 +46,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
+	'wikia-interactive-maps-create-map-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
 
 	'wikia-interactive-maps-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
 	'wikia-interactive-maps-image-uploads-error' => 'There was an error while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
@@ -86,6 +87,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
+	'wikia-interactive-maps-create-map-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',
 
 	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
 	'wikia-interactive-maps-image-uploads-error' => 'An error displayed to a user when a file upload fails because of backend errors',
