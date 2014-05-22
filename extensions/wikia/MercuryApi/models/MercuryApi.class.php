@@ -47,11 +47,15 @@ class MercuryApi {
 	}
 
 	/**
-	 * @desc Get Current wiki theme settings
+	 * @desc Get Current wiki settings
 	 *
 	 * @return mixed
 	 */
-	public function getWikiTheme() {
-		return SassUtil::getOasisSettings();
+	public function getWikiSettings() {
+		global $wgLanguageCode;
+		return [
+			'language' => $wgLanguageCode,
+			'theme' => SassUtil::getOasisSettings()
+		];
 	}
 }

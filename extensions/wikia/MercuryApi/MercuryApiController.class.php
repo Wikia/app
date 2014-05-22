@@ -63,9 +63,9 @@ class MercuryApiController extends WikiaController {
 	/**
 	 * @desc Returns theme settings for the current wiki
 	 */
-	public function getWikiTheme() {
-		$theme = $this->mercuryApi->getWikiTheme();
-		$this->response->setVal( 'theme', $theme );
+	public function getWikiSettings() {
+		$theme = $this->mercuryApi->getWikiSettings();
+		$this->response->setVal( 'settings', $theme );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }
