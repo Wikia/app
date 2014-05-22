@@ -50,7 +50,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Main Special:InteractiveMaps page
+	 * Main Special:InteractiveMaps page
 	 */
 	public function main() {
 		$selectedSort = $this->getVal( 'sort', null );
@@ -111,7 +111,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Single map page
+	 * Single map page
 	 */
 	public function map() {
 		$mapId = (int)$this->getPar();
@@ -193,9 +193,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Entry point to create a map from either existing tiles or new image
+	 *
 	 * @requestParam Integer $tileSetId an unique id of existing tiles
 	 * @requestParam String $image an URL to image which the tiles will be created from
 	 * @requestParam String $title map title
+	 *
 	 * @throws BadRequestApiException
 	 */
 	public function createMap() {
@@ -225,6 +227,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Helper method to validate creation data
+	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException
@@ -250,6 +253,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	/**
 	 * Helper method which sends request to maps service to create tiles' set
 	 * and then processes the response providing results array
+	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException
@@ -277,6 +281,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	/**
 	 * Helper method which sends request to maps service to create a map from existing tiles' set
 	 * and processes the response providing results array
+	 *
 	 * @return Array
 	 */
 	private function createMapFromTilesetId() {
@@ -305,8 +310,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Getter for creation data
+	 *
 	 * @param String $name name of the data key
 	 * @param Bool $default
+	 *
 	 * @return Mixed
 	 */
 	private function getCreationData( $name, $default = false ) {
@@ -319,6 +326,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	/**
 	 * Setter of creation data
+	 *
 	 * @param String $name
 	 * @param Mixed $value
 	 */
@@ -331,6 +339,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @param File $file stashed upload file
 	 * @param Integer $width width of the thumbnail
+	 *
 	 * @return String
 	 */
 	private function getStashedImageThumb( $file, $width ) {
@@ -342,6 +351,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @param int $currentPage
 	 * @param int $itemsPerPage
+	 *
 	 * @return int mixed
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
