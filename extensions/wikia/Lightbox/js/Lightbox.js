@@ -1058,7 +1058,7 @@
 
 						if (data.errors.length) {
 							$(data.errors).each(function () {
-								errorMsg += this;
+								errorMsg += this.toString();
 							});
 						}
 						if (data.sent.length) {
@@ -1421,7 +1421,7 @@
 					break;
 
 				case 'videosModule':
-					if ( !clickSource ) {
+					if (!clickSource) {
 						clickSource = parent.hasClass('videos-module-rail') ?
 							VPS.VIDEOS_MODULE_RAIL :
 							VPS.VIDEOS_MODULE_BOTTOM;
@@ -1482,7 +1482,6 @@
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
 			}
-
 
 			return {
 				clickSource: clickSource,
