@@ -196,6 +196,10 @@
 					window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
 				];
 
+				if (Wikia.isTouchScreen) {
+					resources.push($.getSassCommonURL('/extensions/wikia/Lightbox/css/touch-screen.scss'));
+				}
+
 				deferredList.push($.getResources(resources));
 
 				deferredTemplate = $.Deferred();

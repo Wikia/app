@@ -12,7 +12,7 @@ require([
 
 	var linksWrapper = $('.CorporateFooter ul').first();
 
-	if(Wikia.isTouchscreen() && linksWrapper.exists()){
+	if(Wikia.isTouchScreen() && linksWrapper.exists()){
 		msg.get('Oasis-mobile-switch').then(function(){
 			var mobileSwitch = $('<li><a href="#">' + msg('oasis-mobile-site') + '</a></li>');
 

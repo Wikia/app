@@ -4,11 +4,11 @@
 	window.Wikia = window.Wikia || {};
 
 	// https://github.com/Modernizr/Modernizr/issues/84
-	Wikia.isTouchscreen = function () {
+	Wikia.isTouchScreen = function () {
 		return ('ontouchstart' in window);
 	};
 
-	if (Wikia.isTouchscreen()) {
+	if (Wikia.isTouchScreen()) {
 		$.getResources([
 			$.getSassCommonURL('/skins/oasis/css/touchScreen.scss'),
 			window.stylepath + '/oasis/js/touchScreen.js'

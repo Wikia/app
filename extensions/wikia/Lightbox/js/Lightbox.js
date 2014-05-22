@@ -144,7 +144,9 @@
 			}).on('mouseleave.Lightbox', function () {
 				// Hide Lightbox header and footer on mouse leave.
 				Lightbox.hideOverlay(10);
-			}).on('click.Lightbox', '.LightboxHeader .share-button', function () {
+			}).on('click.Lightbox', '.LightboxHeader .share-button', function (e) {
+				e.preventDefault();
+
 				// Show share screen on button click
 				if (Lightbox.current.type === 'video') {
 					Lightbox.video.destroyVideo();
@@ -719,6 +721,11 @@
 		hideOverlay: function (delay) {
 			var overlay = Lightbox.openModal;
 
+			// Don't enable hover show/hide for touch screens
+			if (Wikia.isTouchScreen()) {
+				return;
+			}
+
 			// If an interstitial ad is being shown, do not hideOverlay
 			if (Lightbox.ads.adIsShowing) {
 				return;
@@ -732,17 +739,6 @@
 					}, (delay || 1200)
 				);
 			}
-		},
-		getModalOptions: function (modalHeight, topOffset) {
-			var modalOptions = {
-				id: 'LightboxModal',
-				className: 'LightboxModal',
-				height: modalHeight,
-				width: 970, // modal adds 30px of padding to width
-				noHeadline: true,
-				topOffset: topOffset
-			};
-			return modalOptions;
 		},
 		updateMedia: function () {
 			var key = Lightbox.current.key,
@@ -1197,7 +1193,7 @@
 								key: key,
 								type: type,
 								playButtonSpan: playButtonSpan,
-								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
+								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1347,7 +1343,7 @@
 								key: key,
 								type: type,
 								playButtonSpan: playButtonSpan,
-								thumbLiClass: Lightbox.videoWrapperClass
+								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
