@@ -399,10 +399,9 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 
 	// Review button for "save" panel
 	this.reviewButton = new OO.ui.ButtonWidget( {
-		'label': ve.msg( 'visualeditor-savedialog-label-review' )
+		'label': ve.msg( 'visualeditor-savedialog-label-review' ),
+		'flags': ['secondary']
 	} );
-	// Wikia change: make button secondary for theming
-	this.reviewButton.$element.find( 'a' ).addClass( 'secondary' );
 	this.reviewButton.connect( this, { 'click': [ 'emit', 'review' ] } );
 
 	// Review good button on "review" panel

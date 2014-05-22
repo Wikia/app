@@ -31,11 +31,9 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.model = model;
 	this.removeButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'flags': ['destructive'],
+		'flags': ['destructive', 'secondary'],
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
-	// Make button secondary for theming
-	this.removeButton.$element.find( 'a' ).addClass( 'secondary' );
 	this.title = new OO.ui.TextInputWidget( {
 		'$': this.$,
 		'readOnly': !this.editable,

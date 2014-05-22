@@ -1874,6 +1874,9 @@ OO.ui.ButtonedElement = function OoUiButtonedElement( $button, config ) {
 	} else {
 		this.$element.addClass( 'oo-ui-buttonedElement-framed' );
 	}
+	if ( $.isArray( config.flags ) && $.inArray( 'secondary', config.flags ) > -1 ) {
+		this.$button.addClass( 'secondary' );
+	}
 };
 
 /* Methods */

@@ -40,15 +40,24 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 			.addItems( [
 				new OO.ui.ButtonOptionWidget(
 					'mwTOCForce',
-					{ 'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-force' ) }
+					{
+						'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-force' ),
+						'flags': ['secondary']
+					}
 				),
 				new OO.ui.ButtonOptionWidget(
 					'default',
-					{ 'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-default' ) }
+					{
+						'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-default' ),
+						'flags': ['secondary']
+					}
 				),
 				new OO.ui.ButtonOptionWidget(
 					'mwTOCDisable',
-					{ 'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' ) }
+					{
+						'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-disable' ),
+						'flags': ['secondary']
+					}
 				)
 			] )
 			.connect( this, { 'select': 'onTableOfContentsFieldChange' } ),
@@ -58,8 +67,6 @@ ve.ui.MWSettingsPage = function VeUiMWSettingsPage( name, config ) {
 			'label': ve.msg( 'visualeditor-dialog-meta-settings-toc-label' )
 		}
 	);
-	// Wikia change: make all buttons secondary for theming
-	this.tableOfContents.$element.find( 'a' ).addClass( 'secondary' );
 
 	// Redirect items
 	this.enableRedirectInput = new OO.ui.CheckboxInputWidget( { '$': this.$ } );
