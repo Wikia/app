@@ -16,6 +16,8 @@ define(
 			modalSections,
 			// placeholder for caching create map modal buttons
 			modalButtons,
+			// placeholder for validation error name
+			validationError,
 			// holds last step of create map flow
 			lastStep = 0,
 			// holds current step of create map flow
@@ -110,7 +112,11 @@ define(
 		 */
 
 		function nextStep() {
-			switchStep(currentStep + 1);
+			if (canMoveToNextStep()) {
+				switchStep(currentStep + 1);
+			} else {
+				displayError(currentStep);
+			}
 		}
 
 		/**
@@ -194,12 +200,12 @@ define(
 
 		function preparePreviewStep(data) {
 			var templateData = {
-					titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
-					orgImage: data.fileUrl,
-					tileSetId: data.tileSetId,
-					thumbnailUrl: data.fileThumbUrl,
-					userName: w.wgUserName
-				};
+				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
+				orgImage: data.fileUrl,
+				tileSetId: data.tileSetId,
+				thumbnailUrl: data.fileThumbUrl,
+				userName: w.wgUserName
+			};
 
 			$(config.steps[2].id).html(mustache.render(mustacheTemplates[1], templateData));
 		}
@@ -211,6 +217,56 @@ define(
 
 		function handleUploadErrors( response ) {
 			// TODO: handle errors (MOB-1626)
+		}
+
+		/**
+		 * Returns true if switching to next step is allowed
+		 * @returns {boolean}
+		 */
+
+		function canMoveToNextStep() {
+			var canMove = true;
+
+			switch (currentStep) {
+				case 2:
+					// the step after choosing/uploading map
+					// it requires valid map title
+					canMove = isMapTitleValid();
+					break;
+			}
+
+			return canMove;
+		}
+
+		/**
+		 * Validates map title
+		 * @returns {boolean}
+		 */
+
+		function isMapTitleValid() {
+			var title = $('#intMapTitle').val(),
+				result = true;
+
+			if (title.length === 0 || !title.trim()) {
+				validationError = 'invalidTitle';
+				result = false;
+			}
+
+			return result;
+		}
+
+		/**
+		 * Gets correct data from steps configuration to display a validation error
+		 * @param index
+		 */
+
+		function displayError(index) {
+			var $errorContainer = $('.map-creation-error'),
+				errorMessage = $.msg(config.steps[index].errorMsgKeys[validationError]);
+
+			$errorContainer.html('');
+			$errorContainer.html(errorMessage);
+			$errorContainer.removeClass(config.hiddenClass);
 		}
 
 		return {

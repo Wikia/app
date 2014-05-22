@@ -25,6 +25,9 @@ define('wikia.intMaps.createMap.config', ['jquery'], function($) {
 				buttons: {
 					'#intMapBack': true,
 					'#intMapNext': true
+				},
+				errorMsgKeys: {
+					invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
 				}
 			}
 		],
