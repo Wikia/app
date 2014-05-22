@@ -12,7 +12,7 @@ class Hooks
 		global $wgContentNamespaces;
 		$title = $article->getTitle();
 		if ( $changed && in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseEvent( $title, 'celery_workers.nlp_pipeline.parse' );
+			self::parseEvent( $title->getArticleId(), $title->getFullUrl(), 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
@@ -21,7 +21,7 @@ class Hooks
 		global $wgContentNamespaces;
 		$title = $article->getTitle();
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseEvent( $title, 'celery_workers.nlp_pipeline.delete' );
+			self::parseEvent( $id, $title->getFullUrl(), 'celery_workers.nlp_pipeline.delete' );
 		}
 		return true;
 	}
@@ -29,7 +29,7 @@ class Hooks
 	public static function onArticleUndelete( Title $title, $created, $comment ) {
 		global $wgContentNamespaces;
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseEvent( $title, 'celery_workers.nlp_pipeline.parse' );
+			self::parseEvent( $title->getArticleId(), $title->getFullUrl(), 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
@@ -37,21 +37,21 @@ class Hooks
 	public static function onTitleMoveComplete( Title $title, Title $newtitle, User $user, $oldid, $newid ) {
 		global $wgContentNamespaces;
 		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseEvent( $title, 'celery_workers.nlp_pipeline.delete' );
-			self::parseEvent( $newtitle, 'celery_workers.nlp_pipeline.parse' );
+			self::parseEvent( $oldid, $title->getFullUrl(), 'celery_workers.nlp_pipeline.delete' );
+			self::parseEvent( $newid, $newtitle->getFullUrl(), 'celery_workers.nlp_pipeline.parse' );
 		}
 		return true;
 	}
 
-	private static function parseEvent( Title $title, $task ) {
+	private static function parseEvent( $articleId, $titleUrl, $task ) {
 		global $wgCityId;
 
 		$taskList = new AsyncBackendTaskList();
 
 		$taskList->taskType( $task )
-				 ->add( $title->getArticleId() )
+				 ->add( $articleId )
 				 ->wikiId( $wgCityId )
-				 ->wikiUrl( preg_replace( '/\/wiki\/*$/', '', $title->getFullURL() ) )
+				 ->wikiUrl( preg_replace( '/\/wiki\/*$/', '', $titleUrl ) )
 				 ->setPriority( Wikia\Tasks\Queues\NlpPipelineQueue::NAME )
 				 ->queue();
 	}

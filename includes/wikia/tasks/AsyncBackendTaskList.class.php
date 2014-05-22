@@ -24,7 +24,7 @@ class AsyncBackendTaskList extends AsyncTaskList
 	 * @return $this
 	 */
 	public function add($pageId) {
-		$this->workId['page_ids'][] = $documentId;
+		$this->workId['page_ids'][] = $pageId;
 		return $this;
 	}
 
