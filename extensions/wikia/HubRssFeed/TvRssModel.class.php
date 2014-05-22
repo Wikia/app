@@ -11,6 +11,7 @@ class TvRssModel extends BaseRssModel {
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
+	const MAX_NUM_ITEMS_IN_FEED = 10;
 	public function getFeedTitle() {
 		return 'Wikia Tv Shows';
 	}
@@ -24,41 +25,65 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	public function getFeedData() {
-/*
+
 		if ($this->isFreshContentInDb(self::FEED_NAME)){
-			return $this->getLastRecoredsFromDb(self::FEED_NAME);
+			return $this->getLastRecoredsFromDb(self::FEED_NAME,  self::MAX_NUM_ITEMS_IN_FEED);
 		}
-		return [];*/
+
+		$additionalContent = false;
 		$rawData = $this->getWikiaArticlesFromExt();
+		if(empty($rawData)) {
+			$additionalContent = true;
+		}
 		$duplicates = $this->getLastDuplicatesFromDb(self::FEED_NAME );
 		$rawData = $this->removeDuplicates($rawData, $duplicates);
-		$wikis = [];
-		foreach($rawData as $item){
-			$wikis[$item['wikia_id']] = true;
-		}
-		$model = new PopularArticlesModel();
-
-		foreach($wikis as $wid=>$v ){
-			$list = $model->getArticles($wid);
-			foreach($list as $item){
-				if(!array_key_exists($item['url'],$duplicates)){
-					$rawData[] = $item;
-					break;
+		$externalDataCount = count($rawData);
+		if( $externalDataCount < self::MAX_NUM_ITEMS_IN_FEED){
+			$wikis = [];
+			if(!empty($rawData)){
+				foreach($rawData as $item){
+					$wikis[$item['wikia_id']] = true;
 				}
+				$wikis = array_keys($wikis);
+
+			}elseif( $additionalContent ) {
+				$wikis = $this->getWikisFromPast();
 			}
 
+			$rawData = $this->getPopularContent($rawData,$wikis,$duplicates, self::MAX_NUM_ITEMS_IN_FEED - $externalDataCount );
 		}
+
 		$out = $this->processItems($rawData);
-		var_dump($rawData,$out);
-		//$this->addFeedsToDb($out,self::FEED_NAME);
-		//var_dump($duplicates,$out);
-		die();
-		//return $out;
+		$this->addFeedsToDb($out,self::FEED_NAME);
+
+		if(count($out) != self::MAX_NUM_ITEMS_IN_FEED){
+			$out = $this->getLastRecoredsFromDb(self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED,true);
+		}
+		return $out;
 	}
 
+	protected function getWikisFromPast(){
+		//select distinct(wrf_wikia_id) from  wikia_rss_feeds  where wrf_feed='tv' order by wrf_pub_date desc limit 3
+		$wikisData= ( new WikiaSQL() )
+			->SELECT(' distinct(wrf_wikia_id) wid ')
+			->FROM( 'wikia_rss_feeds' )
+			->WHERE('wrf_feed')->EQUAL_TO(self::FEED_NAME)
+			->ORDER_BY('wrf_pub_date DESC')
+			 ->LIMIT(3)
+			->runLoop( $this->getDbSlave(), function (&$wikisData, $row )   {
+					$wikisData[] = $row->wid;
+				}
+			);
+		return $wikisData;
+
+	}
+
+
 	protected function getTVEpisodes() {
+		//TODO: Use Http::get
 		$data = simplexml_load_file( self::TVRAGE_RSS_YESTERDAY ) ;
 		if(!$data){
+			\Wikia\Logger\WikiaLogger::instance()->error(__METHOD_." : No content from TVRAGE !");
 			return [];
 		}
 		$items = $data->children();
