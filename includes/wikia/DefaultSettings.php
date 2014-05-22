@@ -45,10 +45,12 @@ require_once("$IP/lib/composer/autoload.php");
 /**
  * wikia library incudes
  */
-require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
+
+// FIXME: move fluest-sql-php to composer via packagist
+require_once ( $IP."/lib/Wikia/fluent-sql-php/src/init.php");
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
-require_once ( $IP."/lib/wikia/Logger/WikiaLogger.setup.php");
+require_once ( $IP."/lib/Wikia/autoloader.php");
 set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
 
 global $wgDBname;
