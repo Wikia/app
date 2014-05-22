@@ -101,6 +101,8 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	protected function getWikiaArticles( $episodes ) {
+		global $wgStagingEnvironment;
+
 		$data = [];
 		foreach ( $episodes as $i => $episode ) {
 			try {
@@ -113,11 +115,15 @@ class TvRssModel extends BaseRssModel {
 				$item['wikia_id'] = $item['wikiId'];
 				$item['page_id'] = $item['articleId'];
 				unset($item['wikiId'], $item['articleId']);
+				if($wgStagingEnvironment){
+					$item['url'] = preg_replace('~http://[^\.]+\.~','http://',$item['url']);
+				}
 				$data[] = $item;
 			} catch (Exception $e) {
 				\Wikia\Logger\WikiaLogger::instance()->error(__METHOD_." : ". $e->getMessage());
 			}
 		}
+
 		return $data;
 	}
 
