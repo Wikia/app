@@ -122,7 +122,7 @@ class FeedEntitySearchService extends EntitySearchService {
 			. ( isset( $l ) ? ' AND +(lang:' . $l . ')' : '' )
 			. ( isset( $wids ) ? ' AND +wid:( ' . implode( ' | ', $wids ) . ')' : '' )
 			. ( isset( $hubs ) ? ' AND +hub:( ' . implode( ' | ', $hubs ) . ')' : '' );
-	//	var_dump($query);
+
 		return $query;
 	}
 
@@ -131,6 +131,7 @@ class FeedEntitySearchService extends EntitySearchService {
 		foreach ( $response as $res ) {
 			$items[ ] = [
 				'id' => $res[ 'id' ],
+				'pageid' => $res[ 'pageid' ],
 				'url' => $res[ 'url' ],
 				'title' => $res[  'title_en' ],
 				'timestamp' => strtotime( $res[ 'created' ] ),

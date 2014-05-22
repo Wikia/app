@@ -1,65 +1,120 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 22.05.14
- * Time: 10:52
- */
 
 class PopularArticlesModel {
+	const REQUIRED_MIN_QUALITY = 80;
+	const DEFAULT_RESULTS_NUMBER = 200;
 
-	protected function lastRollupDate(){
-
-		$now = strtotime('last Sunday');
-		return date('Y-m-d',$now);
+	/**
+	 * @return bool|string
+	 */
+	protected function lastWeeklyRollupDate() {
+		$now = strtotime( 'last Sunday' );
+		return date( 'Y-m-d', $now );
 	}
 
-	public function getArticles($wikiId) {
-		//TODO: FILTER IN SOLR!!!!
-		//TODO: REFACTOR
-		//TODO: REMOVE MAIN PAGES
-		//TODO: USE \Wikia\Search\Services\FeedEntitySearchService
-		global $wgDatamartDB;
-		$wikis = [$wikiId];
 
-		$rec_list = [];
-		foreach ($wikis as $community) {
-			$pages = [];
-			$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $community ) );
-			$ddb = wfGetDB( DB_SLAVE, [], $wgDatamartDB );
+	/**
+	 * Returns a list of recently edited ADN popular articles
+	 *
+	 * @param $wiki_id
+	 * @return array
+	 */
+	public function getArticles( $wiki_id ) {
+		$page_ids = $this->getRecentlyEditedPageIds( $wiki_id );
+		$quality_results = $this->filterResultsOverQuality( $wiki_id, $page_ids );
+		$results = $this->sortByWeeklyPageviews( $quality_results, $wiki_id, $page_ids );
 
-			$result = $sdb->query( 'select page_id,page_touched
-									from page where page_namespace in (0)
-									order by page_latest desc
-									limit 100' );
+		return array_slice( $results, 0, self::DEFAULT_RESULTS_NUMBER );
+	}
 
-			while ($row = $result->fetchObject()) {
-				$service = new SolrDocumentService();
-				$service->setArticleId($row->page_id );
-				$service->setWikiId( $community );
-				$urlField = Wikia\Search\Utilities::field( 'url' );
-				$qualityField = Wikia\Search\Utilities::field( 'article_quality_i' );
-				$document = $service->getResult();
 
-				$sql = 'select * from rollup_wiki_article_pageviews where wiki_id = ' . (int)$community . ' and period_id = 2 and namespace_id = 0 and time_id="'.$this->lastRollupDate().'" and article_id=' . (int)$row->page_id . ' ';
+	/**
+	 * Fetches up to 200 most recently edited articles from a given wiki (without Mainpages)
+	 *
+	 * @param $wiki_id
+	 * @return array
+	 */
+	private function getRecentlyEditedPageIds( $wiki_id ) {
+		$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
 
-				$stats = $ddb->query( $sql );
-				$stats_record = $stats->fetchObject();
-				$pageviews = intval( $stats_record->pageviews );
+		$result = $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
 
-				if (($document !== null) && (isset($document[$urlField]) && (isset($document[$qualityField])) && intval( $document[$qualityField] ) >= 80
-					)) {
-					$pages[] = array("url" => $document[$urlField], "wikia_id"=>$community, "page_id"=>$row->page_id );
-					$touches [] = $row->page_touched;
-					$pvs [] = $pageviews;
-				}
+		$page_ids = [];
+		while ($row = $result->fetchObject()) {
+			$title = Title::newFromText( $row->page_title, $row->page_namespace );
+
+			if ($title instanceof Title && !$title->isMainPage()) {
+				$page_ids [] = intval( $row->page_id );
 			}
-			$sdb->close();
-			array_multisort( $pvs, SORT_DESC, SORT_NUMERIC, $pages );
-			$rec_list = array_merge( $rec_list, array_slice( $pages, 0, 200 ) );
 		}
 
-		return $rec_list;
+		$sdb->close();
 
+		return $page_ids;
 	}
-} 
+
+	/**
+	 * @param $wiki_id
+	 * @param $page_ids
+	 */
+	private function filterResultsOverQuality( $wiki_id, $page_ids ) {
+		$solr_ids = array_map( function ( $id ) use ( $wiki_id ) {
+			return $wiki_id . '_' . $id;
+		}, $page_ids );
+
+		$service = new \Wikia\Search\Services\FeedEntitySearchService();
+		$service->setIds( $solr_ids );
+		$service->setQuality( self::REQUIRED_MIN_QUALITY );
+		return $service->query( '' );
+	}
+
+	/**
+	 * @param $wiki_id
+	 * @param $page_ids
+	 */
+	private function getPageViewsMap( $wiki_id, $page_ids ) {
+		global $wgDatamartDB;
+
+		$pageviews_map = [];
+
+		$ddb = wfGetDB( DB_SLAVE, [], $wgDatamartDB );
+
+		$sql = 'select * from rollup_wiki_article_pageviews where '
+			. 'wiki_id = ' . (int)$wiki_id
+			. ' and period_id = 2 '
+			. ' and namespace_id = 0 and time_id="' . $this->lastWeeklyRollupDate() . '" '
+			. ' and article_id in (' . implode( ',', $page_ids ) . ') ';
+
+		$stats = $ddb->query( $sql );
+
+		while ($object = $stats->fetchObject()) {
+			$pageviews_map[$object->article_id] = $object->pageviews;
+		}
+
+		$ddb->close();
+	}
+
+	/**
+	 * @param $articlefeed
+	 * @param $wiki_id
+	 * @param $page_ids
+	 * @return array
+	 */
+	private function sortByWeeklyPageviews( $articlefeed, $wiki_id, $page_ids ) {
+		$results = [];
+
+		$pageviews_map = $this->getPageViewsMap( $wiki_id, $page_ids );
+
+		foreach ($articlefeed as $feed_item) {
+			$pageviews [] = intval( $pageviews_map[$feed_item['pageid']] );
+			$results[] = [
+				'url' => $feed_item['url'],
+				'wikia_id' => $wiki_id,
+				'page_id' => $feed_item['pageid'],
+			];
+		}
+
+		array_multisort( $pageviews, SORT_DESC, SORT_NUMERIC, $results );
+		return $results;
+	}
+}
