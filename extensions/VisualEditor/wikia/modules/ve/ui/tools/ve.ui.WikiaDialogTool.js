@@ -9,7 +9,7 @@
  * @extends ve.ui.DialogTool
  *
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaMediaInsertDialogTool = function VeUiWikiaMediaInsertDialogTool( toolGroup, config ) {
@@ -35,7 +35,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaMediaInsertDialogTool );
  * @extends ve.ui.IconTextButtonTool
  *
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaSourceModeDialogTool = function VeUiWikiaSourceModeDialogTool( toolGroup, config ) {
@@ -73,7 +73,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaSourceModeDialogTool );
  * @class
  * @extends ve.ui.MWMetaDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMetaDialogTool = function VeUiWikiaMetaDialogTool( toolGroup, config ) {
@@ -92,7 +92,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaMetaDialogTool );
  * @class
  * @extends ve.ui.MWCommandHelpDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaCommandHelpDialogTool = function VeUiWikiaCommandHelpDialogTool( toolGroup, config ) {
@@ -111,7 +111,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaCommandHelpDialogTool );
  * @class
  * @extends ve.ui.MWTransclusionDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWTransclusionDialogTool = function VEUIMWWikiaTransclusionDialogTool( toolGroup, config ) {
@@ -127,7 +127,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaMWTransclusionDialogTool );
  * @class
  * @extends ve.ui.MWMediaEditDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWMediaEditDialogTool = function VEUIWikiaMWMediaEditDialogTool( toolGroup, config ) {
@@ -143,7 +143,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaMWMediaEditDialogTool );
  * @class
  * @extends ve.ui.MWReferenceDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWReferenceDialogTool = function VEUIWikiaMWReferenceDialogTool( toolGroup, config ) {
@@ -159,7 +159,7 @@ ve.ui.toolFactory.register( ve.ui.WikiaMWReferenceDialogTool );
  * @class
  * @extends ve.ui.MWReferenceListDialogTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWReferenceListDialogTool = function VEUIWikiaMWReferenceListDialogTool( toolGroup, config ) {

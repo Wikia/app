@@ -8,7 +8,7 @@
  * @class
  * @extends ve.ui.MWLinkInspectorTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWLinkInspectorTool = function VEUIWikiaMWLinkInspectorTool( toolGroup, config ) {

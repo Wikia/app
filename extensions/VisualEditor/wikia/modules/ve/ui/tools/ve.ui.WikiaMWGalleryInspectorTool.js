@@ -8,7 +8,7 @@
  * @class
  * @extends ve.ui.MWGalleryInspectorTool
  * @constructor
- * @param {OO.ui.Toolgroup} toolGroup
+ * @param {OO.ui.ToolGroup} toolGroup
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWGalleryInspectorTool = function VEUIWikiaMWGalleryInspectorTool( toolGroup, config ) {
