@@ -17,23 +17,23 @@ define(
 			modalSections,
 			// placeholder for caching create map modal buttons
 			modalButtons,
+			// stack for holding modal steps
+			stack =[],
 			// placeholder for validation error name
 			validationError,
-			// holds last step of create map flow
-			lastStep = 0,
-			// holds current step of create map flow
-			currentStep = 0,
 			// placeholder for mustache templates
 			mustacheTemplates,
 			// modal event handlers
 			modalEvents = {
-				next: nextStep,
+				next: createMap,
 				back: previousStep,
 				intMapCustom: function() {
-					switchStep(1);
+					switchStep('customTileSet');
 				},
 				intMapGeo: function() {
-					switchStep(2);
+					// TODO: need geo map data
+					renderCreateMapStep({});
+					switchStep('createMap');
 				}
 			};
 
@@ -61,7 +61,7 @@ define(
 
 				bindEvents(createMapModal, modalEvents);
 				// set initial create map step
-				switchStep(0);
+				switchStep('tileSetType');
 				createMapModal.show();
 			});
 		}
@@ -75,6 +75,23 @@ define(
 
 		function renderModalContentMarkup(modalConfig, template, data) {
 			modalConfig.vars.content = mustache.render(template, data);
+		}
+
+		/**
+		 * @desc prepares image preview and  data for requests to int map service
+		 * @param {object} data - params needed to display image preview and prepare data for requests to int map service
+		 */
+
+		function renderCreateMapStep(data) {
+			var templateData = {
+				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
+				orgImage: data.fileUrl,
+				tileSetId: data.tileSetId,
+				thumbnailUrl: data.fileThumbUrl,
+				userName: w.wgUserName
+			};
+
+			$(config.steps.createMap.id).html(mustache.render(mustacheTemplates[1], templateData));
 		}
 
 		/**
@@ -109,15 +126,32 @@ define(
 		}
 
 		/**
-		 * @desc switches to the next step in create map flow
+		 * @desc Takes data from inputs and sends request to service via bridge
 		 */
 
-		function nextStep() {
-			if (canMoveToNextStep()) {
-				switchStep(currentStep + 1);
-			} else {
-				displayError(currentStep);
+		function createMap() {
+
+			if (!isMapTitleValid()) {
+				displayError('createMap');
+				return;
 			}
+			var mapData = {
+				title: $('#intMapTitle').val(),
+				image: $('#intMapOrgImg').val(),
+				titleSetId: $('#intMapTileSet').val()
+			};
+
+			bridge.createMap(
+				mapData,
+				function(data) {
+					// map created, go to its page
+					qs(data.mapUrl).goTo();
+				},
+				function(data) {
+					validationError = 'notImplemented';
+					displayError('createMap');
+				}
+			);
 		}
 
 		/**
@@ -125,53 +159,49 @@ define(
 		 */
 
 		function previousStep() {
-			switchStep(lastStep);
+			// removes current step from stack
+			stack.pop();
+
+			switchStep(stack.pop());
 		}
 
 		/**
 		 * @desc switches to the given step in create map flow
-		 * @param {number} index - step index
+		 * @param {string} step - key of the step
 		 */
 
-		function switchStep(index) {
-			if( config.steps[index] ) {
-				setStep(index);
-				showStepContent(index);
-				showStepModalButtons(index);
-			} else {
-				createMap();
-			}
+		function switchStep(step) {
+			addToStack(step);
+			showStepContent(step);
+			showStepModalButtons(step);
 		}
 
 		/**
-		 * @desc sets current step in create map flow
-		 * @param {number} index - step index
+		 * @desc adds step to steps stack
+		 * @param {string} step - key of the step
 		 */
 
-		function setStep(index) {
-			lastStep = currentStep;
-			currentStep = index;
+		function addToStack(step) {
+			stack.push(step);
 		}
 
 		/**
 		 * @desc shows step content
-		 * @param {number} index - step index
+		 * @param {string} step - key of the step
 		 */
 
-		function showStepContent(index) {
-			var id = config.steps[index].id;
-
+		function showStepContent(step) {
 			modalSections.addClass(config.hiddenClass);
-			modalSections.filter(id).removeClass(config.hiddenClass);
+			modalSections.filter(config.steps[step].id).removeClass(config.hiddenClass);
 		}
 
 		/**
 		 * @desc shows step buttons
-		 * @param {number} index - step index
+		 * @param {string} step - key of the step
 		 */
 
-		function showStepModalButtons(index) {
-			var buttons = Object.keys(config.steps[index].buttons || {});
+		function showStepModalButtons(step) {
+			var buttons = config.steps[step].buttons || [];
 
 			modalButtons.addClass(config.hiddenClass);
 
@@ -189,8 +219,8 @@ define(
 			bridge.uploadMapImage(
 				form,
 				function(data) {
-					preparePreviewStep(data);
-					switchStep(2);
+					renderCreateMapStep(data);
+					switchStep('createMap');
 				},
 				function(data) {
 					handleUploadErrors(data);
@@ -208,75 +238,15 @@ define(
 		}
 
 		/**
-		 * @desc prepares image preview and  data for requests to int map service
-		 * @param {object} data - params needed to display image preview and prepare data for requests to int map service
-		 */
-
-		function preparePreviewStep(data) {
-			var templateData = {
-				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
-				orgImage: data.fileUrl,
-				tileSetId: data.tileSetId,
-				thumbnailUrl: data.fileThumbUrl,
-				userName: w.wgUserName
-			};
-
-			$(config.steps[2].id).html(mustache.render(mustacheTemplates[1], templateData));
-		}
-
-		/**
-		 * @desc Takes data from inputs and sends request to service via bridge
-		 */
-
-		function createMap() {
-			var mapData = {
-				title: $('#intMapTitle').val(),
-				image: $('#intMapOrgImg').val(),
-				titleSetId: $('#intMapTileSet').val()
-			};
-
-			bridge.createMap(
-				mapData,
-				function(data) {
-				// map created, go to its page
-					qs(data.mapUrl).goTo();
-				},
-				function(data) {
-					validationError = 'notImplemented';
-					displayError(currentStep);
-				}
-			);
-		}
-
-		/**
-		 * Returns true if switching to next step is allowed
-		 * @returns {boolean}
-		 */
-
-		function canMoveToNextStep() {
-			var canMove = true;
-
-			switch (currentStep) {
-				case 2:
-					// the step after choosing/uploading map
-					// it requires valid map title
-					canMove = isMapTitleValid();
-					break;
-			}
-
-			return canMove;
-		}
-
-		/**
 		 * Validates map title
 		 * @returns {boolean}
 		 */
 
 		function isMapTitleValid() {
-			var title = $('#intMapTitle').val(),
+			var title = $('#intMapTitle').val().trim(),
 				result = true;
 
-			if (title.length === 0 || !title.trim()) {
+			if (title.length === 0) {
 				validationError = 'invalidTitle';
 				result = false;
 			}
@@ -286,14 +256,14 @@ define(
 
 		/**
 		 * Gets correct data from steps configuration to display a validation error
-		 * @param index
+		 * @param step
 		 */
 
-		function displayError(index) {
+		function displayError(step) {
 			var $errorContainer = $('.map-creation-error');
 
 			$errorContainer.html('');
-			$errorContainer.html(config.steps[index].errorMsgKeys[validationError]);
+			$errorContainer.html(config.steps[step].errorMsgKeys[validationError]);
 			$errorContainer.removeClass(config.hiddenClass);
 		}
 
