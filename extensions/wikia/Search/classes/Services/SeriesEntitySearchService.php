@@ -6,8 +6,8 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	const XWIKI_CORE = 'xwiki';
 	const WIKI_LIMIT = 1;
-	const MINIMAL_WIKIA_ARTICLES = 30;
-	const MINIMAL_WIKIA_SCORE = 2;
+	const MINIMAL_WIKIA_ARTICLES = 20;
+	const MINIMAL_WIKIA_SCORE = 0.75;
 	const DEFAULT_SLOP = 1;
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
