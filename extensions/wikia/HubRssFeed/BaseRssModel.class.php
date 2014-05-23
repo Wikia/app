@@ -213,7 +213,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function processItems( $rawData ) {
 		$out = [ ];
-		$time = mktime();
+		$time = time();
 		foreach ( $rawData as $item ) {
 			$desc = $this->getArticleDescription( $item[ 'wikia_id' ], $item[ 'page_id' ] );
 
@@ -224,6 +224,18 @@ abstract class BaseRssModel extends WikiaService {
 			if ( !$item[ 'timestamp' ] ) {
 				$item[ 'timestamp' ] = $time;
 			}
+			if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {
+				$info = WikiFactory::getWikiByID( $item[ 'wikia_id' ] );
+				$item[ 'wikititle' ] = $info->city_title;
+			}
+			$pos = strrpos( $item[ 'title' ], '/' );
+			if ( $pos ) {
+				$pos++;
+			}
+			$title = substr( $item[ 'title' ], $pos );
+
+			$item[ 'title' ] = $item[ 'wikititle' ] . ' - ' . $title;
+
 			$out[ $item[ 'url' ] ] = $item;
 		}
 		return $out;
