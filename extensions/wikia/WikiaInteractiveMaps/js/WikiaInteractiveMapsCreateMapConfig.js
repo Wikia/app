@@ -1,7 +1,7 @@
 define('wikia.intMaps.createMap.config', ['jquery'], function($) {
 	'use strict';
 
-	// modal buttons ids
+	// modal buttons selectors
 	var buttons = {
 		back: '#intMapBack',
 		next: '#intMapNext'
