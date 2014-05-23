@@ -294,7 +294,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam string|array providers - Only videos hosted by these providers will be returned. Default: all providers.
-	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @requestParam string|array category - Only videos tagged with these categories will be returned. Default: any categories.
 	 * @requestParam integer width - the width of the thumbnail to return
 	 * @requestParam integer height - the height of the thumbnail to return
 	 * @responseParam array $videos
@@ -312,6 +312,8 @@ class VideoHandlerController extends WikiaController {
 		$height = $this->getVal( 'height', 0 );
 
 		$filter = 'all';
+		$isMobile = ( $providers == 'mobile' || $providers == 'mobileApp' );
+
 		if ( is_string( $providers ) ) {
 			// get providers for mobile
 			if ( $providers == 'mobile' ) {
@@ -332,7 +334,7 @@ class VideoHandlerController extends WikiaController {
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
 
 		// get video id and thumbnail url for mobile
-		if ( !empty( $width ) && !empty( $height ) ) {
+		if ( $isMobile ) {
 			foreach ( $videoList as &$videoInfo ) {
 				$title = $videoInfo['title'];
 				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
@@ -340,8 +342,12 @@ class VideoHandlerController extends WikiaController {
 					$videoInfo['videoId'] = $file->getVideoId();
 					$videoInfo['videoName'] = $file->getTitle()->getText();
 
-					$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
-					$videoInfo['thumbUrl'] = $thumb->getUrl();
+					if ( !empty( $width ) && !empty( $height ) ) {
+						$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
+						$videoInfo['thumbUrl'] = $thumb->getUrl();
+					} else {
+						$videoInfo['thumbUrl'] = '';
+					}
 				} else {
 					$videoInfo['videoId'] = '';
 					$videoInfo['videoName'] = '';

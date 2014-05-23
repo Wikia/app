@@ -246,18 +246,10 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
-		$addedBy = '';
 		if ( $file instanceof File ) {
 			$isVideo = WikiaFileHelper::isVideoFile( $file );
 			if ( $isVideo ) {
 				$title = $file->getTitle()->getText();
-			}
-
-			// For oasis skin only. Remove picture attribution for thumbnails less than 100px
-			if ( $this->app->checkSkin( 'oasis' )
-				&& !empty( $this->wg->EnableOasisPictureAttribution )
-				&& $width > 99 ) {
-				$addedBy = ThumbnailHelper::getByUserMsg( $file, $isVideo );
 			}
 		}
 
@@ -265,9 +257,7 @@ class ThumbnailController extends WikiaController {
 		$this->title = $title;
 		$this->figureClass = $alignClass;
 		$this->url = $url;
-		$this->thumbnailMore = wfMessage( 'thumbnail-more' )->escaped();
 		$this->caption = $caption;
-		$this->addedBy = $addedBy;
 		$this->width = $width;
 
 		wfProfileOut( __METHOD__ );
