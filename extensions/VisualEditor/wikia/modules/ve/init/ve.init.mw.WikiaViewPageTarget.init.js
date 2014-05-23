@@ -55,9 +55,6 @@
 				clearTimeout( indicatorTimeoutId );
 				indicatorTimeoutId = null;
 			}
-			if ( $indicator.is( ':visible' ) ) {
-				$indicator.fadeOut( 400 );
-			}
 		} );
 	}
 
