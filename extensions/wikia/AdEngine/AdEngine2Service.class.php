@@ -308,6 +308,7 @@ class AdEngine2Service
 			'wgUserShowAds',                 // JWPlayer.class.php
 			'wikiaPageIsCorporate',          // analytics_prod.js
 			'wikiaPageType',                 // analytics_prod.js
+			'cscoreCat',                     // analytics_prod.js
 		];
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
