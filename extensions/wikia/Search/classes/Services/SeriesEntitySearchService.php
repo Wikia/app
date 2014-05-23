@@ -8,6 +8,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const WIKI_LIMIT = 1;
 	const MINIMAL_WIKIA_ARTICLES = 30;
 	const MINIMAL_WIKIA_SCORE = 2;
+	const DEFAULT_SLOP = 1;
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
@@ -35,14 +36,14 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
-		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^4 all_domains_mv_wd^10' );
-		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5 all_domains_mv_wd^10' );
+		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
+			'sitename_txt^4 all_domains_mv_wd^15' );
+		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^5 all_domains_mv_wd^15' );
 
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
-		$dismax->setQueryPhraseSlop(1);
-		$dismax->setPhraseSlop(1);
+		$dismax->setQueryPhraseSlop(static::DEFAULT_SLOP);
+		$dismax->setPhraseSlop(static::DEFAULT_SLOP);
 
 		return $select;
 	}
