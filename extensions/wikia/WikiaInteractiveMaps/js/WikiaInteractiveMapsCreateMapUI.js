@@ -224,12 +224,16 @@ define(
 			$(config.steps[2].id).html(mustache.render(mustacheTemplates[1], templateData));
 		}
 
-		function createMap() {
-			var mapData = {};
+		/**
+		 * @desc Takes data from inputs and sends request to service via bridge
+		 */
 
-			mapData.title = $('#intMapTitle').val();
-			mapData.image = $('#intMapOrgImg').val();
-			mapData.tileSetId = $('#intMapTileSet').val();
+		function createMap() {
+			var mapData = {
+				title: $('#intMapTitle').val(),
+				image: $('#intMapOrgImg').val(),
+				titleSetId: $('#intMapTileSet').val()
+			};
 
 			bridge.createMap(
 				mapData,
