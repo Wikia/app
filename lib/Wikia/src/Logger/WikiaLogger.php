@@ -194,6 +194,32 @@ class WikiaLogger {
 		return PHP_SAPI == 'cli' ? 'php' : 'apache2';
 	}
 
+	/**
+	 * Set production mode. Sends logs to logstash/es.
+	 * @return WikiaLogger
+	 */
+	public function setProductionMode() {
+		$this->getSyslogHandler()->setModeLogstashFormat();
+		return $this;
+	}
+
+	/**
+	 * Set development mode. Sends logs to syslog.
+	 * @return WikiaLogger
+	 */
+	public function setDevMode() {
+		$this->getSyslogHandler()->setModeLineFormat();
+		return $this;
+	}
+
+	/**
+	 * Set development mode with logstash/es support.
+	 * return WikiaLogger
+	 */
+	public function setDevModeWithES() {
+		$this->getSyslogHandler()->setModeLogstashFormat()->enableDevMode();
+		return $this;
+	}
 
 	public function getErrorReporting() {
 		return error_reporting();
