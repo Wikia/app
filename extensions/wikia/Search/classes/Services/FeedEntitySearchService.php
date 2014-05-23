@@ -80,6 +80,7 @@ class FeedEntitySearchService extends EntitySearchService {
 	public function getIds() {
 		return $this->ids;
 	}
+
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
@@ -90,11 +91,8 @@ class FeedEntitySearchService extends EntitySearchService {
 		if(!empty($this->sorts)){
 			$select->addSorts($this->sorts);
 		}
-		//	$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
-
 
 		$select->createFilterQuery( 'mp' )->setQuery( '-(is_main_page:true)' );
-
 		$select->setRows( $this->rowLimit ? $this->rowLimit : static::ROWS_NUMBER );
 
 		return $select;
@@ -113,13 +111,16 @@ class FeedEntitySearchService extends EntitySearchService {
 		if ( !empty( $wid ) ) {
 			$wids = is_array( $wid ) ? $wid : [ $wid ];
 		}
+
 		$hub = $this->getHubs();
 		if ( !empty( $hub ) ) {
 			$hubs = is_array( $hub ) ? $hub : [ $hub ];
 		}
+
 		if(!empty($this->ids)){
 			$query .= '+id:(' . implode( ' | ', $this->ids ) . ') ';
 		}
+
 		if(!empty($this->urls)){
 			$query .= ' +url:(' . implode( ' | ', $this->urls ) . ')';
 		}
@@ -127,10 +128,10 @@ class FeedEntitySearchService extends EntitySearchService {
 		if(!empty($this->categories)){
 			$query .= ' +categories_mv_en:(' . implode( ' AND ', $this->categories ) . ')';
 		}
+
 		if(!empty($this->hosts)){
 			$query .= ' +host:(' . implode( ' | ', $this->hosts ) . ') ';
 		}
-
 
 		$query .=
 			 ( isset( $q ) ? ' AND +(article_quality_i:[' . $q . ' TO *])' : '' )
