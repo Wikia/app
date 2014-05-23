@@ -17,6 +17,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 // Article thumbnails
 .WikiaArticle .article-thumb {
 	margin-bottom: 15px;
+	margin-top: 6px;
 
 	a {
 		display: inline-block;
@@ -48,6 +49,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		font-weight: bold;
 	}
 
+	// TODO: this should be safe to remove after 6/18/2014 - liz
 	.attribution {
 		color: $color-subtle-text;
 
@@ -69,12 +71,14 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 		color: $color-alternate-text;
 	}
 
+	// TODO: this should be safe to remove after 6/18/2014 - liz
 	.details {
 		float: right;
 		margin: 0 0 0 5px;
 		visibility: hidden;
 	}
 
+	// TODO: this should be safe to remove after 6/18/2014 - liz
 	&:hover {
 		.details {
 			visibility: visible;
