@@ -222,10 +222,7 @@ class ImageListPager extends TablePager {
 						$deleteMsg = $this->msg( 'delete' )->escaped();
 						$deleteMsg = mb_strtolower( $deleteMsg, mb_detect_encoding( $deleteMsg ) );
 
-						$delete = Xml::element( 'a',
-							array( 'href' => $filePage->getLocalUrl() . '?action=delete' ),
-							$deleteMsg
-						);
+						$delete = Linker::linkKnown( $filePage, $deleteMsg, array( 'title' => false ), array( 'action' => 'delete' ) );
 
 						return "$link ($download) ($delete)";
 					}
