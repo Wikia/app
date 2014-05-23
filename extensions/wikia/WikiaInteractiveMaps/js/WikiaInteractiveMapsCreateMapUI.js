@@ -286,11 +286,10 @@ define(
 		 */
 
 		function displayError(index) {
-			var $errorContainer = $('.map-creation-error'),
-				errorMessage = $.msg(config.steps[index].errorMsgKeys[validationError]);
+			var $errorContainer = $('.map-creation-error');
 
 			$errorContainer.html('');
-			$errorContainer.html(errorMessage);
+			$errorContainer.html(config.steps[index].errorMsgKeys[validationError]);
 			$errorContainer.removeClass(config.hiddenClass);
 		}
 
