@@ -6,7 +6,7 @@
 @import "../../../../skins/oasis/css/mixins/transition";
 @import "../../../../skins/oasis/css/mixins/transform";
 @import "../../UserLogin/mixins/tooltip-icon";
-@import "Colors";
+@import "WikiaHomePageHubSlotsColors";
 
 @mixin interstitial-toggle-animation {
 	-webkit-animation: InterstitialToggle 900ms;

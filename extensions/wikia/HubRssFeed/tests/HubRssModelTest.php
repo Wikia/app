@@ -41,9 +41,9 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::__construct
 	 */
 	public function testConstruct() {
-		$mockToolbox = $this->mockEditHubsModel->setMethods( ['__construct'] )->getMock();
+		$mockEditHubModel = $this->mockEditHubsModel->setMethods( ['__construct'] )->getMock();
 
-		$this->mockClass( 'EditHubModel', $mockToolbox );
+		$this->mockClass( 'EditHubModel', $mockEditHubModel );
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->setConstructorArgs( ['en'] )
@@ -55,12 +55,12 @@ class HubRssModelTest extends WikiaBaseTest {
 		$propApp = $refl->getProperty( 'app' );
 		$propApp->setAccessible( true );
 
-		$propToolbox = $refl->getProperty( 'editHubModel' );
-		$propToolbox->setAccessible( true );
+		$propEditHubModel = $refl->getProperty( 'editHubModel' );
+		$propEditHubModel->setAccessible( true );
 
 		//checking for $this->app inside controller
 		$this->assertInstanceOf( 'WikiaApp', $propApp->getValue( $mock ) );
-		$this->assertInstanceOf( get_class( $mockToolbox ), $propToolbox->getValue( $mock ) );
+		$this->assertInstanceOf( get_class( $mockEditHubModel ), $propEditHubModel->getValue( $mock ) );
 
 
 	}
@@ -192,13 +192,13 @@ class HubRssModelTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedModel::getRealDataV3
 	 */
 	public function testGetRealDataV3() {
-		$mockToolbox = $this->mockEditHubsModel->setMethods( ['getLastPublishedTimestamp'] )->getMock();
+		$mockEditHubModel = $this->mockEditHubsModel->setMethods( ['getLastPublishedTimestamp'] )->getMock();
 
-		$mockToolbox->expects( $this->any() )
+		$mockEditHubModel->expects( $this->any() )
 			->method( 'getLastPublishedTimestamp', '__construct' )
 			->will( $this->returnCallback( 'HubRssModelTest::mock_getLastPublishedTimestamp' ) );
 
-		$this->mockClass( 'EditHubModel', $mockToolbox );
+		$this->mockClass( 'EditHubModel', $mockEditHubModel );
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
 			->disableOriginalConstructor()
@@ -208,7 +208,7 @@ class HubRssModelTest extends WikiaBaseTest {
 		$refl = new \ReflectionObject($mock);
 		$prop = $refl->getProperty( 'editHubModel' );
 		$prop->setAccessible( true );
-		$prop->setValue( $mock, $mockToolbox );
+		$prop->setValue( $mock, $mockEditHubModel );
 
 		$mock->expects( $this->any() )
 			->method( 'getDataFromModulesV3' )
