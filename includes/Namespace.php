@@ -97,14 +97,7 @@ class MWNamespace {
 		self::isMethodValidFor( $index, __METHOD__ );
 		return self::isTalk( $index )
 			? $index
-			// begin wikia change
-			// @author Cqm
-			// VOLDEV-66
-			// fix method for when wikia wall extension is enabled
-			: $index == NS_USER && !empty( $wgEnableWallExt )
-				? NS_USER_WALL
-			// end wikia change
-				: $index + 1;
+			: $index + 1;
 	}
 
 	/**
