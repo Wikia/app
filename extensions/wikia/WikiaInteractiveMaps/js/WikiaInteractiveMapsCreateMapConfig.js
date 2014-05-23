@@ -1,6 +1,12 @@
 define('wikia.intMaps.createMap.config', ['jquery'], function($) {
 	'use strict';
 
+	// modal buttons selectors
+	var buttons = {
+		back: '#intMapBack',
+		next: '#intMapNext'
+	};
+
 	return {
 		// class used for hiding elements
 		hiddenClass: 'hidden',
@@ -9,28 +15,22 @@ define('wikia.intMaps.createMap.config', ['jquery'], function($) {
 		uploadEntryPoint: '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 
 		// holds config for each step
-		// TODO: maybe it would be better to use object instead of array
-		steps: [
-			{
+		steps: {
+			tileSetType: {
 				id: '#intMapsChooseType'
 			},
-			{
-				id: '#intMapsChooseTileSet',
-				buttons: {
-					'#intMapBack': true
-				}
+			customTileSet: {
+				id: '#intMapsCustomTileSet',
+				buttons: [buttons.back]
 			},
-			{
+			createMap: {
 				id: '#intMapsAddTitle',
-				buttons: {
-					'#intMapBack': true,
-					'#intMapNext': true
-				},
+				buttons: [buttons.back, buttons.next],
 				errorMsgKeys: {
 					invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
 				}
 			}
-		],
+		},
 
 		// modal configuration
 		modalConfig: {
