@@ -15,7 +15,6 @@ class MaintenanceRss extends Maintenance {
 	function execute() {
 		$this->warmTv();
 		$this->warmGames();
-		$this->removeOldEntries();
 	}
 
 	function warmTv() {
@@ -29,10 +28,6 @@ class MaintenanceRss extends Maintenance {
 
 	function warmGames() {
 		echo "| NOT WARMING GAMES... :( \n";
-	}
-
-	function removeOldEntries() {
-		echo "| NOT REMOVING OLD ENTRIES... \n";
 	}
 }
 
