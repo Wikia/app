@@ -35,7 +35,9 @@ define(
 					renderCreateMapStep({});
 					switchStep('createMap');
 				}
-			};
+			},
+			// cache selectors
+			$errorContainer;
 
 		// TODO: figure out where is better place to place it and move it there
 		$('body').on('change', '#intMapUpload', function(event) {
@@ -63,6 +65,7 @@ define(
 				// set initial create map step
 				switchStep('tileSetType');
 				createMapModal.show();
+				$errorContainer = $('.map-creation-error');
 			});
 		}
 
@@ -130,11 +133,11 @@ define(
 		 */
 
 		function createMap() {
-
 			if (!isMapTitleValid()) {
-				displayError('createMap');
+				displayError($.msg('wikia-interactive-maps-create-map-error-invalid-map-title'));
 				return;
 			}
+
 			var mapData = {
 				title: $('#intMapTitle').val(),
 				image: $('#intMapOrgImg').val(),
@@ -143,13 +146,12 @@ define(
 
 			bridge.createMap(
 				mapData,
-				function(data) {
+				function(res) {
 					// map created, go to its page
-					qs(data.mapUrl).goTo();
+					qs(res.mapUrl).goTo();
 				},
-				function(data) {
-					validationError = 'notImplemented';
-					displayError('createMap');
+				function(errRes) {
+					displayError(errRes.results.error);
 				}
 			);
 		}
@@ -215,7 +217,6 @@ define(
 		 * @param {object} form - html form node element
 		 */
 
-
 		function uploadMapImage(form) {
 			bridge.uploadMapImage(
 				form,
@@ -230,15 +231,6 @@ define(
 		}
 
 		/**
-		 * @desc Handles upload errors&exceptions
-		 * @param {object} response
-		 */
-
-		function handleUploadErrors( response ) {
-			// TODO: handle errors (MOB-1626)
-		}
-
-		/**
 		 * Validates map title
 		 * @returns {boolean}
 		 */
@@ -248,7 +240,6 @@ define(
 				result = true;
 
 			if (title.length === 0) {
-				validationError = 'invalidTitle';
 				result = false;
 			}
 
@@ -261,8 +252,6 @@ define(
 		 */
 
 		function displayError(message) {
-			var $errorContainer = $('.map-creation-error');
-
 			$errorContainer.html(message);
 			$errorContainer.removeClass(config.hiddenClass);
 		}

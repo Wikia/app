@@ -202,8 +202,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			case UploadBase::FILE_TOO_LARGE:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
 				break;
+			case UploadBase::EMPTY_FILE:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-empty-file' )->plain();
+				break;
+			case UploadBase::FILETYPE_BADTYPE:
+			case UploadBase::VERIFICATION_ERROR:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-bad-type' )->plain();
+				break;
 			default:
-				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error' )->text();
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse();
 				break;
 		}
 
