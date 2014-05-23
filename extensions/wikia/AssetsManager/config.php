@@ -205,7 +205,7 @@ $config['oasis_jquery'] = array(
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
-		'//skins/oasis/js/isTouchScreen.js', // TODO: move to resources directory
+		'//skins/oasis/js/isTouchScreen.js',
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
