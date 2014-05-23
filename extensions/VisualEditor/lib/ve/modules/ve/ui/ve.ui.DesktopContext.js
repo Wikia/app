@@ -63,7 +63,7 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'close': 'onInspectorClose'
 	} );
 	this.surface.getView().getDocument().getDocumentNode().connect( this, {
-		'teardown': 'onSurfaceTeardown'
+		'teardown': 'onDocumentTeardown'
 	} );
 
 	this.$window.on( {
@@ -90,7 +90,7 @@ OO.inheritClass( ve.ui.DesktopContext, ve.ui.Context );
 /**
  * Handle surface teardown.
  */
-ve.ui.DesktopContext.prototype.onSurfaceTeardown = function () {
+ve.ui.DesktopContext.prototype.onDocumentTeardown = function () {
 	this.$window.off( '.ve-ui-desktopContext' );
 };
 
@@ -551,7 +551,6 @@ ve.ui.DesktopContext.prototype.handleFloat = function () {
 ve.ui.DesktopContext.prototype.shouldFloat = function () {
 	var toolbar = this.surface.getTarget().getToolbar(),
 		toolbarHeight = toolbar.$element.height(),
-		offset = this.$element.offset(),
 		focusedNode = this.surface.getView().getFocusedNode(),
 		focusedNodeOffset = focusedNode.$element.offset(),
 		windowScrollTop = this.$window.scrollTop(),
@@ -585,5 +584,5 @@ ve.ui.DesktopContext.prototype.float = function () {
 ve.ui.DesktopContext.prototype.unfloat = function () {
 	this.$element.css( 'position', 'absolute' );
 	this.floating = false;
-	this.update();
+	this.updateDimensions();
 };
