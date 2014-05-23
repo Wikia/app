@@ -66,7 +66,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset);
+				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset + 20); // buffer by 20px
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -87,6 +87,7 @@
 			LightboxLoader.cache.details[Lightbox.current.title] = Lightbox.initialFileDetail;
 			Lightbox.updateMedia();
 			Lightbox.showOverlay();
+
 			Lightbox.hideOverlay(3000);
 
 			LightboxLoader.lightboxLoading = false;
@@ -105,6 +106,11 @@
 			// attach event handlers
 			Lightbox.bindEvents();
 
+			if (Wikia.isTouchScreen()) {
+				Lightbox.openModal.pin
+					.click()
+					.hide();
+			}
 		},
 		cacheDOM: function () {
 			// Template cache
@@ -113,6 +119,7 @@
 			Lightbox.openModal.progressTemplate = $('#LightboxCarouselProgressTemplate');
 			Lightbox.openModal.headerTemplate = $('#LightboxHeaderTemplate');
 			Lightbox.openModal.headerAdTemplate = $('#LightboxHeaderAdTemplate');
+			Lightbox.openModal.pin = $('.LightboxCarousel .toolbar .pin');
 
 			// Cache error message
 			Lightbox.openModal.errorMessage = $('#LightboxErrorMessage').html();
@@ -199,7 +206,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', '.LightboxCarousel .toolbar .pin', function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),

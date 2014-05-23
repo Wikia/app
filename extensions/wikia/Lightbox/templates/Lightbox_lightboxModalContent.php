@@ -52,7 +52,7 @@
 	</script>
 
 	<script id="LightboxHeaderTemplate" class="template" type="text/template">
-		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
+		<a href="#" class="wikia-button share-button secondary"><?= wfMsg('lightbox-header-share-button') ?></a>
 		<a href="{{fileUrl}}" class="wikia-button more-info-button secondary"><?= wfMsg('lightbox-header-more-info-button') ?></a>
 
 		<div id="lightbox-add-to-article" class="lightbox-add-to-article">
