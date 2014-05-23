@@ -1,9 +1,8 @@
-<form class="WikiaForm">
+<form class="WikiaForm create-map-form">
 	<div class="input-group">
 		<input type="text" id="intMapTitle" name="intMapTitle" placeholder="{{titlePlaceholder}}">
 	</div>
 	<img src="{{thumbnailUrl}}" alt="" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
-	<input type="hidden" id="intMapOrgImg" value="{{userName}}">
 	{{#orgImage}}
 		<input type="hidden" id="intMapOrgImg" value="{{orgImage}}">
 	{{/orgImage}}
@@ -11,4 +10,3 @@
 		<input type="hidden" id="intMapTileSet" value="{{tileSetId}}">
 	{{/tileSetId}}
 </form>
-

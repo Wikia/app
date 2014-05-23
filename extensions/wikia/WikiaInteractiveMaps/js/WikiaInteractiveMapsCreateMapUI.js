@@ -4,10 +4,11 @@ define(
 		'jquery',
 		'wikia.window',
 		'wikia.mustache',
+		'wikia.querystring',
 		'wikia.intMaps.createMap.config',
 		'wikia.intMaps.createMap.bridge'
 	],
-	function($, w, mustache, config, bridge) {
+	function($, w, mustache, qs, config, bridge) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -133,9 +134,13 @@ define(
 		 */
 
 		function switchStep(index) {
-			setStep(index);
-			showStepContent(index);
-			showStepModalButtons(index);
+			if( config.steps[index] ) {
+				setStep(index);
+				showStepContent(index);
+				showStepModalButtons(index);
+			} else {
+				createMap();
+			}
 		}
 
 		/**
@@ -194,6 +199,15 @@ define(
 		}
 
 		/**
+		 * @desc Handles upload errors&exceptions
+		 * @param {object} response
+		 */
+
+		function handleUploadErrors( response ) {
+			// TODO: handle errors (MOB-1626)
+		}
+
+		/**
 		 * @desc prepares image preview and  data for requests to int map service
 		 * @param {object} data - params needed to display image preview and prepare data for requests to int map service
 		 */
@@ -210,13 +224,24 @@ define(
 			$(config.steps[2].id).html(mustache.render(mustacheTemplates[1], templateData));
 		}
 
-		/**
-		 * @desc Handles upload errors&exceptions
-		 * @param {object} response
-		 */
+		function createMap() {
+			var mapData = {};
 
-		function handleUploadErrors( response ) {
-			// TODO: handle errors (MOB-1626)
+			mapData.title = $('#intMapTitle').val();
+			mapData.image = $('#intMapOrgImg').val();
+			mapData.tileSetId = $('#intMapTileSet').val();
+
+			bridge.createMap(
+				mapData,
+				function(data) {
+				// map created, go to its page
+					qs(data.mapUrl).goTo();
+				},
+				function(data) {
+					validationError = 'notImplemented';
+					displayError(currentStep);
+				}
+			);
 		}
 
 		/**
