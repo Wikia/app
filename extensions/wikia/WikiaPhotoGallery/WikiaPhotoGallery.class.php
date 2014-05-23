@@ -166,8 +166,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Get value of parsed parameter
 	 */
-	public function getParam($name) {
-		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : null;
+	public function getParam($name, $default = null) {
+		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : $default;
 	}
 
 	/**
@@ -665,17 +665,15 @@ class WikiaPhotoGallery extends ImageGallery {
 			$useBuckets = $this->getParam('buckets');
 			$useRowDivider = $this->getParam('rowdivider');
 			$captionColor = $this->getParam('captiontextcolor');
-			$borderColor = $this->getParam('bordercolor');
+			$borderColor = $this->getParam('bordercolor', 'accent');
 
 			$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
 			$position = $this->getParam('position');
 			$captionsPosition = $this->getParam('captionposition');
 			$captionsAlign = $this->getParam('captionalign');
 			$captionsSize = $this->getParam('captionsize');
-			$captionsColor = (!empty($captionColor)) ? $captionColor : null;
 			$spacing = $this->getParam('spacing');
 			$borderSize = $this->getParam('bordersize');
-			$borderColor = (!empty($borderColor)) ? $borderColor : 'accent';
 			$isTemplate = (isset($this->mData['params']['source']) && $this->mData['params']['source'] == "template\x7f");
 			$hash = $this->mData['hash'];
 			$id = 'gallery-' . $this->mData['id'];
@@ -917,7 +915,10 @@ class WikiaPhotoGallery extends ImageGallery {
 				$html .= $thumbHtml;
 				$html .= Xml::closeElement('a');
 
-				if ($captionsPosition == 'below') {
+				// caption is either below the thumb or 'within' as an overlay
+				$captionBelow = ( $captionsPosition == 'below' ) || $isVideo;
+
+				if ($captionBelow) {
 					$html .= Xml::closeElement('div');
 					$html .= Xml::closeElement('div');
 				}
@@ -932,10 +933,10 @@ class WikiaPhotoGallery extends ImageGallery {
 						'div',
 						array(
 							'class' => 'lightbox-caption'.
-								((!empty($borderColorClass)  && $captionsPosition == 'within') ? $borderColorClass : null),
-							'style' => (($captionsPosition == 'below') ? "width:{$thumbSize}px;" : null).
-								((!empty($captionsColor)) ? " color:{$captionsColor};" : null).
-								((!empty($captionsBackgroundColor)) ? " background-color:{$captionsBackgroundColor}" : null).
+								((!empty($borderColorClass)  && !$captionBelow) ? $borderColorClass : null),
+							'style' => ($captionBelow ? "width:{$thumbSize}px;" : null).
+								((!empty($captionColor)) ? " color:{$captionColor};" : null).
+								((!empty($captionsBackgroundColor) && !$captionBelow) ? " background-color:{$captionsBackgroundColor}" : null).
 								($useBuckets ? " margin-top: 0px;" : '').
 								((!empty($hideOverflow)) ? " overflow: hidden" : null)
 						)
@@ -945,7 +946,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::closeElement('div');
 				}
 
-				if ($captionsPosition == 'within') {
+				if (!$captionBelow) {
 					$html .= Xml::closeElement('div');
 					$html .= Xml::closeElement('div');
 				}
