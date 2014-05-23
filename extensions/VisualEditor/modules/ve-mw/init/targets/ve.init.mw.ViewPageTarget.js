@@ -546,7 +546,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
 	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
 		editApi.captcha.key,
 		've-ui-mwSaveDialog-captcha',
-		{ theme: 'white'}
+		{ theme: 'white' }
 	);
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 
