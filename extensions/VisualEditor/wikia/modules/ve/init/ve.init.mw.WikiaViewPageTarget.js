@@ -142,3 +142,26 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
 };
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
+	var $indicator = $( '.ve-indicator[data-type="loading"]' );
+	if ( $indicator.is( ':visible' ) ) {
+		$indicator.fadeOut( 400 );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
+	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this );
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-load-error',
+			status: status
+		} );
+	}
+};
