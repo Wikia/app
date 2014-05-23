@@ -69,7 +69,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  * 		name="list",
  * 		type="HubInfo",
- * 		items="$ref:HubInfo"
+ * 		items="$ref:HubInfo",
  * 		required="true",
  * 		description="Hubs collection"
  * 	)
@@ -103,15 +103,15 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Api(
  * 	path="/WikiaHubs/ModuleData",
- * 	description="Get explore module data from given date and city/vertical",
+ * 	description="Get explore module data from given date and city",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and city/vertical",
+ * 			summary="Get explore module data from given date and city",
  * 			nickname="getModuleData",
  * 			responseClass="WikiaHubsResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Module, city, vertical or timestamp not valid" )
+ * 				@SWG\ErrorResponse( code="400", reason="Module, city or timestamp not valid" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
