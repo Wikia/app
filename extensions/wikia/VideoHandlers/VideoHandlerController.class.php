@@ -297,6 +297,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam string|array category - Only videos tagged with these categories will be returned. Default: any categories.
 	 * @requestParam integer width - the width of the thumbnail to return
 	 * @requestParam integer height - the height of the thumbnail to return
+	 * @requestParam integer detail [0/1] - check for getting video detail
 	 * @responseParam array $videos
 	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
 	 */
@@ -310,10 +311,9 @@ class VideoHandlerController extends WikiaController {
 		$category = $this->getVal( 'category', '' );
 		$width = $this->getVal( 'width', 0 );
 		$height = $this->getVal( 'height', 0 );
+		$detail = $this->getVal( 'detail', 0 );
 
 		$filter = 'all';
-		$isMobile = ( $providers == 'mobile' || $providers == 'mobileApp' );
-
 		if ( is_string( $providers ) ) {
 			// get providers for mobile
 			if ( $providers == 'mobile' ) {
@@ -333,27 +333,20 @@ class VideoHandlerController extends WikiaController {
 		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
 
-		// get video id and thumbnail url for mobile
-		if ( $isMobile ) {
+		// get video detail
+		if ( !empty( $detail ) ) {
+			$videoOptions = [
+				'thumbWidth' => $width,
+				'thumbHeight' => $height,
+			];
+			$helper = new VideoHandlerHelper();
 			foreach ( $videoList as &$videoInfo ) {
-				$title = $videoInfo['title'];
-				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
-				if ( $file ) {
-					$videoInfo['videoId'] = $file->getVideoId();
-					$videoInfo['videoName'] = $file->getTitle()->getText();
-
-					if ( !empty( $width ) && !empty( $height ) ) {
-						$thumb = $file->transform( [ 'width' => $width, 'height' => $height ] );
-						$videoInfo['thumbUrl'] = $thumb->getUrl();
-					} else {
-						$videoInfo['thumbUrl'] = '';
-					}
-				} else {
-					$videoInfo['videoId'] = '';
-					$videoInfo['videoName'] = '';
-					$videoInfo['thumbUrl'] = '';
+				$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+				if ( !empty( $videoDetail ) ) {
+					$videoInfo = array_merge( $videoInfo, $videoDetail );
 				}
 			}
+
 		}
 
 		$this->videos = $videoList;
