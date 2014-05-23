@@ -142,7 +142,6 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
-
 	protected function getLastDuplicatesFromDb( $feed, $maxHours = self:: UNIQUE_URL_TTL_HOURS ) {
 		$fromTime = date( 'Y-m-d H:i:s', strtotime( sprintf( 'now - %uhour', $maxHours ) ) );
 		$wikisData = ( new WikiaSQL() )
@@ -159,7 +158,6 @@ abstract class BaseRssModel extends WikiaService {
 
 		return $wikisData;
 	}
-
 
 	protected function getArticleDetail( $wikiId, $articleId ) {
 		$host = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) );
@@ -212,7 +210,6 @@ abstract class BaseRssModel extends WikiaService {
 
 	}
 
-
 	protected function removeDuplicates( $rawData, $duplicates = [ ] ) {
 		if ( !is_array( $rawData ) ) {
 			$rawData = [ ];
@@ -221,7 +218,6 @@ abstract class BaseRssModel extends WikiaService {
 			$duplicates = [ ];
 		}
 
-
 		foreach ( $rawData as $key => $item ) {
 			if ( array_key_exists( $item[ 'url' ], $duplicates ) ) {
 				unset( $rawData[ $key ] );
@@ -229,9 +225,7 @@ abstract class BaseRssModel extends WikiaService {
 		}
 
 		return $rawData;
-
 	}
-
 
 	protected function getPopularContent( $rawData, $wikis, $duplicates, $numResults = 0 ) {
 		if ( empty( $wikis ) ) {
@@ -259,5 +253,33 @@ abstract class BaseRssModel extends WikiaService {
 		return $rawData;
 	}
 
+	protected function getDataFromHubs( $hubId, $fromTimestamp ) {
+		$model = new HubRssFeedModel( $this->getFeedLanguage() );
+		$v3 = $model->getRealDataV3( $hubId, null, true );
+		foreach ( $v3 as $key => $item ) {
+			if ( $item[ 'timestamp' ] < $fromTimestamp ) {
+				unset( $v3[ $key ] );
+			} else {
+				//add url as item for compatibility
+				$v3[ $key ][ 'url' ] = $key;
+			}
+		}
+		return $v3;
+	}
 
+	protected function findIdForUrls( $urls ) {
+		$data = [ ];
+		if ( !empty( $urls ) ) {
+			$f2 = new \Wikia\Search\Services\FeedEntitySearchService();
+			$f2->setUrls( $urls );
+			$res = $f2->query( '' );
+			foreach ( $res as $item ) {
+				$item[ 'hub' ] = true;
+				$item[ 'wikia_id' ] = $item[ 'wid' ];
+				$item[ 'page_id' ] = $item[ 'pageid' ];
+				$data[ $item[ 'url' ] ] = $item;
+			}
+		}
+		return $data;
+	}
 }
