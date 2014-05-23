@@ -166,6 +166,36 @@ jQuery(function($){
 		}, trackWithEventData);
 	})();
 
+	/** Alliance Template **/
+	(function() {
+		var alliance = $('.alliance-module', $wikiaArticle),
+			label;
+		if (alliance.length) {
+			alliance.on('mousedown', 'a', function(e){
+				label = $(e.delegateTarget).attr('data-label') + '-click';
+
+				if (label !== undefined) {
+					track({
+						category: 'Alliance',
+						label: label
+					});
+				}
+			});
+
+			alliance.each(function(){
+				label = $(this).attr('data-label') + '-impression';
+
+				if (label !== undefined) {
+					track({
+						action: Wikia.Tracker.ACTIONS.IMPRESSION,
+						category: 'Alliance',
+						label: label
+					});
+				}
+			});
+		}
+	})();
+
 	/** contribute **/
 
 	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function(e) {
