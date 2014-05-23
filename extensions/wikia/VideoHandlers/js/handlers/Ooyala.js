@@ -59,7 +59,7 @@ define('wikia.videohandler.ooyala', [
 				vb.track('ad-finish');
 			});
 
-			// Ad has been fully watched
+			// Listen fill in GoogleIma adTagUrl for no-flash scenario
 			messageBus.subscribe('googleImaReady', 'tracking', function () {
 				var i;
 				if (player && player.modules && player.modules.length) {
