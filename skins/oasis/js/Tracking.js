@@ -169,26 +169,33 @@ jQuery(function($){
 	/** Alliance Template **/
 	(function() {
 		var alliance = $('.alliance-module', $wikiaArticle),
-			label;
+			category = 'Alliance',
+			label,
+			suffix;
 		if (alliance.length) {
 			alliance.on('mousedown', 'a', function(e){
-				label = $(e.delegateTarget).attr('data-label') + '-click';
+				suffix = '-click';
+				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
+					suffix = '-logo-click';
+				}
+				label = $(e.delegateTarget).attr('data-label') + suffix;
 
 				if (label !== undefined) {
 					track({
-						category: 'Alliance',
+						category: category,
 						label: label
 					});
 				}
 			});
 
 			alliance.each(function(){
-				label = $(this).attr('data-label') + '-impression';
+				suffix = '-impression';
+				label = $(this).attr('data-label') + suffix;
 
 				if (label !== undefined) {
 					track({
 						action: Wikia.Tracker.ACTIONS.IMPRESSION,
-						category: 'Alliance',
+						category: category,
 						label: label
 					});
 				}
