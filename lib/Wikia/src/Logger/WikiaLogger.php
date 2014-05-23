@@ -13,34 +13,26 @@ class WikiaLogger {
 	/** @var \Psr\Log\LoggerInterface */
 	private $logger;
 
-	private function __construct($ident) {
-		$this->logger = new Logger(
-			'default',
-			[new SyslogHandler($ident)],
-			[new WebProcessor()]
-		);
+	/** @var SyslogHandler */
+	private $syslogHandler;
+
+	/** @var WebProcessor */
+	private $webProcessor;
+
+	private function __construct() {
 	}
 
 	/**
-	 * @param string $ident
 	 * @return WikiaLogger
 	 */
-	public static function instance($ident=null) {
-		static $instances = [];
+	public static function instance() {
+		static $instance = null;
 
-		if ($ident == null) {
-			$ident = PHP_SAPI == 'cli' ? 'php' : 'apache2';
+		if (!isset($instance)) {
+			$instance = new WikiaLogger();
 		}
 
-		if (!isset($instances[$ident])) {
-			$instances[$ident] = new WikiaLogger($ident);
-		}
-
-		return $instances[$ident];
-	}
-
-	public function logger() {
-		return $this->logger;
+		return $instance;
 	}
 
 	public function onError($code, $message, $file, $line, $context) {
@@ -80,7 +72,7 @@ class WikiaLogger {
 				return false;
 		}
 
-		$this->logger->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}");
+		$this->getLogger()->$method("PHP {$priorityString}: {$message} in {$file} on line {$line}");
 
 		if ($exit) {
 			exit(1);
@@ -90,35 +82,81 @@ class WikiaLogger {
 	}
 
 	public function debug($message, $context=[]) {
-		return $this->logger->debug($message, $context);
+		return $this->getLogger()->debug($message, $context);
 	}
 
 	public function info($message, $context=[]) {
-		return $this->logger->info($message, $context);
+		return $this->getLogger()->info($message, $context);
 	}
 
 	public function notice($message, $context=[]) {
-		return $this->logger->notice($message, $context);
+		return $this->getLogger()->notice($message, $context);
 	}
 
 	public function warning($message, $context=[]) {
-		return $this->logger->warning($message, $context);
+		return $this->getLogger()->warning($message, $context);
 	}
 
 	public function error($message, $context=[]) {
-		return $this->logger->error($message, $context);
+		return $this->getLogger()->error($message, $context);
 	}
 
 	public function critical($message, $context=[]) {
-		return $this->logger->critical($message, $context);
+		return $this->getLogger()->critical($message, $context);
 	}
 
 	public function alert($message, $context=[]) {
-		return $this->logger->alert($message, $context);
+		return $this->getLogger()->alert($message, $context);
 	}
 
 	public function emergency($message, $context=[]) {
-		return $this->logger->emergency($message, $context);
+		return $this->getLogger()->emergency($message, $context);
 	}
 
+	public function setLogger(Logger $logger) {
+		$this->logger = $logger;
+	}
+
+	public function getLogger() {
+		if ($this->logger == null) {
+			$this->logger = $this->defaultLogger();
+		}
+
+		return $this->logger;
+	}
+
+	public function getSyslogHandler() {
+		if ($this->syslogHandler == null) {
+			$this->syslogHandler = new SyslogHandler($this->detectIdent());
+		}
+
+		return $this->syslogHandler;
+	}
+
+	public function setSyslogHandler(SyslogHandler $handler) {
+		$this->syslogHandler = $handler;
+	}
+
+	public function getWebProcessor() {
+		if ($this->webProcessor == null) {
+			$this->webProcessor = new WebProcessor();
+		}
+
+		return $this->webProcessor;
+	}
+
+	public function defaultLogger() {
+		return new Logger(
+			'default',
+			[$this->getSyslogHandler()],
+			[$this->getWebProcessor()]
+		);
+	}
+
+	/**
+		* @return string enum['php', 'apache2']
+	 */
+	public function detectIdent() {
+		return PHP_SAPI == 'cli' ? 'php' : 'apache2';
+	}
 }
