@@ -312,6 +312,9 @@
 .oo-ui-icon-checked {
 	@include ve-icon(checked, wikia);
 }
+.oo-ui-icon-edit {
+	@include ve-icon(edit, wikia);
+}
 .oo-ui-icon-keyboard {
 	@include ve-icon(keyboard, wikia);
 }
