@@ -188,6 +188,10 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 					if ( imgSrc ) {
 						cacheItem.el.src = imgSrc;
 					}
+					// Hack for IE: cached images aren't firing onload
+					if ( cacheItem.el.complete ) {
+						cacheItem.el.onload();
+					}
 					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[idx];
 				}
