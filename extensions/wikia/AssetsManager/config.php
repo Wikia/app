@@ -95,9 +95,15 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
 		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	),
+);
+
+$config['adengine2_wikiabar_boxad_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
 	),
 );
 

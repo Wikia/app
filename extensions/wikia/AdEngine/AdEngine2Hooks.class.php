@@ -14,19 +14,22 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop,
-			$wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead, $wgEnableKruxTargeting;
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead,
+			   $wgAdDriverUseWikiaBarBoxad2, $wgEnableKruxTargeting;
 
-		$wgNoExternals = $request->getBool('noexternals', $wgNoExternals);
-		$wgLiftiumOnLoad = $request->getBool('liftiumonload', (bool) $wgLiftiumOnLoad);
-		$wgAdVideoTargeting = $request->getBool('videotargetting', (bool) $wgAdVideoTargeting);
+		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
+		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
+		$wgAdVideoTargeting = $request->getBool( 'videotargetting', (bool)$wgAdVideoTargeting );
 
 		$wgEnableRHonDesktop = $request->getBool( 'noremnant', $wgEnableRHonDesktop );
 
-		$wgAdDriverForceDirectGptAd = $request->getBool('forcedirectgpt', $wgAdDriverForceDirectGptAd);
-		$wgAdDriverForceLiftiumAd = $request->getBool('forceliftium', $wgAdDriverForceLiftiumAd);
+		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
+		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdPageType = AdEngine2Service::getPageType();
 
-		$wgLoadAdsInHead = $request->getBool('adsinhead', $wgLoadAdsInHead);
+		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
+
+		$wgAdDriverUseWikiaBarBoxad2 = $request->getBool( 'footerboxad', $wgAdDriverUseWikiaBarBoxad2 );
 
 		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
 
@@ -72,7 +75,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgEnableRHonDesktop;
+		global $wgEnableRHonDesktop, $wgAdDriverUseWikiaBarBoxad2;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -90,6 +93,10 @@ class AdEngine2Hooks {
 
 		if ($wgEnableRHonDesktop === false) {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
+		}
+
+		if ($wgAdDriverUseWikiaBarBoxad2 === true) {
+			$jsAssets[] = 'adengine2_wikiabar_boxad_js';
 		}
 		return true;
 	}

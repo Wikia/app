@@ -127,13 +127,8 @@ window.AdEngine_loadLateAds = function () {
 
 	window.wgAfterContentAndJS.push(function () {
 		require([
-			'ext.wikia.adEngine.adConfigLate',
-			'ext.wikia.adEngine.adEngine',
-			'ext.wikia.adEngine.lateAdsQueue',
-			'wikia.tracker',
-			'wikia.log',
-			'ext.wikia.adEngine.slot.wikiaBarBoxad2'
-		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log, slotWikiaBarBoxad2) {
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
 			var module = 'AdEngine_loadLateAds';
 			window.AdEngine_trackStartLateAds();
 			log('launching late ads now', 1, module);
@@ -146,8 +141,6 @@ window.AdEngine_loadLateAds = function () {
 				trackingMethod: 'ad'
 			});
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
-
-			slotWikiaBarBoxad2.init();
 		});
 	});
 };

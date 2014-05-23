@@ -1,17 +1,15 @@
-/*global define*/
-define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
+/*global require*/
+require([
 	'jquery',
 	'wikia.log',
 	'wikia.window',
-	'wikia.document',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.slotTweaker'
-], function ($, log, window, document, adHelper, slotTweaker) {
+], function ($, log, window, adHelper, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.wikiaBarBoxad2',
 		slotname = 'WIKIA_BAR_BOXAD_2',
-		initialized = false,
 		pageHeight = window.document.documentElement.scrollHeight,
 
 		wikiaBar = $('.WikiaBarWrapper'),
@@ -52,23 +50,15 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 		return pageHeight > 1600;
 	}
 
-	function init() {
-		log(['init'], 5, logGroup);
-
-		if (initialized) {
-			return;
-		}
+	$(function(){
+		log(['Init', slotname], 'debug', logGroup);
 
 		if (shouldBeLoaded()) {
+			log(['Register event listener', slotname], 'debug', logGroup);
+
 			onScroll();
 			window.addEventListener('scroll', adHelper.throttle(onScroll, 250));
 		}
+	});
 
-
-		initialized = true;
-	}
-
-	return {
-		init: init
-	};
 });
