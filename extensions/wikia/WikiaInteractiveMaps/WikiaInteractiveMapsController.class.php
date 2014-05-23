@@ -8,6 +8,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAP_PREVIEW_WIDTH = 660;
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
+	const PAGE_NAME = 'InteractiveMaps';
 
 	/**
 	 * @var WikiaMaps
@@ -31,7 +32,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param bool $includable
 	 */
 	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		parent::__construct( 'InteractiveMaps', $restriction, $listed, $function, $file, $includable );
+		parent::__construct( self::PAGE_NAME, $restriction, $listed, $function, $file, $includable );
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
@@ -298,10 +299,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
 		} else {
 			$response = json_decode( $response );
+			$mapId = $response->id;
 
 			$results['success'] = true;
-			$results['mapId'] = $response->id;
-			$results['mapUrl'] = $response->url;
+			$results['mapId'] = $mapId;
+			$results['mapUrl'] = Title::newFromText( self::PAGE_NAME . '/' . $mapId, NS_SPECIAL )->getFullUrl();
 			$results['message'] = $response->message;
 		}
 
