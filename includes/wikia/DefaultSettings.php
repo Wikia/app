@@ -60,7 +60,7 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
  * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
  */
-require_once ( $IP."/lib/Wikia/autoloader.php");
+require_once ( $IP."/lib/Wikia/autoload.php");
 
 /**
  * Set WikiaLogger as the error handler.
