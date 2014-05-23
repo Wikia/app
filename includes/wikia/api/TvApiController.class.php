@@ -37,6 +37,9 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
+		// TMPFIX: replace american right apostrophe with normal one
+		$episodeName = str_replace("’", "'", $episodeName);
+
 		$seriesService = $this->getSeriesService();
 		$seriesService->setLang( $lang )
 			->setQuality( $quality );
