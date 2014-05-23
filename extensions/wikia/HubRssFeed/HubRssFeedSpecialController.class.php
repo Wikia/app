@@ -100,7 +100,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function customRss() {
-		$this->response->setCacheValidity( /*WikiaResponse::CACHE_SHORT*/ 1 );
+		$this->response->setCacheValidity( self::CACHE_TIME );
 		$service = new RssFeedService();
 		$par = $this->request->getVal( 'par' );
 		$model = BaseRssModel::newFromName( $par );
@@ -111,81 +111,6 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $service->toXml() );
 		$this->response->setContentType( 'text/xml' );
-
 	}
-
-	public function gamesRssTV() {
-		$cacheKey = 'test-rss-games';
-
-		$feedModel = new \Wikia\Search\Services\FeedEntitySearchService();
-		$m = new MixedFeedModel();
-		$feedModel->setSorts(['created'=>'desc']);
-		$rows = $feedModel->query( '(+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"warframe.wikia.com" AND +categories_mv_en:"Blog posts")
-		| (+host:"monsterhunter.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"darksouls.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"halo.wikia.com" AND +categories_mv_en:"Blog_posts/News")
-		| (+host:"gta.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"fallout.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"elderscrolls.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog")' );
-		$data = [];
-
-		$model = new HubRssFeedModel('en');
-		$v3 = $model->getRealDataV3( 955764 );
-
-		$f2 = new \Wikia\Search\Services\FeedEntitySearchService();
-		if(!empty($v3)){
-			$f2->setUrls(array_keys($v3));
-			$res = $f2->query('');
-			foreach($res as $item){
-				$item['hub'] = true;
-				$data[$item['url']] = $item;
-			}
-		}
-		$body = $this->wg->memc->get($cacheKey);
-		if(!$body){
-			$body = [];
-		}
-		foreach ( $rows as $item ) {
-			if(array_key_exists($item[ 'url' ],$body)){
-				$data[ $item[ 'url' ] ]  = $body[$item[ 'url' ]];
-			}else{
-				$ids = explode( '_', $item[ 'id' ] );
-				$item[ 'img' ] = $m->getArticleThumbnail( $item[ 'host' ], $ids[ 0 ], $ids[ 1 ] );
-				$item[ 'description' ] = $m->getArticleDescription( $item[ 'host' ], $ids[ 1 ] );
-				$data[ $item[ 'url' ] ] = $item;
-			}
-		}
-		$this->wg->memc->set($cacheKey, $data);
-		$timestamps = [];
-		foreach ($data as $key => $row) {
-			$timestamps[$key]  = $row['timestamp'];
-		}
-
-		array_multisort($timestamps, SORT_DESC, $data);
-		foreach($data as &$item){
-			$pos = strrpos($item['title'],'/');
-			if($pos){
-				$pos ++;
-			}
-			$title = substr($item['title'],$pos );
-
-			$item['title'] = $item['wikititle'] . ' - '.$title;
-
-		}
-		//var_dump($data);
-
-		$service = new HubRssFeedService('en', SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() . "/Games" );
-
-		$xml = $service->dataToXml( $data, MixedFeedModel::FAKE_HUB_ELDERSCROLLS );
-		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
-		$this->response->setBody( $xml );
-		$this->response->setContentType( 'text/xml' );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-	}
-
-
-
 
 }
