@@ -1,12 +1,26 @@
 <?php
 
 abstract class BaseRssModel extends WikiaService {
+
 	const GAMES_FEED = 'games';
 	const TV_FEED = 'tv';
+
+	/**
+	 * For how long the RSS item should be unique
+	 */
 	const UNIQUE_URL_TTL_HOURS = 336;
+
+	/**
+	 * For how long to wait until looking for new content
+	 */
 	const FRESH_CONTENT_TTL_HOURS = 4;
+	/**
+	 * RSS items limit
+	 */
 	const ROWS_LIMIT = 15;
 	const MIN_IMAGE_SIZE = 200;
+
+	protected $forceRegenerateFeed = false;
 
 	public abstract function getFeedTitle();
 
@@ -29,8 +43,11 @@ abstract class BaseRssModel extends WikiaService {
 		}
 	}
 
-	protected function getLastShownFeeds( $feed, $hours = self::UNIQUE_URL_TTL_HOURS ) {
-
+	/**
+	 * @param boolean $forceRegenerateFeed
+	 */
+	public function setForceRegenerateFeed( $forceRegenerateFeed ) {
+		$this->forceRegenerateFeed = $forceRegenerateFeed;
 	}
 
 	protected function getDbSlave() {
@@ -207,7 +224,6 @@ abstract class BaseRssModel extends WikiaService {
 			$out[ $item[ 'url' ] ] = $item;
 		}
 		return $out;
-
 	}
 
 	protected function removeDuplicates( $rawData, $duplicates = [ ] ) {
