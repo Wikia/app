@@ -93,7 +93,6 @@ class MWNamespace {
 	 * @return int
 	 */
 	public static function getTalk( $index ) {
-		global $wgEnableWallExt;
 		self::isMethodValidFor( $index, __METHOD__ );
 		return self::isTalk( $index )
 			? $index
