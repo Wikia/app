@@ -1131,7 +1131,7 @@ class Title {
 		// @author Cqm
 		// VOLDEV-66
 		global $wgEnableWallExt;
-		if ( !$this->isSubpage() && $this->getNamespace() == NS_USER && !empty( $wgEnableWallExt ) ) {}
+		if ( !$this->isSubpage() && $this->getNamespace() == NS_USER && !empty( $wgEnableWallExt ) ) {
 			return Title::makeTitle( NS_USER_WALL, $this->getDBKey() );
 		}
 		// end wikia change
