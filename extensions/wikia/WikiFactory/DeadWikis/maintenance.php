@@ -50,7 +50,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'edits',
-				'max' => '9',
+				'max' => '15',
 			),
 			array(
 				'type' => 'int',
@@ -77,7 +77,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'edits',
-				'max' => '9',
+				'max' => '15',
 			),
 			array(
 				'type' => 'int',

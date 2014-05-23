@@ -128,6 +128,10 @@ class NewWikisPage extends AlphabeticPager {
 		return 'desc';
 	}
 
+	function isExpensive() {
+		return false;
+	}
+
 	function getQueryInfo() {
 		$query = array(
 			'tables' => array( 'city_list' ),

@@ -195,8 +195,7 @@ class AdEngine2Service
 	private static function getJsVariables()
 	{
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			$wgHighValueCountriesDefault, $wgUser,
-			$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
 			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
@@ -209,13 +208,6 @@ class AdEngine2Service
 
 		$vars = [];
 
-		$highValueCountries = WikiFactory::getVarValueByName(
-			'wgHighValueCountries',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgHighValueCountriesDefault
-		);
-
 		$variablesToExpose = [
 			'wgEnableAdsInContent' => $wgEnableAdsInContent,
 			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
@@ -223,7 +215,6 @@ class AdEngine2Service
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
 			// Ad Driver
-			'wgHighValueCountries' => $highValueCountries,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
@@ -308,11 +299,11 @@ class AdEngine2Service
 			'wgUserShowAds',                 // JWPlayer.class.php
 			'wikiaPageIsCorporate',          // analytics_prod.js
 			'wikiaPageType',                 // analytics_prod.js
+			'cscoreCat',                     // analytics_prod.js
 		];
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
 				'cityShort',                     // AdLogicPageParams.js
-				'cscoreCat',                     // analytics_prod.js, AdLogicPageParams.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
 				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
