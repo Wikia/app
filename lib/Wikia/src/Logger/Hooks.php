@@ -23,8 +23,8 @@ class Hooks {
 		if (!$wgDevelEnvironment) {
 			// FIXME: this should be done much earlier in the stack if we want to be able to log everything to
 			// logstash in production
-			// if we are not in dev, setup the WikiaLogger in logstash mode
-			\Wikia\Logger\WikiaLogger::instance()->getSyslogHandler()->setModeLogstashFormat();
+			// if we are not in dev, setup the WikiaLogger in production mode
+			\Wikia\Logger\WikiaLogger::instance()->setProductionMode();
 
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
 			$key = "wikialogger-top-script-$onError";
