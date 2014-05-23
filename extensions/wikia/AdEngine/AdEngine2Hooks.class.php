@@ -49,6 +49,21 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	static public function onInstantGlobalsGetVariables(array &$vars)
+	{
+		$vars[] = 'wgHighValueCountries';
+		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+
+		return true;
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
@@ -121,6 +136,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
+			$scriptModules[] = 'wikia.instantGlobals';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 			$scriptModules[] = 'wikia.window';
