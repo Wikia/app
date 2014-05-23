@@ -186,7 +186,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => $this->title->getLocalUrl( $editQuery ),
 					'text' => wfMessage( 'user-action-menu-edit-profile' )->escaped(),
 					'id' => 'ca-edit',
-					'accesskey' => 'e',
+					'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 				),
 				'image' => MenuButtonController::EDIT_ICON,
 				'name' => 'editprofile',
@@ -208,7 +208,7 @@ class UserProfilePageController extends WikiaController {
 								'href' => $this->title->getLocalUrl( $editQuery ),
 								'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
 								'id' => 'ca-edit',
-								'accesskey' => 'e',
+								'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 							),
 							'image' => MenuButtonController::EDIT_ICON,
 							'name' => 'editprofile',
@@ -219,7 +219,7 @@ class UserProfilePageController extends WikiaController {
 								'href' => $title->getLocalUrl( array_merge( $editQuery, array( 'section' => 'new' ) ) ),
 								'text' => wfMessage( 'user-action-menu-leave-message' )->escaped(),
 								'id' => 'ca-addsection',
-								'accesskey' => '+',
+								'accesskey' => wfMessage( 'accesskey-ca-addsection' )->escaped(),
 							),
 							'image' => MenuButtonController::MESSAGE_ICON,
 							'name' => 'leavemessage',
@@ -228,7 +228,7 @@ class UserProfilePageController extends WikiaController {
 									'href' => $this->title->getFullUrl( $editQuery ),
 									'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
 									'id' => 'ca-edit',
-									'accesskey' => 'e',
+									'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
 								)
 							),
 						);
@@ -263,7 +263,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => $renameUrl,
 					'text' => wfMessage( 'user-action-menu-rename' )->escaped(),
 					'id' => 'ca-move',
-					'accesskey' => 'm',
+					'accesskey' => wfMessage( 'accesskey-ca-move' )->escaped(),
 				);
 			}
 
@@ -274,7 +274,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => $this->title->getLocalUrl( array( 'action' => $protectStatus ) ),
 					'text' => wfMessage( 'user-action-menu-' . $protectStatus )->escaped(),
 					'id' => 'ca-protect',
-					'accesskey' => '=',
+					'accesskey' => wfMessage( 'accesskey-ca-protect' )->escaped(),
 				);
 			}
 
@@ -283,7 +283,7 @@ class UserProfilePageController extends WikiaController {
 					'href' => $this->title->getLocalUrl( array( 'action' => 'delete' ) ),
 					'text' => wfMessage( 'user-action-menu-delete' )->escaped(),
 					'id' => 'ca-delete',
-					'accesskey' => 'd',
+					'accesskey' => wfMessage( 'accesskey-ca-delete' )->escaped(),
 				);
 			}
 
@@ -291,7 +291,7 @@ class UserProfilePageController extends WikiaController {
 				'href' => $this->title->getLocalUrl( array( 'action' => 'history' ) ),
 				'text' => wfMessage( 'user-action-menu-history' )->escaped(),
 				'id' => 'ca-history',
-				'accesskey' => 'h',
+				'accesskey' => wfMessage( 'accesskey-ca-history' )->escaped(),
 			);
 		}
 
