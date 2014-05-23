@@ -19,7 +19,6 @@ class SeriesEntitySearchService extends EntitySearchService {
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
-		$noyearphrase = preg_replace( '|\(\d{4}\)|', '', $query );
 		$phrase = $this->sanitizeQuery( $query );
 		$slang = $this->sanitizeQuery( $this->getLang() );
 
