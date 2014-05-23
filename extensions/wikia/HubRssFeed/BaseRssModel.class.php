@@ -95,6 +95,26 @@ abstract class BaseRssModel extends WikiaService {
 		return $links;
 	}
 
+	protected function getLastFeedTimestamp($feed){
+		$timestamp = ( new WikiaSQL() )
+			->SELECT( "UNIX_TIMESTAMP(wrf_pub_date)" )->AS_( 't' )
+			->FROM( 'wikia_rss_feeds' )
+			->WHERE( 'wrf_pub_date' )
+			->WHERE( 'wrf_feed' )->EQUAL_TO( $feed )
+			->ORDER_BY('wrf_pub_date_desc')
+			->LIMIT( 1 )
+			->run( $this->getDbSlave(), function ( $result ) {
+				$row = $result->fetchObject( $result );
+				if ( $row && isset( $row->t ) ) {
+					return (int)$row->t;
+				}
+
+				return 0;
+			} );
+
+		return $timestamp;
+	}
+
 	protected function getLastRecoredsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
 		$db = $useMaster ? $this->getDbMaster() : $this->getDbSlave();
 		$wikisData = ( new WikiaSQL() )

@@ -16,7 +16,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	];
 
 	protected $customFeeds = [
-		TvRssModel::FEED_NAME=>true
+		TvRssModel::FEED_NAME=>true,
+		GamesRssModel::FEED_NAME=>true
 	];
 
 	/**
@@ -99,6 +100,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function customRss() {
+		$this->response->setCacheValidity( /*WikiaResponse::CACHE_SHORT*/ 1 );
 		$service = new RssFeedService();
 		$par = $this->request->getVal( 'par' );
 		$model = BaseRssModel::newFromName( $par );
@@ -109,7 +111,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $service->toXml() );
 		$this->response->setContentType( 'text/xml' );
-		$this->response->setCacheValidity( /*WikiaResponse::CACHE_SHORT*/ 1 );
+
 	}
 
 	public function gamesRssTV() {
@@ -183,109 +185,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 	}
 
-	public function customRssTV() {
 
-		$body = $this->wg->memc->get("test-rss-tv2");
-		if ( 0 && $body ) {
-			$this->response->setFormat( WikiaResponse::FORMAT_RAW );
-			$this->response->setBody( $body );
-			$this->response->setContentType( 'text/xml' );
-		} else {
-
-			$rssService = new RssFeedService();
-			$tvPremieres = new TVEpisodePremiereService();
-
-			$rssService->setFeedTitle("Wikia TV");
-			$rssService->setFeedDescription("Tv episodes");
-			$rssService->setFeedUrl(SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() . "/Tv");
-			$epizodes = $tvPremieres->getTVEpisodes();
-			$data = $tvPremieres->getWikiaArticles( $epizodes );
-
-			$wikisFound = [];
-			foreach ( $data as $ep ) {
-				if ( isset($ep['wikia']) ) {
-					$wikisFound[$ep['wikia']['wikiId']] = $ep['wikia']['wikiId'];
-				}
-			}
-			$wikisFound = array_keys($wikisFound);
-			$numWikiFound = count($wikisFound);
-			foreach ( $data as $ep ) {
-				if ( isset( $ep['wikia'] ) ) {
-
-					$details = $rssService->getArticleDetails(
-						$ep['wikia']['wikiId'],
-						$ep['wikia']['articleId'],
-						$ep['wikia']['url']
-					);
-
-					$abstract = $details->items->{$ep['wikia']['articleId']}->abstract;
-					$timestamp = $details->items->{$ep['wikia']['articleId']}->revision->timestamp;
-					$thumb = $details->items->{$ep['wikia']['articleId']}->thumbnail;
-
-					$thumbA = null;
-					if ( !empty($thumb) ) {
-						$thumbA['url'] = $thumb;
-						$thumbA['width'] = $details->items->{$ep['wikia']['articleId']}->original_dimensions->width;
-						$thumbA['height'] = $details->items->{$ep['wikia']['articleId']}->original_dimensions->height;
-					}
-					if ( $details ) {
-						$rssService->addElem(
-							"New episode from " . $ep['title'].': '.$ep['episode_title'],
-							$abstract,
-							str_replace("jacek.wikia-dev", "wikia", $ep['wikia']['url']),
-							$timestamp,
-							$thumbA
-						);
-					}
-				}
-			}
-
-
-			if ( $numWikiFound < 5 && $numWikiFound > 0 ) {
-				foreach ($wikisFound as $wikiId) {
-					$other = $tvPremieres->otherArticles($wikiId);
-					if ( isset($other[1]) ) {
-						$details = $rssService->getArticleDetails(
-							$wikiId,
-							$other[1][0]['article_id'],
-							$other[1][0]['url']
-						);
-
-						$thumb = $details->items->{$other[1][0]['article_id']}->thumbnail;
-						$thumbA = null;
-						if ( !empty($thumb) ) {
-							$thumbA['url'] = $thumb;
-							$thumbA['width'] = $details->items->{$other[1][0]['article_id']}->original_dimensions->width;
-							$thumbA['height'] = $details->items->{$other[1][0]['article_id']}->original_dimensions->height;
-						}
-
-						$abstract = $details->items->{$other[1][0]['article_id']}->abstract;
-						$timestamp = $details->items->{$other[1][0]['article_id']}->revision->timestamp;
-						if ( $details ) {
-							$rssService->addElem(
-								$details->items->{$other[1][0]['article_id']}->title,
-								$abstract,
-								str_replace("jacek.wikia-dev", "wikia", $other[1][0]['url']),
-								$timestamp,
-								$thumbA
-							);
-						}
-					}
-				}
-
-			}
-
-
-			$body = $rssService->toXml();
-			$this->wg->memc->set("test-rss-tv2", $body);
-
-			$this->response->setFormat( WikiaResponse::FORMAT_RAW );
-			$this->response->setBody( $body );
-			$this->response->setContentType( 'text/xml' );
-			$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
-		}
-		return $data;
-	}
 
 
 }

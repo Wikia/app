@@ -11,6 +11,21 @@ class FeedEntitySearchService extends EntitySearchService {
 	private $categories;
 	private $hosts;
 	private $sorts;
+	private $rowLimit;
+
+	/**
+	 * @param mixed $rowLimit
+	 */
+	public function setRowLimit( $rowLimit ) {
+		$this->rowLimit = $rowLimit;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRowLimit() {
+		return $this->rowLimit;
+	}
 
 	/**
 	 * @param mixed $sorts
@@ -80,7 +95,7 @@ class FeedEntitySearchService extends EntitySearchService {
 
 		$select->createFilterQuery( 'mp' )->setQuery( '-(is_main_page:true)' );
 
-		$select->setRows( static::ROWS_NUMBER );
+		$select->setRows( $this->rowLimit ? $this->rowLimit : static::ROWS_NUMBER );
 
 		return $select;
 	}
