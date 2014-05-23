@@ -4,10 +4,11 @@ define(
 		'jquery',
 		'wikia.window',
 		'wikia.mustache',
+		'wikia.querystring',
 		'wikia.intMaps.createMap.config',
 		'wikia.intMaps.createMap.bridge'
 	],
-	function($, w, mustache, config, bridge) {
+	function($, w, mustache, qs, config, bridge) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -233,7 +234,8 @@ define(
 			bridge.createMap(
 				mapData,
 				function(data) {
-					console.log( 'Map created!' );
+				// map created, go to its page
+					qs(data.mapUrl).goTo();
 				},
 				function(data) {
 					validationError = 'notImplemented';
