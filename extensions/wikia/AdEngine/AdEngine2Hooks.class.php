@@ -29,8 +29,6 @@ class AdEngine2Hooks {
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 
-		$wgAdDriverUseWikiaBarBoxad2 = $request->getBool( 'footerboxad', $wgAdDriverUseWikiaBarBoxad2 );
-
 		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
 
 		return true;
