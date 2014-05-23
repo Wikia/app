@@ -18,6 +18,8 @@ define(
 			modalButtons,
 			// stack for holding modal steps
 			stack =[],
+			// placeholder for validation error name
+			validationError,
 			// placeholder for mustache templates
 			mustacheTemplates,
 			// modal event handlers
@@ -211,6 +213,37 @@ define(
 
 		function handleUploadErrors( response ) {
 			// TODO: handle errors (MOB-1626)
+		}
+
+		/**
+		 * Validates map title
+		 * @returns {boolean}
+		 */
+
+		function isMapTitleValid() {
+			var title = $('#intMapTitle').val(),
+				result = true;
+
+			if (title.length === 0 || !title.trim()) {
+				validationError = 'invalidTitle';
+				result = false;
+			}
+
+			return result;
+		}
+
+		/**
+		 * Gets correct data from steps configuration to display a validation error
+		 * @param index
+		 */
+
+		function displayError(index) {
+			var $errorContainer = $('.map-creation-error'),
+				errorMessage = $.msg(config.steps[index].errorMsgKeys[validationError]);
+
+			$errorContainer.html('');
+			$errorContainer.html(errorMessage);
+			$errorContainer.removeClass(config.hiddenClass);
 		}
 
 		return {
