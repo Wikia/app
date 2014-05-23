@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Wikia\Logger\WikiaLogger tests
  */
 
 use Wikia\Logger\WikiaLogger;
@@ -33,6 +33,20 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('bar', $logger->debug('foo'));
 	}
 
-	// FIXME: test onError
+	function testOnError() {
+		$wikiaLoggerMock = $this->getMock('\Wikia\Logger\WikiaLogger', ['getErrorReporting'], [], '', false);
+
+		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
+		$loggerMock->expects($this->atLeastOnce())
+			->method('notice')
+			->will($this->returnValue('bar'));
+
+		$wikiaLoggerMock->expects($this->atLeastOnce())
+			->method('getErrorReporting')
+			->will($this->returnValue(E_NOTICE));
+
+		$wikiaLoggerMock->setLogger($loggerMock);
+		$this->assertTrue($wikiaLoggerMock->onError(E_NOTICE, 'foo', __FILE__, __LINE__, 'here'));
+	}
 
 }

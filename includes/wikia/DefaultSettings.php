@@ -62,11 +62,6 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
 
-/**
- * Set WikiaLogger as the error handler.
- */
-set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
-
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -1345,11 +1340,6 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
  * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
  */
 $wgUseETag = true;
-
-/**
- * whether or not to send logs from dev to elasticsearch
- */
-$wgDevESLog = false;
 
 /**
  * Restrictions for some api methods

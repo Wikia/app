@@ -21,6 +21,11 @@ class Hooks {
 		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
 
 		if (!$wgDevelEnvironment) {
+			// FIXME: this should be done much earlier in the stack if we want to be able to log everything to
+			// logstash in production
+			// if we are not in dev, setup the WikiaLogger in logstash mode
+			\Wikia\Logger\WikiaLogger::instance()->getSyslogHandler()->setModeLogstashFormat();
+
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
 			$key = "wikialogger-top-script-$onError";
 			$loggingJs = $wgMemc->get($key);
@@ -71,6 +76,11 @@ class Hooks {
 
 			$scripts = "<script>$loggingJs</script>$scripts";
 		}
+
+		/**
+		 * Setup the WikiaLogger  as the error handler regardless of the environment.
+		 */
+		set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
 
 		return true;
 	}

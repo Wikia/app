@@ -10,11 +10,19 @@
 namespace Wikia\Logger;
 
 
-class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
+class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
 	private $devMode = false;
 
 	public function enableDevMode() {
 		$this->devMode = true;
+	}
+
+	public function disableDevMode() {
+		$this->devMode = false;
+	}
+
+	public function isInDevMode() {
+		return $this->devMode === true;
 	}
 
 	protected function formatV0(array $record) {

@@ -1,22 +1,38 @@
 <?php
 namespace Wikia\Logger;
 
-use Monolog\Formatter\LineFormatter;
+class SyslogHandler extends \Monolog\Handler\SyslogHandler implements DevModeFormatterInterface {
 
-class SyslogHandler extends \Monolog\Handler\SyslogHandler {
-	protected function getDefaultFormatter() {
-		global $wgDevelEnvironment, $wgDevESLog;
+	const LINEFORMATTER_FORMAT = '%message%';
 
-		if ($wgDevelEnvironment && !$wgDevESLog) {
-			$formatter = new LineFormatter('%message%');
-		} else {
-			$formatter = new LogstashFormatter(null);
+	private $devMode = false;
 
-			if ($wgDevelEnvironment && $wgDevESLog) {
-				$formatter->enableDevMode();
-			}
-		}
-
-		return $formatter;
+	public function enableDevMode() {
+		$this->devMode = true;
+		$this->getFormatter()->enableDevMode();
 	}
+
+	public function disableDevMode() {
+		$this->devMode = false;
+		$this->getFormatter()->disableDevMode();
+	}
+
+	public function isInDevMode() {
+		return $this->devMode === true;
+	}
+
+	public function setModeLineFormat() {
+		$this->setFormatter(new LineFormatter(self::LINEFORMATTER_FORMAT));
+		return $this;
+	}
+
+	public function setModeLogstashFormat() {
+		$this->setFormatter(new LogstashFormatter(null));
+		return $this;
+	}
+
+	protected function getDefaultFormatter() {
+		return new LineFormatter(self::LINEFORMATTER_FORMAT);
+	}
+
 }

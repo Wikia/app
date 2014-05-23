@@ -36,7 +36,8 @@ class WikiaLogger {
 	}
 
 	public function onError($code, $message, $file, $line, $context) {
-		if (!($code & error_reporting())) {
+		// is this necessary? I thought the code is being passed in
+		if (!($code & $this->getErrorReporting())) {
 			return true;
 		}
 
@@ -125,6 +126,9 @@ class WikiaLogger {
 		return $this->logger;
 	}
 
+	/**
+	 * @return \SyslogHandler
+	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
 			$this->syslogHandler = new SyslogHandler($this->detectIdent());
@@ -133,10 +137,22 @@ class WikiaLogger {
 		return $this->syslogHandler;
 	}
 
+	/**
+	 * Set the SyslogHandler. Throws an exception of the logger has already been initialized.
+	 *
+	 * @param SyslogHandler $handler
+	 */
 	public function setSyslogHandler(SyslogHandler $handler) {
+		if (isset($this->logger)) {
+			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+		}
+
 		$this->syslogHandler = $handler;
 	}
 
+	/**
+	 * @return \WebProcessor.
+	 */
 	public function getWebProcessor() {
 		if ($this->webProcessor == null) {
 			$this->webProcessor = new WebProcessor();
@@ -145,6 +161,24 @@ class WikiaLogger {
 		return $this->webProcessor;
 	}
 
+	/**
+	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
+	 *
+	 * @param WebProcessor $processor
+	 */
+	public function setWebProcessor(WebProcessor $processor) {
+		if (isset($this->logger)) {
+			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+		}
+
+		$this->webProcessor = $processor;
+	}
+
+	/**
+	 * Creates the default logger.
+	 *
+	 * @return Logger
+	 */
 	public function defaultLogger() {
 		return new Logger(
 			'default',
@@ -158,5 +192,10 @@ class WikiaLogger {
 	 */
 	public function detectIdent() {
 		return PHP_SAPI == 'cli' ? 'php' : 'apache2';
+	}
+
+
+	public function getErrorReporting() {
+		return error_reporting();
 	}
 }
