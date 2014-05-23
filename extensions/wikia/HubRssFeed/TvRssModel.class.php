@@ -1,17 +1,21 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: krzychu
  * Date: 21.05.14
  * Time: 15:44
  */
-
 class TvRssModel extends BaseRssModel {
 	const FEED_NAME = 'tv';
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
-	const MAX_NUM_ITEMS_IN_FEED = 10;
+	const MAX_NUM_ITEMS_IN_FEED = 15;
+	const MIN_NUM_ITEMS_IN_FEED = 5;
+	const ADD_CONTENT_PERIOD = 86400;
+	const TV_HUB_CITY_ID = 957447;
+
 	public function getFeedTitle() {
 		return 'Wikia Tv Shows';
 	}
@@ -24,6 +28,10 @@ class TvRssModel extends BaseRssModel {
 		return 'Wikia Tv Shows';
 	}
 
+	protected function shouldGenerateAdditionalContent() {
+		return mktime() - $this->getLastFeedTimestamp( self::FEED_NAME ) > self::ADD_CONTENT_PERIOD;
+	}
+
 	public function getFeedData() {
 
 		/*
@@ -31,8 +39,8 @@ class TvRssModel extends BaseRssModel {
 		 * don't do anything and return content from DB
 		 */
 		if ( $this->forceRegenerateFeed == false ) {
-			if ($this->isFreshContentInDb(self::FEED_NAME)){
-				return $this->getLastRecoredsFromDb(self::FEED_NAME,  self::MAX_NUM_ITEMS_IN_FEED);
+			if ( $this->isFreshContentInDb( self::FEED_NAME ) ) {
+				return $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
 			}
 		}
 
@@ -42,22 +50,27 @@ class TvRssModel extends BaseRssModel {
 		 * (TVRage data)
 		 */
 		$rawData = $this->getWikiaArticlesFromExtApi();
-		if(empty($rawData)) {
+		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
+		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
+		$hubData = $this->getDataFromHubs( self::TV_HUB_CITY_ID, $timestamp, $duplicates );
+
+		$rawData = array_merge( $rawData, $hubData );
+		if ( empty( $rawData ) ) {
 			/*
 			 * If we do not have match with TVRage for current day -
 			 * lets propose articles from wikis that occured in the past
 			 * on this channel
 			 */
-			$useWikisFromThePast = true;
+			$useWikisFromThePast = $this->shouldGenerateAdditionalContent();
 		}
 		/*
 		 * Remove articles that already occurred in the DB
 		 */
-		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
+
 		$rawData = $this->removeDuplicates( $rawData, $duplicates );
 		$externalDataCount = count( $rawData );
-		if ( $externalDataCount < self::MAX_NUM_ITEMS_IN_FEED ) {
-			$wikis = [];
+		if ( $externalDataCount < self::MIN_NUM_ITEMS_IN_FEED ) {
+			$wikis = [ ];
 			if ( !empty( $rawData ) ) {
 				foreach ( $rawData as $item ) {
 					$wikis[ $item[ 'wikia_id' ] ] = true;
@@ -66,8 +79,12 @@ class TvRssModel extends BaseRssModel {
 			} elseif ( $useWikisFromThePast ) {
 				$wikis = $this->getWikisFromPast();
 			}
-
-			$rawData = $this->getPopularContent( $rawData, $wikis, $duplicates, self::MAX_NUM_ITEMS_IN_FEED - $externalDataCount );
+			/*
+			 * This is needed only to reach MIN_NUM_ITEMS_IN_FEED number of rows
+			 */
+			if ( $externalDataCount < self::MIN_NUM_ITEMS_IN_FEED ) {
+				$rawData = $this->getPopularContent( $rawData, $wikis, $duplicates, self::MIN_NUM_ITEMS_IN_FEED - $externalDataCount );
+			}
 		}
 
 		$out = $this->processItems( $rawData );
@@ -79,25 +96,21 @@ class TvRssModel extends BaseRssModel {
 		return $out;
 	}
 
-	protected function getWikisFromPast(){
+	protected function getWikisFromPast() {
 		//select distinct(wrf_wikia_id) from  wikia_rss_feeds  where wrf_feed='tv' order by wrf_pub_date desc limit 3
-		$wikisData= ( new WikiaSQL() )
-			->SELECT(' distinct(wrf_wikia_id) wid ')
+		$wikisData = ( new WikiaSQL() )
+			->SELECT( ' distinct(wrf_wikia_id) wid ' )
 			->FROM( 'wikia_rss_feeds' )
-			->WHERE('wrf_feed')->EQUAL_TO(self::FEED_NAME)
-			->ORDER_BY('wrf_pub_date DESC')
-			 ->LIMIT(3)
-			->runLoop( $this->getDbSlave(), function (&$wikisData, $row )   {
-					$wikisData[] = $row->wid;
+			->WHERE( 'wrf_feed' )->EQUAL_TO( self::FEED_NAME )
+			->ORDER_BY( 'wrf_pub_date DESC' )
+			->LIMIT( 3 )
+			->runLoop( $this->getDbSlave(), function ( &$wikisData, $row ) {
+					$wikisData[ ] = $row->wid;
 				}
 			);
 
-		if ( count($wikisData) == 0 ) {
-			$wikisData[] = 38969;
-			$wikisData[] = 130814;
-			$wikisData[] = 4428;
-			$wikisData[] = 260417;
-			$wikisData[] = 18068;
+		if ( count( $wikisData ) == 0 ) {
+			$wikisData = [ 38969, 130814, 4428, 260417, 18068 ];
 		}
 
 		return $wikisData;
@@ -106,21 +119,21 @@ class TvRssModel extends BaseRssModel {
 
 	protected function getTVEpisodes() {
 		$data = Http::get( self::TVRAGE_RSS_YESTERDAY );
-		$data = simplexml_load_string($data);
+		$data = simplexml_load_string( $data );
 
-		if(!$data){
-			\Wikia\Logger\WikiaLogger::instance()->error(__METHOD_." : No content from TVRAGE !");
-			return [];
+		if ( !$data ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD_ . " : No content from TVRAGE !" );
+			return [ ];
 		}
 
 		$items = $data->children();
-		$episodes = [];
-		foreach ($items->children() as $elem) {
-			if (!empty($elem->title)) {
-				$EData = $this->parseTitle((string)$elem->title);
-				$EData['episode_title'] = (string)$elem->description;
-				if (!empty($EData['episode_title'])) {
-					$episodes[] = $EData;
+		$episodes = [ ];
+		foreach ( $items->children() as $elem ) {
+			if ( !empty( $elem->title ) ) {
+				$EData = $this->parseTitle( (string)$elem->title );
+				$EData[ 'episode_title' ] = (string)$elem->description;
+				if ( !empty( $EData[ 'episode_title' ] ) ) {
+					$episodes[ ] = $EData;
 				}
 			}
 		}
@@ -130,24 +143,24 @@ class TvRssModel extends BaseRssModel {
 	protected function getWikiaArticles( $episodes ) {
 		global $wgStagingEnvironment;
 
-		$data = [];
+		$data = [ ];
 		foreach ( $episodes as $i => $episode ) {
 			try {
 				$response = $this->sendRequest( 'TvApiController', 'getEpisode', [
-					'seriesName' => $episode['title'],
-					'episodeName' => $episode['episode_title'],
+					'seriesName' => $episode[ 'title' ],
+					'episodeName' => $episode[ 'episode_title' ],
 					'minArticleQuality' => self::MIN_ARTICLE_QUALITY
-				]);
+				] );
 				$item = $response->getData();
-				$item['wikia_id'] = $item['wikiId'];
-				$item['page_id'] = $item['articleId'];
-				unset($item['wikiId'], $item['articleId']);
-				if($wgStagingEnvironment){
-					$item['url'] = preg_replace('~http://[^\.]+\.~','http://',$item['url']);
+				$item[ 'wikia_id' ] = $item[ 'wikiId' ];
+				$item[ 'page_id' ] = $item[ 'articleId' ];
+				unset( $item[ 'wikiId' ], $item[ 'articleId' ] );
+				if ( $wgStagingEnvironment ) {
+					$item[ 'url' ] = preg_replace( '~http://[^\.]+\.~', 'http://', $item[ 'url' ] );
 				}
-				$data[] = $item;
-			} catch (Exception $e) {
-				\Wikia\Logger\WikiaLogger::instance()->error(__METHOD_." : ". $e->getMessage());
+				$data[ ] = $item;
+			} catch ( Exception $e ) {
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD_ . " : " . $e->getMessage() );
 			}
 		}
 
@@ -155,24 +168,24 @@ class TvRssModel extends BaseRssModel {
 	}
 
 
-	protected function parseTitle($episodeRssTitle) {
-		$episodeRssTitle = str_replace("- ", "", trim($episodeRssTitle));
-		$titleArr = explode(" (", $episodeRssTitle);
+	protected function parseTitle( $episodeRssTitle ) {
+		$episodeRssTitle = str_replace( "- ", "", trim( $episodeRssTitle ) );
+		$titleArr = explode( " (", $episodeRssTitle );
 		$parsed = array(
-			"title" => $titleArr[0],
+			"title" => $titleArr[ 0 ],
 			"series" => "",
 			"episode" => ""
 		);
-		if ( count($titleArr) > 1) {
-			$epData = explode("x", trim($titleArr[1], ")"));
-			$parsed['series'] = $epData[0];
-			$parsed['episode'] = $epData[1];
+		if ( count( $titleArr ) > 1 ) {
+			$epData = explode( "x", trim( $titleArr[ 1 ], ")" ) );
+			$parsed[ 'series' ] = $epData[ 0 ];
+			$parsed[ 'episode' ] = $epData[ 1 ];
 		}
 		return $parsed;
 	}
 
-	protected function getWikiaArticlesFromExtApi(){
+	protected function getWikiaArticlesFromExtApi() {
 		$episodes = $this->getTVEpisodes();
-		return $this->getWikiaArticles($episodes);
+		return $this->getWikiaArticles( $episodes );
 	}
 }

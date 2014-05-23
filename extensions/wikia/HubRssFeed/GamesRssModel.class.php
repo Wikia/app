@@ -10,6 +10,7 @@ class GamesRssModel extends BaseRssModel {
 	const FEED_NAME = 'games';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
+	const FRESH_CONTENT_TTL_HOURS = 24;
 
 	public function getFeedTitle() {
 		return 'Wikia Games Feed';
@@ -25,24 +26,24 @@ class GamesRssModel extends BaseRssModel {
 
 	public function getFeedData() {
 
-		if ( $this->isFreshContentInDb( self::FEED_NAME ) ) {
+		if ( $this->forceRegenerateFeed == false && $this->isFreshContentInDb( self::FEED_NAME, self::FRESH_CONTENT_TTL_HOURS ) ) {
 			return $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
 		}
 
 		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
 		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
-		$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp );
-		$hubData = $this->removeDuplicates( $hubData, $duplicates );
-		$hubData = $this->findIdForUrls( array_keys( $hubData ) );
+
 		$blogData = $this->getDataFromBlogs( $timestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
-
+		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
+			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp, $duplicates );
+		}
 		$rawData = array_merge(
 			$blogData,
 			$hubData
 		);
 		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, self::FEED_NAME, false );
+		$this->addFeedsToDb( $out, self::FEED_NAME );
 		if ( count( $out ) != self::MAX_NUM_ITEMS_IN_FEED ) {
 			$out = $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED, true );
 		}
@@ -65,8 +66,6 @@ class GamesRssModel extends BaseRssModel {
 		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog")) AND created:[ ' . $fromDate . ' TO * ]' );
 		return $rows;
 	}
-
-
 
 
 }

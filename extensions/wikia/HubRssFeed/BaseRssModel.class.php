@@ -68,8 +68,7 @@ abstract class BaseRssModel extends WikiaService {
 		return $db;
 	}
 
-	protected function addFeedsToDb( $rows, $feed, $fixedDate = true ) {
-		$date = date( 'c' );
+	protected function addFeedsToDb( $rows, $feed ) {
 		$db = $this->getDbMaster();
 		$db->begin();
 		foreach ( $rows as $url => $item ) {
@@ -79,7 +78,7 @@ abstract class BaseRssModel extends WikiaService {
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
 				->SET( 'wrf_url', $url )
 				->SET( 'wrf_feed', $feed )
-				->SET( 'wrf_pub_date', $fixedDate ? $date : date('Y-m-d H:i:s', $item['timestamp']))
+				->SET( 'wrf_pub_date', date( 'Y-m-d H:i:s', $item[ 'timestamp' ] ) )
 				->SET( 'wrf_title', $item[ 'title' ] )
 				->SET( 'wrf_description', $item[ 'description' ] )
 				->SET( 'wrf_img_url', $item[ 'img' ][ 'url' ] )
@@ -112,12 +111,12 @@ abstract class BaseRssModel extends WikiaService {
 		return $links;
 	}
 
-	protected function getLastFeedTimestamp($feed){
+	protected function getLastFeedTimestamp( $feed ) {
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_pub_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
 			->WHERE( 'wrf_feed' )->EQUAL_TO( $feed )
-			->ORDER_BY('wrf_pub_date DESC')
+			->ORDER_BY( 'wrf_pub_date DESC' )
 			->LIMIT( 1 )
 			->run( $this->getDbSlave(), function ( $result ) {
 				$row = $result->fetchObject( $result );
@@ -214,12 +213,16 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function processItems( $rawData ) {
 		$out = [ ];
+		$time = mktime();
 		foreach ( $rawData as $item ) {
 			$desc = $this->getArticleDescription( $item[ 'wikia_id' ], $item[ 'page_id' ] );
 
 			$item = array_merge( $item, $this->getArticleDetail( $item[ 'wikia_id' ], $item[ 'page_id' ] ) );
 			if ( $desc ) {
 				$item[ 'description' ] = $desc;
+			}
+			if ( !$item[ 'timestamp' ] ) {
+				$item[ 'timestamp' ] = $time;
 			}
 			$out[ $item[ 'url' ] ] = $item;
 		}
@@ -269,7 +272,7 @@ abstract class BaseRssModel extends WikiaService {
 		return $rawData;
 	}
 
-	protected function getDataFromHubs( $hubId, $fromTimestamp ) {
+	protected function getDataFromHubs( $hubId, $fromTimestamp, $duplicates = [ ] ) {
 		$model = new HubRssFeedModel( $this->getFeedLanguage() );
 		$v3 = $model->getRealDataV3( $hubId, null, true );
 		foreach ( $v3 as $key => $item ) {
@@ -280,7 +283,9 @@ abstract class BaseRssModel extends WikiaService {
 				$v3[ $key ][ 'url' ] = $key;
 			}
 		}
-		return $v3;
+
+		$hubData = $this->removeDuplicates( $v3, $duplicates );
+		return $this->findIdForUrls( array_keys( $hubData ) );
 	}
 
 	protected function findIdForUrls( $urls ) {
@@ -298,4 +303,5 @@ abstract class BaseRssModel extends WikiaService {
 		}
 		return $data;
 	}
+
 }
