@@ -16,7 +16,6 @@ class MaintenanceRss extends Maintenance {
 	function execute() {
 		$this->warmTv();
 		$this->warmGames();
-		$this->removeOldEntries();
 	}
 
 	function warmTv() {
@@ -35,10 +34,6 @@ class MaintenanceRss extends Maintenance {
 		$data = $feed->getFeedData();
 		$row = reset($data);
 		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "\n";
-	}
-
-	function removeOldEntries() {
-		echo "| NOT REMOVING OLD ENTRIES... \n";
 	}
 }
 
