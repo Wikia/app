@@ -27,7 +27,8 @@ define('wikia.intMaps.createMap.config', ['jquery'], function($) {
 				id: '#intMapsAddTitle',
 				buttons: [buttons.back, buttons.next],
 				errorMsgKeys: {
-					invalidTitle: 'wikia-interactive-maps-create-map-error-invalid-map-title'
+					invalidTitle: $.msg('wikia-interactive-maps-create-map-error-invalid-map-title'),
+					notImplemented: $.msg('This part is not implemented yet.')
 				}
 			}
 		},

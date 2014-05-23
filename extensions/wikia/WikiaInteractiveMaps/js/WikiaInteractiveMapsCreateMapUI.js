@@ -4,10 +4,11 @@ define(
 		'jquery',
 		'wikia.window',
 		'wikia.mustache',
+		'wikia.querystring',
 		'wikia.intMaps.createMap.config',
 		'wikia.intMaps.createMap.bridge'
 	],
-	function($, w, mustache, config, bridge) {
+	function($, w, mustache, qs, config, bridge) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -125,11 +126,32 @@ define(
 		}
 
 		/**
-		 * @desc switches to the next step in create map flow
+		 * @desc Takes data from inputs and sends request to service via bridge
 		 */
 
 		function createMap() {
-			// TODO: add create map logic
+
+			if (!isMapTitleValid()) {
+				displayError('createMap');
+				return;
+			}
+			var mapData = {
+				title: $('#intMapTitle').val(),
+				image: $('#intMapOrgImg').val(),
+				titleSetId: $('#intMapTileSet').val()
+			};
+
+			bridge.createMap(
+				mapData,
+				function(data) {
+					// map created, go to its page
+					qs(data.mapUrl).goTo();
+				},
+				function(data) {
+					validationError = 'notImplemented';
+					displayError('createMap');
+				}
+			);
 		}
 
 		/**
@@ -221,10 +243,10 @@ define(
 		 */
 
 		function isMapTitleValid() {
-			var title = $('#intMapTitle').val(),
+			var title = $('#intMapTitle').val().trim(),
 				result = true;
 
-			if (title.length === 0 || !title.trim()) {
+			if (title.length === 0) {
 				validationError = 'invalidTitle';
 				result = false;
 			}
@@ -234,15 +256,14 @@ define(
 
 		/**
 		 * Gets correct data from steps configuration to display a validation error
-		 * @param index
+		 * @param step
 		 */
 
-		function displayError(index) {
-			var $errorContainer = $('.map-creation-error'),
-				errorMessage = $.msg(config.steps[index].errorMsgKeys[validationError]);
+		function displayError(step) {
+			var $errorContainer = $('.map-creation-error');
 
 			$errorContainer.html('');
-			$errorContainer.html(errorMessage);
+			$errorContainer.html(config.steps[step].errorMsgKeys[validationError]);
 			$errorContainer.removeClass(config.hiddenClass);
 		}
 

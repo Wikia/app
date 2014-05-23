@@ -19,7 +19,7 @@ define('wikia.intMaps.createMap.bridge', ['jquery', 'wikia.window', 'wikia.intMa
 			success: function(response) {
 				var data = response.results;
 
-				if (data && data.isGood) {
+				if (data && data.success) {
 					success(data);
 				} else {
 					error(response);
@@ -32,7 +32,36 @@ define('wikia.intMaps.createMap.bridge', ['jquery', 'wikia.window', 'wikia.intMa
 		});
 	}
 
-	return {
-		uploadMapImage: uploadMapImage
+	/**
+	 * @desc Sends and AJAX request to create a map
+	 * @param {object} data - request parameters required to create a map
+	 * @param {function} success - success callback function
+	 * @param {function} error - error callback function
+	 */
+
+	function createMap(data, success, error) {
+		$.nirvana.sendRequest({
+			controller: 'WikiaInteractiveMaps',
+			method: 'createMap',
+			format: 'json',
+			data: data,
+			callback: function(response) {
+				var data = response.results;
+
+				if (data && data.success) {
+					success(data);
+				} else {
+					error(response);
+				}
+			},
+			onErrorCallback: function(response) {
+				error(response);
+			}
+		});
 	}
+
+	return {
+		uploadMapImage: uploadMapImage,
+		createMap: createMap
+	};
 });

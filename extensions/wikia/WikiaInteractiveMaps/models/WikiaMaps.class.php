@@ -6,6 +6,7 @@ class WikiaMaps {
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
+	const ENTRY_POINT_TILE_SET = 'tile_set';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -15,7 +16,7 @@ class WikiaMaps {
 	const MAP_WIDTH = 1600;
 
 	/**
-	 * @var array API Connection config
+	 * @var array API connection config
 	 */
 	private $config = [];
 
@@ -33,7 +34,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Create InteractiveMaps request URL
+	 * Create InteractiveMaps request URL
 	 *
 	 * @param array $segments
 	 * @param array $params
@@ -53,7 +54,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Call method and store the result in cache for $expireTime
+	 * Call method and store the result in cache for $expireTime
 	 *
 	 * @param $method
 	 * @param array $params
@@ -69,7 +70,24 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Get Map instances from IntMaps API server
+	 * Wrapper for Http::post() with authorization token attached
+	 *
+	 * @param String $url
+	 * @param Array $data
+	 *
+	 * @return string|bool
+	 */
+	private function postRequest( $url, $data ) {
+		return Http::post( $url, [
+			'postData' => json_encode( $data ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			]
+		] );
+	}
+
+	/**
+	 * Get Map instances from IntMaps API server
 	 *
 	 * @param Array $params an array with parameters which will be added to the url after ? sign
 	 *
@@ -104,7 +122,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Sends requests to IntMap service to get data about a map and tiles it's connected with
+	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
 	 *
 	 * @param Array $params the first element is required and it should be map id passed rest of the array elements
 	 *                      will get added as URI parameters after ? sign
@@ -131,7 +149,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Returns render empty point for map
+	 * Returns render empty point for map
 	 *
 	 * @param Array $params the first element is required and it should be concatenated {mapId}/{zoom}/{lat}/{lon}
 	 *                      rest of the array elements will get added as URI parameters after ? sign
@@ -144,7 +162,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Returns human message based on the tiles processing status in database
+	 * Returns human message based on the tiles processing status in database
 	 *
 	 * @param Integer $status status of tiles processing for the map
 	 *
@@ -166,7 +184,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Returns an array of sorting options instances
+	 * Returns an array of sorting options instances
 	 *
 	 * @param String $selectedSort
 	 *
@@ -183,7 +201,35 @@ class WikiaMaps {
 	}
 
 	/**
-	 * @brief Creates a stdClass representing sorting option
+	 * Sends a request to IntMap Service API to create a map with given parameters
+	 *
+	 * @param Array $mapData array with required parameters to service API
+	 *
+	 * @return string|boolean
+	 */
+	public function saveMap( $mapData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_MAP ] ),
+			$mapData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a map with given parameters
+	 *
+	 * @param Array $tileSetData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function saveTileset( $tileSetData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] ),
+			$tileSetData
+		);
+	}
+
+	/**
+	 * Creates a stdClass representing sorting option
 	 *
 	 * @param String $msgKey message key for MW wfMessage() function
 	 * @param String $value value of the option
