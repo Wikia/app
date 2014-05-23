@@ -153,7 +153,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
 			'wgContentLanguage',
-			'wgMedusaSlot',
 			'wgResourceBasePath',
 			'wgMainPageTitle',
 			'wgSitename',
