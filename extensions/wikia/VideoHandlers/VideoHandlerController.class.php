@@ -294,7 +294,7 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
 	 * @requestParam string|array providers - Only videos hosted by these providers will be returned. Default: all providers.
-	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @requestParam string|array category - Only videos tagged with these categories will be returned. Default: any categories.
 	 * @requestParam integer width - the width of the thumbnail to return
 	 * @requestParam integer height - the height of the thumbnail to return
 	 * @responseParam array $videos
