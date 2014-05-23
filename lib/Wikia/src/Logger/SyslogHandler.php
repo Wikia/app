@@ -1,25 +1,10 @@
 <?php
 namespace Wikia\Logger;
+use Monolog\Formatter\LineFormatter;
 
-class SyslogHandler extends \Monolog\Handler\SyslogHandler implements DevModeFormatterInterface {
+class SyslogHandler extends \Monolog\Handler\SyslogHandler {
 
 	const LINEFORMATTER_FORMAT = '%message%';
-
-	private $devMode = false;
-
-	public function enableDevMode() {
-		$this->devMode = true;
-		$this->getFormatter()->enableDevMode();
-	}
-
-	public function disableDevMode() {
-		$this->devMode = false;
-		$this->getFormatter()->disableDevMode();
-	}
-
-	public function isInDevMode() {
-		return $this->devMode === true;
-	}
 
 	public function setModeLineFormat() {
 		$this->setFormatter(new LineFormatter(self::LINEFORMATTER_FORMAT));

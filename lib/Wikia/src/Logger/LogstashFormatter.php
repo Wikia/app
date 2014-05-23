@@ -45,7 +45,7 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 			}
 		}
 
-		if ($this->devMode) {
+		if ($this->isInDevMode()) {
 			$message['@message'] = "DEV_ES_MESSAGE {$message['@message']}";
 		}
 

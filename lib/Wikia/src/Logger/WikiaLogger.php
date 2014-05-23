@@ -217,7 +217,8 @@ class WikiaLogger {
 	 * return WikiaLogger
 	 */
 	public function setDevModeWithES() {
-		$this->getSyslogHandler()->setModeLogstashFormat()->enableDevMode();
+		$this->getSyslogHandler()->setModeLogstashFormat();
+		$this->getSyslogHandler()->getFormatter()->enableDevMode();
 		return $this;
 	}
 
