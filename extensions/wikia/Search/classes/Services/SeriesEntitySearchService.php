@@ -36,8 +36,8 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
 		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^4 all_domains_mv_wd^15' );
-		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^5 all_domains_mv_wd^15' );
+			'sitename_txt^2 all_domains_mv_wd^5' );
+		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^2 all_domains_mv_wd^5' );
 
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
