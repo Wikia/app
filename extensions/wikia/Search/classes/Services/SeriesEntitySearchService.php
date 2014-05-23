@@ -36,12 +36,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
 		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^4 domains_txt' );
-		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
+			'sitename_txt^4 all_domains_mv_wd^10' );
+		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5 all_domains_mv_wd^10' );
 
-		$domain = strtolower( preg_replace( '|[\W-]+|', '', $this->sanitizeQuery( $noyearphrase ) ) );
-		$dismax->setBoostQuery( 'domains_txt:"www.' . $domain . '.wikia.com"^10 ' .
-			'domains_txt:"' . $domain . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
 
 		return $select;
