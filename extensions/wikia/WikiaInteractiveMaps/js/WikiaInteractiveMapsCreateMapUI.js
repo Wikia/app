@@ -215,15 +215,16 @@ define(
 		 * @param {object} form - html form node element
 		 */
 
+
 		function uploadMapImage(form) {
 			bridge.uploadMapImage(
 				form,
-				function(data) {
-					renderCreateMapStep(data);
+				function(res) {
+					renderCreateMapStep(res);
 					switchStep('createMap');
 				},
-				function(data) {
-					handleUploadErrors(data);
+				function(errRes) {
+					displayError(errRes.results.errors);
 				}
 			);
 		}
@@ -256,14 +257,13 @@ define(
 
 		/**
 		 * Gets correct data from steps configuration to display a validation error
-		 * @param step
+		 * @param {string} message - error message
 		 */
 
-		function displayError(step) {
+		function displayError(message) {
 			var $errorContainer = $('.map-creation-error');
 
-			$errorContainer.html('');
-			$errorContainer.html(config.steps[step].errorMsgKeys[validationError]);
+			$errorContainer.html(message);
 			$errorContainer.removeClass(config.hiddenClass);
 		}
 
