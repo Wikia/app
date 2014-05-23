@@ -29,8 +29,8 @@ class MaintenanceRss extends Maintenance {
 		$db = wfGetDB( DB_MASTER, null, $wgExternalDatawareDB );
 
 		$deleteQuery = "DELETE FROM wikia_rss_feeds "
-			. " where wrf_feed IN ('tv','gaming') "
-			. " AND wrf_pub_date > (DATE_SUB(CURDATE(), INTERVAL " . self::DAYS_TO_KEEP_OLD_FEED_ITEMS . " DAY))";
+			. " where wrf_feed IN ('tv','games') "
+			. " AND wrf_pub_date < (DATE_SUB(CURDATE(), INTERVAL " . self::DAYS_TO_KEEP_OLD_FEED_ITEMS . " DAY))";
 
 		$db->query($deleteQuery);
 
