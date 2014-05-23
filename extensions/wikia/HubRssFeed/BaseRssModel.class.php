@@ -51,18 +51,18 @@ abstract class BaseRssModel extends WikiaService {
 		return $db;
 	}
 
-	protected function addFeedsToDb( $rows, $feed ) {
+	protected function addFeedsToDb( $rows, $feed, $fixedDate = true ) {
 		$date = date( 'c' );
 		$db = $this->getDbMaster();
 		$db->begin();
 		foreach ( $rows as $url => $item ) {
-			$res = ( new WikiaSQL() )
+			( new WikiaSQL() )
 				->INSERT( 'wikia_rss_feeds' )
 				->SET( 'wrf_wikia_id', $item[ 'wikia_id' ] )
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
 				->SET( 'wrf_url', $url )
 				->SET( 'wrf_feed', $feed )
-				->SET( 'wrf_pub_date', $date )
+				->SET( 'wrf_pub_date', $fixedDate ? $date : date('Y-m-d H:i:s', $item['timestamp']))
 				->SET( 'wrf_title', $item[ 'title' ] )
 				->SET( 'wrf_description', $item[ 'description' ] )
 				->SET( 'wrf_img_url', $item[ 'img' ][ 'url' ] )
@@ -99,9 +99,8 @@ abstract class BaseRssModel extends WikiaService {
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_pub_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
-			->WHERE( 'wrf_pub_date' )
 			->WHERE( 'wrf_feed' )->EQUAL_TO( $feed )
-			->ORDER_BY('wrf_pub_date_desc')
+			->ORDER_BY('wrf_pub_date DESC')
 			->LIMIT( 1 )
 			->run( $this->getDbSlave(), function ( $result ) {
 				$row = $result->fetchObject( $result );

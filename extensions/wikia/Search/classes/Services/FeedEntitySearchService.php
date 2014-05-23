@@ -147,12 +147,14 @@ class FeedEntitySearchService extends EntitySearchService {
 			$items[ ] = [
 				'id' => $res[ 'id' ],
 				'pageid' => $res[ 'pageid' ],
+				'page_id' => $res[ 'pageid' ],
 				'url' => $res[ 'url' ],
 				'title' => $res[  'title_en' ],
 				'timestamp' => strtotime( $res[ 'created' ] ),
 				'description' => substr( $res[ 'html_en' ], 0, 100 ),
 				'host' => $res[ 'host' ],
 				'wid' => $res[ 'wid' ],
+				'wikia_id' =>$res[ 'wid' ],
 				'wikititle' => $res['wikititle_en']
 			];
 		}

@@ -8,8 +8,8 @@
 
 class GamesRssModel extends BaseRssModel {
 	const FEED_NAME = 'games';
-	const MAX_NUM_ITEMS_IN_FEED = 30;
-
+	const MAX_NUM_ITEMS_IN_FEED = 15;
+	const GAMING_HUB_CITY_ID = 955764;
 	public function getFeedTitle() {
 		return 'Wikia Games Feed';
 	}
@@ -23,8 +23,29 @@ class GamesRssModel extends BaseRssModel {
 	}
 
 	public function getFeedData() {
-		var_dump($this->getDataFromBlogs(0));
-		die();
+
+		if ($this->isFreshContentInDb(self::FEED_NAME)){
+			return $this->getLastRecoredsFromDb(self::FEED_NAME,  self::MAX_NUM_ITEMS_IN_FEED);
+		}
+
+		$timestamp = $this->getLastFeedTimestamp(self::FEED_NAME) + 1;
+		$duplicates = $this->getLastDuplicatesFromDb(self::FEED_NAME );
+		$hubData = $this->getDataFromHubs($timestamp);
+		$hubData = $this->removeDuplicates($hubData, $duplicates);
+		$hubData = $this->findIdForUrls(array_keys($hubData));
+		$blogData = $this->getDataFromBlogs($timestamp);
+		$blogData =  $this->removeDuplicates($blogData, $duplicates);
+
+		$rawData = array_merge(
+			$blogData,
+			$hubData
+		);
+		$out = $this->processItems($rawData);
+		$this->addFeedsToDb($out,self::FEED_NAME,false);
+		if(count($out) != self::MAX_NUM_ITEMS_IN_FEED){
+			$out = $this->getLastRecoredsFromDb(self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED,true);
+		}
+		return $out;
 	}
 
 	protected function getDataFromBlogs($fromTimestamp){
@@ -42,6 +63,36 @@ class GamesRssModel extends BaseRssModel {
 		| (+host:"elderscrolls.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog")) AND created:[ '.$fromDate.' TO * ]' );
 		return $rows;
+	}
+
+	protected function getDataFromHubs($fromTimestamp){
+		$model = new HubRssFeedModel($this->getFeedLanguage());
+		$v3 = $model->getRealDataV3( self::GAMING_HUB_CITY_ID,null,true);
+		foreach($v3 as $key=>$item){
+			if($item['timestamp'] < $fromTimestamp ){
+				unset($v3[$key]);
+			}else{
+				//add url as item for compatibility
+				$v3[$key]['url'] = $key;
+			}
+		}
+		return $v3;
+	}
+
+	protected function findIdForUrls($urls){
+		$data = [];
+		if(!empty($urls)){
+			$f2 = new \Wikia\Search\Services\FeedEntitySearchService();
+			$f2->setUrls($urls);
+			$res = $f2->query('');
+			foreach($res as $item){
+				$item['hub'] = true;
+				$item['wikia_id'] = $item['wid'];
+				$item['page_id'] = $item['pageid'];
+				$data[$item['url']] = $item;
+			}
+		}
+		return $data;
 	}
 
 
