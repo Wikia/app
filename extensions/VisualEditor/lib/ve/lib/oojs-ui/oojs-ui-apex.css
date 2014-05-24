@@ -156,7 +156,7 @@
   color: #ccc;
 }
 
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button {
+/*.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
   background: #eeeeee;
   background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
@@ -175,7 +175,7 @@
           transition: border-color 100ms ease-in-out;
 }
 
-/*.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button:hover,
+.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button:hover,
 .oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button:focus {
   border-color: #aaa;
 }
