@@ -108,8 +108,8 @@ ve.ui.DesktopContext.prototype.onWindowResize = function () {
 ve.ui.DesktopContext.prototype.onWindowScroll = function () {
 	var toolbar = this.surface.getTarget().getToolbar();
 
-	// Context menu is visible and embedded and the toolbar is floating
-	if ( this.visible && this.embedded && toolbar.isFloating() ) {
+	// Context menu is visible and embedded
+	if ( this.visible && this.embedded ) {
 		this.handleFloat();
 	}
 };
