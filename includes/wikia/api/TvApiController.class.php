@@ -12,6 +12,9 @@ class TvApiController extends WikiaApiController {
 	const NAMESPACE_SETTING = 0;
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
 	const DEFAULT_QUALITY = 20;
+
+	const WG_EXTRA_LOCAL_NAMESPACES_KEY = 'wgExtraNamespacesLocal';
+	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	/** @var Array wikis */
 	protected $wikis = [ ];
 	/** @var SeriesEntitySearchService seriesService */
@@ -55,14 +58,14 @@ class TvApiController extends WikiaApiController {
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
-				$namespaces = WikiFactory::getVarValueByName( 'wgContentNamespaces', $wiki[ 'id' ] );
+				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
 				$episodeService->setNamespace( $namespaces );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
 					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
 				}
 				if ( $result === null ) {
-					$namespaceNames = WikiFactory::getVarValueByName( 'wgExtraNamespacesLocal', $wiki[ 'id' ] );
+					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
 					foreach ( $namespaces as $ns ) {
 						if ( $ns % 2 == 0 && isset( $namespaceNames[ $ns ] ) ) {
 							$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
