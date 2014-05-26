@@ -100,9 +100,8 @@
 <? endif ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
-<?php if ($wg->EnableAdEngineExt) { ?>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
-<?php } ?>
+
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
 

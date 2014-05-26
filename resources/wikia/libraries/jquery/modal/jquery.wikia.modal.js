@@ -51,7 +51,7 @@ $.fn.extend({
 		}
 
 		// let's have it dynamically generated, so every newly created modal will be on top
-		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (5001101 + ($('body').children('.blackout').length) * 2);
+		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (2000000001 + ($('body').children('.blackout').length) * 2);
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -280,7 +280,7 @@ $.fn.extend({
 		var wrapper = this.closest(".modalWrapper");
 
 		// let's have it dynamically generated, so every newly created modal will be on the top
-		var zIndex = 5001101 + ($('body').children('.blackout').length) * 2 ;
+		var zIndex = 2000000001 + ($('body').children('.blackout').length) * 2 ;
 		// show associated blackout
 		var blackout = $(this).data('blackout');
 		var blackoutOpacity = blackout.attr('data-opacity');

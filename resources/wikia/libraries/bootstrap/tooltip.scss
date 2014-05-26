@@ -1,5 +1,4 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-shadow";
 
 $color-shadow: mix(#000000, $color-page, 50%);
@@ -8,7 +7,7 @@ $tooltip-padding: 10px 14px;
 
 .tooltip {
 	position: absolute;
-	z-index: $zTop + 1003; // It's so high because it needs to show up over modals too.
+	z-index: 2000000003; // It's so high because it needs to show up over modals too. 
 	display: block;
 	padding: 5px;
 	font-size: 11px;
