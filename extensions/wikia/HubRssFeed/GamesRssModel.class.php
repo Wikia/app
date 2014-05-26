@@ -11,6 +11,7 @@ class GamesRssModel extends BaseRssModel {
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
 	const FRESH_CONTENT_TTL_HOURS = 24;
+	const SOURCE_BLOGS = 'blogs';
 
 	public function getFeedTitle() {
 		return 'Wikia Games Feed';
@@ -63,10 +64,36 @@ class GamesRssModel extends BaseRssModel {
 		| (+host:"gta.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"fallout.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"elderscrolls.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog"))']);
+		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog")) +ns:500']);
 
-		$rows = $feedModel->query( '+created:[ ' . $fromDate . ' TO * ]' );
+		$rows = $feedModel->query( '+created:[ ' . $fromDate . ' TO * ]');
+		foreach($rows as &$item){
+			//TODO: find better way for this
+			$item[ 'source' ] = self::SOURCE_BLOGS;
+		}
 		return $rows;
+	}
+
+
+	protected function formatTitle( $item ) {
+		switch ( $item[ 'source' ] ) {
+			case self::SOURCE_BLOGS:
+				if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {
+					$info = WikiFactory::getWikiByID( $item[ 'wikia_id' ] );
+					$item[ 'wikititle' ] = $info->city_title;
+				}
+				$pos = strrpos( $item[ 'title' ], '/' );
+				if ( $pos ) {
+					$pos++;
+				}
+				$title = substr( $item[ 'title' ], $pos );
+				$item[ 'title' ] = sprintf( '%s from %s', $title, $item[ 'wikititle' ] );
+				break;
+			case self::SOURCE_HUB:
+				//no change
+				break;
+		}
+		return $item;
 	}
 
 

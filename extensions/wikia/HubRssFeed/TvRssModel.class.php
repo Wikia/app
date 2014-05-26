@@ -15,6 +15,7 @@ class TvRssModel extends BaseRssModel {
 	const MIN_NUM_ITEMS_IN_FEED = 5;
 	const ADD_CONTENT_PERIOD = 86400;
 	const TV_HUB_CITY_ID = 957447;
+	const SOURCE_TVRAGE = 'tvrage';
 
 	public function getFeedTitle() {
 		return 'Wikia Tv Shows';
@@ -29,7 +30,8 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	protected function shouldGenerateAdditionalContent() {
-		return mktime() - $this->getLastFeedTimestamp( self::FEED_NAME ) > self::ADD_CONTENT_PERIOD;
+		$timeDiff = mktime() - $this->getLastInsertFeedTimestamp( self::FEED_NAME, self::SOURCE_GENERATOR ) ;
+		return $timeDiff > self::ADD_CONTENT_PERIOD;
 	}
 
 	public function getFeedData() {
@@ -149,6 +151,9 @@ class TvRssModel extends BaseRssModel {
 				$item = $response->getData();
 				$item[ 'wikia_id' ] = $item[ 'wikiId' ];
 				$item[ 'page_id' ] = $item[ 'articleId' ];
+				$item[ 'series_name' ] = $episode[ 'title' ];
+				$item[ 'episode_name' ] = $episode[ 'episode_title' ];
+				$item[ 'source' ] = self::SOURCE_TVRAGE;
 				unset( $item[ 'wikiId' ], $item[ 'articleId' ] );
 				if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 					$url = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $item[ 'wikia_id' ] ) );
@@ -185,5 +190,28 @@ class TvRssModel extends BaseRssModel {
 	protected function getWikiaArticlesFromExtApi() {
 		$episodes = $this->getTVEpisodes();
 		return $this->getWikiaArticles( $episodes );
+	}
+
+	protected function formatTitle( $item ) {
+		switch ( $item[ 'source' ] ) {
+			case self::SOURCE_TVRAGE:
+				$item[ 'title' ] = sprintf( '%s, the new episode from %s', $item[ 'series_name' ], $item[ 'episode_name' ] );
+				break;
+			case self::SOURCE_HUB:
+				//no change
+				break;
+			case self::SOURCE_GENERATOR:
+				$titles = [ 'Read more about %s from %s', 'More info about %s from %s', 'Recommended page: %s  from %s' ];
+				$titleNum = rand( 0, count( $titles ) - 1 );
+
+				if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {
+					$info = WikiFactory::getWikiByID( $item[ 'wikia_id' ] );
+					$item[ 'wikititle' ] = $info->city_title;
+				}
+				$item[ 'title' ] = sprintf( $titles[ $titleNum ], $item[ 'title' ], $item[ 'wikititle' ] );
+				break;
+
+		}
+		return $item;
 	}
 }
