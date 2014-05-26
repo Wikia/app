@@ -1742,6 +1742,6 @@ $config['int_map_create_map_js'] = [
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapUtils.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapTileSet.js',
 		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapPreview.js',
-		'//extensions/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsCreateMapUI.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapCreateMapModal.js',
 	]
 ];

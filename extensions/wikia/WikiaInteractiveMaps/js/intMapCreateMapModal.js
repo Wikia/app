@@ -1,5 +1,5 @@
 define(
-	'wikia.intMaps.createMap.ui',
+	'wikia.intMaps.createMap.modal',
 	[
 		'jquery',
 		'wikia.intMap.createMap.utils',
@@ -39,7 +39,15 @@ define(
 			events = {
 				error: [
 					function(message) {
-						displayError(message);
+						showError(message);
+					}
+				],
+				cleanUpError: [
+					cleanUpError
+				],
+				mapCreated: [
+					function(data) {
+						showCreatedMap(data);
 					}
 				]
 			};
@@ -87,13 +95,34 @@ define(
 		}
 
 		/**
-		 * Gets correct data from steps configuration to display a validation error
+		 * @desc displays error message
 		 * @param {string} message - error message
 		 */
 
-		function displayError(message) {
-			modal.$errorContainer.html(message);
-			modal.$errorContainer.removeClass('hidden');
+		function showError(message) {
+			modal.$errorContainer
+				.html(message)
+				.removeClass('hidden');
+		}
+
+		/**
+		 * cleans up error message and hides error container
+		 */
+
+		function cleanUpError() {
+			modal.$errorContainer
+				.html('')
+				.addClass('hidden');
+		}
+
+		/**
+		 * @desc redirects to the map page
+		 * @param {object} data - map data
+		 */
+
+		//TODO: to be changed when pin types step will be added
+		function showCreatedMap(data) {
+			qs(data.mapUrl).goTo();
 		}
 
 		return {

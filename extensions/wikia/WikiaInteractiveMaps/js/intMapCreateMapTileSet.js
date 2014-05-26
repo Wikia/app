@@ -1,179 +1,187 @@
-define('wikia.intMap.createMap.tileSet', ['jquery', 'wikia.window', 'wikia.intMap.createMap.utils'], function($, w, utils) {
-	'use strict';
+define(
+	'wikia.intMap.createMap.tileSet',
+	[
+		'jquery',
+		'wikia.window',
+		'wikia.intMap.createMap.utils'
+	],
+	function($, w, utils) {
+		'use strict';
 
-	// reference to modal component
-	var modal,
-		// mustache template
-		template,
-		// template data
-		templateData = {
-			mapType: [
-				{
-					type: 'Geo',
-					name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+		// reference to modal component
+		var modal,
+			// mustache template
+			template,
+			// template data
+			templateData = {
+				mapType: [
+					{
+						type: 'Geo',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-geo')
+					},
+					{
+						type: 'Custom',
+						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
+					}
+				],
+				uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
+			},
+			//modal events
+			events = {
+				intMapGeo: [
+					function() {
+						modal.trigger('previewTileSet', {});
+					}
+				],
+				intMapCustom: [
+					function() {
+						showStep('uploadImage');
+					}
+				],
+				previousStep: [
+					previousStep
+				],
+				chooseTileSet: [
+					chooseTileSet
+				]
+
+			},
+			// steps for choose tile sep
+			steps = {
+				selectType: {
+					id: '#intMapChooseType',
+					buttons: {}
 				},
-				{
-					type: 'Custom',
-					name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
-				}
-			],
-			uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
-		},
-		//modal events
-		events = {
-			intMapGeo: [
-				function() {
-					modal.trigger('previewTileSet', {});
-				}
-			],
-			intMapCustom: [
-				function() {
-					showStep('uploadImage');
-				}
-			],
-			previousStep: [
-				previousStep
-			],
-			chooseTileSet: [
-				chooseTileSet
-			]
-
-		},
-		// steps for choose tile sep
-		steps = {
-			selectType: {
-				id: '#intMapChooseType',
-				buttons: {}
-			},
-			uploadImage: {
-				id: '#intMapImageUpload',
-				buttons: {
-					'#intMapBack': 'previousStep'
+				uploadImage: {
+					id: '#intMapImageUpload',
+					buttons: {
+						'#intMapBack': 'previousStep'
+					}
+				},
+				browseTileSets: {
+					id: '#intMapBrowse',
+					buttons: {}
 				}
 			},
-			browseTileSets: {
-				id: '#intMapBrowse',
-				buttons: {}
-			}
-		},
-		// image upload entry point
-		uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
-		// stack for holding choose tile set steps
-		stack = [],
-		// cached selectors
-		$sections,
-		$upload;
+			// image upload entry point
+			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
+			// stack for holding choose tile set steps
+			stack = [],
+			// cached selectors
+			$sections;
 
-	/**
-	 * @desc initializes and configures UI
-	 * @param {object} modalRef - modal component
-	 * @param {string} mustacheTemplate - mustache template
-	 */
+		/**
+		 * @desc initializes and configures UI
+		 * @param {object} modalRef - modal component
+		 * @param {string} mustacheTemplate - mustache template
+		 */
 
-	function init(modalRef, mustacheTemplate) {
-		modal = modalRef;
-		template = mustacheTemplate;
+		function init(modalRef, mustacheTemplate) {
+			modal = modalRef;
+			template = mustacheTemplate;
 
-		utils.bindEvents(modal, events);
+			utils.bindEvents(modal, events);
 
-		// set base step
-		addToStack('selectType');
+			// set base step
+			addToStack('selectType');
 
-		// TODO: figure out where is better place to place it and move it there
-		modal.$element.on('change', $upload, function(event) {
-			uploadMapImage($(event.target).parent().get(0));
-		});
-	}
+			// TODO: figure out where is better place to place it and move it there
+			modal.$element.on('change', '#intMapUpload', function(event) {
+				uploadMapImage(event.target.parentNode);
+			});
+		}
 
-	/**
-	 * @desc entry point for choose tile set steps
-	 */
+		/**
+		 * @desc entry point for choose tile set steps
+		 */
 
-	function chooseTileSet() {
-		modal.$innerContent.html(utils.render(template, templateData));
+		function chooseTileSet() {
+			modal.$innerContent.html(utils.render(template, templateData));
 
-		// cache selectors
-		$sections = modal.$innerContent.children();
-		$upload = modal.$innerContent.find('#intMapUpload');
+			// cache selectors
+			$sections = modal.$innerContent.children();
 
-		showStep(stack.pop());
-	}
+			showStep(stack.pop());
+		}
 
-	/**
-	 * @desc adds step to steps stack
-	 * @param {string} step - key of the step
-	 */
+		/**
+		 * @desc adds step to steps stack
+		 * @param {string} step - key of the step
+		 */
 
-	function addToStack(step) {
-		stack.push(step);
-	}
+		function addToStack(step) {
+			stack.push(step);
+		}
 
-	/**
-	 * @desc shows step content
-	 * @param {string} id - step is
-	 */
+		/**
+		 * @desc shows step content
+		 * @param {string} id - step is
+		 */
 
-	function showStepContent(id) {
-		$sections.addClass('hidden');
-		$sections.filter(id).removeClass('hidden');
-	}
+		function showStepContent(id) {
+			$sections.addClass('hidden');
+			$sections.filter(id).removeClass('hidden');
+		}
 
-	/**
-	 * @desc shows the given step in choose tile set flow
-	 * @param {string} stepName - name of the step
-	 */
+		/**
+		 * @desc shows the given step in choose tile set flow
+		 * @param {string} stepName - name of the step
+		 */
 
-	function showStep(stepName) {
-		var step = steps[stepName];
+		function showStep(stepName) {
+			var step = steps[stepName];
 
-		addToStack(stepName);
-		showStepContent(step.id);
-		utils.setButtons(modal, step.buttons);
+			addToStack(stepName);
+			showStepContent(step.id);
+			utils.setButtons(modal, step.buttons);
 
-	}
+			modal.trigger('cleanUpError');
 
-	/**
-	 * @desc switches to the previous step in create map flow
-	 */
+		}
 
-	function previousStep() {
-		// removes current step from stack
-		stack.pop();
+		/**
+		 * @desc switches to the previous step in create map flow
+		 */
 
-		showStep(stack.pop());
-	}
+		function previousStep() {
+			// removes current step from stack
+			stack.pop();
 
-	/**
-	 * @desc uploads image to backend
-	 * @param {object} form - html form node element
-	 */
+			showStep(stack.pop());
+		}
 
-	function uploadMapImage(form) {
-		$.ajax({
-			contentType: false,
-			data: new FormData(form),
-			processData: false,
-			type: 'POST',
-			url: w.wgScriptPath + uploadEntryPoint,
-			success: function(response) {
-				var data = response.results;
+		/**
+		 * @desc uploads image to backend
+		 * @param {object} form - html form node element
+		 */
 
-				if (data && data.success) {
-					modal.trigger('previewTileSet', {
-						type: 'uploaded',
-						data: data
-					});
-				} else {
-					modal.trigger('error', response);
+		function uploadMapImage(form) {
+			$.ajax({
+				contentType: false,
+				data: new FormData(form),
+				processData: false,
+				type: 'POST',
+				url: w.wgScriptPath + uploadEntryPoint,
+				success: function(response) {
+					var data = response.results;
+
+					if (data && data.success) {
+						modal.trigger('previewTileSet', {
+							type: 'uploaded',
+							data: data
+						});
+					} else {
+						modal.trigger('error', response.error);
+					}
+				},
+				error: function(response) {
+					modal.trigger('error', response.results.error);
 				}
-			},
-			error: function(response) {
-				modal.trigger('error', response);
-			}
-		});
-	}
+			});
+		}
 
-	return {
-		init: init
-	};
-});
+		return {
+			init: init
+		};
+	}
+);
