@@ -17,7 +17,7 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
+		global $wgOptimizelyLoadFromOurCDN;
 
 		// load optimizely_blocking_js on wikiamobile
 		if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
@@ -26,8 +26,22 @@ class Optimizely {
 			}
 		}
 
-		$scripts .= '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
+		if ( $wgOptimizelyLoadFromOurCDN ) {
+			$scripts .= static::loadFromOurCDN();
+		} else {
+			$scripts .= static::loadOriginal();
+		}
 
 		return true;
+	}
+
+	protected static function loadFromOurCDN() {
+		global $wgResourceBasePath;
+		return '<script src="' . $wgResourceBasePath . '/wikia.php?controller=Optimizely&method=getCode"></script>';
+	}
+
+	protected static function loadOriginal() {
+		global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
+		return '<script src="' . ($wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl) . '" async></script>';
 	}
 }

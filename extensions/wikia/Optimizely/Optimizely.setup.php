@@ -17,6 +17,7 @@ $wgExtensionCredits['other'][] = array(
 
 //classes
 $wgAutoloadClasses['Optimizely'] =  $dir . 'Optimizely.class.php';
+$wgAutoloadClasses['OptimizelyController'] = "{$dir}/OptimizelyController.class.php";
 
 // hooks
 $wgHooks['WikiaSkinTopScripts'][] = 'Optimizely::onWikiaSkinTopScripts';
