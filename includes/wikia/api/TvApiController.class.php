@@ -38,7 +38,11 @@ class TvApiController extends WikiaApiController {
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
-		// TMPFIX: replace american right apostrophe with normal one
+
+		// TODO: this is a workaround to not alter schema of main index too much
+		// once the next gen search is implemented such workarounds would not be needed hopefully
+
+		// this replaces american right apostrophe with normal one
 		$episodeName = str_replace("’", "'", $episodeName);
 
 		$seriesService = $this->getSeriesService();
