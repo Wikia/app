@@ -22,7 +22,7 @@ class GamesRssModel extends BaseRssModel {
 	}
 
 	public function getFeedDescription() {
-		return 'Wikia Games Feed';
+		return 'From Wikia community - Video Games';
 	}
 
 	public function getFeedData() {

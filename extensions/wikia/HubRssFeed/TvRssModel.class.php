@@ -18,7 +18,7 @@ class TvRssModel extends BaseRssModel {
 	const SOURCE_TVRAGE = 'tvrage';
 
 	public function getFeedTitle() {
-		return 'Wikia Tv Shows';
+		return 'Wikia TV Feed';
 	}
 
 	public function getFeedLanguage() {
@@ -26,7 +26,7 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	public function getFeedDescription() {
-		return 'Wikia Tv Shows';
+		return 'From Wikia community - TV';
 	}
 
 	protected function shouldGenerateAdditionalContent() {
