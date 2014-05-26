@@ -11,6 +11,7 @@ class TvApiController extends WikiaApiController {
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
+	const DEFAULT_QUALITY = 20;
 	/** @var Array wikis */
 	protected $wikis = [ ];
 	/** @var SeriesEntitySearchService seriesService */
@@ -41,13 +42,12 @@ class TvApiController extends WikiaApiController {
 		$episodeName = str_replace("’", "'", $episodeName);
 
 		$seriesService = $this->getSeriesService();
-		$seriesService->setLang( $lang )
-			->setQuality( $quality );
+		$seriesService->setLang( $lang );
 		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
-				->setQuality( $quality );
+				->setQuality( ($quality !== null ) ? $quality : static::DEFAULT_QUALITY );
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
