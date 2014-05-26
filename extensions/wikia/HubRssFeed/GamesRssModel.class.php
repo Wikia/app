@@ -36,6 +36,7 @@ class GamesRssModel extends BaseRssModel {
 
 		$blogData = $this->getDataFromBlogs( $timestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
+		$hubData = [];
 		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
 			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp, $duplicates );
 		}
