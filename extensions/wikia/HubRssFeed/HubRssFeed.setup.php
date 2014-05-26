@@ -7,14 +7,16 @@ if ( !defined('MEDIAWIKI') ) {
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
 $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'HubRssFeedModel.class.php';
-$wgAutoloadClasses['MixedFeedModel']	= $dir . 'MixedFeedModel.class.php';
 $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 $wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';
-$wgAutoloadClasses['TVEpisodePremiereService']	= $dir . 'TVEpisodePremiereService.class.php';
+$wgAutoloadClasses['BaseRssModel']	= $dir . 'BaseRssModel.class.php';
+$wgAutoloadClasses['TvRssModel']	= $dir . 'TvRssModel.class.php';
+$wgAutoloadClasses['GamesRssModel']	= $dir . 'GamesRssModel.class.php';
+$wgAutoloadClasses['PopularArticlesModel']	= $dir . 'PopularArticlesModel.class.php';
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(
-	'Gaming', 'Entertainment','Lifestyle'
+	'Gaming', 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Tv'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {

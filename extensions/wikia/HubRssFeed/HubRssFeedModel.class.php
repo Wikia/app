@@ -43,14 +43,18 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	protected function getServicesV3( $cityId ) {
-		return [
+	protected function getServicesV3( $cityId, $useExplore = false ) {
+		$services =  [
 			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
-			'explore' => new MarketingToolboxModuleExploreService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION)
+
 		];
-	
+
+		if ( $useExplore ) {
+			$services[ 'explore' ] = new MarketingToolboxModuleExploreService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION );
+		}
+		return $services;
 	}
 
 	/**
@@ -74,7 +78,7 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	public function getRealDataV3( $cityId, $prevTimestamp = null) {
+	public function getRealDataV3( $cityId, $prevTimestamp = null, $useExplore = false ) {
 		if ( $cityId === 0 ) {
 			return [];
 		}
@@ -96,7 +100,7 @@ class HubRssFeedModel extends WikiaModel {
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
 			$prevTimestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
-			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp );
+			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp, $useExplore );
 
 			if ( $prevData === null ) {
 				$prevTimestamp--;
@@ -229,9 +233,9 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	protected function getDataFromModulesV3( $cityId, $timestamp = null ) {
+	protected function getDataFromModulesV3( $cityId, $timestamp = null, $useExplore = false ) {
 
-		$services = $this->getServicesV3( $cityId );
+		$services = $this->getServicesV3( $cityId , $useExplore );
 		$data = [];
 
 		foreach ( $services as $k => &$v ) {
@@ -244,13 +248,11 @@ class HubRssFeedModel extends WikiaModel {
 		if(array_key_exists('explore', $data)){
 			$data['explore'] = ['links'=>$data['explore']['linkgroups'][1]['links']];
 		}
-		//var_dump($data);
-		//echo "------------------!!!!!!!!----------------";
+
 		$ret =  $this->normalizeDataFromModules( $data );
-		//var_dump($ret);
-		$ret = $this->removeNonValidUrls($ret);
-		//var_dump($ret);
-		//die();
+		if( $useExplore ){
+			$ret = $this->removeNonValidUrls($ret);
+		}
 		return $ret;
 	}
 
