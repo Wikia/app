@@ -69,7 +69,6 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function addFeedsToDb( $rows, $feed ) {
-		return ;
 		$db = $this->getDbMaster();
 		$db->begin();
 		foreach ( $rows as $url => $item ) {
@@ -317,11 +316,11 @@ abstract class BaseRssModel extends WikiaService {
 		return $data;
 	}
 
-	protected function finalizeRecords( $rawData, $rowsToReturn ){
+	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, self::FEED_NAME );
-		if ( count( $out ) != self::MAX_NUM_ITEMS_IN_FEED ) {
-			$out = $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED, true );
+		$this->addFeedsToDb( $out, $feedName);
+		if ( count( $out ) != $rowsToReturn ) {
+			$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
 		}
 		return $out;
 	}

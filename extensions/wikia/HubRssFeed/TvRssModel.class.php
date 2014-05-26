@@ -87,7 +87,7 @@ class TvRssModel extends BaseRssModel {
 			}
 		}
 
-		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED );
+		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED , self::FEED_NAME );
 		return $out;
 	}
 
@@ -151,7 +151,10 @@ class TvRssModel extends BaseRssModel {
 				$item[ 'page_id' ] = $item[ 'articleId' ];
 				unset( $item[ 'wikiId' ], $item[ 'articleId' ] );
 				if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-					$item[ 'url' ] = preg_replace( '~http://[^\.]+\.~', 'http://', $item[ 'url' ] );
+					$url = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $item[ 'wikia_id' ] ) );
+					if ( strpos( $item[ 'url' ], $url ) !== 0 ) {
+						$item[ 'url' ] = preg_replace( '~http://[^\.]+\.~', 'http://', $item[ 'url' ] );
+					}
 				}
 				$data[ ] = $item;
 			} catch ( Exception $e ) {

@@ -43,7 +43,7 @@ class GamesRssModel extends BaseRssModel {
 			$hubData
 		);
 
-		$out = $this->finalizeRecords($rawData,self::MAX_NUM_ITEMS_IN_FEED);
+		$out = $this->finalizeRecords($rawData,self::MAX_NUM_ITEMS_IN_FEED, self::FEED_NAME );
 		return $out;
 	}
 

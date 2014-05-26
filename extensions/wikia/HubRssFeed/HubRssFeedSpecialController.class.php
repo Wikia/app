@@ -105,6 +105,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$par = $this->request->getVal( 'par' );
 		$model = BaseRssModel::newFromName( $par );
 		$service->setFeedLang( $model->getFeedLanguage() );
+		$service->setFeedTitle( $model->getFeedTitle() );
 		$service->setFeedDescription( $model->getFeedDescription() );
 		$service->setFeedUrl( SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() .'/'.ucfirst( $par ) );
 		$service->setData( $model->getFeedData() );
