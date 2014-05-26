@@ -175,7 +175,8 @@ class FeedEntitySearchService extends EntitySearchService {
 				'host' => $res[ 'host' ],
 				'wid' => $res[ 'wid' ],
 				'wikia_id' =>$res[ 'wid' ],
-				'wikititle' => $res['wikititle_en']
+				'wikititle' => $res['wikititle_en'],
+				'ns' => $res['ns']
 			];
 		}
 		return $items;

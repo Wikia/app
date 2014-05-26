@@ -78,18 +78,8 @@ class GamesRssModel extends BaseRssModel {
 	protected function formatTitle( $item ) {
 		switch ( $item[ 'source' ] ) {
 			case self::SOURCE_BLOGS:
-				if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {
-					$info = WikiFactory::getWikiByID( $item[ 'wikia_id' ] );
-					$item[ 'wikititle' ] = $info->city_title;
-				}
-				$pos = strrpos( $item[ 'title' ], '/' );
-				if ( $pos ) {
-					$pos++;
-				}
-				$title = substr( $item[ 'title' ], $pos );
-				$item[ 'title' ] = sprintf( '%s from %s', $title, $item[ 'wikititle' ] );
-				break;
 			case self::SOURCE_HUB:
+				$item = $this->makeBlogTitle( $item );
 				//no change
 				break;
 		}

@@ -22,6 +22,7 @@ abstract class BaseRssModel extends WikiaService {
 	const MIN_IMAGE_SIZE = 200;
 
 	protected $forceRegenerateFeed = false;
+	protected $nsBlogs = [ NS_BLOG_ARTICLE => true ];
 
 	public abstract function getFeedTitle();
 
@@ -325,7 +326,7 @@ abstract class BaseRssModel extends WikiaService {
 			$f2->setUrls( $urls );
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
-				$item[ 'hub' ] = true;
+
 				$item[ 'wikia_id' ] = $item[ 'wid' ];
 				$item[ 'page_id' ] = $item[ 'pageid' ];
 				if( $source ) {
@@ -344,6 +345,26 @@ abstract class BaseRssModel extends WikiaService {
 			$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
 		}
 		return $out;
+	}
+
+	protected function makeBlogTitle( $item ) {
+		if ( array_key_exists( $item[ 'ns' ], $this->nsBlogs ) ) {
+			if ( !array_key_exists( 'wikititle', $item ) || !$item[ 'wikititle' ] ) {
+				$info = WikiFactory::getWikiByID( $item[ 'wikia_id' ] );
+				$item[ 'wikititle' ] = $info->city_title;
+			}
+			$t = GlobalTitle::newFromId( $item[ 'page_id' ], $item[ 'wikia_id' ] );
+			if ( $t instanceof GlobalTitle ) {
+				$orgTitle = $t->getText();
+				$pos = strrpos( $orgTitle, '/' );
+				if ( $pos ) {
+					$pos++;
+				}
+				$title = substr( $orgTitle, $pos );
+				$item[ 'title' ] = sprintf( '%s from %s', $title, $item[ 'wikititle' ] );
+			}
+		}
+		return $item;
 	}
 
 }

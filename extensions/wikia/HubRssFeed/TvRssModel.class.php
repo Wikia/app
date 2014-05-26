@@ -195,10 +195,10 @@ class TvRssModel extends BaseRssModel {
 	protected function formatTitle( $item ) {
 		switch ( $item[ 'source' ] ) {
 			case self::SOURCE_TVRAGE:
-				$item[ 'title' ] = sprintf( '%s, the new episode from %s', $item[ 'series_name' ], $item[ 'episode_name' ] );
+				$item[ 'title' ] = sprintf( '%s, the new episode from %s', $item[ 'episode_name' ], $item[ 'series_name' ] );
 				break;
 			case self::SOURCE_HUB:
-				//no change
+				$item = $this->makeBlogTitle( $item );
 				break;
 			case self::SOURCE_GENERATOR:
 				$titles = [ 'Read more about %s from %s', 'More info about %s from %s', 'Recommended page: %s  from %s' ];
