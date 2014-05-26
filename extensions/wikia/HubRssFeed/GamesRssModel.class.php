@@ -78,8 +78,9 @@ class GamesRssModel extends BaseRssModel {
 	protected function formatTitle( $item ) {
 		switch ( $item[ 'source' ] ) {
 			case self::SOURCE_BLOGS:
-			case self::SOURCE_HUB:
 				$item = $this->makeBlogTitle( $item );
+				break;
+			case self::SOURCE_HUB:
 				//no change
 				break;
 		}

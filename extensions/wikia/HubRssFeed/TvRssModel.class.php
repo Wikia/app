@@ -198,7 +198,7 @@ class TvRssModel extends BaseRssModel {
 				$item[ 'title' ] = sprintf( '%s, the new episode from %s', $item[ 'episode_name' ], $item[ 'series_name' ] );
 				break;
 			case self::SOURCE_HUB:
-				$item = $this->makeBlogTitle( $item );
+
 				break;
 			case self::SOURCE_GENERATOR:
 				$titles = [ 'Read more about %s from %s', 'More info about %s from %s', 'Recommended page: %s  from %s' ];

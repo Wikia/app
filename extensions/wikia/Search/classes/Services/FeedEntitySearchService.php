@@ -171,7 +171,6 @@ class FeedEntitySearchService extends EntitySearchService {
 				'url' => $res[ 'url' ],
 				'title' => $res[  'title_en' ],
 				'timestamp' => strtotime( $res[ 'created' ] ),
-				'description' => substr( $res[ 'html_en' ], 0, 100 ),
 				'host' => $res[ 'host' ],
 				'wid' => $res[ 'wid' ],
 				'wikia_id' =>$res[ 'wid' ],
