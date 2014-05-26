@@ -248,13 +248,11 @@ class HubRssFeedModel extends WikiaModel {
 		if(array_key_exists('explore', $data)){
 			$data['explore'] = ['links'=>$data['explore']['linkgroups'][1]['links']];
 		}
-		//var_dump($data);
-		//echo "------------------!!!!!!!!----------------";
+
 		$ret =  $this->normalizeDataFromModules( $data );
-		//var_dump($ret);
-		$ret = $this->removeNonValidUrls($ret);
-		//var_dump($ret);
-		//die();
+		if( $useExplore ){
+			$ret = $this->removeNonValidUrls($ret);
+		}
 		return $ret;
 	}
 
