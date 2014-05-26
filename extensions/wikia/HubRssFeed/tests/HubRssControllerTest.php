@@ -85,11 +85,16 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->method( 'getParams' )
 			->will( $this->returnValue( ['par' => 'XyZ'] ) );
 
+		$mockTitle = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( ['getFullUrl'] )
+			->getMock();
+
 		$mock->expects( $this->once() )
 			->method( 'forward' )
 			->with( 'HubRssFeedSpecial', 'notfound' );
 
-
+		$mock->currentTitle = $mockTitle;
 		$mock->hubs = ['abc' => 'desc_abc'];
 		$mock->request = $mockRequest;
 		$mock->index();

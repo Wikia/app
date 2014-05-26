@@ -4,13 +4,20 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const SPECIAL_NAME = 'HubRssFeed';
 	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
+	const DAY_QUARTER = 21600;
+	const CACHE_10MIN = 600;
 	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 9;
+	const CACHE_BUST = 26;
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
 		'entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
 		'lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+	];
+
+	protected $customFeeds = [
+		TvRssModel::FEED_NAME=>true,
+		GamesRssModel::FEED_NAME=>true
 	];
 
 	/**
@@ -65,7 +72,10 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$hubName = strtolower( (string)$params[ 'par' ] );
 
-		if ( !isset($this->hubs[ $hubName ]) ) {
+		if ( !isset( $this->hubs[ $hubName ] ) ) {
+			if ( isset( $this->customFeeds[$hubName] ) ) {
+				return $this->forward( 'HubRssFeedSpecial', 'customRss' );
+			}
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
 		}
 
@@ -86,6 +96,21 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );
+		$this->response->setContentType( 'text/xml' );
+	}
+
+	public function customRss() {
+		$this->response->setCacheValidity( self::CACHE_TIME );
+		$service = new RssFeedService();
+		$par = $this->request->getVal( 'par' );
+		$model = BaseRssModel::newFromName( $par );
+		$service->setFeedLang( $model->getFeedLanguage() );
+		$service->setFeedTitle( $model->getFeedTitle() );
+		$service->setFeedDescription( $model->getFeedDescription() );
+		$service->setFeedUrl( SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() .'/'.ucfirst( $par ) );
+		$service->setData( $model->getFeedData() );
+		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
+		$this->response->setBody( $service->toXml() );
 		$this->response->setContentType( 'text/xml' );
 	}
 
