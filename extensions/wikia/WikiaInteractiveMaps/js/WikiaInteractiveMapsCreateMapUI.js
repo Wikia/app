@@ -2,46 +2,42 @@ define(
 	'wikia.intMaps.createMap.ui',
 	[
 		'jquery',
-		'wikia.window',
 		'wikia.mustache',
-		'wikia.querystring',
-		'wikia.intMaps.createMap.config',
-		'wikia.intMaps.createMap.bridge'
+		'wikia.intMap.createMap.tileSet',
+		'wikia.intMap.createMap.preview'
 	],
-	function($, w, mustache, qs, config, bridge) {
+	function($, mustache, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
-		var createMapModal,
-			// placeholder for caching create map flow modal sections
-			modalSections,
-			// placeholder for caching create map modal buttons
-			modalButtons,
-			// stack for holding modal steps
-			stack =[],
-			// placeholder for validation error name
-			validationError,
-			// placeholder for mustache templates
-			mustacheTemplates,
-			// modal event handlers
-			modalEvents = {
-				next: createMap,
-				back: previousStep,
-				intMapCustom: function() {
-					switchStep('customTileSet');
-				},
-				intMapGeo: function() {
-					// TODO: need geo map data
-					renderCreateMapStep({});
-					switchStep('createMap');
+		var modal,
+			// modal configuration
+			modalConfig = {
+				vars: {
+					id: 'intMapCreateMapModal',
+					classes: ['intMapCreateMapModal'],
+					size: 'medium',
+					content: '',
+					title: $.msg('wikia-interactive-maps-create-map-header'),
+					buttons: [
+						{
+							vars: {
+								value: $.msg('wikia-interactive-maps-create-map-next-btn'),
+								classes: ['normal', 'primary'],
+								id: 'intMapNext'
+							}
+						},
+						{
+							vars: {
+								value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
+								id: 'intMapBack'
+							}
+						}
+					]
 				}
-			};
-
-		// TODO: figure out where is better place to place it and move it there
-		$('body').on('change', '#intMapUpload', function(event) {
-			uploadMapImage($(event.target).parent().get(0));
-		});
-
+			},
+			// placeholder for validation error name
+			validationError;
 
 		/**
 		 * @desc Entry point for create map modal
@@ -49,49 +45,19 @@ define(
 		 */
 
 		function init(templates) {
-			// set reference to mustache templates
-			mustacheTemplates = templates;
+			modalConfig.vars.content = mustache.render(templates[0], {});
 
-			renderModalContentMarkup(config.modalConfig, templates[0], config.templateData);
+			createModal(modalConfig, function() {
+				modal.$buttons = modal.$element.find('.buttons').children();
+				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 
-			createModal(config.modalConfig, function() {
-				// cache modal sections and buttons
-				modalSections = createMapModal.$content.children();
-				modalButtons = createMapModal.$element.find('.buttons').children();
+				// init modal steps
+				tileSet.init(modal, templates[1]);
+				preview.init(modal, templates[2]);
 
-				bindEvents(createMapModal, modalEvents);
-				// set initial create map step
-				switchStep('tileSetType');
-				createMapModal.show();
+				modal.trigger('chooseTileSet');
+				modal.show();
 			});
-		}
-
-		/**
-		 * @desc renders HTML markup and adds it to modal config
-		 * @param {object} modalConfig - modal configuration
-		 * @param {string} template - mustache template
-		 * @param {object} data - mustache template data
-		 */
-
-		function renderModalContentMarkup(modalConfig, template, data) {
-			modalConfig.vars.content = mustache.render(template, data);
-		}
-
-		/**
-		 * @desc prepares image preview and  data for requests to int map service
-		 * @param {object} data - params needed to display image preview and prepare data for requests to int map service
-		 */
-
-		function renderCreateMapStep(data) {
-			var templateData = {
-				titlePlaceholder: $.msg('wikia-interactive-maps-create-map-title-placeholder'),
-				orgImage: data.fileUrl,
-				tileSetId: data.tileSetId,
-				thumbnailUrl: data.fileThumbUrl,
-				userName: w.wgUserName
-			};
-
-			$(config.steps.createMap.id).html(mustache.render(mustacheTemplates[1], templateData));
 		}
 
 		/**
@@ -103,155 +69,13 @@ define(
 		function createModal(config, cb) {
 			require(['wikia.ui.factory'], function (uiFactory) {
 				uiFactory.init(['modal']).then(function (uiModal) {
-					uiModal.createComponent(config, function (modal) {
+					uiModal.createComponent(config, function (component) {
 						// set reference to modal component
-						createMapModal = modal;
-
+						modal = component;
 						cb();
 					});
 				});
 			});
-		}
-
-		/**
-		 * @desc binds events to modal
-		 * @param {object} modal - instance of modal component
-		 * @param {object} events - events to be bind to the modal
-		 */
-
-		function bindEvents(modal, events) {
-			Object.keys(events).forEach(function(event) {
-				modal.bind(event, events[event]);
-			});
-		}
-
-		/**
-		 * @desc Takes data from inputs and sends request to service via bridge
-		 */
-
-		function createMap() {
-
-			if (!isMapTitleValid()) {
-				displayError('createMap');
-				return;
-			}
-			var mapData = {
-				title: $('#intMapTitle').val(),
-				image: $('#intMapOrgImg').val(),
-				titleSetId: $('#intMapTileSet').val()
-			};
-
-			bridge.createMap(
-				mapData,
-				function(data) {
-					// map created, go to its page
-					qs(data.mapUrl).goTo();
-				},
-				function(data) {
-					validationError = 'notImplemented';
-					displayError('createMap');
-				}
-			);
-		}
-
-		/**
-		 * @desc switches to the previous step in create map flow
-		 */
-
-		function previousStep() {
-			// removes current step from stack
-			stack.pop();
-
-			switchStep(stack.pop());
-		}
-
-		/**
-		 * @desc switches to the given step in create map flow
-		 * @param {string} step - key of the step
-		 */
-
-		function switchStep(step) {
-			addToStack(step);
-			showStepContent(step);
-			showStepModalButtons(step);
-		}
-
-		/**
-		 * @desc adds step to steps stack
-		 * @param {string} step - key of the step
-		 */
-
-		function addToStack(step) {
-			stack.push(step);
-		}
-
-		/**
-		 * @desc shows step content
-		 * @param {string} step - key of the step
-		 */
-
-		function showStepContent(step) {
-			modalSections.addClass(config.hiddenClass);
-			modalSections.filter(config.steps[step].id).removeClass(config.hiddenClass);
-		}
-
-		/**
-		 * @desc shows step buttons
-		 * @param {string} step - key of the step
-		 */
-
-		function showStepModalButtons(step) {
-			var buttons = config.steps[step].buttons || [];
-
-			modalButtons.addClass(config.hiddenClass);
-
-			buttons.forEach(function(id) {
-				modalButtons.filter(id).removeClass(config.hiddenClass);
-			});
-		}
-
-		/**
-		 * @desc Handler for uploading map image
-		 * @param {object} form - html form node element
-		 */
-
-		function uploadMapImage(form) {
-			bridge.uploadMapImage(
-				form,
-				function(data) {
-					renderCreateMapStep(data);
-					switchStep('createMap');
-				},
-				function(data) {
-					handleUploadErrors(data);
-				}
-			);
-		}
-
-		/**
-		 * @desc Handles upload errors&exceptions
-		 * @param {object} response
-		 */
-
-		function handleUploadErrors( response ) {
-			// TODO: handle errors (MOB-1626)
-		}
-
-		/**
-		 * Validates map title
-		 * @returns {boolean}
-		 */
-
-		function isMapTitleValid() {
-			var title = $('#intMapTitle').val().trim(),
-				result = true;
-
-			if (title.length === 0) {
-				validationError = 'invalidTitle';
-				result = false;
-			}
-
-			return result;
 		}
 
 		/**
