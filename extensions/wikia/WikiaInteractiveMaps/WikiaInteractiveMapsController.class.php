@@ -161,7 +161,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if( empty( $this->wg->EnableUploads ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
 		} else if( $uploadResults[ 'status' ] !== UploadBase::OK ) {
-			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse() ];
+			$uploadStatus[ 'errors' ] = [ $this->translateError( $uploadResults[ 'status' ] ) ];
 		} else if( ( $warnings = $upload->checkWarnings() ) && !empty( $warnings ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
 		} else {
@@ -190,6 +190,40 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal( 'results', $uploadStatus );
+	}
+
+	/**
+	 * Maps error status code to an error message
+	 * @param Integer $errorStatus error code status returned from UploadBase method
+	 * @return String
+	 */
+	private function translateError( $errorStatus ) {
+		switch( $errorStatus ) {
+			case UploadBase::FILE_TOO_LARGE:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
+				break;
+			case UploadBase::EMPTY_FILE:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-empty-file' )->plain();
+				break;
+			case UploadBase::FILETYPE_BADTYPE:
+			case UploadBase::VERIFICATION_ERROR:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-bad-type' )->plain();
+				break;
+			default:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse();
+				break;
+		}
+
+		return $errorMessage;
+	}
+
+	/**
+	 * Returns max upload file size in MB (gets it from config)
+	 * @return float
+	 * @todo Extract it somewhere to includes/wikia/
+	 */
+	private function getMaxFileSize() {
+		return $this->wg->MaxUploadSize / 1024 / 1024;
 	}
 
 	/**
@@ -269,7 +303,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		] );
 
 		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
 		} else {
 			$result = json_decode( $response );
 			$results['success'] = true;
@@ -296,7 +330,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		] );
 
 		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->text();
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
 		} else {
 			$response = json_decode( $response );
 			$mapId = $response->id;

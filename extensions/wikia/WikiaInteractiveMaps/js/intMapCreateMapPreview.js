@@ -65,7 +65,7 @@ define('wikia.intMap.createMap.preview', ['jquery', 'wikia.window', 'wikia.intMa
 		tileSetData = tileSet.data;
 		templateData.tileSetData = tileSetData;
 
-		utils.render(template, templateData, modal.$innerContent);
+		modal.$innerContent.html(utils.render(template, templateData));
 		utils.setButtons(modal, buttons);
 
 		// cache title selector

@@ -90,7 +90,7 @@ define('wikia.intMap.createMap.tileSet', ['jquery', 'wikia.window', 'wikia.intMa
 	 */
 
 	function chooseTileSet() {
-		utils.render(template, templateData, modal.$innerContent);
+		modal.$innerContent.html(utils.render(template, templateData));
 
 		// cache selectors
 		$sections = modal.$innerContent.children();

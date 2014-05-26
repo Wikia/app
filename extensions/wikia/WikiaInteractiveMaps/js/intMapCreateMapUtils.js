@@ -16,14 +16,13 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 	}
 
 	/**
-	 * @desc render template and add it to the container
+	 * @desc render template
 	 * @param {string} template - mustache template
 	 * @param {object} templateData - mustache template variables
-	 * @param {object} $container - jQuery selector
 	 */
 
-	function render(template, templateData, $container) {
-		$container.html(mustache.render(template, templateData));
+	function render(template, templateData) {
+		return mustache.render(template, templateData);
 	}
 
 	/**

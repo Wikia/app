@@ -2,11 +2,11 @@ define(
 	'wikia.intMaps.createMap.ui',
 	[
 		'jquery',
-		'wikia.mustache',
+		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview'
 	],
-	function($, mustache, tileSet, preview) {
+	function($, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -36,8 +36,13 @@ define(
 					]
 				}
 			},
-			// placeholder for validation error name
-			validationError;
+			events = {
+				error: [
+					function(message) {
+						displayError(message);
+					}
+				]
+			};
 
 		/**
 		 * @desc Entry point for create map modal
@@ -45,11 +50,14 @@ define(
 		 */
 
 		function init(templates) {
-			modalConfig.vars.content = mustache.render(templates[0], {});
+			modalConfig.vars.content = utils.render(templates[0], {});
 
 			createModal(modalConfig, function() {
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
+				modal.$errorContainer = $('.map-creation-error');
+
+				utils.bindEvents(modal, events);
 
 				// init modal steps
 				tileSet.init(modal, templates[1]);
@@ -80,15 +88,12 @@ define(
 
 		/**
 		 * Gets correct data from steps configuration to display a validation error
-		 * @param step
+		 * @param {string} message - error message
 		 */
 
-		function displayError(step) {
-			var $errorContainer = $('.map-creation-error');
-
-			$errorContainer.html('');
-			$errorContainer.html(config.steps[step].errorMsgKeys[validationError]);
-			$errorContainer.removeClass(config.hiddenClass);
+		function displayError(message) {
+			modal.$errorContainer.html(message);
+			modal.$errorContainer.removeClass('hidden');
 		}
 
 		return {
