@@ -16,6 +16,7 @@ class EntitySearchService {
 	private $lang;
 	private $quality;
 	private $wikiId;
+	private $namespace;
 	private $hubs;
 
 	public function __construct( $client = null ) {
@@ -63,6 +64,14 @@ class EntitySearchService {
 		return $this;
 	}
 
+	public function getNamespace() {
+		return $this->namespace;
+	}
+
+	public function setNamespace( $namespace ) {
+		$this->namespace = $namespace;
+	}
+
 	public function getHubs() {
 		return $this->hubs;
 	}
@@ -70,6 +79,7 @@ class EntitySearchService {
 	public function setHubs( $hubs ) {
 		$this->hubs = $hubs;
 	}
+
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
