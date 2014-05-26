@@ -11,8 +11,12 @@ class TvApiController extends WikiaApiController {
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
+	const DEFAULT_QUALITY = 20;
+
+	const WG_EXTRA_LOCAL_NAMESPACES_KEY = 'wgExtraNamespacesLocal';
+	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	/** @var Array wikis */
-	protected $wikis = [];
+	protected $wikis = [ ];
 	/** @var SeriesEntitySearchService seriesService */
 	protected $seriesService;
 	/** @var EpisodeEntitySearchService episodeService */
@@ -33,24 +37,43 @@ class TvApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $result );
 
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
+
+		// TODO: this is a workaround to not alter schema of main index too much
+		// once the next gen search is implemented such workarounds would not be needed hopefully
+
+		// this replaces american right apostrophe with normal one
+		$episodeName = str_replace("’", "'", $episodeName);
+
 		$seriesService = $this->getSeriesService();
-		$seriesService->setLang( $lang )
-			->setQuality( $quality );
+		$seriesService->setLang( $lang );
 		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
-				->setQuality( $quality );
+				->setQuality( ($quality !== null ) ? $quality : static::DEFAULT_QUALITY );
 			$result = null;
-			foreach( $wikis as $wiki ) {
-				$episodeService->setWikiId( $wiki['id'] );
+			foreach ( $wikis as $wiki ) {
+				$episodeService->setWikiId( $wiki[ 'id' ] );
+				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
+				$episodeService->setNamespace( $namespaces );
 				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
-					$result = $this->getTitle( $episodeName, $wiki['id'] );
+					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
+				}
+				if ( $result === null ) {
+					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
+					if ( is_array( $namespaces ) ) {
+						foreach ( $namespaces as $ns ) {
+							if ( !MWNamespace::isTalk($ns) && isset( $namespaceNames[ $ns ] ) ) {
+								$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
+								if ( $result !== null ) break;
+							}
+						}
+					}
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
@@ -102,14 +125,14 @@ class TvApiController extends WikiaApiController {
 		return null;
 	}
 
-	protected function getContentUrl($wikiId, $articleId){
+	protected function getContentUrl( $wikiId, $articleId ) {
 		return $this->getEpisodeService()->replaceHostUrl(
 			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
-			.EpisodeEntitySearchService::API_URL . $articleId
+			. EpisodeEntitySearchService::API_URL . $articleId
 		);
 	}
 
-	protected function createTitle($text, $wikiId) {
+	protected function createTitle( $text, $wikiId ) {
 		return GlobalTitle::newFromText( $text, NS_MAIN, $wikiId );
 	}
 
@@ -124,7 +147,7 @@ class TvApiController extends WikiaApiController {
 
 	protected function getQualityFromSolr( $wikiId, $articleId ) {
 		$config = $this->getConfigById( $wikiId, $articleId );
-		return ( new Factory )->getFromConfig( $config )->searchAsApi( ['article_quality_i' => 'quality'  ], false );
+		return ( new Factory )->getFromConfig( $config )->searchAsApi( [ 'article_quality_i' => 'quality' ], false );
 	}
 
 	protected function getConfigById( $wikiId, $articleId ) {
