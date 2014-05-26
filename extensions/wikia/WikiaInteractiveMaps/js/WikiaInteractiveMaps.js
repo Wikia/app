@@ -9,7 +9,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		source = {
 			messages: ['WikiaInteractiveMapsCreateMap'],
 			scripts: ['int_map_create_map_js'],
-			styles: ['extensions/wikia/WikiaInteractiveMaps/css/WikiaInteractiveMapsCreateMap.scss'],
+			styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
 			mustache: [
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSet.mustache',
