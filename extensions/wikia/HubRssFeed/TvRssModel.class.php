@@ -87,12 +87,7 @@ class TvRssModel extends BaseRssModel {
 			}
 		}
 
-		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, self::FEED_NAME );
-
-		if ( count( $out ) != self::MAX_NUM_ITEMS_IN_FEED ) {
-			$out = $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED, true );
-		}
+		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED );
 		return $out;
 	}
 

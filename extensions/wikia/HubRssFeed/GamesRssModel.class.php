@@ -42,20 +42,20 @@ class GamesRssModel extends BaseRssModel {
 			$blogData,
 			$hubData
 		);
-		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, self::FEED_NAME );
-		if ( count( $out ) != self::MAX_NUM_ITEMS_IN_FEED ) {
-			$out = $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED, true );
-		}
+
+		$out = $this->finalizeRecords($rawData,self::MAX_NUM_ITEMS_IN_FEED);
 		return $out;
 	}
 
 	protected function getDataFromBlogs( $fromTimestamp ) {
+		if(!$fromTimestamp){
+			$fromTimestamp = strtotime("now - 1 month");
+		}
 		$feedModel = new \Wikia\Search\Services\FeedEntitySearchService();
 		$fromDate = date( 'Y-m-d\TH:i:s\Z', $fromTimestamp );
 		$feedModel->setRowLimit( self::MAX_NUM_ITEMS_IN_FEED );
 		$feedModel->setSorts( [ 'created' => 'desc' ] );
-		$rows = $feedModel->query( '((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
+		$feedModel->setFilters(['hc'=>'+((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"warframe.wikia.com" AND +categories_mv_en:"Blog posts")
 		| (+host:"monsterhunter.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"darksouls.wikia.com" AND +categories_mv_en:"News")
@@ -63,7 +63,9 @@ class GamesRssModel extends BaseRssModel {
 		| (+host:"gta.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"fallout.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"elderscrolls.wikia.com" AND +categories_mv_en:"News")
-		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog")) AND created:[ ' . $fromDate . ' TO * ]' );
+		| (+host:"leagueoflegends.wikia.com" AND +categories_mv_en:"News_blog"))']);
+
+		$rows = $feedModel->query( '+created:[ ' . $fromDate . ' TO * ]' );
 		return $rows;
 	}
 

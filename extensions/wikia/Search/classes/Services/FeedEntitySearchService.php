@@ -12,6 +12,21 @@ class FeedEntitySearchService extends EntitySearchService {
 	private $hosts;
 	private $sorts;
 	private $rowLimit;
+	private $filters;
+
+	/**
+	 * @param mixed $filters
+	 */
+	public function setFilters( $filters ) {
+		$this->filters = $filters;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getFilters() {
+		return $this->filters;
+	}
 
 	/**
 	 * @param mixed $rowLimit
@@ -93,6 +108,11 @@ class FeedEntitySearchService extends EntitySearchService {
 		}
 
 		$select->createFilterQuery( 'mp' )->setQuery( '-(is_main_page:true)' );
+		if(!empty($this->filters)){
+			foreach($this->filters as $name => $query){
+				$select->createFilterQuery( $name )->setQuery( $query );
+			}
+		}
 		$select->setRows( $this->rowLimit ? $this->rowLimit : static::ROWS_NUMBER );
 
 		return $select;
@@ -138,7 +158,7 @@ class FeedEntitySearchService extends EntitySearchService {
 			. ( isset( $l ) ? ' AND +(lang:' . $l . ')' : '' )
 			. ( isset( $wids ) ? ' AND +wid:( ' . implode( ' | ', $wids ) . ')' : '' )
 			. ( isset( $hubs ) ? ' AND +hub:( ' . implode( ' | ', $hubs ) . ')' : '' );
-
+		var_dump($query);
 		return $query;
 	}
 
