@@ -178,9 +178,10 @@ jQuery(function($){
 				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
 					suffix = '-logo-click';
 				}
-				label = $(e.delegateTarget).attr('data-label') + suffix;
+				label = $(e.delegateTarget).attr('data-label');
 
 				if (label !== undefined) {
+					label += suffix;
 					track({
 						category: category,
 						label: label
@@ -190,9 +191,10 @@ jQuery(function($){
 
 			alliance.each(function(){
 				suffix = '-impression';
-				label = $(this).attr('data-label') + suffix;
+				label = $(this).attr('data-label');
 
 				if (label !== undefined) {
+					label += suffix;
 					track({
 						action: Wikia.Tracker.ACTIONS.IMPRESSION,
 						category: category,
