@@ -136,7 +136,7 @@ class TvRssModel extends BaseRssModel {
 	}
 
 	protected function getWikiaArticles( $episodes ) {
-		global $wgStagingEnvironment;
+		global $wgStagingEnvironment, $wgDevelEnvironment;
 
 		$data = [ ];
 		foreach ( $episodes as $i => $episode ) {
@@ -150,7 +150,7 @@ class TvRssModel extends BaseRssModel {
 				$item[ 'wikia_id' ] = $item[ 'wikiId' ];
 				$item[ 'page_id' ] = $item[ 'articleId' ];
 				unset( $item[ 'wikiId' ], $item[ 'articleId' ] );
-				if ( $wgStagingEnvironment ) {
+				if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 					$item[ 'url' ] = preg_replace( '~http://[^\.]+\.~', 'http://', $item[ 'url' ] );
 				}
 				$data[ ] = $item;
