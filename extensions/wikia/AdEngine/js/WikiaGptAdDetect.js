@@ -1,8 +1,9 @@
 /*global define, setTimeout*/
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
-	'wikia.window'
-], function (log, window) {
+	'wikia.window',
+	'ext.wikia.adEngine.messageListener'
+], function (log, window, messageListener) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptAdDetect',
@@ -81,6 +82,14 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		log(['getAdDetectMethod', slotname], 'info', logGroup);
 
+		if (iframe && iframe.contentWindow && iframe.contentWindow.AdDetectMethod) {
+			log(['getAdDetectMethod', slotname, 'iframe AdDetectMethod = ', iframe.contentWindow.AdDetectMethod], 'info', logGroup);
+
+			iframe.contentWindow.AdDetectId = iframe.id;
+
+			return iframe.contentWindow.AdDetectMethod;
+		}
+
 		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
 
 		if (status === 'success') {
@@ -132,6 +141,19 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		if (hopMethod === 'empty') {
 			return noAdCallback();
+		}
+
+		if (hopMethod === 'async') {
+			return messageListener.register({source: iframe.id, dataKey: 'status'}, function(data) {
+
+				log(['onAdLoad', slotname, 'catched message' , data.status], 'info', logGroup);
+
+				if (data.status === "success") {
+					return adCallback();
+				}
+
+				return noAdCallback();
+			});
 		}
 
 		// On mobile skin we investigate the iframe contents

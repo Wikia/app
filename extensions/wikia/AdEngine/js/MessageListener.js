@@ -5,7 +5,8 @@ define('ext.wikia.adEngine.messageListener', [
 ], function (log, window) {
 	'use strict';
 
-	var callbacks = [],
+	var logGroup = 'ext.wikia.adEngine.messageListener',
+		callbacks = [],
 		unhandledMessages = [];
 
 	function isInterestingMessage(msg) {
@@ -20,7 +21,7 @@ define('ext.wikia.adEngine.messageListener', [
 		}
 
 		if (match.source) {
-			matching = matching && msg.source === match.source;
+			matching = matching && msg.data.AdEngine.source === match.source;
 		}
 
 		return matching;
@@ -28,6 +29,8 @@ define('ext.wikia.adEngine.messageListener', [
 
 	function receiveMessage(msg) {
 		var i, len, callback;
+
+		log(['Received message', msg], 9, logGroup);
 
 		if (isInterestingMessage(msg)) {
 
@@ -46,6 +49,9 @@ define('ext.wikia.adEngine.messageListener', [
 	}
 
 	function init() {
+
+		log('Initialized ads message listener', 9, logGroup);
+
 		window.addEventListener('message', receiveMessage);
 	}
 

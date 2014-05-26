@@ -54,6 +54,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
+		'//extensions/wikia/AdEngine/js/MessageListener.js',
 
 		// high prio
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
@@ -612,6 +613,7 @@ $config['wikiamobile_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/geo.js',
 		'//resources/wikia/modules/lazyqueue.js',
+		'//extensions/wikia/AdEngine/js/MessageListener.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
