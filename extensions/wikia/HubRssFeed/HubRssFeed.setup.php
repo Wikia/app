@@ -16,7 +16,7 @@ $wgAutoloadClasses['PopularArticlesModel']	= $dir . 'PopularArticlesModel.class.
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(
-	'Gaming', 'Entertainment', 'Lifestyle', 'Games', 'Tv'
+	'Gaming', 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Tv'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {
