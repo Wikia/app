@@ -66,10 +66,12 @@ class TvApiController extends WikiaApiController {
 				}
 				if ( $result === null ) {
 					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
-					foreach ( $namespaces as $ns ) {
-						if ( !MWNamespace::isTalk($ns) && isset( $namespaceNames[ $ns ] ) ) {
-							$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
-							if ( $result !== null ) break;
+					if ( is_array( $namespaces ) ) {
+						foreach ( $namespaces as $ns ) {
+							if ( !MWNamespace::isTalk($ns) && isset( $namespaceNames[ $ns ] ) ) {
+								$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
+								if ( $result !== null ) break;
+							}
 						}
 					}
 				}
