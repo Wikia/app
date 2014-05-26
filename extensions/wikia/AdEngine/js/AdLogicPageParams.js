@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = window.location.hostname.toString(),
-		adsInHeadExperiment = abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
@@ -176,10 +175,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
-
-		if (!adsInHeadExperiment) {
-			extend(params, decodeLegacyDartParams(window.amzn_targs));
-		}
+		extend(params, decodeLegacyDartParams(window.amzn_targs));
 
 		log(params, 9, logGroup);
 		return params;

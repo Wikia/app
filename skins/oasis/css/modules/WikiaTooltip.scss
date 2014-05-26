@@ -7,7 +7,7 @@
 	display: none;
 	position: absolute;
 	/* dirty hack just to force clue to appear over modal windows */
-	z-index: $zTop + 2001;
+	z-index: 2000001001;
 	
 	/*
 	color: $color-text;

@@ -83,9 +83,6 @@ class AdEngine2Hooks {
 		if (!AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
-			array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
-		} else {
-			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
 		}
 
 		if ($wgEnableRHonDesktop === false) {

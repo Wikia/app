@@ -1,5 +1,4 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/mixins/box-shadow";
 
 $color-shadow: mix(#000000, $color-page, 50%);
@@ -8,7 +7,7 @@ $color-shadow: mix(#000000, $color-page, 50%);
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: $zTop + 1003; // It's so high because it needs to show up over modals too.
+	z-index: 2000000003; // It's so high because it needs to show up over modals too.
 	display: none;
 	padding: 5px;
 }

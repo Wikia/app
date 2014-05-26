@@ -301,13 +301,9 @@ describe('AdLogicPageParams', function(){
 						{ id: 19, group: { id: 45 } },
 						{ id: 76, group: { id: 112 } }
 					];
-				},
-				getGroup: function () { }
+				}
 			},
-			abTestMockEmpty = {
-				getExperiments: function() {return [];},
-				getGroup: function () { }
-			},
+			abTestMockEmpty = {getExperiments: function() {return [];}},
 			abTestMockNone,
 			adLogicPageParams,
 			params,
