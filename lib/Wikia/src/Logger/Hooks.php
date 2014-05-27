@@ -21,11 +21,6 @@ class Hooks {
 		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgEnableJavaScriptErrorLogging, $wgCacheBuster, $wgMemc;
 
 		if (!$wgDevelEnvironment) {
-			// FIXME: this should be done much earlier in the stack if we want to be able to log everything to
-			// logstash in production
-			// if we are not in dev, setup the WikiaLogger in production mode
-			\Wikia\Logger\WikiaLogger::instance()->setProductionMode();
-
 			$onError = $wgIsGASpecialWiki || $wgEnableJavaScriptErrorLogging;
 			$key = "wikialogger-top-script-$onError";
 			$loggingJs = $wgMemc->get($key);
@@ -77,8 +72,24 @@ class Hooks {
 			$scripts = "<script>$loggingJs</script>$scripts";
 		}
 
+		return true;
+	}
+
+	/**
+	 * A hook for setting up the WikiaLogger early in the app initialization process.
+	 *
+	 * @param WikiFactoryLoader $wikiFactoryLoader
+	 * @return boolean true
+	 */
+	public static function onWikiFactoryExecute(\WikiFactoryLoader $wikiFactoryLoader) {
+		global $wgDevelEnvironment;
+		if ($wgDevelEnvironment) {
+			// default to syslog in dev. you can override this in DevBoxSettings.php
+			\Wikia\Logger\WikiaLogger::instance()->setDevMode();
+		}
+
 		/**
-		 * Setup the WikiaLogger  as the error handler regardless of the environment.
+		 * Setup the WikiaLogger as the error handler
 		 */
 		set_error_handler([\Wikia\Logger\WikiaLogger::instance(), 'onError'], error_reporting());
 

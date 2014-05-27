@@ -395,6 +395,9 @@ $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopS
 $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
+// Set the WikiaLogger mode early in the setup process
+$wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
+
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
 	if ( strpos( $class, 'Wikia\\Sass\\' ) !== false ) {
