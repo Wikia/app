@@ -28,7 +28,15 @@ class TvApiController extends WikiaApiController {
 			$minQuality = (int)$minQuality;
 		}
 
-		$result = $this->findEpisode( $seriesName, $episodeName, $lang, $minQuality );
+		$episodes = explode( ';', $episodeName );
+		$result = null;
+		foreach ( $episodes as $episode ) {
+			$result = $this->findEpisode( $seriesName, $episode, $lang, $minQuality );
+			if( $result ) break;
+		}
+		if (!$result) {
+			throw new NotFoundApiException();
+		}
 
 		$response = $this->getResponse();
 		$response->setValues( $result );
@@ -59,8 +67,7 @@ class TvApiController extends WikiaApiController {
 				}
 			}
 		}
-		//episode was not found
-		throw new NotFoundApiException();
+		return false;
 	}
 
 	protected function getSeriesService() {
