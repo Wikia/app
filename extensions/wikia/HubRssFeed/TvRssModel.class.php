@@ -46,7 +46,7 @@ class TvRssModel extends BaseRssModel {
 		 */
 		if ( $this->forceRegenerateFeed == false ) {
 			if ( $this->isFreshContentInDb( self::FEED_NAME ) ) {
-				return $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
+				return $this->getLastRecordsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
 			}
 		}
 

@@ -159,7 +159,7 @@ abstract class BaseRssModel extends WikiaService {
 		return $timestamp;
 	}
 
-	protected function getLastRecoredsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
+	protected function getLastRecordsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
 		$db = $useMaster ? $this->getDbMaster() : $this->getDbSlave();
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' * ' )
@@ -361,7 +361,7 @@ abstract class BaseRssModel extends WikiaService {
 	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
 		$this->addFeedsToDb( $out, $feedName);
-		$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
+		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
 	}
 
