@@ -17,7 +17,7 @@ class SyslogHandler extends \Monolog\Handler\SyslogHandler {
 	}
 
 	protected function getDefaultFormatter() {
-		return new LineFormatter(self::LINEFORMATTER_FORMAT);
+		return new LogstashFormatter(null);
 	}
 
 }
