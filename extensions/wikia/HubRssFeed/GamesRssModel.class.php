@@ -25,10 +25,14 @@ class GamesRssModel extends BaseRssModel {
 		return 'From Wikia community - Video Games';
 	}
 
+	public function getModelUrlEndpoint(){
+		return '/Games';
+	}
+
 	public function getFeedData() {
 
 		if ( $this->forceRegenerateFeed == false && $this->isFreshContentInDb( self::FEED_NAME, self::FRESH_CONTENT_TTL_HOURS ) ) {
-			return $this->getLastRecoredsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
+			return $this->getLastRecordsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
 		}
 
 		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
@@ -40,7 +44,6 @@ class GamesRssModel extends BaseRssModel {
 		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
 			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp, $duplicates );
 		}
-
 		$rawData = array_merge(
 			$blogData,
 			$hubData
