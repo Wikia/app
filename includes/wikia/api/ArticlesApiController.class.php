@@ -116,7 +116,6 @@ class ArticlesApiController extends WikiaApiController {
 		if ( empty( $articles ) ) {
 			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
 			if ( $fallbackDate ) {
-
 				$articles = DataMartService::getTopArticlesByPageview(
 					$this->wg->CityId,
 					$ids,
