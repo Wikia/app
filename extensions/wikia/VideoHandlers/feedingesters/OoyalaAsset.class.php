@@ -400,6 +400,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['expirationDate'] ) ) {
 			$metadata['expirationdate'] = $data['expirationDate'];
 		}
+		if ( !empty( $data['regionalRestrictions'] ) ) {
+			$metadata['regional_restrictions'] = $data['regionalRestrictions'];
+		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
