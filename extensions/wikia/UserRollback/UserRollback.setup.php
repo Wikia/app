@@ -7,6 +7,8 @@ $dir = dirname(__FILE__) . '/';
  */
 $wgAutoloadClasses['UserRollbackSpecialController'] =  $dir . 'UserRollbackSpecialController.class.php';
 $wgAutoloadClasses['UserRollbackRequest'] =  $dir . 'UserRollbackRequest.class.php';
+$wgAutoloadClasses['UserRollbackTask'] = $dir . 'UserRollbackTask.class.php';
+$wgAutoloadClasses['OldUserRollbackTask'] = $dir . 'UserRollbackTask.old.php';
 
 /**
  * special pages
@@ -28,4 +30,4 @@ $wgGroupPermissions['util']['userrollback'] = true;
 /**
  * task manager
  */
-extAddBatchTask( dirname(__FILE__)."/UserRollbackTask.class.php", "userrollback", "UserRollbackTask" );
+extAddBatchTask( dirname(__FILE__)."/UserRollbackTask.old.php", "userrollback", "OldUserRollbackTask" );
