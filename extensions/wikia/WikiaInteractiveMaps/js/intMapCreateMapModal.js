@@ -106,7 +106,7 @@ define(
 		}
 
 		/**
-		 * cleans up error message and hides error container
+		 * @desc cleans up error message and hides error container
 		 */
 
 		function cleanUpError() {
