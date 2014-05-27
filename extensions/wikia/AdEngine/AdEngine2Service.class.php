@@ -204,7 +204,7 @@ class AdEngine2Service
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdDriverDisableLateQueue;
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue;
 
 		$vars = [];
 
@@ -227,7 +227,7 @@ class AdEngine2Service
 			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
 			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,
-			'wgAdDriverDisableLateQueue' => $wgAdDriverDisableLateQueue,
+			'wgAdEngineDisableLateQueue' => $wgAdEngineDisableLateQueue,
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
@@ -305,7 +305,7 @@ class AdEngine2Service
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
 				'cityShort',                     // AdLogicPageParams.js
-				'wgAdDriverDisableLateQueue',    // AdConfig2.js
+				'wgAdEngineDisableLateQueue',    // AdConfig2.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
 				'wgAdDriverForceLiftiumAd',      // AdConfig2.js
