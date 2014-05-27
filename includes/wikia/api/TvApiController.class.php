@@ -31,7 +31,7 @@ class TvApiController extends WikiaApiController {
 		$episodes = explode( ';', $episodeName );
 		$result = null;
 		foreach ( $episodes as $episode ) {
-			$result = $this->findEpisode( $seriesName, $episode, $lang, $minQuality );
+			$result = $this->findEpisode( $seriesName, trim($episode), $lang, $minQuality );
 			if( $result ) break;
 		}
 		if (!$result) {
