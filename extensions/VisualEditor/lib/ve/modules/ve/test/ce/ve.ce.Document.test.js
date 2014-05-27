@@ -22,7 +22,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 					{ input: 3, output: 4 },
 					{ input: 4, output: 6 },
 					{ input: 6, output: 7 },
-					{ input: 7, output: 10 }
+					{ input: 7, output: 7 }
 				]
 			},
 			{
@@ -33,7 +33,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 					{ input: 3, output: 4 },
 					{ input: 4, output: 6 },
 					{ input: 6, output: 7 },
-					{ input: 7, output: 10 }
+					{ input: 7, output: 7 }
 				]
 			},
 			{
@@ -44,7 +44,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 					{ input: 7, output: 6 },
 					{ input: 6, output: 4 },
 					{ input: 4, output: 3 },
-					{ input: 3, output: 0 }
+					{ input: 3, output: 3 }
 				]
 			},
 			{
@@ -55,7 +55,7 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 					{ input: 7, output: 6 },
 					{ input: 6, output: 4 },
 					{ input: 4, output: 3 },
-					{ input: 3, output: 0 }
+					{ input: 3, output: 3 }
 				]
 			}
 		], i, j, expectCount = 0;
