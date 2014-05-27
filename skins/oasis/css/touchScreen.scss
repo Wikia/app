@@ -87,3 +87,9 @@ td.mw-label {
 	}
 }
 
+// Play buttons should always show on touch-enabled devices
+.video-thumbnail.hide-play {
+	.play-circle {
+		display: block;
+	}
+}
