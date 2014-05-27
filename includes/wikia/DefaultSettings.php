@@ -934,12 +934,6 @@ $wgSassExecutable = '/var/lib/gems/1.8/bin/sass';
 $wgGlobalUserProperties = array('language');
 
 /**
- * debug level for memcached
- */
-$wgMemCachedDebugLevel = 1;
-
-
-/**
  * We keep this enabled to support monobook
  **/
 $wgEnableMWSuggest = true;
