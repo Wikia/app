@@ -8,16 +8,18 @@
  */
 
 class TaskRunner {
+	private $taskId;
 	private $taskList = [];
 	private $results = [];
 	private $callOrder;
 
 	private $exception;
 
-	function __construct($taskList, $callOrder, $createdBy) {
-		$taskList = json_decode($taskList, true);
+	function __construct($taskId, $taskList, $callOrder, $createdBy) {
+		$this->taskId = $taskId;
 		$this->callOrder = json_decode($callOrder, true);
 
+		$taskList = json_decode($taskList, true);
 		foreach ($taskList as $taskData) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
