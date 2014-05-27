@@ -124,17 +124,6 @@ class RebuildLocalisationCache extends Maintenance {
 
 		$this->output( "$numRebuilt languages rebuilt out of $total\n" );
 
-		/* Wikia-specific code starts here */
-		$taskId = $this->getOption( 'task', 0 );
-		if ( 0 < $taskId ) {
-			$oTask = RebuildLocalisationCacheTask::newFromID( $taskId );
-			if ( $oTask instanceof RebuildLocalisationCacheTask ) {
-				$sHost = php_uname( 'n' );
-				$oTask->log( "$numRebuilt languages rebuild out of $total on $sHost." );
-			}
-		}
-		/* Wikia-specific code ends here */
-
 		if ( $numRebuilt === 0 ) {
 			$this->output( "Use --force to rebuild the caches which are still fresh.\n" );
 		}
