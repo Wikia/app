@@ -3,9 +3,10 @@ require([
 	'jquery',
 	'wikia.log',
 	'wikia.window',
+	'wikia.document',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.slotTweaker'
-], function ($, log, window, adHelper, slotTweaker) {
+], function ($, log, window, document, adHelper, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.wikiaBarBoxad2',
@@ -18,15 +19,16 @@ require([
 
 	function onScroll() {
 
-		if (!slotAdded && (window.scrollY > 300 && window.scrollY < 1600)) {
+		var scroll = window.scrollY || document.documentElement.scrollTop;
+		if (!slotAdded && (scroll > 300 && scroll < 1600)) {
 			slotAdded = true;
 
-			$('.WikiaSiteWrapper').append('<div id="'+ slotname + '" class="wikia-ad noprint"></div>');
+			$('.WikiaSiteWrapper').append('<div id="'+ slotname + '" class="wikia-ad noprint hidden"></div>');
 
 			window.adslots2.push([ slotname,null,"AdEngine2" ]);
 		}
 
-		if (slotAdded && (window.scrollY > 500 && window.scrollY < 1000)) {
+		if (slotAdded && (scroll > 500 && scroll < 1000)) {
 			if (wikiaBar.length && wikiaBar[0].style.display === 'none') {
 				return;
 			}
