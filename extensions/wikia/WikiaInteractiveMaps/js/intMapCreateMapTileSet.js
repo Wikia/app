@@ -46,7 +46,7 @@ define(
 				]
 
 			},
-			// steps for choose tile sep
+			// steps for choose tile set
 			steps = {
 				selectType: {
 					id: '#intMapChooseType',
