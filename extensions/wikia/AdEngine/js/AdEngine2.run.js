@@ -125,12 +125,6 @@ require([
 window.AdEngine_loadLateAds = function () {
 	'use strict';
 
-	if(window.wgAdEngineDisableLateQueue) {
-		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, 'AdEngine2');
-
-		return;
-	}
-
 	window.wgAfterContentAndJS.push(function () {
 		require([
 			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
