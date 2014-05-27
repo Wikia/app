@@ -25,6 +25,10 @@ class GamesRssModel extends BaseRssModel {
 		return 'From Wikia community - Video Games';
 	}
 
+	public function getModelUrlEndpoint(){
+		return '/Games';
+	}
+
 	public function getFeedData() {
 
 		if ( $this->forceRegenerateFeed == false && $this->isFreshContentInDb( self::FEED_NAME, self::FRESH_CONTENT_TTL_HOURS ) ) {

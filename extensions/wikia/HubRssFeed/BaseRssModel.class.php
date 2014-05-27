@@ -32,6 +32,8 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedData();
 
+	public abstract function getModelUrlEndpoint();
+
 	/**
 	 * @param $feedName
 	 * @return BaseRssModel
@@ -359,9 +361,7 @@ abstract class BaseRssModel extends WikiaService {
 	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
 		$this->addFeedsToDb( $out, $feedName);
-		if ( count( $out ) != $rowsToReturn ) {
-			$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
-		}
+		$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
 	}
 

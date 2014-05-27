@@ -29,6 +29,10 @@ class TvRssModel extends BaseRssModel {
 		return 'From Wikia community - TV';
 	}
 
+	public function getModelUrlEndpoint(){
+		return '/TV';
+	}
+
 	protected function shouldGenerateAdditionalContent() {
 		$timeDiff = mktime() - $this->getLastInsertFeedTimestamp( self::FEED_NAME, self::SOURCE_GENERATOR ) ;
 		return $timeDiff > self::ADD_CONTENT_PERIOD;
