@@ -125,7 +125,7 @@ require([
 window.AdEngine_loadLateAds = function () {
 	'use strict';
 
-	if(window.wgAdDriverDisableLateQueue) {
+	if(window.wgAdEngineDisableLateQueue) {
 		return;
 	}
 

@@ -14,7 +14,7 @@ class AdEngine2Hooks {
 		// TODO: review top and bottom vars (important for adsinhead)
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead, $wgEnableKruxTargeting,
-			   $wgAdDriverDisableLateQueue;
+			   $wgAdEngineDisableLateQueue;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -23,7 +23,7 @@ class AdEngine2Hooks {
 		$wgEnableRHonDesktop = $request->getBool( 'gptremnant', $wgEnableRHonDesktop );
 		$wgEnableRHonMobile = $request->getBool( 'gptremnant', $wgEnableRHonMobile );
 
-		$wgAdDriverDisableLateQueue = $request->getBool( 'noremnant', $wgAdDriverDisableLateQueue );
+		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
@@ -90,7 +90,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-		global $wgEnableRHonDesktop, $wgAdDriverDisableLateQueue;
+		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -101,16 +101,16 @@ class AdEngine2Hooks {
 		if (!AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
-			if (!$wgAdDriverDisableLateQueue) {
+			if (!$wgAdEngineDisableLateQueue) {
 				array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
 			}
 		} else {
-			if (!$wgAdDriverDisableLateQueue) {
+			if (!$wgAdEngineDisableLateQueue) {
 				array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
 			}
 		}
 
-		if ($wgEnableRHonDesktop === false && !$wgAdDriverDisableLateQueue) {
+		if ($wgEnableRHonDesktop === false && !$wgAdEngineDisableLateQueue) {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
