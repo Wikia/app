@@ -131,6 +131,18 @@ class AdEngine2Service
 		return in_array($pageType, $pageTypes);
 	}
 
+	public static function shouldLoadLiftium()
+	{
+		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
+		return !$wgEnableRHonDesktop && !$wgAdEngineDisableLateQueue;
+	}
+
+	public static function shouldLoadLateQueue()
+	{
+		global $wgAdEngineDisableLateQueue;
+		return !$wgAdEngineDisableLateQueue;
+	}
+
 	/**
 	 * Check if for current page the ads can be displayed or not.
 	 *

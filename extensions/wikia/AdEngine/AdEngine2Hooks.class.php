@@ -13,7 +13,7 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop, $wgEnableRHonMobile,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead,
 			   $wgEnableKruxTargeting, $wgAdEngineDisableLateQueue;
 
@@ -91,15 +91,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onOasisSkinAssetGroups(&$jsAssets) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		global $wgEnableRHonDesktop, $wgAdDriverUseWikiaBarBoxad2;
-=======
-		global $wgEnableRHonDesktop, $wgAdDriverDisableLateQueue;
->>>>>>> ADEN-1178 Create noremnant = 1
-=======
-		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
->>>>>>> ADEN-1178 Renamed $wgAdDriverDisableLateQueue => $wgAdEngineDisableLateQueue
+		global $wgAdDriverUseWikiaBarBoxad2;
 
 		$coreGroupIndex = array_search(AdEngine2Service::ASSET_GROUP_CORE, $jsAssets);
 		if ($coreGroupIndex === false) {
@@ -110,16 +102,15 @@ class AdEngine2Hooks {
 		if (!AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
-			if (!$wgAdEngineDisableLateQueue) {
-				array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
-			}
-		} else {
-			if (!$wgAdEngineDisableLateQueue) {
-				array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
-			}
+			$coreGroupIndex = $coreGroupIndex + 1;
 		}
 
-		if ($wgEnableRHonDesktop === false && !$wgAdEngineDisableLateQueue) {
+		if (AdEngine2Service::shouldLoadLateQueue()) {
+			$coreGroupIndex = $coreGroupIndex + (int)AdEngine2Service::areAdsInHead();
+			array_splice($jsAssets, $coreGroupIndex, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
+		}
+
+		if (AdEngine2Service::shouldLoadLiftium()) {
 			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
 		}
 
