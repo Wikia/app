@@ -126,6 +126,13 @@ class WikiaDispatcher {
 				wfProfileIn($profilename);
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
+				$controllerReflection = new ReflectionClass($controllerClassName);
+
+				if ($controllerReflection->hasConstant('DEFAULT_TEMPLATE_ENGINE')) {
+					$response->setTemplateEngine($controller::DEFAULT_TEMPLATE_ENGINE);
+				} else {
+					$response->setTemplateEngine(WikiaController::DEFAULT_TEMPLATE_ENGINE);
+				}
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);

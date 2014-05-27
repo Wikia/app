@@ -142,8 +142,12 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$hubSlotsValues = $this->request->getParams();
 				$hubSlotsValues = $this->hubsForm->filterData($hubSlotsValues);
 				$hubSavedSlotsValues = $this->prepareArrayFieldsForSave($hubSlotsValues);
-				$this->helper->saveHubSlotsToWF($hubSavedSlotsValues, $this->corpWikiId, $this->visualizationLang);
-				FlashMessages::put(wfMessage('manage-wikia-home-hubs-slot-success')->text());
+				$status = $this->helper->saveHubSlotsToWF($hubSavedSlotsValues, $this->corpWikiId, $this->visualizationLang);
+				if ( $status ) {
+					$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
+				} else {
+					$this->errorMsg = wfMessage('manage-wikia-home-hubs-slot-error')->text();
+				}
 			}
 		}
 
@@ -467,7 +471,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		foreach($formValues as $name => $fields) {
 			foreach($fields as $key => $field) {
-				$values[$key][$name] = $field;
+				$values[$key][$name] = trim($field);
 			}
 		}
 

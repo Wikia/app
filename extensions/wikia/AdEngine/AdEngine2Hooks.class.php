@@ -49,6 +49,21 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	static public function onInstantGlobalsGetVariables(array &$vars)
+	{
+		$vars[] = 'wgHighValueCountries';
+		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+
+		return true;
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
@@ -83,6 +98,9 @@ class AdEngine2Hooks {
 		if (!AdEngine2Service::areAdsInHead()) {
 			// Add ad asset to JavaScripts loaded on bottom (with regular JavaScripts)
 			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE);
+			array_splice($jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
+		} else {
+			array_splice($jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE);
 		}
 
 		if ($wgEnableRHonDesktop === false) {
@@ -118,6 +136,7 @@ class AdEngine2Hooks {
 	 */
 	static public function onWikiaSkinTopModules(&$scriptModules, $skin) {
 		if (AdEngine2Service::areAdsInHead() || AnalyticsProviderAmazonDirectTargetedBuy::isEnabled()) {
+			$scriptModules[] = 'wikia.instantGlobals';
 			$scriptModules[] = 'wikia.cookies';
 			$scriptModules[] = 'wikia.geo';
 			$scriptModules[] = 'wikia.window';
@@ -132,6 +151,16 @@ class AdEngine2Hooks {
 			$scriptModules[] = 'wikia.querystring';
 			$scriptModules[] = 'wikia.tracker';
 		}
+		return true;
+	}
+
+	public static function onWikiaMobileAssetsPackages(&$jsBodyPackages, &$jsExtensionPackages, &$scssPackages) {
+		global $wgAdDriverUseEbay;
+
+		if ($wgAdDriverUseEbay) {
+			$scssPackages[] = 'adengine2_ebay_scss_wikiamobile';
+		}
+
 		return true;
 	}
 }

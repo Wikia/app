@@ -102,12 +102,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			if ( $user->checkPassword( $this->password ) ) {
 				$this->wg->User = $user;
 
-				// Log user in
-				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
-
-				$result = $response->getVal( 'result', '' );
-
 				if ( $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) != null ){// Signup confirm
+					// Log user in manually
+					$this->wg->User->setCookies();
+					LoginForm::clearLoginToken();
+					UserLoginHelper::clearNotConfirmedUserSession();
+					$userLoginHelper->clearPasswordThrottle( $this->username );
 
 					// Confirm
 					UserLoginHelper::removeNotConfirmedFlag( $user );
@@ -127,7 +127,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						'$EDITPROFILEURL' => $user->getUserPage()->getFullURL(),
 						'$LEARNBASICURL' => 'http://community.wikia.com/wiki/Help:Wikia_Basics',
 						'$EXPLOREWIKISURL' => 'http://www.wikia.com',
-                    );
+					);
 
 					$userLoginHelper->sendEmail( $user, 'WelcomeMail', 'usersignup-welcome-email-subject', 'usersignup-welcome-email-body', $emailParams, 'welcome-email', 'WelcomeMail' );
 
@@ -143,6 +143,10 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 					return;
 
 				} else {// Email change
+					// Log user in through standard method
+					$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
+
+					$result = $response->getVal( 'result', '' );
 
 					$optionNewEmail = $this->wg->User->getOption( 'new_email' );
 					if ( !empty( $optionNewEmail ) ) {

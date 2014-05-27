@@ -1,6 +1,7 @@
 <?php
 
 class ThumbnailController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/**
 	 * Thumbnail Template
@@ -60,10 +61,6 @@ class ThumbnailController extends WikiaController {
 		$width = $this->getVal( 'width', 0 );
 		$height = $this->getVal( 'height', 0 );
 		$options = $this->getVal( 'options', array() );
-
-		// use mustache for template
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/thumbnailVideo.mustache' );
 
 		// default value
 		$linkAttribs = [];
@@ -223,8 +220,6 @@ class ThumbnailController extends WikiaController {
 	}
 
 	public function imgThumbnail() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/imgThumbnail.mustache' );
 		$this->response->setData( $this->request->getParams() );
 	}
 
@@ -239,9 +234,6 @@ class ThumbnailController extends WikiaController {
 	public function articleThumbnail() {
 		wfProfileIn( __METHOD__ );
 
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->response->getView()->setTemplatePath( dirname(__FILE__) . '/templates/mustache/articleThumbnail.mustache' );
-
 		$file = $this->getVal( 'file' );
 		$width = $this->getVal( 'outerWidth' );
 		$url = $this->getVal( 'url' );
@@ -254,18 +246,10 @@ class ThumbnailController extends WikiaController {
 
 		// only show titles for videos
 		$title = '';
-		$addedBy = '';
 		if ( $file instanceof File ) {
 			$isVideo = WikiaFileHelper::isVideoFile( $file );
 			if ( $isVideo ) {
 				$title = $file->getTitle()->getText();
-			}
-
-			// For oasis skin only. Remove picture attribution for thumbnails less than 100px
-			if ( $this->app->checkSkin( 'oasis' )
-				&& !empty( $this->wg->EnableOasisPictureAttribution )
-				&& $width > 99 ) {
-				$addedBy = ThumbnailHelper::getByUserMsg( $file, $isVideo );
 			}
 		}
 
@@ -273,9 +257,7 @@ class ThumbnailController extends WikiaController {
 		$this->title = $title;
 		$this->figureClass = $alignClass;
 		$this->url = $url;
-		$this->thumbnailMore = wfMessage( 'thumbnail-more' )->escaped();
 		$this->caption = $caption;
-		$this->addedBy = $addedBy;
 		$this->width = $width;
 
 		wfProfileOut( __METHOD__ );

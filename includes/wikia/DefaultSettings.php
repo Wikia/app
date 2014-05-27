@@ -531,13 +531,13 @@ include_once( "$IP/extensions/wikia/SpecialUnlockdb/SpecialUnlockdb.setup.php" )
 include_once( "$IP/extensions/wikia/WikiaWantedQueryPage/WikiaWantedQueryPage.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/imageServing.setup.php" );
 include_once( "$IP/extensions/wikia/ImageServing/Test/ImageServingTest.setup.php" );
-include_once( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 include_once( "$IP/extensions/wikia/VideoHandlers/VideoHandlers.setup.php" );
 include_once( "$IP/extensions/wikia/SpecialUnusedVideos/SpecialUnusedVideos.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
+include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1016,13 +1016,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Extension for running multiple version of Mediawiki
- */
-if( !isset( $wgUseMedusa ) ) {
-	$wgUseMedusa = false;
-}
-
-/**
  * Memcached class name
  */
 $wgMemCachedClass = 'MemcacheMoxiCluster';
@@ -1168,15 +1161,6 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountriesDefault
- * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
- * Main steering var, change this one.
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
-
-/**
  * @name $wgAmazonDirectTargetedBuyCountries
  * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
  * "Utility" var, don't change it here.
@@ -1215,6 +1199,12 @@ $wgAdDriverEnableRemnantGptMobile = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverUseEbay
+ * Whether to enable AdProviderEbay (true) or not (false)
+ */
+$wgAdDriverUseEbay = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
@@ -1241,13 +1231,6 @@ $wgAdDriverForceDirectGptAd = false;
 $wgAdDriverForceLiftiumAd = false;
 
 /**
- * @name $wgHighValueCountriesDefault
- * Default list of countries defined as high-value for revenue purposes
- * $wgHighValueCountries overrides this
- */
-$wgHighValueCountriesDefault = array('CA'=>3, 'DE'=>3, 'DK'=>3, 'ES'=>3, 'FI'=>3, 'FR'=>3, 'GB'=>3, 'IT'=>3, 'NL'=>3, 'NO'=>3, 'SE'=>3, 'UK'=>3, 'US'=>3);
-
-/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
@@ -1259,18 +1242,6 @@ $wgHighValueCountries = null;
  * Enables page-level video ad targeting
  */
 $wgAdVideoTargeting = false;
-
-/**
- * @name $wgAdDriverUseGptMobile
- * Enables experimental AdEngine on mobile skin (for GPT)
- */
-$wgAdDriverUseGptMobile = true;
-
-/**
- * @name $wgAdDriverUseGptMobileDisabledInLangs
- * Disable wgAdDriverUseGptMobile if wiki is this language
- */
-$wgAdDriverUseGptMobileDisabledInLangs = [];
 
 /**
  * trusted proxy service registry

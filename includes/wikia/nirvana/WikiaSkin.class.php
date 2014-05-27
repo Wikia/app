@@ -189,6 +189,8 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
+		$scripts .= $this->renderTopShortTTLModules();
+
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
 		wfrunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
@@ -203,6 +205,30 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 
 		return self::makeInlineVariablesScript($vars) . $scripts;
+	}
+
+	/**
+	 * Load ResourceLoader modules that have a short caching time
+	 *
+	 * Used by AbTesting and InstantGlobals
+	 *
+	 * @return string
+	 * @author macbre
+	 */
+	protected function renderTopShortTTLModules() {
+		$shortTtlScriptModules = [];
+
+		wfRunHooks( 'WikiaSkinTopShortTTLModules', [ &$shortTtlScriptModules, $this ] );
+
+		if ( !empty($shortTtlScriptModules) ) {
+			$scripts = ResourceLoader::makeCustomLink( $this->wg->out, $shortTtlScriptModules, 'scripts' ) . "\n";
+		}
+		else {
+			$scripts = '';
+		}
+
+		return $scripts;
+
 	}
 
 	// expose protected methods from Skin object
