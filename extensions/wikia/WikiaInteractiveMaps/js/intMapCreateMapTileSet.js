@@ -66,7 +66,7 @@ define(
 			// image upload entry point
 			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
 			// stack for holding choose tile set steps
-			stack = [],
+			stepsStack = [],
 			// cached selectors
 			$sections;
 
@@ -101,7 +101,7 @@ define(
 			// cache selectors
 			$sections = modal.$innerContent.children();
 
-			showStep(stack.pop());
+			showStep(stepsStack.pop());
 		}
 
 		/**
@@ -110,7 +110,7 @@ define(
 		 */
 
 		function addToStack(step) {
-			stack.push(step);
+			stepsStack.push(step);
 		}
 
 		/**
@@ -145,9 +145,9 @@ define(
 
 		function previousStep() {
 			// removes current step from stack
-			stack.pop();
+			stepsStack.pop();
 
-			showStep(stack.pop());
+			showStep(stepsStack.pop());
 		}
 
 		/**
