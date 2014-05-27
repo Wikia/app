@@ -359,6 +359,9 @@ abstract class BaseRssModel extends WikiaService {
 					if ( $orgItem[ 'description' ] ) {
 						$item[ 'description' ] = $orgItem[ 'description' ];
 					}
+					if ( $orgItem[ 'timestamp' ] ) {
+						$item[ 'timestamp' ] = $orgItem[ 'timestamp' ];
+					}
 				}
 
 				$data[ $item[ 'url' ] ] = $item;
