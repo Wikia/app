@@ -32,7 +32,7 @@ class AdEngine2Hooks {
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 
-		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
+		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 
 		return true;
 	}
