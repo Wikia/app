@@ -68,6 +68,7 @@ define(
 				utils.bindEvents(modal, events);
 
 				// init modal steps
+				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1]);
 				preview.init(modal, templates[2]);
 
