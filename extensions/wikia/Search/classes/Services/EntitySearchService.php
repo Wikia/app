@@ -2,6 +2,7 @@
 
 namespace Wikia\Search\Services;
 
+use Solarium_Result_Select;
 use Wikia\Search\Query\Select;
 use Wikia\Search\QueryService\Factory;
 use WikiFactory;
@@ -16,6 +17,7 @@ class EntitySearchService {
 	private $quality;
 	private $wikiId;
 	private $namespace;
+	private $hubs;
 
 	public function __construct( $client = null ) {
 		$config = $this->getConfig();
@@ -70,12 +72,25 @@ class EntitySearchService {
 		$this->namespace = $namespace;
 	}
 
+	public function getHubs() {
+		return $this->hubs;
+	}
+
+	public function setHubs( $hubs ) {
+		$this->hubs = $hubs;
+	}
+
+
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		return $select;
 	}
 
+	/**
+	 * @param Solarium_Result_Select $response Search response
+	 * @return mixed
+	 */
 	protected function consumeResponse( $response ) {
 		return $response;
 	}
