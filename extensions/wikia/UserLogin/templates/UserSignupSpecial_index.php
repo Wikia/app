@@ -26,7 +26,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'signupToken',
-				'value' => $signupToken
+				'value' => Sanitizer::encodeAttribute( $signupToken ),
 			),
 			array( //fake username field (not in use)
 				'type' => 'hidden',

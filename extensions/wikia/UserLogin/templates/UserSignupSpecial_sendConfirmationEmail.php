@@ -13,7 +13,7 @@
 		<fieldset>
 			<div class="input-group">
 				<input type="hidden" name="action" value="resendconfirmation">
-				<input type="hidden" name="username" value="<?=$username?>">
+				<input type="hidden" name="username" value="<?= Sanitizer::encodeAttribute( $username ); ?>">
 				<input type="submit" value="<?= wfMessage('usersignup-confirm-email-resend-email')->escaped() ?>" class="link">
 			</div>
 		</fieldset>

@@ -87,43 +87,9 @@ td.mw-label {
 	}
 }
 
-//all below is about fixing slideshow and gallery
-.wikia-slideshow-popout-prev-next {
-	display: block !important;
-}
-
-.wikia-slideshow-popout-images-wrapper {
-	margin: 0 auto !important;
-	width: 90% !important;
-}
-
-.wikia-slideshow-popout-caption-wrapper {
-	height: 45px;
-}
-
-@media ( orientation: landscape ) {
-	.modalWrapper.wikia-slideshow-popout {
-		height: 97% !important;
-		width: 95% !important;
-		.wikia-slideshow-popout-images-wrapper {
-			height: 340px !important;
-		}
-		.wikia-slideshow-popout-prev-next {
-			top: 130px !important;
-		}
-	}
-}
-
-@media ( orientation: portrait ) {
-	.modalWrapper.wikia-slideshow-popout {
-		left: 10px !important;
-		margin-left: 0 !important;
-		width: 90%!important;
-		#wikia-slideshow-popout-images-wrapper {
-			height: 700px !important;
-		}
-		.wikia-slideshow-popout-prev-next {
-			top: 350px !important;
-		}
+// Play buttons should always show on touch-enabled devices
+.video-thumbnail.hide-play {
+	.play-circle {
+		display: block;
 	}
 }
