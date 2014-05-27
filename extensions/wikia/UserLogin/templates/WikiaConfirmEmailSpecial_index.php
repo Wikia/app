@@ -10,7 +10,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'code',
-				'value' => $code
+				'value' => Sanitizer::encodeAttribute( $code ),
 			),
 			array(
 				'type' => 'hidden',
