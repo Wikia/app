@@ -657,11 +657,15 @@ class SQL {
 		return call_user_func_array([$this, 'VALUE'], func_get_args());
 	}
 
-	public function SET($field, $value) {
-		$set = new Set($field, $value);
+	public function SET($field, $value, $isSql=false) {
+		$set = new Set($field, $value, $isSql);
 		$this->set []= $set;
 
 		return $this->called($set);
+	}
+
+	public function SET_RAW($field, $sql) {
+		return $this->SET($field, $sql, true);
 	}
 
 	public function WHERE($column) {

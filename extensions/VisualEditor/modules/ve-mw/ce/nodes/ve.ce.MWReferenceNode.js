@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWReferenceNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -26,6 +26,7 @@ ve.ce.MWReferenceNode = function VeCeMWReferenceNode( model, config ) {
 	ve.ce.FocusableNode.call( this );
 	ve.ce.ProtectedNode.call( this );
 	ve.ce.RelocatableNode.call( this );
+	ve.ce.ClickableNode.call( this );
 
 	// DOM changes
 	this.$link = this.$( '<a>' ).attr( 'href', '#' );
@@ -48,12 +49,15 @@ OO.inheritClass( ve.ce.MWReferenceNode, ve.ce.LeafNode );
 OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.FocusableNode );
 OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.ProtectedNode );
 OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.RelocatableNode );
+OO.mixinClass( ve.ce.MWReferenceNode, ve.ce.ClickableNode );
 
 /* Static Properties */
 
 ve.ce.MWReferenceNode.static.name = 'mwReference';
 
 ve.ce.MWReferenceNode.static.tagName = 'sup';
+
+ve.ce.MWReferenceNode.static.primaryCommandName = 'reference';
 
 /* Methods */
 
@@ -92,12 +96,7 @@ ve.ce.MWReferenceNode.prototype.onInternalListUpdate = function ( groupsChanged 
  * @method
  */
 ve.ce.MWReferenceNode.prototype.update = function () {
-	var listIndex = this.model.getAttribute( 'listIndex' ),
-		listGroup = this.model.getAttribute( 'listGroup' ),
-		refGroup = this.model.getAttribute( 'refGroup' ),
-		position = this.internalList.getIndexPosition( listGroup, listIndex );
-
-	this.$link.text( '[' + ( refGroup ? refGroup + ' ' : '' ) + ( position + 1 ) + ']' );
+	this.$link.text( this.model.getIndexLabel() );
 };
 
 /** */

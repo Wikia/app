@@ -20,6 +20,7 @@ class SearchApiController extends WikiaApiController {
 
 	const PARAMETER_NAMESPACES = 'namespaces';
 	const MIN_ARTICLE_QUALITY_PARAM_NAME = 'minArticleQuality';
+	const DEFAULT_MIN_ARTICLE_QUALITY = 80;
 
 	protected $allowedHubs = [ 'Gaming' => true, 'Entertainment' => true, 'Lifestyle' => true ];
 
@@ -80,9 +81,14 @@ class SearchApiController extends WikiaApiController {
 			$params = $this->getDetailsParams();
 		}
 
-		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		$responseValues = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( ['id', 'lang_s'], true );
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
 		$items = array();
-		foreach( $resultSet->getResults() as $result ) {
+		foreach( $responseValues['items'] as $result ) {
 			if ( $expand ) {
 				$items[] = $this->getWikiDetailsService()
 					->getWikiDetails( $result['id'], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
@@ -90,10 +96,12 @@ class SearchApiController extends WikiaApiController {
 				$items[] = [
 					'id' => (int) $result['id'],
 					'language' => $result['lang_s'],
-				];
+ 				];
 			}
 		}
-		$this->setResponseData( [ 'items' => $items ], 'image' );
+		$responseValues['items'] = $items;
+
+		$this->setResponseData($responseValues, 'image');
 	}
 
 	/**
@@ -103,7 +111,6 @@ class SearchApiController extends WikiaApiController {
 	 * @requestParam string[] $langs [OPTIONAL] list of characters
 	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
 	 * @requestParam string[] $namespaces [OPTIONAL] list of namespaces to filter by
-	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
 	 * @requestParam integer $limit [OPTIONAL] The number of items
 	 *
 	 * @responseParam array $result contains list of wikias results and articles results.
@@ -119,10 +126,8 @@ class SearchApiController extends WikiaApiController {
 		if ( $this->request->getVal( 'lang' ) ) {
 			throw new InvalidParameterApiException( 'lang' );
 		}
-		$minArticleQuality = null;
-		if ( $this->request->getVal(self::MIN_ARTICLE_QUALITY_PARAM_NAME) != null ) {
-			$minArticleQuality = $this->request->getInt( self::MIN_ARTICLE_QUALITY_PARAM_NAME );
-		}
+		$minArticleQuality = $this->request->getVal(self::MIN_ARTICLE_QUALITY_PARAM_NAME, self::DEFAULT_MIN_ARTICLE_QUALITY);
+
 		$hubs = $this->request->getArray( 'hubs' );
 		foreach ( $hubs as $hub ) {
 			if ( !isset( $this->allowedHubs[ $hub ] ) ) {

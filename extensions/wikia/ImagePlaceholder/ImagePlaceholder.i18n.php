@@ -300,6 +300,14 @@ $messages['ja'] = array(
 	'imgplc-notinhistory' => '履歴表示モードでは画像を追加できません。',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'imgplc-add-image' => 'ಚಿತ್ರಗಳನ್ನು ಸೇರಿಸು',
+	'imgplc-image' => 'ಚಿತ್ರ',
+);
+
 /** Korean (한국어)
  * @author 아라
  * @author 한글화담당
@@ -471,8 +479,8 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'imgplc-add-image' => 'انځور ورګډول',
-	'imgplc-add-video' => 'ويډيو ورګډول',
+	'imgplc-add-image' => 'انځور ورگډول',
+	'imgplc-add-video' => 'ويډيو ورگډول',
 	'imgplc-image' => 'انځور',
 );
 

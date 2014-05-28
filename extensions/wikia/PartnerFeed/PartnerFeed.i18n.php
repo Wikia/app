@@ -202,7 +202,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
-	'partner-feed-earned-badges' => 'Logros recientemente ganados para una wiki específica',
+	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
 	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
@@ -371,6 +371,13 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -405,6 +412,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
+	'partner-feed-recent-changes' => 'آلشتیا تازه باو',
 	'feed-title-recent-images' => 'عسکیا تازه باو',
 	'feed-title-recentchanges' => 'آلشتیا تازه باو',
 );
@@ -628,6 +636,7 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Cainamarques
  * @author Giro720
  */
 $messages['pt-br'] = array(
@@ -640,7 +649,7 @@ $messages['pt-br'] = array(
 	'partner-feed-recent-changes' => 'Mudanças recentes',
 	'partnerfeed' => 'Feed de um parceiro',
 	'error-no-article' => 'Erro: Não foi passado o parâmetro "article"',
-	'feed-title-blogposts' => 'Entradas recentes em blogues',
+	'feed-title-blogposts' => 'Posts recentes em blogues',
 	'feed-title-recent-badges' => 'Condecorações recentes',
 	'feed-title-recent-images' => 'Imagens recentes',
 	'feed-title-leaderboard' => 'Liderança de medalhas',
@@ -650,6 +659,7 @@ $messages['pt-br'] = array(
 	'feed-title-hot-content' => 'Conteúdo popular - $1',
 	'feed-title-blogcomments' => 'Comentários em $1',
 	'feed-title-recentchanges' => 'Mudanças recentes',
+	'partner-feed-error-no-blogpost-found' => '<b>Error:</b> O post $1 não existe.',
 );
 
 /** tarandíne (tarandíne)

@@ -40,9 +40,6 @@ class SassUtil {
 		// Should be last so it can override wgOasisGrid
 		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
 			$params['widthType'] = 2;
-			if ( BodyController::isLimitedResponsiveLayoutEnabled() ) {
-				$params['limitFluid'] = 1;
-			}
 		}
 
 		return $params;
@@ -98,6 +95,8 @@ class SassUtil {
 			if($wgContLang && $wgContLang->isRTL()){
 				$oasisSettings['rtl'] = 'true';
 			}
+
+			wfRunHooks( 'AfterOasisSettingsInitialized', [ &$oasisSettings ] );
 
 			// RT:70673
 			foreach ($oasisSettings as $key => $val) {

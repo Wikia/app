@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
@@ -46,6 +47,7 @@ $messages['en'] = array(
 
 	// confirm email
 	'usersignup-confirm-page-title' => 'Confirm your email',
+	'usersignup-confirm-page-title-wikiamobile' => 'Check your email',
 	'usersignup-confirm-email-resend-email' => "Send me another confirmation email",
 	'usersignup-confirm-email-change-email-content' => "I want to use a different email address.",
 	'usersignup-confirm-email-change-email' => 'Change my email address',
@@ -59,11 +61,15 @@ $messages['en'] = array(
 
 	// confirmation email
 	'usersignup-confirmation-heading' => 'Almost there',
+	'usersignup-confirmation-heading-wikiamobile' => 'Check your email',
 	'usersignup-confirmation-heading-email-resent' => 'New email sent',
 	'usersignup-confirmation-subheading' => 'Check your email',
 	'usersignup-confirmation-email-sent' => "We sent an email to '''$1'''.
 
 Click the confirmation link in your email to finish creating your account.",  // intentional line break
+	'usersignup-confirmation-email-sent-wikiamobile' => "We sent an email to '''$1'''.
+
+Click the confirmation link in your email to finish creating your account. Thanks!",
 	'usersignup-confirmation-email_subject' => 'Almost there! Confirm your Wikia account',
 	'usersignup-confirmation-email-greeting' => 'Hi $USERNAME,',
 	'usersignup-confirmation-email-content' => 'You\'re one step away from creating your account on Wikia! Click the link below to confirm your email address and get started.
@@ -246,6 +252,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  */
 $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
+	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
@@ -278,6 +285,7 @@ $messages['qqq'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Alert that user's email is unconfirmed, and the email has already been sent.",
 	'usersignup-user-pref-confirmemail_noemail' => 'Alert that email has not been entered.  Instructs and links user to Special:Preferences.',
 	'usersignup-confirm-page-title' => 'Confirm page title.  This page is displayed after initially submitting the account information from Special:UserSignup.',
+	'usersignup-confirm-page-title-wikiamobile' => 'Page title for Special:UserSignup on mobile skin',
 	'usersignup-confirm-email-resend-email' => 'Action link to resend email.',
 	'usersignup-confirm-email-change-email-content' => 'Change email heading.',
 	'usersignup-confirm-email-change-email' => 'Action link to open a dialog to change email.',
@@ -294,6 +302,7 @@ Tooltip letting user know they can change their email.  Tooltip is on the same l
 	'usersignup-confirmation-heading-email-resent' => 'Confirm page heading when email has been re-sent.',
 	'usersignup-confirmation-subheading' => 'Confirm page sub heading.',
 	'usersignup-confirmation-email-sent' => 'Confirm page action validation stating email has been sent to $1 e-mail address.  Bold $1, and leave a purposeful line break between line 1 and line 2.',
+	'usersignup-confirmation-email-sent-wikiamobile' => 'Confirm page action validation stating email has been sent to $1 e-mail address on mobile skin.',
 	'usersignup-confirmation-email_subject' => 'Confirmation email subject',
 	'usersignup-confirmation-email-greeting' => 'Confirmation email template greeting.',
 	'usersignup-confirmation-email-content' => 'Confirmation email template body content.  $CONFIRMURL is full url to goto confirm email, and is displayed as-is.',
@@ -901,10 +910,12 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
 	'usersignup-page-title' => 'Wikia beitreten',
+	'usersignup-page-title-wikiamobile' => 'Benutzerkonto erstellen',
 	'usersignup-page-captcha-label' => 'Spam-Schutz:',
 	'usersignup-error-username-length' => 'Der Benutzername darf nicht länger als {{PLURAL:$1|ein Zeichen|$1 Zeichen}} sein.',
 	'usersignup-error-invalid-user' => 'Ungültiger Benutzer. Bitte zuerst anmelden.',
@@ -933,6 +944,7 @@ $messages['de'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Deine Mail-Adresse ist nicht bestätigt. Du solltest eine E-Mail mit Bestätigungslink zum Draufklicken erhalten haben.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Offenbar haben wir deine E-Mail-Adresse nicht. Bitte gib in deinen [[Special:Preferences|Nutzereinstellungen]] eine ein.',
 	'usersignup-confirm-page-title' => 'Mail-Adresse bestätigen',
+	'usersignup-confirm-page-title-wikiamobile' => 'Überprüfe deine E-Mails',
 	'usersignup-confirm-email-resend-email' => 'Mir eine neue Bestätigungsmail senden',
 	'usersignup-confirm-email-change-email-content' => 'Ich möchte eine andere E-mail-Adresse verwenden.',
 	'usersignup-confirm-email-change-email' => 'E-Mail-Adresse ändern',
@@ -944,11 +956,15 @@ $messages['de'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Glückwunsch!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Bereits bestätigt',
 	'usersignup-confirmation-heading' => 'Beinahe fertig',
+	'usersignup-confirmation-heading-wikiamobile' => 'Überprüfe deine E-Mails',
 	'usersignup-confirmation-heading-email-resent' => 'Neue E-Mail versandt',
 	'usersignup-confirmation-subheading' => 'Sieh in deinen Mails',
 	'usersignup-confirmation-email-sent' => "Wir haben eine Mail an '''$1''' versandt.
 
 Klicke den Bestätigungslink in deiner E-Mail, um das Anlegen des Benutzerkontos abzuschließen.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Wir haben eine E-Mail an '''$1''' versandt.
+
+Klicke auf den Bestätigungslink in deiner E-Mail, um die Erstellung deines Benutzerkontos abzuschließen. Danke!",
 	'usersignup-confirmation-email_subject' => 'Beinahe fertig! Bestätige dein Wikia-Konto',
 	'usersignup-confirmation-email-greeting' => 'Hallo $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Der letzte Schritt beim Erstellen deines Wikia-Accounts! Klicke den unteren Link zur Bestätigung deiner Mail-Adresse und du kannst loslegen.
@@ -1136,14 +1152,16 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
+ * @author Fitoschido
  * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'usersignup-page-title' => 'Únete a Wikia',
+	'usersignup-page-title-wikiamobile' => 'Crear una cuenta',
 	'usersignup-page-captcha-label' => 'Palabra borrosa',
 	'usersignup-error-username-length' => 'Vaya, tu nombre no puede ser más de {{PLURAL:$1|un caracter|$1 caracteres}}.',
-	'usersignup-error-invalid-user' => 'Usuario inválido. Por favor identifícate primero.',
+	'usersignup-error-invalid-user' => 'El usuario no es válido. Inicia sesión primero.',
 	'usersignup-error-invalid-email' => 'Por favor escribe una dirección de correo electrónico válida.',
 	'usersignup-error-symbols-in-username' => 'Vaya, tu nombre de usuario sólo puede contener letras y números.',
 	'usersignup-error-empty-email' => 'Vaya, por favor escribe tu dirección de correo electrónico.',
@@ -1169,6 +1187,7 @@ $messages['es'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => '¡Oh, no! Tu correo electrónico no está confirmado. Hemos enviado un correo electrónico, haz clic en el enlace de confirmación para confirmar.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Parece que no tenemos una dirección de correo electrónico para ti. Ve a tus [[Special:Preferences|preferencias]] para ingresar uno.',
 	'usersignup-confirm-page-title' => 'Confirma tu correo electrónico',
+	'usersignup-confirm-page-title-wikiamobile' => 'Revisa tu correo electrónico',
 	'usersignup-confirm-email-resend-email' => 'Enviarme otra confirmación de correo electrónico',
 	'usersignup-confirm-email-change-email-content' => 'Quiero usar una dirección de correo electrónico diferente.',
 	'usersignup-confirm-email-change-email' => 'Cambiar mi correo electrónico',
@@ -1180,6 +1199,7 @@ $messages['es'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => '¡Felicitaciones!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Ya estás confirmado',
 	'usersignup-confirmation-heading' => '¡Ya casi!',
+	'usersignup-confirmation-heading-wikiamobile' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-heading-email-resent' => 'Nuevo correo electrónico enviado',
 	'usersignup-confirmation-subheading' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-email-sent' => "Hemos enviado un correo electrónico a '''$1'''.
@@ -1451,6 +1471,7 @@ Haluatko määrittää mitä sähköpostia saat? Mene osoitteeseen: {{fullurl:{{
  */
 $messages['fr'] = array(
 	'usersignup-page-title' => 'Rejoindre Wikia',
+	'usersignup-page-title-wikiamobile' => 'Créer un compte',
 	'usersignup-page-captcha-label' => 'Mot flou',
 	'usersignup-error-username-length' => "Oups, votre nom d'utilisateur ne peut pas dépasser {{PLURAL:$1|un caractère|$1 caractères}}.",
 	'usersignup-error-invalid-user' => "Utilisateur non valide. Veuillez d'abord vous connecter.",
@@ -1479,6 +1500,7 @@ $messages['fr'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, non ! Votre adresse de courriel n’est pas confirmée. Nous vous avons envoyé un courriel, cliquez sur le lien de confirmation qui s'y trouve pour la confirmer.",
 	'usersignup-user-pref-confirmemail_noemail' => "Il semblerait que nous n'ayons pas d’adresse de courriel pour vous. Allez dans les [[Special:Preferences|préférences utilisateur]] pour en saisir une.",
 	'usersignup-confirm-page-title' => 'Confirmez votre adresse de courriel',
+	'usersignup-confirm-page-title-wikiamobile' => 'Vérifier votre courriel',
 	'usersignup-confirm-email-resend-email' => "M'envoyer un autre courriel de confirmation",
 	'usersignup-confirm-email-change-email-content' => 'Je veux utiliser une autre adresse de messagerie.',
 	'usersignup-confirm-email-change-email' => 'Changer mon adresse de courriel',
@@ -1490,11 +1512,15 @@ $messages['fr'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Félicitations !',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Vous êtes déjà confirmé',
 	'usersignup-confirmation-heading' => 'Ça y est presque',
+	'usersignup-confirmation-heading-wikiamobile' => 'Vérifier votre courriel',
 	'usersignup-confirmation-heading-email-resent' => 'Nouveau courriel envoyé',
 	'usersignup-confirmation-subheading' => 'Vérifiez votre courriel',
 	'usersignup-confirmation-email-sent' => "Nous avons envoyé un courriel à '''$1'''.
 
 Cliquez sur le lien de confirmation dans votre courriel pour terminer la création de votre compte.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Nous avons envoyé un courriel à '''$1'''.
+
+Cliquez sur le lien de confirmation dans votre courriel pour terminer la création de votre compte. Merci !",
 	'usersignup-confirmation-email_subject' => 'Ça y est presque ! Confirmez votre compte Wikia',
 	'usersignup-confirmation-email-greeting' => 'Bonjour $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Vous êtes à la dernière étape de la création de votre compte sur Wikia ! Cliquez sur le lien ci-dessous pour confirmer votre adresse de courriel et commencer.
@@ -2373,6 +2399,7 @@ ___________________________________________
  */
 $messages['krc'] = array(
 	'usersignup-facebook-create-account' => 'Аккаунт къурау',
+	'usersignup-confirm-email-update' => 'Джангырт',
 );
 
 /** Macedonian (македонски)
@@ -2588,6 +2615,7 @@ ___________________________________________
  */
 $messages['ms'] = array(
 	'usersignup-page-title' => 'Sertai Wikia',
+	'usersignup-page-title-wikiamobile' => 'Buka akaun',
 	'usersignup-page-captcha-label' => 'Kata Kabur',
 	'usersignup-error-username-length' => 'Maaf, nama pengguna anda tidak boleh melebihi {{PLURAL:$1|satu aksara|$1 aksara}}.',
 	'usersignup-error-invalid-user' => 'Pengguna tidak sah. Sila log masuk terlebih dahulu.',
@@ -2616,6 +2644,7 @@ $messages['ms'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Maaf! E-mel anda belum disahkan. Kami telah menghantar e-mel kepada anda; klik pautan pengesahan di dalamnya untuk membuat pengesahan.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Nampaknya kami tidak tahu alamat e-mel anda. Pergi ke [[Special:Preferences|keutamaan pengguna]] untuk menyatakan alamat e-mel anda.',
 	'usersignup-confirm-page-title' => 'Sahkan alamat e-mel anda',
+	'usersignup-confirm-page-title-wikiamobile' => 'Semak e-mel anda',
 	'usersignup-confirm-email-resend-email' => 'Hantarkan saya satu lagi e-mel pengesahan',
 	'usersignup-confirm-email-change-email-content' => 'Saya hendak menggunakan alamat e-mel yang lain.',
 	'usersignup-confirm-email-change-email' => 'Tukar alamat e-mel saya',
@@ -2627,11 +2656,15 @@ $messages['ms'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Syabas!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Anda telah pun disahkan',
 	'usersignup-confirmation-heading' => 'Hampir siap',
+	'usersignup-confirmation-heading-wikiamobile' => 'Semak e-mel anda',
 	'usersignup-confirmation-heading-email-resent' => 'E-mel baru dihantar',
 	'usersignup-confirmation-subheading' => 'Semak e-mel anda',
 	'usersignup-confirmation-email-sent' => "Kami telah menghantar e-mel kepada '''$1'''.
 
 Klik pautan pengesahan dalam e-mel anda untuk menyiapkan pembukaan akaun anda.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Kami telah mengirim e-mel ke '''$1'''.
+
+Klik pautan pengesahan pada e-mel anda untuk melengkapkan pembukaan akaun anda. Terima kasih.",
 	'usersignup-confirmation-email_subject' => 'Hampir siap! Sahkan akaun Wikia anda',
 	'usersignup-confirmation-email-greeting' => '$USERNAME,',
 	'usersignup-confirmation-email-content' => 'Hanya tinggal selangkah lagi untuk anda membuka akaun di Wikia! Klik pautan di bawah untuk mengesahkan alamat e-mel anda dan mulakan.
@@ -3206,10 +3239,12 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 );
 
 /** Polish (polski)
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
 	'usersignup-page-title' => 'Dołącz do Wikii',
+	'usersignup-page-title-wikiamobile' => 'Załóż nowe konto',
 	'usersignup-page-captcha-label' => 'Zamazany tekst',
 	'usersignup-error-username-length' => 'Twoja nazwa użytkownika nie może mieć więcej niż {{PLURAL:$1|jeden znak|$1 znaków}}.',
 	'usersignup-error-invalid-user' => 'Niewłaściwy użytkownik. Zaloguj się.',
@@ -3252,6 +3287,9 @@ $messages['pl'] = array(
 	'usersignup-confirmation-heading-email-resent' => 'Wysłano nową wiadomość',
 	'usersignup-confirmation-subheading' => 'Sprawdź swoją skrzynkę e-mailową',
 	'usersignup-confirmation-email-sent' => "Wysłano wiadomość na adres '''$1'''.
+
+Kliknij na link potwierdzający w niej aby ukończyć tworzenie konta.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Wysłano wiadomość na adres '''$1'''.
 
 Kliknij na link potwierdzający w niej aby ukończyć tworzenie konta.",
 	'usersignup-confirmation-email_subject' => 'Potwierdź swoje konto na Wikii',
@@ -3736,9 +3774,11 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'usersignup-page-title' => 'Присоединиться к Викия',
+	'usersignup-page-title-wikiamobile' => 'Создать учётную запись',
 	'usersignup-page-captcha-label' => 'Blurry Word',
 	'usersignup-error-username-length' => 'К сожалению, имя участника не может быть больше {{PLURAL:$1|одного символа|$1 символов}}.',
 	'usersignup-error-invalid-user' => 'Недопустимое имя. Пожалуйста войдите снова.',
@@ -3767,6 +3807,7 @@ $messages['ru'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Адрес вашей электронной почты не подтверждён. Мы отправили вам письмо, в котором вам надо нажать на ссылку, чтобы подтвердить свой email.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Похоже, у нас нет адреса вашей электронной почты. Перейдите в [[Special:Preferences|личные настройки]], чтобы добавить его.',
 	'usersignup-confirm-page-title' => 'Подтвердите адрес своей электронной почты',
+	'usersignup-confirm-page-title-wikiamobile' => 'Проверьте свою электронную почту',
 	'usersignup-confirm-email-resend-email' => 'Пришлите мне ещё одно подтверждение email',
 	'usersignup-confirm-email-change-email-content' => 'Я хочу использовать другой адрес электронной почты.',
 	'usersignup-confirm-email-change-email' => 'Изменить адрес электронной почты',
@@ -3778,11 +3819,15 @@ $messages['ru'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Поздравляем!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Вы уже подтвердили',
 	'usersignup-confirmation-heading' => 'Почти готово',
+	'usersignup-confirmation-heading-wikiamobile' => 'Проверьте свою электронную почту',
 	'usersignup-confirmation-heading-email-resent' => 'Новое письмо отправлено',
 	'usersignup-confirmation-subheading' => 'Проверьте свою электронную почту',
 	'usersignup-confirmation-email-sent' => "Мы направили письмо на адрес '''$1'''.
 
 Нажмите на ссылку подтверждения в письме, чтобы завершить создание учётной записи.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Мы направили письмо на адрес '''$1'''.
+
+Нажмите на ссылку подтверждения в письме, чтобы завершить создание учётной записи. Спасибо!",
 	'usersignup-confirmation-email_subject' => 'Почти готово! Подтвердите вашу учётную запись Викия',
 	'usersignup-confirmation-email-greeting' => 'Привет, $USERNAME',
 	'usersignup-confirmation-email-content' => 'Ты в одном шаге от создания учётной записи на Викия! Нажми на ссылку ниже, чтобы подтвердить свой адрес электронной почты и начать.
@@ -3947,6 +3992,7 @@ ___________________________________________
  */
 $messages['sv'] = array(
 	'usersignup-page-title' => 'Gå med i Wikia',
+	'usersignup-page-title-wikiamobile' => 'Skapa konto',
 	'usersignup-page-captcha-label' => 'Suddigt ord',
 	'usersignup-error-username-length' => 'Hoppsan, ditt användarnamn kan inte vara mer än {{PLURAL:$1|ett tecken|$1 tecken}}.',
 	'usersignup-error-invalid-user' => 'Ogiltig användare. Var god logga in först.',
@@ -3975,6 +4021,7 @@ $messages['sv'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Ånej! Din e-postadress är obekräftad. Vi har skickat ett e-postmeddelande till dig. Klicka på bekräftelselänken för att bekräfta.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Det ser ut som vi inte har en e-postadress för dig. Gå till [[Special:Preferences|användarinställningar]] för att ange ett.',
 	'usersignup-confirm-page-title' => 'Bekräfta din e-postadress',
+	'usersignup-confirm-page-title-wikiamobile' => 'Kontrollera din e-postadress',
 	'usersignup-confirm-email-resend-email' => 'Skicka mig en till e-postbekräftelse',
 	'usersignup-confirm-email-change-email-content' => 'Jag vill använda en annan e-postadress.',
 	'usersignup-confirm-email-change-email' => 'Ändra min e-postadress',
@@ -3986,11 +4033,15 @@ $messages['sv'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Gratulerar!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Du är redan bekräftat',
 	'usersignup-confirmation-heading' => 'Nästan klar',
+	'usersignup-confirmation-heading-wikiamobile' => 'Kontrollera din e-postadress',
 	'usersignup-confirmation-heading-email-resent' => 'Ny e-post skickad',
 	'usersignup-confirmation-subheading' => 'Kontrollera din e-post',
 	'usersignup-confirmation-email-sent' => "Vi har skickat ett e-postmeddelande till '''$1'''.
 
 Klicka på bekräftelselänken i din e-post för att slutföra skapandet av ditt konto.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Vi har skickat ett e-postmeddelande till '''$1'''.
+
+Klicka på bekräftelselänken i din e-postmeddelande för att slutföra skapandet av ditt konto. Tack!",
 	'usersignup-confirmation-email_subject' => 'Nästan klar! Bekräfta ditt Wikia-konto',
 	'usersignup-confirmation-email-greeting' => 'Hej $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Du är ett steg bort från att skapa ditt konto på Wikia! Klicka på länken nedan för att bekräfta din e-postadress och komma igång.

@@ -72,7 +72,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			$hubParams,
 			$params['ts']
 		);
-
 		$structuredData = WikiaDataAccess::cache(
 			$this->getMemcacheKey($lastTimestamp, $this->skinName),
 			6 * 60 * 60,
@@ -164,12 +163,17 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	}
 
 	protected function getMemcacheKey( $timestamp, $skin ) {
+		$toolboxCacheKey = MarketingToolboxModel::CACHE_KEY;
+		if ( $this->getHubsVersion() === 3 ) {
+			$toolboxCacheKey = MarketingToolboxV3Model::CACHE_KEY;
+		}
 		return  wfSharedMemcKey(
-			MarketingToolboxModel::CACHE_KEY,
+			$toolboxCacheKey,
 			$timestamp,
 			$this->verticalId,
 			$this->langCode,
 			$this->getModuleId(),
+			$this->cityId,
 			$skin
 		);
 	}

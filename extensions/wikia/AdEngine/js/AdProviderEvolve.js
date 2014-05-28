@@ -1,13 +1,22 @@
-/*exported AdProviderEvolve*/
 /*jshint maxparams: false*/
 /*jshint maxlen:false*/
 /*jshint quotmark:false*/
-
-var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log, window, document, Krux, evolveHelper, slotTweaker) {
+/*global define*/
+define('ext.wikia.adEngine.provider.evolve', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'wikia.scriptwriter',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.adLogicPageParamsLegacy',
+	'ext.wikia.adEngine.krux',
+	'ext.wikia.adEngine.evolveHelper',
+	'ext.wikia.adEngine.evolveSlotConfig'
+], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper, evolveSlotConfig) {
 	'use strict';
 
 	var slotMap,
-		logGroup = 'AdProviderEvolve',
+		logGroup = 'ext.wikia.adEngine.provider.evolve',
 		ord = Math.round(Math.random() * 23456787654),
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
@@ -15,18 +24,11 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 		iface,
 		undef;
 
-	slotMap = {
-		'HOME_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'HOME_TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'},
-		'HUB_TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'LEFT_SKYSCRAPER_2': {'tile': 3, 'size': '160x600'},
-		'TOP_LEADERBOARD': {'tile': 1, 'size': '728x90', 'dcopt': 'ist'},
-		'TOP_RIGHT_BOXAD': {'tile': 2, 'size': '300x250,300x600'}
-	};
+	slotMap = evolveSlotConfig.getConfig();
 
 	function hasEmbed(slot) {
 		log(['hasEmbed', slot], 5, logGroup);
-		var embedNo = slot.getElementsByTagName('embed').length;
+		var embedNo = slot.getElementsByTagName('embed').length || slot.getElementsByTagName('object').length;
 		log(['hasEmbed', slot, embedNo], 5, logGroup);
 		return !!embedNo;
 	}
@@ -74,8 +76,8 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
 			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
-			adLogicPageLevelParamsLegacy.getCustomKeyValues() +
-			adLogicPageLevelParamsLegacy.getKruxKeyValues();
+			adLogicPageParamsLegacy.getCustomKeyValues() +
+			adLogicPageParamsLegacy.getKruxKeyValues();
 	}
 
 	function getReskinAndSilverScript(slotname) {
@@ -112,7 +114,7 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 
 	// adapted for Evolve + simplified copy of AdConfig.DART.getUrl
 	function getUrl(slotname) {
-		log('getUrl ' + slotname, 5, 'AdProviderEvolve');
+		log('getUrl ' + slotname, 5, logGroup);
 
 		var url,
 			dcopt = slotMap[slotname].dcopt,
@@ -125,49 +127,49 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
-			adLogicPageLevelParamsLegacy.getDomainKV() +
-			adLogicPageLevelParamsLegacy.getHostnamePrefix() +
+			adLogicPageParamsLegacy.getDomainKV() +
+			adLogicPageParamsLegacy.getHostnamePrefix() +
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
 			'tile=' + tile + ';' +
 			'ord=' + ord + '?';
 
-		log(url, 7, 'AdProviderEvolve');
+		log(url, 7, logGroup);
 		return url;
 	}
 
 	function sanitizeSlotname(slotname) {
-		log('sanitizeSlotname', 5, 'AdProviderEvolve');
-		log(slotname, 5, 'AdProviderEvolve');
+		log('sanitizeSlotname', 5, logGroup);
+		log(slotname, 5, logGroup);
 
 		var re = new RegExp('[A-Z1-9_]+'),
 			out = re.exec(slotname),
 			undef;
 
-		log(out, 8, 'AdProviderEvolve');
+		log(out, 8, logGroup);
 
 		if (out) {
 			out = out[0];
 		}
 
 		if (slotMap[out] === undef) {
-			log('error, unknown slotname', 1, 'AdProviderEvolve');
+			log('error, unknown slotname', 1, logGroup);
 			out = '';
 		}
 
-		log(out, 7, 'AdProviderEvolve');
+		log(out, 7, logGroup);
 		return out;
 	}
 
 	function hop(slotname) {
-		log(['hop', slotname], 5, 'AdProviderEvolve');
+		log(['hop', slotname], 5, logGroup);
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
 	function fillInSlot(slotname, pSuccess, pHop) {
-		log('fillInSlot', 5, 'AdProviderEvolve');
-		log(slotname, 5, 'AdProviderEvolve');
+		log('fillInSlot', 5, logGroup);
+		log(slotname, 5, logGroup);
 
 		if (slotname === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
@@ -210,24 +212,16 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 				}
 
 				slotTweaker.addDefaultHeight(slotname);
-				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
+				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
 				pHop({method: '1x1'}, hopTo);
 			});
 		}
 	}
 
 	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, 'AdProviderEvolve');
+		log(['canHandleSlot', slotname], 5, logGroup);
 
-		if (slotMap[slotname]) {
-			return true;
-		}
-
-		if (slotname === slotForSkin) {
-			return true;
-		}
-
-		return false;
+		return evolveSlotConfig.canHandleSlot(slotname);
 	}
 
 	iface = {
@@ -245,4 +239,4 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, log
 	}
 
 	return iface;
-};
+});

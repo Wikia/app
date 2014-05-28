@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Iwan Novirion",
+			"Jagwar"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Maap, elemen ko indak dapek disuntiang jo VisualEditor",
+	"visualeditor-annotationbutton-bold-tooltip": "Taba",
+	"visualeditor-annotationbutton-italic-tooltip": "Miriang",
+	"visualeditor-annotationbutton-link-tooltip": "Pautan",
+	"visualeditor-clearbutton-tooltip": "Hapuih format",
+	"visualeditor-dialog-action-apply": "Tetapkan parubahan",
+	"visualeditor-dialog-action-cancel": "Batal",
+	"visualeditor-formatdropdown-format-heading1": "Judul tingkek 1",
+	"visualeditor-formatdropdown-format-heading2": "Judul tingkek 2",
+	"visualeditor-formatdropdown-format-heading3": "Judul tingkek 3",
+	"visualeditor-formatdropdown-format-heading4": "Judul tingkek 4",
+	"visualeditor-formatdropdown-format-heading5": "Judul tingkek 5",
+	"visualeditor-formatdropdown-format-heading6": "Judul tingkek 6",
+	"visualeditor-formatdropdown-format-paragraph": "Paragrap",
+	"visualeditor-formatdropdown-format-preformatted": "Taformat",
+	"visualeditor-formatdropdown-title": "Ubah format",
+	"visualeditor-historybutton-redo-tooltip": "Ulang",
+	"visualeditor-historybutton-undo-tooltip": "Batal",
+	"visualeditor-indentationbutton-indent-tooltip": "Tambah inden",
+	"visualeditor-indentationbutton-outdent-tooltip": "Kurangi inden",
+	"visualeditor-inspector-close-tooltip": "Tutuik",
+	"visualeditor-inspector-remove-tooltip": "Hapuih",
+	"visualeditor-linkinspector-title": "Hyperlink",
+	"visualeditor-listbutton-bullet-tooltip": "Daftar poin",
+	"visualeditor-listbutton-number-tooltip": "Daftar banomor"
+}

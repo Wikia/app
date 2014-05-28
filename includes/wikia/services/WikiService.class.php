@@ -11,13 +11,10 @@ class WikiService extends WikiaModel {
 
 	const MOST_LINKED_CACHE_TTL = 86400; //24h
 	const MOST_LINKED_LIMIT = 50;
-
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
+	const WIKIAGLOBAL_CITY_ID = 80433;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
-
 	static $botGroups = array('bot', 'bot-global');
 	static $excludedWikiaUsers = array(
 		22439, //Wikia
@@ -357,29 +354,30 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return mixed|null|string
 	 */
-	public function getWikiImages($wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO) {
+	public function getWikiImages( $wikiIds, $imageWidth, $imageHeight = self::IMAGE_HEIGHT_KEEP_ASPECT_RATIO ) {
 		$images = array();
 		try {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
-			$tables = array('city_visualization');
-			$fields = array('city_id', 'city_main_image');
-			$conds = array('city_id' => $wikiIds);
-			$results = $db->select($tables, $fields, $conds, __METHOD__, array(), array());
+			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
+			$tables = array( 'city_visualization' );
+			$fields = array( 'city_id', 'city_main_image' );
+			$conds = array( 'city_id' => $wikiIds );
+			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
-			while($row = $results->fetchObject()) {
-				$title = Title::newFromText($row->city_main_image, NS_FILE);
-				$file = wffindFile($title);
-				
-				if ($file instanceof File && $file->exists()) {
-					$imageServing = new ImageServing(null, $imageWidth, $imageHeight);
-					$images[$row->city_id] = ImagesService::overrideThumbnailFormat(
-						$imageServing->getUrl( $row->city_main_image, $file->getWidth(), $file->getHeight() ),
+			while ( $row = $results->fetchObject() ) {
+				$promoImage = PromoImage::fromPathname($row->city_main_image);
+				$promoImage->ensureCityIdIsSet($row->city_id);
+
+				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
+				if ( $file->exists() ) {
+					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
+					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
+						$imageServing->getUrl( $file, $file->getWidth(), $file->getHeight() ),
 						ImagesService::EXT_JPG
 					);
 				}
 			}
-		} catch(Exception $e) {
-			// for devbox machines
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, false, $e->getMessage() );
 		}
 		return $images;
 	}
@@ -832,10 +830,8 @@ class WikiService extends WikiaModel {
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => $row->city_main_image,
+					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
-						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),
-						'hot' => ( ( $row->city_flags & self::FLAG_HOT ) == self::FLAG_HOT ),
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
 					)

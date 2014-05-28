@@ -52,7 +52,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Activity/LatestActivity",
+ * 	path="/Activity/LatestActivity",
  * 	description="Get information about the latest user activity on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -63,7 +63,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="Maximum number of results",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
@@ -72,7 +72,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="namespaces",
- * 					description="Namespaces results must match",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

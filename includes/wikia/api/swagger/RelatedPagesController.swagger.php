@@ -56,7 +56,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/api/v1/RelatedPages/List",
+ * 	path="/RelatedPages/List",
  * 	description="API to get related pages for given article ID",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -71,7 +71,7 @@ use Swagger\Annotations as SWG;
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="ids",
- * 					description="Id of an article to fetch related pages for",
+ * 					description="Comma-separated list of article ids",
  * 					paramType="query",
  * 					required="true",
  * 					allowMultiple="false",
@@ -80,7 +80,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="Limit the number of related pages to return",
+ * 					description="Limit the number of results",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

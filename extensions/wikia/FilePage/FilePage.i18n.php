@@ -47,7 +47,8 @@ $messages['qqq'] = array(
 {{Identical|View}}',
 	'video-page-see-more-info' => 'Label to uncollapse UI that shows more info',
 	'video-page-see-less-info' => 'Label to collapse UI that shows more info',
-	'video-page-description-heading' => 'Description heading',
+	'video-page-description-heading' => 'Description heading.
+{{Identical|Description}}',
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
@@ -449,12 +450,24 @@ $messages['ka'] = array(
 	'file-page-more-links' => 'იხილე სრული სია',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'video-page-description-heading' => 'ವಿವರ',
+	'video-page-file-list-pagination' => '$1 ಇಂದ $2',
+	'file-page-tab-about' => 'ಕುರಿತು',
+	'file-page-tab-history' => 'ಕಡತದ ಇತಿಹಾಸ',
+	'file-page-tab-metadata' => 'ಮೇಲ್ದರ್ಜೆ ಮಾಹಿತಿ',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'video-page-from-provider' => 'Vu(n) $1',
 	'video-page-see-more-info' => 'Méi Informatioune weisen',
+	'video-page-see-less-info' => 'Manner Informatioune weisen',
 	'video-page-description-heading' => 'Beschreiwung',
 	'video-page-description-zero-state' => 'Et ass nach keng Beschreiwung do.',
 	'video-page-add-description-link-text' => 'Eng Beschreiwung derbäisetzen.',
@@ -801,6 +814,7 @@ Ange en beskrivning här.',
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
+ * @author Ravichandra
  */
 $messages['te'] = array(
 	'video-page-file-list-header' => 'ఇది, ఈ పేజీల్లో కనిపిస్తుంది',
@@ -816,6 +830,7 @@ $messages['te'] = array(
 	'video-page-default-description-header-and-text' => '==వివరణ==
 ఇక్కడ వివరణ ఇవ్వండి.',
 	'video-page-file-list-pagination' => '$2 లో $1',
+	'file-page-replace-button' => 'భర్తీచేయి',
 	'file-page-tab-about' => 'గురించి',
 	'file-page-tab-history' => 'ఫైలు చరిత్ర',
 	'file-page-tab-metadata' => 'మెటాడేటా',

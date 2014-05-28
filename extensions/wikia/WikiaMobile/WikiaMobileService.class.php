@@ -43,8 +43,15 @@ class WikiaMobileService extends WikiaService {
 		$mobileAdService = new WikiaMobileAdService();
 
 		if ( $mobileAdService->shouldLoadAssets() ) {
-			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
-			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
+
+			if ( $this->wg->AdDriverTrackState ) {
+				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
+			}
+
+			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
+				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
+			}
 
 			if ( $mobileAdService->shouldShowAds() ) {
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
@@ -155,6 +162,14 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'BlueKai',
 					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'Datonics',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'ClarityRay',
+					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
@@ -178,14 +193,16 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+			&& empty( $this->wg->WikiaMobileSmartBannerConfig['disabled'] )
+		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_smartbanner_init_js';
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
-			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
 			$this->globalVariables['wgAppIcon'] = $this->wg->WikiaMobileSmartBannerConfig['icon'];
 
-			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig['meta'] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -232,10 +249,12 @@ class WikiaMobileService extends WikiaService {
 		$toc = '';
 
 		$action = $this->wg->Request->getVal( 'action', 'view' );
+        $nameSpace = $this->wg->Title->getNamespace();;
 
 		//Enable TOC only on view action and on real articles and preview
 		if ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0
+			$this->wg->Title->getArticleId() != 0 &&
+            ( $nameSpace !== 2 && $nameSpace !== 500 ) // skip user profile and user blog pages
 		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
 			$this->scssPackages[] = 'wikiamobile_scss_toc';

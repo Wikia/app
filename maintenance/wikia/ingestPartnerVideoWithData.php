@@ -16,6 +16,8 @@ $optionsWithArgs = [ 'u', 's', 'e', 'i' ];
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
+use \Wikia\Logger\WikiaLogger;
+
 // commandLine.inc transforms -h and --help into 'help'
 if ( isset( $options['help'] ) ) {
 	print <<<EOT
@@ -32,11 +34,11 @@ Options:
   -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
   --ra				use ooyala remote asset to ingest video
+  --summary			show summary information
 
 Args:
   provider          Partner to import video from. Int defined in VideoPage.php.
-                    If none is specified, script will ingest content from all
-		    supported premium providers.
+                    If none is specified, script will ingest content from all supported premium providers.
 
 
 EOT;
@@ -59,6 +61,7 @@ $reupload     = isset( $options['r'] );
 $ignoreRecent = isset( $options['i'] ) ? $options['i'] : 0;
 $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
+$showSummary  = isset( $options['summary'] );
 $provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
 
 // check if allow to upload file
@@ -145,9 +148,17 @@ foreach ( $providersVideoFeed as $provider ) {
 	}
 
 	$numCreated = $feedIngester->import( $file, $params );
+	$summary[$provider] = $feedIngester->getResultSummary();
 
-	print "Created $numCreated articles!\n\n";
+	// show ingested videos by vertical
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester, $provider ), 'vertical' );
+
+	print "\nCreated $numCreated articles!\n\n";
 }
+
+// show summary
+displaySummary( $showSummary, getContentSummary( $summary ) );
+
 
 function loadUser( $userName ) {
 	global $wgUser;
@@ -176,4 +187,82 @@ function loadProviders ( $provider ) {
 	}
 
 	return $providersVideoFeed;
+}
+
+function getContentSummary( $summary ) {
+	$log = WikiaLogger::instance();
+
+	$width = 20;
+	$now = date( 'Y-m-d H:i:s' );
+	$content = "Run Date: $now\n";
+
+	// get header
+	$keys = array_keys( current( $summary ) );
+	$content .= sprintf( "%-{$width}s", 'Provider' );
+	foreach( $keys as $field ) {
+		$content .= sprintf( "%{$width}s", ucwords( $field ) );
+	}
+	$content .= "\n";
+
+	// Create the summary body
+	$totals = array_fill_keys( $keys, 0 );
+	foreach ( $summary as $provider => $result ) {
+		$content .= sprintf( "%-{$width}s", strtoupper( $provider ) );
+		foreach ( $result as $key => $value ) {
+			$totals[$key] += $value;
+			$content .= sprintf( "%{$width}s", $value );
+		}
+		$content .= "\n";
+
+		// Make provider data available to kibana
+		$result['provider'] = $provider;
+		$log->info( "Video ingestion complete: $provider", $result );
+	}
+
+	// Write the totals line
+	$content .= sprintf( "%-{$width}s", 'TOTAL' );
+	foreach ( $totals as $key => $value ) {
+		$content .= sprintf( "%{$width}s", $value );
+	}
+	$content .= "\n";
+
+	// Make the summary data available to kibana
+	$log->info("Video ingestion totals", $totals);
+
+	return $content;
+}
+
+function getContentIngestedVideosByCategory( $ingester, $provider ) {
+	$content = "\n\nProvider: ".strtoupper( $provider )."\n";
+	foreach ( $ingester->getResultIngestedVideos() as $category => $msgs ) {
+		$content .= "\nCategory: $category\n";
+		if ( !empty( $msgs ) ) {
+			$content .= implode( '', $msgs );
+			$content .= "\n";
+		}
+	}
+
+	return $content;
+}
+
+function displaySummary( $showSummary, $content, $type = 'summary' ) {
+	if ( empty( $showSummary ) ) {
+		echo $content;
+	} else {
+		$fileVertical = '/tmp/ingestion_vertical';
+		if ( $type == 'summary' ) {
+			// write summary to file
+			$filename = '/tmp/ingestion_summary';
+			file_put_contents( $filename, $content );
+
+			// write ingested videos by vertical to file
+			$content = file_get_contents( $fileVertical );
+			file_put_contents( $filename, $content, FILE_APPEND );
+
+			// delete vertical file
+			unlink( $fileVertical );
+		} else {
+			file_put_contents( $fileVertical, $content, FILE_APPEND );
+		}
+	}
 }

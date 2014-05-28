@@ -1,21 +1,6 @@
 #!/usr/bin/env bash
 cd $(cd $(dirname $0)/..; pwd)
 
-(
-	while IFS='' read -r l
-	do
-		if [[ "$l" == "{{VE-LOAD-HEAD}}" ]]
-		then
-			php maintenance/makeStaticLoader.php --fixdir --section=head --ve-path=../modules/ $*
-		elif [[ "$l" == "{{VE-LOAD-BODY}}" ]]
-		then
-			php maintenance/makeStaticLoader.php --fixdir --section=body --ve-path=../modules/ $*
-		else
-			echo "$l"
-		fi
-	done
-) < .docs/eg-iframe.tpl | php > .docs/eg-iframe.html
-
 # allow custom path to jsduck, or custom version (eg JSDUCK=jsduck _4.10.4_)
 JSDUCK=${JSDUCK:-jsduck}
 
@@ -31,7 +16,8 @@ fi
 $JSDUCK --config .docs/config.json $jsduckopt --processes 0 --color --warnings-exit-nonzero
 ec=$?
 
-rm .docs/eg-iframe.html
+test ! -L docs/lib && ln -s ../lib docs/lib || echo 'Symlink already exists'
+
 cd - > /dev/null
 
 # Exit with exit code of jsduck command

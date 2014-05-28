@@ -1,15 +1,11 @@
 define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
-	'videosmodule.models.abTestRail',
 	'wikia.tracker',
 	'wikia.log'
-], function (TitleThumbnailView, abTest, Tracker, log) {
+], function (TitleThumbnailView, Tracker, log) {
 	'use strict';
 
-	// Keep AB test variables private
-	var testCase,
-		groupParams,
-		track;
+	var track;
 
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-rail',
@@ -18,9 +14,6 @@ define('videosmodule.views.rail', [
 		label: 'module-impression'
 	});
 
-	testCase = abTest();
-	groupParams = testCase.getGroupParams();
-
 	function VideoModule(options) {
 		// this.el is the container for the right rail videos module
 		this.el = options.el;
@@ -28,6 +21,9 @@ define('videosmodule.views.rail', [
 		this.$thumbs = this.$el.find('.thumbnails');
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		// Default number of videos, this is the number of videos we'd like to display if possible
+		this.numVids = 5;
+		this.minNumVids = 3;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -38,18 +34,13 @@ define('videosmodule.views.rail', [
 	VideoModule.prototype.init = function () {
 		var self = this;
 
-		// Check for thumb count b/c this may be the control group in which case don't render
-		if (!groupParams.thumbs) {
-			return;
-		}
-
 		self.$thumbs.addClass('hidden');
 		self.$el
 			.startThrobbing()
 			.removeClass('hidden');
 
 		this.model
-			.fetch(groupParams.verticalOnly)
+			.fetch()
 			.complete(function () {
 				self.render();
 			});
@@ -58,17 +49,20 @@ define('videosmodule.views.rail', [
 	VideoModule.prototype.render = function () {
 		var i,
 			videos = this.model.data.videos,
-			len = videos.length,
+			staffPickVideos = this.model.data.staffVideos,
 			thumbHtml = [],
 			self = this,
 			$imagesLoaded = $.Deferred(),
-			imgCount = 0;
+			imgCount = 0,
+			VideosIndex,
+			StaffPicksIndex,
+			vidsNeeded;
 
-		// If no videos are returned from the server, don't render anything
-		if (!len) {
+		// If we don't have enough videos to display the minimum amount, return
+		if (videos.length + staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
 			log(
-				'No videos were returned for VideosModule rail, ' + testCase.testGroup,
+				'Not enough videos were returned for VideosModule rail',
 				log.levels.error,
 				'VideosModule',
 				true
@@ -76,7 +70,24 @@ define('videosmodule.views.rail', [
 			return;
 		}
 
-		for (i = 0; i < groupParams.thumbs; i++) {
+		// If there are less related videos than our default amount, this.NumVids, pull additional
+		// videos from the staffPicks videos
+		if (videos.length < this.numVids) {
+			vidsNeeded = this.numVids - videos.length;
+			videos = videos.concat(staffPickVideos.splice(0, vidsNeeded));
+			this.numVids = videos.length;
+		}
+
+		this.shuffle(videos);
+		// If we have any staff pick videos, pick one randomly from that list and display it
+		// in a random position in the Videos Module.
+		if (staffPickVideos.length) {
+			VideosIndex = Math.floor(Math.random() * this.numVids);
+			StaffPicksIndex = Math.floor(Math.random() * staffPickVideos.length);
+			videos[VideosIndex] = staffPickVideos[StaffPicksIndex];
+		}
+
+		for (i = 0; i < this.numVids; i++) {
 			thumbHtml.push(new TitleThumbnailView({
 					el: 'li',
 					model: videos[i],
@@ -90,7 +101,7 @@ define('videosmodule.views.rail', [
 			.append(thumbHtml)
 			.find('img[data-video-key]').on('load error', function () {
 				imgCount += 1;
-				if (imgCount === groupParams.thumbs) {
+				if (imgCount === self.numVids) {
 					$imagesLoaded.resolve();
 				}
 			});
@@ -102,6 +113,23 @@ define('videosmodule.views.rail', [
 			});
 
 		track();
+	};
+
+	/**
+	 * Randomize array element order in-place.
+	 * Using Fisher-Yates shuffle algorithm.
+	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+	 */
+	VideoModule.prototype.shuffle = function(array) {
+		var i, j, temp;
+
+		for (i = array.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
 	};
 
 	return VideoModule;

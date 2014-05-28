@@ -3,6 +3,8 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	const WHST_VISUALIZATION_LANG_VAR_NAME = 'vl';
 	const WHST_WIKIS_PER_PAGE = 25;
 
+	const HUB_SLOTS_COUNT = 3;
+
 	const CHANGE_FLAG_ADD = 'add';
 	const CHANGE_FLAG_REMOVE = 'remove';
 
@@ -71,19 +73,21 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->filterOptions = array_merge($this->initFilterOptions(), $this->request->getParams());
 
+		$this->exportListAsCSVUri = $this->getExportListAsCSVUri();
+
 		//verticals slots' configuration
 		/* @var $this->helper WikiaHomePageHelper */
 		$videoGamesAmount = $this->request->getVal('video-games-amount', $this->helper->getNumberOfVideoGamesSlots($this->visualizationLang));
 		$entertainmentAmount = $this->request->getVal('entertainment-amount', $this->helper->getNumberOfEntertainmentSlots($this->visualizationLang));
 		$lifestyleAmount = $this->request->getVal('lifestyle-amount', $this->helper->getNumberOfLifestyleSlots($this->visualizationLang));
-		$hotWikisAmount = $this->request->getVal('hot-wikis-amount', $this->helper->getNumberOfHotWikiSlots($this->visualizationLang));
-		$newWikisAmount = $this->request->getVal('new-wikis-amount', $this->helper->getNumberOfNewWikiSlots($this->visualizationLang));
 
 		$this->form = new CollectionsForm();
 		$this->statsForm = new StatsForm();
+		$this->hubsForm = new HubsSlotsForm();
+		$hubSlotsValues = $this->prepareArrayFieldsToShow($this->helper->getHubSlotsFromWF($this->corpWikiId));
 		$collectionsModel = $this->getWikiaCollectionsModel();
 		$this->collectionsList = $collectionsModel->getList($this->visualizationLang);
-		$collectionValues = $this->prepareCollectionToShow($this->collectionsList);
+		$collectionValues = $this->prepareArrayFieldsToShow($this->collectionsList);
 		$wikisPerCollection = $this->getWikisPerCollection($this->collectionsList);
 
 		$statsValues = $this->helper->getStatsFromWF();
@@ -114,7 +118,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				$isValid = $this->form->validate($collectionValues);
 
 				if ($isValid) {
-					$collectionSavedValues = $this->prepareCollectionForSave($collectionValues);
+					$collectionSavedValues = $this->prepareArrayFieldsForSave($collectionValues);
 					$collectionsModel->saveAll($this->visualizationLang, $collectionSavedValues);
 
 					FlashMessages::put(wfMessage('manage-wikia-home-collections-success')->text());
@@ -134,18 +138,28 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 				} else {
 					$this->errorMsg = wfMessage('manage-wikia-home-stats-failure')->text();
 				}
+			} elseif ( $this->request->getVal('hubs-slots', false)) {
+				$hubSlotsValues = $this->request->getParams();
+				$hubSlotsValues = $this->hubsForm->filterData($hubSlotsValues);
+				$hubSavedSlotsValues = $this->prepareArrayFieldsForSave($hubSlotsValues);
+				$status = $this->helper->saveHubSlotsToWF($hubSavedSlotsValues, $this->corpWikiId, $this->visualizationLang);
+				if ( $status ) {
+					$this->infoMsg = wfMessage('manage-wikia-home-hubs-slot-success')->text();
+				} else {
+					$this->errorMsg = wfMessage('manage-wikia-home-hubs-slot-error')->text();
+				}
 			}
 		}
 
 		$this->form->setFieldsValues($collectionValues);
 		$this->statsForm->setFieldsValues($statsValues);
-		$this->verticals = $this->getWikiVerticals();
+		$this->verticals = $this->helper->getWikiVerticals();
+		$this->hubSlotsValues = $hubSlotsValues;
+		$this->prepareHubsForm($hubSlotsValues);
 
 		$this->setVal('videoGamesAmount', $videoGamesAmount);
 		$this->setVal('entertainmentAmount', $entertainmentAmount);
 		$this->setVal('lifestyleAmount', $lifestyleAmount);
-		$this->setVal('hotWikisAmount', $hotWikisAmount);
-		$this->setVal('newWikisAmount', $newWikisAmount);
 		$this->setVal('wikisPerCollection', $wikisPerCollection);
 
 		$this->response->addAsset('/extensions/wikia/SpecialManageWikiaHome/css/ManageWikiaHome.scss');
@@ -198,7 +212,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 
 		$this->list = $this->helper->getWikisForStaffTool($options);
 		$this->collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
-		$this->verticals = $this->getWikiVerticals();
+		$this->verticals = $this->helper->getWikiVerticals();
 
 		if( $count > self::WHST_WIKIS_PER_PAGE ) {
 			/** @var $paginator Paginator */
@@ -213,21 +227,10 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		wfProfileOut(__METHOD__);
 	}
 
-	//todo: make from isAnySlotNumberNegative() and isHotOrNewSlotNumberNegative() one method
 	protected function isAnySlotNumberNegative($videoGamesAmount, $entertainmentAmount, $lifestyleAmount) {
 		return intval($videoGamesAmount) < 0
 			|| intval($entertainmentAmount) < 0
 			|| intval($lifestyleAmount) < 0;
-	}
-
-	protected function isHotOrNewSlotNumberNegative($hotWikisAmount, $newWikisAmount) {
-		return intval($hotWikisAmount) < 0
-			|| intval($newWikisAmount) < 0;
-	}
-
-	protected function isHotOrNewSlotNumberTooBig($hotWikisAmount, $newWikisAmount) {
-		return intval($hotWikisAmount) > WikiaHomePageHelper::SLOTS_IN_TOTAL
-			|| intval($newWikisAmount) > WikiaHomePageHelper::SLOTS_IN_TOTAL;
 	}
 
 	public function onWrongRights() {
@@ -279,6 +282,78 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		return $result;
 	}
 
+	public function getWikisInVisualisationAsCSV() {
+		wfProfileIn(__METHOD__);
+		global $wgOut;
+
+		if (!$this->checkAccess()) {
+			wfProfileOut(__METHOD__);
+			$this->response->setHeader('Cache-Control', 'no-cache');
+			throw new PermissionsException('managewikiahome');
+		}
+
+		// get data
+		$visualizationLang = $this->request->getVal('lang', $this->wg->contLang->getCode());
+		$list = $this->helper->getWikisForStaffTool($this->prepareFilterOptions($visualizationLang, []));
+		$collections = $this->getWikiaCollectionsModel()->getList($visualizationLang);
+		$verticals = $this->helper->getWikiVerticals();
+
+		// output data in csv format
+		$out = fopen('php://memory', 'w');
+
+		// header
+		$outHeader = ['ID','Vertical','Title','Is blocked?','Is promoted?','Is official?'];
+		foreach ($collections as $collection) {
+			$outHeader[] = 'In collection: '.$collection['name']. '?';
+		}
+		fputcsv($out, $outHeader);
+
+		foreach ($list as $wiki) {
+			$outLine = [
+				$wiki->city_id,
+				$verticals[$wiki->city_vertical],
+				$wiki->city_title,
+				CityVisualization::isBlockedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isPromotedWiki($wiki->city_flags) ? 1 : 0,
+				CityVisualization::isOfficialWiki($wiki->city_flags) ? 1 : 0,
+			];
+			foreach ($collections as $collection) {
+				$outLine[] = in_array($collection['id'], $wiki->collections) ? 1 : 0;
+			}
+			fputcsv($out, $outLine);
+		}
+		fseek($out, 0);
+		$csv = stream_get_contents($out);
+		fclose($out);
+
+		// turn off usual rendering
+		$wgOut->disable();
+
+		// set up headers
+		$this->response->setFormat(WikiaResponse::FORMAT_RAW);
+		$this->response->setHeader('Cache-Control', 'private');
+		$this->response->setHeader('Content-Description', 'File Transfer');
+		$this->response->setHeader('Content-Disposition', 'attachment; filename=ManageWikiaHomeWikisList-'.$visualizationLang.'.csv');
+		$this->response->setHeader('Content-Transfer-Encoding', 'binary');
+
+		$this->response->setContentType( 'application/octet-stream' );
+		$this->response->setBody( $csv );
+
+		wfProfileOut(__METHOD__);
+	}
+
+	private function getExportListAsCSVUri() {
+		global $wgServer, $wgScriptPath;
+
+		$params = [
+			'controller' => 'ManageWikiaHome',
+			'method' => 'getWikisInVisualisationAsCSV',
+			'lang' => $this->visualizationLang
+		];
+
+		return $wgServer . $wgScriptPath . '/wikia.php?' . http_build_query( $params );
+	}
+
 	public function isWikiBlocked() {
 		wfProfileIn(__METHOD__);
 
@@ -301,7 +376,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 			$this->status = false;
 		} else {
 			$wikiId = $this->request->getInt('wikiId', 0);
-			
+
 			$this->status = $this->getWikiaCollectionsModel()->isWikiInCollection($wikiId);
 		}
 
@@ -373,7 +448,7 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Preparing data received from collection's form to array, which could be easily use to insert data
+	 * Preparing data received from form to array, which could be easily use to insert data
 	 * to database or update already existing data.
 	 *
 	 * Example:
@@ -388,19 +463,19 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * 			array('fieldName1' => value2, 'fieldName2' => value2)
 	 * 		  )
 	 *
-	 * @param array $collectionValues data from form collection's form
-	 * @return array $collections data to save
+	 * @param array $formValues data from form collection's form
+	 * @return array $values data to save
 	 */
-	private function prepareCollectionForSave($collectionValues) {
-		$collections = [];
+	private function prepareArrayFieldsForSave($formValues) {
+		$values = [];
 
-		foreach($collectionValues as $name => $collection) {
-			foreach($collection as $key => $field) {
-				$collections[$key][$name] = $field;
+		foreach($formValues as $name => $fields) {
+			foreach($fields as $key => $field) {
+				$values[$key][$name] = trim($field);
 			}
 		}
 
-		return $collections;
+		return $values;
 	}
 
 	/**
@@ -419,47 +494,39 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 	 * 			'fieldName2' => array(value1, value2, ... )
 	 * 		  )
 	 *
-	 * @param array $collections data from database
-	 * @return array $collectionValues data to display
+	 * @param array $values data from database
+	 * @return array $formValues data to display
 	 */
-	private function prepareCollectionToShow($collections) {
-		$collectionValues = [];
+	private function prepareArrayFieldsToShow($values) {
+		$dataValues = [];
 
-		foreach($collections as $key => $collection) {
-			foreach($collection as $name => $value) {
-				$collectionValues[$name][$key] = $value;
+		foreach($values as $key => $field) {
+			foreach($field as $name => $value) {
+				$dataValues[$name][$key] = $value;
 			}
 		}
-		
-		return $collectionValues;
+
+		return $dataValues;
 	}
-	
+
 	private function getWikisPerCollection($collections, $useMaster = false) {
 		$wikisPerCollections = [];
-		
+
 		foreach($collections as $key => $collection) {
 			$collectionId = $collection['id'];
 			$wikis = $this->getWikiaCollectionsModel()->getCountWikisFromCollection($collectionId, $useMaster);
 			$wikisPerCollections[$collectionId] = $wikis;
 		}
-		
+
 		return $wikisPerCollections;
 	}
-	
+
 	private function getWikiaCollectionsModel() {
 		if( !isset($this->wikiaCollectionsModel) ) {
 			$this->wikiaCollectionsModel = new WikiaCollectionsModel();
 		}
-		
-		return $this->wikiaCollectionsModel;
-	}
 
-	private function getWikiVerticals() {
-		return array(
-			WikiFactoryHub::CATEGORY_ID_GAMING => wfMessage('hub-Gaming')->text(),
-			WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => wfMessage('hub-Entertainment')->text(),
-			WikiFactoryHub::CATEGORY_ID_LIFESTYLE => wfMessage('hub-Lifestyle')->text()
-		);
+		return $this->wikiaCollectionsModel;
 	}
 
 	private function prepareFilterOptions($visualizationLang, $filterOptions) {
@@ -506,5 +573,53 @@ class ManageWikiaHomeController extends WikiaSpecialPageController {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Prepare hubs slots setup form in manage wikia home extension
+	 *
+	 * @param $hubSlotsValues
+	 */
+	private function prepareHubsForm( $hubSlotsValues ) {
+		$this->hubsForm->setFieldsValues($hubSlotsValues);
+
+		$response = $this->app->sendRequest(
+			'WikiaHubsApiController',
+			'getHubsV3List',
+			[ 'lang' => $this->visualizationLang ]
+		);
+
+		$wikis = $response->getVal('list', []);
+		$verticals = $this->helper->getWikiVerticals();
+		$fields = $this->hubsForm->getFields();
+		$hubValues = $fields['hub_slot']['value'];
+
+		$index = 0;
+		foreach ($verticals as $vertical) {
+			if( !isset($fields['hub_slot']['value'][$index]) ) {
+				$hubValues[$index] = $vertical;
+			}
+			$index++;
+
+			$choices[] = [
+				'value' => $vertical,
+				'option' => $vertical
+			];
+		}
+
+		foreach ($wikis as $wiki) {
+			$choices[] = [
+				'value' => sprintf($wiki['id']),
+				'option' => $wiki['name']
+			];
+		}
+
+		$choices[] = [
+			'value' => '0',
+			'option' => wfMessage('manage-wikia-home-hubs-slot-empty-option')->plain()
+		];
+
+		$this->hubsForm->setFieldProperty('hub_slot', 'choices', $choices);
+		$this->hubsForm->setFieldProperty('hub_slot', 'value', $hubValues);
 	}
 }

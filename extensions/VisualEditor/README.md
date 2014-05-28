@@ -17,12 +17,11 @@ For information on installing VisualEditor on a local wiki, please
 see https://www.mediawiki.org/wiki/Extension:VisualEditor
 
 For information about running tests and contributing code to VisualEditor,
-see [CODING.md][].  Patch submissions are reviewed and managed with
+see [CONTRIBUTING.md](./CONTRIBUTING.md).  Patch submissions are reviewed and managed with
 [Gerrit][].  There is also [API documentation][] available for the
 VisualEditor.
 
-[VisualEditor]:      http://www.mediawiki.org/wiki/VisualEditor
-[Parsoid]:           http://www.mediawiki.org/wiki/Parsoid
-[CODING.md]:         CODING.md
+[VisualEditor]:      https://www.mediawiki.org/wiki/VisualEditor
+[Parsoid]:           https://www.mediawiki.org/wiki/Parsoid
 [API documentation]: https://doc.wikimedia.org/VisualEditor/master/
 [Gerrit]:            https://www.mediawiki.org/wiki/Gerrit

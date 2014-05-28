@@ -1,42 +1,30 @@
-/*global setTimeout, define*/
-/*jshint maxlen:150, camelcase:false, maxdepth:5*/
-var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gptSlotConfig) {
+/*global define, setTimeout*/
+/*jshint maxlen:125, camelcase:false, maxdepth:7*/
+define('ext.wikia.adEngine.wikiaGptHelper', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.gptSlotConfig'
+], function (log, window, document, adLogicPageParams, gptSlotConfig) {
 	'use strict';
 
-	if ( WikiaGptHelper.prototype.singletonInstance ) {
-		return WikiaGptHelper.prototype.singletonInstance;
-	}
-
-	if (!(this instanceof WikiaGptHelper)){
-		return new WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
-	}
-
-	WikiaGptHelper.prototype.singletonInstance = this;
-
-	var logGroup = 'WikiaGptHelper',
+	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
-		pageLevelParams = adLogicPageLevelParams.getPageLevelParams(),
-		path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
+		specialAdSelector = [
+			'script[src*="/ads.saymedia.com/"]',
+			'script[src*="/native.sharethrough.com/"]',
+			'.celtra-ad-v3, script[src$="/mmadlib.js"]'
+		].join(','),
 		slotQueue = [],
-		doneCallbacks = {},// key: slot name, value: callback
 		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
-		googletag;
-
-	function triggerDone(slotnameGpt) {
-		var callback = doneCallbacks[slotnameGpt];
-
-		log(['triggerDone', slotnameGpt], 3, logGroup);
-
-		if (callback) {
-			delete doneCallbacks[slotnameGpt];
-			setTimeout(callback, 0); // escape from GPT's error-catching
-		}
-	}
+		googletag,
+		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
 
 	function convertSizesToGpt(slotsize) {
-		log(['convertSizeToGpt', slotsize], 9, logGroup);
+		log(['convertSizeToGpt', slotsize], 'debug', logGroup);
 		var tmp1 = slotsize.split(','),
 			sizes = [],
 			tmp2,
@@ -48,6 +36,27 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 		}
 
 		return sizes;
+	}
+
+	function filterOutSizesBiggerThanScreenSize(sizes) {
+		log(['filterOutSizesBiggerThanScreenSize', sizes], 'debug', logGroup);
+		var goodSizes = [], i, len, minWidth;
+
+		minWidth = document.documentElement.offsetWidth;
+
+		for (i = 0, len = sizes.length; i < len; i += 1) {
+			if (sizes[i][0] <= minWidth) {
+				goodSizes.push(sizes[i]);
+			}
+		}
+
+		if (goodSizes.length === 0) {
+			log(['filterOutSizesBiggerThanScreenSize', 'No sizes left. Returning fallbackSize only'], 'error', logGroup);
+			goodSizes.push(fallbackSize);
+		}
+
+		log(['filterOutSizesBiggerThanScreenSize', 'result', goodSizes], 'debug', logGroup);
+		return goodSizes;
 	}
 
 	function loadGpt() {
@@ -71,53 +80,14 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 			node.parentNode.insertBefore(gads, node);
 			googletag = window.googletag;
 
-			log(['loadGpt', 'googletag.cmd.push', 'bind to GPT events'], 4, logGroup);
-			googletag.cmd.push(function () {
-				var debug_log = googletag.debug_log,
-					oldLog = debug_log.log;
-
-				// We're plugging into the log function in GPT so we get some insight of what
-				// happens in GPT internals. The message parameter is an object with getMessageId()
-				// method returning the following integer for the interesting events:
-				//
-				// 3, /Fetching ad for slot ([\/\w]*)/ig);
-				// 4, /Receiving ad for slot ([\/\w]*)/ig);
-				// 5, /^Rendering ad for slot ([\/\w]*)/ig);
-				// 6, /Completed rendering ad for slot ([\/\w]*)/
-				//
-				// Inspiration: https://github.com/mcountis/dfp-events
-				//
-				// 23 Oct 2013: the method changed as explained in this bug and pull request:
-				//
-				// https://github.com/mcountis/dfp-events/pull/5
-
-				googletag.debug_log.log = function (level, message, service, slot) {
-					var domId,
-						doneMessageId = 5;
-
-					// Play extra-safe with this
-					try {
-						domId = slot && slot.getSlotId().getDomId();
-
-						if (domId && typeof message === 'object' && message.getMessageId) {
-							if (message.getMessageId() === doneMessageId) {
-								triggerDone(domId);
-							}
-						}
-					} catch (e) {
-					}
-
-					// Call the original function
-					return oldLog.apply(debug_log, arguments);
-				};
-			});
-
 			// Set page level params
-			log(['loadGpt', 'googletag.cmd.push', 'page level targeting'], 4, logGroup);
+			log(['loadGpt', 'googletag.cmd.push', 'page level targeting'], 'info', logGroup);
 			googletag.cmd.push(function () {
 				var name,
 					value,
 					pubads = googletag.pubads(),
+					pageLevelParams = adLogicPageParams.getPageLevelParams(),
+					path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 					slotname,
 					slotnameGpt,
 					sizes,
@@ -130,13 +100,13 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 
 				pubads.collapseEmptyDivs();
 
-				log(['loadGpt', 'pageLevelParams', pageLevelParams], 9, logGroup);
+				log(['loadGpt', 'pageLevelParams', pageLevelParams], 'debug', logGroup);
 
 				for (name in pageLevelParams) {
 					if (pageLevelParams.hasOwnProperty(name)) {
 						value = pageLevelParams[name];
 						if (value) {
-							log(['pubads.setTargeting', name, value], 9, logGroup);
+							log(['pubads.setTargeting', name, value], 'debug', logGroup);
 							pubads.setTargeting(name, value);
 						}
 					}
@@ -150,15 +120,19 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 						// Define all possible slots
 						for (slotname in slotMap) {
 							if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
-								log(['loadGpt', 'defining slot', slotname], 9, logGroup);
+								log(['loadGpt', 'defining slot', slotname], 'debug', logGroup);
 
 								slotnameGpt = slotname + '_' + slotMapSrc;
 								slotItem = slotMap[slotname];
+
 								sizes = convertSizesToGpt(slotItem.size);
+								if (slotname.match(/TOP_LEADERBOARD/)) {
+									sizes = filterOutSizesBiggerThanScreenSize(sizes);
+								}
 
 								slotPath = path + '/' + slotname + '_' + slotMapSrc;
 
-								log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 9, logGroup);
+								log(['googletag.defineSlot', slotPath, sizes, slotnameGpt], 'debug', logGroup);
 								slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 								slot.addService(googletag.pubads());
 
@@ -172,7 +146,7 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 									if (slotParams.hasOwnProperty(name)) {
 										value = slotParams[name];
 										if (value) {
-											log(['slot.setTargeting', name, value], 9, logGroup);
+											log(['slot.setTargeting', name, value], 'debug', logGroup);
 											slot.setTargeting(name, value);
 										}
 									}
@@ -186,28 +160,97 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 									'data-gpt-slot-sizes': JSON.stringify(sizes)
 								};
 
-								log(['loadGpt', 'defined slot', slotname, slot], 9, logGroup);
+								log(['loadGpt', 'defined slot', slotname, slot], 'debug', logGroup);
 
 							}
 						}
 					}
 				}
 
-				log(['loadGpt', 'all slots defined'], 9, logGroup);
+				log(['loadGpt', 'all slots defined'], 'debug', logGroup);
 
 				// Enable services
 				googletag.pubads().enableSingleRequest();
 				googletag.pubads().disableInitialLoad(); // manually request ads
 				googletag.enableServices();
 
-				log(['loadGpt', 'services enabled'], 9, logGroup);
+				log(['loadGpt', 'services enabled'], 'debug', logGroup);
 			});
 		}
+	}
+
+	function isImagePresent(document) {
+		var imgs, i, len, w, h;
+		imgs = document.querySelectorAll('img[width][height]');
+
+		for (i = 0, len = imgs.length; i < len; i += 1) {
+			w = imgs[i].getAttribute('width');
+			h = imgs[i].getAttribute('height');
+			if (w > 1 && h > 1) {
+				log(['findAdImage', 'found non-1x1 img'], 'info', logGroup);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function findAdInIframe(iframe, adCallback, noAdCallback) {
+		var iframeHeight, iframeContentHeight, iframeId, iframeDoc;
+
+		iframeId = iframe.id;
+		iframeDoc = iframe.contentWindow.document;
+
+		// Because Chrome reports document.body.offsetHeight as the outer
+		// iframe height, we're setting the outer height to 0, so the innerHeight
+		// reports real height of the content. Then we reset the height back
+		iframeHeight = iframe.height;
+		iframe.height = 0;
+		iframeContentHeight = iframeDoc.body.offsetHeight;
+		iframe.height = iframeHeight;
+
+		log(['findAdInIframe', 'height (iframe content)', iframeContentHeight], 'info', logGroup);
+
+		if (iframeContentHeight > 1) {
+			log(['findAdInIframe', iframeId, 'height > 1, launching adCallback'], 'info', logGroup);
+			return adCallback();
+		}
+
+		// Check specifically for ads which can appear empty, even when successful
+		if (iframeDoc.querySelector(specialAdSelector)) {
+			log(['findAdInIframe', iframeId, 'special ad, launching adCallback'], 'info', logGroup);
+			return adCallback();
+		}
+
+		// Check for > 1x1 images
+		// This is needed because DART returns a position:absolute div for very simple ads
+		// and thus the body's offsetHeight is 0 :-(
+		if (isImagePresent(iframeDoc)) {
+			log(['findAdInIframe', iframeId, 'image, launching adCallback'], 'info', logGroup);
+			return adCallback();
+		}
+
+		// No ad found
+		log(['findAdInIframe', iframeId, 'launching noAdCallback'], 'info', logGroup);
+		noAdCallback();
 	}
 
 	function pushAd(slotname, success, error, slotMapSrc) {
 		var slotnameGpt = slotname + '_' + slotMapSrc,
 			slotDiv = document.createElement('div');
+
+		function callSuccess() {
+			if (typeof success === 'function') {
+				success();
+			}
+		}
+
+		function callError() {
+			slotDiv.className += ' hidden';
+			if (typeof error === 'function') {
+				error();
+			}
+		}
 
 		loadGpt();
 
@@ -216,65 +259,78 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 
 		document.getElementById(slotname).appendChild(slotDiv);
 
-		log(['pushAd', slotname], 9, logGroup);
+		log(['pushAd', slotname], 'debug', logGroup);
 		googletag.cmd.push(function () {
 			var attrName;
 
-			log(['googletag.display', slotnameGpt], 9, logGroup);
+			log(['googletag.display', slotnameGpt], 'debug', logGroup);
 			googletag.display(slotnameGpt);
 
 			slotQueue.push(gptSlots[slotnameGpt]);
 
-			doneCallbacks[slotnameGpt] = function () {
-				var status, height, iframeContent;
+			googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+				var status, height, gptEmpty, empty, iframe;
 
-				// First, see if there's a "forced" status from the creative itself
-				status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
+				if (event.slot === gptSlots[slotnameGpt]) {
+					log(['slotRenderEnded', slotname, event], 'info', logGroup);
 
-				if (status === 'success') {
-					log(['doneCallback', slotname, 'running success callback (forced status)'], 4, logGroup);
-					if (typeof success === 'function') {
-						success();
+					// Add debug info
+					slotDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
+					slotDiv.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+					slotDiv.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
+
+					// Check the explicit status
+					status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
+
+					if (status === 'success') {
+						log(['slotRenderEnded', slotname, 'running success callback (forced status)'], 'info', logGroup);
+						return callSuccess();
 					}
-					return;
+
+					// Now, let's base our decision on slot height (1x1 means hop)
+					height = event.size && event.size[1];
+					gptEmpty = event.isEmpty;
+					log(['slotRenderEnded', slotname, 'height', height, 'gptEmpty', gptEmpty], 'info', logGroup);
+
+					empty = gptEmpty || height <= 1;
+
+					if (empty) {
+						log(['slotRenderEnded', slotname, 'running error callback (hop)'], 'info', logGroup);
+						return callError();
+					}
+
+					// On non-mobile skin that's it, success!
+					if (window.skin !== 'wikiamobile') {
+						log(['slotRenderEnded', slotname, 'running success callback'], 'info', logGroup);
+						return callSuccess();
+					}
+
+					// On mobile skin we investigate the iframe contents
+					iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+
+					// No iframe, this is weird, but we assume this means an ad, no hopping!
+					if (!iframe) {
+						log(
+							['slotRenderEnded', slotname, 'running success callback (no ad iframe found)'],
+							'error',
+							logGroup
+						);
+						callSuccess();
+					}
+
+					if (iframe.contentWindow.document.readyState === 'complete') {
+						log(['slotRenderEnded', slotname, 'iframe state complete'], 'info', logGroup);
+						setTimeout(function () {
+							findAdInIframe(iframe, callSuccess, callError);
+						}, 0);
+					} else {
+						log(['slotRenderEnded', slotname, 'binding to iframe onload'], 'info', logGroup);
+						iframe.contentWindow.addEventListener('load', function () {
+							findAdInIframe(iframe, callSuccess, callError);
+						});
+					}
 				}
-
-				// Now, let's base our decision on slot height
-				height = slotDiv.offsetHeight;
-				log(['doneCallback', slotname, 'height (slot)', height], 4, logGroup);
-
-				// For mobile: examine the iframe
-				if (window.skin === 'wikiamobile' && height > 1) {
-					try {
-						iframeContent = slotDiv.querySelector('div[id*="_container_"] iframe').contentWindow;
-						height = iframeContent.innerHeight;
-						log(['doneCallback', slotname, 'height (iframe content)', height], 4, logGroup);
-					} catch (e) {
-						log(['doneCallback', slotname, 'height (iframe content)', 'exception'], 4, logGroup);
-					}
-
-					// Check specifically for ads which can appear empty, even when successful
-					if (height <= 1) {
-						if (iframeContent.document.querySelector('script[src*="/ads.saymedia.com/"], .celtra-ad-v3')) {
-							height = 13;
-							log(['doneCallback', slotname, 'height (iframe content, special ad)', height], 4, logGroup);
-						}
-					}
-				}
-
-				// If calculated height <= 1px, call error, else success
-				if (height <= 1) {
-					log(['doneCallback', slotname, 'running error callback (hop)'], 4, logGroup);
-					if (typeof error === 'function') {
-						error();
-					}
-				} else {
-					log(['doneCallback', slotname, 'running success callback'], 4, logGroup);
-					if (typeof success === 'function') {
-						success();
-					}
-				}
-			};
+			});
 
 			// Save page level and slot level params for easier ad delivery debugging
 			for (attrName in dataAttribs[slotnameGpt]) {
@@ -287,26 +343,27 @@ var WikiaGptHelper = function (log, window, document, adLogicPageLevelParams, gp
 
 	function flushAds() {
 		if (!gptLoaded) {
-			log(['flushAds', 'done', 'no slots to flush'], 4, logGroup);
+			log(['flushAds', 'done', 'no slots to flush'], 'info', logGroup);
 			return;
 		}
 
 		googletag.cmd.push(function () {
-			log(['flushAds', 'start'], 4, logGroup);
+			log(['flushAds', 'start'], 'info', logGroup);
 
-			log(['flushAds', 'refresh', slotQueue], 9, logGroup);
+			log(['flushAds', 'refresh', slotQueue], 'debug', logGroup);
 
 			if (slotQueue.length) {
 				googletag.pubads().refresh(slotQueue);
 				slotQueue = [];
 			}
 
-			log(['flushAds', 'done'], 4, logGroup);
+			log(['flushAds', 'done'], 'info', logGroup);
 		});
 	}
 
-	this.pushAd = pushAd;
-	this.flushAds = flushAds;
-};
+	return {
+		pushAd: pushAd,
+		flushAds: flushAds
+	};
 
-define('ext.wikia.adengine.gpthelper', ['wikia.log', 'wikia.window', 'wikia.document', 'wikia.adlogicpageparams', 'ext.wikia.adengine.gptslotconfig'], WikiaGptHelper);
+});

@@ -46,7 +46,7 @@
 			width: 100%;
 		}
 
-	} else {
+	} @else {
 		width: 735px;
 	}
 
@@ -143,10 +143,36 @@
 	}
 }
 
+.hubs-slots {
+	@include clearfix;
+}
+.hub-slot {
+	display: inline-block;
+	width: 30%;
+	.input-group {
+		margin: 10px 0;
+	}
+	label {
+		display: block;
+	}
+	textarea {
+		height: 75px;
+		width: 80%;
+	}
+}
+.hubs-slots-submit {
+	float: none;
+}
+
+
 input[type=submit] {
 	float: right;
 }
 
 .alternative {
 	color: $color-alternate-text;
+}
+
+.export-list-button {
+	float: right;
 }

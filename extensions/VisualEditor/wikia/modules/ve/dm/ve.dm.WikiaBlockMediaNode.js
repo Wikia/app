@@ -23,10 +23,6 @@ OO.inheritClass( ve.dm.WikiaBlockMediaNode, ve.dm.MWBlockImageNode );
 
 /* Static Properties */
 
-ve.dm.WikiaBlockMediaNode.static.childNodeTypes = [ 'wikiaMediaCaption' ];
-
-ve.dm.WikiaBlockMediaNode.static.captionNodeType = 'wikiaMediaCaption';
-
 ve.dm.WikiaBlockMediaNode.static.typeToRdfa = null;
 
 ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, converter ) {
@@ -35,6 +31,6 @@ ve.dm.WikiaBlockMediaNode.static.toDataElement = function ( domElements, convert
 		),
 		mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
 		mwData = JSON.parse( mwDataJSON );
-	dataElement[0].attributes.attribution = mwData.attribution;
+	dataElement[0].attributes.user = mwData.user;
 	return dataElement;
 };

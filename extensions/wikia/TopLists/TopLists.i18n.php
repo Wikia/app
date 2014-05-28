@@ -385,6 +385,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'toplists-editor-related-article-placeholder' => 'ДӀаязъе йолуш йолу агӀона цӀе',
+	'toplists-editor-description-placeholder' => 'ДӀаязде цунах лаьцна',
 	'toplists-update-button' => 'МогӀам Ӏалашбар',
 	'toplists-image-browser-upload-btn' => 'Харжа',
 	'toplists-seconds' => '$1 {{PLURAL:$1|секунд}}',
@@ -577,7 +578,7 @@ $messages['diq'] = array(
 	'createtoplist' => 'listey Tewr 10ano newe vırazê',
 	'edittoplist' => 'listey Tewr 10a bıvurnê',
 	'toplists-category' => 'listey Tewr 10a',
-	'toplists-editor-title-label' => 'Namey lista',
+	'toplists-editor-title-label' => 'Nameyê liste',
 	'toplists-editor-image-browser-tooltip' => 'Resim deke',
 	'toplists-create-button' => 'Liste vırazê',
 	'toplists-update-button' => 'Listi qeyd ke',

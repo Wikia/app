@@ -6,7 +6,7 @@ var UserSignup = {
 	init: function () {
 		'use strict';
 
-		$('.wikia_terms > a').click(function (event) {
+		$('.wikia_terms > a').on('click', function (event) {
 			var url = $(this).attr('href');
 			event.preventDefault();
 			window.open(url, '_blank');
@@ -22,19 +22,19 @@ var UserSignup = {
 		);
 		this.wikiaForm.el
 			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
-			.bind('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
+			.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
 		this.wikiaForm.el
 			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.bind('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
-			
+			.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+
 		// dom pre-cache
 		this.submitButton = this.wikiaForm.inputs['submit'];
-		if( window.wgUserLoginDisableCaptcha !== true ) {
-			this.wikiaForm.inputs['recaptcha_response_field'].bind('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+		if( window.wgUserLoginDisableCaptcha !== true && this.wikiaForm.inputs['recaptcha_response_field']) {
+			this.wikiaForm.inputs['recaptcha_response_field'].on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
 		}
     }
 };
 
-$(function() {
+$( window ).on('load', function() {
 	UserSignup.init();
 });

@@ -4,10 +4,6 @@
 	transition-duration: $duration;
 	transition-timing-function: $timing;
 	transition-delay: $delay;
-	-moz-transition-property: $property;
-	-moz-transition-duration: $duration;
-	-moz-transition-timing-function: $timing;
-	-moz-transition-delay: $delay;
 	-webkit-transition-property: $property;
 	-webkit-transition-duration: $duration;
 	-webkit-transition-timing-function: $timing;
@@ -17,5 +13,4 @@
 @mixin transition-shorthand($shorthand) {
 	transition: $shorthand;
 	-webkit-transition: $shorthand;
-	-moz-transition: $shorthand;
 }

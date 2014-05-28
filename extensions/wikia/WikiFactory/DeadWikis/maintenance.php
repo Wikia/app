@@ -40,7 +40,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-252 days',
+				'max' => '-182 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -50,24 +50,24 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'edits',
-				'max' => '9',
+				'max' => '15',
 			),
 			array(
 				'type' => 'int',
 				'key' => 'contentpages',
-				'max' => '3',
+				'max' => '5',
 			),
 			array(
 				'type' => 'int',
 				'key' => 'pvlast3month',
-				'max' => '29',
+				'max' => '49',
 			),
 		),
 		self::DELETE_SOON => array(
 			'created' => array(
 				'type' => 'datetime',
 				'key' => 'created',
-				'max' => '-245 days',
+				'max' => '-175 days',
 			),
 			array(
 				'type' => 'datetime',
@@ -77,17 +77,17 @@ class AutomatedDeadWikisDeletionMaintenance {
 			array(
 				'type' => 'int',
 				'key' => 'edits',
-				'max' => '9',
+				'max' => '15',
 			),
 			array(
 				'type' => 'int',
 				'key' => 'contentpages',
-				'max' => '3',
+				'max' => '5',
 			),
 			array(
 				'type' => 'int',
 				'key' => 'pvlast3monthm5',
-				'max' => '29',
+				'max' => '49',
 			),
 		)
 	);

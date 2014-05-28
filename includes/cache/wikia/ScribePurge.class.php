@@ -112,20 +112,6 @@ class ScribePurge {
 	 * @return string method name
 	 */
 	private static function getPurgeCaller() {
-		// analyze the backtrace to log the source of purge requests
-		$backtrace = wfDebugBacktrace();
-		$method = '';
-
-		while ( $entry = array_shift( $backtrace ) ) {
-			// ignore "internal" classes
-			if ( empty( $entry['class'] ) || in_array( $entry['class'], [__CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title', 'WikiaDispatchableObject'] ) ) {
-				continue;
-			}
-
-			$method = $entry['class'] . ':' . $entry['function'];
-			break;
-		}
-
-		return $method;
+		return wfGetCallerClassMethod( [ __CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title', 'WikiaDispatchableObject' ] );
 	}
 }

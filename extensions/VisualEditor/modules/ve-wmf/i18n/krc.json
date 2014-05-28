@@ -1,0 +1,13 @@
+{
+    "@metadata": {
+        "authors": [
+            "Iltever"
+        ]
+    },
+    "tag-visualeditor": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Визуал редактор]]",
+    "tag-visualeditor-description": "Тюрлендириу, [[{{MediaWiki:Visualeditor-descriptionpagelink}}|визуал редактор]] бла этилгенди",
+    "tag-visualeditor-needcheck": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Визуал редактор]]: тинт",
+    "tag-visualeditor-needcheck-description": "Система, иш этиб тюрлендирилмеген вики-текст табхан, [[{{MediaWiki:Visualeditor-descriptionpagelink}}|визуал редакторну]] болушлугъу бла этилген тюрлендириу.",
+    "visualeditor-feedback-link": "Project:VisualEditor/Оюмла",
+    "visualeditor-feedback-tool": "Оюм къой"
+}

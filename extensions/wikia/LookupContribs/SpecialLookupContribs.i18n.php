@@ -509,7 +509,7 @@ $messages['es'] = array(
 	'lookupcontribstitle' => 'Búsqueda de Contribuciones',
 	'lookupcontribsrecentcontributions' => 'Contribuciones recientes para $1',
 	'lookupcontribsfinalcontributions' => 'Contribuciones finales para $1',
-	'lookupcontribshelp' => 'Esta página especial puede ser usada para mostrar las contribuciones de los usuarios en múltiples wikias. Para mostrar la lista, pon un nombre de usuario debajo.',
+	'lookupcontribshelp' => 'Esta página especial puede ser usada para mostrar las contribuciones de los usuarios en múltiples wikis. Para mostrar la lista, pon un nombre de usuario debajo.',
 	'lookupcontribusernotspecify' => 'No has especificado un usuario aún',
 	'lookupcontribsselectuser' => 'Seleccionar usuario:',
 	'lookupcontribsselectfor' => 'Seleccionar para:',
@@ -526,7 +526,7 @@ $messages['es'] = array(
 	'lookupcontribsselectwikis' => 'Seleccionar wikis:',
 	'lookupcontribslistwikiainfo' => 'Lista de wikis donde hay artículos editados por <b>$1</b>',
 	'lookupcontribsnoresultfound' => '¡No se encontraron resultados!',
-	'lookupcontribsinvalidresults' => '¡Resultados inválidos!',
+	'lookupcontribsinvalidresults' => '¡Resultados no válidos!',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Nombre de la BD',
 	'lookupcontribswikiurl' => 'URL',
@@ -541,7 +541,7 @@ $messages['es'] = array(
 	'lookupcontribsprevious' => 'Anterior',
 	'lookupcontribspageremoved' => 'Quitado:',
 	'lookupcontribsrestore' => 'restaurar',
-	'lookupcontribslog' => 'log',
+	'lookupcontribslog' => 'registro',
 	'lookupcontribscontribs' => 'contribuciones',
 	'lookupcontribshist' => 'hist',
 	'lookupcontribsdiff' => 'dif',
@@ -939,6 +939,23 @@ $messages['ja'] = array(
 	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
 	'lookupcontribsshowpages' => '全ページ（$1名前空間）',
 	'lookupcontribscontent' => 'コンテンツ',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lookupcontribswiki' => 'ವಿಕಿ',
+	'lookupcontribswikititle' => 'ಶೀರ್ಷಿಕೆ',
+	'lookupcontribswikioptions' => 'ಆಯ್ಕೆಗಳು',
+	'lookupcontribslastedited' => 'ಕೊನೆಯ ಸಂಪಾದನೆ',
+	'lookupcontribsnext' => 'ಮುಂದಿನದು',
+	'lookupcontribsrestore' => 'ಹಿಂದೆ ಇದ್ದಂತೆ ಮಾಡು',
+	'lookupcontribslog' => 'ದಾಖಲೆ',
+	'lookupcontribscontribs' => 'ಕಾಣಿಕೆಗಳು',
+	'lookupcontribsdiff' => 'ವ್ಯತ್ಯಾಸ',
+	'lookupcontribscontent' => 'ಮಾಹಿತಿ',
+	'lookupcontribsall' => 'ಎಲ್ಲಾ',
 );
 
 /** Korean (한국어)
@@ -1526,20 +1543,20 @@ $messages['pt-br'] = array(
 	'lookupcontribstitle' => 'Procurar Contribuições',
 	'lookupcontribsrecentcontributions' => 'Contribuições recentes de $1',
 	'lookupcontribsfinalcontributions' => 'Contribuições finais de $1',
-	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um utilizador em várias Wikias.
-Para apresentar a lista, forneça abaixo o nome do utilizador.',
+	'lookupcontribshelp' => 'Esta página especial pode ser usada para apresentar as contribuições de um usuário em várias Wikias.
+Para apresentar a lista, forneça abaixo o nome do usuário.',
 	'lookupcontribusernotspecify' => 'Você ainda não especificou um usuário',
 	'lookupcontribsselectuser' => 'Selecionar usuário:',
 	'lookupcontribsselectfor' => 'Selecionar:',
 	'lookupcontribsdisplaymode' => 'Modo de visionamento:',
-	'lookupcontribsselectmodenormal' => 'contribuições recentes do utilizador',
-	'lookupcontribsselectmodefinal' => 'contribuições finais do utilizador',
+	'lookupcontribsselectmodenormal' => 'contribuições recentes do usuário',
+	'lookupcontribsselectmodefinal' => 'contribuições finais do usuário',
 	'lookupcontribsselectmodeall' => 'todas as contribuições do usuário',
 	'lookupcontribsfullurls' => 'URLs completas',
 	'lookupcontribslinks' => 'links para as contribuições',
 	'lookupcontribsgo' => 'Mostrar',
-	'lookupcontribsinvaliduser' => '<p class="error">O utilizador "<b>$1</b>" não existe.
-Verifique se se enganou com o nome do utilizador.</p>',
+	'lookupcontribsinvaliduser' => '<p class="error">O usuário "<b>$1</b>" não existe.
+Verifique se se enganou com o nome do usuário.</p>',
 	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" não é um modo de visionamento válido.</p>',
 	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" não é um modo válido.</p>',
 	'lookupcontribsselectwikis' => 'Selecionar wikis:',

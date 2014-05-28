@@ -62,12 +62,13 @@ $messages['af'] = array(
  * @author Achraf94
  * @author Alexknight12
  * @author Claw eg
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'comboajaxlogin-desc' => 'صندوق ديناميكي يسمح للمستخدمين بتسجيل الدخول كما يذكرهم بكلمة السر و المستخدمين المسجلين.',
 	'comboajaxlogin-createlog' => 'تسجيل الدخول أو إنشاء حساب',
 	'comboajaxlogin-actionmsg' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
-	'comboajaxlogin-actionmsg-protected' => 'لكي تقوم بهذه العملية يجب عليك أولا تسجيل الدخول أو إنشاء حساب',
+	'comboajaxlogin-actionmsg-protected' => 'لتنفيذ هذه العملية عليك أولًا أن تسجل دخولك أو تنشئ حسابًا.',
 	'comboajaxlogin-connectmarketing' => '<h1>اربط حساباتك</h1>
 <ul>
 <li>حافظ على اسم المستخدم الحالي, تاريخ المساهمات, التعديلات... لا شيء يتغير إلا كيفية تسجيل الدخول</li>
@@ -81,7 +82,7 @@ $messages['ar'] = array(
 <li>شارك نشاطك في ويكيا مع أصدقائك في الفيسبوك، مع تحكم كامل في كل ما ينشر على فيسبوكك</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; العودة',
-	'comboajaxlogin-connectmarketing-forward' => 'إبدأ »',
+	'comboajaxlogin-connectmarketing-forward' => 'ابدأ »',
 	'comboajaxlogin-connectdirections' => 'قم بإدخال اسم متخدمك وكلمة مرورك في ويكيا - سوف نقوم بربط حسابك في ويكيا مع الحساب في الفيسبوك سحريا.
 
 عندما تنتهي، يمكنك الدخول بسهولة عبر زر "اتصال عبر الفيسبوك".',
@@ -747,6 +748,29 @@ $messages['hi'] = array(
 	'comboajaxlogin-connectmarketing-oasis' => '<h1>अपने Wikia खाते से कनेक्ट करने के लिए Facebook</h1>!एन!<ul>!एन!<li>रखने के अपने वर्तमान उपयोगकर्ता नाम, इतिहास, कुछ परिवर्तनों को छोड़कर कैसे आप में लॉग इन करें.. संपादित करता</li>!एन!<li>Wikia पर अपनी गतिविधि जो प्रकाशित है के पूर्ण नियंत्रण के साथ Facebook पर अपने दोस्तों के साथ साझा करें</li>!एन!</ul>',
 	'comboajaxlogin-connectmarketing-back' => '«वापस',
 	'comboajaxlogin-connectmarketing-forward' => 'आरंभ करें»',
+);
+
+/** Hunsrik (Hunsrik)
+ * @author Paul Beppler
+ */
+$messages['hrx'] = array(
+	'comboajaxlogin-desc' => 'Dynamisch Box, wos Benutzer ermöchliche tut, sich oonzumelle, Passwörter zu merke und Benutzer zu registriere',
+	'comboajaxlogin-createlog' => 'Benutzerkonto',
+	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführe, musst du dich zuerst oonmelle orrer en Benutzerkonto erstelle',
+	'comboajaxlogin-actionmsg-protected' => 'Um die geschützte Seit zu beoorbeite, musst du dich zunächst oonmelle orrer en Benutzerkonto oonlehn.',
+	'comboajaxlogin-connectmarketing' => '<h1>Verbindt deine Kontos</h1>
+<ul>
+<li>Behall dein aktuell Benutzernoome, Versionsgeschicht, Beoorbeitunge... ännert sich nixs, ausser, wie du in </li> einlogge <li>Teile deine Aktivitäte uff Wikia mit dein Freinde uff Facebook</li>
+<li>komplett Kontroll dodrüwer, was veröffentlicht/publiziert weard.</li>
+</ul>',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Mit Facebook Connect oonmelde</h1>',
+	'comboajaxlogin-connectmarketing-back' => '« Zurück',
+	'comboajaxlogin-connectmarketing-forward' => 'Fänge jetzt an »',
+	'comboajaxlogin-connectdirections' => 'Geb dein Wikia-Benutzernoome und das Passwort hie ren - mir tun dann dein Wikia- und Facebook-Benutzerkonto im Hinnergrund verknüpfe.
+
+Sobald du fertich bist, kannst du dich enfach üwer den Facebook-Connect-Knopf oonmelde.',
+	'comboajaxlogin-post-not-understood' => 'Es gab en Fehler beim uffbau von dem Formular.
+Bittschön versuch das wieder erneit orrer [[Special:Contact|meld es]].',
 );
 
 /** Hungarian (magyar)
@@ -1544,7 +1568,7 @@ $messages['ru'] = array(
  * @author John Reid
  */
 $messages['sco'] = array(
-	'comboajaxlogin-desc' => 'Dynâmic kist that permits uisers tae log-in, remynd passwaird n register uisers',
+	'comboajaxlogin-desc' => 'Dynameec kist that lats uisers log-in, remynd passwaird n register uisers',
 	'comboajaxlogin-createlog' => 'Log in or cræft aen accoont',
 	'comboajaxlogin-actionmsg' => 'Tae perform this action ye first need tae log in or mak aen accoont',
 	'comboajaxlogin-actionmsg-protected' => 'Tae perform this action ye first need tae log in or mak aen accoont.',

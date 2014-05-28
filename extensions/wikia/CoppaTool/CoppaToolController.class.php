@@ -29,7 +29,7 @@ class CoppaToolController extends WikiaController {
 
 		$errorMessage = null;
 		$errorMessage2 = null;
-		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2 );
+		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2, /*$keepEmail = */false );
 		if ( $res === false ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', $errorMessage );

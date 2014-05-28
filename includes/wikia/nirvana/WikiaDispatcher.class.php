@@ -126,6 +126,13 @@ class WikiaDispatcher {
 				wfProfileIn($profilename);
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
+				$controllerReflection = new ReflectionClass($controllerClassName);
+
+				if ($controllerReflection->hasConstant('DEFAULT_TEMPLATE_ENGINE')) {
+					$response->setTemplateEngine($controller::DEFAULT_TEMPLATE_ENGINE);
+				} else {
+					$response->setTemplateEngine(WikiaController::DEFAULT_TEMPLATE_ENGINE);
+				}
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
@@ -171,6 +178,10 @@ class WikiaDispatcher {
 					throw new MethodNotFoundException("{$controllerClassName}::{$method}");
 				}
 
+				if ( !$request->isInternal() ) {
+					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+				}
+
 				// Initialize the RequestContext object if it is not already set
 				// SpecialPageController context is already set by SpecialPageFactory::execute by the time it gets here
 				if ($controller->getContext() === null) {
@@ -187,7 +198,9 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				if ( method_exists( $controller, 'preventUsage' ) && $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
+				if ( method_exists( $controller, 'preventBlockedUsage' ) && $controller->preventBlockedUsage( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} elseif ( method_exists( $controller, 'userAllowedRequirementCheck' ) && $controller->userAllowedRequirementCheck( $controller->getContext()->getUser(), $method ) ) {
 					$result = false;
 				} else {
 					// Actually call the controller::method!
@@ -257,6 +270,22 @@ class WikiaDispatcher {
 
 		wfProfileOut(__METHOD__);
 		return $response;
+	}
+
+	/**
+	 * @param WikiaApp $app
+	 * @param $controllerClassName
+	 * @param $method
+	 * @throws PermissionsException
+	 */
+	private function testIfUserHasPermissionsOrThrow(WikiaApp $app, $controllerClassName, $method) {
+		$nirvanaAccessRules = WikiaAccessRules::instance();
+		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor($controllerClassName, $method);
+		foreach ($permissions as $permission) {
+			if (!$app->wg->User->isAllowed($permission)) {
+				throw new PermissionsException($permission);
+			}
+		}
 	}
 }
 

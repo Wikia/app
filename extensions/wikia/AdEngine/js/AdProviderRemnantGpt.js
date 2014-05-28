@@ -1,8 +1,13 @@
-/*exported AdProviderRemnantDart*/
-var AdProviderRemnantGpt = function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
+/*global define*/
+define('ext.wikia.adEngine.provider.remnantGpt', [
+	'wikia.log',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.wikiaGptHelper',
+	'ext.wikia.adEngine.gptSlotConfig'
+], function (log, slotTweaker, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderRemnantGpt',
+	var logGroup = 'ext.wikia.adEngine.provider.remnantGpt',
 		srcName = 'rh',
 		slotMap = gptSlotConfig.getConfig(srcName);
 
@@ -32,7 +37,6 @@ var AdProviderRemnantGpt = function (log, slotTweaker, wikiaGpt, gptSlotConfig) 
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 
 				slotTweaker.hide(slotname);
-				slotTweaker.hideSelfServeUrl(slotname);
 
 				success();
 			},
@@ -47,4 +51,4 @@ var AdProviderRemnantGpt = function (log, slotTweaker, wikiaGpt, gptSlotConfig) 
 		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
-};
+});

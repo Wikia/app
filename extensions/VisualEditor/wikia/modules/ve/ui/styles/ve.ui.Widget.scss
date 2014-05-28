@@ -4,6 +4,11 @@
 
 /* Button */
 
+.oo-ui-buttonWidget {
+	white-space: nowrap;
+}
+
+// Is this used any longer?
 .oo-ui-iconButtonWidget .oo-ui-buttonWidget-button {
 	&:hover,
 	&:focus {
@@ -101,10 +106,12 @@
 	background: $color-page;
 }
 
-.oo-ui-outlineItemWidget {
-	&.oo-ui-optionWidget-selected {
-		background: $color-ve-hover;
-		text-shadow: $color-ve-gradient-shadow 0px 1px 1px;
+.oo-ui-selectWidget {
+	.oo-ui-outlineItemWidget {
+		&.oo-ui-optionWidget-selected, &.oo-ui-optionWidget-pressed {
+			background: $color-ve-hover;
+			text-shadow: $color-ve-gradient-shadow 0px 1px 1px;
+		}
 	}
 }
 

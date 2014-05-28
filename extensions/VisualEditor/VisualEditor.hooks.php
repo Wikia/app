@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -13,10 +13,7 @@ class VisualEditorHooks {
 		global $wgVisualEditorSupportedSkins;
 		static $isAvailable = null;
 		if ( is_null( $isAvailable ) ) {
-			$isAvailable = (
-				in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
-				$skin->getUser()->getOption( 'enablerichtext' )
-			);
+			$isAvailable = in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
 		}
 		return $isAvailable;
 	}
@@ -37,49 +34,13 @@ class VisualEditorHooks {
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
 		// this should have no impact on deploying to Wikimedia's wiki cluster.
 		// Is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		//wfUseMW( '1.23wmf2' ); #back-compat
+		//wfUseMW( '1.22' );
 
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
 			if ( $msg !== null ) {
 				$wgResourceModules['ext.visualEditor.viewPageTarget.init']['messages'][] = $msg;
 			}
-		}
-
-		// Only load jquery.ULS if ULS Extension isn't already installed:
-		if ( !class_exists( 'UniversalLanguageSelectorHooks' ) ) {
-			$wgResourceModules['jquery.uls'] = $wgVisualEditorResourceTemplate + array(
-				'scripts' => array(
-					'jquery.uls/src/jquery.uls.core.js',
-					'jquery.uls/src/jquery.uls.lcd.js',
-					'jquery.uls/src/jquery.uls.languagefilter.js',
-					'jquery.uls/src/jquery.uls.regionfilter.js',
-				),
-				'styles' => array(
-					'jquery.uls/css/jquery.uls.css',
-					'jquery.uls/css/jquery.uls.lcd.css',
-				),
-				'dependencies' => array(
-					'jquery.uls.grid',
-					'jquery.uls.data',
-					'jquery.uls.compact',
-				),
-			);
-			$wgResourceModules['jquery.uls.data'] = $wgVisualEditorResourceTemplate + array(
-				'scripts' => array(
-					'jquery.uls/src/jquery.uls.data.js',
-					'jquery.uls/src/jquery.uls.data.utils.js',
-				),
-				'position' => 'top',
-			);
-			$wgResourceModules['jquery.uls.grid'] = $wgVisualEditorResourceTemplate + array(
-				'styles' => 'jquery.uls/css/jquery.uls.grid.css',
-				'position' => 'top',
-			);
-			$wgResourceModules['jquery.uls.compact'] = $wgVisualEditorResourceTemplate + array(
-				'styles' => 'jquery.uls/css/jquery.uls.compact.css',
-				'position' => 'top',
-			);
 		}
 	}
 
@@ -92,8 +53,10 @@ class VisualEditorHooks {
 	 * @param $skin Skin
 	 */
 	public static function onBeforePageDisplay( &$output, &$skin ) {
-		$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
-		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		if ( self::isAvailable( $skin ) ) {
+			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+			//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		}
 		return true;
 	}
 
@@ -129,10 +92,11 @@ class VisualEditorHooks {
 					$title->getNamespace() == NS_MEDIAWIKI &&
 					$title->getDefaultMessageText() !== false
 				);
+				$action = $existing ? 'edit' : 'create';
 				$veParams = $skin->editUrlOptions();
 				unset( $veParams['action'] ); // Remove action=edit
 				$veParams['veaction'] = 'edit'; // Set veaction=edit
-				$veTabMessage = $wgVisualEditorTabMessages[$existing ? 'edit' : 'create'];
+				$veTabMessage = $wgVisualEditorTabMessages[$action];
 				$veTabText = $veTabMessage === null ? $data['text'] :
 					wfMessage( $veTabMessage )->setContext( $skin->getContext() )->text();
 				$veTab = array(
@@ -144,16 +108,27 @@ class VisualEditorHooks {
 
 				// Alter the edit tab
 				$editTab = $data;
-				$editTabMessage = $wgVisualEditorTabMessages[$existing ? 'editsource' : 'createsource'];
+				if (
+					$title->inNamespace( NS_FILE ) &&
+					WikiPage::factory( $title ) instanceof WikiFilePage &&
+					!WikiPage::factory( $title )->isLocal()
+				) {
+					$editTabMessage = $wgVisualEditorTabMessages[$action . 'localdescriptionsource'];
+				} else {
+					$editTabMessage = $wgVisualEditorTabMessages[$action . 'source'];
+				}
+
 				if ( $editTabMessage !== null ) {
 					$editTab['text'] = wfMessage( $editTabMessage )->setContext( $skin->getContext() )->text();
 				}
 
 				// Inject the VE tab before or after the edit tab
 				if ( $wgVisualEditorTabPosition === 'before' ) {
+					$editTab['class'] = 'collapsible';
 					$newViews['ve-edit'] = $veTab;
 					$newViews['edit'] = $editTab;
 				} else {
+					$veTab['class'] = 'collapsible';
 					$newViews['edit'] = $editTab;
 					$newViews['ve-edit'] = $veTab;
 				}
@@ -163,6 +138,50 @@ class VisualEditorHooks {
 			}
 		}
 		$links['views'] = $newViews;
+		return true;
+	}
+
+	/**
+	 * Called when the normal wikitext editor is shown.
+	 * Inserts a 'veswitched' hidden field if requested by the client
+	 *
+	 * @param $editPage EditPage
+	 * @param $output OutputPage
+	 * @returns boolean true
+	 */
+	public static function onEditPageShowEditFormFields( EditPage $editPage, OutputPage $output ) {
+		$request = RequestContext::getMain()->getRequest();
+		if ( $request->getBool( 'veswitched' ) ) {
+			$output->addHTML( Xml::input( 'veswitched', false, '1', array( 'type' => 'hidden' ) ) );
+		}
+		return true;
+	}
+
+	/**
+	 * Called when an edit is saved
+	 * Adds 'visualeditor-switched' tag to the edit if requested
+	 *
+	 * @param $article WikiPage
+	 * @param $user User
+	 * @param $content Content
+	 * @param $summary string
+	 * @param $isMinor boolean
+	 * @param $isWatch boolean
+	 * @param $section int
+	 * @param $flags int
+	 * @param $revision Revision|null
+	 * @param $status Status
+	 * @param $baseRevId int|boolean
+	 * @returns boolean true
+	 */
+	public static function onPageContentSaveComplete(
+		$article, $user, $content, $summary, $isMinor, $isWatch,
+		$section, $flags, $revision, $status, $baseRevId
+	) {
+		$request = RequestContext::getMain()->getRequest();
+		if ( $request->getBool( 'veswitched' ) && $revision ) {
+			ChangeTags::addTags( 'visualeditor-switched', null, $revision->getId() );
+		}
 		return true;
 	}
 
@@ -233,13 +252,13 @@ class VisualEditorHooks {
 			$preferences['visualeditor-enable'] = array(
 				'type' => 'toggle',
 				'label-message' => 'visualeditor-preference-enable',
-				'section' => 'editing/beta'
+				'section' => 'editing/editor'
 			);
 		}
 		$preferences['visualeditor-betatempdisable'] = array(
 			'type' => 'toggle',
 			'label-message' => 'visualeditor-preference-betatempdisable',
-			'section' => 'editing/beta'
+			'section' => 'editing/editor'
 		);
 		return true;
 	}
@@ -247,14 +266,16 @@ class VisualEditorHooks {
 	public static function onGetBetaPreferences( $user, &$preferences ) {
 		global $wgExtensionAssetsPath, $wgVisualEditorSupportedSkins, $wgVisualEditorBrowserBlacklist;
 
-		$dir = RequestContext::getMain()->getLanguage()->getDir();
+		$iconpath = $wgExtensionAssetsPath . "/VisualEditor";
 
 		$preferences['visualeditor-enable'] = array(
 			'version' => '1.0',
 			'label-message' => 'visualeditor-preference-core-label',
 			'desc-message' => 'visualeditor-preference-core-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-$dir.svg",
+			'screenshot' => array(
+				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-ltr.svg",
+				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-rtl.svg",
+			),
 			'info-message' => 'visualeditor-preference-core-info-link',
 			'discussion-message' => 'visualeditor-preference-core-discussion-link',
 			'requirements' => array(
@@ -269,8 +290,10 @@ class VisualEditorHooks {
 			'version' => '1.0',
 			'label-message' => 'visualeditor-preference-language-label',
 			'desc-message' => 'visualeditor-preference-language-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-language-$dir.svg",
+			'screenshot' => array(
+				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-language-ltr.svg",
+				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-language-rtl.svg",
+			),
 			'info-message' => 'visualeditor-preference-experimental-info-link',
 			'discussion-message' => 'visualeditor-preference-experimental-discussion-link',
 			'requirements' => array(
@@ -286,8 +309,10 @@ class VisualEditorHooks {
 			'version' => '1.0',
 			'label-message' => 'visualeditor-preference-mwalienextension-label',
 			'desc-message' => 'visualeditor-preference-mwalienextension-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-alien-$dir.svg",
+			'screenshot' => array(
+				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-alien-ltr.svg",
+				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-alien-rtl.svg",
+			),
 			'info-message' => 'visualeditor-preference-mwalienextension-info-link',
 			'discussion-message' => 'visualeditor-preference-mwalienextension-discussion-link',
 			'requirements' => array(
@@ -298,47 +323,17 @@ class VisualEditorHooks {
 		);
 */
 
-		$preferences['visualeditor-enable-mwmath'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-mwmath-label',
-			'desc-message' => 'visualeditor-preference-mwmath-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-formulae-$dir.svg",
-			'info-message' => 'visualeditor-preference-mwmath-info-link',
-			'discussion-message' => 'visualeditor-preference-mwmath-discussion-link',
-			'requirements' => array(
-				'betafeatures' => array(
-					'visualeditor-enable',
-				),
-			),
-		);
-
 /* Disabling Beta Features option for hieroglyphics for now
 		$preferences['visualeditor-enable-mwhiero'] = array(
 			'version' => '1.0',
 			'label-message' => 'visualeditor-preference-mwhiero-label',
 			'desc-message' => 'visualeditor-preference-mwhiero-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-hieroglyphics-$dir.svg",
+			'screenshot' => array(
+				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-hieroglyphics-ltr.svg",
+				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-hieroglyphics-rtl.svg",
+			),
 			'info-message' => 'visualeditor-preference-mwhiero-info-link',
 			'discussion-message' => 'visualeditor-preference-mwhiero-discussion-link',
-			'requirements' => array(
-				'betafeatures' => array(
-					'visualeditor-enable',
-				),
-			),
-		);
-*/
-
-/* Disabling Beta Features option for syntax highlighting for now
-		$preferences['visualeditor-enable-mwsyntaxHighlight'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-mwsyntaxHighlight-label',
-			'desc-message' => 'visualeditor-preference-mwsyntaxHighlight-description',
-			'screenshot' => $wgExtensionAssetsPath .
-				"/VisualEditor/betafeatures-icon-VisualEditor-syntaxHighlight-$dir.svg",
-			'info-message' => 'visualeditor-preference-mwsyntaxHighlight-info-link',
-			'discussion-message' => 'visualeditor-preference-mwsyntaxHighlight-discussion-link',
 			'requirements' => array(
 				'betafeatures' => array(
 					'visualeditor-enable',
@@ -351,6 +346,7 @@ class VisualEditorHooks {
 	public static function onListDefinedTags( &$tags ) {
 		$tags[] = 'visualeditor';
 		$tags[] = 'visualeditor-needcheck';
+		$tags[] = 'visualeditor-switched';
 		return true;
 	}
 
@@ -358,7 +354,7 @@ class VisualEditorHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgStylePath;
+		global $wgStylePath, $wgSVGMaxSize;
 
 		$pageLanguage = $out->getTitle()->getPageLanguage();
 
@@ -369,7 +365,8 @@ class VisualEditorHooks {
 				'/common/images/magnify-clip' .
 				( $pageLanguage->isRTL() ? '-rtl' : '' ) . '.png',
 			'pageLanguageCode' => $pageLanguage->getHtmlCode(),
-			'pageLanguageDir' => $pageLanguage->getDir()
+			'pageLanguageDir' => $pageLanguage->getDir(),
+			'svgMaxSize' => $wgSVGMaxSize,
 		);
 
 		return true;
@@ -380,6 +377,7 @@ class VisualEditorHooks {
 	 */
 	public static function onResourceLoaderGetConfigVars( array &$vars ) {
 		global $wgDefaultUserOptions,
+			$wgThumbLimits,
 			$wgVisualEditorDisableForAnons,
 			$wgVisualEditorEnableExperimentalCode,
 			$wgVisualEditorNamespaces,
@@ -388,30 +386,148 @@ class VisualEditorHooks {
 			$wgVisualEditorTabMessages,
 			$wgVisualEditorBrowserBlacklist,
 			$wgVisualEditorSupportedSkins,
-			$wgVisualEditorShowBetaWelcome;
+			$wgVisualEditorShowBetaWelcome,
+			$wgVisualEditorEnableTocWidget,
+			$wgVisualEditorPreferenceModules;
 
 		$vars['wgVisualEditorConfig'] = array(
 			'disableForAnons' => $wgVisualEditorDisableForAnons,
-			'enableExperimentalCode' => $wgVisualEditorEnableExperimentalCode,
+			'preferenceModules' => $wgVisualEditorPreferenceModules,
 			'namespaces' => $wgVisualEditorNamespaces,
 			'pluginModules' => $wgVisualEditorPluginModules,
 			'defaultUserOptions' => array(
 				'betatempdisable' => $wgDefaultUserOptions['visualeditor-betatempdisable'],
 				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
-				'enable-experimental' => $wgDefaultUserOptions['visualeditor-enable-experimental'],
-//				'enable-language' => $wgDefaultUserOptions['visualeditor-enable-language'],
-//				'enable-mwalienextension' => $wgDefaultUserOptions['visualeditor-enable-mwalienextension'],
-				'enable-mwmath' => $wgDefaultUserOptions['visualeditor-enable-mwmath'],
-//				'enable-mwhiero' => $wgDefaultUserOptions['visualeditor-enable-mwhiero'],
-//				'enable-mwsyntaxHighlight' => $wgDefaultUserOptions['visualeditor-enable-mwsyntaxHighlight'],
+				'defaultthumbsize' => $wgThumbLimits[ $wgDefaultUserOptions['thumbsize'] ]
 			),
 			'blacklist' => $wgVisualEditorBrowserBlacklist,
 			'skins' => $wgVisualEditorSupportedSkins,
 			'tabPosition' => $wgVisualEditorTabPosition,
 			'tabMessages' => $wgVisualEditorTabMessages,
 			'showBetaWelcome' => $wgVisualEditorShowBetaWelcome,
+			'enableTocWidget' => $wgVisualEditorEnableTocWidget
 		);
 
+		foreach ( $wgVisualEditorPreferenceModules as $pref => $module ) {
+			$vars['wgVisualEditorConfig']['defaultUserOptions'][$pref] =
+				$wgDefaultUserOptions[$pref];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Conditionally register the oojs and oojs-ui modules, in case they've already been registered
+	 * by a more recent version of MediaWiki core.
+	 *
+	 * Also conditionally register the jquery.uls and jquery.i18n modules, in case they've already
+	 * been registered by the UniversalLanguageSelector extension.
+	 *
+	 * @param ResourceLoader $resourceLoader
+	 * @returns boolean true
+	 */
+	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
+		global $wgResourceModules, $wgVisualEditorResourceTemplate;
+
+		$libModules = array(
+			'oojs' => $wgVisualEditorResourceTemplate + array(
+				'scripts' => array(
+					'lib/ve/lib/oojs/oojs.js',
+				),
+				'targets' => array( 'desktop', 'mobile' ),
+			),
+			'oojs-ui' => $wgVisualEditorResourceTemplate + array(
+				'scripts' => array(
+					'lib/ve/lib/oojs-ui/oojs-ui.js',
+				),
+				'styles' => array(
+					'lib/ve/lib/oojs-ui/oojs-ui.svg.css',
+				),
+				'skinStyles' => array(
+					'default' => 'lib/ve/lib/oojs-ui/oojs-ui-apex.css',
+				),
+				'messages' => array(
+					'ooui-dialog-action-close',
+					'ooui-outline-control-move-down',
+					'ooui-outline-control-move-up',
+					'ooui-outline-control-remove',
+					'ooui-toolbar-more',
+				),
+				'dependencies' => array(
+					'oojs'
+				),
+				'targets' => array( 'desktop', 'mobile' ),
+			),
+			'jquery.uls' => $wgVisualEditorResourceTemplate + array(
+				'scripts' => array(
+					'lib/jquery.uls/src/jquery.uls.core.js',
+					'lib/jquery.uls/src/jquery.uls.lcd.js',
+					'lib/jquery.uls/src/jquery.uls.languagefilter.js',
+					'lib/jquery.uls/src/jquery.uls.regionfilter.js',
+				),
+				'styles' => array(
+					'lib/jquery.uls/css/jquery.uls.css',
+					'lib/jquery.uls/css/jquery.uls.lcd.css',
+				),
+				'dependencies' => array(
+					'jquery.uls.grid',
+					'jquery.uls.data',
+					'jquery.uls.compact',
+				),
+			),
+			'jquery.uls.data' => $wgVisualEditorResourceTemplate + array(
+				'scripts' => array(
+					'lib/jquery.uls/src/jquery.uls.data.js',
+					'lib/jquery.uls/src/jquery.uls.data.utils.js',
+				),
+				'position' => 'top',
+			),
+			'jquery.uls.grid' => $wgVisualEditorResourceTemplate + array(
+				'styles' => 'lib/jquery.uls/css/jquery.uls.grid.css',
+				'position' => 'top',
+			),
+			'jquery.uls.compact' => $wgVisualEditorResourceTemplate + array(
+				'styles' => 'lib/jquery.uls/css/jquery.uls.compact.css',
+				'position' => 'top',
+			),
+			'jquery.i18n' => $wgVisualEditorResourceTemplate + array(
+				'scripts' => array(
+					'lib/ve/lib/jquery.i18n/src/jquery.i18n.js',
+					'lib/ve/lib/jquery.i18n/src/jquery.i18n.messagestore.js',
+					'lib/ve/lib/jquery.i18n/src/jquery.i18n.parser.js',
+					'lib/ve/lib/jquery.i18n/src/jquery.i18n.emitter.js',
+					'lib/ve/lib/jquery.i18n/src/jquery.i18n.language.js',
+				),
+				// Line below commented out as a part of VE-908/VE-1010
+				//'dependencies' => 'mediawiki.libs.pluralruleparser',
+				'languageScripts' => array(
+					'bs' => 'lib/ve/lib/jquery.i18n/src/languages/bs.js',
+					'dsb' => 'lib/ve/lib/jquery.i18n/src/languages/dsb.js',
+					'fi' => 'lib/ve/lib/jquery.i18n/src/languages/fi.js',
+					'ga' => 'lib/ve/lib/jquery.i18n/src/languages/ga.js',
+					'he' => 'lib/ve/lib/jquery.i18n/src/languages/he.js',
+					'hsb' => 'lib/ve/lib/jquery.i18n/src/languages/hsb.js',
+					'hu' => 'lib/ve/lib/jquery.i18n/src/languages/hu.js',
+					'hy' => 'lib/ve/lib/jquery.i18n/src/languages/hy.js',
+					'la' => 'lib/ve/lib/jquery.i18n/src/languages/la.js',
+					'ml' => 'lib/ve/lib/jquery.i18n/src/languages/ml.js',
+					'os' => 'lib/ve/lib/jquery.i18n/src/languages/os.js',
+					'ru' => 'lib/ve/lib/jquery.i18n/src/languages/ru.js',
+					'sl' => 'lib/ve/lib/jquery.i18n/src/languages/sl.js',
+					'uk' => 'lib/ve/lib/jquery.i18n/src/languages/uk.js',
+				),
+			),
+		);
+
+		$addModules = array();
+
+		foreach ( $libModules as $name => $data ) {
+			if ( !isset( $wgResourceModules[$name] ) && !$resourceLoader->getModule( $name ) ) {
+				$addModules[$name] = $data;
+			}
+		}
+
+		$resourceLoader->register( $addModules );
 		return true;
 	}
 
@@ -422,88 +538,124 @@ class VisualEditorHooks {
 		$testModules['qunit']['ext.visualEditor.test'] = array(
 			'styles' => array(
 				// jsdifflib
-				'jsdifflib/diffview.css',
+				'lib/ve/lib/jsdifflib/diffview.css',
 			),
 			'scripts' => array(
 				// MW config preload
-				've-mw/test/mw-preload.js',
+				'modules/ve-mw/test/mw-preload.js',
 				// jsdifflib
-				'jsdifflib/diffview.js',
-				'jsdifflib/difflib.js',
+				'lib/ve/lib/jsdifflib/diffview.js',
+				'lib/ve/lib/jsdifflib/difflib.js',
 				// QUnit plugin
-				've/test/ve.qunit.js',
+				'lib/ve/modules/ve/test/ve.qunit.js',
 				// UnicodeJS Tests
-				'unicodejs/test/unicodejs.test.js',
-				'unicodejs/test/unicodejs.graphemebreak.test.js',
-				'unicodejs/test/unicodejs.wordbreak.test.js',
+				'lib/ve/modules/unicodejs/test/unicodejs.test.js',
+				'lib/ve/modules/unicodejs/test/unicodejs.graphemebreak.test.js',
+				'lib/ve/modules/unicodejs/test/unicodejs.wordbreak.test.js',
 				// VisualEditor Tests
-				've/test/ve.test.utils.js',
-				've/test/ve.test.js',
-				've/test/ve.Document.test.js',
-				've/test/ve.Node.test.js',
-				've/test/ve.BranchNode.test.js',
-				've/test/ve.LeafNode.test.js',
+				'lib/ve/modules/ve/test/ve.test.utils.js',
+				'lib/ve/modules/ve/test/ve.test.js',
+				'lib/ve/modules/ve/test/ve.Document.test.js',
+				'lib/ve/modules/ve/test/ve.Node.test.js',
+				'lib/ve/modules/ve/test/ve.BranchNode.test.js',
+				'lib/ve/modules/ve/test/ve.LeafNode.test.js',
 				// VisualEditor DataModel Tests
-				've/test/dm/ve.dm.example.js',
-				've/test/dm/ve.dm.AnnotationSet.test.js',
-				've/test/dm/ve.dm.NodeFactory.test.js',
-				've/test/dm/ve.dm.Node.test.js',
-				've/test/dm/ve.dm.Converter.test.js',
-				've/test/dm/ve.dm.BranchNode.test.js',
-				've/test/dm/ve.dm.LeafNode.test.js',
-				've/test/dm/ve.dm.LinearData.test.js',
-				've/test/dm/nodes/ve.dm.TextNode.test.js',
-				've-mw/test/dm/nodes/ve.dm.MWTransclusionNode.test.js',
-				've/test/dm/ve.dm.Document.test.js',
-				've/test/dm/ve.dm.DocumentSynchronizer.test.js',
-				've/test/dm/ve.dm.IndexValueStore.test.js',
-				've/test/dm/ve.dm.InternalList.test.js',
-				've-mw/test/dm/ve.dm.InternalList.test.js',
-				've/test/dm/ve.dm.Transaction.test.js',
-				've-mw/test/dm/ve.dm.Transaction.test.js',
-				've/test/dm/ve.dm.TransactionProcessor.test.js',
-				've/test/dm/ve.dm.Surface.test.js',
-				've/test/dm/ve.dm.SurfaceFragment.test.js',
-				've-mw/test/dm/ve.dm.SurfaceFragment.test.js',
-				've/test/dm/ve.dm.ModelRegistry.test.js',
-				've/test/dm/ve.dm.MetaList.test.js',
-				've/test/dm/ve.dm.Model.test.js',
-				've/test/dm/lineardata/ve.dm.ElementLinearData.test.js',
-				've/test/dm/lineardata/ve.dm.MetaLinearData.test.js',
-				've-mw/test/dm/ve.dm.mwExample.js',
-				've-mw/test/dm/ve.dm.MWConverter.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.example.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.AnnotationSet.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.NodeFactory.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Node.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Converter.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.BranchNode.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.LeafNode.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.LinearData.test.js',
+				'lib/ve/modules/ve/test/dm/nodes/ve.dm.TextNode.test.js',
+				'modules/ve-mw/test/dm/nodes/ve.dm.MWTransclusionNode.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Document.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.DocumentSynchronizer.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.IndexValueStore.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.InternalList.test.js',
+				'modules/ve-mw/test/dm/ve.dm.InternalList.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Transaction.test.js',
+				'modules/ve-mw/test/dm/ve.dm.Transaction.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.TransactionProcessor.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Surface.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.SurfaceFragment.test.js',
+				'modules/ve-mw/test/dm/ve.dm.SurfaceFragment.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.ModelRegistry.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.MetaList.test.js',
+				'lib/ve/modules/ve/test/dm/ve.dm.Model.test.js',
+				'lib/ve/modules/ve/test/dm/lineardata/ve.dm.FlatLinearData.test.js',
+				'lib/ve/modules/ve/test/dm/lineardata/ve.dm.ElementLinearData.test.js',
+				'lib/ve/modules/ve/test/dm/lineardata/ve.dm.MetaLinearData.test.js',
+				'modules/ve-mw/test/dm/ve.dm.mwExample.js',
+				'modules/ve-mw/test/dm/ve.dm.Converter.test.js',
 				// VisualEditor ContentEditable Tests
-				've/test/ce/ve.ce.test.js',
-				've/test/ce/ve.ce.Document.test.js',
-				've/test/ce/ve.ce.Surface.test.js',
-				've-mw/test/ce/ve.ce.Document.test.js',
-				've-mw/test/ce/ve.ce.Surface.test.js',
-				've/test/ce/ve.ce.NodeFactory.test.js',
-				've/test/ce/ve.ce.Node.test.js',
-				've/test/ce/ve.ce.BranchNode.test.js',
-				've/test/ce/ve.ce.ContentBranchNode.test.js',
-				've-mw/test/ce/ve.ce.ContentBranchNode.test.js',
-				've/test/ce/ve.ce.LeafNode.test.js',
-				've/test/ce/nodes/ve.ce.TextNode.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.Document.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.Surface.test.js',
+				'modules/ve-mw/test/ce/ve.ce.Document.test.js',
+				'modules/ve-mw/test/ce/ve.ce.Surface.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.NodeFactory.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.Node.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.BranchNode.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.ContentBranchNode.test.js',
+				'modules/ve-mw/test/ce/ve.ce.ContentBranchNode.test.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.LeafNode.test.js',
+				'lib/ve/modules/ve/test/ce/nodes/ve.ce.TextNode.test.js',
 				// VisualEditor Actions Tests
-				've/test/ui/actions/ve.ui.FormatAction.test.js',
-				've-mw/test/ui/actions/ve.ui.FormatAction.test.js',
-				've/test/ui/actions/ve.ui.IndentationAction.test.js',
-				've/test/ui/actions/ve.ui.ListAction.test.js',
+				'lib/ve/modules/ve/test/ui/actions/ve.ui.FormatAction.test.js',
+				'modules/ve-mw/test/ui/actions/ve.ui.FormatAction.test.js',
+				'lib/ve/modules/ve/test/ui/actions/ve.ui.IndentationAction.test.js',
+				'lib/ve/modules/ve/test/ui/actions/ve.ui.ListAction.test.js',
 				// VisualEditor initialization Tests
-				've/test/init/ve.init.Platform.test.js',
-				've-mw/test/init/targets/ve.init.mw.ViewPageTarget.test.js',
+				'lib/ve/modules/ve/test/init/ve.init.Platform.test.js',
+				'modules/ve-mw/test/init/targets/ve.init.mw.ViewPageTarget.test.js',
+				// IME tests
+				'lib/ve/modules/ve/test/ce/ve.ce.TestRunner.js',
+				'lib/ve/modules/ve/test/ce/ve.ce.imetests.test.js',
+				'lib/ve/modules/ve/test/ce/imetests/backspace-chromium-ubuntu-none.js',
+				'lib/ve/modules/ve/test/ce/imetests/backspace-firefox-ubuntu-none.js',
+				'lib/ve/modules/ve/test/ce/imetests/backspace-ie-win-none.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chrome-win-chinese-traditional-handwriting.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chrome-win-greek.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chrome-win-welsh.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-chinese-cantonese.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-japanese-anthy--hiraganaonly.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-korean-korean.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-chromium-ubuntu-ibus-malayalam-swanalekha.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-chinese-cantonese.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-japanese-anthy--hiraganaonly.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-korean-korean.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-ubuntu-ibus-malayalam.swanalekha.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-win-chinese-traditional-handwriting.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-win-greek.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-firefox-win-welsh.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-ie-win-chinese-traditional-handwriting.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-ie-win-greek.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-ie-win-korean.js',
+				'lib/ve/modules/ve/test/ce/imetests/input-ie-win-welsh.js',
+				'lib/ve/modules/ve/test/ce/imetests/leftarrow-chromium-ubuntu-none.js',
+				'lib/ve/modules/ve/test/ce/imetests/leftarrow-firefox-ubuntu-none.js',
+				'lib/ve/modules/ve/test/ce/imetests/leftarrow-ie-win-none.js',
 			),
 			'dependencies' => array(
 				'unicodejs.wordbreak',
 				'ext.visualEditor.standalone',
 				'ext.visualEditor.core',
+				'ext.visualEditor.mwcore',
+				'ext.visualEditor.mwformatting',
+				'ext.visualEditor.mwlink',
+				'ext.visualEditor.mwgallery',
+				'ext.visualEditor.mwimage',
+				'ext.visualEditor.mwmeta',
+				'ext.visualEditor.mwreference',
+				'ext.visualEditor.mwtransclusion',
 				'ext.visualEditor.experimental',
 				'ext.visualEditor.viewPageTarget.init',
 				'ext.visualEditor.viewPageTarget',
 			),
-			'localBasePath' => __DIR__ . '/modules',
-			'remoteExtPath' => 'VisualEditor/modules',
+			'localBasePath' => __DIR__,
+			'remoteExtPath' => 'VisualEditor',
 		);
 
 		return true;

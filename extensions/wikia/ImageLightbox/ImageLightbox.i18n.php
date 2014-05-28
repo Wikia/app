@@ -267,19 +267,20 @@ $1
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'lightbox_details_tooltip' => 'Teferruatê resimi bıvin',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
 	'lightbox-blog-link' => 'Grey blogi',
-	'lightbox-send' => 'Bırş',
+	'lightbox-send' => 'Bırışe',
 	'lightbox-share-button-email' => 'E-posta',
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
 	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
-	'lightbox-share-email-error-caption' => 'Xırab',
+	'lightbox-share-email-error-caption' => 'Xeta',
 );
 
 /** Esperanto (Esperanto)
@@ -604,6 +605,16 @@ $1
 	'lightbox-share-email-error-login' => 'メールを送信するにはログインする必要があります',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
 	'lightbox-visit-the-wiki' => 'ウィキに移動:',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lightbox-share-button-email' => 'ಇ-ಅಂಚೆ',
+	'lightbox-share-button-www' => 'ಹಂಚು',
+	'lightbox-share-email-page-label-address' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'lightbox-share-email-error-caption' => 'ದೋಷ',
 );
 
 /** Korean (한국어)

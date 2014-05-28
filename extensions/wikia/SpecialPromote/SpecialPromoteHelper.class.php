@@ -268,15 +268,7 @@ class SpecialPromoteHelper extends WikiaObject {
 	}
 
 	public function removeImage($imageName) {
-		$title = Title::newFromText($imageName, NS_FILE);
-		$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
-
-		$visualization = new CityVisualization();
-		$visualization->removeImageFromReview($this->wg->cityId, $title->getArticleId(), $this->wg->contLang->getCode());
-
-		if ($file->exists()) {
-			$file->delete('no longer needed');
-		}
+		PromoImage::fromPathname($imageName)->deleteImage();
 	}
 
 	public function saveVisualizationData($data, $langCode) {
@@ -289,30 +281,40 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 
 		$cityId = $this->wg->cityId;
-		$contentLang = $this->wg->contLang->getCode();
 		$files = array('additionalImages' => array());
-		$originalAdditionImagesNames = $this->getAdditionalImagesNames();
+		$promoImages = array();
 
 		$visualizationModel = new CityVisualization();
 		$isCorpLang = $visualizationModel->isCorporateLang($langCode);
-
 
 		foreach ($data as $fileType => $dataContent) {
 			switch ($fileType) {
 				case 'mainImageName':
 					$fileName = $dataContent;
-					if ( strpos( $fileName, UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME ) === false ) {
-						$dstFileName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-						$files['mainImage'] = $this->moveTmpFile( $fileName, $dstFileName );
-						$files['mainImage']['modified'] = true;
+					// uploaded fileName that matches through infer type, means that
+					// file was not really uploaded, and was already present in DB
+					// FIXME: this mechanism is hacky, it should be more durable than string matching
+
+					$promoMainImage = PromoImage::fromPathname($fileName);
+
+					if ($promoMainImage->isType(PromoImage::MAIN)) {
+						//check if file exists on current wiki
+						$file = GlobalFile::newFromText($promoMainImage->getPathname(), $cityId);
+						if ($file->exists()){
+							array_push($promoImages, $promoMainImage);
+						}
 					} else {
-						$files['mainImage']['name'] = $fileName;
-						$files['mainImage']['modified'] = false;
+						$promoMainImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+						$promoMainImage->processUploadedFile($fileName);
+						array_push($promoImages, $promoMainImage);
 					}
+
 					break;
 				case 'additionalImagesNames':
 					$additionalImagesNames = $dataContent;
-					$files['additionalImages'] = $this->saveAdditionalFiles($additionalImagesNames);
+					$additionalImages= $this->saveAdditionalFiles($additionalImagesNames);
+
+					$promoImages = array_merge($promoImages, $additionalImages);
 					break;
 				case 'headline':
 					$headline = $dataContent;
@@ -320,6 +322,14 @@ class SpecialPromoteHelper extends WikiaObject {
 				case 'description':
 					$description = $dataContent;
 					break;
+				}
+		}
+
+		//attempt to cleanup if there used to be a promo main image
+		if (empty($promoMainImage)){
+			$promoMainImage = new PromoImage(PromoImage::MAIN, $this->wg->DBname);
+			if ($promoMainImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
+				$promoMainImage->deleteImageFromCorporate();
 			}
 		}
 
@@ -329,41 +339,38 @@ class SpecialPromoteHelper extends WikiaObject {
 			'city_description' => $description
 		);
 
-		$modifiedFiles = $this->extractModifiedFiles($files);
-		if (!empty($modifiedFiles)) {
-			$imageReviewState = $isCorpLang
-				? ImageReviewStatuses::STATE_UNREVIEWED
-				: ImageReviewStatuses::STATE_AUTO_APPROVED;
-			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedFiles, $imageReviewState);
-		}
+		$additionalImageNames = array();
+		$modifiedImageNames = array();
 
-		$updateData['city_main_image'] = $files['mainImage']['name'];
-		if( $files['additionalImages'] ) {
-			$additionalImageNames = array();
-			foreach( $files['additionalImages'] as $image ) {
-				if( empty($image['deleted']) ) {
-					$additionalImageNames[] = $image['name'];
-				} else if ( in_array($image['deletedname'], $originalAdditionImagesNames) ) {
-					$deletedFiles[$contentLang][$cityId][] = array(
-						'city_id' => $cityId,
-						'name' => $image['deletedname']
-					);
+		foreach($promoImages as $promoImage){
+			if ($promoImage->isType(PromoImage::MAIN)){
+				if (!$promoImage->wasRemoved()){
+					$updateData['city_main_image'] = $promoImage->getPathname();
+				} else {
+					$updateData['city_main_image'] = null;
+				}
+			} else {
+				if (!$promoImage->wasRemoved()){
+					array_push($additionalImageNames, $promoImage->getPathname());
 				}
 			}
 
-			$updateData['city_images'] = json_encode($additionalImageNames);
+			if ($promoImage->isFileChanged() and !$promoImage->wasRemoved()){
+				array_push($modifiedImageNames, $promoImage->getPathname());
+			}
 		}
+		$updateData['city_images'] = json_encode($additionalImageNames);
 
-		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __MEHOD__, 'files' => $files, 'data'=> $data,
+		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, 'files' => $files, 'data'=> $data,
 				'updateData' => $updateData, 'cityId' => $cityId]);
-		
+
 		$visualizationModel->saveVisualizationData($cityId, $updateData, $langCode);
 
-		if( !empty($deletedFiles) ) {
-			if ($isCorpLang) {
-				$this->createRemovalTask($deletedFiles);
-			}
-			$visualizationModel->deleteImagesFromReview($cityId, $langCode, $deletedFiles);
+		if (!empty($modifiedImageNames)) {
+			$imageReviewState = $isCorpLang
+				? ImageReviewStatuses::STATE_UNREVIEWED
+				: ImageReviewStatuses::STATE_AUTO_APPROVED;
+			$visualizationModel->saveImagesForReview($cityId, $langCode, $modifiedImageNames, $imageReviewState);
 		}
 
 		$visualizationModel->updateWikiPromoteDataCache($cityId, $langCode, $updateData);
@@ -373,6 +380,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		$corpWikiId = $visualizationModel->getTargetWikiId($langCode);
 		// wiki info cache
 		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
+		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $langCode));
 		// wiki list cache
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)
@@ -385,116 +393,62 @@ class SpecialPromoteHelper extends WikiaObject {
 		wfProfileOut(__METHOD__);
 	}
 
-	protected function extractModifiedFiles($files) {
-		$modifiedFiles = array();
-
-		if (!empty($files['mainImage']['modified'])) {
-			$modifiedFiles [] = $files['mainImage']['name'];
-		}
-		foreach ($files['additionalImages'] as $image) {
-			if (!empty($image['modified'])) {
-				$modifiedFiles [] = $image['name'];
-			}
-		}
-		return $modifiedFiles;
-	}
-
 	protected function saveAdditionalFiles($additionalImagesNames) {
-		$files = array();
-		$keys = array();
-		$allKeys = array(1,2,3,4,5,6,7,8,9);
-
-		// find all unchanged files
+		$unchangedTypes = array();
+		$imagesToProcess = array();
+		$allFiles = array();
 		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === 0) {
-				$key = str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME . '-','',
-					str_replace(UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT,'',$singleFileName)
-				);
+			$promoImage= PromoImage::fromPathname($singleFileName);
 
-				$keys []= $key;
-				$files[$key] = array(
-					'name' => $singleFileName,
-					'modified' => false
-				);
+			if (!$promoImage->isType(PromoImage::INVALID)){
+				// check if file exists, if not do not add it to processed files, effectively removing it
+				$file = GlobalFile::newFromText($promoImage->getPathname(), $this->wg->cityId);
+				if ($file->exists()){
+					array_push($promoImages, $promoImage);
+				}
+
+				if (in_array($unchangedTypes, $promoImage->getType())){
+					WikiaLogger::instance()->info("SpecialPromote additional files duplicated type", ['method' => __METHOD__, 'type_duplicated' => $promoImage->getType()]);
+
+				} else {
+					array_push($unchangedTypes, $promoImage->getType());
+				}
+				array_push($allFiles, $promoImage);
+			} else {
+				array_push($imagesToProcess, $singleFileName);
 			}
 		}
 
-		// find all new files
-		$availableKeys = array_diff($allKeys,$keys);
-		foreach($additionalImagesNames as $singleFileName) {
-			if (strpos($singleFileName, UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME) === false) {
-				$key = array_shift($availableKeys);
-				$dstFileName = $this->getAdditionalImageName($key);
+		$freeImageTypeSlots = array_diff(PromoImage::listAllAdditionalTypes(), $unchangedTypes);
+		foreach($imagesToProcess as $uploadedImageFileName) {
+			$imageType = array_shift($freeImageTypeSlots);
 
-				$file = $this->moveTmpFile($singleFileName, $dstFileName);
-				$files[$key] = array(
-					'name' => $file['name'],
-					'modified' => true
-				);
+			if (!empty($imageType)) {
+				$promoImage = new PromoImage($imageType, $this->wg->DBname);
+				$promoImage->processUploadedFile($uploadedImageFileName);
+				array_push($allFiles, $promoImage);
+			} else {
+				WikiaLogger::instance()->info("SpecialPromote too many uploaded files", ['method' => __METHOD__]);
+				break;
 			}
 		}
 
-		foreach($availableKeys as $key) {
-			$dstFileName = $this->getAdditionalImageName($key);
-
-			$this->removeImage($dstFileName);
-
-			$files[$key] = array(
-				'deletedname' => $dstFileName,
-				'deleted' => true
-			);
+		// attempt to Delete Leftover image types from corporate wiki
+		foreach($freeImageTypeSlots as $imageType){
+			$promoImage = new PromoImage($imageType, $this->wg->DBname);
+			if ($promoImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
+				$promoImage->deleteImageFromCorporate();
+			}
 		}
 
-		ksort($files);
-
-		return $files;
-	}
-
-	protected function getAdditionalImageName($index) {
-		return implode('-',
-			array(
-				UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_BASE_NAME,
-				($index),
-			)
-		) . UploadVisualizationImageFromFile::VISUALIZATION_ADDITIONAL_IMAGES_EXT;
-	}
-
-
-	protected function moveTmpFile($fileName, $dstFileName) {
-
-		$dst_file_title = Title::newFromText($dstFileName, NS_FILE);
-
-		$temp_file = RepoGroup::singleton()->getLocalRepo()->getUploadStash()->getFile($fileName);
-		$file = new LocalFile($dst_file_title, RepoGroup::singleton()->getLocalRepo());
-
-		$file->upload($temp_file->getPath(), '', '');
-		$temp_file->remove();
-
-		$data = array(
-			'url' => $file->getURL(),
-			'name' => $file->getName()
-		);
-
-		return $data;
+		return $allFiles;
 	}
 
 	public function getImageUrl($imageFile, $requestedWidth, $requestedHeight) {
 		return $this->homePageHelper->getImageUrlFromFile($imageFile, $requestedWidth, $requestedHeight);
 	}
 
-	protected function createRemovalTask($taskDeletionList) {
-		if (!empty($taskDeletionList) && class_exists('PromoteImageReviewTask')) {
-			$task = new PromoteImageReviewTask();
-			$task->createTask(
-				array(
-					'deletion_list' => $taskDeletionList,
-				),
-				TASK_QUEUED
-			);
-		}
-	}
-
-	protected function checkWikiStatus($WikiId, $langCode) {
+	protected function checkWikiStatus($wikiId, $langCode) {
 		$wikiStatus = [
 			'hasImagesRejected' => false,
 			'hasImagesInReview' => false,
@@ -505,7 +459,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, 'wikiId' => $wikiId, 'lang' => $langCode] );
 
 		$visualization = new CityVisualization();
-		$wikiDataVisualization = $visualization->getWikiDataForVisualization($WikiId, $langCode);
+		$wikiDataVisualization = $visualization->getWikiDataForVisualization($wikiId, $langCode);
 		$mainImage = $this->getMainImage();
 		$additionalImages = $this->getAdditionalImages();
 
@@ -540,6 +494,13 @@ class SpecialPromoteHelper extends WikiaObject {
 		}
 		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, "imageStatuses" => $imageStatuses] );
 		return $wikiStatus;
+	}
+
+	public function triggerReindexing() {
+		// FIXME: currently reindexing of only SpecialPromote data is impossible, some page must be indexed with it
+		// so MainPage took the bullet, if in future search reindexing would be more selective, attempt to reindex only SpecialPromote data
+		$article = new Article(Title::newMainPage());
+		ScribeEventProducerController::notifyPageHasChanged($article->getPage());
 	}
 
 	public function getWikiStatusMessage($WikiId, $langCode) {

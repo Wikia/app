@@ -419,11 +419,11 @@ $messages['ig'] = array(
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'wva-success' => 'La pagina video $1 è stata aggiunta con successo.', # Fuzzy
-	'wva-success-replaced' => 'La pagina video $1 è stata sostituita con successo.', # Fuzzy
+	'wva-success' => 'La pagina video [[:$1]] è stata aggiunta con successo.',
+	'wva-success-replaced' => 'La pagina video [[:$1]] è stata sostituita con successo.',
 	'wva-failure' => 'Prego inserisci parametri validi.',
-	'wva-name' => 'Inserisci il nome:', # Fuzzy
-	'wva-url' => "Inserisci l'URL:", # Fuzzy
+	'wva-name' => 'Nome del video:',
+	'wva-url' => 'URL del video:',
 	'wva-add' => 'Aggiungi',
 	'wva-title' => 'Aggiungi rapidamente video da URL',
 	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
@@ -508,11 +508,11 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'wva-success' => 'Видео-страницата $1 е успешно додадена.', # Fuzzy
-	'wva-success-replaced' => 'Видео-страницата $1 е успешно заменета.', # Fuzzy
+	'wva-success' => 'Видео-страницата [[:$1]] е успешно додадена.',
+	'wva-success-replaced' => 'Видео-страницата [[:$1]] е успешно заменета.',
 	'wva-failure' => 'Наведете важечки параметри.',
-	'wva-name' => 'Внесете го името:', # Fuzzy
-	'wva-url' => 'Внесете URL-адреса:', # Fuzzy
+	'wva-name' => 'Назив на видеото:',
+	'wva-url' => 'URL на видеото:',
 	'wva-add' => 'Додај',
 	'wva-title' => 'Брзо додавање на видеоснимка од URL-адреса',
 	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',

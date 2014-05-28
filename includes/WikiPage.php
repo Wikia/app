@@ -2044,8 +2044,6 @@ class WikiPage extends Page {
 			return WikiPage::DELETE_NO_REVISIONS;
 		}
 
-		$this->doDeleteUpdates( $id );
-
 		# Log the deletion, if the page was suppressed, log it at Oversight instead
 		$logtype = $suppress ? 'suppress' : 'delete';
 
@@ -2065,6 +2063,11 @@ class WikiPage extends Page {
 			$logEntry->publish( $logid );
 		}
 		# Wikia change end
+
+		// Wikia change: doDeleteUpdates has side effects that reset the title. This prevents hooks from acting on the
+		// page if they rely on the title or related associations.
+		$this->doDeleteUpdates( $id );
+		// Wikia change end
 
 		if ( $commit ) {
 			$dbw->commit();

@@ -70,7 +70,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/api/v1/Navigation/Data",
+ * 	path="/Navigation/Data",
  * 	description="Get wiki navigation links",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

@@ -955,11 +955,11 @@ class WikiFactory {
 				$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
 				$value = isset( $variable->cv_value )
 					? self::substVariables( unserialize( $variable->cv_value ), $city_id )
-					: false;
+					: null;
 			}
 
 			// If we found the value return, else proceed to the next city_id
-			if ( !is_null( $value ) ) {
+			if ( !is_null($value) ) {
 				wfProfileOut( __METHOD__ );
 				return $value;
 			}
@@ -3030,14 +3030,20 @@ class WikiFactory {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname'),
+			array('city_id', 'city_title', 'city_url', 'city_public', 'city_dbname', 'city_lang'),
 			$aWhere,
 			__METHOD__,
 			$aOptions
 		);
 
 		while ( $oRow = $dbr->fetchObject($oRes) ) {
-			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title, 'p' => ( !empty($oRow->city_public) ? true : false ), 'd' => $oRow->city_dbname );
+			$aWikis[$oRow->city_id] = [
+				'u' => $oRow->city_url,
+				't' => $oRow->city_title,
+				'p' => ( !empty($oRow->city_public) ? true : false ),
+				'd' => $oRow->city_dbname,
+				'l' => $oRow->city_lang
+			];
 		}
 		$dbr->freeResult( $oRes );
 

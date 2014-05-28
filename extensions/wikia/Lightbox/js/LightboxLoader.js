@@ -9,7 +9,6 @@
 		// cached thumbnail arrays and detailed info
 		cache: {
 			articleMedia: [], // Article Media
-			relatedVideos: [], // Related Video
 			latestPhotos: [], // Latest Photos from DOM
 			wikiPhotos: [], // Back fill of photos from wiki
 			videosModule: [],
@@ -62,7 +61,6 @@
 		init: function () {
 			var self = this,
 				$article = $('#WikiaArticle'),
-				$videos = $('#RelatedVideosRL'),
 				$photos = $('#LatestPhotosModule'),
 				$comments = $('#WikiaArticleComments'), // event handled with $footer
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
@@ -70,7 +68,7 @@
 				$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($videos).add($footer).add($videosModule)
+			$article.add($photos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -82,7 +80,7 @@
 						$slideshowImg,
 						clickSource;
 
-					if (!LightboxLoader.hasLightbox($this, $thumb)) {
+					if (!LightboxLoader.hasLightbox($this, $thumb, e)) {
 						return;
 					}
 
@@ -92,8 +90,6 @@
 						$parent = $videoHomePage;
 					} else if ($this.closest($article).length) {
 						$parent = $article;
-					} else if ($this.closest($videos).length) {
-						$parent = $videos;
 					} else if ($this.closest($photos).length) {
 						$parent = $photos;
 					} else if ($this.closest($comments).length) {
@@ -110,13 +106,8 @@
 
 					// Handle edge cases
 
-					// Allow links to open lightbox without a thumbnail. The link itself must contain data-image-key.
-					// Used in RelatedVideos.
-					if ($this.hasClass('lightbox-link-to-open')) {
-						fileKey = $this.attr('data-image-key') || $this.attr('data-video-key');
-
 					// TODO: refactor wikia slideshow
-					} else if ($this.hasClass('wikia-slideshow-popout')) {
+					if ($this.hasClass('wikia-slideshow-popout')) {
 						$slideshowImg = $this.parents('.wikia-slideshow-toolbar')
 							.siblings('.wikia-slideshow-images-wrapper')
 							.find('li:visible')
@@ -137,9 +128,12 @@
 					}
 
 					// Display video inline, don't open lightbox
-					isVideo = $this.children('.Wikia-video-play-button').length;
-					if ((isVideo && $thumb.width() >= self.videoThumbWidthThreshold) &&
-						(!$this.hasClass('force-lightbox'))) {
+					isVideo = $this.children('.play-circle').length;
+					if (
+						isVideo &&
+						$thumb.width() >= self.videoThumbWidthThreshold &&
+						!$this.hasClass('force-lightbox')
+					) {
 						clickSource = window.wgWikiaHubType ?
 							LightboxTracker.clickSource.HUBS :
 							LightboxTracker.clickSource.EMBED;
@@ -159,7 +153,7 @@
 					'.wikia-slideshow-images .thumbimage, .wikia-slideshow-images .wikia-slideshow-image',
 					function (e) {
 						var $this = $(this);
-						if (LightboxLoader.hasLightbox($this)) {
+						if (LightboxLoader.hasLightbox($this, null, e)) {
 							e.preventDefault();
 							$this.closest('.wikia-slideshow-wrapper').find('.wikia-slideshow-popout').click();
 						}
@@ -353,14 +347,18 @@
 		 *
 		 * @param $link Anchor that was clicked
 		 * @param [$thumb] Optional thumbnail image inside clicked anchor
+		 * @param {jQuery} event jQuery click event
 		 * @returns {boolean}
 		 */
-		hasLightbox: function ($link, $thumb) {
+		hasLightbox: function ($link, $thumb, event) {
+			// if any of the following conditions are true, don't open the lightbox
 			return !(
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||
-				$link.hasClass('no-lightbox')
+				$link.hasClass('no-lightbox') ||
+				event.metaKey ||
+				event.ctrlKey
 			);
 		}
 	};
@@ -381,7 +379,6 @@
 
 		// Constants for tracking the source of a click
 		clickSource: {
-			RV: 'relatedVideos',
 			LP: 'latestPhotos',
 			EMBED: 'embed',
 			SEARCH: 'search',
