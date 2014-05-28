@@ -95,15 +95,15 @@ class RevisionService {
 
 		$result = $this->getLatestRevisionsQuery( $limit, $namespaces );
 
-		$items = array();
+		$items = [];
 		while( ( $row = $result->fetchObject() ) !== false ) {
 			$dateTime = date_create_from_format( 'YmdHis', $row->timestamp );
-			$items[  ] = array(
+			$items[] = [
 				'article'    => intval($row->pageId),
 				'user'       => intval($row->userId),
 				'revisionId' => intval($row->id),
 				'timestamp'  => $dateTime->getTimestamp()
-			);
+			];
 		}
 		return $items;
 	}
@@ -116,10 +116,10 @@ class RevisionService {
 	public function getLatestRevisionsQuery( $limit, $namespaces ) {
 		$namespaces = $this->sqlSanitizeArray($namespaces);
 
-		$tables = array('recentchanges');
-		$joinConditions = array();
-		$conditions = array();
-		$options = array( 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' );
+		$tables = [ 'recentchanges' ];
+		$joinConditions = [];
+		$conditions = [];
+		$options = [ 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' ];
 
 		// clear out the bots
 		$conditions[] = "rc_bot=0";
@@ -128,7 +128,7 @@ class RevisionService {
 		if ( $namespaces != null ) {
 			$conditions[] = "page_namespace in (" . implode(",",$namespaces) . ")";
 			$tables[] = 'page';
-			$joinConditions['page'] = array( "JOIN", "rc_cur_id=page_id" );
+			$joinConditions['page'] = [ "JOIN", "rc_cur_id=page_id" ];
 		}
 		$query = $this->databaseConnection->selectSQLText(
 			$tables
@@ -157,7 +157,7 @@ class RevisionService {
 	 */
 	public function filterDuplicates( $listOfRevisions ) {
 		$prev = null;
-		$resultArray = array();
+		$resultArray = [];
 		foreach( $listOfRevisions as $i => $revision ) {
 			if( $prev == null
 				|| $prev['article'] != $revision['article']
@@ -185,7 +185,7 @@ class RevisionService {
 		if( $array == null ) {
 			return null;
 		}
-		$resultArray = array();
+		$resultArray = [];
 		foreach( $array as $i => $v ) {
 			$resultArray[] = $this->databaseConnection->addQuotes($v);
 		}
@@ -203,12 +203,13 @@ class RevisionService {
 		if( $dbName == null ) {
 			$dbName = F::app()->wg->DBname;
 		}
-		$key = implode("_", array(
+		$key = implode("_", [
 			"RevisionService",
 			$dbName,
 			strval($limit),
 			implode(",",$namespaces),
-			strval($allowDuplicates)));
+			strval($allowDuplicates)
+		]);
 		return $key;
 	}
 
