@@ -213,6 +213,9 @@ abstract class BaseRssModel extends WikiaService {
 		if ( !$article[ 'thumbnail' ] ) {
 			$ws = new WikiService();
 			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
+		}else{
+			//remove cropping info from image url
+			$article[ 'thumbnail' ] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
 			'url' =>  preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] ), //remove cropping info from image url
