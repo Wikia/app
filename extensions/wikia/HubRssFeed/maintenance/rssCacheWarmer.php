@@ -3,7 +3,7 @@
  * @ingroup Maintenance
  */
 
-echo "Rss cache warmer start: ".date("Y-m-d H:i:s")."\n";
+echo "Rss cache warmer start: ".date("Y-m-d H:i:s")."" . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
@@ -16,24 +16,41 @@ class MaintenanceRss extends Maintenance {
 	function execute() {
 		$this->warmTv();
 		$this->warmGames();
+		$this->purgeVarnish();
 	}
 
 	function warmTv() {
-		echo "| Warming TV cache...\n";
+		echo "| Warming TV cache..." . PHP_EOL;
 		$feed = new TvRssModel();
 		$feed->setForceRegenerateFeed( true );
 		$data = $feed->getFeedData();
 		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "\n";
+		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "" . PHP_EOL;
 	}
 
 	function warmGames() {
-		echo "| Warming GAMES cache...\n";
+		echo "| Warming GAMES cache..." . PHP_EOL;
 		$feed = new GamesRssModel();
 		$feed->setForceRegenerateFeed( true );
 		$data = $feed->getFeedData();
 		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "\n";
+		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "" . PHP_EOL;
+	}
+
+	public function purgeVarnish() {
+		global $wgHubRssFeeds, $wgServer;
+
+		echo "| Purging varnishen..." . PHP_EOL;
+		
+		$urls = [];
+
+		foreach($wgHubRssFeeds as $feedEndpoint) {
+			$urls []= SpecialPage::getTitleFor( HubRssFeedSpecialController::SPECIAL_NAME )->getFullUrl() . '/' . $feedEndpoint;
+			$urls []= implode( '/', [ $wgServer, 'rss', $feedEndpoint] );
+		}
+
+		$u = new SquidUpdate( $urls );
+		$u->doUpdate();
 	}
 }
 
