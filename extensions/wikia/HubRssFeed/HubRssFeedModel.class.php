@@ -100,7 +100,11 @@ class HubRssFeedModel extends WikiaModel {
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
 			$prevTimestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
-			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp, $useExplore );
+
+			$prevData = null;
+			if( $prevTimestamp ){
+				$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp, $useExplore );
+			}
 
 			if ( $prevData === null ) {
 				$prevTimestamp--;
