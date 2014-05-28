@@ -167,7 +167,7 @@ class TvRssModel extends BaseRssModel {
 				}
 				$data[ ] = $item;
 			} catch ( Exception $e ) {
-				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD_ . " : " . $e->getMessage() );
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " : " . $e->getMessage() );
 			}
 		}
 
