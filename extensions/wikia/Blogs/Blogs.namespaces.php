@@ -56,6 +56,17 @@ $namespaces['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ * @author TK-999
+ */
+$namespaces['hu'] = array(
+	NS_BLOG_ARTICLE => 'Felhasználói_blog',
+	NS_BLOG_ARTICLE_TALK => 'Felhasználói_blog_hozzászólás',
+	NS_BLOG_LISTING => 'Blog',
+	NS_BLOG_LISTING_TALK => 'Blog_vita',
+);
+
+/**
  * Italian (Italiano)
  */
 $namespaces['it'] = array(

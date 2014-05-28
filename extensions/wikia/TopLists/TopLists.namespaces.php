@@ -46,6 +46,14 @@ $namespaces['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ */
+$namespaces['hu'] = array(
+	NS_TOPLIST	=> 'Top_10-es_lista',
+	NS_TOPLIST_TALK	=> 'Top_10-es_lista_vitalap'
+);
+
+/**
  * Italian (Italiano)
  */
 $namespaces['it'] = array(

@@ -51,6 +51,16 @@ $namespaces['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ * @author TK-999
+ */
+$namespaces['hu'] = array(
+	NS_WIKIA_FORUM_BOARD		=> 'Aloldal',
+	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Téma',
+	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Aloldali_beszélgetésfolyam',
+);
+
+/**
  * Italian (Italiano)
  */
 $namespaces['it'] = array(

@@ -76,6 +76,15 @@ $namespaceNames['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ * @author TK-999
+ */
+$namespaceNames['hu'] = array(
+	SF_NS_FORM           => 'Űrlap',
+	SF_NS_FORM_TALK      => 'Űrlap_vita',
+);
+
+/**
  * @author Ivan Lanin
  */
 $namespaceNames['id'] = array(

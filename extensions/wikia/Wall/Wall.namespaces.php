@@ -51,6 +51,15 @@ $namespaces['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ */
+$namespaces['hu'] = array(
+	NS_USER_WALL			=> 'Üzenőfal',
+	NS_USER_WALL_MESSAGE		=> 'Beszélgetésfolyam',
+	NS_USER_WALL_MESSAGE_GREETING	=> 'Üzenőfali_üdvözlet',
+);
+
+/**
  * Italian (Italiano)
  */
 $namespaces['it'] = array(

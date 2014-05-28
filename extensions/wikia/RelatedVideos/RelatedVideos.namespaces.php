@@ -41,6 +41,13 @@ $namespaces['fr'] = array(
 );
 
 /**
+ * Hungarian (magyar)
+ */
+$namespaces['hu'] = array(
+	NS_RELATED_VIDEOS => 'Kapcsolódó_videók',
+);
+
+/**
  * Italian (Italiano)
  */
 $namespaces['it'] = array(
