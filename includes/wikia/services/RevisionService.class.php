@@ -70,24 +70,17 @@ class RevisionService {
 	/**
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
+	 * @param bool $allowDuplicates if false there will be at most one result per page
 	 * @return array
 	 */
-	public function getRecentlyChangedArticles( $limit, $namespaces ) {
-		$key = self::createCacheKey( $this->queryLimit, $namespaces, false ) . '_' . __METHOD__;
-		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $limit, $namespaces ) {
-			$result = $this->getLatestRevisionsQuery( $limit, $namespaces, true );
-			$items = array();
-			while( ( $row = $result->fetchObject() ) !== false ) {
-				$dateTime = date_create_from_format( 'YmdHis', $row->timestamp );
-				$items[  ] = array(
-					'article'    => intval($row->pageId),
-					'user'       => intval($row->userId),
-					'revisionId' => intval($row->id),
-					'timestamp'  => $dateTime->getTimestamp()
-				);
-			}
-			return $items;
-		}, WikiaDataAccess::SKIP_CACHE );
+	public function getRecentlyChangedArticles( $limit, $namespaces, $allowDuplicates ) {
+		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
+		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces, $allowDuplicates ) {
+			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces, $allowDuplicates );
+		});
+		if( !$allowDuplicates ) {
+			$listOfRevisions = $this->filterByPageId( $listOfRevisions );
+		}
 		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
 		return $listOfRevisions;
 	}
@@ -118,10 +111,9 @@ class RevisionService {
 	/**
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
-	 * @param bool $groupByPageId flag telling if group by page id or not
 	 * @return ResultWrapper
 	 */
-	public function getLatestRevisionsQuery( $limit, $namespaces, $groupByPageId = false ) {
+	public function getLatestRevisionsQuery( $limit, $namespaces ) {
 		$namespaces = $this->sqlSanitizeArray($namespaces);
 
 		$tables = array('recentchanges');
@@ -137,9 +129,6 @@ class RevisionService {
 			$conditions[] = "page_namespace in (" . implode(",",$namespaces) . ")";
 			$tables[] = 'page';
 			$joinConditions['page'] = array( "JOIN", "rc_cur_id=page_id" );
-		}
-		if( $groupByPageId ) {
-			$options[ 'GROUP BY' ] = 'page_id';
 		}
 		$query = $this->databaseConnection->selectSQLText(
 			$tables
@@ -178,6 +167,14 @@ class RevisionService {
 			$prev = $revision;
 		}
 		return $resultArray;
+	}
+
+	/**
+	 * @param array $listOfRevisions list of revisions to remove duplicates from
+	 * @return array
+	 */
+	public function filterByPageId( $listOfRevisions ) {
+		return $listOfRevisions;
 	}
 
 	/**

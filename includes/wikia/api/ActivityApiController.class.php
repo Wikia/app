@@ -61,7 +61,7 @@ class ActivityApiController extends WikiaApiController {
 		if( $allowDuplicates ) {
 			$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates);
 		} else {
-			$items = $this->revisionService->getRecentlyChangedArticles($limit, $namespaces);
+			$items = $this->revisionService->getRecentlyChangedArticles($limit, $namespaces, $allowDuplicates);
 		}
 
 		$this->setVal( 'items', $items );
