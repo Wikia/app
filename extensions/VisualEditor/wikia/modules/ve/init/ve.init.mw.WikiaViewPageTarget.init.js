@@ -29,7 +29,7 @@
 		},
 		indicatorTimeoutId = null;
 
-	function initIndicator() {
+	function initSpinner() {
 		var $indicator = $( '<div>' )
 				.addClass( 've-indicator visible' )
 				.attr( 'data-type', 'loading' ),
@@ -58,7 +58,7 @@
 		} );
 	}
 
-	function showIndicator() {
+	function showSpinner() {
 		var $indicator = $( '.ve-indicator[data-type="loading"]' ),
 			$message = $indicator.find( 'p.message' );
 
@@ -73,7 +73,7 @@
 		}, 3000 );
 	}
 
-	initIndicator();
+	initSpinner();
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -82,7 +82,7 @@
 	function getTarget() {
 		var loadTargetDeferred;
 
-		showIndicator();
+		showSpinner();
 
 		if ( !getTargetDeferred ) {
 			Wikia.Tracker.track( trackerConfig, {
