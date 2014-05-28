@@ -18,8 +18,17 @@ class VideosModule extends WikiaModel {
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
 	const MAX_STAFF_PICKS = 5;
 
+	protected $blacklist;				// black listed videos we never want to show in videos module
 	protected $blacklistCount = null;	// number of blacklist videos
 	protected $existingVideos = [];		// list of existing videos [ titleKey => true ]
+
+	public function __construct() {
+		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
+		// on Community wiki.
+		$serializedBlackList = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL )->cv_value;
+		$this->blacklist = unserialize( $serializedBlackList );
+		parent::__construct();
+	}
 
 	// options for getting video detail
 	protected static $videoOptions = [
@@ -482,7 +491,7 @@ class VideosModule extends WikiaModel {
 	 * @return boolean
 	 */
 	public function addToList( &$videos, $videoTitle ) {
-		if ( !empty( $videoTitle ) && !in_array( $videoTitle, $this->wg->VideosModuleBlackList ) ) {
+		if ( !empty( $videoTitle ) && !in_array( $videoTitle, $this->blacklist ) ) {
 			if ( !array_key_exists( $videoTitle, $this->existingVideos ) ) {
 				$videos[] = $videoTitle;
 
@@ -500,7 +509,7 @@ class VideosModule extends WikiaModel {
 	 */
 	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
-			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
+			$this->blacklistCount = count( $this->blacklist );
 		}
 
 		$limit = $numRequired + $this->blacklistCount;
