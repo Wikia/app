@@ -30,11 +30,11 @@ define('ext.wikia.adEngine.messageListener', [
 	function receiveMessage(msg) {
 		var i, len, callback;
 
-		log(['Received message', msg], 9, logGroup);
+        if (isInterestingMessage(msg)) {
 
-		if (isInterestingMessage(msg)) {
+            log(['Received message', msg.data], 9, logGroup);
 
-			for (i = 0, len = callbacks.length; i < len; i += 1) {
+            for (i = 0, len = callbacks.length; i < len; i += 1) {
 				callback = callbacks[i];
 
 				if (eventMatch(callback.match, msg)) {
