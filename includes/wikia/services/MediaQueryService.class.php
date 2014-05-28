@@ -413,6 +413,7 @@ class MediaQueryService extends WikiaService {
 				->FIELD( 'added_by' )
 				->FIELD( 'duration' )
 				->FIELD( 'views_total' )
+				->DISTINCT( 'video_title' )
 			->FROM( 'video_info' )
 			->WHERE( 'removed' )->EQUAL_TO( 0 )
 			->ORDER_BY( $sortCol )->DESC();
@@ -420,7 +421,6 @@ class MediaQueryService extends WikiaService {
 		if ( $categories ) {
 				$query->JOIN( 'page' )->ON( 'video_title', 'page_title' )
 					  ->JOIN( 'categorylinks' )->ON( 'page_id', 'cl_from' )
-					  ->DISTINCT( 'video_title' )
 					  ->AND_( 'cl_to' )->IN( $categories )
 					  ->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE );
 		}
