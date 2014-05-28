@@ -11,6 +11,8 @@ class WikiaMaps {
 	const STATUS_PROCESSING = 1;
 	const STATUS_FAILED = 3;
 
+	const MAP_DELETE_SUCCESS = 'Map successfully deleted!';
+
 	const MAP_HEIGHT = 300;
 	const MAP_WIDTH = 1600;
 
@@ -64,8 +66,18 @@ class WikiaMaps {
 	public function cachedRequest( $method, Array $params, $expireTime = self::DEFAULT_MEMCACHE_EXPIRE_TIME ) {
 		$memCacheKey = wfMemcKey( __CLASS__, __METHOD__, json_encode( $params ) );
 		return WikiaDataAccess::cache( $memCacheKey, $expireTime, function () use ( $method, $params ) {
-			return $this->{ $method }( $params );
+			return $this->request( $method, $params );
 		} );
+	}
+
+	/**
+	 * @Call the targeted API method
+	 * @param $method
+	 * @param array $params
+	 * @return mixed|null
+	 */
+	public function request( $method, Array $params ) {
+		return $this->{ $method }( $params );
 	}
 
 	/**
@@ -128,6 +140,19 @@ class WikiaMaps {
 		}
 
 		return $map;
+	}
+
+	/**
+	 * @brief Delete map with a given id if the user has rights to do so
+	 * @param array $params
+	 * @return bool
+	 */
+	function deleteMapByIdFromApi( Array $params ) {
+		$mapId = array_shift( $params );
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
+		$res = Http::request( 'DELETE', $url );
+		//ToDo -> validate based on status code, not a message
+		return ( $res && $res->message == self::MAP_DELETE_SUCCESS );
 	}
 
 	/**
@@ -202,6 +227,5 @@ class WikiaMaps {
 
 		return $option;
 	}
-
 }
 
