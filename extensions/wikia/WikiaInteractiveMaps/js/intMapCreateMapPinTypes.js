@@ -20,7 +20,7 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
-				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-placeholder')
+				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder')
 			},
 
 			events = {
@@ -31,7 +31,6 @@ define('wikia.intMap.createMap.pinTypes',
 				],
 				mapCreated: [
 					function(mapData) {
-						console.log(mapData);
 						showPinTypes(mapData);
 					}
 				],
@@ -58,10 +57,7 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		function showPinTypes(data) {
-			var pinTypes = data.pinTypes ? data.pinTypes : [{}];
-
-			pinTypesTemplateData.mapId = data.mapId;
-			pinTypesTemplateData.pinTypes = extendPinTypesData(pinTypes);
+			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
 
 			modal.$innerContent.html(utils.render(pinTypesTemplate, pinTypesTemplateData, {pinType: pinTypeTemplate}));
@@ -93,6 +89,14 @@ define('wikia.intMap.createMap.pinTypes',
 			});
 
 			return extendedPinTypes;
+		}
+
+		function setUpTemplateData(templateData) {
+			// if no pin types display blank pin type input
+			var pinTypes = templateData.pinTypes ? templateData.pinTypes : [{}];
+
+			pinTypesTemplateData.mapId = templateData.mapId;
+			pinTypesTemplateData.pinTypes = extendPinTypesData(pinTypes);
 		}
 
 		function validate(data) {
