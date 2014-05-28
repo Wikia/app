@@ -170,7 +170,7 @@ define(
 							data: data
 						});
 					} else {
-						modal.trigger('error', response.results.errors.pop());
+						modal.trigger('error', data.errors.pop());
 					}
 				},
 				error: function(response) {
