@@ -33,4 +33,8 @@ abstract class WikiaModel extends WikiaObject {
 	public function getStatsDB( $db_type = DB_SLAVE ) {
 		return wfGetDB( $db_type, array(), $this->wg->StatsDB );
 	}
+
+	public function getSpecialsDB( $db_type = DB_SLAVE ) {
+		return wfGetDB( $db_type, array(), $this->wg->SpecialsDB );
+	}
 }
