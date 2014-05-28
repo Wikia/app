@@ -27,6 +27,9 @@ define('wikia.intMap.createMap.pinTypes',
 				addPinType: [
 					addPinType
 				],
+				deletePinType: [
+					deletePinType
+				],
 				mapCreated: [
 					showPinTypes
 				],
@@ -103,6 +106,16 @@ define('wikia.intMap.createMap.pinTypes',
 		function addPinType() {
 			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
 
+		}
+
+		/**
+		 * @desc deletes pin type
+		 * @param {Event} event
+		 */
+		function deletePinType(event) {
+			$(event.target)
+				.parent()
+				.remove();
 		}
 
 		function savePinTypes(data) {
