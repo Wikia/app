@@ -32,6 +32,8 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedData();
 
+	public abstract function getModelUrlEndpoint();
+
 	/**
 	 * @param $feedName
 	 * @return BaseRssModel
@@ -157,7 +159,7 @@ abstract class BaseRssModel extends WikiaService {
 		return $timestamp;
 	}
 
-	protected function getLastRecoredsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
+	protected function getLastRecordsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
 		$db = $useMaster ? $this->getDbMaster() : $this->getDbSlave();
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' * ' )
@@ -290,9 +292,18 @@ abstract class BaseRssModel extends WikiaService {
 
 		$perWiki = ceil( $numResults / count( $wikis ) );
 		$numberOfItemsToAdd = [ ];
-		//TODO:Fix calculations here!
 		foreach ( $wikis as $wid ) {
-			$numberOfItemsToAdd[ $wid ] = $perWiki;
+			if ( $perWiki > 0 ) {
+				$numberOfItemsToAdd[ $wid ] = $perWiki;
+			}
+			if ( $numResults === 0 ) {
+				break;
+			}
+			$numResults -= $perWiki;
+			if ( $perWiki > $numResults ) {
+				$perWiki = $numResults;
+				$numResults = 0;
+			}
 		}
 
 		foreach ( $wikis as $wid ) {
@@ -348,6 +359,9 @@ abstract class BaseRssModel extends WikiaService {
 					if ( $orgItem[ 'description' ] ) {
 						$item[ 'description' ] = $orgItem[ 'description' ];
 					}
+					if ( $orgItem[ 'timestamp' ] ) {
+						$item[ 'timestamp' ] = $orgItem[ 'timestamp' ];
+					}
 				}
 
 				$data[ $item[ 'url' ] ] = $item;
@@ -359,9 +373,7 @@ abstract class BaseRssModel extends WikiaService {
 	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
 		$this->addFeedsToDb( $out, $feedName);
-		if ( count( $out ) != $rowsToReturn ) {
-			$out = $this->getLastRecoredsFromDb( $feedName, $rowsToReturn, true );
-		}
+		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
 	}
 
