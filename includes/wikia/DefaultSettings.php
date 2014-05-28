@@ -355,13 +355,6 @@ $wgAutoloadClasses['ErrorController'] = $IP.'/skins/oasis/modules/ErrorControlle
 $wgAutoloadClasses['WikiaMediaCarouselController'] = $IP.'/skins/oasis/modules/WikiaMediaCarouselController.class.php';
 $wgAutoloadClasses['LeftMenuController'] = $IP.'/skins/oasis/modules/LeftMenuController.class.php';
 
-// Pirates skin
-$wgAutoloadClasses['PiratesController'] = $IP . '/skins/pirates/modules/PiratesController.class.php';
-$wgAutoloadClasses['PiratesGlobalHeaderController'] = $IP . '/skins/pirates/modules/PiratesGlobalHeaderController.class.php';
-$wgAutoloadClasses['PiratesWikiHeaderController'] = $IP . '/skins/pirates/modules/PiratesWikiHeaderController.class.php';
-$wgAutoloadClasses['PiratesWikiNavigationController'] = $IP . '/skins/pirates/modules/PiratesWikiNavigationController.class.php';
-
-
 // Sass-related classes
 $wgAutoloadClasses['SassService']              = $IP.'/includes/wikia/services/sass/SassService.class.php';
 

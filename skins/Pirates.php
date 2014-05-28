@@ -23,19 +23,20 @@ class SkinPirates extends WikiaSkin {
 		//non-strict checks of css/js/scss assets/packages
 		$this->strictAssetUrlCheck = false;
 	}
-
+/*
 	public function bottomScripts() {
 		$bottomScripts = parent::bottomScripts();
 		$bottomScripts = str_replace( $this->wg->out->getScriptsOnly(), '', $bottomScripts );
 		return $bottomScripts;
 	}
+*/
 }
 
 
 class PiratesTemplate extends WikiaSkinTemplate {
 	function execute() {
 		F::app()->setSkinTemplateObj($this);
-		$response = $this->app->sendRequest( Wikia::getVar( 'PiratesEntryControllerName', 'Pirates' ), 'index', null, false );
+		$response = $this->app->sendRequest( 'Pirates', 'index' );
 		$response->sendHeaders();
 		$response->render();
 	}

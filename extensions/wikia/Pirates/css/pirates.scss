@@ -1,0 +1,84 @@
+$url-prefix: "/skins/oasis/css/";
+
+// Legacy
+@import "/skins/common/shared.css";
+@import "/skins/wikia/shared.css";
+
+// Layout
+@import "skins/oasis/css/core/layout";
+
+// Mixins
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/border-opacity";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/forms";
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/mixins/menus";
+@import "skins/oasis/css/mixins/wordmark";
+
+// Core
+@import "skins/oasis/css/core/buttons";
+@import "skins/oasis/css/core/ads";
+@import "skins/oasis/css/core/autocomplete";
+@import "skins/oasis/css/core/typography";
+@import "skins/oasis/css/core/sprite";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/core/reset";
+@import "skins/oasis/css/core/modal";
+@import "skins/oasis/css/core/body";
+@import "skins/oasis/css/core/background";
+@import "skins/oasis/css/core/globalelements";
+@import "skins/oasis/css/core/GlobalHeader";
+@import "skins/oasis/css/core/GlobalHeaderAB";
+@import "skins/oasis/css/core/GlobalNavigationMenu";
+@import "skins/oasis/css/core/AccountNavigation";
+@import "skins/oasis/css/core/page";
+@import "skins/oasis/css/core/CommentsLikes";
+@import "skins/oasis/css/core/WikiHeader";
+@import "skins/oasis/css/core/WikiHeaderAB";
+@import "skins/oasis/css/core/PageHeader";
+@import "skins/oasis/css/core/Search";
+@import "skins/oasis/css/core/Footer";
+@import "skins/oasis/css/core/Notifications";
+@import "skins/oasis/css/core/table";
+@import "skins/oasis/css/core/tabs";
+@import "skins/oasis/css/core/Paginator";
+@import "skins/oasis/css/core/successerror";
+@import "skins/oasis/css/core/SpeechBubble";
+@import "skins/oasis/css/core/ArticleAfterComments";
+@import "skins/oasis/css/core/GlobalNotification";
+@import "skins/oasis/css/core/jquery.ui.autocomplete"; // TODO: load on demand
+@import "skins/oasis/css/core/thumbnails";
+@import "skins/oasis/css/core/MenuElement";
+
+// Bootstrap
+@import "resources/wikia/libraries/bootstrap/tooltip";
+@import "resources/wikia/libraries/bootstrap/popover";
+
+// Extensions (only include here if used on the majority of page views!)
+@import "extensions/wikia/CategorySelect/css/CategorySelect";
+@import "extensions/wikia/RelatedPages/RelatedPages";
+@import "extensions/wikia/ImageLazyLoad/css/ImageLazyLoad";
+@import "extensions/wikia/UserLogin/css/UserLoginGlobal";
+@import "extensions/wikia/VideoHandlers/css/VideoHandlers";
+@import "extensions/wikia/WikiaStyleGuide/css/Form";
+@import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
+@import "extensions/wikia/Chat2/css/ChatEntryPoint";
+@import "extensions/wikia/UserLogin/css/UserLoginDropdown";
+@import "extensions/wikia/Forum/css/RelatedForumDiscussion"; // on every article page
+@import "extensions/wikia/TOC/css/toc.scss";
+
+// CSS (needs leading slash and file extension)
+@import "/extensions/wikia/CreatePage/css/CreatePage.css";
+@import "/extensions/FBConnect/css/fbModal.css";
+@import "/extensions/wikia/AjaxLogin/AjaxLogin.css";
+
+// Responsive layout files
+// These files override some of the styles for older extentions.
+@import "skins/oasis/css/core/responsive-variables";
+@import "skins/oasis/css/core/responsive-font-sizing";
+@import "skins/oasis/css/core/responsive-core";
+@import "skins/oasis/css/core/responsive-mainpage-tag";
+
+@import "article";
