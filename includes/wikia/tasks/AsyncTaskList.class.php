@@ -18,6 +18,7 @@ use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
+use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Tasks\BaseTask;
 
@@ -52,6 +53,9 @@ class AsyncTaskList {
 	/** @var bool whether or not to perform task deduplication */
 	protected $dupCheck = false;
 
+	/** @var array allows us to store information about this specific task */
+	protected $workId;
+
 	public function __construct() {
 		$this->wikiId = self::DEFAULT_WIKI_ID;
 	}
@@ -81,6 +85,9 @@ class AsyncTaskList {
 				break;
 			case ParsoidPurgePriorityQueue::NAME:
 				$queue = new ParsoidPurgePriorityQueue();
+				break;
+			case NlpPipelineQueue::NAME:
+				$queue = new NlpPipelineQueue();
 				break;
 			default:
 				$queue = new Queue();
@@ -173,54 +180,51 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * put this task list into the queue
-	 *
-	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
-	 * @return string the task list's id
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * Lets us set the task type so that we can use other tasks in celery-workers lib
+	 * @param str $type
+	 * @return $this
 	 */
-	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname, $wgWikiaDatacenter;
+	public function taskType( $type ) {
+		$this->taskType = $type;
+		return $this;
+	}
 
-		if ($this->createdBy == null) {
-			$this->createdBy($wgUser);
-		}
+	/**
+	 * Initializes the data we're using to identify a set of tasks so we can reuse the runner without leaky state
+	 * @return $this
+	 */
+	protected function initializeWorkId() {
+		$this->workId = ['tasks' => [], 'wikiId' => $this->wikiId];
+		return $this;
+	}
 
+	/**
+	 * Returns the "args" value of the payload. Required in base class to valuate work id
+	 * @return array
+	 */
+	protected function payloadArgs() {
 		$taskList = [];
-		$workId = ['tasks' => [], 'wikiId' => $this->wikiId];
-
 		foreach ($this->classes as $task) {
 			/** @var BaseTask $task */
 			$serialized = $task->serialize();
 			$taskList []= $serialized;
-			$workId['tasks'] []= $serialized;
+			$this->workId['tasks'] []= $serialized;
 		}
-
-		$id = $this->generateId();
-		$payload = (object) [
-			'id' => $id,
-			'task' => $this->taskType,
-			'args' => [
+		return [
 				$this->wikiId,
 				$this->calls,
 				$taskList,
-			],
-			'kwargs' => (object) [
-				'created_ts' => time(),
-				'created_by' => $this->createdBy,
-				'work_id' => sha1(json_encode($workId)),
-				'force' => !$this->dupCheck
-			]
-		];
+			];
+	}
 
-		if ($this->delay) {
-			$scheduledTime = strtotime($this->delay);
-			if ($scheduledTime !== false && $scheduledTime > time()) {
-				$payload->eta = gmdate('c', $scheduledTime);
-			}
-		}
 
+	/**
+	 * Allows us to determine execution method and runner for a given environment
+	 * @return array
+	 */
+	protected function getExecutor() {
+		global $wgDevelEnvironment, $IP, $wgPreviewHostname, $wgVerifyHostname, $wgWikiaDatacenter;
+		$executor = [];
 		$hostname = gethostname();
 		if (!empty($wgDevelEnvironment)) {
 			if (isset($_SERVER['SERVER_NAME'])) {
@@ -234,12 +238,12 @@ class AsyncTaskList {
 				];
 			}
 
-			$payload->kwargs->executor = [
+			$executor = [
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
 			];
 		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname]) || $wgWikiaDatacenter == 'sjc-internal') { // force internal/preview/verify to run on preview/verify server
-			$payload->kwargs->executor = [
+			$executor = [
 				'method' => 'remote_shell',
 				'runner' => [
 					$hostname,
@@ -247,6 +251,46 @@ class AsyncTaskList {
 				],
 			];
 		}
+		return $executor;
+	}
+
+	/**
+	 * put this task list into the queue
+	 *
+	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
+	 * @return string the task list's id
+	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
+	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 */
+	public function queue(AMQPChannel $channel=null) {
+		global $wgUser;
+
+		$this->initializeWorkId();
+
+		if ($this->createdBy == null) {
+			$this->createdBy($wgUser);
+		}
+
+		$id = $this->generateId();
+		$payload = (object) [
+			'id' => $id,
+			'task' => $this->taskType,
+			'args' => $this->payloadArgs(),
+			'kwargs' => (object) [
+				'created_ts' => time(),
+				'created_by' => $this->createdBy,
+				'work_id' => sha1(json_encode($this->workId)),
+				'force' => !$this->dupCheck,
+				'executor' => $this->getExecutor()
+			]
+		];
+
+		if ($this->delay) {
+			$scheduledTime = strtotime($this->delay);
+			if ($scheduledTime !== false && $scheduledTime > time()) {
+				$payload->eta = gmdate('c', $scheduledTime);
+			}
+		}		
 
 		$message = new AMQPMessage(json_encode($payload), [
 			'content_type' => 'application/json',
