@@ -1207,6 +1207,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
+ * @name $wgAdDriverUseWikiaBarBoxad2
+ * Whether to enable new fancy footer WikiaBar BOXAD 2 (true) or not (false)
+ */
+$wgAdDriverUseWikiaBarBoxad2 = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
