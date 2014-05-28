@@ -211,6 +211,13 @@ function veTrack( data ) {
 			defaultData.orientationEnabled = !!window.veOrientationEnabled ? 'yes' : 'no';
 		}
 
+		// anon edit warning
+		try {
+			defaultData.anoneditwarning = !!anoneditwarning ? 'yes' : 'no';
+		} catch ( e ) {
+			defaultData.anoneditwarning = 'unknown';
+		}
+		
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
