@@ -84,6 +84,7 @@ define(
 		function setData(tileSet) {
 			type = tileSet.type;
 			tileSetData = tileSet.data;
+			tileSetData.image = tileSetData.fileUrl;
 			templateData.tileSetData = tileSetData;
 		}
 
