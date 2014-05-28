@@ -49,7 +49,7 @@ require([
 	}
 
 	function shouldBeLoaded() {
-		return pageHeight > 1600;
+		return window.wgShowAds && pageHeight > 1600;
 	}
 
 	$(function(){

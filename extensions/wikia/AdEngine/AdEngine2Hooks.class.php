@@ -15,7 +15,7 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgEnableRHonDesktop,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgAdPageType, $wgLoadAdsInHead,
-			   $wgAdDriverUseWikiaBarBoxad2, $wgEnableKruxTargeting;
+			   $wgEnableKruxTargeting;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
