@@ -29,18 +29,13 @@ class ActivityApiController extends WikiaApiController {
 	 * @example &namespaces=0,14&allowDuplicates=0&limit=20
 	 */
 	public function getLatestActivity() {
-		$limit = $this->getRequest()->getInt("limit", self::DEFAULT_RESULTS_NUMBER);
-		$namespaces = $this->getRequest()->getArray("namespaces", [self::DEFAULT_ARTICLE_NAMESPACE]);
-		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", true);
-
-		$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates);
-
-		$this->setVal( 'items', $items );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->executeServiceQuery();
 	}
 
 	/**
-	 * Fetches recently changed articles
+	 * Fetches recently changed articles.
+	 *
+	 * Works the same as getLatestActivity() except behavior when allowDuplicates=0 is passed.
 	 *
 	 * @requestParam int $limit [OPTIONAL] maximal result count
 	 * @requestParam array $namespaces [OPTIONAL] [0] by default
@@ -54,13 +49,30 @@ class ActivityApiController extends WikiaApiController {
 	 * @example &namespaces=0,14&allowDuplicates=0&limit=20
 	 */
 	public function getRecentlyChangedArticles() {
-		$limit = $this->getRequest()->getInt("limit", self::DEFAULT_RESULTS_NUMBER);
-		$namespaces = $this->getRequest()->getArray("namespaces", [self::DEFAULT_ARTICLE_NAMESPACE]);
-		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", true);
+		$this->executeServiceQuery( 'filterByArticle' );
+	}
 
-		$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates, 'filterByArticle');
+	/**
+	 * Gets query parameters from the request, sends the request to service and sets results to response $items[] variable
+	 *
+	 * Re-used method in ActivityApiController::getLatestActivity() and ActivityApiController::getRecentlyChangedArticles()
+	 *
+	 * @param String|null $filteringMethod name of filtering method passed to RevisionService::getLatestRevisions()
+	 */
+	private function executeServiceQuery( $filteringMethod = null ) {
+		$limit = $this->getRequest()->getInt( 'limit', self::DEFAULT_RESULTS_NUMBER );
+		$namespaces = $this->getRequest()->getArray( 'namespaces', [ self::DEFAULT_ARTICLE_NAMESPACE ] );
+		$allowDuplicates = $this->getRequest()->getBool( 'allowDuplicates', true );
 
-		$this->setVal( 'items', $items );
+		$items = $this->revisionService->getLatestRevisions(
+			$limit,
+			$namespaces,
+			$allowDuplicates,
+			$filteringMethod
+		);
+
+		$this->response->setVal( 'items', $items );
 		$this->response->setVal( 'basepath', $this->wg->Server );
 	}
+
 }
