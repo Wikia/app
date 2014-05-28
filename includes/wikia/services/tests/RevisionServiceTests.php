@@ -242,6 +242,67 @@ class RevisionServiceTests extends WikiaBaseTest {
 					]
 				],
 			],
+			[
+				'Multiple results of different pages',
+				'input' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353727,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353627,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353527,
+					],
+					[
+						'article' => 3,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353427,
+					],
+				],
+				'expected' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 2,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 3,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353427,
+					]
+				],
+			],
 		];
 	}
 }
