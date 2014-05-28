@@ -13,7 +13,9 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 			mustache: [
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSet.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
+				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
+				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
+				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
 			]
 		};
 

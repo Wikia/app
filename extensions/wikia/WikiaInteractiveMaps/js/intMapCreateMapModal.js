@@ -44,11 +44,6 @@ define(
 				],
 				cleanUpError: [
 					cleanUpError
-				],
-				mapCreated: [
-					function(data) {
-						showCreatedMap(data);
-					}
 				]
 			};
 
