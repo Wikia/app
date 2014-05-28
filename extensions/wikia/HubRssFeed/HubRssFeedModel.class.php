@@ -132,8 +132,21 @@ class HubRssFeedModel extends WikiaModel {
 		}
 
 		array_multisort($timestamps, SORT_DESC, $currentData);
+		$currentData = $this->fakeOrderItems($currentData);
 
+		return $currentData;
+	}
 
+	protected function fakeOrderItems( $currentData ){
+		$prevTimestamp = 0;
+		foreach($currentData as &$item){
+			if($prevTimestamp === $item['timestamp']){
+				$item['timestamp'] --;
+			}elseif($prevTimestamp > 0 && $item['timestamp'] > $prevTimestamp){
+				$item['timestamp'] = $prevTimestamp - 1;
+			}
+			$prevTimestamp = $item['timestamp'];
+		}
 		return $currentData;
 	}
 
@@ -199,7 +212,7 @@ class HubRssFeedModel extends WikiaModel {
 
 		array_multisort($timestamps, SORT_DESC, $currentData);
 
-
+		$currentData = $this->fakeOrderItems($currentData);
 		return $currentData;
 
 	}
