@@ -192,4 +192,56 @@ class RevisionServiceTests extends WikiaBaseTest {
 
 		$this->assertEquals($expectedResult, $result);
 	}
+
+	/**
+	 * @dataProvider filterByPageIdDataProvider
+	 */
+	public function testFilterByPageId( $testDescription, $input, $expected ) {
+		$dbMock = $this->getMock('StdClass', array( 'selectSQLText', 'query', 'addQuotes' ));
+		$revisionService = new RevisionService( $dbMock, 0 );
+		$result = $revisionService->filterByPageId( $input );
+
+		$this->assertEquals($expected, $result, $testDescription);
+	}
+
+	public function filterByPageIdDataProvider() {
+		return [
+			[
+				'Empty input',
+				'input' => [],
+				'expected' => [],
+			],
+			[
+				'One result of the same page',
+				'input' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353827,
+					],
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353727,
+					],
+				],
+				'expected' => [
+					[
+						'article' => 1,
+						'user' => 101,
+						'revisionId' => 201,
+						'timestamp' => 1363353927,
+					]
+				],
+			],
+		];
+	}
 }
