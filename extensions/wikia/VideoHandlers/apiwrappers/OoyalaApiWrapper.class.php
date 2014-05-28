@@ -401,8 +401,8 @@ class OoyalaApiWrapper extends ApiWrapper {
 			return $this->metadata['expirationDate'];
 		}
 
-		if ( !empty( $this->interfaceObj['metadata']['expirationdate'] ) ) {
-			return strtotime( $this->interfaceObj['metadata']['expirationdate'] );
+		if ( !empty( $this->interfaceObj['time_restrictions']['end_date'] ) ) {
+			return strtotime( $this->interfaceObj['time_restrictions']['end_date'] );
 		}
 
 		return '';
