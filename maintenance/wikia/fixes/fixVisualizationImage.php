@@ -46,7 +46,8 @@ class FixVisualizationImage extends Maintenance {
 
 		$sourceFile = \GlobalFile::newFromText($sourceTitle->getText(), $sourceWikiId);
 		if (!$sourceFile->exists()){
-			die("sourceFile doesn't exist\n");
+			echo "sourceFile doesn't exist" . PHP_EOL;
+			return false;
 		}
 		$sourceImageUrl = $sourceFile->getUrl();
 
@@ -54,9 +55,13 @@ class FixVisualizationImage extends Maintenance {
 
 		$imageData = new stdClass();
 		$imageData->name = $promoImage->getPathname();
-		$imageData->description = $imageData->comment = wfMsg('wikiahome-image-auto-uploaded-comment');
+		$imageData->description = $imageData->comment = wfMessage('wikiahome-image-auto-uploaded-comment')->plain();
+
 		$result = ImagesService::uploadImageFromUrl($sourceImageUrl, $imageData, $user);
-		var_dump($result['errors'], $sourceImageUrl);
+		if (!$result['status']){
+			var_dump($result['errors'], $sourceImageUrl);
+		}
+
 		return $result['status'];
 	}
 
@@ -83,25 +88,28 @@ class FixVisualizationImage extends Maintenance {
 	public static function uploadCorrectMainImageOnCurrentWiki(GlobalTitle $srcImageTitle){
 		$app = F::app();
 		$city_id = $app->wg->cityId;
+		$success = true;
 
 		if ($srcImageTitle->exists()){
 			$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($city_id);
 
 			$newTitle = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
 			if (!$newTitle->exists()) {
-				echo "uploading\n";
+				echo "uploading " . $promoImage->getPathname() . PHP_EOL;
 				$success = self::uploadFile($promoImage, $srcImageTitle, $city_id);
 				if (!$success){
-					die("image upload failed\n");
+					echo "image upload failed" . PHP_EOL;
+				} else {
+					echo "uploaded" . PHP_EOL;
 				}
-				echo "uploaded\n";
 			} else {
-				echo "file already exists, skipping upload\n";
+				echo "file already exists, skipping upload" . PHP_EOL;
 			}
 
 		} else {
-			echo "srv image title doesnt exist " . $srcImageTitle->getText() . "\n";
+			echo "srv image title doesnt exist " . $srcImageTitle->getText() . PHP_EOL;
 		}
+		return $success;
 	}
 
 	public static function correctFileExists($cityId) {
@@ -131,32 +139,31 @@ class FixVisualizationImage extends Maintenance {
 		global $wgHooks;
 		$cityId = $app->wg->cityId;
 
+		var_dump(self::fetchAfflictedCityIds('en'));
+
 		$oldMainImageName = (new PromoImage(PromoImage::MAIN))->getPathname();
 		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
 		$UPLOAD_VERIFICATION_KEY = "UploadVerification";
 
 		if (in_array($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY])) {
 			$idx = array_search($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY]);
-			echo "Deleting verification";
+			echo "Deleting upload verification hook " . $idx . PHP_EOL;
 			unset($wgHooks['UploadVerification'][$idx]);
 		}
-		var_dump($idx);
 
 		$oldFileTitle = GlobalTitle::newFromText($oldMainImageName, NS_FILE, $cityId);
-		$t = GlobalFile::newFromText($oldFileTitle, $cityId);
-		var_dump($t->exists());
 
 		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
 
 		if (!self::correctFileExists($cityId)){
-			self::uploadCorrectMainImageOnCurrentWiki($oldFileTitle);
-			self::saveCorrectImageRowForCurrentWiki($dbr);
-
+			if (self::uploadCorrectMainImageOnCurrentWiki($oldFileTitle)){
+				self::saveCorrectImageRowForCurrentWiki($dbr);
+			}
 		} else {
 			if (!self::checkIfImageIsInDB($cityId)){
 				self::saveCorrectImageRowForCurrentWiki($dbr);
 			} else {
-				die("image seems to be correctly set in db, exiting\n");
+				die("image seems to be correctly set in db, exiting" . PHP_EOL);
 			}
 		}
 	}
