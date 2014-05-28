@@ -119,6 +119,10 @@ require([
 	if (window.wgEnableRHonDesktop) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
+
+	if (!window.wgAdDriverDisableLateQueue) {
+		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	}
 });
 
 // Load late ads now
