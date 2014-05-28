@@ -89,9 +89,9 @@ define(
 
 		function validateTitle() {
 			var dfd = new $.Deferred(),
-				title = $title.val().trim();
+				title = $title.val();
 
-			if (title.length !== 0) {
+			if (utils.isEmpty(title)) {
 				// add valid title to tile set data
 				tileSetData.title = title;
 				dfd.resolve();

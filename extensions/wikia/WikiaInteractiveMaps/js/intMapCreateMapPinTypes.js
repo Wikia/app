@@ -34,8 +34,9 @@ define('wikia.intMap.createMap.pinTypes',
 					showPinTypes
 				],
 				savePinTypes: [
-					validate,
-					savePinTypes
+					serializeForm,
+					validate
+					//savePinTypes
 				]
 			},
 			buttons = {
@@ -96,8 +97,29 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypesTemplateData.pinTypes = extendPinTypesData(pinTypes);
 		}
 
-		function validate(data) {
+		function serializeForm() {
+			var o = {},
+				a = $form.serializeArray(),
+				dfd = new $.Deferred();
 
+			$.each(a, function() {
+				if (o[this.name] !== undefined) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+
+			dfd.resolve(o);
+
+			return dfd.promise();
+		}
+
+		function validate(data) {
+			console.log(data);
 		}
 
 		/**
