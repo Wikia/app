@@ -72,6 +72,31 @@ class RevisionService {
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
 	 * @return array
 	 */
+	public function getRecentlyChangedArticles( $limit, $namespaces ) {
+		$key = self::createCacheKey( $this->queryLimit, $namespaces, false ) . '_' . __METHOD__;
+		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $limit, $namespaces ) {
+			$result = $this->getLatestRevisionsQuery( $limit, $namespaces, true );
+			$items = array();
+			while( ( $row = $result->fetchObject() ) !== false ) {
+				$dateTime = date_create_from_format( 'YmdHis', $row->timestamp );
+				$items[  ] = array(
+					'article'    => intval($row->pageId),
+					'user'       => intval($row->userId),
+					'revisionId' => intval($row->id),
+					'timestamp'  => $dateTime->getTimestamp()
+				);
+			}
+			return $items;
+		}, WikiaDataAccess::SKIP_CACHE );
+		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
+		return $listOfRevisions;
+	}
+
+	/**
+	 * @param int $limit limit number of results.
+	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
+	 * @return array
+	 */
 	public function getLatestRevisionsNoCacheAllowDuplicates( $limit, $namespaces ) {
 		$limit = intval($limit);
 
@@ -93,14 +118,16 @@ class RevisionService {
 	/**
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
+	 * @param bool $groupByPageId flag telling if group by page id or not
 	 * @return ResultWrapper
 	 */
-	public function getLatestRevisionsQuery( $limit, $namespaces ) {
+	public function getLatestRevisionsQuery( $limit, $namespaces, $groupByPageId = false ) {
 		$namespaces = $this->sqlSanitizeArray($namespaces);
 
 		$tables = array('recentchanges');
 		$joinConditions = array();
 		$conditions = array();
+		$options = array( 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' );
 
 		// clear out the bots
 		$conditions[] = "rc_bot=0";
@@ -111,12 +138,15 @@ class RevisionService {
 			$tables[] = 'page';
 			$joinConditions['page'] = array( "JOIN", "rc_cur_id=page_id" );
 		}
+		if( $groupByPageId ) {
+			$options[ 'GROUP BY' ] = 'page_id';
+		}
 		$query = $this->databaseConnection->selectSQLText(
 			$tables
 			, 'rc_id as id, page_id as pageId, rc_timestamp as timestamp, rc_user as userId'
 			, $conditions
 			, __METHOD__
-			, array( 'LIMIT' => $limit, 'ORDER BY' => 'rc_id DESC' )
+			, $options
 			, $joinConditions );
 
 		$result = $this->databaseConnection->query($query);
