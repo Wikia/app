@@ -238,7 +238,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	public function createMap() {
 		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
 		$this->setCreationData( 'tileSetId', $tileSetId );
-		$this->setCreationData( 'image', trim( $this->request->getVal( 'image', '' ) ) );
+		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
 		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
 
 		$this->validateMapCreation();
