@@ -210,7 +210,6 @@ abstract class BaseRssModel extends WikiaService {
 		$res = Http::get( $url );
 		$res = json_decode( $res, true );
 		$article = $res[ 'items' ][ $articleId ];
-		$ws = new WikiService();
 		if ( !$article[ 'thumbnail' ] ) {
 			$ws = new WikiService();
 			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
