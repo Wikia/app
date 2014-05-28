@@ -14,13 +14,13 @@ ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_NOTICE );
 
 require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
+use \Wikia\Logger\WikiaLogger;
 
 /**
  * Class flagStatusOfVideos
  */
 class flagStatusOfVideos extends Maintenance {
 
-	const STATUS_WORKING = 1;
 	const STATUS_DELETED = 2;
 	const STATUS_PRIVATE = 4;
 	const STATUS_OTHER_ERROR = 8;
@@ -42,6 +42,7 @@ class flagStatusOfVideos extends Maintenance {
 		$deletedVideos    = 0;
 		$privateVideos    = 0;
 		$otherErrorVideos = 0;
+		$log = WikiaLogger::instance();
 		// Only write to memcache, no reads. We want to make sure to always talk to each of the provider's API directly.
 		// Since each time a request is made to these APIs the response is cached for 1 day, disallow memcache reads
 		// so we can be sure to not be pulling stale data.
@@ -60,9 +61,8 @@ class flagStatusOfVideos extends Maintenance {
 					// If an exception isn't thrown by this point, we know the video is still good
 					$this->debug( "Found working video: " . $video['video_title'] );
 					$workingVideos++;
-					$status = self::STATUS_WORKING;
-					$removeVideo = false;
 				} catch ( Exception $e ) {
+					$removeVideo = true;
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
 						$deletedVideos++;
@@ -75,13 +75,22 @@ class flagStatusOfVideos extends Maintenance {
 						$this->debug( "Found other video: " . $video['video_title'] );
 						$this->debug( $e->getMessage() );
 						$otherErrorVideos++;
+						$loggingParams = [
+							"video_title" => $video["video_title"],
+							"video_id" => $video["video_id"],
+							"error" => $e->getMessage(),
+							"status_code" => $e->getStatusCode() ];
+						$log->info( "Video encountered with unknown error", $loggingParams );
 						$status = self::STATUS_OTHER_ERROR;
+						$removeVideo = false;
 					}
-					$removeVideo = true;
-				}
-				if ( !$this->test ) {
-					wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
-					$this->setRemovedValue( $video, $removeVideo );
+
+					if ( !$this->test ) {
+						wfSetWikiaPageProp( WPP_VIDEO_STATUS, $video['page_id'], $status );
+						if ( $removeVideo ) {
+							$this->setRemovedValue( $video, $removeVideo );
+						}
+					}
 				}
 			}
 		}
