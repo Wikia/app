@@ -132,10 +132,9 @@ class FixVisualizationImage extends Maintenance {
 		$cityId = $app->wg->cityId;
 
 		$oldMainImageName = (new PromoImage(PromoImage::MAIN))->getPathname();
-//		UploadVisualizationImageFromFile::UploadVerification()
 		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
 		$UPLOAD_VERIFICATION_KEY = "UploadVerification";
-//		$idx = array_search($SPECIAL_UPLOAD_VERIFICATION, $app->wg->Hooks[$UPLOAD_VERIFICATION_KEY]);
+
 		if (in_array($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY])) {
 			$idx = array_search($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY]);
 			echo "Deleting verification";
