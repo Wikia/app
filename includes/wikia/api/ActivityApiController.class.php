@@ -58,11 +58,7 @@ class ActivityApiController extends WikiaApiController {
 		$namespaces = $this->getRequest()->getArray("namespaces", [self::DEFAULT_ARTICLE_NAMESPACE]);
 		$allowDuplicates = $this->getRequest()->getBool("allowDuplicates", true);
 
-		if( $allowDuplicates ) {
-			$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates);
-		} else {
-			$items = $this->revisionService->getRecentlyChangedArticles($limit, $namespaces, $allowDuplicates);
-		}
+		$items = $this->revisionService->getLatestRevisions($limit, $namespaces, $allowDuplicates, 'filterByArticle');
 
 		$this->setVal( 'items', $items );
 		$this->response->setVal( 'basepath', $this->wg->Server );

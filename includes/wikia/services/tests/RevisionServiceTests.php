@@ -194,17 +194,17 @@ class RevisionServiceTests extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider filterByPageIdDataProvider
+	 * @dataProvider filterByArticleDataProvider
 	 */
-	public function testFilterByPageId( $testDescription, $input, $expected ) {
+	public function testFilterByArticle( $testDescription, $input, $expected ) {
 		$dbMock = $this->getMock('StdClass', array( 'selectSQLText', 'query', 'addQuotes' ));
 		$revisionService = new RevisionService( $dbMock, 0 );
-		$result = $revisionService->filterByPageId( $input );
+		$result = $revisionService->filterByArticle( $input );
 
 		$this->assertEquals($expected, $result, $testDescription);
 	}
 
-	public function filterByPageIdDataProvider() {
+	public function filterByArticleDataProvider() {
 		return [
 			[
 				'Empty input',

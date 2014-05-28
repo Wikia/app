@@ -53,33 +53,17 @@ class RevisionService {
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
 	 * @param bool $allowDuplicates if false there will be at most one result per page
+	 * @param string $duplicatesFilter optional name of filtering method
 	 * @return array
 	 */
-	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates ) {
+	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $duplicatesFilter = null ) {
 		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
 		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces, $allowDuplicates ) {
 			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces, $allowDuplicates );
 		});
 		if( !$allowDuplicates ) {
-			$listOfRevisions = $this->filterDuplicates( $listOfRevisions );
-		}
-		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
-		return $listOfRevisions;
-	}
-
-	/**
-	 * @param int $limit limit number of results.
-	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
-	 * @param bool $allowDuplicates if false there will be at most one result per page
-	 * @return array
-	 */
-	public function getRecentlyChangedArticles( $limit, $namespaces, $allowDuplicates ) {
-		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
-		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces, $allowDuplicates ) {
-			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces, $allowDuplicates );
-		});
-		if( !$allowDuplicates ) {
-			$listOfRevisions = $this->filterByPageId( $listOfRevisions );
+			$duplicatesFilter = is_null( $duplicatesFilter ) ? 'filterDuplicates' : $duplicatesFilter;
+			$listOfRevisions = $this->$duplicatesFilter( $listOfRevisions );
 		}
 		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
 		return $listOfRevisions;
@@ -173,7 +157,7 @@ class RevisionService {
 	 * @param array $listOfRevisions list of revisions to remove duplicates from
 	 * @return array
 	 */
-	public function filterByPageId( $listOfRevisions ) {
+	public function filterByArticle( $listOfRevisions ) {
 		$presentPageIds = [];
 		$result = [];
 		foreach( $listOfRevisions as $revisionData ) {
