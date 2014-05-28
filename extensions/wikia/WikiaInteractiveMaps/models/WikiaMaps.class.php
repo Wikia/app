@@ -152,7 +152,7 @@ class WikiaMaps {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
 		$res = Http::request( 'DELETE', $url );
 		//ToDo -> validate based on status code, not a message
-		return ( $res && $res->message == self::MAP_DELETE_SUCCESS);
+		return ( $res && $res->message == self::MAP_DELETE_SUCCESS );
 	}
 
 	/**

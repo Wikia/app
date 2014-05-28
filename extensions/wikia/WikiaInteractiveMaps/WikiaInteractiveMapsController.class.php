@@ -56,7 +56,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'limit' => self::MAPS_PER_PAGE,
 		];
 
-		$mapsResponse = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
+		$mapsResponse = $this->mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
 		if ( !$mapsResponse ) {
 			$this->forward( 'WikiaInteractiveMaps', 'error' );
@@ -75,7 +75,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
 		];
 		$this->setVal( 'messages', $messages );
-		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions( $selectedSort ) );
+		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
@@ -114,7 +114,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$map = $mapsModel->cachedRequest(
+		$map = $this->mapsModel->cachedRequest(
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
@@ -122,7 +122,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$url = $mapsModel->buildUrl( [
+			$url = $this->mapsModel->buildUrl( [
 				WikiaMaps::ENTRY_POINT_RENDER,
 				$mapId,
 				$zoom,
@@ -158,10 +158,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @brief Ajax method for deleting a map from IntMaps API
 	 */
 	public function deleteMap() {
-		$mapId = $this->request->getVal('mapId', 0),
+		$mapId = $this->request->getVal( 'mapId', 0 );
 		$result = false;
 		if( $mapId && $this->hasRightsToDelete() ) {
-			$result = $mapsModel->request('deleteMapByIdFromApi', ['mapId' => $mapId]);
+			$result = $this->mapsModel->request('deleteMapByIdFromApi', ['mapId' => $mapId] );
 		}
 		$this->setVal('result', $result);
 	}
