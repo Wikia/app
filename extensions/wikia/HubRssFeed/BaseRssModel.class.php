@@ -218,7 +218,7 @@ abstract class BaseRssModel extends WikiaService {
 			$article[ 'thumbnail' ] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
-			'url' =>  preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] ), //remove cropping info from image url
+			'url' => $article[ 'thumbnail' ],
 			'width' => $article[ 'original_dimensions' ][ 'width' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ],
 			'height' => $article[ 'original_dimensions' ][ 'height' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ]
 		],
