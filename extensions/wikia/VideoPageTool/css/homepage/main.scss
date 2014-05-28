@@ -142,11 +142,6 @@ $color-page-border: #bbbdc0;
 			width: 107px;
 		}
 
-		.ico-realgravity {
-			@include sprite-VideoPageTool('ico_realgravity');
-			width: 36px;
-		}
-
 		.ico-screenplay {
  		@include sprite-VideoPageTool('ico_screenplay');
  		width: 35px;
