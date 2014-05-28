@@ -789,6 +789,7 @@ class ArticlesApiController extends WikiaApiController {
 						$images[$id][0]['original_dimensions'] : null;
 				}
 				if ( !$crop ) {
+					//this will restore image original dimensions
 					$data['thumbnail'] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $data['thumbnail'] );
 				}
 				$result[ $id ] = $data;
