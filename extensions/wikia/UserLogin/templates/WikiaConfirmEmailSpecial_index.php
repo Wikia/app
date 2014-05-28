@@ -26,7 +26,7 @@
 				'type' => 'text',
 				'name' => 'username',
 				'label' => wfMessage('wikiaconfirmemail-username')->escaped(),
-				'value' => $username,
+				'value' => Sanitizer::encodeAttribute( $username ),
 				'isInvalid' => !empty($errParam) && $errParam === 'username',
 				'errorMsg' => !empty($msg) ? $msg : ''
 			),

@@ -352,7 +352,7 @@ class AbuseFilterHooks {
 	 * @param array $tasks
 	 * @return bool
 	 */
-	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
+	public static function onUserRenameLocalIP( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
 		$tasks[] = array(
 			'table' => 'abuse_filter_log',
 			'userid_column' => 'afl_user',

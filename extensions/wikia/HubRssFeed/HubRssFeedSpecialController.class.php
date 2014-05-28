@@ -8,6 +8,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const CACHE_10MIN = 600;
 	/** Use it after release to generate new memcache keys. */
 	const CACHE_BUST = 26;
+	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
@@ -69,6 +70,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		global $wgHubRssFeedCityIds;
 
 		$params = $this->request->getParams();
+		$feedUrl = RequestContext::getMain()->getRequest()->getFullRequestURL();
 
 		$hubName = strtolower( (string)$params[ 'par' ] );
 
@@ -82,11 +84,11 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$langCode = $this->app->wg->ContLang->getCode();
 		$this->model = new HubRssFeedModel($langCode);
 
-		$memcKey = wfMemcKey( self::CACHE_KEY, $hubName, self::CACHE_BUST, $langCode );
+		$memcKey = wfMemcKey( self::CACHE_KEY, $hubName, self::CACHE_BUST, $langCode, $feedUrl );
 
 		$xml = $this->wg->memc->get( $memcKey );
 		if ( $xml === false ) {
-			$service = new HubRssFeedService($langCode, $this->currentTitle->getFullUrl() . '/' . ucfirst( $hubName ));
+			$service = new HubRssFeedService( $langCode, $feedUrl );
 			$verticalId = $this->hubs[ $hubName ];
 			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
 			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
@@ -96,7 +98,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );
-		$this->response->setContentType( 'text/xml' );
+		$this->response->setContentType( self::RSS_CONTENT_TYPE );
 	}
 
 	public function customRss() {
@@ -107,11 +109,11 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$service->setFeedLang( $model->getFeedLanguage() );
 		$service->setFeedTitle( $model->getFeedTitle() );
 		$service->setFeedDescription( $model->getFeedDescription() );
-		$service->setFeedUrl( SpecialPage::getTitleFor( self::SPECIAL_NAME )->getFullUrl() . $model->getModelUrlEndpoint() );
+		$service->setFeedUrl( RequestContext::getMain()->getRequest()->getFullRequestURL() );
 		$service->setData( $model->getFeedData() );
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $service->toXml() );
-		$this->response->setContentType( 'text/xml' );
+		$this->response->setContentType( self::RSS_CONTENT_TYPE );
 	}
 
 }
