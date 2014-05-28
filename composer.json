@@ -3,6 +3,7 @@
 		"vendor-dir": "lib/composer"
 	},
 	"require": {
-		"videlalvaro/php-amqplib": "2.2.*"
+		"videlalvaro/php-amqplib": "2.2.*",
+		"monolog/monolog": "1.9.1"
 	}
 }
