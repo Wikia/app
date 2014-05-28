@@ -213,7 +213,7 @@ abstract class BaseRssModel extends WikiaService {
 		if ( !$article[ 'thumbnail' ] ) {
 			$ws = new WikiService();
 			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
-		}else{
+		} else {
 			$article[ 'thumbnail' ] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] );
 		}
 
