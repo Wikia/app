@@ -113,6 +113,20 @@ class ArticlesApiController extends WikiaApiController {
 			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
 
+		if ( empty( $articles ) ) {
+			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
+			if ( $fallbackDate ) {
+				$articles = DataMartService::getTopArticlesByPageview(
+					$this->wg->CityId,
+					$ids,
+					$namespaces,
+					false,
+					self::MAX_ITEMS + 1, //compensation for Main Page
+					$fallbackDate
+				);
+			}
+		}
+
 		$collection = [];
 
 		if ( !empty( $articles ) ) {

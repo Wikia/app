@@ -13,15 +13,15 @@ class HubRssFeedService {
 
 	protected $descriptions = [
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
-		['t' => 'Wikia Entertainment Community feed',
+		['t' => 'Wikia Entertainment feed',
 			'd' => 'From Wikia community - Entertainment'],
 
 		WikiFactoryHub::CATEGORY_ID_GAMING =>
-		['t' => 'Wikia Gaming Community feed',
+		['t' => 'Wikia Gaming feed',
 			'd' => 'From Wikia community - Gaming'],
 
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE =>
-		['t' => 'Wikia Lifestyle Community feed',
+		['t' => 'Wikia Lifestyle feed',
 			'd' => 'From Wikia community - Lifestyle'],
 	];
 

@@ -1302,7 +1302,7 @@ OO.ui.Window.prototype.open = function ( data ) {
 				this.frame.$content.focus();
 				this.emit( 'ready', data );
 				this.opening = false;
-			}, this ) );			
+			}, this ) );
 		}, this ) );
 	}
 
@@ -2715,6 +2715,9 @@ OO.ui.Tool = function OoUiTool( toolGroup, config ) {
 	OO.ui.Tool.super.call( this, config );
 
 	// Mixin constructors
+	if ( toolGroup.getToolbar().isInContextMenu() ) {
+		config.icon = this.constructor.static.contextIcon;
+	}
 	OO.ui.IconedElement.call( this, this.$( '<span>' ), config );
 
 	// Properties
@@ -7396,7 +7399,7 @@ OO.ui.PopupWidget.prototype.hide = function () {
  * @chainable
  */
 OO.ui.PopupWidget.prototype.display = function ( width, height, transition ) {
-	var padding = 10,
+	var padding = 0, // Wikia change: padding is related to skin.
 		originOffset = Math.round( this.$element.offset().left ),
 		containerLeft = Math.round( this.$container.offset().left ),
 		containerWidth = this.$container.innerWidth(),
@@ -7439,6 +7442,14 @@ OO.ui.PopupWidget.prototype.display = function ( width, height, transition ) {
 
 	return this;
 };
+/**
+ * Getter for this.$popup
+ */
+OO.ui.PopupWidget.prototype.getPopup = function () {
+	return this.$popup;
+};
+
+
 /**
  * Button that shows and hides a popup.
  *

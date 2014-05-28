@@ -142,3 +142,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
 };
+
+ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
+	return this.toolbar;
+};

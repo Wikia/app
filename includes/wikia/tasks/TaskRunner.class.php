@@ -98,6 +98,8 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'ParsoidCacheUpdateJob',
+			'UserRollback',
+			'UserRename',
 		]);
 	}
 }
