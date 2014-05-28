@@ -58,8 +58,8 @@ class RevisionService {
 	 */
 	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $duplicatesFilterMethod = null ) {
 		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
-		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces, $allowDuplicates ) {
-			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces, $allowDuplicates );
+		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces ) {
+			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces );
 		});
 		if( !$allowDuplicates ) {
 			$duplicatesFilterMethod = is_null( $duplicatesFilterMethod ) ? 'filterDuplicates' : $duplicatesFilterMethod;
