@@ -8,6 +8,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
 
+	private $mapsModel;
+
 	/**
 	 * @desc Special page constructor
 	 *
@@ -20,6 +22,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
 		parent::__construct( 'InteractiveMaps', $restriction, $listed, $function, $file, $includable );
+		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
 	/**
@@ -40,8 +43,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @desc Main Special:InteractiveMaps page
 	 */
 	public function main() {
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-
 		$selectedSort = $this->getVal( 'sort', null );
 		$this->setVal( 'selectedSort', $selectedSort );
 		$currentPage = $this->request->getInt( 'page', 1 );
@@ -113,7 +114,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 		$map = $mapsModel->cachedRequest(
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
@@ -152,6 +152,26 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-api-error-message' )
 		] );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * @brief Ajax method for deleting a map from IntMaps API
+	 */
+	public function deleteMap() {
+		$mapId = $this->request->getVal('mapId', 0),
+		$result = false;
+		if( $mapId && $this->hasRightsToDelete() ) {
+			$result = $mapsModel->request('deleteMapByIdFromApi', ['mapId' => $mapId]);
+		}
+		$this->setVal('result', $result);
+	}
+
+	/**
+	 * @brief Check if user has rights to delete a map
+	 * @return Bool
+	 */
+	function hasRightsToDelete () {
+		return $this->wg->user->isLoggedIn();
 	}
 
 	/**
