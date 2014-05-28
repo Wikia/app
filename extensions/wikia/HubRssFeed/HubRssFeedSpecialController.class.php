@@ -8,6 +8,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const CACHE_10MIN = 600;
 	/** Use it after release to generate new memcache keys. */
 	const CACHE_BUST = 26;
+	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
 	protected $hubs = [
 		'gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
@@ -97,7 +98,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $xml );
-		$this->response->setContentType( 'text/xml' );
+		$this->response->setContentType( self::RSS_CONTENT_TYPE );
 	}
 
 	public function customRss() {
@@ -112,7 +113,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$service->setData( $model->getFeedData() );
 		$this->response->setFormat( WikiaResponse::FORMAT_RAW );
 		$this->response->setBody( $service->toXml() );
-		$this->response->setContentType( 'text/xml' );
+		$this->response->setContentType( self::RSS_CONTENT_TYPE );
 	}
 
 }
