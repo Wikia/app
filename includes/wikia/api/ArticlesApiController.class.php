@@ -33,6 +33,7 @@ class ArticlesApiController extends WikiaApiController {
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_LIMIT = 'limit';
 	const PARAM_ARTICLE_QUALITY = 'minArticleQuality';
+	const PARAMETER_CROP = 'crop';
 
 	const DEFAULT_WIDTH = 200;
 	const DEFAULT_HEIGHT = 200;
@@ -227,7 +228,7 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $expand ) {
 			$params = $this->getDetailsParams();
-			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true, $params[ 'crop '] );
 		} else {
 			foreach ( $mostLinked as $item ) {
 					$title = Title::newFromText( $item['page_title'], $nameSpace );
@@ -548,7 +549,7 @@ class ArticlesApiController extends WikiaApiController {
 					}
 				}, $articles[ 0 ] );
 				$params = $this->getDetailsParams();
-				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true, $params[ 'crop' ] );
 			} else {
 				foreach( $articles[0] as $article ) {
 					$title = Title::newFromText( $article['title'] );
@@ -611,7 +612,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
 
-		$collection = $this->getArticlesDetails( $articles, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ] );
+		$collection = $this->getArticlesDetails( $articles, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], false, $params[ 'crop' ] );
 
 		/*
 		 * Varnish/Browser caching not appliable for
@@ -632,11 +633,12 @@ class ArticlesApiController extends WikiaApiController {
 			'width' => $this->request->getInt( static::PARAMETER_WIDTH, static::DEFAULT_WIDTH ),
 			'height' => $this->request->getInt( static::PARAMETER_HEIGHT, static::DEFAULT_HEIGHT ),
 			'length' => $this->request->getInt( static::PARAMETER_ABSTRACT, static::DEFAULT_ABSTRACT_LEN ),
-			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES )
+			'titleKeys' => $this->request->getArray( self::PARAMETER_TITLES ),
+			'crop' => $this->request->getBool( self::PARAMETER_CROP, true ),
 		];
 	}
 
-	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false ) {
+	protected function getArticlesDetails( $articleIds, $articleKeys = [], $width = 0, $height = 0, $abstract = 0, $strict = false, $crop = true ) {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
@@ -711,7 +713,7 @@ class ArticlesApiController extends WikiaApiController {
 		//make the thumbnail's size parametrical without
 		//invalidating the titles details' cache
 		//or the need to duplicate it
-		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height );
+		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height, $crop );
 
 		$articles = null;
 
@@ -771,7 +773,7 @@ class ArticlesApiController extends WikiaApiController {
 		return $result;
 	}
 
-	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_WIDTH, $height = self::DEFAULT_HEIGHT ) {
+	protected function getArticlesThumbnails( $articles, $width = self::DEFAULT_WIDTH, $height = self::DEFAULT_HEIGHT, $crop = true ) {
 		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
 		$result = [];
 		if ( $width > 0 && $height > 0 ) {
@@ -785,6 +787,10 @@ class ArticlesApiController extends WikiaApiController {
 					$data['thumbnail'] = $images[$id][0]['url'];
 					$data['original_dimensions'] = isset( $images[$id][0]['original_dimensions'] ) ?
 						$images[$id][0]['original_dimensions'] : null;
+				}
+				if ( !$crop ) {
+					//this will restore image original dimensions
+					$data['thumbnail'] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $data['thumbnail'] );
 				}
 				$result[ $id ] = $data;
 			}
@@ -925,7 +931,7 @@ class ArticlesApiController extends WikiaApiController {
 				foreach($result as $item){
 					$articleIds[] = $item['id'];
 				}
-				$result = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
+				$result = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true, $params[ 'crop' ] );
 			}
 
 			$this->wg->set( $key, $result, self::CLIENT_CACHE_VALIDITY );
