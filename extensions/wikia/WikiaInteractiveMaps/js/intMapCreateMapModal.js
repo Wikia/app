@@ -5,9 +5,10 @@ define(
 		'wikia.querystring',
 		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
-		'wikia.intMap.createMap.preview'
+		'wikia.intMap.createMap.preview',
+		'wikia.intMap.createMap.pinTypes'
 	],
-	function($, qs, utils, tileSet, preview) {
+	function($, qs, utils, tileSet, preview, pinTypes) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -67,6 +68,7 @@ define(
 				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1]);
 				preview.init(modal, templates[2]);
+				pinTypes.init(modal, templates[3], templates[4]);
 
 				modal.trigger('chooseTileSet');
 				modal.show();

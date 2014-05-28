@@ -1,6 +1,8 @@
 <form class="WikiaForm intMapPinTypes" id="intMapPinTypes">
+	<input type="hidden" name="mapId" value="{{mapId}}">
 	{{#pinTypes}}
-	{{> pinType}}
+		{{> pinType}}
 	{{/pinTypes}}
 	<a href="" title="{{addPinType}}" class="addPinType">{{addPinType}}</a>
+	{{delete}}
 </form>
