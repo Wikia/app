@@ -203,6 +203,13 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
+
+		// anon edit warning
+		try {
+			defaultData.anoneditwarning = !!anoneditwarning ? 'yes' : 'no';
+		} catch ( e ) {
+			defaultData.anoneditwarning = 'unknown';
+		}
 		
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
