@@ -14,12 +14,7 @@ class FixVisualizationImage extends Maintenance {
 			->FROM("city_visualization")
 			->WHERE("city_visualization.city_lang_code")->EQUAL_TO($langCode)
 			->AND_("city_visualization.city_id")->NOT_IN(\FluentSql\StaticSQL::RAW("( select city_id from city_visualization_images)"))
-//			->NOT_IN()-> ("(select city_id from city_visualization_images)")
-//			->JOIN("city_visualization_images")->ON("city_visualization.city_id", "city_visualization_images.city_id")
-
-//			->AND_("city_visualization_images.city_id") ->IS_NULL()
 			->run($dbr, function($result){
-//				var $row=null;
 				$res = [];
 				while ($row = $result->fetchObject( $result )){
 					$res []= $row->city_id;
