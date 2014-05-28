@@ -2,9 +2,9 @@
 
 require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
-global $wgOptimizelyUrl;
+global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
-$curlUrl = 'http:' . $wgOptimizelyUrl;
+$curlUrl = 'http:' . ( $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl );
 $curlHandle = curl_init( $curlUrl );
 $curlOptions = array(
 	// don't fetch the response body, just headers
@@ -20,13 +20,13 @@ if ( $curlHeader !== false ) {
 	preg_match( '/ETag: "(.*?)"/i', $curlHeader, $curlMatches );
 	$curlEtag = $curlMatches[ 1 ];
 
-	$storage = new MysqlKeyValueModel();
-	$storedData = $storage->get( 'optimizelyScript' );
+	$storageModel = new MysqlKeyValueModel();
+	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
-	if ( !$storedData || $storedData[ 'etag' ] !== $curlEtag ) {
+	if ( !$storedData || is_null( $storedData[ 'script' ] ) || $storedData[ 'etag' ] !== $curlEtag ) {
 		curl_setopt_array( $curlHandle, [ CURLOPT_HEADER => false, CURLOPT_NOBODY => false ] );
 		$curlBody = curl_exec( $curlHandle );
-		$storage->set( 'optimizelyScript', [ 'etag' => $curlEtag, 'script' => $curlBody ] );
+		$storageModel->set( OptimizelyController::OPTIMIZELY_SCRIPT_KEY, [ 'etag' => $curlEtag, 'script' => $curlBody ] );
 	}
 }
 

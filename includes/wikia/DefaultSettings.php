@@ -1409,3 +1409,9 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
+
+/*
+ * @name wgOptimizelyLoadFromOurCDN
+ * Loading external Optimizely script from internal storage
+ */
+$wgOptimizelyLoadFromOurCDN = true;
