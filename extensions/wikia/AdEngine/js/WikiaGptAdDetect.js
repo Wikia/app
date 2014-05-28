@@ -82,12 +82,10 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		log(['getAdDetectMethod', slotname], 'info', logGroup);
 
-		if (iframe && iframe.contentWindow && iframe.contentWindow.AdDetectMethod) {
-			log(['getAdDetectMethod', slotname, 'iframe AdDetectMethod = ', iframe.contentWindow.AdDetectMethod], 'info', logGroup);
+		if (iframe && iframe.contentWindow && iframe.contentWindow.AdEngine_adType) {
+			log(['getAdDetectMethod', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
-			iframe.contentWindow.AdDetectId = iframe.id;
-
-			return iframe.contentWindow.AdDetectMethod;
+			return iframe.contentWindow.AdEngine_adType;
 		}
 
 		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
