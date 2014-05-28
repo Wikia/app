@@ -44,7 +44,6 @@ define(
 				chooseTileSet: [
 					chooseTileSet
 				]
-
 			},
 			// steps for choose tile set
 			steps = {
@@ -171,7 +170,7 @@ define(
 							data: data
 						});
 					} else {
-						modal.trigger('error', response.error);
+						modal.trigger('error', data.errors.pop());
 					}
 				},
 				error: function(response) {
