@@ -372,7 +372,6 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
-		var_dump($out);die();
 		$this->addFeedsToDb( $out, $feedName);
 		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
