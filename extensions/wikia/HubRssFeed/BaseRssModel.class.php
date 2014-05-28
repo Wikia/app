@@ -206,7 +206,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function getArticleDetail( $wikiId, $articleId ) {
 		$host = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) );
-		$url = sprintf( '%sapi/v1/Articles/Details?ids=%u', $host, $articleId );
+		$url = sprintf( '%sapi/v1/Articles/Details?crop=false&ids=%u', $host, $articleId );
 		$res = Http::get( $url );
 		$res = json_decode( $res, true );
 		$article = $res[ 'items' ][ $articleId ];
