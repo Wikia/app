@@ -25,28 +25,21 @@ define('wikia.intMap.createMap.pinTypes',
 
 			events = {
 				addPinType: [
-					function(data) {
-						addPinType(data);
-					}
+					addPinType
 				],
 				mapCreated: [
-					function(mapData) {
-						showPinTypes(mapData);
-					}
+					showPinTypes
 				],
 				savePinTypes: [
-					function(data) {
-						validate(data);
-					},
-					function(data) {
-						savePinTypes(data);
-					}
+					validate,
+					savePinTypes
 				]
 			},
 			buttons = {
 				'#intMapNext': 'savePinTypes'
 			},
-			mapUrl;
+			mapUrl,
+			$form;
 
 		function init(_modal, _pinTypesTemplate, _pinTypeTemplate) {
 			modal = _modal;
@@ -62,6 +55,9 @@ define('wikia.intMap.createMap.pinTypes',
 
 			modal.$innerContent.html(utils.render(pinTypesTemplate, pinTypesTemplateData, {pinType: pinTypeTemplate}));
 
+			// cache selectors
+			$form = modal.$innerContent.find('#intMapPinTypes');
+
 			utils.setButtons(modal, buttons);
 		}
 
@@ -70,7 +66,6 @@ define('wikia.intMap.createMap.pinTypes',
 		 * @param {object} pinType - data for pin type
 		 * @returns {object} - pin type data with default template variables
 		 */
-
 		function extendPinTypeData(pinType) {
 			return $.extend(pinTypeTemplateData, pinType);
 		}
@@ -80,7 +75,6 @@ define('wikia.intMap.createMap.pinTypes',
 		 * @param {Array} pinTypes - array of pin type objects
 		 * @returns {Array} - array of extended pin types objects
 		 */
-
 		function extendPinTypesData(pinTypes) {
 			var extendedPinTypes = [];
 
@@ -103,8 +97,12 @@ define('wikia.intMap.createMap.pinTypes',
 
 		}
 
-		function addPinType(data) {
-			console.log(data);
+		/**
+		 * @desc adds blank pin type input field
+		 */
+		function addPinType() {
+			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
+
 		}
 
 		function savePinTypes(data) {
