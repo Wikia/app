@@ -86,7 +86,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 		$xml = $this->wg->memc->get( $memcKey );
 		if ( $xml === false ) {
-			$service = new HubRssFeedService($langCode, RequestContext::getMain()->getRequest()->getFullRequestURL() );
+			$service = new HubRssFeedService( $langCode, RequestContext::getMain()->getRequest()->getFullRequestURL() );
 			$verticalId = $this->hubs[ $hubName ];
 			$cityId = isset( $wgHubRssFeedCityIds[ $hubName ] ) ? $wgHubRssFeedCityIds[ $hubName ] : 0;
 			$data = array_merge( $this->model->getRealDataV3( $cityId ), $this->model->getRealDataV2( $verticalId ) );
