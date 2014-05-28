@@ -174,7 +174,17 @@ class RevisionService {
 	 * @return array
 	 */
 	public function filterByPageId( $listOfRevisions ) {
-		return $listOfRevisions;
+		$presentPageIds = [];
+		$result = [];
+		foreach( $listOfRevisions as $revisionData ) {
+			$pageId = $revisionData['article'];
+
+			if( !in_array( $pageId, $presentPageIds ) ) {
+				$result[] = $revisionData;
+				$presentPageIds[] = $pageId;
+			}
+		}
+		return $result;
 	}
 
 	/**
