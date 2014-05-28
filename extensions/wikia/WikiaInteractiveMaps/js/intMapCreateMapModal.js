@@ -2,11 +2,12 @@ define(
 	'wikia.intMaps.createMap.modal',
 	[
 		'jquery',
+		'wikia.querystring',
 		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview'
 	],
-	function($, utils, tileSet, preview) {
+	function($, qs, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
