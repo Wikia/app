@@ -53,7 +53,7 @@
 				'label' => wfMessage('usersignup-confirm-email-new-email-label')->escaped(),
 				'name' => 'email',
 				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
-				'value' => !empty($email) ? $email : '',
+				'value' => !empty( $email ) ? Sanitizer::encodeAttribute( $email ) : '',
 				'errorMsg' => !empty($msgEmail) ? $msgEmail : ''
 			)
 		),
