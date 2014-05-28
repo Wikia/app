@@ -194,17 +194,20 @@ ve.ui.MWMediaEditDialog.prototype.initialize = function () {
 		new OO.ui.ButtonOptionWidget( 'left', {
 			'$': this.$,
 			'icon': 'align-float-left',
-			'label': ve.msg( 'visualeditor-dialog-media-position-left' )
+			'label': ve.msg( 'visualeditor-dialog-media-position-left' ),
+			'flags': ['secondary']
 		} ),
 		new OO.ui.ButtonOptionWidget( 'center', {
 			'$': this.$,
 			'icon': 'align-center',
-			'label': ve.msg( 'visualeditor-dialog-media-position-center' )
+			'label': ve.msg( 'visualeditor-dialog-media-position-center' ),
+			'flags': ['secondary']
 		} ),
 		new OO.ui.ButtonOptionWidget( 'right', {
 			'$': this.$,
 			'icon': 'align-float-right',
-			'label': ve.msg( 'visualeditor-dialog-media-position-right' )
+			'label': ve.msg( 'visualeditor-dialog-media-position-right' ),
+			'flags': ['secondary']
 		} ),
 	], 0 );
 

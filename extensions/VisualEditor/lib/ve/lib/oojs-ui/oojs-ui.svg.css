@@ -124,7 +124,7 @@
 
 .oo-ui-dialog-content .oo-ui-window-foot {
   bottom: 0;
-  height: 4.8em;
+  height: 4.6em;
   padding: 1em;
 }
 
@@ -301,11 +301,11 @@
   vertical-align: top;
 }
 
-.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
+/*.oo-ui-buttonedElement-framed .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
   display: inline-block;
   line-height: 1.9em;
   vertical-align: middle;
-}
+}*/
 
 .oo-ui-buttonedElement-framed.oo-ui-iconedElement .oo-ui-buttonedElement-button > .oo-ui-iconedElement-icon {
   margin-right: -0.5em;
