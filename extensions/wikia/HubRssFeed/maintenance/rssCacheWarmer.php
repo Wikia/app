@@ -3,7 +3,7 @@
  * @ingroup Maintenance
  */
 
-echo "Rss cache warmer start: ".date("Y-m-d H:i:s")."" . PHP_EOL;
+echo "Rss cache warmer start: " . date("Y-m-d H:i:s") . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
@@ -25,7 +25,7 @@ class MaintenanceRss extends Maintenance {
 		$feed->setForceRegenerateFeed( true );
 		$data = $feed->getFeedData();
 		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "" . PHP_EOL;
+		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
 	}
 
 	function warmGames() {
@@ -34,7 +34,7 @@ class MaintenanceRss extends Maintenance {
 		$feed->setForceRegenerateFeed( true );
 		$data = $feed->getFeedData();
 		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . "" . PHP_EOL;
+		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
 	}
 
 	public function purgeVarnish() {
