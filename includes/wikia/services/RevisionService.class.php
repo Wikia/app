@@ -53,17 +53,17 @@ class RevisionService {
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
 	 * @param bool $allowDuplicates if false there will be at most one result per page
-	 * @param string $duplicatesFilterMethod optional name of filtering method
+	 * @param string $filteringMethod optional name of filtering method
 	 * @return array
 	 */
-	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $duplicatesFilterMethod = null ) {
+	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $filteringMethod = null ) {
 		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
 		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces ) {
 			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces );
 		});
 		if( !$allowDuplicates ) {
-			$duplicatesFilterMethod = is_null( $duplicatesFilterMethod ) ? 'filterDuplicates' : $duplicatesFilterMethod;
-			$listOfRevisions = $this->$duplicatesFilterMethod( $listOfRevisions );
+			$filteringMethod = is_null( $filteringMethod ) ? 'filterDuplicates' : $filteringMethod;
+			$listOfRevisions = $this->$filteringMethod( $listOfRevisions );
 		}
 		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
 		return $listOfRevisions;
