@@ -254,7 +254,7 @@ abstract class BaseRssModel extends WikiaService {
 			}
 
 			if ( !$item[ 'timestamp' ] ) {
-				$item[ 'timestamp' ] = $time;
+				$item[ 'timestamp' ] = $time--;
 			}
 
 			$item = $this->formatTitle( $item );
@@ -372,6 +372,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
 		$out = $this->processItems( $rawData );
+		var_dump($out);die();
 		$this->addFeedsToDb( $out, $feedName);
 		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
