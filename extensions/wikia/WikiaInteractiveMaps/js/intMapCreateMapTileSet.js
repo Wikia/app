@@ -10,6 +10,8 @@ define(
 
 		// reference to modal component
 		var modal,
+			// constant with the id tileset of map of Earth
+			geoTilesetId = 1,
 			// mustache template
 			template,
 			// template data
@@ -30,7 +32,12 @@ define(
 			events = {
 				intMapGeo: [
 					function() {
-						modal.trigger('previewTileSet', {});
+						modal.trigger('previewTileSet', {
+							type: 'geo',
+							data: {
+								tileSetId: geoTilesetId
+							}
+						});
 					}
 				],
 				intMapCustom: [
