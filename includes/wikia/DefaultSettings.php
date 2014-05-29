@@ -756,14 +756,6 @@ $wgMaxThumbnailArea = 0.9e7;
  */
 $wgWikiaMaxNameChars = 50;
 
-
-/**
- * @name $IPA
- *
- * path for answers repo
- */
-$IPA = "/usr/wikia/source/answers";
-
 /**
  * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
  * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
@@ -1317,14 +1309,13 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
 $wgSFlowHost = 'localhost';
 $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
 $wgEnableUserEmail = false;
-
-$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Enables ETag globally
