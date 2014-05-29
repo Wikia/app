@@ -30,7 +30,9 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedData();
 
-	public abstract function getModelUrlEndpoint();
+	public function getModelUrlEndpoint(){
+		return static::URL_ENDOPINT;
+	}
 
 	/**
 	 * @param $feedName
