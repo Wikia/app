@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 29.05.14
- * Time: 08:54
- */
 abstract class HubOnlyRssModel extends BaseRssModel {
 
 	const MAX_NUM_ITEMS_IN_FEED = 15;

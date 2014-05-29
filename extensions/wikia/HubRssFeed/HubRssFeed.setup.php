@@ -1,4 +1,5 @@
 <?php
+
 if ( !defined('MEDIAWIKI') ) {
 	echo "This is a MediaWiki extension.\n";
 	exit(1);

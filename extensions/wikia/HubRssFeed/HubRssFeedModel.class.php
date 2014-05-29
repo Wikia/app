@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: suchy
- * Date: 04.10.13
- * Time: 13:21
- * To change this template use File | Settings | File Templates.
- */
 
 class HubRssFeedModel extends WikiaModel {
 
