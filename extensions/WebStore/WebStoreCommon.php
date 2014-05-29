@@ -48,10 +48,6 @@ class WebStoreCommon {
 		ini_set( 'html_errors', 0 );
 	}
 
-	function handleWarning( $errno, $errstr, $errfile, $errline ) {
-		$this->errors[] = new WebStoreWarning( 'webstore_php_warning', $errstr );
-	}
-
 	function dtd() {
 		return <<<EOT
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
