@@ -67,7 +67,8 @@ class VideosModule extends WikiaModel {
 
 		$categories = [ self::STAFF_PICK_PREFIX.$this->wg->DBname, self::STAFF_PICK_GLOBAL_CATEGORY ];
 		$limit = self::MAX_STAFF_PICKS;
-		$videos = $this->getVideoListFromVideoWiki( $categories, $limit, null, self::SOURCE_STAFF );
+		$sort = 'recent';
+		$videos = $this->getVideoListFromVideoWiki( $categories, $limit, $sort, self::SOURCE_STAFF );
 
 		wfProfileOut( __METHOD__ );
 
@@ -309,7 +310,9 @@ class VideosModule extends WikiaModel {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
 
-		$videos = $this->getVideoListFromVideoWiki( $categories, null, null, self::SOURCE_WIKI_CATEGORIES );
+		$limit = self::LIMIT_VIDEOS;
+		$sort = 'recent';
+		$videos = $this->getVideoListFromVideoWiki( $categories, $limit, $sort, self::SOURCE_WIKI_CATEGORIES );
 
 		wfProfileOut( __METHOD__ );
 
