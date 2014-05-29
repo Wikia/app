@@ -49,14 +49,6 @@ require_once ( $IP."/extensions/Math/Math.php" );
 require_once("$IP/lib/composer/autoload.php");
 
 /**
- * wikia library incudes
- */
-
-// FIXME: move fluest-sql-php to composer via packagist
-require_once ( $IP."/lib/Wikia/fluent-sql-php/src/init.php");
-FluentSql\StaticSQL::setClass("\\WikiaSQL");
-
-/**
  * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
  * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
  */
