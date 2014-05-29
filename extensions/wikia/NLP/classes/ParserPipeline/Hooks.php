@@ -1,9 +1,9 @@
 <?php
 
-namespace \Wikia\NLP\ParserPipeline;
+namespace Wikia\NLP\ParserPipeline;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\AsyncBackendTaskList;
-use \Title;
+use \Title, \User;
 
 class Hooks
 {
@@ -34,15 +34,6 @@ class Hooks
 		return true;
 	}
 
-	public static function onTitleMoveComplete( Title $title, Title $newtitle, User $user, $oldid, $newid ) {
-		global $wgContentNamespaces;
-		if ( in_array( $title->getNamespace(), $wgContentNamespaces ) ) {
-			self::parseEvent( $oldid, $title->getFullUrl(), 'celery_workers.nlp_pipeline.delete' );
-			self::parseEvent( $newid, $newtitle->getFullUrl(), 'celery_workers.nlp_pipeline.parse' );
-		}
-		return true;
-	}
-
 	private static function parseEvent( $articleId, $titleUrl, $task ) {
 		global $wgCityId;
 
@@ -51,8 +42,8 @@ class Hooks
 		$taskList->taskType( $task )
 				 ->add( $articleId )
 				 ->wikiId( $wgCityId )
-				 ->wikiUrl( preg_replace( '/\/wiki\/*$/', '', $titleUrl ) )
-				 ->setPriority( Wikia\Tasks\Queues\NlpPipelineQueue::NAME )
+				 ->wikiUrl( preg_replace( '/\/wiki\/.*$/', '', $titleUrl ) )
+				 ->setPriority( NlpPipelineQueue::NAME )
 				 ->queue();
 	}
 
