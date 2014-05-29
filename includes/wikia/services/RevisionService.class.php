@@ -163,9 +163,9 @@ class RevisionService {
 		foreach( $listOfRevisions as $revisionData ) {
 			$pageId = $revisionData['article'];
 
-			if( !in_array( $pageId, $presentPageIds ) ) {
+			if( !isset( $presentPageIds[$pageId] ) ) {
+				$presentPageIds[$pageId] = true;
 				$result[] = $revisionData;
-				$presentPageIds[] = $pageId;
 			}
 		}
 		return $result;
