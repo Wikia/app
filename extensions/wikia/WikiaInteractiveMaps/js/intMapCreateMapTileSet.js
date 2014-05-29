@@ -10,8 +10,6 @@ define(
 
 		// reference to modal component
 		var modal,
-			// constant with the id tileset of map of Earth
-			geoTilesetId = 1,
 			// mustache template
 			template,
 			// template data
@@ -33,10 +31,7 @@ define(
 				intMapGeo: [
 					function() {
 						modal.trigger('previewTileSet', {
-							type: 'geo',
-							data: {
-								tileSetId: geoTilesetId
-							}
+							type: 'geo'
 						});
 					}
 				],
@@ -173,10 +168,8 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('previewTileSet', {
-							type: 'uploaded',
-							data: data
-						});
+						data.type = 'uploaded';
+						modal.trigger('previewTileSet', data);
 					} else {
 						modal.trigger('error', response.error);
 					}

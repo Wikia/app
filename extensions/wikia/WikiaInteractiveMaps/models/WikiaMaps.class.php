@@ -14,7 +14,7 @@ class WikiaMaps {
 	const MAP_HEIGHT = 300;
 	const MAP_WIDTH = 1600;
 
-	const MAP_TYPE_CUSTOM = 'custom';
+	const MAP_TYPE_CUSTOM = 'uploaded';
 	const MAP_TYPE_GEO = 'geo';
 
 	/**
