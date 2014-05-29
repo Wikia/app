@@ -5,7 +5,7 @@
  * @author Robert Elwell <robert(at)wikia-inc.com>
  */
 
-global $wgEnableEntitiesForDFP, $wgEnableNlpPipelineEvents, $wgExtensionCredits, $wgAutoloadClasses, $wgContLang;
+global $wgEnableEntitiesForDFP, $wgEnableNlpPipelineEvents, $wgExtensionCredits, $wgAutoloadClasses, $wgContLang, $wgDevelEnvironment;
 
 $wgExtensionCredits['other'][] = array(
 		'name'              => 'Wikia NLP',
@@ -26,7 +26,7 @@ if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
 }
 
-if ( $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
+if ( (! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
 	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
 	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
 	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';
