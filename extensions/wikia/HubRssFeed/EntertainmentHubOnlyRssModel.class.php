@@ -8,7 +8,7 @@
  */
 class EntertainmentHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'entertainment';
-
+	const URL_ENDPOINT = '/Entertainment';
 	public function getFeedTitle() {
 		return 'Wikia Entertainment Feed';
 	}
@@ -19,10 +19,6 @@ class EntertainmentHubOnlyRssModel extends HubOnlyRssModel {
 
 	public function getFeedDescription() {
 		return 'From Wikia community - Entertainment';
-	}
-
-	public function getModelUrlEndpoint() {
-		return '/Entertainment';
 	}
 
 	protected function getHubCityIds() {

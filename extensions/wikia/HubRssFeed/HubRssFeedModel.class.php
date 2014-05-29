@@ -363,7 +363,7 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $fileName
 	 * @param $cityId
 	 */
-	public function getThumbData( $fileName, $cityId ) {
+	protected function getThumbData( $fileName, $cityId ) {
 		$f = GlobalFile::newFromText( $fileName, $cityId );
 		if ( $f instanceof GlobalFile && $f->exists() ) {
 			return [ 'url' => $f->getUrl(), 'width' => $f->getWidth(), 'height' => $f->getHeight() ];

@@ -16,8 +16,8 @@ class MaintenanceRss extends Maintenance {
 	function execute() {
 		$this->warmTv();
 		$this->warmGames();
-		$this->warmLifestyle();
-		$this->warmEntertainment();
+		$this->warmLifestyleHubOnly();
+		$this->warmEntertainmentHubOnly();
 		$this->purgeVarnish();
 	}
 
@@ -39,7 +39,7 @@ class MaintenanceRss extends Maintenance {
 		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
 	}
 
-	function warmLifestyle() {
+	function warmLifestyleHubOnly() {
 		echo "| Warming LIFESTYLE cache..." . PHP_EOL;
 		$feed = new LifestyleHubOnlyRssModel();
 		$feed->setForceRegenerateFeed( true );
@@ -48,7 +48,7 @@ class MaintenanceRss extends Maintenance {
 		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
 	}
 
-	function warmEntertainment() {
+	function warmEntertainmentHubOnly() {
 		echo "| Warming ENTERTAINMENT cache..." . PHP_EOL;
 		$feed = new EntertainmentHubOnlyRssModel();
 		$feed->setForceRegenerateFeed( true );
