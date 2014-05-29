@@ -1,13 +1,14 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: krzychu
  * Date: 29.05.14
  * Time: 09:04
  */
+class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
+	const FEED_NAME = 'lifestyle';
 
-class LifestyleHubOnlyRssModel extends HubOnlyRssModel{
-	const FEED_NAME='lifestyle';
 	public function getFeedTitle() {
 		return 'Wikia Lifestyle Feed';
 	}

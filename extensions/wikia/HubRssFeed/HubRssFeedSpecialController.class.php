@@ -11,8 +11,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
 	protected $customFeeds = [
-		TvRssModel::FEED_NAME=>true,
-		GamesRssModel::FEED_NAME=>true,
+		TvRssModel::FEED_NAME => true,
+		GamesRssModel::FEED_NAME => true,
 		LifestyleHubOnlyRssModel::FEED_NAME => true,
 		EntertainmentHubOnlyRssModel::FEED_NAME => true
 	];
@@ -50,7 +50,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function notfound() {
 		$url = $this->currentTitle->getFullUrl();
-		$links = [];
+		$links = [ ];
 
 		foreach ( $this->customFeeds as $k => $v ) {
 			$links[ ] = $url . '/' . ucfirst( $k );
