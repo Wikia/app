@@ -251,6 +251,8 @@ function updateMetadata1716( $video ) {
 			if ( !$resp ) {
 				$newValues = false;
 				$failed++;
+			} else {
+				echo "\tUPDATED: $video[name] (Id: $video[embed_code])...DONE.\n";
 			}
 		}
 	} else {
