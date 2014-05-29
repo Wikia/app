@@ -2,8 +2,6 @@
 
 abstract class BaseRssModel extends WikiaService {
 
-	const GAMES_FEED = 'games';
-	const TV_FEED = 'tv';
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
 	/**
@@ -40,10 +38,14 @@ abstract class BaseRssModel extends WikiaService {
 	 */
 	public static function newFromName( $feedName ) {
 		switch ( strtolower( $feedName ) ) {
-			case self::GAMES_FEED:
+			case GamesRssModel::FEED_NAME:
 				return new GamesRssModel();
-			case self::TV_FEED:
+			case TvRssModel::FEED_NAME:
 				return new TvRssModel();
+			case LifestyleHubOnlyRssModel::FEED_NAME:
+				return new LifestyleHubOnlyRssModel();
+			case EntertainmentHubOnlyRssModel::FEED_NAME:
+				return new EntertainmentHubOnlyRssModel();
 		}
 	}
 
@@ -248,7 +250,7 @@ abstract class BaseRssModel extends WikiaService {
 		foreach ( $rawData as $item ) {
 
 			$details = $this->getArticleDetail( $item[ 'wikia_id' ], $item[ 'page_id' ] );
-			$item[ 'img' ] = $details[ 'img' ];
+
 			if ( empty( $item[ 'description' ] ) ) {
 				$item[ 'description' ] = $this->getArticleDescription( $item[ 'wikia_id' ], $item[ 'page_id' ] );;
 			}
@@ -256,10 +258,13 @@ abstract class BaseRssModel extends WikiaService {
 				$item[ 'title' ] = $details[ 'title' ];
 			}
 
-			if ( !$item[ 'timestamp' ] ) {
+			if ( $item[ 'timestamp' ] ) {
 				$item[ 'timestamp' ] = $time--;
 			}
 
+			if( empty($item['img']) ){
+				$item[ 'img' ] = $details[ 'img' ];
+			}
 			$item = $this->formatTitle( $item );
 
 			$out[ $item[ 'url' ] ] = $item;
@@ -336,7 +341,7 @@ abstract class BaseRssModel extends WikiaService {
 			}
 		}
 		$hubData = $this->removeDuplicates( $v3, $duplicates );
-		$out =  $this->findIdForUrls( $hubData , self::SOURCE_HUB );
+		$out =  $this->findIdForUrls( $hubData , self::SOURCE_HUB.'_'.$hubId );
 		return $out;
 	}
 
@@ -347,7 +352,7 @@ abstract class BaseRssModel extends WikiaService {
 			$f2->setUrls( array_keys( $urls ) );
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
-
+				//TODO: We don't need to add anything more than wikia_id and page_id here, so modify original data instead
 				$item[ 'wikia_id' ] = $item[ 'wid' ];
 				$item[ 'page_id' ] = $item[ 'pageid' ];
 				if( $source ) {
@@ -359,11 +364,16 @@ abstract class BaseRssModel extends WikiaService {
 					if ( $orgItem[ 'title' ] ) {
 						$item[ 'title' ] = $orgItem[ 'title' ];
 					}
+
 					if ( $orgItem[ 'description' ] ) {
 						$item[ 'description' ] = $orgItem[ 'description' ];
 					}
 					if ( $orgItem[ 'timestamp' ] ) {
 						$item[ 'timestamp' ] = $orgItem[ 'timestamp' ];
+					}
+
+					if ( !empty($orgItem[ 'img' ]) ) {
+						$item[ 'img' ] = $orgItem[ 'img' ];
 					}
 				}
 
