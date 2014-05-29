@@ -9,11 +9,11 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 	/**
 	 * Hubs rss links
 	 */
-	private $rssUrls  = [
-		'Games' 	=> 'http://www.wikia.com/rss/Games',
-		'TV' 	=> 'http://www.wikia.com/rss/TV',
+	private $rssUrls = [
+		'Games'         => 'http://www.wikia.com/rss/Games',
+		'TV'            => 'http://www.wikia.com/rss/TV',
 		'Entertainment' => 'http://www.wikia.com/rss/Entertainment',
-		'Lifestyle' 	=> 'http://www.wikia.com/rss/Lifestyle'
+		'Lifestyle'     => 'http://www.wikia.com/rss/Lifestyle'
 	];
 
 	/**
