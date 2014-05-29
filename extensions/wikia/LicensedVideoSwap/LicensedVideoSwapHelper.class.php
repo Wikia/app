@@ -354,6 +354,11 @@ SQL;
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
 			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
 			'postedInArticles' => self::POSTED_IN_ARTICLES,
+			'getThumbnail'     => true,
+			'thumbOptions'     => [
+				'fluid'      => true,
+				'noLightbox' => true,
+			],
 		];
 
 		// Go through each video and add additional detail needed to display the video
@@ -430,7 +435,6 @@ SQL;
 		}
 
 		$videos = $this->suggestionSearch( $titleObj );
-
 		wfProfileOut( __METHOD__ );
 		return $videos;
 	}
@@ -536,6 +540,11 @@ SQL;
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
 			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
 			'postedInArticles' => self::POSTED_IN_ARTICLES,
+			'getThumbnail'     => true,
+			'thumbOptions'     => [
+				'fluid'      => true,
+				'noLightbox' => true,
+			]
 		];
 
 		foreach ( $videoRows as $videoInfo ) {
