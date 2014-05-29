@@ -413,6 +413,7 @@ class MediaQueryService extends WikiaService {
 				->FIELD( 'added_by' )
 				->FIELD( 'duration' )
 				->FIELD( 'views_total' )
+				->DISTINCT( 'video_title' )
 			->FROM( 'video_info' )
 			->WHERE( 'removed' )->EQUAL_TO( 0 )
 			->ORDER_BY( $sortCol )->DESC();

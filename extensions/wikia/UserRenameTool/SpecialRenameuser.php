@@ -50,6 +50,7 @@ $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameu
 $wgAutoloadClasses['RenameUserHelper'] = dirname( __FILE__ ) . '/RenameUserHelper.class.php';
 $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProcess.class.php';
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
+$wgAutoloadClasses['UserRenameTask'] = dirname( __FILE__ ) . '/UserRenameTask.class.php';
 
 //constants
 //define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
@@ -64,12 +65,8 @@ $wgLogNames['renameuser']              = 'userrenametool-logpage';
 $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 
 //task types
-if(function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
-	extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
-}
-else
-	die('The User Rename Tool extension requires the Task Manager extension to be enabled.');
+extAddBatchTask(dirname(__FILE__)."/UserRenameLocalTask.php", "renameuser_local", "UserRenameLocalTask");
+extAddBatchTask(dirname(__FILE__)."/UserRenameGlobalTask.php", "renameuser_global", "UserRenameGlobalTask");
 
 //hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';

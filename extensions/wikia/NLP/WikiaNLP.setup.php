@@ -5,7 +5,7 @@
  * @author Robert Elwell <robert(at)wikia-inc.com>
  */
 
-global $wgEnableEntitiesForDFP, $wgExtensionCredits, $wgAutoloadClasses;
+global $wgEnableEntitiesForDFP, $wgEnableNlpPipelineEvents, $wgExtensionCredits, $wgAutoloadClasses, $wgContLang;
 
 $wgExtensionCredits['other'][] = array(
 		'name'              => 'Wikia NLP',
@@ -20,10 +20,15 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Wikia\NLP\Entities\PageEntitiesService'] =  $dir . 'classes/Entities/PageEntitiesService.php';
 $wgAutoloadClasses['Wikia\NLP\Entities\WikiEntitiesService'] =  $dir . 'classes/Entities/WikiEntitiesService.php';
 $wgAutoloadClasses['Wikia\NLP\Entities\Hooks'] =  $dir . 'classes/Entities/Hooks.php';
-
-// this would be for page_wikia_props -- should move to defines if we use it.
-// define( 'PAGE_ENTITIES_KEY', 22 );
+$wgAutoloadClasses['Wikia\NLP\ParserPipeline\Hooks'] = $dir . 'classes/ParserPipeline/Hooks.php';
 
 if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
+}
+
+if ( $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
+	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
+	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
+	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';
+	$wgHooks['TitleMoveComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onTitleMoveComplete';
 }

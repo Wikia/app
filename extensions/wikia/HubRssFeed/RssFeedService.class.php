@@ -1,4 +1,5 @@
 <?php
+
 class RssFeedService {
 
 	/** This is DateTime::RFC822 with one small change. We use 4 digits year after recommendation from feedvalidator.org */
