@@ -189,26 +189,24 @@ $button-icon-color: white;
 		}
 	}
 	.grid-3 {
-		height: 395px;
-		overflow: hidden;
+		padding-bottom: 3px;
 	}
 	.video-wrapper {
 		background-color: #000;
-		height: 309px;
 		margin-bottom: 9px;
 		position: relative;
 	}
 	.more-videos {
 		@include clearfix;
-		clear:both;
-		width: 100%; // needed for smooth jQuery animation
+		clear: both;
+
 		&:before {
 			@include arrow(15px, $alt-bg-color, 'up');
-			margin-top: -15px;
-			margin-right: 15px;
 			content: "";
 			display: inline-block;
 			float: right;
+			margin-right: 15px;
+			transition: visibility .5s;
 		}
 
 		ul, li {
@@ -219,11 +217,24 @@ $button-icon-color: white;
 		ul {
 			@include clearfix;
 			background-color: $alt-bg-color;
-			padding: 15px;
+			clear: right;
+			height: 190px;
+			overflow: hidden;
+			transition: height .5s;
 		}
+		&.collapsed {
+			ul {
+				height: 0;
+				padding: 0;
+			}
+			&:before {
+				visibility: hidden;
+			}
+		}
+
 		li {
 			float: left;
-			margin-right: 15px;
+			margin: 15px;
 			width: $thumb-img-width;
 			&:last-child {
 				margin-right: 0;
@@ -284,6 +295,9 @@ $button-icon-color: white;
 				text-overflow: ellipsis;
 			}
 		}
+	}
+	.video-thumbnail {
+		display: block;
 	}
 }
 

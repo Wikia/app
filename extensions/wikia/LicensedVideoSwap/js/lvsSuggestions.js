@@ -8,6 +8,7 @@ define('lvs.suggestions', [], function () {
 
 	function init($container) {
 		$container.find('.suggestion-title').ellipses();
+		updateSizeClass($container);
 
 		$container
 			.off('click.lvsSuggestions')
@@ -19,13 +20,19 @@ define('lvs.suggestions', [], function () {
 				if ($this.hasClass('collapsed')) {
 					// Show suggestions
 					$this.removeClass('collapsed');
-					$toggleDiv.slideDown();
+					$toggleDiv.removeClass('collapsed');
 				} else {
 					// Hide suggestions
 					$this.addClass('collapsed');
-					$toggleDiv.slideUp();
+					$toggleDiv.addClass('collapsed');
 				}
 			});
+	}
+
+	function updateSizeClass($elem) {
+		$elem.find('.more-videos .large').each(function () {
+			$(this).removeClass('large').addClass('small');
+		});
 	}
 
 	return {
