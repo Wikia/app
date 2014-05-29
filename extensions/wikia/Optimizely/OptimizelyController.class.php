@@ -10,8 +10,7 @@ class OptimizelyController extends WikiaController {
 		$response->setContentType( 'text/javascript; charset=utf-8' );
 
 		$storageModel = new MysqlKeyValueModel();
-		$storedData = $storageModel->get( self::OPTIMIZELY_SCRIPT_KEY );
-		$this->code = $storedData[ 'script' ];
+		$this->code = $storageModel->get( self::OPTIMIZELY_SCRIPT_KEY );
 
 		$response->setCacheValidity( self::CACHE_DURATION );
 	}
