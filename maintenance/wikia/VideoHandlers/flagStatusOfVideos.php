@@ -63,6 +63,13 @@ class flagStatusOfVideos extends Maintenance {
 					$workingVideos++;
 				} catch ( Exception $e ) {
 					$removeVideo = true;
+					$loggingParams = [
+						"video_title" => $video["video_title"],
+						"video_id" => $video["video_id"],
+						"error" => $e->getMessage(),
+						"exception" => get_class( $e ),
+						"status_code" => $e->getStatusCode() ];
+					$log->info( "Video with error encountered", $loggingParams );
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
 						$deletedVideos++;
@@ -75,12 +82,6 @@ class flagStatusOfVideos extends Maintenance {
 						$this->debug( "Found other video: " . $video['video_title'] );
 						$this->debug( $e->getMessage() );
 						$otherErrorVideos++;
-						$loggingParams = [
-							"video_title" => $video["video_title"],
-							"video_id" => $video["video_id"],
-							"error" => $e->getMessage(),
-							"status_code" => $e->getStatusCode() ];
-						$log->info( "Video encountered with unknown error", $loggingParams );
 						$status = self::STATUS_OTHER_ERROR;
 						$removeVideo = false;
 					}
