@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 29.05.14
- * Time: 09:04
- */
 class EntertainmentHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'entertainment';
 	const URL_ENDPOINT = '/Entertainment';
