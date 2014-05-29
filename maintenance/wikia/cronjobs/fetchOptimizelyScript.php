@@ -15,7 +15,7 @@ if ( $curlData !== false ) {
 	$storageModel = new MysqlKeyValueModel();
 	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
-	if ( !$storedData || $storedData !== $curlData ) {
+	if ( empty( $storedData ) || $storedData !== $curlData ) {
 		$storageModel->set( OptimizelyController::OPTIMIZELY_SCRIPT_KEY, $curlData );
 	}
 }
