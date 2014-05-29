@@ -435,6 +435,7 @@ SQL;
 		}
 
 		$videos = $this->suggestionSearch( $titleObj );
+
 		wfProfileOut( __METHOD__ );
 		return $videos;
 	}
