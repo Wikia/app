@@ -45,7 +45,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mock->expects( $this->once() )
 			->method( 'setVal' )
-			->with( 'links', ['abc/Xyz'] );
+			->with( 'links', ['abc...'] );
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
@@ -58,7 +58,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mock->currentTitle = $mockTitle;
 
-		$mock->customFeeds = ['xyz' => '...'];
+		$mock->customFeeds = ['abc' => '...'];
 
 		$mock->wg = new StdClass();
 
