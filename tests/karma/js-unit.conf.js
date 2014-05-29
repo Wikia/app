@@ -79,6 +79,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
+			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
 			//PhalanxII
