@@ -5,8 +5,21 @@
  */
 class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
+	const MAP_PREVIEW_WIDTH = 660;
 	const MAP_HEIGHT = 600;
 	const MAPS_PER_PAGE = 10;
+	const PAGE_NAME = 'InteractiveMaps';
+
+	/**
+	 * @var WikiaMaps
+	 */
+	private $mapsModel;
+
+	/**
+	 * Keeps data needed while creating map/tile set process
+	 * @var Array
+	 */
+	private $creationData;
 
 	/**
 	 * @desc Special page constructor
@@ -19,7 +32,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param bool $includable
 	 */
 	public function __construct( $name = null, $restriction = 'editinterface', $listed = true, $function = false, $file = 'default', $includable = false ) {
-		parent::__construct( 'InteractiveMaps', $restriction, $listed, $function, $file, $includable );
+		parent::__construct( self::PAGE_NAME, $restriction, $listed, $function, $file, $includable );
+		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 
 	/**
@@ -37,11 +51,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Main Special:InteractiveMaps page
+	 * Main Special:InteractiveMaps page
 	 */
 	public function main() {
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-
 		$selectedSort = $this->getVal( 'sort', null );
 		$this->setVal( 'selectedSort', $selectedSort );
 		$currentPage = $this->request->getInt( 'page', 1 );
@@ -55,7 +67,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'limit' => self::MAPS_PER_PAGE,
 		];
 
-		$mapsResponse = $mapsModel->cachedRequest( 'getMapsFromApi', $params );
+		$mapsResponse = $this->mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
 		if ( !$mapsResponse ) {
 			$this->forward( 'WikiaInteractiveMaps', 'error' );
@@ -74,7 +86,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'wikia-interactive-maps-no-maps' => wfMessage( 'wikia-interactive-maps-no-maps' )
 		];
 		$this->setVal( 'messages', $messages );
-		$this->setVal( 'sortingOptions', $mapsModel->getSortingOptions( $selectedSort ) );
+		$this->setVal( 'sortingOptions', $this->mapsModel->getSortingOptions( $selectedSort ) );
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
@@ -105,7 +117,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Single map page
+	 * Single map page
 	 */
 	public function map() {
 		$mapId = (int)$this->getPar();
@@ -113,8 +125,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$lat = $this->request->getInt( 'lat', WikiaInteractiveMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaInteractiveMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
-		$map = $mapsModel->cachedRequest(
+		$map = $this->mapsModel->cachedRequest(
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
@@ -122,7 +133,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
-			$url = $mapsModel->buildUrl( [
+			$url = $this->mapsModel->buildUrl( [
 				WikiaMaps::ENTRY_POINT_RENDER,
 				$mapId,
 				$zoom,
@@ -145,7 +156,240 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc API Error page
+	 * Upload a file entry point
+	 */
+	public function uploadMap() {
+		$upload = new UploadFromFile();
+		$upload->initializeFromRequest( $this->wg->Request );
+		$uploadResults = $upload->verifyUpload();
+		$uploadStatus = [ 'success' => false ];
+
+		if( empty( $this->wg->EnableUploads ) ) {
+			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
+		} else if( $uploadResults[ 'status' ] !== UploadBase::OK ) {
+			$uploadStatus[ 'errors' ] = [ $this->translateError( $uploadResults[ 'status' ] ) ];
+		} else if( ( $warnings = $upload->checkWarnings() ) && !empty( $warnings ) ) {
+			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
+		} else {
+			//save temp file
+			$file = $upload->stashFile();
+
+			if ( $file instanceof File && $file->exists() ) {
+				$uploadStatus[ 'success' ] = true;
+				$originalWidth = $file->getWidth();
+
+				// $originalHeight = $file->getHeight();
+				// $imageServing = new ImageServing( null, $originalWidth );
+				// $uploadStatus[ 'fileUrl' ] = $imageServing->getUrl( $file, $originalWidth, $originalHeight );
+
+				// OK, so I couldn't use ImageService because it works only on uploaded files
+				// image serving worked with stashed files but it cuts it in a weird way
+				// not to block this any longer I came with the line below but we need to sort it out
+				// and write in a cleaner way
+				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
+
+				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
+				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, self::MAP_PREVIEW_WIDTH );
+			} else {
+				$uploadStatus[ 'success' ] = false;
+			}
+		}
+
+		$this->setVal( 'results', $uploadStatus );
+	}
+
+	/**
+	 * Maps error status code to an error message
+	 * @param Integer $errorStatus error code status returned from UploadBase method
+	 * @return String
+	 */
+	private function translateError( $errorStatus ) {
+		switch( $errorStatus ) {
+			case UploadBase::FILE_TOO_LARGE:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
+				break;
+			case UploadBase::EMPTY_FILE:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-empty-file' )->plain();
+				break;
+			case UploadBase::FILETYPE_BADTYPE:
+			case UploadBase::VERIFICATION_ERROR:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-bad-type' )->plain();
+				break;
+			default:
+				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse();
+				break;
+		}
+
+		return $errorMessage;
+	}
+
+	/**
+	 * Returns max upload file size in MB (gets it from config)
+	 * @return float
+	 * @todo Extract it somewhere to includes/wikia/
+	 */
+	private function getMaxFileSize() {
+		return $this->wg->MaxUploadSize / 1024 / 1024;
+	}
+
+	/**
+	 * Entry point to create a map from either existing tiles or new image
+	 *
+	 * @requestParam Integer $tileSetId an unique id of existing tiles
+	 * @requestParam String $image an URL to image which the tiles will be created from
+	 * @requestParam String $title map title
+	 *
+	 * @throws BadRequestApiException
+	 */
+	public function createMap() {
+		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
+		$this->setCreationData( 'tileSetId', $tileSetId );
+		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
+		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
+
+		$this->validateMapCreation();
+
+		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
+		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
+
+		if( $tileSetId > 0 ) {
+			$results = $this->createMapFromTilesetId();
+		} else {
+			$results = $this->createTileset();
+
+			if( true === $results['success'] ) {
+				$this->setCreationData( 'tileSetId', $results['id'] );
+				$results = $this->createMapFromTilesetId();
+			}
+		}
+
+		$this->setVal( 'results', $results );
+	}
+
+	/**
+	 * Helper method to validate creation data
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function validateMapCreation() {
+		$tileSetId = $this->getCreationData( 'tileSetId' );
+		$imageUrl = $this->getCreationData( 'image' );
+		$mapTitle = $this->getCreationData( 'title' );
+
+		if( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
+
+		if( empty( $mapTitle ) ) {
+			throw new InvalidParameterApiException( 'title' );
+		}
+
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
+	}
+
+	/**
+	 * Helper method which sends request to maps service to create tiles' set
+	 * and then processes the response providing results array
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function createTileset() {
+		$results['success'] = false;
+
+		$response = $this->mapsModel->saveTileset( [
+			'name' => $this->getCreationData( 'title' ),
+			'url' => $this->getCreationData( 'image' ),
+			'created_by' => $this->getCreationData( 'creatorName' ),
+		] );
+
+		if( !$response ) {
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
+		} else {
+			$result = json_decode( $response );
+			$results['success'] = true;
+			$results['id'] = $result->id;
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Helper method which sends request to maps service to create a map from existing tiles' set
+	 * and processes the response providing results array
+	 *
+	 * @return Array
+	 */
+	private function createMapFromTilesetId() {
+		$results['success'] = false;
+
+		$response = $this->mapsModel->saveMap( [
+			'title' => $this->getCreationData( 'title' ),
+			'tile_set_id' => $this->getCreationData( 'tileSetId' ),
+			'city_id' => $this->getCreationData( 'cityId' ),
+			'created_by' => $this->getCreationData( 'creatorName' ),
+		] );
+
+		if( !$response ) {
+			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
+		} else {
+			$response = json_decode( $response );
+			$mapId = $response->id;
+
+			$results['success'] = true;
+			$results['mapId'] = $mapId;
+			$results['mapUrl'] = Title::newFromText( self::PAGE_NAME . '/' . $mapId, NS_SPECIAL )->getFullUrl();
+			$results['message'] = $response->message;
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Getter for creation data
+	 *
+	 * @param String $name name of the data key
+	 * @param Bool $default
+	 *
+	 * @return Mixed
+	 */
+	private function getCreationData( $name, $default = false ) {
+		if( isset( $this->creationData[ $name ] ) ) {
+			return $this->creationData[ $name ];
+		}
+
+		return $default;
+	}
+
+	/**
+	 * Setter of creation data
+	 *
+	 * @param String $name
+	 * @param Mixed $value
+	 */
+	private function setCreationData( $name, $value ) {
+		$this->creationData[ $name ] = $value;
+	}
+
+	/**
+	 * Creates stashed image's thumb url and returns it
+	 *
+	 * @param File $file stashed upload file
+	 * @param Integer $width width of the thumbnail
+	 *
+	 * @return String
+	 */
+	private function getStashedImageThumb( $file, $width ) {
+		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
+	}
+	
+	/**
+	 * API Error page
 	 */
 	public function error() {
 		$this->setVal( 'messages', [
@@ -159,6 +403,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @param int $currentPage
 	 * @param int $itemsPerPage
+	 *
 	 * @return int mixed
 	 */
 	private function getPaginationOffset( $currentPage, $itemsPerPage ) {
@@ -166,4 +411,3 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 }
-

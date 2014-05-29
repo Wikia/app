@@ -17,6 +17,8 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 // controller classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
 $wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . 'WikiaInteractiveMapsParserTagController.class.php';
+
+// helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
 
 // model classes
@@ -33,5 +35,9 @@ $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfter
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
 JSMessages::registerPackage( 'WikiaInteractiveMaps', [
-	'wikia-interactive-maps-map-placeholder-error',
+	'wikia-interactive-maps-map-placeholder-error'
+] );
+
+JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
+	'wikia-interactive-maps-create-map-*'
 ] );

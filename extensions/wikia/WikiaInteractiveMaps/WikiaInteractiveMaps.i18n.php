@@ -37,6 +37,26 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-sort-recently-updated' => 'Recently updated',
 
 	'wikia-interactive-maps-map-not-found-error' => 'Map not found',
+
+	'wikia-interactive-maps-create-map-header' => 'Create a Map',
+	'wikia-interactive-maps-create-map-next-btn' => 'Next',
+	'wikia-interactive-maps-create-map-back-btn' => 'Back',
+
+	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
+	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
+
+	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
+	'wikia-interactive-maps-create-map-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
+
+	'wikia-interactive-maps-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
+	'wikia-interactive-maps-image-uploads-error' => 'There was an error while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
+	'wikia-interactive-maps-image-uploads-warning' => 'There were some issues while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
+	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'The file you tried to upload is too big. Maximum image size is $1 MB',
+	'wikia-interactive-maps-image-uploads-error-empty-file' => 'The file you tried to upload is empty',
+	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
+
+	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 ];
 
 $messages[ 'qqq' ] = [
@@ -65,5 +85,24 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-sort-recently-updated' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list so the recently update maps are on the top',
 
 	'wikia-interactive-maps-map-not-found-error' => 'Error message, shown when map is not found',
+
+	'wikia-interactive-maps-create-map-header' => 'Header for create map modal',
+	'wikia-interactive-maps-create-map-next-btn' => 'Next button for create map modal',
+	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal',
+	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
+	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
+	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
+
+	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
+	'wikia-interactive-maps-create-map-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',
+
+	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
+	'wikia-interactive-maps-image-uploads-error' => 'An error displayed to a user when a file upload fails because of backend errors',
+	'wikia-interactive-maps-image-uploads-warning' => 'An error displayed to a user when a file upload fails because of backend warnings',
+	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'An error displayed to a user when a file upload fails because of incorrect file size; the only parameter is maximum size of file in MB',
+	'wikia-interactive-maps-image-uploads-error-empty-file' => 'An error displayed to a user when file is empty',
+	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
+
+	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 ];
 
