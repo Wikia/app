@@ -254,18 +254,9 @@ EOT;
 		}
 	}
 
-	function setErrorHandler() {
-
-	}
-
-	function handleError( $errno, $errstr, $errfile, $errline ) {
-		$callback = $this->getErrorCleanupFunction();
-		$this->phpErrors[] = call_user_func( $callback, "$errstr in $errfile line $errline" );
-	}
 }
 
 $h = new WebStore404Handler;
-$h->setErrorHandler();
 $h->execute();
 
 
