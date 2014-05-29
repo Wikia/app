@@ -258,7 +258,7 @@ abstract class BaseRssModel extends WikiaService {
 				$item[ 'title' ] = $details[ 'title' ];
 			}
 
-			if ( $item[ 'timestamp' ] ) {
+			if ( !$item[ 'timestamp' ] ) {
 				$item[ 'timestamp' ] = $time--;
 			}
 
