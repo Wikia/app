@@ -147,9 +147,9 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
-	var $indicator = $( '.ve-indicator[data-type="loading"]' );
-	if ( $indicator.is( ':visible' ) ) {
-		$indicator.fadeOut( 400 );
+	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	if ( $spinner.is( ':visible' ) ) {
+		$spinner.fadeOut( 400 );
 	}
 };
 
