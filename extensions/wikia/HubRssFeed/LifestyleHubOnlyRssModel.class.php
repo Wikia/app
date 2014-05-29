@@ -8,6 +8,7 @@
  */
 class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
 	const FEED_NAME = 'lifestyle';
+	const URL_ENDPOINT = '/Lifestyle';
 
 	public function getFeedTitle() {
 		return 'Wikia Lifestyle Feed';
@@ -19,10 +20,6 @@ class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
 
 	public function getFeedDescription() {
 		return 'From Wikia community - Lifestyle';
-	}
-
-	public function getModelUrlEndpoint() {
-		return '/Lifestyle';
 	}
 
 	protected function getHubCityIds() {

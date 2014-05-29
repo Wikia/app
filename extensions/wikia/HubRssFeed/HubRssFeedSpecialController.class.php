@@ -2,19 +2,14 @@
 
 class HubRssFeedSpecialController extends WikiaSpecialPageController {
 	const SPECIAL_NAME = 'HubRssFeed';
-	const CACHE_KEY = 'HubRssFeed';
 	const CACHE_TIME = 3600;
-	const DAY_QUARTER = 21600;
-	const CACHE_10MIN = 600;
-	/** Use it after release to generate new memcache keys. */
-	const CACHE_BUST = 26;
 	const RSS_CONTENT_TYPE = 'text/xml; charset=utf-8';
 
 	protected $customFeeds = [
-		TvRssModel::FEED_NAME => true,
-		GamesRssModel::FEED_NAME => true,
-		LifestyleHubOnlyRssModel::FEED_NAME => true,
-		EntertainmentHubOnlyRssModel::FEED_NAME => true
+		TvRssModel::FEED_NAME => TvRssModel::URL_ENDPOINT,
+		GamesRssModel::FEED_NAME => GamesRssModel::URL_ENDPOINT,
+		LifestyleHubOnlyRssModel::FEED_NAME => LifestyleHubOnlyRssModel::URL_ENDPOINT,
+		EntertainmentHubOnlyRssModel::FEED_NAME => EntertainmentHubOnlyRssModel::URL_ENDPOINT
 	];
 
 	/**
@@ -53,7 +48,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$links = [ ];
 
 		foreach ( $this->customFeeds as $k => $v ) {
-			$links[ ] = $url . '/' . ucfirst( $k );
+			$links[ ] = $url . $v;
 		}
 
 		$this->setVal( 'links', $links );

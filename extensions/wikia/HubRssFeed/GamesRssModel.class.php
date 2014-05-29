@@ -8,6 +8,7 @@
  */
 class GamesRssModel extends BaseRssModel {
 	const FEED_NAME = 'games';
+	const URL_ENDPOINT = '/Games';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
 	const FRESH_CONTENT_TTL_HOURS = 24;
@@ -23,10 +24,6 @@ class GamesRssModel extends BaseRssModel {
 
 	public function getFeedDescription() {
 		return 'From Wikia community - Video Games';
-	}
-
-	public function getModelUrlEndpoint(){
-		return '/Games';
 	}
 
 	public function getFeedData() {
