@@ -158,6 +158,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			) {
 				$this->success = false;
 				$this->resultMessage = $this->msg( 'sessionfailure' )->escaped();
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 

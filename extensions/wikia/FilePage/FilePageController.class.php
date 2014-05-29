@@ -94,6 +94,7 @@ class FilePageController extends WikiaController {
 		$result = array();
 		if ( empty( $summary ) || empty( $type ) ) {
 			$this->result = $result;
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 

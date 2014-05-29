@@ -61,7 +61,8 @@ class MessageBlobStore {
 		}
 		wfProfileOut( __METHOD__ );
 		return $blobs;
-		/* Wikia change end */
+
+		/* Wikia - commented out entire block:
 
 		// Try getting from the DB first
 		$blobs = self::getFromDB( $resourceLoader, array_keys( $modules ), $lang );
@@ -77,6 +78,9 @@ class MessageBlobStore {
 
 		wfProfileOut( __METHOD__ );
 		return $blobs;
+		*/
+
+		/* Wikia change end */
 	}
 
 	/**
