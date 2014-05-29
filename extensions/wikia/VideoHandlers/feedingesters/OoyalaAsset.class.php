@@ -61,7 +61,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $videoId
 	 * @return array|false $result
 	 */
-	public function getAssetById( $videoId ) {
+	public static function getAssetById( $videoId ) {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -86,7 +86,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param int $max
 	 * @return array $assets
 	 */
-	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
+	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
@@ -119,7 +119,7 @@ class OoyalaAsset extends WikiaModel {
 	 * Get labels for all providers
 	 * @return array|false $providers
 	 */
-	public function getApiLabelsProviders() {
+	public static function getApiLabelsProviders() {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -152,12 +152,12 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $labelName - name of the label
 	 * @return string|false $labelId
 	 */
-	public function getLabelId( $labelName ) {
+	public static function getLabelId( $labelName ) {
 		wfProfileIn( __METHOD__ );
 
 		$labelId = false;
 
-		$labels = $this->getApiLabelsProviders();
+		$labels = self::getApiLabelsProviders();
 		if ( $labels == false ) {
 			wfProfileOut( __METHOD__ );
 			return $labelId;
