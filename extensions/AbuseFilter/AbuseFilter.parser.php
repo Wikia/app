@@ -216,15 +216,7 @@ class AFPData {
 			$pattern .= 'i';
 		}
 
-		$handler = new AFPRegexErrorHandler( $pattern, $pos );
-		try {
-			$handler->install();
-			$result = preg_match( $pattern, $str );
-			$handler->restore();
-		} catch ( Exception $e ) {
-			$handler->restore();
-			throw $e;
-		}
+		$result = preg_match( $pattern, $str );
 		return new AFPData( self::DBool, (bool)$result );
 	}
 
@@ -392,32 +384,6 @@ class AFPUserVisibleException extends AFPException {
 		$this->mExceptionID = $exception_id;
 		$this->mPosition = $position;
 		$this->mParams = $params;
-	}
-}
-
-class AFPRegexErrorHandler {
-	function __construct( $regex, $pos ) {
-		$this->regex = $regex;
-		$this->pos = $pos;
-	}
-
-	function handleError( $errno, $errstr, $errfile, $errline, $context ) {
-		if ( error_reporting() == 0 ) {
-			return true;
-		}
-		throw new AFPUserVisibleException(
-			'regexfailure',
-			$this->pos,
-			array( $errstr, $this->regex )
-		);
-	}
-
-	function install() {
-		// no-op
-	}
-
-	function restore() {
-		// no-op
 	}
 }
 
@@ -1508,15 +1474,7 @@ class AbuseFilterParser {
 
 			$matches = array();
 
-			$handler = new AFPRegexErrorHandler( $needle, $this->mCur->pos );
-			try {
-				$handler->install();
-				$count = preg_match_all( $needle, $haystack, $matches );
-				$handler->restore();
-			} catch ( Exception $e ) {
-				$handler->restore();
-				throw $e;
-			}
+			$count = preg_match_all( $needle, $haystack, $matches );
 		}
 
 		return new AFPData( AFPData::DInt, $count );
