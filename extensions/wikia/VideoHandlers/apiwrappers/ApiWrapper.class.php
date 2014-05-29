@@ -572,19 +572,33 @@ class NegativeResponseException extends Exception {
 		$this->status = $status;
 		$this->content = $content;
 		$this->apiUrl = $apiUrl;
+		$this->errors = $status->errors;
 
 		$message = "Negative response from URL '".$apiUrl."'";
 
 		// Add the error message if there is one
-		$errors = $status->errors;
-		if (!empty($errors) && (count($errors) > 0)) {
-			$firstError = $errors[0];
-			if (!empty($firstError['message'])) {
+		if ( !empty( $this->errors ) && ( count( $this->errors ) > 0 ) ) {
+			$firstError = $this->errors[0];
+			if ( !empty( $firstError['message'] ) ) {
 				$message .= ' - '.$firstError['message'];
 			}
 		}
 
 		$this->message = $message;
+	}
+
+	/**
+	 * Returns the http status code of the first error
+	 * @return null|int
+	 */
+	public function getStatusCode() {
+
+		$statusCode = null;
+		if ( is_array( $this->errors) ) {
+			$statusCode = $this->errors[0]['params'][0];
+		}
+
+		return $statusCode;
 	}
 }
 class VideoIsPrivateException extends NegativeResponseException {}
