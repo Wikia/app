@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 21.05.14
- * Time: 15:44
- */
 class TvRssModel extends BaseRssModel {
 	const FEED_NAME = 'tv';
 	const URL_ENDPOINT = '/TV';

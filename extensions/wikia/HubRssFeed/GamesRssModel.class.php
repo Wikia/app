@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 23.05.14
- * Time: 09:33
- */
 class GamesRssModel extends BaseRssModel {
 	const FEED_NAME = 'games';
 	const URL_ENDPOINT = '/Games';
