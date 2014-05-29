@@ -309,8 +309,8 @@ class VideoHandlerController extends WikiaController {
 		$page = $this->getVal( 'page', 1 );
 		$providers = $this->getVal( 'providers', array() );
 		$category = $this->getVal( 'category', '' );
-		$width = $this->getVal( 'width', 0 );
-		$height = $this->getVal( 'height', 0 );
+		$width = $this->getVal( 'width', self::DEFAULT_THUMBNAIL_WIDTH );
+		$height = $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT );
 		$detail = $this->getVal( 'detail', 0 );
 
 		$filter = 'all';
