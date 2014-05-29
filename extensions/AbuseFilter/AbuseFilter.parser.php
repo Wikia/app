@@ -413,11 +413,11 @@ class AFPRegexErrorHandler {
 	}
 
 	function install() {
-		set_error_handler( array( $this, 'handleError' ) );
+		// no-op
 	}
 
 	function restore() {
-		restore_error_handler();
+		// no-op
 	}
 }
 

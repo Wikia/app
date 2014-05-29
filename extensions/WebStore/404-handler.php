@@ -188,7 +188,7 @@ $errors
 </body>
 </html>
 EOT;
-				restore_error_handler();
+
 				break;
 			}
 
@@ -255,7 +255,7 @@ EOT;
 	}
 
 	function setErrorHandler() {
-		set_error_handler( array( $this, 'handleError' ) );
+
 	}
 
 	function handleError( $errno, $errstr, $errfile, $errline ) {

@@ -45,7 +45,6 @@ class WebStoreCommon {
 	}
 
 	function setErrorHandler() {
-		set_error_handler( array( $this, 'handleWarning' ), E_WARNING );
 		ini_set( 'html_errors', 0 );
 	}
 
