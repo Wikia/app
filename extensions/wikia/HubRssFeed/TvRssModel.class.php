@@ -1,13 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: krzychu
- * Date: 21.05.14
- * Time: 15:44
- */
 class TvRssModel extends BaseRssModel {
 	const FEED_NAME = 'tv';
+	const URL_ENDPOINT = '/TV';
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
@@ -27,10 +22,6 @@ class TvRssModel extends BaseRssModel {
 
 	public function getFeedDescription() {
 		return 'From Wikia community - TV';
-	}
-
-	public function getModelUrlEndpoint(){
-		return '/TV';
 	}
 
 	protected function shouldGenerateAdditionalContent() {
