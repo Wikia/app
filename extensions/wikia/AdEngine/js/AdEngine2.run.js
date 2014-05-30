@@ -119,17 +119,15 @@ require([
 	if (window.wgEnableRHonDesktop) {
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
+
+	if (window.wgAdEngineDisableLateQueue) {
+		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	}
 });
 
 // Load late ads now
 window.AdEngine_loadLateAds = function () {
 	'use strict';
-
-	if(window.wgAdEngineDisableLateQueue) {
-		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, 'AdEngine2');
-
-		return;
-	}
 
 	window.wgAfterContentAndJS.push(function () {
 		require([
