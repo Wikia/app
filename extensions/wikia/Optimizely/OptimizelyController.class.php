@@ -9,7 +9,7 @@ class OptimizelyController extends WikiaController {
 		$response = $this->getResponse();
 		$response->setContentType( 'text/javascript; charset=utf-8' );
 
-		$storageModel = new MysqlKeyValueModel();
+		$storageModel = new MySQLKeyValueModel();
 		try {
 			$this->code = $storageModel->get( self::OPTIMIZELY_SCRIPT_KEY );
 		} catch (Exception $e) {

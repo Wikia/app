@@ -309,7 +309,7 @@ $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
-$wgAutoloadClasses['MysqlKeyValueModel'] = "{$IP}/includes/wikia/models/MysqlKeyValueModel.class.php";
+$wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -1409,9 +1409,3 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
-
-/*
- * @name wgOptimizelyLoadFromOurCDN
- * Loading external Optimizely script from internal storage
- */
-$wgOptimizelyLoadFromOurCDN = true;

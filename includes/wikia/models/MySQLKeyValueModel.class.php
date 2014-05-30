@@ -1,6 +1,6 @@
 <?php
 
-class MysqlKeyValueModel extends WikiaModel {
+class MySQLKeyValueModel extends WikiaModel {
 
 	const TABLE_NAME = 'common_key_value';
 	const MEMC_KEY = 'key_val_v.1.0';
@@ -43,10 +43,7 @@ class MysqlKeyValueModel extends WikiaModel {
 	}
 
 	protected function getMemcacheKey( $key ) {
-		return wfSharedMemcKey(
-			self::MEMC_KEY,
-			$key
-		);
+		return wfSharedMemcKey( self::MEMC_KEY, $key );
 	}
 
 	protected function encodeData( $data ) {

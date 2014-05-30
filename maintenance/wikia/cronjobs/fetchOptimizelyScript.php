@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @author Mateusz 'Warkot' Warkocki <mateusz-warkocki(at)wikia-inc.com>
+ *
+ * This script downloads a copy of Optimizely script and puts it into local CDN.
+ * It is stored via MySQLKeyValueModel which uses 'specials' database.
+ */
+
 require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
@@ -14,7 +21,7 @@ if ( stripos( $url, $urlPrefix ) !== 0 ) {
 $data = Http::get( $url );
 
 if ( empty( $data ) ) {
-	$storageModel = new MysqlKeyValueModel();
+	$storageModel = new MySQLKeyValueModel();
 	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
 	if ( empty( $storedData ) || $storedData !== $data ) {
