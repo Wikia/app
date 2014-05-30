@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		iframeContentHeight = iframeDoc.body.offsetHeight;
 		iframe.height = iframeHeight;
 
-		log(['findAdInIframe', 'height (iframe content)', iframeContentHeight], 'info', logGroup);
+		log(['findAdInIframe', iframe.name, 'height (iframe content)', iframeContentHeight], 'info', logGroup);
 
 		if (iframeContentHeight > 1) {
 			log(['findAdInIframe', iframeId, 'height > 1, launching adCallback'], 'info', logGroup);
