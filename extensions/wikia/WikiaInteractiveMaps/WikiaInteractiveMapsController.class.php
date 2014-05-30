@@ -354,7 +354,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @return Mixed
 	 */
-	private function getCreationData( $name, $default = false ) {
+	public function getCreationData( $name, $default = false ) {
 		if( isset( $this->creationData[ $name ] ) ) {
 			return $this->creationData[ $name ];
 		}
@@ -368,7 +368,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param String $name
 	 * @param Mixed $value
 	 */
-	private function setCreationData( $name, $value ) {
+	public function setCreationData( $name, $value ) {
 		$this->creationData[ $name ] = $value;
 	}
 
@@ -477,7 +477,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @return bool
 	 */
-	private function haveNamesForAllPinTypes() {
+	public function haveNamesForAllPinTypes() {
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 		$isValid = true;
 
