@@ -85,7 +85,7 @@ class AdEngine2Service
 		$user = $wg->User;
 		if (!$user->isLoggedIn() || $user->getOption('showAds')) {
 			// Only leaderboard, medrec and invisible on corporate sites for anonymous users
-			if ($wg->EnableWikiaHomePageExt) {
+			if (WikiaPageType::isCorporatePage()) {
 				$pageLevel = self::PAGE_TYPE_CORPORATE;
 				return $pageLevel;
 			}
@@ -96,7 +96,7 @@ class AdEngine2Service
 		}
 
 		// Logged in users get some ads on the main pages (except on the corporate sites)
-		if (!$wg->EnableWikiaHomePageExt && WikiaPageType::isMainPage()) {
+		if (!WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage()) {
 			$pageLevel = self::PAGE_TYPE_HOMEPAGE_LOGGED;
 			return $pageLevel;
 		}
@@ -129,6 +129,18 @@ class AdEngine2Service
 		}
 
 		return in_array($pageType, $pageTypes);
+	}
+
+	public static function shouldLoadLiftium()
+	{
+		global $wgEnableRHonDesktop, $wgAdEngineDisableLateQueue;
+		return !$wgEnableRHonDesktop && !$wgAdEngineDisableLateQueue;
+	}
+
+	public static function shouldLoadLateQueue()
+	{
+		global $wgAdEngineDisableLateQueue;
+		return !$wgAdEngineDisableLateQueue;
 	}
 
 	/**
@@ -204,7 +216,7 @@ class AdEngine2Service
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff;
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue;
 
 		$vars = [];
 
@@ -227,6 +239,7 @@ class AdEngine2Service
 			'wgAdDriverForceDirectGptAd' => $wgAdDriverForceDirectGptAd,
 			'wgAdDriverForceLiftiumAd' => $wgAdDriverForceLiftiumAd,
 			'wgAdVideoTargeting' => $wgAdVideoTargeting,
+			'wgAdEngineDisableLateQueue' => $wgAdEngineDisableLateQueue,
 
 			// AdEngine2.js
 			'wgLoadAdsInHead' => AdEngine2Service::areAdsInHead(),
@@ -304,6 +317,7 @@ class AdEngine2Service
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
 				'cityShort',                     // AdLogicPageParams.js
+				'wgAdEngineDisableLateQueue',    // AdConfig2.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
 				'wgAdDriverForceLiftiumAd',      // AdConfig2.js

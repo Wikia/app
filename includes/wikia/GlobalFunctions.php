@@ -1709,8 +1709,6 @@ function wfWikiaErrorHandler($errno, $errstr, $errfile, $errline) {
 	return false;
 }
 
-set_error_handler('wfWikiaErrorHandler');
-
 /**
  * get namespaces
  * @global $wgContLang

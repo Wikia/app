@@ -611,12 +611,14 @@ class SpecialConnect extends SpecialPage {
 		if ( !$fb_user ) {
 			wfDebug("FBConnect: aborting in attachUser(): no Facebook ID was reported.\n");
 			$wgOut->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		// Look up the user by their name
 		$user = new FBConnectUser(User::newFromName($name));
 		if (!$user || !$user->checkPassword($password)) {
 			$this->sendPage('chooseNameForm', 'wrongpassword');
+			wfProfileOut(__METHOD__);
 			return;
 		}
 		// Attach the user to their Facebook account in the database
