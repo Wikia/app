@@ -356,8 +356,9 @@ SQL;
 			'postedInArticles' => self::POSTED_IN_ARTICLES,
 			'getThumbnail'     => true,
 			'thumbOptions'     => [
-				'fluid'      => true,
-				'noLightbox' => true,
+				'fluid'          => true,
+				'noLightbox'     => true,
+				'hidePlayButton' => true,
 			],
 		];
 
@@ -543,8 +544,9 @@ SQL;
 			'postedInArticles' => self::POSTED_IN_ARTICLES,
 			'getThumbnail'     => true,
 			'thumbOptions'     => [
-				'fluid'      => true,
-				'noLightbox' => true,
+				'fluid'          => true,
+				'noLightbox'     => true,
+				'hidePlayButton' => true,
 			]
 		];
 

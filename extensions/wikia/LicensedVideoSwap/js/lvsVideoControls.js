@@ -19,29 +19,29 @@ define('lvs.videocontrols', [
 	 */
 	var videoInstances = [];
 
-	function setVerticalAlign(/*$element, video*/) {
-		// TODO: once height is set dynamically, let this function run.
-
-		/*
+	// TODO: once height is set dynamically, let this function run.
+	/*
+	function setVerticalAlign($element, video) {
 		var videoHeight = video.height,
 			wrapperHeight = $element.height(),
 			topMargin = ( wrapperHeight - videoHeight ) / 2;
 
 		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );
-		 */
 	}
+	 */
+	function setVerticalAlign() {}
 
+	// TODO: once height is set dynamically, let this function run.
 	// remove vertical alignment css
-	function removeVerticalAlign(/*$element*/) {
-		// TODO: once height is set dynamically, let this function run.
-
-		/*
+	/*
+	function removeVerticalAlign($element) {
 		var height = $element.data( 'height' );
 		if ( height ) {
 			$element.height( height ).css( 'padding-top', 0 );
 		}
-		*/
 	}
+	*/
+	function removeVerticalAlign() {}
 
 	function syncVideoInteraction(title, premiumTitle) {
 		nirvana.sendRequest({
@@ -86,14 +86,14 @@ define('lvs.videocontrols', [
 
 			$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
-			if ($this.hasClass('thumb')) {
+			if ($this.hasClass('small')) {
 				// one of the thumbnails was clicked
 				$element = $this.closest('.row').find('.premium .video-wrapper');
 				$thumbList = $this.closest('ul');
 
 				// put outline around the thumbnail that was clicked
 				$thumbList.find('.selected').removeClass('selected');
-				$this.addClass('selected');
+				$this.parent().addClass('selected');
 
 				// tracking rank should be 1-indexed, so add 1 to the 0-based index
 				trackingRank = $parent.index() + 1;

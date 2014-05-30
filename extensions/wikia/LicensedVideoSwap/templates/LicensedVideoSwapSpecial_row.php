@@ -25,11 +25,6 @@ foreach ($videoList as $video):
 		</div>
 		<div class="video-wrapper">
 			<?= $video['thumbnail'] ?>
-<!--			<a href="--><?//= $video['fileUrl'] ?><!--" class="image video no-lightbox">-->
-<!--				--><?//= $video['videoPlayButton'] ?>
-<!--				<img alt="--><?//= $video['fileTitle'] ?><!--" src="--><?//= $video['thumbUrl'] ?><!--" width="--><?//= $thumbWidth ?><!--" height="--><?//= $thumbHeight ?><!--" data-video-name="--><?//= htmlspecialchars($video['fileTitle']) ?><!--" data-video-key="--><?//= htmlspecialchars(urlencode($video['title'])) ?><!--" class="Wikia-video-thumb thumbimage">-->
-<!--				--><?//= $video['videoOverlay'] ?>
-<!--			</a>-->
 		</div>
 		<button class="keep-button secondary" <?= $confirmKeep ?> data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep')->plain() ?></button>
 	</div>
@@ -41,11 +36,6 @@ foreach ($videoList as $video):
 					<div class="new"><?= wfMessage( 'lvs-new-flag' )->plain() ?></div>
 				<? endif; ?>
 				<?= $best['thumbnail'] ?>
-<!--				<a href="--><?//= $best['fileUrl'] ?><!--" class="image video no-lightbox">-->
-<!--					--><?//= $best['videoPlayButton'] ?>
-<!--					<img alt="--><?//= $best['fileTitle'] ?><!--" src="--><?//= $best['thumbUrl'] ?><!--" width="--><?//= $thumbWidth ?><!--" height="--><?//= $thumbHeight ?><!--" data-video-name="--><?//= htmlspecialchars($best['fileTitle']) ?><!--" data-video-key="--><?//= htmlspecialchars(urlencode($best['title'])) ?><!--" class="Wikia-video-thumb thumbimage">-->
-<!--					--><?//= $best['videoOverlay'] ?>
-<!--				</a>-->
 			</div>
 			<? if ( $numMoreSuggestions > 0 ): ?>
 				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->plain() ?></a>
@@ -63,11 +53,6 @@ foreach ($videoList as $video):
 				?>
 					<li>
 						<?= $suggest['thumbnail'] ?>
-<!--						<a href="--><?//= $suggest['fileUrl'] ?><!--" class="video thumb--><?// if ( $suggest === reset($suggestions) ): ?><!-- selected--><?// endif; ?><!--">-->
-<!--							<span class="timer">--><?//= WikiaFileHelper::formatDuration($suggest['duration']) ?><!--</span>-->
-<!--							<div class="Wikia-video-play-button"><img class="sprite play small" src=" --><?//= $wg->BlankImgUrl ?><!--"></div>-->
-<!--							<img alt="--><?//= $suggest['fileTitle'] ?><!--" src="--><?//= $suggest['thumbUrl'] ?><!--" data-video-name="--><?//= htmlspecialchars($suggest['title']) ?><!--" data-video-key="--><?//= htmlspecialchars(urlencode($suggest['title'])) ?><!--" class="Wikia-video-thumb thumbimage">-->
-<!--						</a>-->
 						<p class="suggestion-title"><?= $suggest['fileTitle'] ?></p>
 					</li>
 				<? endforeach; ?>

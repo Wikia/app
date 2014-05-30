@@ -195,6 +195,10 @@ $button-icon-color: white;
 		background-color: #000;
 		margin-bottom: 9px;
 		position: relative;
+
+		.video {
+			height: 272px; // hard coded for now to ease loading until we make this responsive
+		}
 	}
 	.more-videos {
 		@include clearfix;
@@ -240,7 +244,7 @@ $button-icon-color: white;
 				margin-right: 0;
 			}
 
-			> a.selected {
+			&.selected a {
 			      outline: 5px solid $color-buttons;
 			}
 		}

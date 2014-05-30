@@ -7,10 +7,19 @@ define('lvs.suggestions', [], function () {
 	'use strict';
 
 	function init($container) {
+		var $suggestions = $container.find('.more-videos');
 		$container.find('.suggestion-title').ellipses();
-		updateSizeClass($container);
+		updateSizeClass($suggestions);
+		makeActive($suggestions);
+		bindEvents($container);
+	}
 
-		$container
+	function makeActive($elem) {
+		$elem.find('li:first-child').addClass('selected');
+	}
+
+	function bindEvents($elem) {
+		$elem
 			.off('click.lvsSuggestions')
 			.on('click.lvsSuggestions', '.more-link', function (e) {
 				e.preventDefault();
@@ -30,7 +39,7 @@ define('lvs.suggestions', [], function () {
 	}
 
 	function updateSizeClass($elem) {
-		$elem.find('.more-videos .large').each(function () {
+		$elem.find('.large').each(function () {
 			$(this).removeClass('large').addClass('small');
 		});
 	}
