@@ -7,9 +7,10 @@ $messages['en'] = array(
 	'adengine-exitstitial-redirecting' => 'Your browser will redirect you to the page you requested in a few seconds.',
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',
-	'adengine-ebay-title' => 'Ebay Products',
+	'adengine-ebay-deals' => 'Deals',
 	'adengine-ebay-empty' => 'No matching products',
-	'adengine-ebay-bid' => 'Buy',
+	'adengine-ebay-buy-it-now' => 'Buy It Now',
+	'adengine-ebay-place-a-bid' => 'Place a Bid',
 );
 
 /** Message documentation (Message documentation)
@@ -154,9 +155,10 @@ $messages['es'] = array(
 	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
 	'adengine-exitstitial-go-back' => '¿Quieres volver atrás?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
-	'adengine-ebay-title' => 'los productos de Ebay',
+	'adengine-ebay-deals' => 'Ofertas',
 	'adengine-ebay-empty' => 'No hay productos a juego',
-	'adengine-ebay-bid' => 'Comprar',
+	'adengine-ebay-buy-it-now' => 'Cómpralo ya',
+	'adengine-ebay-place-a-bid' => 'Coloque una Oferta',
 );
 
 /** Estonian (eesti)

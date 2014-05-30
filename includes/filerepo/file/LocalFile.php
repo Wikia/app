@@ -2210,6 +2210,7 @@ class LocalFileMoveBatch {
 	 */
 	var $target;
 
+	/* @var $db Database */
 	var $cur, $olds, $oldCount, $archive, $db;
 
 	function __construct( File $file, Title $target ) {

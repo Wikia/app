@@ -309,9 +309,13 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param $lang language code
 	 */
 	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
-		WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+		$status = WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
 
-		WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
+		if ( $status ) {
+			WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
+		}
+
+		return $status;
 	}
 
 	/**

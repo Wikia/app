@@ -5,6 +5,7 @@ class AdEngine2Service
 
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
@@ -194,8 +195,7 @@ class AdEngine2Service
 	private static function getJsVariables()
 	{
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			$wgHighValueCountriesDefault, $wgUser,
-			$wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
+			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
 			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
@@ -208,13 +208,6 @@ class AdEngine2Service
 
 		$vars = [];
 
-		$highValueCountries = WikiFactory::getVarValueByName(
-			'wgHighValueCountries',
-			[$wgCityId, Wikia::COMMUNITY_WIKI_ID],
-			false,
-			$wgHighValueCountriesDefault
-		);
-
 		$variablesToExpose = [
 			'wgEnableAdsInContent' => $wgEnableAdsInContent,
 			'wgEnableAdMeldAPIClient' => $wgEnableAdMeldAPIClient,
@@ -222,7 +215,6 @@ class AdEngine2Service
 			'wgEnableOpenXSPC' => $wgEnableOpenXSPC,
 
 			// Ad Driver
-			'wgHighValueCountries' => $highValueCountries,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdPageType' => $wgAdPageType,
 			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
@@ -256,7 +248,7 @@ class AdEngine2Service
 			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
 			'wgWikiDirectedAtChildren' => (bool) $wgWikiDirectedAtChildrenByStaff,
 
-			// WikiaDartHelper.js
+			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
 		];
 
@@ -266,7 +258,7 @@ class AdEngine2Service
 		}
 
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
-			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia.fullFluid'], 'scripts');
+			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
 			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
 		}
@@ -307,11 +299,11 @@ class AdEngine2Service
 			'wgUserShowAds',                 // JWPlayer.class.php
 			'wikiaPageIsCorporate',          // analytics_prod.js
 			'wikiaPageType',                 // analytics_prod.js
+			'cscoreCat',                     // analytics_prod.js
 		];
 		if (self::areAdsInHead()) {
 			$topVars = array_merge($topVars, [
 				'cityShort',                     // AdLogicPageParams.js
-				'cscoreCat',                     // analytics_prod.js, AdLogicPageParams.js
 				'wgAdDriverUseSevenOneMedia',    // AdConfig2.js
 				'wgAdDriverForceDirectGptAd',    // AdConfig2.js
 				'wgAdDriverForceLiftiumAd',      // AdConfig2.js

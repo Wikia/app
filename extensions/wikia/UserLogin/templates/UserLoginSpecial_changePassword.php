@@ -28,7 +28,7 @@
 			array(
 				'type' => 'hidden',
 				'name' => 'returnto',
-				'value' => $returnto
+				'value' => Sanitizer::encodeAttribute( $returnto ),
 			),
 			array(
 				'type' => 'custom',

@@ -1,0 +1,13 @@
+<a
+	href="{{linkHref}}"
+	class="video video-thumbnail {{size}} {{#linkClasses}}{{.}} {{/linkClasses}}"
+	{{#linkAttrs}}{{{.}}} {{/linkAttrs}}>
+
+	{{>Thumbnail_imgThumbnail}}
+	{{#noscript}}<noscript>{{{noscript}}}</noscript>{{/noscript}}
+
+	<span class="duration" {{#durationAttrs}}{{{.}}} {{/durationAttrs}}>{{duration}}</span>
+	<span class="play-circle"></span>
+
+	{{#metaAttrs}}<meta itemprop="{{itemprop}}" content="{{content}}">{{/metaAttrs}}
+</a>

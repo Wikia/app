@@ -5720,6 +5720,7 @@ $wgMaximumMovedPages = 100;
 /**
  * Fix double redirects after a page move.
  * Tends to conflict with page move vandalism, use only on a private wiki.
+ * TODO: if this is ever set to true, make sure to migrate includes/job/DoubleRedirectJob.php over to using the new job queue system!
  */
 $wgFixDoubleRedirects = false;
 

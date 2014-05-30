@@ -85,11 +85,11 @@ console.log($spinner);
 
 		showSpinner();
 
+		Wikia.Tracker.track( trackerConfig, {
+			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+			'label': 'edit-page'
+		} );
 		if ( !getTargetDeferred ) {
-			Wikia.Tracker.track( trackerConfig, {
-				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
-				'label': 'edit-page'
-			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
 

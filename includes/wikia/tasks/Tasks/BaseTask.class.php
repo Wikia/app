@@ -19,31 +19,34 @@ abstract class BaseTask {
 	/** @var int when running, the user id of the user who is running this task. */
 	protected $createdBy;
 
-	/** @var \Title title instantiation of $this->titleId */
-	protected $title;
+	/** @var \Title title this task is operating on */
+	protected $title = null;
 
-	/** @var int the title id this task is operating on, if any. */
-	protected $titleId;
+	/** @var array params needed to instantiate $this->title. */
+	protected $titleParams = [];
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
 
 	/** @var int wrapper for AsyncTaskList->wikiId() */
-	private $wikiId = null;
+	private $wikiId = AsyncTaskList::DEFAULT_WIKI_ID;
 
 	/** @var boolean wrapper for AsyncTaskList->dupCheck() */
 	private $dupCheck = false;
+
+	/** @var string wrapper for AsyncTaskList->delay() */
+	private $delay = null;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
 	 * inserting large, serialized classes into rabbitmq
 	 */
 	public function init() {
-		if (!$this->titleId) {
+		if (empty($this->titleParams)) {
 			return;
 		}
 
-		$this->title = \Title::newFromID($this->titleId);
+		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
 		if ( $this->title == null ) {
 			throw new \Exception( "unable to instantiate title with id {$this->titleId}" );
 		}
@@ -135,28 +138,39 @@ abstract class BaseTask {
 	/**
 	 * convenience method wrapping AsyncTaskList
 	 *
-	 * @return string the task's id
+	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
-		$taskList = new AsyncTaskList();
+		$isArray = is_array($this->wikiId);
+		$wikiIds = (array)$this->wikiId;
 
-		foreach ($this->calls as $i => $call) {
-			$taskList->add([$this, $i]);
+		$taskLists = [];
+		foreach ($wikiIds as $wikiId) {
+			$taskList = new AsyncTaskList();
+
+			foreach ($this->calls as $i => $call) {
+				$taskList->add([$this, $i]);
+			}
+
+			$taskList->wikiId( $wikiId );
+
+			if ($this->queueName) {
+				$taskList->setPriority($this->queueName);
+			}
+
+			if ($this->dupCheck) {
+				$taskList->dupCheck();
+			}
+
+			if ($this->delay) {
+				$taskList->delay($this->delay);
+			}
+
+			$taskLists[] = $taskList;
 		}
 
-		if ($this->wikiId) {
-			$taskList->wikiId($this->wikiId);
-		}
-
-		if ($this->queueName) {
-			$taskList->setPriority($this->queueName);
-		}
-
-		if ($this->dupCheck) {
-			$taskList->dupCheck();
-		}
-
-		return $taskList->queue();
+		$tasks = AsyncTaskList::batch($taskLists);
+		return ($isArray ? $tasks : $tasks[0]);
 	}
 
 	/**
@@ -170,7 +184,7 @@ abstract class BaseTask {
 			'class' => get_class($this),
 			'calls' => $this->calls,
 			'context' => [
-				'titleId' => $this->titleId
+				'titleParams' => $this->titleParams,
 			]
 		];
 
@@ -211,28 +225,61 @@ abstract class BaseTask {
 		}
 	}
 
-	public function titleId($titleId) {
-		$this->titleId = $titleId;
+	public function title(\Title $title) {
+		$this->titleParams = [
+			'namespace' => $title->getNamespace(),
+			'dbKey' => $title->getDBkey()
+		];
 
 		return $this;
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList
+
+	/**
+	 * @see AsyncTaskList::wikiId
+	 * @param $wikiId
+	 * @return $this
+	 */
 	public function wikiId($wikiId) {
 		$this->wikiId = $wikiId;
 		return $this;
 	}
 
+	/**
+	 * @see AsyncTaskList::prioritize
+	 * @return $this
+	 */
 	public function prioritize() {
 		return $this->setPriority(PriorityQueue::NAME);
 	}
 
+	/**
+	 * @see AsyncTaskList::setPriority
+	 * @param $queueName
+	 * @return $this
+	 */
 	public function setPriority($queueName) {
 		$this->queueName = $queueName;
 		return $this;
 	}
 
+	/**
+	 * @see AsyncTaskList::dupCheck
+	 * @return $this
+	 */
 	public function dupCheck() {
 		$this->dupCheck = true;
+		return $this;
+	}
+
+	/**
+	 * @see AsyncTaskList::delay
+	 * @param $time
+	 * @return $this
+	 */
+	public function delay($time) {
+		$this->delay = $time;
+		return $this;
 	}
 }

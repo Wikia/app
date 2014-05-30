@@ -75,6 +75,9 @@ $wgHooks['ContributionsToolLinks'][] = 'CheckUserHooks::loadCheckUserLink';
 # Take over autoblocking
 $wgHooks['PerformRetroactiveAutoblock'][] = 'CheckUserHooks::doRetroactiveAutoblock';
 
+# Register tables that need to be updated when a user is renamed
+$wgHooks['UserRename::Local'][] = 'CheckUserHooks::onUserRenameLocal';
+
 $wgResourceModules['ext.checkUser'] = array(
 	'scripts'       => 'checkuser.js',
 	'dependencies' 	=> array( 'mediawiki.util' ), // IP stuff

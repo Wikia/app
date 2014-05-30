@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 		// Task to precompile mustache templates
 		mustache: {
 			files: {
-				src: '../templates/mustache/*.mustache',
+				src: '../templates/*.mustache',
 				dest: 'templates.mustache.js'
 			},
 			options: {

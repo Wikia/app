@@ -368,11 +368,6 @@ class ResourceLoaderHooks {
 			$useLongTTL = !empty($cb) && ($cb <= $wgStyleVersion);
 		}
 
-		// cache "startup" module for longer
-		if (count($modules) === 1 && $modules[0] === 'startup') {
-			$useLongTTL = true;
-		}
-
 		// modify caching times
 		if (!$useLongTTL) {
 			WikiaLogger::instance()->info( 'rl.shortTTL', [

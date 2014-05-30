@@ -384,6 +384,9 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
+	if ( window.veTrack ) {
+		veTrack( { action: 've-edit-page-stop' } );
+	}
 	mw.hook( 've.activationComplete' ).fire();
 };
 
@@ -546,7 +549,7 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
 	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
 		editApi.captcha.key,
 		've-ui-mwSaveDialog-captcha',
-		{ theme: 'white'}
+		{ theme: 'white' }
 	);
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 
@@ -1044,7 +1047,10 @@ ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = null;
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbarButtons = function () {
-	this.toolbarCancelButton = new OO.ui.ButtonWidget( { 'label': ve.msg( 'visualeditor-toolbar-cancel' ) } );
+	this.toolbarCancelButton = new OO.ui.ButtonWidget( {
+		'label': ve.msg( 'visualeditor-toolbar-cancel' ),
+		'flags': ['secondary']
+	} );
 	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
 	this.toolbarSaveButton = new OO.ui.ButtonWidget( {
 		'label': ve.msg( 'wikia-visualeditor-toolbar-savedialog' ),

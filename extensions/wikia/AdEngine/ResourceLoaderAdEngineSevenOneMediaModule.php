@@ -3,17 +3,15 @@
 class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // half an hour -- cache scripts from ad.71i.de for this time
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
-	const CACHE_BUSTER = 5;   // increase this any time the local files change
+	const CACHE_BUSTER = 6;   // increase this any time the local files change
 
 	private function generateData() {
-		$random = mt_rand();
-
-		$global = Http::get('http://ad.71i.de/global_js/globalV6.js?' . $random);
+		$global = Http::get('http://ad.71i.de/global_js/globalV6.js');
 		if ($global === false) {
 			return false;
 		}
 
-		$site = Http::get('http://ad.71i.de/global_js/Sites/wikia.js?' . $random);
+		$site = Http::get('http://ad.71i.de/global_js/Sites/wikia.js');
 		if ($site === false) {
 			return false;
 		}

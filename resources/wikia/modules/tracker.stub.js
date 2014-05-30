@@ -208,5 +208,5 @@ function veTrack( data ) {
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-v3', finalData );
+	syslogReport( 6, 'veTrack-v5', finalData );
 }

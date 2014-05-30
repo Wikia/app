@@ -22,6 +22,9 @@ use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncTaskList {
+	/** @const int default wiki city to run tasks in (community) */
+	const DEFAULT_WIKI_ID = 177;
+
 	/** @var AMQPConnection connection to message broker */
 	protected $connection;
 
@@ -44,10 +47,14 @@ class AsyncTaskList {
 	protected $delay = 0;
 
 	/** @var int the wiki id to execute the task in */
-	protected $wikiId = 177;
+	protected $wikiId = 0;
 
 	/** @var bool whether or not to perform task deduplication */
 	protected $dupCheck = false;
+
+	public function __construct() {
+		$this->wikiId = self::DEFAULT_WIKI_ID;
+	}
 
 	/**
 	 * put this task into the priority queue
@@ -144,8 +151,9 @@ class AsyncTaskList {
 	/**
 	 * set this task to execute sometime in the future instead of ASAP
 	 *
-	 * @param int $time number of seconds to delay the task
+	 * @param string $time any format supported by strtotime()
 	 * @return $this
+	 * @link http://php.net/strtotime
 	 */
 	public function delay($time) {
 		$this->delay = $time;
@@ -154,7 +162,7 @@ class AsyncTaskList {
 	}
 
 	/**
-	 * skip task de-duplication
+	 * enable task de-duplication check
 	 *
 	 * @return $this
 	 */
@@ -173,7 +181,7 @@ class AsyncTaskList {
 	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
 	 */
 	public function queue(AMQPChannel $channel=null) {
-		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname;
+		global $wgDevelEnvironment, $wgUser, $IP, $wgPreviewHostname, $wgVerifyHostname, $wgWikiaDatacenter;
 
 		if ($this->createdBy == null) {
 			$this->createdBy($wgUser);
@@ -230,7 +238,7 @@ class AsyncTaskList {
 				'method' => $executionMethod,
 				'runner' => is_array($executionRunner) ? $executionRunner : [$executionRunner],
 			];
-		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname])) { // force preview/verify to run on preview/verify server
+		} elseif (in_array($hostname, [$wgPreviewHostname, $wgVerifyHostname]) || $wgWikiaDatacenter == 'sjc-internal') { // force internal/preview/verify to run on preview/verify server
 			$payload->kwargs->executor = [
 				'method' => 'remote_shell',
 				'runner' => [

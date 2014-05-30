@@ -30,7 +30,6 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaMobile/js/mediagallery.js',
 			'extensions/wikia/WikiaMobile/js/media.js',
 			'extensions/wikia/WikiaMobile/js/pager.js',
-			'extensions/wikia/WikiaMobile/js/ads.js',
 			'extensions/wikia/WikiaMobile/js/share.js',
 			'extensions/wikia/WikiaMobile/js/tables.js',
 			'extensions/wikia/WikiaMobile/js/throbber.js',
@@ -80,7 +79,7 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
+			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
 			//PhalanxII

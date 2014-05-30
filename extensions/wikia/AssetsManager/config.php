@@ -18,7 +18,6 @@ $config['oasis_shared_core_js'] = array(
 $config['oasis_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'#group_oasis_ads_js',
 		'#group_oasis_noads_extensions_js',
 		'#group_ui_repo_api_js',
 	)
@@ -62,6 +61,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -75,13 +75,12 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
-
 		// low prio
 		// not here! @see adengine2 low prio section someplace else
 	),
 );
 
-$config['oasis_ads_js'] = array(
+$config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
@@ -96,7 +95,32 @@ $config['oasis_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
 	),
+);
+
+$config['adengine2_wikiabar_boxad_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
+	),
+);
+
+$config['adengine2_ebay_scss'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'oasis' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.scss'
+	)
+);
+
+$config['adengine2_ebay_scss_wikiamobile'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => array( 'wikiamobile' ),
+	'assets' => array(
+		'//extensions/wikia/AdEngine/css/AdProviderEbay_centerWell.wikiamobile.scss'
+	)
 );
 
 $config['oasis_noads_extensions_js'] = array(
@@ -122,8 +146,6 @@ $config['oasis_noads_extensions_js'] = array(
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
-		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
@@ -586,29 +608,6 @@ $config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
-		//libraries
-		//I wan't to minimize how much data we have to transfer
-		//We currently don't have JS minimizer so I used minified version of it
-		'//resources/wikia/libraries/postscribe/postscribe.min.js',
-		'//resources/wikia/modules/scriptwriter.js',
-
-		//advertisement "core"
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartMobileHelper.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-
-		//modules
-		'//resources/wikia/modules/geo.js',
-		'//extensions/wikia/WikiaMobile/js/ads.js',
-		'//extensions/wikia/WikiaMobile/js/ad_slots.js',
-	)
-);
-
-$config['wikiamobile_ads_gpt_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/geo.js',
 		'//resources/wikia/modules/lazyqueue.js',
@@ -630,7 +629,7 @@ $config['wikiamobile_ads_gpt_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Run!
-		'//extensions/wikia/WikiaMobile/js/ad_slots2.js',
+		'//extensions/wikia/WikiaMobile/js/ads_run.js',
 	)
 );
 
