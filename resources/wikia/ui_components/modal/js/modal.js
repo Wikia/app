@@ -179,7 +179,7 @@ define( 'wikia.ui.modal', [
 
 		// trigger custom buttons events based on button 'data-event' attribute
 		this.$element.on( 'click', 'button, a.modalEvent', $.proxy( function( event ) {
-			var $target = $( event.target),
+			var $target = $( event.target ),
 				modalEventName = $target.data( 'event' );
 
 			if ($target.is('a')) {
@@ -280,8 +280,13 @@ define( 'wikia.ui.modal', [
 		// in future we may consider ignoring an event if the previous trigger call with the same
 		// eventName did not compete
 
-		( function iterate() {
+		( function iterate( param ) {
 			var result;
+
+			if ( typeof param !== 'undefined' ) {
+				args.push( param );
+			}
+
 			while( listeners && ( i < listeners.length ) ) {
 				result = listeners[ i++ ].apply( undefined, args );
 				if ( result && ( typeof result.then === 'function' ) ) {
