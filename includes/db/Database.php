@@ -929,7 +929,6 @@ abstract class DatabaseBase implements DatabaseType {
 		$ignore = $this->ignoreErrors( true );
 		++$this->mErrorCount;
 
-		// FIXME: should these log to WikiaLogger?
 		if ( $ignore || $tempIgnore ) {
 			wfDebug( "SQL ERROR (ignored): $error\n" );
 			$this->ignoreErrors( $ignore );
