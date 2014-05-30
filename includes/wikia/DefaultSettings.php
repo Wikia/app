@@ -47,6 +47,8 @@ require_once ( $IP."/extensions/Math/Math.php" );
  * can be eliminated.
  */
 require_once("$IP/lib/composer/autoload.php");
+// configure FluentSQL to use the extended WikiaSQL class
+FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
 /**
  * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
