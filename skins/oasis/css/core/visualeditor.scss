@@ -5,7 +5,7 @@
 @import "skins/oasis/css/mixins/box-sizing";
 @import "skins/oasis/css/mixins/flexbox";
 
-.ve-indicator {
+.ve-spinner {
 	@include align-items( center );
 	@include blackout();
 	@include flexbox();

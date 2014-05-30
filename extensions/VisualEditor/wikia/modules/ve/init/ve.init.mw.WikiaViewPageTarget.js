@@ -146,3 +146,26 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
 	return this.toolbar;
 };
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
+	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	if ( $spinner.is( ':visible' ) ) {
+		$spinner.fadeOut( 400 );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
+	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this );
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-load-error',
+			status: status
+		} );
+	}
+};
