@@ -15,7 +15,7 @@ $wgExtensionCredits[ 'other' ][] = array(
 	'version'     => 1
 );
 
-//classes
+// classes
 $wgAutoloadClasses[ 'Optimizely' ] =  $dir . 'Optimizely.class.php';
 $wgAutoloadClasses[ 'OptimizelyController' ] = $dir . '/OptimizelyController.class.php';
 

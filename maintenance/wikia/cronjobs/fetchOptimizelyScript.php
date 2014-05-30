@@ -11,16 +11,10 @@ require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
-$urlPrefix = 'http:';
 $url = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
-
-if ( stripos( $url, $urlPrefix ) !== 0 ) {
-	$url = $urlPrefix . $url;
-}
-
 $data = Http::get( $url );
 
-if ( empty( $data ) ) {
+if ( !empty( $data ) ) {
 	$storageModel = new MySQLKeyValueModel();
 	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
