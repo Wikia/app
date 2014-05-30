@@ -7,13 +7,13 @@ global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 $urlPrefix = 'http:';
 $url = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
 
-if ( substr( $url, 0, strlen( $urlPrefix ) ) !== $urlPrefix ) {
+if ( stripos( $url, $urlPrefix ) !== 0 ) {
 	$url = $urlPrefix . $url;
 }
 
 $data = Http::get( $url );
 
-if ( $data !== false ) {
+if ( empty( $data ) ) {
 	$storageModel = new MysqlKeyValueModel();
 	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
