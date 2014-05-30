@@ -1,12 +1,12 @@
 <?php
 
-
 class WikiaMaps {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
+	const ENTRY_POINT_PIN_TYPE = 'poi_category';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -215,7 +215,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * Sends a request to IntMap Service API to create a tiles' set with given parameters
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
@@ -225,6 +225,20 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] ),
 			$tileSetData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a pin type with given parameters
+	 *
+	 * @param Array $pinTypeData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function savePinType( $pinTypeData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
+			$pinTypeData
 		);
 	}
 
