@@ -9,7 +9,7 @@
 		"vendor-dir": "lib/composer"
 	},
 	"require": {
-		"Wikia/fluent-sql-php": "1.0.*",
+		"wikia/fluent-sql-php": "1.0.*",
 		"videlalvaro/php-amqplib": "2.2.*",
 		"monolog/monolog": "1.9.1"
 	}
