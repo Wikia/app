@@ -196,6 +196,15 @@ var WikiaBar = {
 	isWikiaBarHidden: function () {
 		return this.wikiaBarHidden;
 	},
+	showContainer: function() {
+		$('#WikiaBar').show();
+	},
+	hideContainer: function() {
+		$('#WikiaBar').hide('hidden');
+	},
+	isContainerHidden: function() {
+		$('#WikiaBar').is(":visible");
+	},
 	onShownClick: function (e) {
 		this.changeBarStateData();
 		e.preventDefault();

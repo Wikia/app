@@ -56,6 +56,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
 
 		// high prio
+		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
@@ -104,6 +105,7 @@ $config['adengine2_wikiabar_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
+		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.run.js',
 	),
 );
 
@@ -613,6 +615,7 @@ $config['wikiamobile_ads_js'] = array(
 		'//resources/wikia/modules/lazyqueue.js',
 
 		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
