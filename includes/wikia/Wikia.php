@@ -2323,11 +2323,7 @@ class Wikia {
 	 */
 	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
 		// purge only the first thumbnail
-		if ( count( $urls ) > 1 ) {
-			$urls = [
-				reset( $urls )
-			];
-		}
+		$urls = array_slice($urls, 0, 1);
 
 		return true;
 	}
