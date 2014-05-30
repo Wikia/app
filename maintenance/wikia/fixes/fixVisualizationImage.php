@@ -69,6 +69,15 @@ class FixVisualizationImage extends Maintenance {
 		$imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
 
 		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
+		if (!$title->exists()){
+			echo "image: " . $promoImage->getPathname() . " doesn't exist" . PHP_EOL;
+			return null;
+		}
+		$pageId = $title->getArticleId();
+		if (empty($pageId)){
+			echo "cannot get page id: " . $promoImage->getPathname() . PHP_EOL;
+			return null;
+		}
 
 		$imageData = array();
 		$imageData['city_id'] = $promoImage->getCityId();
@@ -106,7 +115,7 @@ class FixVisualizationImage extends Maintenance {
 			}
 
 		} else {
-			echo "srv image title doesnt exist " . $srcImageTitle->getText() . PHP_EOL;
+			echo "src image title doesn't exist " . $srcImageTitle->getText() . PHP_EOL;
 		}
 		return $success;
 	}
@@ -119,17 +128,22 @@ class FixVisualizationImage extends Maintenance {
 
 	public static function srcFileExists(PromoImage $targetPromoImage) {
 		$promoImage = (new PromoImage($targetPromoImage->getType()));
-		$f = GlobalFile::newFromText($promoImage->getPathname(), $targetPromoImage->getCityId());
+		$title = GlobalTitle::newFromText($targetPromoImage->getPathname(), NS_FILE, $targetPromoImage->cityId);
 
-		return $f->exists();
+//		$f = GlobalFile::newFromText($promoImage->getPathname(), $targetPromoImage->getCityId());
+
+		return $title->exists();
 	}
 
-	public static function saveCorrectImageRowForCurrentWiki($dbr) {
+	public static function saveCorrectImageRowForCurrentWiki(PromoImage $promoImage, $dbr) {
 		$app = F::app();
 		$cityId = $app->wg->cityId;
 
-		$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($cityId);
 		$values = self::buildSyntheticCVImagesRow($promoImage, $app->wg->ContLang->getCode());
+		if (empty($values)){
+			echo "building DB values for image failed." . PHP_EOL;
+			return false;
+		}
 
 		$sql = (new WikiaSQL())->INSERT(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME);
 
@@ -139,6 +153,9 @@ class FixVisualizationImage extends Maintenance {
 		$res = $sql->run($dbr);
 		if ($res){
 			$app->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $app->wg->ContLang->getCode()));
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -150,7 +167,7 @@ class FixVisualizationImage extends Maintenance {
 
 //		echo var_export(self::fetchAfflictedCityIds('en'), true);
 
-		$oldMainImageName = (new PromoImage($promoImage->getCityId()))->getPathname();
+		$oldMainImageName = (new PromoImage($promoImage->getType()))->getPathname();
 		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
 		$UPLOAD_VERIFICATION_KEY = "UploadVerification";
 
@@ -166,14 +183,14 @@ class FixVisualizationImage extends Maintenance {
 
 		if (self::srcFileExists($promoImage) && !self::targetFileExists($promoImage)){
 			if (self::uploadCorrectMainImageOnCurrentWiki($promoImage, $oldFileTitle)){
-				self::saveCorrectImageRowForCurrentWiki($dbr);
+				self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
 			}
 		} else {
 			if (!self::checkIfImageIsInDB($cityId)){
 				if (self::targetFileExists($promoImage)){
-					self::saveCorrectImageRowForCurrentWiki($dbr);
+					self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
 				} else {
-					die("target image not found" . PHP_EOL);
+					die("neither target nor source image found" . PHP_EOL);
 				}
 			} else {
 				die("image seems to be correctly set in db, exiting" . PHP_EOL);
