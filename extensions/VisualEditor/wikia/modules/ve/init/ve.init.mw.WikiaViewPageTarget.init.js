@@ -62,7 +62,6 @@
 		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
 			$message = $spinner.find( 'p.message' );
 
-console.log($spinner);
 		$message.hide();
 		$spinner.fadeIn( 400 );
 
