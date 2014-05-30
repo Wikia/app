@@ -11,6 +11,7 @@ class VideosModule extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 
 	const LIMIT_VIDEOS = 20;
+	const LIMIT_CATEGORY_VIDEOS = 40;
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
@@ -302,10 +303,9 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Get videos from the Video wiki that are in categories listed in wgVideosModuleCategories
-	 * @param integer $numRequired
 	 * @return array
 	 */
-	public function getVideosByCategory( $numRequired ) {
+	public function getVideosByCategory() {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->wg->VideosModuleCategories ) ) {
@@ -319,13 +319,13 @@ class VideosModule extends WikiaModel {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
 
-		$limit = self::LIMIT_VIDEOS;
+		$limit = self::LIMIT_CATEGORY_VIDEOS;
 		$sort = 'recent';
 		$videos = $this->getVideoListFromVideoWiki( $categories, $limit, $sort, self::SOURCE_WIKI_CATEGORIES );
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->trimVideoList( $videos, $numRequired );
+		return $this->trimVideoList( $videos, self::LIMIT_CATEGORY_VIDEOS );
 	}
 
 	/**
