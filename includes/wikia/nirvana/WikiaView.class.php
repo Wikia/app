@@ -33,10 +33,18 @@ class WikiaView {
 	 * @param string $format
 	 */
 	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
+		$controllerName = F::app()->getControllerClassName( $controllerName );
+
 		$response = new WikiaResponse( $format );
 		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
+
+		/* @var $controllerName WikiaController */
+		$controllerReflection = new ReflectionClass( $controllerName );
+		if ( $controllerReflection->hasConstant( 'DEFAULT_TEMPLATE_ENGINE' ) ) {
+			$response->setTemplateEngine( $controllerName::DEFAULT_TEMPLATE_ENGINE );
+		}
 
 		return $response->getView();
 	}
