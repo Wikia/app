@@ -3,11 +3,12 @@ define(
 	[
 		'jquery',
 		'wikia.querystring',
+		'wikia.window',
 		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview'
 	],
-	function($, qs, utils, tileSet, preview) {
+	function($, qs, w, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -72,6 +73,10 @@ define(
 				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1]);
 				preview.init(modal, templates[2]);
+
+				modal.bind( 'beforeClose', function() {
+					w.UserLogin.refreshIfAfterForceLogin();
+				});
 
 				modal.trigger('chooseTileSet');
 				modal.show();
