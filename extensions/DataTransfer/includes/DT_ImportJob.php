@@ -32,6 +32,7 @@ class DTImportJob extends Job {
 		}
 		$for_pages_that_exist = $this->params['for_pages_that_exist'];
 		if ( $for_pages_that_exist == 'skip' && $this->title->exists() ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 

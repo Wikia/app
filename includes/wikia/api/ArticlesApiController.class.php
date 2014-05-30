@@ -99,6 +99,7 @@ class ArticlesApiController extends WikiaApiController {
 					});
 				}
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		}
@@ -276,6 +277,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+				wfProfileOut( __METHOD__ );
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
@@ -292,6 +294,7 @@ class ArticlesApiController extends WikiaApiController {
 			$wikisCount = count( $wikis );
 
 			if ( $wikisCount < 1 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
@@ -342,6 +345,7 @@ class ArticlesApiController extends WikiaApiController {
 			wfProfileOut( __METHOD__ );
 
 			if ( $found == 0 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 

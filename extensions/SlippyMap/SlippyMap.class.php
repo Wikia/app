@@ -126,6 +126,7 @@ class SlippyMap {
 			wfProfileOut( __METHOD__ );
 			return true;
 		} else {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 	}
@@ -155,6 +156,7 @@ class SlippyMap {
 							$val,
 							$wgLang->listToText( array_map( array( &$this, 'addHtmlTT' ), $modes ) )
 						);
+						wfProfileOut( __METHOD__ );
 						return null;
 					} else {
 						$this->mode = $val;

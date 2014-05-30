@@ -84,7 +84,8 @@ class MoodBarHTMLEmailNotification {
 		wfProfileIn( __METHOD__ );
 
 		if ( $title->getNamespace() != NS_USER_TALK ) {
-			return;	
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		$this->title = $title;
