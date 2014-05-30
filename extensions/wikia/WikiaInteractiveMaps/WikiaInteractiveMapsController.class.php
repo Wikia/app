@@ -415,6 +415,10 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			throw new InvalidParameterApiException( 'mapId' );
 		}
 
+		if( empty( $pinTypesNames ) ) {
+			throw new InvalidParameterApiException( 'pinTypeNames' );
+		}
+
 		if( !$this->haveNamesForAllPinTypes() ) {
 			throw new InvalidParameterApiException( 'pin-type-name' );
 		}
