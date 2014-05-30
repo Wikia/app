@@ -15,7 +15,7 @@ class Bucky {
 				$app = F::app();
 				$wgDevelEnvironment = $app->wg->DevelEnvironment;
 				if ( $wgDevelEnvironment ) {
-					$environment = "devbox.{$wgDevelEnvironment}";
+					$environment = "devbox";
 				} else {
 					$environment = 'production';
 				}
@@ -35,6 +35,7 @@ class Bucky {
 			$config = json_encode(array(
 				'host' => $url,
 				'sample' => $sample,
+				'aggregationInterval' => 1000,
 			));
 			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){Bucky.sendPagePerformance('{$environment}');});});</script>";
 			$bottomScripts .= $script;
