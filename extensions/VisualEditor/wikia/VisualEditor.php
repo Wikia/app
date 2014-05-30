@@ -173,4 +173,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalV
 /* Configuration */
 
 // Disable VE for blog namespaces
-$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+if ( defined( 'NS_BLOG_ARTICLE' ) && defined( 'NS_BLOG_ARTICLE_TALK' ) ) {
+	$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+}
