@@ -2,6 +2,9 @@
 
 class Bucky {
 
+	const DEFAULT_SAMPLING = 1; // percentage
+	const BASE_URL = '//slot1.images.wikia.nocookie.net/__rum';
+
 	static protected $environment;
 
 	static public function getEnvironment() {
@@ -26,8 +29,8 @@ class Bucky {
 		$environment = self::getEnvironment();
 		if ( $environment ) {
 			$wgBuckySampling = F::app()->wg->BuckySampling;
-			$url = '//slot1.images.wikia.nocookie.net/__rum'; // "/v1/send" is automatically appended
-			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : 100) / 100;
+			$url = self::BASE_URL; // "/v1/send" is automatically appended
+			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
 			$config = json_encode(array(
 				'host' => $url,
 				'sample' => $sample,
