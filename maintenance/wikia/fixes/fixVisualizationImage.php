@@ -24,15 +24,15 @@ class FixVisualizationImage extends Maintenance {
 		return $city_ids;
 	}
 
-	public static function checkIfImageIsInDB($cityId){
+	public static function checkIfImageIsInDB(PromoImage $promoImage){
 		$app = F::app();
 
 		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
 		$foundRow = (new WikiaSQL())
 			->SELECT("city_visualization_images.city_id")
 			->FROM(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME)
-			->WHERE("city_id")->EQUAL_TO($cityId)->AND_("image_index")->EQUAL_TO(PromoImage::MAIN)
-
+			->WHERE("city_id")->EQUAL_TO($promoImage->getCityId())->AND_("image_index")->EQUAL_TO(PromoImage::MAIN)
+			->AND_('image_name')->EQUAL_TO($promoImage->getPathname())
 			->run($dbr, function($result){
 				while ($row = $result->fetchObject( $result )){
 					return $row;
@@ -186,7 +186,7 @@ class FixVisualizationImage extends Maintenance {
 				self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
 			}
 		} else {
-			if (!self::checkIfImageIsInDB($cityId)){
+			if (!self::checkIfImageIsInDB($promoImage)){
 				if (self::targetFileExists($promoImage)){
 					self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
 				} else {
