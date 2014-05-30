@@ -17,8 +17,9 @@ $result = $runner->format();
 
 // for long-running tasks that end up timing out, we need to notify flower that
 // the task actually did complete successfully
-GuzzleHttp\post("{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
-	'body' => json_encode([
+$x = Http::post("{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
+	'noProxy' => true,
+	'postData' => json_encode([
 		'kwargs' => [
 			'completed' => time(),
 			'state' => $result->status,
