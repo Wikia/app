@@ -387,6 +387,12 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 	if ( window.veTrack ) {
 		veTrack( { action: 've-edit-page-stop' } );
 	}
+
+	// optimizely - begin
+	window['optimizely'] = window['optimizely'] || [];
+	window.optimizely.push(["activate", 1129320454]);
+	// optimizely - end
+
 	mw.hook( 've.activationComplete' ).fire();
 };
 
