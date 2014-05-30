@@ -104,7 +104,7 @@ class CommunityMessages {
 		global $wgMemc;
 		$title = $article->getTitle();
 
-		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner') {
+		if ($title->getNamespace() == NS_MEDIAWIKI && strtolower($title->getText()) == 'community-corner' && !$minoredit) {
 			$revision = Revision::newFromTitle($title);
 			if ($revision) {
 				$wgMemc->set(wfMemcKey('CommunityMessagesTimestamp'), wfTimestamp(TS_UNIX, $revision->getTimestamp()), 86400 /*24h*/);
