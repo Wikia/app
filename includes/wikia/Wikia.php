@@ -2311,18 +2311,20 @@ class Wikia {
 	}
 
 	/**
-	 * Don't send purge requests for each thumbnail.
-	 * Single purge from "LocalFile:purgeCache" does the trick.
+	 * No neeed to purge all thumbnails
 	 *
 	 * @author macbre
 	 * @see PLATFORM-161
+	 * @see PLATFORM-252
 	 *
 	 * @param LocalFile $file
 	 * @param array $urls thumbs to purge
 	 * @return bool
 	 */
 	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		$urls = [];
+		// purge only the first thumbnail
+		$urls = array_slice($urls, 0, 1);
+
 		return true;
 	}
 }
