@@ -120,7 +120,7 @@ require([
 		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
 	}
 
-	if (!window.wgAdDriverDisableLateQueue) {
+	if (window.wgAdEngineDisableLateQueue) {
 		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
 	}
 });
