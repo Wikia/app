@@ -128,7 +128,7 @@ class FixVisualizationImage extends Maintenance {
 
 	public static function srcFileExists(PromoImage $targetPromoImage) {
 		$promoImage = (new PromoImage($targetPromoImage->getType()));
-		$title = GlobalTitle::newFromText($targetPromoImage->getPathname(), NS_FILE, $targetPromoImage->cityId);
+		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $targetPromoImage->cityId);
 
 //		$f = GlobalFile::newFromText($promoImage->getPathname(), $targetPromoImage->getCityId());
 
