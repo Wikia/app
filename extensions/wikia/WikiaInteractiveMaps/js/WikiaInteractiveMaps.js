@@ -27,17 +27,18 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	});
 
 	body.addEventListener('click', function (event) {
-		if (event.target.id === 'createMap') {
-			if (w.wgUserName === null) {
-				w.UserLoginModal.show({
-					origin: 'wikia-int-map-create-map',
-					callback: function () {
-						loadModal(convertSource(source), cacheKey);
-					}
-				});
-			} else {
-				loadModal(convertSource(source), cacheKey);
-			}
+		var targetId = event.target.id,
+			isLoggedInUser = (w.wgUserName === null);
+
+		if ( !isLoggedInUser && targetId === 'createMap') {
+			w.UserLoginModal.show({
+				origin: 'wikia-int-map-create-map',
+				callback: function () {
+					loadModal(convertSource(source), cacheKey);
+				}
+			});
+		} else if ( isLoggedInUser && targetId === 'createMap') {
+			loadModal(convertSource(source), cacheKey);
 		}
 	});
 
