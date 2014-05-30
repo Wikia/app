@@ -35,8 +35,8 @@ define('wikia.intMap.createMap.pinTypes',
 				],
 				savePinTypes: [
 					serializeForm,
-					validate
-					//savePinTypes
+					validate,
+					savePinTypes
 				]
 			},
 			buttons = {
@@ -98,28 +98,70 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		function serializeForm() {
-			var o = {},
-				a = $form.serializeArray(),
+			var serializedForm = {},
+				formArray = $form.serializeArray(),
 				dfd = new $.Deferred();
 
-			$.each(a, function() {
-				if (o[this.name] !== undefined) {
-					if (!o[this.name].push) {
-						o[this.name] = [o[this.name]];
-					}
-					o[this.name].push(this.value || '');
-				} else {
-					o[this.name] = this.value || '';
-				}
+			$.each(formArray, function (i, element) {
+				var name = element.name,
+					value = element.value;
+
+				serializedForm[name] = !/\[\]$/.test(name) ?
+					value :
+					$.isArray(serializedForm[name]) ?
+						serializedForm[name].concat(value) :
+						[value];
 			});
 
-			dfd.resolve(o);
-
+			dfd.resolve(serializedForm);
 			return dfd.promise();
 		}
 
-		function validate(data) {
-			console.log(data);
+		function validate() {
+			var serializedForm = arguments[1],
+				valid = true,
+				dfd = new $.Deferred();
+
+			if (serializedForm['pinTypeName[]']) {
+				serializedForm['pinTypeName[]'].forEach(function (fieldValue) {
+					if (!(fieldValue.length > 0)) {
+						valid = false;
+					}
+				});
+			}
+
+			dfd.resolve({
+				valid: valid,
+				serializedForm: serializedForm
+			});
+			return dfd.promise();
+		}
+
+		function savePinTypes() {
+			var data = arguments[2];
+
+			if (data.valid) {
+				$.nirvana.sendRequest({
+					controller: 'WikiaInteractiveMaps',
+					method: 'createPinTypes',
+					format: 'json',
+					data: data.serializedForm,
+					callback: function(response) {
+						var data = response.results;
+
+						if (data && data.success) {
+							modal.trigger('pinTypesCreated', data);
+						} else {
+							modal.trigger('error', data.error);
+						}
+					},
+					onErrorCallback: function(response) {
+						modal.trigger('error', response.results.error);
+					}
+				});
+			} else {
+				console.log('form not valid');
+			}
 		}
 
 		/**
@@ -127,7 +169,6 @@ define('wikia.intMap.createMap.pinTypes',
 		 */
 		function addPinType() {
 			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
-
 		}
 
 		/**
@@ -138,10 +179,6 @@ define('wikia.intMap.createMap.pinTypes',
 			$(event.target)
 				.parent()
 				.remove();
-		}
-
-		function savePinTypes(data) {
-
 		}
 
 		return {
