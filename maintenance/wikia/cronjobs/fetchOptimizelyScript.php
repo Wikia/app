@@ -5,25 +5,19 @@ require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
 $urlPrefix = 'http:';
-$curlUrl = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
+$url = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
 
-if ( substr( $curlUrl, 0, strlen( $urlPrefix ) ) !== $urlPrefix ) {
-	$curlUrl .= $urlPrefix;
+if ( substr( $url, 0, strlen( $urlPrefix ) ) !== $urlPrefix ) {
+	$url = $urlPrefix . $url;
 }
 
-$curlHandle = curl_init( $curlUrl );
+$data = Http::get( $url );
 
-// don't print the output, assign it to a variable instead
-curl_setopt( $curlHandle, CURLOPT_RETURNTRANSFER, true );
-$curlData = curl_exec( $curlHandle );
-
-if ( $curlData !== false ) {
+if ( $data !== false ) {
 	$storageModel = new MysqlKeyValueModel();
 	$storedData = $storageModel->get( OptimizelyController::OPTIMIZELY_SCRIPT_KEY );
 
-	if ( empty( $storedData ) || $storedData !== $curlData ) {
-		$storageModel->set( OptimizelyController::OPTIMIZELY_SCRIPT_KEY, $curlData );
+	if ( empty( $storedData ) || $storedData !== $data ) {
+		$storageModel->set( OptimizelyController::OPTIMIZELY_SCRIPT_KEY, $data );
 	}
 }
-
-curl_close( $curlHandle );
