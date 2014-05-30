@@ -1399,3 +1399,16 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
+
+/*
+ * @name wgEnableBuckyExt
+ * Enables real user performance reporting via Bucky
+ */
+$wgEnableBuckyExt = false;
+
+/*
+ * @name wgBuckySampling
+ * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
+ * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
+ */
+$wgBuckySampling = 1;
