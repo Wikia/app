@@ -4,7 +4,6 @@
 	},
 	"require": {
 		"videlalvaro/php-amqplib": "2.2.*",
-		"monolog/monolog": "1.9.1",
-		"guzzlehttp/guzzle": "~4"
+		"monolog/monolog": "1.9.1"
 	}
 }
