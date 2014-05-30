@@ -482,6 +482,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$isValid = true;
 
 		foreach( $pinTypesNames as $name ) {
+			$name = trim( $name );
 			if( empty( $name ) ) {
 				$isValid = false;
 				break;
