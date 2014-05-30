@@ -56,7 +56,25 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 					''
 				],
 				false
-			]
+			],
+			[
+				'Whitespace as a pin type name for one pin - invalid',
+				[
+					'                                  ',
+					'Pin Type #2',
+					'Pin Type #3'
+				],
+				false
+			],
+			[
+				'Tabulation as a pin type name for one pin - invalid',
+				[
+					'		',
+					'Pin Type #2',
+					'Pin Type #3'
+				],
+				false
+			],
 		];
 	}
 
