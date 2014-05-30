@@ -28,7 +28,16 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 	body.addEventListener('click', function(event) {
 		if (event.target.id === 'createMap') {
-			loadModal(convertSource(source), cacheKey);
+			if (w.wgUserName === null) {
+				w.UserLoginModal.show({
+					origin: 'wikia-int-map-create-map',
+					callback: function() {
+						loadModal(convertSource(source), cacheKey);
+					}
+				});
+			} else {
+				loadModal(convertSource(source), cacheKey);
+			}
 		}
 	});
 
