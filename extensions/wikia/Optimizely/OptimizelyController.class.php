@@ -2,7 +2,7 @@
 
 class OptimizelyController extends WikiaController {
 
-	const OPTIMIZELY_SCRIPT_KEY = 'optimizelyScriptV.1.0';
+	const OPTIMIZELY_SCRIPT_KEY = 'optimizely_script_v.1.0';
 	const CACHE_DURATION = 300; /* 5 minutes */
 
 	public function getCode() {
@@ -12,8 +12,8 @@ class OptimizelyController extends WikiaController {
 		$storageModel = new MySQLKeyValueModel();
 		try {
 			$this->code = $storageModel->get( self::OPTIMIZELY_SCRIPT_KEY );
-		} catch (Exception $e) {
-			Wikia::log( __METHOD__, false, 'Cannot read optimizely code from storage' );
+		} catch ( Exception $e ) {
+			Wikia::log( __METHOD__, false, 'Cannot read Optimizely code from storage.' );
 			$this->code = '';
 		}
 
