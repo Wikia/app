@@ -122,46 +122,46 @@ define('wikia.intMap.createMap.pinTypes',
 				valid = true,
 				dfd = new $.Deferred();
 
-			if (serializedForm['pinTypeName[]']) {
-				serializedForm['pinTypeName[]'].forEach(function (fieldValue) {
+			if (serializedForm['pinTypeNames[]']) {
+				serializedForm['pinTypeNames[]'].forEach(function (fieldValue) {
 					if (!(fieldValue.length > 0)) {
 						valid = false;
 					}
 				});
 			}
 
-			dfd.resolve({
-				valid: valid,
-				serializedForm: serializedForm
-			});
+			if (valid) {
+				dfd.resolve(serializedForm);
+			} else {
+				//TODO
+				modal.trigger('error', 'Form is not valid');
+				dfd.reject();
+			}
+
 			return dfd.promise();
 		}
 
 		function savePinTypes() {
-			var data = arguments[2];
+			var serializedForm = arguments[2];
 
-			if (data.valid) {
-				$.nirvana.sendRequest({
-					controller: 'WikiaInteractiveMaps',
-					method: 'createPinTypes',
-					format: 'json',
-					data: data.serializedForm,
-					callback: function(response) {
-						var data = response.results;
+			$.nirvana.sendRequest({
+				controller: 'WikiaInteractiveMaps',
+				method: 'createPinTypes',
+				format: 'json',
+				data: serializedForm,
+				callback: function(response) {
+					var data = response.results;
 
-						if (data && data.success) {
-							modal.trigger('pinTypesCreated', data);
-						} else {
-							modal.trigger('error', data.error);
-						}
-					},
-					onErrorCallback: function(response) {
-						modal.trigger('error', response.results.error);
+					if (data && data.success) {
+						modal.trigger('pinTypesCreated', data);
+					} else {
+						modal.trigger('error', data.exception.details);
 					}
-				});
-			} else {
-				console.log('form not valid');
-			}
+				},
+				onErrorCallback: function(response) {
+					modal.trigger('error', JSON.parse(response.responseText).exception.details);
+				}
+			});
 		}
 
 		/**
