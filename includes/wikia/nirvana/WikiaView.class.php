@@ -36,15 +36,12 @@ class WikiaView {
 		$controllerClassName = F::app()->getControllerClassName( $controllerName );
 
 		$response = new WikiaResponse( $format );
-		$response->setControllerName( $controllerClassName );
+		$response->setControllerName( $controllerName );
 		$response->setMethodName( $methodName );
 		$response->setData( $data );
 
 		/* @var $controllerClassName WikiaController */
-		$controllerReflection = new ReflectionClass( $controllerClassName );
-		if ( $controllerReflection->hasConstant( 'DEFAULT_TEMPLATE_ENGINE' ) ) {
-			$response->setTemplateEngine( $controllerClassName::DEFAULT_TEMPLATE_ENGINE );
-		}
+		$response->setTemplateEngine( $controllerClassName::DEFAULT_TEMPLATE_ENGINE );
 
 		return $response->getView();
 	}
