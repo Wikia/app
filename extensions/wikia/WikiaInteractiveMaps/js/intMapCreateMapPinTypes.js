@@ -1,10 +1,11 @@
 define('wikia.intMap.createMap.pinTypes',
 	[
 		'jquery',
+		'wikia.querystring',
 		'wikia.window',
 		'wikia.intMap.createMap.utils'
 	],
-	function($, w, utils) {
+	function($, qs, w, utils) {
 		'use strict';
 
 		// reference to modal component
@@ -24,19 +25,22 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 
 			events = {
+				mapCreated: [
+					showPinTypes
+				],
 				addPinType: [
 					addPinType
 				],
 				deletePinType: [
 					deletePinType
 				],
-				mapCreated: [
-					showPinTypes
-				],
 				savePinTypes: [
 					serializeForm,
 					validate,
 					savePinTypes
+				],
+				pinTypesCreated: [
+					pinTypesCreated
 				]
 			},
 			buttons = {
@@ -45,6 +49,12 @@ define('wikia.intMap.createMap.pinTypes',
 			mapUrl,
 			$form;
 
+		/**
+		 * @desc initializes pin types step
+		 * @param {object} _modal
+		 * @param {object} _pinTypesTemplate
+		 * @param {object} _pinTypeTemplate
+		 */
 		function init(_modal, _pinTypesTemplate, _pinTypeTemplate) {
 			modal = _modal;
 			pinTypesTemplate = _pinTypesTemplate;
@@ -53,6 +63,10 @@ define('wikia.intMap.createMap.pinTypes',
 			utils.bindEvents(modal, events);
 		}
 
+		/**
+		 * @desc shows pin types form
+		 * @param {object} data
+		 */
 		function showPinTypes(data) {
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
@@ -89,6 +103,10 @@ define('wikia.intMap.createMap.pinTypes',
 			return extendedPinTypes;
 		}
 
+		/**
+		 * @desc sets up template data
+		 * @param {object} templateData - template data
+		 */
 		function setUpTemplateData(templateData) {
 			// if no pin types display blank pin type input
 			var pinTypes = templateData.pinTypes ? templateData.pinTypes : [{}];
@@ -97,6 +115,28 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypesTemplateData.pinTypes = extendPinTypesData(pinTypes);
 		}
 
+		/**
+		 * @desc adds blank pin type input field
+		 */
+		function addPinType() {
+			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
+		}
+
+		/**
+		 * @desc deletes pin type
+		 * @param {Event} event
+		 */
+		function deletePinType(event) {
+			$(event.target)
+				.parent()
+				.remove();
+		}
+
+		/**
+		 * TODO it's universal and should be extracted
+		 * @desc serializes form
+		 * @returns {object} - promise
+		 */
 		function serializeForm() {
 			var serializedForm = {},
 				formArray = $form.serializeArray(),
@@ -117,6 +157,10 @@ define('wikia.intMap.createMap.pinTypes',
 			return dfd.promise();
 		}
 
+		/**
+		 * @desc validates pin types
+		 * @returns {object} - promise
+		 */
 		function validate() {
 			var serializedForm = arguments[1],
 				valid = true,
@@ -133,14 +177,16 @@ define('wikia.intMap.createMap.pinTypes',
 			if (valid) {
 				dfd.resolve(serializedForm);
 			} else {
-				//TODO
-				modal.trigger('error', 'Form is not valid');
+				modal.trigger('error', $.msg('wikia-interactive-maps-create-map-pin-type-form-error'));
 				dfd.reject();
 			}
 
 			return dfd.promise();
 		}
 
+		/**
+		 * @desc sends pin types data to PHP controller
+		 */
 		function savePinTypes() {
 			var serializedForm = arguments[2];
 
@@ -165,20 +211,10 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
-		 * @desc adds blank pin type input field
+		 * @desc redirects to the map page
 		 */
-		function addPinType() {
-			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
-		}
-
-		/**
-		 * @desc deletes pin type
-		 * @param {Event} event
-		 */
-		function deletePinType(event) {
-			$(event.target)
-				.parent()
-				.remove();
+		function pinTypesCreated() {
+			qs(mapUrl).goTo();
 		}
 
 		return {
