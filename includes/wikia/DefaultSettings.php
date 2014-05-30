@@ -47,13 +47,7 @@ require_once ( $IP."/extensions/Math/Math.php" );
  * can be eliminated.
  */
 require_once("$IP/lib/composer/autoload.php");
-
-/**
- * wikia library incudes
- */
-
-// FIXME: move fluest-sql-php to composer via packagist
-require_once ( $IP."/lib/Wikia/fluent-sql-php/src/init.php");
+// configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
 /**

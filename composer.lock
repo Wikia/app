@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fcf0e959c8e5f8a5e4c76fcbb727d54f",
+    "hash": "2cbad1e78e445f538d8e399d08446a46",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -155,6 +155,42 @@
                 "rabbitmq"
             ],
             "time": "2013-12-22 12:49:53"
+        },
+        {
+            "name": "wikia/fluent-sql-php",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/fluent-sql-php",
+                "reference": "bf758e5d759d93080e09c295eb701182d20c7309"
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FluentSql\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Owen Davis",
+                    "email": "owend@obscure.org"
+                },
+                {
+                    "name": "Nelson Monterroso",
+                    "email": "nelson@wikia-inc.com"
+                }
+            ],
+            "description": "Fluent SQL wrapper for PHP",
+            "time": "2014-05-29 23:03:53"
         }
     ],
     "packages-dev": [
