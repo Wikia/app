@@ -15,6 +15,7 @@ AIC2.enabled = window.top === window.self
 	&& window.wgShowAds
 	&& !window.wgEnableRHonDesktop
 	&& !window.wgIsMainpage
+	&& !window.wikiaPageIsCorporate
 	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
 
 AIC2.init = function() {
