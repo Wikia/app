@@ -1,6 +1,6 @@
 <?php
 
-class PiratesGlobalHeaderController extends WikiaController {
+class GlobalNavigationController extends WikiaController {
 	private $menuNodes;
 
 	public function init() {

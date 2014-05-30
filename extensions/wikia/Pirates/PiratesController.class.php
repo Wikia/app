@@ -393,7 +393,7 @@ class PiratesController extends WikiaController {
 	}
 
 	public function getGlobalHeader() {
-		return $this->app->renderView('PiratesGlobalHeader', 'Index');
+		return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
 	public function getNotifications() {

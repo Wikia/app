@@ -1,0 +1,332 @@
+@import "skins/oasis/css/core/color";
+@import "layout";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+
+.WikiaPage {
+	border: 1px solid $color-page-border;
+	margin: 0 auto;
+	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
+	&.WikiaGrid {
+		.WikiaSearchHeader {
+			width: 330px;
+		}
+		.WikiaPageHeader {
+			margin-left: 0;
+			margin-right: 0;
+		}
+		.WikiaArticle {
+			padding: 0;
+		}
+	}
+	/* end temp grid transition code */
+	position: relative;
+	@media screen and (max-width: $width-tablet) {
+		width: 728px;
+	}
+	@media screen and (min-width: $width-tablet) and (max-width: $width-desktop) {
+		width: 980px;
+	}
+	@media screen and (min-width: $width-desktop) {
+		width: 1100px;
+	}
+	z-index: 1;
+	>h1:first-child {
+		display: none;
+	}
+	.WikiaPageBackground {
+		background: $color-page;
+		height: 100%;
+		left: 0;
+		opacity: $page-opacity;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	.WikiaPageContentWrapper {
+		@include clearfix;
+		position: relative;
+	}
+}
+
+// Change z-indexes for proper stacking with VisualEditor focus mode
+.ve .WikiaPage {
+	z-index: auto;
+}
+
+.WikiaMainContent {
+	float: left;
+	position: relative;
+	width: $width-outside - 320px;
+	z-index: 1;
+	// one column layout (no right rail)
+	.oasis-one-column & {
+		width: $width-outside;
+		&.grid-6 {
+			width: $width-outside - 20px;
+		}
+	}
+
+	a.new,
+	a.new:visited {
+		color: #CC2200;
+	}
+}
+
+.WikiaArticleCategories {
+	@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
+
+	border: 1px solid $color-page-border;
+	clear: both;
+	line-height: 1.8em;
+	padding: 10px;
+	margin: 10px;
+
+	h1 {
+		display: none;
+	}
+}
+
+.WikiaArticleFooter {
+	padding: 10px;
+}
+
+#WikiaArticleBottomAd {
+	@include clearfix;
+	margin: 50px 10px 35px;
+}
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.WikiaPage.WikiaGrid #WikiaArticleBottomAd {
+    clear: both;
+    margin: 0;
+}
+/* end temp transistion code */
+
+.WikiaRail {
+	float: right;
+	padding: 0 $width-gutter;
+	width: $width-rail;
+	&.grid-2 {
+		padding: 0;
+	}
+	.loading {
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		height: 48px;
+		margin: 10px;
+		padding-top: 10px;
+	}
+
+	.module {
+		@include clearfix;
+		background: $color-page;
+		border: 1px solid $color-page-border;
+		@if lightness($color-page) < 50 {
+			background: $color-module-background;
+			border: 1px solid $color-page-border;
+		}
+		margin-bottom: 10px;
+		padding: 20px 15px 15px;
+		position: relative;
+		word-wrap: break-word;
+
+		header {
+			left: -3px;
+			font-size: 15px;
+			padding: 8px;
+			position: absolute;
+			width: $width-rail - 12px;
+		}
+		details {
+			em {
+				float: left;
+			}
+		}
+		.wikia-button {
+			float: right;
+		}
+		.more {
+			float: right;
+			font-size: 10px;
+			font-weight: bold;
+		}
+		p {
+			line-height: 21px;
+			margin: 0;
+			padding: 0;
+		}
+
+		.wikia-button {
+			font-weight: normal;
+		}
+
+		h1 {
+			font: {
+				size: 18px;
+				weight: bold;
+			}
+			margin: {
+				top: 0px;
+				bottom: 25px;
+			}
+			padding-left: 2px;
+		}
+
+		h2 {
+			@extend h1;
+			clear: both;
+			padding-top: 15px;
+
+			margin: {
+				top: 0;
+				bottom: 10px;
+			}
+		}
+
+		b {
+			font-weight: bold;
+		}
+		i {
+			font-style: italic;
+		}
+
+		.line-top {
+			border-top: solid 1px $color-page-border;
+		}
+
+		.chevron {
+			border-top-color: $color-text;
+		}
+	}
+}
+
+.tally {
+	@include clearfix;
+	font-size: 10px;
+	line-height: 1.3em;
+	padding-left: 2px;
+	text-transform: uppercase;
+	em {
+		float: left;
+		font-size: 30px;
+		font-style: normal;
+		letter-spacing: -1px;
+		line-height: 26px;
+		margin-right: 2px;
+	}
+	span {
+		float: left;
+		&.fixedwidth {
+			width: 61px;
+		}
+	}
+}
+
+.WikiaPagesOnWikiModule {
+	padding-top: 9px;
+	h1 {
+		display: none;
+	}
+	.sprite.new {
+		margin: 0 5px;
+		position: relative;
+		top: 1px;
+	}
+	a {
+		padding-right: 5px;
+	}
+	.wikia-button {
+		margin-bottom: 0.5em;
+	}
+}
+
+.WikiaActivityModule {
+	h1.activity-heading {
+		margin-bottom: 0;
+	}
+	ul {
+		list-style: none;
+		margin: 10px 0;
+	}
+	li {
+		font-size: 12px;
+		padding: 6px 3px 6px 30px;
+		position: relative;
+		&:first-child {
+			border: 0;
+		}
+		em {
+			display: inline-block;
+			font-size: 14px;
+			line-height: 17px;
+			width: 270px;
+		}
+	}
+	.sprite {
+		position: absolute;
+		left: 3px;
+		top: 8px;
+	}
+	.edited-by {
+		font-size: 11px;
+		margin-top: 2px;
+		a {
+			color: $color-links;
+			font-size: 11px;
+		}
+	}
+	a {
+		font-weight: normal;
+	}
+	.page-title {
+		font-size: 14px;
+	}
+	.more {
+		font-weight: bold;
+	}
+}
+
+.WikiaImageModule {
+	h1 {
+		display: none;
+	}
+	img {
+		margin: 10px 0;
+	}
+	.caption {
+		margin-bottom: 10px;
+		text-align: center;
+	}
+}
+
+#contentSub {
+	font-size: 14px;
+	line-height: 16px;
+	padding: 10px;
+
+	.commentslikes {
+		display: inline;
+		font-size: 12px;
+		a:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.wikiaThrobber {
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+	height: 100%;
+	left: 0;
+	opacity: .75;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}
+
+.ContentWarning {
+	#WikiaMainContent, #WikiaRail {
+		display: none;
+	}
+}

@@ -5,7 +5,7 @@ $url-prefix: "/skins/oasis/css/";
 @import "/skins/wikia/shared.css";
 
 // Layout
-@import "skins/oasis/css/core/layout";
+@import "layout";
 
 // Mixins
 @import "skins/oasis/css/mixins/bodytext";
@@ -76,9 +76,7 @@ $url-prefix: "/skins/oasis/css/";
 
 // Responsive layout files
 // These files override some of the styles for older extentions.
-@import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/core/responsive-font-sizing";
-@import "skins/oasis/css/core/responsive-core";
-@import "skins/oasis/css/core/responsive-mainpage-tag";
 
+// Pirates styles
 @import "article";
+@import "page";

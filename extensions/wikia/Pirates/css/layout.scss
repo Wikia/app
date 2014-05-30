@@ -1,0 +1,17 @@
+// Highest z-index
+$zTop: 20000000;
+
+// breakpoints
+$width-min: 768px;
+$width-tablet: 1024px;
+$width-desktop: 1280px;
+
+$width-gutter: 20px;
+$width-outside: 1030px;
+$wikia-search-base-width: 200px;
+
+// wikiaheader-width for the globalheader and gamestarlogo
+$wikiaheader-width: $width-outside + 14px;
+
+// global-navigation height
+$wikiaglobal-nav-height: 37px;
