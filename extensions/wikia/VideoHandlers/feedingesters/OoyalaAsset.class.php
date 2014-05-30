@@ -635,6 +635,26 @@ class OoyalaAsset extends WikiaModel {
 	}
 
 	/**
+	 * Set ad set
+	 * @param string $videoId
+	 * @param string $adSet
+	 * @return boolean $resp
+	 */
+	public function setAdSet( $videoId, $adSet ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/ad_set/'.$adSet;
+		$params = array();
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
 	 * Set label
 	 * @param string $videoId
 	 * @param array $data
