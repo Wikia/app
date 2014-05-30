@@ -274,13 +274,8 @@ define( 'wikia.ui.modal', [
 		// in future we may consider ignoring an event if the previous trigger call with the same
 		// eventName did not compete
 
-		( function iterate( param ) {
+		( function iterate() {
 			var result;
-
-			if ( typeof param !== 'undefined' ) {
-				args.push( param );
-			}
-
 			while( listeners && ( i < listeners.length ) ) {
 				result = listeners[ i++ ].apply( undefined, args );
 				if ( result && ( typeof result.then === 'function' ) ) {
