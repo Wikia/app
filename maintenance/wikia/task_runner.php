@@ -17,7 +17,7 @@ $result = $runner->format();
 
 // for long-running tasks that end up timing out, we need to notify flower that
 // the task actually did complete successfully
-$x = Http::post("{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
+Http::post("{$wgFlowerUrl}/api/task/status/{$options['task_id']}", [
 	'noProxy' => true,
 	'postData' => json_encode([
 		'kwargs' => [
