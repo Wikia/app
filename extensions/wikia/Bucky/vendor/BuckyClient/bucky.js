@@ -392,7 +392,7 @@
         _ref5 = window.performance.timing;
         for (key in _ref5) {
           time = _ref5[key];
-          if (time) {
+          if (time && typeof time === 'number') {
             timer.send("" + path + "." + key, time - start);
           }
         }
