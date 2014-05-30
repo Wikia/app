@@ -85,13 +85,12 @@ class FixVisualizationImage extends Maintenance {
 		return $imageData;
 	}
 
-	public static function uploadCorrectMainImageOnCurrentWiki(GlobalTitle $srcImageTitle){
+	public static function uploadCorrectMainImageOnCurrentWiki(PromoImage $promoImage, GlobalTitle $srcImageTitle){
 		$app = F::app();
 		$city_id = $app->wg->cityId;
 		$success = true;
 
 		if ($srcImageTitle->exists()){
-			$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($city_id);
 
 			$newTitle = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
 			if (!$newTitle->exists()) {
@@ -112,16 +111,15 @@ class FixVisualizationImage extends Maintenance {
 		return $success;
 	}
 
-	public static function targetFileExists($cityId) {
-		$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($cityId);
-		$f = GlobalFile::newFromText($promoImage->getPathname(), $cityId);
+	public static function targetFileExists(PromoImage $promoImage) {
+		$f = GlobalFile::newFromText($promoImage->getPathname(), $promoImage->getCityId());
 
 		return $f->exists();
 	}
 
-	public static function srcFileExists($cityId) {
-		$promoImage = (new PromoImage(PromoImage::MAIN));
-		$f = GlobalFile::newFromText($promoImage->getPathname(), $cityId);
+	public static function srcFileExists(PromoImage $targetPromoImage) {
+		$promoImage = (new PromoImage($targetPromoImage->getType()));
+		$f = GlobalFile::newFromText($promoImage->getPathname(), $targetPromoImage->getCityId());
 
 		return $f->exists();
 	}
@@ -148,10 +146,11 @@ class FixVisualizationImage extends Maintenance {
 		$app = F::app();
 		global $wgHooks;
 		$cityId = $app->wg->cityId;
+		$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($cityId);
 
 //		echo var_export(self::fetchAfflictedCityIds('en'), true);
 
-		$oldMainImageName = (new PromoImage(PromoImage::MAIN))->getPathname();
+		$oldMainImageName = (new PromoImage($promoImage->getCityId()))->getPathname();
 		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
 		$UPLOAD_VERIFICATION_KEY = "UploadVerification";
 
@@ -165,13 +164,13 @@ class FixVisualizationImage extends Maintenance {
 
 		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
 
-		if (self::srcFileExists($cityId) && !self::targetFileExists($cityId)){
-			if (self::uploadCorrectMainImageOnCurrentWiki($oldFileTitle)){
+		if (self::srcFileExists($promoImage) && !self::targetFileExists($promoImage)){
+			if (self::uploadCorrectMainImageOnCurrentWiki($promoImage, $oldFileTitle)){
 				self::saveCorrectImageRowForCurrentWiki($dbr);
 			}
 		} else {
 			if (!self::checkIfImageIsInDB($cityId)){
-				if (self::targetFileExists($cityId)){
+				if (self::targetFileExists($promoImage)){
 					self::saveCorrectImageRowForCurrentWiki($dbr);
 				} else {
 					die("target image not found" . PHP_EOL);
