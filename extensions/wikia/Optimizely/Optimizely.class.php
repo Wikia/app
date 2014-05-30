@@ -36,8 +36,8 @@ class Optimizely {
 	}
 
 	protected static function loadFromOurCDN() {
-		global $wgResourceBasePath;
-		return '<script src="' . $wgResourceBasePath . '/wikia.php?controller=Optimizely&method=getCode"></script>';
+		$scriptDomain = WikiFactory::getLocalEnvURL( WikiFactory::getVarValueByName( 'wgServer', 177 ) );
+		return '<script src="' . $scriptDomain . '/wikia.php?controller=Optimizely&method=getCode"></script>';
 	}
 
 	protected static function loadOriginal() {
