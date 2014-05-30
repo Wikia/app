@@ -7,6 +7,8 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
+use \Wikia\Logger\WikiaLogger;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 /** Number of times to re-try an operation in case of deadlock */
 define( 'DEADLOCK_TRIES', 4 );
@@ -198,6 +200,9 @@ interface DatabaseType {
  * @ingroup Database
  */
 abstract class DatabaseBase implements DatabaseType {
+
+	// @const log 1% of queries
+	const QUERY_SAMPLE_RATE = 0.01;
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -873,12 +878,7 @@ abstract class DatabaseBase implements DatabaseType {
 			throw new MWException( 'Tainted query found' );
 		}
 
-		$queryId = MWDebug::query( $sql, $fname, $isMaster );
-
-		# Do the query and handle errors
-		$ret = $this->doQuery( $commentedSql );
-
-		MWDebug::queryTime( $queryId );
+		$ret = $this->executeAndProfileQuery( $commentedSql, $fname, $isMaster );
 
 		# Try reconnecting if the connection was lost
 		if ( false === $ret && $this->wasErrorReissuable() ) {
@@ -896,7 +896,7 @@ abstract class DatabaseBase implements DatabaseType {
 					# Not a database error to lose a transaction after a minute or two
 					wfLogDBError( "Connection lost and reconnected after {$elapsed}s, query: $sqlx\n" );
 				}
-				$ret = $this->doQuery( $commentedSql );
+				$ret = $this->executeAndProfileQuery( $commentedSql, $fname, $isMaster );
 			} else {
 				wfDebug( "Failed\n" );
 			}
@@ -929,6 +929,7 @@ abstract class DatabaseBase implements DatabaseType {
 		$ignore = $this->ignoreErrors( true );
 		++$this->mErrorCount;
 
+		// FIXME: should these log to WikiaLogger?
 		if ( $ignore || $tempIgnore ) {
 			wfDebug( "SQL ERROR (ignored): $error\n" );
 			$this->ignoreErrors( $ignore );
@@ -3478,5 +3479,49 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function setBigSelects( $value = true ) {
 		// no-op
+	}
+
+
+	/**
+	 * Execute and profile the query. This is a wrapper for capturing timing information
+	 * while executing a query.
+	 *
+	 * @param string $sql the query
+	 * @param string $fname the function name
+	 * @param bool $isMaster is this against the master
+	 *
+	 * @return ResultWrapper see doQuery
+	 */
+	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
+		$queryId = MWDebug::query( $sql, $fname, $isMaster );
+		$start = microtime(true);
+
+		$ret = $this->doQuery( $sql );
+
+		$this->logSql( $sql, $fname, microtime(true) - $start, $isMaster );
+
+		MWDebug::queryTime( $queryId );
+		return $ret;
+	}
+
+	/**
+	 * Log a SQL statement. This function does not log every statement but samples
+	 * at the rate defined in self::QUERY_SAMPLE_RATE.
+	 *
+	 * @param string $sql the query
+	 * @param string $fname the function name
+	 * @param bool $isMaster is this against the master
+	 * @return void
+	 */
+	protected function logSql( $sql, $fname, $elapsedTime, $isMaster ) {
+		$sampler = new BernoulliTrial(self::QUERY_SAMPLE_RATE);
+		if ($sampler->sample()) {
+			WikiaLogger::instance()->info( "SQL $sql", [
+				'method'      => $fname,
+				'elapsed'     => $elapsedTime,
+				'server_role' => $isMaster ? 'master' : 'slave'
+				]
+			);
+		}
 	}
 }
