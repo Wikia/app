@@ -4,7 +4,13 @@ require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
-$curlUrl = 'http:' . ( $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl );
+$urlPrefix = 'http:';
+$curlUrl = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
+
+if ( substr( $curlUrl, 0, strlen( $urlPrefix ) ) !== $urlPrefix ) {
+	$curlUrl .= $urlPrefix;
+}
+
 $curlHandle = curl_init( $curlUrl );
 
 // don't print the output, assign it to a variable instead
