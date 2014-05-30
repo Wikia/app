@@ -1,6 +1,5 @@
 <?php
 
-
 class WikiaMaps {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
@@ -216,7 +215,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * Sends a request to IntMap Service API to create a tiles' set with given parameters
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
