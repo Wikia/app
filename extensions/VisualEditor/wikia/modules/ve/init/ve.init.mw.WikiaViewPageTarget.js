@@ -143,10 +143,6 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 	}
 };
 
-ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
-        return this.toolbar;
-};
-
 /**
  * @inheritdoc
  */
