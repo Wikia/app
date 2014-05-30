@@ -18,6 +18,13 @@ class RevisionService {
 	 */
 	private $queryLimit;
 
+	private $filterMethods = [
+		'filterPassThrough' => true,
+		'filterDuplicates' => true,
+		'filterByArticle' => true,
+	];
+
+	private $filterMethod;
 
 	/**
 	 * @param DatabaseBase $databaseConnection
@@ -30,6 +37,7 @@ class RevisionService {
 		$this->cacheTime = $cacheTime;
 		$this->databaseConnection = $databaseConnection;
 		$this->queryLimit = 200;
+		$this->filterMethod = false;
 	}
 
 	public function getFirstRevisionByArticleId( $articles ) {
@@ -52,19 +60,19 @@ class RevisionService {
 	/**
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null
-	 * @param bool $allowDuplicates if false there will be at most one result per page
-	 * @param string $filteringMethod optional name of filtering method
 	 * @return array
 	 */
-	public function getLatestRevisions( $limit, $namespaces, $allowDuplicates, $filteringMethod = null ) {
-		$key = self::createCacheKey( $this->queryLimit, $namespaces, $allowDuplicates );
+	public function getLatestRevisions( $limit, $namespaces ) {
+		$key = self::createCacheKey( $this->queryLimit, $namespaces );
 		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces ) {
 			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces );
 		});
-		if( !$allowDuplicates ) {
-			$filteringMethod = is_null( $filteringMethod ) ? 'filterDuplicates' : $filteringMethod;
-			$listOfRevisions = $this->$filteringMethod( $listOfRevisions );
+
+		$filterMethod = $this->getFilterMethod();
+		if( is_string( $filterMethod ) ) {
+			$listOfRevisions = $this->$filterMethod( $listOfRevisions );
 		}
+
 		$listOfRevisions = $this->limitCount( $listOfRevisions, $limit );
 		return $listOfRevisions;
 	}
@@ -189,11 +197,10 @@ class RevisionService {
 	/**
 	 * @param $limit int limit number of results.
 	 * @param $namespaces array list of namespaces to filter by. No filter applied if null
-	 * @param $allowDuplicates bool if false there will be at most one result per page
 	 * @param string|NULL $dbName
 	 * @return string
 	 */
-	protected static function createCacheKey( $limit, $namespaces, $allowDuplicates, $dbName = null ) {
+	protected static function createCacheKey( $limit, $namespaces, $dbName = null ) {
 		if( $dbName == null ) {
 			$dbName = F::app()->wg->DBname;
 		}
@@ -201,8 +208,7 @@ class RevisionService {
 			"RevisionService",
 			$dbName,
 			strval($limit),
-			implode(",",$namespaces),
-			strval($allowDuplicates)
+			implode(",",$namespaces)
 		]);
 		return $key;
 	}
@@ -247,5 +253,25 @@ class RevisionService {
 	 */
 	public function getQueryLimit() {
 		return $this->queryLimit;
+	}
+
+	/**
+	 * If a method is in RevisionService::$filterMethods it'll get assigned to RevisionService::$filterMethod field
+	 * If it isn't there false will get assigned to the field
+	 * @param integer $method one of RevisionService::$filterMethods indexes
+	 */
+	public function setFilterMethod( $method ) {
+		if( isset( $this->filterMethods[ $method ] ) ) {
+			$this->filterMethod = $method;
+		} else {
+			$this->filterMethod = false;
+		}
+	}
+
+	/**
+	 * @return string|false
+	 */
+	public function getFilterMethod() {
+		return $this->filterMethod;
 	}
 }

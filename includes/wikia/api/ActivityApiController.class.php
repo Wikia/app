@@ -1,6 +1,5 @@
 <?php
 
-
 class ActivityApiController extends WikiaApiController {
 	private $revisionService;
 
@@ -29,7 +28,7 @@ class ActivityApiController extends WikiaApiController {
 	 * @example &namespaces=0,14&allowDuplicates=0&limit=20
 	 */
 	public function getLatestActivity() {
-		$this->executeServiceQuery();
+		$this->executeServiceQuery( __METHOD__ );
 	}
 
 	/**
@@ -49,7 +48,7 @@ class ActivityApiController extends WikiaApiController {
 	 * @example &namespaces=0,14&allowDuplicates=0&limit=20
 	 */
 	public function getRecentlyChangedArticles() {
-		$this->executeServiceQuery( 'filterByArticle' );
+		$this->executeServiceQuery( __METHOD__ );
 	}
 
 	/**
@@ -57,22 +56,45 @@ class ActivityApiController extends WikiaApiController {
 	 *
 	 * Re-used method in ActivityApiController::getLatestActivity() and ActivityApiController::getRecentlyChangedArticles()
 	 *
-	 * @param String|null $filteringMethod name of filtering method passed to RevisionService::getLatestRevisions()
+	 * @param string $caller name of method calling ActivityApiController::executeServiceQuery()
 	 */
-	private function executeServiceQuery( $filteringMethod = null ) {
+	private function executeServiceQuery( $caller ) {
 		$limit = $this->getRequest()->getInt( 'limit', self::DEFAULT_RESULTS_NUMBER );
 		$namespaces = $this->getRequest()->getArray( 'namespaces', [ self::DEFAULT_ARTICLE_NAMESPACE ] );
+
 		$allowDuplicates = $this->getRequest()->getBool( 'allowDuplicates', true );
+		if( !$allowDuplicates ) {
+			$this->revisionService->setFilterMethod(
+				$this->getFilterMethodByCaller( $caller )
+			);
+		}
 
 		$items = $this->revisionService->getLatestRevisions(
 			$limit,
-			$namespaces,
-			$allowDuplicates,
-			$filteringMethod
+			$namespaces
 		);
 
 		$this->response->setVal( 'items', $items );
 		$this->response->setVal( 'basepath', $this->wg->Server );
+	}
+
+	/**
+	 * @param string $caller name of method which executes service query
+	 * @return string
+	 */
+	private function getFilterMethodByCaller( $caller ) {
+		$method = 'filterPassThrough';
+
+		switch( $caller ) {
+			case 'ActivityApiController::getLatestActivity':
+				$method = 'filterDuplicates';
+				break;
+			case 'ActivityApiController::getRecentlyChangedArticles':
+				$method = 'filterByArticle';
+				break;
+		}
+
+		return $method;
 	}
 
 }
