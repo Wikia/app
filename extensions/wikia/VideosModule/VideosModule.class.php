@@ -18,9 +18,9 @@ class VideosModule extends WikiaModel {
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
 	const MAX_STAFF_PICKS = 5;
 
-	protected $blacklist;				// black listed videos we never want to show in videos module
-	protected $blacklistCount = null;	// number of blacklist videos
-	protected $existingVideos = [];		// list of existing videos [ titleKey => true ]
+	protected $blacklist;               // black listed videos we never want to show in videos module
+	protected $blacklistCount = null;   // number of blacklist videos
+	protected $existingVideos = [];     // list of existing videos [ titleKey => true ]
 
 	public function __construct() {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
