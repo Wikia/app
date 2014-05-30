@@ -1020,7 +1020,7 @@ class SQL {
 				$doDistinctClause = false;
 			}
 
-			$discinct->build($bk, $tabs);
+			$distinct->build($bk, $tabs);
 		}
 	}
 

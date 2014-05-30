@@ -1,4 +1,5 @@
 <?php
+
 if ( !defined('MEDIAWIKI') ) {
 	echo "This is a MediaWiki extension.\n";
 	exit(1);
@@ -8,11 +9,19 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
 $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'HubRssFeedModel.class.php';
 $wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
+$wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';
+$wgAutoloadClasses['BaseRssModel']	= $dir . 'BaseRssModel.class.php';
+$wgAutoloadClasses['TvRssModel']	= $dir . 'TvRssModel.class.php';
+$wgAutoloadClasses['GamesRssModel']	= $dir . 'GamesRssModel.class.php';
+$wgAutoloadClasses['PopularArticlesModel']	= $dir . 'PopularArticlesModel.class.php';
+$wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'EntertainmentHubOnlyRssModel.class.php';
+$wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'LifestyleHubOnlyRssModel.class.php';
+$wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'HubOnlyRssModel.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(
-	'Gaming', 'Entertainment','Lifestyle'
+	 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Tv'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {

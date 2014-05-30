@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: suchy
- * Date: 04.10.13
- * Time: 13:21
- * To change this template use File | Settings | File Templates.
- */
 
 class HubRssFeedModel extends WikiaModel {
 
@@ -43,13 +36,18 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	protected function getServicesV3( $cityId ) {
-		return [
+	protected function getServicesV3( $cityId, $useExplore = false ) {
+		$services =  [
 			'slider' => new MarketingToolboxModuleSliderService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 			'community' => new MarketingToolboxModuleFromthecommunityService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
 			'wikiaspicks' => new MarketingToolboxModuleWikiaspicksService($this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION),
+
 		];
-	
+
+		if ( $useExplore ) {
+			$services[ 'explore' ] = new MarketingToolboxModuleExploreService( $this->lang, MarketingToolboxV3Model::SECTION_HUBS, 0, $cityId, MarketingToolboxV3Model::VERSION );
+		}
+		return $services;
 	}
 
 	/**
@@ -73,7 +71,7 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	public function getRealDataV3( $cityId ) {
+	public function getRealDataV3( $cityId, $prevTimestamp = null, $useExplore = false ) {
 		if ( $cityId === 0 ) {
 			return [];
 		}
@@ -84,7 +82,7 @@ class HubRssFeedModel extends WikiaModel {
 		];
 
 		$currentData = $this->getDataFromModulesV3( $cityId );
-		$timestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params );
+		$timestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params,$prevTimestamp );
 
 		foreach ( $currentData as &$val ) {
 			$val[ 'timestamp' ] = $timestamp;
@@ -95,7 +93,11 @@ class HubRssFeedModel extends WikiaModel {
 
 		for ( $i = 0; $i < self::MAX_DATE_LOOP; $i++ ) {
 			$prevTimestamp = $this->marketingToolboxV3Model->getLastPublishedTimestamp( $params, $prevTimestamp );
-			$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp );
+
+			$prevData = null;
+			if( $prevTimestamp ){
+				$prevData = $this->getDataFromModulesV3( $cityId, $prevTimestamp, $useExplore );
+			}
 
 			if ( $prevData === null ) {
 				$prevTimestamp--;
@@ -127,8 +129,21 @@ class HubRssFeedModel extends WikiaModel {
 		}
 
 		array_multisort($timestamps, SORT_DESC, $currentData);
+		$currentData = $this->fakeOrderItems($currentData);
 
+		return $currentData;
+	}
 
+	protected function fakeOrderItems( $currentData ){
+		$prevTimestamp = 0;
+		foreach($currentData as &$item){
+			if($prevTimestamp === $item['timestamp']){
+				$item['timestamp'] --;
+			}elseif($prevTimestamp > 0 && $item['timestamp'] > $prevTimestamp){
+				$item['timestamp'] = $prevTimestamp - 1;
+			}
+			$prevTimestamp = $item['timestamp'];
+		}
 		return $currentData;
 	}
 
@@ -194,7 +209,7 @@ class HubRssFeedModel extends WikiaModel {
 
 		array_multisort($timestamps, SORT_DESC, $currentData);
 
-
+		$currentData = $this->fakeOrderItems($currentData);
 		return $currentData;
 
 	}
@@ -217,7 +232,7 @@ class HubRssFeedModel extends WikiaModel {
 				'ts' => $timestamp
 			] );
 		}
-		return $this->normalizeDataFromModules( $data );
+		return $this->normalizeDataFromModules( $data , null );
 	}
 
 
@@ -228,9 +243,9 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $cityId
 	 * @return array
 	 */
-	protected function getDataFromModulesV3( $cityId, $timestamp = null ) {
+	protected function getDataFromModulesV3( $cityId, $timestamp = null, $useExplore = false ) {
 
-		$services = $this->getServicesV3( $cityId );
+		$services = $this->getServicesV3( $cityId , $useExplore );
 		$data = [];
 
 		foreach ( $services as $k => &$v ) {
@@ -240,9 +255,28 @@ class HubRssFeedModel extends WikiaModel {
 			] );
 		}
 
-		return $this->normalizeDataFromModules( $data );
+		if(array_key_exists('explore', $data)){
+			$data['explore'] = ['links'=>$data['explore']['linkgroups'][1]['links']];
+		}
+
+		$ret =  $this->normalizeDataFromModules( $data, $cityId );
+
+		if( $useExplore ){
+			$ret = $this->removeNonValidUrls($ret);
+		}
+		return $ret;
 	}
-	
+
+	public function removeNonValidUrls($data){
+		foreach($data as $key=>&$item){
+			if(preg_match('~(\.com$)|(/File:)|(/Image:)~',$key)){
+				unset($data[$key]);
+			}
+		}
+		return $data;
+	}
+
+
 	public static function getFirstValue($data, $keys) {
 		foreach ($keys as $key) {
 			if (isset($data[$key])) return $data[$key];
@@ -256,15 +290,15 @@ class HubRssFeedModel extends WikiaModel {
 	 * @param $data
 	 * @return array
 	 */
-	protected function normalizeDataFromModules( $data ) {
-		$keysForUrl =  [ 'articleUrl', 'url', 'imageLink' ];
-		$keysForTitle =  [ 'shortDesc' , 'articleTitle', 'title' ];
-		$keysForDescription = ['longDesc', 'quote', 'text'];
-		$keysForImage = ['photoName', 'imageAlt'];
+	protected function normalizeDataFromModules( $data, $cityId ) {
+		$keysForUrl =  [ 'articleUrl', 'url', 'imageLink','href' ];
+		$keysForTitle =  [ 'shortDesc' , 'articleTitle', 'title', 'anchor' ];
+		$keysForDescription = ['longDesc', 'quote', 'text', 'anchor'];
+		$keysForImage = [ 'photoName', 'imageAlt' ];
 		
 		$out = [];
 		
-		foreach ( $data as &$result ) {
+		foreach ( $data as $module => &$result ) {
 			
 			if (array_key_exists("title", $result)) {
 				// a single item from wikiaspicks service, which returns data in different format than others
@@ -285,25 +319,25 @@ class HubRssFeedModel extends WikiaModel {
 
 					$out[ $url ] = [
 						'title' => self::getFirstValue($item, $keysForTitle),
-						'description' => self::getFirstValue($item, $keysForDescription)
+						'description' => self::getFirstValue($item, $keysForDescription),
+						'module' => $module
 					];
 
-					$photoName = self::getFirstValue($item, $keysForImage);
+					$photoName = self::getFirstValue( $item, $keysForImage );
 					if ( $photoName ) {
-						$img = $this->getThumbData( $photoName );
+						$img = $this->getThumbData( $photoName, $cityId );
+						if ( !empty($img['url']) ) {
 
-						if ( !empty($img->url) ) {
-
-							$width = $img->width;
-							$height = $img->height;
+							$width = $img['width'];
+							$height = $img['height'];
 
 							if ( $width < self::THUMB_MIN_SIZE ) {
-								$height = round( ($img->height * $width) / $width, 0 );
+								$height = round( ($img['height'] * $width) / $width, 0 );
 								$width = self::THUMB_MIN_SIZE;
 							}
 
 							$out[ $url ][ 'img' ] = [
-								'url' => $img->url,
+								'url' => $img[ 'url' ],
 								'width' => $width,
 								'height' => $height
 							];
@@ -320,11 +354,15 @@ class HubRssFeedModel extends WikiaModel {
 	 * Get thumbnail for given image.
 	 *
 	 * @param $fileName
-	 * @return stdClass
+	 * @param $cityId
 	 */
-	public function getThumbData( $fileName ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, 0, ImagesService::EXT_JPG);
-
+	protected function getThumbData( $fileName, $cityId ) {
+		$f = GlobalFile::newFromText( $fileName, $cityId );
+		if ( $f instanceof GlobalFile && $f->exists() ) {
+			return [ 'url' => $f->getUrl(), 'width' => $f->getWidth(), 'height' => $f->getHeight() ];
+		} else {
+			return [ 'url' => '', 'width' => null, 'height' => null ];
+		}
 	}
 
 }

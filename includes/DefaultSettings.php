@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.15';
+$wgVersion = '1.19.16';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -5720,6 +5720,7 @@ $wgMaximumMovedPages = 100;
 /**
  * Fix double redirects after a page move.
  * Tends to conflict with page move vandalism, use only on a private wiki.
+ * TODO: if this is ever set to true, make sure to migrate includes/job/DoubleRedirectJob.php over to using the new job queue system!
  */
 $wgFixDoubleRedirects = false;
 

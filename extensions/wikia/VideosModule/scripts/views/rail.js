@@ -21,7 +21,9 @@ define('videosmodule.views.rail', [
 		this.$thumbs = this.$el.find('.thumbnails');
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
+		// Default number of videos, this is the number of videos we'd like to display if possible
 		this.numVids = 5;
+		this.minNumVids = 3;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -48,24 +50,32 @@ define('videosmodule.views.rail', [
 		var i,
 			videos = this.model.data.videos,
 			staffPickVideos = this.model.data.staffVideos,
-			len = videos.length,
 			thumbHtml = [],
 			self = this,
 			$imagesLoaded = $.Deferred(),
 			imgCount = 0,
 			VideosIndex,
-			StaffPicksIndex;
+			StaffPicksIndex,
+			vidsNeeded;
 
-		// If no videos are returned from the server, don't render anything
-		if (!len) {
+		// If we don't have enough videos to display the minimum amount, return
+		if (videos.length + staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
 			log(
-				'No videos were returned for VideosModule rail',
+				'Not enough videos were returned for VideosModule rail',
 				log.levels.error,
 				'VideosModule',
 				true
 			);
 			return;
+		}
+
+		// If there are less related videos than our default amount, this.NumVids, pull additional
+		// videos from the staffPicks videos
+		if (videos.length < this.numVids) {
+			vidsNeeded = this.numVids - videos.length;
+			videos = videos.concat(staffPickVideos.splice(0, vidsNeeded));
+			this.numVids = videos.length;
 		}
 
 		this.shuffle(videos);

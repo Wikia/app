@@ -602,7 +602,12 @@ class Linker {
 			}
 		}
 
-		if ( isset( $fp['thumbnail'] ) || isset( $fp['manualthumb'] ) || isset( $fp['framed'] ) ) {
+		if (
+			isset( $fp['thumbnail'] )
+			|| isset( $fp['manualthumb'] )
+			|| isset( $fp['framed'] )
+			|| WikiaFileHelper::isVideoFile( $file ) // wikia change
+		) {
 			global $wgContLang;
 			# Create a thumbnail. Alignment depends on language
 			# writing direction, # right aligned for left-to-right-

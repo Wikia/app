@@ -184,13 +184,10 @@ class HubRssModelTest extends WikiaBaseTest {
 			->will( $this->returnValue( ['slider' => $mockSlider, 'community' => $mockCommunity,
 						'wikiaspicks' => $mockWikiaspicks] ) );
 
-		$tmp = new StdClass();
-		$tmp->url = 'xx';
-		$tmp->width = 500;
-		$tmp->height = 500;
+
 		$mock->expects( $this->any() )
 			->method( 'getThumbData' )
-			->will( $this->returnValue( $tmp ) );
+			->will( $this->returnValue( [ 'url' => 'xx',  'width' => 500, 'height' => 500 ] ) );
 
 
 		$refl = new \ReflectionObject($mock);
@@ -269,12 +266,9 @@ class HubRssModelTest extends WikiaBaseTest {
 					'wikiaspicks' => $mockWikiaspicks] ) );
 
 		$tmp = new StdClass();
-		$tmp->url = 'xx';
-		$tmp->width = 500;
-		$tmp->height = 500;
 		$mock->expects( $this->any() )
 			->method( 'getThumbData' )
-			->will( $this->returnValue( $tmp ) );
+			->will( $this->returnValue( [ 'url' => 'xx',  'width' => 500, 'height' => 500 ] ) );
 
 
 		$refl = new \ReflectionObject($mock);

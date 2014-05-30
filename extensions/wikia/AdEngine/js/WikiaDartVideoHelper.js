@@ -3,28 +3,27 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 	'use strict';
 
 	var logGroup = 'adengine.dartVideoHelper',
-		ord = Math.round(Math.random() * 23945290875),
 		pageParams = adLogicPageParams.getPageLevelParams();
 
 	pageParams.src = 'ooyala';
 
 	function getCustParams() {
-		var key,  vals, params = [], urlEncodedVals, valIndex;
+		var key,  vals, params = [], urlValues, valIndex;
 
 		for (key in pageParams) {
 			if (pageParams.hasOwnProperty(key) && key !== '') {
 				vals = pageParams[key];
-				if (vals) {
+				if (vals && vals.length) {
 					if (!(vals instanceof Array)) {
 						vals = [vals];
 					}
-					urlEncodedVals = [];
-					if (vals.length) {
-						for (valIndex = 0; valIndex < vals.length; valIndex += 1) {
-							urlEncodedVals.push(encodeURIComponent(vals[valIndex].toString()));
-						}
-						params.push(key + '=' + urlEncodedVals.join(','));
+					urlValues = [];
+
+					for (valIndex = 0; valIndex < vals.length; valIndex += 1) {
+						urlValues.push(vals[valIndex].toString());
 					}
+
+					params.push(key + '=' + urlValues.join(','));
 				}
 			}
 		}
@@ -38,29 +37,25 @@ define('ext.wikia.adEngine.dartVideoHelper', ['wikia.log', 'wikia.location', 'ex
 	 */
 	function getUrl() {
 		log('getUrl', 5, logGroup);
-		var key, out,
-			params = {
-				iu: '/5441/wka.ooyalavideo',
-				correlator: ord,
-				ad_rule: '0',
-				output: 'xml_vast2',
-				gdfp_req: '1',
-				env: 'vp',
-				impl: 's',
-				unviewed_position_start: 1,
-				sz: '320x240',
-				t: encodeURIComponent(getCustParams())
-			};
 
-		out = 'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs';
-
-		for (key in params) {
-			if (params.hasOwnProperty(key)) {
-				out += '&' + key + '=' + params[key];
-			}
-		}
+		var ord = Math.round(Math.random() * 23945290875),
+			out = [
+			'http://pubads.g.doubleclick.net/gampad/ads?ciu_szs',
+			'&iu=/5441/wka.ooyalavideo/_page_targeting',
+			'&cust_params=' + encodeURIComponent(getCustParams()),
+			'&sz=320x240',
+			'&impl=s',
+			'&output=xml_vast2',
+			'&gdfp_req=1',
+			'&env=vp',
+			'&ad_rule=0',
+			'&unviewed_position_start=1',
+			'&url=' + location.origin,
+			'&correlator=' + ord
+		].join('');
 
 		log(out, 5, logGroup);
+
 		return out;
 	}
 
