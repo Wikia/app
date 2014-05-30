@@ -11,6 +11,7 @@
 	"require": {
 		"wikia/fluent-sql-php": "1.0.*",
 		"videlalvaro/php-amqplib": "2.2.*",
-		"monolog/monolog": "1.9.1"
+		"monolog/monolog": "1.9.1",
+		"guzzlehttp/guzzle": "~4"
 	}
 }

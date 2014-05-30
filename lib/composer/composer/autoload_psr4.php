@@ -7,5 +7,6 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
-    'FluentSql\\' => array($vendorDir . '/wikia/fluent-sql-php/src'),
+    'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
 );
