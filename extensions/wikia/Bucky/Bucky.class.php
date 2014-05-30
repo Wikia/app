@@ -3,7 +3,7 @@
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
-	const BASE_URL = '//slot1.images.wikia.nocookie.net/__rum';
+	const BASE_URL = '//speed.wikia.net/__rum';
 
 	static protected $environment;
 
