@@ -27,8 +27,9 @@ class Bucky {
 
 	static public function onSkinAfterBottomScripts( Skin $skin, &$bottomScripts ) {
 		$environment = self::getEnvironment();
-		if ( $environment ) {
-			$wgBuckySampling = F::app()->wg->BuckySampling;
+		$app = F::app();
+		if ( $environment && $app->checkSkin('oasis',$skin) ) {
+			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
 			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
 			$config = json_encode(array(
