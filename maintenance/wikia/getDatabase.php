@@ -66,6 +66,10 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		$city_id = $matches[1];
 		$cluster = strtr($matches[2], '123456', 'ABCDEF');
 		$databaseDirectory = "database_$cluster";
+		if ($cluster == 'F') {
+			// FIXME
+			$databaseDirectory = "database-f";
+		}
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);
