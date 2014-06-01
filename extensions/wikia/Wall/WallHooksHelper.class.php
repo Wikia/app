@@ -15,8 +15,8 @@ class WallHooksHelper {
 	static public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm = new WallMessage( $title );
-			if ( $wm->isWallOwner( $user ) ) {
+			// wall owner is in it's name
+			if ( $title->getBaseText() === $user->getName() ) {
 				$blocked = false;
 				wfDebug( __METHOD__ . ": self-user wall page, ignoring any blocks\n" );
 			}
@@ -76,7 +76,7 @@ class WallHooksHelper {
 							($wallMessage->canViewDeletedMessage($app->wg->User) && $app->wg->Request->getVal('show') == '1')
 					) {
 						if(wfRunHooks('WallBeforeRenderThread', array($mainTitle, $wallMessage))) {
-							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getArticleTitle() )));
+							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getWallTitle() )));
 						}
 					} else {
 						$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' =>wfMsg( 'wall-deleted-msg-pagetitle' ) ) ));
@@ -624,10 +624,9 @@ class WallHooksHelper {
 		}
 
 		if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
-			$wm = new WallMessage( $title );
-			$owner = $wm->getWallOwner();
+			$parts = explode( '/', $title->getText() );
 
-			$title = Title::newFromText($owner->getName(), NS_USER_WALL);
+			$title = Title::newFromText($parts[0], NS_USER_WALL);
 			$app->wg->Out->redirect($title->getFullUrl(), 301);
 			$app->wg->Out->enableRedirects(false);
 		}
@@ -890,10 +889,10 @@ class WallHooksHelper {
 
 				$title = $wm->getMetaTitle();
 				$wallUrl = $wm->getWallPageUrl();
-				$pageText = $wm->getMainPageText();
+				$wallOwner = $wm->getWallOwnerName();
 				$class = '';
 
-				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $pageText));
+				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> '.wfMsg(static::getMessagePrefix($rc->getAttribute('rc_namespace')) . '-new-message', array($wallUrl, $wallOwner));
 
 				# Bolden pages watched by this user
 				# Check if the user is following the thread or the board
@@ -1295,7 +1294,7 @@ class WallHooksHelper {
 			$wm = new WallMessage($oTitle);
 			$wallMsgUrl = $wm->getMessagePageUrl();
 			$wallUrl = $wm->getWallUrl();
-			$pageText = $wm->getMainPageText();
+			$wallOwnerName = $wm->getWallOwnerName();
 			$parent = $wm->getTopParentObj();
 			$isMain = is_null($parent);
 
@@ -1306,7 +1305,7 @@ class WallHooksHelper {
 
 			$wm->load();
 			$wallMsgTitle = $wm->getMetaTitle();
-			$headerTitle = wfMsg(static::getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $pageText));
+			$headerTitle = wfMsg(static::getMessagePrefix($namespace).'-thread-group', array(Xml::element('a', array('href' => $wallMsgUrl), $wallMsgTitle), $wallUrl, $wallOwnerName));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -1422,9 +1421,10 @@ class WallHooksHelper {
 		if( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			$result = array();
 
-			$wm = new WallMessage( $title );
+			$parts = explode('/', $title->getText());
+			$username = empty($parts[0]) ? '':$parts[0];
 
-			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) ) {
+			if( $user->isAllowed('walledit') || $user->getName() == $username ) {
 				$result = null;
 				return true;
 			} else {

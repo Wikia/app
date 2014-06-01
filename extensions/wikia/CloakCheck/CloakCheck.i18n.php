@@ -439,7 +439,6 @@ $messages['lb'] = array(
 	'cloakcheck-form-username' => 'Benotzernumm:',
 	'cloakcheck-form-check' => 'Benotzernumm nokucken',
 	'cloakcheck-process-empty' => 'De Benotzernumm däerf net eidel sinn.',
-	'cloakcheck-process-notexist' => 'De Benotzernumm gëtt et net.',
 	'cloakcheck-process-username' => 'Benotzernumm: $1',
 	'cloakcheck-process-accountage-yes' => 'De Benotzerkont ass al genuch.',
 	'cloakcheck-process-accountage-no' => 'De Benotzerkont ass ze nei.',
@@ -452,12 +451,6 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'cloakcheck-form-username' => 'نوم كاروری:',
-	'cloakcheck-process-username' => 'نوم كاروری:$1',
-	'cloakcheck-process-accountage-yes' => 'حساو وه انازه کافی قدیمی نئ',
-	'cloakcheck-process-accountage-no' => 'حساو فره تازه یه',
-	'cloakcheck-process-emailconf-yes' => 'نشونی ایمیل مئکم بیه',
-	'cloakcheck-process-emailconf-no' => 'نشونی ایمیل مئکم نبیه',
-	'cloakcheck-process-edits-yes' => 'کارور ویرایشتیاش خوئن',
 );
 
 /** Lithuanian (lietuvių)

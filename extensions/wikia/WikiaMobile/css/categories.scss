@@ -1,20 +1,35 @@
-.catlinks {
-	margin-bottom: 10px;
+#wkArtCat {
+	.catlinks {
+		margin-bottom: 10px;
 
-	ul{
-		display: inline;
-		list-style: none;
-		margin: 0;
-		padding: 0;
+		 ul{
+			display: inline;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			li{
+				border-left:  1px solid #AAA;
+				display: inline-block;
+				margin: 5px 0;
+				padding: 0 5px;
+			}
+
+			li:first-child{
+				border-left: none;
+			}
+		}
 	}
+}
 
-	li{
-		display: inline;
-		margin-bottom: 5px;
-	}
+#mw-normal-catlinks span{
+	padding: 0 5px;
+}
 
-	li:nth-last-of-type(n+2):after {
-		content: ',';
-		padding-right: 3px;
+.js .catlinks {
+	display: none;
+
+	&.open {
+		display: block;
 	}
 }

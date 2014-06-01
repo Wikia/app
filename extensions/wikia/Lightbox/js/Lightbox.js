@@ -26,7 +26,7 @@ var Lightbox = {
 	to: 0, // timestamp for getting wiki images
 
 	makeLightbox: function(params) {
-		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
+		// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and Touchstorm widget
 		$(window).trigger('lightboxOpened');
 
 		// if we don't have latest photos in the DOM, request them from back end
@@ -1009,17 +1009,15 @@ var Lightbox = {
 
 		shareEmailForm.submit(function(e) {
 			e.preventDefault();
-			var addresses = $( this ).find( 'input' ).first().val(),
-				UserLoginModal = window.UserLoginModal;
+			var addresses = $(this).find('input').first().val();
 
 			// make sure user is logged in
 			if (window.wgUserName) {
 				doShareEmail(addresses);
 			} else {
-				UserLoginModal.show( {
-					origin: 'image-lightbox',
+				UserLoginModal.show({
 					callback: function() {
-						doShareEmail( addresses );
+						doShareEmail(addresses);
 					}
 				});
 			}

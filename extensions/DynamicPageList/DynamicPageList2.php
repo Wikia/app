@@ -5,4 +5,4 @@
    These installations used to require_once() a php source called "DynamicPageList2.php".
 */
 
-require_once("DynamicPageList.php");
+require_once( "DynamicPageList.php" );

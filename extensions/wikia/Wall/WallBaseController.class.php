@@ -72,7 +72,7 @@ class WallBaseController extends WikiaController{
 		}
 
 		//TODO: keep the varnish cache and do purging on post
-		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
+		$this->response->setCacheValidity(0, 0);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -120,7 +120,7 @@ class WallBaseController extends WikiaController{
 		$this->response->setVal('currentPage', $page );
 
 		//TODO: keep the varnish cache and do purging on post
-		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
+		$this->response->setCacheValidity(0, 0);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -523,7 +523,7 @@ class WallBaseController extends WikiaController{
 
 			$wallMessage->load();
 
-			if( $wallMessage->isWallOwner( $this->wg->User ) ) {
+			if( $wallMessage->getWallOwner()->getId() == $this->wg->User->getId() ) {
 				$wallName = wfMsg('wall-message-mywall');
 			} else {
 

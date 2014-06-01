@@ -1,20 +1,5 @@
 <?php
-
 class NavigationModelTest extends WikiaBaseTest {
-
-	function setUp() {
-		parent::setUp();
-		$memcMock = $this->getMock( 'MemcachedPhpBagOStuff', ['get','set'], [], '', false );
-		$memcMock->expects( $this->any() )
-			->method( 'get' )
-			->will( $this->returnValue( false ) );
-		$memcMock->expects( $this->any() )
-			->method( 'set' )
-			->will( $this->returnValue( true ) );
-
-		$this->mockGlobalVariable('wgMemc', $memcMock);
-	}
-
 	function testParseLines() {
 		$model = new NavigationModel();
 

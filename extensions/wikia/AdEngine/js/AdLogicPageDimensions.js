@@ -1,9 +1,7 @@
-/*jshint camelcase:false, maxdepth:4*/
-/*exported AdLogicPageDimensions*/
 var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
+	var logGroup = 'ext.wikia.adengine.logic.shortpage',
 		initCalled = false,
 		wrappedAds = {},
 
@@ -18,14 +16,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
-
-		/**
-		 * Slots based on whether there's a right rail on page or not
-		 */
-		slotsOnlyWithRail = {
-			LEFT_SKYSCRAPER_3: true
-		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -79,11 +69,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			wideEnough = false,
 			conflictingMediaQuery;
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!rightRailPresent) {
-				return false;
-			}
-		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -111,7 +96,7 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				log(['Loading ad in slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.show(ad.slotname, true);
-				ad.loadCallback();
+				ad.provider.fillInSlot(ad.slotinfo);
 				ad.state = 'shown';
 
 			} else if (ad.state === 'hidden') {
@@ -134,6 +119,26 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 				ad.state = 'hidden';
 			}
 		}
+	}
+
+	/**
+	 * Add an ad to the wrappedAds
+	 *
+	 * @param slotname
+	 * @param slotinfo -- the info you pass to fillInSlot
+	 * @param provider -- the original provider for the slot
+	 */
+	function add(slotname, slotinfo, provider) {
+		log(['add', slotname, slotinfo, provider], 'debug', logGroup);
+
+		wrappedAds[slotname] = {
+			slotname: slotname,
+			state: 'none',
+			slotinfo: slotinfo,
+			provider: provider
+		};
+
+		refresh(wrappedAds[slotname]);
 	}
 
 	/**
@@ -185,25 +190,16 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
-	 * Add an ad to the wrappedAds
+	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param slotname
-	 * @param loadCallback -- the function to call when an ad shows up the first time
+	 * @param slotinfo
+	 * @return {boolean}
 	 */
-	function add(slotname, loadCallback) {
-		log(['add', slotname, loadCallback], 'debug', logGroup);
+	function isApplicable(slotinfo) {
+		log(['isApplicable', slotinfo], 'debug', logGroup);
 
-		if (!initCalled) {
-			init();
-		}
-
-		wrappedAds[slotname] = {
-			slotname: slotname,
-			state: 'none',
-			loadCallback: loadCallback
-		};
-
-		refresh(wrappedAds[slotname]);
+		var slotname = slotinfo[0];
+		return !!(slotsOnlyOnLongPages[slotname] || slotsToHideOnMediaQuery[slotname]);
 	}
 
 	/**
@@ -213,30 +209,50 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	 */
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
-		pageHeight = document.documentElement.scrollHeight;
-		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
-		return pageHeight > preFootersThreshold;
+		return pageHeight < preFootersThreshold;
 	}
 
 	/**
-	 * Check if window size logic is applicable to the given slot
+	 * Get proxy for given provider delaying fillInSlot to the time screen dimensions criteria
+	 * are met. It'll hide and reshow the slots when screen dimensions change in case it affects
+	 * their desired presence
 	 *
-	 * @param slotname
-	 * @return {boolean}
+	 * @param provider
+	 * @returns {{name: string, wrappedProvider: *, canHandleSlot: Function, fillInSlot: Function}}
 	 */
-	function isApplicable(slotname) {
-		log(['isApplicable', slotname], 'debug', logGroup);
+	function getProxy(provider) {
+		log(['getProxy', provider], 'debug', logGroup);
 
-		return !!(
-			slotsOnlyOnLongPages[slotname] ||
-				slotsToHideOnMediaQuery[slotname] ||
-				slotsOnlyWithRail[slotname]
-		);
+		function canHandleSlot(slotinfo) {
+			log(['canHandleSlot', slotinfo, provider], 'debug', logGroup);
+			return provider.canHandleSlot(slotinfo);
+		}
+
+		function fillInSlot(slotinfo) {
+			log(['fillInSlot', slotinfo, provider], 'debug', logGroup);
+
+			var slotname = slotinfo[0];
+			add(slotname, slotinfo, provider);
+		}
+
+		// Init once
+		if (!initCalled) {
+			initCalled = true;
+			init();
+		}
+
+		// Return the provider interface
+		return {
+			name: 'WindowSizeProviderProxy',
+			wrappedProvider: provider,
+			canHandleSlot: canHandleSlot,
+			fillInSlot: fillInSlot
+		};
 	}
 
 	return {
 		isApplicable: isApplicable,
-		addSlot: add,
-		hasPreFooters: hasPreFooters
+		hasPreFooters: hasPreFooters,
+		getProxy: getProxy
 	};
 };

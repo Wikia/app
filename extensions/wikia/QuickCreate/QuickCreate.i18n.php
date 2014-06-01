@@ -64,7 +64,7 @@ $messages['ce'] = array(
 	'quickcreate' => 'дlадахьийта хьай дарб',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Jezevec
  */
@@ -363,5 +363,5 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'quickcreate-desc' => '添加“创建新页面”按钮，要求匿名用户登录编辑。',
-	'quickcreate' => '提交您的方案',
+	'quickcreate' => '提交您的菜谱',
 );

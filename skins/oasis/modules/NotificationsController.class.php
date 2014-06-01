@@ -48,7 +48,7 @@ class NotificationsController extends WikiaController {
 			'type' => $type,
 		);
 
-		wfDebug(__METHOD__ . " - " . (is_array( $message ) ) ? json_encode($message) : $message . "\n" );
+		wfDebug(__METHOD__ . " - {$message}\n");
 		wfProfileOut(__METHOD__);
 	}
 

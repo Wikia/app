@@ -54,13 +54,6 @@ class SFCreateCategory extends SpecialPage {
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
-			// Guard against cross-site request forgeries (CSRF)
-			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateCategory' );
-			if ( !$validToken ) {
-				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
-				return;
-			}
 			// Validate category name
 			if ( $category_name === '' ) {
 				$category_name_error_str = wfMsg( 'sf_blank_error' );
@@ -82,7 +75,7 @@ class SFCreateCategory extends SpecialPage {
 		$mw_namespace_labels = $wgContLang->getNamespaces();
 		$special_namespace = $mw_namespace_labels[NS_SPECIAL];
 		$text = <<<END
-	<form action="" method="post">
+	<form action="" method="get">
 
 END;
 		$text .= "\t" . Html::hidden( 'title', "$special_namespace:CreateCategory" ) . "\n";
@@ -128,9 +121,6 @@ END;
 		$sk = $wgUser->getSkin();
 		$create_form_link = SFUtils::linkForSpecialPage( $sk, 'CreateForm' );
 		$text .= "\t" . Html::rawElement( 'p', null, $create_form_link . '.' ) . "\n";
-
-		$text .= "\t" . Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateCategory' ) ) . "\n";
-
 		$text .= "\t</form>\n";
 
 		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );

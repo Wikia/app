@@ -349,9 +349,8 @@ var ImageLightbox = {
 	},
 
 	// create modal popup
-	showLightbox: function( title, content, caption, width, titleKey, type, provider, secondCallBack ) {
-		var self = this,
-			UserLoginModal = window.UserLoginModal;
+	showLightbox: function(title, content, caption, width, titleKey, type, provider, secondCallBack) {
+		var self = this;
 
 		// fix caption when not provided
 		caption = caption || '';
@@ -376,12 +375,11 @@ var ImageLightbox = {
 								});
 							}
 							else {
-								UserLoginModal.show( {
-									origin: 'image-lightbox',
+								UserLoginModal.show({
 									callback: function() {
-										window.location = $( '#lightbox-image-link' ).val();
+										window.location = $('#lightbox-image-link').val();
 									}
-								} );
+								});
 							}
 							return false;
 						}

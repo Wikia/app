@@ -90,8 +90,8 @@ class WikiaSendgridMailer {
 			'head_charset' => 'UTF-8',
  			'html_charset' => 'UTF-8', 
 			'text_charset' => 'UTF-8',
-			'text_encoding' => 'quoted-printable',
-			'html_encoding' => 'quoted-printable'
+			'text_encoding' => '8bit', 
+			'html_encoding' => '8bit'
 		);
 		
 		# send email with attachements

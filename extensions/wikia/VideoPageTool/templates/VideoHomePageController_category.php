@@ -1,11 +1,1 @@
-<? /* @var $assets array */ ?>
-
-<div class="latest-videos-wrapper"></div>
-
-<script type="text/javascript">
-	Wikia.modules = Wikia.modules || {};
-	Wikia.modules.videoHomePage = Wikia.modules.videoHomePage || {};
-
-	// set data for Backbone collection
-	Wikia.modules.videoHomePage.categoryData = <?= json_encode( $assets ) ?>;
-</script>
+<h1>This is the 'category' display handler</h1>

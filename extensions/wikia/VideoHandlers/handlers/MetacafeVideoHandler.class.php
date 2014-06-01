@@ -20,11 +20,7 @@ class MetacafeVideoHandler extends VideoHandler {
 <embed flashVars="playerVars={$sAutoPlayParam}={$sAutoPlayValue}" src="{$url}" $sizeString wmode="transparent" allowFullScreen="true" allowScriptAccess="always" name="Metacafe_{$articleId}" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

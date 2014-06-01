@@ -94,9 +94,6 @@ $wgAutoloadClasses['ChooseNameTemplate'] =	$dir . 'templates/ChooseNameTemplate.
 
 $wgSpecialPages['Connect'] = 'SpecialConnect';
 
-// JSMessages
-JSMessages::registerPackage('FBConnect', array('fbconnect-logout-confirm'));
-
 // Define new autopromote condition (use quoted text, numbers can cause collisions)
 define( 'APCOND_FB_INGROUP',   'fb*g' );
 define( 'APCOND_FB_ISOFFICER', 'fb*o' );

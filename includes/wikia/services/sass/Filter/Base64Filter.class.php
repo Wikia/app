@@ -37,7 +37,7 @@ class Base64Filter extends Filter {
 			return "url({$encoded});";
 		}
 		else {
-			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found! */");
+			throw new Exception("/* Base64 encoding failed: {$fileName} not found! */");
 		}
 	}
 

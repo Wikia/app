@@ -70,8 +70,6 @@ EOT;
 
 		$code = array(
 			'html' => $html,
-			'width' => $this->width,
-			'height' => $this->height,
 			'jsParams' => array(
 				'jwScript' => $jwScript,
 			),

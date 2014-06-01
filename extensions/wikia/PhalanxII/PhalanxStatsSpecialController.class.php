@@ -22,19 +22,17 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		}
 
 		$par = $this->getPar();
-		if ( strpos( $par, 'wiki' ) === 0 ) {
+		$blockId = $this->wg->Request->getInt('blockId', intval($par));
+		if ( !empty( $blockId ) ) {
+			// show block stats
+			$this->blockStats($blockId);
+		} elseif ( strpos( $par, 'wiki' ) !== false ) {
 			// show per-wiki stats
 			list ( , $wikiId ) = explode( "/", $par, 2 );
 			$this->blockWikia($wikiId);
 		} else {
-			$blockId = $this->wg->Request->getInt('blockId', intval($par));
-			if ( !empty( $blockId ) ) {
-				// show block stats
-				$this->blockStats($blockId);
-			} else {
-				// show help page
-				$this->forward('PhalanxStatsSpecial', 'help');
-			}
+			// show help page
+			$this->forward('PhalanxStatsSpecial', 'help');
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -37,10 +37,10 @@
 	}	?>
 	</div>
 	<div id=wkSrh>
-		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL(); ?>" method=get class='wkForm hide-clear'>
+		<form id=wkSrhFrm action="<?= SpecialPage::getSafeTitleFor( 'Search' )->getLocalURL(); ?>" method=get class=wkForm>
 			<input type=hidden name=fulltext value=Search>
 			<input id=wkSrhInp type=text name=search placeholder="<?= wfMessage( 'wikiamobile-search-this-wiki')->text(); ?>" value="<?= $wg->request->getVal( 'search', '' ); ?>" required=required autocomplete=off autofocus>
-			<div id=wkClear class='clsIco'></div>
+			<div id=wkClear class='clsIco hide'></div>
 			<input id=wkSrhSub class='wkBtn main' type=submit value='<?= wfMessage( 'wikiamobile-search' )->text(); ?>'>
 		</form>
 		<ul id=wkSrhSug class=wkLst></ul>

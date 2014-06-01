@@ -1,11 +1,7 @@
-require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache ) {
+require( ['jquery', 'wikia.toc', 'wikia.mustache'], function ( $, toc, mustache ) {
 	'use strict';
 
-	/**
-	 * map container identifier as key, true/false values that determine if TOC was generated for that container
-	 * @type {Object}
-	 */
-	var containerHasTOC = {},
+	var hasTOC = false, // flag - TOC is already created
 		cacheKey = 'TOCAssets'; // Local Storage key
 
 	/**
@@ -15,7 +11,7 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	 */
 
 	function wrapper() {
-		return function( text, render ) {
+		return function ( text, render ) {
 			if ( text !== '' ) {
 				return '<ol>' + render( text ) + '</ol>';
 			} else {
@@ -25,40 +21,29 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	}
 
 	/**
-	 * Checks and gets valid section heading
 	 *
-	 * @param {Object} rawHeader - Node element object for single article header
+	 * @param {Object} header - Node element object for single article header
 	 *
-	 * @returns {Object|Boolean} - returns header jQuery object or false if the header is not valid
+	 * @returns {Boolean|Object} - returns false for non Wikia Article related headers
+	 *                             (example lazy loaded discussion thread)
+	 *                             or custom TOC single section object.
 	 */
-	function getHeader( rawHeader ) {
-		rawHeader = $( rawHeader ).children( '.mw-headline' );
 
-		if ( rawHeader.length === 0 || rawHeader.is( ':hidden' ) ) {
+	function createTOCSection( header ) {
+
+		header = $( header ).children( '.mw-headline' );
+
+		if ( header.length === 0 ) {
 			return false;
 		}
 
 		// clone node and remove noscript to exclude it from text
-		rawHeader = rawHeader.clone();
-		rawHeader.find( 'noscript' ).remove();
+		header = header.clone();
+		header.find( 'noscript' ).remove();
 
-		return rawHeader;
-	}
-
-	/**
-	 *
-	 * @param {Object} header - Processed element object for single article header
-	 *
-	 * @param {Integer} tocLevel - The actual level on which the element will be rendered
-	 *
-	 * @returns {Object} - returns TOC section object
-	 */
-
-	function createTOCSection( header, tocLevel ) {
 		return {
 			title: header.text(),
 			id: header.attr( 'id' ),
-			class: 'toclevel-' + tocLevel,
 			sections: []
 		};
 	}
@@ -72,13 +57,13 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	function loadTemplate() {
 		var dfd = new $.Deferred();
 
-		require( ['wikia.loader', 'wikia.cache'], function( loader, cache ) {
+		require( ['wikia.loader', 'wikia.cache'], function ( loader, cache ) {
 			var template = cache.getVersioned( cacheKey );
 
 			if ( template ) {
 				dfd.resolve( template );
 			} else {
-				require( ['wikia.throbber'], function( throbber ) {
+				require( ['wikia.throbber'], function ( throbber ) {
 					var toc = $( '#toc' );
 
 					throbber.show( toc );
@@ -88,15 +73,15 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 						resources: {
 							mustache: 'extensions/wikia/TOC/templates/TOC_articleContent.mustache'
 						}
-					} ).done( function( data ) {
-						template = data.mustache[0];
+					} ).done( function ( data ) {
+							template = data.mustache[0];
 
-						dfd.resolve( template );
+							dfd.resolve( template );
 
-						cache.setVersioned( cacheKey, template, 604800 ); //7days
+							cache.setVersioned( cacheKey, template, 604800 ); //7days
 
-						throbber.remove( toc );
-					} );
+							throbber.remove( toc );
+						} );
 				} );
 			}
 		} );
@@ -113,16 +98,15 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 
 	function renderTOC( $target ) {
 		var $container = $target.parents( '#toc' ).children( 'ol' ),
-			$contentContainer = getContentContainer( $target ),
-			$headers = $contentContainer.find( 'h1, h2, h3, h4, h5, h6' ),
-			data = toc.getData( $headers, createTOCSection, getHeader );
+			$headers = $target.parents( '#mw-content-text' ).find( 'h1, h2, h3, h4, h5, h6' ),
+			data = toc.getData( $headers, createTOCSection );
 
 		data.wrapper = wrapper;
 
-		loadTemplate().done( function( template ) {
+		loadTemplate().done( function ( template ) {
 			$container.append( mustache.render( template, data ) );
 
-			setHasTOC( $target, true );
+			hasTOC = true;
 		} );
 	}
 
@@ -184,61 +168,21 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 	 */
 	function initTOC() {
 		var $showLink = $( '#togglelink' );
-		if ( !hasTOC( $showLink ) ) {
+		if ( !hasTOC ) {
 			renderTOC( $showLink );
 		}
 		showHideTOC( $showLink );
 	}
 
-	/**
-	 * Checks if TOC was generated already
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {boolean}
-	 */
-	function hasTOC( $target ) {
-		var containerIdentifier = getContainerIdentifier( $target );
-
-		return typeof containerHasTOC[containerIdentifier] !== 'undefined' && containerHasTOC[containerIdentifier];
-	}
-
-	/**
-	 * Sets that toc was generated or not for selected TOC
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @param {boolean} value
-	 */
-	function setHasTOC( $target, value ) {
-		var containerIdentifier = getContainerIdentifier( $target );
-		containerHasTOC[containerIdentifier] = value;
-	}
-
-	/**
-	 * Gets TOC container
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {Object} jquery collection
-	 */
-	function getContentContainer( $target ) {
-		// if tabviewer is on site use content from one tab only
-		return $target.parents( '.tabBody, #mw-content-text' ).first();
-	}
-
-	/**
-	 * Get TOC container identifier - used for setting that TOC was already rendered for that container
-	 * @param {Object} $target (jquery collection) TOC open link
-	 * @returns {string}
-	 */
-	function getContainerIdentifier( $target ) {
-		return getContentContainer( $target ).data( 'tab-body' ) || 'main';
-	}
-
-	$( function() {
+	$( function () {
 		/** Attach events */
-		$( 'body' ).on( 'click', '#togglelink', function( event ) {
+		$( 'body' ).on( 'click', '#togglelink', function ( event ) {
 			event.preventDefault();
 
 			if ( isNewTOC() ) {
 				var $target = $( event.target );
 
-				if ( !hasTOC( $target ) ) {
+				if ( !hasTOC ) {
 					renderTOC( $target );
 				}
 
@@ -246,9 +190,9 @@ require( ['jquery', 'wikia.toc', 'wikia.mustache'], function( $, toc, mustache )
 			}
 		} );
 
-		// reset containerHasTOC flags for each time preview modal is opened
-		$( window ).on( 'EditPageAfterRenderPreview', function() {
-			containerHasTOC = {};
+		// reset hasTOC flag for each time preview modal is opened
+		$( window ).on( 'EditPageAfterRenderPreview', function () {
+			hasTOC = false;
 			if ( isNewTOC() && window.wgUserName !== null ) {
 				initTOC();
 			}

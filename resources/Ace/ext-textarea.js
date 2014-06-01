@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/ext/textarea', ['require', 'exports', 'module' , 'ace/lib/event', 'ace/lib/useragent', 'ace/lib/net', 'ace/ace', 'ace/theme/textmate', 'ace/mode/text'], function(require, exports, module) {
+define('ace/ext/textarea', ['require', 'exports', 'module' , 'ace/lib/event', 'ace/lib/useragent', 'ace/lib/net', 'ace/ace', 'ace/theme/textmate', 'ace/mode/text'], function(require, exports, module) {
 
 
 var event = require("../lib/event");
@@ -64,7 +64,7 @@ function applyStyles(elm, styles) {
 
 function setupContainer(element, getValue) {
     if (element.type != 'textarea') {
-        throw new Error("Textarea required!");
+        throw "Textarea required!";
     }
 
     var parentNode = element.parentNode;
@@ -223,18 +223,21 @@ function setupApi(editor, editorDiv, settingDiv, ace, options, loader) {
             settingDiv.hideButton.focus();
             editor.on("focus", function onFocus() {
                 editor.removeListener("focus", onFocus);
-                settingDiv.style.display = "none";
+                settingDiv.style.display = "none"
             });
         } else {
             editor.focus();
-        }
+        };
     };
 
-    editor.$setOption = editor.setOption;
     editor.setOption = function(key, value) {
         if (options[key] == value) return;
 
         switch (key) {
+            case "gutter":
+                renderer.setShowGutter(toBool(value));
+            break;
+
             case "mode":
                 if (value != "text") {
                     loader("mode-" + value + ".js", "ace/mode/" + value, function() {
@@ -296,9 +299,18 @@ function setupApi(editor, editorDiv, settingDiv, ace, options, loader) {
                     break;
                 }
             break;
-            
-            default:
-                editor.$setOption(key, toBool(value));
+
+            case "useSoftTabs":
+                session.setUseSoftTabs(toBool(value));
+            break;
+
+            case "showPrintMargin":
+                renderer.setShowPrintMargin(toBool(value));
+            break;
+
+            case "showInvisibles":
+                editor.setShowInvisibles(toBool(value));
+            break;
         }
 
         options[key] = value;
@@ -312,7 +324,9 @@ function setupApi(editor, editorDiv, settingDiv, ace, options, loader) {
         return options;
     };
 
-    editor.setOptions(exports.options);
+    for (var option in exports.options) {
+        editor.setOption(option, exports.options[option]);
+    }
 
     return editor;
 }
@@ -412,7 +426,7 @@ function setupSettingPanel(settingDiv, settingOpener, editor, options) {
                     cValue == "true" ? "checked='true'" : "",
                "'></input>"
             );
-            return;
+            return
         }
         builder.push("<select title='" + option + "'>");
         for (var value in obj) {

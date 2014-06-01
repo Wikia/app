@@ -30,7 +30,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/ext/themelist', ['require', 'exports', 'module' , 'ace/ext/themelist_utils/themes'], function(require, exports, module) {
+define('ace/ext/themelist', ['require', 'exports', 'module' , 'ace/ext/themelist_utils/themes'], function(require, exports, module) {
 module.exports.themes = require('ace/ext/themelist_utils/themes').themes;
 module.exports.ThemeDescription = function(name) {
     this.name = name;
@@ -52,7 +52,7 @@ module.exports.themes = module.exports.themes.map(function(name) {
 
 });
 
-ace.define('ace/ext/themelist_utils/themes', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/ext/themelist_utils/themes', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 module.exports.themes = [
     "ambiance",
@@ -70,8 +70,8 @@ module.exports.themes = [
     "kr_theme",
     "merbivore",
     "merbivore_soft",
-    "mono_industrial",
     "monokai",
+    "mono_industrial",
     "pastel_on_dark",
     "solarized_dark",
     "solarized_light",

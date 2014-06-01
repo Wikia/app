@@ -22,11 +22,7 @@ class DailymotionVideoHandler extends VideoHandler {
 <iframe frameborder="0" $sizeString src="{$url}" allowfullscreen></iframe>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

@@ -1,3 +1,8 @@
 .wikia-bar-seasons {
-	background-image: url(/extensions/wikia/WikiaSeasons/images/W-KNOW_bottom_pattern.png); /* base64 */
+	background-image: url(/extensions/wikia/WikiaSeasons/images/wikiabar-snowflakes.png); /* base64 */
+	.wikia-bar.wikia-bar-anon {
+		background-image: url(/extensions/wikia/WikiaSeasons/images/wikiabar-lights.png); /* base64 */
+		background-position: 50%;
+		background-repeat: no-repeat;
+	}
 }

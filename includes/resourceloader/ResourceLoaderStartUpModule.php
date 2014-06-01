@@ -144,7 +144,6 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 				// seem to do that, and custom implementations might forget. Coerce it to TS_UNIX
 				$moduleMtime = wfTimestamp( TS_UNIX, $module->getModifiedTime( $context ) );
 				$mtime = max( $moduleMtime, wfTimestamp( TS_UNIX, $wgCacheEpoch ) );
-				$mtime = ResourceLoaderHooks::normalizeTimestamp($mtime); // Wikia change - @macbre
 				// Wikia - change begin - @author: wladek
 				$flags = $module->getFlag( $module->getFlagNames() );
 				if ( !empty( $flags ) ) {
@@ -294,7 +293,6 @@ ENDSCRIPT;
 		// infinite recursion - think carefully before making changes to this
 		// code!
 		$time = wfTimestamp( TS_UNIX, $wgCacheEpoch );
-		$time = ResourceLoaderHooks::normalizeTimestamp($time); // Wikia change - @macbre
 		foreach ( $loader->getModuleNames() as $name ) {
 			$module = $loader->getModule( $name );
 			$time = max( $time, $module->getModifiedTime( $context ) );

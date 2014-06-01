@@ -9,7 +9,7 @@
 
 		requires: ['core', 'noticearea', 'loadingstatus','pagecontrols', /*'restoreedit',*/ 'autoresizer','edittools',
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
-			'leaveconfirm', 'addfile', 'editorsurvey']
+			'leaveconfirm', 'addfile']
 
 	});
 

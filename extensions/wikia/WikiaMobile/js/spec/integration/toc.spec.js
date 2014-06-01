@@ -1,4 +1,4 @@
-xdescribe('Toc module', function() {
+describe('Toc module', function() {
 	'use strict';
 
 	var sections = {

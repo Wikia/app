@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/geshi', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports) {
+define('ace/theme/geshi', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports) {
 
 	exports.isDark = false;
 	exports.cssClass = "ace-geshi";

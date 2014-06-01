@@ -98,7 +98,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Set asset id
-	 * @param integer $value
+	 * @param type $value
 	 */
 	protected function setAssetId( $value ) {
 		$this->assetId = $value;
@@ -133,7 +133,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * @param array $value
 	 */
 	public function setData( $value ) {
-		foreach ( static::$dataFields as $field ) {
+		foreach ( STATIC::$dataFields as $field ) {
 			if ( property_exists( $this, $field ) && array_key_exists( $field, $value ) ) {
 				$this->$field = $value[$field];
 			}
@@ -168,46 +168,22 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Get the mapping between the display form names and the properties of this asset
-	 */
-	public static function getPropMap() {
-		return array_merge( self::$fields, self::$dataFields );
-	}
-
-	/**
-	 * Get the property name for the given form field name
-	 * @param string $formName
-	 * @return string|null
-	 */
-	public static function getPropName( $formName ) {
-		if ( array_key_exists( $formName, self::$fields ) ) {
-			return self::$fields[ $formName ];
-		}
-		if ( array_key_exists( $formName, self::$dataFields )) {
-			return self::$dataFields[ $formName ];
-		}
-		return null;
-	}
-
-	/**
 	 * Get asset object from program id, section and order
 	 * @param integer $programId
 	 * @param string $section
 	 * @param integer $order
-	 * @return VideoPageToolAsset|null $asset
+	 * @return Object|null $asset
 	 */
 	public static function newAsset( $programId, $section, $order ) {
 		wfProfileIn( __METHOD__ );
+
+		$className = self::getClassNameFromSection( $section );
+		$asset = new $className( $programId, $section, $order );
 
 		if ( empty( $programId ) || empty( $section ) || empty( $order ) ) {
 			wfProfileOut( __METHOD__ );
 			return null;
 		}
-
-		$className = self::getClassNameFromSection( $section );
-
-		/** @var VideoPageToolAsset $asset */
-		$asset = new $className( $programId, $section, $order );
 
 		$asset->setProgramId( $programId );
 		$asset->setSection( $section );
@@ -231,13 +207,11 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Get asset object from a row from table
-	 * @param ResultWrapper $row
-	 * @return VideoPageToolAsset $asset
+	 * @param array $row
+	 * @return object $asset
 	 */
 	public static function newFromRow( $row ) {
 		$className = self::getClassNameFromSection( $row->section );
-
-		/** @var VideoPageToolAsset $asset */
 		$asset = new $className();
 		$asset->loadFromRow( $row );
 
@@ -277,7 +251,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Load data from a row from the table
-	 * @param ResultWrapper $row
+	 * @param array $row
 	 */
 	protected function loadFromRow( $row ) {
 		foreach ( static::$fields as $fieldName => $varName ) {
@@ -292,10 +266,6 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function loadFromCache( $cache ) {
 		foreach ( static::$fields as $varName ) {
-			$this->$varName = $cache[$varName];
-		}
-
-		foreach ( static::$dataFields as $varName ) {
 			$this->$varName = $cache[$varName];
 		}
 	}
@@ -316,13 +286,20 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$data = $this->serializeData();
 
-		(new WikiaSQL())
-			->UPDATE( 'vpt_asset' )
-				->SET( 'data', $data )
-				->SET( 'updated_by', $this->updatedBy )
-				->SET( 'updated_at',  $db->timestamp( $this->updatedAt ) )
-			->WHERE( 'asset_id' )->EQUAL_TO( $this->assetId )
-			->run( $db );
+		$db->update(
+			'vpt_asset',
+			array(
+				'data' => $data,
+				'updated_by' => $this->updatedBy,
+				'updated_at' => $db->timestamp( $this->updatedAt ),
+			),
+			array(
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'`order`' => $this->order,
+			),
+			__METHOD__
+		);
 
 		$affected = $db->affectedRows();
 
@@ -345,21 +322,28 @@ class VideoPageToolAsset extends WikiaModel {
 
 		$db = wfGetDB( DB_MASTER );
 
+		$assetId = $db->nextSequenceValue( 'video_vpt_asset_seq' );
+
 		if ( empty( $this->updatedAt ) ) {
 			$this->updatedAt = $db->timestamp();
 		}
 
 		$data = $this->serializeData();
 
-		( new WikiaSQL() )
-			->INSERT( 'vpt_asset' )
-				->SET( 'program_id', $this->programId )
-				->SET( 'section', $this->section )
-				->SET( '`order`', $this->order )
-				->SET( 'data', $data )
-				->SET( 'updated_by', $this->updatedBy )
-				->SET( 'updated_at', $db->timestamp( $this->updatedAt ) )
-			->run( $db );
+		$db->insert(
+			'vpt_asset',
+			array(
+				'asset_id' => $assetId,
+				'program_id' => $this->programId,
+				'section' => $this->section,
+				'`order`' => $this->order,
+				'data' => $data,
+				'updated_by' => $this->updatedBy,
+				'updated_at' => $db->timestamp( $this->udpatedAt ),
+			),
+			__METHOD__,
+			'IGNORE'
+		);
 
 		$affected = $db->affectedRows();
 		if ( $affected > 0 ) {
@@ -369,57 +353,6 @@ class VideoPageToolAsset extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return Status::newGood( $affected );
-	}
-
-	/**
-	 * Remove asset from the database
-	 * @return Status
-	 */
-	protected function removeFromDatabase() {
-		wfProfileIn( __METHOD__ );
-
-		if ( wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
-		}
-
-		$db = wfGetDB( DB_MASTER );
-
-		(new WikiaSQL())
-			->DELETE( 'vpt_asset' )
-			->WHERE( 'asset_id' )->EQUAL_TO( $this->assetId )
-			->run( $db );
-
-		$affected = $db->affectedRows();
-
-		wfProfileOut( __METHOD__ );
-
-		return Status::newGood( $affected );
-	}
-
-	/**
-	 * Delete asset from database and caches
-	 * @return Status
-	 */
-	public function delete() {
-		wfProfileIn( __METHOD__ );
-
-		// Remove this from cache
-		$this->invalidateCache();
-
-		if ( !$this->exists() ) {
-			$status = Status::newGood();
-			$status->warning( "Tried to delete asset that does not exist" );
-
-			wfProfileOut( __METHOD__ );
-			return $status;
-		}
-
-		$status = $this->removeFromDatabase();
-
-		wfProfileOut( __METHOD__ );
-
-		return $status;
 	}
 
 	/**
@@ -462,6 +395,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 		if ( $status->isGood() ) {
 			$this->invalidateCache();
+			$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -475,7 +409,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 */
 	protected function serializeData() {
 		$data = array();
-		foreach ( static::$dataFields as $field ) {
+		foreach ( STATIC::$dataFields as $field ) {
 			$data[$field] = $this->$field;
 		}
 
@@ -484,7 +418,7 @@ class VideoPageToolAsset extends WikiaModel {
 
 	/**
 	 * Unserialize and set to data
-	 * @param string $serializedData
+	 * @param type $serializedData
 	 */
 	protected function setSerializedData( $serializedData ) {
 		$data = json_decode( $serializedData, true );
@@ -503,13 +437,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Save to cache
 	 */
 	public function saveToCache() {
-		$cache = [];
-
 		foreach ( self::$fields as $varName ) {
-			$cache[$varName] = $this->$varName;
-		}
-
-		foreach ( static::$dataFields as $varName ) {
 			$cache[$varName] = $this->$varName;
 		}
 
@@ -520,11 +448,7 @@ class VideoPageToolAsset extends WikiaModel {
 	 * Clear cache
 	 */
 	protected function invalidateCache() {
-		wfProfileIn( __METHOD__ );
 		$this->wg->Memc->delete( $this->getMemcKey() );
-//		$this->invalidateCacheAssets( $this->programId );
-		$this->invalidateCacheAssetsBySection( $this->programId, $this->section );
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -602,54 +526,6 @@ class VideoPageToolAsset extends WikiaModel {
 	}
 
 	/**
-	 * Get all assets associated with particular program ID.
-	 *
-	 * NOTE: Currently this is only used to cleanup assets when deleting a VideoPageToolProgram and so is
-	 * not cached.  If this is ever used for regular lookups it should be cached.
-	 *
-	 * @param integer $programId Return all assets belonging to this program ID
-	 * @return array
-	 */
-	public static function getAssets( $programId ) {
-		wfProfileIn( __METHOD__ );
-
-		$db = wfGetDB( DB_SLAVE );
-
-		$assets = (new WikiaSQL())
-			->SELECT( '*' )
-				->FIELD( 'unix_timestamp(updated_at)' )->AS_( 'updated_at' )
-			->FROM( 'vpt_asset' )
-			->WHERE( 'program_id' )->EQUAL_TO( $programId )
-			->runLoop( $db, function( &$assets, $row ) {
-					$assets[] = self::newFromRow( $row );
-			});
-
-		wfProfileOut( __METHOD__ );
-
-		return $assets;
-	}
-
-	/**
-	 * Get memcache key for all assets
-	 * @param integer $programId
-	 * @return string
-	 */
-	protected static function getMemcKeyAssets( $programId ) {
-		return wfMemcKey( 'videopagetool', 'assets', $programId );
-	}
-
-	/**
-	 * Clear cache for all assets of a program.
-	 *
-	 * Currently this cache is not being used (see NOTE in the getAssets() method
-	 *
-	 * @param integer $programId
-	 */
-	protected function invalidateCacheAssets( $programId ) {
-		$this->wg->Memc->delete( self::getMemcKeyAssets( $programId ) );
-	}
-
-	/**
 	 * Get asset data (used in template)
 	 * @param array $thumbOptions
 	 * @return array $assetData
@@ -684,7 +560,7 @@ class VideoPageToolAsset extends WikiaModel {
 	public static function formatFormData( $requiredRows, $formValues, &$errMsg ) {
 		$data = array();
 		for ( $i = 0; $i < $requiredRows; $i++ ) {
-			foreach ( static::$dataFields as $formFieldName => $varName ) {
+			foreach ( STATIC::$dataFields as $formFieldName => $varName ) {
 				// validate form
 				$helper = new VideoPageToolHelper();
 				$helper->validateFormField( $formFieldName, $formValues[$formFieldName][$i], $errMsg );

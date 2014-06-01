@@ -65,7 +65,7 @@ class CoppaToolController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		$userIdentityBox = new UserIdentityBox( $userObj );
+		$userIdentityBox = new UserIdentityBox( $this->app, $userObj, UserProfilePageController::MAX_TOP_WIKIS );
 
 		$userIdentityBox->resetUserProfile();
 

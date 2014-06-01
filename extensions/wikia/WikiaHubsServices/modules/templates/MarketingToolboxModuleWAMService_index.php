@@ -1,14 +1,14 @@
 <div class="wam-header">
 	<div class="social-links">
-		<? $fbMsg = wfMessage('wikiahubs-social-facebook-link-' . $canonicalVerticalName)->inContentLanguage()->text(); ?>
+		<? $fbMsg = wfMessage('wikiahubs-social-facebook-link-' . $canonicalVerticalName)->text(); ?>
 		<? if (!empty($fbMsg)): ?>
 			<a href="<?= $fbMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="facebook" /></a>
 		<? endif ?>
-		<? $twMsg =  wfMessage('wikiahubs-social-twitter-link-' . $canonicalVerticalName)->inContentLanguage()->text()?>
+		<? $twMsg =  wfMessage('wikiahubs-social-twitter-link-' . $canonicalVerticalName)->text()?>
 		<? if (!empty($twMsg)): ?>
 			<a href="<?= $twMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="twitter" /></a>
 		<? endif ?>
-		<? $gplusMsg =  wfMessage('wikiahubs-social-googleplus-link-' . $canonicalVerticalName)->inContentLanguage()->text()?>
+		<? $gplusMsg =  wfMessage('wikiahubs-social-googleplus-link-' . $canonicalVerticalName)->text()?>
 		<? if (!empty($gplusMsg)): ?>
 			<a href="<?= $gplusMsg ?>"><img src="<?= $wg->BlankImgUrl; ?>" class="gplus" /></a>
 		<? endif ?>

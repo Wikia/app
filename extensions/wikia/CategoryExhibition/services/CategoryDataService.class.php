@@ -5,14 +5,19 @@
  */
 class CategoryDataService extends Service {
 
-	/**
-	 * @param string $sCategoryDBKey
-	 * @param string $mNamespace
-	 * @param bool $negative
-	 * @return array
-	 */
-	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ) {
-		wfProfileIn( __METHOD__ );
+	private static function tableFromResult( $res ){
+
+		$articles = array();
+		while ($row = $res->fetchObject($res)) {
+			$articles[intval($row->page_id)] = array(
+				'page_id'		=> $row->page_id
+			);
+		}
+
+		return $articles;
+	}
+
+	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ){
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -26,77 +31,10 @@ class CategoryDataService extends Service {
 			array(	'ORDER BY' => 'page_title' ),
 			array(	'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
 		);
-
-		$result = self::tableFromResult( $res );
-
-		wfProfileOut( __METHOD__ );
-		return $result;
+		return self::tableFromResult( $res );
 	}
 
-	/**
-	 * Return the number of articles that are in a particular category.
-	 *
-	 * @param string $sCategoryDBKey The DB key for the category
-	 * @param string $mNamespace A namespace to filter on.  If not given, a count of articles in
-	 *                        any namespace is returned
-	 * @param bool $negative If $mNamespace is provided, this determines if this function returns
-	 *                       a count of all articles with this category (false) or a count
-	 *                       of all articles without this category (true).  Default is false.
-	 * @return int The number of articles with this category
-	 */
-	public static function getArticleCount( $sCategoryDBKey, $mNamespace = '', $negative = false ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( strlen($sCategoryDBKey) == 0 ) {
-			wfProfileOut( __METHOD__ );
-			return 0;
-		}
-
-		$db = wfGetDB( DB_SLAVE );
-
-		// Get a count of articles in a category.  Give at least a very small cache TTL
-		$query = (new WikiaSQL())->cache( 5 )
-			->SELECT( 'count(distinct page_title)' )->AS_( 'count' )
-			->FROM( 'page' )
-				->LEFT_JOIN( 'revision' )->ON( 'rev_page', 'page_id' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
-			->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
-
-		// If we have a namespace, convert it to an array
-		if ( $mNamespace && !is_array($mNamespace) ) {
-			$mNamespace = explode(',', $mNamespace);
-		}
-
-		// Decide whether we include or exclude the namespace passed to us.  If its null
-		// don't include the namespace in the query at all
-		if ( $mNamespace && $negative === true ) {
-			$query->AND_( 'page_namespace' )->NOT_IN( $mNamespace );
-		} else if ( $mNamespace && $negative === false ) {
-			$query->AND_( 'page_namespace' )->IN( $mNamespace );
-		}
-
-		// Run the query we've built
-		$count = $query->run( $db, function( ResultWrapper $result ) {
-			$row = $result->fetchObject();
-			return empty( $row ) ? 0 : $row->count;
-		});
-
-		wfProfileOut( __METHOD__ );
-
-		// Make sure we default to zero
-		return $count;
-	}
-
-	/**
-	 * Return a list of articles in a particular category, ordered by their last edit date
-	 *
-	 * @param string $sCategoryDBKey
-	 * @param string $mNamespace
-	 * @param bool $negative
-	 * @return array
-	 */
-	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ) {
-		wfProfileIn( __METHOD__ );
+	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ){
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select(
@@ -111,26 +49,14 @@ class CategoryDataService extends Service {
 			array(	'revision'  => array( 'LEFT JOIN', 'rev_page = page_id' ),
 				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
 		);
-
-		wfProfileOut( __METHOD__ );
-
 		return self::tableFromResult( $res );
 	}
 
-	/**
-	 * @param string $sCategoryDBKey
-	 * @param array $mNamespace
-	 * @param bool $limit
-	 * @param bool $negative
-	 * @return array
-	 */
-	public static function getMostVisited( $sCategoryDBKey, $mNamespace = null, $limit = false, $negative = false ) {
-		global $wgCityId, $wgStatsDBEnabled;
-		wfProfileIn( __METHOD__ );
+	public static function getMostVisited( $sCategoryDBKey, $mNamespace = null, $limit = false, $negative = false ){
+		global $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
 
 		if ( empty( $wgStatsDBEnabled ) ) {
 			Wikia::log(__METHOD__, ' Stats DB is disabled');
-			wfProfileOut( __METHOD__ );
 			return array();
 		}
 
@@ -138,7 +64,7 @@ class CategoryDataService extends Service {
 			'cl_to' => $sCategoryDBKey
 		);
 
-		if ( !empty( $mNamespace ) ) {
+		if( !empty( $mNamespace ) ) {
 			$where[] = 'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . implode( ',', $mNamespace ) . ')';
 		}
 
@@ -177,15 +103,13 @@ class CategoryDataService extends Service {
 					$keys[$key]= $key;
 				}
 
-				foreach ( $keys as $key ) {
-					if ( isset( $reversedCatKeys[$key] ) ) {
+				foreach($keys as $key) {
+					if ( isset( $reversedCatKeys[$key] ) ){
 						$aResultCount++;
 						unset( $aCategoryArticles[$key] );
 						$aResult[ $key ] = array( 'page_id' => $key );
-						if ( !empty( $limit ) && $aResultCount >= $limit ) {
+						if ( !empty( $limit ) && $aResultCount >= $limit ){
 							self::logProcessingTime($time);
-
-							wfProfileOut( __METHOD__ );
 							return $aResult;
 						}
 					}
@@ -195,37 +119,22 @@ class CategoryDataService extends Service {
 
 				$ret = ( !empty( $aResult ) )  ? $aResult + $aCategoryArticles : $aCategoryArticles;
 
-				if ( !empty( $limit ) && count( $ret ) > $limit ) {
+				if( !empty( $limit ) && count( $ret ) > $limit ) {
 					$ret = array_slice($ret, 0, $limit, true);
 				}
 
-				wfProfileOut( __METHOD__ );
 				return $ret;
 			} else {
 				Wikia::log(__METHOD__, 'No data at all. Quitting.');
-				wfProfileOut( __METHOD__ );
 				return array();
 			}
 		} else {
 			Wikia::log(__METHOD__, ' No articles in category found - quitting');
-			wfProfileOut( __METHOD__ );
 			return array();
 		}
 	}
 
-	protected static function logProcessingTime( $time ) {
+	protected static function logProcessingTime($time) {
 		Wikia::log(__METHOD__, ' Processing Time: ' . (microtime(true) - $time));
-	}
-
-	private static function tableFromResult( ResultWrapper $res ) {
-
-		$articles = array();
-		while ( $row = $res->fetchObject($res) ) {
-			$articles[intval($row->page_id)] = array(
-				'page_id' => $row->page_id
-			);
-		}
-
-		return $articles;
 	}
 }

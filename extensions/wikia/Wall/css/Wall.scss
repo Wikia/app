@@ -486,12 +486,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 	.speech-bubble-message .buttons {
 		ul {
-			left: auto;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			right: 0px;
-
+			list-style: none; margin: 0; padding: 0;
 			li { padding: 0; margin: 0; }
 			li a { padding: 12px 6px; font-size: 11px; }
 		}

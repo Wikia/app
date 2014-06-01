@@ -1,20 +1,13 @@
 <?php
 
 class UserProfilePageHelper {
-
-	const GLOBAL_RESTRICTED_WIKIS_ID = 0;
-	const GLOBAL_RESTRICTED_WIKIS_TYPE = 1;
-	const GLOBAL_RESTRICTED_WIKIS_CACHE_TIME = 0;
-
 	/**
 	 * @brief Get user object from given title
 	 *
 	 * @desc getUserFromTitle() is sometimes called in hooks therefore I added returnUser flag and when
 	 * it is set to true getUserFromTitle() will assign $this->user variable with a user object
 	 *
-	 * @param null|String|Title $title
-	 *
-	 * @return User|null
+	 * @return User
 	 *
 	 * @author ADi
 	 * @author nAndy
@@ -82,101 +75,5 @@ class UserProfilePageHelper {
 		return $user;
 	}
 
-	/**
-	 * Generate Restricted Wikis Memcache key
-	 *
-	 * @return string
-	 */
-	private static function getRestrictedWikisKey() {
-		return  wfSharedMemcKey( __CLASS__, __METHOD__);
-	}
-
-	/**
-	 * Get database handler to Dataware
-	 *
-	 * @param bool $master - Master or slave DB
-	 * @return DatabaseBase|TotallyFakeDatabase - Database hadler
-	 */
-	private static function getDb( $master = FALSE ) {
-		global $wgExternalDatawareDB;
-		return wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalDatawareDB );
-	}
-
-	/**
-	 * Load restricted wiki ids from DB
-	 *
-	 * @return array - Array with restricted wiki ids
-	 */
-	private static function getRestrictedWikisFromDB() {
-		wfProfileIn(__METHOD__);
-		$value = self::getDb( false )->selectField(
-			'global_registry',
-			'item_value',
-			array(
-				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
-				'item_type' => self::GLOBAL_RESTRICTED_WIKIS_TYPE,
-			),
-			__METHOD__
-		);
-		$restrictedWikis = unserialize( $value );
-		wfProfileOut(__METHOD__);
-		return is_array( $restrictedWikis ) ? $restrictedWikis : array();
-	}
-
-	/**
-	 * Save restricted wiki ids to DB
-	 * @param $restrictedWikis array - array with restricted wiki ids
-	 */
-	public static function saveRestrictedWikisDB( $restrictedWikis ) {
-		self::getDb( true )->replace(
-			'global_registry',
-			array( 'item_id', 'item_type' ),
-			array(
-				'item_id' => self::GLOBAL_RESTRICTED_WIKIS_ID,
-				'item_type' => self::GLOBAL_RESTRICTED_WIKIS_TYPE,
-				'item_value' => serialize( $restrictedWikis )
-			),
-			__METHOD__
-		);
-	}
-
-	/**
-	 * Get restricted wiki ids
-	 *
-	 * @return array Array with restricted wiki ids
-	 */
-	public static function getRestrictedWikisIds() {
-		return WikiaDataAccess::cache( self::getRestrictedWikisKey(), self::GLOBAL_RESTRICTED_WIKIS_CACHE_TIME,
-			function () {
-				return self::getRestrictedWikisFromDB();
-			}
-		);
-	}
-
-	/**
-	 * Update Restricted wiki list if necessary
-	 *
-	 * @param $city_id integer Wiki id in wikicities
-	 * @param $is_restricted bool True if wiki is restricted
-	 */
-	public static function updateRestrictedWikis( $city_id, $is_restricted ) {
-		$changed = false;
-		$restrictedWikis = self::getRestrictedWikisIds();
-		if ( $is_restricted ) {
-			if ( !in_array( $city_id, $restrictedWikis ) ) {
-				$restrictedWikis[] = $city_id;
-				$changed = true;
-			}
-		} else {
-			if ( ( $index = array_search($city_id, $restrictedWikis ) ) !== false ) {
-				unset( $restrictedWikis[$index] );
-				$changed = true;
-			}
-		}
-		if ( $changed ) {
-			self::saveRestrictedWikisDB( $restrictedWikis );
-			WikiaDataAccess::cachePurge( self::getRestrictedWikisKey() );
-		}
-	}
 
 }

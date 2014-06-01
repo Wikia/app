@@ -97,7 +97,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox( $user );
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 		$isUserPageOwner = (!$user->isAnon() && $user->getId() == $sessionUser->getId()) ? true : false;
 
 		if ($isUserPageOwner) {
@@ -315,12 +315,6 @@ class UserProfilePageController extends WikiaController {
 			$this->profilePage = new UserProfilePage($sessionUser);
 
 			$this->setVal('body', (string)$this->sendSelfRequest('renderLightbox', array('tab' => $selectedTab, 'userId' => $userId)));
-
-			if (!empty($this->wg->AvatarsMaintenance)) {
-				$this->setVal('avatarsDisabled', true);
-				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
-			}
-
 			//we'll implement interview section later
 			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
@@ -414,7 +408,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox( $user );
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 
 			if (!empty($userData->website) && 0 !== strpos($userData->website, 'http')) {
 				$userData->website = 'http://' . $userData->website;
@@ -745,7 +739,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox( $user );
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 			$userData = $userIdentityBox->getFullData();
 			$userData['avatar'] = $localPath;
 			$userIdentityBox->saveUserData($userData);
@@ -826,7 +820,7 @@ class UserProfilePageController extends WikiaController {
 		/**
 		 * @var $userIdentityBox UserIdentityBox
 		 */
-		$userIdentityBox = new UserIdentityBox( $user );
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 
 		$userData = $userIdentityBox->getFullData();
 
@@ -1027,7 +1021,7 @@ class UserProfilePageController extends WikiaController {
 			/**
 			 * @var $userIdentityBox UserIdentityBox
 			 */
-			$userIdentityBox = new UserIdentityBox( $user );
+			$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
 			$success = $userIdentityBox->hideWiki($wikiId);
 
 			$result = array('success' => $success, 'wikis' => $userIdentityBox->getTopWikis());
@@ -1042,12 +1036,14 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onRefreshFavWikis() {
-		$userId = intval( $this->getVal( 'userId' ) );
-		$user = User::newFromId( $userId );
-		$userIdentityBox = new UserIdentityBox( $user );
-		$result = array( 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) );
+		$userId = intval($this->getVal('userId'));
 
-		$this->setVal( 'result', $result );
+		$user = User::newFromId($userId);
+
+		$userIdentityBox = new UserIdentityBox($this->app, $user, self::MAX_TOP_WIKIS);
+		$result = array('success' => true, 'wikis' => $userIdentityBox->getTopWikis(true));
+
+		$this->setVal('result', $result);
 	}
 
 	public function getClosingModal() {
@@ -1090,8 +1086,8 @@ class UserProfilePageController extends WikiaController {
 			return true;
 		}
 
-		if ($this->request->getVal('avUser')) {
-			$avUser = User::newFromName($this->request->getVal('avUser'));
+		if ($this->request->getVal('av_user')) {
+			$avUser = User::newFromName($this->request->getVal('av_user'));
 			if ($avUser->getID() !== 0) {
 				$avatar = Masthead::newFromUser($avUser);
 				if ($avatar->removeFile(true)) {

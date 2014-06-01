@@ -3,26 +3,8 @@ CKEDITOR.plugins.add('rte-tools', {});
 
 window.RTE.tools = {
 	// show modal version of alert()
-	'alert': function(title, content) {
-		'use strict';
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then(function( modal ) {
-
-				// config for rendering modal
-				var modalConfig = {
-					vars: {
-						id: 'RTEAlertModal',
-						content: '<p>' + content + '</p>',
-						size: 'small',
-						title: title
-					}
-				};
-
-				modal.createComponent( modalConfig, function( RTEAlertModal ) {
-					RTEAlertModal.show();
-				});
-			});
-		});
+	"alert": function(title, content) {
+		window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEModal', width: 500});
 	},
 
 	// call given function with special RTE event type and provide function with given element and extra data

@@ -63,7 +63,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
 
 		//TODO: keep the varnish cache and do purging on post
-		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setCacheValidity( 0, 0 );
 
 		$this->app->wg->SuppressPageHeader = true;
 	}

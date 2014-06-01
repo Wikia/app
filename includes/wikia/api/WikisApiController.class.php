@@ -22,9 +22,8 @@ class WikisApiController extends WikiaApiController {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 2;
 	const WORDMARK = 'Wiki-wordmark.png';
-	const MAX_WIKIS = 250;
 	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
@@ -60,7 +59,6 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getTop( $langs, $hub );
-		$results = $this->filterNonCommercial( $results );
 		$batches = wfPaginateArray( $results, $limit, $batch );
 
 		if ( $expand ) {
@@ -70,7 +68,14 @@ class WikisApiController extends WikiaApiController {
 		foreach ( $batches as $name => $value ) {
 			$this->response->setVal( $name, $value );
 		}
-		$this->response->setCacheValidity(static::CACHE_1_WEEK);
+		$this->response->setCacheValidity(
+			static::CACHE_1_WEEK,
+			static::CACHE_1_WEEK,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 	}
 
 	/**
@@ -115,7 +120,6 @@ class WikisApiController extends WikiaApiController {
 		}
 
 		$results = $this->getWikiService()->getByString( $keyword, $langs, $hub, $includeDomain );
-		$results = $this->filterNonCommercial( $results );
 
 		if( is_array( $results ) ) {
 			$batches = wfPaginateArray( $results, $limit, $batch );
@@ -134,7 +138,14 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->response->setCacheValidity(
+			static::CACHE_1_DAY,
+			static::CACHE_1_DAY,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -175,7 +186,14 @@ class WikisApiController extends WikiaApiController {
 		$this->response->setVal( 'items', $items );
 
 		//set varnish caching
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->response->setCacheValidity(
+			static::CACHE_1_DAY,
+			static::CACHE_1_DAY,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -237,22 +255,6 @@ class WikisApiController extends WikiaApiController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getNonCommercialWikis() {
-		$licensed = new LicensedWikisService();
-		return $licensed->getCommercialUseNotAllowedWikis();
-	}
-
-	protected function filterNonCommercial( $wikis ) {
-		$result =[];
-		$blackList = $this->getNonCommercialWikis();
-		foreach( $wikis as $wiki ) {
-			if ( !isset( $blackList[ $wiki['id'] ] ) ) {
-				$result[] = $wiki;
-			}
-		}
-		return array_slice($result, 0, self::MAX_WIKIS);
-	}
-
 	protected function expandBatches( $batches ) {
 		if ( isset( $batches[ 'items' ] ) ) {
 			$expanded = [];
@@ -303,12 +305,14 @@ class WikisApiController extends WikiaApiController {
 			return [];
 		}
 		//post process thumbnails
-
-		$wikiInfo = array_merge(
-			$wikiInfo,
-			$this->getImageData( $wikiInfo, $width, $height )
-		);
-
+		if ( isset( $wikiInfo[ 'image' ] ) ) {
+			$wikiInfo = array_merge(
+				$wikiInfo,
+				$this->getImageData( $wikiInfo[ 'image' ], $width, $height )
+			);
+		} else {
+			$wikiInfo[ 'image' ] = '';
+		}
 		//set snippet
 		if ( isset( $wikiInfo[ 'desc' ] ) ) {
 			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
@@ -319,77 +323,27 @@ class WikisApiController extends WikiaApiController {
 		return $wikiInfo;
 	}
 
-	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
-		$imageName = $wikiInfo[ 'image' ];
-		$crop = ( $width != null || $height != null );
-		$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
-		$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
-		$imgUrl = '';
-		$imgWidth = null;
-		$imgHeight = null;
-
+	protected function getImageData( $imageName, $width = null, $height = null  ) {
 		$img = wfFindFile( $imageName );
 		if ( $img instanceof WikiaLocalFile ) {
-			//found on en-corporate wiki
-			if ( $crop ) {
+			if ( $width == null && $height == null ) {
 				//get original image if no cropping
+				$imgUrl = $img->getFullUrl();
+			} else {
+				$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
+				$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
 				$imageServing = new ImageServing( null, $width, $height );
 				$imgUrl = $imageServing->getUrl( $img, $width, $height );
-			} else {
-				$imgUrl = $img->getFullUrl();
-				$imgWidth = $img->getWidth();
-				$imgHeight = $img->getHeight();
 			}
-		} else {
-			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
-			if ( $f && $f->exists() ) {
-				$imgWidth = $f->getWidth();
-				$imgHeight = $f->getHeight();
-				if ( $crop ) {
-					$globalTitle = $f->getTitle();
-
-					$imageService = new ImagesService();
-					$response = $imageService->getImageSrc(
-						$globalTitle->getCityId(),
-						$globalTitle->getArticleID(),
-						$width,
-						$height
-					);
-					$imgUrl = $response[ 'src' ];
-				} else {
-					$imgUrl = $f->getUrl();
-				}
-			}
-		}
-
-		if ( $imgUrl ) {
 			return [
 				'image' => $imgUrl,
 				'original_dimensions' => [
-					'width' => $imgWidth,
-					'height' => $imgHeight
+					'width' => $img->getWidth(),
+					'height' => $img->getHeight()
 				]
 			];
-		} else {
-			return [ 'image' => '' ];
 		}
-	}
-
-	protected function findGlobalFileImage( $imageName, $lang, $wikiId ) {
-		//try to find image on lang specific corporate wiki
-		$f = null;
-		$visualizationModel = new CityVisualization();
-		$cityList = $visualizationModel->getVisualizationWikisData();
-
-		if ( isset( $cityList[ $lang ] ) ) {
-			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
-		} else {
-			//if image wasn't found, try to find it on wiki itself
-			$imageName = UploadVisualizationImageFromFile::VISUALIZATION_MAIN_IMAGE_NAME;
-			$f = GlobalFile::newFromText( $imageName, $wikiId );
-		}
-
-		return $f;
+		return [];
 	}
 
 	protected function getWikiWordmarkImage( $id ) {
@@ -452,7 +406,6 @@ class WikisApiController extends WikiaApiController {
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
-		    'lang' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'lang' ] : '',
 			'flags' => $flags,
 			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',

@@ -249,10 +249,8 @@ class WAMService extends Service {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
 		}
 
-		if (!empty($options['excludeBlacklist']) || !empty($options['excludeNonCommercial'])) {
-			$bannedIds = !empty($options['excludeBlacklist']) ? $this->getIdsBlacklistedWikis() : [];
-			$nonCommercialIds = !empty($options['excludeNonCommercial']) ? $this->getNonCommercialWikis() : [];
-			$blacklistIds = array_merge( $bannedIds, $nonCommercialIds );
+		if (!empty($options['excludeBlacklist'])) {
+			$blacklistIds = $this->getIdsBlacklistedWikis();
 			if (!empty($blacklistIds)) {
 				$conds[] = 'fw1.wiki_id NOT IN (' . $db->makeList( $blacklistIds ) . ')';
 			}
@@ -296,12 +294,6 @@ class WAMService extends Service {
 			'dw' => 'dimension_wikis'
 		);
 		return $tables;
-	}
-
-	protected function getNonCommercialWikis() {
-		$licensed = new LicensedWikisService();
-		$licensedIds = array_keys( $licensed->getCommercialUseNotAllowedWikis() );
-		return $licensedIds;
 	}
 
 	protected function getIdsBlacklistedWikis() {

@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/perl', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/perl_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/perl', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/perl_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -40,8 +40,7 @@ var Range = require("../range").Range;
 var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = PerlHighlightRules;
-    
+    this.$tokenizer = new Tokenizer(new PerlHighlightRules().getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.foldingRules = new CStyleFoldMode({start: "^=(begin|item)\\b", end: "^=(cut)\\b"});
 };
@@ -59,7 +58,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
 
         if (tokens.length && tokens[tokens.length-1].type == "comment") {
@@ -89,7 +88,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/perl_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/perl_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -138,6 +137,9 @@ var PerlHighlightRules = function() {
     this.$rules = {
         "start" : [
             {
+                token : "comment",
+                regex : "#.*$"
+            }, {
                 token : "comment.doc",
                 regex : "^=(?:begin|item)\\b",
                 next : "block_comment"
@@ -169,10 +171,7 @@ var PerlHighlightRules = function() {
                 regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
             }, {
                 token : "keyword.operator",
-                regex : "%#|\\$#|\\.\\.\\.|\\|\\|=|>>=|<<=|<=>|&&=|=>|!~|\\^=|&=|\\|=|\\.=|x=|%=|\\/=|\\*=|\\-=|\\+=|=~|\\*\\*|\\-\\-|\\.\\.|\\|\\||&&|\\+\\+|\\->|!=|==|>=|<=|>>|<<|,|=|\\?\\:|\\^|\\||x|%|\\/|\\*|<|&|\\\\|~|!|>|\\.|\\-|\\+|\\-C|\\-b|\\-S|\\-u|\\-t|\\-p|\\-l|\\-d|\\-f|\\-g|\\-s|\\-z|\\-k|\\-e|\\-O|\\-T|\\-B|\\-M|\\-A|\\-X|\\-W|\\-c|\\-R|\\-o|\\-x|\\-w|\\-r|\\b(?:and|cmp|eq|ge|gt|le|lt|ne|not|or|xor)"
-            }, {
-                token : "comment",
-                regex : "#.*$"
+                regex : "\\.\\.\\.|\\|\\|=|>>=|<<=|<=>|&&=|=>|!~|\\^=|&=|\\|=|\\.=|x=|%=|\\/=|\\*=|\\-=|\\+=|=~|\\*\\*|\\-\\-|\\.\\.|\\|\\||&&|\\+\\+|\\->|!=|==|>=|<=|>>|<<|,|=|\\?\\:|\\^|\\||x|%|\\/|\\*|<|&|\\\\|~|!|>|\\.|\\-|\\+|\\-C|\\-b|\\-S|\\-u|\\-t|\\-p|\\-l|\\-d|\\-f|\\-g|\\-s|\\-z|\\-k|\\-e|\\-O|\\-T|\\-B|\\-M|\\-A|\\-X|\\-W|\\-c|\\-R|\\-o|\\-x|\\-w|\\-r|\\b(?:and|cmp|eq|ge|gt|le|lt|ne|not|or|xor)"
             }, {
                 token : "lparen",
                 regex : "[[({]"
@@ -222,7 +221,7 @@ oop.inherits(PerlHighlightRules, TextHighlightRules);
 exports.PerlHighlightRules = PerlHighlightRules;
 });
 
-ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;
@@ -262,7 +261,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

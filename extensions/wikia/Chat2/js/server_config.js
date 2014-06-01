@@ -82,11 +82,11 @@ exports.logLevel = (typeof arvg.loglevel != 'undefined') ? arvg.loglevel : "CRIT
 //TODO move this to other file
 /** KEY BUILDING / ACCESSING FUNCTIONS **/
 exports.getKey_listOfRooms = function( cityId, type, users ){
+	users = users || [];
+	users = users.sort();
 	if(type == "open") {
 		return "rooms_on_wiki:" + cityId;
 	} else {
-		users = users || [];
-		users = users.sort();
 		return "rooms_on_wiki:" + cityId + ':' + md5( type + users.join( ',' ) );
 	}
 }
@@ -110,7 +110,7 @@ exports.getKey_userInRoom = function(userName, roomId){
 exports.getKeyPrefix_usersInRoom = function(){ return "users_in_room"; }
 exports.getKey_usersInRoom = function(roomId){ return exports.getKeyPrefix_usersInRoom() +":" + roomId; } // key for set of all usernames in the given room
 
-exports.getKeyPrefix_usersAllowedInPrivRoom = function(){ return "users_allowed_in_priv_room"; }
+exports.getKeyPrefix_usersAllowedInPrivRoom = function( roomId ){ return "users_allowed_in_priv_room"; }
 exports.getKey_usersAllowedInPrivRoom = function( roomId ){ return exports.getKeyPrefix_usersAllowedInPrivRoom() + ":" + roomId; }
 
 exports.getKey_chatEntriesInRoom = function(roomId){ return "chatentries:" + roomId; }

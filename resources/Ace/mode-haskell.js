@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/haskell', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/haskell_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/haskell', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/haskell_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -43,8 +43,9 @@ var HaskellHighlightRules = require("./haskell_highlight_rules").HaskellHighligh
 var FoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = HaskellHighlightRules;
+    var highlighter = new HaskellHighlightRules();
     this.foldingRules = new FoldMode();
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -56,7 +57,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/haskell_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/haskell_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -265,7 +266,7 @@ oop.inherits(HaskellHighlightRules, TextHighlightRules);
 exports.HaskellHighlightRules = HaskellHighlightRules;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

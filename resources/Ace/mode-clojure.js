@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/clojure', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/clojure_highlight_rules', 'ace/mode/matching_parens_outdent', 'ace/range'], function(require, exports, module) {
+define('ace/mode/clojure', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/clojure_highlight_rules', 'ace/mode/matching_parens_outdent', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -39,7 +39,7 @@ var MatchingParensOutdent = require("./matching_parens_outdent").MatchingParensO
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.HighlightRules = ClojureHighlightRules;
+    this.$tokenizer = new Tokenizer(new ClojureHighlightRules().getRules());
     this.$outdent = new MatchingParensOutdent();
 };
 oop.inherits(Mode, TextMode);
@@ -51,7 +51,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
 
         if (tokens.length && tokens[tokens.length-1].type == "comment") {
@@ -85,7 +85,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/clojure_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/clojure_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -253,7 +253,7 @@ oop.inherits(ClojureHighlightRules, TextHighlightRules);
 exports.ClojureHighlightRules = ClojureHighlightRules;
 });
 
-ace.define('ace/mode/matching_parens_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_parens_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;

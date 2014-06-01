@@ -7,10 +7,10 @@ class PrototypeVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.wikia.com';
 	protected static $providerHomeUrl = 'http://www.wikia.com/';
 
-	function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ){
+	function getEmbed($articleId, $width, $autoplay=false, $isAjax=false, $postOnload=false){
 		// hardcoden but this is only a prototype. In future it will be handled in a better way
 		$width = 660;
-		$height = (integer) ( $width / self::$aspectRatio );
+		$height = (integer) ($width / self::$aspectRatio);
 		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT
@@ -26,11 +26,7 @@ class PrototypeVideoHandler extends VideoHandler {
 </object></div>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

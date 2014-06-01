@@ -17,20 +17,21 @@ class YoutubeVideoHandler extends VideoHandler {
 			'wmode' => 'opaque',
 			'allowfullscreen' => 1,
 		);
-
 		if ( $autoplay ) {
 			$playerVars[self::$autoplayParam] = self::$autoplayValue;
 		}
-
 		$sizeString = $this->getSizeString( $width, $height, 'inline' );
 
+		$html = <<<EOT
+<div id="youtubeVideoPlayer" $sizeString></div>
+EOT;
 		return array(
-			'html' => "<div id='youtubeVideoPlayer' {$sizeString}></div>",
-			'width' => $width,
-			'height' => $height,
+			'html' => $html,
 			'init' => 'wikia.videohandler.youtube',
 			'jsParams' => array(
-				'videoId' => $this->videoId,
+				'width' => $width,
+				'height' => $height,
+				'videoId'=> $this->videoId,
 				'playerVars' => $playerVars,
 			),
 			'scripts' => array(

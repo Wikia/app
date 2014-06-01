@@ -1,4 +1,4 @@
-ace.define('ace/mode/luapage', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/html', 'ace/mode/lua', 'ace/tokenizer', 'ace/mode/luapage_highlight_rules'], function(require, exports, module) {
+define('ace/mode/luapage', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/html', 'ace/mode/lua', 'ace/tokenizer', 'ace/mode/luapage_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -8,9 +8,10 @@ var Tokenizer = require("../tokenizer").Tokenizer;
 var LuaPageHighlightRules = require("./luapage_highlight_rules").LuaPageHighlightRules;
 
 var Mode = function() {
-    this.HighlightRules = LuaPageHighlightRules;
+    var highlighter = new LuaPageHighlightRules();
     
-    this.HighlightRules = LuaPageHighlightRules;
+    this.$tokenizer = new Tokenizer(new LuaPageHighlightRules().getRules());
+    this.$embeds = highlighter.getEmbeds();
     this.createModeDelegates({
         "lua-": LuaMode
     });
@@ -20,7 +21,7 @@ oop.inherits(Mode, HtmlMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/mode/javascript', 'ace/mode/css', 'ace/tokenizer', 'ace/mode/html_highlight_rules', 'ace/mode/behaviour/html', 'ace/mode/folding/html', 'ace/mode/html_completions'], function(require, exports, module) {
+define('ace/mode/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/mode/javascript', 'ace/mode/css', 'ace/tokenizer', 'ace/mode/html_highlight_rules', 'ace/mode/behaviour/html', 'ace/mode/folding/html'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -31,13 +32,13 @@ var Tokenizer = require("../tokenizer").Tokenizer;
 var HtmlHighlightRules = require("./html_highlight_rules").HtmlHighlightRules;
 var HtmlBehaviour = require("./behaviour/html").HtmlBehaviour;
 var HtmlFoldMode = require("./folding/html").FoldMode;
-var HtmlCompletions = require("./html_completions").HtmlCompletions;
 
 var Mode = function() {
-    this.HighlightRules = HtmlHighlightRules;
+    var highlighter = new HtmlHighlightRules();
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
     this.$behaviour = new HtmlBehaviour();
-    this.$completer = new HtmlCompletions();
     
+    this.$embeds = highlighter.getEmbeds();
     this.createModeDelegates({
         "js-": JavaScriptMode,
         "css-": CssMode
@@ -59,16 +60,12 @@ oop.inherits(Mode, TextMode);
         return false;
     };
 
-    this.getCompletions = function(state, session, pos, prefix) {
-        return this.$completer.getCompletions(state, session, pos, prefix);
-    };
-
 }).call(Mode.prototype);
 
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/javascript', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/javascript_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/worker/worker_client', 'ace/mode/behaviour/cstyle', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/javascript', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/javascript_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/worker/worker_client', 'ace/mode/behaviour/cstyle', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -82,8 +79,7 @@ var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
 var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = JavaScriptHighlightRules;
-    
+    this.$tokenizer = new Tokenizer(new JavaScriptHighlightRules().getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CstyleBehaviour();
     this.foldingRules = new CStyleFoldMode();
@@ -98,7 +94,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
         var endState = tokenizedLine.state;
 
@@ -155,7 +151,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/javascript_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/javascript_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -204,8 +200,7 @@ var JavaScriptHighlightRules = function() {
         "no_regex" : [
             {
                 token : "comment",
-                regex : "\\/\\/",
-                next : "line_comment"
+                regex : /\/\/.*$/
             },
             DocCommentHighlightRules.getStartRule("doc-start"),
             {
@@ -280,7 +275,7 @@ var JavaScriptHighlightRules = function() {
                 next : "start"
             }, {
                 token : ["punctuation.operator", "support.function"],
-                regex : /(\.)(s(?:h(?:ift|ow(?:Mod(?:elessDialog|alDialog)|Help))|croll(?:X|By(?:Pages|Lines)?|Y|To)?|t(?:op|rike)|i(?:n|zeToContent|debar|gnText)|ort|u(?:p|b(?:str(?:ing)?)?)|pli(?:ce|t)|e(?:nd|t(?:Re(?:sizable|questHeader)|M(?:i(?:nutes|lliseconds)|onth)|Seconds|Ho(?:tKeys|urs)|Year|Cursor|Time(?:out)?|Interval|ZOptions|Date|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Date|FullYear)|FullYear|Active)|arch)|qrt|lice|avePreferences|mall)|h(?:ome|andleEvent)|navigate|c(?:har(?:CodeAt|At)|o(?:s|n(?:cat|textual|firm)|mpile)|eil|lear(?:Timeout|Interval)?|a(?:ptureEvents|ll)|reate(?:StyleSheet|Popup|EventObject))|t(?:o(?:GMTString|S(?:tring|ource)|U(?:TCString|pperCase)|Lo(?:caleString|werCase))|est|a(?:n|int(?:Enabled)?))|i(?:s(?:NaN|Finite)|ndexOf|talics)|d(?:isableExternalCapture|ump|etachEvent)|u(?:n(?:shift|taint|escape|watch)|pdateCommands)|j(?:oin|avaEnabled)|p(?:o(?:p|w)|ush|lugins.refresh|a(?:ddings|rse(?:Int|Float)?)|r(?:int|ompt|eference))|e(?:scape|nableExternalCapture|val|lementFromPoint|x(?:p|ec(?:Script|Command)?))|valueOf|UTC|queryCommand(?:State|Indeterm|Enabled|Value)|f(?:i(?:nd|le(?:ModifiedDate|Size|CreatedDate|UpdatedDate)|xed)|o(?:nt(?:size|color)|rward)|loor|romCharCode)|watch|l(?:ink|o(?:ad|g)|astIndexOf)|a(?:sin|nchor|cos|t(?:tachEvent|ob|an(?:2)?)|pply|lert|b(?:s|ort))|r(?:ou(?:nd|teEvents)|e(?:size(?:By|To)|calc|turnValue|place|verse|l(?:oad|ease(?:Capture|Events)))|andom)|g(?:o|et(?:ResponseHeader|M(?:i(?:nutes|lliseconds)|onth)|Se(?:conds|lection)|Hours|Year|Time(?:zoneOffset)?|Da(?:y|te)|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Da(?:y|te)|FullYear)|FullYear|A(?:ttention|llResponseHeaders)))|m(?:in|ove(?:B(?:y|elow)|To(?:Absolute)?|Above)|ergeAttributes|a(?:tch|rgins|x))|b(?:toa|ig|o(?:ld|rderWidths)|link|ack))\b(?=\()/
+                regex : /(\.)(s(?:h(?:ift|ow(?:Mod(?:elessDialog|alDialog)|Help))|croll(?:X|By(?:Pages|Lines)?|Y|To)?|t(?:opzzzz|rike)|i(?:n|zeToContent|debar|gnText)|ort|u(?:p|b(?:str(?:ing)?)?)|pli(?:ce|t)|e(?:nd|t(?:Re(?:sizable|questHeader)|M(?:i(?:nutes|lliseconds)|onth)|Seconds|Ho(?:tKeys|urs)|Year|Cursor|Time(?:out)?|Interval|ZOptions|Date|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Date|FullYear)|FullYear|Active)|arch)|qrt|lice|avePreferences|mall)|h(?:ome|andleEvent)|navigate|c(?:har(?:CodeAt|At)|o(?:s|n(?:cat|textual|firm)|mpile)|eil|lear(?:Timeout|Interval)?|a(?:ptureEvents|ll)|reate(?:StyleSheet|Popup|EventObject))|t(?:o(?:GMTString|S(?:tring|ource)|U(?:TCString|pperCase)|Lo(?:caleString|werCase))|est|a(?:n|int(?:Enabled)?))|i(?:s(?:NaN|Finite)|ndexOf|talics)|d(?:isableExternalCapture|ump|etachEvent)|u(?:n(?:shift|taint|escape|watch)|pdateCommands)|j(?:oin|avaEnabled)|p(?:o(?:p|w)|ush|lugins.refresh|a(?:ddings|rse(?:Int|Float)?)|r(?:int|ompt|eference))|e(?:scape|nableExternalCapture|val|lementFromPoint|x(?:p|ec(?:Script|Command)?))|valueOf|UTC|queryCommand(?:State|Indeterm|Enabled|Value)|f(?:i(?:nd|le(?:ModifiedDate|Size|CreatedDate|UpdatedDate)|xed)|o(?:nt(?:size|color)|rward)|loor|romCharCode)|watch|l(?:ink|o(?:ad|g)|astIndexOf)|a(?:sin|nchor|cos|t(?:tachEvent|ob|an(?:2)?)|pply|lert|b(?:s|ort))|r(?:ou(?:nd|teEvents)|e(?:size(?:By|To)|calc|turnValue|place|verse|l(?:oad|ease(?:Capture|Events)))|andom)|g(?:o|et(?:ResponseHeader|M(?:i(?:nutes|lliseconds)|onth)|Se(?:conds|lection)|Hours|Year|Time(?:zoneOffset)?|Da(?:y|te)|UTC(?:M(?:i(?:nutes|lliseconds)|onth)|Seconds|Hours|Da(?:y|te)|FullYear)|FullYear|A(?:ttention|llResponseHeaders)))|m(?:in|ove(?:B(?:y|elow)|To(?:Absolute)?|Above)|ergeAttributes|a(?:tch|rgins|x))|b(?:toa|ig|o(?:ld|rderWidths)|link|ack))\b(?=\()/
             }, {
                 token : ["punctuation.operator", "support.function.dom"],
                 regex : /(\.)(s(?:ub(?:stringData|mit)|plitText|e(?:t(?:NamedItem|Attribute(?:Node)?)|lect))|has(?:ChildNodes|Feature)|namedItem|c(?:l(?:ick|o(?:se|neNode))|reate(?:C(?:omment|DATASection|aption)|T(?:Head|extNode|Foot)|DocumentFragment|ProcessingInstruction|E(?:ntityReference|lement)|Attribute))|tabIndex|i(?:nsert(?:Row|Before|Cell|Data)|tem)|open|delete(?:Row|C(?:ell|aption)|T(?:Head|Foot)|Data)|focus|write(?:ln)?|a(?:dd|ppend(?:Child|Data))|re(?:set|place(?:Child|Data)|move(?:NamedItem|Child|Attribute(?:Node)?)?)|get(?:NamedItem|Element(?:sBy(?:Name|TagName)|ById)|Attribute(?:Node)?)|blur)\b(?=\()/
@@ -325,8 +320,8 @@ var JavaScriptHighlightRules = function() {
                 next : "comment_regex_allowed"
             }, {
                 token : "comment",
-                regex : "\\/\\/",
-                next : "line_comment_regex_allowed"
+                regex : "\\/\\/.*$",
+                next : "start"
             }, {
                 token: "string.regexp",
                 regex: "\\/",
@@ -413,14 +408,6 @@ var JavaScriptHighlightRules = function() {
             {token : "comment", regex : "\\*\\/", next : "no_regex"},
             {defaultToken : "comment"}
         ],
-        "line_comment_regex_allowed" : [
-            {token : "comment", regex : "$|^", next : "start"},
-            {defaultToken : "comment"}
-        ],
-        "line_comment" : [
-            {token : "comment", regex : "$|^", next : "no_regex"},
-            {defaultToken : "comment"}
-        ],
         "qqstring" : [
             {
                 token : "constant.language.escape",
@@ -464,7 +451,7 @@ oop.inherits(JavaScriptHighlightRules, TextHighlightRules);
 exports.JavaScriptHighlightRules = JavaScriptHighlightRules;
 });
 
-ace.define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -508,7 +495,7 @@ exports.DocCommentHighlightRules = DocCommentHighlightRules;
 
 });
 
-ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;
@@ -548,7 +535,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
+define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -871,7 +858,7 @@ oop.inherits(CstyleBehaviour, Behaviour);
 exports.CstyleBehaviour = CstyleBehaviour;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -925,7 +912,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define('ace/mode/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/css_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/worker/worker_client', 'ace/mode/behaviour/css', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/css_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/worker/worker_client', 'ace/mode/behaviour/css', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -938,7 +925,7 @@ var CssBehaviour = require("./behaviour/css").CssBehaviour;
 var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = CssHighlightRules;
+    this.$tokenizer = new Tokenizer(new CssHighlightRules().getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CssBehaviour();
     this.foldingRules = new CStyleFoldMode();
@@ -952,7 +939,7 @@ oop.inherits(Mode, TextMode);
 
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
-        var tokens = this.getTokenizer().getLineTokens(line, state).tokens;
+        var tokens = this.$tokenizer.getLineTokens(line, state).tokens;
         if (tokens.length && tokens[tokens.length-1].type == "comment") {
             return indent;
         }
@@ -994,7 +981,7 @@ exports.Mode = Mode;
 
 });
 
-ace.define('ace/mode/css_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/css_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -1020,80 +1007,11 @@ var CssHighlightRules = function() {
         "support.constant.fonts": supportConstantFonts
     }, "text", true);
 
-    this.$rules = {
-        "start" : [{
-            token : "comment", // multi line comment
-            regex : "\\/\\*",
-            push : "comment"
-        }, {
-            token: "paren.lparen",
-            regex: "\\{",
-            push:  "ruleset"
-        }, {
-            token: "string",
-            regex: "@.*?{",
-            push:  "media"
-        }, {
-            token: "keyword",
-            regex: "#[a-z0-9-_]+"
-        }, {
-            token: "variable",
-            regex: "\\.[a-z0-9-_]+"
-        }, {
-            token: "string",
-            regex: ":[a-z0-9-_]+"
-        }, {
-            token: "constant",
-            regex: "[a-z0-9-_]+"
-        }, {
-            caseInsensitive: true
-        }],
-
-        "media" : [{
-            token : "comment", // multi line comment
-            regex : "\\/\\*",
-            push : "comment"
-        }, {
-            token: "paren.lparen",
-            regex: "\\{",
-            push:  "ruleset"
-        }, {
-            token: "string",
-            regex: "\\}",
-            next:  "pop"
-        }, {
-            token: "keyword",
-            regex: "#[a-z0-9-_]+"
-        }, {
-            token: "variable",
-            regex: "\\.[a-z0-9-_]+"
-        }, {
-            token: "string",
-            regex: ":[a-z0-9-_]+"
-        }, {
-            token: "constant",
-            regex: "[a-z0-9-_]+"
-        }, {
-            caseInsensitive: true
-        }],
-
-        "comment" : [{
-            token : "comment",
-            regex : "\\*\\/",
-            next : "pop"
-        }, {
-            defaultToken : "comment"
-        }],
-
-        "ruleset" : [
+    var base_ruleset = [
         {
-            token : "paren.rparen",
-            regex : "\\}",
-            next:   "pop"
-        }, {
             token : "comment", // multi line comment
             regex : "\\/\\*",
-            push : "comment"
+            next : "ruleset_comment"
         }, {
             token : "string", // single line
             regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
@@ -1126,10 +1044,114 @@ var CssHighlightRules = function() {
             regex : "\\-?[a-zA-Z_][a-zA-Z0-9_\\-]*"
         }, {
             caseInsensitive: true
-        }]
-    };
+        }
+      ];
 
-    this.normalizeRules();
+    var ruleset = lang.copyArray(base_ruleset);
+    ruleset.unshift({
+        token : "paren.rparen",
+        regex : "\\}",
+        next:   "start"
+    });
+
+    var media_ruleset = lang.copyArray( base_ruleset );
+    media_ruleset.unshift({
+        token : "paren.rparen",
+        regex : "\\}",
+        next:   "media"
+    });
+
+    var base_comment = [{
+          token : "comment", // comment spanning whole line
+          regex : ".+"
+    }];
+
+    var comment = lang.copyArray(base_comment);
+    comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "start"
+    });
+
+    var media_comment = lang.copyArray(base_comment);
+    media_comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "media"
+    });
+
+    var ruleset_comment = lang.copyArray(base_comment);
+    ruleset_comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "ruleset"
+    });
+
+    this.$rules = {
+        "start" : [{
+            token : "comment", // multi line comment
+            regex : "\\/\\*",
+            next : "comment"
+        }, {
+            token: "paren.lparen",
+            regex: "\\{",
+            next:  "ruleset"
+        }, {
+            token: "string",
+            regex: "@.*?{",
+            next:  "media"
+        },{
+            token: "keyword",
+            regex: "#[a-z0-9-_]+"
+        },{
+            token: "variable",
+            regex: "\\.[a-z0-9-_]+"
+        },{
+            token: "string",
+            regex: ":[a-z0-9-_]+"
+        },{
+            token: "constant",
+            regex: "[a-z0-9-_]+"
+        },{
+            caseInsensitive: true
+        }],
+
+        "media" : [ {
+            token : "comment", // multi line comment
+            regex : "\\/\\*",
+            next : "media_comment"
+        }, {
+            token: "paren.lparen",
+            regex: "\\{",
+            next:  "media_ruleset"
+        },{
+            token: "string",
+            regex: "\\}",
+            next:  "start"
+        },{
+            token: "keyword",
+            regex: "#[a-z0-9-_]+"
+        },{
+            token: "variable",
+            regex: "\\.[a-z0-9-_]+"
+        },{
+            token: "string",
+            regex: ":[a-z0-9-_]+"
+        },{
+            token: "constant",
+            regex: "[a-z0-9-_]+"
+        },{
+            caseInsensitive: true
+        }],
+
+        "comment" : comment,
+
+        "ruleset" : ruleset,
+        "ruleset_comment" : ruleset_comment,
+
+        "media_ruleset" : media_ruleset,
+        "media_comment" : media_comment
+    };
 };
 
 oop.inherits(CssHighlightRules, TextHighlightRules);
@@ -1138,7 +1160,7 @@ exports.CssHighlightRules = CssHighlightRules;
 
 });
 
-ace.define('ace/mode/behaviour/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/behaviour/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1217,14 +1239,15 @@ oop.inherits(CssBehaviour, CstyleBehaviour);
 exports.CssBehaviour = CssBehaviour;
 });
 
-ace.define('ace/mode/html_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/css_highlight_rules', 'ace/mode/javascript_highlight_rules', 'ace/mode/xml_highlight_rules'], function(require, exports, module) {
+define('ace/mode/html_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/css_highlight_rules', 'ace/mode/javascript_highlight_rules', 'ace/mode/xml_util', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
 var lang = require("../lib/lang");
 var CssHighlightRules = require("./css_highlight_rules").CssHighlightRules;
 var JavaScriptHighlightRules = require("./javascript_highlight_rules").JavaScriptHighlightRules;
-var XmlHighlightRules = require("./xml_highlight_rules").XmlHighlightRules;
+var xmlUtil = require("./xml_util");
+var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
 var tagMap = lang.createMap({
     a           : 'anchor',
@@ -1233,7 +1256,6 @@ var tagMap = lang.createMap({
     img         : 'image',
     input       : 'form',
     label       : 'form',
-    option      : 'form',
     script      : 'script',
     select      : 'form',
     textarea    : 'form',
@@ -1247,258 +1269,83 @@ var tagMap = lang.createMap({
 });
 
 var HtmlHighlightRules = function() {
-    XmlHighlightRules.call(this);
-
-    this.addRules({
-        attributes: [{
-            include : "space"
+    this.$rules = {
+        start : [{
+            token : "text",
+            regex : "<\\!\\[CDATA\\[",
+            next : "cdata"
         }, {
-            token : "entity.other.attribute-name",
-            regex : "[-_a-zA-Z0-9:]+"
+            token : "xml-pe",
+            regex : "<\\?.*?\\?>"
         }, {
-            token : "keyword.operator.separator",
-            regex : "=",
-            push : [{
-                include: "space"
-            }, {
-                token : "string",
-                regex : "[^<>='\"`\\s]+",
-                next : "pop"
-            }, {
-                token : "empty",
-                regex : "",
-                next : "pop"
-            }]
+            token : "comment",
+            regex : "<\\!--",
+            next : "comment"
         }, {
-            include : "string"
+            token : "xml-pe",
+            regex : "<\\!.*?>"
+        }, {
+            token : "meta.tag",
+            regex : "<(?=script\\b)",
+            next : "script"
+        }, {
+            token : "meta.tag",
+            regex : "<(?=style\\b)",
+            next : "style"
+        }, {
+            token : "meta.tag", // opening tag
+            regex : "<\\/?(?=\\S)",
+            next : "tag"
+        }, {
+            token : "text",
+            regex : "\\s+"
+        }, {
+            token : "constant.character.entity",
+            regex : "(?:&#[0-9]+;)|(?:&#x[0-9a-fA-F]+;)|(?:&[a-zA-Z0-9_:\\.-]+;)"
         }],
-        tag: [{
-            token : function(start, tag) {
-                var group = tagMap[tag];
-                return ["meta.tag.punctuation.begin",
-                    "meta.tag.name" + (group ? "." + group : "")];
-            },
-            regex : "(<)([-_a-zA-Z0-9:]+)",
-            next: "start_tag_stuff"
+    
+        cdata : [ {
+            token : "text",
+            regex : "\\]\\]>",
+            next : "start"
+        } ],
+
+        comment : [ {
+            token : "comment",
+            regex : ".*?-->",
+            next : "start"
         }, {
-            token : function(start, tag) {
-                var group = tagMap[tag];
-                return ["meta.tag.punctuation.begin",
-                    "meta.tag.name" + (group ? "." + group : "")];
-            },
-            regex : "(</)([-_a-zA-Z0-9:]+)",
-            next: "end_tag_stuff"
-        }],
-        start_tag_stuff: [
-            {include : "attributes"},
-            {token : "meta.tag.punctuation.end", regex : "/?>", next : "start"}
-        ],
-        end_tag_stuff: [
-            {include : "space"},
-            {token : "meta.tag.punctuation.end", regex : ">", next : "start"}
-        ]
-    });
-
-    this.embedTagRules(CssHighlightRules, "css-", "style");
-    this.embedTagRules(JavaScriptHighlightRules, "js-", "script");
-
-    if (this.constructor === HtmlHighlightRules)
-        this.normalizeRules();
+            defaultToken : "comment"
+        } ]
+    };
+    
+    xmlUtil.tag(this.$rules, "tag", "start", tagMap);
+    xmlUtil.tag(this.$rules, "style", "css-start", tagMap);
+    xmlUtil.tag(this.$rules, "script", "js-start", tagMap);
+    
+    this.embedRules(JavaScriptHighlightRules, "js-", [{
+        token: "comment",
+        regex: "\\/\\/.*(?=<\\/script>)",
+        next: "tag"
+    }, {
+        token: "meta.tag",
+        regex: "<\\/(?=script)",
+        next: "tag"
+    }]);
+    
+    this.embedRules(CssHighlightRules, "css-", [{
+        token: "meta.tag",
+        regex: "<\\/(?=style)",
+        next: "tag"
+    }]);
 };
 
-oop.inherits(HtmlHighlightRules, XmlHighlightRules);
+oop.inherits(HtmlHighlightRules, TextHighlightRules);
 
 exports.HtmlHighlightRules = HtmlHighlightRules;
 });
 
-ace.define('ace/mode/xml_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/xml_util', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
-
-
-var oop = require("../lib/oop");
-var xmlUtil = require("./xml_util");
-var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
-
-var XmlHighlightRules = function(normalize) {
-    this.$rules = {
-        start : [
-            {token : "punctuation.string.begin", regex : "<\\!\\[CDATA\\[", next : "cdata"},
-            {
-                token : ["punctuation.instruction.begin", "keyword.instruction"],
-                regex : "(<\\?)(xml)(?=[\\s])", next : "xml_declaration"
-            },
-            {
-                token : ["punctuation.instruction.begin", "keyword.instruction"],
-                regex : "(<\\?)([-_a-zA-Z0-9]+)", next : "instruction"
-            },
-            {token : "comment", regex : "<\\!--", next : "comment"},
-            {
-                token : ["punctuation.doctype.begin", "meta.tag.doctype"],
-                regex : "(<\\!)(DOCTYPE)(?=[\\s])", next : "doctype"
-            },
-            {include : "tag"},
-            {include : "reference"}
-        ],
-
-        xml_declaration : [
-            {include : "attributes"},
-            {include : "instruction"}
-        ],
-
-        instruction : [
-            {token : "punctuation.instruction.end", regex : "\\?>", next : "start"}
-        ],
-
-        doctype : [
-            {include : "space"},
-            {include : "string"},
-            {token : "punctuation.doctype.end", regex : ">", next : "start"},
-            {token : "xml-pe", regex : "[-_a-zA-Z0-9:]+"},
-            {token : "punctuation.begin", regex : "\\[", push : "declarations"}
-        ],
-
-        declarations : [{
-            token : "text",
-            regex : "\\s+"
-        }, {
-            token: "punctuation.end",
-            regex: "]",
-            next: "pop"
-        }, {
-            token : ["punctuation.begin", "keyword"],
-            regex : "(<\\!)([-_a-zA-Z0-9]+)",
-            push : [{
-                token : "text",
-                regex : "\\s+"
-            },
-            {
-                token : "punctuation.end",
-                regex : ">",
-                next : "pop"
-            },
-            {include : "string"}]
-        }],
-
-        cdata : [
-            {token : "string.end", regex : "\\]\\]>", next : "start"},
-            {token : "text", regex : "\\s+"},
-            {token : "text", regex : "(?:[^\\]]|\\](?!\\]>))+"}
-        ],
-
-        comment : [
-            {token : "comment", regex : "-->", next : "start"},
-            {defaultToken : "comment"}
-        ],
-
-        tag : [{
-            token : ["meta.tag.punctuation.begin", "meta.tag.name"],
-            regex : "(<)((?:[-_a-zA-Z0-9]+:)?[-_a-zA-Z0-9]+)",
-            next: [
-                {include : "attributes"},
-                {token : "meta.tag.punctuation.end", regex : "/?>", next : "start"}
-            ]
-        }, {
-            token : ["meta.tag.punctuation.begin", "meta.tag.name"],
-            regex : "(</)((?:[-_a-zA-Z0-9]+:)?[-_a-zA-Z0-9]+)",
-            next: [
-                {include : "space"},
-                {token : "meta.tag.punctuation.end", regex : ">", next : "start"}
-            ]
-        }],
-
-        space : [
-            {token : "text", regex : "\\s+"}
-        ],
-
-        reference : [{
-            token : "constant.language.escape",
-            regex : "(?:&#[0-9]+;)|(?:&#x[0-9a-fA-F]+;)|(?:&[a-zA-Z0-9_:\\.-]+;)"
-        }, {
-            token : "invalid.illegal", regex : "&"
-        }],
-
-        string: [{
-            token : "string",
-            regex : "'",
-            push : "qstring_inner"
-        }, {
-            token : "string",
-            regex : '"',
-            push : "qqstring_inner"
-        }],
-
-        qstring_inner: [
-            {token : "string", regex: "'", next: "pop"},
-            {include : "reference"},
-            {defaultToken : "string"}
-        ],
-
-        qqstring_inner: [
-            {token : "string", regex: '"', next: "pop"},
-            {include : "reference"},
-            {defaultToken : "string"}
-        ],
-
-        attributes: [{
-            token : "entity.other.attribute-name",
-            regex : "(?:[-_a-zA-Z0-9]+:)?[-_a-zA-Z0-9]+"
-        }, {
-            token : "keyword.operator.separator",
-            regex : "="
-        }, {
-            include : "space"
-        }, {
-            include : "string"
-        }]
-    };
-
-    if (this.constructor === XmlHighlightRules)
-        this.normalizeRules();
-};
-
-
-(function() {
-
-    this.embedTagRules = function(HighlightRules, prefix, tag){
-        this.$rules.tag.unshift({
-            token : ["meta.tag.punctuation.begin", "meta.tag.name." + tag],
-            regex : "(<)(" + tag + ")",
-            next: [
-                {include : "space"},
-                {include : "attributes"},
-                {token : "meta.tag.punctuation.end", regex : "/?>", next : prefix + "start"}
-            ]
-        });
-
-        this.$rules[tag + "-end"] = [
-            {include : "space"},
-            {token : "meta.tag.punctuation.end", regex : ">",  next: "start",
-                onMatch : function(value, currentState, stack) {
-                    stack.splice(0);
-                    return this.token;
-            }}
-        ]
-
-        this.embedRules(HighlightRules, prefix, [{
-            token: ["meta.tag.punctuation.begin", "meta.tag.name." + tag],
-            regex : "(</)(" + tag + ")",
-            next: tag + "-end"
-        }, {
-            token: "string.begin",
-            regex : "<\\!\\[CDATA\\["
-        }, {
-            token: "string.end",
-            regex : "\\]\\]>"
-        }]);
-    };
-
-}).call(TextHighlightRules.prototype);
-
-oop.inherits(XmlHighlightRules, TextHighlightRules);
-
-exports.XmlHighlightRules = XmlHighlightRules;
-});
-
-ace.define('ace/mode/xml_util', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/mode/xml_util', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 
 function string(state) {
@@ -1568,7 +1415,7 @@ exports.tag = function(states, name, nextState, tagMap) {
 
 });
 
-ace.define('ace/mode/behaviour/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour/xml', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/behaviour/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour/xml', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1578,9 +1425,14 @@ var TokenIterator = require("../../token_iterator").TokenIterator;
 var voidElements = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 function hasType(token, type) {
-    var tokenTypes = token.type.split('.');
-    return type.split('.').every(function(type){
-        return (tokenTypes.indexOf(type) !== -1);
+    var hasType = true;
+    var typeList = token.type.split('.');
+    var needleList = type.split('.');
+    needleList.forEach(function(needle){
+        if (typeList.indexOf(needle) == -1) {
+            hasType = false;
+            return false;
+        }
     });
     return hasType;
 }
@@ -1595,7 +1447,7 @@ var HtmlBehaviour = function () {
             var iterator = new TokenIterator(session, position.row, position.column);
             var token = iterator.getCurrentToken();
 
-            if (token && hasType(token, 'string') && iterator.getCurrentTokenColumn() + token.value.length > position.column)
+            if (hasType(token, 'string') && iterator.getCurrentTokenColumn() + token.value.length > position.column)
                 return;
             var atCursor = false;
             if (!token || !hasType(token, 'meta.tag') && !(hasType(token, 'text') && token.value.match('/'))){
@@ -1605,8 +1457,8 @@ var HtmlBehaviour = function () {
             } else {
                 atCursor = true;
             }
-            if (!token || !hasType(token, 'meta.tag.name') || iterator.stepBackward().value.match('/')) {
-                return;
+            if (!token || !hasType(token, 'meta.tag-name') || iterator.stepBackward().value.match('/')) {
+                return
             }
             var element = token.value;
             if (atCursor){
@@ -1627,7 +1479,7 @@ oop.inherits(HtmlBehaviour, XmlBehaviour);
 exports.HtmlBehaviour = HtmlBehaviour;
 });
 
-ace.define('ace/mode/behaviour/xml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/behaviour/xml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1636,9 +1488,14 @@ var CstyleBehaviour = require("./cstyle").CstyleBehaviour;
 var TokenIterator = require("../../token_iterator").TokenIterator;
 
 function hasType(token, type) {
-    var tokenTypes = token.type.split('.');
-    return type.split('.').every(function(type){
-        return (tokenTypes.indexOf(type) !== -1);
+    var hasType = true;
+    var typeList = token.type.split('.');
+    var needleList = type.split('.');
+    needleList.forEach(function(needle){
+        if (typeList.indexOf(needle) == -1) {
+            hasType = false;
+            return false;
+        }
     });
     return hasType;
 }
@@ -1652,9 +1509,6 @@ var XmlBehaviour = function () {
             var position = editor.getCursorPosition();
             var iterator = new TokenIterator(session, position.row, position.column);
             var token = iterator.getCurrentToken();
-
-            if (token && hasType(token, 'string') && iterator.getCurrentTokenColumn() + token.value.length > position.column)
-                return;
             var atCursor = false;
             if (!token || !hasType(token, 'meta.tag') && !(hasType(token, 'text') && token.value.match('/'))){
                 do {
@@ -1663,8 +1517,8 @@ var XmlBehaviour = function () {
             } else {
                 atCursor = true;
             }
-            if (!token || !hasType(token, 'meta.tag.name') || iterator.stepBackward().value.match('/')) {
-                return;
+            if (!token || !hasType(token, 'meta.tag-name') || iterator.stepBackward().value.match('/')) {
+                return
             }
             var tag = token.value;
             if (atCursor){
@@ -1681,11 +1535,11 @@ var XmlBehaviour = function () {
     this.add('autoindent', 'insertion', function (state, action, editor, session, text) {
         if (text == "\n") {
             var cursor = editor.getCursorPosition();
-            var line = session.getLine(cursor.row);
+            var line = session.doc.getLine(cursor.row);
             var rightChars = line.substring(cursor.column, cursor.column + 2);
             if (rightChars == '</') {
-                var next_indent = this.$getIndent(line);
-                var indent = next_indent + session.getTabString();
+                var indent = this.$getIndent(session.doc.getLine(cursor.row)) + session.getTabString();
+                var next_indent = this.$getIndent(session.doc.getLine(cursor.row));
 
                 return {
                     text: '\n' + indent + '\n' + next_indent,
@@ -1701,7 +1555,7 @@ oop.inherits(XmlBehaviour, Behaviour);
 exports.XmlBehaviour = XmlBehaviour;
 });
 
-ace.define('ace/mode/folding/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/mixed', 'ace/mode/folding/xml', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/folding/html', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/mixed', 'ace/mode/folding/xml', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1748,7 +1602,7 @@ oop.inherits(FoldMode, MixedFoldMode);
 
 });
 
-ace.define('ace/mode/folding/mixed', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/mixed', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1764,8 +1618,6 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 
     this.$getMode = function(state) {
-        if (typeof state != "string") 
-            state = state[0];
         for (var key in this.subModes) {
             if (state.indexOf(key) === 0)
                 return this.subModes[key];
@@ -1802,7 +1654,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define('ace/mode/folding/xml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/range', 'ace/mode/folding/fold_mode', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/folding/xml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/range', 'ace/mode/folding/fold_mode', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -1842,7 +1694,7 @@ oop.inherits(FoldMode, BaseFoldMode);
         var value = "";
         for (var i = 0; i < tokens.length; i++) {
             var token = tokens[i];
-            if (token.type.lastIndexOf("meta.tag", 0) === 0)
+            if (token.type.indexOf("meta.tag") === 0)
                 value += token.value;
             else
                 value += lang.stringRepeat(" ", token.value.length);
@@ -1875,7 +1727,7 @@ oop.inherits(FoldMode, BaseFoldMode);
         var start;
         
         do {
-            if (token.type.lastIndexOf("meta.tag", 0) === 0) {
+            if (token.type.indexOf("meta.tag") === 0) {
                 if (!start) {
                     var start = {
                         row: iterator.getCurrentTokenRow(),
@@ -1908,7 +1760,7 @@ oop.inherits(FoldMode, BaseFoldMode);
         var end;
 
         do {
-            if (token.type.lastIndexOf("meta.tag", 0) === 0) {
+            if (token.type.indexOf("meta.tag") === 0) {
                 if (!end) {
                     end = {
                         row: iterator.getCurrentTokenRow(),
@@ -2023,287 +1875,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 
 });
 
-ace.define('ace/mode/html_completions', ['require', 'exports', 'module' , 'ace/token_iterator'], function(require, exports, module) {
-
-
-var TokenIterator = require("../token_iterator").TokenIterator;
-
-var commonAttributes = [
-    "accesskey",
-    "class",
-    "contenteditable",
-    "contextmenu",
-    "dir",
-    "draggable",
-    "dropzone",
-    "hidden",
-    "id",
-    "lang",
-    "spellcheck",
-    "style",
-    "tabindex",
-    "title",
-    "translate"
-];
-
-var eventAttributes = [
-    "onabort",
-    "onblur",
-    "oncancel",
-    "oncanplay",
-    "oncanplaythrough",
-    "onchange",
-    "onclick",
-    "onclose",
-    "oncontextmenu",
-    "oncuechange",
-    "ondblclick",
-    "ondrag",
-    "ondragend",
-    "ondragenter",
-    "ondragleave",
-    "ondragover",
-    "ondragstart",
-    "ondrop",
-    "ondurationchange",
-    "onemptied",
-    "onended",
-    "onerror",
-    "onfocus",
-    "oninput",
-    "oninvalid",
-    "onkeydown",
-    "onkeypress",
-    "onkeyup",
-    "onload",
-    "onloadeddata",
-    "onloadedmetadata",
-    "onloadstart",
-    "onmousedown",
-    "onmousemove",
-    "onmouseout",
-    "onmouseover",
-    "onmouseup",
-    "onmousewheel",
-    "onpause",
-    "onplay",
-    "onplaying",
-    "onprogress",
-    "onratechange",
-    "onreset",
-    "onscroll",
-    "onseeked",
-    "onseeking",
-    "onselect",
-    "onshow",
-    "onstalled",
-    "onsubmit",
-    "onsuspend",
-    "ontimeupdate",
-    "onvolumechange",
-    "onwaiting"
-];
-
-var globalAttributes = commonAttributes.concat(eventAttributes);
-
-var attributeMap = {
-    "html": ["manifest"],
-    "head": [],
-    "title": [],
-    "base": ["href", "target"],
-    "link": ["href", "hreflang", "rel", "media", "type", "sizes"],
-    "meta": ["http-equiv", "name", "content", "charset"],
-    "style": ["type", "media", "scoped"],
-    "script": ["charset", "type", "src", "defer", "async"],
-    "noscript": ["href"],
-    "body": ["onafterprint", "onbeforeprint", "onbeforeunload", "onhashchange", "onmessage", "onoffline", "onpopstate", "onredo", "onresize", "onstorage", "onundo", "onunload"],
-    "section": [],
-    "nav": [],
-    "article": ["pubdate"],
-    "aside": [],
-    "h1": [],
-    "h2": [],
-    "h3": [],
-    "h4": [],
-    "h5": [],
-    "h6": [],
-    "header": [],
-    "footer": [],
-    "address": [],
-    "main": [],
-    "p": [],
-    "hr": [],
-    "pre": [],
-    "blockquote": ["cite"],
-    "ol": ["start", "reversed"],
-    "ul": [],
-    "li": ["value"],
-    "dl": [],
-    "dt": [],
-    "dd": [],
-    "figure": [],
-    "figcaption": [],
-    "div": [],
-    "a": ["href", "target", "ping", "rel", "media", "hreflang", "type"],
-    "em": [],
-    "strong": [],
-    "small": [],
-    "s": [],
-    "cite": [],
-    "q": ["cite"],
-    "dfn": [],
-    "abbr": [],
-    "data": [],
-    "time": ["datetime"],
-    "code": [],
-    "var": [],
-    "samp": [],
-    "kbd": [],
-    "sub": [],
-    "sup": [],
-    "i": [],
-    "b": [],
-    "u": [],
-    "mark": [],
-    "ruby": [],
-    "rt": [],
-    "rp": [],
-    "bdi": [],
-    "bdo": [],
-    "span": [],
-    "br": [],
-    "wbr": [],
-    "ins": ["cite", "datetime"],
-    "del": ["cite", "datetime"],
-    "img": ["alt", "src", "height", "width", "usemap", "ismap"],
-    "iframe": ["name", "src", "height", "width", "sandbox", "seamless"],
-    "embed": ["src", "height", "width", "type"],
-    "object": ["param", "data", "type", "height" , "width", "usemap", "name", "form", "classid"],
-    "param": ["name", "value"],
-    "video": ["src", "autobuffer", "autoplay", "loop", "controls", "width", "height", "poster"],
-    "audio": ["src", "autobuffer", "autoplay", "loop", "controls"],
-    "source": ["src", "type", "media"],
-    "track": ["kind", "src", "srclang", "label", "default"],
-    "canvas": ["width", "height"],
-    "map": ["name"],
-    "area": ["shape", "coords", "href", "hreflang", "alt", "target", "media", "rel", "ping", "type"],
-    "svg": [],
-    "math": [],
-    "table": ["summary"],
-    "caption": [],
-    "colgroup": ["span"],
-    "col": ["span"],
-    "tbody": [],
-    "thead": [],
-    "tfoot": [],
-    "tr": [],
-    "td": ["headers", "rowspan", "colspan"],
-    "th": ["headers", "rowspan", "colspan", "scope"],
-    "form": ["accept-charset", "action", "autocomplete", "enctype", "method", "name", "novalidate", "target"],
-    "fieldset": ["disabled", "form", "name"],
-    "legend": [],
-    "label": ["form", "for"],
-    "input": ["type", "accept", "alt", "autocomplete", "checked", "disabled", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "height", "list", "max", "maxlength", "min", "multiple", "pattern", "placeholder", "readonly", "required", "size", "src", "step", "width", "files", "value"],
-    "button": ["autofocus", "disabled", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "name", "value", "type"],
-    "select": ["autofocus", "disabled", "form", "multiple", "name", "size"],
-    "datalist": [],
-    "optgroup": ["disabled", "label"],
-    "option": ["disabled", "selected", "label", "value"],
-    "textarea": ["autofocus", "disabled", "form", "maxlength", "name", "placeholder", "readonly", "required", "rows", "cols", "wrap"],
-    "keygen": ["autofocus", "challenge", "disabled", "form", "keytype", "name"],
-    "output": ["for", "form", "name"],
-    "progress": ["value", "max"],
-    "meter": ["value", "min", "max", "low", "high", "optimum"],
-    "details": ["open"],
-    "summary": [],
-    "command": ["type", "label", "icon", "disabled", "checked", "radiogroup", "command"],
-    "menu": ["type", "label"],
-    "dialog": ["open"]
-};
-
-var allElements = Object.keys(attributeMap);
-
-function hasType(token, type) {
-    var tokenTypes = token.type.split('.');
-    return type.split('.').every(function(type){
-        return (tokenTypes.indexOf(type) !== -1);
-    });
-}
-
-function findTagName(session, pos) {
-    var iterator = new TokenIterator(session, pos.row, pos.column);
-    var token = iterator.getCurrentToken();
-    if (!token || !hasType(token, 'tag') && !(hasType(token, 'text') && token.value.match('/'))){
-        do {
-            token = iterator.stepBackward();
-        } while (token && (hasType(token, 'string') || hasType(token, 'operator') || hasType(token, 'attribute-name') || hasType(token, 'text')));
-    }
-    if (token && hasType(token, 'tag-name') && !iterator.stepBackward().value.match('/'))
-        return token.value;
-}
-
-var HtmlCompletions = function() {
-
-};
-
-(function() {
-
-    this.getCompletions = function(state, session, pos, prefix) {
-        var token = session.getTokenAt(pos.row, pos.column);
-
-        if (!token)
-            return [];
-        if (hasType(token, "tag-name") || (token.value == '<' && hasType(token, "text")))
-            return this.getTagCompletions(state, session, pos, prefix);
-        if (hasType(token, 'text') || hasType(token, 'attribute-name'))
-            return this.getAttributeCompetions(state, session, pos, prefix);
-
-        return [];
-    };
-
-    this.getTagCompletions = function(state, session, pos, prefix) {
-        var elements = allElements;
-        if (prefix) {
-            elements = elements.filter(function(element){
-                return element.indexOf(prefix) === 0;
-            });
-        }
-        return elements.map(function(element){
-            return {
-                value: element,
-                meta: "tag"
-            };
-        });
-    };
-
-    this.getAttributeCompetions = function(state, session, pos, prefix) {
-        var tagName = findTagName(session, pos);
-        if (!tagName)
-            return [];
-        var attributes = globalAttributes;
-        if (tagName in attributeMap) {
-            attributes = attributes.concat(attributeMap[tagName]);
-        }
-        if (prefix) {
-            attributes = attributes.filter(function(attribute){
-                return attribute.indexOf(prefix) === 0;
-            });
-        }
-        return attributes.map(function(attribute){
-            return {
-                caption: attribute,
-                snippet: attribute + '="$0"',
-                meta: "attribute"
-            };
-        });
-    };
-
-}).call(HtmlCompletions.prototype);
-
-exports.HtmlCompletions = HtmlCompletions;
-});
-
-ace.define('ace/mode/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lua_highlight_rules', 'ace/mode/folding/lua', 'ace/range', 'ace/worker/worker_client'], function(require, exports, module) {
+define('ace/mode/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lua_highlight_rules', 'ace/mode/folding/lua', 'ace/range', 'ace/worker/worker_client'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -2315,8 +1887,7 @@ var Range = require("../range").Range;
 var WorkerClient = require("../worker/worker_client").WorkerClient;
 
 var Mode = function() {
-    this.HighlightRules = LuaHighlightRules;
-    
+    this.$tokenizer = new Tokenizer(new LuaHighlightRules().getRules());
     this.foldingRules = new LuaFoldMode();
 };
 oop.inherits(Mode, TextMode);
@@ -2370,7 +1941,7 @@ oop.inherits(Mode, TextMode);
         var indent = this.$getIndent(line);
         var level = 0;
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
 
         if (state == "start") {
@@ -2393,7 +1964,7 @@ oop.inherits(Mode, TextMode);
         if (line.match(/^\s*[\)\}\]]$/))
             return true;
 
-        var tokens = this.getTokenizer().getLineTokens(line.trim(), state).tokens;
+        var tokens = this.$tokenizer.getLineTokens(line.trim(), state).tokens;
 
         if (!tokens || !tokens.length)
             return false;
@@ -2404,7 +1975,7 @@ oop.inherits(Mode, TextMode);
     this.autoOutdent = function(state, session, row) {
         var prevLine = session.getLine(row - 1);
         var prevIndent = this.$getIndent(prevLine).length;
-        var prevTokens = this.getTokenizer().getLineTokens(prevLine, "start").tokens;
+        var prevTokens = this.$tokenizer.getLineTokens(prevLine, "start").tokens;
         var tabLength = session.getTabString().length;
         var expectedIndent = prevIndent + tabLength * getNetIndentLevel(prevTokens);
         var curIndent = this.$getIndent(session.getLine(row)).length;
@@ -2434,7 +2005,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/lua_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/lua_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -2503,7 +2074,7 @@ var LuaHighlightRules = function() {
         "start" : [{
             stateName: "bracketedComment",
             onMatch : function(value, currentState, stack){
-                stack.unshift(this.next, value.length - 2, currentState);
+                stack.unshift(this.next, value.length, currentState);
                 return "comment";
             },
             regex : /\-\-\[=*\[/,
@@ -2519,7 +2090,7 @@ var LuaHighlightRules = function() {
                         }
                         return "comment";
                     },
-                    regex : /\]=*\]/,
+                    regex : /(?:[^\\]|\\.)*?\]=*\]/,
                     next  : "start"
                 }, {
                     defaultToken : "comment"
@@ -2551,7 +2122,7 @@ var LuaHighlightRules = function() {
                         return "comment";
                     },
                     
-                    regex : /\]=*\]/,
+                    regex : /(?:[^\\]|\\.)*?\]=*\]/,
                     next  : "start"
                 }, {
                     defaultToken : "comment"
@@ -2596,7 +2167,7 @@ oop.inherits(LuaHighlightRules, TextHighlightRules);
 exports.LuaHighlightRules = LuaHighlightRules;
 });
 
-ace.define('ace/mode/folding/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/folding/lua', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -2729,7 +2300,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 }).call(FoldMode.prototype);
 
 });
-ace.define('ace/mode/luapage_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/html_highlight_rules', 'ace/mode/lua_highlight_rules'], function(require, exports, module) {
+define('ace/mode/luapage_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/html_highlight_rules', 'ace/mode/lua_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -2737,38 +2308,31 @@ var HtmlHighlightRules = require("./html_highlight_rules").HtmlHighlightRules;
 var LuaHighlightRules = require("./lua_highlight_rules").LuaHighlightRules;
 
 var LuaPageHighlightRules = function() {
-    HtmlHighlightRules.call(this);
-
-    var startRules = [
-        {
+    this.$rules = new HtmlHighlightRules().getRules();
+    
+    for (var i in this.$rules) {
+        this.$rules[i].unshift({
             token: "keyword",
             regex: "<\\%\\=?",
-            push: "lua-start"
+            next: "lua-start"
         }, {
             token: "keyword",
             regex: "<\\?lua\\=?",
-            push: "lua-start"
-        }
-    ];
-
-    var endRules = [
+            next: "lua-start"
+        });
+    }
+    this.embedRules(LuaHighlightRules, "lua-", [
         {
             token: "keyword",
             regex: "\\%>",
-            next: "pop"
-        }, {
+            next: "start"
+        },
+        {
             token: "keyword",
             regex: "\\?>",
-            next: "pop"
+            next: "start"
         }
-    ];
-
-    this.embedRules(LuaHighlightRules, "lua-", endRules, ["start"]);
-
-    for (var key in this.$rules)
-        this.$rules[key].unshift.apply(this.$rules[key], startRules);
-
-    this.normalizeRules();
+    ]);
 };
 
 oop.inherits(LuaPageHighlightRules, HtmlHighlightRules);

@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/julia', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/julia_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/julia', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/julia_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -43,8 +43,9 @@ var JuliaHighlightRules = require("./julia_highlight_rules").JuliaHighlightRules
 var FoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = JuliaHighlightRules;
+    var highlighter = new JuliaHighlightRules();
     this.foldingRules = new FoldMode();
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -56,7 +57,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/julia_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/julia_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -189,7 +190,7 @@ oop.inherits(JuliaHighlightRules, TextHighlightRules);
 exports.JuliaHighlightRules = JuliaHighlightRules;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

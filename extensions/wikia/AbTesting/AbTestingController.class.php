@@ -45,7 +45,8 @@ class AbTestingController extends WikiaController {
 
 		// set appropriate cache TTL
 		$cacheTTL = $this->getCacheTTL();
-		$response->setCacheValidity($cacheTTL['server'], $cacheTTL['client']);
+		$response->setCacheValidity(null,$cacheTTL['client'],array(WikiaResponse::CACHE_TARGET_BROWSER));
+		$response->setCacheValidity(null,$cacheTTL['server'],array(WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	protected function getGroupData( $expName, $versionId, $groupId ) {

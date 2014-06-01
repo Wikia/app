@@ -179,7 +179,7 @@ class SwiftStorage {
 		$remotePath = $this->getRemotePath( $remoteFile );
 		$file = ( is_resource( $localFile ) ) ? get_resource_type( $localFile ) : $localFile; 
 		
-		wfDebug( __METHOD__ . ": {$file} -> {$remotePath} [{$this->swiftServer}]\n" );
+		wfDebug( __METHOD__ . ": {$file} -> {$remotePath}\n" );
 
 		$time = microtime( true );
 
@@ -225,7 +225,7 @@ class SwiftStorage {
 		}
 
 		$time = round( ( microtime( true ) - $time ) * 1000 );
-		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms [{$this->swiftServer}]\n" );
+		wfDebug( __METHOD__ . ": {$localFile} uploaded in {$time} ms\n" );
 
 		return $res;
 	}
@@ -325,13 +325,5 @@ class SwiftStorage {
 	 */
 	public function getSwiftServer() {
 		return $this->swiftServer;
-	}
-
-	public function getContainerName() {
-		return $this->containerName;
-	}
-
-	public function getPathPrefix() {
-		return $this->pathPrefix;
-	}
+	} 
 }

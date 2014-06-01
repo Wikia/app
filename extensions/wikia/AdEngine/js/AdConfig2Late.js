@@ -1,4 +1,3 @@
-/*exported AdConfig2Late*/
 var AdConfig2Late = function (
 	// regular dependencies
 	log,
@@ -6,7 +5,7 @@ var AdConfig2Late = function (
 
 	// AdProviders
 	adProviderGamePro,
-	adProviderLiftium,
+	adProviderLiftium2Dom,
 	adProviderNull,
 	adProviderSevenOneMedia
 ) {
@@ -20,8 +19,7 @@ var AdConfig2Late = function (
 			'TOP_BUTTON_WIDE': true,
 			'TOP_BUTTON_WIDE.force': true
 		},
-		tryLiftium,
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
+		tryLiftium;
 
 	function getProvider(slot) {
 		var slotname = slot[0];
@@ -29,11 +27,11 @@ var AdConfig2Late = function (
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
 
-		if (slot[2] === 'Liftium') {
-			if (adProviderLiftium.canHandleSlot(slot)) {
-				return adProviderLiftium;
+		if (slot[2] === 'Liftium2' || slot[2] === 'Liftium2Dom') {
+			if (adProviderLiftium2Dom.canHandleSlot(slot)) {
+				return adProviderLiftium2Dom;
 			}
-			log('#' + slotname + ' disabled. Forced Liftium, but it can\'t handle it', 7, logGroup);
+			log('#' + slotname + ' disabled. Forced Liftium2, but it can\'t handle it', 7, logGroup);
 			return adProviderNull;
 		}
 
@@ -42,10 +40,7 @@ var AdConfig2Late = function (
 			if (slotname === 'PREFOOTER_RIGHT_BOXAD' || slotname === 'LEFT_SKYSCRAPER_3') {
 				return adProviderNull;
 			}
-			if (deProvider.canHandleSlot(slotname)) {
-				if (ie8 && window.wgAdDriverUseSevenOneMedia) {
-					return adProviderNull;
-				}
+			if (deProvider.canHandleSlot(slot)) {
 				return deProvider;
 			}
 		}
@@ -56,15 +51,14 @@ var AdConfig2Late = function (
 			tryLiftium = true;
 		}
 
-		if (tryLiftium && adProviderLiftium.canHandleSlot(slotname)) {
-			return adProviderLiftium;
+		if (tryLiftium && adProviderLiftium2Dom.canHandleSlot(slot)) {
+			return adProviderLiftium2Dom;
 		}
 
 		return adProviderNull;
 	}
 
 	return {
-		getDecorators: function () {},
 		getProvider: getProvider
 	};
 };

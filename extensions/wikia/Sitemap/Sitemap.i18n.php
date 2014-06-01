@@ -55,7 +55,7 @@ $messages['ca'] = array(
 	'sitemap-desc' => 'Generar mapes del lloc sobre la marxa',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(

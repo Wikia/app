@@ -7,7 +7,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 	protected $sectionId;
 	protected $verticalId;
 	protected $skinName;
-	private $shouldFilterCommercialData = false;
 
 	public function __construct($langCode, $sectionId, $verticalId) {
 		parent::__construct();
@@ -20,13 +19,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 
 	abstract public function getStructuredData($data);
 
-	/**
-	 * @param $name
-	 * @param $langCode
-	 * @param $sectionId
-	 * @param $verticalId
-	 * @return MarketingToolboxModuleService
-	 */
 	static public function getModuleByName($name, $langCode, $sectionId, $verticalId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
 		return new $moduleClassName($langCode, $sectionId, $verticalId);
@@ -52,10 +44,6 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 			}
 		);
 
-		if ( $this->getShouldFilterCommercialData() ) {
-			$structuredData = $this->filterCommercialData( $structuredData );
-		}
-
 		return $structuredData;
 	}
 
@@ -80,7 +68,7 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		}
 
 		return $structuredData;
-	}
+		}
 
 	protected function getModuleId() {
 		return static::MODULE_ID;
@@ -153,32 +141,4 @@ abstract class MarketingToolboxModuleService extends WikiaService {
 		return false;
 	}
 
-	/**
-	 * @param $filterCommercialData
-	 */
-	public function setShouldFilterCommercialData( $filterCommercialData ) {
-		$this->shouldFilterCommercialData = $filterCommercialData;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getShouldFilterCommercialData() {
-		return $this->shouldFilterCommercialData;
-	}
-
-	/**
-	 * @param $data
-	 * @return mixed
-	 */
-	protected function filterCommercialData( $data ) {
-		return $data;
-	}
-
-	/**
-	 * @return LicensedWikisService
-	 */
-	protected function getLicensedWikisService() {
-		return new LicensedWikisService();
-	}
 }

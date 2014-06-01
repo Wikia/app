@@ -30,7 +30,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/ext/keybinding_menu', ['require', 'exports', 'module' , 'ace/editor', 'ace/ext/menu_tools/overlay_page', 'ace/ext/menu_tools/get_editor_keyboard_shortcuts'], function(require, exports, module) {
+define('ace/ext/keybinding_menu', ['require', 'exports', 'module' , 'ace/editor', 'ace/ext/menu_tools/overlay_page', 'ace/ext/menu_tools/get_editor_keyboard_shortcuts'], function(require, exports, module) {
     
     var Editor = require("ace/editor").Editor;
     function showKeyboardShortcuts (editor) {
@@ -65,7 +65,7 @@ ace.define('ace/ext/keybinding_menu', ['require', 'exports', 'module' , 'ace/edi
 
 });
 
-ace.define('ace/ext/menu_tools/overlay_page', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/ext/menu_tools/overlay_page', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 var dom = require("../../lib/dom");
 var cssText = "#ace_settingsmenu, #kbshortcutmenu {\
@@ -166,7 +166,7 @@ module.exports.overlayPage = function overlayPage(editor, contentElement, top, r
 
 });
 
-ace.define('ace/ext/menu_tools/get_editor_keyboard_shortcuts', ['require', 'exports', 'module' , 'ace/lib/keys'], function(require, exports, module) {
+define('ace/ext/menu_tools/get_editor_keyboard_shortcuts', ['require', 'exports', 'module' , 'ace/lib/keys'], function(require, exports, module) {
 
 var keys = require("../../lib/keys");
 module.exports.getEditorKeybordShortcuts = function(editor) {
@@ -174,7 +174,7 @@ module.exports.getEditorKeybordShortcuts = function(editor) {
     var keybindings = [];
     var commandMap = {};
     editor.keyBinding.$handlers.forEach(function(handler) {
-        var ckb = handler.commandKeyBinding;
+        var ckb = handler.commmandKeyBinding;
         for (var i in ckb) {
             var modifier = parseInt(i);
             if (modifier == -1) {

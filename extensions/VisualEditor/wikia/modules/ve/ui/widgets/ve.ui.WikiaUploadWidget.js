@@ -137,7 +137,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function () {
 		);
 	} else {
 		$.ajax( {
-			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
+			'url': mw.util.wikiScript( 'api' ) + '?action=apitempupload&type=temporary&format=json',
 			'type': 'post',
 			'cache': false,
 			'contentType': false,
@@ -170,7 +170,7 @@ ve.ui.WikiaUploadWidget.prototype.onUploadSuccess = function ( data ) {
 
 	// Success
 	// TODO: this should probably fire 'success' not 'upload'
-	this.emit( 'upload', data.addmediatemporary );
+	this.emit( 'upload', data.apitempupload );
 };
 
 /**

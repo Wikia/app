@@ -359,7 +359,7 @@ class LyricFindReport extends Maintenance {
 				0
 			];
 		} elseif ( $this->namespaceId == 220 /*Gracenote*/ ) {
-			preg_match_all( '/(song|artist|gracenoteid)\s*=\s*(\d+|[\"\']?(.*?)[\"\']?|\s*(.*?))\n/is', $text, $matches );
+			preg_match_all( '/(song|artist|gracenoteid)\s*=\s*(\d+|[\"\'](.*?)[\"\']|\s*(.*?))\n/is', $text, $matches );
 
 			$result = $keys = [];
 			if ( !empty( $matches ) ) {

@@ -18,9 +18,9 @@ class WikiaMobileService extends WikiaService {
 	 */
 	private $templateObject;
 
-	private $jsBodyPackages = [];
+	private $jsBodyPackages = [ 'wikiamobile_js_body_full' ];
 	private $jsExtensionPackages = [];
-	private $scssPackages = [];
+	private $scssPackages = [ 'wikiamobile_scss' ];
 
 	private $globalVariables = [];
 
@@ -38,26 +38,36 @@ class WikiaMobileService extends WikiaService {
 	private function handleAds(){
 		wfProfileIn( __METHOD__ );
 
+		$floatingAd = '';
 		$topLeaderBoardAd = '';
+		$inContentAd = '';
+		$modalInterstitial = '';
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ( $mobileAdService->shouldLoadAssets() ) {
+		if ($mobileAdService->shouldLoadAssets()) {
 			$this->jsBodyPackages[] = 'wikiamobile_js_ads';
 
-			if ( $mobileAdService->shouldShowAds() ) {
+			if ($mobileAdService->shouldShowAds()) {
+				$floatingAd = $this->app->renderView( 'WikiaMobileAdService', 'floating' );
 				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
+				$inContentAd = $this->app->renderView( 'WikiaMobileAdService', 'inContent' );
+				$modalInterstitial = $this->app->renderView( 'WikiaMobileAdService', 'modalInterstitial' );
 				$this->globalVariables['wgShowAds'] = true;
 				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
 			}
 		}
 
+		//Ad units
+		$this->response->setVal( 'floatingAd', $floatingAd );
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
+		$this->response->setVal( 'inContentAd', $inContentAd );
+		$this->response->setVal( 'modalInterstitial', $modalInterstitial );
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function handleAssets( $type = '' ){
+	private function handleAssets(){
 		wfProfileIn( __METHOD__ );
 
 		$cssLinks = '';
@@ -65,14 +75,6 @@ class WikiaMobileService extends WikiaService {
 		$jsExtensionFiles = '';
 		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
-
-		if ( $type == 'preview' ) {
-			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_preview' );
-			array_unshift( $this->scssPackages, 'wikiamobile_scss_preview' );
-		} else {
-			array_unshift( $this->jsBodyPackages, 'wikiamobile_js_body_full' );
-			array_unshift( $this->scssPackages, 'wikiamobile_scss' );
-		}
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
@@ -178,7 +180,6 @@ class WikiaMobileService extends WikiaService {
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
 			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
-			$this->globalVariables['wgAppIcon'] = $this->wg->WikiaMobileSmartBannerConfig['icon'];
 
 			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
 		}
@@ -190,65 +191,35 @@ class WikiaMobileService extends WikiaService {
 		JSMessages::enqueuePackage( 'WkMbl', JSMessages::INLINE );
 	}
 
-	private function handleContent($content = ''){
+	private function handleContent(){
 		wfProfileIn( __METHOD__ );
 
-		if( !empty( $content ) ) {
+		$this->response->setVal( 'wikiaNavigation',
+			$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
+		);
 
-			$this->response->setVal( 'pageContent',
-				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
-						'bodyText' => $content
-					]
-				)
-			);
+		$this->response->setVal( 'pageContent',
+			$this->app->renderView( 'WikiaMobileBodyService', 'index', [
+					'bodyText' => $this->templateObject->get( 'bodytext' ),
+					'categoryLinks' => $this->templateObject->get( 'catlinks')
+				]
+			)
+		);
 
-		} else {
-			$this->response->setVal( 'wikiaNavigation',
-				$this->app->renderView( 'WikiaMobileNavigationService', 'index' )
-			);
-
-			$this->response->setVal( 'pageContent',
-				$this->app->renderView( 'WikiaMobileBodyService', 'index', [
-						'bodyText' => $this->templateObject->get( 'bodytext' ),
-						'categoryLinks' => $this->templateObject->get( 'catlinks')
-					]
-				)
-			);
-
-			$this->response->setVal( 'wikiaFooter',
-				$this->app->renderView( 'WikiaMobileFooterService', 'index' )
-			);
-		}
+		$this->response->setVal( 'wikiaFooter',
+			$this->app->renderView( 'WikiaMobileFooterService', 'index' )
+		);
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	private function handleToc(){
-		$toc = '';
-
-		$action = $this->wg->Request->getVal( 'action', 'view' );
-
-		//Enable TOC only on view action and on real articles and preview
-		if ( ( $action == 'view' || $action == 'ajax' ) &&
-			$this->wg->Title->getArticleId() != 0
-		) {
-			$this->jsExtensionPackages[] = 'wikiamobile_js_toc';
-			$this->scssPackages[] = 'wikiamobile_scss_toc';
-
-			$toc = $this->app->renderPartial( 'WikiaMobileService', 'toc' );
-		}
-
-		$this->response->setVal( 'toc', $toc );
 	}
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
 		$this->handleMessages();
+		$this->handleAds();
 		$this->handleSmartBanner();
 		$this->handleContent();
-		$this->handleAds();
-		$this->handleToc();
 		$this->handleAssets();
 		$this->handleTracking();
 
@@ -263,23 +234,7 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'languageDirection', $this->templateObject->get( 'dir' ) );
 		$this->response->setVal( 'headLinks', $this->wg->Out->getHeadLinks() );
 		$this->response->setVal( 'pageTitle', htmlspecialchars( $this->wg->Out->getHTMLTitle() ) );
-		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ), 'cont-dir-' . $this->wg->ContLang->getDir() ] );
-		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	public function preview() {
-		wfProfileIn( __METHOD__ );
-
-		$content = $this->request->getVal( 'content' );
-
-		$this->handleMessages();
-		$this->handleToc();
-		$this->handleContent( $content );
-		$this->handleAssets( 'preview' );
-
-		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );
+		$this->response->setVal( 'bodyClasses', [ 'wkMobile', $this->templateObject->get( 'pageclass' ) ] );
 		$this->response->setVal( 'globalVariablesScript', $this->skin->getTopScripts( $this->globalVariables ) );
 
 		wfProfileOut( __METHOD__ );

@@ -9,7 +9,6 @@ class ThemeSettings {
 	const HistoryItemsLimit = 10;
 
 	const MIN_WIDTH_FOR_SPLIT = 1030;
-	const MIN_WIDTH_FOR_NO_SPLIT = 2000;
 
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
@@ -72,7 +71,7 @@ class ThemeSettings {
 		$settings = $this->defaultSettings;
 		if(!empty($GLOBALS[self::WikiFactorySettings])) {
 			$settings = array_merge($settings, $GLOBALS[self::WikiFactorySettings]);
-			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+			$colorKeys = array( "color-body", "color-body-middle", "color-page", "color-buttons", "color-links", "color-header" );
 
 			// if any of the user set colors are invalid, use default
 			foreach ($colorKeys as $colorKey) {
@@ -81,12 +80,6 @@ class ThemeSettings {
 					break;
 				}
 			}
-
-			// special check for color-body-middle
-			if (!isset($settings['color-body-middle']) || !ThemeDesignerHelper::isValidColor($settings["color-body-middle"])) {
-				$settings["color-body-middle"] = $settings["color-body"];
-			}
-
 
 			// add variables that might not be saved already in WF
 			if(!isset($settings['background-fixed'])) {
@@ -131,18 +124,6 @@ class ThemeSettings {
 	public function saveSettings($settings, $cityId = null) {
 		global $wgCityId, $wgUser;
 		$cityId = empty($cityId) ? $wgCityId : $cityId;
-
-		// Verify wordmark length ( CONN-116 )
-		$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
-
-		if ( empty( $settings[ 'wordmark-text' ] ) ) {
-			// Do not save wordmark if its empty.
-			unset( $settings[ 'wordmark-text' ] );
-		} else {
-			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
-				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
-			}
-		}
 
 		if(isset($settings['favicon-image-name']) && strpos($settings['favicon-image-name'], 'Temp_file_') === 0) {
 			$temp_file = new LocalFile(Title::newFromText($settings['favicon-image-name'], 6), RepoGroup::singleton()->getLocalRepo());
@@ -273,7 +254,7 @@ class ThemeSettings {
 		global $wgUploadPath;
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
-		$wordmarkPath = explode('/images/', $wordmarkUrl)[0];
+		$wordmarkPath = reset(explode('/images/', $wordmarkUrl));
 
 		if (!empty($wordmarkPath)) {
 			$wordmarkUrl = str_replace(
@@ -306,7 +287,7 @@ class ThemeSettings {
 			return $backgroundUrl;
 		}
 
-		$backgroundPath = explode('/images/', $backgroundUrl)[0];
+		$backgroundPath = reset(explode('/images/', $backgroundUrl));
 
 		if (!empty($wordmarkPath)) {
 			$backgroundUrl = str_replace(

@@ -1,6 +1,9 @@
 <?php
 
 class MarketingToolboxController extends WikiaSpecialPageController {
+
+	const FLASH_MESSAGE_SESSION_KEY = 'flash_message';
+
 	protected $toolboxModel;
 	private $hubsServicesHelper;
 
@@ -124,7 +127,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 		$this->checkDate($this->date);
 
-		$this->flashMessage = FlashMessages::pop();
+		$this->flashMessage = $this->getFlashMessage();
 
 		$modulesData = $this->toolboxModel->getModulesData(
 			$this->langCode,
@@ -171,7 +174,7 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 
 				$this->purgeCache( $module );
 
-				FlashMessages::put(wfMsg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
+				$this->putFlashMessage(wfMsg('marketing-toolbox-module-save-ok', $modulesData['activeModuleName']));
 
 				// send request to add popular/featured videos
 				if ( $module->isVideoModule() ) {
@@ -411,6 +414,17 @@ class MarketingToolboxController extends WikiaSpecialPageController {
 		);
 		$this->videoFileName = $fileName;
 		$this->videoUrl = $url;
+	}
+
+	// TODO extract this code somewhere
+	protected function getFLashMessage() {
+		$message = $this->request->getSessionData(self::FLASH_MESSAGE_SESSION_KEY);
+		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, null);
+		return $message;
+	}
+
+	protected function putFlashMessage($message) {
+		$this->request->setSessionData(self::FLASH_MESSAGE_SESSION_KEY, $message);
 	}
 
 	public function sponsoredImage() {

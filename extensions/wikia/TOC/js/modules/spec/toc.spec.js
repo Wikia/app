@@ -5,13 +5,9 @@ describe( 'TOC', function() {
 	var getHeaders = function( html ) {
 			return html.querySelectorAll( 'h2, h3, h4, h5' );
 		},
-		getHeader = function ( header ) {
-			return header;
-		},
-		createTOCSection = function( header, tocLevel ) {
+		createTOCSection = function( header ) {
 			return {
 				title: header.textContent,
-				class: 'toclevel-' + tocLevel,
 				sections: []
 			};
 		},
@@ -36,16 +32,13 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				},{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				}
 			]
@@ -53,7 +46,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -65,19 +58,15 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test',
-							class:  'toclevel-2',
 							sections: [
 								{
 									title: 'test',
-									class:  'toclevel-3',
 									sections: [
 										{
 											title: 'test',
-											class:  'toclevel-4',
 											sections: []
 										}
 									]
@@ -91,7 +80,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -104,40 +93,32 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test',
-							class:  'toclevel-2',
 							sections: []
 						},
 						{
 							title: 'test',
-							class:  'toclevel-2',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test',
-							class:  'toclevel-2',
 							sections: []
 						},
 						{
 							title: 'test',
-							class:  'toclevel-2',
 							sections: [
 								{
 									title: 'test',
-									class:  'toclevel-3',
 									sections: [
 										{
 											title: 'test',
-											class:  'toclevel-4',
 											sections: []
 										}
 									]
@@ -148,7 +129,6 @@ describe( 'TOC', function() {
 				},
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				}
 			]
@@ -156,7 +136,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -168,17 +148,14 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test',
-					class:  'toclevel-1',
 					sections: []
 				}
 			]
@@ -186,7 +163,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -198,22 +175,18 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test3',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test4',
-							class:  'toclevel-2',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test2',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test5',
-							class:  'toclevel-2',
 							sections: []
 						}
 					]
@@ -223,7 +196,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -235,22 +208,18 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test5',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test4',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test3',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'test2',
-					class:  'toclevel-1',
 					sections: []
 				}
 			]
@@ -258,7 +227,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -270,22 +239,18 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'test2',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test3',
-							class:  'toclevel-2',
 							sections: []
 						}
 					]
 				},
 				{
 					title: 'test2',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'test4',
-							class:  'toclevel-2',
 							sections: []
 						}
 					]
@@ -295,7 +260,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -307,20 +272,16 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'Heading 3',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'Heading 4',
-							class:  'toclevel-2',
 							sections: [
 								{
 									title: 'Heading 5 1',
-									class:  'toclevel-3',
 									sections: []
 								},
 								{
 									title: 'Heading 5 2',
-									class:  'toclevel-3',
 									sections: []
 								}
 							]
@@ -332,7 +293,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});
@@ -344,25 +305,20 @@ describe( 'TOC', function() {
 			sections: [
 				{
 					title: 'Heading 3',
-					class:  'toclevel-1',
 					sections: []
 				},
 				{
 					title: 'Heading 3',
-					class:  'toclevel-1',
 					sections: [
 						{
 							title: 'Heading 4',
-							class:  'toclevel-2',
 							sections: [
 								{
 									title: 'Heading 5 1',
-									class:  'toclevel-3',
 									sections: []
 								},
 								{
 									title: 'Heading 5 2',
-									class:  'toclevel-3',
 									sections: []
 								}
 							]
@@ -374,7 +330,7 @@ describe( 'TOC', function() {
 
 		html.innerHTML = htmlContent;
 		headers = getHeaders( html );
-		data = toc.getData( headers, createTOCSection, getHeader );
+		data = toc.getData( headers, createTOCSection );
 
 		expect( JSON.stringify( data ) ).toBe( JSON.stringify( dataMock ) );
 	});

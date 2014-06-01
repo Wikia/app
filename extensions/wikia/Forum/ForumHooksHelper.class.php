@@ -257,7 +257,7 @@ class ForumHooksHelper {
 	static public function onWallMessageDeleted(&$mw, &$response) {
 		$title = $mw->getTitle();
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getArticleTitle()->getText() )->escaped() );
+			$response->setVal( 'returnTo', wfMessage( 'forum-thread-deleted-return-to', $mw->getWallTitle()->getText() )->escaped() );
 		}
 		return true;
 	}

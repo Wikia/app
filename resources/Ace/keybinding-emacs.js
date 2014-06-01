@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/keyboard/emacs', ['require', 'exports', 'module' , 'ace/lib/dom', 'ace/incremental_search', 'ace/commands/incremental_search_commands', 'ace/keyboard/hash_handler', 'ace/lib/keys'], function(require, exports, module) {
+define('ace/keyboard/emacs', ['require', 'exports', 'module' , 'ace/lib/dom', 'ace/incremental_search', 'ace/commands/incremental_search_commands', 'ace/keyboard/hash_handler', 'ace/lib/keys'], function(require, exports, module) {
 
 
 var dom = require("../lib/dom");
@@ -71,7 +71,7 @@ exports.handler.attach = function(editor) {
                 background-color: rgba(0,250,0,0.9);\
                 opacity: 0.5;\
             }\
-            .emacs-mode .ace_hidden-cursors .ace_cursor{\
+            .emacs-mode .ace_cursor.ace_hidden{\
                 opacity: 1;\
                 background-color: transparent;\
             }\
@@ -195,7 +195,7 @@ exports.handler.bindKey = function(key, command) {
     if (!key)
         return;
 
-    var ckb = this.commandKeyBinding;
+    var ckb = this.commmandKeyBinding;
     key.split("|").forEach(function(keyPart) {
         keyPart = keyPart.toLowerCase();
         ckb[keyPart] = command;
@@ -236,7 +236,7 @@ exports.handler.handleKeyboard = function(data, hashId, key, keyCode) {
     data.universalArgument = false;
     if (modifier) key = modifier + key;
     if (data.keyChain) key = data.keyChain += " " + key;
-    var command = this.commandKeyBinding[key];
+    var command = this.commmandKeyBinding[key];
     data.keyChain = command == "null" ? key : "";
     if (!command) return undefined;
     if (command === "null") return {command: "null"};
@@ -541,7 +541,7 @@ exports.killRing = {
 
 });
 
-ace.define('ace/incremental_search', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/search', 'ace/search_highlight', 'ace/commands/incremental_search_commands', 'ace/lib/dom', 'ace/commands/command_manager', 'ace/editor', 'ace/config'], function(require, exports, module) {
+define('ace/incremental_search', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/search', 'ace/search_highlight', 'ace/commands/incremental_search_commands', 'ace/lib/dom', 'ace/commands/command_manager', 'ace/editor', 'ace/config'], function(require, exports, module) {
 
 
 var oop = require("./lib/oop");
@@ -726,7 +726,7 @@ require("./config").defineOptions(Editor.prototype, "editor", {
 
 });
 
-ace.define('ace/commands/incremental_search_commands', ['require', 'exports', 'module' , 'ace/config', 'ace/lib/oop', 'ace/keyboard/hash_handler', 'ace/commands/occur_commands'], function(require, exports, module) {
+define('ace/commands/incremental_search_commands', ['require', 'exports', 'module' , 'ace/config', 'ace/lib/oop', 'ace/keyboard/hash_handler', 'ace/commands/occur_commands'], function(require, exports, module) {
 
 var config = require("../config");
 var oop = require("../lib/oop");
@@ -873,7 +873,7 @@ exports.IncrementalSearchKeyboardHandler = IncrementalSearchKeyboardHandler;
 
 });
 
-ace.define('ace/commands/occur_commands', ['require', 'exports', 'module' , 'ace/config', 'ace/occur', 'ace/keyboard/hash_handler', 'ace/lib/oop'], function(require, exports, module) {
+define('ace/commands/occur_commands', ['require', 'exports', 'module' , 'ace/config', 'ace/occur', 'ace/keyboard/hash_handler', 'ace/lib/oop'], function(require, exports, module) {
 
 var config = require("../config"),
     Occur = require("../occur").Occur;
@@ -952,7 +952,7 @@ exports.occurStartCommand = occurStartCommand;
 
 });
 
-ace.define('ace/occur', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/search', 'ace/edit_session', 'ace/search_highlight', 'ace/lib/dom'], function(require, exports, module) {
+define('ace/occur', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/search', 'ace/edit_session', 'ace/search_highlight', 'ace/lib/dom'], function(require, exports, module) {
 
 
 var oop = require("./lib/oop");

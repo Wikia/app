@@ -98,7 +98,7 @@ If you believe this is in error, please [[Special:Contact|contact Wikia]].',
 	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire Wikia network due to vandalism or other disruption by a user with a similar name.
 Please [[Special:Contact|contact Wikia]] about the problem.',
 	'phalanx-user-block-new-account' => 'Username is not available for registration. Please choose another one.',
-	'phalanx-email-block-new-account' => 'We can not complete your registration at this time.',
+	'phalanx-email-block-new-account' => 'This email is blocked for registration. Please choose another one.',
 
 	#block reason overrides, worded to add the block reason
 	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
@@ -1828,6 +1828,7 @@ Jeśli uważasz, że jest to błąd, prosimy [[Special:Contact|skontaktuj się z
 	'phalanx-user-block-reason-similar' => 'Na tą nazwę użytkownika nałożono blokadę edycji w całej Wikii spowodowaną wandalizmem lub innymi naruszeniami zasad przez użytkownika o podobnej nazwie.
 Prosimy [[Special:Contact|o kontakt]] w sprawie problemu.',
 	'phalanx-user-block-new-account' => 'Nazwa użytkownika nie jest dostępna do zarejestrowania. Proszę wybrać inną.',
+	'phalanx-email-block-new-account' => 'Adres e-mail użytkownika został zablokowany. Proszę wybrać inny.',
 	'phalanx-user-block-withreason-ip' => 'Ten adres IP został zablokowany i nie posiada praw edycji na całej Wikii z powodu wandalizmu lub innego typu naruszeń zasad czynionych przez Ciebie lub przez inną osobę, która dzieli twój adres IP.
 Jeśli uważasz, że jest to błąd, proszę [[Special:Contact|skontaktuj się z nami]].<br />Blokujący podał również powód dodatkowy: $1.',
 	'phalanx-user-block-withreason-exact' => 'Ta nazwa użytkownika lub adres IP zostały zablokowane i nie posiadają praw edycji na całej Wikii z powodu wandalizmu lub innego typu naruszeń zasad.

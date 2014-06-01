@@ -374,8 +374,7 @@ class AssetsManager {
 		// as it build our whole PHP stack and reads file from filesystem
 		// which cannot be cached by web server as the content is assumed
 		// to be dynamic
-		// BAC-696: added ltrim() - prevent double slash in the URL
-		$url = $wgScriptPath . '/' . ltrim( $filePath, '/' );
+		$url = $wgScriptPath . '/' . $filePath;
 		// TODO: remove it completely
 		//if ($minify !== null ? $minify : $this->mMinify) {
 		//	$url = $this->getAMLocalURL('one', $filePath);
@@ -726,6 +725,14 @@ class AssetsManager {
 
 		if ( !empty( $options['ttl'] ) ) {
 			$request['ttl'] = $options['ttl'];
+		}
+
+		if ( !empty( $options['varnishTTL'] ) ) {
+			$request['varnishTTL'] = $options['varnishTTL'];
+		}
+
+		if ( !empty( $options['browserTTL'] ) ) {
+			$request['browserTTL'] = $options['browserTTL'];
 		}
 
 		$request['cb'] = $wgStyleVersion;

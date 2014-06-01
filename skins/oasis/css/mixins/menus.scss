@@ -51,3 +51,27 @@
 		}
 	}
 }
+
+.WikiaMenuElement {
+	background: $color-page;
+	display: block;
+	list-style: none;
+	padding: 0;
+	li {
+		border-top: 1px solid $color-page-border;
+		float: none !important;
+		margin: 0;
+		padding: 0;
+		&:hover {
+			$dropdown-background: mix($color-buttons, $color-page, 20%);
+			@if $is-dark-wiki {
+				$dropdown-background: lighten($dropdown-background, 8%);
+			}
+			background-color: $dropdown-background !important;
+		}
+		a {
+			height: 20px;
+			line-height: 22px;
+		}
+	}
+}

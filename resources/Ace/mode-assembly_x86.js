@@ -29,7 +29,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/assembly_x86', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/assembly_x86_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
+define('ace/mode/assembly_x86', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/assembly_x86_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -39,8 +39,9 @@ var AssemblyX86HighlightRules = require("./assembly_x86_highlight_rules").Assemb
 var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = AssemblyX86HighlightRules;
+    var highlighter = new AssemblyX86HighlightRules();
     this.foldingRules = new FoldMode();
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -51,7 +52,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/assembly_x86_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/assembly_x86_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -128,7 +129,7 @@ oop.inherits(AssemblyX86HighlightRules, TextHighlightRules);
 exports.AssemblyX86HighlightRules = AssemblyX86HighlightRules;
 });
 
-ace.define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
+define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

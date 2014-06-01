@@ -151,7 +151,6 @@ function getDynamicRobots($bot=''){
 		$r .= "Disallow: /*action=history*\n";
 		$r .= "Disallow: /*action=delete*\n";
 		$r .= "Disallow: /*action=watch*\n";
-		$r .= "Disallow: /*action=purge*\n";
 		$r .= "Noindex: /w/\n";
 		$r .= "Noindex: /trap/\n";
 		$r .= "Noindex: /dbdumps/\n";
@@ -175,7 +174,6 @@ function getDynamicRobots($bot=''){
 		$r .= "Disallow: /*action=history*\n";
 		$r .= "Disallow: /*action=delete*\n";
 		$r .= "Disallow: /*action=watch*\n";
-		$r .= "Disallow: /*action=purge*\n";
 
 	}
 

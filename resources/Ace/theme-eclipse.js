@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/eclipse', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/eclipse', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 
 exports.isDark = false;
@@ -48,7 +48,7 @@ background-color: #FFFFFF;\
 background-color: rgb(60, 76, 114);\
 }\
 .ace-eclipse .ace_cursor {\
-color: black;\
+border-left: 2px solid black;\
 }\
 .ace-eclipse .ace_storage,\
 .ace-eclipse .ace_keyword,\

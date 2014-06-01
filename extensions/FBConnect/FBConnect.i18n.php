@@ -87,7 +87,6 @@ $messages['en'] = array(
 	'fbconnect-errortext' => 'Yikes! It looks like that didn\'t work out. Please try again.',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
 	'fbconnect-invalid' => 'Invalid option',
 	'fbconnect-invalidtext' => 'The selection made on the previous page was invalid.',
 	'fbconnect-success' => 'Facebook verification succeeded',
@@ -217,7 +216,6 @@ OpenID preferences tab title',
 										   to an existing account.',
 	'fbconnect-connect-next' => 'This text appears on the button in the login-and-connect dialog.  After a user enters their username/password, this will slide them over to the next screen which is the Facebook Connect button.',
 	'fbconnect-disconnect-info-existing' => 'Confirmation message shown to users who have disconnected their account from Facebook but had a regular Wikia account.',
-	'fbconnect-logout-confirm' => 'Message shown if a user attempts to cancel process of connecting Wikia account with Facebook account. It informs the user that proceeding with this action will result in logout from Facebook and asks for confirmation.'
 );
 /**/
 

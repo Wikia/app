@@ -119,15 +119,9 @@
 
 	/* page controls styling */
 	$page-controls-wide-width: 600px;
-	$page-controls-wide-width-min: 350px;
-
 	&.editpage-sourcewidemode-on {
 		.cke_toolbar_source {
 			width: $width-outside - $page-controls-wide-width;
-
-			@media screen and (max-width: $breakpoint-small) {
-				width: $width-outside - $page-controls-wide-width-min;
-			}
 		}
 		// save button
 		#wpSave {
@@ -146,10 +140,6 @@
 				.module_content {
 					position: relative;
 					width: $page-controls-wide-width;
-
-					@media screen and (max-width: $breakpoint-small) {
-						width: $page-controls-wide-width-min;
-					}
 				}
 
 				// checkboxes

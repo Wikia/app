@@ -78,8 +78,6 @@ window.onFBloaded = function() {
  * jQuery code to be run when the DOM is ready to be manhandled.
  */
 $(function() {
-	var wpCancelClicked = false;
-
 	// Add a pretty logo to Facebook links
 	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
 
@@ -92,28 +90,6 @@ $(function() {
 			FB.logout(function(response) {
 				window.location = window.fbLogoutURL;
 			});
-		}
-	});
-
-
-	$('#wpCancel').click(function(){
-		if (!wpCancelClicked) {
-			var logout = confirm($.msg('fbconnect-logout-confirm'));
-			if (logout) {
-				wpCancelClicked = true;
-				window.FB.getLoginStatus(function(response){
-					if (response.status === 'connected' ) {
-						window.FB.logout(function(){
-							$('#wpCancel').click();
-						});
-					} else {
-						$('#wpCancel').click();
-					}
-				});
-			}
-			return false;
-		} else {
-			return true;
 		}
 	});
 
@@ -183,7 +159,10 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
 			if(data.status == "ok") {
-				location.reload();
+				$().getModal(window.wgScript + '?action=ajax&rs=SpecialConnect::ajaxModalChooseName&returnto=' + encodeURIComponent(wgPageName) + '&returntoquery=' + encodeURIComponent(window.wgPageQuery || ''),  "#fbConnectModal", {
+			        id: "fbConnectModalWrapper",
+			        width: 600
+				});
 			} else {
 				window.location.href = destUrl;
 			}

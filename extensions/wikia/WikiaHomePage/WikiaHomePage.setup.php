@@ -32,4 +32,3 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaHomePageController::onWikiaMobil
 $wgHooks['ArticleCommentCheck'][] = 'WikiaHomePageController::onArticleCommentCheck';
 $wgHooks['AfterGlobalHeader'][] = 'WikiaHomePageController::onAfterGlobalHeader';
 $wgHooks['GetRailModuleList'][] = 'WikiaHomePageController::onGetRailModuleList';
-$wgHooks['BeforePageDisplay'][] = 'WikiaHomePageController::onBeforePageDisplay';

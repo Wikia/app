@@ -1,4 +1,4 @@
-<li class="feature" data-name="<?= $feature['name'] ?>" data-heading="<?= wfMessage('wikifeatures-feature-heading-'.$feature['name'])->plain() ?>">
+<li class="feature" data-name="<?= $feature['name'] ?>">
 	<h3>
 		<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>
 		<? if (isset($feature['active'])): ?>
@@ -13,12 +13,12 @@
 			<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] . $feature['imageExtension'] ?>" >
 		</div>
 		<? if(!empty($feature['new'])): ?>
-			<span class="promo-text"><?= wfMessage('wikifeatures-promotion-new')->plain() ?></span>
+			<span class="promo-text"><?= wfMsg('wikifeatures-promotion-new') ?></span>
 		<? endif; ?>
 	</div>
 	<div class="details">
 		<p>
-			<?= wfMessage('wikifeatures-feature-description-'.$feature['name'])->parse() ?>
+			<?= wfMsgExt('wikifeatures-feature-description-'.$feature['name'], 'parseinline') ?>
 		</p>
 	</div>
 	<div class="actions">

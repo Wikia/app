@@ -45,21 +45,9 @@ class GlobalTitle extends Title {
 	static protected $cachedObjects = array();
 
 	/**
-	 * @desc Static constructor, Create new Title from name of page
-	 *
-	 * @param String $text
-	 * @param Integer $namespace (default NS_MAIN)
-	 * @param Integer|null $city_id a wiki id; we allow null because of compatibility with Title::newFromText()
-	 *
-	 * @throws Exception when $city_id parameter is null
-	 *
-	 * @return GlobalTitle
+	 * static constructor, Create new Title from name of page
 	 */
-	public static function newFromText( $text, $namespace = NS_MAIN, $city_id = null ) {
-		if( $city_id === null ) {
-		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
-			throw new \Exception( 'Invalid $city_id.' );
-		}
+	public static function newFromText( $text, $namespace, $city_id ) {
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
 		$title = new GlobalTitle();
@@ -74,45 +62,24 @@ class GlobalTitle extends Title {
 		return $title;
 	}
 	
-	/**
-	 * @desc Create a new Title for the Main Page
+    /**
+	 * Create a new Title for the Main Page
 	 *
-	 * @param Integer $city_id a wiki id; we allow null because of compatibility with Title::newMainPage()
-	 *
-	 * @throws Exception when $city_id parameter is null
-	 *
-	 * @return GlobalTitle
+	 * @param int city_id
+	 * @return Title the new object
 	 */
-	public static function newMainPage( $city_id = null ) {
-		if( $city_id === null ) {
-		// we allow to pass null in the method definition because of Strict Compatibility with Title::newFromText()
-			throw new \Exception( 'Invalid $city_id.' );
-		}
-
+	public static function newMainPage( $city_id ) {
 		// sure hope this redirects for the most part
 		$title = self::newFromText( 'Main Page', NS_MAIN, $city_id );
 		return $title;
 	}
 
 	/**
-	 * @desc static constructor, Create new Title from id of page
-	 *
-	 * @param Integer $id
-	 * @param Integer $city_id a wiki id; we allow null because of compatibility with Title::newFromId()
-	 * @param String $dbname
-	 *
-	 * @throws Exception
-	 *
-	 * @returns GlobalTitle|null
+	 * static constructor, Create new Title from id of page
 	 */
-	public static function newFromId( $id, $city_id = null, $dbname = "" ) {
+	public static function newFromId( $id, $city_id, $dbname = "" ) {
 		global $wgMemc;
 		$title = null;
-
-		if( $city_id === null ) {
-		// we allow to pass 0 in the method definition because of Strict Compatibility with Title::newFromText()
-			throw new \Exception( 'Invalid $city_id.' );
-		}
 
 		$memkey = sprintf( "GlobalTitle:%d:%d", $id, $city_id );
 		$res = $wgMemc->get( $memkey );

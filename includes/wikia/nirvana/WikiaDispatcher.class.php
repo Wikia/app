@@ -69,10 +69,8 @@ class WikiaDispatcher {
 	 * @return WikiaResponse
 	 */
 	public function dispatch( WikiaApp $app, WikiaRequest $request ) {
-		wfProfileIn(__METHOD__);
 		global $wgAutoloadClasses;
 		if (empty($wgAutoloadClasses)) {
-			wfProfileOut(__METHOD__);
 			throw new WikiaException( "wgAutoloadClasses is empty, cannot dispatch Request" );
 		}
 		$format = $request->getVal( 'format', WikiaResponse::FORMAT_HTML );
@@ -211,8 +209,6 @@ class WikiaDispatcher {
 			} catch ( WikiaHttpException $e ) {
 				if ( $request->isInternal() ) {
 					//if it is internal call rethrow it so we can apply normal handling
-
-					wfProfileOut(__METHOD__);
 					throw $e;
 
 				} else {
@@ -247,11 +243,9 @@ class WikiaDispatcher {
 
 		if ( $request->isInternal() && $response->hasException() ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');
-			wfProfileOut(__METHOD__);
 			throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
 		}
 
-		wfProfileOut(__METHOD__);
 		return $response;
 	}
 }

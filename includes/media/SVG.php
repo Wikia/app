@@ -93,6 +93,7 @@ class SvgHandler extends ImageHandler {
 		$clientHeight = $params['height'];
 		$physicalWidth = $params['physicalWidth'];
 		$physicalHeight = $params['physicalHeight'];
+		$srcPath = $image->getLocalRefPath();
 
 		if ( $flags & self::TRANSFORM_LATER ) {
 			return new ThumbnailImage( $image, $dstUrl, $clientWidth, $clientHeight, $dstPath );
@@ -102,10 +103,6 @@ class SvgHandler extends ImageHandler {
 			return new MediaTransformError( 'thumbnail_error', $clientWidth, $clientHeight,
 				wfMsg( 'thumbnail_dest_directory' ) );
 		}
-
-		# Transform functions and binaries need a FS source file
-		# Wikia change - moved below checks above - BAC-1123 (macbre)
-		$srcPath = $image->getLocalRefPath();
 
 		$status = $this->rasterize( $srcPath, $dstPath, $physicalWidth, $physicalHeight );
 		if( $status === true ) {

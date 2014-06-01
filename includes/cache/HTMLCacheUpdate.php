@@ -58,15 +58,6 @@ class HTMLCacheUpdate implements DeferrableUpdate {
 
 		# Get an estimate of the number of rows from the BacklinkCache
 		$numRows = $this->mCache->getNumLinks( $this->mTable );
-
-		// Wikia change - begin
-		// @author macbre - BAC-1183
-		if ($numRows > 0) {
-			Wikia::log('purge-requests-WIKIA', false,
-				sprintf('an edit of "%s" triggered %d purge requests', $this->mTitle->getPrefixedText(), $numRows), true);
-		}
-		// Wikia change - end
-
 		if ( $numRows > $this->mRowsPerJob * 2 ) {
 			# Do fast cached partition
 			$this->insertJobs();

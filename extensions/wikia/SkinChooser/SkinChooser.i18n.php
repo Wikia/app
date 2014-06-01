@@ -39,7 +39,7 @@ $messages['ca'] = array(
 	'site-layout' => 'Dissenys del lloc',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Darth Daron
  * @author Dontlietome7
  */
@@ -68,13 +68,6 @@ $messages['es'] = array(
 	'skinchooser-desc' => 'Permite a los usuarios escoger la apariencia del wiki en sus preferencias',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Diseños del sitio',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'new-look' => 'ویکیا',
 );
 
 /** Finnish (suomi)
@@ -147,13 +140,6 @@ $messages['ja'] = array(
 	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
 	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'new-look' => 'ويكيا:',
 );
 
 /** Macedonian (македонски)
@@ -309,15 +295,6 @@ $messages['uk'] = array(
 $messages['uz'] = array(
 	'skinchooser-desc' => 'Foydalanuvchilarga uz skinlarini tanlashga imkon beradi',
 	'new-look' => 'Vikia',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'skinchooser-desc' => 'Cho phép người dùng lựa chọn giao diện trong sở thích của họ',
-	'new-look' => 'Wikia',
-	'site-layout' => 'Bố trí trang web',
 );
 
 /** Simplified Chinese (中文（简体）‎)

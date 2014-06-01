@@ -96,19 +96,26 @@
 					display: block;
 					float: left;
 					height: 26px;
-					min-width: 107px;
 					position: relative;
+					width: 107px;
 					.texton {
-						color: #FFF;
+						color: #FFFFFF;
 						display: none;
 						font-weight: bold;
-						margin: 2px 35px 0 10px;
+						margin-left: 5px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
 					}
 					.textoff {
 						color: #000;
-						display: block;
 						font-weight: bold;
-						margin: 2px 10px 0 35px;
+						margin-left: 32px;
+						position: absolute;
+						text-align: center;
+						top: 2px;
+						width: 70px;
 					}
 					.button {
 						@include border-radius(14px);
@@ -133,8 +140,7 @@
 							display: none;
 						}
 						.button {
-							left: 100%;
-							margin-left: -27px;
+							left: 80px;
 						}
 					}
 				}
@@ -155,6 +161,7 @@
 }
 
 .FeedbackDialog {
+	display: none;
 	.feature-highlight {
 		float: right;
 		margin-left: 30px;
@@ -167,7 +174,6 @@
 		img {
 			border: 1px solid black;
 			width: 300px;
-			height: 214px;
 		}
 	}
 
@@ -185,18 +191,12 @@
 		label {
 			clear: both;
 			float: left;
-			margin: 10px 0;
 		}
-	}
-
-	.comment-character-count {
-		margin-top: 2px;
-		text-align: right;
 	}
 
 	textarea {
 		height: 10em;
-		width: 100%;
+		width: 660px;
 		&.invalid {
 			border: 1px solid #f00;
 			&:focus {

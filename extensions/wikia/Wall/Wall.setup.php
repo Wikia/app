@@ -180,12 +180,13 @@ JSMessages::registerPackage('Wall', array(
 	'wall-button-to-preview-comment',
 	'wall-votes-modal-title',
 	'wall-button-done-source',
+	'wall-preview-modal-title',
+	'wall-preview-modal-button-back',
+	'wall-preview-modal-button-publish',
 	'wall-action-*',
 	'wall-message-source',
 	'wall-confirm-monobook-*',
-	'preview',
-	'savearticle',
-	'back',
+	'wall-preview-modal-title'
 ));
 
 /**

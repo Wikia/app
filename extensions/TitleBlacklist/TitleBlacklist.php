@@ -48,7 +48,7 @@ $wgAPIModules['titleblacklist'] = 'ApiQueryTitleBlacklist';
 
 $wgAvailableRights[] = 'tboverride';	// Implies tboverride-account
 $wgAvailableRights[] = 'tboverride-account';	// For account creation
-// $wgGroupPermissions['sysop']['tboverride'] = true; // Wikia change - move default rights to settings file so they can be overridden by WikiFactory
+$wgGroupPermissions['sysop']['tboverride'] = true;
 
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'TitleBlacklistHooks::userCan';
 $wgHooks['AbortMove'][] = 'TitleBlacklistHooks::abortMove';

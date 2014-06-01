@@ -1,10 +1,9 @@
 <?php
 class PhalanxStatsWikiaPager extends PhalanxStatsPager {
-	public $qCond = 'ps_wiki_id';
-	public $pInx = false;
-
 	public function __construct( $id ) {
 		parent::__construct( $id );
+		$this->qCond = 'ps_wiki_id';
+		$this->pInx = 'wikiId';
 		$this->mTitle = Title::newFromText( 'Phalanx', NS_SPECIAL );
 		$this->mTitleStats = Title::newFromText( 'PhalanxStats', NS_SPECIAL );
 	}

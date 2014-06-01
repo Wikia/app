@@ -1,22 +1,66 @@
 @import 'variables';
+@import 'mixins/transition';
 
 //variables
-$slotWidth: 300px; //in content width
-$slotWidthMax: 320px; //top leaderboard width
-$slotTopHeight: 50px;
+$slotFooterWidth: 300px;//some networks use this instead of 320
+$slotFooterWidthMax: 320px;
+$slotFooterHeight: 50px;
+$slotFooterMargin: 0;
+$slotFooterColor: #666;
+//z-index has to be high enough to be above page content
+//and low enough so expandables can be above it
+$slotZIndex: 4000;
 
-#wkAdTopLeader {
-	background-color: white;
+#wkFloatingAd {
+	position: relative;
+	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
+	-webkit-focus-ring-color: rgba( 0,0,0,0 );
 
-	width: $slotWidthMax;
-	height: $slotTopHeight;
-
-	margin: 0 auto;
 	text-align: center;
 
-	//inverted as this ad is to have 100% fill
-	&.hide {
-		display: none;
+	max-height: $slotFooterHeight;
+
+	&.over {
+		z-index: $slotZIndex;
+	}
+
+	&.fixed {
+		position: fixed;
+		bottom: 0;
+
+		margin: 0;
+		padding: 0;
+
+		width: 100%;
+
+		background-color: $slotFooterColor;
+	}
+
+	&.jsfix {
+		position: absolute;
+	}
+
+	> * {
+		//Footer Ad
+		//force Ad content to stick in place
+		//and don't exceed allowed dimensions
+		margin: $slotFooterMargin auto;
+		max-width: $slotFooterWidthMax;
+		max-height: $slotFooterHeight;
+	}
+}
+
+#wkAdTopLeader {
+	visibility: hidden;
+
+	&.show {
+		visibility: visible;
+
+		width: $slotFooterWidthMax;
+		height: $slotFooterHeight;
+
+		margin: 0 auto;
+		text-align: center;
 	}
 }
 
@@ -28,8 +72,6 @@ $slotTopHeight: 50px;
 
 		position: relative;
 		margin: 0 auto;
-		//compensate for wkPage margin
-		left: -3.125%;
 
 		padding: 15px 0;
 		height: 270px;
@@ -47,7 +89,7 @@ $slotTopHeight: 50px;
 	display: inline-block;
 
 	height: 250px;
-	width: $slotWidth;
+	width: 300px;
 
 	background: rgba(0,0,0,.3);
 
@@ -67,4 +109,11 @@ $slotTopHeight: 50px;
 		font-size: 9px;
 		color: $ad-label-color;
 	}
+}
+
+//when ads are loaded and "floating" at the bottom
+//then make sure there's enough space to host them
+//without getting the adslot overlaying the links
+.ads {
+	padding-bottom: 50px;
 }

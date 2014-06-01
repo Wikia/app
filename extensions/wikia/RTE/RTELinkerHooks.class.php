@@ -108,14 +108,9 @@ class RTELinkerHooks extends Linker {
 	 * Returns placeholder for broken image link
 	 *
 	 * This one is called directly by RTEParser::makeImage()
-	 *
 	 */
-	public static function makeBrokenImageLinkObj( $title, $html = '', $query = '', $trail = '', $prefix = '', $time = false, $wikitextIdx = null ) {
+	public static function makeBrokenImageLinkObj(Title $title, $html = '', $query = '', $trail = '', $prefix = '', $time = false, $wikitextIdx = null) {
 		wfProfileIn(__METHOD__);
-
-		if( !$title instanceof Title ) {
-			throw new \Exception( '$title is not Title class instance' );
-		}
 
 		// try to resolve internal links in broken image caption (RT #90616)
 		$wikitext = RTEData::get('wikitext', $wikitextIdx);

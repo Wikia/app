@@ -112,7 +112,8 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
 		'url': mw.util.wikiScript( 'api' ),
 		'data': {
 			'format': 'json',
-			'action': 'addmediatemporary',
+			'action': 'apitempupload',
+			'type': 'temporary',
 			'url': this.value
 		}
 	} )
@@ -206,21 +207,11 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoAlways = function () {
  * @fires requestVideoDone
  */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
-	var errorMsg;
-
-	// Send errors to the user
 	if ( data.error ) {
-		errorMsg = this.displayMessages[data.error.code] || this.displayMessages.mediaqueryfailed;
-
-		mw.config.get( 'GlobalNotification' ).show(
-			errorMsg,
-			'error',
-			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-		);
-
+		// TODO: Maybe special handling for some errors? At least for "mustbeloggedin"
 		this.requestSearch();
 	} else {
-		this.emit( 'requestVideoDone', data.addmediatemporary );
+		this.emit( 'requestVideoDone', data.apitempupload );
 	}
 };
 
@@ -240,16 +231,4 @@ ve.ui.WikiaMediaQueryWidget.prototype.showUpload = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
 	this.$uploadWrapper.hide();
-};
-
-/**
- * Map API error message to human readable messages
- *
- * @property
- */
-ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
-	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
-	'onlyallowpremium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
-	'permissiondenied' : ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
-	'mediaqueryfailed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };

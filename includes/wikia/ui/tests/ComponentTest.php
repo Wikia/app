@@ -25,7 +25,7 @@ class ComponentTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 		
 		$setTemplatePathMethod->invoke( $UIComponentMock, $templateType );
-		/** @var $UIComponentMock \Wikia\UI\Component */
+		/** @var $UIComponentMock Wikia\UI\Component */
 		$this->assertEquals( $expected, $UIComponentMock->getTemplatePath() );
 	}
 	

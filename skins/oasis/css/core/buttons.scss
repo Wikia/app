@@ -332,8 +332,7 @@ button.wikia-chiclet-button {
 /*****************************
 Facebook style button
 ******************************/
-a.wikia-button-facebook,
-a.wikia-button.wikia-button-facebook {
+a.wikia-button-facebook {
 	@include border-radius(2px);
 	border-color: #afbdd6;
 	color: #fff;

@@ -84,8 +84,7 @@ $messages['qqq'] = array(
 	'wikiaquiz-moreinfoheading-label' => 'Form Label for More Info Heading.',
 	'wikiaquiz-requireemail-label' => 'Label for checkbox for required email address.',
 	'wikiaquiz-moreinfolinks-label' => 'Form Label for More Info Links.',
-	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.
-{{Identical|Article}}',
+	'wikiaquiz-moreinfoarticle-label' => 'Form Label for More info Article.',
 	'wikiaquiz-moreinfolinktext-label' => 'Form Label for More info Link Text.',
 	'wikiaquiz-question-label' => 'Form Label for Question.
 {{Identical|Question}}',
@@ -100,10 +99,8 @@ $messages['qqq'] = array(
 {{Identical|Answer}}',
 	'wikiaquiz-correct-label' => 'Form Label for Correct.',
 	'wikiaquiz-addnewitem-label' => 'Special Page text next to button for a new item to a quiz.',
-	'wikiaquiz-cancel-label' => 'Cancel button label.
-{{Identical|Cancel}}',
-	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.
-{{Identical|Publish}}',
+	'wikiaquiz-cancel-label' => 'Cancel button label.',
+	'wikiaquiz-publish-label' => 'Create/Edit Quiz button label for confirming changes.',
 	'wikiaquiz-error-duplicate-quiz' => 'Error message when user tries to create a quiz that already exists.',
 	'wikiaquiz-error-duplicate-question' => 'Error message when user tries to create a question that already exists.',
 	'wikiaquiz-error-invalid-question' => 'Error message when question is invalid/empty.',
@@ -202,7 +199,6 @@ $messages['az'] = array(
 	'wikiaquiz-cancel-label' => 'İmtina',
 	'wikiaquiz-publish-label' => 'Naşir',
 	'wikiaquiz-game-finish-button' => 'Son',
-	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 );
 
 /** Bulgarian (български)
@@ -349,7 +345,7 @@ $messages['ce'] = array(
 	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  * @author Vks
  */
@@ -502,7 +498,7 @@ $messages['diq'] = array(
 	'wikiaquiz-answers-label' => 'Cıwab',
 	'wikiaquiz-answer-label' => 'Cewab',
 	'wikiaquiz-correct-label' => 'Timar bo?',
-	'wikiaquiz-cancel-label' => 'Bıtexelne',
+	'wikiaquiz-cancel-label' => 'Bıterkne',
 	'wikiaquiz-publish-label' => 'Vıla ke',
 	'wikiaquiz-game-start-button' => 'Destpêkerdışê Kayer',
 	'wikiaquiz-game-cadence-3' => 'Amade',
@@ -586,22 +582,13 @@ $messages['es'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
- * @author Reza1615
  */
 $messages['fa'] = array(
-	'wikiaquiz-title-label' => 'عنوان',
-	'wikiaquiz-question-label' => 'پرسش',
-	'wikiaquiz-questions-label' => 'سوال‌ها',
-	'wikiaquiz-answers-label' => 'پاسخ‌ها',
-	'wikiaquiz-answer-label' => 'پاسخ',
-	'wikiaquiz-cancel-label' => 'لغو',
 	'wikiaquiz-game-start-button' => 'شروع بازی',
 	'wikiaquiz-game-cadence-1' => 'برو!',
 	'wikiaquiz-game-question-label' => 'سؤال',
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
-	'wikiaquiz-game-continue-button' => 'ادامه',
-	'wikiaquiz-game-mute' => 'صامت‌سازی',
 );
 
 /** Faroese (føroyskt)
@@ -2142,13 +2129,6 @@ $messages['uk'] = array(
 	'wikiaquiz-game-email-error' => 'Виникла помилка під час надсилання на цю електронну пошту: $1',
 	'wikiaquiz-game-challenge' => 'Киньте виклик своїм друзям, щоб грати!',
 	'wikiaquiz-game-mute' => 'Без звуку',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
 );
 
 /** Simplified Chinese (中文（简体）‎)

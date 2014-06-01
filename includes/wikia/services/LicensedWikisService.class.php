@@ -63,11 +63,4 @@ class LicensedWikisService extends WikiaModel {
 		return true;
 	}
 
-	public function isCommercialUseAllowedByUrl( $url ) {
-		$urlStructure = parse_url( $url );
-		if ( !empty($urlStructure) && !empty( $urlStructure['host'] ) ) {
-			return $this->isCommercialUseAllowedByHostName( $urlStructure['host'] );
-		}
-		return true;
-	}
 }

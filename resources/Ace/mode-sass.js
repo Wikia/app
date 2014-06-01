@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/sass', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/sass_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
+define('ace/mode/sass', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/sass_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -38,7 +38,7 @@ var SassHighlightRules = require("./sass_highlight_rules").SassHighlightRules;
 var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = SassHighlightRules;
+    this.$tokenizer = new Tokenizer(new SassHighlightRules().getRules());
     this.foldingRules = new FoldMode();
 };
 oop.inherits(Mode, TextMode);
@@ -51,7 +51,7 @@ exports.Mode = Mode;
 
 });
 
-ace.define('ace/mode/sass_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/scss_highlight_rules'], function(require, exports, module) {
+define('ace/mode/sass_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/scss_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -100,7 +100,7 @@ exports.SassHighlightRules = SassHighlightRules;
 
 });
 
-ace.define('ace/mode/scss_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/scss_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -354,7 +354,7 @@ exports.ScssHighlightRules = ScssHighlightRules;
 
 });
 
-ace.define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
+define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

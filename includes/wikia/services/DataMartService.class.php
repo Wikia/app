@@ -382,11 +382,11 @@ class DataMartService extends Service {
 						->AND_('user_id')->IN($userIds)
 					->GROUP_BY('user_id')
 					->runLoop($db, function(&$events, $row) {
-						$events[$row->user_id] = [
-							'creates' => $row->creates,
-							'edits' => $row->creates + $row->edits,
-							'deletes' => $row->deletes,
-							'undeletes' => $row->undeletes,
+						$events[$row['user_id']] = [
+							'creates' => $row['creates'],
+							'edits' => $row['creates'] + $row['edits'],
+							'deletes' => $row['deletes'],
+							'undeletes' => $row['undeletes'],
 						];
 					});
 
@@ -604,7 +604,7 @@ class DataMartService extends Service {
 
 		return $tagViews;
 	}
-
+	
 	public static function getWAM200Wikis() {
 		$app = F::app();
 

@@ -17,7 +17,7 @@ class ApiDocsServiceFactory {
 	 */
 	public function getApiDocsService() {
 		global $IP;
-		$swagger = Swagger::discover( $IP . "/includes/wikia/api/swagger" );
+		$swagger = Swagger::discover( $IP . "/includes/wikia/api/" );
 		$docsService = new ApiDocsService(
 			$swagger,
 			function( $x ) { return "Docs/Api?name=" . $x; }

@@ -1,6 +1,6 @@
 <?php if( !empty($usersInvolved) ): ?>
 <section class="WallHistoryRail module">
-	<h1><?= wfMessage( 'wall-history-who-involved-wall-title' )->escaped(); ?></h1>
+	<h1><?= wfMsg('wall-history-who-involved-wall-title'); ?></h1>
 	<ul>
 		<?php foreach($usersInvolved as $userInvolved): ?>
 			<li>
@@ -19,14 +19,12 @@
 				</span>
 				<ul class="actionlinks">
 					<? if(!$showTalkPage): ?>
-						<li><a href="<?= $userInvolved['userwall']; ?>"> <?= wfMessage( 'wall-history-rail-wall' )->escaped(); ?></a></li>
+						<li><a href="<?= $userInvolved['userwall']; ?>"> <?= wfMsg('wall-history-rail-wall'); ?></a></li>
 					<? else: ?>
-						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMessage( 'talkpage' )->escaped(); ?></a></li>
+						<li><a href="<?= $userInvolved['usertalk']; ?>"> <?= wfMsg('talkpage'); ?></a></li>
 					<? endif; ?>
-					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMessage( 'wall-history-rail-contribs' )->escaped(); ?></a></li>
-					<? if( $app->wg->User->isAllowed( 'block' ) ): ?>
-						<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMessage( 'wall-history-rail-block' )->escaped(); ?></a></li>
-					<? endif; ?>
+					<li><a href="<?= $userInvolved['usercontribs']; ?>"> <?= wfMsg('wall-history-rail-contribs'); ?></a></li>
+					<li><a href="<?= $userInvolved['userblock']; ?>"> <?= wfMsg('wall-history-rail-block'); ?></a></li>
 				</ul>
 			</li>
 		<?php endforeach; ?>

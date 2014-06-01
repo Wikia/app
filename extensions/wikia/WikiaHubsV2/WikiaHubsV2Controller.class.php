@@ -134,7 +134,11 @@ class WikiaHubsV2Controller extends WikiaController {
 	}
 
 	protected function initCacheValidityTimes() {
-		$this->response->setCacheValidity(self::CACHE_VALIDITY_VARNISH, self::CACHE_VALIDITY_BROWSER);
+		$this->response->setCacheValidity(
+			self::CACHE_VALIDITY_BROWSER,
+			self::CACHE_VALIDITY_VARNISH,
+			array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)
+		);
 	}
 
 	/**

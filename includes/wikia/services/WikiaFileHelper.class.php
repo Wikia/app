@@ -185,20 +185,13 @@ class WikiaFileHelper extends Service {
 	 * get html for video info overlay
 	 * @param integer $width
 	 * @param Title|string $title
-	 * @param Boolean $showViews
 	 * @return string
 	 */
-	public static function videoInfoOverlay( $width, $title = null, $showViews = false ) {
+	public static function videoInfoOverlay( $width, $title = null ) {
 		$html = '';
 		if ( $width > 230 && !empty( $title ) ) {
 			$file = self::getFileFromTitle( $title );
 			if ( !empty( $file ) ) {
-				// info
-				$attribs = [
-					"class" => "info-overlay",
-					"style" => "width: {$width}px;"
-				];
-
 				// video title
 				$contentWidth = $width - 60;
 				$videoTitle = $title->getText();
@@ -210,23 +203,26 @@ class WikiaFileHelper extends Service {
 				if ( $fileMetadata ) {
 					$fileMetadata = unserialize( $fileMetadata );
 					if ( array_key_exists( 'duration', $fileMetadata ) ) {
-						$duration = $fileMetadata['duration'];
-						$isoDuration = self::formatDurationISO8601( $duration );
+						$duration = self::formatDuration( $fileMetadata['duration'] );
+						$isoDuration = self::getISO8601Duration( $duration );
 						$content .= '<meta itemprop="duration" content="'.$isoDuration.'">';
 					}
 				}
 
-				$content .= self::videoOverlayDuration( self::formatDuration( $duration ) );
+				$content .= self::videoOverlayDuration( $duration );
 				$content .= '<br />';
 
 				// video views
 				$videoTitle = $title->getDBKey();
-				if( $showViews ) {
-					$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
-					$content .= self::videoOverlayViews( $views );
-					$attribs['class'] .= " info-overlay-with-views";
-					$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
-				}
+				$views = MediaQueryService::getTotalVideoViewsByTitle( $videoTitle );
+				$content .= self::videoOverlayViews( $views );
+				$content .= '<meta itemprop="interactionCount" content="UserPlays:'.$views.'" />';
+
+				// info
+				$attribs = array(
+					"class" => "info-overlay",
+					"style" => "width: {$width}px;"
+				);
 
 				$html = Xml::tags( 'span', $attribs, $content );
 			}
@@ -557,30 +553,39 @@ class WikiaFileHelper extends Service {
 	 * @return string $hms
 	 */
 	public static function formatDuration( $sec ) {
-		$sec = intval( $sec );
+		$hms = "";
+		$hours = intval( intval( $sec ) / 3600 );
+		if ( $hours > 0 ) {
+			$hms .= str_pad( $hours, 2, "0", STR_PAD_LEFT ). ":";
+		}
 
-		$format = ( $sec >= 3600 ) ? 'H:i:s' : 'i:s';
-		$hms = gmdate( $format, $sec );
+		$minutes = intval( ( $sec / 60 ) % 60 );
+		$hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ). ":";
+
+		$seconds = intval( $sec % 60 );
+		$hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
 
 		return $hms;
 	}
 
 	/**
-	 * Format duration from second to ISO 8601 format for meta tag
-	 * @param integer $sec
-	 * @return string $result
+	 * Get the duration in ISO 8601 format for meta tag
+	 * @param $hms
+	 * @return string
 	 */
-	public static function formatDurationISO8601( $sec ) {
-		if ( empty( $sec ) ) {
-			$result = '';
-		} else {
-			$sec = intval( $sec );
+	public static function getISO8601Duration( $hms ) {
+		if ( !empty( $hms ) ) {
+			$segments = explode( ':', $hms );
+			$ret = "PT";
+			if ( count( $segments ) == 3 ) {
+				$ret .= array_shift( $segments ) . 'H';
+			}
+			$ret .= array_shift( $segments ) . 'M';
+			$ret .= array_shift( $segments ) . 'S';
 
-			$format = ( $sec >= 3600 ) ? '\P\TH\Hi\Ms\S' : '\P\Ti\Ms\S';
-			$result = gmdate( $format, $sec );
+			return $ret;
 		}
-
-		return $result;
+		return '';
 	}
 
 	/**
@@ -594,10 +599,6 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get file from title (Please be careful when using $force)
-	 *
-	 * Note: this method turns a string $title into an object, affecting the calling code version
-	 * of this variable
-	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file
@@ -624,10 +625,6 @@ class WikiaFileHelper extends Service {
 
 	/**
 	 * Get video file from title (Please be careful when using $force)
-	 *
-	 * Note: this method calls getFileFromTitle which converts a string $title into a Title object.  This
-	 * conversion is propagated up to the calling code.
-	 *
 	 * @param Title|string $title
 	 * @param bool $force
 	 * @return File|null $file

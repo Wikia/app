@@ -61,7 +61,6 @@ $messages['ar'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
-	'main-tab-search' => 'Axtar',
 	'tab-discover-loading-message' => 'Yüklənir…',
 	'tab-discover-no-network-dialog-close-button' => 'OK',
 	'tab-search-loading-message' => 'Axtarılır...',
@@ -112,7 +111,7 @@ $messages['ca'] = array(
 	'browser-loading-message' => 'Carregant...',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -177,17 +176,6 @@ $messages['es'] = array(
 	'tab-discover-no-network-dialog-close-button' => 'Aceptar',
 	'tab-search-loading-message' => 'Buscando...',
 	'browser-loading-message' => 'Cargando...',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'main-tab-search' => 'جستجو',
-	'main-tab-offline' => 'برون‌خط',
-	'tab-discover-loading-message' => 'در حال بارگذاری...',
-	'tab-discover-no-network-dialog-close-button' => 'تأیید',
-	'browser-loading-message' => 'در حال بارگذاری...',
 );
 
 /** Finnish (suomi)
@@ -310,13 +298,6 @@ $messages['khw'] = array(
 	'main-tab-offline' => 'آف لاین',
 );
 
-/** Korean (한국어)
- * @author 아라
- */
-$messages['ko'] = array(
-	'tab-search-loading-message' => '검색 중...',
-);
-
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -338,12 +319,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'main-tab-personal' => 'ویکیا مه',
 	'main-tab-search' => 'پی جوری',
-	'tab-discover-loading-message' => 'د حالت سوار كرد',
-	'tab-discover-no-network-dialog-close-button' => 'خوئه',
-	'tab-search-loading-message' => 'د حال پی  جوری',
-	'browser-loading-message' => 'د حالت سوار كرد',
 );
 
 /** Macedonian (македонски)

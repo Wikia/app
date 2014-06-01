@@ -47,8 +47,6 @@ $messages['qqq'] = array(
 	'multilookupnext' => '{{Identical|Next}}',
 	'multilookupprevious' => '{{Identical|Previous}}',
 	'multilookupwiki' => '{{Identical|Wiki}}',
-	'multilookuplink' => '{{Identical|Contribution link}}',
-	'multilookupwikidbname' => '{{Identical|Database name}}',
 	'multilookupwikiurl' => '{{Identical|URL}}',
 	'multilookupwikititle' => '{{Identical|Title}}',
 	'right-multilookup' => '{{doc-right|multilookup|ns=Wikia}}',
@@ -79,16 +77,10 @@ Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 
 /** Arabic (العربية)
  * @author Achraf94
- * @author Claw eg
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'specialmultiplelookup-desc' => 'يوفر معلومات البحث عن المستخدم على ويكيات متعددة',
-	'multilookup' => 'بحث متعدد',
-	'multilookupstitle' => 'بحث متعدد',
-	'multilookupselectuser' => 'ابحث عن حسابات لنفس عنوان الآيبي على ويكيات متعددة',
 	'multilookupgo' => 'اذهب',
-	'multilookupnotspecify' => 'لم تقم بتحديد عنوان آيبي حتى الآن.',
 	'multilookupnext' => 'التالي',
 	'multilookupprevious' => 'السابق',
 	'multilookupnbrresult' => 'عدد النتائج:',
@@ -97,8 +89,6 @@ $messages['ar'] = array(
 	'multilookupwiki' => 'الويكي',
 	'multilookuplink' => 'رابط المساهمات',
 	'multilookupdetails' => 'شاهد  التفاصيل',
-	'multilookuplistwikiainfo' => 'قائمة الويكيات التي حررها مستخدمون بعنوان الآيبي <b>$1</b>',
-	'multilookupinvaliduser' => '<p class="error">عنوان الآيبي "<b>$1</b>" غير موجود. افحص الآيبي الذي أدخلته للبحث عن أخطاء ممكنة>',
 	'multilookuplastedit' => 'آخر تحرير من عنوان IP هذا:',
 	'multilookupwikidbname' => 'اسم قاعدة البيانات',
 	'multilookupwikiurl' => 'المسار',
@@ -223,7 +213,7 @@ $messages['ce'] = array(
 	'multilookupwikioptions' => 'Параметраш',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -338,17 +328,6 @@ $messages['es'] = array(
 	'multilookuprecordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
 	'right-multilookup' => 'Información de búsqueda de usuarios en múltiples wikis',
 	'action-multilookup' => 'Búsqueda múltiple',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'multilookupgo' => 'برو',
-	'multilookupwiki' => 'ویکی',
-	'multilookupwikiurl' => 'نشانی اینترنتی',
-	'multilookupwikititle' => 'عنوان',
-	'multilookupwikioptions' => 'گزینه',
 );
 
 /** Finnish (suomi)
@@ -555,23 +534,6 @@ $messages['lb'] = array(
 	'multilookuplistwikiainfo' => 'Lëscht vu Wikien op där Säite vu Benotzer mat der IP-Adress <b>$1</b> geännert goufen',
 	'multilookuplastedit' => 'Lescht Ännerung vun dëser IP-Adress:',
 	'multilookupwikititle' => 'Titel',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'multilookupgo' => 'رو',
-	'multilookupnext' => 'نها',
-	'multilookupprevious' => 'وادمايی',
-	'multilookupnoresultfound' => 'هيچ نتيجه يی  جسته نبی',
-	'multilookupwiki' => 'ويكی',
-	'multilookuplink' => 'لینک هومیار',
-	'multilookupdetails' => 'جزيات نشون بيئه',
-	'multilookupwikidbname' => 'نوم دی بی',
-	'multilookupwikiurl' => 'يو آر ال',
-	'multilookupwikititle' => 'سرتال',
-	'multilookupwikioptions' => 'گزينه يا هنی:',
 );
 
 /** Macedonian (македонски)
@@ -1096,14 +1058,6 @@ $messages['uk'] = array(
 	'action-multilookup' => 'перегляд відомостей про користувачів в декількох вікі',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
-	'multilookupwiki' => 'Wiki',
-);
-
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
@@ -1118,27 +1072,14 @@ $messages['yi'] = array(
  */
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
-	'multilookup' => '查询多个',
-	'multilookupstitle' => '查询多个',
-	'multilookupselectuser' => '搜索多个wiki上的同一IP地址的账户',
 	'multilookupgo' => '去',
 	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
-	'multilookupnbrresult' => '结果数量：',
-	'multilookupinvalidresults' => '无效的结果！',
 	'multilookupnoresultfound' => '找不到结果！',
 	'multilookupwiki' => '维基',
-	'multilookuplink' => '贡献链接',
 	'multilookupdetails' => '查看资讯',
-	'multilookupinvaliduser' => '<p class="error">IP地址“<b>$1</b>”不存在。请检查IP地址是否存在错误。</p>',
-	'multilookuplastedit' => '最后来自此IP地址的编辑：',
-	'multilookupwikidbname' => '数据库名称',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '标题',
 	'multilookupwikioptions' => '选择',
-	'multilookuplastedithdr' => '最后编辑',
-	'multilookuprecordspager' => "显示'''$1'''至'''$2'''项，总共'''$3'''项记录。",
-	'right-multilookup' => '查询用户在多个wiki上的信息',
-	'action-multilookup' => '查询用户在多个wiki上的信息',
 );

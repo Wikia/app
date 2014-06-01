@@ -51,7 +51,7 @@ class WikiaHomePageController extends WikiaController {
 	//failsafe
 	const FAILSAFE_ARTICLE_TITLE = 'Failsafe';
 
-	const DEFAULT_CONTENT_LANG = 'en';
+	const HOMEPAGE_MEMC_KEY_VER = '1.04';
 
 	/**
 	 * @var WikiaHomePageHelper
@@ -74,10 +74,9 @@ class WikiaHomePageController extends WikiaController {
 		$this->wg->Out->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/WikiaHomePage/css/WikiaHomePage.scss'));
 	}
 
-
 	public function index() {
 		//cache response on varnish for 1h to enable rolling of stats
-		$this->response->setCacheValidity(3600);
+		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 
 		$this->response->addAsset('wikiahomepage_scss');
 		$this->response->addAsset('wikiahomepage_js');
@@ -85,6 +84,7 @@ class WikiaHomePageController extends WikiaController {
 		$response = $this->app->sendRequest('WikiaHomePageController', 'getHubImages');
 		$this->hubImages = $response->getVal('hubImages', '');
 
+		$this->lang = $this->wg->contLang->getCode();
 		JSMessages::enqueuePackage('WikiaHomePage', JSMessages::EXTERNAL);
 
 		$batches = $this->getList();
@@ -93,8 +93,6 @@ class WikiaHomePageController extends WikiaController {
 			'wgWikiaBatchesStatus' => $batches['status'],
 			'wgInitialWikiBatchesForVisualization' => $batches['batches']
 		]);
-
-		$this->lang = self::getContentLang();
 
 		OasisController::addBodyClass('WikiaHome');
 	}
@@ -147,10 +145,25 @@ class WikiaHomePageController extends WikiaController {
 	public function getStats() {
 		wfProfileIn(__METHOD__);
 
-		$memKey = $this->helper->getStatsMemcacheKey();
+		$memKey = wfSharedMemcKey('wikiahomepage', 'stats', $this->wg->contLang->getCode(), self::HOMEPAGE_MEMC_KEY_VER);
 		$stats = $this->wg->Memc->get($memKey);
 		if (empty($stats)) {
-			$stats = $this->helper->getStatsIncludingFallbacks();
+			$stats['visitors'] = $this->helper->getStatsFromArticle('StatsVisitors');
+			$stats['mobilePercentage'] = $this->helper->getStatsFromArticle('MobilePercentage') / 100.0;
+
+			$stats['edits'] = $this->helper->getEdits();
+			if (empty($stats['edits'])) {
+				$stats['editsDefault'] = $this->helper->getStatsFromArticle('StatsEdits');
+			}
+
+			$stats['communities'] = $this->helper->getTotalCommunities();
+
+			$defaultTotalPages = $this->helper->getStatsFromArticle('StatsTotalPages');
+			$totalPages = intval(Wikia::get_content_pages());
+			$stats['totalPages'] = ($totalPages > $defaultTotalPages) ? $totalPages : $defaultTotalPages;
+
+			$stats['newCommunities'] = $this->helper->getLastDaysNewCommunities();
+
 			$this->wg->Memc->set($memKey, $stats, 60 * 60 * 1);
 		}
 
@@ -473,18 +486,10 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function renderHubSection() {
 		// biz logic here
-		$heroUrl = $this->request->getVal('herourl');
-		$heroImageUrl = $this->request->getVal('heroimageurl');
-
-		// Don't show HUB if we don't have data ~ we don't have image URL and/or HUB URL
-		if ( empty( $heroImageUrl ) || empty( $heroUrl ) ) {
-			return false;
-		}
-
 		$this->classname = $this->request->getVal('classname');
 		$this->heading = $this->request->getVal('heading');
-		$this->heroimageurl = $heroImageUrl;
-		$this->herourl = $heroUrl;
+		$this->heroimageurl = $this->request->getVal('heroimageurl');
+		$this->herourl = $this->request->getVal('herourl');
 		$this->creative = $this->request->getVal('creative');
 		$this->moreheading = $this->request->getVal('moreheading');
 		$this->morelist = $this->request->getVal('morelist');
@@ -660,31 +665,5 @@ class WikiaHomePageController extends WikiaController {
 		}
 
 		return $this->visualization;
-	}
-
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
-
-		OasisController::addBodyClass( 'wikia-contentlang-' . self::getContentLang() );
-
-		return true;
-	}
-
-	/**
-	 * Gets language variable to get proper sprite image.
-	 * If corporate page exists for passed language code this code is returned
-	 * otherwise default language is returned.
-	 *
-	 *
-	 * @returns string User language code
-	 */
-	private static function getContentLang() {
-		global $wgLang;
-		$lang = $wgLang->getCode();
-
-		$corpLangsList = ( new CityVisualization() )->getVisualizationWikisData();
-		if ( !array_key_exists($lang, $corpLangsList) ) {
-			$lang = self::DEFAULT_CONTENT_LANG;
-		}
-		return $lang;
 	}
 }

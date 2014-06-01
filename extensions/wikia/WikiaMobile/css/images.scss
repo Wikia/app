@@ -12,70 +12,67 @@ figure{
 	line-height: 0;
 	position: relative;
 
-	> a {
+	a {
 		display: inline-block;
 		//This will make link as big as images inside and not bigger so we can safly assume that clicks happen only on img tag
 		overflow: hidden;
 	}
-
-	//Some wikis use this class in a different way and then it looks weird
-	//so it have to be under figure tag
-	.thumbcaption {
-		pointer-events: none;
-
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-
-		padding: 5px;
-		font-size: .9rem;
-		line-height: 1rem;
-		min-height: 25px;
-
-		background-color: rgba(0,0,0,.6);
-
-		color: white;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-
-		.link & {
-			padding-right: 15px;
-		}
-
-		a {
-			pointer-events: auto;
-
-			color: inherit;
-			text-decoration: underline;
-		}
-
-		&:before {
-			position: absolute;
-			right: 0;
-			top: 0;
-
-			height: 25px;
-			width: 15px;
-			background-size: 15px;
-			background-position: center;
-
-			-webkit-transform: rotate(-90deg);
-			-moz-transform: rotate(-90deg);
-			transform: rotate(-90deg);
-		}
-	}
-
 }
 
 .thumb, .link {
 	display: table;
-	margin: 25px auto;
+	margin: 5px auto;
 }
 
 figure.small {
 	display: inline-block;
+}
+
+.thumbcaption {
+	pointer-events: none;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	padding: 5px;
+	font-size: .8em;
+	line-height: 1em;
+	min-height: 25px;
+
+	background-color: rgba(0,0,0,.6);
+
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	.link & {
+		padding-right: 15px;
+	}
+
+	a {
+		pointer-events: auto;
+
+		color: inherit;
+		text-decoration: underline;
+	}
+
+	&:before {
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		height: 25px;
+		width: 15px;
+		background-size: 15px;
+		background-position: center;
+
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+	}
 }
 
 noscript img {
@@ -94,7 +91,7 @@ img {
 		background-image: none !important;
 		background-color: transparent;
 		opacity: 1;
-		width: 100%;
+		width: auto;
 		height: auto;
 	}
 }

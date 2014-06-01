@@ -72,7 +72,7 @@ $wgHooks['FileUndeleteComplete'][] = 'GlobalUsageHooks::onFileUndeleteComplete';
 $wgHooks['UploadComplete'][] = 'GlobalUsageHooks::onUploadComplete';
 $wgHooks['TitleMoveComplete'][] = 'GlobalUsageHooks::onTitleMoveComplete';
 /* Hooks for ImagePage */
-//$wgHooks['ImagePageAfterImageLinks'][] = 'GlobalUsageImagePageHooks::onImagePageAfterImageLinks';
+$wgHooks['ImagePageAfterImageLinks'][] = 'GlobalUsageImagePageHooks::onImagePageAfterImageLinks';
 $wgHooks['ImagePageShowTOC'][] = 'GlobalUsageImagePageHooks::onImagePageShowTOC';
 /* Other hooks */
 $wgHooks['ParserTestTables'][] = 'GlobalUsageHooks::onParserTestTables';

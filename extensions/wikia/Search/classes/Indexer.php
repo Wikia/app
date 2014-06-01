@@ -89,7 +89,7 @@ class Indexer
 		foreach ( $this->serviceNames as $serviceName ) {
 			$serviceResult = $this->getIndexService( $serviceName )
 			                      ->setPageId( $pageId )
-			                      ->getResponse();
+			                      ->execute();
 			
 			if ( is_array( $serviceResult ) ) {
     			$result = array_merge( $result, $serviceResult );

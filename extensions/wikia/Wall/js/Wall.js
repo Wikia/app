@@ -272,8 +272,7 @@ var Wall = $.createClass(Object, {
 	vote: function(e) {
 		e.preventDefault();
 		if(!window.wgUserName) {
-			UserLoginModal.show( {
-				origin: 'wall-and-forum',
+			UserLoginModal.show({
 				callback: this.proxy(function() {
 					this.voteBase(e, function(target, data, dir){
 								window.location.reload();
@@ -326,12 +325,12 @@ var Wall = $.createClass(Object, {
 		});
 	},
 
-	showVotersModal: function( e ) {
-		var target = $( e.target ),
-			id = target.closest( 'li.message' ).data( 'id' ),
-			votes = parseInt( target.closest( '.votes' ).data( 'votes' ), 10 );
+	showVotersModal: function(e) {
+		var target = $(e.target),
+			id = target.closest('li.message').data('id'),
+			votes = parseInt( target.closest('.votes').data('votes'), 10 );
 
-		if( votes > 0 ) {
+		if(votes > 0) {
 			$.nirvana.sendRequest( {
 				controller: 'WallExternalController',
 				method: 'votersModal',
@@ -339,27 +338,32 @@ var Wall = $.createClass(Object, {
 				data: {
 					id: id
 				},
-				callback: function( data ) {
+				callback: function(data) {
 					require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-							var votersModalConfig = {
+						uiFactory.init( 'modal' ).then( function( uiModal ) {
+							var modalId = 'WallVotersModalWrapper',
+								votersModal = uiModal.render( {
+									type: 'default',
 									vars: {
-										id: 'WallVotersModalWrapper',
+										id: modalId,
 										size: 'small',
 										content: data,
-										title: $.msg( 'wall-votes-modal-title' )
+										title: $.msg( 'wall-votes-modal-title' ),
+										closeButton: true,
+										closeText: $.msg( 'close' )
 									}
-								};
+								} );
 
-							uiModal.createComponent( votersModalConfig, function ( votersModal ) {
+							require( [ 'wikia.ui.modal' ], function( modal ) {
+								votersModal = modal.init( modalId, votersModal );
 								votersModal.show();
-							});
-						});
-					});
+							} );
+						} );
+					} );
 				}
-			});
+			} );
 
-			$.getResources( [ $.getSassCommonURL( '/extensions/wikia/Wall/css/WallVoters.scss' ) ] );
+			$.getResources([$.getSassCommonURL('/extensions/wikia/Wall/css/WallVoters.scss')]);
 		}
 	},
 
@@ -452,53 +456,58 @@ var Wall = $.createClass(Object, {
 		}
 
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-				var modalPrimaryBtnId = 'WikiaConfirmOk',
-					confirmModalConfig = {
+			uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+				var modalId = 'WikiaConfirm',
+					modalSecondaryBtnId = 'WikiaConfirmCancel',
+					modalSecondaryBtn = uiButton.render( {
+						type: 'button',
 						vars: {
-							id: 'WikiaConfirm',
-							size: 'medium',
-							content: msg,
-							title: title,
-							buttons: [
-								{
-									vars: {
-										id: modalPrimaryBtnId,
-										value: okmsg,
-										classes: [ 'normal', 'primary' ],
-										disabled: ( mode !== 'rev' ),
-										data: [
-											{
-												key: 'event',
-												value: modalPrimaryBtnId
-											}
-										]
-									}
-								},
-								{
-									vars: {
-										value: cancelmsg,
-										data: [
-											{
-												key: 'event',
-												value: 'close'
-											}
-										]
-									}
-								}
-							]
+							id: modalSecondaryBtnId,
+							type: 'button',
+							classes: [ 'normal', 'secondary' ],
+							value: cancelmsg
 						}
-					};
+					}),
+					modalPrimaryBtnId = 'WikiaConfirmOk',
+					modalPrimaryBtnVars = {
+						id: modalPrimaryBtnId,
+						type: 'button',
+						classes: [ 'normal', 'primary' ],
+						value: okmsg
+					},
+					modalPrimaryBtn, confirmModal;
+				if(mode !== 'rev') {
+					modalPrimaryBtnVars.disabled = true;
+				}
+				modalPrimaryBtn = uiButton.render( {
+					type: 'button',
+					vars: modalPrimaryBtnVars
+				} );
+				confirmModal = uiModal.render( {
+					type: 'default',
+					vars: {
+						id: modalId,
+						size: 'medium',
+						content: msg,
+						title: title,
+						closeButton: true,
+						closeText: $.msg( 'close' ),
+						primaryBtn: modalPrimaryBtn,
+						secondBtn: modalSecondaryBtn
+					}
+				} );
 
-				uiModal.createComponent( confirmModalConfig, function( confirmModal ) {
-					confirmModal.bind( 'WikiaConfirmOk', function () {
+				require( [ 'wikia.ui.modal' ], function( modal ) {
+					confirmModal = modal.init( modalId, confirmModal );
+					confirmModal.$element.find( '#' + modalSecondaryBtnId ).click( function() {
+						confirmModal.close();
+					} );
+					confirmModal.$element.find( '#' + modalPrimaryBtnId ).click( function() {
 						var formdata = confirmModal.$element.find('form').serializeArray();
 						confirmModal.deactivate();
 						self.doAction(id, mode, wallMsg, target, formdata, confirmModal );
-					});
-
+					} );
 					confirmModal.$element.find('textarea.wall-action-reason').bind('keydown keyup change', function(e) {
-
 						var target = $(e.target);
 						if(target.val().length > 0) {
 							confirmModal.$element.find( '#' + modalPrimaryBtnId ).removeAttr('disabled');
@@ -506,11 +515,10 @@ var Wall = $.createClass(Object, {
 							confirmModal.$element.find( '#' + modalPrimaryBtnId ).attr('disabled', 'disabled');
 						}
 					});
-
 					confirmModal.show();
-				});
-			});
-		});
+				} );
+			} );
+		} );
 	},
 
 	/*
@@ -559,7 +567,7 @@ var Wall = $.createClass(Object, {
 
 					if( typeof( modal ) !== 'undefined' ) {
 					// VSTF can delete without confirmation modal
-						modal.trigger( 'close' );
+						modal.close();
 					}
 				}
 			})
@@ -685,8 +693,7 @@ var Wall = $.createClass(Object, {
 		e.preventDefault();
 		var rootMessageId = $(e.target).closest('.message').data('id');
 		if(window.wgDisableAnonymousEditing  && !window.wgUserName) {
-			UserLoginModal.show( {
-				origin: 'wall-and-forum',
+			UserLoginModal.show({
 				callback: this.proxy(function() {
 					this.editTopics(rootMessageId);
 				})
@@ -739,10 +746,9 @@ var Wall = $.createClass(Object, {
 
 	},
 
-	moveThread: function( e ) {
+	moveThread: function(e) {
 		e.preventDefault();
-		var id = $( e.target ).closest( '.message' ).data( 'id' );
-
+		var id = $(e.target).closest('.message').data('id');
 		$.nirvana.sendRequest({
 			controller: 'WallExternalController',
 			method: 'moveModal',
@@ -752,74 +758,84 @@ var Wall = $.createClass(Object, {
 			},
 			callback: function(html) {
 				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-						var moveThreadModalConfig = {
-							vars: {
-								id: 'WallMoveModalWrapper',
-								size: 'small',
-								content: html,
-								title: $.msg( 'wall-action-move-thread-heading' ),
-								buttons: [
-									{
-										vars: {
-											classes: [ 'normal', 'primary' ],
-											value: $.msg( 'wall-action-move-thread-ok'),
-											data: [
-												{
-													key: 'event',
-													value: 'submit'
-												}
-											]
-										}
-									},
-									{
-										vars: {
-											value: $.msg( 'cancel'),
-											data: [
-												{
-													key: 'event',
-													value: 'close'
-												}
-											]
-										}
-									}
-								]
-							}
-						};
+					uiFactory.init( [ 'button', 'modal' ] ).then( function( uiButton, uiModal ) {
+						var modalId = 'WallMoveModalWrapper',
+							cancelMsg = $.msg( 'cancel'),
+							moveThreadMsg = $.msg( 'wall-action-move-thread-ok'),
+							modalPrimaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'primary', 'submit' ],
+									'value': moveThreadMsg,
+									'title': moveThreadMsg
+								}
+							} ),
+							modalSecondaryBtn = uiButton.render( {
+								'type': 'button',
+								'vars': {
+									'id': '',
+									'type': 'button',
+									'href': '#',
+									'classes': [ 'normal', 'secondary', 'cancel'],
+									'value': cancelMsg,
+									'title': cancelMsg
+								}
+							}),
+							moveThreadModal = uiModal.render( {
+								type: 'default',
+								vars: {
+									id: modalId,
+									size: 'small',
+									content: html,
+									title: $.msg( 'wall-action-move-thread-heading' ),
+									closeButton: true,
+									closeText: $.msg( 'close' ),
+									primaryBtn: modalPrimaryBtn,
+									secondBtn: modalSecondaryBtn
+								}
+							} );
 
-						uiModal.createComponent( moveThreadModalConfig, function( moveThreadModal ) {
-							var form = new WikiaForm( moveThreadModal.$content.find( '.WikiaForm' ) );
+						require( [ 'wikia.ui.modal' ], function( modal ) {
+							moveThreadModal = modal.init( modalId, moveThreadModal );
 
-							moveThreadModal.bind( 'submit', function ( event ) {
-								event.preventDefault();
+							moveThreadModal.show();
 
+							var dialog = $('#' + modalId),
+								buttons = dialog.find('.buttons').children('.button'),
+								form = new WikiaForm(dialog.find('.WikiaForm'));
+
+							dialog.on('click.Wall', '.cancel', function(e) {
+								e.preventDefault();
+								moveThreadModal.close();
+							}).on('click.Wall', '.submit', function(e) {
+								e.preventDefault();
 								moveThreadModal.deactivate();
 								$.nirvana.sendRequest({
 									controller: 'WallExternalController',
 									method: 'moveThread',
 									format: 'json',
 									data: {
-										destinationBoardId: moveThreadModal.$content
-											.find('.destinationBoardId option:selected').val(),
+										destinationBoardId: dialog.find('.destinationBoardId option:selected').val(),
 										rootMessageId: id
 									},
-									callback: function( json ) {
-										if( json.status === 'ok' ) {
+									callback: function(json) {
+										if(json.status === 'ok') {
 											Wikia.Querystring().addCb().goTo();
-										} else if( json.status === 'error' ) {
+										} else if(json.status === 'error') {
 											form.clearAllInputErrors();
-											if( json.errorfield ) {
-												form.showInputError( json.errorfield, json.errormsg );
+											if(json.errorfield) {
+												form.showInputError(json.errorfield, json.errormsg);
 											} else {
-												form.showGenericError( json.errormsg );
+												form.showGenericError(json.errormsg);
 											}
 											moveThreadModal.activate();
 										}
 									}
 								});
 							});
-
-							moveThreadModal.show();
 						});
 					});
 				});

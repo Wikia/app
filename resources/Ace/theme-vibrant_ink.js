@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/vibrant_ink', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/vibrant_ink', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-vibrant-ink";
@@ -45,7 +45,11 @@ background-color: #0F0F0F;\
 color: #FFFFFF\
 }\
 .ace-vibrant-ink .ace_cursor {\
-color: #FFFFFF\
+border-left: 2px solid #FFFFFF\
+}\
+.ace-vibrant-ink .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #FFFFFF\
 }\
 .ace-vibrant-ink .ace_marker-layer .ace_selection {\
 background: #6699CC\

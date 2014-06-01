@@ -125,9 +125,7 @@ $messages['en'] = array(
 
 	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
-	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
-
-	'userprofilepage-edit-modal-error' => 'Unexpected error occurred',
+	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!'
 );
 
 /** Message documentation (Message documentation)
@@ -161,7 +159,6 @@ $messages['qqq'] = array(
 	'user-identity-box-join-more-wikis' => 'Message in user profile for when said user has not yet edited in wikis which could be displayed as his favourites',
 	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
 	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
-	'userprofilepage-edit-modal-error' => 'Appears in user profile page edit modal when an unexpected error appears',
 );
 
 /** Arabic (العربية)

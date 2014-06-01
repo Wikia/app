@@ -172,17 +172,4 @@ class MarketingToolboxModuleSliderService extends MarketingToolboxModuleEditable
 		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
 
 	}
-
-	/**
-	 * Remove slides from
-	 * @param $data
-	 * @return mixed
-	 */
-	protected function filterCommercialData( $data ) {
-		$service = $this->getLicensedWikisService();
-		$data['slides'] = array_values( array_filter( $data['slides'], function( $element ) use($service) {
-				return $service->isCommercialUseAllowedByUrl($element['url']);
-			} ) );
-		return $data;
-	}
 }

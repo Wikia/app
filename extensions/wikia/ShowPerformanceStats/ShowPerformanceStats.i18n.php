@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'performancestat-cpu' => 'CPU: $1 s',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -352,16 +352,6 @@ $messages['uk'] = array(
 	'performancestat-total' => 'Всього: $1s',
 	'performancestat-apache' => 'Apache: $1s',
 	'performancestat-cpu' => 'ЦП: $1s',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'showperformancestats-desc' => 'Trả về số liệu thống kê hiệu suất có thể đọc được con người',
-	'performancestat-total' => 'Tổng số: $1s',
-	'performancestat-apache' => 'Apache: $1s',
-	'performancestat-cpu' => 'CPU: $1s',
 );
 
 /** Simplified Chinese (中文（简体）‎)

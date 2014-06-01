@@ -349,10 +349,10 @@ abstract class UploadBase {
 			return $status;
 		}
 
+		if ( $wgVerifyMimeType ) {
 			$this->mFileProps = FSFile::getPropsFromPath( $this->mTempPath, $this->mFinalExtension );
 			$mime = $this->mFileProps['file-mime'];
 
-		if ( $wgVerifyMimeType ) {
 			# XXX: Missing extension will be caught by validateName() via getTitle()
 			if ( $this->mFinalExtension != '' && !$this->verifyExtension( $mime, $this->mFinalExtension ) ) {
 				wfProfileOut( __METHOD__ );
@@ -418,9 +418,8 @@ abstract class UploadBase {
 				return array( 'uploadscripted' );
 			}
 			if( $this->mFinalExtension == 'svg' || $mime == 'image/svg+xml' ) {
-				$svgStatus = $this->detectScriptInSvg( $this->mTempPath );
-				if ( $svgStatus !== false ) {
-					return $svgStatus;
+				if( $this->detectScriptInSvg( $this->mTempPath ) ) {
+					return array( 'uploadscripted' );
 				}
 			}
 		}
@@ -1030,23 +1029,9 @@ abstract class UploadBase {
 		return false;
 	}
 
- 	/**
- 	 * @param $filename string
-	 * @return mixed false of the file is verified (does not contain scripts), array otherwise.
- 	 */
 	protected function detectScriptInSvg( $filename ) {
-		$check = new XmlTypeCheck(
-			$filename,
-			array( $this, 'checkSvgScriptCallback' ),
-			array( 'processing_instruction_handler' => 'UploadBase::checkSvgPICallback' )
-		);
-		if ( $check->wellFormed !== true ) {
-			// Invalid xml (bug 58553)
-			return array( 'uploadinvalidxml' );
-		} elseif ( $check->filterMatch ) {
-			return array( 'uploadscripted' );
-		}
-		return false;
+		$check = new XmlTypeCheck( $filename, array( $this, 'checkSvgScriptCallback' ) );
+		return $check->filterMatch;
 	}
 
 
@@ -1203,20 +1188,6 @@ abstract class UploadBase {
 		}
 
 		return false; //No scripts detected
-	}
-
- 	/**
-	 * Callback to filter SVG Processing Instructions.
-	 * @param $target string processing instruction name
-	 * @param $data string processing instruction attribute and value
-	 * @return bool (true if the filter identified something bad)
-	 */
-	public static function checkSvgPICallback( $target, $data ) {
-		// Don't allow external stylesheets (bug 57550)
-		if ( preg_match( '/xml-stylesheet/i', $target) ) {
-			return true;
-		}
-		return false;
 	}
 
 	private function stripXmlNamespace( $name ) {

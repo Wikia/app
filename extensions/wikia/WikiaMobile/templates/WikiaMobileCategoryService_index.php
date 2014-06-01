@@ -1,9 +1,10 @@
 <?/**
  * @var $categoryLinks
+ * @var $wf WikiaFunctionWrapper
  */?>
 <? if ( !empty( $categoryLinks ) ) :?>
 <section id=wkArtCat>
-	<h2 id=wkCategories><?= wfMessage( 'wikiamobile-article-categories' )->inContentLanguage()->text(); ?></h2>
+	<h1 class='collSec addChev'><?= wfMessage( 'wikiamobile-article-categories' )->inContentLanguage()->text(); ?></h1>
 	<?= $categoryLinks ?>
 </section>
 <? endif ;?>

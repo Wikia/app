@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/clouds_midnight', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/clouds_midnight', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-clouds-midnight";
@@ -45,7 +45,11 @@ background-color: #191919;\
 color: #929292\
 }\
 .ace-clouds-midnight .ace_cursor {\
-color: #7DA5DC\
+border-left: 2px solid #7DA5DC\
+}\
+.ace-clouds-midnight .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #7DA5DC\
 }\
 .ace-clouds-midnight .ace_marker-layer .ace_selection {\
 background: #000000\
@@ -117,6 +121,9 @@ color: #3C403B\
 .ace-clouds-midnight .ace_entity.ace_name.ace_tag,\
 .ace-clouds-midnight .ace_entity.ace_other.ace_attribute-name {\
 color: #606060\
+}\
+.ace-clouds-midnight .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-clouds-midnight .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC) right repeat-y;\

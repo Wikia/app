@@ -134,33 +134,6 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * get total views of a video from database using title
-	 * @return int $viewCount
-	 */
-	public static function getTotalViewsFromTitle( $title ) {
-		wfProfileIn( __METHOD__ );
-
-		$db = wfGetDB( DB_SLAVE );
-
-		$result = $db->select(
-			array( 'video_info' ),
-			array( 'views_total' ),
-			array( 'video_title' => $title ),
-			__METHOD__
-		);
-
-		$viewCount = 0;
-		$row = $db->fetchObject( $result );
-		if ( $row ) {
-			$viewCount = $row->views_total;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $viewCount;
-	}
-
-	/**
 	 * check if video is removed
 	 * @param Title|string $title
 	 * @return boolean

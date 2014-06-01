@@ -33,7 +33,7 @@ class WallController extends WallBaseController {
 			$user_displayname = $user->getName();
 
 			$this->response->setVal( 'wallOwner', $user_displayname);
-			$this->response->setVal( 'wallUrl', $wm->getArticleTitle()->getFullURL() );
+			$this->response->setVal( 'wallUrl', $wm->getWallTitle()->getFullURL() );
 
 			$this->response->setVal( 'showViewLink', $wm->canViewDeletedMessage($this->app->wg->User) );
 			$this->response->setVal( 'viewUrl', $this->app->wg->Title->getFullUrl('show=1'));

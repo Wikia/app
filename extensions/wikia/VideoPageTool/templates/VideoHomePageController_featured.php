@@ -5,8 +5,10 @@
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
 				<li>
-					<div class="slide-image video wikia-video-thumbnail xlarge hide-play fluid" data-index="<?= $index ?>">
-						<span class="play-circle"></span>
+					<div class="slide-image" data-index="<?= $index ?>">
+						<div class="Wikia-video-play-button">
+							<img class="sprite large play" src="<?= $wg->BlankImgUrl ?>">
+						</div>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
 						<div class="caption small-4 columns">
 							<span class="title"><?= $videoData['displayTitle'] ?></span>
@@ -22,8 +24,12 @@
 		<div id="featured-video-thumbs" class="thumbs small-12 columns">
 			<ul class="thumbs-inner small-block-grid-5">
 				<? foreach ( $assets as $videoData ): ?>
-					<li>
-						<?= $videoData['videoThumb'] ?>
+					<li><a class="video">
+							<span class="Wikia-video-play-button">
+								<img class="sprite medium play" src="<?= $wg->BlankImgUrl ?>">
+							</span>
+							<img data-video-key="<?= $videoData['videoKey'] ?>" src="<?= $videoData['thumbUrl'] ?>">
+						</a>
 						<div class="title"><p><?= $videoData['displayTitle'] ?></p></div>
 					</li>
 				<? endforeach; ?>

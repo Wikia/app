@@ -9,9 +9,9 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 	var slotMap,
 		logGroup = 'AdProviderEvolve',
 		ord = Math.round(Math.random() * 23456787654),
-		slotForSkin = 'INVISIBLE_SKIN',
+		slotForSkin = 'INVISIBLE_1',
 		hoppedSlots = {},
-		hopTo = 'Liftium',
+		slotTrackers = {},
 		iface,
 		undef;
 
@@ -161,21 +161,31 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 		return out;
 	}
 
-	function hop(slotname) {
+	function hop(slotname, method) {
+		method = method || 'hop';
+
 		log(['hop', slotname], 5, 'AdProviderEvolve');
-		hoppedSlots[sanitizeSlotname(slotname)] = true;
+
+		slotname = sanitizeSlotname(slotname);
+
+		hoppedSlots[slotname] = true;
+		slotTrackers[slotname].hop(method);
+
+		window.adslots2.push([slotname, undef, 'Liftium2Dom']);
 	}
 
-	function fillInSlot(slotname, pSuccess, pHop) {
+	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderEvolve');
-		log(slotname, 5, 'AdProviderEvolve');
+		log(slot, 5, 'AdProviderEvolve');
 
-		var slotTracker = adTracker.trackSlot('evolve', slotname);
-		slotTracker.init();
+		var slotname = slot[0];
+
+		slotTrackers[slotname] = adTracker.trackSlot('evolve', slotname);
+		slotTrackers[slotname].init();
 
 		if (slotname === slotForSkin) {
 			scriptWriter.injectScriptByUrl(
-				slotname,
+				slot[0],
 				'http://cdn.triggertag.gorillanation.com/js/triggertag.js',
 				function () {
 					log('(invisible triggertag) ghostwriter done', 5, logGroup);
@@ -185,7 +195,6 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundImage, document.body.style.backgroundImage + ' !important');
 							document.body.style.cssText = document.body.style.cssText.replace(document.body.style.backgroundColor, document.body.style.backgroundColor + ' !important');
 						}
-						pSuccess();
 					});
 				}
 			);
@@ -194,36 +203,32 @@ var AdProviderEvolve = function (adLogicPageLevelParamsLegacy, scriptWriter, adT
 				var slot = document.getElementById(slotname),
 					height;
 
-				if (hoppedSlots[slotname]) {
-					slotTracker.hop('hop');
-					pHop({method: 'hop'}, hopTo);
-					return;
-				}
-
 				// Don't rely completely on Evolve hop
-				slotTweaker.removeDefaultHeight(slotname);
-				height = getHeight(slot);
+				if (!hoppedSlots[slotname]) {
+					slotTweaker.removeDefaultHeight(slotname);
+					height = getHeight(slot);
 
-				// Only assume success if > 1x1 ad is returned or there's embed
-				// in the slot (it seems Evolves returns an embed that causes
-				// more HTML to appear after GhostWriter calls finish callback).
-				if (height === undef || height > 1 || hasEmbed(slot)) {
-					// Real success
-					slotTweaker.removeTopButtonIfNeeded(slotname);
-					pSuccess();
-					return;
+					// Only assume success if > 1x1 ad is returned or there's embed
+					// in the slot (it seems Evolves returns an embed that causes
+					// more HTML to appear after GhostWriter calls finish callback).
+					if (height === undef || height > 1 || hasEmbed(slot)) {
+						// Real success
+						slotTweaker.removeTopButtonIfNeeded(slotname);
+					} else {
+						slotTweaker.addDefaultHeight(slotname);
+						log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
+						hop(slotname, '1x1');
+					}
 				}
-
-				slotTweaker.addDefaultHeight(slotname);
-				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, 'AdProviderEvolve');
-				slotTracker.hop('1x1');
-				pHop({method: '1x1'}, hopTo);
 			});
 		}
 	}
 
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, 'AdProviderEvolve');
+	function canHandleSlot(slot) {
+		var slotname = slot[0];
+
+		log('canHandleSlot', 5, 'AdProviderEvolve');
+		log([slotname], 5, 'AdProviderEvolve');
 
 		if (slotMap[slotname]) {
 			return true;

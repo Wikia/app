@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/tomorrow_night_eighties', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/tomorrow_night_eighties', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-tomorrow-night-eighties";
@@ -48,7 +48,11 @@ color: #CCCCCC\
 color: #CCCCCC\
 }\
 .ace-tomorrow-night-eighties .ace_cursor {\
-color: #CCCCCC\
+border-left: 2px solid #CCCCCC\
+}\
+.ace-tomorrow-night-eighties .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #CCCCCC\
 }\
 .ace-tomorrow-night-eighties .ace_marker-layer .ace_selection {\
 background: #515151\
@@ -63,9 +67,6 @@ background: rgb(102, 82, 0)\
 .ace-tomorrow-night-eighties .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
 border: 1px solid #6A6A6A\
-}\
-.ace-tomorrow-night-bright .ace_stack {\
-background: rgb(66, 90, 44)\
 }\
 .ace-tomorrow-night-eighties .ace_marker-layer .ace_active-line {\
 background: #393939\
@@ -118,7 +119,7 @@ color: #6699CC\
 .ace-tomorrow-night-eighties .ace_support.ace_type {\
 color: #FFCC66\
 }\
-.ace-tomorrow-night-eighties .ace_heading,\
+.ace-tomorrow-night-eighties .ace_markup.ace_heading,\
 .ace-tomorrow-night-eighties .ace_string {\
 color: #99CC99\
 }\
@@ -130,6 +131,9 @@ color: #999999\
 .ace-tomorrow-night-eighties .ace_meta.ace_tag,\
 .ace-tomorrow-night-eighties .ace_variable {\
 color: #F2777A\
+}\
+.ace-tomorrow-night-eighties .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-tomorrow-night-eighties .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWPQ09NrYAgMjP4PAAtGAwchHMyAAAAAAElFTkSuQmCC) right repeat-y\

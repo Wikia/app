@@ -147,12 +147,9 @@ class DjVuHandler extends ImageHandler {
 
 		# Use a subshell (brackets) to aggregate stderr from both pipeline commands
 		# before redirecting it to the overall stdout. This works in both Linux and Windows XP.
-		$cmd = '(' . wfEscapeShellArg(
-			$wgDjvuRenderer,
-			"-format=ppm",
-			"-page={$page}",
-			"-size={$params['physicalWidth']}x{$params['physicalHeight']}",
-			$srcPath );
+		$cmd = '(' . wfEscapeShellArg( $wgDjvuRenderer ) . " -format=ppm -page={$page}" .
+			" -size={$params['physicalWidth']}x{$params['physicalHeight']} " .
+			wfEscapeShellArg( $srcPath );
 		if ( $wgDjvuPostProcessor ) {
 			$cmd .= " | {$wgDjvuPostProcessor}";
 		}

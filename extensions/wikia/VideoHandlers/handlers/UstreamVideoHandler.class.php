@@ -22,8 +22,6 @@ EOT;
 
 		return array(
 			'html' => $html,
-			'width' => $width,
-			'height' => $height,
 			'scripts' => array(
 				"extensions/wikia/VideoHandlers/js/handlers/uStream.js",
 			),

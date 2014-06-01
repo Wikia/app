@@ -25,18 +25,16 @@ var HoverMenu = function(selector) {
 	}
 
 	//Events
-	this.menu
-		.on('mouseenter', '> li', $.proxy(this.mouseover, this))
-		.on('mouseleave', '> li', $.proxy(this.mouseout, this));
+	this.menu.children("li").hover($.proxy(this.mouseover, this), $.proxy(this.mouseout, this));
 
 	//Accessibility
 	//Show when any inner anchors are in focus
-	this.menu.on('focus', '> li > a', $.proxy(function(event) {
+	this.menu.children("li").children("a").focus($.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest("li"));
 	}, this));
 
-	this.menu.on('focus', '.subnav a', $.proxy(function(event) {
+	this.menu.find(".subnav a").focus($.proxy(function(event) {
 		this.hideNav();
 		this.showNav($(event.currentTarget).closest(".subnav").closest("li"));
 	}, this));

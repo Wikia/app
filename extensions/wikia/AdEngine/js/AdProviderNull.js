@@ -1,19 +1,19 @@
-/*exported AdProviderNull*/
-var AdProviderNull = function (log, slotTweaker) {
-	'use strict';
+var AdProviderNull = function(log, slotTweaker) {
+	var module = 'AdProviderNull'
+		, canHandleSlot
+		, fillInSlot;
 
-	var logGroup = 'AdProviderNull';
-
-	function canHandleSlot() {
+	canHandleSlot = function(slot) {
 		return true;
-	}
+	};
 
-	function fillInSlot(slotname, success) {
-		log(['fillInSlot', slotname], 5, logGroup);
+	fillInSlot = function(slot) {
+		var slotname = slot[0];
+		log('fillInSlot', 5, module);
+		log(slot, 7, module);
 		slotTweaker.hide(slotname);
-		slotTweaker.hideSelfServeUrl(slotname);
-		success();
-	}
+		return;
+	};
 
 	return {
 		name: 'Null',

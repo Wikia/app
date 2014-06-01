@@ -66,7 +66,7 @@ if ( is_array($imageList) && count($imageList) > 0) {
 				<div class="img-container">
 					<img id="<?php echo $id ?>" src="<?= htmlspecialchars($image['src']) ?>" <? if ( !$image['isthumb'] ) { ?>width="230" <?php } ?>/>
 				</div>
-				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="<?= wfMessage( 'imagereview-gotoimage' )->escaped(); ?>"></a>
+				<a href="<?= htmlspecialchars($image['url']) ?>" target="_blank" class="internal sprite details magnify" title="Go to image page"></a>
 				<?php if ( $image['flags'] & ImageReviewHelper::FLAG_SUSPICOUS_USER ) { ?>
 					<a href="<?= htmlspecialchars($image['user_page']) ?>" target="_blank" class="internal sprite details magnify" title="Flagged: Susicious user. Click to go to uploader's profile" style="clear: both"></a>
 				<?php } ?>
@@ -81,9 +81,9 @@ if ( is_array($imageList) && count($imageList) > 0) {
 				<span class="image-wiki-url"><a href="<?= htmlspecialchars( $image['wiki_url'] ) ?>"><?= htmlspecialchars( $image['wiki_url'] ) ?></a></span>
 				<?php } ?>
 
-				<label title="<?= wfMessage( 'imagereview-label-ok' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-ok' )->escaped(); ?></label>
-				<label title="<?= wfMessage( 'imagereview-label-delete' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>><?= wfMessage( 'imagereview-option-delete' )->escaped(); ?></label>
-				<label title="<?= wfMessage( 'imagereview-label-questionable' )->escaped(); ?>"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ( ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ' checked' : '' ) ?>><?= wfMessage( 'imagereview-option-questionable' )->escaped(); ?></label>
+				<label title="Mark as OK"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_APPROVED ?>"<?= ($stateId == ImageReviewStatuses::STATE_APPROVED || $stateId == ImageReviewStatuses::STATE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_UNREVIEWED ? ' checked' :'') ?>>OK</label>
+				<label title="Delete"><input type="radio" name="<?= $id ?>" value="<?= ( $action == 'rejected' ) ? ImageReviewStatuses::STATE_DELETED : ImageReviewStatuses::STATE_REJECTED ?>"<?= ($stateId == ImageReviewStatuses::STATE_REJECTED ? ' checked' :'') ?>>Del</label>
+				<label title="Questionable"><input type="radio" name="<?= $id ?>" value="<?= ImageReviewStatuses::STATE_QUESTIONABLE ?>"<?= ( ( $stateId == ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW || $stateId == ImageReviewStatuses::STATE_QUESTIONABLE ) ? ' checked' : '' ) ?>>Q</label>
 			</li>
 <?php
 /*

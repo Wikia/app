@@ -30,7 +30,7 @@ var UserLoginDropdown = {
 				this.loginAjaxForm = new UserLoginAjaxForm(this.dropdown);
 
 				// lazy load jquery.wikia.tooltip.js (BugId:22143)
-				UserLoginFacebook.init( UserLoginFacebook.origins.DROPDOWN );
+				UserLoginFacebook.init();
 			}
 
 			$('body').

@@ -25,7 +25,14 @@ class StatsApiController extends WikiaApiController {
 	 * @example
 	 */
 	function getData() {
-		$this->response->setCacheValidity(self::CACHE_VALIDITY);
+		$this->response->setCacheValidity(
+			self::CACHE_VALIDITY,
+			self::CACHE_VALIDITY,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 
 		$wikiService = new WikiService();
 

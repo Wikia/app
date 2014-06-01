@@ -26,7 +26,6 @@ $messages['en'] = array(
 	'coppatool-delete-user-pages-reason' => '[[wikia:Terms of Use|Terms of Use]]',
 	'coppatool-delete-user-pages-success' => 'Task created with ID #$1 to delete user pages.',
 	'coppatool-blank-user-profile' => 'Blank user profiles',
-	'coppatool-imagereview' => 'Review uploads by this user',
 	'coppatool-rename-ip' => 'Overwrite IP address in edits and logs to 0.0.0.0',
 	'coppatool-rename-ip-success' => 'Task created with ID #$1. Check the Staff Log for the status of the rename process.',
 	'coppatool-phalanx-ip' => 'Phalanx block IP address',
@@ -34,7 +33,7 @@ $messages['en'] = array(
 	'coppatool-posterror' => 'Request must be posted.',
 	'coppatool-tokenerror' => 'Invalid token provided.',
 	'coppatool-invalid-ip' => 'Invalid IP address provided.',
-	'coppatool-invalid-user' => 'Invalid user provided.',
+	'coppatool-invalid-user' => 'Invalid user provided.'
 );
 
 /**
@@ -55,7 +54,6 @@ $messages['qqq'] = array(
 	'coppatool-delete-user-pages-reason' => 'Reason for the deletion logs when deleting user pages.',
 	'coppatool-delete-user-pages-success' => 'Success message displayed when a deletion task has successfully been created. $1 is the task ID.',
 	'coppatool-blank-user-profile' => 'Button text for option to blank user profiles',
-	'coppatool-imagereview' => 'Button text for option to review uploads by the given user user',
 	'coppatool-rename-ip' => 'Button text for option to rename IP address',
 	'coppatool-rename-ip-success' => 'Success message displayed when a IP rename task has successfully been created. $1 is the task ID.',
 	'coppatool-phalanx-ip' => 'Button text for option to globally block IP address',

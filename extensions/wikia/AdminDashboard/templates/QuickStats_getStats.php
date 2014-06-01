@@ -1,4 +1,4 @@
-<section id="QuickStatsWidget" class="QuickStatsWidget admin-dashboard-module">
+<section id="QuickStatsWidget" class="QuickStatsWidget">
 	<h1><?= wfMsg('quickstats-header-label') ?></h1>
 	<table class="WikiaDataTable">
 		<thead class="AdminDashboardGeneralHeader">

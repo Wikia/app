@@ -552,7 +552,7 @@ class WikiaMiniUpload {
 						return wfMsg( 'wmu-file-protected' );
 					}
 
-					$temp_file = new FakeLocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
+					$temp_file = new LocalFile(Title::newFromText($mwname, 6), RepoGroup::singleton()->getLocalRepo());
 					$file = new LocalFile($title, RepoGroup::singleton()->getLocalRepo());
 
 					if ( !empty($extraId) ) {

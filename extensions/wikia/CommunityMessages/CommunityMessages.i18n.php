@@ -88,7 +88,7 @@ $messages['ca'] = array(
 	'communitymessages-notice-msg' => "[[Special:WikiActivity|S'han actualitzat els Missatges de la Comunitat]].",
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Jezevec
  */

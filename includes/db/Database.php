@@ -2540,11 +2540,6 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 			$sql .= ' WHERE ' . $conds;
 		}
-		
-		if ( strpos( $sql, '`user`' ) !== false ) {
-			global $wgDBname, $wgUser;
-			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty($wgUser) ) ? $wgUser->getId() : 0, $sql ) );
-		}
 
 		return $this->query( $sql, $fname );
 	}

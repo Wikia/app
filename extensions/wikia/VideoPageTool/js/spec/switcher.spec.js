@@ -22,7 +22,7 @@ describe('Form box switcher', function () {
 			onChange: function(){
 				callbackInt = 1;
 			}
-		} );
+		});
 
 		switcher = $elem.data( 'switcher' );
 	}
@@ -31,29 +31,29 @@ describe('Form box switcher', function () {
 
 	it( 'is set', function() {
 		expect( typeof switcher ).toBe( 'object' );
-	} );
+	});
 
 	it( 'can set boxes', function() {
 		switcher.setBoxes();
 
 		expect( switcher.$boxes.length ).toBe( count );
-	} );
+	});
 
 	it( 'disables the top most arrow', function() {
 		var $topMostArrow = $elem.find( '.form-box' ).first().find( '.nav-up' );
 
 		expect( $topMostArrow.attr( 'disabled' ) ).toBe( 'disabled' );
-	} );
+	});
 
 	it( 'Disables the bottom most arrow', function() {
 		var $bottomMostArrow = $elem.find( '.form-box' ).last().find( '.nav-down' );
 
 		expect( $bottomMostArrow.attr( 'disabled' ) ).toBe( 'disabled' );
-	} );
+	});
 
 	it( 'disables only two arrows', function() {
 		expect( $elem.find( ':disabled' ).length ).toBe( 2 );
-	} );
+	});
 
 
 	it( 'switches down', function() {
@@ -66,7 +66,7 @@ describe('Form box switcher', function () {
 		expect( $elem.find( '#box3' ).index() ).toBe( 2 );
 		expect( callbackInt ).toBe( 1 );
 
-	} );
+	});
 
 	it( 'switches up', function() {
 		buildDOM();
@@ -78,6 +78,6 @@ describe('Form box switcher', function () {
 		expect( $elem.find( '#box3' ).index() ).toBe( 1 );
 		expect( callbackInt ).toBe( 1 );
 
-	} );
+	});
 
-} );
+});

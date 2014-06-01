@@ -1,58 +1,22 @@
-/* global Mustache */
 var WikiWelcome = {
-
+	doptions: {persistent: false, width:400},
 	init: function () {
-		'use strict';
-
-		$.nirvana.sendRequest( {
+		$.nirvana.sendRequest({
 			controller: 'FinishCreateWiki',
 			method: 'WikiWelcomeModal',
-			format: 'json',
+			format: 'html',
 			type: 'get',
-			callback: this.renderModal
-		} );
-	},
-
-	renderModal: function ( data ) {
-		'use strict';
-
-		require( [ 'wikia.ui.factory', 'wikia.loader' ], function ( uiFactory, loader ) {
-			var templatePath = 'extensions/wikia/CreateNewWiki/templates/FinishCreateWiki_WikiWelcomeModal.mustache';
-
-			$.when(
-					uiFactory.init( [ 'modal' ] ),
-					loader( {
-						type: loader.MULTI,
-						resources: {
-							mustache: templatePath
-						}
-					} )
-				).then( function ( uiModal, resources ) {
-					var modalConfig = {
-						vars: {
-							id: 'WikiWelcomeModal',
-							size: 'medium',
-							title: data.title,
-							content: Mustache.render( resources.mustache[0], data )
-						}
-					};
-
-					uiModal.createComponent( modalConfig, function ( wikiWelcomeModal ) {
-						wikiWelcomeModal.bind( 'createpage', function ( event ) {
-							event.preventDefault();
-							window.CreatePage.openDialog( event );
-							wikiWelcomeModal.trigger( 'close' );
-							return false;
-						} );
-						wikiWelcomeModal.show();
-					} );
-				} );
-		} );
+			callback: function(html) {
+				WikiWelcome.d = $(html).makeModal(WikiWelcome.doptions);
+				WikiWelcome.d.find('.createpage').click(function(e) {
+					CreatePage.openDialog(e);
+					WikiWelcome.d.closeModal();
+				});
+			}
+		});
 	}
 };
 
-$( function () {
-	'use strict';
-
+$(function() {
 	WikiWelcome.init();
-} );
+});

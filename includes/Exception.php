@@ -193,7 +193,6 @@ class MWException extends Exception {
 			$wgOut->output();
 		} else {
 			header( 'HTTP/1.1 500 Internal Server Error' );
-			header( "X-MediaWiki-Exception: 1" ); // Wikia change - @author macbre (BAC-1199)
 			header( "Content-Type: text/html; charset=utf-8" );
 			$hookResult = $this->runHooks( get_class( $this ) . "Raw" );
 			if ( $hookResult ) {
@@ -214,7 +213,6 @@ class MWException extends Exception {
 
 		if ( $log ) {
 			wfDebugLog( 'exception', $log );
-			Wikia::log( 'exceptions-WIKIA', get_class($this), $log, true ); // Wikia change - @author macbre (BAC-1199)
 		}
 
 		if ( self::isCommandLine() ) {

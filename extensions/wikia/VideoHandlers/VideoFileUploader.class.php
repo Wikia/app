@@ -87,7 +87,7 @@ class VideoFileUploader {
 		// Some providers will sometimes return error codes when attempting
 		// to fetch a thumbnnail
 		try {
-			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
+			$upload = $this->uploadBestThumbnail();
 		} catch ( Exception $e ) {
 			Wikia::Log(__METHOD__, false, $e->getMessage());
 
@@ -104,25 +104,6 @@ class VideoFileUploader {
 		}
 		$oTitle = Title::newFromText( $titleText, NS_FILE );
 
-		// Check if the user has the proper permissions
-		// Mimicks Special:Upload's behavior
-		$user = F::app()->wg->User;
-		$permErrors = $oTitle->getUserPermissionsErrors( 'edit', $user );
-		$permErrorsUpload = $oTitle->getUserPermissionsErrors( 'upload', $user );
-		if ( !$oTitle->exists() ) {
-			$permErrorsCreate = $oTitle->getUserPermissionsErrors( 'create', $user );
-		} else {
-			$permErrorsCreate = [];
-		}
-
-		if ( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
-			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
-			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
-			$msgKey = array_shift( $permErrors[0] );
-			wfProfileOut( __METHOD__ );
-			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse()  );
-		}
-
 		if ( $oTitle->exists() ) {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
@@ -131,7 +112,7 @@ class VideoFileUploader {
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
-				$article->doEdit( $newcontent, wfMessage( 'videos-update-edit-summary' )->inContentLanguage()->text() );
+				$article->doEdit( $newcontent, 'update' );
 			}
 		}
 
@@ -167,17 +148,17 @@ class VideoFileUploader {
 
 	/**
 	 * Reset the thumbnail for this video to its original from the provider
+	 *
 	 * @param File $file
-	 * @param string $thumbnailUrl
 	 * @return FileRepoStatus
 	 */
-	public function resetThumbnail( File &$file, $thumbnailUrl ) {
+	public function resetThumbnail( File &$file ) {
 		wfProfileIn(__METHOD__);
 
 		// Some providers will sometimes return error codes when attempting
 		// to fetch a thumbnail
 		try {
-			$upload = $this->uploadBestThumbnail( $thumbnailUrl );
+			$upload = $this->uploadBestThumbnail();
 		} catch ( Exception $e ) {
 			return Status::newFatal($e->getMessage());
 		}
@@ -192,16 +173,17 @@ class VideoFileUploader {
 	/**
 	 * Try to upload the best thumbnail for this file, starting with the one the provider
 	 * gives and falling back to the default thumb
-	 * @param string $thumbnailUrl
+	 *
 	 * @return UploadFromUrl
 	 */
-	protected function uploadBestThumbnail( $thumbnailUrl ) {
+	protected function uploadBestThumbnail() {
 		wfProfileIn( __METHOD__ );
 
 		// disable proxy
 		F::app()->wg->DisableProxy = true;
+
 		// Try to upload the thumbnail for this video
-		$upload = $this->uploadThumbnailFromUrl( $thumbnailUrl );
+		$upload = $this->uploadThumbnailFromUrl( $this->getApiWrapper()->getThumbnailUrl() );
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
@@ -287,7 +269,7 @@ class VideoFileUploader {
 
 	}
 
-	public function getApiWrapper( ) {
+	protected function getApiWrapper( ) {
 		wfProfileIn( __METHOD__ );
 		if ( !empty( $this->oApiWrapper ) ) {
 			wfProfileOut( __METHOD__ );

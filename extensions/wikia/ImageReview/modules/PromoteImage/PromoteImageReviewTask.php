@@ -100,8 +100,6 @@ class PromoteImageReviewTask extends BatchTask {
 	 * @return bool
 	 */
 	function uploadImages($targetWikiId, $wikis) {
-		$isError = false;
-
 		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
 
 		foreach($wikis as $sourceWikiId => $images) {
@@ -116,8 +114,6 @@ class PromoteImageReviewTask extends BatchTask {
 						'id' => $result['id'],
 						'name' => $result['name'],
 					);
-				} else {
-					$isError = true;
 				}
 			}
 
@@ -150,9 +146,10 @@ class PromoteImageReviewTask extends BatchTask {
 		if( !empty($uploadedImages) ) {
 		//if wikis have been added by import script or regularly by Special:Promote
 			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
+			return true;
 		}
 
-		return !$isError;
+		return false;
 	}
 
 	function uploadSingleImage($imageId, $destinationName, $targetWikiId, $sourceWikiId) {

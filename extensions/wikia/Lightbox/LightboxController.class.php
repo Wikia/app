@@ -24,7 +24,7 @@ class LightboxController extends WikiaController {
 		$this->showAdModalRectangle = $showAds && $this->wg->ShowAdModalRectangle;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	public function lightboxModalContentError() {
@@ -35,7 +35,7 @@ class LightboxController extends WikiaController {
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**
@@ -72,7 +72,7 @@ class LightboxController extends WikiaController {
 		$this->to = $minTimestamp;
 
 		// set cache control to 1 hour
-		$this->response->setCacheValidity(3600);
+		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**
@@ -211,6 +211,9 @@ class LightboxController extends WikiaController {
 		$this->providerName = $data['providerName'];
 		$this->exists = $data['exists'];
 
+		// set cache control to 1 hour
+		// Note - we're probably not going to use this going forward.  Saipetch is investigating - Liz
+		//$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		// Make sure that a request with missing &format=json does not throw a "template not found" exception
 		$this->response->setFormat('json');
 	}
@@ -304,7 +307,7 @@ class LightboxController extends WikiaController {
 		$this->imageUrl = $thumbUrl;
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 	}
 
 	/**

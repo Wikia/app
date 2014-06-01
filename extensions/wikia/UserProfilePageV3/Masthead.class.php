@@ -225,10 +225,7 @@ class Masthead {
 				/**
 				 * uploaded file, we are adding common/avatars path
 				 */
-				// avatars selected from "samples" are stored as full URLs (BAC-1195)
-				if ( strpos( $url, 'http://' ) === false ) {
-					$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
-				}
+				$url = $wgBlogAvatarPath . rtrim($thumb, '/') . $url;
 			}
 			else {
 				/**

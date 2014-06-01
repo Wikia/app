@@ -65,7 +65,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Sorting/filtering dropdown values
 		$sort = $this->request->getVal( 'sort', 'trend' );
 		$page = $this->request->getVal( 'page', 1 );
-		$category = $this->request->getVal( 'category' );
 
 		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
 		$msg = $this->request->getVal( 'msg', '');
@@ -90,7 +89,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$providers = $providers ? explode(',', $providers) : null;
 
 		$specialVideos = new SpecialVideosHelper();
-		$videos = $specialVideos->getVideos( $sort, $page, $providers, $category );
+		$videos = $specialVideos->getVideos( $sort, $page, $providers );
 
 		$mediaService = new MediaQueryService();
 		if ( $sort == 'premium' ) {
@@ -124,18 +123,15 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		foreach ( $videos as &$video ) {
 			$video['byUserMsg'] = $specialVideos->getByUserMsg( $video['userName'], $video['userUrl'] );
 			$video['postedInMsg'] = $specialVideos->getPostedInMsg( $video['truncatedList'], $video['isTruncated'] );
-			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'], true );
+			$video['videoOverlay'] = WikiaFileHelper::videoInfoOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, $video['fileTitle'] );
 			$video['videoPlayButton'] = WikiaFileHelper::videoPlayButtonOverlay( SpecialVideosHelper::THUMBNAIL_WIDTH, SpecialVideosHelper::THUMBNAIL_HEIGHT );
 		}
-
-		// The new trending in <category> options have a slightly different key format
-		$sortKey = $sort.( empty($category) ? '' : ":$category" );
 
 		$this->thumbHeight = SpecialVideosHelper::THUMBNAIL_HEIGHT;
 		$this->thumbWidth = SpecialVideosHelper::THUMBNAIL_WIDTH;
 		$this->addVideo = $addVideo;
 		$this->pagination = $pagination;
-		$this->sortMsg = $sortingOptions[$sortKey]; // selected sorting option to display in drop down
+		$this->sortMsg = $sortingOptions[$sort]; // selected sorting option to display in drop down
 		$this->sortingOptions = $sortingOptions; // populate the drop down
 		$this->videos = $videos;
 

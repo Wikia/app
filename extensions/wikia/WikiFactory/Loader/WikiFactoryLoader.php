@@ -134,7 +134,6 @@ class WikiFactoryLoader {
 
 		if( !empty( $wgDevelEnvironment ) ) {
 			$this->mDebug = true;
-			$this->mAlwaysFromDB = 1;
 		}
 
 		/**
@@ -630,7 +629,6 @@ class WikiFactoryLoader {
 						/**
 						 * skip this variable
 						 */
-						unset($this->mVariables[ $oRow->cv_name ]);
 						$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
 					}
 				}

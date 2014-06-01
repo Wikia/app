@@ -39,11 +39,3 @@ $wgGroupPermissions['user']['wikifeaturesview'] = true;
 $wgLogTypes[] = 'wikifeatures';
 $wgLogNames['wikifeatures'] = 'wikifeatures-log-name';
 $wgLogHeaders['wikifeatures'] = 'wikifeatures-log-header';
-
-JSMessages::registerPackage( 'WikiFeatures', array(
-	'wikifeatures-deactivate-heading',
-	'wikifeatures-deactivate-description',
-	'wikifeatures-deactivate-notification',
-	'wikifeatures-deactivate-confirm-button',
-	'wikifeatures-deactivate-cancel-button'
-) );

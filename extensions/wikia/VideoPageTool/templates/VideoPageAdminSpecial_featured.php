@@ -18,7 +18,7 @@
 					<?= wfMessage( 'videopagetool-button-add-video' )->text() ?>
 				</button>
 				<p class="video-title <?= $video[ 'videoTitleClass' ] ?>"><?= $video[ 'videoTitle' ]  ?></p>
-				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= htmlspecialchars( $video[ 'videoKey' ] ) ?>">
+				<input type="hidden" name="videoKey[]" class="video-key" id="video-key-<?= $x ?>" value="<?= $video[ 'videoKey' ] ?>">
 			</div>
 
 			<div class="video-thumb-wrapper">
@@ -44,7 +44,7 @@
 
 			<div class="input-group border">
 				<label for="display-title-<?= $x ?>"><?= wfMessage( 'videopagetool-label-display-title' )->text() ?></label>
-				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= htmlspecialchars( $video[ 'displayTitle' ] ) ?>">
+				<input class="display-title" id="display-title-<?= $x ?>" type="text" name="displayTitle[]" value="<?= $video[ 'displayTitle' ] ?>">
 			</div>
 
 			<div class="input-group">

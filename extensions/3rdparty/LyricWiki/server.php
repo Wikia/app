@@ -559,7 +559,7 @@ function searchArtists($searchString){
 				print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
 			}
 
-			// If there were no results at all, look for some with a more liberal query.
+			// If there were no results at all, look for some with a more liberal query (which takes WAY too long to execute).
 			if(count($retVal) == 0){
 				// Under the hood this uses the SimpleSearch service which is powered by Lucene.
 				$searchResults = lw_getSearchResults($artist, $MAX_RESULTS * 3); // select more than max so that we can filter after-the-fact for artists.

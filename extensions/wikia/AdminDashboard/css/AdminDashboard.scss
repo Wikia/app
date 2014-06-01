@@ -10,7 +10,6 @@
 @import "skins/oasis/css/mixins/wordmark";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/core/responsive-variables";
 @import "extensions/wikia/Listusers/css/table";
 
 $admin-dashboard-content-width: 690px;
@@ -138,7 +137,7 @@ $color-highlight-column: rgba($color-page, 0);
 		font-size: 16px;
 		margin-bottom: 5px;
 	}
-	>section {
+	section {
 		margin-bottom: 20px;
 	}
 }
@@ -535,10 +534,6 @@ $color-highlight-column: rgba($color-page, 0);
 	.page-Special_AdminDashboard .WikiaMainContentContainer {
 		margin-right: $admin-dashboard-rail-width;
 		padding: 0;
-
-		@media screen and (max-width: $breakpoint-small) {
-			margin-right: 0;
-		}
 	}
 
 	.WikiaMainContentContainer {

@@ -12,27 +12,19 @@ class RelatedVideosController extends WikiaController {
 	}
 
 	public function getCarouselRL(){
-		wfProfileIn(__METHOD__);
 		// just use different template, logic stays the same
-		$out = $this->getCarousel();
-		wfProfileOut(__METHOD__);
-		return $out;
+		return $this->getCarousel();
 	}
 
 	public function getCarouselElementRL(){
-		wfProfileIn(__METHOD__);
 		$this->response->setTemplateEngine(WikiaResponse::TEMPLATE_ENGINE_MUSTACHE);
 
 		// just use different template, logic stays the same
-		$out = $this->getCarouselElement();
-		wfProfileOut(__METHOD__);
-		return $out;
+		return $this->getCarouselElement();
 	}
 
 	public function getCarousel(){
-		wfProfileIn(__METHOD__);
 		if( $this->app->checkSkin( 'wikiamobile' ) || Wikia::isMainPage() || ( !$this->app->wg->title instanceof Title ) || !$this->app->wg->title->exists() ) {
-			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -43,7 +35,6 @@ class RelatedVideosController extends WikiaController {
 		$this->videos = $videos;
 		$this->totalVideos = $this->getTotalVideos();
 		$this->canAddVideo = $this->wg->User->isAllowed( 'relatedvideosedit' );
-		wfProfileOut(__METHOD__);
 	}
 
 	public function getTotalVideos(){
@@ -172,10 +163,9 @@ class RelatedVideosController extends WikiaController {
 					),
 					'duration' => true,
 					'src' => $preloaded ? false : wfBlankImgUrl(),
-					// This attirbute is deprecated with the new toHtml function.  Remove when refactoring
 					'constHeight' => RelatedVideosService::$height,
 					'usePreloading' => true,
-					'disableRDF' => true,
+					'disableRDF' => true
 				)
 			);
 
@@ -204,7 +194,7 @@ class RelatedVideosController extends WikiaController {
 		}
 
 		// set cache control to 1 day
-		$this->response->setCacheValidity(86400);
+		$this->response->setCacheValidity(86400, 86400, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 
 		wfProfileOut(__METHOD__);
 	}

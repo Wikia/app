@@ -42,7 +42,8 @@ class WallHistoryController extends WallController {
 		if( $this->isThreadLevel ) {
 			$wallMessage = new WallMessage($title);
 			$wallMessage->load();
-
+			$wallOwnerUser = $wallMessage->getWallOwner();
+			
 			$perPage = 50;
 			$wallHistory = new WallHistory();
 			$wallHistory->setPage($page, $perPage);
@@ -55,7 +56,7 @@ class WallHistoryController extends WallController {
 				'title' =>  $wallMessage->getMetatitle(),
 				'url' => $wallMessage->getMessagePageUrl() 
 			); 			
-
+			
 			$wallUrl =  $wallMessage->getArticleTitle()->getFullUrl();
 			$wallOwnerName =  $wallMessage->getArticleTitle()->getText();
 						

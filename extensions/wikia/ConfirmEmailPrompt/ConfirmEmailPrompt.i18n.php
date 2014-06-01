@@ -51,7 +51,7 @@ $messages['ca'] = array(
 	'confirmemailprompt-error' => 'Es aquesta la teva direcció de correu electrònic?: <strong>$1</strong>? [[$2|Confirmar-la]] o [[$3|canvia-la]].',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(

@@ -50,7 +50,7 @@ $messages['ca'] = array(
 	'globalnotification-general-ajax-failure' => 'El navegador no ha pogut connectar-se a Wikia. Intenta-ho més tard.',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Darth Daron
  */
 $messages['cs'] = array(
@@ -267,14 +267,6 @@ $messages['tt-cyrl'] = array(
 $messages['uk'] = array(
 	'globalnotification-desc' => 'Відображає системні повідомлення про такі події, як помилки AJAX',
 	'globalnotification-general-ajax-failure' => 'Браузер не зміг підключитися до Wikia. Спробуйте ще раз пізніше.',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'globalnotification-desc' => 'Hiển thị hệ thống thông báo cho các sự kiện như thất bại AJAX',
-	'globalnotification-general-ajax-failure' => 'Trình duyệt không thể kết nối đến Wikia. Thử lại sau.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

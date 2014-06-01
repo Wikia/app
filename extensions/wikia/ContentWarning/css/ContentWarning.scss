@@ -44,27 +44,20 @@
 		#bodyContent {
 			overflow: hidden;
 			visibility: hidden;
+			width: 0;
 		}
 	}
 
 	.WikiaMainContent,
-	.WikiaRail,
-    .WikiaFooter {
+	.WikiaRail {
 		overflow: hidden;
 		visibility: hidden;
+		width: 0;
 	}
 
-    .WikiaRail {
-      .wikia-ad {
-        display:none;
-      }
-    }
-
-
 	.ContentWarning {
-        display: block;
-        position: fixed;
-    }
+		display: block;
+	}
 
 	.adm-dash-search,
 	.WikiaWideTablesWrapper {

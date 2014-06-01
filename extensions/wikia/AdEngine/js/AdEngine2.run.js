@@ -4,16 +4,15 @@
  */
 
 /*global document, window */
-/*global Geo, Wikia, Krux, AdTracker, SlotTracker */
+/*global Geo, Wikia, Krux, AdTracker */
 /*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
 /*global WikiaDartHelper, WikiaFullGptHelper */
 /*global AdProviderEvolve, AdProviderGpt, AdProviderGamePro, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
+/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdLogicPageDimensions, AdLogicPageLevelParams */
 /*global AdLogicPageLevelParamsLegacy */
 /*global require*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
-/*jshint maxlen:200*/
 
 (function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
 	'use strict';
@@ -22,13 +21,11 @@
 		adConfig,
 		adEngine,
 		adTracker,
-		slotTracker,
 		adLogicDartSubdomain,
 		adLogicHighValueCountry,
 		adLogicPageLevelParams,
 		adLogicPageLevelParamsLegacy,
 		adLogicPageDimensions,
-		adDecoratorPageDimensions,
 		scriptWriter,
 		dartUrl,
 		wikiaDart,
@@ -42,30 +39,34 @@
 		slotTweaker,
 
 		queueForLateAds,
-		adConfigForLateAds;
-
-	// Don't show ads when Sony requests the page
-	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
+		adConfigForLateAds,
+		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./);
 
 	// Don't have SevenOne Media ads on IE8 (or below)
-	window.wgAdDriverUseSevenOneMedia = window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
+	window.wgAdDriverUseSevenOneMedia = !ie8 && window.wgAdDriverUseSevenOneMedia && abTest.inGroup('SEVENONEMEDIA_ADS', 'ENABLED');
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
 
-	slotTracker = SlotTracker(log, tracker);
+	/*
+	 * Currently PostScribe conflicts with Krux as it supplies a different version of the lib.
+	 * Here we disable Krux when PostScribe is to be used
+	 * Related ticket: ADEN-666
+	 */
+	if (window.wgUsePostScribe) {
+		window.wgEnableKruxTargeting = false;
+	}
 
 	// Construct Ad Engine
-	adEngine = AdEngine2(log, LazyQueue, slotTracker);
+	adEngine = AdEngine2(log, LazyQueue);
 
 	// Construct various helpers
-	adTracker = AdTracker(log, tracker, window);
+	adTracker = AdTracker(log, tracker);
 	slotTweaker = SlotTweaker(log, document, window);
 	dartUrl = DartUrl();
 	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
 	adLogicHighValueCountry = AdLogicHighValueCountry(window);
 	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
-	adDecoratorPageDimensions = AdDecoratorPageDimensions(adLogicPageDimensions, log);
 	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
 	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
 	scriptWriter = ScriptWriter(document, log, window);
@@ -89,9 +90,8 @@
 		window,
 		document,
 		Geo,
+		adLogicPageDimensions,
 		abTest,
-
-		adDecoratorPageDimensions,
 
 		// AdProviders:
 		adProviderGpt,
@@ -111,15 +111,8 @@
 			trackingMethod: 'ad'
 		});
 		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2, 'queue.early');
+		adEngine.run(adConfig, window.adslots2);
 	});
-
-	window.AdEngine_getTrackerStats = function () {
-		return {
-			'old': adTracker.getStats(),
-			'new': slotTracker.getStats()
-		};
-	};
 
 	// DART API for Liftium
 	window.LiftiumDART = {
@@ -161,7 +154,7 @@
 				ga_label: 'adengine2 late',
 				trackingMethod: 'ad'
 			});
-			adEngine.run(adConfigForLateAds, queueForLateAds, 'queue.late');
+			adEngine.run(adConfigForLateAds, queueForLateAds);
 		} else {
 			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
 			tracker.track({

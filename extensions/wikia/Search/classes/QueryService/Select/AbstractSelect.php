@@ -184,7 +184,7 @@ abstract class AbstractSelect
 	 * @param array $fields allows us to apply a mapping
 	 * @return array
 	 */
-	public function searchAsApi( $fields = null, $metadata = false, $keyField = null ) {
+	public function searchAsApi( $fields = null, $metadata = false ) {
 		$resultSet = $this->search();
 		$config = $this->getConfig();
 
@@ -197,12 +197,12 @@ abstract class AbstractSelect
 					'batches' => $total > 0 ? $numPages : 0,
 					'currentBatch' => $total > 0 ? $config->getPage() : 0,
 					'next' => $total > 0 ? min( [ $numPages * $limit, $config->getStart() + $limit ] ) : 0,
-					'items' => $resultSet->toArray( $fields, $keyField )
+					'items' => $resultSet->toArray( $fields )
 					];
 		} else if ( $fields ) {
-			$response = $resultSet->toArray( $fields, $keyField );
+			$response = $resultSet->toArray( $fields );
 		} else {
-			$response = $resultSet->toArray( null, $keyField );
+			$response = $resultSet->toArray();
 		}
 		return $response;
 	}
@@ -280,10 +280,8 @@ abstract class AbstractSelect
 	 */
 	protected function getRequestedFields() {
 		$fields = [];
-		$config = $this->getConfig();
-		$language = $config->getLanguageCode();
-		foreach ( array_merge( $this->requestedFields, $config->getRequestedFields() ) as $field ) {
-			$fields[] = Utilities::field( $field, $language );
+		foreach ( array_merge( $this->requestedFields, $this->getConfig()->getRequestedFields() ) as $field ) {
+			$fields[] = Utilities::field( $field );
 		}
 		return $fields;
 	}
@@ -437,7 +435,7 @@ abstract class AbstractSelect
 			$result = $wikiMatch->getResult();
 			$hub = $config->getHub();
 			if ( $result['articles_i'] >= self::ARTICLES_NUM_WIKIMATCH &&
-				( empty($hub) || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
+				( $hub === null || strtolower($hub) === strtolower( $result['hub_s'] ) ) ) {
 				$config->setWikiMatch( $wikiMatch );
 			}
 		}

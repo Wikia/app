@@ -8,10 +8,11 @@
 @import "skins/oasis/css/mixins/multiple-box-shadow";
 @import "skins/oasis/css/mixins/opacity";
 @import "skins/oasis/css/mixins/wordmark";
-@import "skins/oasis/css/mixins/ellipses";
 @import "extensions/wikia/UserLogin/mixins/tooltip-icon";
+
 // Colors
 @import "core/colors";
+
 // Mixins
 @import "mixins/button-resize";
 @import "mixins/gradients";
@@ -19,6 +20,7 @@
 @import "mixins/splotch";
 @import "mixins/sprite-edit-page";
 @import "mixins/sprite-edit-mw-toolbar";
+
 // Core
 @import "core/buttons";
 @import "core/dimensions";
@@ -30,8 +32,10 @@
 @import "core/tabs";
 @import "core/toolbar";
 @import "core/wide";
+
 @import "skins/oasis/css/core/responsive-core";
 @import "skins/oasis/css/core/responsive-variables";
+
 
 body {
 	padding: 0;
@@ -329,7 +333,6 @@ body {
 				overflow-y: scroll;
 				min-height: 320px;
 				padding: 10px;
-				position: relative;
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
@@ -349,21 +352,15 @@ body {
 					list-style: none;
 				}
 			}
-
-			.modalToolbar {
-				display: inline-block;
-				float: right;
-				margin-left: 40px;
-			}
 		}
 	}
 }
 
 #EditPagePreviewEditSummary {
-	display: inline-block;
-	float: left;
-	margin-top: 20px;
-	@include ellipses();
+	display: table-cell;
+	height: 50px;
+	padding-top: 13px;
+	vertical-align: middle;
 	> p {
 		line-height: 18px;
 	}
@@ -429,11 +426,13 @@ body {
 }
 
 .mw-toolbar-editbutton {
-	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
+	@include sprite-edit-mw-toolbar-deep-embed(23px,23px);
 }
 
+
+
 @if ( $responsive-layout-enabled ) {
-	// START - edit page fixes
+// START - edit page fixes
 
 	.editor .WikiaMainContent {
 		float: none;
@@ -533,33 +532,5 @@ body {
 	.EditPageRail {
 		width: $width-rail;
 	}
-
-	// fix for wiki nav bug - DAR-2884
-	.preview .WikiaArticle {
-		overflow: inherit;
-	}
-}
 // END - edit page fixes
-
-//Mobile preview styles
-.mobile-preview {
-	border: 1px solid $color-page-border;
-	height: 480px;
-	width: 320px;
-	overflow: auto;
-	margin: 0 auto;
-
-	-webkit-overflow-scrolling: touch;
-	-webkit-transform: translate3d(0, 0, 0);
-
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-
-	iframe {
-		display: block;
-		height: 100%;
-		margin: 0 auto;
-		width: 100%;
-	}
 }

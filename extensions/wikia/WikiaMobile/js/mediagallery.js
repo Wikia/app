@@ -24,7 +24,8 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		paginationStyle,
 		paginationWidth,
 		current,
-		imgsPerPage = 9;
+		imgsPerPage = 9,
+		thisImg;
 
 	function init(){
 		modalWrapper.addEventListener('click', function (ev) {
@@ -47,7 +48,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 			} else if (target.id === 'wkGalTgl') {
 				if(modalWrapper.className.indexOf('wkMedGal') > -1) {
 					track.event('gallery', track.CLICK, {label: 'close'});
-					goBackToImgModal(goToImg);
+					goBackToImgModal(thisImg);
 				} else {
 					open();
 				}
@@ -122,7 +123,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 
 			pages[pagesNum] += '<div class="galPlc galMedia ' +
 				type +
-				((goToImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
+				((thisImg === i) ? ' this' : '') + '" data-src="' + thumb + '" id=img' + i + '></div>';
 		}
 
 		//add placeholders
@@ -159,6 +160,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 
 	function open(){
 		goToImg = med.getCurrent();
+		thisImg = med.getCurrentDisplayable();
 
 		med.cleanup();
 		mod.open({
@@ -174,7 +176,7 @@ define('mediagallery', ['media', 'modal', 'pager', 'wikia.thumbnailer', 'lazyloa
 		gal = d.getElementById('wkGal');
 		pagination = d.getElementById('wkGalPag');
 		paginationStyle = pagination.style;
-		current = ~~(goToImg/imgsPerPage);
+		current = ~~((goToImg - (goToImg - thisImg))/imgsPerPage);
 		prepareGallery();
 
 		pager = pag({

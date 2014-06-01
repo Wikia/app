@@ -1,5 +1,4 @@
 @import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/arrow-hollow";
 @import "skins/oasis/css/mixins/border-radius";
 @import "skins/oasis/css/mixins/box-sizing-border-box";
 @import "skins/oasis/css/mixins/clearfix";
@@ -66,7 +65,7 @@ $label-padding: 10px 10px 10px 0px;
 	.form-box {
 		@include clearfix;
 		@include module-box;
-		padding: 0 20px;
+		padding: 0 10px;
 		position: relative;
 		&.with-nav {
 			padding-right: 37px; // width of nav buttons + 5px padding
@@ -74,9 +73,8 @@ $label-padding: 10px 10px 10px 0px;
 	}
 	.input-group {
 		@include box-sizing-border-box;
-		clear: none;
 		padding: 5px 0;
-		width: 68%;
+		width: 100%;
 		&.border {
 			border-bottom: 1px solid $color-page-border-subtle;
 		}
@@ -107,7 +105,7 @@ $label-padding: 10px 10px 10px 0px;
 		display: block;
 		float: left;
 		font-size: 18px;
-		margin: 15px 0 0 -45px;
+		margin: 15px 0 0 -35px;
 	}
 
 	// Page level styles
@@ -139,17 +137,12 @@ $label-padding: 10px 10px 10px 0px;
 		padding: 10px 0;
 	}
 
-	// validation
-	label.error {
-		clear: both;
-		float: right;
-		font-size: 13px;
-		margin: 0;
-		width: 70%;
-	}
-
 	// Featured video form styles
 	.featured-video {
+		.input-group {
+			clear: none;
+			width: 68%;
+		}
 		.media-btn {
 			float: left;
 			height: 25px;
@@ -171,76 +164,21 @@ $label-padding: 10px 10px 10px 0px;
 			width: 179px;
 		}
 		.video-thumb {
+			background: $color-page-border-subtle;
+			height: 100px;
 			position: relative;
-
-			img {
-				width: 100%;
-			}
+		}
+		// validation
+		label.error {
+			clear: both;
+			float: right;
+			font-size: 13px;
+			margin: 0;
+			width: 70%;
 		}
 		.button-group {
 			label.error {
 				float: none;
-			}
-		}
-	}
-
-	// Latest video form styles
-	.latest-video-form {
-
-		.form-box {
-			padding-top: 10px;
-		}
-
-		input[data-autocomplete] {
-			outline: 0 none;
-		}
-
-		.autocomplete {
-			position: absolute;
-			left: 141px;
-			top: 46px;
-			max-height: 300px;
-			overflow-y: scroll;
-		}
-
-		.search-button {
-			float: left;
-			margin: 17px 0 0 10px;
-		}
-		.preview {
-			@include box-sizing-border-box;
-			border: 1px solid $color-page-border-subtle;
-			border-top-width: 0;
-			clear: both;
-			color: $color-alternate-text;
-			display: block;
-			margin-top: $module-box-margin-bottom * -1;
-			margin-bottom: $module-box-margin-bottom;
-			padding: 5px 10px;
-			text-align: center;
-			width: 100%;
-
-			span {
-				@include arrow-hollow( 6px, 3px, #CCC, white, 'down' );
-				float: right;
-				right: 40px;
-				top: 9px;
-
-					&:first-child {
-					float: left;
-					right: -10px;
-				}
-
-				&.active {
-					@include arrow-hollow( 6px, 3px, #666, white, 'down' );
-				}
-
-				&.up {
-					@include arrow-hollow( 6px, 3px, #CCC, white, 'up' );
-					&.active {
-						@include arrow-hollow( 6px, 3px, #666, white, 'up' );
-					}
-				}
 			}
 		}
 	}

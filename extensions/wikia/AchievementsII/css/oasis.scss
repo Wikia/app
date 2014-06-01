@@ -130,7 +130,7 @@
 }
 
 .WikiaRail {
-	& > div.AchievementsModule {
+	div.AchievementsModule {
 		.achievements-leaderboard-button {
 			clear: both;
 			margin: {
@@ -171,11 +171,6 @@
 				*float: left;
 			}
 
-		}
-		.badge-text {
-			padding {
-				margin-top: 13px;
-			}
 		}
 		.more {
 			font-weight: normal;

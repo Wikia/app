@@ -1,5 +1,5 @@
 jQuery(function($) {
-	'use strict';
+
 	// Hide content warning, show content
 	function afterApproved() {
 		$('body').removeClass('ShowContentWarning');
@@ -16,20 +16,10 @@ jQuery(function($) {
 			format: 'html',
 			type: 'GET',
 			callback: function(html) {
+				$(window.skin == 'oasis' ? '#WikiaMainContent' : '#bodyContent').before($(html));
 
-				var parent, container, railWidth;
-
-				$(window.skin === 'oasis' ? '#WikiaMainContent' : '#bodyContent').before($(html));
-
-				container = $('#ContentWarning' );
-
-				parent = container.parent();
-
-				railWidth = ($('#WikiaRail').width() || 0) + 50;
-
-				container.width(parent.width() - railWidth);
 				// User acknowledges the content warning message and wishes to proceed
-				container.on('click', '#ContentWarningApprove', function() {
+				$('#ContentWarningApprove').click(function() {
 
 					// Logged in user
 					if (window.wgUserName) {

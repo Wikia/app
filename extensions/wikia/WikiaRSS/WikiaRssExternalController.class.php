@@ -8,7 +8,7 @@ class WikiaRssExternalController extends WikiaController {
 	public function getRssFeeds() {
 		$this->response->setVal('status', false);
 		$options = $this->request->getVal('options', false);
-		$this->response->setCacheValidity(3600); //cache it on varnish for 1h
+		$this->response->setCacheValidity(3600, 3600, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH)); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
 		//we need to restore then its default values

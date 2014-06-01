@@ -329,7 +329,7 @@ class StructuredDataController extends WikiaSpecialPageController {
 
 	public function createReferencedObject() {
 		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->getResponse()->setCacheValidity( 0, 0, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		if ( !$this->wg->User->isAllowed( 'sdsediting' ) ) {
 			$this->response->setVal( 'error', wfMsg( 'structureddata-no-rights-to-add-wikitext-object' ) );
 			return;

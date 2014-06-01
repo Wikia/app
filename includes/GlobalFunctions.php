@@ -1686,14 +1686,6 @@ function wfHostname() {
 function wfReportTime() {
 	global $wgRequestTime, $wgShowHostnames;
 
-	// Wikia change - begin
-	// @author macbre - BAC-550
-	global $wgDisableReportTime;
-	if ( !empty( $wgDisableReportTime ) ) {
-		return '';
-	}
-	// Wikia change - end
-
 	$elapsed = microtime( true ) - $wgRequestTime;
 
 	return $wgShowHostnames
@@ -3965,4 +3957,3 @@ function wfUnpack( $format, $data, $length=false ) {
 	}
 	return $result;
 }
-

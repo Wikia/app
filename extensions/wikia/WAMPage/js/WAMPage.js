@@ -42,32 +42,28 @@ WAMPage.prototype = {
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
 			$.proxy(function(getResourcesData) {
-				var minDate = new Date( window.wamFilterMinMaxDates.min_date * 1000 ),
-					maxDate = new Date( window.wamFilterMinMaxDates.max_date * 1000 );
+				var minDate = new Date(window.wamFilterMinMaxDates['min_date'] * 1000);
+				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
+				var maxDate = new Date(window.wamFilterMinMaxDates['max_date'] * 1000);
+				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
 
-				minDate.setMinutes( minDate.getMinutes() + minDate.getTimezoneOffset() );
-				maxDate.setMinutes( maxDate.getMinutes() + maxDate.getTimezoneOffset() );
-
-				$( '#WamFilterHumanDate' ).datepicker( {
+				$('#WamFilterDate').datepicker({
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					minDate: minDate,
 					maxDate: maxDate,
-					altField: '#WamFilterDate',
-					altFormat: '@',
-					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
-						window.wamFilterDateFormat : undefined,
-					onSelect: $.proxy( function () {
-						var $date = $( '#WamFilterDate' ),
-							timestamp = parseInt( $date.val(), 10 ),
-							currentTimezoneOffset = (new Date( timestamp )).getTimezoneOffset();
-						$date.val( (timestamp / 1000) - currentTimezoneOffset * 60 );
-						WAMPage.trackClick( 'WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change',
-							null, {lang: wgContentLanguage, filter: 'date'} );
-						WAMPage.filterWamIndex( $date );
-					}, this )
-				} );
-			}, this )
+					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat)
+						? window.wamFilterDateFormat
+						: undefined,
+					onSelect: $.proxy(function() {
+						if( $(this).closest('#WamFilterDate') ) {
+							WAMPage.trackClick('WamPage', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: wgContentLanguage, filter: 'date'});
+						}
+						WAMPage.filterWamIndex($('#WamFilterDate'));
+					}, this)
+				})
+			}
+			, this)
 		);
 	},
 

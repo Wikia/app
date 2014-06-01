@@ -100,7 +100,14 @@ class SearchApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(86400);
+		$response->setCacheValidity(
+			86400 /* 24h */,
+			86400 /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 	}
 	
 	/**

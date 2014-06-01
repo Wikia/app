@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/css_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/worker/worker_client', 'ace/mode/behaviour/css', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/css_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/worker/worker_client', 'ace/mode/behaviour/css', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -41,7 +41,7 @@ var CssBehaviour = require("./behaviour/css").CssBehaviour;
 var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = CssHighlightRules;
+    this.$tokenizer = new Tokenizer(new CssHighlightRules().getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CssBehaviour();
     this.foldingRules = new CStyleFoldMode();
@@ -55,7 +55,7 @@ oop.inherits(Mode, TextMode);
 
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
-        var tokens = this.getTokenizer().getLineTokens(line, state).tokens;
+        var tokens = this.$tokenizer.getLineTokens(line, state).tokens;
         if (tokens.length && tokens[tokens.length-1].type == "comment") {
             return indent;
         }
@@ -97,7 +97,7 @@ exports.Mode = Mode;
 
 });
 
-ace.define('ace/mode/css_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/css_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -123,80 +123,11 @@ var CssHighlightRules = function() {
         "support.constant.fonts": supportConstantFonts
     }, "text", true);
 
-    this.$rules = {
-        "start" : [{
-            token : "comment", // multi line comment
-            regex : "\\/\\*",
-            push : "comment"
-        }, {
-            token: "paren.lparen",
-            regex: "\\{",
-            push:  "ruleset"
-        }, {
-            token: "string",
-            regex: "@.*?{",
-            push:  "media"
-        }, {
-            token: "keyword",
-            regex: "#[a-z0-9-_]+"
-        }, {
-            token: "variable",
-            regex: "\\.[a-z0-9-_]+"
-        }, {
-            token: "string",
-            regex: ":[a-z0-9-_]+"
-        }, {
-            token: "constant",
-            regex: "[a-z0-9-_]+"
-        }, {
-            caseInsensitive: true
-        }],
-
-        "media" : [{
-            token : "comment", // multi line comment
-            regex : "\\/\\*",
-            push : "comment"
-        }, {
-            token: "paren.lparen",
-            regex: "\\{",
-            push:  "ruleset"
-        }, {
-            token: "string",
-            regex: "\\}",
-            next:  "pop"
-        }, {
-            token: "keyword",
-            regex: "#[a-z0-9-_]+"
-        }, {
-            token: "variable",
-            regex: "\\.[a-z0-9-_]+"
-        }, {
-            token: "string",
-            regex: ":[a-z0-9-_]+"
-        }, {
-            token: "constant",
-            regex: "[a-z0-9-_]+"
-        }, {
-            caseInsensitive: true
-        }],
-
-        "comment" : [{
-            token : "comment",
-            regex : "\\*\\/",
-            next : "pop"
-        }, {
-            defaultToken : "comment"
-        }],
-
-        "ruleset" : [
+    var base_ruleset = [
         {
-            token : "paren.rparen",
-            regex : "\\}",
-            next:   "pop"
-        }, {
             token : "comment", // multi line comment
             regex : "\\/\\*",
-            push : "comment"
+            next : "ruleset_comment"
         }, {
             token : "string", // single line
             regex : '["](?:(?:\\\\.)|(?:[^"\\\\]))*?["]'
@@ -229,10 +160,114 @@ var CssHighlightRules = function() {
             regex : "\\-?[a-zA-Z_][a-zA-Z0-9_\\-]*"
         }, {
             caseInsensitive: true
-        }]
-    };
+        }
+      ];
 
-    this.normalizeRules();
+    var ruleset = lang.copyArray(base_ruleset);
+    ruleset.unshift({
+        token : "paren.rparen",
+        regex : "\\}",
+        next:   "start"
+    });
+
+    var media_ruleset = lang.copyArray( base_ruleset );
+    media_ruleset.unshift({
+        token : "paren.rparen",
+        regex : "\\}",
+        next:   "media"
+    });
+
+    var base_comment = [{
+          token : "comment", // comment spanning whole line
+          regex : ".+"
+    }];
+
+    var comment = lang.copyArray(base_comment);
+    comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "start"
+    });
+
+    var media_comment = lang.copyArray(base_comment);
+    media_comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "media"
+    });
+
+    var ruleset_comment = lang.copyArray(base_comment);
+    ruleset_comment.unshift({
+          token : "comment", // closing comment
+          regex : ".*?\\*\\/",
+          next : "ruleset"
+    });
+
+    this.$rules = {
+        "start" : [{
+            token : "comment", // multi line comment
+            regex : "\\/\\*",
+            next : "comment"
+        }, {
+            token: "paren.lparen",
+            regex: "\\{",
+            next:  "ruleset"
+        }, {
+            token: "string",
+            regex: "@.*?{",
+            next:  "media"
+        },{
+            token: "keyword",
+            regex: "#[a-z0-9-_]+"
+        },{
+            token: "variable",
+            regex: "\\.[a-z0-9-_]+"
+        },{
+            token: "string",
+            regex: ":[a-z0-9-_]+"
+        },{
+            token: "constant",
+            regex: "[a-z0-9-_]+"
+        },{
+            caseInsensitive: true
+        }],
+
+        "media" : [ {
+            token : "comment", // multi line comment
+            regex : "\\/\\*",
+            next : "media_comment"
+        }, {
+            token: "paren.lparen",
+            regex: "\\{",
+            next:  "media_ruleset"
+        },{
+            token: "string",
+            regex: "\\}",
+            next:  "start"
+        },{
+            token: "keyword",
+            regex: "#[a-z0-9-_]+"
+        },{
+            token: "variable",
+            regex: "\\.[a-z0-9-_]+"
+        },{
+            token: "string",
+            regex: ":[a-z0-9-_]+"
+        },{
+            token: "constant",
+            regex: "[a-z0-9-_]+"
+        },{
+            caseInsensitive: true
+        }],
+
+        "comment" : comment,
+
+        "ruleset" : ruleset,
+        "ruleset_comment" : ruleset_comment,
+
+        "media_ruleset" : media_ruleset,
+        "media_comment" : media_comment
+    };
 };
 
 oop.inherits(CssHighlightRules, TextHighlightRules);
@@ -241,7 +276,7 @@ exports.CssHighlightRules = CssHighlightRules;
 
 });
 
-ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;
@@ -281,7 +316,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define('ace/mode/behaviour/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
+define('ace/mode/behaviour/css', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/mode/behaviour/cstyle', 'ace/token_iterator'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -360,7 +395,7 @@ oop.inherits(CssBehaviour, CstyleBehaviour);
 exports.CssBehaviour = CssBehaviour;
 });
 
-ace.define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
+define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -683,7 +718,7 @@ oop.inherits(CstyleBehaviour, Behaviour);
 exports.CstyleBehaviour = CstyleBehaviour;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

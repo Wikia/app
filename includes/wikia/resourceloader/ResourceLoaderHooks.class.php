@@ -8,8 +8,6 @@
  */
 class ResourceLoaderHooks {
 
-	const TIMESTAMP_PRECISION = 900; // 15 minutes
-
 	static protected $resourceLoaderInstance;
 	static protected $assetsManagerGroups = array(
 //		'skins.oasis.blocking' => 'oasis_blocking',
@@ -367,18 +365,5 @@ class ResourceLoaderHooks {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Round timestamps to 15 minutes to make Varnish entries consistent across nodes
-	 *
-	 * @param $timestamp int timestamp to normalize
-	 * @return int normalized timestamp
-	 *
-	 * @author macbre
-	 * @see BAC-1153
-	 */
-	public static function normalizeTimestamp($timestamp) {
-		return intval( floor( $timestamp / self::TIMESTAMP_PRECISION ) * self::TIMESTAMP_PRECISION );
 	}
 }

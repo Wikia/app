@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/dart', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/c_cpp', 'ace/tokenizer', 'ace/mode/dart_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/dart', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/c_cpp', 'ace/tokenizer', 'ace/mode/dart_highlight_rules', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -44,12 +44,14 @@ var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
     CMode.call(this);
-    this.HighlightRules = DartHighlightRules;
+    var highlighter = new DartHighlightRules();
     this.foldingRules = new CStyleFoldMode();
+
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, CMode);
 
-(function() { 
+(function() {
     this.lineCommentStart = "//";
     this.blockComment = {start: "/*", end: "*/"};
 }).call(Mode.prototype);
@@ -57,7 +59,7 @@ oop.inherits(Mode, CMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/c_cpp', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/c_cpp_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/mode/behaviour/cstyle', 'ace/mode/folding/cstyle'], function(require, exports, module) {
+define('ace/mode/c_cpp', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/c_cpp_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range', 'ace/mode/behaviour/cstyle', 'ace/mode/folding/cstyle'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -70,11 +72,9 @@ var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
 var CStyleFoldMode = require("./folding/cstyle").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = c_cppHighlightRules;
-
+    this.$tokenizer = new Tokenizer(new c_cppHighlightRules().getRules());
     this.$outdent = new MatchingBraceOutdent();
     this.$behaviour = new CstyleBehaviour();
-
     this.foldingRules = new CStyleFoldMode();
 };
 oop.inherits(Mode, TextMode);
@@ -87,7 +87,7 @@ oop.inherits(Mode, TextMode);
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
 
-        var tokenizedLine = this.getTokenizer().getLineTokens(line, state);
+        var tokenizedLine = this.$tokenizer.getLineTokens(line, state);
         var tokens = tokenizedLine.tokens;
         var endState = tokenizedLine.state;
 
@@ -128,7 +128,7 @@ oop.inherits(Mode, TextMode);
 
 exports.Mode = Mode;
 });
-ace.define('ace/mode/c_cpp_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/c_cpp_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -306,7 +306,7 @@ oop.inherits(c_cppHighlightRules, TextHighlightRules);
 exports.c_cppHighlightRules = c_cppHighlightRules;
 });
 
-ace.define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -350,7 +350,7 @@ exports.DocCommentHighlightRules = DocCommentHighlightRules;
 
 });
 
-ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;
@@ -390,7 +390,7 @@ var MatchingBraceOutdent = function() {};
 exports.MatchingBraceOutdent = MatchingBraceOutdent;
 });
 
-ace.define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
+define('ace/mode/behaviour/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/behaviour', 'ace/token_iterator', 'ace/lib/lang'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -713,7 +713,7 @@ oop.inherits(CstyleBehaviour, Behaviour);
 exports.CstyleBehaviour = CstyleBehaviour;
 });
 
-ace.define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
+define('ace/mode/folding/cstyle', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/range', 'ace/mode/folding/fold_mode'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");
@@ -768,7 +768,7 @@ oop.inherits(FoldMode, BaseFoldMode);
 });
 
 
-ace.define('ace/mode/dart_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/dart_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -781,7 +781,7 @@ var DartHighlightRules = function() {
     var keywordControl = "try|catch|finally|throw|break|case|continue|default|do|else|for|if|in|return|switch|while|new";
     var keywordDeclaration = "abstract|class|extends|external|factory|implements|get|native|operator|set|typedef";
     var storageModifier = "static|final|const";
-    var storageType = "void|bool|num|int|double|dynamic|var|String";
+    var storageType = "void|bool|num|int|double|Dynamic|var|String";
 
     var keywordMapper = this.createKeywordMapper({
         "constant.language.dart": constantLanguage,
@@ -815,7 +815,7 @@ var DartHighlightRules = function() {
         },
         {
             token: "keyword.other.import.dart",
-            regex: "(?:\\b)(?:library|import|part|of)(?:\\b)"
+            regex: "(?:\\b)(?:library|import|source|part|of)(?:\\b)"
         },
         {
             token : ["keyword.other.import.dart", "text"],

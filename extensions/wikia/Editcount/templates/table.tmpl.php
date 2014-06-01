@@ -17,7 +17,7 @@
 	/* current wiki */
 	$fedits = $wgLang->formatNum( $edits );
 	$fns = ($ns == NS_MAIN) ? wfMsg( 'blanknamespace' ) : $wgLang->getFormattedNsText( $ns );
-	$percent = ($edits > 0 && $wikitotal > 0) ? wfPercent( $edits / $wikitotal * 100 ) : wfPercent(0);
+	$percent = ($edits > 0 && $nstotal > 0) ? wfPercent( $edits / $nstotal * 100 ) : wfPercent(0);
 	$fpercent = $wgLang->formatNum( $percent );
 	/* all wikis */
 	$editsall = (array_key_exists($ns, $nscountall)) ? $nscountall[$ns] : 0;
@@ -34,22 +34,5 @@
 	<td class="ecrowright"><?=$fpercentall?></td>
 </tr>
 <?	} ?>
-<?php if ( $arcount > 0 ) {
-	/* current wiki total number of archived revisions */
-	$farcount = $wgLang->formatNum( $arcount );
-	$percent = ($arcount > 0 && $wikitotal > 0) ? wfPercent( $arcount / $wikitotal * 100 ) : wfPercent(0);
-	$fpercent = $wgLang->formatNum( $percent );
-?>
-<tr>
-	<td class="ecrowcenter"><?=wfMessage('editcount_archived_revisions')->escaped()?></td>
-	<td class="ecrowright"><?=$farcount?></td>
-	<td class="ecrowright"><?=$fpercent?></td>
-	<td class="ecrowright" style="border-top:0; border-bottom: 0;">&nbsp;</td>
-	<td class="ecrowright"><?=wfMessage('editcount_no_data')->escaped()?></td>
-	<td class="ecrowright">-</td>
-</tr>
-<?php
-}
-?>
 </table>
 <!-- e:<?= __FILE__ ?> -->

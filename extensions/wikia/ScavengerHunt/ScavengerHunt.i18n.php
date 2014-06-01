@@ -197,7 +197,6 @@ $messages['qqq'] = array(
 	'scavengerhunt-button-disable' => '{{Identical|Disable}}',
 	'scavengerhunt-button-enable' => '{{Identical|Enable}}',
 	'scavengerhunt-button-delete' => '{{Identical|Delete}}',
-	'scavengerhunt-quit-game-button-cancel' => '{{Identical|Cancel}}',
 	'scavengerhunt-label-clue-size' => '{{Identical|Font size}}',
 	'scavengerhunt-editor-tip-entry-form-email' => '{{doc-singularthey}}',
 	'scavengerhunt-editor-tip-entry-form-username' => '{{doc-singularthey}}',
@@ -228,7 +227,6 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
- * @author Claw eg
  * @author Meno25
  * @author OsamaK
  */
@@ -283,18 +281,6 @@ $messages['ar'] = array(
 	'scavengerhunt-button-add-section' => 'إضافة خطوة أخرى في الصيد',
 	'scavengerhunt-button-remove-section' => 'إزالة هذه الخطوة',
 	'scavengerhunt-form-error' => 'الرجاء تصحيح الأخطاء التالية:',
-	'scavengerhunt-form-error-no-landing-title' => 'الرجاء إدخال اسم الصفحة المقصودة (URL صالح).',
-	'scavengerhunt-form-error-invalid-title' => 'لم يتم العثور على عنوان الصفحة التالي: "$1".',
-	'scavengerhunt-form-error-landing-button-text' => 'الرجاء إدخال نص زر الصفحة المقصودة.',
-	'scavengerhunt-form-error-landing-button-position' => 'الرجاء أدخل موضع زر الصفحة المقصودة.',
-	'scavengerhunt-form-error-starting-clue' => 'الرجاء ملء كل الحقول في بداية قسم الدليل.',
-	'scavengerhunt-form-error-entry-form' => 'الرجاء ملء كل الحقول في مدخل قسم النموذج.',
-	'scavengerhunt-form-error-goodbye' => 'الرجاء ملء كل الحقول في قسم انبثاق التوديع.',
-	'scavengerhunt-form-error-no-article-title' => 'الرجاء إدخال جميع عناوين المقالات (كعناوين URL صالحة).',
-	'scavengerhunt-form-error-duplicated-article-title' => 'خطوات الصيد لا يجب أن تحتوي على عناوين مكررة',
-	'scavengerhunt-form-error-article-hidden-image' => 'الرجاء إدخال كل عناوين الصور المخفية.',
-	'scavengerhunt-form-error-article-clue' => 'الرجاء إدخال كل المعلومات عن دليل المقالات.',
-	'scavengerhunt-form-error-clue' => 'الرجاء إدخال كل المعلومات عن رسالة مقالات الترحيب.',
 	'scavengerhunt-form-error-no-sprite-image' => 'يرجى إعطاء المسار الكامل لملف الصورة',
 	'scavengerhunt-entry-form-name' => 'اسمك:',
 	'scavengerhunt-entry-form-email' => 'عنوان بريدك الإلكتروني:',
@@ -372,7 +358,6 @@ $messages['br'] = array(
 	'scavengerhunt-button-enable' => 'Gweredekaat',
 	'scavengerhunt-button-delete' => 'Dilemel',
 	'scavengerhunt-button-export' => 'Ezporzhiañ da CVS',
-	'scavengerhunt-button-remove-section' => 'Lemel ar prantad-mañ',
 	'scavengerhunt-form-error' => 'Reizhit ar fazioù-mañ, mar plij :',
 	'scavengerhunt-form-error-article-hidden-image' => "Ebarzhit an holl chomlec'hioù evit ar skeudennoù kuzhet, mar plij.",
 	'scavengerhunt-form-error-invalid-url' => 'Pourchasit un URL gwiriek, mar plij.',
@@ -392,7 +377,6 @@ $messages['br'] = array(
 	'scavengerhunt-label-clue-font' => 'Kinkladurioù ar font',
 	'scavengerhunt-label-article-congrats' => "Kemennadenn gourc'hemennoù",
 	'scavengerhunt-label-facebook' => 'Rannañ Facebook',
-	'scavengerhunt-editor-tip-starting-clue-button-target' => "Setu amañ chomlec'h ar bajenn gant an elfenn gentañ.",
 	'scavengerhunt-editor-tip-clue-color' => "Ret eo al livioù bezañ skrivet gant niveroù c'hwezekredel evel #F00.",
 	'scavengerhunt-editor-tip-facebook-description' => 'Testenn a vo diskwelet er gemennadenn rannañ',
 );
@@ -441,13 +425,12 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'scavengerhunt-button-enable' => 'Юкъадаладе',
 	'scavengerhunt-form-error-no-landing-title' => 'Дехар до, дӀаязъе (URL-адрес) агӀона цӀе.',
 	'scavengerhunt-label-progressBarHintLabel' => 'Координаташ хьехар',
 	'scavengerhunt-label-entry-form-username' => 'Декъашхочун цӀе',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  * @author Vks
  */
@@ -649,7 +632,6 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
- * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -660,8 +642,8 @@ $messages['diq'] = array(
 	'scavengerhunt-list-edit' => 'bıvurne',
 	'scavengerhunt-label-general' => 'Bıngeh',
 	'scavengerhunt-label-name' => 'Name:',
-	'scavengerhunt-button-save' => 'Qeyd ke',
-	'scavengerhunt-button-disable' => 'Aktif niya',
+	'scavengerhunt-button-save' => 'Star ke',
+	'scavengerhunt-button-disable' => 'Bikefilne',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Besterne',
 	'scavengerhunt-entry-form-name' => 'Namey şıma',
@@ -836,23 +818,6 @@ $messages['es'] = array(
 	'scavengerhunt-editor-tip-facebook-description' => 'Texto que se mostrará en el mensaje de intercambio',
 	'scavengerhunt-facebook-image' => 'Imagen compartida de Facebook',
 	'scavengerhunt-facebook-description' => 'Texto compartido de Facebook',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'scavengerhunt-list-header-actions' => 'اقدامات',
-	'scavengerhunt-list-enabled' => 'فعال',
-	'scavengerhunt-list-disabled' => 'غیرفعال',
-	'scavengerhunt-list-edit' => 'ویرایش',
-	'scavengerhunt-label-general' => 'عمومی',
-	'scavengerhunt-label-name' => 'نام:',
-	'scavengerhunt-button-save' => 'ذخیره',
-	'scavengerhunt-button-delete' => 'حذف',
-	'scavengerhunt-quit-game-button-quit' => 'تَرک',
-	'scavengerhunt-quit-game-button-cancel' => 'لغو',
-	'scavengerhunt-label-clue-size' => 'اندازهٔ قلم',
 );
 
 /** Finnish (suomi)
@@ -1435,23 +1400,6 @@ $messages['lb'] = array(
 	'scavengerhunt-quit-game-button-quit' => 'Erausgoen',
 	'scavengerhunt-quit-game-button-cancel' => 'Ofbriechen',
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'scavengerhunt-list-edit' => 'ويرايشت',
-	'scavengerhunt-label-general' => 'کلی',
-	'scavengerhunt-label-name' => 'نوم:',
-	'scavengerhunt-button-save' => 'ذخيره كردن',
-	'scavengerhunt-button-disable' => 'د كار ونن',
-	'scavengerhunt-button-enable' => 'قادر بيه',
-	'scavengerhunt-button-delete' => 'پاك كردن',
-	'scavengerhunt-entry-form-name' => 'نومتو',
-	'scavengerhunt-entry-form-email' => 'نشونی ایمیلتو:',
-	'scavengerhunt-quit-game-button-cancel' => 'رد کردن',
-	'scavengerhunt-label-clue-size' => 'انازه فونت',
 );
 
 /** Macedonian (македонски)

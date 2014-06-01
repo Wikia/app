@@ -32,7 +32,7 @@
  * You must pass this script a --class and --method which is the code it will run for each wiki db.  The
  * prototype for this method should be:
  *
- *   public static function yourMethod ( $db, $test, $verbose = false, $params ) { }
+ *   public static function yourMethod ( $db, $dbname, $verbose = false, $test = false ) { }
  *
  * The $db argument is a Database object that is already connected to the DB name given as the second
  * argument, $dbname.  The third argument determines whether to display verbose messages or not. The fourth

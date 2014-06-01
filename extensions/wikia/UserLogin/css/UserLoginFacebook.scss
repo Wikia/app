@@ -1,118 +1,98 @@
-// core styles
-@import "skins/oasis/css/core/color";
-
-// core mixins
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/opacity";
-@import "skins/oasis/css/mixins/transition";
-
-// local mixins
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "../../../../skins/oasis/css/mixins/clearfix";
+@import "../../../../skins/oasis/css/mixins/opacity";
+@import "../../../../skins/oasis/css/mixins/transition";
 @import "../mixins/submitpane";
 @import "../mixins/tooltip-icon";
 
-// variables
-$section-padding: 20px;
-$fieldset-padding: 12px;
+.UserLoginFacebook {
+	@include transition-shorthand(200ms opacity ease-in-out);
+	@include opacity(100);
+	height: auto;
+}
 
 .UserLoginFacebookWrapper {
 	@include clearfix;
-	margin-bottom: 25px;
-
-	> section {
-		@include box-sizing();
-		float: left;
-		width: 50%;
-	}
 }
 
 .UserLoginFacebookLeft {
-	border-right: solid 1px $color-page-border;
-	padding-right: $section-padding;
-
+	border-right: solid 1px #e4e4e5;
+	float: left;
+	padding: 20px 0 20px 70px;
+	margin-right: 50px;
+	width: 350px;
 	.modal-pane {
 		@include submitpane;
 	}
-
 	.WikiaForm {
 		.input-group {
-			float: none;
-
+			width: 256px;
 			input[type=text],
 			input[type=password] {
-				@include box-sizing();
-				width: 100%;
+				width: 238px;
+			}
+			.tooltip-icon-wrapper {
+				position: relative;
+				line-height: 15px;
+				.tooltip-icon {
+					@include tooltip-icon;
+					right: -15px;
+				}
 			}
 		}
-
-		.tooltip-icon-wrapper {
-			line-height: 15px;
-			position: relative;
-		}
-
-		.tooltip-icon {
-			@include tooltip-icon;
-			right: -15px;
-		}
-
 		.email {
 			margin-bottom: 0;
 		}
-
 	}
 }
 
 .UserLoginFacebookRight {
-	padding-left: $section-padding;
-	padding-top: 4px;
-
+	float: left;
+	padding-top: 30px;
+	width: 200px;
 	> h1 {
 		font-size: 17px;
 	}
-
 	> p {
 		font-size: 14px;
 		padding: 19px 0;
 	}
-
 	> .wikia-button {
 		display: inline-block;
+		margin: 33px 0;
 	}
 }
 
 .FacebookSignupConfigHeader {
+	clear: both;
+	display: block;
+	margin-top: 25px;
 	text-decoration: none;
-
 	.chevron {
 		@include opacity(50);
 		border-top-color: $color-links;
 		border-bottom-color: $color-page;
 		float: left;
 		height: 2px;
-		margin: 5px 4px 0 0;
 		vertical-align: bottom;
+		margin: 8px 4px 0 0;
 	}
-
 	.hide {
 		display: none;
 	}
-
 	.show {
 		display: block;
 	}
-
 	&.on {
 		.chevron {
 			border-bottom-color: $color-links;
 			border-top-color: $color-page;
-			margin: -2px 4px 0 0;
+			margin: 3px 4px 0 0;
 		}
-
 		.hide {
 			display: block;
 		}
-
 		.show {
 			display: none;
 		}
@@ -121,15 +101,14 @@ $fieldset-padding: 12px;
 
 .FacebookSignupConfig {
 	display: none;
-	margin: 10px 0 -7px 0;
-
+	margin: 2px 0 -7px 0;
 	legend {
+		clear: both;
+		float: left;
 		font-weight: bold;
-		left: $fieldset-padding;
-		position: absolute;
-		top: $fieldset-padding;
+		padding: 12px;
+		width: 620px;
 	}
-
 	> fieldset {
 		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
 		@if $is-dark-wiki {
@@ -137,29 +116,22 @@ $fieldset-padding: 12px;
 		} @else {
 			background-color: mix($color-page, #000000, 95%);
 		}
-		padding: 40px 0 $fieldset-padding 0;
-		position: relative;
-
+		padding: 0 0 12px 0;
 		> .input-group {
-			@include box-sizing();
 			clear: none;
 			float: left;
-			padding: 0 $fieldset-padding;
-			width: 50%;
+			padding: 0 12px;
+			width: 300px;
+			input[type=checkbox] {
+				margin-right: 26px;
+				padding-left: 17px;
+			}
 		}
-
 		.indented {
 			padding-top: 10px;
-		}
-	}
-
-	label {
-		padding-left: 40px;
-		position: relative;
-
-		input {
-			left: 0;
-			position: absolute;
+			input[type=checkbox] {
+				float: left;
+			}
 		}
 	}
 }

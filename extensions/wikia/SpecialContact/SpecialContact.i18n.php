@@ -49,11 +49,7 @@ If you prefer to use regular e-mail or have attachments, you can contact us at [
  * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'contact' => '{{Identical|Contact Wikia}}',
-	'specialcontact-wikia' => '{{Identical|Contact Wikia}}',
-	'specialcontact-pagetitle' => '{{Identical|Contact Wikia}}',
 	'specialcontact-username' => '{{Identical|Your username}}',
-	'specialcontact-yourmail' => '{{Identical|E-mail address}}',
 	'specialcontact-problem' => '{{Identical|Subject}}',
 	'specialcontact-problemdesc' => '{{Identical|Message}}',
 );
@@ -135,8 +131,6 @@ $messages['br'] = array(
 	'specialcontact-ccme' => 'Kas un eilenn eus ar gemennadenn-mañ din',
 	'specialcontact-captchainfo' => 'Ebarzhit an destenn er skeudenn, mar plij.',
 	'specialcontact-nomessage' => 'Skrivit ur gemennadenn, mar plij',
-	'specialcontact-ccheader' => 'Setu amañ un eiladenn eus ar gemennadenn a zo bet kaset da Skoazell Wikia',
-	'specialcontact-submitcomplete' => "Trugarez deoc'h evit mont e darempred gant Wikia.",
 );
 
 /** Catalan (català)
@@ -174,14 +168,7 @@ Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots con
 	'specialcontact-submitcomplete' => 'Gràcies per contactar amb Wikia.',
 );
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
-	'specialcontact-problemdesc' => 'Хааман йоза',
-);
-
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -293,7 +280,6 @@ Si prefieres enviar un correo con datos adjuntos, puedes contactarnos a [mailto:
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Mjbmr
- * @author Reza1615
  */
 $messages['fa'] = array(
 	'contact' => 'تماس با ویکیا',
@@ -565,17 +551,6 @@ $messages['lb'] = array(
 	'specialcontact-submitcomplete' => 'Merci datt dir Wikia kontaktéiert hutt.',
 );
 
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'specialcontact-wikiname' => 'کوم ویکی',
-	'specialcontact-realname' => 'نومتو',
-	'specialcontact-yourmail' => 'نشونی ايميل',
-	'specialcontact-problemdesc' => 'پيغوم',
-	'specialcontact-notyou' => 'شما نه؟',
-);
-
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
@@ -656,7 +631,6 @@ $messages['my'] = array(
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
- * @author Event
  */
 $messages['nb'] = array(
 	'contact' => 'Kontakt Wikia',
@@ -667,7 +641,7 @@ $messages['nb'] = array(
 Ytterligere informasjon om hvordan man rapporterer problemer til Wikia finnes [[w:project:Report_a_problem|her]], eventuelt kan du poste på [[w:Forum:Index|Wikias fellesskapsforum]] for brukerstøtte.
 
 Hvis du foretrekker å benytte deg av vanlig e-post eller har vedlegg, kan du kontakte oss på [mailto:community@wikia.com community@wikia.com].',
-	'specialcontact-username' => 'Ditt brukernavn',
+	'specialcontact-username' => 'Brukernavn', # Fuzzy
 	'specialcontact-wikiname' => 'Hvilke wiki',
 	'specialcontact-realname' => 'Ditt navn',
 	'specialcontact-yourmail' => 'E-postadresse',

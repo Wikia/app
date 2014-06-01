@@ -91,18 +91,6 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 						$this->msg( 'coppatool-delete-user-pages' )->escaped()
 					),
 				];
-				$this->buttons[] = [
-					'buttonAction' => 'coppa-imagereview',
-					'buttonLink' => Linker::link(
-						Title::newFromText( 'CoppaImageReview', NS_SPECIAL ),
-						$this->msg( 'coppatool-imagereview' )->escaped(),
-						[ 'target' => '_blank' ],
-						[
-							'username' => $this->userName,
-						],
-						[ 'known', 'noclasses' ]
-					),
-				];
 			} else {
 				$this->buttons[] = [
 					'buttonAction' => 'phalanx-ip',

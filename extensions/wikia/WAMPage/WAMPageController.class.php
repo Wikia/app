@@ -85,7 +85,7 @@ class WAMPageController extends WikiaController
 			]
 		);
 		if (!empty($this->selectedDate)) {
-			$timestamp = $this->selectedDate;
+			$timestamp = $this->getTimestampFromLocalDate($this->selectedDate);
 
 			if (!empty($filterMinMaxDates['min_date'])) {
 				$dateValidator = new WikiaValidatorCompare(['expression' => WikiaValidatorCompare::GREATER_THAN_EQUAL]);
@@ -118,8 +118,10 @@ class WAMPageController extends WikiaController
 
 	protected function getIndexParams($forPaginator = false) {
 		if( $forPaginator ) {
+			$date = isset($this->selectedDate) ? $this->selectedDate : null;
 			$page = '%s';
 		} else {
+			$date = isset($this->selectedDate) ? strtotime($this->selectedDate) : null;
 			$page = $this->page;
 		}
 
@@ -127,11 +129,56 @@ class WAMPageController extends WikiaController
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => $this->selectedVerticalId,
 			'langCode' => $this->selectedLangCode,
-			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
+			'date' => $date,
 			'page' => $page,
 		];
 
 		return $indexParams;
+	}
+
+	/**
+	 * Convert date local language into timestamp (workaround for not existing locales)
+	 *
+	 * @param $localDate
+	 * @return int
+	 */
+	protected function getTimestampFromLocalDate($localDate) {
+		$engMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthNamesArray()
+		);
+
+		$localMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->Lang->getMonthNamesArray()
+		);
+
+		$monthMap = array_combine($localMonthNames, $engMonthNames);
+		// remove first element because it's always empty
+		array_shift($monthMap);
+
+		// get month short version
+		$engShortMonthNames = array_map(
+			'mb_strtolower',
+			Language::factory(self::DEFAULT_LANG_CODE)->getMonthAbbreviationsArray()
+		);
+
+		$localShortMonthNames = array_map(
+			'mb_strtolower',
+			$this->wg->Lang->getMonthAbbreviationsArray()
+		);
+
+		$shortMonthMap = array_combine($localShortMonthNames, $engShortMonthNames);
+		// remove first element because it's always empty
+		array_shift($shortMonthMap);
+
+		$monthMap += $shortMonthMap;
+
+		$engDate = strtr(mb_strtolower($localDate), $monthMap);
+
+		$timestamp = strtotime($engDate);
+
+		return $timestamp;
 	}
 
 	protected function getUrlWithAllParams() {

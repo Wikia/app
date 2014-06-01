@@ -464,22 +464,21 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function notifyEveryoneSave() {
-		$msgid = $this->request->getVal( 'msgid' );
-		$dir = $this->request->getVal( 'dir' );
+		$msgid = $this->request->getVal('msgid');
+		$dir = $this->request->getVal('dir');
 		/**
 		 * @var $mw WallMessage
 		 */
-		$mw = WallMessage::newFromId( $msgid );
-		if ($mw) {
-			if( $dir == 1 ) {
-				$mw->setNotifyEveryone( true );
-				$this->response->setVal( 'newdir', 0 );
-				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-unnotifyeveryone' ) );
-			} else {
-				$mw->setNotifyEveryone( false );
-				$this->response->setVal( 'newdir', 1 );
-				$this->response->setVal( 'newmsg', wfMsg( 'wall-message-notifyeveryone' ) );
-			}
+		$mw =  WallMessage::newFromId($msgid);
+
+		if($dir == 1) {
+			$mw->setNotifyeveryone(true, true);
+			$this->response->setVal('newdir', 0);
+			$this->response->setVal('newmsg', wfMsg('wall-message-unnotifyeveryone'));
+		} else {
+			$mw->setNotifyeveryone(false, true);
+			$this->response->setVal('newdir', 1);
+			$this->response->setVal('newmsg', wfMsg('wall-message-notifyeveryone'));
 		}
 	}
 
@@ -490,9 +489,7 @@ class WallExternalController extends WikiaController {
 		$helper = new WallHelper();
 
 		$msgid = $this->request->getVal('msgid');
-
-		// XSS vulnerable (MAIN-1412)
-		$newtitle = strip_tags( trim($this->request->getVal('newtitle')) );
+		$newtitle = trim($this->request->getVal('newtitle'));
 
 		$newbody = $this->getConvertedContent($this->request->getVal('newbody'));
 

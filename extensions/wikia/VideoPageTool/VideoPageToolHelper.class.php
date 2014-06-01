@@ -1,42 +1,31 @@
 <?php
 
-/**
- * Class VideoPageToolHelper
- */
 class VideoPageToolHelper extends WikiaModel {
 
 	const DEFAULT_LANGUAGE = 'en';
 	const DEFAULT_SECTION = 'featured';
 
-	const THUMBNAIL_WIDTH = 291;
-	const THUMBNAIL_HEIGHT = 131;
-
-	const THUMBNAIL_CATEGORY_WIDTH = 297;
-	const THUMBNAIL_CATEGORY_HEIGHT = 157;
+	const THUMBNAIL_WIDTH = 180;
+	const THUMBNAIL_HEIGHT = 100;
 
 	const MAX_THUMBNAIL_WIDTH = 1024;
 	const MAX_THUMBNAIL_HEIGHT = 461;
 
-	const MAX_VIDEOS_PER_CATEGORY = 24;
-
-	const CACHE_TTL_CATEGORY_DATA = 3600;
-
-	// minimum and maximum rows
 	public static $requiredRows = array(
-		'featured' => [5],
-		'category' => [3, 5],
-		'fan'      => [4],
+		'featured' => 5,
+		'category' => 4,
+		'fan'      => 4,
 	);
 
 	/**
 	 * Get list of sections
-	 * @return array
+	 * @return array $sections
 	 */
 	public function getSections() {
 		$sections = array(
-			VideoPageToolAssetFeatured::SECTION => wfMessage( 'videopagetool-section-featured' )->plain(),
-			VideoPageToolAssetCategory::SECTION => wfMessage( 'videopagetool-section-category' )->plain(),
-//			VideoPageToolAssetFan::SECTION => wfMessage( 'videopagetool-section-fan' )->plain(),
+			'featured' => wfMessage( 'videopagetool-section-featured' )->plain(),
+//			'category' => wfMessage( 'videopagetool-section-category' )->plain(),
+//			'fan' => wfMessage( 'videopagetool-section-fan' )->plain(),
 		);
 
 		return $sections;
@@ -44,7 +33,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * Get list of languages
-	 * @return array
+	 * @return array $languages
 	 */
 	public function getLanguages() {
 		// default language codes
@@ -64,7 +53,7 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param array $sections
 	 * @param string $language
 	 * @param string $date [timestamp]
-	 * @return array
+	 * @return array $leftMenuItems
 	 */
 	public function getLeftMenuItems( $selected, $sections, $language, $date ) {
 		$query = array(
@@ -76,6 +65,7 @@ class VideoPageToolHelper extends WikiaModel {
 		foreach( $sections as $key => $value ) {
 			$query['section'] = $key;
 			$leftMenuItems[] = array(
+				'title' => $value,
 				'anchor' => $value,
 				'href' => $this->wg->title->getLocalURL( $query ),
 				'selected' => ($selected == $key),
@@ -113,14 +103,13 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param string $displayTitle
 	 * @param string $description
 	 * @param array $thumbOptions
-	 * @return array
+	 * @return array $video
 	 */
 	public function getVideoData( $title, $altThumbTitle = '', $displayTitle = '', $description = '', $thumbOptions = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		$video = array();
 
-		/** @var Title $title A string $title will get converted to an object here */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 		if ( !empty( $file ) ) {
 			$videoTitle = $title->getText();
@@ -129,6 +118,7 @@ class VideoPageToolHelper extends WikiaModel {
 			}
 
 			// get thumbnail
+			// TODO: we no longer need the thumbnail html, only the url
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$videoThumb = $thumb->toHtml( $thumbOptions );
 			$thumbUrl = $thumb->getUrl();
@@ -161,7 +151,7 @@ class VideoPageToolHelper extends WikiaModel {
 
 			$video = array(
 				'videoTitle'    => $videoTitle,
-				'videoKey'      => $title->getDBkey(),
+				'videoKey'      => $title->getDBKey(),
 				'videoThumb'    => $videoThumb,
 				'largeThumbUrl' => $largeThumbUrl,
 				'altThumbName'  => $altThumbName,
@@ -175,124 +165,6 @@ class VideoPageToolHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $video;
-	}
-
-	/**
-	 * Get a count of the videos in the given category
-	 * @param Title $categoryTitle
-	 * @return int
-	 */
-	public function getVideosByCategoryCount( Title $categoryTitle ) {
-		wfProfileIn( __METHOD__ );
-
-		$categoryKey = $categoryTitle->getDBkey();
-		$memcKey = $this->getMemcKeyCountVideosByCategory( $categoryKey );
-		$db = wfGetDB( DB_SLAVE );
-
-		$count = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
-			->SELECT( 'count(distinct video_title)' )->AS_( 'count' )
-			->FROM( 'page' )
-				->JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
-			->WHERE( 'cl_to' )->EQUAL_TO( $categoryKey )
-			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
-			->run( $db, function( $result ) {
-				/** @var ResultWrapper $result */
-				$row = $result->fetchObject();
-				$count = empty($row) ? 0 : $row->count;
-				return $count;
-			});
-
-		wfProfileOut( __METHOD__ );
-
-		return $count;
-	}
-
-	/**
-	 * Get videos tagged with the category given by parameter $categoryTitle (limit = 100)
-	 * @param Title $categoryTitle
-	 * @param array $thumbOptions
-	 * @return array An array of video data where each array element has the structure:
-	 *   [ title => 'Video Title',
-	 *     url   => 'http://url.to.video',
-	 *     thumb => '<thumbnail_html_snippet>'
-	 */
-	public function getVideosByCategory( Title $categoryTitle, $thumbOptions = array() ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbKey = $categoryTitle->getDBkey();
-		$memcKey = $this->getMemcKeyVideosByCategory( $dbKey );
-		$db = wfGetDB( DB_SLAVE );
-
-		$thumbOptions['useTemplate'] = true;
-		$thumbOptions['fluid'] = true;
-		$thumbOptions['forceSize'] = 'small';
-
-		$videos = (new WikiaSQL())->cache( self::CACHE_TTL_CATEGORY_DATA, $memcKey )
-
-			->SELECT('page_id')->FIELD('page_title')
-			->FROM( 'page' )
-				->JOIN( 'video_info' )->ON( 'page_title', 'video_title' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
-			->WHERE( 'cl_to' )->EQUAL_TO( $dbKey )
-			->AND_( 'page_namespace' )->EQUAL_TO( NS_FILE )
-			->ORDER_BY( 'added_at ')->DESC()
-			->ORDER_BY( 'page_title' )
-			->LIMIT( self::MAX_VIDEOS_PER_CATEGORY )
-
-			->runLoop( $db, function ( &$videos, $row ) use ( $thumbOptions ) {
-				/** @var Title $title Note: this is a string until the next line */
-				$title = $row->page_title;
-
-				// This method magically converts the string $title into an object
-				$file = WikiaFileHelper::getVideoFileFromTitle( $title );
-
-				if ( !empty( $file ) ) {
-					$thumb = $file->transform( [
-						'width'  => self::THUMBNAIL_CATEGORY_WIDTH,
-						'height' => self::THUMBNAIL_CATEGORY_HEIGHT
-					] );
-					$videoThumb = $thumb->toHtml( $thumbOptions );
-					$videos[] = [
-						'title' => $title->getText(),
-						'url'   => $title->getFullURL(),
-						'thumb' => $videoThumb,
-					];
-				}
-			});
-
-		wfProfileOut( __METHOD__ );
-
-		return empty($videos) ? [] : $videos;
-	}
-
-	/**
- * Get memcache key for videos by category
- * @param $categoryName
- * @return string
- */
-	public function getMemcKeyVideosByCategory( $categoryName ) {
-		$categoryName = md5( $categoryName );
-		return wfMemcKey( 'videopagetool', 'videosbycategory', $categoryName );
-	}
-
-	/**
-	 * Get memcache key for count of videos by category
-	 * @param $categoryName
-	 * @return string
-	 */
-	public function getMemcKeyCountVideosByCategory( $categoryName ) {
-		$categoryName = md5( $categoryName );
-		return wfMemcKey( 'videopagetool', 'count-videos-by-category', $categoryName );
-	}
-
-	/**
-	 * Clear cache for videos by category
-	 * @param string $categoryName
-	 */
-	public function invalidateCacheVideosByCategory( $categoryName ) {
-		$this->wg->Memc->delete( $this->getMemcKeyVideosByCategory( $categoryName ) );
-		$this->wg->Memc->delete( $this->getMemcKeyCountVideosByCategory( $categoryName ) );
 	}
 
 	/**
@@ -317,7 +189,7 @@ class VideoPageToolHelper extends WikiaModel {
 	/**
 	 * Get image data
 	 * @param string $imageTitle
-	 * @return array [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
+	 * @return array $data [ array( 'thumbUrl' => $url, 'largeThumbUrl' => $url ) ]
 	 */
 	public function getImageData( $imageTitle ) {
 		wfProfileIn( __METHOD__ );
@@ -327,7 +199,7 @@ class VideoPageToolHelper extends WikiaModel {
 		$file = WikiaFileHelper::getFileFromTitle( $imageTitle );
 		if ( !empty( $file ) ) {
 			$data['imageTitle'] = $imageTitle->getText();
-			$data['imageKey'] = $imageTitle->getDBkey();
+			$data['imageKey'] = $imageTitle->getDBKey();
 
 			$thumb = $file->transform( array( 'width' => self::THUMBNAIL_WIDTH, 'height' => self::THUMBNAIL_HEIGHT ) );
 			$data['thumbUrl'] = $thumb->getUrl();
@@ -343,62 +215,17 @@ class VideoPageToolHelper extends WikiaModel {
 
 	/**
 	 * Get default values by section
-	 * @param string $section [featured/category/fan]
-	 * @param integer $requiredRows
-	 * @return array
+	 * @param string $section
+	 * @return array $values
 	 */
-	public function getDefaultValuesBySection( $section, $requiredRows = 0 ) {
+	public function getDefaultValuesBySection( $section ) {
 		$className = VideoPageToolAsset::getClassNameFromSection( $section );
 		$values = array();
-		if ( empty( $requiredRows ) ) {
-			$requiredRows = $this->getRequiredRowsMax( $section );
-		}
-
-		for ( $i = 1; $i <= $requiredRows; $i++ ) {
+		for( $i = 1; $i <= self::$requiredRows[$section]; $i++ ) {
 			$values[$i] = $className::getDefaultAssetData();
 		}
 
 		return $values;
-	}
-
-	/**
-	 * Get required rows for this section
-	 * Note: displayTitle field is used to check for number of rows in the form
-	 * @param string $section [featured/category/fan]
-	 * @param array $formValues
-	 * @return integer
-	 */
-	public function getRequiredRows( $section, $formValues ) {
-		$cnt = empty( $formValues['displayTitle']  ) ? 0 : count( $formValues['displayTitle'] );
-		$min = $this->getRequiredRowsMin( $section );
-		$max = $this->getRequiredRowsMax( $section );
-		if ( $cnt <= $min ) {
-			$requiredRows = $min;
-		} else if ( $cnt < $max ) {
-			$requiredRows = $cnt;
-		} else {
-			$requiredRows = $max;
-		}
-
-		return $requiredRows;
-	}
-
-	/**
-	 * Get minimum required rows for this section
-	 * @param string $section [featured/category/fan]
-	 * @return integer
-	 */
-	public function getRequiredRowsMin( $section ) {
-		return min( self::$requiredRows[$section] );
-	}
-
-	/**
-	 * Get maximum required rows for this section
-	 * @param string $section [featured/category/fan]
-	 * @return integer
-	 */
-	public function getRequiredRowsMax( $section ) {
-		return max( self::$requiredRows[$section] );
 	}
 
 	/**
@@ -445,30 +272,13 @@ class VideoPageToolHelper extends WikiaModel {
 	 * @param string $errMsg
 	 * @return bool
 	 */
-	public function validateDescription( $description, &$errMsg ) {
+	public function validateDescriptiion( $description, &$errMsg ) {
 		if ( strlen( $description ) > 200 ) {
 			$errMsg = wfMessage( 'videopagetool-error-invalid-description' )->plain();
 			return false;
 		}
 
 		return true;
-	}
-
-	/**
-	 * Validate category (called from validateFormField())
-	 * @param string $categoryName
-	 * @param string $errMsg
-	 * @return boolean
-	 */
-	public function validateCategoryName( $categoryName, &$errMsg ) {
-		$title = Title::newFromText( $categoryName, NS_CATEGORY );
-		if ( $title instanceof Title && count( $this->getVideosByCategory( $title ) ) > 0 ) {
-			return true;
-		}
-
-		$errMsg = wfMessage( 'videopagetool-error-empty-category' )->plain();
-
-		return false;
 	}
 
 	/**
@@ -496,15 +306,14 @@ class VideoPageToolHelper extends WikiaModel {
 	 * Render assets by section (used in VideoHomePageController)
 	 * @param VideoPageToolProgram $program
 	 * @param string $section [featured/category/fan]
-	 * @param array $thumbOptions An optional array of thumbnail options to override the defaults for the given asset.
-	 * @return array
+	 * @return type
 	 */
-	public function renderAssetsBySection( $program, $section, $thumbOptions = array() ) {
+	public function renderAssetsBySection( $program, $section ) {
 		$data = array();
 		if ( $program instanceof VideoPageToolProgram ) {
+			$thumbOptions = array( 'noLightbox' => true );
 			$assets = $program->getAssetsBySection( $section );
 			foreach ( $assets as $asset ) {
-				/** @var VideoPageToolAsset $asset */
 				$data[] = $asset->getAssetData( $thumbOptions );
 			}
 		}

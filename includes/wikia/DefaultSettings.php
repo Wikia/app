@@ -18,6 +18,12 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 /**
+ * Use revision number
+ */
+include "$IP/includes/wikia/wgCacheBuster.php";
+$wgStyleVersion = $wgMergeStyleVersionJS = $wgMergeStyleVersionCSS = $wgCacheBuster;
+
+/**
  * @name wgAkamaiGlobalVersion
  *
  * this variable is used for purging all images on akamai. increasing this value
@@ -126,8 +132,6 @@ $wgAutoloadClasses['MethodNotFoundException'] = "{$IP}/includes/wikia/nirvana/Wi
 $wgAutoloadClasses['AssetsManager'] = $IP . '/extensions/wikia/AssetsManager/AssetsManager.class.php';
 $wgAutoloadClasses['AssetsConfig'] = $IP . '/extensions/wikia/AssetsManager/AssetsConfig.class.php';
 
-$wgAutoloadClasses['FlashMessages'] = "{$IP}/includes/wikia/FlashMessages.class.php";
-
 /**
  * Wikia API
  * (based on Nirvana)
@@ -223,6 +227,7 @@ $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
+$wgAutoloadClasses[ 'Minify_CSS_Compressor'           ] = "$IP/lib/vendor/Minify_CSS_Compressor.php";
 $wgAutoloadClasses[ 'GMetricClient'                   ] = "$IP/lib/vendor/GMetricClient.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
@@ -259,7 +264,6 @@ $wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
-$wgAutoloadClasses[ 'WikiaSanitizer'                  ] = $IP . '/includes/wikia/WikiaSanitizer.class.php';
 
 /**
  * Resource Loader enhancements
@@ -311,15 +315,12 @@ $wgAutoloadClasses['RenderContentOnlyHelper'] = $IP . '/includes/wikia/RenderCon
 $wgAutoloadClasses['SolrDocumentService'] = $IP . '/includes/wikia/services/SolrDocumentService.class.php';
 $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormBuilderService.class.php';
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
-$wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
-$wgAutoloadClasses['ArticleTypeService'] = $IP.'/includes/wikia/services/ArticleTypeService.class.php';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
-$wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -344,7 +345,6 @@ $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/Follow
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
-$wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/SpotlightsABTestController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
 $wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
@@ -1157,22 +1157,6 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountriesDefault
- * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
- * Main steering var, change this one.
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
-
-/**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
- * "Utility" var, don't change it here.
- */
-$wgAmazonDirectTargetedBuyCountries = null;
-
-/**
  * @name $wgEnableJavaScriptErrorLogging
  * Enables JavaScript error logging mechanism
  */
@@ -1191,29 +1175,6 @@ $wgEnableAdEngineExt = true;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
-
-/**
- * @name $wgAdDriverUseNewTracking
- * Whether to use the new ad tracking code.
- * If true: the new tracking code (SlotTracker.js) will be used on half of
- * the traffic and the old one (AdTracker.js) on the other half.
- * If false: only the old ad tracking code (AdTracker.js) will be used.
- */
-$wgAdDriverUseNewTracking = true;
-
-/**
- * @name $wgHighValueCountriesDefault
- * Default list of countries defined as high-value for revenue purposes
- * $wgHighValueCountries overrides this
- */
-$wgHighValueCountriesDefault = array('CA'=>3, 'DE'=>3, 'DK'=>3, 'ES'=>3, 'FI'=>3, 'FR'=>3, 'GB'=>3, 'IT'=>3, 'NL'=>3, 'NO'=>3, 'SE'=>3, 'UK'=>3, 'US'=>3);
-
-/**
- * @name $wgHighValueCountries
- * List of countries defined as high-value for revenue purposes
- * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
- */
-$wgHighValueCountries = null;
 
 /**
  * @name $wgAdVideoTargeting
@@ -1253,27 +1214,3 @@ $wgPagesWithNoAdsForLoggedInUsersOverriden_AD_LEVEL = null;
  * Enables the Oasis responsive layout styles
  */
 $wgOasisResponsive = null;
-
-/** @var $wgEnableCentralizedLogging bool whether or not logging to syslog is enabled */
-$wgEnableCentralizedLogging = true;
-
-/**
- * @name $wgDisableReportTime
- * Turns off <!-- Served by ... in ... ms --> HTML comment
- */
-$wgDisableReportTime = true;
-
-/**
- * @name $wgInvalidateCacheOnLocalSettingsChange
- * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
- */
-$wgInvalidateCacheOnLocalSettingsChange = false;
-
-/**
- * SFlow client and config
- */
-$wgSFlowHost = 'localhost';
-$wgSFlowPort = 36343;
-$wgSFlowSampling = 1;
-
-$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";

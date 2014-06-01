@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/ext/elastic_tabstops_lite', ['require', 'exports', 'module' , 'ace/editor', 'ace/config'], function(require, exports, module) {
+define('ace/ext/elastic_tabstops_lite', ['require', 'exports', 'module' , 'ace/editor', 'ace/config'], function(require, exports, module) {
 
 
 var ElasticTabstopsLite = function(editor) {

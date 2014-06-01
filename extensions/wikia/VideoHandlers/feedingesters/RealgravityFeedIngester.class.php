@@ -200,15 +200,12 @@ class RealgravityFeedIngester extends VideoFeedIngester {
 	public function generateCategories( $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = $data['marketplaceName'];
-
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
-
 		$categories[] = 'RealGravity';
+		$categories[] = $data['marketplaceName'];
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return $categories;
 	}
 
 	/**

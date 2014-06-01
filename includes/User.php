@@ -2024,19 +2024,10 @@ class User {
                     $dbw = wfGetDB( DB_MASTER );
             }
 			#</Wikia>
-
-			$touched = $dbw->timestamp( $this->mTouched );
-			$needsPurge =  $dbw->selectField(
-				'`user`', '1',
-				array( 'user_id' => $this->mId, 'user_touched < ' . $dbw->addQuotes( $touched ) ),
+			$dbw->update( '`user`',
+				array( 'user_touched' => $dbw->timestamp( $this->mTouched ) ),
+				array( 'user_id' => $this->mId ),
 				__METHOD__ );
-
-			if ( $needsPurge ) {
-				$dbw->update( '`user`',
-					array( 'user_touched' => $touched ), array( 'user_id' => $this->mId ),
-					__METHOD__ );
-			}
-
 			$this->clearSharedCache();
 		}
 	}
@@ -3532,7 +3523,7 @@ class User {
 		}
 
 		$priority = 0;
-		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
+		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg ) );
 
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
@@ -4141,8 +4132,21 @@ class User {
 			 * @author Kamil Koterba
 			 */
 			if ( !empty($wgEnableEditCountLocal) ) {
-				$userStatsService = new UserStatsService( $this->getId() );
-				$userStatsService->increaseEditsCount();
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update( 'wikia_user_properties',
+					array( 'wup_value=wup_value+1' ),
+					array( 'wup_user' => $this->getId(),
+						'wup_property' => 'editcount' ),
+					__METHOD__ );
+
+				if ($dbw->affectedRows() == 1) {
+					//increment memcache also
+					$key = wfSharedMemcKey( 'editcount', $wgCityId, $this->getId() );
+					$wgMemc->incr( $key );
+				} else {
+					//initialize editcount skipping memcache
+					$this->getEditCountLocal( 0, true );
+				}
 			}
 			/* end of change */
 

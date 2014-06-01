@@ -2,7 +2,7 @@
 class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
-
+	
 	// form field values
 	var $params;
 
@@ -24,35 +24,16 @@ class FinishCreateWikiController extends WikiaController {
 		setcookie(self::COOKIE_NAME, '', time() - 3600, $this->app->wg->cookiePath, $this->app->wg->cookieDomain);
 		wfProfileOut(__METHOD__);
 	}
-
+	
+	/**
+	 * empty method for almost static template
+	 */
 	public function WikiWelcomeModal() {
 		wfProfileIn(__METHOD__);
-
-		$buttonParams = [
-			'type' => 'button',
-			'vars' => [
-				'type' => 'button',
-				'classes' => [ 'wikia-button',  'big', 'createpage' ],
-				'value' => wfMessage( 'button-createpage' )->text(),
-				'imageClass' => 'new',
-				'data' => [
-					'key' => 'event',
-					'value' => 'createpage'
-				]
-			]
-		];
-
-		$this->title = wfMessage( 'cnw-welcome-headline', $this->app->wg->Sitename )->text();
-		$this->instruction1 = wfMessage( 'cnw-welcome-instruction1' )->text();
-		$this->button = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
-		$this->instruction2 = wfMessage( 'cnw-welcome-instruction2' )->text();
-		$this->help = wfMessage( 'cnw-welcome-help' )->text();
-
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-
-		wfProfileOut( __METHOD__ );
+		
+		wfProfileOut(__METHOD__);
 	}
-
+	
 	/**
 	 * Updates wiki specific properties set from wiki creation wizard.
 	 * Context of this method is on the wiki that the values are changing on.
@@ -61,7 +42,7 @@ class FinishCreateWikiController extends WikiaController {
 	 */
 	public function FinishCreate() {
 		global $wgUser, $wgSitename;
-
+		
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
 		}
@@ -70,15 +51,15 @@ class FinishCreateWikiController extends WikiaController {
 
 		global $wgOut;
 		$this->LoadState();
-
+		
 		$mainPage = wfMsgForContent( 'mainpage' );
-
+		
 		// set theme
 		if(!empty($this->params['color-body'])) {
 			$themeSettings = new ThemeSettings();
 			$themeSettings->saveSettings($this->params);
 		}
-
+		
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
 			$mainTitle = Title::newFromText($mainPage);
@@ -97,7 +78,7 @@ class FinishCreateWikiController extends WikiaController {
 				$mainArticle->doEdit($newMainPageText, '');
 			}
 		}
-
+		
 		$wgOut->enableClientCache(false);
 
 		$this->clearState();

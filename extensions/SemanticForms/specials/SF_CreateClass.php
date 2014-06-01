@@ -61,13 +61,6 @@ END;
 		$property_name_error_str = '';
 		$save_page = $wgRequest->getCheck( 'save' );
 		if ( $save_page ) {
-			// Guard against cross-site request forgeries (CSRF)
-			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateClass' );
-			if ( !$validToken ) {
-				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
-				return;
-			}
 			$template_name = trim( $wgRequest->getVal( "template_name" ) );
 			$form_name = trim( $wgRequest->getVal( "form_name" ) );
 			$category_name = trim( $wgRequest->getVal( "category_name" ) );
@@ -229,7 +222,6 @@ END;
 				'value' => wfMsg( 'sf_createclass_create' )
 			)
 		);
-		$text .= Html::hidden( 'csrf', $this->getUser()->getEditToken( 'CreateClass' ) ) . "\n";
 		$text .= "</form>\n";
 		$wgOut->addHTML( $text );
 	}

@@ -4,30 +4,31 @@ if (typeof window.window != "undefined" && window.document) {
     return;
 }
 
-window.console = function() {
-    var msgs = Array.prototype.slice.call(arguments, 0);
-    postMessage({type: "log", data: msgs});
+window.console = {
+    log: function() {
+        var msgs = Array.prototype.slice.call(arguments, 0);
+        postMessage({type: "log", data: msgs});
+    },
+    error: function() {
+        var msgs = Array.prototype.slice.call(arguments, 0);
+        postMessage({type: "log", data: msgs});
+    }
 };
-window.console.error =
-window.console.warn = 
-window.console.log =
-window.console.trace = window.console;
-
 window.window = window;
 window.ace = window;
 
 window.normalizeModule = function(parentId, moduleName) {
     if (moduleName.indexOf("!") !== -1) {
         var chunks = moduleName.split("!");
-        return window.normalizeModule(parentId, chunks[0]) + "!" + window.normalizeModule(parentId, chunks[1]);
+        return normalizeModule(parentId, chunks[0]) + "!" + normalizeModule(parentId, chunks[1]);
     }
     if (moduleName.charAt(0) == ".") {
         var base = parentId.split("/").slice(0, -1).join("/");
-        moduleName = (base ? base + "/" : "") + moduleName;
+        moduleName = base + "/" + moduleName;
         
         while(moduleName.indexOf(".") !== -1 && previous != moduleName) {
             var previous = moduleName;
-            moduleName = moduleName.replace(/^\.\//, "").replace(/\/\.\//, "/").replace(/[^\/]+\/\.\.\//, "");
+            moduleName = moduleName.replace(/\/\.\//, "/").replace(/[^\/]+\/\.\.\//, "");
         }
     }
     
@@ -42,9 +43,9 @@ window.require = function(parentId, id) {
     if (!id.charAt)
         throw new Error("worker.js require() accepts only (parentId, id) as arguments");
 
-    id = window.normalizeModule(parentId, id);
+    id = normalizeModule(parentId, id);
 
-    var module = window.require.modules[id];
+    var module = require.modules[id];
     if (module) {
         if (!module.initialized) {
             module.initialized = true;
@@ -54,60 +55,48 @@ window.require = function(parentId, id) {
     }
     
     var chunks = id.split("/");
-    if (!window.require.tlns)
-        return console.log("unable to load " + id);
-    chunks[0] = window.require.tlns[chunks[0]] || chunks[0];
+    chunks[0] = require.tlns[chunks[0]] || chunks[0];
     var path = chunks.join("/") + ".js";
     
-    window.require.id = id;
+    require.id = id;
     importScripts(path);
-    return window.require(parentId, id);
+    return require(parentId, id);
 };
-window.require.modules = {};
-window.require.tlns = {};
+
+require.modules = {};
+require.tlns = {};
 
 window.define = function(id, deps, factory) {
     if (arguments.length == 2) {
         factory = deps;
         if (typeof id != "string") {
             deps = id;
-            id = window.require.id;
+            id = require.id;
         }
     } else if (arguments.length == 1) {
         factory = id;
-        deps = []
-        id = window.require.id;
+        id = require.id;
     }
-
-    if (!deps.length)
-        deps = ['require', 'exports', 'module']
 
     if (id.indexOf("text!") === 0) 
         return;
     
-    var req = function(childId) {
-        return window.require(id, childId);
+    var req = function(deps, factory) {
+        return require(id, deps, factory);
     };
 
-    window.require.modules[id] = {
-        exports: {},
+    require.modules[id] = {
         factory: function() {
-            var module = this;
-            var returnExports = factory.apply(this, deps.map(function(dep) {
-              switch(dep) {
-                  case 'require': return req
-                  case 'exports': return module.exports
-                  case 'module':  return module
-                  default:        return req(dep)
-              }
-            }));
+            var module = {
+                exports: {}
+            };
+            var returnExports = factory(req, module.exports, module);
             if (returnExports)
                 module.exports = returnExports;
             return module;
         }
     };
 };
-window.define.amd = {}
 
 window.initBaseUrls  = function initBaseUrls(topLevelNamespaces) {
     require.tlns = topLevelNamespaces;
@@ -115,8 +104,8 @@ window.initBaseUrls  = function initBaseUrls(topLevelNamespaces) {
 
 window.initSender = function initSender() {
 
-    var EventEmitter = window.require("ace/lib/event_emitter").EventEmitter;
-    var oop = window.require("ace/lib/oop");
+    var EventEmitter = require("ace/lib/event_emitter").EventEmitter;
+    var oop = require("ace/lib/oop");
     
     var Sender = function() {};
     
@@ -167,9 +156,160 @@ window.onmessage = function(e) {
         sender._emit(msg.event, msg.data);
     }
 };
-})(this);// https://github.com/kriskowal/es5-shim
+})(this);
 
-ace.define('ace/lib/es5-shim', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/lib/event_emitter', ['require', 'exports', 'module' ], function(require, exports, module) {
+
+
+var EventEmitter = {};
+var stopPropagation = function() { this.propagationStopped = true; };
+var preventDefault = function() { this.defaultPrevented = true; };
+
+EventEmitter._emit =
+EventEmitter._dispatchEvent = function(eventName, e) {
+    this._eventRegistry || (this._eventRegistry = {});
+    this._defaultHandlers || (this._defaultHandlers = {});
+
+    var listeners = this._eventRegistry[eventName] || [];
+    var defaultHandler = this._defaultHandlers[eventName];
+    if (!listeners.length && !defaultHandler)
+        return;
+
+    if (typeof e != "object" || !e)
+        e = {};
+
+    if (!e.type)
+        e.type = eventName;
+    if (!e.stopPropagation)
+        e.stopPropagation = stopPropagation;
+    if (!e.preventDefault)
+        e.preventDefault = preventDefault;
+
+    for (var i=0; i<listeners.length; i++) {
+        listeners[i](e, this);
+        if (e.propagationStopped)
+            break;
+    }
+    
+    if (defaultHandler && !e.defaultPrevented)
+        return defaultHandler(e, this);
+};
+
+
+EventEmitter._signal = function(eventName, e) {
+    var listeners = (this._eventRegistry || {})[eventName];
+    if (!listeners)
+        return;
+
+    for (var i=0; i<listeners.length; i++)
+        listeners[i](e, this);
+};
+
+EventEmitter.once = function(eventName, callback) {
+    var _self = this;
+    callback && this.addEventListener(eventName, function newCallback() {
+        _self.removeEventListener(eventName, newCallback);
+        callback.apply(null, arguments);
+    });
+};
+
+
+EventEmitter.setDefaultHandler = function(eventName, callback) {
+    var handlers = this._defaultHandlers
+    if (!handlers)
+        handlers = this._defaultHandlers = {_disabled_: {}};
+    
+    if (handlers[eventName]) {
+        var old = handlers[eventName];
+        var disabled = handlers._disabled_[eventName];
+        if (!disabled)
+            handlers._disabled_[eventName] = disabled = [];
+        disabled.push(old);
+        var i = disabled.indexOf(callback);
+        if (i != -1) 
+            disabled.splice(i, 1);
+    }
+    handlers[eventName] = callback;
+};
+EventEmitter.removeDefaultHandler = function(eventName, callback) {
+    var handlers = this._defaultHandlers
+    if (!handlers)
+        return;
+    var disabled = handlers._disabled_[eventName];
+    
+    if (handlers[eventName] == callback) {
+        var old = handlers[eventName];
+        if (disabled)
+            this.setDefaultHandler(eventName, disabled.pop());
+    } else if (disabled) {
+        var i = disabled.indexOf(callback);
+        if (i != -1)
+            disabled.splice(i, 1);
+    }
+};
+
+EventEmitter.on =
+EventEmitter.addEventListener = function(eventName, callback, capturing) {
+    this._eventRegistry = this._eventRegistry || {};
+
+    var listeners = this._eventRegistry[eventName];
+    if (!listeners)
+        listeners = this._eventRegistry[eventName] = [];
+
+    if (listeners.indexOf(callback) == -1)
+        listeners[capturing ? "unshift" : "push"](callback);
+    return callback;
+};
+
+EventEmitter.off =
+EventEmitter.removeListener =
+EventEmitter.removeEventListener = function(eventName, callback) {
+    this._eventRegistry = this._eventRegistry || {};
+
+    var listeners = this._eventRegistry[eventName];
+    if (!listeners)
+        return;
+
+    var index = listeners.indexOf(callback);
+    if (index !== -1)
+        listeners.splice(index, 1);
+};
+
+EventEmitter.removeAllListeners = function(eventName) {
+    if (this._eventRegistry) this._eventRegistry[eventName] = [];
+};
+
+exports.EventEmitter = EventEmitter;
+
+});
+
+define('ace/lib/oop', ['require', 'exports', 'module' ], function(require, exports, module) {
+
+
+exports.inherits = (function() {
+    var tempCtor = function() {};
+    return function(ctor, superCtor) {
+        tempCtor.prototype = superCtor.prototype;
+        ctor.super_ = superCtor.prototype;
+        ctor.prototype = new tempCtor();
+        ctor.prototype.constructor = ctor;
+    };
+}());
+
+exports.mixin = function(obj, mixin) {
+    for (var key in mixin) {
+        obj[key] = mixin[key];
+    }
+    return obj;
+};
+
+exports.implement = function(proto, mixin) {
+    exports.mixin(proto, mixin);
+};
+
+});
+
+define('ace/lib/es5-shim', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 function Empty() {}
 
@@ -866,7 +1006,7 @@ var toObject = function (o) {
 
 });
 
-ace.define('ace/mode/php_worker', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/worker/mirror', 'ace/mode/php/php'], function(require, exports, module) {
+define('ace/mode/php_worker', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/worker/mirror', 'ace/mode/php/php'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -908,33 +1048,7 @@ oop.inherits(PhpWorker, Mirror);
 }).call(PhpWorker.prototype);
 
 });
-
-ace.define('ace/lib/oop', ['require', 'exports', 'module' ], function(require, exports, module) {
-
-
-exports.inherits = (function() {
-    var tempCtor = function() {};
-    return function(ctor, superCtor) {
-        tempCtor.prototype = superCtor.prototype;
-        ctor.super_ = superCtor.prototype;
-        ctor.prototype = new tempCtor();
-        ctor.prototype.constructor = ctor;
-    };
-}());
-
-exports.mixin = function(obj, mixin) {
-    for (var key in mixin) {
-        obj[key] = mixin[key];
-    }
-    return obj;
-};
-
-exports.implement = function(proto, mixin) {
-    exports.mixin(proto, mixin);
-};
-
-});
-ace.define('ace/worker/mirror', ['require', 'exports', 'module' , 'ace/document', 'ace/lib/lang'], function(require, exports, module) {
+define('ace/worker/mirror', ['require', 'exports', 'module' , 'ace/document', 'ace/lib/lang'], function(require, exports, module) {
 
 
 var Document = require("../document").Document;
@@ -977,7 +1091,7 @@ var Mirror = exports.Mirror = function(sender) {
 
 });
 
-ace.define('ace/document', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter', 'ace/range', 'ace/anchor'], function(require, exports, module) {
+define('ace/document', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter', 'ace/range', 'ace/anchor'], function(require, exports, module) {
 
 
 var oop = require("./lib/oop");
@@ -1063,7 +1177,7 @@ var Document = function(text) {
     };
     this.getTextRange = function(range) {
         if (range.start.row == range.end.row) {
-            return this.getLine(range.start.row)
+            return this.$lines[range.start.row]
                 .substring(range.start.column, range.end.column);
         }
         var lines = this.getLines(range.start.row, range.end.row);
@@ -1174,8 +1288,6 @@ var Document = function(text) {
         return end;
     };
     this.remove = function(range) {
-        if (!range instanceof Range)
-            range = Range.fromPoints(range.start, range.end);
         range.start = this.$clipPosition(range.start);
         range.end = this.$clipPosition(range.end);
 
@@ -1259,8 +1371,6 @@ var Document = function(text) {
         this._emit("change", { data: delta });
     };
     this.replace = function(range, text) {
-        if (!range instanceof Range)
-            range = Range.fromPoints(range.start, range.end);
         if (text.length == 0 && range.isEmpty())
             return range.start;
         if (text == this.getTextRange(range))
@@ -1333,133 +1443,7 @@ var Document = function(text) {
 exports.Document = Document;
 });
 
-ace.define('ace/lib/event_emitter', ['require', 'exports', 'module' ], function(require, exports, module) {
-
-
-var EventEmitter = {};
-var stopPropagation = function() { this.propagationStopped = true; };
-var preventDefault = function() { this.defaultPrevented = true; };
-
-EventEmitter._emit =
-EventEmitter._dispatchEvent = function(eventName, e) {
-    this._eventRegistry || (this._eventRegistry = {});
-    this._defaultHandlers || (this._defaultHandlers = {});
-
-    var listeners = this._eventRegistry[eventName] || [];
-    var defaultHandler = this._defaultHandlers[eventName];
-    if (!listeners.length && !defaultHandler)
-        return;
-
-    if (typeof e != "object" || !e)
-        e = {};
-
-    if (!e.type)
-        e.type = eventName;
-    if (!e.stopPropagation)
-        e.stopPropagation = stopPropagation;
-    if (!e.preventDefault)
-        e.preventDefault = preventDefault;
-
-    listeners = listeners.slice();
-    for (var i=0; i<listeners.length; i++) {
-        listeners[i](e, this);
-        if (e.propagationStopped)
-            break;
-    }
-    
-    if (defaultHandler && !e.defaultPrevented)
-        return defaultHandler(e, this);
-};
-
-
-EventEmitter._signal = function(eventName, e) {
-    var listeners = (this._eventRegistry || {})[eventName];
-    if (!listeners)
-        return;
-    listeners = listeners.slice();
-    for (var i=0; i<listeners.length; i++)
-        listeners[i](e, this);
-};
-
-EventEmitter.once = function(eventName, callback) {
-    var _self = this;
-    callback && this.addEventListener(eventName, function newCallback() {
-        _self.removeEventListener(eventName, newCallback);
-        callback.apply(null, arguments);
-    });
-};
-
-
-EventEmitter.setDefaultHandler = function(eventName, callback) {
-    var handlers = this._defaultHandlers
-    if (!handlers)
-        handlers = this._defaultHandlers = {_disabled_: {}};
-    
-    if (handlers[eventName]) {
-        var old = handlers[eventName];
-        var disabled = handlers._disabled_[eventName];
-        if (!disabled)
-            handlers._disabled_[eventName] = disabled = [];
-        disabled.push(old);
-        var i = disabled.indexOf(callback);
-        if (i != -1) 
-            disabled.splice(i, 1);
-    }
-    handlers[eventName] = callback;
-};
-EventEmitter.removeDefaultHandler = function(eventName, callback) {
-    var handlers = this._defaultHandlers
-    if (!handlers)
-        return;
-    var disabled = handlers._disabled_[eventName];
-    
-    if (handlers[eventName] == callback) {
-        var old = handlers[eventName];
-        if (disabled)
-            this.setDefaultHandler(eventName, disabled.pop());
-    } else if (disabled) {
-        var i = disabled.indexOf(callback);
-        if (i != -1)
-            disabled.splice(i, 1);
-    }
-};
-
-EventEmitter.on =
-EventEmitter.addEventListener = function(eventName, callback, capturing) {
-    this._eventRegistry = this._eventRegistry || {};
-
-    var listeners = this._eventRegistry[eventName];
-    if (!listeners)
-        listeners = this._eventRegistry[eventName] = [];
-
-    if (listeners.indexOf(callback) == -1)
-        listeners[capturing ? "unshift" : "push"](callback);
-    return callback;
-};
-
-EventEmitter.off =
-EventEmitter.removeListener =
-EventEmitter.removeEventListener = function(eventName, callback) {
-    this._eventRegistry = this._eventRegistry || {};
-
-    var listeners = this._eventRegistry[eventName];
-    if (!listeners)
-        return;
-
-    var index = listeners.indexOf(callback);
-    if (index !== -1)
-        listeners.splice(index, 1);
-};
-
-EventEmitter.removeAllListeners = function(eventName) {
-    if (this._eventRegistry) this._eventRegistry[eventName] = [];
-};
-
-exports.EventEmitter = EventEmitter;
-
-});
-
-ace.define('ace/range', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/range', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 var comparePoints = function(p1, p2) {
     return p1.row - p2.row || p1.column - p2.column;
@@ -1698,32 +1682,36 @@ Range.comparePoints = function(p1, p2) {
 exports.Range = Range;
 });
 
-ace.define('ace/anchor', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter'], function(require, exports, module) {
+define('ace/anchor', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/event_emitter'], function(require, exports, module) {
 
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 
 var Anchor = exports.Anchor = function(doc, row, column) {
-    this.$onChange = this.onChange.bind(this);
-    this.attach(doc);
-    
+    this.document = doc;
+
     if (typeof column == "undefined")
         this.setPosition(row.row, row.column);
     else
         this.setPosition(row, column);
+
+    this.$onChange = this.onChange.bind(this);
+    doc.on("change", this.$onChange);
 };
 
 (function() {
 
     oop.implement(this, EventEmitter);
+
     this.getPosition = function() {
         return this.$clipPositionToDocument(this.row, this.column);
     };
+
     this.getDocument = function() {
         return this.document;
     };
-    this.$insertRight = false;
+
     this.onChange = function(e) {
         var delta = e.data;
         var range = delta.range;
@@ -1744,8 +1732,7 @@ var Anchor = exports.Anchor = function(doc, row, column) {
 
         if (delta.action === "insertText") {
             if (start.row === row && start.column <= column) {
-                if (start.column === column && this.$insertRight) {
-                } else if (start.row === end.row) {
+                if (start.row === end.row) {
                     column += end.column - start.column;
                 } else {
                     column -= start.column;
@@ -1786,6 +1773,7 @@ var Anchor = exports.Anchor = function(doc, row, column) {
 
         this.setPosition(row, column, true);
     };
+
     this.setPosition = function(row, column, noClip) {
         var pos;
         if (noClip) {
@@ -1812,12 +1800,9 @@ var Anchor = exports.Anchor = function(doc, row, column) {
             value: pos
         });
     };
+
     this.detach = function() {
         this.document.removeEventListener("change", this.$onChange);
-    };
-    this.attach = function(doc) {
-        this.document = doc || this.document;
-        this.document.on("change", this.$onChange);
     };
     this.$clipPositionToDocument = function(row, column) {
         var pos = {};
@@ -1845,7 +1830,7 @@ var Anchor = exports.Anchor = function(doc, row, column) {
 
 });
 
-ace.define('ace/lib/lang', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/lib/lang', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 
 exports.stringReverse = function(string) {
@@ -2024,9 +2009,11 @@ exports.delayedCall = function(fcn, defaultTimeout) {
 
 
 
-ace.define('ace/mode/php/php', ['require', 'exports', 'module' ], function(require, exports, module) {
+define('ace/mode/php/php', ['require', 'exports', 'module' ], function(require, exports, module) {
 
 var PHP = {Constants:{}};
+
+
 
 
 
@@ -2127,7 +2114,6 @@ PHP.Constants.T_ISSET = 350;
 PHP.Constants.T_EMPTY = 351;
 PHP.Constants.T_HALT_COMPILER = 352;
 PHP.Constants.T_CLASS = 353;
-PHP.Constants.T_TRAIT = 382;
 PHP.Constants.T_INTERFACE = 354;
 PHP.Constants.T_EXTENDS = 355;
 PHP.Constants.T_IMPLEMENTS = 356;
@@ -2175,10 +2161,6 @@ PHP.Lexer = function( src, ini ) {
     openTag = (ini === undefined || (/^(on|true|1)$/i.test(ini.short_open_tag) ) ? /(\<\?php\s|\<\?|\<\%|\<script language\=('|")?php('|")?\>)/i : /(\<\?php\s|<\?=|\<script language\=('|")?php('|")?\>)/i),
         openTagStart = (ini === undefined || (/^(on|true|1)$/i.test(ini.short_open_tag)) ? /^(\<\?php\s|\<\?|\<\%|\<script language\=('|")?php('|")?\>)/i : /^(\<\?php\s|<\?=|\<script language\=('|")?php('|")?\>)/i),
             tokens = [
-            {
-                value: PHP.Constants.T_NAMESPACE,
-                re: /^namespace(?=\s)/i
-            },
             {
                 value: PHP.Constants.T_USE,
                 re: /^use(?=\s)/i
@@ -2473,10 +2455,6 @@ PHP.Lexer = function( src, ini ) {
                 afterWhitespace: true
             },
             {
-                value: PHP.Constants.T_TRAIT,
-                re: /^trait(?=[\s]+[A-Za-z])/i,
-            },
-            {
                 value: PHP.Constants.T_PUBLIC,
                 re: /^public(?=[\s])/i
             },
@@ -2687,7 +2665,7 @@ PHP.Lexer = function( src, ini ) {
 
                                 result = result.substring( match[ 0 ].length );
 
-                                match = result.match(/^(\-\>)\s*([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\s*(\()/);
+                                match = result.match(/^(\-\>)([a-zA-Z0-9_\x7f-\xff]*)/);
 
                                 if ( match !== null ) {
 
@@ -2701,9 +2679,6 @@ PHP.Lexer = function( src, ini ) {
                                         match[ 2 ],
                                         line
                                         ]);
-                                    if (match[3]) {
-                                        results.push(match[3]);
-                                    }
                                     result = result.substring( match[ 0 ].length );
                                 }
 
@@ -2715,9 +2690,9 @@ PHP.Lexer = function( src, ini ) {
 
                             var re;
                             if ( curlyOpen > 0) {
-                                re = /^([^\\\$"{}\]\)]|\\.)+/g;
+                                re = /^([^\\\$"{}\]]|\\.)+/g;
                             } else {
-                                re = /^([^\\\$"{]|\\.|{[^\$]|\$(?=[^a-zA-Z_\x7f-\xff]))+/g;;
+                                re = /^([^\\\$"{]|\\.|{[^\$])+/g;
                             }
 
                             while(( match = result.match( re )) !== null ) {
@@ -2731,7 +2706,7 @@ PHP.Lexer = function( src, ini ) {
 
                                 results.push([
                                     parseInt(( curlyOpen > 0 ) ? PHP.Constants.T_CONSTANT_ENCAPSED_STRING : PHP.Constants.T_ENCAPSED_AND_WHITESPACE, 10),
-                                    match[ 0 ].replace(/\n/g,"\\n").replace(/\r/g,""),
+                                    match[ 0 ],
                                     line
                                     ]);
 
@@ -2762,15 +2737,9 @@ PHP.Lexer = function( src, ini ) {
 
                         return undefined;
 
-                    } else {
-                        result = result.replace(/\r/g,"");
                     }
                     return result;
                 }
-            },
-            {
-                value: PHP.Constants.T_NS_SEPARATOR,
-                re: /^\\(?=[a-zA-Z_])/
             },
             {
                 value: PHP.Constants.T_STRING,
@@ -2806,7 +2775,7 @@ PHP.Lexer = function( src, ini ) {
 
                     if ( heredoc !== undefined ) {
 
-                        var regexp = new RegExp('([\\S\\s]*?)(\\r\\n|\\n|\\r)(' + heredoc + ')(;|\\r\\n|\\n)',"i");
+                        var regexp = new RegExp('([\\S\\s]*)(\\r\\n|\\n|\\r)(' + heredoc + ')(;|\\r\\n|\\n)',"i");
 
 
 
@@ -3114,13 +3083,9 @@ PHP.Parser.prototype.getNextToken = function( ) {
         if (typeof token === "string") {
             this.startAttributes['startLine'] = this.line;
             this.endAttributes['endLine'] = this.line;
-            if ('b"' === token) {
-                this.tokenValue = 'b"';
-                return '"'.charCodeAt(0);
-            } else {
-                this.tokenValue = token;
-                return token.charCodeAt(0);
-            }
+
+            this.tokenValue = token;
+            return token.charCodeAt(0);
         } else {
 
 
@@ -3182,77 +3147,12 @@ PHP.Parser.prototype.createTokenMap = function() {
             tokenMap[ i ] = PHP.Constants.T_ECHO;
         } else if( PHP.Constants.T_CLOSE_TAG === i ) {
             tokenMap[ i ] = 59;
-        } else if ( 'UNKNOWN' !== (name = this.tokenName( i ) ) ) { 
+        } else if ( 'UNKNOWN' !== (name = this.tokenName( i ) ) ) {
+
             tokenMap[ i ] =  this[name];
         }
     }
     return tokenMap;
-};
-
-var yynStandard = function () {
-    this.yyval =  this.yyastk[ this.stackPos-(1-1) ];
-};
-
-PHP.Parser.prototype.MakeArray = function( arr ) {
-    return Array.isArray( arr ) ? arr : [ arr ];
-}
-
-
-PHP.Parser.prototype.parseString = function( str ) {
-    var bLength = 0;
-    if ('b' === str[0]) {
-        bLength = 1;
-    }
-
-    if ('\'' === str[ bLength ]) {
-        str = str.replace(
-            ['\\\\', '\\\''],
-            [  '\\',   '\'']);
-    } else {
-
-        str = this.parseEscapeSequences( str, '"');
-
-    }
-
-    return str;
-
-};
-
-PHP.Parser.prototype.parseEscapeSequences = function( str, quote ) {
-
-
-
-    if (undefined !== quote) {
-        str = str.replace(new RegExp('\\' + quote, "g"), quote);
-    }
-
-    var replacements = {
-        '\\': '\\',
-        '$':  '$',
-        'n': "\n",
-        'r': "\r",
-        't': "\t",
-        'f': "\f",
-        'v': "\v",
-        'e': "\x1B"
-    };
-
-    return str.replace(
-        /~\\\\([\\\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3})~/g,
-        function ( matches ){
-            var str = matches[1];
-
-            if ( replacements[ str ] !== undefined ) {
-                return replacements[ str ];
-            } else if ('x' === str[ 0 ] || 'X' === str[ 0 ]) {
-                return chr(hexdec(str));
-            } else {
-                return chr(octdec(str));
-            }
-        }
-        );
-
-    return str;
 };
 
 PHP.Parser.prototype.TOKEN_NONE    = -1;
@@ -5726,63 +5626,6 @@ PHP.Parser.prototype.Stmt_Class_verifyModifier = function() {
 
 };
 
-PHP.Parser.prototype.Node_Stmt_Namespace = function() {
-    return {
-        type: "Node_Stmt_Namespace",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_Use = function() {
-    return {
-        type: "Node_Stmt_Use",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_UseUse = function() {
-    return {
-        type: "Node_Stmt_UseUse",
-        name: arguments[ 0 ],
-        as: arguments[1],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_TraitUseAdaptation_Precedence = function() {
-    return {
-        type: "Node_Stmt_TraitUseAdaptation_Precedence",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_TraitUseAdaptation_Alias = function() {
-    return {
-        type: "Node_Stmt_TraitUseAdaptation_Alias",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_Trait = function() {
-    return {
-        type: "Node_Stmt_Trait",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
-PHP.Parser.prototype.Node_Stmt_TraitUse = function() {
-    return {
-        type: "Node_Stmt_TraitUse",
-        name: arguments[ 0 ],
-        attributes: arguments[ 2 ]
-    };  
-};
-
 PHP.Parser.prototype.Node_Stmt_Class = function() {
     return {
         type: "Node_Stmt_Class",
@@ -6810,26 +6653,6 @@ PHP.Parser.prototype.Node_Name = function() {
   
 };
 
-PHP.Parser.prototype.Node_Name_FullyQualified = function() {
-   
-    return {
-        type: "Node_Name_FullyQualified",
-        parts: arguments[ 0 ],
-        attributes: arguments[ 1 ]
-    };  
-  
-};
-
-PHP.Parser.prototype.Node_Name_Relative = function() {
-   
-    return {
-        type: "Node_Name_Relative",
-        parts: arguments[ 0 ],
-        attributes: arguments[ 1 ]
-    };  
-  
-};
-
 PHP.Parser.prototype.Node_Param = function() {
    
     return {
@@ -6853,6 +6676,7 @@ PHP.Parser.prototype.Node_Arg = function() {
     };  
   
 };
+
 
 PHP.Parser.prototype.Node_Const = function() {
    

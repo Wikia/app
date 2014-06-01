@@ -17,7 +17,6 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 			daysHidden: 15, // Duration to hide the banner after being closed (0 = always show banner)
 			daysReminder: 90 // Duration to hide the banner after "VIEW" is clicked *separate from when the close button is clicked* (0 = always show banner)
 		},
-		day = 86400000,
 		hide = function(){
 			html.className = html.className.replace(' sb-shown', '');
 		},
@@ -69,7 +68,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 					hide();
 
 					cookie.set('sb-installed', 1, $.extend(cookieData, {
-						expires: options.daysReminder * day
+						expires: options.daysReminder * 86400
 					}));
 
 					track.event('smart-banner', track.CLICK, {
@@ -80,7 +79,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 					hide();
 
 					cookie.set('sb-closed', 1, $.extend(cookieData, {
-						expires: options.daysHidden * day
+						expires: options.daysHidden * 86400
 					}));
 
 					track.event('smart-banner', track.CLICK, {

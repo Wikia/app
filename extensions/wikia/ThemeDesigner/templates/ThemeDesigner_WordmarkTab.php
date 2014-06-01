@@ -49,7 +49,7 @@
 			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
 		<?php } else { ?>
 			<form id="WordMarkUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=WordmarkUpload&format=html" method="POST" enctype="multipart/form-data">
-				<input id="WordMarkUploadFile" name="wpUploadFile" class="file-upload" type="file" />
+				<input id="WordMarkUploadFile" name="wpUploadFile" type="file" />
 				<br />
 				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" onclick="return ThemeDesigner.wordmarkUpload(event);"/>
 			</form>
@@ -73,7 +73,7 @@
 			<p><?= wfMessage( 'themedesigner-upload-disabled' )->plain(); ?></p>
 		<?php } else { ?>
 			<form id="FaviconUploadForm" action="<?= $wg->ScriptPath ?>/wikia.php?controller=ThemeDesigner&method=FaviconUpload&format=html" method="POST" enctype="multipart/form-data">
-				<input id="FaviconUploadFile" name="wpUploadFile" class="file-upload" type="file" />
+				<input id="FaviconUploadFile" name="wpUploadFile" type="file" />
 				<input type="submit" value="<?= wfMsg( 'themedesigner-button-upload-wordmark' ) ?>" />
 			</form>
 		<?php } ?>

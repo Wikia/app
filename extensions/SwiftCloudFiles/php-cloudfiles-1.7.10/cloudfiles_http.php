@@ -970,12 +970,7 @@ class CF_Http
         // Wikia change - end
 
         $hdrs = self::_process_headers($metadata, $headers);
-
-		// Wikia change - begin
-		// @author macbre
-		// BAC-1102 - encode URL in HTTP header as RFC 5987 tells us to
-        $hdrs[DESTINATION] = urlencode($destination);
-		// Wikia change - end
+        $hdrs[DESTINATION] = $destination;
 
         $return_code = $this->_send_request($conn_type,$url_path,$hdrs,"COPY");
         switch ($return_code) {

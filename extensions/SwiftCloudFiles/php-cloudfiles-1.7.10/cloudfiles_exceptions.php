@@ -17,7 +17,7 @@
  */
 class SyntaxException extends Exception { }
 class AuthenticationException extends Exception { }
-class InvalidResponseException extends WikiaException { }
+class InvalidResponseException extends Exception { }
 class NonEmptyContainerException extends Exception { }
 class NoSuchObjectException extends Exception { }
 class NoSuchContainerException extends Exception { }
@@ -38,3 +38,4 @@ class ConnectionNotOpenException extends Exception { }
  * c-hanging-comment-ender-p: nil
  * End:
  */
+?>

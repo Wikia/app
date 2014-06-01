@@ -1,21 +1,28 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
-xdescribe("Sections module", function () {
+describe("Sections module", function () {
 	'use strict';
 
-	var sections = modules.sections(jQuery);
+	var sections = modules.sections(
+		function(){
+			return 'TEST';
+		},
+		jQuery
+	);
 
 	it('should be defined', function(){
 		expect(sections).toBeDefined();
 		expect(typeof sections).toBe('object');
-		expect(typeof sections.scrollTo()).toBe('function');
-		expect(typeof sections.current).toBe('function');
-		expect(typeof sections.list).toBe('object`');
+		expect(typeof sections.init).toBe('function');
+		expect(typeof sections.toggle).toBe('function');
+		expect(typeof sections.open).toBe('function');
+		expect(typeof sections.close).toBe('function');
 	});
 
 	it('should init sections', function(){
 
 		getBody().innerHTML = '<div id="wkPage"><div id="mw-content-text"><h2>one</h2><p>test</p>test<p>test</p><p>test</p><h2>two</h2><p>test</p><div>test</div></div></div>';
 
+		sections.init();
 
 		var h2s = document.querySelectorAll('h2');
 

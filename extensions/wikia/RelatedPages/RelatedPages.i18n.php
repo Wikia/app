@@ -82,7 +82,7 @@ $messages['ca'] = array(
 	'wikiarelatedpages-heading' => 'Llegir més',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -113,13 +113,6 @@ $messages['el'] = array(
 $messages['es'] = array(
 	'wikiarelatedpages-desc' => 'Añadir una lista a páginas de páginas relacionadas',
 	'wikiarelatedpages-heading' => 'Leer más',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'wikiarelatedpages-heading' => 'بیشتر بخوانید',
 );
 
 /** Finnish (suomi)

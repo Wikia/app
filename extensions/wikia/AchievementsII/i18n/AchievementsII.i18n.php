@@ -337,7 +337,7 @@ your own user page!',
 	'achievements-badge-hover-desc-sayhi' => 'Awarded for leaving a message<br />
 on someone else\'s talk page!',
 	'achievements-badge-hover-desc-creator' => 'Awarded for creating the wiki!',
-	'achievements-badge-hover-desc-pounce' => 'Awarded for making an edit within an hour of a page\'s creation, one hundred times!',
+	'achievements-badge-hover-desc-pounce' => 'Awarded for making edits on 100 articles within an hour of the page\'s creation!',
 	'achievements-badge-hover-desc-caffeinated' => 'Awarded for making 100 edits on articles in a single day!',
 	'achievements-badge-hover-desc-luckyedit' => 'Awarded for making the Lucky $1th Edit on the wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'This is a special Platinum badge that is only available for a limited time!',

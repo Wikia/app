@@ -26,6 +26,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string language - current language
 	 */
 	public function index() {
+		$this->response->addAsset('videopageadmin_js');
+		$this->response->addAsset('videopageadmin_scss');
+		$this->response->addAsset('videopageadmin_css');
 		if ( !$this->getUser()->isAllowed( 'videopagetool' ) ) {
 			$this->displayRestrictionError();
 			return false;
@@ -40,17 +43,12 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$language = $this->getVal( 'language', VideoPageToolHelper::DEFAULT_LANGUAGE );
 
-		$this->response->addAsset( 'videopageadmin_scss' );
-		$this->response->addAsset( 'videopageadmin_css' );
-
 		$subpage = $this->getSubpage();
 		if ( !empty( $subpage ) ) {
-			$this->response->addAsset( 'videopageadmin_edit_js' );
 			$this->forward( __CLASS__, $subpage );
 			return true;
 		}
 
-		$this->response->addAsset( 'videopageadmin_dashboard_js' );
 		$helper = new VideoPageToolHelper();
 		$this->languages = $helper->getLanguages();
 		$this->language = $language;
@@ -91,56 +89,23 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$program = VideoPageToolProgram::newProgram( $language, $date );
 
-		// get program assets. VPT needs a program object for each request. It first checks if one already exists for
-		// that language and date. If one doesn't, it creates a new one. It then uses that program to pull the
-		// associated assets. If it's a new program, it won't have any assets yet created. To help the user, we
-		// grab the assets from the the last saved program and use those as the default assets for this new program.
+		// get program assets
 		$assets = $program->getAssetsBySection( $section );
 		if ( empty( $assets ) ) {
-			$latestProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
-			if ( !empty( $latestProgram ) ) {
-				$assets = $latestProgram->getAssetsBySection( $section );
+			$publishedProgram = VideoPageToolProgram::loadProgramNearestDate( $language, $date );
+			if ( !empty( $publishedProgram ) ) {
+				$assets = $publishedProgram->getAssetsBySection( $section );
 			}
 		}
 
-		$publishDate = null;
-		$publishedBy = null;
-		if ( $program->isPublished() ) {
-			$publishDate = $program->getPublishDate();
-			$publishedBy = $program->getPublishedBy();
-		} else if ( isset( $latestProgram ) && $latestProgram->isPublished() ) {
-			$publishDate = $latestProgram->getPublishDate();
-			$publishedBy = $latestProgram->getPublishedBy();
-		}
-
-		if ( $publishedBy ) {
-			// Translate user id into username
-			$publishedBy = User::newFromId( $publishedBy )->getName();
-		}
-
-		$lastSavedOn = 0;
-		$savedBy = null;
 		// get asset data
-		$videos = array();
 		if ( empty( $assets ) ) {
 			// get default assets
 			$videos = $helper->getDefaultValuesBySection( $section );
 		} else {
-			// Override defaults so we always show a lightbox in the admin pages
-			$thumbOptions = [ 'noLightbox' => false ];
-
-			// Saved on and saved by data are saved on a per asset basis, therefore it's necessary to loop through each
-			// asset to make sure we're using the latest saved information.
-			foreach ( $assets as $order => $asset ) {
-				/** @var VideoPageToolAsset $asset */
-				$videos[$order] = $asset->getAssetData( $thumbOptions );
-				if ( $asset->getUpdatedAt() > $lastSavedOn ) {
-					$lastSavedOn = $asset->getUpdatedAt();
-					$savedBy = $asset->getUpdatedBy();
-				}
+			foreach( $assets as $order => $asset ) {
+				$videos[$order] = $asset->getAssetData();
 			}
-
-			$savedBy = User::newFromId( $savedBy )->getName();
 		}
 
 		$result = '';
@@ -163,18 +128,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			} else {
 				$formValues = $this->request->getParams();
 				$errMsg = '';
-
-				// use displayTitle field to get required rows
-				$requiredRows = $helper->getRequiredRows( $section, $formValues );
-
+				$requiredRows = VideoPageToolHelper::$requiredRows[$section];
 				$data = $program->formatFormData( $section, $requiredRows, $formValues, $errMsg );
-
-				// Add blank records so $data is the same length as $assets.
-				// This ensures the old assets are removed from DB if they were removed from the input form
-				for ( $i = count( $data ) + 1; $i <= count( $assets ); $i++ ) {
-					$data[$i] = [];
-				}
-
 				if ( empty( $errMsg ) ) {
 					$status = $program->saveAssetsBySection( $section, $data );
 					if ( $status->isGood() ) {
@@ -189,7 +144,9 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					// update original asset data
 					foreach ( $data as $order => $row ) {
 						foreach ( $row as $name => $value ) {
-							$videos[$order][$name] = $value;
+							if ( array_key_exists( $name, $videos[$order] ) && $videos[$order][$name] != $value ) {
+								$videos[$order][$name] = $value;
+							}
 
 							// replace alternative thumbnail
 							if ( $name == 'altThumbTitle' && array_key_exists( 'altThumbKey', $videos[$order] )
@@ -208,12 +165,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			$msg = wfMessage( 'videopagetool-success-save' )->plain();
 		}
 
-		// add default values if the number of assets is less than number of rows that needed to be shown
-		$defaultValues = array_pop( $helper->getDefaultValuesBySection( $section, 1 ) );
-		for ( $i = count( $videos ) + 1; $i <= $helper->getRequiredRowsMax( $section ); $i++ ) {
-			$videos[$i] = $defaultValues;
-		}
-
 		$this->result = $result;
 		$this->msg = $msg;
 
@@ -221,14 +172,10 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->moduleView = $this->app->renderView( 'VideoPageAdminSpecial', $section, array( 'videos' => $videos, 'date' => $date, 'language' => $language ) );
 		$this->publishButton = ( $program->isPublishable( array_keys( $sections ) ) ) ? '' : 'disabled';
 		$this->publishUrl = $this->wg->Title->getLocalURL( array('date' => $date, 'language' => $language) );
-		$this->programDate = $program->getFormattedPublishDate();
+		$this->publishDate = $program->getFormattedPublishDate();
 
 		$this->section = $section;
 		$this->language = $language;
-		$this->lastSavedOn = $lastSavedOn;
-		$this->savedBy = $savedBy;
-		$this->publishDate = $publishDate;
-		$this->publishedBy = $publishedBy;
 	}
 
 	/**
@@ -367,11 +314,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Featured videos template
-	 * @requestParam string date [timestamp]
-	 * @requestParam string language
 	 * @requestParam array videos
-	 * @responseParam string date [timestamp]
-	 * @responseParam string language
 	 * @responseParam array videos
 	 */
 	public function featured() {
@@ -382,26 +325,20 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Category videos template
-	 * @requestParam string date [timestamp]
-	 * @requestParam string language
-	 * @requestParam array video
-	 * @responseParam string date [timestamp]
-	 * @responseParam string language
-	 * @responseParam array $categories
+	 * @requestParam array videos
+	 * @responseParam array videos
 	 */
 	public function category() {
-		$this->categories = $this->getVal( 'videos', array() );
-		$this->date = $this->getVal( 'date' );
-		$this->language = $this->getVal( 'language' );
+		$videos[] = array(
+			'categoryName' => 'Category Name',
+			'displayTitle' => 'Title',
+		);
+		$this->videos = $videos;
 	}
 
 	/**
 	 * Fan videos template
-	 * @requestParam string date [timestamp]
-	 * @requestParam string language
 	 * @requestParam array videos
-	 * @responseParam string date [timestamp]
-	 * @responseParam string language
 	 * @responseParam array videos
 	 */
 	public function fan() {
@@ -415,8 +352,6 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 			'description' => 'description...',
 		);
 		$this->videos = $videos;
-		$this->date = $this->getVal( 'date' );
-		$this->language = $this->getVal( 'language' );
 	}
 
 	/**
@@ -448,10 +383,8 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 
 		$url = urldecode( $url );
 		if ( preg_match( '/.+\/wiki\/File:(.+)$/i', $url, $matches ) ) {
-			// Override defaults so we always show a lightbox in the admin pages
-			$thumbOptions = [ 'noLightbox' => false ];
 			$helper = new VideoPageToolHelper();
-			$video = $helper->getVideoData( $matches[1], $altThumbTitle, null, null, $thumbOptions );
+			$video = $helper->getVideoData( $matches[1], $altThumbTitle );
 		}
 
 		if ( empty( $video ) ) {
@@ -501,52 +434,15 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 		$this->data = $data;
 	}
 
-	/**
-	 * Get videos by category
-	 * @requestParam string categoryName
-	 * @responseParam string $result [ok/error]
-	 * @responseParam string $msg - result message
-	 * @responseParam array $videos - list of videos in the category
-	 */
-	public function getVideosByCategory() {
-		$categoryName = $this->getVal( 'categoryName', '' );
-
-		if ( empty( $categoryName ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-invalid-category' )->plain();
-			return;
-		}
-
-		$title = Title::newFromText( $categoryName, NS_CATEGORY );
-		if ( empty( $title ) ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'videopagetool-error-unknown-category' )->plain();
-			return;
-		}
-
-		$helper = new VideoPageToolHelper();
-
-		$this->result = 'ok';
-		$this->msg = '';
-		$this->thumbnails = $helper->getVideosByCategory( $title );
-		$this->total = $helper->getVideosByCategoryCount( $title );
-		$this->url = $title->escapeLocalURL();
-		$this->seeMoreLabel = wfMessage( 'videopagetool-see-more-label' )->plain();
-	}
-
 	/*
 	 * Render header
 	 */
 
-	public function header() {
+	public function header($data) {
 		$this->language = Language::getLanguageName( $this->getVal( 'language' ) );
 		$this->section = ucfirst( $this->getVal( 'section' ) );
-		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageAdmin')->getLocalURL();
-		$this->lastSavedOn = $this->getVal( 'lastSavedOn' );
-		$this->savedBy = $this->getVal( 'savedBy' );
 		$this->publishDate = $this->getVal( 'publishDate' );
-		$this->publishedBy = $this->getVal( 'publishedBy' );
-		$this->programDate = $this->getVal( 'programDate' );
+		$this->dashboardHref = SpecialPage::getTitleFor('VideoPageAdmin')->getLocalURL();
 	}
 
 	/**

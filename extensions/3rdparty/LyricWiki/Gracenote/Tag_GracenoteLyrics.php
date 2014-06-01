@@ -124,7 +124,11 @@ if(isset($wgScriptPath))
 	$wgHooks['BeforePageDisplay'][] = "gracenoteLyricsTagCss";
 
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
+	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
+	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
 	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
+
+	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 
 	// Use this pre-existing Wikia-specific hook to apply the index policy changes after the defaults are set (which comes after parsing).
 	$wgHooks['AfterViewUpdates'][] = "efGracenoteApplyIndexPolicy";

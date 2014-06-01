@@ -4,7 +4,6 @@ var qs = require('qs');
 var storage = require('./storage').redisFactory();
 var request = require('request');
 var logger = require('./logger').logger;
-var url = require('url');
 
 var urlencode = function(str) {
     // http://kevin.vanzonneveld.net
@@ -52,18 +51,16 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 		postdata = "";
 	}
 
-	storage.getRoomData(roomId, 'wgServer', function(server) {
-		if (server) {
-			var wikiHostname = server.replace(/^https?:\/\//i, ''),
-				redirectInfo = {
-					redirects: 0,   // number of redirects followed so far
-					MAX_REDIRECTS: 3,   // maximum number of redirects
-					newServer: null   // last redirect host (http(s)://something)
-				},
-				// settings HTTP headers' variable
-				headers = {
-					'content-type': 'application/x-www-form-urlencoded'
-				};
+	storage.getRoomData(roomId, 'wgServer', function(data) {
+		if (data) {
+			var wikiHostname = data.replace(/^https?:\/\//i, "");
+			var url = 'http://' + wikiHostname + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999); // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
+			logger.debug("Making  request to host: " + url);
+
+			// settings HTTP headers' variable
+			var headers = {
+				'content-type': 'application/x-www-form-urlencoded'
+			};
 
 			if( handshake && handshake.headers ) {
 				if( typeof handshake.headers['user-agent'] !== 'undefined' ) {
@@ -75,89 +72,46 @@ var requestMW = function(method, roomId, postdata, query, handshake, callback, e
 				}
 			}
 
-			/**
-			 * check the response and if this is a redirect to a new server, follow it
-			 * returns true in case the method handled the redirect response
-			 */
-			function handleRedirect(response) {
-				if (response && (response.statusCode ==  301) && response.headers && response.headers.location) {
-					// extract server
-					var parts = url.parse(response.headers.location);
-					if (parts.hostname != wikiHostname) {
-						redirectInfo.redirects++;
-						if (redirectInfo.redirects < redirectInfo.MAX_REDIRECTS) {
-							redirectInfo.newServer = parts.protocol + '//' + parts.hostname;
-							makeRequest(parts.hostname);
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-
-			/**
-			 * if we were redirected to a new server, store its address in redis
-			 */
-			function updateMWaddress() {
-				if (redirectInfo.newServer && (server != redirectInfo.newServer)) {
-					logger.critical('Old wiki address found: ' + server + ', updating to ' + redirectInfo.newServer);
-					storage.setRoomData(roomId, 'wgServer', redirectInfo.newServer);
-				}
-			}
-
-			/**
-			 * Make a request to MW host entrypoint
-			 */
-			function makeRequest(host) {
-				var requestUrl = 'http://' + host + '/index.php' + query + "&cb=" + Math.floor(Math.random()*99999), // varnish appears to be caching this (at least on dev boxes) when we don't want it to... so cachebust it.;
-					data;
-				logger.debug("Making request to host: " + requestUrl);
-				request({
-						method: method,
-						//followRedirect: false,
-						headers: headers,
-						body: postdata,
-						json: false,
-						url: requestUrl,
-						proxy: 'http://' + config.WIKIA_PROXY
-					},
-					function (error, response, body) {
-						if (handleRedirect(response)) { // cross-server 301 handling
-							return;
-						}
-						if(error) {
-							errorcallback();
-							logger.error(error);
-							return ;
-						}
-						logger.debug(response.statusCode);
-						if(response.statusCode ==  200) {
-							try{
-								if((typeof body) == 'string'){
-									data = JSON.parse(body);
-									logger.debug("parsing");
-								} else {
-									logger.debug("parsed by request");
-									data = body;
-								}
-								logger.debug(data);
-								updateMWaddress();
-								callback(data);
-							} catch(e) {
-								logger.error("Error: while parsing result from:" + requestUrl + '\nError was' + e.message + "\nResponse that didn't parse was:" );
-								logger.error(body);
-								data = {
-									error: '',
-									errorWfMsg: 'chat-err-communicating-with-mediawiki',
-									errorMsgParams: []
-								};
+			request({
+			    	method: method,
+			    	//followRedirect: false,
+			    	headers: headers,
+			    	body: postdata,
+			    	json: false,
+			    	url: url,
+			    	proxy: 'http://' + config.WIKIA_PROXY
+			    }, 
+			    function (error, response, body) {
+			    	if(error) {
+			    		errorcallback();
+			    		logger.error(error);
+			    		return ;
+			    	}
+			    	logger.debug(response.statusCode);
+			    	if(response.statusCode ==  200) {
+						try{
+							if((typeof body) == 'string'){
+								data = JSON.parse(body);
+								logger.debug("parsing");
+							} else {
+								logger.debug("parsed by request");
+								data = body;
 							}
 							logger.debug(data);
+							callback(data);
+						} catch(e) {
+							logger.error("Error: while parsing result from:" + url + '\nError was' + e.message + "\nResponse that didn't parse was:" );
+							logger.error(body);
+							data = {
+								error: '',
+								errorWfMsg: 'chat-err-communicating-with-mediawiki',
+								errorMsgParams: []
+							};
 						}
-				});
-			}
-
-			makeRequest(wikiHostname);
+			    		logger.debug(data);
+			    	}
+			    }
+			);
 		}
 	},
 	errorcallback);

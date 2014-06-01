@@ -1,79 +1,37 @@
 @import "variables.scss";
+//mixins
+@import "mixins/box-shadow.scss";
+@import "mixins/box-sizing.scss";
 
-table[class*="infobox"] {
+table.infobox {
 	border: 1px solid $border-color;
-	border-spacing: 0;
-	border-collapse: collapse;
-	font-size: 0.9rem;
-	margin: 20px auto;
+	@include box-shadow($shadow);
+	font-size: 0.8em;
+	padding: 8px;
 	max-width: 100%;
-	width: 100%;
-	word-break: break-word;
-
-	figure {
-		margin: 0 auto;
-	}
+	margin: 10px auto;
 
 	img {
 		max-width: 100%;
 		height: auto;
 	}
 
-	tr {
-		border-top: 1px solid $border-color;
-	}
-
 	th {
 		text-align: left;
 	}
 
-	//There is already enough spacing
-	ul, ol {
-		padding: 0;
-	}
-
-	th, td {
-		padding: 5px;
-		line-height: 1.25rem;
-		vertical-align: top;
-		width: 50%;
+	td{
+		padding: 0 6px;
 
 		&[colspan='2']{
 			text-align: center;
 			padding: 0;
 
-			b {
-				display: inline-block;
-				margin: 5px;
-			}
-		}
-
-		p {
-			//Some wikis have p inside td. ie. Firefly
-			margin: 0;
-		}
-	}
-
-	.short tr:nth-of-type(n+11):not(.infobox-expand) {
-		display: none;
-	}
-}
-
-.infobox-expand {
-	td {
-		height: $chevron-size * 3;
-		padding-bottom: 10px;
-		vertical-align: middle;
-	}
-
-	.short & {
-		.chevron {
-			border-color: $border-color transparent transparent transparent;
-			margin-top: 15px;
-
-			&:after {
-				border-color: white transparent transparent transparent;
-				bottom: -$chevron-size/2 - 1;
+			b{
+				display: block;
+				width: 100%;
+				margin: 12px 0 15px;
+				border-bottom: 1px solid $border-color;
 			}
 		}
 	}

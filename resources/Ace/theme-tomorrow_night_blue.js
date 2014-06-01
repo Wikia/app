@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/tomorrow_night_blue', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/tomorrow_night_blue', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-tomorrow-night-blue";
@@ -48,7 +48,11 @@ color: #FFFFFF\
 color: #FFFFFF\
 }\
 .ace-tomorrow-night-blue .ace_cursor {\
-color: #FFFFFF\
+border-left: 2px solid #FFFFFF\
+}\
+.ace-tomorrow-night-blue .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #FFFFFF\
 }\
 .ace-tomorrow-night-blue .ace_marker-layer .ace_selection {\
 background: #003F8E\
@@ -115,7 +119,7 @@ color: #BBDAFF\
 .ace-tomorrow-night-blue .ace_support.ace_type {\
 color: #FFEEAD\
 }\
-.ace-tomorrow-night-blue .ace_heading,\
+.ace-tomorrow-night-blue .ace_markup.ace_heading,\
 .ace-tomorrow-night-blue .ace_string {\
 color: #D1F1A9\
 }\
@@ -128,6 +132,9 @@ color: #FF9DA4\
 }\
 .ace-tomorrow-night-blue .ace_comment {\
 color: #7285B7\
+}\
+.ace-tomorrow-night-blue .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-tomorrow-night-blue .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYJDzqfwPAANXAeNsiA+ZAAAAAElFTkSuQmCC) right repeat-y;\

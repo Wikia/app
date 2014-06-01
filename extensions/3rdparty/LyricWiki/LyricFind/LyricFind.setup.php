@@ -48,6 +48,7 @@ $wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';
 // @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
 $wgGroupPermissions['*']['editlyricfind'] = false;
 $wgGroupPermissions['staff']['editlyricfind'] = true;
+$wgNamespaceProtection[ NS_LYRICFIND ] = array('editlyricfind');
 
 $wgHooks['AlternateEdit'][] = 'LyricFindHooks::onAlternateEdit';
 

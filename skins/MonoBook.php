@@ -93,9 +93,7 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 <div id="column-content">
 <?php
 /* Wikia change begin - @author: Hyun */
-if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHtml')) {
-	$this->data['skin']->printTopHtml();
-}
+	method_exists($this->skin, "printTopHtml") && $this->skin->printTopHtml();
 /* Wikia change end */
 ?>
 <div id="content" <?php $this->html("specialpageattributes") ?>>

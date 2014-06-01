@@ -1,6 +1,11 @@
 /* FILE: /extensions/wikia/CreatePage/css/CreatePage.css */
+#CreatePageContainer {
+	padding: 8px;
+}
+
 #CreatePageDialogHeader {
 	margin-bottom: 20px;
+	margin-top: 8px;
 }
 
 #CreatePageDialogSub {
@@ -16,6 +21,7 @@
 
 #CreatePageDialogChoices {
 	margin-bottom: 8px;
+	height: 280px;
     overflow-y: auto;
 	overflow-x: hidden;
 	list-style-type: none;
@@ -23,7 +29,7 @@
 }
 
 #wpCreatePageDialogTitle {
-	width: 98%;
+	width: 100%;
 }
 
 #CreatePageContainer .chooser {
@@ -35,8 +41,6 @@
 
 #CreatePageContainer div img {
 	margin-top: 8px;
-	display: block;
-	margin: 0 auto;
 }
 
 .wikiaSkinMonaco #CreatePageDialogWrapper {
@@ -49,7 +53,6 @@
 }
 
 #CreatePageDialogChoices .accent {
-	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }

@@ -1,6 +1,6 @@
 /*exported AdProviderGamePro*/
 /*jshint maxparams:false*/
-var AdProviderGamePro = function (adLogicPageLevelParamsLegacy, ScriptWriter, adTracker, log, window, slotTweaker) {
+var AdProviderGamePro = function(adLogicPageLevelParamsLegacy, ScriptWriter, adTracker, log, window, slotTweaker) {
 	'use strict';
 
 	var ord = Math.round(Math.random() * 23456787654),
@@ -14,8 +14,11 @@ var AdProviderGamePro = function (adLogicPageLevelParamsLegacy, ScriptWriter, ad
 			'TOP_RIGHT_BOXAD': {'size': '300x250,300x600', 'tile': 3, 'pos': 'mpu'}
 		};
 
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 5, 'AdProviderGamePro');
+	function canHandleSlot(slot) {
+		var slotname = slot[0];
+
+		log('canHandleSlot', 5, 'AdProviderGamePro');
+		log([slotname], 5, 'AdProviderGamePro');
 
 		if (slotMap[slotname]) {
 			return true;
@@ -40,16 +43,17 @@ var AdProviderGamePro = function (adLogicPageLevelParamsLegacy, ScriptWriter, ad
 		return url;
 	}
 
-	function fillInSlot(slotname, success) {
+	function fillInSlot(slot) {
 		log('fillInSlot', 5, 'AdProviderGamePro');
-		log(slotname, 5, 'AdProviderGamePro');
+		log(slot, 5, 'AdProviderGamePro');
+
+		var slotname = slot[0];
 
 		adTracker.trackSlot('gamepro', slotname).init();
 
 		ScriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
 			slotTweaker.removeTopButtonIfNeeded(slotname);
 			slotTweaker.removeDefaultHeight(slotname);
-			success();
 		});
 	}
 

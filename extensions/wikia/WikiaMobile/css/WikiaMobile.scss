@@ -1,20 +1,5 @@
-@font-face {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/wMws1cEtxWZc6AZZIpiqWALUuEpTyoUstqEm5AMlJo4.woff) format('woff');
-}
-
-@font-face {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 600;
-	src: url(http://themes.googleusercontent.com/static/fonts/opensans/v6/MTP_ySUJH_bn48VBG8sNSr3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
-}
-
 //dependencies
-@import "variables";
-@import 'chevrons';
+@import "variables.scss";
 @import "infobox";
 @import "sections";
 @import "images";
@@ -27,45 +12,87 @@
 @import "ad";
 @import "category_page";
 @import 'ui';
+@import 'chevrons';
 @import 'modal';
 @import 'media_modal';
+@import 'toc';
 @import 'search';
 @import 'image_placeholder';
 @import 'throbber';
 @import "form";
-@import "curtain";
 @import '../../RelatedPages/css/RelatedPages.wikiamobile';
 
 //mixins
 @import "mixins/transition.scss";
 @import "mixins/box-shadow.scss";
 
+html {
+	border: none;
+}
+
+body {
+	background-color: $footerBackground;
+
+	color: $page-text-color;
+	font-size: medium;
+	line-height: 1.5em;
+}
+
+#wkCurtain {
+	display: none;
+	height: 100%;
+	width: 100%;
+
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	background-color: rgba(0,0,0,.4);
+
+	z-index: 100;
+
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.hidden {
+	position: relative;
+
+	#wkCurtain {
+		display: block;
+	}
+
+}
+
 #wkMainCntHdr {
-	margin-bottom: 25px;
+	border-bottom: 1px solid $border-color;
+	padding: $page-padding 50px $page-padding 0;
 	position: relative;
 
 	h1{
+		float: left;
+		max-width: 100%;
 		margin: 0;
-
-		line-height: 2.2rem;
-		font-size: 2rem;
-		font-weight: 400;
+		//default 25px looks cramped
+		line-height: 30px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Roboto, "Lucida Grande", arial, sans-serif;
 	}
 
-	div {
-		color: #AAA;
-
-		font-size: .9rem;
-		line-height: 1.2rem;
+	.wkShr{
+		position: absolute;
+		right: 5px;
 	}
+}
+
+a {
+	color: $link-color;
+	text-decoration: none;
 }
 
 #wkPage {
 	//I want page to be at least 405px long to be able to show share and search suggestions
-	min-height: 80%;
-	padding: $page-padding+5px 6.25%;
-	//during loading tables might strech horizontally window - lets not show it to user
-	overflow-x: hidden;
+	min-height: 405px;
+	background-color: white;
+	padding: $page-padding;
 }
 
 //fixes for fluid content
@@ -87,14 +114,105 @@
 }
 //end of fluiding thead content
 
-blockquote, .quote {
-	border-left: 5px solid $nice-blue;
-	padding-left: 12px;
-	margin: 25px 0;
+blockquote {
+	border-left: 1px solid $border-color;
+	padding-left: 5px;
+	margin: 15px;
 }
 
 .printfooter {
 	display: none;
+}
+
+.js .wkShr {
+	display: inline-block;
+}
+
+.wkShr {
+	display: none;
+	position: relative;
+	width: 50px;
+	height: 25px;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image:  url('/extensions/wikia/WikiaMobile/images/share_grey.png'); /* base64 */
+	background-size: 50%;
+
+	&.on {
+		z-index: 5;
+		background-image:  url('/extensions/wikia/WikiaMobile/images/share_blue.png'); /* base64 */
+
+		&::before {
+			border-style: solid;
+			border-width: 11px;
+			content: '';
+			height: 0;
+			position: absolute;
+			width: 0;
+		}
+
+		&::after {
+			border-style: solid;
+			border-width: 10px;
+			content: '';
+			height: 0;
+			position: absolute;
+			width: 0;
+		}
+
+		&.bottom {
+			&::after {
+				border-color: transparent transparent white transparent;
+				bottom:-16px;
+				left:50%;
+				margin-left:-10px;
+			}
+			&::before {
+				border-color: transparent transparent $link-color transparent;
+				bottom:-15px;
+				left:50%;
+				margin-left:-11px;
+			}
+		}
+		/* currently we only use bottom class - uncomment whatever you need, but when you need it
+		&.top {
+			&::after {
+				border-color: white transparent transparent transparent;
+				top:-16px;
+				left:50%;
+				margin-left:-10px;
+			}
+			&::before {
+				border-color: $link-color transparent transparent transparent;
+				top: -15px;
+				left:50%;
+				margin-left:-11px;
+			}
+		}
+		&.left {
+			&::after {
+				border-color: transparent transparent transparent white;
+				left:-16px;
+				top:1px;
+			}
+			&::before {
+				border-color: transparent transparent transparent $link-color;
+				left: -15px;
+			}
+		}
+		&.right {
+			&::after {
+				border-color: transparent white transparent transparent;
+				right:-16px;
+				top:1px;
+			}
+			&::before {
+				border-color: transparent $link-color transparent transparent;
+				right: -15px;
+			}
+		}*/
+	}
 }
 
 #wkTst{
@@ -132,6 +250,7 @@ blockquote, .quote {
 		opacity: 0;
 		-webkit-transform: translateY(20px);
 		-moz-transform: translateY(20px);
+		-o-transform: translateY(20px);
 		transform: translateY(20px);
 	}
 
@@ -143,6 +262,11 @@ blockquote, .quote {
 .js{
 	#wkComm {
 		margin-top: 10px;
+		display: none;
+
+		&.open{
+			display: block;
+		}
 	}
 
 	#wkShowCom{
@@ -154,8 +278,4 @@ blockquote, .quote {
 	text-transform: none;
 	font-size: small;
 	float: right;
-}
-
-.editsection {
-	display: none;
 }

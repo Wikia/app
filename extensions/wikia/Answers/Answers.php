@@ -555,7 +555,7 @@ function wfCategoryPageWithAds(&$cat){
 		global $wgOut, $wgRequest;
 		$from = $wgRequest->getVal( 'from' );
 		$until = $wgRequest->getVal( 'until' );
-		$viewer = new CategoryWithAds( $cat->mTitle, $from, $until );
+		$viewer = new CategoryWithAds( $cat->mTitle, $from, $until);
 		$wgOut->addHTML( $viewer->getHTML() );
 	}
 
@@ -564,19 +564,19 @@ function wfCategoryPageWithAds(&$cat){
 
 class CategoryWithAds extends CategoryViewer{
 
-	function __construct( $title, $from = '', $until = '' ) {
-		parent::__construct( $title, RequestContext::getMain() );
-		$this->fromSortKey = $from;
-		$this->untilSortKey = $until;
+	function __construct( $title, $from = '', $until = '', $query = array() ) {
+		parent::__construct( $title, RequestContext::getMain(), array( $from ), array( $until ), $query );
+		$this->from = $from;
+		$this->until = $until;
 	}
 
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-		if( $this->fromSortKey != '' ) {
-			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->fromSortKey );
+		if( $this->from != '' ) {
+			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
 			$this->flip = false;
-		} elseif( $this->untilSortKey != '' ) {
-			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->untilSortKey );
+		} elseif( $this->until != '' ) {
+			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->until );
 			$this->flip = true;
 		} else {
 			$pageCondition = '1 = 1';

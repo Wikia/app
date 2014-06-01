@@ -166,17 +166,4 @@ class MarketingToolboxModuleFeaturedvideoService extends MarketingToolboxModuleE
 		return $videoData;
 	}
 
-	/**
-	 * Don't return any data for commercial usages
-	 * @param $data
-	 * @return mixed
-	 */
-	protected function filterCommercialData( array $data ) {
-		$data['video'] = null;
-		$service = $this->getLicensedWikisService();
-		if ( isset($data['articleUrl']) && !$service->isCommercialUseAllowedByUrl($data['articleUrl']) ) {
-			$data = null;
-		}
-		return $data;
-	}
 }

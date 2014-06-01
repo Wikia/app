@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/mysql', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/mysql_highlight_rules', 'ace/range'], function(require, exports, module) {
+define('ace/mode/mysql', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/mysql_highlight_rules', 'ace/range'], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var TextMode = require("../mode/text").Mode;
@@ -37,7 +37,7 @@ var MysqlHighlightRules = require("./mysql_highlight_rules").MysqlHighlightRules
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.HighlightRules = MysqlHighlightRules;
+    this.$tokenizer = new Tokenizer(new MysqlHighlightRules().getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -50,7 +50,7 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/mysql_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/mysql_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/lib/lang', 'ace/mode/doc_comment_highlight_rules', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var lang = require("../lib/lang");
@@ -127,7 +127,7 @@ var MysqlHighlightRules = function() {
         "comment" : [
             {token : "comment", regex : "\\*\\/", next : "start"},
             {defaultToken : "comment"}
-        ]
+        ],
     };
 
     this.embedRules(DocCommentHighlightRules, "doc-", [ DocCommentHighlightRules.getEndRule("start") ]);
@@ -139,7 +139,7 @@ oop.inherits(MysqlHighlightRules, TextHighlightRules);
 exports.MysqlHighlightRules = MysqlHighlightRules;
 });
 
-ace.define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/doc_comment_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");

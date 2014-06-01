@@ -33,7 +33,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/vbscript', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/vbscript_highlight_rules'], function(require, exports, module) {
+define('ace/mode/vbscript', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/vbscript_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -42,7 +42,9 @@ var Tokenizer = require("../tokenizer").Tokenizer;
 var VBScriptHighlightRules = require("./vbscript_highlight_rules").VBScriptHighlightRules;
 
 var Mode = function() {
-    this.HighlightRules = VBScriptHighlightRules;
+    var highlighter = new VBScriptHighlightRules();
+    
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -56,7 +58,7 @@ exports.Mode = Mode;
 });
 
 
-ace.define('ace/mode/vbscript_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/vbscript_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -166,7 +168,7 @@ var VBScriptHighlightRules = function() {
             token: [
                 "support.function.asp"
             ],
-            regex: "(?:\\b(Lock|Unlock|SetAbort|SetComplete|BinaryRead|AddHeader|AppendToLog|BinaryWrite|Clear|End|Flush|Redirect|Write|CreateObject|HTMLEncode|MapPath|URLEncode|Abandon|Convert|Regex)\\b)"
+            regex: "(?:\\b(Lock|Unlock|SetAbort|SetComplete|BianryRead|AddHeader|AppendToLog|BinaryWrite|Clear|End|Flush|Redirect|Write|CreateObject|HTMLEncode|MapPath|URLEncode|Abandon|Convert|Regex)\\b)"
         },
         {
             token: [

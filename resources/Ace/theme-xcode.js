@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/xcode', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/xcode', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = false;
 exports.cssClass = "ace-xcode";
@@ -46,7 +46,11 @@ background-color: #FFFFFF;\
 color: #000000\
 }\
 .ace-xcode .ace_cursor {\
-color: #000000\
+border-left: 2px solid #000000\
+}\
+.ace-xcode .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #000000\
 }\
 .ace-xcode .ace_marker-layer .ace_selection {\
 background: #B5D5FF\

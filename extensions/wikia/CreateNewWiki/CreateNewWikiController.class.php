@@ -76,11 +76,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->signupUrl = '';
 		if(!empty($this->wg->EnableUserLoginExt)) {
 			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
-			if ( $wgRequest->getInt( 'nocaptchatest' ) ) {
-				$this->signupUrl = $signupTitle->getFullURL('nocaptchatest=1');
-			} else {
-				$this->signupUrl = $signupTitle->getFullURL();
-			}
+			$this->signupUrl = $signupTitle->getFullURL();
 		}
 
 		// Make various parsed messages and status available in JS

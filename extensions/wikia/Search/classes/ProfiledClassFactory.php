@@ -89,9 +89,6 @@ STOP;
 				if ( substr_count( $sig, '= Array' ) > 0 ) {
 					$sig = str_replace( '= Array', ' = '.$default, $sig );
 				}
-				if ( substr_count( $sig, ' or NULL') > 0 ) {
-					$sig = str_replace( ' or NULL', '', $sig );
-				}
 				$paramSigs[] = $sig;
 			}
 			$paramSignature = implode( ', ', $paramSigs );

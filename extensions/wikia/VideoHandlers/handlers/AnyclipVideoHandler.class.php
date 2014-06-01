@@ -29,12 +29,12 @@ EOT;
 
 		return array(
 			'html' => $html,
-			'width' => $width,
-			'height' => $height,
 			'jsParams' => array(
-				'playerId' => $playerId,
-				'videoId' => $this->videoId,
-				'autoPlay' => $autoPlayStr,
+				'playerId'=> $playerId,
+				'videoId'=> $this->videoId,
+				'width'=> $width,
+				'height'=> $height,
+				'autoPlay'=> $autoPlayStr,
 			),
 			'init' => 'wikia.videohandler.anyclip',
 			'scripts' => array(

@@ -106,7 +106,7 @@ class LatestActivityController extends WikiaController {
 			$this->response->addAsset('skins/oasis/js/LatestActivity.js');
 		}
 		// Cache the latest activity call in varnish (and browser).
-		$this->response->setCacheValidity(self::CACHE_DURATION);
+		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		
 		wfProfileOut( __METHOD__ );
 	}

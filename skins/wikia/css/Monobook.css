@@ -333,13 +333,3 @@ body.ajax * {
     padding: 2px 5px;
 }
 
-.wikiaThrobber {
-	opacity: 0.75;
-	background: url("../../common/images/ajax.gif") no-repeat scroll center #fff;
-	height: 100%;
-	left: 0;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	z-index: 2;
-}

@@ -36,7 +36,7 @@ $messages['ca'] = array(
 	'staffpowers-ipblock-abort' => "No es possible bloquejar l'Staff de Wikia, als Helpers ni als membres del VSTF. Si us plau, utilitza el [[Special:Contact|formulari de contacte]] per informar de qualsevol problema amb el nostre staff.",
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(

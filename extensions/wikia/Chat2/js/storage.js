@@ -50,6 +50,7 @@ RedisStorage.prototype = {
 		self._incr(
 			self.config.getKey_nextRoomId(), function(roomId) {
 				// Create the room.
+				var roomKey = self.config.getKey_room( roomId );
 				var extraData = {};
 				if(extraDataString){
 					try{
@@ -59,18 +60,14 @@ RedisStorage.prototype = {
 						extraData = {};
 					}
 				}
-
-				self.setRoomData(roomId, null, {
+				// Store the room in redis.
+				self._hmset(roomKey, {
 					'room_id': roomId,
 					'wgCityId': cityId,
 					'wgServer': extraData.wgServer,
 					'wgArticlePath': extraData.wgArticlePath
 				});
 
-				// mech: sanity check, I saw that breaking sometimes, want to see the details
-				if (users && (typeof users.sort !== 'function')) {
-					logger.critical('Malformed users list for roomId ' + roomId, users);
-				}
 				// Add the room to the list of rooms on this wiki.
 				self._rpush(self.config.getKey_listOfRooms(cityId, type, users), roomId);
 				var result = {
@@ -112,29 +109,6 @@ RedisStorage.prototype = {
 					'Error: while getting ' + key +' of room: "'+ roomId + '": %error%', 
 					errback);
 		}
-	},
-
-	/**
-	 * Set the room data
-	 * @param roomId room identifier
-	 * @param key key to set, if null then value can containg multiple entries
-	 * @param value single value if key is specified or multipl ewhen key is null
-	 */
-	setRoomData: function(roomId, key, value, callback, errback) {
-		var roomKey = this.config.getKey_room(roomId);
-		if ( key === null )  {
-			this._hmset(roomKey, value, callback,
-				"Warning: couldn't set hash data for room w/key '"+ roomKey + "': %error%",
-				function(errorMsg){
-					logger.warning(errorMsg);
-					errback();
-				});
-		} else {
-			this._hset(roomKey, key, value, callback,
-				'Error: while setting ' + key +' of room: "'+ roomId + '": %error%',
-				errback);
-		}
-
 	},
 	
 	getRuntimeStats: function(callback, errback, both) {

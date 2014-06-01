@@ -12,11 +12,6 @@
  */
 
 class WallNotifications {
-	/**
-	 * @var WikiaApp
-	 */
-	protected $app;
-
 	private $cachedUsers = array();
 
 	private $removedEntities;
@@ -49,7 +44,7 @@ class WallNotifications {
 			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
 			// we're using the same callback when we cannot aquire the lock, as we want to have the list of notifications
 			// even if we won't be able to store it in the cache
-			$memcSync->lockAndSetData( $callback, $callback );
+			$this->lockAndSetData( $memcSync, $callback, $callback);
 		}
 
 		if(empty($list)) {
@@ -59,8 +54,6 @@ class WallNotifications {
 		$read = array();
 		$unread = array();
 
-		// walk through list of ids
-		// $listval is unique_id field from wall_notification table in DB
 		foreach(array_reverse($list['notification']) as $listval) {
 			if(!empty($listval)) {
 				if(!$countonly) {
@@ -125,28 +118,6 @@ class WallNotifications {
 		return $out;
 	}
 
-	/**
-	 * Returns array with wikis' ids and number of unread notifications on that wiki
-	 *
-	 * example return
-	 * 	$output = array(
-	 * 		array(
-	 * 			'id' => 831,
-	 * 			'wgServer' => "http://muppet.wikia.com",
-	 * 			'sitename' => "Muppet Wiki",
-	 * 			'unread' => 5
-	 * 		),
-	 * 		array (
-	 * 			'id' => 5915,
-	 * 			'wgServer' => "http://poznan.wikia.com",
-	 * 			'sitename' => "Poznańska Wiki",
-	 * 			'unread' => 1
-	 * 		)
-	 * 	)
-	 *
-	 * @param int $userId
-	 * @return array
-	 */
 	public function getCounts($userId) {
 		wfProfileIn(__METHOD__);
 		$wikiList = $this->getWikiList($userId);
@@ -189,13 +160,6 @@ class WallNotifications {
 		return 1;
 	}
 
-	/**
-	 * Returns number of unread user's notifications for wiki
-	 * @param int $userId
-	 * @param int $wikiId
-	 * @param bool $notifyeveryone
-	 * @return int
-	 */
 	private function getCount($userId, $wikiId, $notifyeveryone = false) {
 		// fixme
 		// should not to do the whole work of WikiNotifications
@@ -528,7 +492,7 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		$memcSync->lockAndSetData(
+		$this->lockAndSetData( $memcSync,
 			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 
@@ -604,7 +568,7 @@ class WallNotifications {
 			if($this->isCachedData($uId, $wikiId)) {
 				$memcSync = $this->getCache($uId, $wikiId);
 
-				$memcSync->lockAndSetData(
+				$this->lockAndSetData( $memcSync,
 					function() use( $memcSync, $uId, $wikiId, $uniqueId ) {
 						$data = $this->getData($memcSync, $uId, $wikiId);
 						$this->remNotificationFromData($data, $uniqueId);
@@ -701,7 +665,7 @@ class WallNotifications {
 
 		$memcSync = $this->getCache($userId, $wikiId);
 
-		$memcSync->lockAndSetData(
+		$this->lockAndSetData( $memcSync,
 			function() use( $memcSync, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $notifyeveryone ) {
 				$data = $this->getData($memcSync, $userId, $wikiId);
 				$this->addNotificationToData($data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, false, $notifyeveryone );
@@ -729,8 +693,7 @@ class WallNotifications {
 
 	protected function addNotificationToData(&$data, $userId, $wikiId, $uniqueId, $entityKey, $authorId, $isReply, $read = false, $notifyeveryone) {
 		$data['notification'][] = $uniqueId;
-		// $addedAt remember key of added value
-		end( $data['notification'] );
+		$addedAtTmp = end( $data['notification'] );
 		$addedAt = key( $data['notification'] );
 		reset( $data['notification'] );
 
@@ -891,46 +854,21 @@ class WallNotifications {
 		return $data;
 	}
 
-	/**
-	 * Get notification entries from database for specific user on specific wiki
-	 * Fetches bot read and unread ones that are not hidden
-	 * @param int $userId
-	 * @param int $wikiId
-	 * @param bool $master
-	 * @param int $fromId
-	 * @return array
-	 */
 	protected function getBackupData($userId, $wikiId, $master = false, $fromId = 0) {
 		$uniqueIds = array();
 		// select distinct Unique_id from wall_notification where user_id = 1 and wiki_id = 1 order by id
-		// unique_id field contains page id (like page_id in page table)
-		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB(true);
-		$res = $db->select(
-			array ( 'wn1' => 'wall_notification','wn2' => 'wall_notification' ),
-			array ( 'wn1.unique_id' ),
+		$res = $db->select('wall_notification',
+			array('distinct unique_id'),
 			array(
-				'wn1.user_id' => $userId,
-				'wn1.wiki_id' => $wikiId,
-				'wn1.is_hidden' => 0,
-				'wn2.id' => null
+				'user_id' => $userId,
+				'wiki_id' => $wikiId,
+				'is_hidden' => 0
 			),
 			__METHOD__,
 			array(
-				'LIMIT' => '50',
-				'ORDER BY' => 'wn1.id DESC'
-			),
-			array(
-				'wn2' => array (
-					'LEFT JOIN',
-					array (
-						'wn1.user_id = wn2.user_id',
-						'wn1.wiki_id = wn2.wiki_id',
-						'wn1.is_hidden = wn2.is_hidden',
-						'wn1.unique_id = wn2.unique_id',
-						'wn2.id < wn1.id'
-					)
-				),
+				"ORDER BY" => "id desc" ,
+				"LIMIT" => 50
 			)
 		);
 
@@ -940,7 +878,6 @@ class WallNotifications {
 
 		$out = array();
 		if(!empty($uniqueIds)) {
-			// fetch notification entries for pre fetched unique ids
 			$res = $db->select('wall_notification',
 				array('id', 'is_read', 'is_reply', 'unique_id', 'entity_key', 'author_id', 'notifyeveryone'),
 				//array('id', 'unique_id', 'entity_key', 'author_id'),
@@ -1002,7 +939,7 @@ class WallNotifications {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 *
-	 * @param int $userId User Id
+	 * @param $userId int User Id
 	 * @return User User object
 	 */
 	protected function getUser( $userId ) {
@@ -1010,6 +947,46 @@ class WallNotifications {
 			$this->cachedUsers[$userId] = User::newFromId($userId);
 		}
 		return $this->cachedUsers[$userId];
+	}
+
+	/**
+	 * Modify the shared memcache entry after locking it. After this function gets the lock, it calls the $getDataCallback,
+	 * which should return the value to be put into the memcache. In case the lock cannot be acquired, $lockFailCallback
+	 * is called
+	 * If the $getDataCallback returns null or false, no memcache data is set
+	 * @param $memcSync - MemcacheSync instance
+	 * @param $getDataCallback - callback returning the data to be put in the memcache entry.
+	 * @param $lockFailCallback -
+	 */
+	protected function lockAndSetData( $memcSync, $getDataCallback, $lockFailCallback ) {
+		// Try to update the data $count times before giving up
+		$count = 5;
+		while ($count--) {
+			if( $memcSync->lock() ) {
+				$data = $getDataCallback();
+				$success = false;
+				// Make sure we have data
+				if (isset($data)) {
+					// See if we can set it successfully
+					if ($this->setData($memcSync, $data)) {
+						$success = true;
+					}
+				} else {
+					// If there's no data don't bother doing anything
+					$success = true;
+				}
+				$memcSync->unlock();
+				if ( $success ) {
+					break;
+				}
+			} else {
+				$this->random_msleep( $count );
+			}
+		}
+		// If count is -1 it means we left the above loop failing to update
+		if ($count == -1) {
+			$lockFailCallback();
+		}
 	}
 
 }

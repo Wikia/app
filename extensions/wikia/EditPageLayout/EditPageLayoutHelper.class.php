@@ -200,7 +200,6 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/editor/Buttons.js',
 			'extensions/wikia/EditPageLayout/js/editor/Modules.js',
 			// >> Wikia specific editor plugins
-			'extensions/wikia/EditPageLayout/js/plugins/EditorSurvey.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Tracker.js',
 			'extensions/wikia/EditPageLayout/js/plugins/PageControls.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Autoresizer.js',

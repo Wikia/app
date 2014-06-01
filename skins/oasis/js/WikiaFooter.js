@@ -6,48 +6,48 @@ var WikiaFooterApp = {
 		//Variables
 		if( window.wgEnableWikiaBarExt ) {
 		//the admin tool bar is within wikia bar container which is outside the #WikiaPage
-			this.footer = $( '#WikiaBarWrapper' ).find( '.wikia-bar' );
+			this.footer = $('#WikiaBarWrapper').find('.wikia-bar');
 		} else {
 		//the admin tool bar is positioned absolutely but in DOM in it's in #WikiaFooter within #WikiaPage
-			this.footer = $( '#WikiaFooter' );
+			this.footer = $('#WikiaFooter');
 		}
-		this.toolbar = this.footer.children( '.toolbar' );
-		this.gn = $( '.global-notification' );
-		this.windowObj = $( window );
+		this.toolbar = this.footer.children('.toolbar');
+		this.gn = $('.global-notification');
+		this.windowObj = $(window);
 		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
-		if ( this.toolbar.exists() || this.gn.exists() ) {
+		if (this.toolbar.exists() || this.gn.exists()) {
 			if (
 				!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
-					( navigator.userAgent.match( /android/i ) !== null ) )
+					(navigator.userAgent.match(/android/i) !== null))
 			) {
 				this.addScrollEvent();
 				this.addResizeEvent();
 			}
-			this.tcToolbar = new ToolbarCustomize.Toolbar( this.footer.find( '.tools' ) );
+			this.tcToolbar = new ToolbarCustomize.Toolbar( this.footer.find('.tools') );
 		}
 	},
 	addScrollEvent: function() {
 		'use strict';
-		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' ); // GlobalNotifications could be re-binding this event.
-		WikiaFooterApp.windowObj.on( 'scroll.FooterAp', WikiaFooterApp.resolvePosition ).triggerHandler( 'scroll' );
+		WikiaFooterApp.windowObj.off('scroll.FooterAp'); // GlobalNotifications could be re-binding this event.
+		WikiaFooterApp.windowObj.on('scroll.FooterAp', WikiaFooterApp.resolvePosition).triggerHandler('scroll');
 	},
 	addResizeEvent: function (){
 		'use strict';
-		WikiaFooterApp.windowObj.on( 'resize', WikiaFooterApp.centerBar ).triggerHandler( 'resize' );
+		WikiaFooterApp.windowObj.on('resize', WikiaFooterApp.centerBar).triggerHandler('resize');
 	},
 	centerBar: function() {
 		'use strict';
 		var w = WikiaFooterApp.windowObj.width();
-		if ( w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass( 'float' ) ) {
-			WikiaFooterApp.toolbar.css( 'width', w + 10 );
-			if ( !WikiaFooterApp.toolbar.hasClass( 'small' ) ) {
-				WikiaFooterApp.toolbar.addClass( 'small' );
+		if(w < WikiaFooterApp.originalWidth && WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.toolbar.css('width', w+10);
+			if(!WikiaFooterApp.toolbar.hasClass('small')){
+				WikiaFooterApp.toolbar.addClass('small');
 			}
-		} else if ( WikiaFooterApp.toolbar.hasClass( 'small' ) ) {
-			WikiaFooterApp.toolbar.css( 'width', WikiaFooterApp.originalWidth );
-			WikiaFooterApp.toolbar.removeClass( 'small' );
+		} else if(WikiaFooterApp.toolbar.hasClass('small')) {
+			WikiaFooterApp.toolbar.css('width', WikiaFooterApp.originalWidth);
+			WikiaFooterApp.toolbar.removeClass('small');
 		}
 		WikiaFooterApp.resolvePosition();
 	},
@@ -55,7 +55,7 @@ var WikiaFooterApp = {
 	resolvePosition: function() {
 		'use strict';
 		// Disable floating for RTE
-		if ( window.wgIsEditPage ) {
+		if( window.wgIsEditPage ) {
 			return;
 		}
 
@@ -63,31 +63,31 @@ var WikiaFooterApp = {
 			scroll = scrollTop + WikiaFooterApp.windowObj.height(),
 			line = 0;
 
-		if ( WikiaFooterApp.footer.offset() ) {
+		if(WikiaFooterApp.footer.offset()){
 			line = WikiaFooterApp.footer.offset().top + WikiaFooterApp.toolbar.outerHeight();
 		}
 
-		if ( scroll > line && WikiaFooterApp.footer.hasClass( 'float' ) ) {
-			WikiaFooterApp.footer.removeClass( 'float' );
+		if (scroll > line && WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.removeClass('float');
 			WikiaFooterApp.centerBar();
-		} else if ( scroll < line && !WikiaFooterApp.footer.hasClass( 'float' ) ) {
-			WikiaFooterApp.footer.addClass( 'float' );
+		} else if (scroll < line && !WikiaFooterApp.footer.hasClass('float')) {
+			WikiaFooterApp.footer.addClass('float');
 			WikiaFooterApp.centerBar();
 		}
 
 		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
-		if ( window.GlobalNotification && !window.GlobalNotification.isModal() ) {
-			window.GlobalNotification.onScroll( scrollTop );
+		if(window.GlobalNotification && !window.GlobalNotification.isModal()) {
+			window.GlobalNotification.onScroll(scrollTop);
 		}
 	}
 };
 
-( function() {
+(function(){
 	'use strict';
 	window.ToolbarCustomize = window.ToolbarCustomize || {};
 	var TC = window.ToolbarCustomize;
 
-	TC.MenuGroup = $.createClass( window.Observable, {
+	TC.MenuGroup = $.createClass(window.Observable,{
 
 		showTimer: false,
 		hideTimer: false,
@@ -99,49 +99,51 @@ var WikiaFooterApp = {
 		visible: false,
 
 		constructor: function() {
-			TC.MenuGroup.superclass.constructor.call( this );
-			this.showTimer = window.Timer.create( $.proxy( this.show, this ), this.showTimeout );
-			this.hideTimer = window.Timer.create( $.proxy( this.hide, this ), this.hideTimeout );
+			TC.MenuGroup.superclass.constructor.call(this);
+			this.showTimer = window.Timer.create($.proxy(this.show,this),this.showTimeout);
+			this.hideTimer = window.Timer.create($.proxy(this.hide,this),this.hideTimeout);
 		},
 
 		add: function( el ) {
-			var e = $( el );
-			e.unbind( '.menugroup' )
-				.bind( 'mouseenter.menugroup', $.proxy( this.delayedShow, this ) )
-				.bind( 'mouseleave.menugroup', $.proxy( this.delayedHide, this ) )
-				.children( 'a', 'img' )
-					.unbind( '.menugroup' )
-					.bind( 'click.menugroup', $.proxy( this.showOnClick, this ) );
+			var e = $(el);
+			e
+				.unbind('.menugroup')
+				.bind('mouseenter.menugroup',$.proxy(this.delayedShow,this))
+				.bind('mouseleave.menugroup',$.proxy(this.delayedHide,this))
+				.children('a','img')
+					.unbind('.menugroup')
+					.bind('click.menugroup',$.proxy(this.showOnClick,this));
 		},
 
 		remove: function( el ) {
-			$( el ).unbind( '.menugroup' )
-				.children( 'a', 'img' )
-					.unbind( '.menugroup' );
+			$(el)
+				.unbind('.menugroup')
+				.children('a','img')
+					.unbind('.menugroup');
 		},
 
 		show: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
-			if ( !this.showing || this.visible === this.showing ) {
+			if (!this.showing || this.visible === this.showing) {
 				return;
 			}
 
-			if ( this.visible ) {
+			if (this.visible) {
 				this.hide();
 			}
-			if ( this.showing ) {
+			if (this.showing) {
 				this.visible = this.showing;
 				this.showing = false;
-				this.fire( 'menushow', this, this.visible, this.visible.children( 'ul' ) );
-				this.visible.children( 'ul' ).show();
+				this.fire('menushow',this,this.visible,this.visible.children('ul'));
+				this.visible.children('ul').show();
 			}
 		},
 
 		delayedShow: function( evt ) {
-			this.showing = $( evt.currentTarget );
-			if ( this.visible ) {
-				this.show( evt );
+			this.showing = $(evt.currentTarget);
+			if (this.visible) {
+				this.show(evt);
 			} else {
 				this.hideTimer.stop();
 				this.showTimer.start();
@@ -150,33 +152,33 @@ var WikiaFooterApp = {
 
 		showOnClick: function( evt ) {
 			evt.preventDefault();
-			this.showing = $( evt.currentTarget ).parent();
-			this.show( evt );
+			this.showing = $(evt.currentTarget).parent();
+			this.show(evt);
 		},
 
 		hide: function() {
 			this.hideTimer.stop();
 			this.showTimer.stop();
-			if ( this.visible ) {
-				this.fire( 'menuhide', this, this.visible, this.visible.children( 'ul' ) );
-				this.visible.children( 'ul' ).hide();
+			if (this.visible) {
+				this.fire('menuhide',this,this.visible,this.visible.children('ul'));
+				this.visible.children('ul').hide();
 				this.visible = false;
 			}
 		},
 
 		delayedHide: function() {
 			this.hideTimer.stop();
-			if ( this.visible ) {
+			if (this.visible) {
 				this.hideTimer.start();
-			} else if ( this.showing ) {
+			} else if (this.showing) {
 				this.showing = false;
 				this.showTimer.start();
 			}
 		}
 
-	} );
+	});
 
-	TC.Toolbar = $.createClass( Object, {
+	TC.Toolbar = $.createClass(Object,{
 
 		el: false,
 		more: false,
@@ -184,165 +186,166 @@ var WikiaFooterApp = {
 		menuGroup: false,
 
 		constructor: function ( el ) {
-			TC.Toolbar.superclass.constructor.call( this );
+			TC.Toolbar.superclass.constructor.call(this);
 			this.el = el;
 			this.menuGroup = new TC.MenuGroup();
-			this.menuGroup.bind( 'menushow', this.onShowMenu, this );
+			this.menuGroup.bind('menushow',this.onShowMenu,this);
 			this.initialize();
 		},
 
 		initialize: function() {
-			this.el.find( '.tools-customize' ).click( $.proxy( this.openConfiguration, this ) );
-			this.menuGroup.add( this.el.find( 'li.menu' ) );
+			this.el.find('.tools-customize').click($.proxy(this.openConfiguration,this));
+			this.menuGroup.add(this.el.find('li.menu'));
 
 			var that = this;
 
-			require( ['wikia.fluidlayout'], function( fluidlayout ) {
-				that.handleOverflowMenu( fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
-					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall() );
-			} );
+			require(['wikia.fluidlayout'], function(fluidlayout) {
+				that.handleOverflowMenu(fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
+					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall());
+			});
 		},
 
 		openConfiguration: function( evt ) {
 			evt.preventDefault();
-			var conf = new TC.ConfigurationLoader( this );
+			var conf = new TC.ConfigurationLoader(this);
 			conf.show();
 		},
 
 		buildOveflowItem: function () {
-			return this.el.find( '.overflow-menu' );
+			return this.el.find('.overflow-menu');
 		},
 
-		generateMediaQuery: function ( moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint ) {
+		generateMediaQuery: function (moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint) {
 			var firstMediaJSQuery = true,
 				mediaJSQueries = '',
 				moreableCount = moreable.length,
-				alreadyAdded = ( minWidth >= breakpoint ),
+				alreadyAdded = (minWidth >= breakpoint),
 				lastMediaQuery = false;
 
-			moreable.each( function ( i, v ) {
-				var elemWidth = $( v ).outerWidth( true );
+			moreable.each(function (i, v) {
+				var elemWidth = $(v).outerWidth(true);
 
-				if ( nonResponsiveBreakpoint !== false && ( minWidth + elemWidth > nonResponsiveBreakpoint ) ) {
+				if (nonResponsiveBreakpoint !== false && (minWidth + elemWidth > nonResponsiveBreakpoint)) {
 					lastMediaQuery = true;
 				}
 
-				if ( !alreadyAdded && ( ( minWidth + elemWidth ) >= breakpoint ) ) {
+				if (!alreadyAdded && ((minWidth + elemWidth) >= breakpoint)) {
 					alreadyAdded = true;
 					elemWidth += gapWidth;
 				}
 
 				mediaJSQueries += '@media screen ';
-				if ( !firstMediaJSQuery ) {
+				if (!firstMediaJSQuery) {
 					mediaJSQueries += 'and (min-width:' + minWidth + 'px) ';
 				}
 
-				if ( !lastMediaQuery ) {
-					mediaJSQueries += 'and (max-width:' + ( minWidth + elemWidth ) + 'px) ';
+				if (!lastMediaQuery) {
+					mediaJSQueries += 'and (max-width:' + (minWidth + elemWidth) + 'px) ';
 				}
 
-				mediaJSQueries += '{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + ( i + 1 ) +
-					') { display:none; } ' + '.WikiaBarWrapper .tools .overflow-menu {  display: block; }' +
-					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + ( moreableCount - i ) +
+				mediaJSQueries += '{ .WikiaBarWrapper .tools > .overflow:nth-of-type(n + ' + (i + 1) + ') { display:none; } ' +
+					'.WikiaBarWrapper .tools .overflow-menu {  display: block; }' +
+					'.WikiaBarWrapper .tools .overflow-menu .overflow:nth-of-type(-n + ' + (moreableCount - i) +
 					') { display:block; }} ';
 
-				if ( lastMediaQuery ) {
+				if (lastMediaQuery) {
 					return false;
 				}
 
 				minWidth += elemWidth;
 
 				firstMediaJSQuery = false;
-			} );
+			});
 
 			return mediaJSQueries;
 		},
-		getMinWidth: function( all ) {
-			var arrow = this.el.parents( '.wikia-bar:first' ).find( '.arrow' ),
-				minWidth = parseInt( this.el.css( 'padding-left' ), 10 ) +
-					parseInt( this.el.css( 'padding-right' ), 10 ) +
-					arrow.outerWidth( true ),
-				notMoreable = all.filter( ':not(.overflow)' );
+		getMinWidth: function(all) {
+			var arrow = this.el.parents('.wikia-bar:first').find('.arrow'),
+				minWidth = parseInt(this.el.css('padding-left'), 10) +
+					parseInt(this.el.css('padding-right'), 10) +
+					arrow.outerWidth(true),
+				notMoreable = all.filter(':not(.overflow)');
 
-			notMoreable.each( function( i, v ) {
-				minWidth += $( v ).outerWidth( true );
-			} );
+			notMoreable.each(function(i,v) {
+				minWidth += $(v).outerWidth(true);
+			});
 
 			return minWidth;
 		},
 
-		generateSubMenu: function( moreable ) {
+		generateSubMenu: function(moreable) {
 			var where = moreable.last().next(),
 				liMore = this.buildOveflowItem(),
-				more = liMore.children( 'ul' ).empty();
+				more = liMore.children('ul').empty();
 
-			if ( where.exists() ) {
-				where.before (liMore );
+			if (where.exists()) {
+				where.before(liMore);
 			} else {
-				this.el.append( liMore );
+				this.el.append(liMore);
 			}
 
-			moreable.each( function ( i, v ) {
-				$( v ).clone().prependTo( more );
-			} );
-			this.menuGroup.add( liMore,$.proxy( this.onShowMenu,this ) );
+			moreable.each(function (i, v) {
+				$(v).clone().prependTo(more);
+			});
+			this.menuGroup.add(liMore,$.proxy(this.onShowMenu,this));
 		},
-		addStyles: function( mediaJsQueries ) {
-			var id = 'WikiaFooterMediaQueries',
-				styles = '<style id="' + id + '" type"text/css">' + mediaJsQueries + '</style>';
-
-			// <style> tag in IE 8 is read-only so it needs to be created from scratch each time
-			$( '#' + id ).remove();
-			$( 'head' ).append( styles );
+		addStyles: function(mediaJsQueries) {
+			var styles = $('#WikiaFooterMediaQueries');
+			if (!styles.exists()) {
+				styles = $(document.createElement('style')).attr({
+					type: 'text/css',
+					id: 'WikiaFooterMediaQueries'
+				});
+			}
+			styles.html(mediaJsQueries).appendTo('head');
 		},
 
-		handleOverflowMenu: function ( breakpoint, gapWidth, nonResponsiveBreakpoint ) {
-			var all = this.el.children( 'li' ),
-				moreable = all.filter( '.overflow' ),
-				minWidth = this.getMinWidth( all );
+		handleOverflowMenu: function (breakpoint, gapWidth, nonResponsiveBreakpoint) {
+			var all = this.el.children('li'),
+				moreable = all.filter('.overflow'),
+				minWidth = this.getMinWidth(all);
 
-			this.addStyles( this.generateMediaQuery( moreable, minWidth, breakpoint, gapWidth,
-				nonResponsiveBreakpoint ) );
+			this.addStyles(this.generateMediaQuery(moreable, minWidth, breakpoint, gapWidth, nonResponsiveBreakpoint));
 
-			this.generateSubMenu( moreable );
+			this.generateSubMenu(moreable);
 		},
 
 		onShowMenu: function( mgroup, li, ul ) {
-			ul.css( 'left', ( li.offset().left-this.el.offset().left ) + 'px' );
-			ul.css( 'right', 'auto' );
+			ul.css('left', (li.offset().left-this.el.offset().left)+'px');
+			ul.css('right','auto');
 		},
 
-		load: function( html ) {
-			this.el.children( 'li' ).not( '.loadtime' ).remove();
-			this.el.prepend( $( html ) );
+		load: function(html) {
+			this.el.children('li').not('.loadtime').remove();
+			this.el.prepend($(html));
 			this.initialize();
 		}
 
-	} );
+	});
 
-	TC.ConfigurationLoader = $.createClass( Object, {
+	TC.ConfigurationLoader = $.createClass(Object,{
 
 		constructor: function( toolbar ) {
 			this.toolbar = toolbar;
 		},
 
 		show: function() {
-			$.loadLibrary( 'ToolbarCustomize',
+			$.loadLibrary('ToolbarCustomize',
 				window.stylepath + '/oasis/js/ToolbarCustomize.js',
 				typeof TC.Configuration,
-				$.proxy( function() {
-					var c = new TC.Configuration( this.toolbar );
+				$.proxy(function(){
+					var c = new TC.Configuration(this.toolbar);
 					c.show();
-				}, this )
+				},this)
 			);
 		}
 
-	} );
+	});
 
-} )();
+})();
 
-$( function() {
+$(function(){
 	'use strict';
 
 	WikiaFooterApp.init();
-} );
+});

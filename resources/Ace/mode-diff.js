@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/diff', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/diff_highlight_rules', 'ace/mode/folding/diff'], function(require, exports, module) {
+define('ace/mode/diff', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/diff_highlight_rules', 'ace/mode/folding/diff'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -38,7 +38,7 @@ var HighlightRules = require("./diff_highlight_rules").DiffHighlightRules;
 var FoldMode = require("./folding/diff").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = HighlightRules;
+    this.$tokenizer = new Tokenizer(new HighlightRules().getRules());
     this.foldingRules = new FoldMode(["diff", "index", "\\+{3}", "@@|\\*{5}"], "i");
 };
 oop.inherits(Mode, TextMode);
@@ -51,7 +51,7 @@ exports.Mode = Mode;
 
 });
 
-ace.define('ace/mode/diff_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/diff_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -110,9 +110,6 @@ var DiffHighlightRules = function() {
                 regex: "^Index.+$",
                 token: "variable"
             }, {
-                regex: "^\\s+$",
-                token: "text"
-            }, {
                 regex: "\\s*$",
                 token: "invalid"
             }, {
@@ -128,7 +125,7 @@ oop.inherits(DiffHighlightRules, TextHighlightRules);
 exports.DiffHighlightRules = DiffHighlightRules;
 });
 
-ace.define('ace/mode/folding/diff', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
+define('ace/mode/folding/diff', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

@@ -45,11 +45,6 @@ class Factory {
 	const ASSET_TYPE_JS = 'js';
 
 	/**
-	 * @desc key in dependencies config indicating dependency on another component
-	 */
-	const COMPONENT_DEPENDENCY = 'components';
-
-	/**
 	 * @var \Wikia\UI\Factory
 	 */
 	private static $instance = null;
@@ -288,89 +283,49 @@ class Factory {
 	}
 
 	/**
-	 * @desc returns configurated instance of \Wikia\UI\Component
-	 *
-	 * @param string $name name of the component to create
-	 * @param array $assets component assets will be added to this array
-	 * @throws DataException
-	 */
-	protected function initComponent( $name, &$assets ) {
-		$componentConfig = $this->loadComponentConfig( $name );
-
-		// if there are some components, put them in the $assets
-		$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
-		foreach( $assetsTypes as $assetType ) {
-			$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
-			if( is_array( $dependenciesCfg ) ) {
-				$assets = array_merge( $assets, $dependenciesCfg );
-			} else {
-				$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
-				throw new DataException( $exceptionMessage );
-			}
-		}
-
-		// init component, put config inside and set base template path
-		$component = $this->getComponentInstance();
-		$component->setName( $name );
-		if ( !empty( $componentConfig['templateVars'] ) ) {
-			$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
-		}
-		$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
-
-		$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
-
-		if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
-			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );
-		}
-
-		if ( !empty( $componentConfig[ 'jsWrapperModule' ] ) ) {
-			$component->setJSWrapperModule( $componentConfig[ 'jsWrapperModule' ] );
-		}
-
-		return $component;
-	}
-
-	/**
 	 * @desc Loads JS/CSS dependencies, creates and configurates an instance of \Wikia\UI\Component object which is returned
 	 *
 	 * @param string|array $componentNames
 	 * @param bool $loadAssets flag indicating if the component assets should be loaded - needed when we want to render components
-	 * @param array|null optional array, when specified, the dependent components will be loaded and stored in it
 	 *
 	 * @throws \Wikia\UI\DataException
 	 * @return array
 	 */
-	public function init( $componentNames, $loadAssets = true, &$dependencies = null ) {
-		if ( !is_array( $componentNames ) ) {
+	public function init( $componentNames, $loadAssets = true ) {
+		if ( !is_array($componentNames ) ) {
 			$componentNames = (array)$componentNames;
 		}
 		
 		$components = [];
 		$assets = [];
-		$result = [];
 
 		// iterate $componentNames, read configs, write down dependencies
 		foreach ( $componentNames as $name ) {
-			$components[$name] = $this->initComponent( $name, $assets );
-			$result[] = $components[$name];
-		}
+			$componentConfig = $this->loadComponentConfig( $name );
 
-		if ( is_array( $dependencies ) ) {
-			// process the dependencies
-			$dependenciesToLoad = [];
-			foreach( $result as $component ) {
-				$dependenciesToLoad = array_merge( $dependenciesToLoad, $component->getComponentDependencies() );
-			}
-			while( !empty( $dependenciesToLoad ) ) {
-				$name = array_shift( $dependenciesToLoad );
-				if ( !isset( $components[$name] ) ) {
-					$components[$name] = $this->initComponent( $name, $assets );
-					$dependenciesToLoad = array_merge( $dependenciesToLoad, $components[$name]->getComponentDependencies() );
-				}
-				if ( !isset( $dependencies[$name] ) ) {
-					$dependencies[$name] = $components[$name];
+			// if there are some components, put them in the $assets
+			$assetsTypes = [ self::ASSET_TYPE_JS, self::ASSET_TYPE_CSS ];
+			foreach( $assetsTypes as $assetType ) {
+				$dependenciesCfg = !empty( $componentConfig['dependencies'][$assetType] ) ? $componentConfig['dependencies'][$assetType] : [];
+				if( is_array( $dependenciesCfg ) ) {
+					$assets = array_merge( $assets, $dependenciesCfg );
+				} else {
+					$exceptionMessage = sprintf( DataException::EXCEPTION_MSG_INVALID_ASSETS_TYPE, $assetType );
+					throw new DataException( $exceptionMessage );
 				}
 			}
+
+			// init component, put config inside and set base template path
+			$component = $this->getComponentInstance();
+			$component->setName( $name );
+			if ( !empty($componentConfig['templateVars']) ) {
+				$component->setTemplateVarsConfig( $componentConfig['templateVars'] );
+			}
+			$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
+
+			$component->setAssets( $componentConfig['dependencies'] );
+
+			$components[] = $component;
 		}
 
 		if ( $loadAssets ) {
@@ -381,7 +336,7 @@ class Factory {
 		}
 
 		// return components
-		return ( sizeof( $result ) == 1 ) ? $result[0] : $result;
+		return (sizeof($components) == 1) ? $components[0] : $components;
 	}
 
 	/**

@@ -308,12 +308,11 @@ class AdEngine2Controller extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		global $wgRequest, $wgNoExternals, $wgEnableAdsInContent, $wgEnableOpenXSPC,
-			   $wgAdDriverCookieLifetime, $wgHighValueCountries, $wgHighValueCountriesDefault,
+			   $wgAdDriverCookieLifetime, $wgHighValueCountries,
 			   $wgUser, $wgEnableWikiAnswers, $wgAdDriverUseCookie, $wgAdDriverUseExpiryStorage,
 			   $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			   $wgLoadAdDriverOnLiftiumInit, $wgOutboundScreenRedirectDelay,
-			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgAdDriverUseNewTracking,
-			   $wgOut;
+			   $wgEnableOutboundScreenExt, $wgAdDriverUseSevenOneMedia, $wgOut;
 
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
 
@@ -334,18 +333,10 @@ class AdEngine2Controller extends WikiaController {
 
 		// AdDriver
 		$vars['wgAdDriverCookieLifetime'] = $wgAdDriverCookieLifetime;
-
-		// TODO: move the (wiki->community->variable) logic to WikiFactory
-		$highValueCountries = $wgHighValueCountries;
+		$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', 177);	// community central
 		if (empty($highValueCountries)) {
-			// If the variable is not set for given wiki, use the value from the community wiki
-			$highValueCountries = WikiFactory::getVarValueByName('wgHighValueCountries', Wikia::COMMUNITY_WIKI_ID);
+			$highValueCountries = $wgHighValueCountries;
 		}
-		if (empty($highValueCountries)) {
-			// If the variable is set nor for given wiki neither for community, use the default value
-			$highValueCountries = $wgHighValueCountriesDefault;
-		}
-
 		$vars['wgHighValueCountries'] = $highValueCountries;
 
 		if (!empty($wgAdDriverUseExpiryStorage)) {
@@ -360,9 +351,6 @@ class AdEngine2Controller extends WikiaController {
 		if (!empty($wgAdDriverUseSevenOneMedia)) {
 			$vars['wgAdDriverUseSevenOneMedia'] = $wgAdDriverUseSevenOneMedia;
 			$vars['wgAdDriverSevenOneMediaCombinedUrl'] = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
-		}
-		if (!empty($wgAdDriverUseNewTracking)) {
-			$vars['wgAdDriverUseNewTracking'] = $wgAdDriverUseNewTracking;
 		}
 
 		if ($wgUser->getOption('showAds')) {
@@ -394,14 +382,13 @@ class AdEngine2Controller extends WikiaController {
 	 * @return bool
 	 */
 	static public function onWikiaSkinTopScriptsLegacy(&$vars, &$scripts) {
-		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals, $wgEnableWikiaHomePageExt;
+		global $wgCityId, $wgEnableKruxTargeting, $wgNoExternals;
 
 		wfProfileIn(__METHOD__);
 
 		// generic type of page: forum/search/article/home/...
 		$vars['wikiaPageType'] = WikiaPageType::getPageType();
 		$vars['wikiaPageIsHub'] = WikiaPageType::isWikiaHub();
-		$vars['wikiaPageIsWikiaHomePage'] = !empty( $wgEnableWikiaHomePageExt ) && WikiaPageType::isMainPage();
 
 		// category/hub
 		$catInfo = HubService::getComscoreCategory($wgCityId);

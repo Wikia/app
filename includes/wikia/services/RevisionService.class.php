@@ -32,23 +32,6 @@ class RevisionService {
 		$this->queryLimit = 200;
 	}
 
-	public function getFirstRevisionByArticleId( $articles ) {
-		$ids = !is_array( $articles ) ? [ $articles ] : $articles;
-		$result = [];
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			[ 'revision' ],
-			[ 'rev_id', 'rev_page', 'rev_user', 'rev_timestamp' ],
-			[ 'rev_page' => $ids, 'rev_parent_id = 0' ],
-			'RevisionService::getFirstRevisionByArticleId'
-		);
-		while ( $row = $res->fetchRow() ) {
-			$result[ $row[ 'rev_page' ] ] = $row;
-		}
-		return $result;
-	}
-
 	/**
 	 * @param int $limit limit number of results.
 	 * @param array $namespaces list of namespaces to filter by. No filter applied if null

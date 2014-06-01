@@ -1,2 +1,2 @@
 #!/bin/sh
-ant -f build-wikia.xml -Dunittest=${TEST:-$1} phpunit-single
+ant -f build-wikia.xml -Dunittest=$TEST phpunit-single

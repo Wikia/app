@@ -1,9 +1,11 @@
 @mixin box-shadow($shadow, $secondShadow: ""){
 	@if $secondShadow == "" {
 		-webkit-box-shadow: $shadow;
+		-o-box-shadow: $shadow;
 		box-shadow: $shadow;
 	} @else {
 		-webkit-box-shadow: $shadow, $secondShadow;
+		-o-box-shadow: $shadow, $secondShadow;
 		box-shadow: $shadow, $secondShadow;
 	}
 }

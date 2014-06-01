@@ -79,15 +79,6 @@ class ParserCache {
 	 * @param $popts ParserOptions
 	 */
 	function getETag( $article, $popts ) {
-		// Wikia change - begin
-		// @author macbre - BAC-1227
-		$eTag = false;
-		wfRunHooks( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
-		if ($eTag !== false) {
-			return $eTag;
-		}
-		// Wikia change - end
-
 		return 'W/"' . $this->getParserOutputKey( $article,
 			$popts->optionsHash( ParserOptions::legacyOptions(), $article->getTitle() ) ) .
 				"--" . $article->getTouched() . '"';
@@ -234,14 +225,8 @@ class ParserCache {
 			// Save the timestamp so that we don't have to load the revision row on view
 			$parserOutput->setTimestamp( $article->getTimestamp() );
 
-			// Wikia change - begin
-			// @author macbre - BAC-1172
-			#$info = "Saved in parser cache with key $parserOutputKey and timestamp $now";
-			$info = "Saved in parser cache with key $parserOutputKey";
-
-			$parserOutput->mText .= "\n<!-- $info -->\n";
-			wfDebug( "$info\n" );
-			// Wikia change - end
+			$parserOutput->mText .= "\n<!-- Saved in parser cache with key $parserOutputKey and timestamp $now -->\n";
+			wfDebug( "Saved in parser cache with key $parserOutputKey and timestamp $now\n" );
 
 			// Save the parser output
 			$this->mMemc->set( $parserOutputKey, $parserOutput, $expire );

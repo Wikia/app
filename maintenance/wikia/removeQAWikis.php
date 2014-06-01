@@ -17,7 +17,6 @@ class RemoveQAWikis extends Maintenance {
 
 	const REASON = 'Marked for removal by RemoveQAWikis maintenance script';
 	const WIKI_PREFIX = 'qatestwiki';
-	const LANG_PREFIXES = 'de es fr it ja nl no pl pt ptbr ru zh';
 
 	/**
 	 * Set script options
@@ -50,43 +49,36 @@ class RemoveQAWikis extends Maintenance {
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-		$langPrefixes = explode(' ', self::LANG_PREFIXES);
-		$langPrefixes[] = ''; // English wikis do not have a prefix in dbname
+		$res = $dbr->select(
+			'city_list',
+			array(
+				'city_id',
+				'city_dbname',
+				'city_url',
+				'city_factory_timestamp',
+			),
+			array(
+				'city_public' => 1,
+				'city_dbname ' . $dbr->buildLike( self::WIKI_PREFIX, $dbr->anyString() )
+			),
+			__METHOD__
+		);
 
-		foreach($langPrefixes as $langPrefix) {
-			$this->output("Checking wikis with '{$langPrefix}' language prefix...");
+		$this->output("\n\n");
 
-			$res = $dbr->select(
-				'city_list',
-				array(
-					'city_id',
-					'city_dbname',
-					'city_url',
-					'city_factory_timestamp',
-				),
-				array(
-					'city_public' => 1,
-					'city_dbname ' . $dbr->buildLike( $langPrefix . self::WIKI_PREFIX, $dbr->anyString() )
-				),
-				__METHOD__
-			);
+		while($wiki = $res->fetchObject()) {
+			$this->output("* {$wiki->city_dbname} <{$wiki->city_url}>... ");
 
-			$this->output("\n\n");
-
-			while($wiki = $res->fetchObject()) {
-				$this->output("* {$wiki->city_dbname} <{$wiki->city_url}>... ");
-
-				if (!$isDryRun) {
-					if ($this->markWikiAsClosed($wiki->city_id)) {
-						$this->output("done\n");
-					}
-					else {
-						$this->output("err!\n");
-					}
+			if (!$isDryRun) {
+				if ($this->markWikiAsClosed($wiki->city_id)) {
+					$this->output("done\n");
 				}
 				else {
-					$this->output("skipping, dry run\n");
+					$this->output("err!\n");
 				}
+			}
+			else {
+				$this->output("skipping, dry run\n");
 			}
 		}
 

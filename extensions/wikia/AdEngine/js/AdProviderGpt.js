@@ -61,7 +61,7 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 	// Private methods
 
 	function incrementItemInStorage(storageKey) {
-		log('incrementItemInStorage ' + storageKey, 'debug', logGroup);
+		log('incrementItemInStorage ' + storageKey, 5, logGroup);
 
 		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
 
@@ -71,104 +71,64 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 		return numCallForSlot;
 	}
 
-	function getStorageKey(param, slotname) {
-		return 'dart_' + param + '_' + slotname;
+	function canHandleSlot(slotinfo) {
+		log(['canHandleSlot', slotinfo], 5, logGroup);
+
+		return !!slotMap[slotinfo[0]];
 	}
 
+	// Public methods
+
 	/**
-	 * Flush GPT ads
+	 * Flush GPT ads (if not flushed already).
 	 *
 	 * This function will cause all ads pushed to GPT to be fetched and rendered.
-	 * All other ads will auto-flush because the gptFlush variable is set to true.
+	 * All other ads will go through the legacy DART API.
 	 */
 	function flushGpt() {
-		log('flushGpt', 'debug', logGroup);
+		log('flushGpt', 5, logGroup);
 
 		gptFlushed = true;
 		wikiaGpt.flushAds();
 	}
 
-	/**
-	 * Given we're considering calling DART (right country, right slot), should we?
-	 *
-	 * @param slotname
-	 * @returns {boolean}
-	 */
-	function shouldCallDart(slotname) {
-		log(['shouldCallDart', slotname], 'debug', logGroup);
+	function fillInSlot(slot) {
+		log(['fillInSlot', slot], 5, logGroup);
 
-		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
-			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
-
-		// Show INVISIBLE_SKIN when leaderboard was to be shown
-		if (slotname === 'INVISIBLE_SKIN') {
-			if (leaderboardCalled) {
-				return true;
-			}
-		}
-
-		// Always have an ad for MODAL_INTERSTITIAL
-		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
-			return true;
-		}
-
-		// Check if there was ad last time
-		// If not, check if desired number of DART calls were made
-		if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
-			log('There was no ad for this slot last time and reached max number of calls to DART', 'debug', logGroup);
-			log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup);
-			return false;
-		}
-
-		if (slotname.search('LEADERBOARD') > -1) {
-			leaderboardCalled = true;
-		}
-		return true;
-	}
-
-	// Public methods
-
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 'debug', logGroup);
-
-		if (!isHighValueCountry || !slotMap[slotname]) {
-			return false;
-		}
-
-		if (gptConfig[slotname] === 'flushonly') {
-			return true;
-		}
-
-		var canHandle = shouldCallDart(slotname);
-
-		if (!canHandle && gptConfig[slotname] === 'flush') {
+		if (gptConfig[slot[0]] === 'flushonly') {
 			flushGpt();
-		}
-
-		return canHandle;
-	}
-
-	function fillInSlot(slotname, success, hop) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
-
-		var noAdStorageKey = getStorageKey('noad', slotname),
-			numCallForSlotStorageKey = getStorageKey('calls', slotname),
-			slotTracker = adTracker.trackSlot('addriver2', slotname);
-
-		if (gptConfig[slotname] === 'flushonly') {
-			flushGpt();
-			success();
 			return;
 		}
 
-		slotTracker.init();
+		var slotname = slot[0],
 
-		incrementItemInStorage(numCallForSlotStorageKey);
-		cacheStorage.del(noAdStorageKey);
+			noAdStorageKey = 'dart_noad_' + slotname,
+			numCallForSlotStorageKey = 'dart_calls_' + slotname,
 
-		wikiaGpt.pushAd(
-			slotname,
-			function () { // Success
+			noAdLastTime = cacheStorage.get(noAdStorageKey, now) || false,
+			numCallForSlot = cacheStorage.get(numCallForSlotStorageKey, now) || 0,
+			dontCallDart = false,
+
+			slotTracker = adTracker.trackSlot('addriver2', slotname),
+
+			// Do this when DART hops or doesn't handle
+			error = function () {
+				log(slotname + ' was not filled by DART', 2, logGroup);
+				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+
+				// don't track hop if not high value country
+				// don't track hop if dart was not called but rather skipped
+				if (isHighValueCountry && !dontCallDart) {
+					// Track hop time
+					slotTracker.hop();
+				}
+
+				slot[2] = 'Liftium2';
+				window.adslots2.push(slot);
+			},
+
+			// Do this when filling slot by DART
+			success = function () {
 				slotTweaker.removeDefaultHeight(slotname);
 				slotTweaker.removeTopButtonIfNeeded(slotname);
 				slotTweaker.adjustLeaderboardSize(slotname);
@@ -178,20 +138,48 @@ var AdProviderGpt = function (adTracker, log, window, Geo, slotTweaker, cacheSto
 					// Track hop time
 					slotTracker.success();
 				}
+			};
 
-				success();
-			},
-			function () { // Hop
-				log(slotname + ' was not filled by DART', 'info', logGroup);
-				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+		if (!isHighValueCountry) {
+			error();
+			return;
+		}
 
-				// Track hop time
-				slotTracker.hop();
-
-				// hop to Liftium
-				hop({method: 'hop'}, 'Liftium');
+		// Show INVISIBLE_SKIN when leaderboard was shown
+		if (slotname === 'INVISIBLE_SKIN') {
+			if (!leaderboardCalled) {
+				dontCallDart = true;
 			}
-		);
+		} else if (!slotname.match(/^MODAL_INTERSTITIAL/)) {
+			// Always have an ad for MODAL_INTERSTITIAL
+			// Otherwise check if there was ad last time
+			// If not, check if desired number of DART calls were made
+			if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
+				log('There was no ad for this slot last time and reached max number of calls to DART', 5, logGroup);
+				log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 6, logGroup);
+
+				dontCallDart = true;
+			}
+		}
+
+		if (dontCallDart) {
+			if (gptConfig[slotname] === 'flush') {
+				flushGpt();
+			}
+			error();
+			return;
+		}
+
+		if (slotname.search('LEADERBOARD') > -1) {
+			leaderboardCalled = true;
+		}
+
+		incrementItemInStorage(numCallForSlotStorageKey);
+		cacheStorage.del(noAdStorageKey);
+
+		slotTracker.init();
+
+		wikiaGpt.pushAd(slotname, success, error);
 
 		if (gptConfig[slotname] === 'flush' || gptFlushed) {
 			flushGpt();

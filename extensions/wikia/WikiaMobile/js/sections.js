@@ -1,85 +1,153 @@
 /*
  * @define sections
  * module used to handle sections on wikiamobile
+ * expanding and collapsing
  *
  * @author Jakub Olek
+ * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  */
 
-define( 'sections', ['jquery', 'wikia.window'], function ( $, window ) {
-	'use strict';
 
-	var d = window.document,
-		sections = $( 'h2[id],h3[id],h4[id]', d.getElementById( 'wkPage' ) ).toArray(),
-		l = sections.length,
-		lastSection,
-		escapeRegExp = /[()\.\+]/g,
-		offset = 5;
+define('sections', ['JSMessages', 'jquery'], function(msg, $){
+	var d = document,
+		fragment = d.createDocumentFragment(),
+		OPENCLASS = 'open',
+		goBck = '<span class=goBck>&uarr; ' + msg('wikiamobile-hide-section') + '</span>',
+		chevron = '<span class=chev></span>',
+		$d = $(d);
 
-	/**
-	 * @desc Function that lets you scroll viewport to a given section
-	 * @param header - a string representation of a header
-	 * @returns {undefined|true} - status code if scroll actually happened
-	 */
-	function scrollTo ( header ) {
-		//() . and + have to be escaped before passed to querySelector
-		var h = document.querySelector( header.replace( escapeRegExp, '\\$&' ) ),
-			ret;
+	function init(){
+		var article = d.getElementById('mw-content-text');
 
-		if ( h ) {
-			window.scrollTo( 0, $(h).offset().top - offset + 1);
-			ret = true;
+		//avoid running if there are no sections which are direct children of the article section
+		if(d.querySelector('#mw-content-text > h2')){
+			var contents = article.childNodes,
+				root = fragment,
+				x,
+				y = contents.length,
+				currentSection = false,
+				node,
+				nodeName,
+				isH2;
+
+			for (x=0; x < y; x++) {
+				node = $(contents[x]);
+				nodeName = node[0].nodeName;
+				isH2 = (nodeName == 'H2');
+
+				if (nodeName != '#comment' && nodeName != 'SCRIPT') {
+					if(node[0].id == 'WkMainCntFtr' || node[0].className == 'printfooter' || node.hasClass('noWrap')){
+						//do not wrap these elements
+						root = fragment;
+					}else if (isH2){
+						node = node
+							.clone(true)
+							.addClass('collSec')
+							//append chevron
+							.append(chevron);
+
+						fragment.appendChild(node[0]);
+
+						currentSection = $(d.createElement('section')).addClass('artSec').attr('data-index', x)[0];
+						fragment.appendChild(currentSection);
+
+						root = currentSection;
+						continue;
+					}
+
+					root.appendChild(node.clone(true)[0]);
+				}
+			}
+
+			article.innerHTML = '';
+			article.appendChild( fragment );
 		}
 
-		return ret;
+		//this has to run even if we don't find any sections on a page for ie. Category Pages, pages without any sections but with readmore and stuff
+		$('#wkPage').on('click', '.collSec', function(){
+			toggle(this);
+		}).on('click', '.goBck', function(){
+			var parent = $(this.parentElement);
+
+			parent.removeClass(OPENCLASS).prev().removeClass(OPENCLASS)[0].scrollIntoView();
+
+			$d.trigger('sections:close', [parent]);
+		});
 	}
 
-	/**
-	 * @desc Finds and returns a current section
-	 * @returns jQuery object - a current section
-	 */
-	function current () {
-		var top = window.scrollY,
-			i = 0;
+	function toggle(h2, scroll){
+		h2 = $(typeof h2 === 'string' ? document.getElementById(h2) : h2);
 
-		for ( ; i < l; i++ ) {
-			if ( sections[i].offsetTop - offset > top ) {
-				break;
+		if(h2.length){
+			if(h2.hasClass(OPENCLASS)){
+				close(h2);
+			}else{
+				open(h2, scroll);
 			}
 		}
-
-		return $( sections[i - 1] );
 	}
 
-	lastSection = current();
+	function find(heading){
+		var h2;
 
-	/**
-	 * @desc Function that fires at most every 200ms while scrolling\
-	 * @triggers section:changed with a current section refernece and its id
-	 */
-	function onScroll () {
-		var currentSection = current();
-		// this is not needed to be fired on every scroll event
-		window.removeEventListener( 'scroll', onScroll );
-
-		if ( currentSection && !currentSection.is( lastSection ) ) {
-			$( d ).trigger( 'section:changed', {
-				section: currentSection,
-				id: currentSection.length ? currentSection[0].id : undefined
-			} );
-
-			lastSection = currentSection;
+		if(typeof heading == 'string') {
+			heading = $(d.getElementById(heading.replace(/ /g, '_')));
 		}
 
-		window.setTimeout( function () {
-			window.addEventListener( 'scroll', onScroll );
-		}, 200 );
+		//find in what section is the header
+		if(heading.length && !heading.is('h1,h2')) h2 = heading.parent('.artSec').prev();
+
+		return [h2 || $(heading), heading];
 	}
 
-	window.addEventListener( 'scroll', onScroll );
+	function scrollTo(header){
+		var top =  header.offset().top;
+		//scroll header into view
+		//if the page is long that is the way I found it reliable
+		//without calling it like that
+		//android sometimes did not scroll at all
+		//and iOS sometimes scrolled to a wrong place
+		window.scrollTo(0, top);
+		setTimeout(function(){
+			window.scrollTo(0, top);
+		}, 50);
+	}
+
+	function open(id, scroll) {
+		var headers = find(id),
+			h2 = headers[0];
+
+		if(!h2.hasClass(OPENCLASS)) {
+			var next = h2.addClass(OPENCLASS).next().addClass(OPENCLASS);
+
+			if(!h2[0].goBackAdded && next.hasClass('artSec')) {
+				next.append(goBck);
+				h2[0].goBackAdded = true;
+			}
+
+			$.event.trigger('sections:open', [next]);
+		}
+
+		if(scroll && headers[1]){
+			scrollTo(headers[1]);
+		}
+	}
+
+	function close(id) {
+		var h2 = find(id)[0],
+			next;
+
+		if(h2.hasClass('open')) {
+			next = h2.removeClass(OPENCLASS).next().removeClass(OPENCLASS);
+
+			$.event.trigger('sections:close', [next]);
+		}
+	}
 
 	return {
-		list: sections,
-		scrollTo: scrollTo,
-		current: current
+		init: init,
+		toggle: toggle,
+		open: open,
+		close: close
 	};
-} );
+});

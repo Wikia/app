@@ -40,14 +40,18 @@
 		}
 		input[type=submit] {
 			margin: 10px 0 0;
-			width: 125px;
+			@if ( $responsive-layout-enabled ) {
+				width: 125px;
+			}
 		}
 		.general-errors {
 			display: none;
 		}
 	}
 	> .sso-login {
-		text-align: center;
+		@if ( $responsive-layout-enabled ) {
+			text-align: center;
+		}
 		> .sso-login-divider {
 			@include divider;
 			line-height: 12px;
@@ -61,6 +65,7 @@
 			font-size: 10px;
 			height: 16px;
 			line-height: 16px;
+			margin-left: 6px;
 			padding: 0 9px 0 0;
 			> img {
 				margin: 0 4px;

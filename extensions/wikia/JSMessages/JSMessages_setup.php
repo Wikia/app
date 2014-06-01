@@ -24,9 +24,10 @@ $wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';
 $wgAutoloadClasses['JSMessagesController'] =  $dir . '/JSMessagesController.class.php';
 
 // hooks
-$wgHooks['WikiaSkinTopScripts']        [] = 'JSMessages::onWikiaSkinTopScripts';
-$wgHooks['ResourceLoaderGetConfigVars'][] = 'JSMessages::onResourceLoaderGetConfigVars';
-$wgHooks['MessageCacheReplace']        [] = 'JSMessagesHelper::onMessageCacheReplace';
+$wgHooks['WikiaSkinTopScripts'][] = 'JSMessages::onWikiaSkinTopScripts';
+$wgHooks['MessageCacheReplace'][] = 'JSMessagesHelper::onMessageCacheReplace';
+
+
 
 $wgExtensionFunctions[] = function () {
 	// This has to be wrapped in a function so it isn't run before we include GlobalSettings.php

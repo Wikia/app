@@ -22,7 +22,4 @@ class FakeLocalFile extends LocalFile {
 
 	function upgradeRow() {}
 	function doDBInserts() {}
-
-	// BAC-1221: don't send purge requests for images matching "Temp_file_" pattern
-	function purgeEverything() {}
 }

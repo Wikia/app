@@ -48,8 +48,7 @@ ve.dm.MWCategoryMetaItem.static.toDataElement = function ( domElements ) {
 			'category': decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
 			'origCategory': matches[2],
 			'sortkey': decodeURIComponent( rawSortkey ).replace( /_/g, ' ' ),
-			'origSortkey': rawSortkey,
-			'origRel': firstDomElement.getAttribute( 'rel' )
+			'origSortkey': rawSortkey
 		}
 	};
 };
@@ -74,7 +73,7 @@ ve.dm.MWCategoryMetaItem.static.toDomElements = function ( dataElement, doc ) {
 	} else {
 		category = encodeURIComponent( category );
 	}
-	domElement.setAttribute( 'rel', dataElement.attributes.origRel || 'mw:WikiLink/Category' );
+	domElement.setAttribute( 'rel', 'mw:WikiLink/Category' );
 	href = hrefPrefix + category;
 	if ( sortkey !== '' ) {
 		href += '#' + sortkey;

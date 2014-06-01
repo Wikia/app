@@ -1748,8 +1748,6 @@ class EditPage {
 	 */
 	function showEditForm( $formCallback = null ) {
 		global $wgOut, $wgUser;
-        //wikia change ***
-        $isMobile = F::app()->checkskin('wikiamobile');
 
 		wfProfileIn( __METHOD__ );
 
@@ -1900,14 +1898,12 @@ class EditPage {
 		$wgOut->addHTML( $this->editFormTextAfterWarn );
 
 		$this->showStandardInputs();
+
 		$this->showFormAfterText();
+
 		$this->showTosSummary();
 
-		// wikia change begin
-		if ( !$isMobile ) {
-			$this->showEditTools();
-		}
-		// wikia change end
+		$this->showEditTools();
 
 		$wgOut->addHTML( $this->editFormTextAfterTools . "\n" );
 
@@ -2625,18 +2621,9 @@ HTML
 	 * @return string
 	 */
 	function getPreviewText() {
-		wfProfileIn( __METHOD__ );
-		// Wikia change begin
-		global $wgEnableSlowPagesBlacklistExt;
-		if ( !empty( $wgEnableSlowPagesBlacklistExt ) ) {
-			global $wgSlowPagesBlacklist;
-			if ( in_array( $this->mTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
-				wfProfileOut( __METHOD__ );
-				return sprintf( '<div class="previewnote">%s</div>', wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain() );
-			}
-		}
-		// Wikia change end
 		global $wgOut, $wgUser, $wgParser, $wgRawHtml;
+
+		wfProfileIn( __METHOD__ );
 
 		// wikia change begin
 		// TODO: remove?

@@ -28,7 +28,7 @@ $messages['br'] = array(
 	'cacheepoch-submit' => 'Hizivaat an talvoudenn',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

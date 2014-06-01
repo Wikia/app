@@ -37,7 +37,7 @@ function lw_CanonicalHref( &$canonicalUrl ){
 
 	// Only process if we're in NS_GRACENOTE or NS_LYRICFIND
 	if((defined('NS_GRACENOTE') && ($wgTitle->getNamespace() == NS_GRACENOTE))
-		|| (defined('NS_LYRICFIND') && ($wgTitle->getNamespace() == NS_LYRICFIND))){
+		|| (defined('NS_LYRICFIND') && $wgTitle->getNamespace() == NS_LYRICFIND)){
 		// Check if a community version of the page exists.
 		$nonPrefixedTitleText = $wgTitle->getText();
 		$mainNsTitle = Title::newFromText( $nonPrefixedTitleText, NS_MAIN );

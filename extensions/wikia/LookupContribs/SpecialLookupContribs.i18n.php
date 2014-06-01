@@ -67,18 +67,14 @@ Check given username for possible typos.</p>',
  * @author Umherirrender
  */
 $messages['qqq'] = array(
-	'lookupcontribslinks' => '{{Identical|Contribution link}}',
 	'lookupcontribsgo' => '{{Identical|Go}}',
 	'lookupcontribswiki' => '{{Identical|Wiki}}',
-	'lookupcontribswikidbname' => '{{Identical|Database name}}',
 	'lookupcontribswikiurl' => '{{Identical|URL}}',
 	'lookupcontribswikititle' => '{{Identical|Title}}',
-	'lookupcontribscontribslink' => '{{Identical|Contribution link}}',
 	'lookupcontribsnext' => '{{Identical|Next}}',
 	'lookupcontribsprevious' => '{{Identical|Previous}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
 	'lookupcontribsrestore' => '{{Identical|Restore}}',
-	'lookupcontribscontribs' => '{{Identical|Contribution}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
@@ -188,7 +184,6 @@ $messages['az'] = array(
 	'lookupcontribswikititle' => 'Başlıq',
 	'lookupcontribsnext' => 'növbəti',
 	'lookupcontribsfinal' => 'son',
-	'lookupcontribsall' => 'bütün',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -333,12 +328,10 @@ $messages['ce'] = array(
 	'lookupcontribswikioptions' => 'Параметраш',
 	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
 	'lookupcontribscontribs' => 'къинхьегам',
-	'lookupcontribshist' => 'истори',
-	'lookupcontribscontent' => 'чулацам',
 	'lookupcontribsall' => 'массо',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  * @author Mormegil
  */
@@ -566,16 +559,8 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
- * @author Reza1615
  */
 $messages['fa'] = array(
-	'lookupcontribsgo' => 'برو',
-	'lookupcontribswiki' => 'ویکی',
-	'lookupcontribswikiurl' => 'نشانی اینترنتی',
-	'lookupcontribswikititle' => 'عنوان',
-	'lookupcontribswikioptions' => 'گزینه',
-	'lookupcontribshist' => 'تاریخچه',
-	'lookupcontribsdiff' => 'تفاوت',
 	'lookupcontribscontent' => 'محتوا',
 	'lookupcontribsnormal' => 'اخیر',
 	'lookupcontribsall' => 'همه',
@@ -980,11 +965,7 @@ $messages['lrc'] = array(
 	'lookupcontribsselectfor' => 'انتخاب بيه سی:',
 	'lookupcontribsgo' => 'رو',
 	'lookupcontribswiki' => 'ويكی',
-	'lookupcontribswikidbname' => 'نوم دی بی',
 	'lookupcontribswikiurl' => 'يو آر ال',
-	'lookupcontribsnext' => 'نها',
-	'lookupcontribsprevious' => 'وادمايی',
-	'lookupcontribspageremoved' => 'ؤرداشته بیه:',
 	'lookupcontribscontent' => 'محتويات',
 	'lookupcontribsnormal' => 'تازه باو',
 	'lookupcontribsall' => 'همه',
@@ -1503,7 +1484,6 @@ Verifique se se enganou no nome do utilizador.</p>',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
- * @author Fitoschido
  * @author JM Pessanha
  * @author Luckas
  * @author Luckas Blade
@@ -1542,7 +1522,7 @@ Verifique se se enganou com o nome do utilizador.</p>',
 	'lookupcontribsdetails' => 'Ver detalhes de:',
 	'lookupcontribslastedited' => 'Última edição',
 	'lookupcontribsrecordspager' => "A mostrar os registos '''$1''' a '''$2''' de '''$3'''.",
-	'lookupcontribsnbrresult' => 'N.º do resultado:',
+	'lookupcontribsnbrresult' => 'Nº do resultado:',
 	'lookupcontribsnext' => 'seguintes',
 	'lookupcontribsprevious' => 'anteriores',
 	'lookupcontribspageremoved' => 'Removidas:',

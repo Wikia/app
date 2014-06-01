@@ -3,6 +3,7 @@
 
 //mixins
 @import "mixins/linear-gradient.scss";
+@import "mixins/box-sizing.scss";
 @import "mixins/box-shadow.scss";
 @import "mixins/transition.scss";
 
@@ -88,7 +89,7 @@
 	background-color: white;
 	-webkit-tap-highlight-color: rgba( 0,0,0,0 );
 	-webkit-focus-ring-color: rgba( 0,0,0,0 );
-	@include box-shadow(0 0 2px black);
+	@include box-shadow(0 0 5px black);
 
 	&.nav-open {
 		z-index: $highest-z-index+1;
@@ -249,6 +250,7 @@
 	}
 
 	&.cur3 {
+
 		#lvl1 {
 			-webkit-transform: translate(-200%) ;
 			-moz-transform: translate(-200%);
@@ -295,11 +297,14 @@
 		}
 
 		h1 {
-			margin: 0;
+			margin: 0 50px;
+		    border-top: none;
 			text-align: center;
 			font-size: medium;
 			font-weight: bold;
 			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 
 			&.anim {
 				-webkit-animation: slideIn .5s ease;
@@ -314,19 +319,6 @@
 			&.animBack {
 				-webkit-animation: slideBack .5s ease;
 				-moz-animation: slideBack .5s ease;
-			}
-			span {
-				background-position: center;
-				display: block;
-
-				position: absolute;
-				right: 0;
-				top: 0;
-
-				height: 50px;
-				width: 50px;
-
-				pointer-events: none;
 			}
 		}
 	}
@@ -424,16 +416,18 @@
 	}
 }
 
-#lvl1 {
+#lvl1{
 	margin: 0;
 	padding: 0;
 }
 
 #wkNavLink {
-	overflow: hidden;
-	padding-right: 50px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 50px;
+	background-position: center;
 }
 
 #wkNavBack {
@@ -442,24 +436,4 @@
 	float: left;
 
 	border-radius: 3px;
-}
-
-.cont-dir-rtl #wkNavMenu {
-	direction: ltr; //JanusCSS will change it to rtl
-
-	&.cur2 {
-		#lvl1 {
-			-webkit-transform: translate(100%);
-			-moz-transform: translate(100%);
-			transform: translate(100%);
-		}
-	}
-
-	&.cur3 {
-		#lvl1 {
-			-webkit-transform: translate(200%) ;
-			-moz-transform: translate(200%);
-			transform: translate(200%);
-		}
-	}
 }

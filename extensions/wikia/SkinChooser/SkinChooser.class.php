@@ -189,34 +189,30 @@ class SkinChooser {
 	public static function onGetSkin(RequestContext $context, &$skin) {
 		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgForceSkin, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
 
-		wfProfileIn(__METHOD__);
+		$isOasisPublicBeta = $wgDefaultSkin == 'oasis';
 
-		$isOasisPublicBeta = ( $wgDefaultSkin == 'oasis' );
+		wfProfileIn(__METHOD__);
 
 		$request = $context->getRequest();
 		$title = $context->getTitle();
 		$user = $context->getUser();
-		$useskin = $request->getVal( 'useskin' );
 
 		/**
-		 * check headers sent by varnish, if X-Skin is send force skin unless there is useskin param in url
+		 * check headers sent by varnish, if X-Skin is send force skin
 		 * @author eloy, requested by artur
 		 */
-		if ( !$useskin && function_exists( 'apache_request_headers' ) ) {
+		if( function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
-
-			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile", "uncyclopedia" ) ) ) {
+			if( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "wikia", "wikiamobile" ) ) ) {
 				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
-				wfProfileOut( __METHOD__ );
-
+				wfProfileOut(__METHOD__);
 				return false;
 			}
 		}
 
-		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
-			$skin = Skin::newFromKey( isset( $wgDefaultSkin ) ? $wgDefaultSkin : 'monobook' );
-			wfProfileOut( __METHOD__ );
-
+		if(!($title instanceof Title) || in_array( self::getUserOption('skin'), $wgSkipSkins )) {
+			$skin = Skin::newFromKey(isset($wgDefaultSkin) ? $wgDefaultSkin : 'monobook');
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -224,19 +220,18 @@ class SkinChooser {
 		if( $request->getVal('useskin') == 'wikia' ) {
 			$request->setVal('useskin', 'oasis');
 		}
-		if ( !empty( $wgForceSkin ) ) {
-			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
-			$elems = explode( '-', $wgForceSkin );
-			$userSkin = ( array_key_exists( 0, $elems ) ) ? $elems[ 0 ] : null;
-			$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : null;
+		if(!empty($wgForceSkin)) {
+			$wgForceSkin = $request->getVal('useskin', $wgForceSkin);
+			$elems = explode('-', $wgForceSkin);
+			$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
+			$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 
-			$skin = Skin::newFromKey( $userSkin );
+			$skin = Skin::newFromKey($userSkin);
 			$skin->themename = $userTheme;
 
-			self::log( __METHOD__, "forced skin to be {$wgForceSkin}" );
+			self::log(__METHOD__, "forced skin to be {$wgForceSkin}");
 
-			wfProfileOut( __METHOD__ );
-
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -281,16 +276,13 @@ class SkinChooser {
 		}
 		wfProfileOut(__METHOD__.'::GetSkinLogic');
 
-		if ( !$useskin ) {
-			$useskin = $userSkin;
-		}
+		$useskin = $request->getVal('useskin', $userSkin);
+		$elems = explode('-', $useskin);
+		$userSkin = ( array_key_exists(0, $elems) ) ? ( (empty($wgEnableAnswers) && $elems[0] == 'answers') ? 'oasis' : $elems[0]) : null;
+		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : $userTheme;
+		$userTheme = $request->getVal('usetheme', $userTheme);
 
-		$elems = explode( '-', $useskin );
-		$userSkin = ( array_key_exists( 0, $elems ) ) ? ( ( empty( $wgEnableAnswers ) && $elems[ 0 ] == 'answers' ) ? 'oasis' : $elems[ 0 ] ) : null;
-		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
-		$userTheme = $request->getVal( 'usetheme', $userTheme );
-
-		$skin = &Skin::newFromKey( $userSkin );
+		$skin = &Skin::newFromKey($userSkin);
 
 		$normalizedSkinName = substr(strtolower(get_class($skin)),4);
 

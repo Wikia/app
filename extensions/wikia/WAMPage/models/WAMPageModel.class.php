@@ -109,6 +109,7 @@ class WAMPageModel extends WikiaModel {
 		}
 
 		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
+		$WAMData['wam_index'] = $this->calculateFilterIndex($WAMData['wam_index'], $params);
 
 		return $WAMData;
 	}
@@ -284,6 +285,14 @@ class WAMPageModel extends WikiaModel {
 			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
 		}
 
+		return $wamWikis;
+	}
+
+	protected function calculateFilterIndex($wamWikis, $params) {
+		$i = 1;
+		foreach ($wamWikis as &$wiki) {
+			$wiki['index'] = $params['offset'] + $i++;
+		}
 		return $wamWikis;
 	}
 

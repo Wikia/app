@@ -25,6 +25,10 @@ $color-masthead: $color-page;
 
 $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%), 40%);
 
+// Temporary - waiting for UI Styleguide team
+@import "modalFix";
+
+
 .WikiaUserPagesHeader {
 	@if $page-opacity == 100 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);

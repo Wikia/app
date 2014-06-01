@@ -5,18 +5,15 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 	private static $code = <<< SCRIPT
 		<script>
 			require(['wikia.geo'], function (geo) {
-				if (geo.getCountryCode() in %%COUNTRIES%%) {
-					var aax_src='3006',
-						aax_url = encodeURIComponent(document.location),
-						s = document.createElement('script'),
-						insertLoc = document.getElementsByTagName('script')[0];
-
+				if (geo.getCountryCode() === 'US') {
+					var aax_src='3006';
+					var aax_url = encodeURIComponent(document.location);
 					try { aax_url = encodeURIComponent("" + window.top.location); } catch(e) {}
-
+					var s = document.createElement('script');
 					s.type = 'text/javascript';
 					s.async = true;
-					s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
-
+					s.src = '//aax-us-east.amazon-adsystem.com/e/dtb/bid?src=' + aax_src + '&u=' + aax_url + "&cb=" + Math.round(Math.random()*10000000);
+					var insertLoc = document.getElementsByTagName('script')[0];
 					insertLoc.parentNode.insertBefore(s, insertLoc);
 				}
 			});
@@ -24,46 +21,21 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 SCRIPT;
 
 	public static function isEnabled() {
-		global $wgEnableAmazonDirectTargetedBuy, $wgShowAds, $wgAdDriverUseSevenOneMedia;
-
-		return $wgEnableAmazonDirectTargetedBuy
-			&& $wgShowAds
-			&& AdEngine2Controller::areAdsShowableOnPage()
-			&& !$wgAdDriverUseSevenOneMedia;
+		return F::app()->wg->EnableAmazonDirectTargetedBuy
+			&& F::app()->wg->ShowAds
+			&& AdEngine2Controller::areAdsShowableOnPage();
 	}
 
 	public function getSetupHtml($params = array()) {
-		global $wgAmazonDirectTargetedBuyCountries, $wgAmazonDirectTargetedBuyCountriesDefault;
-
 		static $called = false;
+
 		$code = '';
 
-		if (!$called && self::isEnabled()) {
+		if (!$called) {
 			$called = true;
-			$countriesJS = [];
 
-			$amazonCountries = $wgAmazonDirectTargetedBuyCountries;
-			if (empty($amazonCountries)) {
-				// If the variable is not set for given wiki, use the value from the community wiki
-				$amazonCountries = WikiFactory::getVarValueByName(
-					'wgAmazonDirectTargetedBuyCountries', Wikia::COMMUNITY_WIKI_ID
-				);
-			}
-			if (empty($amazonCountries)) {
-				// If the variable is set nor for given wiki neither for community, use the default value
-				$amazonCountries = $wgAmazonDirectTargetedBuyCountriesDefault;
-			}
-
-			if (is_array($amazonCountries)) {
-				foreach ($amazonCountries as $countryCode) {
-					if (is_string($countryCode)) {
-						$countriesJS[$countryCode] = true;
-					}
-				}
-			}
-
-			if ($countriesJS) {
-				$code = str_replace('%%COUNTRIES%%', json_encode($countriesJS), self::$code);
+			if (self::isEnabled()) {
+				$code = self::$code;
 			}
 		}
 

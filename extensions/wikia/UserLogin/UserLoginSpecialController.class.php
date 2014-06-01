@@ -13,16 +13,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
-
+	
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
 	/* @var $userLoginHelper UserLoginHelper */
 	private $userLoginHelper = null;
-
-	// let's keep this fields private for security reasons
-	private $username = '';
-	private $password = '';
 
 	public function __construct() {
 		parent::__construct( 'UserLogin', '', false );
@@ -149,15 +145,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				if ( $this->result == 'ok' ) {
 					// redirect page
 					$this->userLoginHelper->doRedirect();
-				} elseif ( $this->result == 'unconfirm' ) {
+				} else if ( $this->result == 'unconfirm' ) {
 					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
-				} elseif ( $this->result === 'closurerequested' ) {
-					$response = $this->app->sendRequest( 'UserLoginSpecial', 'getCloseAccountRedirectUrl' );
-					$redirectUrl = $response->getVal( 'redirectUrl' );
-					$this->wg->Out->redirect( $redirectUrl );
-				} elseif ( $this->result == 'resetpass') {
+				} else if ( $this->result == 'resetpass') {
 					$this->editToken = $this->wg->User->getEditToken();
 					$this->subheading = wfMessage('resetpass_announce')->escaped();
 					$this->wg->Out->setPageTitle( wfMessage('userlogin-password-page-title')->plain() );
@@ -172,11 +164,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->setPageTitle( wfMessage('userlogin-forgot-password')->plain() );
 			return;
 		}
-
-		// we're sure at this point we'll need the private fields'
-		// values in the template let's pass them then
-		$this->response->setVal( 'username', $this->username );
-		$this->response->setVal( 'password', $this->password );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$recoverParam = 'recover=1';
@@ -208,10 +195,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->redirectUrl = $title->getFullUrl( $params );
 	}
 
-	public function getCloseAccountRedirectUrl() {
-		$this->redirectUrl = SpecialPage::getTitleFor( 'CloseMyAccount', 'reactivate' )->getFullUrl();
-	}
-
 	/**
 	 * @brief renders html version that will be inserted into ajax based login interaction
 	 * @details
@@ -220,57 +203,23 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		if ( isset( $query['password'] ) ) {
-			// remove the password from the params to prevent exposiong in into the URL
-			unset($query['password']);
-		}
-
-		$this->returnto = $this->getReturnToFromQuery( $query );
-		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
-	}
-
-	public function getMainPagePartialUrl() {
-		return Title::newMainPage()->getPartialURL();
-	}
-
-	/**
-	 * @param String $title
-	 *
-	 * @return Boolean
-	 */
-	public function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
-	}
-
-	private function getReturnToFromQuery( $query ) {
-		if( !is_array( $query ) ) {
-			return '';
-		}
-
-		$returnto = $this->getMainPagePartialUrl();
-		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnto = $query['title'] ;
-			unset( $query['title'] );
-		}
-
-		return $returnto;
-	}
-
-	private function getReturnToQueryFromQuery( $query ) {
-		if( !is_array( $query ) ) {
-			return '';
-		}
-
-		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
-		// and because of that the returntoquery gets longer and longer with each failure
-		if( !empty( $query['returntoquery'] ) ) {
-			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
-			$query['returntoquery'] = [];
+		$this->returnto = Title::newMainPage()->getPartialURL();
+		if (isset($query['title'])) {
+			if ( !AccountNavigationController::isBlacklisted( $query['title'] ) ) {
+				$this->returnto = $query['title'] ;
+			} else {
+				$this->returnto = Title::newMainPage()->getPartialURL();
+			}
+			unset($query['title']);
+			if ( isset( $query['password'] ) ) {
+				// remove the password from the params to prevent exposiong in into the URL
+				unset($query['password']);
+			}
 		} else {
-			$prevReturnToQuery = [];
+			$this->returnto = Title::newMainPage()->getPartialURL();
 		}
 
-		return wfArrayToCGI( $query, $prevReturnToQuery );
+		$this->returntoquery = wfArrayToCGI( $query );
 	}
 
 	public function providers() {
@@ -362,14 +311,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->result = 'unconfirm';
 					$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $this->wg->User->getEmail() )->parse();
 				} else {
-					$result = '';
-					$resultMsg = '';
-					if ( !wfRunHooks( 'WikiaUserLoginSuccess', array( $this->wg->User, &$result, &$resultMsg ) ) ) {
-						$this->result = $result;
-						$this->msg = $resultMsg;
-						break;
-					}
-
 					//Login succesful
 					$injected_html = '';
 					wfRunHooks('UserLoginComplete', array(&$this->wg->User, &$injected_html));
@@ -385,9 +326,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					LoginForm::clearLoginToken();
 					UserLoginHelper::clearNotConfirmedUserSession();
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
-					// we're sure at this point we'll need the private field'
-					// value in the template let's pass them then
-					$this->response->setVal( 'username', $loginForm->mUsername );
+					$this->username = $loginForm->mUsername;
 					$this->result = 'ok';
 				}
 				break;

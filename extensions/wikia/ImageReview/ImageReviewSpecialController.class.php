@@ -53,7 +53,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->forward( get_class( $this ), 'csvStats' );
 		}
 
-		$this->response->setCacheValidity(WikiaResponse::CACHE_DISABLED);
+		$this->response->setCacheValidity(0, 0, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		$this->response->sendHeaders();
 
 		$this->response->addAsset('extensions/wikia/ImageReview/js/jquery.onImagesLoad.js');
@@ -192,6 +192,7 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$name = "ImageReviewStats-$startYear-$startMonth-$startDay-to-$endYear-$endMonth-$endDay";
 
 		header("Pragma: public");
+		header("Expires: 0");
 		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 		header('Content-Type: text/force-download');
 

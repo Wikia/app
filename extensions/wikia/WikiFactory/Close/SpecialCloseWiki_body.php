@@ -392,7 +392,7 @@ class CloseWikiPage extends SpecialPage {
 		$bShowDumps = false;
 		$aFiles = array();
 
-		if ( $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
+		if ( $this->closedWiki->city_lastdump_timestamp < DumpsOnDemand::S3_MIGRATION ) {
 			$aFiles = array(
 				'pages_current'	=> '_pages_current.xml.gz',
 				'pages_full'	=> '_pages_full.xml.gz',

@@ -36,9 +36,6 @@ class RebuildLocalisationCache extends Maintenance {
 		$this->mDescription = "Rebuild the localisation cache";
 		$this->addOption( 'force', 'Rebuild all files, even ones not out of date' );
 		$this->addOption( 'threads', 'Fork more than one thread', false, true );
-		// Wikia change begin
-		$this->addOption( 'cache-dir', 'Override the value of $wgCacheDirectory', false, true );
-		// Wikia change end
 	}
 
 	public function memoryLimit() {
@@ -47,11 +44,6 @@ class RebuildLocalisationCache extends Maintenance {
 
 	public function execute() {
 		global $wgLocalisationCacheConf;
-
-		// Wikia change begin
-		global $wgCacheDirectory;
-		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
-		// Wikia change end
 
 		$force = $this->hasOption( 'force' );
 		$threads = $this->getOption( 'threads', 1 );

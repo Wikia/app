@@ -62,7 +62,7 @@ $messages['ca'] = array(
 	'healthcheck-desc' => "Una [[Special:HealthCheck|pàgina especial]] per verificar l'estat del servidor",
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(

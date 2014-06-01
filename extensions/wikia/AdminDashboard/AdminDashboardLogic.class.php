@@ -85,6 +85,7 @@ class AdminDashboardLogic {
 				"PageLayoutBuilderForm",
 				"Phalanx",
 				"PhalanxStats",
+				"PhotoPopSetup",
 				"Places",
 				"Play",
 				"Preferences",

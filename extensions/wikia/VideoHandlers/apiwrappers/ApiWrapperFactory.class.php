@@ -65,7 +65,7 @@ class ApiWrapperFactory {
 		$map = F::app()->wg->videoMigrationProviderMap;
 		foreach( $map as $name ) {
 			$class_name = $name . 'ApiWrapper';
-			if ( $class_name::isMatchingHostname( $parsed['host'] ) ) {
+			if ( $class_name::isMatchingHostname(  $parsed['host'] ) ) {
 				wfProfileOut( __METHOD__ );
 				return $class_name::newFromUrl( $url );
 			}

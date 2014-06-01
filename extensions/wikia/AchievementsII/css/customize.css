@@ -18,6 +18,7 @@ ul.custom-badges {
 }
 
 ul.custom-badges li {
+  height: 190px;
   padding-bottom: 10px;
   border-bottom: 1px solid #AAAAAA;
   margin-bottom: 15px;

@@ -1,4 +1,4 @@
-<aside class="AdminDashboardRail WikiaRail" id="AdminDashboardRail">
+<aside class="AdminDashboardRail" id="AdminDashboardRail">
 	<?= $wg->EnableFounderProgressBarExt ? $app->renderView( 'FounderProgressBar', 'widget' ) : '' ?>
 	<?= $app->renderView( 'QuickStats', 'getStats') ?>
 </aside>

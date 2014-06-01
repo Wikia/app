@@ -163,7 +163,7 @@
 						'index',
 						array(
 							'text' => wfMessage('cnw-desc-all-ages')->escaped(),
-							'tooltipIconTitle' => wfMessage('cnw-desc-tip-all-ages')->plain(),
+							'tooltipIconTitle' => wfMessage('cnw-desc-tip-all-ages')->escaped(),
 						)
 					);
 					?>

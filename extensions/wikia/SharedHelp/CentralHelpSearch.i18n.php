@@ -51,7 +51,7 @@ $messages['ca'] = array(
 	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  * @author Darth Daron
  */
@@ -147,13 +147,6 @@ $messages['it'] = array(
  */
 $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'centralhelpsearch-placeholder' => 'پی جوری هومیاری',
 );
 
 /** Lithuanian (lietuvių)

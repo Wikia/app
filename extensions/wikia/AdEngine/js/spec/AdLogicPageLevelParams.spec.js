@@ -364,13 +364,13 @@ describe('AdLogicPageLevelParams', function(){
 			adLogicPageLevelParams = AdLogicPageLevelParams(logMock, windowMock, kruxMock, adLogicPageDimensionsMock, abTestMock),
 			params = adLogicPageLevelParams.getPageLevelParams();
 
-		expect(params.s0).toBe('hub');
-		expect(params.s1).toBe('_ent_hub');
-		expect(params.s2).toBe('hub');
-		expect(params.dmn).toBe('wikiacom');
-		expect(params.hostpre).toBe('www');
-		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
+		expect(	params.s0).toBe('hub');
+		expect(	params.s1).toBe('_ent_hub');
+		expect(	params.s2).toBe('hub');
+		expect(	params.dmn).toBe('wikiacom');
+		expect(	params.hostpre).toBe('www');
+		expect(	params.lang).toBe('en');
+		expect(	params.hasp).toBe('yes');
 	});
 
 	it('getUrl Hub page: lifestyle', function() {

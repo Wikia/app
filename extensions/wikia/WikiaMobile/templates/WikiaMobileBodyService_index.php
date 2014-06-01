@@ -11,11 +11,13 @@
  */
 ?>
 <section id=wkPage>
-	<?= !empty( $pageHeaderContent ) ? $pageHeaderContent : ''; ?>
+	<?= $pageHeaderContent ;?>
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<footer id=wkMainCntFtr>
-			<nav id=wkRltdCnt><?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?></nav>
+			<nav id=wkRltdCnt>
+			<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
+			</nav>
 			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
 			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 		</footer>

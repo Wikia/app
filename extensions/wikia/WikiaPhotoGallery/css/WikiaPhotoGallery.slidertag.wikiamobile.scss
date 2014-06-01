@@ -17,7 +17,7 @@
 		transition: opacity .3s;
 		width: 280px;
 		height: 280px;
-		margin-bottom: -10px;
+		margin-bottom: 10px;
 		overflow: hidden;
 
 		& > a {
@@ -75,17 +75,17 @@
 //medium
 @media screen and (max-width:680px){
 	.wkSlider{
-		width: 420px;
+		width: 460px;
 		height: 225px;
 
 		figure{
-			width: 200px;
-			height: 200px;
+			width: 225px;
+			height: 225px;
 		}
 	}
 
 	.imagesOdd .img0{
-		width: 420px;
+		width: 460px;
 	}
 
 	.imgs3, .imgs4 {
@@ -101,50 +101,50 @@
 //small
 @media screen and (max-width:480px){
 	.wkSlider{
-		width: 280px;
+		width: 300px;
 		height: 145px;
 
 		figure{
-			width: 135px;
-			height: 135px;
+			width: 145px;
+			height: 145px;
 		}
 	}
 
 	.imagesOdd .img0{
-		width: 280px;
+		width: 300px;
 	}
 
 	.imgs3, .imgs4 {
-		height: 280px;
+		height: 310px;
 	}
 
 	.imgs5 {
-		height: 460px;
+		height: 470px;
 	}
 }
 
 @media screen and (orientation:landscape) and (min-width:321px){
 	.wkSlider {
-		width: 595px;
-		height: 140px;
+		width: 660px;
+		height: 156px;
 
 		figure{
 			float: none;
-			width: 140px;
-			height: 140px;
+			width: 156px;
+			height: 156px;
 		}
 	}
 
 	.imagesOdd {
 		.img0 {
-			width: 290px;
+			width: 325px;
 			float: left;
 		}
 	}
 
 	.imgs3{
 		.img0 {
-			margin-right: 13px;
+			margin-right: 10px;
 		}
 	}
 
@@ -153,17 +153,17 @@
 			margin: 0;
 		}
 		.img0, .img3 {
-			margin-right: 13px;
+			margin-right: 10px;
 		}
 	}
 
 	.imgs1 {
-		width: 305px;
+		width: 325px;
 	}
 
 	.imgs2 {
 		figure {
-			width: 290px;
+			width: 325px;
 			margin-right: 10px;
 		}
 
@@ -174,7 +174,7 @@
 
 	.imgs5 {
 		height: 332px;
-		width: 445px;
+		width: 490px;
 
 		.img2 {
 			margin-right: 10px;
@@ -185,51 +185,50 @@
 //medium in landscape
 @media screen and (orientation:landscape) and (min-width:321px) and (max-width: 680px){
 	.wkSlider {
-		width: 420px;
-		height: 95px;
+		width: 460px;
+		height: 107px;
 
 		figure {
-			width: 95px;
-			height: 95px;
+			width: 107px;
+			height: 107px;
 		}
 	}
 
 	.imagesOdd .img0 {
-		width: 200px;
+		width: 224px;
 	}
 
 	.imgs1 {
-		width: 200px;
+		width: 224px;
 	}
 
 	.imgs2 {
 		figure{
-			width: 200px;
+			width: 224px;
 		}
 	}
 
 	.imgs5 {
 		height: 234px;
-		width: 310px;
+		width: 342px;
 	}
 }
 
 //small in landscape
 @media screen and (orientation:landscape) and (min-width:321px) and (max-width: 480px){
 	.wkSlider {
-		width: 420px;
-		height: 95px;
+		width: 460px;
+		height: 107px;
 
 		figure {
-			width: 95px;
-			height: 95px;
+			width: 107px;
+			height: 107px;
 		}
 	}
 
 	.imagesOdd {
 		.img0{
-			width: 205px;
-			margin-right: 13px;
+			width: 224px;
 		}
 	}
 
@@ -239,7 +238,7 @@
 
 	.imgs2 {
 		figure {
-			width: 205px;
+			width: 224px;
 		}
 	}
 
@@ -248,7 +247,7 @@
 		width: 455px;
 
 		figure {
-			width: 145px;
+			width:145px;
 			height: 145px;
 		}
 
@@ -257,7 +256,7 @@
 		}
 
 		.img0 {
-			width: 280px;
+			width: 300px;
 		}
 	}
 }

@@ -2,7 +2,7 @@
 	"templateVars": {
 		"link" : {
 			"required": [ "href", "classes", "value", "title" ],
-			"optional": [ "target", "id", "data", "imageClass" ]
+			"optional": [ "target", "id", "data" ]
 		},
 		"input" : {
 			"required": [ "type", "name", "classes", "value" ],
@@ -10,7 +10,7 @@
 		},
 		"button" : {
 			"required": [ "type", "classes", "value" ],
-			"optional": [ "id", "disabled", "data", "imageClass" ]
+			"optional": [ "id", "disabled", "data" ]
 		}
 	},
 	"dependencies": {

@@ -53,7 +53,6 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
- * @author Claw eg
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -61,9 +60,6 @@ $messages['ar'] = array(
 	'places-desc' => 'يوفر دعم مرشد  <nowiki><place> و <places></nowiki> ليحدد جغرافيا الصفحات، كما يضع [[Special:Places|خريطة بالأماكن المحددة]]',
 	'places-in-category' => 'الأماكن في تصنيف $1',
 	'places-on-map' => '{{PLURAL:$1|مكان واحد|$1 أماكن}} على هذه الخريطة',
-	'places-modal-go-to-special' => 'عرض {{PLURAL:$1|مكان واحد|2=مكانين|$1 أماكن|$1 مكان}} ([[Special:Places|شاهد الكل]])',
-	'places-toolbar-button-tooltip' => 'اضغط لإضافة علامات جغرافية لهذه الصفحة',
-	'places-toolbar-button-address' => 'يرجى تقديم عنوان ليستخدم كإحدى العلامات جغرافية لهذه الصفحة',
 	'places-editor-search' => 'بحث',
 	'places-editor-title-create-new' => 'إضافة علامة جغرافية',
 	'places-editor-title-edit' => 'تعديل علامة جغرافية',
@@ -72,20 +68,11 @@ $messages['ar'] = array(
 	'places-geolocation-button-label' => 'إضافة مكان',
 	'places-geolocation-modal-add-title' => 'إضافة مكان',
 	'places-geolocation-modal-error-title' => 'خطأ',
-	'places-geolocation-modal-error' => 'وقع خطأ أثناء محاولة تحديد موقعك:<br />$1',
-	'places-geolocation-modal-not-available' => 'عفوًا! هذه الميزة متوفرة حاليًا للأجهزة المحمولة فقط.<br /><br />أتود تجربتها؟ قم بزيارة هذه الصفحة باستخدام جهازك المحمول المفضل.',
 	'places-error-no-article' => 'يجب أن تحدد صفحة',
 	'places-error-place-already-exists' => 'تم تحديد الموقع الجغرافي لهذه الصفحة بالفعل',
 	'places-updated-geolocation' => 'إضافة علامة جغرافية لهذه الصفحة',
 	'places-category-switch' => 'تعطيل تحديد الموقع الجغرافي',
 	'places-category-switch-off' => 'تمكين تحديد الموقع الجغرافي',
-);
-
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
-	'places-geolocation-modal-error-title' => 'Xəta',
 );
 
 /** Breton (brezhoneg)
@@ -139,10 +126,9 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'places-editor-search' => 'Лаха',
-	'places-editor-geoposition' => 'ХӀинца йолу меттиг',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  */
 $messages['cs'] = array(
@@ -221,14 +207,6 @@ $messages['es'] = array(
 	'places-updated-geolocation' => 'Geoetiqueta esta página',
 	'places-category-switch' => 'Desactivar las geoetiquetas',
 	'places-category-switch-off' => 'Activar las geoetiquetas',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'places-editor-search' => 'جستجو',
-	'places-geolocation-modal-error-title' => 'خطا',
 );
 
 /** Finnish (suomi)
@@ -380,14 +358,6 @@ $messages['lb'] = array(
 	'places-geolocation-modal-add-title' => 'Plaz derbäisetzen',
 	'places-geolocation-modal-error-title' => 'Feeler',
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'places-editor-search' => 'پی جوری',
-	'places-geolocation-modal-error-title' => 'خطا',
 );
 
 /** Macedonian (македонски)
@@ -721,23 +691,6 @@ $messages['tl'] = array(
 	'places-updated-geolocation' => 'Nalagyan na ang pahinang ito ng tatak na pangheograpiya',
 	'places-category-switch' => 'Huwag paganahin ang paglalagay ng tatak na pangheograpiya',
 	'places-category-switch-off' => 'Paganahin ang paglalagay ng tatak na pangheograpiya',
-);
-
-/** Turkish (Türkçe)
- * @author Incelemeelemani
- */
-$messages['tr'] = array(
-	'places-editor-search' => 'Ara',
-	'places-editor-title-create-new' => 'Bir coğrafi etiket ekle',
-	'places-editor-title-edit' => 'Coğrafi etiketi düzenle',
-	'places-editor-show-my-location' => 'Beni konumumu bul',
-	'places-editor-geoposition' => 'Mevcut coğrafi konum:',
-	'places-geolocation-button-label' => 'Konum ekle',
-	'places-geolocation-modal-add-title' => 'Konum ekle',
-	'places-geolocation-modal-error-title' => 'Hata',
-	'places-geolocation-modal-error' => 'Konumunuz belirlenmeye çalışılırken bir hata oluştu:<br />$1',
-	'places-geolocation-modal-not-available' => 'Bu özellik şu anda yalnızca mobil sürümdü kullanılabilir. <br /><br /> Tekrar denemek ister misiniz? Bu sayfayı yalnızca mobil cihazınız ile ziyaret edin.',
-	'places-error-no-article' => 'Bir sayfa belirtmelisiniz',
 );
 
 /** Ukrainian (українська)

@@ -1,66 +1,177 @@
-// core
 @import "color";
-
-// mixins
-@import "../mixins/box-sizing-border-box";
-@import "../mixins/calc";
-@import "../mixins/gradient";
 @import "../mixins/clearfix";
 @import "../mixins/menus";
+@import "../mixins/gradient";
 
-// rename item modal styles
 .toolbar-edit-rename-item {
-	.input-group {
-		float: none;
+	padding: 10px 0;
 
-		input[type="text"] {
-			@include box-sizing-border-box;
-			width: 100%;
-
-		}
+	.input-box {
+		border: 1px solid $color-page-border;
+		width: 350px;
 	}
 }
 
 .MyToolsConfiguration {
+	@include clearfix;
+
 	.column {
-		padding: 10px 0;
 		position: relative;
+		float: left;
+		width: 332px;
+		padding: 10px;
+		&:first-child {
+			padding-left: 0px;
+		}
 	}
 
 	.options-list, .search-box {
 		margin-top: 6px;
 	}
 
+
+
 	label {
 		font-weight: bold;
 		font-size: 110%;
+		margin-bottom: 3px;
+	}
+
+	.reset-defaults {
+		.wikia-chiclet-button {
+			margin-top: -1px;
+			vertical-align: middle;
+			height: 11px;
+			width: 12px;
+
+			img {
+				background: url(/skins/oasis/images/icon_return_6.png); /* base64 */
+				background-repeat: no-repeat;
+                background-position: top left;
+				height: 6px;
+				left: 3px;
+				position: relative;
+				top: -2px;
+				width: 7px;
+			}
+
+			background-color: $color-links;
+			background-image: none;
+			&:hover {
+				background-image: none;
+			}
+		}
+	}
+
+	.reset-defaults, .advanced-tools {
+		position: absolute;
+		display: block;
+		top: 10px;
+		right: 10px;
+		font-size: 80%;
+	}
+
+	.options-list {
+		border: 1px solid $color-page-border;
+		height: 380px;
+		overflow: auto;
+		padding: 0 6px;
+		position: relative;
+
+		li {
+			padding: 6px 60px 6px 5px;
+			position: relative;
+			&:hover {
+				background: $color-menu-highlight;
+			}
+			img.sprite {
+				position: absolute;
+				top: .4em;
+			}
+			border-bottom: 1px dashed mix($color-page,$color-text,80%);
+			&:last-child, &.ui-sortable-helper {
+				border-bottom-width: 0;
+			}
+			&.list-item-indent-1 {
+				margin-left: 30px;
+			}
+
+			.edit-pencil, .trash, .drag {
+				display: none;
+			}
+			&:hover {
+				.edit-pencil, .trash, .drag {
+					display: block;
+				}
+			}
+
+			.edit-pencil {
+				cursor: pointer;
+				right: 46px
+			}
+			.trash {
+				cursor: pointer;
+				right: 26px;
+			}
+			.drag {
+				cursor: move;
+				right: 6px;
+			}
+
+			.folder-icon {
+				background-image: url(/skins/oasis/images/icon_folder_16.png); /* base64 */
+				verical-align: middle;
+				height: 16px;
+				width: 16px;
+				margin-top: 1px;
+				margin-right: 5px;
+			}
+
+			.tree-line {
+				position: absolute;
+				top: 0;
+				left: -5px;
+				height: 29px;
+				width: 1px;
+				background-color: $color-text;
+			}
+			.tree-line-last {
+				position: absolute;
+				top: 0;
+				left: -5px;
+				height: 14px;
+				width: 1px;
+				background-color: $color-text;
+			}
+			.tree-dash {
+				position: absolute;
+				top: 13px;
+				left: -5px;
+				height: 1px;
+				width: 8px;
+				background-color: $color-text;
+			}
+		}
 	}
 
 	.search-box {
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
-		float: none;
-		margin-bottom: 0;
-		padding: 10px;
+		padding: 11px 12px 5px 9px;
 		position: relative;
 
-		// styles for auto-complete dropdown wrapper
-		> div {
-			@include width-calc('100% - 20px');
-		}
-
-		input[type="text"] {
-			@include box-sizing-border-box;
-			width: 100%;
+		.search {
+			@include linear-gradient(false, top, rgba(#000, .05), 0, rgba(#000, 0), 40%);
+			border: 1px solid $color-page-border;
+			height: 19px;
+			width: 310px;
 
 			&::-webkit-input-placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
-
 			&:-moz-placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
-
 			&.placeholder {
 				color: mix($color-page,$color-text,50%);
 			}
@@ -68,20 +179,17 @@
 	}
 
 	.autocomplete {
-		@include box-sizing-border-box;
 		@include menu-regular;
 		margin-top: 2px;
 		overflow: auto;
 		overflow-x: hidden;
 		position: relative;
-		width: 100%;
-		z-index: 2;
-
+		width: 313px;
+		z-index: 10;
 		div {
 			font-size: 14px;
 			padding: 4px 4px 2px;
 		}
-
 		.selected {
 			background: $color-menu-highlight;
 		}
@@ -96,195 +204,46 @@
 
 		.popular-list {
 			padding: 4px 0;
-		}
+			max-height: 290px;
+			overflow-y: auto;
 
-		li {
-			line-height: 20px;
+			li {
+				line-height: 20px;
+			}
 		}
 
 		.popular-toggle {
+			padding: 0 10px 0 7px;
+			line-height: 28px;
 			color: $color-links;
 			cursor: pointer;
-			line-height: 28px;
-			padding: 0 10px 0 7px;
-		}
 
-		.icon-show,
-		.icon-hide {
-			border-color: transparent;
-			border-style: solid;
-			border-width: 9px 5px;
-			height: 0;
-			position: relative;
-			left: -7px;
-			width: 0;
-		}
-
-		.icon-show {
-			border-top-color: $color-links;
-			top: 12px;
-		}
-
-		.icon-hide {
-			border-bottom-color: $color-links;
-			top: -12px;
-		}
-	}
-
-	.reset-defaults {
-		.wikia-chiclet-button {
-			background-color: $color-links;
-			background-image: none;
-			height: 11px;
-			margin-top: -1px;
-			vertical-align: middle;
-			width: 12px;
-
-			&:hover {
-				background-image: none;
+			.icon-show, .icon-hide {
+				border-color: transparent;
+				border-style: solid;
+				border-width: 9px 5px;
+				width: 0;
+				height: 0;
+				position: relative;
+				left: -7px;
 			}
-		}
-
-		img {
-			background: url(/skins/oasis/images/icon_return_6.png); /* base64 */
-			background-repeat: no-repeat;
-			background-position: top left;
-			height: 6px;
-			left: 3px;
-			position: relative;
-			top: -2px;
-			width: 7px;
-		}
-	}
-
-	.reset-defaults,
-	.advanced-tools {
-		display: block;
-		font-size: 80%;
-		position: absolute;
-		right: 0;
-		top: 10px;
-	}
-
-	.options-list {
-		border: 1px solid $color-page-border;
-		padding: 0 6px;
-		position: relative;
-
-		li {
-			border-bottom: 1px dashed mix($color-page,$color-text,80%);
-			padding: 6px;
-			position: relative;
-
-			&:last-child,
-			&.ui-sortable-helper {
-				border-bottom-width: 0;
+			.icon-show {
+				border-top-color: $color-links;
+				top: 12px;
 			}
-		}
-
-		img.sprite {
-			position: absolute;
-			top: .4em;
-		}
-
-		.list-item-indent-1 {
-			margin-left: 30px;
-		}
-
-		.edit-pencil, .trash, .drag {
-			display: none;
-		}
-
-		.edit-pencil {
-			cursor: pointer;
-			right: 46px
-		}
-
-		.trash {
-			cursor: pointer;
-			right: 26px;
-		}
-
-		.drag {
-			cursor: move;
-			right: 6px;
-		}
-
-		.folder-icon {
-			background-image: url(/skins/oasis/images/icon_folder_16.png); /* base64 */
-			verical-align: middle;
-			height: 16px;
-			width: 16px;
-			margin-top: 1px;
-			margin-right: 5px;
-		}
-
-		.tree-line,
-		.tree-line-last,
-		.tree-dash {
-			background-color: $color-text;
-			left: -5px;
-			position: absolute;
-		}
-
-		.tree-line,
-		.tree-line-last {
-			top: 0;
-			width: 1px
-		}
-
-		.tree-line {
-			height: 29px;
-		}
-
-		.tree-line-last {
-			height: 14px;
-
-		}
-
-		.tree-dash {
-			height: 1px;
-			top: 13px;
-			width: 8px;
-
-		}
-	}
-
-	// fix for hovering on iPad and hiding drag and drop icon
-	.no-ipad {
-		li:hover {
-			background: $color-menu-highlight;
-
-			.edit-pencil, .trash, .drag {
-				display: block;
+			.icon-hide {
+				border-bottom-color: $color-links;
+				top: -12px;
 			}
 		}
 	}
 
-	.on-ipad {
-		li:hover {
-			background: none;
-
-			.edit-pencil, .trash, .drag {
-				display: none;
-			}
-		}
-
-		li.hover {
-			background: $color-menu-highlight;
-
-			.edit-pencil, .trash, .drag {
-				display: block;
-			}
-		}
-
-		// changing position of these icons because on iPads there is no third icon
-		.edit-pencil {
-			right: 26px
-		}
-
-		.trash {
-			right: 6px;
-		}
+	.buttons {
+		@include clearfix;
+		clear: both;
+		float: right;
+		margin-left: 10px;
+		*margin-left: 5px;
 	}
+
 }

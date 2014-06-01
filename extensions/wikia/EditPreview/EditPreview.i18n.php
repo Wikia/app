@@ -4,8 +4,7 @@ $messages['en'] = array(
 	'wikia-editor-preview-current-width' => 'Current width',
 	'wikia-editor-preview-min-width' => 'Minimum width',
 	'wikia-editor-preview-max-width' => 'Maximum width',
-	'wikia-editor-preview-mobile-width' => 'Mobile',
-	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devices, or your current display.",
+	'wikia-editor-preview-type-tooltip' => "See how your edits will look with fluid width on any computer. Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, or on your current display.",
 );
 
 /** Message Documentation */

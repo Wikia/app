@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/terminal', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/terminal', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-terminal-theme";
@@ -45,7 +45,11 @@ background-color: black;\
 color: #DEDEDE\
 }\
 .ace-terminal-theme .ace_cursor {\
-color: #9F9F9F\
+border-left: 2px solid springgreen\
+}\
+.ace-terminal-theme .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #9F9F9F\
 }\
 .ace-terminal-theme .ace_marker-layer .ace_selection {\
 background: #424242\
@@ -121,7 +125,7 @@ color: #7AA6DA\
 .ace-terminal-theme .ace_support.ace_type {\
 color: #E7C547\
 }\
-.ace-terminal-theme .ace_heading,\
+.ace-terminal-theme .ace_markup.ace_heading,\
 .ace-terminal-theme .ace_string {\
 color: #B9CA4A\
 }\
@@ -134,6 +138,9 @@ color: #D54E53\
 }\
 .ace-terminal-theme .ace_comment {\
 color: orangered\
+}\
+.ace-terminal-theme .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-terminal-theme .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYLBWV/8PAAK4AYnhiq+xAAAAAElFTkSuQmCC) right repeat-y;\

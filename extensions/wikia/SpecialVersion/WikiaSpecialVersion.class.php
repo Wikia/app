@@ -9,29 +9,17 @@ class WikiaSpecialVersion extends SpecialVersion {
 		global $IP;
 		return self::getVersionFromDir($IP);
 	}
-
+	
 	public static function getWikiaConfigVersion() {
-		global $IP;
-		if ( file_exists( "$IP/../config" ) ) {
-			return self::getVersionFromDir("$IP/../config");
-		}
-		# transition only, remove when new deploytools are released
-		if ( file_exists("$IP/../docroot" ) ) {
-			return self::getVersionFromDir("$IP/../docroot");
-		}
+		return self::getVersionFromDir("/usr/wikia/conf/current"); # no global for config path :(
 	}
 
 	public static function getVersionFromDir($dir) {
-		$filename = $dir . '/wikia.version.txt';
-		if ( file_exists( $filename ) ) {
-			return file_get_contents( $filename );
-		}
-		# transition only, remove when new deploytools are released
 		$filename = $dir . '/VERSION';
 		if ( file_exists( $filename ) ) {
 			return file_get_contents( $filename );
 		}
-		return self::getGitBranch($dir);
+		return self::getGitBranch($dir);	
 	}
 
 	/**
@@ -39,7 +27,7 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @return string
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
-	private function getGitBranch($dir) {
+	private function getGitBranch($dir) {	
 		return shell_exec("cd $dir ; git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
 	}
 

@@ -1,65 +1,34 @@
-/*exported AdEngine2*/
-var AdEngine2 = function (log, LazyQueue, slotTracker) {
+var AdEngine2 = function(log, LazyQueue) {
 	'use strict';
 
-	var logGroup = 'AdEngine2',
-		undef;
+	var module = 'AdEngine2'
+		, run;
 
-	function decorate(func, decorators) {
-		log(['decorate', func, decorators], 'debug', logGroup);
+	run = function(adConfig, adslots) {
+		log('run', 5, module);
 
-		var i, len;
+		log('initial queue', 7, module);
+		log(adslots, 7, module);
 
-		if (decorators && decorators.length) {
-			for (i = 0, len = decorators.length; i < len; i += 1) {
-				func = decorators[i](func);
-			}
-		}
+		log('initializing LazyQueue on the queue', 7, module);
+		LazyQueue.makeQueue(adslots, function(slot) {
+			log('fillInSlot', 5, module);
+			log(slot, 5, module);
 
-		return func;
-	}
+			var slotname = slot[0]
+				, provider = adConfig.getProvider(slot)
+			;
 
-	function run(adConfig, adslots, queueName) {
-		var decorators = adConfig.getDecorators();
+			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 3, module);
 
-		function fillInSlot(slot) {
-			log(['fillInSlot', slot], 'debug', logGroup);
+			provider.fillInSlot([slotname]);
+		});
 
-			var slotname = slot[0],
-				provider = adConfig.getProvider(slot),
-				aSlotTracker = slotTracker(provider.name, slotname, queueName);
-
-			function success(extra) {
-				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success');
-			}
-
-			function hop(extra, hopTo) {
-				log(['hop', slotname, extra, hopTo], 'debug', logGroup);
-				aSlotTracker.track('hop', extra);
-				if (hopTo) {
-					adslots.push([slotname, undef, hopTo]);
-				}
-			}
-
-			log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
-
-			provider.fillInSlot(slotname, success, hop);
-		}
-
-		log('run', 'debug', logGroup);
-
-		log('initial queue', 'debug', logGroup);
-		log(adslots, 'debug', logGroup);
-
-		log('initializing LazyQueue on the queue', 7, logGroup);
-		LazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
-
-		log('launching queue on adslots', 'debug', logGroup);
+		log('launching queue on adslots', 7, module);
 		adslots.start();
 
-		log('initial queue handled', 'debug', logGroup);
-	}
+		log('initial queue handled', 6, module);
+	};
 
 	return {run: run};
 };

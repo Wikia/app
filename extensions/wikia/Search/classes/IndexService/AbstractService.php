@@ -172,7 +172,7 @@ abstract class AbstractService
 	 * Execute with hook to reinitialize
 	 * @return \Wikia\Search\IndexService\AbstractService
 	 */
-	public function getResponse() {
+	protected function getResponse() {
 		try {
 			$response = $this->execute();
 		} catch ( \Exception $e ) {

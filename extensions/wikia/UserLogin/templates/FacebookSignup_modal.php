@@ -1,4 +1,5 @@
 <div class="UserLoginFacebook">
+	<h1><?= wfMessage('usersignup-facebook-heading')->escaped() ?></h1>
 	<section class="UserLoginFacebookWrapper">
 		<section class="UserLoginFacebookLeft">
 
@@ -24,7 +25,7 @@
 				'method' => 'index',
 				'params' => array(
 					'text' => wfMessage('email')->escaped(),
-					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->plain(),
+					'tooltipIconTitle' => wfMessage('usersignup-facebook-email-tooltip')->escaped(),
 				),
 			),
 			array(

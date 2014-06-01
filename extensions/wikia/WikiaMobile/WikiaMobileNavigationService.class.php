@@ -10,23 +10,12 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 * @var $navModel NavigationModel
 	 */
 	private $navModel = null;
-	static $skipRendering = false;
 
 	function init(){
 		$this->navModel = new NavigationModel();
 	}
 
-	static function setSkipRendering( $value = false ){
-		self::$skipRendering = $value;
-	}
-
 	public function index() {
-
-		if ( self::$skipRendering ) {
-			return false;
-		}
-
-
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 

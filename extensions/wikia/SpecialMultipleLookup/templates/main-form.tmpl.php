@@ -59,7 +59,7 @@ $(document).ready(function() {
 				"aTargets": [ 1 ],
 				"bSortable" : false
 			},
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : false, "sClass": "ml-datetime" },
 			{ "fnRender": function ( oObj ) {
 				var row = '<a href="'+ oObj.aData[3] + '">' + oObj.aData[3] + '</a>';
 				return row;
@@ -69,7 +69,7 @@ $(document).ready(function() {
 				"bSortable" : false,
 			},
 			{ "sClass": "ml-datetime", "aTargets": [ 4 ], "bSortable" : true },
-			{ "bVisible": true,  "aTargets": [ 5 ], "bSortable" : false },
+			{ "bVisible": true,  "aTargets": [ 5 ], "bSortable" : false, "sClass": "ml-datetime" },
 		],
 		"bProcessing": true,
 		"bServerSide": true,

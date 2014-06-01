@@ -20,11 +20,7 @@ class BliptvVideoHandler extends VideoHandler {
 <iframe src="http://blip.tv/play/{$embedVideoId}.html?p=1&autoStart={$autoStartParam}" $sizeString frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="{$url}" style="display:none"></embed>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 	public function getProviderDetailUrl() {

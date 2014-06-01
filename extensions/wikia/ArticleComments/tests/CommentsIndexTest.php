@@ -41,17 +41,6 @@ class CommentsIndexTest extends WikiaBaseTest {
 	}
 
 	/*
-	 * Make sure we don't query the db for non-existingarticles
-	 */
-	public function testCommentsIndexSkipDBWhenNoArticle() {
-		$dbMock = $this->getMock( 'stdClass', [ 'selectRow' ] );
-		$dbMock->expects( $this->exactly( 0 ) )
-			->method( 'selectRow' );
-
-		CommentsIndex::newFromId(0, 0, $dbMock);
-	}
-
-	/*
 	 * The purpose of CommentsIndex cache is avoid database queries for CommentsIndex instances that were created
 	 * during the request. So here we simulate inserting the CommentsIndex to the table and then ask for that id and
 	 * make sure it's not fetched from the database

@@ -2,13 +2,11 @@
 <project name="Wikia QA" default="all" basedir=".">
     <description>Wikia QA Tests</description>
 
-    <property name="localsettings" value="/usr/wikia/source/wiki/LocalSettings.php" />
+    <property name="localsettings" value="/usr/wikia/docroot/wiki.factory/LocalSettings.php" />
     <property name="phpunitexcludegroups" value="deprecated,Broken" />
     <property name="dbname" value="firefly" />
 
 	<!-- PHP Tests -->
-
-	<!-- unit tests only -->
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
 		<exec executable="php" dir="${basedir}" failonerror="true">
@@ -22,7 +20,6 @@
 		</exec>
 	</target>
 
-	<!-- unit, infrastructure, integration tests -->
     <target name="phpunit">
 		<mkdir dir="${basedir}/build/logs" />
         <exec executable="php" dir="${basedir}" failonerror="true">
@@ -36,7 +33,6 @@
         </exec>
     </target>
 
-	<!-- used to run a single test file / extension-->
     <target name="phpunit-single">
         <exec executable="php" dir="${basedir}" failonerror="true">
             <env key="SERVER_DBNAME" value="${dbname}" />
@@ -48,7 +44,6 @@
         </exec>
     </target>
 
-	<!-- code coverage report -->
 	<target name="phpunit-coverage">
 		<mkdir dir="${basedir}/build/coverage" />
 		<exec executable="php" dir="${basedir}" failonerror="true">

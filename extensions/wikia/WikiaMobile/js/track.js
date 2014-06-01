@@ -7,16 +7,16 @@
 
 /* global define Wikia */
 
-define( 'track', ['wikia.tracker'], function ( tracker ) {
+define('track', ['wikia.tracker'], function( tracker ) {
 	'use strict';
 	var ACTIONS = tracker.ACTIONS || {};
 
 	return {
-		event: function ( category, action, options, ev ) {
+		event: function (category, action, options, ev) {
 			options = options || {};
 
-			if ( !window.wgGameGuides ) {
-				tracker.track( {
+			if (!window.wgGameGuides) {
+				tracker.track({
 					action: action,
 					browserEvent: ev,
 					category: 'wikiamobile-' + category,
@@ -24,7 +24,7 @@ define( 'track', ['wikia.tracker'], function ( tracker ) {
 					label: options.label,
 					trackingMethod: options.method || 'ga',
 					value: options.value
-				} );
+				});
 			}
 		},
 		//if anything happens to Wikia.Tracker it'll be much easier to fix it in one place
@@ -36,4 +36,4 @@ define( 'track', ['wikia.tracker'], function ( tracker ) {
 		TEXT_LINK: ACTIONS.CLICK_LINK_TEXT,
 		IMPRESSION: ACTIONS.IMPRESSION
 	};
-} );
+});

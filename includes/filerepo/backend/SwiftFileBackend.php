@@ -251,7 +251,7 @@ class SwiftFileBackend extends FileBackendStore {
 			// The MD5 here will be checked within Swift against its own MD5.
 			$obj->set_etag( md5_file( $params['src'] ) );
 			// Use the same content type as StreamFile for security
-			$obj->content_type = $this->getFileProps($params)['mime']; // Wikia cnange: use the same logic as for DB row (BAC-1199)
+			$obj->content_type = StreamFile::contentTypeFromPath( $params['dst'] );
 			// Actually write the object in Swift
 			$obj->load_from_filename( $params['src'], True ); // calls $obj->write()
 		} catch ( BadContentTypeException $e ) {

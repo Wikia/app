@@ -213,11 +213,11 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			doneCallbacks[slotnameGpt] = function () {
 				var status, height;
 
-				status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
-
-				if (status === 'success') {
-					log(['doneCallback', slotname, 'running success callback (forced status)'], 4, logGroup);
-					if (typeof success === 'function') {
+				// TODO: unify forced status and height based status?
+				if (window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname]) {
+					status = window.adDriver2ForcedStatus[slotname];
+					log(['doneCallback', slotname, 'forced status', status], 4, logGroup);
+					if (status === 'success' && typeof success === 'function') {
 						success();
 					}
 				} else {
@@ -253,6 +253,8 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 		}
 
 		googletag.cmd.push(function () {
+			var i, len, callback;
+
 			log(['flushAds', 'start'], 4, logGroup);
 
 			log(['flushAds', 'refresh', slotQueue], 9, logGroup);
@@ -260,6 +262,11 @@ var WikiaFullGptHelper = function (log, window, document, adLogicPageLevelParams
 			if (slotQueue.length) {
 				googletag.pubads().refresh(slotQueue);
 				slotQueue = [];
+			}
+
+			for (i = 0, len = doneCallbacks.length; i < len; i += 1) {
+				callback = doneCallbacks.shift();
+				callback();
 			}
 
 			log(['flushAds', 'done'], 4, logGroup);

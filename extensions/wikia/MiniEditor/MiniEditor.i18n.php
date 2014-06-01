@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'minieditor-placeholder-reply' => 'Respondre al missatge aquí',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Jezevec
  */
 $messages['cs'] = array(
@@ -94,13 +94,6 @@ $messages['es'] = array(
 	'minieditor-message-edit' => 'Este es un mensaje existente',
 	'minieditor-reply' => 'Responder',
 	'minieditor-placeholder-reply' => 'Responder al mensaje aquí',
-);
-
-/** Persian (فارسی)
- * @author Reza1615
- */
-$messages['fa'] = array(
-	'minieditor-reply' => 'پاسخ دادن',
 );
 
 /** Finnish (suomi)
@@ -209,13 +202,6 @@ $messages['ku-latn'] = array(
  */
 $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'minieditor-reply' => 'جؤاو ده ئن',
 );
 
 /** Macedonian (македонски)
@@ -413,18 +399,6 @@ $messages['uk'] = array(
 	'minieditor-message-edit' => 'Це існуюче повідомлення',
 	'minieditor-reply' => 'Відповісти',
 	'minieditor-placeholder-reply' => 'Відповідь на повідомлення тут',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'minieditor-specialpage-title' => 'Trang thử nghiệm miniEditor',
-	'minieditor-new-heading' => 'Gửi một tin nhắn mới',
-	'minieditor-placeholder-new' => 'Nhập tin nhắn của bạn vào đây',
-	'minieditor-message-edit' => 'Đây là một bài viết sẵn có',
-	'minieditor-reply' => 'Trả lời',
-	'minieditor-placeholder-reply' => 'Trả lời tin nhắn ở đây',
 );
 
 /** Simplified Chinese (中文（简体）‎)

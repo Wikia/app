@@ -1,5 +1,5 @@
 <section class="partners">
-	<h2 class="partners-title"><?= wfMessage( 'videohomepage-partner-section-title' )->plain() ?></h2>
+	<h1 class="partners-title"><?= wfMessage( 'videohomepage-partner-section-title' )->plain() ?></h1>
 	<ul class="small-block-grid-6">
 		<? foreach( $partners as $partnerKey=>$partner ) { ?>
 		<li>

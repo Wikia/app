@@ -29,7 +29,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/lisp', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lisp_highlight_rules'], function(require, exports, module) {
+define('ace/mode/lisp', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/lisp_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -38,7 +38,9 @@ var Tokenizer = require("../tokenizer").Tokenizer;
 var LispHighlightRules = require("./lisp_highlight_rules").LispHighlightRules;
 
 var Mode = function() {
-    this.HighlightRules = LispHighlightRules;
+    var highlighter = new LispHighlightRules();
+    
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
@@ -52,7 +54,7 @@ exports.Mode = Mode;
 });
 
 
-ace.define('ace/mode/lisp_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/lisp_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");

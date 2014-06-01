@@ -32,9 +32,7 @@ var ThemeDesigner = {
 		// min width for dynamic is equal to our breakpoint
 		// TODO: When refactoring ThemeDesigner into AMD module, use wikia.fluidlayout.getBreakpointContent
 		this.minWidthForDynamicBackground = 1030;
-		// TODO: when using wikia.fluidlayout for minWidthForDynamicBackground, we need to add following variable to
-		// wikia.fluidlayout and reference it here too.
-		this.minWidthNotSplitBackground = 2000;
+		this.minWidthNotSplitBackground = 2100;
 
 		this.backgroundType = 0;
 
@@ -246,11 +244,6 @@ var ThemeDesigner = {
 			event.preventDefault();
 			var value = $('#wordmark-edit').find('input[type="text"]').val().trim();
 			if (value.length > 0) {
-
-				if ( value.length > 50 ) {
-					value = value.substr( 0, 50 );
-				}
-
 				ThemeDesigner.set('wordmark-text', value);
 			} else {
 				$.getMessages('ThemeDesigner', function() {

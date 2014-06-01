@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/pastel_on_dark', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/pastel_on_dark', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-pastel-on-dark";
@@ -45,7 +45,11 @@ background-color: #2C2828;\
 color: #8F938F\
 }\
 .ace-pastel-on-dark .ace_cursor {\
-color: #A7A7A7\
+border-left: 2px solid #A7A7A7\
+}\
+.ace-pastel-on-dark .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #A7A7A7\
 }\
 .ace-pastel-on-dark .ace_marker-layer .ace_selection {\
 background: rgba(221, 240, 255, 0.20)\
@@ -129,6 +133,9 @@ color: #C1C144\
 }\
 .ace-pastel-on-dark .ace_xml-pe {\
 color: #494949\
+}\
+.ace-pastel-on-dark .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-pastel-on-dark .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYIiPj/8PAARgAh2NTMh8AAAAAElFTkSuQmCC) right repeat-y;\

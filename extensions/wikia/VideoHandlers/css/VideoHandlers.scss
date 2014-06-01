@@ -22,7 +22,7 @@
 	}
 }
 
-/* Monobook doesn't have oasis sprite so we're using the old way of
+/* Monobook doesn't have oasis sprite so we're using the old way of 
  * giving the div a one-size-fits-all background image.  (bugid:95941);
  */
 .skin-monobook .Wikia-video-play-button {
@@ -64,17 +64,12 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 		display: block;
 		font-family: "Helvetica", "Arial", sans-serif;
 		font-size: 12px;
-		height: 25px;
+		height: 40px;
 		line-height: 17px;
-		margin-top: -25px;
+		margin-top: -40px;
 		padding: 4px 5px;
 		position: relative;
 		text-align: left;
-		// Add space for another line (view count)
-		&.info-overlay-with-views {
-			height: 40px;
-			margin-top: -40px;
-		}
 		.info-overlay-title {
 			display: block;
 			font-size: 14px;
@@ -84,7 +79,6 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 			padding-right: 3px;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			word-wrap: normal;
 		}
 		.info-overlay-duration {
 			display: inline-block;
@@ -92,10 +86,6 @@ a:hover .Wikia-video-play-button, .Wikia-video-play-button:hover {
 			font-size: 12px;
 			font-weight: bold;
 		}
-	}
-	// can be removed after article cache clears on 2/6/2014
-	.info-overlay-views {
-		display: none;
 	}
 	&:hover {
 		text-decoration: none;

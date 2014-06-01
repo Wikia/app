@@ -18,8 +18,8 @@ define( 'wikia.videohandler.ooyala', [ 'wikia.window', require.optional( 'ext.wi
 		var containerId = vb.timeStampId( params.playerId ),
 			started = false,
 			createParams = {
-				width: vb.width + 'px',
-				height: vb.height + 'px',
+				width: params.width + 'px',
+				height: params.height + 'px',
 				autoplay: params.autoPlay,
 				wmode: 'transparent'
 			};

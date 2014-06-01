@@ -240,7 +240,7 @@ class SquidUpdate {
 	 * @static
 	 */
 	static function ScribePurge( $urlArr ) {
-		global $wgEnableScribeReport, $wgCityId;
+		global $wgEnableScribeReport;
 		wfProfileIn( __METHOD__ );
 		$key = 'varnish_purges';
 
@@ -255,24 +255,15 @@ class SquidUpdate {
 					throw new MWException( 'Bad purge URL' );
 				}
 				$url = SquidUpdate::expand( $url );
-				$method = self::getPurgeCaller();
 
-				wfDebug( "Purging URL $url from $method via Scribe\n" );
+				wfDebug( "Purging URL $url via Scribe\n" );
 				$data = json_encode(
 					array(
 						'url' => $url,
 						'time' => time(),
-						'method' => $method,
 					)
 				);
 				WScribeClient::singleton($key)->send($data);
-
-				// log purges using SFlow (BAC-1258)
-				Wikia\SFlow::operation('varnish.purge', [
-					'city' => $wgCityId,
-					'url' => $url,
-					'method' => $method,
-				]);
 			}
 		}
 		catch( TException $e ) {
@@ -280,29 +271,6 @@ class SquidUpdate {
 		}
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Return the name of the method (outside of internal code) that triggered purge request
-	 *
-	 * @return bool|string method name
-	 */
-	private static function getPurgeCaller() {
-		// analyze the backtrace to log the source of purge requests
-		$backtrace = wfDebugBacktrace();
-		$method = '';
-
-		while($entry = array_shift($backtrace)) {
-			// ignore "internal" classes
-			if (empty($entry['class']) || in_array($entry['class'], [__CLASS__, 'WikiPage', 'Article', 'Title'])) {
-				continue;
-			}
-
-			$method = $entry['class'] . ':' . $entry['function'];
-			break;
-		}
-
-		return $method;
 	}
 
 	/**

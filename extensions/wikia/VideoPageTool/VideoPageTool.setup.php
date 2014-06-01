@@ -37,9 +37,6 @@ $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'VideoPageToolHooks::onArticleFromTitle';
-$wgHooks['ArticlePurge'][] = 'VideoPageToolHooks::onArticlePurge';
-$wgHooks['CategorySelectSave'][] = 'VideoPageToolHooks::onCategorySelectSave';
-$wgHooks['VideoIngestionComplete'][] = 'VideoPageToolHooks::onVideoIngestionComplete';
 
 // permissions
 $wgGroupPermissions['*']['videopagetool'] = false;
@@ -56,6 +53,5 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-description-maxlength-error',
 	'videopagetool-video-title-default-text',
 	'videopagetool-image-title-default-text',
-	'videopagetool-formerror-altthumb',
-	'videopagetool-formerror-category-name',
+	'videopagetool-formerror-altthumb'
 ));

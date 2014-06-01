@@ -10,6 +10,23 @@
  * TODO: Importing section is not finished yet
  */
 
+// include chef generated variables: $wgWikiaDatacenter
+require_once('/usr/wikia/devbox/DevBoxVariables.php');
+
+switch($wgWikiaDatacenter) {
+	case 'poz':
+		$wgDBdevboxServer1 = 'dev-db-a1-p1';
+		$wgDBdevboxServer2 = 'dev-db-a1-p1';
+		$wgDBdevboxCentral = 'dev-db-central-p1';
+		break;
+	case 'sjc':
+	default:
+		$wgDBdevboxServer1 = 'dev-db-a1';
+		$wgDBdevboxServer2 = 'dev-db-b1';
+		$wgDBdevboxCentral = 'dev-db-central';
+		break;
+
+}
 
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
@@ -24,28 +41,11 @@ $USAGE =
 	"\t\t-d          Fetch and import to dev db\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
 	"\t\t-l          Read settings from external file\n" .
-	"\t\t-p          Which production datacenter to use for db dumps\n".
 	"\n" .
 	"Or use " . __DIR__ . "/getDatabase.sh host\n";
 
-$opts = getopt ("l:i:d:f:c:p:?::");
+$opts = getopt ("l:i:d:f:c:?::");
 if( empty( $opts ) ) die( $USAGE );
-
-$wgWikiaDatacenter = $opts['p'];
-switch($wgWikiaDatacenter) {
-	case 'poz':
-		$wgDBdevboxServer1 = 'dev-db-a1-p1';
-		$wgDBdevboxServer2 = 'dev-db-a1-p1';
-		$wgDBdevboxCentral = 'dev-db-central-p1';
-		break;
-	case 'sjc':
-		$wgDBdevboxServer1 = 'dev-db-a1';
-		$wgDBdevboxServer2 = 'dev-db-b1';
-		$wgDBdevboxCentral = 'dev-db-central';
-		break;
-	default:
-		die("unknown data center: {$opts['p']}\n$USAGE");
-}
 
 // Grind through s3 for a bit and figure out what the most recent dump is
 

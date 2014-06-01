@@ -52,7 +52,6 @@
 @import "core/WikiaBar";
 @import "core/jquery.ui.autocomplete"; // TODO: load on demand
 @import "core/video-thumbnail";
-@import "core/MenuElement";
 
 // Bootstrap
 @import "resources/wikia/libraries/bootstrap/tooltip";
@@ -70,6 +69,7 @@
 @import "extensions/wikia/WikiaPhotoGallery/css/slideshow"; // TODO: load on demand
 @import "extensions/wikia/WikiaBar/css/WikiaBar";
 @import "extensions/wikia/Chat2/css/ChatEntryPoint";
+@import "extensions/wikia/WikiaSeasons/css/WikiaSeasonsBar";
 @import "extensions/wikia/UserLogin/css/UserLoginDropdown";
 @import "extensions/wikia/Forum/css/RelatedForumDiscussion";	// on every article page
 @import "extensions/wikia/TOC/css/toc.scss";

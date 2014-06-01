@@ -63,12 +63,6 @@ class FooterController extends WikiaController {
 		$this->options = $service->listToJson($service->getCurrentList());
 		$this->allOptions = $service->sortJsonByCaption($service->listToJson($service->getAllList()));
 		$this->popularOptions = $service->sortJsonByCaption($service->listToJson($service->getPopularList()));
-		$this->messages = array(
-			'oasis-toolbar-edit-title' => wfMsg('oasis-toolbar-edit-title'),
-			'oasis-toolbar-edit-rename-item' => wfMsg('oasis-toolbar-edit-rename-item'),
-			'oasis-toolbar-edit-save' => wfMsg('oasis-toolbar-edit-save'),
-			'oasis-toolbar-edit-cancel' => wfMsg('oasis-toolbar-edit-cancel'),
-		);
 	}
 
 	public function executeToolbarSave( $params ) {

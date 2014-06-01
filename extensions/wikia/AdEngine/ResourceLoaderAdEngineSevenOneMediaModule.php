@@ -20,7 +20,7 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.css');
 		$myJs = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.js');
 
-		// $myCss = CSSMin::minify($myCss);
+		// $myCss = Minify_CSS_Compressor::process($myCss);
 
 		$script = [
 			'var SEVENONEMEDIA_CSS = ' . json_encode($myCss) . ';',

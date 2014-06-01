@@ -42,16 +42,32 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 		$nextPage = '';
 
+		// ingest only live video
+		$cond = array_merge( array( "status = 'live'" ), $params['cond'] );
+
+		$apiParams = array(
+			'limit' => self::API_PAGE_SIZE,
+			'where' => implode( ' AND ', $cond ),
+		);
+
 		do {
 			// connect to provider API
-			$url = OoyalaAsset::getApiUrlAssets( self::API_PAGE_SIZE, $nextPage, $params['cond'] );
+			$url = $this->initFeedUrl( $apiParams, $nextPage );
 			print( "Connecting to $url...\n" );
 
-			$response = OoyalaAsset::getApiContent( $url );
-			if ( $response === false ) {
+			$req = MWHttpRequest::factory( $url, array( 'noProxy' => true ) );
+			$status = $req->execute();
+			if ( $status->isGood() ) {
+				$response = $req->getContent();
+			} else {
+				print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
 				wfProfileOut( __METHOD__ );
+
 				return 0;
 			}
+
+			// parse response
+			$response = json_decode( $response, true );
 
 			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
@@ -72,7 +88,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['published'] = empty( $video['metadata']['published'] ) ? '' : strtotime( $video['metadata']['published'] );
 				$clipData['name'] = empty( $video['metadata']['name'] ) ? '' : $video['metadata']['name'];
 				$clipData['type'] = empty( $video['metadata']['type'] ) ? '' : $video['metadata']['type'];
-				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $this->getCategory( $video['metadata']['category'] );
+				$clipData['category'] = empty( $video['metadata']['category'] ) ? '' : $video['metadata']['category'];
 				$clipData['keywords'] = empty( $video['metadata']['keywords'] ) ? '' : $video['metadata']['keywords'];
 				$clipData['description'] = trim( $video['description'] );
 
@@ -157,12 +173,11 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['name'] ) ) {
-			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $data['name'] ) ) );
+			$categories += array_map( 'trim', explode( ',', $data['name'] ) );
 		}
 
 		if ( !empty( $data['pageCategories'] ) ) {
-			$stdCategories = array_map( array( $this ,'getStdPageCategory' ), explode( ',', $data['pageCategories'] ) );
-			$categories = array_merge( $categories, $stdCategories );
+			$categories += array_map( 'trim', explode( ',', $data['pageCategories'] ) );
 		}
 
 		// remove 'the' category
@@ -174,8 +189,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		if ( !empty( $data['categoryName'] ) ) {
 			$categories[] = $data['categoryName'];
 		}
-
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		$categories[] = 'Ooyala';
 

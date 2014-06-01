@@ -8,8 +8,8 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "true";
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
-		$height = $this->getHeight( $width );
+	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
+		$height = $this->getHeight($width);
 		$url = $this->getEmbedUrl();
 		$autoplayStrParam = self::$autoplayParam;
 		$autoplayStrValue = $autoplay ? self::$autoplayValue : 'false';
@@ -19,11 +19,7 @@ class SouthparkstudiosVideoHandler extends VideoHandler {
 <embed src="$url" $sizeString type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" base="." flashVars="$autoplayStrParam=$autoplayStrValue"></embed>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

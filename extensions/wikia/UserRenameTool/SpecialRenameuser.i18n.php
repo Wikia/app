@@ -184,7 +184,6 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
- * @author Claw eg
  * @author Malhargan
  * @author Meno25
  * @author Mido
@@ -213,7 +212,6 @@ $messages['ar'] = array(
 	'userrenametool-errorinvalid' => 'اسم المستخدم "<nowiki>$1</nowiki>" غير صالح.',
 	'userrenametool-errorinvalidnew' => '"<nowiki> $1 </nowiki>" ليس اسم مستخدم جديد صالح.',
 	'userrenametool-errortoomany' => 'المستخدم "<nowiki>$1</nowiki>" لديه $2 {{PLURAL:$2|مساهمة|مساهمة}}، إعادة تسمية مستخدم لديه أكثر من $3 {{PLURAL:$3|مساهمة|مساهمة}} يمكن أن تؤثر سلبا على أداء الموقع.',
-	'userrenametool-errorbot' => 'المستخدم <nowiki>$1</nowiki> بوت',
 	'userrenametool-error-request' => 'حدثت مشكلة أثناء استقبال الطلب.
 من فضلك عد وحاول مرة ثانية.',
 	'userrenametool-error-same-user' => 'لا يمكنك إعادة تسمية مستخدم بنفس الاسم.',
@@ -342,7 +340,6 @@ $messages['ast'] = array(
  * @author Cekli829
  */
 $messages['az'] = array(
-	'userrenametool-warnings' => 'Xəbərdarlıqlar:',
 	'userrenametool-confirm-yes' => 'Bəli',
 	'userrenametool-confirm-no' => 'Xeyr',
 );
@@ -616,7 +613,6 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
- * @author Fohanno
  * @author Fulup
  * @author Y-M D
  */
@@ -641,10 +637,6 @@ $messages['br'] = array(
 	'userrenametool-errorbot' => 'Ur bot eo an implijer <nowiki>$1</nowiki>.',
 	'userrenametool-error-request' => 'Ur gudenn zo bet gant degemer ar reked. Kit war-gil ha klaskit en-dro.',
 	'userrenametool-error-same-user' => "N'haller ket adenvel un implijer gant an hevelep anv hag a-raok.",
-	'userrenametool-error-invalid-ip' => "Pourchaset ez eus bet chomlec'hioù IP direizh.",
-	'userrenametool-warnings-characters' => 'Arouezennoù difennet zo en anv implijer nevez !',
-	'userrenametool-warnings-maxlength' => "Ne c'hall ket bezañ ouzhpenn 255 arouezenn en anv implijer nevez !",
-	'userrenametool-warn-table-missing' => 'N\'eus ket eus an daolenn "<nowiki>$2</nowiki>" en diaz roadennoù "<nowiki>$1</nowiki>."',
 	'userrenametool-info-started' => 'Kroget en deus $1 da adenvel : $2 e $3 (marilh : $4).
 Abeg : "$5".',
 	'userrenametool-info-finished' => 'Echuet en deus $1 da adenvel : $2 e $3 (marilh : $4).
@@ -669,7 +661,6 @@ Abeg : "$5".',
 	'userrenametool-log' => 'Ssavet gantañ $1 degasadenn. $2',
 	'userrenametool-move-log' => 'Pajenn dilec\'hiet ent emgefreek e-ser adenvel an implijer "[[User:$1|$1]]" e "[[User:$2|$2]]"',
 	'right-renameuser' => 'Adenvel implijerien',
-	'action-renameuser' => 'adenvel an implijerien',
 );
 
 /** Bosnian (bosanski)
@@ -794,12 +785,8 @@ Seràs notificat per correu electrònic quan s'hagi completat.",
 $messages['ce'] = array(
 	'renameuser' => 'Декъашхочун цӀе хийца',
 	'userrenametool-submit' => 'Кхочушдé',
-	'userrenametool-info-wiki-finished' => '$1 цӀе хийцина $2 → $3 (→ $4).
-Бахьна: "$5".',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
-	'userrenametool-logpagetext' => 'ХӀокху тептар чохь гойту дӀабазбелла декъашхойн цӀераш хийцар.',
-	'userrenametool-logentry' => 'цӀе хийцина $1 → «$2»',
-	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» → «[[User:$2|$2]]»',
+	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» оцу «[[User:$2|$2]]»',
 	'right-renameuser' => 'Декъашхойн цӀе хийцар',
 	'action-renameuser' => 'декъашхойн цӀераш хийцар',
 );
@@ -832,7 +819,7 @@ $messages['crh-latn'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|1 deñişiklik|$1 deñişiklik}} yapqan. Sebep: $2',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Chmee2
  * @author Danny B.
  * @author Darth Daron
@@ -909,7 +896,7 @@ O dokončení budete informován(a) e-mailem.',
 	'right-renameuser' => 'Přejmenovávání uživatelů',
 );
 
-/** Church Slavic (словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author Svetko
  * @author ОйЛ
  */
@@ -1062,7 +1049,6 @@ Du wirst per E-Mail benachrichtigt, wenn alles abgeschlossen ist.',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
- * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -1073,7 +1059,7 @@ $messages['diq'] = array(
 	'userrenametool-submit' => 'Namey karberi bıvurnê',
 	'userrenametool-errorblocked' => '$3<nowiki>$2</nowiki> Karber <nowiki>$1</nowiki> bloke kerd.',
 	'userrenametool-errorlocked' => 'Karber <nowiki>$1</nowiki> bloke biyo.',
-	'userrenametool-errorbot' => '<nowiki>$1</nowiki> yew boto.',
+	'userrenametool-errorbot' => '<nowiki>$1</nowiki>yew boto.',
 	'userrenametool-confirm-yes' => 'Eya',
 	'userrenametool-confirm-no' => 'Nê',
 	'userrenametool-logentry' => ' $1 nameycı yo newe "$2"o',
@@ -1329,7 +1315,6 @@ $messages['ext'] = array(
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
- * @author Reza1615
  */
 $messages['fa'] = array(
 	'userrenametool' => 'تغییر یک نام کاربر',
@@ -1362,7 +1347,6 @@ $messages['fa'] = array(
 	'userrenametool-log' => '{{PLURAL:$1|۱ ویرایش|$1 ویرایش}}. دلیل: $2',
 	'userrenametool-move-log' => 'صفحه در ضمن تغییر نام «[[User:$1|$1]]» به «[[User:$2|$2]]» به طور خودکار انتقال داده شد.',
 	'right-renameuser' => 'تغییر نام کاربران',
-	'action-renameuser' => 'تغییر نام کاربران',
 );
 
 /** Finnish (suomi)
@@ -2731,7 +2715,6 @@ $messages['mk'] = array(
 );
 
 /** Malayalam (മലയാളം)
- * @author Praveenp
  * @author Shijualex
  */
 $messages['ml'] = array(
@@ -2741,7 +2724,7 @@ $messages['ml'] = array(
 	'userrenametool-old' => 'ഇപ്പോഴത്തെ ഉപയോക്തൃനാമം:',
 	'userrenametool-new' => 'പുതിയ ഉപയോക്തൃനാമം:',
 	'userrenametool-reason' => 'ഉപയോക്തൃനാമം മാറ്റാനുള്ള കാരണം:',
-	'userrenametool-move' => 'നിലവിലുള്ള ഉപയോക്തൃതാളും, ഉപയോക്താവിന്റെ സം‌വാദത്താളും (ഉപതാളുകൾ അടക്കം) പുതിയ പേരിലേക്ക് മാറ്റുക.',
+	'userrenametool-move' => 'നിലവിലുള്ള ഉപയോക്തൃതാളും, ഉപയോക്താവിന്റെ സം‌വാദം താളും (സബ് പേജുകള്‍ അടക്കം) പുതിയ നാമത്തിലേക്കു മാറ്റുക.',
 	'userrenametool-reserve' => 'പഴയ ഉപയോക്തൃനാമം ഭാവിയിൽ ഉപയോഗിക്കുന്നതു തടയുക',
 	'userrenametool-warnings' => 'മുന്നറിയിപ്പുകൾ:',
 	'userrenametool-confirm' => 'അതെ, ഉപയോക്താവിനെ പുനർനാമകരണം ചെയ്യുക',
@@ -2811,7 +2794,6 @@ $messages['mr'] = array(
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author Aviator
- * @author SNN95
  */
 $messages['ms'] = array(
 	'userrenametool' => 'Tukar nama pengguna',
@@ -2851,7 +2833,6 @@ Sila undur dan cuba lagi.',
 	'userrenametool-error-cannot-rename-account' => 'Gagal menukar nama akaun pengguna pada pangkalan data kongsian global.',
 	'userrenametool-error-cannot-create-block' => 'Sekatan Phalanx tidak dapat dibentuk.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Berlakunya ralat tak dijangka; semak log atau cuba lagi.',
-	'userrenametool-error-invalid-ip' => 'Alamat IP tidak sah yang disediakan.',
 	'userrenametool-warnings-characters' => 'Nama pengguna baru mengandungi aksara terlarang!',
 	'userrenametool-warnings-maxlength' => 'Nama pengguna baru tidak boleh melebihi 255 aksara!',
 	'userrenametool-warn-repeat' => 'Perhatian! Pengguna "<nowiki>$1</nowiki>" sudah menukar namanya kepada "<nowiki>$2</nowiki>".
@@ -3054,7 +3035,7 @@ Zie ook het [[Special:Stafflog|Staflogboek]].',
 	'userrenametool-desc' => "Voegt een [[Special:UserRenameTool|speciale pagina]] toe om een gebruiker te hernoemen (u hebt hiervoor het recht ''renameuser'' nodig)",
 	'userrenametool-old' => 'Huidige gebruikersnaam:',
 	'userrenametool-new' => 'Nieuwe gebruikersnaam:',
-	'userrenametool-encoded' => 'Gecodeerde URL:',
+	'userrenametool-encoded' => 'URL gecodeerd:',
 	'userrenametool-reason' => 'Reden voor hernoemen:',
 	'userrenametool-move' => "De gebruikerspagina en overlegpagina (en eventuele subpagina's) hernoemen naar de nieuwe gebruikersnaam",
 	'userrenametool-reserve' => 'Voorkomen dat de oude gebruiker opnieuw wordt geregistreerd',
@@ -3417,7 +3398,6 @@ $messages['ps'] = array(
 	'userrenametool-old' => 'اوسنی کارن-نوم:',
 	'userrenametool-new' => 'نوی کارن-نوم:',
 	'userrenametool-reason' => 'د نوم د بدلون سبب:',
-	'userrenametool-move' => 'د کارن او د خبرو اترو مخونه (او د هغوی څېرمه مخونه) نوي نوم ته ورلېږدول',
 	'userrenametool-warnings' => 'ګواښنې:',
 	'userrenametool-submit' => 'کارن-نوم بدلول',
 	'userrenametool-errordoesnotexist' => 'د "<nowiki>$1</nowiki>" په نامه کارونکی نه شته.',
@@ -3605,13 +3585,6 @@ $messages['qu'] = array(
 	'userrenametool-log' => "{{PLURAL:$1|1 llamk'apusqa|$1 llamk'apusqakuna}}, kayrayku: $2",
 	'userrenametool-move-log' => '"[[User:$1|$1]]" ruraqpa sutinta "[[User:$2|$2]]" sutiman hukchaspa kikinmanta ruraqpa p\'anqatapas astan',
 	'right-renameuser' => 'Ruraqpa sutinkunata hukchay',
-);
-
-/** Romansh (rumantsch)
- * @author Kazu89
- */
-$messages['rm'] = array(
-	'userrenametool-logpage' => "Protocol da midadas da num d'utilisader",
 );
 
 /** Romani (Romani)
@@ -4564,7 +4537,6 @@ $messages['vep'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
  * @author Minh Nguyen
  * @author Vinhtantran
  * @author Xiao Qiao
@@ -4578,20 +4550,13 @@ Xem [[Special:Stafflog|Staff log]]',
 	'userrenametool-desc' => "Đổi tên thành viên (cần có quyền ''renameuser'')",
 	'userrenametool-old' => 'Tên hiệu hiện nay:',
 	'userrenametool-new' => 'Tên hiệu mới:',
-	'userrenametool-encoded' => 'URL mã hóa:',
 	'userrenametool-reason' => 'Lý do đổi tên:',
 	'userrenametool-move' => 'Di chuyển trang thành viên và thảo luận thành viên (cùng với trang con của nó) sang tên mới',
 	'userrenametool-reserve' => 'Không cho phép ai lấy tên cũ',
 	'userrenametool-notify-renamed' => 'Gửi e-mail cho người dùng khi việc đổi tên đã hoàn tất',
 	'userrenametool-warnings' => 'Cảnh báo:',
-	'userrenametool-requested-rename' => 'Người dùng $1 yêu cầu đổi tên',
-	'userrenametool-did-not-request-rename' => 'Người dùng $1 không yêu cầu đổi tên',
-	'userrenametool-previously-renamed' => 'Người sử dụng $1 đã đổi tên',
-	'userrenametool-phalanx-matches' => 'Đội hình phalanx bộ lọc phù hợp với $1:',
 	'userrenametool-confirm' => 'Đổi tên người dùng',
 	'userrenametool-submit' => 'Thực hiện',
-	'userrenametool-error-antispoof-conflict' => 'Cảnh báo AntiSpoof - hiện đã là một tên người dùng tương tự như "<nowiki>$1</nowiki>".',
-	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof không được cài đặt.',
 	'userrenametool-errordoesnotexist' => 'Thành viên “<nowiki>$1</nowiki>” không tồn tại.',
 	'userrenametool-errorexists' => 'Thành viên “<nowiki>$1</nowiki>” đã hiện hữu.',
 	'userrenametool-errorinvalid' => 'Tên thành viên “<nowiki>$1</nowiki>” không hợp lệ.',
@@ -4603,46 +4568,18 @@ Xem [[Special:Stafflog|Staff log]]',
 	'userrenametool-errorbot' => 'Người dùng <nowiki>$1</nowiki> là một robot.',
 	'userrenametool-error-request' => 'Có trục trặc trong tiếp nhận yêu cầu. Xin hãy quay lại và thử lần nữa.',
 	'userrenametool-error-same-user' => 'Bạn không thể đổi tên thành viên sang tên y hệt như vậy.',
-	'userrenametool-error-extension-abort' => 'Một phần mở rộng không cho trình đổi tên.',
-	'userrenametool-error-cannot-rename-account' => 'Đổi tên tài khoản người dùng trên cơ sở dữ liệu toàn cầu chia sẻ không thành công.',
-	'userrenametool-error-cannot-create-block' => 'Sáng tạo của Phalanx khối không thành công.',
-	'userrenametool-error-cannot-rename-unexpected' => 'Lỗi bất ngờ xảy ra, hãy kiểm tra nhật trình hoặc thử một lần nữa.',
-	'userrenametool-error-invalid-ip' => 'Địa chỉ IP không hợp lệ được cung cấp.',
-	'userrenametool-warnings-characters' => 'Tên người dùng mới chứa các ký tự bất hợp pháp!',
-	'userrenametool-warnings-maxlength' => 'Độ dài tên người dùng mới không thể vượt quá giới hạn 255 ký tự!',
-	'userrenametool-warn-repeat' => 'Chú ý! Người dùng "<nowiki>$1</nowiki>" đã được đổi tên để "<nowiki>$2 </nowiki>".
-Tiếp tục xử lý chỉ khi bạn cần phải cập nhật một số thông tin còn thiếu.',
-	'userrenametool-warn-table-missing' => 'Bảng "<nowiki>$2</nowiki>" không tồn tại trong cơ sở dữ liệu" <nowiki>$1</nowiki>."',
-	'userrenametool-info-started' => '$1 bắt đầu để đổi tên: $2 đến $3 (bản ghi: $4).
-Lý do:"$5".',
-	'userrenametool-info-finished' => '$1 hoàn thành đổi tên: $2 đến $3 (bản ghi: $4).
-Lý do: "$5".',
-	'userrenametool-info-failed' => '$1 đổi tên không thành công: $2 để $3 (bản ghi: $4).
-Lý do: "$5".',
-	'userrenametool-info-wiki-finished' => '$1 đổi tên $2 đến $3 trên $4.
-Lý do: " $5 ".',
-	'userrenametool-info-wiki-finished-problems' => '$1 đổi tên thành $2 đến $3 trên $4 bị lỗi.
-Lý do: "$5".',
-	'userrenametool-info-in-progress' => 'Đổi tên đang quá trình tiến hành.
-Phần còn lại sẽ được thực hiện trong nền.
-Bạn sẽ được thông báo qua thư điện tử khi nó được hoàn thành.',
 	'userrenametool-success' => 'Thành viên “<nowiki>$1</nowiki>” đã được đổi tên thành “<nowiki>$2</nowiki>”.',
-	'userrenametool-confirm-intro' => 'Bạn có thực sự muốn làm điều này?',
 	'userrenametool-confirm-yes' => 'Có',
 	'userrenametool-confirm-no' => 'Không',
 	'userrenametool-page-exists' => 'Trang $1 đã tồn tại và không thể bị tự động ghi đè.',
 	'userrenametool-page-moved' => 'Trang $1 đã được di chuyển đến $2.',
 	'userrenametool-page-unmoved' => 'Trang $1 không thể di chuyển đến $2.',
-	'userrenametool-finished-email-subject' => 'Đổi tên người dùng quá trình hoàn thành [$1]',
-	'userrenametool-finished-email-body-text' => 'Quá trình di chuyển "<nowiki>$1</nowiki>" để "<nowiki>$2</nowiki>" đã được hoàn thành.',
-	'userrenametool-finished-email-body-html' => 'Quá trình di chuyển "<nowiki>$1</nowiki>" để "<nowiki>$2</nowiki>" đã được hoàn thành.',
 	'userrenametool-logpage' => 'Nhật trình đổi tên thành viên',
 	'userrenametool-logpagetext' => 'Đây là nhật trình ghi lại các thay đổi đối với tên thành viên',
 	'userrenametool-logentry' => 'đã đổi tên $1 thành “$2”',
 	'userrenametool-log' => 'Đã có {{PLURAL:$1|1 sửa đổi|$1 sửa đổi}}. Lý do: $2',
 	'userrenametool-move-log' => 'Đã tự động di chuyển trang khi đổi tên thành viên “[[User:$1|$1]]” thành “[[User:$2|$2]]”',
 	'right-renameuser' => 'Đổi tên thành viên',
-	'action-renameuser' => 'đổi tên người dùng',
 );
 
 /** Volapük (Volapük)
@@ -4803,13 +4740,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-error-same-user' => '您不可以更改一位用户是跟之前的东西一样。',
 	'userrenametool-error-extension-abort' => '一个扩展阻碍了重命名进程。',
 	'userrenametool-error-cannot-rename-account' => '在共享的全局数据库重命名用户失败。',
-	'userrenametool-error-invalid-ip' => '提供的IP地址无效。',
-	'userrenametool-warnings-characters' => '新用户名包含非法字符！',
 	'userrenametool-warnings-maxlength' => '新用户名长度不可超过255个字符！',
-	'userrenametool-warn-table-missing' => '“<nowiki>$2</nowiki>”表在数据库“<nowiki>$1</nowiki>”中不存在。',
-	'userrenametool-info-in-progress' => '重命名进程正在进行。
-其余部分将在后台完成。
-完成后你将收到电子邮件通知。',
 	'userrenametool-success' => '用户"<nowiki>$1</nowiki>"已经更名为"<nowiki>$2</nowiki>"',
 	'userrenametool-confirm-intro' => '你真的想这样做呢？',
 	'userrenametool-confirm-yes' => '是',
@@ -4826,7 +4757,6 @@ $messages['zh-hans'] = array(
 	'userrenametool-log' => '拥有$1次编辑。 理由: $2',
 	'userrenametool-move-log' => '当由"[[User:$1|$1]]"重命名作"[[User:$2|$2]]"时已经自动移动用户页',
 	'right-renameuser' => '重新命名用户',
-	'action-renameuser' => '重命名用户',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

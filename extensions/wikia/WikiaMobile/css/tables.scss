@@ -8,6 +8,7 @@ $wide-table-border: 5px solid rgb(215,232,242);
 //if native scroll is available:
 .overflow .bigTable {
 	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 //if not
@@ -22,15 +23,23 @@ $wide-table-border: 5px solid rgb(215,232,242);
 
 //handling wide Tables
 .bigTable{
-	border: 1px solid $border-color;
-
 	position: relative;
 
-	-webkit-overflow-scrolling: touch;
-
 	max-width: 100%;
+	padding: 5px;
+	margin-top: $page-padding;
+
+	@include box-shadow(inset 0 0 15px $shadow-color, inset -20px 0 45px -10px rgb(215, 232, 242));
+
+	border: 1px solid $border-color;
+
+	-webkit-transition: border .2s;
+	-moz-transition: border .2s;
+	-o-transtion: border .2s;
 
 	&.active {
+		@include box-shadow(inset 0 0 15px $shadow-color);
+
 		table {
 			pointer-events: auto;
 		}

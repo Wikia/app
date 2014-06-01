@@ -36,7 +36,7 @@ require(['uniqueId'], function(uniqueId) {
 				},
 				diffHandler = function(ev){
 					$().log('showing diff', 'RestoreEdit');
-					editor.plugins.pagecontrols.renderChanges();
+					editor.plugins.pagecontrols.renderChanges({});
 				};
 
 				var originalMode = editor.mode;

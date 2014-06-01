@@ -12,18 +12,15 @@ $dir = dirname( __FILE__ ) . '/';
 /* Classes */
 
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
+$wgAutoloadClasses['ApiTempUpload'] = $dir . 'ApiTempUpload.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
 $wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
-$wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
-$wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
-$wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 
 /* API Modules */
 
+$wgAPIModules['apitempupload'] = 'ApiTempUpload';
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
-$wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
-$wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 
 /* Resource Loader Modules */
 
@@ -122,10 +119,6 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiasourcemode-apply-button',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-link',
 			'wikia-visualeditor-dialog-wikiasourcemode-help-text',
-			'wikia-visualeditor-notification-media-must-be-logged-in',
-			'wikia-visualeditor-notification-media-only-premium-videos-allowed',
-			'wikia-visualeditor-notification-media-query-failed',
-			'wikia-visualeditor-notification-media-permission-denied',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core',

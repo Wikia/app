@@ -104,7 +104,15 @@ class WAMApiController extends WikiaApiController {
 		$this->response->setVal('wam_index', $wamIndex['wam_index']);
 		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
 		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
-		$this->response->setCacheValidity(6 * 60 * 60);
+		$this->response->setCacheValidity(
+			6 * 60 * 60 /* 6h */,
+			6 * 60 * 60 /* 6h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
+
 	}
 
 	/**
@@ -144,7 +152,6 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
 		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
-		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
 		$options['fetchWikiImages'] = $this->request->getBool('fetch_wiki_images', false);

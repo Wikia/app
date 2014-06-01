@@ -23,6 +23,10 @@ class AssetsManagerController extends WikiaController {
 	 * @requestParam string scripts - comma-separated list of AssetsManager groups
 	 * @requestParam string messages - comma-separated list of JSMessages packages
 	 * @requestParam integer ttl - cache period for varnish and browser (in seconds),
+	 * no caching will be used if not specified or 0, this value is overridden by varnishTTL
+	 * and browserTTL respectively for the Varnish part and the Browser part
+	 * @requestParam integer varnishTTL - cache period for varnish (in seconds)
+	 * @requestParam integer browserTTL - cache period for varnish (in seconds)
 	 *
 	 * @responseParam array templates - rendered templates (either HTML or JSON encoded string)
 	 * @responseParam array styles - minified styles
@@ -42,6 +46,8 @@ class AssetsManagerController extends WikiaController {
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
 		$ttl = $this->request->getInt( 'ttl', 0 );
+		$varnishTTL = $this->request->getInt( 'varnishTTL', $ttl );
+		$browserTTL = $this->request->getInt( 'browserTTL', $ttl );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -142,8 +148,12 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		// handle cache time
-		if ( $ttl > 0 ) {
-			$this->response->setCacheValidity( $ttl );
+		if ( $varnishTTL > 0 ) {
+			$this->response->setCacheValidity( $varnishTTL, $varnishTTL, array( WikiaResponse::CACHE_TARGET_VARNISH ) );
+		}
+
+		if ( $browserTTL > 0 ) {
+			$this->response->setCacheValidity( $browserTTL, $browserTTL, array( WikiaResponse::CACHE_TARGET_BROWSER ) );
 		}
 
 		$this->response->setFormat( 'json' );
@@ -152,6 +162,15 @@ class AssetsManagerController extends WikiaController {
 
 	private function getComponentMemcacheKey( $par ) {
 		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
+	}
+
+	/**
+	 * Purges Varnish and Memcached data mapping to the specified set of paramenters
+	 *
+	 * @param array $options @see getMultiTypePackage
+	 */
+	public function purgeMultiTypePackageCache( Array $options ) {
+		SquidUpdate::purge( array ( AssetsManager::getInstance()->getMultiTypePackageURL( $options ) ) );
 	}
 
 	/**

@@ -193,14 +193,6 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 	// Events
 	this.$licenseSelect.on( 'change', ve.bind( this.onLicenseSelectChange, this ) );
 
-	// Select the first option that isn't 'No license' or a disabled 'heading' option
-	this.$licenseSelect
-		.find( 'option' )
-			.not( ':selected' )
-			.not( ':disabled' )
-		.eq(0)
-			.prop( 'selected', true );
-
 	// Initialization
 	this.$license
 		.addClass( 've-ui-wikiaMediaPageWidget-item-license' )
@@ -218,7 +210,10 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
 	this.$overlay = this.$$( '<span>' )
-		.addClass( 'play-circle' );
+		.addClass( 'play-circle' )
+		.add(
+			this.$$( '<span>' ).addClass( 'play-arrow' )
+		);
 
 	this.$itemWrapper
 		.addClass( 'wikia-video-thumbnail' )

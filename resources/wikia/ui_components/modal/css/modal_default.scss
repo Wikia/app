@@ -29,7 +29,6 @@ $large-modal-margin: 50px;
 	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
-	@include box-sizing-border-box;
 
 	background-color: $color-page;
 	border-radius: 2px;
@@ -84,7 +83,10 @@ $large-modal-margin: 50px;
 
 	> footer .button {
 		float: right;
-		margin-left: 20px;
+	}
+
+	> footer .button:last-child {
+		margin: 0 20px;
 	}
 
 	> section {
@@ -117,14 +119,7 @@ $large-modal-margin: 50px;
 		@include height-calc('100% - #{$large-modal-margin}');
 		@include width-calc('100% - #{$large-modal-margin}');
 		display: block;
-		max-height: none;
-		min-height: none;
-		padding-bottom: $header-footer-height;
 		position: relative;
-
-		> section {
-			@include height-calc('100% - #{$header-footer-height}');
-		}
 
 		> footer {
 			bottom: 0;
@@ -152,17 +147,12 @@ $large-modal-margin: 50px;
 
 	.modal {
 		display: block;
-		max-height: 90%;
 		padding-bottom: $header-footer-height;
 
-		> footer {
+		& > footer {
 			bottom: 0;
 			position: absolute;
 			width: 100%;
-		}
-
-		> section {
-			box-sizing: content-box;
 		}
 
 	}
@@ -180,11 +170,6 @@ $large-modal-margin: 50px;
 
 	> .medium {
 		margin-left: -$medium-modal-width / 2;
-	}
-
-	> .large {
-		left: 25px;
-		top: 25px;
 	}
 
 }
@@ -208,22 +193,10 @@ $large-modal-margin: 50px;
 
 // styles required to disable scrolling behind modal
 body.with-blackout {
+	position: fixed;
+	width: 100%;
 
-	&.background-dynamic {
-		position: static;
-
-		&:after,
-		&:before {
-			height: 100%;
-		}
-	}
-
-	.WikiaSiteWrapper {
-		position: fixed;
-		width: 100%;
-	}
-
-	.fake-scrollbar {
+	&.fake-scrollbar {
 		overflow-y: scroll;
 	}
 }

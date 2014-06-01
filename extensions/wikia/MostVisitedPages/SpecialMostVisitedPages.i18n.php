@@ -117,7 +117,7 @@ $messages['ce'] = array(
 	'mostvisitedpagessearchbtn' => 'лаха',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -367,14 +367,6 @@ $messages['lb'] = array(
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
 	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
 	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
-);
-
-/** لوری (لوری)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
-	'mostvisitedpagessearchtext' => 'نوم گوتار',
-	'mostvisitedpagessearchbtn' => 'پی جوری',
 );
 
 /** Macedonian (македонски)

@@ -781,12 +781,6 @@ HTML
 			$ret = false;
 		}
 
-		// Disable for IE 11 (VE-675). RTE should be gone by the time IE 12 rolls out, so it's
-		// not necessary to match for future versions.
-		if ( strpos( $sAgent, 'Trident/' ) !== false && strpos( $sAgent, 'rv:11.0' ) !== false ) {
-			$ret = false;
-		}
-
 		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
 		wfProfileOut(__METHOD__);
 		return $ret;

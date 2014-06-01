@@ -30,6 +30,5 @@ JSMessages::registerPackage('EditPreview', [
 	'wikia-editor-preview-current-width',
 	'wikia-editor-preview-min-width',
 	'wikia-editor-preview-max-width',
-	'wikia-editor-preview-mobile-width',
 	'wikia-editor-preview-type-tooltip'
 ]);

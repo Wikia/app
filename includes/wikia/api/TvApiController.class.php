@@ -52,7 +52,14 @@ class TvApiController extends WikiaApiController {
 		$response = $this->getResponse();
 		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
+		$response->setCacheValidity(
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
+			self::RESPONSE_CACHE_VALIDITY /* 24h */,
+			array(
+				WikiaResponse::CACHE_TARGET_BROWSER,
+				WikiaResponse::CACHE_TARGET_VARNISH
+			)
+		);
 	}
 
 	/**

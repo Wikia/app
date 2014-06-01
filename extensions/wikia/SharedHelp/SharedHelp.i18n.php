@@ -66,7 +66,7 @@ $messages['ca'] = array(
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Darth Daron
  * @author Mormegil
  */

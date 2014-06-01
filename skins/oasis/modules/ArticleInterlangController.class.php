@@ -14,9 +14,14 @@ class ArticleInterlangController extends WikiaController {
 			$this->language_urls = array();
 		}
 		$this->language_list = null;
+		$this->enable_more = null;
+		$this->request_all = false;
+		/** max languages which are visible by default, for all languages, click "see all >" **/
+		$this->max_visible = 3;
 	}
 	
 	public function executeIndex() {
+		global $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 		$this->WidgetLanguages();
 		wfProfileOut(__METHOD__);
@@ -24,6 +29,9 @@ class ArticleInterlangController extends WikiaController {
 
 	function WidgetLanguages() {
 		wfProfileIn( __METHOD__ );
+		global $wgRequest;
+
+		$this->request_all = $wgRequest->getVal('interlang') == 'all';
 
 		$request_language_urls = $this->request->getVal('request_language_urls');
 		if(!empty($request_language_urls)) {
@@ -61,6 +69,10 @@ class ArticleInterlangController extends WikiaController {
 		}
 		if (!empty($langSortBy)) {
 			$this->language_list = $langSortBy;
+
+			if (count($this->language_list) > $this->max_visible) {
+				$this->enable_more = true;
+			}
 		}
 		wfProfileOut(__METHOD__);
 	}

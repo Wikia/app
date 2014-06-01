@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/merbivore', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/merbivore', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = true;
 exports.cssClass = "ace-merbivore";
@@ -45,7 +45,11 @@ background-color: #161616;\
 color: #E6E1DC\
 }\
 .ace-merbivore .ace_cursor {\
-color: #FFFFFF\
+border-left: 2px solid #FFFFFF\
+}\
+.ace-merbivore .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #FFFFFF\
 }\
 .ace-merbivore .ace_marker-layer .ace_selection {\
 background: #454545\
@@ -116,6 +120,9 @@ color: #AD2EA4\
 }\
 .ace-merbivore .ace_entity.ace_other.ace_attribute-name {\
 color: #FFFF89\
+}\
+.ace-merbivore .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-merbivore .ace_indent-guide {\
 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWMQFxf3ZXB1df0PAAdsAmERTkEHAAAAAElFTkSuQmCC) right repeat-y;\

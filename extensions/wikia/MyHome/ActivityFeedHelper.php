@@ -173,12 +173,13 @@ class ActivityFeedHelper {
 	/**
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function purgeCommunityWidgetInVarnish(Title $title) {
-		global $wgContentNamespaces, $wgContLang, $wgMemc;
+	static function purgeCommunityWidgetInVarnish($title) {
+		global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
 		if (in_array($title->getNamespace(), $wgContentNamespaces)) {
 			$lang = $wgContLang->getCode();
 			$key = wfMemcKey('community_widget_v1', $lang);
 			$wgMemc->delete($key);
+			SquidUpdate::purge(array($wgScript . "?action=ajax&rs=CommunityWidgetAjax&uselang=$lang"));
 		}
 		return true;
 	}

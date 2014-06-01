@@ -67,13 +67,17 @@ ve.dm.WikiaCartItem.prototype.getTitleParts = function ( title ) {
 /**
  * @method
  * @description Sets title with special case for user-blanked input
- * @param {String} title May be full path (File:Example.jpg) or string for basename
+ * @param String May be full path (File:Example.jpg) or string for basename
  */
 ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 	var parts,
 		prefix,
 		basename,
 		extension;
+
+	if ( typeof title === 'number' ) {
+		title = title.toString();
+	}
 
 	parts = this.getTitleParts( title || mw.config.get( 'wgPageName' ) );
 	prefix = parts[1] || this.prefix || '';
@@ -82,13 +86,3 @@ ve.dm.WikiaCartItem.prototype.setTitle = function ( title ) {
 
 	this.title = prefix + basename + extension;
 };
-
-/**
- * @method
- * @description Gets the ID based on temporary or permanent file
- * @returns {String} Id string, either the temporary filename or the title
- */
-ve.dm.WikiaCartItem.prototype.getId = function () {
-	return this.isTemporary() ? this.temporaryFileName : this.title;
-};
-

@@ -140,10 +140,6 @@ var ScriptWriter = function (document, log, window, loader) {
 			url = '/resources/wikia/libraries/postscribe/postscribe.min.js';
 			impl = implPs;
 
-			// GhostWriter does this safety-guards, but PostScribe doesn't
-			document.open = function () {};
-			document.close = function () {};
-
 			if (postscribeLoaded) {
 				log(['loadImpl', 'postscribe already loaded, processing queue'], 'debug', module);
 				processQueue();

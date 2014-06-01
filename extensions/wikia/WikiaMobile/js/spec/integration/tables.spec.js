@@ -1,7 +1,5 @@
 /*global describe, it, runs, waitsFor, expect, require, document*/
 describe("Tables module", function () {
-	'use strict';
-
 	var body = getBody();
 
 	body.innerHTML = '<div id="mw-content-text"><table id="TESTTABLE"><tbody><tr style="min-width: 99999px;"><td>some content to TEST wide table</td><td>and some more</td></tr><tr><td></td></tr></tbody></table></div>';
@@ -16,11 +14,7 @@ describe("Tables module", function () {
 		},
 		{
 			Features: {},
-			IScroll: function(){
-				return {
-					on: function(){}
-				};
-			},
+			iScroll: function(){},
 			addEventListener: function(){
 
 			},
@@ -61,7 +55,7 @@ describe("Tables module", function () {
 		expect(table.parentElement.className).toBe('bigTable');
 	});
 
-	it('should add wkScroll to bigTable', function(){
+	it('should add wkScroll to bitTable', function(){
 		var foundTables = $(body).find('table');
 
 		tables.process(foundTables);

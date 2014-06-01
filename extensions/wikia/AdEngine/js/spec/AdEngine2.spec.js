@@ -1,32 +1,26 @@
 describe('AdEngine2', function(){
-	it('Doesn\'t throw with empty queue, but throws with undefined queue', function() {
-		var logMock = function() {},
-			adConfigMock = {getDecorators: function () {}},
-			lazyQueueMock = {makeQueue: function (queue) {queue.start = function() {}}},
-			slotTrackerMock,
-			adEngine,
-			undef;
+	it('Throws with undefined queue', function() {
+		var logMock = function() {}
+			, adConfigMock
+			, adslotsNotUsed
+			, adEngine
+			, lazyQueueMock;
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
-
-		expect(function() {
-			adEngine.run(adConfigMock, [], 'queue-name');
-		}).not.toThrow();
+		adEngine = AdEngine2(logMock, lazyQueueMock);
 
 		expect(function() {
-			adEngine.run(adConfigMock, undef, 'queue-name');
+			adEngine.run(adConfigMock, adslotsNotUsed);
 		}).toThrow();
 	});
 
 	it('Makes LazyQueue from run parameter and starts it', function() {
-		var logMock = function() {},
-			adConfigMock = {getDecorators: function () {}},
-			slotsMock,
-			lazyQueueMock,
-			slotTrackerMock,
-			makeQueueCalledOn,
-			queueStartCalled = false,
-			adEngine;
+		var logMock = function() {}
+			, adConfigMock
+			, slotsMock
+			, lazyQueueMock
+			, makeQueueCalledOn
+			, queueStartCalled = false
+			, adEngine;
 
 		lazyQueueMock = {
 			makeQueue: function(queue, callback) {
@@ -40,7 +34,7 @@ describe('AdEngine2', function(){
 			}
 		};
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = AdEngine2(logMock, lazyQueueMock);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(makeQueueCalledOn).toBe(slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
@@ -48,15 +42,13 @@ describe('AdEngine2', function(){
 	});
 
 	it('Calls AdConfig2 getProvider and then fillInSlot for slots provider in the passed array', function() {
-		var noop = function () {},
-			logMock = noop,
-			adConfigMock,
-			slotsMock = {start: noop},
-			lazyQueueMock,
-			slotTrackerMock = function () { return {init: noop, success: noop, hop: noop}; },
-			getProviderCalledFor = [],
-			fillInSlotCalledFor = [],
-			adEngine;
+		var logMock = function() {}
+			, adConfigMock
+			, slotsMock = {start: function() {}}
+			, lazyQueueMock
+			, getProviderCalledFor = []
+			, fillInSlotCalledFor = []
+			, adEngine;
 
 		lazyQueueMock = {
 			makeQueue: function(slots, callback) {
@@ -69,15 +61,14 @@ describe('AdEngine2', function(){
 			getProvider: function(slot) {
 				getProviderCalledFor.push(slot[0]);
 				return {
-					fillInSlot: function(slotname) {
-						fillInSlotCalledFor.push(slotname);
+					fillInSlot: function() {
+						fillInSlotCalledFor.push(slot[0]);
 					}
-				};
-			},
-			getDecorators: noop
+				}
+			}
 		};
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = AdEngine2(logMock, lazyQueueMock);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(getProviderCalledFor.length).toBe(2, 'adConfig.getProvider called 2 times');

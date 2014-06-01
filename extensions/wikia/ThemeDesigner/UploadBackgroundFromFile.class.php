@@ -4,7 +4,7 @@
  */
 
 class UploadBackgroundFromFile extends UploadFromFile {
-	const FILESIZE_LIMIT = 307200;
+	const FILESIZE_LIMIT = 153600;
 	const FILESIZE_ERROR = 20;
 	const FILETYPE_ERROR = 21;
 

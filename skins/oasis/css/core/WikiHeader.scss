@@ -367,8 +367,8 @@ $WikiNavWidth: $width-outside - 271px;
 		}
 
 		> .contribute:hover {
-			background: none;
 			@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			background: none;
 		}
 
 		.share-button {
@@ -427,14 +427,6 @@ $WikiNavWidth: $width-outside - 271px;
 .WikiHeaderPreview {
 	> nav {
 		left: 0;
-
-		// fix for wiki nav bug - DAR-2884
-		@if ( $responsive-layout-enabled ) {
-			left: -10px;
-			position: relative;
-			top: auto;
-			width: auto;
-		}
 
 		> .navbackground > .chevron {
 			display: none;

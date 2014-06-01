@@ -83,7 +83,7 @@ function api_getDefaultRoomId(cityId, extraDataString, type, serializedUsers, su
 	// See if there are any rooms for this wiki and if there are, get the first one.
 	var roomId = "";
 
-	var users = [];
+	users = [];
 	if ( typeof(serializedUsers) != 'undefined' ) {
 		try {
 			users = JSON.parse( serializedUsers ) || [];

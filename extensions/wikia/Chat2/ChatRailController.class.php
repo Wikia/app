@@ -62,7 +62,7 @@ class ChatRailController extends WikiaController {
 		}
 
 		// Cache the entire call in varnish (and browser).
-		$this->response->setCacheValidity(self::CACHE_DURATION);
+		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -71,7 +71,7 @@ class ChatRailController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 		$this->users = ChatEntryPoint::getChatUsersInfo();
 		// Cache the entire call in varnish (and browser).
-		$this->response->setCacheValidity(self::CACHE_DURATION);
+		$this->response->setCacheValidity(self::CACHE_DURATION, self::CACHE_DURATION, array(WikiaResponse::CACHE_TARGET_BROWSER, WikiaResponse::CACHE_TARGET_VARNISH));
 		wfProfileOut( __METHOD__ );
 	}
 

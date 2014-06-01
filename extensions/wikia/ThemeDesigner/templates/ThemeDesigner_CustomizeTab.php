@@ -32,7 +32,7 @@
 							<input type="checkbox" id="not-split-background">
 							<?= wfMessage('themedesigner-not-split-background')->plain() ?>
 						</label>
-						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-not-split-background', ThemeSettings::MIN_WIDTH_FOR_NO_SPLIT)->parse() ?>"></span>
+						<span class="form-questionmark" rel="tooltip" title="<?= wfMessage('themedesigner-rules-not-split-background')->parse() ?>"></span>
 					</span>
 				<? endif ?>
 			</li>

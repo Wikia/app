@@ -64,15 +64,15 @@ class WallNotificationEntity {
 	public function loadDataFromRev( Revision $rev, $wikiId, $master = false ) {
 		$this->id = $rev->getId(). '_' .  $wikiId;
 
-		$wm = WallMessage::newFromTitle($rev->getTitle()); /* @var $wm WallMessage */
-		$wm->load();
+		$ac = WallMessage::newFromTitle($rev->getTitle()); /* @var $ac WallMessage */
+		$ac->load();
 
 		$app = F::app();
 
 		$this->data = new stdClass;
 		$this->data_noncached = new stdClass;
 
-		$walluser = $wm->getWallOwner( $master );
+		$walluser = $ac->getWallOwner( $master );
 		$authoruser = User::newFromId($rev->getUser());
 
 		if(empty($walluser)) {
@@ -90,7 +90,7 @@ class WallNotificationEntity {
 		$this->data->wikiname = $app->wg->sitename;
 		$this->data->rev_id = $rev->getId();
 
-		$wallTitle = $wm->getArticleTitle();
+		$wallTitle = $ac->getWallTitle();
 		if(!empty($wallTitle) && $wallTitle->exists()) {
 			$this->data->article_title_ns = $wallTitle->getNamespace();
 			$this->data->article_title_text = $wallTitle->getText();
@@ -107,7 +107,7 @@ class WallNotificationEntity {
 
 		$this->data->parent_id = null;
 		
-		$this->data->parent_page_id = $wm->getArticleTitle()->getArticleId();
+		$this->data->parent_page_id = $ac->getWallTitle()->getArticleId();
 
 		if( $authoruser instanceof User ) {
 			$this->data->msg_author_id = $authoruser->getId();
@@ -128,20 +128,20 @@ class WallNotificationEntity {
 		$this->data->wall_userid = $walluser->getId();
 		$this->data->wall_displayname = $this->data->wall_username;
 		//TODO: double ?
-		$this->data->title_id = $wm->getTitle()->getArticleId();
+		$this->data->title_id = $ac->getTitle()->getArticleId();
 
-		$this->data_noncached->title = $wm->getTitle();
+		$this->data_noncached->title = $ac->getTitle();
 
-		$acParent = $wm->getTopParentObj();
+		$acParent = $ac->getTopParentObj();
 		$this->data->parent_username = '';
 		$this->data->thread_title = '';
 		$this->data_noncached->parent_title_dbkey = '';
 
-		$this->data_noncached->msg_text = $wm->getText();
-		$this->data->notifyeveryone = $wm->getNotifyeveryone();
+		$this->data_noncached->msg_text = $ac->getText();
+		$this->data->notifyeveryone = $ac->getNotifyeveryone();
 
-		if($wm->isEdited()) {
-			$this->data->reason = $wm->getLastEditSummery();
+		if($ac->isEdited()) {
+			$this->data->reason = $ac->getLastEditSummery();
 		} else {
 			$this->data->reason = '';
 		}
@@ -172,13 +172,13 @@ class WallNotificationEntity {
 			$this->data->thread_title = $acParent->getMetaTitle();
 			$this->data_noncached->parent_title_dbkey = $title->getDBkey();
 			$this->data->parent_id = $acParent->getId();
-			$this->data->url = $wm->getMessagePageUrl();
+			$this->data->url = $ac->getMessagePageUrl();
 
 		} else {
-			$this->data->url = $wm->getMessagePageUrl();
+			$this->data->url = $ac->getMessagePageUrl();
 			$this->data->parent_username = $walluser->getName();
-			$this->data_noncached->thread_title_full = $wm->getMetaTitle();
-			$this->data->thread_title = $wm->getMetaTitle();
+			$this->data_noncached->thread_title_full = $ac->getMetaTitle();
+			$this->data->thread_title = $ac->getMetaTitle();
 		}
 
 		return true;

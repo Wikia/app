@@ -1,4 +1,4 @@
-ace.define('ace/mode/snippets', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/text_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
+define('ace/mode/snippets', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/text_highlight_rules', 'ace/mode/folding/coffee'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -84,7 +84,7 @@ var SnippetGroupHighlightRules = function() {
 		{onMatch: function(value, state, stack) {
 			stack.splice(stack.length);
 			return this.tokenName;
-		}, tokenName: "text", regex: "^(?!\t)", next: "start"}
+		}, tokenName: "text", regex: "^(?!\t)", next: "start"},
 	])
 	
 };
@@ -96,20 +96,23 @@ exports.SnippetGroupHighlightRules = SnippetGroupHighlightRules;
 var FoldMode = require("./folding/coffee").FoldMode;
 
 var Mode = function() {
-    this.HighlightRules = SnippetGroupHighlightRules;
+    var highlighter = new SnippetGroupHighlightRules();
     this.foldingRules = new FoldMode();
+    this.$tokenizer = new Tokenizer(highlighter.getRules());
 };
 oop.inherits(Mode, TextMode);
 
 (function() {
-    this.$indentWithTabs = true;
+    this.getNextLineIndent = function(state, line, tab) {
+        return this.$getIndent(line);
+    };
 }).call(Mode.prototype);
 exports.Mode = Mode;
 
 
 });
 
-ace.define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
+define('ace/mode/folding/coffee', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/folding/fold_mode', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../../lib/oop");

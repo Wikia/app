@@ -55,7 +55,7 @@ class SFCreateProperty extends SpecialPage {
 
 	static function printCreatePropertyForm() {
 		global $wgOut, $wgRequest, $sfgScriptPath;
-		global $smwgContLang, $wgUser;
+		global $smwgContLang;
 
 		# cycle through the query values, setting the appropriate local variables
 		$property_name = $wgRequest->getVal( 'property_name' );
@@ -70,13 +70,6 @@ class SFCreateProperty extends SpecialPage {
 		$save_page = $wgRequest->getCheck( 'wpSave' );
 		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
-			$validToken = $wgUser->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateProperty' );
-			if ( !$validToken ) {
-				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$wgOut->addHTML( $text );
-				return;
-			}
-
 			# validate property name
 			if ( $property_name === '' ) {
 				$property_name_error_str = wfMsg( 'sf_blank_error' );
@@ -153,8 +146,7 @@ END;
 END;
 		$edit_buttons = "\t" . Html::input( 'wpSave', $save_button_text, 'submit', array( 'id' => 'wpSave' ) );
 		$edit_buttons .= "\t" . Html::input( 'wpPreview', $preview_button_text, 'submit', array( 'id' => 'wpPreview' ) );
-		$text .= "\t" . Html::rawElement( 'div', array( 'class' => 'editButtons' ), $edit_buttons ) . "\n";
-		$text .= "\t" . Html::hidden( 'csrf', $wgUser->getEditToken( 'CreateProperty' ) ) . "\n";
+	$text .= "\t" . Html::rawElement( 'div', array( 'class' => 'editButtons' ), $edit_buttons ) . "\n";
 		$text .= "\t</form>\n";
 
 		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );

@@ -6,13 +6,8 @@ describe("Media module", function () {
 
 	var qsMock = function() {
 			return {
-				getVal: function(){},
-				removeVal: function(){
-					return {
-						replaceState: function(){}
-					};
-				}
-			};
+				getVal: function(){}
+			}
 		},
 		modal = {
 			open: function(){},
@@ -25,11 +20,7 @@ describe("Media module", function () {
 				}
 			}
 		},
-		media,
-		toast = {
-			show: function(){}
-		},
-		msg = function(){};
+		media;
 
 
 	function MediaClass(data){
@@ -47,9 +38,7 @@ describe("Media module", function () {
 
 	loader.MULTI = '';
 
-	window.Features = {};
-
-	media = modules.media(msg, modal, null, qsMock, null,null, null, null, loader, null, null, MediaClass, toast);
+	media = modules.media(null, modal, null, qsMock, null,null, null, null, loader, null, null, MediaClass);
 
 	it('should be defined', function(){
 		expect(media).toBeDefined();
@@ -57,6 +46,7 @@ describe("Media module", function () {
 		expect(typeof media.openModal).toBe('function');
 		expect(typeof media.getMedia).toBe('function');
 		expect(typeof media.getCurrent).toBe('function');
+		expect(typeof media.hideShare).toBe('function');
 		expect(typeof media.init).toBe('function');
 		expect(typeof media.cleanup).toBe('function');
 	});

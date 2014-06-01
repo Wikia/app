@@ -6,93 +6,65 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
+		global $wgRequest, $wgTitle, $wgOut;
 		wfProfileIn(__METHOD__);
-
-		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
-			global $wgSlowPagesBlacklist;
-			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
-				wfProfileOut( __METHOD__ );
-				return [
-					'html' => wfMessage( 'slowpagesblacklist-preview-unavailable' )->plain(),
-					'catbox' => '',
-					'interlanglinks' => ''
-				];
-			}
-		}
-
 		if($wgTitle && class_exists($page)) {
 			$pageObj = new $page();
 			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
 				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
 				$service = new EditPageService($wgTitle);
 				$html = $pageObj->getOwnPreviewDiff($wikitext, $method);
+				$catbox = null;
+				$interlanglinks = null;
 
-				/**
-				 * @val String $type - partial or full - whether to return full skin along with css and js or just a content
-				 */
-				$type = $wgRequest->getVal( 'type', 'partial' );
-
-				$res = [];
-
-				if ( $html === false ) {
+				if($html === false ) {
 					$html = '';
-
-					if ( $method == 'preview' ) {
+					if($method == 'preview') {
 						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
 						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
 						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
 
-						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-							if ( $type === 'full' ) {
-								$res['html'] = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
-							} else {
-								$res['html'] = $html;
-							}
-						} else {
-							// add page title when not in section edit mode
-							if ($section === '') {
-								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
-							}
-
-							// allow extensions to modify preview (BugId:6721)
-							wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
-
-							/**
-							 * bugid: 11407
-							 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
-							 */
-							if ( preg_match( '/^#REDIRECT /m', $wikitext ) ) {
-								$article = Article::newFromTitle( $wgTitle, RequestContext::getMain() );
-								$matches = array();
-								if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
-									$redirectTitle = Title::newFromText( $matches[1][0] );
-									$html = $article->viewRedirect( array( $redirectTitle ) );
-								}
-							}
-
-							$html = '<div class="WikiaArticle">'. $html .'</div>';
-
-							$res = [
-								'html' => $html,
-								'catbox' => $catbox,
-								'interlanglinks' => $interlanglinks
-							];
+						// add page title when not in section edit mode
+						if ($section === '') {
+							$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
 						}
 
-					} elseif ( $method == 'diff' ) {
-						$res['html'] = $service->getDiff( $wikitext, intval( $section ) );
+						// allow extensions to modify preview (BugId:6721)
+						wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+
+						/**
+						 * bugid: 11407
+						 * Provide an appropriate preview for a redirect, based on wikitext, not revision.
+						 */
+						if ( preg_match( '/^#REDIRECT /m', $wikitext ) ) {
+							$article = Article::newFromTitle( $wgTitle, RequestContext::getMain() );
+							$matches = array();
+							if ( preg_match_all( '/^#REDIRECT \[\[([^\]]+)\]\]/Um', $wikitext, $matches ) ) {
+    							$redirectTitle = Title::newFromText( $matches[1][0] );
+    							$html = $article->viewRedirect( array( $redirectTitle ) );
+							}
+						}
+
+					} elseif($method == 'diff') {
+						$html = $service->getDiff($wikitext, intval($section));
 					}
 				}
+
+				$html = '<div class="WikiaArticle">'. $html .'</div>';
+
+				$res = array(
+					'html' => $html,
+					'catbox' => $catbox,
+					'interlanglinks' => $interlanglinks
+				);
 
 				wfProfileOut(__METHOD__);
 				return $res;
 			}
 		}
-
 		wfProfileOut(__METHOD__);
-		return [ 'html' => '' ];
+		return array( 'html' => '' );
 	}
 
 	/**
@@ -116,26 +88,22 @@ class EditPageLayoutAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function preview() {
-		global $wgRequest;
+		global $wgRequest, $wgLang;
 		wfProfileIn(__METHOD__);
 
-		$skin = $wgRequest->getVal( 'skin' );
-
-		if ( !empty( $skin ) ) {
-			RequestContext::getMain()->setSkin(
-				Skin::newFromKey( $skin )
-			);
-		}
-
-		$res = self::resolveWikitextFromRequest( 'preview' );
+		$res = self::resolveWikitextFromRequest('preview');
 
 		// parse summary
-		// DAR-2382 -- render edit summary the same way it's rendered on Special:WikiActivity and Special:RecentChanges
-		$summary = $wgRequest->getText( 'summary' );
-		$summary = RequestContext::getMain()->getSkin()->formatComment( $summary, false );
 
-		if( $summary != '' ) {
-			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->rawParams( $summary )->parse();
+		// taken from EditPage.php
+		# Truncate for whole multibyte characters. +5 bytes for ellipsis
+		$summary = $wgLang->truncate($wgRequest->getText('summary'), 150);
+
+		# Remove extra headings from summaries and new sections.
+		$summary = preg_replace('/^\s*=+\s*(.*?)\s*=+\s*$/', '$1', $summary);
+
+		if ($summary != '') {
+			$res['summary'] = wfMsgExt('wikia-editor-preview-editSummary', array('parse'), $summary);
 		}
 
 		wfProfileOut(__METHOD__);

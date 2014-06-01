@@ -27,7 +27,6 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'dump-database' => '{{Identical|Database dump}}',
 	'dump-database-last-unknown' => 'Used when the time of the last database dump request is not known, or if there have been no requests.
 {{Identical|Unknown}}',
 );
@@ -53,7 +52,6 @@ Wikia maak outomaties rugsteunkopieë van alle wiki's.",
 /** Arabic (العربية)
  * @author Achraf94
  * @author Alexknight12
- * @author Claw eg
  * @author DRIHEM
  */
 $messages['ar'] = array(
@@ -69,20 +67,11 @@ $messages['ar'] = array(
 	'dump-database-request-already-submitted' => 'تم طلب المقلب مؤخرا (منذ 7 أيام على الأقل)',
 	'dump-database-request-requested' => 'طلب بعث قاعدة البيانات',
 	'dump-database-info-more' => 'الرجاء <a href="http://community.wikia.com/wiki/Help:Database_download">قراءة هذا</a> لمزيد من المعلومات',
-	'dump-database-last-unknown' => 'غير معروف',
-);
-
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
-	'dump-database-last-unknown' => 'Naməlum',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
- * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'dump-database' => 'Копіі базы зьвестак',
@@ -97,7 +86,6 @@ $messages['be-tarask'] = array(
 	'dump-database-request-already-submitted' => 'Копія была запытаная нядаўна (меней 7 дзён таму)',
 	'dump-database-request-requested' => 'Запыт копіі базы зьвестак дасланы',
 	'dump-database-info-more' => 'Калі ласка, глядзіце дадатковую інфармацыю <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
-	'dump-database-last-unknown' => 'Невядома',
 );
 
 /** Bulgarian (български)
@@ -169,14 +157,7 @@ $messages['ca'] = array(
 	'dump-database-last-unknown' => 'Desconegut',
 );
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
-	'dump-database-full-pages' => 'Карара агӀонаш а истори а',
-);
-
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -865,25 +846,6 @@ $messages['uk'] = array(
 	'dump-database-request-requested' => 'Запит на створення дампу бази даних надіслано.',
 	'dump-database-info-more' => 'Будь ласка, ознайомтесь з детальнішою інформацією <a href="http://community.wikia.com/wiki/Help:Database_download">тут</a>',
 	'dump-database-last-unknown' => 'Невідомо',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'dump-database' => 'Cơ sở dữ liệu',
-	'dump-database-info' => 'Kho cơ sở dữ liệu có thể được sử dụng như là một dự phòng cá nhân (Wikia riêng biệt sao lưu của tất cả wiki sản xuất tự động) hoặc cho các chương trình bảo trì.',
-	'dump-database-curr-pages' => 'Số trang nội dung',
-	'dump-database-curr-pages-info' => '(Phiên bản này thường là tốt nhất để sử dụng bot)',
-	'dump-database-full-pages' => 'Trang hiện tại và lịch sử',
-	'dump-database-full-pages-info' => '(Cảnh báo: tập tin này có thể rất lớn)',
-	'dump-database-request' => 'Yêu cầu một bản Cập Nhật',
-	'dump-database-request-info' => '(Bãi thường tạo ra hàng tuần)',
-	'dump-database-request-submit' => 'Gửi yêu cầu',
-	'dump-database-request-already-submitted' => 'Kết xuất đã được yêu cầu mới (ít hơn 7 ngày trước)',
-	'dump-database-request-requested' => 'Yêu cầu cho bãi chứa cơ sở dữ liệu được gửi',
-	'dump-database-info-more' => 'Xin vui lòng <a href="http://community.wikia.com/wiki/Help:Database_download">xem</a> để biết thêm chi tiết',
-	'dump-database-last-unknown' => 'Không rõ',
 );
 
 /** Wu (吴语)

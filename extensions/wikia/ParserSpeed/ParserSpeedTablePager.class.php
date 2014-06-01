@@ -11,7 +11,7 @@ class ParserSpeedTablePager extends TablePager {
 	public function __construct( IContextSource $context = null ) {
 		parent::__construct($context);
 		$this->mDb = wfGetDB(DB_SLAVE,array(),F::app()->wg->ExternalDatawareDB);
-		$this->mainNamespaceText = $this->msg( 'blanknamespace' )->inContentLanguage()->plain();
+		$this->mainNamespaceText = wfMessage('blanknamespace')->inContentLanguage()->plain();
 	}
 
 	function isFieldSortable( $field ) {
@@ -53,18 +53,19 @@ class ParserSpeedTablePager extends TablePager {
 	}
 
 	function getFieldNames() {
+		// todo: transfer to i18n files
 		return array(
-			'page_ns' => $this->msg( 'parserspeed-namespace' )->plain(),
-			'article_title' => $this->msg( 'parserspeed-title' )->plain(),
-			'average_time' => $this->msg( 'parserspeed-average' )->plain(),
-			'minimum_time' => $this->msg( 'parserspeed-minimum' )->plain(),
-			'maximum_time' => $this->msg( 'parserspeed-maximum' )->plain(),
-			'wikitext_size' => $this->msg( 'parserspeed-wikitext' )->plain(),
-			'html_size' => $this->msg( 'parserspeed-html' )->plain(),
-			'exp_func_count' => $this->msg( 'parserspeed-expensive-functions' )->plain(),
-			'node_count' => $this->msg( 'parserspeed-nodes' )->plain(),
-			'post_expand_size' => $this->msg( 'parserspeed-expand-size' )->plain(),
-			'temp_arg_size' => $this->msg( 'parserspeed-arg-size' )->plain(),
+			'page_ns' => 'Namespace',
+			'article_title' => 'Article',
+			'average_time' => 'Avg. parsing time',
+			'minimum_time' => 'Min. parsing time',
+			'maximum_time' => 'Max. parsing time',
+			'wikitext_size' => 'Wikitext size',
+			'html_size' => 'HTML size',
+			'exp_func_count' => 'Exp. functions',
+			'node_count' => 'Node count',
+			'post_expand_size' => 'Post expand size',
+			'temp_arg_size' => 'Temp arg. size'
 		);
 	}
 

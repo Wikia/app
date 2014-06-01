@@ -1,116 +1,93 @@
-(function( window, $ ) {
-	'use strict';
+(function(window, $) {
 
-	Wall.MessageForm = $.createClass( Observable, {
-		constructor: function( page, model ) {
-			Wall.MessageForm.superclass.constructor.apply( this,arguments );
-			this.model = model;
-			this.page = page;
-			this.wall = $( '#Wall' );
-		},
-
-		showPreviewModal: function( format, metatitle, body, width, publishCallback ) {
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-					var previewModalConfig = {
-							vars: {
-								id: 'WallPreviewModal',
-								size: 'medium',
-								content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
-								title: $.msg( 'preview' ),
-								buttons: [
-									{
-										vars: {
-											value: $.msg( 'savearticle' ),
-											classes: [ 'normal', 'primary' ],
-											data: [
-												{
-													key: 'event',
-													value: 'publish'
-												}
-											]
-										}
-									},
-									{
-										vars: {
-											value: $.msg( 'back' ),
-											data: [
-												{
-													key: 'event',
-													value: 'close'
-												}
-											]
-										}
-									}
-								]
-							}
-						};
-
-					uiModal.createComponent( previewModalConfig, function( previewModal ) {
-
-						previewModal.bind( 'publish', function() {
-							previewModal.trigger( 'close' );
-							publishCallback();
-						});
-
-						previewModal.show();
-						previewModal.deactivate();
-
-						$.nirvana.sendRequest({
-							controller: 'WallExternalController',
-							method: 'preview',
-							format: 'json',
-							data: {
-								convertToFormat: format,
-								metatitle: metatitle,
-								body: body
-							},
-							callback: function( data ) {
-								previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
-								previewModal.activate();
-							}
-						});
-					});
+Wall.MessageForm = $.createClass(Observable, {
+	constructor: function(page, model) {
+		Wall.MessageForm.superclass.constructor.apply(this,arguments);
+		this.model = model;
+		this.page = page;
+		this.wall = $('#Wall');
+	},
+	
+	showPreviewModal: function(format, metatitle, body, width, publishCallback) {
+		var modal;
+		var options = {
+			buttons: [
+				{
+					id: 'close',
+					message: $.msg('back'),
+					handler: function() {
+						modal.closeModal();
+					}
+				},
+				{
+					id: 'publish',
+					defaultButton: true,
+					message: $.msg('savearticle'),
+					handler: function() {
+						modal.closeModal();
+						publishCallback();
+					}
+				}
+			],
+			width: 'auto',
+			className: 'preview',
+			callback: function() {
+				$.nirvana.sendRequest({
+					controller: 'WallExternalController',
+					method: 'preview',
+					format: 'json',
+					data: { 
+						'convertToFormat': format,
+						'metatitle': metatitle,
+						'body': body
+					},
+					callback: function(data) {
+						$('.WallPreview').stopThrobbing();
+						$('.WallPreview .WikiaArticle').html(data.body);
+					}
 				});
-			});
-
-			return false;
-		},
-
-		getMessageWidth: function( msg ) {
-			return msg.find( '.editarea' ).width();
-		},
-
-		loginBeforeSubmit: function( action ) {
-
-			var UserLoginModal = window.UserLoginModal;
-
-			if( window.wgDisableAnonymousEditing  && !window.wgUserName ) {
-				UserLoginModal.show( {
-					origin: 'wall-and-forum',
-					callback: this.proxy( function() {
-						action( false );
-						return true;
-					} )
-				} );
-			} else {
-				action( true );
-				return true;
 			}
-		},
-
-		reloadAfterLogin: function() {
-			UserLoginAjaxForm.prototype.reloadPage();
-		},
-
-		getFormat: function() {
-			// gets overriden if MiniEditor is enabled
-			return '';
-		},
-
-		proxy: function( func ) {
-			return $.proxy( func, this );
+		};
+		
+		// use loading indicator before real content will be fetched	
+		var content = $('<div class="WallPreview"><div class="WikiaArticle"></div></div>');
+		content.find('.WikiaArticle').css('width', width);
+		var modal = $.showCustomModal($.msg('preview'), content, options);
+		$('.WallPreview').startThrobbing();
+		
+		return false;
+	},
+	
+	getMessageWidth: function(msg) {
+		return msg.find('.editarea').width();
+	},
+	
+	loginBeforeSubmit: function(action) {
+		if(window.wgDisableAnonymousEditing  && !window.wgUserName) {
+			UserLoginModal.show({
+				callback: this.proxy(function() {
+					action(false);
+					return true;
+				})
+			});
+		} else {
+			action(true);
+			return true;
 		}
-	});
+	},
 
-})( window, jQuery );
+	reloadAfterLogin: function() {
+		UserLoginAjaxForm.prototype.reloadPage();
+	},
+
+	getFormat: function() {
+		// gets overriden if MiniEditor is enabled
+		return '';
+	},
+
+	proxy: function(func) {
+		return $.proxy(func, this);
+	}
+});
+
+})(window, jQuery);

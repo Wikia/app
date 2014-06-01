@@ -138,21 +138,9 @@ class WikiaMobileCategoryViewer extends CategoryViewer{
 	}
 
 	public function getData(){
-
-		if ( !empty( $this->blogs ) ) {
-			$items = $this->items + [
-				wfMessage( 'wikiamobile-categories-blogs' )->text() => $this->blogs
-			];
-
-			$count = $this->count + count( $this->blogs );
-		} else {
-			$items = $this->items;
-			$count = $this->count;
-		}
-
 		return [
-			'items' => $items,
-			'count' => $count
+			'items' => $this->items,
+			'count' => $this->count
 		];
 	}
 }

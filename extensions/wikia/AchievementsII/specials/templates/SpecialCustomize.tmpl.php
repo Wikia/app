@@ -66,7 +66,7 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 				<?
 				$badge = new AchBadge($badgeTypeId, $lap, $badgeData['level']);
 				?>
-				<li class="<?=($lap == ($inTrackBadgesCount - 1)) ? ' last' : null?>">
+				<li class="clearfix<?=($lap == ($inTrackBadgesCount - 1)) ? ' last' : null?>">
 
 					<div class="content-form">
 						<p class="input">
@@ -136,7 +136,7 @@ foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
 			$badgesCount = count($badges);
 			?>
 			<?foreach($badges as $index => $badge):?>
-				<li class="<?= ($index == ($badgesCount-1)) ? ' last' : '' ?>">
+				<li class="clearfix<?= ($index == ($badgesCount-1)) ? ' last' : '' ?>">
 					<div class="content-form">
 						<p class="input">
 							<input class="c-message" type="text" name="msg_<?=$badge->getTypeId();?>" value="<?=htmlspecialchars($badge->getName());?>">

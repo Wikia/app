@@ -44,5 +44,8 @@
 			<input type="hidden" name="wpCreatePageChoices" value="format" />
 		<?php endif; ?>
 		<input id="hiddenCreatePageDialogButton" type="submit" style="display: none;" name="hiddenCreatePageDialogButton" value="<?= wfMsg("createpage-dialog-title") ?>" />
+		<div id="CreatePageDialogButton" class="modalToolbar neutral">
+			<?= Wikia::specialPageLink('CreatePage', 'button-createpage', 'wikia-button createpage', 'blank.gif', 'oasis-create-page', 'sprite new'); ?>
+		</div>
 	</form>
 </div>

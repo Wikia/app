@@ -7,8 +7,8 @@ class SevenloadVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://sevenload.com/';
 	protected static $autoplayParam = "play";
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
-		$height = $this->getHeight( $width );
+	public function getEmbed($articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false) {
+		$height = $this->getHeight($width);
 		$autoplayStr = ( $autoplay ) ? '/' . self::$autoplayParam : '' ;
 		$url = $this->getEmbedUrl();
 		$url .= '/'.$width.'x'.$height.'/swf'.$autoplayStr;
@@ -22,11 +22,7 @@ class SevenloadVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

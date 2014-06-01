@@ -21,7 +21,7 @@ class DumpsOnDemand {
 
     /**
      * From this moment on we use Amazon S3 storage for the dumps.
-     * All earlier dumps are gone and all data referring to them should be considered invalid.
+     * All ealier dumps are gone and all data referring to them should be considered invalid.
      */
 	const S3_MIGRATION = '20131002154415';
 

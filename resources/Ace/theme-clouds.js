@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/theme/clouds', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
+define('ace/theme/clouds', ['require', 'exports', 'module' , 'ace/lib/dom'], function(require, exports, module) {
 
 exports.isDark = false;
 exports.cssClass = "ace-clouds";
@@ -45,7 +45,11 @@ background-color: #FFFFFF;\
 color: #000000\
 }\
 .ace-clouds .ace_cursor {\
-color: #000000\
+border-left: 2px solid #000000\
+}\
+.ace-clouds .ace_overwrite-cursors .ace_cursor {\
+border-left: 0px;\
+border-bottom: 1px solid #000000\
 }\
 .ace-clouds .ace_marker-layer .ace_selection {\
 background: #BDD5FC\
@@ -116,6 +120,9 @@ color: #BCC8BA\
 .ace-clouds .ace_entity.ace_name.ace_tag,\
 .ace-clouds .ace_entity.ace_other.ace_attribute-name {\
 color: #606060\
+}\
+.ace-clouds .ace_markup.ace_underline {\
+text-decoration: underline\
 }\
 .ace-clouds .ace_indent-guide {\
 background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y\

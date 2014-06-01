@@ -15,9 +15,6 @@ $messages['en'] = array(
 	'videopagetool-error-missing-parameter' => 'Required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Invalid module',
 	'videopagetool-error-invalid-description' => 'The description is too long (200 characters limit)',
-	'videopagetool-error-invalid-category' => 'Invalid category',
-	'videopagetool-error-unknown-category' => 'Unknown category',
-	'videopagetool-error-empty-category' => 'The category is empty',
 	'videopagetool-error-image-not-exist' => 'Image does not exist',
 	'videopagetool-error-image-invalid-size' => 'Invalid image size',
 	'videopagetool-error-unknown-program' => 'Unknown program',
@@ -35,7 +32,6 @@ $messages['en'] = array(
 	'videopagetool-placeholder-video-description' => 'About this video',
 	'videopagetool-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
 	'videopagetool-button-save' => 'Save',
-	'videopagetool-button-search' => 'Search',
 	'videopagetool-button-clear' => 'Clear all',
 	'videopagetool-confirm-clear-title' => 'Clear form',
 	'videopagetool-confirm-clear-message' => 'Are you sure you want to clear the entire contents of the form?',
@@ -51,31 +47,13 @@ $messages['en'] = array(
 	'videopagetool-success-save' => 'Your changes have been saved',
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
-	'videopagetool-see-more-label' => 'See more videos',
-
-	// Latest Video (category) form
-	'videopagetool-category-label-name' => 'Category',
-	'videopagetool-category-label-display-title' => 'Title',
-	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
-	'videopagetool-category-display-title-placeholder' => 'Category title',
-	'videopagetool-category-preview' => 'Preview',
-	'videopagetool-category-instructions' => 'Note: A minimum of three modules must be programmed in order to save or publish this page.',
-
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
-	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
 
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
-	'videohomepage-header-browse' => 'Browse',
-	'videopagetool-header-last-saved' => "'''Last saved:''' $1",
-	'videopagetool-header-publish-date' => "'''Publish date:''' $1",
-	'videopagetool-header-not-published' => "'''Not published'''",
-	'videopagetool-header-saved-by' => "'''Saved by:''' $1",
-	'videopagetool-header-published-by' => "'''Published by:''' $1",
-
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
@@ -91,12 +69,9 @@ $messages['qqq'] = array(
 	'videopagetool-error-permission' => 'This text appears if user does not have permission to access the tool.',
 	'videopagetool-error-invalid-language' => 'This text appears if the language is invalid.',
 	'videopagetool-error-invalid-date' => 'This text appears if the date is invalid.',
+	'videopagetool-error-invalid-description' => 'This text appears if the description is too long.',
 	'videopagetool-error-missing-parameter' => 'This text appears if the required parameter is missing',
 	'videopagetool-error-invalid-module' => 'Error text when code requests a Video Page module that does not exist',
-	'videopagetool-error-invalid-description' => 'This text appears if the description is too long.',
-	'videopagetool-error-invalid-category' => 'This text appears if the category is invalid',
-	'videopagetool-error-unknown-category' => 'This text appears if the category is unknown',
-	'videopagetool-error-empty-category' => 'This text appears if the category is empty',
 	'videopagetool-error-image-not-exist' => 'This text appears if the image does not exist',
 	'videopagetool-error-unknown-program' => 'This text appears if the program is unknown',
 	'videopagetool-error-program-not-ready' => 'This text appears if the program is not ready to be published',
@@ -114,7 +89,6 @@ $messages['qqq'] = array(
 	'videopagetool-placeholder-video-description' => 'Placeholder text inside a textarea for entering a description of a video',
 	'videopagetool-html-text-tip' => "Tip advising how to add html anchor tags to their content.",
 	'videopagetool-button-save' => 'button text for saving a form',
-	'videopagetool-button-search' => 'button text for searching for category',
 	'videopagetool-button-clear' => 'button text for clearing the entire contents of a form',
 	'videopagetool-confirm-clear-title' => 'Title text that appears in a confirmation modal after the reset form button is clicked.',
 	'videopagetool-confirm-clear-message' => 'message text that appears in a confirmation modal after the reset form button is clicked.',
@@ -128,15 +102,6 @@ $messages['qqq'] = array(
 	'videopagetool-tooltip-in-progress' => 'In Progress',
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
-	'videopagetool-see-more-label' => 'Link text to a page of all videos in the category being displayed',
-
-	// Latest Video (category) form
-	'videopagetool-category-label-name' => 'label for the form input to enter a category',
-	'videopagetool-category-label-display-title' => 'label for the form input to enter a display title for a given video',
-	'videopagetool-category-name-placeholder' => 'form input placeholder text to enter a category',
-	'videopagetool-category-preview' => 'link to view a preview of the different videos in a category',
-	'videopagetool-category-display-title-placeholder' => 'form input placeholder text to enter the title that will be displayed for a given video',
-
 	'videopagetool-success-publish' => 'This text appears if your changes have been published successfully',
 	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
@@ -145,12 +110,6 @@ $messages['qqq'] = array(
 	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
 	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
-	'videopagetool-header-last-saved' => 'This text is the date and time the page was last saved',
-	'videopagetool-header-publish-date' => 'This text is the date the page was published',
-	'videopagetool-header-not-published' => 'This text is displayed if the page has not yet been published',
-	'videopagetool-header-saved-by' => 'Name of last person to save this page',
-	'videopagetool-header-published-by' => 'Name of person to publish this page',
-
 	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',

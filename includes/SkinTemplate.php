@@ -1872,11 +1872,6 @@ abstract class BaseTemplate extends QuickTemplate {
 
 		// Reduce footer links down to only those which are being used
 		$validFooterLinks = array();
-
-		if (!is_array($footerlinks)) {
-			return $validFooterLinks;
-		}
-
 		foreach( $footerlinks as $category => $links ) {
 			$validFooterLinks[$category] = array();
 			foreach( $links as $link ) {

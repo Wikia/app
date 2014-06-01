@@ -51,13 +51,6 @@ $messages['bar'] = array(
 	'categorygalleries-desc' => "Zoagt da'raa Seiten-Galarie auf Kategorieseiten",
 );
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author Red Winged Duck
- */
-$messages['be-tarask'] = array(
-	'categorygalleries-desc' => 'Паказвае галерэю старонак на старонках катэгорыяў',
-);
-
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -86,7 +79,7 @@ $messages['ca'] = array(
 	'categorygalleries-desc' => 'Mostra una galeria de pàgines sobre les pàgines de la categoria',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(

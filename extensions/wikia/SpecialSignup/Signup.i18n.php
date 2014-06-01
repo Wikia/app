@@ -60,7 +60,7 @@ $messages['ca'] = array(
 	'signup' => 'Registrar-se',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -311,13 +311,6 @@ $messages['te'] = array(
 $messages['tl'] = array(
 	'signup-desc' => 'Nagdaragdag ng [[{{#Special:Signup}}]] na pang-taguri para sa [[{{#Special:UserLogin}}/signup]]',
 	'signup' => 'Magpatala',
-);
-
-/** Turkish (Türkçe)
- * @author Incelemeelemani
- */
-$messages['tr'] = array(
-	'signup' => 'Hesap oluştur',
 );
 
 /** Tatar (Cyrillic script) (татарча)

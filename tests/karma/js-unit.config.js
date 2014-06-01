@@ -57,10 +57,7 @@ module.exports = function(config) {
 			'resources/wikia/modules/csspropshelper.js',
 			'resources/wikia/modules/spec/*.spec.js',
 
-			//UI components
-			'resources/wikia/ui_components/**/*.js',
-
-			//Advertisement
+			//Advertisment
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -69,12 +66,11 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageLevelParamsLegacy.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderGamePro.js',
 			'extensions/wikia/AdEngine/js/AdProviderGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
+			'extensions/wikia/AdEngine/js/AdProviderLiftium2Dom.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
@@ -91,40 +87,13 @@ module.exports = function(config) {
 			'extensions/wikia/WikiaHomePage/js/WikiaHomePage.js',
 			'extensions/wikia/WikiaHomePage/js/spec/WikiaHomePage.spec.js',
 
-			/**
-			 * Extension: VideoPageTool
-			 * @description This extension is actually split up into a 'homepage' & an 'admin' component and is
-			 * built using Backbone. Therefore, these unit tests are to be organized in a mirrored structure.
-			 */
-
-			/*
-			 * Common VideoPageTool Deps
-			 */
-			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
-			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
-
-			/*
-			 * VideoPageTool: Admin Module
-			 */
-
-			// Collections
-			'extensions/wikia/VideoPageTool/js/admin/collections/category.js',
-			'extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
-			// Views
-			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
-
-			/*
-			 * VideoPageTool: Homepage Module
-			 */
-			'extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
-
-			/*
-			 * VideoPageTool: Source the tests
-			 */
+			// Video
+			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
 			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/**/*.spec.js',
+
+			//Suggestions
+			'extensions/wikia/Suggestions/js/SuggestionsMatcher.js',
+			'extensions/wikia/Suggestions/js/spec/*.spec.js',
 
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
@@ -135,9 +104,13 @@ module.exports = function(config) {
 			'extensions/wikia/TOC/js/modules/toc.js',
 			'extensions/wikia/TOC/js/modules/spec/toc.spec.js',
 
+			// Video
+			'extensions/wikia/VideoPageTool/js/views/jquery.switcher.js',
+			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
+
 			// LyricFind PV tracking
 			'extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
-			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js'
+			'extensions/3rdparty/LyricWiki/LyricFind/js/spec/*.spec.js',
 		]
 	});
 };

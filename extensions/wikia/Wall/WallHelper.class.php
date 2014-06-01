@@ -8,8 +8,6 @@ class WallHelper {
 	const WA_WALL_COMMENTS_MAX_LEN = 150;
 	const WA_WALL_COMMENTS_EXPIRED_TIME = 259200; // = (3 * 24 * 60 * 60) = 3 days
 
-	const NOTIFICATION_EXPIRE_DAYS = 7;
-
 	const PARSER_CACHE_TTL = 3600; // 60 * 60
 
 	public function __construct() {
@@ -65,17 +63,18 @@ class WallHelper {
 	 * It sends request to UserProfilePage controller which should return user object generated
 	 * from passed title.
 	 *
+	 * @param bool $title
 	 * @return User
 	 *
 	 * @author Andrzej 'nAndy' Åukaszewski
 	 */
 	//TODO: remove call to UserProfilePage
-	public function getUser() {
-		$title = F::app()->wg->Title;
+	public function getUser($title = false) {
+		$title = $title ? $title : F::App()->wg->Title;
 		$ns = $title->getNamespace();
-		$user = null;
+        $user = null;
 
-		if( $ns == NS_USER_WALL ) {
+        if( $ns == NS_USER_WALL ) {
 
 			/**
 			 * @var $w Wall
@@ -83,31 +82,19 @@ class WallHelper {
 			$w = Wall::newFromTitle( $title );
 			$user = $w->getUser();
 		} else if( $ns == NS_USER_WALL_MESSAGE) {
-			// title to wall thread is Thread:dddd, which does not exist in the db. this will
-			// result in articleId being 0, which will break the logic later. So we need
-			// to fetch the existing title here (Username/@comment-...)
-			if ( intval( $title->getText() ) > 0 ) {
-				$mainTitle = Title::newFromId( $title->getText() );
-				if ( empty( $mainTitle ) ) {
-					$mainTitle = Title::newFromId( $title->getText(), Title::GAID_FOR_UPDATE );
-				}
-				if ( !empty( $mainTitle ) ) {
-					$title = $mainTitle;
-				}
-			}
 			/**
 			 * @var $wm WallMessage
 			 */
 
 			$wm = WallMessage::newFromTitle( $title );
-			$user = $wm->getWallOwner();
+            $user = $wm->getWallOwner();
 		}
 
-		if( is_null( $user ) ) {
-			return UserProfilePageHelper::getUserFromTitle( $title );
-		}
+        if( is_null($user) ) {
+            return UserProfilePageHelper::getUserFromTitle($title);
+        }
 
-		return $user;
+        return $user;
 	}
 
 	/**
@@ -318,12 +305,8 @@ class WallHelper {
 
 			if( $user ) {
 				$items[$i]['real-name'] = $user->getName();
-				if ( !empty( F::app()->wg->EnableWallExt ) ) {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
-				} else {
-					$userLinkTitle = Title::newFromText( $user->getName(), NS_USER );
-				}
-				$items[$i]['user-profile-url'] = $userLinkTitle->getFullUrl();
+				$userWallTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
+				$items[$i]['user-profile-url'] = $userWallTitle->getFullUrl();
 			} else {
 				$items[$i]['real-name'] = '';
 			}
@@ -622,11 +605,6 @@ class WallHelper {
 		} else {
 			$articleTitleTxt = $wm->getMetaTitle();
 			$articleId = $wm->getId();
-		}
-
-		// XSS vulnerable (MAIN-1412)
-		if ( !empty( $articleTitleTxt ) ) {
-			$articleTitleTxt = strip_tags( $articleTitleTxt );
 		}
 
 		$ci = $wm->getCommentsIndex();

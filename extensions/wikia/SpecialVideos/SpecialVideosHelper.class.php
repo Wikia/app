@@ -24,12 +24,6 @@ class SpecialVideosHelper extends WikiaModel {
 			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
 		}
 
-		if ( $this->wg->UseVideoVerticalFilters ) {
-			$options['trend:Games'] = wfMessage( 'specialvideos-filter-games' )->text();
-			$options['trend:Lifestyle'] = wfMessage( 'specialvideos-filter-lifestyle' )->text();
-			$options['trend:Entertainment'] = wfMessage( 'specialvideos-filter-entertainment' )->text();
-		}
-
 		return $options;
 	}
 
@@ -38,10 +32,9 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @param string $sort [recent/popular/trend]
 	 * @param integer $page
 	 * @param array $providers
-	 * @param string $category
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array(), $category = '' ) {
+	public function getVideos( $sort, $page, $providers = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {
@@ -52,7 +45,7 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $sort, $filter, self::VIDEOS_PER_PAGE, $page, $providers );
 
 		$videos = array();
 		$helper = new VideoHandlerHelper();

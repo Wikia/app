@@ -23,11 +23,7 @@ class TwitchtvVideoHandler extends VideoHandler {
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 }

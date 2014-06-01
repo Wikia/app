@@ -164,40 +164,4 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 		$this->assertStringStartsWith( '<pre>', $output );
 	}
 
-	/**
-	 * @dataProvider setCacheValidityProvider
-	 */
-	public function testSetCacheValidity($varnishTTL, $clientTTL, $expectedValue, $passExpectedValue) {
-		$this->object->setCacheValidity( $varnishTTL, $clientTTL );
-		$cacheControlValue = $this->object->getHeader( 'Cache-Control' )[0]['value'];
-		$passCacheControlValue = $this->object->getHeader( 'X-Pass-Cache-Control' )[0]['value'];
-
-		$this->assertEquals( $expectedValue, $cacheControlValue, 'Cache-Control header should match the expected value' );
-		$this->assertEquals( $passExpectedValue, $passCacheControlValue, 'X-Pass-Cache-Control header should match the expected value' );
-	}
-
-	public function setCacheValidityProvider() {
-		return [
-			// no caching
-			[
-				WikiaResponse::CACHE_DISABLED, false,
-				's-maxage=0', null
-			],
-			// cache on Varnish only
-			[
-				60, WikiaResponse::CACHE_DISABLED,
-				's-maxage=60', null
-			],
-			// cache on both
-			[
-				60, false,
-				's-maxage=60', 'public, max-age=60'
-			],
-			// cache on both (different TTLs)
-			[
-				86400, 60,
-				's-maxage=86400', 'public, max-age=60'
-			],
-		];
-	}
 }

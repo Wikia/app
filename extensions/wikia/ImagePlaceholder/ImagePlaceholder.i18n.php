@@ -48,13 +48,6 @@ $messages['ast'] = array(
 	'imgplc-notinhistory' => 'Nun pues amestar una imaxe nel mou historial.',
 );
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
-	'imgplc-image' => 'Şəkil',
-);
-
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author Wizardist
  */
@@ -98,7 +91,7 @@ $messages['ca'] = array(
 	'imgplc-notinhistory-video' => 'No es pot afegir un vídeo en el mode historial.',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Dontlietome7
  */
 $messages['cs'] = array(
@@ -343,7 +336,6 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'imgplc-add-image' => 'اضاف کردن عسگ',
 	'imgplc-image' => 'عسگ',
 );
 
@@ -596,15 +588,9 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
  */
 $messages['vi'] = array(
-	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
-	'imgplc-placeholder' => 'Giữ chỗ',
-	'imgplc-image' => 'Hình ảnh',
-	'imgplc-notinhistory' => 'Bạn không thể thêm một hình ảnh trong chế độ lịch sử.',
-	'imgplc-notinhistory-video' => 'Bạn không thể thêm một video ở chế độ lịch sử.',
 );
 
 /** Simplified Chinese (中文（简体）‎)

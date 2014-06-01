@@ -28,7 +28,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-ace.define('ace/mode/ocaml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/ocaml_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range'], function(require, exports, module) {
+define('ace/mode/ocaml', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text', 'ace/tokenizer', 'ace/mode/ocaml_highlight_rules', 'ace/mode/matching_brace_outdent', 'ace/range'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -39,8 +39,7 @@ var MatchingBraceOutdent = require("./matching_brace_outdent").MatchingBraceOutd
 var Range = require("../range").Range;
 
 var Mode = function() {
-    this.HighlightRules = OcamlHighlightRules;
-    
+    this.$tokenizer = new Tokenizer(new OcamlHighlightRules().getRules());
     this.$outdent   = new MatchingBraceOutdent();
 };
 oop.inherits(Mode, TextMode);
@@ -74,7 +73,7 @@ var indenter = /(?:[({[=:]|[-=]>|\b(?:else|try|with))\s*$/;
 
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
-        var tokens = this.getTokenizer().getLineTokens(line, state).tokens;
+        var tokens = this.$tokenizer.getLineTokens(line, state).tokens;
 
         if (!(tokens.length && tokens[tokens.length - 1].type === 'comment') &&
             state === 'start' && indenter.test(line))
@@ -95,7 +94,7 @@ var indenter = /(?:[({[=:]|[-=]>|\b(?:else|try|with))\s*$/;
 exports.Mode = Mode;
 });
 
-ace.define('ace/mode/ocaml_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
+define('ace/mode/ocaml_highlight_rules', ['require', 'exports', 'module' , 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function(require, exports, module) {
 
 
 var oop = require("../lib/oop");
@@ -403,7 +402,7 @@ oop.inherits(OcamlHighlightRules, TextHighlightRules);
 exports.OcamlHighlightRules = OcamlHighlightRules;
 });
 
-ace.define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
+define('ace/mode/matching_brace_outdent', ['require', 'exports', 'module' , 'ace/range'], function(require, exports, module) {
 
 
 var Range = require("../range").Range;

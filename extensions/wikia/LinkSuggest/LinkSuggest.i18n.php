@@ -66,7 +66,7 @@ $messages['ca'] = array(
 	'tog-redirected-from' => '&ndash; redirigit des de $1',
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Darth Daron
  * @author Jezevec
  * @author Mormegil
@@ -193,9 +193,7 @@ $messages['it'] = array(
  * @author Tommy6
  */
 $messages['ja'] = array(
-	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
 	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
-	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -400,11 +398,10 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
- * @author Incelemeelemani
  * @author Manco Capac
  */
 $messages['tr'] = array(
-	'tog-disablelinksuggest' => 'Kaynak modu bağlantısını gösterme',
+	'tog-disablelinksuggest' => 'Bağlantı önermesini gösterme', # Fuzzy
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -419,17 +416,8 @@ $messages['tt-cyrl'] = array(
  */
 $messages['uk'] = array(
 	'linksuggest-desc' => 'Пропонує редакторам посилання в режимі редагування',
-	'tog-disablelinksuggest' => 'Не показувати підказки з посиланнями у режимі вихідного коду',
+	'tog-disablelinksuggest' => 'Не показувати пропозицій посилань у режимі Вихідного коду',
 	'tog-redirected-from' => '&ndash; перенаправлено з $1',
-);
-
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- */
-$messages['vi'] = array(
-	'linksuggest-desc' => 'Đề nghị liên kết đến các biên tập viên chỉnh sửa quan',
-	'tog-disablelinksuggest' => 'Không hiển thị các liên kết đề nghị trong chế độ nguồn',
-	'tog-redirected-from' => '&ndash; đổi hướng từ $1',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -239,7 +239,6 @@ class CategorySelectController extends WikiaController {
 					$response[ 'html' ] = $this->app->renderView( 'CategorySelectController', 'categories', array(
 						'categories' => $categories
 					));
-					wfRunHooks( 'CategorySelectSave', array( $title, $newCategories ) );
 					break;
 
 				case EditPage::AS_SPAM_ERROR:

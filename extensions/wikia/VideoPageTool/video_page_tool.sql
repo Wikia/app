@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS `vpt_program` (
   `language` varchar(2) NOT NULL DEFAULT 'en',
   `publish_date` datetime NOT NULL,
   `is_published` tinyint(1) NOT NULL DEFAULT '0',
-  `published_by` int(10) unsigned NULL,
   PRIMARY KEY (`program_id`),
   UNIQUE KEY `program` (`language`, `publish_date`),
   KEY `publish_date` (`publish_date`, `language`, `is_published`)

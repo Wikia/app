@@ -75,10 +75,8 @@
 	background-position: center;
 	background-size: 40%;
 	-webkit-transition: opacity .3s;
-	-moz-transition: opacity .3s;
-	transition: opacity .3s;
 
-	.hide-clear > & {
+	&.hide {
 		opacity: 0;
 		pointer-events: none;
 	}

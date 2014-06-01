@@ -147,7 +147,7 @@ L'article '''$1''' no s'ha trobat.
 * Per anar a la portada d'aquest lloc, fes clic a l'enllaç: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Czech (čeština)
+/** Czech (česky)
  * @author Mormegil
  */
 $messages['cs'] = array(
@@ -513,7 +513,7 @@ $messages['mk'] = array(
 
 * Обидете се со статијата [[$2]]
 * Можете да го употребите полето за пребарување од лево
-* За да отидете на главната страница на ова мрежно место, стиснете на врската: [{{SERVER}} {{SITENAME}}]",
+* За да отидете на главната страница на ова мрежно место, кликнете на врската: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Malayalam (മലയാളം)
@@ -864,12 +864,11 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'our404handler' => 'Lỗi 404: Không tìm thấy trang!',
-	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin đừng tiếp tục.',
+	'our404handler-oops' => 'Đây không phải là những trang bạn đang tìm kiếm. Xin cứ tiếp tục.',
 	'message404' => "
 '''Chúng tôi thực sự rất tiếc, nhưng vì lý do nào đó, trang bạn yêu cầu không tồn tại.'''
 

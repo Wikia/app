@@ -12,9 +12,9 @@ class RealgravityVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.realgravity.com/';
 	protected static $providerHomeUrl = 'http://www.realgravity.com/';
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload=false ) {
 
-		$height = $this->getHeight( $width );
+		$height = $this->getHeight($width);
 		$url = $this->getEmbedUrl();
 		$videoId = $this->getEmbedVideoId();
 
@@ -48,11 +48,7 @@ $sizeString classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" style="visibili
 </object>
 EOT;
 
-		return array(
-			'html' => $html,
-			'width' => $width,
-			'height' => $height,
-		);
+		return array( 'html' => $html );
 	}
 
 	public function getEmbedSrcData() {

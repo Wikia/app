@@ -143,21 +143,4 @@ $messages = array_merge( $messages , array(
 'see_more' => '更に詳しくは',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 'addnewtalksection-link' => '新しいセクションを開始する',
-
-// hubs
-'hub-Entertainment' => 'エンターテイメント',
-'hub-Gaming' => 'ゲーム',
-'hub-Video_Games' => 'ゲーム',
-'hub-Lifestyle' => 'ライフスタイル',
-'hub-Wikia' => 'Wikia',
-
-# former shared-* messages
-'shared-Oasis-footer-wikia-links' => "*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
-*http://www.wikia.com/Hiring|キャリア
-*http://www.wikia.com/Advertising|広告
-*Special:Contact|コンタクト
-*http://ja.community.wikia.com/wiki/Wikia:ウィキアの利用規約|<span>ウィキアの利用規約</span>
-*http://ja.wikia.com/個人情報保護に関する方針|個人情報保護に関する方針　
-*http://www.wikia.com/Special:CreateWiki?uselang=ja|ウィキアを始める
-*_LICENSE_",
 ));

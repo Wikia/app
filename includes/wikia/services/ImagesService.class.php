@@ -17,7 +17,7 @@ class ImagesService extends Service {
 	 * @param integer $pageId
 	 * @return string imageUrl
 	 */
-	public static function getImageSrc($wikiId, $pageId, $imgSize = 250, $imgHeight = null) {
+	public static function getImageSrc($wikiId, $pageId, $imgSize = 250) {
 		wfProfileIn(__METHOD__);
 
 		$dbname = WikiFactory::IDtoDB($wikiId);
@@ -28,10 +28,6 @@ class ImagesService extends Service {
 			'imgSize' => $imgSize,
 			'imgFailOnFileNotFound' => 'true',
 		);
-
-		if($imgHeight!==null){
-			$param['imgHeight']  = $imgHeight;
-		}
 
 		$response = ApiService::foreignCall($dbname, $param);
 

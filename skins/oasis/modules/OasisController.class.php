@@ -42,7 +42,6 @@ class OasisController extends WikiaController {
 		$this->ivw = null;
 		$this->amazonDirectTargetedBuy = null;
 		$this->dynamicYield = null;
-		$this->ivw2 = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -53,7 +52,7 @@ class OasisController extends WikiaController {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
+	public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
 		return true;
 	}
@@ -267,7 +266,6 @@ class OasisController extends WikiaController {
 			$this->ivw = AnalyticsEngine::track('IVW', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
