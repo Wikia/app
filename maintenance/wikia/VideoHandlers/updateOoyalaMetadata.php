@@ -224,6 +224,7 @@ function updateMetadata1716( $video ) {
 
 	// update expiration date
 	if ( !empty( $video['time_restrictions']['end_date'] ) || !empty( $video['metadata']['expirationdate'] ) ) {
+		$updatedList[] = 'expiration date';
 		$newMetadata['update1716'] = 1;
 		if ( empty( $video['time_restrictions']['end_date'] ) ) {
 			$newValues['expirationDate'] = '';
@@ -237,23 +238,31 @@ function updateMetadata1716( $video ) {
 	// get regional restrictions
 	if ( !empty( $video['metadata']['regional_restrictions'] ) ) {
 		$newMetadata['update1716'] = 1;
-		$newValues['regionalRestriction'] = strtoupper( $video['metadata']['regional_restrictions'] );
+		$updatedList[] = 'regional restrictions';
+		$newValues['regionalRestrictions'] = strtoupper( $video['metadata']['regional_restrictions'] );
 	}
 
 	if ( $cntPageCategories > 0 || !empty( $newMetadata['update1716'] ) ) {
+		if ( $cntPageCategories > 0 ) {
+			$updatedList[] = 'page categories';
+		}
+
 		// for debugging
 		//echo "\n\tNEW Metadata (".$video['embed_code']."):\n";
 		//compareMetadata( $video['metadata'], $newMetadata );
 		//echo "\n";
 
+		$resp = true;
 		if ( !$dryRun ) {
 			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $newMetadata );
 			if ( !$resp ) {
 				$newValues = false;
 				$failed++;
-			} else {
-				echo "\tUPDATED: $video[name] (Id: $video[embed_code])...DONE.\n";
 			}
+		}
+
+		if ( $resp ) {
+			   echo "\tUPDATED: $video[name] (Id: $video[embed_code])...DONE (Updated ".implode(', ', $updatedList).").\n";
 		}
 	} else {
 		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - No changes.\n";
@@ -309,7 +318,7 @@ function updateMetadataWiki( $video, $newValues ) {
 	global $dryRun, $failedWiki, $skippedWiki;
 
 	$name = $video['img_name'];
-	echo "Updated (Wiki): $name";
+	echo "\tUpdated (Wiki): $name";
 
 	$title = Title::newFromText( $name, NS_FILE );
 	if ( !$title instanceof Title ) {
@@ -422,7 +431,7 @@ $remove = isset( $options['remove'] ) ? $options['remove'] : '';
 $update = isset( $options['update'] ) ? $options['update'] : '';
 $from = isset( $options['from'] ) ? $options['from'] : '';
 $to = isset( $options['to'] ) ? $options['to'] : '';
-$limit = empty( $options['limit'] ) ? '' : $options['limit'];
+$limit = empty( $options['limit'] ) ? 50000 : $options['limit'];
 $isList = isset( $options['list'] );
 $videoWiki = isset( $options['videoWiki'] );
 $update1716 = isset( $options['update1716'] );
