@@ -50,6 +50,10 @@ SCRIPT;
 		$t = F::app()->wg->Title;
 		$title = $t->getText();
 
+		if (WikiaPageType::isWikiaHub()) {
+			return 'RC_WIKIA_START';
+		}
+
 		if ($dbname == 'dehauptseite') {
 			if (Wikia::isMainPage()) return 'RC_WIKIA_HOME';
 
@@ -58,10 +62,6 @@ SCRIPT;
 			if (WikiaPageType::getPageType() == 'search') return 'RC_WIKIA_SEARCH';
 
 			return 'RC_WIKIA_SVCE';
-		}
-
-		if (WikiaPageType::isWikiaHub()) {
-			return 'RC_WIKIA_START';
 		}
 
 		if ($dbname == 'de') {

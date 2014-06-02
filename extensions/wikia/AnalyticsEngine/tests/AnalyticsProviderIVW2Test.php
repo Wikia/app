@@ -15,9 +15,7 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 	private function getAnalyticsProviderIVW2Code($url) {
 		$page = Http::get($url, 'default', array('noProxy' => true));
 		if (preg_match('/\\\\"cp\\\\":\\\\"(RC_WIKIA_[A-Z]+)\\\\"/', $page, $m)) {
-			$path = parse_url($m[1], PHP_URL_PATH);
-			$arr = explode('/', $path);
-			return array_pop($arr);
+			return $m[1];
 		} else {
 			$this->fail('Cannot find the IVW2 analytics code on page ' . $url);
 		}
@@ -74,7 +72,7 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
 			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
-			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
+			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'), // old-style sub-hub
 		);
 	}
 
