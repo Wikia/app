@@ -32,6 +32,7 @@ class Http {
 	 *    - userAgent           A user agent, if you want to override the default
 	 *                          MediaWiki/$wgVersion
 	 *    - headers             Additional headers for request
+	 *    - returnInstance      If set the method will return MWHttpRequest instance instead of string|boolean
 	 * @return Mixed: (bool)false on failure or a string on success
 	 */
 	public static function request( $method, $url, $options = array() ) {
@@ -85,9 +86,13 @@ class Http {
 
 		}
 
-		if ( $isOk ) {
-		// Wikia change - end
+		// Wikia change - @author: nAndy - begin
+		// Introduced new returnInstance options to return MWHttpRequest instance instead of string-bool mix
+		if( !empty( $options['returnInstance'] ) ) {
+			$ret = $req;
+		} else if( $isOk && empty( $options['returnInstance'] ) ) {
 			$ret = $req->getContent();
+			// Wikia change - end
 		} else {
 			$ret = false;
 		}
