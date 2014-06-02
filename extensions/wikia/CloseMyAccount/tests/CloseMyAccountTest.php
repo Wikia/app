@@ -106,7 +106,12 @@ class CloseMyAccountTest extends WikiaBaseTest {
 		$helperMock->expects( $this->any() )
 			->method( 'track' );
 
-		$result = $helperMock->requestReactivation( $userMock, $this->app );
+		$appMock = $this->getMock( 'WikiaApp', [ 'renderView' ] );
+		$appMock->expects( $this->any() )
+			->method( 'renderView' )
+			->will( $this->returnValue( '' ) );
+
+		$result = $helperMock->requestReactivation( $userMock, $appMock );
 
 		$this->assertEquals( $expected, $result );
 	}
