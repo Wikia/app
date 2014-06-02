@@ -13,6 +13,7 @@ return [
 	// shared AMD modules loaded on each page
 	'amd.shared' => [
 		'dependencies' => [
+			'wikia.instantGlobals',
 			'wikia.cache',
 			'wikia.cookies',
 			'wikia.document',
@@ -113,6 +114,13 @@ return [
 	],
 	'wikia.abTest' => [
 		'scripts' => 'resources/wikia/modules/abTest.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window'
+		],
+	],
+	'wikia.instantGlobals' => [
+		'scripts' => 'resources/wikia/modules/instantGlobals.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window'

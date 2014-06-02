@@ -24,7 +24,6 @@ $wgAutoloadClasses['SpecialPromoteController'] =  $dir . 'SpecialPromoteControll
 $wgAutoloadClasses['SpecialPromoteHelper'] =  $dir . 'SpecialPromoteHelper.class.php';
 $wgAutoloadClasses['SpecialPromoteHooks'] =  $dir . 'SpecialPromoteHooks.class.php';
 $wgAutoloadClasses['UploadVisualizationImageFromFile'] =  $dir . 'UploadVisualizationImageFromFile.class.php';
-$wgAutoloadClasses['PromoImage'] = $dir . 'PromoImage.class.php';
 
 // needed task
 $wgAutoloadClasses['PromoteImageReviewTask'] = $promoteImageReviewExtDir  . 'PromoteImageReviewTask.php';

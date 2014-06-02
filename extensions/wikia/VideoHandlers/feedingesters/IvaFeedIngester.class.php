@@ -7,6 +7,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IvaApiWrapper';
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
+	protected static $FEED_URL_ASSET = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets()?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
 	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
 
 	private static $VIDEO_SETS = array(
@@ -439,7 +440,29 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'The Americans' => array( 934933 ),
 	);
 
-	private static $EXCLUDE_MEDIA_IDS = array( 3, 12, 14, 15, 33, 36 );	// exclude song types
+	// exclude song and movie types
+	protected static $EXCLUDE_MEDIA_IDS = [
+		3, 12, 14, 15, 33, 36,
+		0, 5, 6, 10, 20,
+	];
+
+	protected static $MEDIA_IDS_MOVIE = [ 0, 5, 6, 10, 20 ];
+
+	// expand fields included in API [ array( fieldName => apiType ) ]
+	protected static $API_EXPAND_FIELDS = [
+		'Descriptions' => 'VideoAssets',
+		'VideoAssetScreenCapture' => 'VideoAssets',
+		'MediaType' => 'VideoAssets',
+		'LanguageSpoken' => 'VideoAssets',
+		'LanguageSubtitled' => 'VideoAssets',
+		'CountryTarget' => 'VideoAssets',
+		'MovieMpaa' => 'EntertainmentProgram',
+		'TvRating' => 'EntertainmentProgram',
+		'GameWarning' => 'EntertainmentProgram',
+		'MovieCategory' => 'EntertainmentProgram',
+		'TvCategory' => 'EntertainmentProgram',
+		'ProgramToPerformerMaps/Performer' => 'EntertainmentProgram',
+	];
 
 	const API_PAGE_SIZE = 100;
 
@@ -466,6 +489,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$articlesCreated = 0;
 
 		// Ingest any content from the defined video sets above
+		$videoParams = [ 'apiType' => 'EntertainmentProgram' ];
 		foreach( self::$VIDEO_SETS as $keyword => $videoSet ) {
 			$videoParams['keyword'] = $keyword;
 
@@ -483,20 +507,30 @@ class IvaFeedIngester extends VideoFeedIngester {
 			}
 		}
 
+		// Ingest Movie Assets
+		$videoParams = [ 'apiType' => 'VideoAssets' ];
+		$result = $this->ingestVideosAsset( $createParams, $startDate, $endDate, $videoParams );
+		if ( $result === false ) {
+			wfProfileOut( __METHOD__ );
+			return 0;
+		}
+
+		$articlesCreated += $result;
+
 		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
 
 	/**
-	 * ingest videos
+	 * Ingest videos (for EntertainmentProgram)
 	 * @param array $createParams
 	 * @param integer $startDate - Unixtime for beginning of modified-on date range
 	 * @param integer $endDate - Unixtime for ending of modified-on date range
 	 * @param array $videoParams
 	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
-	private function ingestVideos( $createParams, $startDate, $endDate, $videoParams ) {
+	protected function ingestVideos( $createParams, $startDate, $endDate, $videoParams ) {
 		wfProfileIn( __METHOD__ );
 
 		$page = 0;
@@ -517,61 +551,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 			print( "Found $numPrograms Entertainment Programs...\n" );
 
 			foreach( $programs as $program ) {
-				$clipData = array();
-
-				$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
-				$program['title'] = $this->updateTitle( $program['title'] );
-
-				// get series
-				$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
-
-				if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
-					$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
+				$clipData = $this->getDataFromProgram( $videoParams, $program );
+				if ( $clipData === false ) {
 					continue;
 				}
-
-				// get season
-				$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
-				if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season (26)
-					 $clipData['season'] = $program['title'];
-				}
-
-				// get episode
-				$clipData['episode'] = empty( $videoParams['episode'] ) ? '' : $videoParams['episode'];
-				if ( empty( $clipData['episode'] ) && $program['MediaId'] == 27 ) {	// media type = episode (27)
-					 $clipData['episode'] = $program['title'];
-				}
-
-				$clipData['tags'] = trim( $program['Tagline'] );
-
-				$clipData['industryRating'] = '';
-				if ( !empty( $program['MovieMpaa']['Rating'] ) ) {
-					$clipData['industryRating'] = $this->getIndustryRating( $program['MovieMpaa']['Rating'] );
-				} else if ( !empty( $program['TvRating']['Rating'] ) ) {
-					$clipData['industryRating'] = $this->getIndustryRating( $program['TvRating']['Rating'] );
-				} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
-					$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
-				}
-
-				$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
-				$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
-
-				$clipData['genres'] = '';
-				if ( !empty( $program['MovieCategory']['Category'] ) ) {
-					$clipData['genres'] = $program['MovieCategory']['Category'];
-				} else if ( !empty( $program['TvCategory']['Category'] ) ) {
-					$clipData['genres'] = $program['TvCategory']['Category'];
-				} else if ( !empty( $program['GameCategory']['Category'] ) ) {
-					$clipData['genres'] = $program['GameCategory']['Category'];
-				}
-
-				$actors = array();
-				if ( !empty( $program['ProgramToPerformerMaps']['results'] ) ) {
-					foreach( $program['ProgramToPerformerMaps']['results'] as $performer ) {
-						$actors[] = trim( $performer['Performer']['FullName'] );
-					}
-				}
-				$clipData['actors'] = implode( ', ', $actors );
 
 				$videoAssets = $program['VideoAssets']['results'];
 				$numVideos = count( $videoAssets );
@@ -580,88 +563,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				// add video assets
 				foreach ( $videoAssets as $videoAsset ) {
-					$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
-					$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
-
-					// add episode name to title if the title contains 'clip' and number
-					// example:
-					// $clipData['episode'] = 'THE OFFICE: GARDEN PARTY'
-					// $clipData['titleName'] = 'THE OFFICE: CLIP 1'
-					// The new title will be 'THE OFFICE: GARDEN PARTY - CLIP 1'
-					if ( !empty( $clipData['episode'] ) && preg_match( '/^([^:]*:)(.* clip \d+.*)/i', $clipData['titleName'], $matches ) ) {
-						$titleName = $clipData['titleName'];
-
-						// if episode and title start with the same words (i.e. <series_name>:), remove the matched word from the title
-						if ( !empty( $matches[1] ) && !empty( $matches[2] ) && preg_match( '/^'.$matches[1].'.*/i', $clipData['episode'] ) ) {
-							$titleName = trim( $matches[2] );
-						}
-
-						$clipData['titleName'] = $clipData['episode'].' - '.$titleName;
-					}
-
-					$clipData['videoId'] = $videoAsset['Publishedid'];
-
-					if ( !empty( $videoAsset['ExpirationDate'] ) ) {
-						$this->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
+					$clipData = $this->getDataFromAsset( $videoParams, $videoAsset, $clipData );
+					if ( $clipData === false ) {
 						continue;
 					}
-
-					$clipData['thumbnail'] = empty( $videoAsset['VideoAssetScreenCapture']['URL'] ) ? '' : $videoAsset['VideoAssetScreenCapture']['URL'];
-					$clipData['duration'] = $videoAsset['StreamLengthinseconds'];
-
-					$clipData['published'] = '';
-					if ( preg_match('/Date\((\d+)\)/', $videoAsset['DateCreated'], $matches) ) {
-						$clipData['published'] = $matches[1]/1000;
-					}
-
-					$clipData['type'] = $this->getStdType( $videoAsset['MediaType']['Media'] );
-					$clipData['category'] = $this->getCategory( $clipData['type'] );
-					$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
-					$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
-					$clipData['provider'] = 'iva';
-
-					// get resolution
-					$clipData['resolution'] = '';
-					if ( !empty( $videoAsset['SourceWidth'] ) && $videoAsset['SourceWidth'] > 0
-						&& !empty( $videoAsset['SourceHeight'] ) && $videoAsset['SourceHeight'] > 0 ) {
-						$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
-					}
-
-					// get language
-					if ( empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
-						$clipData['language'] = '';
-					} else {
-						$clipData['language'] = $videoAsset['LanguageSpoken']['LanguageName'];
-					}
-
-					// get subtitle
-					if ( empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
-						$clipData['subtitle'] = '';
-					} else {
-						$clipData['subtitle'] = $videoAsset['LanguageSubtitled']['LanguageName'];
-					}
-
-					// get target country
-					if ( empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
-						$clipData['targetCountry'] = '';
-					} else {
-						$clipData['targetCountry'] = $videoAsset['CountryTarget']['CountryName'];
-					}
-
-					$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
-
-					// get keywords
-					$keywords = empty( $clipData['name'] ) ? array() : array( $clipData['name'] );
-					if ( !empty( $clipData['series'] ) ) {
-						$keywords[] = $clipData['series'];
-					}
-					if ( !empty( $clipData['category'] ) ) {
-						$keywords[] = $clipData['category'];
-					}
-					if ( !empty( $clipData['tags'] ) ) {
-						$keywords[] = $clipData['tags'];
-					}
-					$clipData['keywords'] = implode( ', ', $this->getUniqueArray( $keywords ) );
 
 					$msg = '';
 					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
@@ -696,68 +601,320 @@ class IvaFeedIngester extends VideoFeedIngester {
 		return $articlesCreated;
 	}
 
+
+	/**
+	 * Ingest videos (for assets)
+	 * @param array $createParams
+	 * @param integer $startDate - Unixtime for beginning of modified-on date range
+	 * @param integer $endDate - Unixtime for ending of modified-on date range
+	 * @param array $videoParams
+	 * @return integer|false $articlesCreated - number of articles created or false
+	 */
+	protected function ingestVideosAsset( $createParams, $startDate, $endDate, $videoParams ) {
+		wfProfileIn( __METHOD__ );
+
+		$page = 0;
+		$articlesCreated = 0;
+
+		do {
+			// Get the URL that selects specific video sets based on title matches
+			$url = $this->makeSetFeedURL( $videoParams, $startDate, $endDate, $page++ );
+
+			// Retrieve the video data from IVA
+			$videoAssets = $this->requestData( $url );
+			if ( $videoAssets === false ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			$numVideos = count( $videoAssets );
+			$this->videoFound( $numVideos );
+
+			foreach( $videoAssets as $videoAsset ) {
+				$clipData = $this->getDataFromProgram( $videoParams, $videoAsset['EntertainmentProgram'] );
+				if ( $clipData === false ) {
+					continue;
+				}
+
+				$videoParams['keyword'] = $clipData['series'];
+				$clipData['series'] = '';
+
+				$videoData = $this->getDataFromAsset( $videoParams, $videoAsset, $clipData );
+				if ( $videoData === false ) {
+					continue;
+				}
+
+				$msg = '';
+				$articlesCreated += $this->createVideo( $videoData, $msg, $createParams );
+				if ( $msg ) {
+					print "ERROR: $msg\n";
+				}
+			}
+		} while ( $numVideos == self::API_PAGE_SIZE );
+
+		wfProfileOut( __METHOD__ );
+
+		return $articlesCreated;
+	}
+
+	/**
+	 * Get clip data from program
+	 * @param array $videoParams
+	 * @param array $program - EntertainmentProgram data from API
+	 * @return array|false $clipdata
+	 */
+	protected function getDataFromProgram( $videoParams, $program ) {
+		wfProfileIn( __METHOD__ );
+
+		$clipData = array();
+
+		$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
+		$program['title'] = $this->updateTitle( $program['title'] );
+
+		// get series
+		$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
+
+		if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
+			$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// get season
+		$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
+		if ( empty( $clipData['season'] ) && $program['MediaId'] == 26 ) {	// media type = season (26)
+			 $clipData['season'] = $program['title'];
+		}
+
+		// get episode
+		$clipData['episode'] = empty( $videoParams['episode'] ) ? '' : $videoParams['episode'];
+		if ( empty( $clipData['episode'] ) && $program['MediaId'] == 27 ) {	// media type = episode (27)
+			 $clipData['episode'] = $program['title'];
+		}
+
+		$clipData['tags'] = trim( $program['Tagline'] );
+
+		$clipData['industryRating'] = '';
+		if ( !empty( $program['MovieMpaa']['Rating'] ) ) {
+			$clipData['industryRating'] = $this->getIndustryRating( $program['MovieMpaa']['Rating'] );
+		} else if ( !empty( $program['TvRating']['Rating'] ) ) {
+			$clipData['industryRating'] = $this->getIndustryRating( $program['TvRating']['Rating'] );
+		} else if ( !empty( $program['GameWarning']['Warning'] ) ) {
+			$clipData['industryRating'] = $this->getIndustryRating( $program['GameWarning']['Warning'] );
+		}
+
+		$clipData['ageRequired'] = $this->getAgeRequired( $clipData['industryRating'] );
+		$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
+
+		$clipData['genres'] = '';
+		if ( !empty( $program['MovieCategory']['Category'] ) ) {
+			$clipData['genres'] = $program['MovieCategory']['Category'];
+		} else if ( !empty( $program['TvCategory']['Category'] ) ) {
+			$clipData['genres'] = $program['TvCategory']['Category'];
+		} else if ( !empty( $program['GameCategory']['Category'] ) ) {
+			$clipData['genres'] = $program['GameCategory']['Category'];
+		}
+
+		$actors = array();
+		if ( !empty( $program['ProgramToPerformerMaps']['results'] ) ) {
+			foreach( $program['ProgramToPerformerMaps']['results'] as $performer ) {
+				$actors[] = trim( $performer['Performer']['FullName'] );
+			}
+		}
+		$clipData['actors'] = implode( ', ', $actors );
+
+		wfProfileOut( __METHOD__ );
+
+		return $clipData;
+	}
+
+	/**
+	 * Get clip data from asset data
+	 * @param array $videoParams
+	 * @param array $videoAsset - asset data from API
+	 * @param array|false $clipData
+	 */
+	protected function getDataFromAsset( $videoParams, $videoAsset, $clipData ) {
+		wfProfileIn( __METHOD__ );
+
+		$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
+		$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
+
+		// add episode name to title if the title contains 'clip' and number
+		// example:
+		// $clipData['episode'] = 'THE OFFICE: GARDEN PARTY'
+		// $clipData['titleName'] = 'THE OFFICE: CLIP 1'
+		// The new title will be 'THE OFFICE: GARDEN PARTY - CLIP 1'
+		if ( !empty( $clipData['episode'] ) && preg_match( '/^([^:]*:)(.* clip \d+.*)/i', $clipData['titleName'], $matches ) ) {
+			$titleName = $clipData['titleName'];
+
+			// if episode and title start with the same words (i.e. <series_name>:), remove the matched word from the title
+			if ( !empty( $matches[1] ) && !empty( $matches[2] ) && preg_match( '/^'.$matches[1].'.*/i', $clipData['episode'] ) ) {
+				$titleName = trim( $matches[2] );
+			}
+
+			$clipData['titleName'] = $clipData['episode'].' - '.$titleName;
+		}
+
+		$clipData['videoId'] = $videoAsset['Publishedid'];
+
+		if ( !empty( $videoAsset['ExpirationDate'] ) ) {
+			$this->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$clipData['thumbnail'] = empty( $videoAsset['VideoAssetScreenCapture']['URL'] ) ? '' : $videoAsset['VideoAssetScreenCapture']['URL'];
+		$clipData['duration'] = $videoAsset['StreamLengthinseconds'];
+
+		$clipData['published'] = '';
+		if ( preg_match('/Date\((\d+)\)/', $videoAsset['DateCreated'], $matches) ) {
+			$clipData['published'] = $matches[1]/1000;
+		}
+
+		$clipData['type'] = $this->getStdType( $videoAsset['MediaType']['Media'] );
+		$clipData['category'] = $this->getCategory( $clipData['type'] );
+		$clipData['description'] = trim( $videoAsset['Descriptions']['ItemDescription'] );
+		$clipData['hd'] = ( $videoAsset['HdSource'] == 'true' ) ? 1 : 0;
+		$clipData['provider'] = 'iva';
+
+		// get resolution
+		$clipData['resolution'] = '';
+		if ( !empty( $videoAsset['SourceWidth'] ) && $videoAsset['SourceWidth'] > 0
+			&& !empty( $videoAsset['SourceHeight'] ) && $videoAsset['SourceHeight'] > 0 ) {
+			$clipData['resolution'] = $videoAsset['SourceWidth'].'x'.$videoAsset['SourceHeight'];
+		}
+
+		// get language
+		if ( empty( $videoAsset['LanguageSpoken']['LanguageName'] ) ) {
+			$clipData['language'] = '';
+		} else {
+			$clipData['language'] = $videoAsset['LanguageSpoken']['LanguageName'];
+		}
+
+		// get subtitle
+		if ( empty( $videoAsset['LanguageSubtitled']['LanguageName'] ) ) {
+			$clipData['subtitle'] = '';
+		} else {
+			$clipData['subtitle'] = $videoAsset['LanguageSubtitled']['LanguageName'];
+		}
+
+		// get target country
+		if ( empty( $videoAsset['CountryTarget']['CountryName'] ) ) {
+			$clipData['targetCountry'] = '';
+		} else {
+			$clipData['targetCountry'] = $videoAsset['CountryTarget']['CountryName'];
+		}
+
+		$clipData['name'] = empty( $videoParams['keyword'] ) ? '' : $videoParams['keyword'];
+
+		// get keywords
+		$keywords = empty( $clipData['name'] ) ? array() : array( $clipData['name'] );
+		if ( !empty( $clipData['series'] ) ) {
+			$keywords[] = $clipData['series'];
+		}
+		if ( !empty( $clipData['category'] ) ) {
+			$keywords[] = $clipData['category'];
+		}
+		if ( !empty( $clipData['tags'] ) ) {
+			$keywords[] = $clipData['tags'];
+		}
+		$clipData['keywords'] = implode( ', ', $this->getUniqueArray( $keywords ) );
+
+		wfProfileOut( __METHOD__ );
+
+		return $clipData;
+	}
+
 	/**
 	 * Create the feed URL for a specific $videoSet
 	 * @param array $videoParams
 	 * @param integer $startDate - Unixtime for beginning of modified-on date range
 	 * @param integer $endDate - Unixtime for ending of modified-on date range
 	 * @param integer $page - The page of results to fetch
-	 * @return string - A feed URL
+	 * @return string $url - A feed URL
 	 */
 	private function makeSetFeedURL( $videoParams, $startDate, $endDate, $page ) {
+		wfProfileIn( __METHOD__ );
+
 		$filter = "(DateModified gt datetime'$startDate') " .
 			"and (DateModified le datetime'$endDate') ";
 
-		$videoSet = $videoParams['videoSet'];
-		// check if it is PromotesPublishedId
-		if ( empty( $videoParams['isPromotesPublishedId'] ) ) {
-			// check if $videoSet is publish id or keyword
-			if ( empty( $videoParams['isPublishedId'] ) ) {
-				$filter .= "and (substringof('$videoSet', Title) eq true) ";
-			} else {
-				$filter .= "and (Publishedid eq $videoSet) ";
-			}
+		if ( $videoParams['apiType'] == 'VideoAssets' ) {
+			$feedUrl = static::$FEED_URL_ASSET;
+			$filter .= "and (MediaId eq ".implode( ' or MediaId eq ', self::$MEDIA_IDS_MOVIE ).") ";
 		} else {
-			$filter .= "and (PromotesPublishedId eq $videoSet) ";
+			$feedUrl = static::$FEED_URL;
+
+			$videoSet = $videoParams['videoSet'];
+			// check if it is PromotesPublishedId
+			if ( empty( $videoParams['isPromotesPublishedId'] ) ) {
+				// check if $videoSet is publish id or keyword
+				if ( empty( $videoParams['isPublishedId'] ) ) {
+					$filter .= "and (substringof('$videoSet', Title) eq true) ";
+				} else {
+					$filter .= "and (Publishedid eq $videoSet) ";
+				}
+			} else {
+				$filter .= "and (PromotesPublishedId eq $videoSet) ";
+			}
+
+			// exclude song and movie
+			foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
+				$filter .= "and (MediaId ne $id) ";
+			}
 		}
 
-		// exclude song
-		foreach ( self::$EXCLUDE_MEDIA_IDS as $id ) {
-			$filter .= "and (MediaId ne $id) ";
+		$expand = $this->getApiExpandFields( $videoParams );
+
+		$url = $this->initFeedUrl( $feedUrl, $filter, $expand, $page );
+
+		wfProfileOut( __METHOD__ );
+
+		return $url;
+	}
+
+	/**
+	 * Get expand fields for API
+	 * @param array $videoParams
+	 * @return array $expand - The expand fields to include in the URL to expand the video metadata
+	 */
+	protected function getApiExpandFields( $videoParams ) {
+		wfProfileIn( __METHOD__ );
+
+		if (  $videoParams['apiType'] == 'VideoAssets' ) {
+			$expand = [ 'EntertainmentProgram' ];
+		} else {
+			$expand = [ 'VideoAssets' ];
 		}
 
-		return $this->initFeedUrl( $filter, $page );
+		foreach ( self::$API_EXPAND_FIELDS as $key => $value ) {
+			$expand[] = ( $videoParams['apiType'] == $value ) ? $key : "$value/$key";
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $expand;
 	}
 
 	/**
 	 * Construct the URL given a start and end date and the result page to retrieve.
-	 * @param $filter - The filter to include in the URL to select the correct video metadata
-	 * @param $page - The page of results to fetch
-	 * @return string - A feed URL
+	 * @param string $feedUrl - template url
+	 * @param string $filter - The filter to include in the URL to select the correct video metadata
+	 * @param array $expand - The expand fields to include in the URL to expand the video metadata
+	 * @param integer $page - The page of results to fetch
+	 * @return string $url - A feed URL
 	 */
-	private function initFeedUrl( $filter, $page ) {
-		$url = str_replace( '$1', self::API_PAGE_SIZE, static::$FEED_URL );
+	private function initFeedUrl( $feedUrl, $filter, $expand, $page ) {
+		wfProfileIn( __METHOD__ );
+
+		$url = str_replace( '$1', self::API_PAGE_SIZE, $feedUrl );
 		$url = str_replace( '$2', self::API_PAGE_SIZE * $page, $url );
 		$url = str_replace( '$3', urlencode( $filter ), $url );
-
-		$expand = array(
-			'VideoAssets',
-			'VideoAssets/Descriptions',
-			'VideoAssets/VideoAssetScreenCapture',
-			'VideoAssets/MediaType',
-			'MovieMpaa',
-			'TvRating',
-			'GameWarning',
-			'MovieCategory',
-			'TvCategory',
-			'ProgramToPerformerMaps/Performer',
-			'VideoAssets/LanguageSpoken',
-			'VideoAssets/LanguageSubtitled',
-			'VideoAssets/CountryTarget',
-		);
-
 		$url = str_replace( '$4', implode( ',', $expand ), $url );
 		$url = str_replace( '$5', F::app()->wg->IvaApiConfig['DeveloperId'], $url );
+
+		wfProfileOut( __METHOD__ );
 
 		return $url;
 	}
@@ -818,7 +975,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return preg_replace( '/\s*,\s*/', ' ', $this->getUniqueArray( $categories ) );
 	}
 
 	/**

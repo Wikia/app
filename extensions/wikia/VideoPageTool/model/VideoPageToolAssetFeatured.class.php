@@ -17,7 +17,8 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 		'useTemplate' => true,
 		'fluid' => true,
 		'hidePlayButton' => true,
-		'imgClass' => 'vpt-featured-thumbnail'
+		'imgClass' => 'vpt-featured-thumbnail',
+		'noLazyLoad' => true,
 	];
 
 	// required data field -- array( FormFieldName => varName )

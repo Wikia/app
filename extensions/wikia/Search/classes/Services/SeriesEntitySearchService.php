@@ -6,8 +6,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 	const XWIKI_CORE = 'xwiki';
 	const WIKI_LIMIT = 1;
-	const MINIMAL_WIKIA_ARTICLES = 50;
-	const MINIMAL_WIKIA_SCORE = 2;
+	const MINIMAL_WIKIA_ARTICLES = 20;
+	const MINIMAL_WIKIA_SCORE = 1;
+	const DEFAULT_SLOP = 1;
 
 	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
 
@@ -18,7 +19,6 @@ class SeriesEntitySearchService extends EntitySearchService {
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
-		$noyearphrase = preg_replace( '|\(\d{4}\)|', '', $query );
 		$phrase = $this->sanitizeQuery( $query );
 		$slang = $this->sanitizeQuery( $this->getLang() );
 
@@ -35,14 +35,14 @@ class SeriesEntitySearchService extends EntitySearchService {
 		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
 		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
-		$dismax->setQueryFields( 'series_mv_tm^10 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^4 domains_txt' );
-		$dismax->setPhraseFields( 'series_mv_tm^10 sitename_txt^5' );
+		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
+			'sitename_txt^2 all_domains_mv_wd^5' );
+		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^2 all_domains_mv_wd^5' );
 
-		$domain = strtolower( preg_replace( '|[\W-]+|', '', $this->sanitizeQuery( $noyearphrase ) ) );
-		$dismax->setBoostQuery( 'domains_txt:"www.' . $domain . '.wikia.com"^10 ' .
-			'domains_txt:"' . $domain . '.wikia.com"^10' );
 		$dismax->setBoostFunctions( 'wam_i^2' );
+
+		$dismax->setQueryPhraseSlop(static::DEFAULT_SLOP);
+		$dismax->setPhraseSlop(static::DEFAULT_SLOP);
 
 		return $select;
 	}

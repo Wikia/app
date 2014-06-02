@@ -125,7 +125,6 @@
     _gaqWikiaPush(['_setCustomVar', 8, 'PageType',
                       window.wikiaPageType, 3],
                   ['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
-                  ['_setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
                   ['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
                   ['_setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
     );
@@ -159,7 +158,6 @@
     window._gaq.push(['ads._setCustomVar', 8, 'PageType',
                   window.wikiaPageType, 3],
               ['ads._setCustomVar', 9, 'CityId', window.wgCityId, 3],
-              ['ads._setCustomVar', 12, 'MedusaSlot', window.wgMedusaSlot, 3],
               ['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
               ['ads._setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3]
     );
@@ -209,7 +207,7 @@
      * @param {number=0} opt_value Event Value. Have to be an integer.
      * @param {boolean=false} opt_noninteractive Event noInteractive.
      */
-    window.gaTrackEvent = function(category, action, opt_label, opt_value, 
+    window.gaTrackEvent = function(category, action, opt_label, opt_value,
                                    opt_noninteractive) {
         var args = Array.prototype.slice.call(arguments);
         args.unshift('_trackEvent');

@@ -40,19 +40,26 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
-/**
- * wikia library incudes
- */
-require_once ( $IP."/lib/wikia/fluent-sql-php/src/init.php");
 
+/**
+ * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
+ * dependencies added via composer to lib/composer until external dependencies with composer/packagist
+ * can be eliminated.
+ */
+require_once("$IP/lib/composer/autoload.php");
+// configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
+
+/**
+ * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
+ * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
+ */
+require_once ( $IP."/lib/Wikia/autoload.php");
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
 }
-
-require_once("$IP/lib/composer/autoload.php");
 
 /**
  * autoload classes
@@ -377,8 +384,14 @@ $wgAutoloadClasses['SpotlightsABTestController'] = $IP.'/skins/oasis/modules/Spo
 $wgAutoloadClasses['SpotlightsModel'] = "{$IP}/includes/wikia/models/SpotlightsModel.class.php";
 $wgAutoloadClasses['ReadMoreController'] = $IP.'/skins/oasis/modules/ReadMoreController.class.php';
 $wgAutoloadClasses['ReadMoreModel'] = "{$IP}/includes/wikia/models/ReadMoreModel.class.php";
+
+// Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
+
+// Set the WikiaLogger mode early in the setup process
+$wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -538,6 +551,7 @@ include_once( "$IP/extensions/wikia/ArticleSummary/ArticleSummary.setup.php" );
 include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
+include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -639,11 +653,6 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
 $wgAutoloadClasses[ 'CreateNewWikiTask' ] = "$IP/extensions/wikia/CreateNewWiki/CreateNewWikiTask.class.php";
 
 /**
- * Logger
- */
-require_once ( $IP."/extensions/wikia/Logger/WikiaLogger.setup.php" );
-
-/**
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
@@ -741,14 +750,6 @@ $wgMaxThumbnailArea = 0.9e7;
  * @see rt#39263
  */
 $wgWikiaMaxNameChars = 50;
-
-
-/**
- * @name $IPA
- *
- * path for answers repo
- */
-$IPA = "/usr/wikia/source/answers";
 
 /**
  * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
@@ -1163,15 +1164,6 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 $wgEnableAmazonDirectTargetedBuy = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountriesDefault
- * The default value for $wgAmazonDirectTargetedBuyCountriesDefault
- * Main steering var, change this one.
- * Value set for community central overrides this. Value for particular wiki overrides the community
- * US + EU (UK is GB...)
- */
-$wgAmazonDirectTargetedBuyCountriesDefault = ['US', 'AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'PL', 'PT', 'ES', 'SE', 'CH', 'GB'];
-
-/**
  * @name $wgAmazonDirectTargetedBuyCountries
  * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
  * "Utility" var, don't change it here.
@@ -1216,6 +1208,12 @@ $wgEnableAdEngineExt = true;
 $wgAdDriverUseEbay = false;
 
 /**
+ * @name $wgAdDriverUseWikiaBarBoxad2
+ * Whether to enable new fancy footer WikiaBar BOXAD 2 (true) or not (false)
+ */
+$wgAdDriverUseWikiaBarBoxad2 = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
@@ -1240,13 +1238,6 @@ $wgAdDriverForceDirectGptAd = false;
  * Forces to use AdProviderLiftium for all slots managed by this provider
  */
 $wgAdDriverForceLiftiumAd = false;
-
-/**
- * @name $wgHighValueCountriesDefault
- * Default list of countries defined as high-value for revenue purposes
- * $wgHighValueCountries overrides this
- */
-$wgHighValueCountriesDefault = array('CA'=>3, 'DE'=>3, 'DK'=>3, 'ES'=>3, 'FI'=>3, 'FR'=>3, 'GB'=>3, 'IT'=>3, 'NL'=>3, 'NO'=>3, 'SE'=>3, 'UK'=>3, 'US'=>3);
 
 /**
  * @name $wgHighValueCountries
@@ -1313,14 +1304,13 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
 $wgSFlowHost = 'localhost';
 $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
 $wgEnableUserEmail = false;
-
-$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Enables ETag globally
@@ -1330,11 +1320,6 @@ $wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
  * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
  */
 $wgUseETag = true;
-
-/**
- * whether or not to send logs from dev to elasticsearch
- */
-$wgDevESLog = false;
 
 /**
  * Restrictions for some api methods
@@ -1409,3 +1394,16 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
+
+/*
+ * @name wgEnableBuckyExt
+ * Enables real user performance reporting via Bucky
+ */
+$wgEnableBuckyExt = false;
+
+/*
+ * @name wgBuckySampling
+ * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
+ * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
+ */
+$wgBuckySampling = 1;

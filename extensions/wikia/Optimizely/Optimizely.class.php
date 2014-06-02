@@ -17,19 +17,21 @@ class Optimizely {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		global $wgOptimizelyLoadFromOurCDN;
+		global $wgOptimizelyLoadFromOurCDN, $wgNoExternals;
 
-		// load optimizely_blocking_js on wikiamobile
-		if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
-			foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
-				$scripts .= '<script src="' . $script . '"></script>';
+		if ( !$wgNoExternals ) {
+			// load optimizely_blocking_js on wikiamobile
+			if ( F::app()->checkSkin( ['wikiamobile'], $skin ) ) {
+				foreach ( AssetsManager::getInstance()->getURL( [ 'optimizely_blocking_js' ] ) as $script ) {
+					$scripts .= '<script src="' . $script . '"></script>';
+				}
 			}
-		}
 
-		if ( $wgOptimizelyLoadFromOurCDN ) {
-			$scripts .= static::loadFromOurCDN();
-		} else {
-			$scripts .= static::loadOriginal();
+			if ( $wgOptimizelyLoadFromOurCDN ) {
+				$scripts .= static::loadFromOurCDN();
+			} else {
+				$scripts .= static::loadOriginal();
+			}
 		}
 
 		return true;

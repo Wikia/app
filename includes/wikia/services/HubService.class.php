@@ -120,7 +120,7 @@ class HubService extends Service {
 	private static function getCategoryIdForCity($cityId) {
 		$categoryId = null;
 
-		if( WikiaPageType::isCorporatePage() && $cityId == F::app()->wg->CityId ) {
+		if( WikiaPageType::isWikiaHomePage() && $cityId == F::app()->wg->CityId ) {
 			$categoryId = WikiFactoryHub::CATEGORY_ID_CORPORATE;
 		} else {
 			$category = WikiFactory::getCategory($cityId);
