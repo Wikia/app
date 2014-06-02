@@ -33,48 +33,17 @@ class PromoteImageReviewTask extends BaseTask {
 		$this->corporatePageIds = $this->model->getVisualizationWikisIds();
 	}
 
+	public function upload($wikiList) {
+		global $wgCityId, $wgLanguageCode;
 
-	public function upload($list) {
-		$result = true;
-		foreach ($list as $targetWikiId => $wikis) {
-			$result = $this->uploadImages($targetWikiId, $wikis);
-		}
-
-		return $result;
-	}
-
-	public function delete($list) {
-		$result = true;
-		foreach ($list as $corpWikiLang => $wikis) {
-			$result = $this->deleteImages($corpWikiLang, $wikis);
-		}
-
-		return $result;
-	}
-
-	private function finalizeImageUploadStatus($imageId, $sourceWikiId, $status){
-		$db = wfGetDB(DB_MASTER, array(), F::app()->wg->ExternalSharedDB);
-
-		(new \WikiaSQL())
-			->UPDATE('city_visualization_images')
-			->SET('reviewer_id', 'null', true)
-				->SET('image_review_status', $status)
-			->WHERE('city_id')->EQUAL_TO($sourceWikiId)
-				->AND_('page_id')->EQUAL_TO($imageId)
-				->AND_('image_review_status', ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING)
-			->run($db);
-	}
-
-	private function uploadImages($targetWikiId, $wikis) {
 		$isError = false;
-		$targetWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $targetWikiId);
 
-		foreach($wikis as $sourceWikiId => $images) {
+		foreach($wikiList as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
 			$uploadedImages = array();
 			foreach ($images as $image) {
-				$result = $this->uploadSingleImage($image['id'], $image['name'], $targetWikiId, $sourceWikiId);
+				$result = $this->uploadSingleImage($image['id'], $image['name'], $wgCityId, $sourceWikiId);
 
 				if ($result['status'] === 0) {
 					$uploadedImages[] = ['id' => $result['id'], 'name' => $result[ 'name' ]];
@@ -108,85 +77,29 @@ class PromoteImageReviewTask extends BaseTask {
 		if(!empty($uploadedImages) && in_array($sourceWikiId, $this->corporatePageIds)) {
 			//if images uploaded but not from import script
 			//saving changes in city_visualization_images table and purging cache
-			$this->addImagesToPromoteDb($targetWikiId, $targetWikiLang, $uploadedImages);
-			$this->model->purgeWikiPromoteDataCache($targetWikiId, $targetWikiLang);
+			$this->addImagesToPromoteDb($uploadedImages);
+			$this->model->purgeWikiPromoteDataCache($wgCityId, $wgLanguageCode);
 		}
 
 		if( !empty($uploadedImages) ) {
 			//if wikis have been added by import script or regularly by Special:Promote
-			$this->model->purgeVisualizationWikisListCache($targetWikiId, $targetWikiLang);
+			$this->model->purgeVisualizationWikisListCache($wgCityId, $wgLanguageCode);
 		}
 
-		return $isError;
+		return !$isError;
 	}
 
-	public function uploadSingleImage($imageId, $destinationName, $targetWikiId, $sourceWikiId) {
-		global $IP, $wgWikiaLocalSettingsPath;
-
-		$retval = "";
-		$imageTitle = \GlobalTitle::newFromId($imageId, $sourceWikiId);
-
-		$sourceImageUrl = null;
-
-		$sourceFile = \GlobalFile::newFromText($imageTitle->getText(), $sourceWikiId);
-		if ($sourceFile->exists()){
-			$sourceImageUrl = $sourceFile->getUrl();
-		} else {
-			$this->log('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
-			return array('status' => 1);
-		}
-
-		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
-		if( empty($city_url) ) {
-			$this->log('Apparently the server for ' . $targetWikiId . ' is not available via WikiFactory');
-			return array('status' => 1);
-		}
-
-		$destinationName = PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
-
-		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/upload.php";
-		$sCommand .= " --originalimageurl=" . escapeshellarg($sourceImageUrl);
-		$sCommand .= " --destimagename=" . escapeshellarg($destinationName);
-		$sCommand .= " --wikiid=" . escapeshellarg( $sourceWikiId );
-		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
-
-		$logdata = [
-			'command' => $sCommand,
-			'city_url' => $city_url
-		];
-
-		$output = wfShellExec($sCommand, $retval);
-
-		$logdata['output'] = $output;
-		$logdata['retval'] = $retval;
-
-		if( $retval ) {
-			$this->log('Upload error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
-		} else {
-			$this->log('Upload successful: '.$output);
-		}
-
-		$output = json_decode($output);
-
-		return array(
-			'status' => $retval,
-			'name' => $output->name,
-			'id' => $output->id, //page_id
-		);
-	}
-
-	private function deleteImages($corpWikiLang, $wikis) {
+	public function delete($wikiList) {
 		$app = F::app();
-		$corpWikiId = $this->model->getTargetWikiId($corpWikiLang);
 
-		foreach($wikis as $sourceWikiId => $images) {
+		foreach($wikiList as $sourceWikiId => $images) {
 			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
 			if( !empty($images) ) {
 				$removedImages = array();
 				foreach($images as $imageName) {
 					if (PromoImage::fromPathname($imageName)->isValid()) {
-						$result = $this->removeSingleImage($corpWikiId, $imageName);
+						$result = $this->removeSingleImage($imageName);
 
 						if( $result['status'] === 0 ) {
 							//almost all the time on devboxes images aren't removed because of no permissions
@@ -221,35 +134,129 @@ class PromoteImageReviewTask extends BaseTask {
 		return true;
 	}
 
-	private function removeSingleImage($targetWikiId, $imageName) {
-		global $IP, $wgWikiaLocalSettingsPath;
+	/**
+	 * @param $imageId
+	 * @param $destinationName
+	 * @param mixed $_ unused variable, kept to maintain compatibility with legacy task. TODO: remove this param.
+	 * @param $sourceWikiId
+	 * @return array
+	 * @throws \Exception
+	 */
+	public function uploadSingleImage($imageId, $destinationName, $_, $sourceWikiId) {
+		global $wgEnableUploads, $wgServer;
 
-		$retval = -1;
+		$imageTitle = \GlobalTitle::newFromId($imageId, $sourceWikiId);
+		$sourceImageUrl = null;
+		$sourceFile = \GlobalFile::newFromText($imageTitle->getText(), $sourceWikiId);
 
-		$sCommand = "SERVER_ID={$targetWikiId} php $IP/maintenance/wikia/ImageReview/PromoteImage/remove.php";
-		$sCommand .= " --imagename=" . escapeshellarg($imageName);
-		$sCommand .= " --userid=" . escapeshellarg($this->createdBy());
-		$sCommand .= " --conf {$wgWikiaLocalSettingsPath}";
-
-		$output = wfShellExec($sCommand, $retval);
-		$city_url = WikiFactory::getVarValueByName("wgServer", $targetWikiId);
-
-		if( empty($city_url) ) {
-			$this->log('Apparently the server is not available via WikiFactory');
-			return array('status' => 1);
-		}
-
-		$city_path = WikiFactory::getVarValueByName("wgScript", $targetWikiId);
-		if( $retval != 0 ) {
-			$this->log('Remove error! (' . $city_url . '). Error code returned: ' . $retval . ' Error was: ' . $output);
+		if ($sourceFile->exists()){
+			$sourceImageUrl = $sourceFile->getUrl();
 		} else {
-			$this->log('Removal successful: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($output) . '">' . $city_url . $city_path . '?title=' . $output . '</a>');
+			$this->log('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
+			return ['status' => 1];
 		}
 
-		return array(
-			'status' => $retval,
-			'title' => $output,
-		);
+		$destinationName = PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
+		$user = \User::newFromName('WikiaBot');
+
+		if (!($user instanceof \User)) {
+			return ['status' => 2];
+		} elseif (empty($sourceImageUrl)) {
+			return ['status' => 3];
+		} elseif (empty($destinationName)) {
+			return ['status' => 4];
+		} elseif ($sourceWikiId <= 0) {
+			return ['status' => 5];
+		} elseif (empty($wgEnableUploads)) {
+			return ['status' => 6];
+		}
+
+		$imageData = (object) [
+			'name' => $destinationName,
+			'description' => wfMsg('wikiahome-image-auto-uploaded-comment'),
+			'comment' => wfMsg('wikiahome-image-auto-uploaded-comment'),
+		];
+
+		$uploadResult = \ImagesService::uploadImageFromUrl($sourceImageUrl, $imageData, $user);
+		if ($uploadResult['status'] === true) {
+			$result = [
+				'status' => 0,
+				'id' => $uploadResult['page_id'],
+				'name' => $destinationName
+			];
+		} elseif (!empty($uploadResult['errors'][0]['message']) &&
+				$uploadResult['errors'][0]['message'] === 'backend-fail-alreadyexists') {
+			$result = [
+				'status' => 0,
+				'id' => $uploadResult['page_id'],
+				'name' => $destinationName,
+				'notice' => 'The file already existed. It was replaced.',
+			];
+		} else {
+			$result = [
+				'status' => 7,
+			];
+			$this->log("Upload error! ({$wgServer}). Error code returned: {$result['status']}");
+		}
+
+		return $result;
+	}
+
+	private function removeSingleImage($imageName) {
+		global $wgEnableUploads;
+
+		$createdBy = $this->createdBy();
+		$user = empty($createdBy) ? \User::newFromName('WikiaBot') : \User::newFromId($createdBy);
+
+		if (!($user instanceof \User)) {
+			return [
+				'status' => 2,
+				'title' => 'Error: Could not get bot user object',
+			];
+		} elseif (!$user->isAllowed('delete')) {
+			return [
+				'status' => 3,
+				'title' => 'Error: You do not have the right permissions',
+			];
+		} elseif (empty($imageName)) {
+			return [
+				'status' => 4,
+				'title' => 'Error: Invalid image name',
+			];
+		}
+
+		$imageTitle = \Title::newFromText($imageName, NS_FILE);
+		if (!($imageTitle instanceof \Title)) {
+			return [
+				'status' => 5,
+				'title' => 'Error: Could not get title object',
+			];
+		} elseif (empty($wgEnableUploads)) {
+			return [
+				'status' => 6,
+				'title' => 'Error: File uploads disabled',
+			];
+		}
+
+		$file = wfFindFile($imageTitle);
+		if ($file instanceof \File && $file->exists()) {
+			$status = $file->delete('automated deletion');
+		} else {
+			$status = [
+				'ok' => false,
+			];
+		}
+
+		if ($status['ok']) {
+			return [
+				'status' => 0,
+			];
+		} else {
+			return [
+				'status' => 6,
+				'title' => 'Error: File has not been deleted',
+			];
+		}
 	}
 
 	private function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
@@ -311,23 +318,21 @@ class PromoteImageReviewTask extends BaseTask {
 	/**
 	 * @desc Adding data of wikis imported on wikia.com by import script
 	 *
-	 * @param $targetWikiId
-	 * @param $targetWikiLang
 	 * @param $images
 	 */
-	private function addImagesToPromoteDb($targetWikiId, $targetWikiLang, $images) {
-		global $wgExternalSharedDB;
+	private function addImagesToPromoteDb($images) {
+		global $wgCityId, $wgLanguageCode, $wgExternalSharedDB;
 
 		$imagesToAdd = [];
 
 		foreach( $images as $image ) {
 			$imageData = new stdClass();
 
-			$promoImage = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($targetWikiId);
+			$promoImage = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($wgCityId);
 
-			$imageData->city_id = $targetWikiId;
+			$imageData->city_id = $wgCityId;
 			$imageData->page_id = $image['id'];
-			$imageData->city_lang_code = $targetWikiLang;
+			$imageData->city_lang_code = $wgLanguageCode;
 			$imageData->image_index =  $promoImage->getType();
 			$imageData->image_name = $promoImage->getPathname();
 			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
@@ -353,18 +358,29 @@ class PromoteImageReviewTask extends BaseTask {
 				$deleteArray[] = $image->page_id;
 			}
 
-			$dbm->begin();
 			(new \WikiaSQL())
 				->DELETE('city_visualization_images')
 				->WHERE('page_id')->IN($deleteArray)
-					->AND_('city_id')->EQUAL_TO($targetWikiId)
+					->AND_('city_id')->EQUAL_TO($wgCityId)
 				->run($dbm);
 
 			(new \WikiaSQL())
 				->INSERT('city_visualization_images', array_keys($insertArray[0]))
 				->VALUES($insertArray)
 				->run($dbm);
-			$dbm->commit();
 		}
+	}
+
+	private function finalizeImageUploadStatus($imageId, $sourceWikiId, $status) {
+		global $wgExternalSharedDB;
+
+		(new \WikiaSQL())
+			->UPDATE('city_visualization_images')
+				->SET('reviewer_id', 'null', true)
+				->SET('image_review_status', $status)
+			->WHERE('city_id')->EQUAL_TO($sourceWikiId)
+				->AND_('page_id')->EQUAL_TO($imageId)
+				->AND_('image_review_status')->EQUAL_TO(ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING)
+			->run(wfGetDB(DB_MASTER, array(), $wgExternalSharedDB));
 	}
 }

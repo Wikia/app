@@ -95,7 +95,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function createUploadTask($taskAdditionList) {
-		wfRunHooks('CreatePromoImageReviewTask', 'upload', $taskAdditionList);
+		wfRunHooks('CreatePromoImageReviewTask', ['upload', $taskAdditionList]);
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -508,9 +508,23 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if (TaskRunner::isModern('PromoteImageReviewTask')) {
-			$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
-			$task->call($type, $list);
-			$task->queue();
+			$tasks = [];
+
+			foreach ($list as $targetWikiId => $wikis) {
+				$task = (new \Wikia\Tasks\AsyncTaskList())
+					->add((new \Wikia\Tasks\Tasks\PromoteImageReviewTask())->call($type, $wikis));
+
+				if ($type == 'delete') { // in the "delete" case, targetWikiId is actually a language code
+					$wikiId = (new CityVisualization())->getTargetWikiId($targetWikiId);
+					$task->wikiId($wikiId);
+				} else {
+					$task->wikiId($targetWikiId);
+				}
+
+				$tasks []= $task;
+			}
+
+			\Wikia\Tasks\AsyncTaskList::batch($tasks);
 		} else {
 			$task = new PromoteImageReviewTask();
 			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';

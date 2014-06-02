@@ -54,7 +54,10 @@ class FixVisualizationImage extends Maintenance {
 					if ($file && $file->isMissing()) {
 
 						$t = GlobalTitle::newFromText("Wikia-Visualization-Add-$imageIndex.png", NS_FILE, $row['city_id']);
-						$task = new PromoteImageReviewTask();
+						$task = TaskRunner::isModern('PromoteImageReviewTask') ?
+							new \Wikia\Tasks\Tasks\PromoteImageReviewTask() :
+							new PromoteImageReviewTask();
+
 						var_dump($t->getArticleID(), "Wikia-Visualization-Add-$imageIndex.png", $app->wg->cityId, $row['city_id']);
 						$res = $task->uploadSingleImage($t->getArticleID(), "Wikia-Visualization-Add-$imageIndex.png", $app->wg->cityId, $row['city_id']);
 
