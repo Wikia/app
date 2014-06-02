@@ -355,6 +355,7 @@ class DataMartService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if ( empty($userIds) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 

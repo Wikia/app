@@ -114,6 +114,7 @@ class UserProfilePageHelper {
 		$db = self::getDb( false );
 		if ( !$db->tableExists( self::GLOBAL_REGISTRY_TABLE, __METHOD__ ) ) {
 			Wikia::log( __METHOD__, sprintf('Table %s does not exist on Dataware DB', self::GLOBAL_REGISTRY_TABLE ));
+			wfProfileOut( __METHOD__ );
 			return array();
 		}
 		$value = $db->selectField(

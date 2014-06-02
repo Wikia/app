@@ -130,8 +130,8 @@ class Parser_LinkHooks extends Parser {
 		$holders = new LinkHolderArray( $this );
 		
 		if( is_null( $this->mTitle ) ) {
-			wfProfileOut( __METHOD__ );
 			wfProfileOut( __METHOD__.'-setup' );
+			wfProfileOut( __METHOD__ );
 			throw new MWException( __METHOD__.": \$this->mTitle is null\n" );
 		}
 
@@ -211,6 +211,7 @@ class Parser_LinkHooks extends Parser {
 		# PROTO: where PROTO is a valid URL protocol; these
 		# should be external links.
 		if( preg_match('/^\b(?:' . wfUrlProtocols() . ')/', $titleText) ) {
+			wfProfileOut( __METHOD__."-misc" );
 			wfProfileOut( __METHOD__ );
 			return $wt;
 		}

@@ -1758,3 +1758,12 @@ $config['optimizely_blocking_js'] = array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	)
 );
+
+/* extension/wikia/Bucky */
+$config['bucky_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+	)
+);
