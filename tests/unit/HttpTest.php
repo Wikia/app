@@ -9,7 +9,14 @@ class HttpTest extends WikiaBaseTest {
 	 * Tests request without any additional options with successful response
 	 */
 	public function testRequest_success() {
-		$requestMock = $this->getMock( 'PhpHttpRequest', [ 'execute', 'getContent' ] );
+		$requestMock = $this->getMock(
+			'PhpHttpRequest',
+			[ 'execute', 'getContent' ],
+			[],
+			'',
+			false
+		);
+
 		$requestMock->expects( $this->once() )
 			->method( 'execute' )
 			->will( $this->returnValue( $this->getStatusMock( self::HTTP_CONTENT ) ) );
@@ -26,7 +33,13 @@ class HttpTest extends WikiaBaseTest {
 	 * Tests request without any additional options with error in response
 	 */
 	public function testRequest_error() {
-		$requestMock = $this->getMock( 'PhpHttpRequest', [ 'execute' ] );
+		$requestMock = $this->getMock(
+			'PhpHttpRequest',
+			[ 'execute', 'getContent' ],
+			[],
+			'',
+			false
+		);
 
 		$requestMock->expects( $this->once() )
 			->method( 'execute' )
@@ -38,7 +51,13 @@ class HttpTest extends WikiaBaseTest {
 	}
 
 	public function testRequest_return_response_instance() {
-		$requestMock = $this->getMock( 'PhpHttpRequest', [ 'execute' ] );
+		$requestMock = $this->getMock(
+			'PhpHttpRequest',
+			[ 'execute', 'getContent' ],
+			[],
+			'',
+			false
+		);
 
 		$requestMock->expects( $this->once() )
 			->method( 'execute' )
@@ -69,8 +88,8 @@ class HttpTest extends WikiaBaseTest {
 			'MWHttpRequest',
 			'factory'
 		)->expects( $this->once() )
-			->method( 'factory' )
-			->will( $this->returnValue( $requestMock ) );
+		->method( 'factory' )
+		->will( $this->returnValue( $requestMock ) );
 	}
 
 }
