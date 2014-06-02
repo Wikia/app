@@ -19,29 +19,21 @@ define('lvs.videocontrols', [
 	 */
 	var videoInstances = [];
 
-	// TODO: once height is set dynamically, let this function run.
-	/*
 	function setVerticalAlign($element, video) {
 		var videoHeight = video.height,
 			wrapperHeight = $element.height(),
-			topMargin = ( wrapperHeight - videoHeight ) / 2;
+			topMargin = (wrapperHeight - videoHeight) / 2;
 
-		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );
+		$element.data('height', wrapperHeight).height(wrapperHeight - topMargin).css('padding-top', topMargin);
 	}
-	 */
-	function setVerticalAlign() {}
 
-	// TODO: once height is set dynamically, let this function run.
 	// remove vertical alignment css
-	/*
 	function removeVerticalAlign($element) {
-		var height = $element.data( 'height' );
-		if ( height ) {
-			$element.height( height ).css( 'padding-top', 0 );
+		var height = $element.data('height');
+		if (height) {
+			$element.height(height).css('padding-top', 0);
 		}
 	}
-	*/
-	function removeVerticalAlign() {}
 
 	function syncVideoInteraction(title, premiumTitle) {
 		nirvana.sendRequest({
@@ -136,18 +128,22 @@ define('lvs.videocontrols', [
 				},
 				callback: function (data) {
 					var videoInstance,
-						vbIndex;
+						vbIndex,
+						$playerContainer = $element.find('.video-thumbnail');
 
 					// Remove styles of previous video
-					removeVerticalAlign($element);
+					removeVerticalAlign($playerContainer);
 
 					videoInstance = new VideoBootstrap(
-						$element.find('.video-thumbnail')[0],
+						$playerContainer[0],
 						data.embedCode,
 						'licensedVideoSwap'
 					);
 
-					setVerticalAlign($element, videoInstance);
+					// remove image so user doesn't see it get styles applied
+					$playerContainer.find('img').remove();
+
+					setVerticalAlign($playerContainer, videoInstance);
 
 					// Update swap button so it contains the dbkey of the video to swap
 					$row.find('.swap-button').attr('data-video-swap', fileTitle);

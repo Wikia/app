@@ -19,7 +19,7 @@ define('lvs.suggestions', [], function () {
 
 	/**
 	 * Suggested thumbnails come back from LVS script as large - set them to small
-	 * @param $elem
+	 * @param {jQuery} $elem
 	 */
 	function updateSizeClass($elem) {
 		$elem.find('.large').each(function () {
