@@ -3,7 +3,6 @@
 class HttpTest extends WikiaBaseTest {
 
 	const HTTP_CONTENT = 'HTTP Success Response';
-	const EXAMPLE_URL = 'http://www.wikia.com';
 
 	/**
 	 * Tests request without any additional options with successful response
@@ -19,7 +18,7 @@ class HttpTest extends WikiaBaseTest {
 
 		$this->mockMWHttpRequestFactory( $requestMock );
 
-		$this->assertEquals( 'HTTP Success Response', Http::request( 'GET', self::EXAMPLE_URL ) );
+		$this->assertEquals( 'HTTP Success Response', Http::request( 'GET', 'http://wikia.com' ) );
 	}
 
 	/**
@@ -34,25 +33,7 @@ class HttpTest extends WikiaBaseTest {
 
 		$this->mockMWHttpRequestFactory( $requestMock );
 
-		$this->assertEquals( false, Http::request( 'GET', self::EXAMPLE_URL ) );
-	}
-
-	public function testRequest_return_response_instance() {
-		$requestMock = $this->getMock( 'PhpHttpRequest', [ 'execute' ] );
-
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->will( $this->returnValue( $this->getStatusMock( self::HTTP_CONTENT ) ) );
-
-		$this->mockMWHttpRequestFactory( $requestMock );
-
-		$this->assertInstanceOf( 'MWHttpRequest', Http::request(
-			'GET',
-			self::EXAMPLE_URL,
-			[
-				'returnInstance' => true
-			]
-		) );
+		$this->assertEquals( false, Http::request( 'GET', 'http://wikia.com' ) );
 	}
 
 	private function getStatusMock( $returnValue ) {
