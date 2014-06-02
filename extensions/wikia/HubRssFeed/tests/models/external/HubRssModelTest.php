@@ -15,7 +15,7 @@ class HubRssModelTest extends WikiaBaseTest {
 	protected $mockToolbox;
 
 	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../';
+		$dir = dirname( __FILE__ ) . '/../../../';
 		global $wgAutoloadClasses;
 		$wgAutoloadClasses['MarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
 		$wgAutoloadClasses['AbstractMarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/AbstractMarketingToolboxModel.class.php';
