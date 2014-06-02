@@ -57,7 +57,7 @@ define('lvs.videocontrols', [
 	function init($container) {
 		var videoWidth = $container.find('.grid-3').width();
 
-		$container.on('click', '.video', function (e) {
+		$container.find('.video').on('click.lvs', function (e) {
 			e.preventDefault();
 
 			var $this = $(this),
@@ -93,13 +93,24 @@ define('lvs.videocontrols', [
 
 				// put outline around the thumbnail that was clicked
 				$thumbList.find('.selected').removeClass('selected');
-				$this.parent().addClass('selected');
+				$parent.addClass('selected');
+
+				// swap titles
+				$element.find('.title').text(
+					$parent.find('.title').attr('title')
+				);
 
 				// tracking rank should be 1-indexed, so add 1 to the 0-based index
 				trackingRank = $parent.index() + 1;
 			} else {
 				// Large image was clicked
 				$element = $parent;
+
+				// remove click event - this is no longer a video thumbnail
+				$this.off('.lvs')
+					.on('click.lvs', function (e) {
+						e.preventDefault();
+					});
 
 				// For tracking purposes, figure out if premium or non-premium was clicked
 				$wrapper = $parent.closest('.grid-3');
@@ -121,7 +132,7 @@ define('lvs.videocontrols', [
 				data: {
 					fileTitle: fileTitle,
 					width: videoWidth,
-					autoplay: 1,
+					autoplay: 1
 				},
 				callback: function (data) {
 					var videoInstance,
@@ -130,7 +141,11 @@ define('lvs.videocontrols', [
 					// Remove styles of previous video
 					removeVerticalAlign($element);
 
-					videoInstance = new VideoBootstrap($element[0], data.embedCode, 'licensedVideoSwap');
+					videoInstance = new VideoBootstrap(
+						$element.find('.video-thumbnail')[0],
+						data.embedCode,
+						'licensedVideoSwap'
+					);
 
 					setVerticalAlign($element, videoInstance);
 

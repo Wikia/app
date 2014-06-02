@@ -23,7 +23,7 @@ foreach ($videoList as $video):
 				<? endif; ?>
 			</div>
 		</div>
-		<div class="video-wrapper">
+		<div class="video-wrapper title-thumbnail">
 			<?= F::app()->renderPartial( 'ThumbnailController', 'title', [
 				'thumbnail' => $video['thumbnail'],
 				'title' => $video['fileTitle'],
@@ -35,19 +35,16 @@ foreach ($videoList as $video):
 	<div class="grid-3 premium">
 		<p><?= wfMessage('lvs-best-match-label')->plain() ?></p>
 		<? if ( !empty($best) ): ?>
-			<div class="video-wrapper">
-				<? if ( $video['isNew'] ): ?>
-					<div class="new"><?= wfMessage( 'lvs-new-flag' )->plain() ?></div>
-				<? endif; ?>
+			<div class="video-wrapper title-thumbnail">
 				<?= F::app()->renderPartial( 'ThumbnailController', 'title', [
 					'thumbnail' => $best['thumbnail'],
 					'title' => $best['fileTitle'],
 					'url' => $best['fileUrl'],
 				]) ?>
+				<? if ( $video['isNew'] ): ?>
+					<div class="new"><?= wfMessage( 'lvs-new-flag' )->plain() ?></div>
+				<? endif; ?>
 			</div>
-			<? if ( $numMoreSuggestions > 0 ): ?>
-				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->plain() ?></a>
-			<? endif; ?>
 			<button class="swap-button lvs-sprite" data-video-swap="<?= htmlspecialchars($best['title']) ?>"> <?= wfMessage('lvs-button-swap')->plain() ?></button>
 		<? else: ?>
 			<p><?= wfMessage('lvs-no-matching-videos')->plain() ?></p>
@@ -55,6 +52,7 @@ foreach ($videoList as $video):
 	</div>
 	<? if ( $numMoreSuggestions > 0 ): ?>
 		<div class="more-videos">
+			<h4 class="more-text"><?= wfMessage('lvs-more-suggestions')->plain() ?></h4>
 			<ul>
 				<?
 				   foreach ($suggestions as $suggest):

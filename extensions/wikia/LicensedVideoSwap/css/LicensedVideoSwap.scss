@@ -169,39 +169,39 @@ $button-icon-color: white;
 			}
 		}
 	}
-	.more-link {
-		color: $color-text;
-		font-size: 13px;
-		float: right;
-		line-height: 15px;
-		padding-right: 10px;
-
-		&:before {
-			@include arrow(5px, $color-text, 'up');
-			content: "";
-			display: block;
-			float: right;
-			margin-top: 6px;
-			margin-left: 5px;
-		}
-		&.collapsed:before {
-			@include arrow(5px, $color-text, 'down');
-		}
-	}
 	.grid-3 {
-		padding-bottom: 3px;
+		padding-bottom: 20px;
 	}
 	.video-wrapper {
 		margin-bottom: 9px;
 		position: relative;
 
 		.video {
-			height: 272px; // hard coded for now to ease loading until we make this responsive
+			background-color: #000;
+			height: 302px;
+			line-height: 302px; // hack to vertically center image
+			overflow: hidden;
+
+			img {
+				display: inline-block;
+				vertical-align: middle;
+			}
 		}
 	}
 	.more-videos {
 		@include clearfix;
+		background-color: $alt-bg-color;
 		clear: both;
+		margin-top: 10px;
+
+		h4 {
+			padding: 8px 0 0 15px;
+			text-transform: capitalize;
+
+			&:after {
+				content: ':';
+			}
+		}
 
 		&:before {
 			@include arrow(15px, $alt-bg-color, 'up');
@@ -209,7 +209,7 @@ $button-icon-color: white;
 			display: inline-block;
 			float: right;
 			margin-right: 15px;
-			transition: visibility .5s;
+			margin-top: -15px;
 		}
 
 		ul, li {
@@ -219,25 +219,14 @@ $button-icon-color: white;
 		}
 		ul {
 			@include clearfix;
-			background-color: $alt-bg-color;
 			clear: right;
 			height: 190px;
 			overflow: hidden;
-			transition: height .5s;
-		}
-		&.collapsed {
-			ul {
-				height: 0;
-				padding: 0;
-			}
-			&:before {
-				visibility: hidden;
-			}
 		}
 
 		li {
 			float: left;
-			margin: 15px;
+			margin: 10px 15px 15px;
 			width: $thumb-img-width;
 			&:last-child {
 				margin-right: 0;
@@ -251,13 +240,9 @@ $button-icon-color: white;
 			line-height: $thumb-img-height;
 			width: $thumb-img-width;
 		}
-		.video {
-			display: block;
-			position: relative;
-			> img {
-				height:$thumb-img-height;
-				width:$thumb-img-width;
-			}
+		.video > img {
+			height:$thumb-img-height;
+			width:$thumb-img-width;
 		}
 	}
 	.swap-button:before {

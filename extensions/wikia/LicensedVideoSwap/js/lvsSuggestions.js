@@ -11,33 +11,16 @@ define('lvs.suggestions', [], function () {
 		$suggestions.find('.title a').ellipses();
 		updateSizeClass($suggestions);
 		makeActive($suggestions);
-		bindEvents($container);
 	}
 
 	function makeActive($elem) {
 		$elem.find('li:first-child').addClass('selected');
 	}
 
-	function bindEvents($elem) {
-		$elem
-			.off('click.lvsSuggestions')
-			.on('click.lvsSuggestions', '.more-link', function (e) {
-				e.preventDefault();
-				var $this = $(this),
-					$toggleDiv = $this.parent().next('.more-videos');
-
-				if ($this.hasClass('collapsed')) {
-					// Show suggestions
-					$this.removeClass('collapsed');
-					$toggleDiv.removeClass('collapsed');
-				} else {
-					// Hide suggestions
-					$this.addClass('collapsed');
-					$toggleDiv.addClass('collapsed');
-				}
-			});
-	}
-
+	/**
+	 * Suggested thumbnails come back from LVS script as large - set them to small
+	 * @param $elem
+	 */
 	function updateSizeClass($elem) {
 		$elem.find('.large').each(function () {
 			$(this).removeClass('large').addClass('small');
