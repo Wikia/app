@@ -28,7 +28,11 @@ class FixVisualizationImage extends Maintenance {
 
 				$t = GlobalTitle::newFromText('Wikia-Visualization-Main.png', NS_FILE, $row['city_id']);
 
-				$task = new PromoteImageReviewTask();
+				if (TaskRunner::isModern('PromoteImageReviewTask')) {
+					$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+				} else {
+					$task = new PromoteImageReviewTask();
+				}
 
 				var_dump($t->getArticleID(), $row['city_main_image'], $app->wg->cityId, $row['city_id']);
 

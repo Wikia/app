@@ -23,7 +23,11 @@ class FixWikiMainImage extends Maintenance {
 
 				$t = GlobalTitle::newFromText( 'Wikia-Visualization-Main.png', NS_FILE, $wiki['city_id'] );
 
-				$task = new PromoteImageReviewTask();
+				if (TaskRunner::isModern('PromoteImageReviewTask')) {
+					$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+				} else {
+					$task = new PromoteImageReviewTask();
+				}
 
 				var_dump( $t->getArticleID(), $wiki['city_main_image'], $corpWikiId, $wiki['city_id'] );
 

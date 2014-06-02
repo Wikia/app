@@ -95,15 +95,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function createUploadTask($taskAdditionList) {
-		if (!empty($taskAdditionList)) {
-			$task = new PromoteImageReviewTask();
-			$task->createTask(
-				array(
-					'upload_list' => $taskAdditionList,
-				),
-				TASK_QUEUED
-			);
-		}
+		wfRunHooks('CreatePromoImageReviewTask', 'upload', $taskAdditionList);
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -508,5 +500,27 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$ret = 'last_edited desc';
 		}
 		return $ret;
+	}
+
+	public static function onCreatePromoteImageReviewTask($type, $list) {
+		if (empty($list)) {
+			return true;
+		}
+
+		if (TaskRunner::isModern('PromoteImageReviewTask')) {
+			$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+			$task->call($type, $list);
+			$task->queue();
+		} else {
+			$task = new PromoteImageReviewTask();
+			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
+			$params = [
+				$key => $list,
+			];
+
+			$task->createTask($params, TASK_QUEUED);
+		}
+
+		return true;
 	}
 }
