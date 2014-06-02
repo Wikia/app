@@ -197,7 +197,7 @@ class JsonFormatSimplifier {
 					$containList = true;
 				}
 			}
-			$value = implode('', $sectionResult);
+			$value = implode(' ', $sectionResult);
 			if( $containList ) {
 				$listsSections[] = $value;
 			} else {
