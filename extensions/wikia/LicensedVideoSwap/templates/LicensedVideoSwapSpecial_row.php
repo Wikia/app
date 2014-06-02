@@ -24,7 +24,11 @@ foreach ($videoList as $video):
 			</div>
 		</div>
 		<div class="video-wrapper">
-			<?= $video['thumbnail'] ?>
+			<?= F::app()->renderPartial( 'ThumbnailController', 'title', [
+				'thumbnail' => $video['thumbnail'],
+				'title' => $video['fileTitle'],
+				'url' => $video['fileUrl'],
+			]) ?>
 		</div>
 		<button class="keep-button secondary" <?= $confirmKeep ?> data-video-keep="<?= htmlspecialchars($video['title']) ?>"><?= wfMessage('lvs-button-keep')->plain() ?></button>
 	</div>
@@ -35,7 +39,11 @@ foreach ($videoList as $video):
 				<? if ( $video['isNew'] ): ?>
 					<div class="new"><?= wfMessage( 'lvs-new-flag' )->plain() ?></div>
 				<? endif; ?>
-				<?= $best['thumbnail'] ?>
+				<?= F::app()->renderPartial( 'ThumbnailController', 'title', [
+					'thumbnail' => $best['thumbnail'],
+					'title' => $best['fileTitle'],
+					'url' => $best['fileUrl'],
+				]) ?>
 			</div>
 			<? if ( $numMoreSuggestions > 0 ): ?>
 				<a class="more-link" href="#"><?= wfMessage('lvs-more-suggestions')->plain() ?></a>
@@ -52,8 +60,11 @@ foreach ($videoList as $video):
 				   foreach ($suggestions as $suggest):
 				?>
 					<li>
-						<?= $suggest['thumbnail'] ?>
-						<p class="suggestion-title"><?= $suggest['fileTitle'] ?></p>
+						<?= F::app()->renderPartial( 'ThumbnailController', 'title', [
+							'thumbnail' => $suggest['thumbnail'],
+							'title' => $suggest['fileTitle'],
+							'url' => $suggest['fileUrl'],
+						]) ?>
 					</li>
 				<? endforeach; ?>
 			</ul>

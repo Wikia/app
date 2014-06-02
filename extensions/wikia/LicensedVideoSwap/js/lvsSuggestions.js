@@ -8,7 +8,7 @@ define('lvs.suggestions', [], function () {
 
 	function init($container) {
 		var $suggestions = $container.find('.more-videos');
-		$container.find('.suggestion-title').ellipses();
+		$suggestions.find('.title a').ellipses();
 		updateSizeClass($suggestions);
 		makeActive($suggestions);
 		bindEvents($container);
