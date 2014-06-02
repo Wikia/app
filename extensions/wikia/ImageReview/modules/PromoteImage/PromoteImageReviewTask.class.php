@@ -7,19 +7,11 @@
 
 namespace Wikia\Tasks\Tasks;
 
-use PromoImage as PromoImage;
-use WikiFactory as WikiFactory;
-use WikiGetDataForVisualizationHelper as WikiGetDataForVisualizationHelper;
-use CityVisualization as CityVisualization;
-use ImageReviewStatuses as ImageReviewStatuses;
-use F as F;
-use stdClass as stdClass;
-
 class PromoteImageReviewTask extends BaseTask {
-	/** @var WikiGetDataForVisualizationHelper */
+	/** @var \WikiGetDataForVisualizationHelper */
 	private $helper;
 
-	/** @var CityVisualization */
+	/** @var \CityVisualization */
 	private $model;
 
 	/** @var array */
@@ -28,8 +20,8 @@ class PromoteImageReviewTask extends BaseTask {
 	public function init() {
 		parent::init();
 
-		$this->helper = new WikiGetDataForVisualizationHelper();
-		$this->model = new CityVisualization();
+		$this->helper = new \WikiGetDataForVisualizationHelper();
+		$this->model = new \CityVisualization();
 		$this->corporatePageIds = $this->model->getVisualizationWikisIds();
 	}
 
@@ -39,7 +31,7 @@ class PromoteImageReviewTask extends BaseTask {
 		$isError = false;
 
 		foreach($wikiList as $sourceWikiId => $images) {
-			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
+			$sourceWikiLang = \WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
 			$uploadedImages = array();
 			foreach ($images as $image) {
@@ -47,10 +39,10 @@ class PromoteImageReviewTask extends BaseTask {
 
 				if ($result['status'] === 0) {
 					$uploadedImages[] = ['id' => $result['id'], 'name' => $result[ 'name' ]];
-					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_APPROVED);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, \ImageReviewStatuses::STATE_APPROVED);
 				} else {
 					//on error move image back to review, so that upload could be retried
-					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, ImageReviewStatuses::STATE_UNREVIEWED);
+					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, \ImageReviewStatuses::STATE_UNREVIEWED);
 					$isError = true;
 				}
 			}
@@ -69,7 +61,7 @@ class PromoteImageReviewTask extends BaseTask {
 
 					//purging interstitial cache
 					$memcKey = $this->helper->getMemcKey($sourceWikiId, $sourceWikiLang);
-					F::app()->wg->Memc->set($memcKey, null);
+					\F::app()->wg->Memc->set($memcKey, null);
 				}
 			}
 		}
@@ -90,15 +82,15 @@ class PromoteImageReviewTask extends BaseTask {
 	}
 
 	public function delete($wikiList) {
-		$app = F::app();
+		$app = \F::app();
 
 		foreach($wikiList as $sourceWikiId => $images) {
-			$sourceWikiLang = WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
+			$sourceWikiLang = \WikiFactory::getVarValueByName('wgLanguageCode', $sourceWikiId);
 
 			if( !empty($images) ) {
 				$removedImages = array();
 				foreach($images as $imageName) {
-					if (PromoImage::fromPathname($imageName)->isValid()) {
+					if (\PromoImage::fromPathname($imageName)->isValid()) {
 						$result = $this->removeSingleImage($imageName);
 
 						if( $result['status'] === 0 ) {
@@ -154,7 +146,7 @@ class PromoteImageReviewTask extends BaseTask {
 			return ['status' => 1];
 		}
 
-		$destinationName = PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
+		$destinationName = \PromoImage::fromPathname($destinationName)->ensureCityIdIsSet($sourceWikiId)->getPathname();
 		$user = \User::newFromName('WikiaBot');
 
 		if (!($user instanceof \User)) {
@@ -265,7 +257,7 @@ class PromoteImageReviewTask extends BaseTask {
 
 		if (!empty($currentImages)) {
 			foreach ($currentImages as $imageName) {
-				$promoImage = PromoImage::fromPathname($imageName);
+				$promoImage = \PromoImage::fromPathname($imageName);
 				if ($promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images)) {
 					$data['city_images'][] = $promoImage->getPathname();
 				}
@@ -273,9 +265,9 @@ class PromoteImageReviewTask extends BaseTask {
 		}
 
 		foreach($images as $image) {
-			$promoImage = PromoImage::fromPathname($image['name']);
+			$promoImage = \PromoImage::fromPathname($image['name']);
 
-			if ($promoImage->isType(PromoImage::MAIN)) {
+			if ($promoImage->isType(\PromoImage::MAIN)) {
 				$data['city_main_image'] = $promoImage->getPathname();
 			} elseif ($promoImage->isAdditional()) {
 				$data['city_images'][] = $promoImage->getPathname();
@@ -299,7 +291,7 @@ class PromoteImageReviewTask extends BaseTask {
 			$currentImages = $wikiData['images'];
 
 			foreach($currentImages as $imageName) {
-				$promoImage = PromoImage::fromPathname($imageName);
+				$promoImage = \PromoImage::fromPathname($imageName);
 				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $deletedImages) ) {
 					$data['city_images'][] = $promoImage->getPathname();
 				}
@@ -324,16 +316,16 @@ class PromoteImageReviewTask extends BaseTask {
 		$imagesToAdd = [];
 
 		foreach( $images as $image ) {
-			$imageData = new stdClass();
+			$imageData = new \stdClass();
 
-			$promoImage = PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($wgCityId);
+			$promoImage = \PromoImage::fromPathname($image['name'])->ensureCityIdIsSet($wgCityId);
 
 			$imageData->city_id = $wgCityId;
 			$imageData->page_id = $image['id'];
 			$imageData->city_lang_code = $wgLanguageCode;
 			$imageData->image_index =  $promoImage->getType();
 			$imageData->image_name = $promoImage->getPathname();
-			$imageData->image_review_status = ImageReviewStatuses::STATE_APPROVED;
+			$imageData->image_review_status = \ImageReviewStatuses::STATE_APPROVED;
 			$imageData->last_edited = date('Y-m-d H:i:s');
 			$imageData->review_start = null;
 			$imageData->review_end = null;
@@ -378,7 +370,7 @@ class PromoteImageReviewTask extends BaseTask {
 				->SET('image_review_status', $status)
 			->WHERE('city_id')->EQUAL_TO($sourceWikiId)
 				->AND_('page_id')->EQUAL_TO($imageId)
-				->AND_('image_review_status')->EQUAL_TO(ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING)
+				->AND_('image_review_status')->EQUAL_TO(\ImageReviewStatuses::STATE_APPROVED_AND_TRANSFERRING)
 			->run(wfGetDB(DB_MASTER, array(), $wgExternalSharedDB));
 	}
 }
