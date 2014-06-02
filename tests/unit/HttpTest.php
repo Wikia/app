@@ -19,7 +19,7 @@ class HttpTest extends WikiaBaseTest {
 
 		$this->mockMWHttpRequestFactory( $requestMock );
 
-		$this->assertEquals( self::HTTP_CONTENT, Http::request( 'GET', self::EXAMPLE_URL ) );
+		$this->assertEquals( 'HTTP Success Response', Http::request( 'GET', self::EXAMPLE_URL ) );
 	}
 
 	/**
