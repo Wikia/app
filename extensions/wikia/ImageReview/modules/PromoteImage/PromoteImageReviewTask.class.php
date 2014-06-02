@@ -102,8 +102,6 @@ class PromoteImageReviewTask extends BaseTask {
 						$result = $this->removeSingleImage($imageName);
 
 						if( $result['status'] === 0 ) {
-							//almost all the time on devboxes images aren't removed because of no permissions
-							//when we run maintenance/wikia/ImageReview/PromoteImage/remove.php with sudo it works
 							$removedImages[] = $imageName;
 						}
 					}
