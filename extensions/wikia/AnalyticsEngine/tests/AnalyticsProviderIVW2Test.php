@@ -15,9 +15,7 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 	private function getAnalyticsProviderIVW2Code($url) {
 		$page = Http::get($url, 'default', array('noProxy' => true));
 		if (preg_match('/\\\\"cp\\\\":\\\\"(RC_WIKIA_[A-Z]+)\\\\"/', $page, $m)) {
-			$path = parse_url($m[1], PHP_URL_PATH);
-			$arr = explode('/', $path);
-			return array_pop($arr);
+			return $m[1];
 		} else {
 			$this->fail('Cannot find the IVW2 analytics code on page ' . $url);
 		}
@@ -41,9 +39,16 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 			array('http://de.wikia.com/Spezial:Kontakt', 'RC_WIKIA_SVCE'),
 			array('http://de.wikia.com/Spezial:UserSignup', 'RC_WIKIA_SVCE'),
 
-			array('http://de.wikia.com/Videospiele', 'RC_WIKIA_START'),
-			array('http://de.wikia.com/Entertainment', 'RC_WIKIA_START'),
-			array('http://de.wikia.com/Lifestyle', 'RC_WIKIA_START'),
+			// hubs:
+			array('http://de.videospielehub.wikia.com/wiki/Videospiele_Hub', 'RC_WIKIA_START'),
+			array('http://de.lifestylehub.wikia.com/wiki/Lifestyle_Hub', 'RC_WIKIA_START'),
+
+			// new entertainment hubs:
+			array('http://de.filmhub.wikia.com/wiki/Film_Hub', 'RC_WIKIA_START'),
+			array('http://de.tvhub.wikia.com/wiki/TV_Hub', 'RC_WIKIA_START'),
+			array('http://de.literaturhub.wikia.com/wiki/Literatur_Hub', 'RC_WIKIA_START'),
+			array('http://de.comicshub.wikia.com/wiki/Comics_Hub', 'RC_WIKIA_START'),
+			array('http://de.musikhub.wikia.com/wiki/Musik_Hub', 'RC_WIKIA_START'),
 
 			array('http://de.wikia.com/Mobil', 'RC_WIKIA_MOBIL'),
 			array('http://de.wikia.com/Mobil/LyricWiki', 'RC_WIKIA_MOBIL'),
@@ -67,7 +72,7 @@ class AnalyticsProviderIVW2Test extends WikiaBaseTest {
 			array('http://de.green.wikia.com/wiki/Hauptseite', 'RC_WIKIA_UGCLIFESTYLE'),
 			array('http://de.naruto.wikia.com/wiki/Narutopedia', 'RC_WIKIA_UGCANIME'),
 
-			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'),
+			array('http://de.wikia.com/Entertainment/Anime', 'RC_WIKIA_START'), // old-style sub-hub
 		);
 	}
 
