@@ -63,6 +63,18 @@ class LicensedVideoSwapHelper extends WikiaModel {
 	 */
 	protected $jaccard;
 
+	protected $defaultVideoOptions = [
+		'thumbWidth'       => self::THUMBNAIL_WIDTH,
+		'thumbHeight'      => self::THUMBNAIL_HEIGHT,
+		'postedInArticles' => self::POSTED_IN_ARTICLES,
+		'getThumbnail'     => true,
+		'thumbOptions'     => [
+			'fluid'          => true,
+			'noLightbox'     => true,
+			'hidePlayButton' => true,
+		],
+	];
+
 	/**
 	 * Get the raw data about LVS from the DB
 	 * @return array
@@ -350,18 +362,6 @@ SQL;
 		// Get a list of what videos the user has already looked at
 		$visitedList = unserialize( $this->wg->User->getOption( LicensedVideoSwapHelper::USER_VISITED_LIST ) );
 
-		$videoOptions = [
-			'thumbWidth'       => self::THUMBNAIL_WIDTH,
-			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
-			'postedInArticles' => self::POSTED_IN_ARTICLES,
-			'getThumbnail'     => true,
-			'thumbOptions'     => [
-				'fluid'          => true,
-				'noLightbox'     => true,
-				'hidePlayButton' => true,
-			],
-		];
-
 		// Go through each video and add additional detail needed to display the video
 		$videos = array();
 		foreach ( $videoList as $videoInfo ) {
@@ -372,7 +372,7 @@ SQL;
 				continue;
 			}
 
-			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+			$videoDetail = $helper->getVideoDetail( $videoInfo, $this->defaultVideoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
 
@@ -538,18 +538,6 @@ SQL;
 		// Get the play button image to overlay on the video
 		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
 
-		$videoOptions = [
-			'thumbWidth'       => self::THUMBNAIL_WIDTH,
-			'thumbHeight'      => self::THUMBNAIL_HEIGHT,
-			'postedInArticles' => self::POSTED_IN_ARTICLES,
-			'getThumbnail'     => true,
-			'thumbOptions'     => [
-				'fluid'          => true,
-				'noLightbox'     => true,
-				'hidePlayButton' => true,
-			]
-		];
-
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
 			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
@@ -590,7 +578,7 @@ SQL;
 			$videoDetail = $helper->getVideoDetailFromWiki(
 				$this->wg->WikiaVideoRepoDBName,
 				$videoInfo['title'],
-				$videoOptions
+				$this->defaultVideoOptions
 			);
 
 			// Go to the next suggestion if we can't get any details for this one
