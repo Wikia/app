@@ -1249,7 +1249,7 @@ $wgHighValueCountries = null;
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */
-$wgAdVideoTargeting = false;
+$wgAdVideoTargeting = true;
 
 /**
  * trusted proxy service registry
