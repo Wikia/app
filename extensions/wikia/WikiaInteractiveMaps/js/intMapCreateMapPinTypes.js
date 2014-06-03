@@ -175,6 +175,7 @@ define('wikia.intMap.createMap.pinTypes',
 			}
 
 			if (valid) {
+				modal.trigger('cleanUpError');
 				dfd.resolve(serializedForm);
 			} else {
 				modal.trigger('error', $.msg('wikia-interactive-maps-create-map-pin-type-form-error'));
@@ -199,6 +200,7 @@ define('wikia.intMap.createMap.pinTypes',
 					var data = response.results;
 
 					if (data && data.success) {
+						modal.trigger('cleanUpError');
 						modal.trigger('pinTypesCreated', data);
 					} else {
 						modal.trigger('error', data.error);

@@ -61,8 +61,6 @@ define(
 		 */
 
 		function preview(tileSet) {
-			modal.trigger('cleanUpError');
-
 			setData(tileSet);
 			modal.$innerContent.html(utils.render(template, templateData));
 			utils.setButtons(modal, buttons);
@@ -117,6 +115,7 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
+						modal.trigger('cleanUpError');
 						modal.trigger('mapCreated', data);
 					} else {
 						modal.trigger('error', data.error);

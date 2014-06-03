@@ -166,6 +166,7 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
+						modal.trigger('cleanUpError');
 						modal.trigger('previewTileSet', {
 							type: 'uploaded',
 							data: data
