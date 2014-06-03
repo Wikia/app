@@ -381,6 +381,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		// wiki info cache
 		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
 		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $langCode));
+		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getImagesMemcKey($cityId, $langCode));
 		// wiki list cache
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)
