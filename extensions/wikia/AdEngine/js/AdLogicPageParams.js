@@ -11,7 +11,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = window.location.hostname.toString(),
-		adsInHeadExperiment = abTest && abTest.getGroup('ADS_IN_HEAD'),
+		adsInHeadExperiment = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
