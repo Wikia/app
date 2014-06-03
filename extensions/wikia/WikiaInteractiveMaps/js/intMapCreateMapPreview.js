@@ -89,7 +89,7 @@ define(
 			var dfd = new $.Deferred(),
 				title = $title.val();
 
-			if (utils.isEmpty(title)) {
+			if (!utils.isEmpty(title)) {
 				// add valid title to tile set data
 				tileSetData.title = title;
 				dfd.resolve();

@@ -45,7 +45,7 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 	}
 
 	function isEmpty(value) {
-		return (value.trim().length === 0) ? false : true;
+		return value.trim().length === 0;
 	}
 
 	return {
