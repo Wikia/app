@@ -267,10 +267,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		return false;
 	}
 
-	public function removeImage($imageName) {
-		PromoImage::fromPathname($imageName)->deleteImage();
-	}
-
 	public function saveVisualizationData($data, $langCode) {
 		global $wgEnableUploads;
 
