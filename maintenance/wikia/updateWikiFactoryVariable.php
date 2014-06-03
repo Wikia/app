@@ -154,6 +154,9 @@ $varData['cv_id'] = (int) $varData['cv_id'];
 
 echo "Variable: $varName (Id: $varData[cv_id])\n";
 
+// for debugging
+//echo "Variable data: ".json_encode( $varData )."\n";
+
 $wgUser = User::newFromName( 'WikiaBot' );
 $wgUser->load();
 
@@ -170,7 +173,7 @@ if ( $removeFromWF ) {
 
 		printStatus( $status );
 	} else {
-		echo "\tCannot remove $varName from WikiFactory (Some wikis currently use the variable).";
+		echo "Warning: Cannot remove $varName from WikiFactory (The variable is used in some wikis).\n";
 	}
 
 	exit();
