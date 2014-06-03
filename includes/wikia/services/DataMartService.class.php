@@ -355,6 +355,7 @@ class DataMartService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if ( empty($userIds) ) {
+			wfProfileOut(__METHOD__);
 			return false;
 		}
 
@@ -427,25 +428,51 @@ class DataMartService extends Service {
 		return $edits;
 	}
 
-	public static function findLastRollupsDate(){
+	public static function findLastRollupsDate( $period_id, $numTry = 5 ){
 		$app = F::app();
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-		$res = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
-			->SELECT('max(time_id) as t')
-			->FROM('rollup_wiki_article_pageviews')
-			->WHERE('time_id')->LESS_THAN_OR_EQUAL(sql::RAW('CURDATE()'))
-			->LIMIT(1)
-			->cache( self::CACHE_TOP_ARTICLES )
-			->run( $db, function ( $result ) {
+		//compensation for NOW
+		$date = date( 'Y-m-d' ) . ' 00:00:01';
+		do {
+			$date = ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+				->SELECT( 'max(time_id) as t' )
+				->FROM( 'rollup_wiki_article_pageviews' )
+				->WHERE( 'time_id' )->LESS_THAN( $date )
+				->LIMIT( 1 )
+				->cache( self::CACHE_TOP_ARTICLES )
+				->run( $db, function ( $result ) {
 					$row = $result->fetchObject( $result );
 
 					if ( $row && isset( $row->t ) ) {
 						return $row->t;
 					}
 
-					return 0;
+					return null;
 				} );
-		return $res;
+			if(!$date){
+				break;
+			}
+
+			$found =  ( new WikiaSQL() )->skipIf( empty( $app->wg->StatsDBEnabled ) )
+				->SELECT( '1 as c' )
+				->FROM( 'rollup_wiki_article_pageviews' )
+				->WHERE( 'time_id' )->EQUAL_TO( $date )
+				->AND_( 'period_id' )->EQUAL_TO( $period_id )
+				->LIMIT( 1 )
+				->cache( self::CACHE_TOP_ARTICLES )
+				->run( $db, function ( $result ) {
+					$row = $result->fetchObject( $result );
+
+					if ( $row && isset( $row->c ) ) {
+						return $row->c;
+					}
+
+					return null;
+				} );
+
+			$numTry --;
+		} while ( !$found &&  $numTry > 0);
+		return $date;
 	}
 
 	/**

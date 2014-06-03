@@ -240,6 +240,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 			$newState = ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW;
 			$values[] = " review_end = '0000-00-00 00:00:00'";
 		} else {
+			wfProfileOut(__METHOD__);
 			return $imageList; // not supported state transition
 		}
 

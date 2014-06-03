@@ -61,6 +61,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptHelper.js',
+		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEbay.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -96,6 +97,13 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	),
+);
+
+$config['adengine2_wikiabar_boxad_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotWikiaBarBoxad2.js',
 	),
 );
 
@@ -1748,5 +1756,14 @@ $config['optimizely_blocking_js'] = array(
 	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
+	)
+);
+
+/* extension/wikia/Bucky */
+$config['bucky_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 	)
 );

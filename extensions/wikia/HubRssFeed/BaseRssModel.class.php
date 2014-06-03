@@ -2,8 +2,6 @@
 
 abstract class BaseRssModel extends WikiaService {
 
-	const GAMES_FEED = 'games';
-	const TV_FEED = 'tv';
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
 	/**
@@ -32,7 +30,9 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedData();
 
-	public abstract function getModelUrlEndpoint();
+	public function getModelUrlEndpoint(){
+		return static::URL_ENDOPINT;
+	}
 
 	/**
 	 * @param $feedName
@@ -40,10 +40,14 @@ abstract class BaseRssModel extends WikiaService {
 	 */
 	public static function newFromName( $feedName ) {
 		switch ( strtolower( $feedName ) ) {
-			case self::GAMES_FEED:
+			case GamesRssModel::FEED_NAME:
 				return new GamesRssModel();
-			case self::TV_FEED:
+			case TvRssModel::FEED_NAME:
 				return new TvRssModel();
+			case LifestyleHubOnlyRssModel::FEED_NAME:
+				return new LifestyleHubOnlyRssModel();
+			case EntertainmentHubOnlyRssModel::FEED_NAME:
+				return new EntertainmentHubOnlyRssModel();
 		}
 	}
 
@@ -75,7 +79,7 @@ abstract class BaseRssModel extends WikiaService {
 	protected function addFeedsToDb( $rows, $feed ) {
 		$db = $this->getDbMaster();
 		$db->begin();
-		$nowDate = date('Y-m-d H:i:s');
+		$nowDate = date( 'Y-m-d H:i:s' );
 		foreach ( $rows as $url => $item ) {
 			( new WikiaSQL() )
 				->INSERT( 'wikia_rss_feeds' )
@@ -213,6 +217,9 @@ abstract class BaseRssModel extends WikiaService {
 		if ( !$article[ 'thumbnail' ] ) {
 			$ws = new WikiService();
 			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
+		} else {
+			//remove cropping info from image url
+			$article[ 'thumbnail' ] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
 			'url' => $article[ 'thumbnail' ],
@@ -245,7 +252,7 @@ abstract class BaseRssModel extends WikiaService {
 		foreach ( $rawData as $item ) {
 
 			$details = $this->getArticleDetail( $item[ 'wikia_id' ], $item[ 'page_id' ] );
-			$item[ 'img' ] = $details[ 'img' ];
+
 			if ( empty( $item[ 'description' ] ) ) {
 				$item[ 'description' ] = $this->getArticleDescription( $item[ 'wikia_id' ], $item[ 'page_id' ] );;
 			}
@@ -254,9 +261,12 @@ abstract class BaseRssModel extends WikiaService {
 			}
 
 			if ( !$item[ 'timestamp' ] ) {
-				$item[ 'timestamp' ] = $time;
+				$item[ 'timestamp' ] = $time--;
 			}
 
+			if ( empty( $item[ 'img' ] ) ) {
+				$item[ 'img' ] = $details[ 'img' ];
+			}
 			$item = $this->formatTitle( $item );
 
 			$out[ $item[ 'url' ] ] = $item;
@@ -310,7 +320,7 @@ abstract class BaseRssModel extends WikiaService {
 			$list = $model->getArticles( $wid );
 			foreach ( $list as $item ) {
 				if ( !array_key_exists( $item[ 'url' ], $duplicates ) ) {
-					$item[ 'source' ]  = self::SOURCE_GENERATOR;
+					$item[ 'source' ] = self::SOURCE_GENERATOR;
 					$rawData[ ] = $item;
 					if ( --$numberOfItemsToAdd[ $wid ] == 0 ) {
 						break;
@@ -333,21 +343,21 @@ abstract class BaseRssModel extends WikiaService {
 			}
 		}
 		$hubData = $this->removeDuplicates( $v3, $duplicates );
-		$out =  $this->findIdForUrls( $hubData , self::SOURCE_HUB );
+		$out = $this->findIdForUrls( $hubData, self::SOURCE_HUB . '_' . $hubId );
 		return $out;
 	}
 
-	protected function findIdForUrls( $urls, $source = null) {
+	protected function findIdForUrls( $urls, $source = null ) {
 		$data = [ ];
 		if ( !empty( $urls ) ) {
 			$f2 = new \Wikia\Search\Services\FeedEntitySearchService();
 			$f2->setUrls( array_keys( $urls ) );
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
-
+				//TODO: We don't need to add anything more than wikia_id and page_id here, so modify original data instead
 				$item[ 'wikia_id' ] = $item[ 'wid' ];
 				$item[ 'page_id' ] = $item[ 'pageid' ];
-				if( $source ) {
+				if ( $source ) {
 					$item[ 'source' ] = $source;
 				}
 
@@ -356,11 +366,16 @@ abstract class BaseRssModel extends WikiaService {
 					if ( $orgItem[ 'title' ] ) {
 						$item[ 'title' ] = $orgItem[ 'title' ];
 					}
+
 					if ( $orgItem[ 'description' ] ) {
 						$item[ 'description' ] = $orgItem[ 'description' ];
 					}
 					if ( $orgItem[ 'timestamp' ] ) {
 						$item[ 'timestamp' ] = $orgItem[ 'timestamp' ];
+					}
+
+					if ( !empty( $orgItem[ 'img' ] ) ) {
+						$item[ 'img' ] = $orgItem[ 'img' ];
 					}
 				}
 
@@ -370,9 +385,9 @@ abstract class BaseRssModel extends WikiaService {
 		return $data;
 	}
 
-	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ){
+	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ) {
 		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, $feedName);
+		$this->addFeedsToDb( $out, $feedName );
 		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
 		return $out;
 	}

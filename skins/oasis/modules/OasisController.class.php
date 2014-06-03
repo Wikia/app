@@ -388,7 +388,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -488,7 +488,7 @@ class OasisController extends WikiaController {
 			$this->jsFiles = $jsFiles;
 		}
 
-		if ($wgEnableAdEngineExt &&  !$wgEnableRHonDesktop) {
+		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 

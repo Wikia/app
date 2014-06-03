@@ -3589,6 +3589,7 @@ function wfFindFile( $title, $options = array() ) {
 	wfProfileIn(__METHOD__);
 
 	if ( F::app()->wg->IsGhostVideo ) {
+		wfProfileOut(__METHOD__);
 		return false;
 	}
 	$file = RepoGroup::singleton()->findFile( $title, $options );
