@@ -44,6 +44,12 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 		});
 	}
 
+	/**
+	 * @desc check if string is empty
+	 * @param {string} value
+	 * @returns {boolean}
+	 */
+
 	function isEmpty(value) {
 		return value.trim().length === 0;
 	}

@@ -399,6 +399,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Validates process of creating pin types
+	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
 	 * @throws InvalidParameterApiException

@@ -52,8 +52,8 @@ define('wikia.intMap.createMap.pinTypes',
 		/**
 		 * @desc initializes pin types step
 		 * @param {object} _modal
-		 * @param {object} _pinTypesTemplate
-		 * @param {object} _pinTypeTemplate
+		 * @param {string} _pinTypesTemplate
+		 * @param {string} _pinTypeTemplate
 		 */
 		function init(_modal, _pinTypesTemplate, _pinTypeTemplate) {
 			modal = _modal;
@@ -146,11 +146,15 @@ define('wikia.intMap.createMap.pinTypes',
 				var name = element.name,
 					value = element.value;
 
-				serializedForm[name] = !/\[\]$/.test(name) ?
-					value :
-					$.isArray(serializedForm[name]) ?
-						serializedForm[name].concat(value) :
-						[value];
+				if (/\[\]$/.test(name)) {
+					if ($.isArray(serializedForm[name])) {
+						serializedForm[name].push(value);
+					} else {
+						serializedForm[name] = [value];
+					}
+				} else {
+					serializedForm[name] = value;
+				}
 			});
 
 			dfd.resolve(serializedForm);
@@ -213,6 +217,7 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
+		 * TODO figure out where we should put this function
 		 * @desc redirects to the map page
 		 */
 		function pinTypesCreated() {
