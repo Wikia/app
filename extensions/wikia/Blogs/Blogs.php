@@ -152,7 +152,6 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageS
 include( __DIR__ . "/BlogTemplate.php");
 include( __DIR__ . "/BlogArticle.php");
 include( __DIR__ . "/BlogLockdown.php");
-include( __DIR__ . "/BloglistDeferredPurgeJob.class.php" );
 
 /**
  * add task
@@ -160,10 +159,5 @@ include( __DIR__ . "/BloglistDeferredPurgeJob.class.php" );
 if( function_exists( "extAddBatchTask" ) ) {
 	extAddBatchTask( __DIR__ . "/BlogTask.php", "blog", "BlogTask" );
 }
-
-/**
- * associated jobs
- */
-$wgJobClasses['bloglistDeferredPurge'] = 'BloglistDeferredPurgeJob';
 
 $wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = __DIR__.'/BlogTask.class.php';
