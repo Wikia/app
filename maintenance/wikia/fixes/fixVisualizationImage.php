@@ -2,76 +2,200 @@
 require_once( dirname(__FILE__) . '/../../Maintenance.php' );
 
 class FixVisualizationImage extends Maintenance {
-	public function execute() {
+
+	public static function fetchAfflictedCityIds($langCode=null){
+		$app = F::app();
+		if (empty($langCode)){
+			$langCode = $app->wg->ContLang->getCode();
+		}
+		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
+		$city_ids = (new WikiaSQL())
+			->SELECT("city_visualization.city_id")
+			->FROM("city_visualization")
+			->WHERE("city_visualization.city_lang_code")->EQUAL_TO($langCode)
+			->AND_("city_visualization.city_id")->NOT_IN(\FluentSql\StaticSQL::RAW("( select city_id from city_visualization_images)"))
+			->run($dbr, function($result){
+				$res = [];
+				while ($row = $result->fetchObject( $result )){
+					$res []= $row->city_id;
+				}
+				return $res;
+			});
+		return $city_ids;
+	}
+
+	public static function checkIfImageIsInDB(PromoImage $promoImage){
 		$app = F::app();
 
 		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
-		$rows = $dbr->select(
-			array( 'city_visualization' ),
-			array( 'city_id', 'city_main_image', 'city_images' ),
-			array(
-				'city_lang_code' => $app->wg->ContLang->getCode(),
-				'city_main_image is not null'
-			),
-			__METHOD__
-		);
-
-
-		$i = 0;
-		while ($row = $rows->fetchRow()) {
-			$row['city_images'] = json_decode($row['city_images'], true);
-			$title = Title::newFromText($row['city_main_image'], NS_FILE);
-			$file = wffindFile($title);
-
-
-			if ($file && $file->isMissing()) {
-
-				$t = GlobalTitle::newFromText('Wikia-Visualization-Main.png', NS_FILE, $row['city_id']);
-
-				if (TaskRunner::isModern('PromoteImageReviewTask')) {
-					$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
-				} else {
-					$task = new PromoteImageReviewTask();
+		$foundRow = (new WikiaSQL())
+			->SELECT("city_visualization_images.city_id")
+			->FROM(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME)
+			->WHERE("city_id")->EQUAL_TO($promoImage->getCityId())->AND_("image_index")->EQUAL_TO(PromoImage::MAIN)
+			->AND_('image_name')->EQUAL_TO($promoImage->getPathname())
+			->run($dbr, function($result){
+				while ($row = $result->fetchObject( $result )){
+					return $row;
 				}
+				return null;
+			});
+		return !empty($foundRow);
+	}
 
-				var_dump($t->getArticleID(), $row['city_main_image'], $app->wg->cityId, $row['city_id']);
+	public static function uploadFile(PromoImage $promoImage, GlobalTitle $sourceTitle, $sourceWikiId) {
 
-				$res = $task->uploadSingleImage($t->getArticleID(), 'Wikia-Visualization-Main.png', $app->wg->cityId, $row['city_id']);
-
-				var_dump($res);
-
-				$i++;
-			}
-
-			if (is_array($row['city_images'])) {
-
-				foreach($row['city_images'] as $imageName) {
-					$imageIndex = str_replace('Wikia-Visualization-Add-', '', $imageName);
-					$imageIndex = substr($imageIndex, 0, 1);
-
-					$title = Title::newFromText($imageName, NS_FILE);
-					$file = wffindFile($title);
-					if ($file && $file->isMissing()) {
-
-						$t = GlobalTitle::newFromText("Wikia-Visualization-Add-$imageIndex.png", NS_FILE, $row['city_id']);
-						if (TaskRunner::isModern('PromoteImageReviewTask')) {
-							$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
-						} else {
-							$task = new PromoteImageReviewTask();
-						}
-
-						var_dump($t->getArticleID(), "Wikia-Visualization-Add-$imageIndex.png", $app->wg->cityId, $row['city_id']);
-						$res = $task->uploadSingleImage($t->getArticleID(), "Wikia-Visualization-Add-$imageIndex.png", $app->wg->cityId, $row['city_id']);
-
-						var_dump($res);
-					}
-				}
-			}
-
-
+		$sourceFile = \GlobalFile::newFromText($sourceTitle->getText(), $sourceWikiId);
+		if (!$sourceFile->exists()){
+			echo "sourceFile doesn't exist" . PHP_EOL;
+			return false;
 		}
-		var_dump($i);
+		$sourceImageUrl = $sourceFile->getUrl();
 
+		$user = User::newFromName('WikiaBot');
+
+		$imageData = new stdClass();
+		$imageData->name = $promoImage->getPathname();
+		$imageData->description = $imageData->comment = wfMessage('wikiahome-image-auto-uploaded-comment')->plain();
+
+		$result = ImagesService::uploadImageFromUrl($sourceImageUrl, $imageData, $user);
+		if (!$result['status']){
+			var_dump($result['errors'], $sourceImageUrl);
+		}
+
+		return $result['status'];
+	}
+
+	public static function buildSyntheticCVImagesRow(PromoImage $promoImage, $langCode){
+		$imageReviewStatus = ImageReviewStatuses::STATE_UNREVIEWED;
+
+		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
+		if (!$title->exists()){
+			echo "image: " . $promoImage->getPathname() . " doesn't exist" . PHP_EOL;
+			return null;
+		}
+		$pageId = $title->getArticleId();
+		if (empty($pageId)){
+			echo "cannot get page id: " . $promoImage->getPathname() . PHP_EOL;
+			return null;
+		}
+
+		$imageData = array();
+		$imageData['city_id'] = $promoImage->getCityId();
+		$imageData['page_id'] = $title->getArticleId();
+		$imageData['city_lang_code'] = $langCode;
+		$imageData['image_index'] = $promoImage->getType();
+		$imageData['image_name'] = $promoImage->getPathname();
+		$imageData['image_review_status'] = $imageReviewStatus;
+		$imageData['last_edited'] = date('Y-m-d H:i:s');
+		$imageData['review_start'] = null;
+		$imageData['review_end'] = null;
+		$imageData['reviewer_id'] = null;
+
+		return $imageData;
+	}
+
+	public static function uploadCorrectMainImageOnCurrentWiki(PromoImage $promoImage, GlobalTitle $srcImageTitle){
+		$app = F::app();
+		$city_id = $app->wg->cityId;
+		$success = true;
+
+		if ($srcImageTitle->exists()){
+
+			$newTitle = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->cityId);
+			if (!$newTitle->exists()) {
+				echo "uploading " . $promoImage->getPathname() . PHP_EOL;
+				$success = self::uploadFile($promoImage, $srcImageTitle, $city_id);
+				if (!$success){
+					echo "image upload failed" . PHP_EOL;
+				} else {
+					echo "uploaded" . PHP_EOL;
+				}
+			} else {
+				echo "file already exists, skipping upload" . PHP_EOL;
+			}
+
+		} else {
+			echo "src image title doesn't exist " . $srcImageTitle->getText() . PHP_EOL;
+		}
+		return $success;
+	}
+
+	public static function targetFileExists(PromoImage $promoImage) {
+		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $promoImage->getCityId());
+
+		return $title->exists();
+	}
+
+	public static function srcFileExists(PromoImage $targetPromoImage) {
+		$promoImage = (new PromoImage($targetPromoImage->getType()));
+		$title = GlobalTitle::newFromText($promoImage->getPathname(), NS_FILE, $targetPromoImage->cityId);
+
+//		$f = GlobalFile::newFromText($promoImage->getPathname(), $targetPromoImage->getCityId());
+
+		return $title->exists();
+	}
+
+	public static function saveCorrectImageRowForCurrentWiki(PromoImage $promoImage, $dbr) {
+		$app = F::app();
+		$cityId = $app->wg->cityId;
+
+		$values = self::buildSyntheticCVImagesRow($promoImage, $app->wg->ContLang->getCode());
+		if (empty($values)){
+			echo "building DB values for image failed." . PHP_EOL;
+			return false;
+		}
+
+		$sql = (new WikiaSQL())->INSERT(CityVisualization::CITY_VISUALIZATION_IMAGES_TABLE_NAME);
+
+		foreach($values as $key => $value) {
+			$sql->SET($key, $value);
+		}
+		$res = $sql->run($dbr);
+		if ($res){
+			$app->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $app->wg->ContLang->getCode()));
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function execute() {
+		$app = F::app();
+		global $wgHooks;
+		$cityId = $app->wg->cityId;
+		$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($cityId);
+
+//		echo var_export(self::fetchAfflictedCityIds('en'), true);
+
+		$oldMainImageName = (new PromoImage($promoImage->getType()))->getPathname();
+		$SPECIAL_UPLOAD_VERIFICATION = "UploadVisualizationImageFromFile::UploadVerification";
+		$UPLOAD_VERIFICATION_KEY = "UploadVerification";
+
+		if (in_array($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY])) {
+			$idx = array_search($SPECIAL_UPLOAD_VERIFICATION, $wgHooks[$UPLOAD_VERIFICATION_KEY]);
+			echo "Deleting upload verification hook " . $idx . PHP_EOL;
+			unset($wgHooks['UploadVerification'][$idx]);
+		}
+
+		$oldFileTitle = GlobalTitle::newFromText($oldMainImageName, NS_FILE, $cityId);
+
+		$dbr = wfGetDB( DB_MASTER, array(), $app->wg->ExternalSharedDB );
+
+		if (self::srcFileExists($promoImage) && !self::targetFileExists($promoImage)){
+			if (self::uploadCorrectMainImageOnCurrentWiki($promoImage, $oldFileTitle)){
+				self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
+			}
+		} else {
+			if (!self::checkIfImageIsInDB($promoImage)){
+				if (self::targetFileExists($promoImage)){
+					self::saveCorrectImageRowForCurrentWiki($promoImage, $dbr);
+				} else {
+					die("neither target nor source image found" . PHP_EOL);
+				}
+			} else {
+				die("image seems to be correctly set in db, exiting" . PHP_EOL);
+			}
+		}
 	}
 }
 

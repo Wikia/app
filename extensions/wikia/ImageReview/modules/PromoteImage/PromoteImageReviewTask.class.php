@@ -232,12 +232,12 @@ class PromoteImageReviewTask extends BaseTask {
 		if ($file instanceof \File && $file->exists()) {
 			$status = $file->delete('automated deletion');
 		} else {
-			$status = [
+			$status = (object) [
 				'ok' => false,
 			];
 		}
 
-		if ($status['ok']) {
+		if ($status->ok) {
 			return [
 				'status' => 0,
 			];
