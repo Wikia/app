@@ -26,10 +26,10 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		expect(typeof mocks.window.addEventListener.calls[0].args[1]).toBe('function');
 	}
 
-	function callEventListener(data) {
+	function callEventListener(data, source) {
 		var callback = mocks.window.addEventListener.calls[0].args[1];
 
-		callback({ data: data });
+		callback({data: data, source: source});
 	}
 
 	it('reacts to register then event', function () {
@@ -40,12 +40,12 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 
 		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
 		messageListener.init();
-		messageListener.register({ source: mocks.gptIframe.id, dataKey: 'status' }, mocks.callback);
+		messageListener.register({ source: mocks.gptIframe, dataKey: 'status' }, mocks.callback);
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
 
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success'});
 	});
 
 	it('matches the event details (does not fire the callback for non-matching register)', function () {
@@ -56,16 +56,19 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 
 		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
 		messageListener.init();
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
 		checkAddEventListenerCall();
 
 		callEventListener('some random message');
-		callEventListener({some: 'object'});
-		callEventListener({AdEngine: {aaa: 'bbb'}}, mocks.gptIframe);
-		callEventListener({AdEngine: 'ccc'}, mocks.gptIframe);
+		callEventListener(JSON.stringify('some random message'));
+		callEventListener(JSON.stringify({some: 'object'}));
+		callEventListener(JSON.stringify({AdEngine: {aaa: 'bbb'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {aaa: 'bbb'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: 'ccc'}), mocks.gptIframe);
+		callEventListener(JSON.stringify('ccc'), mocks.gptIframe);
 		callEventListener('ccc', mocks.gptIframe);
-		callEventListener({AdEngine: {status: 'success'}}, mocks.otherIframe);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.otherIframe);
 		expect(mocks.callback.calls.length).toBe(0);
 	});
 
@@ -80,21 +83,21 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 
 		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
 		messageListener.init();
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
-		messageListener.register({source: mocks.otherIframe.id, dataKey: 'info'}, mocks.callback4);
-		messageListener.register({source: mocks.otherIframe.id, dataKey: 'status'}, mocks.callback3);
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'info'}, mocks.callback2);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
+		messageListener.register({source: mocks.otherIframe, dataKey: 'info'}, mocks.callback4);
+		messageListener.register({source: mocks.otherIframe, dataKey: 'status'}, mocks.callback3);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'info'}, mocks.callback2);
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
-		callEventListener({AdEngine: {info: 'something', source: mocks.gptIframe.id}});
-		callEventListener({AdEngine: {status: 'something', source: mocks.otherIframe.id}});
-		callEventListener({AdEngine: {info: 'something', source: mocks.otherIframe.id}});
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {info: 'something'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {status: 'something'}}), mocks.otherIframe);
+		callEventListener(JSON.stringify({AdEngine: {info: 'something'}}), mocks.otherIframe);
 
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
-		expect(mocks.callback2).toHaveBeenCalledWith({info: 'something', source: mocks.gptIframe.id});
-		expect(mocks.callback3).toHaveBeenCalledWith({status: 'something', source: mocks.otherIframe.id});
-		expect(mocks.callback4).toHaveBeenCalledWith({info: 'something', source: mocks.otherIframe.id});
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success'});
+		expect(mocks.callback2).toHaveBeenCalledWith({info: 'something'});
+		expect(mocks.callback3).toHaveBeenCalledWith({status: 'something'});
+		expect(mocks.callback4).toHaveBeenCalledWith({info: 'something'});
 	});
 
 	it('calls the callback only once', function () {
@@ -105,12 +108,12 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 
 		messageListener = modules['ext.wikia.adEngine.messageListener'](mocks.log, mocks.window);
 		messageListener.init();
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id}});
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success'});
 		expect(mocks.callback.calls.length).toBe(1);
 	});
 
@@ -127,10 +130,10 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		messageListener.init();
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
 
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success'});
 	});
 
 	it('reacts to event then register then event (only calls once)', function () {
@@ -143,11 +146,11 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		messageListener.init();
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }}, mocks.gptIframe);
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }}, mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success', source: mocks.gptIframe }}), mocks.gptIframe);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success', source: mocks.gptIframe }}), mocks.gptIframe);
 
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe });
 		expect(mocks.callback.calls.length).toBe(1);
 	});
 
@@ -161,12 +164,12 @@ describe('Module ext.wikia.adEngine.messageListener', function () {
 		messageListener.init();
 
 		checkAddEventListenerCall();
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
-		messageListener.register({source: mocks.gptIframe.id, dataKey: 'status'}, mocks.callback);
-		callEventListener({AdEngine: {status: 'success', source: mocks.gptIframe.id }});
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
+		messageListener.register({source: mocks.gptIframe, dataKey: 'status'}, mocks.callback);
+		callEventListener(JSON.stringify({AdEngine: {status: 'success'}}), mocks.gptIframe);
 
-		expect(mocks.callback).toHaveBeenCalledWith({status: 'success', source: mocks.gptIframe.id });
+		expect(mocks.callback).toHaveBeenCalledWith({status: 'success'});
 		expect(mocks.callback.calls.length).toBe(1);
 	});
 });

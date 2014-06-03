@@ -1,4 +1,5 @@
 /*global define, setTimeout*/
+/*jshint camelcase:false*/
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window',
@@ -142,11 +143,11 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 
 		if (hopMethod === 'async') {
-			return messageListener.register({source: iframe.id, dataKey: 'status'}, function(data) {
+			return messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, function (data) {
 
-				log(['onAdLoad', slotname, 'catched message' , data.status], 'info', logGroup);
+				log(['onAdLoad', slotname, 'caught message' , data.status], 'info', logGroup);
 
-				if (data.status === "success") {
+				if (data.status === 'success') {
 					return adCallback();
 				}
 

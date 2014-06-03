@@ -1,4 +1,4 @@
-/*global define, setTimeout*/
+/*global define*/
 define('ext.wikia.adEngine.messageListener', [
 	'wikia.log',
 	'wikia.window'
@@ -10,18 +10,22 @@ define('ext.wikia.adEngine.messageListener', [
 		unhandledMessages = [];
 
 	function isInterestingMessage(msg) {
-		return !!msg.data.AdEngine;
+		try {
+			return !!JSON.parse(msg.data).hasOwnProperty('AdEngine');
+		} catch (e) {
+			return false;
+		}
 	}
 
 	function eventMatch(match, msg) {
 		var matching = true;
 
 		if (match.dataKey) {
-			matching = matching && msg.data.AdEngine[match.dataKey];
+			matching = matching && JSON.parse(msg.data).AdEngine.hasOwnProperty(match.dataKey);
 		}
 
 		if (match.source) {
-			matching = matching && msg.data.AdEngine.source === match.source;
+			matching = matching && msg.source === match.source;
 		}
 
 		return matching;
@@ -30,27 +34,29 @@ define('ext.wikia.adEngine.messageListener', [
 	function receiveMessage(msg) {
 		var i, len, callback;
 
-        if (isInterestingMessage(msg)) {
+		if (isInterestingMessage(msg)) {
+			log(['Received message', msg.data], 'debug', logGroup);
 
-            log(['Received message', msg.data], 9, logGroup);
-
-            for (i = 0, len = callbacks.length; i < len; i += 1) {
+			for (i = 0, len = callbacks.length; i < len; i += 1) {
 				callback = callbacks[i];
 
 				if (eventMatch(callback.match, msg)) {
-					callback.fn(msg.data.AdEngine);
+					log(['Event matching', msg, callback], 'debug', logGroup);
+
+					callback.fn(JSON.parse(msg.data).AdEngine);
 					callbacks.splice(i, 1);
 					return;
 				}
 			}
+
+			log(['Event not matching (pushed to unhandled messages)', msg], 'debug', logGroup);
 
 			unhandledMessages.push(msg);
 		}
 	}
 
 	function init() {
-
-		log('Initialized ads message listener', 9, logGroup);
+		log('Initialized ads message listener', 'debug', logGroup);
 
 		window.addEventListener('message', receiveMessage);
 	}
@@ -58,18 +64,22 @@ define('ext.wikia.adEngine.messageListener', [
 	function register(match, callback) {
 		var i, len, msg;
 
+		log(['Register callback', match, callback], 'debug', logGroup);
 		for (i = 0, len = unhandledMessages.length; i < len; i += 1) {
 			msg = unhandledMessages[i];
 
 			if (eventMatch(match, msg)) {
 				unhandledMessages.splice(i, 1);
 
-				callback(msg.data.AdEngine);
+				log(['Some event matches', msg, callback], 'debug', logGroup);
+				callback(JSON.parse(msg.data).AdEngine);
 
 				// Don't add the callback to the list, already handled
 				return;
 			}
 		}
+
+		log(['No events matching (pushing to callbacks)', callback], 'debug', logGroup);
 
 		callbacks.push({match: match, fn: callback});
 	}
