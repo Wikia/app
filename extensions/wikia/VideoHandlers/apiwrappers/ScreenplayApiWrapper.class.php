@@ -19,6 +19,7 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 	protected static $CACHE_KEY = 'screenplayapi';
 	protected static $aspectRatio = 1.7777778;
 	protected static $THUMBNAIL_URL_TEMPLATE = 'http://www.totaleclips.com/Player/Bounce.aspx?eclipid=$1&bitrateid=$2&vendorid=$3&type=$4';
+	protected static $ASSET_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&eclipid=$4';
 
 	public function getDescription() {
 		return '';	//  no description from provider
@@ -36,6 +37,7 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 		$thumb = str_replace( '$2', $bitrateId, $thumb );
 		$thumb = str_replace( '$3', F::app()->wg->ScreenplayApiConfig['customerId'], $thumb );
 		$thumb = str_replace( '$4', self::THUMBNAIL_TYPE, $thumb );
+
 		return $thumb;
 	}
 
@@ -64,4 +66,53 @@ class ScreenplayApiWrapper extends IngestionApiWrapper {
 		}
 		return '';	// Screenplay API includes this field, but videos ingested prior to refactoring didn't save it
 	}
+
+	/**
+	 *
+	 * @param string $videoId
+	 * @param array $bitrateId
+	 * @return mixed
+	 */
+	public static function getAssetByVideoId( $videoId, $bitrateId = [] ) {
+		wfProfileIn( __METHOD__ );
+
+		$app = F::app();
+
+		$url = str_replace( '$1', $app->wg->ScreenplayApiConfig['customerId'], static::$ASSET_URL );
+		$url = str_replace( '$2', $app->wg->ScreenplayApiConfig['username'], $url );
+		$url = str_replace( '$3', $app->wg->ScreenplayApiConfig['password'], $url );
+		$url = str_replace( '$4', $videoId, $url );
+
+		if ( !empty( $bitrateId ) ) {
+			$url .= '&bitrateID='.implode( ',', $bitrateId );
+		}
+
+		$result = self::getUrlContent( $url );
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
+	/**
+	 * Get thumbnail url from Asset
+	 * @param string $videoId
+	 * @return string|false
+	 */
+	public static function getThumbnailUrlFromAsset( $videoId ) {
+		wfProfileIn( __METHOD__ );
+
+		$bitrateId = [ self::MEDIUM_JPEG_BITRATE_ID ];
+		$asset = self::getAssetByVideoId( $videoId, $bitrateId );
+		if ( !empty( $asset[0]['Url'] ) ) {
+			$thumbUrl = $asset[0]['Url'];
+		} else {
+			$thumbUrl = false;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $thumbUrl;
+	}
+
 }
