@@ -84,8 +84,7 @@ class UpdateSpecialPagesTask extends BaseTask {
 			$num = $queryPage->recache( $limit );
 			$end = wfTime();
 			if ( $num === false ) {
-				// TODO database specific exception?
-				throw new \Exception('database error');
+				throw new \DBError( $dbw, "database error" );
 			}
 			$this->log( sprintf("%-30s updated %d rows in %.2fs", $special, $num, $end - $start) );
 
