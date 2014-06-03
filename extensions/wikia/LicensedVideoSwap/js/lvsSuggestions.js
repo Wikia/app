@@ -10,11 +10,16 @@ define('lvs.suggestions', [], function () {
 		var $suggestions = $container.find('.more-videos');
 		$suggestions.find('.title a').ellipses();
 		updateSizeClass($suggestions);
-		makeActive($suggestions);
+		setActiveLi($suggestions, 0);
 	}
 
-	function makeActive($elem) {
-		$elem.find('li:first-child').addClass('selected');
+	/**
+	 *
+	 * @param {jQuery} $elem container for list elements to be set active
+	 * @param {number} idx index of LI in list
+	 */
+	function setActiveLi($elem, idx) {
+		$elem.find('li').eq(idx).addClass('selected');
 	}
 
 	/**
