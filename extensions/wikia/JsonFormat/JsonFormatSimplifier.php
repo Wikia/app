@@ -214,7 +214,8 @@ class JsonFormatSimplifier {
 	protected function getElements( $node ) {
 		$result = [];
 		foreach( $node['elements'] as $element ) {
-			$text = [ $element['text'] ];
+			//unicode trim
+			$text = [ preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $element['text'] ) ];
 			if( !empty($element['elements']) ) {
 				$text[] = '(' . $this->getElements( $element ) . ')';
 			}
