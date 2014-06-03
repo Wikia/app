@@ -36,7 +36,6 @@ define(
 			},
 			events = {
 				error: [
-
 					function (message) {
 						showError(message);
 					}
@@ -45,9 +44,13 @@ define(
 					cleanUpError
 				],
 				mapCreated: [
-
 					function (data) {
 						showCreatedMap(data);
+					}
+				],
+				beforeClose: [
+					function () {
+						w.UserLogin.refreshIfAfterForceLogin();
 					}
 				]
 			};
@@ -71,10 +74,6 @@ define(
 				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1]);
 				preview.init(modal, templates[2]);
-
-				modal.bind('beforeClose', function () {
-					w.UserLogin.refreshIfAfterForceLogin();
-				});
 
 				modal.trigger('chooseTileSet');
 				modal.show();
