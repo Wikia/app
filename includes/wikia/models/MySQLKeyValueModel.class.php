@@ -36,7 +36,7 @@ class MySQLKeyValueModel extends WikiaModel {
 			$this->getMemcacheKey( $key ),
 			self::CACHE_DURATION,
 			function() use ( $value ) { return $value; },
-			WikiaDataAccess::SKIP_CACHE
+			WikiaDataAccess::REFRESH_CACHE
 		);
 	}
 
