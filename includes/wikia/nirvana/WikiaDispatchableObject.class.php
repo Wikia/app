@@ -10,6 +10,7 @@
  * @author Owen Davis <owen(at)wikia-inc.com>
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
 
 	/**
 	 * Mediawiki RequestContext object
