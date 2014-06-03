@@ -883,6 +883,7 @@ class RenameUserProcess {
 
 		if ( $this->mUserId !== 0 || !IP::isIPAddress( $this->mOldUsername ) || !IP::isIPAddress( $this->mNewUsername ) ) {
 			$this->addError( wfMessage( 'userrenametool-error-invalid-ip' )->escaped() );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 

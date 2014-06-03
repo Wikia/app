@@ -11,6 +11,7 @@ class VideosModule extends WikiaModel {
 	const THUMBNAIL_HEIGHT = 309;
 
 	const LIMIT_VIDEOS = 20;
+	const LIMIT_CATEGORY_VIDEOS = 40;
 	const CACHE_TTL = 3600;
 	const CACHE_VERSION = 2;
 
@@ -26,8 +27,17 @@ class VideosModule extends WikiaModel {
 	const SOURCE_STAFF = 'staff-picks';
 	const SOURCE_WIKI_VERTICAL = 'wiki-vertical';
 
-	protected $blacklistCount = null;	// number of blacklist videos
-	protected $existingVideos = [];		// list of existing videos [ titleKey => true ]
+	protected $blacklist;               // black listed videos we never want to show in videos module
+	protected $blacklistCount = null;   // number of blacklist videos
+	protected $existingVideos = [];     // list of existing videos [ titleKey => true ]
+
+	public function __construct() {
+		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
+		// on Community wiki.
+		$serializedBlackList = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL )->cv_value;
+		$this->blacklist = unserialize( $serializedBlackList );
+		parent::__construct();
+	}
 
 	// options for getting video detail
 	protected static $videoOptions = [
@@ -293,10 +303,9 @@ class VideosModule extends WikiaModel {
 
 	/**
 	 * Get videos from the Video wiki that are in categories listed in wgVideosModuleCategories
-	 * @param integer $numRequired
 	 * @return array
 	 */
-	public function getVideosByCategory( $numRequired ) {
+	public function getVideosByCategory() {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->wg->VideosModuleCategories ) ) {
@@ -310,13 +319,13 @@ class VideosModule extends WikiaModel {
 			$categories = [ $this->wg->VideosModuleCategories ];
 		}
 
-		$limit = self::LIMIT_VIDEOS;
+		$limit = self::LIMIT_CATEGORY_VIDEOS;
 		$sort = 'recent';
 		$videos = $this->getVideoListFromVideoWiki( $categories, $limit, $sort, self::SOURCE_WIKI_CATEGORIES );
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->trimVideoList( $videos, $numRequired );
+		return $this->trimVideoList( $videos, self::LIMIT_CATEGORY_VIDEOS );
 	}
 
 	/**
@@ -498,7 +507,7 @@ class VideosModule extends WikiaModel {
 	 * @return boolean
 	 */
 	public function addToList( &$videos, $videoTitle ) {
-		if ( !empty( $videoTitle ) && !in_array( $videoTitle, $this->wg->VideosModuleBlackList ) ) {
+		if ( !empty( $videoTitle ) && !in_array( $videoTitle, $this->blacklist ) ) {
 			if ( !array_key_exists( $videoTitle, $this->existingVideos ) ) {
 				$videos[] = $videoTitle;
 
@@ -516,7 +525,7 @@ class VideosModule extends WikiaModel {
 	 */
 	protected function getPaddedVideoLimit( $numRequired ) {
 		if ( is_null( $this->blacklistCount ) ) {
-			$this->blacklistCount = count( $this->wg->VideosModuleBlackList );
+			$this->blacklistCount = count( $this->blacklist );
 		}
 
 		$limit = $numRequired + $this->blacklistCount;

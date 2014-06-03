@@ -302,8 +302,10 @@ class _DiffEngine1 {
 			$x1 = $xoff + (int)( ( $numer + ( $xlim -$xoff ) * $chunk ) / $nchunks );
 			for ( ; $x < $x1; $x++ ) {
 				$line = $flip ? $this->yv[$x] : $this->xv[$x];
-					if ( empty( $ymatches[$line] ) )
+					if ( empty( $ymatches[$line] ) ) {
+						wfProfileOut( __METHOD__ . "-chunk" );
 						continue;
+					}
 				$matches = $ymatches[$line];
 				reset( $matches );
 				while ( list ( $junk, $y ) = each( $matches ) )
@@ -311,6 +313,7 @@ class _DiffEngine1 {
 						$k = $this->_lcs_pos( $y );
 						USE_ASSERTS && assert( $k > 0 );
 						$ymids[$k] = $ymids[$k -1];
+						wfProfileOut( __METHOD__ . "-chunk" );
 						break;
 					}
 				while ( list ( /* $junk */, $y ) = each( $matches ) ) {
@@ -328,7 +331,7 @@ class _DiffEngine1 {
 					}
 				}
 			}
-
+			wfProfileOut( __METHOD__ . "-chunk" );
 		}
 
 		$seps[] = $flip ? array( $yoff, $xoff ) : array( $xoff, $yoff );
@@ -346,6 +349,7 @@ class _DiffEngine1 {
 
 	function _lcs_pos ( $ypos ) {
 
+		wfProfileIn( __METHOD__ );
 
 		$end = $this->lcs;
 		if ( $end == 0 || $ypos > $this->seq[$end] ) {
@@ -369,6 +373,8 @@ class _DiffEngine1 {
 		$this->in_seq[$this->seq[$end]] = false;
 		$this->seq[$end] = $ypos;
 		$this->in_seq[$ypos] = 1;
+
+		wfProfileOut( __METHOD__ );
 
 		return $end;
 	}

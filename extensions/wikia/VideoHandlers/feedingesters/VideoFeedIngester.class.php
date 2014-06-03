@@ -130,33 +130,34 @@ abstract class VideoFeedIngester {
 		}
 
 		$metadata = array(
-			'videoId'        => $data['videoId'],
-			'altVideoId'     => isset( $data['altVideoId'] ) ? $data['altVideoId'] : '',
-			'hd'             => isset( $data['hd'] ) ? $data['hd'] : 0,
-			'duration'       => isset( $data['duration'] ) ? $data['duration'] : '',
-			'published'      => isset( $data['published'] ) ? $data['published'] : '',
-			'thumbnail'      => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
-			'description'    => isset( $data['description'] ) ? $data['description'] : '',
-			'name'           => isset( $data['name'] ) ? $data['name'] : '',
-			'type'           => isset( $data['type'] ) ? $data['type'] : '',
-			'category'       => isset( $data['category'] ) ? $data['category'] : '',
-			'keywords'       => isset( $data['keywords'] ) ? $data['keywords'] : '',
-			'industryRating' => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
-			'ageGate'        => isset( $data['ageGate'] ) ? $data['ageGate'] : 0,
-			'ageRequired'    => isset( $data['ageRequired'] ) ? $data['ageRequired'] : 0,
-			'provider'       => isset( $data['provider'] ) ? $data['provider'] : '',
-			'language'       => isset( $data['language'] ) ? $data['language'] : '',
-			'subtitle'       => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
-			'genres'         => isset( $data['genres'] ) ? $data['genres'] : '',
-			'actors'         => isset( $data['actors'] ) ? $data['actors'] : '',
-			'targetCountry'  => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
-			'series'         => isset( $data['series'] ) ? $data['series'] : '',
-			'season'         => isset( $data['season'] ) ? $data['season'] : '',
-			'episode'        => isset( $data['episode'] ) ? $data['episode'] : '',
-			'characters'     => isset( $data['characters'] ) ? $data['characters'] : '',
-			'resolution'     => isset( $data['resolution'] ) ? $data['resolution'] : '',
-			'aspectRatio'    => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
-			'expirationDate' => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
+			'videoId'              => $data['videoId'],
+			'altVideoId'           => isset( $data['altVideoId'] ) ? $data['altVideoId'] : '',
+			'hd'                   => isset( $data['hd'] ) ? $data['hd'] : 0,
+			'duration'             => isset( $data['duration'] ) ? $data['duration'] : '',
+			'published'            => isset( $data['published'] ) ? $data['published'] : '',
+			'thumbnail'            => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
+			'description'          => isset( $data['description'] ) ? $data['description'] : '',
+			'name'                 => isset( $data['name'] ) ? $data['name'] : '',
+			'type'                 => isset( $data['type'] ) ? $data['type'] : '',
+			'category'             => isset( $data['category'] ) ? $data['category'] : '',
+			'keywords'             => isset( $data['keywords'] ) ? $data['keywords'] : '',
+			'industryRating'       => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
+			'ageGate'              => isset( $data['ageGate'] ) ? $data['ageGate'] : 0,
+			'ageRequired'          => isset( $data['ageRequired'] ) ? $data['ageRequired'] : 0,
+			'provider'             => isset( $data['provider'] ) ? $data['provider'] : '',
+			'language'             => isset( $data['language'] ) ? $data['language'] : '',
+			'subtitle'             => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
+			'genres'               => isset( $data['genres'] ) ? $data['genres'] : '',
+			'actors'               => isset( $data['actors'] ) ? $data['actors'] : '',
+			'targetCountry'        => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
+			'series'               => isset( $data['series'] ) ? $data['series'] : '',
+			'season'               => isset( $data['season'] ) ? $data['season'] : '',
+			'episode'              => isset( $data['episode'] ) ? $data['episode'] : '',
+			'characters'           => isset( $data['characters'] ) ? $data['characters'] : '',
+			'resolution'           => isset( $data['resolution'] ) ? $data['resolution'] : '',
+			'aspectRatio'          => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
+			'expirationDate'       => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
+			'regionalRestrictions' => isset( $data['regionalRestrictions'] ) ? $data['regionalRestrictions'] : '',
 		);
 
 		return $metadata;
@@ -245,8 +246,7 @@ abstract class VideoFeedIngester {
 
 		// check if the video id exists in Ooyala.
 		if ( $remoteAsset ) {
-			$ooyalaAsset = new OoyalaAsset();
-			$dupAssets = $ooyalaAsset->getAssetsBySourceId( $id, $provider );
+			$dupAssets = OoyalaAsset::getAssetsBySourceId( $id, $provider );
 			if ( !empty( $dupAssets ) ) {
 				if ( $this->reupload === false ) {
 					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists in remote assets.\n" );
