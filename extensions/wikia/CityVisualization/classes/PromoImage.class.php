@@ -114,8 +114,12 @@ class PromoImage extends WikiaObject {
 		return $this->pathnameHelper(true, true);
 	}
 
-	public function getOriginFile(){
-		$f = GlobalFile::newFromText($this->getPathname(), $this->getCityId());
+	public function getOriginFile($cityId = null){
+		if (empty($cityId)){
+			$cityId =  $this->getCityId();
+		}
+
+		$f = GlobalFile::newFromText($this->getPathname(), $cityId);
 		return $f;
 	}
 
