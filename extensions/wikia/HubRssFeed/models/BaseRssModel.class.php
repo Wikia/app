@@ -4,6 +4,9 @@ abstract class BaseRssModel extends WikiaService {
 
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
+	const ENDPOINT_ASSIMPLEJSON = 'api/v1/Articles/AsSimpleJson';
+	const ENDPOINT_DETAILS = 'api/v1/Articles/Details';
+
 	/**
 	 * For how long the RSS item should be unique
 	 */
@@ -28,11 +31,27 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedDescription();
 
-	public abstract function getFeedData();
-
 	public function getModelUrlEndpoint(){
 		return static::URL_ENDOPINT;
 	}
+
+	public function getFeedData(){
+		/*
+		 * If content in DB is fresh (BaseRssModel::FRESH_CONTENT_TTL_HOURS)
+		 * don't do anything and return content from DB
+		 */
+		if ( $this->forceRegenerateFeed == false ) {
+			if ( $this->isFreshContentInDb( static::FEED_NAME ) ) {
+				return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
+			}
+		}
+		$duplicates = $this->getLastDuplicatesFromDb( static::FEED_NAME );
+		$timestamp = $this->getLastFeedTimestamp( static::FEED_NAME ) + 1;
+		return $this->loadData( $timestamp, $duplicates );
+
+	}
+
+	protected abstract function loadData( $lastTimestamp, $duplicates );
 
 	/**
 	 * @param $feedName
@@ -77,6 +96,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function addFeedsToDb( $rows, $feed ) {
+		$feed = self::getStagingPrefix(). $feed;
 		$db = $this->getDbMaster();
 		$db->begin();
 		$nowDate = date( 'Y-m-d H:i:s' );
@@ -102,7 +122,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function isFreshContentInDb( $feed, $hours = self::FRESH_CONTENT_TTL_HOURS ) {
 		//select count(1) as c from wikia_rss_feeds where wrf_pub_date >= '2014-05-20 00:00:00' AND wrf_feed = 'tv';
-
+		$feed = self::getStagingPrefix(). $feed;
 		$startTime = date( 'Y-m-d H:i:s', strtotime( sprintf( 'now - %uhour', $hours ) ) );
 		$links = ( new WikiaSQL() )
 			->SELECT( "count(1)" )->AS_( 'c' )
@@ -125,6 +145,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function getLastFeedTimestamp( $feed ) {
 		//select UNIX_TIMESTAMP(wrf_pub_date) AS t wikia_rss_feeds where wrf_feed = 'tv' ORDER BY wrf_pub_date DESC limit 1
+		$feed = self::getStagingPrefix(). $feed;
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_pub_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
@@ -144,6 +165,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastInsertFeedTimestamp( $feed, $source ) {
+		$feed = self::getStagingPrefix(). $feed;
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_ins_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
@@ -164,6 +186,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastRecordsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
+		$feed = self::getStagingPrefix(). $feed;
 		$db = $useMaster ? $this->getDbMaster() : $this->getDbSlave();
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' * ' )
@@ -192,6 +215,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastDuplicatesFromDb( $feed, $maxHours = self:: UNIQUE_URL_TTL_HOURS ) {
+		$feed = self::getStagingPrefix(). $feed;
 		$fromTime = date( 'Y-m-d H:i:s', strtotime( sprintf( 'now - %uhour', $maxHours ) ) );
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' wrf_url ' )
@@ -209,10 +233,11 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getArticleDetail( $wikiId, $articleId ) {
-		$host = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) );
-		$url = sprintf( '%sapi/v1/Articles/Details?ids=%u', $host, $articleId );
-		$res = Http::get( $url );
-		$res = json_decode( $res, true );
+		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ),[ 'ids' => $articleId ],  self::ENDPOINT_DETAILS );
+		if ( !$res ) {
+			return [ ];
+		}
+
 		$article = $res[ 'items' ][ $articleId ];
 		if ( !$article[ 'thumbnail' ] ) {
 			$ws = new WikiService();
@@ -231,10 +256,10 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getArticleDescription( $wikiId, $articleId ) {
-		$host = WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) );
-		$url = sprintf( '%sapi/v1/Articles/AsSimpleJson?id=%u', $host, $articleId );
-		$res = Http::get( $url );
-		$res = json_decode( $res, true );
+		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ), [ 'id' => $articleId ], self::ENDPOINT_ASSIMPLEJSON );
+		if ( !$res ) {
+			return '';
+		}
 		foreach ( $res[ 'sections' ] as $section ) {
 			if ( is_array( $section[ 'content' ] ) ) {
 				foreach ( $section[ 'content' ] as $content ) {
@@ -354,32 +379,14 @@ abstract class BaseRssModel extends WikiaService {
 			$f2->setUrls( array_keys( $urls ) );
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
-				//TODO: We don't need to add anything more than wikia_id and page_id here, so modify original data instead
-				$item[ 'wikia_id' ] = $item[ 'wid' ];
-				$item[ 'page_id' ] = $item[ 'pageid' ];
-				if ( $source ) {
-					$item[ 'source' ] = $source;
+				$key = $item[ 'url' ];
+				if(array_key_exists($key , $urls)){
+					$newItem = $urls[$key];
+					$newItem[ 'wikia_id' ] = $item[ 'wid' ];
+					$newItem[ 'page_id' ] = $item[ 'pageid' ];
+					$newItem[ 'source' ] = $source;
+					$data[] = $newItem;
 				}
-
-				if ( array_key_exists( $item[ 'url' ], $urls ) ) {
-					$orgItem = $urls[ $item[ 'url' ] ];
-					if ( $orgItem[ 'title' ] ) {
-						$item[ 'title' ] = $orgItem[ 'title' ];
-					}
-
-					if ( $orgItem[ 'description' ] ) {
-						$item[ 'description' ] = $orgItem[ 'description' ];
-					}
-					if ( $orgItem[ 'timestamp' ] ) {
-						$item[ 'timestamp' ] = $orgItem[ 'timestamp' ];
-					}
-
-					if ( !empty( $orgItem[ 'img' ] ) ) {
-						$item[ 'img' ] = $orgItem[ 'img' ];
-					}
-				}
-
-				$data[ $item[ 'url' ] ] = $item;
 			}
 		}
 		return $data;
@@ -410,6 +417,19 @@ abstract class BaseRssModel extends WikiaService {
 			}
 		}
 		return $item;
+	}
+
+	public static function getStagingPrefix(){
+		global $wgDevelEnvironment, $wgStagingEnvironment;
+
+		if( $wgDevelEnvironment ||  $wgStagingEnvironment ){
+			return 'stag_';
+		}
+
+		if ( !empty( $_ENV[ 'WIKIA_ENVIRONMENT' ] ) && $_ENV[ 'WIKIA_ENVIRONMENT' ] == 'sandbox' ) {
+			return 'stag_';
+		}
+		return '';
 	}
 
 }

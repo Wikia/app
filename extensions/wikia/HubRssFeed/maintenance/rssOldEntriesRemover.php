@@ -23,13 +23,17 @@ class MaintenanceRss extends Maintenance {
 
 	function removeOldEntries() {
 		global $wgExternalDatawareDB;
-
+		$prefix = BaseRssModel::getStagingPrefix();
+		$availFeeds = 	[
+			$prefix.TvRssModel::FEED_NAME, $prefix.GamesRssModel::FEED_NAME,
+			$prefix.LifestyleHubOnlyRssModel::FEED_NAME, $prefix.EntertainmentHubOnlyRssModel::FEED_NAME
+			];
 		echo "| REMOVING OLD ENTRIES... \n";
 
 		$db = wfGetDB( DB_MASTER, null, $wgExternalDatawareDB );
 
 		$deleteQuery = "DELETE FROM wikia_rss_feeds "
-			. " where wrf_feed IN ('tv','games') "
+			. " where wrf_feed IN ( '" . implode( '\',\'', $availFeeds ) ."' ) "
 			. " AND wrf_pub_date < (DATE_SUB(CURDATE(), INTERVAL " . self::DAYS_TO_KEEP_OLD_FEED_ITEMS . " DAY))";
 
 		$db->query($deleteQuery);

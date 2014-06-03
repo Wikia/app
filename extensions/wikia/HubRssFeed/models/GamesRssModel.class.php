@@ -20,20 +20,12 @@ class GamesRssModel extends BaseRssModel {
 		return 'From Wikia community - Video Games';
 	}
 
-	public function getFeedData() {
-
-		if ( $this->forceRegenerateFeed == false && $this->isFreshContentInDb( self::FEED_NAME, self::FRESH_CONTENT_TTL_HOURS ) ) {
-			return $this->getLastRecordsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
-		}
-
-		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
-		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
-
-		$blogData = $this->getDataFromBlogs( $timestamp );
+	public function loadData( $lastTimestamp, $duplicates ) {
+ 		$blogData = $this->getDataFromBlogs( $lastTimestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
 		$hubData = [];
 		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
-			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp, $duplicates );
+			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $lastTimestamp, $duplicates );
 		}
 		$rawData = array_merge(
 			$blogData,
@@ -64,7 +56,6 @@ class GamesRssModel extends BaseRssModel {
 
 		$rows = $feedModel->query( '+created:[ ' . $fromDate . ' TO * ]');
 		foreach($rows as &$item){
-			//TODO: find better way for this
 			$item[ 'source' ] = self::SOURCE_BLOGS;
 		}
 		return $rows;
