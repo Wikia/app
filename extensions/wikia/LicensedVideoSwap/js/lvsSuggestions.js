@@ -14,7 +14,6 @@ define('lvs.suggestions', [], function () {
 	}
 
 	/**
-	 *
 	 * @param {jQuery} $elem container for list elements to be set active
 	 * @param {number} idx index of LI in list
 	 */
