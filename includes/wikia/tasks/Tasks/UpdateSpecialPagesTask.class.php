@@ -28,7 +28,7 @@ class UpdateSpecialPagesTask extends BaseTask {
 
 		if ( !$wikiId ) {
 			// TODO localize?
-			throw new InvalidArgumentException("No wikia exists for domain {$wikiaDomain}");
+			throw new InvalidArgumentException( "No wikia exists for domain {$wikiaDomain}" );
 		}
 
 		$localizationTask = new UpdateSpecialPagesTask();
@@ -47,12 +47,12 @@ class UpdateSpecialPagesTask extends BaseTask {
 
 		foreach ( $wgSpecialPageCacheUpdates as $special => $call ) {
 			if ( !is_callable( $call ) ) {
-				throw new \InvalidArgumentException("Uncallable function '{$call}' for special page {$special}");
+				throw new \InvalidArgumentException( "Uncallable function '{$call}' for special page {$special}" );
 			}
 			$start = wfTime();
 			call_user_func( $call, $dbw );
 			$end = wfTime();
-			$this->log(sprintf("%-30s completed in %.2fs", $special, $end - $start));
+			$this->log( sprintf("%-30s completed in %.2fs", $special, $end - $start) );
 
 			// Wait for the slave to catch up
 			wfWaitForSlaves();
@@ -61,15 +61,15 @@ class UpdateSpecialPagesTask extends BaseTask {
 		// This is needed to initialise $wgQueryPages
 		require_once( "$IP/includes/QueryPage.php" );
 
-		$disabledPages = ($wgDisableQueryPageUpdate ? array_flip($wgDisableQueryPageUpdate) : []);
+		$disabledPages = ( $wgDisableQueryPageUpdate ? array_flip($wgDisableQueryPageUpdate) : [] );
 		foreach ( $wgQueryPages as $page ) {
 			list( $class, $special ) = $page;
 
-			$limit = (isset($page[2]) ? $page[2] : $wgQueryCacheLimit);
+			$limit = ( isset($page[2]) ? $page[2] : $wgQueryCacheLimit );
 
 			$queryPage = $this->getQueryPage( $special, $class );
 
-			if ( array_key_exists( $special, $disabledPages ) ) {
+			if ( array_key_exists($special, $disabledPages) ) {
 				// skip disabled pages
 				$this->log( sprintf("%-30s disabled", $special) );
 				continue;
@@ -117,11 +117,11 @@ class UpdateSpecialPagesTask extends BaseTask {
 		$queryPage = \SpecialPageFactory::getPage( $special );
 
 		if ( !$queryPage ) {
-			throw new InvalidArgumentException("No such special page: {$special}");
+			throw new InvalidArgumentException( "No such special page: {$special}" );
 		}
 
 		if ( !($queryPage instanceof \QueryPage) ) {
-			if ( !class_exists( $class ) ) {
+			if ( !class_exists($class) ) {
 				require_once( $queryPage->getFile() );
 			}
 			$queryPage = new $class();
