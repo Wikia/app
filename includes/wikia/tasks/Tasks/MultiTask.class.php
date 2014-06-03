@@ -90,6 +90,8 @@ class MultiTask extends BaseTask {
 	 * @param string $article - Article name (with namespace if needed)
 	 * @param string $text - Text to add to comtent
 	 * @param string $wikis - Comma separated list of Wikis (database names)
+	 * @param string $lang - Wikis with language
+	 * @param string $cat - Wikis in category
 	 * @param string $reason - Reason of removing
 	 * @param string $params - Comma separated list of delete params: <ul><li>s: bitfields to further suppress the content (Revision::DELETED_TEXT, Revision::DELETED_COMMENT, Revision::DELETED_USER, Revision::DELETED_RESTRICTED),</li></ul>
 	 * 
@@ -150,14 +152,77 @@ class MultiTask extends BaseTask {
 	 *
 	 * @param int $uid - User ID
 	 * @param string $article - Article name (with namespace if needed)
-	 * @param string $text - Text to add to comtent
-	 * @param string $summary - Summary of edit
+	 * @param string $newarticle - New article name (with namespace if needed)
+	 * @param string $reason - Reason of article movin'
 	 * @param string $wikis - Comma separated list of Wikis (database names)
-	 * @param string $params - Comma separated list of edit params: <ul><li>m: minor edit,</li><li>b: bot (hidden) edit,</li><li>a: enable autosummary,</li><li>no-rc: do not show the change in recent changes,</li><li>newonly: skip existing articles</li></ul>
+	 * @param string $lang - Wikis with language
+	 * @param string $cat - Wikis in category
+	 * @param string $params - Comma separated list of edit params: <ul><li>watch: add new article to watchlist,</li><li>redirect: set new page as redirect to old one</li></ul>
 	 * 
 	 * @return double
 	 */
-	public function move( $uid, $article = '', $summary = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
+	public function move( $uid, $article = '', $newarticle = '', $reason = '', $wikis = '', $lang = '', $cat = '', $params = '' ) {
+		# set username
+		$oUser = \User::newFromId( $uid );
+		if ( $oUser instanceof \User ) {
+			$oUser->load();
+			$this->username = $oUser->getName();
+		} else {
+			$this->username = '';
+		}
+		
+		if ( empty( $this->username ) ) {
+			$error = 'Username cannot be empty';
+			throw new \Exception( $error . ': ' . __METHOD__  );
+			return $error;
+		}
+		
+		# check params
+		if ( !empty( $params ) ) {
+			foreach ( explode( ',', $params ) as $param ) {
+				$this->params[] = trim( $param );
+			}
+		}
+
+		# check old page title
+		$old_page = \Title::newFromText( $article );
+		if ( !is_object($old_page) ) {
+			$error = 'Invalid article (' . $article . ')';
+			throw new \Exception( $error . ': ' . __METHOD__ );
+			return $error;
+		}
+		
+		# check page title
+		$this->page = \Title::newFromText( $newarticle );
+		if ( !is_object($this->page) ) {
+			$error = 'Invalid article (' . $article . ')';
+			throw new \Exception( $error . ': ' . __METHOD__ );
+			return $error;
+		}
+
+		# parse text options 
+		$this->main_params = [
+			'u' => $this->username,
+			'ot' => str_replace( ' ', '_', $old_page->getText() ),
+			'on' => $old_page->getNamespace(),
+			'nt' => str_replace( ' ', '_', $this->page->getText() ),
+			'nn' => $this->page->getNamespace(),
+		];
+		
+		if ( !empty( $reason ) ) {
+			$this->main_params[ 'r' ] = $reason;
+		}
+		
+		# check wikis
+		$task_wikis = [];
+		if ( !empty( $wikis ) ) {
+			$task_wikis = explode( ",", $wikis );
+		}		
+
+		$this->action = 'move';
+		$result = $this->runOnWikis( $task_wikis, $lang, $cat );
+
+		return $result;
 	}
 	
 	private function runOnWikis( $wikis=[], $lang = '', $cat = '' ) {
