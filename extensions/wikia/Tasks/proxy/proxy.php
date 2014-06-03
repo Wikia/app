@@ -10,5 +10,5 @@ $order = $_POST['call_order'];
 $createdBy = escapeshellarg($_POST['created_by']);
 
 $command = "SERVER_ID=$wikiId php $script --task_id=".$taskId." --task_list=".json_encode($list)." --call_order=".json_encode($order)." --created_by=$createdBy";
-file_put_contents('/home/nelson/proxy', $command);
+
 echo shell_exec($command);
