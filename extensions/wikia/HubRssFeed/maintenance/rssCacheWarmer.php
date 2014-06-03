@@ -14,47 +14,22 @@ class MaintenanceRss extends Maintenance {
 	}
 
 	function execute() {
-		$this->warmTv();
-		$this->warmGames();
-		$this->warmLifestyleHubOnly();
-		$this->warmEntertainmentHubOnly();
+		$this->warm();
 		$this->purgeVarnish();
 	}
 
-	function warmTv() {
-		echo "| Warming TV cache..." . PHP_EOL;
-		$feed = new TvRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
-
-	function warmGames() {
-		echo "| Warming GAMES cache..." . PHP_EOL;
-		$feed = new GamesRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
-
-	function warmLifestyleHubOnly() {
-		echo "| Warming LIFESTYLE cache..." . PHP_EOL;
-		$feed = new LifestyleHubOnlyRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
-
-	function warmEntertainmentHubOnly() {
-		echo "| Warming ENTERTAINMENT cache..." . PHP_EOL;
-		$feed = new EntertainmentHubOnlyRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
+	protected function warm(){
+		global $wgHubRssFeeds;
+		foreach($wgHubRssFeeds as $feedName ){
+			echo "| Warming '$feedName' cache..." . PHP_EOL;
+			$feed = BaseRssModel::newFromName($feedName);
+			if($feed instanceof BaseRssModel){
+				$numRows = $feed->generateFeedData();
+				echo "| Got ". $numRows . " new entries " . PHP_EOL;
+			}else{
+				echo "| Feed not found: ". $feedName . PHP_EOL;
+			}
+		}
 	}
 
 	public function purgeVarnish() {

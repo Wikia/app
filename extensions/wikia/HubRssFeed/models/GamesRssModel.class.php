@@ -1,8 +1,7 @@
 <?php
 
 class GamesRssModel extends BaseRssModel {
-	const FEED_NAME = 'games';
-	const URL_ENDPOINT = '/Games';
+	const FEED_NAME = 'Games';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
 	const FRESH_CONTENT_TTL_HOURS = 24;
@@ -23,16 +22,14 @@ class GamesRssModel extends BaseRssModel {
 	public function loadData( $lastTimestamp, $duplicates ) {
  		$blogData = $this->getDataFromBlogs( $lastTimestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
-		$hubData = [];
-		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
-			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $lastTimestamp, $duplicates );
-		}
+		$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $lastTimestamp, $duplicates );
+
 		$rawData = array_merge(
 			$blogData,
 			$hubData
 		);
 
-		$out = $this->finalizeRecords($rawData,self::MAX_NUM_ITEMS_IN_FEED, self::FEED_NAME );
+		$out = $this->finalizeRecords($rawData, self::FEED_NAME );
 		return $out;
 	}
 

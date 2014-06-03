@@ -1,8 +1,7 @@
 <?php
 
 class EntertainmentHubOnlyRssModel extends HubOnlyRssModel {
-	const FEED_NAME = 'entertainment';
-	const URL_ENDPOINT = '/Entertainment';
+	const FEED_NAME = 'Entertainment';
 	public function getFeedTitle() {
 		return 'Wikia Entertainment Feed';
 	}

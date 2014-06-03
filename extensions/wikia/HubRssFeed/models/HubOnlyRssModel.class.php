@@ -11,7 +11,7 @@ abstract class HubOnlyRssModel extends BaseRssModel {
 			$rawData = array_merge( $rawData, $this->getDataFromHubs( $hubCityId, $lastTimestamp, $duplicates ) );
 		}
 
-		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED, static::FEED_NAME );
+		$out = $this->finalizeRecords( $rawData, static::FEED_NAME );
 		return $out;
 	}
 

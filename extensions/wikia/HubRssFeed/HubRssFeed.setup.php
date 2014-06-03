@@ -21,7 +21,7 @@ $wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
 $wgHubRssFeeds = array(
-	 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Tv'
+	 'Entertainment', 'Lifestyle', 'Games', 'TV'
 );
 
 foreach ( $wgHubRssFeeds as $feed ) {

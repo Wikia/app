@@ -22,7 +22,6 @@ abstract class BaseRssModel extends WikiaService {
 	const ROWS_LIMIT = 15;
 	const MIN_IMAGE_SIZE = 200;
 
-	protected $forceRegenerateFeed = false;
 	protected $nsBlogs = [ NS_BLOG_ARTICLE => true ];
 
 	public abstract function getFeedTitle();
@@ -31,24 +30,14 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedDescription();
 
-	public function getModelUrlEndpoint(){
-		return static::URL_ENDOPINT;
+	public function getFeedData(){
+		return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
 	}
 
-	public function getFeedData(){
-		/*
-		 * If content in DB is fresh (BaseRssModel::FRESH_CONTENT_TTL_HOURS)
-		 * don't do anything and return content from DB
-		 */
-		if ( $this->forceRegenerateFeed == false ) {
-			if ( $this->isFreshContentInDb( static::FEED_NAME ) ) {
-				return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
-			}
-		}
+	public function generateFeedData(){
 		$duplicates = $this->getLastDuplicatesFromDb( static::FEED_NAME );
 		$timestamp = $this->getLastFeedTimestamp( static::FEED_NAME ) + 1;
 		return $this->loadData( $timestamp, $duplicates );
-
 	}
 
 	protected abstract function loadData( $lastTimestamp, $duplicates );
@@ -58,7 +47,7 @@ abstract class BaseRssModel extends WikiaService {
 	 * @return BaseRssModel
 	 */
 	public static function newFromName( $feedName ) {
-		switch ( strtolower( $feedName ) ) {
+		switch ( $feedName ) {
 			case GamesRssModel::FEED_NAME:
 				return new GamesRssModel();
 			case TvRssModel::FEED_NAME:
@@ -67,15 +56,11 @@ abstract class BaseRssModel extends WikiaService {
 				return new LifestyleHubOnlyRssModel();
 			case EntertainmentHubOnlyRssModel::FEED_NAME:
 				return new EntertainmentHubOnlyRssModel();
+			default:
+				return null;
 		}
 	}
 
-	/**
-	 * @param boolean $forceRegenerateFeed
-	 */
-	public function setForceRegenerateFeed( $forceRegenerateFeed ) {
-		$this->forceRegenerateFeed = $forceRegenerateFeed;
-	}
 
 	protected function getDbSlave() {
 		static $db = null;
@@ -100,8 +85,9 @@ abstract class BaseRssModel extends WikiaService {
 		$db = $this->getDbMaster();
 		$db->begin();
 		$nowDate = date( 'Y-m-d H:i:s' );
+		$added = 0;
 		foreach ( $rows as $url => $item ) {
-			( new WikiaSQL() )
+			$added += ( new WikiaSQL() )
 				->INSERT( 'wikia_rss_feeds' )
 				->SET( 'wrf_wikia_id', $item[ 'wikia_id' ] )
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
@@ -118,6 +104,7 @@ abstract class BaseRssModel extends WikiaService {
 				->run( $db );
 		}
 		$db->commit();
+		return $added;
 	}
 
 	protected function isFreshContentInDb( $feed, $hours = self::FRESH_CONTENT_TTL_HOURS ) {
@@ -243,8 +230,7 @@ abstract class BaseRssModel extends WikiaService {
 			$ws = new WikiService();
 			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
 		} else {
-			//remove cropping info from image url
-			$article[ 'thumbnail' ] = preg_replace( '/(.*\/)(.*)\/.*/', '$1$2/-$2', $article[ 'thumbnail' ] );
+			$article[ 'thumbnail' ] = ImagesService::getFileUrlFromThumbUrl( $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
 			'url' => $article[ 'thumbnail' ],
@@ -276,22 +262,25 @@ abstract class BaseRssModel extends WikiaService {
 		$time = time();
 		foreach ( $rawData as $item ) {
 
-			$details = $this->getArticleDetail( $item[ 'wikia_id' ], $item[ 'page_id' ] );
+			$detailsFields = [ 'title', 'img' ];
+			$details = null;
+			foreach ( $detailsFields as $field ) {
+				if ( empty( $item[ $field ] ) ) {
+					if ( empty( $details ) ) {
+						$details = $this->getArticleDetail( $item[ 'wikia_id' ], $item[ 'page_id' ] );
+					}
+					$item[ $field ] = $details[ $field ];
+				}
+			}
+
+			if ( empty($item[ 'timestamp' ] )) {
+				$item[ 'timestamp' ] = $time--;
+			}
 
 			if ( empty( $item[ 'description' ] ) ) {
 				$item[ 'description' ] = $this->getArticleDescription( $item[ 'wikia_id' ], $item[ 'page_id' ] );;
 			}
-			if ( empty( $item[ 'title' ] ) ) {
-				$item[ 'title' ] = $details[ 'title' ];
-			}
 
-			if ( !$item[ 'timestamp' ] ) {
-				$item[ 'timestamp' ] = $time--;
-			}
-
-			if ( empty( $item[ 'img' ] ) ) {
-				$item[ 'img' ] = $details[ 'img' ];
-			}
 			$item = $this->formatTitle( $item );
 
 			$out[ $item[ 'url' ] ] = $item;
@@ -392,11 +381,9 @@ abstract class BaseRssModel extends WikiaService {
 		return $data;
 	}
 
-	protected function finalizeRecords( $rawData, $rowsToReturn, $feedName ) {
+	protected function finalizeRecords( $rawData, $feedName ) {
 		$out = $this->processItems( $rawData );
-		$this->addFeedsToDb( $out, $feedName );
-		$out = $this->getLastRecordsFromDb( $feedName, $rowsToReturn, true );
-		return $out;
+		return $this->addFeedsToDb( $out, $feedName );
 	}
 
 	protected function makeBlogTitle( $item ) {

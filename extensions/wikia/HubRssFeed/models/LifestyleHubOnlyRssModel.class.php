@@ -1,8 +1,7 @@
 <?php
 
 class LifestyleHubOnlyRssModel extends HubOnlyRssModel {
-	const FEED_NAME = 'lifestyle';
-	const URL_ENDPOINT = '/Lifestyle';
+	const FEED_NAME = 'Lifestyle';
 
 	public function getFeedTitle() {
 		return 'Wikia Lifestyle Feed';

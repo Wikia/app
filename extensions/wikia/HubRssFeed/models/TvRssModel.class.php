@@ -1,8 +1,7 @@
 <?php
 
 class TvRssModel extends BaseRssModel {
-	const FEED_NAME = 'tv';
-	const URL_ENDPOINT = '/TV';
+	const FEED_NAME = 'TV';
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
@@ -72,8 +71,7 @@ class TvRssModel extends BaseRssModel {
 			}
 		}
 
-		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED , self::FEED_NAME );
-		return $out;
+		return  $this->finalizeRecords( $rawData, self::FEED_NAME );
 	}
 
 	protected function getWikisFromPast() {
