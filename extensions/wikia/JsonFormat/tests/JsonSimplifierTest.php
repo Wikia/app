@@ -7,6 +7,30 @@ class JsonSimplifierTest extends WikiaBaseTest {
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
 		parent::setUp();
 	}
+
+	public function testDoubleLinks() {
+		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
+
+		$html = <<<'EOD'
+<div class="floatright"><a href="/wiki/File:Withstand.png" class="image"><img alt="Withstand" src="http://img4.wikia.nocookie.net/__cb20120827194222/lohgame/images/thumb/a/a5/Withstand.png/250px-Withstand.png" width="250" height="349" data-image-name="Withstand.png" data-image-key="Withstand.png" /></a></div>
+		<p><b>Withstand</b> (Genesis, #46) is an <a href="/wiki/Uncommon" title="Uncommon" class="mw-redirect">Uncommon</a> <a href="/wiki/Martial_Attack" title="Martial Attack" class="mw-redirect">Martial&#160;Attack</a> card with 0 <a href="/wiki/Attack" title="Attack">Attack</a> and 3 <a href="/wiki/Shield" title="Shield">Shield</a>.
+</p>
+<h2><span class="mw-headline" id="Card_Effect">Card Effect</span></h2>
+<p>For the next 3 turns, if you would gain shield, gain +1 <a href="/wiki/Shield" title="Shield">shield</a>.
+</p>
+<h2><span class="mw-headline" id="Card_Description">Card Description</span></h2>
+<p><i>"I see they haven't started hiring a better class of Southside 'security' guards since I worked here. They tried to terminate me too. As you can see, it didn't stick." -- <a href="/wiki/The_Southside_Sentry" title="The Southside Sentry">The Southside Sentry</a></i>
+</p>
+EOD;
+		$jsonSimple = $htmlParser->parse( $html );
+		$output = $simplifier->simplifyToText( $jsonSimple );
+		$this->assertEquals(
+			'Withstand (Genesis, #46) is an Uncommon Martial Attack card with 0 Attack and 3 Shield.'.
+			' For the next 3 turns, if you would gain shield, gain +1 shield. "I see they haven\'t started'.
+			' hiring a better class of Southside \'security\' guards since I worked here. They tried to'.
+			' terminate me too. As you can see, it didn\'t stick." -- The Southside Sentry', $output );
+	}
 	
 	public function testImages() {
 		// PLA-1362
