@@ -32,7 +32,7 @@ class MySQLKeyValueModel extends WikiaModel {
 			[ self::DB_KEY_FIELD ],
 			[ self::DB_KEY_FIELD => $key, self::DB_VALUE_FIELD => $this->encodeData( $value ) ]
 		);
-		WikiaDataAccess::cachePurge( $this->getMemcacheKey( $key ) );
+		WikiaDataAccess::cache( $this->getMemcacheKey( $key ), self::CACHE_DURATION, $value );
 	}
 
 	public function delete( $key ) {
