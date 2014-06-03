@@ -61,7 +61,7 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
-	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
+    'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 ];
 
 $messages[ 'qqq' ] = [
@@ -112,5 +112,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
+
+    'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
 ];
 
