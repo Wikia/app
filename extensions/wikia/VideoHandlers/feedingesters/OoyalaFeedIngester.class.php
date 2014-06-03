@@ -114,6 +114,15 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
 
+				if ( $clipData['provider'] == "ooyala/howdini" ) {
+					$ooyalaAsset = new OoyalaAsset();
+					$clipData["genres"] = $ooyalaAsset->getHowdiniGenre( $video['metadata']['category'] );
+					$clipData["category"] = "Lifestyle";
+					$clipData["type"] = "How To";
+					$clipData["pageCategories"] = "Lifestyle, Howdini, How To";
+					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
+				}
+
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
 				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );

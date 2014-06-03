@@ -758,4 +758,43 @@ class OoyalaAsset extends WikiaModel {
 		}
 	}
 
+	/**
+	 * Returns a genre based off of the category. This is specific to the Howdini provider. The details of this
+	 * mapping can be found in Jira VID-1691
+	 * @param $category
+	 * @return string
+	 */
+	function getHowdiniGenre( $category ) {
+
+		$category = strtolower( trim( $category ) );
+		switch( $category ) {
+			case "celebrations":
+				$genre = "Variety";
+				break;
+			case "family":
+				$genre = "Family";
+				break;
+			case "food":
+				$genre = "Food and Drink";
+				break;
+			case "health":
+				$genre = "Health";
+				break;
+			case "living":
+				$genre = "Home";
+				break;
+			case "style":
+				$genre = "Fashion";
+				break;
+			case "tech":
+				$genre = "Tech";
+				break;
+			default:
+				$genre = ucfirst( $category );
+				break;
+		}
+
+		return $genre;
+	}
+
 }
