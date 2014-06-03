@@ -156,8 +156,4 @@ include( __DIR__ . "/BlogLockdown.php");
 /**
  * add task
  */
-if( function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask( __DIR__ . "/BlogTask.php", "blog", "BlogTask" );
-}
-
 $wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = __DIR__.'/BlogTask.class.php';
