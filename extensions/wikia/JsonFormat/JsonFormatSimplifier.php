@@ -118,12 +118,12 @@ class JsonFormatSimplifier {
 	 * @param String $inlineText
 	 */
 	private function appendInline( &$sectionElements, $inlineText ) {
-		if ( trim($inlineText) != "" ) {
-			if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+		if( count( $sectionElements ) == 0 || $sectionElements[count($sectionElements) - 1 ]["type"] != "paragraph") {
+			if ( trim($inlineText) != "" ) {
 				$sectionElements[] = [ "type" => "paragraph", "text" => $inlineText ];
-			} else {
-				$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 			}
+		} else {
+			$sectionElements[ count($sectionElements) - 1 ]["text"] .= $inlineText;
 		}
 	}
 
