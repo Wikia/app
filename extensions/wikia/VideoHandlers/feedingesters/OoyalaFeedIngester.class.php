@@ -114,12 +114,14 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
 
+				// Howdini has specific metadata which we want to map to our own
 				if ( $clipData['provider'] == "ooyala/howdini" ) {
-					$ooyalaAsset = new OoyalaAsset();
-					$clipData["genres"] = $ooyalaAsset->getHowdiniGenre( $video['metadata']['category'] );
+					$clipData["genres"] = $this->getHowdiniGenre( $video['metadata']['category'] );
 					$clipData["category"] = "Lifestyle";
 					$clipData["type"] = "How To";
 					$clipData["pageCategories"] = "Lifestyle, Howdini, How To";
+					$ooyalaAsset = new OoyalaAsset();
+					// Make sure all Howdini assets use the Howdini ad set
 					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
 				}
 
@@ -213,6 +215,45 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;
+	}
+
+	/**
+	 * Returns a genre based off of the category. This is specific to the Howdini provider. The details of this
+	 * mapping can be found in Jira VID-1691
+	 * @param $category
+	 * @return string
+	 */
+	function getHowdiniGenre( $category ) {
+
+		$category = strtolower( trim( $category ) );
+		switch( $category ) {
+			case "celebrations":
+				$genre = "Variety";
+				break;
+			case "family":
+				$genre = "Family";
+				break;
+			case "food":
+				$genre = "Food and Drink";
+				break;
+			case "health":
+				$genre = "Health";
+				break;
+			case "living":
+				$genre = "Home";
+				break;
+			case "style":
+				$genre = "Fashion";
+				break;
+			case "tech":
+				$genre = "Tech";
+				break;
+			default:
+				$genre = ucfirst( $category );
+				break;
+		}
+
+		return $genre;
 	}
 
 }
