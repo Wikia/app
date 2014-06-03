@@ -142,11 +142,11 @@ abstract class ApiWrapper {
 		return $videoId;
 	}
 
-	protected function initializeInterfaceObject(){
-		$this->interfaceObj = $this->getInterfaceObjectFromType( static::$RESPONSE_FORMAT );
+	protected function initializeInterfaceObject() {
+		$this->interfaceObj = $this->getInterfaceObjectFromType();
 	}
 
-	protected function getInterfaceObjectFromType( $type ) {
+	protected function getInterfaceObjectFromType() {
 
 		wfProfileIn( __METHOD__ );
 
@@ -177,7 +177,7 @@ abstract class ApiWrapper {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
 		}
-		$processedResponse = $this->processResponse( $response, $type );
+		$processedResponse = $this->processResponse( $response );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
 
 		wfProfileOut( __METHOD__ );
@@ -210,12 +210,11 @@ abstract class ApiWrapper {
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
-	protected function processResponse( $response, $type ){
+	protected function processResponse( $response ){
 
 		wfProfileIn( __METHOD__ );
 
-		$return = '';
-		switch ( $type ){
+		switch ( static::$RESPONSE_FORMAT ){
 			case self::RESPONSE_FORMAT_JSON :
 				 $return = json_decode( $response, true );
 			break;
