@@ -209,7 +209,7 @@ class Hooks {
 			 * problem here.
 			 */
 			$retval = null;
-			set_error_handler( 'Hooks::hookErrorHandler' );
+
 			wfProfileOut(__METHOD__);
 			wfProfileIn( $func );
 			try {
@@ -219,7 +219,7 @@ class Hooks {
 			}
 			wfProfileOut( $func );
 			wfProfileIn(__METHOD__);
-			restore_error_handler();
+
 
 			/* String return is an error; false return means stop processing. */
 			if ( is_string( $retval ) ) {
@@ -261,17 +261,4 @@ class Hooks {
 		return true;
 	}
 
-	/**
-	 * This REALLY should be protected... but it's public for compatibility
-	 *
-	 * @param $errno Unused
-	 * @param $errstr String: error message
-	 * @return Boolean: false
-	 */
-	public static function hookErrorHandler( $errno, $errstr ) {
-		if ( strpos( $errstr, 'expected to be a reference, value given' ) !== false ) {
-			throw new MWHookException( $errstr );
-		}
-		return false;
-	}
 }

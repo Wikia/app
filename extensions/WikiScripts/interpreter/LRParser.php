@@ -24,8 +24,10 @@ class WSLRParser implements WSParser {
 	private function loadGrammar() {
 		wfProfileIn( __METHOD__ );
 
-		if( self::$mLoaded )
+		if( self::$mLoaded ) {
+			wfProfileOut( __METHOD__ );
 			return;
+		}
 
 		require_once( 'LRTable.php' );
 

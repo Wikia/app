@@ -1137,6 +1137,7 @@ abstract class FileBackendStore extends FileBackend {
 				return $this->cache[$path]['stat'];
 			} elseif ( in_array( $this->cache[$path]['stat'], array( 'NOT_EXIST', 'NOT_EXIST_LATEST' ) ) ) {
 				if ( !$latest || $this->cache[$path]['stat'] === 'NOT_EXIST_LATEST' ) {
+					wfProfileOut( __METHOD__ );
 					return false;
 				}
 			}

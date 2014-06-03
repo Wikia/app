@@ -47,13 +47,7 @@ require_once ( $IP."/extensions/Math/Math.php" );
  * can be eliminated.
  */
 require_once("$IP/lib/composer/autoload.php");
-
-/**
- * wikia library incudes
- */
-
-// FIXME: move fluest-sql-php to composer via packagist
-require_once ( $IP."/lib/Wikia/fluent-sql-php/src/init.php");
+// configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
 /**
@@ -756,14 +750,6 @@ $wgMaxThumbnailArea = 0.9e7;
  */
 $wgWikiaMaxNameChars = 50;
 
-
-/**
- * @name $IPA
- *
- * path for answers repo
- */
-$IPA = "/usr/wikia/source/answers";
-
 /**
  * If this is set to true, then no externals (ads, spotlights, beacons such as google analytics and quantcast)
  * will be used.  This is used to help us get a good baseline for testing performance of in-house stuff only.
@@ -1263,7 +1249,7 @@ $wgHighValueCountries = null;
  * @name $wgAdVideoTargeting
  * Enables page-level video ad targeting
  */
-$wgAdVideoTargeting = false;
+$wgAdVideoTargeting = true;
 
 /**
  * trusted proxy service registry
@@ -1317,14 +1303,13 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
 $wgSFlowHost = 'localhost';
 $wgSFlowPort = 36343;
 $wgSFlowSampling = 1;
+$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Set to true to enable user-to-user e-mail.
  * This can potentially be abused, as it's hard to track.
  */
 $wgEnableUserEmail = false;
-
-$wgAutoloadClasses[ 'Wikia\\SFlow'] = "$IP/lib/vendor/SFlow.class.php";
 
 /**
  * Enables ETag globally
@@ -1408,3 +1393,16 @@ $wgLyricsItunesAffiliateToken = '';
  * Enables caching of search results on CDN
  */
 $wgEnableSpecialSearchCaching = true;
+
+/*
+ * @name wgEnableBuckyExt
+ * Enables real user performance reporting via Bucky
+ */
+$wgEnableBuckyExt = false;
+
+/*
+ * @name wgBuckySampling
+ * Sets the sampling rate for Bucky reporting, sampling applied at each page view.
+ * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
+ */
+$wgBuckySampling = 1;
