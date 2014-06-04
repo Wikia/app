@@ -36,8 +36,12 @@ define('wikia.intMap.createMap.pinTypes',
 				],
 				savePinTypes: [
 					serializeForm,
-					validate,
-					savePinTypes
+					function(event, serializedForm) {
+						return validate(serializedForm);
+					},
+					function(event, serializedForm, validatedForm) {
+						return savePinTypes(validatedForm);
+					}
 				],
 				pinTypesCreated: [
 					pinTypesCreated
@@ -135,18 +139,19 @@ define('wikia.intMap.createMap.pinTypes',
 		/**
 		 * TODO it's universal and should be extracted
 		 * @desc serializes form
-		 * @returns {object} - promise
+		 * @returns {object} - promise, resolves with serialized form
 		 */
 		function serializeForm() {
 			var serializedForm = {},
 				formArray = $form.serializeArray(),
+				fieldNameIsArrayRegex = /\[\]$/,
 				dfd = new $.Deferred();
 
 			$.each(formArray, function (i, element) {
 				var name = element.name,
 					value = element.value;
 
-				if (/\[\]$/.test(name)) {
+				if (fieldNameIsArrayRegex.test(name)) {
 					if ($.isArray(serializedForm[name])) {
 						serializedForm[name].push(value);
 					} else {
@@ -163,14 +168,15 @@ define('wikia.intMap.createMap.pinTypes',
 
 		/**
 		 * @desc validates pin types
-		 * @returns {object} - promise
+		 * @param {object} serializedForm - object with serialized form
+		 * @returns {object} - promise, resolves with validated form
 		 */
-		function validate() {
-			var serializedForm = arguments[1],
-				valid = true,
+		function validate(serializedForm) {
+			var valid = false,
 				dfd = new $.Deferred();
 
 			if (serializedForm['pinTypeNames[]']) {
+				valid = true;
 				serializedForm['pinTypeNames[]'].forEach(function (fieldValue) {
 					if (!(fieldValue.length > 0)) {
 						valid = false;
@@ -191,15 +197,14 @@ define('wikia.intMap.createMap.pinTypes',
 
 		/**
 		 * @desc sends pin types data to PHP controller
+		 * @param {object} validatedForm - object with serialized and validated form
 		 */
-		function savePinTypes() {
-			var serializedForm = arguments[2];
-
+		function savePinTypes(validatedForm) {
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMaps',
 				method: 'createPinTypes',
 				format: 'json',
-				data: serializedForm,
+				data: validatedForm,
 				callback: function(response) {
 					var data = response.results;
 
