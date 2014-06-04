@@ -354,7 +354,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @return Mixed
 	 */
-	public function getCreationData( $name, $default = false ) {
+	private function getCreationData( $name, $default = false ) {
 		if( isset( $this->creationData[ $name ] ) ) {
 			return $this->creationData[ $name ];
 		}
