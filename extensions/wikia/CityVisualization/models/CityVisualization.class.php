@@ -454,8 +454,8 @@ class CityVisualization extends WikiaModel {
 		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
 	}
 
-	public function getWikiImageNamesCacheKey($wikiId, $langCode) {
-		return $this->getVisualizationElementMemcKey('wiki_data_visualization_image_names', $wikiId, $langCode);
+	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
+		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
@@ -594,7 +594,7 @@ class CityVisualization extends WikiaModel {
 	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode);
+		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode, $filter);
 		$wikiImageNames = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImageNames)) {
