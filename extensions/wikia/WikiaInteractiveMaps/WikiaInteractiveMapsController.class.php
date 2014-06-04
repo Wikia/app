@@ -422,7 +422,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 
 		if( !$this->hasNamesForAllPinTypes() ) {
-			throw new InvalidParameterApiException( 'pin-type-name' );
+			throw new InvalidParameterApiException( 'pinTypeNames' );
 		}
 
 		if( !$this->wg->User->isLoggedIn() ) {
