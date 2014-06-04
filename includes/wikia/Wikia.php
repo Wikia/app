@@ -141,25 +141,26 @@ class Wikia {
 
 		$mMemcacheKey = wfMemcKey('favicon');
 		$mData = $wgMemc->get($mMemcacheKey);
+		$faviconFilename = 'Favicon.ico';
 
 		if ( empty($mData) ) {
-			$localFaviconTitle = Title::newFromText( 'Favicon.ico', NS_FILE );
-			$localFavicon = wfFindFile('Favicon.ico');
+			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
+			$localFavicon = wfFindFile( $faviconFilename );
 
 			#FIXME: Checking existance of Title in order to use File. #VID-1744
 			if ( $localFaviconTitle->exists() ) {
 				$favicon = $localFavicon->getURL();
 			} else {
-				$favicon = GlobalFile::newFromText( 'Favicon.ico', self::COMMUNITY_WIKI_ID )->getURL();
+				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
 			}
 
-			$wgMemc->set($mMemcacheKey, $favicon);
+			$wgMemc->set($mMemcacheKey, $favicon, 86400);
 		}
 
 		return $mData;
 	}
 
-	public static function uncacheFavicon() {
+	public static function invalidateFavicon() {
 		global $wgMemc;
 
 		$wgMemc->delete( wfMemcKey('favicon') );

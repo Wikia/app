@@ -150,7 +150,7 @@ class ThemeSettings {
 			$file = new LocalFile(Title::newFromText(self::FaviconImageName, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($temp_file->getPath(), '', '');
 			$temp_file->delete('');
-			Wikia::uncacheFavicon();
+			Wikia::invalidateFavicon();
 
 			$settings['favicon-image-url'] = $file->getURL();
 			$settings['favicon-image-name'] = $file->getName();
