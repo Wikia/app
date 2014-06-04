@@ -58,4 +58,34 @@ class MercuryApi {
 			'theme' => SassUtil::getOasisSettings()
 		];
 	}
+
+	public function getArticleComments( $app, $articleId, $page ) {
+		$comments = $app->sendRequest( 'ArticleComments', 'WikiaMobileCommentsPage', array(
+			'articleID' => $articleId,
+			'page' => $page,
+			'format' => 'json'
+		) )->getData();
+		$items = array();
+		foreach ( array_keys( $comments['commentListRaw'] ) as  $pageId) {
+			$comment = ArticleComment::newFromId( (int)$pageId );
+			if ( !empty( $comment ) ) {
+				$items[] = $this->getComment( $comment->getData() );
+			}
+		}
+		return $items;
+	}
+
+	private function getComment( $commentData ) {
+		$result = new stdClass();
+		$result->id = $commentData['id'];
+		$result->text = $commentData['text'];
+		$result->created = (int)$commentData['rawmwtimestamp'];
+
+		$result->user = new stdClass();
+		$result->user->name = $commentData['author']->mName;
+		$result->user->image = $commentData['avatar'];
+		$result->user->url = $commentData['userurl'];
+		return $result;
+	}
+
 }

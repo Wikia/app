@@ -3,6 +3,7 @@
 class MercuryApiController extends WikiaController {
 
 	const PARAM_ARTICLE_ID = 'articleId';
+	const PARAM_PAGE = 'page';
 	const NUMBER_CONTRIBUTORS = 6;
 
 	private $mercuryApi = null;
@@ -68,4 +69,21 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'settings', $theme );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
+
+	public function getArticleComments() {
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
+
+		if( $articleId === 0 ) {
+			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
+		}
+
+		$page = $this->request->getInt( self::PARAM_PAGE, 1 );
+
+		$comments = $this->mercuryApi->getArticleComments( $this->app, $articleId, $page );
+
+		$this->response->setVal( 'items', $comments );
+
+		//$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+	}
+
 }
