@@ -213,9 +213,9 @@ function veTrack( data ) {
 
 		// anon edit warning
 		try {
-			defaultData.anoneditwarning = !!anoneditwarning ? 'yes' : 'no';
+			defaultData.anonEditWarning = !!anoneditwarning ? 'yes' : 'no';
 		} catch ( e ) {
-			defaultData.anoneditwarning = 'unknown';
+			defaultData.anonEditWarning = 'unknown';
 		}
 		
 		finalData = $.extend( {}, defaultData, data );
