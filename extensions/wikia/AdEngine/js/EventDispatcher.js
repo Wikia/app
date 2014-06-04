@@ -18,12 +18,12 @@ define('ext.wikia.adEngine.eventDispatcher', function () {
 		 */
 		bind: function (eventName, callback, lazyBind) {
 
-			var event = this._get(eventName), i;
+			var event = this._get(eventName), i, j;
 
 			event.push(callback);
 
 			if (lazyBind === true) {
-				for (i = 0; i < event.calls.length; i = i + 1) {
+				for (i = 0, j = event.calls.length; i < j; i = i + 1) {
 					callback.apply(this, event.calls[i]);
 				}
 			}
@@ -47,12 +47,12 @@ define('ext.wikia.adEngine.eventDispatcher', function () {
 		 * @param eventName
 		 */
 		trigger: function (eventName /* , args... */) {
-			var i, result = true, event = this._get(eventName),
+			var i, j, result = true, event = this._get(eventName),
 				args = Array.prototype.slice.call(arguments, 1);
 
 			event.calls.push(args);
 
-			for (i = 0; result !== false && i < event.length; i = i + 1) {
+			for (i = 0, j = event.length; result !== false && i < j; i = i + 1) {
 				result = event[i].apply(this, args);
 			}
 

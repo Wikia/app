@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adHelper',
-	'ext.wikia.adEngine.eventDispatcher',
-	'ext.wikia.adEngine.slotTweaker'
-], function ($, log, window, document, adHelper, eventDispatcher, slotTweaker) {
+	'ext.wikia.adEngine.eventDispatcher'
+], function ($, log, window, document, adHelper, eventDispatcher) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.wikiaBarBoxad2',
@@ -22,7 +21,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 		loadOffsetTop = 300;
 
 	function isBetween(value, top, bottom) {
-		return top && bottom && ( value >= top && value <= bottom );
+		return top && bottom && (value >= top && value <= bottom);
 	}
 
 	function onScroll() {
@@ -32,14 +31,14 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 		if (!slotAdded.length && isBetween(scroll, loadOffsetTop, loadOffsetBottom)) {
 			log(['Adding new slot', slotname], 9, logGroup);
 
-			slotAdded = $('<div id="' + slotname + '" class="wikia-ad noprint" style="display: none;"></div>').appendTo('.WikiaSiteWrapper');
+			slotAdded = $('<div class="wikia-ad noprint" style="display: none;"></div>');
+			slotAdded.attr('id', slotname)
+			slotAdded.appendTo('.WikiaSiteWrapper');
 
 			window.adslots2.push([ slotname ]);
 		}
 
 		if (slotAdded.length) {
-
-			console.log(scroll, visibleOffsetTop, visibleOffsetBottom, isBetween(scroll, visibleOffsetTop, visibleOffsetBottom));
 
 			if (isBetween(scroll, visibleOffsetTop, visibleOffsetBottom)) {
 				wikiaBar.hideContainer();

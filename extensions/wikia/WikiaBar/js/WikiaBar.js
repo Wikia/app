@@ -200,10 +200,10 @@ var WikiaBar = {
 		$('#WikiaBar').show();
 	},
 	hideContainer: function() {
-		$('#WikiaBar').hide('hidden');
+		$('#WikiaBar').hide();
 	},
 	isContainerHidden: function() {
-		$('#WikiaBar').is(":visible");
+		return $('#WikiaBar').is(":visible");
 	},
 	onShownClick: function (e) {
 		this.changeBarStateData();
