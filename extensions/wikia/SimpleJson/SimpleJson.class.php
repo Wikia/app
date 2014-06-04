@@ -105,11 +105,11 @@ class SimpleJson extends WikiaService {
 		]);
 
 		return WikiaDataAccess::cache(
-			wfMemcKey('simplejson', $revisionId),
+			wfMemcKey('SimpleJson', $revisionId),
 			60*60*24*14*2, //twice as long as ParserCache
 			function() use ($userId) {
 				return [self::$media, self::$users, $userId];
-			}, WikiaDataAccess::REFRESH_CACHE
+			}
 		);
 	}
 }
