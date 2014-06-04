@@ -276,7 +276,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$results = $this->createTileset();
 
 			if( true === $results['success'] ) {
-				$this->setCreationData( 'tileSetId', $results['id'] );
+				$this->setCreationData( 'tileSetId', $results['content']->id );
 				$results = $this->createMapFromTilesetId();
 			}
 		}
@@ -336,15 +336,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
-		} else {
-			$result = json_decode( $response );
-			$results['success'] = true;
-			$results['id'] = $result->id;
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**
@@ -361,8 +358,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response['success'] ) {
-			$response['message'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else {
 			$response['content']->mapUrl = Title::newFromText(
 				self::PAGE_NAME . '/' . $response['content']->id,

@@ -18,7 +18,7 @@ class WikiaMaps {
 	const MAP_TYPE_GEO = 'geo';
 
 	const HTTP_CREATED_CODE = 201;
-	const HTTP_SUCCESS_CODE = 200;
+	const HTTP_SUCCESS_OK = 200;
 
 	/**
 	 * @var array API connection config
@@ -299,10 +299,12 @@ class WikiaMaps {
 	 */
 	private function processServiceResponse( MWHttpRequest $response ) {
 		$results['success'] = false;
-		$results['content'] = json_decode( $response->getContent() );
 		$status = $response->getStatus();
+		$content = json_decode( $response->getContent() );
+		$results['content'] = $content;
 
-		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_CODE ] ) ) {
+		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
+		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
 			$results['success'] = true;
 		}
 
