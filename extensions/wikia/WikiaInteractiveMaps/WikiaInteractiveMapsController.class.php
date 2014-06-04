@@ -382,7 +382,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @throws BadRequestApiException
 	 */
 	public function createPinTypes() {
-		$this->setCreationData( 'mapId', intval( $this->request->getVal( 'mapId', 0 ) ) );
+		$this->setCreationData( 'mapId', $this->request->getInt( 'mapId' ) );
 		$this->setCreationData( 'pinTypeNames', $this->request->getArray( 'pinTypeNames' ) );
 
 		$this->validatePinTypesCreation();
