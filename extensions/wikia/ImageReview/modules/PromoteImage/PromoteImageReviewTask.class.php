@@ -254,7 +254,7 @@ class PromoteImageReviewTask extends BaseTask {
 
 	private function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
 		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
-		$data = $this->getWikiCityImages($wikiData['images']);
+		$data = $this->getWikiCityImages($wikiData['images'], $images);
 
 		foreach($images as $image) {
 			$promoImage = \PromoImage::fromPathname($image['name']);
@@ -277,7 +277,7 @@ class PromoteImageReviewTask extends BaseTask {
 
 	private function syncAdditionalImages($sourceWikiId, $sourceWikiLang, $deletedImages) {
 		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
-		$data = $this->getWikiCityImages($wikiData['images']);
+		$data = $this->getWikiCityImages($wikiData['images'], $deletedImages);
 
 		if( isset($data['city_images']) ) {
 			$data['city_images'] = json_encode($data['city_images']);
@@ -286,13 +286,13 @@ class PromoteImageReviewTask extends BaseTask {
 		return $data;
 	}
 
-	private function getWikiCityImages($currentImages) {
+	private function getWikiCityImages($currentImages, $images) {
 		$data = [];
 
 		if (!empty($currentImages)) {
 			foreach($currentImages as $imageName) {
 				$promoImage = \PromoImage::fromPathname($imageName);
-				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $deletedImages) ) {
+				if($promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images)) {
 					$data['city_images'][] = $promoImage->getPathname();
 				}
 			}
