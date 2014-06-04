@@ -23,13 +23,13 @@
 	/* end temp grid transition code */
 	position: relative;
 	@media screen and (max-width: $width-tablet) {
-		width: 728px;
+		width: 768px;
 	}
 	@media screen and (min-width: $width-tablet) and (max-width: $width-desktop) {
-		width: 980px;
+		width: 1024px;
 	}
 	@media screen and (min-width: $width-desktop) {
-		width: 1100px;
+		width: 1156px;
 	}
 	z-index: 1;
 	>h1:first-child {
@@ -103,104 +103,6 @@
     margin: 0;
 }
 /* end temp transistion code */
-
-.WikiaRail {
-	float: right;
-	padding: 0 $width-gutter;
-	width: $width-rail;
-	&.grid-2 {
-		padding: 0;
-	}
-	.loading {
-		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-		height: 48px;
-		margin: 10px;
-		padding-top: 10px;
-	}
-
-	.module {
-		@include clearfix;
-		background: $color-page;
-		border: 1px solid $color-page-border;
-		@if lightness($color-page) < 50 {
-			background: $color-module-background;
-			border: 1px solid $color-page-border;
-		}
-		margin-bottom: 10px;
-		padding: 20px 15px 15px;
-		position: relative;
-		word-wrap: break-word;
-
-		header {
-			left: -3px;
-			font-size: 15px;
-			padding: 8px;
-			position: absolute;
-			width: $width-rail - 12px;
-		}
-		details {
-			em {
-				float: left;
-			}
-		}
-		.wikia-button {
-			float: right;
-		}
-		.more {
-			float: right;
-			font-size: 10px;
-			font-weight: bold;
-		}
-		p {
-			line-height: 21px;
-			margin: 0;
-			padding: 0;
-		}
-
-		.wikia-button {
-			font-weight: normal;
-		}
-
-		h1 {
-			font: {
-				size: 18px;
-				weight: bold;
-			}
-			margin: {
-				top: 0px;
-				bottom: 25px;
-			}
-			padding-left: 2px;
-		}
-
-		h2 {
-			@extend h1;
-			clear: both;
-			padding-top: 15px;
-
-			margin: {
-				top: 0;
-				bottom: 10px;
-			}
-		}
-
-		b {
-			font-weight: bold;
-		}
-		i {
-			font-style: italic;
-		}
-
-		.line-top {
-			border-top: solid 1px $color-page-border;
-		}
-
-		.chevron {
-			border-top-color: $color-text;
-		}
-	}
-}
-
 .tally {
 	@include clearfix;
 	font-size: 10px;
