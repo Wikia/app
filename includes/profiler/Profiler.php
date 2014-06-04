@@ -14,10 +14,10 @@
 function wfProfileIn( $functionname ) {
 	global $wgProfiler;
 	// Wikia change - @author: wladek - 2x faster
-	if ( $wgProfiler instanceof ProfilerStub ) {
-		// noop
-	} elseif ( $wgProfiler instanceof Profiler ) {
-		$wgProfiler->profileIn( $functionname );
+	if ( $wgProfiler instanceof Profiler ) {
+		if ( !($wgProfiler instanceof ProfilerStub) ) {
+			$wgProfiler->profileIn( $functionname );
+		}
 	} elseif ( isset( $wgProfiler['class'] ) ) {
 		Profiler::instance()->profileIn( $functionname );
 	}
@@ -30,10 +30,10 @@ function wfProfileIn( $functionname ) {
 function wfProfileOut( $functionname = 'missing' ) {
 	global $wgProfiler;
 	// Wikia change - @author: wladek - 2x faster
-	if ( $wgProfiler instanceof ProfilerStub ) {
-		// noop
-	} elseif ( $wgProfiler instanceof Profiler ) {
-		$wgProfiler->profileOut($functionname);
+	if ( $wgProfiler instanceof Profiler ) {
+		if ( !($wgProfiler instanceof ProfilerStub) ) {
+			$wgProfiler->profileOut($functionname);
+		}
 	} elseif ( isset( $wgProfiler['class'] ) ) {
 		Profiler::instance()->profileOut( $functionname );
 	}
