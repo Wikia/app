@@ -1,6 +1,5 @@
 <?php
 
-
 class WikiaMaps {
 
 	const DEFAULT_MEMCACHE_EXPIRE_TIME = 3600;
@@ -14,6 +13,9 @@ class WikiaMaps {
 
 	const MAP_HEIGHT = 300;
 	const MAP_WIDTH = 1600;
+
+	const MAP_TYPE_CUSTOM = 'uploaded';
+	const MAP_TYPE_GEO = 'geo';
 
 	/**
 	 * @var array API connection config
@@ -259,5 +261,17 @@ class WikiaMaps {
 		return $option;
 	}
 
-}
+	/**
+	 * Returns Geo tileset's id from config or 0
+	 *
+	 * @return integer
+	 */
+	public function getGeoMapTilesetId() {
+		if( isset( $this->config[ 'geoTilesetId' ] ) ) {
+			return $this->config[ 'geoTilesetId' ];
+		}
 
+		return 0;
+	}
+
+}

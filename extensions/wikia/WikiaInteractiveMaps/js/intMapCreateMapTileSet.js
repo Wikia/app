@@ -30,7 +30,9 @@ define(
 			events = {
 				intMapGeo: [
 					function() {
-						modal.trigger('previewTileSet', {});
+						modal.trigger('previewTileSet', {
+							type: 'geo'
+						});
 					}
 				],
 				intMapCustom: [
@@ -165,10 +167,8 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('previewTileSet', {
-							type: 'uploaded',
-							data: data
-						});
+						data.type = 'uploaded';
+						modal.trigger('previewTileSet', data);
 					} else {
 						modal.trigger('error', data.errors.pop());
 					}

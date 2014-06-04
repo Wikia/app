@@ -242,15 +242,33 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @throws BadRequestApiException
 	 */
 	public function createMap() {
-		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
-		$this->setCreationData( 'tileSetId', $tileSetId );
-		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
+		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
+
+		$this->setCreationData( 'tileSetId', $this->request->getInt( 'tileSetId', 0 ) );
 		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
+		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
 
 		$this->validateMapCreation();
 
 		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
 		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
+
+		if( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
+			$results = $this->createCustomMap();
+		} else {
+			$results = $this->createGeoMap();
+		}
+
+		$this->setVal( 'results', $results );
+	}
+
+	/**
+	 * Creates a custom map for given tileset or creating a tileset and then map out of it
+	 *
+	 * @return Array
+	 */
+	private function createCustomMap() {
+		$tileSetId = $this->getCreationData( 'tileSetId' );
 
 		if( $tileSetId > 0 ) {
 			$results = $this->createMapFromTilesetId();
@@ -263,7 +281,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->setVal( 'results', $results );
+		return $results;
+	}
+
+	/**
+	 * Creates a map from Geo tileset
+	 *
+	 * @return Array
+	 */
+	private function createGeoMap() {
+		$this->setCreationData( 'tileSetId', $this->mapsModel->getGeoMapTilesetId() );
+		return $this->createMapFromTilesetId();
 	}
 
 	/**
