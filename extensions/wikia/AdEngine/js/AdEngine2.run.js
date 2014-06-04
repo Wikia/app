@@ -20,8 +20,9 @@ require([
 	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, abTest) {
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -52,6 +53,8 @@ require([
 			});
 		}
 	};
+
+	messageListener.init();
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
@@ -161,7 +164,7 @@ window.AdEngine_loadLateAds = function () {
 		}
 
 		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
-		performanceBased = window.performance && Math.round(window.performance.now());
+		performanceBased = window.performance && window.performance.now && Math.round(window.performance.now());
 
 		require([
 			'wikia.log',
