@@ -18,7 +18,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		};
 
 	// attach handlers
-	body.addEventListener('change', function(event) {
+	body.addEventListener('change', function (event) {
 		var target = event.target;
 
 		if (target.id === 'orderMapList') {
@@ -26,8 +26,19 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		}
 	});
 
-	body.addEventListener('click', function(event) {
-		if (event.target.id === 'createMap') {
+	body.addEventListener('click', function (event) {
+		var targetId = event.target.id,
+			isLoggedInUser = (w.wgUserName !== null);
+
+		if (!isLoggedInUser && targetId === 'createMap') {
+			w.UserLoginModal.show({
+				origin: 'wikia-int-map-create-map',
+				callback: function () {
+					w.UserLogin.forceLoggedIn = true;
+					loadModal(convertSource(source), cacheKey);
+				}
+			});
+		} else if (isLoggedInUser && targetId === 'createMap') {
 			loadModal(convertSource(source), cacheKey);
 		}
 	});
@@ -49,10 +60,10 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 */
 
 	function loadModal(source, cacheKey) {
-		getAssets(source, cacheKey).then(function(assets) {
+		getAssets(source, cacheKey).then(function (assets) {
 			addAssetsToDOM(assets);
 
-			require(['wikia.intMaps.createMap.modal'], function(createMap) {
+			require(['wikia.intMaps.createMap.modal'], function (createMap) {
 				createMap.init(assets.mustache);
 			});
 		});
@@ -69,17 +80,17 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		var dfd = new $.Deferred(),
 			assets;
 
-		require(['wikia.cache'], function(cache) {
+		require(['wikia.cache'], function (cache) {
 			assets = cache.getVersioned(cacheKey);
 
 			if (assets) {
 				dfd.resolve(assets);
 			} else {
-				require(['wikia.loader'], function(loader) {
+				require(['wikia.loader'], function (loader) {
 					loader({
 						type: loader.MULTI,
 						resources: source
-					}).done(function(assets) {
+					}).done(function (assets) {
 						dfd.resolve(assets);
 					});
 				});
@@ -95,7 +106,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 */
 
 	function addAssetsToDOM(assets) {
-		require(['wikia.loader'], function(loader) {
+		require(['wikia.loader'], function (loader) {
 			loader.processScript(assets.scripts);
 			loader.processStyle(assets.styles);
 		});
@@ -110,7 +121,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	function convertSource(source) {
 		var convertedSource = {};
 
-		Object.keys(source).forEach(function(type) {
+		Object.keys(source).forEach(function (type) {
 			convertedSource[type] = source[type].join();
 		});
 

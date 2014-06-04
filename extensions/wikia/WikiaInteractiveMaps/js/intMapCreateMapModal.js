@@ -1,13 +1,13 @@
 define(
-	'wikia.intMaps.createMap.modal',
-	[
+	'wikia.intMaps.createMap.modal', [
 		'jquery',
 		'wikia.querystring',
+		'wikia.window',
 		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview'
 	],
-	function($, qs, utils, tileSet, preview) {
+	function ($, qs, w, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -20,26 +20,23 @@ define(
 					size: 'medium',
 					content: '',
 					title: $.msg('wikia-interactive-maps-create-map-header'),
-					buttons: [
-						{
-							vars: {
-								value: $.msg('wikia-interactive-maps-create-map-next-btn'),
-								classes: ['normal', 'primary'],
-								id: 'intMapNext'
-							}
-						},
-						{
-							vars: {
-								value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
-								id: 'intMapBack'
-							}
+					buttons: [{
+						vars: {
+							value: $.msg('wikia-interactive-maps-create-map-next-btn'),
+							classes: ['normal', 'primary'],
+							id: 'intMapNext'
 						}
-					]
+					}, {
+						vars: {
+							value: $.msg('wikia-interactive-maps-create-map-back-btn'),
+							id: 'intMapBack'
+						}
+					}]
 				}
 			},
 			events = {
 				error: [
-					function(message) {
+					function (message) {
 						showError(message);
 					}
 				],
@@ -47,8 +44,13 @@ define(
 					cleanUpError
 				],
 				mapCreated: [
-					function(data) {
+					function (data) {
 						showCreatedMap(data);
+					}
+				],
+				beforeClose: [
+					function () {
+						w.UserLogin.refreshIfAfterForceLogin();
 					}
 				]
 			};
@@ -61,7 +63,7 @@ define(
 		function init(templates) {
 			modalConfig.vars.content = utils.render(templates[0], {});
 
-			createModal(modalConfig, function() {
+			createModal(modalConfig, function () {
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 				modal.$errorContainer = $('.map-creation-error');
