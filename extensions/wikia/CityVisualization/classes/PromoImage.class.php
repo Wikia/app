@@ -114,8 +114,12 @@ class PromoImage extends WikiaObject {
 		return $this->pathnameHelper(true, true);
 	}
 
-	public function getOriginFile(){
-		$f = GlobalFile::newFromText($this->getPathname(), $this->getCityId());
+	public function getOriginFile($cityId = null){
+		if (empty($cityId)){
+			$cityId =  $this->getCityId();
+		}
+
+		$f = GlobalFile::newFromText($this->getPathname(), $cityId);
 		return $f;
 	}
 
@@ -182,10 +186,6 @@ class PromoImage extends WikiaObject {
 	public function purgeImage() {
 		$this->deleteImage();
 		$this->deleteImageFromCorporate();
-		if ($this->isCityIdSet()){
-			//for legacy compatibility attempt to remove older image path format
-			$this->removalTaskHelper($this->pathnameHelper(false,true));
-		}
 		return $this;
 	}
 
@@ -197,10 +197,6 @@ class PromoImage extends WikiaObject {
 
 	public function deleteImage() {
 		$this->deleteImageHelper($this->getPathname());
-		if ($this->isCityIdSet()){
-			//for legacy compatibility attempt to remove older image path format
-			$this->deleteImageHelper($this->pathnameHelper(false,true));
-		}
 		$this->removed = true;
 		return $this;
 	}
