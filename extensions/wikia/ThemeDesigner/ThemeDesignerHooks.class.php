@@ -38,7 +38,6 @@ class ThemeDesignerHooks {
 	private static function checkFavicon( $title ) {
 		wfProfileIn( __METHOD__ );
 		if ( $title->getText() == 'Favicon.ico' ) {
-			christianLog( 'Favicon modified' );
 			Wikia::uncacheFavicon();
 		}
 		wfProfileOut( __METHOD__ );
