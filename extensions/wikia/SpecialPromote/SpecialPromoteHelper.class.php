@@ -432,11 +432,11 @@ class SpecialPromoteHelper extends WikiaObject {
 
 		foreach($freeImageTypeSlots as $imageType){
 			$promoImage = new PromoImage($imageType, $this->wg->DBname);
-			// attempt to Leftover image types from current wiki
+			// attempt to delete leftover image types from current wiki
 			if ($promoImage->getOriginFile(F::app()->wg->cityId)->exists()) {
 				$promoImage->deleteImage();
 			}
-			// attempt to Delete Leftover image types from corporate wiki
+			// attempt to delete leftover image types from corporate wiki
 			if ($promoImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
 				$promoImage->deleteImageFromCorporate();
 			}

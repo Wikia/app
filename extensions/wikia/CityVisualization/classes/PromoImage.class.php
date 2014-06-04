@@ -165,21 +165,12 @@ class PromoImage extends WikiaObject {
 
 		//create task only for languages which have corporate wiki
 		if ($visualization->isCorporateLang($content_lang)) {
-			if (class_exists('PromoteImageReviewTask')) {
-				$task = new PromoteImageReviewTask();
-				$deletion_list = array(
-					$content_lang => array(
-						$this->wg->cityId => array($imageName)
-					)
-				);
-
-				$task->createTask(
-					array(
-						'deletion_list' => $deletion_list
-					),
-					TASK_QUEUED
-				);
-			}
+			$deletion_list = array(
+				$content_lang => array(
+					$this->wg->cityId => array($imageName)
+				)
+			);
+			wfRunHooks('CreatePromoImageReviewTask', ['delete', $deletion_list]);
 		}
 	}
 
