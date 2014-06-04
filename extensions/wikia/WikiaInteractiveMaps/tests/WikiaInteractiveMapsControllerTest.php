@@ -5,16 +5,16 @@ require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/models/WikiaMaps.cla
 class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 
 	/**
-	 * @dataProvider haveNamesForAllPinTypesDataProvider
+	 * @dataProvider hasNamesForAllPinTypesDataProvider
 	 */
-	public function testHaveNamesForAllPinTypes( $message, $input, $expected ) {
+	public function testHasNamesForAllPinTypes( $message, $input, $expected ) {
 		$controller = new WikiaInteractiveMapsController();
 		$controller->setCreationData( 'pinTypeNames', $input );
 
 		$this->assertEquals( $expected, $controller->hasNamesForAllPinTypes(), $message );
 	}
 
-	public function haveNamesForAllPinTypesDataProvider() {
+	public function hasNamesForAllPinTypesDataProvider() {
 		return [
 			[
 				'Empty pin types data - valid',
