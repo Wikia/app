@@ -2327,4 +2327,32 @@ class Wikia {
 
 		return true;
 	}
+
+	/**
+	 * Get an array of country codes and return the country names array indexed by corresponding codes
+	 * @param array $countryCodes
+	 * @return array Country names indexed by code
+	 */
+	public static function getCountryNames( array $countryCodes ) {
+		if ( empty( $countryCodes ) || !is_callable( array( 'CountryNames', 'getNames' ) ) ) {
+			return [];
+		}
+
+		global $wgLang;
+		$userLanguageCode = $wgLang->getCode();
+
+		// Retrieve the list of countries in user's language (via CLDR)
+		$countries = CountryNames::getNames( $userLanguageCode );
+		if ( empty( $countries ) ) {
+			return [];
+		}
+
+		foreach ( $countryCodes as $countryCode ) {
+			if ( isset( $countries[$countryCode] ) ) {
+				$countryNames[$countryCode] = $countries[$countryCode];
+			}
+		}
+
+		return $countryNames;
+	}
 }
