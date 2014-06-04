@@ -485,17 +485,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function hasNamesForAllPinTypes() {
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
-		$isValid = true;
 
 		foreach( $pinTypesNames as $name ) {
 			$name = trim( $name );
 			if( empty( $name ) ) {
-				$isValid = false;
-				break;
+				return false;
 			}
 		}
 
-		return $isValid;
+		return true;
 	}
 
 	/**
