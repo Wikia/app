@@ -136,6 +136,35 @@ class Wikia {
 		unset(Wikia::$vars[$key]);
 	}
 
+	public static function getFavicon() {
+		global $wgMemc;
+
+		$mMemcacheKey = wfMemcKey('favicon');
+		$mData = $wgMemc->get($mMemcacheKey);
+
+		if ( empty($mData) ) {
+			$localFaviconTitle = Title::newFromText( 'Favicon.ico', NS_FILE );
+			$localFavicon = wfFindFile('Favicon.ico');
+
+			#FIXME: Checking existance of Title in order to use File. #VID-1744
+			if ( $localFaviconTitle->exists() ) {
+				$favicon = $localFavicon->getURL();
+			} else {
+				$favicon = GlobalFile::newFromText( 'Favicon.ico', self::COMMUNITY_WIKI_ID )->getURL();
+			}
+
+			$wgMemc->set($mMemcacheKey, $favicon);
+		}
+
+		return $mData;
+	}
+
+	public static function uncacheFavicon() {
+		global $wgMemc;
+
+		$wgMemc->delete( wfMemcKey('favicon') );
+	}
+
 	/**
 	 * @author inez@wikia.com
 	 */

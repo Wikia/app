@@ -3193,13 +3193,7 @@ $templates
 			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
 		}
 
-		if ( $wgFavicon !== false ) {
-			// Wikia change begin - @author: macbre
-			wfRunHooks('OutputPageFavicon', [&$wgFavicon]);
-			// Wikia change end
-
-			$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => $wgFavicon ) );
-		}
+		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFavicon() ) );
 
 		# OpenSearch description link
 		$tags[] = Html::element( 'link', array(
