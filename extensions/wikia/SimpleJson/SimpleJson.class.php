@@ -4,21 +4,28 @@ class SimpleJson extends WikiaService {
 	static $media = [];
 	static $users = [];
 
+	const CACHE_VERSION = '0.0.0';
+
 	private static function createMarker($galleryId = NULL){
 		$id = count(self::$media) - 1;
 		$dataRef = "data-ref={$id}";
 		$galleryId = !is_null( $galleryId ) ? " id='gallery-{$galleryId}'" : "";
 
-		return "{{media {$dataRef}{$galleryId}}}";
+		return "<script class='article-media' {$dataRef}{$galleryId}}}></script>";
 	}
 
-	private static function createMediaObj($details, $imageName, $caption = ""){
+	private static function createMediaObj($details, $imageName, $caption = "") {
 		return [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'caption' => ParserPool::parse($caption, RequestContext::getMain()->getTitle(), new ParserOptions(), false)->getText(), //TODO: This does not work and leaves link comments behind!
+			'caption' => ParserPool::parse(
+					$caption,
+					RequestContext::getMain()->getTitle(),
+					new ParserOptions(),
+					false
+				)->getText(),
 			'user' => (int) $details['userId'],
 			'embed' => $details['videoEmbedCode'],
 			'views' => (int) $details['videoViews']
@@ -29,7 +36,7 @@ class SimpleJson extends WikiaService {
 		self::$users[(int) $details['userId']] = [
 			'name' => $details['userName'],
 			'avatar' => $details['userThumbUrl'],
-			'url' => $details['userPageUrl']
+			'url' => Title::newFromText($details['userName'], NS_USER)->getLocalURL()
 		];
 	}
 
@@ -78,19 +85,31 @@ class SimpleJson extends WikiaService {
 		global $wgSimpleJson;
 
 		if ( $wgSimpleJson ) {
-			$confstr .= '!simpleJson';
+			$confstr .= '!simpleJson:' . self::CACHE_VERSION;
 		}
 
 		return true;
 	}
 
-	public static function getData($revisionId){
+	public static function getData( Article $article ){
+
+		$revisionId = $article->getRevIdFetched();
+		$userId = $article->getUser();
+		$user = User::newFromId( $userId );
+
+		self::addUserObj([
+			'userId' => $userId,
+			'userName' => $user->getName(),
+			'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
+			'userPageUrl' => $user->getUserPage()->getLocalURL()
+		]);
+
 		return WikiaDataAccess::cache(
 			wfMemcKey('simplejson', $revisionId),
 			60*60*24*14*2, //twice as long as ParserCache
-			function() {
-				return [self::$media, self::$users];
-			}
+			function() use ($userId) {
+				return [self::$media, self::$users, $userId];
+			}, WikiaDataAccess::REFRESH_CACHE
 		);
 	}
 }

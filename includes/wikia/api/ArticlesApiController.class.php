@@ -929,7 +929,7 @@ class ArticlesApiController extends WikiaApiController {
 			if ( !empty( $articleId ) ) {
 				$article = Article::newFromID( $articleId );
 			}else if ( !empty( $articleTitle ) ) {
-				$title = Title::newFromText($articleTitle, NS_MAIN);
+				$title = Title::newFromText( $articleTitle, NS_MAIN );
 
 				if ( $title->exists() ) {
 					$article = Article::newFromTitle( $title, RequestContext::getMain() );
@@ -950,7 +950,9 @@ class ArticlesApiController extends WikiaApiController {
 			$wgSimpleJson = true;
 
 			$parsedArticle = $article->getParserOutput();
-			list($media, $users) = SimpleJson::getData($article->getRevIdFetched());
+			User::newFromId($article->getUser());
+
+			list($media, $users, $userId) = SimpleJson::getData( $article );
 
 			$wgSimpleJson = false;
 			$categories = [];
@@ -966,17 +968,18 @@ class ArticlesApiController extends WikiaApiController {
 				'payload' => [
 					'title' => $parsedArticle->getDisplayTitle(),
 					'article' => $parsedArticle->getText(),
+					'user' => $userId,
 					'media' => $media,
 					'users' => $users,
 					'categories' => $categories,
-				]
+				],
+				'baseUrl' => F::app()->wg->Server
 			];
 
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 		} else {
 			throw new BadRequestApiException( 'This entry point is disabled' );
 		}
-
 	}
 
 	public function getPopular() {
