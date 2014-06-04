@@ -11,7 +11,7 @@ class WikiaInteractiveMapsControllerTest extends WikiaBaseTest {
 		$controller = new WikiaInteractiveMapsController();
 		$controller->setCreationData( 'pinTypeNames', $input );
 
-		$this->assertEquals( $expected, $controller->haveNamesForAllPinTypes(), $message );
+		$this->assertEquals( $expected, $controller->hasNamesForAllPinTypes(), $message );
 	}
 
 	public function haveNamesForAllPinTypesDataProvider() {

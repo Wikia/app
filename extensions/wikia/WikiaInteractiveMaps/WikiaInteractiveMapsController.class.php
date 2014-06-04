@@ -421,7 +421,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			throw new InvalidParameterApiException( 'pinTypeNames' );
 		}
 
-		if( !$this->haveNamesForAllPinTypes() ) {
+		if( !$this->hasNamesForAllPinTypes() ) {
 			throw new InvalidParameterApiException( 'pin-type-name' );
 		}
 
@@ -483,7 +483,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 *
 	 * @return bool
 	 */
-	public function haveNamesForAllPinTypes() {
+	public function hasNamesForAllPinTypes() {
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 		$isValid = true;
 
