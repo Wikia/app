@@ -89,8 +89,8 @@ class ProfilerXhprof extends ProfilerStub {
 	}
 
 	/**
-	 * Filter supplied profiling data.
-	 * Removes entries that are invalid or took too short to be reported.
+	 * Filter given profiling data.
+	 * Removes entries that are invalid or didn't reach the time threshold to be reported.
 	 *
 	 * @param $data array
 	 * @return array
