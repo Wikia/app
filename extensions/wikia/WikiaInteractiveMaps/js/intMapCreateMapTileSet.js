@@ -11,7 +11,8 @@ define(
 		// reference to modal component
 		var modal,
 			// mustache template
-			template,
+			uiTemplate,
+			tileSetThumbTemplate,
 			// template data
 			templateData = {
 				mapType: [
@@ -24,6 +25,7 @@ define(
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
 					}
 				],
+				browse: 'Browse existing tile sets',
 				uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
 			},
 			//modal events
@@ -38,11 +40,30 @@ define(
 						showStep('uploadImage');
 					}
 				],
+				intMapBrowse: [
+					function() {
+						showStep('browseTileSets');
+						getTileSetThumbs();
+					}
+				],
 				previousStep: [
 					previousStep
 				],
 				chooseTileSet: [
 					chooseTileSet
+				],
+				receivedTileSets: [
+					showTileSetThumbs
+				],
+				selectTileSet: [
+					function(event) {
+						modal.trigger('previewTileSet', {
+							type: 'custom',
+							data: {
+								tileSetId: $(event.currentTarget).data('id')
+							}
+						});
+					}
 				]
 			},
 			// steps for choose tile set
@@ -59,7 +80,10 @@ define(
 				},
 				browseTileSets: {
 					id: '#intMapBrowse',
-					buttons: {}
+					buttons: {
+						'#intMapBack': 'previousStep'
+					},
+					helper: getTileSetThumbs
 				}
 			},
 			// image upload entry point
@@ -67,17 +91,20 @@ define(
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors
-			$sections;
+			$sections,
+			$browse;
 
 		/**
 		 * @desc initializes and configures UI
 		 * @param {object} modalRef - modal component
-		 * @param {string} mustacheTemplate - mustache template
+		 * @param {string} _uiTemplate - mustache template for this step UI
+		 * @param {string} _tileSetThumbTemplate - mustache template for tile set thumb
 		 */
 
-		function init(modalRef, mustacheTemplate) {
+		function init(modalRef, _uiTemplate, _tileSetThumbTemplate) {
 			modal = modalRef;
-			template = mustacheTemplate;
+			uiTemplate = _uiTemplate;
+			tileSetThumbTemplate = _tileSetThumbTemplate;
 
 			utils.bindEvents(modal, events);
 
@@ -95,10 +122,11 @@ define(
 		 */
 
 		function chooseTileSet() {
-			modal.$innerContent.html(utils.render(template, templateData));
+			modal.$innerContent.html(utils.render(uiTemplate, templateData));
 
 			// cache selectors
 			$sections = modal.$innerContent.children();
+			$browse = $sections.filter('#intMapBrowse');
 
 			showStep(stepsStack.pop());
 		}
@@ -134,6 +162,10 @@ define(
 			showStepContent(step.id);
 			utils.setButtons(modal, step.buttons);
 
+			if (typeof step.helper === 'function') {
+				step.helper();
+			}
+
 			modal.trigger('cleanUpError');
 
 		}
@@ -147,6 +179,42 @@ define(
 			stepsStack.pop();
 
 			showStep(stepsStack.pop());
+		}
+
+		/**
+		 * @desc loads tile sets thumbs
+		 * @param {string=} searchTerm - search term, if specified loads tile set which name match this term
+		 */
+
+		function getTileSetThumbs(searchTerm) {
+			$.nirvana.sendRequest({
+				controller: 'WikiaInteractiveMaps',
+				method: 'getTileSets',
+				format: 'json',
+				data: searchTerm ? {searchTerm: searchTerm} : null,
+				callback: function(response) {
+					var data = response.results;
+
+					if (data && data.success) {
+						modal.trigger('receivedTileSets', data.tileSets);
+					} else {
+						modal.trigger('error', data.error);
+					}
+				},
+				onErrorCallback: function(response) {
+					modal.trigger('error', response.results.error);
+				}
+			});
+		}
+
+		function showTileSetThumbs(tileSets) {
+			var html = '';
+
+			tileSets.forEach(function(tileSet) {
+				html += utils.render(tileSetThumbTemplate, tileSet);
+			});
+
+			$browse.html(html);
 		}
 
 		/**
