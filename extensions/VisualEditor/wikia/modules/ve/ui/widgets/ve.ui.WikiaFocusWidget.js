@@ -39,8 +39,8 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
 		.connect( this, {
-			'setup': this.onSurfaceSetup,
-			'teardown': this.onSurfaceTeardown
+			'setup': this.onDocumentSetup,
+			'teardown': this.onDocumentTeardown
 		} );
 	this.$window
 		.on( {
@@ -101,10 +101,10 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 	}
 };
 
-ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
+ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function() {
 	var interval, i = 0;
 
-	if ( this.surface.getView().getDir() === 'rtl' ) {
+	if ( this.surface.getDir() === 'rtl' ) {
 		this.switchDirection();
 	}
 
@@ -134,7 +134,7 @@ ve.ui.WikiaFocusWidget.prototype.switchDirection = function() {
 	this.$left = [this.$right, this.$right = this.$left][0];
 };
 
-ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
+ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function() {
 	this.showDistractions();
 	this.$element.remove();
 };

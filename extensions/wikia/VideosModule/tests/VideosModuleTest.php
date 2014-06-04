@@ -32,52 +32,41 @@
 			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
 		}
 
-
 		/**
-		 * Test Video Module Controller
-		 * @dataProvider videosModuleDataProvider
+		 * Test that both duplicate videos and videos found in the wgVideosModuleBlackList are filtered out when
+		 * creating the list of videos to be shown in the videos module
+		 * @dataProvider testAddToListDataProvider
 		 */
-		public function testVideosModule( $requestParams, $expectedData ) {
+		public function testAddToList( $videoData ) {
 			$this->setUpMock();
 
-			$response = $this->app->sendRequest( 'VideosModule', 'index', $requestParams );
-
-			$responseData = $response->getData();
-			$this->assertEquals( $expectedData['result'], $responseData['result'] );
-			$this->assertEquals( $expectedData['msg'], $responseData['msg'] );
-			$this->assertEquals( $expectedData['videos'], $responseData['videos'] );
+			$module = new VideosModule();
+			$videos = [];
+			foreach ( $videoData as $video ) {
+				$module->addToList( $videos, $video );
+			}
+			// Test if blacklisted videos are filtered out
+			$this->assertArrayNotHasKey(self::$videoBlacklist[0], $videos);
+			// Test if duplicate videos are filtered out
+			$this->assertEquals(1, array_count_values($videos)["Video_2"]);
 		}
 
-		public function videosModuleDataProvider() {
-			$requestParams1 = [
-				'articleId' => null,
-				'verticalOnly' => null,
-				'limit' => null,
-				'local' => null,
-				'sort' => null,
-			];
-
-			$expectedData1 = [
-				'result' => 'error',
-				'msg' => wfMessage( 'videosmodule-error-no-articleId' )->plain(),
-				'videos' => [],
-			];
-
-			$requestParams2 = [
-				'articleId' => null,
-				'verticalOnly' => false,
-				'limit' => null,
-				'local' => null,
-				'sort' => null,
-			];
-
+		public function testAddToListDataProvider() {
 			return [
-				// Related videos + no article id
-				[ $requestParams1, $expectedData1 ],
-				// Related videos + no article id + verticalOnly = false
-				[ $requestParams2, $expectedData1 ],
+				[
+					[
+						"Video_1",
+						"Video_2",
+						self::$videoBlacklist[0]
+					],
+					[
+						"Video_1",
+						"Video_2",
+						"Video_2",
+						"Video_3"
+					]
+				]
 			];
 		}
-
 	}
 

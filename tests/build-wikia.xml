@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Wikia QA" default="all" basedir=".">
-    <description>Wikia QA Tests</description>
+	<description>Wikia QA Tests</description>
 
-    <property name="localsettings" value="/usr/wikia/source/wiki/LocalSettings.php" />
-    <property name="phpunitexcludegroups" value="deprecated,Broken" />
-    <property name="dbname" value="firefly" />
+	<property name="localsettings" value="/usr/wikia/source/wiki/LocalSettings.php" />
+	<property name="phpunitexcludegroups" value="deprecated,Broken" />
+	<property name="dbname" value="firefly" />
 
 	<!-- PHP Tests -->
-    <!-- fast unit tests only -->
-    <target name="fastphp">
-        <mkdir dir="${basedir}/build/logs" />
-        <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_DBNAME" value="${dbname}" />
-            <arg line="run-test.php
-                       --log-junit=${basedir}/build/logs/phpunit.xml
-                       --conf=${localsettings}
-                       --configuration=${basedir}/phpunit.xml
-					   --exclude-group=Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
-                       " />
-        </exec>
-    </target>
+	<!-- fast unit tests only -->
+	<target name="fastphp">
+		<mkdir dir="${basedir}/build/logs" />
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_DBNAME" value="${dbname}" />
+			<arg line="run-test.php
+						--log-junit=${basedir}/build/logs/phpunit.xml
+						--conf=${localsettings}
+						--configuration=${basedir}/phpunit.xml
+						--exclude-group=Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
+						" />
+		</exec>
+	</target>
 	<!-- unit tests only -->
 	<target name="php">
 		<mkdir dir="${basedir}/build/logs" />
 		<exec executable="php" dir="${basedir}" failonerror="true">
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
-                       --log-junit ${basedir}/build/logs/phpunit.xml
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-					   --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
-                       " />
+						--log-junit ${basedir}/build/logs/phpunit.xml
+						--conf ${localsettings}
+						--configuration ${basedir}/phpunit.xml
+						--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+						" />
 		</exec>
 	</target>
 
 	<!-- unit, infrastructure, integration tests -->
-    <target name="phpunit">
+	<target name="phpunit">
 		<mkdir dir="${basedir}/build/logs" />
-        <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_DBNAME" value="${dbname}" />
-            <arg line="run-test.php
-                       --log-junit ${basedir}/build/logs/phpunit.xml
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-					   --exclude-group ${phpunitexcludegroups}
-                       " />
-        </exec>
-    </target>
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_DBNAME" value="${dbname}" />
+			<arg line="run-test.php
+						--log-junit ${basedir}/build/logs/phpunit.xml
+						--conf ${localsettings}
+						--configuration ${basedir}/phpunit.xml
+						--exclude-group ${phpunitexcludegroups}
+						" />
+		</exec>
+	</target>
 
 	<!-- used to run a single test file / extension-->
-    <target name="phpunit-single">
-        <exec executable="php" dir="${basedir}" failonerror="true">
-            <env key="SERVER_DBNAME" value="${dbname}" />
-            <arg line="run-test.php
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-                       ${unittest}
-                       " />
-        </exec>
-    </target>
+	<target name="phpunit-single">
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_DBNAME" value="${dbname}" />
+			<arg line="run-test.php
+						--conf ${localsettings}
+						--configuration ${basedir}/phpunit.xml
+						${unittest}
+						" />
+		</exec>
+	</target>
 
 	<!-- code coverage report -->
 	<target name="phpunit-coverage">
@@ -66,11 +66,11 @@
 		<exec executable="php" dir="${basedir}" failonerror="true">
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-                       --coverage-html ${basedir}/build/coverage
-                       --exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
-                       " />
+						--conf ${localsettings}
+						--configuration ${basedir}/phpunit.xml
+						--coverage-html ${basedir}/build/coverage
+						--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+						" />
 		</exec>
 	</target>
 
@@ -78,27 +78,42 @@
 		<exec executable="php" dir="${basedir}" failonerror="true">
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="run-test.php
-                       --conf ${localsettings}
-                       --configuration ${basedir}/phpunit.xml
-                       --coverage-html ${basedir}/build/coverage
-                       ${unittest}
-                       " />
+						--conf ${localsettings}
+						--configuration ${basedir}/phpunit.xml
+						--coverage-html ${basedir}/build/coverage
+						${unittest}
+						" />
+		</exec>
+	</target>
+
+	<!-- Slow unit tests list - without execution -->
+	<target name="slow-list">
+		<mkdir dir="${basedir}/build/logs" />
+		<exec executable="php" dir="${basedir}" failonerror="true">
+			<env key="SERVER_DBNAME" value="${dbname}" />
+			<arg line="run-test.php
+						--log-junit=${basedir}/build/logs/phpunit.xml
+						--conf=${localsettings}
+						--configuration=${basedir}/phpunit.xml
+						--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+						--slow-list
+						" />
 		</exec>
 	</target>
 	<!-- /PHP Tests -->
 
 	<!-- JS Tests -->
-    <target name="jsunit">
+	<target name="jsunit">
 		<mkdir dir="${basedir}/build" />
-        <exec executable="karma" dir="${basedir}" failonerror="true">
-            <arg line="start
-            		karma/js-unit.conf.js
+		<exec executable="karma" dir="${basedir}" failonerror="true">
+			<arg line="start
+					karma/js-unit.conf.js
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage
-            	" />
-        </exec>
-    </target>
+				" />
+		</exec>
+	</target>
 
 	<target name="jsintegration">
 		<mkdir dir="${basedir}/build" />
@@ -108,7 +123,7 @@
 					--single-run
 					--no-auto-watch
 					--reporters junit,coverage
-            	" />
+				" />
 		</exec>
 	</target>
 	<!-- /JS Tests -->
@@ -119,13 +134,13 @@
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="codelint.php
-					   --conf ${localsettings}
-					   --mode=php
-					   --dir=${basedir}/../extensions/wikia,${basedir}/../includes/wikia,${basedir}/../skins/oasis,${basedir}/../extensions/3rdparty/LyricWiki
-					   --blacklist=extensions/wikia/hacks,extensions/wikia/CodeLint/examples,/templates/,.tmpl.php,.setup.php,/tests/
-					   --format=html
-					   --output=${basedir}/build/phplint.html
-					   " />
+						--conf ${localsettings}
+						--mode=php
+						--dir=${basedir}/../extensions/wikia,${basedir}/../includes/wikia,${basedir}/../skins/oasis,${basedir}/../extensions/3rdparty/LyricWiki
+						--blacklist=extensions/wikia/hacks,extensions/wikia/CodeLint/examples,/templates/,.tmpl.php,.setup.php,/tests/
+						--format=html
+						--output=${basedir}/build/phplint.html
+						" />
 		</exec>
 	</target>
 
@@ -134,13 +149,13 @@
 		<exec executable="php" dir="${basedir}/../maintenance/wikia" failonerror="true">
 			<env key="SERVER_DBNAME" value="${dbname}" />
 			<arg line="codelint.php
-					   --conf ${localsettings}
-					   --mode=js
-					   --dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../resources,${basedir}/../extensions/wikia
-					   --blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
-					   --format=html
-					   --output=${basedir}/build/jslint.html
-					   " />
+						--conf ${localsettings}
+						--mode=js
+						--dir=${basedir}/../skins/oasis,${basedir}/../skins/wikia,${basedir}/../resources,${basedir}/../extensions/wikia
+						--blacklist=/CodeLint/examples/anticode.js,/resources/wikia/libraries/ghostwriter/,/libraries/zepto/,/libraries/yui,/CodeLint/js/,/RTE/ckeditor/_../,/jquery/jquery-,/resources/jquery,/resources/mediawiki,/Chat/js/lib/,lib/socket.io,/AdEngine/bezen/,/extensions/wikia/hacks,/extensions/wikia/SemanticBundle,qunit/qunit.js,jasmine/jasmine.js,/resources/mediawiki.language/,/tests/
+						--format=html
+						--output=${basedir}/build/jslint.html
+						" />
 		</exec>
 	</target>
 	<!-- /Linters -->

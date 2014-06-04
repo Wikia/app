@@ -1,8 +1,14 @@
-
-var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain) {
+// TODO: This file is only used by JWPlayer. Remove it when JWPlayer is removed
+/*global define*/
+define('ext.wikia.adEngine.dartHelper', [
+	'wikia.log',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.dartUrl',
+	'ext.wikia.adEngine.adLogicDartSubdomain'
+], function (log, adLogicPageParams, dartUrl, adLogicDartSubdomain) {
 	'use strict';
 
-	var logGroup = 'WikiaDartHelper',
+	var logGroup = 'ext.wikia.adEngine.dartHelper',
 		getUrl,
 		ord = Math.round(Math.random() * 23456787654),
 		tile = 1,
@@ -32,7 +38,7 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl, adLogicDar
 			localOrd = params.ord || ord,
 			url,
 			subdomain = params.subdomain || (adLogicDartSubdomain && adLogicDartSubdomain.getSubdomain()),
-			pageParams = adLogicPageLevelParams.getPageLevelParams(),
+			pageParams = adLogicPageParams.getPageLevelParams(),
 			name,
 			value;
 
@@ -93,11 +99,4 @@ var WikiaDartHelper = function (log, adLogicPageLevelParams, dartUrl, adLogicDar
 	return {
 		getUrl: getUrl
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('ext.wikia.adengine.darthelper', ['wikia.log', 'wikia.adlogicpageparams', 'wikia.darturl', 'ext.wikia.adengine.adlogic.subdomain'], context.WikiaDartHelper);
-	}
-}(this));
+});

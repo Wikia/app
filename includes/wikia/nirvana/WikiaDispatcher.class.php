@@ -97,6 +97,7 @@ class WikiaDispatcher {
 				if ( $nextCall['reset'] ) $response->resetData();
 			}
 
+			$profilename = null;
 			try {
 
 				// Determine the "base" name for the controller, stripping off Controller/Service/Module
@@ -126,6 +127,7 @@ class WikiaDispatcher {
 				wfProfileIn($profilename);
 
 				$controller = new $controllerClassName; /* @var $controller WikiaController */
+				$response->setTemplateEngine($controllerClassName::DEFAULT_TEMPLATE_ENGINE);
 
 				if ( $callNext ) {
 					list ($nextController, $nextMethod, $resetData) = explode("::", $callNext);
@@ -191,7 +193,9 @@ class WikiaDispatcher {
 				$controller->setApp( $app );
 				$controller->init();
 
-				if ( method_exists( $controller, 'preventUsage' ) && $controller->preventUsage( $controller->getContext()->getUser(), $method ) ) {
+				if ( method_exists( $controller, 'preventBlockedUsage' ) && $controller->preventBlockedUsage( $controller->getContext()->getUser(), $method ) ) {
+					$result = false;
+				} elseif ( method_exists( $controller, 'userAllowedRequirementCheck' ) && $controller->userAllowedRequirementCheck( $controller->getContext()->getUser(), $method ) ) {
 					$result = false;
 				} else {
 					// Actually call the controller::method!
@@ -238,7 +242,9 @@ class WikiaDispatcher {
 					}
 				}
 			} catch ( Exception $e ) {
-				wfProfileOut($profilename);
+				if ($profilename) {
+					wfProfileOut($profilename);
+				}
 
 				$response->setException($e);
 				Wikia::log(__METHOD__, $e->getMessage() );

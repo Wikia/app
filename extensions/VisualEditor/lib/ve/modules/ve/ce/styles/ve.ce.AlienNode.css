@@ -1,0 +1,31 @@
+/*!
+ * VisualEditor ContentEditable AlienNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Fix weird Chrome native selection involving floated elements */
+.ve-ce-alienBlockNode:before,
+.ve-ce-alienBlockNode:after {
+	content: '';
+}
+
+.ve-ce-alienBlockNode {
+	display: block;
+}
+
+.ve-ce-alienInlineNode  {
+	display: inline;
+}
+
+.ve-ce-alienNode-phantom {
+	background-color: #C3E59A;
+	background-image: -ms-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px );
+	background-image: -webkit-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px);
+	background-image: repeating-linear-gradient(-45deg, white 0px, white 5px, #C3E59A 5px, #C3E59A 10px );
+	background-size: 14px 14px;
+	box-shadow: none;
+	cursor: not-allowed;
+}

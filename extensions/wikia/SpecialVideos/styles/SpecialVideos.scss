@@ -1,0 +1,190 @@
+@import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/color";
+@import "skins/oasis/css/mixins/bodytext";
+@import "skins/oasis/css/mixins/box-shadow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/gradient";
+
+$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
+$placeholder-bg-color: darken($color-page, 10%);
+@if $is-dark-wiki {
+	$placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Light.png);  /* base64 */
+	$placeholder-bg-color: lighten($color-page, 10%);
+}
+
+.addVideo {
+	margin-top: 2px;
+	position: relative;
+	vertical-align: top;
+	img.sprite {
+		background-color: transparent;
+		background-repeat: no-repeat;
+		&.addRelatedVideo {
+			background-image: url(/extensions/wikia/SpecialVideos/images/AddVideo_Icon.png);  /* base64 */
+			height: 22px;
+			width: 30px;
+			float: left;
+		}
+	}
+}
+
+.ContentHeader {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border;
+	padding: 8px 0 18px;
+	margin-bottom: 18px;
+
+	> label {
+		display: block;
+		float: left;
+		font-weight: bold;
+		line-height: 21px;
+		margin-right: 8px;
+	}
+
+	.WikiaDropdown {
+		float:left;
+		.dropdown {
+			@include box-shadow(0, 0, 0, transparent, 0, 0);
+			width: 215px;
+		}
+		strong {
+			font-weight: normal;
+		}
+	}
+}
+
+.special-videos-grid {
+	@include clearfix;
+	border-bottom: 1px solid $color-page-border;
+	color: $color-alternate-text;
+	margin-bottom: 18px;
+
+	a {
+		color: $color-alternate-text;
+		&:hover {
+			color: $color-links;
+			text-decoration: none;
+		}
+	}
+
+	// Override article p styles
+	p, p + p, .posted-in {
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 18px;
+		margin: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	li {
+		margin: 0;
+		padding-bottom: 5px;
+		position: relative;
+		&:hover .remove {
+			display: block;
+		}
+	}
+
+	img {
+		// handle failed image loads so they maintain somewhat reasonable proportions
+		max-height: 208px;
+	}
+
+	.info {
+		height: 150px;
+		margin-top: 5px;
+	}
+
+	.by-views {
+		white-space: normal;
+	}
+
+	.views {
+		white-space: nowrap;
+		&:before {
+			content: '\2666';
+			font-size: 7px;
+			padding-right: 3px;
+			vertical-align: top;
+		}
+	}
+
+	.title {
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 26px;
+		margin-bottom: 5px;
+		overflow: visible;
+		white-space: normal;
+		a {
+			color: $color-text;
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+
+	.add-video-placeholder {
+		opacity: .5;
+		background-image: $placeholder-bg-img;
+		background-color: $placeholder-bg-color;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		border: 1px solid $color-page-border;
+		cursor: pointer;
+		height: 205px;
+		margin-bottom: 8px;
+		width: 100%;
+
+		&:hover {
+			opacity: .65;
+		}
+	}
+	// TODO: add ellipses/more js with VID-1601
+	.posted-in {
+		overflow: hidden;
+		white-space: nowrap;
+		width: 100%;
+		ul, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: inline;
+		}
+		li:after {
+			content: ", ";
+		}
+		li:last-child:after {
+			content: "";
+		}
+		a.ellipses {
+			float: right;
+			display: none;
+		}
+		> div {
+			display: inline-block;
+			&.processed {
+				float: left; // ie10 layout
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+	.remove {
+		background-color: #ddd;
+		cursor: pointer;
+		display: none;
+		margin-right: 12px;
+		padding: 0px 2px 4px 5px;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 101;
+	}
+}
+.messageHolder {
+	display: none;
+}

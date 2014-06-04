@@ -8,11 +8,12 @@
  */
 
 define('wikia.videohandler.ooyala', [
+	'jquery',
 	'wikia.window',
-	require.optional('ext.wikia.adengine.dartvideohelper'),
+	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function (window, dartVideoHelper, loader, log) {
+], function ($, window, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -23,6 +24,7 @@ define('wikia.videohandler.ooyala', [
 	return function (params, vb) {
 		var containerId = vb.timeStampId(params.playerId),
 			started = false,
+			tagUrl,
 			createParams = {
 				width: vb.width + 'px',
 				height: vb.height + 'px',
@@ -57,6 +59,18 @@ define('wikia.videohandler.ooyala', [
 				vb.track('ad-finish');
 			});
 
+			// Listen GoogleIma event to fill adTagUrl for no-flash scenario
+			messageBus.subscribe('googleImaReady', 'tracking', function () {
+				var i;
+				if (player && player.modules && player.modules.length) {
+					for (i = 0; i < player.modules.length; i = i + 1) {
+						if (player.modules[i].name === "GoogleIma" && player.modules[i].instance) {
+							player.modules[i].instance.adTagUrl = tagUrl;
+						}
+					}
+				}
+			});
+
 			// Log all events and values (for debugging)
 			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
 				console.log(eventName);
@@ -68,11 +82,13 @@ define('wikia.videohandler.ooyala', [
 
 		if (window.wgAdVideoTargeting && window.wgShowAds) {
 			if (!dartVideoHelper) {
-				throw 'ext.wikia.adengine.dartvideohelper is not defined and it should as we need to display ads';
+				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
-			createParams['google-ima-ads-manager'] = {
-				adTagUrl: dartVideoHelper.getUrl(),
-				showInAdControlBar: true
+
+			tagUrl = dartVideoHelper.getUrl();
+
+			createParams.vast = {
+				tagUrl: tagUrl
 			};
 		}
 
@@ -87,29 +103,25 @@ define('wikia.videohandler.ooyala', [
 			log( message, log.levels.error, 'VideoBootstrap' );
 		}
 
-		/* Ooyala doesn't support more than one player type (i.e. age-gate and non-age-gate)
-		 * per page load unless we delete window.OO before we reload the player script.
-		 *
-		 * If they ever fix this we can remove this hack and load params.jsFile with
-		 * video bootstrap
-		 */
-		delete window.OO;
-
-		log( 'Begin getting Ooyala assets', log.levels.info, 'VideoBootstrap' );
-
-		/* the second file depends on the first file */
-		loader({
-			type: loader.JS,
-			resources: params.jsFile[ 0 ]
-		}).done(function() {
-			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
+		if ( window.OO === undefined ) {
+			/* the second file depends on the first file */
 			loader({
 				type: loader.JS,
-				resources: params.jsFile[ 1 ]
+				resources: params.jsFile[ 0 ]
 			}).done(function() {
-				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-				window.OO.Player.create( containerId, params.videoId, createParams );
+				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				loader({
+					type: loader.JS,
+					resources: params.jsFile[ 1 ]
+				}).done(function() {
+					log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+					window.OO.Player.create( containerId, params.videoId, createParams );
+				}).fail( loadFail );
 			}).fail( loadFail );
-		}).fail( loadFail );
+		} else {
+			window.OO.Player.create( containerId, params.videoId, createParams );
+		}
+
 	};
 });

@@ -677,7 +677,7 @@ $messages['diq'] = array(
 	'scavengerhunt-button-disable' => 'Aktif niya',
 	'scavengerhunt-button-enable' => 'Aktif ke',
 	'scavengerhunt-button-delete' => 'Bestere',
-	'scavengerhunt-entry-form-name' => 'Namey şıma',
+	'scavengerhunt-entry-form-name' => 'Nameyê şıma:',
 	'scavengerhunt-quit-game-button-quit' => 'Bıvci',
 	'scavengerhunt-quit-game-button-cancel' => 'Bıtexelne',
 	'scavengerhunt-label-entry-form-email' => 'E postay karberi',
@@ -1405,6 +1405,25 @@ $messages['ja'] = array(
 	'scavengerhunt-button-delete' => '削除',
 	'scavengerhunt-entry-form-name' => '名前:',
 	'scavengerhunt-entry-form-email' => 'メール アドレス',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'scavengerhunt-list-header-actions' => 'ಕ್ರಿಯೆಗಳು',
+	'scavengerhunt-list-enabled' => 'ಶಕ್ತಗೊಳಿಸಿದ',
+	'scavengerhunt-list-disabled' => 'ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿದ',
+	'scavengerhunt-list-edit' => 'ಸಂಪಾದಿಸಿ',
+	'scavengerhunt-label-name' => 'ಹೆಸರು:',
+	'scavengerhunt-button-disable' => 'ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ',
+	'scavengerhunt-button-enable' => 'ಸಕ್ರಿಯಗೊಳಿಸಿ',
+	'scavengerhunt-button-delete' => 'ಅಳಿಸು',
+	'scavengerhunt-entry-form-name' => 'ನಿಮ್ಮ ಹೆಸರು:',
+	'scavengerhunt-entry-form-email' => 'ನಿಮ್ಮ ಇ-ಅಂಚೆ ವಿಳಾಸ',
+	'scavengerhunt-quit-game-button-quit' => 'ನಿರ್ಗಮಿಸು',
+	'scavengerhunt-label-entry-form-username' => 'ಬಳಕೆದಾರ ಹೆಸರು',
+	'scavengerhunt-label-clue-size' => 'ಅಕ್ಷರಶೈಲಿಯಗಾತ್ರ',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

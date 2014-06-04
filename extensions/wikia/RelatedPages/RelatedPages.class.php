@@ -12,7 +12,7 @@ class RelatedPages {
 	protected $memcKeyPrefix = '';
 	static protected $instance = null;
 
-	protected function __construct( ) {
+	protected function __construct() {
 	}
 
 	protected function __clone() {
@@ -34,7 +34,7 @@ class RelatedPages {
 	}
 
 	private static function followRedirect( &$title ) {
-		$redirect = (new WikiPage( $title ))->getRedirectTarget();
+		$redirect = ( new WikiPage( $title ) )->getRedirectTarget();
 
 		if ( !empty( $redirect ) ) {
 			$title = $redirect;
@@ -75,15 +75,15 @@ class RelatedPages {
 		$this->categories = null;
 	}
 
-	public function setData( $data ){
+	public function setData( $data ) {
 		$this->pages = $data;
 	}
 
-	public function getData(){
+	public function getData() {
 		return $this->pages;
 	}
 
-	public function pushData( $data ){
+	public function pushData( $data ) {
 		$this->pages[] = $data;
 	}
 
@@ -91,7 +91,7 @@ class RelatedPages {
 		return $this->isRendered;
 	}
 
-	public function setRendered($value) {
+	public function setRendered( $value ) {
 		$this->isRendered = $value;
 	}
 
@@ -116,9 +116,9 @@ class RelatedPages {
 		$this->setData( array() );
 		$categories = $this->getCategories( $articleId );
 
-		if ( count($categories) > 0 ) {
+		if ( count( $categories ) > 0 ) {
 			//RT#80681/RT#139837: apply category blacklist
-			$categories = CategoriesService::filterOutBlacklistedCategories($categories);
+			$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
 			$categories = $this->getCategoriesByRank( $categories );
 
 			if( count( $categories ) > $this->categoriesLimit ) {
@@ -136,17 +136,17 @@ class RelatedPages {
 		return $this->getData();
 	}
 
-	protected function afterGet( $pages, $limit ){
+	protected function afterGet( $pages, $limit ) {
 		wfProfileIn( __METHOD__ );
 
-		$imageServing = new ImageServing( array_keys($pages), 200, array( 'w' => 2, 'h' => 1 ) );
-		$images = $imageServing->getImages(1); // get just one image per article
+		$imageServing = new ImageServing( array_keys( $pages ), 200, array( 'w' => 2, 'h' => 1 ) );
+		$images = $imageServing->getImages( 1 ); // get just one image per article
 
 		foreach( $pages as $pageId => $data ) {
-			$data['imgUrl'] = isset( $images[$pageId] ) ? $images[$pageId][0]['url'] : null;
-			$data['text'] = $this->getArticleSnippet( $pageId );
+			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'text' ] = $this->getArticleSnippet( $pageId );
 			$this->pushData( $data );
-			if (count($this->getData()) >= $limit) {
+			if ( count( $this->getData() ) >= $limit ) {
 				break;
 			}
 		}
@@ -163,13 +163,13 @@ class RelatedPages {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ){
-			$cacheKey = wfMemcKey( __METHOD__, $category);
+		if ( empty( $this->memcKeyPrefix ) ) {
+			$cacheKey = wfMemcKey( __METHOD__, $category );
 		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category);
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
 		}
 		$cache = $wgMemc->get( $cacheKey );
-		if( is_array($cache) ) {
+		if( is_array( $cache ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cache;
 		}
@@ -188,7 +188,7 @@ class RelatedPages {
 			$joinSql
 		);
 
-		while( $row = $dbr->fetchObject($res) ) {
+		while( $row = $dbr->fetchObject( $res ) ) {
 			$pages[] = $row->page_id;
 		}
 
@@ -202,27 +202,27 @@ class RelatedPages {
 	* get pages that belong to a list of categories
 	* @author Owen
 	*/
-	protected function getPagesForCategories($articleId, $limit, Array $categories) {
+	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
 		global $wgMemc;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $articleId);
+			$cacheKey = wfMemcKey( __METHOD__, $articleId );
 		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId);
+			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId );
 		}
-		$cache = $wgMemc->get($cacheKey);
+		$cache = $wgMemc->get( $cacheKey );
 
 		if ( is_array( $cache ) ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $cache;
 		}
 
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB( DB_SLAVE );
 		$pages = array();
 
-		if ( empty($categories) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $categories ) ) {
+			wfProfileOut( __METHOD__ );
 			return $pages;
 		}
 
@@ -231,24 +231,24 @@ class RelatedPages {
 
 		$innerSQL = $dbr->selectSQLText(
 			$tables,
-			array( "cl_from AS page_id"),
-			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )"),
+			array( "cl_from AS page_id" ),
+			array( "cl_to IN ( " . $dbr->makeList( $categories ) . " )" ),
 			__METHOD__,
 			array(),
 			$joinSql
 		);
 
 		$sql = "SELECT page_id, count(*) c FROM ( $innerSQL ) i WHERE page_id != $articleId GROUP BY page_id ORDER BY c desc LIMIT $limit";
-		$res = $dbr->query($sql, __METHOD__);
+		$res = $dbr->query( $sql, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$pageId = $row->page_id;
-			$title = Title::newFromId($pageId);
+			$title = Title::newFromId( $pageId );
 
 			// filter out redirect pages (RT #72662)
-			if (!empty($title) && $title->exists() && !$title->isRedirect()) {
+			if ( !empty( $title ) && $title->exists() && !$title->isRedirect() ) {
 				$prefixedTitle = $title->getPrefixedText();
 
-				$pages[$pageId] = array(
+				$pages[ $pageId ] = array(
 					'url' => $title->getLocalUrl(),
 					'title' => $prefixedTitle,
 					'id' => (int) $pageId
@@ -256,8 +256,8 @@ class RelatedPages {
 			}
 		}
 
-		$wgMemc->set($cacheKey, $pages, ( $this->categoryCacheTTL * 3600));
-		wfProfileOut(__METHOD__);
+		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
+		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
@@ -265,7 +265,7 @@ class RelatedPages {
 		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
-		if(count($wgContentNamespaces) > 0) {
+		if( count( $wgContentNamespaces ) > 0 ) {
 			$joinSql = array( "page" =>
 				array(
 					"JOIN",
@@ -273,8 +273,8 @@ class RelatedPages {
 						" AND ",
 						array(
 							"page_id = cl_from",
-							( count($wgContentNamespaces) == 1)
-								? "page_namespace = " . intval(reset($wgContentNamespaces))
+							( count( $wgContentNamespaces ) == 1 )
+								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
 								: "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )",
 						)
 					)
@@ -313,7 +313,7 @@ class RelatedPages {
 			}
 		}
 
-		return count($results) ? array_values( $results ) : $categories;
+		return count( $results ) ? array_values( $results ) : $categories;
 	}
 
 	/**
@@ -325,28 +325,28 @@ class RelatedPages {
 		wfProfileIn( __METHOD__ );
 
 		$results = WikiaDataAccess::cacheWithLock(
-			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__),
+			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__) : wfMemcKey( $this->memcKeyPrefix, __METHOD__ ),
 			$this->categoryRankCacheTTL * 3600,
 			function () use ( $wgContentNamespaces ) {
-				$db = wfGetDB(DB_SLAVE);
+				$db = wfGetDB( DB_SLAVE );
 				$sql = ( new WikiaSQL() )
-					->SELECT( "COUNT(cl_to)" )->AS_("count")->FIELD('cl_to')
+					->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FIELD( 'cl_to' )
 					->FROM( 'categorylinks' )
 					->GROUP_BY( 'cl_to' )
 					->HAVING( 'count > 1' )
-					->ORDER_BY( ['count', 'desc'] );
+					->ORDER_BY( [ 'count', 'desc' ] );
 
-				if( count($wgContentNamespaces) > 0 ) {
-					$join_cond = ( count($wgContentNamespaces) == 1)
-								? "page_namespace = " . intval(reset($wgContentNamespaces))
+				if( count( $wgContentNamespaces ) > 0 ) {
+					$join_cond = ( count( $wgContentNamespaces ) == 1 )
+								? "page_namespace = " . intval( reset( $wgContentNamespaces ) )
 								: "page_namespace in ( " . $db->makeList( $wgContentNamespaces ) . " )";
 
-					$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
+					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
 				}
 
 				$rank = 1;
-				$results = $sql->runLoop($db, function(&$results, $row) use ( &$rank ) {
-					$results[$row->cl_to] = $rank;
+				$results = $sql->runLoop( $db, function( &$results, $row ) use ( &$rank ) {
+					$results[ $row->cl_to ] = $rank;
 					$rank++;
 				});
 
@@ -363,25 +363,25 @@ class RelatedPages {
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, md5($category) );
+			$cacheKey = wfMemcKey( __METHOD__, md5( $category ) );
 		} else {
 			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, md5( $category ) );
 		}
-		$count = $wgMemc->get($cacheKey);
+		$count = $wgMemc->get( $cacheKey );
 
 		if ( !isset( $count ) ) {
 			$dbr = wfGetDB(DB_SLAVE);
 			$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_("count")->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
-			if( count($wgContentNamespaces) > 0 ) {
-				$join_cond = ( count($wgContentNamespaces) == 1) ? "page_namespace = " . intval(reset($wgContentNamespaces)) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
-				$sql->JOIN('page')->ON("page_id = cl_from AND $join_cond");
+			if( count( $wgContentNamespaces ) > 0 ) {
+				$join_cond = ( count( $wgContentNamespaces ) == 1) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
+				$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
 			}
 
-			$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); });
+			$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
 
 			$count = ( is_object( $result ) ) ? $result->count : 0;
 			if ( $count > 0 ) {
-				$wgMemc->set($cacheKey, $count, $this->categoryRankCacheTTL * 3600);
+				$wgMemc->set( $cacheKey, $count, $this->categoryRankCacheTTL * 3600 );
 			}
 		}
 
@@ -413,12 +413,12 @@ class RelatedPages {
 		$request = $app->wg->Request;
 		$title = $wg->Title;
 
-		if ( $out->isArticle() && $request->getVal( 'action', 'view') == 'view' ) {
+		if ( $out->isArticle() && $request->getVal( 'action', 'view' ) == 'view' ) {
 			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
 
 			if(
-				!(Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces )) &&
-				!$app->checkSkin( 'wikiamobile' )
+				!( Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces ) )
+				&& !$app->checkSkin( 'wikiamobile' )
 			) {
 				if ( $app->checkSkin( 'oasis' ) ) {
 					OasisController::addSkinAssetGroup( 'relatedpages_js' );
@@ -445,7 +445,7 @@ class RelatedPages {
 	 *
 	 * @return bool
 	 */
-	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages) {
+	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ) {
 		if ( F::app()->wg->Request->getVal( 'action', 'view' ) == 'view' ) {
 			$jsStaticPackages[] = 'relatedpages_wikiamobile_js';
 			//css is in WikiaMobile.scss as AM can't concatanate scss files currently
@@ -459,7 +459,8 @@ class RelatedPages {
 
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
-		if ( ( $skin === 'oasis' || $skin === 'monobook') && $wgTitle->getNamespace() !== NS_FILE ){
+		// File pages handle their own rendering of related pages wrapper
+		if ( ( $skin === 'oasis' || $skin === 'monobook' ) && $wgTitle->getNamespace() !== NS_FILE ) {
 			$text = '<div id="RelatedPagesModuleWrapper"></div>';
 		}
 

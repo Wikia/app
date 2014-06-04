@@ -24,18 +24,22 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  * @author OsamaK
  */
 $messages['ar'] = array(
 	'userdata' => 'احصل على بيانات المستخدم',
 	'userdata-userid-label' => 'توفير معرف المستخدم:',
 	'userdata-submit' => 'الحصول على البيانات',
+	'userdata-not-updated' => 'فشل في تحديث wgUserData',
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Y-M D
  */
 $messages['br'] = array(
+	'userdata' => 'Tapout roadennoù an implijer',
 	'userdata-submit' => 'Tapout roadennoù',
 );
 

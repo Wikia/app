@@ -260,6 +260,7 @@ $messages['br'] = array(
 	'lvs-restore-video-success' => 'Adlakaet ho peus ar video er roll-mañ.',
 	'lvs-error-permission-access' => "Ne c'hallit ket mont d'ar bajenn-mañ.",
 	'lvs-error-invalid-page-status' => "Ne c'hallit ket assevel ar video-mañ.",
+	'lvs-error-already-kept-forever' => "Dalc'het eo bet ar video-mañ dija.",
 	'lvs-posted-in-more' => "muioc'h",
 	'lvs-confirm-keep-title' => "Derc'hel ar video",
 	'lvs-confirm-undo-swap-title' => 'Kadarnaat an dizober',
@@ -435,12 +436,12 @@ $messages['es'] = array(
 	'lvs-callout-header' => 'Hemos encontrado los siguientes videos de tu wiki en Wikia Video. <br /> Sería buena idea reemplazar tus videos desde Wikia Video porque:',
 	'lvs-match-stats-description' => 'Videos<br />con coincidencias',
 	'lvs-callout-title-licensed' => '100% autorizado',
-	'lvs-callout-reason-licensed' => "Está '''autorizado''' su uso en las comunidades de vuestros wikis",
+	'lvs-callout-reason-licensed' => 'Está autorizado su uso en las comunidades de sus wikis',
 	'lvs-callout-title-quality' => 'Alta Calidad',
 	'lvs-callout-reason-quality' => "Los videos de Wikia son en '''alta definición'''",
 	'lvs-callout-title-collaborative' => 'Colaborativo',
-	'lvs-callout-reason-collaborative' => "Son '''colaborativos''' y pueden ser '''usados en múltiples wikis'''",
-	'lvs-callout-reason-more' => 'y más cosas... añadiremos más funcionalidades y formas de usar y administrador estos vídeos fácilmente. ¡Estad atentos!',
+	'lvs-callout-reason-collaborative' => 'Son colaborativos y pueden ser usados en múltiples wikis',
+	'lvs-callout-reason-more' => 'y más cosas... añadiremos más funcionalidades y formas de usar y administrador estos vídeos fácilmente. ¡Mantente atento!',
 	'lvs-instructions-header' => 'Cómo usar esta página',
 	'lvs-instructions' => 'Muchos de los videos que se añaden a vuestros wikis dejan de estar disponibles cuando se borran por violaciones de derechos de autor. Es por esto que Wikia ha subido [[w:c:video|miles de videos]] autorizados por nuestros patrocinadores del contenido. Esta página especial es una forma fácil de ver si hay alguna copia autorizada de un video parecido o igual al de vuestro wiki. Por favor, tened en cuenta que a menudo el mismo video puede tener una miniatura diferente así que es mejor que reviséis el video antes de tomar una decisión. ¡Feliz intercambio!',
 	'lvs-button-keep' => 'Mantener',
@@ -725,6 +726,20 @@ $messages['ja'] = array(
 	'lvs-instructions' => 'せっかくページに動画を埋め込んでも、著作権侵害により動画が削除されてしまい、利用できなくなることがあります。この問題に対する解決策としてウィキアでは、[[w:c:video|提携先から得た数多くの許諾済み動画を提供し]]、各ウィキで利用できるようにしました。このページは、このウィキアに既に埋め込まれている各動画を、同じもしくは似た内容の許諾済み動画に差し替えられないか簡単に検索するためのものです。なお、完全に同じ動画であるにもかかわらず動画サムネイルが違ってしまうことがあることに注意してください。差し替え動画を決める際には、動画自体を再生して確認することをおすすめいたします。',
 	'lvs-button-keep' => 'このまま',
 	'lvs-button-swap' => '差し替え',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'lvs-history-button-text' => 'ಇತಿಹಾಸ',
+	'lvs-button-yes' => 'ಹೌದು',
+	'lvs-button-no' => 'ಇಲ್ಲ',
+	'lvs-more-suggestions' => 'ಯಾವುದೇ ಸಲಹೆಗಳಿಲ್ಲ',
+	'lvs-undo-swap' => 'ಕಳಚು',
+	'lvs-undo-keep' => 'ಕಳಚು',
+	'lvs-posted-in-more' => 'ಹೆಚ್ಚು',
+	'lvs-new-flag' => 'ಹೊಸ',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -8,7 +8,6 @@ class VideoHandlerController extends WikiaController {
 	const VIDEO_LIMIT = 100;
 	const DEFAULT_THUMBNAIL_WIDTH = 250;
 	const DEFAULT_THUMBNAIL_HEIGHT = 250;
-	const DEFAULT_POSTED_IN_ARTICLES = 10;
 
 	/**
 	 * Get the embed code for the title given by fileTitle
@@ -248,20 +247,16 @@ class VideoHandlerController extends WikiaController {
 	/**
 	 * Exposes the VideoHandlerHelper::getVideoDetail method from this controller
 	 * @requestParam array|string fileTitle - The title of the file to get details for
-	 * @requestParam int thumbWidth - The width of the video thumbnail to return
-	 * @requestParam int thumbHeight - The height of the video thumbnail to return
+	 * @requestParam array videoOptions
+	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
 	 * @requestParam int articleLimit - The number of "posted in" article detail records to return
-	 * @requestParam bool getThumb - Whether to return a fully formed html thumbnail of the video or not
 	 * @responseParam array detail - The video details
 	 */
 	public function getVideoDetail() {
 		wfProfileIn( __METHOD__ );
 
 		$fileTitle = $this->getVal( 'fileTitle', array() );
-		$thumbWidth = $this->getVal( 'thumbWidth', self::DEFAULT_THUMBNAIL_WIDTH );
-		$thumbHeight = $this->getVal( 'thumbHeight', self::DEFAULT_THUMBNAIL_HEIGHT );
-		$articleLimit = $this->getVal( 'articleLimit', self::DEFAULT_POSTED_IN_ARTICLES );
-		$getThumb = $this->getVal( 'getThumb', false );
+		$videoOptions = $this->getVal( 'videoOptions', array() );
 
 		if ( is_string( $fileTitle ) ) {
 			$singleFile = true;
@@ -271,17 +266,18 @@ class VideoHandlerController extends WikiaController {
 			$fileTitles = $fileTitle;
 		}
 
+		if ( !array_key_exists( 'thumbWidth', $videoOptions ) ) {
+			$videoOptions['thumbWidth'] = self::DEFAULT_THUMBNAIL_WIDTH;
+		}
+
+		if ( !array_key_exists( 'thumbHeight', $videoOptions ) ) {
+			$videoOptions['thumbHeight'] = self::DEFAULT_THUMBNAIL_HEIGHT;
+		}
+
 		$videos = [];
 		$helper = new VideoHandlerHelper();
 		foreach ( $fileTitles as $fileTitle ) {
-			$detail = $helper->getVideoDetail(
-				[ 'title' => $fileTitle ],
-				$thumbWidth,
-				$thumbHeight,
-				$articleLimit,
-				$getThumb
-			);
-
+			$detail = $helper->getVideoDetail( [ 'title' => $fileTitle ], $videoOptions );
 			if ( !empty( $detail ) ) {
 				$videos[] = $detail;
 			}
@@ -297,8 +293,11 @@ class VideoHandlerController extends WikiaController {
 	 * @requestParam string sort [recent/popular/trend]
 	 * @requestParam integer limit (maximum = 100)
 	 * @requestParam integer page
-	 * @requestParam array providers - Only videos hosted by these providers will be returned. Default: all providers.
-	 * @requestParam string category - Category name. Only videos tagged with this category will be returned. Default: any categories.
+	 * @requestParam string|array providers - Only videos hosted by these providers will be returned. Default: all providers.
+	 * @requestParam string|array category - Only videos tagged with these categories will be returned. Default: any categories.
+	 * @requestParam integer width - the width of the thumbnail to return
+	 * @requestParam integer height - the height of the thumbnail to return
+	 * @requestParam integer detail [0/1] - check for getting video detail
 	 * @responseParam array $videos
 	 *   [array('title'=>value, 'provider'=>value, 'addedAt'=>value,'addedBy'=>value, 'duration'=>value, 'viewsTotal'=>value)]
 	 */
@@ -310,10 +309,20 @@ class VideoHandlerController extends WikiaController {
 		$page = $this->getVal( 'page', 1 );
 		$providers = $this->getVal( 'providers', array() );
 		$category = $this->getVal( 'category', '' );
+		$width = $this->getVal( 'width', self::DEFAULT_THUMBNAIL_WIDTH );
+		$height = $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT );
+		$detail = $this->getVal( 'detail', 0 );
 
 		$filter = 'all';
 		if ( is_string( $providers ) ) {
-			$providers = [ $providers ];
+			// get providers for mobile
+			if ( $providers == 'mobile' ) {
+				$providers = $this->wg->WikiaMobileSupportedVideos;
+			} elseif ( $providers == 'mobileApp' ) {
+				$providers = $this->wg->WikiaMobileAppSupportedVideos;
+			} else {
+				$providers = [ $providers ];
+			}
 		}
 
 		// set maximum limit
@@ -323,6 +332,22 @@ class VideoHandlerController extends WikiaController {
 
 		$mediaService = new MediaQueryService();
 		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+		// get video detail
+		if ( !empty( $detail ) ) {
+			$videoOptions = [
+				'thumbWidth' => $width,
+				'thumbHeight' => $height,
+			];
+			$helper = new VideoHandlerHelper();
+			foreach ( $videoList as &$videoInfo ) {
+				$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+				if ( !empty( $videoDetail ) ) {
+					$videoInfo = array_merge( $videoInfo, $videoDetail );
+				}
+			}
+
+		}
 
 		$this->videos = $videoList;
 

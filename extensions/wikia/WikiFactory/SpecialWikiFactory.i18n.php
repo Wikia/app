@@ -4194,7 +4194,7 @@ $messages['pt'] = array(
 	'awc-metrics-two-months' => 'criadas há menos de dois meses',
 	'awc-metrics-three-months' => 'criadas há menos de três meses',
 	'awc-metrics-half-year' => 'criadas há menos de seis meses',
-	'awc-metrics-by-email' => 'ou (correio eletrónico do utilizador):',
+	'awc-metrics-by-email' => 'ou (e-mail do usuário):',
 	'awc-metrics-by-user' => 'encontrado por (nome do utilizador):',
 	'awc-metrics-by-dbname' => 'onde os nomes das BDs contenham:',
 	'awc-metrics-by-title' => ' e títulos a partir de:',
@@ -4261,6 +4261,7 @@ regist.',
  * @author Aristóbulo
  * @author Cainamarques
  * @author Caio1478
+ * @author Cybermandrake
  * @author Daemorris
  * @author Giro720
  * @author JM Pessanha
@@ -4375,7 +4376,7 @@ $messages['pt-br'] = array(
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Essa wiki foi fechada',
 	'disabled-wiki-info' => 'Essa wiki foi desabilitada',
-	'closed-wiki-dump-exists' => 'Você pode [$1 recuperar seu conteúdo] se desejar.<br />(Caso sua wiki tenha sido fechada recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Você pode recuperar seu conteúdo se desejar.<br />(Caso seu wiki tenha sido fechado recentemente, os arquivos poderão demorar um pouco para serem gerados)', # Fuzzy
 	'closed-wiki-dump-links' => '[$1 Páginas atuais] (esta versão normalmente é a melhor para a utilização por bots)<br />[$2 Páginas e histórico atuais] (atenção: este ficheiro pode ser muito grande)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. O esvaziamento do conteúdo estará disponível em 24 horas. Cheque novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Crie uma nova Wiki',

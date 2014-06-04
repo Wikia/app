@@ -26,10 +26,10 @@ if ( !empty( $result ) ) {
 	<?= $app->renderView( 'UserLoginSpecial', 'Providers' ) ;?>
 	<? endif;?>
 	<form method=post action="<?= $formPostAction ?>">
-		<input type=hidden name=loginToken value='<?= $loginToken ?>'>
+		<input type=hidden name=loginToken id='loginToken' value="<?= Sanitizer::encodeAttribute( $loginToken ) ?>">
 		<input type=hidden name=keeploggedin value=true>
 		<? if ( !empty( $returnto ) ): ?>
-			<input type=hidden name=returnto value="<?= $returnto; ?>">
+			<input type=hidden name=returnto value="<?= Sanitizer::encodeAttribute( $returnto ); ?>">
 		<? endif; ?>
 		<input type=text name=username class=wkInp
 		       placeholder='<?= wfMessage( 'yourname' )->escaped()?>'<?= ( $username ) ? ' value="' . htmlspecialchars($username) . '"' : ''?><?= ( $userErr ) ? ' class=inpErr' : ''?>>

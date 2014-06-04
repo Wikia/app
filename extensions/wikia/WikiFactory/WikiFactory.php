@@ -33,13 +33,13 @@ $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 
 class WikiFactoryDuplicateWgServer extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
-	
+
 	function __construct( $city_id, $city_url, $duplicate_city_id ) {
 		$message = "Cannot set wgServer for wiki $city_id to '$city_url' because it conflicts with wiki $duplicate_city_id";
 		parent::__construct($message);
 		$this->city_id = $city_id;
 		$this->city_url = $city_url;
-		$this->duplicate_city_id = $duplicate_city_id;		
+		$this->duplicate_city_id = $duplicate_city_id;
 	}
 }
 
@@ -643,7 +643,7 @@ class WikiFactory {
 							array("city_url" => $city_url ),
 							array("city_id" => $city_id),
 							__METHOD__
-						);						
+						);
 					} catch ( DBQueryError $e ) {
 						if ( preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error) ) {
 							$res = $dbw->selectRow(
@@ -651,16 +651,16 @@ class WikiFactory {
 								"city_id",
 								array("city_url" => $city_url),
 								__METHOD__
-							);							
+							);
 							if ( isset($res->city_id) ) {
-								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);								
+								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);
 								Wikia::log( __METHOD__, "", $exc->getMessage());
 								$dbw->rollback();
 								throw $exc;
 							}
-						} 
+						}
 						throw $e;
-					}					
+					}
 
 					break;
 
@@ -736,9 +736,9 @@ class WikiFactory {
 			$bStatus = false;
 			// rethrowing here does not seem to be right. Callers expect success or failure
 			// as result value, not DBQueryError exception
-			// throw $e; 
+			// throw $e;
 		}
-	
+
 
 		self::clearCache( $city_id );
 		wfProfileOut( __METHOD__ );
@@ -2555,7 +2555,8 @@ class WikiFactory {
 			array( 'city_id' => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, sprintf('Binary flags %s read from city_flags', decbin( $city_flags ) ), $city_id );
+		//reduce log spam in wikifactory logs
+		//self::log( self::LOG_STATUS, sprintf('Binary flags %s read from city_flags', decbin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 

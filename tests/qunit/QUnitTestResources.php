@@ -4,6 +4,7 @@ return array(
 
 	/* Test suites for MediaWiki core modules */
 
+
 	'mediawiki.tests.qunit.suites' => array(
 		'scripts' => array(
 			'tests/qunit/suites/resources/jquery/jquery.autoEllipsis.test.js',

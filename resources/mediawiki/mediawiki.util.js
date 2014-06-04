@@ -565,6 +565,30 @@
 			return address.search( new RegExp( '^' + RE_IP_ADD + block + '$' ) ) !== -1;
 		},
 
+
+
+
+
+
+
+
+		getUrl: function ( str, params ) {
+			var url = mw.config.get( 'wgArticlePath' ).replace(
+				'$1',
+				util.wikiUrlencode( typeof str === 'string' ? str : mw.config.get( 'wgPageName' ) )
+			);
+
+			if ( params && !$.isEmptyObject( params ) ) {
+				url += ( url.indexOf( '?' ) !== -1 ? '&' : '?' ) + $.param( params );
+			}
+
+			return url;
+		},
+
+
+
+
+
 		/**
 		 * Note: borrows from IP::isIPv6
 		 *
@@ -599,8 +623,8 @@
 		}
 	};
 
-	// #back-compat for VE
-	util.getUrl = util.wikiGetlink;
+
+
 
 	mw.util = util;
 

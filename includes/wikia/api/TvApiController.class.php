@@ -2,19 +2,25 @@
 
 use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
-use Wikia\Search\Services\TvSearchService;
+use Wikia\Search\Services\SeriesEntitySearchService;
+use Wikia\Search\Services\EpisodeEntitySearchService;
+
 
 class TvApiController extends WikiaApiController {
 
 	const LANG_SETTING = 'en';
 	const NAMESPACE_SETTING = 0;
-	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
-	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 	const RESPONSE_CACHE_VALIDITY = 86400; /* 24h */
+	const DEFAULT_QUALITY = 20;
+
+	const WG_EXTRA_LOCAL_NAMESPACES_KEY = 'wgExtraNamespacesLocal';
+	const WG_CONTENT_NAMESPACES_KEY = 'wgContentNamespaces';
 	/** @var Array wikis */
-	protected $wikis = [];
-	/** @var TvSearchService tvService */
-	protected $tvService;
+	protected $wikis = [ ];
+	/** @var SeriesEntitySearchService seriesService */
+	protected $seriesService;
+	/** @var EpisodeEntitySearchService episodeService */
+	protected $episodeService;
 
 	public function getEpisode() {
 		$request = $this->getRequest();
@@ -26,49 +32,79 @@ class TvApiController extends WikiaApiController {
 			$minQuality = (int)$minQuality;
 		}
 
-		$result = $this->findEpisode( $seriesName, $episodeName, $lang, $minQuality );
-		$output = $this->createOutput( $result );
+		$episodes = explode( ';', $episodeName );
+		$result = null;
+		foreach ( $episodes as $episode ) {
+			$result = $this->findEpisode( $seriesName, trim($episode), $lang, $minQuality );
+			if( $result ) break;
+		}
+		if (!$result) {
+			throw new NotFoundApiException();
+		}
 
 		$response = $this->getResponse();
-		$response->setValues( $output );
+		$response->setValues( $result );
 
-		$response->setCacheValidity(self::RESPONSE_CACHE_VALIDITY);
-	}
-
-	protected function getRequiredParam( $name ) {
-		$query = $this->getRequest()->getVal( $name, null );
-		if ( empty( $query ) || $query === null ) {
-			throw new InvalidParameterApiException( $name );
-		}
-		return $query;
+		$response->setCacheValidity( self::RESPONSE_CACHE_VALIDITY );
 	}
 
 	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
-		$tvs = $this->getTvSearchService();
-		$wikis = $tvs->queryXWiki( $seriesName, $lang );
+
+		// TODO: this is a workaround to not alter schema of main index too much
+		// once the next gen search is implemented such workarounds would not be needed hopefully
+
+		// this replaces american right apostrophe with normal one
+		$episodeName = str_replace("’", "'", $episodeName);
+
+		$seriesService = $this->getSeriesService();
+		$seriesService->setLang( $lang );
+		$wikis = $seriesService->query( $seriesName );
 		if ( !empty( $wikis ) ) {
+			$episodeService = $this->getEpisodeService();
+			$episodeService->setLang( $lang )
+				->setQuality( ($quality !== null ) ? $quality : static::DEFAULT_QUALITY );
 			$result = null;
-			foreach( $wikis as $wiki ) {
-				$result = $tvs->queryMain( $episodeName, $wiki['id'], $lang, $quality );
+			foreach ( $wikis as $wiki ) {
+				$episodeService->setWikiId( $wiki[ 'id' ] );
+				$namespaces = WikiFactory::getVarValueByName( self::WG_CONTENT_NAMESPACES_KEY, $wiki[ 'id' ] );
+				$episodeService->setNamespace( $namespaces );
+				$result = $episodeService->query( $episodeName );
 				if ( $result === null ) {
-					$result = $this->getTitle( $episodeName, $wiki['id'] );
+					$result = $this->getTitle( $episodeName, $wiki[ 'id' ] );
+				}
+				if ( $result === null ) {
+					$namespaceNames = WikiFactory::getVarValueByName( self::WG_EXTRA_LOCAL_NAMESPACES_KEY, $wiki[ 'id' ] );
+					if ( is_array( $namespaces ) ) {
+						foreach ( $namespaces as $ns ) {
+							if ( !MWNamespace::isTalk($ns) && isset( $namespaceNames[ $ns ] ) ) {
+								$result = $episodeService->query( $namespaceNames[ $ns ].":".$episodeName );
+								if ( $result !== null ) break;
+							}
+						}
+					}
 				}
 				if ( $result !== null ) {
 					if ( ( $quality == null ) || ( $result[ 'quality' ] !== null && $result[ 'quality' ] >= $quality ) ) {
-						return [ 'wiki' => $wiki, 'article' => $result ];
+						return $result;
 					}
 				}
 			}
 		}
-		//episode was not found
-		throw new NotFoundApiException();
+		return false;
 	}
 
-	protected function getTvSearchService() {
-		if ( !isset( $this->tvService ) ) {
-			$this->tvService = new TvSearchService();
+	protected function getSeriesService() {
+		if ( !isset( $this->seriesService ) ) {
+			$this->seriesService = new SeriesEntitySearchService();
 		}
-		return $this->tvService;
+		return $this->seriesService;
+	}
+
+	protected function getEpisodeService() {
+		if ( !isset( $this->episodeService ) ) {
+			$this->episodeService = new EpisodeEntitySearchService();
+		}
+		return $this->episodeService;
 	}
 
 	protected function getTitle( $text, $wikiId ) {
@@ -85,16 +121,25 @@ class TvApiController extends WikiaApiController {
 		if ( $title->exists() ) {
 			$articleId = (int)$title->getArticleID();
 			return [
+				'wikiId' => $wikiId,
 				'articleId' => $articleId,
 				'title' => $title->getText(),
 				'url' => $title->getFullURL(),
-				'quality' => $this->getArticleQuality( $wikiId, $articleId )
+				'quality' => $this->getArticleQuality( $wikiId, $articleId ),
+				'contentUrl' => $this->getContentUrl( $wikiId, $articleId )
 			];
 		}
 		return null;
 	}
 
-	protected function createTitle($text, $wikiId) {
+	protected function getContentUrl( $wikiId, $articleId ) {
+		return $this->getEpisodeService()->replaceHostUrl(
+			WikiFactory::DBtoUrl( WikiFactory::IDtoDB( $wikiId ) )
+			. EpisodeEntitySearchService::API_URL . $articleId
+		);
+	}
+
+	protected function createTitle( $text, $wikiId ) {
 		return GlobalTitle::newFromText( $text, NS_MAIN, $wikiId );
 	}
 
@@ -109,7 +154,7 @@ class TvApiController extends WikiaApiController {
 
 	protected function getQualityFromSolr( $wikiId, $articleId ) {
 		$config = $this->getConfigById( $wikiId, $articleId );
-		return ( new Factory )->getFromConfig( $config )->searchAsApi( ['article_quality_i' => 'quality'  ], false );
+		return ( new Factory )->getFromConfig( $config )->searchAsApi( [ 'article_quality_i' => 'quality' ], false );
 	}
 
 	protected function getConfigById( $wikiId, $articleId ) {
@@ -123,23 +168,5 @@ class TvApiController extends WikiaApiController {
 			->setPageId( (int)$articleId )
 			->setNamespaces( [ static::NAMESPACE_SETTING ] );
 		return $searchConfig;
-	}
-
-	protected function createOutput( $data ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-
-		$result = array_merge( [ 'wikiId' => (int) $data['wiki']['id'] ], $data['article'] );
-		$result[ 'contentUrl' ] = $data['wiki']['url'] . self::API_URL . $data['article'][ 'articleId' ];
-
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			$result[ 'contentUrl' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "contentUrl" ] );
-			$result[ 'url' ] = preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $result[ "url" ] );
-		}
-
-		return $result;
-	}
-
-	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
 	}
 }

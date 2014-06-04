@@ -109,11 +109,18 @@ class LyricsScraper {
 	 */
 	function processSongs( $artistData, $albumData, $leanSongsData ) {
 		$songsData = [];
+
 		foreach( $leanSongsData as $songData ) {
 			if ( $songData['title'] ) {
 				// Song has wiki title
 				$songArticle = $this->articleFromTitle( $songData['title'] );
-				if ( $songArticle !== null ) {
+				if ( !is_null( $songArticle ) ) {
+
+					if( $this->songScraper->isSongTraslation( $songArticle ) ) {
+						self::log( "\t\t\tSONG IS A TRANSLATION: " . $songData['song'] . " ...SKIPPING" . PHP_EOL );
+						continue;
+					}
+
 					// Song article exists
 					self::log( "\t\t\tSONG: " . $songData['title'] . PHP_EOL );
 					$songData = array_merge( $songData, $this->songScraper->processArticle( $songArticle ) );
@@ -137,16 +144,18 @@ class LyricsScraper {
 					continue;
 				}
 			}
+
 			self::log( "\t\t\tSONG NOT FOUND: " . $songData['song'] . PHP_EOL );
 			// Add song to songs list
 			$songsData[] = $this->songScraper->sanitizeData(
 				$songData,
 				$this->songScraper->getDataMap()
 			);
+
 		}
+
 		return $songsData;
 	}
-
 
 	/**
 	 * @desc Get wiki article from article title

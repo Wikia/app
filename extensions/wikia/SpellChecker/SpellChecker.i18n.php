@@ -22,6 +22,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
+	'spellchecker-info-provider' => '{{Identical|Provider}}',
 	'spellchecker-info-spellcheck-languages' => '{{Identical|Language}}',
 );
 
@@ -74,11 +75,12 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  */
 $messages['br'] = array(
 	'spellchecker-desc' => 'Pourchas a ra un etrefas gwiriañ ar reizhskrivañ evit ar vodulenn PHP enchant',
-	'enablespellchecker' => 'Gweredekaat ar reizhskriver', # Fuzzy
+	'enablespellchecker' => 'Gweredekaat ar reizhskriver er mod gwelet',
 	'spellchecker-info' => 'Titouroù war ar reizhskriver',
 	'spellchecker-info-languages' => 'Yezhoù hegerz ($1)',
 	'spellchecker-info-provider' => 'Pourvezer',
@@ -257,6 +259,13 @@ $messages['ia'] = array(
  */
 $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'spellchecker-info-spellcheck-languages' => 'ಭಾಷೆ',
 );
 
 /** Colognian (Ripoarisch)

@@ -81,7 +81,7 @@
 
 	<script id="LightboxCarouselThumbs" type="text/template">
 		{{#thumbs}}
-			<li{{#liClass}} class="{{liClass}}"{{/liClass}}>
+			<li class="{{thumbLiClass}}" data-backfill="{{backfill}}">
 				{{{playButtonSpan}}}
 				<img class="thumb" src="<?= $wg->BlankImgUrl ?>" data-src="{{thumbUrl}}" data-caption="{{caption}}" width="90" height="55">
 			</li>

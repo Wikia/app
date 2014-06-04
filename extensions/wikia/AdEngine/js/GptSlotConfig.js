@@ -1,6 +1,5 @@
-/*exported GptSlotConfig*/
 /*global define*/
-var GptSlotConfig = function() {
+define('ext.wikia.adEngine.gptSlotConfig', function () {
 	'use strict';
 
 	var slotMapConfig = {
@@ -25,6 +24,7 @@ var GptSlotConfig = function() {
 			'TOP_LEADERBOARD': {'size': '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', 'tile': 2, 'loc': 'top', 'dcopt': 'ist'},
 			'TOP_RIGHT_BOXAD': {'size': '300x250,300x600,300x1050', 'tile': 1, 'loc': 'top'},
 			'WIKIA_BAR_BOXAD_1': {'size': '320x50,320x70,320x100', 'tile': 4, 'loc': 'bottom'},
+			'WIKIA_BAR_BOXAD_2': {'size': '728x90,300x250', 'tile': 2, 'loc': 'bottom'},
 			'GPT_FLUSH': 'flushonly'
 		},
 		'mobile': {
@@ -67,6 +67,4 @@ var GptSlotConfig = function() {
 		getConfig: getConfig
 	};
 
-};
-
-define('ext.wikia.adengine.gptslotconfig', [], GptSlotConfig);
+});

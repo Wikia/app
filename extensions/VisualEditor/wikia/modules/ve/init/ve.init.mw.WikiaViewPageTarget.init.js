@@ -87,11 +87,11 @@
 
 		showIndicator();
 
+		Wikia.Tracker.track( trackerConfig, {
+			'action': Wikia.Tracker.ACTIONS.IMPRESSION,
+			'label': 'edit-page'
+		} );
 		if ( !getTargetDeferred ) {
-			Wikia.Tracker.track( trackerConfig, {
-				'action': Wikia.Tracker.ACTIONS.IMPRESSION,
-				'label': 'edit-page'
-			} );
 			getTargetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
 
@@ -101,6 +101,17 @@
 			).done( function () {
 				var target = new ve.init.mw.WikiaViewPageTarget();
 				ve.init.mw.targets.push( target );
+
+				if ( ve.debug ) {
+					debugBar = new ve.init.DebugBar();
+					target.on( 'surfaceReady', function () {
+						$( '#content' ).append( debugBar.$element.show() );
+						debugBar.attachToSurface( target.surface );
+						target.surface.on( 'destroy', function () {
+							debugBar.$element.hide();
+						} );
+					} );
+				}
 
 				// Transfer methods
 				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
@@ -306,7 +317,7 @@
 					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
 
-				if ( init.isInValidNamespace( redlinkArticle ) ) {
+				if ( init.isInValidNamespace( decodeURIComponent( redlinkArticle ) ) ) {
 					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
 				}
 			}

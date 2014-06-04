@@ -29,7 +29,7 @@ class CoppaToolController extends WikiaController {
 
 		$errorMessage = null;
 		$errorMessage2 = null;
-		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2 );
+		$res = EditAccount::closeAccount( $userObj, wfMessage( 'coppatool-reason' )->plain(), $errorMessage, $errorMessage2, /*$keepEmail = */false );
 		if ( $res === false ) {
 			$this->response->setVal( 'success', false );
 			$this->response->setVal( 'errorMsg', $errorMessage );
@@ -142,24 +142,31 @@ class CoppaToolController extends WikiaController {
 
 		$wikiIDs = RenameUserHelper::lookupIPActivity( $ipAddr );
 
-		$task = new UserRenameLocalTask();
-		$task->createTask(
-			[
-				'city_ids' => $wikiIDs,
-				'requestor_id' => $this->wg->User->getID(),
-				'requestor_name' => $this->wg->User->getName(),
-				'rename_user_id' => 0,
-				'rename_old_name' => $ipAddr,
-				'rename_new_name' => $newIpAddr,
-				'rename_ip' => true,
-				'notify_renamed' => false,
-				'reason' => wfMessage( 'coppatool-reason' )->plain(),
-			],
-			TASK_QUEUED,
-			BatchTask::PRIORITY_HIGH
-		);
+		$taskParams = [
+			'requestor_id' => $this->wg->User->getID(),
+			'requestor_name' => $this->wg->User->getName(),
+			'rename_user_id' => 0,
+			'rename_old_name' => $ipAddr,
+			'rename_new_name' => $newIpAddr,
+			'rename_ip' => true,
+			'notify_renamed' => false,
+			'reason' => wfMessage( 'coppatool-reason' )->plain(),
+		];
+		if ( TaskRunner::isModern('UserRename') ) {
+			$task = ( new UserRenameTask() )
+				->wikiId( $wikiIDs )
+				->setPriority( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 
-		$taskID = $task->getID();
+			$task->call('renameUser', $taskParams);
+			$taskID = $task->queue();
+		} else {
+			$taskParams['city_ids'] = $wikiIDs;
+
+			$task = new UserRenameLocalTask();
+			$task->createTask( $taskParams, TASK_QUEUED, BatchTask::PRIORITY_HIGH );
+
+			$taskID = $task->getID();
+		}
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-rename-ip-success', $taskID )->plain() );

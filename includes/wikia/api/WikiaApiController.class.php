@@ -164,6 +164,14 @@ class WikiaApiController extends WikiaController {
 			return self::API_ENDPOINT_INTERNAL;
 		}
 	}
+
+	protected function getRequiredParam( $name ) {
+		$query = $this->getRequest()->getVal( $name, null );
+		if ( empty( $query ) || $query === null ) {
+			throw new InvalidParameterApiException( $name );
+		}
+		return $query;
+	}
 	
 	protected function getSkipMethods() {
 		return array_merge(parent::getSkipMethods(),
