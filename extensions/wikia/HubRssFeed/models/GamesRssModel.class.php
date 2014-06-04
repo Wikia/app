@@ -41,7 +41,7 @@ class GamesRssModel extends BaseRssModel {
 		$fromDate = date( 'Y-m-d\TH:i:s\Z', $fromTimestamp );
 		$feedModel->setRowLimit( self::MAX_NUM_ITEMS_IN_FEED );
 		$feedModel->setSorts( [ 'created' => 'desc' ] );
-		$feedModel->setFilters(['hc'=>'+((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
+		$feedModel->addFilters(['hc'=>'+((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"warframe.wikia.com" AND +categories_mv_en:"Blog posts")
 		| (+host:"monsterhunter.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"darksouls.wikia.com" AND +categories_mv_en:"News")
