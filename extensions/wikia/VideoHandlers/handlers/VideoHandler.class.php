@@ -266,6 +266,15 @@ abstract class VideoHandler extends BitmapHandler {
 	}
 
 	/**
+	 * Get regional restrictions of file
+	 * @return string|null
+	 */
+	public function getRegionalRestrictions() {
+		$metadata = $this->getMetadata(true);
+		return ( !empty( $metadata['regionalRestrictions'] ) ? $metadata['regionalRestrictions'] : null );
+	}
+
+	/**
 	 *
 	 * @return int duration in seconds, or null
 	 */
