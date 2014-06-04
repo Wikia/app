@@ -108,7 +108,7 @@ class Http {
 	 * @param $url
 	 * @param $timeout string
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
 		$options['timeout'] = $timeout;
@@ -121,7 +121,7 @@ class Http {
 	 *
 	 * @param $url
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function post( $url, $options = array() ) {
 		return Http::request( 'POST', $url, $options );
