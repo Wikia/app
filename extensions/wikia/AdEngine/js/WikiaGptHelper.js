@@ -1,4 +1,4 @@
-/*global define*/
+/*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.wikiaGptHelper', [
 	'wikia.log',
@@ -231,7 +231,11 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 					var iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
 
-					gptAdDetect.onAdLoad(slotname, event, iframe, callSuccess, callError);
+					// IE doesn't allow us to inspect GPT iframe at this point.
+					// Let's launch our callback in a setTimeout instead.
+					setTimeout(function () {
+						gptAdDetect.onAdLoad(slotname, event, iframe, callSuccess, callError);
+					}, 0);
 				}
 			});
 
