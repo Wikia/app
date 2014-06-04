@@ -64,6 +64,10 @@ $messages['en'] = array(
 	'lvs-no-monobook-support' => "This page is not supported in Monobook. To access it in the Wikia layout, $1. This will not change your layout preference",
 	'lvs-click-here' => 'click here',
 	'lvs-new-flag' => 'New',
+
+
+	'lvs-maintenance-header' => 'Under Maintenance',
+	'lvs-maintenance-body' => 'Wikia is performing scheduled maintenance on LicensedVideoSwap. We\'re sorry for the inconvenience. Please check back after Friday, 6/13/14, at 6pm PST.',
 );
 
 /** Message documentation (Message documentation)
