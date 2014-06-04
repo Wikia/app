@@ -14,4 +14,4 @@ $wgExtensionCredits['other'][] = array(
 );
 
 
-$wgAutoloadClasses['EvergreensController'] = __DIR__ . 'EvergreensController.class.php';
+$wgAutoloadClasses['EvergreensController'] = __DIR__ . "/EvergreensController.class.php";
