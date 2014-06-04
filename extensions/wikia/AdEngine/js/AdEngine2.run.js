@@ -160,7 +160,7 @@ window.AdEngine_loadLateAds = function () {
 		}
 
 		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
-		performanceBased = window.performance && Math.round(window.performance.now());
+		performanceBased = window.performance && window.performance.now && Math.round(window.performance.now());
 
 		require([
 			'wikia.log',
