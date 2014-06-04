@@ -85,7 +85,7 @@ function removeFromVariablesPool( $varData ) {
 	try {
 		$dbw->delete(
 			"city_variables_pool",
-			array ( "cv_variable_id" => $varData['cv_id'] ),
+			array ( "cv_id" => $varData['cv_id'] ),
 			__METHOD__
 		);
 		$log->info( "Remove variable from city_variables_pool table.", $varData );
@@ -150,8 +150,6 @@ if ( empty( $varData['cv_id'] ) ) {
 	die( "Error: $varName not found.\n" );
 }
 
-$varData['cv_id'] = (int) $varData['cv_id'];
-
 echo "Variable: $varName (Id: $varData[cv_id])\n";
 
 // for debugging
@@ -179,9 +177,6 @@ if ( $removeFromWF ) {
 	exit();
 }
 
-$total = 0;
-$failed = 0;
-
 if ( empty( $wikiId ) ) {
 	$wikiIds = getWikiIds( $varData['cv_id'], $limit );
 } else {
@@ -193,11 +188,15 @@ if ( empty( $wikiId ) ) {
 	}
 }
 
+$cnt = 0;
+$failed = 0;
+$total = count( $wikiIds );
+
 foreach ( $wikiIds as $id ) {
-	$total++;
+	$cnt++;
 
 	if ( $remove ) {
-		echo "\tRemove $varName from wikiId $id";
+		echo "\tWiki $id [$cnt of $total]: Remove $varName ";
 
 		if ( $dryRun ) {
 			$status = Status::newGood();
