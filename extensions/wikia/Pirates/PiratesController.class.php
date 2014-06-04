@@ -409,7 +409,7 @@ class PiratesController extends WikiaController {
 	}
 
 	public function getFooter() {
-		return $this->app->renderView('CorporateFooter', 'Index');
+		return $this->app->renderView('Footer', 'Index');
 	}
 
 	public static function addBodyParameter($parameter) {

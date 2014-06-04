@@ -78,5 +78,6 @@ $url-prefix: "/skins/oasis/css/";
 // These files override some of the styles for older extentions.
 
 // Pirates styles
+@import "ads";
 @import "article";
 @import "page";
