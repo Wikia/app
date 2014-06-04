@@ -2,7 +2,7 @@
 	$providerLink = '<a href="' . $providerUrl . '" target="_blank">' . $provider . '</a>';
 	$providerPhrase = wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped();
 	if ( $expireDate ) {
-		$providerPhrase .= ' &#8226; ' . $expireDate;
+		$providerPhrase .= "<span class='expire-date'>$expireDate</span>";
 	}
 ?>
 

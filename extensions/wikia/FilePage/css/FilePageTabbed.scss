@@ -90,6 +90,12 @@
 		font-size: 18px;
 		margin: 0;
 	}
+	span.expire-date {
+		&:before {
+			content: '•';
+			margin: 0 5px;
+		}
+	}
 	.regional-restriction {
 		clear: both;
 		font-size: 12px;
