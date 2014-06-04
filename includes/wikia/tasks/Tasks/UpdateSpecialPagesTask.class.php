@@ -28,7 +28,7 @@ class UpdateSpecialPagesTask extends BaseTask {
 
 		if ( !$wikiId ) {
 			// TODO localize?
-			throw new InvalidArgumentException( "No wikia exists for domain {$wikiaDomain}" );
+			throw new \InvalidArgumentException( "No wikia exists for domain {$wikiaDomain}" );
 		}
 
 		$localizationTask = new UpdateSpecialPagesTask();
@@ -116,7 +116,7 @@ class UpdateSpecialPagesTask extends BaseTask {
 		$queryPage = \SpecialPageFactory::getPage( $special );
 
 		if ( !$queryPage ) {
-			throw new InvalidArgumentException( "No such special page: {$special}" );
+			throw new \InvalidArgumentException( "No such special page: {$special}" );
 		}
 
 		if ( !($queryPage instanceof \QueryPage) ) {
