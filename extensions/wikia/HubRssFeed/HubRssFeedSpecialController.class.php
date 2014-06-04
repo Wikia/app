@@ -41,8 +41,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$url = $this->currentTitle->getFullUrl();
 		$links = [ ];
 
-		foreach ( $wgHubRssFeeds as  $v ) {
-			$links[ ] = $url . '/'. $v;
+		foreach ( $wgHubRssFeeds as  $feedName ) {
+			$links[ ] = $url . '/'. $feedName;
 		}
 
 		$this->setVal( 'links', $links );
@@ -52,10 +52,8 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 
 	public function index() {
-		global $wgHubRssFeeds;
 
-		$params = $this->request->getParams();
-		$hubName = (string)$params[ 'par' ];
+		$hubName = (string)$this->request->getVal( 'par' );
 		$model = BaseRssModel::newFromName( $hubName );
 		if(!$model instanceof BaseRssModel){
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );

@@ -6,7 +6,7 @@ abstract class BaseRssModel extends WikiaService {
 	const SOURCE_GENERATOR = 'generator';
 	const ENDPOINT_ASSIMPLEJSON = 'api/v1/Articles/AsSimpleJson';
 	const ENDPOINT_DETAILS = 'api/v1/Articles/Details';
-
+	const DATETIME_FORMAT = 'Y-m-d H:i:s';
 	/**
 	 * For how long the RSS item should be unique
 	 */
@@ -81,19 +81,19 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function addFeedsToDb( $rows, $feed ) {
-		$feed = self::getStagingPrefix(). $feed;
+		$feed = self::getStagingPrefix() . $feed;
 		$db = $this->getDbMaster();
 		$db->begin();
-		$nowDate = date( 'Y-m-d H:i:s' );
-		$added = 0;
+		$nowDate = date( self::DATETIME_FORMAT );
+		$numAdded = 0;
 		foreach ( $rows as $url => $item ) {
-			$added += ( new WikiaSQL() )
+			$numAdded += ( new WikiaSQL() )
 				->INSERT( 'wikia_rss_feeds' )
 				->SET( 'wrf_wikia_id', $item[ 'wikia_id' ] )
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
 				->SET( 'wrf_url', $url )
 				->SET( 'wrf_feed', $feed )
-				->SET( 'wrf_pub_date', date( 'Y-m-d H:i:s', $item[ 'timestamp' ] ) )
+				->SET( 'wrf_pub_date', date( self::DATETIME_FORMAT , $item[ 'timestamp' ] ) )
 				->SET( 'wrf_title', $item[ 'title' ] )
 				->SET( 'wrf_description', $item[ 'description' ] )
 				->SET( 'wrf_img_url', $item[ 'img' ][ 'url' ] )
@@ -104,13 +104,13 @@ abstract class BaseRssModel extends WikiaService {
 				->run( $db );
 		}
 		$db->commit();
-		return $added;
+		return $numAdded;
 	}
 
 	protected function isFreshContentInDb( $feed, $hours = self::FRESH_CONTENT_TTL_HOURS ) {
 		//select count(1) as c from wikia_rss_feeds where wrf_pub_date >= '2014-05-20 00:00:00' AND wrf_feed = 'tv';
-		$feed = self::getStagingPrefix(). $feed;
-		$startTime = date( 'Y-m-d H:i:s', strtotime( sprintf( 'now - %uhour', $hours ) ) );
+		$feed = self::getStagingPrefix() . $feed;
+		$startTime = date( self::DATETIME_FORMAT, strtotime( sprintf( 'now - %uhour', $hours ) ) );
 		$links = ( new WikiaSQL() )
 			->SELECT( "count(1)" )->AS_( 'c' )
 			->FROM( 'wikia_rss_feeds' )
@@ -132,7 +132,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function getLastFeedTimestamp( $feed ) {
 		//select UNIX_TIMESTAMP(wrf_pub_date) AS t wikia_rss_feeds where wrf_feed = 'tv' ORDER BY wrf_pub_date DESC limit 1
-		$feed = self::getStagingPrefix(). $feed;
+		$feed = self::getStagingPrefix() . $feed;
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_pub_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
@@ -152,7 +152,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastInsertFeedTimestamp( $feed, $source ) {
-		$feed = self::getStagingPrefix(). $feed;
+		$feed = self::getStagingPrefix() . $feed;
 		$timestamp = ( new WikiaSQL() )
 			->SELECT( "UNIX_TIMESTAMP(wrf_ins_date)" )->AS_( 't' )
 			->FROM( 'wikia_rss_feeds' )
@@ -173,7 +173,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastRecordsFromDb( $feed, $limit = self::ROWS_LIMIT, $useMaster = false ) {
-		$feed = self::getStagingPrefix(). $feed;
+		$feed = self::getStagingPrefix() . $feed;
 		$db = $useMaster ? $this->getDbMaster() : $this->getDbSlave();
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' * ' )
@@ -202,8 +202,8 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getLastDuplicatesFromDb( $feed, $maxHours = self:: UNIQUE_URL_TTL_HOURS ) {
-		$feed = self::getStagingPrefix(). $feed;
-		$fromTime = date( 'Y-m-d H:i:s', strtotime( sprintf( 'now - %uhour', $maxHours ) ) );
+		$feed = self::getStagingPrefix() . $feed;
+		$fromTime = date( self::DATETIME_FORMAT, strtotime( sprintf( 'now - %uhour', $maxHours ) ) );
 		$wikisData = ( new WikiaSQL() )
 			->SELECT( ' wrf_url ' )
 			->FROM( 'wikia_rss_feeds' )

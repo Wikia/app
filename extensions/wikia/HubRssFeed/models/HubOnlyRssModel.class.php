@@ -20,4 +20,4 @@ abstract class HubOnlyRssModel extends BaseRssModel {
 	}
 
 	protected abstract function getHubCityIds();
-} 
+}

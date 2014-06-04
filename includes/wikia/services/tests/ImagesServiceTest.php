@@ -171,6 +171,33 @@ class ImagesServiceTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider getFileUrlFromThumbUrlDataProvider
+	 */
+	public function getFileUrlFromThumbUrl( $imageUrl, $thumbUrl ) {
+		$this->assertEquals(
+			$imageUrl,
+			ImagesService::getFileUrlFromThumbUrl( $thumbUrl )
+		);
+	}
+
+	public function getFileUrlFromThumbUrlDataProvider() {
+		return [
+			[
+				'imageUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/f/f3/Wikia-Visualization-Main%2Cenanimanga.png',
+				'thumbUrl' => 'http://images4.wikia.nocookie.net/__cb62277/wikiaglobal/images/thumb/f/f3/Wikia-Visualization-Main%2Cenanimanga.png/50px-Wikia-Visualization-Main%2Cenanimanga.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png',
+				'thumbUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/50px-Wikia-Visualization-Main%2Crunescape.png'
+			],
+			[
+				'imageUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png/100px-Wikia-Visualization-Main%2Crunescape.png',
+				'thumbUrl' => 'http://images.damian.wikia-dev.com/__cb1378818316/wikiaglobal/images/8/8b/Wikia-Visualization-Main%2Crunescape.png/100px-Wikia-Visualization-Main%2Crunescape.png'
+			]
+		];
+	}
+
+	/**
 	 * @dataProvider getThumbUrlFromFileUrlDataProvider
 	 */
 	public function testGetThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension, $expected) {
