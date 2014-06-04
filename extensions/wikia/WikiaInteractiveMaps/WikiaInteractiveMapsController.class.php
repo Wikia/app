@@ -464,11 +464,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
-		if( $createdPinTypes === $requestedCreations ) {
-			$results['success'] = true;
-		} else {
+		$results['success'] = true;
+
+		if( $createdPinTypes !== $requestedCreations ) {
 			$results['success'] = false;
-			$result['error'] = wfMessage(
+			$results['error'] = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
 				$createdPinTypes,
 				$requestedCreations
