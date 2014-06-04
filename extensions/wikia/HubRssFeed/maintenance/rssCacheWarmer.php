@@ -20,20 +20,21 @@ class MaintenanceRss extends Maintenance {
 
 	protected function warm() {
 		global $wgHubRssFeeds;
-		$times = [ ];
+
 		foreach ( $wgHubRssFeeds as $feedName ) {
 			echo "| Warming '$feedName' cache..." . PHP_EOL;
 			$feed = BaseRssModel::newFromName( $feedName );
 			if ( $feed instanceof BaseRssModel ) {
 				$time = time();
 				$numRows = $feed->generateFeedData();
-				$times[ ] = $feedName . ' ' . ( time() - $time ) . ' sec ';
 				echo "| Got " . $numRows . " new entries " . PHP_EOL;
+				\Wikia\Logger\WikiaLogger::instance()
+					->info( __CLASS__ . ' '. $feedName . 'time (s): ' . ( time() - $time ) );
 			} else {
 				echo "| Feed not found: " . $feedName . PHP_EOL;
 			}
 		}
-		\Wikia\Logger\WikiaLogger::instance()->info( __CLASS__ . " times: " . implode( ",", $times ) );
+
 	}
 
 	public function purgeVarnish() {
