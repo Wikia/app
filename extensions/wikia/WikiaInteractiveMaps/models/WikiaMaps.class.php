@@ -85,8 +85,8 @@ class WikiaMaps {
 			'headers' => [
 				'Authorization' => $this->config['token']
 			],
-            //TODO this is temporary workaround, remove it before production!
-            'noProxy' => true
+			//TODO: this is temporary workaround, remove it before production!
+			'noProxy' => true
 		] );
 	}
 
@@ -101,8 +101,9 @@ class WikiaMaps {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = Http::get( $url, 'default', array(
-            'noProxy' => true
-        ) );
+			//TODO: this is temporary workaround, remove it before production!
+			'noProxy' => true
+		) );
 
 		if ( $response !== false ) {
 			$mapsData = json_decode( $response );
@@ -140,16 +141,16 @@ class WikiaMaps {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = Http::get( $url, 'default', array(
-            //TODO this is temporary workaround, remove it before production!
-            'noProxy' => true
-        ) );
+			//TODO: this is temporary workaround, remove it before production!
+			'noProxy' => true
+		) );
 
 		$map = json_decode( $response );
 		if( !empty( $map->tile_set_url ) ) {
 			$response = Http::get( $map->tile_set_url, 'default', array(
-                //TODO this is temporary workaround, remove it before production!
-                'noProxy' => true
-            ) );
+				//TODO: this is temporary workaround, remove it before production!
+				'noProxy' => true
+			) );
 			$tilesData = json_decode( $response );
 
 			if( !is_null( $tilesData ) ) {
