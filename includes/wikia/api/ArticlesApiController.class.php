@@ -57,6 +57,7 @@ class ArticlesApiController extends WikiaApiController {
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
+	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -910,6 +911,46 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
 		$this->setResponseData( $jsonSimple, 'images', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+	}
+
+	public function getAsJson() {
+		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+		$articleTitle = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+
+		if ( empty( $articleId ) && empty($articleTitle) ) {
+			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );
+		}
+
+		$article = Article::newFromID( $articleId );
+		if( empty($article) ) {
+			throw new NotFoundApiException( "Unable to find any article with " . self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME . '=' . $articleId );
+		}
+
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
+		$parsedArticle = $article->getParserOutput();
+		$categories = [];
+
+		foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+			$categories[] = [
+				"title" => $category,
+				"url" => Title::newFromText($category, NS_CATEGORY)->getLocalURL()
+			];
+		}
+
+		$result = [
+			'payload' => [
+				'title' => $parsedArticle->getDisplayTitle(),
+				'article' => $parsedArticle->getText(),
+				'media' => SimpleJson::$media,
+				'users' => SimpleJson::$users,
+				'categories' => $categories,
+			]
+		];
+
+		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {

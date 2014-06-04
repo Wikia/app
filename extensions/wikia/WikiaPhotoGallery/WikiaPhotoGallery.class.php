@@ -524,6 +524,12 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn(__METHOD__);
 
+		if ( !wfRunHooks( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
+			wfProfileOut(__METHOD__);
+
+			return $out;
+		}
+
 		// render as placeholder in RTE
 		if (!empty($wgRTEParserEnabled)) {
 			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
