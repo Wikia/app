@@ -105,14 +105,16 @@ class WikiaMaps {
 	private function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = Http::get( $url, 'default', [
-			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				'returnInstance' => true,
+				//TODO: this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 
-		if ( $response !== false ) {
-			$mapsData = json_decode( $response );
+		if( !$response['success'] ) {
+			$mapsData = $response['content'];
 
 			// Add map size to maps and human status messages
 			array_walk( $mapsData->items, function( &$map ) {
