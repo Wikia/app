@@ -354,8 +354,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function createMapFromTilesetId() {
-		$results['success'] = false;
-
 		$response = $this->mapsModel->saveMap( [
 			'title' => $this->getCreationData( 'title' ),
 			'tile_set_id' => $this->getCreationData( 'tileSetId' ),
@@ -363,19 +361,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		if( !$response['success'] ) {
+			$response['message'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else {
-			$response = json_decode( $response );
-			$mapId = $response->id;
-
-			$results['success'] = true;
-			$results['mapId'] = $mapId;
-			$results['mapUrl'] = Title::newFromText( self::PAGE_NAME . '/' . $mapId, NS_SPECIAL )->getFullUrl();
-			$results['message'] = $response->message;
+			$response['content']->mapUrl = Title::newFromText(
+				self::PAGE_NAME . '/' . $response['content']->id,
+				NS_SPECIAL
+			)->getFullUrl();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**

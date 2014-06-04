@@ -114,11 +114,11 @@ define(
 					if (data && data.success) {
 						modal.trigger('mapCreated', data);
 					} else {
-						modal.trigger('error', data.error);
+						modal.trigger('error', data.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.error);
+					modal.trigger('error', response.results.message);
 				}
 			});
 		}

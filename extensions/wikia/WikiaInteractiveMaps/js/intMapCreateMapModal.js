@@ -126,7 +126,7 @@ define(
 
 		//TODO: to be changed when pin types step will be added
 		function showCreatedMap(data) {
-			qs(data.mapUrl).goTo();
+			qs(data.content.mapUrl).goTo();
 		}
 
 		return {
