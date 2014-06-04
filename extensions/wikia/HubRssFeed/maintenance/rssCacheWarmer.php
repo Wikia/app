@@ -18,18 +18,22 @@ class MaintenanceRss extends Maintenance {
 		$this->purgeVarnish();
 	}
 
-	protected function warm(){
+	protected function warm() {
 		global $wgHubRssFeeds;
-		foreach($wgHubRssFeeds as $feedName ){
+		$times = [ ];
+		foreach ( $wgHubRssFeeds as $feedName ) {
 			echo "| Warming '$feedName' cache..." . PHP_EOL;
-			$feed = BaseRssModel::newFromName($feedName);
-			if($feed instanceof BaseRssModel){
+			$feed = BaseRssModel::newFromName( $feedName );
+			if ( $feed instanceof BaseRssModel ) {
+				$time = time();
 				$numRows = $feed->generateFeedData();
-				echo "| Got ". $numRows . " new entries " . PHP_EOL;
-			}else{
-				echo "| Feed not found: ". $feedName . PHP_EOL;
+				$times[ ] = $feedName . ' ' . ( time() - $time ) . ' sec ';
+				echo "| Got " . $numRows . " new entries " . PHP_EOL;
+			} else {
+				echo "| Feed not found: " . $feedName . PHP_EOL;
 			}
 		}
+		\Wikia\Logger\WikiaLogger::instance()->info( __CLASS__ . " times: " . implode( ",", $times ) );
 	}
 
 	public function purgeVarnish() {
