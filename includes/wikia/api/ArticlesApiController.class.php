@@ -914,64 +914,69 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsJson() {
-		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
-		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+		if ( $this->wg->EnableSimpleJsonApi ) {
+			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
-		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
-			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
-		}
-
-		if ( empty( $articleId ) && empty( $articleTitle ) ) {
-			throw new BadRequestApiException( 'You need to pass title or id of an article' );
-		}
-
-		if ( !empty( $articleId ) ) {
-			$article = Article::newFromID( $articleId );
-		}else if ( !empty( $articleTitle ) ) {
-			$title = Title::newFromText($articleTitle, NS_MAIN);
-
-			if ( $title->exists() ) {
-				$article = Article::newFromTitle( $title, RequestContext::getMain() );
+			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
 			}
-		}
 
-		if( empty( $article ) ) {
-			throw new NotFoundApiException( "Unable to find any article" );
-		}
+			if ( empty( $articleId ) && empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'You need to pass title or id of an article' );
+			}
 
-		//Response is based on wikiamobile skin as this already removes inline style
-		//and make response smaller
-		RequestContext::getMain()->setSkin(
-			Skin::newFromKey( 'wikiamobile' )
-		);
+			if ( !empty( $articleId ) ) {
+				$article = Article::newFromID( $articleId );
+			}else if ( !empty( $articleTitle ) ) {
+				$title = Title::newFromText($articleTitle, NS_MAIN);
 
-		global $wgSimpleJson;
-		$wgSimpleJson = true;
+				if ( $title->exists() ) {
+					$article = Article::newFromTitle( $title, RequestContext::getMain() );
+				}
+			}
 
-		$parsedArticle = $article->getParserOutput();
-		list($media, $users) = SimpleJson::getData($article->getRevIdFetched());
+			if( empty( $article ) ) {
+				throw new NotFoundApiException( "Unable to find any article" );
+			}
 
-		$wgSimpleJson = false;
-		$categories = [];
+			//Response is based on wikiamobile skin as this already removes inline style
+			//and make response smaller
+			RequestContext::getMain()->setSkin(
+				Skin::newFromKey( 'wikiamobile' )
+			);
 
-		foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
-			$categories[] = [
-				"title" => $category,
-				"url" => Title::newFromText($category, NS_CATEGORY)->getLocalURL()
+			global $wgSimpleJson;
+			$wgSimpleJson = true;
+
+			$parsedArticle = $article->getParserOutput();
+			list($media, $users) = SimpleJson::getData($article->getRevIdFetched());
+
+			$wgSimpleJson = false;
+			$categories = [];
+
+			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+				$categories[] = [
+					"title" => $category,
+					"url" => Title::newFromText($category, NS_CATEGORY)->getLocalURL()
+				];
+			}
+
+			$result = [
+				'payload' => [
+					'title' => $parsedArticle->getDisplayTitle(),
+					'article' => $parsedArticle->getText(),
+					'media' => $media,
+					'users' => $users,
+					'categories' => $categories,
+				]
 			];
+
+			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		} else {
+			throw new BadRequestApiException( 'This entry point is disabled' );
 		}
 
-		$result = [
-			'payload' => [
-				'title' => $parsedArticle->getDisplayTitle(),
-				'article' => $parsedArticle->getText(),
-				'media' => $media,
-				'users' => $users,
-				'categories' => $categories,
-			]
-		];
-
-		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {
