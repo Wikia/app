@@ -15,3 +15,4 @@ $wgAutoloadClasses['SimpleJson'] =  $dir . 'SimpleJson.class.php';
 //hooks
 $wgHooks['ImageBeforeProduceHTML'][] = 'SimpleJson::onImageBeforeProduceHTML';
 $wgHooks['GalleryBeforeProduceHTML'][] = 'SimpleJson::onGalleryBeforeProduceHTML';
+$wgHooks['PageRenderingHash'][] = 'SimpleJson::onPageRenderingHash';

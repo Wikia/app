@@ -34,31 +34,63 @@ class SimpleJson extends WikiaService {
 	}
 
 	public static function onGalleryBeforeProduceHTML($data, &$out){
-		$media = [];
+		global $wgSimpleJson;
 
-		foreach($data['images'] as $image) {
-			$details = WikiaFileHelper::getMediaDetail(Title::newFromText( $image['name'], NS_FILE ));
-			$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
+		if ( $wgSimpleJson ) {
+			$media = [];
 
-			self::addUserObj($details);
+			foreach($data['images'] as $image) {
+				$details = WikiaFileHelper::getMediaDetail(Title::newFromText( $image['name'], NS_FILE ));
+				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
+
+				self::addUserObj($details);
+			}
+
+			self::$media[] = $media;
+
+			$out = self::createMarker($data['id']);
+
+			return false;
 		}
 
-		self::$media[] = $media;
-
-		$out = self::createMarker($data['id']);
-
-		return false;
+		return true;
 	}
 
 	public static function onImageBeforeProduceHTML(&$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res){
-		$details = WikiaFileHelper::getMediaDetail( $title );
+		global $wgSimpleJson;
 
-		self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
+		if ( $wgSimpleJson ) {
+			$details = WikiaFileHelper::getMediaDetail( $title );
 
-		self::addUserObj($details);
+			self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
 
-		$res = self::createMarker();
+			self::addUserObj($details);
 
-		return false;
+			$res = self::createMarker();
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public static function onPageRenderingHash( &$confstr ){
+		global $wgSimpleJson;
+
+		if ( $wgSimpleJson ) {
+			$confstr .= '!simpleJson';
+		}
+
+		return true;
+	}
+
+	public static function getData($revisionId){
+		return WikiaDataAccess::cache(
+			wfMemcKey('simplejson', $revisionId),
+			60*60*24*14*2, //twice as long as ParserCache
+			function() {
+				return [self::$media, self::$users];
+			}
+		);
 	}
 }

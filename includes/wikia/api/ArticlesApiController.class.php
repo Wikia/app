@@ -915,22 +915,43 @@ class ArticlesApiController extends WikiaApiController {
 
 	public function getAsJson() {
 		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
-		$articleTitle = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
-		if ( empty( $articleId ) && empty($articleTitle) ) {
-			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );
+		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
 		}
 
-		$article = Article::newFromID( $articleId );
-		if( empty($article) ) {
-			throw new NotFoundApiException( "Unable to find any article with " . self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME . '=' . $articleId );
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'You need to pass title or id of an article' );
 		}
 
+		if ( !empty( $articleId ) ) {
+			$article = Article::newFromID( $articleId );
+		}else if ( !empty( $articleTitle ) ) {
+			$title = Title::newFromText($articleTitle, NS_MAIN);
+
+			if ( $title->exists() ) {
+				$article = Article::newFromTitle( $title, RequestContext::getMain() );
+			}
+		}
+
+		if( empty( $article ) ) {
+			throw new NotFoundApiException( "Unable to find any article" );
+		}
+
+		//Response is based on wikiamobile skin as this already removes inline style
+		//and make response smaller
 		RequestContext::getMain()->setSkin(
 			Skin::newFromKey( 'wikiamobile' )
 		);
 
+		global $wgSimpleJson;
+		$wgSimpleJson = true;
+
 		$parsedArticle = $article->getParserOutput();
+		list($media, $users) = SimpleJson::getData($article->getRevIdFetched());
+
+		$wgSimpleJson = false;
 		$categories = [];
 
 		foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
@@ -944,8 +965,8 @@ class ArticlesApiController extends WikiaApiController {
 			'payload' => [
 				'title' => $parsedArticle->getDisplayTitle(),
 				'article' => $parsedArticle->getText(),
-				'media' => SimpleJson::$media,
-				'users' => SimpleJson::$users,
+				'media' => $media,
+				'users' => $users,
 				'categories' => $categories,
 			]
 		];
