@@ -110,7 +110,8 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setVal( 'items', $comments );
 		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
-		//$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 }
