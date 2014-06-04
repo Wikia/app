@@ -33,7 +33,7 @@ class Http {
 	 *                          MediaWiki/$wgVersion
 	 *    - headers             Additional headers for request
 	 *    - returnInstance      If set the method will return MWHttpRequest instance instead of string|boolean
-	 * @return Mixed: (bool)false on failure or a string on success
+	 * @return Mixed: (bool)false on failure or a string on success or MWHttpRequest instance if returnInstance option is set
 	 */
 	public static function request( $method, $url, $options = array() ) {
 		$fname = __METHOD__ . '::' . $method;
@@ -90,7 +90,7 @@ class Http {
 		// Introduced new returnInstance options to return MWHttpRequest instance instead of string-bool mix
 		if( !empty( $options['returnInstance'] ) ) {
 			$ret = $req;
-		} else if( $isOk && empty( $options['returnInstance'] ) ) {
+		} else if( $isOk ) {
 			$ret = $req->getContent();
 			// Wikia change - end
 		} else {
