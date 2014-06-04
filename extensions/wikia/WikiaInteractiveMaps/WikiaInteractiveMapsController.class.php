@@ -337,7 +337,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		] );
 
 		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
+			$results['error'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else {
 			$result = json_decode( $response );
 			$results['success'] = true;
@@ -364,7 +364,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		] );
 
 		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
+			$results['error'] = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else {
 			$response = json_decode( $response );
 			$mapId = $response->id;
@@ -421,7 +421,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function error() {
 		$this->setVal( 'messages', [
-			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-api-error-message' )
+			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-service-error' )->parse()
 		] );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
