@@ -570,6 +570,28 @@ abstract class ApiWrapper {
 		return true;
 	}
 
+	/**
+	 * Get content for the url
+	 * @param string $url
+	 * @return mixed
+	 */
+	protected static function getUrlContent( $url ) {
+		wfProfileIn( __METHOD__ );
+
+		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$result = json_decode( $req->getContent(), true );
+		} else {
+			$result = false;
+			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
+
 }
 
 class EmptyResponseException extends Exception {
