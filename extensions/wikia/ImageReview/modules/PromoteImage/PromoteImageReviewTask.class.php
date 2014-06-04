@@ -38,7 +38,10 @@ class PromoteImageReviewTask extends BaseTask {
 				$result = $this->uploadSingleImage($image['id'], $image['name'], $wgCityId, $sourceWikiId);
 
 				if ($result['status'] === 0) {
-					$uploadedImages[] = ['id' => $result['id'], 'name' => $result[ 'name' ]];
+					$uploadedImages[] = [
+						'id' => $result['id'],
+						'name' => $result['name']
+					];
 					$this->finalizeImageUploadStatus($image['id'], $sourceWikiId, \ImageReviewStatuses::STATE_APPROVED);
 				} else {
 					//on error move image back to review, so that upload could be retried
@@ -250,19 +253,8 @@ class PromoteImageReviewTask extends BaseTask {
 	}
 
 	private function getImagesToUpdateInDb($sourceWikiId, $sourceWikiLang, $images) {
-		$data = array();
-
 		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
-		$currentImages = $wikiData['images'];
-
-		if (!empty($currentImages)) {
-			foreach ($currentImages as $imageName) {
-				$promoImage = \PromoImage::fromPathname($imageName);
-				if ($promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images)) {
-					$data['city_images'][] = $promoImage->getPathname();
-				}
-			}
-		}
+		$data = $this->getWikiCityImages($wikiData['images'], $images);
 
 		foreach($images as $image) {
 			$promoImage = \PromoImage::fromPathname($image['name']);
@@ -284,22 +276,26 @@ class PromoteImageReviewTask extends BaseTask {
 	}
 
 	private function syncAdditionalImages($sourceWikiId, $sourceWikiLang, $deletedImages) {
-		$data = array();
-
 		$wikiData = $this->model->getWikiData($sourceWikiId, $sourceWikiLang, $this->helper);
-		if(!empty($wikiData['images'])) {
-			$currentImages = $wikiData['images'];
-
-			foreach($currentImages as $imageName) {
-				$promoImage = \PromoImage::fromPathname($imageName);
-				if( $promoImage->isAdditional() && !in_array($promoImage->getPathname(), $deletedImages) ) {
-					$data['city_images'][] = $promoImage->getPathname();
-				}
-			}
-		}
+		$data = $this->getWikiCityImages($wikiData['images'], $deletedImages);
 
 		if( isset($data['city_images']) ) {
 			$data['city_images'] = json_encode($data['city_images']);
+		}
+
+		return $data;
+	}
+
+	private function getWikiCityImages($currentImages, $images) {
+		$data = [];
+
+		if (!empty($currentImages)) {
+			foreach($currentImages as $imageName) {
+				$promoImage = \PromoImage::fromPathname($imageName);
+				if($promoImage->isAdditional() && !in_array($promoImage->getPathname(), $images)) {
+					$data['city_images'][] = $promoImage->getPathname();
+				}
+			}
 		}
 
 		return $data;
