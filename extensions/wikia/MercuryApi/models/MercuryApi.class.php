@@ -2,6 +2,8 @@
 
 class MercuryApi {
 
+	const AUTHOR_AVATAR_SIZE = 50;
+
 	/**
 	 * @desc Fetch Article comments count
 	 *
@@ -59,31 +61,58 @@ class MercuryApi {
 		];
 	}
 
-	public function getArticleComments( $app, $articleId, $page ) {
-		$comments = $app->sendRequest( 'ArticleComments', 'WikiaMobileCommentsPage', array(
-			'articleID' => $articleId,
-			'page' => $page,
-			'format' => 'json'
-		) )->getData();
-		$items = array();
-		foreach ( array_keys( $comments['commentListRaw'] ) as  $pageId) {
-			$comment = ArticleComment::newFromId( (int)$pageId );
-			if ( !empty( $comment ) ) {
-				$items[] = $this->getComment( $comment->getData() );
+	/**
+	 * Process comments and return two level comments
+	 *
+	 * @param array $commentsData
+	 * @return array
+	 */
+	public function processArticleComments( Array $commentsData ) {
+		$items = [];
+		foreach ( $commentsData[ 'commentListRaw' ] as $pageId => $commentData) {
+			$item = null;
+			foreach ( $commentData as $level => $commentBody) {
+				if ( $level === 'level1' ) {
+					$comment = $this->getComment( $pageId );
+					if ( $comment ) {
+						$item = $comment;
+					}
+				}
+				if ( $level === 'level2' && !empty( $item ) ) {
+					$item->items = [];
+					foreach ( array_keys( $commentBody ) as $articleId ) {
+						$comment = $this->getComment( $articleId );
+						if ( $comment ) {
+							$item->items[] = $comment;
+						}
+					}
+				}
 			}
+			$items[] = $item;
 		}
 		return $items;
 	}
 
-	private function getComment( $commentData ) {
+	/**
+	 * Generate comment item object from comment article id
+	 *
+	 * @param integer $articleId
+	 * @return null|stdClass
+	 */
+	private function getComment( $articleId ) {
+		$articleComment = ArticleComment::newFromId( $articleId );
+		if ( empty ($articleComment) ) {
+			return null;
+		}
+		$commentData = $articleComment->getData();
 		$result = new stdClass();
 		$result->id = $commentData['id'];
 		$result->text = $commentData['text'];
 		$result->created = (int)$commentData['rawmwtimestamp'];
-
 		$result->user = new stdClass();
+		$result->user->id = $commentData['author']->mId;
 		$result->user->name = $commentData['author']->mName;
-		$result->user->image = $commentData['avatar'];
+		$result->user->avatar = AvatarService::getAvatarUrl( $result->user->name, self::AUTHOR_AVATAR_SIZE );
 		$result->user->url = $commentData['userurl'];
 		return $result;
 	}
