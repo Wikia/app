@@ -18,6 +18,7 @@ class WikiaMaps {
 	const MAP_TYPE_GEO = 'geo';
 
 	const HTTP_CREATED_CODE = 201;
+	const HTTP_SUCCESS_CODE = 200;
 
 	/**
 	 * @var array API connection config
@@ -113,7 +114,7 @@ class WikiaMaps {
 			] )
 		);
 
-		if( !$response['success'] ) {
+		if( $response['success'] ) {
 			$mapsData = $response['content'];
 
 			// Add map size to maps and human status messages
@@ -148,20 +149,25 @@ class WikiaMaps {
 	private function getMapByIdFromApi( Array $params ) {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = Http::get( $url, 'default', [
-				'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
-
-		$map = json_decode( $response );
-		if( !empty( $map->tile_set_url ) ) {
-			$response = Http::get( $map->tile_set_url, 'default', [
-				'returnInstance' => true,
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+					'returnInstance' => true,
 				//TODO: this is temporary workaround, remove it before production!
 				'noProxy' => true
-			] );
-			$tilesData = json_decode( $response );
+			] )
+		);
+
+		$map = $response['content'];
+		if( !empty( $map->tile_set_url ) ) {
+			$response = $this->processServiceResponse(
+				Http::get( $map->tile_set_url, 'default', [
+					'returnInstance' => true,
+					//TODO: this is temporary workaround, remove it before production!
+					'noProxy' => true
+				] )
+			);
+
+			$tilesData = $response['content'];
 
 			if( !is_null( $tilesData ) ) {
 				$map->image = $tilesData->image;
@@ -296,7 +302,7 @@ class WikiaMaps {
 		$results['content'] = json_decode( $response->getContent() );
 		$status = $response->getStatus();
 
-		if( $status === self::HTTP_CREATED_CODE ) {
+		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_CODE ] ) ) {
 			$results['success'] = true;
 		}
 
