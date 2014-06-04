@@ -90,11 +90,12 @@
 		font-size: 18px;
 		margin: 0;
 	}
-	.expire-date {
+	.regional-restriction {
 		clear: both;
-		font-size: 11px;
-		line-height: 11px;
-		padding-top: 10px;
+		font-size: 12px;
+		color: $color-alternate-text;
+		line-height: 18px;
+		width: 460px;
 	}
 	.inner {
 		width: 670px;

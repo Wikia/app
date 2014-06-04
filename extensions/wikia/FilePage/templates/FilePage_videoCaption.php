@@ -1,11 +1,17 @@
-<? $providerLink = '<a href="' . $providerUrl . '" target="_blank">' . $provider . '</a>'; ?>
+<?
+	$providerLink = '<a href="' . $providerUrl . '" target="_blank">' . $provider . '</a>';
+	$providerPhrase = wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped();
+	if ( $expireDate ) {
+		$providerPhrase .= ' &#8226; ' . $expireDate;
+	}
+?>
 
 <div class="video-page-caption">
 	<div class="inner">
-		<p class="video-provider"><?= wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped() ?></p>
+		<p class="video-provider"><?= $providerPhrase ?></p>
 		<p class="video-views"><?= wfMessage( 'video-page-views' )->numParams( $viewCount )->parse() ?></p>
-		<? if( $expireDate ): ?>
-			<p class="expire-date"><?= $expireDate ?></p>
+		<? if ( $regionalRestrictions ) : ?>
+			<p class="regional-restriction"><?= $regionalRestrictions ?></p>
 		<? endif; ?>
 	</div>
 </div>

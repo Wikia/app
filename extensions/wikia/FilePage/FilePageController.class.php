@@ -199,13 +199,61 @@ class FilePageController extends WikiaController {
 			$expireDate = wfMessage( 'video-page-expires', $date )->text();
 		}
 
+		// Get restricted country list
+		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
+		if ( !empty( $regionalRestrictions ) ) {
+			$countryNames = $this->getCountryNames( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
+
+			if ( !empty( $countryNames ) ) {
+				$countries = implode( ', ', $countryNames );
+			} else {
+				$countries = $regionalRestrictions;
+			}
+
+			$regionalRestrictions = wfMessage( 'video-page-regional-restrictions', $countries )->text();
+		}
+
 		$this->provider = ucwords( $provider );
 		$this->detailUrl = $this->getVal( 'detailUrl' );
 		$this->providerUrl = $this->getVal( 'providerUrl' );
 		$this->expireDate = $expireDate;
+		$this->regionalRestrictions = $regionalRestrictions;
 		$this->viewCount = $this->getVal( 'views' );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get an array of country codes and return the country names
+	 * TODO: move this to a global library (possibly along with CentralNotice::getCountriesList())
+	 * @param array $countryCodes
+	 * @return array
+	 */
+	private function getCountryNames( array $countryCodes ) {
+		if ( empty( $countryCodes ) ) {
+			return [];
+		}
+
+		global $wgLang;
+		$userLanguageCode = $wgLang->getCode();
+
+		$countries = [];
+		if ( is_callable( array( 'CountryNames', 'getNames' ) ) ) {
+			// Retrieve the list of countries in user's language (via CLDR)
+			$countries = CountryNames::getNames( $userLanguageCode );
+		}
+
+		if (empty( $countries )) {
+			return [];
+		}
+
+		foreach ( $countryCodes as $countryCode ) {
+			if ( isset( $countries[$countryCode] ) ) {
+				$countryNames[] = $countries[$countryCode];
+			}
+		}
+
+		return $countryNames;
 	}
 
 	private function firstPageWithCategory () {
