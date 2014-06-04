@@ -17,6 +17,8 @@ class WikiaMaps {
 	const MAP_TYPE_CUSTOM = 'uploaded';
 	const MAP_TYPE_GEO = 'geo';
 
+	const HTTP_CREATED_CODE = 201;
+
 	/**
 	 * @var array API connection config
 	 */
@@ -80,15 +82,17 @@ class WikiaMaps {
 	 * @return string|bool
 	 */
 	private function postRequest( $url, $data ) {
-		return Http::post( $url, [
-			'postData' => json_encode( $data ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			],
-			'returnInstance' => true,
-			//TODO: this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		return $this->processServiceResponse(
+			Http::post( $url, [
+				'postData' => json_encode( $data ),
+				'headers' => [
+					'Authorization' => $this->config['token']
+				],
+				'returnInstance' => true,
+				//TODO: this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 	}
 
 	/**
@@ -277,6 +281,24 @@ class WikiaMaps {
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Returns results array with success and content elements
+	 *
+	 * @param MWHttpRequest $response
+	 * @todo: how about extracting results to an object?
+	 */
+	private function processServiceResponse( MWHttpRequest $response ) {
+		$results['success'] = false;
+		$results['content'] = json_decode( $response->getContent() );
+		$status = $response->getStatus();
+
+		if( $status === self::HTTP_CREATED_CODE ) {
+			$results['success'] = true;
+		}
+
+		return $results;
 	}
 
 }
