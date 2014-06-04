@@ -2345,8 +2345,7 @@ class Wikia {
 		require_once( "$IP/extensions/cldr/CldrNames.php" );
 		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
 
-		global $wgLang;
-		$userLanguageCode = $wgLang->getCode();
+		$userLanguageCode = F::app()->wg->Lang->getCode();
 
 		// Retrieve the list of countries in user's language (via CLDR)
 		$countries = CountryNames::getNames( $userLanguageCode );
