@@ -1,7 +1,7 @@
 <?php
 # defined here since this is loaded before settings -gp
 $wgProfilerSamplePercent = 1;
-$wgXhprofSamplePercent = 10;
+$wgXhprofSamplePercent = 1;
 $wgProfilerRequestSample = rand(1, 100);
 if( !empty( $_GET['forceprofile'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleText.php' );
