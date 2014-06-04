@@ -58,6 +58,12 @@ class FixMissingWikiFactoryVariables extends Maintenance {
 	 * Get the current values of WikiFactory variables directly from the database
 	 */
 	private function getCurrentVariables() {
+		// do not extract the following variables from WF changes log
+		$this->currentVariables = [
+			'wgUploadMaintenance' => false,
+			'wgEnableUploads' => true,
+		];
+
 		$res = $this->dbr->select(
 			[
 				'city_variables',
