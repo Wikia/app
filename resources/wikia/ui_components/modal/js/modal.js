@@ -283,6 +283,7 @@ define( 'wikia.ui.modal', [
 		( function iterate( param ) {
 			var result;
 
+			// if listener returns some value then push it to array of arguments that are passed to the next listener
 			if ( typeof param !== 'undefined' ) {
 				args.push( param );
 			}
