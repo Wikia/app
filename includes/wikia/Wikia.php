@@ -2334,9 +2334,16 @@ class Wikia {
 	 * @return array Country names indexed by code
 	 */
 	public static function getCountryNames( array $countryCodes ) {
-		if ( empty( $countryCodes ) || !is_callable( array( 'CountryNames', 'getNames' ) ) ) {
+		if ( empty( $countryCodes ) ) {
 			return [];
 		}
+
+		// This is hacky and I'm not proud of this :(
+		// Load only files required for country names to avoid loading the whole CLDR
+		// The files are included on the fly as needed instead of loading it every single time
+		global $IP;
+		require_once( "$IP/extensions/cldr/CldrNames.php" );
+		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
 
 		global $wgLang;
 		$userLanguageCode = $wgLang->getCode();
