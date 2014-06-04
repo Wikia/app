@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
@@ -23,6 +24,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	// AdProviders
 	adProviderEvolve,
 	adProviderLiftium,
+	adProviderDirectGpt,
 	adProviderRemnantGpt,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
@@ -39,7 +41,18 @@ define('ext.wikia.adEngine.adConfigLate', [
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
-		adProviderRemnant;
+		adProviderRemnant,
+
+		coffeeCupCountries = {
+			US: true,
+			PL: true
+		},
+		coffeeCupSlots = {
+			'LEFT_SKYSCRAPER_3': true,
+			'PREFOOTER_LEFT_BOXAD': true,
+			'PREFOOTER_RIGHT_BOXAD': true
+		},
+		coffeeCupEnabled = window.wgAdDriverUseCoffeeCup && coffeeCupCountries[country];
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
@@ -93,6 +106,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
 				return adProviderNull;
 			}
+		}
+
+		// Coffee cup
+		if (coffeeCupEnabled && coffeeCupSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+			return adProviderDirectGpt;
 		}
 
 		// Ebay integration
