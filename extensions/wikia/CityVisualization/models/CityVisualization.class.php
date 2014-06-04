@@ -455,7 +455,7 @@ class CityVisualization extends WikiaModel {
 	}
 
 	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
-		return $this->getVisualizationElementMemcKey('wiki_data_visualization_image_names' . ":" . "filter" . $filter, $wikiId, $langCode);
+		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
