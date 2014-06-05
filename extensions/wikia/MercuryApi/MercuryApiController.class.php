@@ -82,24 +82,24 @@ class MercuryApiController extends WikiaController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function getArticleComments() {
-		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID );
+		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, 0 );
 
 		if( $articleId === 0 ) {
 			throw new InvalidParameterApiException( self::PARAM_ARTICLE_ID );
 		}
 
 		$title = Title::newFromID( $articleId );
-		if ( empty( $title ) ) {
+		if ( !( $title instanceof Title ) ) {
 			throw new NotFoundApiException( self::PARAM_ARTICLE_ID );
 		}
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
-		$commentsResponse = $this->app->sendRequest( 'ArticleComments', 'WikiaMobileCommentsPage', array(
+		$commentsResponse = $this->app->sendRequest( 'ArticleComments', 'WikiaMobileCommentsPage', [
 			'articleID' => $articleId,
 			'page' => $page,
 			'format' => WikiaResponse::FORMAT_JSON
-		) );
+		] );
 
 		if ( empty( $commentsResponse ) ) {
 			throw new BadRequestApiException();
@@ -108,9 +108,9 @@ class MercuryApiController extends WikiaController {
 		$commentsData = $commentsResponse->getData();
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
-		$this->response->setVal( 'items', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
-		$this->response->setVal( 'basepath', $this->wg->Server );
+		$this->response->setVal( 'comments', $comments );
+		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
+		$this->response->setVal( 'basePath', $this->wg->Server );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 

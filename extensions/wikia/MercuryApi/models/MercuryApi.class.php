@@ -69,9 +69,9 @@ class MercuryApi {
 	 */
 	public function processArticleComments( Array $commentsData ) {
 		$items = [];
-		foreach ( $commentsData[ 'commentListRaw' ] as $pageId => $commentData) {
+		foreach ( $commentsData['commentListRaw'] as $pageId => $commentData ) {
 			$item = null;
-			foreach ( $commentData as $level => $commentBody) {
+			foreach ( $commentData as $level => $commentBody ) {
 				if ( $level === 'level1' ) {
 					$comment = $this->getComment( $pageId );
 					if ( $comment ) {
@@ -79,11 +79,11 @@ class MercuryApi {
 					}
 				}
 				if ( $level === 'level2' && !empty( $item ) ) {
-					$item->items = [];
+					$item['items'] = [];
 					foreach ( array_keys( $commentBody ) as $articleId ) {
 						$comment = $this->getComment( $articleId );
 						if ( $comment ) {
-							$item->items[] = $comment;
+							$item['comments'][] = $comment;
 						}
 					}
 				}
@@ -97,24 +97,27 @@ class MercuryApi {
 	 * Generate comment item object from comment article id
 	 *
 	 * @param integer $articleId
-	 * @return null|stdClass
+	 * @return null|mixed
 	 */
 	private function getComment( $articleId ) {
 		$articleComment = ArticleComment::newFromId( $articleId );
-		if ( empty ($articleComment) ) {
+		if ( !( $articleComment instanceof ArticleComment ) ) {
 			return null;
 		}
 		$commentData = $articleComment->getData();
-		$result = new stdClass();
-		$result->id = $commentData['id'];
-		$result->text = $commentData['text'];
-		$result->created = (int)$commentData['rawmwtimestamp'];
-		$result->user = new stdClass();
-		$result->user->id = $commentData['author']->mId;
-		$result->user->name = $commentData['author']->mName;
-		$result->user->avatar = AvatarService::getAvatarUrl( $result->user->name, self::AUTHOR_AVATAR_SIZE );
-		$result->user->url = $commentData['userurl'];
-		return $result;
+		return [
+			'id' => $commentData['id'],
+			'text' => $commentData['text'],
+			'created' => (int)$commentData['rawmwtimestamp'],
+			'user' => [
+				'id' => $commentData['author']->mId,
+				'name' => $commentData['author']->mName,
+				'avatar' => AvatarService::getAvatarUrl(
+						$commentData['author']->mName, AvatarService::AVATAR_SIZE_MEDIUM
+					),
+				'url' => $commentData['userurl']
+			]
+		];
 	}
 
 }
