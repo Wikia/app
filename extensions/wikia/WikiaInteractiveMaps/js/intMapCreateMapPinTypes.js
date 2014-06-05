@@ -178,7 +178,7 @@ define('wikia.intMap.createMap.pinTypes',
 			if (serializedForm['pinTypeNames[]']) {
 				valid = true;
 				serializedForm['pinTypeNames[]'].forEach(function (fieldValue) {
-					if (!(fieldValue.length > 0)) {
+					if (utils.isEmpty(fieldValue)) {
 						valid = false;
 					}
 				});
