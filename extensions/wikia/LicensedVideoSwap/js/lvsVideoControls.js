@@ -76,8 +76,6 @@ define('lvs.videocontrols', [
 				$newFlag.fadeOut();
 			}
 
-			$row.find('.swap-button').attr('data-video-swap', fileTitle);
-
 			if ($this.hasClass('small')) {
 				// one of the thumbnails was clicked
 				$element = $this.closest('.row').find('.premium .video-wrapper');
@@ -91,6 +89,9 @@ define('lvs.videocontrols', [
 				$element.find('.title').text(
 					$parent.find('.title').attr('title')
 				);
+
+				// Update swap button so it contains the dbkey of the new video to swap
+				$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
 				// tracking rank should be 1-indexed, so add 1 to the 0-based index
 				trackingRank = $parent.index() + 1;
@@ -144,9 +145,6 @@ define('lvs.videocontrols', [
 					$playerContainer.find('img').remove();
 
 					setVerticalAlign($playerContainer, videoInstance);
-
-					// Update swap button so it contains the dbkey of the video to swap
-					$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
 					/* Track video instances so we can reset them later:
 					 * If the wrapper element already has a player in it, switch it for this new one.
