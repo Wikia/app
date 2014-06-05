@@ -11,7 +11,7 @@ class SimpleJson extends WikiaService {
 		$dataRef = "data-ref={$id}";
 		$galleryId = !is_null( $galleryId ) ? " id='gallery-{$galleryId}'" : "";
 
-		return "<script class='article-media' {$dataRef}{$galleryId}}}></script>";
+		return "<script class='article-media' {$dataRef}{$galleryId}></script>";
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
@@ -104,12 +104,16 @@ class SimpleJson extends WikiaService {
 			'userPageUrl' => $user->getUserPage()->getLocalURL()
 		]);
 
-		return WikiaDataAccess::cache(
-			wfMemcKey('SimpleJson', $revisionId),
-			60*60*24*14*2, //twice as long as ParserCache
-			function() use ($userId) {
-				return [self::$media, self::$users, $userId];
-			}
-		);
+		if ( !empty(self::$media) && !empty(self::$users)) {
+			F::app()->wg->Memc->set(
+				wfMemcKey('SimpleJson', $revisionId),
+				[self::$media, self::$users, $userId],
+				0*60*24*14*2 //twice as long as ParserCache
+			);
+
+			return [self::$media, self::$users, $userId];
+		} else {
+			return F::app()->wg->Memc->get(wfMemcKey('SimpleJson', $revisionId));
+		}
 	}
 }
