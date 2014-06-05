@@ -1222,10 +1222,11 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
- * @name $wgAdDriverUseCoffeeCup
- * Whether to call DART for additional below the fold slots
+ * @name $wgAdDriverUseDartForSlotsBelowTheFold
+ * Whether to call DART for additional slots below the fold. Also known as "Coffee cup"
+ * TODO: add an internal page for the reasons
  */
-$wgAdDriverUseCoffeeCup = false;
+$wgAdDriverUseDartForSlotsBelowTheFold = false;
 
 /**
  * @name $wgAdDriverTrackState

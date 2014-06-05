@@ -246,7 +246,7 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
 
-	it('getProvider returns DirectGpt for wgAdDriverUseCoffeeCup for given slots', function () {
+	it('getProvider returns DirectGpt for wgAdDriverUseDartForSlotsBelowTheFold for given slots', function () {
 		var adProviderNullMock = {name: 'NullMock'},
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
@@ -254,7 +254,7 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
-			windowMock = {wgAdDriverUseCoffeeCup: true},
+			windowMock = {wgAdDriverUseDartForSlotsBelowTheFold: true},
 			abTestMock,
 			geoMock = { getCountryCode: function () {return 'US';} },
 			adConfig;

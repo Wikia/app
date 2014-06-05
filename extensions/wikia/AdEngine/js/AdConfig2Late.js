@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'PREFOOTER_LEFT_BOXAD': true,
 			'PREFOOTER_RIGHT_BOXAD': true
 		},
-		coffeeCupEnabled = window.wgAdDriverUseCoffeeCup && coffeeCupCountries[country];
+		coffeeCupEnabled = window.wgAdDriverUseDartForSlotsBelowTheFold && coffeeCupCountries[country];
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
