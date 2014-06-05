@@ -914,7 +914,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsJson() {
-		if ( $this->wg->EnableSimpleJsonApi ) {
+		if ( $this->wg->EnableArticleAsJsonApi ) {
 			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
 
@@ -946,15 +946,16 @@ class ArticlesApiController extends WikiaApiController {
 				Skin::newFromKey( 'wikiamobile' )
 			);
 
-			global $wgSimpleJson;
-			$wgSimpleJson = true;
+			global $wgArticleAsJson;
+			$wgArticleAsJson = true;
 
 			$parsedArticle = $article->getParserOutput();
-			User::newFromId($article->getUser());
 
-			list($media, $users, $userId) = SimpleJson::getData( $article );
+			$articleContent = json_decode(
+				trim(preg_replace('/\n.*/i', '', $parsedArticle->getText())) //TODO: Can we not do this?
+			);
 
-			$wgSimpleJson = false;
+			$wgArticleAsJson = false;
 			$categories = [];
 
 			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
@@ -967,13 +968,13 @@ class ArticlesApiController extends WikiaApiController {
 			$result = [
 				'payload' => [
 					'title' => $parsedArticle->getDisplayTitle(),
-					'article' => $parsedArticle->getText(),
-					'user' => $userId,
-					'media' => $media,
-					'users' => $users,
+					'article' => $articleContent->content,
+					'user' => $article->getUser(),
+					'media' => $articleContent->media,
+					'users' => $articleContent->users,
 					'categories' => $categories,
 				],
-				'baseUrl' => F::app()->wg->Server
+				'baseUrl' => $this->wg->Server
 			];
 
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );

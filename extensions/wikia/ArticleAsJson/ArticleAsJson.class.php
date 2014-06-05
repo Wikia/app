@@ -1,10 +1,10 @@
 <?php
 
-class SimpleJson extends WikiaService {
+class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
 
-	const CACHE_VERSION = '0.0.0';
+	const CACHE_VERSION = '0.0.1';
 
 	private static function createMarker($galleryId = NULL){
 		$id = count(self::$media) - 1;
@@ -15,7 +15,9 @@ class SimpleJson extends WikiaService {
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
-		return [
+		wfProfileIn( __METHOD__ );
+
+		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
@@ -30,24 +32,35 @@ class SimpleJson extends WikiaService {
 			'embed' => $details['videoEmbedCode'],
 			'views' => (int) $details['videoViews']
 		];
+
+		wfProfileOut( __METHOD__ );
+		return $media;
 	}
 
 	private static function addUserObj($details){
+		wfProfileIn( __METHOD__ );
+
+		$userTitle = Title::newFromText( $details['userName'], NS_USER );
+
 		self::$users[(int) $details['userId']] = [
 			'name' => $details['userName'],
 			'avatar' => $details['userThumbUrl'],
-			'url' => Title::newFromText($details['userName'], NS_USER)->getLocalURL()
+			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
 		];
+
+		wfProfileOut( __METHOD__ );
 	}
 
-	public static function onGalleryBeforeProduceHTML($data, &$out){
-		global $wgSimpleJson;
+	public static function onGalleryBeforeProduceHTML( $data, &$out ){
+		global $wgArticleAsJson;
 
-		if ( $wgSimpleJson ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $wgArticleAsJson ) {
 			$media = [];
 
 			foreach($data['images'] as $image) {
-				$details = WikiaFileHelper::getMediaDetail(Title::newFromText( $image['name'], NS_FILE ));
+				$details = WikiaFileHelper::getMediaDetail( Title::newFromText( $image['name'], NS_FILE ) );
 				$media[] = self::createMediaObj($details, $image['name'], $image['caption']);
 
 				self::addUserObj($details);
@@ -57,16 +70,20 @@ class SimpleJson extends WikiaService {
 
 			$out = self::createMarker($data['id']);
 
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public static function onImageBeforeProduceHTML(&$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res){
-		global $wgSimpleJson;
+		global $wgArticleAsJson;
 
-		if ( $wgSimpleJson ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( $wgArticleAsJson ) {
 			$details = WikiaFileHelper::getMediaDetail( $title );
 
 			self::$media[] = self::createMediaObj($details, $title->getText(), $frameParams['caption']);
@@ -75,45 +92,52 @@ class SimpleJson extends WikiaService {
 
 			$res = self::createMarker();
 
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	public static function onPageRenderingHash( &$confstr ){
-		global $wgSimpleJson;
+		global $wgArticleAsJson;
 
-		if ( $wgSimpleJson ) {
-			$confstr .= '!simpleJson:' . self::CACHE_VERSION;
+		wfProfileIn( __METHOD__ );
+
+		if ( $wgArticleAsJson ) {
+			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	public static function getData( Article $article ){
+	public static function onParserAfterTidy( Parser &$parser, &$text ) {
+		global $wgArticleAsJson;
 
-		$revisionId = $article->getRevIdFetched();
-		$userId = $article->getUser();
-		$user = User::newFromId( $userId );
+		wfProfileIn( __METHOD__ );
 
-		self::addUserObj([
-			'userId' => $userId,
-			'userName' => $user->getName(),
-			'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
-			'userPageUrl' => $user->getUserPage()->getLocalURL()
-		]);
+		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
 
-		if ( !empty(self::$media) && !empty(self::$users)) {
-			F::app()->wg->Memc->set(
-				wfMemcKey('SimpleJson', $revisionId),
-				[self::$media, self::$users, $userId],
-				0*60*24*14*2 //twice as long as ParserCache
-			);
+			$user = User::newFromName( $parser->getRevisionUser() );
+			$userId = $user->getId();
 
-			return [self::$media, self::$users, $userId];
-		} else {
-			return F::app()->wg->Memc->get(wfMemcKey('SimpleJson', $revisionId));
+			self::addUserObj([
+				'userId' => $userId,
+				'userName' => $user->getName(),
+				'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
+				'userPageUrl' => $user->getUserPage()->getLocalURL()
+			]);
+
+			$text = json_encode([
+				'content' => $text,
+				'media' => self::$media,
+				'users' => self::$users
+			]);
 		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
 	}
 }
