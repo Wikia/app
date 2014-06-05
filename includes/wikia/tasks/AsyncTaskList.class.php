@@ -224,7 +224,7 @@ class AsyncTaskList {
 	 */
 	protected function getExecutor() {
 		global $wgDevelEnvironment, $IP, $wgPreviewHostname, $wgVerifyHostname, $wgWikiaDatacenter;
-		$executor = [];
+		$executor = null;
 		$hostname = gethostname();
 		if (!empty($wgDevelEnvironment)) {
 			if (isset($_SERVER['SERVER_NAME'])) {

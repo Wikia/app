@@ -127,7 +127,7 @@ class WikiaLogger {
 	}
 
 	/**
-	 * @return \SyslogHandler
+	 * @return SyslogHandler
 	 */
 	public function getSyslogHandler() {
 		if ($this->syslogHandler == null) {
@@ -144,14 +144,14 @@ class WikiaLogger {
 	 */
 	public function setSyslogHandler(SyslogHandler $handler) {
 		if (isset($this->logger)) {
-			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+			throw new \InvalidArgumentException("Error, \$this->logger has been initialized.");
 		}
 
 		$this->syslogHandler = $handler;
 	}
 
 	/**
-	 * @return \WebProcessor.
+	 * @return WebProcessor.
 	 */
 	public function getWebProcessor() {
 		if ($this->webProcessor == null) {
@@ -168,7 +168,7 @@ class WikiaLogger {
 	 */
 	public function setWebProcessor(WebProcessor $processor) {
 		if (isset($this->logger)) {
-			throw new InvalidArgumentException("Error, \$this->logger has been initialized.");
+			throw new \InvalidArgumentException("Error, \$this->logger has been initialized.");
 		}
 
 		$this->webProcessor = $processor;

@@ -100,6 +100,7 @@ class TaskRunner {
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
 			'ParsoidCacheUpdateJob',
+			'PromoteImageReviewTask',
 			'UserRollback',
 			'UserRename',
 		]);

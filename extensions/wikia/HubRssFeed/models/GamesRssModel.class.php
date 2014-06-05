@@ -1,8 +1,7 @@
 <?php
 
 class GamesRssModel extends BaseRssModel {
-	const FEED_NAME = 'games';
-	const URL_ENDPOINT = '/Games';
+	const FEED_NAME = 'Games';
 	const MAX_NUM_ITEMS_IN_FEED = 15;
 	const GAMING_HUB_CITY_ID = 955764;
 	const FRESH_CONTENT_TTL_HOURS = 24;
@@ -20,27 +19,17 @@ class GamesRssModel extends BaseRssModel {
 		return 'From Wikia community - Video Games';
 	}
 
-	public function getFeedData() {
-
-		if ( $this->forceRegenerateFeed == false && $this->isFreshContentInDb( self::FEED_NAME, self::FRESH_CONTENT_TTL_HOURS ) ) {
-			return $this->getLastRecordsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
-		}
-
-		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
-		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
-
-		$blogData = $this->getDataFromBlogs( $timestamp );
+	public function loadData( $lastTimestamp, $duplicates ) {
+ 		$blogData = $this->getDataFromBlogs( $lastTimestamp );
 		$blogData = $this->removeDuplicates( $blogData, $duplicates );
-		$hubData = [];
-		if ( !empty( $blogData ) || $this->forceRegenerateFeed ) {
-			$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $timestamp, $duplicates );
-		}
+		$hubData = $this->getDataFromHubs( self::GAMING_HUB_CITY_ID, $lastTimestamp, $duplicates );
+
 		$rawData = array_merge(
 			$blogData,
 			$hubData
 		);
 
-		$out = $this->finalizeRecords($rawData,self::MAX_NUM_ITEMS_IN_FEED, self::FEED_NAME );
+		$out = $this->finalizeRecords($rawData, self::FEED_NAME );
 		return $out;
 	}
 
@@ -52,7 +41,7 @@ class GamesRssModel extends BaseRssModel {
 		$fromDate = date( 'Y-m-d\TH:i:s\Z', $fromTimestamp );
 		$feedModel->setRowLimit( self::MAX_NUM_ITEMS_IN_FEED );
 		$feedModel->setSorts( [ 'created' => 'desc' ] );
-		$feedModel->setFilters(['hc'=>'+((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
+		$feedModel->addFilters(['hc'=>'+((+host:"dragonage.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"warframe.wikia.com" AND +categories_mv_en:"Blog posts")
 		| (+host:"monsterhunter.wikia.com" AND +categories_mv_en:"News")
 		| (+host:"darksouls.wikia.com" AND +categories_mv_en:"News")
@@ -64,7 +53,6 @@ class GamesRssModel extends BaseRssModel {
 
 		$rows = $feedModel->query( '+created:[ ' . $fromDate . ' TO * ]');
 		foreach($rows as &$item){
-			//TODO: find better way for this
 			$item[ 'source' ] = self::SOURCE_BLOGS;
 		}
 		return $rows;

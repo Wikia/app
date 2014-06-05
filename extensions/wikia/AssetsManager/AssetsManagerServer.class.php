@@ -87,6 +87,13 @@ class AssetsManagerServer {
 
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
 
+		// Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
+		// See BAC-550 for details
+		// @macbre
+		global $wgRequestTime;
+		$headers['X-Served-By'] = wfHostname();
+		$headers['X-Backend-Response-Time'] = round(microtime( true ) - $wgRequestTime, 3);
+
 		foreach($headers as $k => $v) {
 			header($k . ': ' . $v);
 		}
