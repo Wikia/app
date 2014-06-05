@@ -43,16 +43,16 @@ define('ext.wikia.adEngine.adConfigLate', [
 		sevenOneMediaDisabled = abTest && abTest.inGroup('SEVENONEMEDIA_DR', 'DISABLED'),
 		adProviderRemnant,
 
-		coffeeCupCountries = {
+		dartBtfCountries = {
 			US: true,
 			PL: true
 		},
-		coffeeCupSlots = {
-			'LEFT_SKYSCRAPER_3': true,
-			'PREFOOTER_LEFT_BOXAD': true,
-			'PREFOOTER_RIGHT_BOXAD': true
+		dartBtfSlots = {
+			LEFT_SKYSCRAPER_3: true,
+			PREFOOTER_LEFT_BOXAD: true,
+			PREFOOTER_RIGHT_BOXAD: true
 		},
-		coffeeCupEnabled = window.wgAdDriverUseDartForSlotsBelowTheFold && coffeeCupCountries[country];
+		dartBtfEnabled = window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfCountries[country];
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
@@ -108,8 +108,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		// Coffee cup
-		if (coffeeCupEnabled && coffeeCupSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
+		// DART for some slots below the fold a.k.a. coffee cup
+		if (dartBtfEnabled && dartBtfSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
 			return adProviderDirectGpt;
 		}
 
