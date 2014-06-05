@@ -151,7 +151,7 @@ class WikiaMaps {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', [
-					'returnInstance' => true,
+				'returnInstance' => true,
 				//TODO: this is temporary workaround, remove it before production!
 				'noProxy' => true
 			] )
