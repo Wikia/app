@@ -1209,9 +1209,15 @@ $wgAdDriverUseEbay = false;
 
 /**
  * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer WikiaBar BOXAD 2 (true) or not (false)
+ * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
  */
 $wgAdDriverUseWikiaBarBoxad2 = false;
+
+/**
+ * @name $wgAdDriverUseWikiaBarBoxad2ImpressionCapping
+ * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad call.
+ */
+$wgAdDriverUseWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

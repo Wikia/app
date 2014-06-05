@@ -216,7 +216,8 @@ class AdEngine2Service
 			$wgEnableRHonDesktop, $wgAdPageType, $wgOut,
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
-			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue;
+			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
+			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverUseWikiaBarBoxad2ImpressionCapping;
 
 		$vars = [];
 
@@ -274,6 +275,10 @@ class AdEngine2Service
 			$url = ResourceLoader::makeCustomURL($wgOut, ['wikia.ext.adengine.sevenonemedia'], 'scripts');
 			$variablesToExpose['wgAdDriverSevenOneMediaCombinedUrl'] = $url;
 			$variablesToExpose['wgAdDriverSevenOneMediaDisableFirePlaces'] = !empty($wgOasisResponsive) && empty($wgOasisResponsiveLimited);
+		}
+
+		if ($wgAdDriverUseWikiaBarBoxad2) {
+			$variablesToExpose['wgAdDriverUseWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverUseWikiaBarBoxad2ImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {
