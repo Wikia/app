@@ -50,6 +50,10 @@ define('lvs.videocontrols', [
 		var videoWidth = $container.find('.grid-3').width();
 
 		$container.find('.video').on('click.lvs', function (e) {
+			// allow click-through if command/control click
+			if (e.metaKey || e.ctrlKey) {
+				return;
+			}
 			e.preventDefault();
 
 			var $this = $(this),
@@ -164,6 +168,16 @@ define('lvs.videocontrols', [
 		$container.on('contentReset', function () {
 			// All video instances will have been wiped away with the html reset
 			videoInstances = [];
+		});
+
+		// If a title is clicked, trigger a click on it's thumbnail counterpart
+		$container.find('.title a').on('click', function (e) {
+			// allow click-through if command/control click
+			if (e.metaKey || e.ctrlKey) {
+				return;
+			}
+			e.preventDefault();
+			$(this).parent().siblings('.video').click();
 		});
 	}
 
