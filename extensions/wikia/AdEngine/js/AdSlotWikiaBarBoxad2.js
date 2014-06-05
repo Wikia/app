@@ -68,7 +68,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 
 		if (slot[0] === 'LEFT_SKYSCRAPER_2') {
 
-			skyscraperOffset = $('LEFT_SKYSCRAPER_2').offset() || {};
+			skyscraperOffset = $('#LEFT_SKYSCRAPER_2').offset() || {};
 
 			if (skyscraperOffset.top) {
 				visibleOffsetBottom = skyscraperOffset.top - 150;
