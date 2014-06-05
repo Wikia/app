@@ -1222,6 +1222,12 @@ $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 
 /**
+ * @name $wgAdDriverUseCoffeeCup
+ * Whether to call DART for additional below the fold slots
+ */
+$wgAdDriverUseCoffeeCup = false;
+
+/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
