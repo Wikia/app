@@ -150,9 +150,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
 			'accesskey-save',
-			'wikia-visualeditor-dialog-wikiaorientation-headline',
-			'wikia-visualeditor-dialog-wikiaorientation-text',
-			'wikia-visualeditor-dialog-wikiaorientation-start-button',
+			'wikia-visualeditor-dialog-orientation-headline',
+			'wikia-visualeditor-dialog-orientation-text',
+			'wikia-visualeditor-dialog-orientation-start-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

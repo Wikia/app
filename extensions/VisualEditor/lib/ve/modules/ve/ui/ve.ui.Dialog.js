@@ -19,6 +19,16 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	// Parent constructor
 	OO.ui.Dialog.call( this, config );
 
+	if ( config.disableAnimation ) {
+		this.frame.$element.parent().addClass( 've-ui-noAnimation' );
+	}
+	if ( config.width ) {
+		this.frame.$element.parent().css( 'width', config.width );
+	}
+	if ( config.height ) {
+		this.frame.$element.parent().css( 'height', config.height );
+	}
+
 	// Properties
 	this.fragment = null;
 };

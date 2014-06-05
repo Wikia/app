@@ -174,7 +174,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status 
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.onSurfaceReady = function () {
-	if ( mw.user.anonymous() && window.veOrientationEnabled && !window.localStorage.getItem( 'wikiaVEOrientationViewed' ) ) {
+	if ( window.mw.user.anonymous() && window.veOrientationEnabled && !window.localStorage.getItem( 'wikiaVEOrientationViewed' ) ) {
 		// Copied from ve.ui.DialogAction
 		this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open( this.surface.getModel().getFragment( null, true ),
 			{ dir: this.surface.getModel().getDocument().getDir() } );

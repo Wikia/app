@@ -42,9 +42,9 @@ $messages['en'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permission denied',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Sorry, this video is not available for preview.',
 	'wikia-visualeditor-loading' => 'Loading the VisualEditor...',
-	'wikia-visualeditor-dialog-wikiaorientation-headline' => 'Welcome',
-	'wikia-visualeditor-dialog-wikiaorientation-text' => 'This page is created, edited and maintained by people just like yourself. Make your first contribution today.',
-	'wikia-visualeditor-dialog-wikiaorientation-start-button' => 'Start editing',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Welcome',
+	'wikia-visualeditor-dialog-orientation-text' => 'This page is created, edited and maintained by people just like yourself. Make your first contribution today.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Start editing',
 );
 
 /** Message documentation (Message documentation)
@@ -103,9 +103,9 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Error message displayed when user is not allowed to add an image or video.
 {{Identical|Permission denied}}',
 	'wikia-visualeditor-loading' => 'The message displayed next to the loading indicator while the editor is loading.',
-	'wikia-visualeditor-dialog-wikiaorientation-headline' => 'Header greeting to new users opening VisualEditor.',
-	'wikia-visualeditor-dialog-wikiaorientation-text' => 'Text under greeting enticing users to edit with VisualEditor.',
-	'wikia-visualeditor-dialog-wikiaorientation-start-button' => 'Button that closes greeting dialog and shows VisualEditor.',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Header greeting to new users opening VisualEditor.',
+	'wikia-visualeditor-dialog-orientation-text' => 'Text under greeting enticing users to edit with VisualEditor.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Button that closes greeting dialog and shows VisualEditor.',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
