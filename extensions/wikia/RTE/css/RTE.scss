@@ -139,9 +139,6 @@
 }
 
 .RTEMediaCaption {
-	background: #f9f9f9;
-	border: solid 1px #ccc;
-	border-top: none;
 	display: none;
 	font-size: 11px;
 	left: 0;
@@ -579,8 +576,6 @@
 		color: $color-text;
 	}
 	.RTEMediaCaption {
-		background-color: $color-article-thumb-background;
-		border-color: $color-article-thumb-border;
 		cursor: default;
 		a {
 			cursor: default;

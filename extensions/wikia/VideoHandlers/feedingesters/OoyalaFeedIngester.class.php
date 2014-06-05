@@ -100,7 +100,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['genres'] = empty( $video['metadata']['genres'] ) ? '' : $video['metadata']['genres'];
 				$clipData['actors'] = empty( $video['metadata']['actors'] ) ? '' : $video['metadata']['actors'];
 				$clipData['startDate'] = empty( $video['time_restrictions']['start_date'] ) ? '' : strtotime( $video['time_restrictions']['start_date'] );
-				$clipData['expirationDate'] = empty( $video['metadata']['expirationdate'] ) ? '' : strtotime( $video['metadata']['expirationdate'] );
+				$clipData['expirationDate'] = empty( $video['time_restrictions']['end_date'] ) ? '' : strtotime( $video['time_restrictions']['end_date'] );
+				$clipData['regionalRestrictions'] = empty( $video['metadata']['regional_restrictions'] ) ? '' : strtoupper( $video['metadata']['regional_restrictions'] );
 				$clipData['targetCountry'] = empty( $video['metadata']['targetcountry'] ) ? '' : $video['metadata']['targetcountry'];
 				$clipData['source'] = empty( $video['metadata']['source'] ) ? '' : $video['metadata']['source'];
 				$clipData['sourceId'] = empty( $video['metadata']['sourceid'] ) ? '' : $video['metadata']['sourceid'];
@@ -111,9 +112,18 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['resolution'] = empty( $video['metadata']['resolution'] ) ? '' : $video['metadata']['resolution'];
 				$clipData['aspectRatio'] = empty( $video['metadata']['aspectratio'] ) ? '' : $video['metadata']['aspectratio'];
 				$clipData['distributor'] = empty( $video['metadata']['distributor'] ) ? '' : $video['metadata']['distributor'];
-
-				// For page categories only. Not store in metadata.
 				$clipData['pageCategories'] = empty( $video['metadata']['pagecategories'] ) ? '' : $video['metadata']['pagecategories'];
+
+				// Howdini has specific metadata which we want to map to our own
+				if ( $clipData['provider'] == "ooyala/howdini" ) {
+					$clipData["genres"] = $this->getHowdiniGenre( $video['metadata']['category'] );
+					$clipData["category"] = "Lifestyle";
+					$clipData["type"] = "How To";
+					$clipData["pageCategories"] = "Lifestyle, Howdini, How To";
+					$ooyalaAsset = new OoyalaAsset();
+					// Make sure all Howdini assets use the Howdini ad set
+					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
+				}
 
 				$msg = '';
 				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'provider' => $clipData['provider'] );
@@ -205,6 +215,45 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' :  $data['pageCategories'];
 
 		return $metadata;
+	}
+
+	/**
+	 * Returns a genre based off of the category. This is specific to the Howdini provider. The details of this
+	 * mapping can be found in Jira VID-1691
+	 * @param $category
+	 * @return string
+	 */
+	function getHowdiniGenre( $category ) {
+
+		$category = strtolower( trim( $category ) );
+		switch( $category ) {
+			case "celebrations":
+				$genre = "Variety";
+				break;
+			case "family":
+				$genre = "Family";
+				break;
+			case "food":
+				$genre = "Food and Drink";
+				break;
+			case "health":
+				$genre = "Health";
+				break;
+			case "living":
+				$genre = "Home";
+				break;
+			case "style":
+				$genre = "Fashion";
+				break;
+			case "tech":
+				$genre = "Tech";
+				break;
+			default:
+				$genre = ucfirst( $category );
+				break;
+		}
+
+		return $genre;
 	}
 
 }

@@ -19,28 +19,20 @@ define('lvs.videocontrols', [
 	 */
 	var videoInstances = [];
 
-	function setVerticalAlign(/*$element, video*/) {
-		// TODO: once height is set dynamically, let this function run.
-
-		/*
+	function setVerticalAlign($element, video) {
 		var videoHeight = video.height,
 			wrapperHeight = $element.height(),
-			topMargin = ( wrapperHeight - videoHeight ) / 2;
+			topMargin = (wrapperHeight - videoHeight) / 2;
 
-		$element.data( 'height', wrapperHeight ).height( wrapperHeight - topMargin ).css( 'padding-top', topMargin );
-		 */
+		$element.data('height', wrapperHeight).height(wrapperHeight - topMargin).css('padding-top', topMargin);
 	}
 
 	// remove vertical alignment css
-	function removeVerticalAlign(/*$element*/) {
-		// TODO: once height is set dynamically, let this function run.
-
-		/*
-		var height = $element.data( 'height' );
-		if ( height ) {
-			$element.height( height ).css( 'padding-top', 0 );
+	function removeVerticalAlign($element) {
+		var height = $element.data('height');
+		if (height) {
+			$element.height(height).css('padding-top', 0);
 		}
-		*/
 	}
 
 	function syncVideoInteraction(title, premiumTitle) {
@@ -57,7 +49,7 @@ define('lvs.videocontrols', [
 	function init($container) {
 		var videoWidth = $container.find('.grid-3').width();
 
-		$container.on('click', '.video', function (e) {
+		$container.find('.video').on('click.lvs', function (e) {
 			e.preventDefault();
 
 			var $this = $(this),
@@ -84,22 +76,34 @@ define('lvs.videocontrols', [
 				$newFlag.fadeOut();
 			}
 
-			$row.find('.swap-button').attr('data-video-swap', fileTitle);
-
-			if ($this.hasClass('thumb')) {
+			if ($this.hasClass('small')) {
 				// one of the thumbnails was clicked
 				$element = $this.closest('.row').find('.premium .video-wrapper');
 				$thumbList = $this.closest('ul');
 
 				// put outline around the thumbnail that was clicked
 				$thumbList.find('.selected').removeClass('selected');
-				$this.addClass('selected');
+				$parent.addClass('selected');
+
+				// swap titles
+				$element.find('.title').text(
+					$parent.find('.title').attr('title')
+				);
+
+				// Update swap button so it contains the dbkey of the new video to swap
+				$row.find('.swap-button').attr('data-video-swap', fileTitle);
 
 				// tracking rank should be 1-indexed, so add 1 to the 0-based index
 				trackingRank = $parent.index() + 1;
 			} else {
 				// Large image was clicked
 				$element = $parent;
+
+				// remove click event - this is no longer a video thumbnail
+				$this.off('.lvs')
+					.on('click.lvs', function (e) {
+						e.preventDefault();
+					});
 
 				// For tracking purposes, figure out if premium or non-premium was clicked
 				$wrapper = $parent.closest('.grid-3');
@@ -121,21 +125,26 @@ define('lvs.videocontrols', [
 				data: {
 					fileTitle: fileTitle,
 					width: videoWidth,
-					autoplay: 1,
+					autoplay: 1
 				},
 				callback: function (data) {
 					var videoInstance,
-						vbIndex;
+						vbIndex,
+						$playerContainer = $element.find('.video-thumbnail');
 
 					// Remove styles of previous video
-					removeVerticalAlign($element);
+					removeVerticalAlign($playerContainer);
 
-					videoInstance = new VideoBootstrap($element[0], data.embedCode, 'licensedVideoSwap');
+					videoInstance = new VideoBootstrap(
+						$playerContainer[0],
+						data.embedCode,
+						'licensedVideoSwap'
+					);
 
-					setVerticalAlign($element, videoInstance);
+					// remove image so user doesn't see it get styles applied
+					$playerContainer.find('img').remove();
 
-					// Update swap button so it contains the dbkey of the video to swap
-					$row.find('.swap-button').attr('data-video-swap', fileTitle);
+					setVerticalAlign($playerContainer, videoInstance);
 
 					/* Track video instances so we can reset them later:
 					 * If the wrapper element already has a player in it, switch it for this new one.
