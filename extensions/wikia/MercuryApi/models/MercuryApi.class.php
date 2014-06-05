@@ -2,8 +2,6 @@
 
 class MercuryApi {
 
-	const AUTHOR_AVATAR_SIZE = 50;
-
 	/**
 	 * @desc Fetch Article comments count
 	 *
