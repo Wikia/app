@@ -102,7 +102,7 @@ class TaskRunner {
 			'ParsoidCacheUpdateJob',
 			'PromoteImageReviewTask',
 			'UserRollback',
-			'UserRename',
+//			'UserRename',
 		]);
 	}
 }
