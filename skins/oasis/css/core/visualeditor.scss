@@ -10,7 +10,13 @@
 	@include blackout();
 	@include flexbox();
 	@include justify-content( center );
-	opacity: 0;
+	@if lightness($color-page) >= 50% {
+		background: rgba( darken($color-page, 5%), 0.97 );
+	} @else if lightness($color-page) >= 10% {
+		background: rgba( darken($color-page, 10%), 0.97 );
+	} @else {
+		background: rgba( $color-page, 0.9 );
+	}
 
 	.content {
 		@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );

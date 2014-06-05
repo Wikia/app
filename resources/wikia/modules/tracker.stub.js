@@ -203,7 +203,14 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
-		
+
+		// Orientation dialog
+		try {
+			defaultData.orientationEnabled = !! window.veOrientationEnabled;
+		} catch ( e ) {
+			defaultData.orientationEnabled = 'unknown';
+		}
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };

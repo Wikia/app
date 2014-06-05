@@ -91,6 +91,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
@@ -149,6 +150,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
 			'accesskey-save',
+			'wikia-visualeditor-dialog-wikiaorientation-headline',
+			'wikia-visualeditor-dialog-wikiaorientation-text',
+			'wikia-visualeditor-dialog-wikiaorientation-start-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
