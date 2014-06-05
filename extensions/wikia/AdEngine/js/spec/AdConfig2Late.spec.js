@@ -1,4 +1,4 @@
-/*global describe, it, expect, AdConfig2Late*/
+/*global describe, it, expect, modules*/
 describe('AdConfig2Late', function () {
 	'use strict';
 
@@ -7,18 +7,18 @@ describe('AdConfig2Late', function () {
 		'GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
 	].join('');
 
-	var adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function() {return false;}};
 
-
-		it('getProvider returns Liftium if it can handle it', function() {
+		it('getProvider returns Liftium if it can handle it', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {},
 			abTestMock = {inGroup: function () {return false;}},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -28,6 +28,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -36,15 +37,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
 
-	it('getProvider returns Null if Liftium cannot handle it', function() {
+	it('getProvider returns Null if Liftium cannot handle it', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return false;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return false;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return false;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {},
 			abTestMock = {inGroup: function () {return false;}},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -54,6 +57,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -62,15 +66,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock');
 	});
 
-	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia)', function() {
+	it('getProvider returns SevenOneMedia if it can handle it (for wgAdDriverUseSevenOneMedia)', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: true},
 			abTestMock = {inGroup: function () {return false;}},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -80,6 +86,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -88,19 +95,21 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderSevenOneMedia, 'adProviderSevenOneMediaMock');
 	});
 
-	it('getProvider returns Null for 71M disaster recovery with wgAdDriverUseSevenOneMedia', function() {
+	it('getProvider returns Null for 71M disaster recovery with wgAdDriverUseSevenOneMedia', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: true},
 			abTestMock = {
 				inGroup: function (experiment, group) {
 					return (experiment === 'SEVENONEMEDIA_DR' && group === 'DISABLED');
 				}
 			},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -110,6 +119,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -118,19 +128,21 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderSevenOneMediaMock');
 	});
 
-	it('getProvider returns Liftium for 71M disaster recovery without wgAdDriverUseSevenOneMedia', function() {
+	it('getProvider returns Liftium for 71M disaster recovery without wgAdDriverUseSevenOneMedia', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: false},
 			abTestMock = {
 				inGroup: function (experiment, group) {
 					return (experiment === 'SEVENONEMEDIA_DR' && group === 'DISABLED');
 				}
 			},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -140,6 +152,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -148,15 +161,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderSevenOneMediaMock');
 	});
 
-	it('getProvider returns Null for IE8 with wgAdDriverUseSevenOneMedia', function() {
+	it('getProvider returns Null for IE8 with wgAdDriverUseSevenOneMedia', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: true, navigator: {userAgent: uaIE8}},
 			abTestMock = {inGroup: function () {}},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -166,6 +181,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -173,15 +189,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderSevenOneMediaMock');
 	});
 
-	it('getProvider returns Liftium for IE8 without wgAdDriverUseSevenOneMedia', function() {
+	it('getProvider returns Liftium for IE8 without wgAdDriverUseSevenOneMedia', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: false, navigator: {userAgent: uaIE8}},
 			abTestMock = {inGroup: function () {}},
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -191,6 +209,7 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
@@ -198,15 +217,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
 
-	it('getProvider returns Liftium without AbTest', function() {
+	it('getProvider returns Liftium without AbTest', function () {
 		var adProviderNullMock = {name: 'NullMock'},
-			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function() {return true;}},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function() {return true;}},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function() {return true;}},
-			logMock = function() {},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
 			windowMock = {wgAdDriverUseSevenOneMedia: false},
 			abTestMock,
-			geoMock = { getCountryCode: function() { return 'PL'; } },
+			geoMock = { getCountryCode: function () { return 'PL'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -216,11 +237,45 @@ describe('AdConfig2Late', function () {
 			geoMock,
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
+			adProviderDirectGpt,
 			adProviderRemnantGpt,
 			adProviderNullMock,
 			adProviderSevenOneMedia
 		);
 
 		expect(adConfig.getProvider(['foo'])).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
+	});
+
+	it('getProvider returns DirectGpt for wgAdDriverUseCoffeeCup for given slots', function () {
+		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true;}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
+			windowMock = {wgAdDriverUseCoffeeCup: true},
+			abTestMock,
+			geoMock = { getCountryCode: function () {return 'US';} },
+			adConfig;
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			abTestMock,
+			geoMock,
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderNullMock,
+			adProviderSevenOneMedia
+		);
+
+		expect(adConfig.getProvider(['foo'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
+		expect(adConfig.getProvider(['MODAL_INTERSTITIAL'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
+		expect(adConfig.getProvider(['LEFT_SKYSCRAPER_3'])).toBe(adProviderDirectGpt, 'adProviderDirectGpt');
+		expect(adConfig.getProvider(['PREFOOTER_LEFT_BOXAD'])).toBe(adProviderDirectGpt, 'adProviderDirectGpt');
+		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).toBe(adProviderDirectGpt, 'adProviderDirectGpt');
 	});
 });
