@@ -2327,4 +2327,38 @@ class Wikia {
 
 		return true;
 	}
+
+	/**
+	 * Get an array of country codes and return the country names array indexed by corresponding codes
+	 * @param array $countryCodes
+	 * @return array Country names indexed by code
+	 */
+	public static function getCountryNames( array $countryCodes ) {
+		if ( empty( $countryCodes ) ) {
+			return [];
+		}
+
+		// This is hacky and I'm not proud of this :(
+		// Load only files required for country names to avoid loading the whole CLDR
+		// The files are included on the fly as needed instead of loading it every single time
+		global $IP;
+		require_once( "$IP/extensions/cldr/CldrNames.php" );
+		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
+
+		$userLanguageCode = F::app()->wg->Lang->getCode();
+
+		// Retrieve the list of countries in user's language (via CLDR)
+		$countries = CountryNames::getNames( $userLanguageCode );
+		if ( empty( $countries ) ) {
+			return [];
+		}
+
+		foreach ( $countryCodes as $countryCode ) {
+			if ( isset( $countries[$countryCode] ) ) {
+				$countryNames[$countryCode] = $countries[$countryCode];
+			}
+		}
+
+		return $countryNames;
+	}
 }
