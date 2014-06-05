@@ -1,8 +1,7 @@
 <?php
 
 class TvRssModel extends BaseRssModel {
-	const FEED_NAME = 'tv';
-	const URL_ENDPOINT = '/TV';
+	const FEED_NAME = 'TV';
 	const TVRAGE_RSS_YESTERDAY = "http://www.tvrage.com/myrss.php?class=scripted&date=yesterday";
 	const TVRAGE_RSS_TODAY = "http://www.tvrage.com/myrss.php?class=scripted&date=today";
 	const MIN_ARTICLE_QUALITY = 30;
@@ -29,17 +28,7 @@ class TvRssModel extends BaseRssModel {
 		return $timeDiff > self::ADD_CONTENT_PERIOD;
 	}
 
-	public function getFeedData() {
-
-		/*
-		 * If content in DB is fresh (BaseRssModel::FRESH_CONTENT_TTL_HOURS)
-		 * don't do anything and return content from DB
-		 */
-		if ( $this->forceRegenerateFeed == false ) {
-			if ( $this->isFreshContentInDb( self::FEED_NAME ) ) {
-				return $this->getLastRecordsFromDb( self::FEED_NAME, self::MAX_NUM_ITEMS_IN_FEED );
-			}
-		}
+	protected  function loadData( $lastTimestamp, $duplicates ) {
 
 		$useWikisFromThePast = false;
 		/*
@@ -47,9 +36,7 @@ class TvRssModel extends BaseRssModel {
 		 * (TVRage data)
 		 */
 		$rawData = $this->getWikiaArticlesFromExtApi();
-		$duplicates = $this->getLastDuplicatesFromDb( self::FEED_NAME );
-		$timestamp = $this->getLastFeedTimestamp( self::FEED_NAME ) + 1;
-		$hubData = $this->getDataFromHubs( self::TV_HUB_CITY_ID, $timestamp, $duplicates );
+		$hubData = $this->getDataFromHubs( self::TV_HUB_CITY_ID, $lastTimestamp, $duplicates );
 
 		$rawData = array_merge( $rawData, $hubData );
 		if ( empty( $rawData ) ) {
@@ -84,8 +71,7 @@ class TvRssModel extends BaseRssModel {
 			}
 		}
 
-		$out = $this->finalizeRecords( $rawData, self::MAX_NUM_ITEMS_IN_FEED , self::FEED_NAME );
-		return $out;
+		return  $this->finalizeRecords( $rawData, self::FEED_NAME );
 	}
 
 	protected function getWikisFromPast() {

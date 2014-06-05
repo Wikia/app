@@ -45,7 +45,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 
 		$mock->expects( $this->once() )
 			->method( 'setVal' )
-			->with( 'links', ['abc...'] );
+			->with( 'links', [] );
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
@@ -57,8 +57,6 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->will( $this->returnValue( 'abc' ) );
 
 		$mock->currentTitle = $mockTitle;
-
-		$mock->customFeeds = ['abc' => '...'];
 
 		$mock->wg = new StdClass();
 
@@ -82,7 +80,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->getMock();
 
 		$mockRequest->expects( $this->any() )
-			->method( 'getParams' )
+			->method( 'getVal' )
 			->will( $this->returnValue( ['par' => 'XyZ'] ) );
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
@@ -95,7 +93,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->with( 'HubRssFeedSpecial', 'notfound' );
 
 		$mock->currentTitle = $mockTitle;
-		$mock->customFeeds = ['abc' => 'desc_abc'];
+
 		$mock->request = $mockRequest;
 		$mock->index();
 	}
