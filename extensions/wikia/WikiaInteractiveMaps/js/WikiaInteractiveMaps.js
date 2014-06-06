@@ -4,18 +4,40 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
 
-		// create map modal assets
-		cacheKey = 'wikia_interactive_maps_create_map',
-		source = {
-			messages: ['WikiaInteractiveMapsCreateMap'],
-			scripts: ['int_map_create_map_js'],
-			styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
-			mustache: [
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
-			]
+		//registry for the modal actions assets
+		actions = {
+			createMap: {
+				loadModal: function(assets) {
+					require(['wikia.intMaps.createMap.modal'], function(createMap) {
+						createMap.init(assets.mustache);
+					});
+				},
+				source: {
+					messages: ['WikiaInteractiveMapsCreateMap'],
+					scripts: ['int_map_create_map_js'],
+					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSet.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
+					]
+				},
+				origin: 'wikia-int-map-create-map',
+				cacheKey: 'wikia_interactive_maps_create_map'
+			},
+			deleteMap: {
+				loadModal: function() {
+					require(['wikia.intMaps.deleteMap'], function(deleteMap) {
+						deleteMap.init();
+					});
+				},
+				source: {
+					messages: ['WikiaInteractiveMapsDeleteMap'],
+					scripts: ['int_map_delete_map_js']
+				},
+				origin: 'wikia-int-map-delete-map',
+				cacheKey: 'wikia_interactive_maps_delete_map'
+			}
 		};
 
 	// attach handlers
@@ -29,18 +51,19 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 	body.addEventListener('click', function (event) {
 		var targetId = event.target.id,
-			isLoggedInUser = (w.wgUserName !== null);
+			isLoggedInUser = (w.wgUserName !== null),
+			target = actions[targetId];
 
-		if (!isLoggedInUser && targetId === 'createMap') {
+		if (target && !isLoggedInUser) {
 			w.UserLoginModal.show({
-				origin: 'wikia-int-map-create-map',
+				origin: target.origin,
 				callback: function () {
 					w.UserLogin.forceLoggedIn = true;
-					loadModal(convertSource(source), cacheKey);
+					loadModal(target);
 				}
 			});
-		} else if (isLoggedInUser && targetId === 'createMap') {
-			loadModal(convertSource(source), cacheKey);
+		} else if (target && isLoggedInUser) {
+			loadModal(target);
 		}
 	});
 
@@ -60,14 +83,12 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 * @param {string} cacheKey - local storage key
 	 */
 
-	function loadModal(source, cacheKey) {
-		getAssets(source, cacheKey).then(function (assets) {
-			addAssetsToDOM(assets);
-
-			require(['wikia.intMaps.createMap.modal'], function (createMap) {
-				createMap.init(assets.mustache);
+	function loadModal(target) {
+		getAssets(convertSource(target.source), target.cacheKey)
+			.then(function (assets) {
+				addAssetsToDOM(assets);
+				target.loadModal(assets);
 			});
-		});
 	}
 
 	/**
