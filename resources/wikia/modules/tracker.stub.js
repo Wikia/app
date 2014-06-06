@@ -205,12 +205,12 @@ function veTrack( data ) {
 		}
 
 		// anon edit warning
-		try {
-			defaultData.anonEditWarning = !!anoneditwarning ? 'yes' : 'no';
-		} catch ( e ) {
+		if ( window.anoneditwarning === undefined ) {
 			defaultData.anonEditWarning = 'unknown';
+		} else {
+			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
 		}
-		
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
