@@ -61,9 +61,7 @@ define(
 					function(event) {
 						modal.trigger('previewTileSet', {
 							type: 'custom',
-							data: {
-								tileSetId: $(event.currentTarget).data('id')
-							}
+							tileSetId: $(event.currentTarget).data('id')
 						});
 					}
 				]
