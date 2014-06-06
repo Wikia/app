@@ -169,25 +169,15 @@
 
 /* Focus Widget */
 .ve-ui-wikiaFocusWidget {
-	@if lightness($color-page) >= 10% {
-		opacity: 0.97;
-	} @else {
-		opacity: 0.9;
-	}
 	left: 0;
+	opacity: .5;
 	position: absolute;
 	right: 0;
 	top: 0;
 	z-index: $zTop;
 
 	div {
-		@if lightness($color-page) >= 50% {
-			background-color: darken($color-page, 5%);
-		} @else if lightness($color-page) >= 10% {
-			background-color: darken($color-page, 10%);
-		} @else {
-			background-color: $color-page;
-		}
+		background-color: #000;
 		position: absolute;
 		top: 0;
 		left: 0;
