@@ -58,6 +58,14 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
+
+	'wikia-interactive-maps-delete-map' => 'Delete map',
+	'wikia-interactive-maps-view-source' => 'View source',
+	'wikia-interactive-maps-delete-map-title' => 'Delete map',
+	'wikia-interactive-maps-delete-map-prompt' => 'Are you sure to delete the map?',
+	'wikia-interactive-maps-delete-map-confirm-button' => 'Delete Map',
+	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
+	'wikia-interactive-maps-delete-map-error' => 'There was an error while deleting a map.',
 ];
 
 $messages[ 'qqq' ] = [
