@@ -119,7 +119,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 	}
 
 	if ( window.veOrientationEnabled !== undefined ) {
-		window['optimizely'] = window['optimizely'] || [];
+		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
 	}
 
@@ -146,7 +146,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
 		if ( window.veOrientationEnabled !== undefined ) {
-			window['optimizely'] = window['optimizely'] || [];
+			window.optimizely = window.optimizely || [];
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
@@ -188,7 +188,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
 
 	if ( mw.user.anonymous() ) {
-		window['optimizely'] = window['optimizely'] || [];
+		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['activate', 1173750562] );
 
 		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
