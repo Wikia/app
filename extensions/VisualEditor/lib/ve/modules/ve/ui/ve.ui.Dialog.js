@@ -19,6 +19,7 @@ ve.ui.Dialog = function VeUiDialog( config ) {
 	// Parent constructor
 	OO.ui.Dialog.call( this, config );
 
+	// FIXME: In the worst case scope is traversed three times to access same object (parent).
 	if ( config.disableAnimation ) {
 		this.frame.$element.parent().addClass( 've-ui-noAnimation' );
 	}
