@@ -936,7 +936,7 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 
-			if( empty( $article ) ) {
+			if ( empty( $article ) ) {
 				throw new NotFoundApiException( "Unable to find any article" );
 			}
 

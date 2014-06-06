@@ -6,12 +6,10 @@ class ArticleAsJson extends WikiaService {
 
 	const CACHE_VERSION = '0.0.1';
 
-	private static function createMarker($galleryId = NULL){
+	private static function createMarker(){
 		$id = count(self::$media) - 1;
-		$dataRef = "data-ref={$id}";
-		$galleryId = !is_null( $galleryId ) ? " id='gallery-{$galleryId}'" : "";
 
-		return "<script class='article-media' {$dataRef}{$galleryId}></script>";
+		return "<script class='article-media' data-ref={$id}></script>";
 	}
 
 	private static function createMediaObj($details, $imageName, $caption = "") {
@@ -68,7 +66,7 @@ class ArticleAsJson extends WikiaService {
 
 			self::$media[] = $media;
 
-			$out = self::createMarker($data['id']);
+			$out = self::createMarker();
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -119,7 +117,6 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
-
 			$user = User::newFromName( $parser->getRevisionUser() );
 			$userId = $user->getId();
 
