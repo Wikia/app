@@ -85,11 +85,11 @@ class MercuryApi {
 					}
 				}
 				if ( $level === 'level2' && !empty( $item ) ) {
-					$item['replies'] = [];
+					$item['comments'] = [];
 					foreach ( array_keys( $commentBody ) as $articleId ) {
 						$comment = $this->getComment( $articleId );
 						if ( $comment ) {
-							$item['replies'][] = $comment;
+							$item['comments'][] = $comment;
 						}
 					}
 				}
