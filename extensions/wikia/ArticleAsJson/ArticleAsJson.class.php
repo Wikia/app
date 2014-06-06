@@ -26,7 +26,7 @@ class ArticleAsJson extends WikiaService {
 					new ParserOptions(),
 					false
 				)->getText(),
-			'user' => (int) $details['userId'],
+			'user' => $details['userName'],
 			'embed' => $details['videoEmbedCode'],
 			'views' => (int) $details['videoViews']
 		];
@@ -40,8 +40,8 @@ class ArticleAsJson extends WikiaService {
 
 		$userTitle = Title::newFromText( $details['userName'], NS_USER );
 
-		self::$users[(int) $details['userId']] = [
-			'name' => $details['userName'],
+		self::$users[$details['userName']] = [
+			'id' => $details['userId'],
 			'avatar' => $details['userThumbUrl'],
 			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
 		];
@@ -102,7 +102,6 @@ class ArticleAsJson extends WikiaService {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
-
 		if ( $wgArticleAsJson ) {
 			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
 		}
@@ -117,15 +116,27 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
-			$user = User::newFromName( $parser->getRevisionUser() );
-			$userId = $user->getId();
 
-			self::addUserObj([
-				'userId' => $userId,
-				'userName' => $user->getName(),
-				'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
-				'userPageUrl' => $user->getUserPage()->getLocalURL()
-			]);
+			if ( User::isIP( $parser->getRevisionUser() ) ) {
+				$userName = $parser->getRevisionUser();
+
+				self::addUserObj([
+					'userId' => 0,
+					'userName' => $parser->getRevisionUser(),
+					'userThumbUrl' => AvatarService::getAvatarUrl($userName, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
+				]);
+			} else {
+				$user = User::newFromName( $parser->getRevisionUser() );
+
+				self::addUserObj([
+					'userId' => $user->getId(),
+					'userName' => $user->getName(),
+					'userThumbUrl' => AvatarService::getAvatarUrl($user, AvatarService::AVATAR_SIZE_MEDIUM),
+					'userPageUrl' => $user->getUserPage()->getLocalURL()
+				]);
+			}
+
 
 			$text = json_encode([
 				'content' => $text,
