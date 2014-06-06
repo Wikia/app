@@ -234,10 +234,8 @@ define(
 
 					if (data && data.success) {
 						modal.trigger('cleanUpError');
-						modal.trigger('previewTileSet', {
-							type: 'uploaded',
-							data: data
-						});
+						data.type = 'custom';
+						modal.trigger('previewTileSet', data);
 					} else {
 						modal.trigger('error', data.errors.pop());
 					}

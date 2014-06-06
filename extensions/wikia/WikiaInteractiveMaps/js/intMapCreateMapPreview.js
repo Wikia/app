@@ -68,25 +68,14 @@ define(
 		function preview(tileSet) {
 			modal.trigger('cleanUpError');
 
-			setData(tileSet);
+			tileSetData = tileSet;
+			templateData.tileSetData = tileSetData;
 			modal.$innerContent.html(utils.render(template, templateData));
 			utils.setButtons(modal, buttons);
 
 			// cache input title selector
 			$title = $('#intMapTitle');
 		}
-
-		/**
-		 * @desc sets tile set data
-		 * @param {object} tileSet tile set data
-		 */
-
-		function setData(tileSet) {
-			type = tileSet.type;
-			tileSetData = tileSet.data;
-			templateData.tileSetData = tileSetData;
-		}
-
 
 		/**
 		 * @desc validates title

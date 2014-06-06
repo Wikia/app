@@ -8,7 +8,7 @@ define(
 		'wikia.intMap.createMap.preview',
 		'wikia.intMap.createMap.pinTypes'
 	],
-	function($, qs, utils, tileSet, preview, pinTypes) {
+	function($, qs, w, utils, tileSet, preview, pinTypes) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -45,9 +45,9 @@ define(
 					cleanUpError
 				],
 				mapCreated: [
-					function (data) {
+					/*function (data) {
 						showCreatedMap(data);
-					}
+					}*/
 				],
 				beforeClose: [
 					function () {
