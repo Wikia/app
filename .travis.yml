@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - 0.10
 before_script:
-  - 'npm install istanbul@0.1.44'
-  - 'npm install karma@0.10.4 ; cat /home/travis/build/Wikia/app/npm-debug.log'
-  - 'npm install karma-junit-reporter@0.1.0 ; cat /home/travis/build/Wikia/app/npm-debug.log'
-  - 'npm install karma-coverage@0.1.1'
+  - 'npm install istanbul@0.1.44 karma-coffee-preprocessor@0.1.2 karma@0.10.4 karma-junit-reporter@0.1.0 karma-coverage@0.1.1'
+script:
+  - ls -al
+#  - karma start /usr/wikia/source/wiki/tests/karma/js-unit.conf.js
+#  - karma start /usr/wikia/source/wiki/tests/karma/js-unit.conf.js --single-run
