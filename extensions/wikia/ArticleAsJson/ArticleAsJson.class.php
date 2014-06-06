@@ -140,4 +140,15 @@ class ArticleAsJson extends WikiaService {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	public static function onShowEditLink( Parser &$this, &$showEditLink ) {
+		global $wgArticleAsJson;
+
+		//We don't have editing in this version
+		if ( $wgArticleAsJson ) {
+			$showEditLink = false;
+		}
+
+		return true;
+	}
 }

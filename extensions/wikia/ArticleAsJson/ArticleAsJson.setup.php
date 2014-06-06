@@ -17,3 +17,4 @@ $wgHooks['ImageBeforeProduceHTML'][] = 'ArticleAsJson::onImageBeforeProduceHTML'
 $wgHooks['GalleryBeforeProduceHTML'][] = 'ArticleAsJson::onGalleryBeforeProduceHTML';
 $wgHooks['PageRenderingHash'][] = 'ArticleAsJson::onPageRenderingHash';
 $wgHooks['ParserAfterTidy'][] = 'ArticleAsJson::onParserAfterTidy';
+$wgHooks['Parser::showEditLink'][] = 'ArticleAsJson::onShowEditLink';
