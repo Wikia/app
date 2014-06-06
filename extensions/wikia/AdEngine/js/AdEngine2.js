@@ -1,9 +1,12 @@
-/*exported AdEngine2*/
 /*global define*/
-var AdEngine2 = function (log, LazyQueue, slotTracker) {
+define('ext.wikia.adEngine.adEngine', [
+	'wikia.log',
+	'wikia.lazyqueue',
+	'ext.wikia.adEngine.slotTracker'
+], function (log, LazyQueue, slotTracker) {
 	'use strict';
 
-	var logGroup = 'AdEngine2',
+	var logGroup = 'ext.wikia.adEngine.adEngine',
 		undef;
 
 	function decorate(func, decorators) {
@@ -63,6 +66,4 @@ var AdEngine2 = function (log, LazyQueue, slotTracker) {
 	}
 
 	return {run: run};
-};
-
-define('ext.wikia.adengine.adengine', ['wikia.log', 'wikia.lazyqueue', 'ext.wikia.adengine.slottracker'], AdEngine2);
+});

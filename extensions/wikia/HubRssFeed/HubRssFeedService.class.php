@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: suchy
- * Date: 07.10.13
- * Time: 09:05
- * To change this template use File | Settings | File Templates.
- */
 
 class HubRssFeedService {
 	/** This is DateTime::RFC822 with one small change. We use 4 digits year after recommendation from feedvalidator.org */
@@ -13,15 +6,15 @@ class HubRssFeedService {
 
 	protected $descriptions = [
 		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT =>
-		['t' => 'Wikia Entertainment Community feed',
+		['t' => 'Wikia Entertainment feed',
 			'd' => 'From Wikia community - Entertainment'],
 
 		WikiFactoryHub::CATEGORY_ID_GAMING =>
-		['t' => 'Wikia Gaming Community feed',
+		['t' => 'Wikia Gaming feed',
 			'd' => 'From Wikia community - Gaming'],
 
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE =>
-		['t' => 'Wikia Lifestyle Community feed',
+		['t' => 'Wikia Lifestyle feed',
 			'd' => 'From Wikia community - Lifestyle'],
 	];
 

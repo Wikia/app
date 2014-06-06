@@ -1,8 +1,8 @@
 define(
-	'wikia.intMaps.createMap.modal',
-	[
+	'wikia.intMaps.createMap.modal', [
 		'jquery',
 		'wikia.querystring',
+		'wikia.window',
 		'wikia.intMap.createMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview',
@@ -21,31 +21,38 @@ define(
 					size: 'medium',
 					content: '',
 					title: $.msg('wikia-interactive-maps-create-map-header'),
-					buttons: [
-						{
-							vars: {
-								value: $.msg('wikia-interactive-maps-create-map-next-btn'),
-								classes: ['normal', 'primary'],
-								id: 'intMapNext'
-							}
-						},
-						{
-							vars: {
-								value:  $.msg('wikia-interactive-maps-create-map-back-btn'),
-								id: 'intMapBack'
-							}
+					buttons: [{
+						vars: {
+							value: $.msg('wikia-interactive-maps-create-map-next-btn'),
+							classes: ['normal', 'primary'],
+							id: 'intMapNext'
 						}
-					]
+					}, {
+						vars: {
+							value: $.msg('wikia-interactive-maps-create-map-back-btn'),
+							id: 'intMapBack'
+						}
+					}]
 				}
 			},
 			events = {
 				error: [
-					function(message) {
+					function (message) {
 						showError(message);
 					}
 				],
 				cleanUpError: [
 					cleanUpError
+				],
+				mapCreated: [
+					function (data) {
+						showCreatedMap(data);
+					}
+				],
+				beforeClose: [
+					function () {
+						w.UserLogin.refreshIfAfterForceLogin();
+					}
 				]
 			};
 
@@ -57,7 +64,7 @@ define(
 		function init(templates) {
 			modalConfig.vars.content = utils.render(templates[0], {});
 
-			createModal(modalConfig, function() {
+			createModal(modalConfig, function () {
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 				modal.$errorContainer = $('.map-creation-error');
@@ -66,9 +73,9 @@ define(
 
 				// init modal steps
 				// TODO: figure out the way to automatically register and init different step of the UI
-				tileSet.init(modal, templates[1]);
-				preview.init(modal, templates[2]);
-				pinTypes.init(modal, templates[3], templates[4]);
+				tileSet.init(modal, templates[1],  templates[2]);
+				preview.init(modal, templates[3]);
+				pinTypes.init(modal, templates[4], templates[5]);
 
 				modal.trigger('chooseTileSet');
 				modal.show();

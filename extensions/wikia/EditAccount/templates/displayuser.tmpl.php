@@ -57,6 +57,7 @@
 		</div>
 
 		<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 
 </fieldset>
@@ -67,6 +68,7 @@
 		<input type="submit" value="<?php echo wfMsg('editaccount-submit-close') ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="closeaccount" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php if( $isDisabled ) { ?>
 <?= wfMsg('edit-account-closed-flag'); ?>
@@ -74,6 +76,7 @@
 		<input type="submit" value="<?php echo wfMsg('editaccount-submit-cleardisable') ?>" <?= $disabled; ?> />
 		<input type="hidden" name="wpAction" value="cleardisable" />
 		<input type="hidden" name="wpUserName" value="<?php echo $user_hsc ?>" />
+		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 <?php } //end undisable ?>
 </fieldset>

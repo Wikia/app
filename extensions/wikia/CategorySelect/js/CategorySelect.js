@@ -592,7 +592,7 @@
 
 			return template.content && template || $.Deferred(function( dfd ) {
 				Wikia.getMultiTypePackage({
-					mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_' + name + '.mustache',
+					mustache: 'extensions/wikia/CategorySelect/templates/CategorySelect_' + name + '.mustache',
 					callback: function( pkg ) {
 						template.content = pkg.mustache[ 0 ];
 						dfd.resolve( template );

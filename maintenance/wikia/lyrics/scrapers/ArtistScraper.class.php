@@ -15,9 +15,11 @@ class ArtistScraper extends BaseScraper {
 	 * @return array
 	 */
 	public function processArticle( Article $article ) {
+		$name = $article->getTitle()->getText();
 		$artistData = [
 			'article_id' => $article->getId(),
-			'name' => $article->getTitle()->getText()
+			'name' => $name,
+			'name_lowercase' => LyricsUtils::lowercase( $name ),
 		];
 
 		$artistData = array_merge( $artistData, $this->getHeader( $article ) );
@@ -106,11 +108,15 @@ class ArtistScraper extends BaseScraper {
 	public function getAlbumSongs( $section ) {
 		$songs = [];
 
-		if ( preg_match_all('/^# (.+?)$/mu', $section, $matches ) ) {
+		if ( preg_match_all('/^[#*](.+?)$/mu', $section, $matches ) ) {
 			$number = 1;
 			foreach ( $matches[1] as $song ) {
-				$songs[] = $this->getSongData( $song, $number );
-				$number++;
+				$songExploded = explode( ':', $song );
+
+				if( count( $songExploded ) > 1 ) {
+					$songs[] = $this->getSongData( $song, $number );
+					$number++;
+				}
 			}
 		}
 
@@ -141,6 +147,8 @@ class ArtistScraper extends BaseScraper {
 		} else {
 			$result['Album'] = trim( $heading );
 		}
+
+		$result['album_name_lc'] = LyricsUtils::lowercase( $result['Album'] );
 
 		return $result;
 	}
@@ -174,6 +182,7 @@ class ArtistScraper extends BaseScraper {
 		return [
 			'article_id' => 'id',
 			'name' => 'artist_name',
+			'name_lowercase' => 'artist_name_lc',
 			'pic' => 'image',
 			'iTunes' => 'itunes',
 			'genres' => 'genres',

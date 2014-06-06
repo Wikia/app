@@ -1,0 +1,32 @@
+{
+    "@metadata": {
+        "authors": [
+            "Bluyten",
+            "Breghtje",
+            "Catrope",
+            "Flightmare",
+            "Hansmuller",
+            "Jdforrester",
+            "Keegan",
+            "Konovalov",
+            "RajeshPandey",
+            "Romaine",
+            "SPQRobin",
+            "Saruman",
+            "Siebrand",
+            "Southparkfan",
+            "सरोज कुमार ढकाल",
+            "Sjoerddebruin"
+        ]
+    },
+    "tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstbewerker]]",
+    "tag-visualeditor-description": "Bewerking gemaakt met behulp van de [[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstbewerker]]",
+    "tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstbewerker: controleren]]",
+    "tag-visualeditor-needcheck-description": "Bewerking gemaakt met de [[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstbewerker]] waarbij het systeem gedetecteerd heeft dat de wikitekst mogelijk onbedoelde veranderingen bevat.",
+    "tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuele tekstbewerker: omgeschakeld]]",
+    "tag-visualeditor-switched-description": "De gebruiker is begonnen met bewerken via de Visuele tekstbewerker en is daarna omgeschakeld naar wikitekstbewerker.",
+    "visualeditor-feedback-link": "Project:Visuele tekstbewerker/Terugkoppeling",
+    "visualeditor-feedback-tool": "Terugkoppeling achterlaten",
+    "visualeditor-help-label": "Gebruikershandleiding lezen",
+    "visualeditor-help-title": "Gebruikershandleiding voor de tekstverwerker"
+}

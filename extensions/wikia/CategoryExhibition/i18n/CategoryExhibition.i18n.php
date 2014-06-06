@@ -373,8 +373,15 @@ $messages['ja'] = array(
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'category-exhibition-alphabetical' => 'ಅಕ್ಷರಾನುಕ್ರಮ',
+	'category-exhibition-mostvisited' => 'ಹೆಚ್ಚು ಸಂದರ್ಶಿಸಲ್ಪಟ್ಟ',
+	'category-exhibition-recentedits' => 'ಇತ್ತೀಚಿಗೆ ಸಂಪಾದಿಸಿದ',
 	'category-exhibition-page-header' => '"$1" ವರ್ಗದಲ್ಲಿರುವ ಲೇಖನಗಳು',
 	'category-exhibition-subcategories-header' => 'ಉಪವರ್ಗಗಳು',
+	'category-exhibition-media-header' => '"$1" ವರ್ಗದಲ್ಲಿರುವ ಚಿತ್ರ/ಶಬ್ದ ಫೈಲುಗಳು',
+	'category-exhibition-blogs-header' => 'ಬ್ಲಾಗ್ ಪೋಸ್ಟ್ ಗಳು',
+	'category-exhibition-display-old' => 'ವರ್ಗ ಪಟ್ಟಿ ನೋಟ',
+	'category-exhibition-display-new' => 'ವರ್ಗ ಪ್ರದರ್ಶನ ನೋಟ',
 );
 
 /** Korean (한국어)
@@ -547,7 +554,7 @@ $messages['ps'] = array(
 	'category-exhibition-page-header' => 'د "$1" وېشنيزې مخونه',
 	'category-exhibition-subcategories-header' => 'څېرمه وېشنيزې',
 	'category-exhibition-media-header' => 'د "$1" وېشنيزې رسنۍ',
-	'category-exhibition-blogs-header' => 'د بلاګ پوستونه',
+	'category-exhibition-blogs-header' => 'د بلاگ پوستونه',
 	'category-exhibition-display-old' => 'د وېشنيزې لړليک کتل',
 );
 

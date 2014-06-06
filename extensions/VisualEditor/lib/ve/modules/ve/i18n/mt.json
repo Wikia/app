@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chrisportelli"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-annotationbutton-bold-tooltip": "Tipa ħoxna",
+	"visualeditor-annotationbutton-code-tooltip": "Kodiċi tal-kompjuter",
+	"visualeditor-annotationbutton-italic-tooltip": "Tipa korsiva",
+	"visualeditor-annotationbutton-language-tooltip": "Lingwa",
+	"visualeditor-annotationbutton-link-tooltip": "Ħolqa",
+	"visualeditor-help-tool": "Għajnuna",
+	"visualeditor-languageinspector-widget-label-direction": "Direzzjoni",
+	"visualeditor-languageinspector-widget-label-langcode": "Kodiċi tal-lingwa",
+	"visualeditor-languageinspector-widget-label-language": "Lingwa"
+}

@@ -15,6 +15,9 @@ class WikiaMaps {
 	const MAP_HEIGHT = 300;
 	const MAP_WIDTH = 1600;
 
+	const MAP_TYPE_CUSTOM = 'custom';
+	const MAP_TYPE_GEO = 'geo';
+
 	/**
 	 * @var array API connection config
 	 */
@@ -98,9 +101,9 @@ class WikiaMaps {
 	private function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = Http::get( $url, 'default', array(
-			'noProxy' => true
-		) );
+		$response = Http::get( $url, 'default', [
+            'noProxy' => true
+        ] );
 
 		if ( $response !== false ) {
 			$mapsData = json_decode( $response );
@@ -137,17 +140,17 @@ class WikiaMaps {
 	private function getMapByIdFromApi( Array $params ) {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = Http::get( $url, 'default', array(
+		$response = Http::get( $url, 'default', [
 			//TODO this is temporary workaround, remove it before production!
 			'noProxy' => true
-		) );
+		] );
 
 		$map = json_decode( $response );
 		if( !empty( $map->tile_set_url ) ) {
-			$response = Http::get( $map->tile_set_url, 'default', array(
+			$response = Http::get( $map->tile_set_url, 'default', [
 				//TODO this is temporary workaround, remove it before production!
 				'noProxy' => true
-			) );
+			] );
 			$tilesData = json_decode( $response );
 
 			if( !is_null( $tilesData ) ) {
@@ -208,6 +211,26 @@ class WikiaMaps {
 		}
 
 		return $options;
+	}
+
+	/**
+	 * Sends request to interactive maps service and returns list of tile sets
+	 *
+	 * @param array $params - request params
+	 *
+	 * @return array - list of tile sets
+	 */
+
+	public function getTileSets( Array $params ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
+
+		//TODO: consider caching the response
+		$response = Http::get( $url, 'default', [
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
+		] );
+
+		return json_decode( $response );
 	}
 
 	/**
@@ -273,5 +296,17 @@ class WikiaMaps {
 		return $option;
 	}
 
-}
+	/**
+	 * Returns Geo tileset's id from config or 0
+	 *
+	 * @return integer
+	 */
+	public function getGeoMapTilesetId() {
+		if( isset( $this->config[ 'geoTilesetId' ] ) ) {
+			return $this->config[ 'geoTilesetId' ];
+		}
 
+		return 0;
+	}
+
+}

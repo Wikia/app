@@ -79,18 +79,12 @@ td.activityfeed-details-label {
 }
 
 .activityfeed-inserted-media li {
-	border: solid 1px #ccc;
 	float: left;
 	margin: 4px 4px 4px 0;
 	position: relative;
 }
 
 .activityfeed-inserted-media li a {
-	cursor: pointer;
-	display: table-cell;
-	height: 160px;
-	text-align: center;
-	vertical-align: middle;
 	width: 160px;
 }
 

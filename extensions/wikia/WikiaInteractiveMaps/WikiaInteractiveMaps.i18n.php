@@ -27,6 +27,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Wikia Interactive Maps error occurred: Map not found.',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
+	'wikia-interactive-maps-api-error-message' => 'Unexpected error has occurred.',
 
 	'wikia-interactive-maps-map-status-done' => 'Ready to use',
 	'wikia-interactive-maps-map-status-processing' => 'Processing...',
@@ -44,6 +45,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
+	'wikia-interactive-maps-create-map-browse-tile-set' => 'Browse existing tile sets',
 	'wikia-interactive-maps-create-map-add-pin-type' => 'Add Another Pin Type',
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Delete',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
@@ -83,6 +85,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
 
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
+	'wikia-interactive-maps-api-error-message' => 'Backend connection error.',
 
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list from newest map to oldest',
 	'wikia-interactive-maps-sort-alphabetical' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list in alphabetical order',
@@ -96,6 +99,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
+	'wikia-interactive-maps-create-map-browse-tile-set' => 'Link to browse tile set step in create map modal',
 	'wikia-interactive-maps-create-map-add-pin-type' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',

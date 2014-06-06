@@ -1,0 +1,29 @@
+{
+    "@metadata": {
+        "authors": [
+            "McDutchie"
+        ]
+    },
+    "tooltip-ca-createsource": "Crear le codice fonte de iste pagina",
+    "tooltip-ca-editsource": "Modificar le codice fonte de iste pagina",
+    "tooltip-ca-ve-edit": "Modificar iste pagina con le editor visual",
+    "visualeditor-beta-label": "beta",
+    "visualeditor-beta-warning": "Le editor visual es in stadio 'beta'. Es possibile incontrar problemas e non poter modificar certe partes de un pagina. Clicca sur \"{{int:visualeditor-ca-editsource}}\" pro cambiar al modo wikitexto (le modificationes non salveguardate essera perdite).",
+    "visualeditor-browserwarning": "Le editor visual non supporta officialmente le navigator del web que tu usa.",
+    "visualeditor-ca-createsource": "Crear fonte",
+    "visualeditor-ca-editsource": "Modificar fonte",
+    "visualeditor-ca-editsource-section": "modificar fonte",
+    "visualeditor-ca-ve-create": "Editor visual",
+    "visualeditor-ca-ve-edit": "Editor visual",
+    "visualeditor-desc": "Editor visual pro MediaWiki",
+    "visualeditor-descriptionpagelink": "Project:Editor visual",
+    "visualeditor-dialog-media-content-section": "Legenda",
+    "visualeditor-dialog-media-insert-button": "Inserer multimedia",
+    "visualeditor-dialog-media-insert-title": "Inserer multimedia",
+    "visualeditor-dialog-media-title": "Configuration multimedial",
+    "visualeditor-dialog-meta-categories-category": "Categoria",
+    "visualeditor-dialog-meta-categories-data-label": "Categorias",
+    "visualeditor-loadwarning": "Error durante le cargamento del datos ab le servitor: $1. Vole tu reprobar?",
+    "visualeditor-saveerror": "Error durante le salveguarda del datos in le servitor: $1.",
+    "visualeditor-viewpage-savewarning": "Es tu secur de voler retornar al modo de lectura sin salveguardar primo?"
+}

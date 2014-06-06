@@ -24,13 +24,25 @@ class SongScraper extends BaseScraper {
 		// MOB-1367 - make sure the song name is the same as song's article title
 		$songTitle = $article->getTitle();
 		$songName = ( !is_null( $songTitle ) ) ? $this->getSongFromArtistTitle( $songTitle->getText() ) : null;
-		if( !is_null( $songName  ) ) {
+		if( !is_null( $songName ) ) {
 			$songData['song'] = $songName;
+			$songData['song_lowercase'] = LyricsUtils::lowercase( $songName );
 		} else {
 			wfDebugLog( __METHOD__, sprintf( 'Scraped song without title (%d) or with invalid name', $songArticleId ) );
 		}
 
 		return $songData;
+	}
+
+	/**
+	 * @desc If there is {{TranslatedSong}} template returns true; false otherwise
+	 *
+	 * @param Article $article
+	 * @return Boolean
+	 */
+	public function isSongTraslation( Article $article ) {
+		$translation = $this->getTemplateValues( 'TranslatedSong', $article->getContent() );
+		return !empty( $translation['current'] );
 	}
 
 	/**
@@ -40,7 +52,7 @@ class SongScraper extends BaseScraper {
 	 *
 	 * @return null|String
 	 */
-	private function getSongFromArtistTitle( $titleText ) {
+	protected function getSongFromArtistTitle( $titleText ) {
 		$titleTextExploded = explode( ':', $titleText );
 
 		if( count( $titleTextExploded ) > 1 ) {
@@ -83,7 +95,8 @@ class SongScraper extends BaseScraper {
 			'article_id' => 'id',
 			'number' => 'number',
 			'song' => 'song_name',
-			'itunes' => 'itunes',
+			'song_lowercase' => 'song_name_lc',
+			'iTunes' => 'itunes',
 			'lyrics' => 'lyrics',
 			'romanizedSong' => 'romanized_song_name',
 			'language' => 'language',

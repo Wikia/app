@@ -2080,12 +2080,20 @@ class Wikia {
 	/**
 	 * @param $user User
 	 */
-	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
+	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		global $wgExternalAuthType;
 
 		if ( $disabled ) {
+			$userEmail = $user->getEmail();
+			// Optionally keep email in user property
+			if ( $keepEmail && !empty( $userEmail ) ) {
+				$user->setOption( 'disabled-user-email', $userEmail );
+			} elseif ( !$keepEmail ) {
+				// Make sure user property is removed
+				$user->setOption( 'disabled-user-email', null );
+			}
 			$user->setEmail( '' );
-			$user->setPassword( wfGenerateToken() . self::REQUIRED_CHARS );
+			$user->setPassword( null );
 			$user->setOption( 'disabled', 1 );
 			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
@@ -2303,18 +2311,20 @@ class Wikia {
 	}
 
 	/**
-	 * Don't send purge requests for each thumbnail.
-	 * Single purge from "LocalFile:purgeCache" does the trick.
+	 * No neeed to purge all thumbnails
 	 *
 	 * @author macbre
 	 * @see PLATFORM-161
+	 * @see PLATFORM-252
 	 *
 	 * @param LocalFile $file
 	 * @param array $urls thumbs to purge
 	 * @return bool
 	 */
 	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		$urls = [];
+		// purge only the first thumbnail
+		$urls = array_slice($urls, 0, 1);
+
 		return true;
 	}
 }

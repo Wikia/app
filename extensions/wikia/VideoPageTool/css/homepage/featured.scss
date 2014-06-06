@@ -93,9 +93,6 @@ $play-button-overlay-fade-duration: 400ms;
 					line-height: 21px;
 				}
 			}
-			.Wikia-video-play-button {
-				margin: -42.5px 0 0 -42.5px;
-			}
 			.slide-video {
 				color: #FFF;
 				margin: auto;
@@ -153,16 +150,11 @@ $play-button-overlay-fade-duration: 400ms;
 				}
 			}
 			a { // .video
-				@include transition-show-hide( '.Wikia-video-play-button' );
 				display: block;
 				margin-bottom: 10px;
 				position: relative;
 				text-align: center;
 				width: 100%;
-
-				.Wikia-video-play-button {
-					margin: -25px 0 0 -25px;
-				}
 
 				&.playing {
 					&:after {
@@ -176,9 +168,6 @@ $play-button-overlay-fade-duration: 400ms;
 						top: 0;
 						width: 100%;
 						z-index: 101; // above play button which is 100
-					}
-					.Wikia-video-play-button {
-						display: none;
 					}
 				}
 
@@ -194,7 +183,6 @@ $play-button-overlay-fade-duration: 400ms;
 		}
 	}
 	.bx-wrapper {
-		@include transition-show-hide( '.Wikia-video-play-button' );
 		@include transition-show-hide( '.bx-controls-direction a' );
 
 		.bx-controls-direction a {
@@ -209,11 +197,6 @@ $play-button-overlay-fade-duration: 400ms;
 				@include sprite-VideoPageTool('carousel_right_arrow_white');
 			}
 		}
-	}
-	.Wikia-video-play-button {
-		position: absolute;
-		top: 50%;
-		left: 50%;
 	}
 	.hidden {
 		visibility: hidden;

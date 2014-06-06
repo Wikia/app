@@ -1,5 +1,16 @@
-ve.ui.WikiaCartWidget = function VeUiWikiaCartWidget( model, config ) {
-	OO.ui.SelectWidget.call( this, config );
+/*!
+ * VisualEditor UserInterface WikiaCartWidget class.
+ */
+
+/**
+ * @class
+ * @extends OO.ui.SelectWidget
+ *
+ * @constructor
+ * @param {ve.dm.WikiaCart} model Cart item
+ */
+ve.ui.WikiaCartWidget = function VeUiWikiaCartWidget( model ) {
+	OO.ui.SelectWidget.call( this );
 	this.model = model;
 	this.model.connect( this, { 'add': 'onAdd', 'remove': 'onRemove' } );
 	this.$element.addClass( 've-ui-wikiaCartWidget' );

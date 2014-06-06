@@ -18,7 +18,7 @@
 					<? $videoUrlField = $form->getField('videoUrl')?>
 					<?=(new Wikia\Template\MustacheEngine())->setData([
 						'blankImgUrl' => $wg->BlankImgUrl,
-						'removeMsg' => wfMessage('marketing-toolbox-edithub-remove')->text(),
+						'removeMsg' => wfMessage('wikia-hubs-remove')->text(),
 						'errorMsg' => (isset($videoUrlField['errorMessage'][$idx])) ? $videoUrlField['errorMessage'][$idx] : '',
 						'sectionNo' => (isset($video['section-no'])) ? $video['section-no'] : null,
 						'videoTitle' => (isset($video['title'])) ? $video['title'] : null,

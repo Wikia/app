@@ -399,13 +399,6 @@ WikiaHomePageRemix.prototype = {
 				currentlink.attr('data-wikiurl', listslot.wikiurl);
 			}
 			currentslot.find('span').remove().end().find('img').attr('src', listslot.image);
-
-			if (listslot.wikinew) {
-				wikinamehtml.append('<strong class="new">' + $.msg('wikia-home-page-new') + '</strong>');
-			}
-			if (listslot.wikihot) {
-				wikinamehtml.append('<strong class="hot">' + $.msg('wikia-home-page-hot') + '</strong>');
-			}
 			currentslot.data('wiki-id', listslot.wikiid);
 			wikinamehtml.append(listslot.wikiname);
 

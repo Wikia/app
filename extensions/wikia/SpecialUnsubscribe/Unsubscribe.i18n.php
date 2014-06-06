@@ -89,6 +89,8 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'unsubscribe' => 'Digoumanantiñ',
+	'unsubscribe-badtoken' => 'Digarezit, ur gudenn zo bet gant ar jedouer surentez.',
+	'unsubscribe-bademail' => 'Digarezit, ur gudenn zo bet gant ar postel.',
 	'unsubscribe-nousers' => "N'eus bet kavet implijer ebet gant ar chomlec'h postel-se.",
 	'unsubscribe-noconfusers' => "N'eus bet kavet implijer kadarnaet ebet gant ar chomlec'h postel-se.",
 	'unsubscribe-confirm-legend' => 'Kadarnaat',

@@ -27,6 +27,17 @@ $messages['qqq'] = array(
 	'wikianewfiles-more' => 'Text displayed when there are more articles the file is posted in.',
 );
 
+/** Arabic (العربية)
+ * @author Achraf94
+ */
+$messages['ar'] = array(
+	'wikianewfiles-title' => 'ملفات جديدة في هذه الويكي',
+	'wikianewfiles-desc' => 'يعرض [[Special:NewFiles|صفحة خاصة]] لتجاوز بعض تنسيقات العنوان.',
+	'wikianewfiles-uploadby' => 'من قبل {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'نشرت في',
+	'wikianewfiles-more' => 'المزيد...',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -156,11 +167,13 @@ $messages['pa'] = array(
 );
 
 /** Polish (polski)
+ * @author Pan Cube
  * @author Pio387
  * @author Wedkarski
  */
 $messages['pl'] = array(
 	'wikianewfiles-title' => 'Nowe pliki na tej wiki',
+	'wikianewfiles-desc' => 'Rozszerza [[Special:NewFiles|stronę specjalną]] aby zastąpić niektóre formatowania nagłówków',
 	'wikianewfiles-uploadby' => 'przez {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Zamieszczony w',
 	'wikianewfiles-more' => 'więcej…',

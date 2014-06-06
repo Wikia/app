@@ -27,7 +27,9 @@ class SolrLyricsApiHandler {
 	public $cityId;
 
 	public function __construct( $config ) {
-		$this->cityId = F::app()->wg->CityId;
+		$wg = F::app()->wg;
+		$this->cityId = $wg->CityId;
+		$this->itunesAffiliateToken = $wg->LyricsItunesAffiliateToken;
 		$this->client = new Solarium_Client( $config );
 	}
 
@@ -239,7 +241,7 @@ class SolrLyricsApiHandler {
 	 * @desc Decorates Solr results with images URLs, albums and songs for an artist
 	 *
 	 * @param Solarium_Document_ReadOnly $solrArtist
-	 *
+	 * @param Bool $addUrl
 	 * @return stdClass
 	 */
 	private function getOutputArtist( $solrArtist, $addUrl = false ) {
@@ -247,6 +249,14 @@ class SolrLyricsApiHandler {
 
 		if ( $solrArtist->image ) {
 			$this->appendImages( $artist, $solrArtist->image );
+		}
+
+		if ( $solrArtist->itunes ) {
+			$artist->itunes = LyricsUtils::generateITunesUrl(
+				$solrArtist->itunes,
+				LyricsUtils::TYPE_ARTIST,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		if ( $solrArtist->albums ) {
@@ -270,14 +280,15 @@ class SolrLyricsApiHandler {
 	public function getArtist( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsUtils::TYPE_ARTIST,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
+			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
 		] );
 
 		$query->setFields( [
 			'artist_name',
 			'image',
 			'albums',
-			'songs'
+			'songs',
+			'itunes'
 		] );
 
 		$query->setStart( 0 )->setRows( 1 );
@@ -300,8 +311,8 @@ class SolrLyricsApiHandler {
 	public function getAlbum( LyricsApiSearchParams $searchParams ) {
 		$query = $this->newQueryFromSearch( [
 			'type: %1%' => LyricsUtils::TYPE_ALBUM,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
-			'album_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_ALBUM ),
+			'artist_name_lc: %P2%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
+			'album_name_lc: %P3%' => $searchParams->getLowerCaseField( LyricsApiController::PARAM_ALBUM ),
 		] );
 
 		$query->setFields( [
@@ -337,7 +348,11 @@ class SolrLyricsApiHandler {
 		}
 
 		if ( $queryResult->itunes ) {
-			$album->itunes = $queryResult->itunes;
+			$album->itunes = LyricsUtils::generateITunesUrl(
+				$queryResult->itunes,
+				LyricsUtils::TYPE_ALBUM,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		$album->artist = $this->buildArtist( $queryResult );
@@ -363,7 +378,11 @@ class SolrLyricsApiHandler {
 		$song = $this->buildSong( $solrSong, $addSongUrl );
 
 		if ( $solrSong->itunes ) {
-			$song->itunes = $solrSong->itunes;
+			$song->itunes = LyricsUtils::generateITunesUrl(
+				$solrSong->itunes,
+				LyricsUtils::TYPE_SONG,
+				$this->itunesAffiliateToken
+			);
 		}
 
 		$song->lyrics = $solrSong->lyrics;
@@ -379,7 +398,7 @@ class SolrLyricsApiHandler {
 		}
 
 		if( !is_null( $highlights ) ) {
-			$song->hightlights = $highlights->getField( self::INDEX_FIELD_NAME_LYRICS );
+			$song->highlights = $highlights->getField( self::INDEX_FIELD_NAME_LYRICS );
 		}
 
 		return $song;
@@ -393,19 +412,25 @@ class SolrLyricsApiHandler {
 	 * @return null|stdClass
 	 */
 	public function getSong( LyricsApiSearchParams $searchParams ) {
-		$solrQuery = [
-			'type: %1%' => LyricsUtils::TYPE_SONG,
-			'artist_name: %P2%' => $searchParams->getField( LyricsApiController::PARAM_ARTIST ),
-			'song_name: %P3%' => $searchParams->getField( LyricsApiController::PARAM_SONG ),
+		$query = $this->client->createSelect();
+		$lowerCaseSongName = $searchParams->getLowerCaseField( LyricsApiController::PARAM_SONG );
+		$queryText = 'type:%1% AND artist_name_lc:%P2% AND ( song_name_lc:%P3% OR song_name_lc:%P4% )';
+
+		$params = [
+			LyricsUtils::TYPE_SONG,
+			$searchParams->getLowerCaseField( LyricsApiController::PARAM_ARTIST ),
+			$lowerCaseSongName,
+			LyricsUtils::removeBrackets( $lowerCaseSongName ),
 		];
 
-		$query = $this->newQueryFromSearch( $solrQuery );
+		$query->setQuery( $queryText, $params );
 		$query->setFields( [
 			'artist_name',
 			'album_id',
 			'album_name',
 			'song_name',
 			'image',
+			'itunes',
 			self::INDEX_FIELD_NAME_LYRICS
 		] );
 

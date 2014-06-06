@@ -15,6 +15,7 @@ $messages['en'] = array(
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
 	'wikiahubs-v3-suggest-article-submit-button' => 'Submit',
+	'wikiahubs-v3-suggest-article-close-button' => 'Close',
 	'wikiahubs-v3-suggest-article-what-article' => 'What URL do you want to share? (255 character limit)',
 	'wikiahubs-v3-suggest-article-reason' => 'Why is this cool? (140 characters limit)',
 	'wikiahubs-v3-suggest-article-success' => 'Thanks for suggesting an article, our editors will look over it. Check back often to see if it\'s up!',

@@ -2,7 +2,9 @@
 /**
  * Class definition for WikiaSearchController.
  */
-// Someday there will be a namespace declaration here.
+
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Responsible for handling search requests.
  * @author relwell
@@ -60,6 +62,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
+
+	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
+	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -246,9 +251,24 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-		if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
+
+		$minDuration = $this->getVal( 'minseconds' );
+		$maxDuration = $this->getVal( 'maxseconds' );
+
+		if ( $minDuration && $maxDuration ) {
 			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 		}
+
+		$log = WikiaLogger::instance();
+		$log->info( __METHOD__.' - Querying SOLR', [
+			'method'      => __METHOD__,
+			'title'       => $title,
+			'limit'       => $limit,
+			'mm'          => $mm,
+			'minDuration' => $minDuration,
+			'maxDuration' => $maxDuration
+		] );
+
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $queryService->searchAsApi() );
 	}
@@ -299,6 +319,17 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
 				$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
 			}
+
+			$log = WikiaLogger::instance();
+			$log->info( __METHOD__.' - Querying SOLR', [
+				'method'      => __METHOD__,
+				'topics'      => $topics,
+				'limit'       => $limit,
+				'mm'          => $mm,
+				'minDuration' => $minDuration,
+				'maxDuration' => $maxDuration
+			] );
+
 			$this->getResponse()->setFormat( 'json' );
 			$this->getResponse()->setData( $queryService->searchAsApi() );
 		}
@@ -541,6 +572,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 			->setBoostGroup			 ( $this->getVal( 'ab' ) )
 		;
+
+		if ( $this->isCorporateWiki() ) {
+			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+		}
+
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
@@ -575,7 +611,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				'filters'       => $this->getVal( 'filters', array() ),
 				);
 
-		$isMonobook = $this->app->checkSkin( 'monobook') ;
+		$isMonobook = $this->app->checkSkin( 'monobook' );
 
 		$this->setVal( 'results',               $searchConfig->getResults() );
 		$this->setVal( 'resultsFound',          $searchConfig->getResultsFound() );
@@ -597,6 +633,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
 		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
+
+		if ( $this->isCorporateWiki() ) {
+			$resultsLang = $searchConfig->getLanguageCode();
+			if ( $resultsLang != $this->app->wg->ContLang->getCode() ) {
+				$this->setVal( 'resultsLang', $resultsLang );
+			}
+		}
 
 		if( $this->currentPage == $this->pagesCount ) {
 			$this->setVal( 'shownResultsEnd', $this->resultsFound );
@@ -681,10 +724,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return boolean true
 	 */
 	protected function handleSkinSettings() {
+		global $wgCityId;
 		$this->wg->Out->addHTML( JSSnippets::addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
 		if ( $this->isCorporateWiki() ) {
 			OasisController::addBodyClass('inter-wiki-search');
+
+			$this->setVal('corporateWikiId', $wgCityId );
 			$this->overrideTemplate('CrossWiki_index');
 		}
 		$skin = $this->wg->User->getSkin();

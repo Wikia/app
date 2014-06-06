@@ -1,4 +1,5 @@
-var AdLogicHighValueCountry = function (window) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window', 'wikia.instantGlobals'], function (window, globals) {
 	'use strict';
 
 	var highValueCountries,
@@ -23,7 +24,7 @@ var AdLogicHighValueCountry = function (window) {
 		'US': 3
 	};
 
-	highValueCountries = window.wgHighValueCountries || defaultHighValueCountries;
+	highValueCountries = globals.wgHighValueCountries ?  globals.wgHighValueCountries : defaultHighValueCountries;
 
 	isHighValueCountry = function (country) {
 		if (country && highValueCountries) {
@@ -43,4 +44,4 @@ var AdLogicHighValueCountry = function (window) {
 		isHighValueCountry: isHighValueCountry,
 		getMaxCallsToDART: getMaxCallsToDART
 	};
-};
+});

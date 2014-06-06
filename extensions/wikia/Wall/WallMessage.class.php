@@ -1284,7 +1284,7 @@ class WallMessage {
 		return false;
 	}
 
-	protected function setInCommentsIndex( $prop, $value, $useMaster = false ) {
+	public function setInCommentsIndex( $prop, $value, $useMaster = false ) {
 		$commentId = $this->getId();
 		if ( !empty($commentId) ) {
 			$commentsIndex = $this->getCommentsIndex();

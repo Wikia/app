@@ -7,21 +7,45 @@
 }
 
 //make bigger inputs for finger
-input {
-	height: 30px !important;
-	font-size: 15pt;
+input,
+input[type=button],
+input[type=submit],
+input[type=reset],
+button {
+	height: 30px;
 }
 
-.WikiaSearch .wikia-button {
-	height: 40px !important;
+select {
+	height: 35px;
 }
 
-.AccountNavigation .UserLoginDropdown .WikiaForm input[type=text],
-.AccountNavigation .UserLoginDropdown .WikiaForm input[type=password] {
-	font-size: 14px;
+.AccountNavigation .UserLoginDropdown .WikiaForm {
+	input[type=text],
+	input[type=password] {
+		height: 30px;
+	}
 }
 
-//hide facbook description
+.WikiaSignup select {
+	width: 103px;
+}
+
+//greater height of inputs makes the one-line-labels break
+.search-filter-sort,
+td.mw-input,
+.wikitable td {
+	input[type=checkbox],
+	input[type=radio] {
+		position: relative;
+		top: 9px;
+	}
+}
+
+td.mw-label {
+	vertical-align: middle;
+}
+
+//hide facebook description
 #AjaxLoginConnectMarketing div {
 	h1:nth-of-type(2), ul {
 		display: none;
@@ -29,6 +53,7 @@ input {
 }
 
 //fixes for register form
+//TODO: Remove the hacks and do it properly
 #wpName2, #wpEmail, #uselang, #wpBirthYear {
 	position: absolute !important;
 	left: 35px !important;

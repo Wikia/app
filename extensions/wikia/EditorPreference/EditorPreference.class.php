@@ -113,7 +113,9 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		$vars['wgVisualEditorPreferred'] = self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+		global $wgUser, $wgTitle;
+		$vars['wgVisualEditorPreferred'] = ( self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
+			!$wgUser->isBlockedFrom( $wgTitle ) );
 		return true;
 	}
 
@@ -157,8 +159,9 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink( $skin ) {
-		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
+		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgUser;
 		return $skin->getSkinName() === 'oasis' &&
+			!$wgUser->isBlockedFrom( $wgTitle ) &&
 			!$wgTitle->isRedirect() &&
 			$wgEnableVisualEditorExt &&
 			( is_array( $wgVisualEditorNamespaces ) ?

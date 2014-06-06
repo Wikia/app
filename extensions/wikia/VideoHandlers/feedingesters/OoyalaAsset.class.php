@@ -83,7 +83,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $sourceId
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
-	 * @param integer $limit
+	 * @param int $max
 	 * @return array $assets
 	 */
 	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
@@ -204,7 +204,7 @@ class OoyalaAsset extends WikiaModel {
 			$asset = json_decode( $response, true );
 
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
-			foreach( explode("\n", var_export($asset, 1)) as $line ) {
+			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";
 			}
 
@@ -431,10 +431,10 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
-		if ( !empty( $data['distributor']) ) {
+		if ( !empty( $data['distributor'] ) ) {
 			$metadata['distributor'] = $data['distributor'];
 		}
-		if ( !empty( $data['streamHdUrl']) ) {
+		if ( !empty( $data['streamHdUrl'] ) ) {
 			$metadata['streamHdUrl'] = $data['streamHdUrl'];
 		}
 		// set blank thumbnail

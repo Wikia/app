@@ -674,6 +674,7 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Crazymadlover
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  */
 $messages['pt'] = array(
@@ -689,6 +690,7 @@ $messages['pt'] = array(
 	'dump-database-request-already-submitted' => 'Foi solicitada recentemente uma cópia para ficheiro (há menos de 7 dias)',
 	'dump-database-request-requested' => 'Foi enviado o pedido de cópia da base de dados para ficheiro',
 	'dump-database-info-more' => 'Consulte <a href="http://community.wikia.com/wiki/Help:Database_download">download da base de dados</a> para mais informação, por favor',
+	'dump-database-last-unknown' => 'Desconhecido',
 );
 
 /** Brazilian Portuguese (português do Brasil)

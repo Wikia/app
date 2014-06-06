@@ -325,5 +325,4 @@
 
 	// Exports
 	Wikia.AbTest = AbTest;
-
 })( window );

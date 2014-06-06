@@ -1,24 +1,39 @@
-/*exported AdConfig2*/
-var AdConfig2 = function (
+/*global define*/
+define('ext.wikia.adEngine.adConfig', [
+	// regular dependencies
+	'wikia.log',
+	'wikia.window',
+	'wikia.document',
+	'wikia.geo',
+	'wikia.abTest',
+
+	'ext.wikia.adEngine.adDecoratorPageDimensions',
+	'ext.wikia.adEngine.evolveSlotConfig',
+
+	// adProviders
+	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.later',
+	'ext.wikia.adEngine.provider.null'
+], function (
 	// regular dependencies
 	log,
 	window,
 	document,
-	Geo,
+	geo,
 	abTest,
 
 	adDecoratorPageDimensions,
+	evolveSlotConfig,
 
 	// adProviders
 	adProviderDirectGpt,
-	adProviderEvolve,
 	adProviderLater,
 	adProviderNull
 ) {
 	'use strict';
 
-	var logGroup = 'AdConfig2',
-		country = Geo.getCountryCode(),
+	var logGroup = 'ext.wikia.adEngine.adConfig',
+		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
 		decorators = [adDecoratorPageDimensions];
@@ -44,6 +59,7 @@ var AdConfig2 = function (
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,
+		'WIKIA_BAR_BOXAD_2': true,
 		'GPT_FLUSH': true
 	};
 
@@ -62,14 +78,14 @@ var AdConfig2 = function (
 		// Force providers:
 		if (slot[2] === 'Evolve') {
 			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-			return adProviderEvolve;
+			return adProviderLater;
 		}
 		if (slot[2] === 'AdDriver2') {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
 			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'AdDriver') {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
+			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
 			return adProviderDirectGpt;
 		}
 		if (slot[2] === 'Liftium') {
@@ -107,9 +123,9 @@ var AdConfig2 = function (
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-				return adProviderEvolve;
+			if (evolveSlotConfig.canHandleSlot(slotname)) {
+				log(['getProvider', slot, 'Later (Evolve)'], 'info', logGroup);
+				return adProviderLater;
 			}
 		}
 
@@ -127,4 +143,4 @@ var AdConfig2 = function (
 		getDecorators: function () { return decorators; },
 		getProvider: getProvider
 	};
-};
+});

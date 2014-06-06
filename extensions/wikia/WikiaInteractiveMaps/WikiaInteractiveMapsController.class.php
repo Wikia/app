@@ -69,6 +69,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$mapsResponse = $this->mapsModel->cachedRequest( 'getMapsFromApi', $params );
 
+		if ( !$mapsResponse ) {
+			$this->forward( 'WikiaInteractiveMaps', 'error' );
+			return;
+		}
+
 		$this->setVal( 'maps', $mapsResponse->items );
 		$this->setVal( 'hasMaps', !empty( $mapsResponse->total ) );
 
@@ -124,6 +129,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'getMapByIdFromApi',
 			[ 'id' => $mapId ]
 		);
+
 		if ( isset( $map->title ) ) {
 			$this->wg->out->setHTMLTitle( $map->title );
 
@@ -227,6 +233,34 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * get list of tile sets
+	 *
+	 * @return Array
+	 */
+
+	public function getTileSets() {
+		$params = [];
+		$results[ 'success' ] = false;
+
+		$searchTerm = $this->request->getVal( 'searchTerm', null );
+
+		if ( !is_null( $searchTerm ) ) {
+			$params[ 'searchTerm' ] = $searchTerm;
+		}
+
+		$response = $this->mapsModel->getTileSets( $params );
+
+		if ( $response ) {
+			$results[ 'success' ] = true;
+			$results[ 'tileSets' ] = $response;
+		} else {
+			$results[ 'error' ] = wfMessage( 'wikia-interactive-maps-api-error-message' )->plain();
+		}
+
+		$this->response->setVal( 'results', $results );
+	}
+
+	/**
 	 * Entry point to create a map from either existing tiles or new image
 	 *
 	 * @requestParam Integer $tileSetId an unique id of existing tiles
@@ -238,15 +272,33 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @throws InvalidParameterApiException
 	 */
 	public function createMap() {
-		$tileSetId = $this->request->getInt( 'tileSetId', 0 );
-		$this->setCreationData( 'tileSetId', $tileSetId );
-		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
+		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
+
+		$this->setCreationData( 'tileSetId', $this->request->getInt( 'tileSetId', 0 ) );
 		$this->setCreationData( 'title', trim( $this->request->getVal( 'title', '' ) ) );
+		$this->setCreationData( 'image', trim( $this->request->getVal( 'fileUrl', '' ) ) );
 
 		$this->validateMapCreation();
 
 		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
 		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
+
+		if( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
+			$results = $this->createCustomMap();
+		} else {
+			$results = $this->createGeoMap();
+		}
+
+		$this->setVal( 'results', $results );
+	}
+
+	/**
+	 * Creates a custom map for given tileset or creating a tileset and then map out of it
+	 *
+	 * @return Array
+	 */
+	private function createCustomMap() {
+		$tileSetId = $this->getCreationData( 'tileSetId' );
 
 		if( $tileSetId > 0 ) {
 			$results = $this->createMapFromTilesetId();
@@ -259,7 +311,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			}
 		}
 
-		$this->setVal( 'results', $results );
+		return $results;
+	}
+
+	/**
+	 * Creates a map from Geo tileset
+	 *
+	 * @return Array
+	 */
+	private function createGeoMap() {
+		$this->setCreationData( 'tileSetId', $this->mapsModel->getGeoMapTilesetId() );
+		return $this->createMapFromTilesetId();
 	}
 
 	/**
@@ -506,6 +568,16 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function getStashedImageThumb( $file, $width ) {
 		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
+	}
+	
+	/**
+	 * API Error page
+	 */
+	public function error() {
+		$this->setVal( 'messages', [
+			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-api-error-message' )
+		] );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
 	/**

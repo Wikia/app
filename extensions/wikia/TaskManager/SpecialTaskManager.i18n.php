@@ -148,11 +148,16 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Elseweyr
  */
 $messages['fi'] = array(
 	'taskmanager' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_title' => 'Näytä ja hallinnoi taustatehtäviä',
 	'taskmanager_tasklist' => 'Palaa tehtäväluetteloon',
+	'right-taskmanager' => 'Voi näyttää taustatehtäviä',
+	'right-taskmanager-action' => 'Voi hallinnoida taustatehtäviä',
+	'taskmanager-invert' => 'Käänteinen valinta',
+	'action-taskmanager' => 'näyttää tai hallinnoida taustatehtäviä',
 );
 
 /** French (français)

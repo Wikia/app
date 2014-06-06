@@ -34,7 +34,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
-<?= $wikiaScriptLoader; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -76,14 +76,14 @@
 	<?= $body ?>
 
 	<?php
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'GPT_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
 		if (empty($wg->SuppressAds)) {
-			echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_1'));
+			echo F::app()->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_1', 'pageTypes' => ['corporate', 'all_ads']]);
 			if (!$wg->EnableWikiaHomePageExt) {
-				echo F::app()->renderView('Ad', 'Index', array('slotname' => 'INVISIBLE_2'));
+				echo F::app()->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_2']);
 			}
 		}
-		echo F::app()->renderView('Ad', 'Index', array('slotname' => 'SEVENONEMEDIA_FLUSH'));
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>
 <? if( $jsAtBottom ): ?>
@@ -100,7 +100,9 @@
 <? endif ?>
 
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
-
+<?php if ($wg->EnableAdEngineExt) { ?>
+<script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
+<?php } ?>
 <?= $bottomScripts ?>
 <?= $cssPrintLinks ?>
 

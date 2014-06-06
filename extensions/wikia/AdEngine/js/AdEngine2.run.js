@@ -3,113 +3,38 @@
  * Once AMD is available, this file will be almost no longer needed.
  */
 
-/*global document, window */
-/*global Geo, Wikia, Krux, SlotTracker */
-/*global AdConfig2, AdEngine2, DartUrl, EvolveHelper, SlotTweaker, ScriptWriter */
-/*global WikiaDartHelper, WikiaFullGptHelper, AdLogicPageDimensions */
-/*global AdProviderEvolve, AdProviderDirectGpt, AdProviderLater, AdProviderNull */
-/*global AdLogicDartSubdomain, AdLogicHighValueCountry, AdDecoratorPageDimensions, AdLogicPageLevelParams */
-/*global AdLogicPageLevelParamsLegacy, GptSlotConfig */
-/*global require*/
+/*global window, require, setTimeout*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
-
-(function (log, tracker, window, document, Geo, LazyQueue, Cookies, Cache, Krux, abTest) {
+require([
+	'wikia.log',
+	'wikia.window',
+	'wikia.tracker',
+	'ext.wikia.adEngine.adEngine',
+	'ext.wikia.adEngine.adConfig',
+	'ext.wikia.adEngine.evolveSlotConfig',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.dartHelper',
+	'ext.wikia.adEngine.slotTracker',
+	'ext.wikia.adEngine.lateAdsQueue',
+	'ext.wikia.adEngine.adLogicHighValueCountry',
+	'ext.wikia.adEngine.slotTweaker',
+	require.optional('wikia.abTest')
+], function (log, window, tracker, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, abTest) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
-		adConfig,
-		adEngine,
-		slotTracker,
-		adLogicDartSubdomain,
-		adLogicHighValueCountry,
-		adLogicPageLevelParams,
-		adLogicPageLevelParamsLegacy,
-		adLogicPageDimensions,
-		adDecoratorPageDimensions,
-		scriptWriter,
-		dartUrl,
-		wikiaDart,
-		wikiaGptHelper,
-		evolveHelper,
-		adProviderDirectGpt,
-		adProviderEvolve,
-		adProviderLater,
-		adProviderNull,
-		slotTweaker,
-		gptSlotConfig,
-
-		queueForLateAds,
-		adConfigForLateAds,
 		params,
 		param,
-		value;
+		value,
+		adsinhead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
 	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;
-
-	slotTracker = SlotTracker(window, log, tracker);
-
-	// Construct Ad Engine
-	adEngine = AdEngine2(log, LazyQueue, slotTracker);
-
-	// Construct various helpers
-	slotTweaker = SlotTweaker(log, document, window);
-	dartUrl = DartUrl();
-	gptSlotConfig = GptSlotConfig();
-	adLogicDartSubdomain = AdLogicDartSubdomain(Geo);
-	adLogicHighValueCountry = AdLogicHighValueCountry(window);
-	adLogicPageDimensions = AdLogicPageDimensions(window, document, log, slotTweaker);
-	adDecoratorPageDimensions = AdDecoratorPageDimensions(adLogicPageDimensions, log);
-	adLogicPageLevelParams = AdLogicPageLevelParams(log, window, Krux, adLogicPageDimensions, abTest);
-	adLogicPageLevelParamsLegacy = AdLogicPageLevelParamsLegacy(log, window, adLogicPageLevelParams, Krux, dartUrl);
-	scriptWriter = ScriptWriter(document, log, window);
-	wikiaDart = WikiaDartHelper(log, adLogicPageLevelParams, dartUrl, adLogicDartSubdomain);
-	wikiaGptHelper = WikiaGptHelper(log, window, document, adLogicPageLevelParams, gptSlotConfig);
-	evolveHelper = EvolveHelper(log, window);
-
-	// Construct Ad Providers
-	adProviderDirectGpt = AdProviderDirectGpt(log, window, Geo, slotTweaker, Cache, adLogicHighValueCountry, wikiaGptHelper, gptSlotConfig);
-	adProviderEvolve = AdProviderEvolve(adLogicPageLevelParamsLegacy, scriptWriter, log, window, document, Krux, evolveHelper, slotTweaker);
-	adProviderNull = AdProviderNull(log, slotTweaker);
-
-	// Special Ad Provider, to deal with the late ads
-	queueForLateAds = [];
-	adProviderLater = AdProviderLater(log, queueForLateAds);
-
-	adConfig = AdConfig2(
-		// regular dependencies:
-		log,
-		window,
-		document,
-		Geo,
-		abTest,
-
-		adDecoratorPageDimensions,
-
-		// AdProviders:
-		adProviderDirectGpt,
-		adProviderEvolve,
-		adProviderLater,
-		adProviderNull
-	);
-
-	window.wgAfterContentAndJS.push(function () {
-		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
-		window.adslots2 = window.adslots2 || [];
-		adEngine.run(adConfig, window.adslots2, 'queue.early');
-	});
 
 	window.AdEngine_getTrackerStats = slotTracker.getStats;
 
@@ -130,65 +55,23 @@
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		adProviderEvolve.hop(slotname);
-	};
-
-	/*
-	 * TODO this is the right approach but it does compete with AdDriver (refactor to AdEngine2Controller?)
-	 * window.LiftiumOptions = window.LiftiumOptions || {};
-	 * window.LiftiumOptions.autoInit = false;
-	 */
-
-	// Set late run config
-	window.AdEngine_setLateAdsConfig = function (adConfig) {
-		adConfigForLateAds = adConfig;
-	};
-
-	// Load late ads now (you need to call AdEngine_setLateConfig first!)
-	window.AdEngine_loadLateAds = function () {
-		if (adConfigForLateAds) {
-			log('launching late ads now', 1, module);
-			log('work on queueForLateAds according to AdConfig2Late', 1, module);
-			tracker.track({
-				eventName: 'liftium.init',
-				ga_category: 'init2/init',
-				ga_action: 'init',
-				ga_label: 'adengine2 late',
-				trackingMethod: 'ad'
-			});
-			adEngine.run(adConfigForLateAds, queueForLateAds, 'queue.late');
-		} else {
-			log('ERROR, AdEngine_loadLateAds called before AdEngine_setLateConfig!', 1, module);
-			tracker.track({
-				eventName: 'liftium.errors',
-				ga_category: 'errors2/no_late_config',
-				ga_action: 'no_late_config',
-				ga_label: 'adengine2 late',
-				trackingMethod: 'ad'
-			});
-		}
-	};
-
-	if (window.wgEnableRHonDesktop) {
-		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
-	}
-	// Load Krux asynchronously later
-	// If you call AdEngine_loadKruxLater(Krux) at the end of the HTML Krux
-	// or on DOM ready, it will be loaded after most (if not all) of the ads
-	window.AdEngine_loadKruxLater = function (Krux) {
-		if (window.wgAdsShowableOnPage) {
-			scriptWriter.callLater(function () {
-				log('Loading Krux code', 8, module);
-				Krux.load(window.wgKruxCategoryId);
-			});
-		}
+		require(['ext.wikia.adEngine.provider.evolve'], function(adProviderEvolve) {
+			adProviderEvolve.hop(slotname);
+		});
 	};
 
 	// Register window.wikiaDartHelper so jwplayer can use it
 	window.wikiaDartHelper = wikiaDart;
 
+	// Register adLogicHighValueCountry as so Liftium can use it
+	window.adLogicHighValueCountry = adLogicHighValueCountry;
+
+	// Register adSlotTweaker so DART creatives can use it
+	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
+	window.adSlotTweaker = slotTweaker;
+
 	// Export page level params, so Krux can read them
-	params = adLogicPageLevelParams.getPageLevelParams();
+	params = adLogicPageParams.getPageLevelParams();
 	for (param in params) {
 		if (params.hasOwnProperty(param)) {
 			value = params[param];
@@ -203,7 +86,7 @@
 	window.loadCustomAd = function (params) {
 		log('loadCustomAd', 'debug', module);
 
-		var adModule = 'ext.wikia.adengine.template.' + params.type;
+		var adModule = 'ext.wikia.adEngine.template.' + params.type;
 		log('loadCustomAd: loading ' + adModule, 'debug', module);
 
 		require([adModule], function (adTemplate) {
@@ -212,4 +95,125 @@
 		});
 	};
 
-}(Wikia.log, Wikia.Tracker, window, document, Geo, Wikia.LazyQueue, Wikia.Cookies, Wikia.Cache, Krux, Wikia.AbTest));
+	function startEarlyQueue() {
+		// Start ads
+		window.AdEngine_trackStartEarlyAds();
+		log('work on window.adslots2 according to AdConfig2', 1, module);
+		tracker.track({
+			eventName: 'liftium.init',
+			ga_category: 'init2/init',
+			ga_action: 'init',
+			ga_label: 'adengine2',
+			trackingMethod: 'ad'
+		});
+		window.adslots2 = window.adslots2 || [];
+		adEngine.run(adConfig, window.adslots2, 'queue.early');
+	}
+
+	if (adsinhead) {
+		setTimeout(startEarlyQueue, 0);
+	} else {
+		window.wgAfterContentAndJS.push(startEarlyQueue);
+	}
+
+	if (window.wgEnableRHonDesktop) {
+		window.wgAfterContentAndJS.push(window.AdEngine_loadLateAds);
+	}
+
+	if (window.wgAdEngineDisableLateQueue) {
+		log('skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
+	}
+});
+
+// Load late ads now
+window.AdEngine_loadLateAds = function () {
+	'use strict';
+
+	window.wgAfterContentAndJS.push(function () {
+		require([
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+			var module = 'AdEngine_loadLateAds';
+			window.AdEngine_trackStartLateAds();
+			log('launching late ads now', 1, module);
+			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
+			tracker.track({
+				eventName: 'liftium.init',
+				ga_category: 'init2/init',
+				ga_action: 'init',
+				ga_label: 'adengine2 late',
+				trackingMethod: 'ad'
+			});
+			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
+		});
+	});
+};
+
+// Tracking functions for ads in head metrics
+(function (window) {
+	'use strict';
+
+	function trackTime(timeTo) {
+		var wgNowBased, performanceBased;
+
+		if (!window.wgLoadAdsInHead) {
+			return;
+		}
+
+		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
+		performanceBased = window.performance && Math.round(window.performance.now());
+
+		require([
+			'wikia.log',
+			'wikia.tracker',
+			'ext.wikia.adEngine.slotTracker',
+			require.optional('wikia.abTest')
+		], function (log, tracker, slotTracker, abTest) {
+			var adsinhead = abTest && abTest.getGroup('ADS_IN_HEAD');
+
+			if (!adsinhead) {
+				return;
+			}
+
+			log([
+				'time to: ' + timeTo,
+				'adsinhead: ' + adsinhead,
+				'wgNowBased: ' + wgNowBased,
+				'performanceBased: ' + performanceBased
+			], 'info', 'AdEngine_track');
+
+			tracker.track({
+				ga_category: 'ad/performance/' + timeTo + '/wgNow',
+				ga_action: 'adsinhead=' + adsinhead,
+				ga_label: slotTracker.getTimeBucket(wgNowBased / 1000),
+				ga_value: wgNowBased,
+				trackingMethod: 'ad'
+			});
+
+			if (performanceBased) {
+				tracker.track({
+					ga_category: 'ad/performance/' + timeTo + '/performance',
+					ga_action: 'adsinhead=' + adsinhead,
+					ga_label: slotTracker.getTimeBucket(performanceBased / 1000),
+					ga_value: performanceBased,
+					trackingMethod: 'ad'
+				});
+			}
+		});
+	}
+
+	// Measure time to page interactive
+	window.AdEngine_trackPageInteractive = function () {
+		trackTime('interactivePage');
+	};
+
+	// Measure time to load early queue
+	window.AdEngine_trackStartEarlyAds = function () {
+		trackTime('startEarlyAds');
+	};
+
+	// Measure time to load late queue
+	window.AdEngine_trackStartLateAds = function () {
+		trackTime('startLateAds');
+	};
+}(window));

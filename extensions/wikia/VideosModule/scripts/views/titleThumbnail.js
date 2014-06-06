@@ -5,7 +5,7 @@ define('videosmodule.views.titleThumbnail', [
 	'use strict';
 
 	var track = Tracker.buildTrackingFunction({
-		category: 'videos-module-' + window.wgVideosModuleABTest,
+		category: 'videos-module-rail',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.CLICK,
 		label: 'thumbnail-click'

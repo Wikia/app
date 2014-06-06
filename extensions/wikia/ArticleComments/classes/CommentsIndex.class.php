@@ -339,6 +339,7 @@ class CommentsIndex extends WikiaModel {
 				Wikia::log(__FUNCTION__, __LINE__, "WALL_COMMENTS returning cached object for id " . $commentId, true);
 				$ci = clone self::$objectCache[ $commentId ];
 				$ci->setDB( $dbw );
+				wfProfileOut( __METHOD__ );
 				return $ci;
 			}
 

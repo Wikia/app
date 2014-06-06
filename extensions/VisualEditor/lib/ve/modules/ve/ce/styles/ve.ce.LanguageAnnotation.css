@@ -1,0 +1,11 @@
+/*!
+ * VisualEditor ContentEditable LanguageAnnotation styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ce-LanguageAnnotation {
+	border-bottom: 1px dashed #ccc;
+	background-color: #ebf3f5;
+}

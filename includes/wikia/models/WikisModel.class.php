@@ -10,8 +10,6 @@ class WikisModel extends WikiaModel {
 	const CACHE_VERSION = '4';
 	const MAX_RESULTS = 250;
 
-	const FLAG_NEW = 1;
-	const FLAG_HOT = 2;
 	const FLAG_PROMOTED = 4;
 	const FLAG_BLOCKED = 8;
 	const FLAG_OFFICIAL = 16;
@@ -309,10 +307,8 @@ class WikisModel extends WikiaModel {
 					'desc' => $row->city_description,
 					//this is stored in a pretty peculiar format,
 					//see extensions/wikia/CityVisualization/models/CityVisualization.class.php
-					'image' => $row->city_main_image,
+					'image' => PromoImage::fromPathname($row->city_main_image)->ensureCityIdIsSet($row->city_id)->getPathname(),
 					'flags' => array(
-						'new' => ( ( $row->city_flags & self::FLAG_NEW ) == self::FLAG_NEW ),
-						'hot' => ( ( $row->city_flags & self::FLAG_HOT ) == self::FLAG_HOT ),
 						'official' => ( ( $row->city_flags & self::FLAG_OFFICIAL ) == self::FLAG_OFFICIAL ),
 						'promoted' => ( ( $row->city_flags & self::FLAG_PROMOTED ) == self::FLAG_PROMOTED )
 					)

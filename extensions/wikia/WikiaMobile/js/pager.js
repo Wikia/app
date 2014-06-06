@@ -219,6 +219,9 @@ define('pager', ['wikia.window'], function (window) {
 
 			},
 			onTouchMove = function(ev){
+				if (options.disableSwipe) {
+					return false;
+				}
 				if ( ev.touches.length === 1 ) {
 					if( isFunction ? !checkCancel() : true ) {
 						ev.preventDefault();

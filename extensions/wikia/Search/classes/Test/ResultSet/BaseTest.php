@@ -302,7 +302,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsStartNotZero() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -312,6 +312,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		$this->config
 		    ->expects( $this->never() )
 		    ->method ( 'getInterWiki' )
+		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
 		;
 		$this->resultSet
 		    ->expects( $this->never() )
@@ -335,7 +340,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsOnWiki() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -346,6 +351,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->once() )
 		    ->method ( 'getInterWiki' )
 		    ->will   ( $this->returnValue( false ) )
+		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
 		;
 		$this->resultSet
 		    ->expects( $this->never() )
@@ -369,7 +379,7 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\Base::HandleMatchPrepends
 	 */
 	public function testHandleMatchPrependsInterWiki() {
-		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki' ] );
+		$this->prepareMocks( [ 'getResultsStart', 'prependWikiMatchIfExists', 'prependArticleMatchIfExists' ], [ 'getInterWiki', 'mustAddMatchedRecords' ] );
 		
 		$this->resultSet
 		    ->expects( $this->once() )
@@ -380,6 +390,11 @@ class BaseTest extends Wikia\Search\Test\BaseTest {
 		    ->expects( $this->once() )
 		    ->method ( 'getInterWiki' )
 		    ->will   ( $this->returnValue( true ) )
+		;
+		$this->config
+			->expects( $this->any() )
+			->method( 'mustAddMatchedRecords' )
+			->will( $this->returnValue( 0 ) )
 		;
 		$this->resultSet
 		    ->expects( $this->once() )

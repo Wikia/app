@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sahran",
+			"Tel'et",
+			"Tifinaghes"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "توم",
+	"visualeditor-annotationbutton-italic-tooltip": "يانتۇ",
+	"visualeditor-annotationbutton-link-tooltip": "ئۇلانما",
+	"visualeditor-formatdropdown-format-heading1": "ماۋزۇ 1",
+	"visualeditor-formatdropdown-format-heading2": "ماۋزۇ 2",
+	"visualeditor-formatdropdown-format-heading3": "ماۋزۇ 3",
+	"visualeditor-formatdropdown-format-heading4": "ماۋزۇ 4",
+	"visualeditor-formatdropdown-format-heading5": "ماۋزۇ 5",
+	"visualeditor-formatdropdown-format-heading6": "ماۋزۇ 6",
+	"visualeditor-formatdropdown-format-paragraph": "ئابزاس",
+	"visualeditor-historybutton-redo-tooltip": "قايتىلا",
+	"visualeditor-historybutton-undo-tooltip": "يېنىۋال",
+	"visualeditor-inspector-close-tooltip": "ياپ",
+	"visualeditor-inspector-remove-tooltip": "چىقىرىۋەت"
+}

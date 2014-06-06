@@ -235,8 +235,6 @@ The original post and your summary will still appear in the wiki's history.",
 
 	/* Wall Level History */
 	'wall-history' => 'History',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 
 	'wall-history-title' => 'wall history',
 	'wall-history-who-involved-wall-title' => "Who's involved?",
@@ -844,7 +842,8 @@ checkbox on Special:Block',
 	'wall-topic-input-error-limit' => 'Error message saying user has reached the maximum amount of topics.  $1 is the max such as 4',
 	'wall-topic-heading' => 'Related Topics section heading',
 	'wall-topic-edit' => 'Edit Topics call to action that brings up modal',
-	'wall-topic-edit-save' => 'Edit Topics - Save button',
+	'wall-topic-edit-save' => 'Edit Topics - Save button.
+{{Identical|Save}}',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button.
 {{Identical|Cancel}}',
 );
@@ -2389,7 +2388,7 @@ $messages['diq'] = array(
 	'wall-default-title' => "$1'i ra mesac",
 	'wall-button-to-preview-comment' => 'Verqayt',
 	'wall-button-to-cancel-preview' => 'Bıvurne',
-	'wall-button-to-submit-comment' => 'Nusne',
+	'wall-button-to-submit-comment' => 'Bırışe',
 	'wall-button-to-submit-reply' => 'Cewab bıde',
 	'wall-button-cancel-changes' => 'Bıtexelne',
 	'wall-button-done-source' => 'Qeyd kerd',
@@ -2398,11 +2397,11 @@ $messages['diq'] = array(
 	'wall-message-delete' => 'Bestere',
 	'wall-user-talk-archive-page-title' => 'Karber_behse_arşiw',
 	'wall-action-all-confirm-cancel' => 'Bıtexelne',
-	'wall-delete-error-title' => 'Xırab',
+	'wall-delete-error-title' => 'Xeta',
 	'wall-action-remove-confirm-ok' => 'Hewad',
 	'wall-action-admin-confirm-ok' => 'Bestere',
 	'wall-action-restore-confirm-ok' => 'Timar bike',
-	'wall-action-rev-confirm-ok' => 'E, besternê',
+	'wall-action-rev-confirm-ok' => 'Eya, bestere',
 	'wall-notifications' => 'Mengeney',
 	'wall-notifications-all' => 'Tebliği pêro',
 	'wall-notifications-markasread-all-wikis' => 'Wikiy pêro',
@@ -2705,8 +2704,6 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-deleted-reply-undo' => 'Esta respuesta ha sido borrada. $1',
 	'wall-deleted-reply' => 'Esta respuesta ha sido eliminada',
 	'wall-history' => 'Historial',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'Historial del muro',
 	'wall-history-who-involved-wall-title' => '¿Quiénes participaron?',
 	'wall-history-who-involved-thread-title' => '¿Quiénes participaron de este tema?',
@@ -3394,8 +3391,6 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-deleted-reply-undo' => 'Cette réponse a été supprimée. $1',
 	'wall-deleted-reply' => 'Cette réponse a été supprimée',
 	'wall-history' => 'Historique',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'historique du mur',
 	'wall-history-who-involved-wall-title' => 'Qui a participé?',
 	'wall-history-who-involved-thread-title' => 'Qui a participé à ce fil ?',
@@ -3703,8 +3698,6 @@ A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-deleted-reply-undo' => 'Esta resposta foi borrada. $1',
 	'wall-deleted-reply' => 'Esta resposta foi borrada',
 	'wall-history' => 'Historial',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'historial do muro',
 	'wall-history-who-involved-wall-title' => 'Quen participou?',
 	'wall-history-who-involved-thread-title' => 'Quen participou neste fío?',
@@ -4380,6 +4373,7 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
+ * @author Beta16
  * @author Minerva Titani
  * @author Sactage
  */
@@ -4395,7 +4389,7 @@ $messages['it'] = array(
 	'wall-notifications-notifyeveryone' => 'Evidenziata da $1',
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
-	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione', # Fuzzy
+	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
 );
 
 /** Japanese (日本語)
@@ -4828,6 +4822,7 @@ $messages['lb'] = array(
 	'wall-action-all-confirm-cancel' => 'Ofbriechen',
 	'wall-delete-error-title' => 'Feeler',
 	'wall-action-remove-confirm-ok' => 'Ewechhuelen',
+	'wall-action-close-confirm-ok' => 'Zoumaachen',
 	'wall-action-admin-thread-title' => 'Dës Rubrik läschen',
 	'wall-action-admin-reply-title' => 'Dës Äntwert läschen',
 	'wall-action-admin-confirm-ok' => 'Läschen',
@@ -4842,6 +4837,13 @@ $messages['lb'] = array(
 	'wall-topic-input-placeholder' => 'En Thema derbäisetzen (fakultativ)',
 	'wall-topic-edit-save' => 'Späicheren',
 	'wall-topic-edit-cancel' => 'Ofbriechen',
+);
+
+/** لوری (لوری)
+ * @author Mogoeilor
+ */
+$messages['lrc'] = array(
+	'wall-button-save-changes' => 'ذخیره کردن آلشتیا',
 );
 
 /** Latvian (latviešu)
@@ -5046,8 +5048,6 @@ $messages['mk'] = array(
 	'wall-deleted-reply-undo' => 'Овој одговор е избришан. $1',
 	'wall-deleted-reply' => 'Овој одговор е избришан',
 	'wall-history' => 'Историја',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'историја на ѕидот',
 	'wall-history-who-involved-wall-title' => 'Кој учествува?',
 	'wall-history-who-involved-thread-title' => 'Кој е вклучен во разговорот во нишкава?',
@@ -5357,8 +5357,6 @@ Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-deleted-reply-undo' => 'Tred ini telah dihapuskan. $1',
 	'wall-deleted-reply' => 'Balasan ini telah dihapuskan',
 	'wall-history' => 'Sejarah',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'sejarah papan',
 	'wall-history-who-involved-wall-title' => 'Siapa yang terlibat?',
 	'wall-history-who-involved-thread-title' => 'Siapa yang terlibat di tred ini?',
@@ -6354,8 +6352,6 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-deleted-reply-undo' => 'Ta odpowiedź została skasowana. $1',
 	'wall-deleted-reply' => 'Ta odpowiedź została skasowana',
 	'wall-history' => 'Historia',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'Historia tablicy',
 	'wall-history-who-involved-wall-title' => 'Kto edytował?',
 	'wall-history-who-involved-thread-title' => 'Kto edytował ten wątek?',
@@ -6506,8 +6502,8 @@ $messages['ps'] = array(
 	'wall-action-admin-confirm-ok' => 'ړنگول',
 	'wall-action-restore-confirm-ok' => 'بيازېرمل',
 	'wall-action-rev-confirm-ok' => 'هو، ړنگ دې شي',
-	'wall-notifications' => 'يادګيرنې',
-	'wall-notifications-all' => 'ټولې يادګيرنې',
+	'wall-notifications' => 'يادگيرنې',
+	'wall-notifications-all' => 'ټولې يادگيرنې',
 	'wall-notifications-markasread' => 'ټول لوستی په نخښه کول',
 	'wall-notifications-markasread-all-wikis' => 'ټولې ويکي گانې',
 	'wall-notifications-markasread-this-wiki' => 'همدا ويکي',
@@ -7237,8 +7233,6 @@ $messages['ru'] = array(
 	'wall-deleted-reply-undo' => 'Этот ответ был удалён. $1',
 	'wall-deleted-reply' => 'Этот ответ был удалён',
 	'wall-history' => 'История',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'История обсуждения',
 	'wall-history-who-involved-wall-title' => 'Участники этого обсуждения',
 	'wall-history-who-involved-thread-title' => 'Кто участвует в этой теме?',
@@ -7832,8 +7826,6 @@ Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins h
 	'wall-deleted-reply-undo' => 'Detta svar har raderats. $1',
 	'wall-deleted-reply' => 'Detta svar har raderats',
 	'wall-history' => 'Historik',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'vägghistorik',
 	'wall-history-who-involved-wall-title' => 'Vem är inblandade?',
 	'wall-history-who-involved-thread-title' => 'Vem är inblandade i denna tråd?',
@@ -8153,8 +8145,6 @@ Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysay
 	'wall-deleted-reply-undo' => 'Nabura na ang tugon na ito. $1',
 	'wall-deleted-reply' => 'Nabura na ang tugon na ito',
 	'wall-history' => 'Kasaysayan',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'kasaysayan ng dingding',
 	'wall-history-who-involved-wall-title' => 'Sino ba ang kasangkot sa dingding na ito?', # Fuzzy
 	'wall-history-who-involved-thread-title' => 'Sino ba ang kasangkot sa sinulid na ito?',
@@ -8370,8 +8360,6 @@ $messages['tt-cyrl'] = array(
 	'wall-action-restore-confirm-ok' => 'Торгызу',
 	'wall-notifications-markasread-all-wikis' => 'Барлык викиләр',
 	'wn-newmsg' => 'Сез $1 диварында яңа хат калдырдыгыз',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'mail-notification-subject' => '$1 -- $2',
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
@@ -8887,8 +8875,6 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-deleted-reply-undo' => 'Trả lời này đã bị xóa. $1',
 	'wall-deleted-reply' => 'Trả lời này đã bị gỡ bỏ',
 	'wall-history' => 'Lịch sử',
-	'wall-history-username-full' => '<a href="$3">$1</a> <a href="$3" class="username"><small>$2</small></a>',
-	'wall-history-username-short' => '<a href="$2">$1</a>',
 	'wall-history-title' => 'lịch sử tường',
 	'wall-history-who-involved-wall-title' => 'Những người tham gia?',
 	'wall-history-who-involved-thread-title' => 'Ai đã tham gia trong luồng này?',

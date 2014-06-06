@@ -10,7 +10,7 @@
 		current: {
 			type: '', // image or video
 			title: '', // currently displayed file name
-			carouselType: '', // articleMedia, relatedVideos, or latestPhotos
+			carouselType: '', // articleMedia or latestPhotos
 			index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
@@ -21,8 +21,8 @@
 
 		// Carousel vars
 		// overlay for thumb images
-		thumbPlayButton: '<div class="Wikia-video-play-button" style="line-height:55px;width:90px;">' +
-			'<img class="sprite play small" src="' + window.wgBlankImgUrl + '"></div>',
+		thumbPlayButton: '<span class="play-circle"></span>',
+		videoWrapperClass: 'video-thumbnail xxsmall',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
 		thumbLoadCount: 20,
@@ -828,11 +828,11 @@
 				});
 			}
 		},
+		// order by priority position in carousel backfill
 		carouselTypes: [
-			'relatedVideos',
+			'videosModule',
 			'articleMedia',
-			'latestPhotos',
-			'videosModule'
+			'latestPhotos'
 		],
 		setUpCarousel: function () {
 			// Load backfill content from DOM
@@ -975,10 +975,10 @@
 				var template = Lightbox.openModal.progressTemplate,
 					progress,
 					html,
-					firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
+					$firstThumb = Lightbox.openModal.carousel.find('li').eq(idx1);
 
 				// Track progress based on if we're in backfill content or original content
-				if (firstThumb.hasClass('back-fill')) {
+				if ($firstThumb.data('backfill') === 'true') {
 					progress = trackBackfillProgress(idx1, idx2);
 				} else {
 					progress = trackOriginalProgress(idx1, idx2);
@@ -988,12 +988,7 @@
 				Lightbox.openModal.progress.html(html);
 			};
 
-			beforeMove = function () {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').hide();
-			};
-
 			afterMove = function (idx) {
-				Lightbox.openModal.carousel.find('.Wikia-video-play-button .play').show();
 				// if we're close to the end, load more thumbnails
 				if (Lightbox.current.thumbs.length - idx < Lightbox.thumbLoadCount) {
 					Lightbox.getMediaThumbs.wikiPhotos();
@@ -1201,7 +1196,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
 					});
@@ -1214,57 +1210,6 @@
 						Lightbox.backfillCount += thumbArr.length;
 					}
 
-				}
-
-				// Add thumbs to current lightbox cache
-				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
-				Lightbox.addThumbsToCarousel(thumbArr, backfill);
-			},
-			// Get related videos from DOM
-			relatedVideos: function (backfill) {
-				var cached = LightboxLoader.cache.relatedVideos,
-					thumbArr = [],
-					playButton = Lightbox.thumbPlayButton,
-					RVI = window.RelatedVideosIds,
-					i,
-					arrLength,
-					key,
-					title;
-
-				if (!window.RelatedVideosIds) {
-					return;
-				}
-
-				if (cached.length) {
-					thumbArr = cached;
-				} else {
-
-					for (i = 0, arrLength = RVI.length; i < arrLength; i++) {
-						key = RVI[i].key;
-						title = RVI[i].title;
-
-						if (!key) {
-							key = title.replace(/ /g, '_');
-						}
-
-						thumbArr.push({
-							thumbUrl: Lightbox.thumbParams(RVI[i].thumb, 'video'),
-							key: key,
-							title: title,
-							type: 'video',
-							playButtonSpan: playButton
-						});
-
-					}
-
-					// Fill relatedVideos cache
-					LightboxLoader.cache.relatedVideos = thumbArr;
-
-					// Count backfill items for progress bar
-					if (backfill) {
-						Lightbox.backfillCount += thumbArr.length;
-					}
 				}
 
 				// Add thumbs to current lightbox cache
@@ -1401,7 +1346,8 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan
+								playButtonSpan: playButtonSpan,
+								thumbLiClass: Lightbox.videoWrapperClass
 							});
 						}
 					});
@@ -1423,12 +1369,14 @@
 			}
 		},
 		addThumbsToCarousel: function (thumbs, backfill) {
-			var container = Lightbox.openModal.carouselContainer,
-				// render carousel
-				carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
-					liClass: backfill ? 'back-fill' : '',
-					thumbs: thumbs
-				});
+			var carouselThumbs,
+				container = Lightbox.openModal.carouselContainer;
+
+			// render carousel
+			carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
+				backfill: backfill,
+				thumbs: thumbs
+			});
 
 			Lightbox.openModal.carousel.append(carouselThumbs);
 
@@ -1461,14 +1409,6 @@
 				trackingCarouselType = '';
 
 			switch (id) {
-				// Related Videos
-				case 'RelatedVideosRL':
-					clickSource = clickSource || VPS.RV;
-
-					carouselType = 'relatedVideos';
-					trackingCarouselType = 'related-videos';
-					break;
-
 				// Embeded in Article Comments
 				case 'WikiaArticleComments':
 					clickSource = clickSource || VPS.EMBED;

@@ -5,6 +5,10 @@
  * @author Will Lee <wlee at wikia-inc.com>
  * @author Piotr Bablok <pbablok at wikia-inc.com>
  * @author Jacek Jursza <jacek at wikia-inc.com>
+ * @author Saipetch Kongkatong <saipetch at wikia-inc.com>
+ * @author Liz Lee <Liz at wikia-inc.com>
+ * @author Garth Webb <garth at wikia-inc.com>
+ * @author James Sutterfield <james at wikia-inc.com>
  * @date 2011-12-06
  * @copyright Copyright (C) 2010 Jakub Kurcek, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -17,6 +21,10 @@ $wgExtensionCredits['videohandlers'][] = array(
 		"Will Lee <wlee at wikia-inc.com>",
 		"Piotr Bablok <pbablok at wikia-inc.com>",
 		"Jacek Jursza <jacek at wikia-inc.com>",
+		"Saipetch Kongkatong <saipetch at wikia-inc.com>",
+		"Liz Lee <liz at wikia-inc.com>",
+		"Garth Webb <garth at wikia-inc.com>",
+		"James Sutterfield <james at wikia-inc.com>",
 	),
 	'url' => 'http://video.wikia.com',
 	'descriptionmsg' => 'wikia-videohandlers-desc',
@@ -96,7 +104,6 @@ $wgHooks['ParserBeforeStrip'][] = 'VideoHandlerHooks::WikiaVideoParserBeforeStri
 
 $wgHooks['FileRevertFormBeforeUpload'][] = 'VideoHandlerHooks::onFileRevertFormBeforeUpload';
 $wgHooks['SetupAfterCache'][] = 'VideoHandlerHooks::onSetupAfterCache';
-$wgHooks['BeforePageDisplay'][] = 'VideoHandlerHooks::onBeforePageDisplay';
 $wgHooks['LinkerMakeThumbLink2FileOriginalSize'][] = 'VideoHandlerHooks::onLinkerMakeThumbLink2FileOriginalSize';
 $wgHooks['ParserAfterStrip'][] = 'VideoHandlerHooks::convertOldInterwikiToNewInterwiki';
 $wgHooks['File::checkExtensionCompatibilityResult'][] = 'VideoHandlerHooks::checkExtensionCompatibilityResult';

@@ -87,7 +87,7 @@ class LyricsApiController extends WikiaController {
 				$details = 'Could not find artist which match the criteria';
 				break;
 			case 'searchSong':
-				$details = 'Could not find album which match the criteria';
+				$details = 'Could not find song which match the criteria';
 				break;
 			case 'searchLyrics':
 				$details = 'Could not find song which match the criteria';

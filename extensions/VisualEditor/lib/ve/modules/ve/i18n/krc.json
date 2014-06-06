@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Iltever"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Джарсыугъа, бу элементни визуал редактор тюрлендирелмейди",
+	"visualeditor-annotationbutton-bold-tooltip": "Къалын",
+	"visualeditor-annotationbutton-italic-tooltip": "Курсив",
+	"visualeditor-annotationbutton-link-tooltip": "Джибериу",
+	"visualeditor-clearbutton-tooltip": "Форматлауну ариула",
+	"visualeditor-dialog-action-apply": "Тюрлендириулени сакъла",
+	"visualeditor-dialog-action-cancel": "Ызына ал",
+	"visualeditor-formatdropdown-format-heading1": "Башлыкъ 1",
+	"visualeditor-formatdropdown-format-heading2": "Башлыкъ 2",
+	"visualeditor-formatdropdown-format-heading3": "Башлыкъ 3",
+	"visualeditor-formatdropdown-format-heading4": "Башлыкъ 4",
+	"visualeditor-formatdropdown-format-heading5": "Башлыкъ 5",
+	"visualeditor-formatdropdown-format-heading6": "Башлыкъ 6",
+	"visualeditor-formatdropdown-format-paragraph": "Абзац",
+	"visualeditor-formatdropdown-format-preformatted": "Преформатланнган",
+	"visualeditor-formatdropdown-title": "Форматлау",
+	"visualeditor-historybutton-redo-tooltip": "Къайтар",
+	"visualeditor-historybutton-undo-tooltip": "Ызына ал",
+	"visualeditor-indentationbutton-indent-tooltip": "Къалгъан джерни кенгерт",
+	"visualeditor-indentationbutton-outdent-tooltip": "Къалгъан джерни къысхарт",
+	"visualeditor-inspector-close-tooltip": "Джаб",
+	"visualeditor-inspector-remove-tooltip": "Кетер",
+	"visualeditor-linkinspector-title": "Гиперджибериу",
+	"visualeditor-listbutton-bullet-tooltip": "Ышанлы тизим",
+	"visualeditor-listbutton-number-tooltip": "Номерленнген тизим"
+}

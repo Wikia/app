@@ -7,7 +7,7 @@ describe('AdEngine2', function(){
 			adEngine,
 			undef;
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
 
 		expect(function() {
 			adEngine.run(adConfigMock, [], 'queue-name');
@@ -40,7 +40,7 @@ describe('AdEngine2', function(){
 			}
 		};
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(makeQueueCalledOn).toBe(slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
@@ -77,7 +77,7 @@ describe('AdEngine2', function(){
 			getDecorators: noop
 		};
 
-		adEngine = AdEngine2(logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(getProviderCalledFor.length).toBe(2, 'adConfig.getProvider called 2 times');

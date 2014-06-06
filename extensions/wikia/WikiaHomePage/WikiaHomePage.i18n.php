@@ -112,9 +112,6 @@ __NOEDITSECTION__',
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 WAM Score]',
 
-	'wikia-home-page-hot' => 'Hot',
-	'wikia-home-page-new' => 'New',
-
 	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
 	'wikiahome-preview-stats-wam' => "'''$1''' WAM Score",
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Page|'''$1''' Pages}}",
@@ -351,10 +348,6 @@ __NOEDITSECTION__',
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 Puntuación WAM]',
 
-
-	'wikia-home-page-hot' => 'Calentito',
-	'wikia-home-page-new' => 'Nuevo',
-
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Página|'''$1''' Páginas}}",
 	'wikiahome-preview-stats-photos' => "{{PLURAL:$1|'''1''' Imagen|'''$1''' Imágenes}}",
 	'wikiahome-preview-stats-videos' => "{{PLURAL:$1|'''1''' Vídeo|'''$1''' Vídeos}}",
@@ -457,9 +450,6 @@ __NOEDITSECTION__',
 *'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 Classement WAM]',
-
-	'wikia-home-page-hot' => 'Chaud',
-	'wikia-home-page-new' => 'Nouveau',
 	
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 
@@ -578,9 +568,6 @@ __NOEDITSECTION__',
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 Punktacja WAM]',
 
-	'wikia-home-page-hot' => 'Gorące',
-	'wikia-home-page-new' => 'Nowe',
-
 	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
 	'wikiahome-preview-stats-wam' => "'''$1''' Punktacja WAM",
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' Strona|'''$1''' Strony|'''$1''' Stron}}",
@@ -692,9 +679,6 @@ __NOEDITSECTION__',
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 WAM スコア]',
 
-	'wikia-home-page-hot' => 'ホット',
-	'wikia-home-page-new' => 'ニュー',
-
 	'wikiahome-preview-stats-wam-empty-label' => 'WAM',
 	'wikiahome-preview-stats-wam' => "'''$1''' WAM スコア",
 	'wikiahome-preview-stats-page' => "{{PLURAL:$1|'''1''' ページ|'''$1''' ページ}}",
@@ -784,9 +768,6 @@ $messages['qqq'] = array(
 	'wikiahome-footer-everywhere' => '5rd column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
 	'wikiahome-footer-partner' => '6th column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
 	'wikiahome-footer-community-wam' => 'A link to WAM Scores page; use here wikitext to make it a list element and to make it working link',
-
-	'wikia-home-page-hot' => 'Mark for wiki, that is flagged as hot',
-	'wikia-home-page-new' => 'Mark for wiki, that is flagged as new',
 
 	'wikiahome-preview-stats-wam-empty-label' => 'Label for WAM score placeholder, when this Wiki is not included in WAM Index',
 	'wikiahome-preview-stats-wam' => "WAM Score label, 1st parameter is score - please bold it with wikitext",

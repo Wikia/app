@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWMediaSearchWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,7 +28,7 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
-	this.sources = ve.copy( ve.init.platform.getMediaSources() );
+	this.sources = {};
 	this.size = config.size || 150;
 	this.queryTimeout = null;
 	this.titles = {};
@@ -39,7 +39,6 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwMediaSearchWidget' );
-	this.queryMediaSources();
 };
 
 /* Inheritance */
@@ -47,6 +46,14 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 OO.inheritClass( ve.ui.MWMediaSearchWidget, OO.ui.SearchWidget );
 
 /* Methods */
+
+/**
+ * Set the fileRepo sources for the media search
+ * @param {Object} sources The sources object
+ */
+ve.ui.MWMediaSearchWidget.prototype.setSources = function ( sources ) {
+	this.sources = sources;
+};
 
 /**
  * Handle select widget select events.
@@ -89,7 +96,7 @@ ve.ui.MWMediaSearchWidget.prototype.onResultsScroll = function () {
  * @method
  */
 ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
-	var i, len, source,
+	var i, len, source, url,
 		value = this.query.getValue();
 
 	if ( value === '' ) {
@@ -98,39 +105,48 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
 
 	for ( i = 0, len = this.sources.length; i < len; i++ ) {
 		source = this.sources[i];
-		if ( source.request ) {
-			source.request.abort();
-		}
-		if ( !source.gsroffset ) {
-			source.gsroffset = 0;
-		}
-		this.query.pushPending();
-		source.request = $.ajax( {
-			'url': source.url,
-			'data': {
-				'format': 'json',
+		// If we don't have either 'apiurl' or 'scriptDirUrl'
+		// the source is invalid, and we will skip it
+		if ( source.apiurl || source.scriptDirUrl !== undefined ) {
+			if ( source.request ) {
+				source.request.abort();
+			}
+			if ( !source.gsroffset ) {
+				source.gsroffset = 0;
+			}
+			if ( source.local ) {
+				url = mw.util.wikiScript( 'api' );
+			} else {
+				// If 'apiurl' is set, use that. Otherwise, build the url
+				// from scriptDirUrl and /api.php suffix
+				url = source.apiurl || ( source.scriptDirUrl + '/api.php' );
+			}
+			this.query.pushPending();
+			source.request = ve.init.mw.Target.static.apiRequest( {
 				'action': 'query',
 				'generator': 'search',
 				'gsrsearch': value,
 				'gsrnamespace': 6,
-				'gsrlimit': 15,
+				'gsrlimit': 20,
 				'gsroffset': source.gsroffset,
 				'prop': 'imageinfo',
 				'iiprop': 'dimensions|url',
 				'iiurlheight': this.size
-			},
-			// This request won't be cached since the JSON-P callback is unique. However make sure
-			// to allow jQuery to cache otherwise so it won't e.g. add "&_=(random)" which will
-			// trigger a MediaWiki API error for invalid parameter "_".
-			'cache': true,
-			// TODO: Only use JSON-P for cross-domain.
-			// jQuery has this logic built-in (if url is not same-origin ..)
-			// but isn't working for some reason.
-			'dataType': 'jsonp'
-		} )
-			.done( ve.bind( this.onMediaQueryDone, this, source ) )
-			.always( ve.bind( this.onMediaQueryAlways, this, source ) );
-		source.value = value;
+			}, {
+				'url': url,
+				// This request won't be cached since the JSON-P callback is unique. However make sure
+				// to allow jQuery to cache otherwise so it won't e.g. add "&_=(random)" which will
+				// trigger a MediaWiki API error for invalid parameter "_".
+				'cache': true,
+				// TODO: Only use JSON-P for cross-domain.
+				// jQuery has this logic built-in (if url is not same-origin ..)
+				// but isn't working for some reason.
+				'dataType': 'jsonp'
+			} )
+				.done( ve.bind( this.onMediaQueryDone, this, source ) )
+				.always( ve.bind( this.onMediaQueryAlways, this, source ) );
+			source.value = value;
+		}
 	}
 };
 
@@ -157,7 +173,7 @@ ve.ui.MWMediaSearchWidget.prototype.onMediaQueryDone = function ( source, data )
 		return;
 	}
 
-	var	page, title,
+	var page, title,
 		items = [],
 		pages = data.query.pages,
 		value = this.query.getValue();
@@ -171,15 +187,20 @@ ve.ui.MWMediaSearchWidget.prototype.onMediaQueryDone = function ( source, data )
 	}
 
 	for ( page in pages ) {
-		title = new mw.Title( pages[page].title ).getMainText();
-		if ( !( title in this.titles ) ) {
-			this.titles[title] = true;
-			items.push(
-				new ve.ui.MWMediaResultWidget(
-					pages[page],
-					{ '$': this.$, 'size': this.size }
-				)
-			);
+		// Verify that imageinfo exists
+		// In case it does not, skip the image to avoid errors in
+		// ve.ui.MWMediaResultWidget
+		if ( pages[page].imageinfo && pages[page].imageinfo.length > 0 ) {
+			title = new mw.Title( pages[page].title ).getMainText();
+			if ( !( title in this.titles ) ) {
+				this.titles[title] = true;
+				items.push(
+					new ve.ui.MWMediaResultWidget(
+						pages[page],
+						{ '$': this.$, 'size': this.size }
+					)
+				);
+			}
 		}
 	}
 

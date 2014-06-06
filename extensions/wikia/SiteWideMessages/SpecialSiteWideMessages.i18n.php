@@ -633,6 +633,7 @@ $messages['br'] = array(
 	'swm-error-long-message' => "Ar c'hemennadennoù a zo bevennet da 500 arouez",
 	'swm-error-empty-group' => 'Ebarzhiñ anv ar strollad-se.',
 	'swm-lang-other' => 'an holl yezhoù a chom',
+	'action-messagetool' => "kas kemennadennoù d'al lec'hienn a-bezh",
 	'swm-label-mode-users-registration' => 'Deiziad enrollañ',
 	'swm-mode-users-registration-after' => "War-lerc'h",
 	'swm-mode-users-registration-before' => 'Kent',
@@ -994,7 +995,7 @@ $messages['diq'] = array(
 	'swm-label-preview' => 'Verqayt',
 	'swm-label-edit' => 'Bıvurne',
 	'swm-label-remove' => 'Hewad',
-	'swm-label-sent' => 'Bırş',
+	'swm-label-sent' => 'Rışna',
 	'swm-label-list' => 'Liste',
 	'swm-label-recipient-wikis' => 'Wikiy',
 	'swm-label-recipient-users' => 'Karberi',
@@ -1878,9 +1879,26 @@ $messages['ja'] = array(
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
+ * @author VASANTH S.N.
  */
 $messages['kn'] = array(
+	'swm-label-preview' => 'ಮುನ್ನೋಟ',
+	'swm-label-edit' => 'ಸಂಪಾದಿಸಿ',
+	'swm-label-remove' => 'ತೆಗೆ',
+	'swm-label-list' => 'ಪಟ್ಟಿ',
+	'swm-label-recipient-users' => 'ಬಳಕೆದಾರರು',
+	'swm-label-mode-wikis-all' => 'ಎಲ್ಲಾ ವಿಕಿಗಳು',
+	'swm-label-mode-wikis-wiki' => 'ಆಯ್ದ ವಿಕಿಗಳು',
+	'swm-label-mode-wikis-wiki-multi' => 'ವಿಕಿಗಳ ಪಟ್ಟಿ',
+	'swm-label-mode-users-active' => 'ಸಕ್ರಿಯ ಬಳಕೆದಾರರು',
+	'swm-label-mode-users-anon' => 'ಎಲ್ಲಾ ಅನಾಮಧೇಯ ಸದಸ್ಯರು',
+	'swm-label-content' => 'ಮಾಹಿತಿ',
+	'swm-label-comment' => 'ಟಿಪ್ಪಣಿ',
+	'swm-label-language' => 'ಭಾಷೆ',
 	'swm-list-table-lang' => 'ಭಾಷೆಗಳು',
+	'swm-yes' => 'ಹೌದು',
+	'swm-no' => 'ಇಲ್ಲ',
+	'swm-mode-users-editcount-more' => 'ಹೆಚ್ಚು',
 );
 
 /** Korean (한국어)
@@ -1985,6 +2003,7 @@ $messages['lrc'] = array(
 	'swm-label-list' => 'نوم گه',
 	'swm-label-recipient-wikis' => 'ويكيا:',
 	'swm-label-recipient-users' => 'کاروریا',
+	'swm-label-mode-wikis-wiki-multi' => 'نوم گه ویکی یا',
 	'swm-label-mode-users-all' => 'همه کاروریا',
 	'swm-label-mode-users-active' => 'کاروریا کارکو',
 	'swm-label-mode-users-user-multi' => 'نوم گه کاروریا',

@@ -28,6 +28,11 @@ define(
 				createMap: [
 					validateTitle,
 					createMap
+				],
+				mapCreated: [
+					function(data) {
+						console.log('Map created: ', data);
+					}
 				]
 			},
 			// modal buttons and events for them in this step
@@ -61,6 +66,8 @@ define(
 		 */
 
 		function preview(tileSet) {
+			modal.trigger('cleanUpError');
+
 			setData(tileSet);
 			modal.$innerContent.html(utils.render(template, templateData));
 			utils.setButtons(modal, buttons);

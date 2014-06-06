@@ -167,12 +167,13 @@ $messages['dsb'] = array(
  * @author Locos epraix
  * @author McDutchie
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'mostvisitedpages' => 'Páginas más visitadas',
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
-	'mostvisitedpageslatest' => 'En los últimos $1 minutos',
+	'mostvisitedpageslatest' => '{{PLURAL:$1|en el último|en los últimos}} $1 {{PLURAL:$1|minuto|minutos}}',
 	'mostvisitedpageslatestlink' => 'Ver últimas páginas visitadas',
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
 );

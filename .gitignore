@@ -29,3 +29,5 @@ _misc
 
 # Ignore files created by identifySpamAccounts
 spamAccountIds.txt
+
+lib/composer/**/.git

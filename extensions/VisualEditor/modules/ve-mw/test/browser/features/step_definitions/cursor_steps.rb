@@ -4,10 +4,10 @@ end
 
 When(/^I send right arrow times (\d+)$/) do |number|
   on(VisualEditorPage) do |page|
-    page.content_element.when_present.fire_event('onfocus')
+    page.content_element.when_present(10).fire_event("onfocus")
     number.to_i.times do
       page.content_element.send_keys :arrow_right
-      page.content_element.fire_event('onblur') #gerrit 86800/86801
+      page.content_element.fire_event("onblur") #gerrit 86800/86801
     end
   end
 end

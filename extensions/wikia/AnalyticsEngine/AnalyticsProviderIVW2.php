@@ -50,11 +50,14 @@ SCRIPT;
 		$t = F::app()->wg->Title;
 		$title = $t->getText();
 
+		if (WikiaPageType::isWikiaHub()) {
+			return 'RC_WIKIA_START';
+		}
+
 		if ($dbname == 'dehauptseite') {
 			if (Wikia::isMainPage()) return 'RC_WIKIA_HOME';
 
 			if (strpos($title, 'Mobil') === 0) return 'RC_WIKIA_MOBIL';
-			if (in_array($title, array('Videospiele', 'Entertainment', 'Lifestyle', 'Entertainment/Anime'))) return 'RC_WIKIA_START';
 
 			if (WikiaPageType::getPageType() == 'search') return 'RC_WIKIA_SEARCH';
 

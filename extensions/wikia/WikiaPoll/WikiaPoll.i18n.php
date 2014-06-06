@@ -737,7 +737,7 @@ $messages['pms'] = array(
  */
 $messages['ps'] = array(
 	'wikiapoll-desc' => 'د ټولپوښتنو د جوړولو او اداره کولو لپاره يوه آسانه لار برابروي',
-	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 وګړي|$1 وګړو}} رايه ورکړې',
+	'wikiapoll-people-voted' => '{{PLURAL:$1|$1 وگړي|$1 وگړو}} رايه ورکړې',
 	'wikiapoll-question' => '$1؟',
 	'wikiapoll-thanks-for-vote' => 'مننه!',
 	'wikiapoll-vote' => 'رايه ورکول!',
@@ -754,6 +754,7 @@ $messages['ps'] = array(
 
 /** Portuguese (português)
  * @author Hamilton Abreu
+ * @author Imperadeiro98
  * @author Luckas
  * @author SandroHc
  * @author Waldir
@@ -773,6 +774,7 @@ $messages['pt'] = array(
 	'wikiapoll-publish-label' => 'Publicar',
 	'wikiapoll-error-duplicate' => 'Já existe um inquérito com esse nome.',
 	'wikiapoll-error-invalid-title' => 'O texto da pergunta é inválido.',
+	'wikiamobile-wikiapoll-open-poll' => 'O que é que acha?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Obrigado por votar!',
 	'wikiamobile-wikiapoll-poll' => 'Votação',
 	'wikiamobile-wikiapoll-user-voted' => 'Votas-te para $1',
