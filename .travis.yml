@@ -1,9 +1,9 @@
 language: node_js
 node_js:
   - 0.10
+install: ant
 before_script:
   - 'npm install istanbul@0.1.44 karma-coffee-preprocessor@0.1.2 karma@0.10.4 karma-junit-reporter@0.1.0 karma-coverage@0.1.1'
-  - 'apt-get install -y ant'
 script:
   - karma start tests/karma/js-unit.conf.js --single-run
   - cd tests; ant -f build-wikia.xml -Dunittest=../extensions/wikia/WikiaHubsV3/tests phpunit-single
