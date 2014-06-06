@@ -114,5 +114,13 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
+
+	'wikia-interactive-maps-delete-map' => 'Action to delete an existing map',
+	'wikia-interactive-maps-view-source' => 'Action to view source of the map',
+	'wikia-interactive-maps-delete-map-title' => 'Title of the "delete map" modal',
+	'wikia-interactive-maps-delete-map-prompt' => 'Prompt asking if user is sure to delete a map',
+	'wikia-interactive-maps-delete-map-confirm-button' => 'Button to confirm deleting the map',
+	'wikia-interactive-maps-delete-map-success' => 'Information about succesful deletion of the map',
+	'wikia-interactive-maps-delete-map-error' => 'Information about error during deletion of the map',
 ];
 
