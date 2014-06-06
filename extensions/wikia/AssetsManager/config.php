@@ -217,6 +217,7 @@ $config['oasis_jquery'] = array(
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+		'//skins/oasis/js/isTouchScreen.js',
 
 		// jQuery/Oasis specific code
 		'//skins/oasis/js/tables.js',
@@ -231,7 +232,7 @@ $config['oasis_jquery'] = array(
 
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
-		
+
 		// Lazy rail
 		'#group_lazy_rail_js',
 	)
@@ -307,7 +308,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/WikiHeader.js',
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
-		'//skins/oasis/js/isTouchScreen.js',
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',

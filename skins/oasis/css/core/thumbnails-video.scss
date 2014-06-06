@@ -1,6 +1,8 @@
 @import "skins/oasis/css/mixins/background-opacity";
 @import "skins/oasis/css/mixins/border-opacity";
 
+// See touchScreen.scss for modified hover state styles
+
 @mixin hoverState($size: '50') {
 	$url: '/skins/oasis/images/videoPlayButtons/' + $size + 'x' + $size + '_hover.png';
 

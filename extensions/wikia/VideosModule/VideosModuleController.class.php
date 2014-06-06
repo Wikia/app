@@ -29,7 +29,7 @@ class VideosModuleController extends WikiaController {
 		if ( $localContent ) {
 			$videos = $module->getLocalVideos( $numRequired, $sort );
 		} else {
-			$videos = $module->getVideosByCategory( $numRequired );
+			$videos = $module->getVideosByCategory();
 			if ( empty( $videos ) ) {
 				$videos = $module->getWikiRelatedVideosTopics( $numRequired );
 			}
