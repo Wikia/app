@@ -135,7 +135,7 @@ class Wikia {
 		unset(Wikia::$vars[$key]);
 	}
 
-	public static function getFavicon() {
+	public static function getFaviconFullUrl() {
 		global $wgMemc;
 
 		$mMemcacheKey = wfMemcKey('favicon');

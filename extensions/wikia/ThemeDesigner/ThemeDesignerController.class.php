@@ -81,7 +81,7 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executeWordmarkTab() {
-		$this->faviconUrl = Wikia::getFavicon();
+		$this->faviconUrl = Wikia::getFaviconFullUrl();
 	}
 
 	public function executePicker() {

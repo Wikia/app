@@ -3193,7 +3193,7 @@ $templates
 			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
 		}
 
-		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFavicon() ) );
+		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFaviconFullUrl() ) );
 
 		# OpenSearch description link
 		$tags[] = Html::element( 'link', array(
