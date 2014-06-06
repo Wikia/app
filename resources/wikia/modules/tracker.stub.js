@@ -205,10 +205,10 @@ function veTrack( data ) {
 		}
 
 		// Orientation dialog
-		try {
-			defaultData.orientationEnabled = !! window.veOrientationEnabled;
-		} catch ( e ) {
+		if ( window.veOrientationEnabled === undefined ) {
 			defaultData.orientationEnabled = 'unknown';
+		} else {
+			defaultData.orientationEnabled = !!window.veOrientationEnabled;
 		}
 
 		finalData = $.extend( {}, defaultData, data );
