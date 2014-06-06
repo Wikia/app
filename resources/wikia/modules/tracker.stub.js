@@ -183,7 +183,7 @@ function veTrack( data ) {
 		// isRedlink
 		try {
 			uri = new mw.Uri( location.href );
-			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no'
+			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no';
 		} catch ( e ) {
 			defaultData.isRedlink = 'unknown';
 		}
@@ -208,7 +208,7 @@ function veTrack( data ) {
 		if ( window.veOrientationEnabled === undefined ) {
 			defaultData.orientationEnabled = 'unknown';
 		} else {
-			defaultData.orientationEnabled = !!window.veOrientationEnabled;
+			defaultData.orientationEnabled = !!window.veOrientationEnabled ? 'yes' : 'no';
 		}
 
 		finalData = $.extend( {}, defaultData, data );
