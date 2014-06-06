@@ -40,13 +40,3 @@
 		font-weight: bold;
 	}
 }
-
-.oo-ui-dialog {
-	@if lightness($color-page) >= 50% {
-		background-color: rgba( darken($color-page, 5%), 0.97 );
-	} @else if lightness($color-page) >= 10% {
-		background-color: rgba( darken($color-page, 10%), 0.97 );
-	} @else {
-		background-color: rgba( $color-page, 0.9 );
-	}
-}
