@@ -38,7 +38,7 @@ $messages['qqq'] = array(
 	'shared_help_info' => 'Message displayed on top of help pages',
 	'shared_help_edit_info' => 'Edit information message on help pages in edit mode',
 	'shared_help_search_info' => 'Information about where to find editing help',
-	'shared_help_was_redirect' => 'Information about redirect target',
+	'shared_help_was_redirect' => 'Information about redirect target. Parameters: $1 - PAGENAME of redirect destination.',
 );
 
 /** Arabic (العربية)
