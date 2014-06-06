@@ -1,0 +1,7 @@
+<form class="WikiaForm intMapPinTypes" id="intMapPinTypes">
+	<input type="hidden" name="mapId" value="{{mapId}}">
+	{{#pinTypes}}
+		{{> pinType}}
+	{{/pinTypes}}
+</form>
+<a href="" title="{{addPinType}}" class="addPinType modalEvent" data-event="addPinType">{{addPinType}}</a>

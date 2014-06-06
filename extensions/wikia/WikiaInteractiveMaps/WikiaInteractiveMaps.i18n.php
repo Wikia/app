@@ -46,6 +46,10 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Browse existing tile sets',
+	'wikia-interactive-maps-create-map-add-pin-type' => 'Add Another Pin Type',
+	'wikia-interactive-maps-create-map-delete-pin-type' => 'Delete',
+	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
+	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 	'wikia-interactive-maps-create-map-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
@@ -58,6 +62,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
+
+	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 ];
 
 $messages[ 'qqq' ] = [
@@ -94,6 +100,10 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Link to browse tile set step in create map modal',
+	'wikia-interactive-maps-create-map-add-pin-type' => 'Link for adding new blank input for Pin Type in edit/create Pin types UI',
+	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
+	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
+	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 	'wikia-interactive-maps-create-map-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',
@@ -106,5 +116,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
+
+	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
 ];
 

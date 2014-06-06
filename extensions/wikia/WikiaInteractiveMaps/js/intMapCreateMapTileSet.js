@@ -233,7 +233,8 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						data.type = 'uploaded';
+						modal.trigger('cleanUpError');
+						data.type = 'custom';
 						modal.trigger('previewTileSet', data);
 					} else {
 						modal.trigger('error', data.errors.pop());
