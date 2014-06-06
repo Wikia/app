@@ -36,7 +36,7 @@ $messages['qqq'] = array(
 	'sharedhelp-searchprofile' => 'Search profile link name displayed in left sidebar on search',
 	'sharedhelp-searchprofile-tooltip' => 'Tooltip for search profile link',
 	'shared_help_info' => 'Message displayed on top of help pages',
-	'shared_help_edit_info' => 'Edit information message on help pages in edit mode',
+	'shared_help_edit_info' => 'Edit information message on help pages in edit mode. Parameters: $1 - PAGENAME the transcluded page is stored on. $2 - SITENAME the transcluded page is stored on.',
 	'shared_help_search_info' => 'Information about where to find editing help',
 	'shared_help_was_redirect' => 'Information about redirect target. Parameters: $1 - PAGENAME of redirect destination.',
 );
