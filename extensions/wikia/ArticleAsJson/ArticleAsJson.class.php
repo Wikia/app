@@ -41,7 +41,7 @@ class ArticleAsJson extends WikiaService {
 		$userTitle = Title::newFromText( $details['userName'], NS_USER );
 
 		self::$users[$details['userName']] = [
-			'id' => $details['userId'],
+			'id' => (int) $details['userId'],
 			'avatar' => $details['userThumbUrl'],
 			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
 		];
@@ -136,7 +136,6 @@ class ArticleAsJson extends WikiaService {
 					'userPageUrl' => $user->getUserPage()->getLocalURL()
 				]);
 			}
-
 
 			$text = json_encode([
 				'content' => $text,

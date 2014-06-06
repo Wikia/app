@@ -951,9 +951,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			$parsedArticle = $article->getParserOutput();
 
-			$articleContent = json_decode(
-				trim(preg_replace('/\n.*/i', '', $parsedArticle->getText())) //TODO: Can we not do this?
-			);
+			$articleContent = json_decode($parsedArticle->getText());
 
 			$wgArticleAsJson = false;
 			$categories = [];
