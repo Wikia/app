@@ -233,6 +233,34 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * get list of tile sets
+	 *
+	 * @return Array
+	 */
+
+	public function getTileSets() {
+		$params = [];
+		$results[ 'success' ] = false;
+
+		$searchTerm = $this->request->getVal( 'searchTerm', null );
+
+		if ( !is_null( $searchTerm ) ) {
+			$params[ 'searchTerm' ] = $searchTerm;
+		}
+
+		$response = $this->mapsModel->getTileSets( $params );
+
+		if ( $response ) {
+			$results[ 'success' ] = true;
+			$results[ 'tileSets' ] = $response;
+		} else {
+			$results[ 'error' ] = wfMessage( 'wikia-interactive-maps-api-error-message' )->plain();
+		}
+
+		$this->response->setVal( 'results', $results );
+	}
+
+	/**
 	 * Entry point to create a map from either existing tiles or new image
 	 *
 	 * @requestParam Integer $tileSetId an unique id of existing tiles

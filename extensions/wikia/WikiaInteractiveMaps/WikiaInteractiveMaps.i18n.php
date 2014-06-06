@@ -45,6 +45,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Real Map',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Custom Map',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Title',
+	'wikia-interactive-maps-create-map-browse-tile-set' => 'Browse existing tile sets',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 	'wikia-interactive-maps-create-map-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
@@ -92,6 +93,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-choose-type-geo' => 'Button for choosing real map type',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Button for choosing custom map type',
 	'wikia-interactive-maps-create-map-title-placeholder' => 'Input placeholder for map title',
+	'wikia-interactive-maps-create-map-browse-tile-set' => 'Link to browse tile set step in create map modal',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 	'wikia-interactive-maps-create-map-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',

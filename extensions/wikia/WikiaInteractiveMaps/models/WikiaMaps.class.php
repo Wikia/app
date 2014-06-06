@@ -213,6 +213,26 @@ class WikiaMaps {
 	}
 
 	/**
+	 * Sends request to interactive maps service and returns list of tile sets
+	 *
+	 * @param array $params - request params
+	 *
+	 * @return array - list of tile sets
+	 */
+
+	public function getTileSets( Array $params ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
+
+		//TODO: consider caching the response
+		$response = Http::get( $url, 'default', [
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
+		] );
+
+		return json_decode( $response );
+	}
+
+	/**
 	 * Sends a request to IntMap Service API to create a map with given parameters
 	 *
 	 * @param Array $mapData array with required parameters to service API
