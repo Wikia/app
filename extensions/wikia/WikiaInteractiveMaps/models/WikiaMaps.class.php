@@ -6,6 +6,7 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
+	const MAP_DELETE_SUCCESS = 'Map successfully updated';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -87,6 +88,23 @@ class WikiaMaps {
 			],
             //TODO this is temporary workaround, remove it before production!
             'noProxy' => true
+		] );
+	}
+
+	/**
+	 * Wrapper for put request with authorization token attached
+	 *
+	 * @param String $url
+	 * @param Array $data
+	 *
+	 * @return string|bool
+	 */
+	private function putRequest( $url, $data ) {
+		return Http::request( 'PUT', $url, [
+			'postData' => json_encode( $data ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			]
 		] );
 	}
 
@@ -230,6 +248,23 @@ class WikiaMaps {
 		] );
 
 		return json_decode( $response );
+	}
+
+	/**
+	 * Sends a request to delete a map instance
+	 *
+	 * @param array $data
+	 *
+	 * @return bool
+	 */
+	public function deleteMapById( $mapId ) {
+		$payload = [
+			'deleted' => true
+		];
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
+		$res = json_decode( $this->putRequest($url, $payload) );
+		//ToDo -> validate based on status code, not a message
+		return ( $res && $res->message == self::MAP_DELETE_SUCCESS );
 	}
 
 	/**
