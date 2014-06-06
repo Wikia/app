@@ -25,7 +25,7 @@ define(
 						name: $.msg('wikia-interactive-maps-create-map-choose-type-custom')
 					}
 				],
-				browse: 'Browse existing tile sets',
+				browse: $.msg('wikia-interactive-maps-create-map-browse-tile-set'),
 				uploadFileBtn: $.msg('wikia-interactive-maps-create-map-upload-file')
 			},
 			//modal events
