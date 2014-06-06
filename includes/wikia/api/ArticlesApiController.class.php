@@ -931,7 +931,7 @@ class ArticlesApiController extends WikiaApiController {
 			} else {
 				$title = Title::newFromText( $articleTitle, NS_MAIN );
 
-				if ( $title->exists() ) {
+				if ( $title instanceof Title && $title->exists() ) {
 					$article = Article::newFromTitle( $title, RequestContext::getMain() );
 				}
 			}
