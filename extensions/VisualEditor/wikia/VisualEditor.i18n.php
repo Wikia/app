@@ -313,6 +313,9 @@ $messages['de'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Zugriff verweigert',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Für dieses Video gibt es leider keine Vorschau.',
 	'wikia-visualeditor-loading' => 'Der VisualEditor wird geladen …',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Willkommen',
+	'wikia-visualeditor-dialog-orientation-text' => 'Diese Seite wurde von Leuten wie Dir erstellt, bearbeitet und verwaltet. Mach heute gleich Deinen ersten Beitrag!',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Bearbeitung beginnen',
 );
 
 /** Zazaki (Zazaki)
@@ -402,6 +405,9 @@ $messages['es'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permiso denegado',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Lo sentimos, este video no está disponible para su previsualización.',
 	'wikia-visualeditor-loading' => 'Cargando el VisualEditor...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Bienvenida',
+	'wikia-visualeditor-dialog-orientation-text' => 'Esta página es creada, editada y mantenida por personas como tú. Haz tu primera contribución hoy.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Comenzar a editar',
 );
 
 /** Persian (فارسی)
@@ -680,6 +686,18 @@ $messages['km'] = array(
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'អ្នក​ត្រូវ​តែ​កត់​ឈ្មោះ​ចូល ដើម្បី​បន្ថែម​រូប​ភាព និង​វីដេអូ។',
 	'wikia-visualeditor-notification-media-query-failed' => 'សូម​ទោស, យើង​រក​មិន​ឃើញ​ប្រភេទ​រូបភាព ឬ វីដេអូ​ដែល​ស្គាល់​ពី URL នោះ​ទេ។',
 	'wikia-visualeditor-notification-media-permission-denied' => 'ពុំ​មាន​សិទ្ធិ​ឡើយ',
+);
+
+$messages['it'] = array(
+	'wikia-visualeditor-dialog-orientation-headline' => 'Benvenuto',
+	'wikia-visualeditor-dialog-orientation-text' => 'Questa pagina è stata creata, modificata e mantenuta da utenti come te. Fai oggi la tua prima modifica.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Inizia a contribuire',
+);
+
+$messages['ja'] = array(
+	'wikia-visualeditor-dialog-orientation-headline' => 'ようこそ',
+	'wikia-visualeditor-dialog-orientation-text' => 'このページはあなたのような編集者によって作られ、編集され、メンテナンスされています。初めての投稿してみて下さい。',
+	'wikia-visualeditor-dialog-orientation-start-button' => '編集を始める',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -996,6 +1014,9 @@ $messages['pl'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Brak dostępu',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Przepraszamy, ten film nie jest dostępny do podglądu.',
 	'wikia-visualeditor-loading' => 'Ładowanie VisualEditora...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Witaj',
+	'wikia-visualeditor-dialog-orientation-text' => 'Ta strona jest tworzona, edytowana i utrzymywana przez ludzi takich jak Ty. Rozpocznij edytowanie już dziś!',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Rozpocznij edycję',
 );
 
 /** Pashto (پښتو)
@@ -1022,6 +1043,9 @@ $messages['pt'] = array(
 	'wikia-visualeditor-dialog-drop-target-callout' => 'Larga os ficheiros aqui',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Lamentamos, mas este vídeo não está disponível para visualização.',
 	'wikia-visualeditor-loading' => 'A carregar o Editor Visual...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Bem-vindo',
+	'wikia-visualeditor-dialog-orientation-text' => 'Essa página foi criada, editada e mantida por pessoas como você. Faça a sua primeira contribuição hoje.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Comece a editar',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1062,6 +1086,9 @@ $messages['pt-br'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Esta wiki permite apenas conteúdo licenciado da <a href="http://video.wikia.com" target="_blank">Biblioteca de Vídeos da Wikia</a> para ser adicionado. Por favor acesse <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para encontrar vídeos.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Desculpe, não conseguimos encontrar uma imagem ou vídeo suportados nesse URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permissão negada',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Bem-vindo',
+	'wikia-visualeditor-dialog-orientation-text' => 'Essa página foi criada, editada e mantida por pessoas como você. Faça a sua primeira contribuição hoje.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Comece a editar',
 );
 
 /** Romanian (română)
@@ -1173,6 +1200,9 @@ $messages['ru'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Доступ запрещён',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'К сожалению, это видео не доступно для предварительного просмотра.',
 	'wikia-visualeditor-loading' => 'Загрузка Визуального редактора…',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Добро пожаловать',
+	'wikia-visualeditor-dialog-orientation-text' => 'Эта страница была создана, редактируется и поддерживается такими же участниками, как и вы. Сделайте свою первую правку сегодня.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Начать редактирование',
 );
 
 /** Scots (Scots)
@@ -1431,6 +1461,9 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此wiki只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
 	'wikia-visualeditor-notification-media-query-failed' => '抱歉，我们无法在此找到支持的图像或视频。',
 	'wikia-visualeditor-notification-media-permission-denied' => '权限被拒绝',
+	'wikia-visualeditor-dialog-orientation-headline' => '欢迎',
+	'wikia-visualeditor-dialog-orientation-text' => '这个页面是由像您一样的用户创建、编辑和维护的。您也可以立刻作出贡献。',
+	'wikia-visualeditor-dialog-orientation-start-button' => '开始编辑',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -1470,4 +1503,7 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '此wiki只允許增加來自<a href="http://video.wikia.com" target="_blank">Wikia影片庫</a>的授權内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜尋影片。',
 	'wikia-visualeditor-notification-media-query-failed' => '抱歉，我們無法在這個位置找到可用的圖像或影片。',
 	'wikia-visualeditor-notification-media-permission-denied' => '權限錯誤',
+	'wikia-visualeditor-dialog-orientation-headline' => '歡迎',
+	'wikia-visualeditor-dialog-orientation-text' => '這個頁面是由像您一樣的用戶創建、編輯和維護的。您也可以立刻作出貢獻。',
+	'wikia-visualeditor-dialog-orientation-start-button' => '開始編輯',
 );
