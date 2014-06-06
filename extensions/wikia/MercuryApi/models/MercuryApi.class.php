@@ -3,6 +3,13 @@
 class MercuryApi {
 
 	/**
+	 * Aggregated list of comments users
+	 *
+	 * @var array
+	 */
+	 private $users = [];
+
+	/**
 	 * @desc Fetch Article comments count
 	 *
 	 * @param Title $title - Article title
@@ -66,7 +73,8 @@ class MercuryApi {
 	 * @return array
 	 */
 	public function processArticleComments( Array $commentsData ) {
-		$items = [];
+		$this->clearUsers();
+		$comments = [];
 		foreach ( $commentsData['commentListRaw'] as $pageId => $commentData ) {
 			$item = null;
 			foreach ( $commentData as $level => $commentBody ) {
@@ -77,18 +85,21 @@ class MercuryApi {
 					}
 				}
 				if ( $level === 'level2' && !empty( $item ) ) {
-					$item['items'] = [];
+					$item['replies'] = [];
 					foreach ( array_keys( $commentBody ) as $articleId ) {
 						$comment = $this->getComment( $articleId );
 						if ( $comment ) {
-							$item['comments'][] = $comment;
+							$item['replies'][] = $comment;
 						}
 					}
 				}
 			}
-			$items[] = $item;
+			$comments[] = $item;
 		}
-		return $items;
+		return [
+			'comments' => $comments,
+			'users' => $this->getUsers(),
+		];
 	}
 
 	/**
@@ -106,16 +117,44 @@ class MercuryApi {
 		return [
 			'id' => $commentData['id'],
 			'text' => $commentData['text'],
-			'created' => (int)$commentData['rawmwtimestamp'],
-			'user' => [
-				'id' => $commentData['author']->mId,
-				'name' => $commentData['author']->mName,
+			'created' => (int)wfTimestamp( TS_UNIX, $commentData['rawmwtimestamp'] ),
+			'userName' => $this->addUser( $commentData ),
+		];
+	}
+
+	/**
+	 * Add user to aggregated user array
+	 *
+	 * @param array $commentData - ArticleComment Data
+	 * @return string userName
+	 */
+	private function addUser(Array $commentData) {
+		$userName = trim( $commentData['author']->mName );
+		if ( !isset( $this->users[$userName] ) ) {
+			$this->users[$userName] = [
+				'id' => (int)$commentData['author']->mId,
 				'avatar' => AvatarService::getAvatarUrl(
 						$commentData['author']->mName, AvatarService::AVATAR_SIZE_MEDIUM
 					),
 				'url' => $commentData['userurl']
-			]
-		];
+			];
+		}
+		return $userName;
 	}
 
+	/**
+	 * Get list of aggregated users
+	 *
+	 * @return array
+	 */
+	private function getUsers() {
+		return $this->users;
+	}
+
+	/**
+	 * Clear list of aggregated users
+	 */
+	private function clearUsers() {
+		$this->users = [];
+	}
 }
