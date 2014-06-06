@@ -76,9 +76,6 @@ class WikiaTask {
 
 		if ( $verbose ) {
 			echo "Caching video views for wiki $dbname ... ";
-			if ( $test ) {
-				echo "\n";
-			}
 		}
 
 		$memKeyBase = MediaQueryService::getMemKeyTotalVideoViews();
