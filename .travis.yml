@@ -1,10 +1,5 @@
-language: php
+language: node_js
 node_js:
   - 0.10
-php:
-  - 5.4
 install:
   - 'npm install -d'
-script:
-  - npm test
-  - cd tests; ant -f build-wikia.xml -Dunittest=../extensions/wikia/WikiaHubsV3/tests phpunit-single
