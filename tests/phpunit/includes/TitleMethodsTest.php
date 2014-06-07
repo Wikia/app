@@ -2,6 +2,11 @@
 
 class TitleMethodsTest extends MediaWikiTestCase {
 
+  public function testFailure() {
+    $this->assertEquals(false, true);
+    /***/
+  }
+
 	public function dataEquals() {
 		return array(
 			array( 'Main Page', 'Main Page', true ),
