@@ -30,16 +30,14 @@
  * @ingroup Language
  * @see http://be-x-old.wikipedia.org/wiki/Project_talk:LanguageBe_tarask.php
  */
-// @codingStandardsIgnoreStart Ignore class name is not in camel caps format error
 class LanguageBe_tarask extends Language {
-	// @codingStandardsIgnoreEnd
 	/**
 	 * The Belarusian language uses apostrophe sign,
 	 * but the characters used for this could be both U+0027 and U+2019.
 	 * This function unifies apostrophe sign in search index values
 	 * to enable seach using both apostrophe signs.
 	 *
-	 * @param string $string
+	 * @param $string string
 	 *
 	 * @return string
 	 */
@@ -62,7 +60,7 @@ class LanguageBe_tarask extends Language {
 	 * Four-digit number should be without group commas (spaces)
 	 * So "1 234 567", "12 345" but "1234"
 	 *
-	 * @param string $_
+	 * @param $_ string
 	 *
 	 * @return string
 	 */

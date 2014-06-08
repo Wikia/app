@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Parse and evaluate a plural rule.
  *
@@ -31,6 +30,7 @@
  * @file
  * @since 1.20
  */
+
 class CLDRPluralRuleEvaluator {
 	/**
 	 * Evaluate a number against a set of plural rules. If a rule passes,
@@ -42,7 +42,6 @@ class CLDRPluralRuleEvaluator {
 	 */
 	public static function evaluate( $number, array $rules ) {
 		$rules = self::compile( $rules );
-
 		return self::evaluateCompiled( $number, $rules );
 	}
 
@@ -59,7 +58,6 @@ class CLDRPluralRuleEvaluator {
 		foreach ( $rules as &$rule ) {
 			$rule = CLDRPluralRuleConverter::convert( $rule );
 		}
-
 		return $rules;
 	}
 
@@ -77,7 +75,6 @@ class CLDRPluralRuleEvaluator {
 		$number = strval( $number );
 		if ( !preg_match( '/^ -? ( ([0-9]+) (?: \. ([0-9]+) )? )$/x', $number, $m ) ) {
 			wfDebug( __METHOD__ . ": invalid number input, returning 'other'\n" );
-
 			return count( $rules );
 		}
 		if ( !isset( $m[3] ) ) {
@@ -142,8 +139,8 @@ class CLDRPluralRuleEvaluator {
 	 */
 	private static function doOperation( $token, $left, $right ) {
 		if ( in_array( $token, array( 'in', 'not-in', 'within', 'not-within' ) ) ) {
-			if ( !( $right instanceof CLDRPluralRuleEvaluatorRange ) ) {
-				$right = new CLDRPluralRuleEvaluatorRange( $right );
+			if ( !( $right instanceof CLDRPluralRuleEvaluator_Range ) ) {
+				$right = new CLDRPluralRuleEvaluator_Range( $right );
 			}
 		}
 		switch ( $token ) {
@@ -167,19 +164,17 @@ class CLDRPluralRuleEvaluator {
 				if ( is_int( $left ) ) {
 					return (int)fmod( $left, $right );
 				}
-
 				return fmod( $left, $right );
 			case ',':
-				if ( $left instanceof CLDRPluralRuleEvaluatorRange ) {
+				if ( $left instanceof CLDRPluralRuleEvaluator_Range ) {
 					$range = $left;
 				} else {
-					$range = new CLDRPluralRuleEvaluatorRange( $left );
+					$range = new CLDRPluralRuleEvaluator_Range( $left );
 				}
 				$range->add( $right );
-
 				return $range;
 			case '..':
-				return new CLDRPluralRuleEvaluatorRange( $left, $right );
+				return new CLDRPluralRuleEvaluator_Range( $left, $right );
 			default:
 				throw new CLDRPluralRuleError( "Invalid RPN token" );
 		}

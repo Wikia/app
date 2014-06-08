@@ -189,6 +189,7 @@ $dateFormats = array(
  */
 $bookstoreList = array(
 	'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
+	'PriceSCAN' => 'http://www.pricescan.com/books/bookDetail.asp?isbn=$1',
 	'Barnes & Noble' => 'http://search.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
 	'Amazon.com' => 'http://www.amazon.com/gp/search/?field-isbn=$1'
 );
@@ -508,7 +509,7 @@ $linkPrefixCharset = 'a-zA-Z\\x{80}-\\x{10ffff}';
 /**
  * List of filenames for some ui images that can be overridden per language
  * basis if needed.
- */
+*/
 $imageFiles = array(
 	'button-bold'     => 'button_bold.png',
 	'button-italic'   => 'button_italic.png',
