@@ -1,13 +1,34 @@
 <?php
+/**
+ * Ripuarian (Ripoarėsh) specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @author Purodha Blissenbach
+ * @ingroup Language
+ */
 
-/** Ripuarian (Ripoarėsh)
+/**
+ * Ripuarian (Ripoarėsh)
  *
  * @ingroup Language
- *
- * @author Purodha Blissenbach
  */
 class LanguageKsh extends Language {
-	static $familygender = array(
+	private static $familygender = array(
 		// Do not add male wiki families, since that's the default.
 		// No need add neuter wikis having names ending in -wiki.
 			'wikipedia' => 'f',
@@ -62,8 +83,8 @@ class LanguageKsh extends Language {
 	 * Contents of the leftmost table column can be copied and pasted as
 	 * "case" values.
 	 *
-	 * @param $word String
-	 * @param $case String
+	 * @param string $word
+	 * @param string $case
 	 *
 	 * @return string
 	 */
@@ -83,17 +104,17 @@ class LanguageKsh extends Language {
 			# däm WikiMaatplaz sing, dä Wikipeedija ier, däm Wikiwööterbooch sing
 			# dem/em WikiMaatplaz sing, de Wikipeedija ier, dem/em Wikiwööterbooch sing
 			$word = ( preg_match( '/ b/', $case )
-						? ( $gender=='f' ? 'dä' : 'däm' )
-						: ( $gender=='f' ? 'de' : 'dem' )
+						? ( $gender == 'f' ? 'dä' : 'däm' )
+						: ( $gender == 'f' ? 'de' : 'dem' )
 					) . ' ' . $word . ' ' .
-					( $gender=='f' ? 'ier' : 'sing' ) .
+					( $gender == 'f' ? 'ier' : 'sing' ) .
 					( preg_match( '/ m/', $case ) ? 'e' : ''
 				);
 		} elseif ( preg_match( '/ e/', $case ) ) {
 			# en dämm WikiMaatPlaz, en dä Wikipeedija, en dämm Wikiwööterbooch
 			# em WikiMaatplaz, en de Wikipeedija, em Wikiwööterbooch
 			if ( preg_match( '/ b/', $case ) ) {
-				$word = 'en '.( $gender == 'f' ? 'dä' : 'däm' ) . ' ' . $word;
+				$word = 'en ' . ( $gender == 'f' ? 'dä' : 'däm' ) . ' ' . $word;
 			} else {
 				$word = ( $gender == 'f' ? 'en de' : 'em' ) . ' ' . $word;
 			}
@@ -103,13 +124,13 @@ class LanguageKsh extends Language {
 			if ( preg_match( '/ b/', $case ) ) {
 				$word = 'vun ' . ( $gender == 'f' ? 'dä' : 'däm' ) . ' ' . $word;
 			} else {
-				$word = ( $gender== 'f' ? 'vun de' : 'vum' ) . ' ' . $word;
+				$word = ( $gender == 'f' ? 'vun de' : 'vum' ) . ' ' . $word;
 			}
 		} elseif ( preg_match( '/ [3d]/', $case ) ) {
 			# dämm WikiMaatPlaz, dä Wikipeedija, dämm Wikiwööterbooch
 			# dem/em WikiMaatplaz, de Wikipeedija, dem/em Wikiwööterbooch
 			if ( preg_match( '/ b/', $case ) ) {
-				$word = ( $gender == 'f' ? 'dää' : 'dämm' ) .' ' . $word;
+				$word = ( $gender == 'f' ? 'dää' : 'dämm' ) . ' ' . $word;
 			} else {
 				$word = ( $gender == 'f' ? 'de' : 'dem' ) . ' ' . $word;
 			}
@@ -120,7 +141,7 @@ class LanguageKsh extends Language {
 				switch ( $gender ) {
 					case 'm':
 						$lord = 'dä';
-						break ;
+						break;
 					case 'f':
 						$lord = 'di';
 						break;
@@ -139,7 +160,7 @@ class LanguageKsh extends Language {
 						$lord = 'et';
 				}
 			}
-			$word = $lord.' '.$word;
+			$word = $lord . ' ' . $word;
 		}
 		return $word;
 	}
@@ -147,7 +168,7 @@ class LanguageKsh extends Language {
 	/**
 	 * Avoid grouping whole numbers between 0 to 9999
 	 *
-	 * @param $_ string
+	 * @param string $_
 	 *
 	 * @return string
 	 */
@@ -162,13 +183,19 @@ class LanguageKsh extends Language {
 	/**
 	 * Handle cases of (1, other, 0) or (1, other)
 	 *
-	 * @param $count int
-	 * @param $forms array
+	 * @param int $count
+	 * @param array $forms
 	 *
 	 * @return string
 	 */
 	function convertPlural( $count, $forms ) {
-		if ( !count( $forms ) ) { return ''; }
+		$forms = $this->handleExplicitPluralForms( $count, $forms );
+		if ( is_string( $forms ) ) {
+			return $forms;
+		}
+		if ( !count( $forms ) ) {
+			return '';
+		}
 		$forms = $this->preConvertPlural( $forms, 3 );
 
 		if ( $count == 1 ) {

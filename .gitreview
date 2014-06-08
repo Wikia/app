@@ -1,0 +1,6 @@
+[gerrit]
+host=gerrit.wikimedia.org
+port=29418
+project=mediawiki/core.git
+defaultbranch=wmf/1.24wmf8
+defaultrebase=0

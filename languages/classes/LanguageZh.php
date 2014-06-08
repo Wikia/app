@@ -1,20 +1,40 @@
 <?php
+/**
+ * Chinese specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Language
+ */
 
-require_once( dirname( __FILE__ ) . '/../LanguageConverter.php' );
-require_once( dirname( __FILE__ ) . '/LanguageZh_hans.php' );
+require_once __DIR__ . '/../LanguageConverter.php';
+require_once __DIR__ . '/LanguageZh_hans.php';
 
 /**
  * @ingroup Language
  */
 class ZhConverter extends LanguageConverter {
-
 	/**
-	 * @param $langobj Language
-	 * @param $maincode string
-	 * @param $variants array
-	 * @param $variantfallbacks array
-	 * @param $flags array
-	 * @param $manualLevel array
+	 * @param Language $langobj
+	 * @param string $maincode
+	 * @param array $variants
+	 * @param array $variantfallbacks
+	 * @param array $flags
+	 * @param array $manualLevel
 	 */
 	function __construct( $langobj, $maincode,
 								$variants = array(),
@@ -29,31 +49,31 @@ class ZhConverter extends LanguageConverter {
 									$flags,
 									$manualLevel );
 		$names = array(
-			'zh'      => '原文',
+			'zh' => '原文',
 			'zh-hans' => '简体',
 			'zh-hant' => '繁體',
-			'zh-cn'   => '大陆',
-			'zh-tw'   => '台灣',
-			'zh-hk'   => '香港',
-			'zh-mo'   => '澳門',
-			'zh-sg'   => '新加坡',
-			'zh-my'   => '大马',
+			'zh-cn' => '大陆',
+			'zh-tw' => '台灣',
+			'zh-hk' => '香港',
+			'zh-mo' => '澳門',
+			'zh-sg' => '新加坡',
+			'zh-my' => '大马',
 		);
 		$this->mVariantNames = array_merge( $this->mVariantNames, $names );
 	}
 
 	function loadDefaultTables() {
-		require( dirname( __FILE__ ) . "/../../includes/ZhConversion.php" );
+		require __DIR__ . "/../../includes/ZhConversion.php";
 		$this->mTables = array(
 			'zh-hans' => new ReplacementArray( $zh2Hans ),
 			'zh-hant' => new ReplacementArray( $zh2Hant ),
-			'zh-cn'   => new ReplacementArray( array_merge( $zh2Hans, $zh2CN ) ),
-			'zh-hk'   => new ReplacementArray( array_merge( $zh2Hant, $zh2HK ) ),
-			'zh-mo'   => new ReplacementArray( array_merge( $zh2Hant, $zh2HK ) ),
-			'zh-my'   => new ReplacementArray( array_merge( $zh2Hans, $zh2SG ) ),
-			'zh-sg'   => new ReplacementArray( array_merge( $zh2Hans, $zh2SG ) ),
-			'zh-tw'   => new ReplacementArray( array_merge( $zh2Hant, $zh2TW ) ),
-			'zh'      => new ReplacementArray
+			'zh-cn' => new ReplacementArray( array_merge( $zh2Hans, $zh2CN ) ),
+			'zh-hk' => new ReplacementArray( array_merge( $zh2Hant, $zh2HK ) ),
+			'zh-mo' => new ReplacementArray( array_merge( $zh2Hant, $zh2HK ) ),
+			'zh-my' => new ReplacementArray( array_merge( $zh2Hans, $zh2SG ) ),
+			'zh-sg' => new ReplacementArray( array_merge( $zh2Hans, $zh2SG ) ),
+			'zh-tw' => new ReplacementArray( array_merge( $zh2Hant, $zh2TW ) ),
+			'zh' => new ReplacementArray
 		);
 	}
 
@@ -67,22 +87,8 @@ class ZhConverter extends LanguageConverter {
 	}
 
 	/**
-	 * there shouldn't be any latin text in Chinese conversion, so no need
-	 * to mark anything.
-	 * $noParse is there for compatibility with LanguageConvert::markNoConversion
-	 *
-	 * @param $text string
-	 * @param $noParse bool
-	 *
+	 * @param string $key
 	 * @return string
-	 */
-	function markNoConversion( $text, $noParse = false ) {
-		return $text;
-	}
-
-	/**
-	 * @param $key string
-	 * @return String
 	 */
 	function convertCategoryKey( $key ) {
 		return $this->autoConvert( $key, 'zh' );
@@ -96,26 +102,36 @@ class ZhConverter extends LanguageConverter {
  * @ingroup Language
  */
 class LanguageZh extends LanguageZh_hans {
-
 	function __construct() {
 		global $wgHooks;
+
 		parent::__construct();
 
-		$variants = array( 'zh', 'zh-hans', 'zh-hant', 'zh-cn', 'zh-hk', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw' );
+		$variants = array(
+			'zh',
+			'zh-hans',
+			'zh-hant',
+			'zh-cn',
+			'zh-hk',
+			'zh-mo',
+			'zh-my',
+			'zh-sg',
+			'zh-tw'
+		);
 
 		$variantfallbacks = array(
-			'zh'      => array( 'zh-hans', 'zh-hant', 'zh-cn', 'zh-tw', 'zh-hk', 'zh-sg', 'zh-mo', 'zh-my' ),
+			'zh' => array( 'zh-hans', 'zh-hant', 'zh-cn', 'zh-tw', 'zh-hk', 'zh-sg', 'zh-mo', 'zh-my' ),
 			'zh-hans' => array( 'zh-cn', 'zh-sg', 'zh-my' ),
 			'zh-hant' => array( 'zh-tw', 'zh-hk', 'zh-mo' ),
-			'zh-cn'   => array( 'zh-hans', 'zh-sg', 'zh-my' ),
-			'zh-sg'   => array( 'zh-hans', 'zh-cn', 'zh-my' ),
-			'zh-my'   => array( 'zh-hans', 'zh-sg', 'zh-cn' ),
-			'zh-tw'   => array( 'zh-hant', 'zh-hk', 'zh-mo' ),
-			'zh-hk'   => array( 'zh-hant', 'zh-mo', 'zh-tw' ),
-			'zh-mo'   => array( 'zh-hant', 'zh-hk', 'zh-tw' ),
+			'zh-cn' => array( 'zh-hans', 'zh-sg', 'zh-my' ),
+			'zh-sg' => array( 'zh-hans', 'zh-cn', 'zh-my' ),
+			'zh-my' => array( 'zh-hans', 'zh-sg', 'zh-cn' ),
+			'zh-tw' => array( 'zh-hant', 'zh-hk', 'zh-mo' ),
+			'zh-hk' => array( 'zh-hant', 'zh-mo', 'zh-tw' ),
+			'zh-mo' => array( 'zh-hant', 'zh-hk', 'zh-tw' ),
 		);
 		$ml = array(
-			'zh'      => 'disable',
+			'zh' => 'disable',
 			'zh-hans' => 'unidirectional',
 			'zh-hant' => 'unidirectional',
 		);
@@ -125,37 +141,33 @@ class LanguageZh extends LanguageZh_hans {
 								array(),
 								$ml );
 
-		$wgHooks['ArticleSaveComplete'][] = $this->mConverter;
+		$wgHooks['PageContentSaveComplete'][] = $this->mConverter;
 	}
 
 	/**
 	 * this should give much better diff info
 	 *
-	 * @param $text string
+	 * @param string $text
 	 * @return string
 	 */
 	function segmentForDiff( $text ) {
-		return preg_replace(
-			"/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"' ' .\"$1\"", $text );
+		return preg_replace( '/[\xc0-\xff][\x80-\xbf]*/', ' $0', $text );
 	}
 
 	/**
-	 * @param $text string
+	 * @param string $text
 	 * @return string
 	 */
 	function unsegmentForDiff( $text ) {
-		return preg_replace(
-			"/ ([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"\"$1\"", $text );
+		return preg_replace( '/ ([\xc0-\xff][\x80-\xbf]*)/', '$1', $text );
 	}
 
 	/**
 	 * auto convert to zh-hans and normalize special characters.
 	 *
-	 * @param $string String
-	 * @param $autoVariant String, default to 'zh-hans'
-	 * @return String
+	 * @param string $string
+	 * @param string $autoVariant default to 'zh-hans'
+	 * @return string
 	 */
 	function normalizeForSearch( $string, $autoVariant = 'zh-hans' ) {
 		wfProfileIn( __METHOD__ );
@@ -173,7 +185,7 @@ class LanguageZh extends LanguageZh_hans {
 	}
 
 	/**
-	 * @param $termsArray array
+	 * @param array $termsArray
 	 * @return array
 	 */
 	function convertForSearchResult( $termsArray ) {
@@ -184,4 +196,3 @@ class LanguageZh extends LanguageZh_hans {
 		return $ret;
 	}
 }
-

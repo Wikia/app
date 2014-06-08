@@ -7,10 +7,32 @@
  * @ingroup Language
  * @file
  *
+ * @author Rachitrali
  * @author Rk_kaul (on ks.wikipedia.org)
+ * @author VibhasKS
  */
 
 $rtl = true;
+
+$namespaceNames = array(
+	NS_MEDIA            => 'میڈیا',
+	NS_SPECIAL          => 'خاص',
+	NS_MAIN             => '',
+	NS_TALK             => 'بَحَژ',
+	NS_USER             => 'رُکُن',
+	NS_USER_TALK        => 'رُکُن_بَحَژ',
+	NS_PROJECT_TALK     => '$1_بَحَژ',
+	NS_FILE             => 'فَیِل',
+	NS_FILE_TALK        => 'فَیِل_بَحَژ',
+	NS_MEDIAWIKI        => 'میڈیاوکی',
+	NS_MEDIAWIKI_TALK   => 'میڈیاوکی_بَحَژ',
+	NS_TEMPLATE         => 'فرما',
+	NS_TEMPLATE_TALK    => 'فرما_بَحَژ',
+	NS_HELP             => 'پَلزُن',
+	NS_HELP_TALK        => 'پَلزُن_بَحَژ',
+	NS_CATEGORY         => 'زٲژ',
+	NS_CATEGORY_TALK    => 'زٲژ_بَحَژ',
+);
 
 $digitTransformTable = array(
 	'0' => '٠', # &#x0660;
@@ -30,49 +52,3 @@ $separatorTransformTable = array(
 	',' => '٬', # &#x066c;
 );
 
-$messages = array(
-# Dates
-'monday'    => 'ژِنٛدٕروار',
-'february'  => 'فرؤری',
-'april'     => 'اپریٖل',
-'may_long'  => 'مٔی',
-'june'      => 'جوٗن',
-'august'    => 'اَگست',
-'september' => 'سیٚپٹَمبَر',
-'november'  => 'نَوَمبَر',
-'december'  => 'ڈیٚسَمبَر',
-
-'about' => 'مُتعلِق',
-
-'help'             => 'مدد',
-'search'           => 'ژھارُن',
-'searchbutton'     => 'ژھارُن',
-'history_short'    => 'توٲریٖخ',
-'talkpagelinktext' => 'بَحَژ',
-'talk'             => 'بَحَژ',
-'jumptosearch'     => 'ژھارُن',
-
-# All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite' => 'مُتعلِق {{SITENAME}}',
-'mainpage'  => 'گَرٕ',
-
-# Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main'     => 'صَفہٕ',
-'nstab-category' => 'زٲژ',
-
-# Edit pages
-'summary' => 'خُلاسہٕ:',
-
-# Recent changes
-'recentchanges' => 'نَوِ تبدیلی',
-
-# Upload
-'filedesc' => 'خُلاسہٕ',
-
-'sp-contributions-talk'   => 'بَحَژ',
-'sp-contributions-submit' => 'ژھارُن',
-
-# Namespace 8 related
-'allmessagesname' => 'ناو',
-
-);
