@@ -8,15 +8,9 @@
  * See the README, INSTALL, and UPGRADE files for basic setup instructions
  * and pointers to the online documentation.
  *
- * http://www.mediawiki.org/
+ * https://www.mediawiki.org/
  *
  * ----------
- *
- * Copyright (C) 2001-2011 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
- * Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason,
- * Niklas Laxström, Domas Mituzas, Rob Church, Yuri Astrakhan, Aryeh Gregor,
- * Aaron Schulz, Andrew Garrett, Raimond Spekking, Alexandre Emsenhuber
- * Siebrand Mazeland, Chad Horohoe, Roan Kattouw and others.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +34,9 @@
 # has structures (try/catch, foo()->bar(), etc etc) which throw parse errors in
 # PHP 4. Setup.php and ObjectCache.php have structures invalid in PHP 5.0 and
 # 5.1, respectively.
-if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.2.3' ) < 0 ) {
-	require( dirname( __FILE__ ) . '/includes/PHPVersionError.php' );
+if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.3.2' ) < 0 ) {
+	// We need to use dirname( __FILE__ ) here cause __DIR__ is PHP5.3+
+	require dirname( __FILE__ ) . '/includes/PHPVersionError.php';
 	wfPHPVersionError( 'index.php' );
 }
 
@@ -56,16 +51,8 @@ if( function_exists( 'newrelic_name_transaction' ) ) {
 /*
  * Wikia Change - end
  */
-
-
-# Initialise common code.  This gives us access to GlobalFunctions, the
-# AutoLoader, and the globals $wgRequest, $wgOut, $wgUser, $wgLang and
-# $wgContLang, amongst others; it does *not* load $wgTitle
-if ( isset( $_SERVER['MW_COMPILED'] ) ) {
-	require ( 'phase3/includes/WebStart.php' );
-} else {
-	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
-}
+ 
+require __DIR__ . '/includes/WebStart.php';
 
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();

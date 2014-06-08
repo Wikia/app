@@ -20,12 +20,12 @@
  * @file
  * @author Roan Kattouw
  * @author Trevor Parscal
- *
  */
 
 // Bail if PHP is too low
-if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.2.3' ) < 0 ) {
-	require( dirname( __FILE__ ) . '/includes/PHPVersionError.php' );
+if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.3.2' ) < 0 ) {
+	// We need to use dirname( __FILE__ ) here cause __DIR__ is PHP5.3+
+	require dirname( __FILE__ ) . '/includes/PHPVersionError.php';
 	wfPHPVersionError( 'load.php' );
 }
 
@@ -34,26 +34,12 @@ if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.
 $wgUserForceAnon = true;
 // Wikia change - end
 
-if ( isset( $_SERVER['MW_COMPILED'] ) ) {
-	require ( 'phase3/includes/WebStart.php' );
-} else {
-	require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
-}
-
-// Construct a tag for newrelic
-if( function_exists( 'newrelic_name_transaction' ) ) {
-	if ( function_exists( 'newrelic_disable_autorum') ) {
-		newrelic_disable_autorum();
-	}
-	newrelic_name_transaction( "ResourceLoader" );
-}
-
+require __DIR__ . '/includes/WebStart.php';
 
 wfProfileIn( 'load.php' );
 
 // URL safety checks
 if ( !$wgRequest->checkUrlExtension() ) {
-	wfProfileOut( 'load.php' );
 	return;
 }
 
