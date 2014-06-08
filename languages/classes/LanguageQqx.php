@@ -32,7 +32,7 @@
  */
 class LanguageQqx extends Language {
 	/**
-	 * @param string $key
+	 * @param $key string
 	 * @return string
 	 */
 	function getMessage( $key ) {

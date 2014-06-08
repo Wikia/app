@@ -36,6 +36,7 @@ require_once __DIR__ . '/../LanguageConverter.php';
  * @ingroup Language
  */
 class ShiConverter extends LanguageConverter {
+
 	protected $mDoContentConvert;
 
 	public $mToLatin = array(
@@ -80,8 +81,8 @@ class ShiConverter extends LanguageConverter {
 	 * update: delete all rule parsing because it's not used
 	 * currently, and just produces a couple of bugs
 	 *
-	 * @param string $rule
-	 * @param array $flags
+	 * @param $rule string
+	 * @param $flags array
 	 * @return array
 	 */
 	function parseManualRule( $rule, $flags = array() ) {
@@ -101,13 +102,12 @@ class ShiConverter extends LanguageConverter {
 	/**
 	 * Do not convert content on talk pages
 	 *
-	 * @param string $text
-	 * @param Parser $parser
+	 * @param $text string
+	 * @param $parser Parser
 	 * @return string
 	 */
 	function parserConvert( $text, &$parser ) {
-		$this->mDoContentConvert = !( is_object( $parser->getTitle() )
-			&& $parser->getTitle()->isTalkPage() );
+		$this->mDoContentConvert = !( is_object( $parser->getTitle() ) && $parser->getTitle()->isTalkPage() );
 
 		return parent::parserConvert( $text, $parser );
 	}
@@ -118,9 +118,9 @@ class ShiConverter extends LanguageConverter {
 	 *     names as they were
 	 *   - do not try to find variants for usernames
 	 *
-	 * @param string $link
-	 * @param Title $nt
-	 * @param bool $ignoreOtherCond
+	 * @param $link string
+	 * @param $nt Title
+	 * @param $ignoreOtherCond bool
 	 */
 	function findVariantLink( &$link, &$nt, $ignoreOtherCond = false ) {
 		// check for user namespace
@@ -142,8 +142,8 @@ class ShiConverter extends LanguageConverter {
 	 * An ugly function wrapper for parsing Image titles
 	 * (to prevent image name conversion)
 	 *
-	 * @param string $text
-	 * @param bool $toVariant
+	 * @param $text string
+	 * @param $toVariant bool
 	 *
 	 * @return string
 	 */
@@ -161,8 +161,8 @@ class ShiConverter extends LanguageConverter {
 	/**
 	 * It translates text into variant
 	 *
-	 * @param string $text
-	 * @param string $toVariant
+	 * @param $text string
+	 * @param $toVariant string
 	 *
 	 * @return string
 	 */

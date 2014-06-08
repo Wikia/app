@@ -35,8 +35,8 @@ class LanguageHe extends Language {
 	 * Available cases:
 	 * "prefixed" (or "תחילית") - when the word has a prefix
 	 *
-	 * @param string $word The word to convert
-	 * @param string $case The case
+	 * @param $word String: the word to convert
+	 * @param $case String: the case
 	 *
 	 * @return string
 	 */

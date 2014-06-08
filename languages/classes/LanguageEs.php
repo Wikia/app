@@ -29,7 +29,7 @@
 class LanguageEs extends Language {
 
 	/**
-	 * @param string $_
+	 * @param $_ string
 	 * @return string
 	 */
 	function commafy( $_ ) {

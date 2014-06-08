@@ -29,8 +29,8 @@
 class LanguageHu extends Language {
 
 	/**
-	 * @param string $word
-	 * @param string $case
+	 * @param $word string
+	 * @param $case
 	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {

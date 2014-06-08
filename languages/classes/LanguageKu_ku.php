@@ -26,13 +26,12 @@
  *
  * @ingroup Language
  */
-// @codingStandardsIgnoreStart Ignore class name is not in camel caps format error
 class LanguageKu_ku extends Language {
-	// @codingStandardsIgnoreEnd
+
 	/**
 	 * Avoid grouping whole numbers between 0 to 9999
 	 *
-	 * @param string $_
+	 * @param $_ string
 	 *
 	 * @return string
 	 */

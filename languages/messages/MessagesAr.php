@@ -30,7 +30,6 @@ $datePreferences = array(
 	'ymd',
 	'hijri',
 	'ISO 8601',
-	'jMY',
 );
 
 /**

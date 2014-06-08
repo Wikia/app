@@ -33,8 +33,8 @@ class LanguageHy extends Language {
 	 * Convert from the nominative form of a noun to some other case
 	 * Invoked with {{grammar:case|word}}
 	 *
-	 * @param string $word
-	 * @param string $case
+	 * @param $word string
+	 * @param $case string
 	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {
@@ -82,7 +82,7 @@ class LanguageHy extends Language {
 	/**
 	 * Armenian numeric format is "12 345,67" but "1234,56"
 	 *
-	 * @param string $_
+	 * @param $_ string
 	 *
 	 * @return string
 	 */

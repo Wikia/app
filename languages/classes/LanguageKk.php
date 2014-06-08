@@ -38,14 +38,15 @@ define( 'H_HAMZA', 'ٴ' ); # U+0674 ARABIC LETTER HIGH HAMZA
  * @ingroup Language
  */
 class KkConverter extends LanguageConverter {
+
 	protected $mCyrl2Latn, $mLatn2Cyrl, $mCyLa2Arab;
 
 	/**
-	 * @param Language $langobj
-	 * @param string $maincode
-	 * @param array $variants
-	 * @param array $variantfallbacks
-	 * @param array $flags
+	 * @param $langobj Language
+	 * @param $maincode string
+	 * @param $variants array
+	 * @param $variantfallbacks array
+	 * @param $flags array
 	 */
 	function __construct( $langobj, $maincode,
 								$variants = array(),
@@ -226,8 +227,8 @@ class KkConverter extends LanguageConverter {
 	 * update: delete all rule parsing because it's not used
 	 *      currently, and just produces a couple of bugs
 	 *
-	 * @param string $rule
-	 * @param array $flags
+	 * @param $rule string
+	 * @param $flags array
 	 * @return array
 	 */
 	function parseManualRule( $rule, $flags = array() ) {
@@ -250,8 +251,8 @@ class KkConverter extends LanguageConverter {
 	 *    names as they were
 	 *  - do not try to find variants for usernames
 	 *
-	 * @param string $link
-	 * @param Title $nt
+	 * @param $link string
+	 * @param $nt Title
 	 * @param bool $ignoreOtherCond
 	 */
 	function findVariantLink( &$link, &$nt, $ignoreOtherCond = false ) {
@@ -274,8 +275,8 @@ class KkConverter extends LanguageConverter {
 	 * An ugly function wrapper for parsing Image titles
 	 * (to prevent image name conversion)
 	 *
-	 * @param string $text
-	 * @param bool $toVariant
+	 * @param $text string
+	 * @param $toVariant bool
 	 *
 	 * @return string
 	 */
@@ -293,8 +294,8 @@ class KkConverter extends LanguageConverter {
 	/**
 	 *  It translates text into variant
 	 *
-	 * @param string $text
-	 * @param string $toVariant
+	 * @param $text string
+	 * @param $toVariant string
 	 *
 	 * @return string
 	 */
@@ -325,28 +326,20 @@ class KkConverter extends LanguageConverter {
 		// disable conversion variables like $1, $2...
 		$varsfix = '\$[0-9]';
 
-		$matches = preg_split(
-			'/' . $varsfix . '[^' . $letters . ']+/u',
-			$text,
-			-1,
-			PREG_SPLIT_OFFSET_CAPTURE
-		);
-
+		$matches = preg_split( '/' . $varsfix . '[^' . $letters . ']+/u', $text, -1, PREG_SPLIT_OFFSET_CAPTURE );
 		$mstart = 0;
 		$ret = '';
-
 		foreach ( $matches as $m ) {
 			$ret .= substr( $text, $mstart, $m[1] -$mstart );
 			$ret .= $this->regsConverter( $m[0], $toVariant );
 			$mstart = $m[1] + strlen( $m[0] );
 		}
-
 		return $ret;
 	}
 
 	/**
-	 * @param string $text
-	 * @param string $toVariant
+	 * @param $text string
+	 * @param $toVariant string
 	 * @return mixed|string
 	 */
 	function regsConverter( $text, $toVariant ) {
@@ -357,9 +350,9 @@ class KkConverter extends LanguageConverter {
 		switch ( $toVariant ) {
 			case 'kk-arab':
 			case 'kk-cn':
-				$letters = KK_C_LC . KK_C_UC; /*.KK_L_LC.KK_L_UC*/
-				$front = 'әөүіӘӨҮІ'; /*.'äöüiÄÖÜİ'*/
-				$excludes = 'еэгғкқЕЭГҒКҚ'; /*.'eégğkqEÉGĞKQ'*/
+				$letters = KK_C_LC . KK_C_UC/*.KK_L_LC.KK_L_UC*/;
+				$front = 'әөүіӘӨҮІ'/*.'äöüiÄÖÜİ'*/;
+				$excludes = 'еэгғкқЕЭГҒКҚ'/*.'eégğkqEÉGĞKQ'*/;
 				// split text to words
 				$matches = preg_split( '/[\b\s\-\.:]+/', $text, -1, PREG_SPLIT_OFFSET_CAPTURE );
 				$mstart = 0;
@@ -369,9 +362,7 @@ class KkConverter extends LanguageConverter {
 					// is matched the word to front vowels?
 					// exclude a words matched to е, э, г, к, к, қ,
 					// them should be without hamza
-					if ( preg_match( '/[' . $front . ']/u', $m[0] )
-						&& !preg_match( '/[' . $excludes . ']/u', $m[0] )
-					) {
+					if ( preg_match( '/[' . $front . ']/u', $m[0] ) && !preg_match( '/[' . $excludes . ']/u', $m[0] ) ) {
 						$ret .= preg_replace( '/[' . $letters . ']+/u', H_HAMZA . '$0', $m[0] );
 					} else {
 						$ret .= $m[0];
@@ -404,12 +395,13 @@ class KkConverter extends LanguageConverter {
 	}
 
 	/**
-	 * @param string $key
-	 * @return string
+	 * @param $key string
+	 * @return String
 	 */
 	function convertCategoryKey( $key ) {
 		return $this->autoConvert( $key, 'kk' );
 	}
+
 }
 
 /**
@@ -419,6 +411,7 @@ class KkConverter extends LanguageConverter {
  * @ingroup Language
  */
 class LanguageKk extends LanguageKk_cyrl {
+
 	function __construct() {
 		global $wgHooks;
 		parent::__construct();
@@ -442,7 +435,7 @@ class LanguageKk extends LanguageKk_cyrl {
 	/**
 	 * It fixes issue with ucfirst for transforming 'i' to 'İ'
 	 *
-	 * @param string $string
+	 * @param $string string
 	 *
 	 * @return string
 	 */
@@ -459,7 +452,7 @@ class LanguageKk extends LanguageKk_cyrl {
 	/**
 	 * It fixes issue with  lcfirst for transforming 'I' to 'ı'
 	 *
-	 * @param string $string
+	 * @param $string string
 	 *
 	 * @return string
 	 */
@@ -474,8 +467,8 @@ class LanguageKk extends LanguageKk_cyrl {
 	}
 
 	/**
-	 * @param string $word
-	 * @param string $case
+	 * @param $word string
+	 * @param $case string
 	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {

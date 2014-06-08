@@ -32,8 +32,8 @@ class LanguageGa extends Language {
 	 * Convert day names
 	 * Invoked with {{GRAMMAR:transformation|word}}
 	 *
-	 * @param string $word
-	 * @param string $case
+	 * @param $word string
+	 * @param $case string
 	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {

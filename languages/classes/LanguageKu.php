@@ -127,8 +127,7 @@ class KuConverter extends LanguageConverter {
 		' O' => 'ئۆ ',
 		' U' => 'ئو ',
 		' Û' => 'ئوو ',
-		# eyn erstmal deaktivieren, einfache Anführungsstriche sind einfach zu
-		# häufig, um sie als eyn zu interpretieren.
+		# eyn erstmal deaktivieren, einfache Anführungsstriche sind einfach zu häufig, um sie als eyn zu interpretieren
 		# '\'' => 'ع',
 
 /*		# deactivated for now, breaks links i.e. in header of Special:Recentchanges :-(
@@ -160,9 +159,9 @@ class KuConverter extends LanguageConverter {
 	 *     names as they were
 	 *   - do not try to find variants for usernames
 	 *
-	 * @param string $link
-	 * @param Title $nt
-	 * @param bool $ignoreOtherCond
+	 * @param $link string
+	 * @param $nt Title
+	 * @param $ignoreOtherCond bool
 	 */
 	function findVariantLink( &$link, &$nt, $ignoreOtherCond = false ) {
 		// check for user namespace
@@ -184,8 +183,8 @@ class KuConverter extends LanguageConverter {
 	 * An ugly function wrapper for parsing Image titles
 	 * (to prevent image name conversion)
 	 *
-	 * @param string $text
-	 * @param bool $toVariant
+	 * @param $text string
+	 * @param $toVariant bool
 	 *
 	 * @return string
 	 */
@@ -204,8 +203,8 @@ class KuConverter extends LanguageConverter {
 	 *  It translates text into variant, specials:
 	 *    - ommiting roman numbers
 	 *
-	 * @param string $text
-	 * @param bool $toVariant
+	 * @param $text string
+	 * @param $toVariant bool
 	 *
 	 * @throws MWException
 	 * @return string
