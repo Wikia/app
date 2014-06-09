@@ -414,7 +414,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function error() {
 		$this->setVal( 'messages', [
-			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-service-error' )->parse()
+			'wikia-interactive-maps-service-error' => wfMessage( 'wikia-interactive-maps-service-error' )->parse()
 		] );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
