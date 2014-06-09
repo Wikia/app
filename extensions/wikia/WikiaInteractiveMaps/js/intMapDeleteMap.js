@@ -1,4 +1,5 @@
 define('wikia.intMaps.deleteMap', ['jquery'], function($) {
+	'use strict';
 	var modal,
 		modalConfig = {
 			vars: {
@@ -33,7 +34,6 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 				]
 			}
 		},
-		$deleteMapButton = $('#intMapsDeleteMap'),
 		$mapId = $('iframe[name=wikia-interactive-map]').data('mapid'),
 		url = 'wikia.php?controller=WikiaInteractiveMaps&method=deleteMap';
 
