@@ -1,4 +1,4 @@
-/*global define, setTimeout*/
+/*global define, setTimeout, clearTimeout*/
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
@@ -150,6 +150,40 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 				if (data.status === 'success') {
 					return adCallback();
 				}
+
+				return noAdCallback();
+			});
+		}
+
+		if (hopMethod === 'openx') {
+
+			var openxSuccess, successTrigger, waitForSuccess = function () {
+
+				if (openxSuccess) {
+					return;
+				}
+				successTrigger = setTimeout(function () {
+					log(['onAdLoad', slotname, 'verify openX ad' ], 'info', logGroup);
+
+					if (openxSuccess) {
+						return;
+					}
+					inspectIframe(slotname, iframe, function () {
+						openxSuccess = true;
+						clearTimeout(successTrigger);
+						adCallback();
+					}, waitForSuccess);
+				}, 500);
+			};
+
+			waitForSuccess();
+
+			return messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, function (data) {
+
+				log(['onAdLoad', slotname, 'caught message' , data.status], 'info', logGroup);
+
+				openxSuccess = true;
+				clearTimeout(successTrigger);
 
 				return noAdCallback();
 			});
