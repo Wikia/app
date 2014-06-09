@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: suchy
- * Date: 07.10.13
- * Time: 09:05
- * To change this template use File | Settings | File Templates.
- */
 
 class HubRssFeedService {
 	/** This is DateTime::RFC822 with one small change. We use 4 digits year after recommendation from feedvalidator.org */

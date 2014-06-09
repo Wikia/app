@@ -48,7 +48,7 @@ abstract class BaseTask {
 
 		$this->title = \Title::makeTitleSafe($this->titleParams['namespace'], $this->titleParams['dbKey']);
 		if ( $this->title == null ) {
-			throw new \Exception( "unable to instantiate title with id {$this->titleId}" );
+			throw new \Exception( "unable to instantiate title with id {$this->titleParams['dbKey']}" );
 		}
 	}
 

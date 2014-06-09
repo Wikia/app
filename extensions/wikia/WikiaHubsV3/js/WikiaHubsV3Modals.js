@@ -39,7 +39,7 @@
 		},
 
 		openModal: function (data) {
-			require(['wikia.ui.factory'], function (uiFactory) {
+			require(['wikia.ui.factory', 'wikia.hubs'], function (uiFactory, wikiaHubs) {
 				uiFactory.init(['modal']).then(function (uiModal) {
 					var modalConfig = {
 						vars: {
@@ -101,7 +101,7 @@
 
 							// send tracking
 							/* jshint camelcase: false */
-							window.WikiaHubs.trackClick(
+							wikiaHubs.trackClick(
 								'get-promoted',
 								Wikia.Tracker.ACTIONS.SUBMIT,
 								'suggest-article-submit',

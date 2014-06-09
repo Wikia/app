@@ -114,8 +114,12 @@ class PromoImage extends WikiaObject {
 		return $this->pathnameHelper(true, true);
 	}
 
-	public function getOriginFile(){
-		$f = GlobalFile::newFromText($this->getPathname(), $this->getCityId());
+	public function getOriginFile($cityId = null){
+		if (empty($cityId)){
+			$cityId =  $this->getCityId();
+		}
+
+		$f = GlobalFile::newFromText($this->getPathname(), $cityId);
 		return $f;
 	}
 
@@ -161,31 +165,18 @@ class PromoImage extends WikiaObject {
 
 		//create task only for languages which have corporate wiki
 		if ($visualization->isCorporateLang($content_lang)) {
-			if (class_exists('PromoteImageReviewTask')) {
-				$task = new PromoteImageReviewTask();
-				$deletion_list = array(
-					$content_lang => array(
-						$this->wg->cityId => array($imageName)
-					)
-				);
-
-				$task->createTask(
-					array(
-						'deletion_list' => $deletion_list
-					),
-					TASK_QUEUED
-				);
-			}
+			$deletion_list = array(
+				$content_lang => array(
+					$this->wg->cityId => array($imageName)
+				)
+			);
+			wfRunHooks('CreatePromoImageReviewTask', ['delete', $deletion_list]);
 		}
 	}
 
 	public function purgeImage() {
 		$this->deleteImage();
 		$this->deleteImageFromCorporate();
-		if ($this->isCityIdSet()){
-			//for legacy compatibility attempt to remove older image path format
-			$this->removalTaskHelper($this->pathnameHelper(false,true));
-		}
 		return $this;
 	}
 
@@ -197,10 +188,6 @@ class PromoImage extends WikiaObject {
 
 	public function deleteImage() {
 		$this->deleteImageHelper($this->getPathname());
-		if ($this->isCityIdSet()){
-			//for legacy compatibility attempt to remove older image path format
-			$this->deleteImageHelper($this->pathnameHelper(false,true));
-		}
 		$this->removed = true;
 		return $this;
 	}

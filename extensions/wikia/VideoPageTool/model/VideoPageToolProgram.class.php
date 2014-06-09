@@ -150,6 +150,7 @@ class VideoPageToolProgram extends WikiaModel {
 			wfProfileOut( __METHOD__ );
 			return $program;
 		} else {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 	}

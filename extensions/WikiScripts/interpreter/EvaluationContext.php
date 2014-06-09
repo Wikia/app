@@ -430,6 +430,7 @@ class WSEvaluationContext {
 				wfProfileOut( __METHOD__ );
 				return $result;
 		}
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

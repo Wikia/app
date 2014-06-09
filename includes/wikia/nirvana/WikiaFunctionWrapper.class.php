@@ -25,6 +25,8 @@
  * @method ReadOnly
  * @method Timestamp
  * @method TimestampNow
+ *
+ * @deprecated
  */
 class WikiaFunctionWrapper {
 

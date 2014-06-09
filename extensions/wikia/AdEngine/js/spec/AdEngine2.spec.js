@@ -1,4 +1,8 @@
+/*global describe,modules,it,expect */
 describe('AdEngine2', function(){
+	'use strict';
+	var eventDispatcher = { trigger: function() { return true; }};
+
 	it('Doesn\'t throw with empty queue, but throws with undefined queue', function() {
 		var logMock = function() {},
 			adConfigMock = {getDecorators: function () {}},
@@ -7,7 +11,7 @@ describe('AdEngine2', function(){
 			adEngine,
 			undef;
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
 
 		expect(function() {
 			adEngine.run(adConfigMock, [], 'queue-name');
@@ -40,11 +44,11 @@ describe('AdEngine2', function(){
 			}
 		};
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(makeQueueCalledOn).toBe(slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
-		expect(queueStartCalled).toBeTruthy('Called start on the slot array provided to adEngine.run')
+		expect(queueStartCalled).toBeTruthy('Called start on the slot array provided to adEngine.run');
 	});
 
 	it('Calls AdConfig2 getProvider and then fillInSlot for slots provider in the passed array', function() {
@@ -77,7 +81,7 @@ describe('AdEngine2', function(){
 			getDecorators: noop
 		};
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(getProviderCalledFor.length).toBe(2, 'adConfig.getProvider called 2 times');
