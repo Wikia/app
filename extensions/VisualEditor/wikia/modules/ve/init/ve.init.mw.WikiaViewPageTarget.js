@@ -187,7 +187,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
 
-	if ( mw.user.anonymous() ) {
+	if ( mw.user.anonymous() && !/(\?|&)redlink=1/.test( window.location.search ) ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['activate', 1173750562] );
 
@@ -196,5 +196,4 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
 		}
 	}
-
 };
