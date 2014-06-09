@@ -12,9 +12,9 @@ echo wfMessage( 'specialcontact-intro-rename-account' )->parseAsBlock();
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 
-<?= wfMessage( 'specialcontact-logged-in-as', $encName, 'link' )->parse() ?>
+<?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() ?>
         
-<?= wfMessage( 'specialcontact-mail-on-file', $encEmail, 'link' )->parse() ?>
+<?= wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock() ?>
 
 <p>
 <label for="wpUserNameNew"><?= wfMessage( 'specialcontact-label-rename-newusername' )->escaped() ?></label>

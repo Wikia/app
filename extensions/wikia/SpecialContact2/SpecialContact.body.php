@@ -55,12 +55,13 @@ class ContactForm extends SpecialPage {
 		global $wgCaptchaClass, $wgServer;
 
 		$app = F::app();
-
 		$isMobile = $app->checkSkin( 'wikiamobile');
+		$out = $this->getOutput();
+		$user = $this->getUser();
 
-		$this->getOutput()->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialContact2/SpecialContact.scss' ) );
 		$extPath = $app->wg->extensionsPath;
-		$this->getOutput()->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
+		$out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
@@ -75,7 +76,7 @@ class ContactForm extends SpecialPage {
 
 		if( $this->getRequest()->wasPosted() ) {
 
-			if( $this->getUser()->isAnon() && class_exists( $wgCaptchaClass ) ) {
+			if( $user->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
 				$info = $captchaObj->passCaptcha();
 			}
@@ -90,8 +91,8 @@ class ContactForm extends SpecialPage {
 
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
-			if ( $this->getUser()->isLoggedIn() && ( $this->getUser()->getName() !== $this->getRequest()->getText( 'wpUserName' ) ) ) {
-				$this->getOutput()->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
+			if ( $user->isLoggedIn() && ( $user->getName() !== $this->getRequest()->getText( 'wpUserName' ) ) ) {
+				$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
 				return;
 			}
 
@@ -107,8 +108,8 @@ class ContactForm extends SpecialPage {
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
 					// notify relevant extension that a request has been made
-					$this->getUser()->setOption( $this->customForms[$par]['markuser'], 1 );
-					$this->getUser()->saveSettings();
+					$user->setOption( $this->customForms[$par]['markuser'], 1 );
+					$user->saveSettings();
 				}
 
 				$messageText = vsprintf( $this->customForms[$par]['format'], $args );
@@ -134,7 +135,7 @@ class ContactForm extends SpecialPage {
 			}
 
 			#captcha
-			if( $this->getUser()->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
+			if( $user->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
 				$this->err[] = $this->msg('specialcontact-captchafail' )->escaped();
 				$this->errInputs['wpCaptchaWord'] = true;
 			}
@@ -151,42 +152,42 @@ class ContactForm extends SpecialPage {
 			#if there were any ->err s, they will be displayed in ContactForm
 		}
 
-		$this->getOutput()->setRobotpolicy( 'noindex,nofollow' );
-		$this->getOutput()->setArticleRelated( false );
+		$out->setRobotpolicy( 'noindex,nofollow' );
+		$out->setArticleRelated( false );
 
 		if ( $isMobile ) {
 
-			$this->getOutput()->setPageTitle( $this->msg( 'contact' )->text() );
+			$out->setPageTitle( $this->msg( 'contact' )->text() );
 
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 			$captchaErr = !empty( $this->errInputs['wpCaptchaWord'] ) ? 'inpErr' : null;
 
 			$oTmpl->set_vars( [
-				'isLoggedIn' => $this->getUser()->isLoggedIn(),
+				'isLoggedIn' => $user->isLoggedIn(),
 				'intro' => $this->msg( 'specialcontact-intro-content-issue-mobile' )->parse(),
-				'encName' => $this->getUser()->getName(),
-				'encEmail' => $this->getUser()->getEmail(),
-				'hasEmailConf' => $this->getUser()->isEmailConfirmed(),
+				'encName' => $user->getName(),
+				'encEmail' => $user->getEmail(),
+				'hasEmailConf' => $user->isEmailConfirmed(),
 				'subject' => $this->mProblem,
 				'content' => $this->mProblemDesc,
 				'cc' => $this->mCCme,
 				'userName' => $this->mUserName,
 				'email' => $this->mEmail,
-				'captchaForm' => ($this->getUser()->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
+				'captchaForm' => ($user->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
 				'referral' => $this->mReferral
 			] );
 
-			$this->getOutput()->addHTML( $oTmpl->render( "mobile-form" ) );
+			$out->addHTML( $oTmpl->render( "mobile-form" ) );
 
 			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_scss' ) as $s ) {
-				$this->getOutput()->addStyle( $s );
+				$out->addStyle( $s );
 			}
 
 			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_js' ) as $s ) {
-				$this->getOutput()->addScript( "<script src=" . $s . ">" );
+				$out->addScript( "<script src=" . $s . ">" );
 			}
 
 		} else {
@@ -332,9 +333,10 @@ class ContactForm extends SpecialPage {
 	function ContactFormPicker() {
 		global $SpecialContactSecMap;
 
-		$this->getOutput()->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
+		$out = $this->getOutput();
+		$out->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
 
-		$uskin = RequestContext::getMain()->getSkin();
+		$uskin = $this->getSkin();
 
 		$secDat = array();
 
@@ -393,7 +395,7 @@ class ContactForm extends SpecialPage {
 		);
 
 		$oTmpl->set_vars( $vars );
-		$this->getOutput()->addHTML( $oTmpl->render("picker") );
+		$out->addHTML( $oTmpl->render("picker") );
 
 		return;
 	}
@@ -415,17 +417,20 @@ class ContactForm extends SpecialPage {
 	function ShowContactForm( $sub = null ) {
 		global $wgServer, $wgCaptchaClass;
 
-		$this->getOutput()->setPageTitle(
+		$out = $this->getOutput();
+		$user = $this->getUser();
+
+		$out->setPageTitle(
 			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
 		);
 
-		if( $this->getUser()->isLoggedIn() ) {
+		if( $user->isLoggedIn() ) {
 			//user mode
 
 			//we have user data, so use it, overriding any passed in from url
-			$this->mUserName = $this->getUser()->getName();
-			$this->mRealName = $this->getUser()->getRealName();
-			$this->mEmail = $this->getUser()->getEmail();
+			$this->mUserName = $user->getName();
+			$this->mRealName = $user->getRealName();
+			$this->mEmail = $user->getEmail();
 
 			# since logged in, assume...
 			//no box, just print
@@ -501,13 +506,13 @@ class ContactForm extends SpecialPage {
 			'encRealName' => $encRealName,
 			'encProblem' => $encProblem,
 			'encProblemDesc' => $encProblemDesc,
-			'isLoggedIn' => $this->getUser()->isLoggedIn(),
+			'isLoggedIn' => $user->isLoggedIn(),
 		);
 
-		if( $this->getUser()->isLoggedIn() ) {
+		if( $user->isLoggedIn() ) {
 			#logged in
-			$vars[ 'hasEmail' ] = $this->getUser()->getEmail();
-			$vars[ 'hasEmailConf' ] = $this->getUser()->isEmailConfirmed();
+			$vars[ 'hasEmail' ] = $user->getEmail();
+			$vars[ 'hasEmailConf' ] = $user->isEmailConfirmed();
 		}
 		elseif (class_exists($wgCaptchaClass)) {
 			#anon
@@ -522,15 +527,15 @@ class ContactForm extends SpecialPage {
 		$oTmpl->set_vars( $vars );
 
 		if( $this->secDat['form'] === true ) {
-			$this->getOutput()->addHTML( $oTmpl->render("form") );
-		} elseif ( $this->getUser()->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
-			$this->getOutput()->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
+			$out->addHTML( $oTmpl->render("form") );
+		} elseif ( $user->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
+			$out->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
-		} elseif ( $this->secDat['form'] === 'rename-account' && $this->getUser()->getOption( 'wasRenamed', 0 ) ) {
-			$this->getOutput()->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
+		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getOption( 'wasRenamed', 0 ) ) {
+			$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
 			return;
 		} else {
-			$this->getOutput()->addHTML( $oTmpl->render( $this->secDat['form'] ) );
+			$out->addHTML( $oTmpl->render( $this->secDat['form'] ) );
 		}
 		return true;
 	}
@@ -540,7 +545,8 @@ class ContactForm extends SpecialPage {
 	 */
 	function ShowNonForm( $sub = null ) {
 
-		$this->getOutput()->setPageTitle(
+		$out = $this->getOutput();
+		$out->setPageTitle(
 			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
 		);
 
@@ -555,7 +561,7 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl->set_vars( $vars );
 
-		$this->getOutput()->addHTML( $oTmpl->render("noform") );
+		$out->addHTML( $oTmpl->render("noform") );
 
 		return;
 	}
