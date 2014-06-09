@@ -15,38 +15,17 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	public function setUp() {
 		$dir = dirname( __FILE__ ) . '/../../../';
 		global $wgAutoloadClasses;
-		$wgAutoloadClasses['MarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/MarketingToolboxModel.class.php';
-		$wgAutoloadClasses['AbstractMarketingToolboxModel']	= $dir . '../WikiaHubsServices/models/AbstractMarketingToolboxModel.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleSliderService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleSliderService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleFromthecommunityService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFromthecommunityService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleWikiaspicksService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleWikiaspicksService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleEditableService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleFeaturedvideoService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleFeaturedvideoService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleExploreService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleExploreService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModulePollsService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModulePollsService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModulePopularvideosService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModulePopularvideosService.class.php';
-		$wgAutoloadClasses['MarketingToolboxExploreModel'] = $dir . '../WikiaHubsServices/models/MarketingToolboxExploreModel.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleWAMService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleWAMService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleNonEditableService'] = $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleNonEditableService.class.php';
-		$wgAutoloadClasses['MarketingToolboxModuleService'] =  $dir . '../WikiaHubsServices/modules/MarketingToolboxModuleService.class.php';
-		$wgAutoloadClasses['MarketingToolboxV3Model']	= $dir . '../WikiaHubsServices/models/MarketingToolboxV3Model.class.php';
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 
 		parent::setUp();
 	}
-	private function mockRecentlyEditedPageIdsQuery(){
+	private function mockDbQuery(){
 		$mockQueryResults = $this->getMock("ResultWrapper", array('fetchObject'), array(), '', false);
 
 		$mockDb = $this->getMock('DatabaseMysql', array('query'));
 		$mockDb->expects($this->any())->method('query')->will($this->returnValue($mockQueryResults));
 
 		$this->mockGlobalFunction('wfGetDb', $mockDb);
-
-		// pre-populate results
-		$args = func_get_args();
-
-
-
 
 		return $mockQueryResults;
 	}
@@ -63,7 +42,7 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	public function testRecentlyEditedPageIds_SkipMainPage() {
 		$mainPage = Title::newMainPage();
 
-		$mockResults = $this->mockRecentlyEditedPageIdsQuery();
+		$mockResults = $this->mockDbQuery();
 		$mockResults->expects($this->at(0))->method("fetchObject")
 			->will($this->returnValue($this->fakeRecentlyEditedQueryRow($mainPage)));
 
@@ -80,7 +59,7 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$row0->page_id = 0;
 		$row1->page_id = 1;
 
-		$mockResults = $this->mockRecentlyEditedPageIdsQuery();
+		$mockResults = $this->mockDbQuery();
 		$mockResults->expects($this->at(0))->method("fetchObject")
 			->will($this->returnValue($row0));
 		$mockResults->expects($this->at(1))->method("fetchObject")
@@ -93,24 +72,24 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$this->assertEquals($result[1], 1);
 	}
 
+	public function testGetPageView_ReturnsPageViewMap(){
+		$row0 = new stdClass();
+		$row0->article_id = 10;
+		$row0->pageviews = 110;
+		$row1 = new stdClass();
+		$row1->article_id = 12;
+		$row1->pageviews = 112;
 
-	public function testGetArticles(){
-		$row = $this->fakeRecentlyEditedQueryRow(Title::newFromText("some title"));
-
-		$mockResults = $this->mockRecentlyEditedPageIdsQuery();
+		$mockResults = $this->mockDbQuery();
 		$mockResults->expects($this->at(0))->method("fetchObject")
-			->will($this->returnValue($row));
+			->will($this->returnValue($row0));
 		$mockResults->expects($this->at(1))->method("fetchObject")
-			->will($this->returnValue($row));
+			->will($this->returnValue($row1));
 
-
-
-		$mockPop = $this->getMock("PopularArticlesModel", ["getRecentlyEditedPageIds"]);
-//		$mockPop->expects($this->any())->method("filterResultsOverQuality")->will($this->returnValue($article_feed));
-
-		$mockPop->getArticles(0);
-
-
+		$fn = self::getFn(new PopularArticlesModel(), 'getPageViewsMap');
+		$result = $fn(0, [0]);
+		$this->assertEquals($result[10], 110);
+		$this->assertEquals($result[12], 112);
 	}
 
 }
