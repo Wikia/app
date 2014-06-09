@@ -1082,7 +1082,7 @@ class WallHooksHelper {
 			$wfMsgOptsBase = static::getMessageOptions($rc);
 
 			$wfMsgOpts = [
-				$wfMsgOptsBase['articleUrl'],
+				$wfMsgOptsBase['articleTitle'],
 				$wfMsgOptsBase['articleTitleTxt'],
 				$wfMsgOptsBase['wallTitleTxt'],
 				$wfMsgOptsBase['wallPageName'],
@@ -1097,7 +1097,7 @@ class WallHooksHelper {
 
 			switch($rc->getAttribute('rc_log_action')) {
 				case 'wall_remove':
-					$actionText = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rNWall.i18nc_namespace' ) ) . '-removed-' . $msgType, $wfMsgOpts )->parse();
+					$actionText = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-removed-' . $msgType, $wfMsgOpts )->parse();
 					break;
 				case 'wall_restore':
 					$actionText = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-restored-' . $msgType, $wfMsgOpts )->parse();
@@ -1710,9 +1710,8 @@ class WallHooksHelper {
 					Xml::openElement('li') .
 					wfMessage( 'wall-whatlinkshere-wall-line', $wfMsgOpts )->text() .
 					' (' .
-					Xml::element('a', array(
-							'href' => $wlhTitle->getFullUrl(array('target' => $wfMsgOptsBase['articleUrl'])),
-					), wfMessage( 'whatlinkshere-links' )->text() ) .
+					Linker::linkKnown( $wlhTitle, wfMessage( 'whatlinkshere-links' )->text(), [],  [ 'target' => $wfMsgOptsBase['articleTitle'] ]
+					) .
 					')' .
 					Xml::closeElement('li')
 			);
