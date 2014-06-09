@@ -148,6 +148,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$this->setVal( 'viewSource', wfMessage( 'wikia-interactive-maps-view-source' ) );
 			$this->setVal( 'deleteMap', wfMessage( 'wikia-interactive-maps-delete-map' ) );
 			$this->setVal( 'mapId', $mapId );
+			$this->setVal( 'blankImg', $this->wg->BlankImgUrl );
 		} else {
 			$this->setVal( 'mapFound', false );
 			$this->setVal( 'title', wfMessage( 'error' ) );
