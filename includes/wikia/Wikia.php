@@ -30,7 +30,6 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
-$wgHooks['OutputPageFavicon']        [] = 'Wikia::onOutputPageFavicon';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
@@ -134,6 +133,36 @@ class Wikia {
 
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
+	}
+
+	public static function getFaviconFullUrl() {
+		global $wgMemc;
+
+		$mMemcacheKey = wfMemcKey('favicon');
+		$mData = $wgMemc->get($mMemcacheKey);
+		$faviconFilename = 'Favicon.ico';
+
+		if ( empty($mData) ) {
+			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
+			$localFavicon = wfFindFile( $faviconFilename );
+
+			#FIXME: Checking existance of Title in order to use File. #VID-1744
+			if ( $localFaviconTitle->exists() ) {
+				$favicon = $localFavicon->getURL();
+			} else {
+				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+			}
+
+			$wgMemc->set($mMemcacheKey, $favicon, 86400);
+		}
+
+		return $mData;
+	}
+
+	public static function invalidateFavicon() {
+		global $wgMemc;
+
+		$wgMemc->delete( wfMemcKey('favicon') );
 	}
 
 	/**
@@ -2158,27 +2187,6 @@ class Wikia {
 			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
 			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 		}
-
-		return true;
-	}
-
-	/**
-	 * Rewrties favicon URL to point to CDN domain with a proper cache buster
-	 *
-	 * Uses ThemeDesigner's "revision" ID instead of wgStyleVersion
-	 * to properly update the favicon after the upload
-	 *
-	 * @param $favicon string favicon URL to modify
-	 * @return bool true
-	 *
-	 * @authro hyun
-	 * @authro macbre
-	 *
-	 * @see BAC-1131
-	 */
-	static function onOutputPageFavicon(&$favicon) {
-		$cb = SassUtil::getCacheBuster();
-		$favicon = wfReplaceImageServer($favicon, $cb);
 
 		return true;
 	}

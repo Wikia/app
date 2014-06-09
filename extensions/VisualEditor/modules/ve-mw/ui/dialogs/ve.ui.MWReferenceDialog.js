@@ -231,7 +231,8 @@ ve.ui.MWReferenceDialog.prototype.initialize = function () {
 	} );
 	this.selectButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'label': ve.msg ( 'visualeditor-dialog-reference-useexisting-label' )
+		'label': ve.msg ( 'visualeditor-dialog-reference-useexisting-label' ),
+		'flags': ['secondary']
 	} );
 	this.backButton = new OO.ui.ButtonWidget( {
 		'$': this.$,

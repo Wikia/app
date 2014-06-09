@@ -45,3 +45,8 @@
 #ve-ui-mwSaveDialog-captcha #recaptcha_area {
 	margin: 5px auto 0 auto;
 }
+
+.oo-ui-dialog .oo-ui-window-frame.ve-ui-noAnimation {
+	transform: none;
+	transition: none;
+}
