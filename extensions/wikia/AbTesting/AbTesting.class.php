@@ -47,7 +47,6 @@ class AbTesting extends WikiaObject {
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		$app = F::app();
-		$wg = $app->wg;
 
 		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
 			//Add this mock as wikia.ext.abtesting relies on it and on WikiaMobile there is no mw object
@@ -55,11 +54,15 @@ class AbTesting extends WikiaObject {
 			$scripts .= '<script>var mw = {loader: {state: function(){}}}</script>';
 		}
 
+		return true;
+	}
+
+	static public function onWikiaSkinTopShortTTLModules( Array &$modules, $skin) {
+		$app = F::app();
+
 		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink( $wg->out, array( 'wikia.ext.abtesting' ), 'scripts' ) . "\n";
+			$modules[] = 'wikia.ext.abtesting';
 		}
-
-
 
 		return true;
 	}

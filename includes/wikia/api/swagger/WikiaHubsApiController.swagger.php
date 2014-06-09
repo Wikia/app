@@ -66,7 +66,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *
  * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleData",
+ * 	path="/WikiaHubs/ModuleData",
  * 	description="Get explore module data from given date and city/vertical",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -125,7 +125,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleDataV2",
+ * 	path="/WikiaHubs/ModuleDataV2",
  * 	description="Get explore module data from given date and vertical (from HubsV2)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -176,7 +176,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleDataV3",
+ * 	path="/WikiaHubs/ModuleDataV3",
  * 	description="Get explore module data from given date and city (from HubsV3)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

@@ -68,8 +68,8 @@ Liftium.addEventListener = function(item, eventName, callback){
 
 
 Liftium.beaconCall = function (url, cb){
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'LIFTIUM_DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group LIFTIUM_DISABLED', 1);
+	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
+		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
 		return;
 	}
 	// Create an image and call the beacon
@@ -253,8 +253,8 @@ Liftium.buildQueryString = function(nvpairs, sep){
 
 
 Liftium.callAd = function (sizeOrSlot, slotPlacement) {
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'LIFTIUM_DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group LIFTIUM_DISABLED', 1);
+	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
+		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
 		return;
 	}
 
@@ -432,8 +432,8 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacement){
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
 
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'LIFTIUM_DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group LIFTIUM_DISABLED', 1);
+	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
+		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
 		return;
 	}
 
@@ -1427,8 +1427,8 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 
 Liftium.init = function (callback) {
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'LIFTIUM_DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group LIFTIUM_DISABLED', 1);
+	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
+		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
 		return;
 	}
 
@@ -1552,7 +1552,9 @@ Liftium.isNetworkInChain = function (network_name, slotname){
 	return found;
 };
 
-Liftium.isHighValueCountry = AdLogicHighValueCountry(window).isHighValueCountry;
+Liftium.isHighValueCountry = function (countryCode) {
+	return window.adLogicHighValueCountry.isHighValueCountry(countryCode);
+}
 
 /* Check to see if the user from the right geography */
 Liftium.isValidCountry = function (countryList){
@@ -1794,8 +1796,8 @@ Liftium.normalizeColor = function(input){
 
 Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
-	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'LIFTIUM_DISABLED')) {
-		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group LIFTIUM_DISABLED', 1);
+	if (window.Wikia && window.Wikia.AbTest && window.Wikia.AbTest.inGroup('LIFTIUM_DR', 'DISABLED')) {
+		Liftium.d('(Fake) AB experiment LIFTIUM_DR, group DISABLED', 1);
 		return;
 	}
 

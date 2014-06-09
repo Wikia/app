@@ -1,0 +1,56 @@
+@import "skins/oasis/css/mixins/gradient";
+@import "skins/oasis/css/core/color";
+
+@mixin slideshow-nav {
+	a {
+		background-image: none; // apply background only for monobook
+		cursor: pointer;
+
+		// "buttons"
+		span {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+			display: inline-block;
+			height: 36px;
+			line-height: 36px;
+			margin: 12px 0;
+			text-align: center;
+			width: 28px;
+
+			// arrows
+			.chevron {
+				border-width: 6px 11px;
+				margin-top: -2px;
+			}
+		}
+		&.wikia-slideshow-next {
+			text-align: right;
+		}
+
+		// arrows on-hover state
+		&:hover {
+			span {
+				@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			}
+		}
+	}
+	.wikia-slideshow-prev {
+		span {
+			border-top-right-radius: 6px;
+			border-bottom-right-radius: 6px;
+			.chevron {
+				border-color: transparent $color-buttons transparent transparent;
+				margin-left: -12px;
+			}
+		}
+	}
+	.wikia-slideshow-next {
+		span {
+			border-top-left-radius: 6px;
+			border-bottom-left-radius: 6px;
+			.chevron {
+				border-color: transparent transparent transparent $color-buttons;
+				margin-right: -12px;
+			}
+		}
+	}
+}

@@ -680,16 +680,6 @@ hu',
 'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 'createwikilang' => 'Default language for this wiki',
 
-#Special:SharedHelp
-'shared_help_info' => 'This text is stored on Wikia $2. [$1 Suggest changes here].',
-'shared_help_edit_info' => 'The help text within the box is stored at [[w:c:help:Help:$1|Help:$1]] on Wikia $2. See [[Help:Shared Help]] for more info.
-
-Any changes that apply to \'\'all\'\' wikis should be made to the Wikia $2 copy. [[w:c:help:Help_talk:$1|Suggest changes here]].
-
-Text should be placed on this page if you wish to explain usage, style and policy guidelines which apply only to {{SITENAME}}. Text added in this edit box will be displayed above the boxed help text.',
-'shared_help_search_info' => 'To search for help with editing, please visit the [http://help.wikia.com/wiki/Special:Search?search=$1 Help Wikia]',
-'shared_help_was_redirect' => 'This page is a redirect to $1',
-
 #Special:MultiUpload
 'multiplefileuploadsummary' => 'Summary:',
 

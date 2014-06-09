@@ -2,7 +2,7 @@
 
 class YoutubeApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1?v=2&alt=json';
+	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1';
 	protected static $CACHE_KEY = 'youtubeapi';
 	protected static $aspectRatio = 1.7777778;
 
@@ -260,4 +260,26 @@ class YoutubeApiWrapper extends ApiWrapper {
 		// return default
 		parent::checkForResponseErrors($status, $content, $apiUrl);
 	}
+
+	/**
+	 * Get url for API.
+	 * More information: https://developers.google.com/youtube/2.0/developers_guide_protocol
+	 * @return string
+	 */
+	protected function getApiUrl() {
+
+		$youtubeConfig = F::app()->wg->YoutubeConfig;
+
+
+		$params = [
+			'v' => $youtubeConfig['v'],
+			'key' => $youtubeConfig['DeveloperKey'],
+			'alt' => 'json'
+		];
+
+		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
+
+		return $apiUrl . '?' . http_build_query( $params );
+	}
+
 }

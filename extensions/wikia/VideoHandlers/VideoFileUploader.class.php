@@ -179,6 +179,7 @@ class VideoFileUploader {
 		try {
 			$upload = $this->uploadBestThumbnail( $thumbnailUrl );
 		} catch ( Exception $e ) {
+			wfProfileOut(__METHOD__);
 			return Status::newFatal($e->getMessage());
 		}
 

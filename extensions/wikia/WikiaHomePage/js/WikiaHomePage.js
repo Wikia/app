@@ -399,13 +399,6 @@ WikiaHomePageRemix.prototype = {
 				currentlink.attr('data-wikiurl', listslot.wikiurl);
 			}
 			currentslot.find('span').remove().end().find('img').attr('src', listslot.image);
-
-			if (listslot.wikinew) {
-				wikinamehtml.append('<strong class="new">' + $.msg('wikia-home-page-new') + '</strong>');
-			}
-			if (listslot.wikihot) {
-				wikinamehtml.append('<strong class="hot">' + $.msg('wikia-home-page-hot') + '</strong>');
-			}
 			currentslot.data('wiki-id', listslot.wikiid);
 			wikinamehtml.append(listslot.wikiname);
 
@@ -615,15 +608,3 @@ $(window).load(function() {
 	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });
 
-
-// Support clicking on whole button, not only the flag
-$( function() {
-	$( '.wikiahomepage-footer' ).on( 'click', '.wikia-menu-button.secondary li', function ( event ) {
-		// check if our target is really the event's target we would like to invoke - in order to avoid incidental
-		// calling of event handler from child elements
-		if ( event.target === this ) {
-			event.stopPropagation();
-			$( this ).children( 'a' ).get( 0 ).click();
-		}
-	} );
-} );

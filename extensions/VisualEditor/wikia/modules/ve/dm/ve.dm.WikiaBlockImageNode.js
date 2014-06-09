@@ -24,6 +24,11 @@ OO.inheritClass( ve.dm.WikiaBlockImageNode, ve.dm.WikiaBlockMediaNode );
 
 ve.dm.WikiaBlockImageNode.static.name = 'wikiaBlockImage';
 
+ve.dm.WikiaBlockImageNode.static.childNodeTypes = [ 'wikiaImageCaption' ];
+
+ve.dm.WikiaBlockImageNode.static.captionNodeType = 'wikiaImageCaption';
+
+
 /* Registration */
 
 ve.dm.modelRegistry.register( ve.dm.WikiaBlockImageNode );

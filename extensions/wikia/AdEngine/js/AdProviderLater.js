@@ -1,12 +1,14 @@
-/*exported AdProviderLater*/
-/*global setTimeout*/
-var AdProviderLater = function (log, queueForLateAds) {
+/*global setTimeout, define*/
+define('ext.wikia.adEngine.provider.later', [
+	'wikia.log',
+	'ext.wikia.adEngine.lateAdsQueue'
+], function (log, lateAdsQueue) {
 	'use strict';
 
 	function fillInSlot(slotname, success) {
-		log(['fillInSlot', slotname, success], 5, 'AdProviderLater');
+		log(['fillInSlot', slotname, success], 5, 'ext.wikia.adEngine.provider.later');
 		setTimeout(function () {
-			queueForLateAds.push([slotname]);
+			lateAdsQueue.push([slotname]);
 		}, 0);
 		success();
 	}
@@ -15,4 +17,4 @@ var AdProviderLater = function (log, queueForLateAds) {
 		name: 'Later',
 		fillInSlot: fillInSlot
 	};
-};
+});

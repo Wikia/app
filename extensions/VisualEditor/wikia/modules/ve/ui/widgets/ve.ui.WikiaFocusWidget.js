@@ -39,8 +39,8 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
 		.connect( this, {
-			'setup': this.onSurfaceSetup,
-			'teardown': this.onSurfaceTeardown
+			'setup': this.onDocumentSetup,
+			'teardown': this.onDocumentTeardown
 		} );
 	this.$window
 		.on( {
@@ -101,8 +101,12 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 	}
 };
 
-ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
+ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function() {
 	var interval, i = 0;
+
+	if ( this.surface.getDir() === 'rtl' ) {
+		this.switchDirection();
+	}
 
 	this.hideDistractions();
 	this.adjustLayout();
@@ -118,7 +122,19 @@ ve.ui.WikiaFocusWidget.prototype.onSurfaceSetup = function() {
 	}, this ), 1000 );
 };
 
-ve.ui.WikiaFocusWidget.prototype.onSurfaceTeardown = function() {
+
+/**
+ * Switch this.$left and this.$right for RTL
+ *
+ * @method
+ */
+ve.ui.WikiaFocusWidget.prototype.switchDirection = function() {
+	// this.$right is assigned to this.$left inside the array.
+	// this.$left is assigned to the first element in the array, this.$right.
+	this.$left = [this.$right, this.$right = this.$left][0];
+};
+
+ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function() {
 	this.showDistractions();
 	this.$element.remove();
 };

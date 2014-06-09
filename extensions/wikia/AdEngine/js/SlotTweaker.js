@@ -1,9 +1,12 @@
-/*exports SlotTweaker*/
 /*global define*/
-var SlotTweaker = function (log, document, window) {
+define('ext.wikia.adEngine.slotTweaker', [
+	'wikia.log',
+	'wikia.document',
+	'wikia.window'
+], function (log, document, window) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.slottweaker',
+	var logGroup = 'ext.wikia.adEngine.slotTweaker',
 		defaultHeightClass = 'default-height',
 		rclass = /[\t\r\n]/g,
 		standardLeaderboardSizeClass = 'standard-leaderboard';
@@ -17,31 +20,23 @@ var SlotTweaker = function (log, document, window) {
 	}
 
 	// TODO: called always with usingClass=true
-	function hide(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+	function hide(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
-			if (usingClass) {
-				slot.className += ' hidden';
-			} else {
-				slot.style.display = 'none';
-			}
+			slot.className += ' hidden';
 		}
 	}
 
-	function show(slotname, usingClass) {
-		log('hide ' + slotname + (usingClass ? ' using class hidden' : ' using display: none'), 6, logGroup);
+	function show(slotname) {
+		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
-			if (usingClass) {
-				removeClass(slot, 'hidden');
-			} else {
-				throw 'Showing slot not based on hidden class unsupported';
-			}
+			removeClass(slot, 'hidden');
 		}
 	}
 
@@ -52,19 +47,6 @@ var SlotTweaker = function (log, document, window) {
 
 		if (slot) {
 			removeClass(slot, defaultHeightClass);
-		}
-	}
-
-	function isMedrec(slotname) {
-		return slotname.match(/TOP_RIGHT_BOXAD/);
-	}
-
-	function hideSelfServeUrl(slotname) {
-		var selfServeUrl = document.getElementsByClassName('SelfServeUrl');
-		if (isMedrec(slotname)) {
-			if (selfServeUrl.length > 0) {
-				selfServeUrl[0].className += ' hidden';
-			}
 		}
 	}
 
@@ -127,9 +109,6 @@ var SlotTweaker = function (log, document, window) {
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		hideSelfServeUrl : hideSelfServeUrl,
 		show: show
 	};
-};
-
-define('ext.wikia.adengine.slottweaker', ['wikia.log', 'wikia.document', 'wikia.window'], SlotTweaker);
+});

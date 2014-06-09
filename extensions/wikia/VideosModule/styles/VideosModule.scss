@@ -1,0 +1,49 @@
+/*
+ * Right rail videos module
+ * Bottom module styles were removed in commit ee2c6e7
+ */
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/core/layout';
+
+.WikiaRail .videos-module-rail {
+	&.hidden, .hidden {
+		display: none;
+	}
+
+	h1 {
+		display: block;
+		font-size: 20px;
+		margin-bottom: 13px;
+	}
+
+	.thumbnails {
+
+		a:first-of-type {
+			margin-bottom: 7px;
+		}
+
+		.title {
+			font-size: 15px;
+			height: 42px;
+		}
+
+		.title a {
+			color: $color-text;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-wrap: normal;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+	@media screen and (max-width: $breakpoint-small) {
+		// only show three videos on tablet portrait view
+		li:nth-child(n+4) {
+			display: none;
+		}
+	}
+}

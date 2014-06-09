@@ -8,26 +8,25 @@
  * Dialog for inserting MediaWiki media objects.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
  * @param {Object} [config] Config options
  */
-ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( surface, config ) {
+ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.Dialog.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaMediaInsertDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
 ve.ui.WikiaMediaInsertDialog.static.name = 'wikiaMediaInsert';
 
-ve.ui.WikiaMediaInsertDialog.static.titleMessage = 'visualeditor-dialog-media-insert-title';
+ve.ui.WikiaMediaInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
 
 ve.ui.WikiaMediaInsertDialog.static.icon = 'media';
 
@@ -69,7 +68,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	};
 
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.cartModel = new ve.dm.WikiaCart();
@@ -78,16 +77,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.dropTarget = new ve.ui.WikiaDropTargetWidget( {
 		'$': this.$,
 		'$document': this.frame.$document,
-		'$overlay': this.surface.$globalOverlay
+		'$overlay': this.$overlay
 	} );
-	this.insertButton = new OO.ui.PushButtonWidget( {
+	this.insertButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-insert-button' ),
 		'flags': ['primary']
 	} );
 	this.insertionDetails = {};
 	this.license = { 'promise': null, 'html': null };
-	this.pages = new OO.ui.PagedLayout( { '$': this.$, 'attachPagesPanel': true } );
+	this.pages = new OO.ui.BookletLayout( { '$': this.$, 'attachPagesPanel': true } );
 	this.query = new ve.ui.WikiaMediaQueryWidget( {
 		'$': this.$,
 		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' )
@@ -97,7 +96,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
 	this.timings = {};
-	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'hideIcon': true } );
+	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$ } );
 
 	this.$cart = this.$( '<div>' );
 	this.$content = this.$( '<div>' );
@@ -114,7 +113,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$policyReadMoreLink = this.$( '<a>' )
 		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-read-more' ) );
 	this.$policyReadMore.append( this.$policyReadMoreLink );
-
+	// Core VE used to pass VeUiSurface to this constructor. Getting it now with DOM traversal.
+	this.$globalOverlay = this.$frame.closest('.ve-ui-surface-overlay-global');
 
 	// Events
 	this.cartModel.connect( this, {
@@ -146,8 +146,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	// Initialization
 	this.$mainPage.append( this.upload.$element, this.$policy, this.$policyReadMore );
 
-	this.pages.addPage( 'main', { '$content': this.$mainPage } );
-	this.pages.addPage( 'search', { '$content': this.search.$element } );
+	this.mainPage = new OO.ui.PageLayout( 'main', { '$content': this.$mainPage } );
+	this.searchPage = new OO.ui.PageLayout( 'search', { '$content': this.search.$element } );
+	this.pages.addPages( [ this.mainPage, this.searchPage ] );
 
 	this.$cart
 		.addClass( 've-ui-wikiaCartWidget-wrapper' )
@@ -160,7 +161,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
-	this.surface.$globalOverlay.append( this.mediaPreview.$element );
+	this.$globalOverlay.append( this.mediaPreview.$element );
 };
 
 
@@ -333,9 +334,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.onCartModelAdd = function ( items ) {
 			'remove': 'onMediaPageRemove',
 			'preview': 'onMediaPreview'
 		} );
-		this.pages.addPage( item.getId(), { '$content': page.$element } );
+		this.pages.addPages( [ page ] );
 	}
-
 	this.results.setChecked( items, true );
 };
 
@@ -407,7 +407,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this );
+	ve.ui.Dialog.prototype.setup.call( this );
 	this.pages.setPage( 'main' );
 
 	// If the policy height (which has a max-height property set) is the same as the first child of the policy
@@ -440,14 +440,14 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  */
 ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
 	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ) );
+		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
 	}
 	this.cartModel.clearItems();
 	this.queryInput.setValue( '' );
 	this.dropTarget.teardown();
 
 	// Parent method
-	ve.ui.MWDialog.prototype.teardown.call( this, action );
+	ve.ui.Dialog.prototype.teardown.call( this, action );
 };
 
 /**
@@ -484,8 +484,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.convertTemporaryToPermanent = function ( 
 /**
  * @method
  * @param {ve.dm.WikiaCartItem[]} cartItems Items to add
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragment ) {
 	var i, promises = [];
 
 	this.timings.insertStart = ve.now();
@@ -508,15 +509,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems ) {
 	}
 
 	$.when.apply( $, promises ).done( ve.bind( function() {
-		this.insertPermanentMedia( cartItems );
+		this.insertPermanentMedia( cartItems, fragment );
 	}, this ) );
 };
 
 /**
  * @method
  * @param {Object} cartItems Cart items to insert.
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems ) {
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartItems, fragment ) {
 	var items = {},
 		promises = [],
 		types = {
@@ -566,23 +568,9 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 		);
 	}
 
-	function updateAvatar( result ) {
-		items[result.title].avatar = result.avatar;
-		items[result.title].username = result.username;
-	}
-
-	// Attribution request
-	for ( title in items ) {
-		promises.push(
-			this.getPhotoAttribution( title ).done(
-				ve.bind( updateAvatar, this )
-			)
-		);
-	}
-
 	// When all ajax requests are finished, insert media
 	$.when.apply( $, promises ).done(
-		ve.bind( this.insertPermanentMediaCallback, this, items )
+		ve.bind( this.insertPermanentMediaCallback, this, items, fragment )
 	);
 };
 
@@ -591,15 +579,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
  *
  * @method
  * @param {Object} items Items to insert
+ * @param {ve.dm.SurfaceFragment} fragment
  */
-ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items ) {
-	var count, item, title, type,
+ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function ( items, fragment ) {
+	var count, item, title, type, captionType,
 		typeCount = { 'photo': 0, 'video': 0 },
 		linmod = [];
 
 	for ( title in items ) {
 		item = items[title];
 		type = 'wikiaBlock' + ( item.type === 'photo' ? 'Image' : 'Video' );
+		captionType = ( item.type === 'photo' ) ? 'wikiaImageCaption' : 'wikiaVideoCaption';
 		typeCount[item.type]++;
 		linmod.push(
 			{
@@ -612,14 +602,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 					'width': item.width,
 					'height': item.height,
 					'resource': './' + item.title,
-					'attribution': {
-						'username': item.username,
-						'avatar': item.avatar
-					}
+					'user': item.username
 				}
 			},
-			{ 'type': 'wikiaMediaCaption' },
-			{ 'type': '/wikiaMediaCaption' },
+			{ 'type': captionType },
+			{ 'type': '/' + captionType },
 			{ 'type': '/' + type }
 		);
 	}
@@ -645,36 +632,13 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMediaCallback = function (
 		} );
 	}
 
-	this.surface.getModel().getFragment().collapseRangeToEnd().insertContent( linmod );
+	fragment.collapseRangeToEnd().insertContent( linmod );
 
 	ve.track( 'wikia', {
 		'action': ve.track.actions.SUCCESS,
 		'label': 'dialog-media-insert',
 		'value': ve.now() - this.timings.insertStart
 	} );
-};
-
-/**
- * Gets photo attribution information
- *
- * @method
- * @param {string} title Title of the file
- * @returns {jQuery.Promise}
- */
-ve.ui.WikiaMediaInsertDialog.prototype.getPhotoAttribution = function ( title ) {
-	var deferred = $.Deferred();
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'apiphotoattribution',
-			'format': 'json',
-			'file': title
-		},
-		'success': function ( data ) {
-			deferred.resolve( data );
-		}
-	} );
-	return deferred.promise();
 };
 
 /**

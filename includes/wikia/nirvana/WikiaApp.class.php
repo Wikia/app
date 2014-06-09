@@ -53,6 +53,12 @@ class WikiaApp {
 	protected $skinTemplateObj = null;
 
 	/**
+	 * WikiaApp is a singleton
+	 * @var WikiaApp
+	 */
+	protected static $appInstance;
+
+	/**
 	 * global MW variables helper accessor
 	 * @var $wg WikiaGlobalRegistry
 	 */
@@ -116,6 +122,17 @@ class WikiaApp {
 			}
 			error_log( __METHOD__ . ': ' . $message );
 		}
+	}
+
+	/**
+	 * get application object
+	 * @return WikiaApp
+	 */
+	public static function app() {
+		if (!isset(self::$appInstance)) {
+			self::$appInstance = new WikiaApp();
+		}
+		return self::$appInstance;
 	}
 
 	/**
@@ -747,3 +764,10 @@ class WikiaApp {
 		}
 	}
 }
+
+/**
+ * WikiaFactory class alias
+ *
+ */
+class F extends WikiaApp { }
+

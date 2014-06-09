@@ -184,4 +184,117 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$userIdentityBoxMock->getTopWikis();
 	}
 
+	/**
+	 * @dataProvider testSaveUserData_spamFilterProvider
+	 */
+	public function testSaveUserData_spamFilter($userData) {
+		$userMock =  $this->getMock( 'User', [ 'setOption' ] );
+		$userIdentityBoxMock = $this->getMock(
+			'UserIdentityBox',
+			[ 'doSpamCheck', 'hasUserEditedMastheadBefore' ],
+			[ $userMock ],
+			'',
+			false
+		);
+
+		$userIdentityBoxMock->expects( $this->any() )
+			->method( 'hasUserEditedMastheadBefore' )
+			->will( $this->returnValue(true) );
+
+		$userData = new StdClass();
+		foreach ($userData as $property => $config) {
+			$userData->$property = $config['value'];
+
+			if ($property == 'name') {
+				$otherUser = $this->getMock( 'User', [] );
+				$this->mockClassStaticMethod('User', 'newFromName', $otherUser);
+				$userIdentityBoxMock->expects( $this->once() )
+					->method( 'doSpamCheck' )
+					->with( $otherUser )
+					->will( $this->returnValue(!$config['spam']) );
+
+				$userMock->expects( $this->once() )
+					->method( 'setRealName' )
+					->with($config['option']['value']);
+			} else {
+				$userIdentityBoxMock->expects( $this->once() )
+					->method( 'doSpamCheck' )
+					->with( $config['value'] )
+					->will( $this->returnValue(!$config['spam']) );
+
+				$userMock->expects( $this->once() )
+					->method( 'setOption' )
+					->with( $config['option']['property'], $config['option']['value'] );
+			}
+		}
+
+		$userIdentityBoxMock->saveUserData($userData);
+	}
+
+	public function testSaveUserData_spamFilterProvider() {
+		return array(
+			array(
+				array(
+					'name' => array(
+						'value' => 'short enough',
+						'spam' => false,
+						'option' => array(
+							'property' => 'name',
+							'value' => 'short enough',
+						),
+					),
+				),
+			),
+			array(
+				array(
+					'name' => array(
+						'value' => 'this is just way too long, and should be truncated to 40 characters',
+						'spam' => false,
+						'option' => array(
+							'property' => 'name',
+							'value' => '',
+						),
+					),
+				),
+			),
+			array(
+				array(
+					'name' => array(
+						'value' => 'spammy names should default to nothing',
+						'spam' => true,
+						'option' => array(
+							'property' => 'name',
+							'value' => '',
+						),
+					),
+				),
+			),
+			array(
+				// base case using a property with no additional filtering
+				array(
+					'twitter' => array(
+						'value' => 'twitterhandle',
+						'spam' => false,
+						'option' => array(
+							'property' => 'twitter',
+							'value' => 'twitterhandle',
+						),
+					),
+				),
+			),
+			array(
+				// base case using a property with no additional filtering
+				array(
+					'twitter' => array(
+						'value' => 'twitterhandle',
+						'spam' => true,
+						'option' => array(
+							'property' => 'twitter',
+							'value' => '',
+						),
+					),
+				),
+			),
+		);
+	}
 }

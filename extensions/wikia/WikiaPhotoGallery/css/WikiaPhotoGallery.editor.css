@@ -1,17 +1,12 @@
 .WikiaPhotoGalleryEditorPage {
 	display: none;
 	height: 460px;
-	/*overflow: auto;*/
 	position: relative;
 }
 
 #WikiaPhotoGalleryEditor .WikiaPhotoGalleryEditorPageInner {
 	padding: 0 15px;
 	position: relative;
-}
-
-#WikiaPhotoGalleryEditor .modalContent {
-	*display: block; /* IE7 */
 }
 
 /* generic stuff */
@@ -138,10 +133,6 @@ img.WikiaPhotoGalleryProgress {
 
 #WikiaPhotoGallerySearch input[type="text"] {
 	width: 193px;
-}
-
-#WikiaPhotoGallerySearch button {
-	*width: 35px; /* IE7 */
 }
 
 /* search results */

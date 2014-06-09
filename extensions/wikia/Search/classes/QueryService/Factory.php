@@ -44,7 +44,7 @@ class Factory
 			'adapter' => 'Solarium_Client_Adapter_Curl',
 			'adapteroptions' => array(
 				'host'    => $host,
-				'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : 8983,
+				'port'    => empty( $_GET['newsolrhost'] ) ? $service->getGlobalWithDefault( 'SolrPort', 8180 ) : $service->getGlobal( 'SolrDefaultPort' ),
 				'path'    => '/solr/',
 			)
 		);

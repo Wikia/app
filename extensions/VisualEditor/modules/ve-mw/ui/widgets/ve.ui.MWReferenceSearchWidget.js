@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWReferenceSearchWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -12,10 +12,9 @@
  * @extends OO.ui.SearchWidget
  *
  * @constructor
- * @param {ve.ui.Surface} [varname] [description]
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( surface, config ) {
+ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( config ) {
 	// Configuration intialization
 	config = ve.extendObject( {
 		'placeholder': ve.msg( 'visualeditor-reference-input-placeholder' )
@@ -25,7 +24,6 @@ ve.ui.MWReferenceSearchWidget = function VeUiMWReferenceSearchWidget( surface, c
 	OO.ui.SearchWidget.call( this, config );
 
 	// Properties
-	this.surface = surface;
 	this.index = [];
 
 	// Initialization
@@ -40,8 +38,7 @@ OO.inheritClass( ve.ui.MWReferenceSearchWidget, OO.ui.SearchWidget );
 
 /**
  * @event select
- * @param {Object|string|null} data Reference node attributes, command string (e.g. 'create') or
- *  null if no item is selected
+ * @param {ve.dm.MWReferenceModel|null} data Reference model, null if no item is selected
  */
 
 /* Methods */
@@ -74,7 +71,7 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
 		data = item.getData();
 		// Resolve indexed values
 		if ( this.index[data] ) {
-			data = this.index[data].attributes;
+			data = this.index[data].reference;
 		}
 	} else {
 		data = null;
@@ -87,15 +84,15 @@ ve.ui.MWReferenceSearchWidget.prototype.onResultsSelect = function ( item ) {
  * Build a serchable index of references.
  *
  * @method
+ * @param {ve.dm.InternalList} internalList Internal list
  */
-ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
-	var i, iLen, j, jLen, group, groupName, groupNames, view, text, attr, firstNodes, indexOrder,
-		refnode, matches, name, citation,
-		internalList = this.surface.getModel().getDocument().getInternalList(),
+ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function ( internalList ) {
+	var i, iLen, j, jLen, ref, group, groupName, groupNames, view, text, firstNodes, indexOrder,
+		refGroup, refNode, matches, name, citation,
 		groups = internalList.getNodeGroups();
 
 	function extractAttrs() {
-		text += ' ' + $(this).attr( 'href' );
+		text += ' ' + this.getAttribute( 'href' );
 	}
 
 	this.index = [];
@@ -110,9 +107,9 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 		firstNodes = group.firstNodes;
 		indexOrder = group.indexOrder;
 		for ( j = 0, jLen = indexOrder.length; j < jLen; j++ ) {
-			refnode = firstNodes[indexOrder[j]];
-			attr = ve.copy( refnode.getAttributes() );
-			view = new ve.ce.InternalItemNode( internalList.getItemNode( attr.listIndex ) );
+			refNode = firstNodes[indexOrder[j]];
+			ref = ve.dm.MWReferenceModel.static.newFromReferenceNode( refNode );
+			view = new ve.ce.InternalItemNode( internalList.getItemNode( ref.getListIndex() ) );
 
 			// HACK: PHP parser doesn't wrap single lines in a paragraph
 			if ( view.$element.children().length === 1 && view.$element.children( 'p' ).length === 1 ) {
@@ -120,18 +117,23 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 				view.$element.children().replaceWith( view.$element.children().contents() );
 			}
 
-			citation = ( attr.refGroup.length ? attr.refGroup + ' ' : '' ) + ( j + 1 );
-			matches = attr.listKey.match( /^literal\/(.*)$/ );
+			refGroup = ref.getGroup();
+			citation = ( refGroup && refGroup.length ? refGroup + ' ' : '' ) + ( j + 1 );
+			matches = ref.getListKey().match( /^literal\/(.*)$/ );
 			name = matches && matches[1] || '';
+			// Hide previously auto-generated reference names
+			if ( name.match( /^:[0-9]+$/ ) ) {
+				name = '';
+			}
 			// Make visible text, citation and reference name searchable
 			text = [ view.$element.text().toLowerCase(), citation, name ].join( ' ' );
 			// Make URLs searchable
 			view.$element.find( 'a[href]' ).each( extractAttrs );
 
 			this.index.push( {
-				'$': view.$element.clone().show(),
+				'$element': view.$element.clone().show(),
 				'text': text,
-				'attributes': attr,
+				'reference': ref,
 				'citation': citation,
 				'name': name
 			} );
@@ -141,6 +143,15 @@ ve.ui.MWReferenceSearchWidget.prototype.buildIndex = function () {
 
 	// Re-populate
 	this.onQueryChange();
+};
+
+/**
+ * Check whether the index built by #buildIndex is empty. This will return true if
+ * #buildIndex hasn't been called yet.
+ * @returns {boolean} Index is empty
+ */
+ve.ui.MWReferenceSearchWidget.prototype.isIndexEmpty = function () {
+	return this.index.length === 0;
 };
 
 /**

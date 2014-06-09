@@ -20,12 +20,22 @@ class FacebookSignupController extends WikiaController {
 		// try to get connected Wikia account
 		$user = FBConnectDB::getUser($fbUserId);
 
-		if ( ($user instanceof User) && ($fbUserId !== 0) ) {
-			// account is connected - log the user in
-			$user->setCookies();
+		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
+			$this->errorMsg = '';
 
-			$this->loggedIn = true;
-			$this->userName = $user->getName();
+			if ( $this->isAccountDisabled( $user ) ) {
+				// User account was disabled, abort the login
+				$this->loginAborted = true;
+				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
+			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$this->errorMsg ] ) ) {
+				$this->loginAborted = true;
+			} else {
+				// account is connected - log the user in
+				$user->setCookies();
+
+				$this->loggedIn = true;
+				$this->userName = $user->getName();
+			}
 		}
 		else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
@@ -158,5 +168,19 @@ class FacebookSignupController extends WikiaController {
 	private function getFacebookUserId() {
 		$fbApi = new FBConnectAPI();
 		return $fbApi->user();
+	}
+
+	/**
+	 * Check if account is disabled
+	 *
+	 * @param  User    $user User account
+	 * @return boolean       true if the account is disabled,
+	 *                       false otherwise
+	 */
+	private function isAccountDisabled( User $user ) {
+		return $user->getBoolOption( 'disabled' ) || (
+			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
+			$user->getRealName() == CLOSED_ACCOUNT_FLAG
+		);
 	}
 }

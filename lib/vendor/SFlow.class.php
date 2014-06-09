@@ -50,6 +50,7 @@ class SFlow {
 		try {
 			$sock = fsockopen( "udp://" . $wgSFlowHost, $wgSFlowPort, $errno, $errstr );
 			if ( !$sock ) {
+				wfProfileOut( __METHOD__ );
 				return;
 			}
 

@@ -71,6 +71,23 @@ class WikiaHubsV3Controller extends WikiaController {
 		}
 	}
 
+	public function getArticleSuggestModal() {
+		$templateData = [
+			'urlLabel' => wfMessage('wikiahubs-v3-suggest-article-what-article')->text(),
+			'reasonLabel' => wfMessage('wikiahubs-v3-suggest-article-reason')->text(),
+			'successMessage' => wfMessage('wikiahubs-v3-suggest-article-success')->text()
+		];
+
+		$this->setVal( 'html', ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/templates' )
+			->setData( $templateData )
+			->render( 'WikiaHubsV3_suggestArticle.mustache' ) );
+
+		$this->setVal( 'title', wfMessage('wikiahubs-v3-suggest-article-header')->escaped() );
+		$this->setVal( 'labelSubmit', wfMessage( 'wikiahubs-v3-suggest-article-submit-button' )->escaped() );
+		$this->setVal( 'labelCancel', wfMessage( 'wikiahubs-v3-suggest-article-close-button' )->escaped() );
+	}
+
 	/**
 	 * Check if user has access to see hub page in future date
 	 *
@@ -97,9 +114,9 @@ class WikiaHubsV3Controller extends WikiaController {
 
 		$module = MarketingToolboxModuleService::getModuleByName(
 			$moduleName,
-			$this->wg->ContLang->getCode(),
-			MarketingToolboxV3Model::SECTION_HUBS,
-			$this->verticalId,
+			null,
+			null,
+			null,
 			$this->cityId,
 			self::HUBS_VERSION
 		);
@@ -172,6 +189,14 @@ class WikiaHubsV3Controller extends WikiaController {
 		$this->verticalName = $this->getContext()->getTitle()->getText();
 		$this->canonicalVerticalName = str_replace(' ', '', $this->model->getCanonicalVerticalNameById($this->cityId));
 		$this->wg->out->setPageTitle($this->verticalName);
+
+		// For the main page, overwrite the <title> element with the contents of 'pagetitle-view-mainpage'.
+		if ( $this->getContext()->getTitle()->isMainPage() ) {
+			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
+			if ( !$msg->isDisabled() ) {
+				$this->wg->out->setHTMLTitle( $msg->title( $this->getContext()->getTitle() ) );
+			}
+		}
 	}
 
 	protected function initModel() {

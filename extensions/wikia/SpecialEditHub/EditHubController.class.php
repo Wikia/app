@@ -409,8 +409,9 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	private function purgeWikiaHomepageHubs() {
-		WikiaDataAccess::cachePurge( WikiaHomePageHelper::getHubSlotsMemcacheKey($this->langCode) );
-		$this->getHubsServicesHelper()->purgeHomePageVarnish($this->langCode);
+		$lang = $this->wg->ContLang->getCode();
+		WikiaDataAccess::cachePurge( WikiaHomePageHelper::getHubSlotsMemcacheKey($lang) );
+		$this->getHubsServicesHelper()->purgeHomePageVarnish($lang);
 	}
 
 	private function getHubsServicesHelper() {

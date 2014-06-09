@@ -1,9 +1,20 @@
+/*
+ * VisualEditor UserInterface WikiaCartItemWidget class.
+ */
+
 /* global require */
 
-ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model, config ) {
+/**
+ * @class
+ * @extends OO.ui.OptionWidget
+ *
+ * @constructor
+ * @param {ve.dm.WikiaCartItem} model Cart item
+ */
+ve.ui.WikiaCartItemWidget = function VeUiWikiaCartItemWidget( model ) {
 	var size = 60, $image;
 
-	OO.ui.OptionWidget.call( this, model.getId(), config );
+	OO.ui.OptionWidget.call( this, model.getId() );
 
 	this.model = model;
 	this.$element.addClass( 've-ui-texture-pending' );

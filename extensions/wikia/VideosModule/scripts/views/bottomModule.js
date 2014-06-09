@@ -1,26 +1,28 @@
+// Old code to instantiate the bottom module. We're keeping it around just in case we decide to switch
+// to the bottom position later on.
+
 define('videosmodule.views.bottomModule', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
-	'videosmodule.models.abTestBottom',
 	'wikia.tracker'
-], function (sloth, TitleThumbnailView, Mustache, templates, abTest, Tracker) {
+], function (sloth, TitleThumbnailView, Mustache, templates, Tracker) {
 	'use strict';
 
-	// Keep AB test variables private
-	var testCase,
-		groupParams,
-		track;
+	var track, groupParams;
+
+	// mock test data for now
+	groupParams = {
+		rows: 2,
+		position: 1
+	};
 
 	track = Tracker.buildTrackingFunction({
 		category: 'videos-module-bottom',
 		trackingMethod: 'both',
 		action: Tracker.ACTIONS.IMPRESSION
 	});
-
-	testCase = abTest();
-	groupParams = testCase.getGroupParams();
 
 	function VideoModule(options) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
@@ -29,7 +31,6 @@ define('videosmodule.views.bottomModule', [
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
-		this.shouldRender = false;
 
 		// Make sure we're on an article page
 		if (this.articleId) {
@@ -39,14 +40,7 @@ define('videosmodule.views.bottomModule', [
 
 	VideoModule.prototype.init = function () {
 		var self = this;
-		if (!groupParams) {
-			// Handle control group, no videos module display
-			this.handleRelatedPages();
-			return;
-		}
-
-		this.shouldRender = true;
-		this.data = this.model.fetch(groupParams.verticalOnly);
+		this.data = this.model.fetch();
 		// Sloth is a lazy loading service that waits till an element is visible to load more content
 		sloth({
 			on: this.el,
@@ -86,9 +80,7 @@ define('videosmodule.views.bottomModule', [
 		track({
 			label: 'related-pages-impression'
 		});
-		if (this.shouldRender) {
-			this.render();
-		}
+		this.render();
 	};
 
 
@@ -153,9 +145,6 @@ define('videosmodule.views.bottomModule', [
 
 		track({
 			label: 'module-impression'
-		});
-		track({
-			label: testCase.testGroup
 		});
 	};
 

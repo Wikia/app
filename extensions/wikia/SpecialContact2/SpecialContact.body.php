@@ -59,7 +59,13 @@ class ContactForm extends SpecialPage {
 		$out = $this->getOutput();
 		$user = $this->getUser();
 
-		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/SpecialContact2/SpecialContact.scss' ) );
+		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
+			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
+			$out->redirect( $closeAccountTitle->getFullURL() );
+		}
+
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
+
 		$extPath = $app->wg->extensionsPath;
 		$out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mUserName = null;
@@ -296,7 +302,9 @@ class ContactForm extends SpecialPage {
 			}
 		}
 
-		$result = UserMailer::send( $mail_community, $mail_user, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
+		# send mail to wgSpecialContactEmail
+		# PLATFORM-212 -> To: and From: fields are set to wgSpecialContactEmail, ReplyTo: field is the user email
+		$result = UserMailer::send( $mail_community, $mail_community, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
 
 		if (!$result->isOK()) {
 			$errors .= "\n" . $result->getMessage();
@@ -340,8 +348,9 @@ class ContactForm extends SpecialPage {
 
 		$secDat = array();
 
-		foreach( $SpecialContactSecMap as $section )
-		{
+		$closeMyAccountSupported = $this->isCloseMyAccountSupported();
+
+		foreach ( $SpecialContactSecMap as $section ) {
 			if( empty($section['headerMsg']) ) {
 				continue;
 			}
@@ -371,9 +380,13 @@ class ContactForm extends SpecialPage {
 					$msg = $info;
 				}
 
-				$title = Title::newFromText('Contact/' . $sub, NS_SPECIAL);
+				if ( $sub === 'close-account' && $closeMyAccountSupported ) {
+					$title = SpecialPage::getTitleFor( 'CloseMyAccount' );
+				} else {
+					$title = SpecialPage::getTitleFor( 'Contact', $sub );
+				}
 				$msgKey = 'specialcontact-seclink-' . $msg;
-				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, $this->msg( $msgKey )->text(), '', '', '', "class={$msgKey}" );
+				$newsec['links'][] = $uskin->makeKnownLinkObj( $title, $this->msg( $msgKey )->escaped(), '', '', '', "class={$msgKey}" );
 			}
 			$secDat[] = $newsec;
 		}
@@ -678,5 +691,18 @@ class ContactForm extends SpecialPage {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Check if the CloseMyAccount extension is enabled and supported in the
+	 * current language.
+	 *
+	 * @return boolean True if CloseMyAccount is enabled and supported in the
+	 *                 current language, false otherwise
+	 */
+	private function isCloseMyAccountSupported() {
+		global $wgContLang, $wgEnableCloseMyAccountExt, $wgSupportedCloseMyAccountLang;
+		return !empty( $wgEnableCloseMyAccountExt )
+				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
 	}
 }

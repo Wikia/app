@@ -419,11 +419,11 @@ $messages['ig'] = array(
  * @author Pietrodn
  */
 $messages['it'] = array(
-	'wva-success' => 'La pagina video $1 è stata aggiunta con successo.', # Fuzzy
-	'wva-success-replaced' => 'La pagina video $1 è stata sostituita con successo.', # Fuzzy
+	'wva-success' => 'La pagina video [[:$1]] è stata aggiunta con successo.',
+	'wva-success-replaced' => 'La pagina video [[:$1]] è stata sostituita con successo.',
 	'wva-failure' => 'Prego inserisci parametri validi.',
-	'wva-name' => 'Inserisci il nome:', # Fuzzy
-	'wva-url' => "Inserisci l'URL:", # Fuzzy
+	'wva-name' => 'Nome del video:',
+	'wva-url' => 'URL del video:',
 	'wva-add' => 'Aggiungi',
 	'wva-title' => 'Aggiungi rapidamente video da URL',
 	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',

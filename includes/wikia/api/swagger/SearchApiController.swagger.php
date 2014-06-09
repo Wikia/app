@@ -365,7 +365,7 @@ use Swagger\Annotations as SWG;
  *  )
  *
  * @SWG\Api(
- * 	path="/api/v1/Search/List",
+ * 	path="/Search/List",
  * 	description="Search local Wikia for given phrase. Should not be used directly on www.wikia.com.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -449,7 +449,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Search/CrossWiki",
+ * 	path="/Search/CrossWiki",
  * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -522,7 +522,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/Search/CrossWiki?expand=1",
+ * 	path="/Search/CrossWiki?expand=1",
  * 	description="Get results for cross-wiki search for submitted query. As a result you get a list of Wikis expanded with detailed data",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -619,7 +619,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  *  @SWG\Api(
- * 	path="/api/v1/Search/Combined",
+ * 	path="/Search/Combined",
  * 	description="Get results for combined wiki and cross-wiki search ",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

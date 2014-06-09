@@ -9,26 +9,25 @@
  * Dialog for editing wikitext in source mode.
  *
  * @class
- * @extends ve.ui.MWDialog
+ * @extends ve.ui.Dialog
  *
  * @constructor
- * @param {ve.ui.Surface} surface
  * @param {Object} [config] Config options
  */
-ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( surface, config ) {
+ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( config ) {
 	// Parent constructor
-	ve.ui.MWDialog.call( this, surface, config );
+	ve.ui.Dialog.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.MWDialog );
+OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.Dialog );
 
 /* Static Properties */
 
 ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
-ve.ui.WikiaSourceModeDialog.static.titleMessage = 'wikia-visualeditor-dialog-wikiasourcemode-title';
+ve.ui.WikiaSourceModeDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
 
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
@@ -36,7 +35,7 @@ ve.ui.WikiaSourceModeDialog.static.icon = 'source';
 
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.MWDialog.prototype.initialize.call( this );
+	ve.ui.Dialog.prototype.initialize.call( this );
 
 	// Properties
 	this.openCount = 0;
@@ -45,7 +44,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 		'$': this.$,
 		'multiline': true
 	});
-	this.applyButton = new OO.ui.PushButtonWidget( {
+	this.applyButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
 		'flags': ['primary']
@@ -68,22 +67,22 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 };
 
 /**
- * Handle opening the dialog.
- *
- * @method
+ * @inheritdoc
  */
-ve.ui.WikiaSourceModeDialog.prototype.setup = function () {
-	var doc = this.surface.getModel().getDocument();
+ve.ui.WikiaSourceModeDialog.prototype.setup = function ( data ) {
+	var doc = this.getFragment().getDocument();
 
+	this.target = data.target;
 	this.openCount++;
 	this.timings.serializeStart = ve.now();
 
 	// Parent method
-	ve.ui.MWDialog.prototype.setup.call( this );
+	ve.ui.Dialog.prototype.setup.call( this );
 
 	this.$frame.startThrobbing();
-	this.surface.getTarget().serialize(
-		ve.dm.converter.getDomFromData( doc.getFullData(), doc.getStore(), doc.getInternalList() ),
+	// Use the WikiaViewPageTarget object as the target here
+	this.target.serialize(
+		ve.dm.converter.getDomFromModel( doc, false ),
 		ve.bind( this.onSerialize, this )
 	);
 };
@@ -152,7 +151,7 @@ ve.ui.WikiaSourceModeDialog.prototype.parse = function( ) {
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
-	var target;
+	var target, parseStart;
 	if ( !response || response.error || !response.visualeditor || response.visualeditor.result !== 'success' ) {
 		return this.onParseError.call( this );
 	}
@@ -165,25 +164,24 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 
 	// TODO: This whole approach is based on ve.init.mw.ViewPageTarget.js and contains a lot of code
 	// duplication, it should be discussed with WMF guys and refactored.
-	target = this.surface.getTarget();
+	target = this.target;
 
 	target.deactivating = true;
 	target.tearDownToolbarButtons();
 	target.detachToolbarButtons();
-	target.saveDialog.reset();
-	target.saveDialog.close();
 
 	target.tearDownSurface( false );
+	target.deactivating = false;
 
 	target.wikitext = this.sourceModeTextarea.getValue();
 
 	target.activating = true;
 	target.edited = true;
 	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+	parseStart = this.timings.parseStart;
 	target.setUpSurface( target.doc, ve.bind( function() {
 		this.editNotices = {};
 		this.setupToolbarButtons();
-		this.setupSaveDialog();
 		this.attachToolbarButtons();
 		this.$document[0].focus();
 		this.activating = false;
@@ -191,9 +189,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function( response ) {
 		ve.track( 'wikia', {
 			'action': ve.track.actions.SUCCESS,
 			'label': 'dialog-source-parse',
-			'value': ve.now() - this.timings.parseStart
+			'value': ve.now() - parseStart
 		} );
-	}, target ), false );
+	}, target ) );
 };
 
 /**

@@ -22,4 +22,4 @@ Feature: VisualEditor
     | Editing with ÄËÏÖÜ                         | Editing with ÄËÏÖÜ                         |
     | Editing with ÂÊÎÔÛ                         | Editing with ÂÊÎÔÛ                         |
     | Editing with áéíóú                         | Editing with áéíóú                         |
-    | Editing with Déjà vu 北京 <tag & "OK" 'end' | Editing with Déjà vu 北京 <tag & "OK" 'end' |
+    | Editing with Déjà vu 北京 <tag & "OK" "end" | Editing with Déjà vu 北京 <tag & "OK" "end" |

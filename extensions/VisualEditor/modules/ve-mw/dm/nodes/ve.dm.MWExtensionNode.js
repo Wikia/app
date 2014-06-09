@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWExtensionNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -38,6 +38,12 @@ ve.dm.MWExtensionNode.static.matchTagNames = null;
 
 ve.dm.MWExtensionNode.static.isContent = true;
 
+/**
+ * HTML tag name.
+ * @static
+ * @property {string}
+ * @inheritable
+ */
 ve.dm.MWExtensionNode.static.tagName = null;
 
 /**
@@ -74,7 +80,7 @@ ve.dm.MWExtensionNode.static.toDataElement = function ( domElements, converter )
 
 ve.dm.MWExtensionNode.static.toDomElements = function ( dataElement, doc, converter ) {
 	var el,
-		index = converter.getStore().indexOfHash( OO.getHash( this.getHashObject( dataElement ) ) ),
+		index = converter.getStore().indexOfHash( OO.getHash( [ this.getHashObject( dataElement ), undefined ] ) ),
 		originalMw = dataElement.attributes.originalMw;
 
 	// If the transclusion is unchanged just send back the

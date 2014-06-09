@@ -20,7 +20,6 @@
 	"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
 	"requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
 	"requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
-	"requireCamelCaseOrUpperCaseIdentifiers": true,
 	"disallowKeywords": [ "with" ],
 	"disallowMultipleLineStrings": true,
 	"disallowMultipleLineBreaks": true,

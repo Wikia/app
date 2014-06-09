@@ -1,7 +1,7 @@
 /*!
  * VisualEditor MediaWiki Initialization Platform class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -23,11 +23,7 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 	this.externalLinkUrlProtocolsRegExp = new RegExp( '^' + mw.config.get( 'wgUrlProtocols' ) );
 	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor/modules';
 	this.parsedMessages = {};
-	this.mediaSources = [
-		//TODO: Bug 50673
-		{ 'url': mw.util.wikiScript( 'api' ) },
-		{ 'url': '//commons.wikimedia.org/w/api.php' }
-	];
+	this.linkCache = new ve.init.mw.LinkCache();
 };
 
 /* Inheritance */
@@ -90,16 +86,6 @@ ve.init.mw.Platform.prototype.getUserLanguages = function () {
 	}
 
 	return langs;
-};
-
-/**
- * Get a list of URLs to MediaWiki API entry points where media can be found.
- *
- * @method
- * @returns {string[]} API URLs
- */
-ve.init.mw.Platform.prototype.getMediaSources = function () {
-	return this.mediaSources;
 };
 
 /* Initialization */

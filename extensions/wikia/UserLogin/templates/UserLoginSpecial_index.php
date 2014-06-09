@@ -1,11 +1,11 @@
 <div class="UserLogin">
 <?php
 	$tabIndex = 5;
-	
+
 	$loginTokenInput = array(
 		'type' => 'hidden',
 		'name' => 'loginToken',
-		'value' => $loginToken
+		'value' => Sanitizer::encodeAttribute( $loginToken ),
 	);
 
 	$userNameInput = array(

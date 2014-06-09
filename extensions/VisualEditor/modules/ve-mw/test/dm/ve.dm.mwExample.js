@@ -1,7 +1,7 @@
 /*!
- * VisualEditor DataModel MediaWiki example data sets.
+ * VisualEditor DataModel MediaWiki-specific example data sets.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -17,28 +17,58 @@ ve.dm.mwExample.createExampleDocument = function ( name, store ) {
 };
 
 ve.dm.mwExample.MWTransclusion = {
-	'blockOpen':         '<div about="#mwt1" typeof="mw:Transclusion" data-mw="{&quot;target&quot;:{&quot;wt&quot;:&quot;Test&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Hello, world!&quot;}},&quot;id&quot;:&quot;mwt1&quot;}" data-parsoid="{&quot;tsr&quot;:[18,40],&quot;src&quot;:&quot;{{Test|Hello, world!}}&quot;,&quot;dsr&quot;:[18,40,null,null]}"></div>',
-	'blockOpenModified': '<div about="#mwt1" typeof="mw:Transclusion" data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Test&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Hello, globe!&quot;}}}" data-parsoid="{&quot;tsr&quot;:[18,40],&quot;src&quot;:&quot;{{Test|Hello, world!}}&quot;,&quot;dsr&quot;:[18,40,null,null]}"></div>',
+	'blockOpen':
+		'<div about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;target&quot;:{&quot;wt&quot;:&quot;Test&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Hello, world!&quot;}},&quot;id&quot;:&quot;mwt1&quot;}"' +
+			' data-parsoid="{&quot;tsr&quot;:[18,40],&quot;src&quot;:&quot;{{Test|Hello, world!}}&quot;,&quot;dsr&quot;:[18,40,null,null]}"' +
+		'>' +
+		'</div>',
+	'blockOpenModified':
+		'<div about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Test&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;Hello, globe!&quot;}}}"' +
+			' data-ve-no-generated-contents="true"' +
+			' data-parsoid="{&quot;tsr&quot;:[18,40],&quot;src&quot;:&quot;{{Test|Hello, world!}}&quot;,&quot;dsr&quot;:[18,40,null,null]}"' +
+		'>' +
+		'</div>',
 	'blockContent': '<p about="#mwt1" data-parsoid="{}">Hello, world!</p>',
-	'inlineOpen':         '<span about="#mwt1" typeof="mw:Transclusion" data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;1,234&quot;}}}" data-parsoid="{&quot;tsr&quot;:[18,34],&quot;src&quot;:&quot;{{Inline|1,234}}&quot;,&quot;dsr&quot;:[18,34,null,null]}">',
-	'inlineOpenModified': '<span about="#mwt1" typeof="mw:Transclusion" data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;5,678&quot;}}}" data-parsoid="{&quot;tsr&quot;:[18,34],&quot;src&quot;:&quot;{{Inline|1,234}}&quot;,&quot;dsr&quot;:[18,34,null,null]}">',
+	'inlineOpen':
+		'<span about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;1,234&quot;}}}"' +
+			' data-parsoid="{&quot;tsr&quot;:[18,34],&quot;src&quot;:&quot;{{Inline|1,234}}&quot;,&quot;dsr&quot;:[18,34,null,null]}"' +
+		'>',
+	'inlineOpenModified':
+		'<span about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;5,678&quot;}}}"' +
+			' data-ve-no-generated-contents="true"' +
+			' data-parsoid="{&quot;tsr&quot;:[18,34],&quot;src&quot;:&quot;{{Inline|1,234}}&quot;,&quot;dsr&quot;:[18,34,null,null]}"' +
+		'>',
 	'inlineContent': '$1,234.00',
 	'inlineClose': '</span>',
-	'mixed': '<link about="#mwt1" rel="mw:WikiLink/Category" typeof="mw:Transclusion" data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;5,678&quot;}}}"><span about="#mwt1">Foo</span>',
-	'pairOne': '<p about="#mwt1" typeof="mw:Transclusion" data-mw="{&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;foo&quot;}}}" data-parsoid="1">foo</p>',
-	'pairTwo': '<p about="#mwt2" typeof="mw:Transclusion" data-mw="{&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;foo&quot;}}}" data-parsoid="2">foo</p>',
+	'mixed':
+		'<link about="#mwt1" rel="mw:PageProp/Category" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;id&quot;:&quot;mwt1&quot;,&quot;target&quot;:{&quot;wt&quot;:&quot;Inline&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;5,678&quot;}}}"' +
+		'>' +
+		'<span about="#mwt1">Foo</span>',
+	'pairOne':
+		'<p about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;foo&quot;}}}" data-parsoid="1"' +
+		'>foo</p>',
+	'pairTwo':
+		'<p about="#mwt2" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;foo&quot;}}}" data-parsoid="2"' +
+		'>foo</p>',
 	'meta':
-		'<link rel="mw:WikiLink/Category" href="./Category:Page" about="#mwt1" typeof="mw:Transclusion" ' +
-			'data-mw="{&quot;target&quot;:{&quot;wt&quot;:&quot;Template:Echo&quot;,&quot;href&quot;:&quot;./Template:Echo&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;[[Category:Page]]\\n[[Category:Book]]&quot;}},&quot;i&quot;:0}">' +
+		'<link rel="mw:PageProp/Category" href="./Category:Page" about="#mwt1" typeof="mw:Transclusion"' +
+			' data-mw="{&quot;target&quot;:{&quot;wt&quot;:&quot;Template:Echo&quot;,&quot;href&quot;:&quot;./Template:Echo&quot;},&quot;params&quot;:{&quot;1&quot;:{&quot;wt&quot;:&quot;[[Category:Page]]\\n[[Category:Book]]&quot;}},&quot;i&quot;:0}">' +
 		'<span about="#mwt1" data-parsoid="{}">\n</span>' +
-		'<link rel="mw:WikiLink/Category" href="./Category:Book" about="#mwt1">'
+		'<link rel="mw:PageProp/Category" href="./Category:Book" about="#mwt1">'
 };
 ve.dm.mwExample.MWTransclusion.blockData = {
 	'type': 'mwTransclusionBlock',
 	'attributes': {
 		'mw': {
 			'id': 'mwt1',
-			'target': { 'wt' : 'Test' },
+			'target': { 'wt': 'Test' },
 			'params': {
 				'1': { 'wt': 'Hello, world!' }
 			}
@@ -65,7 +95,7 @@ ve.dm.mwExample.MWTransclusion.inlineData = {
 	'attributes': {
 		'mw': {
 			'id': 'mwt1',
-			'target': { 'wt' : 'Inline' },
+			'target': { 'wt': 'Inline' },
 			'params': {
 				'1': { 'wt': '1,234' }
 			}
@@ -98,7 +128,7 @@ ve.dm.mwExample.MWTransclusion.mixedDataOpen = {
 	'htmlAttributes': [
 		{ 'values': {
 			'about': '#mwt1',
-			'rel': 'mw:WikiLink/Category',
+			'rel': 'mw:PageProp/Category',
 			'typeof': 'mw:Transclusion',
 			'data-mw': '{\"id\":\"mwt1\",\"target\":{\"wt\":\"Inline\"},\"params\":{\"1\":{\"wt\":\"5,678\"}}}'
 		} },
@@ -123,6 +153,60 @@ ve.dm.mwExample.MWTransclusion.mixedParamsHash = OO.getHash( [ ve.dm.MWTransclus
 ve.dm.mwExample.MWTransclusion.mixedStoreItems = {
 	'hash': ve.dm.mwExample.MWTransclusion.mixedParamsHash,
 	'value': $( ve.dm.mwExample.MWTransclusion.mixed ).toArray()
+};
+
+ve.dm.mwExample.MWInternalLink = {
+	'absoluteHref': ve.resolveUrl( '/wiki/Foo/Bar', ve.dm.example.base )
+};
+
+ve.dm.mwExample.MWInternalLink.absoluteOpen = '<a rel="mw:WikiLink" href="' + ve.dm.mwExample.MWInternalLink.absoluteHref + '">';
+ve.dm.mwExample.MWInternalLink.absoluteData = {
+	'type': 'link/mwInternal',
+	'attributes': {
+		'title': 'Foo/Bar',
+		'origTitle': 'Foo/Bar',
+		'normalizedTitle': 'Foo/Bar',
+		'lookupTitle': 'Foo/Bar',
+		'hrefPrefix': ''
+	},
+	'htmlAttributes': [
+		{
+			'values': {
+				'href': ve.dm.mwExample.MWInternalLink.absoluteHref,
+				'rel': 'mw:WikiLink'
+			},
+			'computed': {
+				'href': ve.dm.mwExample.MWInternalLink.absoluteHref
+			}
+		}
+	]
+};
+
+ve.dm.mwExample.MWInternalSectionLink = {
+	'absoluteHref': ve.resolveUrl( '/wiki/Foo#Bar', ve.dm.example.base )
+};
+
+ve.dm.mwExample.MWInternalSectionLink.absoluteOpen = '<a rel="mw:WikiLink" href="' + ve.dm.mwExample.MWInternalSectionLink.absoluteHref + '">';
+ve.dm.mwExample.MWInternalSectionLink.absoluteData = {
+	'type': 'link/mwInternal',
+	'attributes': {
+		'title': 'Foo#Bar',
+		'origTitle': 'Foo#Bar',
+		'normalizedTitle': 'Foo#Bar',
+		'lookupTitle': 'Foo',
+		'hrefPrefix': ''
+	},
+	'htmlAttributes': [
+		{
+			'values': {
+				'href': ve.dm.mwExample.MWInternalSectionLink.absoluteHref,
+				'rel': 'mw:WikiLink'
+			},
+			'computed': {
+				'href': ve.dm.mwExample.MWInternalSectionLink.absoluteHref
+			}
+		}
+	]
 };
 
 ve.dm.mwExample.MWBlockImage = {
@@ -231,16 +315,16 @@ ve.dm.mwExample.mwNowikiHtml = '<body><p>Foo<span typeof="mw:Nowiki">[[Bar]]</sp
 
 ve.dm.mwExample.withMeta = [
 	{
-		'type': 'alienMeta',
+		'type': 'comment',
 		'attributes': {
-			'domElements': $( '<!-- No content conversion -->' ).toArray()
+			'text': ' No content conversion '
 		}
 	},
-	{ 'type': '/alienMeta' },
+	{ 'type': '/comment' },
 	{
 		'type': 'mwAlienMeta',
 		'attributes': {
-			'domElements': $( '<meta property="mw:PageProp/nocc" />' ).toArray()
+			'domElements': $( '<meta property="mw:ThisIsAnAlien" />' ).toArray()
 		}
 	},
 	{ 'type': '/mwAlienMeta' },
@@ -255,8 +339,7 @@ ve.dm.mwExample.withMeta = [
 			'category': 'Category:Bar',
 			'origCategory': 'Category:Bar',
 			'sortkey': '',
-			'origSortkey': '',
-			'origRel': 'mw:PageProp/Category'
+			'origSortkey': ''
 		},
 		'htmlAttributes': [
 			{
@@ -284,12 +367,12 @@ ve.dm.mwExample.withMeta = [
 	'B',
 	'a',
 	{
-		'type': 'alienMeta',
+		'type': 'comment',
 		'attributes': {
-			'domElements': $( '<!-- inline -->' ).toArray()
+			'text': ' inline '
 		}
 	},
-	{ 'type': '/alienMeta' },
+	{ 'type': '/comment' },
 	'z',
 	{ 'type': '/paragraph' },
 	{
@@ -300,12 +383,12 @@ ve.dm.mwExample.withMeta = [
 	},
 	{ 'type': '/mwAlienMeta' },
 	{
-		'type': 'alienMeta',
+		'type': 'comment',
 		'attributes': {
-			'domElements': $( '<!--barbaz-->' ).toArray()
+			'text': 'barbaz'
 		}
 	},
-	{ 'type': '/alienMeta' },
+	{ 'type': '/comment' },
 	{
 		'type': 'mwCategory',
 		'attributes': {
@@ -313,8 +396,7 @@ ve.dm.mwExample.withMeta = [
 			'category': 'Category:Foo foo',
 			'origCategory': 'Category:Foo_foo',
 			'sortkey': 'Bar baz#quux',
-			'origSortkey': 'Bar baz%23quux',
-			'origRel': 'mw:PageProp/Category'
+			'origSortkey': 'Bar baz%23quux'
 		},
 
 		'htmlAttributes': [
@@ -368,7 +450,7 @@ ve.dm.mwExample.withMetaMetaData = [
 		{
 			'type': 'mwAlienMeta',
 			'attributes': {
-				'domElements': $( '<meta property="mw:PageProp/nocc" />' ).toArray()
+				'domElements': $( '<meta property="mw:ThisIsAnAlien" />' ).toArray()
 			}
 		}
 	],
@@ -388,7 +470,7 @@ ve.dm.mwExample.withMetaMetaData = [
 			'htmlAttributes': [
 				{
 					'values': {
-						'rel': 'mw:WikiLink/Category',
+						'rel': 'mw:PageProp/Category',
 						'href': './Category:Bar'
 					},
 					'computed': {
@@ -426,9 +508,9 @@ ve.dm.mwExample.withMetaMetaData = [
 			}
 		},
 		{
-			'type': 'alienMeta',
+			'type': 'comment',
 			'attributes': {
-				'domElements': $( '<!--barbaz-->' ).toArray()
+				'text': 'barbaz'
 			}
 		},
 		{
@@ -441,7 +523,7 @@ ve.dm.mwExample.withMetaMetaData = [
 				'origSortkey': 'Bar baz%23quux'
 			},
 			'htmlAttributes': [ { 'values': {
-				'rel': 'mw:WikiLink/Category',
+				'rel': 'mw:PageProp/Category',
 				'href': './Category:Foo_foo#Bar baz%23quux'
 			} } ]
 		},
@@ -648,17 +730,17 @@ ve.dm.mwExample.references = [
 	{ 'type': '/paragraph' },
 	{ 'type': '/internalItem' },
 	{ 'type': 'internalItem' },
-	{ 'type' : 'paragraph' },
+	{ 'type': 'paragraph' },
 	'Q', 'u', 'u', 'x',
 	{ 'type': '/paragraph' },
 	{ 'type': '/internalItem' },
 	{ 'type': 'internalItem' },
-	{ 'type' : 'paragraph' },
+	{ 'type': 'paragraph' },
 	'N', 'o', ' ', 'n', 'a', 'm', 'e', ' ', '2',
 	{ 'type': '/paragraph' },
 	{ 'type': '/internalItem' },
 	{ 'type': 'internalItem' },
-	{ 'type' : 'paragraph' },
+	{ 'type': 'paragraph' },
 	'N', 'o', ' ', 'n', 'a', 'm', 'e', ' ', '3',
 	{ 'type': '/paragraph' },
 	{ 'type': '/internalItem' },
@@ -666,10 +748,13 @@ ve.dm.mwExample.references = [
 ];
 
 ve.dm.mwExample.complexInternalData = [
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- before -->' ).get() } },
-	{ 'type': '/alienMeta' },
+	// Metadata is indented
+	// 0
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- before -->' ).get() } },
+		{ 'type': '/alienMeta' },
 	{ 'type': 'paragraph' },
 	'F', ['o', [ve.dm.example.bold]], ['o', [ve.dm.example.italic]],
+	// 4
 	{ 'type': 'mwReference', 'attributes': {
 		'mw': {},
 		'about': '#mwt1',
@@ -679,17 +764,24 @@ ve.dm.mwExample.complexInternalData = [
 		'refGroup': '',
 		'contentsUsed': true
 	} },
+	// 5
 	{ 'type': '/mwReference' },
+	// 6
 	{ 'type': '/paragraph' },
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- after -->' ).get() } },
-	{ 'type': '/alienMeta' },
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- after -->' ).get() } },
+		{ 'type': '/alienMeta' },
+	// 7
 	{ 'type': 'internalList' },
+	// 8
 	{ 'type': 'internalItem' },
+	// 9
 	{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
 	'R', ['e', [ve.dm.example.bold]], 'f',
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- reference -->' ).get() } },
-	{ 'type': '/alienMeta' },
+	// 13
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- reference -->' ).get() } },
+		{ 'type': '/alienMeta' },
 	'e', ['r', [ve.dm.example.italic]], ['e', [ve.dm.example.italic]],
+	// 16
 	{ 'type': 'mwReference', 'attributes': {
 		'mw': {},
 		'about': '#mwt2',
@@ -699,26 +791,37 @@ ve.dm.mwExample.complexInternalData = [
 		'refGroup': '',
 		'contentsUsed': true
 	} },
+	// 17
 	{ 'type': '/mwReference' },
 	'n', 'c', 'e',
+	// 21
 	{ 'type': '/paragraph' },
+	// 22
 	{ 'type': '/internalItem' },
+	// 23
 	{ 'type': 'internalItem' },
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- beginning -->' ).get() } },
-	{ 'type': '/alienMeta' },
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- beginning -->' ).get() } },
+		{ 'type': '/alienMeta' },
+	// 24
 	{ 'type': 'preformatted' },
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- inside -->' ).get() } },
-	{ 'type': '/alienMeta' },
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- inside -->' ).get() } },
+		{ 'type': '/alienMeta' },
+	// 25
 	{ 'type': 'mwEntity', 'attributes': { 'character': '€' } },
+	// 26
 	{ 'type': '/mwEntity' },
 	'2', '5', '0',
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- inside2 -->' ).get() } },
-	{ 'type': '/alienMeta' },
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- inside2 -->' ).get() } },
+		{ 'type': '/alienMeta' },
+	// 30
 	{ 'type': '/preformatted' },
-	{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- end -->' ).get() } },
-	{ 'type': '/alienMeta' },
+		{ 'type': 'alienMeta', 'attributes': { 'domElements': $( '<!-- end -->' ).get() } },
+		{ 'type': '/alienMeta' },
+	// 31
 	{ 'type': '/internalItem' },
+	// 32
 	{ 'type': '/internalList' }
+	// 33
 ];
 
 ve.dm.mwExample.complexInternalData.internalItems = [
@@ -1219,6 +1322,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [
@@ -1242,6 +1346,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [
@@ -1265,6 +1370,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [
@@ -1363,12 +1469,12 @@ ve.dm.mwExample.domToDataCases = {
 			'F', 'o', 'o',
 			{ 'type': '/paragraph' },
 			{
-				'type': 'alienMeta',
+				'type': 'comment',
 				'attributes': {
-					'domElements': $( '<!-- bar -->' ).toArray()
+					'text': ' bar '
 				}
 			},
-			{ 'type': '/alienMeta' },
+			{ 'type': '/comment' },
 			{ 'type': '/internalItem' },
 			{ 'type': '/internalList' }
 		]
@@ -1386,6 +1492,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Foo/Bar',
 						'origTitle': 'Foo/Bar',
 						'normalizedTitle': 'Foo/Bar',
+						'lookupTitle': 'Foo/Bar',
 						'hrefPrefix': './../../../'
 					},
 					'htmlAttributes': [
@@ -1409,6 +1516,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Foo/Bar',
 						'origTitle': 'Foo/Bar',
 						'normalizedTitle': 'Foo/Bar',
+						'lookupTitle': 'Foo/Bar',
 						'hrefPrefix': './../../../'
 					},
 					'htmlAttributes': [
@@ -1432,6 +1540,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Foo/Bar',
 						'origTitle': 'Foo/Bar',
 						'normalizedTitle': 'Foo/Bar',
+						'lookupTitle': 'Foo/Bar',
 						'hrefPrefix': './../../../'
 					},
 					'htmlAttributes': [
@@ -1451,6 +1560,56 @@ ve.dm.mwExample.domToDataCases = {
 			{ 'type': 'internalList' },
 			{ 'type': '/internalList' }
 		]
+	},
+	'internal link with absolute path': {
+		'body': '<p>' + ve.dm.mwExample.MWInternalLink.absoluteOpen + 'Foo</a></p>',
+		'data': [
+			{ 'type': 'paragraph' },
+			[
+				'F',
+				[ ve.dm.mwExample.MWInternalLink.absoluteData ]
+			],
+			[
+				'o',
+				[ ve.dm.mwExample.MWInternalLink.absoluteData ]
+			],
+			[
+				'o',
+				[ ve.dm.mwExample.MWInternalLink.absoluteData ]
+			],
+			{ 'type': '/paragraph' },
+			{ 'type': 'internalList' },
+			{ 'type': '/internalList' }
+		],
+		'normalizedBody': '<p><a rel="mw:WikiLink" href="Foo/Bar">Foo</a></p>',
+		'mwConfig': {
+			'wgArticlePath': '/wiki/$1'
+		}
+	},
+	'internal link with absolute path and section': {
+		'body': '<p>' + ve.dm.mwExample.MWInternalSectionLink.absoluteOpen + 'Foo</a></p>',
+		'data': [
+			{ 'type': 'paragraph' },
+			[
+				'F',
+				[ ve.dm.mwExample.MWInternalSectionLink.absoluteData ]
+			],
+			[
+				'o',
+				[ ve.dm.mwExample.MWInternalSectionLink.absoluteData ]
+			],
+			[
+				'o',
+				[ ve.dm.mwExample.MWInternalSectionLink.absoluteData ]
+			],
+			{ 'type': '/paragraph' },
+			{ 'type': 'internalList' },
+			{ 'type': '/internalList' }
+		],
+		'normalizedBody': '<p><a rel="mw:WikiLink" href="Foo#Bar">Foo</a></p>',
+		'mwConfig': {
+			'wgArticlePath': '/wiki/$1'
+		}
 	},
 	'numbered external link (empty mw:Extlink)': {
 		'body': '<p>Foo<a rel="mw:ExtLink" href="http://www.example.com"></a>Bar</p>',
@@ -1532,7 +1691,7 @@ ve.dm.mwExample.domToDataCases = {
 	},
 	'whitespace preservation with wrapped comments and language links': {
 		'body': 'Foo\n' +
-			'<link rel="mw:WikiLink/Language" href="http://de.wikipedia.org/wiki/Foo">\n' +
+			'<link rel="mw:PageProp/Language" href="http://de.wikipedia.org/wiki/Foo">\n' +
 			'<link rel="mw:PageProp/Language" href="http://fr.wikipedia.org/wiki/Foo">',
 		'data': [
 			{
@@ -1549,14 +1708,13 @@ ve.dm.mwExample.domToDataCases = {
 			{
 				'type': 'mwLanguage',
 				'attributes': {
-					'href': 'http://de.wikipedia.org/wiki/Foo',
-					'origRel': 'mw:WikiLink/Language'
+					'href': 'http://de.wikipedia.org/wiki/Foo'
 				},
 				'htmlAttributes': [
 					{
 						'values': {
 							'href': 'http://de.wikipedia.org/wiki/Foo',
-							'rel': 'mw:WikiLink/Language'
+							'rel': 'mw:PageProp/Language'
 						},
 						'computed': {
 							'href': 'http://de.wikipedia.org/wiki/Foo'
@@ -1569,8 +1727,7 @@ ve.dm.mwExample.domToDataCases = {
 			{
 				'type': 'mwLanguage',
 				'attributes': {
-					'href': 'http://fr.wikipedia.org/wiki/Foo',
-					'origRel': 'mw:PageProp/Language'
+					'href': 'http://fr.wikipedia.org/wiki/Foo'
 				 },
 				'htmlAttributes': [
 					{
@@ -1591,7 +1748,7 @@ ve.dm.mwExample.domToDataCases = {
 		]
 	},
 	'document with meta elements': {
-		'body': '<!-- No content conversion --><meta property="mw:PageProp/nocc" /><p>Foo' +
+		'body': '<!-- No content conversion --><meta property="mw:ThisIsAnAlien" /><p>Foo' +
 			'<link rel="mw:PageProp/Category" href="./Category:Bar" />Bar' +
 			'<meta property="mw:foo" content="bar" />Ba<!-- inline -->z</p>' +
 			'<meta property="mw:bar" content="baz" /><!--barbaz-->' +
@@ -1792,6 +1949,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [
@@ -1816,6 +1974,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [
@@ -1840,6 +1999,7 @@ ve.dm.mwExample.domToDataCases = {
 						'title': 'Bar',
 						'origTitle': 'Bar',
 						'normalizedTitle': 'Bar',
+						'lookupTitle': 'Bar',
 						'hrefPrefix': './'
 					},
 					'htmlAttributes': [

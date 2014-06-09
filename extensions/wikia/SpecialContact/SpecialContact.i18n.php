@@ -250,11 +250,11 @@ Wenn du gewöhnliche E-Mails bevorzugst oder Anhänge hast, kannst du uns unter 
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'contact' => 'Wikia İrtibat',
-	'specialcontact-wikia' => 'Wikia İrtibat',
-	'specialcontact-pagetitle' => 'Wikia İrtibat',
+	'contact' => 'Wikia de irtıbat kewe',
+	'specialcontact-wikia' => 'Wikia de irtıbat kewe',
+	'specialcontact-pagetitle' => 'Wikia de irtıbat kewe',
 	'specialcontact-username' => 'Namey Karberi', # Fuzzy
-	'specialcontact-realname' => 'Namey şıma',
+	'specialcontact-realname' => 'Nameyê şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
 	'specialcontact-problem' => 'Mewzu',
 	'specialcontact-problemdesc' => 'Mesac',
@@ -556,6 +556,16 @@ $messages['ja'] = array(
 	'specialcontact-mailsubcc' => 'ウィキアへの連絡メールの控え',
 	'specialcontact-ccheader' => 'このメールはあなたがウィキアのサポートに送信した連絡メッセージの控えです',
 	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'specialcontact-realname' => 'ನಿಮ್ಮ ಹೆಸರು:',
+	'specialcontact-yourmail' => 'ಮಿಂಚಂಚೆ ವಿಳಾಸ',
+	'specialcontact-problem' => 'ವಿಷಯ',
+	'specialcontact-problemdesc' => 'ಸಂದೇಶ',
 );
 
 /** Korean (한국어)
@@ -1233,9 +1243,12 @@ $messages['zh-hant'] = array(
 	'specialcontact-problem' => '主旨',
 	'specialcontact-problemdesc' => '訊息',
 	'specialcontact-mail' => '發送到 Wikia',
+	'specialcontact-filledin' => '這個資訊已經從你的帳號設定中填妥',
 	'specialcontact-ccme' => '向我發送此郵件的副本',
 	'specialcontact-ccdisabled' => '被停用: 請驗證您的電子郵件地址，以便能使用這個功能',
 	'specialcontact-notyou' => '不是您？',
+	'specialcontact-captchainfo' => '請輸入圖像中的文字。',
+	'specialcontact-captchatitle' => '驗證碼',
 	'specialcontact-formtitle' => '聯繫Wikia 支援人員',
 	'specialcontact-nomessage' => '請填寫留言',
 	'specialcontact-captchafail' => '驗證碼錯誤或遺失。',

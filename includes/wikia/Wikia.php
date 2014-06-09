@@ -2080,12 +2080,20 @@ class Wikia {
 	/**
 	 * @param $user User
 	 */
-	public static function invalidateUser( $user, $disabled = false, $ajax = false ) {
+	public static function invalidateUser( $user, $disabled = false, $keepEmail = true, $ajax = false ) {
 		global $wgExternalAuthType;
 
 		if ( $disabled ) {
+			$userEmail = $user->getEmail();
+			// Optionally keep email in user property
+			if ( $keepEmail && !empty( $userEmail ) ) {
+				$user->setOption( 'disabled-user-email', $userEmail );
+			} elseif ( !$keepEmail ) {
+				// Make sure user property is removed
+				$user->setOption( 'disabled-user-email', null );
+			}
 			$user->setEmail( '' );
-			$user->setPassword( wfGenerateToken() . self::REQUIRED_CHARS );
+			$user->setPassword( null );
 			$user->setOption( 'disabled', 1 );
 			$user->setOption( 'disabled_date', wfTimestamp( TS_DB ) );
 			$user->mToken = null;
@@ -2201,7 +2209,7 @@ class Wikia {
 	 * @author macbre
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {
-		global $wgStyleVersion;
+		global $wgStyleVersion, $wgUser, $wgCacheEpoch;
 		$touched = $article->getTouched();
 
 		// don't emit the default touched value set in WikiPage class (see CONN-430)
@@ -2210,7 +2218,14 @@ class Wikia {
 			return true;
 		}
 
-		$eTag = sprintf( '%s-%s', $touched, $wgStyleVersion );
+		// use the same rules as in OutputPage::checkLastModified
+		$timestamps = [
+			'page' => $touched,
+			'user' => $wgUser->getTouched(),
+			'epoch' => $wgCacheEpoch,
+		];
+
+		$eTag = sprintf( '%s-%s', max($timestamps), $wgStyleVersion );
 		return true;
 	}
 
@@ -2296,18 +2311,54 @@ class Wikia {
 	}
 
 	/**
-	 * Don't send purge requests for each thumbnail.
-	 * Single purge from "LocalFile:purgeCache" does the trick.
+	 * No neeed to purge all thumbnails
 	 *
 	 * @author macbre
 	 * @see PLATFORM-161
+	 * @see PLATFORM-252
 	 *
 	 * @param LocalFile $file
 	 * @param array $urls thumbs to purge
 	 * @return bool
 	 */
 	static function onLocalFilePurgeThumbnailsUrls( LocalFile $file, Array &$urls ) {
-		$urls = [];
+		// purge only the first thumbnail
+		$urls = array_slice($urls, 0, 1);
+
 		return true;
+	}
+
+	/**
+	 * Get an array of country codes and return the country names array indexed by corresponding codes
+	 * @param array $countryCodes
+	 * @return array Country names indexed by code
+	 */
+	public static function getCountryNames( array $countryCodes ) {
+		if ( empty( $countryCodes ) ) {
+			return [];
+		}
+
+		// This is hacky and I'm not proud of this :(
+		// Load only files required for country names to avoid loading the whole CLDR
+		// The files are included on the fly as needed instead of loading it every single time
+		global $IP;
+		require_once( "$IP/extensions/cldr/CldrNames.php" );
+		require_once( "$IP/extensions/cldr/CountryNames.body.php" );
+
+		$userLanguageCode = F::app()->wg->Lang->getCode();
+
+		// Retrieve the list of countries in user's language (via CLDR)
+		$countries = CountryNames::getNames( $userLanguageCode );
+		if ( empty( $countries ) ) {
+			return [];
+		}
+
+		foreach ( $countryCodes as $countryCode ) {
+			if ( isset( $countries[$countryCode] ) ) {
+				$countryNames[$countryCode] = $countries[$countryCode];
+			}
+		}
+
+		return $countryNames;
 	}
 }

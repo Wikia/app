@@ -1,10 +1,18 @@
-/* exported adProviderDirectGpt */
 /* jshint maxparams: false, maxlen: 150 */
-
-var AdProviderDirectGpt = function (log, window, Geo, slotTweaker, cacheStorage, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+/*global define*/
+define('ext.wikia.adEngine.provider.directGpt', [
+	'wikia.log',
+	'wikia.window',
+	'wikia.geo',
+	'wikia.cache',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.adLogicHighValueCountry',
+	'ext.wikia.adEngine.wikiaGptHelper',
+	'ext.wikia.adEngine.gptSlotConfig'
+], function (log, window, Geo, cacheStorage, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
-	var logGroup = 'AdProviderDirectGpt',
+	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
 		srcName = 'gpt',
 		slotMap,
 		forgetAdsShownAfterTime = 3600, // an hour
@@ -174,4 +182,4 @@ var AdProviderDirectGpt = function (log, window, Geo, slotTweaker, cacheStorage,
 		fillInSlot: fillInSlot,
 		canHandleSlot: canHandleSlot
 	};
-};
+});

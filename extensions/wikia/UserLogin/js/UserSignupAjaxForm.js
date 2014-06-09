@@ -91,7 +91,7 @@ UserSignupAjaxForm.prototype.checkFieldsValid = function() {
 };
 
 UserSignupAjaxForm.prototype.checkFieldEmpty = function(field) {
-	return (field.is('input') && field.val() == '') || (field.is('select') && field.val() == -1);
+	return field && ((field.is('input') && field.val() == '') || (field.is('select') && field.val() == -1));
 };
 
 UserSignupAjaxForm.prototype.activateSubmit = function() {

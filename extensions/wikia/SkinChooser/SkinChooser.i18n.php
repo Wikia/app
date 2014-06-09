@@ -149,6 +149,13 @@ $messages['ja'] = array(
 	'site-layout' => 'サイトの外装',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'new-look' => 'ವಿಕಿಯಾ',
+);
+
 /** لوری (لوری)
  * @author Mogoeilor
  */

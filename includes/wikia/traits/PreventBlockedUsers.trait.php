@@ -21,12 +21,12 @@ trait PreventBlockedUsers {
 	 * @param string $action arbitrary action that the user is trying to take
 	 * @return bool
 	 */
-	public function preventUsage( User $user, $action ) {
+	public function preventBlockedUsage( User $user, $action ) {
 		$result = false;
 
 		if ( !in_array( $action, $this->whitelist() ) && $user->isBlocked() ) {
 			$result = true;
-			$this->onUsagePrevented( $user );
+			$this->onBlockedUsagePrevented( $user );
 		}
 
 		return $result;
@@ -36,7 +36,7 @@ trait PreventBlockedUsers {
 	 * action to take when a user is prevented from taking an action
 	 * @param User $user
 	 */
-	protected function onUsagePrevented( User $user ) {
+	protected function onBlockedUsagePrevented( User $user ) {
 	}
 }
 
@@ -47,7 +47,7 @@ trait PreventBlockedUsers {
 trait PreventBlockedUsersThrowsError {
 	use PreventBlockedUsers;
 
-	protected function onUsagePrevented( User $user ) {
+	protected function onBlockedUsagePrevented( User $user ) {
 		throw new UserBlockedError( $user->mBlock );
 	}
 }

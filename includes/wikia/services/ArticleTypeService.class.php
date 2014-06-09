@@ -1,44 +1,83 @@
 <?php
 
-
 class ArticleTypeService {
-	const KNOWLEDGE_DB = "dataknowledge";
+	/**
+	 * Request timeout in seconds.
+	 */
+	const TIMEOUT = 2;
 
 	/**
-	 * @var DatabaseBase
+	 * @var string
 	 */
-	private $knowledgeDbConnection = null;
+	private $holmesEndpoint;
 
-	function __construct( DatabaseBase $knowledgeDbConnection = null ) {
-		if ( $knowledgeDbConnection == null ) {
-			$knowledgeDbConnection = wfGetDB( DB_SLAVE, array(), self::KNOWLEDGE_DB);
+	/**
+	 * @param string|null $holmesEndpoint root for holmes endpoint
+	 */
+	function __construct( $holmesEndpoint = null ) {
+		if ( is_null( $holmesEndpoint ) ) {
+			// use wgHolmesEndpoint by default
+			$holmesEndpoint = F::app()->wg->HolmesEndpoint;
 		}
-
-		$this->knowledgeDbConnection = $knowledgeDbConnection;
+		$this->holmesEndpoint = $holmesEndpoint;
 	}
 
 	/**
-	 * Returns article type for given (wikiId, pageId) pair
-	 * @param int $wikiId
+	 * Returns article type for given pageId
 	 * @param int $pageId
+	 * @throws ServiceUnavailableException
 	 * @return string|null
 	 */
-	public function getArticleType( $wikiId, $pageId ) {
-		return (new WikiaSQL())->SELECT("a.type")
-			->FROM("article_types")->AS_("a")
-				->LEFT_OUTER_JOIN("wiki_types")->AS_("w")->ON("a.wiki_id = w.wiki_id")
-			->WHERE("(w.type IS NULL OR w.type = 'canonical')")
-				->AND_("a.wiki_id")->EQUAL_TO( $wikiId )
-				->AND_("a.page_id")->EQUAL_TO( $pageId )
-			->cache( 60 * 60 )
-			->run( $this->knowledgeDbConnection, function( ResultWrapper $result ) {
-				$row = $result->fetchObject( $result );
+	public function getArticleType( $pageId ) {
+		if ( !$pageId ) {
+			return null;
+		}
+		$articleData = $this->getArticleDataByArticleId($pageId);
 
-				if ( $row && isset( $row->type ) ) {
-					return $row->type;
-				}
+		if ( is_null($articleData) ) {
+			return null;
+		}
 
-				return null;
-			});
+		$json = json_encode( $articleData, JSON_FORCE_OBJECT );
+		$response = Http::post($this->getHolmesClassificationsEndpoint(),
+			[
+				'postData' => $json,
+				'timeout'=> self::TIMEOUT,
+				'headers' => [ 'Content-Type'=>'application/json'],
+			]
+		);
+
+		$response = json_decode( $response, true );
+
+		if ( empty( $response ) ) {
+			$wikiId = F::app()->wg->cityId;
+			\Wikia\Logger\WikiaLogger::instance()->error("ArticleTypeService error. Possibly holmes service unavailable.", ["wikiId" => $wikiId, "pageId" => $pageId]);
+			throw new ServiceUnavailableException('ArticleTypeService error for: ' . $wikiId . '_' . $pageId);
+		}
+
+		return $response[ 'class' ];
 	}
+
+	private function getHolmesClassificationsEndpoint() {
+		return $this->holmesEndpoint . "/classifications";
+	}
+
+	/**
+	 * @param $pageId
+	 * @return array|null
+	 */
+	private function getArticleDataByArticleId($pageId) {
+		$art = Article::newFromID($pageId);
+		if ($art) {
+			$title = $art->getTitle()->getText();
+			$text = $art->getPage()->getRawText();
+			if (!empty($title) && !empty($text)) {
+				return [ 'title' => $title, 'wikiText' => $text	];
+			}
+		} 
+		return null;
+	}
+}
+
+class ServiceUnavailableException extends Exception {
 }

@@ -344,7 +344,6 @@ class UserMailer {
 			self::$mErrorString = '';
 			$html_errors = ini_get( 'html_errors' );
 			ini_set( 'html_errors', '0' );
-			set_error_handler( 'UserMailer::errorHandler' );
 
 			$safeMode = wfIniGetBool( 'safe_mode' );
 			foreach ( $to as $recip ) {
@@ -360,7 +359,6 @@ class UserMailer {
 				}
 			}
 
-			restore_error_handler();
 			ini_set( 'html_errors', $html_errors );
 
 			if ( self::$mErrorString ) {
@@ -374,16 +372,6 @@ class UserMailer {
 				return Status::newGood();
 			}
 		}
-	}
-
-	/**
-	 * Set the mail error message in self::$mErrorString
-	 *
-	 * @param $code Integer: error number
-	 * @param $string String: error message
-	 */
-	static function errorHandler( $code, $string ) {
-		self::$mErrorString = preg_replace( '/^mail\(\)(\s*\[.*?\])?: /', '', $string );
 	}
 
 	/**

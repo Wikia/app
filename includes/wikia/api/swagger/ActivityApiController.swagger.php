@@ -52,7 +52,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 	path="/api/v1/Activity/LatestActivity",
+ * 	path="/Activity/LatestActivity",
  * 	description="Get information about the latest user activity on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -81,7 +81,48 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="allowDuplicates",
- * 					description="Set if duplicate values are allowed -- otherwise they are filtered",
+ * 					description="Set if duplicate values of an article's revisions made by the same user are not allowed",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="boolean",
+ * 					defaultValue="true"
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ * @SWG\Api(
+ * 	path="/Activity/RecentlyChangedArticles",
+ * 	description="Get information about recently changed articles on the current wiki",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get recently changed articles",
+ * 			nickname="getRecentlyChangedArticles",
+ * 			responseClass="ActivityResponseResult",
+ * 			@SWG\Parameters(
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of results",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue="10"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="namespaces",
+ * 					description="Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="Array",
+ * 					defaultValue="0"
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="allowDuplicates",
+ * 					description="Set if duplicates of articles are not allowed",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",

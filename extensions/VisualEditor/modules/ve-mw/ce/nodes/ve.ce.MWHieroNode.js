@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWHieroNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -32,6 +32,8 @@ OO.inheritClass( ve.ce.MWHieroNode, ve.ce.MWExtensionNode );
 ve.ce.MWHieroNode.static.name = 'mwHiero';
 
 ve.ce.MWHieroNode.static.tagName = 'div';
+
+ve.ce.MWHieroNode.static.primaryCommandName = 'hiero';
 
 /* Registration */
 

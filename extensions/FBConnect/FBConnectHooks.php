@@ -66,6 +66,15 @@ class FBConnectHooks {
 	 */
 	static function AutopromoteCondition( $cond_type, $args, $user, &$result ) {
 		global $fbUserRightsFromGroup;
+
+		// Wikia change begin - Make fb-user a properly implicit group (CE-767)
+		if ( $cond_type === APCOND_FB_USER ) {
+			$fbIds = FBConnectDB::getFacebookIDs( $user );
+			$result = !empty( $fbIds );
+			return true;
+		}
+		// Wikia change end
+
 		// Probably a redundant check, but with PHP you can never be too sure...
 		if (!$fbUserRightsFromGroup) {
 			// No group to pull rights from, so the user can't be a member

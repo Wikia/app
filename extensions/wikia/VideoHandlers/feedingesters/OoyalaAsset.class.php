@@ -61,7 +61,7 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $videoId
 	 * @return array|false $result
 	 */
-	public function getAssetById( $videoId ) {
+	public static function getAssetById( $videoId ) {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -83,10 +83,10 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $sourceId
 	 * @param string $source
 	 * @param string $assetType [remote_asset]
-	 * @param integer $limit
+	 * @param int $max
 	 * @return array $assets
 	 */
-	public function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
+	public static function getAssetsBySourceId( $sourceId, $source, $assetType = 'remote_asset', $max = 3 ) {
 		wfProfileIn( __METHOD__ );
 
 		$cond = [
@@ -119,7 +119,7 @@ class OoyalaAsset extends WikiaModel {
 	 * Get labels for all providers
 	 * @return array|false $providers
 	 */
-	public function getApiLabelsProviders() {
+	public static function getApiLabelsProviders() {
 		wfProfileIn( __METHOD__ );
 
 		$method = 'GET';
@@ -152,12 +152,12 @@ class OoyalaAsset extends WikiaModel {
 	 * @param string $labelName - name of the label
 	 * @return string|false $labelId
 	 */
-	public function getLabelId( $labelName ) {
+	public static function getLabelId( $labelName ) {
 		wfProfileIn( __METHOD__ );
 
 		$labelId = false;
 
-		$labels = $this->getApiLabelsProviders();
+		$labels = self::getApiLabelsProviders();
 		if ( $labels == false ) {
 			wfProfileOut( __METHOD__ );
 			return $labelId;
@@ -204,7 +204,7 @@ class OoyalaAsset extends WikiaModel {
 			$asset = json_decode( $response, true );
 
 			print( "Ooyala: Uploaded Remote Asset: $data[provider]: $asset[name] \n" );
-			foreach( explode("\n", var_export($asset, 1)) as $line ) {
+			foreach( explode( "\n", var_export( $asset, 1 ) ) as $line ) {
 				print ":: $line\n";
 			}
 
@@ -400,6 +400,9 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['expirationDate'] ) ) {
 			$metadata['expirationdate'] = $data['expirationDate'];
 		}
+		if ( !empty( $data['regionalRestrictions'] ) ) {
+			$metadata['regional_restrictions'] = $data['regionalRestrictions'];
+		}
 		if ( !empty( $data['keywords'] ) ) {
 			$metadata['keywords'] = $data['keywords'];
 		}
@@ -431,10 +434,10 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['pageCategories'] ) ) {
 			$metadata['pagecategories'] = $data['pageCategories'];
 		}
-		if ( !empty( $data['distributor']) ) {
+		if ( !empty( $data['distributor'] ) ) {
 			$metadata['distributor'] = $data['distributor'];
 		}
-		if ( !empty( $data['streamHdUrl']) ) {
+		if ( !empty( $data['streamHdUrl'] ) ) {
 			$metadata['streamHdUrl'] = $data['streamHdUrl'];
 		}
 		// set blank thumbnail
@@ -625,6 +628,26 @@ class OoyalaAsset extends WikiaModel {
 		if ( !empty( $data['ageRequired'] ) ) {
 			$resp = $this->setPlayer( $videoId, OoyalaVideoHandler::OOYALA_PLAYER_ID_AGEGATE );
 		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $resp;
+	}
+
+	/**
+	 * Set ad set
+	 * @param string $videoId
+	 * @param string $adSet
+	 * @return boolean $resp
+	 */
+	public function setAdSet( $videoId, $adSet ) {
+		wfProfileIn( __METHOD__ );
+
+		$method = 'PUT';
+		$reqPath = '/v2/assets/'.$videoId.'/ad_set/'.$adSet;
+		$params = array();
+
+		$resp = $this->sendRequest( $method, $reqPath, $params );
 
 		wfProfileOut( __METHOD__ );
 

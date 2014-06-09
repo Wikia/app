@@ -4,7 +4,7 @@ describe('EvolveHelper', function(){
 			, windowMock = {}
 			;
 
-		evolveHelper = EvolveHelper(logMock, windowMock);
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, windowMock);
 
 		windowMock.wgDBname = null;
 		windowMock.wgDartCustomKeyValues = null;

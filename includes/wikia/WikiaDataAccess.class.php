@@ -21,8 +21,8 @@ class WikiaDataAccess {
 
 	/**
 	 * WikiaDataAccess::USE_CACHE - does not have to be passed to cache or cacheWithLock [default]
-	 * WikiaDataAccess::SKIP_CACHE - is equivalent of mcache=none for one variable
-	 * WikiaDataAccess::REFRESH_CACHE - is equivalent of mcache=writeonly for one variable
+	 * WikiaDataAccess::SKIP_CACHE - is equivalent of mcache=none for one variable - use this option wisely
+	 * WikiaDataAccess::REFRESH_CACHE - is equivalent of mcache=writeonly for one variable - use this option wisely
 	 */
 	const USE_CACHE = 0;
 	const SKIP_CACHE = 1;
@@ -48,10 +48,10 @@ class WikiaDataAccess {
 	 * returns cached data if possible (up to $cacheTime old)
 	 * otherwise gets the data and saves the result in cache before returning it
 	 *
-	 * @params String $key memcached key
-	 * @params Integer $cacheTime TTL of memcached data in seconds
-	 * @params Callback $getData function name (http://php.net/manual/en/language.types.callable.php)
-	 * @param $skipCache Integer
+	 * @param String $key memcached key
+	 * @param Integer $cacheTime TTL of memcached data in seconds
+	 * @param Callback $getData function name (http://php.net/manual/en/language.types.callable.php)
+	 * @param Integer $command check description of constants above - USE_CACHE, SKIP_CACHE, REFRESH_CACHE
 	 * 
 	 * @author Piotr Bablok <pbablok@wikia-inc.com>
 	 * @author Jakub Olek <jolek@wikia-inc.com>
@@ -88,20 +88,16 @@ class WikiaDataAccess {
 	 * with Logging if getting was skipped
 	 * but refresh is made
 	 *
-	 * @param $key String
-	 * @param $result Mixed
-	 * @param $cacheTime Integer
-	 * @param $command Integer
+	 * @param String $key memcached key
+	 * @param Mixed $result returned result of the callback function which gets data
+	 * @param Integer $cacheTime TTL of memcached data in seconds
+	 * @param Integer $command check description of constants above - USE_CACHE, SKIP_CACHE, REFRESH_CACHE
 	 * 
 	 * @author Jakub Olek <jolek@wikia-inc.com>
 	 */
 	static private function setCache( $key, $result, $cacheTime, $command = self::USE_CACHE ) {
 		if ( $command == self::USE_CACHE || $command == self::REFRESH_CACHE ) {
 			F::app()->wg->Memc->set( $key, $result, $cacheTime );
-		}
-
-		if ( $command == self::REFRESH_CACHE ) {
-			Wikia::log( __METHOD__, 'debug', "Cache refreshed for key:{$key}, if this is on production please contact the author of the code.", true );
 		}
 	}
 

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWLinkTargetInputWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -28,7 +28,7 @@ ve.ui.MWLinkTargetInputWidget = function VeUiMWLinkTargetInputWidget( config ) {
 	OO.ui.LookupInputWidget.call( this, this, config );
 
 	// Events
-	this.lookupMenu.connect( this, { 'select': 'onLookupMenuItemSelect' } );
+	this.lookupMenu.connect( this, { 'choose': 'onLookupMenuItemChoose' } );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwLinkTargetInputWidget' );
@@ -54,7 +54,7 @@ OO.mixinClass( ve.ui.MWLinkTargetInputWidget, OO.ui.LookupInputWidget );
  * @method
  * @param {OO.ui.MenuItemWidget|null} item Selected item
  */
-ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemSelect = function ( item ) {
+ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 	if ( item ) {
 		this.setAnnotation( item.getData() );
 	} else if ( this.annotation ) {
@@ -69,17 +69,29 @@ ve.ui.MWLinkTargetInputWidget.prototype.onLookupMenuItemSelect = function ( item
  * @returns {jqXHR} AJAX object without success or fail handlers attached
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
-	return $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
+	var propsJqXhr,
+		searchJqXhr = ve.init.mw.Target.static.apiRequest( {
 			'action': 'opensearch',
 			'search': this.value,
 			'namespace': 0,
 			'suggest': ''
-		},
-		'dataType': 'json'
-	} );
+		} );
+
+	return searchJqXhr.then( function ( data ) {
+		propsJqXhr = ve.init.mw.Target.static.apiRequest( {
+			'action': 'query',
+			'prop': 'info|pageprops',
+			'titles': ( data[1] || [] ).join( '|' ),
+			'ppprop': 'disambiguation'
+		} );
+		return propsJqXhr;
+	} ).promise( { abort: function () {
+		searchJqXhr.abort();
+
+		if ( propsJqXhr ) {
+			propsJqXhr.abort();
+		}
+	} } );
 };
 
 /**
@@ -89,7 +101,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
  * @param {Mixed} data Response from server
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	return ve.isArray( data ) && data.length ? data[1] : [];
+	return data.query && data.query.pages || {};
 };
 
 /**
@@ -99,17 +111,34 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupCacheItemFromData = function ( 
  * @returns {OO.ui.MenuItemWidget[]} Menu items
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( data ) {
-	var i, len, item,
+	var i, len, item, pageExistsExact, pageExists, index, matchingPage,
 		menu$ = this.lookupMenu.$,
 		items = [],
-		matchingPages = data,
-		// If not found, run value through mw.Title to avoid treating a match as a
-		// mismatch where normalisation would make them matching (bug 48476)
-		pageExistsExact = ve.indexOf( this.value, matchingPages ) !== -1,
-		titleObj = mw.Title.newFromText( this.value ),
-		pageExists = pageExistsExact || (
-			titleObj && ve.indexOf( titleObj.getPrefixedText(), matchingPages ) !== -1
-		);
+		existingPages = [],
+		matchingPages = [],
+		disambigPages = [],
+		redirectPages = [],
+		titleObj = mw.Title.newFromText( this.value );
+
+	for ( index in data ) {
+		matchingPage = data[index];
+		existingPages.push( matchingPage.title );
+
+		if ( matchingPage.redirect !== undefined ) {
+			redirectPages.push( matchingPage.title );
+		} else if ( matchingPage.pageprops !== undefined && matchingPage.pageprops.disambiguation !== undefined ) {
+			disambigPages.push( matchingPage.title );
+		} else {
+			matchingPages.push( matchingPage.title );
+		}
+	}
+
+	// If not found, run value through mw.Title to avoid treating a match as a
+	// mismatch where normalisation would make them matching (bug 48476)
+	pageExistsExact = ve.indexOf( this.value, existingPages ) !== -1;
+	pageExists = pageExistsExact || (
+		titleObj && ve.indexOf( titleObj.getPrefixedText(), existingPages ) !== -1
+	);
 
 	// External link
 	if ( ve.init.platform.getExternalLinkUrlProtocolsRegExp().test( this.value ) ) {
@@ -149,7 +178,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( 
 	if ( matchingPages && matchingPages.length ) {
 		items.push( new OO.ui.MenuSectionItemWidget(
 			'matchingPages',
-			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-matching-page' ) }
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-matching-page', matchingPages.length ) }
 		) );
 		// Offer the exact text as a suggestion if the page exists
 		if ( pageExists && !pageExistsExact ) {
@@ -159,6 +188,34 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupMenuItemsFromData = function ( 
 			items.push( new OO.ui.MenuItemWidget(
 				this.getInternalLinkAnnotationFromTitle( matchingPages[i] ),
 				{ '$': menu$, 'rel': 'matchingPage', 'label': matchingPages[i] }
+			) );
+		}
+	}
+
+	// Disambiguation pages
+	if ( disambigPages.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'disambigPages',
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-disambig-page', disambigPages.length ) }
+		) );
+		for ( i = 0, len = disambigPages.length; i < len; i++ ) {
+			items.push( new OO.ui.MenuItemWidget(
+				this.getInternalLinkAnnotationFromTitle( disambigPages[i] ),
+				{ '$': menu$, 'rel': 'disambigPage', 'label': disambigPages[i] }
+			) );
+		}
+	}
+
+	// Redirect pages
+	if ( redirectPages.length ) {
+		items.push( new OO.ui.MenuSectionItemWidget(
+			'redirectPages',
+			{ '$': menu$, 'label': ve.msg( 'visualeditor-linkinspector-suggest-redirect-page', redirectPages.length ) }
+		) );
+		for ( i = 0, len = redirectPages.length; i < len; i++ ) {
+			items.push( new OO.ui.MenuItemWidget(
+				this.getInternalLinkAnnotationFromTitle( redirectPages[i] ),
+				{ '$': menu$, 'rel': 'redirectPage', 'label': redirectPages[i] }
 			) );
 		}
 	}
@@ -218,7 +275,9 @@ ve.ui.MWLinkTargetInputWidget.prototype.getInternalLinkAnnotationFromTitle = fun
 		'type': 'link/mwInternal',
 		'attributes': {
 			'title': target,
-			'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target )
+			// bug 62816: we really need a builder for this stuff
+			'normalizedTitle': ve.dm.MWInternalLinkAnnotation.static.normalizeTitle( target ),
+			'lookupTitle': ve.dm.MWInternalLinkAnnotation.static.getLookupTitle( target )
 		}
 	} );
 };

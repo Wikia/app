@@ -165,3 +165,5 @@ if( function_exists( "extAddBatchTask" ) ) {
  * associated jobs
  */
 $wgJobClasses['bloglistDeferredPurge'] = 'BloglistDeferredPurgeJob';
+
+$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = __DIR__.'/BlogTask.class.php';

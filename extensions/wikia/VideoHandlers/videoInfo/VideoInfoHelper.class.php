@@ -135,6 +135,7 @@ class VideoInfoHelper extends WikiaModel {
 
 	/**
 	 * get total views of a video from database using title
+	 * @param $title
 	 * @return int $viewCount
 	 */
 	public static function getTotalViewsFromTitle( $title ) {

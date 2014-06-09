@@ -33,11 +33,11 @@
 						<? endif; ?>
 					</div>
 
-					<div class='nav'>
+					<div class='nav <?= $val['navClass'] ?>'>
 						<? if( !empty( $val['videoPlayButton'] ) ): ?>
 							<?= $val['videoPlayButton'] ?>
 						<? endif; ?>
-						<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>'> 
+						<img width='<?= $thumbDimensions['w'] ?>' height='<?= $thumbDimensions['h'] ?>' src='<?= $val['imageThumbnail'] ?>'>
 					</div>
 				</li>
 			<? endforeach; ?>

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor UserInterface MWTitleInputWidget class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -32,7 +32,7 @@ ve.ui.MWTitleInputWidget = function VeUiMWTitleInputWidget( config ) {
 	this.namespace = config.namespace || null;
 
 	// Events
-	this.lookupMenu.connect( this, { 'select': 'onLookupMenuItemSelect' } );
+	this.lookupMenu.connect( this, { 'choose': 'onLookupMenuItemChoose' } );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwTitleInputWidget' );
@@ -53,7 +53,7 @@ OO.mixinClass( ve.ui.MWTitleInputWidget, OO.ui.LookupInputWidget );
  * @method
  * @param {OO.ui.MenuItemWidget} item Selected item
  */
-ve.ui.MWTitleInputWidget.prototype.onLookupMenuItemSelect = function ( item ) {
+ve.ui.MWTitleInputWidget.prototype.onLookupMenuItemChoose = function ( item ) {
 	if ( item ) {
 		this.setValue( item.getData() );
 	}
@@ -78,15 +78,10 @@ ve.ui.MWTitleInputWidget.prototype.getLookupRequest = function () {
 		value = value.substr( 1 );
 	}
 
-	return $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'opensearch',
-			'search': value,
-			'suggest': ''
-		},
-		'dataType': 'json'
+	return ve.init.mw.Target.static.apiRequest( {
+		'action': 'opensearch',
+		'search': value,
+		'suggest': ''
 	} );
 };
 
@@ -97,7 +92,7 @@ ve.ui.MWTitleInputWidget.prototype.getLookupRequest = function () {
  * @param {Mixed} data Response from server
  */
 ve.ui.MWTitleInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	return ve.isArray( data ) && data.length ? data[1] : [];
+	return data[1] || [];
 };
 
 /**

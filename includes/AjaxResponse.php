@@ -100,7 +100,7 @@ class AjaxResponse {
 			header ( "Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . " GMT" );
 		}
 
-		if ( $this->mCacheDuration ) {
+		if ( is_numeric( $this->mCacheDuration ) ) { # Wikia change - make setCacheDuration(0) calls work (author @macbre)
 			# If squid caches are configured, tell them to cache the response,
 			# and tell the client to always check with the squid. Otherwise,
 			# tell the client to use a cached copy, without a way to purge it.

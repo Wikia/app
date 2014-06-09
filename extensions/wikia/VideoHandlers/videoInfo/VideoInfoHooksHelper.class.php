@@ -280,7 +280,11 @@ class VideoInfoHooksHelper {
 		$req = F::app()->wg->Request;
 		$controller = $req->getVal( 'controller', '' );
 		$method = $req->getVal( 'method', '' );
-		if ( $controller == 'VideoEmbedTool' || $method == 'insertVideo' || ( $controller == 'Videos' && $method == 'addVideo' ) )  {
+		if ( $controller == 'VideoEmbedTool'
+			 || $method == 'insertVideo'
+			 || ( $controller == 'Videos' && $method == 'addVideo' )
+			 || ( $controller == 'Lightbox' && $method = 'getMediaDetail' )
+		) {
 			return true;
 		}
 

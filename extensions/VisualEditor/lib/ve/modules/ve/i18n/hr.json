@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"MaGa",
+			"Roberta F.",
+			"SpeedyGonsales"
+		]
+	},
+	"visualeditor-aliennode-tooltip": "Žao nam je, ali ovaj element se za sada ne može uređivati u VisualEditoru, već na stari način.",
+	"visualeditor-annotationbutton-bold-tooltip": "Podebljano",
+	"visualeditor-annotationbutton-code-tooltip": "Računalni kôd",
+	"visualeditor-annotationbutton-italic-tooltip": "Kurziv",
+	"visualeditor-annotationbutton-link-tooltip": "Poveznica",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "Precrtano",
+	"visualeditor-annotationbutton-subscript-tooltip": "Indeks",
+	"visualeditor-annotationbutton-superscript-tooltip": "Eksponent",
+	"visualeditor-annotationbutton-underline-tooltip": "Podcrtano",
+	"visualeditor-clearbutton-tooltip": "Ukloni oblikovanje",
+	"visualeditor-dialog-action-apply": "Sačuvaj izmjene",
+	"visualeditor-dialog-action-cancel": "Odustani",
+	"visualeditor-dialog-action-goback": "Idi natrag",
+	"visualeditor-formatdropdown-format-heading1": "Naslov 1",
+	"visualeditor-formatdropdown-format-heading2": "Naslov 2",
+	"visualeditor-formatdropdown-format-heading3": "Naslov 3",
+	"visualeditor-formatdropdown-format-heading4": "Naslov 4",
+	"visualeditor-formatdropdown-format-heading5": "Naslov 5",
+	"visualeditor-formatdropdown-format-heading6": "Naslov 6",
+	"visualeditor-formatdropdown-format-paragraph": "Odlomak",
+	"visualeditor-help-tool": "Pomoć",
+	"visualeditor-historybutton-redo-tooltip": "ponovi",
+	"visualeditor-historybutton-undo-tooltip": "vrati",
+	"visualeditor-indentationbutton-indent-tooltip": "Povećaj uvlaku",
+	"visualeditor-indentationbutton-outdent-tooltip": "Smanji uvlaku",
+	"visualeditor-inspector-close-tooltip": "Zatvori",
+	"visualeditor-inspector-remove-tooltip": "Ukloni",
+	"visualeditor-linkinspector-title": "Poveznica",
+	"visualeditor-listbutton-bullet-tooltip": "Popis s grafičkim oznakama",
+	"visualeditor-listbutton-number-tooltip": "Numerirani popis",
+	"visualeditor-specialcharacter-button-tooltip": "Posebni znak",
+	"visualeditor-specialcharacterinspector-title": "Posebni znak",
+	"visualeditor-toolbar-insert": "Umetni"
+}

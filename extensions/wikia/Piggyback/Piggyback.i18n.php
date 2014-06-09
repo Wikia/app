@@ -445,19 +445,20 @@ Verifique a soletração.',
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author JM Pessanha
+ * @author Luckas
  */
 $messages['pt-br'] = array(
-	'piggybac-desc' => 'Permite a autenticação em nome de outro utilizador',
+	'piggybac-desc' => 'Permite a autenticação em nome de outro usuário',
 	'piggyback' => 'Personificação',
-	'piggyback-otherusername' => 'Nome de outro utilizador:',
-	'piggyback-nosuchuser' => 'Não existe um utilizador com o nome "$1".
-Os nomes de utilizador são sensíveis a maiúsculas e minúsculas.
+	'piggyback-otherusername' => 'Outro nome de usuário:',
+	'piggyback-nosuchuser' => 'Não existe um usuário com o nome "$1".
+Os nomes de usuário são sensíveis a maiúsculas e minúsculas.
 Verifique a ortografia.',
-	'piggyback-wronguser' => '$1 não é o seu nome de utilizador',
-	'piggyback-loginprompt' => 'Reintroduza o seu nome de utilizador e a senha.',
+	'piggyback-wronguser' => '$1 não é o seu nome de usuário',
+	'piggyback-loginprompt' => 'Reintroduza o seu nome de usuário e a senha.',
 	'piggyback-firstlogout' => 'Saia primeiro de volta à sua conta, por favor.',
 	'piggyback-itisyou' => 'Não se pode personificar a si mesmo.',
-	'piggyback-issysopto' => 'Não pode personificar um utilizador que tem o direito de personificação.',
+	'piggyback-issysopto' => 'Não pode personificar um usuário que tem o direito de personificação.',
 	'action-piggyback' => 'Fazer logon como outro usuário',
 	'log-name-piggyback' => 'Registro de sobreposto',
 	'log-description-piggyback' => 'Este log é um registro de conta sobreposta.',

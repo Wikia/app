@@ -415,6 +415,13 @@ $messages['ja'] = array(
 	'prefs-rte' => 'リッチテキストエディタ',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'rte-edgecase-redirect' => 'ಪುನರ್ನಿರ್ದೇಶನಗಳು',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

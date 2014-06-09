@@ -1,4 +1,14 @@
+/*global describe, expect, it*/
 describe('AdLogicPageDimensions', function(){
+
+	'use strict';
+
+	var adHelperMock = {
+		throttle: function (fn) {
+			return fn;
+		}
+	};
+
 	function adShown(slotName, pageLength, responsiveLayout, matchingMediaQuery, railExists) {
 
 		if (typeof railExists === 'undefined') {
@@ -20,7 +30,7 @@ describe('AdLogicPageDimensions', function(){
 			documentMock = {documentElement: {scrollHeight: pageLength, scrollWidth: 1280}, getElementById: function() { return railExists ? {} : null; }},
 			slotTweakerMock = {hide: function() {}, show: function() {}},
 			abTestMock = {getGroup: function () {}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
+			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](windowMock, documentMock, logMock, slotTweakerMock, adHelperMock),
 			fillInSlotCalled = false,
 			fillInSlotMock = function () { fillInSlotCalled = true; };
 
@@ -151,7 +161,7 @@ describe('AdLogicPageDimensions', function(){
 			adLoadCounter = 0,
 			slotTweakerMock = {hide: function () {adShown = false;}, show: function () {adShown = true;}},
 			abTestMock = {getGroup: function () {}},
-			adLogicPageDimensions = AdLogicPageDimensions(windowMock, documentMock, logMock, slotTweakerMock, abTestMock),
+			adLogicPageDimensions = modules['ext.wikia.adEngine.adLogicPageDimensions'](windowMock, documentMock, logMock, slotTweakerMock, adHelperMock),
 			fillInSlotMock = function () { adLoadCounter += 1; };
 
 		documentMock.documentElement.scrollHeight = 1000;

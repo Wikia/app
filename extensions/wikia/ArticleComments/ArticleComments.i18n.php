@@ -241,7 +241,11 @@ ___________________________________________
  * @author Basharh
  */
 $messages['arc'] = array(
+	'article-comments-delete' => 'ܫܘܦ',
+	'article-comments-edit' => 'ܫܚܠܦ',
 	'article-comments-history' => 'ܬܫܥܝܬܐ',
+	'article-comments-prev-page' => 'ܕܩܕܡ',
+	'article-comments-next-page' => 'ܕܒܬܪ',
 );
 
 /** Assamese (অসমীয়া)
@@ -475,15 +479,33 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Tauhid16
  */
 $messages['bn'] = array(
+	'article-comments-cancel' => 'বাতিল',
+	'article-comments-delete' => 'অপসারণ',
 	'article-comments-edit' => 'সম্পাদনা',
 	'article-comments-history' => 'ইতিহাস',
+	'article-comments-error' => 'মন্তব্য সংরক্ষণ করা সম্ভব নয়',
+	'article-comments-toc-item' => 'মন্তব্যসমূহ',
+	'article-comments-comment-cannot-add' => 'এই নিবন্ধনে আপনি কোনো মন্তব্য যুক্ত করেতে পারবেননা।',
+	'article-comments-vote' => 'পক্ষে ভোট দিন',
 	'article-comments-reply' => 'উত্তর',
 	'article-comments-show-all' => 'সকল মন্তব্য দেখাও',
 	'article-comments-prev-page' => 'পূর্ব',
 	'article-comments-next-page' => 'পর',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'মন্তব্যসমূহ',
+	'wikiamobile-article-comments-more' => 'আরও লোড করুন',
+	'wikiamobile-article-comments-prev' => 'পূর্বেরটি লোড করুন',
+	'wikiamobile-article-comments-none' => 'কোন মন্তব্য নেই',
+	'wikiamobile-article-comments-view' => 'ফিরতি বার্তাসমূহ দেখাও',
+	'wikiamobile-article-comments-replies' => 'ফিরতি বার্তাসমূহ',
+	'wikiamobile-article-comments-post-reply' => 'ফিরতি বার্তা লেখুন',
+	'wikiamobile-article-comments-post' => 'পোস্ট',
+	'wikiamobile-article-comments-placeholder' => 'মন্তব্য প্রকাশ করুন',
+	'wikiamobile-article-comments-login-post' => 'মন্তব্য করার জন্য দয়া করে প্রবেশ করুন',
+	'wikiamobile-article-comments-post-fail' => 'মন্তব্য সংরক্ষণ করা সম্ভব হয়নি দয়া করে পরে চেষ্টা করুন',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -498,6 +520,7 @@ $messages['bo'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
@@ -531,6 +554,7 @@ $messages['br'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Diverket eo bet ar bajenn kar / an evezhiadenn kar.',
 	'article-comments-empty-comment' => "N'hallit ket degas un evezhiadenn c'houllo. <a href='$1'>Diverkañ anezhi ?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Evezhiadenn}}',
 	'wikiamobile-article-comments-header' => 'Displegadennoù',
 	'wikiamobile-article-comments-more' => "Lenn muioc'h",
 	'wikiamobile-article-comments-prev' => 'Kargañ an hini kent',
@@ -936,8 +960,8 @@ $messages['diq'] = array(
 	'wikiamobile-article-comments-none' => 'Vatış çıno',
 	'wikiamobile-article-comments-view' => 'Cewabi bıvin',
 	'wikiamobile-article-comments-replies' => 'cewabi',
-	'wikiamobile-article-comments-post-reply' => 'Cewab bırşe',
-	'wikiamobile-article-comments-post' => 'Bırş',
+	'wikiamobile-article-comments-post-reply' => 'Yew cewab bırışe',
+	'wikiamobile-article-comments-post' => 'Bırışe',
 	'wikiamobile-article-comments-placeholder' => 'Mışewre bırşe',
 	'wikiamobile-article-comments-login-post' => 'Mışewre rıştışi rê şıma ra recay ma qeyd bê',
 	'enotif_body_article_comment-HTML' => '<p>Bırayo  $WATCHINGUSERNAME,
@@ -1030,6 +1054,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author DJ Nietzsche
+ * @author Fitoschido
  * @author Ihojose
  * @author VegaDark
  */
@@ -1043,7 +1068,7 @@ $messages['es'] = array(
 	'article-comments-delete' => '(borrar)',
 	'article-comments-edit' => '(editar)',
 	'article-comments-history' => '(Historial)',
-	'article-comments-error' => 'El comentario no pudo ser guardado',
+	'article-comments-error' => 'No se pudo guardar el comentario',
 	'article-comments-undeleted-comment' => 'Comentario no borrado para la página del blog $1',
 	'article-comments-rc-comment' => 'Comentario de artículo (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Comentarios de artículo ([[$1]])',
@@ -1544,6 +1569,12 @@ $messages['hi'] = array(
 $messages['hrx'] = array(
 	'article-comments-edit' => 'beoorbeite',
 	'article-comments-history' => 'Versione',
+	'article-comments-vote' => 'Abstimme',
+	'article-comments-reply' => 'Antworte',
+	'article-comments-show-all' => 'All Kommentare oonzeiche',
+	'article-comments-prev-page' => 'Vorriche',
+	'article-comments-next-page' => 'Nächst',
+	'article-comments-page-spacer' => '&#160...&#160',
 	'wikiamobile-article-comments-header' => 'Kommentare',
 	'wikiamobile-article-comments-more' => 'Weitre loode',
 	'wikiamobile-article-comments-prev' => 'Voariche loode',
@@ -2035,6 +2066,7 @@ $messages['ko'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '상위 글/ 상위 댓글이 삭제됨',
 	'article-comments-empty-comment' => "빈 댓글을 쓸 수 없습니다. <a href='$1'>삭제 하시겠습니까?</a>",
+	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|의견}} $1개',
 	'wikiamobile-article-comments-header' => '댓글',
 	'wikiamobile-article-comments-more' => '더 불러오기',
 	'wikiamobile-article-comments-prev' => '이전 불러오기',
@@ -2047,6 +2079,15 @@ $messages['ko'] = array(
 	'wikiamobile-article-comments-login-post' => '덧글을 남기려면 로그인하세요.',
 	'wikiamobile-article-comments-post-fail' => '덧글을 저장하는데 실패했습니다. 잠시 후에 시도해 주세요.',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 이(가) {{SITENAME}}의 "$PAGETITLE"에 덧글을 달았습니다',
+	'enotif_body_article_comment' => '$WATCHINGUSERNAME님 안녕하세요,
+
+{{SITENAME}}의 $PAGETITLE 에서 새 덧글이 있습니다. 모든 덧글을 보려면 다음 링크를 사용하세요: $PAGETITLE_URL#WikiaArticleComments
+
+- 위키아 커뮤니티 지원
+
+___________________________________________
+* 중앙 커뮤니티에서 도움말과 조언을 찾으세요: http://community.wikia.com
+* 메시지를 적게 받고 싶습니까? 여기서 구독 취소하거나 이메일 환경 설정을 바꿀 수 있습니다: http://community.wikia.com/Special:Preferences',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -2136,6 +2177,7 @@ $messages['lb'] = array(
 	'wikiamobile-article-comments-none' => 'Keng Bemierkungen',
 	'wikiamobile-article-comments-view' => 'Äntwerte kucken',
 	'wikiamobile-article-comments-replies' => 'Äntwerten',
+	'wikiamobile-article-comments-placeholder' => 'Bemierkung derbäisetzen',
 	'wikiamobile-article-comments-post-fail' => "D'Bemierkung konnt net gespäichert ginn, probéiert w.e.g. méi spéit nach eng Kéier",
 );
 
@@ -3061,11 +3103,11 @@ $messages['ps'] = array(
 	'article-comments-history' => 'پېښليک',
 	'article-comments-error' => 'تبصره مو نه شي خوندي کېدلی',
 	'article-comments-rc-comments' => 'د ليکنې تبصرې ([[$1]])',
-	'article-comments-rc-blog-comment' => 'بلاګ تبصره (<span class="plainlinks">[$1 $2]</span>)',
-	'article-comments-rc-blog-comments' => 'د بلاګ تبصرې ([[$1]])',
+	'article-comments-rc-blog-comment' => 'بلاگ تبصره (<span class="plainlinks">[$1 $2]</span>)',
+	'article-comments-rc-blog-comments' => 'د بلاگ تبصرې ([[$1]])',
 	'article-comments-login' => 'دلته د يوې تبصرې د خپرولو لپاره لطفاً <a href="$1">غونډال ته ننوځۍ</a>.',
 	'article-comments-toc-item' => 'تبصرې',
-	'article-comments-comment-cannot-add' => 'تاسې دې ليکنه کې يوه تبصره نه شی ورګډولی.',
+	'article-comments-comment-cannot-add' => 'تاسې دې ليکنه کې يوه تبصره نه شی ورگډولی.',
 	'article-comments-vote' => 'مثبته رايه',
 	'article-comments-reply' => 'ځوابول',
 	'article-comments-show-all' => 'ټولې تبصرې ښکاره کول',
@@ -3367,8 +3409,8 @@ $messages['ru'] = array(
 - Команда Викия
 
 ___________________________________________
-* Вы можете найти помощь и совет на Центральной Вики: http://community.wikia.com
-* Хотите контролировать, какие электронные письма вы хотите получать? Вы можете настроить рассылку или отписаться от неё на странице личных настроек: http://community.wikia.com/Special:Preferences',
+* Найти помощь и совет можно на Community Central (http://community.wikia.com) и Вики Сообщества (http://ru.community.wikia.com)
+* Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Привет $WATCHINGUSERNAME,
 <br /><br />
 Новый комментарий был добавлен к странице $PAGETITLE на {{SITENAME}}. Uы можете посмотреть все комментарии по этой ссылке:  $PAGETITLE_URL#WikiaArticleComments

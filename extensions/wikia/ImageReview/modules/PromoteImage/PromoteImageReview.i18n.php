@@ -3,6 +3,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'promoteimagereview' => 'Admin Image Upload Review',
+
 	'promote-image-review-reason' => "Violation of Wikia's [[wikia:Terms of Use|Terms of Use]]",
 	'promote-image-review-header' => 'Images awaiting review',
 	'promote-image-review-header-questionable' => 'Questionable images awaiting staff review',
@@ -17,4 +19,8 @@ $messages['en'] = array(
 
 $messages['pl'] = array(
 	'imagereview-reason' => "Naruszenie [[wikia:Terms of Use|Regulaminu]] serwisu Wikia",
+);
+
+$messages['qqq'] = array(
+	'promoteimagereview' => 'Name of special page',
 );

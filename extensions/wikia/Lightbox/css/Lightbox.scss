@@ -41,10 +41,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 			@include transition-shorthand(opacity $lightbox-overlay-hide-duration ease-out);
 			opacity: 0;
 		}
-		// Fix IE8 issues with css transitions
-		.lightbox-arrows span.disabled, .Wikia-video-play-button {
-			opacity: 0;
-		}
 	}
 	&.more-info-mode, &.share-mode {
 		>.close {
@@ -282,14 +278,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		opacity: 1;
 		position: absolute;
 		-webkit-backface-visibility: hidden;	/* flicker fix for webkit transition */
-		/* ie8 fix - opacity filter will not apply on positioned/floated elements to ie8 unless "filter: inherit" is applied to every element down to the actual element - fb:32565 */
-		.avatar,
-		.carousel,
-		.close,
-		div {
-			filter: inherit;
-		}
-		/* end ie8 fix */
 	}
 	.LightboxCarousel {
 		@include clearfix;

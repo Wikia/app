@@ -333,6 +333,16 @@ $messages['id'] = array(
 	'right-stafflog' => 'Dapat melihat stafflog',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'stafflog-filter-label' => 'ಶೋಧಕ',
+	'stafflog-filter-user' => 'ಬಳಕೆದಾರ:',
+	'stafflog-filter-type' => 'ನಮೂನೆ:',
+	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(

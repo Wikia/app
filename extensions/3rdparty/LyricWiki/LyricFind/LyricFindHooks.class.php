@@ -143,8 +143,7 @@ class LyricFindHooks {
 	 * @param strip_state (undocumented)
 	 */
 	static public function onParserBeforeStrip(Parser $parser, &$text, &$strip_state){
-		$wg = F::app()->wg;
-		$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $wg->Title->getArticleID());
+		$removedProp = wfGetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $parser->getTitle()->getArticleID());
 		$isMarkedAsRemoved = (!empty($removedProp));
 		if($isMarkedAsRemoved){
 			// Replace just the lyrics boxes if any are found. If none are found, hide the whole page.

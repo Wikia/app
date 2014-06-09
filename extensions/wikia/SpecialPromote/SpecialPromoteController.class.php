@@ -172,11 +172,12 @@ class SpecialPromoteController extends WikiaSpecialPageController {
 		if ( empty( $data['additionalImagesNames'] ) ) {
 			$data['additionalImagesNames'] = array();
 		}
-		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __MEHOD__, 'data'=> $data] );
+		WikiaLogger::instance()->debug( "SpecialPromote", ['method' => __METHOD__, 'data'=> $data] );
 
 		try {
 			$this->helper->saveVisualizationData( $data, $this->wg->contLang->getCode() );
 			$this->success = true;
+			$this->helper->triggerReindexing();
 		} catch ( Exception $e ) {
 			$this->success = false;
 			$this->error   = $e->getMessage();

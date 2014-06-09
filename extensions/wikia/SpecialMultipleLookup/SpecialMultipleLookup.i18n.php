@@ -543,6 +543,15 @@ $messages['ja'] = array(
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'multilookupgo' => 'ಹೋಗು',
+	'multilookupnext' => 'ನಂತರ',
+	'multilookupwiki' => 'ವಿಕಿ',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */

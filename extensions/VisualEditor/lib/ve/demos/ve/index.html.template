@@ -1,0 +1,32 @@
+<!--
+/*!
+ * VisualEditor standalone demo
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>VisualEditor Standalone Demo</title>
+
+		<!-- STYLES -->
+
+		<!-- demo styles -->
+		<link rel="stylesheet" href="demo.css">
+	</head>
+	<body>
+		<ul class="ve-demo-menu">
+				<!-- MENU -->
+		</ul>
+		<div class="ve-demo-editor"></div>
+		<div class="ve-demo-debugBar"></div>
+
+		<!-- SCRIPTS -->
+
+		<!-- demo scripts -->
+		<script src="demo.js"></script>
+	</body>
+</html>

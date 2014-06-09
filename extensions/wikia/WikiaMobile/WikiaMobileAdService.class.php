@@ -16,7 +16,7 @@ class WikiaMobileAdService extends WikiaService {
 		// Show ads only for anon users on all but special pages
 		// TODO: unify with desktop logic, like this:
 		// AdEngine2Controller::getAdLevelForPage() === AdEngine2Controller::LEVEL_ALL
-        return $this->shouldLoadAssets() && !$this->wg->Title->isSpecialPage() && $this->wg->Request->getVal('action') !== 'edit';
+        return $this->wg->EnableAdEngineExt && $this->shouldLoadAssets() && !$this->wg->Title->isSpecialPage() && $this->wg->Request->getVal('action') !== 'edit';
 	}
 
 	public function floating() {

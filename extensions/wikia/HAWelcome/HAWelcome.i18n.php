@@ -1375,6 +1375,7 @@ S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|pag
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Pan Cube
  * @author Pio387
  * @author Sovq
  * @author Sp5uhe
@@ -1429,10 +1430,10 @@ Proszę, [[Special:Userlogin|załóż konto]]. Ułatwi Ci to kontakt ze społecz
 
 Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.",
 	'welcome-message-wall-anon-staff' => 'Cześć,
-Witaj na {{SITENAME}} i dziękuję za edycję na stronie [[:$1]] Dzięki za dokonanie pierwszej edycji. Zachęcamy każdego edytora do [[Special:UserLogin|utworzenia nazwy użytkownika]], dzięki czemu Twoje edycje będą trzymane w jednym miejscu, uzyskasz dostęp do więcej rozszerzeń Wikii i poznasz resztę społeczności {{SITENAME}}.
+Witaj na {{SITENAME}} i dziękuję za edycję na stronie [[:$1]] Dzięki za dokonanie pierwszej edycji. Zachęcamy każdego edytora do [[Special:UserLogin|utworzenia profilu użytkownika]], dzięki czemu Twoje edycje będą trzymane w jednym miejscu, uzyskasz dostęp do więcej rozszerzeń Wikii i poznasz resztę społeczności {{SITENAME}}.
 
 
-Jeśli potrzebujesz pomocy, odwiedź nasze  [[w:c:pl:Pomoc:Zawartość|strony pomocy]], a potem odwiedź [[w:c:spolecznosc|Centrum Społeczności]], by dowiedzieć się więcej. Wesołego edytowania!', # Fuzzy
+Jeśli potrzebujesz pomocy, odwiedź nasze  [[Pomoc:Zawartość|strony pomocy]], a potem odwiedź [[w:c:spolecznosc|Centrum Społeczności]], by dowiedzieć się więcej. Wesołego edytowania!', # Fuzzy
 	'welcome-description' => 'Wysyła wiadomość powitalną dla użytkowników po ich pierwszej edycji.',
 );
 

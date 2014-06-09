@@ -11,7 +11,7 @@ Then(/^(.+) should appear in the diff view$/) do |headings_string|
     # Contents pulled from the Cucumber tables in the .feature are escaped regexes.
     # In this case we want unescaped regexes (and in one case a leading space)
     # So we put single quotes around the entries in the .feature file and strip them here to get unescaped regexes.
-    headings_string = headings_string.gsub(/'/, '')
+    headings_string = headings_string.gsub(/"/, "")
     page.wait_until(10) do
       page.diff_view.include? "Your text"
     end

@@ -339,6 +339,23 @@ $messages['ka'] = array(
 	'timeago-second' => '1 წუთის წინ',
 );
 
+/** Kazakh (Cyrillic script) (қазақша (кирил)‎)
+ * @author Arystanbek
+ */
+$messages['kk-cyrl'] = array(
+	'timeago-year' => '{{PLURAL:$1|$1 жыл|$1 жыл}} бұрын',
+	'timeago-month' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
+	'timeago-day' => '{{PLURAL:$1|$1 күн|$1 күн}} бұрын',
+	'timeago-hour' => '{{PLURAL:$1|$1 сағат|$1 сағат}} бұрын',
+	'timeago-minute' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
+	'timeago-second' => 'минут бұрын',
+	'timeago-day-from-now' => '{{PLURAL:$1|$1 күн|$1 күн}} бұрын',
+	'timeago-hour-from-now' => '{{PLURAL:$1|$1 сағат|$1 сағат}} бұрын',
+	'timeago-minute-from-now' => '{{PLURAL:$1|$1 минут|$1 минут}} бұрын',
+	'timeago-month-from-now' => '{{PLURAL:$1|$1 ай|$1 ай}} бұрын',
+	'timeago-second-from-now' => 'минут бұрын',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -403,6 +420,7 @@ $messages['nb'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Flightmare
  * @author SPQRobin
  * @author Siebrand
  */
@@ -418,7 +436,7 @@ $messages['nl'] = array(
 	'timeago-hour-from-now' => 'over {{PLURAL:$1|een uur|$1 uur}}',
 	'timeago-minute-from-now' => 'over {{PLURAL:$1|een minuut|$1 minuten}}',
 	'timeago-month-from-now' => 'over {{PLURAL:$1|een maand|$1 maanden}}',
-	'timeago-second-from-now' => 'over een minuut',
+	'timeago-second-from-now' => 'een minuut van nu',
 );
 
 /** Occitan (occitan)
