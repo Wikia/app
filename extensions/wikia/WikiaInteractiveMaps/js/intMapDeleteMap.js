@@ -13,7 +13,7 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 							data: [
 								{
 									key: 'event',
-									value: 'delete'
+									value: 'close'
 								}
 							]
 						}
@@ -25,7 +25,7 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 							data: [
 								{
 									key: 'event',
-									value: 'close'
+									value: 'delete'
 								}
 							]
 						}
