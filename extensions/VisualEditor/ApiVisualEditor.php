@@ -360,13 +360,17 @@ class ApiVisualEditor extends ApiBase {
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
+				$anoneditwarning = false;
+				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
 				// TODO: In MW 1.19.7 method getEditNotices does not exist so for now fallback to just an empty
 				// but in future figure out what's the proper backward compatibility solution.
 				// #back-compat
 				// $notices = $page->getEditNotices();
 				$notices = array();
-				if ( $user->isAnon() ) {
-					$notices[] = $this->msg( 'anoneditwarning' )->parseAsBlock();
+				// Wikia change - using 'VisualEditor-anoneditwarning' instead of 'anoneditwarning'
+				if ( $user->isAnon() && $anoneditwarningMessage->exists() ) {
+					$notices[] = $anoneditwarningMessage->parseAsBlock();
+					$anoneditwarning = true;
 				}
 				if ( $parsed && $parsed['restoring'] ) {
 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
@@ -458,6 +462,7 @@ class ApiVisualEditor extends ApiBase {
 							'notices' => $notices,
 							'checkboxes' => $checkboxes,
 							'links' => $links,
+							'anoneditwarning' => $anoneditwarning
 						),
 						$parsed['result']
 					);

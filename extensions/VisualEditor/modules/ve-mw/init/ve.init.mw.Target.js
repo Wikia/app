@@ -374,6 +374,9 @@ ve.init.mw.Target.onModulesReady = function () {
 ve.init.mw.Target.onLoad = function ( response ) {
 	var data = response ? response.visualeditor : null;
 
+	// Wikia tracking if the anoneditwarning was shown
+	window.anoneditwarning = response.visualeditor.anoneditwarning;
+
 	if ( !data && !response.error ) {
 		ve.init.mw.Target.onLoadError.call(
 			this, null, 'Invalid response in response from server', null

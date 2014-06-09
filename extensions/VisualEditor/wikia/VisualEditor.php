@@ -91,6 +91,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
@@ -149,6 +150,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-notification-media-permission-denied',
 			'wikia-visualeditor-notification-video-preview-not-available',
 			'accesskey-save',
+			'wikia-visualeditor-dialog-orientation-headline',
+			'wikia-visualeditor-dialog-orientation-text',
+			'wikia-visualeditor-dialog-orientation-start-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
@@ -173,6 +177,13 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalV
 /* Configuration */
 
 // Disable VE for blog namespaces
-if ( defined( 'NS_BLOG_ARTICLE' ) && defined( 'NS_BLOG_ARTICLE_TALK' ) ) {
-	$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+if ( !empty( $wgEnableBlogArticles ) ) {
+	$tempArray = array();
+	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
+		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
+			continue;
+		}
+		$tempArray[] = $value;
+	}
+	$wgVisualEditorNamespaces = $tempArray;
 }
