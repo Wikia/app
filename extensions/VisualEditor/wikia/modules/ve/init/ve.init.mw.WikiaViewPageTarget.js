@@ -190,7 +190,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 
 	if ( mw.user.anonymous() && !uri.query.redlink ) {
 		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['activate', 1173750562] );
+		window.optimizely.push( ['activate', 1248850316] );
 
 		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
 			this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open();
