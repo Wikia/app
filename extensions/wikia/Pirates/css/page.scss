@@ -22,10 +22,10 @@
 	}
 	/* end temp grid transition code */
 	position: relative;
-	@media screen and (max-width: $width-tablet) {
+	@media screen and (max-width: $width-tablet - 1) {
 		width: 768px;
 	}
-	@media screen and (min-width: $width-tablet + 1) and (max-width: $width-desktop) {
+	@media screen and (min-width: $width-tablet) and (max-width: $width-desktop) {
 		width: 1024px;
 	}
 	@media screen and (min-width: $width-desktop + 1) {
