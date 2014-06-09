@@ -8,7 +8,6 @@ if ( !defined('MEDIAWIKI') ) {
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
 $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'models/external/HubRssFeedModel.class.php';
-$wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
 $wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';
 $wgAutoloadClasses['BaseRssModel']	= $dir . 'models/BaseRssModel.class.php';
 $wgAutoloadClasses['TvRssModel']	= $dir . 'models/TvRssModel.class.php';
