@@ -44,8 +44,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		adProviderRemnant,
 
 		dartBtfCountries = {
-			US: true,
-			PL: true
+			US: true
 		},
 		dartBtfSlots = {
 			LEFT_SKYSCRAPER_3: true,
