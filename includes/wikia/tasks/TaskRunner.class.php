@@ -95,11 +95,8 @@ class TaskRunner {
 
 	static function isModern($taskName) {
 		return in_array($taskName, [
-			'BloglistDeferredPurgeJob',
-			'BlogTask',
 			'CreatePdfThumbnailsJob',
 //		'CreateWikiLocalJob',
-			'ParsoidCacheUpdateJob',
 			'PromoteImageReviewTask',
 			'UserRollback',
 //			'UserRename',
