@@ -5,12 +5,12 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 			vars: {
 				id: 'intMapsDeleteMapModal',
 				size: 'small',
-				content: $.msg('wikia-interactive-maps-delete-map-prompt'),
-				title: $.msg('wikia-interactive-maps-delete-map-title'),
+				content: $.msg('wikia-interactive-maps-delete-map-client-prompt'),
+				title: $.msg('wikia-interactive-maps-delete-map-client-title'),
 				buttons: [
 					{
 						vars: {
-							value: 'Delete',
+							value: $.msg('wikia-interactive-maps-delete-map-client-cancel-button'),
 							data: [
 								{
 									key: 'event',
@@ -21,7 +21,7 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 					},
 					{
 						vars: {
-							value: $.msg('wikia-interactive-maps-delete-map-confirm-button'),
+							value: $.msg('wikia-interactive-maps-delete-map-client-confirm-button'),
 							classes: ['normal', 'primary'],
 							data: [
 								{

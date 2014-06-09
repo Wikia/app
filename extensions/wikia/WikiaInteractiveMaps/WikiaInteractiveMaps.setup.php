@@ -43,5 +43,5 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 ] );
 
 JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
-	'wikia-interactive-maps-delete-map-*'
+	'wikia-interactive-maps-delete-map-client-*'
 ] );

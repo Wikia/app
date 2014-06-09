@@ -59,11 +59,12 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
-	'wikia-interactive-maps-delete-map' => 'Delete map',
 	'wikia-interactive-maps-view-source' => 'View source',
-	'wikia-interactive-maps-delete-map-title' => 'Delete map',
-	'wikia-interactive-maps-delete-map-prompt' => 'Are you sure to delete the map?',
-	'wikia-interactive-maps-delete-map-confirm-button' => 'Delete Map',
+	'wikia-interactive-maps-delete-map' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Are you sure to delete the map?',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Delete Map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Cancel',
 	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
 	'wikia-interactive-maps-delete-map-error' => 'There was an error while deleting a map.',
 ];
@@ -115,11 +116,12 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 
-	'wikia-interactive-maps-delete-map' => 'Action to delete an existing map',
 	'wikia-interactive-maps-view-source' => 'Action to view source of the map',
-	'wikia-interactive-maps-delete-map-title' => 'Title of the "delete map" modal',
-	'wikia-interactive-maps-delete-map-prompt' => 'Prompt asking if user is sure to delete a map',
-	'wikia-interactive-maps-delete-map-confirm-button' => 'Button to confirm deleting the map',
+	'wikia-interactive-maps-delete-map' => 'Action to delete an existing map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Title of the "delete map" modal',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt asking if user is sure to delete a map',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Button to confirm deleting the map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Button to cancel deleting the map',
 	'wikia-interactive-maps-delete-map-success' => 'Information about succesful deletion of the map',
 	'wikia-interactive-maps-delete-map-error' => 'Information about error during deletion of the map',
 ];

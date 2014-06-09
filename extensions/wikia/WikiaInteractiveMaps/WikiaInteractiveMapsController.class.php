@@ -458,7 +458,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 		NotificationsController::addConfirmation( $result ?
 			wfMessage( 'wikia-interactive-maps-delete-map-success' ) :
-			wfMessage('wikia-interactive-maps-delete-map-success') );
+			wfMessage('wikia-interactive-maps-delete-map-error') );
 		$this->wg->Out->redirect( Title::newFromText( 'InteractiveMaps', NS_SPECIAL )->getFullUrl() );
 	}
 	
