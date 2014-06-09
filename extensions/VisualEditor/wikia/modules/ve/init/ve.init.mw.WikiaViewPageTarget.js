@@ -184,10 +184,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status 
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
+	var uri = new mw.Uri( location.href );
 	// Parent method
 	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
 
-	if ( mw.user.anonymous() && !/(\?|&)redlink=1/.test( window.location.search ) ) {
+	if ( mw.user.anonymous() && !uri.query.redlink ) {
 		window.optimizely = window.optimizely || [];
 		window.optimizely.push( ['activate', 1173750562] );
 
