@@ -22,7 +22,7 @@ class UserRenameTask extends BaseTask {
 	 *		phalanx_block_id => Phalanx login block ID
 	 */
 	public function renameUser( array $wikiCityIds, array $params ) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+		global $IP;
 
 		$renameIP = !empty($params['rename_ip']);
 
