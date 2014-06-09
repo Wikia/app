@@ -38,7 +38,7 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 		url = 'wikia.php?controller=WikiaInteractiveMaps&method=deleteMap';
 
 	/**
-	 * @Desc Creates a POST form with map ID in the payload and submits it
+	 * @desc Creates a POST form with map ID in the payload and submits it
 	 * to WikiaInteractiveMaps controller (method deleteMap)
 	 */
 	function deleteMap() {
@@ -51,21 +51,8 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 		$form.submit();
 	}
 
-	function triggerDeleteMapModal() {
-		if (window.wgUserName === null) {
-			window.UserLoginModal.show({
-				origin: 'wikia-int-map-create-map',
-				callback: function() {
-					loadModal();
-				}
-			});
-		} else {
-			loadModal();
-		}
-	}
-
 	/**
-	 * Opens modal with a prompt to confirm map deletion
+	 * @desc Opens modal with a prompt to confirm map deletion
 	 */
 	function init() {
 		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
@@ -81,5 +68,5 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 
 	return {
 		init: init
-	}
+	};
 });
