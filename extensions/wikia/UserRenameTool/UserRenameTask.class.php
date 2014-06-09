@@ -36,19 +36,11 @@ class UserRenameTask extends BaseTask {
 			/**
 			 * execute maintenance script
 			 */
-			$aconf = $wgWikiaAdminSettingsPath;
-
-			if ( defined('ENV_DEVBOX') && ENV_DEVBOX ) {
-				$aconf = preg_replace("/\\.\\.\\//","",$aconf);
-			}
-
 			$cmd = sprintf( "SERVER_ID=%s php {$IP}/maintenance/wikia/RenameUser_local.php", $cityId );
 			$opts = [
 				'rename-user-id' => $params['rename_user_id'],
 				'requestor-id' => $params['requestor_id'],
 				'reason' => $params['reason'],
-				'conf' => $wgWikiaLocalSettingsPath,
-				'aconf' => $aconf,
 			];
 
 			if ( $renameIP ) {
