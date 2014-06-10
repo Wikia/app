@@ -56,7 +56,7 @@ class UserRollbackTask extends BaseTask {
 		$cmd = sprintf("SERVER_ID=%d php {$phpScript} --users %s --time %s --onlyshared",
 			$wgCityId, escapeshellarg(implode('|', $identifiers)), escapeshellarg($timestamp));
 
-		$this->log( "Running {$cmd}" );
+		$this->info( "Running {$cmd}" );
 		$retval = wfShellExec( $cmd, $status );
 		return $retval;
 	}

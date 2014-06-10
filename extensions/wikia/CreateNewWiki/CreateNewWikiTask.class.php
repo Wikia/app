@@ -37,15 +37,15 @@ class CreateNewWikiTask extends BaseTask {
 		$wgErrorLog = false;
 
 		if ( $params['founderId'] ) {
-			Wikia::log( __METHOD__, 'user', "Loading user with user id = {$params['founderId']}" );
+			$this->info('loading founding user', ['founderId' => $params['founderId']]);
 			$this->founder = User::newFromId( $params['founderId'] );
 			$this->founder->load();
 		} else {
-			Wikia::log( __METHOD__, 'user', "Founder user_id is unknown" );
+			$this->warning("founder user_id is unknown");
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
-			Wikia::log( __METHOD__, 'user', "Cannot load user with user_id = {$params['founderId']}" );
+			$this->warning('cannot load founding user', ['founderId' => $params['founderId']]);
 			if ( !empty( $params['founderName'] ) ) {
 				$this->founder = User::newFromName( $params['founderName'] );
 				$this->founder->load();
@@ -87,21 +87,21 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgCityId, $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->log( "Running {$cmd}" );
+		$this->info( "Running {$cmd}" );
 		$retval = wfShellExec( $cmd, $status );
-		$this->log( $retval );
+		$this->info( "done", ['retval' => $retval] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/initStats.php --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->log( "Running {$cmd}" );
+		$this->info( "Running {$cmd}" );
 		$retval = wfShellExec( $cmd, $status );
-		$this->log( $retval );
+		$this->info( "done", ['retval' => $retval] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->log( "Running {$cmd}" );
+		$this->info( "Running {$cmd}" );
 		$retval = wfShellExec( $cmd, $status );
-		$this->log( $retval );
+		$this->info( "done", ['retval' => $retval] );
 
-		$this->log( "Remove edit lock" );
+		$this->info( "Remove edit lock" );
 		$variable = WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
 		if ( isset( $variable->cv_variable_id ) ) {
 			WikiFactory::removeVarById( $variable->cv_variable_id, $wgCityId );
@@ -110,9 +110,9 @@ class CreateNewWikiTask extends BaseTask {
 
 		$dbname = WikiFactory::IDtoDB( $wgCityId );
 		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
-		$this->log( "Running {$cmd}" );
+		$this->info( "Running {$cmd}" );
 		$retval = wfShellExec( $cmd, $status );
-		$this->log( $retval );
+		$this->info( "done", ['retval' => $retval] );
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( WikiFactory::getVarsKey( $wgCityId ) );
@@ -133,8 +133,7 @@ class CreateNewWikiTask extends BaseTask {
 		if ( !$sourceTitle ) {
 			$sourceTitle = Title::newFromText( "Main_Page" );
 			if ( !$sourceTitle ) {
-				Wikia::log( __METHOD__, "err", "Invalid page title: {$source} and Main_page" );
-
+				$this->error("invalid page title", ["title" => $source]);
 				return;
 			}
 		}
@@ -147,10 +146,10 @@ class CreateNewWikiTask extends BaseTask {
 			$targetTitle = Title::newFromText( $target );
 			if ( $targetTitle ) {
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					Wikia::log( __METHOD__, "move", $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText() );
+					$this->info( "move {$sourceTitle->getPrefixedText()} --> {$targetTitle->getPrefixedText()}" );
 					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 					if ( $err !== true ) {
-						Wikia::log( __METHOD__, "move", "Moving FAILED" );
+						$this->error( "Moving FAILED" );
 					} else {
 						/**
 						 * fill Mediawiki:Mainpage with new title
@@ -160,7 +159,7 @@ class CreateNewWikiTask extends BaseTask {
 						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 						$mwMainPageArticle->doPurge();
 
-						Wikia::log( __METHOD__, "move", "Page moved" );
+						$this->info( "Page moved" );
 
 						/**
 						 * also move associated talk page if it exists
@@ -168,17 +167,17 @@ class CreateNewWikiTask extends BaseTask {
 						$sourceTalkTitle = $sourceTitle->getTalkPage();
 						$targetTalkTitle = $targetTitle->getTalkPage();
 						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-							Wikia::log( __METHOD__, "move", $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText() );
+							$this->info( "move {$sourceTalkTitle->getPrefixedText()} --> {$targetTalkTitle->getPrefixedText()}" );
 							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
 							if ( $err === true ) {
-								Wikia::log( __METHOD__, "move", "Moved talk page" );
+								$this->info( 'Moved talk page' );
 							} else {
-								Wikia::log( __METHOD__, "move", "Found talk page but moving FAILED" );
+								$this->warning( 'Found talk page but moving FAILED' );
 							}
 						}
 					}
 				} else {
-					Wikia::log( __METHOD__, "move", "source {$source} and target {$target} are the same" );
+					$this->info( "source {$source} and target {$target} are the same" );
 				}
 			}
 		}
@@ -240,12 +239,12 @@ class CreateNewWikiTask extends BaseTask {
 			}
 		}
 
-		Wikia::log( __METHOD__, 'info', "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$lastRevTimestamp}" );
+		$this->info( "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$lastRevTimestamp}" );
 
 		$updateSql->run( $dbw );
 		$rows = $dbw->affectedRows();
 
-		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		$this->info( "change rev_user and rev_user_text in revisions: {$rows} rows" );
 	}
 
 	/**
@@ -257,9 +256,11 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgUser, $wgEnableWallExt;
 		$saveUser = $wgUser;
 
-		Wikia::log( __METHOD__, "talk", "Setting welcome talk page on new wiki or Wall" );
+		$this->info( 'Setting welcome talk page on new wiki or Wall', [
+			'sitename' => $this->wikiName,
+			'language' => $this->wikiLang,
+		] );
 
-		Wikia::log( __METHOD__, "vars", "sitename: {$this->wikiName}; language: {$this->wikiLang}" );
 		/**
 		 * set apropriate staff member
 		 */
@@ -305,14 +306,14 @@ class CreateNewWikiTask extends BaseTask {
 				return false;
 			}
 
-			Wikia::log( __METHOD__, "wall", $this->founder->getName() );
+			$this->info( "wall {$this->founder->getName()}" );
 
 			return true;
 		}
 
 		$talkPage = $this->founder->getTalkPage();
 		if ( $talkPage ) {
-			Wikia::log( __METHOD__, "talk", $talkPage->getFullUrl() );
+			$this->info("talk {$talkPage->getFullUrl()}");
 			/**
 			 * and now create talk article
 			 */
@@ -320,10 +321,10 @@ class CreateNewWikiTask extends BaseTask {
 			if ( !$talkArticle->exists() ) {
 				$talkArticle->doEdit( $talkBody, wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 			} else {
-				Wikia::log( __METHOD__, "talkpage", sprintf( "%s already exists", $talkPage->getFullURL() ) );
+				$this->warning( sprintf( "talkpage %s already exists", $talkPage->getFullURL() ) );
 			}
 		} else {
-			Wikia::log( __METHOD__, "error", "Can't take talk page for user " . $this->founder->getId() );
+			$this->error( "Can't take talk page for user", ['founderId' => $this->founder->getId()] );
 		}
 		$wgUser = $saveUser; // Restore user object after creating talk message
 		return true;
@@ -386,9 +387,9 @@ class CreateNewWikiTask extends BaseTask {
 			}
 
 			if ( $ok ) {
-				Wikia::log( __METHOD__, "ok", "Protected key page: $pageName" );
+				$this->info("Protected key page: {$pageName}");
 			} else {
-				Wikia::log( __METHOD__, "err", "Failed while trying to protect $pageName" );
+				$this->warning("Failed while trying to protect {$pageName}");
 			}
 		}
 		$wgUser->removeGroup( "staff" );
@@ -444,6 +445,6 @@ class CreateNewWikiTask extends BaseTask {
 				return $numRows;
 			} );
 
-		Wikia::log( __METHOD__, "info", "send starter revisions to scribe: {$numRows} rows" );
+		$this->info("send starter revisions to scribe: {$numRows} rows");
 	}
 } 

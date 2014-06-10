@@ -9,10 +9,13 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
+	use Loggable;
+
 	/** @var array calls this task will make */
 	protected $calls = [];
 
@@ -36,6 +39,9 @@ abstract class BaseTask {
 
 	/** @var string wrapper for AsyncTaskList->delay() */
 	private $delay = null;
+
+	/** @var int id this task's id, or id of the task that this task is a subtask of */
+	private $taskId;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
@@ -225,6 +231,11 @@ abstract class BaseTask {
 		}
 	}
 
+	/**
+	 * set this task to run against a specific article/page/etc
+	 * @param \Title $title
+	 * @return $this
+	 */
 	public function title(\Title $title) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
@@ -232,6 +243,22 @@ abstract class BaseTask {
 		];
 
 		return $this;
+	}
+
+	/**
+	 * @param $taskId
+	 * @return $this
+	 */
+	public function taskId($taskId) {
+		$this->taskId = $taskId;
+		return $this;
+	}
+
+	/** @see Loggable::getLoggerContext */
+	protected function getLoggerContext() {
+		return [
+			'task_id' => $this->taskId,
+		];
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList

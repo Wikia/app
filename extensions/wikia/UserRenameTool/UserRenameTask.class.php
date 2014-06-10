@@ -20,6 +20,7 @@ class UserRenameTask extends BaseTask {
 	 *		reason => Reason for requesting username change
 	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
 	 *		phalanx_block_id => Phalanx login block ID
+	 * @return bool
 	 */
 	public function renameUser( array $params ) {
 		global $wgCityId;
@@ -101,9 +102,9 @@ class UserRenameTask extends BaseTask {
 				'UserRenameProcessFinishedNotification',
 				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 			);
-			$this->log("Notification sent to: {$user->getEmail()}");
+			$this->info("Notification sent to: {$user->getEmail()}");
 		} else {
-			$this->log("Cannot send email, no email set for user: {$user->getName()}");
+			$this->warning("Cannot send email, no email set for user: {$user->getName()}");
 		}
 	}
 }
