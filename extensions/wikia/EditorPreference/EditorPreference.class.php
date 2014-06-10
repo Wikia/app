@@ -50,7 +50,7 @@ class EditorPreference {
 			return true;
 		}
 
-		$isVEPrimaryEditor = self::isVisualEditorPrimary();
+		$isVisualEditorPrimaryEditor = self::isVisualEditorPrimary();
 		$title = $skin->getRelevantTitle();
 		// Rebuild the 'views' links in this array
 		$newViews = array();
@@ -59,36 +59,36 @@ class EditorPreference {
 			if ( $action === 'edit' ) {
 				$pageExists = $title->exists() || $title->getDefaultMessageText() !== false;
 
-				// Message keys for VE tab and regular Edit tab
-				if ( $isVEPrimaryEditor ) {
+				// Message keys for VisualEditor tab and regular Edit tab
+				if ( $isVisualEditorPrimaryEditor ) {
 					if ( $pageExists ) {
-						$veMessageKey = 'edit';
+						$visualEditorMessageKey = 'edit';
 					} else {
-						$veMessageKey = 'create';
+						$visualEditorMessageKey = 'create';
 					}
 
 					$editMessageKey = self::getDropdownEditMessageKey();
 				} else {
-					$veMessageKey = 'visualeditor-ca-ve-edit';
+					$visualEditorMessageKey = 'visualeditor-ca-ve-edit';
 					$editMessageKey = $pageExists ? 'edit' : 'create';
 				}
 
 				// Create the Visual Editor tab
-				$veTab = array(
+				$visualEditorTab = array(
 					'href' => self::getVisualEditorEditUrl(),
-					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
+					'text' => wfMessage( $visualEditorMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
-					'main' => $isVEPrimaryEditor
+					'main' => $isVisualEditorPrimaryEditor
 				);
 
 				// Alter the edit tab
 				$editTab = $data;
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
-				$editTab['main'] = !$veTab['main'];
+				$editTab['main'] = !$visualEditorTab['main'];
 
 				$newViews['edit'] = $editTab;
-				$newViews['ve-edit'] = $veTab;
+				$newViews['ve-edit'] = $visualEditorTab;
 			} else {
 				// Just pass through
 				$newViews[$action] = $data;
@@ -139,7 +139,7 @@ class EditorPreference {
 				return self::OPTION_EDITOR_CK;
 			}
 			else {
-				// Both VE and CK editor are disabled
+				// Both VisualEditor and CK editor are disabled
 				return self::OPTION_EDITOR_SOURCE;
 			}
 		}
@@ -179,7 +179,7 @@ class EditorPreference {
 	public static function onAddNewAccount( User $user ) {
 		global $wgForceVisualEditor;
 		if ( $wgForceVisualEditor ) {
-			// Force new users to set VE as preference
+			// Force new users to set VisualEditor as preference
 			$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
 			$user->saveSettings();
 		}
