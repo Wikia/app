@@ -1,8 +1,29 @@
 <?php
-
-/** Ossetian (Ирон)
+/**
+ * Ossetian (Ирон) specific code.
  *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  * @author Soslan Khubulov
+ * @ingroup Language
+ */
+
+/**
+ * Ossetian (Ирон)
  *
  * @ingroup Language
  */
@@ -46,7 +67,6 @@ class LanguageOs extends Language {
 		# Variable for ending
 		$ending = '';
 
-
 		# CHecking if the $word is in plural form
 		if ( preg_match( '/тæ$/u', $word ) ) {
 			$word = mb_substr( $word, 0, -1 );
@@ -60,27 +80,41 @@ class LanguageOs extends Language {
 		# Checking if $word ends on 'у'. 'У' can be either consonant 'W' or vowel 'U' in cyrillic Ossetic.
 		# Examples: {{grammar:genitive|аунеу}} = аунеуы, {{grammar:genitive|лæппу}} = лæппуйы.
 		elseif ( preg_match( "/у$/u", $word ) ) {
-			if ( !preg_match( "/[аæеёиоыэюя]$/u", mb_substr( $word, -2, 1 ) ) )
+			if ( !preg_match( "/[аæеёиоыэюя]$/u", mb_substr( $word, -2, 1 ) ) ) {
 				$jot = 'й';
+			}
 		} elseif ( !preg_match( "/[бвгджзйклмнопрстфхцчшщьъ]$/u", $word ) ) {
 			$hyphen = '-';
 		}
 
 		switch ( $case ) {
-			case 'genitive': $ending = $hyphen . $jot . 'ы'; break;
-			case 'dative': $ending = $hyphen . $jot . 'æн'; break;
-			case 'allative': $ending = $hyphen . $end_allative; break;
+			case 'genitive':
+				$ending = $hyphen . $jot . 'ы';
+				break;
+			case 'dative':
+				$ending = $hyphen . $jot . 'æн';
+				break;
+			case 'allative':
+				$ending = $hyphen . $end_allative;
+				break;
 			case 'ablative':
 				if ( $jot == 'й' ) {
-					$ending = $hyphen . $jot . 'æ'; break;
+					$ending = $hyphen . $jot . 'æ';
+				} else {
+					$ending = $hyphen . $jot . 'æй';
 				}
-				else {
-					$ending = $hyphen . $jot . 'æй'; break;
-				}
-			case 'inessive': break;
-			case 'superessive': $ending = $hyphen . $jot . 'ыл'; break;
-			case 'equative': $ending = $hyphen . $jot . 'ау'; break;
-			case 'comitative': $ending = $hyphen . 'имæ'; break;
+				break;
+			case 'inessive':
+				break;
+			case 'superessive':
+				$ending = $hyphen . $jot . 'ыл';
+				break;
+			case 'equative':
+				$ending = $hyphen . $jot . 'ау';
+				break;
+			case 'comitative':
+				$ending = $hyphen . 'имæ';
+				break;
 		}
 		return $word . $ending;
 	}
