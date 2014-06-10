@@ -199,7 +199,7 @@ class EditorPreference {
 	 */
 	public static function onUserProfilePageAfterGetActionButtonData( &$actionButtonArray, $namespace, $canRename,
 		$canProtect, $canDelete, $isUserPageOwner ) {
-		global $wgTitle, $wgSkin;
+		global $wgTitle;
 		// If namespace is not User namespace
 		if ( $namespace !== NS_USER ) {
 			return true;
