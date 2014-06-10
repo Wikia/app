@@ -61,7 +61,7 @@ OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
 
 /* Methods */
 ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
-	var surfaceOffset, surfaceEdges, documentDimensions,
+	var surfaceOffset, surfaceEdges, documentDimensions, topEdge,
 		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
 
 	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
@@ -70,16 +70,19 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 		surfaceEdges = {
 			right: surfaceOffset.left + this.$surface.width(),
 			bottom: surfaceOffset.top + this.$surface.height(),
-			left: surfaceOffset.left
+			left: surfaceOffset.left,
+			top: surfaceOffset.top
 		};
 		documentDimensions = {
 			height: this.$body.outerHeight(),
 			width: this.$window.width()
 		};
+		// Handle NS_USER
+		topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ? surfaceEdges.top : this.$pageHeader.offset().top;
 
 		this.$top
 			.css( {
-				'height': this.$pageHeader.offset().top - this.spacing,
+				'height': topEdge - this.spacing,
 				'width': documentDimensions.width
 			} );
 		this.$right
