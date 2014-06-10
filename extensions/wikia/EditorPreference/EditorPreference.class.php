@@ -185,4 +185,57 @@ class EditorPreference {
 		// is set in CommonSettings.
 		return true;
 	}
+
+	/**
+	 * Add a VisualEditor edit link to the user profile action dropdown.
+	 *
+	 * @param array $actionButtonArray
+	 * @param integer $namespace
+	 * @param boolean $canRename
+	 * @param boolean $canProtect
+	 * @param boolean $canDelete
+	 * @param boolean $isUserPageOwner
+	 * @return boolean
+	 */
+	public static function onUserProfilePageAfterGetActionButtonData( &$actionButtonArray, $namespace, $canRename,
+		$canProtect, $canDelete, $isUserPageOwner ) {
+		global $wgTitle, $wgSkin;
+		// If namespace is not User namespace
+		if ( $namespace !== NS_USER ) {
+			return true;
+		}
+
+		if ( $actionButtonArray['name'] === 'editprofile' ) {
+			if ( self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL ) {
+				// Switch main edit button to use VisualEditor
+				$actionButtonArray['action']['href'] = $wgTitle->getLocalUrl( array('veaction' => 'edit') );
+				$actionButtonArray['action']['id'] = 'ca-ve-edit';
+
+				if ( !$wgEnableRTEExt ) {
+					$editMessageKey = 'visualeditor-ca-editsource';
+				} else {
+					$editMessageKey = 'visualeditor-ca-classiceditor';
+				}
+
+				// Append link to action dropdown for editing in CK or source editor
+				$actionButtonArray['dropdown'] = array( 'edit' => array(
+					'href' => $wgTitle->getLocalUrl( array('action' => 'edit') ),
+					'text' => wfMessage( $editMessageKey )->text(),
+					'id'   => 'ca-edit'
+				) ) + $actionButtonArray['dropdown'];
+
+			} else {
+				// Prepend a VisualEditor link to the action dropdown
+				$actionButtonArray['dropdown'] = array( 've-edit' => array(
+					'href' => $wgTitle->getLocalUrl( array('veaction' => 'edit') ),
+					'text' => wfMessage( 'visualeditor-ca-ve-edit' )->text(),
+					'id'   => 'ca-ve-edit'
+				) ) + $actionButtonArray['dropdown'];
+
+				$actionButtonArray['action']['id'] = 'ca-edit';
+			}
+		}
+
+		return true;
+	}
 }
