@@ -43,14 +43,14 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		global $wgUser, $wgEnableRTEExt;
+		global $wgUser;
 
 		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink( $skin ) ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
 
-		$primaryEditor = self::getPrimaryEditor();
+		$isVEPrimaryEditor = self::isVisualEditorPrimary();
 		$title = $skin->getRelevantTitle();
 		// Rebuild the 'views' links in this array
 		$newViews = array();
@@ -61,18 +61,14 @@ class EditorPreference {
 				$veParams = $editParams = $skin->editUrlOptions();
 
 				// Message keys for VE tab and regular Edit tab
-				if ( $primaryEditor === self::OPTION_EDITOR_VISUAL ) {
+				if ( $isVEPrimaryEditor ) {
 					if ( $pageExists ) {
 						$veMessageKey = 'edit';
 					} else {
 						$veMessageKey = 'create';
 					}
 
-					if ( !$wgEnableRTEExt ) {
-						$editMessageKey = 'visualeditor-ca-editsource';
-					} else {
-						$editMessageKey = 'visualeditor-ca-classiceditor';
-					}
+					$editMessageKey = self::getDropdownEditMessageKey();
 				} else {
 					$veMessageKey = 'visualeditor-ca-ve-edit';
 					$editMessageKey = $pageExists ? 'edit' : 'create';
@@ -86,7 +82,7 @@ class EditorPreference {
 					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
-					'main' => $primaryEditor === self::OPTION_EDITOR_VISUAL
+					'main' => $isVEPrimaryEditor
 				);
 
 				// Alter the edit tab
@@ -153,6 +149,15 @@ class EditorPreference {
 	}
 
 	/**
+	 * Checks whether VisualEditor is the primary editor.
+	 *
+	 * @return boolean True if VisualEditor is primary and false otherwise
+	 */
+	private static function isVisualEditorPrimary() {
+		return self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+	}
+
+	/**
 	 * Checks whether the VisualEditor link should be shown.
 	 *
 	 * @param Skin Current skin object
@@ -206,21 +211,15 @@ class EditorPreference {
 		}
 
 		if ( $actionButtonArray['name'] === 'editprofile' ) {
-			if ( self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL ) {
+			if ( self::isVisualEditorPrimary() ) {
 				// Switch main edit button to use VisualEditor
 				$actionButtonArray['action']['href'] = $wgTitle->getLocalUrl( array('veaction' => 'edit') );
 				$actionButtonArray['action']['id'] = 'ca-ve-edit';
 
-				if ( !$wgEnableRTEExt ) {
-					$editMessageKey = 'visualeditor-ca-editsource';
-				} else {
-					$editMessageKey = 'visualeditor-ca-classiceditor';
-				}
-
 				// Append link to action dropdown for editing in CK or source editor
 				$actionButtonArray['dropdown'] = array( 'edit' => array(
 					'href' => $wgTitle->getLocalUrl( array('action' => 'edit') ),
-					'text' => wfMessage( $editMessageKey )->text(),
+					'text' => wfMessage( self::getDropdownEditMessageKey() )->text(),
 					'id'   => 'ca-edit'
 				) ) + $actionButtonArray['dropdown'];
 
@@ -237,5 +236,15 @@ class EditorPreference {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get the message key for a non-VisualEditor edit link in the actions dropdown.
+	 *
+	 * @return string
+	 */
+	private static function getDropdownEditMessageKey() {
+		global $wgEnableRTEExt;
+		return empty( $wgEnableRTEExt ) ? 'visualeditor-ca-editsource' : 'visualeditor-ca-classiceditor';
 	}
 }
