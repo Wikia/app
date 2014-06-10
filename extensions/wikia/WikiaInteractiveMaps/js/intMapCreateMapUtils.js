@@ -19,10 +19,11 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 	 * @desc render template
 	 * @param {string} template - mustache template
 	 * @param {object} templateData - mustache template variables
+	 * @param {object} partials - mustache partials
 	 */
 
-	function render(template, templateData) {
-		return mustache.render(template, templateData);
+	function render(template, templateData, partials) {
+		return mustache.render(template, templateData, (typeof partials === 'object' ? partials : null));
 	}
 
 	/**
@@ -43,9 +44,20 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 		});
 	}
 
+	/**
+	 * @desc check if string is empty
+	 * @param {string} value
+	 * @returns {boolean}
+	 */
+
+	function isEmpty(value) {
+		return value.trim().length === 0;
+	}
+
 	return {
 		bindEvents: bindEvents,
 		render: render,
-		setButtons: setButtons
+		setButtons: setButtons,
+		isEmpty: isEmpty
 	}
 });

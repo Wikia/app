@@ -233,13 +233,43 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * get list of tile sets
+	 *
+	 * @return Array
+	 */
+
+	public function getTileSets() {
+		$params = [];
+		$results[ 'success' ] = false;
+
+		$searchTerm = $this->request->getVal( 'searchTerm', null );
+
+		if ( !is_null( $searchTerm ) ) {
+			$params[ 'searchTerm' ] = $searchTerm;
+		}
+
+		$response = $this->mapsModel->getTileSets( $params );
+
+		if ( $response ) {
+			$results[ 'success' ] = true;
+			$results[ 'tileSets' ] = $response;
+		} else {
+			$results[ 'error' ] = wfMessage( 'wikia-interactive-maps-api-error-message' )->plain();
+		}
+
+		$this->response->setVal( 'results', $results );
+	}
+
+	/**
 	 * Entry point to create a map from either existing tiles or new image
 	 *
 	 * @requestParam Integer $tileSetId an unique id of existing tiles
 	 * @requestParam String $image an URL to image which the tiles will be created from
 	 * @requestParam String $title map title
 	 *
+	 * @throws PermissionsException
 	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
 	 */
 	public function createMap() {
 		$type = trim( $this->request->getVal( 'type', WikiaMaps::MAP_TYPE_GEO ) );
@@ -393,8 +423,132 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @param String $name
 	 * @param Mixed $value
 	 */
-	private function setCreationData( $name, $value ) {
+	public function setCreationData( $name, $value ) {
 		$this->creationData[ $name ] = $value;
+	}
+
+	/**
+	 * Entry point to create pin types
+	 *
+	 * @requestParam Integer $mapId an unique map id
+	 * @requestParam Array $pinTypeNames an array of pin types names
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 */
+	public function createPinTypes() {
+		$this->setCreationData( 'mapId', $this->request->getInt( 'mapId' ) );
+		$this->setCreationData( 'pinTypeNames', $this->request->getArray( 'pinTypeNames' ) );
+
+		$this->validatePinTypesCreation();
+
+		$this->setCreationData( 'createdBy', $this->wg->User->getName() );
+
+		$this->createPinTypesFromArray();
+		$createdPinTypes = $this->getCreationData( 'createdPinTypes' );
+
+		$this->setVal( 'results', $this->getPinTypesCreationResults(
+			count( $this->getCreationData( 'pinTypeNames' ) ),
+			$createdPinTypes )
+		);
+	}
+
+	/**
+	 * Validates process of creating pin types
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 * @throws InvalidParameterApiException
+	 */
+	private function validatePinTypesCreation() {
+		$mapId = $this->getCreationData( 'mapId' );
+		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
+
+		if( $mapId === 0 && empty( $pinTypesNames ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
+
+		if( $mapId === 0 ) {
+			throw new InvalidParameterApiException( 'mapId' );
+		}
+
+		if( empty( $pinTypesNames ) ) {
+			throw new InvalidParameterApiException( 'pinTypeNames' );
+		}
+
+		if( !$this->hasNamesForAllPinTypes() ) {
+			throw new InvalidParameterApiException( 'pinTypeNames' );
+		}
+
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
+	}
+
+	/**
+	 * Sends requests to the service to create a pin type. Counts how many requests were successful.
+	 */
+	private function createPinTypesFromArray() {
+		$mapId = $this->getCreationData( 'mapId' );
+		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
+
+		$createdPinTypes = 0;
+		foreach( $pinTypesNames as $name ) {
+			$response = json_decode(
+				$this->mapsModel->savePinType( [
+					'map_id' => $mapId,
+					'name' => $name,
+					'created_by' => $this->getCreationData( 'createdBy' ),
+				] )
+			);
+
+			if( isset( $response->id ) ) {
+				$createdPinTypes++;
+			}
+		}
+
+		$this->setCreationData( 'createdPinTypes', $createdPinTypes );
+	}
+
+	/**
+	 * Returns result of creating pin types
+	 *
+	 * @param integer $requestedCreations how many pin types were supposed to be created
+	 * @param integer $createdPinTypes how many pin types were created
+	 *
+	 * @return Array
+	 */
+	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
+		$results['success'] = true;
+
+		if( $createdPinTypes !== $requestedCreations ) {
+			$results['success'] = false;
+			$results['error'] = wfMessage(
+				'wikia-interactive-maps-create-pin-types-error',
+				$createdPinTypes,
+				$requestedCreations
+			)->plain();
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Iterates through all pin types and returns true if all of them have name, false otherwise
+	 *
+	 * @return bool
+	 */
+	public function hasNamesForAllPinTypes() {
+		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
+
+		foreach( $pinTypesNames as $name ) {
+			$name = trim( $name );
+			if( empty( $name ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

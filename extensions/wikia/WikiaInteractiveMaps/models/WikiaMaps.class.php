@@ -6,6 +6,7 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
+	const ENTRY_POINT_PIN_TYPE = 'poi_category';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -14,7 +15,7 @@ class WikiaMaps {
 	const MAP_HEIGHT = 300;
 	const MAP_WIDTH = 1600;
 
-	const MAP_TYPE_CUSTOM = 'uploaded';
+	const MAP_TYPE_CUSTOM = 'custom';
 	const MAP_TYPE_GEO = 'geo';
 
 	const HTTP_CREATED_CODE = 201;
@@ -230,6 +231,26 @@ class WikiaMaps {
 	}
 
 	/**
+	 * Sends request to interactive maps service and returns list of tile sets
+	 *
+	 * @param array $params - request params
+	 *
+	 * @return array - list of tile sets
+	 */
+
+	public function getTileSets( Array $params ) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
+
+		//TODO: consider caching the response
+		$response = Http::get( $url, 'default', [
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
+		] );
+
+		return json_decode( $response );
+	}
+
+	/**
 	 * Sends a request to IntMap Service API to create a map with given parameters
 	 *
 	 * @param Array $mapData array with required parameters to service API
@@ -244,7 +265,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * Sends a request to IntMap Service API to create a tiles' set with given parameters
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
@@ -254,6 +275,20 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] ),
 			$tileSetData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a pin type with given parameters
+	 *
+	 * @param Array $pinTypeData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function savePinType( $pinTypeData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
+			$pinTypeData
 		);
 	}
 

@@ -77,16 +77,15 @@ define(
 			$title = $('#intMapTitle');
 		}
 
-
 		/**
 		 * @desc validates title
 		 */
 
 		function validateTitle() {
 			var dfd = new $.Deferred(),
-				title = $title.val().trim();
+				title = $title.val();
 
-			if (title.length !== 0) {
+			if (!utils.isEmpty(title)) {
 				// add valid title to tile set data
 				tileSetData.title = title;
 				dfd.resolve();
@@ -112,6 +111,7 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
+						modal.trigger('cleanUpError');
 						modal.trigger('mapCreated', data);
 					} else {
 						modal.trigger('error', data.content.message);
