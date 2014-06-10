@@ -6,6 +6,8 @@ class WikiaMaps {
 	const ENTRY_POINT_MAP = 'map';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
+	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+
 	const MAP_DELETE_SUCCESS = 'Map successfully updated';
 
 	const STATUS_DONE = 0;
@@ -86,8 +88,8 @@ class WikiaMaps {
 			'headers' => [
 				'Authorization' => $this->config['token']
 			],
-            //TODO this is temporary workaround, remove it before production!
-            'noProxy' => true
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
 		] );
 	}
 
@@ -118,9 +120,9 @@ class WikiaMaps {
 	private function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = Http::get( $url, 'default', array(
+		$response = Http::get( $url, 'default', [
             'noProxy' => true
-        ) );
+        ] );
 
 		if ( $response !== false ) {
 			$mapsData = json_decode( $response );
@@ -157,17 +159,17 @@ class WikiaMaps {
 	private function getMapByIdFromApi( Array $params ) {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = Http::get( $url, 'default', array(
-            //TODO this is temporary workaround, remove it before production!
-            'noProxy' => true
-        ) );
+		$response = Http::get( $url, 'default', [
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
+		] );
 
 		$map = json_decode( $response );
 		if( !empty( $map->tile_set_url ) ) {
-			$response = Http::get( $map->tile_set_url, 'default', array(
-                //TODO this is temporary workaround, remove it before production!
-                'noProxy' => true
-            ) );
+			$response = Http::get( $map->tile_set_url, 'default', [
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] );
 			$tilesData = json_decode( $response );
 
 			if( !is_null( $tilesData ) ) {
@@ -282,7 +284,7 @@ class WikiaMaps {
 	}
 
 	/**
-	 * Sends a request to IntMap Service API to create a map with given parameters
+	 * Sends a request to IntMap Service API to create a tiles' set with given parameters
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
@@ -292,6 +294,20 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_TILE_SET ] ),
 			$tileSetData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a pin type with given parameters
+	 *
+	 * @param Array $pinTypeData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function savePinType( $pinTypeData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
+			$pinTypeData
 		);
 	}
 

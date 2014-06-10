@@ -9,6 +9,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Evgeniy "aquilax" Vasilev',
 		'Jakub "Student" Olek',
 		'Rafał Leszczyński',
+		'Igor Rogatty'
 	],
 	'description' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'version' => 0.1

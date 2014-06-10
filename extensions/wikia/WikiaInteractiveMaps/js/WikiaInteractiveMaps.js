@@ -79,8 +79,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 	/**
 	 * @desc loads all assets for create map modal and initialize it
-	 * @param {object} source - object with paths to different assets
-	 * @param {string} cacheKey - local storage key
+	 * @param {object} target - one of the actions objects
 	 */
 
 	function loadModal(target) {
