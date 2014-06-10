@@ -13,7 +13,6 @@ $nav-font-alternative-color: #666;
 $dropdown-font-color: #0a5fa3;
 $menu-hover-bg-color: #edf1f4;
 $new-border-color: #c7d1d8;
-$chevron-active-color: #092140;
 $facebook-background-color: #3c5b9b;
 
 .WikiaHeader.v3 {
@@ -62,7 +61,7 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			&:hover .chevron {
-				border-top-color: $chevron-active-color;
+				border-top-color: $nav-font-color;
 			}
 
 			.avatar {
@@ -128,6 +127,7 @@ $facebook-background-color: #3c5b9b;
 				background-color: initial;
 				border: 0;
 				border-bottom: 1px solid $new-border-color;
+				color: $nav-font-color;
 				font-size: 15px;
 				height: 40px;
 				padding: 15px 0 5px;
