@@ -58,7 +58,6 @@ class EditorPreference {
 		foreach ( $links['views'] as $action => $data ) {
 			if ( $action === 'edit' ) {
 				$pageExists = $title->exists() || $title->getDefaultMessageText() !== false;
-				$veParams = $editParams = $skin->editUrlOptions();
 
 				// Message keys for VE tab and regular Edit tab
 				if ( $isVEPrimaryEditor ) {
@@ -75,10 +74,8 @@ class EditorPreference {
 				}
 
 				// Create the Visual Editor tab
-				unset( $veParams['action'] );
-				$veParams['veaction'] = 'edit';
 				$veTab = array(
-					'href' => $title->getLocalURL( $veParams ),
+					'href' => self::getVisualEditorEditUrl(),
 					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
@@ -213,12 +210,12 @@ class EditorPreference {
 		if ( $actionButtonArray['name'] === 'editprofile' ) {
 			if ( self::isVisualEditorPrimary() ) {
 				// Switch main edit button to use VisualEditor
-				$actionButtonArray['action']['href'] = $wgTitle->getLocalUrl( array('veaction' => 'edit') );
+				$actionButtonArray['action']['href'] = self::getVisualEditorEditUrl();
 				$actionButtonArray['action']['id'] = 'ca-ve-edit';
 
 				// Append link to action dropdown for editing in CK or source editor
 				$actionButtonArray['dropdown'] = array( 'edit' => array(
-					'href' => $wgTitle->getLocalUrl( array('action' => 'edit') ),
+					'href' => self::getEditUrl(),
 					'text' => wfMessage( self::getDropdownEditMessageKey() )->text(),
 					'id'   => 'ca-edit'
 				) ) + $actionButtonArray['dropdown'];
@@ -226,7 +223,7 @@ class EditorPreference {
 			} else {
 				// Prepend a VisualEditor link to the action dropdown
 				$actionButtonArray['dropdown'] = array( 've-edit' => array(
-					'href' => $wgTitle->getLocalUrl( array('veaction' => 'edit') ),
+					'href' => self::getVisualEditorEditUrl(),
 					'text' => wfMessage( 'visualeditor-ca-ve-edit' )->text(),
 					'id'   => 'ca-ve-edit'
 				) ) + $actionButtonArray['dropdown'];
@@ -246,5 +243,28 @@ class EditorPreference {
 	private static function getDropdownEditMessageKey() {
 		global $wgEnableRTEExt;
 		return empty( $wgEnableRTEExt ) ? 'visualeditor-ca-editsource' : 'visualeditor-ca-classiceditor';
+	}
+
+	/**
+	 * Get the current page's edit URL for CK or source editor.
+	 *
+	 * @return string
+	 */
+	private static function getEditUrl() {
+		global $wgTitle, $wgUser;
+		return $wgTitle->getLocalURL( $wgUser->getSkin()->editUrlOptions() );
+	}
+
+	/**
+	 * Get the current page's edit URL for VisualEditor.
+	 *
+	 * @return string
+	 */
+	private static function getVisualEditorEditUrl() {
+		global $wgTitle, $wgUser;
+		$params = $wgUser->getSkin()->editUrlOptions();
+		unset( $params['action'] );
+		$params['veaction'] = 'edit';
+		return $wgTitle->getLocalURL( $params );
 	}
 }
