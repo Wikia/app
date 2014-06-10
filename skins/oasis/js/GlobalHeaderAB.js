@@ -1,7 +1,8 @@
 $(function(){
 	var $accountNavigation = $( '#AccountNavigation' ),
 		$avatar = $accountNavigation.find( 'li:first .avatar' ),
-		avatarSize = 36;
+		avatarSize = 36,
+		$loginDropdown = $accountNavigation.find( '#UserLoginDropdown' );
 
 	$('.WikiaHeader').addClass('v3');
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
@@ -16,4 +17,9 @@ $(function(){
 
 	$accountNavigation.find('.subnav' ).find( '.new' ).removeClass( 'new' );
 	$accountNavigation.find( '.ajaxRegister' ).wrap( '<div class="ajaxRegisterContainer"></div>' ).parent().prependTo( '#UserLoginDropdown' );
+
+	$loginDropdown.find( 'input[type="text"], input[type="password"]' ).each(function() {
+		var $input = $( this );
+		$input.attr( 'placeholder', $input.prev().hide().text() );
+	});
 });
