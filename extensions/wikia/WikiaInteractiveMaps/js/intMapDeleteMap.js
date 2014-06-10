@@ -1,4 +1,4 @@
-define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystirng', 'wikia.ui.factory'], function($, qs, uiFactory) {
+define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystring', 'wikia.ui.factory'], function($, qs, uiFactory) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -42,7 +42,6 @@ define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystirng', 'wikia.ui.fact
 	 */
 	function deleteMap() {
 		event.preventDefault();
-		cleanUpError();
 		modal.deactivate();
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
@@ -53,7 +52,7 @@ define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystirng', 'wikia.ui.fact
 			callback: function(response) {
 				var redirectUrl = response.redirectUrl;
 				if (redirectUrl) {
-					qs(redirectUrl).goto();
+					qs(redirectUrl).goTo();
 				} else {
 					showError();
 				}
@@ -83,18 +82,7 @@ define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystirng', 'wikia.ui.fact
 	 */
 	function showError() {
 		modal.activate();
-		modal.$errorContainer
-			.html($.msg('wikia-interactive-maps-delete-map-client-error'))
-			.removeClass('hidden');
-	}
-
-	/**
-	 * @desc cleans up error message and hides error container
-	 */
-	function cleanUpError() {
-		modal.$errorContainer
-			.html('')
-			.addClass('hidden');
+		modal.setContent($.msg('wikia-interactive-maps-delete-map-client-error'));
 	}
 
 	return {

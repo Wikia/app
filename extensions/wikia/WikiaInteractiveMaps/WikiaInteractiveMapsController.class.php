@@ -403,11 +403,20 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 			$results['success'] = true;
 			$results['mapId'] = $mapId;
-			$results['mapUrl'] = Title::newFromText( self::PAGE_NAME . '/' . $mapId, NS_SPECIAL )->getFullUrl();
+			$results['mapUrl'] = $this->getSpecialUrl( self::PAGE_NAME . '/' . $mapId );
 			$results['message'] = $response->message;
 		}
 
 		return $results;
+	}
+
+	/**
+	 * @desc Obtains a url to a special page with a given path
+	 * @param {string} $name - name of the special page
+	 * @return string
+	 */
+	function getSpecialUrl( $name ) {
+		return Title::newFromText( $path, NS_SPECIAL )->getFullUrl();
 	}
 
 	/**
@@ -457,10 +466,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		if( $mapId && $this->wg->User->isLoggedIn() ) {
 			$result = $this->mapsModel->deleteMapById( $mapId );
 		}
-		NotificationsController::addConfirmation( $result ?
-			wfMessage( 'wikia-interactive-maps-delete-map-success' ) :
-			wfMessage('wikia-interactive-maps-delete-map-error') );
-		$this->wg->Out->redirect( Title::newFromText( 'InteractiveMaps', NS_SPECIAL )->getFullUrl() );
+		if ( $result ) {
+			NotificationsController::addConfirmation(
+				wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
+			$this->response->setVal('redirectUrl',
+				$this->getSpecialUrl( 'InteractiveMaps' ) );
+		}
 	}
 	
 	/**

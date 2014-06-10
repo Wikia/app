@@ -65,8 +65,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Are you sure to delete the map?',
 	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Delete Map',
 	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Cancel',
+	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
 	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
-	'wikia-interactive-maps-delete-map-error' => 'There was an error while deleting a map.',
 ];
 
 $messages[ 'qqq' ] = [
@@ -122,7 +122,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt (in modal) asking if user is sure to delete a map',
 	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Text on a button(in modal) to confirm deleting the map',
 	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Text on a button (in modal) to cancel deleting the map',
+	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
 	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
-	'wikia-interactive-maps-delete-map-error' => 'Notification text about error during deletion of the map',
 ];
 
