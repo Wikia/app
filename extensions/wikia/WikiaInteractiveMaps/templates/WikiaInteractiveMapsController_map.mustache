@@ -1,18 +1,6 @@
 <header class="WikiaPageHeader">
 	<h1>{{title}}</h1>
-	{{#mapFound}}
-	<nav class="wikia-menu-button">
-		<a href="#">{{viewSource}}</a>
-		<span class ='drop'>
-			<img src="{{blankImg}}" class="chevron">
-		</span>
-		<ul class="WikiaMenuElement">
-			<li>
-				<a id="deleteMap">{{deleteMap}}</a>
-			</li>
-		</ul>
-	</nav>
-	{{/mapFound}}
+	{{#mapFound}}{{{menu}}}{{/mapFound}}
 </header>
 {{#mapFound}}
 <iframe src="{{url}}" name="wikia-interactive-map" width="100%" height="{{#height}}{{height}}{{/height}}{{^height}}100%{{/height}}" data-mapid={{mapId}}></iframe>
