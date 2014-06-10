@@ -170,7 +170,6 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 					}
 					inspectIframe(slotname, iframe, function () {
 						openxSuccess = true;
-						clearTimeout(successTrigger);
 						adCallback();
 					}, waitForSuccess);
 				}, 500);
