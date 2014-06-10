@@ -3,7 +3,7 @@
  * Oracle search engine
  *
  * Copyright © 2004 Brion Vibber <brion@pobox.com>
- * http://www.mediawiki.org/
+ * https://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,82 +28,65 @@
  * Search engine hook base class for Oracle (ConText).
  * @ingroup Search
  */
-class SearchOracle extends SearchEngine {
-	
-	private $reservedWords = array ('ABOUT' => 1, 
-									'ACCUM' => 1, 
-									'AND' => 1, 
-									'BT' => 1, 
-									'BTG' => 1, 
-									'BTI' => 1, 
-									'BTP' => 1,
-									'FUZZY' => 1, 
-									'HASPATH' => 1, 
-									'INPATH' => 1, 
-									'MINUS' => 1, 
-									'NEAR' => 1, 
-									'NOT' => 1,
-									'NT' => 1, 
-									'NTG' => 1, 
-									'NTI' => 1, 
-									'NTP' => 1, 
-									'OR' => 1, 
-									'PT' => 1, 
-									'RT' => 1, 
-									'SQE' => 1,
-									'SYN' => 1, 
-									'TR' => 1, 
-									'TRSYN' => 1, 
-									'TT' => 1, 
-									'WITHIN' => 1);
+class SearchOracle extends SearchDatabase {
 
-	/**
-	 * Creates an instance of this class
-	 * @param $db DatabasePostgres: database object
-	 */
-	function __construct($db) {
-		parent::__construct( $db );
-	}
+	private $reservedWords = array(
+		'ABOUT' => 1,
+		'ACCUM' => 1,
+		'AND' => 1,
+		'BT' => 1,
+		'BTG' => 1,
+		'BTI' => 1,
+		'BTP' => 1,
+		'FUZZY' => 1,
+		'HASPATH' => 1,
+		'INPATH' => 1,
+		'MINUS' => 1,
+		'NEAR' => 1,
+		'NOT' => 1,
+		'NT' => 1,
+		'NTG' => 1,
+		'NTI' => 1,
+		'NTP' => 1,
+		'OR' => 1,
+		'PT' => 1,
+		'RT' => 1,
+		'SQE' => 1,
+		'SYN' => 1,
+		'TR' => 1,
+		'TRSYN' => 1,
+		'TT' => 1,
+		'WITHIN' => 1,
+	);
 
 	/**
 	 * Perform a full text search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return SqlSearchResultSet
 	 */
 	function searchText( $term ) {
-		if ($term == '')
-			return new SqlSearchResultSet(false, '');
+		if ( $term == '' ) {
+			return new SqlSearchResultSet( false, '' );
+		}
 
-		$resultSet = $this->db->resultObject($this->db->query($this->getQuery($this->filter($term), true)));
-		return new SqlSearchResultSet($resultSet, $this->searchTerms);
+		$resultSet = $this->db->resultObject( $this->db->query( $this->getQuery( $this->filter( $term ), true ) ) );
+		return new SqlSearchResultSet( $resultSet, $this->searchTerms );
 	}
 
 	/**
 	 * Perform a title-only search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return SqlSearchResultSet
 	 */
-	function searchTitle($term) {
-		if ($term == '')
-			return new SqlSearchResultSet(false, '');
-
-		$resultSet = $this->db->resultObject($this->db->query($this->getQuery($this->filter($term), false)));
-		return new MySQLSearchResultSet($resultSet, $this->searchTerms);
-	}
-
-
-	/**
-	 * Return a partial WHERE clause to exclude redirects, if so set
-	 * @return String
-	 */
-	function queryRedirect() {
-		if ($this->showRedirects) {
-			return '';
-		} else {
-			return 'AND page_is_redirect=0';
+	function searchTitle( $term ) {
+		if ( $term == '' ) {
+			return new SqlSearchResultSet( false, '' );
 		}
+
+		$resultSet = $this->db->resultObject( $this->db->query( $this->getQuery( $this->filter( $term ), false ) ) );
+		return new MySQLSearchResultSet( $resultSet, $this->searchTerms );
 	}
 
 	/**
@@ -111,8 +94,9 @@ class SearchOracle extends SearchEngine {
 	 * @return String
 	 */
 	function queryNamespaces() {
-		if( is_null($this->namespaces) )
+		if ( is_null( $this->namespaces ) ) {
 			return '';
+		}
 		if ( !count( $this->namespaces ) ) {
 			$namespaces = '0';
 		} else {
@@ -124,12 +108,12 @@ class SearchOracle extends SearchEngine {
 	/**
 	 * Return a LIMIT clause to limit results on the query.
 	 *
-	 * @param string
+	 * @param $sql string
 	 *
 	 * @return String
 	 */
 	function queryLimit( $sql ) {
-		return $this->db->limitResult($sql, $this->limit, $this->offset);
+		return $this->db->limitResult( $sql, $this->limit, $this->offset );
 	}
 
 	/**
@@ -147,21 +131,20 @@ class SearchOracle extends SearchEngine {
 	 * The guts shoulds be constructed in queryMain()
 	 * @param $filteredTerm String
 	 * @param $fulltext Boolean
+	 * @return String
 	 */
 	function getQuery( $filteredTerm, $fulltext ) {
-		return $this->queryLimit($this->queryMain($filteredTerm, $fulltext) . ' ' .
-			$this->queryRedirect() . ' ' .
+		return $this->queryLimit( $this->queryMain( $filteredTerm, $fulltext ) . ' ' .
 			$this->queryNamespaces() . ' ' .
-			$this->queryRanking( $filteredTerm, $fulltext ) . ' ');
+			$this->queryRanking( $filteredTerm, $fulltext ) . ' ' );
 	}
-
 
 	/**
 	 * Picks which field to index on, depending on what type of query.
 	 * @param $fulltext Boolean
 	 * @return String
 	 */
-	function getIndexField($fulltext) {
+	function getIndexField( $fulltext ) {
 		return $fulltext ? 'si_text' : 'si_title';
 	}
 
@@ -173,9 +156,9 @@ class SearchOracle extends SearchEngine {
 	 * @return String
 	 */
 	function queryMain( $filteredTerm, $fulltext ) {
-		$match = $this->parseQuery($filteredTerm, $fulltext);
-		$page        = $this->db->tableName('page');
-		$searchindex = $this->db->tableName('searchindex');
+		$match = $this->parseQuery( $filteredTerm, $fulltext );
+		$page = $this->db->tableName( 'page' );
+		$searchindex = $this->db->tableName( 'searchindex' );
 		return 'SELECT page_id, page_namespace, page_title ' .
 			"FROM $page,$searchindex " .
 			'WHERE page_id=si_page AND ' . $match;
@@ -184,8 +167,9 @@ class SearchOracle extends SearchEngine {
 	/**
 	 * Parse a user input search string, and return an SQL fragment to be used
 	 * as part of a WHERE clause
+	 * @return string
 	 */
-	function parseQuery($filteredText, $fulltext) {
+	function parseQuery( $filteredText, $fulltext ) {
 		global $wgContLang;
 		$lc = SearchEngine::legalSearchChars();
 		$this->searchTerms = array();
@@ -193,46 +177,47 @@ class SearchOracle extends SearchEngine {
 		# @todo FIXME: This doesn't handle parenthetical expressions.
 		$m = array();
 		$searchon = '';
-		if (preg_match_all('/([-+<>~]?)(([' . $lc . ']+)(\*?)|"[^"]*")/',
-			  $filteredText, $m, PREG_SET_ORDER)) {
-			foreach($m as $terms) {
+		if ( preg_match_all( '/([-+<>~]?)(([' . $lc . ']+)(\*?)|"[^"]*")/',
+				$filteredText, $m, PREG_SET_ORDER ) ) {
+			foreach ( $m as $terms ) {
 				// Search terms in all variant forms, only
 				// apply on wiki with LanguageConverter
 				$temp_terms = $wgContLang->autoConvertToAllVariants( $terms[2] );
-				if( is_array( $temp_terms )) {
-					$temp_terms = array_unique( array_values( $temp_terms ));
-					foreach( $temp_terms as $t ) {
-						$searchon .= ($terms[1] == '-' ? ' ~' : ' & ') . $this->escapeTerm( $t );
+				if ( is_array( $temp_terms ) ) {
+					$temp_terms = array_unique( array_values( $temp_terms ) );
+					foreach ( $temp_terms as $t ) {
+						$searchon .= ( $terms[1] == '-' ? ' ~' : ' & ' ) . $this->escapeTerm( $t );
 					}
 				}
 				else {
-					$searchon .= ($terms[1] == '-' ? ' ~' : ' & ') . $this->escapeTerm( $terms[2] );
+					$searchon .= ( $terms[1] == '-' ? ' ~' : ' & ' ) . $this->escapeTerm( $terms[2] );
 				}
-				if (!empty($terms[3])) {
+				if ( !empty( $terms[3] ) ) {
 					$regexp = preg_quote( $terms[3], '/' );
-					if ($terms[4])
+					if ( $terms[4] ) {
 						$regexp .= "[0-9A-Za-z_]+";
+					}
 				} else {
-					$regexp = preg_quote(str_replace('"', '', $terms[2]), '/');
+					$regexp = preg_quote( str_replace( '"', '', $terms[2] ), '/' );
 				}
 				$this->searchTerms[] = $regexp;
 			}
 		}
 
-
-		$searchon = $this->db->addQuotes(ltrim($searchon, ' &'));
-		$field = $this->getIndexField($fulltext);
+		$searchon = $this->db->addQuotes( ltrim( $searchon, ' &' ) );
+		$field = $this->getIndexField( $fulltext );
 		return " CONTAINS($field, $searchon, 1) > 0 ";
 	}
 
-	private function escapeTerm($t) {
+	private function escapeTerm( $t ) {
 		global $wgContLang;
-		$t = $wgContLang->normalizeForSearch($t);
-		$t = isset($this->reservedWords[strtoupper($t)]) ? '{'.$t.'}' : $t;
-		$t = preg_replace('/^"(.*)"$/', '($1)', $t);
-		$t = preg_replace('/([-&|])/', '\\\\$1', $t);
+		$t = $wgContLang->normalizeForSearch( $t );
+		$t = isset( $this->reservedWords[strtoupper( $t )] ) ? '{' . $t . '}' : $t;
+		$t = preg_replace( '/^"(.*)"$/', '($1)', $t );
+		$t = preg_replace( '/([-&|])/', '\\\\$1', $t );
 		return $t;
 	}
+
 	/**
 	 * Create or update the search index record for the given page.
 	 * Title and text should be pre-processed.
@@ -241,10 +226,10 @@ class SearchOracle extends SearchEngine {
 	 * @param $title String
 	 * @param $text String
 	 */
-	function update($id, $title, $text) {
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->replace('searchindex',
-			array('si_page'),
+	function update( $id, $title, $text ) {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->replace( 'searchindex',
+			array( 'si_page' ),
 			array(
 				'si_page' => $id,
 				'si_title' => $title,
@@ -252,13 +237,13 @@ class SearchOracle extends SearchEngine {
 			), 'SearchOracle::update' );
 
 		// Sync the index
-		// We need to specify the DB name (i.e. user/schema) here so that 
+		// We need to specify the DB name (i.e. user/schema) here so that
 		// it can work from the installer, where
 		//     ALTER SESSION SET CURRENT_SCHEMA = ...
 		// was used.
-		$dbw->query( "CALL ctx_ddl.sync_index(" . 
+		$dbw->query( "CALL ctx_ddl.sync_index(" .
 			$dbw->addQuotes( $dbw->getDBname() . '.' . $dbw->tableName( 'si_text_idx', 'raw' ) ) . ")" );
-		$dbw->query( "CALL ctx_ddl.sync_index(" . 
+		$dbw->query( "CALL ctx_ddl.sync_index(" .
 			$dbw->addQuotes( $dbw->getDBname() . '.' . $dbw->tableName( 'si_title_idx', 'raw' ) ) . ")" );
 	}
 
@@ -269,16 +254,15 @@ class SearchOracle extends SearchEngine {
 	 * @param $id Integer
 	 * @param $title String
 	 */
-	function updateTitle($id, $title) {
-		$dbw = wfGetDB(DB_MASTER);
+	function updateTitle( $id, $title ) {
+		$dbw = wfGetDB( DB_MASTER );
 
-		$dbw->update('searchindex',
-			array('si_title' => $title),
-			array('si_page'  => $id),
+		$dbw->update( 'searchindex',
+			array( 'si_title' => $title ),
+			array( 'si_page' => $id ),
 			'SearchOracle::updateTitle',
-			array());
+			array() );
 	}
-
 
 	public static function legalSearchChars() {
 		return "\"" . parent::legalSearchChars();

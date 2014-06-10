@@ -3,7 +3,7 @@
  * MySQL search engine
  *
  * Copyright (C) 2004 Brion Vibber <brion@pobox.com>
- * http://www.mediawiki.org/
+ * https://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,17 +28,9 @@
  * Search engine hook for MySQL 4+
  * @ingroup Search
  */
-class SearchMySQL extends SearchEngine {
+class SearchMySQL extends SearchDatabase {
 	var $strictMatching = true;
 	static $mMinSearchLength;
-
-	/**
-	 * Creates an instance of this class
-	 * @param $db DatabaseMysql: database object
-	 */
-	function __construct( $db ) {
-		parent::__construct( $db );
-	}
 
 	/**
 	 * Parse the user's query and transform it into an SQL fragment which will
@@ -57,12 +49,12 @@ class SearchMySQL extends SearchEngine {
 
 		# @todo FIXME: This doesn't handle parenthetical expressions.
 		$m = array();
-		if( preg_match_all( '/([-+<>~]?)(([' . $lc . ']+)(\*?)|"[^"]*")/',
-			  $filteredText, $m, PREG_SET_ORDER ) ) {
-			foreach( $m as $bits ) {
+		if ( preg_match_all( '/([-+<>~]?)(([' . $lc . ']+)(\*?)|"[^"]*")/',
+				$filteredText, $m, PREG_SET_ORDER ) ) {
+			foreach ( $m as $bits ) {
 				@list( /* all */, $modifier, $term, $nonQuoted, $wildcard ) = $bits;
 
-				if( $nonQuoted != '' ) {
+				if ( $nonQuoted != '' ) {
 					$term = $nonQuoted;
 					$quote = '';
 				} else {
@@ -70,8 +62,10 @@ class SearchMySQL extends SearchEngine {
 					$quote = '"';
 				}
 
-				if( $searchon !== '' ) $searchon .= ' ';
-				if( $this->strictMatching && ($modifier == '') ) {
+				if ( $searchon !== '' ) {
+					$searchon .= ' ';
+				}
+				if ( $this->strictMatching && ( $modifier == '' ) ) {
 					// If we leave this out, boolean op defaults to OR which is rarely helpful.
 					$modifier = '+';
 				}
@@ -79,7 +73,7 @@ class SearchMySQL extends SearchEngine {
 				// Some languages such as Serbian store the input form in the search index,
 				// so we may need to search for matches in multiple writing system variants.
 				$convertedVariants = $wgContLang->autoConvertToAllVariants( $term );
-				if( is_array( $convertedVariants ) ) {
+				if ( is_array( $convertedVariants ) ) {
 					$variants = array_unique( array_values( $convertedVariants ) );
 				} else {
 					$variants = array( $term );
@@ -99,11 +93,12 @@ class SearchMySQL extends SearchEngine {
 				$strippedVariants = array_unique( $strippedVariants );
 
 				$searchon .= $modifier;
-				if( count( $strippedVariants) > 1 )
+				if ( count( $strippedVariants ) > 1 ) {
 					$searchon .= '(';
-				foreach( $strippedVariants as $stripped ) {
+				}
+				foreach ( $strippedVariants as $stripped ) {
 					$stripped = $this->normalizeText( $stripped );
-					if( $nonQuoted && strpos( $stripped, ' ' ) !== false ) {
+					if ( $nonQuoted && strpos( $stripped, ' ' ) !== false ) {
 						// Hack for Chinese: we need to toss in quotes for
 						// multiple-character phrases since normalizeForSearch()
 						// added spaces between them to make word breaks.
@@ -111,8 +106,9 @@ class SearchMySQL extends SearchEngine {
 					}
 					$searchon .= "$quote$stripped$quote$wildcard ";
 				}
-				if( count( $strippedVariants) > 1 )
+				if ( count( $strippedVariants ) > 1 ) {
 					$searchon .= ')';
+				}
 
 				// Match individual terms or quoted phrase in result highlighting...
 				// Note that variants will be introduced in a later stage for highlighting!
@@ -134,8 +130,8 @@ class SearchMySQL extends SearchEngine {
 		global $wgContLang;
 
 		$regex = preg_quote( $string, '/' );
-		if( $wgContLang->hasWordBreaks() ) {
-			if( $wildcard ) {
+		if ( $wgContLang->hasWordBreaks() ) {
+			if ( $wildcard ) {
 				// Don't cut off the final bit!
 				$regex = "\b$regex";
 			} else {
@@ -156,7 +152,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Perform a full text search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return MySQLSearchResultSet
 	 */
 	function searchText( $term ) {
@@ -166,7 +162,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Perform a title-only search query and return a result set.
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return MySQLSearchResultSet
 	 */
 	function searchTitle( $term ) {
@@ -177,7 +173,9 @@ class SearchMySQL extends SearchEngine {
 		global $wgCountTotalSearchHits;
 
 		// This seems out of place, why is this called with empty term?
-		if ( trim( $term ) === '' ) return null;
+		if ( trim( $term ) === '' ) {
+			return null;
+		}
 
 		$filteredTerm = $this->filter( $term );
 		$query = $this->getQuery( $filteredTerm, $fulltext );
@@ -187,7 +185,7 @@ class SearchMySQL extends SearchEngine {
 		);
 
 		$total = null;
-		if( $wgCountTotalSearchHits ) {
+		if ( $wgCountTotalSearchHits ) {
 			$query = $this->getCountQuery( $filteredTerm, $fulltext );
 			$totalResult = $this->db->select(
 				$query['tables'], $query['fields'], $query['conds'],
@@ -195,7 +193,7 @@ class SearchMySQL extends SearchEngine {
 			);
 
 			$row = $totalResult->fetchObject();
-			if( $row ) {
+			if ( $row ) {
 				$total = intval( $row->c );
 			}
 			$totalResult->free();
@@ -205,12 +203,11 @@ class SearchMySQL extends SearchEngine {
 	}
 
 	public function supports( $feature ) {
-		switch( $feature ) {
-		case 'list-redirects':
+		switch ( $feature ) {
 		case 'title-suffix-filter':
 			return true;
 		default:
-			return false;
+			return parent::supports( $feature );
 		}
 	}
 
@@ -221,9 +218,7 @@ class SearchMySQL extends SearchEngine {
 	 */
 	protected function queryFeatures( &$query ) {
 		foreach ( $this->features as $feature => $value ) {
-			if ( $feature ===  'list-redirects' && !$value ) {
-				$query['conds']['page_is_redirect'] = 0;
-			} elseif( $feature === 'title-suffix-filter' && $value ) {
+			if ( $feature === 'title-suffix-filter' && $value ) {
 				$query['conds'][] = 'page_title' . $this->db->buildLike( $this->db->anyString(), $value );
 			}
 		}
@@ -290,7 +285,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Get the base part of the search query.
 	 *
-	 * @param &$query Search query array
+	 * @param &$query array Search query array
 	 * @param $filteredTerm String
 	 * @param $fulltext Boolean
 	 * @since 1.18 (changed)
@@ -308,6 +303,7 @@ class SearchMySQL extends SearchEngine {
 
 	/**
 	 * @since 1.18 (changed)
+	 * @return array
 	 */
 	function getCountQuery( $filteredTerm, $fulltext ) {
 		$match = $this->parseQuery( $filteredTerm, $fulltext );
@@ -357,14 +353,28 @@ class SearchMySQL extends SearchEngine {
 
 		$dbw->update( 'searchindex',
 			array( 'si_title' => $this->normalizeText( $title ) ),
-			array( 'si_page'  => $id ),
+			array( 'si_page' => $id ),
 			__METHOD__,
 			array( $dbw->lowPriorityOption() ) );
 	}
 
 	/**
+	 * Delete an indexed page
+	 * Title should be pre-processed.
+	 *
+	 * @param Integer $id Page id that was deleted
+	 * @param String $title Title of page that was deleted
+	 */
+	function delete( $id, $title ) {
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw->delete( 'searchindex', array( 'si_page' => $id ), __METHOD__ );
+	}
+
+	/**
 	 * Converts some characters for MySQL's indexing to grok it correctly,
 	 * and pads short words to overcome limitations.
+	 * @return mixed|string
 	 */
 	function normalizeText( $string ) {
 		global $wgContLang;
@@ -384,7 +394,7 @@ class SearchMySQL extends SearchEngine {
 		// ignores short words... Pad them so we can pass them
 		// through without reconfiguring the server...
 		$minLength = $this->minSearchLength();
-		if( $minLength > 1 ) {
+		if ( $minLength > 1 ) {
 			$n = $minLength - 1;
 			$out = preg_replace(
 				"/\b(\w{1,$n})\b/",
@@ -412,6 +422,7 @@ class SearchMySQL extends SearchEngine {
 	 * Armor a case-folded UTF-8 string to get through MySQL's
 	 * fulltext search without being mucked up by funny charset
 	 * settings or anything else of the sort.
+	 * @return string
 	 */
 	protected function stripForSearchCallback( $matches ) {
 		return 'u8' . bin2hex( $matches[1] );
@@ -424,7 +435,7 @@ class SearchMySQL extends SearchEngine {
 	 * @return int
 	 */
 	protected function minSearchLength() {
-		if( is_null( self::$mMinSearchLength ) ) {
+		if ( is_null( self::$mMinSearchLength ) ) {
 			$sql = "SHOW GLOBAL VARIABLES LIKE 'ft\\_min\\_word\\_len'";
 
 			$dbr = wfGetDB( DB_SLAVE );
@@ -432,7 +443,7 @@ class SearchMySQL extends SearchEngine {
 			$row = $result->fetchObject();
 			$result->free();
 
-			if( $row && $row->Variable_name == 'ft_min_word_len' ) {
+			if ( $row && $row->Variable_name == 'ft_min_word_len' ) {
 				self::$mMinSearchLength = intval( $row->Value );
 			} else {
 				self::$mMinSearchLength = 0;
@@ -446,7 +457,7 @@ class SearchMySQL extends SearchEngine {
  * @ingroup Search
  */
 class MySQLSearchResultSet extends SqlSearchResultSet {
-	function __construct( $resultSet, $terms, $totalHits=null ) {
+	function __construct( $resultSet, $terms, $totalHits = null ) {
 		parent::__construct( $resultSet, $terms );
 		$this->mTotalHits = $totalHits;
 	}
