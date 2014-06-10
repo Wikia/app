@@ -2,7 +2,6 @@
 
 class EvergreensController extends WikiaController {
 
-
 	public function log() {
 		wfProfileIn( __METHOD__ );
 		if ( $this->request->wasPosted() ) {
@@ -28,7 +27,6 @@ class EvergreensController extends WikiaController {
 				$this->response->setVal( 'hash', $sHash );
 			}
 		}
-		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 		$this->response->setFormat( 'json' );
 		wfProfileOut( __METHOD__ );
 	}
