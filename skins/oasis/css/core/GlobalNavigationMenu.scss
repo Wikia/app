@@ -1,3 +1,64 @@
 @import "skins/oasis/css/core/color.scss";
 @import "skins/oasis/css/mixins/transition.scss";
 
+.GlobalNavigationContainer {
+	position: absolute;
+	top: 66px;
+	width: calc(100% - 290px);
+	display: none;
+
+	* {
+		box-sizing: border-box;
+	}
+}
+
+.GlobalNavigationDropdown {
+	width: 866px;
+	background: #fff;
+	position: relative;
+	z-index: 1000;
+	margin: 0 auto;
+	border-collapse: collapse;
+
+	td {
+		padding: 0;
+	}
+
+	td.hub {
+		font-size: 21px;
+		width: 290px;
+		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAA+CAYAAAAxgtvTAAABtElEQVRYw7WYuS9EYRTFf2dsiYICiZHIaEwURKVT6RSiUUkEef+VRBCJTqNS6XQKobAk1tgahVbE1XzTTBgz8965zXt5y7n53fPtRMRGGKMEbGIMAUTEKTDtSFBK1203wQDwDPRYCCS9AwfOEuEyW7Wb1KJugYqFQNI3sGMjSBRjwE1d6QrzAEn3wJHLZIvZqn8QEd2pTwxaCCR9Ans2gkQxBZy5PEDSOXBiS1Ck2frrRUT0Ay9Ar4VA0gew7yxRIWVSo5cRIeAKGLcQSApgy0aQKIaBR6DL4QGS3oBDl8m5zVYzH0VEZypT2UIg6QvYtREkiipw2co/rXiApGvg2GVy22a3hBsR5TQA2ghwl2jBnSBzNtNp4NRJsO4cKnrSWmnARbDYjngrCbJ2m2kzE04l7RtKLoK1PB3yv0m/A7gDRl09eS6PeDMJMnJGo6XjEPAEdLsIlvOK/0dwDkxahuuImClCvFGJMgqK3zaBvcAr0OciWCpK/K8EhZXnt6OECeDCOemvOo9zutICd9hFMF+0eH2CDEPUDgVHgAeg00Ww4hAHUNqqXgJV19p01iVeS5BhjB92p9qqQcAu4QAAAABJRU5ErkJggg==) no-repeat center right;
+
+		&.active {
+			font-weight: bold;
+
+			.comics {
+				background-color: #94d11f;
+				/*svg
+			#76bf06
+				*/
+			}
+			&.games {
+				background-color: #ff5400;
+				// #e1390b
+			}
+		}
+
+	}
+	tr {
+		height: 62px;
+	}
+	td:not(.level-1) {
+		span {
+			width: 270px;
+			display: block;
+			overflow-y: scroll;
+		}
+		&[data-submenu='1'] span {
+			padding: 0 18px 0 12px;
+		}
+		&[data-submenu='2'] span {
+			padding: 0 34px 0 18px;
+		}
+	}
+}
