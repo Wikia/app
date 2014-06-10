@@ -247,7 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+		// VOLDEV-68: Remove broken section edit links
+		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$opts->setEditSection( false );
+		$head = $parser->parse( $rawtext, $this->mTitle, $opts );
 
 		$this->mText = wfFixMalformedHTML( $head->getText() );
 
