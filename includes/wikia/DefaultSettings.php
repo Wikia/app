@@ -1214,10 +1214,10 @@ $wgAdDriverUseEbay = false;
 $wgAdDriverUseWikiaBarBoxad2 = false;
 
 /**
- * @name $wgAdDriverUseWikiaBarBoxad2ImpressionCapping
- * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad call.
+ * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
+ * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
  */
-$wgAdDriverUseWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
+$wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

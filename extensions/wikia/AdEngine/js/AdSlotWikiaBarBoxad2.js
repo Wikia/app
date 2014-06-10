@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.slot.wikiaBarBoxad2', [
 		now = window.wgNow || new Date(),
 		impressionCacheKey = 'wikiaBarBoxad2_impressions',
 		forgetImpressionsAfterTime = 3600, // an hour
-		impressionCapping = window.wgAdDriverUseWikiaBarBoxad2ImpressionCapping || [],
+		impressionCapping = window.wgAdDriverWikiaBarBoxad2ImpressionCapping || [],
 
 		$slot,
 		pageHeight = window.document.documentElement.scrollHeight,

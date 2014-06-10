@@ -217,7 +217,7 @@ class AdEngine2Service
 			$wgRequest, $wgEnableKruxTargeting,
 			$wgAdVideoTargeting, $wgLiftiumOnLoad,
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff, $wgAdEngineDisableLateQueue,
-			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverUseWikiaBarBoxad2ImpressionCapping;
+			$wgAdDriverUseWikiaBarBoxad2, $wgAdDriverWikiaBarBoxad2ImpressionCapping;
 
 		$vars = [];
 
@@ -278,7 +278,7 @@ class AdEngine2Service
 		}
 
 		if ($wgAdDriverUseWikiaBarBoxad2) {
-			$variablesToExpose['wgAdDriverUseWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverUseWikiaBarBoxad2ImpressionCapping;
+			$variablesToExpose['wgAdDriverWikiaBarBoxad2ImpressionCapping'] = $wgAdDriverWikiaBarBoxad2ImpressionCapping;
 		}
 
 		foreach($variablesToExpose as $varName => $varValue) {
