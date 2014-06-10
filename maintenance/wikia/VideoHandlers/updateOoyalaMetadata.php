@@ -414,6 +414,12 @@ function updateRemoteAssetUrls( $ingester, $video ) {
 		return;
 	}
 
+	if ( !empty( $video['metadata']['updateAssetUrls']) ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Already updated.\n";
+		$skipped++;
+		return;
+	}
+
 	$urls = $ingester->getRemoteAssetUrls( $video['metadata']['sourceid'] );
 
 	// for debugging
@@ -429,7 +435,13 @@ function updateRemoteAssetUrls( $ingester, $video ) {
 	$resp = true;
 	if ( !$dryRun ) {
 		$resp = OoyalaAsset::updateRemoteAssetUrls( $video['embed_code'], $urls );
-		if ( !$resp ) {
+		if ( $resp ) {
+			$metadata = [ 'updateAssetUrls' => 1 ];
+			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
+			if ( !$resp ) {
+				"ERROR: $video[name] (Id: $video[embed_code]) - Cannot set updateAssetUrls to 1 in metadata.\n";
+			}
+		} else {
 			$failed++;
 		}
 	}
