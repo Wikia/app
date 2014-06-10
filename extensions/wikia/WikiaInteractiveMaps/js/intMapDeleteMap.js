@@ -1,4 +1,4 @@
-define('wikia.intMaps.deleteMap', ['jquery'], function($) {
+define('wikia.intMaps.deleteMap', ['jquery', 'wikia.querystirng', 'wikia.ui.factory'], function($, qs, uiFactory) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -34,8 +34,7 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 				]
 			}
 		},
-		$mapId = $('iframe[name=wikia-interactive-map]').data('mapid'),
-		url = 'wikia.php?controller=WikiaInteractiveMaps&method=deleteMap';
+		mapId = $('iframe[name=wikia-interactive-map]').data('mapid');
 
 	/**
 	 * @desc Creates a POST form with map ID in the payload and submits it
@@ -43,27 +42,59 @@ define('wikia.intMaps.deleteMap', ['jquery'], function($) {
 	 */
 	function deleteMap() {
 		event.preventDefault();
+		cleanUpError();
 		modal.deactivate();
-		var $form = $('<form method="post" action="'+ url + '"></form>');
-		$('<input type="hidden" name="mapId">')
-			.val($mapId)
-			.appendTo($form);
-		$form.submit();
+		$.nirvana.sendRequest({
+			controller: 'WikiaInteractiveMaps',
+			method: 'deleteMap',
+			data: {
+				mapId: mapId
+			},
+			callback: function(response) {
+				var redirectUrl = response.redirectUrl;
+				if (redirectUrl) {
+					qs(redirectUrl).goto();
+				} else {
+					showError();
+				}
+			},
+			onErrorCallback: function() {
+				showError();
+			}
+		});
 	}
 
 	/**
 	 * @desc Opens modal with a prompt to confirm map deletion
 	 */
 	function init() {
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-				uiModal.createComponent( modalConfig, function( _modal ) {
-					modal = _modal;
-					modal.bind('delete', deleteMap);
-					modal.show();
-				});
+		uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+			uiModal.createComponent( modalConfig, function( _modal ) {
+				modal = _modal;
+				modal.bind('delete', deleteMap);
+				modal.show();
 			});
 		});
+	}
+
+	/**
+	 * @desc displays error message
+	 * @param {string} message - error message
+	 */
+	function showError() {
+		modal.activate();
+		modal.$errorContainer
+			.html($.msg('wikia-interactive-maps-delete-map-client-error'))
+			.removeClass('hidden');
+	}
+
+	/**
+	 * @desc cleans up error message and hides error container
+	 */
+	function cleanUpError() {
+		modal.$errorContainer
+			.html('')
+			.addClass('hidden');
 	}
 
 	return {
