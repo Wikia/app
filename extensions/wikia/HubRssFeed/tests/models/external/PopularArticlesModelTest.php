@@ -1,25 +1,30 @@
 <?php
 
-class PopularArticlesModelTest extends WikiaBaseTest {
-	protected static function getFn( $obj, $name ) {
-		$class = new ReflectionClass( get_class($obj) );
-		$method = $class->getMethod( $name );
-		$method->setAccessible( true );
+class PopularArticlesModelTest extends WikiaBaseTest
+{
+	protected static function getFn($obj, $name)
+	{
+		$class = new ReflectionClass(get_class($obj));
+		$method = $class->getMethod($name);
+		$method->setAccessible(true);
 
-		return function() use ($obj, $method){
+		return function () use ($obj, $method) {
 			$args = func_get_args();
 			return $method->invokeArgs($obj, $args);
 		};
 	}
 
-	public function setUp() {
-		$dir = dirname( __FILE__ ) . '/../../../';
+	public function setUp()
+	{
+		$dir = dirname(__FILE__) . '/../../../';
 		global $wgAutoloadClasses;
 		$this->setupFile = $dir . 'HubRssFeed.setup.php';
 
 		parent::setUp();
 	}
-	private function mockDbQuery(){
+
+	private function mockDbQuery()
+	{
 		$mockQueryResults = $this->getMock("ResultWrapper", array('fetchObject'), array(), '', false);
 
 		$mockDb = $this->getMock('DatabaseMysql', array('query'));
@@ -30,7 +35,8 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		return $mockQueryResults;
 	}
 
-	private function fakeRecentlyEditedQueryRow(Title $title){
+	private function fakeRecentlyEditedQueryRow(Title $title)
+	{
 		$row = new stdClass();
 		$row->page_namespace = $title->getNamespace();
 		$row->page_title = $title->getBaseText();
@@ -38,8 +44,11 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		return $row;
 	}
 
-
-	public function testRecentlyEditedPageIds_SkipMainPage() {
+	/*
+	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
+	 */
+	public function testRecentlyEditedPageIds_SkipMainPage()
+	{
 		$mainPage = Title::newMainPage();
 
 		$mockResults = $this->mockDbQuery();
@@ -52,7 +61,11 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$this->assertEmpty($result);
 	}
 
-	public function testRecentlyEditedPageIds_ReturnPageIds() {
+	/*
+	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
+	 */
+	public function testRecentlyEditedPageIds_ReturnPageIds()
+	{
 		$someTitle = Title::newFromText("some title");
 		$row0 = $this->fakeRecentlyEditedQueryRow($someTitle);
 		$row1 = clone $row0;
@@ -72,7 +85,11 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$this->assertEquals($result[1], 1);
 	}
 
-	public function testGetPageView_ReturnsPageViewMap(){
+	/*
+	 * @covers PopularArticlesModel::getPageViewsMap
+	 */
+	public function testGetPageView_ReturnsPageViewMap()
+	{
 		$row0 = new stdClass();
 		$row0->article_id = 10;
 		$row0->pageviews = 110;
@@ -91,5 +108,4 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		$this->assertEquals($result[10], 110);
 		$this->assertEquals($result[12], 112);
 	}
-
 }
