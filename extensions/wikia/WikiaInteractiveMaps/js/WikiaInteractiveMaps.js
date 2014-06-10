@@ -7,11 +7,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		//registry for the modal actions assets
 		actions = {
 			createMap: {
-				loadModal: function(assets) {
-					require(['wikia.intMaps.createMap.modal'], function(createMap) {
-						createMap.init(assets.mustache);
-					});
-				},
+				module: 'wikia.intMaps.createMap.modal',
 				source: {
 					messages: ['WikiaInteractiveMapsCreateMap'],
 					scripts: ['int_map_create_map_js'],
@@ -26,11 +22,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 				cacheKey: 'wikia_interactive_maps_create_map'
 			},
 			deleteMap: {
-				loadModal: function() {
-					require(['wikia.intMaps.deleteMap'], function(deleteMap) {
-						deleteMap.init();
-					});
-				},
+				module: 'wikia.intMaps.deleteMap',
 				source: {
 					messages: ['WikiaInteractiveMapsDeleteMap'],
 					scripts: ['int_map_delete_map_js']
@@ -86,7 +78,9 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		getAssets(convertSource(target.source), target.cacheKey)
 			.then(function (assets) {
 				addAssetsToDOM(assets);
-				target.loadModal(assets);
+				require([target.module], function(module) {
+					module.init(assets.mustache);
+				});
 			});
 	}
 
