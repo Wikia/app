@@ -7,6 +7,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	const MAP_PREVIEW_WIDTH = 660;
 	const MAP_HEIGHT = 600;
+	const PIN_TYPE_MARKER_WIDTH = 60;
 	const MAPS_PER_PAGE = 10;
 	const PAGE_NAME = 'InteractiveMaps';
 
@@ -158,7 +159,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	/**
 	 * Upload a file entry point
 	 */
-	public function uploadMap() {
+	public function upload() {
 		$upload = new UploadFromFile();
 		$upload->initializeFromRequest( $this->wg->Request );
 		$uploadResults = $upload->verifyUpload();
@@ -189,7 +190,18 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				// TODO: Talk to Platform Team about adding possibility to add stashed files via ImageService
 
 				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
-				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, self::MAP_PREVIEW_WIDTH );
+
+				switch( $this->request->getVal( 'uploadType' ) ) {
+					case 'map':
+						$thumbWidth = self::MAP_PREVIEW_WIDTH;
+						break;
+
+					case 'marker':
+						$thumbWidth = self::PIN_TYPE_MARKER_WIDTH;
+						break;
+				}
+
+				$uploadStatus[ 'fileThumbUrl' ] = $this->getStashedImageThumb( $file, $thumbWidth );
 			} else {
 				$uploadStatus[ 'success' ] = false;
 			}

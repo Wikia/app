@@ -87,7 +87,7 @@ define(
 				}
 			},
 			// image upload entry point
-			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=uploadMap&format=json',
+			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=map&format=json',
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors

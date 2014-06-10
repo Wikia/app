@@ -51,6 +51,8 @@ define('wikia.intMap.createMap.pinTypes',
 				'#intMapNext': 'savePinTypes'
 			},
 			mapUrl,
+			// marker image upload entry point
+			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=marker&format=json',
 			$form;
 
 		/**
