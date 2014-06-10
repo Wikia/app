@@ -1,0 +1,153 @@
+@import "skins/oasis/css/mixins/box-sizing";
+@import "skins/oasis/css/mixins/gradient";
+
+$new-nav-height: 66px;
+$new-breakpoint-small: 768px;
+$new-breakpoint-big: 1280px;
+
+$nav-background-color: #fff;
+$nav-font-color: #092140;
+$dropdown-font-color: #0a5fa3;
+$menu-hover-bg-color: #edf1f4;
+$new-border-color: #c7d1d8;
+$chevron-active-color: #092140;
+
+.WikiaHeader.v3 {
+	background: none;
+	background-color: $nav-background-color;
+	border: 0;
+	color: $nav-font-color;
+
+	.wikia-header-mask {
+		background: none;
+	}
+
+	nav {
+		height: $new-nav-height;
+	}
+
+
+	#AccountNavigation.AccountNavigation {
+		right: 0;
+	}
+
+	.AccountNavigation {
+		border-left: 1px solid $new-border-color;
+		top: 0;
+
+		> li {
+			@include box-sizing;
+			height: $new-nav-height;
+			padding: 0;
+
+			&:hover {
+				background: none;
+				background-color: $menu-hover-bg-color;
+			}
+
+			> a {
+				border: 0;
+				display: block;
+				padding: 15px 23px 15px 39px;
+			}
+
+			.chevron {
+				position: static;
+				color: $new-border-color;
+				margin-top: 14px;
+
+				&:hover {
+					color: $chevron-active-color;
+				}
+			}
+
+			.avatar {
+				border-radius: 50%;
+				margin-right: 6px;
+			}
+		}
+
+		.subnav.show {
+			@include clear-box-shadow;
+			background-color: $nav-background-color;
+			border: 0;
+			top: $new-nav-height;
+
+			> li {
+				margin-top: $new-border-color;
+				> a {
+					color: $dropdown-font-color;
+					font-size: 15px;
+					padding: 15px 20px;
+
+					&:hover {
+						@include clear-box-shadow;
+						background-color: $menu-hover-bg-color;
+					}
+				}
+			}
+		}
+	}
+
+	.UserLoginDropdown {
+		padding: 0;
+		width: 250px;
+
+		.WikiaForm {
+			padding: 20px;
+
+			.input-group {
+				@include box-sizing;
+				padding: 0 10px;
+				width: 100%;
+			}
+
+			input[type=text],
+			input[type=password] {
+				@include box-sizing;
+				font-size: 15px;
+				height: 40px;
+				width: 100%;
+			}
+		}
+	}
+
+	.ajaxRegisterContainer {
+		background-color: $nav-font-color;
+		padding: 20px;
+	}
+	.ajaxRegister {
+		background-color: $dropdown-font-color;
+		color: $nav-background-color;
+		display: block;
+		font-size: 15px;
+		font-weight: bold;
+		line-height: 40px;
+		text-align: center;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+
+	input.login-button {
+		@include clear-linear-gradient();
+		border: none;
+		border-radius: 0;
+		background-color: $dropdown-font-color;
+		display: block;
+		font-size: 15px;
+		height: 40px;
+		line-height: 40px;
+		margin-top: 30px;
+		padding: 20px;
+		text-transform: uppercase;
+	}
+
+	@media screen and (max-width: $new-breakpoint-small -1px) {
+
+	}
+
+	@media screen and (min-width: $new-breakpoint-small) and (max-width: $new-breakpoint-big -1px)  {
+
+	}
+}
+
