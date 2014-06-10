@@ -15,24 +15,39 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 			'</ul>',
 		verticalMenu = [
 			{
-				'menu': 'Games',
-				'type': 'games',
+				'menu': 'books',
+				'type': 'books',
 				'active': true,
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			},
 			{
-				'menu': 'Comics',
+				'menu': 'comics',
 				'type': 'comics',
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			},
 			{
-				'menu': 'Games',
+				'menu': 'games',
 				'type': 'games',
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			},
 			{
-				'menu': 'Comics',
-				'type': 'comics',
+				'menu': 'lifestyle',
+				'type': 'lifestyle',
+				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
+			},
+			{
+				'menu': 'movies',
+				'type': 'movies',
+				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
+			},
+			{
+				'menu': 'music',
+				'type': 'music',
+				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
+			},
+			{
+				'menu': 'tv',
+				'type': 'tv',
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			}
 		];
@@ -45,14 +60,16 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 	// 2. populate main menu + dave submenu data in data
 	$.each(verticalMenu, function(index) {
 		var $elem = $('<td class="' + this.type + ' hub"></td>'),
-			htmlContent = this.menu;
+			$tr = $globalNavigationDropdown.find('[data-row=' + index + ']'),
+			icon = '<span class="icon" />',
+			border = '<span class="border" />';
 
 		if (this.active) {
-			$elem.addClass('active');
+			$tr.addClass('active');
 		}
 
-		$elem.html(htmlContent);
-		$globalNavigationDropdown.find('[data-row=' + index + ']').append($elem);
+		$elem.html(icon + border + this.menu);
+		$tr.append($elem);
 	});
 	// 3. finish table markup - add place for submenu
 
@@ -63,6 +80,13 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 	$globalNavigationDropdown.find('[data-submenu=1] span').text("The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.");
 	$globalNavigationDropdown.find('[data-submenu=2] span').text("The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.");
 
+
+	$globalNavigationDropdown.on('click', 'td.hub', function (e) {
+		e.preventDefault();
+
+		$globalNavigationDropdown.find('tr').removeClass('active');
+		$(this).parent().addClass('active');
+	});
 
 	$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {
 		e.preventDefault();

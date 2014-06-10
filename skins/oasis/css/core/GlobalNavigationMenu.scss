@@ -14,11 +14,12 @@
 
 .GlobalNavigationDropdown {
 	width: 866px;
-	background: #fff;
 	position: relative;
 	z-index: 1000;
 	margin: 0 auto;
 	border-collapse: collapse;
+	color: #092140;
+	background-color: #f7f7f7;
 
 	td {
 		padding: 0;
@@ -27,32 +28,138 @@
 	td.hub {
 		font-size: 21px;
 		width: 290px;
-		background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAA+CAYAAAAxgtvTAAABtElEQVRYw7WYuS9EYRTFf2dsiYICiZHIaEwURKVT6RSiUUkEef+VRBCJTqNS6XQKobAk1tgahVbE1XzTTBgz8965zXt5y7n53fPtRMRGGKMEbGIMAUTEKTDtSFBK1203wQDwDPRYCCS9AwfOEuEyW7Wb1KJugYqFQNI3sGMjSBRjwE1d6QrzAEn3wJHLZIvZqn8QEd2pTwxaCCR9Ans2gkQxBZy5PEDSOXBiS1Ck2frrRUT0Ay9Ar4VA0gew7yxRIWVSo5cRIeAKGLcQSApgy0aQKIaBR6DL4QGS3oBDl8m5zVYzH0VEZypT2UIg6QvYtREkiipw2co/rXiApGvg2GVy22a3hBsR5TQA2ghwl2jBnSBzNtNp4NRJsO4cKnrSWmnARbDYjngrCbJ2m2kzE04l7RtKLoK1PB3yv0m/A7gDRl09eS6PeDMJMnJGo6XjEPAEdLsIlvOK/0dwDkxahuuImClCvFGJMgqK3zaBvcAr0OciWCpK/K8EhZXnt6OECeDCOemvOo9zutICd9hFMF+0eH2CDEPUDgVHgAeg00Ww4hAHUNqqXgJV19p01iVeS5BhjB92p9qqQcAu4QAAAABJRU5ErkJggg==) no-repeat center right;
+		background: #fff url(/skins/oasis/images/GlobalNavigation/chevron-level-1.png) no-repeat center right;
+		padding-left: 65px;
+		position: relative;
 
-		&.active {
-			font-weight: bold;
-
-			.comics {
-				background-color: #94d11f;
-				/*svg
-			#76bf06
-				*/
-			}
-			&.games {
-				background-color: #ff5400;
-				// #e1390b
-			}
+		.icon {
+			background-position-x: 5px;
+			background-position-y: 5px;
+			background-size: 52px;
+			background-repeat: no-repeat;
+			display: inline-block;
+			width: 62px;
+			height: 62px;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.border {
+			position: absolute;
+			width: 164px;
+			height: 1px;
+			top: 0;
+			left: 102px;
+			background: #e9edef;
 		}
 
+		&.books .icon {
+			background-color: #ff7f26;
+		}
+		&.comics .icon {
+			background-color: #ff5400;
+		}
+		&.games .icon {
+			background-color: #94d11f;
+		}
+		&.lifestyle .icon {
+			background-color: #ffd000;
+		}
+		&.movies .icon {
+			background-color: #09d3bf;
+		}
+		&.music .icon {
+			background-color: #c819ad;
+		}
+		&.tv .icon {
+			background-color: #00b7e0;
+		}
+	}
+
+	tr:not(.active) td.books .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/books.svg);
+	}
+	tr.active td.books .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/books_hover.svg);
+	}
+	tr:not(.active) td.comics .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/comics.svg);
+	}
+	tr.active td.comics .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/comics_hover.svg);
+	}
+	tr:not(.active) td.games .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/games.svg);
+	}
+	tr.active td.games .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/games_hover.svg);
+	}
+	tr:not(.active) td.lifestyle .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle.svg);
+	}
+	tr.active td.lifestyle .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg);
+	}
+	tr:not(.active) td.movies .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/movies.svg);
+	}
+	tr.active td.movies .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/movies_hover.svg);
+	}
+	tr:not(.active) td.music .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/music.svg);
+	}
+	tr.active td.music .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/music_hover.svg);
+	}
+	tr:not(.active) td.tv .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/tv.svg);
+	}
+	tr.active td.tv .icon {
+		background-image: url(/skins/oasis/images/GlobalNavigation/tv_hover.svg);
+	}
+
+	tr.active td:first-child {
+		font-weight: bold;
+		color: #fff;
+		background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png);
+
+		&.books {
+			background-color: #ff7f26;
+		}
+		&.comics {
+			background-color: #ff5400;
+		}
+		&.games {
+			background-color: #94d11f;
+		}
+		&.lifestyle {
+			background-color: #ffd000;
+		}
+		&.movies {
+			background-color: #09d3bf;
+		}
+		&.music {
+			background-color: #c819ad;
+		}
+		&.tv {
+			background-color: #00b7e0;
+		}
 	}
 	tr {
 		height: 62px;
 	}
-	td:not(.level-1) {
+	tr.active td.hub .border, tr.active + tr:not(.active) td.hub .border
+	{
+		background: none;
+	}
+
+	tr td:not(.hub) {
+		color: #092140;
+
 		span {
 			width: 270px;
 			display: block;
-			overflow-y: scroll;
 		}
 		&[data-submenu='1'] span {
 			padding: 0 18px 0 12px;
