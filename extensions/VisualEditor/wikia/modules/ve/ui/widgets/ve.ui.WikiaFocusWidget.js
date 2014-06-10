@@ -61,7 +61,7 @@ OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
 
 /* Methods */
 ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
-	var surfaceOffset, surfaceEdges, documentDimensions,
+	var surfaceOffset, surfaceEdges, documentDimensions, topEdge,
 		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
 
 	if ( uniqueLayoutId !== this.uniqueLayoutId ) {
