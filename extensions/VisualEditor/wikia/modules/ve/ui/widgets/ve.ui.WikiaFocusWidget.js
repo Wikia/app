@@ -77,7 +77,8 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 			height: this.$body.outerHeight(),
 			width: this.$window.width()
 		};
-		topEdge = mw.config.values.wgNamespaceNumber === 2 ? surfaceEdges.top : this.$pageHeader.offset().top;
+		// Handle NS_USER
+		topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ? surfaceEdges.top : this.$pageHeader.offset().top;
 
 		this.$top
 			.css( {
