@@ -52,6 +52,7 @@ class ThumbnailController extends WikiaController {
 	 *	Keys:
 	 *		itemprop - for RDF metadata
 	 * @responseParam array metaAttrs - for RDF metadata [ array( array( 'itemprop' => '', 'content' => '' ) ) ]
+	 * @responseParam string mediaType - 'image' | 'video'
 	 */
 	public function video() {
 		wfProfileIn( __METHOD__ );
@@ -76,7 +77,7 @@ class ThumbnailController extends WikiaController {
 		}
 
 		// get class for a tag
-		$linkClasses = ['video'];
+		$linkClasses = [];
 		if ( empty( $options['noLightbox'] ) ) {
 			$linkClasses[] = 'image';
 			$linkClasses[] = 'lightbox';
@@ -196,16 +197,23 @@ class ThumbnailController extends WikiaController {
 		$this->imgClass = $imgClass;
 		$this->imgAttrs = ThumbnailHelper::getAttribs( $imgAttribs );
 
+		$this->mediaType = 'video';
+
+
 		// data-src attribute in case of lazy loading
 		$this->noscript = '';
 		$this->dataSrc = '';
+
+		$imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
+		$this->imgTag = $imgTag;
+
 		if ( !empty( $options['usePreloading'] ) ) {
 			$this->dataSrc = $imgSrc;
 		} elseif ( !empty( $this->wg->EnableAdsLazyLoad )
 			&& empty( $options['noLazyLoad'] )
 			&& ImageLazyLoad::isValidLazyLoadedImage( $this->imgSrc )
 		) {
-			$this->noscript = $this->app->renderView( 'ThumbnailController', 'imgThumbnail', $this->response->getData() );
+			$this->noscript = $imgTag;
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
 
@@ -219,14 +227,16 @@ class ThumbnailController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function imgThumbnail() {
+	public function imgTag() {
 		$this->response->setData( $this->request->getParams() );
 	}
 
 	/**
 	 * @todo Implement image controller
 	 */
-	public function image() {}
+	public function image() {
+		$this->mediaType = 'image';
+	}
 
 	/**
 	 * Article figure tags with thumbnails inside
