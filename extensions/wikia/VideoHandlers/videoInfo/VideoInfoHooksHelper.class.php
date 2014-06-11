@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * VideoInfo Hooks Helper
  * @author Liz Lee, Saipetch Kongkatong
@@ -14,30 +16,58 @@ class VideoInfoHooksHelper {
 	 * @return true
 	 */
 	public static function onFileUpload( $file, $reupload, $hasDescription ) {
+		return true;
+	}
+
+	/**
+	 * Insert or update video info record from given file
+	 * @param LocalFile $file
+	 * @param bool $reupload
+	 * @return bool
+	 * @throws Exception
+	 */
+	public static function upsertVideoInfo( \LocalFile $file, $reupload ) {
+		if ( !$file->isDataLoaded() ) {
+			$errMessage = 'Video file not loaded';
+			WikiaLogger::instance()->error($errMessage);
+			throw new \Exception($errMessage);
+		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$videoData = $videoInfoHelper->getVideoDataFromFile( $file );
-		if ( !empty($videoData) ) {
-			$videoInfo = new VideoInfo( $videoData );
-			if ( $reupload ) {
-				$videoInfo->reuploadVideo();
-			} else {
-				// check if the foreign video with the same title exists
-				if ( $videoInfoHelper->videoExists($file->getTitle(), true) ) {
-					$videoInfo->reuploadVideo();
-				} else {
-					$videoInfo->addVideo();
-				}
 
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				if ( !$file->isLocal() ) {
-					$mediaService->clearCacheTotalPremiumVideos();
-				}
-				if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
-					VideoInfoHooksHelper::clearCategories( $file->getTitle() );
-				}
-			}
+		if ( empty( $videoData ) ) {
+			return true;
+		}
+
+		$videoInfo = new VideoInfo( $videoData );
+		if ( $reupload ||
+		     // check if the foreign video with the same title exists
+		     $videoInfoHelper->videoExists( $file->getTitle(), true )
+		) {
+			$videoInfo->reuploadVideo();
+		} else {
+			$videoInfo->addVideo();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Clear cache of video info specific to given file
+	 * @param LocalFile $file
+	 * @return bool
+	 */
+	public static function purgeVideoInfoCache( \LocalFile $file ) {
+		$mediaService = new MediaQueryService();
+		$mediaService->clearCacheTotalVideos();
+
+		if ( !$file->isLocal() ) {
+			$mediaService->clearCacheTotalPremiumVideos();
+		}
+
+		if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
+			VideoInfoHooksHelper::clearCategories( $file->getTitle() );
 		}
 
 		return true;
