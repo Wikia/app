@@ -112,7 +112,7 @@ define(
 
 					if (data && data.success) {
 						modal.trigger('cleanUpError');
-						modal.trigger('mapCreated', data);
+						modal.trigger('mapCreated', data.content);
 					} else {
 						modal.trigger('error', data.content.message);
 					}
