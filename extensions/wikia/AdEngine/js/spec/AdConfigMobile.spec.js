@@ -1,7 +1,7 @@
 describe('AdConfigMobile', function(){
 
 
-	it('getProvider Null wins over all on mobile', function() {
+	it('wgShowAds set to false blocks all providers on mobile', function() {
 		var adProviderNullMock = {name: 'NullMock'}
 			, adProviderDirectGptMobileMock = {name:'GptMobileMock', canHandleSlot: function() {return true}}
 			, adProviderRemnantGptMobileMock = {name: 'RemnantGptMobileMock', canHandleSlot: function() {return true}}
