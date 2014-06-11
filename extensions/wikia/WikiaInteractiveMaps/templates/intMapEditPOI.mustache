@@ -1,0 +1,23 @@
+<p class="error hidden"></p>
+<form class="WikiaForm intMapEditPOIForm" id="intMapEditPOIForm">
+	<div class="input-group">
+		<input type="text" placeholder="{{namePlaceholder}}" name="name" value="{{name}}">
+	</div>
+	<div class="input-group">
+		<input type="text" placeholder="{{articlePlaceholder}}" name="articleLink" value="{{article}}">
+	</div>
+	<div class="input-group">
+		<select name="pinTypeId">
+			<option value="" selected>{{categoryPlaceholder}}</option>
+			{{#categories}}
+				<option value="{{id}}" {{selected}}>{{name}}</option>
+			{{/categories}}
+		</select>
+	</div>
+	<div class="input-group">
+		<textarea name="description" placeholder="{{descriptionPlaceholder}}">{{description}}</textarea>
+	</div>
+	<input type="hidden" name="mapId" value="{{mapId}}">
+	<input type="hidden" name="lat" value="{{lat}}">
+	<input type="hidden" name="lon" value="{{lng}}">
+</form>

@@ -51,6 +51,19 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
 
+	'wikia-interactive-maps-edit-poi-header' => 'Add Pin Point',
+	'wikia-interactive-maps-edit-poi-save' => 'Save',
+	'wikia-interactive-maps-edit-poi-cancel' => 'Cancel',
+	'wikia-interactive-maps-edit-poi-delete' => 'Delete',
+	'wikia-interactive-maps-edit-poi-name-placeholder' => 'Title',
+	'wikia-interactive-maps-edit-poi-article-placeholder' => 'Associated Article',
+	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Select a Pin Type',
+	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Add a Description',
+	'wikia-interactive-maps-edit-poi-error-name' => 'Name must be set',
+	'wikia-interactive-maps-edit-poi-error-pin-type-id' => 'Pin type must be set',
+
+
+
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 	'wikia-interactive-maps-create-map-service-error' => 'Oops, we have issues with our maps service. If it repeats [[Special:Contact|contact us]], please.',
 
@@ -104,6 +117,17 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-delete-pin-type' => 'Link title for deleting Pin Type in edit/create Pin types UI',
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
+
+	'wikia-interactive-maps-edit-poi-header' => 'Modal header for add pin to map',
+	'wikia-interactive-maps-edit-poi-save' => 'Modal button to save pin on map',
+	'wikia-interactive-maps-edit-poi-cancel' => 'Modal button cancel action edit / add pin to map',
+	'wikia-interactive-maps-edit-poi-delete' => 'Modal button - delete pin from map',
+	'wikia-interactive-maps-edit-poi-name-placeholder' => 'Input placeholder for pin name in edit pin modal',
+	'wikia-interactive-maps-edit-poi-article-placeholder' => 'Input placeholder for associated article in edit pin modal',
+	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Placeholder / default state option in select pin category',
+	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Textarea placeholder for pin description in edit pin modal',
+	'wikia-interactive-maps-edit-poi-error-name' => 'Error message - missing pin name in add pin UI',
+	'wikia-interactive-maps-edit-poi-error-pin-type-id' => 'Error message - pin type not set in add pin UI',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 	'wikia-interactive-maps-create-map-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',

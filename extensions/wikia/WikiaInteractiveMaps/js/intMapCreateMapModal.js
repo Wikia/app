@@ -3,7 +3,7 @@ define(
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'wikia.intMap.createMap.utils',
+		'wikia.intMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview',
 		'wikia.intMap.createMap.pinTypes'
@@ -17,7 +17,7 @@ define(
 			modalConfig = {
 				vars: {
 					id: 'intMapCreateMapModal',
-					classes: ['intMapCreateMapModal'],
+					classes: ['intMapCreateMapModal', 'intMapModal'],
 					size: 'medium',
 					content: '',
 					title: $.msg('wikia-interactive-maps-create-map-header'),

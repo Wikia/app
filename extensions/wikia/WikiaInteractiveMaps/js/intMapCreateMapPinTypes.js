@@ -3,7 +3,7 @@ define('wikia.intMap.createMap.pinTypes',
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'wikia.intMap.createMap.utils'
+		'wikia.intMap.utils'
 	],
 	function($, qs, w, utils) {
 		'use strict';

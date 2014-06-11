@@ -1,15 +1,16 @@
-require(['wikia.querystring', 'wikia.window'], function (qs, w) {
+require(['wikia.querystring', 'wikia.window','ponto', 'wikia.intMap.pontoBridge'], function (qs, w, ponto, PontoBridge) {
 	'use strict';
 
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
+		targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0].contentWindow,
 
 		// create map modal assets
 		cacheKey = 'wikia_interactive_maps_create_map',
 		source = {
 			messages: ['WikiaInteractiveMapsCreateMap'],
 			scripts: ['int_map_create_map_js'],
-			styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
+			styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
 			mustache: [
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
@@ -19,6 +20,9 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
 			]
 		};
+
+	// set iframe target for Ponto
+	ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe);
 
 	// attach handlers
 	body.addEventListener('change', function (event) {
@@ -46,12 +50,10 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 		}
 	});
 
-
 	/**
 	 * @desc reload the page after choosing ordering option
 	 * @param {string} sortType - sorting method
 	 */
-
 	function sortMapList(sortType) {
 		qs().setVal('sort', sortType, false).goTo();
 	}
@@ -61,7 +63,6 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 * @param {object} source - object with paths to different assets
 	 * @param {string} cacheKey - local storage key
 	 */
-
 	function loadModal(source, cacheKey) {
 		getAssets(source, cacheKey).then(function (assets) {
 			addAssetsToDOM(assets);
@@ -78,7 +79,6 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 * @param {string} cacheKey - local storage key
 	 * @returns {object} - promise
 	 */
-
 	function getAssets(source, cacheKey) {
 		var dfd = new $.Deferred(),
 			assets;
@@ -107,20 +107,17 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	 * @desc adds scripts and styles to DOM
 	 * @param {object} assets - object with assets
 	 */
-
 	function addAssetsToDOM(assets) {
 		require(['wikia.loader'], function (loader) {
 			loader.processScript(assets.scripts);
 			loader.processStyle(assets.styles);
 		});
 	}
-
 	/**
 	 * @desc converts paths to assets in arrays to comma separated strings
 	 * @param {object} source - object with arrays of paths to different type assets
 	 * @returns {object} - object with arrays converted to comma separated strings
 	 */
-
 	function convertSource(source) {
 		var convertedSource = {};
 

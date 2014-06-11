@@ -10,16 +10,20 @@ class WikiaInteractiveMapsHooks {
 	 * @return bool
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath;
+		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath, $wgResourceBasePath;
 
 		if( !empty( $wgEnableWikiaInteractiveMaps ) ) {
 			// add the asset to every page
 			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMapsParserTag.js' );
 		}
 
+		// add the asset only on Special:InteractiveMaps page
 		if( self::isSpecialInteractiveMapsPage() ) {
-			// add the asset only on Special:InteractiveMaps page
-			$text .= Html::linkedScript( $wgExtensionsPath . '/wikia/WikiaInteractiveMaps/js/WikiaInteractiveMaps.js' );
+			$scripts = AssetsManager::getInstance()->getURL( 'int_map_special_page_js' );
+
+			foreach( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
 		}
 
 		return true;
