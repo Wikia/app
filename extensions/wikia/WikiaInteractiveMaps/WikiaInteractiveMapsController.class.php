@@ -165,8 +165,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	function getMenuMarkup() {
 		$actionButtonArray = [
 			'action' => [
-				'text' => wfMessage( 'wikia-interactive-maps-view-source' )->escaped(),
-				'id' => 'viewSource'
+				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
 			],
 			'dropdown' => [
 				'deleteMap' => [
@@ -437,7 +436,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	function getSpecialUrl( $name ) {
-		return Title::newFromText( $path, NS_SPECIAL )->getFullUrl();
+		return Title::newFromText( $name, NS_SPECIAL )->getFullUrl();
 	}
 
 	/**

@@ -13,7 +13,7 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 					scripts: ['int_map_create_map_js'],
 					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
 					mustache: [
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSet.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
 					]
@@ -25,7 +25,10 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 				module: 'wikia.intMaps.deleteMap',
 				source: {
 					messages: ['WikiaInteractiveMapsDeleteMap'],
-					scripts: ['int_map_delete_map_js']
+					scripts: ['int_map_delete_map_js'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache'
+					]
 				},
 				origin: 'wikia-int-map-delete-map',
 				cacheKey: 'wikia_interactive_maps_delete_map'
