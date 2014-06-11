@@ -85,6 +85,7 @@ class WAMPageModel extends WikiaModel {
 				default: $params = $this->getVisualizationParams(); break;
 			}
 
+			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
 	}
