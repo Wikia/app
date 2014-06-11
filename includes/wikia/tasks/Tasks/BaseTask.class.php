@@ -134,14 +134,6 @@ abstract class BaseTask {
 	}
 
 	/**
-	 * TODO: link this to the task runner that is currently running, and append to it's log. then return that as part
-	 * of retval
-	 */
-	public function log($line) {
-
-	}
-
-	/**
 	 * convenience method wrapping AsyncTaskList
 	 *
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
