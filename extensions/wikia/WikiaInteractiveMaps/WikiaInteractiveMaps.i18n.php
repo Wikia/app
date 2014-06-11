@@ -65,6 +65,8 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 
+	'log-name-maps' => 'Maps',
+	'log-description-maps' => 'This is a log of maps actions',
 	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$1]]',
 	'wikia-interactive-maps-update-map-log-entry' => 'updated map [[$1]]',
 	'wikia-interactive-maps-delete-map-log-entry' => 'deleted map [[$1]]',
@@ -127,6 +129,18 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 
-	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
+	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed',
+
+	'log-name-maps' => 'Name for Special:Log filter',
+	'log-description-maps' => 'Description for Special:Log filter',
+	'wikia-interactive-maps-create-map-log-entry' => 'Message to be displayed in the log when a map is created',
+	'wikia-interactive-maps-update-map-log-entry' => 'Message to be displayed in the log when a map is updated',
+	'wikia-interactive-maps-delete-map-log-entry' => 'Message to be displayed in the log when a map is deleted',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is created',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is updated',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'Message to be displayed in the log when a pin type is deleted',
+	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is created',
+	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is updated',
+	'wikia-interactive-maps-create-pin-log-entry' => 'Message to be displayed in the log when a pin is deleted',
 ];
 
