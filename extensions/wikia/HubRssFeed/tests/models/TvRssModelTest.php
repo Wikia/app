@@ -1,26 +1,23 @@
 <?php
 
-class TvRssModelTest extends WikiaBaseTest
-{
-	protected static function getFn($obj, $name)
-	{
-		$class = new ReflectionClass(get_class($obj));
-		$method = $class->getMethod($name);
-		$method->setAccessible(true);
+class TvRssModelTest extends WikiaBaseTest {
+	protected static function getFn( $obj, $name ) {
+		$class = new ReflectionClass(get_class( $obj ));
+		$method = $class->getMethod( $name );
+		$method->setAccessible( true );
 
-		return function () use ($obj, $method) {
+		return function () use ( $obj, $method ) {
 			$args = func_get_args();
-			return $method->invokeArgs($obj, $args);
+			return $method->invokeArgs( $obj, $args );
 		};
 	}
 
 	/**
 	 * @covers TvRssModel::formatTitle
 	 */
-	public function testFormatTitle()
-	{
+	public function testFormatTitle() {
 		$dummy = new TvRssModel();
-		$formatTitle = self::getFn($dummy, 'formatTitle');
+		$formatTitle = self::getFn( $dummy, 'formatTitle' );
 		$dummyItem = [
 			"source" => TvRssModel::SOURCE_TVRAGE,
 			'episode_name' => "episode",
@@ -29,29 +26,28 @@ class TvRssModelTest extends WikiaBaseTest
 			'title' => 'bogus_title',
 		];
 
-		$this->assertEquals($formatTitle($dummyItem)['title'], "episode, the new episode from series");
+		$this->assertEquals( $formatTitle( $dummyItem )['title'], "episode, the new episode from series" );
 
 		$dummyItem['source'] = TvRssModel::SOURCE_GENERATOR;
 
 		$valid_titles = [
 			"More info about bogus_title from Muppet Wiki",
 			"Read more about bogus_title from Muppet Wiki",
-			"Recommended page: bogus_title  from Muppet Wiki"];
-		$this->assertContains($formatTitle($dummyItem)['title'], $valid_titles);
+			"Recommended page: bogus_title  from Muppet Wiki" ];
+		$this->assertContains( $formatTitle( $dummyItem )['title'], $valid_titles );
 	}
 
 	/**
 	 * @covers TvRssModel::parseTitle
 	 */
-	public function testParseTitle()
-	{
+	public function testParseTitle() {
 		$dummy = new TvRssModel();
-		$parseTitle = self::getFn($dummy, 'parseTitle');
+		$parseTitle = self::getFn( $dummy, 'parseTitle' );
 
 		$dummyRssTitle = "- Suits (04x01)";
-		$parsed = $parseTitle($dummyRssTitle);
-		$this->assertEquals($parsed['title'], "Suits");
-		$this->assertEquals($parsed['series'], "04");
-		$this->assertEquals($parsed['episode'], "01");
+		$parsed = $parseTitle( $dummyRssTitle );
+		$this->assertEquals( $parsed['title'], "Suits" );
+		$this->assertEquals( $parsed['series'], "04" );
+		$this->assertEquals( $parsed['episode'], "01" );
 	}
 }

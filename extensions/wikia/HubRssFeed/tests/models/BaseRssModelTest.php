@@ -139,10 +139,9 @@ class BaseRssModelTest extends WikiaBaseTest
 	/**
 	 * @covers BaseRssModel::getArticleDetail
 	 */
-	public function testGetArticleDetail()
-	{
+	public function testGetArticleDetail() {
 		$dummy = new DummyModel();
-		$getArticleDetail = self::getFn($dummy, 'getArticleDetail');
+		$getArticleDetail = self::getFn( $dummy, 'getArticleDetail' );
 
 		$details = $getArticleDetail(831, 49);
 
