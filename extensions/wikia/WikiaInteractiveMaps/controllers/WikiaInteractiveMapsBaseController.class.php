@@ -7,15 +7,16 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	/**
 	 * @var WikiaMaps
 	 */
-	private $mapsModel;
+	protected $mapsModel;
 
 	/**
 	 * Keeps data needed while creating map/tile/poi process
 	 * @var Array
 	 */
-	private $data;
+	protected $data;
 
 	public function __construct() {
+		parent::__construct();
 		$this->mapsModel = new WikiaMaps( $this->wg->IntMapConfig );
 	}
 

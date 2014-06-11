@@ -7,6 +7,7 @@ class WikiaMaps {
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+	const ENTRY_POINT_POI = 'poi';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -272,6 +273,20 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
 			$pinTypeData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a point of interest (POI) with given parameters
+	 *
+	 * @param Array $poiData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function savePoi( $poiData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI ] ),
+			$poiData
 		);
 	}
 
