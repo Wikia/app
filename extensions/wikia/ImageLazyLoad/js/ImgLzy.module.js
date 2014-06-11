@@ -70,7 +70,7 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				src = src.
 					replace(/\.[^\./]+$/, '.webp').
 					// cb++ for WebP thumbs - PLATFORM-283
-					replace('/__cb', '/__cb0');
+					replace(/\/__cb(\d+)\//, '/__cb0$1/');
 			}
 			return src;
 		},
