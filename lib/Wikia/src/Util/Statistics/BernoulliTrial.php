@@ -1,7 +1,7 @@
 <?php
 /**
  * Bernoulli Trial
- * Keywords: sample statistical probability
+ * Keywords: sample stats probability
  *
  * A Bernoulli trial is a random experiment with two possible outcomes in
  * which the probability of success is the same for each trial. This class
@@ -9,11 +9,11 @@
  *
  * You can use this to randomly sample high volume events where it may not be
  * feasible to include all of the events. Examples include high volume API
- * requests or or queries to a storage engine.
+ * requests or queries to a storage engine.
  *
  * Example:
  *	$sampler = new BernoulliTrial(0.1);
- *	if ($sampler->sample()) {
+ *	if ($sampler->shouldSample()) {
  *		// do something 10 % of the time
  *	}
  *
@@ -37,30 +37,25 @@ class BernoulliTrial {
 	private $probability = null;
 
 	/**
-	 * Create the trial with the given probability of success.
+	 * Create the trial with the given probability of success. The probability
+	 * provided should be in the range [0-1] with 0 being no sampling and 1 being a
+	 * 100% sample rate.
 	 *
 	 * @param float $probability the probability of success
+	 * @throws InvalidArgumentException
 	 */
 	function __construct($probability) {
-		$this->probability = $this->normalizeProbability($probability);
+		$this->checkProbability($probability);
+		$this->probability = $probability;
 	}
 
-	/**
-	 * Get the probability of success.
-	 *
-	 * @return float
-	 */
 	public function getProbability() {
 		return $this->probability;
 	}
 
-	/**
-	 * Set the probability.
-	 *
-	 * @param float $probability the probability of success
-	 */
 	public function setProbability($probability) {
-		$this->probability = $this->normalizeProbability($probability);
+		$this->checkProbability($probability);
+		$this->probability = $probability;
 	}
 
 	/**
@@ -69,7 +64,7 @@ class BernoulliTrial {
 	 *
 	 * @return bool
 	 */
-	public function sample() {
+	public function shouldSample() {
 		if ($this->getRandomFloat() <= $this->probability) {
 			return true;
 		}
@@ -93,10 +88,13 @@ class BernoulliTrial {
 	 * If the probability is > 1 then set it to 1. If the probability is < 0 then set it to 0.
 	 *
 	 * @param float $probability
-	 * @return float
+	 * @throws InvalidArgumentException
+	 *
 	 */
-	public function normalizeProbability($probability) {
-		return min(self::MAX_PROBABILITY, max($probability, self::MIN_PROBABILITY));
+	public function checkProbability($probability) {
+		if ($probability < self::MIN_PROBABILITY || $probability > self::MAX_PROBABILITY) {
+			throw new \InvalidArgumentException(sprintf("Error, probability %f outside the range %f-%f.", $probability, self::MIN_PROBABILITY, self::MAX_PROBABILITY));
+		}
 	}
 
 }

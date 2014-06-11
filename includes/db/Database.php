@@ -7,7 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
-use \Wikia\Logger\WikiaLogger;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /** Number of times to re-try an operation in case of deadlock */
@@ -3515,7 +3515,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return void
 	 */
 	protected function logSql( $sql, $fname, $elapsedTime, $isMaster ) {
-		if ($this->getSampler()->sample()) {
+		if ($this->getSampler()->shouldSample()) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
