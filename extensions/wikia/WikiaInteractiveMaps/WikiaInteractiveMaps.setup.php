@@ -24,6 +24,7 @@ $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMaps
 
 // model classes
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
+$wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
 // special pages
 $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
@@ -42,3 +43,6 @@ JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-*'
 ] );
+
+// Logs
+$wgLogTypes[] = WikiaMapsLogger::LOG_TYPE_NAME;

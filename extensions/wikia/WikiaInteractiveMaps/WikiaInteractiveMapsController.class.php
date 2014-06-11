@@ -305,7 +305,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		} else {
 			$results = $this->createTileset();
 
-			if( true === $results['success'] ) {
+			if( true === $results[ 'success' ] ) {
+
 				$this->setCreationData( 'tileSetId', $results['id'] );
 				$results = $this->createMapFromTilesetId();
 			}
@@ -403,6 +404,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$results['mapId'] = $mapId;
 			$results['mapUrl'] = Title::newFromText( self::PAGE_NAME . '/' . $mapId, NS_SPECIAL )->getFullUrl();
 			$results['message'] = $response->message;
+
+			// Log new map created
+			WikiaMapsLogger::addLogEntry(
+				WikiaMapsLogger::ACTION_CREATE_MAP,
+				$mapId,
+				$this->getCreationData( 'title' )
+			);
 		}
 
 		return $results;
@@ -500,6 +508,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 
 		$createdPinTypes = 0;
+		$logEntries = [];
 		foreach( $pinTypesNames as $name ) {
 			$response = json_decode(
 				$this->mapsModel->savePinType( [
@@ -510,8 +519,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			);
 
 			if( isset( $response->id ) ) {
+				$logEntries[] = WikiaMapsLogger::newLogEntry(
+					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
+					$mapId,
+					$name,
+					[ $response->id ]
+				);
 				$createdPinTypes++;
 			}
+		}
+		if ( !empty( $logEntries ) ) {
+			WikiaMapsLogger::addLogEntries( $logEntries );
 		}
 
 		$this->setCreationData( 'createdPinTypes', $createdPinTypes );
