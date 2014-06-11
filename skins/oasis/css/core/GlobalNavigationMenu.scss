@@ -28,7 +28,10 @@
 	td.hub {
 		font-size: 21px;
 		width: 290px;
-		background: #fff url(/skins/oasis/images/GlobalNavigation/chevron-level-1.png) no-repeat center right;
+		background-image: url(base64png('/skins/oasis/images/GlobalNavigation/chevron-level-1.png') );
+		background-position: center right;
+		background-color: #fff;
+		background-repeat: no-repeat;
 		padding-left: 65px;
 		position: relative;
 
@@ -77,52 +80,52 @@
 	}
 
 	tr:not(.active) td.books .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/books.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/books.svg'));
 	}
 	tr.active td.books .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/books_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/books_hover.svg'));
 	}
 	tr:not(.active) td.comics .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/comics.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/comics.svg'));
 	}
 	tr.active td.comics .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/comics_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/comics_hover.svg'));
 	}
 	tr:not(.active) td.games .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/games.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/games.svg'));
 	}
 	tr.active td.games .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/games_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/games_hover.svg'));
 	}
 	tr:not(.active) td.lifestyle .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/lifestyle.svg'));
 	}
 	tr.active td.lifestyle .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg'));
 	}
 	tr:not(.active) td.movies .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/movies.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/movies.svg'));
 	}
 	tr.active td.movies .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/movies_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/movies_hover.svg'));
 	}
 	tr:not(.active) td.music .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/music.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/music.svg'));
 	}
 	tr.active td.music .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/music_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/music_hover.svg'));
 	}
 	tr:not(.active) td.tv .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/tv.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/tv.svg'));
 	}
 	tr.active td.tv .icon {
-		background-image: url(/skins/oasis/images/GlobalNavigation/tv_hover.svg);
+		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/tv_hover.svg'));
 	}
 
 	tr.active td:first-child {
 		font-weight: bold;
 		color: #fff;
-		background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png);
+		background-image: url(base64png('/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png') );
 
 		&.books {
 			background-color: #ff7f26;
