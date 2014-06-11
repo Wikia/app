@@ -27,7 +27,7 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 *
 	 * @return Mixed
 	 */
-	private function getData( $name, $default = false ) {
+	protected function getData( $name, $default = false ) {
 		if( isset( $this->data[ $name ] ) ) {
 			return $this->data[ $name ];
 		}
@@ -41,8 +41,12 @@ class WikiaInteractiveMapsBaseController extends WikiaController {
 	 * @param String $name
 	 * @param Mixed $value
 	 */
-	public function setData( $name, $value ) {
+	protected function setData( $name, $value ) {
 		$this->data[ $name ] = $value;
+	}
+
+	protected function getAllData() {
+		return $this->data;
 	}
 
 }

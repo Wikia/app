@@ -23,13 +23,13 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	public function editPoi() {
 		$poiId = $this->request->getInt( 'poiId' );
 		$this->setData( 'poiId', $poiId );
-		$this->setData( 'mapId', $this->request->getArray( 'mapId' ) );
-		$this->setData( 'name', $this->request->getArray( 'name' ) );
-		$this->setData( 'poiCategoryId', $this->request->getArray( 'poiCategoryId' ) );
-		$this->setData( 'articleLink', $this->request->getArray( 'articleLink' ) );
-		$this->setData( 'lat', $this->request->getArray( 'lat' ) );
-		$this->setData( 'lon', $this->request->getArray( 'lon' ) );
-		$this->setData( 'description', $this->request->getArray( 'description' ) );
+		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
+		$this->setData( 'name', $this->request->getVal( 'name' ) );
+		$this->setData( 'poiCategoryId', $this->request->getInt( 'poiCategoryId' ) );
+		$this->setData( 'articleLink', $this->request->getVal( 'articleLink' ) );
+		$this->setData( 'lat', $this->request->getVal( 'lat' ) );
+		$this->setData( 'lon', $this->request->getVal( 'lon' ) );
+		$this->setData( 'description', $this->request->getVal( 'description' ) );
 
 		$this->validatePoiData();
 
@@ -44,8 +44,29 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setVal( 'results', $results );
 	}
 
+	/**
+	 * Validates data needed for creating/updating POI
+	 */
 	private function validatePoiData() {
-		// TODO: finish me!
+		$name = $this->getData( 'name' );
+		$poiCategoryId = $this->getData( 'poiCategoryId' );
+		$mapId = $this->getData( 'mapId' );
+		$lat = $this->getData( 'lat' );
+		$lon = $this->getData( 'lon' );
+
+		if( empty( $name )
+			|| empty( $poiCategoryId )
+			|| empty( $mapId )
+			|| empty( $lat )
+			|| empty( $lon )
+			|| empty( $name )
+		) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
+
+		if( !$this->wg->User->isLoggedIn() ) {
+			throw new PermissionsException( 'interactive maps' );
+		}
 	}
 
 	private function updatePoi() {
