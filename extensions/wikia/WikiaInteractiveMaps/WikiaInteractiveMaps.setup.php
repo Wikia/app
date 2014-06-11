@@ -16,8 +16,8 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 // controller classes
-$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
-$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . 'WikiaInteractiveMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . '/controllers/WikiaInteractiveMapsController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/controllers/WikiaInteractiveMapsParserTagController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
