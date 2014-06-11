@@ -20,6 +20,9 @@ class WikiaMaps {
 	const MAP_TYPE_CUSTOM = 'custom';
 	const MAP_TYPE_GEO = 'geo';
 
+	const HTTP_CREATED_CODE = 201;
+	const HTTP_SUCCESS_OK = 200;
+
 	/**
 	 * @var array API connection config
 	 */
@@ -83,14 +86,17 @@ class WikiaMaps {
 	 * @return string|bool
 	 */
 	private function postRequest( $url, $data ) {
-		return Http::post( $url, [
-			'postData' => json_encode( $data ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			],
-			//TODO this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		return $this->processServiceResponse(
+			Http::post( $url, [
+				'postData' => json_encode( $data ),
+				'headers' => [
+					'Authorization' => $this->config['token']
+				],
+				'returnInstance' => true,
+				//TODO: this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 	}
 
 	/**
@@ -120,12 +126,16 @@ class WikiaMaps {
 	private function getMapsFromApi( Array $params ) {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
-		$response = Http::get( $url, 'default', [
-            'noProxy' => true
-        ] );
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				'returnInstance' => true,
+				//TODO: this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 
-		if ( $response !== false ) {
-			$mapsData = json_decode( $response );
+		if( $response['success'] ) {
+			$mapsData = $response['content'];
 
 			// Add map size to maps and human status messages
 			array_walk( $mapsData->items, function( &$map ) {
@@ -159,18 +169,25 @@ class WikiaMaps {
 	private function getMapByIdFromApi( Array $params ) {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
-		$response = Http::get( $url, 'default', [
-			//TODO this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
-
-		$map = json_decode( $response );
-		if( !empty( $map->tile_set_url ) ) {
-			$response = Http::get( $map->tile_set_url, 'default', [
-				//TODO this is temporary workaround, remove it before production!
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				'returnInstance' => true,
+				//TODO: this is temporary workaround, remove it before production!
 				'noProxy' => true
-			] );
-			$tilesData = json_decode( $response );
+			] )
+		);
+
+		$map = $response['content'];
+		if( !empty( $map->tile_set_url ) ) {
+			$response = $this->processServiceResponse(
+				Http::get( $map->tile_set_url, 'default', [
+					'returnInstance' => true,
+					//TODO: this is temporary workaround, remove it before production!
+					'noProxy' => true
+				] )
+			);
+
+			$tilesData = $response['content'];
 
 			if( !is_null( $tilesData ) ) {
 				$map->image = $tilesData->image;
@@ -244,10 +261,12 @@ class WikiaMaps {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
-		$response = Http::get( $url, 'default', [
-			//TODO this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 
 		return json_decode( $response );
 	}
@@ -343,6 +362,26 @@ class WikiaMaps {
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Returns results array with success and content elements
+	 *
+	 * @param MWHttpRequest $response
+	 * @todo: how about extracting results to an object?
+	 */
+	private function processServiceResponse( MWHttpRequest $response ) {
+		$results['success'] = false;
+		$status = $response->getStatus();
+		$content = json_decode( $response->getContent() );
+		$results['content'] = $content;
+
+		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
+		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
+			$results['success'] = true;
+		}
+
+		return $results;
 	}
 
 }

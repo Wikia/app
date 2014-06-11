@@ -328,7 +328,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$results = $this->createTileset();
 
 			if( true === $results['success'] ) {
-				$this->setCreationData( 'tileSetId', $results['id'] );
+				$this->setCreationData( 'tileSetId', $results['content']->id );
 				$results = $this->createMapFromTilesetId();
 			}
 		}
@@ -388,15 +388,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
-		} else {
-			$result = json_decode( $response );
-			$results['success'] = true;
-			$results['id'] = $result->id;
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**
@@ -406,8 +403,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function createMapFromTilesetId() {
-		$results['success'] = false;
-
 		$response = $this->mapsModel->saveMap( [
 			'title' => $this->getCreationData( 'title' ),
 			'tile_set_id' => $this->getCreationData( 'tileSetId' ),
@@ -415,19 +410,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
-			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		} else {
-			$response = json_decode( $response );
-			$mapId = $response->id;
-
-			$results['success'] = true;
-			$results['mapId'] = $mapId;
-			$results['mapUrl'] = $this->getSpecialUrl( self::PAGE_NAME . '/' . $mapId );
-			$results['message'] = $response->message;
+			$response['content']->mapUrl = Title::newFromText(
+				self::PAGE_NAME . '/' . $response['content']->id,
+				NS_SPECIAL
+			)->getFullUrl();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**
@@ -487,8 +480,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->setVal( 'results', $this->getPinTypesCreationResults(
 			count( $this->getCreationData( 'pinTypeNames' ) ),
-			$createdPinTypes )
-		);
+			$createdPinTypes
+		) );
 	}
 
 	/**
@@ -532,15 +525,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$createdPinTypes = 0;
 		foreach( $pinTypesNames as $name ) {
-			$response = json_decode(
-				$this->mapsModel->savePinType( [
-					'map_id' => $mapId,
-					'name' => $name,
-					'created_by' => $this->getCreationData( 'createdBy' ),
-				] )
-			);
+			$response = $this->mapsModel->savePinType( [
+				'map_id' => $mapId,
+				'name' => $name,
+				'created_by' => $this->getCreationData( 'createdBy' ),
+			] );
 
-			if( isset( $response->id ) ) {
+			if( $response['success'] === true ) {
 				$createdPinTypes++;
 			}
 		}
@@ -557,18 +548,19 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
-		$results['success'] = true;
+		$response['success'] = true;
 
 		if( $createdPinTypes !== $requestedCreations ) {
-			$results['success'] = false;
-			$results['error'] = wfMessage(
+			$response['success'] = false;
+			$response['content'] = new stdClass();
+			$response['message'] = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
 				$createdPinTypes,
 				$requestedCreations
 			)->plain();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**
@@ -623,7 +615,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	public function error() {
 		$this->setVal( 'messages', [
-			'wikia-interactive-maps-api-error-message' => wfMessage( 'wikia-interactive-maps-api-error-message' )
+			'wikia-interactive-maps-service-error' => wfMessage( 'wikia-interactive-maps-service-error' )->parse()
 		] );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
