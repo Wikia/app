@@ -64,6 +64,16 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
 	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
+
+	'wikia-interactive-maps-create-map-log-entry' => 'created new map [[$1]]',
+	'wikia-interactive-maps-update-map-log-entry' => 'updated map [[$1]]',
+	'wikia-interactive-maps-delete-map-log-entry' => 'deleted map [[$1]]',
+	'wikia-interactive-maps-create-pin-type-log-entry' => 'created new pin type for [[$1]]',
+	'wikia-interactive-maps-update-pin-type-log-entry' => 'updated pin type for [[$1]]',
+	'wikia-interactive-maps-delete-pin-type-log-entry' => 'deleted pin type for [[$1]]',
+	'wikia-interactive-maps-create-pin-log-entry' => 'created new pin for [[$1]]',
+	'wikia-interactive-maps-create-pin-log-entry' => 'updated pin for [[$1]]',
+	'wikia-interactive-maps-create-pin-log-entry' => 'deleted pin for [[$1]]',
 ];
 
 $messages[ 'qqq' ] = [
