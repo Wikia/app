@@ -67,7 +67,10 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
 		rewriteURLForWebP: function (src) {
 			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbCheckRegExp.test(src)) {
-				src = src.replace(/\.[^\./]+$/, '.webp');
+				src = src.
+					replace(/\.[^\./]+$/, '.webp').
+					// cb++ for WebP thumbs - PLATFORM-283
+					replace('/__cb', '/__cb0');
 			}
 			return src;
 		},
