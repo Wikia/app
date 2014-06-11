@@ -185,5 +185,5 @@ if ( !empty( $wgEnableBlogArticles ) ) {
 		}
 		$tempArray[] = $value;
 	}
-	$wgVisualEditorNamespaces = $tempArray;
+	$wgVisualEditorNamespaces = array_merge( $tempArray, array( NS_CATEGORY ) );
 }
