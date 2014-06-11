@@ -136,6 +136,8 @@ class VideoFileUploader {
 		}
 
 		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
+
+		/** @var WikiaLocalFile $file */
 		$file = new $class(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
