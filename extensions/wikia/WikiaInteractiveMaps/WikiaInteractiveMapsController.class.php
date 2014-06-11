@@ -160,16 +160,17 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * Upload a file entry point
 	 */
 	public function upload() {
-		$upload = new UploadFromFile();
+		$uploadType = $this->request->getVal( 'uploadType' );
+		$upload = new WikiaInteractiveMapsUploadImageFromFile();
 		$upload->initializeFromRequest( $this->wg->Request );
-		$uploadResults = $upload->verifyUpload();
+		$uploadResults = $upload->verifyUpload( $uploadType );
 		$uploadStatus = [ 'success' => false ];
 
-		if( empty( $this->wg->EnableUploads ) ) {
+		if ( empty( $this->wg->EnableUploads ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-disabled' )->plain() ];
-		} else if( $uploadResults[ 'status' ] !== UploadBase::OK ) {
+		} else if ( $uploadResults[ 'status' ] !== UploadBase::OK ) {
 			$uploadStatus[ 'errors' ] = [ $this->translateError( $uploadResults[ 'status' ] ) ];
-		} else if( ( $warnings = $upload->checkWarnings() ) && !empty( $warnings ) ) {
+		} else if ( ( $warnings = $upload->checkWarnings() ) && !empty( $warnings ) ) {
 			$uploadStatus[ 'errors' ] = [ wfMessage( 'wikia-interactive-maps-image-uploads-warning' )->parse() ];
 		} else {
 			//save temp file
@@ -191,12 +192,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 				$uploadStatus[ 'fileUrl' ] = $this->getStashedImageThumb( $file, $originalWidth );
 
-				switch( $this->request->getVal( 'uploadType' ) ) {
-					case 'map':
+				switch ( $uploadType ) {
+					case WikiaInteractiveMapsUploadImageFromFile::UPLOAD_TYPE_MAP:
 						$thumbWidth = self::MAP_PREVIEW_WIDTH;
 						break;
 
-					case 'marker':
+					case WikiaInteractiveMapsUploadImageFromFile::UPLOAD_TYPE_PIN_TYPE_MARKER:
 						$thumbWidth = self::PIN_TYPE_MARKER_WIDTH;
 						break;
 				}
@@ -216,7 +217,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return String
 	 */
 	private function translateError( $errorStatus ) {
-		switch( $errorStatus ) {
+		switch ( $errorStatus ) {
 			case UploadBase::FILE_TOO_LARGE:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-file-too-large', $this->getMaxFileSize() )->plain();
 				break;
@@ -226,6 +227,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			case UploadBase::FILETYPE_BADTYPE:
 			case UploadBase::VERIFICATION_ERROR:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error-bad-type' )->plain();
+				break;
+			case WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR:
+				$errorMessage = wfMessage(
+					'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small',
+					WikiaInteractiveMapsUploadImageFromFile::PIN_TYPE_MARKER_IMAGE_MIN_SIZE
+				)->plain();
 				break;
 			default:
 				$errorMessage = wfMessage( 'wikia-interactive-maps-image-uploads-error' )->parse();
@@ -295,7 +302,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->setCreationData( 'creatorName', $this->wg->User->getName() );
 		$this->setCreationData( 'cityId', (int) $this->wg->CityId );
 
-		if( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
+		if ( $type === WikiaMaps::MAP_TYPE_CUSTOM ) {
 			$results = $this->createCustomMap();
 		} else {
 			$results = $this->createGeoMap();
@@ -312,12 +319,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function createCustomMap() {
 		$tileSetId = $this->getCreationData( 'tileSetId' );
 
-		if( $tileSetId > 0 ) {
+		if ( $tileSetId > 0 ) {
 			$results = $this->createMapFromTilesetId();
 		} else {
 			$results = $this->createTileset();
 
-			if( true === $results['success'] ) {
+			if ( true === $results['success'] ) {
 				$this->setCreationData( 'tileSetId', $results['id'] );
 				$results = $this->createMapFromTilesetId();
 			}
@@ -348,15 +355,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$imageUrl = $this->getCreationData( 'image' );
 		$mapTitle = $this->getCreationData( 'title' );
 
-		if( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
+		if ( $tileSetId === 0 && empty( $imageUrl ) && empty( $mapTitle ) ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if( empty( $mapTitle ) ) {
+		if ( empty( $mapTitle ) ) {
 			throw new InvalidParameterApiException( 'title' );
 		}
 
-		if( !$this->wg->User->isLoggedIn() ) {
+		if ( !$this->wg->User->isLoggedIn() ) {
 			throw new PermissionsException( 'interactive maps' );
 		}
 	}
@@ -378,7 +385,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
+		if ( !$response ) {
 			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
 		} else {
 			$result = json_decode( $response );
@@ -405,7 +412,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			'created_by' => $this->getCreationData( 'creatorName' ),
 		] );
 
-		if( !$response ) {
+		if ( !$response ) {
 			$results['error'] = wfMessage( 'wikia-interactive-maps-create-map-service-error' )->parse();
 		} else {
 			$response = json_decode( $response );
@@ -429,7 +436,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Mixed
 	 */
 	private function getCreationData( $name, $default = false ) {
-		if( isset( $this->creationData[ $name ] ) ) {
+		if ( isset( $this->creationData[ $name ] ) ) {
 			return $this->creationData[ $name ];
 		}
 
@@ -458,6 +465,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	public function createPinTypes() {
 		$this->setCreationData( 'mapId', $this->request->getInt( 'mapId' ) );
 		$this->setCreationData( 'pinTypeNames', $this->request->getArray( 'pinTypeNames' ) );
+		$this->setCreationData( 'pinTypeMarkers', $this->request->getArray( 'pinTypeMarkers' ) );
 
 		$this->validatePinTypesCreation();
 
@@ -483,23 +491,23 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$mapId = $this->getCreationData( 'mapId' );
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 
-		if( $mapId === 0 && empty( $pinTypesNames ) ) {
+		if ( $mapId === 0 && empty( $pinTypesNames ) ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if( $mapId === 0 ) {
+		if ( $mapId === 0 ) {
 			throw new InvalidParameterApiException( 'mapId' );
 		}
 
-		if( empty( $pinTypesNames ) ) {
+		if ( empty( $pinTypesNames ) ) {
 			throw new InvalidParameterApiException( 'pinTypeNames' );
 		}
 
-		if( !$this->hasNamesForAllPinTypes() ) {
+		if ( !$this->hasNamesForAllPinTypes() ) {
 			throw new InvalidParameterApiException( 'pinTypeNames' );
 		}
 
-		if( !$this->wg->User->isLoggedIn() ) {
+		if ( !$this->wg->User->isLoggedIn() ) {
 			throw new PermissionsException( 'interactive maps' );
 		}
 	}
@@ -510,23 +518,34 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function createPinTypesFromArray() {
 		$mapId = $this->getCreationData( 'mapId' );
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
+		$pinTypesMarkers = $this->getCreationData( 'pinTypeMarkers' );
 
-		$createdPinTypes = 0;
-		foreach( $pinTypesNames as $name ) {
+		$numberOfPinTypes = count( $pinTypesNames );
+		$numberOfPinTypesCreated = 0;
+
+		for ( $i = 0; $i < $numberOfPinTypes; $i++ ) {
+			$pinTypeData = [
+				'map_id' => $mapId,
+				'name' => $pinTypesNames[ $i ],
+				'created_by' => $this->getCreationData( 'createdBy' ),
+			];
+
+			// if user didn't upload marker then this is empty string. we don't want to send it to api
+			// when there is more of sanitizing we should abstract it to another function
+			if ( !empty( $pinTypesMarkers[ $i ] ) ) {
+				$pinTypeData[ 'marker' ] = $pinTypesMarkers[ $i ];
+			}
+
 			$response = json_decode(
-				$this->mapsModel->savePinType( [
-					'map_id' => $mapId,
-					'name' => $name,
-					'created_by' => $this->getCreationData( 'createdBy' ),
-				] )
+				$this->mapsModel->savePinType( $pinTypeData )
 			);
 
-			if( isset( $response->id ) ) {
-				$createdPinTypes++;
+			if ( isset( $response->id ) ) {
+				$numberOfPinTypesCreated++;
 			}
 		}
 
-		$this->setCreationData( 'createdPinTypes', $createdPinTypes );
+		$this->setCreationData( 'createdPinTypes', $numberOfPinTypesCreated );
 	}
 
 	/**
@@ -540,7 +559,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
 		$results['success'] = true;
 
-		if( $createdPinTypes !== $requestedCreations ) {
+		if ( $createdPinTypes !== $requestedCreations ) {
 			$results['success'] = false;
 			$results['error'] = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
@@ -560,9 +579,9 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	public function hasNamesForAllPinTypes() {
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
 
-		foreach( $pinTypesNames as $name ) {
+		foreach ( $pinTypesNames as $name ) {
 			$name = trim( $name );
-			if( empty( $name ) ) {
+			if ( empty( $name ) ) {
 				return false;
 			}
 		}

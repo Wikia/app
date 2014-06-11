@@ -34,6 +34,15 @@ define('wikia.intMap.createMap.pinTypes',
 				deletePinType: [
 					deletePinType
 				],
+				uploadMarkerImage: [
+					uploadMarkerImage
+				],
+				saveMarkerImage: [
+					saveMarkerImage
+				],
+				previewMarkerImage: [
+					previewMarkerImage
+				],
 				savePinTypes: [
 					serializeForm,
 					function(event, serializedForm) {
@@ -67,6 +76,11 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypeTemplate = _pinTypeTemplate;
 
 			utils.bindEvents(modal, events);
+
+			// TODO: figure out where is better place to place it and move it there
+			modal.$element.on('change', '.pin-type-marker-image-upload', function (event) {
+				modal.trigger('uploadMarkerImage', event.target);
+			});
 		}
 
 		/**
@@ -139,6 +153,48 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
+		 * @desc uploads marker image to backend
+		 * @param {Element} inputElement - file input element
+		 */
+		function uploadMarkerImage(inputElement) {
+			var file = inputElement.files[0],
+				formData = new FormData(),
+				$inputElement = $(inputElement),
+				$inputElementWrapper = $inputElement.closest('.pin-type-marker');
+			formData.append('wpUploadFile', file);
+
+			utils.upload(modal, formData, uploadEntryPoint, function (data) {
+				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
+				modal.trigger('previewMarkerImage', data, $inputElement, $inputElementWrapper);
+			});
+		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function saveMarkerImage(data, $inputElementWrapper) {
+			$inputElementWrapper
+				.find('.pin-type-marker-image-url')
+				.val(data['fileThumbUrl']);
+		}
+
+		/**
+		 * @desc hides file input and shows marker image instead
+		 * @param {object} data - data returned from backend
+		 * @param {$} $inputElement - file input element
+		 * @param {$} $inputElementWrapper - file input element wrapper
+		 */
+		function previewMarkerImage(data, $inputElement, $inputElementWrapper) {
+			$inputElement.addClass('hidden');
+			$inputElementWrapper
+				.find('.pin-type-marker-image')
+				.attr('src', data['fileThumbUrl'])
+				.removeClass('hidden');
+		}
+
+		/**
 		 * TODO it's universal and should be extracted
 		 * @desc serializes form
 		 * @returns {object} - promise, resolves with serialized form
@@ -146,7 +202,7 @@ define('wikia.intMap.createMap.pinTypes',
 		function serializeForm() {
 			var serializedForm = {},
 				formArray = $form.serializeArray(),
-				fieldNameIsArrayRegex = /\[\]$/,
+				fieldNameIsArrayRegex = /\[]$/,
 				dfd = new $.Deferred();
 
 			$.each(formArray, function (i, element) {

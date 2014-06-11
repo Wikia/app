@@ -1,4 +1,10 @@
-define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($, mustache) {
+define('wikia.intMap.createMap.utils',
+	[
+		'jquery',
+		'wikia.window',
+		'wikia.mustache'
+	],
+	function($, w, mustache) {
 	'use strict';
 
 	/**
@@ -45,6 +51,40 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 	}
 
 	/**
+	 * @desc
+	 * @param {object} modal - modal component
+	 * @param {FormData} formData - FormData object with file input named wpUploadFile
+	 * @param {string} uploadEntryPoint - URL to upload entry point in backend
+	 * @param {function=} successCallback - optional callback to call after successful request
+	 */
+
+	function upload(modal, formData, uploadEntryPoint, successCallback) {
+		$.ajax({
+			contentType: false,
+			data: formData,
+			processData: false,
+			type: 'POST',
+			url: w.wgScriptPath + uploadEntryPoint,
+			success: function(response) {
+				var data = response.results;
+
+				if (data && data.success) {
+					modal.trigger('cleanUpError');
+
+					if (typeof successCallback === 'function') {
+						successCallback(data);
+					}
+				} else {
+					modal.trigger('error', data.errors.pop());
+				}
+			},
+			error: function(response) {
+				modal.trigger('error', response.results.error);
+			}
+		});
+	}
+
+	/**
 	 * @desc check if string is empty
 	 * @param {string} value
 	 * @returns {boolean}
@@ -58,6 +98,7 @@ define('wikia.intMap.createMap.utils', ['jquery', 'wikia.mustache'], function($,
 		bindEvents: bindEvents,
 		render: render,
 		setButtons: setButtons,
+		upload: upload,
 		isEmpty: isEmpty
 	}
 });

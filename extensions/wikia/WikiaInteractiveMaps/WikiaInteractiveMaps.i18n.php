@@ -60,6 +60,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'The file you tried to upload is too big. Maximum image size is $1 MB',
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'The file you tried to upload is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
+	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'Error: The image you uploaded was too small. Please use an image that is at least $1 x $1 pixels.',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
@@ -114,6 +115,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'An error displayed to a user when a file upload fails because of incorrect file size; the only parameter is maximum size of file in MB',
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'An error displayed to a user when file is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
+	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'An error displayed to a user when uploaded image for custom pin type marker is too small',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 
