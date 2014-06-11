@@ -185,5 +185,8 @@ if ( !empty( $wgEnableBlogArticles ) ) {
 		}
 		$tempArray[] = $value;
 	}
-	$wgVisualEditorNamespaces = array_merge( $tempArray, array( NS_CATEGORY ) );
+	$wgVisualEditorNamespaces = $tempArray;
 }
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
