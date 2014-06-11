@@ -10,7 +10,7 @@ class ChatHelper {
 	const CHAT_DEVBOX_ENV = 'dev';
 	const CHAT_PREVIEW_ENV = 'preview';
 	const CHAT_VERIFY_ENV = 'verify';
-	const CHAT_PRODUCTION_ENV = 'slot1';
+	const CHAT_PRODUCTION_ENV = 'prod';
 
 	/**
 	 * Hooks into GetRailModuleList and adds the chat module to the side-bar when appropriate.
