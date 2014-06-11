@@ -78,19 +78,15 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 	if ( ns === 14 ) {
 		// Category
 		$elements = $( '#mw-content-text' ).children().filter( function( index ) {
-			var $this = $( this ),
-				match = true;
-			if (
+			var $this = $( this );
+			return !(
 				// Category thumbs
 				$this.hasClass( 'category-gallery' ) ||
 				// Category exhibition
 				$this.is( '#mw-pages' ) ||
 				// Category list
-				$this.children( '#mw-pages' ).length === 1
-			) {
-				match = false;
-			}
-			return match;
+				$this.children( '#mw-pages' ).length
+			);
 		} );
 	} else {
 		$elements = $( '#mw-content-text' );
