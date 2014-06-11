@@ -1224,7 +1224,7 @@ $wgVisualEditorParsoidTimeout = 100;
 $wgVisualEditorSerializationCacheTimeout = 3600;
 
 // Namespaces to enable VisualEditor in
-$wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER, NS_CATEGORY ) );
+$wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER ) );
 
 // Whether to enable the (experimental for now) TOC widget
 $wgVisualEditorEnableTocWidget = false;
