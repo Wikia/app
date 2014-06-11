@@ -75,18 +75,19 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 	var $elements,
 		ns = mw.config.get( 'wgNamespaceNumber' );
 
-	if ( ns === 14) {
+	if ( ns === 14 ) {
 		// Category
 		$elements = $( '#mw-content-text' ).children().filter( function( index ) {
-			var match = true;
-			if ( $( this ).hasClass( 'category-gallery' ) ) {
+			var $this = $( this ),
+				match = true;
+			if (
 				// Category thumbs
-				match = false;
-			} else if ( $( this ).is( '#mw-pages' ) ) {
+				$this.hasClass( 'category-gallery' ) ||
 				// Category exhibition
-				match = false;
-			} else if ( $( this ).children( '#mw-pages' ).length === 1 ) {
+				$this.is( '#mw-pages' ) ||
 				// Category list
+				$this.children( '#mw-pages' ).length === 1
+			) {
 				match = false;
 			}
 			return match;
