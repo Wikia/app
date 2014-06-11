@@ -3,6 +3,7 @@
 class WAMPageController extends WikiaController
 {
 	const DEFAULT_LANG_CODE = 'en';
+	const DATE_FORMAT = 'Y-m-d';
 
 	protected $model;
 
@@ -54,7 +55,6 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function collectRequestParameters() {
-		$this->filterLanguages = $this->model->getCorporateWikisLanguages();
 		$this->filterVerticals = $this->model->getVerticals();
 
 		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
@@ -67,6 +67,11 @@ class WAMPageController extends WikiaController
 		$this->selectedDate = ($this->selectedDate !== '') ? $this->selectedDate : null;
 
 		$this->page = $this->getVal('page', $this->model->getFirstPage());
+
+		$this->date = empty( $this->selectedDate ) ? time() : $this->selectedDate;
+		$this->date = date( self::DATE_FORMAT, $this->date );
+
+		$this->filterLanguages = $this->model->getWamLanguages( $this->date );
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {

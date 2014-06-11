@@ -176,6 +176,39 @@ class WAMService extends Service {
 		return $dates;
 	}
 
+	public function getWamLanguages( $date ) {
+		$app = F::app();
+		wfProfileIn( __METHOD__ );
+
+		$memKey = wfSharedMemcKey( 'wam-languages', $date );
+
+		$getData = function () use ( $app, $date ) {
+			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+			$result = $db->select(
+				[
+					'fw1' => 'fact_wam_scores',
+					'dw' => 'dimension_wikis'
+				],
+				'distinct lang',
+				[ 'time_id' => $date ],
+				__METHOD__,
+				[ 'ORDER BY' => 'lang ASC' ],
+				[ 'dw' => [ 'left join', [ 'fw1.wiki_id = dw.wiki_id' ] ] ]
+			);
+
+			$languages = [];
+			while ( $row = $db->fetchRow( $result ) ) {
+				$languages[] = $row[ 'lang' ];
+			}
+
+			return $languages;
+		};
+
+		$wamLanguages = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+		wfProfileOut( __METHOD__ );
+		return $wamLanguages;
+	}
+
 	protected function getWamIndexJoinConditions ($options) {
 		$join_conds = array(
 			'fw2' => array(

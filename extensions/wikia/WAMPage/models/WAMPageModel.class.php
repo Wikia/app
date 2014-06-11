@@ -13,6 +13,8 @@ class WAMPageModel extends WikiaModel {
 	const TAB_INDEX_ENTERTAINMENT = 3;
 	const TAB_INDEX_LIFESTYLE = 4;
 
+	const USE_DEV_ENV_MOCKED_DATA = false;
+
 	/**
 	 * @desc Cache for config array from WikiFactory
 	 *
@@ -72,7 +74,7 @@ class WAMPageModel extends WikiaModel {
 	 * @return mixed
 	 */
 	public function getVisualizationWikis($tabIndex) {
-		if( !empty($this->app->wg->DevelEnvironment) ) {
+		if( self::USE_DEV_ENV_MOCKED_DATA && !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
 			switch($tabIndex) {
@@ -83,7 +85,6 @@ class WAMPageModel extends WikiaModel {
 				default: $params = $this->getVisualizationParams(); break;
 			}
 
-			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
 		}
 		return $this->prepareIndex($WAMData['wam_index'], $tabIndex);
 	}
@@ -102,7 +103,7 @@ class WAMPageModel extends WikiaModel {
 	public function getIndexWikis($params) {
 		$params = $this->getIndexParams($params);
 
-		if( !empty($this->app->wg->DevelEnvironment) ) {
+		if( self::USE_DEV_ENV_MOCKED_DATA && !empty($this->app->wg->DevelEnvironment) ) {
 			$WAMData = $this->getMockedDataForDev();
 		} else {
 			$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
@@ -256,6 +257,16 @@ class WAMPageModel extends WikiaModel {
 		$visualizationModel = new CityVisualization();
 		$wikisData = $visualizationModel->getVisualizationWikisData();
 		return array_keys($wikisData);
+	}
+
+	/**
+	 * Get all WAM languages for a specified day for filters
+	 *
+	 * @return array
+	 */
+	public function getWamLanguages( $date ) {
+		$result = $this->app->sendRequest( 'WAMApi', 'getWamLanguages', [ 'date' => $date ] )->getData();
+		return $result[ 'languages' ];
 	}
 
 	/**
