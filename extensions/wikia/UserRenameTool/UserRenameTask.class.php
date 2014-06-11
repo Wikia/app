@@ -120,16 +120,16 @@ class UserRenameTask extends BaseTask {
 				'UserRenameProcessFinishedNotification',
 				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 			);
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"Rename user {$oldUsername} to {$newUsername}: email notification",
-				[
-					'to' => $user->getEmail(),
-				]
-			);
+			$this->info('rename user with email notification', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+				'email' => $user->getEmail(),
+			]);
 		} else {
-			\Wikia\Logger\WikiaLogger::instance()->warning(
-				"Rename user {$oldUsername} to {$newUsername}: no email address set for user"
-			);
+			$this->warning('no email address set for user', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+			]);
 		}
 	}
 }
