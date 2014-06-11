@@ -40,7 +40,7 @@ abstract class BaseTask {
 	/** @var string wrapper for AsyncTaskList->delay() */
 	private $delay = null;
 
-	/** @var int id this task's id, or id of the task that this task is a subtask of */
+	/** @var string id this task's id, or id of the task that this task is a subtask of */
 	private $taskId;
 
 	/**

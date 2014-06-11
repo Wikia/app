@@ -37,17 +37,17 @@ class CreateNewWikiTask extends BaseTask {
 		$wgErrorLog = false;
 
 		if ( $params['founderId'] ) {
-			$this->info('loading founding user', ['founderId' => $params['founderId']]);
-			$this->founder = User::newFromId( $params['founderId'] );
+			$this->info('loading founding user', ['founder_id' => $params['founderId']]);
+			$this->founder = User::newFromId( $params['founder_id'] );
 			$this->founder->load();
 		} else {
 			$this->warning("founder user_id is unknown");
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
-			$this->warning('cannot load founding user', ['founderId' => $params['founderId']]);
+			$this->warning('cannot load founding user', ['founder_id' => $params['founderId']]);
 			if ( !empty( $params['founderName'] ) ) {
-				$this->founder = User::newFromName( $params['founderName'] );
+				$this->founder = User::newFromName( $params['founder_name'] );
 				$this->founder->load();
 			}
 		}
@@ -55,7 +55,7 @@ class CreateNewWikiTask extends BaseTask {
 		if ( !$this->founder || $this->founder->isAnon() ) {
 			global $wgExternalAuthType;
 			if ( $wgExternalAuthType ) {
-				$extUser = ExternalUser::newFromName( $params['founderName'] );
+				$extUser = ExternalUser::newFromName( $params['founder_name'] );
 				if ( is_object( $extUser ) ) {
 					$extUser->linkToLocal( $extUser->getId() );
 				}
@@ -84,22 +84,19 @@ class CreateNewWikiTask extends BaseTask {
 	}
 
 	public function maintenance( $server ) {
-		global $wgCityId, $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+		global $wgCityId, $IP;
 
-		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->info( "Running {$cmd}" );
-		$retval = wfShellExec( $cmd, $status );
-		$this->info( "done", ['retval' => $retval] );
+		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge" );
+		$output = wfShellExec( $cmd, $retval );
+		$this->info( 'run update.php', ['retval' => $retval, 'output' => $output] );
 
-		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/initStats.php --server={$server} --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->info( "Running {$cmd}" );
-		$retval = wfShellExec( $cmd, $status );
-		$this->info( "done", ['retval' => $retval] );
+		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/initStats.php --server={$server}" );
+		$output = wfShellExec( $cmd, $retval );
+		$this->info( 'run initStats.php', ['retval' => $retval, 'output' => $output] );
 
-		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only --conf {$wgWikiaLocalSettingsPath} --aconf {$wgWikiaAdminSettingsPath}" );
-		$this->info( "Running {$cmd}" );
-		$retval = wfShellExec( $cmd, $status );
-		$this->info( "done", ['retval' => $retval] );
+		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only" );
+		$output = wfShellExec( $cmd, $retval );
+		$this->info( 'run refreshLinks.php', ['retval' => $retval, 'output' => $output] );
 
 		$this->info( "Remove edit lock" );
 		$variable = WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
@@ -110,9 +107,8 @@ class CreateNewWikiTask extends BaseTask {
 
 		$dbname = WikiFactory::IDtoDB( $wgCityId );
 		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
-		$this->info( "Running {$cmd}" );
-		$retval = wfShellExec( $cmd, $status );
-		$this->info( "done", ['retval' => $retval] );
+		$output = wfShellExec( $cmd, $retval );
+		$this->info( 'run events_local_users.pl', ['retval' => $retval, 'output' => $output] );
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( WikiFactory::getVarsKey( $wgCityId ) );
@@ -145,12 +141,16 @@ class CreateNewWikiTask extends BaseTask {
 			 */
 			$targetTitle = Title::newFromText( $target );
 			if ( $targetTitle ) {
+				$moveContext = [
+					'source' => $sourceTitle->getPrefixedText(),
+					'target' => $targetTitle->getPrefixedText(),
+				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-					$this->info( "move {$sourceTitle->getPrefixedText()} --> {$targetTitle->getPrefixedText()}" );
 					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 					if ( $err !== true ) {
-						$this->error( "Moving FAILED" );
+						$this->error('main page move failed', $moveContext);
 					} else {
+						$this->info('main page moved', $moveContext);
 						/**
 						 * fill Mediawiki:Mainpage with new title
 						 */
@@ -159,25 +159,26 @@ class CreateNewWikiTask extends BaseTask {
 						$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 						$mwMainPageArticle->doPurge();
 
-						$this->info( "Page moved" );
-
 						/**
 						 * also move associated talk page if it exists
 						 */
 						$sourceTalkTitle = $sourceTitle->getTalkPage();
 						$targetTalkTitle = $targetTitle->getTalkPage();
 						if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-							$this->info( "move {$sourceTalkTitle->getPrefixedText()} --> {$targetTalkTitle->getPrefixedText()}" );
+							$moveContext = [
+								'source' => $sourceTalkTitle->getPrefixedText(),
+								'target' => $targetTalkTitle->getPrefixedText(),
+							];
 							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
 							if ( $err === true ) {
-								$this->info( 'Moved talk page' );
+								$this->info( 'talk page moved', $moveContext );
 							} else {
-								$this->warning( 'Found talk page but moving FAILED' );
+								$this->warning( 'talk page move failed', $moveContext );
 							}
 						}
 					}
 				} else {
-					$this->info( "source {$source} and target {$target} are the same" );
+					$this->info( 'talk page not moved. source, destination are the same', $moveContext );
 				}
 			}
 		}
@@ -239,12 +240,13 @@ class CreateNewWikiTask extends BaseTask {
 			}
 		}
 
-		$this->info( "about to change rev_user, rev_user_text and rev_timestamp in revisions older than {$lastRevTimestamp}" );
-
 		$updateSql->run( $dbw );
 		$rows = $dbw->affectedRows();
 
-		$this->info( "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		$this->info('rev_user, rev_user_text updated', [
+			'rev_timestamp' => $lastRevTimestamp,
+			'rows_affected' => $rows,
+		]);
 	}
 
 	/**
@@ -306,14 +308,13 @@ class CreateNewWikiTask extends BaseTask {
 				return false;
 			}
 
-			$this->info( "wall {$this->founder->getName()}" );
+			$this->info( "wall message created", ['founder_name' => $this->founder->getName()] );
 
 			return true;
 		}
 
 		$talkPage = $this->founder->getTalkPage();
 		if ( $talkPage ) {
-			$this->info("talk {$talkPage->getFullUrl()}");
 			/**
 			 * and now create talk article
 			 */
@@ -321,10 +322,10 @@ class CreateNewWikiTask extends BaseTask {
 			if ( !$talkArticle->exists() ) {
 				$talkArticle->doEdit( $talkBody, wfMsg( "autocreatewiki-welcometalk-log" ), EDIT_SUPPRESS_RC | EDIT_MINOR | EDIT_FORCE_BOT );
 			} else {
-				$this->warning( sprintf( "talkpage %s already exists", $talkPage->getFullURL() ) );
+				$this->warning( 'talkpage already exists', ['url' => $talkPage->getFullURL()] );
 			}
 		} else {
-			$this->error( "Can't take talk page for user", ['founderId' => $this->founder->getId()] );
+			$this->error( "Can't take talk page for user", ['founder_id' => $this->founder->getId()] );
 		}
 		$wgUser = $saveUser; // Restore user object after creating talk message
 		return true;
@@ -387,9 +388,9 @@ class CreateNewWikiTask extends BaseTask {
 			}
 
 			if ( $ok ) {
-				$this->info("Protected key page: {$pageName}");
+				$this->info('Protected key page', ['page_name' => $pageName]);
 			} else {
-				$this->warning("Failed while trying to protect {$pageName}");
+				$this->warning('failed to protect key page', ['page_name' => $pageName]);
 			}
 		}
 		$wgUser->removeGroup( "staff" );
@@ -445,6 +446,6 @@ class CreateNewWikiTask extends BaseTask {
 				return $numRows;
 			} );
 
-		$this->info("send starter revisions to scribe: {$numRows} rows");
+		$this->info('send starter revisions to scribe', ['num_rows' => $numRows]);
 	}
 } 
