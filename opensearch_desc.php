@@ -1,14 +1,28 @@
 <?php
-
 /**
- * Generate an OpenSearch description file
+ * Generate an OpenSearch description file.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
  *
  * @file
  */
 
-require( dirname(__FILE__) . '/includes/WebStart.php' );
+require_once __DIR__ . '/includes/WebStart.php';
 
-if( $wgRequest->getVal( 'ctype' ) == 'application/xml' ) {
+if ( $wgRequest->getVal( 'ctype' ) == 'application/xml' ) {
 	// Makes testing tweaks about a billion times easier
 	$ctype = 'application/xml';
 } else {
@@ -20,10 +34,9 @@ $response->header( "Content-type: $ctype" );
 
 // Set an Expires header so that squid can cache it for a short time
 // Short enough so that the sysadmin barely notices when $wgSitename is changed
-$expiryTime = 86400; // 1 day
-// Note: We changed varnish to pass through X-Pass-Cache-Control to the client
-$response->header( "Cache-Control: max-age=$expiryTime" );
-$response->header( "X-Pass-Cache-Control: max-age=$expiryTime" );
+$expiryTime = 600; # 10 minutes
+$response->header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + $expiryTime ) . ' GMT' );
+$response->header( 'Cache-control: max-age=600' );
 
 print '<?xml version="1.0"?>';
 print Xml::openElement( 'OpenSearchDescription',
@@ -41,7 +54,7 @@ print Xml::openElement( 'OpenSearchDescription',
 //
 // Behavior seems about the same between Firefox and IE 7/8 here.
 // 'Description' doesn't appear to be used by either.
-$fullName = wfMsgForContent( 'opensearch-desc' );
+$fullName = wfMessage( 'opensearch-desc' )->inContentLanguage()->text();
 print Xml::element( 'ShortName', null, $fullName );
 print Xml::element( 'Description', null, $fullName );
 
@@ -52,7 +65,7 @@ print Xml::element( 'Image',
 		'height' => 16,
 		'width' => 16,
 		'type' => 'image/x-icon' ),
-	wfExpandUrl( $wgFavicon , PROTO_CURRENT ) );
+	wfExpandUrl( $wgFavicon, PROTO_CURRENT ) );
 
 $urls = array();
 
@@ -65,7 +78,7 @@ $urls[] = array(
 	'method' => 'get',
 	'template' => $searchPage->getCanonicalURL( 'search={searchTerms}' ) );
 
-if( $wgEnableAPI ) {
+if ( $wgEnableAPI ) {
 	// JSON interface for search suggestions.
 	// Supported in Firefox 2 and later.
 	$urls[] = array(
@@ -78,7 +91,7 @@ if( $wgEnableAPI ) {
 // general way than overriding the whole search engine...
 wfRunHooks( 'OpenSearchUrls', array( &$urls ) );
 
-foreach( $urls as $attribs ) {
+foreach ( $urls as $attribs ) {
 	print Xml::element( 'Url', $attribs );
 }
 

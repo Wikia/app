@@ -8,7 +8,27 @@
  * @file
  *
  * @author Rk_kaul (on ks.wikipedia.org)
+ * @author VibhasKS
  */
+
+$namespaceNames = array(
+	NS_MEDIA            => 'मीडिया',
+	NS_SPECIAL          => 'खास',
+	NS_TALK             => 'बहज़',
+	NS_USER             => 'रुक्न',
+	NS_USER_TALK        => 'रुक्न_बहज़',
+	NS_PROJECT_TALK     => '$1_बहज़',
+	NS_FILE             => 'फ़ाइल',
+	NS_FILE_TALK        => 'फ़ाइल_बहज़',
+	NS_MEDIAWIKI        => 'मीडियाविकि',
+	NS_MEDIAWIKI_TALK   => 'मीडियाविकि_बहज़',
+	NS_TEMPLATE         => 'नमॆना',
+	NS_TEMPLATE_TALK    => 'नमॆना_बहज़',
+	NS_HELP             => 'म॒दत',
+	NS_HELP_TALK        => 'म॒दत_बहज़',
+	NS_CATEGORY         => 'ज़ॉज़',
+	NS_CATEGORY_TALK    => 'ज़ॉज़_बहज़',
+);
 
 $digitTransformTable = array(
 	'0' => '०', # &#x0966;
@@ -23,10 +43,3 @@ $digitTransformTable = array(
 	'9' => '९', # &#x096f;
 );
 
-$messages = array(
-'help' => 'मदद',
-
-# Recent changes
-'recentchanges' => 'नवि तबदीली',
-
-);

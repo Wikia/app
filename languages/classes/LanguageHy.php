@@ -1,9 +1,31 @@
 <?php
+/**
+ * Armenian (Հայերեն) specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @author Ruben Vardanyan (Me@RubenVardanyan.com)
+ * @ingroup Language
+ */
 
-/** Armenian (Հայերեն)
+/**
+ * Armenian (Հայերեն)
  *
  * @ingroup Language
- * @author Ruben Vardanyan (Me@RubenVardanyan.com)
  */
 class LanguageHy extends Language {
 
@@ -27,17 +49,18 @@ class LanguageHy extends Language {
 		# join and array_slice instead mb_substr
 		$ar = array();
 		preg_match_all( '/./us', $word, $ar );
-		if ( !preg_match( "/[a-zA-Z_]/us", $word ) )
+		if ( !preg_match( "/[a-zA-Z_]/us", $word ) ) {
 			switch ( $case ) {
 				case 'genitive': # սեռական հոլով
-					if ( join( '', array_slice( $ar[0], -1 ) ) == 'ա' )
+					if ( join( '', array_slice( $ar[0], -1 ) ) == 'ա' ) {
 						$word = join( '', array_slice( $ar[0], 0, -1 ) ) . 'այի';
-					elseif ( join( '', array_slice( $ar[0], -1 ) ) == 'ո' )
+					} elseif ( join( '', array_slice( $ar[0], -1 ) ) == 'ո' ) {
 						$word = join( '', array_slice( $ar[0], 0, -1 ) ) . 'ոյի';
-					elseif ( join( '', array_slice( $ar[0], -4 ) ) == 'գիրք' )
+					} elseif ( join( '', array_slice( $ar[0], -4 ) ) == 'գիրք' ) {
 						$word = join( '', array_slice( $ar[0], 0, -4 ) ) . 'գրքի';
-					else
+					} else {
 						$word .= 'ի';
+					}
 					break;
 				case 'dative':  # Տրական հոլով
 					# stub
@@ -52,20 +75,8 @@ class LanguageHy extends Language {
 					# stub
 					break;
 			}
+		}
 		return $word;
-	}
-
-	/**
-	 * @param $count int
-	 * @param $forms array
-	 *
-	 * @return string
-	 */
-	function convertPlural( $count, $forms ) {
-		if ( !count( $forms ) ) { return ''; }
-		$forms = $this->preConvertPlural( $forms, 2 );
-
-		return ( abs( $count ) <= 1 ) ? $forms[0] : $forms[1];
 	}
 
 	/**

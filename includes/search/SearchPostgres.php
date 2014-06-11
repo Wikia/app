@@ -3,7 +3,7 @@
  * PostgreSQL search engine
  *
  * Copyright © 2006-2007 Greg Sabino Mullane <greg@turnstep.com>
- * http://www.mediawiki.org/
+ * https://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,34 +28,21 @@
  * Search engine hook base class for Postgres
  * @ingroup Search
  */
-class SearchPostgres extends SearchEngine {
-
-	/**
-	 * @var DatabasePostgres
-	 */
-	protected $db;
-	/**
-	 * Creates an instance of this class
-	 * @param $db DatabaseSqlite: database object
-	 */
-	function __construct( $db ) {
-		parent::__construct( $db );
-	}
-
+class SearchPostgres extends SearchDatabase {
 	/**
 	 * Perform a full text search query via tsearch2 and return a result set.
 	 * Currently searches a page's current title (page.page_title) and
 	 * latest revision article text (pagecontent.old_text)
 	 *
-	 * @param $term String: raw search term
+	 * @param string $term raw search term
 	 * @return PostgresSearchResultSet
 	 */
 	function searchTitle( $term ) {
-		$q = $this->searchQuery( $term , 'titlevector', 'page_title' );
-		$olderror = error_reporting(E_ERROR);
+		$q = $this->searchQuery( $term, 'titlevector', 'page_title' );
+		$olderror = error_reporting( E_ERROR );
 		$resultSet = $this->db->resultObject( $this->db->query( $q, 'SearchPostgres', true ) );
-		error_reporting($olderror);
-		if (!$resultSet) {
+		error_reporting( $olderror );
+		if ( !$resultSet ) {
 			// Needed for "Query requires full scan, GIN doesn't support it"
 			return new SearchResultTooMany();
 		}
@@ -64,10 +51,10 @@ class SearchPostgres extends SearchEngine {
 
 	function searchText( $term ) {
 		$q = $this->searchQuery( $term, 'textvector', 'old_text' );
-		$olderror = error_reporting(E_ERROR);
+		$olderror = error_reporting( E_ERROR );
 		$resultSet = $this->db->resultObject( $this->db->query( $q, 'SearchPostgres', true ) );
-		error_reporting($olderror);
-		if (!$resultSet) {
+		error_reporting( $olderror );
+		if ( !$resultSet ) {
 			return new SearchResultTooMany();
 		}
 		return new PostgresSearchResultSet( $resultSet, $this->searchTerms );
@@ -86,29 +73,29 @@ class SearchPostgres extends SearchEngine {
 		wfDebug( "parseQuery received: $term \n" );
 
 		## No backslashes allowed
-		$term = preg_replace('/\\\/', '', $term);
+		$term = preg_replace( '/\\\/', '', $term );
 
 		## Collapse parens into nearby words:
-		$term = preg_replace('/\s*\(\s*/', ' (', $term);
-		$term = preg_replace('/\s*\)\s*/', ') ', $term);
+		$term = preg_replace( '/\s*\(\s*/', ' (', $term );
+		$term = preg_replace( '/\s*\)\s*/', ') ', $term );
 
 		## Treat colons as word separators:
-		$term = preg_replace('/:/', ' ', $term);
+		$term = preg_replace( '/:/', ' ', $term );
 
 		$searchstring = '';
 		$m = array();
-		if( preg_match_all('/([-!]?)(\S+)\s*/', $term, $m, PREG_SET_ORDER ) ) {
-			foreach( $m as $terms ) {
-				if (strlen($terms[1])) {
+		if ( preg_match_all( '/([-!]?)(\S+)\s*/', $term, $m, PREG_SET_ORDER ) ) {
+			foreach ( $m as $terms ) {
+				if ( strlen( $terms[1] ) ) {
 					$searchstring .= ' & !';
 				}
-				if (strtolower($terms[2]) === 'and') {
+				if ( strtolower( $terms[2] ) === 'and' ) {
 					$searchstring .= ' & ';
 				}
-				elseif (strtolower($terms[2]) === 'or' or $terms[2] === '|') {
+				elseif ( strtolower( $terms[2] ) === 'or' or $terms[2] === '|' ) {
 					$searchstring .= ' | ';
 				}
-				elseif (strtolower($terms[2]) === 'not') {
+				elseif ( strtolower( $terms[2] ) === 'not' ) {
 					$searchstring .= ' & !';
 				}
 				else {
@@ -118,22 +105,22 @@ class SearchPostgres extends SearchEngine {
 		}
 
 		## Strip out leading junk
-		$searchstring = preg_replace('/^[\s\&\|]+/', '', $searchstring);
+		$searchstring = preg_replace( '/^[\s\&\|]+/', '', $searchstring );
 
 		## Remove any doubled-up operators
-		$searchstring = preg_replace('/([\!\&\|]) +(?:[\&\|] +)+/', "$1 ", $searchstring);
+		$searchstring = preg_replace( '/([\!\&\|]) +(?:[\&\|] +)+/', "$1 ", $searchstring );
 
 		## Remove any non-spaced operators (e.g. "Zounds!")
-		$searchstring = preg_replace('/([^ ])[\!\&\|]/', "$1", $searchstring);
+		$searchstring = preg_replace( '/([^ ])[\!\&\|]/', "$1", $searchstring );
 
 		## Remove any trailing whitespace or operators
-		$searchstring = preg_replace('/[\s\!\&\|]+$/', '', $searchstring);
+		$searchstring = preg_replace( '/[\s\!\&\|]+$/', '', $searchstring );
 
 		## Remove unnecessary quotes around everything
-		$searchstring = preg_replace('/^[\'"](.*)[\'"]$/', "$1", $searchstring);
+		$searchstring = preg_replace( '/^[\'"](.*)[\'"]$/', "$1", $searchstring );
 
 		## Quote the whole thing
-		$searchstring = $this->db->addQuotes($searchstring);
+		$searchstring = $this->db->addQuotes( $searchstring );
 
 		wfDebug( "parseQuery returned: $searchstring \n" );
 
@@ -146,49 +133,46 @@ class SearchPostgres extends SearchEngine {
 	 * @param $term String
 	 * @param $fulltext String
 	 * @param $colname
+	 * @return string
 	 */
 	function searchQuery( $term, $fulltext, $colname ) {
 		# Get the SQL fragment for the given term
 		$searchstring = $this->parseQuery( $term );
 
 		## We need a separate query here so gin does not complain about empty searches
-		$SQL = "SELECT to_tsquery($searchstring)";
-		$res = $this->db->query($SQL);
-		if (!$res) {
+		$sql = "SELECT to_tsquery($searchstring)";
+		$res = $this->db->query( $sql );
+		if ( !$res ) {
 			## TODO: Better output (example to catch: one 'two)
-			die ("Sorry, that was not a valid search string. Please go back and try again");
+			die( "Sorry, that was not a valid search string. Please go back and try again" );
 		}
 		$top = $res->fetchRow();
 		$top = $top[0];
 
-		if ($top === "") { ## e.g. if only stopwords are used XXX return something better
-			$query = "SELECT page_id, page_namespace, page_title, 0 AS score ".
+		if ( $top === "" ) { ## e.g. if only stopwords are used XXX return something better
+			$query = "SELECT page_id, page_namespace, page_title, 0 AS score " .
 				"FROM page p, revision r, pagecontent c WHERE p.page_latest = r.rev_id " .
 				"AND r.rev_text_id = c.old_id AND 1=0";
 		}
 		else {
 			$m = array();
-			if( preg_match_all("/'([^']+)'/", $top, $m, PREG_SET_ORDER ) ) {
-				foreach( $m as $terms ) {
+			if ( preg_match_all( "/'([^']+)'/", $top, $m, PREG_SET_ORDER ) ) {
+				foreach ( $m as $terms ) {
 					$this->searchTerms[$terms[1]] = $terms[1];
 				}
 			}
 
-			$query = "SELECT page_id, page_namespace, page_title, ".
-			"ts_rank($fulltext, to_tsquery($searchstring), 5) AS score ".
+			$query = "SELECT page_id, page_namespace, page_title, " .
+			"ts_rank($fulltext, to_tsquery($searchstring), 5) AS score " .
 			"FROM page p, revision r, pagecontent c WHERE p.page_latest = r.rev_id " .
 			"AND r.rev_text_id = c.old_id AND $fulltext @@ to_tsquery($searchstring)";
 		}
 
-		## Redirects
-		if (! $this->showRedirects)
-			$query .= ' AND page_is_redirect = 0';
-
 		## Namespaces - defaults to 0
-		if( !is_null($this->namespaces) ){ // null -> search all
-			if ( count($this->namespaces) < 1)
+		if ( !is_null( $this->namespaces ) ) { // null -> search all
+			if ( count( $this->namespaces ) < 1 ) {
 				$query .= ' AND page_namespace = 0';
-			else {
+			} else {
 				$namespaces = $this->db->makeList( $this->namespaces );
 				$query .= " AND page_namespace IN ($namespaces)";
 			}
@@ -207,10 +191,10 @@ class SearchPostgres extends SearchEngine {
 
 	function update( $pageid, $title, $text ) {
 		## We don't want to index older revisions
-		$SQL = "UPDATE pagecontent SET textvector = NULL WHERE old_id IN ".
+		$sql = "UPDATE pagecontent SET textvector = NULL WHERE old_id IN " .
 				"(SELECT rev_text_id FROM revision WHERE rev_page = " . intval( $pageid ) .
 				" ORDER BY rev_text_id DESC OFFSET 1)";
-		$this->db->query($SQL);
+		$this->db->query( $sql );
 		return true;
 	}
 
@@ -225,9 +209,10 @@ class SearchPostgres extends SearchEngine {
  */
 class PostgresSearchResult extends SearchResult {
 	function __construct( $row ) {
-		parent::__construct($row);
+		parent::__construct( $row );
 		$this->score = $row->score;
 	}
+
 	function getScore() {
 		return $this->score;
 	}
@@ -243,7 +228,7 @@ class PostgresSearchResultSet extends SqlSearchResultSet {
 
 	function next() {
 		$row = $this->mResultSet->fetchObject();
-		if( $row === false ) {
+		if ( $row === false ) {
 			return false;
 		} else {
 			return new PostgresSearchResult( $row );

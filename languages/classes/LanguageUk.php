@@ -1,6 +1,28 @@
 <?php
+/**
+ * Ukrainian (українська мова) specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Language
+ */
 
-/** Ukrainian (українська мова)
+/**
+ * Ukrainian (українська мова)
  *
  * @ingroup Language
  */
@@ -26,32 +48,32 @@ class LanguageUk extends Language {
 		# join and array_slice instead mb_substr
 		$ar = array();
 		preg_match_all( '/./us', $word, $ar );
-		if ( !preg_match( "/[a-zA-Z_]/us", $word ) )
+		if ( !preg_match( "/[a-zA-Z_]/us", $word ) ) {
 			switch ( $case ) {
 				case 'genitive': # родовий відмінок
-					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вікі' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вікі' ) )
-						{ }
-					elseif ( join( '', array_slice( $ar[0], -1 ) ) == 'ь' )
+					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вікі' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вікі' ) ) {
+					} elseif ( join( '', array_slice( $ar[0], -1 ) ) == 'ь' ) {
 						$word = join( '', array_slice( $ar[0], 0, -1 ) ) . 'я';
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ія' )
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ія' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'ії';
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ка' )
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ка' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'ки';
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ти' )
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ти' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'тей';
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ди' )
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ди' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'дів';
-					elseif ( join( '', array_slice( $ar[0], -3 ) ) == 'ник' )
+					} elseif ( join( '', array_slice( $ar[0], -3 ) ) == 'ник' ) {
 						$word = join( '', array_slice( $ar[0], 0, -3 ) ) . 'ника';
+					}
 					break;
 				case 'dative':  # давальний відмінок
 					# stub
 					break;
 				case 'accusative': # знахідний відмінок
-					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вікі' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вікі' ) )
-						{ }
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ія' )
+					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вікі' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вікі' ) ) {
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ія' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'ію';
+					}
 					break;
 				case 'instrumental':  # орудний відмінок
 					# stub
@@ -60,38 +82,8 @@ class LanguageUk extends Language {
 					# stub
 					break;
 			}
-		return $word;
-	}
-
-	/**
-	 * @param $count int
-	 * @param $forms array
-	 * @return string
-	 */
-	function convertPlural( $count, $forms ) {
-		if ( !count( $forms ) ) { return ''; }
-
-		// If the actual number is not mentioned in the expression, then just two forms are enough:
-		// singular for $count == 1
-		// plural   for $count != 1
-		// For example, "This user belongs to {{PLURAL:$1|one group|several groups}}."
-		if ( count( $forms ) === 2 ) return $count == 1 ? $forms[0] : $forms[1];
-
-		// @todo FIXME: CLDR defines 4 plural forms. Form for decimals is missing/
-		// See http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html#uk
-		$forms = $this->preConvertPlural( $forms, 3 );
-
-		if ( $count > 10 && floor( ( $count % 100 ) / 10 ) == 1 ) {
-			return $forms[2];
-		} else {
-			switch ( $count % 10 ) {
-				case 1:  return $forms[0];
-				case 2:
-				case 3:
-				case 4:  return $forms[1];
-				default: return $forms[2];
-			}
 		}
+		return $word;
 	}
 
 	/**

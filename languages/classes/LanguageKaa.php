@@ -1,6 +1,28 @@
 <?php
+/**
+ * Karakalpak (Qaraqalpaqsha) specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Language
+ */
 
-/** Karakalpak (Qaraqalpaqsha)
+/**
+ * Karakalpak (Qaraqalpaqsha)
  *
  * @ingroup Language
  */
@@ -19,7 +41,7 @@ class LanguageKaa extends Language {
 	function convertGrammar( $word, $case ) {
 		global $wgGrammarForms;
 		if ( isset( $wgGrammarForms['kaa'][$case][$word] ) ) {
-		     return $wgGrammarForms['kaa'][$case][$word];
+			return $wgGrammarForms['kaa'][$case][$word];
 		}
 		/* Full code of function convertGrammar() is in development. Updates coming soon. */
 		return $word;
@@ -32,7 +54,7 @@ class LanguageKaa extends Language {
 	 *
 	 * @return string
 	 */
-	function ucfirst ( $string ) {
+	function ucfirst( $string ) {
 		if ( substr( $string, 0, 1 ) === 'i' ) {
 			return 'İ' . substr( $string, 1 );
 		} else {
@@ -41,13 +63,13 @@ class LanguageKaa extends Language {
 	}
 
 	/**
-	 * It fixes issue with  lcfirst for transforming 'I' to 'ı'
+	 * It fixes issue with lcfirst for transforming 'I' to 'ı'
 	 *
 	 * @param $string string
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
-	function lcfirst ( $string ) {
+	function lcfirst( $string ) {
 		if ( substr( $string, 0, 1 ) === 'I' ) {
 			return 'ı' . substr( $string, 1 );
 		} else {

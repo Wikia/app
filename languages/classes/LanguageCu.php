@@ -1,6 +1,28 @@
 <?php
+/**
+ * Old Church Slavonic (Ѩзыкъ словѣньскъ) specific code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Language
+ */
 
-/** Old Church Slavonic (Ѩзыкъ словѣньскъ)
+/**
+ * Old Church Slavonic (Ѩзыкъ словѣньскъ)
  *
  * @ingroup Language
  */
@@ -26,36 +48,19 @@ class LanguageCu extends Language {
 		# join and array_slice instead mb_substr
 		$ar = array();
 		preg_match_all( '/./us', $word, $ar );
-		if ( !preg_match( "/[a-zA-Z_]/us", $word ) )
+		if ( !preg_match( "/[a-zA-Z_]/us", $word ) ) {
 			switch ( $case ) {
 				case 'genitive': # родительный падеж
-					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вики' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вики' ) )
-						{ }
-					elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ї' )
+					if ( ( join( '', array_slice( $ar[0], -4 ) ) == 'вики' ) || ( join( '', array_slice( $ar[0], -4 ) ) == 'Вики' ) ) {
+					} elseif ( join( '', array_slice( $ar[0], -2 ) ) == 'ї' ) {
 						$word = join( '', array_slice( $ar[0], 0, -2 ) ) . 'їѩ';
+					}
 					break;
 				case 'accusative': # винительный падеж
 					# stub
 					break;
 			}
-		return $word;
-	}
-
-	/**
-	 * @param $count int
-	 * @param $forms array
-	 * @return string
-	 */
-	function convertPlural( $count, $forms ) {
-		if ( !count( $forms ) ) { return ''; }
-		$forms = $this->preConvertPlural( $forms, 4 );
-
-		switch ( $count % 10 ) {
-			case 1:  return $forms[0];
-			case 2:  return $forms[1];
-			case 3:
-			case 4:  return $forms[2];
-			default: return $forms[3];
 		}
+		return $word;
 	}
 }
