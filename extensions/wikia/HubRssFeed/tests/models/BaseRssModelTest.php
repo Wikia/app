@@ -39,11 +39,6 @@ class BaseRssModelTest extends WikiaBaseTest
 		};
 	}
 
-	/**
-	 * @var PHPUnit_Framework_MockObject_MockBuilder
-	 */
-	protected $mockToolbox;
-
 	public function setUp()
 	{
 		$dir = dirname(__FILE__) . '/../../';
