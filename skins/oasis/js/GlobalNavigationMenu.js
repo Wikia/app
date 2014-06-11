@@ -13,11 +13,11 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 			'<li><a href="google.com">Item</a></li>' +
 			'<li><a href="google.com">Item</a></li>' +
 			'</ul>',
+		activeType = 'comics',
 		verticalMenu = [
 			{
 				'menu': 'books',
 				'type': 'books',
-				'active': true,
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			},
 			{
@@ -51,9 +51,8 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
 			}
 		];
-
 	// build menu
-	// 2. prepare table markup
+	// 1. prepare table markup
 	$.each(verticalMenu, function(index) {
 		$globalNavigationDropdown.append('<tr data-row="' + index + '"></tr>');
 	});
@@ -64,28 +63,25 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 			icon = '<span class="icon" />',
 			border = '<span class="border" />';
 
-		if (this.active) {
-			$tr.addClass('active');
-		}
-
-		$elem.html(icon + border + this.menu);
-		$tr.append($elem);
+		$elem.data('data', this.data).html(icon + border + this.menu);
+		$tr.append($elem).data('type', this.type);
 	});
 	// 3. finish table markup - add place for submenu
-
 	$globalNavigationDropdown.find('[data-row=0]')
 		.append('<td rowspan="' + verticalMenu.length + '" data-submenu="1"><span style="height:' + (verticalMenu.length * 62) + 'px" />')
 		.append('<td rowspan="' + verticalMenu.length + '" data-submenu="2"><span style="height:' + (verticalMenu.length * 62) + 'px" />');
 	//
-	$globalNavigationDropdown.find('[data-submenu=1] span').text("The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.");
-	$globalNavigationDropdown.find('[data-submenu=2] span').text("The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.");
-
 
 	$globalNavigationDropdown.on('click', 'td.hub', function (e) {
 		e.preventDefault();
-
 		$globalNavigationDropdown.find('tr').removeClass('active');
-		$(this).parent().addClass('active');
+
+		var $this = $(this),
+			data = $this.data('data');
+
+		$this.parent().addClass('active');
+		$globalNavigationDropdown.find('[data-submenu=1] span').html(data[0]);
+		$globalNavigationDropdown.find('[data-submenu=2] span').html(data[1]);
 	});
 
 	$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {

@@ -28,7 +28,7 @@
 	td.hub {
 		font-size: 21px;
 		width: 290px;
-		background-image: url(base64png('/skins/oasis/images/GlobalNavigation/chevron-level-1.png') );
+		background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1.png); /* base64 */
 		background-position: center right;
 		background-color: #fff;
 		background-repeat: no-repeat;
@@ -80,52 +80,52 @@
 	}
 
 	tr:not(.active) td.books .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/books.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/books.svg');
 	}
 	tr.active td.books .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/books_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/books_hover.svg');
 	}
 	tr:not(.active) td.comics .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/comics.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/comics.svg');
 	}
 	tr.active td.comics .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/comics_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/comics_hover.svg');
 	}
 	tr:not(.active) td.games .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/games.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/games.svg');
 	}
 	tr.active td.games .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/games_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/games_hover.svg');
 	}
 	tr:not(.active) td.lifestyle .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/lifestyle.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/lifestyle.svg');
 	}
 	tr.active td.lifestyle .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/lifestyle_hover.svg');
 	}
 	tr:not(.active) td.movies .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/movies.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/movies.svg');
 	}
 	tr.active td.movies .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/movies_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/movies_hover.svg');
 	}
 	tr:not(.active) td.music .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/music.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/music.svg');
 	}
 	tr.active td.music .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/music_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/music_hover.svg');
 	}
 	tr:not(.active) td.tv .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/tv.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/tv.svg');
 	}
 	tr.active td.tv .icon {
-		background-image: url(base64svg('/skins/oasis/images/GlobalNavigation/tv_hover.svg'));
+		background-image: base64_svg_url('/skins/oasis/images/GlobalNavigation/tv_hover.svg');
 	}
 
 	tr.active td:first-child {
 		font-weight: bold;
 		color: #fff;
-		background-image: url(base64png('/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png') );
+		background-image: url(/skins/oasis/images/GlobalNavigation/chevron-level-1_hover.png); /* base64 */
 
 		&.books {
 			background-color: #ff7f26;
@@ -159,16 +159,36 @@
 
 	tr td:not(.hub) {
 		color: #092140;
+		font-size: 15px;
 
 		span {
 			width: 270px;
 			display: block;
+
+			a, h2 {
+				color: inherit;
+				font: inherit;
+				padding-bottom: 19px;
+			}
+
+			h2 {
+				font-weight: bold;
+				padding-bottom: 19px;
+
+				&:not(:first-child) {
+					padding-top: 30px;
+				}
+			}
+
+			a {
+				display: inline-block;
+			}
 		}
 		&[data-submenu='1'] span {
-			padding: 0 18px 0 12px;
+			padding: 26px 18px 26px 12px;
 		}
 		&[data-submenu='2'] span {
-			padding: 0 34px 0 18px;
+			padding: 26px 34px 26px 18px;
 		}
 	}
 }

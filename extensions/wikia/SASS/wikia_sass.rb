@@ -2,22 +2,13 @@ require 'sass'
 require 'base64'
 
 module WikiaFunctions
-
-	def base64contents(fileName)
+	def base64_svg_url(fileName)
 		assert_type fileName, :String
-		Sass::Script::String.new Base64.encode64( File.open( Dir.pwd.to_s + fileName.to_s.tr('"', '') ).read )
-	end
 
-	def base64png(fileName)
-		Sass::Script::String.new '"data:image/png;base64,' + base64contents(fileName).to_s + '"'
-	end
+		base64_encoded_file = Base64.encode64( File.open( Dir.pwd.to_s + fileName.to_s.tr('"', '') ).read )
+		url = "url(\"data:image/svg+xml;charset=utf-8;base64,#{base64_encoded_file}\")"
 
-	def base64jpg(fileName)
-		Sass::Script::String.new '"data:image/jpeg;base64,' + base64contents(fileName).to_s + '"'
-	end
-
-	def base64svg(fileName)
-		Sass::Script::String.new '"data:image/svg+xml;charset=utf-8;base64,' + base64contents(fileName).to_s + '"'
+		Sass::Script::String.new url
 	end
 
 	def get_command_line_param(paramName, defaultResult="")

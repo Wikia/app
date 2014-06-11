@@ -19,6 +19,8 @@ $facebook-background-color: #3c5b9b;
 	background: none;
 	background-color: $nav-background-color;
 	border: 0;
+	box-shadow: none;
+	-webkit-box-shadow: none;
 	color: $nav-font-color;
 
 	.wikia-header-mask {
