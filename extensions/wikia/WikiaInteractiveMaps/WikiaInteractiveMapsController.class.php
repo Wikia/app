@@ -449,8 +449,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$this->setVal( 'results', $this->getPinTypesCreationResults(
 			count( $this->getCreationData( 'pinTypeNames' ) ),
-			$createdPinTypes )
-		);
+			$createdPinTypes
+		) );
 	}
 
 	/**
@@ -494,15 +494,13 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$createdPinTypes = 0;
 		foreach( $pinTypesNames as $name ) {
-			$response = json_decode(
-				$this->mapsModel->savePinType( [
-					'map_id' => $mapId,
-					'name' => $name,
-					'created_by' => $this->getCreationData( 'createdBy' ),
-				] )
-			);
+			$response = $this->mapsModel->savePinType( [
+				'map_id' => $mapId,
+				'name' => $name,
+				'created_by' => $this->getCreationData( 'createdBy' ),
+			] );
 
-			if( isset( $response->id ) ) {
+			if( $response['success'] === true ) {
 				$createdPinTypes++;
 			}
 		}
@@ -519,18 +517,19 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
-		$results['success'] = true;
+		$response['success'] = true;
 
 		if( $createdPinTypes !== $requestedCreations ) {
-			$results['success'] = false;
-			$results['error'] = wfMessage(
+			$response['success'] = false;
+			$response['content'] = new stdClass();
+			$response['message'] = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
 				$createdPinTypes,
 				$requestedCreations
 			)->plain();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**

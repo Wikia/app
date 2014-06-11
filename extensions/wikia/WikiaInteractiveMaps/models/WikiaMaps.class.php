@@ -242,10 +242,12 @@ class WikiaMaps {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
-		$response = Http::get( $url, 'default', [
-			//TODO this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 
 		return json_decode( $response );
 	}
