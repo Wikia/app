@@ -2,7 +2,7 @@
 /**
  * Loggable
  *
- * <insert description here>
+ * Trait to allow objects to log with a common context
  *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
