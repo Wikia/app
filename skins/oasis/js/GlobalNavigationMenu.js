@@ -1,98 +1,69 @@
-require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], function ($, uiFactory, nirvana, mustache) {
+require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactory, nirvana) {
 	'use strict';
 
-	$('#GlobalNavigation').remove();
-	$('<li id="GlobalNavigationMenuButton">&lt;INSERT MENU HERE&gt;</li>').insertBefore('li.WikiaLogo');
-	$('<div class="GlobalNavigationContainer"><nav><div class="hubs"></div></nav></div>').insertAfter('.WikiaHeader');
-
-	var $globalNavigationNav = $('.GlobalNavigationContainer nav'),
-		$hubsMenu = $globalNavigationNav.find('.hubs'),
-		rnd = function() {
-			return Math.floor(Math.random() * 1000);
-		},
-		verticalMenuData = function() {
-			return '<h2>Title ' + rnd() + '</h2><ul>' +
-			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
-			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
-			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
-			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
-			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
-			'</ul>'; },
-		verticalData = {
-			activeType: 'comics',
-			menu: [
-				{
-					'label': 'Books',
-					'type': 'books',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'ComiX',
-					'type': 'comics',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'Games!',
-					'type': 'games',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'LiveStyle',
-					'type': 'lifestyle',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'Moovies',
-					'type': 'movies',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'Musique',
-					'type': 'music',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
-				},
-				{
-					'label': 'T.V.',
-					'type': 'tv',
-					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+	var menuPromise = nirvana.sendRequest({
+				controller: 'GlobalHeaderController',
+				method: 'getGlobalMenuItems',
+				format: 'json',
+				type: 'GET',
+				data: {
+					version: '2'
 				}
-			]
-		};
-	// build menu
-	// 1. prepare table markup
-//	$.each(verticalMenu, function(index) {
-//		$globalNavigationNav.append('<tr data-row="' + index + '"></tr>');
-//	});
-	$globalNavigationNav.addClass('count-' + verticalData.menu.length);
-	// 2. populate main menu + dave submenu data in data
-	$.each(verticalData.menu, function() {
-		var $elem = $('<nav class="' + this.type + ' hub"><span class="icon" />' +
-			'<span class="border" /><span class="label" /></nav>');
+			}),
+			hamburgerButton = '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 44 66" enable-background="new 0 0 44 66" xml:space="preserve" width="100%" height="100%"><rect x="0" id="rect5" height="3" width="28" y="27" /><rect x="0" id="rect7" height="2.9690001" width="28" y="33" /><polygon id="polygon9" points="28,41.969 0,41.963 0,39.031 28,39.031 " /><polygon id="svg-chevron" points="44,33.011 39,38 34,33.011 " /></svg>',
+			$globalNavigationNav,
+			initialize = function(){
+				$('#GlobalNavigation').remove();
+				$('<li id="GlobalNavigationMenuButton">' + hamburgerButton + '</li>').insertBefore('li.WikiaLogo');
+				$('<div class="GlobalNavigationContainer"><nav><div class="hubs"></div></nav></div>').insertAfter('.WikiaHeader');
+				$globalNavigationNav = $('.GlobalNavigationContainer nav');
+			},
+			buildMenu = function(verticalData) {
+				var $hubsMenu = $globalNavigationNav.find('.hubs');
+				//
+				$globalNavigationNav.addClass('count-' + verticalData.menu.length).data('active', verticalData.active);
+				//
+				$.each(verticalData.menu, function() {
+					var $elem = $('<nav class="' + this.type + ' hub"><span class="icon" />' +
+						'<span class="border" /><span class="label" /></nav>');
 
-		$elem.data('data', this.data).find('.label').text(this.label);
-		$elem.appendTo($hubsMenu);
-	});
-	// 3. finish table markup - add place for submenu
-	$globalNavigationNav
-		.append('<section data-submenu="0" />')
-		.append('<section data-submenu="1" />');
-	//
+					$elem.data('data', this.data).find('.label').text(this.label);
+					$elem.appendTo($hubsMenu);
+				});
+				//
+				$globalNavigationNav
+					.append('<section data-submenu="0" />')
+					.append('<section data-submenu="1" />');
+			},
+			attachEvents = function() {
+				$globalNavigationNav.on('mouseover', '.hub', function (e) {
+					e.preventDefault();
+					$globalNavigationNav.find('.hub').removeClass('active');
 
-	$globalNavigationNav.on('click', '.hub', function (e) {
-		e.preventDefault();
-		$globalNavigationNav.find('.hub').removeClass('active');
+					var $this = $(this),
+						data = $this.data('data');
 
-		var $this = $(this),
-			data = $this.data('data');
+					$this.addClass('active');
+					$globalNavigationNav.find('[data-submenu=0]').html(data[0]);
+					$globalNavigationNav.find('[data-submenu=1]').html(data[1]);
+				}).on('mouseleave', function(){
+					$('#GlobalNavigationMenuButton').removeClass('active');
+					$('.GlobalNavigationContainer').hide();
+				});
 
-		$this.addClass('active');
-		$globalNavigationNav.find('[data-submenu=0]').html(data[0]);
-		$globalNavigationNav.find('[data-submenu=1]').html(data[1]);
-	}).find('.hub.' + verticalData.activeType).click();
+				$('#WikiaHeader').on('mouseover click', '#GlobalNavigationMenuButton', function (e) {
+					e.preventDefault();
+					//
+					$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseover();
 
-	$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {
-		e.preventDefault();
+					$('#GlobalNavigationMenuButton').addClass('active');
+					$('.GlobalNavigationContainer').show();
+				});
+			};
 
-		$('.GlobalNavigationContainer').toggle();
+	$.when(menuPromise).done(function(verticalMenuData) {
+			initialize();
+			buildMenu(verticalMenuData);
+			attachEvents();
 	});
 });

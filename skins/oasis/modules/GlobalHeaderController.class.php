@@ -109,12 +109,67 @@ class GlobalHeaderController extends WikiaController {
 	}
 
 	public function getGlobalMenuItems() {
-		// convert menuNodes to better json menu
-		$nodes = $this->menuNodes;
 		$menuData = [];
 
-		foreach($nodes[0]['children'] as $id) {
-			$menuData[] = $this->recursiveConvertMenuNodeToArray($id);
+		if ($this->request->getVal('version', '1') == '1') {
+			// convert menuNodes to better json menu
+			$nodes = $this->menuNodes;
+
+			foreach($nodes[0]['children'] as $id) {
+				$menuData[] = $this->recursiveConvertMenuNodeToArray($id);
+			}
+		} else {
+			// THIS IS ONLY A PLACEHOLDER DATA
+
+			function rand_items() {
+				return '<h2>Title ' . rand(1, 10) . '</h2><ul>' .
+				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'</ul>';
+			}
+			$menuData = [
+				'active' => 'comics',
+				'menu' => [
+					[
+						'label' =>  'Books',
+						'type' => 'books',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'ComiX',
+						'type' => 'comics',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'Games!',
+						'type' => 'games',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'LiveStyle',
+						'type' => 'lifestyle',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'Moovies',
+						'type' => 'movies',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'Musique',
+						'type' => 'music',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+					[
+						'label' =>  'T.V.',
+						'type' => 'tv',
+						'data' => [ rand_items().rand_items() , rand_items().rand_items() ]
+					],
+				]
+			];
 		}
 		// respond
 		$this->response->setFormat('json');
