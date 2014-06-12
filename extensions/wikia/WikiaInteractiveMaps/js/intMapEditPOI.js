@@ -43,13 +43,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		},
 		events = {
 			save: [
-				processForm,
-				function(event, serializedForm) {
-					return validatePOIData(serializedForm);
-				},
-				function(event, serializedForm) {
-					return save(serializedForm);
-				}
+				save
 			]
 		},
 		templateData = {
@@ -100,15 +94,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	}
 
 	/**
-	 * @desc serializes form data and return it in promise pattern needed for modal events chain
-	 * @returns {object} - promise with serialized form data
+	 * @desc calls function chain used to save POI
 	 */
-	function processForm() {
-		var deferred = new $.Deferred();
-
-		deferred.resolve(utils.serializeForm(modal.$form));
-
-		return deferred.promise();
+	function save() {
+		sendData(validatePOIData(utils.serializeForm(modal.$form)));
 	}
 
 	/**
@@ -116,29 +105,27 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} data - serialized form data
 	 */
 	function validatePOIData(data) {
-		var deferred = new $.Deferred(),
-			required = ['name', 'pinTypeId'];
+		var required = ['name', 'pinTypeId'],
+			valid = required.every(function(value) {
+				if (utils.isEmpty(data[value])) {
+					showError($.msg('wikia-interactive-maps-edit-poi-error-' + utils.camelCaseToDash(value)));
+					return false;
+				}
+				return true;
+			});
 
-		required.every(function(value) {
-			var valid = true;
-
-			if (utils.isEmpty(data[value])) {
-				showError($.msg('wikia-interactive-maps-edit-poi-error-' + utils.camelCaseToDash(value)));
-				deferred.reject();
-				valid = false;
-			}
-
-			return valid;
-		});
-
-		return deferred.promise();
+		return (valid ? data : false);
 	}
 
 	/**
 	 * @desc sends request to backend with POI data
 	 * @param {object} data - POI data
 	 */
-	function save(data) {
+	function sendData(data) {
+		if (!data) {
+			return;
+		}
+
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsPoi',
 			method: 'editPoi',

@@ -1,14 +1,13 @@
 define(
 	'wikia.intMaps.createMap.modal', [
 		'jquery',
-		'wikia.querystring',
 		'wikia.window',
 		'wikia.intMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview',
 		'wikia.intMap.createMap.pinTypes'
 	],
-	function($, qs, w, utils, tileSet, preview, pinTypes) {
+	function($, w, utils, tileSet, preview, pinTypes) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -44,11 +43,6 @@ define(
 				cleanUpError: [
 					cleanUpError
 				],
-				mapCreated: [
-					/*function (data) {
-						showCreatedMap(data);
-					}*/
-				],
 				beforeClose: [
 					function () {
 						w.UserLogin.refreshIfAfterForceLogin();
@@ -64,7 +58,10 @@ define(
 		function init(templates) {
 			modalConfig.vars.content = utils.render(templates[0], {});
 
-			createModal(modalConfig, function () {
+			utils.createModal(modalConfig, function (_modal) {
+				// set reference to modal component
+				modal = _modal;
+
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 				modal.$errorContainer = $('.map-creation-error');
@@ -79,24 +76,6 @@ define(
 
 				modal.trigger('chooseTileSet');
 				modal.show();
-			});
-		}
-
-		/**
-		 * @desc creates modal component
-		 * @param {object} config - modal config
-		 * @param {function} cb - callback function called after creating modal
-		 */
-
-		function createModal(config, cb) {
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(function (uiModal) {
-					uiModal.createComponent(config, function (component) {
-						// set reference to modal component
-						modal = component;
-						cb();
-					});
-				});
 			});
 		}
 
@@ -119,16 +98,6 @@ define(
 			modal.$errorContainer
 				.html('')
 				.addClass('hidden');
-		}
-
-		/**
-		 * @desc redirects to the map page
-		 * @param {object} data - map data
-		 */
-
-		//TODO: to be changed when pin types step will be added
-		function showCreatedMap(data) {
-			qs(data.mapUrl).goTo();
 		}
 
 		return {

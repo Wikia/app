@@ -28,11 +28,6 @@ define(
 				createMap: [
 					validateTitle,
 					createMap
-				],
-				mapCreated: [
-					function(data) {
-						console.log('Map created: ', data);
-					}
 				]
 			},
 			// modal buttons and events for them in this step
@@ -42,8 +37,6 @@ define(
 			},
 			// tile set data for map creation
 			tileSetData,
-			// reference to the type of tile set
-			type,
 			// selector for title input
 			$title;
 
