@@ -45,6 +45,7 @@ define('wikia.intMaps.deleteMap',
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
 			method: 'deleteMap',
+			type: 'POST',
 			data: {
 				mapId: mapId
 			},

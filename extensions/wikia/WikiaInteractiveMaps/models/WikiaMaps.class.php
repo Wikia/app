@@ -8,8 +8,6 @@ class WikiaMaps {
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_PIN_TYPE = 'poi_category';
 
-	const MAP_DELETE_SUCCESS = 'Map successfully updated';
-
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
 	const STATUS_FAILED = 3;
@@ -22,6 +20,7 @@ class WikiaMaps {
 
 	const HTTP_CREATED_CODE = 201;
 	const HTTP_SUCCESS_OK = 200;
+	const HTTP_UPDATED_CODE = 303;
 
 	/**
 	 * @var array API connection config
@@ -108,12 +107,16 @@ class WikiaMaps {
 	 * @return string|bool
 	 */
 	private function putRequest( $url, $data ) {
-		return Http::request( 'PUT', $url, [
-			'postData' => json_encode( $data ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			]
-		] );
+		return $this->processServiceResponse(
+			Http::request( 'PUT', $url, [
+				'postData' => json_encode( $data ),
+				'headers' => [
+					'Authorization' => $this->config['token']
+				],
+				'returnInstance' => true,
+				'noProxy' => true
+			] )
+		);
 	}
 
 	/**
@@ -283,9 +286,7 @@ class WikiaMaps {
 			'deleted' => true
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
-		$res = json_decode( $this->putRequest($url, $payload) );
-		//ToDo -> validate based on status code, not a message
-		return ( $res && $res->message == self::MAP_DELETE_SUCCESS );
+		return $this->putRequest($url, $payload);
 	}
 
 	/**
@@ -377,7 +378,8 @@ class WikiaMaps {
 		$results['content'] = $content;
 
 		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
-		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
+		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_UPDATED_CODE,
+				self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
 			$results['success'] = true;
 		}
 
