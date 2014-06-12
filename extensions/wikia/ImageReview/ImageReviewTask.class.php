@@ -59,16 +59,17 @@ class ImageReviewTask extends BaseTask {
 					'exit_status' => $exitStatus,
 					'error' => $title,
 				]);
-				continue;
-			} else {
-				$cityPath = \WikiFactory::getVarValueByName('wgScript', $wikiId);
-				$escapedTitle = wfEscapeWikiText($title);
 
-				$this->info('removed image', [
-					'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
-					'title' => $escapedTitle,
-				]);
+				continue;
 			}
+
+			$cityPath = \WikiFactory::getVarValueByName('wgScript', $wikiId);
+			$escapedTitle = wfEscapeWikiText($title);
+
+			$this->info('removed image', [
+				'link' => "{$cityUrl}{$cityPath}?title={$escapedTitle}",
+				'title' => $escapedTitle,
+			]);
 
 			++$articlesDeleted;
 		}
