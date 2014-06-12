@@ -197,6 +197,37 @@ define(
 			return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 		}
 
+		/**
+		 * @desc checks if user is logged in
+		 * @returns {boolean}
+		 */
+		function isUserLoggedIn() {
+			return (w.wgUserName !== null);
+		}
+
+		/**
+		 * @desc lunches force login modal
+		 * @param {string} origin - used for tracking the source of force login modal
+		 * @param {function} cb - callback function to be called after login
+		 */
+		function showForceLoginModal(origin, cb) {
+			w.UserLoginModal.show({
+				origin: origin,
+				callback: function() {
+					w.UserLogin.forceLoggedIn = true;
+					cb();
+				}
+			});
+		}
+
+		/**
+		 * @desc refreshes page after closing modal
+		 * @todo do we need to do this?
+		 */
+		function refreshIfAfterForceLogin() {
+			w.UserLogin.refreshIfAfterForceLogin();
+		}
+
 		return {
 			loadModal: loadModal,
 			createModal: createModal,
@@ -205,7 +236,10 @@ define(
 			setButtons: setButtons,
 			isEmpty: isEmpty,
 			serializeForm: serializeForm,
-			camelCaseToDash: camelCaseToDash
+			camelCaseToDash: camelCaseToDash,
+			isUserLoggedIn: isUserLoggedIn,
+			showForceLoginModal: showForceLoginModal,
+			refreshIfAfterForceLogin: refreshIfAfterForceLogin
 		}
 	}
 );

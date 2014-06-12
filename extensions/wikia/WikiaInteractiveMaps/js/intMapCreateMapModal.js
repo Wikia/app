@@ -44,9 +44,7 @@ define(
 					cleanUpError
 				],
 				beforeClose: [
-					function () {
-						w.UserLogin.refreshIfAfterForceLogin();
-					}
+					utils.refreshIfAfterForceLogin
 				]
 			};
 

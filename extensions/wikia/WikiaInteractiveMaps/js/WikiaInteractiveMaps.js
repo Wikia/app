@@ -10,8 +10,7 @@ require(
 		'use strict';
 
 		var body = $('body'),
-			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0].contentWindow,
-			isLoggedInUser = (w.wgUserName !== null),
+			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0],
 			// create map modal assets
 			createMapConfig = {
 				module: 'wikia.intMaps.createMap.modal',
@@ -32,9 +31,6 @@ require(
 				origin: 'wikia-int-map-create-map'
 			};
 
-		// set iframe target for Ponto
-		ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe);
-
 		// attach handlers
 		body
 			.on('change', '#orderMapList', function(event) {
@@ -43,6 +39,8 @@ require(
 			.on('click', '#createMap', function() {
 				createMap();
 			});
+
+		setPontoIframeTarget(targetIframe);
 
 		/**
 		 * @desc reload the page after choosing ordering option
@@ -53,18 +51,24 @@ require(
 		}
 
 		/**
+		 * @desc sets iFrame target for ponto if iFrame exists
+		 * @param {object} targetIframe - iFrame element
+		 */
+		function setPontoIframeTarget(targetIframe) {
+			if (targetIframe) {
+				ponto.setTarget(Ponto.TARGET_IFRAME, '*', targetIframe.contentWindow);
+			}
+		}
+
+		/**
 		 * @desc opens create map modal preceded by forced login modal for anons
 		 */
 		function createMap() {
-			if (isLoggedInUser) {
+			if (utils.isUserLoggedIn()) {
 				utils.loadModal(createMapConfig);
 			} else {
-				w.UserLoginModal.show({
-					origin: createMapConfig.origin,
-					callback: function() {
-						w.UserLogin.forceLoggedIn = true;
-						utils.loadModal(createMapConfig);
-					}
+				utils.showForceLoginModal(createMapConfig.origin, function() {
+					utils.loadModal(createMapConfig);
 				});
 			}
 		}

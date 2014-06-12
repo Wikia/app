@@ -44,6 +44,9 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 		events = {
 			save: [
 				save
+			],
+			beforeClose: [
+				utils.refreshIfAfterForceLogin
 			]
 		},
 		templateData = {

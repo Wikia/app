@@ -12,7 +12,8 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 					mustache: ['extensions/wikia/WikiaInteractiveMaps/templates/intMapEditPOI.mustache']
 				},
 				cacheKey: 'wikia_interactive_maps_edit_poi',
-				module: 'wikia.intMap.editPOI'
+				module: 'wikia.intMap.editPOI',
+				origin: 'wikia-interactive-maps-edit-poi'
 			}
 		};
 
@@ -27,10 +28,28 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 		 * @param {number} callbackId - required by iframe to figure out the origin of response from the client
 		 */
 		this.processData = function(params, callbackId) {
-			utils.loadModal(actions[params.action], params.data, function(response) {
-				Ponto.respond(response, callbackId);
-			});
-		}
+			var actionConfig = actions[params.action],
+				data = params.data;
+
+			if (utils.isUserLoggedIn()) {
+				utils.loadModal(actionConfig, data, function(response) {
+					Ponto.respond(response, callbackId);
+				});
+			} else {
+				utils.showForceLoginModal(actionConfig.origin, function() {
+					utils.loadModal(actionConfig, data, function(response) {
+						Ponto.respond(response, callbackId);
+					});
+				});
+			}
+		};
+
+		/**
+		 * @desc tells iframe that it's opened on Wikia page
+		 */
+		this.isWikia = function(params, callbackId) {
+			Ponto.respond(true, callbackId);
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
