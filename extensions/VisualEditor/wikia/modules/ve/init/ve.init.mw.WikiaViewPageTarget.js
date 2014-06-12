@@ -71,8 +71,34 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
+	var $elements,
+		ns = mw.config.get( 'wgNamespaceNumber' );
+
+	if ( ns === 14 ) {
+		// Category
+		$elements = $( '#mw-content-text' ).children().filter( function( index ) {
+			var $this = $( this );
+			return !(
+				// Category thumbs
+				$this.hasClass( 'category-gallery' ) ||
+				// Category exhibition
+				$this.is( '#mw-pages' ) ||
+				// Category list
+				$this.children( '#mw-pages' ).length
+			);
+		} );
+	} else {
+		$elements = $( '#mw-content-text' );
+	}
+
+	$elements = $elements.add( '.WikiaArticleCategories' );
+
+	return $elements;
+};
+
 ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
-	$( '#mw-content-text, .WikiaArticleCategories' )
+	this.getNonEditableUIElements()
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
 
