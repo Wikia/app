@@ -100,6 +100,7 @@ class TaskRunner {
 			'PromoteImageReviewTask',
 			'UserRollback',
 //			'UserRename',
+			'HTMLCacheUpdate',
 		]);
 	}
 }
