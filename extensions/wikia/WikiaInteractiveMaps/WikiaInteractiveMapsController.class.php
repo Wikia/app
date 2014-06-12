@@ -240,7 +240,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 	public function getTileSets() {
 		$params = [];
-		$results[ 'success' ] = false;
 
 		$searchTerm = $this->request->getVal( 'searchTerm', null );
 
@@ -248,13 +247,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$params[ 'searchTerm' ] = $searchTerm;
 		}
 
-		$response = $this->mapsModel->getTileSets( $params );
+		$results = $this->mapsModel->getTileSets( $params );
 
-		if ( $response ) {
-			$results[ 'success' ] = true;
-			$results[ 'tileSets' ] = $response;
-		} else {
-			$results[ 'error' ] = wfMessage( 'wikia-interactive-maps-api-error-message' )->plain();
+		if( !$results['success'] && is_null( $results['content'] ) ) {
+			$results['content'] = new stdClass();
+			$results['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
 		$this->response->setVal( 'results', $results );
@@ -305,7 +302,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		} else {
 			$results = $this->createTileset();
 
-			if( true === $results['success'] ) {
+			if ( true === $results['success'] ) {
 				$this->setCreationData( 'tileSetId', $results['content']->id );
 				$results = $this->createMapFromTilesetId();
 			}

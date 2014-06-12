@@ -244,12 +244,13 @@ class WikiaMaps {
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', [
+				'returnInstance' => true,
 				//TODO this is temporary workaround, remove it before production!
 				'noProxy' => true
 			] )
 		);
 
-		return json_decode( $response );
+		return $response;
 	}
 
 	/**
