@@ -85,7 +85,6 @@ class ImageReviewTask extends BaseTask {
 		$recipients = [new \MailAddress('tor@wikia-inc.com'), new \MailAddress('sannse@wikia-inc.com')];
 		$from = $recipients[0];
 
-
 		\UserMailer::send($recipients, $from, $subject, $body);
 	}
 } 
