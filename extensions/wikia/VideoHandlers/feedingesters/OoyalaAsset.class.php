@@ -301,7 +301,7 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			print( "Ooyala: Updated Metadata for $videoId: \n" );
+			print( "Ooyala: Added Metadata for $videoId: \n" );
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				print ":: $line\n";
 			}
@@ -322,13 +322,22 @@ class OoyalaAsset extends WikiaModel {
 	 * @return boolean $resp
 	 */
 	public static function updateMetadata( $videoId, $metadata ) {
-		$method = 'PATCH';
 		$reqPath = '/v2/assets/'.$videoId.'/metadata';
+		return self::updateAsset( $videoId, $metadata, $reqPath );
+	}
 
-		$reqBody = json_encode( $metadata );
+	/**
+	 * Send request to Ooyala to update asset
+	 * @param string $videoId
+	 * @param array $params
+	 * @return boolean $resp
+	 */
+	public static function updateAsset( $videoId, $params, $reqPath ) {
+		$method = 'PATCH';
+		$reqBody = json_encode( $params );
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, array(), $reqBody );
-		echo "\tRequest to update metadata: $url\n";
+		echo "\tRequest to update asset: $url\n";
 
 		$options = [
 			'method'   => $method,
@@ -342,16 +351,28 @@ class OoyalaAsset extends WikiaModel {
 			$meta = json_decode( $req->getContent(), true );
 			$resp = true;
 
-			echo "\tUpdated Metadata for $videoId: \n";
+			echo "\tUpdated Asset for $videoId: \n";
 			foreach( explode( "\n", var_export( $meta, true ) ) as $line ) {
 				echo "\t\t:: $line\n";
 			}
 		} else {
 			$resp = false;
-			echo "\tERROR: problem updating metadata (".$status->getMessage().").\n";
+			echo "\tERROR: problem updating asset (".$status->getMessage().").\n";
 		}
 
 		return $resp;
+	}
+
+	/**
+	 * Send request to Ooyala to update urls for remote asset
+	 * @param string $videoId
+	 * @param array $urls
+	 * @return boolean $resp
+	 */
+	public static function updateRemoteAssetUrls( $videoId, $urls ) {
+		$reqPath = '/v2/assets/'.$videoId;
+		$params['stream_urls'] = $urls;
+		return self::updateAsset( $videoId, $params, $reqPath );
 	}
 
 	/**

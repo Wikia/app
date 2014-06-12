@@ -117,6 +117,12 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarSaveButtonClick = function () 
 	if ( window.veTrack ) {
 		veTrack( { action: 've-save-button-click' } );
 	}
+
+	if ( window.veOrientationEnabled !== undefined ) {
+		window.optimizely = window.optimizely || [];
+		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
+	}
+
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-publish' } );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
@@ -139,10 +145,56 @@ ve.init.mw.WikiaViewPageTarget.prototype.updateToolbarSaveButtonState = function
 		!this.toolbarSaveButtonEnableTracked &&
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
+		if ( window.veOrientationEnabled !== undefined ) {
+			window.optimizely = window.optimizely || [];
+			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
+		}
 		ve.track( 'wikia', { 'action': ve.track.actions.ENABLE, 'label': 'button-publish' } );
 	}
 };
 
 ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
 	return this.toolbar;
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
+	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	if ( $spinner.is( ':visible' ) ) {
+		$spinner.fadeOut( 400 );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status, error ) {
+	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this, jqXHR, status, error );
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-load-error',
+			status: status
+		} );
+	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
+	var uri = new mw.Uri( location.href );
+	// Parent method
+	ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs.call( this );
+
+	if ( mw.user.anonymous() && !uri.query.redlink ) {
+		window.optimizely = window.optimizely || [];
+		window.optimizely.push( ['activate', 1248850316] );
+
+		if ( window.veOrientationEnabled && !window.localStorage.getItem( 'WikiaVEOrientationViewed' ) ) {
+			this.surface.getDialogs().getWindow( 'wikiaOrientation' ).open();
+			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
+		}
+	}
 };

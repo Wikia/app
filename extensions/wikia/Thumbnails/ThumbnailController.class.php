@@ -24,6 +24,7 @@ class ThumbnailController extends WikiaController {
 	 *		disableRDF - disable RDF metadata
 	 *		fluid - image will take the width of it's container
 	 *		forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+	 *
 	 * @responseParam string width
 	 * @responseParam string height
 	 * @responseParam string linkHref
@@ -31,7 +32,7 @@ class ThumbnailController extends WikiaController {
 	 * @responseParam array linkAttrs
 	 *	Keys:
 	 *		id - id attribute for link,
-	 *		class - class of link attributes
+	 *		class - css class
 	 *		data-timestamp - timestamp of the file
 	 *		itemprop - for RDF metadata
 	 *		itemscope - for RDF metadata
