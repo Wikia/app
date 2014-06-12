@@ -262,7 +262,7 @@ function updateMetadata1716( $video ) {
 		}
 
 		if ( $resp ) {
-			   echo "\tUPDATED: $video[name] (Id: $video[embed_code])...DONE (Updated ".implode(', ', $updatedList).").\n";
+			echo "\tUPDATED: $video[name] (Id: $video[embed_code])...DONE (Updated ".implode(', ', $updatedList).").\n";
 		}
 	} else {
 		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - No changes.\n";
@@ -399,6 +399,58 @@ function updateMetadataWiki( $video, $newValues ) {
 	return true;
 }
 
+function updateRemoteAssetUrls( $ingester, $video ) {
+	global $dryRun, $skipped, $failed;
+
+	if ( empty( $video['metadata']['source'] ) || $video['metadata']['source'] != $ingester->getProvider() ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Invalid source value (Provider: {$ingester->getProvider()}, Source: {$video['metadata']['source']}).\n";
+		$skipped++;
+		return;
+	}
+
+	if ( empty( $video['metadata']['sourceid'] ) ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Empty source id.\n";
+		$skipped++;
+		return;
+	}
+
+	if ( !empty( $video['metadata']['updateAssetUrls']) ) {
+		echo "\tSKIP: $video[name] (Id: $video[embed_code]) - Already updated.\n";
+		$skipped++;
+		return;
+	}
+
+	$urls = $ingester->getRemoteAssetUrls( $video['metadata']['sourceid'] );
+
+	// for debugging
+	//echo "\n\tNEW URLs (".$video['embed_code']."):\n";
+	//foreach ( $video['stream_urls'] as $key => &$value ) {
+	//	if ( is_null( $value ) ) {
+	//		unset( $video['stream_urls'][$key] );
+	//	}
+	//}
+	//compareMetadata( $video['stream_urls'], $urls );
+	//echo "\n";
+
+	$resp = true;
+	if ( !$dryRun ) {
+		$resp = OoyalaAsset::updateRemoteAssetUrls( $video['embed_code'], $urls );
+		if ( $resp ) {
+			$metadata = [ 'updateAssetUrls' => 1 ];
+			$resp = OoyalaAsset::updateMetadata( $video['embed_code'], $metadata );
+			if ( !$resp ) {
+				"ERROR: $video[name] (Id: $video[embed_code]) - Cannot set updateAssetUrls to 1 in metadata.\n";
+			}
+		} else {
+			$failed++;
+		}
+	}
+
+	if ( $resp ) {
+		echo "\tUPDATED: $video[name] (Id: $video[embed_code]) ... DONE.\n";
+	}
+}
+
 // ----------------------------- Main ------------------------------------
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
@@ -418,6 +470,7 @@ if ( isset( $options['help'] ) ) {
 	--list             set if the metadata value is a list (used with --update option, optional)
 	--videoWiki        update metadata in video wiki if the metadata in backlot is changed
 	--update1716       update pageCategories, regional restrictions and expiration date
+	--assetUrls        update remote asset urls
 	--limit            limit
 	--dry-run          dry run
 	--help             you are reading it right now\n\n" );
@@ -435,6 +488,7 @@ $limit = empty( $options['limit'] ) ? 50000 : $options['limit'];
 $isList = isset( $options['list'] );
 $videoWiki = isset( $options['videoWiki'] );
 $update1716 = isset( $options['update1716'] );
+$assetUrl = isset( $options['assetUrls'] );
 
 if ( !is_numeric( $ageRequired ) ) {
 	die( "Invalid age.\n" );
@@ -442,6 +496,10 @@ if ( !is_numeric( $ageRequired ) ) {
 
 if ( !empty( $update ) && ( !isset( $options['from'] ) || !isset( $options['to'] ) ) ) {
 	die( "--from and --to options are required.\n" );
+}
+
+if ( !empty( $assetUrl ) ) {
+	$ingester = VideoFeedIngester::getInstance( 'iva' );
 }
 
 $apiPageSize = 100;
@@ -519,6 +577,14 @@ do {
 			} else {
 				updateMetadataVideoWiki( $video['embed_code'], $newValues );
 			}
+		}
+
+		if ( !empty( $assetUrl ) ) {
+			echo "\tAsset URLs for {$video['embed_code']}: \n";
+			foreach( explode( "\n", var_export( $video['stream_urls'], TRUE ) ) as $line ) {
+				echo "\t\t:: $line\n";
+			}
+			updateRemoteAssetUrls( $ingester, $video );
 		}
 	}
 
