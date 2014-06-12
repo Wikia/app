@@ -108,10 +108,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @param {object} data - serialized form data
 	 */
 	function validatePOIData(data) {
-		var required = ['name', 'pinTypeId'],
+		var required = ['name', 'poi_category_id'],
 			valid = required.every(function(value) {
 				if (utils.isEmpty(data[value])) {
-					showError($.msg('wikia-interactive-maps-edit-poi-error-' + utils.camelCaseToDash(value)));
+					showError($.msg('wikia-interactive-maps-edit-poi-error-' + value.replace(/_/g, '-')));
 					return false;
 				}
 				return true;
@@ -122,10 +122,10 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 	/**
 	 * @desc sends request to backend with POI data
-	 * @param {object} data - POI data
+	 * @param {object} poiData - POI data
 	 */
-	function sendData(data) {
-		if (!data) {
+	function sendData(poiData) {
+		if (!poiData) {
 			return;
 		}
 
@@ -133,12 +133,12 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			controller: 'WikiaInteractiveMapsPoi',
 			method: 'editPoi',
 			type: 'POST',
-			data: data,
+			data: poiData,
 			callback: function(response) {
 				var data = response.results;
 
 				if (data && data.success) {
-					trigger(data.content);
+					trigger(poiData);
 					modal.trigger('close');
 				} else {
 					showError(data.content.message);

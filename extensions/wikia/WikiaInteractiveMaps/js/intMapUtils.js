@@ -189,15 +189,6 @@ define(
 		}
 
 		/**
-		 * @desc convert camel case string to dash string
-		 * @param {string} str - camel case string
-		 * @returns {string} - dash string
-		 */
-		function camelCaseToDash(str) {
-			return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-		}
-
-		/**
 		 * @desc checks if user is logged in
 		 * @returns {boolean}
 		 */
@@ -236,7 +227,6 @@ define(
 			setButtons: setButtons,
 			isEmpty: isEmpty,
 			serializeForm: serializeForm,
-			camelCaseToDash: camelCaseToDash,
 			isUserLoggedIn: isUserLoggedIn,
 			showForceLoginModal: showForceLoginModal,
 			refreshIfAfterForceLogin: refreshIfAfterForceLogin

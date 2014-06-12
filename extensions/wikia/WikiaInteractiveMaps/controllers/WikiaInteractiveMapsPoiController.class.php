@@ -16,12 +16,12 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @requestParam Integer $poiId an unique POI id if not set then we're creating a new POI
 	 * @requestParam Integer $mapId an unique map id
 	 * @requestParam String $name an array of pin types names
-	 * @requestParam String $poiCategoryId an unique poi category id
-	 * @requestParam String $articleLink a link to wikia article
+	 * @requestParam String $poi_category_id an unique poi category id
+	 * @requestParam String $link a link to wikia article
 	 * @requestParam Float $lat
 	 * @requestParam Float $lon
 	 * @requestParam String $description a POI description
-	 * @requestParam String $imageUrl an image URL
+	 * @requestParam String $photo an image URL
 	 *
 	 * @throws PermissionsException
 	 * @throws BadRequestApiException
@@ -31,12 +31,12 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$this->setData( 'poiId', $poiId );
 		$this->setData( 'mapId', $this->request->getInt( 'mapId' ) );
 		$this->setData( 'name', $this->request->getVal( 'name' ) );
-		$this->setData( 'poiCategoryId', $this->request->getInt( 'poiCategoryId' ) );
-		$this->setData( 'articleLink', $this->request->getVal( 'articleLink' ) );
+		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
+		$this->setData( 'articleLink', $this->request->getVal( 'link' ) );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
-		$this->setData( 'imageUrl', $this->request->getVal( 'imageUrl' ) );
+		$this->setData( 'imageUrl', $this->request->getVal( 'photo' ) );
 
 		$this->validatePoiData();
 
