@@ -9,17 +9,6 @@ use Wikia\Logger\WikiaLogger;
 class VideoInfoHooksHelper {
 
 	/**
-	 * Hook: add or reupload video and clear cache when file is uploaded
-	 * @param LocalFile $file
-	 * @param $reupload
-	 * @param $hasDescription
-	 * @return true
-	 */
-	public static function onFileUpload( $file, $reupload, $hasDescription ) {
-		return true;
-	}
-
-	/**
 	 * Insert or update video info record from given file
 	 * @param LocalFile $file
 	 * @param bool $reupload
