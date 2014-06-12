@@ -26,6 +26,7 @@ class VideosModuleController extends WikiaController {
 		$sort = $this->request->getVal( 'sort', 'trend' );
 
 		$module = new VideosModule();
+		$staffVideos = $module->getStaffPicks();
 		if ( $localContent ) {
 			$videos = $module->getLocalVideos( $numRequired, $sort );
 		} else {
@@ -38,7 +39,7 @@ class VideosModuleController extends WikiaController {
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
-		$this->staffVideos = $module->getStaffPicks();
+		$this->staffVideos = $staffVideos;
 
 		// set cache
 		$this->response->setCacheValidity( 600 );

@@ -11,6 +11,7 @@ class UserRenameTask extends BaseTask {
 	/**
 	 * Marshal & execute the RenameUserProcess functions to rename a user
 	 *
+	 * @param array $wikiCityIds
 	 * @param array $params
 	 *		requestor_id => ID of the user requesting this rename action
 	 *		requestor_name => Name of the user requesting this rename action
@@ -20,9 +21,10 @@ class UserRenameTask extends BaseTask {
 	 *		reason => Reason for requesting username change
 	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
 	 *		phalanx_block_id => Phalanx login block ID
+	 * @return bool
 	 */
-	public function renameUser( array $params ) {
-		global $wgCityId;
+	public function renameUser( array $wikiCityIds, array $params ) {
+		global $IP;
 
 		$renameIP = !empty($params['rename_ip']);
 
@@ -30,39 +32,56 @@ class UserRenameTask extends BaseTask {
 		$process->setLogDestination( \RenameUserProcess::LOG_BATCH_TASK, $this );
 		$process->setRequestorUser();
 
-		try {
-			// Rename user by IP address (for CoppaTool)
+		$noErrors = true;
+
+		foreach ($wikiCityIds as $cityId) {
+			/**
+			 * execute maintenance script
+			 */
+			$cmd = sprintf( "SERVER_ID=%s php {$IP}/maintenance/wikia/RenameUser_local.php", $cityId );
+			$opts = [
+				'rename-user-id' => $params['rename_user_id'],
+				'requestor-id' => $params['requestor_id'],
+				'reason' => $params['reason'],
+			];
+
 			if ( $renameIP ) {
-				// validate IP rename
-				foreach ( [$params['rename_old_name'], $params['rename_new_name']] as $ip ) {
-					if ( !IP::isIPAddress($ip) ) {
-						$this->log("Invalid IP provided to rename IP address: {$ip}");
-						return false;
-					}
-				}
-				$process->updateLocalIP();
+				$opts['rename-old-name'] = $params['rename_old_name'];
+				$opts['rename-new-name'] = $params['rename_new_name'];
 			} else {
-				$process->updateLocal();
+				$opts['rename-old-name-enc'] = rawurlencode( $params['rename_old_name'] );
+				$opts['rename-new-name-enc'] = rawurlencode( $params['rename_new_name'] );
+				$opts['rename-fake-user-id'] = $params['rename_fake_user_id'];
+				$opts['phalanx-block-id'] = $params['phalanx_block_id'];
 			}
-			$errors = $process->getErrors();
-		} catch (Exception $e) {
-			$errors = $process->getErrors();
-			$errors[] = sprintf("Exception in updateLocal(): %s in %s at line %d",
-				$e->getMessage(), $e->getFile(), $e->getLine());
+
+			foreach ($opts as $opt => $val) {
+				$cmd .= sprintf( ' --%s %s', $opt, escapeshellarg($val) );
+			}
+			if ( $renameIP ) {
+				$cmd .= ' --rename-ip-address';
+			}
+
+			$exitCode = null;
+			$output = wfShellExec( $cmd, $exitCode );
+			$logMessage = sprintf( "Rename user %s to %s on city id %s",
+				$params['rename_old_name'], $params['rename_new_name'], $cityId);
+			$logContext = [
+				'command' => $cmd,
+				'exitStatus' => $exitCode,
+				'output' => $output,
+			];
+			if ( $exitCode > 0 ) {
+				\Wikia\Logger\WikiaLogger::instance()->error($logMessage, $logContext);
+				$noErrors = false;
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->info($logMessage, $logContext);
+			}
 		}
 
 		// clean up pre-process setup
 		$process->cleanup();
 
-		if ( !empty($errors) ) {
-			foreach ( $errors as $error ) {
-				$this->log($error);
-			}
-		}
-		// TODO - The original task sent a notification to the requestor and
-		// renamed user (if not by IP) *always*; should it do that even if there
-		// are errors?
-		// notify requestor and renamed user
 		$this->notifyUser(
 			\User::newFromId( $params['requestor_id'] ),
 			$params['rename_old_name'],
@@ -81,7 +100,7 @@ class UserRenameTask extends BaseTask {
 			}
 		}
 
-		return empty($errors);
+		return $noErrors;
 	}
 
 	/**
@@ -101,9 +120,16 @@ class UserRenameTask extends BaseTask {
 				'UserRenameProcessFinishedNotification',
 				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 			);
-			$this->log("Notification sent to: {$user->getEmail()}");
+			$this->info('rename user with email notification', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+				'email' => $user->getEmail(),
+			]);
 		} else {
-			$this->log("Cannot send email, no email set for user: {$user->getName()}");
+			$this->warning('no email address set for user', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+			]);
 		}
 	}
 }

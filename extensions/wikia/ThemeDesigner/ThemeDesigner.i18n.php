@@ -80,7 +80,7 @@ $messages['qqq'] = array(
 	'themedesigner-desc' => '{{desc}}',
 	'themedesigner-background' => '{{Identical|Background}}',
 	'themedesigner-page' => '{{Identical|Page}}',
-	'themedesigner-color' => '{{Identical|Main}}',
+	'themedesigner-color' => 'Primary background color. {{Identical|Main}}',
 	'themedesigner-color-middle' => 'Background color between background image (when background image is split to two parts in fluid layout.
 {{Identical|Middle}}',
 	'themedesigner-rules-color-middle' => 'Information about position and purpose of color and that can be different from standard background color',

@@ -388,6 +388,9 @@ ve.init.mw.Target.onLoad = function ( response ) {
 			this, null, 'No HTML content in response from server', null
 		);
 	} else {
+		// Wikia tracking if the anoneditwarning was shown
+		window.anoneditwarning = response.visualeditor.anoneditwarning;
+
 		this.originalHtml = data.content;
 		this.doc = ve.createDocumentFromHtml( this.originalHtml );
 

@@ -19,6 +19,7 @@ class WikiaLogger {
 	/** @var WebProcessor */
 	private $webProcessor;
 
+	/** private to enforce singleton */
 	private function __construct() {
 	}
 
@@ -141,6 +142,7 @@ class WikiaLogger {
 	 * Set the SyslogHandler. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param SyslogHandler $handler
+	 * @throws \InvalidArgumentException
 	 */
 	public function setSyslogHandler(SyslogHandler $handler) {
 		if (isset($this->logger)) {
@@ -165,6 +167,7 @@ class WikiaLogger {
 	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
 	 *
 	 * @param WebProcessor $processor
+	 * @throws \InvalidArgumentException
 	 */
 	public function setWebProcessor(WebProcessor $processor) {
 		if (isset($this->logger)) {

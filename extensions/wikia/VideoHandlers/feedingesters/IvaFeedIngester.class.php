@@ -8,7 +8,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
 	protected static $FEED_URL_ASSET = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets()?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
-	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
+	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=$4&publishedid=$2&e=$3';
+
+	protected static $ASSET_BITRATE = 1500;
+	protected static $ASSET_BITRATE_MOBILE = 750;
 
 	private static $VIDEO_SETS = array(
 		'Wiggles' => array( 'Wiggles' ),
@@ -991,33 +994,43 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		if ( $generateUrl ) {
-			$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
-			$url = str_replace( '$2', $data['videoId'], $url );
-
-			$expired = 1609372800; // 2020-12-31
-			$url = str_replace( '$3', $expired, $url );
-
-			$hash = $this->generateHash( $url );
-			$url .= '&h='.$hash;
-
-			$data['url'] = array(
-				'flash' => $url,
-				'iphone' => $url,
-			);
+			$data['url'] = $this->getRemoteAssetUrls( $data['videoId'] );
 		}
 
 		return $data;
 	}
 
 	/**
-	 * Generate an MD5 hash from the IVA App Key combined with the URL
-	 * @param string $url - The URL to base the hash on
-	 * @return string $hash - The MD5 hash
+	 * Get list of url for the remote asset
+	 * @param string $videoId
+	 * @return array
 	 */
-	protected function generateHash( $url ) {
-		$hash = md5( strtolower( F::app()->wg->IvaApiConfig['AppKey'].$url ) );
+	public function getRemoteAssetUrls( $videoId ) {
+		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
+		$url = str_replace( '$2', $videoId, $url );
 
-		return $hash;
+		$expired = 1609372800; // 2020-12-31
+		$url = str_replace( '$3', $expired, $url );
+
+		$urls = [
+			'flash'  => $this->generateHash( $url, self::$ASSET_BITRATE ),
+			'iphone' => $this->generateHash( $url, self::$ASSET_BITRATE_MOBILE ),
+		];
+
+		return $urls;
+	}
+
+	/**
+	 * Generate an MD5 hash from the IVA App Key combined with the URL and append to the URL
+	 * @param string $url - The URL to base the hash on
+	 * @return string $url - URL including hash value
+	 */
+	protected function generateHash( $url, $bitrate ) {
+		$url = str_replace( '$4', $bitrate, $url );
+		$hash = md5( strtolower( F::app()->wg->IvaApiConfig['AppKey'].$url ) );
+		$url .= '&h='.$hash;
+
+		return $url;
 	}
 
 	/**

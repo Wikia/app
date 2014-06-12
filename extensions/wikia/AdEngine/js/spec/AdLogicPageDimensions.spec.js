@@ -70,6 +70,12 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 1000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 1000)).toBeFalsy('height=1000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
+		expect(adShown('foo', 2000)).toBeTruthy('height=2000 slot=foo -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_2', 2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('PREFOOTER_LEFT_BOXAD', 2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_RIGHT_BOXAD', 2000)).toBeTruthy('height=2000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+
 		expect(adShown('foo', 3000)).toBeTruthy('height=3000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 3000)).toBeTruthy('height=3000 slot=LEFT_SKYSCRAPER_2 -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_3', 3000)).toBeFalsy('height=3000 slot=LEFT_SKYSCRAPER_3 -> NO ADS');
@@ -91,6 +97,12 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('LEFT_SKYSCRAPER_3', 1000, true, width2000)).toBeFalsy('height=1000 slot=LEFT_SKYSCRAPER_3 -> ADS');
 		expect(adShown('PREFOOTER_LEFT_BOXAD', 1000, true, width2000)).toBeFalsy('height=1000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
 		expect(adShown('PREFOOTER_RIGHT_BOXAD', 1000, true, width2000)).toBeFalsy('height=1000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+
+		expect(adShown('foo', 2000, true, width2000)).toBeTruthy('height=2000 slot=foo -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_2', 2000, true, width2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_2 -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 2000, true, width2000)).toBeFalsy('height=2000 slot=LEFT_SKYSCRAPER_3 -> ADS');
+		expect(adShown('PREFOOTER_LEFT_BOXAD', 2000, true, width2000)).toBeTruthy('height=2000 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('PREFOOTER_RIGHT_BOXAD', 2000, true, width2000)).toBeTruthy('height=2000 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 
 		expect(adShown('foo', 3000, true, width2000)).toBeTruthy('height=3000 slot=foo -> ADS');
 		expect(adShown('LEFT_SKYSCRAPER_2', 3000, true, width2000)).toBeTruthy('height=3000 slot=LEFT_SKYSCRAPER_2 -> ADS');
