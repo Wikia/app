@@ -602,10 +602,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$result = $this->mapsModel->deleteMapById( $mapId )['success'];
 		}
 		if ( $result ) {
-			NotificationsController::addConfirmation(
-				wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
-			$this->response->setVal('redirectUrl',
-				$this->getSpecialUrl( 'InteractiveMaps' ) );
+			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
+			$this->response->setVal(
+				'redirectUrl',
+				$this->getSpecialUrl( 'InteractiveMaps' )
+			);
 		}
 	}
 	
