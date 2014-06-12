@@ -230,7 +230,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
  */
 ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
 	var $articleContent, $insertTarget,
-		$mwContentText = $( '#mw-content-text' );
+		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
 
 	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
