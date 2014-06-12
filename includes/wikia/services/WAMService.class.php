@@ -8,6 +8,7 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
+	const DATE_FORMAT = 'Y-m-d';
 
 	protected static $verticalNames = [
 		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
@@ -181,18 +182,20 @@ class WAMService extends Service {
 		wfProfileIn( __METHOD__ );
 
 		$memKey = wfSharedMemcKey( 'wam-languages', $date );
+		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
 
 		$getData = function () use ( $app, $date ) {
 			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+			echo $db->getDBname();
 			$result = $db->select(
-				// SELECT DISTINCT lang FROM dimension_wikis = dw LEFT JOIN fact_wam_scores = fw1 ON dw.wiki_id = fw1.wiki_id WHERE fw1.time_id = '2014-06-04' ORDER BY dw.lang ASC;
-				// SELECT  DISTINCT lang  FROM `dimension_wikis` `dw` LEFT JOIN `fact_wam_scores` `fw1` ON ((fw1.wiki_id = dw.wiki_id))  WHERE fw1.time_id = '2014-06-04'  ORDER BY dw.lang ASC;
 				[
 					'fw1' => 'fact_wam_scores',
 					'dw' => 'dimension_wikis'
 				],
-				'DISTINCT lang',
-				[ 'fw1.time_id' => $date, ],
+				'DISTINCT dw.lang',
+//				[ 'fw1.time_id' => 'FROM_UNIXTIME( ' . $date . ', GET_FORMAT( DATE, \'ISO\' ) )' ],
+//				[ 'fw1.time_id' => 'FROM_UNIXTIME( ' . $date . ', \'%Y-%m-%d\' )' ],
+				[ 'fw1.time_id' => date( self::DATE_FORMAT, $date  ) ],
 				__METHOD__,
 				[ 'ORDER BY' => 'dw.lang ASC' ],
 				[ 'fw1' => [ 'LEFT JOIN', [ 'dw.wiki_id = fw1.wiki_id' ] ] ]

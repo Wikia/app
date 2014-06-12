@@ -254,6 +254,7 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
+	//TODO Check if still needed - if not, remove
 	public function getCorporateWikisLanguages() {
 		$visualizationModel = new CityVisualization();
 		$wikisData = $visualizationModel->getVisualizationWikisData();
@@ -266,7 +267,7 @@ class WAMPageModel extends WikiaModel {
 	 * @return array
 	 */
 	public function getWAMLanguages( $date ) {
-		$result = $this->app->sendRequest( 'WAMApi', 'getWAMLanguages', [ 'date' => $date ] )->getData();
+		$result = $this->app->sendRequest( 'WAMApi', 'getWAMLanguages', [ 'wam_day' => $date ] )->getData();
 		return $result[ 'languages' ];
 	}
 
