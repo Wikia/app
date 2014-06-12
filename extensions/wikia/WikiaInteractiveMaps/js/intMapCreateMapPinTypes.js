@@ -270,11 +270,11 @@ define('wikia.intMap.createMap.pinTypes',
 						modal.trigger('cleanUpError');
 						modal.trigger('pinTypesCreated', data.content);
 					} else {
-						modal.trigger('error', data.error);
+						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', JSON.parse(response.responseText).exception.details);
+					modal.trigger('error', response.results.content.message);
 				}
 			});
 		}

@@ -196,13 +196,13 @@ define(
 					var data = response.results;
 
 					if (data && data.success) {
-						modal.trigger('receivedTileSets', data.tileSets);
+						modal.trigger('receivedTileSets', data.content);
 					} else {
-						modal.trigger('error', data.error);
+						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', response.results.error);
+					modal.trigger('error', response.results.content.message);
 				}
 			});
 		}
