@@ -176,6 +176,8 @@ class PromoteImageReviewTask extends BaseTask {
 		} else {
 			$this->info('uploadSingleImage success', [
 				'output' => $output,
+				'src_img_url' => $sourceImageUrl,
+				'dest_name' => $destinationName,
 			]);
 		}
 
@@ -205,7 +207,7 @@ class PromoteImageReviewTask extends BaseTask {
 		if ($exitStatus != 0) {
 			$this->error('removeSingleImage error', [
 				'city_url' => $cityUrl,
-				'exit_status' => $exitStatus,
+				'status' => $exitStatus,
 				'error' => $output,
 			]);
 		} else {
