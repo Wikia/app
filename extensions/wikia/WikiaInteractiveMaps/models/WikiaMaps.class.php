@@ -7,6 +7,7 @@ class WikiaMaps {
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+	const ENTRY_POINT_POI = 'poi';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -82,6 +83,25 @@ class WikiaMaps {
 	 */
 	private function postRequest( $url, $data ) {
 		return Http::post( $url, [
+			'postData' => json_encode( $data ),
+			'headers' => [
+				'Authorization' => $this->config['token']
+			],
+			//TODO this is temporary workaround, remove it before production!
+			'noProxy' => true
+		] );
+	}
+
+	/**
+	 * Wrapper for Http::request() with authorization token attached
+	 *
+	 * @param String $url
+	 * @param Array $data
+	 *
+	 * @return string|bool
+	 */
+	private function putRequest( $url, $data ) {
+		return Http::request( 'PUT', $url, [
 			'postData' => json_encode( $data ),
 			'headers' => [
 				'Authorization' => $this->config['token']
@@ -272,6 +292,35 @@ class WikiaMaps {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
 			$pinTypeData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a point of interest (POI) with given parameters
+	 *
+	 * @param Array $poiData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function savePoi( $poiData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI ] ),
+			$poiData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to update a point of interest (POI) with given parameters
+	 *
+	 * @param Integer $poiId unique id of existing POI
+	 * @param Array $poiData array with required parameters to service API
+	 *
+	 * @return string|bool
+	 */
+	public function updatePoi( $poiId, $poiData ) {
+		return $this->putRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI, $poiId ] ),
+			$poiData
 		);
 	}
 
