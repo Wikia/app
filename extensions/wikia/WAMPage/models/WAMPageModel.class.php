@@ -265,8 +265,8 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public function getWamLanguages( $date ) {
-		$result = $this->app->sendRequest( 'WAMApi', 'getWamLanguages', [ 'date' => $date ] )->getData();
+	public function getWAMLanguages( $date ) {
+		$result = $this->app->sendRequest( 'WAMApi', 'getWAMLanguages', [ 'date' => $date ] )->getData();
 		return $result[ 'languages' ];
 	}
 

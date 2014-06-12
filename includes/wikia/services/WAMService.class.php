@@ -176,7 +176,7 @@ class WAMService extends Service {
 		return $dates;
 	}
 
-	public function getWamLanguages( $date ) {
+	public function getWAMLanguages( $date ) {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
 
@@ -185,20 +185,22 @@ class WAMService extends Service {
 		$getData = function () use ( $app, $date ) {
 			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
 			$result = $db->select(
+				// SELECT DISTINCT lang FROM dimension_wikis = dw LEFT JOIN fact_wam_scores = fw1 ON dw.wiki_id = fw1.wiki_id WHERE fw1.time_id = '2014-06-04' ORDER BY dw.lang ASC;
+				// SELECT  DISTINCT lang  FROM `dimension_wikis` `dw` LEFT JOIN `fact_wam_scores` `fw1` ON ((fw1.wiki_id = dw.wiki_id))  WHERE fw1.time_id = '2014-06-04'  ORDER BY dw.lang ASC;
 				[
 					'fw1' => 'fact_wam_scores',
 					'dw' => 'dimension_wikis'
 				],
-				'distinct lang',
-				[ 'time_id' => $date ],
+				'DISTINCT lang',
+				[ 'fw1.time_id' => $date, ],
 				__METHOD__,
-				[ 'ORDER BY' => 'lang ASC' ],
-				[ 'dw' => [ 'left join', [ 'fw1.wiki_id = dw.wiki_id' ] ] ]
+				[ 'ORDER BY' => 'dw.lang ASC' ],
+				[ 'fw1' => [ 'LEFT JOIN', [ 'dw.wiki_id = fw1.wiki_id' ] ] ]
 			);
 
 			$languages = [];
-			while ( $row = $db->fetchRow( $result ) ) {
-				$languages[] = $row[ 'lang' ];
+			while ( $row = $db->fetchObject( $result ) ) {
+				$languages[] = $row->lang;
 			}
 
 			return $languages;

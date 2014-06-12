@@ -71,7 +71,8 @@ class WAMPageController extends WikiaController
 		$this->date = empty( $this->selectedDate ) ? time() : $this->selectedDate;
 		$this->date = date( self::DATE_FORMAT, $this->date );
 
-		$this->filterLanguages = $this->model->getWamLanguages( $this->date );
+		$this->filterLanguages = $this->model->getWAMLanguages( $this->date );
+//		var_dump( $this->filterLanguages );
 
 		$langValidator = new WikiaValidatorSelect(array('allowed' => $this->filterLanguages));
 		if (!$langValidator->isValid($this->selectedLangCode)) {

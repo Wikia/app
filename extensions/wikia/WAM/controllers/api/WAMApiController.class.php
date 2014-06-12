@@ -118,10 +118,14 @@ class WAMApiController extends WikiaApiController {
 		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
 	}
 
-	public function getWamLanguages() {
+	public function getWAMLanguages() {
 		$date = $this->request->getVal( 'date', null );
+//		echo "\nWAMApiController Date: ";
+//		var_dump( $date );
 		$wamService = new WAMService();
-		$result = $wamService->getWamLanguages( $date );
+		$result = $wamService->getWAMLanguages( $date );
+//		echo "\nWAMApiController result: ";
+//		var_dump( $result );
 		$this->response->setVal( 'languages', $result );
 	}
 
