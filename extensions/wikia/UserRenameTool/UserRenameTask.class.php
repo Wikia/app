@@ -11,6 +11,7 @@ class UserRenameTask extends BaseTask {
 	/**
 	 * Marshal & execute the RenameUserProcess functions to rename a user
 	 *
+	 * @param array $wikiCityIds
 	 * @param array $params
 	 *		requestor_id => ID of the user requesting this rename action
 	 *		requestor_name => Name of the user requesting this rename action
@@ -20,6 +21,7 @@ class UserRenameTask extends BaseTask {
 	 *		reason => Reason for requesting username change
 	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
 	 *		phalanx_block_id => Phalanx login block ID
+	 * @return bool
 	 */
 	public function renameUser( array $wikiCityIds, array $params ) {
 		global $IP;
@@ -118,16 +120,16 @@ class UserRenameTask extends BaseTask {
 				'UserRenameProcessFinishedNotification',
 				wfMsgForContent('userrenametool-finished-email-body-html', $oldUsername, $newUsername)
 			);
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				"Rename user {$oldUsername} to {$newUsername}: email notification",
-				[
-					'to' => $user->getEmail(),
-				]
-			);
+			$this->info('rename user with email notification', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+				'email' => $user->getEmail(),
+			]);
 		} else {
-			\Wikia\Logger\WikiaLogger::instance()->warning(
-				"Rename user {$oldUsername} to {$newUsername}: no email address set for user"
-			);
+			$this->warning('no email address set for user', [
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
+			]);
 		}
 	}
 }
