@@ -205,18 +205,21 @@ class ThumbnailController extends WikiaController {
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		$imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
-		$this->imgTag = $imgTag;
-
 		if ( !empty( $options['usePreloading'] ) ) {
 			$this->dataSrc = $imgSrc;
 		} elseif ( !empty( $this->wg->EnableAdsLazyLoad )
 			&& empty( $options['noLazyLoad'] )
 			&& ImageLazyLoad::isValidLazyLoadedImage( $this->imgSrc )
 		) {
-			$this->noscript = $imgTag;
+			$this->noscript = $this->noscript = $this->app->renderView(
+				'ThumbnailController',
+				'imgTag',
+				$this->response->getData()
+			);
 			ImageLazyLoad::setLazyLoadingAttribs( $this->dataSrc, $this->imgSrc, $this->imgClass, $this->imgAttrs );
 		}
+
+		$this->imgTag = $this->app->renderView( 'ThumbnailController', 'imgTag', $this->response->getData());
 
 		// set duration
 		$this->duration = WikiaFileHelper::formatDuration( $duration );
