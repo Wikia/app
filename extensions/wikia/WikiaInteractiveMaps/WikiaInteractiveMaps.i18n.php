@@ -132,7 +132,7 @@ $messages[ 'qqq' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
 
-	'wikia-interactive-maps-action' => 'Text on a button near the map title that triggers dropdown with possible actions',
+	'wikia-interactive-maps-actions' => 'Text on a button near the map title that triggers dropdown with possible actions',
 	'wikia-interactive-maps-delete-map' => 'Text on a button for deleting an existing map',
 	'wikia-interactive-maps-delete-map-client-title' => 'Title of the "delete map" modal',
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt (in modal) asking if user is sure to delete a map',
