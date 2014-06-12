@@ -41,10 +41,11 @@ class VideoInfoHooksHelper {
 		}
 
 		$videoInfo = new VideoInfo( $videoData );
-		if ( $reupload ||
-		     // check if the foreign video with the same title exists
-		     $videoInfoHelper->videoExists( $file->getTitle(), true )
-		) {
+
+		// Force a reupload if the foreign video with the same title exists
+		$reupload = $reupload || $videoInfoHelper->videoExists( $file->getTitle() , true );
+
+		if ( $reupload ) {
 			$videoInfo->reuploadVideo();
 		} else {
 			$videoInfo->addVideo();
