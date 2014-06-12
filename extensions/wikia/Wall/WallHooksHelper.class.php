@@ -66,7 +66,11 @@ class WallHooksHelper {
 				// article exists or existed
 				if($fromDeleted) {
 					$app->wg->SuppressPageHeader = true;
-					$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ) ));
+					$app->wg->Out->addHTML(
+						$app->renderView( 'WallController', 'messageDeleted', [
+							'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text()
+						] )
+					);
 					$app->wg->Out->setPageTitle( wfMessage( 'wall-deleted-msg-pagetitle' )->text() );
 					$app->wg->Out->setHTMLTitle( wfMessage( 'errorpagetitle' )->text() );
 				} else {
@@ -1078,7 +1082,6 @@ class WallHooksHelper {
 				&& in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS)
 				&& in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
 
-			$actionText = '';
 			$wfMsgOptsBase = static::getMessageOptions($rc);
 
 			$wfMsgOpts = [

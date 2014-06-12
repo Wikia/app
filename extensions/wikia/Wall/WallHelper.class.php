@@ -135,7 +135,7 @@ class WallHelper {
 		$parent = $wmessage->getTopParentObj();
 
 		if( !in_array(true, array($wmessage->isAdminDelete(), $wmessage->isRemove())) ) {
-			$item['wall-url'] = $wmessage->getWallPageUrl();
+			$item['wall-title'] = $wmessage->getArticleTitle()->getPrefixedText();
 
 			$owner = $wmessage->getWallOwner();
 
@@ -155,7 +155,7 @@ class WallHelper {
 
 				$item['url'] = $wmessage->getMessagePageUrl();
 				$res['title'] = 'message-wall-thread-#'.$title->getArticleID();
-				$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">' . wfMessage( 'wall-wiki-activity-wall-owner', $item['wall-owner'] )->escaped() . '</a>' )->text();
+				$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 			} else {
 			//child
 				$parent->load();
@@ -165,7 +165,7 @@ class WallHelper {
 					if( isset($parent->mMetadata['title']) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData($item, $parent, $title);
 					$res['title'] = 'message-wall-thread-#'.$parent->getTitle()->getArticleID();
-					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', '<a href="'.$item['wall-url'].'">' . wfMessage( 'wall-wiki-activity-wall-owner', $item['wall-owner'] )->escaped() . '</a>' )->text();
+					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 				} else {
 				//message was removed or deleted
 					$item = array();
