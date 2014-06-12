@@ -34,11 +34,18 @@ class HTMLCacheUpdateTask extends BaseTask {
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$timestamp = $dbw->timestamp();
-
 		$dbw->update( 'page',
-			array( 'page_touched' => $timestamp ),
-			array( 'page_id' => $affectedTitles ),
+			array(
+				'page_touched' => $dbw->timestamp(),
+			),
+			array(
+				'page_id' => array_map(
+					function($t) {
+						return $t->getArticleID();
+					},
+					$affectedTitles
+				),
+			),
 			__METHOD__
 		);
 
@@ -64,15 +71,12 @@ class HTMLCacheUpdateTask extends BaseTask {
 	 */
 	protected function getAffectedTitles( array $tables ) {
 		$cache = $this->title->getBacklinkCache();
-		$ids = [];
+		$titles = [];
 		foreach ( $tables as $table ) {
-			$numRows = $cache->getNumLinks( $table );
-			$titles = $cache->getLinks( $table );
-			foreach ( $titles as $title ) {
-				$ids[] = $title->getArticleID();
+			foreach ( $cache->getLinks($table) as $title ) {
+				$titles[] = $title;
 			}
 		}
-		sr_log("Total:", $ids);
-		return $ids;
+		return $titles;
 	}
 }
