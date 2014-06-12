@@ -105,6 +105,7 @@ class BaseRssModelTest extends WikiaBaseTest
 	}
 
 	/**
+	 * @group UsingDB
 	 * @covers BaseRssModel::processItems
 	 */
 	public function testProcessItems()
@@ -128,7 +129,6 @@ class BaseRssModelTest extends WikiaBaseTest
 		];
 
 		$processedData = $processItems($sampleItems);
-//		$this->assertArrayHasKey()
 		$this->assertArrayHasKey('timestamp', $processedData['dummy_url']);
 		$this->assertLessThan($processedData['dummy_url']['timestamp'], $processedData['dummy_url2']['timestamp']);
 
@@ -137,6 +137,7 @@ class BaseRssModelTest extends WikiaBaseTest
 	}
 
 	/**
+	 * @group UsingDB
 	 * @covers BaseRssModel::getArticleDetail
 	 */
 	public function testGetArticleDetail() {
