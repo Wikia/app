@@ -30,7 +30,7 @@ $hubsmenu-font-color: #092140;
  .GlobalNavigationContainer {
 	display: none;
 	position: absolute;
-	top: 66px;
+	top: 68px;
 	width: -webkit-calc(100% - 290px);
 	width: calc(100% - 290px);
 
@@ -45,6 +45,8 @@ $hubsmenu-font-color: #092140;
 		position: relative;
 		width: 866px;
 		z-index: 1000;
+		border: 2px solid rgba(0,0,0,.1);
+		border-top: 0;
 
 		.hubs {
 			position: absolute;
@@ -193,7 +195,7 @@ $hubsmenu-font-color: #092140;
 			&.count-#{$i} section,
 			&.count-#{$i} .hubs,
 			&.count-#{$i} {
-				height: $i * 62px;
+				height: 2px + $i * 62px;
 			}
 		}
 
@@ -204,6 +206,7 @@ $hubsmenu-font-color: #092140;
 			overflow: auto;
 			position: absolute;
 			width: 270px;
+			top: -2px;
 
 			a, h2 {
 				color: inherit;

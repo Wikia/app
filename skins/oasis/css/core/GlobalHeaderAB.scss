@@ -16,12 +16,13 @@ $new-border-color: #c7d1d8;
 $facebook-background-color: #3c5b9b;
 
 .WikiaHeader.v3 {
+	@include clear-box-shadow;
 	background: none;
 	background-color: $nav-background-color;
 	border: 0;
-	box-shadow: none;
-	-webkit-box-shadow: none;
+	border-bottom: 2px solid rgba(0,0,0,.1);
 	color: $nav-font-color;
+
 
 	.wikia-header-mask {
 		background: none;
@@ -76,8 +77,9 @@ $facebook-background-color: #3c5b9b;
 		.subnav.show {
 			@include clear-box-shadow;
 			background-color: $nav-background-color;
-			border: 0;
-			top: $new-nav-height;
+			border: 2px solid rgba(0,0,0,.1);
+			border-top: 0;
+			top: $new-nav-height + 1;
 
 			> li {
 				border-top: 1px solid $new-border-color;
