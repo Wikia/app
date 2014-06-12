@@ -44,7 +44,6 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	} );
 	this.target = this.surface.getTarget() || null;
 
-
 	// Events
 	this.surface.getModel().connect( this, {
 		'documentUpdate': 'onModelChange',
