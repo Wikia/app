@@ -67,8 +67,8 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 	} );
 
 	this.$window.on( {
-		'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
-		'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
+		//'resize.ve-ui-desktopContext': $.throttle( 500, ve.bind( this.onWindowResize, this ) ),
+		//'scroll.ve-ui-desktopContext': $.throttle( 100, ve.bind( this.onWindowScroll, this ) )
 	} );
 	this.$element.add( this.$menu )
 		.on( 'mousedown', false );

@@ -12,12 +12,8 @@
  * @extends ve.ce.WikiaBlockMediaNode
  *
  * @constructor
- * @param {ve.dm.WikiaBlockImageNode} model Model to observe
- * @param {Object} [config] Config options
  */
-ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode( model, config ) {
-	// Parent constructor
-	ve.ce.WikiaBlockMediaNode.call( this, model, config );
+ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode() {
 };
 
 /* Inheritance */
@@ -27,7 +23,6 @@ OO.inheritClass( ve.ce.WikiaBlockImageNode, ve.ce.WikiaBlockMediaNode );
 /* Static Properties */
 
 ve.ce.WikiaBlockImageNode.static.name = 'wikiaBlockImage';
-
 
 /* Registration */
 
