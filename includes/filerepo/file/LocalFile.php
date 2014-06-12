@@ -1139,6 +1139,16 @@ class LocalFile extends File {
 			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 		}
 
+		/* wikia change - begin (VID-1568) */
+		// Update/Insert video info
+		try {
+			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
+		} catch ( \Exception $e ) {
+			$dbw->rollback();
+			return false;
+		}
+		/* wikia change - end (VID-1568) */
+
 		# Commit the transaction now, in case something goes wrong later
 		# The most important thing is that files don't get lost, especially archives
 		$dbw->commit();
@@ -1157,8 +1167,12 @@ class LocalFile extends File {
 
 			# Remove the old file from the squid cache
 			SquidUpdate::purge( array( $this->getURL() ) );
+
+			/* wikia change - begin (VID-1568) */
+			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
+			/* wikia change - end (VID-1568) */
 		}
-		
+
 		# Hooks, hooks, the magic of hooks...
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
@@ -1516,6 +1530,16 @@ class LocalFile extends File {
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback();
 	}
+
+	/* wikia change - begin (VID-1568) */
+	/**
+	 * Check if file data is loaded
+	 * @return bool
+	 */
+	public function isDataLoaded() {
+		return $this->dataLoaded;
+	}
+	/* wikia change - end (VID-1568) */
 } // LocalFile class
 
 # ------------------------------------------------------------------------------
