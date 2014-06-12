@@ -11,6 +11,8 @@ namespace Wikia\Tasks\Tasks;
 
 class ImageReviewTask extends BaseTask {
 	public function delete($pageList, $suppress=false) {
+		global $IP;
+
 		$user = \User::newFromId($this->createdBy);
 		$userName = $user->getName();
 		$articlesDeleted = 0;
@@ -38,8 +40,7 @@ class ImageReviewTask extends BaseTask {
 			$cityLang = \WikiFactory::getVarValueByName('wgLanguageCode', $wikiId);
 			$reason = wfMsgExt('imagereview-reason', ['language' => $cityLang]);
 
-			$command = "perl /usr/wikia/backend/bin/run_maintenance --id={$wikiId} --script=wikia/deleteOn.php".
-				' --'.
+			$command = "SERVER_ID={$wikiId} php {$IP}/maintenance/wikia/deleteOn.php".
 				' -u '.escapeshellarg($userName).
 				' --id '.$imageId;
 
@@ -50,12 +51,12 @@ class ImageReviewTask extends BaseTask {
 				$command .= ' -s';
 			}
 
-			$title = wfShellExec($command, $retval);
+			$title = wfShellExec($command, $exitStatus);
 
-			if ($retval !== 0) {
+			if ($exitStatus !== 0) {
 				$this->error('article deletion error', [
 					'city_url' => $cityUrl,
-					'retval' => $retval,
+					'exit_status' => $exitStatus,
 					'error' => $title,
 				]);
 				continue;
@@ -77,7 +78,7 @@ class ImageReviewTask extends BaseTask {
 		}
 	}
 
-	public function sendNotification() {
+	private function sendNotification() {
 		global $wgFlowerUrl;
 
 		$subject = "ImageReview deletion failed #{$this->taskId}";
