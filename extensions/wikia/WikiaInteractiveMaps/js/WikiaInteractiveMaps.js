@@ -14,8 +14,11 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
 					mustache: [
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSet.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache'
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
 					]
 				},
 				origin: 'wikia-int-map-create-map',
