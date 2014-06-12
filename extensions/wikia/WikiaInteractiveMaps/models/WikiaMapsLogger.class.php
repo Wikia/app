@@ -80,13 +80,13 @@ class WikiaMapsLogger {
 	 *
 	 * @param string $type Type of the entry
 	 * @param string $action Action of the entry
-	 * @param Title $title Page title
-	 * @param $forUI
+	 * @param mixed $title Page title or null
+	 * @param mixed $skin Skin object or null
 	 * @param array $params Params array
-	 * @param bool $filterWikilinks
+	 * @param bool $filterWikilinks - whether to filter wiki links
 	 * @return string
 	 */
-	public static function formatLogEntry( $type, $action, Title $title, $forUI, Array $params, $filterWikilinks ) {
+	public static function formatLogEntry( $type, $action, $title, $skin, Array $params, $filterWikilinks ) {
 		global $wgLang;
 
 		$mapPageTitle = $wgLang->convertTitle( $title );
@@ -107,6 +107,9 @@ class WikiaMapsLogger {
 		];
 		if ( isset( $translations[ $action ] ) ) {
 			$messageKey = $translations[ $action ];
+		}
+		if ( is_null( $skin ) ) {
+			return wfMessage( $messageKey, $mapPageTitle )->plain();
 		}
 		return wfMessage( $messageKey, $mapPageTitle );
 	}
