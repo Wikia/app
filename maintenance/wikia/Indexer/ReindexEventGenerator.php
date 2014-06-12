@@ -22,6 +22,8 @@ class ReindexEventGenerator extends Maintenance {
 	 */
 	public function execute() {
 		if ( !$this->get_params_from_env() ) {
+			$this->output('Some params are not set in env,
+			please check: RABBITMQ_HOST, RABBITMQ_PORT, RABBITMQ_USER, RABBITMQ_PASSWORD, RABBITMQ_VHOST.');
 			die;
 		}
 		$db = wfGetDB( DB_SLAVE );
