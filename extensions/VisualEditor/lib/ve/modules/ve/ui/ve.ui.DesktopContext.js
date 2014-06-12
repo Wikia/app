@@ -42,6 +42,8 @@ ve.ui.DesktopContext = function VeUiDesktopContext( surface, config ) {
 		'$': this.$,
 		'$container': this.surface.getView().$element
 	} );
+	this.target = this.surface.getTarget() || null;
+
 
 	// Events
 	this.surface.getModel().connect( this, {
@@ -416,7 +418,7 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 	if ( position ) {
 		if ( this.floating ) {
 			position.x += surfaceOffset.left;
-			position.y = this.surface.getTarget().getToolbar().$element.height() + this.floatThreshold;
+			position.y = this.target.getToolbar().$element.height() + this.floatThreshold;
 		}
 		this.$element.css( { 'left': position.x, 'top': position.y } );
 	}
@@ -531,12 +533,14 @@ ve.ui.DesktopContext.prototype.shouldBeEmbedded = function ( focusedNode ) {
  * Handle floating or unfloating the context menu.
  */
 ve.ui.DesktopContext.prototype.handleFloat = function () {
-	if ( this.shouldFloat() ) {
-		if ( !this.floating ) {
-			this.float();
+	if ( this.target ) {
+		if ( this.shouldFloat() ) {
+			if ( !this.floating ) {
+				this.float();
+			}
+		} else if ( this.floating ) {
+			this.unfloat();
 		}
-	} else if ( this.floating ) {
-		this.unfloat();
 	}
 };
 
