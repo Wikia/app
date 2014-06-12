@@ -193,8 +193,6 @@ class WAMService extends Service {
 					'dw' => 'dimension_wikis'
 				],
 				'DISTINCT dw.lang',
-//				[ 'fw1.time_id' => 'FROM_UNIXTIME( ' . $date . ', GET_FORMAT( DATE, \'ISO\' ) )' ],
-//				[ 'fw1.time_id' => 'FROM_UNIXTIME( ' . $date . ', \'%Y-%m-%d\' )' ],
 				[ 'fw1.time_id' => date( self::DATE_FORMAT, $date  ) ],
 				__METHOD__,
 				[ 'ORDER BY' => 'dw.lang ASC' ],

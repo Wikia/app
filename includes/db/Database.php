@@ -1376,10 +1376,6 @@ abstract class DatabaseBase implements DatabaseType {
 		$options = array(), $join_conds = array() ) {
 		$sql = $this->selectSQLText( $table, $vars, $conds, $fname, $options, $join_conds );
 
-		if (stristr($sql,'distinct')){
-			var_dump( $sql );
-		}
-
 		return $this->query( $sql, $fname );
 	}
 
