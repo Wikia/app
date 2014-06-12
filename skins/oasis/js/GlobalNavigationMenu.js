@@ -3,86 +3,92 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana', 'wikia.mustache' ], fun
 
 	$('#GlobalNavigation').remove();
 	$('<li id="GlobalNavigationMenuButton">&lt;INSERT MENU HERE&gt;</li>').insertBefore('li.WikiaLogo');
-	$('<div class="GlobalNavigationContainer"><table class="GlobalNavigationDropdown"/></div>').appendTo('body');
+	$('<div class="GlobalNavigationContainer"><nav><div class="hubs"></div></nav></div>').insertAfter('.WikiaHeader');
 
-	var $globalNavigationDropdown = $('.GlobalNavigationDropdown'),
-		verticalMenuData = '<h2>Title</h2><ul>' +
-			'<li><a href="google.com">Item</a></li>' +
-			'<li><a href="google.com">Item</a></li>' +
-			'<li><a href="google.com">Item</a></li>' +
-			'<li><a href="google.com">Item</a></li>' +
-			'<li><a href="google.com">Item</a></li>' +
-			'</ul>',
-		activeType = 'comics',
-		verticalMenu = [
-			{
-				'menu': 'books',
-				'type': 'books',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'comics',
-				'type': 'comics',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'games',
-				'type': 'games',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'lifestyle',
-				'type': 'lifestyle',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'movies',
-				'type': 'movies',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'music',
-				'type': 'music',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			},
-			{
-				'menu': 'tv',
-				'type': 'tv',
-				'data': [verticalMenuData + verticalMenuData, verticalMenuData + verticalMenuData]
-			}
-		];
+	var $globalNavigationNav = $('.GlobalNavigationContainer nav'),
+		$hubsMenu = $globalNavigationNav.find('.hubs'),
+		rnd = function() {
+			return Math.floor(Math.random() * 1000);
+		},
+		verticalMenuData = function() {
+			return '<h2>Title ' + rnd() + '</h2><ul>' +
+			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
+			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
+			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
+			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
+			'<li><a href="google.com">Item ' + rnd() + '</a></li>' +
+			'</ul>'; },
+		verticalData = {
+			activeType: 'comics',
+			menu: [
+				{
+					'label': 'Books',
+					'type': 'books',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'ComiX',
+					'type': 'comics',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'Games!',
+					'type': 'games',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'LiveStyle',
+					'type': 'lifestyle',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'Moovies',
+					'type': 'movies',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'Musique',
+					'type': 'music',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				},
+				{
+					'label': 'T.V.',
+					'type': 'tv',
+					'data': [verticalMenuData() + verticalMenuData(), verticalMenuData() + verticalMenuData()]
+				}
+			]
+		};
 	// build menu
 	// 1. prepare table markup
-	$.each(verticalMenu, function(index) {
-		$globalNavigationDropdown.append('<tr data-row="' + index + '"></tr>');
-	});
+//	$.each(verticalMenu, function(index) {
+//		$globalNavigationNav.append('<tr data-row="' + index + '"></tr>');
+//	});
+	$globalNavigationNav.addClass('count-' + verticalData.menu.length);
 	// 2. populate main menu + dave submenu data in data
-	$.each(verticalMenu, function(index) {
-		var $elem = $('<td class="' + this.type + ' hub"></td>'),
-			$tr = $globalNavigationDropdown.find('[data-row=' + index + ']'),
-			icon = '<span class="icon" />',
-			border = '<span class="border" />';
+	$.each(verticalData.menu, function() {
+		var $elem = $('<nav class="' + this.type + ' hub"><span class="icon" />' +
+			'<span class="border" /><span class="label" /></nav>');
 
-		$elem.data('data', this.data).html(icon + border + this.menu);
-		$tr.append($elem).data('type', this.type);
+		$elem.data('data', this.data).find('.label').text(this.label);
+		$elem.appendTo($hubsMenu);
 	});
 	// 3. finish table markup - add place for submenu
-	$globalNavigationDropdown.find('[data-row=0]')
-		.append('<td rowspan="' + verticalMenu.length + '" data-submenu="1"><span style="height:' + (verticalMenu.length * 62) + 'px" />')
-		.append('<td rowspan="' + verticalMenu.length + '" data-submenu="2"><span style="height:' + (verticalMenu.length * 62) + 'px" />');
+	$globalNavigationNav
+		.append('<section data-submenu="0" />')
+		.append('<section data-submenu="1" />');
 	//
 
-	$globalNavigationDropdown.on('click', 'td.hub', function (e) {
+	$globalNavigationNav.on('click', '.hub', function (e) {
 		e.preventDefault();
-		$globalNavigationDropdown.find('tr').removeClass('active');
+		$globalNavigationNav.find('.hub').removeClass('active');
 
 		var $this = $(this),
 			data = $this.data('data');
 
-		$this.parent().addClass('active');
-		$globalNavigationDropdown.find('[data-submenu=1] span').html(data[0]);
-		$globalNavigationDropdown.find('[data-submenu=2] span').html(data[1]);
-	});
+		$this.addClass('active');
+		$globalNavigationNav.find('[data-submenu=0]').html(data[0]);
+		$globalNavigationNav.find('[data-submenu=1]').html(data[1]);
+	}).find('.hub.' + verticalData.activeType).click();
 
 	$('#WikiaHeader').on('click', '#GlobalNavigationMenuButton', function (e) {
 		e.preventDefault();
