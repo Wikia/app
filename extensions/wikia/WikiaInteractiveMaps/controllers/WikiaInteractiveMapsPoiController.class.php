@@ -5,6 +5,11 @@
  */
 class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseController {
 
+	const ACTION_CREATE = 'create';
+	const ACTION_UPDATE = 'update';
+
+	private $currentAction;
+
 	/**
 	 * Entry point to create/edit point of interest
 	 *
@@ -35,8 +40,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 		$this->validatePoiData();
 
-		$this->setData( 'createdBy', $this->wg->User->getName() );
-
 		if( $poiId > 0 ) {
 			$results = $this->updatePoi();
 		} else {
@@ -44,6 +47,37 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		$this->setVal( 'results', $results );
+	}
+
+	/**
+	 * Sets current action being executed on POI
+	 *
+	 * @param String $action
+	 * @throws Exception
+	 */
+	private function setAction( $action ) {
+		$availableActions = [
+			self::ACTION_CREATE => true,
+			self::ACTION_UPDATE => true,
+		];
+
+		if( isset( $availableActions[ $action ] ) ) {
+			$this->currentAction = $action;
+		} else {
+			throw new Exception( sprintf( 'Invalid action (%s)', $action ) );
+		}
+	}
+
+	private function getAction() {
+		return $this->currentAction;
+	}
+
+	private function isUpdate() {
+		return ( $this->getAction() === self::ACTION_UPDATE );
+	}
+
+	private function isCreate() {
+		return ( $this->getAction() === self::ACTION_CREATE );
 	}
 
 	/**
@@ -72,9 +106,17 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	private function updatePoi() {
-		// TODO: finish me!
+		$this->setAction( self::ACTION_UPDATE );
 
 		$results['success'] = false;
+		$response = json_decode( $this->mapsModel->updatePoi(
+			$this->getData( 'poiId' ),
+			$this->getSanitizedData()
+		) );
+		if( $response->id ) {
+			$results['success'] = true;
+			$results['content'] = $response;
+		}
 
 		return $results;
 	}
@@ -85,16 +127,36 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @return bool|string
 	 */
 	private function createPoi() {
-		$results['success'] = false;
+		$this->setAction( self::ACTION_CREATE );
 
+		$results['success'] = false;
+		$response = json_decode( $this->mapsModel->savePoi( $this->getSanitizedData() ) );
+		if( $response->id ) {
+			$results['success'] = true;
+			$results['content'] = $response;
+		}
+
+		return $results;
+	}
+
+	private function getSanitizedData() {
 		$poiData = [
 			'name' => $this->getData( 'name' ),
 			'poi_category_id' => $this->getData( 'poiCategoryId' ),
-			'map_id' => $this->getData( 'mapId' ),
 			'lat' => $this->getData( 'lat' ),
 			'lon' => $this->getData( 'lon' ),
-			'created_by' => $this->getData( 'createdBy' )
 		];
+
+		$userName = $this->wg->User->getName();
+
+		if( $this->isCreate() ) {
+			$poiData['map_id'] = $this->getData( 'mapId' );
+			$poiData['created_by'] = $userName;
+		}
+
+		if( $this->isUpdate() ) {
+			$poiData['updated_by'] = $userName;
+		}
 
 		$description = $this->getData( 'description' );
 		if( !empty( $description ) ) {
@@ -111,13 +173,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			$poiData['photo'] = $photo;
 		}
 
-		$response = json_decode( $this->mapsModel->savePoi( $poiData ) );
-		if( $response->id ) {
-			$results['success'] = true;
-			$results['content'] = $response;
-		}
-
-		return $results;
+		return $poiData;
 	}
 
 }
