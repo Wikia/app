@@ -36,16 +36,21 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 					.append('<section data-submenu="1" />');
 			},
 			attachEvents = function() {
-				$globalNavigationNav.on('mouseover', '.hub', function (e) {
+				var $hub = $globalNavigationNav.find('.hub'),
+					$submenu0 = $globalNavigationNav.find('[data-submenu=0]'),
+					$submenu1 = $globalNavigationNav.find('[data-submenu=1]');
+
+				$globalNavigationNav.on('mouseenter', '.hub', function (e) {
 					e.preventDefault();
-					$globalNavigationNav.find('.hub').removeClass('active');
+					$hub.removeClass('active');
 
 					var $this = $(this),
 						data = $this.data('data');
 
 					$this.addClass('active');
-					$globalNavigationNav.find('[data-submenu=0]').html(data[0]);
-					$globalNavigationNav.find('[data-submenu=1]').html(data[1]);
+					$submenu0.html(data[0]);
+					$submenu1.html(data[1]);
+
 				}).on('mouseleave', function(){
 					$('#GlobalNavigationMenuButton').removeClass('active');
 					$('.GlobalNavigationContainer').hide();
@@ -54,7 +59,7 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 				$('#WikiaHeader').on('mouseover click', '#GlobalNavigationMenuButton', function (e) {
 					e.preventDefault();
 					//
-					$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseover();
+					$globalNavigationNav.find('.hub.' + $globalNavigationNav.data('active')).mouseenter();
 
 					$('#GlobalNavigationMenuButton').addClass('active');
 					$('.GlobalNavigationContainer').show();
