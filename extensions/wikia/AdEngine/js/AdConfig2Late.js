@@ -51,7 +51,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true
 		},
-		dartBtfEnabled = window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfCountries[country];
+		dartBtfVerticals = {
+			Entertainment: true
+		},
+
+		dartBtfEnabled = dartBtfCountries[country] && (
+				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
+				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals.hasOwnProperty(window.cscoreCat))
+			);
 
 	if (window.wgEnableRHonDesktop) {
 		adProviderRemnant = adProviderRemnantGpt;
