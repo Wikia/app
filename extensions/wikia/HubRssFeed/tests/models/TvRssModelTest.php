@@ -34,8 +34,9 @@ class TvRssModelTest extends WikiaBaseTest {
 		$valid_titles = [
 			"More info about bogus_title from Muppet Wiki",
 			"Read more about bogus_title from Muppet Wiki",
-			"Recommended page: bogus_title  from Muppet Wiki" ];
-		$this->assertContains( $formatTitle( $dummyItem )['title'], $valid_titles );
+			"Recommended page: bogus_title from Muppet Wiki" ];
+		$title = $formatTitle( $dummyItem )['title'];
+		$this->assertContains( $title , $valid_titles );
 	}
 
 	/**

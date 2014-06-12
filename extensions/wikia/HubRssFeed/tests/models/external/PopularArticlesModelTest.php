@@ -20,7 +20,7 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	private function mockDbQuery() {
+	private function mockDbQuery( &$mockDb = null ) {
 		$mockQueryResults = $this->getMock( "ResultWrapper", array( 'fetchObject' ), array(), '', false );
 
 		$mockDb = $this->getMock( 'DatabaseMysql', array( 'query' ) );
@@ -40,22 +40,24 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	}
 
 	/*
+	 * @group UsingDB
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_SkipMainPage() {
 		$mainPage = Title::newMainPage();
-
-		$mockResults = $this->mockDbQuery();
+		$mockDb = null;
+		$mockResults = $this->mockDbQuery( $mockDb );
 		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
 			->will( $this->returnValue( $this->fakeRecentlyEditedQueryRow( $mainPage ) ) );
 
 		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
-		$result = $fn( 0 );
+		$result = $fn( 0, $mockDb );
 
 		$this->assertEmpty( $result );
 	}
 
 	/*
+	 * @group UsingDB
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_ReturnPageIds() {
