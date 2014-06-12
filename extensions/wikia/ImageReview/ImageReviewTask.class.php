@@ -2,8 +2,6 @@
 /**
  * ImageReviewTask
  *
- * <insert description here>
- *
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
