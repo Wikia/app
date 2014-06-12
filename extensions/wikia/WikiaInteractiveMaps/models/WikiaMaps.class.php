@@ -51,10 +51,10 @@ class WikiaMaps {
 	public function buildUrl( Array $segments, Array $params = [] ) {
 		return sprintf(
 			'%s://%s:%d/api/%s/%s%s',
-			$this->config['protocol'],
-			$this->config['hostname'],
-			$this->config['port'],
-			$this->config['version'],
+			$this->config[ 'protocol' ],
+			$this->config[ 'hostname' ],
+			$this->config[ 'port' ],
+			$this->config[ 'version' ],
 			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
 		);
@@ -89,7 +89,7 @@ class WikiaMaps {
 			Http::post( $url, [
 				'postData' => json_encode( $data ),
 				'headers' => [
-					'Authorization' => $this->config['token']
+					'Authorization' => $this->config[ 'token' ]
 				],
 				'returnInstance' => true,
 				//TODO: this is temporary workaround, remove it before production!
@@ -111,7 +111,7 @@ class WikiaMaps {
 			Http::request( 'PUT', $url, [
 				'postData' => json_encode( $data ),
 				'headers' => [
-					'Authorization' => $this->config['token']
+					'Authorization' => $this->config[ 'token' ]
 				],
 				'returnInstance' => true,
 				'noProxy' => true
@@ -137,8 +137,8 @@ class WikiaMaps {
 			] )
 		);
 
-		if( $response['success'] ) {
-			$mapsData = $response['content'];
+		if( $response[ 'success' ] ) {
+			$mapsData = $response[ 'content' ];
 
 			// Add map size to maps and human status messages
 			array_walk( $mapsData->items, function( &$map ) {
@@ -180,7 +180,7 @@ class WikiaMaps {
 			] )
 		);
 
-		$map = $response['content'];
+		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
 			$response = $this->processServiceResponse(
 				Http::get( $map->tile_set_url, 'default', [
@@ -190,7 +190,7 @@ class WikiaMaps {
 				] )
 			);
 
-			$tilesData = $response['content'];
+			$tilesData = $response[ 'content' ];
 
 			if( !is_null( $tilesData ) ) {
 				$map->image = $tilesData->image;
@@ -286,7 +286,7 @@ class WikiaMaps {
 			'deleted' => true
 		];
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
-		return $this->putRequest($url, $payload);
+		return $this->putRequest( $url, $payload );
 	}
 
 	/**
@@ -372,15 +372,15 @@ class WikiaMaps {
 	 * @todo: how about extracting results to an object?
 	 */
 	private function processServiceResponse( MWHttpRequest $response ) {
-		$results['success'] = false;
+		$results[ 'success' ] = false;
 		$status = $response->getStatus();
 		$content = json_decode( $response->getContent() );
-		$results['content'] = $content;
+		$results[ 'content' ] = $content;
 
 		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
 		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_UPDATED_CODE,
 				self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
-			$results['success'] = true;
+			$results[ 'success' ] = true;
 		}
 
 		return $results;
