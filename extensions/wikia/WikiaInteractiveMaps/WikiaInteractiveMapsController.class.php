@@ -598,7 +598,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	public function deleteMap() {
 		$mapId = $this->request->getVal( 'mapId', 0 );
 		$result = false;
-		if( $mapId && $this->wg->User->isLoggedIn() ) {
+		if ( $mapId && $this->wg->User->isLoggedIn() ) {
 			$result = $this->mapsModel->deleteMapById( $mapId )['success'];
 		}
 		if ( $result ) {
