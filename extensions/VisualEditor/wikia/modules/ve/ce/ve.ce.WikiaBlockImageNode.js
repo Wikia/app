@@ -12,8 +12,12 @@
  * @extends ve.ce.WikiaBlockMediaNode
  *
  * @constructor
+ * @param {ve.dm.WikiaBlockImageNode} model Model to observe
+ * @param {Object} [config] Config options
  */
-ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode() {
+ve.ce.WikiaBlockImageNode = function VeCeWikiaBlockImageNode( model, config ) {
+	// Parent constructor
+	ve.ce.WikiaBlockMediaNode.call( this, model, config );
 };
 
 /* Inheritance */
