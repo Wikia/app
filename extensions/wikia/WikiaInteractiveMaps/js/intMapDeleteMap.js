@@ -42,6 +42,7 @@ define('wikia.intMaps.deleteMap',
 	 */
 	function deleteMap() {
 		modal.deactivate();
+		closeError();
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMaps',
 			method: 'deleteMap',
