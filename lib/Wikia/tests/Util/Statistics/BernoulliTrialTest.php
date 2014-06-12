@@ -13,20 +13,20 @@ class BernoulliTrialTest extends PHPUnit_Framework_TestCase {
 	 * @param float $trials
 	 * @dataProvider sampleProvider
 	 */
-	function testShouldSample($probability, $tolerance, $trials) {
+	function testShouldSample( $probability, $tolerance, $trials ) {
 		$total     = 0.0;
 		$trials    = (float)$trials;
 		$tolerance = (float)$tolerance;
 
-		$sampler = new BernoulliTrial($probability);
-		for ($i=0; $i<$trials; $i++) {
-			if ($sampler->shouldSample()) {
+		$sampler = new BernoulliTrial( $probability );
+		for ( $i = 0; $i < $trials; $i++ ) {
+			if ( $sampler->shouldSample() ) {
 				$total++;
 			}
 		}
 
-		$actual = $total/$trials;
-		$this->assertTrue(abs($actual - $probability) < $tolerance, sprintf("percent is %f %d %d", $actual, $total, $trials));
+		$actual = $total / $trials;
+		$this->assertTrue( abs( $actual - $probability ) < $tolerance, sprintf( "percent is %f %d %d", $actual, $total, $trials ) );
 	}
 
 	/**
@@ -38,9 +38,9 @@ class BernoulliTrialTest extends PHPUnit_Framework_TestCase {
 	public function sampleProvider() {
 		return array(
 			# probability, tolerance from actual, sample size
-			array(0.01, 0.005, 10000.0),
-			array(1.0, 0.01, 10000.0),
-			array(0.5, 0.08, 10000.0),
+			array( 0.01, 0.005, 10000.0 ),
+			array( 1.0, 0.01, 10000.0 ),
+			array( 0.5, 0.08, 10000.0 ),
 		);
 	}
 
@@ -48,14 +48,14 @@ class BernoulliTrialTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testHighProbability() {
-		$sampler = new BernoulliTrial(BernoulliTrial::MAX_PROBABILITY + 1);
+		$sampler = new BernoulliTrial( BernoulliTrial::MAX_PROBABILITY + 1 );
 	}
 
 	/**
 	 * @expectedException \InvalidArgumentException
 	 */
 	public function testLowProbability() {
-		$sampler = new BernoulliTrial(BernoulliTrial::MIN_PROBABILITY - 1);
+		$sampler = new BernoulliTrial( BernoulliTrial::MIN_PROBABILITY - 1 );
 	}
 
 }

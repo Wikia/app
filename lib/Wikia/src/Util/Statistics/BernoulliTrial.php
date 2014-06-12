@@ -44,8 +44,8 @@ class BernoulliTrial {
 	 * @param float $probability the probability of success
 	 * @throws InvalidArgumentException
 	 */
-	function __construct($probability) {
-		$this->checkProbability($probability);
+	function __construct( $probability ) {
+		$this->checkProbability( $probability );
 		$this->probability = $probability;
 	}
 
@@ -53,8 +53,8 @@ class BernoulliTrial {
 		return $this->probability;
 	}
 
-	public function setProbability($probability) {
-		$this->checkProbability($probability);
+	public function setProbability( $probability ) {
+		$this->checkProbability( $probability );
 		$this->probability = $probability;
 	}
 
@@ -65,7 +65,7 @@ class BernoulliTrial {
 	 * @return bool
 	 */
 	public function shouldSample() {
-		if ($this->getRandomFloat() <= $this->probability) {
+		if ( $this->getRandomFloat() <= $this->probability ) {
 			return true;
 		}
 
@@ -79,7 +79,7 @@ class BernoulliTrial {
 	 * @return float
 	 */
 	public function getRandomFloat() {
-		return mt_rand(self::MIN_MT_RAND_RANGE, self::MAX_MT_RAND_RANGE) / self::MAX_MT_RAND_RANGE;
+		return mt_rand( self::MIN_MT_RAND_RANGE, self::MAX_MT_RAND_RANGE ) / self::MAX_MT_RAND_RANGE;
 	}
 
 	/**
@@ -91,9 +91,9 @@ class BernoulliTrial {
 	 * @throws InvalidArgumentException
 	 *
 	 */
-	public function checkProbability($probability) {
-		if ($probability < self::MIN_PROBABILITY || $probability > self::MAX_PROBABILITY) {
-			throw new \InvalidArgumentException(sprintf("Error, probability %f outside the range %f-%f.", $probability, self::MIN_PROBABILITY, self::MAX_PROBABILITY));
+	public function checkProbability( $probability ) {
+		if ( $probability < self::MIN_PROBABILITY || $probability > self::MAX_PROBABILITY ) {
+			throw new \InvalidArgumentException( sprintf( "Error, probability %f outside the range %f-%f.", $probability, self::MIN_PROBABILITY, self::MAX_PROBABILITY ) );
 		}
 	}
 
