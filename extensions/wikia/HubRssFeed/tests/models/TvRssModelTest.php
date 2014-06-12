@@ -13,6 +13,7 @@ class TvRssModelTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @group UsingDB
 	 * @covers TvRssModel::formatTitle
 	 */
 	public function testFormatTitle() {
