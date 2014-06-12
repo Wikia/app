@@ -508,14 +508,19 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if (TaskRunner::isModern('PromoteImageReviewTask')) {
-			$taskLists = [];
+			$batch = [];
 
 			foreach ($list as $targetWikiId => $wikis) {
-				$taskLists []= (new \Wikia\Tasks\AsyncTaskList())
-					->add((new \Wikia\Tasks\Tasks\PromoteImageReviewTask())->call($type, $targetWikiId, $wikis));
+				$taskList = new \Wikia\Tasks\AsyncTaskList();
+				$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+
+				$call = $task->call($type, $targetWikiId, $wikis);
+				$taskList->add($call);
+
+				$batch []= $taskList;
 			}
 
-			\Wikia\Tasks\AsyncTaskList::batch($taskLists);
+			\Wikia\Tasks\AsyncTaskList::batch($batch);
 		} else {
 			$task = new PromoteImageReviewTask();
 			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
