@@ -140,7 +140,6 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 				$lat,
 				$lon
 			] );
-			$this->getMenuMarkup();
 
 			$this->setVal( 'title', $map->title );
 			$this->setVal( 'mapFound', true );
