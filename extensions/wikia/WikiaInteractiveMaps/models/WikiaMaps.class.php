@@ -322,8 +322,8 @@ class WikiaMaps {
 	 * @return integer
 	 */
 	public function getGeoMapTilesetId() {
-		if( isset( $this->config[ 'geoTilesetId' ] ) ) {
-			return $this->config[ 'geoTilesetId' ];
+		if( isset( $this->config[ 'geo-tileset-id' ] ) ) {
+			return $this->config[ 'geo-tileset-id' ];
 		}
 
 		return 0;
