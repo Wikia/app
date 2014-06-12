@@ -40,8 +40,6 @@ class CreateNewWikiTask extends BaseTask {
 			$this->info('loading founding user', ['founder_id' => $params['founderId']]);
 			$this->founder = User::newFromId( $params['founder_id'] );
 			$this->founder->load();
-		} else {
-			$this->warning("founder user_id is unknown");
 		}
 
 		if ( !$this->founder || $this->founder->isAnon() ) {
@@ -87,16 +85,16 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgCityId, $IP;
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/update.php --server={$server} --quick --nopurge" );
-		$output = wfShellExec( $cmd, $retval );
-		$this->info( 'run update.php', ['retval' => $retval, 'output' => $output] );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run update.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/initStats.php --server={$server}" );
-		$output = wfShellExec( $cmd, $retval );
-		$this->info( 'run initStats.php', ['retval' => $retval, 'output' => $output] );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run initStats.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/refreshLinks.php --server={$server} --new-only" );
-		$output = wfShellExec( $cmd, $retval );
-		$this->info( 'run refreshLinks.php', ['retval' => $retval, 'output' => $output] );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run refreshLinks.php', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$this->info( "Remove edit lock" );
 		$variable = WikiFactory::getVarByName( 'wgReadOnly', $wgCityId );
@@ -107,8 +105,8 @@ class CreateNewWikiTask extends BaseTask {
 
 		$dbname = WikiFactory::IDtoDB( $wgCityId );
 		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} " );
-		$output = wfShellExec( $cmd, $retval );
-		$this->info( 'run events_local_users.pl', ['retval' => $retval, 'output' => $output] );
+		$output = wfShellExec( $cmd, $exitStatus );
+		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( WikiFactory::getVarsKey( $wgCityId ) );
