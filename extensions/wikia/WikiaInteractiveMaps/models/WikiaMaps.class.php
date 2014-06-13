@@ -107,14 +107,16 @@ class WikiaMaps {
 	 * @return string|bool
 	 */
 	private function putRequest( $url, $data ) {
-		return Http::request( 'PUT', $url, [
-			'postData' => json_encode( $data ),
-			'headers' => [
-				'Authorization' => $this->config['token']
-			],
-			//TODO this is temporary workaround, remove it before production!
-			'noProxy' => true
-		] );
+		return $this->processServiceResponse(
+			Http::request( 'PUT', $url, [
+				'postData' => json_encode( $data ),
+				'headers' => [
+					'Authorization' => $this->config['token']
+				],
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
 	}
 
 	/**

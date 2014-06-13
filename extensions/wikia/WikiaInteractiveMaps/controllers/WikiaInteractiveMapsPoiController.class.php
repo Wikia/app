@@ -108,17 +108,17 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	private function updatePoi() {
 		$this->setAction( self::ACTION_UPDATE );
 
-		$results['success'] = false;
-		$response = json_decode( $this->mapsModel->updatePoi(
+		$response = $this->mapsModel->updatePoi(
 			$this->getData( 'poiId' ),
 			$this->getSanitizedData()
-		) );
-		if( $response->id ) {
-			$results['success'] = true;
-			$results['content'] = $response;
+		);
+
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	/**
@@ -129,14 +129,13 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	private function createPoi() {
 		$this->setAction( self::ACTION_CREATE );
 
-		$results['success'] = false;
-		$response = json_decode( $this->mapsModel->savePoi( $this->getSanitizedData() ) );
-		if( $response->id ) {
-			$results['success'] = true;
-			$results['content'] = $response;
+		$response = $this->mapsModel->savePoi( $this->getSanitizedData() );
+		if( !$response['success'] && is_null( $response['content'] ) ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
-		return $results;
+		return $response;
 	}
 
 	private function getSanitizedData() {
