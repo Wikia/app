@@ -391,7 +391,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		} else {
 			$mapId = $response['content']->id;
 			$response['content']->mapUrl = Title::newFromText(
-				self::PAGE_NAME . '/' . $response['content']->id,
+				self::PAGE_NAME . '/' . $mapId,
 				NS_SPECIAL
 			)->getFullUrl();
 
