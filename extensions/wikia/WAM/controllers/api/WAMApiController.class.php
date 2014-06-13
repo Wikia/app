@@ -125,9 +125,17 @@ class WAMApiController extends WikiaApiController {
 	 * @responseParam Array $languages list of aviable languages for the specified day
 	 */
 	public function getWAMLanguages() {
-		$wam_day = $this->request->getVal( 'wam_day', null );
+		$wamDay = $this->request->getVal( 'wam_day', null );
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
+
+		if ( empty( $wamDay ) ) {
+			$wamDay = $wamDates[ 'max_date' ];
+		} elseif ( $wamDay > $wamDates[ 'max_date' ] || $wamDay < $wamDates[ 'min_date' ] ) {
+			throw new OutOfRangeApiException( 'wam_day', $wamDates[ 'min_date' ], $wamDates[ 'max_date' ] );
+		}
+
 		$wamService = new WAMService();
-		$result = $wamService->getWAMLanguages( $wam_day );
+		$result = $wamService->getWAMLanguages( $wamDay );
 		$this->response->setVal( 'languages', $result );
 	}
 

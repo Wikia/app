@@ -181,8 +181,8 @@ class WAMService extends Service {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
 
-		$memKey = wfSharedMemcKey( 'wam-languages', $date );
 		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$memKey = wfSharedMemcKey( 'wam-languages', $date );
 
 		$getData = function () use ( $app, $date ) {
 			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
