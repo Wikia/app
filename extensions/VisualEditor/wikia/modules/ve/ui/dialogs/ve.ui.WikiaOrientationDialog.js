@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaOrientationDialog class.
  */
 
+/*global veTrack */
+
 /**
  * Dialog for orientating users new to VE.
  *

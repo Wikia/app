@@ -60,7 +60,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
 
 /* Methods */
-ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
+ve.ui.WikiaFocusWidget.prototype.adjustLayout = function () {
 	var surfaceOffset, surfaceEdges, documentDimensions,
 		uniqueLayoutId = this.$window.width() * this.$body.outerHeight() * this.surface.$element.height();
 
@@ -101,7 +101,7 @@ ve.ui.WikiaFocusWidget.prototype.adjustLayout = function() {
 	}
 };
 
-ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function() {
+ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function () {
 	var interval, i = 0;
 
 	if ( this.surface.getDir() === 'rtl' ) {
@@ -112,7 +112,7 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function() {
 	this.adjustLayout();
 
 	// Run adjustLayout() a few times while images load, etc
-	interval = setInterval( ve.bind( function() {
+	interval = setInterval( ve.bind( function () {
 		this.uniqueLayoutId = 0;
 		this.adjustLayout();
 		if ( i === 2 ) {
@@ -122,31 +122,30 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentSetup = function() {
 	}, this ), 1000 );
 };
 
-
 /**
  * Switch this.$left and this.$right for RTL
  *
  * @method
  */
-ve.ui.WikiaFocusWidget.prototype.switchDirection = function() {
+ve.ui.WikiaFocusWidget.prototype.switchDirection = function () {
 	// this.$right is assigned to this.$left inside the array.
 	// this.$left is assigned to the first element in the array, this.$right.
 	this.$left = [this.$right, this.$right = this.$left][0];
 };
 
-ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function() {
+ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function () {
 	this.showDistractions();
 	this.$element.remove();
 };
 
-ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
+ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
 	if ( mw.config.get( 'wgEnableWikiaBarExt' ) ) {
 		mw.config.get( 'WikiaBar' ).hide();
 	}
 	// Visibility property - problem with edit button opening when setting display property
 	this.$pageHeaderElements.css( 'visibility', 'hidden' );
 	this.$wikiaAds
-		.each( function() {
+		.each( function () {
 			var $ad = $( this );
 			$ad.css( {
 				'height': $ad.height(),
@@ -156,7 +155,7 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function() {
 		.addClass( 've-hidden-ad' );
 };
 
-ve.ui.WikiaFocusWidget.prototype.showDistractions = function() {
+ve.ui.WikiaFocusWidget.prototype.showDistractions = function () {
 	if ( this.showWikiaBar ) {
 		mw.config.get( 'WikiaBar' ).show();
 	}

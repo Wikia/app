@@ -96,7 +96,7 @@
 				loadTargetDeferred,
 				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
 			).done( function () {
-				var target = new ve.init.mw.WikiaViewPageTarget();
+				var debugBar, target = new ve.init.mw.WikiaViewPageTarget();
 				ve.init.mw.targets.push( target );
 
 				if ( ve.debug ) {
@@ -202,7 +202,7 @@
 		 *
 		 * @param {string|Function} plugin Module name or callback that optionally returns a promise
 		 */
-		addPlugin: function( plugin ) {
+		addPlugin: function ( plugin ) {
 			plugins.push( plugin );
 		},
 
