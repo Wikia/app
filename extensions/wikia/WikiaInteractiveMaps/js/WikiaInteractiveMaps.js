@@ -4,20 +4,38 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 	var doc = w.document,
 		body = doc.getElementsByTagName('body')[0],
 
-		// create map modal assets
-		cacheKey = 'wikia_interactive_maps_create_map',
-		source = {
-			messages: ['WikiaInteractiveMapsCreateMap'],
-			scripts: ['int_map_create_map_js'],
-			styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
-			mustache: [
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
-				'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
-			]
+		//registry for the modal actions assets
+		actions = {
+			createMap: {
+				module: 'wikia.intMaps.createMap.modal',
+				source: {
+					messages: ['WikiaInteractiveMapsCreateMap'],
+					scripts: ['int_map_create_map_js'],
+					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapCreateMap.scss'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
+					]
+				},
+				origin: 'wikia-int-map-create-map',
+				cacheKey: 'wikia_interactive_maps_create_map'
+			},
+			deleteMap: {
+				module: 'wikia.intMaps.deleteMap',
+				source: {
+					messages: ['WikiaInteractiveMapsDeleteMap'],
+					scripts: ['int_map_delete_map_js'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache'
+					]
+				},
+				origin: 'wikia-int-map-delete-map',
+				cacheKey: 'wikia_interactive_maps_delete_map'
+			}
 		};
 
 	// attach handlers
@@ -31,18 +49,19 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 	body.addEventListener('click', function (event) {
 		var targetId = event.target.id,
-			isLoggedInUser = (w.wgUserName !== null);
+			isLoggedInUser = (w.wgUserName !== null),
+			target = actions[targetId];
 
-		if (!isLoggedInUser && targetId === 'createMap') {
+		if (target && !isLoggedInUser) {
 			w.UserLoginModal.show({
-				origin: 'wikia-int-map-create-map',
+				origin: target.origin,
 				callback: function () {
 					w.UserLogin.forceLoggedIn = true;
-					loadModal(convertSource(source), cacheKey);
+					loadModal(target);
 				}
 			});
-		} else if (isLoggedInUser && targetId === 'createMap') {
-			loadModal(convertSource(source), cacheKey);
+		} else if (target && isLoggedInUser) {
+			loadModal(target);
 		}
 	});
 
@@ -58,18 +77,17 @@ require(['wikia.querystring', 'wikia.window'], function (qs, w) {
 
 	/**
 	 * @desc loads all assets for create map modal and initialize it
-	 * @param {object} source - object with paths to different assets
-	 * @param {string} cacheKey - local storage key
+	 * @param {object} target - one of the actions objects
 	 */
 
-	function loadModal(source, cacheKey) {
-		getAssets(source, cacheKey).then(function (assets) {
-			addAssetsToDOM(assets);
-
-			require(['wikia.intMaps.createMap.modal'], function (createMap) {
-				createMap.init(assets.mustache);
+	function loadModal(target) {
+		getAssets(convertSource(target.source), target.cacheKey)
+			.then(function (assets) {
+				addAssetsToDOM(assets);
+				require([target.module], function(module) {
+					module.init(assets.mustache);
+				});
 			});
-		});
 	}
 
 	/**

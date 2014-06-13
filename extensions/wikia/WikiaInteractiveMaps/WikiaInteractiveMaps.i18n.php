@@ -61,6 +61,15 @@ $messages[ 'en' ] = [
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
 
+	'wikia-interactive-maps-actions' => 'Actions',
+	'wikia-interactive-maps-delete-map' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Are you sure to delete the map?',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Delete Map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Cancel',
+	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
+	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
+
 	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 ];
 
@@ -122,6 +131,15 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
+
+	'wikia-interactive-maps-actions' => 'Text on a button near the map title that triggers dropdown with possible actions',
+	'wikia-interactive-maps-delete-map' => 'Text on a button for deleting an existing map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Title of the "delete map" modal',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt (in modal) asking if user is sure to delete a map',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Text on a button(in modal) to confirm deleting the map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Text on a button (in modal) to cancel deleting the map',
+	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
+	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
 
 	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
 ];
