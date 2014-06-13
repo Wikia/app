@@ -60,9 +60,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Select a Pin Type',
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Add a Description',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Name must be set',
-	'wikia-interactive-maps-edit-poi-error-pin-type-id' => 'Pin type must be set',
-
-
+	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Pin type must be set',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 
@@ -136,7 +134,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Placeholder / default state option in select pin category',
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Textarea placeholder for pin description in edit pin modal',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Error message - missing pin name in add pin UI',
-	'wikia-interactive-maps-edit-poi-error-pin-type-id' => 'Error message - pin type not set in add pin UI',
+	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Error message - pin type not set in add pin UI',
 
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 
