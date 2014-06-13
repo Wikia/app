@@ -209,7 +209,6 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 				if (data && data.success) {
 					poiData.id = data.content.id;
-					console.log('DDDDD ', poiData)
 					trigger(poiData);
 					modal.trigger('close');
 				} else {
