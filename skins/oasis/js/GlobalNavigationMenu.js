@@ -37,8 +37,8 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 			},
 			attachEvents = function() {
 				var $hub = $globalNavigationNav.find('.hub'),
-					$submenu0 = $globalNavigationNav.find('[data-submenu=0]'),
-					$submenu1 = $globalNavigationNav.find('[data-submenu=1]');
+					submenu0 = $globalNavigationNav.find('[data-submenu=0]')[0],
+					submenu1 = $globalNavigationNav.find('[data-submenu=1]')[0];
 
 				$globalNavigationNav.on('mouseenter', '.hub', function (e) {
 					e.preventDefault();
@@ -48,8 +48,8 @@ require([ 'jquery', 'wikia.ui.factory', 'wikia.nirvana' ], function ($, uiFactor
 						data = $this.data('data');
 
 					$this.addClass('active');
-					$submenu0.html(data[0]);
-					$submenu1.html(data[1]);
+					submenu0.innerHTML = data[0];
+					submenu1.innerHTML = data[1];
 
 				}).on('mouseleave', function(){
 					$('#GlobalNavigationMenuButton').removeClass('active');
