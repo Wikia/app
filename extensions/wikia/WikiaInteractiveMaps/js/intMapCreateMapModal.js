@@ -98,8 +98,19 @@ define(
 				.addClass('hidden');
 		}
 
+		/**
+		 * @desc redirects to the map page
+		 * @param {object} data - map data
+		 */
+
+		//TODO: to be changed when pin types step will be added
+		function showCreatedMap(data) {
+			qs(data.content.mapUrl).goTo();
+		}
+
 		return {
 			init: init
 		};
 	}
 );
+
