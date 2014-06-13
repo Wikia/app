@@ -224,3 +224,37 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 		}
 	}
 };
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
+	var insertTarget,
+		$mwContentText = $( '#mw-content-text' ),
+		$content = $( $.parseHTML( html ) );
+
+	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
+		//Category
+		$mwContentText.children().filter( function( index ) {
+			var $this = $( this );
+			return !(
+				// Category form
+				$this.hasClass( 'category-gallery-form' ) ||
+				// Category thumbs
+				$this.hasClass( 'category-gallery' ) ||
+				// Category exhibition
+				$this.is( '#mw-pages' ) ||
+				// Category list
+				$this.children( '#mw-pages' ).length
+			);
+		} ).remove();
+
+		insertTarget = window.CategoryExhibition ? '#mw-pages' : '.category-gallery';
+		$content.insertBefore( insertTarget );
+	} else {
+		$mwContentText.empty().append( $content );
+	}
+
+	mw.hook( 'wikipage.content' ).fire( $mwContentText );
+	$( '#catlinks' ).replaceWith( categoriesHtml );
+};
