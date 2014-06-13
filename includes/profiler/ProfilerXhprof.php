@@ -120,8 +120,6 @@ class ProfilerXhprof extends ProfilerStub {
 		$dbName = $config['db_name'];
 		$maxPacketSize = self::UDP_PACKET_MAX_SIZE;
 
-		print "<!-- xhprof:dest=$udpHost:$udpPort -->";
-
 		$profilerId = function_exists('wfWikiID') ? wfWikiID() : $dbName;
 
 		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
