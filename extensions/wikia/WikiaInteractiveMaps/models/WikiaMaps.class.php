@@ -429,6 +429,9 @@ class WikiaMaps {
 
 		if( $this->isSuccess( $status, $content ) ) {
 			$results['success'] = true;
+		} else {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
 		}
 
 		return $results;
