@@ -258,7 +258,6 @@ $settings = array(
 			'wgEnotifMaxRecips' => 'int',
 			'wgEnotifMinorEdits' => 'bool',
 			'wgEnotifRevealEditorAddress' => 'bool',
-			'wgEnotifUseJobQ' => 'bool',
 			'wgEnotifUseRealName' => 'bool',
 			'wgEnotifUserTalk' => 'bool',
 			'wgEnotifWatchlist' => 'bool',

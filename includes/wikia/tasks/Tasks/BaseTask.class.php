@@ -28,6 +28,9 @@ abstract class BaseTask {
 	/** @var array params needed to instantiate $this->title. */
 	protected $titleParams = [];
 
+	/** @var string when running, this task's id, or id of the task that this task is a subtask of */
+	protected $taskId;
+
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
 
@@ -39,9 +42,6 @@ abstract class BaseTask {
 
 	/** @var string wrapper for AsyncTaskList->delay() */
 	private $delay = null;
-
-	/** @var string id this task's id, or id of the task that this task is a subtask of */
-	private $taskId;
 
 	/**
 	 * Do any additional work required to restore this class to its previous state. Useful when you want to avoid
