@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack */
+/*global mw, veTrack, _kiq */
 
 /**
  * Initialization MediaWiki view page target.
@@ -128,9 +128,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	mw.hook( 've.cancelButton' ).fire();
 	// Trigger Qualaroo survey for anonymous users abandoning edit
+	/*jslint nomen: true*/
 	if ( mw.user.anonymous() && window._kiq ) {
 		_kiq.push( ['set', { 'event': 'abandon_ve_cancel' } ] );
 	}
+	/*jslint nomen: false*/
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 

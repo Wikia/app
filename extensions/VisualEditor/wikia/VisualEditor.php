@@ -190,3 +190,4 @@ if ( !empty( $wgEnableBlogArticles ) ) {
 
 // Add additional valid namespaces for Wikia
 $wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;

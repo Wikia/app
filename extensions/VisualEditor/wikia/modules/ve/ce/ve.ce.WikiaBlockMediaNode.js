@@ -55,14 +55,14 @@ ve.ce.WikiaBlockMediaNode.static.cssClasses = {
 	'default': {
 		'left': 'tleft',
 		'right': 'tright',
-		'center' : 'tnone',
-		'none' : 'tnone'
+		'center': 'tnone',
+		'none': 'tnone'
 	},
 	'none': {
 		'left': 'floatleft',
 		'right': 'floatright',
-		'center' : 'floatnone',
-		'none' : 'floatnone'
+		'center': 'floatnone',
+		'none': 'floatnone'
 	}
 };
 
