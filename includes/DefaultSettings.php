@@ -1073,16 +1073,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Set to true to put the sending user's email in a Reply-To header
- * instead of From. ($wgEmergencyContact will be used as From.)
- *
- * Some mailers (eg sSMTP) set the SMTP envelope sender to the From value,
- * which can cause problems with SPF validation and leak recipient addressses
- * when bounces are sent to the sender.
- */
-$wgUserEmailUseReplyTo = false;
-
-/**
  * Minimum time, in hours, which must elapse between password reminder
  * emails for a given account. This is to prevent abuse by mail flooding.
  */
@@ -4930,7 +4920,6 @@ $wgJobClasses = array(
 	'refreshLinks2' => 'RefreshLinksJob2',
 	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
 	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
-	'sendMail' => 'EmaillingJob',
 	'enotifNotify' => 'EnotifNotifyJob',
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
 	'uploadFromUrl' => 'UploadFromUrlJob',

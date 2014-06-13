@@ -250,7 +250,6 @@ $settings = array(
 			'wgPasswordReminderResendTime' => 'int',
 			'wgAdditionalMailParams' => 'text',
 			'wgSMTP' => 'array',
-			'wgUserEmailUseReplyTo' => 'bool',
 			'wgUserEmailConfirmationTokenExpiry' => 'int',
 		),
 		'enotif' => array(
