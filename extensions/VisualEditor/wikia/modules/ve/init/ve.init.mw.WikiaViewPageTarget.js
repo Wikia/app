@@ -229,7 +229,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
-	var $insertTarget,
+	var insertTarget,
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
 
@@ -249,8 +249,8 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 			);
 		} ).remove();
 
-		$insertTarget = window.CategoryExhibition ? '#mw-pages' : '.category-gallery';
-		$content.insertBefore( $insertTarget );
+		insertTarget = window.CategoryExhibition ? '#mw-pages' : '.category-gallery';
+		$content.insertBefore( insertTarget );
 	} else {
 		$mwContentText.empty().append( $content );
 	}
