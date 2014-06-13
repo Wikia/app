@@ -422,18 +422,21 @@ class WikiaMaps {
 	 * @todo: how about extracting results to an object?
 	 */
 	private function processServiceResponse( MWHttpRequest $response ) {
-		$results['success'] = false;
 		$status = $response->getStatus();
 		$content = json_decode( $response->getContent() );
-		$results['content'] = $content;
 
-		if( $this->isSuccess( $status, $content ) ) {
-			$results['success'] = true;
+		$success = $this->isSuccess( $status, $content );
+		if( !$success && is_null( $content ) ) {
+			$results['success'] = false;
+			$content = new stdClass();
+			$content->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		} else if( !$success && !is_null( $content ) ) {
+			$results['success'] = false;
 		} else {
-			$response['content'] = new stdClass();
-			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+			$results['success'] = true;
 		}
 
+		$results['content'] = $content;
 		return $results;
 	}
 
