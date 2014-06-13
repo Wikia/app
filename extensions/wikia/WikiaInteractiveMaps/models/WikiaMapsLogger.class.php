@@ -102,8 +102,8 @@ class WikiaMapsLogger {
 			self::ACTION_UPDATE_PIN_TYPE => 'wikia-interactive-maps-update-pin-type-log-entry',
 			self::ACTION_DELETE_PIN_TYPE => 'wikia-interactive-maps-delete-pin-type-log-entry',
 			self::ACTION_CREATE_PIN => 'wikia-interactive-maps-create-pin-log-entry',
-			self::ACTION_UPDATE_PIN => 'wikia-interactive-maps-create-pin-log-entry',
-			self::ACTION_DELETE_PIN => 'wikia-interactive-maps-create-pin-log-entry',
+			self::ACTION_UPDATE_PIN => 'wikia-interactive-maps-update-pin-log-entry',
+			self::ACTION_DELETE_PIN => 'wikia-interactive-maps-delete-pin-log-entry',
 		];
 		if ( isset( $translations[ $action ] ) ) {
 			$messageKey = $translations[ $action ];
