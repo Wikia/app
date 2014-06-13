@@ -482,7 +482,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		} else {
-			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
+			$result = OoyalaAsset::updateMetadata( $dupAsset['embed_code'], $assetMeta );
 			if ( !$result ) {
 				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
@@ -1311,6 +1311,14 @@ abstract class VideoFeedIngester {
 	 */
 	public function getResultIngestedVideos() {
 		return $this->resultIngestedVideos;
+	}
+
+	/**
+	 * Get provider
+	 * @return string
+	 */
+	public function getProvider() {
+		return STATIC::$PROVIDER;
 	}
 
 }

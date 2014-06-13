@@ -145,7 +145,7 @@ class PromoteImageReviewTask extends BaseTask {
 		if ($sourceFile->exists()){
 			$sourceImageUrl = $sourceFile->getUrl();
 		} else {
-			$this->log('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
+			$this->warning('Apparently the image from city_id=' . $sourceWikiId . ' ' . $imageTitle->getText() . ' is unaccessible');
 			return ['status' => 1];
 		}
 
@@ -189,7 +189,7 @@ class PromoteImageReviewTask extends BaseTask {
 			$result = [
 				'status' => 7,
 			];
-			$this->log("Upload error! ({$wgServer}). Error code returned: {$result['status']}");
+			$this->error("Upload error!", ["server" => $wgServer, "retval" => $result['status']]);
 		}
 
 		return $result;

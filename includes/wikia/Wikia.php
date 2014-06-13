@@ -75,6 +75,7 @@ class Wikia {
 	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
+	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -138,21 +139,21 @@ class Wikia {
 	public static function getFaviconFullUrl() {
 		global $wgMemc;
 
-		$mMemcacheKey = wfMemcKey('favicon');
+		$mMemcacheKey = wfMemcKey(self::FAVICON_URL_CACHE_KEY);
 		$mData = $wgMemc->get($mMemcacheKey);
 		$faviconFilename = 'Favicon.ico';
 
 		if ( empty($mData) ) {
 			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-			$localFavicon = wfFindFile( $faviconFilename );
-
 			#FIXME: Checking existance of Title in order to use File. #VID-1744
 			if ( $localFaviconTitle->exists() ) {
+				$localFavicon = wfFindFile( $faviconFilename );
+			}
+			if ( $localFavicon ) {
 				$favicon = $localFavicon->getURL();
 			} else {
 				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
 			}
-
 			$wgMemc->set($mMemcacheKey, $favicon, 86400);
 		}
 
@@ -162,7 +163,7 @@ class Wikia {
 	public static function invalidateFavicon() {
 		global $wgMemc;
 
-		$wgMemc->delete( wfMemcKey('favicon') );
+		$wgMemc->delete( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
 	}
 
 	/**

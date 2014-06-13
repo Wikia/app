@@ -172,8 +172,8 @@ ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
 /**
  * @inheritdoc
  */
-ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
-	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this );
+ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status, error ) {
+	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this, jqXHR, status, error );
 	if ( window.veTrack ) {
 		veTrack( {
 			action: 've-load-error',
