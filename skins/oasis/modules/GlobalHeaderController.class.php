@@ -123,11 +123,11 @@ class GlobalHeaderController extends WikiaController {
 
 			function rand_items() {
 				return '<h2>Title ' . rand(1, 10) . '</h2><ul>' .
-				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
-				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
-				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
-				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
-				'<li><a href="google.com">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="#">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="#">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="#">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="#">Item ' . rand(1, 10) . '</a></li>' .
+				'<li><a href="#">Item ' . rand(1, 10) . '</a></li>' .
 				'</ul>';
 			}
 			$menuData = [
