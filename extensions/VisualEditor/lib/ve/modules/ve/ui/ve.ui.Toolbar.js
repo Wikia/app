@@ -114,9 +114,7 @@ ve.ui.Toolbar.prototype.onWindowScroll = function () {
  * @param {jQuery.Event} e Window scroll event
  */
 ve.ui.Toolbar.prototype.onWindowResize = function () {
-	var parent, parentOffset,
-		update = {},
-		offset = this.elementOffset;
+	var $parent, parentOffset, update = {}, offset = this.elementOffset;
 
 	// Update right offset after resize (see #float)
 	offset.right = this.$window.width() - this.$element.outerWidth() - offset.left;
