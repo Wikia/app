@@ -13,6 +13,7 @@ define('wikia.intMap.createMap.pinTypes',
 			// mustache templates
 			pinTypesTemplate,
 			pinTypeTemplate,
+			pinTypeParentTemplate,
 			// template data
 			pinTypesTemplateData = {
 				pinTypes: [],
@@ -21,7 +22,11 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
-				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder')
+				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder'),
+				pinTypeParents: [{
+					id: 1,
+					name: 'ksz'
+				}]
 			},
 
 			events = {
@@ -59,10 +64,11 @@ define('wikia.intMap.createMap.pinTypes',
 		 * @param {string} _pinTypesTemplate
 		 * @param {string} _pinTypeTemplate
 		 */
-		function init(_modal, _pinTypesTemplate, _pinTypeTemplate) {
+		function init(_modal, _pinTypesTemplate, _pinTypeTemplate, _pinTypeParentTemplate) {
 			modal = _modal;
 			pinTypesTemplate = _pinTypesTemplate;
 			pinTypeTemplate = _pinTypeTemplate;
+			pinTypeParentTemplate = _pinTypeParentTemplate;
 
 			utils.bindEvents(modal, events);
 		}
@@ -75,7 +81,10 @@ define('wikia.intMap.createMap.pinTypes',
 			setUpTemplateData(data);
 			mapUrl = data.mapUrl;
 
-			modal.$innerContent.html(utils.render(pinTypesTemplate, pinTypesTemplateData, {pinType: pinTypeTemplate}));
+			modal.$innerContent.html(utils.render(pinTypesTemplate, pinTypesTemplateData, {
+				pinType: pinTypeTemplate,
+				pinTypeParent: pinTypeParentTemplate
+			}));
 
 			// cache selectors
 			$form = modal.$innerContent.find('#intMapPinTypes');

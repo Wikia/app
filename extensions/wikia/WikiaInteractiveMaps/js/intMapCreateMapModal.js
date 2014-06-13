@@ -75,7 +75,7 @@ define(
 				// TODO: figure out the way to automatically register and init different step of the UI
 				tileSet.init(modal, templates[1],  templates[2]);
 				preview.init(modal, templates[3]);
-				pinTypes.init(modal, templates[4], templates[5]);
+				pinTypes.init(modal, templates[4], templates[5], templates[6]);
 
 				modal.trigger('chooseTileSet');
 				modal.show();
