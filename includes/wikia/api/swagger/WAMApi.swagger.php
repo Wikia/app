@@ -386,6 +386,27 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * )
+ * 
+ * @SWG\Api(
+ * 	path="/WAM/getWAMLanguages",
+ * 	description="Get language codes of the wikis that are in the WAM ranking for a given day",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get WAM score starting and last available dates",
+ * 			nickname="getWAMLanguages",
+ * 			responseClass="WAMLanguagesSet"
+ * 			@SWG\Parameter(
+ * 				name="wam_day",
+ * 				description="timestamp of the day for the requested list",
+ * 				paramType="query",
+ * 				required="false",
+ * 				allowMultiple="false",
+ * 				dataType="int"
+ * 			),
+ * 		)
+ * 	)
+ * )
  */
 
 die;

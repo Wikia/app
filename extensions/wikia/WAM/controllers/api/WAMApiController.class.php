@@ -121,7 +121,7 @@ class WAMApiController extends WikiaApiController {
 	/**
 	 * Gets language codes of the wikis that are in the WAM ranking for a given day
 	 *
-	 * @requestParam Integer $wam_day date of requested list
+	 * @requestParam Integer $wam_day timestamp of the day for the requested list
 	 * @responseParam Array $languages list of aviable languages for the specified day
 	 */
 	public function getWAMLanguages() {

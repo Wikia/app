@@ -8,7 +8,7 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
-	const DATE_FORMAT = 'Y-m-d';
+	const CACHE_DURATION = 86400; /* 24 hours */
 
 	protected static $verticalNames = [
 		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
@@ -66,7 +66,7 @@ class WAMService extends Service {
 			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
 		};
 
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
 		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
@@ -186,17 +186,16 @@ class WAMService extends Service {
 
 		$getData = function () use ( $app, $date ) {
 			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
-			echo $db->getDBname();
 			$result = $db->select(
 				[
 					'fw1' => 'fact_wam_scores',
 					'dw' => 'dimension_wikis'
 				],
 				'DISTINCT dw.lang',
-				[ 'fw1.time_id' => date( self::DATE_FORMAT, $date  ) ],
+				'fw1.time_id = FROM_UNIXTIME(' . $date . ')',
 				__METHOD__,
 				[ 'ORDER BY' => 'dw.lang ASC' ],
-				[ 'fw1' => [ 'LEFT JOIN', [ 'dw.wiki_id = fw1.wiki_id' ] ] ]
+				[ 'fw1' => [ 'RIGHT JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
 			);
 
 			$languages = [];
@@ -207,7 +206,7 @@ class WAMService extends Service {
 			return $languages;
 		};
 
-		$wamLanguages = WikiaDataAccess::cacheWithLock( $memKey, 86400 /* 24 hours */, $getData );
+		$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
 		wfProfileOut( __METHOD__ );
 		return $wamLanguages;
 	}
@@ -350,7 +349,7 @@ class WAMService extends Service {
 					'wam_blacklist',
 					$blacklistExt->cv_id
 				),
-				24 * 60 * 60,
+				self::CACHE_DURATION,
 				function () use ( $blacklistExt ) {
 					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
 					return array_keys( $blacklistWikis );
