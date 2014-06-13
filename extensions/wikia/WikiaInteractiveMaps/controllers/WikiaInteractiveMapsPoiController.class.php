@@ -123,7 +123,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	public function deletePoi() {
-		$poiId = $this->request->getInt( 'poiId' );
+		$poiId = $this->request->getInt( 'id' );
 		$response = $this->mapsModel->deletePoi( $poiId );
 
 		if( !$response['success'] ) {
