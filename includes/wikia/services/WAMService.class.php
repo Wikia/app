@@ -195,7 +195,7 @@ class WAMService extends Service {
 				'fw1.time_id = FROM_UNIXTIME(' . $date . ')',
 				__METHOD__,
 				[ 'ORDER BY' => 'dw.lang ASC' ],
-				[ 'fw1' => [ 'RIGHT JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
+				[ 'fw1' => [ 'INNER JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
 			);
 
 			$languages = [];
