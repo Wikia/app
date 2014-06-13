@@ -77,7 +77,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 
 	if ( ns === 14 ) {
 		// Category
-		$elements = $( '#mw-content-text' ).children().filter( function( index ) {
+		$elements = $( '#mw-content-text' ).children().filter( function () {
 			var $this = $( this );
 			return !(
 				// Category thumbs
@@ -237,7 +237,7 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 
 	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
 		//Category
-		$mwContentText.children().filter( function( index ) {
+		$mwContentText.children().filter( function () {
 			var $this = $( this );
 			return !(
 				// Category form
