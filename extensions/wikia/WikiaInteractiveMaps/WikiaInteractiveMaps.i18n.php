@@ -50,7 +50,8 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
 
-	'wikia-interactive-maps-edit-poi-header' => 'Add Pin Point',
+	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
+	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
 	'wikia-interactive-maps-edit-poi-save' => 'Save',
 	'wikia-interactive-maps-edit-poi-cancel' => 'Cancel',
 	'wikia-interactive-maps-edit-poi-delete' => 'Delete',
@@ -125,7 +126,8 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
 
-	'wikia-interactive-maps-edit-poi-header' => 'Modal header for add pin to map',
+	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
+	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
 	'wikia-interactive-maps-edit-poi-save' => 'Modal button to save pin on map',
 	'wikia-interactive-maps-edit-poi-cancel' => 'Modal button cancel action edit / add pin to map',
 	'wikia-interactive-maps-edit-poi-delete' => 'Modal button - delete pin from map',

@@ -47,8 +47,8 @@ define('wikia.intMap.pontoBridge', ['wikia.window', 'ponto', 'wikia.intMap.utils
 		/**
 		 * @desc tells iframe that it's opened on Wikia page
 		 */
-		this.isWikia = function(params, callbackId) {
-			Ponto.respond(true, callbackId);
+		this.isWikia = function() {
+			return true;
 		};
 	}
 

@@ -8,16 +8,17 @@
 	</div>
 	<div class="input-group">
 		<select name="poi_category_id">
-			<option value="" selected>{{categoryPlaceholder}}</option>
+			<option value="" {{^poi_category_id}}selected{{/poi_category_id}}>{{categoryPlaceholder}}</option>
 			{{#categories}}
-				<option value="{{id}}" {{selected}}>{{name}}</option>
+				<option value="{{id}}" data-value-type="number" {{#selected}}selected{{/selected}}>{{name}}</option>
 			{{/categories}}
 		</select>
 	</div>
 	<div class="input-group">
 		<textarea name="description" placeholder="{{descriptionPlaceholder}}">{{description}}</textarea>
 	</div>
-	<input type="hidden" name="mapId" value="{{mapId}}">
-	<input type="hidden" name="lat" value="{{lat}}">
-	<input type="hidden" name="lon" value="{{lng}}">
+    <input type="hidden" name="id" data-value-type="number" value="{{id}}">
+	<input type="hidden" name="mapId" data-value-type="number" value="{{mapId}}">
+	<input type="hidden" name="lat" data-value-type="number" value="{{lat}}">
+	<input type="hidden" name="lon" data-value-type="number" value="{{lon}}">
 </form>
