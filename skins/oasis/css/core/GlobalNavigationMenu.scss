@@ -3,6 +3,7 @@
 
 $hubsmenu-background-color: #f7f7f7;
 $hubsmenu-font-color: #092140;
+$shadow-width: 2px;
 
 #GlobalNavigationMenuButton {
 	background: $hubsmenu-background-color;
@@ -11,10 +12,7 @@ $hubsmenu-font-color: #092140;
 	height: 66px;
 	margin-top: 0;
 	width: 43px;
-
-	polygon, rect {
-		fill: $hubsmenu-font-color;
-	}
+	fill: $hubsmenu-font-color;
 
 	#svg-chevron {
 		fill: #c7d1d8;
@@ -45,12 +43,12 @@ $hubsmenu-font-color: #092140;
 		position: relative;
 		width: 866px;
 		z-index: 1000;
-		border: 2px solid rgba(0,0,0,.1);
+		border: $shadow-width solid rgba(0,0,0,.1);
 		border-top: 0;
 
 		.hubs {
 			position: absolute;
-			width: 290px;
+			width: 302px;
 		}
 
 		.hub {
@@ -62,12 +60,11 @@ $hubsmenu-font-color: #092140;
 			display: table;
 			font-size: 21px;
 			height: 62px;
-			padding-left: 65px;
+			padding-left: 123px;
 			position: relative;
 
 			.icon {
-				background-position-x: 5px;
-				background-position-y: 5px;
+				background-position: center;
 				background-repeat: no-repeat;
 				background-size: 52px;
 				display: inline-block;
@@ -75,7 +72,7 @@ $hubsmenu-font-color: #092140;
 				left: 0;
 				position: absolute;
 				top: 0;
-				width: 62px;
+				width: 90px;
 			}
 			.label {
 				display: table-cell;
@@ -86,10 +83,10 @@ $hubsmenu-font-color: #092140;
 			.border {
 				background: #e9edef;
 				height: 1px;
-				left: 102px;
+				left: 112px;
 				position: absolute;
 				top: 0;
-				width: 164px;
+				width: 166px;
 			}
 
 			&.active .border, &.active + &:not(.active) .border
@@ -195,7 +192,7 @@ $hubsmenu-font-color: #092140;
 			&.count-#{$i} section,
 			&.count-#{$i} .hubs,
 			&.count-#{$i} {
-				height: 2px + $i * 62px;
+				height: $shadow-width + $i * 62px;
 			}
 		}
 
@@ -205,8 +202,7 @@ $hubsmenu-font-color: #092140;
 			font-size: 15px;
 			overflow: auto;
 			position: absolute;
-			width: 270px;
-			top: -2px;
+			top: -$shadow-width;
 
 			a, h2 {
 				color: inherit;
@@ -228,12 +224,96 @@ $hubsmenu-font-color: #092140;
 			}
 
 			&[data-submenu='0'] {
-				left: 290px;
+				left: 302px;
 				padding: 26px 18px 26px 12px;
+				width: 258px;
 			}
 			&[data-submenu='1'] {
 				left: 560px;
-				padding: 26px 34px 26px 18px;
+				padding: 26px 24px 26px 24px;
+				width: 294px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.GlobalNavigationContainer {
+		width: 100%;
+
+		> nav {
+			width: 768px;
+
+			.hubs {
+				width: 272px;
+			}
+			.hub {
+				font-size: 18px;
+				padding-left: 86px;
+
+				.icon {
+					width: 70px
+				}
+				.border {
+					left: 82px;
+					width: 166px;
+				}
+			}
+
+			section {
+				&[data-submenu='0'] {
+					left: 272px;
+					padding-left: 0px;
+					padding-right: 8px;
+					width: 232px;
+				}
+				&[data-submenu='1'] {
+					left: 504px;
+					padding-left: 16px;
+					padding-right: 24px;
+					width: 260px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+	.GlobalNavigationContainer {
+		width: -webkit-calc(100% - 258px);
+		width: calc(100% - 258px);
+
+		> nav {
+			width: 766px;
+
+			.hubs {
+				width: 268px;
+			}
+			.hub {
+				padding-left: 112px;
+
+				.icon {
+					width: 82px
+				}
+				.border {
+					left: 102px;
+					width: 142px;
+				}
+			}
+
+			section {
+				&[data-submenu='0'] {
+					left: 268px;
+					padding-left: 10px;
+					padding-right: 10px;
+					width: 239px;
+				}
+				&[data-submenu='1'] {
+					left: 507px;
+					padding-left: 20px;
+					padding-right: 20px;
+					width: 259px;
+				}
 			}
 		}
 	}
