@@ -115,7 +115,7 @@ define('wikia.intMap.createMap.pinTypes',
 			// if no pin types display blank pin type input
 			var pinTypes = templateData.pinTypes ? templateData.pinTypes : [{}];
 
-			pinTypesTemplateData.mapId = templateData.mapId;
+			pinTypesTemplateData.mapId = templateData.id;
 			pinTypesTemplateData.pinTypes = extendPinTypesData(pinTypes);
 		}
 
@@ -210,13 +210,13 @@ define('wikia.intMap.createMap.pinTypes',
 
 					if (data && data.success) {
 						modal.trigger('cleanUpError');
-						modal.trigger('pinTypesCreated', data);
+						modal.trigger('pinTypesCreated', data.content);
 					} else {
-						modal.trigger('error', data.error);
+						modal.trigger('error', data.content.message);
 					}
 				},
 				onErrorCallback: function(response) {
-					modal.trigger('error', JSON.parse(response.responseText).exception.details);
+					modal.trigger('error', response.results.content.message);
 				}
 			});
 		}
