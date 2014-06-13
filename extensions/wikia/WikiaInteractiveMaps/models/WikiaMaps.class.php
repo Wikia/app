@@ -21,6 +21,8 @@ class WikiaMaps {
 
 	const HTTP_CREATED_CODE = 201;
 	const HTTP_SUCCESS_OK = 200;
+	const HTTP_UPDATED = 303;
+	const HTTP_NO_CONTENT = 204;
 
 	/**
 	 * @var array API connection config
@@ -82,7 +84,7 @@ class WikiaMaps {
 	 * @param String $url
 	 * @param Array $data
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	private function postRequest( $url, $data ) {
 		return $this->processServiceResponse(
@@ -104,7 +106,7 @@ class WikiaMaps {
 	 * @param String $url
 	 * @param Array $data
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	private function putRequest( $url, $data ) {
 		return $this->processServiceResponse(
@@ -113,6 +115,27 @@ class WikiaMaps {
 				'headers' => [
 					'Authorization' => $this->config['token']
 				],
+				'returnInstance' => true,
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
+	}
+
+	/**
+	 * Wrapper for Http::request() with authorization token attached
+	 *
+	 * @param String $url
+	 *
+	 * @return Array
+	 */
+	private function deleteRequest( $url ) {
+		return $this->processServiceResponse(
+			Http::request( 'DELETE', $url, [
+				'headers' => [
+					'Authorization' => $this->config['token']
+				],
+				'returnInstance' => true,
 				//TODO this is temporary workaround, remove it before production!
 				'noProxy' => true
 			] )
@@ -255,11 +278,10 @@ class WikiaMaps {
 	/**
 	 * Sends request to interactive maps service and returns list of tile sets
 	 *
-	 * @param array $params - request params
+	 * @param Array $params - request params
 	 *
-	 * @return array - list of tile sets
+	 * @return Array - list of tile sets
 	 */
-
 	public function getTileSets( Array $params ) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
@@ -280,7 +302,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $mapData array with required parameters to service API
 	 *
-	 * @return string|boolean
+	 * @return Array
 	 */
 	public function saveMap( $mapData ) {
 		return $this->postRequest(
@@ -294,7 +316,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function saveTileset( $tileSetData ) {
 		return $this->postRequest(
@@ -308,7 +330,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $pinTypeData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function savePinType( $pinTypeData ) {
 		return $this->postRequest(
@@ -322,7 +344,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $poiData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function savePoi( $poiData ) {
 		return $this->postRequest(
@@ -337,12 +359,25 @@ class WikiaMaps {
 	 * @param Integer $poiId unique id of existing POI
 	 * @param Array $poiData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function updatePoi( $poiId, $poiData ) {
 		return $this->putRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_POI, $poiId ] ),
 			$poiData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to delete a point of interest (POI)
+	 *
+	 * @param Integer $poiId unique id of existing POI
+	 *
+	 * @return Array
+	 */
+	public function deletePoi( $poiId ) {
+		return $this->deleteRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI, $poiId ] )
 		);
 	}
 
@@ -392,12 +427,35 @@ class WikiaMaps {
 		$content = json_decode( $response->getContent() );
 		$results['content'] = $content;
 
-		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
-		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
+		if( $this->isSuccess( $status, $content ) ) {
 			$results['success'] = true;
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Returns true if HTTP request was successfully processed
+	 *
+	 * @param Integer $status HTTP response status
+	 * @param String $content HTTP response content
+	 *
+	 * @return bool
+	 */
+	private function isSuccess( $status, $content ) {
+		$isStatusOK = in_array( $status, [
+			self::HTTP_CREATED_CODE,
+			self::HTTP_UPDATED,
+			self::HTTP_NO_CONTENT,
+		] );
+
+		// MW Http::request() can return 200 HTTP code if service is offline
+		// that's why we check content here
+		if( $isStatusOK || ( $status === self::HTTP_SUCCESS_OK && !is_null( $content ) ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

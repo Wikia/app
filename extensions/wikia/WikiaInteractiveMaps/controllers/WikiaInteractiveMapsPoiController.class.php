@@ -7,6 +7,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 
 	const ACTION_CREATE = 'create';
 	const ACTION_UPDATE = 'update';
+	const ACTION_DELETE = 'delete';
 
 	private $currentAction;
 
@@ -59,6 +60,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		$availableActions = [
 			self::ACTION_CREATE => true,
 			self::ACTION_UPDATE => true,
+			self::ACTION_DELETE => true,
 		];
 
 		if( isset( $availableActions[ $action ] ) ) {
@@ -95,7 +97,6 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 			|| empty( $mapId )
 			|| empty( $lat )
 			|| empty( $lon )
-			|| empty( $name )
 		) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
@@ -119,6 +120,18 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 
 		return $response;
+	}
+
+	public function deletePoi() {
+		$poiId = $this->request->getInt( 'poiId' );
+		$response = $this->mapsModel->deletePoi( $poiId );
+
+		if( !$response['success'] ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		}
+
+		$this->setVal( 'results', $response );
 	}
 
 	/**
