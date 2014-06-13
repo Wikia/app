@@ -266,12 +266,13 @@ class WikiaMaps {
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
 			Http::get( $url, 'default', [
+				'returnInstance' => true,
 				//TODO this is temporary workaround, remove it before production!
 				'noProxy' => true
 			] )
 		);
 
-		return json_decode( $response );
+		return $response;
 	}
 
 	/**
@@ -358,8 +359,8 @@ class WikiaMaps {
 	 * @return integer
 	 */
 	public function getGeoMapTilesetId() {
-		if( isset( $this->config[ 'geoTilesetId' ] ) ) {
-			return $this->config[ 'geoTilesetId' ];
+		if( isset( $this->config[ 'geo-tileset-id' ] ) ) {
+			return $this->config[ 'geo-tileset-id' ];
 		}
 
 		return 0;
