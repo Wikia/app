@@ -156,7 +156,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			controller: 'WikiaInteractiveMapsPoi',
 			method: 'deletePoi',
 			type: 'POST',
-			data: params.id,
+			data: {id: params.id},
 			callback: function(response) {
 				var data = response.results;
 
