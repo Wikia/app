@@ -71,11 +71,6 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
-
-
-
-
-
 ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
 	$( '#mw-content-text, .WikiaArticleCategories' )
 		.addClass( 've-init-mw-viewPageTarget-content' )
