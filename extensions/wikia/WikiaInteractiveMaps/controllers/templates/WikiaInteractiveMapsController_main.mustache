@@ -1,0 +1,28 @@
+<nav class="maps-controls">
+	<select id="orderMapList">
+		{{#sortingOptions}}
+			<option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+		{{/sortingOptions}}
+	</select>
+	<button id="createMap">{{messages.wikia-interactive-maps-create-a-map}}</button>
+</nav>
+<h2>{{messages.wikia-interactive-maps-title}}</h2>
+{{#hasMaps}}
+<ul class="map-list">
+{{#maps}}
+	<li>
+		{{#done}}<a href="{{baseUrl}}/{{id}}">{{/done}}
+			{{^done}}<div class="map-status">{{status_message}}</div>{{/done}}
+			<img src="{{image}}" alt="{{title}}" height="{{map_height}}" width="{{map_width}}"/>
+			<h3>{{title}}</h3>
+			<p>{{updated_on}}</p>
+		{{#done}}</a>{{/done}}
+	</li>
+{{/maps}}
+</ul>
+{{{pagination}}}
+{{/hasMaps}}
+{{^hasMaps}}
+	<p>{{messages.wikia-interactive-maps-no-maps}}</p>
+{{/hasMaps}}
+

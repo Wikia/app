@@ -1,0 +1,25 @@
+
+.intMapModal {
+	.hidden {
+		display: none !important;
+	}
+
+	.WikiaForm .input-group {
+		float: none;
+		padding-left: 0;
+		padding-right: 0;
+		width: 100%;
+
+		input,
+		select,
+		textarea {
+			box-sizing: border-box;
+			width: 100%;
+		}
+
+		textarea {
+			height: 50px;
+			resize: none;
+		}
+	}
+}

@@ -1,0 +1,19 @@
+<form class="WikiaForm create-map-form">
+	<div class="input-group">
+		<input type="text" id="intMapTitle" name="intMapTitle" placeholder="{{titlePlaceholder}}" value="">
+	</div>
+
+	{{#tileSetData}}
+
+	<img src="{{fileThumbUrl}}" alt="" id="intMapPreviewImage" class="intMapPreviewImage" width="100%" height="auto" />
+
+	{{#fileUrl}}
+	<input type="hidden" id="intMapOrgImg" value="{{fileUrl}}">
+	{{/fileUrl}}
+
+	{{#tileSetId}}
+	<input type="hidden" id="intMapTileSet" value="{{tileSetId}}">
+	{{/tileSetId}}
+
+	{{/tileSetData}}
+</form>
