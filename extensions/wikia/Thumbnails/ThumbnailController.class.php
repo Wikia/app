@@ -18,10 +18,7 @@ class ThumbnailController extends WikiaController {
 	 *		src - source for image
 	 *		imgClass - string of space separated classes for image
 	 *		alt - alt for image
-	 *		usePreloading - for lazy loading
 	 *		valign - valign for image
-	 *		imgExtraStyle - extra style for image
-	 *		disableRDF - disable RDF metadata
 	 *		fluid - image will take the width of it's container
 	 *		forceSize - 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 	 *
@@ -45,7 +42,6 @@ class ThumbnailController extends WikiaController {
 	 * @responseParam array imgAttrs
 	 *	Keys:
 	 *		alt - alt for image
-	 *		style - style for image
 	 *		itemprop - for RDF metadata
 	 * @responseParam string dataSrc - data-src attribute for image lazy loading
 	 * @responseParam string duration (HH:MM:SS)
@@ -121,27 +117,13 @@ class ThumbnailController extends WikiaController {
 			$imgSrc = $options['src'];
 		}
 
+		$lazyLoadImg = empty( $options['noLazyLoad'] ) && ImageLazyLoad::isValidLazyLoadedImage( $imgSrc );
+
 		// get alt for img tag
 		$imgAttribs['alt'] = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
 		$imgAttribs['alt'] = htmlspecialchars( $imgAttribs['alt'] );
 
-		// set valign for img tag
-		$imgAttribs['style'] = '';
-		if ( !empty( $options['valign'] ) ) {
-			$imgAttribs['style'] .= "vertical-align: {$options['valign']}";
-		}
-
-		// get extra style for img tag
-		if ( !empty( $options['imgExtraStyle'] ) ) {
-			$imgAttribs['style'] .= $options['imgExtraStyle'];
-		}
-
-		// remove style from $imgAttribs if it is empty
-		if ( $imgAttribs['style'] == '' ) {
-			unset( $imgAttribs['style'] );
-		}
-
-		// set data-params for img tag
+		// set data-params for img tag on mobile
 		if ( !empty( $options['dataParams'] ) ) {
 			$imgAttribs['data-params'] = ThumbnailHelper::getDataParams( $file, $imgSrc, $options );
 		}
@@ -153,7 +135,7 @@ class ThumbnailController extends WikiaController {
 		$metaAttribs = [];
 
 		// disable RDF metadata in video thumbnails
-		if ( empty( $options['disableRDF'] ) ) { // bugId: #46621
+		if ( !$lazyLoadImg ) {
 			// link
 			$linkAttribs['itemprop'] = 'video';
 			$linkAttribs['itemscope'] = '';
@@ -205,13 +187,8 @@ class ThumbnailController extends WikiaController {
 		$this->noscript = '';
 		$this->dataSrc = '';
 
-		if ( !empty( $options['usePreloading'] ) ) {
-			$this->dataSrc = $imgSrc;
-		} elseif ( !empty( $this->wg->EnableAdsLazyLoad )
-			&& empty( $options['noLazyLoad'] )
-			&& ImageLazyLoad::isValidLazyLoadedImage( $this->imgSrc )
-		) {
-			$this->noscript = $this->noscript = $this->app->renderView(
+		if ( $lazyLoadImg ) {
+			$this->noscript = $this->app->renderView(
 				'ThumbnailController',
 				'imgTag',
 				$this->response->getData()
