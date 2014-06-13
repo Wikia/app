@@ -328,6 +328,15 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( override ) {
  * @param {Mixed|null} error Thrown exception or HTTP error string
  */
 ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
+	if ( window.veTrack ) {
+		veTrack( {
+			action: 've-load-error',
+			type: 4,
+			status: status,
+			jqXHR: jqXHR ? jqXHR.status : 'unknown'
+		} );
+	}
+
 	// Don't show an error if the load was manually aborted
 	// The response.status check here is to catch aborts triggered by navigation away from the page
 	if (

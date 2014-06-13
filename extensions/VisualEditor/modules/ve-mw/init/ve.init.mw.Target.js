@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw */
+/* global mw, veTrack */
 
 /**
  * Initialization MediaWiki target.
@@ -375,15 +375,28 @@ ve.init.mw.Target.onLoad = function ( response ) {
 	var data = response ? response.visualeditor : null;
 
 	if ( !data && !response.error ) {
+		if ( window.veTrack ) {
+			veTrack( { action: 've-load-error', type: 1 } );
+		}
 		ve.init.mw.Target.onLoadError.call(
 			this, null, 'Invalid response in response from server', null
 		);
 	} else if ( response.error || data.result === 'error' ) {
+		if ( window.veTrack ) {
+			veTrack( {
+				action: 've-load-error',
+				detail: response.error.code + ': ' + response.error.info,
+				type: 2
+			} );
+		}
 		ve.init.mw.Target.onLoadError.call( this, null,
 			response.error.code + ': ' + response.error.info,
 			null
 		);
 	} else if ( typeof data.content !== 'string' ) {
+		if ( window.veTrack ) {
+			veTrack( { action: 've-load-error', type: 3 } );
+		}
 		ve.init.mw.Target.onLoadError.call(
 			this, null, 'No HTML content in response from server', null
 		);
