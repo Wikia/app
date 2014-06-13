@@ -14,7 +14,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	/**
 	 * Entry point to create/edit point of interest
 	 *
-	 * @requestParam Integer $poiId an unique POI id if not set then we're creating a new POI
+	 * @requestParam Integer $id an unique POI id if not set then we're creating a new POI
 	 * @requestParam Integer $mapId an unique map id
 	 * @requestParam String $name an array of pin types names
 	 * @requestParam String $poi_category_id an unique poi category id
@@ -51,6 +51,68 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	}
 
 	/**
+	 * Entry point to delete a poi
+	 *
+	 * @requestParam Integer id an unique POI id
+	 *
+	 * @throws PermissionsException
+	 * @throws BadRequestApiException
+	 */
+	public function deletePoi() {
+		$this->setAction( self::ACTION_DELETE );
+		$this->setData( 'poiId', $this->request->getInt( 'id' ) );
+
+		$this->validatePoiData();
+
+		$response = $this->mapsModel->deletePoi( $this->getData( 'poiId' ) );
+
+		if( !$response['success'] ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		}
+
+		$this->setVal( 'results', $response );
+	}
+
+	/**
+	 * Creates a new point of interest
+	 *
+	 * @return Array
+	 */
+	private function createPoi() {
+		$this->setAction( self::ACTION_CREATE );
+
+		$response = $this->mapsModel->savePoi( $this->getSanitizedData() );
+		if( !$response['success'] ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Updates an existing point of interest
+	 *
+	 * @return Array
+	 */
+	private function updatePoi() {
+		$this->setAction( self::ACTION_UPDATE );
+
+		$response = $this->mapsModel->updatePoi(
+			$this->getData( 'poiId' ),
+			$this->getSanitizedData()
+		);
+
+		if( !$response['success'] ) {
+			$response['content'] = new stdClass();
+			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		}
+
+		return $response;
+	}
+
+	/**
 	 * Sets current action being executed on POI
 	 *
 	 * @param String $action
@@ -70,34 +132,51 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 	}
 
+	/**
+	 * Getter returns current action
+	 *
+	 * @return String
+	 */
 	private function getAction() {
 		return $this->currentAction;
 	}
 
+	/**
+	 * Helper method returns true if current action is an update
+	 *
+	 * @return bool
+	 */
 	private function isUpdate() {
 		return ( $this->getAction() === self::ACTION_UPDATE );
 	}
 
+	/**
+	 * Helper method returns true if current action is a create
+	 *
+	 * @return bool
+	 */
 	private function isCreate() {
 		return ( $this->getAction() === self::ACTION_CREATE );
+	}
+
+	/**
+	 * Helper method returns true if current action is a delete
+	 *
+	 * @return bool
+	 */
+	private function isDelete() {
+		return ( $this->getAction() === self::ACTION_DELETE );
 	}
 
 	/**
 	 * Validates data needed for creating/updating POI
 	 */
 	private function validatePoiData() {
-		$name = $this->getData( 'name' );
-		$poiCategoryId = $this->getData( 'poiCategoryId' );
-		$mapId = $this->getData( 'mapId' );
-		$lat = $this->getData( 'lat' );
-		$lon = $this->getData( 'lon' );
+		if( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidEditData() ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
+		}
 
-		if( empty( $name )
-			|| empty( $poiCategoryId )
-			|| empty( $mapId )
-			|| empty( $lat )
-			|| empty( $lon )
-		) {
+		if( $this->isDelete() && !$this->isValidDeleteData() ) {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
@@ -106,51 +185,41 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 		}
 	}
 
-	private function updatePoi() {
-		$this->setAction( self::ACTION_UPDATE );
+	/**
+	 * Helper methods returns true if data is valid for create or update
+	 *
+	 * @return bool
+	 */
+	private function isValidEditData() {
+		$name = $this->getData( 'name' );
+		$poiCategoryId = $this->getData( 'poiCategoryId' );
+		$mapId = $this->getData( 'mapId' );
+		$lat = $this->getData( 'lat' );
+		$lon = $this->getData( 'lon' );
 
-		$response = $this->mapsModel->updatePoi(
-			$this->getData( 'poiId' ),
-			$this->getSanitizedData()
-		);
-
-		if( !$response['success'] && is_null( $response['content'] ) ) {
-			$response['content'] = new stdClass();
-			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
-		}
-
-		return $response;
-	}
-
-	public function deletePoi() {
-		$poiId = $this->request->getInt( 'id' );
-		$response = $this->mapsModel->deletePoi( $poiId );
-
-		if( !$response['success'] ) {
-			$response['content'] = new stdClass();
-			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
-		}
-
-		$this->setVal( 'results', $response );
+		return ( empty( $name ) || empty( $poiCategoryId ) || empty( $mapId ) || empty( $lat ) || empty( $lon ) );
 	}
 
 	/**
-	 * Creates a new point of interest
+	 * Helper methods returns true if data is valid for delete
 	 *
-	 * @return bool|string
+	 * @return bool
 	 */
-	private function createPoi() {
-		$this->setAction( self::ACTION_CREATE );
+	private function isValidDeleteData() {
+		$poiId = $this->getData( 'poiId' );
 
-		$response = $this->mapsModel->savePoi( $this->getSanitizedData() );
-		if( !$response['success'] && is_null( $response['content'] ) ) {
-			$response['content'] = new stdClass();
-			$response['content']->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		if( $poiId < 0 ) {
+			return false;
 		}
 
-		return $response;
+		return true;
 	}
 
+	/**
+	 * Depending on a current action prepares proper data for POST requests (create, edit)
+	 *
+	 * @return array
+	 */
 	private function getSanitizedData() {
 		$poiData = [
 			'name' => $this->getData( 'name' ),
