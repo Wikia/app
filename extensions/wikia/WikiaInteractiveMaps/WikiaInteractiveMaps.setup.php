@@ -46,6 +46,8 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 
 // Logs
 $wgLogTypes[] = 'maps';
+$wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
+$wgLogHeaders['maps'] = 'wikia-interactive-maps-log-description';
 
 $logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
 
