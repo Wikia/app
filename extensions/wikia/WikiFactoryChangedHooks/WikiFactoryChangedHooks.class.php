@@ -187,6 +187,10 @@ Class WikiFactoryChangedHooks {
 		if ($cv_name == "wgEnableBlogArticles" && $value == true) {
 			Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
 
+			if ( !class_exists( 'BlogTask' ) ) {
+				global $IP;
+				require_once( "$IP/extensions/wikia/Blogs/BlogTask.class.php" );
+			}
 			$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
 			$task->call('maintenance');
 			$task->queue();
