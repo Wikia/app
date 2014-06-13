@@ -229,7 +229,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
-	var $articleContent, $insertTarget,
+	var $insertTarget,
 		$mwContentText = $( '#mw-content-text' ),
 		$content = $( $.parseHTML( html ) );
 
@@ -251,11 +251,10 @@ ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, catego
 
 		$insertTarget = window.CategoryExhibition ? '#mw-pages' : '.category-gallery';
 		$content.insertBefore( $insertTarget );
-		$articleContent = $mwContentText;
 	} else {
-		$articleContent = $mwContentText.empty().append( $content );
+		$mwContentText.empty().append( $content );
 	}
 
-	mw.hook( 'wikipage.content' ).fire( $articleContent );
+	mw.hook( 'wikipage.content' ).fire( $mwContentText );
 	$( '#catlinks' ).replaceWith( categoriesHtml );
 };
