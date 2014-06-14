@@ -568,7 +568,6 @@ $wgAutoloadLocalClasses = array(
 	'Job' => 'includes/job/JobQueue.php',
 	'RefreshLinksJob' => 'includes/job/RefreshLinksJob.php',
 	'RefreshLinksJob2' => 'includes/job/RefreshLinksJob.php',
-	'UploadFromUrlJob' => 'includes/job/UploadFromUrlJob.php',
 
 	# includes/json
 	'FormatJson' => 'includes/json/FormatJson.php',
