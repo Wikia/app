@@ -1,7 +1,7 @@
 CREATE TABLE `city_visualization_images` (
   `city_id` int(11) NOT NULL,
   `city_lang_code` varchar(8) DEFAULT NULL,
-  `image_type` enum('main','main') DEFAULT 'main',
+  `image_type` int(11) DEFAULT '0',
   `image_index` int(11) DEFAULT '1',
   `image_name` varchar(255) NOT NULL,
   `image_review_status` tinyint(3) unsigned DEFAULT NULL,
