@@ -166,8 +166,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Get value of parsed parameter
 	 */
-	public function getParam($name) {
-		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : null;
+	public function getParam($name, $default = null) {
+		return isset($this->mParsedParams[$name]) ? $this->mParsedParams[$name] : $default;
 	}
 
 	/**
@@ -669,7 +669,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$perRow = ($this->mPerRow > 0) ? $this->mPerRow : 'dynamic';
 			$position = $this->getParam('position');
-			$captionsPosition = $this->getParam('captionposition');
+			$captionsPosition = $this->getParam('captionposition', 'below');
 			$captionsAlign = $this->getParam('captionalign');
 			$captionsSize = $this->getParam('captionsize');
 			$captionsColor = (!empty($captionColor)) ? $captionColor : null;
@@ -695,6 +695,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'hash' => $hash,
 				'class' =>  'wikia-gallery'.
 					(($isTemplate) ? ' template' : null).
+					" wikia-gallery-caption-{$captionsPosition}" .
 					" wikia-gallery-position-{$position}".
 					" wikia-gallery-spacing-{$spacing}".
 					" wikia-gallery-border-{$borderSize}".
@@ -812,7 +813,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$html .= Xml::openElement('div',
 					array(
-					'class' => 'gallery-image-wrapper'.
+					'class' => 'gallery-image-wrapper' .
 						((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
 					'id' => $wrapperId,
 					'style' => 'position: relative;'.
