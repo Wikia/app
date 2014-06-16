@@ -111,6 +111,6 @@ class WikiaMapsLogger {
 		if ( is_null( $skin ) ) {
 			return wfMessage( $messageKey, $mapPageTitle )->plain();
 		}
-		return wfMessage( $messageKey, $mapPageTitle );
+		return wfMessage( $messageKey, $mapPageTitle )->parse();
 	}
 }
