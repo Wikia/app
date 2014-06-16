@@ -695,7 +695,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				'hash' => $hash,
 				'class' =>  'wikia-gallery'.
 					(($isTemplate) ? ' template' : null).
-					" wikia-gallery-caption-{$captionsPosition}" .
+					" wikia-gallery-caption-{$captionsPosition}".
 					" wikia-gallery-position-{$position}".
 					" wikia-gallery-spacing-{$spacing}".
 					" wikia-gallery-border-{$borderSize}".
@@ -813,7 +813,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				$html .= Xml::openElement('div',
 					array(
-					'class' => 'gallery-image-wrapper' .
+					'class' => 'gallery-image-wrapper'.
 						((!$useBuckets && !empty($borderColorClass)) ? $borderColorClass : null),
 					'id' => $wrapperId,
 					'style' => 'position: relative;'.
