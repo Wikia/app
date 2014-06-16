@@ -144,7 +144,9 @@ define('wikia.intMap.createMap.pinTypes',
 		 * @desc adds blank pin type input field
 		 */
 		function addPinType() {
-			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({})));
+			$form.append(utils.render(pinTypeTemplate, extendPinTypeData({}), {
+				parentPinType: parentPinTypeTemplate
+			}));
 		}
 
 		/**
