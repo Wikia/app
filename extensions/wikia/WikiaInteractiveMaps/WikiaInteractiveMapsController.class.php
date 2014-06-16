@@ -629,4 +629,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		return ($currentPage - 1) * $itemsPerPage;
 	}
 
+	/**
+	 * Generate extension translations file
+	 */
+	public function executeTranslation() {
+		$messages = [];
+		include( dirname( __FILE__ ) . '/WikiaInteractiveMapsService.i18n.php' );
+		$this->response->setVal( 'messages', $messages );
+	}
 }
