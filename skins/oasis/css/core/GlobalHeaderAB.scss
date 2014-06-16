@@ -331,7 +331,7 @@ $facebook-background-color: #3c5b9b;
 			border: none;
 			width: 424px;
 			&.show {
-				left: -424px;
+				left: -426px;
 				top: 0px;
 			}
 			background-color: #fff;
@@ -359,6 +359,7 @@ $facebook-background-color: #3c5b9b;
 					background-color: inherit;
 					color: #fff;
 					font-size: 15px;
+					line-height: 1;
 					padding: 0;
 				}
 				#wall-notifications-markasread {
@@ -373,12 +374,20 @@ $facebook-background-color: #3c5b9b;
 				}
 			}
 
+			.notifications-for-wiki.show {
+				.notifications-wiki-header {
+					background-image: url(/skins/oasis/images/GlobalNavigation/chevron_up.png);
+				}
+			}
+
 			.notifications-wiki-header {
-				background-color: #edf1f4;
-				background-image: none;
+				background: #edf1f4 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%;
 				color: #0a5fa3;
 				font-weight: bold;
 				padding: 20px;
+				.chevron {
+					display: none;
+				}
 			}
 
 			.notifications-wiki-count-container {
