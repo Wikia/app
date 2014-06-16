@@ -13,7 +13,11 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.null'
+	'ext.wikia.adEngine.provider.null',
+
+	// adSlots
+	'ext.wikia.adEngine.slot.topInContentBoxad'
+
 ], function (
 	// regular dependencies
 	log,
@@ -28,7 +32,10 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderNull
+	adProviderNull,
+
+	// adSlots
+	topInContentBoxad
 ) {
 	'use strict';
 
@@ -56,6 +63,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_4': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
+		'TOP_IN_CONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,
@@ -138,6 +146,8 @@ define('ext.wikia.adEngine.adConfig', [
 		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
 		return adProviderLater;
 	}
+
+	topInContentBoxad.init();
 
 	return {
 		getDecorators: function () { return decorators; },

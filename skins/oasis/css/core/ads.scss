@@ -82,6 +82,13 @@
 .home-top-right-ads {
 	float: right;
 }
+
+.home-top-right-ads.top-right-ads-in-content {
+  display: block;
+  margin-bottom: 15px;
+  margin-left: 15px;
+}
+
 #HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;

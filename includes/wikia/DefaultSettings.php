@@ -1214,6 +1214,12 @@ $wgAdDriverUseEbay = false;
 $wgAdDriverUseWikiaBarBoxad2 = false;
 
 /**
+ * @name $wgAdDriverUseTopInContentBoxad
+ * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
+ */
+$wgAdDriverUseTopInContentBoxad = false;
+
+/**
  * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
  * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
  */
