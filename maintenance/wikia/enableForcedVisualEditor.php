@@ -31,47 +31,13 @@ function getVEForcedValue( $wikiId ) {
 
 // Use the --disable option to set $wgForceVisualEditor to false
 $forceVisualEditor = isset( $options['disable'] ) ? false : true;
-// Highest WAM rank at which to change the variable (lower number = higher rank)
-if ( !isset( $options['wam'] ) ) {
-	die( "You must specify a max WAM score with the --wam=N option (use 0 for all wikis).\n" );
-} elseif ( preg_match( '/^(\d+?)-(\d+?)$/', $options['wam'], $matches ) === 1 ) {
-	$wamMinScore = min( $matches[1], $matches[2] );
-	$wamMaxScore = max( $matches[1], $matches[2] );
-} elseif ( $options['wam'] > 5000 || $options['wam'] < 0 ) {
-	die( "WAM score must be a value between 0 and 5000.\n" );
-} else {
-	$wamMinScore = $options['wam'];
+
+if ( !isset( $options['limit'] ) ) {
+	exit( "No limit specified. Please specify an integer limit using the --limit option.\n" );
+} elseif ( ( $limit = (int)$options['limit'] ) < 1 ) {
+	exit( "Invalid limit specified. Please specify an integer limit greater than 0.\n" );
 }
 
-// First get the WAM index
-$wamWikis = array();
-$app = F::app();
-$offset = 0;
-$limit = WAMApiController::DEFAULT_PAGE_SIZE;
-echo "Gathering WAM rankings";
-while ( $offset < 5000 ) {
-	echo '.';
-	$wamData = $app->sendRequest( 'WAMApi', 'getWAMIndex', array( 'offset' => $offset ) )->getData();
-
-	if ( empty( $wamData ) || !is_array( $wamData['wam_index'] ) ) {
-		// Unexpected return values -- is something broken?
-		echo "\nWarning: Invalid or missing data returned from WAM API.\n";
-		break;
-	}
-	elseif ( empty( $wamData['wam_index'] ) ) {
-		// Unexpectedly reached end of list
-		echo "\nWarning: Unexpectedly reached end of WAM list (less than 5000 wikis indexed).\n";
-		break;
-	}
-
-	foreach ( $wamData['wam_index'] as $wikiId => $data ) {
-		$wamWikis[$wikiId] = $data['wam_rank'];
-	}
-
-	$offset += $limit;
-}
-
-echo "\n";
 // Get all wiki IDs from the database
 $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -83,28 +49,28 @@ while ( $row = $dbr->fetchObject( $result ) ) {
 	$allWikis[] = $row;
 }
 
+echo count( $allWikis ) . " wikis found.\n";
+
+$count = 1;
+$affected = 0;
 foreach ( $allWikis as $wiki ) {
-	// If the wiki is not WAM-ranked or is in the exclusion list, continue
-	if ( !isset( $wamWikis[$wiki->city_id] ) || ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) ) {
-		continue;
-	} elseif ( $wamWikis[$wiki->city_id] >= $wamMinScore ) {
-		if ( isset( $wamMaxScore ) && $wamWikis[$wiki->city_id] > $wamMaxScore ) {
-			// WAM score is out of specified range
-			continue;
-		}
-		$wamText = 'WAM rank '.$wamWikis[$wiki->city_id];
-	} else {
-		// If the wiki has a WAM score and the score is higher (numerically less) than the WAM score threshold parameter, ignore it
+	if ( $count > $limit ) {
+		break;
+	} elseif ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) {
+		// If the wiki is in the exclusion list, continue
 		continue;
 	}
 
 	$wikiFactoryVar = WikiFactory::getVarByName( 'wgForceVisualEditor', $wiki->city_id );
-	if ( getVEForcedValue( $wiki->city_id ) !== $forceVisualEditor ) {
-		echo 'Setting $wgForceVisualEditor to '.( $forceVisualEditor ? 'TRUE' : 'FALSE' ).' for '.$wiki->city_title.' ('.$wiki->city_url.") -- $wamText\n";
+	if ( (bool)getVEForcedValue( $wiki->city_id ) !== $forceVisualEditor ) {
+		echo 'Setting $wgForceVisualEditor to '.( $forceVisualEditor ? 'TRUE' : 'FALSE' ).' for '.$wiki->city_title.' ('.$wiki->city_url.")\n";
 		// Safety switch: Uncomment two lines below if you know what you are doing.
 		//WikiFactory::setVarByName( 'wgForceVisualEditor', $wiki->city_id, $forceVisualEditor );
 		//WikiFactory::clearCache( $wiki->city_id );
+		$affected++;
 	}
+
+	$count++;
 }
 
-echo "Done.\n";
+echo "Done. $affected of $limit wikis affected.\n";
