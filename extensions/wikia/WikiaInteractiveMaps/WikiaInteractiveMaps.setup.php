@@ -37,6 +37,7 @@ $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfter
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
+
 JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 	'wikia-interactive-maps-map-placeholder-error'
 ] );
@@ -49,4 +50,7 @@ JSMessages::registerPackage( 'WikiaInteractiveMapsEditPOI', [
 	'wikia-interactive-maps-edit-poi-*'
 ] );
 
+JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
+	'wikia-interactive-maps-delete-map-client-*'
+] );
 

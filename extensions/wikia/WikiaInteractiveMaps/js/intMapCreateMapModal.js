@@ -62,7 +62,7 @@ define(
 
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
-				modal.$errorContainer = $('.map-creation-error');
+				modal.$errorContainer = $('.map-modal-error');
 
 				utils.bindEvents(modal, events);
 

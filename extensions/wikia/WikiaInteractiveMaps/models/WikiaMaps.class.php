@@ -53,10 +53,10 @@ class WikiaMaps {
 	public function buildUrl( Array $segments, Array $params = [] ) {
 		return sprintf(
 			'%s://%s:%d/api/%s/%s%s',
-			$this->config['protocol'],
-			$this->config['hostname'],
-			$this->config['port'],
-			$this->config['version'],
+			$this->config[ 'protocol' ],
+			$this->config[ 'hostname' ],
+			$this->config[ 'port' ],
+			$this->config[ 'version' ],
 			implode( '/',  $segments ),
 			!empty( $params ) ? '?' . http_build_query( $params ) : ''
 		);
@@ -91,7 +91,7 @@ class WikiaMaps {
 			Http::post( $url, [
 				'postData' => json_encode( $data ),
 				'headers' => [
-					'Authorization' => $this->config['token']
+					'Authorization' => $this->config[ 'token' ]
 				],
 				'returnInstance' => true,
 				//TODO: this is temporary workaround, remove it before production!
@@ -160,8 +160,8 @@ class WikiaMaps {
 			] )
 		);
 
-		if( $response['success'] ) {
-			$mapsData = $response['content'];
+		if( $response[ 'success' ] ) {
+			$mapsData = $response[ 'content' ];
 
 			// Add map size to maps and human status messages
 			array_walk( $mapsData->items, function( &$map ) {
@@ -203,7 +203,7 @@ class WikiaMaps {
 			] )
 		);
 
-		$map = $response['content'];
+		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
 			$response = $this->processServiceResponse(
 				Http::get( $map->tile_set_url, 'default', [
@@ -213,7 +213,7 @@ class WikiaMaps {
 				] )
 			);
 
-			$tilesData = $response['content'];
+			$tilesData = $response[ 'content' ];
 
 			if( !is_null( $tilesData ) ) {
 				$map->image = $tilesData->image;
@@ -295,6 +295,21 @@ class WikiaMaps {
 		);
 
 		return $response;
+	}
+
+	/**
+	 * Sends a request to delete a map instance
+	 *
+	 * @param array $data
+	 *
+	 * @return bool
+	 */
+	public function deleteMapById( $mapId ) {
+		$payload = [
+			'deleted' => true
+		];
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ] );
+		return $this->putRequest( $url, $payload );
 	}
 
 	/**
@@ -463,5 +478,5 @@ class WikiaMaps {
 
 		return false;
 	}
-
 }
+

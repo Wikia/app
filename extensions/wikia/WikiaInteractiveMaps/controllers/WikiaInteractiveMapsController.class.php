@@ -90,7 +90,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 
 		$urlParams = [];
 		if ( !is_null( $selectedSort ) ) {
-			$urlParams['sort'] = $selectedSort;
+			$urlParams['sort' ] = $selectedSort;
 		}
 
 		$url = $this->getContext()->getTitle()->getFullURL( $urlParams );
@@ -145,6 +145,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			$this->setVal( 'mapFound', true );
 			$this->setVal( 'url', $url );
 			$this->setVal( 'height', self::MAP_HEIGHT );
+			$this->setVal( 'menu', $this->getMenuMarkup() );
+			$this->setVal( 'mapId', $mapId );
 		} else {
 			$this->setVal( 'mapFound', false );
 			$this->setVal( 'title', wfMessage( 'error' ) );
@@ -153,6 +155,25 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 			] );
 		}
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	/**
+	 * @desc Renders the menu markup for the map page from mustache
+	 * @return string
+	 */
+	function getMenuMarkup() {
+		$actionButtonArray = [
+			'action' => [
+				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
+			],
+			'dropdown' => [
+				'deleteMap' => [
+					'text' => wfMessage( 'wikia-interactive-maps-delete-map' )->escaped(),
+					'id' => 'deleteMap'
+				]
+			],
+		];
+		return F::app()->renderView( 'MenuButton', 'index', $actionButtonArray );
 	}
 
 	/**
@@ -294,8 +315,8 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		} else {
 			$results = $this->createTileset();
 
-			if ( true === $results['success'] ) {
-				$this->setCreationData( 'tileSetId', $results['content']->id );
+			if( true === $results[ 'success' ] ) {
+				$this->setCreationData( 'tileSetId', $results[ 'content' ]->id );
 				$results = $this->createMapFromTilesetId();
 			}
 		}
@@ -372,6 +393,15 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * @desc Obtains a url to a special page with a given path
+	 * @param string $name - name of the special page
+	 * @return string
+	 */
+	function getSpecialUrl( $name ) {
+		return Title::newFromText( $name, NS_SPECIAL )->getFullUrl();
 	}
 
 	/**
@@ -490,12 +520,12 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 * @return Array
 	 */
 	private function getPinTypesCreationResults( $requestedCreations, $createdPinTypes ) {
-		$response['success'] = true;
+		$response[ 'success' ] = true;
 
 		if( $createdPinTypes !== $requestedCreations ) {
-			$response['success'] = false;
-			$response['content'] = new stdClass();
-			$response['message'] = wfMessage(
+			$response[ 'success' ] = false;
+			$response[ 'content' ] = new stdClass();
+			$response[ 'message' ] = wfMessage(
 				'wikia-interactive-maps-create-pin-types-error',
 				$createdPinTypes,
 				$requestedCreations
@@ -533,6 +563,24 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	 */
 	private function getStashedImageThumb( $file, $width ) {
 		return wfReplaceImageServer( $file->getThumbUrl( $width . "px-" . $file->getName() ) );
+	}
+
+	/**
+	 * @desc Ajax method for deleting a map from IntMaps API
+	 */
+	public function deleteMap() {
+		$mapId = $this->request->getVal( 'mapId', 0 );
+		$result = false;
+		if ( $mapId && $this->wg->User->isLoggedIn() ) {
+			$result = $this->mapsModel->deleteMapById( $mapId )[ 'success' ];
+		}
+		if ( $result ) {
+			NotificationsController::addConfirmation( wfMessage( 'wikia-interactive-maps-delete-map-success' ) );
+			$this->response->setVal(
+				'redirectUrl',
+				$this->getSpecialUrl( 'InteractiveMaps' )
+			);
+		}
 	}
 	
 	/**

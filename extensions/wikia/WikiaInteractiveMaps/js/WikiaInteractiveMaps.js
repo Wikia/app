@@ -13,13 +13,17 @@ require(
 			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0],
 			// create map modal assets
 			createMapConfig = {
+
+		//registry for the modal actions assets
+		actions = {
+			createMap: {
 				module: 'wikia.intMaps.createMap.modal',
 				source: {
 					messages: ['WikiaInteractiveMapsCreateMap'],
 					scripts: ['int_map_create_map_js'],
 					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
 					mustache: [
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapModal.mustache',
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
@@ -27,18 +31,32 @@ require(
 						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
 					]
 				},
-				cacheKey: 'wikia_interactive_maps_create_map',
-				origin: 'wikia-int-map-create-map'
-			};
+				origin: 'wikia-int-map-create-map',
+				cacheKey: 'wikia_interactive_maps_create_map'
+			},
+			deleteMap: {
+				module: 'wikia.intMaps.deleteMap',
+				source: {
+					messages: ['WikiaInteractiveMapsDeleteMap'],
+					scripts: ['int_map_delete_map_js'],
+					mustache: [
+						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache'
+					]
+				},
+				origin: 'wikia-int-map-delete-map',
+				cacheKey: 'wikia_interactive_maps_delete_map'
+			}
+		};
 
 		// attach handlers
-		body
-			.on('change', '#orderMapList', function(event) {
-				sortMapList(event.target.value);
-			})
-			.on('click', '#createMap', function() {
-				createMap();
-			});
+                body
+                        .on('change', '#orderMapList', function(event) {
+                                sortMapList(event.target.value);
+                        })
+                        .on('click', '#createMap', function() {
+                                createMap();
+                        });
+
 
 		setPontoIframeTarget(targetIframe);
 
@@ -61,6 +79,15 @@ require(
 		}
 
 		/**
+		 * @desc reload the page after choosing ordering option
+		 * @param {string} sortType - sorting method
+		 */
+
+		function sortMapList(sortType) {
+			qs().setVal('sort', sortType, false).goTo();
+		}
+
+		/**
 		 * @desc opens create map modal preceded by forced login modal for anons
 		 */
 		function createMap() {
@@ -74,3 +101,4 @@ require(
 		}
 	}
 );
+
