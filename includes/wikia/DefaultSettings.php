@@ -475,6 +475,10 @@ $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
+/*
+ * Allow blog tasks to be used even when Blogs extension is not enabled
+ */
+$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 
 /**
  * registered API methods
@@ -1432,8 +1436,3 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
-
-/*
- * Allow blog tasks to be used even when Blogs extension is not enabled
- */
-$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
