@@ -219,7 +219,11 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
-	protected function getArticleDetail( $wikiId, $articleId, $wikiService = null ) {
+	protected function getWikiService(){
+		return new WikiService();
+	}
+
+	protected function getArticleDetail( $wikiId, $articleId ) {
 		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ),[ 'ids' => $articleId ],  self::ENDPOINT_DETAILS );
 		if ( !$res ) {
 			return [ ];
@@ -227,9 +231,7 @@ abstract class BaseRssModel extends WikiaService {
 
 		$article = $res[ 'items' ][ $articleId ];
 		if ( !$article[ 'thumbnail' ] ) {
-			if(! $wikiService instanceof WikiService ){
-				$wikiService = new WikiService();
-			}
+			$wikiService = $this->getWikiService();
 			$article[ 'thumbnail' ] = $wikiService->getWikiWordmark( $wikiId );
 		} else {
 			$article[ 'thumbnail' ] = ImagesService::getFileUrlFromThumbUrl( $article[ 'thumbnail' ] );

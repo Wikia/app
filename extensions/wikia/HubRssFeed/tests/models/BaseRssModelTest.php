@@ -25,7 +25,7 @@ class DummyModel extends BaseRssModel
 	}
 
 	/**
-	 * Mock for getArticleDetail
+	 * Mocked version of getArticleDetail without database calls. Used to test processItems
 	 * @param $wid
 	 * @param $aid
 	 * @return array
@@ -42,7 +42,7 @@ class DummyModel extends BaseRssModel
 	}
 
 	/**
-	 * mock for getArticleDescription
+	 * Mocked version of getArticleDescription without database calls. Used to test processItems
 	 * @param $wid
 	 * @param $aid
 	 * @return string
@@ -252,14 +252,21 @@ class BaseRssModelTest extends WikiaBaseTest
 
 		$mock = $this->getMockBuilder( 'BaseRssModel' )
 			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'getFeedTitle', 'getFeedLanguage', 'getFeedDescription', 'loadData', 'formatTitle' ] )
+			->setMethods( [
+				'__construct', 'getFeedTitle', 'getFeedLanguage',
+				'getFeedDescription', 'loadData', 'formatTitle','getWikiService'
+			] )
 			->getMock();
+
+		$mock->expects( $this->any() )
+			->method( 'getWikiService' )
+			->will( $this->returnValue( $mockWs ) );
 
 		$function = self::getFn( $mock, 'getArticleDetail' );
 
 		$expected = [ 'img' => [ 'url' => "wordmark11.png", 'width' => 200, 'height' => 200 ], 'title' => "xxx" ];
 
-		$this->assertEquals( $expected, $function( 99, 222, $mockWs ) );
+		$this->assertEquals( $expected, $function( 99, 222 ) );
 	}
 
 	/**

@@ -59,18 +59,18 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 		return $mockQueryResults;
 	}
 
-	private function fakeRecentlyEditedQueryRow( Title $title ) {
-		$row = new stdClass();
-		$row->page_namespace = $title->getNamespace();
-		$row->page_title = $title->getBaseText();
-		$row->page_id = $title->getArticleId();
-		return $row;
-	}
-
 	/*
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_SkipMainPage() {
+		$mock = $this->getMockBuilder( 'PopularArticlesModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getRecentlyEditedPageResult' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'getRecentlyEditedPageResult' )
+			->will( $this->returnValue( new fakeResultGenerator( 2 ) ) );
+
 		$mockTitleMain = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( [ '__construct', 'isMainPage' ] )
@@ -81,8 +81,8 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
 
-		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
-		$result = $fn( 0, new fakeResultGenerator( 2 ) );
+		$fn = self::getFn( $mock, 'getRecentlyEditedPageIds' );
+		$result = $fn( 0 );
 
 		$this->assertEmpty( $result );
 	}
@@ -91,6 +91,14 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_ReturnPageIds() {
+		$mock = $this->getMockBuilder( 'PopularArticlesModel' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'getRecentlyEditedPageResult' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'getRecentlyEditedPageResult' )
+			->will( $this->returnValue( new fakeResultGenerator( 2 ) ) );
+
 		$mockTitleMain = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
 			->setMethods( [ '__construct', 'isMainPage' ] )
@@ -101,8 +109,8 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 
 		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
 
-		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
-		$result = $fn( 0, new fakeResultGenerator( 2 ) );
+		$fn = self::getFn( $mock, 'getRecentlyEditedPageIds' );
+		$result = $fn( 0 );
 
 		$this->assertEquals( $result, [ 0, 1 ] );
 	}

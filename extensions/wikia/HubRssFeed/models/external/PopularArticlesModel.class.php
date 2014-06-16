@@ -27,6 +27,17 @@ class PopularArticlesModel {
 		return array_slice( $results, 0, self::DEFAULT_RESULTS_NUMBER );
 	}
 
+	/**
+	 * Fetches up to 200 most recently edited articles from a given wiki
+	 *
+	 * @param $wiki_id
+	 * @return ResultWrapper
+	 */
+	protected function getRecentlyEditedPageResult( $wiki_id ){
+		$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
+		return  $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
+	}
+
 
 	/**
 	 * Fetches up to 200 most recently edited articles from a given wiki (without Mainpages)
@@ -34,11 +45,8 @@ class PopularArticlesModel {
 	 * @param $wiki_id
 	 * @return array
 	 */
-	protected function getRecentlyEditedPageIds( $wiki_id, $result = null ) {
-		if( !$result ){
-			$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
-			$result = $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
-		}
+	protected function getRecentlyEditedPageIds( $wiki_id ) {
+	    $result = $this->getRecentlyEditedPageResult( $wiki_id );
 		$page_ids = [];
 		while ($row = $result->fetchObject()) {
 			$title = Title::newFromText( $row->page_title, $row->page_namespace );
