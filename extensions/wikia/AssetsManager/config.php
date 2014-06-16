@@ -1781,7 +1781,6 @@ $config['int_map_special_page_js'] = [
 	]
 ];
 
-
 $config['int_map_create_map_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
