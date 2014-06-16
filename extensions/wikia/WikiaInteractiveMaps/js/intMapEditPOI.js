@@ -58,7 +58,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 				value: $.msg('wikia-interactive-maps-edit-poi-delete'),
 				data: {
 					key: 'event',
-					value: 'del'
+					value: 'deletePOI'
 				}
 			}
 		},
@@ -103,7 +103,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 
 		if (isEditMode) {
 			title = editPOITitle;
-			buttons.push(deletePOIButton)
+			buttons.push(deletePOIButton);
 		}
 
 		modalConfig.vars.title = title;
