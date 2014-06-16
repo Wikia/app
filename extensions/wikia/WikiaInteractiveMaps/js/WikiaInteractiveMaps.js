@@ -11,7 +11,6 @@ require(
 
 		var body = $('body'),
 			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0],
-
 			//registry for the modal actions assets
 			actions = {
 				createMap: {
@@ -75,7 +74,6 @@ require(
 		 * @desc reload the page after choosing ordering option
 		 * @param {string} sortType - sorting method
 		 */
-
 		function sortMapList(sortType) {
 			qs().setVal('sort', sortType, false).goTo();
 		}
@@ -97,3 +95,4 @@ require(
 		}
 	}
 );
+
