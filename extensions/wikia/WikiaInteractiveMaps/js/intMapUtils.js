@@ -104,11 +104,8 @@ define(
 		 */
 		function createModal(config, cb) {
 			uiFactory.init(['modal']).then(function (modal) {
-				modal.createComponent(config, function (component) {
-					cb(component);
-				});
+				modal.createComponent(config, cb);
 			});
-
 		}
 
 		/**
