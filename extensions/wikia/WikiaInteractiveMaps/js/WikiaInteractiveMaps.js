@@ -47,7 +47,6 @@ require(
 			};
 
 		// attach handlers
-		console.log('dadasdasdasda');
 		body
 			.on('change', '#orderMapList', function(event) {
 				sortMapList(event.target.value);
