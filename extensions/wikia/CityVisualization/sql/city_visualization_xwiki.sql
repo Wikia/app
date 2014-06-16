@@ -5,6 +5,6 @@ CREATE TABLE `city_visualization_xwiki` (
   `city_headline` varchar(255) DEFAULT NULL,
   `city_description` text,
   `city_flags` smallint(8) DEFAULT '0',
-  KEY `cv_cid_cf_ce` (`city_id`,`city_flags`),
-  CONSTRAINT `city_visualization_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
+  KEY `cvx_cid_cf_ce` (`city_id`,`city_flags`),
+  CONSTRAINT `city_visualization_xwiki_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
