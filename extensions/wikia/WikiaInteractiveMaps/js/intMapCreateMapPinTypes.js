@@ -13,7 +13,8 @@ define('wikia.intMap.createMap.pinTypes',
 			// mustache templates
 			pinTypesTemplate,
 			pinTypeTemplate,
-			pinTypeParentTemplate,
+			parentPinTypeTemplate,
+
 			// template data
 			pinTypesTemplateData = {
 				pinTypes: [],
@@ -23,14 +24,12 @@ define('wikia.intMap.createMap.pinTypes',
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
 				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder'),
-				pinTypeParents: [{
-					id: 1,
-					name: 'ksz'
-				}]
+				parentPinTypes: []
 			},
 
 			events = {
 				mapCreated: [
+					setUpParentPinTypes,
 					showPinTypes
 				],
 				addPinType: [
@@ -63,12 +62,13 @@ define('wikia.intMap.createMap.pinTypes',
 		 * @param {object} _modal
 		 * @param {string} _pinTypesTemplate
 		 * @param {string} _pinTypeTemplate
+		 * @param {string} _parentPinTypeTemplate
 		 */
-		function init(_modal, _pinTypesTemplate, _pinTypeTemplate, _pinTypeParentTemplate) {
+		function init(_modal, _pinTypesTemplate, _pinTypeTemplate, _parentPinTypeTemplate) {
 			modal = _modal;
 			pinTypesTemplate = _pinTypesTemplate;
 			pinTypeTemplate = _pinTypeTemplate;
-			pinTypeParentTemplate = _pinTypeParentTemplate;
+			parentPinTypeTemplate = _parentPinTypeTemplate;
 
 			utils.bindEvents(modal, events);
 		}
@@ -83,7 +83,7 @@ define('wikia.intMap.createMap.pinTypes',
 
 			modal.$innerContent.html(utils.render(pinTypesTemplate, pinTypesTemplateData, {
 				pinType: pinTypeTemplate,
-				pinTypeParent: pinTypeParentTemplate
+				parentPinType: parentPinTypeTemplate
 			}));
 
 			// cache selectors
@@ -109,11 +109,23 @@ define('wikia.intMap.createMap.pinTypes',
 		function extendPinTypesData(pinTypes) {
 			var extendedPinTypes = [];
 
-			pinTypes.forEach(function(pinType) {
+			pinTypes.forEach(function (pinType) {
 				extendedPinTypes.push(extendPinTypeData(pinType));
 			});
 
 			return extendedPinTypes;
+		}
+
+		function setUpParentPinTypes() {
+			var dfd = new $.Deferred();
+
+			getParentPinTypes()
+				.then(function (parentPinTypes) {
+					pinTypeTemplateData.parentPinTypes = parentPinTypes;
+					dfd.resolve();
+				});
+
+			return dfd.promise();
 		}
 
 		/**
@@ -200,6 +212,31 @@ define('wikia.intMap.createMap.pinTypes',
 				modal.trigger('error', $.msg('wikia-interactive-maps-create-map-pin-type-form-error'));
 				dfd.reject();
 			}
+
+			return dfd.promise();
+		}
+
+		function getParentPinTypes() {
+			var dfd = new $.Deferred();
+
+			$.nirvana.sendRequest({
+				controller: 'WikiaInteractiveMaps',
+				method: 'getParentPinTypes',
+				format: 'json',
+				callback: function(response) {
+					var data = response.results;
+
+					if (data && data.success) {
+						dfd.resolve(data.content);
+					} else {
+						modal.trigger('error', data.content.message);
+						dfd.resolve([]);
+					}
+				},
+				onErrorCallback: function(response) {
+					modal.trigger('error', response.results.content.message);
+				}
+			});
 
 			return dfd.promise();
 		}

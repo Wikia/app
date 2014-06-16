@@ -1,8 +1,8 @@
 <div class="input-group">
     <select name="pinTypeParents[]">
-        {{#pinTypeParents}}
-            {{> pinTypeParent}}
-        {{/pinTypeParents}}
+        {{#parentPinTypes}}
+            {{> parentPinType}}
+        {{/parentPinTypes}}
     </select>
 	<input type="text" name="pinTypeNames[]" placeholder="{{placeholder}}" value="{{name}}">
 	<a href="" title="{{delete}}" class="deleteIcon modalEvent" data-event="deletePinType">{{delete}}</a>

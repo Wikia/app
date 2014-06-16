@@ -424,6 +424,11 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 		$this->creationData[ $name ] = $value;
 	}
 
+	public function getParentPinTypes() {
+		$parentPinTypesResponse = $this->mapsModel->cachedRequest( 'getParentPinTypes', [] );
+		$this->setVal( 'results', $parentPinTypesResponse );
+	}
+
 	/**
 	 * Entry point to create pin types
 	 *

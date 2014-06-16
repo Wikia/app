@@ -281,6 +281,25 @@ class WikiaMaps {
 		);
 	}
 
+	public function getParentPinTypes() {
+		$params = [
+			'parents' => 1
+		];
+
+		$url = $this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ], $params );
+
+		//TODO: consider caching the response
+		$response = $this->processServiceResponse(
+			Http::get( $url, 'default', [
+				'returnInstance' => true,
+				//TODO this is temporary workaround, remove it before production!
+				'noProxy' => true
+			] )
+		);
+
+		return $response;
+	}
+
 	/**
 	 * Sends a request to IntMap Service API to create a pin type with given parameters
 	 *
