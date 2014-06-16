@@ -1434,6 +1434,6 @@ $wgXhprofUDPPort = '3911';
 $wgXhprofMinimumTime = 0.001;
 
 /*
- * Require blog tasks even when Blogs extension is not enabled
+ * Allow blog tasks to be used even when Blogs extension is not enabled
  */
 $wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
