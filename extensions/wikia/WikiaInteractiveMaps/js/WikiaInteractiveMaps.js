@@ -52,11 +52,9 @@ require(
 				sortMapList(event.target.value);
 			})
 			.on('click', 'button#createMap', function() {
-				console.log('aaaaaaa');
 				triggerAction('createMap');
 			})
 			.on('click', 'a#deleteMap', function(event) {
-				console.log('bbbbbbb');
 				event.preventDefault();
 				triggerAction('deleteMap');
 			})
