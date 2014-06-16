@@ -18,8 +18,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			save: [
 				save
 			],
-			deletePOi: [
-				deletePOi
+			deletePOI: [
+				deletePOI
 			],
 			beforeClose: [
 				utils.refreshIfAfterForceLogin
@@ -149,7 +149,7 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @desc deletes POI
 	 */
 
-	function deletePOi() {
+	function deletePOI() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsPoi',
 			method: 'deletePoi',
