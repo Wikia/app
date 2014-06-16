@@ -136,20 +136,4 @@ class BaseRssModelTest extends WikiaBaseTest
 		$this->assertNotNull($processedData['dummy_url']['img']['url']);
 	}
 
-	/**
-	 * @group UsingDB
-	 * @covers BaseRssModel::getArticleDetail
-	 */
-	public function testGetArticleDetail() {
-		$dummy = new DummyModel();
-		$getArticleDetail = self::getFn( $dummy, 'getArticleDetail' );
-
-		$details = $getArticleDetail(831, 49);
-
-		$this->assertEquals("Miss Piggy", $details['title']);
-		foreach (['url', 'width', 'height'] as $key) {
-			$this->assertArrayHasKey($key, $details['img']);
-		}
-
-	}
 }
