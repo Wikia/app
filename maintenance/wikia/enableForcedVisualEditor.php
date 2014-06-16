@@ -39,10 +39,11 @@ if ( !isset( $options['limit'] ) ) {
 }
 
 // Get all wiki IDs from the database
-$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-echo "Fetching all wikis from database...\n";
-$result = $dbr->select( 'city_list', 'city_id, city_title, city_url' );
+echo "Fetching $limit wikis from database...\n";
+$result = $dbr->select( 'city_list', 'city_id, city_title, city_url', '', 'DatabaseMysql::select',
+	array( 'LIMIT' => $limit, 'ORDER BY' => 'city_id' ) );
 
 $allWikis = array();
 while ( $row = $dbr->fetchObject( $result ) ) {
@@ -51,12 +52,9 @@ while ( $row = $dbr->fetchObject( $result ) ) {
 
 echo count( $allWikis ) . " wikis found.\n";
 
-$count = 1;
 $affected = 0;
 foreach ( $allWikis as $wiki ) {
-	if ( $count > $limit ) {
-		break;
-	} elseif ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) {
+	if ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) {
 		// If the wiki is in the exclusion list, continue
 		continue;
 	}
@@ -69,8 +67,6 @@ foreach ( $allWikis as $wiki ) {
 		//WikiFactory::clearCache( $wiki->city_id );
 		$affected++;
 	}
-
-	$count++;
 }
 
 echo "Done. $affected of $limit wikis affected.\n";
