@@ -23,6 +23,17 @@ class DummyModel extends BaseRssModel
 	{
 		return $item;
 	}
+
+	protected function getArticleDetail( $wid, $aid ) {
+		$articles = [
+			831 => [
+				49 => [ 'img' => [ 'url' => 'uaa', 'width' => 11, 'height' => 22 ], 'title' => 'taa' ],
+				4 => [ 'img' => [ 'url' => 'ubb', 'width' => 33, 'height' => 44 ], 'title' => 'tbb' ]
+			]
+		];
+
+		return $articles[ $wid ][ $aid ];
+	}
 }
 
 class BaseRssModelTest extends WikiaBaseTest
