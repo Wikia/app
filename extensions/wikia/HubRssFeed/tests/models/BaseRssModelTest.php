@@ -233,7 +233,7 @@ class BaseRssModelTest extends WikiaBaseTest
 				'items' => [
 					222 => [
 						'thumbnail' => null,
-						'original_dimensions' => [ ],
+						'original_dimensions' => [ 'width' => null, 'height' => null  ],
 						'title' => 'xxx'
 					]
 				]
@@ -266,10 +266,11 @@ class BaseRssModelTest extends WikiaBaseTest
 	 * @covers BaseRssModel::getArticleDescription
 	 */
 	public function testGetArticleDescription() {
+		$this->mockStaticMethod( 'WikiFactory', 'IDtoDB', null );
 		$this->mockStaticMethod( 'ApiService', 'foreignCall',
 			[
 				'sections' => [
-					[ 'xx' => 'section_1' ],
+					[ 'content' => 'section_1' ],
 					[ 'content' => [
 						[ 'type' => 'cc' ],
 						[ 'type' => 'paragraph', 'text' => 'test1' ]
