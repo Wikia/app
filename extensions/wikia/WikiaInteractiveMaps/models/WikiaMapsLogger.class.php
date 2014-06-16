@@ -55,7 +55,7 @@ class WikiaMapsLogger {
 	 * @param string $type Log type category name
 	 */
 	public static function addLogEntries( Array $logEntries, $type = self::LOG_TYPE_NAME ) {
-		if ( is_array( $logEntries ) && !empty( $logEntries ) ) {
+		if ( !empty( $logEntries ) ) {
 			$log = new LogPage( $type, self::SHOW_IN_RECENT_CHANGES );
 			$pagesCache = [];
 			foreach ( $logEntries as $logEntry ) {
