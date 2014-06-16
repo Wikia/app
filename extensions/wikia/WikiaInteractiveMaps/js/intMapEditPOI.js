@@ -18,8 +18,8 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 			save: [
 				save
 			],
-			del: [
-				del
+			deletePOI: [
+				deletePOI
 			],
 			beforeClose: [
 				utils.refreshIfAfterForceLogin
@@ -99,13 +99,11 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 */
 	function setModalMode(isEditMode) {
 		var title = addPOITitle,
-			buttons = [];
-
-		buttons = buttons.concat(modalButtons);
+			buttons = [].concat(modalButtons);
 
 		if (isEditMode) {
 			title = editPOITitle;
-			buttons.push(deletePOIButton);
+			buttons.push(deletePOIButton)
 		}
 
 		modalConfig.vars.title = title;
@@ -151,12 +149,14 @@ define('wikia.intMap.editPOI', ['jquery', 'wikia.intMap.utils'], function($, uti
 	 * @desc deletes POI
 	 */
 
-	function del() {
+	function deletePOI() {
 		$.nirvana.sendRequest({
 			controller: 'WikiaInteractiveMapsPoi',
 			method: 'deletePoi',
 			type: 'POST',
-			data: {id: params.id},
+			data: {
+				id: params.id
+			},
 			callback: function(response) {
 				var data = response.results;
 
