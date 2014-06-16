@@ -10,7 +10,7 @@ class WikiaInteractiveMapsHooks {
 	 * @return bool
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
-		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath, $wgResourceBasePath;
+		global $wgEnableWikiaInteractiveMaps, $wgExtensionsPath;
 
 		if( !empty( $wgEnableWikiaInteractiveMaps ) ) {
 			// add the asset to every page

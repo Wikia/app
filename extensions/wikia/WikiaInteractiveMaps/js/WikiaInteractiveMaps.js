@@ -11,62 +11,58 @@ require(
 
 		var body = $('body'),
 			targetIframe =  w.document.getElementsByName('wikia-interactive-map')[0],
-			// create map modal assets
-			createMapConfig = {
 
-		//registry for the modal actions assets
-		actions = {
-			createMap: {
-				module: 'wikia.intMaps.createMap.modal',
-				source: {
-					messages: ['WikiaInteractiveMapsCreateMap'],
-					scripts: ['int_map_create_map_js'],
-					styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
-					mustache: [
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
-					]
+			//registry for the modal actions assets
+			actions = {
+				createMap: {
+					module: 'wikia.intMaps.createMap.modal',
+					source: {
+						messages: ['WikiaInteractiveMapsCreateMap'],
+						scripts: ['int_map_create_map_js'],
+						styles: ['extensions/wikia/WikiaInteractiveMaps/css/intMapModal.scss'],
+						mustache: [
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapChooseTileSet.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapTileSetThumb.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPreview.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinTypes.mustache',
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapCreateMapPinType.mustache'
+						]
+					},
+					origin: 'wikia-int-map-create-map',
+					cacheKey: 'wikia_interactive_maps_create_map'
 				},
-				origin: 'wikia-int-map-create-map',
-				cacheKey: 'wikia_interactive_maps_create_map'
-			},
-			deleteMap: {
-				module: 'wikia.intMaps.deleteMap',
-				source: {
-					messages: ['WikiaInteractiveMapsDeleteMap'],
-					scripts: ['int_map_delete_map_js'],
-					mustache: [
-						'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache'
-					]
-				},
-				origin: 'wikia-int-map-delete-map',
-				cacheKey: 'wikia_interactive_maps_delete_map'
-			}
-		};
+				deleteMap: {
+					module: 'wikia.intMaps.deleteMap',
+					source: {
+						messages: ['WikiaInteractiveMapsDeleteMap'],
+						scripts: ['int_map_delete_map_js'],
+						mustache: [
+							'extensions/wikia/WikiaInteractiveMaps/templates/intMapModal.mustache'
+						]
+					},
+					origin: 'wikia-int-map-delete-map',
+					cacheKey: 'wikia_interactive_maps_delete_map'
+				}
+			};
 
 		// attach handlers
-                body
-                        .on('change', '#orderMapList', function(event) {
-                                sortMapList(event.target.value);
-                        })
-                        .on('click', '#createMap', function() {
-                                createMap();
-                        });
-
+		console.log('dadasdasdasda');
+		body
+			.on('change', '#orderMapList', function(event) {
+				sortMapList(event.target.value);
+			})
+			.on('click', 'button#createMap', function() {
+				console.log('aaaaaaa');
+				triggerAction('createMap');
+			})
+			.on('click', 'a#deleteMap', function(event) {
+				console.log('bbbbbbb');
+				event.preventDefault();
+				triggerAction('deleteMap');
+			})
 
 		setPontoIframeTarget(targetIframe);
-
-		/**
-		 * @desc reload the page after choosing ordering option
-		 * @param {string} sortType - sorting method
-		 */
-		function sortMapList(sortType) {
-			qs().setVal('sort', sortType, false).goTo();
-		}
 
 		/**
 		 * @desc sets iFrame target for ponto if iFrame exists
@@ -88,17 +84,19 @@ require(
 		}
 
 		/**
-		 * @desc opens create map modal preceded by forced login modal for anons
+		 * @desc opens modal associated with chosen action preceded by forced login modal for anons
+		 * @param {string} action - name of action
 		 */
-		function createMap() {
+		function triggerAction(action) {
+			var actionConfig = actions[action];
+
 			if (utils.isUserLoggedIn()) {
-				utils.loadModal(createMapConfig);
+				utils.loadModal(actionConfig);
 			} else {
-				utils.showForceLoginModal(createMapConfig.origin, function() {
-					utils.loadModal(createMapConfig);
+				utils.showForceLoginModal(actionConfig.origin, function() {
+					utils.loadModal(actionConfig);
 				});
 			}
 		}
 	}
 );
-
