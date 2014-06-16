@@ -36,14 +36,18 @@ $facebook-background-color: #3c5b9b;
 
 	.WikiaLogo {
 		box-sizing: border-box;
+		display: table;
 		margin-left: 36px;
 		margin-right: 82px;
 		padding: 0;
 		width: 112px;
 
 		a {
+			display: table-cell;
+			height: 66px;
 			position: static;
 			top: 0;
+			vertical-align: middle;
 
 			path {
 				fill: $nav-font-color;
