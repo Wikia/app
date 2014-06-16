@@ -17,7 +17,7 @@ define('wikia.intMaps.deleteMap',
 							data: [
 								{
 									key: 'event',
-									value: 'delete'
+									value: 'deleteMap'
 								}
 							]
 						}
