@@ -1432,3 +1432,8 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
+
+/*
+ * Require blog tasks even when Blogs extension is not enabled
+ */
+$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
