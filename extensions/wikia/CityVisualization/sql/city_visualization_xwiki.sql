@@ -1,4 +1,4 @@
-CREATE TABLE `city_visualization` (
+CREATE TABLE `city_visualization_xwiki` (
   `city_id` int(11) DEFAULT NULL,
   `city_lang_code` char(8) NOT NULL DEFAULT 'en',
   `city_vertical` int(11) DEFAULT NULL,

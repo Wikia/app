@@ -1,4 +1,4 @@
-CREATE TABLE `city_visualization_images` (
+CREATE TABLE `city_visualization_images_xwiki` (
   `city_id` int(11) NOT NULL,
   `city_lang_code` varchar(8) DEFAULT NULL,
   `image_type` int(11) DEFAULT '0',
@@ -13,5 +13,5 @@ CREATE TABLE `city_visualization_images` (
   KEY `cvi_image_type` (`image_type`),
   KEY `cvi_image_review_status` (`image_review_status`),
   KEY `cvi_city_lang_code` (`city_lang_code`),
-  CONSTRAINT `city_visualization_images_ifbk_1` FOREIGN KEY (`city_id`) REFERENCES `city_visualization` (`city_id`) ON DELETE CASCADE
+  CONSTRAINT `city_visualization_images_ifbk_1` FOREIGN KEY (`city_id`) REFERENCES `city_visualization_xwiki` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
