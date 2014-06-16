@@ -7,7 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
-use \Wikia\Logger\WikiaLogger;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /** Number of times to re-try an operation in case of deadlock */
@@ -203,6 +203,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 	// @const log 1% of queries
 	const QUERY_SAMPLE_RATE = 0.01;
+
+	protected $sampler = null;
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -3513,9 +3515,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return void
 	 */
 	protected function logSql( $sql, $fname, $elapsedTime, $isMaster ) {
-		$sampler = new BernoulliTrial(self::QUERY_SAMPLE_RATE);
-		if ($sampler->sample()) {
-			WikiaLogger::instance()->info( "SQL $sql", [
+		if ($this->getSampler()->shouldSample()) {
+			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
 				'server_role' => $isMaster ? 'master' : 'slave'
@@ -3523,4 +3524,21 @@ abstract class DatabaseBase implements DatabaseType {
 			);
 		}
 	}
+
+	public function getSampler() {
+		if (!isset($this->sampler)) {
+			$this->sampler = new BernoulliTrial(self::QUERY_SAMPLE_RATE);
+		}
+
+		return $this->sampler;
+	}
+
+	public function setSampler(BernoulliTrial $sampler) {
+		$this->sampler = $sampler;
+	}
+
+	public function getWikiaLogger() {
+		return WikiaLogger::instance();
+	}
+
 }

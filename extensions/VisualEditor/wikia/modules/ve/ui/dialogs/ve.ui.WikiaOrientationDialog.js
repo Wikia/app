@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaOrientationDialog class.
  */
 
+/*global veTrack */
+
 /**
  * Dialog for orientating users new to VE.
  *
@@ -14,7 +16,7 @@
 ve.ui.WikiaOrientationDialog = function VeUiWikiaOrientationDialog( config ) {
 	config =  $.extend( config, {
 		width: '550px',
-		height: '308px',
+		height: '300px',
 		disableAnimation: true
 	} );
 

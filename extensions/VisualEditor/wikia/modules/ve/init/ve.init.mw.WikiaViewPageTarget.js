@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack */
+/*global mw, veTrack, _kiq */
 
 /**
  * Initialization MediaWiki view page target.
@@ -71,8 +71,34 @@ ve.init.mw.WikiaViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
+ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () {
+	var $elements,
+		ns = mw.config.get( 'wgNamespaceNumber' );
+
+	if ( ns === 14 ) {
+		// Category
+		$elements = $( '#mw-content-text' ).children().filter( function () {
+			var $this = $( this );
+			return !(
+				// Category thumbs
+				$this.hasClass( 'category-gallery' ) ||
+				// Category exhibition
+				$this.is( '#mw-pages' ) ||
+				// Category list
+				$this.children( '#mw-pages' ).length
+			);
+		} );
+	} else {
+		$elements = $( '#mw-content-text' );
+	}
+
+	$elements = $elements.add( '.WikiaArticleCategories' );
+
+	return $elements;
+};
+
 ve.init.mw.WikiaViewPageTarget.prototype.hidePageContent = function () {
-	$( '#mw-content-text, .WikiaArticleCategories' )
+	this.getNonEditableUIElements()
 		.addClass( 've-init-mw-viewPageTarget-content' )
 		.hide();
 
@@ -102,9 +128,11 @@ ve.init.mw.WikiaViewPageTarget.prototype.onToolbarCancelButtonClick = function (
 	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'button-cancel' } );
 	mw.hook( 've.cancelButton' ).fire();
 	// Trigger Qualaroo survey for anonymous users abandoning edit
+	/*jslint nomen: true*/
 	if ( mw.user.anonymous() && window._kiq ) {
 		_kiq.push( ['set', { 'event': 'abandon_ve_cancel' } ] );
 	}
+	/*jslint nomen: false*/
 	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
 };
 
@@ -170,8 +198,8 @@ ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
 /**
  * @inheritdoc
  */
-ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
-	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this );
+ve.init.mw.WikiaViewPageTarget.prototype.onLoadError = function ( jqXHR, status, error ) {
+	ve.init.mw.ViewPageTarget.prototype.onLoadError.call( this, jqXHR, status, error );
 	if ( window.veTrack ) {
 		veTrack( {
 			action: 've-load-error',
@@ -197,4 +225,38 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 			window.localStorage.setItem( 'WikiaVEOrientationViewed', true );
 		}
 	}
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.ViewPageTarget.prototype.replacePageContent = function ( html, categoriesHtml ) {
+	var insertTarget,
+		$mwContentText = $( '#mw-content-text' ),
+		$content = $( $.parseHTML( html ) );
+
+	if ( mw.config.get( 'wgNamespaceNumber' ) === 14 ) {
+		//Category
+		$mwContentText.children().filter( function () {
+			var $this = $( this );
+			return !(
+				// Category form
+				$this.hasClass( 'category-gallery-form' ) ||
+				// Category thumbs
+				$this.hasClass( 'category-gallery' ) ||
+				// Category exhibition
+				$this.is( '#mw-pages' ) ||
+				// Category list
+				$this.children( '#mw-pages' ).length
+			);
+		} ).remove();
+
+		insertTarget = window.CategoryExhibition ? '#mw-pages' : '.category-gallery';
+		$content.insertBefore( insertTarget );
+	} else {
+		$mwContentText.empty().append( $content );
+	}
+
+	mw.hook( 'wikipage.content' ).fire( $mwContentText );
+	$( '#catlinks' ).replaceWith( categoriesHtml );
 };

@@ -89,6 +89,7 @@ class PopularArticlesModel {
 			$pageviews_map[$object->article_id] = $object->pageviews;
 		}
 
+		return $pageviews_map;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 <?php
 set_time_limit(0);
+$wgCommandLineSilentMode = true; // suppress output from Wikia::log calls
 $options = ['help'];
 $optionsWithArgs = [
 	'task_id',
