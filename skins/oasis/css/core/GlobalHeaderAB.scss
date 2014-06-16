@@ -91,12 +91,12 @@ $facebook-background-color: #3c5b9b;
 				> a {
 					color: $dropdown-font-color;
 					font-size: 15px;
-					padding: 15px 20px;
-
-					&:hover {
-						@include clear-box-shadow;
-						background-color: $menu-hover-bg-color;
-					}
+					padding: 20px;
+				}
+				&:hover > a {
+					@include clear-box-shadow;
+					background-color: $dropdown-font-color;
+					color: #fff;
 				}
 			}
 		}
@@ -245,6 +245,125 @@ $facebook-background-color: #3c5b9b;
 		.UserLoginDropdown .WikiaForm {
 			padding: 0 16px;
 		}
+	}
+	#bubbles_count {
+		text-align: right;
+		float: right;
+	}
+
+	#WallNotifications {
+		background: none;
+		display: block;
+		width: 100%;
+		height: 51px;
+		top: 0;
+		right: 0;
+		li {
+			height: auto;
+			padding: 0;
+			a {
+				height: auto;
+			}
+		}
+		li:hover {
+			@include clear-linear-gradient;
+		}
+		.bubbles {
+			display: none;
+		}
+		.subnav {
+			border: none;
+			width: 424px;
+			&.show {
+				left: -424px;
+				top: 0px;
+			}
+			background-color: #fff;
+			li:first-child,
+			li:nth-child(2) {
+				border: none;
+			}
+			li {
+				border-top: 1px solid $new-border-color;
+				width: auto;
+				a:hover {
+					@include clear-box-shadow;
+				}
+			}
+			.empty-notifications {
+				display: none;
+			}
+			.notifications-header {
+				background-color: #092140;
+				padding: 20px;
+				&:hover {
+					background-color: #092140 !important;
+				}
+				span {
+					background-color: inherit;
+					color: #fff;
+					font-size: 15px;
+					padding: 0;
+				}
+				#wall-notifications-markasread {
+					top: 20px;
+				}
+				#wall-notifications-markasread-sub {
+					color: #fff;
+				}
+				#wall-notifications-markasread-this-wiki {
+					color: #c7d1d8;
+					font-size: 15px;
+				}
+			}
+
+			.notifications-wiki-header {
+				background-color: #edf1f4;
+				background-image: none;
+				color: #0a5fa3;
+				font-weight: bold;
+				padding: 20px;
+			}
+
+			.notifications-wiki-count-container {
+				display: none;
+			}
+
+			.notifications-for-wiki-list a {
+				background-color: #f4f6f7;
+				display: block;
+				&:hover {
+					background-color: #f4f6f7 !important;
+				}
+
+				.msg-title {
+					color: #092140;
+					font-size: 15px;
+					width: auto;
+				}
+				.msg-body {
+					color: #092140;
+					font-size: 15px;
+					width: auto;
+				}
+				.timeago {
+					color: #c7d1d8;
+					font-size: 12px;
+					width: auto;
+				}
+				.notification {
+					@include width-calc('100% - 65px');
+					line-height: 22px;
+				}
+			}
+		}
+	}
+
+	.WikiaMenuElement li:hover {
+		background-color: transparent !important;
+	}
+
+	@media screen and (max-width: $new-breakpoint-small -1px) {
 
 		.AccountNavigation > li > a {
 			padding: 15px 16px 15px 26px;

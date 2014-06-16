@@ -1,13 +1,17 @@
+window.removedFromHoverMenu = false;
+
 $(function(){
 	var $accountNavigation = $( '#AccountNavigation' ),
 		$avatar = $accountNavigation.find( 'li:first .avatar' ),
 		avatarSize = 36,
 		$loginDropdown = $accountNavigation.find( '#UserLoginDropdown' );
+		$accountNavsubnav = $accountNavigation.find('.subnav'),
+		$wallNotifications = $( '#WallNotifications'),
+		$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
 
 	$('.WikiaHeader').addClass('v3');
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
 	$accountNavigation.find( '.login-text' ).hide();
-	$( '#WallNotifications' ).hide();
 
 	if ( $avatar.length > 0 ) {
 		$avatar.attr( 'src', $avatar.attr( 'src' ).replace( '/20px-', '/' + avatarSize + 'px-' ) )
@@ -15,7 +19,30 @@ $(function(){
 			.attr( 'width', avatarSize );
 	}
 
-	$accountNavigation.find('.subnav' ).find( '.new' ).removeClass( 'new' );
+	$accountNavigation.on('mouseover', '.notificationsEntry', function(){
+		$('.subnav', $wallNotifications).addClass('show');
+	});
+
+	$accountNavigation.on('mouseover', function(){
+		if( !window.removedFromHoverMenu ) {
+			removeWallNotificationsFromHoverMenu();
+			window.removedFromHoverMenu = true;
+		}
+		$('>li >.subnav', $accountNavigation).addClass('show');
+	});
+
+	$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
+		$('.subnav', $wallNotifications).removeClass('show');
+	});
+
+	$accountNavigation.on('mouseleave', function(){
+		$('>li >.subnav', $accountNavigation).removeClass('show');
+	});
+
+	$accountNavsubnav.find( '.new' ).removeClass( 'new' );
+	$('.bubbles #bubbles_count').remove();
+	$notifications.append($wallNotifications);
+	$accountNavsubnav.prepend($notifications);
 	$accountNavigation.find( '.ajaxRegister' ).wrap( '<div class="ajaxRegisterContainer"></div>' ).parent().prependTo( '#UserLoginDropdown' );
 
 	if ( $loginDropdown.length > 0 || $avatar.attr( 'src' ).indexOf( '/Avatar.jpg' ) > -1 ) {
@@ -29,4 +56,16 @@ $(function(){
 		var $input = $( this );
 		$input.attr( 'placeholder', $input.prev().hide().text() );
 	});
+	function removeWallNotificationsFromHoverMenu() {
+		for(var menu in window.HoverMenuGlobal.menus) {
+			if(window.HoverMenuGlobal.menus[menu].selector === '#AccountNavigation') {
+				window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
+			}
+			if(window.HoverMenuGlobal.menus[menu].selector === '#WallNotifications') {
+				window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
+				window.HoverMenuGlobal.menus[menu].menu.off('mouseenter','> li', window.HoverMenuGlobal.menus[menu].mouseover);
+				window.HoverMenuGlobal.menus[menu].menu.off('mouseleave','> li', window.HoverMenuGlobal.menus[menu].mouseout);
+			}
+		}
+	}
 });
