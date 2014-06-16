@@ -1,188 +1,92 @@
 <?php
 
-class BaseXWikiImage {
+abstract class BaseXWikiImage {
+
+	const IMAGE_NAME_TEMPLATE = '%1s/%2s/%s%s';
+	const IMAGE_URL_TEMPLATE = 'http://images.wikia.com/$s/images/%s/%s%s';
+	const THUMBNAIL_URL_BASE_TEMPLATE = 'http://images.wikia.com/$s/images/thumb/%s/%s%s';
+	const IMAGE_TYPE = "png";
+
 	public $mDefaultPath = 'http://images.wikia.com/messaging/images/';
 
-	public $mPath = false;
-
-	public $mUser = false;
-
 	public $mDefaultAvatars = false;
+	protected $name, $fileNameSuffix;
 
-	public $avatarUrl = null;
+	abstract protected function onFileRemoval( $success );
 
-	public $userPageUrl = null;
+	abstract public function getImageGroupToken();
 
-	public function __construct() {
-	}
+	abstract public function getFileDirectory();
 
-	public $imageGroupToken = "base_x_wiki";
+	abstract public function getSwiftContainer();
 
-	public function getImageGroupToken() {
-		return $imageGroupToken;
-	}
+	abstract public function getSwiftPathPrefix();
 
-	public function getDefaultAvatars( $thumb = "" ) {
-		if ( $thumb == "" && is_array( $this->mDefaultAvatars ) && count( $this->mDefaultAvatars ) > 0 ) {
-			return $this->mDefaultAvatars;
-		}
-
-		$this->mDefaultAvatars = array();
-		$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
-
-		if ( is_array( $images ) ) {
-			foreach ( $images as $image ) {
-				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->mDefaultAvatars[] = $this->mDefaultPath . $thumb . $hash . $image;
-			}
-		}
-
-		return $this->mDefaultAvatars;
-	}
-
-	public function setUrl( $url ) {
-		$this->avatarUrl = $url;
-	}
-
-	public function getUrl( $thumb = "" ) {
-		if ( !empty($this->avatarUrl) ) {
-			return $this->avatarUrl;
-		} else {
-			$url = $this->getPurgeUrl( $thumb ); // get the basic URL
-			return wfReplaceImageServer( $url, $this->mUser->getTouched() );
-		}
-	}
-
-	public function getPurgeUrl( $thumb = "" ) {
-		global $wgBlogAvatarPath;
-		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-
-		if ( $url ) {
-			/**
-			 * if default avatar we glue with messaging.wikia.com
-			 * if uploaded avatar we glue with common avatar path
-			 */
-			if ( strpos( $url, '/' ) !== false ) {
-				/**
-				 * uploaded file, we are adding common/avatars path
-				 */
-				// avatars selected from "samples" are stored as full URLs (BAC-1195)
-				if ( strpos( $url, 'http://' ) === false ) {
-					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url;
-				}
-			} else {
-				/**
-				 * default avatar, path from messaging.wikia.com
-				 */
-				$hash = FileRepo::getHashPathForLevel( $url, 2 );
-				$url = $this->mDefaultPath . trim( $thumb, '/' ) . '/' . $hash . $url;
-			}
-		} else {
-			$defaults = $this->getDefaultAvatars( trim( $thumb, "/" ) . "/" );
-			$url = array_shift( $defaults );
-		}
-
-		return $url;
-	}
-
-	public function getThumbnail( $width, $inPurgeFormat = false ) {
-		if ( $inPurgeFormat ) {
-			$url = $this->getPurgeUrl( '/thumb/' );
-		} else {
-			$url = $this->getUrl( '/thumb/' );
-		}
-
-		return ImagesService::getThumbUrlFromFileUrl( $url, $width );
-	}
-
-	/**
-	 * Get the URL in a generic form (ie: images.wikia.com) to be used
-	 * for purging thumbnails.
-	 *
-	 * @access public
-	 * @author Sean Colombo
-	 *
-	 * @param width - the width of the thumbnail (height will be same propotion to width as in unscaled image)
-	 * @return string -- url to Avatar on the purgable hostname.
+	/*
+	 * returns mime allowed in upload
 	 */
+	protected function getAllowedMime() {
+		return [ 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' ];
+	}
+
+	public function __construct( $name ) {
+		$this->name = $name;
+		$this->fileNameSuffix = "." . self::IMAGE_TYPE;
+	}
+
+	protected function rawGetUrl( $template ) {
+		$nameHash = FileRepo::getHashPathForLevel( $this->name, 2 );
+		return sprintf( $template, $this->getImageGroupToken(), $nameHash, $this->name );
+	}
+
+
+	public function getUrl() {
+		return wfReplaceImageServer( $this->getPurgeUrl() );
+	}
+
+	public function getThumbnailUrl( $width ) {
+		return wfReplaceImageServer( $this->getThumbnailPurgeUrl( $width ) );
+	}
+
+	// urls used for purging cache
+	public function getPurgeUrl() {
+		return $this->rawGetUrl( self::IMAGE_URL_TEMPLATE );
+	}
+
 	public function getThumbnailPurgeUrl( $width ) {
-		return $this->getThumbnail( $width, true );
+		$tempUrl = $this->rawGetUrl( self::THUMBNAIL_URL_BASE_TEMPLATE );
+		return ImagesService::getThumbUrlFromFileUrl( $tempUrl, $width );
 	}
-
-	/**
-	 * Returns true if the user whose masthead this is, has an avatar set.
-	 * Returns false if they do not (and would end up using the default avatar).
-	 */
-	public function hasAvatar() {
-		$hasAvatar = false;
-		if ( !empty($this->avatarUrl) ) {
-			$hasAvatar = true;
-		} else {
-			$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-			if ( ($url) && (strpos( $url, '/' ) !== false) ) {
-				// uploaded file
-				$hasAvatar = true;
-			}
-		}
-		return $hasAvatar;
-	} // end hasAvatar()
 
 	public function getLocalPath() {
-		if ( $this->mPath ) {
-			return $this->mPath;
-		}
-
-		$image = sprintf( '%s.png', $this->mUser->getID() );
-		$hash = sha1( (string)$this->mUser->getID() );
-		$folder = substr( $hash, 0, 1 ) . '/' . substr( $hash, 0, 2 );
-
-		$this->mPath = "/{$folder}/{$image}";
-
-
-		return $this->mPath;
+		$nameHash = sha1( $this->name );
+		return sprintf( self::IMAGE_PATH_TEMPLATE, $nameHash, $nameHash, $this->name, $this->fileNameSuffix );
 	}
 
 	public function getFullPath() {
-		global $wgBlogAvatarDirectory;
-		return $wgBlogAvatarDirectory . $this->getLocalPath();
+		return rtrim( $this->getFileDirectory(), PATH_SEPARATOR ) . PATH_SEPARATOR . $this->getLocalPath();
 	}
 
 	public function getSwiftStorage() {
 		global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-		return \Wikia\SwiftStorage::newFromContainer( $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix );
+		return \Wikia\SwiftStorage::newFromContainer( $this->getSwiftContainer(), $this->getSwiftPathPrefix() );
 	}
 
 	public function getTempFile() {
-		return tempnam( wfTempDir(), 'avatar' );
+		return tempnam( wfTempDir(), $this->getImageGroupToken() );
 	}
 
-	public function isDefault() {
-		$url = $this->mUser->getOption( AVATAR_USER_OPTION_NAME );
-		if ( $url ) {
-			/**
-			 * default avatar are only filenames without path
-			 */
-			if ( strpos( $url, '/' ) !== false ) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	protected function doRemoveFile() {
+	public function removeFile() {
 		$swift = $this->getSwiftStorage();
 
-		$avatarRemotePath = $this->getLocalPath();
-		$status = $swift->remove( $avatarRemotePath );
+		$path = $this->getLocalPath();
+		$status = $swift->remove( $path );
 
-		return $status->isOk();
-	}
+		$result = $status->isOk();
+		$this->onFileRemoval( $result );
 
-	public function removeFile( $addLog = true ) {
-		$result = $this->doRemoveFile();
-
-		if ( $result === false ) {
-			Wikia::log( __METHOD__, false, 'cannot remove xwiki image - ' . $this->getLocalPath() );
+		if ( $result ) {
+			Wikia::log( __METHOD__, false, 'cannot remove xwiki image - ' . $path );
 		} else {
 			// remove thumbnails
 			$this->purgeThumbnails();
@@ -192,16 +96,10 @@ class BaseXWikiImage {
 	}
 
 	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
+		return str_replace( "/{$this->getImageGroupToken()}/", "/{$this->getImageGroupToken()}/thumb/", $dir );
 	}
 
 	public function uploadByUrl( $url ) {
-		// macbre: avatars operations are disabled during maintenance
-		global $wgAvatarsMaintenance;
-		if ( !empty($wgAvatarsMaintenance) ) {
-			return UPLOAD_ERR_NO_TMP_DIR;
-		}
-
 		$sTmpFile = '';
 
 		$errorNo = $this->uploadByUrlToTempFile( $url, $sTmpFile );
@@ -233,14 +131,6 @@ class BaseXWikiImage {
 	}
 
 	public function uploadFile( $request, $input = AVATAR_UPLOAD_FIELD, &$errorMsg = '' ) {
-		// macbre: avatars operations are disabled during maintenance
-		global $wgAvatarsMaintenance;
-		if ( !empty($wgAvatarsMaintenance) ) {
-			return UPLOAD_ERR_NO_TMP_DIR;
-		}
-
-		$this->__setLogType();
-
 		$errorNo = $request->getUploadError( $input );
 		if ( $errorNo != UPLOAD_ERR_OK ) {
 			wfProfileOut( __METHOD__ );
@@ -270,109 +160,80 @@ class BaseXWikiImage {
 		return $errorNo;
 	}
 
-	private function postProcessImageInternal( $sTmpFile, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
+	private function postProcessImageInternal( $sourceTempFilePath, &$errorNo = UPLOAD_ERR_OK, &$errorMsg = '' ) {
+		$imgInfo = getimagesize( $sourceTempFilePath );
 
-
-		$aImgInfo = getimagesize( $sTmpFile );
-
-		/**
-		 * check if mimetype is allowed
-		 */
-		$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
-		if ( !in_array( $aImgInfo['mime'], $aAllowMime ) ) {
-			global $wgLang;
-
+		if ( !in_array( $imgInfo['mime'], $this->getAllowedMime() ) ) {
 			// This seems to be the most appropriate error message to describe that the image type is invalid.
 			// Available error codes; http://php.net/manual/en/features.file-upload.errors.php
 			$errorNo = UPLOAD_ERR_EXTENSION;
-			$errorMsg = wfMsg( 'blog-avatar-error-type', $aImgInfo['mime'], $wgLang->listToText( $aAllowMime ) );
-
+			//TODO: add localized generic error message
+//			global $wgLang;
+//			$errorMsg = wfMsg('blog-avatar-error-type', $imgInfo['mime'], $wgLang->listToText( $this->getAllowedMime() ) );
+			$this->onUploadMimeRejected();
 			return $errorNo;
 		}
 
-		switch ( $aImgInfo['mime'] ) {
+		$sourceImage = null;
+
+		switch ( $imgInfo['mime'] ) {
 			case 'image/gif':
-				$oImgOrig = @imagecreatefromgif( $sTmpFile );
+				$sourceImage = @imagecreatefromgif( $sourceTempFilePath );
 				break;
 			case 'image/pjpeg':
 			case 'image/jpeg':
 			case 'image/jpg':
-				$oImgOrig = @imagecreatefromjpeg( $sTmpFile );
+				$sourceImage = @imagecreatefromjpeg( $sourceTempFilePath );
 				break;
 			case 'image/x-png':
 			case 'image/png':
-				$oImgOrig = @imagecreatefrompng( $sTmpFile );
+				$sourceImage = @imagecreatefrompng( $sourceTempFilePath );
 				break;
 		}
-		$aOrigSize = array( 'width' => $aImgInfo[0], 'height' => $aImgInfo[1] );
 
-		/**
-		 * generate new image to png format
-		 */
-		$sFilePath = empty($wgAvatarsUseSwiftStorage) ? $this->getFullPath() : $this->getTempFile(); // either NFS or temp file
+		$targetFilePath = $this->getFullPath();
 
-		$ioh = new ImageOperationsHelper();
-		$oImg = $ioh->postProcess( $oImgOrig, $aOrigSize );
+		$imageOperationsHelper = new ImageOperationsHelper();
+		$imgObject = $imageOperationsHelper->postProcess( $sourceImage, [ 'width' => $imgInfo[0], 'height' => $imgInfo[1] ] );
 
 		/**
 		 * save to new file ... but create folder for it first
 		 */
-		if ( !is_dir( dirname( $sFilePath ) ) && !wfMkdirParents( dirname( $sFilePath ) ) ) {
-
-
+		if ( !is_dir( dirname( $targetFilePath ) ) && !wfMkdirParents( dirname( $targetFilePath ) ) ) {
 			return UPLOAD_ERR_CANT_WRITE;
 		}
-
-		if ( !imagepng( $oImg, $sFilePath ) ) {
-
+		/**
+		 * Save file as PNG
+		 */
+		if ( !imagepng( $imgObject, $targetFilePath ) ) {
 			$errorNo = UPLOAD_ERR_CANT_WRITE;
 		} else {
 			$errorNo = UPLOAD_ERR_OK;
 
 			/* remove tmp image */
-			imagedestroy( $oImg );
+			imagedestroy( $imgObject );
 
 			// store the avatar on Swift
-			if ( !empty($wgAvatarsUseSwiftStorage) ) {
-				$swift = $this->getSwiftStorage();
-				$res = $swift->store( $sFilePath, $this->getLocalPath(), [ ], 'image/png' );
 
-				// errors handling
-				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
+			$swift = $this->getSwiftStorage();
+			$res = $swift->store( $targetFilePath, $this->getLocalPath(), [ ], 'image/png' );
 
-				// synchronize between DC
-				if ( $res->isOK() ) {
-					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
-						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-					Wikia\SwiftSync\Queue::newFromParams( [
-						'city_id' => 0,
-						'op' => 'store',
-						'src' => $sFilePath,
-						'dst' => $mwStorePath
-					] )->add();
-				}
+			// errors handling
+			$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
 
-				// sync with NFS
-				global $wgEnableSwithSyncToLocalFS;
-				if ( !empty($wgEnableSwithSyncToLocalFS) ) {
-					copy( $sFilePath, $this->getFullPath() );
-				}
+			// synchronize between DC
+			if ( $res->isOK() ) {
+				$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
+					$this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalPath() );
+				Wikia\SwiftSync\Queue::newFromParams( [
+					'city_id' => 0,
+					'op' => 'store',
+					'src' => $targetFilePath,
+					'dst' => $mwStorePath
+				] )->add();
 			}
 
-			$sUserText = $this->mUser->getName();
-			$mUserPage = Title::newFromText( $sUserText, NS_USER );
-			$oLogPage = new LogPage(AVATAR_LOG_NAME);
-			$oLogPage->addEntry( 'avatar_chn', $mUserPage, '' );
-			unlink( $sTmpFile );
-
-			/**
-			 * notify image replication system
-			 */
-			global $wgEnableUploadInfoExt;
-			if ( $wgEnableUploadInfoExt ) {
-				UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
-			}
+			unlink( $sourceTempFilePath );
 
 			// remove generated thumbnails
 			$this->purgeThumbnails();
