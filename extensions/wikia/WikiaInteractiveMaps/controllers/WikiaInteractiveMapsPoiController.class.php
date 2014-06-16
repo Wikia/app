@@ -186,12 +186,7 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 */
 	private function isValidDeleteData() {
 		$poiId = $this->getData( 'poiId' );
-
-		if( $poiId < 0 ) {
-			return false;
-		}
-
-		return true;
+		return $poiId > 0;
 	}
 
 	/**
