@@ -5,7 +5,7 @@
 
 $new-nav-height: 66px;
 $new-breakpoint-small: 1024px;
-$new-breakpoint-big: 1281px;
+$new-breakpoint-big: 1280px;
 
 $nav-background-color: #fff;
 $nav-font-color: #092140;
@@ -23,13 +23,78 @@ $facebook-background-color: #3c5b9b;
 	border-bottom: 2px solid rgba(0,0,0,.1);
 	color: $nav-font-color;
 
+	.page-width-container {
+		margin: 0 auto;
+		padding-right: 112px;
+		width: 1156px;
+	}
+
 
 	.wikia-header-mask {
 		background: none;
 	}
 
+	.WikiaLogo {
+		box-sizing: border-box;
+		margin-left: 36px;
+		margin-right: 82px;
+		padding: 0;
+		width: 112px;
+
+		a {
+			position: static;
+			top: 0;
+
+			path {
+				fill: $nav-font-color;
+			}
+		}
+	}
+
+	.start-a-wiki {
+		border-left: 1px solid $new-border-color;
+		border-right: 1px solid $new-border-color;
+		box-sizing: border-box;
+		display: table;
+		float: right;
+		font-size: 15px;
+		font-weight: bold;
+		padding: 0;
+		width: 176px;
+
+		svg {
+			height: 14px;
+			width: 14px;
+
+			path {
+				fill: $nav-font-color;
+			}
+		}
+
+		span {
+			padding-left: 10px;
+		}
+
+		a {
+			color: $nav-font-color;
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+
+			&:hover {
+				text-decoration: none;
+				background-color: $menu-hover-bg-color;
+			}
+		}
+	}
+
 	nav {
 		height: $new-nav-height;
+
+		li {
+			height: $new-nav-height;
+			margin: 0;
+		}
 	}
 
 
@@ -79,7 +144,7 @@ $facebook-background-color: #3c5b9b;
 			background-color: $nav-background-color;
 			border: 2px solid rgba(0,0,0,.1);
 			border-top: 0;
-			top: $new-nav-height + 1;
+			top: $new-nav-height + 2px;
 
 			> li {
 				border-top: 1px solid $new-border-color;
@@ -237,15 +302,6 @@ $facebook-background-color: #3c5b9b;
 		fill: $new-border-color;
 	}
 
-	@media screen and (max-width: $new-breakpoint-small - 1) {
-		.ajaxRegisterContainer, .UserLoginDropdown .sso-login {
-			padding: 16px;
-		}
-
-		.UserLoginDropdown .WikiaForm {
-			padding: 0 16px;
-		}
-	}
 	#bubbles_count {
 		text-align: right;
 		float: right;
@@ -363,24 +419,63 @@ $facebook-background-color: #3c5b9b;
 		background-color: transparent !important;
 	}
 
-	@media screen and (max-width: $new-breakpoint-small -1px) {
+	@media screen and (max-width: $new-breakpoint-small - 1) {
+		.page-width-container {
+			padding-right: 92px;
+			width: 768px;
 
-		.AccountNavigation > li > a {
-			padding: 15px 16px 15px 26px;
+			.WikiaLogo {
+				margin-left: 16px;
+				margin-right: 24px;
+			}
+
+			.start-a-wiki {
+				width: 84px;
+
+				span {
+					display: none;
+				}
+			}
+
+			.ajaxRegisterContainer, .UserLoginDropdown .sso-login {
+				padding: 16px;
+			}
+
+			.UserLoginDropdown .WikiaForm {
+				padding: 0 16px;
+			}
+
+			.AccountNavigation > li > a {
+				padding: 15px 16px 15px 26px;
+			}
 		}
 	}
 
-	@media screen and (min-width: $new-breakpoint-small) and (max-width: $new-breakpoint-big - 1)  {
-		.ajaxRegisterContainer, .UserLoginDropdown .sso-login {
-			padding: 19px;
-		}
+	@media screen and (min-width: $new-breakpoint-small) and (max-width: $new-breakpoint-big)  {
+		.page-width-container {
+			padding-right: 100px;
+			width: $new-breakpoint-small;
 
-		.UserLoginDropdown .WikiaForm {
-			padding: 0 19px;
-		}
+			.WikiaLogo {
+				margin-left: 30px;
+				margin-right: 53px;
+			}
 
-		.AccountNavigation > li > a {
-			padding: 15px 19px 15px 31px;
+			.start-a-wiki {
+				width: 166px;
+			}
+
+			.ajaxRegisterContainer, .UserLoginDropdown .sso-login {
+				padding: 19px;
+			}
+
+			.UserLoginDropdown .WikiaForm {
+				padding: 0 19px;
+			}
+
+			.AccountNavigation > li > a {
+				padding: 15px 19px 15px 31px;
+			}
 		}
 	}
 }
