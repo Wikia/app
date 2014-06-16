@@ -56,7 +56,7 @@ require(
 			.on('click', 'a#deleteMap', function(event) {
 				event.preventDefault();
 				triggerAction('deleteMap');
-			})
+			});
 
 		setPontoIframeTarget(targetIframe);
 
