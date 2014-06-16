@@ -1,5 +1,33 @@
 <?php
 
+
+class fakeResultGenerator {
+	protected $dataId = 0;
+	protected $limit = -1;
+
+	public function __construct( $limit ) {
+		$this->limit = $limit;
+	}
+
+	public function fetchObject() {
+		if ( !$this->limit ) {
+			return null;
+		}
+
+		if ( $this->limit > 0 ) {
+			$this->limit--;
+		}
+
+		$row = new stdClass();
+		$row->page_namespace = $this->dataId & 1;
+		$row->page_title = "title_" . $this->dataId;
+		$row->page_id = $this->dataId;
+		$this->dataId++;
+
+		return $row;
+	}
+}
+
 class PopularArticlesModelTest extends WikiaBaseTest {
 	protected static function getFn( $obj, $name ) {
 		$class = new ReflectionClass(get_class( $obj ));
@@ -40,44 +68,43 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	}
 
 	/*
-	 * @group UsingDB
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_SkipMainPage() {
-		$mainPage = Title::newMainPage();
-		$mockDb = null;
-		$mockResults = $this->mockDbQuery( $mockDb );
-		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $this->fakeRecentlyEditedQueryRow( $mainPage ) ) );
+		$mockTitleMain = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'isMainPage' ] )
+			->getMock();
+		$mockTitleMain->expects( $this->any() )
+			->method( 'isMainPage' )
+			->will( $this->returnValue( true ) );
+
+		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
 
 		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
-		$result = $fn( 0, $mockDb );
+		$result = $fn( 0, new fakeResultGenerator( 2 ) );
 
 		$this->assertEmpty( $result );
 	}
 
 	/*
-	 * @group UsingDB
 	 * @covers PopularArticlesModel::getRecentlyEditedPageIds
 	 */
 	public function testRecentlyEditedPageIds_ReturnPageIds() {
-		$someTitle = Title::newFromText( "some title" );
-		$row0 = $this->fakeRecentlyEditedQueryRow( $someTitle );
-		$row1 = clone $row0;
-		$row0->page_id = 0;
-		$row1->page_id = 1;
+		$mockTitleMain = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct', 'isMainPage' ] )
+			->getMock();
+		$mockTitleMain->expects( $this->any() )
+			->method( 'isMainPage' )
+			->will( $this->returnValue( false ) );
 
-		$mockResults = $this->mockDbQuery();
-		$mockResults->expects( $this->at( 0 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row0 ) );
-		$mockResults->expects( $this->at( 1 ) )->method( "fetchObject" )
-			->will( $this->returnValue( $row1 ) );
+		$this->mockStaticMethod( 'Title', 'newFromText', $mockTitleMain );
 
 		$fn = self::getFn( new PopularArticlesModel(), 'getRecentlyEditedPageIds' );
-		$result = $fn( 0 );
+		$result = $fn( 0, new fakeResultGenerator( 2 ) );
 
-		$this->assertEquals( $result[0], 0 );
-		$this->assertEquals( $result[1], 1 );
+		$this->assertEquals( $result, [ 0, 1 ] );
 	}
 
 	/*

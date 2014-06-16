@@ -34,11 +34,11 @@ class PopularArticlesModel {
 	 * @param $wiki_id
 	 * @return array
 	 */
-	protected function getRecentlyEditedPageIds( $wiki_id, $sdb = null ) {
-		if( !$sdb ){
+	protected function getRecentlyEditedPageIds( $wiki_id, $result = null ) {
+		if( !$result ){
 			$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
+			$result = $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
 		}
-		$result = $sdb->query( 'select page_id,page_title from page where page_namespace = 0 order by page_latest desc limit ' . self::DEFAULT_RESULTS_NUMBER );
 		$page_ids = [];
 		while ($row = $result->fetchObject()) {
 			$title = Title::newFromText( $row->page_title, $row->page_namespace );
