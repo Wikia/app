@@ -34,7 +34,7 @@ class PopularArticlesModel {
 	 * @param $wiki_id
 	 * @return array
 	 */
-	protected function getRecentlyEditedPageIds( $wiki_id, $sdb = null) {
+	protected function getRecentlyEditedPageIds( $wiki_id, $sdb = null ) {
 		if( !$sdb ){
 			$sdb = wfGetDB( DB_SLAVE, [], WikiFactory::IDtoDB( $wiki_id ) );
 		}
