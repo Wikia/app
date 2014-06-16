@@ -1,6 +1,6 @@
 define('wikia.intMaps.deleteMap',
-	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.ui.factory', 'wikia.intMap.createMap.utils'],
-	function($, qs, w, uiFactory, utils) {
+	['jquery', 'wikia.querystring', 'wikia.window', 'wikia.intMap.utils'],
+	function($, qs, w, utils) {
 	'use strict';
 	var modal,
 		modalConfig = {
@@ -8,6 +8,7 @@ define('wikia.intMaps.deleteMap',
 				id: 'intMapsDeleteMapModal',
 				size: 'small',
 				title: $.msg('wikia-interactive-maps-delete-map-client-title'),
+				content: '',
 				buttons: [
 					{
 						vars: {
@@ -16,7 +17,7 @@ define('wikia.intMaps.deleteMap',
 							data: [
 								{
 									key: 'event',
-									value: 'delete'
+									value: 'deleteMap'
 								}
 							]
 						}
@@ -51,18 +52,19 @@ define('wikia.intMaps.deleteMap',
 	 * @desc Opens modal with a prompt to confirm map deletion
 	 */
 	function init(templates) {
-		if (!modalConfig.vars.content) {
-			modalConfig.vars.content = utils.render(templates[0]);
-		}
-		uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-			uiModal.createComponent( modalConfig, function( _modal ) {
-				modal = _modal;
-				utils.bindEvents(modal, events);
-				modal.$element.find('#intMapInnerContent')
-					.html($.msg('wikia-interactive-maps-delete-map-client-prompt'));
-				modal.$error = modal.$element.find('.map-modal-error');
-				modal.show();
-			});
+		modalConfig.vars.content = utils.render(templates[0]);
+
+		utils.createModal(modalConfig, function(_modal) {
+			modal = _modal;
+			utils.bindEvents(modal, events);
+
+			modal.$error = modal.$element.find('.map-modal-error');
+
+			modal.$element
+				.find('#intMapInnerContent')
+				.html($.msg('wikia-interactive-maps-delete-map-client-prompt'));
+
+			modal.show();
 		});
 	}
 

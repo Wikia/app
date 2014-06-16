@@ -7,6 +7,7 @@ class WikiaMaps {
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_PIN_TYPE = 'poi_category';
+	const ENTRY_POINT_POI = 'poi';
 
 	const STATUS_DONE = 0;
 	const STATUS_PROCESSING = 1;
@@ -20,7 +21,8 @@ class WikiaMaps {
 
 	const HTTP_CREATED_CODE = 201;
 	const HTTP_SUCCESS_OK = 200;
-	const HTTP_UPDATED_CODE = 303;
+	const HTTP_UPDATED = 303;
+	const HTTP_NO_CONTENT = 204;
 
 	/**
 	 * @var array API connection config
@@ -82,40 +84,38 @@ class WikiaMaps {
 	 * @param String $url
 	 * @param Array $data
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	private function postRequest( $url, $data ) {
 		return $this->processServiceResponse(
-			Http::post( $url, [
-				'postData' => json_encode( $data ),
-				'headers' => [
-					'Authorization' => $this->config[ 'token' ]
-				],
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::post( $url, $this->getHttpRequestOptions( $data ) )
 		);
 	}
 
 	/**
-	 * Wrapper for put request with authorization token attached
+	 * Wrapper for Http::request() with authorization token attached
 	 *
 	 * @param String $url
 	 * @param Array $data
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	private function putRequest( $url, $data ) {
 		return $this->processServiceResponse(
-			Http::request( 'PUT', $url, [
-				'postData' => json_encode( $data ),
-				'headers' => [
-					'Authorization' => $this->config[ 'token' ]
-				],
-				'returnInstance' => true,
-				'noProxy' => true
-			] )
+			Http::request( 'PUT', $url, $this->getHttpRequestOptions( $data ) )
+		);
+	}
+
+	/**
+	 * Wrapper for Http::request() with authorization token attached
+	 *
+	 * @param String $url
+	 *
+	 * @return Array
+	 */
+	private function deleteRequest( $url ) {
+		return $this->processServiceResponse(
+			Http::request( 'DELETE', $url, $this->getHttpRequestOptions() )
 		);
 	}
 
@@ -130,11 +130,7 @@ class WikiaMaps {
 		$mapsData = new stdClass();
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP ], $params );
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		if( $response[ 'success' ] ) {
@@ -173,21 +169,13 @@ class WikiaMaps {
 		$mapId = array_shift( $params );
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP, $mapId ], $params );
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO: this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		$map = $response[ 'content' ];
 		if( !empty( $map->tile_set_url ) ) {
 			$response = $this->processServiceResponse(
-				Http::get( $map->tile_set_url, 'default', [
-					'returnInstance' => true,
-					//TODO: this is temporary workaround, remove it before production!
-					'noProxy' => true
-				] )
+				Http::get( $map->tile_set_url, 'default', $this->getHttpRequestOptions() )
 			);
 
 			$tilesData = $response[ 'content' ];
@@ -255,21 +243,16 @@ class WikiaMaps {
 	/**
 	 * Sends request to interactive maps service and returns list of tile sets
 	 *
-	 * @param array $params - request params
+	 * @param Array $params - request params
 	 *
-	 * @return array - list of tile sets
+	 * @return Array - list of tile sets
 	 */
-
 	public function getTileSets( Array $params ) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_TILE_SET ], $params );
 
 		//TODO: consider caching the response
 		$response = $this->processServiceResponse(
-			Http::get( $url, 'default', [
-				'returnInstance' => true,
-				//TODO this is temporary workaround, remove it before production!
-				'noProxy' => true
-			] )
+			Http::get( $url, 'default', $this->getHttpRequestOptions() )
 		);
 
 		return $response;
@@ -295,7 +278,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $mapData array with required parameters to service API
 	 *
-	 * @return string|boolean
+	 * @return Array
 	 */
 	public function saveMap( $mapData ) {
 		return $this->postRequest(
@@ -309,7 +292,7 @@ class WikiaMaps {
 	 *
 	 * @param Array $tileSetData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function saveTileset( $tileSetData ) {
 		return $this->postRequest(
@@ -323,12 +306,54 @@ class WikiaMaps {
 	 *
 	 * @param Array $pinTypeData array with required parameters to service API
 	 *
-	 * @return string|bool
+	 * @return Array
 	 */
 	public function savePinType( $pinTypeData ) {
 		return $this->postRequest(
 			$this->buildUrl( [ self::ENTRY_POINT_PIN_TYPE ] ),
 			$pinTypeData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to create a point of interest (POI) with given parameters
+	 *
+	 * @param Array $poiData array with required parameters to service API
+	 *
+	 * @return Array
+	 */
+	public function savePoi( $poiData ) {
+		return $this->postRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI ] ),
+			$poiData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to update a point of interest (POI) with given parameters
+	 *
+	 * @param Integer $poiId unique id of existing POI
+	 * @param Array $poiData array with required parameters to service API
+	 *
+	 * @return Array
+	 */
+	public function updatePoi( $poiId, $poiData ) {
+		return $this->putRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI, $poiId ] ),
+			$poiData
+		);
+	}
+
+	/**
+	 * Sends a request to IntMap Service API to delete a point of interest (POI)
+	 *
+	 * @param Integer $poiId unique id of existing POI
+	 *
+	 * @return Array
+	 */
+	public function deletePoi( $poiId ) {
+		return $this->deleteRequest(
+			$this->buildUrl( [ self::ENTRY_POINT_POI, $poiId ] )
 		);
 	}
 
@@ -373,18 +398,70 @@ class WikiaMaps {
 	 * @todo: how about extracting results to an object?
 	 */
 	private function processServiceResponse( MWHttpRequest $response ) {
-		$results[ 'success' ] = false;
 		$status = $response->getStatus();
 		$content = json_decode( $response->getContent() );
-		$results[ 'content' ] = $content;
 
-		// MW Http::request() can return 200 HTTP code if service is offline, that's why we check content here
-		if( in_array( $status, [ self::HTTP_CREATED_CODE, self::HTTP_UPDATED_CODE,
-				self::HTTP_SUCCESS_OK ] ) && !is_null( $content ) ) {
-			$results[ 'success' ] = true;
+		$success = $this->isSuccess( $status, $content );
+		if( !$success && is_null( $content ) ) {
+			$results['success'] = false;
+			$content = new stdClass();
+			$content->message = wfMessage( 'wikia-interactive-maps-service-error' )->parse();
+		} else if( !$success && !is_null( $content ) ) {
+			$results['success'] = false;
+		} else {
+			$results['success'] = true;
 		}
 
+		$results['content'] = $content;
 		return $results;
 	}
 
+	/**
+	 * Returns true if HTTP request was successfully processed
+	 *
+	 * @param Integer $status HTTP response status
+	 * @param String $content HTTP response content
+	 *
+	 * @return bool
+	 */
+	private function isSuccess( $status, $content ) {
+		$isStatusOK = in_array( $status, [
+			self::HTTP_CREATED_CODE,
+			self::HTTP_UPDATED,
+			self::HTTP_NO_CONTENT,
+		] );
+
+		// MW Http::request() can return 200 HTTP code if service is offline
+		// that's why we check content here
+		if( $isStatusOK || ( $status === self::HTTP_SUCCESS_OK && !is_null( $content ) ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns default options for Http::request() method
+	 *
+	 * @param array $postData
+	 *
+	 * @return array
+	 */
+	private function getHttpRequestOptions( Array $postData = [] ) {
+		$options = [
+			'headers' => [
+				'Authorization' => $this->config[ 'token' ]
+			],
+			'returnInstance' => true,
+			//TODO: this is temporary workaround, remove it before production!
+			'noProxy' => true
+		];
+
+		if( !empty( $postData ) ) {
+			$options[ 'postData' ] = json_encode( $postData );
+		}
+
+		return $options;
+	}
 }
+
