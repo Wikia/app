@@ -194,7 +194,7 @@ define(
 		}
 
 		/**
-		 * @desc lunches force login modal
+		 * @desc launches force login modal
 		 * @param {string} origin - used for tracking the source of force login modal
 		 * @param {function} cb - callback function to be called after login
 		 */
