@@ -24,6 +24,12 @@ class DummyModel extends BaseRssModel
 		return $item;
 	}
 
+	/**
+	 * Mock for getArticleDetail
+	 * @param $wid
+	 * @param $aid
+	 * @return array
+	 */
 	protected function getArticleDetail( $wid, $aid ) {
 		$articles = [
 			831 => [
@@ -33,6 +39,23 @@ class DummyModel extends BaseRssModel
 		];
 
 		return $articles[ $wid ][ $aid ];
+	}
+
+	/**
+	 * mock for getArticleDescription
+	 * @param $wid
+	 * @param $aid
+	 * @return string
+	 */
+	protected function getArticleDescription( $wid, $aid ){
+		$descriptions = [
+			831 => [
+				49 => 'd49',
+				4 => 'd4'
+			]
+		];
+
+		return $descriptions[ $wid ][ $aid ];
 	}
 }
 
@@ -143,8 +166,8 @@ class BaseRssModelTest extends WikiaBaseTest
 		$this->assertArrayHasKey('timestamp', $processedData['dummy_url']);
 		$this->assertLessThan($processedData['dummy_url']['timestamp'], $processedData['dummy_url2']['timestamp']);
 
-		$this->assertNotNull($processedData['dummy_url']['description']);
-		$this->assertNotNull($processedData['dummy_url']['img']['url']);
+		$this->assertEquals( 'd49', $processedData[ 'dummy_url' ][ 'description' ] );
+		$this->assertEquals( 'uaa', $processedData[ 'dummy_url' ][ 'img' ][ 'url' ] );
 	}
 
 }
