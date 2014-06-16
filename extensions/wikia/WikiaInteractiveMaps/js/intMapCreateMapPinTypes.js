@@ -131,7 +131,7 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
-		 * @desc
+		 * @desc handler method triggered by savePinTypes event
 		 */
 		function savePinTypes() {
 			sendPinTypes(validate(utils.serializeForm($form)));
