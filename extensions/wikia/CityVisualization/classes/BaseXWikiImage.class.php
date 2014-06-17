@@ -1,22 +1,19 @@
 <?php
 
 abstract class BaseXWikiImage {
-
-	const IMAGE_NAME_TEMPLATE = '%1s/%2s/%s%s';
-	const IMAGE_URL_TEMPLATE = 'http://images.wikia.com/$s/images/%s/%s%s';
-	const THUMBNAIL_URL_BASE_TEMPLATE = 'http://images.wikia.com/$s/images/thumb/%s/%s%s';
-	const IMAGE_TYPE = "png";
-
-	public $mDefaultPath = 'http://images.wikia.com/messaging/images/';
+	const IMAGE_PATH_TEMPLATE = '%1s/%2s/%s';
+	// <1 first character of name hash>/<2 first characters of name hash>/<name><extension_suffix>
+	const IMAGE_URL_TEMPLATE = 'http://images.wikia.com/%s%s/%s/%s%s';
+	const THUMBNAIL_URL_BASE_TEMPLATE = 'http://images.wikia.com/%s%s/thumb/%s/%s%s';
+	const IMAGE_HOST = "http://images.wikia.com/";
+	const IMAGE_TYPE = "png"; //currently only storing images as PNG's is supported
 
 	public $mDefaultAvatars = false;
 	protected $name, $fileNameSuffix;
 
 	abstract protected function onFileRemoval( $success );
 
-	abstract public function getImageGroupToken();
-
-	abstract public function getFileDirectory();
+	abstract public function getContainerDirectory();
 
 	abstract public function getSwiftContainer();
 
@@ -34,46 +31,49 @@ abstract class BaseXWikiImage {
 		$this->fileNameSuffix = "." . self::IMAGE_TYPE;
 	}
 
-	protected function rawGetUrl( $template ) {
-		$nameHash = FileRepo::getHashPathForLevel( $this->name, 2 );
-		return sprintf( $template, $this->getImageGroupToken(), $nameHash, $this->name );
-	}
-
-
 	public function getUrl() {
 		return wfReplaceImageServer( $this->getPurgeUrl() );
 	}
 
 	public function getThumbnailUrl( $width ) {
-		return wfReplaceImageServer( $this->getThumbnailPurgeUrl( $width ) );
+		$url = ImagesService::getThumbUrlFromFileUrl( $this->getLocalThumbnailPath(), $width );
+		return wfReplaceImageServer( $url );
 	}
 
 	// urls used for purging cache
 	public function getPurgeUrl() {
-		return $this->rawGetUrl( self::IMAGE_URL_TEMPLATE );
+		return $this->getBaseUrl() . "/" . $this->getLocalPath();
 	}
 
-	public function getThumbnailPurgeUrl( $width ) {
-		$tempUrl = $this->rawGetUrl( self::THUMBNAIL_URL_BASE_TEMPLATE );
-		return ImagesService::getThumbUrlFromFileUrl( $tempUrl, $width );
+	public function getThumbnailPurgeUrl( ) {
+		return $this->getBaseUrl() . "/" . $this->getLocalThumbnailPath();
 	}
 
-	public function getLocalPath() {
-		$nameHash = sha1( $this->name );
-		return sprintf( self::IMAGE_PATH_TEMPLATE, $nameHash, $nameHash, $this->name, $this->fileNameSuffix );
+	protected function getBaseUrl() {
+		return self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
+	}
+	protected function getLocalPath($name = null) {
+		if (empty($name)){
+			$name = $this->name . $this->fileNameSuffix;
+		}
+		$nameHash = FileRepo::getHashPathForLevel( $this->name, 2 );
+		return sprintf( self::IMAGE_PATH_TEMPLATE, $nameHash, $nameHash, $name );
+	}
+
+	protected function getLocalThumbnailPath($name = null) {
+		return "thumb/" . $this->getLocalPath($name);
 	}
 
 	public function getFullPath() {
-		return rtrim( $this->getFileDirectory(), PATH_SEPARATOR ) . PATH_SEPARATOR . $this->getLocalPath();
+		return rtrim( $this->getContainerDirectory(), PATH_SEPARATOR ) . PATH_SEPARATOR . $this->getLocalPath();
 	}
 
 	public function getSwiftStorage() {
-		global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
 		return \Wikia\SwiftStorage::newFromContainer( $this->getSwiftContainer(), $this->getSwiftPathPrefix() );
 	}
 
 	public function getTempFile() {
-		return tempnam( wfTempDir(), $this->getImageGroupToken() );
+		return tempnam( wfTempDir(), trim($this->getSwiftPathPrefix(), "/") );
 	}
 
 	public function removeFile() {
@@ -81,9 +81,7 @@ abstract class BaseXWikiImage {
 
 		$path = $this->getLocalPath();
 		$status = $swift->remove( $path );
-
 		$result = $status->isOk();
-		$this->onFileRemoval( $result );
 
 		if ( $result ) {
 			Wikia::log( __METHOD__, false, 'cannot remove xwiki image - ' . $path );
@@ -96,7 +94,8 @@ abstract class BaseXWikiImage {
 	}
 
 	private function getThumbPath( $dir ) {
-		return str_replace( "/{$this->getImageGroupToken()}/", "/{$this->getImageGroupToken()}/thumb/", $dir );
+		$path_token = trim($this->getSwiftPathPrefix(), "/");
+		return str_replace( "/{$path_token}/", "/{$path_token}/thumb/", $dir );
 	}
 
 	public function uploadByUrl( $url ) {
@@ -113,11 +112,6 @@ abstract class BaseXWikiImage {
 
 
 	public function uploadByUrlToTempFile( $url, &$sTmpFile ) {
-		// macbre: avatars operations are disabled during maintenance
-		global $wgAvatarsMaintenance;
-		if ( !empty($wgAvatarsMaintenance) ) {
-			return UPLOAD_ERR_NO_TMP_DIR;
-		}
 		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
 
 		// Pull the image from the URL and save it to a temporary file.
@@ -170,7 +164,6 @@ abstract class BaseXWikiImage {
 			//TODO: add localized generic error message
 //			global $wgLang;
 //			$errorMsg = wfMsg('blog-avatar-error-type', $imgInfo['mime'], $wgLang->listToText( $this->getAllowedMime() ) );
-			$this->onUploadMimeRejected();
 			return $errorNo;
 		}
 
@@ -214,7 +207,6 @@ abstract class BaseXWikiImage {
 			imagedestroy( $imgObject );
 
 			// store the avatar on Swift
-
 			$swift = $this->getSwiftStorage();
 			$res = $swift->store( $targetFilePath, $this->getLocalPath(), [ ], 'image/png' );
 
@@ -239,75 +231,40 @@ abstract class BaseXWikiImage {
 			$this->purgeThumbnails();
 		}
 
-
 		return $errorNo;
-	} // end postProcessImageInternal()
+	}
+
+	private function removeThumbnails() {
+		$baseFileUrl  = self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
+
+		$swift = $this->getSwiftStorage();
+
+		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
+		$thumbnailDir = sprintf( 'mwstore://swift-backend/%s%s%s', $this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalThumbnailPath());
+
+		$urls = [ ];
+		$files = [ ];
+		$iterator = $backend->getFileList( array( 'dir' => $thumbnailDir ) );
+		foreach ( $iterator as $file ) {
+			$files[] = sprintf( "%s/%s", $this->getLocalThumbnailPath(), $file );
+		}
+
+		// deleting files on file system and creating an array of URLs to purge
+		if ( !empty($files) ) {
+			foreach ( $files as $file ) {
+				$status = $swift->remove( $file );
+				if ( !$status->isOk() ) {
+				} else {
+					$urls[] = wfReplaceImageServer( $baseFileUrl ) . "/$file";
+				}
+			}
+		}
+
+		return $urls;
+	}
 
 	private function purgeThumbnails() {
-		global $wgAvatarsUseSwiftStorage, $wgBlogAvatarPath, $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-		// get path to thumbnail folder
-
-
-		// dirty hack, should work in this case
-		if ( !empty($wgAvatarsUseSwiftStorage) ) {
-			$swift = $this->getSwiftStorage();
-
-			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-			$dir = sprintf( 'mwstore://swift-backend/%s%s%s', $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-			$dir = $this->getThumbPath( $dir );
-
-			$avatarRemotePath = sprintf( "thumb%s", $this->getLocalPath() );
-
-			$urls = [ ];
-			$files = [ ];
-			$iterator = $backend->getFileList( array( 'dir' => $dir ) );
-			foreach ( $iterator as $file ) {
-				$files[] = sprintf( "%s/%s", $avatarRemotePath, $file );
-			}
-
-			// deleting files on file system and creating an array of URLs to purge
-			if ( !empty($files) ) {
-				foreach ( $files as $file ) {
-					$status = $swift->remove( $file );
-					if ( !$status->isOk() ) {
-
-					} else {
-						$urls[] = wfReplaceImageServer( $wgBlogAvatarPath ) . "/$file";
-
-					}
-				}
-			}
-
-		} else {
-			$dir = $this->getFullPath();
-			$dir = $this->getThumbPath( $dir );
-			if ( is_dir( $dir ) ) {
-				$urls = [ ];
-				$files = [ ];
-				// copied from LocalFile->getThumbnails
-				$handle = opendir( $dir );
-
-				if ( $handle ) {
-					while ( false !== ($file = readdir( $handle )) ) {
-						if ( $file{0} != '.' ) {
-							$files[] = $file;
-						}
-					}
-					closedir( $handle );
-				}
-
-				// partialy copied from LocalFile->purgeThumbnails()
-				foreach ( $files as $file ) {
-					// deleting files on file system
-					@unlink( "$dir/$file" );
-					$urls[] = $this->getPurgeUrl( '/thumb/' ) . "/$file";
-
-				}
-			} else {
-
-			}
-
-		}
+		$urls = $this->removeThumbnails();
 
 		// purging avatars urls
 		SquidUpdate::purge( $urls );
