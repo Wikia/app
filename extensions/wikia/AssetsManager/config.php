@@ -1810,3 +1810,13 @@ $config['int_map_delete_map_js'] = [
 	]
 ];
 
+$config['int_map_embed_map_code'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapUtils.js',
+		'//extensions/wikia/WikiaInteractiveMaps/js/intMapEmbedMapCode.js',
+	]
+];
+
+
