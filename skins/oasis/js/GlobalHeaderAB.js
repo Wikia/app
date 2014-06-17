@@ -8,8 +8,8 @@ $(function(){
 		avatarSize = 36,
 		$loginDropdown = $accountNavigation.find( '#UserLoginDropdown'),
 		$accountNavsubnav = $accountNavigation.find('.subnav'),
-		$wallNotifications = $( '#WallNotifications'),
-		$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
+		$wallNotifications,
+		$notifications;
 
 	$('.WikiaHeader').addClass('v3');
 	$( '#AccountNavigation > li:first > a' ).contents().filter(function() { return this.nodeType === 3; }).wrap( '<span class="login-text">' );
@@ -21,30 +21,38 @@ $(function(){
 			.attr( 'width', avatarSize );
 	}
 
-	$accountNavigation.on('mouseover', '.notificationsEntry', function(){
-		$('.subnav', $wallNotifications).addClass('show');
-	});
 
-	$accountNavigation.on('mouseover', function(){
-		if( !window.removedFromHoverMenu ) {
-			removeWallNotificationsFromHoverMenu();
-			window.removedFromHoverMenu = true;
-		}
-		$('>li >.subnav', $accountNavigation).addClass('show');
-	});
 
-	$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
-		$('.subnav', $wallNotifications).removeClass('show');
-	});
+	if (window.wgUserName !== null) {
+		$wallNotifications = $( '#WallNotifications');
+		$notifications = $('<li class="notificationsEntry"><a href="#"><span id="bubbles_count"></span>Notifications</a></li>');
 
-	$accountNavigation.on('mouseleave', function(){
-		$('>li >.subnav', $accountNavigation).removeClass('show');
-	});
+		$accountNavigation.on('mouseover', '.notificationsEntry', function(){
+			$('.subnav', $wallNotifications).addClass('show');
+		});
+
+		$accountNavigation.on('mouseover', function(){
+			if( !window.removedFromHoverMenu ) {
+				removeWallNotificationsFromHoverMenu();
+				window.removedFromHoverMenu = true;
+			}
+			$('>li >.subnav', $accountNavigation).addClass('show');
+		});
+
+		$accountNavigation.on('mouseleave', '.notificationsEntry', function(){
+			$('.subnav', $wallNotifications).removeClass('show');
+		});
+
+		$accountNavigation.on('mouseleave', function(){
+			$('>li >.subnav', $accountNavigation).removeClass('show');
+		});
+
+		$('.bubbles #bubbles_count').remove();
+		$notifications.append($wallNotifications);
+		$accountNavsubnav.prepend($notifications);
+	}
 
 	$accountNavsubnav.find( '.new' ).removeClass( 'new' );
-	$('.bubbles #bubbles_count').remove();
-	$notifications.append($wallNotifications);
-	$accountNavsubnav.prepend($notifications);
 	$accountNavigation.find( '.ajaxRegister' ).wrap( '<div class="ajaxRegisterContainer"></div>' ).parent().prependTo( '#UserLoginDropdown' );
 
 	if ( $loginDropdown.length > 0 || $avatar.attr( 'src' ).indexOf( '/Avatar.jpg' ) > -1 ) {
