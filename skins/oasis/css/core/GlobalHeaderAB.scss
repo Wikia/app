@@ -20,7 +20,7 @@ $facebook-background-color: #3c5b9b;
 	background: none;
 	background-color: $nav-background-color;
 	border: 0;
-	border-bottom: 2px solid rgba(0,0,0,.1);
+	border-bottom: 1px solid $new-border-color;
 	color: $nav-font-color;
 
 	.page-width-container {
@@ -69,6 +69,8 @@ $facebook-background-color: #3c5b9b;
 		svg {
 			height: 14px;
 			width: 14px;
+			position: absolute;
+			top: 27px;
 
 			path {
 				fill: $nav-font-color;
@@ -76,7 +78,7 @@ $facebook-background-color: #3c5b9b;
 		}
 
 		span {
-			padding-left: 10px;
+			padding-left: 20px;
 		}
 
 		a {
@@ -84,6 +86,7 @@ $facebook-background-color: #3c5b9b;
 			display: table-cell;
 			text-align: center;
 			vertical-align: middle;
+			padding-top: 5px;
 
 			&:hover {
 				text-decoration: none;
@@ -146,9 +149,9 @@ $facebook-background-color: #3c5b9b;
 		.subnav.show {
 			@include clear-box-shadow;
 			background-color: $nav-background-color;
-			border: 2px solid rgba(0,0,0,.1);
+			border: 1px solid $new-border-color;
 			border-top: 0;
-			top: $new-nav-height + 2px;
+			top: $new-nav-height;
 
 			> li {
 				border-top: 1px solid $new-border-color;

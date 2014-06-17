@@ -3,7 +3,7 @@
 
 $hubsmenu-background-color: #f7f7f7;
 $hubsmenu-font-color: #092140;
-$shadow-width: 2px;
+$shadow-width: 1px;
 
 #GlobalNavigationMenuButton {
 	background: $hubsmenu-background-color;
@@ -11,7 +11,7 @@ $shadow-width: 2px;
 	cursor: pointer;
 	height: 66px;
 	margin-top: 0;
-	width: 43px;
+	width: 60px;
 	fill: $hubsmenu-font-color;
 
 	#svg-chevron {
@@ -28,7 +28,7 @@ $shadow-width: 2px;
  .GlobalNavigationContainer {
 	display: none;
 	position: absolute;
-	top: 68px;
+	top: 66px;
 	width: -webkit-calc(100% - 290px);
 	width: calc(100% - 290px);
 
@@ -43,7 +43,7 @@ $shadow-width: 2px;
 		position: relative;
 		width: 866px;
 		z-index: 1000;
-		border: $shadow-width solid rgba(0,0,0,.1);
+		border: 1px solid #c7d1d8;;
 		border-top: 0;
 
 		.hubs {
@@ -88,6 +88,9 @@ $shadow-width: 2px;
 				position: absolute;
 				top: 0;
 				width: 166px;
+			}
+			&:first-child .border {
+				display: none;
 			}
 
 			&.active .border, &.active + &:not(.active) .border
@@ -203,7 +206,6 @@ $shadow-width: 2px;
 			font-size: 15px;
 			overflow: auto;
 			position: absolute;
-			top: -$shadow-width;
 
 			a, h2 {
 				color: inherit;
@@ -239,6 +241,9 @@ $shadow-width: 2px;
 }
 
 @media screen and (max-width: 1023px) {
+	#GlobalNavigationMenuButton {
+		width: 40px;
+	}
 	.GlobalNavigationContainer {
 		width: 100%;
 
@@ -280,6 +285,9 @@ $shadow-width: 2px;
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1280px) {
+	#GlobalNavigationMenuButton {
+		width: 52px;
+	}
 	.GlobalNavigationContainer {
 		width: -webkit-calc(100% - 258px);
 		width: calc(100% - 258px);
