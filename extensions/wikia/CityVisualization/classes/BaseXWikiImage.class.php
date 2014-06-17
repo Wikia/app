@@ -1,20 +1,17 @@
 <?php
 
 abstract class BaseXWikiImage {
-	const IMAGE_PATH_TEMPLATE = '%1s/%2s/%s';
 	// <1 first character of name hash>/<2 first characters of name hash>/<name><extension_suffix>
-	const IMAGE_URL_TEMPLATE = 'http://images.wikia.com/%s%s/%s/%s%s';
-	const THUMBNAIL_URL_BASE_TEMPLATE = 'http://images.wikia.com/%s%s/thumb/%s/%s%s';
 	const IMAGE_HOST = "http://images.wikia.com/";
 	const IMAGE_TYPE = "png"; //currently only storing images as PNG's is supported
 
 	protected $name, $fileNameSuffix;
 
-	abstract public function getContainerDirectory();
+	abstract protected function getContainerDirectory();
 
-	abstract public function getSwiftContainer();
+	abstract protected function getSwiftContainer();
 
-	abstract public function getSwiftPathPrefix();
+	abstract protected function getSwiftPathPrefix();
 
 	/*
 	 * returns mime allowed in upload
@@ -33,7 +30,7 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getThumbnailUrl( $width ) {
-		$url = ImagesService::getThumbUrlFromFileUrl( $this->getLocalThumbnailPath(), $width );
+		$url = ImagesService::getThumbUrlFromFileUrl( $this->getThumbnailPurgeUrl(), $width );
 		return wfReplaceImageServer( $url );
 	}
 
@@ -50,20 +47,18 @@ abstract class BaseXWikiImage {
 		return self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
 	}
 
-	protected function getLocalPath( $name = null ) {
-		if ( empty($name) ) {
-			$name = $this->name . $this->fileNameSuffix;
-		}
-		$nameHash = FileRepo::getHashPathForLevel( $this->name, 2 );
-		return sprintf( self::IMAGE_PATH_TEMPLATE, $nameHash, $nameHash, $name );
+	protected function getLocalPath() {
+		$name = $this->name . $this->fileNameSuffix;
+		$nameHash = FileRepo::getHashPathForLevel( $name, 2 );
+		return $nameHash . "$name";
 	}
 
-	protected function getLocalThumbnailPath( $name = null ) {
-		return "thumb/" . $this->getLocalPath( $name );
+	protected function getLocalThumbnailPath() {
+		return "thumb/" . $this->getLocalPath();
 	}
 
 	public function getFullPath() {
-		return rtrim( $this->getContainerDirectory(), PATH_SEPARATOR ) . PATH_SEPARATOR . $this->getLocalPath();
+		return rtrim( $this->getContainerDirectory(), "/" ) . "/" . $this->getLocalPath();
 	}
 
 	public function getSwiftStorage() {
@@ -91,11 +86,6 @@ abstract class BaseXWikiImage {
 		return $result;
 	}
 
-	private function getThumbPath( $dir ) {
-		$path_token = trim( $this->getSwiftPathPrefix(), "/" );
-		return str_replace( "/{$path_token}/", "/{$path_token}/thumb/", $dir );
-	}
-
 	public function uploadByUrl( $url ) {
 		$sTmpFile = '';
 
@@ -106,8 +96,7 @@ abstract class BaseXWikiImage {
 		}
 
 		return $errorNo;
-	} // end uploadByUrl()
-
+	}
 
 	public function uploadByUrlToTempFile( $url, &$sTmpFile ) {
 		$errorNo = UPLOAD_ERR_OK; // start by presuming there is no error.
