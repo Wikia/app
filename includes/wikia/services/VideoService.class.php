@@ -30,15 +30,7 @@ class VideoService extends WikiaModel {
 				$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 			}
 			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
-				$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
-
-				if ( ($pos = strpos($url, 'Video:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				}
+				list( $file, $title ) = $this->getVideoByUrl( $url );
 			}
 			if ( $title && WikiaFileHelper::isFileTypeVideo($title) ) {
 				$videoTitle = $title;
@@ -51,10 +43,10 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+				$file = wfFindFile( $videoTitle );
 			}
 
 			// Add a default description if available and one doesn't already exist
-			$file = wfFindFile( $videoTitle );
 			$vHelper = new VideoHandlerHelper();
 			$vHelper->addDefaultVideoDescription( $file );
 		} catch ( Exception $e ) {
@@ -111,6 +103,40 @@ class VideoService extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get Video file and title by given URL
+	 * @param string $url
+	 * @return array [File, Title], [null, null] if not found
+	 */
+	public function getVideoByUrl( $url ) {
+		global $wgContLang;
+
+		$title = null;
+		$file = null;
+
+		$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|Video:|' . $nsFileTranslated . ':)(.+)$/';
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		} elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file ) { // bugID: 26721
+				$file = wfFindFile( $matches[2] );
+			}
+		}
+
+		if ( $file ) {
+			$title = $file->getTitle();
+		}
+
+		return [$file, $title];
 	}
 
 }
