@@ -58,6 +58,7 @@ class ContactForm extends SpecialPage {
 		$isMobile = $app->checkSkin( 'wikiamobile');
 		$out = $this->getOutput();
 		$user = $this->getUser();
+		$request = $this->getRequest();
 
 		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
@@ -71,16 +72,16 @@ class ContactForm extends SpecialPage {
 		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
-		$this->mProblem = $this->getRequest()->getText( 'wpContactSubject' ); //subject
+		$this->mProblem = $request->getText( 'wpContactSubject' ); //subject
 		$this->mProblemDesc = null;
-		$this->mAction = $this->getRequest()->getVal( 'action' );
-		$this->mEmail = $this->getRequest()->getText( 'wpEmail' );
-		$this->mBrowser = $this->getRequest()->getText( 'wpBrowser' );
-		$this->mAbTestInfo = $this->getRequest()->getText( 'wpAbTesting' );
-		$this->mCCme = $this->getRequest()->getCheck( 'wgCC' );
-		$this->mReferral = $this->getRequest()->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
+		$this->mAction = $request->getVal( 'action' );
+		$this->mEmail = $request->getText( 'wpEmail' );
+		$this->mBrowser = $request->getText( 'wpBrowser' );
+		$this->mAbTestInfo = $request->getText( 'wpAbTesting' );
+		$this->mCCme = $request->getCheck( 'wgCC' );
+		$this->mReferral = $request->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
-		if( $this->getRequest()->wasPosted() ) {
+		if ( $request->wasPosted() ) {
 
 			if( $user->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
@@ -88,16 +89,16 @@ class ContactForm extends SpecialPage {
 			}
 
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
-			$this->mUserName = $this->getRequest()->getText( 'wpUserName' );
-			$this->getRequest()->setVal( 'wpUrlencUserName', urlencode( str_replace( ' ', '_', $this->getRequest()->getText( 'wpUserName' ) ) ) );
-			$this->getRequest()->setVal( 'wpUrlencUserNameNew', urlencode( str_replace( ' ', '_', $this->getRequest()->getText( 'wpUserNameNew' ) ) ) );
+			$this->mUserName = $request->getText( 'wpUserName' );
+			$request->setVal( 'wpUrlencUserName', urlencode( str_replace( ' ', '_', $request->getText( 'wpUserName' ) ) ) );
+			$request->setVal( 'wpUrlencUserNameNew', urlencode( str_replace( ' ', '_', $request->getText( 'wpUserNameNew' ) ) ) );
 
-			$this->mRealName = $this->getRequest()->getText( 'wpContactRealName' );
-			$this->mWhichWiki = $this->getRequest()->getText( 'wpContactWikiName', $wgServer );
+			$this->mRealName = $request->getText( 'wpContactRealName' );
+			$this->mWhichWiki = $request->getText( 'wpContactWikiName', $wgServer );
 
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
-			if ( $user->isLoggedIn() && ( $user->getName() !== $this->getRequest()->getText( 'wpUserName' ) ) ) {
+			if ( $user->isLoggedIn() && ( $user->getName() !== $request->getText( 'wpUserName' ) ) ) {
 				$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
 				return;
 			}
@@ -105,11 +106,11 @@ class ContactForm extends SpecialPage {
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
 				if ( $par === 'rename-account' ) {
-					$this->validateUserName( $this->getRequest()->getText( 'wpUserNameNew' ) );
+					$this->validateUserName( $request->getText( 'wpUserNameNew' ) );
 				}
 
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
-					$args[] = $this->getRequest()->getVal( $var );
+					$args[] = $request->getVal( $var );
 				}
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
@@ -123,9 +124,9 @@ class ContactForm extends SpecialPage {
 				$this->mProblemDesc = $messageText;
 
 				// set subject
-				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $this->getRequest()->getText( 'wpUserName' ), $this->mWhichWiki ) );
+				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $request->getText( 'wpUserName' ), $this->mWhichWiki ) );
 			} else {
-				$this->mProblemDesc = $this->getRequest()->getText( 'wpContactDesc' ); //body
+				$this->mProblemDesc = $request->getText( 'wpContactDesc' ); //body
 			}
 
 			#malformed email?
@@ -217,9 +218,13 @@ class ContactForm extends SpecialPage {
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
 
-		$this->getOutput()->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
-		$this->getOutput()->setRobotpolicy( 'noindex,nofollow' );
-		$this->getOutput()->setArticleRelated( false );
+		$user = $this->getUser();
+		$output = $this->getOutput();
+		$request = $this->getRequest();
+
+		$output->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
+		$output->setRobotpolicy( 'noindex,nofollow' );
+		$output->setArticleRelated( false );
 
 		//build common top of both emails
 		$m_shared = '';
@@ -234,13 +239,13 @@ class ContactForm extends SpecialPage {
 		$items[] = 'wkLang: ' . $wgLanguageCode;
 
 		//always add the IP
-		$items[] = 'IP:' . $this->getRequest()->getIP();
+		$items[] = 'IP:' . $request->getIP();
 
 		//if they are logged in, add the ID(and name) and their lang
-		$uid = $this->getUser()->getID();
+		$uid = $user->getID();
 		if( !empty($uid) ) {
-			$items[] = 'uID: ' . $uid . " (User:". $this->getUser()->getName() .")";
-			$items[] = 'uLang: ' . $this->getUser()->getOption('language');
+			$items[] = 'uID: ' . $uid . " (User:". $user->getName() .")";
+			$items[] = 'uLang: ' . $user->getOption( 'language' );
 		}
 
 		if ( !empty( $this->mReferral ) ) {
@@ -277,7 +282,7 @@ class ContactForm extends SpecialPage {
 
 		$subject = $this->msg( 'specialcontact-mailsub' )->text() . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
 
-		$screenshot = $this->getRequest()->getFileTempname( 'wpScreenshot' );
+		$screenshot = $request->getFileTempname( 'wpScreenshot' );
 		$magic = MimeMagic::singleton();
 
 		$screenshots = array();
@@ -311,26 +316,26 @@ class ContactForm extends SpecialPage {
 		}
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
-		if( empty($errors) && $this->mCCme && $this->getUser()->isEmailConfirmed() ) {
+		if ( empty( $errors ) && $this->mCCme && $user->isEmailConfirmed() ) {
 			$result = UserMailer::send( $mail_user, $mail_community, $this->msg( 'specialcontact-mailsubcc' )->text(), $mcc, $mail_user, null, 'SpecialContactCC' );
 			if (!$result->isOK()) {
 				$errors .= "\n" . $result->getMessage();
 			}
 		}
 
-		if ( !empty($errors) ) {
-			$this->getOutput()->addHTML( $this->formatError( $this->err ) );
+		if ( !empty( $errors ) ) {
+			$output->addHTML( $this->formatError( $this->err ) );
 		}
 
 		/********************************************************/
 		#sending done, show message
 
 		#parse this message to allow wiki links (BugId: 1048)
-		$this->getOutput()->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parse() );
+		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parse() );
 
 		$mp = Title::newMainPage();
 		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
-		$this->getOutput()->addHTML($this->msg( 'returnto', $link )->escaped() );
+		$output->addHTML( $this->msg( 'returnto' )->rawParams( $link )->escaped() );
 
 		return;
 	}
@@ -356,7 +361,7 @@ class ContactForm extends SpecialPage {
 			}
 
 			$newsec = array(
-				'header' => $this->msg('specialcontact-secheader-' . $section['headerMsg'] )->escaped(),
+				'header' => $this->msg( 'specialcontact-secheader-' . $section['headerMsg'] )->escaped(),
 				'links' => array(),
 			);
 
@@ -391,7 +396,7 @@ class ContactForm extends SpecialPage {
 			$secDat[] = $newsec;
 		}
 
-			$local = $this->msg( 'specialcontact-intro-main-local' )->inContentLanguage()->parse();
+		$local = $this->msg( 'specialcontact-intro-main-local' )->inContentLanguage()->parse();
 		if( !wfEmptyMsg('specialcontact-intro-main-local', $local) ) {
 			#ok?
 		}
