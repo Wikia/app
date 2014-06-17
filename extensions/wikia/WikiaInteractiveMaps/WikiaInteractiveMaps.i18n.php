@@ -50,6 +50,18 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Pin Type Title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'Please fill all fields',
 
+	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
+	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
+	'wikia-interactive-maps-edit-poi-save' => 'Save',
+	'wikia-interactive-maps-edit-poi-cancel' => 'Cancel',
+	'wikia-interactive-maps-edit-poi-delete' => 'Delete',
+	'wikia-interactive-maps-edit-poi-name-placeholder' => 'Title',
+	'wikia-interactive-maps-edit-poi-article-placeholder' => 'Associated Article',
+	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Select a Pin Type',
+	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Add a Description',
+	'wikia-interactive-maps-edit-poi-error-name' => 'Name must be set',
+	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Pin type must be set',
+
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
 
 	'wikia-interactive-maps-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
@@ -61,6 +73,15 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'Error: The image you uploaded was too small. Please use an image that is at least $1 x $1 pixels.',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
+
+	'wikia-interactive-maps-actions' => 'Actions',
+	'wikia-interactive-maps-delete-map' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Delete map',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Are you sure to delete the map?',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Delete Map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Cancel',
+	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
+	'wikia-interactive-maps-delete-map-success' => 'Map was succesfuly deleted!',
 
 	'wikia-interactive-maps-create-pin-types-error' => 'Unfortunately, we could not create all pin types. Some of them might have been created, though. Check which are missing and try adding them again, please.',
 ];
@@ -113,6 +134,18 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-pin-type-name-placeholder' => 'Input placeholder for pin types title',
 	'wikia-interactive-maps-create-map-pin-type-form-error' => 'An error displayed to a user when pin type form is not valid',
 
+	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
+	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
+	'wikia-interactive-maps-edit-poi-save' => 'Modal button to save pin on map',
+	'wikia-interactive-maps-edit-poi-cancel' => 'Modal button cancel action edit / add pin to map',
+	'wikia-interactive-maps-edit-poi-delete' => 'Modal button - delete pin from map',
+	'wikia-interactive-maps-edit-poi-name-placeholder' => 'Input placeholder for pin name in edit pin modal',
+	'wikia-interactive-maps-edit-poi-article-placeholder' => 'Input placeholder for associated article in edit pin modal',
+	'wikia-interactive-maps-edit-poi-category-placeholder' => 'Placeholder / default state option in select pin category',
+	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Textarea placeholder for pin description in edit pin modal',
+	'wikia-interactive-maps-edit-poi-error-name' => 'Error message - missing pin name in add pin UI',
+	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Error message - pin type not set in add pin UI',
+
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
 
 	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
@@ -124,6 +157,15 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-pin-type-marker-too-small' => 'An error displayed to a user when uploaded image for custom pin type marker is too small',
 
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
+
+	'wikia-interactive-maps-actions' => 'Text on a button near the map title that triggers dropdown with possible actions',
+	'wikia-interactive-maps-delete-map' => 'Text on a button for deleting an existing map',
+	'wikia-interactive-maps-delete-map-client-title' => 'Title of the "delete map" modal',
+	'wikia-interactive-maps-delete-map-client-prompt' => 'Prompt (in modal) asking if user is sure to delete a map',
+	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Text on a button(in modal) to confirm deleting the map',
+	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Text on a button (in modal) to cancel deleting the map',
+	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
+	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesful deletion of the map',
 
 	'wikia-interactive-maps-create-pin-types-error' => 'An error message displayed when creating pin types failed'
 ];
