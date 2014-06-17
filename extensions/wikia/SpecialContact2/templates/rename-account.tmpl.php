@@ -53,8 +53,8 @@ echo wfMsgExt( 'specialcontact-intro-rename-account', array( 'parse' ) );
 						controller: 'UserSignupSpecial',
 						method: 'formValidation',
 						format: 'json',
-						field: 'username',
-						username: newUsername
+						field: 'userloginext01',
+						userloginext01: newUsername
 					};
 				$resultContainer.text( '' );
 				$resultImage.removeClass().addClass( 'sprite progress' );

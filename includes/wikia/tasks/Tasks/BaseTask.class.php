@@ -9,10 +9,13 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {
+	use Loggable;
+
 	/** @var array calls this task will make */
 	protected $calls = [];
 
@@ -24,6 +27,9 @@ abstract class BaseTask {
 
 	/** @var array params needed to instantiate $this->title. */
 	protected $titleParams = [];
+
+	/** @var string when running, this task's id, or id of the task that this task is a subtask of */
+	protected $taskId;
 
 	/** @var string wrapper for AsyncTaskList->queue() */
 	private $queueName = null;
@@ -128,14 +134,6 @@ abstract class BaseTask {
 	}
 
 	/**
-	 * TODO: link this to the task runner that is currently running, and append to it's log. then return that as part
-	 * of retval
-	 */
-	public function log($line) {
-
-	}
-
-	/**
 	 * convenience method wrapping AsyncTaskList
 	 *
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
@@ -225,6 +223,11 @@ abstract class BaseTask {
 		}
 	}
 
+	/**
+	 * set this task to run against a specific article/page/etc
+	 * @param \Title $title
+	 * @return $this
+	 */
 	public function title(\Title $title) {
 		$this->titleParams = [
 			'namespace' => $title->getNamespace(),
@@ -232,6 +235,22 @@ abstract class BaseTask {
 		];
 
 		return $this;
+	}
+
+	/**
+	 * @param $taskId
+	 * @return $this
+	 */
+	public function taskId($taskId) {
+		$this->taskId = $taskId;
+		return $this;
+	}
+
+	/** @see Loggable::getLoggerContext */
+	protected function getLoggerContext() {
+		return [
+			'task_id' => $this->taskId,
+		];
 	}
 
 	// following are wrappers that will eventually call the same functions in AsyncTaskList

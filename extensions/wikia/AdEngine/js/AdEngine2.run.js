@@ -32,7 +32,7 @@ require([
 		adsinhead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	// Don't show ads when Sony requests the page
-	window.wgShowAds = window.wgShowAds && !window.navigator.userAgent.match(/sony_tvs/);
+	window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info.tvsideview.sony.net/);
 
 	// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 	window.wgUsePostScribe = window.wgUsePostScribe || window.wgAdDriverUseSevenOneMedia;

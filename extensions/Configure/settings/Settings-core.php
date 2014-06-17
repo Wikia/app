@@ -250,7 +250,6 @@ $settings = array(
 			'wgPasswordReminderResendTime' => 'int',
 			'wgAdditionalMailParams' => 'text',
 			'wgSMTP' => 'array',
-			'wgUserEmailUseReplyTo' => 'bool',
 			'wgUserEmailConfirmationTokenExpiry' => 'int',
 		),
 		'enotif' => array(
@@ -259,7 +258,6 @@ $settings = array(
 			'wgEnotifMaxRecips' => 'int',
 			'wgEnotifMinorEdits' => 'bool',
 			'wgEnotifRevealEditorAddress' => 'bool',
-			'wgEnotifUseJobQ' => 'bool',
 			'wgEnotifUseRealName' => 'bool',
 			'wgEnotifUserTalk' => 'bool',
 			'wgEnotifWatchlist' => 'bool',

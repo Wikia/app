@@ -399,7 +399,8 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 
 	// Review button for "save" panel
 	this.reviewButton = new OO.ui.ButtonWidget( {
-		'label': ve.msg( 'visualeditor-savedialog-label-review' )
+		'label': ve.msg( 'visualeditor-savedialog-label-review' ),
+		'flags': ['secondary']
 	} );
 	this.reviewButton.connect( this, { 'click': [ 'emit', 'review' ] } );
 

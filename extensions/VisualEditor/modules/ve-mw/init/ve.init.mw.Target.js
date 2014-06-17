@@ -388,6 +388,9 @@ ve.init.mw.Target.onLoad = function ( response ) {
 			this, null, 'No HTML content in response from server', null
 		);
 	} else {
+		// Wikia tracking if the anoneditwarning was shown
+		window.anoneditwarning = response.visualeditor.anoneditwarning;
+
 		this.originalHtml = data.content;
 		this.doc = ve.createDocumentFromHtml( this.originalHtml );
 
@@ -1337,7 +1340,8 @@ ve.init.mw.Target.prototype.setUpSurface = function ( doc, callback ) {
 				// Initialize surface
 				target.surface.getContext().hide();
 				target.$document = target.surface.$element.find( '.ve-ce-documentNode' );
-				target.$element.append( target.surface.$element );
+				// Wikia change to prepend the surface to the target.
+				target.$element.prepend( target.surface.$element );
 				target.setUpToolbar();
 
 				// Add appropriately mw-content-ltr or mw-content-rtl class
