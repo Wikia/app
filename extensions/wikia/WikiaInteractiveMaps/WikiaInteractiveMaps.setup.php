@@ -16,14 +16,17 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 ];
 
 // controller classes
-$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . 'WikiaInteractiveMapsController.class.php';
-$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . 'WikiaInteractiveMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsController' ] = $dir . '/controllers/WikiaInteractiveMapsController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsParserTagController' ] = $dir . '/controllers/WikiaInteractiveMapsParserTagController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsBaseController' ] = $dir . '/controllers/WikiaInteractiveMapsBaseController.class.php';
+$wgAutoloadClasses[ 'WikiaInteractiveMapsPoiController' ] = $dir . '/controllers/WikiaInteractiveMapsPoiController.class.php';
 
 // helper classes
 $wgAutoloadClasses[ 'WikiaInteractiveMapsHooks' ] = $dir . 'WikiaInteractiveMapsHooks.class.php';
 
 // model classes
 $wgAutoloadClasses[ 'WikiaMaps' ] = $dir . '/models/WikiaMaps.class.php';
+$wgAutoloadClasses[ 'WikiaMapsLogger' ] = $dir . '/models/WikiaMapsLogger.class.php';
 
 // special pages
 $wgSpecialPages[ 'InteractiveMaps' ] = 'WikiaInteractiveMapsController';
@@ -35,6 +38,7 @@ $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaInteractiveMapsHooks::onSkinAfter
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaInteractiveMaps' ] = $dir . 'WikiaInteractiveMaps.i18n.php';
+
 JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 	'wikia-interactive-maps-map-placeholder-error'
 ] );
@@ -42,3 +46,30 @@ JSMessages::registerPackage( 'WikiaInteractiveMaps', [
 JSMessages::registerPackage( 'WikiaInteractiveMapsCreateMap', [
 	'wikia-interactive-maps-create-map-*'
 ] );
+
+JSMessages::registerPackage( 'WikiaInteractiveMapsEditPOI', [
+	'wikia-interactive-maps-edit-poi-*'
+] );
+
+JSMessages::registerPackage( 'WikiaInteractiveMapsDeleteMap', [
+	'wikia-interactive-maps-delete-map-client-*'
+] );
+
+// Logs
+$wgLogTypes[] = 'maps';
+$wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
+$wgLogHeaders['maps'] = 'wikia-interactive-maps-log-description';
+
+$logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
+
+$wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
+
+$wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_pin_type' ] = $logActionsHandler;
+
+$wgLogActionsHandlers[ 'maps/create_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/update_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/delete_pin' ] = $logActionsHandler;

@@ -3,7 +3,7 @@ define('wikia.intMap.createMap.pinTypes',
 		'jquery',
 		'wikia.querystring',
 		'wikia.window',
-		'wikia.intMap.createMap.utils'
+		'wikia.intMap.utils'
 	],
 	function($, qs, w, utils) {
 		'use strict';
@@ -39,13 +39,7 @@ define('wikia.intMap.createMap.pinTypes',
 					deletePinType
 				],
 				savePinTypes: [
-					serializeForm,
-					function(event, serializedForm) {
-						return validate(serializedForm);
-					},
-					function(event, serializedForm, validatedForm) {
-						return savePinTypes(validatedForm);
-					}
+					savePinTypes
 				],
 				pinTypesCreated: [
 					pinTypesCreated
@@ -160,43 +154,18 @@ define('wikia.intMap.createMap.pinTypes',
 		}
 
 		/**
-		 * TODO it's universal and should be extracted
-		 * @desc serializes form
-		 * @returns {object} - promise, resolves with serialized form
+		 * @desc handler method triggered by savePinTypes event
 		 */
-		function serializeForm() {
-			var serializedForm = {},
-				formArray = $form.serializeArray(),
-				fieldNameIsArrayRegex = /\[\]$/,
-				dfd = new $.Deferred();
-
-			$.each(formArray, function (i, element) {
-				var name = element.name,
-					value = element.value;
-
-				if (fieldNameIsArrayRegex.test(name)) {
-					if ($.isArray(serializedForm[name])) {
-						serializedForm[name].push(value);
-					} else {
-						serializedForm[name] = [value];
-					}
-				} else {
-					serializedForm[name] = value;
-				}
-			});
-
-			dfd.resolve(serializedForm);
-			return dfd.promise();
+		function savePinTypes() {
+			sendPinTypes(validate(utils.serializeForm($form)));
 		}
-
 		/**
 		 * @desc validates pin types
 		 * @param {object} serializedForm - object with serialized form
 		 * @returns {object} - promise, resolves with validated form
 		 */
 		function validate(serializedForm) {
-			var valid = false,
-				dfd = new $.Deferred();
+			var valid = false;
 
 			if (serializedForm['pinTypeNames[]']) {
 				valid = true;
@@ -209,13 +178,11 @@ define('wikia.intMap.createMap.pinTypes',
 
 			if (valid) {
 				modal.trigger('cleanUpError');
-				dfd.resolve(serializedForm);
+				return serializedForm;
 			} else {
 				modal.trigger('error', $.msg('wikia-interactive-maps-create-map-pin-type-form-error'));
-				dfd.reject();
+				return false;
 			}
-
-			return dfd.promise();
 		}
 
 		function getParentPinTypes() {
@@ -245,14 +212,18 @@ define('wikia.intMap.createMap.pinTypes',
 
 		/**
 		 * @desc sends pin types data to PHP controller
-		 * @param {object} validatedForm - object with serialized and validated form
+		 * @param {object} data - object with serialized and validated form
 		 */
-		function savePinTypes(validatedForm) {
+		function sendPinTypes(data) {
+			if (!data) {
+				return;
+			}
+
 			$.nirvana.sendRequest({
 				controller: 'WikiaInteractiveMaps',
 				method: 'createPinTypes',
 				format: 'json',
-				data: validatedForm,
+				data: data,
 				callback: function(response) {
 					var data = response.results;
 

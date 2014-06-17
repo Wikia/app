@@ -1,14 +1,13 @@
 define(
 	'wikia.intMaps.createMap.modal', [
 		'jquery',
-		'wikia.querystring',
 		'wikia.window',
-		'wikia.intMap.createMap.utils',
+		'wikia.intMap.utils',
 		'wikia.intMap.createMap.tileSet',
 		'wikia.intMap.createMap.preview',
 		'wikia.intMap.createMap.pinTypes'
 	],
-	function($, qs, w, utils, tileSet, preview, pinTypes) {
+	function($, w, utils, tileSet, preview, pinTypes) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -17,7 +16,7 @@ define(
 			modalConfig = {
 				vars: {
 					id: 'intMapCreateMapModal',
-					classes: ['intMapCreateMapModal'],
+					classes: ['intMapCreateMapModal', 'intMapModal'],
 					size: 'medium',
 					content: '',
 					title: $.msg('wikia-interactive-maps-create-map-header'),
@@ -44,15 +43,8 @@ define(
 				cleanUpError: [
 					cleanUpError
 				],
-				mapCreated: [
-					/*function (data) {
-						showCreatedMap(data);
-					}*/
-				],
 				beforeClose: [
-					function () {
-						w.UserLogin.refreshIfAfterForceLogin();
-					}
+					utils.refreshIfAfterForceLogin
 				]
 			};
 
@@ -64,10 +56,13 @@ define(
 		function init(templates) {
 			modalConfig.vars.content = utils.render(templates[0], {});
 
-			createModal(modalConfig, function () {
+			utils.createModal(modalConfig, function (_modal) {
+				// set reference to modal component
+				modal = _modal;
+
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
-				modal.$errorContainer = $('.map-creation-error');
+				modal.$errorContainer = $('.map-modal-error');
 
 				utils.bindEvents(modal, events);
 
@@ -79,24 +74,6 @@ define(
 
 				modal.trigger('chooseTileSet');
 				modal.show();
-			});
-		}
-
-		/**
-		 * @desc creates modal component
-		 * @param {object} config - modal config
-		 * @param {function} cb - callback function called after creating modal
-		 */
-
-		function createModal(config, cb) {
-			require(['wikia.ui.factory'], function (uiFactory) {
-				uiFactory.init(['modal']).then(function (uiModal) {
-					uiModal.createComponent(config, function (component) {
-						// set reference to modal component
-						modal = component;
-						cb();
-					});
-				});
 			});
 		}
 
@@ -136,3 +113,4 @@ define(
 		};
 	}
 );
+

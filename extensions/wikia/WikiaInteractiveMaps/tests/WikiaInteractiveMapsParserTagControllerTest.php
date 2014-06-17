@@ -1,5 +1,5 @@
 <?php
-require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/WikiaInteractiveMapsParserTagController.class.php' );
+require_once( $IP . '/extensions/wikia/WikiaInteractiveMaps/controllers/WikiaInteractiveMapsParserTagController.class.php' );
 
 class WikiaInteractiveMapsParserTagControllerTest extends WikiaBaseTest {
 
