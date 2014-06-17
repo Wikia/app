@@ -28,8 +28,8 @@ class WikiaInteractiveMapsPoiController extends WikiaInteractiveMapsBaseControll
 	 * @throws BadRequestApiException
 	 */
 	public function editPoi() {
-		$mapId = $this->request->getInt( 'mapId' );
 		$poiId = $this->request->getInt( 'id' );
+		$mapId = $this->request->getInt( 'mapId' );
 		$name = $this->request->getVal( 'name' );
 		$this->setData( 'poiId', $poiId );
 		$this->setData( 'mapId', $mapId );
