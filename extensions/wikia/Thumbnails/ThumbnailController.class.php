@@ -3,6 +3,18 @@
 class ThumbnailController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	public function makeThumb() {
+		$thumb = $this->getVal( 'thumb' );
+		if ( $thumb instanceof ThumbnailVideo ) {
+			$handler = 'video';
+		} else {
+			$handler = 'image';
+		}
+
+		// Dispatch to the appropriate handler
+		$this->forward( __CLASS__, $handler );
+	}
+
 	/**
 	 * Thumbnail Template
 	 * @requestParam File file
@@ -248,24 +260,23 @@ class ThumbnailController extends WikiaController {
 	}
 
 	/**
-	 * @todo Implement image controller
+	 * Image controller
 	 */
 	public function image() {
 		/** @var File $file */
-		$file    = $this->getVal( 'file' );
-		$imgSrc  = $this->getVal( 'url', '' );
-		$width   = $this->getVal( 'width', 0 );
-		$height  = $this->getVal( 'height', 0 );
+		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', array() );
 
 		$this->mediaType = 'image';
 
-		$title = $file->getTitle();
+		$linkAttribs = $this->getImageLinkAttribs( $thumb, $options );
+		$attribs     = $this->getImageAttribs( $thumb, $options );
 
-		$linkAttribs = $this->getImageAnchorAttribs($options);
-		$imgAttribs = $this->getImageImgAttribs($options);
+		$this->linkAttribs = $linkAttribs;
+		$this->imgAttribs  = $attribs;
+	}
 
-		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+	protected function getImageLinkAttribs( MediaTransformOutput $thumb, array $options ) {
 
 		// Comes from hooks BeforeParserFetchFileAndTitle and only LinkedRevs subscribes
 		// to this and it doesn't seem to be loaded ... ask if used and add logging to see if used
@@ -280,6 +291,7 @@ class ThumbnailController extends WikiaController {
 				$linkAttribs['target'] = $options['custom-target-link'];
 			}
 		} elseif ( !empty( $options['custom-title-link'] ) ) {
+			/** @var Title $title */
 			$title = $options['custom-title-link'];
 			$linkAttribs = array(
 				'href' => $title->getLinkURL(),
@@ -288,105 +300,56 @@ class ThumbnailController extends WikiaController {
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( empty( $options['title'] ) ? null : $options['title'], $query );
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$linkAttribs = array( 'href' => $this->file->getURL() );
+			$linkAttribs = array( 'href' => $thumb->file->getURL() );
 		} else {
 			$linkAttribs = false;
 		}
 
+		return $linkAttribs;
+	}
+
+	protected function getImageAttribs( MediaTransformOutput $thumb, array $options ) {
+		/** @var Title $title */
+		$title = $thumb->file->getTitle();
+		$alt = empty( $options['alt'] ) ? $title->getText() : $options['alt'];
+
 		$attribs = array(
-			'alt' => $alt,
-			'src' => $this->url,
-			'width' => $this->width,
-			'height' => $this->height,
+			'alt'    => $alt,
+			'src'    => $thumb->url,
+			'width'  => $thumb->width,
+			'height' => $thumb->height,
 		);
+
 		if ( !empty( $options['valign'] ) ) {
 			$attribs['style'] = "vertical-align: {$options['valign']}";
 		}
+
 		if ( !empty( $options['img-class'] ) ) {
 			$attribs['class'] = $options['img-class'];
 		}
 
-		/**
-		 * Wikia change begin
-		 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-		 * @author Liz Lee
-		 */
-		$fileTitle = $this->file->getTitle();
-		if ( $fileTitle instanceof Title ) {
-			$attribs['data-image-name'] = htmlspecialchars($fileTitle->getText());
-			$attribs['data-image-key'] = htmlspecialchars(urlencode($fileTitle->getDBKey()));
+		$title = $thumb->file->getTitle();
+		if ( $title instanceof Title ) {
+			$attribs['data-image-name'] = htmlspecialchars( $title->getText() );
+			$attribs['data-image-key']  = htmlspecialchars( urlencode( $title->getDBKey() ) );
 		}
 
-		$html = $this->linkWrap( $linkAttribs, Xml::element( 'img', $attribs ) );
-
-
-
-		// FROM IMAGE TWEAKS
-
-		if (
-			empty( $options['custom-url-link'] ) &&
-			empty( $options['custom-title-link'] ) &&
-			!empty( $options['desc-link'] )
-		) {
-			if ( is_array( $linkAttribs ) ) {
-				if (
-					!empty( $options['custom-title-link'] ) &&
-					$options['custom-title-link'] instanceof Title
-				) {
-					// Caption is set but image is not a "thumb" so the caption gets set as the title attribute
-					$title = $options['custom-title-link'];
-					$linkAttribs['title'] = $title->getFullText();
-				} elseif ( !empty( $options['file-link'] ) && empty( $options['desc-link'] ) ) {
-					$linkAttribs['class'] = empty($linkAttribs['class']) ? ' lightbox' : $linkAttribs['class'] . ' lightbox';
-				}
-
-				//override any previous value if title is passed as an option
-				if ( !empty( $options['title'] ) ) {
-					$linkAttribs['title'] = $options['title'];
-				}
-			}
-
-			$contents = Xml::element( 'img', $imgAttribs );
-
-			$html = ( $linkAttribs ) ? Xml::tags( 'a', $linkAttribs, $contents ) : $contents;
-
-			// END FROM IMAGE TWEAKS
-		}
-
-		// Set output variables here
-		// $this->foo = $foo;
-	}
-
-/////////////// DON'T USE
-
-	/**
-	 * Wrap some XHTML text in an anchor tag with the given attributes
-	 *
-	 * @param $linkAttribs array
-	 * @param $contents string
-	 *
-	 * @return string
-	 */
-	protected function linkWrap( $linkAttribs, $contents ) {
-		if ( $linkAttribs ) {
-			return Xml::tags( 'a', $linkAttribs, $contents );
-		} else {
-			return $contents;
-		}
+		return $attribs;
 	}
 
 	/**
+	 * @param MediaTransformOutput $thumb
 	 * @param $title string
-	 * @param $params array
+	 * @param array|string $params array
 	 * @return array
 	 */
-	public function getDescLinkAttribs( $title = null, $params = '' ) {
-		$query = $this->page ? ( 'page=' . urlencode( $this->page ) ) : '';
+	public function getDescLinkAttribs( MediaTransformOutput $thumb, $title = null, $params = '' ) {
+		$query = $thumb->page ? ( 'page=' . urlencode( $thumb->page ) ) : '';
 		if( $params ) {
 			$query .= $query ? '&'.$params : $params;
 		}
 		$attribs = array(
-			'href' => $this->file->getTitle()->getLocalURL( $query ),
+			'href' => $thumb->file->getTitle()->getLocalURL( $query ),
 			'class' => 'image',
 		);
 		if ( $title ) {
@@ -394,9 +357,6 @@ class ThumbnailController extends WikiaController {
 		}
 		return $attribs;
 	}
-
-///////////////// DON'T USE
-
 
 	/**
 	 * Article figure tags with thumbnails inside

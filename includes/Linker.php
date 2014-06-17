@@ -828,7 +828,6 @@ class Linker {
 		$origHTML = null;
 
 		/* Wikia change/refactor start - @author Liz */
-// HERE
 		// TODO: Look into making this a separate function
 		if ( !$exists ) {
 			$origHTML = self::makeBrokenImageLinkObj( $title, $fp['title'], '', '', '', $time == true );
@@ -836,17 +835,27 @@ class Linker {
 			$origHTML = htmlspecialchars( wfMsg( 'thumbnail_error', '' ) );
 		} else {
 			$params = array(
-				'alt' => $fp['alt'],
-				'title' => $fp['title'],
-				'img-class' => 'thumbimage',
-				'align' => $fp['align'],
+				'alt'        => $fp['alt'],
+				'title'      => $fp['title'],
+				'img-class'  => 'thumbimage',
+				'align'      => $fp['align'],
 				'outerWidth' => $width,
-				'file' => $file,
-				'url' => $url,
+				'file'       => $file,
+				'url'        => $url,
 			);
 
 			$params = self::getImageLinkMTOParams( $fp, $query ) + $params;
-			$origHTML = $thumb->toHtml( $params );
+
+			// Split rendering between 'wikiamobile' which uses the old non-templated path
+			// vs everything else which should use the new templated controller
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$origHTML = $thumb->toHtml( $params );
+			} else {
+				$origHTML = F::app()->renderView( 'ThumbnailController', 'makeThumb', [
+					'thumb'   => $thumb,
+					'options' => $params,
+				] );
+			}
 		}
 
 		$isMobile = F::app()->checkSkin( 'wikiamobile' );

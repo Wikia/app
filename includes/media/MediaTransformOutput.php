@@ -237,21 +237,6 @@ class ThumbnailImage extends MediaTransformOutput {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
 
-		// Migrate to new system which uses a template instead of this toHtml method
-		if ( !empty( $options['useTemplate'] ) ) {
-			$html = F::app()->renderView( 'ThumbnailController', 'video',  [
-				'file' => $this->file,
-				'url' => $this->url,
-				'width' => $this->width,
-				'height' => $this->height,
-				'options' => $options,
-			] );
-
-			wfProfileOut( __METHOD__ );
-
-			return $html;
-		}
-
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
 		$query = empty( $options['desc-query'] )  ? '' : $options['desc-query'];
