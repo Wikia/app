@@ -441,6 +441,7 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	public function createPinTypes() {
 		$this->setCreationData( 'mapId', $this->request->getInt( 'mapId' ) );
 		$this->setCreationData( 'pinTypeNames', $this->request->getArray( 'pinTypeNames' ) );
+		$this->setCreationData( 'pinTypeParents', $this->request->getArray( 'pinTypeParents' ) );
 
 		$this->validatePinTypesCreation();
 
@@ -493,12 +494,19 @@ class WikiaInteractiveMapsController extends WikiaSpecialPageController {
 	private function createPinTypesFromArray() {
 		$mapId = $this->getCreationData( 'mapId' );
 		$pinTypesNames = $this->getCreationData( 'pinTypeNames' );
+		$pinTypesParents = $this->getCreationData( 'pinTypeParents' );
+		$pinTypesNamesLength = count($pinTypesNames);
+		//TODO
+		$defaultParent = 1;
 
 		$createdPinTypes = 0;
-		foreach( $pinTypesNames as $name ) {
+		for ( $i = 0; $i < $pinTypesNamesLength; $i++ ) {
+			$pinTypeParent = (!empty($pinTypesParents[$i])) ? $pinTypesParents[$i] : $defaultParent;
+
 			$response = $this->mapsModel->savePinType( [
 				'map_id' => $mapId,
-				'name' => $name,
+				'name' => $pinTypesNames[$i],
+				'parent_poi_category_id' => $pinTypeParent,
 				'created_by' => $this->getCreationData( 'createdBy' ),
 			] );
 
