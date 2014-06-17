@@ -1,4 +1,4 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adConfig', [
 	'ext.wikia.adEngine.provider.null',
 
 	// adSlots
-	'ext.wikia.adEngine.slot.topInContentBoxad'
+	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
 
 ], function (
 	// regular dependencies
@@ -147,7 +147,9 @@ define('ext.wikia.adEngine.adConfig', [
 		return adProviderLater;
 	}
 
-	topInContentBoxad.init();
+	if (topInContentBoxad) {
+		topInContentBoxad.init();
+	}
 
 	return {
 		getDecorators: function () { return decorators; },

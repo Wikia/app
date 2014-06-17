@@ -7,9 +7,9 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.topInContentBoxad',
-		result = null,
-
-		slotName = 'TOP_IN_CONTENT_BOXAD';
+		slotName = 'TOP_IN_CONTENT_BOXAD',
+		articleHeightMaxDelta = 125,
+		result = null;
 
 
 	function doesNotBreakContent(slot) {
@@ -48,13 +48,13 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 			return result;
 		}
 
-		adPlace.setAttribute('style', 'display:block;height:250px;width:300px');
+		adPlace.className += ' top-right-ads-in-content';
 		wikiaArticleCloneDiv.style.position = 'absolute';
 		wikiaArticleCloneDiv.style.visibility = 'hidden';
 
 		wikiaArticleDiv.parentNode.insertBefore(fragment, wikiaArticleDiv);
 
-		if (wikiaArticleDiv.offsetHeight + 125 > wikiaArticleCloneDiv.offsetHeight) {
+		if (wikiaArticleDiv.offsetHeight + articleHeightMaxDelta > wikiaArticleCloneDiv.offsetHeight) {
 			result = true;
 			adPlace = wikiaArticleDiv.querySelector('.home-top-right-ads');
 			adPlace.className += ' top-right-ads-in-content';
