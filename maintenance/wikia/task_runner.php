@@ -10,6 +10,10 @@ $optionsWithArgs = [
 ];
 require_once(__DIR__."/../commandLine.inc");
 
+\Wikia\Logger\WikiaLogger::instance()->pushContext([
+	'task_id' => $options['task_id']
+]);
+
 $runner = new TaskRunner($options['task_id'], $options['task_list'], $options['call_order'], $options['created_by']);
 
 ob_start();
