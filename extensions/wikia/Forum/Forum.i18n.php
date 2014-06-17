@@ -662,6 +662,7 @@ $messages['az'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Agilight
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -806,6 +807,51 @@ $messages['ca'] = array(
 	'forum-thread-reply-placeholder' => 'Deixar una resposta',
 	'forum-thread-reply-post' => 'Contesta',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
+);
+
+/** Czech (čeština)
+ * @author Darth Daron
+ */
+$messages['cs'] = array(
+	'forum-forum-title' => 'Fórum',
+	'forum-active-threads' => '$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}} o: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|vlákno<br />na tomto fóru|vlákna<br />na tomto fóru|vláken<br />na tomto fóru}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|aktivní<br />diskuze|aktivní<br />diskuze|aktivních<br />diskuzí}}</span>',
+	'forum-specialpage-heading' => 'Fórum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Můžete to upravit<span>',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|vlákno|vlákna|vláken}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|příspěvek|příspěvky|příspěvků}}',
+	'forum-specialpage-board-lastpostby' => 'Poslední příspěvek od',
+	'forum-specialpage-policies-edit' => 'Upravit',
+	'forum-specialpage-policies' => 'Pravidla na fóra/FAQ',
+	'forum-board-topics' => 'Témata',
+	'forum-board-thread-follow' => 'Sledovat',
+	'forum-board-thread-following' => 'Sledováno',
+	'forum-board-new-message-heading' => 'Začít novou diskusi',
+	'forum-thread-reply-placeholder' => 'Odpovědět',
+	'forum-thread-reply-post' => 'Odpovědět',
+	'forum-sorting-option-newest-replies' => 'Poslední odpovědi',
+	'forum-sorting-option-popular-threads' => 'Nejpopulárnější',
+	'forum-sorting-option-most-replies' => 'Nejaktivnější za 7 dní',
+	'forum-sorting-option-newest-threads' => 'Nejnovější vlákna',
+	'forum-sorting-option-oldest-threads' => 'Nejstarší vlákna',
+	'forum-discussion-post' => 'Poslat',
+	'forum-discussion-highlight' => 'Zvýraznit tuto diskuzi',
+	'forum-discussion-placeholder-title' => 'O čem chcete mluvit?',
+	'forum-discussion-placeholder-message-short' => 'Napsat novou zprávu',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|odpověděl|odpověděla}} na vaše vlákno v subfóru $3',
+	'forum-notification-user2-reply-to-your' => '$1 a $2 odpověděli na vaše vlákno v subfóru $3',
+	'forum-notification-user3-reply-to-your' => '$1 a další odpověděli na vaše vlákno v subfóru $3',
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|odpověděl|odpověděla}} v subfóru $3',
+	'forum-notification-user2-reply-to-someone' => '$1 a $2 odpověděli v subfóru $3',
+	'forum-notification-user3-reply-to-someone' => '$1 a další odpověděli v subfóru $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|napsal|napsala}} novou zprávu v subfóru $2',
+	'forum-mail-notification-html-greeting' => 'Ahoj $1,',
+	'forum-mail-notification-html-button' => 'Zobrazit konverzaci',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-activity-module-heading' => 'Aktivita fóra',
+	'forum-related-module-heading' => 'Související vlákna',
 );
 
 /** German (Deutsch)
@@ -1930,6 +1976,13 @@ $messages['kn'] = array(
 	'forum-thread-reply-post' => 'ಉತ್ತರಿಸಿ',
 );
 
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'forum-forum-title' => '포럼',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -2637,13 +2690,14 @@ ___________________________________________<br />
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author TheGabrielZaum
+ * @author Tuliouel
  */
 $messages['pt-br'] = array(
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}} sobre: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Tópico<br />neste Fórum|Tópicos<br />neste Fórum}}</span>',
-	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Discussão<br />Ativa|Discussões<br />Ativas}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Ativa<br />Discussão|Ativas<br />Discussões}}</span>',
 	'forum-specialpage-heading' => 'Fórum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Você pode editar isto.<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|tópico|tópicos}}',
@@ -3227,6 +3281,14 @@ ___________________________________________<br />
 $messages['tr'] = array(
 	'forum-specialpage-policies-edit' => 'Düzenle',
 	'forum-specialpage-policies' => 'Forum İlkeleri / SSS',
+);
+
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'forum-forum-title' => 'Шуулган',
+	'forum-specialpage-heading' => 'Шуулган',
 );
 
 /** Ukrainian (українська)
@@ -3822,6 +3884,7 @@ $messages['zh-hans'] = array(
 	'forum-header-total-threads' => '<em>$1</em><span>在此论坛上<br />条帖子</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>条活跃的<br />讨论</span>',
 	'forum-specialpage-heading' => '论坛',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading 您可以编辑它<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|帖子|帖子}}',
 	'forum-specialpage-board-lastpostby' => '最后发帖者',
@@ -3879,9 +3942,39 @@ $messages['zh-hans'] = array(
 	'forum-notification-user2-reply-to-your' => '$1和$2在$3的讨论版上回复了你',
 	'forum-notification-user2-reply-to-someone' => '$1和$2在$3的讨论板上做出了回复',
 	'forum-notification-user3-reply-to-someone' => '$1等人$3讨论版上做出了回复',
+	'forum-notification-newmsg-on-followed-wall' => '$1在$2板块发送了一条消息',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
 	'forum-mail-notification-html-greeting' => 'Hi $1，',
 	'forum-mail-notification-html-button' => '查看会话',
 	'forum-mail-notification-subject' => '$1——$2',
+	'forum-mail-notification-body' => '嗨！$WATCHER
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+见对话：（$MESSAGE_LINK）
+
+Wikia团队
+
+___________________________________________
+* 在社群中心寻求帮助和建议：http://community.wikia.com
+* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => '嗨！$WATCHER
+<p>$SUBJECT。</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">见对话</a></p>
+<p>Wikia团队</p>
+___________________________________________<br />
+* 在社群中心寻求帮助和建议：http://community.wikia.com
+* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '在$1',
 	'forum-wiki-activity-msg-name' => '$1板面',
 	'forum-activity-module-heading' => '论坛活动',
@@ -3891,25 +3984,37 @@ $messages['zh-hans'] = array(
 	'forum-contributions-line' => '$5（$6|$7）$8<a href="$1">$2</a>在<a href="$3">$4板面</a>',
 	'forum-recentchanges-new-message' => '在<a href="$1">$2板面</a>',
 	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-recentchanges-removed-thread' => '已从[[$3|$4 板块]]移除回复“[[$1|$2]]”',
 	'forum-recentchanges-deleted-reply-title' => '一个主题',
 	'forum-recentchanges-namespace-selector-message-wall' => '论坛讨论区',
+	'forum-recentchanges-thread-group' => '$1 在<a href="$2">$3 板块</a>',
 	'forum-recentchanges-history-link' => '板面历史',
 	'forum-recentchanges-thread-history-link' => '帖子历史',
-	'forum-board-history-title' => '委员会历史',
+	'forum-board-history-title' => '板面历史',
 	'forum-specialpage-oldforum-link' => '旧论坛存档',
 	'forum-admin-page-breadcrumb' => '管理员面板管理',
-	'forum-admin-create-new-board-label' => '创建新面板',
-	'forum-admin-create-new-board-modal-heading' => '创建新面板',
+	'forum-admin-create-new-board-label' => '创建新板面',
+	'forum-admin-create-new-board-modal-heading' => '创建新板面',
 	'forum-admin-create-new-board-title' => '板块标题',
 	'forum-admin-create-new-board-description' => '版块描述',
+	'forum-admin-edit-board-modal-heading' => '编辑板块：$1',
+	'forum-admin-edit-board-title' => '板块标题',
+	'forum-admin-edit-board-description' => '版块描述',
+	'forum-admin-delete-and-merge-board-modal-heading' => '删除板块：$1',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
+	'forum-autoboard-title-1' => '一般讨论',
 	'forum-autoboard-title-2' => '新闻和公告',
 	'forum-autoboard-body-2' => '重大消息信息',
+	'forum-autoboard-title-3' => '$1上的新鲜事',
 	'forum-autoboard-title-4' => '问答',
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
 	'forum-board-destination-empty' => '（请选择面板）',
+	'forum-board-title-validation-length' => '板块名应至少4个字符长',
+	'forum-board-title-validation-exists' => '已存在同名板块',
+	'forum-board-validation-count' => '板块最多可以有$1个',
+	'forum-board-id-validation-missing' => '板块id丢失',
 	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
 	'forum-related-discussion-heading' => '关于$1的讨论',

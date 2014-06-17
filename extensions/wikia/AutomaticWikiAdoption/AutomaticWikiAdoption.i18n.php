@@ -1355,15 +1355,27 @@ Instrumentos utile:
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'wikiadoption' => 'Adopsi wiki otomatis',
+	'wikiadoption-desc' => 'Ekstensien AutomaticWikiAdoption untuk MediaWiki',
+	'wikiadoption-header' => 'Mengadopsi wiki ini',
 	'wikiadoption-button-adopt' => 'Ya, saya ingin mengadopsi {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Cari tahu lebih lanjut!',
+	'wikiadoption-description' => '$1, siap untuk mengadopsi {{SITENAME}}?
+<br><br>
+Belum ada pengurus aktif pada {{SITENAME}} untuk sementara, dan kami sedang mencari pemimpin baru untuk membantu tumbuh kembang komunitas dan konten wiki ini! Kami berharap Anda mau menjadi pengurus untuk {{SITENAME}}.
+<br><br>
+Dengan mengadopsi wiki, Anda akan dipromosikan menjadi pengurus dan birokrat yang diberikan peralatan khusus untuk mengelola komunitas dan konten wiki. Anda juga akan mampu mengangkat pengurus baru untuk membantu, menghapus, rollback, bergerak dan melindungi halaman.
+<br><br>
+Apakah Anda siap untuk membantu kami dalam {{SITENAME}}?', # Fuzzy
 	'wikiadoption-know-more-header' => 'Ingin mengetahui lebih banyak?',
 	'wikiadoption-know-more-description' => 'Periksalah pranala ini untuk informasi lebih lanjut. Dan tentu saja, silakan hubungi kami jika Anda memiliki pertanyaan!',
 	'wikiadoption-adoption-successed' => 'Selamat! Anda sekarang adalah pengurus di wiki ini!',
 	'wikiadoption-adoption-failed' => 'Kami mohon maaf. Kami telah mencoba untuk menjadikan Anda pengurus, tetapi ini tidak berjalan. Silakan [http://community.wikia.com/Special:Contact hubungi kami], dan kami akan mencoba untuk membantu Anda.',
+	'wikiadoption-not-allowed' => 'Mohon maaf. Anda belum bisa mengadopsi wiki ini sekarang.',
+	'wikiadoption-not-enough-edits' => 'Ups! Anda perlu memiliki lebih dari 10 suntingan untuk mengadopsi wiki ini.',
 	'wikiadoption-adopted-recently' => 'Ups! Anda baru-baru ini telah mengadopsi wiki lain. Anda akan perlu menunggu beberapa saat sebelum Anda dapat mengadopsi sebuah wiki baru.',
 	'wikiadoption-log-reason' => 'Adopsi Wiki Otomatis',
 	'wikiadoption-notification' => '{{SITENAME}} tersedia untuk diadopsi. Tertarik untuk menjadi pemimpin di sini? Adopsi wiki ini untuk memulai! $2',
@@ -1386,6 +1398,7 @@ Jika Anda memerlukan bantuan untuk merawat wiki ini, Anda juga dapat mengizinkan
 Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan dalam daftar ini.',
+	'wikiadoption-mail-second-subject' => '#WIKINAME akan segera disiapkan untuk mengadopsi',
 	'wikiadoption-mail-second-content' => 'Hai $1,
 Oh, tidak! Sudah hampir 60 hari sejak adanya pengurus aktif pada #WIKINAME. Penting bahwa pengurus secara teratur muncul dan berkontribusi sehingga wiki dapat berlanjut untuk berjalan dengan mulus.<br /><br />
 
@@ -1402,6 +1415,7 @@ Karena sudah begitu banyak hari sejak kemunculan pengurus saat ini, #WIKINAME ki
 Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan dalam daftar ini.',
+	'wikiadoption-mail-adoption-subject' => '#WIKINAME telah diadopsi',
 	'wikiadoption-mail-adoption-content' => 'Hai $1,
 
 #WIKINAME telah diadopsi. Wiki tersedia untuk diadopsi ketika tidak ada pengurus saat ini yang aktif hingga 60 hari atau lebih.
@@ -1420,6 +1434,7 @@ Pengguna pengadopsi #WIKINAME kini akan memiliki status birokrat dan pengurus. J
 Tim Wikia<br /><br />
 
 Anda dapat <a href="$3">berhenti berlangganan</a> dari perubahan pada daftar ini.',
+	'tog-adoptionmails' => 'Email saya jika  $1  akan menjadi tersedia untuk pengguna lain untuk mengadopsi',
 	'wikiadoption-pref-label' => 'Mengubah preferensi ini hanya akan mempengaruhi surel dari $1.',
 	'wikiadoption-welcome-header' => 'Selamat! Anda telah mengadopsi {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Anda sekarang adalah birokrat di wiki ini. Dengan status baru Anda sekarang Anda memiliki akses ke seluruh peralatan yang akan membantu Anda mengelola {{SITENAME}}.
@@ -1437,11 +1452,14 @@ Peralatan yang Membantu:
  * @author Darth Kule
  * @author Gianfranco
  * @author Minerva Titani
+ * @author PeppeAeco
  * @author Ximo17
  */
 $messages['it'] = array(
 	'wikiadoption' => 'Adozione Automatica di Wiki',
+	'wikiadoption-desc' => "Un'estensione di AutomaticWikiAdoption per MediaWiki",
 	'wikiadoption-header' => 'Adotta questa wiki',
+	'wikiadoption-button-adopt' => 'Sì, voglio adottare {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Per saperne di più!',
 	'wikiadoption-know-more-header' => 'Vuoi saperne di più?',
 	'wikiadoption-know-more-description' => 'Per maggiori informazioni clicca sui seguenti links. Ovviamente, per qualsiasi problema non esitare a contattarci!',
@@ -1455,6 +1473,7 @@ $messages['it'] = array(
 	'tog-adoptionmails' => "Mandami una mail se $1 diventa disponibile per l'adozione da parte di altri utenti",
 	'tog-adoptionmails-v2' => "...se la wiki diventa disponibile per l'adozione da parte di altri utenti",
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
+	'wikiadoption-welcome-header' => 'Complimenti! Tu hai adottato {{SITENAME}}!',
 );
 
 /** Japanese (日本語)
@@ -1681,8 +1700,8 @@ $messages['mk'] = array(
 	'wikiadoption-know-more-header' => 'Сакате да дознаете повеќе?',
 	'wikiadoption-know-more-description' => 'За повеќе информации, погледајте ги овие врски. И секако, најслободно обратете ни се ако имате прашања!',
 	'wikiadoption-adoption-successed' => 'Честитаме! Сега сте администратор на ова вики!',
-	'wikiadoption-adoption-failed' => 'Нажалост, се обидовме да ве назначиме за администратор, но не успеавме. [http://community.wikia.com/Special:Contact Контактирајте нè], и ќе се обидеме да ви помогнеме.',
-	'wikiadoption-not-allowed' => 'Нажалост, во моментов не можете да го посвоите ова вики.',
+	'wikiadoption-adoption-failed' => 'За жал, се обидовме да ве назначиме за администратор, но не успеавме. [http://community.wikia.com/Special:Contact Контактирајте нè], и ќе се обидеме да ви помогнеме.',
+	'wikiadoption-not-allowed' => 'За жал, во моментов не можете да го посвоите ова вики.',
 	'wikiadoption-not-enough-edits' => 'Упс! Мора да имате барем 10 уредувања за да можете да го присвоите викито.',
 	'wikiadoption-adopted-recently' => 'Упс! Неодамна имате посвоено друго вики. Ќе треба да почекате пред да можете да посвоите уште едно.',
 	'wikiadoption-log-reason' => 'Автоматско посвојување на вики',
