@@ -152,7 +152,7 @@ class CrossWikiCoreTest extends BaseTest
 		$expected = [ 
 				'id' => 123, 'sitename_txt' => 'foo wiki', 'lang_s' => 'en', 'hub_s' => 'Gaming', 
 				'created_dt' => '11:11:11T2013-01-01Z', 'touched_dt' => '11:11:11T2013-01-01Z', 'url' => 'http://foo.wikia.com/', 'dbname_s' => 'foo',
-				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname', 'domains_txt' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ],
+				'hostname_s' => 'hostname', 'hostname_txt' => 'hostname', 'all_domains_mv_wd' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ], 'domains_txt' => [ 'bar.wikia.com', 'baz.wikia.com', 'foo.wikia.com' ],
 				'wiki_pagetitle_txt' => 'Foo Wiki - Bar, Baz and More!',
 				];
 		$this->proxyClass( 'WikiFactory', $mockWiki, 'getWikiById' );

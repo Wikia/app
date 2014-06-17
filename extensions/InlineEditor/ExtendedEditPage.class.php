@@ -13,6 +13,8 @@ class ExtendedEditPage extends EditPage {
 	public function initInlineEditor( $inlineEditor ) {
 		global $wgRequest, $wgOut;
 
+		wfProfileIn( __METHOD__ );
+
 		$intro = '';
 
 		$this->importFormData( $wgRequest );
@@ -77,6 +79,7 @@ class ExtendedEditPage extends EditPage {
 				// first init some other stuff (below)
 			}
 			else {
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 		}
@@ -84,6 +87,7 @@ class ExtendedEditPage extends EditPage {
 			// attemptSave does a redirect *itself* when it's succesful!
 			$this->attemptSave();
 			if ( $this->isConflict ) {
+				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			else {
@@ -91,6 +95,7 @@ class ExtendedEditPage extends EditPage {
 			}
 		}
 		else {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -99,6 +104,7 @@ class ExtendedEditPage extends EditPage {
 
 		if ( $this->showHeader() === false ) {
 			$wgOut->clearHTML();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -106,6 +112,8 @@ class ExtendedEditPage extends EditPage {
 		$wgOut->clearHTML();
 
 		$inlineEditor->setIntro( $intro );
+
+		wfProfileOut( __METHOD__ );
 
 		return true;
 	}

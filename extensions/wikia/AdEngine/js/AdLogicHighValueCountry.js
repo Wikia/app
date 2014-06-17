@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window'], function (window) {
+define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window', 'wikia.instantGlobals'], function (window, globals) {
 	'use strict';
 
 	var highValueCountries,
@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.window'], function 
 		'US': 3
 	};
 
-	highValueCountries = window.wgHighValueCountries || defaultHighValueCountries;
+	highValueCountries = globals.wgHighValueCountries ?  globals.wgHighValueCountries : defaultHighValueCountries;
 
 	isHighValueCountry = function (country) {
 		if (country && highValueCountries) {

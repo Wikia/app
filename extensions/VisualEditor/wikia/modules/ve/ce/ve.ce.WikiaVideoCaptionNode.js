@@ -61,7 +61,10 @@ ve.ce.WikiaVideoCaptionNode.prototype.onSplice = function () {
 	if ( !this.$title ) {
 		this.$title = this.createTitle();
 	}
-	this.$title.insertAfter( this.$details );
+	// insert title before caption
+	if ( this.children.length ) {
+		this.children[0].$element.before( this.$title );
+	}
 };
 
 /* Registration */

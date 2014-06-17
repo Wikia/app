@@ -15,7 +15,7 @@
 			parent::setUp();
 		}
 
-		protected function setUpMock( $missingArticleIdMessage ) {
+		protected function setUpMock() {
 			// mock cache
 			$mock_cache = $this->getMock( 'stdClass', [ 'get', 'set', 'delete' ] );
 			$mock_cache->expects( $this->any() )
@@ -30,46 +30,43 @@
 
 			$this->mockGlobalVariable( 'wgVideosModuleBlackList', self::$videoBlacklist );
 			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
-
-			$this->mockMessage( 'videosmodule-error-no-articleId', $missingArticleIdMessage );
-			$this->mockMessage( 'videosmodule-title-default', 'title' );
 		}
-
 
 		/**
-		 * Test Video Module Controller
-		 * @dataProvider videosModuleDataProvider
+		 * Test that both duplicate videos and videos found in the wgVideosModuleBlackList are filtered out when
+		 * creating the list of videos to be shown in the videos module
+		 * @dataProvider testAddToListDataProvider
 		 */
-		public function testVideosModule( $requestParams, $expectedData ) {
-			$this->setUpMock( $expectedData['msg'] );
+		public function testAddToList( $videoData ) {
+			$this->setUpMock();
 
-			$response = $this->app->sendRequest( 'VideosModule', 'index', $requestParams );
-
-			$responseData = $response->getData();
-			$this->assertEquals( $expectedData['result'], $responseData['result'] );
-			$this->assertEquals( $expectedData['msg'], $responseData['msg'] );
-			$this->assertEquals( $expectedData['videos'], $responseData['videos'] );
+			$module = new VideosModule();
+			$videos = [];
+			foreach ( $videoData as $video ) {
+				$module->addToList( $videos, $video );
+			}
+			// Test if blacklisted videos are filtered out
+			$this->assertArrayNotHasKey(self::$videoBlacklist[0], $videos);
+			// Test if duplicate videos are filtered out
+			$this->assertEquals(1, array_count_values($videos)["Video_2"]);
 		}
 
-		public function videosModuleDataProvider() {
-			$requestParams1 = [
-				'articleId' => null,
-				'limit' => null,
-				'local' => null,
-				'sort' => null,
-			];
-
-			$expectedData1 = [
-				'result' => 'error',
-				'msg' => 'Article no Id message',
-				'videos' => [],
-			];
-
+		public function testAddToListDataProvider() {
 			return [
-				// Related videos + no article id
-				[ $requestParams1, $expectedData1 ],
+				[
+					[
+						"Video_1",
+						"Video_2",
+						self::$videoBlacklist[0]
+					],
+					[
+						"Video_1",
+						"Video_2",
+						"Video_2",
+						"Video_3"
+					]
+				]
 			];
 		}
-
 	}
 

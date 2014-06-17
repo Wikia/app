@@ -57,6 +57,7 @@ class ArticlesApiController extends WikiaApiController {
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
+	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -99,6 +100,7 @@ class ArticlesApiController extends WikiaApiController {
 					});
 				}
 			} else {
+				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
 		}
@@ -112,6 +114,20 @@ class ArticlesApiController extends WikiaApiController {
 			false,
 			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
+
+		if ( empty( $articles ) ) {
+			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
+			if ( $fallbackDate ) {
+				$articles = DataMartService::getTopArticlesByPageview(
+					$this->wg->CityId,
+					$ids,
+					$namespaces,
+					false,
+					self::MAX_ITEMS + 1, //compensation for Main Page
+					$fallbackDate
+				);
+			}
+		}
 
 		$collection = [];
 
@@ -262,6 +278,7 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( !empty( $langs ) &&  count($langs) > self::LANGUAGES_LIMIT) {
+				wfProfileOut( __METHOD__ );
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
@@ -278,6 +295,7 @@ class ArticlesApiController extends WikiaApiController {
 			$wikisCount = count( $wikis );
 
 			if ( $wikisCount < 1 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
@@ -328,6 +346,7 @@ class ArticlesApiController extends WikiaApiController {
 			wfProfileOut( __METHOD__ );
 
 			if ( $found == 0 ) {
+				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
 
@@ -892,6 +911,74 @@ class ArticlesApiController extends WikiaApiController {
 		$jsonSimple = $jsonFormatService->getSimpleFormatForArticle( $article );
 
 		$this->setResponseData( $jsonSimple, 'images', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+	}
+
+	public function getAsJson() {
+		if ( $this->wg->EnableArticleAsJsonApi ) {
+			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+
+			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+			}
+
+			if ( empty( $articleId ) && empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'You need to pass title or id of an article' );
+			}
+
+			if ( !empty( $articleId ) ) {
+				$article = Article::newFromID( $articleId );
+			} else {
+				$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+				if ( $title instanceof Title && $title->exists() ) {
+					$article = Article::newFromTitle( $title, RequestContext::getMain() );
+				}
+			}
+
+			if ( empty( $article ) ) {
+				throw new NotFoundApiException( "Unable to find any article" );
+			}
+
+			//Response is based on wikiamobile skin as this already removes inline style
+			//and make response smaller
+			RequestContext::getMain()->setSkin(
+				Skin::newFromKey( 'wikiamobile' )
+			);
+
+			global $wgArticleAsJson;
+			$wgArticleAsJson = true;
+
+			$parsedArticle = $article->getParserOutput();
+
+			$articleContent = json_decode($parsedArticle->getText());
+
+			$wgArticleAsJson = false;
+			$categories = [];
+
+			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+				$categories[] = [
+					"title" => $category,
+					"url" => Title::newFromText($category, NS_CATEGORY)->getLocalURL()
+				];
+			}
+
+			$result = [
+				'payload' => [
+					'title' => $parsedArticle->getDisplayTitle(),
+					'article' => $articleContent->content,
+					'user' => $article->getUser(),
+					'media' => $articleContent->media,
+					'users' => $articleContent->users,
+					'categories' => $categories,
+				],
+				'baseUrl' => $this->wg->Server
+			];
+
+			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		} else {
+			throw new BadRequestApiException( 'This entry point is disabled' );
+		}
 	}
 
 	public function getPopular() {

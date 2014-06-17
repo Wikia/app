@@ -25,6 +25,7 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	OO.ui.Toolbar.call( this, ve.ui.toolFactory, ve.ui.toolGroupFactory, options );
 
 	// Properties
+	this.inContextMenu = options.inContextMenu || false;
 	this.surface = surface;
 	this.floating = false;
 	this.floatable = false;
@@ -113,7 +114,8 @@ ve.ui.Toolbar.prototype.onWindowScroll = function () {
  * @param {jQuery.Event} e Window scroll event
  */
 ve.ui.Toolbar.prototype.onWindowResize = function () {
-	var update = {},
+	var parent, parentOffset,
+		update = {},
 		offset = this.elementOffset;
 
 	// Update right offset after resize (see #float)
@@ -121,7 +123,12 @@ ve.ui.Toolbar.prototype.onWindowResize = function () {
 	update.offset = offset;
 
 	if ( this.floating ) {
-		update.css = { 'right': offset.right };
+		$parent = this.$element.parent();
+		parentOffset = $parent.offset();
+		update.css = {
+			'left': parentOffset.left,
+			'right': this.$window.width() - $parent.outerWidth() - parentOffset.left
+		};
 		this.$bar.css( update.css );
 	}
 
@@ -282,12 +289,17 @@ ve.ui.Toolbar.prototype.destroy = function () {
  * @fires position
  */
 ve.ui.Toolbar.prototype.float = function () {
-	var update;
+	var update, parent, parentOffset;
 	if ( !this.floating ) {
 		// When switching into floating mode, set the height of the wrapper and
 		// move the bar to the same offset as the in-flow element
+		parent = this.$element.parent();
+		parentOffset = parent.offset();
 		update = {
-			'css': { 'left': this.elementOffset.left, 'right': this.elementOffset.right },
+			'css': {
+				'left': parentOffset.left,
+				'right': this.$window.width() - parent.outerWidth() - parentOffset.left
+			},
 			'floating': true
 		};
 		this.$element
@@ -350,4 +362,20 @@ ve.ui.Toolbar.prototype.disableFloatable = function () {
 	}
 
 	this.floatable = false;
+};
+
+/**
+ * Gets value of this.inContextMenu
+ * @returns {boolean}
+ */
+ve.ui.Toolbar.prototype.isInContextMenu = function () {
+	return this.inContextMenu;
+};
+
+/**
+ * Return floating state
+ * @returns {boolean}
+ */
+ve.ui.Toolbar.prototype.isFloating = function () {
+	return this.floating;
 };

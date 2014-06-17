@@ -13,7 +13,6 @@ $dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
-$wgAutoloadClasses['ApiPhotoAttribution'] = $dir . 'ApiPhotoAttribution.php';
 $wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
 $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
@@ -22,7 +21,6 @@ $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 /* API Modules */
 
 $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
-$wgAPIModules['apiphotoattribution'] = 'ApiPhotoAttribution';
 $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
@@ -95,6 +93,8 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
+			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
+			've/ui/tools/ve.ui.WikiaMWLinkInspectorTool.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
@@ -169,3 +169,10 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 $wgHooks['GetPreferences'][] = 'VisualEditorWikiaHooks::onGetPreferences';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+
+/* Configuration */
+
+// Disable VE for blog namespaces
+if ( defined( 'NS_BLOG_ARTICLE' ) && defined( 'NS_BLOG_ARTICLE_TALK' ) ) {
+	$wgVisualEditorNamespaces = array_diff( $wgVisualEditorNamespaces, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) );
+}

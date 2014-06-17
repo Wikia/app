@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,
+		'WIKIA_BAR_BOXAD_2': true,
 		'GPT_FLUSH': true
 	};
 

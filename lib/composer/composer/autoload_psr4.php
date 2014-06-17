@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
+    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'FluentSql\\' => array($vendorDir . '/wikia/fluent-sql-php/src'),
 );

@@ -14,7 +14,7 @@ $messages = array();
 $messages['en'] = array(
 	'closemyaccount' => 'Close My Account',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
-	'closemyaccount-intro-text' => "We are sorry {{GENDER:$2|you}} want to disable your account. Wikia has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
+	'closemyaccount-intro-text' => "We are sorry {{GENDER:$2|you}} want to disable your account. Wikia has many communities on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wikia, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
 
 If you have decided you definitely want to disable your account please be aware:
 * Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used.

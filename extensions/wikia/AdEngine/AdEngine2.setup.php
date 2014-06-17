@@ -7,7 +7,6 @@ $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2Exitstit
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaFullFluidModule'] = __DIR__ . '/ResourceLoaderAdEngineSevenOneMediaFullFluidModule.php';
 $wgAutoloadClasses['AdProviderEbayController'] = __DIR__ . '/AdProviderEbayController.class.php';
 
 // Hooks for AdEngine2
@@ -18,6 +17,7 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGr
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AdEngine2Hooks::onWikiaMobileAssetsPackages';
 $wgHooks['OasisSkinAssetGroups'][] = 'AdEngine2Hooks::onOasisSkinAssetGroups';
+$wgHooks['InstantGlobalsGetVariables'][] = 'AdEngine2Hooks::onInstantGlobalsGetVariables';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
@@ -32,8 +32,4 @@ $wgExtensionFunctions[] = function() {
 // Register Resource Loader module for SevenOne Media files
 $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
-);
-
-$wgResourceModules['wikia.ext.adengine.sevenonemedia.fullFluid'] = array(
-	'class' => 'ResourceLoaderAdEngineSevenOneMediaFullFluidModule',
 );

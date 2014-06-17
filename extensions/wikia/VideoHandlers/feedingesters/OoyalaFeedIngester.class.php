@@ -138,9 +138,9 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	private function initFeedUrl( $params, $nextPage ) {
 		$method = 'GET';
 		$reqPath = '/v2/assets';
-		if ( !empty($nextPage) ) {
+		if ( !empty( $nextPage ) ) {
 			$parsed = explode( "?", $nextPage );
-			parse_str( array_pop($parsed), $params );
+			parse_str( array_pop( $parsed ), $params );
 		}
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );

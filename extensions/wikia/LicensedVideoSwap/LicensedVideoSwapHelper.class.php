@@ -443,6 +443,7 @@ SQL;
 	 * @return array - A list of suggested videos
 	 */
 	public function suggestionSearch( $title, $test = false, $verbose = false ) {
+		wfProfileIn( __METHOD__ );
 		// Accept either a title string or title object here
 		$titleObj = is_object( $title ) ? $title : Title::newFromText( $title, NS_FILE );
 		$articleId = $titleObj->getArticleID();

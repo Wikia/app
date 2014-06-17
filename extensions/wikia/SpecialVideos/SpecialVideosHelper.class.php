@@ -99,7 +99,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = array(), $category = '', $options = [] ) {
+	public function getVideos( $sort, $page, $providers = [], $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $sort == 'premium' ) {

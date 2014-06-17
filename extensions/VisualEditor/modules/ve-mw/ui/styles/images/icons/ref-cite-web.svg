@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24" height="24" viewBox="0, 0, 24, 24">
-<g id="web" opacity="0.75">
-	<path d="M11.496,17.5 C8.185,17.5 5.499,14.815 5.499,11.5 C5.499,8.185 8.185,5.5 11.496,5.5 C14.808,5.5 17.493,8.185 17.493,11.5 C17.493,14.815 14.808,17.5 11.496,17.5 z" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M11.5,17.5 C9.716,17.5 8.269,14.815 8.269,11.5 C8.269,8.185 9.716,5.5 11.5,5.5 C13.284,5.5 14.731,8.185 14.731,11.5 C14.731,14.815 13.284,17.5 11.5,17.5 z" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M11.496,5.5 L11.496,17.5" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M5.499,11.5 L17.493,11.5" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M6.5,14.5 L16.5,14.5" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M6.5,8.5 L16.5,8.5" fill-opacity="0" stroke="#000000" stroke-width="1.018"/>
-	<path d="M17,5 L17,4 L20,4 L20,19 L17,19 L17,18 L19,18 L19,5 z" fill="#000000"/>
-	<path d="M6,18 L6,19 L3,19 L3,4 L6,4 L6,5 L4,5 L4,18 z" fill="#000000"/>
+<g id="web" style="opacity:0.75">
+	<g id="globe" style="stroke:black;fill-opacity:0;">
+		<path d="M11.496,17.5 C8.185,17.5 5.499,14.815 5.499,11.5 C5.499,8.185 8.185,5.5 11.496,5.5 C14.808,5.5 17.493,8.185 17.493,11.5 C17.493,14.815 14.808,17.5 11.496,17.5 z"/>
+		<path d="M11.5,17.5 C9.716,17.5 8.269,14.815 8.269,11.5 C8.269,8.185 9.716,5.5 11.5,5.5 C13.284,5.5 14.731,8.185 14.731,11.5 C14.731,14.815 13.284,17.5 11.5,17.5 z"/>
+		<path d="M11.496,5.5 L11.496,17.5"/>
+		<path d="M5.499,11.5 L17.493,11.5"/>
+		<path d="M6.5,14.5 L16.5,14.5"/>
+		<path d="M6.5,8.5 L16.5,8.5"/>
+	</g>
+	<g id="brackets">
+		<path d="M17,5 L17,4 L20,4 L20,19 L17,19 L17,18 L19,18 L19,5 z"/>
+		<path d="M6,18 L6,19 L3,19 L3,4 L6,4 L6,5 L4,5 L4,18 z"/>
+	</g>
 </g>
 </svg>

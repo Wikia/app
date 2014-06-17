@@ -29,12 +29,12 @@
 			),
 			array(
 				'type' => 'custom',
-				'output' => '<strong>' . $fbEmail . '</strong>'
+				'output' => '<strong>' . htmlspecialchars( $fbEmail ) . '</strong>'
 			),
 			array(
 				'type' => 'hidden',
 				'name' => 'loginToken',
-				'value' => $loginToken
+				'value' => Sanitizer::encodeAttribute( $loginToken ),
 			),
 			array(
 				'type' => 'nirvanaview',

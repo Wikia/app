@@ -20,7 +20,7 @@ $USAGE =
 	"\t\t-h          Fetch and import to dev db by hostname (short name or fully qualified name ok)\n" .
 	"\t\t-f          Fetch a new database file from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
-	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_PROD_DATACENTER) \n".
+	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_DATACENTER) \n".
 	"\n";
 
 $opts = getopt ("h:i:f:p:?::");
@@ -29,7 +29,7 @@ if( empty( $opts ) ) die( $USAGE );
 if (array_key_exists('p', $opts)) {
 	$wgWikiaDatacenter = $opts['p'];
 } else {
-	$wgWikiaDatacenter = getenv('WIKIA_PROD_DATACENTER');
+	$wgWikiaDatacenter = getenv('WIKIA_DATACENTER');
 }
 switch($wgWikiaDatacenter) {
 	case 'poz':
@@ -66,6 +66,10 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		$city_id = $matches[1];
 		$cluster = strtr($matches[2], '123456', 'ABCDEF');
 		$databaseDirectory = "database_$cluster";
+		if ($cluster == 'F') {
+			// FIXME
+			$databaseDirectory = "database-f";
+		}
 		// just being lazy - easier to do this as a separate regex
 		$pattern = '/wgDBname="(.*)"/';
 		preg_match($pattern, $page, $matches);

@@ -915,6 +915,7 @@ abstract class UploadBase {
 	public static function detectScript( $file, $mime, $extension ) {
 		global $wgAllowTitlesInSVG;
 
+		wfProfileIn( __METHOD__ );
 		# ugly hack: for text files, always look at the entire file.
 		# For binary field, just check the first K.
 
@@ -929,6 +930,7 @@ abstract class UploadBase {
 		$chunk = strtolower( $chunk );
 
 		if( !$chunk ) {
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -952,6 +954,7 @@ abstract class UploadBase {
 
 		# check for HTML doctype
 		if ( preg_match( "/<!DOCTYPE *X?HTML/i", $chunk ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -997,6 +1000,7 @@ abstract class UploadBase {
 		foreach( $tags as $tag ) {
 			if( false !== strpos( $chunk, $tag ) ) {
 				wfDebug( __METHOD__ . ": found something that may make it be mistaken for html: $tag\n" );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
@@ -1011,22 +1015,26 @@ abstract class UploadBase {
 		# look for script-types
 		if( preg_match( '!type\s*=\s*[\'"]?\s*(?:\w*/)?(?:ecma|java)!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found script types\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		# look for html-style script-urls
 		if( preg_match( '!(?:href|src|data)\s*=\s*[\'"]?\s*(?:ecma|java)script:!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found html-style script urls\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		# look for css-style script-urls
 		if( preg_match( '!url\s*\(\s*[\'"]?\s*(?:ecma|java)script:!sim', $chunk ) ) {
 			wfDebug( __METHOD__ . ": found css-style script urls\n" );
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		wfDebug( __METHOD__ . ": no scripts found\n" );
+		wfProfileOut( __METHOD__ );
 		return false;
 	}
 

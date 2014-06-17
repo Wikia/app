@@ -524,6 +524,12 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn(__METHOD__);
 
+		if ( !wfRunHooks( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
+			wfProfileOut(__METHOD__);
+
+			return $out;
+		}
+
 		// render as placeholder in RTE
 		if (!empty($wgRTEParserEnabled)) {
 			if ($this->mType == self::WIKIA_PHOTO_GALLERY) {
@@ -559,7 +565,10 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		$out .= JSSnippets::addToStack(
-			array( '/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js', ),
+			array(
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+			),
 			array(),
 			'WikiaPhotoGalleryView.init'
 		);
@@ -761,13 +770,14 @@ class WikiaPhotoGallery extends ImageGallery {
 				 */
 				$imageTitle = $imageData[0];
 				$fileObject = $fileObjectsCache[$index];
+				$imageTitleText = $imageTitle->getText();
 
 				$image['height'] = $height;
 				$image['width'] = $thumbSize;
 				$image['caption'] = $imageData[1];
 
 				if (!is_object($fileObject) || ($imageTitle->getNamespace() != NS_FILE)) {
-					$image['linkTitle'] = $image['titleText'] = $imageTitle->getText();
+					$image['linkTitle'] = $image['titleText'] = $imageTitleText;
 					$image['thumbnail'] = false;
 					$image['link'] = Skin::makeSpecialUrl("Upload", array( 'wpDestFile' => $image['linkTitle'] ) );
 					$image['classes'] = 'image broken-image accent new';
@@ -789,7 +799,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 					$image['link'] = $imageData[2];
 
-					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitle->getText(), $image['link']);
+					$linkAttribs = $this->parseLink($imageTitle->getLocalUrl(), $imageTitleText, $image['link']);
 
 					$image['link'] = $linkAttribs['href'];
 					$image['linkTitle'] = $linkAttribs['title'];
@@ -858,8 +868,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				if (!empty($image['thumbnail'])) {
 					if ( $isVideo ) {
+						$thumbHtml = '';
+						$duration = $fileObject->getMetadataDuration();
+						if ( !empty( $duration ) ) {
+							$duration = WikiaFileHelper::formatDuration( $duration );
+							$thumbHtml .= '<span class="duration">' . $duration . '</span>';
+						}
 						$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
-						$thumbHtml = $this->videoPlayButton;
+						$thumbHtml .= $this->videoPlayButton;
 						$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
 					} else {
 						$thumbHtml = '';
@@ -912,6 +928,11 @@ class WikiaPhotoGallery extends ImageGallery {
 					$html .= Xml::closeElement('div');
 				}
 
+				// Insert video titles here
+				if ($isVideo) {
+					$html .= '<div class="title">' . $imageTitleText . '</div>';
+				}
+
 				if (!empty($image['caption'])) {
 					$html .= Xml::openElement(
 						'div',
@@ -947,12 +968,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				if ($perRow == 'dynamic') {
 					$html .= Xml::element('br');
 				}
-
-				// add button for Monaco
-				$html .= Xml::openElement('span', array('class' => 'wikia-gallery-add noprint', 'style' => 'display: none'));
-				$html .= Xml::element('img', array('src' => $wgBlankImgUrl, 'class' => 'sprite-small add'));
-				$html .= Xml::element('a', array('href' => '#'), wfMessage('wikiaPhotoGallery-viewmode-addphoto')->inContentLanguage()->text());
-				$html .= Xml::closeElement('span');
 
 				// add button for Oasis
 				$html .= Xml::openElement('a', array('class' => 'wikia-photogallery-add wikia-button noprint', 'style' => 'display: none'));
@@ -1240,6 +1255,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		$slideshowHtml .= JSSnippets::addToStack(
 			array(
 				'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
 				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 			),
 			array(),

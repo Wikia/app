@@ -97,7 +97,8 @@ class WikiFactoryHub {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @author Emil Podlaszewski <emil@wikia.com>
 	 *
-	 * @return array	array with categories
+	 * @param $city_id
+	 * @return array An array with categories
 	 */
 	public function getBreadCrumb( $city_id ) {
 		global $wgExternalSharedDB;
@@ -284,7 +285,8 @@ class WikiFactoryHub {
 	 * @access public
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @return integer	category id
+	 * @param string $name
+	 * @return integer category id
 	 */
 	public function getIdByName( $name ) {
 		global $wgExternalSharedDB;
@@ -356,7 +358,7 @@ class WikiFactoryHub {
 			}
 		}
 
-		return;
+		return null;
 	}
 
 	/**

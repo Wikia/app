@@ -11,6 +11,18 @@ $wgEnableWAMApiExt = true;
 ini_set( 'include_path', dirname(__FILE__).'/../' );
 require_once( 'commandLine.inc' );
 
+// List of wiki IDs for which the wgForceVisualEditor variable should NOT be enabled
+$excludedWikis = array(
+	// Values are for description only and just need to be not equal to false
+	43339 => 'lyrics',
+	2233  => 'marvel',
+	3616  => 'it.marvel',
+	2237  => 'dc',
+	90248 => 'archie',
+	4385  => 'darkhorse',
+	2446  => 'imagecomics',
+);
+
 function getVEForcedValue( $wikiId ) {
 	$wikiFactoryVar = WikiFactory::getVarByName( 'wgForceVisualEditor', $wikiId );
 	return ( is_object( $wikiFactoryVar ) && $wikiFactoryVar->cv_value ) ?
@@ -21,12 +33,15 @@ function getVEForcedValue( $wikiId ) {
 $forceVisualEditor = isset( $options['disable'] ) ? false : true;
 // Highest WAM rank at which to change the variable (lower number = higher rank)
 if ( !isset( $options['wam'] ) ) {
-	die( "You must specify a max WAM score with the --wam=N option (use 0 for all wikis).\n");
+	die( "You must specify a max WAM score with the --wam=N option (use 0 for all wikis).\n" );
+} elseif ( preg_match( '/^(\d+?)-(\d+?)$/', $options['wam'], $matches ) === 1 ) {
+	$wamMinScore = min( $matches[1], $matches[2] );
+	$wamMaxScore = max( $matches[1], $matches[2] );
+} elseif ( $options['wam'] > 5000 || $options['wam'] < 0 ) {
+	die( "WAM score must be a value between 0 and 5000.\n" );
+} else {
+	$wamMinScore = $options['wam'];
 }
-elseif ( $options['wam'] > 5000 || $options['wam'] < 0 ) {
-	die( "WAM score must be a value between 0 and 5000.\n");
-}
-$wamThreshold = $options['wam'];
 
 // First get the WAM index
 $wamWikis = array();
@@ -69,9 +84,14 @@ while ( $row = $dbr->fetchObject( $result ) ) {
 }
 
 foreach ( $allWikis as $wiki ) {
-	if ( !isset( $wamWikis[$wiki->city_id] ) ) {
-		$wamText = 'No WAM score';
-	} elseif ( $wamWikis[$wiki->city_id] >= $wamThreshold ) {
+	// If the wiki is not WAM-ranked or is in the exclusion list, continue
+	if ( !isset( $wamWikis[$wiki->city_id] ) || ( $forceVisualEditor && isset( $excludedWikis[$wiki->city_id] ) ) ) {
+		continue;
+	} elseif ( $wamWikis[$wiki->city_id] >= $wamMinScore ) {
+		if ( isset( $wamMaxScore ) && $wamWikis[$wiki->city_id] > $wamMaxScore ) {
+			// WAM score is out of specified range
+			continue;
+		}
 		$wamText = 'WAM rank '.$wamWikis[$wiki->city_id];
 	} else {
 		// If the wiki has a WAM score and the score is higher (numerically less) than the WAM score threshold parameter, ignore it

@@ -129,7 +129,7 @@ $wgAjaxExportList[] = "SpecialConnect::getLoginButtonModal";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
 // These hooks need to be hooked up prior to init() because runhooks may be called for them before init is run.
-$fbHooksToAddImmediately = array( 'SpecialPage_initList' );
+$fbHooksToAddImmediately = array( 'SpecialPage_initList', 'AutopromoteCondition' );
 foreach( $fbHooksToAddImmediately as $hookName ) {
 	$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 }

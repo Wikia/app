@@ -166,7 +166,8 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				scrollBottom,
 				idx,
 				inViewport,
-				cacheItem;
+				cacheItem,
+				imgSrc;
 
 			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
@@ -183,8 +184,15 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 				if (inViewport && this.parentVisible(cacheItem) && cacheItem.jq.is(':visible')) {
 					cacheItem.jq.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					cacheItem.el.src = this.rewriteURLForWebP(cacheItem.jq.data('src'));
-					cacheItem.jq.removeClass('lzy');
+					imgSrc = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
+					if ( imgSrc ) {
+						cacheItem.el.src = imgSrc;
+					}
+					// Hack for IE: cached images aren't firing onload
+					if ( cacheItem.el.complete ) {
+						cacheItem.el.onload();
+					}
+					cacheItem.jq.removeClass( 'lzy' );
 					delete this.cache[idx];
 				}
 			}
