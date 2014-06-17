@@ -42,23 +42,24 @@ abstract class BaseXWikiImage {
 		return $this->getBaseUrl() . "/" . $this->getLocalPath();
 	}
 
-	public function getThumbnailPurgeUrl( ) {
+	public function getThumbnailPurgeUrl() {
 		return $this->getBaseUrl() . "/" . $this->getLocalThumbnailPath();
 	}
 
 	protected function getBaseUrl() {
 		return self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
 	}
-	protected function getLocalPath($name = null) {
-		if (empty($name)){
+
+	protected function getLocalPath( $name = null ) {
+		if ( empty($name) ) {
 			$name = $this->name . $this->fileNameSuffix;
 		}
 		$nameHash = FileRepo::getHashPathForLevel( $this->name, 2 );
 		return sprintf( self::IMAGE_PATH_TEMPLATE, $nameHash, $nameHash, $name );
 	}
 
-	protected function getLocalThumbnailPath($name = null) {
-		return "thumb/" . $this->getLocalPath($name);
+	protected function getLocalThumbnailPath( $name = null ) {
+		return "thumb/" . $this->getLocalPath( $name );
 	}
 
 	public function getFullPath() {
@@ -70,7 +71,7 @@ abstract class BaseXWikiImage {
 	}
 
 	public function getTempFile() {
-		return tempnam( wfTempDir(), trim($this->getSwiftPathPrefix(), "/") );
+		return tempnam( wfTempDir(), trim( $this->getSwiftPathPrefix(), "/" ) );
 	}
 
 	public function removeFile() {
@@ -91,7 +92,7 @@ abstract class BaseXWikiImage {
 	}
 
 	private function getThumbPath( $dir ) {
-		$path_token = trim($this->getSwiftPathPrefix(), "/");
+		$path_token = trim( $this->getSwiftPathPrefix(), "/" );
 		return str_replace( "/{$path_token}/", "/{$path_token}/thumb/", $dir );
 	}
 
@@ -232,12 +233,12 @@ abstract class BaseXWikiImage {
 	}
 
 	private function removeThumbnails() {
-		$baseFileUrl  = self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
+		$baseFileUrl = self::IMAGE_HOST . $this->getSwiftContainer() . $this->getSwiftPathPrefix();
 
 		$swift = $this->getSwiftStorage();
 
 		$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
-		$thumbnailDir = sprintf( 'mwstore://swift-backend/%s%s%s', $this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalThumbnailPath());
+		$thumbnailDir = sprintf( 'mwstore://swift-backend/%s%s%s', $this->getSwiftContainer(), $this->getSwiftPathPrefix(), $this->getLocalThumbnailPath() );
 
 		$urls = [ ];
 		$files = [ ];
