@@ -338,7 +338,7 @@ $facebook-background-color: #3c5b9b;
 			border: none;
 			width: 424px;
 			&.show {
-				left: -426px;
+				left: -425px;
 				top: 0px;
 			}
 			background-color: #fff;
@@ -358,7 +358,7 @@ $facebook-background-color: #3c5b9b;
 			}
 			.notifications-header {
 				background-color: #092140;
-				padding: 20px;
+				padding: 23px 20xp 17px;
 				&:hover {
 					background-color: #092140 !important;
 				}
@@ -370,7 +370,7 @@ $facebook-background-color: #3c5b9b;
 					padding: 0;
 				}
 				#wall-notifications-markasread {
-					top: 20px;
+					top: 23px;
 				}
 				#wall-notifications-markasread-sub {
 					color: #fff;
@@ -388,7 +388,7 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			.notifications-wiki-header {
-				background: #edf1f4 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%;
+				background: #e2e6e9 no-repeat url(/skins/oasis/images/GlobalNavigation/chevron_down.png) 394px 50%;
 				color: #0a5fa3;
 				font-weight: bold;
 				padding: 20px;

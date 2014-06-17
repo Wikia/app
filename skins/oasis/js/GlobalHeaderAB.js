@@ -73,11 +73,13 @@ $(function(){
 			if (window.HoverMenuGlobal.menus.hasOwnProperty(menu)) {
 				if(window.HoverMenuGlobal.menus[menu].selector === '#AccountNavigation') {
 					window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
+					window.HoverMenuGlobal.menus.splice(menu,1);
 				}
 				if(window.HoverMenuGlobal.menus[menu].selector === '#WallNotifications') {
 					window.HoverMenuGlobal.menus[menu].menu.off('focus', '.subnav a');
 					window.HoverMenuGlobal.menus[menu].menu.off('mouseenter','> li', window.HoverMenuGlobal.menus[menu].mouseover);
 					window.HoverMenuGlobal.menus[menu].menu.off('mouseleave','> li', window.HoverMenuGlobal.menus[menu].mouseout);
+					window.HoverMenuGlobal.menus.splice(menu,1);
 				}
 			}
 		}
