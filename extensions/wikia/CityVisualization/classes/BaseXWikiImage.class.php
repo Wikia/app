@@ -8,10 +8,7 @@ abstract class BaseXWikiImage {
 	const IMAGE_HOST = "http://images.wikia.com/";
 	const IMAGE_TYPE = "png"; //currently only storing images as PNG's is supported
 
-	public $mDefaultAvatars = false;
 	protected $name, $fileNameSuffix;
-
-	abstract protected function onFileRemoval( $success );
 
 	abstract public function getContainerDirectory();
 
