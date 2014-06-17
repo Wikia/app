@@ -16,9 +16,9 @@ class WikiaInteractiveMapsUploadImageFromFile extends UploadFromFile {
 	public function verifyUpload( $uploadType ) {
 		$details = parent::verifyUpload();
 
-		if ( $details[ 'status' ] == self::OK ) {
+		if ( $details[ 'status' ] === self::OK ) {
 			// check minimal dimensions for pin type marker
-			if ( $uploadType == self::UPLOAD_TYPE_PIN_TYPE_MARKER ) {
+			if ( $uploadType === self::UPLOAD_TYPE_PIN_TYPE_MARKER ) {
 				$imageSize = getimagesize( $this->getTempPath() );
 				if ( $imageSize[ 0 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE || $imageSize[ 1 ] < self::PIN_TYPE_MARKER_IMAGE_MIN_SIZE ) {
 					$details[ 'status' ] = self::PIN_TYPE_MARKER_IMAGE_TOO_SMALL_ERROR;

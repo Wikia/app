@@ -189,10 +189,13 @@ define(
 		 * @desc
 		 * @param {object} modal - modal component
 		 * @param {FormData} formData - FormData object with file input named wpUploadFile
-		 * @param {string} uploadEntryPoint - URL to upload entry point in backend
+		 * @param {string} uploadType - upload type, like "map" or "marker"
 		 * @param {function=} successCallback - optional callback to call after successful request
 		 */
-		function upload(modal, formData, uploadEntryPoint, successCallback) {
+		function upload(modal, formData, uploadType, successCallback) {
+			var uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=' +
+				uploadType + '&format=json';
+
 			$.ajax({
 				contentType: false,
 				data: formData,

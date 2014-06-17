@@ -86,8 +86,6 @@ define(
 					helper: getTileSetThumbs
 				}
 			},
-			// image upload entry point
-			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=map&format=json',
 			// stack for holding choose tile set steps
 			stepsStack = [],
 			// cached selectors
@@ -230,7 +228,7 @@ define(
 		function uploadMapImage(form) {
 			var formData = new FormData(form);
 
-			utils.upload(modal, formData, uploadEntryPoint, function (data) {
+			utils.upload(modal, formData, 'map', function (data) {
 				data.type = 'custom';
 				modal.trigger('previewTileSet', data);
 			});

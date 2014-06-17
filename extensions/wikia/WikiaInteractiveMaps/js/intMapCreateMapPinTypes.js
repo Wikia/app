@@ -21,7 +21,8 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 			pinTypeTemplateData = {
 				delete: $.msg('wikia-interactive-maps-create-map-delete-pin-type'),
-				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder')
+				placeholder: $.msg('wikia-interactive-maps-create-map-pin-type-name-placeholder'),
+				wgBlankImgUrl: w.wgBlankImgUrl
 			},
 
 			events = {
@@ -55,7 +56,6 @@ define('wikia.intMap.createMap.pinTypes',
 			},
 			mapUrl,
 			// marker image upload entry point
-			uploadEntryPoint = '/wikia.php?controller=WikiaInteractiveMaps&method=upload&uploadType=marker&format=json',
 			$form;
 
 		/**
@@ -158,7 +158,7 @@ define('wikia.intMap.createMap.pinTypes',
 
 			formData.append('wpUploadFile', file);
 
-			utils.upload(modal, formData, uploadEntryPoint, function (data) {
+			utils.upload(modal, formData, 'marker', function (data) {
 				modal.trigger('saveMarkerImage', data, $inputElementWrapper);
 				modal.trigger('previewMarkerImage', data, $inputElement, $inputElementWrapper);
 			});
