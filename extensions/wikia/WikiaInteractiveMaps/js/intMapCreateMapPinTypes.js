@@ -155,6 +155,7 @@ define('wikia.intMap.createMap.pinTypes',
 				formData = new FormData(),
 				$inputElement = $(inputElement),
 				$inputElementWrapper = $inputElement.closest('.pin-type-marker');
+
 			formData.append('wpUploadFile', file);
 
 			utils.upload(modal, formData, uploadEntryPoint, function (data) {
