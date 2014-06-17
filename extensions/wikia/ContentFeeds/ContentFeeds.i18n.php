@@ -278,9 +278,12 @@ $messages['id'] = array(
 );
 
 /** Italian (italiano)
+ * @author PeppeAeco
  * @author Rippitippi
  */
 $messages['it'] = array(
+	'contentfeeds-desc' => 'Fornisce informazioni ricche e aggiornate attraverso vari tag o "feed"',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creare il tuo primo paio di pagine!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titolo',
 	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',

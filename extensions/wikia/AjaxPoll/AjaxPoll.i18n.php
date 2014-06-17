@@ -30,11 +30,12 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;من مجموع التصويتات',
-	'ajaxpoll-thankyou' => 'شكرا لتصويتك!',
-	'ajaxpoll-error' => 'كانت هناك مشكلة مع تجهيز صوتك ، يرجى المحاولة مرة أخرى.',
+	'ajaxpoll-thankyou' => 'شكرًا لتصويتك!',
+	'ajaxpoll-error' => 'حدثت مشكلة في تجهيز صوتك، يرجى المحاولة مرة أخرى.',
 	'ajaxpoll-summary' => 'تم إنشاء هذا التصويت في $1 على $2، و حتى الآن صوت $3 شخصا.',
 	'ajaxpoll-submit' => 'تصويت!',
 	'ajaxpoll-closed' => 'تم إغلاق التصويت الآن. استمتع بالنتائج.',

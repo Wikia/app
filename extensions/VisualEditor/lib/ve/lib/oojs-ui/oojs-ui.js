@@ -2126,6 +2126,10 @@ OO.ui.FlaggableElement.prototype.setFlags = function ( flags ) {
 			// Set
 			this.flags[flag] = true;
 			this.$element.addClass( classPrefix + flag );
+			// Wikia change for theming buttons
+			if ( flag === 'secondary' && this.$button ) {
+				this.$button.addClass( 'secondary' );
+			}
 		}
 	} else if ( OO.isPlainObject( flags ) ) {
 		for ( flag in flags ) {

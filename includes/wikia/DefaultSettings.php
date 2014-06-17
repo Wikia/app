@@ -1209,9 +1209,15 @@ $wgAdDriverUseEbay = false;
 
 /**
  * @name $wgAdDriverUseWikiaBarBoxad2
- * Whether to enable new fancy footer WikiaBar BOXAD 2 (true) or not (false)
+ * Whether to enable new fancy footer ad WIKIA_BAR_BOXAD_2
  */
 $wgAdDriverUseWikiaBarBoxad2 = false;
+
+/**
+ * @name $wgAdDriverWikiaBarBoxad2ImpressionCapping
+ * Impression capping for WIKIA_BAR_BOXAD_2. Array with the numbers of the potential ad calls.
+ */
+$wgAdDriverWikiaBarBoxad2ImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1220,6 +1226,13 @@ $wgAdDriverUseWikiaBarBoxad2 = false;
  */
 $wgAdDriverUseSevenOneMedia = null;
 $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
+
+/**
+ * @name $wgAdDriverUseDartForSlotsBelowTheFold
+ * Whether to call DART for additional slots below the fold. Also known as "Coffee cup"
+ * TODO: add an internal page for the reasons
+ */
+$wgAdDriverUseDartForSlotsBelowTheFold = false;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1407,3 +1420,21 @@ $wgEnableBuckyExt = false;
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
 $wgBuckySampling = 1;
+
+/*
+ * @name wgXhprofUDPHost
+ * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
+ */
+$wgXhprofUDPHost = null;
+
+/*
+ * @name wgXhprofUDPPort
+ * Port that xhprof data should be reported to
+ */
+$wgXhprofUDPPort = '3911';
+
+/*
+ * @name wgXhprofMinimumTime
+ * Threshold for total time spent in function to be reported (set to 0 to report all entries)
+ */
+$wgXhprofMinimumTime = 0.001;
